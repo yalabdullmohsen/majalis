@@ -136,6 +136,106 @@ export async function getMyAchievements(userId: string) {
   return data || [];
 }
 
+// ─── Admin CRUD ────────────────────────────────────────────────────────────────
+
+export async function adminGetStats() {
+  const [sheikhs, lessonsRes, library, miracles, pendingFawaid] = await Promise.all([
+    supabase.from("sheikhs").select("*", { count: "exact", head: true }),
+    supabase.from("lessons").select("status"),
+    supabase.from("library_items").select("*", { count: "exact", head: true }),
+    supabase.from("scientific_miracles").select("*", { count: "exact", head: true }),
+    supabase.from("fawaid").select("*", { count: "exact", head: true }).eq("status", "pending"),
+  ]);
+  const lessons = lessonsRes.data || [];
+  return {
+    sheikhsCount: sheikhs.count ?? 0,
+    lessonsTotal: lessons.length,
+    lessonsApproved: lessons.filter((l: any) => l.status === "approved").length,
+    lessonsPending: lessons.filter((l: any) => l.status === "pending").length,
+    libraryCount: library.count ?? 0,
+    miraclesCount: miracles.count ?? 0,
+    pendingFawaidCount: pendingFawaid.count ?? 0,
+  };
+}
+
+export async function adminGetSheikhs() {
+  const { data, error } = await supabase.from("sheikhs").select("*").order("name");
+  return { data: data || [], error };
+}
+
+export async function adminUpsertSheikh(data: any) {
+  const { id, ...rest } = data;
+  if (id) return await supabase.from("sheikhs").update(rest).eq("id", id);
+  return await supabase.from("sheikhs").insert(rest);
+}
+
+export async function adminDeleteSheikh(id: string) {
+  return await supabase.from("sheikhs").delete().eq("id", id);
+}
+
+export async function adminGetLessons() {
+  const { data, error } = await supabase
+    .from("lessons").select("*, sheikhs(name)")
+    .order("created_at", { ascending: false });
+  return { data: data || [], error };
+}
+
+export async function adminUpsertLesson(data: any) {
+  const { id, sheikhs, ...rest } = data;
+  if (id) return await supabase.from("lessons").update(rest).eq("id", id);
+  return await supabase.from("lessons").insert(rest);
+}
+
+export async function adminDeleteLesson(id: string) {
+  return await supabase.from("lessons").delete().eq("id", id);
+}
+
+export async function adminGetLibrary() {
+  const { data, error } = await supabase
+    .from("library_items").select("*, sheikhs(name)")
+    .order("created_at", { ascending: false });
+  return { data: data || [], error };
+}
+
+export async function adminUpsertLibraryItem(data: any) {
+  const { id, sheikhs, ...rest } = data;
+  if (id) return await supabase.from("library_items").update(rest).eq("id", id);
+  return await supabase.from("library_items").insert(rest);
+}
+
+export async function adminDeleteLibraryItem(id: string) {
+  return await supabase.from("library_items").delete().eq("id", id);
+}
+
+export async function adminGetMiracles() {
+  const { data, error } = await supabase
+    .from("scientific_miracles").select("*")
+    .order("created_at", { ascending: false });
+  return { data: data || [], error };
+}
+
+export async function adminUpsertMiracle(data: any) {
+  const { id, ...rest } = data;
+  if (id) return await supabase.from("scientific_miracles").update(rest).eq("id", id);
+  return await supabase.from("scientific_miracles").insert(rest);
+}
+
+export async function adminDeleteMiracle(id: string) {
+  return await supabase.from("scientific_miracles").delete().eq("id", id);
+}
+
+export async function adminGetAllFawaid() {
+  const { data, error } = await supabase
+    .from("fawaid").select("*").order("created_at", { ascending: false });
+  return { data: data || [], error };
+}
+
+export async function adminDeleteFawaid(id: string) {
+  return await supabase.from("fawaid").delete().eq("id", id);
+}
+
+// ─── Search ────────────────────────────────────────────────────────────────────
+
 export async function searchEverything(term: string) {
   const q = `%${term}%`;
   const [lessons, library, miracles, sheikhs] = await Promise.all([
