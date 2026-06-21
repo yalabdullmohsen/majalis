@@ -1,6 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { router } from "expo-router";
 import * as Haptics from "expo-haptics";
 import React from "react";
 import {
@@ -22,7 +21,7 @@ import { getPendingFawaid, moderateFawaid } from "@/lib/supabase";
 export default function AdminScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
-  const { user } = useAuth();
+  const { user, isAdmin } = useAuth();
   const queryClient = useQueryClient();
 
   const { data: pending, isLoading, refetch } = useQuery({
@@ -61,12 +60,12 @@ export default function AdminScreen() {
     );
   };
 
-  if (!user) {
+  if (!user || !isAdmin) {
     return (
       <View style={[styles.center, { backgroundColor: colors.background }]}>
         <Ionicons name="lock-closed-outline" size={40} color={colors.mutedForeground} />
         <Text style={[styles.emptyText, { color: colors.mutedForeground }]}>
-          يجب تسجيل الدخول للوصول إلى هذه الصفحة
+          {!user ? "يجب تسجيل الدخول للوصول إلى هذه الصفحة" : "هذه الصفحة للمشرفين فقط."}
         </Text>
       </View>
     );

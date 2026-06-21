@@ -1,8 +1,10 @@
 import { Ionicons } from "@expo/vector-icons";
-import { useQuery } from "@tanstack/react-query";
+import * as Haptics from "expo-haptics";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
 import {
   ActivityIndicator,
+  Alert,
   FlatList,
   Platform,
   Pressable,
@@ -14,8 +16,14 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { useAuth } from "@/context/AuthContext";
 import { useColors } from "@/hooks/useColors";
-import { getLessons } from "@/lib/supabase";
+import {
+  getLessons,
+  getMyRegistrations,
+  registerForLesson,
+  unregisterFromLesson,
+} from "@/lib/supabase";
 
 const CATEGORIES = ["الكل", "فقه", "عقيدة", "تفسير", "حديث", "سيرة", "تزكية", "أخرى"];
 const CITIES = ["كل المحافظات", "العاصمة", "حولي", "الفروانية", "الجهراء", "الأحمدي", "مبارك الكبير"];
@@ -23,6 +31,9 @@ const CITIES = ["كل المحافظات", "العاصمة", "حولي", "الف
 export default function LessonsScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
+
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("الكل");
   const [city, setCity] = useState("كل المحافظات");
@@ -32,12 +43,58 @@ export default function LessonsScreen() {
     queryFn: () => getLessons({ category, city, search }),
   });
 
+  const { data: myRegData } = useQuery({
+    queryKey: ["my-registrations", user?.id],
+    queryFn: () => getMyRegistrations(user!.id),
+    enabled: !!user,
+  });
+
+  const myReg: string[] = myRegData || [];
+
+  const toggleMutation = useMutation({
+    mutationFn: async (lessonId: string) => {
+      if (!user) throw new Error("not-logged-in");
+      if (myReg.includes(lessonId)) {
+        await unregisterFromLesson(user.id, lessonId);
+      } else {
+        await registerForLesson(user.id, lessonId);
+      }
+    },
+    onSuccess: () => {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+      queryClient.invalidateQueries({ queryKey: ["my-registrations", user?.id] });
+    },
+    onError: (err: any) => {
+      if (err?.message === "not-logged-in") {
+        Alert.alert("تنبيه", "يرجى تسجيل الدخول أولاً");
+      } else {
+        Alert.alert("خطأ", "حدث خطأ أثناء التسجيل");
+      }
+    },
+  });
+
+  const handleToggle = (lessonId: string) => {
+    if (!user) {
+      Alert.alert("تنبيه", "يرجى تسجيل الدخول أولاً");
+      return;
+    }
+    toggleMutation.mutate(lessonId);
+  };
+
   const lessons = data?.data || [];
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
-      {/* Search bar */}
-      <View style={[styles.searchBar, { backgroundColor: colors.card, borderColor: colors.border, marginTop: Platform.OS === "web" ? 67 : 0 }]}>
+      <View
+        style={[
+          styles.searchBar,
+          {
+            backgroundColor: colors.card,
+            borderColor: colors.border,
+            marginTop: Platform.OS === "web" ? 67 : 0,
+          },
+        ]}
+      >
         <Ionicons name="search-outline" size={18} color={colors.mutedForeground} />
         <TextInput
           style={[styles.searchInput, { color: colors.foreground }]}
@@ -54,7 +111,6 @@ export default function LessonsScreen() {
         )}
       </View>
 
-      {/* Category pills */}
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -80,7 +136,6 @@ export default function LessonsScreen() {
         ))}
       </ScrollView>
 
-      {/* City pills */}
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -126,30 +181,74 @@ export default function LessonsScreen() {
               </Text>
             </View>
           )}
-          renderItem={({ item }: { item: any }) => (
-            <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
-              <View style={styles.cardHeader}>
-                <View style={[styles.badge, { backgroundColor: colors.accent }]}>
-                  <Text style={[styles.badgeText, { color: colors.primary }]}>{item.category}</Text>
+          renderItem={({ item }: { item: any }) => {
+            const registered = myReg.includes(item.id);
+            return (
+              <View
+                style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}
+              >
+                <View style={styles.cardHeader}>
+                  <View style={[styles.badge, { backgroundColor: colors.accent }]}>
+                    <Text style={[styles.badgeText, { color: colors.primary }]}>
+                      {item.category}
+                    </Text>
+                  </View>
+                  <Text style={[styles.cardTitle, { color: colors.foreground }]}>{item.title}</Text>
                 </View>
-                <Text style={[styles.cardTitle, { color: colors.foreground }]}>{item.title}</Text>
+                <View style={styles.cardMeta}>
+                  <View style={styles.metaItem}>
+                    <Ionicons name="location-outline" size={13} color={colors.mutedForeground} />
+                    <Text style={[styles.metaText, { color: colors.mutedForeground }]}>{item.city}</Text>
+                  </View>
+                  <View style={styles.metaItem}>
+                    <Ionicons name="business-outline" size={13} color={colors.mutedForeground} />
+                    <Text style={[styles.metaText, { color: colors.mutedForeground }]}>
+                      {item.mosque || "—"}
+                    </Text>
+                  </View>
+                  <View style={styles.metaItem}>
+                    <Ionicons name="person-outline" size={13} color={colors.mutedForeground} />
+                    <Text style={[styles.metaText, { color: colors.mutedForeground }]}>
+                      {item.sheikhs?.name || "—"}
+                    </Text>
+                  </View>
+                </View>
+
+                <View style={styles.cardFooter}>
+                  <View style={[styles.tag, { borderColor: colors.border }]}>
+                    <Text style={[styles.tagText, { color: colors.mutedForeground }]}>
+                      {item.audience || "الكل"}
+                    </Text>
+                  </View>
+                  <View style={[styles.tag, { borderColor: colors.border }]}>
+                    <Text style={[styles.tagText, { color: colors.mutedForeground }]}>
+                      {item.delivery || "حضور فقط"}
+                    </Text>
+                  </View>
+                  <Pressable
+                    style={[
+                      styles.regBtn,
+                      {
+                        backgroundColor: registered ? colors.card : colors.primary,
+                        borderColor: registered ? colors.border : colors.primary,
+                      },
+                    ]}
+                    onPress={() => handleToggle(item.id)}
+                    disabled={toggleMutation.isPending}
+                  >
+                    <Text
+                      style={[
+                        styles.regBtnText,
+                        { color: registered ? colors.mutedForeground : "#FFF" },
+                      ]}
+                    >
+                      {registered ? "إلغاء التسجيل" : "سجّل حضوري"}
+                    </Text>
+                  </Pressable>
+                </View>
               </View>
-              <View style={styles.cardMeta}>
-                <View style={styles.metaItem}>
-                  <Ionicons name="location-outline" size={13} color={colors.mutedForeground} />
-                  <Text style={[styles.metaText, { color: colors.mutedForeground }]}>{item.city}</Text>
-                </View>
-                <View style={styles.metaItem}>
-                  <Ionicons name="business-outline" size={13} color={colors.mutedForeground} />
-                  <Text style={[styles.metaText, { color: colors.mutedForeground }]}>{item.mosque || "—"}</Text>
-                </View>
-                <View style={styles.metaItem}>
-                  <Ionicons name="person-outline" size={13} color={colors.mutedForeground} />
-                  <Text style={[styles.metaText, { color: colors.mutedForeground }]}>{item.sheikhs?.name || "—"}</Text>
-                </View>
-              </View>
-            </View>
-          )}
+            );
+          }}
         />
       )}
     </View>
@@ -187,20 +286,46 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     borderWidth: 1,
     marginBottom: 10,
+    gap: 10,
   },
-  cardHeader: { gap: 6, marginBottom: 10 },
-  cardTitle: { fontSize: 16, fontWeight: "700", textAlign: "right", fontFamily: "Inter_700Bold" },
+  cardHeader: { gap: 6 },
+  cardTitle: {
+    fontSize: 16,
+    fontWeight: "700",
+    textAlign: "right",
+    fontFamily: "Inter_700Bold",
+  },
   badge: {
     alignSelf: "flex-start",
     paddingHorizontal: 10,
     paddingVertical: 3,
     borderRadius: 10,
-    alignItems: "flex-end",
   },
   badgeText: { fontSize: 12, fontWeight: "600" },
   cardMeta: { gap: 5 },
   metaItem: { flexDirection: "row-reverse", alignItems: "center", gap: 5 },
   metaText: { fontSize: 13 },
+  cardFooter: {
+    flexDirection: "row-reverse",
+    alignItems: "center",
+    gap: 8,
+    flexWrap: "wrap",
+  },
+  tag: {
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 8,
+    borderWidth: 1,
+  },
+  tagText: { fontSize: 12 },
+  regBtn: {
+    marginLeft: "auto",
+    paddingHorizontal: 14,
+    paddingVertical: 7,
+    borderRadius: 10,
+    borderWidth: 1,
+  },
+  regBtnText: { fontSize: 13, fontWeight: "700" },
   empty: { alignItems: "center", paddingTop: 60, gap: 12 },
   emptyText: { fontSize: 15 },
 });
