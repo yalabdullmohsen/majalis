@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { getQaQuestions } from "@/lib/supabase";
-import { C, QA_CATEGORIES, QA_RULING_COLORS, QA_DISCLAIMER } from "@/lib/theme";
+import { getQaQuestions, getQaCategories } from "@/lib/supabase";
+import { C, QA_RULING_COLORS, QA_REVIEW_LABELS, QA_DISCLAIMER } from "@/lib/theme";
 import { PageHeader, Loading, Empty } from "@/components/ui-common";
 
 function Disclaimer() {
@@ -34,8 +34,8 @@ function RulingBadge({ ruling }: { ruling: string }) {
   );
 }
 
-function ReliabilityBadge({ reliability }: { reliability: string }) {
-  const approved = reliability === "معتمد";
+function ReviewBadge({ status }: { status: string }) {
+  const approved = status === "approved";
   return (
     <span
       style={{
@@ -48,27 +48,32 @@ function ReliabilityBadge({ reliability }: { reliability: string }) {
         whiteSpace: "nowrap",
       }}
     >
-      {approved ? "✓ معتمد" : "↻ يحتاج مراجعة"}
+      {approved ? "✓ " : "↻ "}{QA_REVIEW_LABELS[status] || status}
     </span>
   );
 }
 
 export default function QaPage() {
   const [items, setItems] = useState<any[]>([]);
+  const [categories, setCategories] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [category, setCategory] = useState("الكل");
+  const [categoryId, setCategoryId] = useState("all");
   const [search, setSearch] = useState("");
   const [openId, setOpenId] = useState<string | null>(null);
 
   useEffect(() => {
+    getQaCategories().then(({ data }) => setCategories(data));
+  }, []);
+
+  useEffect(() => {
     setLoading(true);
-    getQaQuestions({ category, search }).then(({ data }) => {
+    getQaQuestions({ categoryId, search }).then(({ data }) => {
       setItems(data);
       setLoading(false);
     });
-  }, [category, search]);
+  }, [categoryId, search]);
 
-  const chips = ["الكل", ...QA_CATEGORIES];
+  const chips = [{ id: "all", name: "الكل" }, ...categories];
 
   return (
     <div style={{ maxWidth: "48rem", margin: "0 auto", padding: "2.5rem 1.25rem 4rem" }}>
@@ -103,11 +108,11 @@ export default function QaPage() {
       {/* التصنيفات */}
       <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1.75rem" }}>
         {chips.map((cat) => {
-          const active = category === cat;
+          const active = categoryId === cat.id;
           return (
             <button
-              key={cat}
-              onClick={() => setCategory(cat)}
+              key={cat.id}
+              onClick={() => setCategoryId(cat.id)}
               style={{
                 fontSize: "0.8125rem",
                 padding: "0.375rem 0.875rem",
@@ -121,7 +126,7 @@ export default function QaPage() {
                 whiteSpace: "nowrap",
               }}
             >
-              {cat}
+              {cat.name}
             </button>
           );
         })}
@@ -135,6 +140,7 @@ export default function QaPage() {
         <div style={{ display: "grid", gap: "0.75rem" }}>
           {items.map((q: any) => {
             const open = openId === q.id;
+            const catName = q.qa_categories?.name;
             return (
               <div
                 key={q.id}
@@ -164,11 +170,13 @@ export default function QaPage() {
                       {q.question}
                     </span>
                     <span style={{ display: "flex", gap: "0.375rem", flexWrap: "wrap", marginTop: "0.5rem", alignItems: "center" }}>
-                      <span style={{ fontSize: "0.6875rem", color: C.emeraldDeep, background: C.sage, padding: "0.1rem 0.5rem", borderRadius: "999px", fontWeight: 600 }}>
-                        {q.category}
-                      </span>
+                      {catName && (
+                        <span style={{ fontSize: "0.6875rem", color: C.emeraldDeep, background: C.sage, padding: "0.1rem 0.5rem", borderRadius: "999px", fontWeight: 600 }}>
+                          {catName}
+                        </span>
+                      )}
                       {q.ruling_type && <RulingBadge ruling={q.ruling_type} />}
-                      <ReliabilityBadge reliability={q.reliability} />
+                      <ReviewBadge status={q.review_status} />
                     </span>
                   </span>
                 </button>

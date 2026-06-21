@@ -17,17 +17,8 @@ export const GOVERNORATES = [
 ];
 
 // ─── الأسئلة والأجوبة الدينية ───────────────────────────────────────
-export const QA_CATEGORIES = [
-  "أحكام شرعية",
-  "قصص الأنبياء",
-  "سير الصالحين",
-  "السيرة النبوية",
-  "الصحابة",
-  "ألغاز فقهية",
-];
-
-// التصنيف الوحيد الذي يظهر فيه نوع الحكم
-export const QA_RULING_CATEGORY = "أحكام شرعية";
+// التصنيفات تُقرأ من جدول qa_categories. هذا السلَج للتصنيف الذي يظهر فيه نوع الحكم.
+export const QA_RULING_CATEGORY_SLUG = "rulings";
 
 export const QA_RULING_TYPES = ["حلال", "حرام", "مكروه", "مباح", "سنة", "مندوب"];
 
@@ -41,7 +32,10 @@ export const QA_RULING_COLORS: Record<string, { bg: string; text: string }> = {
   "حرام": { bg: "#FEE2E2", text: "#991B1B" },
 };
 
-// درجة الاعتماد
-export const QA_RELIABILITY = ["معتمد", "يحتاج مراجعة"];
+// حالة النشر (status)
+export const QA_STATUS_LABELS: Record<string, string> = { published: "منشور", draft: "مسودة" };
+// درجة الاعتماد / المراجعة (review_status)
+export const QA_REVIEW_LABELS: Record<string, string> = { approved: "معتمد", needs_review: "يحتاج مراجعة" };
+
 export const QA_DISCLAIMER =
   "المحتوى علمي وتعليمي، وما يحتاج إلى فتوى خاصة يُحال إلى أهل العلم المختصين.";

@@ -278,13 +278,21 @@ export async function adminUpdateUserRole(userId: string, role: string) {
 
 // ─── الأسئلة والأجوبة الدينية ───────────────────────────────────────────────────
 
-export async function getQaQuestions({ category, search }: { category?: string; search?: string } = {}) {
+export async function getQaCategories() {
+  const { data, error } = await supabase
+    .from("qa_categories")
+    .select("*")
+    .order("created_at", { ascending: true });
+  return { data: data || [], error };
+}
+
+export async function getQaQuestions({ categoryId, search }: { categoryId?: string; search?: string } = {}) {
   let q = supabase
     .from("qa_questions")
-    .select("*")
-    .eq("is_published", true)
+    .select("*, qa_categories(name, slug)")
+    .eq("status", "published")
     .order("created_at", { ascending: false });
-  if (category && category !== "الكل") q = q.eq("category", category);
+  if (categoryId && categoryId !== "all") q = q.eq("category_id", categoryId);
   const { data, error } = await q;
   let result = data || [];
   if (search?.trim()) {
@@ -299,16 +307,16 @@ export async function getQaQuestions({ category, search }: { category?: string; 
 export async function adminGetQuestions() {
   const { data, error } = await supabase
     .from("qa_questions")
-    .select("*")
+    .select("*, qa_categories(name, slug)")
     .order("created_at", { ascending: false });
   return { data: data || [], error };
 }
 
 export async function adminUpsertQuestion(data: any) {
-  const { id, ...rest } = data;
-  // نوع الحكم يُحفظ فقط لتصنيف الأحكام الشرعية
-  if (rest.category !== "أحكام شرعية") rest.ruling_type = null;
+  const { id, qa_categories, ...rest } = data;
   if (!rest.ruling_type) rest.ruling_type = null;
+  if (!rest.category_id) rest.category_id = null;
+  rest.updated_at = new Date().toISOString();
   if (id) return await supabase.from("qa_questions").update(rest).eq("id", id);
   return await supabase.from("qa_questions").insert(rest);
 }
@@ -317,8 +325,11 @@ export async function adminDeleteQuestion(id: string) {
   return await supabase.from("qa_questions").delete().eq("id", id);
 }
 
-export async function adminToggleQuestionPublish(id: string, isPublished: boolean) {
-  return await supabase.from("qa_questions").update({ is_published: isPublished }).eq("id", id);
+export async function adminSetQuestionStatus(id: string, status: string) {
+  return await supabase
+    .from("qa_questions")
+    .update({ status, updated_at: new Date().toISOString() })
+    .eq("id", id);
 }
 
 // ─── Search ────────────────────────────────────────────────────────────────────
