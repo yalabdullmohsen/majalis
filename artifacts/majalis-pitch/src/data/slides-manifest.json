@@ -1,0 +1,66 @@
+[
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567801",
+    "position": 1,
+    "filepath": "src/pages/slides/Slide1Title.tsx",
+    "title": "مجالس — العلم في متناولك",
+    "description": "الشريحة الافتتاحية",
+    "speakerNotes": ""
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567802",
+    "position": 2,
+    "filepath": "src/pages/slides/Slide2Problem.tsx",
+    "title": "التحدي — طلب العلم الشرعي",
+    "description": "المشاكل التي تواجه طالب العلم",
+    "speakerNotes": ""
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567803",
+    "position": 3,
+    "filepath": "src/pages/slides/Slide3Solution.tsx",
+    "title": "الحل — مجالس",
+    "description": "ما تقدمه المنصة",
+    "speakerNotes": ""
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567804",
+    "position": 4,
+    "filepath": "src/pages/slides/Slide4Lessons.tsx",
+    "title": "الدروس — تصفّح وسجّل",
+    "description": "ميزة الدروس الشرعية",
+    "speakerNotes": ""
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567805",
+    "position": 5,
+    "filepath": "src/pages/slides/Slide5Sheikhs.tsx",
+    "title": "المشايخ — ملفات موثّقة",
+    "description": "صفحات المشايخ المعتمدين",
+    "speakerNotes": ""
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567806",
+    "position": 6,
+    "filepath": "src/pages/slides/Slide6Library.tsx",
+    "title": "المكتبة والفوائد",
+    "description": "المصادر العلمية والفوائد والإعجاز",
+    "speakerNotes": ""
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567807",
+    "position": 7,
+    "filepath": "src/pages/slides/Slide7HowToStart.tsx",
+    "title": "كيف تبدأ — ثلاث خطوات",
+    "description": "خطوات البدء بالمنصة",
+    "speakerNotes": ""
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567808",
+    "position": 8,
+    "filepath": "src/pages/slides/Slide8Closing.tsx",
+    "title": "انضم إلينا",
+    "description": "الشريحة الختامية",
+    "speakerNotes": ""
+  }
+]

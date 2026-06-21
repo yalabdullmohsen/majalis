@@ -1,0 +1,31 @@
+kind = "slides"
+previewPath = "/majalis-pitch/"
+title = "مجالس — عرض تقديمي"
+version = "1.0.0"
+id = "artifacts/majalis-pitch"
+router = "path"
+
+[[integratedSkills]]
+name = "slides"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/majalis-pitch/" ]
+localPort = 20030
+
+[services.development]
+run = "pnpm --filter @workspace/majalis-pitch run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/majalis-pitch", "run", "build" ]
+publicDir = "artifacts/majalis-pitch/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "20030"
+BASE_PATH = "/majalis-pitch/"
