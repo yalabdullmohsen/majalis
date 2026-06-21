@@ -1,8 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { supabase, getCurrentUser, signIn, signUp, signOut } from "@/lib/supabase";
 
-// @ts-ignore
-const AuthContext = createContext(null);
+const AuthContext = createContext<any>(null);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<any>(null);

@@ -20,13 +20,31 @@ const AuthContext = createContext<AuthContextType>({
   signOut: async () => {},
 });
 
-async function fetchIsAdmin(userId: string): Promise<boolean> {
-  const { data } = await supabase
+async function fetchOrCreateProfile(supabaseUser: { id: string; email?: string; user_metadata?: any }) {
+  // Try to fetch existing profile
+  const { data: profile } = await supabase
     .from("profiles")
     .select("role")
-    .eq("id", userId)
+    .eq("id", supabaseUser.id)
     .single();
-  return data?.role === "admin";
+
+  if (profile) return profile;
+
+  // Profile missing — create it now (fallback if DB trigger is absent)
+  const { data: created } = await supabase
+    .from("profiles")
+    .upsert(
+      {
+        id: supabaseUser.id,
+        full_name: supabaseUser.user_metadata?.full_name ?? "",
+        role: "user",
+      },
+      { onConflict: "id" }
+    )
+    .select("role")
+    .single();
+
+  return created;
 }
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
@@ -34,15 +52,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  const hydrateUser = async (supabaseUser: { id: string; email?: string } | null) => {
+  const hydrateUser = async (supabaseUser: { id: string; email?: string; user_metadata?: any } | null) => {
     if (!supabaseUser) {
       setUser(null);
       setIsAdmin(false);
       return;
     }
     setUser({ id: supabaseUser.id, email: supabaseUser.email });
-    const admin = await fetchIsAdmin(supabaseUser.id);
-    setIsAdmin(admin);
+    const profile = await fetchOrCreateProfile(supabaseUser);
+    setIsAdmin(profile?.role === "admin");
   };
 
   useEffect(() => {

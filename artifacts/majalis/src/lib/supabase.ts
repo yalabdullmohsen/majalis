@@ -29,8 +29,25 @@ export async function signOut() {
 export async function getCurrentUser() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return null;
-  const { data: profile } = await supabase
+
+  // Fetch existing profile
+  let { data: profile } = await supabase
     .from("profiles").select("*").eq("id", user.id).single();
+
+  // If no profile exists yet (trigger may be missing), create it now
+  if (!profile) {
+    const { data: created } = await supabase
+      .from("profiles")
+      .upsert({
+        id: user.id,
+        full_name: user.user_metadata?.full_name ?? "",
+        role: "user",
+      }, { onConflict: "id" })
+      .select("*")
+      .single();
+    profile = created;
+  }
+
   return { ...user, profile };
 }
 
