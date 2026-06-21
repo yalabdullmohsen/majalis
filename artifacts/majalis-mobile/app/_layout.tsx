@@ -51,6 +51,10 @@ function RootLayoutNav() {
         name="miracles/index"
         options={{ title: "الإعجاز العلمي", headerShown: true }}
       />
+      <Stack.Screen
+        name="admin"
+        options={{ title: "لوحة الإشراف", headerShown: true }}
+      />
     </Stack>
   );
 }

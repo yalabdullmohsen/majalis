@@ -21,6 +21,7 @@ const CATEGORIES = [
   { icon: "book-outline", label: "الدروس والدورات", route: "/lessons" },
   { icon: "people-outline", label: "المشايخ والدعاة", route: "/sheikhs" },
   { icon: "library-outline", label: "المكتبة العلمية", route: "/library" },
+  { icon: "planet-outline", label: "الإعجاز العلمي", route: "/miracles" },
   { icon: "star-outline", label: "الفوائد", route: "/fawaid" },
 ];
 

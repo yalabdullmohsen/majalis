@@ -1,4 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import React, { useState } from "react";
 import {
   ActivityIndicator,
@@ -75,6 +76,14 @@ export default function AccountScreen() {
             <Pressable style={[styles.menuItem, { borderColor: colors.border }]}>
               <Ionicons name="book-outline" size={20} color={colors.primary} />
               <Text style={[styles.menuText, { color: colors.foreground }]}>دروسي المسجلة</Text>
+              <Ionicons name="chevron-back" size={18} color={colors.mutedForeground} />
+            </Pressable>
+            <Pressable
+              style={[styles.menuItem, { borderTopWidth: 1, borderColor: colors.border }]}
+              onPress={() => router.push("/admin" as any)}
+            >
+              <Ionicons name="shield-checkmark-outline" size={20} color={colors.brass} />
+              <Text style={[styles.menuText, { color: colors.foreground }]}>لوحة الإشراف</Text>
               <Ionicons name="chevron-back" size={18} color={colors.mutedForeground} />
             </Pressable>
             <Pressable
