@@ -1,70 +1,45 @@
 import { Ionicons } from "@expo/vector-icons";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import * as Haptics from "expo-haptics";
-import React from "react";
+import React, { useState } from "react";
 import {
-  ActivityIndicator,
-  Alert,
-  FlatList,
   Platform,
   Pressable,
-  StyleSheet,
+  ScrollView,
   Text,
   View,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { FawaidAdmin } from "@/components/admin/FawaidAdmin";
+import { LibraryAdmin } from "@/components/admin/LibraryAdmin";
+import { LessonsAdmin } from "@/components/admin/LessonsAdmin";
+import { MiraclesAdmin } from "@/components/admin/MiraclesAdmin";
+import { SheikhsAdmin } from "@/components/admin/SheikhsAdmin";
+import { UsersAdmin } from "@/components/admin/UsersAdmin";
 import { useAuth } from "@/context/AuthContext";
 import { useColors } from "@/hooks/useColors";
-import { getPendingFawaid, moderateFawaid } from "@/lib/supabase";
+
+type Section = "sheikhs" | "lessons" | "library" | "miracles" | "fawaid" | "users";
+
+const TABS: { key: Section; label: string; icon: string }[] = [
+  { key: "sheikhs",  label: "المشايخ",         icon: "person-outline" },
+  { key: "lessons",  label: "الدروس",           icon: "book-outline" },
+  { key: "library",  label: "المكتبة",          icon: "library-outline" },
+  { key: "miracles", label: "الإعجاز",          icon: "moon-outline" },
+  { key: "fawaid",   label: "الفوائد",          icon: "sparkles-outline" },
+  { key: "users",    label: "المستخدمون",        icon: "people-outline" },
+];
 
 export default function AdminScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
   const { user, isAdmin } = useAuth();
-  const queryClient = useQueryClient();
-
-  const { data: pending, isLoading, refetch } = useQuery({
-    queryKey: ["pending-fawaid"],
-    queryFn: getPendingFawaid,
-    enabled: !!user,
-  });
-
-  const moderateMutation = useMutation({
-    mutationFn: ({ id, status }: { id: string; status: string }) =>
-      moderateFawaid(id, status),
-    onSuccess: (_, { status }) => {
-      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-      queryClient.invalidateQueries({ queryKey: ["pending-fawaid"] });
-      queryClient.invalidateQueries({ queryKey: ["fawaid"] });
-    },
-    onError: () => {
-      Alert.alert("خطأ", "حدث خطأ أثناء التحديث");
-    },
-  });
-
-  const handleModerate = (id: string, status: "approved" | "rejected") => {
-    Alert.alert(
-      status === "approved" ? "قبول الفائدة" : "رفض الفائدة",
-      status === "approved"
-        ? "هل تريد قبول هذه الفائدة ونشرها؟"
-        : "هل تريد رفض هذه الفائدة؟",
-      [
-        { text: "إلغاء", style: "cancel" },
-        {
-          text: status === "approved" ? "قبول" : "رفض",
-          style: status === "approved" ? "default" : "destructive",
-          onPress: () => moderateMutation.mutate({ id, status }),
-        },
-      ]
-    );
-  };
+  const [section, setSection] = useState<Section>("sheikhs");
 
   if (!user || !isAdmin) {
     return (
-      <View style={[styles.center, { backgroundColor: colors.background }]}>
-        <Ionicons name="lock-closed-outline" size={40} color={colors.mutedForeground} />
-        <Text style={[styles.emptyText, { color: colors.mutedForeground }]}>
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center", gap: 16, padding: 32, backgroundColor: colors.background }}>
+        <Ionicons name="lock-closed-outline" size={44} color={colors.mutedForeground} />
+        <Text style={{ fontSize: 16, color: colors.mutedForeground, textAlign: "center", lineHeight: 26 }}>
           {!user ? "يجب تسجيل الدخول للوصول إلى هذه الصفحة" : "هذه الصفحة للمشرفين فقط."}
         </Text>
       </View>
@@ -72,129 +47,73 @@ export default function AdminScreen() {
   }
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
-      {isLoading ? (
-        <ActivityIndicator color={colors.primary} style={{ marginTop: 60 }} />
-      ) : (
-        <FlatList
-          data={pending || []}
-          keyExtractor={(item: any) => item.id}
-          contentContainerStyle={{
-            padding: 16,
-            paddingTop: Platform.OS === "web" ? 67 + 12 : 12,
-            paddingBottom: Platform.OS === "web" ? 34 : insets.bottom + 40,
-          }}
-          onRefresh={refetch}
-          refreshing={isLoading}
-          ListHeaderComponent={() => (
-            <View style={styles.header}>
-              <Ionicons name="shield-checkmark-outline" size={22} color={colors.primary} />
-              <Text style={[styles.headerTitle, { color: colors.foreground }]}>
-                فوائد في انتظار المراجعة ({(pending || []).length})
-              </Text>
-            </View>
-          )}
-          ListEmptyComponent={() => (
-            <View style={styles.empty}>
-              <Ionicons name="checkmark-done-circle-outline" size={40} color={colors.primary} />
-              <Text style={[styles.emptyText, { color: colors.mutedForeground }]}>
-                لا توجد فوائد في الانتظار
-              </Text>
-            </View>
-          )}
-          renderItem={({ item }: { item: any }) => (
-            <View
-              style={[
-                styles.card,
-                { backgroundColor: colors.card, borderColor: colors.border },
-              ]}
-            >
-              <Text style={[styles.cardText, { color: colors.foreground }]}>
-                {item.text}
-              </Text>
-              {item.author_name ? (
-                <Text style={[styles.cardAuthor, { color: colors.mutedForeground }]}>
-                  — {item.author_name}
+    <View style={{ flex: 1, backgroundColor: colors.background }}>
+      {/* Top tab bar */}
+      <View
+        style={{
+          paddingTop: Platform.OS === "web" ? 67 : insets.top + 8,
+          borderBottomWidth: 1,
+          borderColor: colors.border,
+          backgroundColor: colors.card,
+        }}
+      >
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{ paddingHorizontal: 12, paddingBottom: 0, flexDirection: "row-reverse" }}
+        >
+          {TABS.map((t) => {
+            const active = section === t.key;
+            return (
+              <Pressable
+                key={t.key}
+                onPress={() => setSection(t.key)}
+                style={{
+                  flexDirection: "row-reverse",
+                  alignItems: "center",
+                  gap: 5,
+                  paddingHorizontal: 14,
+                  paddingVertical: 10,
+                  marginHorizontal: 2,
+                  borderBottomWidth: 2.5,
+                  borderColor: active ? colors.primary : "transparent",
+                }}
+              >
+                <Ionicons
+                  name={t.icon as any}
+                  size={16}
+                  color={active ? colors.primary : colors.mutedForeground}
+                />
+                <Text
+                  style={{
+                    fontSize: 13,
+                    fontWeight: active ? "700" : "400",
+                    color: active ? colors.primary : colors.mutedForeground,
+                  }}
+                >
+                  {t.label}
                 </Text>
-              ) : null}
-              <Text style={[styles.cardMeta, { color: colors.mutedForeground }]}>
-                بتاريخ: {new Date(item.created_at).toLocaleDateString("ar-KW")}
-              </Text>
+              </Pressable>
+            );
+          })}
+        </ScrollView>
+      </View>
 
-              <View style={styles.actions}>
-                <Pressable
-                  style={[styles.rejectBtn, { borderColor: colors.destructive }]}
-                  onPress={() => handleModerate(item.id, "rejected")}
-                  disabled={moderateMutation.isPending}
-                >
-                  <Ionicons name="close" size={18} color={colors.destructive} />
-                  <Text style={[styles.rejectBtnText, { color: colors.destructive }]}>رفض</Text>
-                </Pressable>
-                <Pressable
-                  style={[styles.approveBtn, { backgroundColor: colors.primary }]}
-                  onPress={() => handleModerate(item.id, "approved")}
-                  disabled={moderateMutation.isPending}
-                >
-                  <Ionicons name="checkmark" size={18} color="#FFF" />
-                  <Text style={styles.approveBtnText}>قبول</Text>
-                </Pressable>
-              </View>
-            </View>
-          )}
-        />
-      )}
+      {/* Section content */}
+      <View
+        style={{
+          flex: 1,
+          padding: 16,
+          paddingBottom: Platform.OS === "web" ? 34 : insets.bottom + 16,
+        }}
+      >
+        {section === "sheikhs"  && <SheikhsAdmin />}
+        {section === "lessons"  && <LessonsAdmin />}
+        {section === "library"  && <LibraryAdmin />}
+        {section === "miracles" && <MiraclesAdmin />}
+        {section === "fawaid"   && <FawaidAdmin />}
+        {section === "users"    && <UsersAdmin />}
+      </View>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1 },
-  center: { flex: 1, alignItems: "center", justifyContent: "center", gap: 16, padding: 32 },
-  header: {
-    flexDirection: "row-reverse",
-    alignItems: "center",
-    gap: 8,
-    marginBottom: 16,
-  },
-  headerTitle: { fontSize: 18, fontWeight: "700", fontFamily: "Inter_700Bold" },
-  card: {
-    padding: 16,
-    borderRadius: 14,
-    borderWidth: 1,
-    marginBottom: 12,
-    gap: 8,
-  },
-  cardText: { fontSize: 16, lineHeight: 26, textAlign: "right" },
-  cardAuthor: { fontSize: 13, textAlign: "right", fontStyle: "italic" },
-  cardMeta: { fontSize: 12, textAlign: "right" },
-  actions: {
-    flexDirection: "row-reverse",
-    gap: 10,
-    marginTop: 4,
-  },
-  approveBtn: {
-    flexDirection: "row-reverse",
-    alignItems: "center",
-    gap: 6,
-    paddingHorizontal: 18,
-    paddingVertical: 9,
-    borderRadius: 10,
-    flex: 1,
-    justifyContent: "center",
-  },
-  approveBtnText: { color: "#FFF", fontSize: 14, fontWeight: "700" },
-  rejectBtn: {
-    flexDirection: "row-reverse",
-    alignItems: "center",
-    gap: 6,
-    paddingHorizontal: 18,
-    paddingVertical: 9,
-    borderRadius: 10,
-    borderWidth: 1,
-    flex: 1,
-    justifyContent: "center",
-  },
-  rejectBtnText: { fontSize: 14, fontWeight: "700" },
-  empty: { alignItems: "center", paddingTop: 40, gap: 12 },
-  emptyText: { fontSize: 15, textAlign: "center" },
-});
