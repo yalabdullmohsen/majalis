@@ -1,9 +1,14 @@
 import { createClient } from "@supabase/supabase-js";
 
-const url = import.meta.env.VITE_SUPABASE_URL as string || "https://placeholder.supabase.co";
-const key = import.meta.env.VITE_SUPABASE_ANON_KEY as string || "placeholder-key";
+const url = (import.meta.env.VITE_SUPABASE_URL as string || "").trim();
+const key = (import.meta.env.VITE_SUPABASE_ANON_KEY as string || "").trim();
 
-export const supabase = createClient(url, key);
+const isConfigured = url.startsWith("http");
+
+// @ts-ignore
+export const supabase = isConfigured
+  ? createClient(url, key)
+  : createClient("https://placeholder.supabase.co", "placeholder-anon-key-placeholder-anon-key-placeholder-anon-key-p");
 
 export async function signUp(email: string, password: string, fullName: string) {
   return await supabase.auth.signUp({
