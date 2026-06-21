@@ -85,7 +85,7 @@ export default function FawaidScreen() {
                 },
               ]}
             >
-              <Ionicons name="quote" size={20} color={colors.brass} style={{ alignSelf: "flex-end" }} />
+              <Ionicons name="chatbubble-outline" size={20} color={colors.brass} style={{ alignSelf: "flex-end" }} />
               <Text style={[styles.text, { color: colors.foreground }]}>{item.text}</Text>
               {item.author_name ? (
                 <Text style={[styles.author, { color: colors.brass }]}>— {item.author_name}</Text>
