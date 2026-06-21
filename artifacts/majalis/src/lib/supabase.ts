@@ -1,6 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 
-const url = (import.meta.env.VITE_SUPABASE_URL as string || "").trim();
+const url = (import.meta.env.VITE_SUPABASE_URL as string || "").trim().replace(/\/+$/, "");
 const key = (import.meta.env.VITE_SUPABASE_ANON_KEY as string || "").trim();
 
 const isConfigured = url.startsWith("http");
