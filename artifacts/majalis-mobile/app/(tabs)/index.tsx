@@ -22,6 +22,7 @@ const CATEGORIES = [
   { icon: "people-outline", label: "المشايخ والدعاة", route: "/sheikhs" },
   { icon: "library-outline", label: "المكتبة العلمية", route: "/library" },
   { icon: "planet-outline", label: "الإعجاز العلمي", route: "/miracles" },
+  { icon: "help-circle-outline", label: "الأسئلة والأجوبة", route: "/qa" },
   { icon: "star-outline", label: "الفوائد", route: "/fawaid" },
 ];
 

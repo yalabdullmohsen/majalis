@@ -52,6 +52,10 @@ function RootLayoutNav() {
         options={{ title: "الإعجاز العلمي", headerShown: true }}
       />
       <Stack.Screen
+        name="qa/index"
+        options={{ title: "الأسئلة والأجوبة", headerShown: true }}
+      />
+      <Stack.Screen
         name="admin"
         options={{ title: "لوحة الإشراف", headerShown: true }}
       />

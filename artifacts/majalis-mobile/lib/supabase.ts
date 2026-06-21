@@ -186,6 +186,35 @@ export async function getMiracles({
   return { data: data || [], error };
 }
 
+export async function getQaCategories() {
+  const { data, error } = await supabase
+    .from("qa_categories")
+    .select("*")
+    .order("created_at", { ascending: true });
+  return { data: data || [], error };
+}
+
+export async function getQaQuestions({
+  categoryId,
+  search,
+}: { categoryId?: string; search?: string } = {}) {
+  let q = supabase
+    .from("qa_questions")
+    .select("*, qa_categories(name, slug)")
+    .eq("status", "published")
+    .order("created_at", { ascending: false });
+  if (categoryId && categoryId !== "all") q = q.eq("category_id", categoryId);
+  const { data, error } = await q;
+  let result = data || [];
+  if (search?.trim()) {
+    const s = search.trim();
+    result = result.filter(
+      (x: any) => x.question?.includes(s) || x.answer?.includes(s)
+    );
+  }
+  return { data: result, error };
+}
+
 // ─── Admin CRUD ─────────────────────────────────────────────────────────────
 
 export async function adminGetStats() {

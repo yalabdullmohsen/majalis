@@ -336,16 +336,20 @@ export async function adminSetQuestionStatus(id: string, status: string) {
 
 export async function searchEverything(term: string) {
   const q = `%${term}%`;
-  const [lessons, library, miracles, sheikhs] = await Promise.all([
+  const [lessons, library, miracles, sheikhs, qa, fawaid] = await Promise.all([
     supabase.from("lessons").select("id, title, category").eq("status", "approved").ilike("title", q),
     supabase.from("library_items").select("id, title, type").eq("status", "approved").ilike("title", q),
     supabase.from("scientific_miracles").select("id, title, category").eq("status", "approved").ilike("title", q),
     supabase.from("sheikhs").select("id, name").ilike("name", q),
+    supabase.from("qa_questions").select("id, question, qa_categories(name)").eq("status", "published").ilike("question", q),
+    supabase.from("fawaid").select("id, text, author_name").eq("status", "approved").ilike("text", q),
   ]);
   return {
     lessons: lessons.data || [],
     library: library.data || [],
     miracles: miracles.data || [],
     sheikhs: sheikhs.data || [],
+    qa: qa.data || [],
+    fawaid: fawaid.data || [],
   };
 }
