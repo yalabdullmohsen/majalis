@@ -10,6 +10,8 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: notifications
+    description: Push notification operations
 paths:
   /healthz:
     get:
@@ -24,6 +26,56 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /notifications/register:
+    post:
+      operationId: registerPushToken
+      tags: [notifications]
+      summary: Register a push notification token
+      description: Registers an Expo push token for a user device
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TokenRegistration"
+      responses:
+        "200":
+          description: Token registered successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TokenRegistrationResult"
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+  /notifications/send:
+    post:
+      operationId: sendNotification
+      tags: [notifications]
+      summary: Send a push notification
+      description: Sends a push notification to registered devices (used by webhooks/admin)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NotificationPayload"
+      responses:
+        "200":
+          description: Notification sent
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotificationResult"
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
 components:
   schemas:
     HealthStatus:
@@ -33,4 +85,70 @@ components:
           type: string
       required:
         - status
-
+    TokenRegistration:
+      type: object
+      properties:
+        token:
+          type: string
+          description: Expo push token
+        userId:
+          type: string
+          description: Optional user ID to associate with this token
+        platform:
+          type: string
+          enum: [ios, android, web]
+          description: Device platform
+      required:
+        - token
+        - platform
+    TokenRegistrationResult:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+      required:
+        - success
+        - message
+    NotificationPayload:
+      type: object
+      properties:
+        title:
+          type: string
+        body:
+          type: string
+        data:
+          type: object
+          additionalProperties: true
+          description: Data payload for deep linking (e.g. { screen, id })
+        userIds:
+          type: array
+          items:
+            type: string
+          description: Optional list of user IDs to target; omit to send to all registered tokens
+      required:
+        - title
+        - body
+    NotificationResult:
+      type: object
+      properties:
+        success:
+          type: boolean
+        sent:
+          type: integer
+          description: Number of notifications sent
+        errors:
+          type: integer
+          description: Number of failed sends
+      required:
+        - success
+        - sent
+        - errors
+    ApiError:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error

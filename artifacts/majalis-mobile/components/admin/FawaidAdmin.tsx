@@ -6,6 +6,7 @@ import { ActivityIndicator, Alert, Pressable, ScrollView, Text, View } from "rea
 
 import { useColors } from "@/hooks/useColors";
 import { adminDeleteFawaid, adminGetAllFawaid, moderateFawaid } from "@/lib/supabase";
+import { notifyFawaidApproved } from "@/lib/notifications";
 
 const STATUS_TABS = [
   { value: "", label: "الكل" },
@@ -32,11 +33,14 @@ export function FawaidAdmin() {
 
   const moderate = useMutation({
     mutationFn: ({ id, status }: { id: string; status: string }) => moderateFawaid(id, status),
-    onSuccess: () => {
+    onSuccess: (_data, variables) => {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       qc.invalidateQueries({ queryKey: ["admin-fawaid"] });
       qc.invalidateQueries({ queryKey: ["fawaid"] });
       qc.invalidateQueries({ queryKey: ["pending-fawaid"] });
+      if (variables.status === "approved") {
+        notifyFawaidApproved();
+      }
     },
     onError: () => Alert.alert("خطأ", "حدث خطأ أثناء التحديث"),
   });

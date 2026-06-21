@@ -17,6 +17,7 @@ import {
   adminGetAllSheikhs,
   adminUpsertLesson,
 } from "@/lib/supabase";
+import { notifyLessonApproved } from "@/lib/notifications";
 
 import {
   AdminFormModal,
@@ -100,6 +101,9 @@ export function LessonsAdmin() {
       qc.invalidateQueries({ queryKey: ["admin-lessons"] });
       qc.invalidateQueries({ queryKey: ["lessons"] });
       setModal(false);
+      if (form.status === "approved") {
+        notifyLessonApproved(form.title);
+      }
     },
     onError: () => Alert.alert("خطأ", "حدث خطأ أثناء الحفظ"),
   });
