@@ -146,6 +146,19 @@ export async function getLibrary({
   return { data: data || [], error };
 }
 
+export async function getPendingFawaid() {
+  const { data } = await supabase
+    .from("fawaid")
+    .select("*")
+    .eq("status", "pending")
+    .order("created_at", { ascending: false });
+  return data || [];
+}
+
+export async function moderateFawaid(id: string, status: string) {
+  return await supabase.from("fawaid").update({ status }).eq("id", id);
+}
+
 export async function getMiracles({
   category,
   sourceType,
