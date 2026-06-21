@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
-import { adminGetAllFawaid, moderateFawaid, adminDeleteFawaid } from "@/lib/supabase";
+import { adminGetAllFawaid, moderateFawaid, adminDeleteFawaid, adminUpsertFawaid } from "@/lib/supabase";
 import { C } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
+import { AdminModal, Field, inputSt, selectSt, textareaSt } from "./AdminModal";
+import { BulkImport } from "./BulkImport";
+
+const STATUS_OPTIONS: Record<string, string> = { approved: "مقبول", pending: "معلّق", rejected: "مرفوض" };
+const EMPTY_FAWAID: any = { text: "", author_name: "", status: "approved" };
 
 const STATUS_AR: Record<string, string> = { approved: "مقبول", pending: "معلّق", rejected: "مرفوض" };
 const STATUS_COLORS: Record<string, { bg: string; text: string }> = {
@@ -15,12 +20,27 @@ export function FawaidSection() {
   const [items, setItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("all");
+  const [open, setOpen] = useState(false);
+  const [form, setForm] = useState<any>(EMPTY_FAWAID);
+  const [saving, setSaving] = useState(false);
 
   const load = () => { setLoading(true); adminGetAllFawaid().then(({ data }) => { setItems(data); setLoading(false); }); };
   useEffect(() => { load(); }, []);
 
   const moderate = async (id: string, status: string) => { await moderateFawaid(id, status); load(); };
   const handleDelete = async (id: string) => { if (!confirm("هل تريد حذف هذه الفائدة نهائيًا؟")) return; await adminDeleteFawaid(id); load(); };
+
+  const openAdd = () => { setForm({ ...EMPTY_FAWAID }); setOpen(true); };
+  const openEdit = (item: any) => { setForm({ id: item.id, text: item.text || "", author_name: item.author_name || "", status: item.status || "approved" }); setOpen(true); };
+  const set = (k: string, v: any) => setForm((f: any) => ({ ...f, [k]: v }));
+  const handleSave = async () => {
+    if (!form.text.trim()) return alert("نص الفائدة مطلوب");
+    setSaving(true);
+    const { error } = await adminUpsertFawaid(form);
+    setSaving(false);
+    if (error) return alert(`تعذّر الحفظ: ${error.message}`);
+    setOpen(false); load();
+  };
 
   const filtered = filter === "all" ? items : items.filter(i => i.status === filter);
   const pendingCount = items.filter(i => i.status === "pending").length;
@@ -35,6 +55,17 @@ export function FawaidSection() {
           )}
         </h2>
         <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+          <BulkImport
+            title="استيراد الفوائد"
+            template={[{ text: "نص الفائدة العلمية أو الأثر…", author_name: "ابن القيم رحمه الله", status: "approved" }]}
+            importRow={(row) => adminUpsertFawaid({ status: "approved", ...row })}
+            onDone={load}
+          />
+          <button onClick={openAdd} style={{ padding: "0.5rem 1.25rem", borderRadius: "0.375rem", background: C.emerald, color: C.parchment, border: "none", cursor: "pointer", fontFamily: "inherit", fontSize: "0.875rem", fontWeight: 600 }}>+ إضافة فائدة</button>
+        </div>
+      </div>
+
+      <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1.25rem" }}>
           {FILTERS.map(([v, l]) => (
             <button
               key={v}
@@ -44,7 +75,6 @@ export function FawaidSection() {
               {l}
             </button>
           ))}
-        </div>
       </div>
 
       {loading ? <Loading /> : (
@@ -76,6 +106,9 @@ export function FawaidSection() {
                         إعادة للانتظار
                       </button>
                     )}
+                    <button onClick={() => openEdit(item)} style={{ padding: "0.25rem 0.75rem", borderRadius: "0.25rem", background: C.panel, color: C.emeraldDeep, border: `1px solid ${C.line}`, cursor: "pointer", fontSize: "0.75rem", fontFamily: "inherit" }}>
+                      تعديل
+                    </button>
                     <button onClick={() => handleDelete(item.id)} style={{ padding: "0.25rem 0.75rem", borderRadius: "0.25rem", background: C.panel, color: C.inkSoft, border: `1px solid ${C.line}`, cursor: "pointer", fontSize: "0.75rem", fontFamily: "inherit" }}>
                       حذف
                     </button>
@@ -91,6 +124,20 @@ export function FawaidSection() {
           {filtered.length === 0 && <p style={{ textAlign: "center", color: C.inkSoft, padding: "2.5rem" }}>لا توجد فوائد في هذه الفئة</p>}
         </div>
       )}
+
+      <AdminModal title={form.id ? "تعديل الفائدة" : "إضافة فائدة جديدة"} open={open} onClose={() => setOpen(false)} onSave={handleSave} saving={saving}>
+        <Field label="نص الفائدة *">
+          <textarea style={{ ...textareaSt, minHeight: "7rem" }} value={form.text} onChange={e => set("text", e.target.value)} placeholder="اكتب نص الفائدة العلمية أو الأثر..." />
+        </Field>
+        <Field label="القائل / المصدر">
+          <input style={inputSt} value={form.author_name || ""} onChange={e => set("author_name", e.target.value)} placeholder="اسم العالم أو المرجع (اختياري)" />
+        </Field>
+        <Field label="الحالة">
+          <select style={selectSt} value={form.status} onChange={e => set("status", e.target.value)}>
+            {Object.entries(STATUS_OPTIONS).map(([v, l]) => <option key={v} value={v}>{l}</option>)}
+          </select>
+        </Field>
+      </AdminModal>
     </div>
   );
 }

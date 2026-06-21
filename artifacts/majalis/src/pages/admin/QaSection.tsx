@@ -15,6 +15,7 @@ import {
 } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
 import { AdminModal, Field, FieldRow, inputSt, selectSt, textareaSt } from "./AdminModal";
+import { BulkImport } from "./BulkImport";
 
 const EMPTY: any = {
   question: "",
@@ -108,7 +109,24 @@ export function QaSection() {
             <span style={{ padding: "0.1rem 0.5rem", borderRadius: "0.75rem", background: "#FEF3C7", color: "#92400E", fontSize: "0.7rem" }}>{reviewCount} يحتاج مراجعة</span>
           )}
         </h2>
-        <button onClick={openAdd} style={{ padding: "0.5rem 1.25rem", borderRadius: "0.375rem", background: C.emerald, color: C.parchment, border: "none", cursor: "pointer", fontFamily: "inherit", fontSize: "0.875rem", fontWeight: 600 }}>+ إضافة سؤال</button>
+        <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+          <BulkImport
+            title="استيراد الأسئلة والأجوبة"
+            hint="يمكن ربط التصنيف باسمه عبر الحقل category_name (يُطابَق تلقائيًا)."
+            template={[{ question: "ما حكم صيام يوم عرفة؟", answer: "صيام يوم عرفة سنة مؤكدة لغير الحاج…", category_name: "أحكام شرعية", ruling_type: "سنة", evidence: "حديث: «صيام يوم عرفة أحتسب على الله…»", reference: "صحيح مسلم", status: "published" }]}
+            importRow={(row) => {
+              const { category_name, ...rest } = row;
+              let category_id = row.category_id || null;
+              if (!category_id && category_name) {
+                const m = categories.find((c) => c.name === category_name || c.name?.includes(category_name));
+                category_id = m?.id || null;
+              }
+              return adminUpsertQuestion({ review_status: "approved", status: "published", ...rest, category_id });
+            }}
+            onDone={load}
+          />
+          <button onClick={openAdd} style={{ padding: "0.5rem 1.25rem", borderRadius: "0.375rem", background: C.emerald, color: C.parchment, border: "none", cursor: "pointer", fontFamily: "inherit", fontSize: "0.875rem", fontWeight: 600 }}>+ إضافة سؤال</button>
+        </div>
       </div>
 
       {/* أدوات الفلترة والبحث */}

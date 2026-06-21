@@ -3,6 +3,7 @@ import { adminGetLibrary, adminUpsertLibraryItem, adminDeleteLibraryItem, adminG
 import { C } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
 import { AdminModal, Field, FieldRow, inputSt, selectSt, textareaSt } from "./AdminModal";
+import { BulkImport } from "./BulkImport";
 
 const TYPES = ["كتاب", "متن", "تفريغ", "ملخص", "مقال", "صوت", "مرئي"];
 const CATS = ["فقه", "عقيدة", "تفسير", "حديث", "سيرة", "أصول", "تزكية", "لغة", "أخرى"];
@@ -51,7 +52,24 @@ export function LibrarySection() {
     <div>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.25rem" }}>
         <h2 style={{ margin: 0, fontSize: "1.125rem", fontWeight: 700, color: C.emeraldDeep, fontFamily: "Amiri, serif" }}>المكتبة العلمية ({items.length})</h2>
-        <button onClick={openAdd} style={{ padding: "0.5rem 1.25rem", borderRadius: "0.375rem", background: C.emerald, color: C.parchment, border: "none", cursor: "pointer", fontFamily: "inherit", fontSize: "0.875rem", fontWeight: 600 }}>+ إضافة مادة</button>
+        <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+          <BulkImport
+            title="استيراد مواد المكتبة"
+            hint="يمكن ربط الشيخ/المؤلف باسمه عبر الحقل sheikh_name (يُطابَق تلقائيًا)."
+            template={[{ title: "متن الأصول الثلاثة", type: "متن", category: "عقيدة", sheikh_name: "الشيخ عبدالله الأنصاري", external_url: "https://example.com/book.pdf", description: "وصف مختصر", status: "approved" }]}
+            importRow={(row) => {
+              const { sheikh_name, ...rest } = row;
+              let sheikh_id = row.sheikh_id || null;
+              if (!sheikh_id && sheikh_name) {
+                const m = sheikhs.find((s) => s.name === sheikh_name || s.name?.includes(sheikh_name));
+                sheikh_id = m?.id || null;
+              }
+              return adminUpsertLibraryItem({ status: "approved", ...rest, sheikh_id });
+            }}
+            onDone={load}
+          />
+          <button onClick={openAdd} style={{ padding: "0.5rem 1.25rem", borderRadius: "0.375rem", background: C.emerald, color: C.parchment, border: "none", cursor: "pointer", fontFamily: "inherit", fontSize: "0.875rem", fontWeight: 600 }}>+ إضافة مادة</button>
+        </div>
       </div>
 
       {loading ? <Loading /> : (

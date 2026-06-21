@@ -3,6 +3,7 @@ import { adminGetMiracles, adminUpsertMiracle, adminDeleteMiracle } from "@/lib/
 import { C } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
 import { AdminModal, Field, FieldRow, inputSt, selectSt, textareaSt } from "./AdminModal";
+import { BulkImport } from "./BulkImport";
 
 const CATEGORIES = ["فلك", "طب", "جيولوجيا", "أحياء", "كيمياء", "فيزياء", "أخرى"];
 const SOURCE_TYPES = ["قرآن", "سنة"];
@@ -40,7 +41,15 @@ export function MiraclesSection() {
     <div>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.25rem" }}>
         <h2 style={{ margin: 0, fontSize: "1.125rem", fontWeight: 700, color: C.emeraldDeep, fontFamily: "Amiri, serif" }}>الإعجاز العلمي ({items.length})</h2>
-        <button onClick={openAdd} style={{ padding: "0.5rem 1.25rem", borderRadius: "0.375rem", background: C.emerald, color: C.parchment, border: "none", cursor: "pointer", fontFamily: "inherit", fontSize: "0.875rem", fontWeight: 600 }}>+ إضافة مقال</button>
+        <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+          <BulkImport
+            title="استيراد مقالات الإعجاز العلمي"
+            template={[{ title: "خلق الإنسان في القرآن", category: "طب", source_type: "قرآن", reference: "﴿وَلَقَدْ خَلَقْنَا الْإِنْسَانَ مِن سُلَالَةٍ مِّن طِينٍ﴾", body: "نص المقال العلمي التفصيلي…", scholarly_source: "اسم الدراسة العلمية", status: "approved" }]}
+            importRow={(row) => adminUpsertMiracle({ status: "approved", ...row })}
+            onDone={load}
+          />
+          <button onClick={openAdd} style={{ padding: "0.5rem 1.25rem", borderRadius: "0.375rem", background: C.emerald, color: C.parchment, border: "none", cursor: "pointer", fontFamily: "inherit", fontSize: "0.875rem", fontWeight: 600 }}>+ إضافة مقال</button>
+        </div>
       </div>
 
       {loading ? <Loading /> : (

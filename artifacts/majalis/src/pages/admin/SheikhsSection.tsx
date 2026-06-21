@@ -3,6 +3,9 @@ import { adminGetSheikhs, adminUpsertSheikh, adminDeleteSheikh } from "@/lib/sup
 import { C, GOVERNORATES } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
 import { AdminModal, Field, FieldRow, inputSt, selectSt, textareaSt } from "./AdminModal";
+import { BulkImport } from "./BulkImport";
+
+const toArr = (v: any) => Array.isArray(v) ? v : (v ? String(v).split(/[،,]/).map((s: string) => s.trim()).filter(Boolean) : []);
 
 const EMPTY: any = {
   name: "", bio: "", biography: "", city: "", photo_url: "",
@@ -49,7 +52,21 @@ export function SheikhsSection() {
     <div>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.25rem" }}>
         <h2 style={{ margin: 0, fontSize: "1.125rem", fontWeight: 700, color: C.emeraldDeep, fontFamily: "Amiri, serif" }}>المشايخ ({items.length})</h2>
-        <button onClick={openAdd} style={{ padding: "0.5rem 1.25rem", borderRadius: "0.375rem", background: C.emerald, color: C.parchment, border: "none", cursor: "pointer", fontFamily: "inherit", fontSize: "0.875rem", fontWeight: 600 }}>+ إضافة شيخ</button>
+        <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+          <BulkImport
+            title="استيراد المشايخ"
+            hint="التخصصات والمؤهلات يمكن أن تكون مصفوفة نصوص أو نصًا مفصولًا بفواصل."
+            template={[{ name: "الشيخ عبدالله الأنصاري", city: "العاصمة", bio: "نبذة مختصرة", specialties: ["الفقه", "العقيدة"], qualifications: ["بكالوريوس شريعة"], years_experience: 10, is_verified: true }]}
+            importRow={(row) => adminUpsertSheikh({
+              ...row,
+              specialties: toArr(row.specialties),
+              qualifications: toArr(row.qualifications),
+              years_experience: row.years_experience ? parseInt(row.years_experience) : null,
+            })}
+            onDone={load}
+          />
+          <button onClick={openAdd} style={{ padding: "0.5rem 1.25rem", borderRadius: "0.375rem", background: C.emerald, color: C.parchment, border: "none", cursor: "pointer", fontFamily: "inherit", fontSize: "0.875rem", fontWeight: 600 }}>+ إضافة شيخ</button>
+        </div>
       </div>
 
       {loading ? <Loading /> : (

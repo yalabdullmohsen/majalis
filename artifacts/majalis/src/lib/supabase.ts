@@ -169,14 +169,17 @@ export async function getMyAchievements(userId: string) {
 // ─── Admin CRUD ────────────────────────────────────────────────────────────────
 
 export async function adminGetStats() {
-  const [sheikhs, lessonsRes, library, miracles, pendingFawaid] = await Promise.all([
+  const [sheikhs, lessonsRes, library, miracles, fawaidTotal, pendingFawaid, qa] = await Promise.all([
     supabase.from("sheikhs").select("*", { count: "exact", head: true }),
     supabase.from("lessons").select("status"),
     supabase.from("library_items").select("*", { count: "exact", head: true }),
     supabase.from("scientific_miracles").select("*", { count: "exact", head: true }),
+    supabase.from("fawaid").select("*", { count: "exact", head: true }),
     supabase.from("fawaid").select("*", { count: "exact", head: true }).eq("status", "pending"),
+    supabase.from("qa_questions").select("status"),
   ]);
   const lessons = lessonsRes.data || [];
+  const qaRows = qa.data || [];
   return {
     sheikhsCount: sheikhs.count ?? 0,
     lessonsTotal: lessons.length,
@@ -184,7 +187,10 @@ export async function adminGetStats() {
     lessonsPending: lessons.filter((l: any) => l.status === "pending").length,
     libraryCount: library.count ?? 0,
     miraclesCount: miracles.count ?? 0,
+    fawaidTotal: fawaidTotal.count ?? 0,
     pendingFawaidCount: pendingFawaid.count ?? 0,
+    qaTotal: qaRows.length,
+    qaPublished: qaRows.filter((q: any) => q.status === "published").length,
   };
 }
 
@@ -258,6 +264,13 @@ export async function adminGetAllFawaid() {
   const { data, error } = await supabase
     .from("fawaid").select("*").order("created_at", { ascending: false });
   return { data: data || [], error };
+}
+
+export async function adminUpsertFawaid(data: any) {
+  const { id, ...rest } = data;
+  if (!rest.status) rest.status = "approved";
+  if (id) return await supabase.from("fawaid").update(rest).eq("id", id);
+  return await supabase.from("fawaid").insert(rest);
 }
 
 export async function adminDeleteFawaid(id: string) {
