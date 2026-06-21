@@ -1,44 +1,60 @@
-# [Project name]
+# مجالس — المنصة العلمية الشرعية
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+منصة عربية للدروس الشرعية والمشايخ والمكتبة العلمية والإعجاز العلمي والفوائد.
 
 ## Run & Operate
 
-- `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
+- Workflows start automatically — use the Replit preview to view the app
 - `pnpm run typecheck` — full typecheck across all packages
-- `pnpm run build` — typecheck + build all packages
-- `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
-- `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
-- Required env: `DATABASE_URL` — Postgres connection string
 
 ## Stack
 
 - pnpm workspaces, Node.js 24, TypeScript 5.9
-- API: Express 5
-- DB: PostgreSQL + Drizzle ORM
-- Validation: Zod (`zod/v4`), `drizzle-zod`
-- API codegen: Orval (from OpenAPI spec)
-- Build: esbuild (CJS bundle)
+- Frontend: React + Vite (artifact: `artifacts/majalis/`)
+- Database: Supabase (external — user's own Supabase project)
+- Auth: Supabase Auth
+- Fonts: Amiri (headings) + Almarai (body) via Google Fonts
+- RTL Arabic layout throughout
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `artifacts/majalis/src/` — main React app
+- `artifacts/majalis/src/lib/supabase.ts` — Supabase client + all data fetching functions
+- `artifacts/majalis/src/lib/theme.ts` — color palette (C.*) and GOVERNORATES list
+- `artifacts/majalis/src/components/` — NavBar, AuthProvider, ui-common
+- `artifacts/majalis/src/pages/` — all page components
+- `.migration-backup/01_schema.sql` — Supabase DB schema (run in Supabase SQL Editor)
+- `.migration-backup/02_seed.sql` — seed data (optional, run after schema)
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- Directly connects to Supabase from the browser (no Express proxy needed for data)
+- All auth, data reads, and writes go through `@supabase/supabase-js` client
+- Color palette centralized in `lib/theme.ts` as the `C` object — used inline via `style={}` props
+- No Tailwind — uses plain inline styles matching the original's custom CSS utility classes
+- Supabase Row Level Security (RLS) enforces all access control at the DB level
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+- **الرئيسية** — hero landing page with recent lessons and fawaid preview
+- **الدروس** — browse/search lessons with category and city filters; authenticated users can register
+- **المشايخ** — list of verified sheikhs with detail pages showing their lessons
+- **المكتبة** — scientific/religious library filtered by content type
+- **الإعجاز العلمي** — scientific miracles articles filterable by category and source
+- **الفوائد** — approved religious quotes; logged-in users can submit new ones
+- **Admin** — moderators can approve/reject pending fawaid submissions
+- **Auth** — email/password login and registration via Supabase Auth
 
 ## User preferences
 
-_Populate as you build — explicit user instructions worth remembering across sessions._
+_Populate as you build._
 
 ## Gotchas
 
-_Populate as you build — sharp edges, "always run X before Y" rules._
+- `VITE_SUPABASE_URL` must be the project URL (`https://xxx.supabase.co`), NOT the anon key
+- `VITE_SUPABASE_ANON_KEY` must be the JWT anon key starting with `eyJ...`
+- The Supabase DB schema must be applied manually via Supabase SQL Editor (see `.migration-backup/01_schema.sql`)
+- Vite secrets with `VITE_` prefix are exposed to the browser at build/dev time
 
 ## Pointers
 
