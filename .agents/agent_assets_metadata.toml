@@ -1,5 +1,4 @@
 uploads = []
-outputs = []
 
 [[generated]]
 id = "7WKCq-lxztUwCBCwSoBk0"
@@ -24,3 +23,9 @@ id = "d8GFzXparJqwBlrILFiiv"
 uri = "file://artifacts/majalis-promo/public/images/mosque.png"
 type = "image"
 title = "Mosque interior blur"
+
+[[outputs]]
+id = "xpH8uU589Yn6H1RTj22MV"
+uri = "file://.local/outputs/majalis.pdf"
+type = "pdf"
+title = "majalis.pdf"
