@@ -234,6 +234,18 @@ export async function adminDeleteFawaid(id: string) {
   return await supabase.from("fawaid").delete().eq("id", id);
 }
 
+export async function adminGetUsers() {
+  const { data, error } = await supabase
+    .from("profiles")
+    .select("*")
+    .order("created_at", { ascending: false });
+  return { data: data || [], error };
+}
+
+export async function adminUpdateUserRole(userId: string, role: string) {
+  return await supabase.from("profiles").update({ role }).eq("id", userId);
+}
+
 // ─── Search ────────────────────────────────────────────────────────────────────
 
 export async function searchEverything(term: string) {

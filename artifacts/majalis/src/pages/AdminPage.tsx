@@ -9,8 +9,9 @@ import { LessonsSection } from "@/pages/admin/LessonsSection";
 import { LibrarySection } from "@/pages/admin/LibrarySection";
 import { MiraclesSection } from "@/pages/admin/MiraclesSection";
 import { FawaidSection } from "@/pages/admin/FawaidSection";
+import { UsersSection } from "@/pages/admin/UsersSection";
 
-type Section = "stats" | "sheikhs" | "lessons" | "library" | "miracles" | "fawaid";
+type Section = "stats" | "sheikhs" | "lessons" | "library" | "miracles" | "fawaid" | "users";
 
 const NAV: { key: Section; label: string; icon: string }[] = [
   { key: "stats",    label: "نظرة عامة",       icon: "📊" },
@@ -19,6 +20,7 @@ const NAV: { key: Section; label: string; icon: string }[] = [
   { key: "library",  label: "المكتبة",           icon: "🏛️" },
   { key: "miracles", label: "الإعجاز العلمي",    icon: "🌙" },
   { key: "fawaid",   label: "الفوائد",           icon: "✨" },
+  { key: "users",    label: "المستخدمون",         icon: "🧑‍🤝‍🧑" },
 ];
 
 export default function AdminPage() {
@@ -38,14 +40,13 @@ export default function AdminPage() {
 
   return (
     <div style={{ display: "flex", minHeight: "calc(100vh - 60px)", background: C.parchment }}>
-      {/* Sidebar — in RTL direction this is on the right side */}
       <aside style={{
         width: "210px", flexShrink: 0,
         borderLeft: `1px solid ${C.line}`,
         background: C.parchmentDeep,
         padding: "1.5rem 0",
       }}>
-        <p style={{ fontSize: "0.6875rem", fontWeight: 700, color: C.inkSoft, padding: "0 1rem", marginBottom: "0.75rem", letterSpacing: "0.06em", textTransform: "uppercase" }}>
+        <p style={{ fontSize: "0.6875rem", fontWeight: 700, color: C.inkSoft, padding: "0 1rem", marginBottom: "0.75rem", letterSpacing: "0.06em" }}>
           لوحة التحكم
         </p>
         <nav>
@@ -72,7 +73,6 @@ export default function AdminPage() {
         </nav>
       </aside>
 
-      {/* Content area */}
       <main style={{ flex: 1, padding: "2rem 2rem 3rem", overflowX: "auto", minWidth: 0 }}>
         {section === "stats"    && <StatsSection />}
         {section === "sheikhs"  && <SheikhsSection />}
@@ -80,6 +80,7 @@ export default function AdminPage() {
         {section === "library"  && <LibrarySection />}
         {section === "miracles" && <MiraclesSection />}
         {section === "fawaid"   && <FawaidSection />}
+        {section === "users"    && <UsersSection />}
       </main>
     </div>
   );
