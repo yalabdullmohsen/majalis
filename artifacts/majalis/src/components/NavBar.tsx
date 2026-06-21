@@ -9,6 +9,7 @@ const TABS = [
   { href: "/library", label: "المكتبة" },
   { href: "/miracles", label: "الإعجاز العلمي" },
   { href: "/fawaid", label: "الفوائد" },
+  { href: "/qa", label: "الأسئلة والأجوبة" },
 ];
 
 export default function NavBar() {

@@ -42,6 +42,7 @@
 - **المكتبة** — scientific/religious library filtered by content type
 - **الإعجاز العلمي** — scientific miracles articles filterable by category and source
 - **الفوائد** — approved religious quotes; logged-in users can submit new ones
+- **الأسئلة والأجوبة** — public religious Q&A; filter by category + search; each entry has ruling type (for أحكام شرعية), evidence, reference, reliability (معتمد/يحتاج مراجعة) and publish status (منشور/مسودة); admin CRUD section; reads from `qa_questions` (run `supabase/qa_questions.sql` in Supabase SQL Editor)
 - **Admin** — moderators can approve/reject pending fawaid submissions
 - **Auth** — email/password login and registration via Supabase Auth
 

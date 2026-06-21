@@ -8,6 +8,7 @@ import SheikhDetailPage from "@/pages/SheikhDetailPage";
 import LibraryPage from "@/pages/LibraryPage";
 import MiraclesPage from "@/pages/MiraclesPage";
 import FawaidPage from "@/pages/FawaidPage";
+import QaPage from "@/pages/QaPage";
 import LoginPage from "@/pages/LoginPage";
 import AdminPage from "@/pages/AdminPage";
 import NotFound from "@/pages/not-found";
@@ -22,6 +23,7 @@ function Router() {
       <Route path="/library" component={LibraryPage} />
       <Route path="/miracles" component={MiraclesPage} />
       <Route path="/fawaid" component={FawaidPage} />
+      <Route path="/qa" component={QaPage} />
       <Route path="/login" component={LoginPage} />
       <Route path="/admin" component={AdminPage} />
       <Route component={NotFound} />

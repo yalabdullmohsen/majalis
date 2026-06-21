@@ -276,6 +276,51 @@ export async function adminUpdateUserRole(userId: string, role: string) {
   return await supabase.from("profiles").update({ role }).eq("id", userId);
 }
 
+// ─── الأسئلة والأجوبة الدينية ───────────────────────────────────────────────────
+
+export async function getQaQuestions({ category, search }: { category?: string; search?: string } = {}) {
+  let q = supabase
+    .from("qa_questions")
+    .select("*")
+    .eq("is_published", true)
+    .order("created_at", { ascending: false });
+  if (category && category !== "الكل") q = q.eq("category", category);
+  const { data, error } = await q;
+  let result = data || [];
+  if (search?.trim()) {
+    const s = search.trim();
+    result = result.filter(
+      (x: any) => x.question?.includes(s) || x.answer?.includes(s)
+    );
+  }
+  return { data: result, error };
+}
+
+export async function adminGetQuestions() {
+  const { data, error } = await supabase
+    .from("qa_questions")
+    .select("*")
+    .order("created_at", { ascending: false });
+  return { data: data || [], error };
+}
+
+export async function adminUpsertQuestion(data: any) {
+  const { id, ...rest } = data;
+  // نوع الحكم يُحفظ فقط لتصنيف الأحكام الشرعية
+  if (rest.category !== "أحكام شرعية") rest.ruling_type = null;
+  if (!rest.ruling_type) rest.ruling_type = null;
+  if (id) return await supabase.from("qa_questions").update(rest).eq("id", id);
+  return await supabase.from("qa_questions").insert(rest);
+}
+
+export async function adminDeleteQuestion(id: string) {
+  return await supabase.from("qa_questions").delete().eq("id", id);
+}
+
+export async function adminToggleQuestionPublish(id: string, isPublished: boolean) {
+  return await supabase.from("qa_questions").update({ is_published: isPublished }).eq("id", id);
+}
+
 // ─── Search ────────────────────────────────────────────────────────────────────
 
 export async function searchEverything(term: string) {
