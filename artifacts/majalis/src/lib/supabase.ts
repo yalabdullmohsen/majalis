@@ -1,6 +1,19 @@
 import { createClient } from "@supabase/supabase-js";
 
-const url = (import.meta.env.VITE_SUPABASE_URL as string || "").trim().replace(/\/+$/, "");
+// Normalize to the bare project origin (https://xxx.supabase.co).
+// The supabase-js client appends /rest/v1, /auth/v1, etc. itself, so any
+// path (e.g. a stray "/rest/v1/") or trailing slash in the env value must be
+// stripped — otherwise requests become ".../rest/v1//auth/v1/signup" → PGRST125.
+function normalizeSupabaseUrl(raw: string): string {
+  const v = (raw || "").trim();
+  try {
+    return new URL(v).origin;
+  } catch {
+    return v.replace(/\/+$/, "");
+  }
+}
+
+const url = normalizeSupabaseUrl(import.meta.env.VITE_SUPABASE_URL as string);
 const key = (import.meta.env.VITE_SUPABASE_ANON_KEY as string || "").trim();
 
 const isConfigured = url.startsWith("http");

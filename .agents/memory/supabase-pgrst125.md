@@ -1,6 +1,6 @@
 ---
 name: Supabase PGRST125 "Invalid path specified in request URL"
-description: What it means when every Supabase request returns PGRST125, and how to diagnose
+description: Real cause is usually a path baked into the URL env value; how to diagnose
 ---
 
 # PGRST125 "Invalid path specified in request URL"
@@ -8,27 +8,27 @@ description: What it means when every Supabase request returns PGRST125, and how
 When **every** Supabase REST/auth request returns
 `{"code":"PGRST125","message":"Invalid path specified in request URL"}`
 (including the public `/auth/v1/settings` endpoint and normal table queries),
-the project's backend services (PostgREST + GoTrue) are **not serving** —
-almost always because the **project is paused/inactive** (free tier pauses
-after ~1 week idle) or was deleted/restored.
+the requests are hitting a malformed path.
 
-**Why it's not a code bug:** the Cloudflare edge gateway stays up even when
-the project is paused — bare host returns the standard `401 "No API key found"`,
-and CORS `OPTIONS` preflight returns `200`. Only *routed* requests (with a valid
-apikey) hit the dead backend and get PGRST125.
+## Most common cause (confirmed in this project)
+The `SUPABASE_URL` env/secret contained a **path**, e.g.
+`https://xxx.supabase.co/rest/v1/` instead of the bare origin
+`https://xxx.supabase.co`. supabase-js appends `/rest/v1` and `/auth/v1`
+itself, so the baked-in path produced URLs like
+`.../rest/v1//auth/v1/signup` → PGRST125 for *all* calls.
+
+**Stripping only the trailing slash is NOT enough** — it leaves `/rest/v1`.
+Extract the origin: `new URL(raw).origin` (fallback `.replace(/\/+$/,"")`).
 
 ## Fast diagnosis (no secrets printed)
-1. Decode anon JWT payload → check `ref` matches the URL host ref, `role`, `exp`.
-   Mismatched ref or expired key is the other common cause.
-2. `GET {url}/auth/v1/settings` with apikey — on a LIVE project this returns
-   200 JSON. PGRST125 here = backend down → project paused.
-3. Bare host (no key) returning `401 "No API key found"` confirms the gateway
-   itself is alive (rules out network/DNS).
+1. `console.log(JSON.stringify(raw_url))` — reveals hidden path/trailing slash/whitespace.
+   (The project URL is non-sensitive; the anon key must NOT be printed.)
+2. Decode anon JWT payload → check `ref` matches URL host ref, `role`, `exp`.
+3. Probe the **canonical bare origin** directly: `GET {origin}/auth/v1/settings`
+   with apikey → 200 JSON on a healthy project. If that works but the app
+   fails, the env URL is malformed, not the project.
+4. Bare host (no key) returning `401 "No API key found"` = gateway alive.
 
-**Fix:** user must restore/unpause the project in the Supabase dashboard
-(or recreate it). Cannot be fixed from app code.
-
-## Unrelated defensive fix worth keeping
-Strip trailing slash from the URL before createClient:
-`(env.URL||"").trim().replace(/\/+$/,"")` — a trailing slash produces
-`//auth/v1/signup` which independently breaks requests.
+**Why:** URL env values are easy to paste with a `/rest/v1/` suffix copied from
+the Supabase dashboard's API page. Always normalize to origin in code so a
+wrong env value can't break every request.

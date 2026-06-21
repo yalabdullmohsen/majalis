@@ -1,6 +1,19 @@
 import { createClient } from "@supabase/supabase-js";
 
-const url = (process.env.EXPO_PUBLIC_SUPABASE_URL || "").trim().replace(/\/+$/, "");
+// Normalize to the bare project origin (https://xxx.supabase.co).
+// The supabase-js client appends /rest/v1, /auth/v1, etc. itself, so any
+// path (e.g. a stray "/rest/v1/") or trailing slash in the env value must be
+// stripped — otherwise requests become ".../rest/v1//auth/v1/signup" → PGRST125.
+function normalizeSupabaseUrl(raw: string): string {
+  const v = (raw || "").trim();
+  try {
+    return new URL(v).origin;
+  } catch {
+    return v.replace(/\/+$/, "");
+  }
+}
+
+const url = normalizeSupabaseUrl(process.env.EXPO_PUBLIC_SUPABASE_URL || "");
 const key = (process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY || "").trim();
 
 const isConfigured = url.startsWith("https://");
