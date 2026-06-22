@@ -33,6 +33,12 @@ Without these secrets the web app **still builds and runs** but falls back to a 
 client, so list pages stay in the loading/empty state and login/registration calls error — the UI
 shell, RTL layout, and client-side routing all work regardless.
 
+Non-obvious auth gotcha: the live Supabase project has **email confirmation enabled**, so a
+successful signup creates the account and sends a confirmation email but does **not** return a
+session — the app navigates home yet stays logged-out (NavBar shows the green "دخول"/Login button;
+a logged-in NavBar instead shows the user's name plus a "خروج"/Logout button). To test
+authenticated flows you need a pre-confirmed account or to confirm the email out of band.
+
 ### Lint / test / build
 
 - There is **no ESLint/Prettier-script, and no automated test suite** wired up. The quality gate is
