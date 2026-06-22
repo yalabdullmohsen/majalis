@@ -1,12 +1,20 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
+html, body { overflow-x: hidden; }
+
 body {
   font-family: 'Almarai', system-ui, sans-serif;
   background: #FAF5EA;
   color: #241F18;
   line-height: 1.7;
+  -webkit-text-size-adjust: 100%;
 }
 
 a { text-decoration: none; color: inherit; }
 button { cursor: pointer; font-family: inherit; }
 input, textarea, select { font-family: inherit; }
+
+img { max-width: 100%; height: auto; }
+
+/* keep long Arabic titles / URLs from forcing horizontal scroll on small screens */
+h1, h2, h3, p { overflow-wrap: anywhere; }

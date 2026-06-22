@@ -71,6 +71,9 @@ export default function NavBar() {
 
   useEffect(() => { setOpen(false); }, [location]);
 
+  const isActive = (href: string) =>
+    href === "/" ? location === "/" : location === href || location.startsWith(`${href}/`);
+
   return (
     <header className="sticky top-0 z-50 border-b" style={{ background: C.parchment, borderColor: C.line }}>
       <div style={{ maxWidth: "72rem", margin: "0 auto", padding: "0.75rem 1rem", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "1rem" }}>
@@ -81,10 +84,10 @@ export default function NavBar() {
         {!isMobile && (
           <nav style={{ display: "flex", alignItems: "center", gap: "0.25rem", overflowX: "auto", flex: 1, justifyContent: "center" }}>
             {TABS.map((t) => (
-              <Link key={t.href} href={t.href} style={tabStyle(location === t.href)}>{t.label}</Link>
+              <Link key={t.href} href={t.href} style={tabStyle(isActive(t.href))}>{t.label}</Link>
             ))}
             {isAdmin && (
-              <Link href="/admin" style={{ ...tabStyle(location === "/admin"), color: location === "/admin" ? C.emeraldDeep : C.brassDeep }}>لوحة التحكم</Link>
+              <Link href="/admin" style={{ ...tabStyle(isActive("/admin")), color: isActive("/admin") ? C.emeraldDeep : C.brassDeep }}>لوحة التحكم</Link>
             )}
           </nav>
         )}
@@ -117,10 +120,10 @@ export default function NavBar() {
           </div>
           <nav style={{ display: "flex", flexDirection: "column", gap: "0.15rem" }}>
             {TABS.map((t) => (
-              <Link key={t.href} href={t.href} style={{ ...tabStyle(location === t.href), padding: "0.6rem 0.75rem" }}>{t.label}</Link>
+              <Link key={t.href} href={t.href} style={{ ...tabStyle(isActive(t.href)), padding: "0.6rem 0.75rem" }}>{t.label}</Link>
             ))}
             {isAdmin && (
-              <Link href="/admin" style={{ ...tabStyle(location === "/admin"), padding: "0.6rem 0.75rem", color: C.brassDeep }}>لوحة التحكم</Link>
+              <Link href="/admin" style={{ ...tabStyle(isActive("/admin")), padding: "0.6rem 0.75rem", color: C.brassDeep }}>لوحة التحكم</Link>
             )}
           </nav>
           <div style={{ borderTop: `1px solid ${C.line}`, marginTop: "0.75rem", paddingTop: "0.75rem" }}>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "wouter";
 import { C } from "@/lib/theme";
-import { getLessons, getSheikhs, getApprovedFawaid, getLibrary, getMiracles, getQaQuestions } from "@/lib/supabase";
+import { getLessons, getSheikhs, getApprovedFawaid, getLibrary, getMiracles, getQaQuestions, getPlatformStats } from "@/lib/supabase";
 
 const FEATURES = [
   { href: "/lessons", icon: "📚", title: "الدروس والدورات", desc: "دروس علمية شرعية موثّقة ومعتمدة" },
@@ -22,6 +22,31 @@ function BrassRule() {
   return <div style={{ height: 1, background: C.brass, opacity: 0.35, margin: "0" }} />;
 }
 
+function StatBand({ stats }: { stats: Record<string, number> | null }) {
+  const items = [
+    { key: "sheikhs", label: "مشايخ ودعاة" },
+    { key: "lessons", label: "دروس ودورات" },
+    { key: "library", label: "مواد المكتبة" },
+    { key: "miracles", label: "مقالات الإعجاز" },
+    { key: "qa", label: "أسئلة وأجوبة" },
+    { key: "fawaid", label: "فوائد منشورة" },
+  ];
+  return (
+    <div style={{ background: C.emerald }}>
+      <div style={{ maxWidth: "72rem", margin: "0 auto", padding: "1.25rem 1rem", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(110px, 1fr))", gap: "0.75rem" }}>
+        {items.map((it) => (
+          <div key={it.key} style={{ textAlign: "center", color: C.parchment }}>
+            <p style={{ fontSize: "clamp(1.4rem, 5vw, 1.875rem)", fontWeight: 700, fontFamily: "Amiri, serif", margin: 0, lineHeight: 1.1 }}>
+              {stats ? stats[it.key] ?? 0 : "…"}
+            </p>
+            <p style={{ fontSize: "0.75rem", color: "#DDEBE0", margin: "0.25rem 0 0" }}>{it.label}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function SectionHead({ title, href }: { title: string; href?: string }) {
   return (
     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "1rem" }}>
@@ -38,6 +63,8 @@ export default function HomePage() {
   const [library, setLibrary] = useState<any[]>([]);
   const [miracles, setMiracles] = useState<any[]>([]);
   const [qa, setQa] = useState<any[]>([]);
+  const [stats, setStats] = useState<Record<string, number> | null>(null);
+  const [loading, setLoading] = useState(true);
   const [term, setTerm] = useState("");
   const [, navigate] = useLocation();
 
@@ -50,8 +77,10 @@ export default function HomePage() {
         setLibrary((lib.data || []).slice(0, 4));
         setMiracles((m.data || []).slice(0, 3));
         setQa((q.data || []).slice(0, 3));
+        setLoading(false);
       }
     );
+    getPlatformStats().then(setStats);
   }, []);
 
   const submitSearch = (e: React.FormEvent) => {
@@ -65,15 +94,15 @@ export default function HomePage() {
       {/* ── Hero ─────────────────────────────────────────── */}
       <div style={{ background: C.emeraldDeep, color: C.parchment, position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0, opacity: 0.06, backgroundImage: `repeating-linear-gradient(45deg, ${C.parchment} 0, ${C.parchment} 1px, transparent 1px, transparent 22px)` }} />
-        <div style={{ maxWidth: "60rem", margin: "0 auto", padding: "4.5rem 1.25rem 4rem", textAlign: "center", position: "relative" }}>
+        <div style={{ maxWidth: "60rem", margin: "0 auto", padding: "clamp(2.75rem, 8vw, 4.5rem) 1.25rem 4rem", textAlign: "center", position: "relative" }}>
           <p style={{ fontSize: "0.875rem", color: C.brass, letterSpacing: "0.08em", marginBottom: "0.75rem", fontWeight: 600 }}>
             المنصة العلمية الشرعية
           </p>
-          <h1 style={{ fontSize: "3.25rem", fontWeight: 700, fontFamily: "Amiri, serif", margin: "0 0 1rem", lineHeight: 1.15 }}>
+          <h1 style={{ fontSize: "clamp(2.25rem, 9vw, 3.25rem)", fontWeight: 700, fontFamily: "Amiri, serif", margin: "0 0 1rem", lineHeight: 1.15 }}>
             مجالس
           </h1>
           <div style={{ width: "3rem", height: 2, background: C.brass, margin: "0 auto 1.25rem" }} />
-          <p style={{ fontSize: "1.0625rem", color: "#E8E0CE", maxWidth: "34rem", margin: "0 auto 1.75rem", lineHeight: 1.85 }}>
+          <p style={{ fontSize: "clamp(0.95rem, 3.5vw, 1.0625rem)", color: "#E8E0CE", maxWidth: "34rem", margin: "0 auto 1.75rem", lineHeight: 1.85 }}>
             الدروس والدورات والمشايخ والمكتبة العلمية والإعجاز العلمي والفوائد — مجتمعةً في مكانٍ واحد، موثّقة ومعتمدة.
           </p>
 
@@ -101,6 +130,9 @@ export default function HomePage() {
         </div>
       </div>
 
+      {/* ── Stats band ─────────────────────────────────── */}
+      <StatBand stats={stats} />
+
       <div style={{ maxWidth: "72rem", margin: "0 auto", padding: "3rem 1rem 4rem" }}>
         {/* ── Features ──────────────────────────────────── */}
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "1rem", marginBottom: "3.5rem" }}>
@@ -114,6 +146,11 @@ export default function HomePage() {
             </Link>
           ))}
         </div>
+
+        {/* ── Loading state for dynamic content ─────────── */}
+        {loading && (
+          <p style={{ textAlign: "center", color: C.inkSoft, padding: "1rem 0 2rem" }}>جارٍ تحميل أحدث المحتوى...</p>
+        )}
 
         {/* ── Recent lessons ────────────────────────────── */}
         {lessons.length > 0 && (

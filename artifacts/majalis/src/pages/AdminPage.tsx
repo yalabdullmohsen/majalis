@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "wouter";
 import { C } from "@/lib/theme";
 import { useAuth } from "@/components/AuthProvider";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { Loading } from "@/components/ui-common";
 import { StatsSection } from "@/pages/admin/StatsSection";
 import { SheikhsSection } from "@/pages/admin/SheikhsSection";
@@ -28,6 +29,7 @@ const NAV: { key: Section; label: string; icon: string }[] = [
 export default function AdminPage() {
   const { isAdmin, loading: authLoading } = useAuth() as any;
   const [section, setSection] = useState<Section>("stats");
+  const isMobile = useIsMobile();
 
   if (authLoading) return <Loading />;
   if (!isAdmin) {
@@ -40,6 +42,56 @@ export default function AdminPage() {
     );
   }
 
+  const content = (
+    <>
+      {section === "stats"    && <StatsSection />}
+      {section === "sheikhs"  && <SheikhsSection />}
+      {section === "lessons"  && <LessonsSection />}
+      {section === "library"  && <LibrarySection />}
+      {section === "miracles" && <MiraclesSection />}
+      {section === "fawaid"   && <FawaidSection />}
+      {section === "qa"       && <QaSection />}
+      {section === "users"    && <UsersSection />}
+    </>
+  );
+
+  // ── Mobile: stacked layout with a horizontally scrollable tab bar ──
+  if (isMobile) {
+    return (
+      <div style={{ minHeight: "calc(100vh - 60px)", background: C.parchment }}>
+        <nav style={{
+          display: "flex", gap: "0.375rem", overflowX: "auto", padding: "0.75rem 1rem",
+          background: C.parchmentDeep, borderBottom: `1px solid ${C.line}`,
+          position: "sticky", top: 0, zIndex: 10,
+        }}>
+          {NAV.map(n => (
+            <button
+              key={n.key}
+              onClick={() => setSection(n.key)}
+              style={{
+                display: "flex", alignItems: "center", gap: "0.375rem",
+                flexShrink: 0, padding: "0.5rem 0.875rem", borderRadius: "999px",
+                border: `1px solid ${section === n.key ? C.emerald : C.line}`,
+                cursor: "pointer", whiteSpace: "nowrap",
+                background: section === n.key ? C.emerald : C.panel,
+                color: section === n.key ? C.parchment : C.inkSoft,
+                fontFamily: "inherit", fontSize: "0.8125rem",
+                fontWeight: section === n.key ? 700 : 400,
+              }}
+            >
+              <span>{n.icon}</span>
+              {n.label}
+            </button>
+          ))}
+        </nav>
+        <main style={{ padding: "1.25rem 1rem 3rem", overflowX: "auto", minWidth: 0 }}>
+          {content}
+        </main>
+      </div>
+    );
+  }
+
+  // ── Desktop: fixed sidebar ──
   return (
     <div style={{ display: "flex", minHeight: "calc(100vh - 60px)", background: C.parchment }}>
       <aside style={{
@@ -76,14 +128,7 @@ export default function AdminPage() {
       </aside>
 
       <main style={{ flex: 1, padding: "2rem 2rem 3rem", overflowX: "auto", minWidth: 0 }}>
-        {section === "stats"    && <StatsSection />}
-        {section === "sheikhs"  && <SheikhsSection />}
-        {section === "lessons"  && <LessonsSection />}
-        {section === "library"  && <LibrarySection />}
-        {section === "miracles" && <MiraclesSection />}
-        {section === "fawaid"   && <FawaidSection />}
-        {section === "qa"       && <QaSection />}
-        {section === "users"    && <UsersSection />}
+        {content}
       </main>
     </div>
   );

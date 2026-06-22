@@ -1,6 +1,7 @@
 import { Switch, Route, Router as WouterRouter } from "wouter";
 import { AuthProvider } from "@/components/AuthProvider";
 import NavBar from "@/components/NavBar";
+import Footer from "@/components/Footer";
 import HomePage from "@/pages/HomePage";
 import AboutPage from "@/pages/AboutPage";
 import SearchPage from "@/pages/SearchPage";
@@ -40,11 +41,12 @@ function App() {
   return (
     <AuthProvider>
       <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-        <div style={{ minHeight: "100vh", direction: "rtl" }}>
+        <div style={{ minHeight: "100vh", direction: "rtl", display: "flex", flexDirection: "column" }}>
           <NavBar />
-          <main>
+          <main style={{ flex: 1 }}>
             <Router />
           </main>
+          <Footer />
         </div>
       </WouterRouter>
     </AuthProvider>

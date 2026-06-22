@@ -21,9 +21,20 @@ export function SheikhsSection() {
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState<any>(EMPTY);
   const [saving, setSaving] = useState(false);
+  const [search, setSearch] = useState("");
 
   const load = () => { setLoading(true); adminGetSheikhs().then(({ data }) => { setItems(data); setLoading(false); }); };
   useEffect(() => { load(); }, []);
+
+  const filtered = items.filter((it) => {
+    const s = search.trim();
+    if (!s) return true;
+    return (
+      it.name?.includes(s) ||
+      it.city?.includes(s) ||
+      (it.specialties || []).some((sp: string) => sp.includes(s))
+    );
+  });
 
   const openAdd = () => { setForm({ ...EMPTY }); setOpen(true); };
   const openEdit = (item: any) => {
@@ -50,7 +61,7 @@ export function SheikhsSection() {
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.25rem" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem", flexWrap: "wrap", gap: "0.75rem" }}>
         <h2 style={{ margin: 0, fontSize: "1.125rem", fontWeight: 700, color: C.emeraldDeep, fontFamily: "Amiri, serif" }}>المشايخ ({items.length})</h2>
         <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
           <BulkImport
@@ -69,6 +80,13 @@ export function SheikhsSection() {
         </div>
       </div>
 
+      <input
+        value={search}
+        onChange={e => setSearch(e.target.value)}
+        placeholder="بحث بالاسم أو المحافظة أو التخصص..."
+        style={{ ...inputSt, maxWidth: "320px", marginBottom: "1.25rem" }}
+      />
+
       {loading ? <Loading /> : (
         <div style={{ overflowX: "auto" }}>
           <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.875rem" }}>
@@ -80,7 +98,7 @@ export function SheikhsSection() {
               </tr>
             </thead>
             <tbody>
-              {items.map(item => (
+              {filtered.map(item => (
                 <tr key={item.id} style={{ borderBottom: `1px solid ${C.line}` }}>
                   <td style={{ padding: "0.625rem 0.75rem", color: C.ink, fontWeight: 600 }}>{item.name}</td>
                   <td style={{ padding: "0.625rem 0.75rem", color: C.inkSoft }}>{item.city || "—"}</td>
@@ -103,7 +121,11 @@ export function SheikhsSection() {
               ))}
             </tbody>
           </table>
-          {items.length === 0 && <p style={{ textAlign: "center", color: C.inkSoft, padding: "2rem" }}>لا يوجد مشايخ — ابدأ بإضافة أول شيخ</p>}
+          {filtered.length === 0 && (
+            <p style={{ textAlign: "center", color: C.inkSoft, padding: "2rem" }}>
+              {items.length === 0 ? "لا يوجد مشايخ — ابدأ بإضافة أول شيخ" : "لا توجد نتائج مطابقة للبحث"}
+            </p>
+          )}
         </div>
       )}
 

@@ -345,17 +345,58 @@ export async function adminSetQuestionStatus(id: string, status: string) {
     .eq("id", id);
 }
 
+// ─── Platform stats (public counts for the homepage) ────────────────────────────
+
+export async function getPlatformStats() {
+  const [sheikhs, lessons, library, miracles, qa, fawaid] = await Promise.all([
+    supabase.from("sheikhs").select("*", { count: "exact", head: true }),
+    supabase.from("lessons").select("*", { count: "exact", head: true }).eq("status", "approved"),
+    supabase.from("library_items").select("*", { count: "exact", head: true }).eq("status", "approved"),
+    supabase.from("scientific_miracles").select("*", { count: "exact", head: true }).eq("status", "approved"),
+    supabase.from("qa_questions").select("*", { count: "exact", head: true }).eq("status", "published"),
+    supabase.from("fawaid").select("*", { count: "exact", head: true }).eq("status", "approved"),
+  ]);
+  return {
+    sheikhs: sheikhs.count ?? 0,
+    lessons: lessons.count ?? 0,
+    library: library.count ?? 0,
+    miracles: miracles.count ?? 0,
+    qa: qa.count ?? 0,
+    fawaid: fawaid.count ?? 0,
+  };
+}
+
 // ─── Search ────────────────────────────────────────────────────────────────────
 
+// Strip characters that are reserved inside a PostgREST `or=()` filter so an
+// arbitrary search term can be embedded safely without breaking the query.
+function sanitizeForOr(term: string): string {
+  return term.replace(/[(),*:]/g, " ").trim();
+}
+
+// Build a PostgREST `or` filter that ilike-matches `term` across several columns.
+function ilikeOr(term: string, columns: string[]): string {
+  return columns.map((c) => `${c}.ilike.*${term}*`).join(",");
+}
+
 export async function searchEverything(term: string) {
-  const q = `%${term}%`;
+  const t = sanitizeForOr(term);
+  if (!t) {
+    return { lessons: [], library: [], miracles: [], sheikhs: [], qa: [], fawaid: [] };
+  }
   const [lessons, library, miracles, sheikhs, qa, fawaid] = await Promise.all([
-    supabase.from("lessons").select("id, title, category").eq("status", "approved").ilike("title", q),
-    supabase.from("library_items").select("id, title, type").eq("status", "approved").ilike("title", q),
-    supabase.from("scientific_miracles").select("id, title, category").eq("status", "approved").ilike("title", q),
-    supabase.from("sheikhs").select("id, name").ilike("name", q),
-    supabase.from("qa_questions").select("id, question, qa_categories(name)").eq("status", "published").ilike("question", q),
-    supabase.from("fawaid").select("id, text, author_name").eq("status", "approved").ilike("text", q),
+    supabase.from("lessons").select("id, title, category").eq("status", "approved")
+      .or(ilikeOr(t, ["title", "description", "mosque", "city"])),
+    supabase.from("library_items").select("id, title, type").eq("status", "approved")
+      .or(ilikeOr(t, ["title", "description", "category"])),
+    supabase.from("scientific_miracles").select("id, title, category").eq("status", "approved")
+      .or(ilikeOr(t, ["title", "body", "reference", "scholarly_source"])),
+    supabase.from("sheikhs").select("id, name")
+      .or(ilikeOr(t, ["name", "bio", "biography", "city", "ijazah"])),
+    supabase.from("qa_questions").select("id, question, qa_categories(name)").eq("status", "published")
+      .or(ilikeOr(t, ["question", "answer", "evidence", "reference"])),
+    supabase.from("fawaid").select("id, text, author_name").eq("status", "approved")
+      .or(ilikeOr(t, ["text", "author_name"])),
   ]);
   return {
     lessons: lessons.data || [],

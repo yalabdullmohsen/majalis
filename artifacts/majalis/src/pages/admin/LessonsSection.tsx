@@ -26,6 +26,7 @@ export function LessonsSection() {
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState<any>(EMPTY);
   const [saving, setSaving] = useState(false);
+  const [search, setSearch] = useState("");
 
   const load = () => {
     setLoading(true);
@@ -34,6 +35,18 @@ export function LessonsSection() {
     });
   };
   useEffect(() => { load(); }, []);
+
+  const filtered = items.filter((it) => {
+    const s = search.trim();
+    if (!s) return true;
+    return (
+      it.title?.includes(s) ||
+      it.sheikhs?.name?.includes(s) ||
+      it.city?.includes(s) ||
+      it.category?.includes(s) ||
+      it.mosque?.includes(s)
+    );
+  });
 
   const openAdd = () => { setForm({ ...EMPTY }); setOpen(true); };
   const openEdit = (item: any) => {
@@ -55,7 +68,7 @@ export function LessonsSection() {
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.25rem" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem", flexWrap: "wrap", gap: "0.75rem" }}>
         <h2 style={{ margin: 0, fontSize: "1.125rem", fontWeight: 700, color: C.emeraldDeep, fontFamily: "Amiri, serif" }}>الدروس ({items.length})</h2>
         <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
           <BulkImport
@@ -77,6 +90,13 @@ export function LessonsSection() {
         </div>
       </div>
 
+      <input
+        value={search}
+        onChange={e => setSearch(e.target.value)}
+        placeholder="بحث بالعنوان أو الشيخ أو المحافظة أو التصنيف..."
+        style={{ ...inputSt, maxWidth: "340px", marginBottom: "1.25rem" }}
+      />
+
       {loading ? <Loading /> : (
         <div style={{ overflowX: "auto" }}>
           <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.875rem" }}>
@@ -88,7 +108,7 @@ export function LessonsSection() {
               </tr>
             </thead>
             <tbody>
-              {items.map(item => {
+              {filtered.map(item => {
                 const sc = STATUS_COLORS[item.status] || { bg: C.parchmentDeep, text: C.inkSoft };
                 return (
                   <tr key={item.id} style={{ borderBottom: `1px solid ${C.line}` }}>
@@ -113,7 +133,11 @@ export function LessonsSection() {
               })}
             </tbody>
           </table>
-          {items.length === 0 && <p style={{ textAlign: "center", color: C.inkSoft, padding: "2rem" }}>لا توجد دروس — ابدأ بإضافة أول درس</p>}
+          {filtered.length === 0 && (
+            <p style={{ textAlign: "center", color: C.inkSoft, padding: "2rem" }}>
+              {items.length === 0 ? "لا توجد دروس — ابدأ بإضافة أول درس" : "لا توجد نتائج مطابقة للبحث"}
+            </p>
+          )}
         </div>
       )}
 
