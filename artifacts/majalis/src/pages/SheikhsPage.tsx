@@ -85,9 +85,10 @@ export default function SheikhsPage() {
                     )}
                   </div>
                 </div>
+                {(s.specialty || s.specialties?.[0]) && <p style={{ fontSize: "0.8rem", marginBottom: "0.35rem", color: C.brassDeep, fontWeight: 700 }}>{s.specialty || s.specialties?.[0]}</p>}
                 {s.ijazah && <p style={{ fontSize: "0.8rem", marginBottom: "0.35rem", color: C.brassDeep }}>{s.ijazah}</p>}
                 <p style={{ fontSize: "0.8rem", color: C.inkSoft, margin: 0 }}>
-                  {[s.city, s.years_experience ? `${s.years_experience} سنة خبرة` : null].filter(Boolean).join(" · ")}
+                  {[s.country || s.city, s.lessons_count ? `${s.lessons_count} دروس` : null, s.years_experience ? `${s.years_experience} سنة خبرة` : null].filter(Boolean).join(" · ")}
                 </p>
                 {s.specialties?.length > 0 && (
                   <div style={{ display: "flex", gap: "0.35rem", flexWrap: "wrap", marginTop: "0.75rem" }}>

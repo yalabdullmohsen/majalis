@@ -74,8 +74,9 @@ export default function NavBar() {
   return (
     <header className="sticky top-0 z-50 border-b" style={{ background: C.parchment, borderColor: C.line }}>
       <div style={{ maxWidth: "72rem", margin: "0 auto", padding: "0.75rem 1rem", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "1rem" }}>
-        <Link href="/" style={{ fontSize: "1.375rem", fontWeight: 700, flexShrink: 0, color: C.emeraldDeep, fontFamily: "Amiri, serif", textDecoration: "none" }}>
-          مجالس
+        <Link href="/" style={{ display: "flex", alignItems: "center", gap: "0.45rem", fontSize: "1.25rem", fontWeight: 700, flexShrink: 0, color: C.emeraldDeep, fontFamily: "Amiri, serif", textDecoration: "none" }}>
+          <img src="/brand/majlis-logo.svg" alt="" style={{ width: 34, height: 34 }} />
+          المجلس العلمي
         </Link>
 
         {!isMobile && (

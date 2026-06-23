@@ -13,8 +13,9 @@ export default function Footer() {
     <footer style={{ borderTop: `1px solid ${C.line}`, background: C.emeraldDeep, color: C.parchment }}>
       <div style={{ maxWidth: "72rem", margin: "0 auto", padding: "2rem 1rem", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "1.5rem", alignItems: "start" }}>
         <div>
-          <Link href="/" style={{ display: "inline-block", color: C.parchment, fontFamily: "Amiri, serif", fontSize: "1.5rem", fontWeight: 700, marginBottom: "0.5rem" }}>
-            مجالس
+          <Link href="/" style={{ display: "inline-flex", alignItems: "center", gap: "0.55rem", color: C.parchment, fontFamily: "Amiri, serif", fontSize: "1.5rem", fontWeight: 700, marginBottom: "0.5rem" }}>
+            <img src="/brand/majlis-logo.svg" alt="" style={{ width: 42, height: 42 }} />
+            المجلس العلمي
           </Link>
           <p style={{ maxWidth: "34rem", margin: 0, color: "#E8E0CE", fontSize: "0.875rem", lineHeight: 1.9 }}>
             منصة علمية شرعية تجمع الدروس والمشايخ والمكتبة العلمية والإعجاز والفوائد المختارة، مع عناية بالتوثيق والمراجعة.
