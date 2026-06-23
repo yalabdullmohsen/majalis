@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
+import { demoFawaid, demoLibrary, demoLessons, demoQa, demoSheikhs, isDemoId } from "@/lib/demoData";
 
 // Normalize to the bare project origin (https://xxx.supabase.co).
 // The supabase-js client appends /rest/v1, /auth/v1, etc. itself, so any
@@ -102,10 +103,15 @@ export async function updateMyProfile(userId: string, data: { full_name?: string
 export async function getSheikhs() {
   const { data, error } = await supabase
     .from("sheikhs").select("*").order("name");
-  return { data: data || [], error };
+  return { data: data?.length ? data : demoSheikhs, error: data?.length ? error : null };
 }
 
 export async function getSheikhById(id: string) {
+  if (isDemoId(id)) {
+    const sheikh = demoSheikhs.find((s) => s.id === id);
+    const lessons = demoLessons.filter((lesson) => lesson.sheikh_id === id);
+    return { sheikh, lessons, error: null };
+  }
   const { data: sheikh, error: sheikhError } = await supabase
     .from("sheikhs").select("*").eq("id", id).single();
   const { data: lessons, error: lessonsError } = await supabase
@@ -122,17 +128,22 @@ export async function getLessons({ category, city, search }: { category?: string
   if (category && category !== "الكل") q = q.eq("category", category);
   if (city && city !== "كل المحافظات") q = q.eq("city", city);
   const { data, error } = await q;
-  let result = data || [];
+  let result = data?.length ? data : demoLessons;
   if (search?.trim()) {
     const s = search.trim();
     result = result.filter(
       (l: any) => l.title?.includes(s) || l.mosque?.includes(s) || l.city?.includes(s)
     );
   }
-  return { data: result, error };
+  if (category && category !== "الكل") result = result.filter((l: any) => l.category === category);
+  if (city && city !== "كل المحافظات") result = result.filter((l: any) => l.city === city || l.sheikhs?.country === city);
+  return { data: result, error: data?.length ? error : null };
 }
 
 export async function getLessonById(id: string) {
+  if (isDemoId(id)) {
+    return { data: demoLessons.find((lesson) => lesson.id === id) || null, error: null };
+  }
   const { data, error } = await supabase
     .from("lessons")
     .select("*, sheikhs(*)")
@@ -241,7 +252,7 @@ export async function getApprovedFawaid() {
     .from("fawaid").select("*")
     .eq("status", "approved")
     .order("created_at", { ascending: false });
-  return { data: data || [], error };
+  return { data: data?.length ? data : demoFawaid, error: data?.length ? error : null };
 }
 
 export async function submitFawaid(userId: string, text: string, authorName: string) {
@@ -267,10 +278,16 @@ export async function getLibrary({ type, category }: { type?: string; category?:
   if (type) q = q.eq("type", type);
   if (category) q = q.eq("category", category);
   const { data, error } = await q.order("created_at", { ascending: false });
-  return { data: data || [], error };
+  let result = data?.length ? data : demoLibrary;
+  if (type) result = result.filter((item: any) => item.type === type);
+  if (category) result = result.filter((item: any) => item.category === category);
+  return { data: result, error: data?.length ? error : null };
 }
 
 export async function getLibraryItemById(id: string) {
+  if (isDemoId(id)) {
+    return { data: demoLibrary.find((item) => item.id === id) || null, error: null };
+  }
   const { data, error } = await supabase
     .from("library_items")
     .select("*, sheikhs(*)")
@@ -447,17 +464,20 @@ export async function getQaQuestions({ categoryId, search }: { categoryId?: stri
     .order("created_at", { ascending: false });
   if (categoryId && categoryId !== "all") q = q.eq("category_id", categoryId);
   const { data, error } = await q;
-  let result = data || [];
+  let result = data?.length ? data : demoQa;
   if (search?.trim()) {
     const s = search.trim();
     result = result.filter(
       (x: any) => x.question?.includes(s) || x.answer?.includes(s)
     );
   }
-  return { data: result, error };
+  return { data: result, error: data?.length ? error : null };
 }
 
 export async function getQaQuestionById(id: string) {
+  if (isDemoId(id)) {
+    return { data: demoQa.find((item) => item.id === id) || null, error: null };
+  }
   const { data, error } = await supabase
     .from("qa_questions")
     .select("*, qa_categories(name, slug)")
@@ -507,12 +527,27 @@ export async function searchEverything(term: string) {
     supabase.from("qa_questions").select("id, question, qa_categories(name)").eq("status", "published").ilike("question", q),
     supabase.from("fawaid").select("id, text, author_name").eq("status", "approved").ilike("text", q),
   ]);
+  const needle = term.trim();
+  const includes = (value?: string) => !needle || value?.includes(needle);
+  const score = (item: any, fields: string[]) => fields.reduce((total, field) => {
+    const value = String(item[field] || "");
+    if (value === needle) return total + 100;
+    if (value.startsWith(needle)) return total + 60;
+    if (value.includes(needle)) return total + 25;
+    return total;
+  }, 0);
+  const sortByRelevance = (items: any[], fields: string[]) => [...items].sort((a, b) => score(b, fields) - score(a, fields));
+  const mergedLessons = [...(lessons.data || []), ...demoLessons.filter((item) => includes(item.title) || includes(item.description) || includes(item.category))];
+  const mergedLibrary = [...(library.data || []), ...demoLibrary.filter((item) => includes(item.title) || includes(item.description) || includes(item.category) || includes(item.author_name))];
+  const mergedSheikhs = [...(sheikhs.data || []), ...demoSheikhs.filter((item) => includes(item.name) || includes(item.specialty) || includes(item.country))];
+  const mergedQa = [...(qa.data || []), ...demoQa.filter((item) => includes(item.question) || includes(item.answer))];
+  const mergedFawaid = [...(fawaid.data || []), ...demoFawaid.filter((item) => includes(item.text) || includes(item.author_name))];
   return {
-    lessons: lessons.data || [],
-    library: library.data || [],
+    lessons: sortByRelevance(mergedLessons, ["title", "description", "category"]).slice(0, 30),
+    library: sortByRelevance(mergedLibrary, ["title", "description", "category", "author_name"]).slice(0, 30),
     miracles: miracles.data || [],
-    sheikhs: sheikhs.data || [],
-    qa: qa.data || [],
-    fawaid: fawaid.data || [],
+    sheikhs: sortByRelevance(mergedSheikhs, ["name", "specialty", "country"]).slice(0, 30),
+    qa: sortByRelevance(mergedQa, ["question", "answer"]).slice(0, 30),
+    fawaid: sortByRelevance(mergedFawaid, ["text", "author_name"]).slice(0, 30),
   };
 }

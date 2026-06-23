@@ -33,8 +33,10 @@ export default function LibraryDetailPage({ params }: { params: { id: string } }
       <Link href="/library" style={{ color: C.brassDeep, fontSize: "0.875rem", display: "inline-block", marginBottom: "1.25rem" }}>← العودة إلى المكتبة</Link>
       {error && <ErrorMessage text={error} onRetry={load} />}
       <article style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.75rem", padding: "1.5rem" }}>
+        {item.cover_url && <img src={item.cover_url} alt="" style={{ width: "min(100%, 18rem)", display: "block", margin: "0 auto 1.25rem", borderRadius: "0.75rem", boxShadow: "0 18px 45px rgba(36,31,24,0.16)" }} />}
         <span style={{ display: "inline-flex", padding: "0.18rem 0.7rem", borderRadius: "999px", background: C.sage, color: C.emeraldDeep, fontSize: "0.78rem", fontWeight: 700 }}>{item.type}</span>
         <h1 style={{ margin: "0.85rem 0 0.5rem", color: C.emeraldDeep, fontFamily: "Amiri, serif", fontSize: "2rem", lineHeight: 1.35 }}>{item.title}</h1>
+        {(item.author_name || item.sheikhs?.name) && <p style={{ color: C.emeraldDeep, margin: "0 0 0.4rem", fontWeight: 700 }}>المؤلف: {item.author_name || item.sheikhs?.name}</p>}
         {item.category && <p style={{ color: C.brassDeep, margin: "0 0 1rem", fontSize: "0.875rem" }}>{item.category}</p>}
         {item.sheikhs && (
           <Link href={`/sheikhs/${item.sheikh_id}`} style={{ display: "flex", alignItems: "center", gap: "0.75rem", padding: "0.8rem", borderRadius: "0.5rem", background: C.parchment, marginBottom: "1rem" }}>

@@ -9,6 +9,7 @@ import {
   deleteLessonRating,
   getLessonById,
   getLessonRatings,
+  getLessons,
   getMyFavoriteLessonIds,
   getMyLessonRating,
   getMyRegistrations,
@@ -23,6 +24,7 @@ export default function LessonDetailPage({ params }: { params: { id: string } })
   const { user, isLoggedIn } = useAuth() as any;
   const [lesson, setLesson] = useState<any>(null);
   const [ratings, setRatings] = useState<any[]>([]);
+  const [similarLessons, setSimilarLessons] = useState<any[]>([]);
   const [average, setAverage] = useState(0);
   const [ratingCount, setRatingCount] = useState(0);
   const [myRating, setMyRating] = useState<any>(null);
@@ -41,6 +43,10 @@ export default function LessonDetailPage({ params }: { params: { id: string } })
       const lessonRes = await getLessonById(params.id);
       if (lessonRes.error) setError(getSupabaseErrorMessage(lessonRes.error, "تعذّر تحميل الدرس."));
       setLesson(lessonRes.data);
+      if (lessonRes.data?.category) {
+        const similar = await getLessons({ category: lessonRes.data.category });
+        setSimilarLessons((similar.data || []).filter((item: any) => item.id !== params.id).slice(0, 3));
+      }
 
       const ratingRes = await getLessonRatings(params.id);
       if (ratingRes.error) setError(getSupabaseErrorMessage(ratingRes.error, "تعذّر تحميل تقييمات الدرس."));
@@ -132,6 +138,16 @@ export default function LessonDetailPage({ params }: { params: { id: string } })
     await load();
   };
 
+  const shareLesson = async () => {
+    const url = window.location.href;
+    if (navigator.share) {
+      await navigator.share({ title: lesson.title, text: lesson.description || lesson.title, url });
+    } else {
+      await navigator.clipboard.writeText(url);
+      setError("تم نسخ رابط الدرس للمشاركة.");
+    }
+  };
+
   if (loading) return <Loading />;
   if (!lesson) return <Empty text="لم يُعثر على الدرس." />;
 
@@ -141,13 +157,23 @@ export default function LessonDetailPage({ params }: { params: { id: string } })
       {error && <ErrorMessage text={error} onRetry={load} />}
 
       <section style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.75rem", padding: "1.5rem", marginBottom: "1.5rem" }}>
+        <div style={{ borderRadius: "0.85rem", overflow: "hidden", background: "#0E3027", marginBottom: "1.25rem", position: "relative", aspectRatio: "16 / 9" }}>
+          {lesson.video_url ? (
+            <iframe src={lesson.video_url} title={lesson.title} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen style={{ border: 0, width: "100%", height: "100%" }} />
+          ) : (
+            <div style={{ width: "100%", height: "100%", backgroundImage: `linear-gradient(rgba(14,48,39,.35), rgba(14,48,39,.8)), url(${lesson.thumbnail_url || "/demo/lessons/lesson-1.svg"})`, backgroundSize: "cover", backgroundPosition: "center", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <div style={{ width: "4.5rem", height: "4.5rem", borderRadius: "999px", background: C.brass, color: C.parchment, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "2rem" }}>▶</div>
+            </div>
+          )}
+        </div>
         <div style={{ display: "flex", justifyContent: "space-between", gap: "1rem", alignItems: "flex-start", flexWrap: "wrap" }}>
           <div>
             {lesson.category && <span style={{ fontSize: "0.75rem", padding: "0.15rem 0.6rem", borderRadius: "999px", background: C.sage, color: C.emeraldDeep }}>{lesson.category}</span>}
             <h1 style={{ margin: "0.75rem 0", fontFamily: "Amiri, serif", color: C.emeraldDeep, fontSize: "2rem", lineHeight: 1.35 }}>{lesson.title}</h1>
-            <p style={{ color: C.inkSoft, margin: 0, fontSize: "0.875rem" }}>{[lesson.mosque, lesson.city, lesson.schedule].filter(Boolean).join(" · ")}</p>
+            <p style={{ color: C.inkSoft, margin: 0, fontSize: "0.875rem" }}>{[lesson.mosque, lesson.city, lesson.schedule, lesson.duration].filter(Boolean).join(" · ")}</p>
           </div>
           <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+            <button onClick={shareLesson} style={{ padding: "0.55rem 0.9rem", borderRadius: "0.5rem", border: `1px solid ${C.line}`, background: C.panel, color: C.emeraldDeep, fontFamily: "inherit" }}>مشاركة</button>
             <button onClick={toggleFavorite} disabled={saving} style={{ padding: "0.55rem 0.9rem", borderRadius: "0.5rem", border: `1px solid ${favorite ? C.brass : C.line}`, background: favorite ? "#FEF3C7" : C.panel, color: favorite ? C.brassDeep : C.inkSoft, fontFamily: "inherit" }}>
               {favorite ? "★ في المفضلة" : "☆ أضف للمفضلة"}
             </button>
@@ -168,6 +194,20 @@ export default function LessonDetailPage({ params }: { params: { id: string } })
         )}
 
         {lesson.description && <p style={{ color: C.ink, lineHeight: 1.9, marginTop: "1.25rem", whiteSpace: "pre-wrap" }}>{lesson.description}</p>}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))", gap: "0.75rem", marginTop: "1.25rem" }}>
+          {[
+            ["التصنيف", lesson.category],
+            ["النوع", lesson.lesson_type || "درس"],
+            ["المدة", lesson.duration || "غير محددة"],
+            ["طريقة الحضور", lesson.delivery],
+            ["الفئة", lesson.audience],
+          ].map(([label, value]) => (
+            <div key={label} style={{ padding: "0.8rem", borderRadius: "0.5rem", background: C.parchment }}>
+              <p style={{ margin: "0 0 0.2rem", color: C.inkSoft, fontSize: "0.75rem" }}>{label}</p>
+              <strong style={{ color: C.emeraldDeep, fontSize: "0.9rem" }}>{value || "—"}</strong>
+            </div>
+          ))}
+        </div>
       </section>
 
       <section style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.75rem", padding: "1.5rem", marginBottom: "1.5rem" }}>
@@ -195,6 +235,20 @@ export default function LessonDetailPage({ params }: { params: { id: string } })
               {row.comment && <p style={{ margin: 0, color: C.ink, lineHeight: 1.8 }}>{row.comment}</p>}
             </article>
           ))}
+        </section>
+      )}
+
+      {similarLessons.length > 0 && (
+        <section style={{ marginTop: "1.5rem" }}>
+          <h2 style={{ color: C.emeraldDeep, fontFamily: "Amiri, serif", marginBottom: "1rem" }}>دروس مشابهة</h2>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "0.85rem" }}>
+            {similarLessons.map((item: any) => (
+              <Link key={item.id} href={`/lessons/${item.id}`} style={{ padding: "1rem", borderRadius: "0.65rem", border: `1px solid ${C.line}`, background: C.panel }}>
+                <p style={{ margin: "0 0 0.35rem", color: C.emeraldDeep, fontWeight: 700 }}>{item.title}</p>
+                <p style={{ margin: 0, color: C.inkSoft, fontSize: "0.8rem" }}>{item.sheikhs?.name}</p>
+              </Link>
+            ))}
+          </div>
         </section>
       )}
     </div>

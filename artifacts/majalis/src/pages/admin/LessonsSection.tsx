@@ -5,7 +5,7 @@ import { Loading, ErrorMessage } from "@/components/ui-common";
 import { AdminModal, Field, FieldRow, inputSt, selectSt, textareaSt } from "./AdminModal";
 import { BulkImport } from "./BulkImport";
 
-const CATEGORIES = ["تفسير", "فقه", "عقيدة", "حديث", "سيرة", "تجويد", "أخرى"];
+const CATEGORIES = ["العقيدة", "الفقه", "التفسير", "الحديث", "السيرة", "الأخلاق", "الدعوة"];
 const AUDIENCE = ["الكل", "رجال", "نساء", "أطفال"];
 const DELIVERY = ["حضور فقط", "بث مباشر", "كلاهما"];
 const STATUSES: Record<string, string> = { approved: "معتمد", pending: "معلّق", rejected: "مرفوض" };
