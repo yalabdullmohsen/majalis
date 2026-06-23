@@ -10,6 +10,8 @@ export default function SheikhsPage() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [verifiedOnly, setVerifiedOnly] = useState(false);
+  const [specialty, setSpecialty] = useState("الكل");
+  const [country, setCountry] = useState("كل الدول");
   const [error, setError] = useState("");
 
   const load = () => {
@@ -31,15 +33,22 @@ export default function SheikhsPage() {
     const s = search.trim();
     return sheikhs.filter((sh) => {
       if (verifiedOnly && !sh.is_verified) return false;
+      if (specialty !== "الكل" && !(sh.specialties || []).includes(specialty) && sh.specialty !== specialty) return false;
+      if (country !== "كل الدول" && (sh.country || sh.city) !== country) return false;
       if (!s) return true;
       return (
         sh.name?.includes(s) ||
         sh.ijazah?.includes(s) ||
         sh.city?.includes(s) ||
+        sh.country?.includes(s) ||
+        sh.specialty?.includes(s) ||
         (sh.specialties || []).some((sp: string) => sp.includes(s))
       );
-    });
-  }, [sheikhs, search, verifiedOnly]);
+    }).sort((a, b) => String(a.name || "").localeCompare(String(b.name || ""), "ar"));
+  }, [sheikhs, search, verifiedOnly, specialty, country]);
+
+  const specialties = useMemo(() => ["الكل", ...Array.from(new Set(sheikhs.flatMap((s) => s.specialties?.length ? s.specialties : [s.specialty]).filter(Boolean)))], [sheikhs]);
+  const countries = useMemo(() => ["كل الدول", ...Array.from(new Set(sheikhs.map((s) => s.country || s.city).filter(Boolean)))], [sheikhs]);
 
   return (
     <div style={{ maxWidth: "56rem", margin: "0 auto", padding: "2.5rem 1.25rem 4rem" }}>
@@ -65,6 +74,12 @@ export default function SheikhsPage() {
         >
           المعتمدون فقط
         </button>
+        <select value={specialty} onChange={(e) => setSpecialty(e.target.value)} style={{ padding: "0.55rem 0.8rem", borderRadius: "0.5rem", border: `1px solid ${C.line}`, background: C.panel, color: C.ink, fontFamily: "inherit" }}>
+          {specialties.map((item) => <option key={item} value={item}>{item}</option>)}
+        </select>
+        <select value={country} onChange={(e) => setCountry(e.target.value)} style={{ padding: "0.55rem 0.8rem", borderRadius: "0.5rem", border: `1px solid ${C.line}`, background: C.panel, color: C.ink, fontFamily: "inherit" }}>
+          {countries.map((item) => <option key={item} value={item}>{item}</option>)}
+        </select>
       </div>
 
       {loading ? (

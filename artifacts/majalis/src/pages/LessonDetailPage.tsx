@@ -197,6 +197,7 @@ export default function LessonDetailPage({ params }: { params: { id: string } })
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))", gap: "0.75rem", marginTop: "1.25rem" }}>
           {[
             ["التصنيف", lesson.category],
+            ["النوع", lesson.lesson_type || "درس"],
             ["المدة", lesson.duration || "غير محددة"],
             ["طريقة الحضور", lesson.delivery],
             ["الفئة", lesson.audience],
