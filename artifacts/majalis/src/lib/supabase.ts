@@ -90,6 +90,15 @@ export async function getCurrentUser() {
   return { ...user, profile };
 }
 
+export async function updateMyProfile(userId: string, data: { full_name?: string; city?: string | null; avatar_url?: string | null }) {
+  return await supabase
+    .from("profiles")
+    .update(data)
+    .eq("id", userId)
+    .select("*")
+    .single();
+}
+
 export async function getSheikhs() {
   const { data, error } = await supabase
     .from("sheikhs").select("*").order("name");
@@ -97,17 +106,17 @@ export async function getSheikhs() {
 }
 
 export async function getSheikhById(id: string) {
-  const { data: sheikh } = await supabase
+  const { data: sheikh, error: sheikhError } = await supabase
     .from("sheikhs").select("*").eq("id", id).single();
-  const { data: lessons } = await supabase
+  const { data: lessons, error: lessonsError } = await supabase
     .from("lessons").select("*").eq("sheikh_id", id).eq("status", "approved");
-  return { sheikh, lessons: lessons || [] };
+  return { sheikh, lessons: lessons || [], error: sheikhError || lessonsError };
 }
 
 export async function getLessons({ category, city, search }: { category?: string; city?: string; search?: string } = {}) {
   let q = supabase
     .from("lessons")
-    .select("*, sheikhs(name, city)")
+    .select("*, sheikhs(name, city, photo_url)")
     .eq("status", "approved")
     .order("created_at", { ascending: false });
   if (category && category !== "الكل") q = q.eq("category", category);
@@ -123,6 +132,16 @@ export async function getLessons({ category, city, search }: { category?: string
   return { data: result, error };
 }
 
+export async function getLessonById(id: string) {
+  const { data, error } = await supabase
+    .from("lessons")
+    .select("*, sheikhs(*)")
+    .eq("id", id)
+    .eq("status", "approved")
+    .single();
+  return { data, error };
+}
+
 export async function registerForLesson(userId: string, lessonId: string) {
   return await supabase
     .from("lesson_registrations")
@@ -136,10 +155,85 @@ export async function unregisterFromLesson(userId: string, lessonId: string) {
 }
 
 export async function getMyRegistrations(userId: string) {
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from("lesson_registrations")
     .select("lesson_id").eq("user_id", userId);
+  if (error) throw error;
   return (data || []).map((r: any) => r.lesson_id);
+}
+
+export async function getMyRegisteredLessons(userId: string) {
+  const { data, error } = await supabase
+    .from("lesson_registrations")
+    .select("registered_at, lessons(*, sheikhs(name, city, photo_url))")
+    .eq("user_id", userId)
+    .order("registered_at", { ascending: false });
+  return { data: (data || []).map((r: any) => ({ ...r.lessons, registered_at: r.registered_at })).filter(Boolean), error };
+}
+
+export async function getMyFavoriteLessonIds(userId: string) {
+  const { data, error } = await supabase
+    .from("lesson_favorites")
+    .select("lesson_id")
+    .eq("user_id", userId);
+  return { data: (data || []).map((r: any) => r.lesson_id), error };
+}
+
+export async function getMyFavoriteLessons(userId: string) {
+  const { data, error } = await supabase
+    .from("lesson_favorites")
+    .select("lessons(*, sheikhs(name, city, photo_url))")
+    .eq("user_id", userId);
+  return { data: (data || []).map((r: any) => r.lessons).filter(Boolean), error };
+}
+
+export async function addLessonFavorite(userId: string, lessonId: string) {
+  return await supabase
+    .from("lesson_favorites")
+    .upsert({ user_id: userId, lesson_id: lessonId }, { onConflict: "user_id,lesson_id" });
+}
+
+export async function removeLessonFavorite(userId: string, lessonId: string) {
+  return await supabase
+    .from("lesson_favorites")
+    .delete()
+    .eq("user_id", userId)
+    .eq("lesson_id", lessonId);
+}
+
+export async function getLessonRatings(lessonId: string) {
+  const { data, error } = await supabase
+    .from("lesson_ratings")
+    .select("*")
+    .eq("lesson_id", lessonId)
+    .order("created_at", { ascending: false });
+  const rows = data || [];
+  const average = rows.length ? rows.reduce((sum: number, row: any) => sum + Number(row.rating || 0), 0) / rows.length : 0;
+  return { data: rows, average, count: rows.length, error };
+}
+
+export async function getMyLessonRating(userId: string, lessonId: string) {
+  const { data, error } = await supabase
+    .from("lesson_ratings")
+    .select("*")
+    .eq("user_id", userId)
+    .eq("lesson_id", lessonId)
+    .maybeSingle();
+  return { data, error };
+}
+
+export async function upsertLessonRating(userId: string, lessonId: string, rating: number, comment: string) {
+  return await supabase
+    .from("lesson_ratings")
+    .upsert({ user_id: userId, lesson_id: lessonId, rating, comment: comment || null }, { onConflict: "user_id,lesson_id" });
+}
+
+export async function deleteLessonRating(userId: string, lessonId: string) {
+  return await supabase
+    .from("lesson_ratings")
+    .delete()
+    .eq("user_id", userId)
+    .eq("lesson_id", lessonId);
 }
 
 export async function getApprovedFawaid() {
@@ -176,6 +270,16 @@ export async function getLibrary({ type, category }: { type?: string; category?:
   return { data: data || [], error };
 }
 
+export async function getLibraryItemById(id: string) {
+  const { data, error } = await supabase
+    .from("library_items")
+    .select("*, sheikhs(*)")
+    .eq("id", id)
+    .eq("status", "approved")
+    .single();
+  return { data, error };
+}
+
 export async function getMiracles({ category, sourceType }: { category?: string; sourceType?: string } = {}) {
   let q = supabase.from("scientific_miracles").select("*").eq("status", "approved");
   if (category) q = q.eq("category", category);
@@ -184,12 +288,22 @@ export async function getMiracles({ category, sourceType }: { category?: string;
   return { data: data || [], error };
 }
 
+export async function getMiracleById(id: string) {
+  const { data, error } = await supabase
+    .from("scientific_miracles")
+    .select("*")
+    .eq("id", id)
+    .eq("status", "approved")
+    .single();
+  return { data, error };
+}
+
 export async function getMyAchievements(userId: string) {
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from("achievements").select("*")
     .eq("user_id", userId)
     .order("earned_at", { ascending: false });
-  return data || [];
+  return { data: data || [], error };
 }
 
 // ─── Admin CRUD ────────────────────────────────────────────────────────────────
@@ -341,6 +455,16 @@ export async function getQaQuestions({ categoryId, search }: { categoryId?: stri
     );
   }
   return { data: result, error };
+}
+
+export async function getQaQuestionById(id: string) {
+  const { data, error } = await supabase
+    .from("qa_questions")
+    .select("*, qa_categories(name, slug)")
+    .eq("id", id)
+    .eq("status", "published")
+    .single();
+  return { data, error };
 }
 
 export async function adminGetQuestions() {

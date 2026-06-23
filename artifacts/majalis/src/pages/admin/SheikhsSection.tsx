@@ -4,6 +4,7 @@ import { C, GOVERNORATES } from "@/lib/theme";
 import { Loading, ErrorMessage } from "@/components/ui-common";
 import { AdminModal, Field, FieldRow, inputSt, selectSt, textareaSt } from "./AdminModal";
 import { BulkImport } from "./BulkImport";
+import SheikhAvatar from "@/components/SheikhAvatar";
 
 const toArr = (v: any) => Array.isArray(v) ? v : (v ? String(v).split(/[،,]/).map((s: string) => s.trim()).filter(Boolean) : []);
 
@@ -106,7 +107,12 @@ export function SheikhsSection() {
             <tbody>
               {items.map(item => (
                 <tr key={item.id} style={{ borderBottom: `1px solid ${C.line}` }}>
-                  <td style={{ padding: "0.625rem 0.75rem", color: C.ink, fontWeight: 600 }}>{item.name}</td>
+                  <td style={{ padding: "0.625rem 0.75rem", color: C.ink, fontWeight: 600 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.55rem" }}>
+                      <SheikhAvatar sheikh={item} size={34} />
+                      <span>{item.name}</span>
+                    </div>
+                  </td>
                   <td style={{ padding: "0.625rem 0.75rem", color: C.inkSoft }}>{item.city || "—"}</td>
                   <td style={{ padding: "0.625rem 0.75rem" }}>
                     <span style={{ padding: "0.125rem 0.5rem", borderRadius: "0.25rem", background: item.is_verified ? C.sage : C.parchmentDeep, color: item.is_verified ? C.emeraldDeep : C.inkSoft, fontSize: "0.75rem" }}>

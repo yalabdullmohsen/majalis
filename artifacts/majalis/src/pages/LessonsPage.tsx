@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
+import { Link } from "wouter";
 import { C, GOVERNORATES } from "@/lib/theme";
 import { getLessons, registerForLesson, unregisterFromLesson, getMyRegistrations, getSupabaseErrorMessage } from "@/lib/supabase";
 import { PageHeader, Loading, Empty, Chip, ErrorMessage } from "@/components/ui-common";
 import { useAuth } from "@/components/AuthProvider";
+import SheikhAvatar from "@/components/SheikhAvatar";
 
 const CATEGORIES = ["الكل", "تفسير", "فقه", "عقيدة", "حديث", "سيرة", "تجويد", "أخرى"];
 
@@ -91,8 +93,11 @@ export default function LessonsPage() {
         <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "0.75rem" }}>
           {lessons.map((l: any) => (
             <div id={`lesson-${l.id}`} key={l.id} style={{ padding: "1rem", borderRadius: "0.375rem", border: `1px solid ${C.line}`, background: C.panel }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "0.5rem" }}>
-                <p style={{ fontWeight: 700, color: C.emeraldDeep, fontSize: "1rem" }}>{l.title}</p>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "0.5rem", gap: "0.75rem" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.65rem" }}>
+                  <SheikhAvatar sheikh={l.sheikhs} size={42} />
+                  <Link href={`/lessons/${l.id}`} style={{ fontWeight: 700, color: C.emeraldDeep, fontSize: "1rem" }}>{l.title}</Link>
+                </div>
                 {l.category && <span style={{ fontSize: "0.75rem", padding: "0.125rem 0.5rem", borderRadius: "0.25rem", background: C.sage, color: C.emeraldDeep, flexShrink: 0, marginRight: "0.5rem" }}>{l.category}</span>}
               </div>
               <p style={{ fontSize: "0.75rem", color: C.brassDeep, marginBottom: "0.25rem" }}>{l.sheikhs?.name}</p>
@@ -111,6 +116,7 @@ export default function LessonsPage() {
                     {myReg.includes(l.id) ? "إلغاء التسجيل" : "سجّل حضوري"}
                   </button>
                 )}
+                <Link href={`/lessons/${l.id}`} style={{ fontSize: "0.75rem", color: C.brassDeep, marginRight: isLoggedIn ? 0 : "auto", fontWeight: 700 }}>تفاصيل الدرس</Link>
               </div>
             </div>
           ))}

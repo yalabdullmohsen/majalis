@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { getSheikhs, getSupabaseErrorMessage } from "@/lib/supabase";
 import { C } from "@/lib/theme";
 import { PageHeader, Loading, Empty, ErrorMessage } from "@/components/ui-common";
+import SheikhAvatar from "@/components/SheikhAvatar";
 
 export default function SheikhsPage() {
   const [sheikhs, setSheikhs] = useState<any[]>([]);
@@ -76,9 +77,7 @@ export default function SheikhsPage() {
             <Link key={s.id} href={`/sheikhs/${s.id}`} style={{ textDecoration: "none" }}>
               <div style={{ borderRadius: "0.5rem", border: `1px solid ${C.line}`, padding: "1.5rem", background: C.panel, height: "100%", borderTop: `3px solid ${C.emerald}` }}>
                 <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "0.875rem" }}>
-                  <div style={{ width: "3rem", height: "3rem", borderRadius: "999px", background: C.sage, color: C.emeraldDeep, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.2rem", fontWeight: 700, fontFamily: "Amiri, serif", flexShrink: 0 }}>
-                    {s.name?.charAt(0) || "؟"}
-                  </div>
+                  <SheikhAvatar sheikh={s} size={54} />
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <p style={{ fontWeight: 700, color: C.emeraldDeep, fontSize: "1.0625rem", margin: 0, fontFamily: "Amiri, serif" }}>{s.name}</p>
                     {s.is_verified && (

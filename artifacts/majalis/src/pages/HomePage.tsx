@@ -191,7 +191,7 @@ export default function HomePage() {
           {lessons.length > 0 ? (
             <div className="home-lessons-grid">
               {lessons.slice(0, 3).map((lesson: any) => (
-                <Link key={lesson.id} href="/lessons" className="home-lesson-card">
+                <Link key={lesson.id} href={`/lessons/${lesson.id}`} className="home-lesson-card">
                   <div className="home-card-glow" />
                   <div className="home-card-row">
                     <span className="home-tag">{lesson.category || "درس علمي"}</span>
@@ -243,7 +243,7 @@ export default function HomePage() {
           <SectionHead eyebrow="الأرشيف العلمي" title="المكتبة العلمية" subtitle="كتب ومتون وتفريغات منظمة للوصول السريع إلى المادة المناسبة." href="/library" />
           <div className="home-library-grid">
             {displayedLibrary.map((item: any) => (
-              <Link key={item.id} href="/library" className="home-library-card">
+              <Link key={item.id} href={String(item.id).startsWith("fallback-") ? "/library" : `/library/${item.id}`} className="home-library-card">
                 <span className="home-library-icon">{item.type === "كتاب" ? "📕" : item.type === "متن" ? "📜" : "📝"}</span>
                 <div>
                   <span className="home-tag">{item.type || "مادة علمية"}</span>
@@ -260,7 +260,7 @@ export default function HomePage() {
             <SectionHead eyebrow="علم وإيمان" title="الإعجاز العلمي" subtitle="قراءات موثقة تربط العلم بآيات التفكر." href="/miracles" />
             <div className="home-miracle-list">
               {displayedMiracles.map((item: any) => (
-                <Link key={item.id} href="/miracles" className="home-miracle-card">
+                <Link key={item.id} href={String(item.id).startsWith("fallback-") ? "/miracles" : `/miracles/${item.id}`} className="home-miracle-card">
                   <div>
                     <span className="home-tag">{item.source_type || "موثق"}</span>
                     {item.category && <span className="home-soft-tag">{item.category}</span>}
@@ -290,7 +290,7 @@ export default function HomePage() {
             <SectionHead eyebrow="إجابات موثقة" title="أسئلة شائعة من المنصة" subtitle="نماذج من الأسئلة المنشورة بإجابات علمية مدعمة." href="/qa" />
             <div className="home-qa-grid">
               {qa.slice(0, 3).map((item: any) => (
-                <Link key={item.id} href="/qa" className="home-qa-card">
+                <Link key={item.id} href={`/qa/${item.id}`} className="home-qa-card">
                   <span>{item.qa_categories?.name || "سؤال وجواب"}</span>
                   <h3>{item.question}</h3>
                 </Link>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "wouter";
 import { getQaQuestions, getQaCategories, getSupabaseErrorMessage } from "@/lib/supabase";
 import { C, QA_RULING_COLORS, QA_REVIEW_LABELS, QA_DISCLAIMER } from "@/lib/theme";
 import { PageHeader, Loading, Empty, ErrorMessage } from "@/components/ui-common";
@@ -217,6 +218,9 @@ export default function QaPage() {
                         {new Date(q.created_at).toLocaleDateString("ar-KW")}
                       </p>
                     </div>
+                    <Link href={`/qa/${q.id}`} style={{ display: "inline-block", marginTop: "0.75rem", color: C.brassDeep, fontSize: "0.8125rem", fontWeight: 700 }}>
+                      فتح صفحة السؤال
+                    </Link>
                   </div>
                 )}
               </div>

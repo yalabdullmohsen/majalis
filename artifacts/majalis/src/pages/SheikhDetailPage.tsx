@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { getSheikhById, getSupabaseErrorMessage } from "@/lib/supabase";
 import { C } from "@/lib/theme";
 import { Loading, Empty, ErrorMessage } from "@/components/ui-common";
+import SheikhAvatar from "@/components/SheikhAvatar";
 
 export default function SheikhDetailPage({ params }: { params: { id: string } }) {
   const [sheikh, setSheikh] = useState<any>(null);
@@ -36,8 +37,11 @@ export default function SheikhDetailPage({ params }: { params: { id: string } })
       </Link>
 
       <div style={{ padding: "1.5rem", borderRadius: "0.5rem", border: `1px solid ${C.line}`, background: C.panel, marginBottom: "1.5rem" }}>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1rem" }}>
-          <h1 style={{ fontSize: "1.5rem", fontWeight: 700, color: C.emeraldDeep, fontFamily: "Amiri, serif" }}>{sheikh.name}</h1>
+        <div style={{ display: "flex", alignItems: "center", gap: "1rem", justifyContent: "space-between", marginBottom: "1rem", flexWrap: "wrap" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.9rem" }}>
+            <SheikhAvatar sheikh={sheikh} size={76} />
+            <h1 style={{ fontSize: "1.5rem", fontWeight: 700, color: C.emeraldDeep, fontFamily: "Amiri, serif", margin: 0 }}>{sheikh.name}</h1>
+          </div>
           {sheikh.is_verified && (
             <span style={{ fontSize: "0.75rem", padding: "0.25rem 0.75rem", borderRadius: "0.25rem", background: C.sage, color: C.emeraldDeep }}>شيخ معتمد</span>
           )}

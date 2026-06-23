@@ -99,19 +99,19 @@ export default function SearchPage() {
             {total} نتيجة لـ «<span style={{ fontWeight: 700, color: C.ink }}>{q}</span>»
           </p>
           <Group title="الدروس" items={results.lessons} render={(l) => (
-            <ResultRow key={l.id} href={`/lessons#lesson-${l.id}`} title={l.title} meta={l.category} />
+            <ResultRow key={l.id} href={`/lessons/${l.id}`} title={l.title} meta={l.category} />
           )} />
           <Group title="المشايخ" items={results.sheikhs} render={(s) => (
             <ResultRow key={s.id} href={`/sheikhs/${s.id}`} title={s.name} />
           )} />
           <Group title="المكتبة" items={results.library} render={(it) => (
-            <ResultRow key={it.id} href={`/library?search=${encodeURIComponent(it.title)}#library-${it.id}`} title={it.title} meta={it.type} />
+            <ResultRow key={it.id} href={`/library/${it.id}`} title={it.title} meta={it.type} />
           )} />
           <Group title="الإعجاز العلمي" items={results.miracles} render={(m) => (
-            <ResultRow key={m.id} href={`/miracles?search=${encodeURIComponent(m.title)}#miracle-${m.id}`} title={m.title} meta={m.category} />
+            <ResultRow key={m.id} href={`/miracles/${m.id}`} title={m.title} meta={m.category} />
           )} />
           <Group title="الأسئلة والأجوبة" items={results.qa} render={(x) => (
-            <ResultRow key={x.id} href={`/qa?search=${encodeURIComponent(x.question)}#qa-${x.id}`} title={x.question} meta={x.qa_categories?.name} />
+            <ResultRow key={x.id} href={`/qa/${x.id}`} title={x.question} meta={x.qa_categories?.name} />
           )} />
           <Group title="الفوائد" items={results.fawaid} render={(f) => (
             <ResultRow key={f.id} href={`/fawaid#fawaid-${f.id}`} title={f.text} meta={f.author_name} />

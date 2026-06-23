@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { Link } from "wouter";
 import { getLibrary, getSupabaseErrorMessage } from "@/lib/supabase";
 import { C } from "@/lib/theme";
 import { PageHeader, Loading, Empty, Chip, ErrorMessage } from "@/components/ui-common";
@@ -68,7 +69,7 @@ export default function LibraryPage() {
           {filtered.map((item: any) => (
             <div id={`library-${item.id}`} key={item.id} style={{ padding: "1.25rem", borderRadius: "0.5rem", border: `1px solid ${C.line}`, background: C.panel, display: "flex", flexDirection: "column", borderRight: `3px solid ${C.brass}` }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "0.5rem", marginBottom: "0.5rem" }}>
-                <p style={{ fontWeight: 700, color: C.ink, fontSize: "1rem", margin: 0, lineHeight: 1.5 }}>{item.title}</p>
+                <Link href={`/library/${item.id}`} style={{ fontWeight: 700, color: C.ink, fontSize: "1rem", margin: 0, lineHeight: 1.5 }}>{item.title}</Link>
                 <span style={{ fontSize: "0.72rem", padding: "0.15rem 0.55rem", borderRadius: "999px", background: C.sage, color: C.emeraldDeep, flexShrink: 0, whiteSpace: "nowrap" }}>
                   {TYPE_ICON[item.type] ? `${TYPE_ICON[item.type]} ` : ""}{item.type}
                 </span>
@@ -85,6 +86,9 @@ export default function LibraryPage() {
                   فتح المادة ←
                 </a>
               )}
+              <Link href={`/library/${item.id}`} style={{ fontSize: "0.8125rem", color: C.brassDeep, textDecoration: "none", fontWeight: 700, marginTop: item.file_url || item.external_url ? "0.5rem" : "auto" }}>
+                تفاصيل المادة ←
+              </Link>
             </div>
           ))}
         </div>
