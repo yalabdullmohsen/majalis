@@ -35,25 +35,20 @@ create trigger on_auth_user_created
   execute function public.handle_new_user();
 
 -- ---------------------------------------------------------------------
--- 3) إضافة سياسة INSERT لجدول profiles (مطلوبة لإدخال تلقائي من المحفّز)
---    إذا كانت موجودة بالفعل سيظهر خطأ "already exists" — تجاهله
+-- 3) تضييق سياسة INSERT لجدول profiles
+--    تسمح للمستخدم بإنشاء ملفه الأساسي فقط، وتمنع حقن role/points/level مخصصة.
 -- ---------------------------------------------------------------------
-do $$
-begin
-  if not exists (
-    select 1 from pg_policies
-    where schemaname = 'public'
-      and tablename  = 'profiles'
-      and policyname = 'المحفّز ينشئ ملف المستخدم'
-  ) then
-    execute $policy$
-      create policy "المحفّز ينشئ ملف المستخدم"
-        on public.profiles for insert
-        with check (true)
-    $policy$;
-  end if;
-end;
-$$;
+drop policy if exists "المحفّز ينشئ ملف المستخدم" on public.profiles;
+drop policy if exists "المستخدم ينشئ ملفه الأساسي فقط" on public.profiles;
+
+create policy "المستخدم ينشئ ملفه الأساسي فقط"
+  on public.profiles for insert
+  with check (
+    auth.uid() = id
+    and role = 'user'
+    and points = 0
+    and level = 1
+  );
 
 -- ---------------------------------------------------------------------
 -- 4) تعبئة المستخدمين الحاليين الذين ليس لهم profile بعد
