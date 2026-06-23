@@ -1,8 +1,12 @@
 import { Switch, Route, Router as WouterRouter } from "wouter";
 import { AuthProvider } from "@/components/AuthProvider";
 import NavBar from "@/components/NavBar";
+import Footer from "@/components/Footer";
 import HomePage from "@/pages/HomePage";
 import AboutPage from "@/pages/AboutPage";
+import PrivacyPage from "@/pages/PrivacyPage";
+import TermsPage from "@/pages/TermsPage";
+import ContactPage from "@/pages/ContactPage";
 import SearchPage from "@/pages/SearchPage";
 import LessonsPage from "@/pages/LessonsPage";
 import SheikhsPage from "@/pages/SheikhsPage";
@@ -12,6 +16,7 @@ import MiraclesPage from "@/pages/MiraclesPage";
 import FawaidPage from "@/pages/FawaidPage";
 import QaPage from "@/pages/QaPage";
 import LoginPage from "@/pages/LoginPage";
+import ForgotPasswordPage from "@/pages/ForgotPasswordPage";
 import AdminPage from "@/pages/AdminPage";
 import NotFound from "@/pages/not-found";
 
@@ -20,6 +25,9 @@ function Router() {
     <Switch>
       <Route path="/" component={HomePage} />
       <Route path="/about" component={AboutPage} />
+      <Route path="/privacy" component={PrivacyPage} />
+      <Route path="/terms" component={TermsPage} />
+      <Route path="/contact" component={ContactPage} />
       <Route path="/search/:q" component={SearchPage} />
       <Route path="/search" component={SearchPage} />
       <Route path="/lessons" component={LessonsPage} />
@@ -30,6 +38,7 @@ function Router() {
       <Route path="/fawaid" component={FawaidPage} />
       <Route path="/qa" component={QaPage} />
       <Route path="/login" component={LoginPage} />
+      <Route path="/forgot-password" component={ForgotPasswordPage} />
       <Route path="/admin" component={AdminPage} />
       <Route component={NotFound} />
     </Switch>
@@ -40,11 +49,12 @@ function App() {
   return (
     <AuthProvider>
       <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-        <div style={{ minHeight: "100vh", direction: "rtl" }}>
+        <div style={{ minHeight: "100vh", direction: "rtl", display: "flex", flexDirection: "column" }}>
           <NavBar />
-          <main>
+          <main style={{ flex: 1 }}>
             <Router />
           </main>
+          <Footer />
         </div>
       </WouterRouter>
     </AuthProvider>

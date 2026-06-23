@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { getQaQuestions, getQaCategories } from "@/lib/supabase";
+import { getQaQuestions, getQaCategories, getSupabaseErrorMessage } from "@/lib/supabase";
 import { C, QA_RULING_COLORS, QA_REVIEW_LABELS, QA_DISCLAIMER } from "@/lib/theme";
-import { PageHeader, Loading, Empty } from "@/components/ui-common";
+import { PageHeader, Loading, Empty, ErrorMessage } from "@/components/ui-common";
 
 function Disclaimer() {
   return (
@@ -58,17 +58,26 @@ export default function QaPage() {
   const [categories, setCategories] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [categoryId, setCategoryId] = useState("all");
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(() => new URLSearchParams(window.location.search).get("search") || "");
   const [openId, setOpenId] = useState<string | null>(null);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    getQaCategories().then(({ data }) => setCategories(data));
+    getQaCategories().then(({ data, error }) => {
+      if (error) setError(getSupabaseErrorMessage(error, "تعذّر تحميل تصنيفات الأسئلة."));
+      setCategories(data);
+    }).catch((err) => setError(getSupabaseErrorMessage(err, "تعذّر تحميل تصنيفات الأسئلة.")));
   }, []);
 
   useEffect(() => {
     setLoading(true);
-    getQaQuestions({ categoryId, search }).then(({ data }) => {
+    setError("");
+    getQaQuestions({ categoryId, search }).then(({ data, error }) => {
+      if (error) setError(getSupabaseErrorMessage(error, "تعذّر تحميل الأسئلة والأجوبة."));
       setItems(data);
+      setLoading(false);
+    }).catch((err) => {
+      setError(getSupabaseErrorMessage(err, "تعذّر تحميل الأسئلة والأجوبة."));
       setLoading(false);
     });
   }, [categoryId, search]);
@@ -84,6 +93,8 @@ export default function QaPage() {
       />
 
       <Disclaimer />
+
+      {error && <ErrorMessage text={error} />}
 
       {/* البحث */}
       <input
@@ -143,6 +154,7 @@ export default function QaPage() {
             const catName = q.qa_categories?.name;
             return (
               <div
+                id={`qa-${q.id}`}
                 key={q.id}
                 style={{ borderRadius: "0.5rem", border: `1px solid ${C.line}`, background: C.panel, overflow: "hidden" }}
               >

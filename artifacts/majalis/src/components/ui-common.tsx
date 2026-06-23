@@ -24,6 +24,43 @@ export function Loading() {
   return <p style={{ textAlign: "center", padding: "2.5rem 0", color: C.inkSoft }}>جارٍ التحميل...</p>;
 }
 
+export function ErrorMessage({ text, onRetry }: { text: string; onRetry?: () => void }) {
+  return (
+    <div
+      role="alert"
+      style={{
+        padding: "0.875rem 1rem",
+        borderRadius: "0.5rem",
+        border: "1px solid #FCA5A5",
+        background: "#FEF2F2",
+        color: "#991B1B",
+        fontSize: "0.875rem",
+        lineHeight: 1.8,
+        marginBottom: "1rem",
+      }}
+    >
+      <p style={{ margin: 0 }}>{text}</p>
+      {onRetry && (
+        <button
+          onClick={onRetry}
+          style={{
+            marginTop: "0.625rem",
+            border: "1px solid #FCA5A5",
+            borderRadius: "0.375rem",
+            background: "#fff",
+            color: "#991B1B",
+            padding: "0.35rem 0.75rem",
+            fontSize: "0.8125rem",
+            fontFamily: "inherit",
+          }}
+        >
+          إعادة المحاولة
+        </button>
+      )}
+    </div>
+  );
+}
+
 export function Empty({ text }: { text: string }) {
   return <p style={{ textAlign: "center", padding: "2.5rem 0", color: C.inkSoft }}>{text}</p>;
 }

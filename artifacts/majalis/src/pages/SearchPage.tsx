@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useParams, useLocation } from "wouter";
 import { C } from "@/lib/theme";
-import { searchEverything } from "@/lib/supabase";
-import { Loading } from "@/components/ui-common";
+import { getSupabaseErrorMessage, searchEverything } from "@/lib/supabase";
+import { Loading, ErrorMessage } from "@/components/ui-common";
 
 type Results = { lessons: any[]; library: any[]; miracles: any[]; sheikhs: any[]; qa: any[]; fawaid: any[] };
 const EMPTY: Results = { lessons: [], library: [], miracles: [], sheikhs: [], qa: [], fawaid: [] };
@@ -38,6 +38,7 @@ export default function SearchPage() {
   const [term, setTerm] = useState(q);
   const [results, setResults] = useState<Results>(EMPTY);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     setTerm(q);
@@ -46,8 +47,13 @@ export default function SearchPage() {
       return;
     }
     setLoading(true);
+    setError("");
     searchEverything(q).then((r) => {
       setResults(r);
+      setLoading(false);
+    }).catch((err) => {
+      setError(getSupabaseErrorMessage(err, "تعذّر تنفيذ البحث."));
+      setResults(EMPTY);
       setLoading(false);
     });
   }, [q]);
@@ -81,6 +87,8 @@ export default function SearchPage() {
         <p style={{ textAlign: "center", color: C.inkSoft, padding: "2rem 0" }}>اكتب كلمة للبحث في محتوى المنصة.</p>
       ) : loading ? (
         <Loading />
+      ) : error ? (
+        <ErrorMessage text={error} />
       ) : total === 0 ? (
         <p style={{ textAlign: "center", color: C.inkSoft, padding: "2rem 0" }}>
           لا توجد نتائج مطابقة لـ «{q}».
@@ -91,22 +99,22 @@ export default function SearchPage() {
             {total} نتيجة لـ «<span style={{ fontWeight: 700, color: C.ink }}>{q}</span>»
           </p>
           <Group title="الدروس" items={results.lessons} render={(l) => (
-            <ResultRow key={l.id} href="/lessons" title={l.title} meta={l.category} />
+            <ResultRow key={l.id} href={`/lessons#lesson-${l.id}`} title={l.title} meta={l.category} />
           )} />
           <Group title="المشايخ" items={results.sheikhs} render={(s) => (
             <ResultRow key={s.id} href={`/sheikhs/${s.id}`} title={s.name} />
           )} />
           <Group title="المكتبة" items={results.library} render={(it) => (
-            <ResultRow key={it.id} href="/library" title={it.title} meta={it.type} />
+            <ResultRow key={it.id} href={`/library?search=${encodeURIComponent(it.title)}#library-${it.id}`} title={it.title} meta={it.type} />
           )} />
           <Group title="الإعجاز العلمي" items={results.miracles} render={(m) => (
-            <ResultRow key={m.id} href="/miracles" title={m.title} meta={m.category} />
+            <ResultRow key={m.id} href={`/miracles?search=${encodeURIComponent(m.title)}#miracle-${m.id}`} title={m.title} meta={m.category} />
           )} />
           <Group title="الأسئلة والأجوبة" items={results.qa} render={(x) => (
-            <ResultRow key={x.id} href="/qa" title={x.question} meta={x.qa_categories?.name} />
+            <ResultRow key={x.id} href={`/qa?search=${encodeURIComponent(x.question)}#qa-${x.id}`} title={x.question} meta={x.qa_categories?.name} />
           )} />
           <Group title="الفوائد" items={results.fawaid} render={(f) => (
-            <ResultRow key={f.id} href="/fawaid" title={f.text} meta={f.author_name} />
+            <ResultRow key={f.id} href={`/fawaid#fawaid-${f.id}`} title={f.text} meta={f.author_name} />
           )} />
         </>
       )}

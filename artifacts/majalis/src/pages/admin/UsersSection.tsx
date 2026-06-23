@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { adminGetUsers, adminUpdateUserRole } from "@/lib/supabase";
+import { adminGetUsers, adminUpdateUserRole, getSupabaseErrorMessage } from "@/lib/supabase";
 import { C } from "@/lib/theme";
-import { Loading } from "@/components/ui-common";
+import { Loading, ErrorMessage } from "@/components/ui-common";
 
 const ROLES: Record<string, { label: string; bg: string; text: string }> = {
   admin:  { label: "مشرف",    bg: "#FEF3C7", text: "#92400E" },
@@ -21,17 +21,30 @@ export function UsersSection() {
   const [filter, setFilter] = useState("all");
   const [search, setSearch] = useState("");
   const [updatingId, setUpdatingId] = useState<string | null>(null);
+  const [error, setError] = useState("");
 
   const load = () => {
     setLoading(true);
-    adminGetUsers().then(({ data }) => { setUsers(data); setLoading(false); });
+    setError("");
+    adminGetUsers().then(({ data, error }) => {
+      if (error) setError(getSupabaseErrorMessage(error, "تعذّر تحميل المستخدمين."));
+      setUsers(data);
+      setLoading(false);
+    }).catch((err) => {
+      setError(getSupabaseErrorMessage(err, "تعذّر تحميل المستخدمين."));
+      setLoading(false);
+    });
   };
   useEffect(() => { load(); }, []);
 
   const handleRoleChange = async (userId: string, newRole: string) => {
     setUpdatingId(userId);
-    await adminUpdateUserRole(userId, newRole);
+    const { error } = await adminUpdateUserRole(userId, newRole);
     setUpdatingId(null);
+    if (error) {
+      setError(getSupabaseErrorMessage(error, "تعذّر تغيير دور المستخدم."));
+      return;
+    }
     load();
   };
 
@@ -59,6 +72,8 @@ export function UsersSection() {
           style={{ padding: "0.375rem 0.75rem", borderRadius: "0.375rem", border: `1px solid ${C.line}`, background: C.panel, color: C.ink, fontSize: "0.875rem", fontFamily: "inherit", outline: "none", minWidth: "200px" }}
         />
       </div>
+
+      {error && <ErrorMessage text={error} onRetry={load} />}
 
       {/* Role filter tabs */}
       <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1.25rem", flexWrap: "wrap" }}>

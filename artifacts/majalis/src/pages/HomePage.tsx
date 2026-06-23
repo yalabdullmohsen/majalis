@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { Link, useLocation } from "wouter";
-import { getLessons, getSheikhs, getApprovedFawaid, getLibrary, getMiracles, getQaQuestions } from "@/lib/supabase";
+import { getLessons, getSheikhs, getApprovedFawaid, getLibrary, getMiracles, getQaQuestions, getSupabaseErrorMessage } from "@/lib/supabase";
+import { ErrorMessage } from "@/components/ui-common";
 
 const FEATURES = [
   { href: "/lessons", icon: "📚", title: "الدروس والدورات", desc: "دروس علمية شرعية موثقة ومعتمدة" },
@@ -77,11 +78,15 @@ export default function HomePage() {
   const [miracles, setMiracles] = useState<any[]>([]);
   const [qa, setQa] = useState<any[]>([]);
   const [term, setTerm] = useState("");
+  const [error, setError] = useState("");
   const [, navigate] = useLocation();
 
   useEffect(() => {
+    setError("");
     Promise.all([getLessons(), getSheikhs(), getApprovedFawaid(), getLibrary(), getMiracles(), getQaQuestions()]).then(
       ([l, s, f, lib, m, q]) => {
+        const firstError = [l.error, s.error, f.error, lib.error, m.error, q.error].find(Boolean);
+        if (firstError) setError(getSupabaseErrorMessage(firstError, "تعذّر تحميل بعض أقسام الصفحة الرئيسية."));
         setLessons(l.data || []);
         setSheikhs(s.data || []);
         setFawaid(f.data || []);
@@ -89,7 +94,7 @@ export default function HomePage() {
         setMiracles(m.data || []);
         setQa(q.data || []);
       }
-    );
+    ).catch((err) => setError(getSupabaseErrorMessage(err, "تعذّر تحميل الصفحة الرئيسية.")));
   }, []);
 
   const stats = useMemo(
@@ -160,6 +165,8 @@ export default function HomePage() {
       </section>
 
       <main className="home-container home-main">
+        {error && <ErrorMessage text={error} />}
+
         <section className="home-stats" aria-label="إحصائيات المنصة">
           {stats.map((stat) => (
             <div key={stat.label} className="home-stat-card">

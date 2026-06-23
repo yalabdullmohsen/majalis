@@ -23,6 +23,25 @@ export const supabase = isConfigured
   ? createClient(url, key)
   : createClient("https://placeholder.supabase.co", "placeholder-anon-key-placeholder-anon-key-placeholder-anon-key-p");
 
+export function getSupabaseErrorMessage(error: unknown, fallback = "تعذّر الاتصال بالخدمة. يرجى المحاولة لاحقًا.") {
+  if (!isConfigured) {
+    return "إعدادات Supabase غير مكتملة. يرجى ضبط رابط المشروع ومفتاح الوصول.";
+  }
+  if (!error) return fallback;
+  const message = typeof error === "object" && error && "message" in error ? String((error as any).message) : String(error);
+  if (!message) return fallback;
+  if (/Failed to fetch|NetworkError|Load failed|fetch/i.test(message)) {
+    return "تعذّر الاتصال بالخادم. تحقق من اتصال الإنترنت ثم حاول مجددًا.";
+  }
+  if (/JWT|Auth session missing|invalid login|Invalid login credentials/i.test(message)) {
+    return "بيانات الدخول غير صحيحة أو انتهت الجلسة. يرجى تسجيل الدخول مجددًا.";
+  }
+  if (/permission|not authorized|row-level security|violates row-level security|42501/i.test(message)) {
+    return "ليست لديك صلاحية لتنفيذ هذا الإجراء.";
+  }
+  return message;
+}
+
 export async function signUp(email: string, password: string, fullName: string) {
   return await supabase.auth.signUp({
     email,
@@ -37,6 +56,13 @@ export async function signIn(email: string, password: string) {
 
 export async function signOut() {
   return await supabase.auth.signOut();
+}
+
+export async function resetPassword(email: string) {
+  const origin = typeof window !== "undefined" ? window.location.origin : "";
+  const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+  const redirectTo = origin ? `${origin}${base}/login` : undefined;
+  return await supabase.auth.resetPasswordForEmail(email, { redirectTo });
 }
 
 export async function getCurrentUser() {

@@ -1,23 +1,32 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
-import { getSheikhById } from "@/lib/supabase";
+import { getSheikhById, getSupabaseErrorMessage } from "@/lib/supabase";
 import { C } from "@/lib/theme";
-import { Loading, Empty } from "@/components/ui-common";
+import { Loading, Empty, ErrorMessage } from "@/components/ui-common";
 
 export default function SheikhDetailPage({ params }: { params: { id: string } }) {
   const [sheikh, setSheikh] = useState<any>(null);
   const [lessons, setLessons] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  useEffect(() => {
+  const load = () => {
+    setLoading(true);
+    setError("");
     getSheikhById(params.id).then(({ sheikh, lessons }) => {
       setSheikh(sheikh);
       setLessons(lessons);
       setLoading(false);
+    }).catch((err) => {
+      setError(getSupabaseErrorMessage(err, "تعذّر تحميل بيانات الشيخ."));
+      setLoading(false);
     });
-  }, [params.id]);
+  };
+
+  useEffect(() => { load(); }, [params.id]);
 
   if (loading) return <Loading />;
+  if (error) return <div style={{ maxWidth: "48rem", margin: "0 auto", padding: "2.5rem 1.25rem 4rem" }}><ErrorMessage text={error} onRetry={load} /></div>;
   if (!sheikh) return <Empty text="لم يُعثر على الشيخ." />;
 
   return (
@@ -67,7 +76,7 @@ export default function SheikhDetailPage({ params }: { params: { id: string } })
           <h2 style={{ fontSize: "1.125rem", fontWeight: 700, color: C.emeraldDeep, fontFamily: "Amiri, serif", marginBottom: "1rem" }}>دروس الشيخ</h2>
           <div style={{ display: "grid", gap: "0.75rem" }}>
             {lessons.map((l: any) => (
-              <div key={l.id} style={{ padding: "1rem", borderRadius: "0.375rem", border: `1px solid ${C.line}`, background: C.panel }}>
+              <div id={`lesson-${l.id}`} key={l.id} style={{ padding: "1rem", borderRadius: "0.375rem", border: `1px solid ${C.line}`, background: C.panel }}>
                 <p style={{ fontWeight: 700, color: C.ink, marginBottom: "0.25rem" }}>{l.title}</p>
                 <p style={{ fontSize: "0.75rem", color: C.inkSoft }}>
                   {[l.mosque, l.city, l.schedule].filter(Boolean).join(" · ")}

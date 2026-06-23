@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { getApprovedFawaid, submitFawaid } from "@/lib/supabase";
+import { getApprovedFawaid, submitFawaid, getSupabaseErrorMessage } from "@/lib/supabase";
 import { C } from "@/lib/theme";
-import { PageHeader, Loading, Empty } from "@/components/ui-common";
+import { PageHeader, Loading, Empty, ErrorMessage } from "@/components/ui-common";
 import { useAuth } from "@/components/AuthProvider";
 
 export default function FawaidPage() {
@@ -11,21 +11,35 @@ export default function FawaidPage() {
   const [authorName, setAuthorName] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState("");
   const { user, isLoggedIn } = useAuth() as any;
 
-  useEffect(() => {
-    getApprovedFawaid().then(({ data }) => {
+  const load = () => {
+    setLoading(true);
+    setError("");
+    getApprovedFawaid().then(({ data, error }) => {
+      if (error) setError(getSupabaseErrorMessage(error, "تعذّر تحميل الفوائد."));
       setFawaid(data);
       setLoading(false);
+    }).catch((err) => {
+      setError(getSupabaseErrorMessage(err, "تعذّر تحميل الفوائد."));
+      setLoading(false);
     });
-  }, []);
+  };
+
+  useEffect(() => { load(); }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!text.trim()) return;
+    setError("");
     setSubmitting(true);
-    await submitFawaid(user.id, text, authorName || user?.profile?.full_name || "");
+    const { error } = await submitFawaid(user.id, text, authorName || user?.profile?.full_name || "");
     setSubmitting(false);
+    if (error) {
+      setError(getSupabaseErrorMessage(error, "تعذّر إرسال الفائدة."));
+      return;
+    }
     setSubmitted(true);
     setText("");
     setAuthorName("");
@@ -39,10 +53,12 @@ export default function FawaidPage() {
         subtitle="فوائد دينية مختارة ومراجَعة من قِبل الفريق."
       />
 
+      {error && <ErrorMessage text={error} onRetry={load} />}
+
       {loading ? <Loading /> : fawaid.length === 0 ? <Empty text="لا توجد فوائد بعد." /> : (
         <div style={{ display: "grid", gap: "0.75rem", marginBottom: "2.5rem" }}>
           {fawaid.map((f: any) => (
-            <div key={f.id} style={{ padding: "1.25rem", borderRadius: "0.375rem", border: `1px solid ${C.line}`, background: C.parchmentDeep }}>
+            <div id={`fawaid-${f.id}`} key={f.id} style={{ padding: "1.25rem", borderRadius: "0.375rem", border: `1px solid ${C.line}`, background: C.parchmentDeep }}>
               <p style={{ fontSize: "0.9375rem", color: C.ink, lineHeight: "1.75" }}>
                 <span style={{ color: C.brassDeep, fontSize: "1.25rem", marginLeft: "0.25rem" }}>❝</span>
                 {f.text}

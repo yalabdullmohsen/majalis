@@ -1,21 +1,30 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
-import { getSheikhs } from "@/lib/supabase";
+import { getSheikhs, getSupabaseErrorMessage } from "@/lib/supabase";
 import { C } from "@/lib/theme";
-import { PageHeader, Loading, Empty } from "@/components/ui-common";
+import { PageHeader, Loading, Empty, ErrorMessage } from "@/components/ui-common";
 
 export default function SheikhsPage() {
   const [sheikhs, setSheikhs] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [verifiedOnly, setVerifiedOnly] = useState(false);
+  const [error, setError] = useState("");
 
-  useEffect(() => {
-    getSheikhs().then(({ data }) => {
+  const load = () => {
+    setLoading(true);
+    setError("");
+    getSheikhs().then(({ data, error }) => {
+      if (error) setError(getSupabaseErrorMessage(error, "تعذّر تحميل قائمة المشايخ."));
       setSheikhs(data);
       setLoading(false);
+    }).catch((err) => {
+      setError(getSupabaseErrorMessage(err, "تعذّر تحميل قائمة المشايخ."));
+      setLoading(false);
     });
-  }, []);
+  };
+
+  useEffect(() => { load(); }, []);
 
   const filtered = useMemo(() => {
     const s = search.trim();
@@ -38,6 +47,8 @@ export default function SheikhsPage() {
         title="المشايخ والدعاة"
         subtitle="تعرّف على المشايخ والدعاة المعتمدين، وإجازاتهم وتخصصاتهم ودروسهم."
       />
+
+      {error && <ErrorMessage text={error} onRetry={load} />}
 
       {/* search + filter */}
       <div style={{ display: "flex", gap: "0.625rem", flexWrap: "wrap", alignItems: "center", marginBottom: "1.5rem" }}>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { adminGetMiracles, adminUpsertMiracle, adminDeleteMiracle } from "@/lib/supabase";
+import { adminGetMiracles, adminUpsertMiracle, adminDeleteMiracle, getSupabaseErrorMessage } from "@/lib/supabase";
 import { C } from "@/lib/theme";
-import { Loading } from "@/components/ui-common";
+import { Loading, ErrorMessage } from "@/components/ui-common";
 import { AdminModal, Field, FieldRow, inputSt, selectSt, textareaSt } from "./AdminModal";
 import { BulkImport } from "./BulkImport";
 
@@ -19,21 +19,43 @@ export function MiraclesSection() {
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState<any>(EMPTY);
   const [saving, setSaving] = useState(false);
+  const [error, setError] = useState("");
 
-  const load = () => { setLoading(true); adminGetMiracles().then(({ data }) => { setItems(data); setLoading(false); }); };
+  const load = () => {
+    setLoading(true);
+    setError("");
+    adminGetMiracles().then(({ data, error }) => {
+      if (error) setError(getSupabaseErrorMessage(error, "تعذّر تحميل مقالات الإعجاز."));
+      setItems(data);
+      setLoading(false);
+    }).catch((err) => {
+      setError(getSupabaseErrorMessage(err, "تعذّر تحميل مقالات الإعجاز."));
+      setLoading(false);
+    });
+  };
   useEffect(() => { load(); }, []);
 
   const openAdd = () => { setForm({ ...EMPTY }); setOpen(true); };
   const openEdit = (item: any) => { setForm({ ...EMPTY, ...item }); setOpen(true); };
   const handleDelete = async (id: string, title: string) => {
     if (!confirm(`هل تريد حذف "${title}"؟`)) return;
-    await adminDeleteMiracle(id); load();
+    const { error } = await adminDeleteMiracle(id);
+    if (error) {
+      setError(getSupabaseErrorMessage(error, "تعذّر حذف مقال الإعجاز."));
+      return;
+    }
+    load();
   };
   const handleSave = async () => {
     if (!form.title.trim()) return alert("العنوان مطلوب");
     setSaving(true);
-    await adminUpsertMiracle(form);
-    setSaving(false); setOpen(false); load();
+    const { error } = await adminUpsertMiracle(form);
+    setSaving(false);
+    if (error) {
+      setError(getSupabaseErrorMessage(error, "تعذّر حفظ مقال الإعجاز."));
+      return;
+    }
+    setOpen(false); load();
   };
   const set = (k: string, v: any) => setForm((f: any) => ({ ...f, [k]: v }));
 
@@ -51,6 +73,8 @@ export function MiraclesSection() {
           <button onClick={openAdd} style={{ padding: "0.5rem 1.25rem", borderRadius: "0.375rem", background: C.emerald, color: C.parchment, border: "none", cursor: "pointer", fontFamily: "inherit", fontSize: "0.875rem", fontWeight: 600 }}>+ إضافة مقال</button>
         </div>
       </div>
+
+      {error && <ErrorMessage text={error} onRetry={load} />}
 
       {loading ? <Loading /> : (
         <div style={{ overflowX: "auto" }}>

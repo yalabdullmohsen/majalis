@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
-import { getLibrary } from "@/lib/supabase";
+import { getLibrary, getSupabaseErrorMessage } from "@/lib/supabase";
 import { C } from "@/lib/theme";
-import { PageHeader, Loading, Empty, Chip } from "@/components/ui-common";
+import { PageHeader, Loading, Empty, Chip, ErrorMessage } from "@/components/ui-common";
 
 const TYPES = ["الكل", "كتاب", "متن", "تفريغ", "ملخص", "مقال", "صوت", "مرئي"];
 
@@ -14,12 +14,18 @@ export default function LibraryPage() {
   const [items, setItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [type, setType] = useState("الكل");
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(() => new URLSearchParams(window.location.search).get("search") || "");
+  const [error, setError] = useState("");
 
   useEffect(() => {
     setLoading(true);
-    getLibrary({ type: type === "الكل" ? undefined : type }).then(({ data }) => {
+    setError("");
+    getLibrary({ type: type === "الكل" ? undefined : type }).then(({ data, error }) => {
+      if (error) setError(getSupabaseErrorMessage(error, "تعذّر تحميل مواد المكتبة."));
       setItems(data);
+      setLoading(false);
+    }).catch((err) => {
+      setError(getSupabaseErrorMessage(err, "تعذّر تحميل مواد المكتبة."));
       setLoading(false);
     });
   }, [type]);
@@ -40,6 +46,8 @@ export default function LibraryPage() {
         subtitle="كتب ومتون وتفريغات وملخصات ومقالات وصوتيات ومرئيات شرعية معتمدة."
       />
 
+      {error && <ErrorMessage text={error} />}
+
       <input
         value={search}
         onChange={(e) => setSearch(e.target.value)}
@@ -58,7 +66,7 @@ export default function LibraryPage() {
       ) : (
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: "1rem" }}>
           {filtered.map((item: any) => (
-            <div key={item.id} style={{ padding: "1.25rem", borderRadius: "0.5rem", border: `1px solid ${C.line}`, background: C.panel, display: "flex", flexDirection: "column", borderRight: `3px solid ${C.brass}` }}>
+            <div id={`library-${item.id}`} key={item.id} style={{ padding: "1.25rem", borderRadius: "0.5rem", border: `1px solid ${C.line}`, background: C.panel, display: "flex", flexDirection: "column", borderRight: `3px solid ${C.brass}` }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "0.5rem", marginBottom: "0.5rem" }}>
                 <p style={{ fontWeight: 700, color: C.ink, fontSize: "1rem", margin: 0, lineHeight: 1.5 }}>{item.title}</p>
                 <span style={{ fontSize: "0.72rem", padding: "0.15rem 0.55rem", borderRadius: "999px", background: C.sage, color: C.emeraldDeep, flexShrink: 0, whiteSpace: "nowrap" }}>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { adminGetAllFawaid, moderateFawaid, adminDeleteFawaid, adminUpsertFawaid } from "@/lib/supabase";
+import { adminGetAllFawaid, moderateFawaid, adminDeleteFawaid, adminUpsertFawaid, getSupabaseErrorMessage } from "@/lib/supabase";
 import { C } from "@/lib/theme";
-import { Loading } from "@/components/ui-common";
+import { Loading, ErrorMessage } from "@/components/ui-common";
 import { AdminModal, Field, inputSt, selectSt, textareaSt } from "./AdminModal";
 import { BulkImport } from "./BulkImport";
 
@@ -23,12 +23,39 @@ export function FawaidSection() {
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState<any>(EMPTY_FAWAID);
   const [saving, setSaving] = useState(false);
+  const [error, setError] = useState("");
 
-  const load = () => { setLoading(true); adminGetAllFawaid().then(({ data }) => { setItems(data); setLoading(false); }); };
+  const load = () => {
+    setLoading(true);
+    setError("");
+    adminGetAllFawaid().then(({ data, error }) => {
+      if (error) setError(getSupabaseErrorMessage(error, "تعذّر تحميل الفوائد."));
+      setItems(data);
+      setLoading(false);
+    }).catch((err) => {
+      setError(getSupabaseErrorMessage(err, "تعذّر تحميل الفوائد."));
+      setLoading(false);
+    });
+  };
   useEffect(() => { load(); }, []);
 
-  const moderate = async (id: string, status: string) => { await moderateFawaid(id, status); load(); };
-  const handleDelete = async (id: string) => { if (!confirm("هل تريد حذف هذه الفائدة نهائيًا؟")) return; await adminDeleteFawaid(id); load(); };
+  const moderate = async (id: string, status: string) => {
+    const { error } = await moderateFawaid(id, status);
+    if (error) {
+      setError(getSupabaseErrorMessage(error, "تعذّر تغيير حالة الفائدة."));
+      return;
+    }
+    load();
+  };
+  const handleDelete = async (id: string) => {
+    if (!confirm("هل تريد حذف هذه الفائدة نهائيًا؟")) return;
+    const { error } = await adminDeleteFawaid(id);
+    if (error) {
+      setError(getSupabaseErrorMessage(error, "تعذّر حذف الفائدة."));
+      return;
+    }
+    load();
+  };
 
   const openAdd = () => { setForm({ ...EMPTY_FAWAID }); setOpen(true); };
   const openEdit = (item: any) => { setForm({ id: item.id, text: item.text || "", author_name: item.author_name || "", status: item.status || "approved" }); setOpen(true); };
@@ -38,7 +65,10 @@ export function FawaidSection() {
     setSaving(true);
     const { error } = await adminUpsertFawaid(form);
     setSaving(false);
-    if (error) return alert(`تعذّر الحفظ: ${error.message}`);
+    if (error) {
+      setError(getSupabaseErrorMessage(error, "تعذّر حفظ الفائدة."));
+      return;
+    }
     setOpen(false); load();
   };
 
@@ -64,6 +94,8 @@ export function FawaidSection() {
           <button onClick={openAdd} style={{ padding: "0.5rem 1.25rem", borderRadius: "0.375rem", background: C.emerald, color: C.parchment, border: "none", cursor: "pointer", fontFamily: "inherit", fontSize: "0.875rem", fontWeight: 600 }}>+ إضافة فائدة</button>
         </div>
       </div>
+
+      {error && <ErrorMessage text={error} onRetry={load} />}
 
       <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1.25rem" }}>
           {FILTERS.map(([v, l]) => (

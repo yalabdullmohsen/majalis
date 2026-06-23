@@ -1,17 +1,28 @@
 import { useEffect, useState } from "react";
-import { adminGetStats } from "@/lib/supabase";
+import { adminGetStats, getSupabaseErrorMessage } from "@/lib/supabase";
 import { C } from "@/lib/theme";
-import { Loading } from "@/components/ui-common";
+import { Loading, ErrorMessage } from "@/components/ui-common";
 
 export function StatsSection() {
   const [stats, setStats] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  useEffect(() => {
-    adminGetStats().then(s => { setStats(s); setLoading(false); });
-  }, []);
+  const load = () => {
+    setLoading(true);
+    setError("");
+    adminGetStats()
+      .then(s => { setStats(s); setLoading(false); })
+      .catch((err) => {
+        setError(getSupabaseErrorMessage(err, "تعذّر تحميل إحصائيات الإدارة."));
+        setLoading(false);
+      });
+  };
+
+  useEffect(() => { load(); }, []);
 
   if (loading) return <Loading />;
+  if (error) return <ErrorMessage text={error} onRetry={load} />;
 
   const cards = [
     { label: "المشايخ", value: stats.sheikhsCount, color: C.emerald, bg: C.sage },
