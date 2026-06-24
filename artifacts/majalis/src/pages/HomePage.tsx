@@ -3,6 +3,7 @@ import { Link, useLocation } from "wouter";
 import { getLessons, getSheikhs, getApprovedFawaid, getLibrary, getMiracles, getQaQuestions } from "@/lib/supabase";
 import { DEMO_LESSONS, DEMO_SHEIKHS, DEMO_QA } from "@/lib/demo-content";
 import { Loading, ErrorState } from "@/components/ui-common";
+import { CurrentLessonsSection } from "@/components/lessons/CurrentLessonsSection";
 
 const FEATURES = [
   { href: "/lessons", icon: "📚", title: "الدروس والدورات", desc: "دروس علمية شرعية موثقة ومعتمدة" },
@@ -165,6 +166,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <CurrentLessonsSection />
 
       <main className="home-container home-main">
         {loading && <Loading />}

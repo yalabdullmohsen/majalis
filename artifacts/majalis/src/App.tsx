@@ -7,6 +7,8 @@ import HomePage from "@/pages/HomePage";
 import AboutPage from "@/pages/AboutPage";
 import SearchPage from "@/pages/SearchPage";
 import LessonsPage from "@/pages/LessonsPage";
+import CurrentLessonsPage from "@/pages/CurrentLessonsPage";
+import CoursesPage from "@/pages/CoursesPage";
 import SheikhsPage from "@/pages/SheikhsPage";
 import SheikhDetailPage from "@/pages/SheikhDetailPage";
 import LibraryPage from "@/pages/LibraryPage";
@@ -48,6 +50,8 @@ function Router() {
       <Route path="/search/:q" component={SearchPage} />
       <Route path="/search" component={SearchPage} />
       <Route path="/lessons" component={LessonsPage} />
+      <Route path="/lessons/current" component={CurrentLessonsPage} />
+      <Route path="/courses" component={CoursesPage} />
       <Route path="/sheikhs" component={SheikhsPage} />
       <Route path="/sheikhs/:id" component={SheikhDetailPage} />
       <Route path="/library" component={LibraryPage} />
