@@ -23,10 +23,10 @@ export default function AboutPage() {
       <div style={{ background: C.emeraldDeep, color: C.parchment }}>
         <div style={{ maxWidth: "48rem", margin: "0 auto", padding: "3.5rem 1.25rem", textAlign: "center" }}>
           <p style={{ fontSize: "0.875rem", color: C.brass, letterSpacing: "0.08em", marginBottom: "0.6rem", fontWeight: 600 }}>عن المنصة</p>
-          <h1 style={{ fontSize: "2.5rem", fontWeight: 700, fontFamily: "Amiri, serif", margin: "0 0 0.75rem" }}>مجالس العلم</h1>
+          <h1 style={{ fontSize: "2.5rem", fontWeight: 700, fontFamily: "Amiri, serif", margin: "0 0 0.75rem" }}>المجلس العلمي</h1>
           <div style={{ width: "3rem", height: 2, background: C.brass, margin: "0 auto 1.25rem" }} />
           <p style={{ fontSize: "1.0625rem", color: "#E8E0CE", lineHeight: 1.9, margin: 0 }}>
-            مجالس العلم منصة علمية شرعية متخصصة تجمع الدروس والمحاضرات والدورات والكتب والفوائد والأسئلة الشرعية في مكان واحد بطريقة احترافية ومنظمة، لتسهيل الوصول إلى المحتوى العلمي الموثوق.
+            المجلس العلمي منصة علمية شرعية متخصصة تجمع الدروس والمحاضرات والدورات والكتب والفوائد والأسئلة الشرعية في مكان واحد بطريقة احترافية ومنظمة، لتسهيل الوصول إلى المحتوى العلمي الموثوق.
           </p>
         </div>
       </div>

@@ -92,7 +92,7 @@ export async function getLessons({ category, city, search }: { category?: string
 
   let q = supabase
     .from("lessons")
-    .select("*, sheikhs(name, city)")
+    .select("*, sheikhs(name, city, image_url, photo_url)")
     .eq("status", "approved")
     .order("created_at", { ascending: false });
   if (category && category !== "الكل") q = q.eq("category", category);
@@ -278,6 +278,36 @@ export async function adminUpsertSheikh(data: any) {
 
 export async function adminDeleteSheikh(id: string) {
   return await supabase.from("sheikhs").delete().eq("id", id);
+}
+
+function sheikhStoragePathFromUrl(imageUrl: string): string | null {
+  try {
+    const marker = "/storage/v1/object/public/sheikhs/";
+    const idx = imageUrl.indexOf(marker);
+    if (idx === -1) return null;
+    return decodeURIComponent(imageUrl.slice(idx + marker.length));
+  } catch {
+    return null;
+  }
+}
+
+export async function uploadSheikhImage(file: File, sheikhId?: string) {
+  const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
+  const safeExt = ["jpg", "jpeg", "png", "webp", "gif"].includes(ext) ? ext : "jpg";
+  const fileName = `${sheikhId || crypto.randomUUID()}-${Date.now()}.${safeExt}`;
+  const { error } = await supabase.storage.from("sheikhs").upload(fileName, file, {
+    upsert: true,
+    contentType: file.type || `image/${safeExt === "jpg" ? "jpeg" : safeExt}`,
+  });
+  if (error) throw error;
+  const { data } = supabase.storage.from("sheikhs").getPublicUrl(fileName);
+  return data.publicUrl;
+}
+
+export async function deleteSheikhImage(imageUrl: string) {
+  const path = sheikhStoragePathFromUrl(imageUrl);
+  if (!path) return { error: null };
+  return await supabase.storage.from("sheikhs").remove([path]);
 }
 
 export async function adminGetLessons() {
@@ -538,7 +568,7 @@ async function searchLessonsFallback(term: string) {
     const like = ilikePattern(p);
     return supabase
       .from("lessons")
-      .select("id, title, category, description, sheikhs(name)")
+      .select("id, title, category, description, mosque, schedule, sheikhs(name, image_url, photo_url)")
       .eq("status", "approved")
       .or(`title.ilike.${like},description.ilike.${like},category.ilike.${like},mosque.ilike.${like},city.ilike.${like}`)
       .limit(40);
@@ -573,7 +603,7 @@ async function searchSheikhsFallback(term: string) {
   const patterns = arabicSearchPatterns(term);
   const responses = await Promise.all(
     patterns.map((p) =>
-      supabase.from("sheikhs").select("id, name, bio, specialties").ilike("name", ilikePattern(p)).limit(20)
+      supabase.from("sheikhs").select("id, name, bio, specialties, image_url, photo_url").ilike("name", ilikePattern(p)).limit(20)
     )
   );
   const rows = mergeUniqueById(responses.flatMap((r) => r.data || [])).filter((s: any) =>

@@ -148,7 +148,7 @@ export default function QaPage() {
   return (
     <div className="page-shell narrow qa-page">
       <PageHeader
-        eyebrow="مجالس العلم"
+        eyebrow="المجلس العلمي"
         title="الأسئلة والأجوبة الدينية"
         subtitle="مجموعة من الأسئلة والأجوبة العلمية المدعّمة بالأدلة الشرعية والمراجع، مرتّبة حسب التصنيف."
       />

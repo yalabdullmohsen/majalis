@@ -3,7 +3,7 @@ import { arabicMatchAny } from "./arabic-search";
 export const DEMO_LESSONS = [
   {
     id: "demo-lesson-1",
-    title: "مجالس العلم — مقدمة في العقيدة الصحيحة",
+    title: "المجلس العلمي — مقدمة في العقيدة الصحيحة",
     category: "عقيدة",
     mosque: "مسجد النور",
     city: "الرياض",
@@ -12,7 +12,7 @@ export const DEMO_LESSONS = [
     schedule: "السبت 8م",
     description: "درس تمهيدي يعرّف طالب العلم بأصول الاعتقاد على منهج أهل السنة.",
     speaker_name: "الشيخ عبدالله بن باز",
-    keywords: ["مجالس العلم", "عقيدة", "الإسلام", "أهل السنة"],
+    keywords: ["المجلس العلمي", "عقيدة", "الإسلام", "أهل السنة"],
     sheikhs: { name: "الشيخ عبدالله بن باز" },
   },
   {
@@ -54,7 +54,7 @@ export const DEMO_LESSONS = [
     schedule: "الثلاثاء 6م",
     description: "مجلس علمي في مصطلح الحديث ومنهج الإمام محمد ناصر الدين الألباني رحمه الله.",
     speaker_name: "الشيخ محمد ناصر الدين الألباني",
-    keywords: ["حديث", "الألباني", "مجالس العلم", "سنة"],
+    keywords: ["حديث", "الألباني", "المجلس العلمي", "سنة"],
     sheikhs: { name: "الشيخ محمد ناصر الدين الألباني" },
   },
 ];
@@ -118,7 +118,7 @@ export const DEMO_LIBRARY = [
   },
   {
     id: "demo-library-3",
-    title: "تفريغ: أصول طلب العلم في مجالس العلم",
+    title: "تفريغ: أصول طلب العلم في المجلس العلمي",
     type: "تفريغ",
     category: "تأصيل",
     description: "تفريغ درس علمي عن آداب طلب العلم ومراتبه.",
@@ -136,7 +136,7 @@ export const DEMO_FAWAID = [
   {
     id: "demo-fawaid-1",
     text: "العلم ميراث النبوة، وكل مجلس علم خطوة إلى بصيرة أوسع.",
-    author_name: "مجالس العلم",
+    author_name: "المجلس العلمي",
   },
   {
     id: "demo-fawaid-2",

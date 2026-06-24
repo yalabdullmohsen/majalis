@@ -101,7 +101,7 @@ export default function CardsPage() {
     <div dir="rtl" className="min-h-screen bg-[#FAF5EA] py-8">
       <div className="mx-auto max-w-6xl px-4">
         <Link href="/" className="text-sm font-bold text-[#164E3C] hover:underline">
-          ← مجالس العلم
+          ← المجلس العلمي
         </Link>
         <h1 className="mt-2 mb-8 text-3xl font-bold text-[#164E3C]">🎨 البطاقات الدعوية</h1>
 
@@ -255,7 +255,7 @@ export default function CardsPage() {
                       fontFamily: "'Scheherazade New', serif",
                     }}
                   >
-                    مجالس العلم
+                    المجلس العلمي
                   </div>
                 </div>
               </div>

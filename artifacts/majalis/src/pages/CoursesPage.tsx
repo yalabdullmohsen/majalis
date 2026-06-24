@@ -82,7 +82,7 @@ export default function CoursesPage() {
               return (
                 <article key={course.id} id={course.id} className="la-course-panel">
                   <div className="la-course-header">
-                    <SheikhAvatar name={course.sheikhName} imageUrl={sheikhImage} size="lg" />
+                    <SheikhAvatar name={course.sheikhName} src={sheikhImage} size={100} />
                     <div className="la-course-intro">
                       <p className="la-course-honorific">فضيلة الشيخ</p>
                       <p className="la-course-sheikh">{course.sheikhName}</p>

@@ -1,14 +1,16 @@
-import { useEffect, useState } from "react";
-import { adminGetSheikhs, adminUpsertSheikh, adminDeleteSheikh } from "@/lib/supabase";
+import { useEffect, useRef, useState } from "react";
+import { adminGetSheikhs, adminUpsertSheikh, adminDeleteSheikh, uploadSheikhImage, deleteSheikhImage } from "@/lib/supabase";
 import { C, GOVERNORATES } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
 import { AdminModal, Field, FieldRow, inputSt, selectSt, textareaSt } from "./AdminModal";
 import { BulkImport } from "./BulkImport";
+import { SheikhAvatar } from "@/components/lessons/SheikhAvatar";
+import { resolveSheikhImageUrl } from "@/lib/sheikh-image";
 
 const toArr = (v: any) => Array.isArray(v) ? v : (v ? String(v).split(/[،,]/).map((s: string) => s.trim()).filter(Boolean) : []);
 
 const EMPTY: any = {
-  name: "", bio: "", biography: "", city: "", photo_url: "",
+  name: "", bio: "", biography: "", city: "", photo_url: "", image_url: "",
   years_experience: "", is_verified: false, specialties: "", qualifications: "", ijazah: "",
 };
 
@@ -21,13 +23,18 @@ export function SheikhsSection() {
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState<any>(EMPTY);
   const [saving, setSaving] = useState(false);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string>("");
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const load = () => { setLoading(true); adminGetSheikhs().then(({ data }) => { setItems(data); setLoading(false); }); };
   useEffect(() => { load(); }, []);
 
-  const openAdd = () => { setForm({ ...EMPTY }); setOpen(true); };
+  const openAdd = () => { setForm({ ...EMPTY }); setImageFile(null); setImagePreview(""); setOpen(true); };
   const openEdit = (item: any) => {
     setForm({ ...EMPTY, ...item, specialties: (item.specialties || []).join("، "), qualifications: (item.qualifications || []).join("، ") });
+    setImageFile(null);
+    setImagePreview(resolveSheikhImageUrl(item) || "");
     setOpen(true);
   };
   const handleDelete = async (id: string, name: string) => {
@@ -37,14 +44,51 @@ export function SheikhsSection() {
   const handleSave = async () => {
     if (!form.name.trim()) return alert("الاسم مطلوب");
     setSaving(true);
-    const payload = {
-      ...form,
-      years_experience: form.years_experience ? parseInt(form.years_experience) : null,
-      specialties: form.specialties ? form.specialties.split(/[،,]/).map((s: string) => s.trim()).filter(Boolean) : [],
-      qualifications: form.qualifications ? form.qualifications.split(/[،,]/).map((s: string) => s.trim()).filter(Boolean) : [],
-    };
-    await adminUpsertSheikh(payload);
-    setSaving(false); setOpen(false); load();
+    try {
+      let imageUrl = form.image_url || form.photo_url || "";
+      if (imageFile) {
+        imageUrl = await uploadSheikhImage(imageFile, form.id);
+      }
+      const payload = {
+        ...form,
+        image_url: imageUrl || null,
+        photo_url: imageUrl || form.photo_url || null,
+        years_experience: form.years_experience ? parseInt(form.years_experience) : null,
+        specialties: form.specialties ? form.specialties.split(/[،,]/).map((s: string) => s.trim()).filter(Boolean) : [],
+        qualifications: form.qualifications ? form.qualifications.split(/[،,]/).map((s: string) => s.trim()).filter(Boolean) : [],
+      };
+      await adminUpsertSheikh(payload);
+      setOpen(false);
+      setImageFile(null);
+      setImagePreview("");
+      load();
+    } catch (err: any) {
+      alert(err?.message || "تعذر حفظ بيانات الشيخ.");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleImagePick = (file: File | null) => {
+    if (!file) return;
+    if (!file.type.startsWith("image/")) {
+      alert("يرجى اختيار ملف صورة.");
+      return;
+    }
+    setImageFile(file);
+    const reader = new FileReader();
+    reader.onload = () => setImagePreview(String(reader.result || ""));
+    reader.readAsDataURL(file);
+  };
+
+  const handleRemoveImage = async () => {
+    const current = resolveSheikhImageUrl(form);
+    if (current && current.includes("/storage/v1/object/public/sheikhs/")) {
+      await deleteSheikhImage(current);
+    }
+    setImageFile(null);
+    setImagePreview("");
+    setForm((f: any) => ({ ...f, image_url: "", photo_url: "" }));
   };
   const set = (k: string, v: any) => setForm((f: any) => ({ ...f, [k]: v }));
 
@@ -136,10 +180,23 @@ export function SheikhsSection() {
           <Field label="سنوات الخبرة">
             <input type="number" style={inputSt} value={form.years_experience || ""} onChange={e => set("years_experience", e.target.value)} placeholder="عدد السنوات" min={0} />
           </Field>
-          <Field label="رابط الصورة الشخصية">
-            <input style={inputSt} value={form.photo_url || ""} onChange={e => set("photo_url", e.target.value)} placeholder="https://..." />
+          <Field label="رابط صورة خارجي (اختياري)">
+            <input style={inputSt} value={form.image_url || form.photo_url || ""} onChange={e => { set("image_url", e.target.value); set("photo_url", e.target.value); setImagePreview(e.target.value); setImageFile(null); }} placeholder="https://..." />
           </Field>
         </FieldRow>
+        <Field label="صورة الشيخ">
+          <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
+            <SheikhAvatar src={imagePreview || resolveSheikhImageUrl(form)} name={form.name || "شيخ"} size={96} />
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+              <input ref={fileInputRef} type="file" accept="image/*" hidden onChange={(e) => handleImagePick(e.target.files?.[0] || null)} />
+              <button type="button" style={BTN_EDIT} onClick={() => fileInputRef.current?.click()}>رفع صورة</button>
+              {(imagePreview || resolveSheikhImageUrl(form)) && (
+                <button type="button" style={BTN_DEL} onClick={handleRemoveImage}>حذف الصورة</button>
+              )}
+              <span style={{ fontSize: "0.75rem", color: C.inkSoft }}>معاينة قبل الحفظ — تُرفع عند الضغط على «حفظ»</span>
+            </div>
+          </div>
+        </Field>
         <Field label="الاعتماد">
           <label style={{ display: "flex", alignItems: "center", gap: "0.5rem", cursor: "pointer" }}>
             <input type="checkbox" checked={!!form.is_verified} onChange={e => set("is_verified", e.target.checked)} />

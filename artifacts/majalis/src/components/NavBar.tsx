@@ -106,8 +106,26 @@ export default function NavBar() {
   return (
     <header className="sticky top-0 z-50 border-b" style={{ background: C.parchment, borderColor: C.line }}>
       <div style={{ maxWidth: "72rem", margin: "0 auto", padding: "0.75rem 1rem", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "1rem" }}>
-        <Link href="/" style={{ fontSize: "1.2rem", fontWeight: 700, flexShrink: 0, minWidth: "6.5rem", color: C.emeraldDeep, fontFamily: "Amiri, serif", textDecoration: "none", textAlign: "right" }}>
-          مجالس العلم
+        <Link
+          href="/"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "0.625rem",
+            flexShrink: 0,
+            textDecoration: "none",
+            color: C.emeraldDeep,
+            minWidth: 0,
+          }}
+        >
+          <img
+            src="/logo.png"
+            alt="المجلس العلمي"
+            className="navbar-logo"
+          />
+          <span style={{ fontWeight: 700, fontSize: "1.125rem", fontFamily: "Amiri, serif", whiteSpace: "nowrap" }}>
+            المجلس العلمي
+          </span>
         </Link>
 
         {!isMobile && (

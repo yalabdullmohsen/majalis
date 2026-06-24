@@ -1,4 +1,5 @@
-import { arabicMatchAny } from "@/lib/arabic-search";
+import { SheikhAvatar } from "@/components/lessons/SheikhAvatar";
+import { resolveSheikhImageUrl, resolveLessonSheikhImage, parseLessonSchedule } from "@/lib/sheikh-image";
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { getSheikhs } from "@/lib/supabase";
@@ -82,7 +83,11 @@ export default function SheikhsPage() {
           {filtered.map((s: any) => (
             <Link key={s.id} href={usingDemo ? "/sheikhs" : `/sheikhs/${s.id}`} className="page-card sheikh-card">
               <div className="sheikh-card-top">
-                <div className="sheikh-avatar">{s.name?.charAt(0) || "؟"}</div>
+                <SheikhAvatar
+                  src={resolveSheikhImageUrl(s)}
+                  name={s.name}
+                  size="responsive"
+                />
                 <div>
                   <p className="sheikh-name">{s.name}</p>
                   {s.is_verified && <span className="verified-badge">✓ معتمد</span>}

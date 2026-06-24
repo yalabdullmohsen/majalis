@@ -40,8 +40,8 @@ function routeForPath(path: string) {
     const term = decodeURIComponent(normalized.slice("/search/".length));
     return {
       ...requiredRoute("/search"),
-      title: `نتائج البحث: ${term} | مجالس العلم`,
-      description: `نتائج البحث عن «${term}» في الدروس والمشايخ والمكتبة والفوائد داخل مجالس العلم.`,
+      title: `نتائج البحث: ${term} | المجلس العلمي`,
+      description: `نتائج البحث عن «${term}» في الدروس والمشايخ والمكتبة والفوائد داخل المجلس العلمي.`,
       robots: "noindex, follow",
     };
   }
@@ -49,8 +49,8 @@ function routeForPath(path: string) {
   if (normalized.startsWith("/sheikhs/")) {
     return {
       ...requiredRoute("/sheikhs"),
-      title: "صفحة الشيخ | مجالس العلم",
-      description: "تعرف على صفحة الشيخ ودروسه وبياناته العلمية داخل مجالس العلم.",
+      title: "صفحة الشيخ | المجلس العلمي",
+      description: "تعرف على صفحة الشيخ ودروسه وبياناته العلمية داخل المجلس العلمي.",
     };
   }
 

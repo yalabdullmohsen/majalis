@@ -1,11 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
 import { C, GOVERNORATES } from "@/lib/theme";
 import { getLessons, registerForLesson, unregisterFromLesson, getMyRegistrations } from "@/lib/supabase";
-import { DEMO_LESSONS, demoNoticeText } from "@/lib/demo-content";
+import { DEMO_LESSONS, demoNoticeText, isDemoId } from "@/lib/demo-content";
 import { PageHeader, Loading, Empty, Chip, ErrorState, DemoNotice } from "@/components/ui-common";
 import { useAuth } from "@/components/AuthProvider";
 import ContentActions from "@/components/ContentActions";
-import { isDemoId } from "@/lib/demo-content";
+import { SheikhAvatar } from "@/components/lessons/SheikhAvatar";
+import { resolveLessonSheikhImage, parseLessonSchedule } from "@/lib/sheikh-image";
+import { Link } from "wouter";
 
 const CATEGORIES = ["الكل", "تفسير", "فقه", "عقيدة", "حديث", "سيرة", "تجويد", "أخرى"];
 
@@ -112,32 +114,56 @@ export default function LessonsPage() {
       ) : displayed.length === 0 ? (
         <Empty text="لا توجد دروس." />
       ) : (
-        <div className="page-card-grid">
-          {displayed.map((l: any) => (
-            <article key={l.id} className="page-card">
-              <div className="page-card-header">
-                <p>{l.title}</p>
-                {l.category && <span className="page-tag">{l.category}</span>}
-              </div>
-              <p className="page-meta">{l.sheikhs?.name}</p>
-              <p className="page-meta">
-                {[l.mosque, l.city, l.schedule].filter(Boolean).join(" · ")}
-              </p>
-              {l.description && <p className="page-desc">{l.description}</p>}
-              {!isDemoId(l.id) && (
-                <ContentActions contentType="lesson" contentId={l.id} />
-              )}
-              <div className="page-card-footer">
-                <span className="page-soft-tag">{l.audience || "الكل"}</span>
-                <span className="page-soft-tag">{l.delivery || "حضور فقط"}</span>
-                {isLoggedIn && !usingDemo && (
-                  <button type="button" onClick={() => toggleReg(l.id)} className="page-action-btn">
-                    {myReg.includes(l.id) ? "إلغاء التسجيل" : "سجّل حضوري"}
-                  </button>
+        <div className="page-card-grid lesson-cards-grid">
+          {displayed.map((l: any) => {
+            const sheikhName = l.sheikhs?.name || l.speaker_name || "شيخ معتمد";
+            const { day, time } = parseLessonSchedule(l.schedule);
+            return (
+              <article key={l.id} className="page-card lesson-card">
+                <div className="lesson-card-header">
+                  <SheikhAvatar
+                    src={resolveLessonSheikhImage(l)}
+                    name={sheikhName}
+                    size="responsive"
+                  />
+                  <div className="lesson-card-head-text">
+                    <p className="lesson-card-sheikh">{sheikhName}</p>
+                    <h3 className="lesson-card-title">{l.title}</h3>
+                  </div>
+                </div>
+                <div className="lesson-card-meta-grid">
+                  <div>
+                    <span className="lesson-card-label">المسجد</span>
+                    <strong>{l.mosque || "—"}</strong>
+                  </div>
+                  <div>
+                    <span className="lesson-card-label">اليوم</span>
+                    <strong>{day}</strong>
+                  </div>
+                  <div>
+                    <span className="lesson-card-label">الوقت</span>
+                    <strong>{time}</strong>
+                  </div>
+                </div>
+                {l.description && <p className="page-desc">{l.description}</p>}
+                {!isDemoId(l.id) && (
+                  <ContentActions contentType="lesson" contentId={l.id} />
                 )}
-              </div>
-            </article>
-          ))}
+                <div className="page-card-footer">
+                  <span className="page-tag">{l.category || "درس"}</span>
+                  <span className="page-soft-tag">{l.audience || "الكل"}</span>
+                  <Link href="/lessons" className="page-action-btn lesson-card-details-btn">
+                    عرض التفاصيل
+                  </Link>
+                  {isLoggedIn && !usingDemo && (
+                    <button type="button" onClick={() => toggleReg(l.id)} className="page-action-btn">
+                      {myReg.includes(l.id) ? "إلغاء التسجيل" : "سجّل حضوري"}
+                    </button>
+                  )}
+                </div>
+              </article>
+            );
+          })}
         </div>
       )}
     </div>

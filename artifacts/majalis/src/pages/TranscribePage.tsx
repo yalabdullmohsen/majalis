@@ -185,7 +185,7 @@ export default function TranscribePage() {
     <div dir="rtl" className="min-h-screen bg-[#FAF5EA] py-8">
       <div className="mx-auto max-w-4xl px-4">
         <Link href="/" className="text-sm font-bold text-[#164E3C] hover:underline">
-          ← مجالس العلم
+          ← المجلس العلمي
         </Link>
         <h1 className="mt-2 text-3xl font-bold text-[#164E3C]">🎙️ تفريغ المحاضرات</h1>
         <p className="mb-8 text-[#5B5446]">حوّل الصوت والفيديو إلى نص مع تلخيص ذكي واستخراج الفوائد</p>

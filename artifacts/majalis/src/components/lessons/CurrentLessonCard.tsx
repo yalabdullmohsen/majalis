@@ -138,7 +138,7 @@ export function CurrentLessonCard({ lesson, compact = false, showDetailsLink = t
 
         <div className="la-poster__hero">
           <div className="la-poster__avatar-col">
-            <SheikhAvatar name={lesson.sheikhName} imageUrl={sheikhImage} size={compact ? "md" : "xl"} />
+            <SheikhAvatar name={lesson.sheikhName} src={sheikhImage} size={compact ? 80 : 100} />
             <p className="la-poster__honorific">فضيلة الشيخ</p>
             <p className="la-poster__sheikh">{lesson.sheikhName}</p>
           </div>

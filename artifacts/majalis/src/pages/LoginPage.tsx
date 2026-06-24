@@ -58,8 +58,12 @@ export default function LoginPage() {
   return (
     <div style={{ maxWidth: "24rem", margin: "4rem auto", padding: "0 1.25rem" }}>
       <div style={{ padding: "2rem", borderRadius: "0.5rem", border: `1px solid ${C.line}`, background: C.panel }}>
+        <div style={{ textAlign: "center", marginBottom: "1.25rem" }}>
+          <img src="/logo.png" alt="المجلس العلمي" style={{ width: "4rem", height: "4rem", borderRadius: "999px", objectFit: "contain", margin: "0 auto 0.75rem" }} />
+          <p style={{ margin: 0, fontSize: "1rem", fontWeight: 700, color: C.emeraldDeep, fontFamily: "Amiri, serif" }}>المجلس العلمي</p>
+        </div>
         <h1 style={{ fontSize: "1.25rem", fontWeight: 700, color: C.emeraldDeep, fontFamily: "Amiri, serif", textAlign: "center", marginBottom: "1.5rem" }}>
-          {mode === "login" ? "تسجيل الدخول إلى مجالس العلم" : "إنشاء حساب في مجالس العلم"}
+          {mode === "login" ? "تسجيل الدخول" : "إنشاء حساب"}
         </h1>
 
         {error && (

@@ -14,7 +14,7 @@ export function CurrentLessonsSection() {
       <div className="la-section-bar">
         <div>
           <p className="la-section-bar__eyebrow">الدروس الحالية</p>
-          <h2 id="lesson-announcements-heading">إعلانات المجالس العلمية والبرامج التعليمية</h2>
+          <h2 id="lesson-announcements-heading">إعلانات الالمجلس العلميية والبرامج التعليمية</h2>
           <p className="la-section-bar__sub">
             عرض موحّد ونظيف للدروس: صورة الشيخ، الموعد، المكان، وروابط مباشرة للخريطة والبث
             والمادة العلمية — بدون الاعتماد على QR داخل الصورة.

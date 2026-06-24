@@ -4,6 +4,8 @@ import { getLessons, getSheikhs, getApprovedFawaid, getLibrary, getMiracles, get
 import { DEMO_LESSONS, DEMO_SHEIKHS, DEMO_QA } from "@/lib/demo-content";
 import { Loading, ErrorState } from "@/components/ui-common";
 import { CurrentLessonsSection } from "@/components/lessons/CurrentLessonsSection";
+import { SheikhAvatar } from "@/components/lessons/SheikhAvatar";
+import { resolveSheikhImageUrl, resolveLessonSheikhImage, parseLessonSchedule } from "@/lib/sheikh-image";
 
 const FEATURES = [
   { href: "/lessons", icon: "📚", title: "الدروس والدورات", desc: "دروس علمية شرعية موثقة ومعتمدة" },
@@ -34,12 +36,12 @@ const FALLBACK_MIRACLES = [
 ];
 
 const FALLBACK_FAWAID = [
-  { id: "fallback-fawaid-1", text: "العلم ميراث النبوة، وكل مجلس علم خطوة إلى بصيرة أوسع.", author_name: "مجالس العلم" },
+  { id: "fallback-fawaid-1", text: "العلم ميراث النبوة، وكل مجلس علم خطوة إلى بصيرة أوسع.", author_name: "المجلس العلمي" },
   { id: "fallback-fawaid-2", text: "صلاح القلب يبدأ بسؤال صادق واتباع للدليل.", author_name: "فائدة مختارة" },
 ];
 
 function getSheikhImage(sheikh: any): string | undefined {
-  return sheikh?.image_url || sheikh?.photo_url || sheikh?.avatar_url || sheikh?.profile_image_url;
+  return resolveSheikhImageUrl(sheikh);
 }
 
 function excerpt(value: string | undefined, limit: number) {
@@ -128,8 +130,11 @@ export default function HomePage() {
         <div className="home-hero-pattern" />
         <div className="home-container home-hero-grid">
           <div className="home-hero-copy">
-            <p className="home-kicker">المنصة العلمية الشرعية</p>
-            <h1>مجالس العلم — دروسك وكتبك ومشايخك في مكان واحد</h1>
+            <div className="home-hero-brand">
+              <img src="/logo.png" alt="المجلس العلمي" className="home-hero-logo" />
+              <p className="home-kicker">المنصة العلمية الشرعية</p>
+            </div>
+            <h1>المجلس العلمي — دروسك وكتبك ومشايخك في مكان واحد</h1>
             <p className="home-hero-text">
               منصة عربية تجمع الدروس والمحاضرات والدورات والكتب والفوائد والأسئلة الشرعية بطريقة منظمة، مع مساعد علمي يرشدك داخل المحتوى دون ادعاء الإفتاء.
             </p>
@@ -200,36 +205,47 @@ export default function HomePage() {
                 <p className="home-demo-note">نعرض دروسًا تجريبية حتى يُضاف محتوى حي من لوحة الإدارة.</p>
               )}
               <div className="home-lessons-grid">
-                {displayedLessons.map((lesson: any) => (
-                  <Link key={lesson.id} href="/lessons" className="home-lesson-card">
-                    <div className="home-card-glow" />
-                    <div className="home-card-row">
-                      <span className="home-tag">{lesson.category || "درس علمي"}</span>
-                      <span>{lesson.delivery || "حضور"}</span>
-                    </div>
-                    <h3>{lesson.title}</h3>
-                    {lesson.description && <p>{excerpt(lesson.description, 120)}</p>}
-                    <div className="home-lesson-meta">
-                      <span>{lesson.sheikhs?.name || "شيخ معتمد"}</span>
-                      <span>{[lesson.mosque, lesson.city].filter(Boolean).join(" - ") || "متاح قريبا"}</span>
-                    </div>
-                  </Link>
-                ))}
+                {displayedLessons.map((lesson: any) => {
+                  const sheikhName = lesson.sheikhs?.name || lesson.speaker_name || "شيخ معتمد";
+                  const { day, time } = parseLessonSchedule(lesson.schedule);
+                  return (
+                    <Link key={lesson.id} href="/lessons" className="home-lesson-card">
+                      <div className="home-card-glow" />
+                      <div className="home-lesson-card-top">
+                        <SheikhAvatar
+                          src={resolveLessonSheikhImage(lesson)}
+                          name={sheikhName}
+                          size="responsive"
+                        />
+                        <div>
+                          <p className="home-lesson-sheikh">{sheikhName}</p>
+                          <h3>{lesson.title}</h3>
+                        </div>
+                      </div>
+                      <div className="home-lesson-meta">
+                        <span>{lesson.mosque || "مسجد"}</span>
+                        <span>{day} · {time}</span>
+                      </div>
+                      {lesson.description && <p>{excerpt(lesson.description, 100)}</p>}
+                    </Link>
+                  );
+                })}
               </div>
             </section>
 
             <section className="home-section home-sheikhs-section">
               <SectionHead eyebrow="أهل العلم" title="أبرز المشايخ" subtitle="تعرف على المشايخ والدعاة المعتمدين وتخصصاتهم." href="/sheikhs" />
               <div className="home-sheikhs-grid">
-                {displayedSheikhs.map((sheikh: any) => {
-                  const image = getSheikhImage(sheikh);
-                  return (
+                {displayedSheikhs.map((sheikh: any) => (
                     <Link key={sheikh.id} href={usingDemoSheikhs ? "/sheikhs" : `/sheikhs/${sheikh.id}`} className="home-sheikh-card">
-                      <div className="home-sheikh-photo">
-                        {image ? <img src={image} alt={sheikh.name || "شيخ"} /> : <span>{sheikh.name?.charAt(0) || "ع"}</span>}
-                      </div>
+                      <SheikhAvatar
+                        src={getSheikhImage(sheikh)}
+                        name={sheikh.name}
+                        size="responsive"
+                        className="home-sheikh-photo-wrap"
+                      />
                       <h3>{sheikh.name}</h3>
-                      <p>{sheikh.ijazah || sheikh.city || "شيخ معتمد في منصة مجالس العلم"}</p>
+                      <p>{sheikh.ijazah || sheikh.city || "شيخ معتمد في المجلس العلمي"}</p>
                       <div className="home-sheikh-tags">
                         {sheikh.is_verified && <span>معتمد</span>}
                         {(sheikh.specialties || []).slice(0, 2).map((specialty: string) => (
@@ -237,8 +253,7 @@ export default function HomePage() {
                         ))}
                       </div>
                     </Link>
-                  );
-                })}
+                ))}
               </div>
             </section>
 

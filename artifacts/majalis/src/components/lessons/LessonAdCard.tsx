@@ -89,7 +89,7 @@ export function LessonAdCard({ item, compact = false, onOpen }: Props) {
 
           <div className="lad-card__actions">
             <button type="button" className="lad-btn lad-btn--primary" onClick={() => onOpen(item)}>
-              تفاصيل الدرس
+              عرض التفاصيل
             </button>
             <ExternalLink href={firstSession.mapUrl}>الخريطة</ExternalLink>
             <ExternalLink href={firstSession.liveUrl}>البث المباشر</ExternalLink>

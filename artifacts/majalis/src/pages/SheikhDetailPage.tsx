@@ -4,6 +4,8 @@ import { getSheikhById } from "@/lib/supabase";
 import { C } from "@/lib/theme";
 import { Loading, Empty } from "@/components/ui-common";
 import ContentActions from "@/components/ContentActions";
+import { SheikhAvatar } from "@/components/lessons/SheikhAvatar";
+import { resolveSheikhImageUrl } from "@/lib/sheikh-image";
 
 export default function SheikhDetailPage({ params }: { params: { id: string } }) {
   const [sheikh, setSheikh] = useState<any>(null);
@@ -28,11 +30,20 @@ export default function SheikhDetailPage({ params }: { params: { id: string } })
       </Link>
 
       <div style={{ padding: "1.5rem", borderRadius: "0.5rem", border: `1px solid ${C.line}`, background: C.panel, marginBottom: "1.5rem" }}>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1rem" }}>
-          <h1 style={{ fontSize: "1.5rem", fontWeight: 700, color: C.emeraldDeep, fontFamily: "Amiri, serif" }}>{sheikh.name}</h1>
-          {sheikh.is_verified && (
-            <span style={{ fontSize: "0.75rem", padding: "0.25rem 0.75rem", borderRadius: "0.25rem", background: C.sage, color: C.emeraldDeep }}>شيخ معتمد</span>
-          )}
+        <div style={{ display: "flex", alignItems: "flex-start", gap: "1rem", marginBottom: "1rem" }}>
+          <SheikhAvatar
+            src={resolveSheikhImageUrl(sheikh)}
+            name={sheikh.name}
+            size={100}
+          />
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "0.75rem", flexWrap: "wrap" }}>
+              <h1 style={{ fontSize: "1.5rem", fontWeight: 700, color: C.emeraldDeep, fontFamily: "Amiri, serif", margin: 0 }}>{sheikh.name}</h1>
+              {sheikh.is_verified && (
+                <span style={{ fontSize: "0.75rem", padding: "0.25rem 0.75rem", borderRadius: "0.25rem", background: C.sage, color: C.emeraldDeep }}>شيخ معتمد</span>
+              )}
+            </div>
+          </div>
         </div>
 
         {sheikh.ijazah && (

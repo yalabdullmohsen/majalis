@@ -4,6 +4,8 @@ import { C } from "@/lib/theme";
 import { formatSupabaseError, searchEverything, type SearchResults } from "@/lib/supabase";
 import { DemoNotice, ErrorState, SearchSkeleton } from "@/components/ui-common";
 import { demoNoticeText } from "@/lib/demo-content";
+import { SheikhAvatar } from "@/components/lessons/SheikhAvatar";
+import { resolveSheikhImageUrl, resolveLessonSheikhImage } from "@/lib/sheikh-image";
 
 const EMPTY: SearchResults = {
   lessons: [],
@@ -27,12 +29,29 @@ function Group({ title, items, render }: { title: string; items: any[]; render: 
   );
 }
 
-function ResultRow({ href, title, meta }: { href: string; title: string; meta?: string }) {
+function ResultRow({
+  href,
+  title,
+  meta,
+  avatarSrc,
+  avatarName,
+}: {
+  href: string;
+  title: string;
+  meta?: string;
+  avatarSrc?: string;
+  avatarName?: string;
+}) {
   return (
     <Link href={href} style={{ textDecoration: "none" }}>
       <div className="search-result-row">
-        <span>{title}</span>
-        {meta && <span className="search-result-meta">{meta}</span>}
+        {avatarName && (
+          <SheikhAvatar src={avatarSrc} name={avatarName} size={48} className="search-result-avatar" />
+        )}
+        <div className="search-result-copy">
+          <span>{title}</span>
+          {meta && <span className="search-result-meta">{meta}</span>}
+        </div>
       </div>
     </Link>
   );
@@ -157,13 +176,23 @@ export default function SearchPage() {
                     href="/lessons"
                     title={l.title}
                     meta={l.speaker_name || l.sheikhs?.name || l.category}
+                    avatarSrc={resolveLessonSheikhImage(l)}
+                    avatarName={l.speaker_name || l.sheikhs?.name || "شيخ"}
                   />
                 )}
               />
               <Group
                 title="المشايخ"
                 items={results.sheikhs}
-                render={(s) => <ResultRow key={s.id} href={`/sheikhs/${s.id}`} title={s.name} />}
+                render={(s) => (
+                  <ResultRow
+                    key={s.id}
+                    href={`/sheikhs/${s.id}`}
+                    title={s.name}
+                    avatarSrc={resolveSheikhImageUrl(s)}
+                    avatarName={s.name}
+                  />
+                )}
               />
               <Group
                 title="المكتبة"

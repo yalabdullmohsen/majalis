@@ -37,7 +37,7 @@ export default function AdminPage() {
         padding: "1.5rem 0",
       }}>
         <p style={{ fontSize: "0.6875rem", fontWeight: 700, color: C.inkSoft, padding: "0 1rem", marginBottom: "0.75rem", letterSpacing: "0.06em" }}>
-          لوحة تحكم مجالس العلم
+          لوحة تحكم المجلس العلمي
         </p>
         <Link
           href="/admin/dashboard"
