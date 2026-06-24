@@ -185,19 +185,60 @@ alter table tasmee_requests        enable row level security;
 alter table achievements           enable row level security;
 
 -- دالة مساعدة: هل المستخدم الحالي مشرف؟
-create or replace function is_admin()
-returns boolean language sql security definer stable as $$
+create or replace function public.is_admin()
+returns boolean
+language sql
+security definer
+stable
+set search_path = public
+as $$
   select exists (
-    select 1 from profiles
+    select 1 from public.profiles
     where id = auth.uid() and role = 'admin'
   );
 $$;
 
 -- ---- سياسات profiles ----
-create policy "الجميع يقرأ الملفات العامة"
-  on profiles for select using (true);
-create policy "كل شخص يعدّل ملفه فقط"
-  on profiles for update using (auth.uid() = id);
+create policy "قراءة ملفي الشخصي"
+  on profiles for select using (auth.uid() = id or is_admin());
+create policy "المستخدم ينشئ ملفه الأساسي فقط"
+  on profiles for insert
+  with check (auth.uid() = id and role = 'user' and points = 0 and level = 1);
+create policy "المستخدم يعدل بياناته العامة فقط"
+  on profiles for update
+  using (auth.uid() = id)
+  with check (auth.uid() = id);
+create policy "المشرف يحدث ملفات المستخدمين والأدوار"
+  on profiles for update
+  using (is_admin())
+  with check (is_admin());
+
+create or replace function public.prevent_profile_protected_column_update()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  if not public.is_admin()
+    and (
+      new.role is distinct from old.role
+      or new.points is distinct from old.points
+      or new.level is distinct from old.level
+    )
+  then
+    raise exception 'Only admins can update profile role, points, or level'
+      using errcode = '42501';
+  end if;
+
+  return new;
+end;
+$$;
+
+create trigger prevent_profile_protected_column_update
+  before update of role, points, level on public.profiles
+  for each row
+  execute function public.prevent_profile_protected_column_update();
 
 -- ---- سياسات المحتوى المنشور: الجميع يقرأ المعتمد، المشرف يدير الكل ----
 create policy "قراءة الدروس المعتمدة"
@@ -225,8 +266,8 @@ create policy "قراءة الفوائد المعتمدة"
   on fawaid for select using (status = 'approved' or is_admin());
 create policy "أي مستخدم مسجّل يرسل فائدة"
   on fawaid for insert with check (auth.uid() = submitted_by);
-create policy "المشرف يراجع الفوائد"
-  on fawaid for update using (is_admin()) with check (is_admin());
+create policy "المشرف يدير الفوائد"
+  on fawaid for all using (is_admin()) with check (is_admin());
 
 -- ---- التسجيلات/المفضلة/التقييم: كل شخص يدير بياناته فقط ----
 create policy "إدارة تسجيلاتي"
