@@ -222,7 +222,7 @@ function cardText(card: CondolenceCard) {
 export default function CondolencesPage() {
   const [card, setCard] = useState<CondolenceCard>(() => withIdentity(getSharedCardFromUrl() || INITIAL_CARD));
   const [archive, setArchive] = useState<CondolenceCard[]>([]);
-  const [copied, setCopied] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
   const template = TEMPLATES[card.templateId];
 
   useEffect(() => {
@@ -230,6 +230,11 @@ export default function CondolencesPage() {
   }, []);
 
   const shareUrl = useMemo(() => publicCardUrl(withIdentity(card)), [card]);
+
+  const showSuccess = (message: string) => {
+    setSuccessMessage(message);
+    window.setTimeout(() => setSuccessMessage(""), 2200);
+  };
 
   const update = (key: keyof CondolenceCard, value: string) => {
     setCard((current) => withIdentity({ ...current, [key]: value }));
@@ -241,14 +246,12 @@ export default function CondolencesPage() {
     writeArchive(nextArchive);
     setArchive(nextArchive);
     setCard(nextCard);
-    setCopied(true);
-    window.setTimeout(() => setCopied(false), 1800);
+    showSuccess("تم حفظ التعزية في الأرشيف.");
   };
 
   const copyLink = async () => {
     await navigator.clipboard.writeText(shareUrl);
-    setCopied(true);
-    window.setTimeout(() => setCopied(false), 1800);
+    showSuccess("تم نسخ الرابط الخاص.");
   };
 
   const shareWhatsApp = () => {
@@ -331,9 +334,9 @@ export default function CondolencesPage() {
             <button type="submit">حفظ في الأرشيف</button>
             <button type="button" onClick={copyLink}>إنشاء رابط خاص</button>
             <button type="button" onClick={shareWhatsApp}>مشاركة واتساب</button>
-            <button type="button" onClick={() => downloadCardImage(withIdentity(card))}>تحميل صورة عالية الجودة</button>
+            <button type="button" onClick={async () => { await downloadCardImage(withIdentity(card)); showSuccess("تم تحميل صورة التعزية بنجاح."); }}>تحميل صورة عالية الجودة</button>
           </div>
-          {copied && <p className="condolence-success">تم تنفيذ العملية بنجاح.</p>}
+          {successMessage && <p className="condolence-success" role="status">{successMessage}</p>}
         </form>
 
         <aside className="condolence-preview-wrap">
