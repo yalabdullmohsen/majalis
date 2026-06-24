@@ -81,9 +81,7 @@ export default function FawaidPage() {
           {displayed.map((f: any) => (
             <div key={f.id} style={{ padding: "1.25rem", borderRadius: "0.375rem", border: `1px solid ${C.line}`, background: C.parchmentDeep }}>
               <p style={{ fontSize: "0.9375rem", color: C.ink, lineHeight: "1.75" }}>
-                <span style={{ color: C.brassDeep, fontSize: "1.25rem", marginLeft: "0.25rem" }}>❝</span>
                 {f.text}
-                <span style={{ color: C.brassDeep, fontSize: "1.25rem", marginRight: "0.25rem" }}>❞</span>
               </p>
               {f.author_name && <p style={{ fontSize: "0.75rem", color: C.inkSoft, marginTop: "0.5rem", textAlign: "left" }}>— {f.author_name}</p>}
               {!isDemoId(f.id) && (

@@ -13,6 +13,54 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://majlisilm.com/lessons-map</loc>
+    <lastmod>2026-06-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.88</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/calendar</loc>
+    <lastmod>2026-06-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.88</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/series</loc>
+    <lastmod>2026-06-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.86</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/books</loc>
+    <lastmod>2026-06-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/audio-library</loc>
+    <lastmod>2026-06-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.84</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran</loc>
+    <lastmod>2026-06-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/adhkar</loc>
+    <lastmod>2026-06-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.78</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/kuwait-lessons</loc>
+    <lastmod>2026-06-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://majlisilm.com/announcements</loc>
     <lastmod>2026-06-24</lastmod>
     <changefreq>daily</changefreq>

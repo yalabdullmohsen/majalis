@@ -10,19 +10,43 @@ import { FawaidSection } from "@/pages/admin/FawaidSection";
 import { QaSection } from "@/pages/admin/QaSection";
 import { QuizSection } from "@/pages/admin/QuizSection";
 import { UsersSection } from "@/pages/admin/UsersSection";
+import { MosquesSection } from "@/pages/admin/MosquesSection";
+import { BooksSection } from "@/pages/admin/BooksSection";
+import { SeriesSection } from "@/pages/admin/SeriesSection";
+import { DailyContentSection } from "@/pages/admin/DailyContentSection";
+import { PrayerTimesSection } from "@/pages/admin/PrayerTimesSection";
 
-type Section = "stats" | "sheikhs" | "lessons" | "library" | "miracles" | "fawaid" | "qa" | "quiz" | "users";
+type Section =
+  | "stats"
+  | "sheikhs"
+  | "lessons"
+  | "mosques"
+  | "books"
+  | "series"
+  | "library"
+  | "miracles"
+  | "fawaid"
+  | "qa"
+  | "quiz"
+  | "daily"
+  | "prayer"
+  | "users";
 
-const NAV: { key: Section; label: string; icon: string }[] = [
-  { key: "stats",    label: "نظرة عامة",       icon: "📊" },
-  { key: "sheikhs",  label: "المشايخ",           icon: "👤" },
-  { key: "lessons",  label: "الدروس",            icon: "📚" },
-  { key: "library",  label: "المكتبة",           icon: "🏛️" },
-  { key: "miracles", label: "الإعجاز العلمي",    icon: "🌙" },
-  { key: "fawaid",   label: "الفوائد",           icon: "✨" },
-  { key: "qa",       label: "الأسئلة والأجوبة",  icon: "❓" },
-  { key: "quiz",     label: "المسابقات",          icon: "🏆" },
-  { key: "users",    label: "المستخدمون",         icon: "🧑‍🤝‍🧑" },
+const NAV: { key: Section; label: string }[] = [
+  { key: "stats", label: "نظرة عامة" },
+  { key: "sheikhs", label: "المشايخ" },
+  { key: "lessons", label: "الدروس" },
+  { key: "mosques", label: "المساجد" },
+  { key: "books", label: "الكتب" },
+  { key: "series", label: "السلاسل" },
+  { key: "library", label: "المكتبة" },
+  { key: "miracles", label: "الإعجاز العلمي" },
+  { key: "fawaid", label: "الفوائد" },
+  { key: "qa", label: "الأسئلة والأجوبة" },
+  { key: "quiz", label: "المسابقات" },
+  { key: "daily", label: "محتوى اليوم" },
+  { key: "prayer", label: "مواقيت الصلاة" },
+  { key: "users", label: "المستخدمون" },
 ];
 
 export default function AdminPage() {
@@ -48,10 +72,10 @@ export default function AdminPage() {
             color: C.brassDeep, fontWeight: 600,
           }}
         >
-          <span>📈</span> لوحة متقدمة
+          لوحة متقدمة
         </Link>
         <nav>
-          {NAV.map(n => (
+          {NAV.map((n) => (
             <button
               key={n.key}
               onClick={() => setSection(n.key)}
@@ -67,7 +91,6 @@ export default function AdminPage() {
                 transition: "all 0.12s",
               }}
             >
-              <span style={{ fontSize: "1rem" }}>{n.icon}</span>
               {n.label}
             </button>
           ))}
@@ -75,15 +98,20 @@ export default function AdminPage() {
       </aside>
 
       <main style={{ flex: 1, padding: "2rem 2rem 3rem", overflowX: "auto", minWidth: 0 }}>
-        {section === "stats"    && <StatsSection />}
-        {section === "sheikhs"  && <SheikhsSection />}
-        {section === "lessons"  && <LessonsSection />}
-        {section === "library"  && <LibrarySection />}
+        {section === "stats" && <StatsSection />}
+        {section === "sheikhs" && <SheikhsSection />}
+        {section === "lessons" && <LessonsSection />}
+        {section === "mosques" && <MosquesSection />}
+        {section === "books" && <BooksSection />}
+        {section === "series" && <SeriesSection />}
+        {section === "library" && <LibrarySection />}
         {section === "miracles" && <MiraclesSection />}
-        {section === "fawaid"   && <FawaidSection />}
-        {section === "qa"       && <QaSection />}
-        {section === "quiz"     && <QuizSection />}
-        {section === "users"    && <UsersSection />}
+        {section === "fawaid" && <FawaidSection />}
+        {section === "qa" && <QaSection />}
+        {section === "quiz" && <QuizSection />}
+        {section === "daily" && <DailyContentSection />}
+        {section === "prayer" && <PrayerTimesSection />}
+        {section === "users" && <UsersSection />}
       </main>
     </div>
   );

@@ -5048,3 +5048,541 @@ input, textarea, select { font-family: inherit; }
     grid-template-columns: 1fr;
   }
 }
+
+/* ── Platform v2: Today board, books, series, map, calendar ── */
+.ui-card-btn--ghost {
+  background: transparent;
+  color: var(--majalis-emerald-deep);
+  border: 1px solid var(--majalis-line);
+}
+
+.ui-card-btn--ghost:hover {
+  background: var(--majalis-parchment-deep);
+}
+
+.navbar-menu-btn {
+  min-height: 44px;
+  padding: 0.4rem 0.85rem;
+  border: 1px solid var(--majalis-line);
+  border-radius: 0.5rem;
+  background: var(--majalis-panel);
+  color: var(--majalis-emerald-deep);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.today-board {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.today-board-prayer h3 {
+  color: var(--majalis-emerald-deep);
+  font-size: 1rem;
+  margin-bottom: 0.85rem;
+}
+
+.today-board-prayer-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 0.85rem;
+}
+
+.today-prayer-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.85rem;
+  border-radius: 0.85rem;
+  border: 1px solid var(--majalis-line);
+  background: var(--majalis-parchment-deep);
+}
+
+.today-prayer-cell span {
+  color: var(--majalis-ink-soft);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.today-prayer-cell strong {
+  color: var(--majalis-emerald-deep);
+  font-size: 1.05rem;
+}
+
+.today-prayer-cell small {
+  color: var(--majalis-ink-soft);
+  font-size: 0.82rem;
+}
+
+.today-prayer-cell.is-previous {
+  background: linear-gradient(180deg, #f3f4f6, #fff);
+  border-color: rgba(91, 84, 70, 0.2);
+}
+
+.today-prayer-cell.is-next {
+  background: linear-gradient(180deg, #fbf5e7, #fff);
+  border-color: rgba(176, 141, 46, 0.35);
+}
+
+.today-prayer-cell.is-remaining {
+  background: linear-gradient(180deg, #eef5ff, #fff);
+  border-color: rgba(30, 64, 175, 0.2);
+}
+
+.today-prayer-all {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  color: var(--majalis-ink-soft);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.today-board-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.today-board-item {
+  padding: 1rem;
+  border-radius: 0.9rem;
+  border: 1px solid var(--majalis-line);
+  background: var(--majalis-parchment-deep);
+}
+
+.today-board-item h4 {
+  color: var(--majalis-emerald-deep);
+  font-size: 0.92rem;
+  margin-bottom: 0.5rem;
+}
+
+.today-board-meaning {
+  margin-top: 0.65rem;
+  padding-top: 0.65rem;
+  border-top: 1px solid var(--majalis-line);
+  color: var(--majalis-ink);
+  font-size: 0.88rem;
+}
+
+.today-ayah {
+  color: var(--majalis-emerald-deep);
+  font-size: 1.05rem;
+  line-height: 1.85;
+}
+
+.today-upcoming-count {
+  display: block;
+  font-size: 2rem;
+  color: var(--majalis-emerald-deep);
+  margin: 0.35rem 0 0.65rem;
+}
+
+.today-board-stats {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.today-board-link {
+  margin-top: 0.65rem;
+  width: fit-content;
+}
+
+.books-grid,
+.books-page-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.book-card {
+  display: grid;
+  grid-template-columns: 88px 1fr;
+  gap: 1rem;
+  padding: 1rem;
+  align-items: start;
+}
+
+.book-cover {
+  width: 88px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  border: 1px solid var(--majalis-line);
+  background: var(--majalis-parchment-deep);
+}
+
+.book-card h3 {
+  color: var(--majalis-emerald-deep);
+  font-size: 1rem;
+  margin: 0.35rem 0;
+}
+
+.book-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.65rem;
+}
+
+.series-category-block {
+  margin-bottom: 1.5rem;
+}
+
+.series-category-title {
+  color: var(--majalis-emerald-deep);
+  font-size: 1.05rem;
+  margin-bottom: 0.75rem;
+}
+
+.series-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.series-card {
+  display: block;
+  padding: 1.15rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.series-card h3,
+.series-card h4 {
+  color: var(--majalis-emerald-deep);
+  font-size: 1rem;
+  margin-bottom: 0.35rem;
+}
+
+.series-progress-bar {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--majalis-line);
+  margin: 0.65rem 0 0.35rem;
+  overflow: hidden;
+}
+
+.series-progress-bar span {
+  display: block;
+  height: 100%;
+  background: var(--majalis-emerald);
+  border-radius: 999px;
+}
+
+.series-progress-label {
+  color: var(--majalis-ink-soft);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.series-card--full {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.series-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.65rem;
+}
+
+.mosque-map-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.mosque-map-card {
+  padding: 1.15rem;
+}
+
+.mosque-map-card--today {
+  border: 2px solid var(--majalis-emerald);
+  background: linear-gradient(180deg, #ecf7f1, #fff);
+}
+
+.mosque-map-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.35rem;
+}
+
+.mosque-map-card-head h3 {
+  color: var(--majalis-emerald-deep);
+  font-size: 1.05rem;
+}
+
+.mosque-lesson-count {
+  color: var(--majalis-ink-soft);
+  font-size: 0.85rem;
+  margin: 0.35rem 0 0.65rem;
+}
+
+.mosque-lesson-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.55rem 0;
+  border-top: 1px solid var(--majalis-line);
+  font-size: 0.85rem;
+}
+
+.mosque-lesson-preview strong {
+  color: var(--majalis-ink);
+}
+
+.mosque-lesson-preview span {
+  color: var(--majalis-ink-soft);
+}
+
+.mosque-map-actions,
+.mosque-detail-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.85rem;
+}
+
+.calendar-period-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.calendar-period-btn {
+  min-height: 44px;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--majalis-line);
+  border-radius: 0.65rem;
+  background: var(--majalis-panel);
+  color: var(--majalis-ink-soft);
+  font-weight: 700;
+  font-size: 0.88rem;
+}
+
+.calendar-period-btn.is-active {
+  background: var(--majalis-emerald);
+  border-color: var(--majalis-emerald);
+  color: var(--majalis-parchment);
+}
+
+.calendar-lesson-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.calendar-lesson-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem;
+  flex-wrap: wrap;
+}
+
+.calendar-subtitle {
+  color: var(--majalis-emerald-deep);
+  font-size: 1.05rem;
+  margin-bottom: 0.75rem;
+}
+
+.sheikh-detail-card {
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.sheikh-detail-head {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.sheikh-title {
+  color: var(--majalis-ink-soft);
+  font-weight: 600;
+}
+
+.sheikh-socials {
+  margin-top: 1.25rem;
+}
+
+.sheikh-social-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.page-back-link {
+  display: inline-block;
+  margin-bottom: 1rem;
+  color: var(--majalis-emerald);
+  font-weight: 700;
+  font-size: 0.88rem;
+}
+
+.page-shell--narrow {
+  max-width: 52rem;
+}
+
+.page-note {
+  margin-top: 1.25rem;
+  color: var(--majalis-ink-soft);
+  font-size: 0.88rem;
+}
+
+.audio-library-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.audio-lesson-card {
+  padding: 1.15rem;
+}
+
+.audio-lesson-card h3 {
+  color: var(--majalis-emerald-deep);
+  font-size: 1rem;
+  margin-bottom: 0.35rem;
+}
+
+.audio-transcript {
+  color: var(--majalis-ink-soft);
+  font-size: 0.85rem;
+  margin: 0.5rem 0;
+}
+
+.audio-lesson-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.audio-unavailable {
+  color: var(--majalis-ink-soft);
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 0.5rem 0;
+}
+
+.favorites-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.favorite-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  flex-wrap: wrap;
+}
+
+.login-prompt {
+  padding: 1.5rem;
+  text-align: center;
+  max-width: 28rem;
+  margin: 1rem auto;
+}
+
+.login-prompt p {
+  margin-bottom: 1rem;
+}
+
+.quran-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.quran-surah-card {
+  padding: 1rem;
+  text-align: center;
+}
+
+.quran-number {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  line-height: 2rem;
+  border-radius: 999px;
+  background: var(--majalis-sage);
+  color: var(--majalis-emerald-deep);
+  font-weight: 800;
+  font-size: 0.82rem;
+  margin-bottom: 0.35rem;
+}
+
+.quran-tafsir-note {
+  color: var(--majalis-ink-soft);
+  font-size: 0.78rem;
+  margin-top: 0.35rem;
+}
+
+.adhkar-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.adhkar-section {
+  padding: 1.25rem;
+}
+
+.adhkar-section h2 {
+  color: var(--majalis-emerald-deep);
+  font-size: 1.1rem;
+  margin-bottom: 0.85rem;
+}
+
+.adhkar-section ol {
+  padding-right: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.adhkar-count {
+  display: inline-block;
+  margin-right: 0.5rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  background: var(--majalis-sage);
+  color: var(--majalis-emerald-deep);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .today-board-prayer-grid,
+  .today-board-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .book-card {
+    grid-template-columns: 1fr;
+  }
+
+  .book-cover {
+    width: 100%;
+    max-width: 120px;
+    height: auto;
+    aspect-ratio: 3 / 4;
+  }
+}

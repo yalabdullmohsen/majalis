@@ -574,6 +574,98 @@ export async function adminSetQuizQuestionStatus(id: string, status: string) {
     .eq("id", id);
 }
 
+// ─── Platform v2 admin ─────────────────────────────────────────────────────────
+
+export async function adminGetMosques() {
+  const { data, error } = await supabase.from("mosques").select("*").order("name");
+  if (error) logSupabaseError("adminGetMosques", error);
+  return { data: data || [], error };
+}
+
+export async function adminUpsertMosque(data: any) {
+  const { id, ...rest } = data;
+  if (id) return await supabase.from("mosques").update(rest).eq("id", id);
+  return await supabase.from("mosques").insert(rest);
+}
+
+export async function adminDeleteMosque(id: string) {
+  return await supabase.from("mosques").delete().eq("id", id);
+}
+
+export async function adminGetBooks() {
+  const { data, error } = await supabase.from("books").select("*").order("title");
+  if (error) logSupabaseError("adminGetBooks", error);
+  return { data: data || [], error };
+}
+
+export async function adminUpsertBook(data: any) {
+  const { id, ...rest } = data;
+  if (id) return await supabase.from("books").update(rest).eq("id", id);
+  return await supabase.from("books").insert(rest);
+}
+
+export async function adminDeleteBook(id: string) {
+  return await supabase.from("books").delete().eq("id", id);
+}
+
+export async function adminGetLessonSeries() {
+  const { data, error } = await supabase
+    .from("lesson_series")
+    .select("*, sheikhs(name)")
+    .order("title");
+  if (error) logSupabaseError("adminGetLessonSeries", error);
+  return { data: data || [], error };
+}
+
+export async function adminUpsertLessonSeries(data: any) {
+  const { id, sheikhs, ...rest } = data;
+  if (id) return await supabase.from("lesson_series").update(rest).eq("id", id);
+  return await supabase.from("lesson_series").insert(rest);
+}
+
+export async function adminDeleteLessonSeries(id: string) {
+  return await supabase.from("lesson_series").delete().eq("id", id);
+}
+
+export async function adminGetDailyContent() {
+  const { data, error } = await supabase
+    .from("daily_content")
+    .select("*")
+    .order("publish_date", { ascending: false });
+  if (error) logSupabaseError("adminGetDailyContent", error);
+  return { data: data || [], error };
+}
+
+export async function adminUpsertDailyContent(data: any) {
+  const { id, ...rest } = data;
+  if (id) return await supabase.from("daily_content").update(rest).eq("id", id);
+  return await supabase.from("daily_content").insert(rest);
+}
+
+export async function adminDeleteDailyContent(id: string) {
+  return await supabase.from("daily_content").delete().eq("id", id);
+}
+
+export async function adminGetPrayerTimesRows() {
+  const { data, error } = await supabase
+    .from("prayer_times")
+    .select("*")
+    .order("date", { ascending: false })
+    .limit(60);
+  if (error) logSupabaseError("adminGetPrayerTimesRows", error);
+  return { data: data || [], error };
+}
+
+export async function adminUpsertPrayerTime(data: any) {
+  const { id, ...rest } = data;
+  if (id) return await supabase.from("prayer_times").update(rest).eq("id", id);
+  return await supabase.from("prayer_times").insert(rest);
+}
+
+export async function adminDeletePrayerTime(id: string) {
+  return await supabase.from("prayer_times").delete().eq("id", id);
+}
+
 // ─── Search ────────────────────────────────────────────────────────────────────
 
 export type SearchResults = {

@@ -38,4 +38,4 @@ export const QA_STATUS_LABELS: Record<string, string> = { published: "منشور
 export const QA_REVIEW_LABELS: Record<string, string> = { approved: "معتمد", needs_review: "يحتاج مراجعة" };
 
 export const QA_DISCLAIMER =
-  "المحتوى علمي وتعليمي، وما يحتاج إلى فتوى خاصة يُحال إلى أهل العلم المختصين.";
+  "الفتاوى الخاصة تُعرض على أهل العلم المختصين. المحتوى علمي وتعليمي عام.";

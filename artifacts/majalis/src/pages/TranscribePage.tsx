@@ -208,7 +208,7 @@ export default function TranscribePage() {
         <Link href="/" className="text-sm font-bold text-[#164E3C] hover:underline">
           ← المجلس العلمي
         </Link>
-        <h1 className="mt-2 text-2xl font-bold text-[#164E3C]">🎙️ تفريغ المحاضرات</h1>
+        <h1 className="mt-2 text-2xl font-bold text-[#164E3C]">تفريغ المحاضرات</h1>
         <p className="mb-8 text-[#5B5446]">حوّل الصوت والفيديو إلى نص مع تلخيص ذكي واستخراج الفوائد</p>
 
         {!isLoggedIn && (
@@ -219,9 +219,9 @@ export default function TranscribePage() {
 
         <div className="mb-6 flex gap-2 rounded-xl border border-[#E0D7C4] bg-white p-1 shadow-sm">
           {[
-            { id: "upload" as const, label: "📁 رفع ملف" },
-            { id: "youtube" as const, label: "▶️ يوتيوب" },
-            { id: "text" as const, label: "📝 نص مباشر" },
+            { id: "upload" as const, label: "رفع ملف" },
+            { id: "youtube" as const, label: "يوتيوب" },
+            { id: "text" as const, label: "نص مباشر" },
           ].map((tab) => (
             <button
               key={tab.id}
@@ -255,7 +255,7 @@ export default function TranscribePage() {
               }`}
             >
               <input {...getInputProps()} />
-              <div className="mb-3 text-4xl">🎵</div>
+              <div className="mb-3 text-sm font-bold text-[#5B5446]">ملف صوتي أو مرئي</div>
               {file ? (
                 <p className="font-medium text-[#164E3C]">{file.name}</p>
               ) : (
@@ -297,12 +297,12 @@ export default function TranscribePage() {
               <div className="mb-1 flex justify-between text-sm">
                 <span className="text-[#5B5446]">
                   {status === "uploading"
-                    ? "⏫ جاري الرفع..."
+                    ? "جاري الرفع..."
                     : status === "processing"
-                      ? "🧠 Claude يحلل المحتوى..."
+                      ? "Claude يحلل المحتوى..."
                       : status === "done"
-                        ? "✅ اكتملت المعالجة"
-                        : "❌ حدث خطأ"}
+                        ? "اكتملت المعالجة"
+                        : "حدث خطأ"}
                 </span>
                 <span className="font-medium text-[#164E3C]">{progress}%</span>
               </div>
@@ -327,7 +327,7 @@ export default function TranscribePage() {
             disabled={!isLoggedIn || status === "uploading" || status === "processing"}
             className="w-full rounded-xl bg-[#1F6E54] py-4 text-lg font-bold text-white transition-all hover:bg-[#164E3C] disabled:opacity-50"
           >
-            {status === "uploading" || status === "processing" ? "⏳ جاري المعالجة..." : "🚀 ابدأ التحليل الذكي"}
+            {status === "uploading" || status === "processing" ? "جاري المعالجة..." : "ابدأ التحليل الذكي"}
           </button>
         </div>
 
@@ -335,7 +335,7 @@ export default function TranscribePage() {
           <div className="mt-8 space-y-6">
             {result.summary && (
               <div className="rounded-2xl border border-[#E0D7C4] bg-white p-6 shadow-sm">
-                <h2 className="mb-4 text-xl font-bold text-[#164E3C]">📋 الملخص الذكي</h2>
+                <h2 className="mb-4 text-xl font-bold text-[#164E3C]">الملخص الذكي</h2>
                 <p className="text-lg leading-relaxed text-[#241F18]">{result.summary}</p>
               </div>
             )}
@@ -343,7 +343,7 @@ export default function TranscribePage() {
             {result.benefits && result.benefits.length > 0 && (
               <div className="rounded-2xl border border-[#E0D7C4] bg-white p-6 shadow-sm">
                 <h2 className="mb-4 text-xl font-bold text-[#164E3C]">
-                  💡 الفوائد المستخرجة ({result.benefits.length})
+                  الفوائد المستخرجة ({result.benefits.length})
                 </h2>
                 <div className="space-y-3">
                   {result.benefits.map((b, i) => (
@@ -367,7 +367,7 @@ export default function TranscribePage() {
 
             {result.key_quotes && result.key_quotes.length > 0 && (
               <div className="rounded-2xl border border-[#E0D7C4] bg-white p-6 shadow-sm">
-                <h2 className="mb-4 text-xl font-bold text-[#164E3C]">💬 أبرز الاقتباسات</h2>
+                <h2 className="mb-4 text-xl font-bold text-[#164E3C]">أبرز الاقتباسات</h2>
                 <div className="space-y-3">
                   {result.key_quotes.map((q, i) => (
                     <blockquote key={i} className="border-r-4 border-[#1F6E54] pr-4 italic text-[#5B5446]">

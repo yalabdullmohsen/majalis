@@ -105,9 +105,9 @@ export default function ContentActions({ contentType, contentId }: Props) {
             key={star}
             type="button"
             onClick={() => handleRating(star)}
-            className={`text-2xl transition-transform hover:scale-110 ${rating >= star ? "text-amber-400" : "text-gray-300"}`}
+            className={`text-sm font-bold px-1 transition-transform hover:scale-110 ${rating >= star ? "text-amber-600" : "text-gray-300"}`}
           >
-            ★
+            {star}
           </button>
         ))}
       </div>
@@ -118,7 +118,7 @@ export default function ContentActions({ contentType, contentId }: Props) {
         className={`flex items-center gap-1 px-3 py-1.5 rounded-lg text-sm font-medium transition-all border
           ${bookmarked ? "bg-amber-50 border-amber-300 text-amber-700" : "bg-white border-gray-300 text-gray-600 hover:border-amber-300"}`}
       >
-        {bookmarked ? "🔖 محفوظ" : "🔖 احفظ"}
+        {bookmarked ? "محفوظ" : "احفظ"}
       </button>
 
       <button
@@ -126,7 +126,7 @@ export default function ContentActions({ contentType, contentId }: Props) {
         onClick={() => setShowReport(!showReport)}
         className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-sm font-medium border bg-white border-gray-300 text-gray-600 hover:border-red-300 hover:text-red-600 transition-all"
       >
-        🚩 إبلاغ
+        إبلاغ
       </button>
 
       {showReport && (

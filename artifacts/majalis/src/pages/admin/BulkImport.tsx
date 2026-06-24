@@ -81,7 +81,7 @@ export function BulkImport({ title, template, hint, importRow, onDone }: BulkImp
             onClick={e => e.stopPropagation()}
           >
             <div style={{ padding: "1rem 1.25rem", borderBottom: `1px solid ${C.line}`, display: "flex", justifyContent: "space-between", alignItems: "center", flexShrink: 0 }}>
-              <button onClick={close} style={{ background: "none", border: "none", cursor: "pointer", color: C.inkSoft, fontSize: "1.25rem", lineHeight: 1, padding: "0.25rem 0.5rem" }}>✕</button>
+              <button onClick={close} aria-label="إغلاق" style={{ background: "none", border: "none", cursor: "pointer", color: C.inkSoft, fontSize: "1.25rem", lineHeight: 1, padding: "0.25rem 0.5rem" }}>×</button>
               <h2 style={{ margin: 0, fontSize: "1.0625rem", fontWeight: 700, color: C.emeraldDeep }}>{title}</h2>
             </div>
 

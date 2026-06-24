@@ -99,7 +99,7 @@ export default function QuizPage() {
     <div className="page-shell narrow">
       <PageHeader
         eyebrow="اختبر معلوماتك"
-        title="🏆 المسابقات الشرعية"
+        title="المسابقات الشرعية"
         subtitle="أسئلة تعليمية في الأنبياء والصحابة والسيرة والأحكام والصالحين — اختر القسم وابدأ."
       />
 
@@ -135,7 +135,7 @@ export default function QuizPage() {
               className="page-action-btn"
               style={{ width: "100%", marginTop: "1.5rem", padding: "0.875rem", fontSize: "1rem" }}
             >
-              ▶️ ابدأ المسابقة ({effectiveCount} {effectiveCount === 1 ? "سؤال" : "أسئلة"})
+              ابدأ المسابقة ({effectiveCount} {effectiveCount === 1 ? "سؤال" : "أسئلة"})
             </button>
           )}
         </>
@@ -169,7 +169,7 @@ export default function QuizPage() {
 
           {!revealed ? (
             <button type="button" onClick={checkAnswer} disabled={!input.trim()} className="page-action-btn" style={{ width: "100%" }}>
-              ✓ تحقق من الإجابة
+              تحقق من الإجابة
             </button>
           ) : (
             <div style={{ display: "grid", gap: "0.75rem" }}>
@@ -181,7 +181,7 @@ export default function QuizPage() {
                 color: correct ? C.emeraldDeep : "#991B1B",
                 fontWeight: 600,
               }}>
-                {correct ? "✅ إجابة صحيحة — بارك الله فيك!" : `❌ الإجابة الصحيحة: ${current.answer}`}
+                {correct ? "إجابة صحيحة — بارك الله فيك!" : `الإجابة الصحيحة: ${current.answer}`}
               </div>
               <button type="button" onClick={nextQuestion} className="page-action-btn" style={{ width: "100%" }}>
                 {index + 1 >= deck.length ? "عرض النتيجة" : "السؤال التالي ←"}
@@ -197,8 +197,7 @@ export default function QuizPage() {
 
       {phase === "done" && (
         <div style={{ textAlign: "center", marginTop: "2rem", padding: "2rem 1rem", borderRadius: "1rem", border: `1px solid ${C.line}`, background: C.panel }}>
-          <p style={{ fontSize: "3rem", margin: "0 0 0.5rem" }}>🎉</p>
-          <h2 style={{ margin: "0 0 0.5rem", color: C.emeraldDeep }}>انتهت المسابقة</h2>
+          <h2 style={{ margin: "0 0 0.5rem", color: C.emeraldDeep, fontSize: "1.5rem" }}>انتهت المسابقة</h2>
           <p style={{ fontSize: "2rem", fontWeight: 700, color: C.emerald, margin: "0.5rem 0 1.5rem" }}>
             {score} / {deck.length}
           </p>
@@ -210,7 +209,7 @@ export default function QuizPage() {
                 : "لا بأس — راجع الأسئلة وحاول مجدداً."}
           </p>
           <div style={{ display: "flex", gap: "0.75rem", justifyContent: "center", flexWrap: "wrap" }}>
-            <button type="button" onClick={startQuiz} className="page-action-btn">🔄 إعادة نفس المسابقة</button>
+            <button type="button" onClick={startQuiz} className="page-action-btn">إعادة نفس المسابقة</button>
             <button type="button" onClick={reset} className="page-toggle-btn">← إعدادات جديدة</button>
           </div>
         </div>

@@ -7,12 +7,12 @@ const KUWAIT_LON = 47.9774;
 const KUWAIT_METHOD = 9;
 
 const PRAYER_KEYS = [
-  { key: "Fajr", name: "الفجر", icon: "🌙", obligatory: true },
-  { key: "Sunrise", name: "الشروق", icon: "🌅", obligatory: false },
-  { key: "Dhuhr", name: "الظهر", icon: "☀️", obligatory: true },
-  { key: "Asr", name: "العصر", icon: "🌤️", obligatory: true },
-  { key: "Maghrib", name: "المغرب", icon: "🌇", obligatory: true },
-  { key: "Isha", name: "العشاء", icon: "🌙", obligatory: true },
+  { key: "Fajr", name: "الفجر", icon: "", obligatory: true },
+  { key: "Sunrise", name: "الشروق", icon: "", obligatory: false },
+  { key: "Dhuhr", name: "الظهر", icon: "", obligatory: true },
+  { key: "Asr", name: "العصر", icon: "", obligatory: true },
+  { key: "Maghrib", name: "المغرب", icon: "", obligatory: true },
+  { key: "Isha", name: "العشاء", icon: "", obligatory: true },
 ];
 
 /** @type {{ dateKey: string | null; payload: object | null; fetchedAt: number }} */

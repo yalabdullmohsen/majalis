@@ -6,6 +6,7 @@ import { DemoNotice, ErrorState, SearchSkeleton } from "@/components/ui-common";
 import { demoNoticeText } from "@/lib/demo-content";
 import { SheikhAvatar } from "@/components/lessons/SheikhAvatar";
 import { resolveSheikhImageUrl, resolveLessonSheikhImage } from "@/lib/sheikh-image";
+import { searchPlatformExtras } from "@/lib/platform-search";
 
 const EMPTY: SearchResults = {
   lessons: [],
@@ -63,6 +64,7 @@ export default function SearchPage() {
   const q = params.q ? decodeURIComponent(params.q) : "";
   const [term, setTerm] = useState(q);
   const [results, setResults] = useState<SearchResults>(EMPTY);
+  const [extras, setExtras] = useState({ books: [] as any[], series: [] as any[], mosques: [] as any[], transcripts: [] as any[] });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [usingDemo, setUsingDemo] = useState(false);
@@ -80,8 +82,9 @@ export default function SearchPage() {
     setUsingDemo(false);
 
     try {
-      const r = await searchEverything(query);
+      const [r, e] = await Promise.all([searchEverything(query), searchPlatformExtras(query)]);
       setResults(r);
+      setExtras(e);
       setUsingDemo(!!r.usingDemo);
 
       if (r.error) {
@@ -123,7 +126,11 @@ export default function SearchPage() {
     results.miracles.length +
     results.sheikhs.length +
     results.qa.length +
-    results.fawaid.length;
+    results.fawaid.length +
+    extras.books.length +
+    extras.series.length +
+    extras.mosques.length +
+    extras.transcripts.length;
 
   return (
     <div className="page-shell narrow search-page">
@@ -208,6 +215,26 @@ export default function SearchPage() {
                 title="الأسئلة والأجوبة"
                 items={results.qa}
                 render={(x) => <ResultRow key={x.id} href="/qa" title={x.question} meta={x.qa_categories?.name} />}
+              />
+              <Group
+                title="الكتب"
+                items={extras.books}
+                render={(b) => <ResultRow key={b.id} href="/books" title={b.title} meta={b.author} />}
+              />
+              <Group
+                title="السلاسل"
+                items={extras.series}
+                render={(s) => <ResultRow key={s.id} href="/series" title={s.title} meta={s.sheikh_name} />}
+              />
+              <Group
+                title="المساجد"
+                items={extras.mosques}
+                render={(m) => <ResultRow key={m.id} href={`/mosques/${m.id}`} title={m.name} meta={`${m.governorate} — ${m.area || ""}`} />}
+              />
+              <Group
+                title="التفريغات"
+                items={extras.transcripts}
+                render={(t) => <ResultRow key={t.id} href="/audio-library" title={t.title} meta={t.sheikh_name} />}
               />
               <Group
                 title="الفوائد"

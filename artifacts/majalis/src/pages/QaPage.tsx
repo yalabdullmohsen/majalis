@@ -19,7 +19,6 @@ import { DEMO_QA, DEMO_QA_CATEGORIES, demoNoticeText, isDemoId } from "@/lib/dem
 function Disclaimer() {
   return (
     <div className="qa-disclaimer">
-      <span aria-hidden="true">⚠️</span>
       <p>{QA_DISCLAIMER}</p>
     </div>
   );
@@ -44,7 +43,7 @@ function ReviewBadge({ status }: { status: string }) {
         color: approved ? "#065F46" : "#92400E",
       }}
     >
-      {approved ? "✓ " : "↻ "}
+      {approved ? "" : ""}
       {QA_REVIEW_LABELS[status] || status}
     </span>
   );

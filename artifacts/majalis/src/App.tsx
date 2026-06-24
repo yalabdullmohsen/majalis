@@ -9,6 +9,15 @@ import AboutPage from "@/pages/AboutPage";
 import SearchPage from "@/pages/SearchPage";
 import LessonsPage from "@/pages/LessonsPage";
 import KuwaitLessonsPage from "@/pages/KuwaitLessonsPage";
+import LessonsMapPage from "@/pages/LessonsMapPage";
+import CalendarPage from "@/pages/CalendarPage";
+import SeriesPage from "@/pages/SeriesPage";
+import BooksPage from "@/pages/BooksPage";
+import AudioLibraryPage from "@/pages/AudioLibraryPage";
+import FavoritesPage from "@/pages/FavoritesPage";
+import QuranPage from "@/pages/QuranPage";
+import AdhkarPage from "@/pages/AdhkarPage";
+import MosqueDetailPage from "@/pages/MosqueDetailPage";
 import CurrentLessonsPage from "@/pages/CurrentLessonsPage";
 import AnnouncementsPage from "@/pages/AnnouncementsPage";
 import CoursesPage from "@/pages/CoursesPage";
@@ -48,6 +57,16 @@ function SafeLazyRoute({ component: Component }: { component: ComponentType }) {
   );
 }
 
+function SafeRoute({ path, component: Component }: { path: string; component: ComponentType }) {
+  return (
+    <Route path={path}>
+      <ErrorBoundary>
+        <Component />
+      </ErrorBoundary>
+    </Route>
+  );
+}
+
 function Router() {
   return (
     <Switch>
@@ -56,12 +75,21 @@ function Router() {
       <Route path="/search/:q" component={SearchPage} />
       <Route path="/search" component={SearchPage} />
       <Route path="/lessons" component={LessonsPage} />
+      <Route path="/lessons-map" component={LessonsMapPage} />
       <Route path="/kuwait-lessons" component={KuwaitLessonsPage} />
+      <Route path="/calendar" component={CalendarPage} />
+      <Route path="/series" component={SeriesPage} />
+      <Route path="/books" component={BooksPage} />
+      <Route path="/audio-library" component={AudioLibraryPage} />
+      <Route path="/favorites" component={FavoritesPage} />
+      <Route path="/quran" component={QuranPage} />
+      <Route path="/adhkar" component={AdhkarPage} />
       <Route path="/announcements" component={AnnouncementsPage} />
       <Route path="/lessons/current" component={CurrentLessonsPage} />
       <Route path="/courses" component={CoursesPage} />
       <Route path="/sheikhs" component={SheikhsPage} />
-      <Route path="/sheikhs/:id" component={SheikhDetailPage} />
+      <SafeRoute path="/sheikhs/:id" component={SheikhDetailPage} />
+      <SafeRoute path="/mosques/:id" component={MosqueDetailPage} />
       <Route path="/library" component={LibraryPage} />
       <Route path="/miracles" component={MiraclesPage} />
       <Route path="/fawaid" component={FawaidPage} />

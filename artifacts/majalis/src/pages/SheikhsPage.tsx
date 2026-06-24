@@ -90,7 +90,7 @@ export default function SheikhsPage() {
                 />
                 <div>
                   <p className="sheikh-name">{s.name}</p>
-                  {s.is_verified && <span className="verified-badge">✓ معتمد</span>}
+                  {s.is_verified && <span className="verified-badge">معتمد</span>}
                 </div>
               </div>
               {s.ijazah && <p className="page-meta">{s.ijazah}</p>}

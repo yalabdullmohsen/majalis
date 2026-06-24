@@ -7,25 +7,29 @@ import { C } from "@/lib/theme";
 const HIDDEN_NAV_HREFS = new Set(["/sheikhs", "/transcribe"]);
 
 const NEW_NAV_ITEMS = [
-  { href: "/cards", label: "🎨 البطاقات" },
+  { href: "/calendar", label: "التقويم" },
+  { href: "/lessons-map", label: "خريطة الدروس" },
+  { href: "/favorites", label: "المفضلة" },
+  { href: "/cards", label: "البطاقات" },
   { href: "/condolences", label: "قوالب العزاء" },
 ];
 
 const TABS = [
   { href: "/", label: "الرئيسية" },
-  { href: "/announcements", label: "إعلانات الدروس" },
-  { href: "/courses", label: "الدورات" },
-  { href: "/lessons", label: "الدروس" },
   { href: "/kuwait-lessons", label: "دروس الكويت" },
-  { href: "/sheikhs", label: "المشايخ" },
+  { href: "/lessons", label: "الدروس" },
+  { href: "/series", label: "السلاسل" },
+  { href: "/books", label: "الكتب" },
   { href: "/library", label: "المكتبة" },
-  { href: "/miracles", label: "الإعجاز العلمي" },
-  { href: "/fawaid", label: "الفوائد" },
-  { href: "/qa", label: "الأسئلة والأجوبة" },
-  { href: "/quiz", label: "🏆 المسابقات" },
-  { href: "/transcribe", label: "🎙️ تفريغ" },
+  { href: "/audio-library", label: "الصوتيات" },
+  { href: "/quran", label: "القرآن" },
+  { href: "/adhkar", label: "الأذكار" },
+  { href: "/qa", label: "الفتاوى" },
+  { href: "/announcements", label: "الإعلانات" },
+  { href: "/sheikhs", label: "المشايخ" },
+  { href: "/transcribe", label: "تفريغ" },
   ...NEW_NAV_ITEMS,
-  { href: "/assistant", label: "المساعد الذكي" },
+  { href: "/assistant", label: "المساعد" },
   { href: "/about", label: "عن المنصة" },
 ].filter((tab) => !HIDDEN_NAV_HREFS.has(tab.href));
 
@@ -72,7 +76,7 @@ function SearchBox({ onSubmitDone }: { onSubmitDone?: () => void }) {
         style={{ border: "none", outline: "none", background: "transparent", fontSize: "0.8125rem", fontFamily: "inherit", padding: "0.3rem 0.5rem", color: C.ink, width: "8.5rem" }}
       />
       <button type="submit" aria-label="بحث" style={{ border: "none", background: C.emerald, color: C.parchment, borderRadius: "0.375rem", cursor: "pointer", padding: "0.3rem 0.55rem", fontSize: "0.8rem" }}>
-        🔍
+        بحث
       </button>
     </form>
   );
@@ -81,7 +85,7 @@ function SearchBox({ onSubmitDone }: { onSubmitDone?: () => void }) {
 function MobileQuickNav({ location }: { location: string }) {
   return (
     <nav className="mobile-quick-nav" aria-label="أدوات سريعة">
-      {NEW_NAV_ITEMS.map((item) => {
+      {NEW_NAV_ITEMS.slice(0, 3).map((item) => {
         const active = location === item.href;
         return (
           <Link
@@ -120,11 +124,7 @@ export default function NavBar() {
             minWidth: 0,
           }}
         >
-          <img
-            src="/logo-icon.png"
-            alt="المجلس العلمي"
-            className="navbar-logo"
-          />
+          <img src="/logo-icon.png" alt="المجلس العلمي" className="navbar-logo" />
           <span className="site-brand-name">المجلس العلمي</span>
         </Link>
 
@@ -153,8 +153,8 @@ export default function NavBar() {
           ))}
 
           {isMobile && (
-            <button onClick={() => setOpen((o) => !o)} aria-label="القائمة" style={{ border: `1px solid ${C.line}`, background: C.panel, borderRadius: "0.5rem", padding: "0.4rem 0.6rem", cursor: "pointer", fontSize: "1.1rem", lineHeight: 1, color: C.emeraldDeep }}>
-              {open ? "✕" : "☰"}
+            <button onClick={() => setOpen((o) => !o)} aria-label="القائمة" className="navbar-menu-btn">
+              {open ? "إغلاق" : "القائمة"}
             </button>
           )}
         </div>
