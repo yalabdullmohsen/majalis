@@ -1,4 +1,5 @@
 import express from "express";
+import compression from "compression";
 import path from "node:path";
 import { existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -19,6 +20,15 @@ if (Number.isNaN(port) || port <= 0) {
 
 const app = express();
 app.disable("x-powered-by");
+app.use(compression());
+
+app.use((_req, res, next) => {
+  res.setHeader("X-Content-Type-Options", "nosniff");
+  res.setHeader("X-Frame-Options", "DENY");
+  res.setHeader("X-XSS-Protection", "1; mode=block");
+  res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
+  next();
+});
 
 const assistantRateLimit = createRateLimiter({
   windowMs: 60_000,
@@ -69,7 +79,17 @@ function prerenderPath(urlPath) {
   return path.join(distDir, "index.html");
 }
 
-app.use(express.static(distDir, { index: false, maxAge: "1h" }));
+app.use(
+  express.static(distDir, {
+    index: false,
+    maxAge: "1h",
+    setHeaders(res, filePath) {
+      if (filePath.includes(`${path.sep}assets${path.sep}`)) {
+        res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+      }
+    },
+  }),
+);
 
 app.use((req, res, next) => {
   if (req.method !== "GET" && req.method !== "HEAD") {

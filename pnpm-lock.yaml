@@ -233,6 +233,9 @@ importers:
       '@supabase/supabase-js':
         specifier: ^2.108.2
         version: 2.108.2
+      compression:
+        specifier: ^1.8.1
+        version: 1.8.1
       express:
         specifier: ^5.2.1
         version: 5.2.1

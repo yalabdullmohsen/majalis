@@ -4,6 +4,12 @@ import { useAuth } from "./AuthProvider";
 import NotificationBell from "./NotificationBell";
 import { C } from "@/lib/theme";
 
+const NEW_NAV_ITEMS = [
+  { href: "/transcribe", label: "🎙️ تفريغ" },
+  { href: "/cards", label: "🎨 البطاقات" },
+  { href: "/condolences", label: "🤲 التعزية" },
+];
+
 const TABS = [
   { href: "/", label: "الرئيسية" },
   { href: "/lessons", label: "الدروس" },
@@ -12,9 +18,7 @@ const TABS = [
   { href: "/miracles", label: "الإعجاز العلمي" },
   { href: "/fawaid", label: "الفوائد" },
   { href: "/qa", label: "الأسئلة والأجوبة" },
-  { href: "/condolences", label: "التعازي والوفيات" },
-  { href: "/transcribe", label: "تفريغ المحاضرات" },
-  { href: "/cards", label: "البطاقات الدعوية" },
+  ...NEW_NAV_ITEMS,
   { href: "/assistant", label: "المساعد الذكي" },
   { href: "/about", label: "عن المنصة" },
 ];
@@ -68,6 +72,25 @@ function SearchBox({ onSubmitDone }: { onSubmitDone?: () => void }) {
   );
 }
 
+function MobileQuickNav({ location }: { location: string }) {
+  return (
+    <nav className="mobile-quick-nav" aria-label="أدوات سريعة">
+      {NEW_NAV_ITEMS.map((item) => {
+        const active = location === item.href;
+        return (
+          <Link
+            key={item.href}
+            href={item.href}
+            className={`mobile-quick-nav-item${active ? " active" : ""}`}
+          >
+            {item.label}
+          </Link>
+        );
+      })}
+    </nav>
+  );
+}
+
 export default function NavBar() {
   const { isLoggedIn, isAdmin, user, logout } = useAuth() as any;
   const [location] = useLocation();
@@ -115,7 +138,8 @@ export default function NavBar() {
         </div>
       </div>
 
-      {/* mobile drawer */}
+      {isMobile && !open && <MobileQuickNav location={location} />}
+
       {isMobile && open && (
         <div style={{ borderTop: `1px solid ${C.line}`, background: C.parchment, padding: "0.75rem 1rem 1rem" }}>
           <div style={{ marginBottom: "0.75rem" }}>

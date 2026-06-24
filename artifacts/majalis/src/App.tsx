@@ -1,3 +1,4 @@
+import { Suspense, lazy, type ComponentType } from "react";
 import { Switch, Route, Router as WouterRouter, useLocation } from "wouter";
 import { AuthProvider } from "@/components/AuthProvider";
 import { AdminRouteGuard } from "@/components/AdminRouteGuard";
@@ -12,20 +13,30 @@ import LibraryPage from "@/pages/LibraryPage";
 import MiraclesPage from "@/pages/MiraclesPage";
 import FawaidPage from "@/pages/FawaidPage";
 import QaPage from "@/pages/QaPage";
-import AssistantPage from "@/pages/AssistantPage";
-import CondolencesPage from "@/pages/CondolencesPage";
-import TranscribePage from "@/pages/TranscribePage";
-import CardsPage from "@/pages/CardsPage";
 import LoginPage from "@/pages/LoginPage";
-import AdminPage from "@/pages/AdminPage";
-import AdminDashboardPage from "@/pages/admin/AdminDashboardPage";
 import NotFound from "@/pages/not-found";
 import { usePageSeo } from "@/lib/seo";
+import { Loading } from "@/components/ui-common";
+
+const AssistantPage = lazy(() => import("@/pages/AssistantPage"));
+const CondolencesPage = lazy(() => import("@/pages/CondolencesPage"));
+const TranscribePage = lazy(() => import("@/pages/TranscribePage"));
+const CardsPage = lazy(() => import("@/pages/CardsPage"));
+const AdminPage = lazy(() => import("@/pages/AdminPage"));
+const AdminDashboardPage = lazy(() => import("@/pages/admin/AdminDashboardPage"));
 
 function SeoManager() {
   const [location] = useLocation();
   usePageSeo(location);
   return null;
+}
+
+function LazyRoute({ component: Component }: { component: ComponentType }) {
+  return (
+    <Suspense fallback={<Loading />}>
+      <Component />
+    </Suspense>
+  );
 }
 
 function Router() {
@@ -42,19 +53,23 @@ function Router() {
       <Route path="/miracles" component={MiraclesPage} />
       <Route path="/fawaid" component={FawaidPage} />
       <Route path="/qa" component={QaPage} />
-      <Route path="/assistant" component={AssistantPage} />
-      <Route path="/condolences" component={CondolencesPage} />
-      <Route path="/transcribe" component={TranscribePage} />
-      <Route path="/cards" component={CardsPage} />
+      <Route path="/assistant"><LazyRoute component={AssistantPage} /></Route>
+      <Route path="/condolences"><LazyRoute component={CondolencesPage} /></Route>
+      <Route path="/transcribe"><LazyRoute component={TranscribePage} /></Route>
+      <Route path="/cards"><LazyRoute component={CardsPage} /></Route>
       <Route path="/login" component={LoginPage} />
       <Route path="/admin/dashboard">
         <AdminRouteGuard>
-          <AdminDashboardPage />
+          <Suspense fallback={<Loading />}>
+            <AdminDashboardPage />
+          </Suspense>
         </AdminRouteGuard>
       </Route>
       <Route path="/admin">
         <AdminRouteGuard>
-          <AdminPage />
+          <Suspense fallback={<Loading />}>
+            <AdminPage />
+          </Suspense>
         </AdminRouteGuard>
       </Route>
       <Route component={NotFound} />
