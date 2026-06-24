@@ -2,7 +2,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { VERSION as ANTHROPIC_SDK_VERSION } from "@anthropic-ai/sdk/version";
 
 const ANTHROPIC_VERSION = "2023-06-01";
-const MODEL = "claude-sonnet-4-20250514";
+const MODEL = "claude-3-5-haiku-latest";
 
 const SYSTEM_PROMPT = `
 أنت "المساعد العلمي" في منصة مجالس.
