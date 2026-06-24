@@ -1,6 +1,6 @@
 const ANTHROPIC_MESSAGES_URL = "https://api.anthropic.com/v1/messages";
 const ANTHROPIC_VERSION = "2023-06-01";
-const MODEL = "claude-3-5-haiku-latest";
+const MODEL = "claude-sonnet-4-20250514";
 
 const SYSTEM_PROMPT = `
 أنت "المساعد العلمي" في منصة مجالس.
