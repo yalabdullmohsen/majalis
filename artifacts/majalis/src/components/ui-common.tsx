@@ -58,6 +58,32 @@ export function Empty({ text }: { text: string }) {
   return <p style={{ textAlign: "center", padding: "2.5rem 0", color: C.inkSoft }}>{text}</p>;
 }
 
+export function QaSkeleton({ count = 4 }: { count?: number }) {
+  return (
+    <div className="qa-skeleton-list" aria-hidden="true">
+      {Array.from({ length: count }).map((_, i) => (
+        <div key={i} className="qa-skeleton-item">
+          <div className="qa-skeleton-line qa-skeleton-line--title" />
+          <div className="qa-skeleton-line qa-skeleton-line--meta" />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export function SearchSkeleton() {
+  return (
+    <div className="qa-skeleton-list" aria-hidden="true">
+      {Array.from({ length: 5 }).map((_, i) => (
+        <div key={i} className="qa-skeleton-item qa-skeleton-item--row">
+          <div className="qa-skeleton-line qa-skeleton-line--title" />
+          <div className="qa-skeleton-line qa-skeleton-line--chip" />
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export function Chip({ active, children, onClick }: { active?: boolean; children: React.ReactNode; onClick?: () => void }) {
   return (
     <button

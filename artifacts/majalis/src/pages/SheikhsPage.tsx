@@ -1,3 +1,4 @@
+import { arabicMatchAny } from "@/lib/arabic-search";
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { getSheikhs } from "@/lib/supabase";
@@ -37,11 +38,9 @@ export default function SheikhsPage() {
     return source.filter((sh) => {
       if (verifiedOnly && !sh.is_verified) return false;
       if (!s) return true;
-      return (
-        sh.name?.includes(s) ||
-        sh.ijazah?.includes(s) ||
-        sh.city?.includes(s) ||
-        (sh.specialties || []).some((sp: string) => sp.includes(s))
+      return arabicMatchAny(
+        [sh.name, sh.ijazah, sh.city, sh.bio, ...(sh.specialties || [])],
+        s
       );
     });
   }, [source, search, verifiedOnly]);

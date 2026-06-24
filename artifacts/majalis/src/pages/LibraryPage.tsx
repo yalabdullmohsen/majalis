@@ -1,3 +1,4 @@
+import { arabicMatchAny } from "@/lib/arabic-search";
 import { useEffect, useMemo, useState } from "react";
 import { getLibrary } from "@/lib/supabase";
 import { DEMO_LIBRARY, demoNoticeText } from "@/lib/demo-content";
@@ -43,8 +44,8 @@ export default function LibraryPage() {
   const filtered = useMemo(() => {
     const s = search.trim();
     if (!s) return source;
-    return source.filter(
-      (it) => it.title?.includes(s) || it.description?.includes(s) || it.category?.includes(s)
+    return source.filter((it) =>
+      arabicMatchAny([it.title, it.description, it.category, it.type], s)
     );
   }, [source, search]);
 

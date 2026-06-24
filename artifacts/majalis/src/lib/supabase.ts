@@ -1,4 +1,11 @@
 import { createClient } from "@supabase/supabase-js";
+import { arabicMatchAny, arabicSearchPatterns, ilikePattern } from "./arabic-search";
+import {
+  DEMO_QA_CATEGORIES,
+  filterDemoQa,
+  searchDemoContent,
+} from "./demo-content";
+import { formatSupabaseError, isSupabaseConfigured, logSupabaseError } from "./supabase-config";
 
 // Normalize to the bare project origin (https://xxx.supabase.co).
 // The supabase-js client appends /rest/v1, /auth/v1, etc. itself, so any
@@ -16,7 +23,9 @@ function normalizeSupabaseUrl(raw: string): string {
 const url = normalizeSupabaseUrl(import.meta.env.VITE_SUPABASE_URL as string);
 const key = (import.meta.env.VITE_SUPABASE_ANON_KEY as string || "").trim();
 
-const isConfigured = url.startsWith("http");
+const isConfigured = isSupabaseConfigured();
+
+export { isSupabaseConfigured, formatSupabaseError };
 
 // @ts-ignore
 export const supabase = isConfigured
@@ -79,6 +88,8 @@ export async function getSheikhById(id: string) {
 }
 
 export async function getLessons({ category, city, search }: { category?: string; city?: string; search?: string } = {}) {
+  if (!isConfigured) return { data: [], error: null };
+
   let q = supabase
     .from("lessons")
     .select("*, sheikhs(name, city)")
@@ -87,14 +98,31 @@ export async function getLessons({ category, city, search }: { category?: string
   if (category && category !== "الكل") q = q.eq("category", category);
   if (city && city !== "كل المحافظات") q = q.eq("city", city);
   const { data, error } = await q;
+  if (error) {
+    logSupabaseError("getLessons", error);
+    return { data: [], error };
+  }
+
   let result = data || [];
   if (search?.trim()) {
     const s = search.trim();
-    result = result.filter(
-      (l: any) => l.title?.includes(s) || l.mosque?.includes(s) || l.city?.includes(s)
+    result = result.filter((l: any) =>
+      arabicMatchAny(
+        [
+          l.title,
+          l.description,
+          l.mosque,
+          l.city,
+          l.category,
+          l.speaker_name,
+          l.sheikhs?.name,
+          ...(Array.isArray(l.keywords) ? l.keywords : []),
+        ],
+        s
+      )
     );
   }
-  return { data: result, error };
+  return { data: result, error: null };
 }
 
 export async function registerForLesson(userId: string, lessonId: string) {
@@ -335,29 +363,74 @@ export async function adminUpdateUserRole(userId: string, role: string) {
 // ─── الأسئلة والأجوبة الدينية ───────────────────────────────────────────────────
 
 export async function getQaCategories() {
+  if (!isConfigured) {
+    return { data: DEMO_QA_CATEGORIES.filter((c) => c.id !== "all"), error: null, usingDemo: true };
+  }
+
   const { data, error } = await supabase
     .from("qa_categories")
     .select("*")
     .order("created_at", { ascending: true });
-  return { data: data || [], error };
+
+  if (error) {
+    logSupabaseError("getQaCategories", error);
+    return { data: DEMO_QA_CATEGORIES.filter((c) => c.id !== "all"), error, usingDemo: true };
+  }
+
+  return { data: data || [], error: null, usingDemo: false };
 }
 
 export async function getQaQuestions({ categoryId, search }: { categoryId?: string; search?: string } = {}) {
+  if (!isConfigured) {
+    return {
+      data: filterDemoQa({ categoryId, search }),
+      error: null,
+      usingDemo: true,
+    };
+  }
+
   let q = supabase
     .from("qa_questions")
     .select("*, qa_categories(name, slug)")
     .eq("status", "published")
     .order("created_at", { ascending: false });
-  if (categoryId && categoryId !== "all") q = q.eq("category_id", categoryId);
+
+  if (categoryId && categoryId !== "all") {
+    q = q.eq("category_id", categoryId);
+  }
+
+  if (search?.trim()) {
+    const patterns = arabicSearchPatterns(search);
+    const orParts = patterns.flatMap((p) => {
+      const like = ilikePattern(p);
+      return [`question.ilike.${like}`, `answer.ilike.${like}`, `evidence.ilike.${like}`, `reference.ilike.${like}`];
+    });
+    if (orParts.length) q = q.or(orParts.join(","));
+  }
+
   const { data, error } = await q;
+
+  if (error) {
+    logSupabaseError("getQaQuestions", error, { categoryId, search });
+    return {
+      data: filterDemoQa({ categoryId, search }),
+      error,
+      usingDemo: true,
+    };
+  }
+
   let result = data || [];
   if (search?.trim()) {
     const s = search.trim();
-    result = result.filter(
-      (x: any) => x.question?.includes(s) || x.answer?.includes(s)
+    result = result.filter((x: any) =>
+      arabicMatchAny(
+        [x.question, x.answer, x.evidence, x.reference, x.qa_categories?.name],
+        s
+      )
     );
   }
-  return { data: result, error };
+
+  return { data: result, error: null, usingDemo: false };
 }
 
 export async function adminGetQuestions() {
@@ -430,22 +503,237 @@ export async function adminSetQuizQuestionStatus(id: string, status: string) {
 
 // ─── Search ────────────────────────────────────────────────────────────────────
 
-export async function searchEverything(term: string) {
-  const q = `%${term}%`;
-  const [lessons, library, miracles, sheikhs, qa, fawaid] = await Promise.all([
-    supabase.from("lessons").select("id, title, category").eq("status", "approved").ilike("title", q),
-    supabase.from("library_items").select("id, title, type").eq("status", "approved").ilike("title", q),
-    supabase.from("scientific_miracles").select("id, title, category").eq("status", "approved").ilike("title", q),
-    supabase.from("sheikhs").select("id, name").ilike("name", q),
-    supabase.from("qa_questions").select("id, question, qa_categories(name)").eq("status", "published").ilike("question", q),
-    supabase.from("fawaid").select("id, text, author_name").eq("status", "approved").ilike("text", q),
-  ]);
+export type SearchResults = {
+  lessons: any[];
+  library: any[];
+  miracles: any[];
+  sheikhs: any[];
+  qa: any[];
+  fawaid: any[];
+  error?: string | null;
+  usingDemo?: boolean;
+};
+
+const EMPTY_SEARCH: SearchResults = {
+  lessons: [],
+  library: [],
+  miracles: [],
+  sheikhs: [],
+  qa: [],
+  fawaid: [],
+};
+
+function mergeUniqueById<T extends { id: string }>(rows: T[]): T[] {
+  const seen = new Set<string>();
+  return rows.filter((row) => {
+    if (seen.has(row.id)) return false;
+    seen.add(row.id);
+    return true;
+  });
+}
+
+async function searchLessonsFallback(term: string) {
+  const patterns = arabicSearchPatterns(term);
+  const queries = patterns.map((p) => {
+    const like = ilikePattern(p);
+    return supabase
+      .from("lessons")
+      .select("id, title, category, description, sheikhs(name)")
+      .eq("status", "approved")
+      .or(`title.ilike.${like},description.ilike.${like},category.ilike.${like},mosque.ilike.${like},city.ilike.${like}`)
+      .limit(40);
+  });
+
+  const responses = await Promise.all(queries);
+  const rows = responses.flatMap((r) => {
+    if (r.error) logSupabaseError("searchLessonsFallback", r.error, { term });
+    return r.data || [];
+  });
+
+  const filtered = mergeUniqueById(rows).filter((l: any) =>
+    arabicMatchAny(
+      [
+        l.title,
+        l.description,
+        l.category,
+        l.mosque,
+        l.city,
+        l.speaker_name,
+        l.sheikhs?.name,
+        ...(Array.isArray(l.keywords) ? l.keywords : []),
+      ],
+      term
+    )
+  );
+
+  return { data: filtered, errors: responses.map((r) => r.error).filter(Boolean) };
+}
+
+async function searchSheikhsFallback(term: string) {
+  const patterns = arabicSearchPatterns(term);
+  const responses = await Promise.all(
+    patterns.map((p) =>
+      supabase.from("sheikhs").select("id, name, bio, specialties").ilike("name", ilikePattern(p)).limit(20)
+    )
+  );
+  const rows = mergeUniqueById(responses.flatMap((r) => r.data || [])).filter((s: any) =>
+    arabicMatchAny([s.name, s.bio, ...(s.specialties || [])], term)
+  );
+  return { data: rows, errors: responses.map((r) => r.error).filter(Boolean) };
+}
+
+async function searchLibraryFallback(term: string) {
+  const patterns = arabicSearchPatterns(term);
+  const responses = await Promise.all(
+    patterns.map((p) => {
+      const like = ilikePattern(p);
+      return supabase
+        .from("library_items")
+        .select("id, title, type, description, category")
+        .eq("status", "approved")
+        .or(`title.ilike.${like},description.ilike.${like},category.ilike.${like}`)
+        .limit(20);
+    })
+  );
+  const rows = mergeUniqueById(responses.flatMap((r) => r.data || [])).filter((it: any) =>
+    arabicMatchAny([it.title, it.description, it.category, it.type], term)
+  );
+  return { data: rows, errors: responses.map((r) => r.error).filter(Boolean) };
+}
+
+async function searchQaFallback(term: string) {
+  const patterns = arabicSearchPatterns(term);
+  const responses = await Promise.all(
+    patterns.map((p) => {
+      const like = ilikePattern(p);
+      return supabase
+        .from("qa_questions")
+        .select("id, question, answer, qa_categories(name)")
+        .eq("status", "published")
+        .or(`question.ilike.${like},answer.ilike.${like}`)
+        .limit(20);
+    })
+  );
+  const rows = mergeUniqueById(responses.flatMap((r) => r.data || [])).filter((x: any) =>
+    arabicMatchAny([x.question, x.answer, x.qa_categories?.name], term)
+  );
+  return { data: rows, errors: responses.map((r) => r.error).filter(Boolean) };
+}
+
+async function searchMiraclesFallback(term: string) {
+  const like = ilikePattern(term);
+  const { data, error } = await supabase
+    .from("scientific_miracles")
+    .select("id, title, category, body")
+    .eq("status", "approved")
+    .or(`title.ilike.${like},body.ilike.${like}`)
+    .limit(15);
+  if (error) logSupabaseError("searchMiraclesFallback", error, { term });
   return {
-    lessons: lessons.data || [],
-    library: library.data || [],
-    miracles: miracles.data || [],
-    sheikhs: sheikhs.data || [],
-    qa: qa.data || [],
-    fawaid: fawaid.data || [],
+    data: (data || []).filter((m: any) => arabicMatchAny([m.title, m.body, m.category], term)),
+    errors: error ? [error] : [],
   };
+}
+
+async function searchFawaidFallback(term: string) {
+  const like = ilikePattern(term);
+  const { data, error } = await supabase
+    .from("fawaid")
+    .select("id, text, author_name")
+    .eq("status", "approved")
+    .ilike("text", like)
+    .limit(15);
+  if (error) logSupabaseError("searchFawaidFallback", error, { term });
+  return {
+    data: (data || []).filter((f: any) => arabicMatchAny([f.text, f.author_name], term)),
+    errors: error ? [error] : [],
+  };
+}
+
+async function searchEverythingFallback(term: string): Promise<SearchResults> {
+  const [lessons, sheikhs, library, qa, miracles, fawaid] = await Promise.all([
+    searchLessonsFallback(term),
+    searchSheikhsFallback(term),
+    searchLibraryFallback(term),
+    searchQaFallback(term),
+    searchMiraclesFallback(term),
+    searchFawaidFallback(term),
+  ]);
+
+  const errors = [
+    ...lessons.errors,
+    ...sheikhs.errors,
+    ...library.errors,
+    ...qa.errors,
+    ...miracles.errors,
+    ...fawaid.errors,
+  ];
+
+  return {
+    lessons: lessons.data,
+    sheikhs: sheikhs.data,
+    library: library.data,
+    qa: qa.data,
+    miracles: miracles.data,
+    fawaid: fawaid.data,
+    error: errors.length ? formatSupabaseError(errors[0]) : null,
+    usingDemo: false,
+  };
+}
+
+export async function searchEverything(term: string): Promise<SearchResults> {
+  const query = term.trim();
+  if (!query) return { ...EMPTY_SEARCH };
+
+  if (!isConfigured) {
+    const demo = searchDemoContent(query);
+    return { ...demo, usingDemo: true, error: null };
+  }
+
+  try {
+    const { data, error } = await supabase.rpc("search_platform", { query });
+
+    if (!error && data) {
+      return {
+        lessons: data.lessons || [],
+        library: data.library || [],
+        miracles: data.miracles || [],
+        sheikhs: data.sheikhs || [],
+        qa: data.qa || [],
+        fawaid: data.fawaid || [],
+        usingDemo: false,
+        error: null,
+      };
+    }
+
+    if (error) {
+      logSupabaseError("searchEverything.rpc", error, { query });
+    }
+  } catch (err) {
+    logSupabaseError("searchEverything.rpc", err, { query });
+  }
+
+  const fallback = await searchEverythingFallback(query);
+  const total =
+    fallback.lessons.length +
+    fallback.library.length +
+    fallback.miracles.length +
+    fallback.sheikhs.length +
+    fallback.qa.length +
+    fallback.fawaid.length;
+
+  if (total === 0) {
+    const demo = searchDemoContent(query);
+    const demoTotal =
+      demo.lessons.length +
+      demo.library.length +
+      demo.sheikhs.length +
+      demo.qa.length +
+      demo.fawaid.length;
+    if (demoTotal > 0) {
+      return { ...demo, usingDemo: true, error: fallback.error ?? null };
+    }
+  }
+
+  return fallback;
 }
