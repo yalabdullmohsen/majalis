@@ -30,7 +30,7 @@ const FALLBACK_MIRACLES = [
 ];
 
 const FALLBACK_FAWAID = [
-  { id: "fallback-fawaid-1", text: "العلم ميراث النبوة، وكل مجلس علم خطوة إلى بصيرة أوسع.", author_name: "مجالس" },
+  { id: "fallback-fawaid-1", text: "العلم ميراث النبوة، وكل مجلس علم خطوة إلى بصيرة أوسع.", author_name: "مجالس العلم" },
   { id: "fallback-fawaid-2", text: "صلاح القلب يبدأ بسؤال صادق واتباع للدليل.", author_name: "فائدة مختارة" },
 ];
 
@@ -121,9 +121,9 @@ export default function HomePage() {
         <div className="home-container home-hero-grid">
           <div className="home-hero-copy">
             <p className="home-kicker">المنصة العلمية الشرعية</p>
-            <h1>مجالس علم تجمع الدرس والشيخ والكتاب والفائدة</h1>
+            <h1>مجالس العلم تجمع الدروس والمحاضرات والدورات والكتب والفوائد والأسئلة الشرعية</h1>
             <p className="home-hero-text">
-              بوابة عربية منظمة للوصول إلى الدروس المعتمدة، وسير المشايخ، والمكتبة العلمية، ومقالات الإعجاز، والفوائد المختارة في تجربة هادئة وسريعة.
+              مجالس العلم منصة علمية شرعية متخصصة تجمع الدروس والمحاضرات والدورات والكتب والفوائد والأسئلة الشرعية في مكان واحد بطريقة احترافية ومنظمة، لتسهيل الوصول إلى المحتوى العلمي الموثوق.
             </p>
             <form onSubmit={submitSearch} className="home-search" aria-label="البحث في المنصة">
               <span aria-hidden="true">🔎</span>
@@ -216,7 +216,7 @@ export default function HomePage() {
                       {image ? <img src={image} alt={sheikh.name || "شيخ"} /> : <span>{sheikh.name?.charAt(0) || "ع"}</span>}
                     </div>
                     <h3>{sheikh.name}</h3>
-                    <p>{sheikh.ijazah || sheikh.city || "شيخ معتمد في منصة مجالس"}</p>
+                    <p>{sheikh.ijazah || sheikh.city || "شيخ معتمد في منصة مجالس العلم"}</p>
                     <div className="home-sheikh-tags">
                       {sheikh.is_verified && <span>معتمد</span>}
                       {(sheikh.specialties || []).slice(0, 2).map((specialty: string) => (

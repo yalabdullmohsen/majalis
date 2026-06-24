@@ -1,1 +1,1 @@
-- [Majalis dual-artifact parity](dual-artifact-parity.md) — web + mobile have separate Supabase libs; keep queries/sections in sync across both.
+- [Majalis Al-Ilm dual-artifact parity](dual-artifact-parity.md) — web + mobile have separate Supabase libs; keep queries/sections in sync across both.

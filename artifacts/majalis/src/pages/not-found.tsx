@@ -10,7 +10,7 @@ export default function NotFound() {
           الصفحة غير موجودة
         </h1>
         <p style={{ color: C.inkSoft, fontSize: "1rem", lineHeight: 1.9, maxWidth: "34rem", margin: "0 auto 1.5rem" }}>
-          يبدو أن الرابط غير صحيح أو أن الصفحة نُقلت. يمكنك الرجوع إلى الصفحة الرئيسية أو استخدام البحث للوصول إلى الدروس والمشايخ والكتب.
+          يبدو أن الرابط غير صحيح أو أن الصفحة نُقلت داخل مجالس العلم. يمكنك الرجوع إلى الصفحة الرئيسية أو استخدام البحث للوصول إلى الدروس والمشايخ والكتب.
         </p>
         <div style={{ display: "flex", gap: "0.75rem", justifyContent: "center", flexWrap: "wrap" }}>
           <Link href="/" style={{ borderRadius: "999px", background: C.emerald, color: C.parchment, padding: "0.75rem 1.25rem", fontWeight: 800 }}>

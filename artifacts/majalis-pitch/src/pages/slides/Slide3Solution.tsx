@@ -57,7 +57,7 @@ export default function Slide3Solution() {
             textWrap: "balance",
           }}
         >
-          مجالس
+          مجالس العلم
         </div>
         <div
           style={{
@@ -216,7 +216,7 @@ export default function Slide3Solution() {
           letterSpacing: "0.05em",
         }}
       >
-        majalis
+        Majalis Al-Ilm
       </div>
     </div>
   );

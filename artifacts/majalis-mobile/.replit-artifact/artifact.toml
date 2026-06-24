@@ -1,6 +1,6 @@
 kind = "mobile"
 previewPath = "/mobile/"
-title = "مجالس Mobile"
+title = "مجالس العلم Mobile"
 version = "1.0.0"
 id = "artifacts/majalis-mobile"
 router = "expo-domain"

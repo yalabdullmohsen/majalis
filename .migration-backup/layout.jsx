@@ -7,7 +7,7 @@ import { AuthProvider } from "@/components/AuthProvider";
 import NavBar from "@/components/NavBar";
 
 export const metadata = {
-  title: "مجالس — المنصة العلمية الشرعية",
+  title: "مجالس العلم — المنصة العلمية الشرعية",
   description: "الدروس والدورات والمشايخ والمكتبة العلمية والإعجاز العلمي في مكان واحد",
 };
 

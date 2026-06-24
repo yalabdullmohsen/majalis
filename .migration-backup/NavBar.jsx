@@ -26,7 +26,7 @@ export default function NavBar() {
     >
       <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
         <Link href="/" className="text-xl font-bold shrink-0" style={{ color: C.emeraldDeep, fontFamily: "Amiri, serif" }}>
-          مجالس
+          مجالس العلم
         </Link>
 
         <nav className="flex items-center gap-1 overflow-x-auto">

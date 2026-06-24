@@ -78,7 +78,7 @@ export default function QaPage() {
   return (
     <div style={{ maxWidth: "48rem", margin: "0 auto", padding: "2.5rem 1.25rem 4rem" }}>
       <PageHeader
-        eyebrow="المجلس العلمي"
+        eyebrow="مجالس العلم"
         title="الأسئلة والأجوبة الدينية"
         subtitle="مجموعة من الأسئلة والأجوبة العلمية المدعّمة بالأدلة الشرعية والمراجع، مرتّبة حسب التصنيف."
       />
