@@ -2094,11 +2094,49 @@ input, textarea, select { font-family: inherit; }
   }
 }
 
-/* ── Condolences templates page ── */
-.condolences-page {
-  min-height: 100vh;
-  background: var(--majalis-parchment);
-  padding: 2rem 0 3rem;
+/* ── Condolences black & white card (1080 export) ── */
+.cond-bw-preview-wrap {
+  overflow: hidden;
+  margin-inline: auto;
+}
+
+.cond-bw-card .cond-bw-verse-top {
+  font-size: 52px;
+}
+
+.cond-bw-card .cond-bw-verse-mid {
+  font-size: 34px;
+}
+
+.cond-bw-card .cond-bw-hero {
+  font-size: 76px;
+  color: #fff;
+}
+
+.cond-bw-card .cond-bw-name {
+  font-size: 44px;
+}
+
+.cond-bw-card .cond-bw-transition {
+  font-size: 30px;
+}
+
+.cond-bw-card .cond-bw-meta {
+  font-size: 28px;
+}
+
+.cond-bw-card .cond-bw-extra {
+  font-size: 26px;
+}
+
+@media (max-width: 640px) {
+  .cond-bw-card .cond-bw-hero {
+    font-size: 64px;
+  }
+
+  .cond-bw-card .cond-bw-verse-top {
+    font-size: 42px;
+  }
 }
 
 .condolences-page__shell {
