@@ -1,4 +1,5 @@
 import assistantHandler from "../api/assistant.js";
+import assistantHealthHandler from "../api/assistant/health.js";
 import testAnthropicHandler from "../api/test-anthropic.js";
 import transcribeHandler from "../api/transcribe.js";
 import { createRateLimiter } from "./rate-limit.mjs";
@@ -16,6 +17,7 @@ const transcribeRateLimit = createRateLimiter({
 });
 
 const API_ROUTES = [
+  { prefix: "/api/assistant/health", handler: assistantHealthHandler, allowGet: true, exact: true },
   { prefix: "/api/assistant", handler: assistantHandler, rateLimit: assistantRateLimit, allowGet: true },
   { prefix: "/api/test-anthropic", handler: testAnthropicHandler, allowGet: true },
   { prefix: "/api/transcribe", handler: transcribeHandler, rateLimit: transcribeRateLimit },
@@ -42,7 +44,10 @@ function sendJson(res, status, payload) {
 }
 
 function matchRoute(url) {
-  return API_ROUTES.find((route) => url?.startsWith(route.prefix));
+  const path = (url || "").split("?")[0];
+  return API_ROUTES.find((route) =>
+    route.exact ? path === route.prefix : path === route.prefix || path.startsWith(`${route.prefix}?`),
+  );
 }
 
 export function majalisApiPlugin() {

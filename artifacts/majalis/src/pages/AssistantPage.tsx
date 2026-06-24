@@ -35,40 +35,6 @@ function createId() {
     : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
 }
 
-function buildFallbackGuidance(question: string): string {
-  const hints: string[] = [];
-
-  if (/درس|دروس|محاض|دورة|إعلان/.test(question)) {
-    hints.push("تصفّح قسم الدروس (/lessons) أو إعلانات الدروس (/announcements).");
-  }
-  if (/شيخ|مشايخ|داع|عالم/.test(question)) {
-    hints.push("راجع قسم المشايخ (/sheikhs) للتعرف على العلماء المعتمدين.");
-  }
-  if (/كتاب|مكتبة|متن|تفسير|فقه|أركان|إسلام/.test(question)) {
-    hints.push("زُر المكتبة العلمية (/library) للكتب والمتون، أو قسم الأسئلة (/qa).");
-  }
-  if (/سؤال|فتو|حكم|يجوز/.test(question)) {
-    hints.push("للأسئلة الشرعية العامة راجع قسم الأسئلة والأجوبة (/qa).");
-  }
-
-  if (hints.length === 0) {
-    return [
-      "يمكنك البحث داخل المنصة عبر قسم البحث (/search)،",
-      "أو تصفّح الدروس (/lessons) والمكتبة (/library) والمشايخ (/sheikhs).",
-      "",
-      "تذكّر: الفتوى الخاصة تُعرض على عالم مختص.",
-    ].join("\n");
-  }
-
-  return [
-    ...hints,
-    "",
-    "يمكنك أيضًا استخدام البحث (/search) للعثور على محتوى محدد.",
-    "",
-    "تذكّر: الفتوى الخاصة تُعرض على عالم مختص.",
-  ].join("\n");
-}
-
 function pickAnswer(data: AssistantResponse): string | null {
   const text = data.answer || data.reply;
   return typeof text === "string" && text.trim() ? text.trim() : null;
@@ -137,10 +103,7 @@ export default function AssistantPage() {
         return;
       }
 
-      const userMessageText = data.message || FAILURE_MESSAGE;
-      const replyContent = data.fallback
-        ? `${userMessageText}\n\n${buildFallbackGuidance(trimmed)}`
-        : userMessageText;
+      const replyContent = data.message || FAILURE_MESSAGE;
 
       console.log("[assistant-ui] assistant reply appended", {
         mode: data.fallback ? "fallback" : "message",
@@ -157,21 +120,21 @@ export default function AssistantPage() {
         },
       ]);
 
-      if (data.fallback && data.message === UNAVAILABLE_BANNER) {
-        setAssistantAvailable(false);
+      if (data.fallback) {
+        setError(replyContent);
+        if (data.message === UNAVAILABLE_BANNER) {
+          setAssistantAvailable(false);
+        }
       }
     } catch (caughtError) {
       console.error("[assistant-ui] fetch error", caughtError);
-      const reason =
-        caughtError instanceof Error ? caughtError.message : "خطأ شبكة غير معروف";
-
-      setError(`تعذر إرسال السؤال: ${reason}`);
+      setError(FAILURE_MESSAGE);
       setMessages((current) => [
         ...current,
         {
           id: createId(),
           role: "assistant",
-          content: `${FAILURE_MESSAGE}\n\n${buildFallbackGuidance(trimmed)}`,
+          content: FAILURE_MESSAGE,
         },
       ]);
     } finally {

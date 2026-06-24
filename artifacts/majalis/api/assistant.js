@@ -1,24 +1,16 @@
-import Anthropic from "@anthropic-ai/sdk";
-import {
-  ASSISTANT_MODEL,
-  createAnthropicClient,
-  readAnthropicApiKey,
-} from "./anthropic-config.js";
 import { sendJson, endEmpty } from "./_http.js";
 
 export const maxDuration = 30;
 
+const ANTHROPIC_MESSAGES_URL = "https://api.anthropic.com/v1/messages";
+const ANTHROPIC_VERSION = "2023-06-01";
+const ASSISTANT_MODEL = "claude-haiku-4-5";
+
 const UNAVAILABLE_MESSAGE = "المساعد العلمي غير متاح حالياً. نعمل على تفعيله قريبًا.";
 const FAILURE_MESSAGE = "تعذر تشغيل المساعد الآن، حاول لاحقًا.";
 
-const SYSTEM_PROMPT = `
-أنت "المساعد العلمي" في منصة مجالس العلم.
-أجب بالعربية الفصحى الواضحة وبأسلوب علمي منضبط ومتواضع.
-ساعد المستخدم في البحث عن الدروس والمشايخ والكتب والفوائد داخل منصة مجالس العلم، واقترح كلمات بحث مناسبة وروابط أقسام مثل /lessons و/sheikhs و/library و/search.
-قدّم إجابات عامة ومفيدة في المسائل العلمية والتربوية دون ادعاء الإفتاء.
-لا تصدر فتوى قطعية ولا تحكم على واقعة خاصة. عند طلب فتوى أو حكم شرعي ملزم قل نصًا: "هذه مسألة تحتاج إلى عالم مختص"، ثم قدّم إرشادًا عامًا للبحث أو سؤال أهل العلم.
-إن كان السؤال خارج اختصاص المنصة فأجب باختصار ووجّه المستخدم إلى مصدر موثوق.
-`.trim();
+const SYSTEM_PROMPT =
+  "أنت مساعد علمي شرعي داخل منصة مجالس العلم. أجب بأدب واختصار، ولا تصدر فتوى خاصة، وانصح بسؤال أهل العلم في النوازل.";
 
 const DEFINITIVE_FATWA_PATTERNS = [
   /فتوى/,
@@ -38,6 +30,10 @@ const DEFINITIVE_FATWA_PATTERNS = [
 
 function fallbackPayload(message = FAILURE_MESSAGE) {
   return { ok: false, message, fallback: true };
+}
+
+function hasAnthropicApiKey() {
+  return Boolean((process.env.ANTHROPIC_API_KEY || "").trim());
 }
 
 async function parseBody(req) {
@@ -98,20 +94,61 @@ function looksLikeDefinitiveFatwaRequest(text) {
   return DEFINITIVE_FATWA_PATTERNS.some((pattern) => pattern.test(text));
 }
 
-function extractAnthropicText(data) {
-  return (data?.content || [])
-    .filter((block) => block?.type === "text" && typeof block.text === "string")
-    .map((block) => block.text)
-    .join("\n")
-    .trim();
-}
-
 function successPayload(answer) {
   return { ok: true, answer, reply: answer };
 }
 
+async function callAnthropic(message) {
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+
+  const response = await fetch(ANTHROPIC_MESSAGES_URL, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      "x-api-key": apiKey,
+      "anthropic-version": ANTHROPIC_VERSION,
+    },
+    body: JSON.stringify({
+      model: ASSISTANT_MODEL,
+      max_tokens: 1000,
+      system: SYSTEM_PROMPT,
+      messages: [
+        {
+          role: "user",
+          content: message,
+        },
+      ],
+    }),
+  });
+
+  const responseText = await response.text();
+
+  if (!response.ok) {
+    console.error("[assistant] Anthropic API failed:", {
+      status: response.status,
+      responseText,
+    });
+    throw new Error(`Anthropic request failed with status ${response.status}`);
+  }
+
+  let data;
+  try {
+    data = JSON.parse(responseText);
+  } catch (error) {
+    console.error("[assistant] Anthropic invalid JSON:", {
+      status: response.status,
+      responseText,
+      error,
+    });
+    throw error;
+  }
+
+  const answer = data?.content?.[0]?.text;
+  return typeof answer === "string" ? answer.trim() : "";
+}
+
 async function handleAssistantRequest(req, res) {
-  const hasKey = Boolean(readAnthropicApiKey());
+  const hasKey = hasAnthropicApiKey();
 
   console.log("[assistant] request received", {
     method: req.method,
@@ -135,7 +172,7 @@ async function handleAssistantRequest(req, res) {
   }
 
   if (!hasKey) {
-    console.error("[assistant] Service unavailable: API key not configured");
+    console.error("[assistant] Service unavailable: ANTHROPIC_API_KEY not configured");
     sendJson(res, 200, fallbackPayload(UNAVAILABLE_MESSAGE));
     return;
   }
@@ -169,16 +206,13 @@ async function handleAssistantRequest(req, res) {
   }
 
   try {
-    const client = createAnthropicClient(Anthropic);
-    const message = await client.messages.create({
-      model: ASSISTANT_MODEL,
-      max_tokens: 800,
-      system: SYSTEM_PROMPT,
-      messages: [{ role: "user", content: userMessage }],
-    });
+    const answer = await callAnthropic(userMessage);
 
-    const answer =
-      extractAnthropicText(message) || "لم أتمكن من توليد إجابة الآن. حاول لاحقًا.";
+    if (!answer) {
+      console.error("[assistant] Anthropic returned empty answer");
+      sendJson(res, 200, fallbackPayload(FAILURE_MESSAGE));
+      return;
+    }
 
     console.log("[assistant] success", { answerLength: answer.length });
     sendJson(res, 200, successPayload(answer));
