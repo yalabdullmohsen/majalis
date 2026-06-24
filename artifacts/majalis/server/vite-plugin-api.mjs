@@ -1,4 +1,5 @@
 import assistantHandler from "../api/assistant.js";
+import testAnthropicHandler from "../api/test-anthropic.js";
 import transcribeHandler from "../api/transcribe.js";
 import { createRateLimiter } from "./rate-limit.mjs";
 
@@ -15,7 +16,8 @@ const transcribeRateLimit = createRateLimiter({
 });
 
 const API_ROUTES = [
-  { prefix: "/api/assistant", handler: assistantHandler, rateLimit: assistantRateLimit },
+  { prefix: "/api/assistant", handler: assistantHandler, rateLimit: assistantRateLimit, allowGet: true },
+  { prefix: "/api/test-anthropic", handler: testAnthropicHandler, allowGet: true },
   { prefix: "/api/transcribe", handler: transcribeHandler, rateLimit: transcribeRateLimit },
 ];
 
@@ -57,7 +59,7 @@ export function majalisApiPlugin() {
           return;
         }
 
-        if (req.method === "GET" && route.prefix === "/api/assistant") {
+        if (req.method === "GET" && route.allowGet) {
           req.body = {};
           try {
             await route.handler(req, res);
@@ -79,14 +81,14 @@ export function majalisApiPlugin() {
           return;
         }
 
-        route.rateLimit(req, res, async () => {
+        const runPost = async () => {
           const body = await readJsonBody(req);
-          if (body === null) {
+          if (body === null && route.prefix !== "/api/test-anthropic") {
             sendJson(res, 400, { ok: false, message: "اكتب سؤالك أولًا." });
             return;
           }
 
-          req.body = body;
+          req.body = body ?? {};
           try {
             await route.handler(req, res);
           } catch (error) {
@@ -99,7 +101,13 @@ export function majalisApiPlugin() {
               });
             }
           }
-        });
+        };
+
+        if (route.rateLimit) {
+          route.rateLimit(req, res, runPost);
+        } else {
+          await runPost();
+        }
       });
     },
   };

@@ -1,10 +1,12 @@
 import Anthropic from "@anthropic-ai/sdk";
+import {
+  ASSISTANT_MODEL,
+  createAnthropicClient,
+  readAnthropicApiKey,
+} from "./anthropic-config.js";
 import { sendJson, endEmpty } from "./_http.js";
 
 export const maxDuration = 30;
-
-const ANTHROPIC_VERSION = "2023-06-01";
-const MODEL = "claude-3-5-haiku-latest";
 
 const UNAVAILABLE_MESSAGE = "المساعد العلمي غير متاح حالياً. نعمل على تفعيله قريبًا.";
 const FAILURE_MESSAGE = "تعذر تشغيل المساعد الآن، حاول لاحقًا.";
@@ -34,22 +36,8 @@ const DEFINITIVE_FATWA_PATTERNS = [
   /زكاة/,
 ];
 
-function getApiKey() {
-  return (process.env.ANTHROPIC_API_KEY || "").trim();
-}
-
 function fallbackPayload(message = FAILURE_MESSAGE) {
   return { ok: false, message, fallback: true };
-}
-
-function createAnthropicClient(apiKey) {
-  return new Anthropic({
-    apiKey,
-    maxRetries: 0,
-    defaultHeaders: {
-      "anthropic-version": ANTHROPIC_VERSION,
-    },
-  });
 }
 
 async function parseBody(req) {
@@ -123,7 +111,7 @@ function successPayload(answer) {
 }
 
 async function handleAssistantRequest(req, res) {
-  const hasKey = Boolean(getApiKey());
+  const hasKey = Boolean(readAnthropicApiKey());
 
   console.log("[assistant] request received", {
     method: req.method,
@@ -181,9 +169,9 @@ async function handleAssistantRequest(req, res) {
   }
 
   try {
-    const client = createAnthropicClient(getApiKey());
+    const client = createAnthropicClient(Anthropic);
     const message = await client.messages.create({
-      model: MODEL,
+      model: ASSISTANT_MODEL,
       max_tokens: 800,
       system: SYSTEM_PROMPT,
       messages: [{ role: "user", content: userMessage }],

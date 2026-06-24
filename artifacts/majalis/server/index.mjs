@@ -4,6 +4,7 @@ import path from "node:path";
 import { existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import assistantHandler from "../api/assistant.js";
+import testAnthropicHandler from "../api/test-anthropic.js";
 import transcribeHandler from "../api/transcribe.js";
 import { createRateLimiter } from "./rate-limit.mjs";
 
@@ -67,6 +68,8 @@ app.options("/api/transcribe", (_req, res) => {
 
 app.get("/api/assistant", runHandler(assistantHandler, "assistant"));
 app.post("/api/assistant", express.json({ limit: "32kb" }), assistantRateLimit, runHandler(assistantHandler, "assistant"));
+app.get("/api/test-anthropic", runHandler(testAnthropicHandler, "test-anthropic"));
+app.post("/api/test-anthropic", runHandler(testAnthropicHandler, "test-anthropic"));
 app.post("/api/transcribe", express.json({ limit: "2mb" }), transcribeRateLimit, runHandler(transcribeHandler, "transcribe"));
 
 app.get("/api/healthz", (_req, res) => {
