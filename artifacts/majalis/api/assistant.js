@@ -1,8 +1,10 @@
 import Anthropic from "@anthropic-ai/sdk";
-import { VERSION as ANTHROPIC_SDK_VERSION } from "@anthropic-ai/sdk/version";
 
 const ANTHROPIC_VERSION = "2023-06-01";
-const MODEL = "claude-haiku-4-5";
+const MODEL = "claude-3-5-haiku-latest";
+
+const UNAVAILABLE_MESSAGE = "المساعد العلمي غير متاح حالياً. نعمل على تفعيله قريبًا.";
+const FAILURE_MESSAGE = "تعذر تشغيل المساعد الآن، حاول لاحقًا.";
 
 const SYSTEM_PROMPT = `
 أنت "المساعد العلمي" في منصة مجالس العلم.
@@ -33,24 +35,12 @@ function setJsonHeaders(res) {
   res.setHeader("Content-Type", "application/json; charset=utf-8");
 }
 
-function createHttpError(statusCode, message) {
-  const error = new Error(message);
-  error.statusCode = statusCode;
-  return error;
+function getApiKey() {
+  return (process.env.ANTHROPIC_API_KEY || "").trim();
 }
 
-function getAnthropicApiKey() {
-  const rawApiKey = process.env.ANTHROPIC_API_KEY || "";
-  const apiKey = rawApiKey.trim();
-
-  if (!apiKey) {
-    throw createHttpError(500, "لم يتم ضبط مفتاح Anthropic في متغير البيئة ANTHROPIC_API_KEY.");
-  }
-
-  return {
-    apiKey,
-    hadSurroundingWhitespace: rawApiKey !== apiKey,
-  };
+function fallbackPayload(message = FAILURE_MESSAGE) {
+  return { ok: false, message, fallback: true };
 }
 
 function createAnthropicClient(apiKey) {
@@ -81,7 +71,7 @@ async function parseBody(req) {
     try {
       return JSON.parse(rawBody);
     } catch {
-      throw createHttpError(400, "صيغة الطلب غير صالحة. أرسل JSON يحتوي على messages.");
+      return null;
     }
   }
 
@@ -108,6 +98,14 @@ function sanitizeMessages(messages) {
   return sanitized;
 }
 
+function extractUserMessage(body) {
+  const direct = String(body?.message || "").trim();
+  if (direct) return direct;
+
+  const messages = sanitizeMessages(body?.messages);
+  return [...messages].reverse().find((message) => message.role === "user")?.content || "";
+}
+
 function looksLikeDefinitiveFatwaRequest(text) {
   return DEFINITIVE_FATWA_PATTERNS.some((pattern) => pattern.test(text));
 }
@@ -120,35 +118,8 @@ function extractAnthropicText(data) {
     .trim();
 }
 
-function getErrorStatus(error) {
-  if (Number.isInteger(error?.statusCode)) {
-    return error.statusCode;
-  }
-
-  if (Number.isInteger(error?.status)) {
-    return error.status;
-  }
-
-  return 500;
-}
-
-function getErrorMessage(error) {
-  return error instanceof Error && error.message ? error.message : "حدث خطأ غير معروف في خدمة المساعد الذكي.";
-}
-
-function logAssistantError(message, error, details = {}) {
-  console.error(message, {
-    ...details,
-    error: getErrorMessage(error),
-  });
-}
-
-function getAnthropicErrorBody(error) {
-  return error && typeof error === "object" && "error" in error ? error.error : undefined;
-}
-
-async function verifyAnthropicModel(client) {
-  await client.models.retrieve(MODEL);
+function successPayload(answer) {
+  return { ok: true, answer, reply: answer };
 }
 
 async function handleAssistantRequest(req, res) {
@@ -157,63 +128,60 @@ async function handleAssistantRequest(req, res) {
     return;
   }
 
+  if (req.method === "GET") {
+    res.status(200).json({ ok: true, available: Boolean(getApiKey()) });
+    return;
+  }
+
   if (req.method !== "POST") {
-    res.status(405).json({ error: "الطريقة غير مدعومة." });
+    res.status(405).json({ ok: false, message: "الطريقة غير مدعومة." });
+    return;
+  }
+
+  const apiKey = getApiKey();
+  if (!apiKey) {
+    console.error("[assistant] Service unavailable: API key not configured");
+    res.status(200).json(fallbackPayload(UNAVAILABLE_MESSAGE));
     return;
   }
 
   const body = await parseBody(req);
-  const messages = sanitizeMessages(body.messages);
-  const lastUserMessage = [...messages].reverse().find((message) => message.role === "user");
-
-  if (!lastUserMessage) {
-    throw createHttpError(400, "أرسل سؤالًا واضحًا للمساعد.");
-  }
-
-  if (looksLikeDefinitiveFatwaRequest(lastUserMessage.content)) {
-    res.status(200).json({
-      reply:
-        'هذه مسألة تحتاج إلى عالم مختص. يمكنني مساعدتك بإرشاد عام: ابحث في المنصة عن كلمات المسألة أو اسم الشيخ المناسب، ثم اعرض الواقعة بتفاصيلها على عالم مؤهل.',
-    });
+  if (body === null) {
+    res.status(400).json({ ok: false, message: "اكتب سؤالك أولًا." });
     return;
   }
 
-  const { apiKey, hadSurroundingWhitespace } = getAnthropicApiKey();
-  const client = createAnthropicClient(apiKey);
+  const userMessage = extractUserMessage(body);
+  if (!userMessage) {
+    res.status(400).json({ ok: false, message: "اكتب سؤالك أولًا." });
+    return;
+  }
+
+  if (looksLikeDefinitiveFatwaRequest(userMessage)) {
+    res.status(200).json(
+      successPayload(
+        'هذه مسألة تحتاج إلى عالم مختص. يمكنني مساعدتك بإرشاد عام: ابحث في المنصة عن كلمات المسألة أو اسم الشيخ المناسب، ثم اعرض الواقعة بتفاصيلها على عالم مؤهل.',
+      ),
+    );
+    return;
+  }
 
   try {
-    await verifyAnthropicModel(client);
-
+    const client = createAnthropicClient(apiKey);
     const message = await client.messages.create({
       model: MODEL,
-      max_tokens: 700,
+      max_tokens: 800,
       system: SYSTEM_PROMPT,
-      messages: [{ role: "user", content: lastUserMessage.content }],
+      messages: [{ role: "user", content: userMessage }],
     });
 
-    const reply = extractAnthropicText(message);
+    const answer =
+      extractAnthropicText(message) || "لم أتمكن من توليد إجابة الآن. حاول لاحقًا.";
 
-    if (!reply) {
-      res.status(502).json({ error: "لم يرجع المساعد ردًا صالحًا." });
-      return;
-    }
-
-    res.status(200).json({ reply });
+    res.status(200).json(successPayload(answer));
   } catch (error) {
-    const status = getErrorStatus(error) === 500 ? 502 : getErrorStatus(error);
-    const anthropicErrorBody = getAnthropicErrorBody(error);
-
-    logAssistantError("Anthropic request failed", error, {
-      status,
-      model: MODEL,
-      anthropicVersion: ANTHROPIC_VERSION,
-      anthropicSdkVersion: ANTHROPIC_SDK_VERSION,
-      hasAnthropicApiKey: Boolean(apiKey),
-      apiKeyHadSurroundingWhitespace: hadSurroundingWhitespace,
-      body: anthropicErrorBody ?? getErrorMessage(error),
-    });
-
-    res.status(status).json(anthropicErrorBody ?? { error: getErrorMessage(error) });
+    console.error("[assistant] Anthropic API failed:", error);
+    res.status(200).json(fallbackPayload(FAILURE_MESSAGE));
   }
 }
 
@@ -222,13 +190,9 @@ export default async function handler(req, res) {
     setJsonHeaders(res);
     await handleAssistantRequest(req, res);
   } catch (error) {
-    const status = getErrorStatus(error);
-    logAssistantError("Assistant API route failed", error, {
-      status,
-      method: req?.method,
-      hasAnthropicApiKey: Boolean(process.env.ANTHROPIC_API_KEY),
-      anthropicSdkVersion: ANTHROPIC_SDK_VERSION,
-    });
-    res.status(status).json({ error: getErrorMessage(error) });
+    console.error("[assistant] Route error:", error);
+    if (!res.headersSent) {
+      res.status(200).json(fallbackPayload(FAILURE_MESSAGE));
+    }
   }
 }

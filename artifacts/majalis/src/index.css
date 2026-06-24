@@ -895,6 +895,39 @@ input, textarea, select { font-family: inherit; }
   font-weight: 800;
 }
 
+.assistant-unavailable {
+  margin-top: 1rem;
+  padding: 1rem 1.1rem;
+  border-radius: 0.85rem;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(250, 245, 234, 0.28);
+  text-align: center;
+}
+
+.assistant-unavailable p {
+  margin-bottom: 0.85rem;
+  font-weight: 700;
+  line-height: 1.7;
+}
+
+.assistant-home-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 1.15rem;
+  border-radius: 999px;
+  background: var(--majalis-parchment);
+  color: var(--majalis-emerald-deep);
+  font-weight: 700;
+  font-size: 0.9rem;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.assistant-home-btn:hover {
+  transform: translateY(-1px);
+  background: #fff;
+}
+
 .assistant-service-warning {
   margin-top: 1rem;
   padding: 0.75rem 1rem;

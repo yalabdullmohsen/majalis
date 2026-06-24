@@ -7,12 +7,24 @@ type ChatMessage = {
   content: string;
 };
 
+type AssistantResponse = {
+  ok?: boolean;
+  available?: boolean;
+  answer?: string;
+  reply?: string;
+  message?: string;
+  fallback?: boolean;
+};
+
 const WELCOME_MESSAGE: ChatMessage = {
   id: "welcome",
   role: "assistant",
   content:
     "مرحبًا بك في المساعد العلمي. اسألني عن الدروس أو المشايخ أو الكتب داخل منصة مجالس العلم، وسأجيب بإرشاد علمي عام دون ادعاء الإفتاء.",
 };
+
+const UNAVAILABLE_BANNER = "المساعد العلمي غير متاح حالياً. نعمل على تفعيله قريبًا.";
+const FAILURE_MESSAGE = "تعذر تشغيل المساعد الآن، حاول لاحقًا.";
 
 const QUICK_PROMPTS = [
   "أرشدني إلى دروس في العقيدة",
@@ -27,15 +39,43 @@ function createId() {
     : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
 }
 
-function extractError(data: unknown): string | null {
-  if (!data || typeof data !== "object") return null;
-  const record = data as Record<string, unknown>;
-  if (typeof record.error === "string") return record.error;
-  if (record.error && typeof record.error === "object") {
-    const nested = record.error as Record<string, unknown>;
-    if (typeof nested.message === "string") return nested.message;
+function buildFallbackGuidance(question: string): string {
+  const hints: string[] = [];
+
+  if (/درس|دروس|محاض|دورة|إعلان/.test(question)) {
+    hints.push("تصفّح قسم الدروس (/lessons) أو إعلانات الدروس (/announcements).");
   }
-  return null;
+  if (/شيخ|مشايخ|داع|عالم/.test(question)) {
+    hints.push("راجع قسم المشايخ (/sheikhs) للتعرف على العلماء المعتمدين.");
+  }
+  if (/كتاب|مكتبة|متن|تفسير|فقه/.test(question)) {
+    hints.push("زُر المكتبة العلمية (/library) للكتب والمتون.");
+  }
+  if (/سؤال|فتو|حكم|يجوز/.test(question)) {
+    hints.push("للأسئلة الشرعية العامة راجع قسم الأسئلة والأجوبة (/qa).");
+  }
+
+  if (hints.length === 0) {
+    return [
+      "يمكنك البحث داخل المنصة عبر قسم البحث (/search)،",
+      "أو تصفّح الدروس (/lessons) والمكتبة (/library) والمشايخ (/sheikhs).",
+      "",
+      "تذكّر: الفتوى الخاصة تُعرض على عالم مختص.",
+    ].join("\n");
+  }
+
+  return [
+    ...hints,
+    "",
+    "يمكنك أيضًا استخدام البحث (/search) للعثور على محتوى محدد.",
+    "",
+    "تذكّر: الفتوى الخاصة تُعرض على عالم مختص.",
+  ].join("\n");
+}
+
+function pickAnswer(data: AssistantResponse): string | null {
+  const text = data.answer || data.reply;
+  return typeof text === "string" && text.trim() ? text.trim() : null;
 }
 
 export default function AssistantPage() {
@@ -43,7 +83,7 @@ export default function AssistantPage() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [serviceReady, setServiceReady] = useState<boolean | null>(null);
+  const [assistantAvailable, setAssistantAvailable] = useState<boolean | null>(null);
   const bottomRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -51,9 +91,12 @@ export default function AssistantPage() {
   }, [messages, loading]);
 
   useEffect(() => {
-    fetch("/api/healthz")
-      .then((res) => setServiceReady(res.ok))
-      .catch(() => setServiceReady(false));
+    fetch("/api/assistant")
+      .then(async (res) => {
+        const data = (await res.json().catch(() => ({}))) as AssistantResponse;
+        setAssistantAvailable(Boolean(data.available));
+      })
+      .catch(() => setAssistantAvailable(false));
   }, []);
 
   const sendQuestion = async (question: string) => {
@@ -77,40 +120,61 @@ export default function AssistantPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          message: trimmed,
           messages: nextMessages
             .filter((message) => message.id !== WELCOME_MESSAGE.id)
             .map(({ role, content }) => ({ role, content })),
         }),
       });
 
-      const data = await response.json().catch(() => ({}));
-      const serverError = extractError(data);
+      const data = (await response.json().catch(() => ({}))) as AssistantResponse;
 
-      if (!response.ok) {
-        if (response.status === 429) {
-          throw new Error(serverError || "تم تجاوز الحد المسموح. يرجى الانتظار دقيقة ثم المحاولة مجددًا.");
-        }
-        if (response.status === 502 || response.status === 500) {
-          throw new Error(serverError || "خدمة المساعد غير متاحة حاليًا. تحقق من إعدادات الخادم.");
-        }
-        throw new Error(serverError || "تعذر الحصول على رد من المساعد الذكي.");
+      if (response.status === 429) {
+        setError("تم تجاوز الحد المسموح. يرجى الانتظار دقيقة ثم المحاولة مجددًا.");
+        return;
       }
 
-      const assistantMessage: ChatMessage = {
-        id: createId(),
-        role: "assistant",
-        content: typeof data?.reply === "string" && data.reply.trim()
-          ? data.reply
-          : "لم يرجع المساعد ردًا واضحًا.",
-      };
-
-      setMessages((current) => [...current, assistantMessage]);
-    } catch (caughtError) {
-      if (caughtError instanceof TypeError) {
-        setError("تعذر الاتصال بخدمة المساعد. تأكد أن الخادم يعمل وأن المفتاح ANTHROPIC_API_KEY مضبوط.");
-      } else {
-        setError(caughtError instanceof Error ? caughtError.message : "حدث خطأ غير متوقع.");
+      if (response.status === 400) {
+        setError(data.message || "اكتب سؤالك أولًا.");
+        return;
       }
+
+      const answer = pickAnswer(data);
+
+      if (data.ok && answer) {
+        setMessages((current) => [
+          ...current,
+          { id: createId(), role: "assistant", content: answer },
+        ]);
+        return;
+      }
+
+      const userMessageText = data.message || FAILURE_MESSAGE;
+      const guidance = data.fallback ? buildFallbackGuidance(trimmed) : userMessageText;
+
+      setMessages((current) => [
+        ...current,
+        {
+          id: createId(),
+          role: "assistant",
+          content: data.fallback
+            ? `${userMessageText}\n\n${guidance}`
+            : userMessageText,
+        },
+      ]);
+
+      if (data.fallback && data.message === UNAVAILABLE_BANNER) {
+        setAssistantAvailable(false);
+      }
+    } catch {
+      setMessages((current) => [
+        ...current,
+        {
+          id: createId(),
+          role: "assistant",
+          content: `${FAILURE_MESSAGE}\n\n${buildFallbackGuidance(trimmed)}`,
+        },
+      ]);
     } finally {
       setLoading(false);
     }
@@ -121,6 +185,8 @@ export default function AssistantPage() {
     await sendQuestion(input);
   };
 
+  const showUnavailableBanner = assistantAvailable === false;
+
   return (
     <div className="assistant-page">
       <section className="assistant-hero" aria-labelledby="assistant-title">
@@ -129,11 +195,16 @@ export default function AssistantPage() {
         <p>
           رفيق بحث عربي يساعدك في الوصول إلى الدروس والمشايخ والكتب والفوائد داخل مجالس العلم، مع التزام واضح بأن الفتوى الخاصة تُحال إلى أهل العلم المختصين.
         </p>
-        {serviceReady === false && (
-          <p className="assistant-service-warning" role="alert">
-            خدمة المساعد غير متصلة حاليًا. تأكد من تشغيل الخادم وضبط ANTHROPIC_API_KEY.
-          </p>
+
+        {showUnavailableBanner && (
+          <div className="assistant-unavailable" role="alert">
+            <p>{UNAVAILABLE_BANNER}</p>
+            <Link href="/" className="assistant-home-btn">
+              العودة إلى الصفحة الرئيسية
+            </Link>
+          </div>
         )}
+
         <div className="assistant-links" aria-label="روابط سريعة">
           <Link href="/lessons">الدروس</Link>
           <Link href="/sheikhs">المشايخ</Link>

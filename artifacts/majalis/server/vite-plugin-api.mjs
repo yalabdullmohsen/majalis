@@ -57,15 +57,32 @@ export function majalisApiPlugin() {
           return;
         }
 
+        if (req.method === "GET" && route.prefix === "/api/assistant") {
+          req.body = {};
+          try {
+            await route.handler(req, res);
+          } catch (error) {
+            console.error(`${route.prefix} dev GET handler failed`, error);
+            if (!res.headersSent) {
+              sendJson(res, 200, {
+                ok: false,
+                message: "تعذر تشغيل المساعد الآن، حاول لاحقًا.",
+                fallback: true,
+              });
+            }
+          }
+          return;
+        }
+
         if (req.method !== "POST") {
-          sendJson(res, 405, { error: "الطريقة غير مدعومة." });
+          sendJson(res, 405, { ok: false, message: "الطريقة غير مدعومة." });
           return;
         }
 
         route.rateLimit(req, res, async () => {
           const body = await readJsonBody(req);
           if (body === null) {
-            sendJson(res, 400, { error: "صيغة الطلب غير صالحة." });
+            sendJson(res, 400, { ok: false, message: "اكتب سؤالك أولًا." });
             return;
           }
 
@@ -75,7 +92,11 @@ export function majalisApiPlugin() {
           } catch (error) {
             console.error(`${route.prefix} dev handler failed`, error);
             if (!res.headersSent) {
-              sendJson(res, 500, { error: "حدث خطأ غير متوقع في الخادم." });
+              sendJson(res, 200, {
+                ok: false,
+                message: "تعذر تشغيل المساعد الآن، حاول لاحقًا.",
+                fallback: true,
+              });
             }
           }
         });

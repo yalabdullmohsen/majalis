@@ -47,7 +47,11 @@ function runHandler(handler, label) {
     handler(req, res).catch((error) => {
       console.error(`Unhandled ${label} error`, error);
       if (!res.headersSent) {
-        res.status(500).json({ error: "حدث خطأ غير متوقع في الخادم." });
+        res.status(200).json({
+          ok: false,
+          message: "تعذر تشغيل المساعد الآن، حاول لاحقًا.",
+          fallback: true,
+        });
       }
     });
   };
@@ -61,6 +65,7 @@ app.options("/api/transcribe", (_req, res) => {
   res.status(204).end();
 });
 
+app.get("/api/assistant", runHandler(assistantHandler, "assistant"));
 app.post("/api/assistant", express.json({ limit: "32kb" }), assistantRateLimit, runHandler(assistantHandler, "assistant"));
 app.post("/api/transcribe", express.json({ limit: "2mb" }), transcribeRateLimit, runHandler(transcribeHandler, "transcribe"));
 
