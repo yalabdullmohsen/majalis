@@ -1,4 +1,4 @@
-import { Switch, Route, Router as WouterRouter } from "wouter";
+import { Switch, Route, Router as WouterRouter, useLocation } from "wouter";
 import { AuthProvider } from "@/components/AuthProvider";
 import NavBar from "@/components/NavBar";
 import HomePage from "@/pages/HomePage";
@@ -15,6 +15,13 @@ import AssistantPage from "@/pages/AssistantPage";
 import LoginPage from "@/pages/LoginPage";
 import AdminPage from "@/pages/AdminPage";
 import NotFound from "@/pages/not-found";
+import { usePageSeo } from "@/lib/seo";
+
+function SeoManager() {
+  const [location] = useLocation();
+  usePageSeo(location);
+  return null;
+}
 
 function Router() {
   return (
@@ -43,6 +50,7 @@ function App() {
     <AuthProvider>
       <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
         <div style={{ minHeight: "100vh", direction: "rtl" }}>
+          <SeoManager />
           <NavBar />
           <main>
             <Router />
