@@ -45,7 +45,7 @@ export async function callAssistantApi(
     });
     data = {
       ok: false,
-      message: "تعذر الاتصال بخادم المساعد. تأكد أن مسار /api/assistant مفعّل على الاستضافة.",
+      message: "تعذر تشغيل المساعد الآن، حاول لاحقًا.",
       fallback: true,
     };
   }
