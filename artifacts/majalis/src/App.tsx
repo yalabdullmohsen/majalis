@@ -1,6 +1,7 @@
 import { Suspense, lazy, type ComponentType } from "react";
 import { Switch, Route, Router as WouterRouter, useLocation } from "wouter";
 import { AuthProvider } from "@/components/AuthProvider";
+import { FontPreferenceProvider } from "@/components/FontPreferenceProvider";
 import { AdminRouteGuard } from "@/components/AdminRouteGuard";
 import NavBar from "@/components/NavBar";
 import HomePage from "@/pages/HomePage";
@@ -87,17 +88,19 @@ function Router() {
 
 function App() {
   return (
-    <AuthProvider>
-      <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-        <div style={{ minHeight: "100vh", direction: "rtl" }}>
-          <SeoManager />
-          <NavBar />
-          <main>
-            <Router />
-          </main>
-        </div>
-      </WouterRouter>
-    </AuthProvider>
+    <FontPreferenceProvider>
+      <AuthProvider>
+        <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+          <div style={{ minHeight: "100vh", direction: "rtl" }}>
+            <SeoManager />
+            <NavBar />
+            <main>
+              <Router />
+            </main>
+          </div>
+        </WouterRouter>
+      </AuthProvider>
+    </FontPreferenceProvider>
   );
 }
 

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
+import { FontSelector } from "@/components/FontSelector";
 import { callAssistantApi, type AssistantResponse } from "@/lib/assistant-api";
 import { splitAssistantLines } from "@/lib/assistant-text";
 
@@ -33,14 +34,14 @@ function AssistantReply({ content }: { content: string }) {
   const lines = splitAssistantLines(content);
 
   return (
-    <div className="space-y-2 leading-8">
+    <div className="assistant-reply space-y-2">
       {lines.map((line, index) => {
         const isTitle = index === 0 && !line.startsWith("•");
 
         return (
           <p
             key={`${index}-${line.slice(0, 24)}`}
-            className={isTitle ? "text-base font-bold text-[#164E3C]" : "text-sm text-[#241F18]"}
+            className={isTitle ? "assistant-reply-title" : "assistant-reply-line"}
           >
             {line}
           </p>
@@ -125,8 +126,11 @@ export default function AssistantPage() {
   return (
     <div className="assistant-page">
       <header className="assistant-header">
-        <h1>المساعد العلمي</h1>
-        <p>
+        <div className="assistant-header-top">
+          <h1 className="assistant-title">المساعد العلمي</h1>
+          <FontSelector />
+        </div>
+        <p className="assistant-intro">
           مساعد ذكي يرشدك في المسائل العلمية العامة داخل مجالس العلم. الفتوى الخاصة تُعرض على
           عالم مختص.
         </p>
@@ -141,7 +145,7 @@ export default function AssistantPage() {
                 message.isFailure ? " assistant-message-failure" : ""
               }${
                 message.role === "assistant" && !message.isFailure
-                  ? " max-w-2xl w-full self-end rounded-2xl border border-[#E0D7C4] bg-white p-4 shadow-sm"
+                  ? " assistant-message-reply max-w-2xl w-full self-end rounded-2xl border border-[#E0D7C4] bg-white p-4 shadow-sm"
                   : ""
               }`}
             >

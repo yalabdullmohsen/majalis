@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "wouter";
 import { useAuth } from "./AuthProvider";
+import { FontSelector } from "./FontSelector";
 import NotificationBell from "./NotificationBell";
 import { C } from "@/lib/theme";
 
@@ -121,6 +122,7 @@ export default function NavBar() {
         )}
 
         <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexShrink: 0 }}>
+          {!isMobile && <FontSelector compact />}
           {!isMobile && <SearchBox />}
 
           {!isMobile && (isLoggedIn ? (
@@ -147,6 +149,9 @@ export default function NavBar() {
         <div style={{ borderTop: `1px solid ${C.line}`, background: C.parchment, padding: "0.75rem 1rem 1rem" }}>
           <div style={{ marginBottom: "0.75rem" }}>
             <SearchBox onSubmitDone={() => setOpen(false)} />
+          </div>
+          <div style={{ marginBottom: "0.75rem" }}>
+            <FontSelector />
           </div>
           <nav style={{ display: "flex", flexDirection: "column", gap: "0.15rem" }}>
             {TABS.map((t) => (
