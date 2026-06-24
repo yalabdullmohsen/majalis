@@ -129,6 +129,7 @@ export default function AssistantPage() {
       const answer = pickAnswer(data);
 
       if (data.ok && answer) {
+        console.log("[assistant-ui] assistant reply appended", { mode: "ai", length: answer.length });
         setMessages((current) => [
           ...current,
           { id: createId(), role: "assistant", content: answer },
@@ -137,15 +138,22 @@ export default function AssistantPage() {
       }
 
       const userMessageText = data.message || FAILURE_MESSAGE;
+      const replyContent = data.fallback
+        ? `${userMessageText}\n\n${buildFallbackGuidance(trimmed)}`
+        : userMessageText;
+
+      console.log("[assistant-ui] assistant reply appended", {
+        mode: data.fallback ? "fallback" : "message",
+        ok: data.ok,
+        length: replyContent.length,
+      });
 
       setMessages((current) => [
         ...current,
         {
           id: createId(),
           role: "assistant",
-          content: data.fallback
-            ? `${userMessageText}\n\n${buildFallbackGuidance(trimmed)}`
-            : userMessageText,
+          content: replyContent,
         },
       ]);
 
