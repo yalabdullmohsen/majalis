@@ -237,7 +237,7 @@ if (questions.length !== 200) throw new Error(`Expected 200 questions, got ${que
 
 const header = ["section", "category", "level", "question", "answer"];
 const csv = header.join(",") + "\n" + questions.map((r) => r.map(csvEscape).join(",")).join("\n");
-fs.writeFileSync(outPath, "\uFEFF" + csv, "utf8");
+fs.writeFileSync(outPath, csv, "utf8");
 
 console.log(`✓ Created ${outPath}`);
 console.log(`  Total: ${questions.length}`);

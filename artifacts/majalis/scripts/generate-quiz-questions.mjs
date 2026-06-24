@@ -87,6 +87,9 @@ const csv =
   "\n" +
   questions.map((row) => row.map(csvEscape).join(",")).join("\n");
 
+fs.mkdirSync(path.dirname(csvPath), { recursive: true });
+fs.writeFileSync(csvPath, csv, "utf8");
+
 const seedObjects = questions.map(([section, category, level, question, answer], i) => ({
   id: `demo-quiz-${i + 1}`,
   section,
