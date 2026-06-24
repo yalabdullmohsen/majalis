@@ -1,18 +1,23 @@
+import { useMemo, useState } from "react";
 import { Link } from "wouter";
-import { FEATURED_ANNOUNCEMENTS } from "@/lib/current-lessons";
-import { CurrentLessonCard } from "./CurrentLessonCard";
+import { lessonAds, sortLessonAds, type LessonAd } from "@/lib/lesson-ads";
+import { LessonAdCard } from "./LessonAdCard";
+import { LessonAdModal } from "./LessonAdModal";
 
 export function CurrentLessonsSection() {
-  const announcements = FEATURED_ANNOUNCEMENTS;
+  const [activeItem, setActiveItem] = useState<LessonAd | null>(null);
+
+  const sortedItems = useMemo(() => sortLessonAds(lessonAds), []);
 
   return (
-    <section className="la-home-section" aria-labelledby="lesson-announcements-heading">
+    <section className="la-home-section lad-section" aria-labelledby="lesson-announcements-heading">
       <div className="la-section-bar">
         <div>
-          <p className="la-section-bar__eyebrow">إعلانات الدروس والدورات</p>
-          <h2 id="lesson-announcements-heading">إعلانات الدروس</h2>
+          <p className="la-section-bar__eyebrow">الدروس الحالية</p>
+          <h2 id="lesson-announcements-heading">إعلانات المجالس العلمية والبرامج التعليمية</h2>
           <p className="la-section-bar__sub">
-            إعلانات احترافية للدروس الشرعية في مساجد الكويت — جداول أسبوعية محدّثة.
+            عرض موحّد ونظيف للدروس: صورة الشيخ، الموعد، المكان، وروابط مباشرة للخريطة والبث
+            والمادة العلمية — بدون الاعتماد على QR داخل الصورة.
           </p>
         </div>
         <Link href="/announcements" className="la-section-bar__link">
@@ -20,13 +25,13 @@ export function CurrentLessonsSection() {
         </Link>
       </div>
 
-      <div className="la-home-grid">
-        {announcements.map((lesson) => (
-          <CurrentLessonCard key={lesson.id} lesson={lesson} compact showDetailsLink />
+      <div className="home-container lad-home-grid">
+        {sortedItems.map((item) => (
+          <LessonAdCard key={item.id} item={item} compact onOpen={setActiveItem} />
         ))}
       </div>
 
-      <div className="la-home-cta-row">
+      <div className="home-container la-home-cta-row">
         <Link href="/announcements" className="la-home-cta">
           جميع إعلانات الدروس
         </Link>
@@ -34,6 +39,8 @@ export function CurrentLessonsSection() {
           الدورات الكاملة
         </Link>
       </div>
+
+      <LessonAdModal item={activeItem} onClose={() => setActiveItem(null)} />
     </section>
   );
 }
