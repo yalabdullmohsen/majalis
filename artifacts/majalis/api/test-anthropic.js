@@ -1,16 +1,12 @@
-import Anthropic from "@anthropic-ai/sdk";
-import { createAnthropicClient, readAnthropicApiKey, TEST_MODEL } from "./anthropic-config.js";
 import { sendJson } from "./_http.js";
+import { blockInProduction } from "./_security.js";
 
 export const maxDuration = 30;
 
 export default async function handler(req, res) {
-  const apiKey = readAnthropicApiKey();
+  if (blockInProduction(res, sendJson)) return;
 
-  console.log("[test-anthropic] request", {
-    method: req.method,
-    hasApiKey: Boolean(apiKey),
-  });
+  const apiKey = (process.env.ANTHROPIC_API_KEY || "").trim();
 
   if (req.method === "OPTIONS") {
     res.statusCode = 204;
@@ -24,25 +20,22 @@ export default async function handler(req, res) {
   }
 
   if (!apiKey) {
-    sendJson(res, 200, { success: false, error: "ANTHROPIC_API_KEY not configured" });
+    sendJson(res, 200, { success: false, error: "Service not configured" });
     return;
   }
 
   try {
+    const { default: Anthropic } = await import("@anthropic-ai/sdk");
+    const { createAnthropicClient, TEST_MODEL } = await import("./anthropic-config.js");
     const client = createAnthropicClient(Anthropic, apiKey);
     await client.messages.create({
       model: TEST_MODEL,
       max_tokens: 16,
       messages: [{ role: "user", content: "Reply with OK only." }],
     });
-
-    console.log("[test-anthropic] success");
     sendJson(res, 200, { success: true });
   } catch (error) {
-    console.error("[test-anthropic] Anthropic API failed:", error);
-    sendJson(res, 200, {
-      success: false,
-      error: error?.message || "Anthropic request failed",
-    });
+    console.error("[test-anthropic] failed:", error);
+    sendJson(res, 200, { success: false, error: "Connection test failed" });
   }
 }

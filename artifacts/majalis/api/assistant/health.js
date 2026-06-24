@@ -1,4 +1,5 @@
 import { sendJson } from "../_http.js";
+import { isProduction } from "../_security.js";
 
 export default async function handler(req, res) {
   if (req.method === "OPTIONS") {
@@ -12,11 +13,11 @@ export default async function handler(req, res) {
     return;
   }
 
-  const hasKey = Boolean((process.env.ANTHROPIC_API_KEY || "").trim());
+  const configured = Boolean((process.env.ANTHROPIC_API_KEY || "").trim());
 
   sendJson(res, 200, {
-    hasKey,
-    runtime: "server",
     ok: true,
+    available: configured,
+    ...(isProduction() ? {} : { runtime: "server" }),
   });
 }

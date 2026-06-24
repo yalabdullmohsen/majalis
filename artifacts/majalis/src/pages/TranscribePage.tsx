@@ -1,4 +1,6 @@
 import { useCallback, useState } from "react";
+import { validateMediaUpload, safeUploadFileName, MAX_MEDIA_BYTES } from "@/lib/file-validation";
+import { sanitizeText } from "@/lib/sanitize";
 import { Link } from "wouter";
 import { useDropzone } from "react-dropzone";
 import { supabase } from "@/lib/supabase";
@@ -30,11 +32,25 @@ export default function TranscribePage() {
   const [errorMessage, setErrorMessage] = useState("");
 
   const onDrop = useCallback(
-    (acceptedFiles: File[]) => {
+    (acceptedFiles: File[], rejectedFiles: { errors: { code: string }[] }[]) => {
+      if (rejectedFiles.length > 0) {
+        const code = rejectedFiles[0]?.errors[0]?.code;
+        if (code === "file-too-large") {
+          setErrorMessage("حجم الملف يتجاوز الحد المسموح.");
+        } else {
+          setErrorMessage("نوع الملف غير مدعوم.");
+        }
+        return;
+      }
       const picked = acceptedFiles[0];
       if (!picked) return;
+      const check = validateMediaUpload(picked);
+      if (!check.ok) {
+        setErrorMessage(check.error);
+        return;
+      }
       setFile(picked);
-      if (!title) setTitle(picked.name.replace(/\.[^/.]+$/, ""));
+      if (!title) setTitle(sanitizeText(picked.name.replace(/\.[^/.]+$/, ""), 120));
     },
     [title]
   );
@@ -42,10 +58,13 @@ export default function TranscribePage() {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: {
-      "audio/*": [".mp3", ".wav", ".m4a"],
-      "video/*": [".mp4", ".webm"],
+      "audio/mpeg": [".mp3"],
+      "audio/wav": [".wav"],
+      "audio/mp4": [".m4a"],
+      "video/mp4": [".mp4"],
+      "video/webm": [".webm"],
     },
-    maxSize: 500 * 1024 * 1024,
+    maxSize: MAX_MEDIA_BYTES,
     multiple: false,
   });
 
@@ -53,10 +72,12 @@ export default function TranscribePage() {
     setErrorMessage("");
     setResult(null);
 
-    if (!title.trim()) {
+    if (!sanitizeText(title, 200)) {
       setErrorMessage("أدخل عنواناً للمحاضرة.");
       return;
     }
+
+    const safeTitle = sanitizeText(title, 200);
 
     if (!isLoggedIn) {
       setErrorMessage("يجب تسجيل الدخول أولاً.");
@@ -91,10 +112,10 @@ export default function TranscribePage() {
         .from("transcriptions")
         .insert({
           user_id: user.id,
-          title: title.trim(),
+          title: safeTitle,
           file_type: fileType,
-          source_url: activeTab === "youtube" ? youtubeUrl.trim() || null : null,
-          transcript_text: activeTab === "text" ? transcriptText : null,
+          source_url: activeTab === "youtube" ? sanitizeText(youtubeUrl, 500) || null : null,
+          transcript_text: activeTab === "text" ? sanitizeText(manualText, 50000) : null,
           status: "processing",
         })
         .select()
@@ -105,7 +126,7 @@ export default function TranscribePage() {
       setProgress(30);
 
       if (file && activeTab === "upload") {
-        const fileName = `${user.id}/${Date.now()}-${file.name}`;
+        const fileName = `${user.id}/${Date.now()}-${safeUploadFileName(file.name)}`;
         const { error: uploadError } = await supabase.storage
           .from("transcriptions")
           .upload(fileName, file, { upsert: false });
@@ -160,7 +181,7 @@ export default function TranscribePage() {
         },
         body: JSON.stringify({
           transcript_text: transcriptText,
-          title: title.trim(),
+          title: safeTitle,
           transcription_id: record.id,
         }),
       });
@@ -168,7 +189,7 @@ export default function TranscribePage() {
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
         await supabase.from("transcriptions").update({ status: "error" }).eq("id", record.id);
-        throw new Error(data?.error || "فشل التحليل.");
+        throw new Error("تعذر إكمال التحليل. حاول لاحقًا.");
       }
 
       setProgress(100);
@@ -177,7 +198,7 @@ export default function TranscribePage() {
     } catch (err) {
       console.error(err);
       setStatus("error");
-      setErrorMessage(err instanceof Error ? err.message : "حدث خطأ غير متوقع.");
+      setErrorMessage("تعذر إكمال العملية. حاول لاحقًا.");
     }
   };
 
@@ -187,7 +208,7 @@ export default function TranscribePage() {
         <Link href="/" className="text-sm font-bold text-[#164E3C] hover:underline">
           ← المجلس العلمي
         </Link>
-        <h1 className="mt-2 text-3xl font-bold text-[#164E3C]">🎙️ تفريغ المحاضرات</h1>
+        <h1 className="mt-2 text-2xl font-bold text-[#164E3C]">🎙️ تفريغ المحاضرات</h1>
         <p className="mb-8 text-[#5B5446]">حوّل الصوت والفيديو إلى نص مع تلخيص ذكي واستخراج الفوائد</p>
 
         {!isLoggedIn && (

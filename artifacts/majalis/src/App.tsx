@@ -20,12 +20,12 @@ import QaPage from "@/pages/QaPage";
 import QuizPage from "@/pages/QuizPage";
 import LoginPage from "@/pages/LoginPage";
 import TranscribePage from "@/pages/TranscribePage";
+import AssistantPage from "@/pages/AssistantPage";
 import NotFound from "@/pages/not-found";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { usePageSeo } from "@/lib/seo";
 import { Loading } from "@/components/ui-common";
 
-const AssistantPage = lazy(() => import("@/pages/AssistantPage"));
 const CondolencesPage = lazy(() => import("@/pages/CondolencesPage"));
 const CardsPage = lazy(() => import("@/pages/CardsPage"));
 const AdminPage = lazy(() => import("@/pages/AdminPage"));
@@ -37,11 +37,13 @@ function SeoManager() {
   return null;
 }
 
-function LazyRoute({ component: Component }: { component: ComponentType }) {
+function SafeLazyRoute({ component: Component }: { component: ComponentType }) {
   return (
-    <Suspense fallback={<Loading />}>
-      <Component />
-    </Suspense>
+    <ErrorBoundary>
+      <Suspense fallback={<Loading />}>
+        <Component />
+      </Suspense>
+    </ErrorBoundary>
   );
 }
 
@@ -63,27 +65,35 @@ function Router() {
       <Route path="/fawaid" component={FawaidPage} />
       <Route path="/qa" component={QaPage} />
       <Route path="/quiz" component={QuizPage} />
-      <Route path="/assistant"><LazyRoute component={AssistantPage} /></Route>
-      <Route path="/condolences"><LazyRoute component={CondolencesPage} /></Route>
+      <Route path="/assistant">
+        <ErrorBoundary>
+          <AssistantPage />
+        </ErrorBoundary>
+      </Route>
+      <Route path="/condolences"><SafeLazyRoute component={CondolencesPage} /></Route>
       <Route path="/transcribe">
         <ErrorBoundary>
           <TranscribePage />
         </ErrorBoundary>
       </Route>
-      <Route path="/cards"><LazyRoute component={CardsPage} /></Route>
+      <Route path="/cards"><SafeLazyRoute component={CardsPage} /></Route>
       <Route path="/login" component={LoginPage} />
       <Route path="/admin/dashboard">
         <AdminRouteGuard>
-          <Suspense fallback={<Loading />}>
-            <AdminDashboardPage />
-          </Suspense>
+          <ErrorBoundary>
+            <Suspense fallback={<Loading />}>
+              <AdminDashboardPage />
+            </Suspense>
+          </ErrorBoundary>
         </AdminRouteGuard>
       </Route>
       <Route path="/admin">
         <AdminRouteGuard>
-          <Suspense fallback={<Loading />}>
-            <AdminPage />
-          </Suspense>
+          <ErrorBoundary>
+            <Suspense fallback={<Loading />}>
+              <AdminPage />
+            </Suspense>
+          </ErrorBoundary>
         </AdminRouteGuard>
       </Route>
       <Route component={NotFound} />

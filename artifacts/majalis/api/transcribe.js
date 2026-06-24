@@ -37,7 +37,7 @@ function getSupabaseConfig() {
 function getAnthropicApiKey() {
   const apiKey = getEnv("ANTHROPIC_API_KEY");
   if (!apiKey) {
-    throw createHttpError(500, "لم يتم ضبط مفتاح Anthropic في متغير البيئة ANTHROPIC_API_KEY.");
+    throw createHttpError(503, "خدمة التحليل غير متاحة حالياً.");
   }
   return apiKey;
 }
@@ -182,8 +182,9 @@ ${trimmedText.substring(0, 8000)}`,
   } catch (err) {
     console.error("Transcription API error:", err);
     const status = Number.isInteger(err?.statusCode) ? err.statusCode : 500;
-    res.status(status).json({
-      error: err instanceof Error && err.message ? err.message : "حدث خطأ في المعالجة",
+    const publicStatus = status >= 500 ? 500 : status;
+    res.status(publicStatus).json({
+      error: publicStatus >= 500 ? "تعذر إكمال التحليل. حاول لاحقًا." : "تعذر معالجة الطلب.",
     });
   }
 }

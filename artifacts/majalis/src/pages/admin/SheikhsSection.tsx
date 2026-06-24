@@ -6,6 +6,8 @@ import { AdminModal, Field, FieldRow, inputSt, selectSt, textareaSt } from "./Ad
 import { BulkImport } from "./BulkImport";
 import { SheikhAvatar } from "@/components/lessons/SheikhAvatar";
 import { resolveSheikhImageUrl } from "@/lib/sheikh-image";
+import { sanitizeText, sanitizeOptionalUrl } from "@/lib/sanitize";
+import { validateSheikhImage } from "@/lib/file-validation";
 
 const toArr = (v: any) => Array.isArray(v) ? v : (v ? String(v).split(/[،,]/).map((s: string) => s.trim()).filter(Boolean) : []);
 
@@ -51,19 +53,24 @@ export function SheikhsSection() {
       }
       const payload = {
         ...form,
+        name: sanitizeText(form.name, 200),
+        bio: sanitizeText(form.bio, 2000),
+        biography: sanitizeText(form.biography, 10000),
+        city: sanitizeText(form.city, 80),
+        ijazah: sanitizeText(form.ijazah, 500),
         image_url: imageUrl || null,
-        photo_url: imageUrl || form.photo_url || null,
+        photo_url: imageUrl || sanitizeOptionalUrl(form.photo_url) || null,
         years_experience: form.years_experience ? parseInt(form.years_experience) : null,
-        specialties: form.specialties ? form.specialties.split(/[،,]/).map((s: string) => s.trim()).filter(Boolean) : [],
-        qualifications: form.qualifications ? form.qualifications.split(/[،,]/).map((s: string) => s.trim()).filter(Boolean) : [],
+        specialties: form.specialties ? form.specialties.split(/[،,]/).map((s: string) => sanitizeText(s, 80)).filter(Boolean) : [],
+        qualifications: form.qualifications ? form.qualifications.split(/[،,]/).map((s: string) => sanitizeText(s, 120)).filter(Boolean) : [],
       };
       await adminUpsertSheikh(payload);
       setOpen(false);
       setImageFile(null);
       setImagePreview("");
       load();
-    } catch (err: any) {
-      alert(err?.message || "تعذر حفظ بيانات الشيخ.");
+    } catch {
+      alert("تعذر حفظ بيانات الشيخ.");
     } finally {
       setSaving(false);
     }
@@ -71,8 +78,9 @@ export function SheikhsSection() {
 
   const handleImagePick = (file: File | null) => {
     if (!file) return;
-    if (!file.type.startsWith("image/")) {
-      alert("يرجى اختيار ملف صورة.");
+    const check = validateSheikhImage(file);
+    if (!check.ok) {
+      alert(check.error);
       return;
     }
     setImageFile(file);
@@ -188,7 +196,7 @@ export function SheikhsSection() {
           <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
             <SheikhAvatar src={imagePreview || resolveSheikhImageUrl(form)} name={form.name || "شيخ"} size={96} />
             <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-              <input ref={fileInputRef} type="file" accept="image/*" hidden onChange={(e) => handleImagePick(e.target.files?.[0] || null)} />
+              <input ref={fileInputRef} type="file" accept="image/png,image/jpeg,image/jpg,image/webp" hidden onChange={(e) => handleImagePick(e.target.files?.[0] || null)} />
               <button type="button" style={BTN_EDIT} onClick={() => fileInputRef.current?.click()}>رفع صورة</button>
               {(imagePreview || resolveSheikhImageUrl(form)) && (
                 <button type="button" style={BTN_DEL} onClick={handleRemoveImage}>حذف الصورة</button>

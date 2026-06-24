@@ -5,6 +5,7 @@ import {
   filterDemoQa,
   searchDemoContent,
 } from "./demo-content";
+import { validateSheikhImage, safeUploadFileName } from "./file-validation";
 import { formatSupabaseError, isSupabaseConfigured, logSupabaseError } from "./supabase-config";
 
 // Normalize to the bare project origin (https://xxx.supabase.co).
@@ -292,9 +293,15 @@ function sheikhStoragePathFromUrl(imageUrl: string): string | null {
 }
 
 export async function uploadSheikhImage(file: File, sheikhId?: string) {
+  const check = validateSheikhImage(file);
+  if (!check.ok) throw new Error(check.error);
+
   const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
-  const safeExt = ["jpg", "jpeg", "png", "webp", "gif"].includes(ext) ? ext : "jpg";
-  const fileName = `${sheikhId || crypto.randomUUID()}-${Date.now()}.${safeExt}`;
+  const safeExt = ["jpg", "jpeg", "png", "webp"].includes(ext) ? ext : "jpg";
+  const fileName = safeUploadFileName(
+    `${sheikhId || crypto.randomUUID()}-${Date.now()}.${safeExt}`,
+    safeExt,
+  );
   const { error } = await supabase.storage.from("sheikhs").upload(fileName, file, {
     upsert: true,
     contentType: file.type || `image/${safeExt === "jpg" ? "jpeg" : safeExt}`,

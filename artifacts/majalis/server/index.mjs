@@ -50,11 +50,12 @@ function runHandler(handler, label) {
     handler(req, res).catch((error) => {
       console.error(`Unhandled ${label} error`, error);
       if (!res.headersSent) {
-        res.status(200).json({
-          ok: false,
-          message: "تعذر تشغيل المساعد الآن، حاول لاحقًا.",
-          fallback: true,
-        });
+        const isTranscribe = label === "transcribe";
+        res.status(isTranscribe ? 500 : 200).json(
+          isTranscribe
+            ? { error: "تعذر إكمال العملية. حاول لاحقًا." }
+            : { ok: false, message: "تعذر تشغيل المساعد الآن، حاول لاحقًا.", fallback: true },
+        );
       }
     });
   };

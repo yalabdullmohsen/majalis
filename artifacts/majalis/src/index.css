@@ -4337,3 +4337,52 @@ input, textarea, select { font-family: inherit; }
     min-width: 0;
   }
 }
+
+/* ── Mobile UX & touch targets ── */
+@media (max-width: 880px) {
+  .site-brand-name {
+    font-size: 0.95rem;
+    max-width: 9rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .navbar-logo {
+    width: 40px;
+    height: 40px;
+    max-width: 40px;
+    max-height: 40px;
+  }
+
+  .mobile-quick-nav-item,
+  .page-action-btn,
+  .page-search-form button,
+  .assistant-form button,
+  .lad-btn {
+    min-height: 44px;
+  }
+
+  .page-card,
+  .home-lesson-card,
+  .home-sheikh-card,
+  .lesson-card,
+  .sheikh-card {
+    overflow: hidden;
+    word-break: break-word;
+  }
+
+  .page-card-header p,
+  .lesson-card-title,
+  .home-lesson-card h3 {
+    font-size: 0.92rem;
+    line-height: 1.5;
+  }
+
+  .assistant-title {
+    font-size: 1.25rem;
+  }
+
+  .assistant-message-reply {
+    max-width: 100% !important;
+  }
+}

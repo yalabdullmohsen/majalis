@@ -187,7 +187,7 @@ export default function QaPage() {
 
       {!isSupabaseConfigured() && !showDemoNotice && (
         <p className="qa-config-hint">
-          Supabase غير مُعدّ — يُعرض محتوى تجريبي. أضف VITE_SUPABASE_URL و VITE_SUPABASE_ANON_KEY.
+          Supabase غير مُعدّ — يُعرض محتوى تجريبي حتى يُفعَّل الاتصال بقاعدة البيانات.
         </p>
       )}
 
