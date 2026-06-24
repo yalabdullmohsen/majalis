@@ -132,6 +132,33 @@ export const DEMO_LIBRARY = [
   },
 ];
 
+export const DEMO_MIRACLES = [
+  {
+    id: "demo-miracle-1",
+    title: "آيات التفكر في خلق السماوات والأرض",
+    source_type: "قرآن",
+    category: "فلك",
+    body: "قال تعالى: ﴿إِنَّ فِي خَلْقِ السَّمَاوَاتِ وَالْأَرْضِ وَاخْتِلَافِ اللَّيْلِ وَالنَّهَارِ لَآيَاتٍ لِّأُولِي الْأَلْبَابِ﴾ — دلالة على عظمة الخالق في نظام الكون.",
+    status: "approved",
+  },
+  {
+    id: "demo-miracle-2",
+    title: "دلائل القدرة في خلق الإنسان",
+    source_type: "قرآن",
+    category: "طب",
+    body: "قال تعالى: ﴿فَنَظِرْ إِلَىٰ إِطْفَارِهِ﴾ — إشارة إلى بدء خلق الإنسان من نطفة ومراحل نموه المعجزة.",
+    status: "approved",
+  },
+  {
+    id: "demo-miracle-3",
+    title: "الجبال أوتادًا للأرض",
+    source_type: "قرآن",
+    category: "جيولوجيا",
+    body: "قال تعالى: ﴿وَأَلْقَىٰ فِي الْأَرْضِ رَوَاسِيَ﴾ — وصف علمي لدور الجبال في ثبات الأرض.",
+    status: "approved",
+  },
+];
+
 export const DEMO_FAWAID = [
   {
     id: "demo-fawaid-1",

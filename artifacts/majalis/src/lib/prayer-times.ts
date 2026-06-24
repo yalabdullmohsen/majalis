@@ -34,6 +34,125 @@ export type PrayerStatus = {
 
 const OBLIGATORY_KEYS = new Set(["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"]);
 
+const KUWAIT_LAT = 29.3759;
+const KUWAIT_LON = 47.9774;
+const KUWAIT_METHOD = 9;
+
+const PRAYER_META = [
+  { key: "Fajr", name: "الفجر", icon: "🌙", obligatory: true },
+  { key: "Sunrise", name: "الشروق", icon: "🌅", obligatory: false },
+  { key: "Dhuhr", name: "الظهر", icon: "☀️", obligatory: true },
+  { key: "Asr", name: "العصر", icon: "🌤️", obligatory: true },
+  { key: "Maghrib", name: "المغرب", icon: "🌇", obligatory: true },
+  { key: "Isha", name: "العشاء", icon: "🌙", obligatory: true },
+];
+
+function kuwaitDateKey(date = new Date()) {
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Kuwait",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(date);
+}
+
+function kuwaitDateParam(date = new Date()) {
+  const parts = kuwaitDateKey(date).split("-");
+  return `${parts[2]}-${parts[1]}-${parts[0]}`;
+}
+
+function parseTimeToMinutes(value: string) {
+  const match = String(value || "").match(/^(\d{1,2}):(\d{2})/);
+  if (!match) return null;
+  return Number(match[1]) * 60 + Number(match[2]);
+}
+
+function formatTime12(value: string) {
+  const minutes = parseTimeToMinutes(value);
+  if (minutes == null) return value;
+  const hours24 = Math.floor(minutes / 60);
+  const mins = minutes % 60;
+  const period = hours24 >= 12 ? "م" : "ص";
+  const hours12 = hours24 % 12 || 12;
+  return `${hours12}:${String(mins).padStart(2, "0")} ${period}`;
+}
+
+function buildPayload(timings: Record<string, string>, meta: { timezone?: string } | null, date: any): PrayerTimesPayload {
+  const prayers: PrayerSlot[] = PRAYER_META.map(({ key, name, icon, obligatory }) => ({
+    key,
+    name,
+    icon,
+    obligatory,
+    time24: timings[key],
+    time: formatTime12(timings[key]),
+    minutes: parseTimeToMinutes(timings[key]),
+  }));
+
+  return {
+    ok: true,
+    city: "الكويت – محافظة العاصمة",
+    timezone: meta?.timezone || "Asia/Kuwait",
+    method: "Kuwait",
+    source: "AlAdhan (طريقة الكويت)",
+    date: {
+      gregorian: date?.gregorian?.date || kuwaitDateParam(),
+      hijri: date?.hijri?.date || null,
+      readable: date?.readable || null,
+    },
+    prayers,
+    fetchedAt: new Date().toISOString(),
+  };
+}
+
+/** Approximate Kuwait prayer times when all network sources fail. */
+function staticPrayerFallback(): PrayerTimesPayload {
+  const timings: Record<string, string> = {
+    Fajr: "04:30",
+    Sunrise: "05:50",
+    Dhuhr: "11:45",
+    Asr: "15:10",
+    Maghrib: "17:35",
+    Isha: "19:00",
+  };
+
+  const readable = new Intl.DateTimeFormat("ar-KW", {
+    timeZone: "Asia/Kuwait",
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  }).format(new Date());
+
+  return {
+    ...buildPayload(timings, { timezone: "Asia/Kuwait" }, { readable }),
+    source: "تقدير محلي (بدون اتصال)",
+    stale: true,
+  };
+}
+
+async function fetchAlAdhanDirect(): Promise<PrayerTimesPayload> {
+  const dateParam = kuwaitDateParam();
+  const url =
+    `https://api.aladhan.com/v1/timings/${dateParam}` +
+    `?latitude=${KUWAIT_LAT}&longitude=${KUWAIT_LON}&method=${KUWAIT_METHOD}`;
+
+  const response = await fetch(url, {
+    headers: { Accept: "application/json" },
+    signal: AbortSignal.timeout(12_000),
+  });
+
+  if (!response.ok) {
+    throw new Error(`AlAdhan responded with ${response.status}`);
+  }
+
+  const json = await response.json();
+  if (json?.code !== 200 || !json?.data?.timings) {
+    throw new Error("Invalid AlAdhan payload");
+  }
+
+  return buildPayload(json.data.timings, json.data.meta, json.data.date);
+}
+
 function kuwaitNowMinutes(): number {
   const parts = new Intl.DateTimeFormat("en-GB", {
     timeZone: "Asia/Kuwait",
@@ -108,16 +227,25 @@ export function computePrayerStatus(prayers: PrayerSlot[]): PrayerStatus {
   };
 }
 
+/** Never throws — always returns usable prayer times. */
 export async function fetchPrayerTimes(): Promise<PrayerTimesPayload> {
-  const response = await fetch("/api/prayer-times", {
-    headers: { Accept: "application/json" },
-  });
+  try {
+    const response = await fetch("/api/prayer-times", {
+      headers: { Accept: "application/json" },
+    });
 
-  const data = (await response.json()) as PrayerTimesPayload & { message?: string };
+    const data = (await response.json()) as PrayerTimesPayload & { message?: string };
 
-  if (!response.ok || !data.ok) {
-    throw new Error(data.message || "تعذر تحميل مواقيت الصلاة.");
+    if (response.ok && data.ok) {
+      return data;
+    }
+  } catch {
+    // fall through to direct fetch
   }
 
-  return data;
+  try {
+    return await fetchAlAdhanDirect();
+  } catch {
+    return staticPrayerFallback();
+  }
 }

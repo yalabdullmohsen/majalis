@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { PageHeader, Loading, Empty, ErrorState } from "@/components/ui-common";
+import { PageHeader, Loading, Empty } from "@/components/ui-common";
 import { KuwaitLessonCard } from "@/components/kuwait/KuwaitLessonCard";
 import {
   DEFAULT_KUWAIT_FILTERS,
@@ -13,15 +13,13 @@ import {
 export default function KuwaitLessonsPage() {
   const [lessons, setLessons] = useState<KuwaitLessonRecord[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
   const [filters, setFilters] = useState<KuwaitLessonFilters>(DEFAULT_KUWAIT_FILTERS);
 
   const load = () => {
     setLoading(true);
-    setError("");
     loadKuwaitLessons()
       .then(setLessons)
-      .catch(() => setError("تعذر تحميل دروس الكويت."))
+      .catch(() => setLessons([]))
       .finally(() => setLoading(false));
   };
 
@@ -117,13 +115,12 @@ export default function KuwaitLessonsPage() {
       </div>
 
       {loading && <Loading />}
-      {error && <ErrorState text={error} onRetry={load} />}
 
-      {!loading && !error && filtered.length === 0 && (
+      {!loading && filtered.length === 0 && (
         <Empty text="لا توجد دروس مطابقة للبحث حاليًا." />
       )}
 
-      {!loading && !error && filtered.length > 0 && (
+      {!loading && filtered.length > 0 && (
         <div className="home-kuwait-grid kuwait-lessons-grid">
           {filtered.map((lesson) => (
             <KuwaitLessonCard key={lesson.id} lesson={lesson} />

@@ -8,7 +8,6 @@ import {
 
 export function HomePrayerTimes() {
   const [data, setData] = useState<PrayerTimesPayload | null>(null);
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const [tick, setTick] = useState(0);
 
@@ -17,9 +16,6 @@ export function HomePrayerTimes() {
     fetchPrayerTimes()
       .then((payload) => {
         if (active) setData(payload);
-      })
-      .catch(() => {
-        if (active) setError("تعذر تحميل مواقيت الصلاة.");
       })
       .finally(() => {
         if (active) setLoading(false);
@@ -49,11 +45,7 @@ export function HomePrayerTimes() {
     const msUntilMidnight = ((23 - h) * 3600 + (59 - m) * 60 + (60 - s)) * 1000;
 
     const timer = window.setTimeout(() => {
-      setLoading(true);
-      fetchPrayerTimes()
-        .then(setData)
-        .catch(() => setError("تعذر تحديث مواقيت اليوم."))
-        .finally(() => setLoading(false));
+      fetchPrayerTimes().then(setData);
     }, msUntilMidnight);
 
     return () => window.clearTimeout(timer);
@@ -68,14 +60,6 @@ export function HomePrayerTimes() {
     return (
       <section className="home-section" aria-labelledby="prayer-times-heading">
         <Loading />
-      </section>
-    );
-  }
-
-  if (error && !data) {
-    return (
-      <section className="home-section" aria-labelledby="prayer-times-heading">
-        <p className="home-inline-error">{error}</p>
       </section>
     );
   }

@@ -243,11 +243,16 @@ export function extractFilterOptions(lessons: KuwaitLessonRecord[]) {
 }
 
 export async function loadKuwaitLessons(): Promise<KuwaitLessonRecord[]> {
-  const { data } = await getKuwaitLessonsFromDb();
-  const mapped = (data || []).map(mapDbLesson);
-  const staticMapped = KUWAIT_LESSONS.map(mapStaticLesson);
-  const merged = dedupeKuwaitLessons([...mapped, ...staticMapped]).filter((l) => !isExpired(l));
-  return sortKuwaitLessons(merged);
+  try {
+    const { data } = await getKuwaitLessonsFromDb();
+    const mapped = (data || []).map(mapDbLesson);
+    const staticMapped = KUWAIT_LESSONS.map(mapStaticLesson);
+    const merged = dedupeKuwaitLessons([...mapped, ...staticMapped]).filter((l) => !isExpired(l));
+    return sortKuwaitLessons(merged);
+  } catch {
+    const staticMapped = KUWAIT_LESSONS.map(mapStaticLesson);
+    return sortKuwaitLessons(staticMapped.filter((l) => !isExpired(l)));
+  }
 }
 
 export const DEFAULT_KUWAIT_FILTERS: KuwaitLessonFilters = {

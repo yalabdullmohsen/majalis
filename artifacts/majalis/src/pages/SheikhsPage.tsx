@@ -1,27 +1,28 @@
+import { arabicMatchAny } from "@/lib/arabic-search";
 import { SheikhAvatar } from "@/components/lessons/SheikhAvatar";
 import { resolveSheikhImageUrl, resolveLessonSheikhImage, parseLessonSchedule } from "@/lib/sheikh-image";
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { getSheikhs } from "@/lib/supabase";
 import { DEMO_SHEIKHS, demoNoticeText } from "@/lib/demo-content";
-import { PageHeader, Loading, Empty, ErrorState, DemoNotice } from "@/components/ui-common";
+import { PageHeader, Loading, Empty, DemoNotice } from "@/components/ui-common";
 
 export default function SheikhsPage() {
   const [sheikhs, setSheikhs] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [usingDemo, setUsingDemo] = useState(false);
   const [search, setSearch] = useState("");
   const [verifiedOnly, setVerifiedOnly] = useState(false);
 
   const loadSheikhs = async () => {
     setLoading(true);
-    setError("");
     try {
-      const { data, error: fetchError } = await getSheikhs();
-      if (fetchError) throw fetchError;
+      const { data, usingSeed } = await getSheikhs();
       setSheikhs(data);
+      setUsingDemo(Boolean(usingSeed));
     } catch {
-      setError("تعذر تحميل قائمة المشايخ.");
+      setSheikhs(DEMO_SHEIKHS);
+      setUsingDemo(true);
     } finally {
       setLoading(false);
     }
@@ -31,8 +32,7 @@ export default function SheikhsPage() {
     loadSheikhs();
   }, []);
 
-  const usingDemo = sheikhs.length === 0 && !loading && !error;
-  const source = usingDemo ? DEMO_SHEIKHS : sheikhs;
+  const source = sheikhs;
 
   const filtered = useMemo(() => {
     const s = search.trim();
@@ -74,8 +74,6 @@ export default function SheikhsPage() {
 
       {loading ? (
         <Loading />
-      ) : error ? (
-        <ErrorState text={error} onRetry={loadSheikhs} />
       ) : filtered.length === 0 ? (
         <Empty text={sheikhs.length === 0 ? "لا يوجد مشايخ بعد." : "لا توجد نتائج مطابقة."} />
       ) : (

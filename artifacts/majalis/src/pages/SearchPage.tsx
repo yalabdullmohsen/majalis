@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, useParams, useLocation } from "wouter";
 import { C } from "@/lib/theme";
-import { formatSupabaseError, searchEverything, type SearchResults } from "@/lib/supabase";
-import { DemoNotice, ErrorState, SearchSkeleton } from "@/components/ui-common";
-import { demoNoticeText } from "@/lib/demo-content";
+import { searchEverything, type SearchResults } from "@/lib/supabase";
+import { demoNoticeText, searchDemoContent } from "@/lib/demo-content";
+import { DemoNotice, SearchSkeleton } from "@/components/ui-common";
 import { SheikhAvatar } from "@/components/lessons/SheikhAvatar";
 import { resolveSheikhImageUrl, resolveLessonSheikhImage } from "@/lib/sheikh-image";
 
@@ -64,43 +64,26 @@ export default function SearchPage() {
   const [term, setTerm] = useState(q);
   const [results, setResults] = useState<SearchResults>(EMPTY);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
   const [usingDemo, setUsingDemo] = useState(false);
 
   const runSearch = async (query: string) => {
     if (!query.trim()) {
       setResults(EMPTY);
-      setError("");
       setUsingDemo(false);
       return;
     }
 
     setLoading(true);
-    setError("");
     setUsingDemo(false);
 
     try {
       const r = await searchEverything(query);
       setResults(r);
       setUsingDemo(!!r.usingDemo);
-
-      if (r.error) {
-        console.error("[majalis:SearchPage]", r.error, { query });
-        const total =
-          r.lessons.length +
-          r.library.length +
-          r.miracles.length +
-          r.sheikhs.length +
-          r.qa.length +
-          r.fawaid.length;
-        if (total === 0) {
-          setError(r.error);
-        }
-      }
-    } catch (err) {
-      console.error("[majalis:SearchPage]", err, { query });
-      setError(formatSupabaseError(err));
-      setResults(EMPTY);
+    } catch {
+      const demo = searchDemoContent(query);
+      setResults({ ...demo, usingDemo: true, error: null });
+      setUsingDemo(true);
     } finally {
       setLoading(false);
     }
@@ -148,16 +131,9 @@ export default function SearchPage() {
         </p>
       ) : loading ? (
         <SearchSkeleton />
-      ) : error && total === 0 ? (
-        <ErrorState text={error} onRetry={() => runSearch(q)} />
       ) : (
         <>
           {usingDemo && <DemoNotice text={demoNoticeText("البحث")} />}
-          {error && total > 0 && (
-            <p className="qa-inline-error" role="alert">
-              {error} — نعرض النتائج المتاحة.
-            </p>
-          )}
           {total === 0 ? (
             <p style={{ textAlign: "center", color: C.inkSoft, padding: "2rem 0" }}>
               لا توجد نتائج مطابقة لـ «{q}».

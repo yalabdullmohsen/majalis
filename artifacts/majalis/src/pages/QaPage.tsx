@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
-  formatSupabaseError,
   getQaCategories,
   getQaQuestions,
   isSupabaseConfigured,
@@ -9,7 +8,6 @@ import { C, QA_RULING_COLORS, QA_REVIEW_LABELS, QA_DISCLAIMER } from "@/lib/them
 import {
   PageHeader,
   Empty,
-  ErrorState,
   DemoNotice,
   QaSkeleton,
 } from "@/components/ui-common";
@@ -64,7 +62,6 @@ export default function QaPage() {
   const [categories, setCategories] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [categoriesLoading, setCategoriesLoading] = useState(true);
-  const [error, setError] = useState("");
   const [usingDemo, setUsingDemo] = useState(false);
   const [categoryId, setCategoryId] = useState("all");
   const [search, setSearch] = useState("");
@@ -91,28 +88,16 @@ export default function QaPage() {
 
   const loadQuestions = useCallback(async () => {
     setLoading(true);
-    setError("");
     try {
-      const { data, error: fetchError, usingDemo: demo } = await getQaQuestions({
+      const { data, usingDemo: demo } = await getQaQuestions({
         categoryId,
         search: debouncedSearch,
       });
 
       setUsingDemo(demo);
-      setItems(data);
-
-      if (fetchError) {
-        console.error("[majalis:QaPage] questions", fetchError, { categoryId, search: debouncedSearch });
-        if (!demo || data.length === 0) {
-          setError(formatSupabaseError(fetchError));
-        }
-      } else if (!isSupabaseConfigured() && data.length === 0) {
-        setUsingDemo(true);
-        setItems(DEMO_QA);
-      }
-    } catch (err) {
-      console.error("[majalis:QaPage] questions", err);
-      setError(formatSupabaseError(err));
+      setItems(data.length > 0 ? data : DEMO_QA);
+      if (data.length === 0) setUsingDemo(true);
+    } catch {
       setUsingDemo(true);
       setItems(DEMO_QA);
     } finally {
@@ -143,7 +128,7 @@ export default function QaPage() {
     return "لا توجد أسئلة منشورة بعد. سيتم عرض المحتوى فور إضافته من لوحة التحكم.";
   }, [categoryId, debouncedSearch]);
 
-  const showDemoNotice = usingDemo && !error;
+  const showDemoNotice = usingDemo;
 
   return (
     <div className="page-shell narrow qa-page">
@@ -193,20 +178,10 @@ export default function QaPage() {
 
       {loading ? (
         <QaSkeleton count={5} />
-      ) : error && items.length === 0 ? (
-        <ErrorState
-          text={`${error}${!isSupabaseConfigured() ? " (وضع تجريبي غير متاح)" : ""}`}
-          onRetry={loadQuestions}
-        />
       ) : items.length === 0 ? (
         <Empty text={emptyMessage} />
       ) : (
         <>
-          {error && (
-            <p className="qa-inline-error" role="alert">
-              {error} — نعرض النتائج المتاحة أو المحتوى التجريبي.
-            </p>
-          )}
           <div className="qa-list">
             {items.map((q: any) => {
               const open = openId === q.id;

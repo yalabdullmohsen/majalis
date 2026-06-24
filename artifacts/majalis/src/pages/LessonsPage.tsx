@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { C, GOVERNORATES } from "@/lib/theme";
 import { getLessons, registerForLesson, unregisterFromLesson, getMyRegistrations } from "@/lib/supabase";
 import { DEMO_LESSONS, demoNoticeText, isDemoId } from "@/lib/demo-content";
-import { PageHeader, Loading, Empty, Chip, ErrorState, DemoNotice } from "@/components/ui-common";
+import { PageHeader, Loading, Empty, Chip, DemoNotice } from "@/components/ui-common";
 import { useAuth } from "@/components/AuthProvider";
 import ContentActions from "@/components/ContentActions";
 import { SheikhAvatar } from "@/components/lessons/SheikhAvatar";
@@ -14,7 +14,7 @@ const CATEGORIES = ["الكل", "تفسير", "فقه", "عقيدة", "حديث"
 export default function LessonsPage() {
   const [lessons, setLessons] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [usingDemo, setUsingDemo] = useState(false);
   const [category, setCategory] = useState("الكل");
   const [city, setCity] = useState("كل المحافظات");
   const [search, setSearch] = useState("");
@@ -23,13 +23,13 @@ export default function LessonsPage() {
 
   const fetchLessons = async () => {
     setLoading(true);
-    setError("");
     try {
-      const { data, error: fetchError } = await getLessons({ category, city, search });
-      if (fetchError) throw fetchError;
+      const { data, usingSeed } = await getLessons({ category, city, search });
       setLessons(data);
+      setUsingDemo(Boolean(usingSeed));
     } catch {
-      setError("تعذر تحميل الدروس. تحقق من الاتصال وحاول مجددًا.");
+      setLessons(DEMO_LESSONS);
+      setUsingDemo(true);
     } finally {
       setLoading(false);
     }
@@ -61,8 +61,7 @@ export default function LessonsPage() {
     }
   };
 
-  const usingDemo = lessons.length === 0 && !loading && !error;
-  const displayed = usingDemo ? DEMO_LESSONS : lessons;
+  const displayed = lessons;
 
   const stats = useMemo(
     () => ({
@@ -109,8 +108,6 @@ export default function LessonsPage() {
 
       {loading ? (
         <Loading />
-      ) : error ? (
-        <ErrorState text={error} onRetry={fetchLessons} />
       ) : displayed.length === 0 ? (
         <Empty text="لا توجد دروس." />
       ) : (

@@ -3,7 +3,7 @@ import { Link, useLocation } from "wouter";
 import { getLibrary, getMiracles, getApprovedFawaid, getQaQuestions } from "@/lib/supabase";
 import { DEMO_QA } from "@/lib/demo-content";
 import { HOME_MAINTENANCE_MESSAGE } from "@/lib/home-content";
-import { Loading, ErrorState } from "@/components/ui-common";
+import { Loading } from "@/components/ui-common";
 import { HomePrayerTimes } from "@/components/home/HomePrayerTimes";
 import { HomeDailyHadith } from "@/components/home/HomeDailyHadith";
 import { HomeDailyAyah } from "@/components/home/HomeDailyAyah";
@@ -58,12 +58,10 @@ export default function HomePage() {
   const [qa, setQa] = useState<any[]>([]);
   const [term, setTerm] = useState("");
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
   const [, navigate] = useLocation();
 
   const loadHome = () => {
     setLoading(true);
-    setError("");
     Promise.all([getApprovedFawaid(), getLibrary(), getMiracles(), getQaQuestions()])
       .then(([f, lib, m, q]) => {
         setFawaid(f.data || []);
@@ -71,7 +69,6 @@ export default function HomePage() {
         setMiracles(m.data || []);
         setQa(q.data || []);
       })
-      .catch(() => setError("تعذر تحميل بعض أقسام الصفحة."))
       .finally(() => setLoading(false));
   };
 
@@ -132,10 +129,8 @@ export default function HomePage() {
         <HomeKuwaitLessons />
 
         {loading && <Loading />}
-        {error && <ErrorState text={error} onRetry={loadHome} />}
 
-        {!error && (
-          <>
+        <>
             <section className="home-section">
               <SectionHead eyebrow="أقسام المنصة" title="ابدأ من هنا" subtitle="أهم الأقسام للتعلم والبحث." />
               <div className="home-feature-grid home-feature-grid--compact">
@@ -214,8 +209,7 @@ export default function HomePage() {
               </div>
               <Link href="/assistant" className="home-primary-action">افتح المساعد العلمي</Link>
             </section>
-          </>
-        )}
+        </>
       </main>
     </div>
   );

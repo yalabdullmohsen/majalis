@@ -3,7 +3,7 @@ import { getApprovedFawaid, submitFawaid } from "@/lib/supabase";
 import { DEMO_FAWAID, demoNoticeText } from "@/lib/demo-content";
 import { canSubmitForm } from "@/lib/form-rate-limit";
 import { C } from "@/lib/theme";
-import { PageHeader, Loading, Empty, ErrorState, DemoNotice } from "@/components/ui-common";
+import { PageHeader, Loading, Empty, DemoNotice } from "@/components/ui-common";
 import { useAuth } from "@/components/AuthProvider";
 import ContentActions from "@/components/ContentActions";
 import { isDemoId } from "@/lib/demo-content";
@@ -11,7 +11,7 @@ import { isDemoId } from "@/lib/demo-content";
 export default function FawaidPage() {
   const [fawaid, setFawaid] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [usingDemo, setUsingDemo] = useState(false);
   const [text, setText] = useState("");
   const [authorName, setAuthorName] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -21,13 +21,13 @@ export default function FawaidPage() {
 
   const loadFawaid = async () => {
     setLoading(true);
-    setError("");
     try {
-      const { data, error: fetchError } = await getApprovedFawaid();
-      if (fetchError) throw fetchError;
+      const { data, usingSeed } = await getApprovedFawaid();
       setFawaid(data);
+      setUsingDemo(Boolean(usingSeed));
     } catch {
-      setError("تعذر تحميل الفوائد.");
+      setFawaid(DEMO_FAWAID);
+      setUsingDemo(true);
     } finally {
       setLoading(false);
     }
@@ -59,8 +59,7 @@ export default function FawaidPage() {
     }
   };
 
-  const usingDemo = fawaid.length === 0 && !loading && !error;
-  const displayed = usingDemo ? DEMO_FAWAID : fawaid;
+  const displayed = fawaid;
 
   return (
     <div className="page-shell narrow">
@@ -72,9 +71,7 @@ export default function FawaidPage() {
 
       {usingDemo && <DemoNotice text={demoNoticeText("الفوائد")} />}
 
-      {loading ? <Loading /> : error ? (
-        <ErrorState text={error} onRetry={loadFawaid} />
-      ) : displayed.length === 0 ? (
+      {loading ? <Loading /> : displayed.length === 0 ? (
         <Empty text="لا توجد فوائد بعد." />
       ) : (
         <div style={{ display: "grid", gap: "0.75rem", marginBottom: "2.5rem" }}>
