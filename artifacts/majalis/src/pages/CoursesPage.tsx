@@ -7,16 +7,18 @@ import {
   ExternalLink,
   GraduationCap,
   MapPin,
-  Radio,
+  Megaphone,
 } from "lucide-react";
 import { CurrentLessonsFilters } from "@/components/lessons/CurrentLessonsFilters";
+import { SheikhAvatar } from "@/components/lessons/SheikhAvatar";
 import {
   DEMO_COURSES,
   DEMO_CURRENT_LESSONS,
   downloadCalendar,
   filterCurrentLessons,
+  formatPeriod,
   getFilterOptions,
-  sheikhAvatarUrl,
+  resolveSheikhImage,
   type LessonFilters,
 } from "@/lib/current-lessons";
 
@@ -31,7 +33,7 @@ export default function CoursesPage() {
   );
 
   const visibleCourseIds = useMemo(
-    () => new Set(filteredLessons.map((l) => l.courseId)),
+    () => new Set(filteredLessons.map((l) => l.courseId).filter(Boolean) as string[]),
     [filteredLessons],
   );
 
@@ -43,61 +45,61 @@ export default function CoursesPage() {
   }, [filters, visibleCourseIds]);
 
   return (
-    <div className="cl-page">
-      <section className="cl-page-hero">
-        <div className="home-container cl-page-hero__inner">
-          <div className="cl-page-hero__chips">
-            <span className="cl-ribbon">الدورات</span>
-            <Link href="/lessons/current" className="cl-link-chip">
-              <Calendar className="w-4 h-4" aria-hidden="true" />
-              الدروس الحالية
+    <div className="la-page">
+      <section className="la-page-hero">
+        <div className="home-container la-page-hero__inner">
+          <div className="la-page-hero__chips">
+            <span className="la-ribbon">الدورات</span>
+            <Link href="/announcements" className="la-link-chip">
+              <Megaphone className="la-icon" aria-hidden="true" />
+              إعلانات الدروس
             </Link>
           </div>
-          <h1 className="cl-page-title">الدورات الشرعية</h1>
-          <p className="cl-page-lead">
+          <h1 className="la-page-title">الدورات الشرعية</h1>
+          <p className="la-page-lead">
             عرض الدورة كاملة مع جميع المحاضرات والجدول الأسبوعي.
           </p>
         </div>
       </section>
 
-      <div className="home-container cl-page-body">
+      <div className="home-container la-page-body">
         <CurrentLessonsFilters filters={filters} options={options} onChange={setFilters} />
 
         {courses.length === 0 ? (
-          <div className="cl-empty-state">
-            <GraduationCap className="cl-empty-icon" aria-hidden="true" />
-            <p className="cl-empty-title">لا توجد دورات مطابقة</p>
+          <div className="la-empty-state">
+            <GraduationCap className="la-empty-icon" aria-hidden="true" />
+            <p className="la-empty-title">لا توجد دورات مطابقة</p>
           </div>
         ) : (
-          <div className="cl-courses-stack">
+          <div className="la-courses-stack">
             {courses.map((course) => {
               const primary = course.lessons[0];
+              const sheikhImage = resolveSheikhImage({
+                sheikh_image_url: course.sheikh_image_url,
+                sheikhImage: course.sheikhImage,
+              });
 
               return (
-                <article key={course.id} id={course.id} className="cl-course-panel">
-                  <div className="cl-course-header">
-                    <img
-                      src={sheikhAvatarUrl(course.sheikhName, course.sheikhImage)}
-                      alt={course.sheikhName}
-                      className="cl-course-avatar"
-                      loading="lazy"
-                    />
-                    <div className="cl-course-intro">
-                      <p className="cl-course-sheikh">{course.sheikhName}</p>
-                      <h2 className="cl-course-title">{course.title}</h2>
-                      <p className="cl-course-desc">{course.description}</p>
-                      <div className="cl-course-meta">
-                        <span className="cl-meta-pill">
-                          <Calendar className="w-3.5 h-3.5" aria-hidden="true" />
-                          {course.startDate} — {course.endDate}
+                <article key={course.id} id={course.id} className="la-course-panel">
+                  <div className="la-course-header">
+                    <SheikhAvatar name={course.sheikhName} imageUrl={sheikhImage} size="lg" />
+                    <div className="la-course-intro">
+                      <p className="la-course-honorific">فضيلة الشيخ</p>
+                      <p className="la-course-sheikh">{course.sheikhName}</p>
+                      <h2 className="la-course-title">{course.title}</h2>
+                      <p className="la-course-desc">{course.description}</p>
+                      <div className="la-course-meta">
+                        <span className="la-meta-pill">
+                          <Calendar className="la-icon la-icon--sm" aria-hidden="true" />
+                          {formatPeriod(course)}
                         </span>
-                        <span className="cl-meta-pill">
-                          <MapPin className="w-3.5 h-3.5" aria-hidden="true" />
+                        <span className="la-meta-pill">
+                          <MapPin className="la-icon la-icon--sm" aria-hidden="true" />
                           {course.mosque} — {course.region}
                         </span>
                         {primary && (
-                          <span className="cl-meta-pill">
-                            <Clock className="w-3.5 h-3.5" aria-hidden="true" />
+                          <span className="la-meta-pill">
+                            <Clock className="la-icon la-icon--sm" aria-hidden="true" />
                             {primary.day} · {primary.time}
                           </span>
                         )}
@@ -105,19 +107,33 @@ export default function CoursesPage() {
                     </div>
                   </div>
 
-                  <div className="cl-course-body">
-                    <h3 className="cl-subheading">
-                      <BookOpen className="w-5 h-5" aria-hidden="true" />
+                  <div className="la-course-body">
+                    {course.curriculum && course.curriculum.length > 0 && (
+                      <>
+                        <h3 className="la-subheading">
+                          <BookOpen className="la-icon" aria-hidden="true" />
+                          محتوى الدورة
+                        </h3>
+                        <ul className="la-curriculum-list">
+                          {course.curriculum.map((item) => (
+                            <li key={item}>{item}</li>
+                          ))}
+                        </ul>
+                      </>
+                    )}
+
+                    <h3 className="la-subheading la-subheading--spaced">
+                      <BookOpen className="la-icon" aria-hidden="true" />
                       محاضرات الدورة
                     </h3>
-                    <ol className="cl-lecture-list">
+                    <ol className="la-lecture-list">
                       {course.lectures.map((lecture, idx) => (
-                        <li key={lecture.id} className="cl-lecture-item">
-                          <span className="cl-lecture-num">{idx + 1}</span>
+                        <li key={lecture.id} className="la-lecture-item">
+                          <span className="la-lecture-num">{idx + 1}</span>
                           <div>
-                            <p className="cl-lecture-title">{lecture.title}</p>
+                            <p className="la-lecture-title">{lecture.title}</p>
                             {(lecture.day || lecture.date) && (
-                              <p className="cl-lecture-meta">
+                              <p className="la-lecture-meta">
                                 {[lecture.day, lecture.time, lecture.date].filter(Boolean).join(" · ")}
                               </p>
                             )}
@@ -128,17 +144,17 @@ export default function CoursesPage() {
 
                     {course.weeklySchedule.length > 0 && (
                       <>
-                        <h3 className="cl-subheading cl-subheading--spaced">
-                          <Calendar className="w-5 h-5" aria-hidden="true" />
+                        <h3 className="la-subheading la-subheading--spaced">
+                          <Calendar className="la-icon" aria-hidden="true" />
                           الجدول الأسبوعي
                         </h3>
-                        <div className="cl-weekly-grid">
-                          {course.weeklySchedule.map((slot) => (
-                            <div key={`${slot.day}-${slot.time}`} className="cl-weekly-slot">
-                              <p className="cl-weekly-day">{slot.day}</p>
-                              <p className="cl-weekly-time">{slot.time}</p>
-                              <p className="cl-weekly-mosque">{course.mosque}</p>
-                              <p className="cl-weekly-area">{course.region}</p>
+                        <div className="la-weekly-grid">
+                          {course.weeklySchedule.map((slot, i) => (
+                            <div key={`${slot.day}-${slot.time}-${i}`} className="la-weekly-slot">
+                              <p className="la-weekly-day">{slot.day}</p>
+                              <p className="la-weekly-time">{slot.time}</p>
+                              <p className="la-weekly-mosque">{course.mosque}</p>
+                              <p className="la-weekly-area">{course.region}</p>
                             </div>
                           ))}
                         </div>
@@ -146,16 +162,15 @@ export default function CoursesPage() {
                     )}
 
                     {primary && (
-                      <div className="cl-course-actions">
-                        <Link href={`/courses#${course.id}`} className="cl-btn cl-btn--primary">
+                      <div className="la-course-actions">
+                        <Link href={`/courses#${course.id}`} className="la-btn la-btn--primary">
                           عرض التفاصيل
                         </Link>
                         <button
                           type="button"
-                          className="cl-btn cl-btn--secondary"
+                          className="la-btn la-btn--secondary"
                           onClick={() => downloadCalendar(primary)}
                         >
-                          <Calendar className="w-4 h-4" aria-hidden="true" />
                           إضافة إلى التقويم
                         </button>
                         {primary.mapsUrl && (
@@ -163,9 +178,9 @@ export default function CoursesPage() {
                             href={primary.mapsUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="cl-btn cl-btn--ghost"
+                            className="la-btn la-btn--ghost"
                           >
-                            <MapPin className="w-4 h-4" aria-hidden="true" />
+                            <MapPin className="la-icon la-icon--sm" aria-hidden="true" />
                             فتح الموقع على الخريطة
                           </a>
                         )}
@@ -174,9 +189,9 @@ export default function CoursesPage() {
                             href={primary.streamUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="cl-btn cl-btn--ghost"
+                            className="la-btn la-btn--ghost"
                           >
-                            <Radio className="w-4 h-4" aria-hidden="true" />
+                            <ExternalLink className="la-icon la-icon--sm" aria-hidden="true" />
                             رابط البث
                           </a>
                         )}
@@ -185,9 +200,9 @@ export default function CoursesPage() {
                             href={primary.bookUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="cl-btn cl-btn--ghost"
+                            className="la-btn la-btn--ghost"
                           >
-                            <ExternalLink className="w-4 h-4" aria-hidden="true" />
+                            <ExternalLink className="la-icon la-icon--sm" aria-hidden="true" />
                             رابط الكتاب
                           </a>
                         )}

@@ -1,36 +1,36 @@
 import { Link } from "wouter";
-import { DEMO_CURRENT_LESSONS } from "@/lib/current-lessons";
+import { FEATURED_ANNOUNCEMENTS } from "@/lib/current-lessons";
 import { CurrentLessonCard } from "./CurrentLessonCard";
 
 export function CurrentLessonsSection() {
-  const lessons = DEMO_CURRENT_LESSONS;
+  const announcements = FEATURED_ANNOUNCEMENTS;
 
   return (
-    <section className="cl-home-section" aria-labelledby="current-lessons-heading">
-      <div className="cl-section-bar">
+    <section className="la-home-section" aria-labelledby="lesson-announcements-heading">
+      <div className="la-section-bar">
         <div>
-          <p className="cl-section-bar__eyebrow">الدروس والدورات الحالية</p>
-          <h2 id="current-lessons-heading">الدروس الحالية</h2>
-          <p className="cl-section-bar__sub">
-            إعلانات الدروس الأسبوعية في مساجد الكويت — محدّثة ومباشرة.
+          <p className="la-section-bar__eyebrow">إعلانات الدروس والدورات</p>
+          <h2 id="lesson-announcements-heading">إعلانات الدروس</h2>
+          <p className="la-section-bar__sub">
+            إعلانات احترافية للدروس الشرعية في مساجد الكويت — جداول أسبوعية محدّثة.
           </p>
         </div>
-        <Link href="/lessons/current" className="cl-section-bar__link">
+        <Link href="/announcements" className="la-section-bar__link">
           عرض الكل
         </Link>
       </div>
 
-      <div className="cl-home-grid">
-        {lessons.map((lesson) => (
+      <div className="la-home-grid">
+        {announcements.map((lesson) => (
           <CurrentLessonCard key={lesson.id} lesson={lesson} compact showDetailsLink />
         ))}
       </div>
 
-      <div className="cl-home-cta-row">
-        <Link href="/lessons/current" className="cl-home-cta">
-          جميع الدروس الحالية
+      <div className="la-home-cta-row">
+        <Link href="/announcements" className="la-home-cta">
+          جميع إعلانات الدروس
         </Link>
-        <Link href="/courses" className="cl-home-cta cl-home-cta--outline">
+        <Link href="/courses" className="la-home-cta la-home-cta--outline">
           الدورات الكاملة
         </Link>
       </div>

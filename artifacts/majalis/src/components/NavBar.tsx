@@ -12,7 +12,7 @@ const NEW_NAV_ITEMS = [
 
 const TABS = [
   { href: "/", label: "الرئيسية" },
-  { href: "/lessons/current", label: "الدروس الحالية" },
+  { href: "/announcements", label: "إعلانات الدروس" },
   { href: "/courses", label: "الدورات" },
   { href: "/lessons", label: "الدروس" },
   { href: "/sheikhs", label: "المشايخ" },

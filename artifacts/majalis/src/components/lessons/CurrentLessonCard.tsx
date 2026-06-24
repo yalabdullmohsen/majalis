@@ -1,8 +1,17 @@
 import { useRef, useState } from "react";
 import { Link } from "wouter";
-import html2canvas from "html2canvas";
-import type { CurrentLesson } from "@/lib/current-lessons";
-import { downloadCalendar, sheikhAvatarUrl } from "@/lib/current-lessons";
+import * as htmlToImage from "html-to-image";
+import type { AnnouncementTemplate, CurrentLesson } from "@/lib/current-lessons";
+import {
+  downloadCalendar,
+  formatPeriod,
+  formatWeeklySchedule,
+  resolveBookQr,
+  resolveMosqueQr,
+  resolveSheikhImage,
+  shareAnnouncement,
+} from "@/lib/current-lessons";
+import { SheikhAvatar } from "./SheikhAvatar";
 
 type Props = {
   lesson: CurrentLesson;
@@ -10,122 +19,196 @@ type Props = {
   showDetailsLink?: boolean;
 };
 
+function CornerOrnaments() {
+  return (
+    <>
+      <span className="la-corner la-corner--tl" aria-hidden="true" />
+      <span className="la-corner la-corner--tr" aria-hidden="true" />
+      <span className="la-corner la-corner--bl" aria-hidden="true" />
+      <span className="la-corner la-corner--br" aria-hidden="true" />
+    </>
+  );
+}
+
+function CurriculumBlock({ items }: { items: string[] }) {
+  return (
+    <div className="la-poster__curriculum">
+      <p className="la-poster__label">محتوى الدورة</p>
+      <ul>
+        {items.map((item) => (
+          <li key={item}>{item}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function WeeklyBlock({ lesson }: { lesson: CurrentLesson }) {
+  if (lesson.template === "weekly-schedule" || lesson.weeklySchedule.length > 0) {
+    return (
+      <div className="la-poster__weekly">
+        <span className="la-poster__label">الجدول الأسبوعي</span>
+        <p className="la-poster__weekly-text">{formatWeeklySchedule(lesson.weeklySchedule)}</p>
+      </div>
+    );
+  }
+  return null;
+}
+
+function QrBlock({ lesson }: { lesson: CurrentLesson }) {
+  const mosqueQr = resolveMosqueQr(lesson);
+  const bookQr = resolveBookQr(lesson);
+  const liveQr = lesson.live_qr_url;
+
+  if (!mosqueQr && !bookQr && !liveQr) return null;
+
+  return (
+    <div className="la-poster__qr-row">
+      {mosqueQr && (
+        <div className="la-poster__qr">
+          <img src={mosqueQr} alt="موقع المسجد" />
+          <span>موقع المسجد</span>
+        </div>
+      )}
+      {bookQr && (
+        <div className="la-poster__qr">
+          <img src={bookQr} alt="رابط الكتاب" />
+          <span>رابط الكتاب</span>
+        </div>
+      )}
+      {liveQr && (
+        <div className="la-poster__qr">
+          <img src={liveQr} alt="البث المباشر" />
+          <span>البث المباشر</span>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function templateClass(template: AnnouncementTemplate) {
+  return `la-poster la-poster--${template}`;
+}
+
 export function CurrentLessonCard({ lesson, compact = false, showDetailsLink = true }: Props) {
-  const cardRef = useRef<HTMLDivElement>(null);
+  const posterRef = useRef<HTMLDivElement>(null);
   const [downloading, setDownloading] = useState(false);
-  const avatar = sheikhAvatarUrl(lesson.sheikhName, lesson.sheikhImage);
+  const [sharing, setSharing] = useState(false);
+  const sheikhImage = resolveSheikhImage(lesson);
 
   const downloadAd = async () => {
-    if (!cardRef.current) return;
+    if (!posterRef.current) return;
     setDownloading(true);
     try {
-      const canvas = await html2canvas(cardRef.current, {
-        scale: 2,
-        backgroundColor: "#ffffff",
-        logging: false,
+      const dataUrl = await htmlToImage.toPng(posterRef.current, {
+        quality: 1,
+        pixelRatio: 2,
+        backgroundColor: "#FAF5EA",
+        cacheBust: true,
       });
       const link = document.createElement("a");
       link.download = `إعلان-${lesson.title}.png`;
-      link.href = canvas.toDataURL("image/png", 1);
+      link.href = dataUrl;
       link.click();
     } catch (err) {
-      console.error("[majalis:lesson-ad]", err);
-      alert("تعذر تحميل الإعلان.");
+      console.error("[majalis:announcement-export]", err);
+      alert("تعذر تحميل الإعلان. حاول مجددًا.");
     } finally {
       setDownloading(false);
     }
   };
 
+  const onShare = async () => {
+    setSharing(true);
+    try {
+      await shareAnnouncement(lesson);
+    } finally {
+      setSharing(false);
+    }
+  };
+
+  const detailsHref = lesson.courseId ? `/courses#${lesson.courseId}` : "/announcements";
+
   return (
-    <article className={compact ? "cl-card cl-card--compact" : "cl-card"}>
-      <div ref={cardRef} className="cl-poster">
-        <div className="cl-poster__ribbon">إعلان درس علمي</div>
-        <div className="cl-poster__head">
-          <img src={avatar} alt={lesson.sheikhName} className="cl-poster__avatar" />
-          <div>
-            <p className="cl-poster__sheikh">{lesson.sheikhName}</p>
-            <h3 className="cl-poster__title">{lesson.title}</h3>
-            {lesson.category && <span className="cl-poster__tag">{lesson.category}</span>}
+    <article className={compact ? "la-card la-card--compact" : "la-card"}>
+      <div ref={posterRef} className={templateClass(lesson.template)}>
+        <CornerOrnaments />
+
+        <div className="la-poster__ribbon">{lesson.announcementType}</div>
+
+        <div className="la-poster__hero">
+          <div className="la-poster__avatar-col">
+            <SheikhAvatar name={lesson.sheikhName} imageUrl={sheikhImage} size={compact ? "md" : "xl"} />
+            <p className="la-poster__honorific">فضيلة الشيخ</p>
+            <p className="la-poster__sheikh">{lesson.sheikhName}</p>
+          </div>
+
+          <div className="la-poster__body">
+            <h3 className="la-poster__title">{lesson.title}</h3>
+            <p className="la-poster__desc">{lesson.description}</p>
           </div>
         </div>
 
-        <p className="cl-poster__desc">{lesson.description}</p>
-
-        <div className="cl-poster__schedule">
-          <div className="cl-poster__day">
-            <span>اليوم</span>
+        <div className="la-poster__info-grid">
+          <div className="la-poster__info-cell">
+            <span className="la-poster__label">اليوم</span>
             <strong>{lesson.day}</strong>
           </div>
-          <div className="cl-poster__time">
-            <span>الوقت</span>
+          <div className="la-poster__info-cell">
+            <span className="la-poster__label">الوقت</span>
             <strong>{lesson.time}</strong>
           </div>
         </div>
 
-        <div className="cl-poster__location">
-          <p><strong>{lesson.mosque}</strong></p>
-          <p>{lesson.region}</p>
-          <p className="cl-poster__dates">
-            من {lesson.startDate} إلى {lesson.endDate}
-          </p>
+        <div className="la-poster__place">
+          <span className="la-poster__label">المكان</span>
+          <p className="la-poster__mosque">{lesson.mosque}</p>
+          <p className="la-poster__region">{lesson.region}</p>
         </div>
 
-        {lesson.weeklySchedule.length > 0 && (
-          <div className="cl-poster__weekly">
-            <span>الجدول الأسبوعي:</span>
-            {lesson.weeklySchedule.map((s) => (
-              <span key={`${s.day}-${s.time}`} className="cl-poster__slot">
-                {s.day} — {s.time}
-              </span>
-            ))}
+        <p className="la-poster__period">{formatPeriod(lesson)}</p>
+
+        <WeeklyBlock lesson={lesson} />
+
+        {lesson.template === "course" && lesson.curriculum && lesson.curriculum.length > 0 && (
+          <CurriculumBlock items={lesson.curriculum} />
+        )}
+
+        {lesson.template === "single-lecture" && lesson.lectures?.[0] && (
+          <div className="la-poster__lecture">
+            <span className="la-poster__label">المحاضرة</span>
+            <p>{lesson.lectures[0].title}</p>
           </div>
         )}
 
-        {(lesson.mosqueMapQrUrl || lesson.bookQrUrl) && (
-          <div className="cl-poster__qr-row">
-            {lesson.mosqueMapQrUrl && (
-              <div className="cl-poster__qr">
-                <img src={lesson.mosqueMapQrUrl} alt="باركود موقع المسجد" />
-                <span>موقع المسجد</span>
-              </div>
-            )}
-            {lesson.bookQrUrl && (
-              <div className="cl-poster__qr">
-                <img src={lesson.bookQrUrl} alt="باركود الكتاب" />
-                <span>الكتاب</span>
-              </div>
-            )}
-          </div>
-        )}
+        <QrBlock lesson={lesson} />
       </div>
 
-      <div className="cl-actions">
+      <div className="la-actions">
         {showDetailsLink && (
-          <Link href={`/courses#${lesson.courseId}`} className="cl-btn cl-btn--primary">
+          <Link href={detailsHref} className="la-btn la-btn--primary">
             عرض التفاصيل
           </Link>
         )}
-        <button type="button" className="cl-btn cl-btn--secondary" onClick={() => downloadCalendar(lesson)}>
+        <button type="button" className="la-btn la-btn--gold" onClick={downloadAd} disabled={downloading}>
+          {downloading ? "جارٍ التحميل…" : "تحميل الإعلان"}
+        </button>
+        <button type="button" className="la-btn la-btn--secondary" onClick={onShare} disabled={sharing}>
+          {sharing ? "جارٍ المشاركة…" : "مشاركة"}
+        </button>
+        <button type="button" className="la-btn la-btn--secondary" onClick={() => downloadCalendar(lesson)}>
           إضافة إلى التقويم
         </button>
         {lesson.mapsUrl && (
-          <a href={lesson.mapsUrl} target="_blank" rel="noopener noreferrer" className="cl-btn cl-btn--ghost">
+          <a
+            href={lesson.mapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="la-btn la-btn--ghost"
+          >
             فتح الموقع على الخريطة
           </a>
         )}
-        {lesson.streamUrl && (
-          <a href={lesson.streamUrl} target="_blank" rel="noopener noreferrer" className="cl-btn cl-btn--ghost">
-            رابط البث
-          </a>
-        )}
-        {lesson.bookUrl && (
-          <a href={lesson.bookUrl} target="_blank" rel="noopener noreferrer" className="cl-btn cl-btn--ghost">
-            رابط الكتاب
-          </a>
-        )}
-        <button type="button" className="cl-btn cl-btn--download" onClick={downloadAd} disabled={downloading}>
-          {downloading ? "جارٍ التحميل..." : "تحميل الإعلان"}
-        </button>
       </div>
     </article>
   );

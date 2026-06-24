@@ -1,3 +1,9 @@
+export type AnnouncementTemplate =
+  | "weekly-lesson"
+  | "course"
+  | "weekly-schedule"
+  | "single-lecture";
+
 export type WeeklySlot = {
   day: string;
   time: string;
@@ -13,8 +19,13 @@ export type CourseLecture = {
 
 export type CurrentLesson = {
   id: string;
-  courseId: string;
+  courseId?: string;
+  template: AnnouncementTemplate;
+  /** Arabic label shown on poster ribbon */
+  announcementType: string;
   sheikhName: string;
+  sheikh_image_url?: string;
+  /** @deprecated use sheikh_image_url */
   sheikhImage?: string;
   title: string;
   description: string;
@@ -24,13 +35,22 @@ export type CurrentLesson = {
   region: string;
   streamUrl?: string;
   bookUrl?: string;
-  mosqueMapQrUrl?: string;
-  bookQrUrl?: string;
   mapsUrl?: string;
-  startDate: string;
-  endDate: string;
+  mosque_qr_url?: string;
+  book_qr_url?: string;
+  live_qr_url?: string;
+  /** @deprecated use mosque_qr_url */
+  mosqueMapQrUrl?: string;
+  /** @deprecated use book_qr_url */
+  bookQrUrl?: string;
+  startDate?: string;
+  endDate?: string;
+  /** e.g. "مستمر" — overrides formatted date range */
+  periodLabel?: string;
   weeklySchedule: WeeklySlot[];
-  lectures: CourseLecture[];
+  curriculum?: string[];
+  lectures?: CourseLecture[];
+  featured?: boolean;
   category?: string;
 };
 
@@ -38,53 +58,83 @@ export type Course = {
   id: string;
   title: string;
   sheikhName: string;
+  sheikh_image_url?: string;
   sheikhImage?: string;
   description: string;
   mosque: string;
   region: string;
-  startDate: string;
-  endDate: string;
+  startDate?: string;
+  endDate?: string;
+  periodLabel?: string;
   weeklySchedule: WeeklySlot[];
   lectures: CourseLecture[];
+  curriculum?: string[];
   streamUrl?: string;
   bookUrl?: string;
   mapsUrl?: string;
   lessons: CurrentLesson[];
 };
 
-const SHEIKH_OTHMAN = {
-  sheikhName: "الشيخ عثمان الخميس",
-  sheikhImage: undefined as string | undefined,
+export const TEMPLATE_LABELS: Record<AnnouncementTemplate, string> = {
+  "weekly-lesson": "قالب درس أسبوعي",
+  course: "قالب دورة علمية",
+  "weekly-schedule": "قالب جدول أسبوعي",
+  "single-lecture": "قالب محاضرة واحدة",
 };
-
-function qrFor(url: string) {
-  return `https://api.qrserver.com/v1/create-qr-code/?size=160x160&margin=8&data=${encodeURIComponent(url)}`;
-}
 
 function mapsLink(mosque: string, region: string) {
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${mosque} ${region} الكويت`)}`;
 }
 
+function fmtDate(iso: string) {
+  const [y, m, d] = iso.split("-");
+  return `${d}-${m}-${y}`;
+}
+
+export function formatPeriod(lesson: Pick<CurrentLesson, "startDate" | "endDate" | "periodLabel">) {
+  if (lesson.periodLabel) return lesson.periodLabel;
+  if (lesson.startDate && lesson.endDate) {
+    return `من ${fmtDate(lesson.startDate)} إلى ${fmtDate(lesson.endDate)}`;
+  }
+  if (lesson.startDate) return `يبدأ ${fmtDate(lesson.startDate)}`;
+  return "مستمر";
+}
+
+export function formatWeeklySchedule(slots: WeeklySlot[]) {
+  return slots.map((s) => `${s.day} — ${s.time}`).join(" · ");
+}
+
+export function resolveSheikhImage(lesson: Pick<CurrentLesson, "sheikh_image_url" | "sheikhImage">) {
+  return lesson.sheikh_image_url || lesson.sheikhImage;
+}
+
+export function resolveMosqueQr(lesson: Pick<CurrentLesson, "mosque_qr_url" | "mosqueMapQrUrl">) {
+  return lesson.mosque_qr_url || lesson.mosqueMapQrUrl;
+}
+
+export function resolveBookQr(lesson: Pick<CurrentLesson, "book_qr_url" | "bookQrUrl">) {
+  return lesson.book_qr_url || lesson.bookQrUrl;
+}
+
 export const DEMO_CURRENT_LESSONS: CurrentLesson[] = [
   {
-    id: "cl-1",
+    id: "ann-1",
     courseId: "course-tafsir-nahl",
-    ...SHEIKH_OTHMAN,
+    template: "weekly-lesson",
+    announcementType: "درس أسبوعي",
+    sheikhName: "عثمان بن محمد الخميس",
     title: "تفسير سورة النحل",
     description:
-      "درس أسبوعي في تفسير سورة النحل مع الشيخ عثمان الخميس — يركّز على معاني الآيات وأحكامها وربطها بالواقع.",
+      "درس أسبوعي في تفسير سورة النحل مع فضيلة الشيخ عثمان الخميس، يركز على معاني الآيات وأحكامها وربطها بالواقع.",
     day: "الجمعة",
     time: "بعد المغرب",
     mosque: "مسجد موضي",
     region: "الفروانية",
-    streamUrl: "https://youtube.com/@othmanalkhamis",
-    bookUrl: "https://example.com/book/tafsir-nahl",
     mapsUrl: mapsLink("مسجد موضي", "الفروانية"),
-    mosqueMapQrUrl: qrFor(mapsLink("مسجد موضي", "الفروانية")),
-    bookQrUrl: qrFor("https://example.com/book/tafsir-nahl"),
     startDate: "2026-01-10",
     endDate: "2026-06-30",
     category: "تفسير",
+    featured: true,
     weeklySchedule: [{ day: "الجمعة", time: "بعد المغرب" }],
     lectures: [
       { id: "l1", title: "مقدمة سورة النحل", day: "الجمعة", time: "بعد المغرب", date: "2026-01-10" },
@@ -94,66 +144,111 @@ export const DEMO_CURRENT_LESSONS: CurrentLesson[] = [
     ],
   },
   {
-    id: "cl-2",
+    id: "ann-2",
     courseId: "course-muqni",
-    ...SHEIKH_OTHMAN,
-    title: "تلخيص مختصر المقنع",
+    template: "weekly-lesson",
+    announcementType: "درس أسبوعي",
+    sheikhName: "عثمان بن محمد الخميس",
+    title: "شرح كتاب تلخيص مختصر المقنع",
     description:
-      "شرح مختصر لكتاب المقنع في الفقه الحنبلي — مناسب لطالب العلم الذي يريد ضبط المسائل الأصولية بأسلوب ميسّر.",
+      "درس أسبوعي في شرح كتاب تلخيص مختصر المقنع، باب الشروط في النكاح — القسم الثاني.",
     day: "الأربعاء",
     time: "بعد المغرب",
     mosque: "مسجد الياقوت",
-    region: "حولي",
-    streamUrl: "https://youtube.com/@othmanalkhamis",
-    bookUrl: "https://example.com/book/muqni",
-    mapsUrl: mapsLink("مسجد الياقوت", "حولي"),
-    mosqueMapQrUrl: qrFor(mapsLink("مسجد الياقوت", "حولي")),
-    bookQrUrl: qrFor("https://example.com/book/muqni"),
-    startDate: "2026-02-01",
-    endDate: "2026-08-01",
+    region: "الصديق",
+    mapsUrl: mapsLink("مسجد الياقوت", "الصديق"),
+    periodLabel: "مستمر",
     category: "فقه",
+    featured: true,
     weeklySchedule: [{ day: "الأربعاء", time: "بعد المغرب" }],
     lectures: [
-      { id: "m1", title: "مقدمة الكتاب وطريقة المؤلف", day: "الأربعاء", time: "بعد المغرب", date: "2026-02-01" },
-      { id: "m2", title: "باب الطهارة — الوضوء", day: "الأربعاء", time: "بعد المغرب", date: "2026-02-08" },
-      { id: "m3", title: "باب الطهارة — الغسل والتيمم", day: "الأربعاء", time: "بعد المغرب", date: "2026-02-15" },
-      { id: "m4", title: "باب الصلاة — شروط الصلاة", day: "الأربعاء", time: "بعد المغرب", date: "2026-02-22" },
+      { id: "m1", title: "مقدمة الكتاب وطريقة المؤلف", day: "الأربعاء", time: "بعد المغرب" },
+      { id: "m2", title: "باب الطهارة — الوضوء", day: "الأربعاء", time: "بعد المغرب" },
+      { id: "m3", title: "باب الطهارة — الغسل والتيمم", day: "الأربعاء", time: "بعد المغرب" },
+      { id: "m4", title: "باب الصلاة — شروط الصلاة", day: "الأربعاء", time: "بعد المغرب" },
+    ],
+  },
+  {
+    id: "ann-3",
+    courseId: "course-taaseel",
+    template: "course",
+    announcementType: "دورة علمية",
+    sheikhName: "راشد طليم فهد الطليم",
+    title: "الدورة العلمية التأصيلية",
+    description: "دورة علمية تأصيلية في عدد من المتون الشرعية.",
+    day: "الاثنين",
+    time: "قبل المغرب بساعة، بعد المغرب، بعد العشاء",
+    mosque: "مسجد أبي واقد الليثي",
+    region: "القيروان",
+    mapsUrl: mapsLink("مسجد أبي واقد الليثي", "القيروان"),
+    periodLabel: "مستمر",
+    featured: true,
+    weeklySchedule: [
+      { day: "الاثنين", time: "قبل المغرب بساعة" },
+      { day: "الاثنين", time: "بعد المغرب" },
+      { day: "الاثنين", time: "بعد العشاء" },
+    ],
+    curriculum: [
+      "بلوغ المرام من أدلة الأحكام",
+      "القواعد المثلى في صفات الله وأسمائه الحسنى",
+      "قراءة في كتاب دعوى تعارض السنة النبوية مع العلم التجريبي",
+    ],
+    lectures: [
+      { id: "t1", title: "بلوغ المرام من أدلة الأحكام", day: "الاثنين", time: "قبل المغرب بساعة" },
+      { id: "t2", title: "القواعد المثلى في صفات الله وأسمائه الحسنى", day: "الاثنين", time: "بعد المغرب" },
+      {
+        id: "t3",
+        title: "قراءة في كتاب دعوى تعارض السنة النبوية مع العلم التجريبي",
+        day: "الاثنين",
+        time: "بعد العشاء",
+      },
     ],
   },
 ];
+
+export const FEATURED_ANNOUNCEMENTS = DEMO_CURRENT_LESSONS.filter((a) => a.featured).slice(0, 3);
 
 export const DEMO_COURSES: Course[] = [
   {
     id: "course-tafsir-nahl",
     title: "تفسير سورة النحل",
-    ...SHEIKH_OTHMAN,
+    sheikhName: DEMO_CURRENT_LESSONS[0].sheikhName,
     description: DEMO_CURRENT_LESSONS[0].description,
     mosque: "مسجد موضي",
     region: "الفروانية",
     startDate: "2026-01-10",
     endDate: "2026-06-30",
     weeklySchedule: DEMO_CURRENT_LESSONS[0].weeklySchedule,
-    lectures: DEMO_CURRENT_LESSONS[0].lectures,
-    streamUrl: DEMO_CURRENT_LESSONS[0].streamUrl,
-    bookUrl: DEMO_CURRENT_LESSONS[0].bookUrl,
+    lectures: DEMO_CURRENT_LESSONS[0].lectures ?? [],
     mapsUrl: DEMO_CURRENT_LESSONS[0].mapsUrl,
     lessons: [DEMO_CURRENT_LESSONS[0]],
   },
   {
     id: "course-muqni",
-    title: "تلخيص مختصر المقنع",
-    ...SHEIKH_OTHMAN,
+    title: "شرح كتاب تلخيص مختصر المقنع",
+    sheikhName: DEMO_CURRENT_LESSONS[1].sheikhName,
     description: DEMO_CURRENT_LESSONS[1].description,
     mosque: "مسجد الياقوت",
-    region: "حولي",
-    startDate: "2026-02-01",
-    endDate: "2026-08-01",
+    region: "الصديق",
+    periodLabel: "مستمر",
     weeklySchedule: DEMO_CURRENT_LESSONS[1].weeklySchedule,
-    lectures: DEMO_CURRENT_LESSONS[1].lectures,
-    streamUrl: DEMO_CURRENT_LESSONS[1].streamUrl,
-    bookUrl: DEMO_CURRENT_LESSONS[1].bookUrl,
+    lectures: DEMO_CURRENT_LESSONS[1].lectures ?? [],
     mapsUrl: DEMO_CURRENT_LESSONS[1].mapsUrl,
     lessons: [DEMO_CURRENT_LESSONS[1]],
+  },
+  {
+    id: "course-taaseel",
+    title: "الدورة العلمية التأصيلية",
+    sheikhName: DEMO_CURRENT_LESSONS[2].sheikhName,
+    description: DEMO_CURRENT_LESSONS[2].description,
+    mosque: "مسجد أبي واقد الليثي",
+    region: "القيروان",
+    periodLabel: "مستمر",
+    weeklySchedule: DEMO_CURRENT_LESSONS[2].weeklySchedule,
+    curriculum: DEMO_CURRENT_LESSONS[2].curriculum,
+    lectures: DEMO_CURRENT_LESSONS[2].lectures ?? [],
+    mapsUrl: DEMO_CURRENT_LESSONS[2].mapsUrl,
+    lessons: [DEMO_CURRENT_LESSONS[2]],
   },
 ];
 
@@ -166,7 +261,7 @@ export type LessonFilters = {
 
 export function filterCurrentLessons(
   lessons: CurrentLesson[],
-  filters: LessonFilters
+  filters: LessonFilters,
 ): CurrentLesson[] {
   return lessons.filter((l) => {
     if (filters.sheikh && filters.sheikh !== "الكل" && l.sheikhName !== filters.sheikh) return false;
@@ -178,7 +273,7 @@ export function filterCurrentLessons(
 }
 
 export function getFilterOptions(lessons: CurrentLesson[]) {
-  const uniq = (vals: string[]) => ["الكل", ...Array.from(new Set(vals)).sort()];
+  const uniq = (vals: string[]) => ["الكل", ...Array.from(new Set(vals)).sort((a, b) => a.localeCompare(b, "ar"))];
   return {
     sheikhs: uniq(lessons.map((l) => l.sheikhName)),
     mosques: uniq(lessons.map((l) => l.mosque)),
@@ -187,23 +282,38 @@ export function getFilterOptions(lessons: CurrentLesson[]) {
   };
 }
 
+export function sheikhInitial(name: string) {
+  const cleaned = name
+    .replace(/^(الشيخ|فضيلة|فضيلة الشيخ)\s+/u, "")
+    .replace(/[^\u0600-\u06FFa-zA-Z]/g, "")
+    .trim();
+  return cleaned.charAt(0) || "ش";
+}
+
+/** @deprecated use SheikhAvatar component */
 export function sheikhAvatarUrl(name: string, image?: string) {
   if (image) return image;
-  const initial = name.replace(/[^\u0600-\u06FFa-zA-Z]/g, "").charAt(0) || "ش";
+  const initial = sheikhInitial(name);
   return `data:image/svg+xml,${encodeURIComponent(
-    `<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
-      <rect width="200" height="200" fill="#164E3C"/>
-      <text x="100" y="118" text-anchor="middle" fill="#FAF5EA" font-size="72" font-family="serif">${initial}</text>
-    </svg>`
+    `<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240">
+      <defs>
+        <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#164E3C"/>
+          <stop offset="100%" stop-color="#1F6E54"/>
+        </linearGradient>
+      </defs>
+      <circle cx="120" cy="120" r="118" fill="url(#g)" stroke="#B08D2E" stroke-width="4"/>
+      <text x="120" y="138" text-anchor="middle" fill="#FAF5EA" font-size="88" font-family="Amiri, serif">${initial}</text>
+    </svg>`,
   )}`;
 }
 
 export function buildCalendarIcs(lesson: CurrentLesson): string {
-  const dt = lesson.startDate.replace(/-/g, "");
+  const dt = (lesson.startDate ?? "20260101").replace(/-/g, "");
   const lines = [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
-    "PRODID:-//Majalis//Current Lessons//AR",
+    "PRODID:-//Majalis//Lesson Announcements//AR",
     "CALSCALE:GREGORIAN",
     "BEGIN:VEVENT",
     `UID:${lesson.id}@majalis`,
@@ -211,7 +321,7 @@ export function buildCalendarIcs(lesson: CurrentLesson): string {
     `DTSTART;VALUE=DATE:${dt}`,
     `SUMMARY:${lesson.title} — ${lesson.sheikhName}`,
     `DESCRIPTION:${lesson.description.replace(/\n/g, " ")}`,
-    `LOCATION:${lesson.mosque}, ${lesson.region}`,
+    `LOCATION:${lesson.mosque}، ${lesson.region}`,
     "END:VEVENT",
     "END:VCALENDAR",
   ];
@@ -223,9 +333,44 @@ export function downloadCalendar(lesson: CurrentLesson) {
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = `${lesson.title}.ics`;
+  a.download = `إعلان-${lesson.title}.ics`;
   a.click();
   URL.revokeObjectURL(url);
+}
+
+export function buildShareText(lesson: CurrentLesson) {
+  const lines = [
+    lesson.announcementType,
+    `فضيلة الشيخ ${lesson.sheikhName}`,
+    lesson.title,
+    `${lesson.day} — ${lesson.time}`,
+    `${lesson.mosque} — ${lesson.region}`,
+    formatPeriod(lesson),
+    formatWeeklySchedule(lesson.weeklySchedule),
+  ];
+  return lines.filter(Boolean).join("\n");
+}
+
+export async function shareAnnouncement(lesson: CurrentLesson) {
+  const text = buildShareText(lesson);
+  const shareData = { title: lesson.title, text };
+
+  if (typeof navigator !== "undefined" && navigator.share) {
+    try {
+      await navigator.share({ ...shareData, url: window.location.href });
+      return;
+    } catch {
+      /* user cancelled or unsupported payload */
+    }
+  }
+
+  if (typeof navigator !== "undefined" && navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(text);
+    alert("تم نسخ نص الإعلان.");
+    return;
+  }
+
+  alert(text);
 }
 
 export function getCourseById(id: string) {
