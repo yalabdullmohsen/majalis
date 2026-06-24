@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { getSheikhById } from "@/lib/supabase";
 import { C } from "@/lib/theme";
 import { Loading, Empty } from "@/components/ui-common";
+import ContentActions from "@/components/ContentActions";
 
 export default function SheikhDetailPage({ params }: { params: { id: string } }) {
   const [sheikh, setSheikh] = useState<any>(null);
@@ -60,6 +61,9 @@ export default function SheikhDetailPage({ params }: { params: { id: string } })
             <p style={{ fontSize: "0.875rem", color: C.ink, lineHeight: "1.75" }}>{sheikh.biography}</p>
           </div>
         )}
+        <div style={{ marginTop: "1rem" }}>
+          <ContentActions contentType="scholar" contentId={sheikh.id} />
+        </div>
       </div>
 
       {lessons.length > 0 && (

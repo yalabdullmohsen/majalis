@@ -4,6 +4,8 @@ import { getLessons, registerForLesson, unregisterFromLesson, getMyRegistrations
 import { DEMO_LESSONS, demoNoticeText } from "@/lib/demo-content";
 import { PageHeader, Loading, Empty, Chip, ErrorState, DemoNotice } from "@/components/ui-common";
 import { useAuth } from "@/components/AuthProvider";
+import ContentActions from "@/components/ContentActions";
+import { isDemoId } from "@/lib/demo-content";
 
 const CATEGORIES = ["الكل", "تفسير", "فقه", "عقيدة", "حديث", "سيرة", "تجويد", "أخرى"];
 
@@ -122,6 +124,9 @@ export default function LessonsPage() {
                 {[l.mosque, l.city, l.schedule].filter(Boolean).join(" · ")}
               </p>
               {l.description && <p className="page-desc">{l.description}</p>}
+              {!isDemoId(l.id) && (
+                <ContentActions contentType="lesson" contentId={l.id} />
+              )}
               <div className="page-card-footer">
                 <span className="page-soft-tag">{l.audience || "الكل"}</span>
                 <span className="page-soft-tag">{l.delivery || "حضور فقط"}</span>

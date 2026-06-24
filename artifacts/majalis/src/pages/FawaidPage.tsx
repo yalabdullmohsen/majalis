@@ -5,6 +5,8 @@ import { canSubmitForm } from "@/lib/form-rate-limit";
 import { C } from "@/lib/theme";
 import { PageHeader, Loading, Empty, ErrorState, DemoNotice } from "@/components/ui-common";
 import { useAuth } from "@/components/AuthProvider";
+import ContentActions from "@/components/ContentActions";
+import { isDemoId } from "@/lib/demo-content";
 
 export default function FawaidPage() {
   const [fawaid, setFawaid] = useState<any[]>([]);
@@ -84,6 +86,11 @@ export default function FawaidPage() {
                 <span style={{ color: C.brassDeep, fontSize: "1.25rem", marginRight: "0.25rem" }}>❞</span>
               </p>
               {f.author_name && <p style={{ fontSize: "0.75rem", color: C.inkSoft, marginTop: "0.5rem", textAlign: "left" }}>— {f.author_name}</p>}
+              {!isDemoId(f.id) && (
+                <div style={{ marginTop: "0.75rem" }}>
+                  <ContentActions contentType="benefit" contentId={f.id} />
+                </div>
+              )}
             </div>
           ))}
         </div>

@@ -2,6 +2,8 @@ import { useEffect, useMemo, useState } from "react";
 import { getLibrary } from "@/lib/supabase";
 import { DEMO_LIBRARY, demoNoticeText } from "@/lib/demo-content";
 import { PageHeader, Loading, Empty, Chip, ErrorState, DemoNotice } from "@/components/ui-common";
+import ContentActions from "@/components/ContentActions";
+import { isDemoId } from "@/lib/demo-content";
 
 const TYPES = ["الكل", "كتاب", "متن", "تفريغ", "ملخص", "مقال", "صوت", "مرئي"];
 
@@ -91,6 +93,9 @@ export default function LibraryPage() {
                 <a href={item.file_url || item.external_url} target="_blank" rel="noreferrer" className="page-link">
                   فتح المادة ←
                 </a>
+              )}
+              {!isDemoId(item.id) && (
+                <ContentActions contentType="book" contentId={item.id} />
               )}
             </article>
           ))}

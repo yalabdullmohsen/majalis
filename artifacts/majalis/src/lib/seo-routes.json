@@ -228,6 +228,18 @@
       "robots": "noindex, nofollow"
     },
     {
+      "path": "/admin/dashboard",
+      "title": "لوحة التحكم المتقدمة | مجالس العلم",
+      "description": "إحصائيات المنصة والبلاغات المعلّقة.",
+      "keywords": [
+        "لوحة التحكم",
+        "إحصائيات",
+        "بلاغات"
+      ],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
       "path": "/404",
       "title": "الصفحة غير موجودة | مجالس العلم",
       "description": "تعذر العثور على الصفحة المطلوبة في مجالس العلم.",

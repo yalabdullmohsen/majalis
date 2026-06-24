@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "wouter";
 import { useAuth } from "./AuthProvider";
+import NotificationBell from "./NotificationBell";
 import { C } from "@/lib/theme";
 
 const TABS = [
@@ -88,7 +89,7 @@ export default function NavBar() {
               <Link key={t.href} href={t.href} style={tabStyle(location === t.href)}>{t.label}</Link>
             ))}
             {isAdmin && (
-              <Link href="/admin" style={{ ...tabStyle(location === "/admin"), color: location === "/admin" ? C.emeraldDeep : C.brassDeep }}>لوحة التحكم</Link>
+              <Link href="/admin" style={{ ...tabStyle(location.startsWith("/admin")), color: location.startsWith("/admin") ? C.emeraldDeep : C.brassDeep }}>لوحة التحكم</Link>
             )}
           </nav>
         )}
@@ -98,6 +99,7 @@ export default function NavBar() {
 
           {!isMobile && (isLoggedIn ? (
             <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+              <NotificationBell />
               <span style={{ fontSize: "0.75rem", color: C.inkSoft }}>{user?.profile?.full_name || "مرحبًا"}</span>
               <button onClick={logout} style={{ fontSize: "0.75rem", padding: "0.375rem 0.75rem", borderRadius: "0.375rem", border: `1px solid ${C.line}`, color: C.inkSoft, background: "transparent", cursor: "pointer", fontFamily: "inherit" }}>خروج</button>
             </div>
@@ -124,12 +126,13 @@ export default function NavBar() {
               <Link key={t.href} href={t.href} style={{ ...tabStyle(location === t.href), padding: "0.6rem 0.75rem" }}>{t.label}</Link>
             ))}
             {isAdmin && (
-              <Link href="/admin" style={{ ...tabStyle(location === "/admin"), padding: "0.6rem 0.75rem", color: C.brassDeep }}>لوحة التحكم</Link>
+              <Link href="/admin" style={{ ...tabStyle(location.startsWith("/admin")), padding: "0.6rem 0.75rem", color: C.brassDeep }}>لوحة التحكم</Link>
             )}
           </nav>
           <div style={{ borderTop: `1px solid ${C.line}`, marginTop: "0.75rem", paddingTop: "0.75rem" }}>
             {isLoggedIn ? (
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "0.75rem" }}>
+                <NotificationBell />
                 <span style={{ fontSize: "0.8125rem", color: C.inkSoft }}>{user?.profile?.full_name || "مرحبًا"}</span>
                 <button onClick={logout} style={{ fontSize: "0.8125rem", padding: "0.4rem 0.9rem", borderRadius: "0.375rem", border: `1px solid ${C.line}`, color: C.inkSoft, background: "transparent", cursor: "pointer", fontFamily: "inherit" }}>خروج</button>
               </div>

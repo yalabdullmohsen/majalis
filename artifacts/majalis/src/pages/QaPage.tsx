@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { getQaQuestions, getQaCategories } from "@/lib/supabase";
 import { C, QA_RULING_COLORS, QA_REVIEW_LABELS, QA_DISCLAIMER } from "@/lib/theme";
 import { PageHeader, Loading, Empty } from "@/components/ui-common";
+import ContentActions from "@/components/ContentActions";
+import { isDemoId } from "@/lib/demo-content";
 
 function Disclaimer() {
   return (
@@ -205,6 +207,12 @@ export default function QaPage() {
                         {new Date(q.created_at).toLocaleDateString("ar-KW")}
                       </p>
                     </div>
+
+                    {!isDemoId(q.id) && (
+                      <div style={{ marginTop: "0.875rem" }}>
+                        <ContentActions contentType="qa" contentId={q.id} />
+                      </div>
+                    )}
                   </div>
                 )}
               </div>

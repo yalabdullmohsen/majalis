@@ -194,6 +194,47 @@ export async function adminGetStats() {
   };
 }
 
+export async function adminGetDashboardStats() {
+  const startOfDay = new Date();
+  startOfDay.setHours(0, 0, 0, 0);
+
+  const [
+    { count: users },
+    { count: lessons },
+    { count: books },
+    { count: benefits },
+    { count: qa },
+    { count: reports },
+    { count: trans },
+    { count: todayViews },
+    { data: recentReports },
+  ] = await Promise.all([
+    supabase.from("profiles").select("*", { count: "exact", head: true }),
+    supabase.from("lessons").select("*", { count: "exact", head: true }),
+    supabase.from("library_items").select("*", { count: "exact", head: true }),
+    supabase.from("fawaid").select("*", { count: "exact", head: true }),
+    supabase.from("qa_questions").select("*", { count: "exact", head: true }),
+    supabase.from("error_reports").select("*", { count: "exact", head: true }).eq("status", "pending"),
+    supabase.from("transcriptions").select("*", { count: "exact", head: true }),
+    supabase.from("content_views").select("*", { count: "exact", head: true }).gte("viewed_at", startOfDay.toISOString()),
+    supabase.from("error_reports").select("*").eq("status", "pending").order("created_at", { ascending: false }).limit(5),
+  ]);
+
+  return {
+    stats: {
+      totalUsers: users || 0,
+      totalLessons: lessons || 0,
+      totalBooks: books || 0,
+      totalBenefits: benefits || 0,
+      totalQA: qa || 0,
+      pendingReports: reports || 0,
+      todayViews: todayViews || 0,
+      totalTranscriptions: trans || 0,
+    },
+    recentReports: recentReports || [],
+  };
+}
+
 export async function adminGetSheikhs() {
   const { data, error } = await supabase.from("sheikhs").select("*").order("name");
   return { data: data || [], error };

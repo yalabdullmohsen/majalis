@@ -18,6 +18,7 @@ import TranscribePage from "@/pages/TranscribePage";
 import CardsPage from "@/pages/CardsPage";
 import LoginPage from "@/pages/LoginPage";
 import AdminPage from "@/pages/AdminPage";
+import AdminDashboardPage from "@/pages/admin/AdminDashboardPage";
 import NotFound from "@/pages/not-found";
 import { usePageSeo } from "@/lib/seo";
 
@@ -46,6 +47,11 @@ function Router() {
       <Route path="/transcribe" component={TranscribePage} />
       <Route path="/cards" component={CardsPage} />
       <Route path="/login" component={LoginPage} />
+      <Route path="/admin/dashboard">
+        <AdminRouteGuard>
+          <AdminDashboardPage />
+        </AdminRouteGuard>
+      </Route>
       <Route path="/admin">
         <AdminRouteGuard>
           <AdminPage />

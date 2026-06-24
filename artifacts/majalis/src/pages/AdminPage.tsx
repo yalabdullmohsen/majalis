@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "wouter";
 import { C } from "@/lib/theme";
 import { StatsSection } from "@/pages/admin/StatsSection";
 import { SheikhsSection } from "@/pages/admin/SheikhsSection";
@@ -36,6 +37,17 @@ export default function AdminPage() {
         <p style={{ fontSize: "0.6875rem", fontWeight: 700, color: C.inkSoft, padding: "0 1rem", marginBottom: "0.75rem", letterSpacing: "0.06em" }}>
           لوحة تحكم مجالس العلم
         </p>
+        <Link
+          href="/admin/dashboard"
+          style={{
+            display: "flex", alignItems: "center", gap: "0.625rem",
+            padding: "0.625rem 1rem", marginBottom: "0.5rem",
+            textDecoration: "none", fontSize: "0.8125rem",
+            color: C.brassDeep, fontWeight: 600,
+          }}
+        >
+          <span>📈</span> لوحة متقدمة
+        </Link>
         <nav>
           {NAV.map(n => (
             <button
