@@ -9,15 +9,12 @@ import {
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <label className="block">
-      <span className="mb-2 block text-sm text-white/70">{label}</span>
+    <label className="cond-form-field">
+      <span className="cond-form-label">{label}</span>
       {children}
     </label>
   );
 }
-
-const inputClass =
-  "w-full rounded-xl border border-white/15 bg-black px-4 py-3 text-white outline-none focus:border-white/40";
 
 export default function CondolencesPage() {
   const cardRef = useRef<HTMLDivElement>(null);
@@ -49,8 +46,7 @@ export default function CondolencesPage() {
       link.download = `تعزية-${form.name.trim() || "بطاقة"}.png`;
       link.href = dataUrl;
       link.click();
-    } catch (err) {
-      console.error("[majalis:condolences] PNG export failed", err);
+    } catch {
       alert("تعذر تحميل الصورة. حاول مجددًا.");
     } finally {
       setDownloading(false);
@@ -58,29 +54,29 @@ export default function CondolencesPage() {
   };
 
   return (
-    <main dir="rtl" className="min-h-screen bg-neutral-950 px-4 py-8 text-white">
-      <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[380px_1fr]">
-        <section className="rounded-2xl border border-white/10 bg-white/5 p-5">
-          <h1 className="mb-2 text-2xl font-bold">قوالب العزاء</h1>
-          <p className="mb-6 text-sm text-white/60">
-            اكتب البيانات ثم حمّل البطاقة بدون شعار أو حقوق.
+    <main dir="rtl" className="cond-page">
+      <div className="cond-page-inner">
+        <section className="ui-card cond-form-panel">
+          <h1 className="cond-page-title">قوالب العزاء</h1>
+          <p className="cond-page-desc">
+            اكتب البيانات ثم حمّل البطاقة للمشاركة في واتساب أو إنستغرام.
           </p>
 
-          <div className="space-y-4">
-            <Field label="اسم المتوفى">
+          <div className="cond-form-fields">
+            <Field label="الاسم">
               <input
                 value={form.name}
                 onChange={(e) => update("name", e.target.value)}
-                className={inputClass}
-                placeholder="مثال: عبدالله فالح بن خضير المطيري"
+                className="cond-input"
+                placeholder="اسم المتوفى"
               />
             </Field>
 
-            <Field label="تاريخ الوفاة">
+            <Field label="التاريخ">
               <input
                 value={form.deathDate}
                 onChange={(e) => update("deathDate", e.target.value)}
-                className={inputClass}
+                className="cond-input"
                 placeholder="مثال: الثلاثاء 2026/6/23"
               />
             </Field>
@@ -89,7 +85,7 @@ export default function CondolencesPage() {
               <input
                 value={form.burialTime}
                 onChange={(e) => update("burialTime", e.target.value)}
-                className={inputClass}
+                className="cond-input"
                 placeholder="مثال: بعد صلاة العشاء"
               />
             </Field>
@@ -98,7 +94,7 @@ export default function CondolencesPage() {
               <input
                 value={form.condolencePlace}
                 onChange={(e) => update("condolencePlace", e.target.value)}
-                className={inputClass}
+                className="cond-input"
                 placeholder="مثال: العزاء بالمقبرة"
               />
             </Field>
@@ -107,7 +103,7 @@ export default function CondolencesPage() {
               <textarea
                 value={form.extraText}
                 onChange={(e) => update("extraText", e.target.value)}
-                className={`${inputClass} min-h-24 resize-none`}
+                className="cond-input cond-textarea"
                 placeholder="مثال: نسأل الله له الرحمة والمغفرة"
               />
             </Field>
@@ -116,25 +112,35 @@ export default function CondolencesPage() {
               <select
                 value={form.size}
                 onChange={(e) => update("size", e.target.value as CondolenceForm["size"])}
-                className={inputClass}
+                className="cond-input"
               >
-                <option value="square">مربع 1080×1080</option>
-                <option value="story">طولي 1080×1350</option>
+                <option value="square">مربع 1080×1080 — واتساب</option>
+                <option value="story">طولي 1080×1350 — إنستغرام</option>
               </select>
             </Field>
+
+            <label className="cond-checkbox">
+              <input
+                type="checkbox"
+                checked={form.showLogo}
+                onChange={(e) => update("showLogo", e.target.checked)}
+              />
+              <span>إظهار الشعار على البطاقة</span>
+            </label>
 
             <button
               type="button"
               onClick={downloadImage}
               disabled={downloading}
-              className="w-full rounded-xl bg-white py-3 font-bold text-black hover:bg-white/90 disabled:opacity-60"
+              className="ui-card-btn cond-download-btn"
             >
               {downloading ? "جارٍ التحميل..." : "تحميل الصورة PNG"}
             </button>
           </div>
         </section>
 
-        <section className="flex items-center justify-center overflow-auto py-2">
+        <section className="cond-preview-panel">
+          <h2 className="cond-preview-title">معاينة</h2>
           <CondolenceCard
             ref={cardRef}
             form={form}
@@ -145,7 +151,6 @@ export default function CondolencesPage() {
         </section>
       </div>
 
-      {/* بطاقة التصدير بالمقاس الكامل — مخفية عن العرض */}
       <div className="cond-bw-export-host" aria-hidden="true">
         <CondolenceCard
           ref={exportRef}

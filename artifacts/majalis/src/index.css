@@ -4386,3 +4386,492 @@ input, textarea, select { font-family: inherit; }
     max-width: 100% !important;
   }
 }
+
+.ui-card {
+  border: 1px solid rgba(224, 215, 196, 0.9);
+  border-radius: 1.15rem;
+  background: var(--majalis-panel);
+  box-shadow: 0 8px 28px rgba(36, 31, 24, 0.07);
+  transition: transform 0.16s ease, box-shadow 0.16s ease;
+}
+
+.ui-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 36px rgba(36, 31, 24, 0.1);
+}
+
+.ui-card-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.65rem 1.15rem;
+  border-radius: 0.75rem;
+  background: var(--majalis-emerald);
+  color: var(--majalis-parchment);
+  font-weight: 700;
+  font-size: 0.88rem;
+  text-align: center;
+  transition: background 0.15s ease;
+}
+
+.ui-card-btn:hover {
+  background: var(--majalis-emerald-deep);
+}
+
+/* ── Homepage maintenance & new sections ── */
+.home-hero-grid--compact {
+  grid-template-columns: minmax(0, 1fr);
+  padding-block: clamp(3rem, 8vw, 5.5rem) clamp(2.5rem, 6vw, 4rem);
+}
+
+.home-maintenance-banner {
+  display: block;
+  max-width: 38rem;
+  margin: 0 0 1.5rem;
+  padding: 0.85rem 1.1rem;
+  border-radius: 0.85rem;
+  border: 1px solid rgba(250, 245, 234, 0.35);
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(250, 245, 234, 0.95);
+  font-size: clamp(0.95rem, 2.5vw, 1.05rem);
+  font-weight: 700;
+  line-height: 1.75;
+}
+
+.home-feature-grid--compact {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.home-kuwait-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.home-kuwait-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding: 1.15rem;
+}
+
+.home-kuwait-card-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+}
+
+.home-kuwait-sheikh {
+  color: var(--majalis-ink-soft);
+  font-size: 0.82rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.home-kuwait-card h3 {
+  color: var(--majalis-emerald-deep);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.home-kuwait-meta {
+  display: grid;
+  gap: 0.45rem;
+  margin: 0;
+}
+
+.home-kuwait-meta > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-size: 0.85rem;
+}
+
+.home-kuwait-meta dt {
+  color: var(--majalis-ink-soft);
+  font-weight: 700;
+}
+
+.home-kuwait-meta dd {
+  margin: 0;
+  text-align: left;
+  color: var(--majalis-ink);
+  font-weight: 600;
+}
+
+.home-kuwait-note {
+  padding: 0.55rem 0.75rem;
+  border-radius: 0.65rem;
+  background: var(--majalis-parchment-deep);
+  color: var(--majalis-emerald-deep);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.home-prayer-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 0.75rem;
+  padding: 1.15rem;
+}
+
+.home-prayer-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.75rem 0.5rem;
+  border-radius: 0.85rem;
+  background: var(--majalis-parchment-deep);
+  text-align: center;
+}
+
+.home-prayer-name {
+  color: var(--majalis-ink-soft);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.home-prayer-time {
+  color: var(--majalis-emerald-deep);
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+.home-daily-card {
+  padding: 1.35rem 1.25rem;
+}
+
+.home-daily-card--ayah {
+  background: linear-gradient(180deg, #fff, #f9f4ea);
+}
+
+.home-daily-quote,
+.home-ayah-text {
+  color: var(--majalis-emerald-deep);
+  font-size: clamp(1.05rem, 2.8vw, 1.25rem);
+  font-weight: 700;
+  line-height: 1.85;
+  margin-bottom: 0.85rem;
+}
+
+.home-daily-meta {
+  color: var(--majalis-ink-soft);
+  font-size: 0.88rem;
+  margin-bottom: 0.35rem;
+}
+
+.home-daily-meaning {
+  margin-top: 0.65rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--majalis-line);
+  color: var(--majalis-ink);
+  font-size: 0.92rem;
+  line-height: 1.8;
+}
+
+@media (max-width: 980px) {
+  .home-kuwait-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .home-prayer-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .home-feature-grid--compact {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .home-prayer-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .home-feature-grid--compact {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Card polish — lessons, ads, announcements, assistant */
+.home-stat-card,
+.home-feature-card,
+.home-lesson-card,
+.home-sheikh-card,
+.home-library-card,
+.home-miracle-card,
+.home-fawaid-card,
+.home-qa-card,
+.la-card,
+.lad-card,
+.assistant-message-reply {
+  border-radius: 1.15rem;
+  box-shadow: 0 8px 28px rgba(36, 31, 24, 0.07);
+}
+
+.lad-card,
+.la-card {
+  overflow: hidden;
+}
+
+.assistant-message-reply {
+  border: 1px solid var(--majalis-line);
+}
+
+/* ── Condolences & Cards pages ── */
+.cond-page,
+.cards-page {
+  min-height: 100vh;
+  background: var(--majalis-parchment);
+  padding: clamp(1.5rem, 4vw, 2.5rem) 1rem;
+}
+
+.cond-page-inner,
+.cards-page-inner {
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+.cond-page-inner {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: minmax(280px, 380px) 1fr;
+  align-items: start;
+}
+
+.cond-form-panel {
+  padding: 1.25rem;
+}
+
+.cond-page-title,
+.cards-page-title {
+  color: var(--majalis-emerald-deep);
+  font-size: clamp(1.35rem, 3vw, 1.75rem);
+  margin-bottom: 0.35rem;
+}
+
+.cond-page-desc,
+.cards-back-link {
+  color: var(--majalis-ink-soft);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.cond-form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.cond-form-label {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: var(--majalis-ink-soft);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.cond-input {
+  width: 100%;
+  border: 1px solid var(--majalis-line);
+  border-radius: 0.75rem;
+  padding: 0.7rem 0.85rem;
+  background: var(--majalis-panel);
+  color: var(--majalis-ink);
+  font-size: 0.92rem;
+  outline: none;
+}
+
+.cond-input:focus {
+  border-color: var(--majalis-emerald);
+  box-shadow: 0 0 0 2px rgba(31, 110, 84, 0.15);
+}
+
+.cond-textarea {
+  min-height: 5.5rem;
+  resize: vertical;
+}
+
+.cond-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--majalis-ink-soft);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.cond-download-btn,
+.cards-download-btn {
+  width: 100%;
+  font-size: 1rem;
+  padding-block: 0.85rem;
+}
+
+.cond-preview-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.cond-preview-title {
+  align-self: flex-start;
+  color: var(--majalis-emerald-deep);
+  font-size: 1rem;
+}
+
+.cond-bw-logo {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  opacity: 0.85;
+}
+
+.cards-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.cards-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.cards-panel {
+  padding: 1.15rem;
+}
+
+.cards-panel h2 {
+  color: var(--majalis-ink);
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.cards-textarea,
+.cards-input {
+  width: 100%;
+  border: 1px solid var(--majalis-line);
+  border-radius: 0.75rem;
+  padding: 0.75rem 0.9rem;
+  margin-bottom: 0.65rem;
+  background: var(--majalis-parchment-deep);
+  color: var(--majalis-ink);
+  font-size: 1rem;
+  line-height: 1.8;
+  outline: none;
+}
+
+.cards-template-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.cards-template-btn {
+  border: 2px solid var(--majalis-line);
+  border-radius: 0.85rem;
+  padding: 0.65rem;
+  background: var(--majalis-panel);
+  color: var(--majalis-ink-soft);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.cards-template-btn.is-active {
+  border-color: var(--majalis-emerald);
+  background: var(--majalis-sage);
+  color: var(--majalis-emerald-deep);
+}
+
+.cards-template-swatch {
+  display: block;
+  height: 2rem;
+  margin-bottom: 0.45rem;
+  border-radius: 0.45rem;
+  border: 1px solid rgba(36, 31, 24, 0.08);
+}
+
+.cards-size-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.cards-size-btn {
+  flex: 1;
+  min-width: 5.5rem;
+  min-height: 44px;
+  border: 1px solid var(--majalis-line);
+  border-radius: 0.65rem;
+  background: var(--majalis-panel);
+  color: var(--majalis-ink-soft);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.cards-size-btn.is-active {
+  background: var(--majalis-emerald);
+  border-color: var(--majalis-emerald);
+  color: var(--majalis-parchment);
+}
+
+.cards-preview-wrap h2 {
+  color: var(--majalis-emerald-deep);
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.cards-preview-frame {
+  overflow: hidden;
+  border-radius: 1rem;
+  box-shadow: 0 16px 48px rgba(36, 31, 24, 0.12);
+}
+
+.cards-export-canvas {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  position: relative;
+  direction: rtl;
+  box-sizing: border-box;
+}
+
+.cards-export-quote {
+  text-align: center;
+  line-height: 1.85;
+  font-weight: 700;
+  margin-bottom: 1.75rem;
+}
+
+.cards-export-source {
+  font-size: 1rem;
+  text-align: center;
+  padding-top: 1rem;
+  width: 65%;
+}
+
+.cards-export-logo {
+  position: absolute;
+  bottom: 1.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+@media (max-width: 900px) {
+  .cond-page-inner,
+  .cards-layout {
+    grid-template-columns: 1fr;
+  }
+}

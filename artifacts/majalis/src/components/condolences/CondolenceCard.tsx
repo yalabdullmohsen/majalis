@@ -8,6 +8,7 @@ export type CondolenceForm = {
   condolencePlace: string;
   extraText: string;
   size: "square" | "story";
+  showLogo: boolean;
 };
 
 export const defaultCondolenceForm: CondolenceForm = {
@@ -17,6 +18,7 @@ export const defaultCondolenceForm: CondolenceForm = {
   condolencePlace: "",
   extraText: "",
   size: "square",
+  showLogo: false,
 };
 
 export const CARD_FONT =
@@ -92,6 +94,15 @@ export const CondolenceCard = forwardRef<HTMLDivElement, Props>(function Condole
           <p className="cond-bw-extra mt-5 max-w-[80%] leading-relaxed text-white/75">
             {form.extraText.trim()}
           </p>
+        )}
+
+        {form.showLogo && (
+          <img
+            src="/logo.png"
+            alt=""
+            className="cond-bw-logo mt-6"
+            aria-hidden="true"
+          />
         )}
 
         <Ornament small />

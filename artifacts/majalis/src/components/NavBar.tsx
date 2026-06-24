@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "wouter";
 import { useAuth } from "./AuthProvider";
-import { FontSelector } from "./FontSelector";
 import NotificationBell from "./NotificationBell";
 import { C } from "@/lib/theme";
 
+const HIDDEN_NAV_HREFS = new Set(["/sheikhs", "/transcribe"]);
+
 const NEW_NAV_ITEMS = [
-  { href: "/transcribe", label: "🎙️ تفريغ" },
   { href: "/cards", label: "🎨 البطاقات" },
   { href: "/condolences", label: "قوالب العزاء" },
 ];
@@ -22,10 +22,11 @@ const TABS = [
   { href: "/fawaid", label: "الفوائد" },
   { href: "/qa", label: "الأسئلة والأجوبة" },
   { href: "/quiz", label: "🏆 المسابقات" },
+  { href: "/transcribe", label: "🎙️ تفريغ" },
   ...NEW_NAV_ITEMS,
   { href: "/assistant", label: "المساعد الذكي" },
   { href: "/about", label: "عن المنصة" },
-];
+].filter((tab) => !HIDDEN_NAV_HREFS.has(tab.href));
 
 function useIsMobile() {
   const [mobile, setMobile] = useState(typeof window !== "undefined" ? window.innerWidth < 880 : false);
@@ -138,7 +139,6 @@ export default function NavBar() {
         )}
 
         <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexShrink: 0 }}>
-          {!isMobile && <FontSelector compact />}
           {!isMobile && <SearchBox />}
 
           {!isMobile && (isLoggedIn ? (
@@ -165,9 +165,6 @@ export default function NavBar() {
         <div style={{ borderTop: `1px solid ${C.line}`, background: C.parchment, padding: "0.75rem 1rem 1rem" }}>
           <div style={{ marginBottom: "0.75rem" }}>
             <SearchBox onSubmitDone={() => setOpen(false)} />
-          </div>
-          <div style={{ marginBottom: "0.75rem" }}>
-            <FontSelector />
           </div>
           <nav style={{ display: "flex", flexDirection: "column", gap: "0.15rem" }}>
             {TABS.map((t) => (

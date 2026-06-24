@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { FontSelector } from "@/components/FontSelector";
 import { callAssistantApi, type AssistantResponse } from "@/lib/assistant-api";
 import { splitAssistantLines } from "@/lib/assistant-text";
 
@@ -128,7 +127,6 @@ export default function AssistantPage() {
       <header className="assistant-header">
         <div className="assistant-header-top">
           <h1 className="assistant-title">المساعد العلمي</h1>
-          <FontSelector />
         </div>
         <p className="assistant-intro">
           مساعد ذكي يرشدك في المسائل العلمية العامة داخل المجلس العلمي. الفتوى الخاصة تُعرض على
