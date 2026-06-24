@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { adminGetLessons, adminUpsertLesson, adminDeleteLesson, adminGetSheikhs } from "@/lib/supabase";
+import { adminGetLessons, adminUpsertLesson, adminDeleteLesson, adminGetSheikhs, getSupabaseErrorMessage } from "@/lib/supabase";
 import { C, GOVERNORATES } from "@/lib/theme";
-import { Loading } from "@/components/ui-common";
+import { Loading, ErrorMessage } from "@/components/ui-common";
 import { AdminModal, Field, FieldRow, inputSt, selectSt, textareaSt } from "./AdminModal";
 import { BulkImport } from "./BulkImport";
 
-const CATEGORIES = ["تفسير", "فقه", "عقيدة", "حديث", "سيرة", "تجويد", "أخرى"];
+const CATEGORIES = ["العقيدة", "الفقه", "التفسير", "الحديث", "السيرة", "الأخلاق", "الدعوة"];
 const AUDIENCE = ["الكل", "رجال", "نساء", "أطفال"];
 const DELIVERY = ["حضور فقط", "بث مباشر", "كلاهما"];
 const STATUSES: Record<string, string> = { approved: "معتمد", pending: "معلّق", rejected: "مرفوض" };
@@ -26,11 +26,20 @@ export function LessonsSection() {
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState<any>(EMPTY);
   const [saving, setSaving] = useState(false);
+  const [error, setError] = useState("");
 
   const load = () => {
     setLoading(true);
-    Promise.all([adminGetLessons(), adminGetSheikhs()]).then(([{ data: l }, { data: s }]) => {
+    setError("");
+    Promise.all([adminGetLessons(), adminGetSheikhs()]).then(([lessonsRes, sheikhsRes]) => {
+      const firstError = lessonsRes.error || sheikhsRes.error;
+      if (firstError) setError(getSupabaseErrorMessage(firstError, "تعذّر تحميل بيانات الدروس."));
+      const { data: l } = lessonsRes;
+      const { data: s } = sheikhsRes;
       setItems(l); setSheikhs(s); setLoading(false);
+    }).catch((err) => {
+      setError(getSupabaseErrorMessage(err, "تعذّر تحميل بيانات الدروس."));
+      setLoading(false);
     });
   };
   useEffect(() => { load(); }, []);
@@ -43,13 +52,23 @@ export function LessonsSection() {
   };
   const handleDelete = async (id: string, title: string) => {
     if (!confirm(`هل تريد حذف الدرس "${title}"؟`)) return;
-    await adminDeleteLesson(id); load();
+    const { error } = await adminDeleteLesson(id);
+    if (error) {
+      setError(getSupabaseErrorMessage(error, "تعذّر حذف الدرس."));
+      return;
+    }
+    load();
   };
   const handleSave = async () => {
     if (!form.title.trim()) return alert("عنوان الدرس مطلوب");
     setSaving(true);
-    await adminUpsertLesson({ ...form, sheikh_id: form.sheikh_id || null });
-    setSaving(false); setOpen(false); load();
+    const { error } = await adminUpsertLesson({ ...form, sheikh_id: form.sheikh_id || null });
+    setSaving(false);
+    if (error) {
+      setError(getSupabaseErrorMessage(error, "تعذّر حفظ الدرس."));
+      return;
+    }
+    setOpen(false); load();
   };
   const set = (k: string, v: any) => setForm((f: any) => ({ ...f, [k]: v }));
 
@@ -76,6 +95,8 @@ export function LessonsSection() {
           <button onClick={openAdd} style={{ padding: "0.5rem 1.25rem", borderRadius: "0.375rem", background: C.emerald, color: C.parchment, border: "none", cursor: "pointer", fontFamily: "inherit", fontSize: "0.875rem", fontWeight: 600 }}>+ إضافة درس</button>
         </div>
       </div>
+
+      {error && <ErrorMessage text={error} onRetry={load} />}
 
       {loading ? <Loading /> : (
         <div style={{ overflowX: "auto" }}>

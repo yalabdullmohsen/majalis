@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { adminGetSheikhs, adminUpsertSheikh, adminDeleteSheikh } from "@/lib/supabase";
+import { adminGetSheikhs, adminUpsertSheikh, adminDeleteSheikh, getSupabaseErrorMessage } from "@/lib/supabase";
 import { C, GOVERNORATES } from "@/lib/theme";
-import { Loading } from "@/components/ui-common";
+import { Loading, ErrorMessage } from "@/components/ui-common";
 import { AdminModal, Field, FieldRow, inputSt, selectSt, textareaSt } from "./AdminModal";
 import { BulkImport } from "./BulkImport";
+import SheikhAvatar from "@/components/SheikhAvatar";
 
 const toArr = (v: any) => Array.isArray(v) ? v : (v ? String(v).split(/[،,]/).map((s: string) => s.trim()).filter(Boolean) : []);
 
@@ -21,8 +22,20 @@ export function SheikhsSection() {
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState<any>(EMPTY);
   const [saving, setSaving] = useState(false);
+  const [error, setError] = useState("");
 
-  const load = () => { setLoading(true); adminGetSheikhs().then(({ data }) => { setItems(data); setLoading(false); }); };
+  const load = () => {
+    setLoading(true);
+    setError("");
+    adminGetSheikhs().then(({ data, error }) => {
+      if (error) setError(getSupabaseErrorMessage(error, "تعذّر تحميل المشايخ."));
+      setItems(data);
+      setLoading(false);
+    }).catch((err) => {
+      setError(getSupabaseErrorMessage(err, "تعذّر تحميل المشايخ."));
+      setLoading(false);
+    });
+  };
   useEffect(() => { load(); }, []);
 
   const openAdd = () => { setForm({ ...EMPTY }); setOpen(true); };
@@ -32,7 +45,12 @@ export function SheikhsSection() {
   };
   const handleDelete = async (id: string, name: string) => {
     if (!confirm(`هل تريد حذف الشيخ "${name}"؟`)) return;
-    await adminDeleteSheikh(id); load();
+    const { error } = await adminDeleteSheikh(id);
+    if (error) {
+      setError(getSupabaseErrorMessage(error, "تعذّر حذف الشيخ."));
+      return;
+    }
+    load();
   };
   const handleSave = async () => {
     if (!form.name.trim()) return alert("الاسم مطلوب");
@@ -43,8 +61,13 @@ export function SheikhsSection() {
       specialties: form.specialties ? form.specialties.split(/[،,]/).map((s: string) => s.trim()).filter(Boolean) : [],
       qualifications: form.qualifications ? form.qualifications.split(/[،,]/).map((s: string) => s.trim()).filter(Boolean) : [],
     };
-    await adminUpsertSheikh(payload);
-    setSaving(false); setOpen(false); load();
+    const { error } = await adminUpsertSheikh(payload);
+    setSaving(false);
+    if (error) {
+      setError(getSupabaseErrorMessage(error, "تعذّر حفظ بيانات الشيخ."));
+      return;
+    }
+    setOpen(false); load();
   };
   const set = (k: string, v: any) => setForm((f: any) => ({ ...f, [k]: v }));
 
@@ -69,6 +92,8 @@ export function SheikhsSection() {
         </div>
       </div>
 
+      {error && <ErrorMessage text={error} onRetry={load} />}
+
       {loading ? <Loading /> : (
         <div style={{ overflowX: "auto" }}>
           <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.875rem" }}>
@@ -82,7 +107,12 @@ export function SheikhsSection() {
             <tbody>
               {items.map(item => (
                 <tr key={item.id} style={{ borderBottom: `1px solid ${C.line}` }}>
-                  <td style={{ padding: "0.625rem 0.75rem", color: C.ink, fontWeight: 600 }}>{item.name}</td>
+                  <td style={{ padding: "0.625rem 0.75rem", color: C.ink, fontWeight: 600 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.55rem" }}>
+                      <SheikhAvatar sheikh={item} size={34} />
+                      <span>{item.name}</span>
+                    </div>
+                  </td>
                   <td style={{ padding: "0.625rem 0.75rem", color: C.inkSoft }}>{item.city || "—"}</td>
                   <td style={{ padding: "0.625rem 0.75rem" }}>
                     <span style={{ padding: "0.125rem 0.5rem", borderRadius: "0.25rem", background: item.is_verified ? C.sage : C.parchmentDeep, color: item.is_verified ? C.emeraldDeep : C.inkSoft, fontSize: "0.75rem" }}>

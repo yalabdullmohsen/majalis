@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { useLocation } from "wouter";
+import { Link, useLocation } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { C } from "@/lib/theme";
+import { ErrorMessage } from "@/components/ui-common";
+import { getSupabaseErrorMessage } from "@/lib/supabase";
 
 export default function LoginPage() {
   const [mode, setMode] = useState<"login" | "register">("login");
@@ -27,7 +29,7 @@ export default function LoginPage() {
       }
       navigate("/");
     } catch (err: any) {
-      setError(err.message || "حدث خطأ، يرجى المحاولة مجدداً.");
+      setError(getSupabaseErrorMessage(err, "حدث خطأ، يرجى المحاولة مجدداً."));
     }
     setLoading(false);
   };
@@ -39,11 +41,7 @@ export default function LoginPage() {
           {mode === "login" ? "تسجيل الدخول" : "إنشاء حساب"}
         </h1>
 
-        {error && (
-          <p style={{ color: "#dc2626", fontSize: "0.875rem", marginBottom: "1rem", padding: "0.5rem", background: "#fef2f2", borderRadius: "0.375rem", textAlign: "center" }}>
-            {error}
-          </p>
-        )}
+        {error && <ErrorMessage text={error} />}
 
         <form onSubmit={handleSubmit}>
           {mode === "register" && (
@@ -86,6 +84,14 @@ export default function LoginPage() {
             {loading ? "جارٍ المعالجة..." : mode === "login" ? "دخول" : "إنشاء الحساب"}
           </button>
         </form>
+
+        {mode === "login" && (
+          <p style={{ textAlign: "center", marginTop: "0.75rem", fontSize: "0.8125rem" }}>
+            <Link href="/forgot-password" style={{ color: C.brassDeep, textDecoration: "underline" }}>
+              نسيت كلمة المرور؟
+            </Link>
+          </p>
+        )}
 
         <p style={{ textAlign: "center", marginTop: "1rem", fontSize: "0.875rem", color: C.inkSoft }}>
           {mode === "login" ? "ليس لديك حساب؟ " : "لديك حساب؟ "}

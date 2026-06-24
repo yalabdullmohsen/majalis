@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { Link, useLocation } from "wouter";
-import { getLessons, getSheikhs, getApprovedFawaid, getLibrary, getMiracles, getQaQuestions } from "@/lib/supabase";
+import { getLessons, getSheikhs, getApprovedFawaid, getLibrary, getMiracles, getQaQuestions, getSupabaseErrorMessage } from "@/lib/supabase";
+import { ErrorMessage } from "@/components/ui-common";
 
 const FEATURES = [
   { href: "/lessons", icon: "📚", title: "الدروس والدورات", desc: "دروس علمية شرعية موثقة ومعتمدة" },
@@ -77,11 +78,15 @@ export default function HomePage() {
   const [miracles, setMiracles] = useState<any[]>([]);
   const [qa, setQa] = useState<any[]>([]);
   const [term, setTerm] = useState("");
+  const [error, setError] = useState("");
   const [, navigate] = useLocation();
 
   useEffect(() => {
+    setError("");
     Promise.all([getLessons(), getSheikhs(), getApprovedFawaid(), getLibrary(), getMiracles(), getQaQuestions()]).then(
       ([l, s, f, lib, m, q]) => {
+        const firstError = [l.error, s.error, f.error, lib.error, m.error, q.error].find(Boolean);
+        if (firstError) setError(getSupabaseErrorMessage(firstError, "تعذّر تحميل بعض أقسام الصفحة الرئيسية."));
         setLessons(l.data || []);
         setSheikhs(s.data || []);
         setFawaid(f.data || []);
@@ -89,7 +94,7 @@ export default function HomePage() {
         setMiracles(m.data || []);
         setQa(q.data || []);
       }
-    );
+    ).catch((err) => setError(getSupabaseErrorMessage(err, "تعذّر تحميل الصفحة الرئيسية.")));
   }, []);
 
   const stats = useMemo(
@@ -121,7 +126,7 @@ export default function HomePage() {
         <div className="home-container home-hero-grid">
           <div className="home-hero-copy">
             <p className="home-kicker">المنصة العلمية الشرعية</p>
-            <h1>مجالس علم تجمع الدرس والشيخ والكتاب والفائدة</h1>
+            <h1>المجلس العلمي يجمع الدرس والشيخ والكتاب والفائدة</h1>
             <p className="home-hero-text">
               بوابة عربية منظمة للوصول إلى الدروس المعتمدة، وسير المشايخ، والمكتبة العلمية، ومقالات الإعجاز، والفوائد المختارة في تجربة هادئة وسريعة.
             </p>
@@ -140,6 +145,9 @@ export default function HomePage() {
               </Link>
               <Link href="/library" className="home-secondary-action">
                 تصفح المكتبة
+              </Link>
+              <Link href="/login" className="home-secondary-action">
+                انضم الآن
               </Link>
             </div>
           </div>
@@ -160,6 +168,8 @@ export default function HomePage() {
       </section>
 
       <main className="home-container home-main">
+        {error && <ErrorMessage text={error} />}
+
         <section className="home-stats" aria-label="إحصائيات المنصة">
           {stats.map((stat) => (
             <div key={stat.label} className="home-stat-card">
@@ -184,7 +194,7 @@ export default function HomePage() {
           {lessons.length > 0 ? (
             <div className="home-lessons-grid">
               {lessons.slice(0, 3).map((lesson: any) => (
-                <Link key={lesson.id} href="/lessons" className="home-lesson-card">
+                <Link key={lesson.id} href={`/lessons/${lesson.id}`} className="home-lesson-card">
                   <div className="home-card-glow" />
                   <div className="home-card-row">
                     <span className="home-tag">{lesson.category || "درس علمي"}</span>
@@ -233,19 +243,26 @@ export default function HomePage() {
         </section>
 
         <section className="home-section home-library-section">
-          <SectionHead eyebrow="الأرشيف العلمي" title="المكتبة العلمية" subtitle="كتب ومتون وتفريغات منظمة للوصول السريع إلى المادة المناسبة." href="/library" />
+          <SectionHead eyebrow="أحدث الإصدارات" title="أحدث الكتب" subtitle="كتب وأغلفة مختارة من المكتبة العلمية للوصول السريع إلى المادة المناسبة." href="/library" />
           <div className="home-library-grid">
             {displayedLibrary.map((item: any) => (
-              <Link key={item.id} href="/library" className="home-library-card">
-                <span className="home-library-icon">{item.type === "كتاب" ? "📕" : item.type === "متن" ? "📜" : "📝"}</span>
+              <Link key={item.id} href={String(item.id).startsWith("fallback-") ? "/library" : `/library/${item.id}`} className="home-library-card">
+                {item.cover_url ? <img src={item.cover_url} alt="" className="home-library-icon" style={{ objectFit: "cover" }} /> : <span className="home-library-icon">{item.type === "كتاب" ? "📕" : item.type === "متن" ? "📜" : "📝"}</span>}
                 <div>
                   <span className="home-tag">{item.type || "مادة علمية"}</span>
                   <h3>{item.title}</h3>
-                  <p>{item.description || item.category || "مادة مختارة ضمن المكتبة العلمية."}</p>
+                  <p>{item.author_name || item.description || item.category || "مادة مختارة ضمن المكتبة العلمية."}</p>
                 </div>
               </Link>
             ))}
           </div>
+        </section>
+
+        <section className="home-section" style={{ borderRadius: "1.5rem", padding: "clamp(1.5rem, 4vw, 2.5rem)", background: "linear-gradient(135deg, #164E3C, #1F6E54)", color: "#FAF5EA", textAlign: "center" }}>
+          <p className="home-kicker" style={{ marginBottom: "0.5rem" }}>ابدأ رحلتك العلمية</p>
+          <h2 style={{ fontFamily: "Amiri, serif", fontSize: "clamp(1.8rem, 4vw, 2.8rem)", marginBottom: "0.75rem" }}>سجّل حسابك واحفظ دروسك المفضلة</h2>
+          <p style={{ maxWidth: "38rem", margin: "0 auto 1.25rem", lineHeight: 1.9, color: "#E8E0CE" }}>تابع الدروس، احفظ المفضلة، قيّم ما حضرت، واجمع نقاطك وإنجازاتك في مكان واحد.</p>
+          <Link href="/login" className="home-primary-action">إنشاء حساب مجاني</Link>
         </section>
 
         <section className="home-section home-two-column">
@@ -253,7 +270,7 @@ export default function HomePage() {
             <SectionHead eyebrow="علم وإيمان" title="الإعجاز العلمي" subtitle="قراءات موثقة تربط العلم بآيات التفكر." href="/miracles" />
             <div className="home-miracle-list">
               {displayedMiracles.map((item: any) => (
-                <Link key={item.id} href="/miracles" className="home-miracle-card">
+                <Link key={item.id} href={String(item.id).startsWith("fallback-") ? "/miracles" : `/miracles/${item.id}`} className="home-miracle-card">
                   <div>
                     <span className="home-tag">{item.source_type || "موثق"}</span>
                     {item.category && <span className="home-soft-tag">{item.category}</span>}
@@ -283,7 +300,7 @@ export default function HomePage() {
             <SectionHead eyebrow="إجابات موثقة" title="أسئلة شائعة من المنصة" subtitle="نماذج من الأسئلة المنشورة بإجابات علمية مدعمة." href="/qa" />
             <div className="home-qa-grid">
               {qa.slice(0, 3).map((item: any) => (
-                <Link key={item.id} href="/qa" className="home-qa-card">
+                <Link key={item.id} href={`/qa/${item.id}`} className="home-qa-card">
                   <span>{item.qa_categories?.name || "سؤال وجواب"}</span>
                   <h3>{item.question}</h3>
                 </Link>

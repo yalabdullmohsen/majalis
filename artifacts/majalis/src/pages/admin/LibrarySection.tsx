@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { adminGetLibrary, adminUpsertLibraryItem, adminDeleteLibraryItem, adminGetSheikhs } from "@/lib/supabase";
+import { adminGetLibrary, adminUpsertLibraryItem, adminDeleteLibraryItem, adminGetSheikhs, getSupabaseErrorMessage } from "@/lib/supabase";
 import { C } from "@/lib/theme";
-import { Loading } from "@/components/ui-common";
+import { Loading, ErrorMessage } from "@/components/ui-common";
 import { AdminModal, Field, FieldRow, inputSt, selectSt, textareaSt } from "./AdminModal";
 import { BulkImport } from "./BulkImport";
 
@@ -20,11 +20,20 @@ export function LibrarySection() {
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState<any>(EMPTY);
   const [saving, setSaving] = useState(false);
+  const [error, setError] = useState("");
 
   const load = () => {
     setLoading(true);
-    Promise.all([adminGetLibrary(), adminGetSheikhs()]).then(([{ data: l }, { data: s }]) => {
+    setError("");
+    Promise.all([adminGetLibrary(), adminGetSheikhs()]).then(([libraryRes, sheikhsRes]) => {
+      const firstError = libraryRes.error || sheikhsRes.error;
+      if (firstError) setError(getSupabaseErrorMessage(firstError, "تعذّر تحميل بيانات المكتبة."));
+      const { data: l } = libraryRes;
+      const { data: s } = sheikhsRes;
       setItems(l); setSheikhs(s); setLoading(false);
+    }).catch((err) => {
+      setError(getSupabaseErrorMessage(err, "تعذّر تحميل بيانات المكتبة."));
+      setLoading(false);
     });
   };
   useEffect(() => { load(); }, []);
@@ -37,14 +46,24 @@ export function LibrarySection() {
   };
   const handleDelete = async (id: string, title: string) => {
     if (!confirm(`هل تريد حذف "${title}"؟`)) return;
-    await adminDeleteLibraryItem(id); load();
+    const { error } = await adminDeleteLibraryItem(id);
+    if (error) {
+      setError(getSupabaseErrorMessage(error, "تعذّر حذف مادة المكتبة."));
+      return;
+    }
+    load();
   };
   const handleSave = async () => {
     if (!form.title.trim()) return alert("العنوان مطلوب");
     if (!form.type) return alert("نوع المادة مطلوب");
     setSaving(true);
-    await adminUpsertLibraryItem({ ...form, sheikh_id: form.sheikh_id || null });
-    setSaving(false); setOpen(false); load();
+    const { error } = await adminUpsertLibraryItem({ ...form, sheikh_id: form.sheikh_id || null });
+    setSaving(false);
+    if (error) {
+      setError(getSupabaseErrorMessage(error, "تعذّر حفظ مادة المكتبة."));
+      return;
+    }
+    setOpen(false); load();
   };
   const set = (k: string, v: any) => setForm((f: any) => ({ ...f, [k]: v }));
 
@@ -71,6 +90,8 @@ export function LibrarySection() {
           <button onClick={openAdd} style={{ padding: "0.5rem 1.25rem", borderRadius: "0.375rem", background: C.emerald, color: C.parchment, border: "none", cursor: "pointer", fontFamily: "inherit", fontSize: "0.875rem", fontWeight: 600 }}>+ إضافة مادة</button>
         </div>
       </div>
+
+      {error && <ErrorMessage text={error} onRetry={load} />}
 
       {loading ? <Loading /> : (
         <div style={{ overflowX: "auto" }}>

@@ -5,6 +5,7 @@ import {
   adminDeleteQuestion,
   adminSetQuestionStatus,
   getQaCategories,
+  getSupabaseErrorMessage,
 } from "@/lib/supabase";
 import {
   C,
@@ -13,7 +14,7 @@ import {
   QA_RULING_COLORS,
   QA_REVIEW_LABELS,
 } from "@/lib/theme";
-import { Loading } from "@/components/ui-common";
+import { Loading, ErrorMessage } from "@/components/ui-common";
 import { AdminModal, Field, FieldRow, inputSt, selectSt, textareaSt } from "./AdminModal";
 import { BulkImport } from "./BulkImport";
 
@@ -40,14 +41,26 @@ export function QaSection() {
   const [saving, setSaving] = useState(false);
   const [filter, setFilter] = useState("all");
   const [search, setSearch] = useState("");
+  const [error, setError] = useState("");
 
   const load = () => {
     setLoading(true);
-    adminGetQuestions().then(({ data }) => { setItems(data); setLoading(false); });
+    setError("");
+    adminGetQuestions().then(({ data, error }) => {
+      if (error) setError(getSupabaseErrorMessage(error, "تعذّر تحميل الأسئلة."));
+      setItems(data);
+      setLoading(false);
+    }).catch((err) => {
+      setError(getSupabaseErrorMessage(err, "تعذّر تحميل الأسئلة."));
+      setLoading(false);
+    });
   };
   useEffect(() => {
     load();
-    getQaCategories().then(({ data }) => setCategories(data));
+    getQaCategories().then(({ data, error }) => {
+      if (error) setError(getSupabaseErrorMessage(error, "تعذّر تحميل تصنيفات الأسئلة."));
+      setCategories(data);
+    }).catch((err) => setError(getSupabaseErrorMessage(err, "تعذّر تحميل تصنيفات الأسئلة.")));
   }, []);
 
   const firstCatId = categories[0]?.id || "";
@@ -60,14 +73,20 @@ export function QaSection() {
   const handleDelete = async (id: string, question: string) => {
     if (!confirm(`هل تريد حذف السؤال "${question.slice(0, 40)}..."؟`)) return;
     const { error } = await adminDeleteQuestion(id);
-    if (error) return alert(`تعذّر الحذف: ${error.message}`);
+    if (error) {
+      setError(getSupabaseErrorMessage(error, "تعذّر حذف السؤال."));
+      return;
+    }
     load();
   };
 
   const toggleStatus = async (item: any) => {
     const next = item.status === "published" ? "draft" : "published";
     const { error } = await adminSetQuestionStatus(item.id, next);
-    if (error) return alert(`تعذّر تغيير حالة النشر: ${error.message}`);
+    if (error) {
+      setError(getSupabaseErrorMessage(error, "تعذّر تغيير حالة النشر."));
+      return;
+    }
     load();
   };
 
@@ -77,7 +96,10 @@ export function QaSection() {
     setSaving(true);
     const { error } = await adminUpsertQuestion(form);
     setSaving(false);
-    if (error) return alert(`تعذّر الحفظ: ${error.message}`);
+    if (error) {
+      setError(getSupabaseErrorMessage(error, "تعذّر حفظ السؤال."));
+      return;
+    }
     setOpen(false); load();
   };
 
@@ -128,6 +150,8 @@ export function QaSection() {
           <button onClick={openAdd} style={{ padding: "0.5rem 1.25rem", borderRadius: "0.375rem", background: C.emerald, color: C.parchment, border: "none", cursor: "pointer", fontFamily: "inherit", fontSize: "0.875rem", fontWeight: 600 }}>+ إضافة سؤال</button>
         </div>
       </div>
+
+      {error && <ErrorMessage text={error} onRetry={load} />}
 
       {/* أدوات الفلترة والبحث */}
       <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", alignItems: "center", marginBottom: "1.25rem" }}>

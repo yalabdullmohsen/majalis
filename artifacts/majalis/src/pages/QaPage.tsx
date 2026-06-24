@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { getQaQuestions, getQaCategories } from "@/lib/supabase";
+import { Link } from "wouter";
+import { getQaQuestions, getQaCategories, getSupabaseErrorMessage } from "@/lib/supabase";
 import { C, QA_RULING_COLORS, QA_REVIEW_LABELS, QA_DISCLAIMER } from "@/lib/theme";
-import { PageHeader, Loading, Empty } from "@/components/ui-common";
+import { PageHeader, Loading, Empty, ErrorMessage } from "@/components/ui-common";
 
 function Disclaimer() {
   return (
@@ -58,17 +59,26 @@ export default function QaPage() {
   const [categories, setCategories] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [categoryId, setCategoryId] = useState("all");
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(() => new URLSearchParams(window.location.search).get("search") || "");
   const [openId, setOpenId] = useState<string | null>(null);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    getQaCategories().then(({ data }) => setCategories(data));
+    getQaCategories().then(({ data, error }) => {
+      if (error) setError(getSupabaseErrorMessage(error, "تعذّر تحميل تصنيفات الأسئلة."));
+      setCategories(data);
+    }).catch((err) => setError(getSupabaseErrorMessage(err, "تعذّر تحميل تصنيفات الأسئلة.")));
   }, []);
 
   useEffect(() => {
     setLoading(true);
-    getQaQuestions({ categoryId, search }).then(({ data }) => {
+    setError("");
+    getQaQuestions({ categoryId, search }).then(({ data, error }) => {
+      if (error) setError(getSupabaseErrorMessage(error, "تعذّر تحميل الأسئلة والأجوبة."));
       setItems(data);
+      setLoading(false);
+    }).catch((err) => {
+      setError(getSupabaseErrorMessage(err, "تعذّر تحميل الأسئلة والأجوبة."));
       setLoading(false);
     });
   }, [categoryId, search]);
@@ -84,6 +94,8 @@ export default function QaPage() {
       />
 
       <Disclaimer />
+
+      {error && <ErrorMessage text={error} />}
 
       {/* البحث */}
       <input
@@ -143,6 +155,7 @@ export default function QaPage() {
             const catName = q.qa_categories?.name;
             return (
               <div
+                id={`qa-${q.id}`}
                 key={q.id}
                 style={{ borderRadius: "0.5rem", border: `1px solid ${C.line}`, background: C.panel, overflow: "hidden" }}
               >
@@ -205,6 +218,9 @@ export default function QaPage() {
                         {new Date(q.created_at).toLocaleDateString("ar-KW")}
                       </p>
                     </div>
+                    <Link href={`/qa/${q.id}`} style={{ display: "inline-block", marginTop: "0.75rem", color: C.brassDeep, fontSize: "0.8125rem", fontWeight: 700 }}>
+                      فتح صفحة السؤال
+                    </Link>
                   </div>
                 )}
               </div>
