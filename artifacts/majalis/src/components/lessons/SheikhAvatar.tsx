@@ -23,7 +23,7 @@ export function SheikhAvatar({
   size = "responsive",
   className = "",
 }: Props) {
-  const resolvedSrc = (src || imageUrl || "").trim() || "/logo.png";
+  const resolvedSrc = (src || imageUrl || "").trim() || "/logo-icon.png";
   const isResponsive = size === "responsive";
   const numericSize =
     typeof size === "number" ? size : isResponsive ? undefined : LEGACY_SIZE[size] ?? 96;

@@ -100,7 +100,7 @@ export default function HomePage() {
               <img src="/logo.png" alt="المجلس العلمي" className="home-hero-logo" />
               <p className="home-kicker">المنصة العلمية الشرعية</p>
             </div>
-            <h1>المجلس العلمي</h1>
+            <h1 className="visually-hidden">المجلس العلمي</h1>
             <div className="home-maintenance-card ui-card" role="status">
               <p className="home-maintenance-banner">{HOME_MAINTENANCE_MESSAGE}</p>
             </div>

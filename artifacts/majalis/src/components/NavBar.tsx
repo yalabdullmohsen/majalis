@@ -121,7 +121,7 @@ export default function NavBar() {
           }}
         >
           <img
-            src="/logo.png"
+            src="/logo-icon.png"
             alt="المجلس العلمي"
             className="navbar-logo"
           />
