@@ -31,20 +31,35 @@ function setJsonHeaders(res) {
   res.setHeader("Content-Type", "application/json; charset=utf-8");
 }
 
-function parseBody(req) {
-  if (!req.body) {
-    return {};
-  }
+function createHttpError(statusCode, message) {
+  const error = new Error(message);
+  error.statusCode = statusCode;
+  return error;
+}
 
-  if (typeof req.body === "string") {
-    try {
-      return JSON.parse(req.body);
-    } catch {
-      return {};
+async function parseBody(req) {
+  let rawBody = req.body;
+
+  if (rawBody === undefined) {
+    rawBody = "";
+    for await (const chunk of req) {
+      rawBody += chunk;
     }
   }
 
-  return req.body;
+  if (!rawBody) {
+    return {};
+  }
+
+  if (typeof rawBody === "string") {
+    try {
+      return JSON.parse(rawBody);
+    } catch {
+      throw createHttpError(400, "صيغة الطلب غير صالحة. أرسل JSON يحتوي على messages.");
+    }
+  }
+
+  return rawBody;
 }
 
 function sanitizeMessages(messages) {
@@ -87,9 +102,22 @@ function parseAnthropicResponseBody(responseBody) {
   }
 }
 
-export default async function handler(req, res) {
-  setJsonHeaders(res);
+function getErrorStatus(error) {
+  return Number.isInteger(error?.statusCode) ? error.statusCode : 500;
+}
 
+function getErrorMessage(error) {
+  return error instanceof Error && error.message ? error.message : "حدث خطأ غير معروف في خدمة المساعد الذكي.";
+}
+
+function logAssistantError(message, error, details = {}) {
+  console.error(message, {
+    ...details,
+    error: getErrorMessage(error),
+  });
+}
+
+async function handleAssistantRequest(req, res) {
   if (req.method === "OPTIONS") {
     res.status(204).end();
     return;
@@ -100,13 +128,12 @@ export default async function handler(req, res) {
     return;
   }
 
-  const body = parseBody(req);
+  const body = await parseBody(req);
   const messages = sanitizeMessages(body.messages);
   const lastUserMessage = [...messages].reverse().find((message) => message.role === "user");
 
   if (!lastUserMessage) {
-    res.status(400).json({ error: "أرسل سؤالًا واضحًا للمساعد." });
-    return;
+    throw createHttpError(400, "أرسل سؤالًا واضحًا للمساعد.");
   }
 
   if (looksLikeDefinitiveFatwaRequest(lastUserMessage.content)) {
@@ -118,8 +145,7 @@ export default async function handler(req, res) {
   }
 
   if (!process.env.ANTHROPIC_API_KEY) {
-    res.status(500).json({ error: "لم يتم ضبط مفتاح Anthropic في متغير البيئة ANTHROPIC_API_KEY." });
-    return;
+    throw createHttpError(500, "لم يتم ضبط مفتاح Anthropic في متغير البيئة ANTHROPIC_API_KEY.");
   }
 
   try {
@@ -142,7 +168,7 @@ export default async function handler(req, res) {
     const data = parseAnthropicResponseBody(responseBody);
 
     if (!anthropicResponse.ok) {
-      console.error("Anthropic request failed", {
+      logAssistantError("Anthropic request failed", new Error(data?.error?.message || "Anthropic request failed"), {
         status: anthropicResponse.status,
         body: responseBody,
       });
@@ -161,7 +187,22 @@ export default async function handler(req, res) {
     }
 
     res.status(200).json({ reply });
-  } catch {
-    res.status(502).json({ error: "حدث خطأ أثناء التواصل مع خدمة المساعد الذكي." });
+  } catch (error) {
+    throw createHttpError(502, getErrorMessage(error));
+  }
+}
+
+export default async function handler(req, res) {
+  try {
+    setJsonHeaders(res);
+    await handleAssistantRequest(req, res);
+  } catch (error) {
+    const status = getErrorStatus(error);
+    logAssistantError("Assistant API route failed", error, {
+      status,
+      method: req?.method,
+      hasAnthropicApiKey: Boolean(process.env.ANTHROPIC_API_KEY),
+    });
+    res.status(status).json({ error: getErrorMessage(error) });
   }
 }
