@@ -76,7 +76,7 @@ export default function NavBar() {
   return (
     <header className="sticky top-0 z-50 border-b" style={{ background: C.parchment, borderColor: C.line }}>
       <div style={{ maxWidth: "72rem", margin: "0 auto", padding: "0.75rem 1rem", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "1rem" }}>
-        <Link href="/" style={{ fontSize: "1.375rem", fontWeight: 700, flexShrink: 0, color: C.emeraldDeep, fontFamily: "Amiri, serif", textDecoration: "none" }}>
+        <Link href="/" style={{ fontSize: "1.2rem", fontWeight: 700, flexShrink: 0, minWidth: "6.5rem", color: C.emeraldDeep, fontFamily: "Amiri, serif", textDecoration: "none", textAlign: "right" }}>
           مجالس العلم
         </Link>
 
