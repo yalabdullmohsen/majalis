@@ -1,4 +1,6 @@
-const ANTHROPIC_MESSAGES_URL = "https://api.anthropic.com/v1/messages";
+import Anthropic from "@anthropic-ai/sdk";
+import { VERSION as ANTHROPIC_SDK_VERSION } from "@anthropic-ai/sdk/version";
+
 const ANTHROPIC_VERSION = "2023-06-01";
 const MODEL = "claude-sonnet-4-20250514";
 
@@ -35,6 +37,30 @@ function createHttpError(statusCode, message) {
   const error = new Error(message);
   error.statusCode = statusCode;
   return error;
+}
+
+function getAnthropicApiKey() {
+  const rawApiKey = process.env.ANTHROPIC_API_KEY || "";
+  const apiKey = rawApiKey.trim();
+
+  if (!apiKey) {
+    throw createHttpError(500, "لم يتم ضبط مفتاح Anthropic في متغير البيئة ANTHROPIC_API_KEY.");
+  }
+
+  return {
+    apiKey,
+    hadSurroundingWhitespace: rawApiKey !== apiKey,
+  };
+}
+
+function createAnthropicClient(apiKey) {
+  return new Anthropic({
+    apiKey,
+    maxRetries: 0,
+    defaultHeaders: {
+      "anthropic-version": ANTHROPIC_VERSION,
+    },
+  });
 }
 
 async function parseBody(req) {
@@ -94,16 +120,16 @@ function extractAnthropicText(data) {
     .trim();
 }
 
-function parseAnthropicResponseBody(responseBody) {
-  try {
-    return JSON.parse(responseBody);
-  } catch {
-    return {};
-  }
-}
-
 function getErrorStatus(error) {
-  return Number.isInteger(error?.statusCode) ? error.statusCode : 500;
+  if (Number.isInteger(error?.statusCode)) {
+    return error.statusCode;
+  }
+
+  if (Number.isInteger(error?.status)) {
+    return error.status;
+  }
+
+  return 500;
 }
 
 function getErrorMessage(error) {
@@ -115,6 +141,14 @@ function logAssistantError(message, error, details = {}) {
     ...details,
     error: getErrorMessage(error),
   });
+}
+
+function getAnthropicErrorBody(error) {
+  return error && typeof error === "object" && "error" in error ? error.error : undefined;
+}
+
+async function verifyAnthropicModel(client) {
+  await client.models.retrieve(MODEL);
 }
 
 async function handleAssistantRequest(req, res) {
@@ -144,42 +178,20 @@ async function handleAssistantRequest(req, res) {
     return;
   }
 
-  if (!process.env.ANTHROPIC_API_KEY) {
-    throw createHttpError(500, "لم يتم ضبط مفتاح Anthropic في متغير البيئة ANTHROPIC_API_KEY.");
-  }
+  const { apiKey, hadSurroundingWhitespace } = getAnthropicApiKey();
+  const client = createAnthropicClient(apiKey);
 
   try {
-    const anthropicResponse = await fetch(ANTHROPIC_MESSAGES_URL, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        "x-api-key": process.env.ANTHROPIC_API_KEY,
-        "anthropic-version": ANTHROPIC_VERSION,
-      },
-      body: JSON.stringify({
-        model: MODEL,
-        max_tokens: 700,
-        system: SYSTEM_PROMPT,
-        messages: [{ role: "user", content: lastUserMessage.content }],
-      }),
+    await verifyAnthropicModel(client);
+
+    const message = await client.messages.create({
+      model: MODEL,
+      max_tokens: 700,
+      system: SYSTEM_PROMPT,
+      messages: [{ role: "user", content: lastUserMessage.content }],
     });
 
-    const responseBody = await anthropicResponse.text();
-    const data = parseAnthropicResponseBody(responseBody);
-
-    if (!anthropicResponse.ok) {
-      logAssistantError("Anthropic request failed", new Error(data?.error?.message || "Anthropic request failed"), {
-        status: anthropicResponse.status,
-        body: responseBody,
-      });
-
-      res.status(anthropicResponse.status).json({
-        error: data?.error?.message || "تعذر الاتصال بخدمة المساعد الذكي.",
-      });
-      return;
-    }
-
-    const reply = extractAnthropicText(data);
+    const reply = extractAnthropicText(message);
 
     if (!reply) {
       res.status(502).json({ error: "لم يرجع المساعد ردًا صالحًا." });
@@ -188,7 +200,20 @@ async function handleAssistantRequest(req, res) {
 
     res.status(200).json({ reply });
   } catch (error) {
-    throw createHttpError(502, getErrorMessage(error));
+    const status = getErrorStatus(error) === 500 ? 502 : getErrorStatus(error);
+    const anthropicErrorBody = getAnthropicErrorBody(error);
+
+    logAssistantError("Anthropic request failed", error, {
+      status,
+      model: MODEL,
+      anthropicVersion: ANTHROPIC_VERSION,
+      anthropicSdkVersion: ANTHROPIC_SDK_VERSION,
+      hasAnthropicApiKey: Boolean(apiKey),
+      apiKeyHadSurroundingWhitespace: hadSurroundingWhitespace,
+      body: anthropicErrorBody ?? getErrorMessage(error),
+    });
+
+    res.status(status).json(anthropicErrorBody ?? { error: getErrorMessage(error) });
   }
 }
 
@@ -202,6 +227,7 @@ export default async function handler(req, res) {
       status,
       method: req?.method,
       hasAnthropicApiKey: Boolean(process.env.ANTHROPIC_API_KEY),
+      anthropicSdkVersion: ANTHROPIC_SDK_VERSION,
     });
     res.status(status).json({ error: getErrorMessage(error) });
   }
