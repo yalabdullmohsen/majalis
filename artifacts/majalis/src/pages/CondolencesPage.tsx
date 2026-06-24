@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import * as htmlToImage from "html-to-image";
 import {
   CondolenceCard,
@@ -21,41 +21,26 @@ const inputClass =
 
 export default function CondolencesPage() {
   const cardRef = useRef<HTMLDivElement>(null);
+  const exportRef = useRef<HTMLDivElement>(null);
   const [form, setForm] = useState<CondolenceForm>(defaultCondolenceForm);
   const [downloading, setDownloading] = useState(false);
 
-  const exportSize = EXPORT_SIZES[form.size];
-  const isStory = form.size === "story";
-
-  const previewScale = useMemo(() => {
-    const maxW = typeof window !== "undefined" && window.innerWidth < 640 ? 320 : 480;
-    const maxH = isStory ? 540 : 480;
-    return Math.min(1, maxW / exportSize.width, maxH / exportSize.height);
-  }, [exportSize.width, exportSize.height, isStory]);
+  const dims = EXPORT_SIZES[form.size];
 
   const update = <K extends keyof CondolenceForm>(key: K, value: CondolenceForm[K]) => {
     setForm((prev) => ({ ...prev, [key]: value }));
   };
 
   const downloadImage = async () => {
-    const el = cardRef.current;
+    const el = exportRef.current ?? cardRef.current;
     if (!el) return;
     setDownloading(true);
-    const prevTransform = el.style.transform;
-    const prevPosition = el.style.position;
-    const prevLeft = el.style.left;
-    const prevTop = el.style.top;
     try {
-      el.style.transform = "none";
-      el.style.position = "fixed";
-      el.style.left = "-9999px";
-      el.style.top = "0";
-
       const dataUrl = await htmlToImage.toPng(el, {
         quality: 1,
         pixelRatio: 1,
-        width: exportSize.width,
-        height: exportSize.height,
+        width: dims.width,
+        height: dims.height,
         backgroundColor: "#000000",
         cacheBust: true,
       });
@@ -68,10 +53,6 @@ export default function CondolencesPage() {
       console.error("[majalis:condolences] PNG export failed", err);
       alert("تعذر تحميل الصورة. حاول مجددًا.");
     } finally {
-      el.style.transform = prevTransform;
-      el.style.position = prevPosition;
-      el.style.left = prevLeft;
-      el.style.top = prevTop;
       setDownloading(false);
     }
   };
@@ -82,7 +63,7 @@ export default function CondolencesPage() {
         <section className="rounded-2xl border border-white/10 bg-white/5 p-5">
           <h1 className="mb-2 text-2xl font-bold">قوالب العزاء</h1>
           <p className="mb-6 text-sm text-white/60">
-            اكتب البيانات ثم حمّل البطاقة بدون شعار أو حقوق — لوجه الله.
+            اكتب البيانات ثم حمّل البطاقة بدون شعار أو حقوق.
           </p>
 
           <div className="space-y-4">
@@ -153,29 +134,25 @@ export default function CondolencesPage() {
           </div>
         </section>
 
-        <section className="flex items-center justify-center overflow-auto">
-          <div
-            className="cond-bw-preview-wrap"
-            style={{
-              width: exportSize.width * previewScale,
-              height: exportSize.height * previewScale,
-            }}
-          >
-            <div
-              ref={cardRef}
-              style={{
-                transform: `scale(${previewScale})`,
-                transformOrigin: "top right",
-              }}
-            >
-              <CondolenceCard
-                form={form}
-                width={exportSize.width}
-                height={exportSize.height}
-              />
-            </div>
-          </div>
+        <section className="flex items-center justify-center overflow-auto py-2">
+          <CondolenceCard
+            ref={cardRef}
+            form={form}
+            width={dims.previewW}
+            height={dims.previewH}
+            preview
+          />
         </section>
+      </div>
+
+      {/* بطاقة التصدير بالمقاس الكامل — مخفية عن العرض */}
+      <div className="cond-bw-export-host" aria-hidden="true">
+        <CondolenceCard
+          ref={exportRef}
+          form={form}
+          width={dims.width}
+          height={dims.height}
+        />
       </div>
     </main>
   );

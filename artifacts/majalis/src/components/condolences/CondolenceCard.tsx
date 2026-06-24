@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import { Ornament } from "./Ornament";
 
 export type CondolenceForm = {
@@ -24,23 +25,28 @@ export const CARD_FONT =
 export const VERSE_INNA = "\u0625\u0646\u0627 \u0644\u0644\u0647 \u0648\u0625\u0646\u0627 \u0625\u0644\u064a\u0647 \u0631\u0627\u062c\u0639\u0648\u0646";
 
 export const EXPORT_SIZES = {
-  square: { width: 1080, height: 1080 },
-  story: { width: 1080, height: 1350 },
+  square: { width: 1080, height: 1080, previewW: 480, previewH: 480 },
+  story: { width: 1080, height: 1350, previewW: 432, previewH: 540 },
 } as const;
 
 type Props = {
   form: CondolenceForm;
   width: number;
   height: number;
+  preview?: boolean;
   className?: string;
 };
 
-export function CondolenceCard({ form, width, height, className = "" }: Props) {
+export const CondolenceCard = forwardRef<HTMLDivElement, Props>(function CondolenceCard(
+  { form, width, height, preview = false, className = "" },
+  ref
+) {
   const hasDetails = form.deathDate || form.burialTime || form.condolencePlace;
 
   return (
     <div
-      className={`cond-bw-card relative overflow-hidden bg-black text-white shadow-2xl ${className}`}
+      ref={ref}
+      className={`cond-bw-card relative overflow-hidden bg-black text-white shadow-2xl ${preview ? "cond-bw-card--preview" : ""} ${className}`}
       style={{
         width,
         height,
@@ -92,4 +98,4 @@ export function CondolenceCard({ form, width, height, className = "" }: Props) {
       </div>
     </div>
   );
-}
+});

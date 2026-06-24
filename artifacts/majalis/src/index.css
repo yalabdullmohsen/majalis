@@ -2094,49 +2094,70 @@ input, textarea, select { font-family: inherit; }
   }
 }
 
-/* ── Condolences black & white card (1080 export) ── */
-.cond-bw-preview-wrap {
-  overflow: hidden;
-  margin-inline: auto;
+/* ── Condolences black & white card ── */
+.cond-bw-export-host {
+  position: fixed;
+  left: -9999px;
+  top: 0;
+  pointer-events: none;
+  opacity: 0;
 }
 
-.cond-bw-card .cond-bw-verse-top {
+.cond-bw-card--preview .cond-bw-verse-top {
+  font-size: clamp(1.75rem, 5vw, 2.25rem);
+}
+
+.cond-bw-card--preview .cond-bw-verse-mid {
+  font-size: clamp(1.1rem, 3vw, 1.35rem);
+}
+
+.cond-bw-card--preview .cond-bw-hero {
+  font-size: clamp(2rem, 6vw, 2.75rem);
+}
+
+.cond-bw-card--preview .cond-bw-name {
+  font-size: clamp(1.35rem, 4vw, 1.75rem);
+}
+
+.cond-bw-card--preview .cond-bw-transition {
+  font-size: 1rem;
+}
+
+.cond-bw-card--preview .cond-bw-meta {
+  font-size: 0.95rem;
+}
+
+.cond-bw-card--preview .cond-bw-extra {
+  font-size: 0.9rem;
+}
+
+.cond-bw-card:not(.cond-bw-card--preview) .cond-bw-verse-top {
   font-size: 52px;
 }
 
-.cond-bw-card .cond-bw-verse-mid {
+.cond-bw-card:not(.cond-bw-card--preview) .cond-bw-verse-mid {
   font-size: 34px;
 }
 
-.cond-bw-card .cond-bw-hero {
+.cond-bw-card:not(.cond-bw-card--preview) .cond-bw-hero {
   font-size: 76px;
   color: #fff;
 }
 
-.cond-bw-card .cond-bw-name {
+.cond-bw-card:not(.cond-bw-card--preview) .cond-bw-name {
   font-size: 44px;
 }
 
-.cond-bw-card .cond-bw-transition {
+.cond-bw-card:not(.cond-bw-card--preview) .cond-bw-transition {
   font-size: 30px;
 }
 
-.cond-bw-card .cond-bw-meta {
+.cond-bw-card:not(.cond-bw-card--preview) .cond-bw-meta {
   font-size: 28px;
 }
 
-.cond-bw-card .cond-bw-extra {
+.cond-bw-card:not(.cond-bw-card--preview) .cond-bw-extra {
   font-size: 26px;
-}
-
-@media (max-width: 640px) {
-  .cond-bw-card .cond-bw-hero {
-    font-size: 64px;
-  }
-
-  .cond-bw-card .cond-bw-verse-top {
-    font-size: 42px;
-  }
 }
 
 .condolences-page__shell {
