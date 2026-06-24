@@ -1168,6 +1168,18 @@ input, textarea, select { font-family: inherit; }
 .assistant-message-assistant {
   align-self: flex-end;
   background: #fff;
+  max-width: 42rem;
+  width: 100%;
+}
+
+.assistant-message-assistant .space-y-2 > p {
+  margin: 0;
+  white-space: normal;
+  line-height: 2;
+}
+
+.assistant-message-assistant .space-y-2 > p + p {
+  margin-top: 0.5rem;
 }
 
 .assistant-loading,

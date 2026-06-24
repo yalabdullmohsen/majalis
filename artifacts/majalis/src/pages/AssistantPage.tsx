@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { callAssistantApi, type AssistantResponse } from "@/lib/assistant-api";
+import { splitAssistantLines } from "@/lib/assistant-text";
 
 type ChatMessage = {
   id: string;
@@ -26,6 +27,27 @@ function createId() {
 function pickAnswer(data: AssistantResponse): string | null {
   const text = data.answer || data.reply;
   return typeof text === "string" && text.trim() ? text.trim() : null;
+}
+
+function AssistantReply({ content }: { content: string }) {
+  const lines = splitAssistantLines(content);
+
+  return (
+    <div className="space-y-2 leading-8">
+      {lines.map((line, index) => {
+        const isTitle = index === 0 && !line.startsWith("•");
+
+        return (
+          <p
+            key={`${index}-${line.slice(0, 24)}`}
+            className={isTitle ? "text-base font-bold text-[#164E3C]" : "text-sm text-[#241F18]"}
+          >
+            {line}
+          </p>
+        );
+      })}
+    </div>
+  );
 }
 
 export default function AssistantPage() {
@@ -117,10 +139,18 @@ export default function AssistantPage() {
               key={message.id}
               className={`assistant-message assistant-message-${message.role}${
                 message.isFailure ? " assistant-message-failure" : ""
+              }${
+                message.role === "assistant" && !message.isFailure
+                  ? " max-w-2xl w-full self-end rounded-2xl border border-[#E0D7C4] bg-white p-4 shadow-sm"
+                  : ""
               }`}
             >
               <span>{message.role === "user" ? "أنت" : "المساعد العلمي"}</span>
-              <p>{message.content}</p>
+              {message.role === "assistant" && !message.isFailure ? (
+                <AssistantReply content={message.content} />
+              ) : (
+                <p>{message.content}</p>
+              )}
             </article>
           ))}
 
