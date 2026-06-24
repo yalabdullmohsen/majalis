@@ -1,47 +1,82 @@
 import { useEffect, useState } from "react";
 import { getApprovedFawaid, submitFawaid } from "@/lib/supabase";
+import { DEMO_FAWAID, demoNoticeText } from "@/lib/demo-content";
+import { canSubmitForm } from "@/lib/form-rate-limit";
 import { C } from "@/lib/theme";
-import { PageHeader, Loading, Empty } from "@/components/ui-common";
+import { PageHeader, Loading, Empty, ErrorState, DemoNotice } from "@/components/ui-common";
 import { useAuth } from "@/components/AuthProvider";
 
 export default function FawaidPage() {
   const [fawaid, setFawaid] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   const [text, setText] = useState("");
   const [authorName, setAuthorName] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState("");
   const { user, isLoggedIn } = useAuth() as any;
 
-  useEffect(() => {
-    getApprovedFawaid().then(({ data }) => {
+  const loadFawaid = async () => {
+    setLoading(true);
+    setError("");
+    try {
+      const { data, error: fetchError } = await getApprovedFawaid();
+      if (fetchError) throw fetchError;
       setFawaid(data);
+    } catch {
+      setError("تعذر تحميل الفوائد.");
+    } finally {
       setLoading(false);
-    });
+    }
+  };
+
+  useEffect(() => {
+    loadFawaid();
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!text.trim()) return;
+    if (!canSubmitForm("fawaid-submit", 8000)) {
+      setSubmitError("يرجى الانتظار قليلًا قبل إرسال فائدة أخرى.");
+      return;
+    }
+    setSubmitError("");
     setSubmitting(true);
-    await submitFawaid(user.id, text, authorName || user?.profile?.full_name || "");
-    setSubmitting(false);
-    setSubmitted(true);
-    setText("");
-    setAuthorName("");
+    try {
+      const { error: insertError } = await submitFawaid(user.id, text, authorName || user?.profile?.full_name || "");
+      if (insertError) throw insertError;
+      setSubmitted(true);
+      setText("");
+      setAuthorName("");
+    } catch {
+      setSubmitError("تعذر إرسال الفائدة. حاول مجددًا.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
+  const usingDemo = fawaid.length === 0 && !loading && !error;
+  const displayed = usingDemo ? DEMO_FAWAID : fawaid;
+
   return (
-    <div style={{ maxWidth: "48rem", margin: "0 auto", padding: "2.5rem 1.25rem 4rem" }}>
+    <div className="page-shell narrow">
       <PageHeader
         eyebrow="اقتباسات مختارة"
         title="الفوائد"
         subtitle="فوائد دينية مختارة ومراجَعة من قِبل الفريق."
       />
 
-      {loading ? <Loading /> : fawaid.length === 0 ? <Empty text="لا توجد فوائد بعد." /> : (
+      {usingDemo && <DemoNotice text={demoNoticeText("الفوائد")} />}
+
+      {loading ? <Loading /> : error ? (
+        <ErrorState text={error} onRetry={loadFawaid} />
+      ) : displayed.length === 0 ? (
+        <Empty text="لا توجد فوائد بعد." />
+      ) : (
         <div style={{ display: "grid", gap: "0.75rem", marginBottom: "2.5rem" }}>
-          {fawaid.map((f: any) => (
+          {displayed.map((f: any) => (
             <div key={f.id} style={{ padding: "1.25rem", borderRadius: "0.375rem", border: `1px solid ${C.line}`, background: C.parchmentDeep }}>
               <p style={{ fontSize: "0.9375rem", color: C.ink, lineHeight: "1.75" }}>
                 <span style={{ color: C.brassDeep, fontSize: "1.25rem", marginLeft: "0.25rem" }}>❝</span>
@@ -61,6 +96,9 @@ export default function FawaidPage() {
             <p style={{ color: C.emeraldDeep, fontSize: "0.875rem" }}>شكرًا! سيتم مراجعة الفائدة قبل نشرها.</p>
           ) : (
             <form onSubmit={handleSubmit}>
+              {submitError && (
+                <p style={{ color: "#b91c1c", fontSize: "0.875rem", marginBottom: "0.75rem" }} role="alert">{submitError}</p>
+              )}
               <textarea
                 value={text}
                 onChange={(e) => setText(e.target.value)}

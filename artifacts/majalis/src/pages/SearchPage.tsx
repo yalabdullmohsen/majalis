@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams, useLocation } from "wouter";
 import { C } from "@/lib/theme";
 import { searchEverything } from "@/lib/supabase";
-import { Loading } from "@/components/ui-common";
+import { Loading, ErrorState } from "@/components/ui-common";
 
 type Results = { lessons: any[]; library: any[]; miracles: any[]; sheikhs: any[]; qa: any[]; fawaid: any[] };
 const EMPTY: Results = { lessons: [], library: [], miracles: [], sheikhs: [], qa: [], fawaid: [] };
@@ -38,18 +38,28 @@ export default function SearchPage() {
   const [term, setTerm] = useState(q);
   const [results, setResults] = useState<Results>(EMPTY);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  useEffect(() => {
-    setTerm(q);
-    if (!q.trim()) {
+  const runSearch = async (query: string) => {
+    if (!query.trim()) {
       setResults(EMPTY);
       return;
     }
     setLoading(true);
-    searchEverything(q).then((r) => {
+    setError("");
+    try {
+      const r = await searchEverything(query);
       setResults(r);
+    } catch {
+      setError("تعذر إجراء البحث. حاول مجددًا.");
+    } finally {
       setLoading(false);
-    });
+    }
+  };
+
+  useEffect(() => {
+    setTerm(q);
+    runSearch(q);
   }, [q]);
 
   const submit = (e: React.FormEvent) => {
@@ -61,26 +71,25 @@ export default function SearchPage() {
   const total = results.lessons.length + results.library.length + results.miracles.length + results.sheikhs.length + results.qa.length + results.fawaid.length;
 
   return (
-    <div style={{ maxWidth: "48rem", margin: "0 auto", padding: "2.5rem 1.25rem 4rem" }}>
+    <div className="page-shell narrow">
       <h1 style={{ fontSize: "1.75rem", fontWeight: 700, color: C.emeraldDeep, fontFamily: "Amiri, serif", margin: "0 0 1.25rem" }}>البحث</h1>
 
-      <form onSubmit={submit} style={{ display: "flex", gap: "0.5rem", marginBottom: "2rem" }}>
+      <form onSubmit={submit} className="page-search-form">
         <input
           value={term}
           onChange={(e) => setTerm(e.target.value)}
           placeholder="ابحث في الدروس والمشايخ والمكتبة والإعجاز العلمي..."
           autoFocus
-          style={{ flex: 1, padding: "0.75rem 1rem", borderRadius: "0.5rem", border: `1px solid ${C.line}`, fontSize: "0.95rem", fontFamily: "inherit", outline: "none", background: C.panel, color: C.ink }}
         />
-        <button type="submit" style={{ padding: "0.75rem 1.5rem", borderRadius: "0.5rem", background: C.emerald, color: C.parchment, border: "none", cursor: "pointer", fontWeight: 700, fontFamily: "inherit", fontSize: "0.95rem" }}>
-          بحث
-        </button>
+        <button type="submit">بحث</button>
       </form>
 
       {!q.trim() ? (
         <p style={{ textAlign: "center", color: C.inkSoft, padding: "2rem 0" }}>اكتب كلمة للبحث في محتوى المنصة.</p>
       ) : loading ? (
         <Loading />
+      ) : error ? (
+        <ErrorState text={error} onRetry={() => runSearch(q)} />
       ) : total === 0 ? (
         <p style={{ textAlign: "center", color: C.inkSoft, padding: "2rem 0" }}>
           لا توجد نتائج مطابقة لـ «{q}».

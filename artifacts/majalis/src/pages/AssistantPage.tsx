@@ -63,7 +63,19 @@ export default function AssistantPage() {
       const data = await response.json().catch(() => ({}));
 
       if (!response.ok) {
-        throw new Error(data?.error || "تعذر الحصول على رد من المساعد الذكي.");
+        const serverError =
+          typeof data?.error === "string"
+            ? data.error
+            : typeof data?.error?.message === "string"
+              ? data.error.message
+              : null;
+        if (response.status === 429) {
+          throw new Error(serverError || "تم تجاوز الحد المسموح. يرجى الانتظار دقيقة ثم المحاولة مجددًا.");
+        }
+        if (response.status === 502 || response.status === 500) {
+          throw new Error(serverError || "خدمة المساعد غير متاحة حاليًا. تحقق من إعدادات الخادم.");
+        }
+        throw new Error(serverError || "تعذر الحصول على رد من المساعد الذكي.");
       }
 
       const assistantMessage: ChatMessage = {
@@ -74,7 +86,11 @@ export default function AssistantPage() {
 
       setMessages((current) => [...current, assistantMessage]);
     } catch (caughtError) {
-      setError(caughtError instanceof Error ? caughtError.message : "حدث خطأ غير متوقع.");
+      if (caughtError instanceof TypeError) {
+        setError("تعذر الاتصال بخدمة المساعد. تأكد أن الخادم يعمل وأن المفتاح ANTHROPIC_API_KEY مضبوط.");
+      } else {
+        setError(caughtError instanceof Error ? caughtError.message : "حدث خطأ غير متوقع.");
+      }
     } finally {
       setLoading(false);
     }

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { getLibrary } from "@/lib/supabase";
-import { C } from "@/lib/theme";
-import { PageHeader, Loading, Empty, Chip } from "@/components/ui-common";
+import { DEMO_LIBRARY, demoNoticeText } from "@/lib/demo-content";
+import { PageHeader, Loading, Empty, Chip, ErrorState, DemoNotice } from "@/components/ui-common";
 
 const TYPES = ["الكل", "كتاب", "متن", "تفريغ", "ملخص", "مقال", "صوت", "مرئي"];
 
@@ -13,27 +13,41 @@ const TYPE_ICON: Record<string, string> = {
 export default function LibraryPage() {
   const [items, setItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   const [type, setType] = useState("الكل");
   const [search, setSearch] = useState("");
 
-  useEffect(() => {
+  const loadLibrary = async () => {
     setLoading(true);
-    getLibrary({ type: type === "الكل" ? undefined : type }).then(({ data }) => {
+    setError("");
+    try {
+      const { data, error: fetchError } = await getLibrary({ type: type === "الكل" ? undefined : type });
+      if (fetchError) throw fetchError;
       setItems(data);
+    } catch {
+      setError("تعذر تحميل المكتبة العلمية.");
+    } finally {
       setLoading(false);
-    });
+    }
+  };
+
+  useEffect(() => {
+    loadLibrary();
   }, [type]);
+
+  const usingDemo = items.length === 0 && !loading && !error;
+  const source = usingDemo ? DEMO_LIBRARY : items;
 
   const filtered = useMemo(() => {
     const s = search.trim();
-    if (!s) return items;
-    return items.filter(
+    if (!s) return source;
+    return source.filter(
       (it) => it.title?.includes(s) || it.description?.includes(s) || it.category?.includes(s)
     );
-  }, [items, search]);
+  }, [source, search]);
 
   return (
-    <div style={{ maxWidth: "56rem", margin: "0 auto", padding: "2.5rem 1.25rem 4rem" }}>
+    <div className="page-shell">
       <PageHeader
         eyebrow="الأرشيف العلمي"
         title="المكتبة العلمية"
@@ -44,40 +58,41 @@ export default function LibraryPage() {
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         placeholder="ابحث في المكتبة..."
-        style={{ width: "100%", boxSizing: "border-box", padding: "0.625rem 0.875rem", borderRadius: "0.5rem", border: `1px solid ${C.line}`, fontSize: "0.9rem", fontFamily: "inherit", outline: "none", background: C.panel, color: C.ink, marginBottom: "1rem" }}
+        className="page-search-input full"
       />
 
-      <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1.75rem" }}>
+      <div className="page-chip-row">
         {TYPES.map((t) => (
           <Chip key={t} active={type === t} onClick={() => setType(t)}>{t}</Chip>
         ))}
       </div>
 
-      {loading ? <Loading /> : filtered.length === 0 ? (
+      {usingDemo && <DemoNotice text={demoNoticeText("المكتبة")} />}
+
+      {loading ? (
+        <Loading />
+      ) : error ? (
+        <ErrorState text={error} onRetry={loadLibrary} />
+      ) : filtered.length === 0 ? (
         <Empty text={items.length === 0 ? "لا توجد مواد بعد." : "لا توجد نتائج مطابقة."} />
       ) : (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: "1rem" }}>
+        <div className="page-card-grid">
           {filtered.map((item: any) => (
-            <div key={item.id} style={{ padding: "1.25rem", borderRadius: "0.5rem", border: `1px solid ${C.line}`, background: C.panel, display: "flex", flexDirection: "column", borderRight: `3px solid ${C.brass}` }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "0.5rem", marginBottom: "0.5rem" }}>
-                <p style={{ fontWeight: 700, color: C.ink, fontSize: "1rem", margin: 0, lineHeight: 1.5 }}>{item.title}</p>
-                <span style={{ fontSize: "0.72rem", padding: "0.15rem 0.55rem", borderRadius: "999px", background: C.sage, color: C.emeraldDeep, flexShrink: 0, whiteSpace: "nowrap" }}>
+            <article key={item.id} className="page-card library-card">
+              <div className="page-card-header">
+                <p>{item.title}</p>
+                <span className="page-tag">
                   {TYPE_ICON[item.type] ? `${TYPE_ICON[item.type]} ` : ""}{item.type}
                 </span>
               </div>
-              {item.category && <p style={{ fontSize: "0.75rem", color: C.brassDeep, margin: "0 0 0.4rem" }}>{item.category}</p>}
-              {item.description && <p style={{ fontSize: "0.8125rem", color: C.inkSoft, lineHeight: 1.7, margin: "0 0 0.875rem", flex: 1 }}>{item.description}</p>}
+              {item.category && <p className="page-meta">{item.category}</p>}
+              {item.description && <p className="page-desc">{item.description}</p>}
               {(item.file_url || item.external_url) && (
-                <a
-                  href={item.file_url || item.external_url}
-                  target="_blank"
-                  rel="noreferrer"
-                  style={{ fontSize: "0.8125rem", color: C.emeraldDeep, textDecoration: "none", fontWeight: 700, marginTop: "auto" }}
-                >
+                <a href={item.file_url || item.external_url} target="_blank" rel="noreferrer" className="page-link">
                   فتح المادة ←
                 </a>
               )}
-            </div>
+            </article>
           ))}
         </div>
       )}

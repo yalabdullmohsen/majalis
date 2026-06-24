@@ -26,10 +26,19 @@ const NAV: { key: Section; label: string; icon: string }[] = [
 ];
 
 export default function AdminPage() {
-  const { isAdmin, loading: authLoading } = useAuth() as any;
+  const { isAdmin, isLoggedIn, loading: authLoading } = useAuth() as any;
   const [section, setSection] = useState<Section>("stats");
 
   if (authLoading) return <Loading />;
+  if (!isLoggedIn) {
+    return (
+      <div style={{ maxWidth: "24rem", margin: "5rem auto", padding: "2rem", textAlign: "center", background: C.panel, borderRadius: "0.5rem", border: `1px solid ${C.line}` }}>
+        <p style={{ fontSize: "2rem", marginBottom: "0.75rem" }}>🔒</p>
+        <p style={{ color: C.inkSoft, marginBottom: "1rem", fontSize: "0.9375rem" }}>يجب تسجيل الدخول للوصول إلى لوحة التحكم.</p>
+        <Link href="/login" style={{ color: C.emeraldDeep, textDecoration: "underline", fontSize: "0.875rem" }}>تسجيل الدخول</Link>
+      </div>
+    );
+  }
   if (!isAdmin) {
     return (
       <div style={{ maxWidth: "24rem", margin: "5rem auto", padding: "2rem", textAlign: "center", background: C.panel, borderRadius: "0.5rem", border: `1px solid ${C.line}` }}>

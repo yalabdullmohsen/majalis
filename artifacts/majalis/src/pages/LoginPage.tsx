@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useLocation } from "wouter";
+import { Link, useLocation } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { C } from "@/lib/theme";
 
@@ -9,6 +9,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
   const { login, register } = useAuth() as any;
   const [, navigate] = useLocation();
@@ -16,18 +17,32 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+    setSuccess("");
     setLoading(true);
     try {
       if (mode === "login") {
         const { error } = await login(email, password);
         if (error) throw error;
+        navigate("/");
       } else {
-        const { error } = await register(email, password, fullName);
+        const { data, error } = await register(email, password, fullName);
         if (error) throw error;
+        if (data?.session) {
+          navigate("/");
+        } else {
+          setSuccess(
+            "تم إنشاء حسابك بنجاح. يرجى فتح بريدك الإلكتروني وتأكيد حسابك قبل تسجيل الدخول."
+          );
+          setMode("login");
+        }
       }
-      navigate("/");
     } catch (err: any) {
-      setError(err.message || "حدث خطأ، يرجى المحاولة مجدداً.");
+      const message = err.message || "حدث خطأ، يرجى المحاولة مجدداً.";
+      if (message.toLowerCase().includes("email not confirmed")) {
+        setError("يرجى تأكيد بريدك الإلكتروني أولاً من الرابط المرسل إليك.");
+      } else {
+        setError(message);
+      }
     }
     setLoading(false);
   };
@@ -42,6 +57,12 @@ export default function LoginPage() {
         {error && (
           <p style={{ color: "#dc2626", fontSize: "0.875rem", marginBottom: "1rem", padding: "0.5rem", background: "#fef2f2", borderRadius: "0.375rem", textAlign: "center" }}>
             {error}
+          </p>
+        )}
+
+        {success && (
+          <p style={{ color: "#166534", fontSize: "0.875rem", marginBottom: "1rem", padding: "0.75rem", background: "#ecfdf5", borderRadius: "0.375rem", textAlign: "center", lineHeight: 1.6 }}>
+            {success}
           </p>
         )}
 

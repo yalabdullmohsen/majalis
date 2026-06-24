@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { Link, useLocation } from "wouter";
 import { getLessons, getSheikhs, getApprovedFawaid, getLibrary, getMiracles, getQaQuestions } from "@/lib/supabase";
+import { Loading } from "@/components/ui-common";
 
 const FEATURES = [
   { href: "/lessons", icon: "📚", title: "الدروس والدورات", desc: "دروس علمية شرعية موثقة ومعتمدة" },
@@ -77,19 +78,21 @@ export default function HomePage() {
   const [miracles, setMiracles] = useState<any[]>([]);
   const [qa, setQa] = useState<any[]>([]);
   const [term, setTerm] = useState("");
+  const [loading, setLoading] = useState(true);
   const [, navigate] = useLocation();
 
   useEffect(() => {
-    Promise.all([getLessons(), getSheikhs(), getApprovedFawaid(), getLibrary(), getMiracles(), getQaQuestions()]).then(
-      ([l, s, f, lib, m, q]) => {
+    setLoading(true);
+    Promise.all([getLessons(), getSheikhs(), getApprovedFawaid(), getLibrary(), getMiracles(), getQaQuestions()])
+      .then(([l, s, f, lib, m, q]) => {
         setLessons(l.data || []);
         setSheikhs(s.data || []);
         setFawaid(f.data || []);
         setLibrary(lib.data || []);
         setMiracles(m.data || []);
         setQa(q.data || []);
-      }
-    );
+      })
+      .finally(() => setLoading(false));
   }, []);
 
   const stats = useMemo(
@@ -160,6 +163,7 @@ export default function HomePage() {
       </section>
 
       <main className="home-container home-main">
+        {loading && <Loading />}
         <section className="home-stats" aria-label="إحصائيات المنصة">
           {stats.map((stat) => (
             <div key={stat.label} className="home-stat-card">

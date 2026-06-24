@@ -44,6 +44,8 @@ authenticated flows you need a pre-confirmed account or to confirm the email out
 - There is **no ESLint/Prettier-script, and no automated test suite** wired up. The quality gate is
   TypeScript: `pnpm run typecheck` (root) or per package `pnpm --filter <pkg> run typecheck`.
 - Build all: `pnpm run build` (runs typecheck first). Build only web: `PORT=24216 BASE_PATH=/ pnpm --filter @workspace/majalis run build`.
+- Production web serve: `PORT=24216 BASE_PATH=/ pnpm --filter @workspace/majalis run start` (Express static + `/api/assistant`).
+- `ANTHROPIC_API_KEY` must be set as a server secret for the assistant API in production.
 - **Known pre-existing typecheck failure:** `pnpm run typecheck` reports 2 errors in
   `artifacts/majalis/src/components/ui/button-group.tsx` and `.../calendar.tsx` caused by two
   `@types/react` versions coexisting in the lockfile (19.1.17 pulled by Expo/React-Native deps and

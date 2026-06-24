@@ -18,13 +18,23 @@ localPort = 24216
 run = "pnpm --filter @workspace/majalis run dev"
 
 [services.production]
-build = [ "pnpm", "--filter", "@workspace/majalis", "run", "build" ]
-publicDir = "artifacts/majalis/dist/public"
-serve = "static"
 
-[[services.production.rewrites]]
-from = "/*"
-to = "/index.html"
+[services.production.build]
+args = ["pnpm", "--filter", "@workspace/majalis", "run", "build"]
+
+[services.production.build.env]
+NODE_ENV = "production"
+
+[services.production.run]
+args = ["node", "artifacts/majalis/server/index.mjs"]
+
+[services.production.run.env]
+PORT = "24216"
+BASE_PATH = "/"
+NODE_ENV = "production"
+
+[services.production.health.startup]
+path = "/api/healthz"
 
 [services.env]
 PORT = "24216"
