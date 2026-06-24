@@ -24,12 +24,6 @@ export type DailyAyah = {
   meaning: string;
 };
 
-export type PrayerTimes = {
-  dateLabel: string;
-  city: string;
-  times: { name: string; time: string }[];
-};
-
 export const KUWAIT_LESSONS: KuwaitLesson[] = [
   {
     id: "kw-1",
@@ -79,18 +73,5 @@ export const DAILY_AYAH: DailyAyah = {
   meaning: "بعد الشدة يسر، ومع كل ضيق مخرج وفرج من الله تعالى.",
 };
 
-export const KUWAIT_PRAYER_TIMES: PrayerTimes = {
-  dateLabel: "مواقيت تقريبية — الكويت",
-  city: "الكويت",
-  times: [
-    { name: "الفجر", time: "4:42" },
-    { name: "الشروق", time: "5:58" },
-    { name: "الظهر", time: "11:52" },
-    { name: "العصر", time: "3:18" },
-    { name: "المغرب", time: "5:47" },
-    { name: "العشاء", time: "7:02" },
-  ],
-};
-
 export const HOME_MAINTENANCE_MESSAGE =
-  "جارِ التعديل على الموقع وتعبئة البيانات من قبل بو عبد المحسن انتظرونا";
+  "جارٍ التعديل على الموقع وتعبئة البيانات من قبل منار... انتظرونا.";

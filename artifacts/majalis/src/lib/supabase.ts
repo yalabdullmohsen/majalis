@@ -126,6 +126,38 @@ export async function getLessons({ category, city, search }: { category?: string
   return { data: result, error: null };
 }
 
+export async function getKuwaitLessonsFromDb() {
+  if (!isConfigured) return { data: [], error: null };
+
+  const { data, error } = await supabase
+    .from("lessons")
+    .select("*, sheikhs(name, city, image_url, photo_url, avatar_url)")
+    .eq("status", "approved")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    logSupabaseError("getKuwaitLessonsFromDb", error);
+    return { data: [], error };
+  }
+
+  const kuwaitGovernorates = new Set([
+    "العاصمة",
+    "حولي",
+    "الفروانية",
+    "الجهراء",
+    "الأحمدي",
+    "مبارك الكبير",
+    "الكويت",
+  ]);
+
+  const filtered = (data || []).filter((row: any) => {
+    const city = String(row.city || "").trim();
+    return !city || kuwaitGovernorates.has(city) || city.includes("الكويت");
+  });
+
+  return { data: filtered, error: null };
+}
+
 export async function registerForLesson(userId: string, lessonId: string) {
   return await supabase
     .from("lesson_registrations")
@@ -326,6 +358,10 @@ export async function adminGetLessons() {
 
 export async function adminUpsertLesson(data: any) {
   const { id, sheikhs, ...rest } = data;
+  if (!rest.end_date) rest.end_date = null;
+  if (!rest.speaker_name) rest.speaker_name = null;
+  if (!rest.region) rest.region = null;
+  if (!rest.day_of_week) rest.day_of_week = null;
   if (id) return await supabase.from("lessons").update(rest).eq("id", id);
   return await supabase.from("lessons").insert(rest);
 }

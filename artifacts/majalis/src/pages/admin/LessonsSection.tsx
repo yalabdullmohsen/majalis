@@ -14,7 +14,23 @@ const STATUS_COLORS: Record<string, { bg: string; text: string }> = {
   pending:  { bg: "#FEF3C7", text: "#92400E" },
   rejected: { bg: "#FEE2E2", text: "#991B1B" },
 };
-const EMPTY: any = { title: "", sheikh_id: "", mosque: "", city: "", category: "", audience: "الكل", delivery: "حضور فقط", schedule: "", lesson_time: "", description: "", status: "approved" };
+const EMPTY: any = {
+  title: "",
+  sheikh_id: "",
+  speaker_name: "",
+  mosque: "",
+  city: "العاصمة",
+  region: "",
+  category: "",
+  audience: "الكل",
+  delivery: "حضور فقط",
+  schedule: "",
+  day_of_week: "",
+  lesson_time: "",
+  description: "",
+  end_date: "",
+  status: "approved",
+};
 
 const BTN_EDIT: React.CSSProperties = { padding: "0.25rem 0.625rem", borderRadius: "0.25rem", border: `1px solid ${C.line}`, background: C.panel, color: C.emeraldDeep, cursor: "pointer", fontSize: "0.75rem", fontFamily: "inherit" };
 const BTN_DEL: React.CSSProperties = { ...BTN_EDIT, color: "#dc2626" };
@@ -145,6 +161,14 @@ export function LessonsSection() {
           <input style={inputSt} value={form.mosque || ""} onChange={e => set("mosque", e.target.value)} placeholder="اسم المسجد أو المركز" />
         </Field>
         <FieldRow>
+          <Field label="المنطقة">
+            <input style={inputSt} value={form.region || ""} onChange={e => set("region", e.target.value)} placeholder="مثال: الصديق" />
+          </Field>
+          <Field label="اسم الشيخ (إن لم يُربط بحساب)">
+            <input style={inputSt} value={form.speaker_name || ""} onChange={e => set("speaker_name", e.target.value)} placeholder="اسم الشيخ" />
+          </Field>
+        </FieldRow>
+        <FieldRow>
           <Field label="الجمهور المستهدف">
             <select style={selectSt} value={form.audience} onChange={e => set("audience", e.target.value)}>
               {AUDIENCE.map(a => <option key={a} value={a}>{a}</option>)}
@@ -154,6 +178,19 @@ export function LessonsSection() {
             <select style={selectSt} value={form.delivery} onChange={e => set("delivery", e.target.value)}>
               {DELIVERY.map(d => <option key={d} value={d}>{d}</option>)}
             </select>
+          </Field>
+        </FieldRow>
+        <FieldRow>
+          <Field label="اليوم">
+            <select style={selectSt} value={form.day_of_week || ""} onChange={e => set("day_of_week", e.target.value)}>
+              <option value="">اختر اليوم</option>
+              {["السبت", "الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة"].map(d => (
+                <option key={d} value={d}>{d}</option>
+              ))}
+            </select>
+          </Field>
+          <Field label="تاريخ الانتهاء (اختياري)">
+            <input type="date" style={inputSt} value={form.end_date || ""} onChange={e => set("end_date", e.target.value || null)} />
           </Field>
         </FieldRow>
         <FieldRow>

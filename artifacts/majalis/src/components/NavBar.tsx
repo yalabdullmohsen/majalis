@@ -16,6 +16,7 @@ const TABS = [
   { href: "/announcements", label: "إعلانات الدروس" },
   { href: "/courses", label: "الدورات" },
   { href: "/lessons", label: "الدروس" },
+  { href: "/kuwait-lessons", label: "دروس الكويت" },
   { href: "/sheikhs", label: "المشايخ" },
   { href: "/library", label: "المكتبة" },
   { href: "/miracles", label: "الإعجاز العلمي" },

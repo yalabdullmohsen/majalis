@@ -11,7 +11,7 @@ import { HomeKuwaitLessons } from "@/components/home/HomeKuwaitLessons";
 
 const FEATURES = [
   { href: "/lessons", icon: "📚", title: "الدروس والدورات", desc: "دروس علمية شرعية موثقة ومعتمدة" },
-  { href: "/announcements", icon: "📢", title: "إعلانات الدروس", desc: "جدول الدروس والمحاضرات في الكويت" },
+  { href: "/kuwait-lessons", icon: "🕌", title: "دروس الكويت", desc: "مرجع شامل للدروس في مساجد الكويت" },
   { href: "/library", icon: "🏛", title: "المكتبة العلمية", desc: "كتب ومتون وتفريغات ومقالات" },
   { href: "/assistant", icon: "🤖", title: "المساعد العلمي", desc: "إرشاد ذكي للبحث داخل المنصة" },
   { href: "/miracles", icon: "🌌", title: "الإعجاز العلمي", desc: "مقالات موثقة من الكتاب والسنة" },
@@ -101,9 +101,9 @@ export default function HomePage() {
               <p className="home-kicker">المنصة العلمية الشرعية</p>
             </div>
             <h1>المجلس العلمي</h1>
-            <p className="home-maintenance-banner" role="status">
-              {HOME_MAINTENANCE_MESSAGE}
-            </p>
+            <div className="home-maintenance-card ui-card" role="status">
+              <p className="home-maintenance-banner">{HOME_MAINTENANCE_MESSAGE}</p>
+            </div>
             <form onSubmit={submitSearch} className="home-search" aria-label="البحث في المنصة">
               <span aria-hidden="true">🔎</span>
               <input

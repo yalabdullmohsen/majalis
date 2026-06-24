@@ -8,6 +8,7 @@ import HomePage from "@/pages/HomePage";
 import AboutPage from "@/pages/AboutPage";
 import SearchPage from "@/pages/SearchPage";
 import LessonsPage from "@/pages/LessonsPage";
+import KuwaitLessonsPage from "@/pages/KuwaitLessonsPage";
 import CurrentLessonsPage from "@/pages/CurrentLessonsPage";
 import AnnouncementsPage from "@/pages/AnnouncementsPage";
 import CoursesPage from "@/pages/CoursesPage";
@@ -55,6 +56,7 @@ function Router() {
       <Route path="/search/:q" component={SearchPage} />
       <Route path="/search" component={SearchPage} />
       <Route path="/lessons" component={LessonsPage} />
+      <Route path="/kuwait-lessons" component={KuwaitLessonsPage} />
       <Route path="/announcements" component={AnnouncementsPage} />
       <Route path="/lessons/current" component={CurrentLessonsPage} />
       <Route path="/courses" component={CoursesPage} />

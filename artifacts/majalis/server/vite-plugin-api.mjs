@@ -2,6 +2,7 @@ import assistantHandler from "../api/assistant.js";
 import assistantHealthHandler from "../api/assistant/health.js";
 import testAnthropicHandler from "../api/test-anthropic.js";
 import transcribeHandler from "../api/transcribe.js";
+import prayerTimesHandler from "../api/prayer-times.js";
 import { createRateLimiter } from "./rate-limit.mjs";
 
 const assistantRateLimit = createRateLimiter({
@@ -18,6 +19,7 @@ const transcribeRateLimit = createRateLimiter({
 
 const API_ROUTES = [
   { prefix: "/api/assistant/health", handler: assistantHealthHandler, allowGet: true, exact: true },
+  { prefix: "/api/prayer-times", handler: prayerTimesHandler, allowGet: true, exact: true },
   { prefix: "/api/assistant", handler: assistantHandler, rateLimit: assistantRateLimit, allowGet: true },
   { prefix: "/api/test-anthropic", handler: testAnthropicHandler, allowGet: true },
   { prefix: "/api/transcribe", handler: transcribeHandler, rateLimit: transcribeRateLimit },

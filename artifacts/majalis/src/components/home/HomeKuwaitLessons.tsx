@@ -1,39 +1,46 @@
+import { useEffect, useState } from "react";
 import { Link } from "wouter";
-import { SheikhAvatar } from "@/components/lessons/SheikhAvatar";
-import { KUWAIT_LESSONS } from "@/lib/home-content";
+import { Loading } from "@/components/ui-common";
+import { KuwaitLessonCard } from "@/components/kuwait/KuwaitLessonCard";
+import { loadKuwaitLessons, type KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 
 export function HomeKuwaitLessons() {
+  const [lessons, setLessons] = useState<KuwaitLessonRecord[]>([]);
+  const [total, setTotal] = useState(0);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadKuwaitLessons()
+      .then((items) => {
+        setTotal(items.length);
+        setLessons(items.slice(0, 3));
+      })
+      .finally(() => setLoading(false));
+  }, []);
+
   return (
     <section className="home-section" aria-labelledby="kuwait-lessons-heading">
       <div className="home-section-head">
         <div>
           <p className="home-eyebrow">الكويت</p>
           <h2 id="kuwait-lessons-heading">دروس الكويت</h2>
-          <p>دروس علمية محدّثة في مساجد الكويت — بيانات أولية قابلة للتعديل.</p>
+          <p>دروس علمية محدّثة في مساجد الكويت.</p>
         </div>
-        <Link href="/lessons" className="home-section-link">عرض الكل</Link>
+        <Link href="/kuwait-lessons" className="home-section-link">عرض الكل</Link>
       </div>
-      <div className="home-kuwait-grid">
-        {KUWAIT_LESSONS.map((lesson) => (
-          <article key={lesson.id} className="ui-card home-kuwait-card">
-            <div className="home-kuwait-card-top">
-              <SheikhAvatar src={lesson.sheikhImage} name={lesson.sheikhName} size="responsive" />
-              <div>
-                <p className="home-kuwait-sheikh">{lesson.sheikhName}</p>
-                <h3>{lesson.title}</h3>
-              </div>
-            </div>
-            <dl className="home-kuwait-meta">
-              <div><dt>اليوم</dt><dd>{lesson.day}</dd></div>
-              <div><dt>الوقت</dt><dd>{lesson.time}</dd></div>
-              <div><dt>المسجد</dt><dd>{lesson.mosque}</dd></div>
-              <div><dt>المنطقة</dt><dd>{lesson.region}</dd></div>
-            </dl>
-            {lesson.note && <p className="home-kuwait-note">{lesson.note}</p>}
-            <Link href="/announcements" className="ui-card-btn">عرض التفاصيل</Link>
-          </article>
-        ))}
-      </div>
+
+      {loading ? (
+        <Loading />
+      ) : (
+        <>
+          <p className="kuwait-lessons-count">{total} درس متاح في الكويت</p>
+          <div className="home-kuwait-grid">
+            {lessons.map((lesson) => (
+              <KuwaitLessonCard key={lesson.id} lesson={lesson} compact />
+            ))}
+          </div>
+        </>
+      )}
     </section>
   );
 }

@@ -7,6 +7,7 @@ import assistantHandler from "../api/assistant.js";
 import assistantHealthHandler from "../api/assistant/health.js";
 import testAnthropicHandler from "../api/test-anthropic.js";
 import transcribeHandler from "../api/transcribe.js";
+import prayerTimesHandler from "../api/prayer-times.js";
 import { createRateLimiter } from "./rate-limit.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -75,6 +76,8 @@ app.post("/api/assistant", express.json({ limit: "32kb" }), assistantRateLimit, 
 app.get("/api/test-anthropic", runHandler(testAnthropicHandler, "test-anthropic"));
 app.post("/api/test-anthropic", runHandler(testAnthropicHandler, "test-anthropic"));
 app.post("/api/transcribe", express.json({ limit: "2mb" }), transcribeRateLimit, runHandler(transcribeHandler, "transcribe"));
+
+app.get("/api/prayer-times", runHandler(prayerTimesHandler, "prayer-times"));
 
 app.get("/api/healthz", (_req, res) => {
   res.json({ ok: true, service: "majalis-web" });
