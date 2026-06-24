@@ -79,6 +79,14 @@ function extractAnthropicText(data) {
     .trim();
 }
 
+function parseAnthropicResponseBody(responseBody) {
+  try {
+    return JSON.parse(responseBody);
+  } catch {
+    return {};
+  }
+}
+
 export default async function handler(req, res) {
   setJsonHeaders(res);
 
@@ -118,22 +126,27 @@ export default async function handler(req, res) {
     const anthropicResponse = await fetch(ANTHROPIC_MESSAGES_URL, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "content-type": "application/json",
         "x-api-key": process.env.ANTHROPIC_API_KEY,
         "anthropic-version": ANTHROPIC_VERSION,
       },
       body: JSON.stringify({
         model: MODEL,
-        max_tokens: 900,
-        temperature: 0.2,
+        max_tokens: 700,
         system: SYSTEM_PROMPT,
-        messages,
+        messages: [{ role: "user", content: lastUserMessage.content }],
       }),
     });
 
-    const data = await anthropicResponse.json().catch(() => ({}));
+    const responseBody = await anthropicResponse.text();
+    const data = parseAnthropicResponseBody(responseBody);
 
     if (!anthropicResponse.ok) {
+      console.error("Anthropic request failed", {
+        status: anthropicResponse.status,
+        body: responseBody,
+      });
+
       res.status(anthropicResponse.status).json({
         error: data?.error?.message || "تعذر الاتصال بخدمة المساعد الذكي.",
       });
