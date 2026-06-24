@@ -7,7 +7,7 @@ import { C } from "@/lib/theme";
 const NEW_NAV_ITEMS = [
   { href: "/transcribe", label: "🎙️ تفريغ" },
   { href: "/cards", label: "🎨 البطاقات" },
-  { href: "/condolences", label: "🤲 التعزية" },
+  { href: "/condolences", label: "قوالب العزاء" },
 ];
 
 const TABS = [

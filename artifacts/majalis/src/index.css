@@ -2093,3 +2093,455 @@ input, textarea, select { font-family: inherit; }
     align-items: flex-start;
   }
 }
+
+/* ── Condolences templates page ── */
+.condolences-page {
+  min-height: 100vh;
+  background: var(--majalis-parchment);
+  padding: 2rem 0 3rem;
+}
+
+.condolences-page__shell {
+  width: min(100%, 72rem);
+  margin: 0 auto;
+  padding-inline: clamp(1rem, 4vw, 1.5rem);
+}
+
+.condolences-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
+  gap: clamp(1.25rem, 3vw, 2rem);
+  align-items: start;
+}
+
+.condolences-panel {
+  display: grid;
+  gap: 1rem;
+}
+
+.condolences-block {
+  background: var(--majalis-panel);
+  border: 1px solid var(--majalis-line);
+  border-radius: 0.75rem;
+  padding: 1rem 1.125rem;
+}
+
+.condolences-block h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--majalis-emerald-deep);
+  margin: 0 0 0.875rem;
+  font-family: Amiri, serif;
+}
+
+.cond-template-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.cond-template-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid #333;
+  background: linear-gradient(145deg, #111 0%, #1a1a1a 100%);
+  color: #f5f5f5;
+  font-family: inherit;
+  font-size: 0.8125rem;
+  cursor: pointer;
+  text-align: right;
+}
+
+.cond-template-btn.active {
+  border-color: var(--majalis-emerald);
+  box-shadow: 0 0 0 2px rgba(31, 110, 84, 0.35);
+}
+
+.cond-template-btn__swatch {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: radial-gradient(circle, #222 0%, #000 100%);
+  flex-shrink: 0;
+}
+
+.cond-size-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.cond-size-btn {
+  flex: 1;
+  min-width: 8rem;
+  padding: 0.55rem 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--majalis-line);
+  background: var(--majalis-parchment-deep);
+  color: var(--majalis-ink-soft);
+  font-family: inherit;
+  font-size: 0.8125rem;
+  cursor: pointer;
+}
+
+.cond-size-btn.active {
+  border-color: var(--majalis-emerald);
+  background: var(--majalis-emerald);
+  color: var(--majalis-parchment);
+  font-weight: 700;
+}
+
+.cond-form {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.cond-field {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.cond-field span {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--majalis-ink-soft);
+}
+
+.cond-field input,
+.cond-field textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.625rem 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--majalis-line);
+  background: var(--majalis-panel);
+  color: var(--majalis-ink);
+  font-family: Amiri, "Scheherazade New", serif;
+  font-size: 1rem;
+  outline: none;
+}
+
+.cond-field input:focus,
+.cond-field textarea:focus {
+  border-color: var(--majalis-emerald);
+  box-shadow: 0 0 0 2px rgba(31, 110, 84, 0.15);
+}
+
+.cond-actions {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.cond-btn {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  font-family: inherit;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.cond-btn--primary {
+  background: #111;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.cond-btn--primary:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.cond-btn--secondary {
+  background: var(--majalis-emerald);
+  color: var(--majalis-parchment);
+}
+
+.cond-btn--ghost {
+  background: transparent;
+  color: var(--majalis-ink-soft);
+  border: 1px solid var(--majalis-line);
+}
+
+.cond-copy-status {
+  text-align: center;
+  font-size: 0.8125rem;
+  color: var(--majalis-emerald-deep);
+  margin: 0;
+}
+
+.condolences-preview-wrap {
+  position: sticky;
+  top: 1rem;
+}
+
+.cond-preview-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--majalis-ink);
+  margin: 0 0 0.75rem;
+  font-family: Amiri, serif;
+}
+
+.cond-preview-scaler {
+  overflow: hidden;
+  border-radius: 0.75rem;
+  box-shadow: var(--majalis-shadow);
+  margin-inline: auto;
+}
+
+.cond-export-wrap {
+  will-change: transform;
+}
+
+/* ── Card canvas (1080 export) ── */
+.cond-card {
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  color: #fff;
+  background: linear-gradient(160deg, #0a0a0a 0%, #151515 45%, #0d0d0d 100%);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  padding: 3.5rem 2.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.cond-pattern-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+.cond-corner-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.cond-deco-circle {
+  position: absolute;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  pointer-events: none;
+}
+
+.cond-deco-circle--1 {
+  width: 520px;
+  height: 520px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.cond-deco-circle--2 {
+  width: 380px;
+  height: 380px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.cond-deco-circle--3 {
+  width: 240px;
+  height: 240px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.cond-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.25rem;
+  width: 100%;
+}
+
+.cond-headline {
+  font-size: clamp(2rem, 4.5vw, 3.25rem);
+  font-weight: 700;
+  line-height: 1.65;
+  color: #fff;
+  letter-spacing: 0.02em;
+}
+
+.cond-headline--sm {
+  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+}
+
+.cond-hero-text {
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 700;
+  line-height: 1.5;
+  color: #fff;
+}
+
+.cond-hero-text--baqiya,
+.cond-hero-text--bashshir {
+  font-size: clamp(2.8rem, 6vw, 4.5rem);
+}
+
+.cond-sub {
+  font-size: clamp(1rem, 2vw, 1.35rem);
+  color: rgba(255, 255, 255, 0.72);
+  margin: 0;
+}
+
+.cond-name {
+  font-size: clamp(1.6rem, 3.2vw, 2.6rem);
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+  line-height: 1.55;
+}
+
+.cond-name--large {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+}
+
+.cond-details {
+  width: min(100%, 820px);
+  display: grid;
+  gap: 0.65rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 0.75rem;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.cond-details p {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.cond-details span {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.cond-details strong {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.cond-extra {
+  margin-top: 0.35rem !important;
+  font-size: 1.05rem !important;
+  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.88) !important;
+  white-space: pre-wrap;
+}
+
+.cond-footer-verse {
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.65);
+  margin: 0;
+}
+
+.cond-ayah {
+  font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+  color: rgba(255, 255, 255, 0.75);
+  margin: 0;
+  line-height: 1.8;
+}
+
+.cond-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: min(100%, 420px);
+}
+
+.cond-divider span {
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.cond-circle-frame {
+  position: relative;
+  width: min(100%, 520px);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+}
+
+.cond-circle-frame__ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: inset 0 0 0 12px rgba(255, 255, 255, 0.03);
+}
+
+.cond-circle-frame__content {
+  position: relative;
+  z-index: 1;
+  padding: 1.5rem;
+}
+
+.cond-official-badge {
+  padding: 0.35rem 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  font-size: 1rem;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.cond-official-box {
+  width: min(100%, 860px);
+  padding: 1.25rem 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.cond-crescent {
+  opacity: 0.7;
+}
+
+@media (max-width: 960px) {
+  .condolences-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .condolences-preview-wrap {
+    position: static;
+    order: -1;
+  }
+
+  .cond-preview-scaler {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 520px) {
+  .cond-template-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cond-card {
+    padding: 2.5rem 1.75rem;
+  }
+}
