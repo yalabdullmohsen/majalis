@@ -3,12 +3,15 @@ import { Link } from "wouter";
 import { getSheikhs, getSupabaseErrorMessage } from "@/lib/supabase";
 import { C } from "@/lib/theme";
 import { PageHeader, Loading, Empty, ErrorMessage } from "@/components/ui-common";
+import SheikhAvatar from "@/components/SheikhAvatar";
 
 export default function SheikhsPage() {
   const [sheikhs, setSheikhs] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [verifiedOnly, setVerifiedOnly] = useState(false);
+  const [specialty, setSpecialty] = useState("الكل");
+  const [country, setCountry] = useState("كل الدول");
   const [error, setError] = useState("");
 
   const load = () => {
@@ -30,15 +33,22 @@ export default function SheikhsPage() {
     const s = search.trim();
     return sheikhs.filter((sh) => {
       if (verifiedOnly && !sh.is_verified) return false;
+      if (specialty !== "الكل" && !(sh.specialties || []).includes(specialty) && sh.specialty !== specialty) return false;
+      if (country !== "كل الدول" && (sh.country || sh.city) !== country) return false;
       if (!s) return true;
       return (
         sh.name?.includes(s) ||
         sh.ijazah?.includes(s) ||
         sh.city?.includes(s) ||
+        sh.country?.includes(s) ||
+        sh.specialty?.includes(s) ||
         (sh.specialties || []).some((sp: string) => sp.includes(s))
       );
-    });
-  }, [sheikhs, search, verifiedOnly]);
+    }).sort((a, b) => String(a.name || "").localeCompare(String(b.name || ""), "ar"));
+  }, [sheikhs, search, verifiedOnly, specialty, country]);
+
+  const specialties = useMemo(() => ["الكل", ...Array.from(new Set(sheikhs.flatMap((s) => s.specialties?.length ? s.specialties : [s.specialty]).filter(Boolean)))], [sheikhs]);
+  const countries = useMemo(() => ["كل الدول", ...Array.from(new Set(sheikhs.map((s) => s.country || s.city).filter(Boolean)))], [sheikhs]);
 
   return (
     <div style={{ maxWidth: "56rem", margin: "0 auto", padding: "2.5rem 1.25rem 4rem" }}>
@@ -64,6 +74,12 @@ export default function SheikhsPage() {
         >
           المعتمدون فقط
         </button>
+        <select value={specialty} onChange={(e) => setSpecialty(e.target.value)} style={{ padding: "0.55rem 0.8rem", borderRadius: "0.5rem", border: `1px solid ${C.line}`, background: C.panel, color: C.ink, fontFamily: "inherit" }}>
+          {specialties.map((item) => <option key={item} value={item}>{item}</option>)}
+        </select>
+        <select value={country} onChange={(e) => setCountry(e.target.value)} style={{ padding: "0.55rem 0.8rem", borderRadius: "0.5rem", border: `1px solid ${C.line}`, background: C.panel, color: C.ink, fontFamily: "inherit" }}>
+          {countries.map((item) => <option key={item} value={item}>{item}</option>)}
+        </select>
       </div>
 
       {loading ? (
@@ -76,9 +92,7 @@ export default function SheikhsPage() {
             <Link key={s.id} href={`/sheikhs/${s.id}`} style={{ textDecoration: "none" }}>
               <div style={{ borderRadius: "0.5rem", border: `1px solid ${C.line}`, padding: "1.5rem", background: C.panel, height: "100%", borderTop: `3px solid ${C.emerald}` }}>
                 <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "0.875rem" }}>
-                  <div style={{ width: "3rem", height: "3rem", borderRadius: "999px", background: C.sage, color: C.emeraldDeep, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.2rem", fontWeight: 700, fontFamily: "Amiri, serif", flexShrink: 0 }}>
-                    {s.name?.charAt(0) || "؟"}
-                  </div>
+                  <SheikhAvatar sheikh={s} size={54} />
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <p style={{ fontWeight: 700, color: C.emeraldDeep, fontSize: "1.0625rem", margin: 0, fontFamily: "Amiri, serif" }}>{s.name}</p>
                     {s.is_verified && (
@@ -86,9 +100,10 @@ export default function SheikhsPage() {
                     )}
                   </div>
                 </div>
+                {(s.specialty || s.specialties?.[0]) && <p style={{ fontSize: "0.8rem", marginBottom: "0.35rem", color: C.brassDeep, fontWeight: 700 }}>{s.specialty || s.specialties?.[0]}</p>}
                 {s.ijazah && <p style={{ fontSize: "0.8rem", marginBottom: "0.35rem", color: C.brassDeep }}>{s.ijazah}</p>}
                 <p style={{ fontSize: "0.8rem", color: C.inkSoft, margin: 0 }}>
-                  {[s.city, s.years_experience ? `${s.years_experience} سنة خبرة` : null].filter(Boolean).join(" · ")}
+                  {[s.country || s.city, s.lessons_count ? `${s.lessons_count} دروس` : null, s.years_experience ? `${s.years_experience} سنة خبرة` : null].filter(Boolean).join(" · ")}
                 </p>
                 {s.specialties?.length > 0 && (
                   <div style={{ display: "flex", gap: "0.35rem", flexWrap: "wrap", marginTop: "0.75rem" }}>

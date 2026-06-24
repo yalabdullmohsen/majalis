@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
+import { demoFawaid, demoLibrary, demoLessons, demoQa, demoSheikhs, isDemoId } from "@/lib/demoData";
 
 // Normalize to the bare project origin (https://xxx.supabase.co).
 // The supabase-js client appends /rest/v1, /auth/v1, etc. itself, so any
@@ -90,37 +91,66 @@ export async function getCurrentUser() {
   return { ...user, profile };
 }
 
+export async function updateMyProfile(userId: string, data: { full_name?: string; city?: string | null; avatar_url?: string | null }) {
+  return await supabase
+    .from("profiles")
+    .update(data)
+    .eq("id", userId)
+    .select("*")
+    .single();
+}
+
 export async function getSheikhs() {
   const { data, error } = await supabase
     .from("sheikhs").select("*").order("name");
-  return { data: data || [], error };
+  return { data: data?.length ? data : demoSheikhs, error: data?.length ? error : null };
 }
 
 export async function getSheikhById(id: string) {
-  const { data: sheikh } = await supabase
+  if (isDemoId(id)) {
+    const sheikh = demoSheikhs.find((s) => s.id === id);
+    const lessons = demoLessons.filter((lesson) => lesson.sheikh_id === id);
+    return { sheikh, lessons, error: null };
+  }
+  const { data: sheikh, error: sheikhError } = await supabase
     .from("sheikhs").select("*").eq("id", id).single();
-  const { data: lessons } = await supabase
+  const { data: lessons, error: lessonsError } = await supabase
     .from("lessons").select("*").eq("sheikh_id", id).eq("status", "approved");
-  return { sheikh, lessons: lessons || [] };
+  return { sheikh, lessons: lessons || [], error: sheikhError || lessonsError };
 }
 
 export async function getLessons({ category, city, search }: { category?: string; city?: string; search?: string } = {}) {
   let q = supabase
     .from("lessons")
-    .select("*, sheikhs(name, city)")
+    .select("*, sheikhs(name, city, photo_url)")
     .eq("status", "approved")
     .order("created_at", { ascending: false });
   if (category && category !== "الكل") q = q.eq("category", category);
   if (city && city !== "كل المحافظات") q = q.eq("city", city);
   const { data, error } = await q;
-  let result = data || [];
+  let result = data?.length ? data : demoLessons;
   if (search?.trim()) {
     const s = search.trim();
     result = result.filter(
       (l: any) => l.title?.includes(s) || l.mosque?.includes(s) || l.city?.includes(s)
     );
   }
-  return { data: result, error };
+  if (category && category !== "الكل") result = result.filter((l: any) => l.category === category);
+  if (city && city !== "كل المحافظات") result = result.filter((l: any) => l.city === city || l.sheikhs?.country === city);
+  return { data: result, error: data?.length ? error : null };
+}
+
+export async function getLessonById(id: string) {
+  if (isDemoId(id)) {
+    return { data: demoLessons.find((lesson) => lesson.id === id) || null, error: null };
+  }
+  const { data, error } = await supabase
+    .from("lessons")
+    .select("*, sheikhs(*)")
+    .eq("id", id)
+    .eq("status", "approved")
+    .single();
+  return { data, error };
 }
 
 export async function registerForLesson(userId: string, lessonId: string) {
@@ -136,10 +166,85 @@ export async function unregisterFromLesson(userId: string, lessonId: string) {
 }
 
 export async function getMyRegistrations(userId: string) {
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from("lesson_registrations")
     .select("lesson_id").eq("user_id", userId);
+  if (error) throw error;
   return (data || []).map((r: any) => r.lesson_id);
+}
+
+export async function getMyRegisteredLessons(userId: string) {
+  const { data, error } = await supabase
+    .from("lesson_registrations")
+    .select("registered_at, lessons(*, sheikhs(name, city, photo_url))")
+    .eq("user_id", userId)
+    .order("registered_at", { ascending: false });
+  return { data: (data || []).map((r: any) => ({ ...r.lessons, registered_at: r.registered_at })).filter(Boolean), error };
+}
+
+export async function getMyFavoriteLessonIds(userId: string) {
+  const { data, error } = await supabase
+    .from("lesson_favorites")
+    .select("lesson_id")
+    .eq("user_id", userId);
+  return { data: (data || []).map((r: any) => r.lesson_id), error };
+}
+
+export async function getMyFavoriteLessons(userId: string) {
+  const { data, error } = await supabase
+    .from("lesson_favorites")
+    .select("lessons(*, sheikhs(name, city, photo_url))")
+    .eq("user_id", userId);
+  return { data: (data || []).map((r: any) => r.lessons).filter(Boolean), error };
+}
+
+export async function addLessonFavorite(userId: string, lessonId: string) {
+  return await supabase
+    .from("lesson_favorites")
+    .upsert({ user_id: userId, lesson_id: lessonId }, { onConflict: "user_id,lesson_id" });
+}
+
+export async function removeLessonFavorite(userId: string, lessonId: string) {
+  return await supabase
+    .from("lesson_favorites")
+    .delete()
+    .eq("user_id", userId)
+    .eq("lesson_id", lessonId);
+}
+
+export async function getLessonRatings(lessonId: string) {
+  const { data, error } = await supabase
+    .from("lesson_ratings")
+    .select("*")
+    .eq("lesson_id", lessonId)
+    .order("created_at", { ascending: false });
+  const rows = data || [];
+  const average = rows.length ? rows.reduce((sum: number, row: any) => sum + Number(row.rating || 0), 0) / rows.length : 0;
+  return { data: rows, average, count: rows.length, error };
+}
+
+export async function getMyLessonRating(userId: string, lessonId: string) {
+  const { data, error } = await supabase
+    .from("lesson_ratings")
+    .select("*")
+    .eq("user_id", userId)
+    .eq("lesson_id", lessonId)
+    .maybeSingle();
+  return { data, error };
+}
+
+export async function upsertLessonRating(userId: string, lessonId: string, rating: number, comment: string) {
+  return await supabase
+    .from("lesson_ratings")
+    .upsert({ user_id: userId, lesson_id: lessonId, rating, comment: comment || null }, { onConflict: "user_id,lesson_id" });
+}
+
+export async function deleteLessonRating(userId: string, lessonId: string) {
+  return await supabase
+    .from("lesson_ratings")
+    .delete()
+    .eq("user_id", userId)
+    .eq("lesson_id", lessonId);
 }
 
 export async function getApprovedFawaid() {
@@ -147,7 +252,7 @@ export async function getApprovedFawaid() {
     .from("fawaid").select("*")
     .eq("status", "approved")
     .order("created_at", { ascending: false });
-  return { data: data || [], error };
+  return { data: data?.length ? data : demoFawaid, error: data?.length ? error : null };
 }
 
 export async function submitFawaid(userId: string, text: string, authorName: string) {
@@ -173,7 +278,23 @@ export async function getLibrary({ type, category }: { type?: string; category?:
   if (type) q = q.eq("type", type);
   if (category) q = q.eq("category", category);
   const { data, error } = await q.order("created_at", { ascending: false });
-  return { data: data || [], error };
+  let result = data?.length ? data : demoLibrary;
+  if (type) result = result.filter((item: any) => item.type === type);
+  if (category) result = result.filter((item: any) => item.category === category);
+  return { data: result, error: data?.length ? error : null };
+}
+
+export async function getLibraryItemById(id: string) {
+  if (isDemoId(id)) {
+    return { data: demoLibrary.find((item) => item.id === id) || null, error: null };
+  }
+  const { data, error } = await supabase
+    .from("library_items")
+    .select("*, sheikhs(*)")
+    .eq("id", id)
+    .eq("status", "approved")
+    .single();
+  return { data, error };
 }
 
 export async function getMiracles({ category, sourceType }: { category?: string; sourceType?: string } = {}) {
@@ -184,12 +305,22 @@ export async function getMiracles({ category, sourceType }: { category?: string;
   return { data: data || [], error };
 }
 
+export async function getMiracleById(id: string) {
+  const { data, error } = await supabase
+    .from("scientific_miracles")
+    .select("*")
+    .eq("id", id)
+    .eq("status", "approved")
+    .single();
+  return { data, error };
+}
+
 export async function getMyAchievements(userId: string) {
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from("achievements").select("*")
     .eq("user_id", userId)
     .order("earned_at", { ascending: false });
-  return data || [];
+  return { data: data || [], error };
 }
 
 // ─── Admin CRUD ────────────────────────────────────────────────────────────────
@@ -333,14 +464,27 @@ export async function getQaQuestions({ categoryId, search }: { categoryId?: stri
     .order("created_at", { ascending: false });
   if (categoryId && categoryId !== "all") q = q.eq("category_id", categoryId);
   const { data, error } = await q;
-  let result = data || [];
+  let result = data?.length ? data : demoQa;
   if (search?.trim()) {
     const s = search.trim();
     result = result.filter(
       (x: any) => x.question?.includes(s) || x.answer?.includes(s)
     );
   }
-  return { data: result, error };
+  return { data: result, error: data?.length ? error : null };
+}
+
+export async function getQaQuestionById(id: string) {
+  if (isDemoId(id)) {
+    return { data: demoQa.find((item) => item.id === id) || null, error: null };
+  }
+  const { data, error } = await supabase
+    .from("qa_questions")
+    .select("*, qa_categories(name, slug)")
+    .eq("id", id)
+    .eq("status", "published")
+    .single();
+  return { data, error };
 }
 
 export async function adminGetQuestions() {
@@ -383,12 +527,27 @@ export async function searchEverything(term: string) {
     supabase.from("qa_questions").select("id, question, qa_categories(name)").eq("status", "published").ilike("question", q),
     supabase.from("fawaid").select("id, text, author_name").eq("status", "approved").ilike("text", q),
   ]);
+  const needle = term.trim();
+  const includes = (value?: string) => !needle || value?.includes(needle);
+  const score = (item: any, fields: string[]) => fields.reduce((total, field) => {
+    const value = String(item[field] || "");
+    if (value === needle) return total + 100;
+    if (value.startsWith(needle)) return total + 60;
+    if (value.includes(needle)) return total + 25;
+    return total;
+  }, 0);
+  const sortByRelevance = (items: any[], fields: string[]) => [...items].sort((a, b) => score(b, fields) - score(a, fields));
+  const mergedLessons = [...(lessons.data || []), ...demoLessons.filter((item) => includes(item.title) || includes(item.description) || includes(item.category))];
+  const mergedLibrary = [...(library.data || []), ...demoLibrary.filter((item) => includes(item.title) || includes(item.description) || includes(item.category) || includes(item.author_name))];
+  const mergedSheikhs = [...(sheikhs.data || []), ...demoSheikhs.filter((item) => includes(item.name) || includes(item.specialty) || includes(item.country))];
+  const mergedQa = [...(qa.data || []), ...demoQa.filter((item) => includes(item.question) || includes(item.answer))];
+  const mergedFawaid = [...(fawaid.data || []), ...demoFawaid.filter((item) => includes(item.text) || includes(item.author_name))];
   return {
-    lessons: lessons.data || [],
-    library: library.data || [],
+    lessons: sortByRelevance(mergedLessons, ["title", "description", "category"]).slice(0, 30),
+    library: sortByRelevance(mergedLibrary, ["title", "description", "category", "author_name"]).slice(0, 30),
     miracles: miracles.data || [],
-    sheikhs: sheikhs.data || [],
-    qa: qa.data || [],
-    fawaid: fawaid.data || [],
+    sheikhs: sortByRelevance(mergedSheikhs, ["name", "specialty", "country"]).slice(0, 30),
+    qa: sortByRelevance(mergedQa, ["question", "answer"]).slice(0, 30),
+    fawaid: sortByRelevance(mergedFawaid, ["text", "author_name"]).slice(0, 30),
   };
 }

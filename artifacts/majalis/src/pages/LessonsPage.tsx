@@ -1,15 +1,19 @@
 import { useEffect, useState } from "react";
+import { Link } from "wouter";
 import { C, GOVERNORATES } from "@/lib/theme";
 import { getLessons, registerForLesson, unregisterFromLesson, getMyRegistrations, getSupabaseErrorMessage } from "@/lib/supabase";
 import { PageHeader, Loading, Empty, Chip, ErrorMessage } from "@/components/ui-common";
 import { useAuth } from "@/components/AuthProvider";
+import SheikhAvatar from "@/components/SheikhAvatar";
 
-const CATEGORIES = ["الكل", "تفسير", "فقه", "عقيدة", "حديث", "سيرة", "تجويد", "أخرى"];
+const CATEGORIES = ["الكل", "العقيدة", "الفقه", "التفسير", "الحديث", "السيرة", "الأخلاق", "الدعوة"];
+const TYPES = ["كل الأنواع", "درس", "محاضرة"];
 
 export default function LessonsPage() {
   const [lessons, setLessons] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [category, setCategory] = useState("الكل");
+  const [type, setType] = useState("كل الأنواع");
   const [city, setCity] = useState("كل المحافظات");
   const [search, setSearch] = useState("");
   const [myReg, setMyReg] = useState<string[]>([]);
@@ -21,11 +25,11 @@ export default function LessonsPage() {
     setError("");
     const { data, error } = await getLessons({ category, city, search });
     if (error) setError(getSupabaseErrorMessage(error, "تعذّر تحميل الدروس."));
-    setLessons(data);
+    setLessons(type === "كل الأنواع" ? data : data.filter((lesson: any) => (lesson.lesson_type || "درس") === type));
     setLoading(false);
   };
 
-  useEffect(() => { fetch(); }, [category, city]);
+  useEffect(() => { fetch(); }, [category, city, type]);
 
   useEffect(() => {
     if (isLoggedIn && user?.id) {
@@ -81,6 +85,11 @@ export default function LessonsPage() {
           <Chip key={c} active={category === c} onClick={() => setCategory(c)}>{c}</Chip>
         ))}
       </div>
+      <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "0.75rem" }}>
+        {TYPES.map((t) => (
+          <Chip key={t} active={type === t} onClick={() => setType(t)}>{t}</Chip>
+        ))}
+      </div>
       <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1.5rem" }}>
         {["كل المحافظات", ...GOVERNORATES].map((g) => (
           <Chip key={g} active={city === g} onClick={() => setCity(g)}>{g}</Chip>
@@ -91,8 +100,12 @@ export default function LessonsPage() {
         <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "0.75rem" }}>
           {lessons.map((l: any) => (
             <div id={`lesson-${l.id}`} key={l.id} style={{ padding: "1rem", borderRadius: "0.375rem", border: `1px solid ${C.line}`, background: C.panel }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "0.5rem" }}>
-                <p style={{ fontWeight: 700, color: C.emeraldDeep, fontSize: "1rem" }}>{l.title}</p>
+              {l.thumbnail_url && <img src={l.thumbnail_url} alt="" style={{ width: "100%", maxHeight: "13rem", objectFit: "cover", borderRadius: "0.5rem", marginBottom: "0.8rem" }} />}
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "0.5rem", gap: "0.75rem" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.65rem" }}>
+                  <SheikhAvatar sheikh={l.sheikhs} size={42} />
+                  <Link href={`/lessons/${l.id}`} style={{ fontWeight: 700, color: C.emeraldDeep, fontSize: "1rem" }}>{l.title}</Link>
+                </div>
                 {l.category && <span style={{ fontSize: "0.75rem", padding: "0.125rem 0.5rem", borderRadius: "0.25rem", background: C.sage, color: C.emeraldDeep, flexShrink: 0, marginRight: "0.5rem" }}>{l.category}</span>}
               </div>
               <p style={{ fontSize: "0.75rem", color: C.brassDeep, marginBottom: "0.25rem" }}>{l.sheikhs?.name}</p>
@@ -102,7 +115,9 @@ export default function LessonsPage() {
               {l.description && <p style={{ fontSize: "0.8125rem", color: C.ink, marginBottom: "0.75rem", lineHeight: "1.6" }}>{l.description}</p>}
               <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
                 <span style={{ fontSize: "0.75rem", padding: "0.125rem 0.5rem", borderRadius: "0.25rem", border: `1px solid ${C.line}`, color: C.inkSoft }}>{l.audience || "الكل"}</span>
+                <span style={{ fontSize: "0.75rem", padding: "0.125rem 0.5rem", borderRadius: "0.25rem", border: `1px solid ${C.line}`, color: C.emeraldDeep }}>{l.lesson_type || "درس"}</span>
                 <span style={{ fontSize: "0.75rem", padding: "0.125rem 0.5rem", borderRadius: "0.25rem", border: `1px solid ${C.line}`, color: C.inkSoft }}>{l.delivery || "حضور فقط"}</span>
+                {l.duration && <span style={{ fontSize: "0.75rem", padding: "0.125rem 0.5rem", borderRadius: "0.25rem", border: `1px solid ${C.line}`, color: C.brassDeep }}>{l.duration}</span>}
                 {isLoggedIn && (
                   <button
                     onClick={() => toggleReg(l.id)}
@@ -111,6 +126,7 @@ export default function LessonsPage() {
                     {myReg.includes(l.id) ? "إلغاء التسجيل" : "سجّل حضوري"}
                   </button>
                 )}
+                <Link href={`/lessons/${l.id}`} style={{ fontSize: "0.75rem", color: C.brassDeep, marginRight: isLoggedIn ? 0 : "auto", fontWeight: 700 }}>تفاصيل الدرس</Link>
               </div>
             </div>
           ))}

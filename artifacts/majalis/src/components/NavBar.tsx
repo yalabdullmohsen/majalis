@@ -74,8 +74,9 @@ export default function NavBar() {
   return (
     <header className="sticky top-0 z-50 border-b" style={{ background: C.parchment, borderColor: C.line }}>
       <div style={{ maxWidth: "72rem", margin: "0 auto", padding: "0.75rem 1rem", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "1rem" }}>
-        <Link href="/" style={{ fontSize: "1.375rem", fontWeight: 700, flexShrink: 0, color: C.emeraldDeep, fontFamily: "Amiri, serif", textDecoration: "none" }}>
-          مجالس
+        <Link href="/" style={{ display: "flex", alignItems: "center", gap: "0.45rem", fontSize: "1.25rem", fontWeight: 700, flexShrink: 0, color: C.emeraldDeep, fontFamily: "Amiri, serif", textDecoration: "none" }}>
+          <img src="/brand/majlis-logo.svg" alt="" style={{ width: 34, height: 34 }} />
+          المجلس العلمي
         </Link>
 
         {!isMobile && (
@@ -94,7 +95,8 @@ export default function NavBar() {
 
           {!isMobile && (isLoggedIn ? (
             <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-              <span style={{ fontSize: "0.75rem", color: C.inkSoft }}>{user?.profile?.full_name || "مرحبًا"}</span>
+              <Link href="/profile" style={{ fontSize: "0.75rem", color: C.emeraldDeep, fontWeight: 700 }}>{user?.profile?.full_name || "ملفي"}</Link>
+              <Link href="/my-lessons" style={{ fontSize: "0.75rem", color: C.inkSoft }}>دروسي</Link>
               <button onClick={logout} style={{ fontSize: "0.75rem", padding: "0.375rem 0.75rem", borderRadius: "0.375rem", border: `1px solid ${C.line}`, color: C.inkSoft, background: "transparent", cursor: "pointer", fontFamily: "inherit" }}>خروج</button>
             </div>
           ) : (
@@ -125,8 +127,9 @@ export default function NavBar() {
           </nav>
           <div style={{ borderTop: `1px solid ${C.line}`, marginTop: "0.75rem", paddingTop: "0.75rem" }}>
             {isLoggedIn ? (
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                <span style={{ fontSize: "0.8125rem", color: C.inkSoft }}>{user?.profile?.full_name || "مرحبًا"}</span>
+              <div style={{ display: "grid", gap: "0.5rem" }}>
+                <Link href="/profile" style={{ ...tabStyle(location === "/profile"), padding: "0.6rem 0.75rem" }}>{user?.profile?.full_name || "ملفي الشخصي"}</Link>
+                <Link href="/my-lessons" style={{ ...tabStyle(location === "/my-lessons"), padding: "0.6rem 0.75rem" }}>دروسي المسجلة</Link>
                 <button onClick={logout} style={{ fontSize: "0.8125rem", padding: "0.4rem 0.9rem", borderRadius: "0.375rem", border: `1px solid ${C.line}`, color: C.inkSoft, background: "transparent", cursor: "pointer", fontFamily: "inherit" }}>خروج</button>
               </div>
             ) : (
