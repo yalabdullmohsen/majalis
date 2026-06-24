@@ -19,13 +19,14 @@ import FawaidPage from "@/pages/FawaidPage";
 import QaPage from "@/pages/QaPage";
 import QuizPage from "@/pages/QuizPage";
 import LoginPage from "@/pages/LoginPage";
+import TranscribePage from "@/pages/TranscribePage";
 import NotFound from "@/pages/not-found";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { usePageSeo } from "@/lib/seo";
 import { Loading } from "@/components/ui-common";
 
 const AssistantPage = lazy(() => import("@/pages/AssistantPage"));
 const CondolencesPage = lazy(() => import("@/pages/CondolencesPage"));
-const TranscribePage = lazy(() => import("@/pages/TranscribePage"));
 const CardsPage = lazy(() => import("@/pages/CardsPage"));
 const AdminPage = lazy(() => import("@/pages/AdminPage"));
 const AdminDashboardPage = lazy(() => import("@/pages/admin/AdminDashboardPage"));
@@ -64,7 +65,11 @@ function Router() {
       <Route path="/quiz" component={QuizPage} />
       <Route path="/assistant"><LazyRoute component={AssistantPage} /></Route>
       <Route path="/condolences"><LazyRoute component={CondolencesPage} /></Route>
-      <Route path="/transcribe"><LazyRoute component={TranscribePage} /></Route>
+      <Route path="/transcribe">
+        <ErrorBoundary>
+          <TranscribePage />
+        </ErrorBoundary>
+      </Route>
       <Route path="/cards"><LazyRoute component={CardsPage} /></Route>
       <Route path="/login" component={LoginPage} />
       <Route path="/admin/dashboard">

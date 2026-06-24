@@ -4,6 +4,22 @@ import { C } from "@/lib/theme";
 type Props = { children: ReactNode };
 type State = { error: Error | null };
 
+function userFacingErrorMessage(error: Error): string {
+  const msg = (error.message || "").toLowerCase();
+
+  if (
+    msg.includes("failed to fetch dynamically imported module") ||
+    msg.includes("loading chunk") ||
+    msg.includes("chunkloaderror") ||
+    msg.includes("/assets/") ||
+    msg.includes("importing a module script failed")
+  ) {
+    return "تعذر تحميل هذه الصفحة. حدّث المتصفح أو حاول مجددًا.";
+  }
+
+  return "تعذر عرض هذه الصفحة. حاول مجددًا.";
+}
+
 export class ErrorBoundary extends Component<Props, State> {
   state: State = { error: null };
 
@@ -35,12 +51,12 @@ export class ErrorBoundary extends Component<Props, State> {
           <h1 style={{ color: C.emeraldDeep, marginBottom: "0.75rem", fontSize: "1.35rem" }}>
             حدث خطأ غير متوقع
           </h1>
-          <p style={{ color: "#b91c1c", marginBottom: "1rem", lineHeight: 1.7, fontSize: "0.9rem" }}>
-            {this.state.error.message || "تعذر عرض هذه الصفحة."}
+          <p style={{ color: C.inkSoft, marginBottom: "1rem", lineHeight: 1.7, fontSize: "0.95rem" }}>
+            {userFacingErrorMessage(this.state.error)}
           </p>
           <button
             type="button"
-            onClick={this.reset}
+            onClick={() => window.location.reload()}
             style={{
               padding: "0.55rem 1.1rem",
               borderRadius: "0.5rem",
