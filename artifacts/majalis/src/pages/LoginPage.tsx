@@ -1,13 +1,41 @@
 import { useState } from "react";
 import { useLocation } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
+import { TurnstileCaptcha, isCaptchaConfigured } from "@/components/TurnstileCaptcha";
 import { C } from "@/lib/theme";
+
+const MAX_AUTH_ATTEMPTS = 5;
+const AUTH_COOLDOWN_MS = 15 * 60 * 1000;
+
+function authAttemptKey(mode: "login" | "register", email: string) {
+  return `majalis-auth-attempts:${mode}:${email.trim().toLowerCase()}`;
+}
+
+function readAuthAttempts(mode: "login" | "register", email: string) {
+  const raw = window.localStorage.getItem(authAttemptKey(mode, email));
+  if (!raw) return { count: 0, lockedUntil: 0 };
+  try {
+    return JSON.parse(raw) as { count: number; lockedUntil: number };
+  } catch {
+    return { count: 0, lockedUntil: 0 };
+  }
+}
+
+function writeAuthAttempts(mode: "login" | "register", email: string, attempts: { count: number; lockedUntil: number }) {
+  window.localStorage.setItem(authAttemptKey(mode, email), JSON.stringify(attempts));
+}
+
+function clearAuthAttempts(mode: "login" | "register", email: string) {
+  window.localStorage.removeItem(authAttemptKey(mode, email));
+}
 
 export default function LoginPage() {
   const [mode, setMode] = useState<"login" | "register">("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
+  const [captchaToken, setCaptchaToken] = useState("");
+  const [captchaResetKey, setCaptchaResetKey] = useState(0);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const { login, register } = useAuth() as any;
@@ -18,15 +46,32 @@ export default function LoginPage() {
     setError("");
     setLoading(true);
     try {
+      const attempts = readAuthAttempts(mode, email);
+      if (attempts.lockedUntil > Date.now()) {
+        const minutes = Math.ceil((attempts.lockedUntil - Date.now()) / 60000);
+        throw new Error(`محاولات كثيرة. حاول مرة أخرى بعد ${minutes} دقيقة.`);
+      }
+      if (!isCaptchaConfigured() || !captchaToken) {
+        throw new Error("يرجى إكمال التحقق الأمني قبل المتابعة.");
+      }
       if (mode === "login") {
-        const { error } = await login(email, password);
+        const { error } = await login(email, password, captchaToken);
         if (error) throw error;
       } else {
-        const { error } = await register(email, password, fullName);
+        const { error } = await register(email, password, fullName, captchaToken);
         if (error) throw error;
       }
+      clearAuthAttempts(mode, email);
       navigate("/");
     } catch (err: any) {
+      const attempts = readAuthAttempts(mode, email);
+      const nextCount = attempts.count + 1;
+      writeAuthAttempts(mode, email, {
+        count: nextCount,
+        lockedUntil: nextCount >= MAX_AUTH_ATTEMPTS ? Date.now() + AUTH_COOLDOWN_MS : 0,
+      });
+      setCaptchaToken("");
+      setCaptchaResetKey((key) => key + 1);
       setError(err.message || "حدث خطأ، يرجى المحاولة مجدداً.");
     }
     setLoading(false);
@@ -78,10 +123,11 @@ export default function LoginPage() {
               style={{ width: "100%", padding: "0.5rem 0.75rem", borderRadius: "0.375rem", border: `1px solid ${C.line}`, fontSize: "0.875rem", fontFamily: "inherit", outline: "none", background: C.parchment, color: C.ink }}
             />
           </div>
+          <TurnstileCaptcha key={`${mode}-${captchaResetKey}`} onToken={setCaptchaToken} />
           <button
             type="submit"
-            disabled={loading}
-            style={{ width: "100%", padding: "0.625rem", borderRadius: "0.375rem", background: C.emerald, color: C.parchment, border: "none", cursor: "pointer", fontSize: "0.875rem", fontWeight: 700, fontFamily: "inherit", opacity: loading ? 0.7 : 1 }}
+            disabled={loading || !captchaToken}
+            style={{ width: "100%", padding: "0.625rem", borderRadius: "0.375rem", background: C.emerald, color: C.parchment, border: "none", cursor: loading || !captchaToken ? "not-allowed" : "pointer", fontSize: "0.875rem", fontWeight: 700, fontFamily: "inherit", opacity: loading || !captchaToken ? 0.7 : 1 }}
           >
             {loading ? "جارٍ المعالجة..." : mode === "login" ? "دخول" : "إنشاء الحساب"}
           </button>
@@ -90,7 +136,7 @@ export default function LoginPage() {
         <p style={{ textAlign: "center", marginTop: "1rem", fontSize: "0.875rem", color: C.inkSoft }}>
           {mode === "login" ? "ليس لديك حساب؟ " : "لديك حساب؟ "}
           <button
-            onClick={() => { setMode(mode === "login" ? "register" : "login"); setError(""); }}
+            onClick={() => { setMode(mode === "login" ? "register" : "login"); setError(""); setCaptchaToken(""); setCaptchaResetKey((key) => key + 1); }}
             style={{ color: C.emeraldDeep, background: "none", border: "none", cursor: "pointer", fontFamily: "inherit", fontSize: "0.875rem", textDecoration: "underline" }}
           >
             {mode === "login" ? "سجّل الآن" : "سجّل دخولك"}

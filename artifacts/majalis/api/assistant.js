@@ -3,6 +3,10 @@ import { VERSION as ANTHROPIC_SDK_VERSION } from "@anthropic-ai/sdk/version";
 
 const ANTHROPIC_VERSION = "2023-06-01";
 const MODEL = "claude-haiku-4-5";
+const MAX_BODY_BYTES = 32 * 1024;
+const RATE_LIMIT_WINDOW_MS = 60 * 1000;
+const RATE_LIMIT_MAX_REQUESTS = 20;
+const rateLimitBuckets = new Map();
 
 const SYSTEM_PROMPT = `
 أنت "المساعد العلمي" في منصة مجالس.
@@ -39,6 +43,39 @@ function createHttpError(statusCode, message) {
   return error;
 }
 
+function getHeader(req, name) {
+  const headers = req?.headers;
+  if (!headers) return "";
+  if (typeof headers.get === "function") return headers.get(name) || "";
+  return headers[name] || headers[name.toLowerCase()] || "";
+}
+
+function getClientIp(req) {
+  const forwarded = getHeader(req, "x-forwarded-for");
+  if (forwarded) return forwarded.split(",")[0].trim();
+  return req?.socket?.remoteAddress || "unknown";
+}
+
+function enforceRateLimit(req) {
+  const ip = getClientIp(req);
+  const now = Date.now();
+  const bucket = rateLimitBuckets.get(ip) || { count: 0, resetAt: now + RATE_LIMIT_WINDOW_MS };
+
+  if (now > bucket.resetAt) {
+    bucket.count = 0;
+    bucket.resetAt = now + RATE_LIMIT_WINDOW_MS;
+  }
+
+  bucket.count += 1;
+  rateLimitBuckets.set(ip, bucket);
+
+  if (bucket.count > RATE_LIMIT_MAX_REQUESTS) {
+    const error = createHttpError(429, "طلبات كثيرة، حاول لاحقًا.");
+    error.retryAfter = Math.ceil((bucket.resetAt - now) / 1000);
+    throw error;
+  }
+}
+
 function getAnthropicApiKey() {
   const rawApiKey = process.env.ANTHROPIC_API_KEY || "";
   const apiKey = rawApiKey.trim();
@@ -70,6 +107,9 @@ async function parseBody(req) {
     rawBody = "";
     for await (const chunk of req) {
       rawBody += chunk;
+      if (Buffer.byteLength(rawBody, "utf8") > MAX_BODY_BYTES) {
+        throw createHttpError(413, "حجم الطلب كبير جدًا.");
+      }
     }
   }
 
@@ -78,6 +118,9 @@ async function parseBody(req) {
   }
 
   if (typeof rawBody === "string") {
+    if (Buffer.byteLength(rawBody, "utf8") > MAX_BODY_BYTES) {
+      throw createHttpError(413, "حجم الطلب كبير جدًا.");
+    }
     try {
       return JSON.parse(rawBody);
     } catch {
@@ -162,6 +205,8 @@ async function handleAssistantRequest(req, res) {
     return;
   }
 
+  enforceRateLimit(req);
+
   const body = await parseBody(req);
   const messages = sanitizeMessages(body.messages);
   const lastUserMessage = [...messages].reverse().find((message) => message.role === "user");
@@ -223,6 +268,9 @@ export default async function handler(req, res) {
     await handleAssistantRequest(req, res);
   } catch (error) {
     const status = getErrorStatus(error);
+    if (status === 429 && Number.isInteger(error?.retryAfter)) {
+      res.setHeader("Retry-After", String(error.retryAfter));
+    }
     logAssistantError("Assistant API route failed", error, {
       status,
       method: req?.method,

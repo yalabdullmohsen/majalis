@@ -24,7 +24,7 @@ export default function FawaidPage() {
     e.preventDefault();
     if (!text.trim()) return;
     setSubmitting(true);
-    await submitFawaid(user.id, text, authorName || user?.profile?.full_name || "");
+    await submitFawaid(text, authorName || user?.profile?.full_name || "");
     setSubmitting(false);
     setSubmitted(true);
     setText("");

@@ -26,7 +26,7 @@ export default function LessonsPage() {
 
   useEffect(() => {
     if (isLoggedIn && user?.id) {
-      getMyRegistrations(user.id).then(setMyReg);
+      getMyRegistrations().then(setMyReg);
     }
   }, [isLoggedIn, user]);
 
@@ -35,10 +35,10 @@ export default function LessonsPage() {
   const toggleReg = async (lessonId: string) => {
     if (!isLoggedIn) return alert("يرجى تسجيل الدخول أولاً");
     if (myReg.includes(lessonId)) {
-      await unregisterFromLesson(user.id, lessonId);
+      await unregisterFromLesson(lessonId);
       setMyReg(myReg.filter((id) => id !== lessonId));
     } else {
-      await registerForLesson(user.id, lessonId);
+      await registerForLesson(lessonId);
       setMyReg([...myReg, lessonId]);
     }
   };

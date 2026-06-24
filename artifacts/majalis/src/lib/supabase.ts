@@ -23,16 +23,24 @@ export const supabase = isConfigured
   ? createClient(url, key)
   : createClient("https://placeholder.supabase.co", "placeholder-anon-key-placeholder-anon-key-placeholder-anon-key-p");
 
-export async function signUp(email: string, password: string, fullName: string) {
+async function requireAuthUserId(): Promise<string> {
+  const { data: { user }, error } = await supabase.auth.getUser();
+  if (error || !user) {
+    throw new Error("يجب تسجيل الدخول أولًا.");
+  }
+  return user.id;
+}
+
+export async function signUp(email: string, password: string, fullName: string, captchaToken: string) {
   return await supabase.auth.signUp({
     email,
     password,
-    options: { data: { full_name: fullName } },
+    options: { data: { full_name: fullName }, captchaToken },
   });
 }
 
-export async function signIn(email: string, password: string) {
-  return await supabase.auth.signInWithPassword({ email, password });
+export async function signIn(email: string, password: string, captchaToken: string) {
+  return await supabase.auth.signInWithPassword({ email, password, options: { captchaToken } });
 }
 
 export async function signOut() {
@@ -43,23 +51,8 @@ export async function getCurrentUser() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return null;
 
-  // Fetch existing profile
-  let { data: profile } = await supabase
+  const { data: profile } = await supabase
     .from("profiles").select("*").eq("id", user.id).single();
-
-  // If no profile exists yet (trigger may be missing), create it now
-  if (!profile) {
-    const { data: created } = await supabase
-      .from("profiles")
-      .upsert({
-        id: user.id,
-        full_name: user.user_metadata?.full_name ?? "",
-        role: "user",
-      }, { onConflict: "id" })
-      .select("*")
-      .single();
-    profile = created;
-  }
 
   return { ...user, profile };
 }
@@ -97,19 +90,22 @@ export async function getLessons({ category, city, search }: { category?: string
   return { data: result, error };
 }
 
-export async function registerForLesson(userId: string, lessonId: string) {
+export async function registerForLesson(lessonId: string) {
+  const userId = await requireAuthUserId();
   return await supabase
     .from("lesson_registrations")
     .insert({ user_id: userId, lesson_id: lessonId });
 }
 
-export async function unregisterFromLesson(userId: string, lessonId: string) {
+export async function unregisterFromLesson(lessonId: string) {
+  const userId = await requireAuthUserId();
   return await supabase
     .from("lesson_registrations").delete()
     .eq("user_id", userId).eq("lesson_id", lessonId);
 }
 
-export async function getMyRegistrations(userId: string) {
+export async function getMyRegistrations() {
+  const userId = await requireAuthUserId();
   const { data } = await supabase
     .from("lesson_registrations")
     .select("lesson_id").eq("user_id", userId);
@@ -124,7 +120,8 @@ export async function getApprovedFawaid() {
   return { data: data || [], error };
 }
 
-export async function submitFawaid(userId: string, text: string, authorName: string) {
+export async function submitFawaid(text: string, authorName: string) {
+  const userId = await requireAuthUserId();
   return await supabase.from("fawaid").insert({
     text, author_name: authorName, submitted_by: userId, status: "pending",
   });
@@ -158,7 +155,8 @@ export async function getMiracles({ category, sourceType }: { category?: string;
   return { data: data || [], error };
 }
 
-export async function getMyAchievements(userId: string) {
+export async function getMyAchievements() {
+  const userId = await requireAuthUserId();
   const { data } = await supabase
     .from("achievements").select("*")
     .eq("user_id", userId)

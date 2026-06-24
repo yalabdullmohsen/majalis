@@ -16,6 +16,7 @@ import LoginPage from "@/pages/LoginPage";
 import AdminPage from "@/pages/AdminPage";
 import NotFound from "@/pages/not-found";
 import { usePageSeo } from "@/lib/seo";
+import { RequireAdmin } from "@/components/RequireAdmin";
 
 function SeoManager() {
   const [location] = useLocation();
@@ -39,7 +40,13 @@ function Router() {
       <Route path="/qa" component={QaPage} />
       <Route path="/assistant" component={AssistantPage} />
       <Route path="/login" component={LoginPage} />
-      <Route path="/admin" component={AdminPage} />
+      <Route path="/admin">
+        {() => (
+          <RequireAdmin>
+            <AdminPage />
+          </RequireAdmin>
+        )}
+      </Route>
       <Route component={NotFound} />
     </Switch>
   );
