@@ -1,147 +1,275 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link } from "wouter";
-import { CondolenceCard1 } from "@/components/condolences/CondolenceCard1";
-import { CondolenceCard2 } from "@/components/condolences/CondolenceCard2";
-import { CondolenceCard3 } from "@/components/condolences/CondolenceCard3";
-import { CondolenceCard4 } from "@/components/condolences/CondolenceCard4";
-import { defaultCondolenceData, type CondolenceData } from "@/components/condolences/types";
+import html2canvas from "html2canvas";
 
-/** تعريف التصاميم الأربعة المتاحة */
-const DESIGNS = [
-  { id: "design-1", title: "الكلاسيكي الداكن", Card: CondolenceCard1 },
-  { id: "design-2", title: "الأبيض الأرجواني", Card: CondolenceCard2 },
-  { id: "design-3", title: "الرمادي الدمشقي", Card: CondolenceCard3 },
-  { id: "design-4", title: "الخضراء الإسلامية", Card: CondolenceCard4 },
-] as const;
+type CondolenceTemplate = {
+  id: string;
+  name: string;
+  bg: string;
+  border: string;
+  mainColor: string;
+  subColor: string;
+  accent: string;
+};
 
-type DesignId = (typeof DESIGNS)[number]["id"];
+type CondolenceFormData = {
+  deceasedName: string;
+  familyName: string;
+  deathDate: string;
+  condolenceTime: string;
+  condolenceLocation: string;
+  prayer: string;
+  phone: string;
+};
 
-/** فتح نافذة طباعة لبطاقة واحدة */
-function printCard(cardId: string) {
-  document.body.classList.add(`print-${cardId}`);
-  window.print();
-  window.setTimeout(() => {
-    document.body.classList.remove(`print-${cardId}`);
-  }, 600);
-}
+const CONDOLENCE_TEMPLATES: CondolenceTemplate[] = [
+  {
+    id: "dark_classic",
+    name: "الكلاسيكي الداكن",
+    bg: "#1a1a2e",
+    border: "#d4af37",
+    mainColor: "#d4af37",
+    subColor: "#f5f0e8",
+    accent: "#d4af37",
+  },
+  {
+    id: "deep_green",
+    name: "الأخضر الإسلامي",
+    bg: "#0d4a2a",
+    border: "#d4af37",
+    mainColor: "#ffffff",
+    subColor: "#d4f7e7",
+    accent: "#fbbf24",
+  },
+  {
+    id: "white_purple",
+    name: "الأبيض الأرجواني",
+    bg: "#ffffff",
+    border: "#6b21a8",
+    mainColor: "#1e1b4b",
+    subColor: "#4c1d95",
+    accent: "#7c3aed",
+  },
+  {
+    id: "dark_gray",
+    name: "الرمادي الدمشقي",
+    bg: "#1a1a1a",
+    border: "#9ca3af",
+    mainColor: "#f5f0e8",
+    subColor: "#d4af37",
+    accent: "#9ca3af",
+  },
+];
+
+const defaultData: CondolenceFormData = {
+  deceasedName: "الحاج محمد بن عبدالله الفلاني",
+  familyName: "عائلة الفلاني الكريمة",
+  deathDate: "١٥ محرم ١٤٤٦ هـ",
+  condolenceTime: "من بعد صلاة المغرب حتى العشاء",
+  condolenceLocation: "ديوانية العائلة — مدينة الكويت",
+  prayer: "رحمه الله وأسكنه فسيح جناته",
+  phone: "",
+};
+
+const FORM_FIELDS: Array<{ field: keyof CondolenceFormData; label: string; placeholder: string }> = [
+  { field: "deceasedName", label: "اسم الفقيد", placeholder: "الحاج محمد بن عبدالله" },
+  { field: "familyName", label: "العائلة المعزّاة", placeholder: "عائلة الفلاني الكريمة" },
+  { field: "deathDate", label: "تاريخ الوفاة", placeholder: "١٥ محرم ١٤٤٦ هـ" },
+  { field: "condolenceTime", label: "وقت العزاء", placeholder: "من بعد المغرب حتى العشاء" },
+  { field: "condolenceLocation", label: "مكان العزاء", placeholder: "ديوانية العائلة" },
+  { field: "prayer", label: "الدعاء", placeholder: "رحمه الله وأسكنه فسيح جناته" },
+  { field: "phone", label: "رقم التواصل (اختياري)", placeholder: "+965 XXXX XXXX" },
+];
+
+const CARD_WIDTH = 600;
+const CARD_MIN_HEIGHT = 750;
+const PREVIEW_SCALE = 0.6;
 
 export default function CondolencesPage() {
-  const [data, setData] = useState<CondolenceData>(defaultCondolenceData);
+  const [data, setData] = useState(defaultData);
+  const [selectedTemplate, setSelectedTemplate] = useState(CONDOLENCE_TEMPLATES[0]);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
 
-  const update = (key: keyof CondolenceData, value: string) => {
-    setData((current) => ({ ...current, [key]: value }));
+  const update = (field: keyof CondolenceFormData, value: string) => {
+    setData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handlePrint = (designId: DesignId) => {
-    printCard(designId);
+  const downloadCard = async () => {
+    if (!cardRef.current) return;
+    setIsGenerating(true);
+    try {
+      const canvas = await html2canvas(cardRef.current, { scale: 3, useCORS: true });
+      const link = document.createElement("a");
+      link.download = `تعزية-${data.deceasedName}-${Date.now()}.png`;
+      link.href = canvas.toDataURL("image/png", 1.0);
+      link.click();
+    } finally {
+      setIsGenerating(false);
+    }
   };
+
+  const t = selectedTemplate;
 
   return (
-    <div dir="rtl" className="condolences-studio min-h-screen bg-[#FAF5EA] text-[#241F18]">
-      {/* رأس الصفحة — جزء من موقع مجالس العلم */}
-      <header className="condolences-studio-header border-b border-[#E0D7C4] bg-white/80 backdrop-blur-sm no-print">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-4">
-          <div>
-            <Link href="/" className="text-sm font-bold text-[#164E3C] hover:underline">
-              ← مجالس العلم
-            </Link>
-            <h1 className="mt-1 font-['Scheherazade_New','Amiri',serif] text-2xl font-bold text-[#164E3C]">
-              تصاميم بطاقات التعزية
-            </h1>
-            <p className="text-sm text-[#5B5446]">أربعة قوالب عربية إسلامية — معاينة مباشرة وطباعة فورية</p>
-          </div>
-        </div>
-      </header>
+    <div dir="rtl" className="min-h-screen bg-[#FAF5EA] py-8">
+      <div className="mx-auto max-w-6xl px-4">
+        <Link href="/" className="text-sm font-bold text-[#164E3C] hover:underline">
+          ← مجالس العلم
+        </Link>
+        <h1 className="mt-2 text-3xl font-bold text-[#164E3C]">🤲 بطاقات التعزية الإسلامية</h1>
+        <p className="mb-8 text-[#5B5446]">إنا لله وإنا إليه راجعون — أنشئ بطاقة تعزية احترافية</p>
 
-      <main className="mx-auto max-w-6xl px-4 py-8">
-        {/* حقول الإدخال — معاينة حية */}
-        <section className="no-print mb-10 rounded-2xl border border-[#E0D7C4] bg-white p-6 shadow-sm">
-          <h2 className="mb-4 text-lg font-bold text-[#164E3C]">بيانات التعزية</h2>
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-            <label className="flex flex-col gap-1 text-sm">
-              <span className="font-semibold text-[#5B5446]">اسم المتوفى</span>
-              <input
-                className="rounded-lg border border-[#E0D7C4] px-3 py-2 outline-none focus:border-[#1F6E54]"
-                value={data.deceasedName}
-                onChange={(e) => update("deceasedName", e.target.value)}
-              />
-            </label>
-            <label className="flex flex-col gap-1 text-sm">
-              <span className="font-semibold text-[#5B5446]">اسم العائلة المُعزَّاة</span>
-              <input
-                className="rounded-lg border border-[#E0D7C4] px-3 py-2 outline-none focus:border-[#1F6E54]"
-                value={data.familyName}
-                onChange={(e) => update("familyName", e.target.value)}
-              />
-            </label>
-            <label className="flex flex-col gap-1 text-sm">
-              <span className="font-semibold text-[#5B5446]">تاريخ الوفاة</span>
-              <input
-                className="rounded-lg border border-[#E0D7C4] px-3 py-2 outline-none focus:border-[#1F6E54]"
-                value={data.deathDate}
-                onChange={(e) => update("deathDate", e.target.value)}
-              />
-            </label>
-            <label className="flex flex-col gap-1 text-sm">
-              <span className="font-semibold text-[#5B5446]">وقت العزاء</span>
-              <input
-                className="rounded-lg border border-[#E0D7C4] px-3 py-2 outline-none focus:border-[#1F6E54]"
-                value={data.condolenceTime}
-                onChange={(e) => update("condolenceTime", e.target.value)}
-              />
-            </label>
-            <label className="flex flex-col gap-1 text-sm md:col-span-2">
-              <span className="font-semibold text-[#5B5446]">مكان العزاء</span>
-              <input
-                className="rounded-lg border border-[#E0D7C4] px-3 py-2 outline-none focus:border-[#1F6E54]"
-                value={data.condolenceLocation}
-                onChange={(e) => update("condolenceLocation", e.target.value)}
-              />
-            </label>
-            <label className="flex flex-col gap-1 text-sm md:col-span-2">
-              <span className="font-semibold text-[#5B5446]">دعاء قصير</span>
-              <textarea
-                className="rounded-lg border border-[#E0D7C4] px-3 py-2 outline-none focus:border-[#1F6E54]"
-                rows={2}
-                value={data.prayer}
-                onChange={(e) => update("prayer", e.target.value)}
-              />
-            </label>
-          </div>
-        </section>
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+          <div className="space-y-4">
+            <div className="rounded-2xl border border-[#E0D7C4] bg-white p-5 shadow-sm">
+              <h2 className="mb-3 font-bold text-[#241F18]">🎨 القالب</h2>
+              <div className="grid grid-cols-2 gap-2">
+                {CONDOLENCE_TEMPLATES.map((tmpl) => (
+                  <button
+                    key={tmpl.id}
+                    type="button"
+                    onClick={() => setSelectedTemplate(tmpl)}
+                    className={`rounded-xl border-2 p-3 text-sm font-medium transition-all ${
+                      selectedTemplate.id === tmpl.id
+                        ? "border-[#1F6E54] ring-2 ring-[#CFE0D3]"
+                        : "border-[#E0D7C4]"
+                    }`}
+                    style={{ backgroundColor: tmpl.bg }}
+                  >
+                    <span style={{ color: tmpl.mainColor }}>{tmpl.name}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
 
-        {/* شبكة التصاميم — عمودان على سطح المكتب */}
-        <section className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-          {DESIGNS.map(({ id, title, Card }) => (
-            <div
-              key={id}
-              className="condolence-design-wrap rounded-2xl border border-[#E0D7C4] bg-[#F0E8D6]/40 p-4"
-              data-design={id}
+            <div className="space-y-3 rounded-2xl border border-[#E0D7C4] bg-white p-5 shadow-sm">
+              <h2 className="mb-1 font-bold text-[#241F18]">📝 البيانات</h2>
+              {FORM_FIELDS.map(({ field, label, placeholder }) => (
+                <div key={field}>
+                  <label className="mb-1 block text-xs font-medium text-[#5B5446]">{label}</label>
+                  <input
+                    value={data[field]}
+                    onChange={(e) => update(field, e.target.value)}
+                    placeholder={placeholder}
+                    className="w-full rounded-lg border border-[#E0D7C4] px-3 py-2 text-right text-sm outline-none focus:ring-2 focus:ring-[#1F6E54]"
+                    style={{ fontFamily: "'Scheherazade New', serif" }}
+                  />
+                </div>
+              ))}
+            </div>
+
+            <button
+              type="button"
+              onClick={downloadCard}
+              disabled={isGenerating}
+              className="w-full rounded-xl bg-[#164E3C] py-4 text-lg font-bold text-white transition-all hover:bg-[#0f352b] disabled:opacity-50"
             >
-              <div className="no-print mb-3 flex flex-wrap items-center justify-between gap-2">
-                <h3 className="font-bold text-[#164E3C]">{title}</h3>
-                <div className="flex gap-2">
-                  <button
-                    type="button"
-                    className="rounded-lg bg-[#1F6E54] px-3 py-1.5 text-sm font-bold text-white hover:bg-[#164E3C]"
-                    onClick={() => handlePrint(id)}
+              {isGenerating ? "⏳ جاري الإنشاء..." : "⬇️ تحميل بطاقة التعزية"}
+            </button>
+          </div>
+
+          <div>
+            <h2 className="mb-4 text-lg font-bold text-[#241F18]">👁️ المعاينة</h2>
+            <div
+              className="flex justify-center overflow-hidden rounded-2xl shadow-2xl"
+              style={{
+                width: CARD_WIDTH * PREVIEW_SCALE,
+                minHeight: CARD_MIN_HEIGHT * PREVIEW_SCALE,
+              }}
+            >
+              <div
+                style={{
+                  transform: `scale(${PREVIEW_SCALE})`,
+                  transformOrigin: "top center",
+                  width: CARD_WIDTH,
+                }}
+              >
+                <div
+                  ref={cardRef}
+                  style={{
+                    width: CARD_WIDTH,
+                    minHeight: CARD_MIN_HEIGHT,
+                    backgroundColor: t.bg,
+                    border: `2px solid ${t.border}`,
+                    padding: "48px 40px",
+                    direction: "rtl",
+                    fontFamily: "'Scheherazade New', serif",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: 20,
+                    boxSizing: "border-box",
+                  }}
+                >
+                  <div
+                    style={{
+                      color: t.mainColor,
+                      fontSize: 42,
+                      fontWeight: 700,
+                      textAlign: "center",
+                      lineHeight: 1.7,
+                    }}
                   >
-                    طباعة
-                  </button>
-                  <button
-                    type="button"
-                    className="rounded-lg border border-[#1F6E54] px-3 py-1.5 text-sm font-bold text-[#164E3C] hover:bg-[#CFE0D3]"
-                    onClick={() => handlePrint(id)}
-                  >
-                    نسخ التصميم
-                  </button>
+                    إنا لله وإنا إليه راجعون
+                  </div>
+
+                  <div style={{ color: t.accent, opacity: 0.6, fontSize: 24 }}>✦ ✧ ✦</div>
+
+                  <div style={{ textAlign: "center" }}>
+                    <div style={{ color: t.subColor, fontSize: 18, opacity: 0.8 }}>انتقل إلى رحمة الله</div>
+                    <div style={{ color: t.mainColor, fontSize: 36, fontWeight: 700, marginTop: 8 }}>
+                      {data.deceasedName}
+                    </div>
+                    <div style={{ color: t.subColor, fontSize: 20, marginTop: 4, opacity: 0.8 }}>
+                      {data.deathDate}
+                    </div>
+                  </div>
+
+                  <div style={{ width: "70%", height: 1, backgroundColor: t.border, opacity: 0.4 }} />
+
+                  <div style={{ color: t.accent, fontSize: 22, textAlign: "center", fontStyle: "italic" }}>
+                    {data.prayer}
+                  </div>
+
+                  {(data.condolenceTime || data.condolenceLocation) && (
+                    <div
+                      style={{
+                        border: `1px solid ${t.border}`,
+                        borderRadius: 12,
+                        padding: "16px 24px",
+                        textAlign: "center",
+                        width: "90%",
+                      }}
+                    >
+                      <div style={{ color: t.subColor, fontSize: 18, opacity: 0.8, marginBottom: 8 }}>
+                        موعد ومكان العزاء
+                      </div>
+                      {data.condolenceTime && (
+                        <div style={{ color: t.mainColor, fontSize: 20 }}>{data.condolenceTime}</div>
+                      )}
+                      {data.condolenceLocation && (
+                        <div style={{ color: t.mainColor, fontSize: 20, marginTop: 4 }}>{data.condolenceLocation}</div>
+                      )}
+                      {data.phone && (
+                        <div style={{ color: t.accent, fontSize: 18, marginTop: 8 }}>{data.phone}</div>
+                      )}
+                    </div>
+                  )}
+
+                  <div style={{ color: t.subColor, fontSize: 20, textAlign: "center", opacity: 0.9 }}>
+                    تتقدم {data.familyName} بخالص العزاء والمواساة
+                  </div>
+
+                  <div style={{ color: t.subColor, opacity: 0.4, fontSize: 14, marginTop: "auto" }}>
+                    مجالس العلم
+                  </div>
                 </div>
               </div>
-              <Card data={data} id={id} />
             </div>
-          ))}
-        </section>
-      </main>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
