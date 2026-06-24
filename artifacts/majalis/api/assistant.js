@@ -1,4 +1,7 @@
 import Anthropic from "@anthropic-ai/sdk";
+import { sendJson, endEmpty } from "./_http.js";
+
+export const maxDuration = 30;
 
 const ANTHROPIC_VERSION = "2023-06-01";
 const MODEL = "claude-3-5-haiku-latest";
@@ -31,10 +34,6 @@ const DEFINITIVE_FATWA_PATTERNS = [
   /زكاة/,
 ];
 
-function setJsonHeaders(res) {
-  res.setHeader("Content-Type", "application/json; charset=utf-8");
-}
-
 function getApiKey() {
   return (process.env.ANTHROPIC_API_KEY || "").trim();
 }
@@ -54,34 +53,35 @@ function createAnthropicClient(apiKey) {
 }
 
 async function parseBody(req) {
-  let rawBody = req.body;
+  if (req.body !== undefined && req.body !== null && req.body !== "") {
+    if (typeof req.body === "object") return req.body;
+    if (typeof req.body === "string") {
+      try {
+        return JSON.parse(req.body);
+      } catch {
+        return null;
+      }
+    }
+  }
 
-  if (rawBody === undefined) {
-    rawBody = "";
+  let rawBody = "";
+  if (typeof req.on === "function") {
     for await (const chunk of req) {
       rawBody += chunk;
     }
   }
 
-  if (!rawBody) {
-    return {};
-  }
+  if (!rawBody) return {};
 
-  if (typeof rawBody === "string") {
-    try {
-      return JSON.parse(rawBody);
-    } catch {
-      return null;
-    }
+  try {
+    return JSON.parse(rawBody);
+  } catch {
+    return null;
   }
-
-  return rawBody;
 }
 
 function sanitizeMessages(messages) {
-  if (!Array.isArray(messages)) {
-    return [];
-  }
+  if (!Array.isArray(messages)) return [];
 
   const sanitized = messages
     .map((message) => ({
@@ -123,42 +123,56 @@ function successPayload(answer) {
 }
 
 async function handleAssistantRequest(req, res) {
+  const hasKey = Boolean(getApiKey());
+
+  console.log("[assistant] request received", {
+    method: req.method,
+    hasApiKey: hasKey,
+    url: req.url,
+  });
+
   if (req.method === "OPTIONS") {
-    res.status(204).end();
+    endEmpty(res, 204);
     return;
   }
 
   if (req.method === "GET") {
-    res.status(200).json({ ok: true, available: Boolean(getApiKey()) });
+    sendJson(res, 200, { ok: true, available: hasKey });
     return;
   }
 
   if (req.method !== "POST") {
-    res.status(405).json({ ok: false, message: "الطريقة غير مدعومة." });
+    sendJson(res, 405, { ok: false, message: "الطريقة غير مدعومة." });
     return;
   }
 
-  const apiKey = getApiKey();
-  if (!apiKey) {
+  if (!hasKey) {
     console.error("[assistant] Service unavailable: API key not configured");
-    res.status(200).json(fallbackPayload(UNAVAILABLE_MESSAGE));
+    sendJson(res, 200, fallbackPayload(UNAVAILABLE_MESSAGE));
     return;
   }
 
   const body = await parseBody(req);
   if (body === null) {
-    res.status(400).json({ ok: false, message: "اكتب سؤالك أولًا." });
+    sendJson(res, 400, { ok: false, message: "اكتب سؤالك أولًا." });
     return;
   }
 
   const userMessage = extractUserMessage(body);
   if (!userMessage) {
-    res.status(400).json({ ok: false, message: "اكتب سؤالك أولًا." });
+    sendJson(res, 400, { ok: false, message: "اكتب سؤالك أولًا." });
     return;
   }
 
+  console.log("[assistant] processing message", {
+    length: userMessage.length,
+    preview: userMessage.slice(0, 80),
+  });
+
   if (looksLikeDefinitiveFatwaRequest(userMessage)) {
-    res.status(200).json(
+    sendJson(
+      res,
+      200,
       successPayload(
         'هذه مسألة تحتاج إلى عالم مختص. يمكنني مساعدتك بإرشاد عام: ابحث في المنصة عن كلمات المسألة أو اسم الشيخ المناسب، ثم اعرض الواقعة بتفاصيلها على عالم مؤهل.',
       ),
@@ -167,7 +181,7 @@ async function handleAssistantRequest(req, res) {
   }
 
   try {
-    const client = createAnthropicClient(apiKey);
+    const client = createAnthropicClient(getApiKey());
     const message = await client.messages.create({
       model: MODEL,
       max_tokens: 800,
@@ -178,21 +192,21 @@ async function handleAssistantRequest(req, res) {
     const answer =
       extractAnthropicText(message) || "لم أتمكن من توليد إجابة الآن. حاول لاحقًا.";
 
-    res.status(200).json(successPayload(answer));
+    console.log("[assistant] success", { answerLength: answer.length });
+    sendJson(res, 200, successPayload(answer));
   } catch (error) {
     console.error("[assistant] Anthropic API failed:", error);
-    res.status(200).json(fallbackPayload(FAILURE_MESSAGE));
+    sendJson(res, 200, fallbackPayload(FAILURE_MESSAGE));
   }
 }
 
 export default async function handler(req, res) {
   try {
-    setJsonHeaders(res);
     await handleAssistantRequest(req, res);
   } catch (error) {
     console.error("[assistant] Route error:", error);
-    if (!res.headersSent) {
-      res.status(200).json(fallbackPayload(FAILURE_MESSAGE));
+    if (!res.headersSent && !res.writableEnded) {
+      sendJson(res, 200, fallbackPayload(FAILURE_MESSAGE));
     }
   }
 }

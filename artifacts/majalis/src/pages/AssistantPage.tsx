@@ -1,19 +1,15 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { Link } from "wouter";
+import {
+  callAssistantApi,
+  checkAssistantAvailability,
+  type AssistantResponse,
+} from "@/lib/assistant-api";
 
 type ChatMessage = {
   id: string;
   role: "user" | "assistant";
   content: string;
-};
-
-type AssistantResponse = {
-  ok?: boolean;
-  available?: boolean;
-  answer?: string;
-  reply?: string;
-  message?: string;
-  fallback?: boolean;
 };
 
 const WELCOME_MESSAGE: ChatMessage = {
@@ -48,8 +44,8 @@ function buildFallbackGuidance(question: string): string {
   if (/شيخ|مشايخ|داع|عالم/.test(question)) {
     hints.push("راجع قسم المشايخ (/sheikhs) للتعرف على العلماء المعتمدين.");
   }
-  if (/كتاب|مكتبة|متن|تفسير|فقه/.test(question)) {
-    hints.push("زُر المكتبة العلمية (/library) للكتب والمتون.");
+  if (/كتاب|مكتبة|متن|تفسير|فقه|أركان|إسلام/.test(question)) {
+    hints.push("زُر المكتبة العلمية (/library) للكتب والمتون، أو قسم الأسئلة (/qa).");
   }
   if (/سؤال|فتو|حكم|يجوز/.test(question)) {
     hints.push("للأسئلة الشرعية العامة راجع قسم الأسئلة والأجوبة (/qa).");
@@ -91,17 +87,14 @@ export default function AssistantPage() {
   }, [messages, loading]);
 
   useEffect(() => {
-    fetch("/api/assistant")
-      .then(async (res) => {
-        const data = (await res.json().catch(() => ({}))) as AssistantResponse;
-        setAssistantAvailable(Boolean(data.available));
-      })
-      .catch(() => setAssistantAvailable(false));
+    checkAssistantAvailability().then(setAssistantAvailable);
   }, []);
 
   const sendQuestion = async (question: string) => {
     const trimmed = question.trim();
     if (!trimmed || loading) return;
+
+    console.log("[assistant-ui] submit clicked", { question: trimmed });
 
     const userMessage: ChatMessage = {
       id: createId(),
@@ -116,18 +109,12 @@ export default function AssistantPage() {
     setLoading(true);
 
     try {
-      const response = await fetch("/api/assistant", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          message: trimmed,
-          messages: nextMessages
-            .filter((message) => message.id !== WELCOME_MESSAGE.id)
-            .map(({ role, content }) => ({ role, content })),
-        }),
+      const { response, data } = await callAssistantApi({
+        message: trimmed,
+        messages: nextMessages
+          .filter((message) => message.id !== WELCOME_MESSAGE.id)
+          .map(({ role, content }) => ({ role, content })),
       });
-
-      const data = (await response.json().catch(() => ({}))) as AssistantResponse;
 
       if (response.status === 429) {
         setError("تم تجاوز الحد المسموح. يرجى الانتظار دقيقة ثم المحاولة مجددًا.");
@@ -150,7 +137,6 @@ export default function AssistantPage() {
       }
 
       const userMessageText = data.message || FAILURE_MESSAGE;
-      const guidance = data.fallback ? buildFallbackGuidance(trimmed) : userMessageText;
 
       setMessages((current) => [
         ...current,
@@ -158,7 +144,7 @@ export default function AssistantPage() {
           id: createId(),
           role: "assistant",
           content: data.fallback
-            ? `${userMessageText}\n\n${guidance}`
+            ? `${userMessageText}\n\n${buildFallbackGuidance(trimmed)}`
             : userMessageText,
         },
       ]);
@@ -166,7 +152,12 @@ export default function AssistantPage() {
       if (data.fallback && data.message === UNAVAILABLE_BANNER) {
         setAssistantAvailable(false);
       }
-    } catch {
+    } catch (caughtError) {
+      console.error("[assistant-ui] fetch error", caughtError);
+      const reason =
+        caughtError instanceof Error ? caughtError.message : "خطأ شبكة غير معروف";
+
+      setError(`تعذر إرسال السؤال: ${reason}`);
       setMessages((current) => [
         ...current,
         {
@@ -182,6 +173,7 @@ export default function AssistantPage() {
 
   const submit = async (event: FormEvent) => {
     event.preventDefault();
+    console.log("[assistant-ui] form submit", { inputLength: input.trim().length });
     await sendQuestion(input);
   };
 
