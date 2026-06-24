@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const appRoot = resolve(__dirname, "..");
 const publicDir = resolve(appRoot, "public");
+const seoPrerenderDir = resolve(appRoot, "seo-prerender");
 const seoConfigPath = resolve(appRoot, "src/lib/seo-routes.json");
 
 const seoConfig = JSON.parse(await readFile(seoConfigPath, "utf8"));
@@ -100,16 +101,19 @@ await writeFile(resolve(publicDir, "robots.txt"), robots, "utf8");
 for (const route of seoConfig.routes.filter((r) => r.sitemap)) {
   const routeDir =
     route.path === "/"
-      ? publicDir
-      : resolve(publicDir, route.path.slice(1));
+      ? seoPrerenderDir
+      : resolve(seoPrerenderDir, route.path.slice(1));
   await mkdir(routeDir, { recursive: true });
-  await writeFile(resolve(routeDir, "index.seo.html"), prerenderHtml(route), "utf8");
+  await writeFile(resolve(routeDir, "index.html"), prerenderHtml(route), "utf8");
 
   if (route.path !== "/") {
-    try {
-      await unlink(resolve(routeDir, "index.html"));
-    } catch {
-      // legacy stub may not exist
+    const legacyPublicDir = resolve(publicDir, route.path.slice(1));
+    for (const legacyName of ["index.html", "index.seo.html"]) {
+      try {
+        await unlink(resolve(legacyPublicDir, legacyName));
+      } catch {
+        // legacy stub may not exist
+      }
     }
   }
 }

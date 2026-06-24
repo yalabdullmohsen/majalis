@@ -12,6 +12,7 @@ import { createRateLimiter } from "./rate-limit.mjs";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const appRoot = path.resolve(__dirname, "..");
 const distDir = path.resolve(appRoot, "dist/public");
+const seoPrerenderDir = path.resolve(appRoot, "seo-prerender");
 
 const rawPort = process.env.PORT || "24216";
 const port = Number(rawPort);
@@ -80,14 +81,14 @@ app.get("/api/healthz", (_req, res) => {
 
 function prerenderPath(urlPath) {
   if (urlPath === "/") {
-    const rootSeo = path.join(distDir, "index.seo.html");
+    const rootSeo = path.join(seoPrerenderDir, "index.html");
     if (existsSync(rootSeo)) return rootSeo;
+    const distRootSeo = path.join(distDir, "index.seo.html");
+    if (existsSync(distRootSeo)) return distRootSeo;
     return path.join(distDir, "index.html");
   }
-  const nestedSeo = path.join(distDir, urlPath.slice(1), "index.seo.html");
+  const nestedSeo = path.join(seoPrerenderDir, urlPath.slice(1), "index.html");
   if (existsSync(nestedSeo)) return nestedSeo;
-  const nested = path.join(distDir, urlPath.slice(1), "index.html");
-  if (existsSync(nested)) return nested;
   return path.join(distDir, "index.html");
 }
 
