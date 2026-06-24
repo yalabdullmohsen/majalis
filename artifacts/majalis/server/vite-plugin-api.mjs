@@ -1,4 +1,5 @@
 import assistantHandler from "../api/assistant.js";
+import transcribeHandler from "../api/transcribe.js";
 import { createRateLimiter } from "./rate-limit.mjs";
 
 const assistantRateLimit = createRateLimiter({
@@ -6,6 +7,17 @@ const assistantRateLimit = createRateLimiter({
   max: 15,
   keyPrefix: "assistant-dev",
 });
+
+const transcribeRateLimit = createRateLimiter({
+  windowMs: 60_000,
+  max: 8,
+  keyPrefix: "transcribe-dev",
+});
+
+const API_ROUTES = [
+  { prefix: "/api/assistant", handler: assistantHandler, rateLimit: assistantRateLimit },
+  { prefix: "/api/transcribe", handler: transcribeHandler, rateLimit: transcribeRateLimit },
+];
 
 async function readJsonBody(req) {
   const chunks = [];
@@ -27,14 +39,17 @@ function sendJson(res, status, payload) {
   res.end(JSON.stringify(payload));
 }
 
+function matchRoute(url) {
+  return API_ROUTES.find((route) => url?.startsWith(route.prefix));
+}
+
 export function majalisApiPlugin() {
   return {
     name: "majalis-api",
     configureServer(server) {
       server.middlewares.use(async (req, res, next) => {
-        if (!req.url?.startsWith("/api/assistant")) {
-          return next();
-        }
+        const route = matchRoute(req.url);
+        if (!route) return next();
 
         if (req.method === "OPTIONS") {
           res.statusCode = 204;
@@ -47,20 +62,20 @@ export function majalisApiPlugin() {
           return;
         }
 
-        assistantRateLimit(req, res, async () => {
+        route.rateLimit(req, res, async () => {
           const body = await readJsonBody(req);
           if (body === null) {
-            sendJson(res, 400, { error: "صيغة الطلب غير صالحة. أرسل JSON يحتوي على messages." });
+            sendJson(res, 400, { error: "صيغة الطلب غير صالحة." });
             return;
           }
 
           req.body = body;
           try {
-            await assistantHandler(req, res);
+            await route.handler(req, res);
           } catch (error) {
-            console.error("Assistant dev handler failed", error);
+            console.error(`${route.prefix} dev handler failed`, error);
             if (!res.headersSent) {
-              sendJson(res, 500, { error: "حدث خطأ غير متوقع في خدمة المساعد الذكي." });
+              sendJson(res, 500, { error: "حدث خطأ غير متوقع في الخادم." });
             }
           }
         });

@@ -12,6 +12,7 @@ const TABS = [
   { href: "/fawaid", label: "الفوائد" },
   { href: "/qa", label: "الأسئلة والأجوبة" },
   { href: "/condolences", label: "التعازي والوفيات" },
+  { href: "/transcribe", label: "تفريغ المحاضرات" },
   { href: "/assistant", label: "المساعد الذكي" },
   { href: "/about", label: "عن المنصة" },
 ];

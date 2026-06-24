@@ -3,6 +3,7 @@ import path from "node:path";
 import { existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import assistantHandler from "../api/assistant.js";
+import transcribeHandler from "../api/transcribe.js";
 import { createRateLimiter } from "./rate-limit.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -18,7 +19,6 @@ if (Number.isNaN(port) || port <= 0) {
 
 const app = express();
 app.disable("x-powered-by");
-app.use(express.json({ limit: "32kb" }));
 
 const assistantRateLimit = createRateLimiter({
   windowMs: 60_000,
@@ -26,20 +26,33 @@ const assistantRateLimit = createRateLimiter({
   keyPrefix: "assistant",
 });
 
-function runAssistantHandler(req, res) {
-  assistantHandler(req, res).catch((error) => {
-    console.error("Unhandled assistant error", error);
-    if (!res.headersSent) {
-      res.status(500).json({ error: "حدث خطأ غير متوقع في خدمة المساعد الذكي." });
-    }
-  });
+const transcribeRateLimit = createRateLimiter({
+  windowMs: 60_000,
+  max: 8,
+  keyPrefix: "transcribe",
+});
+
+function runHandler(handler, label) {
+  return (req, res) => {
+    handler(req, res).catch((error) => {
+      console.error(`Unhandled ${label} error`, error);
+      if (!res.headersSent) {
+        res.status(500).json({ error: "حدث خطأ غير متوقع في الخادم." });
+      }
+    });
+  };
 }
 
 app.options("/api/assistant", (_req, res) => {
   res.status(204).end();
 });
 
-app.post("/api/assistant", assistantRateLimit, runAssistantHandler);
+app.options("/api/transcribe", (_req, res) => {
+  res.status(204).end();
+});
+
+app.post("/api/assistant", express.json({ limit: "32kb" }), assistantRateLimit, runHandler(assistantHandler, "assistant"));
+app.post("/api/transcribe", express.json({ limit: "2mb" }), transcribeRateLimit, runHandler(transcribeHandler, "transcribe"));
 
 app.get("/api/healthz", (_req, res) => {
   res.json({ ok: true, service: "majalis-web" });

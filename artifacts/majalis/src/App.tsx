@@ -14,6 +14,7 @@ import FawaidPage from "@/pages/FawaidPage";
 import QaPage from "@/pages/QaPage";
 import AssistantPage from "@/pages/AssistantPage";
 import CondolencesPage from "@/pages/CondolencesPage";
+import TranscribePage from "@/pages/TranscribePage";
 import LoginPage from "@/pages/LoginPage";
 import AdminPage from "@/pages/AdminPage";
 import NotFound from "@/pages/not-found";
@@ -41,6 +42,7 @@ function Router() {
       <Route path="/qa" component={QaPage} />
       <Route path="/assistant" component={AssistantPage} />
       <Route path="/condolences" component={CondolencesPage} />
+      <Route path="/transcribe" component={TranscribePage} />
       <Route path="/login" component={LoginPage} />
       <Route path="/admin">
         <AdminRouteGuard>

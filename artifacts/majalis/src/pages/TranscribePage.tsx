@@ -1,0 +1,364 @@
+import { useCallback, useState } from "react";
+import { Link } from "wouter";
+import { useDropzone } from "react-dropzone";
+import { supabase } from "@/lib/supabase";
+import { useAuth } from "@/components/AuthProvider";
+
+type TabId = "upload" | "youtube" | "text";
+type Status = "idle" | "uploading" | "processing" | "done" | "error";
+
+type AnalysisResult = {
+  summary?: string;
+  benefits?: Array<{ benefit: string; timestamp?: string; category?: string }>;
+  main_topics?: string[];
+  speaker_info?: string;
+  key_quotes?: string[];
+};
+
+const WHISPER_PLACEHOLDER = "// سيتم التفريغ عبر Whisper API عند ربطه";
+
+export default function TranscribePage() {
+  const { isLoggedIn } = useAuth() as { isLoggedIn: boolean };
+  const [file, setFile] = useState<File | null>(null);
+  const [youtubeUrl, setYoutubeUrl] = useState("");
+  const [title, setTitle] = useState("");
+  const [status, setStatus] = useState<Status>("idle");
+  const [result, setResult] = useState<AnalysisResult | null>(null);
+  const [progress, setProgress] = useState(0);
+  const [activeTab, setActiveTab] = useState<TabId>("upload");
+  const [manualText, setManualText] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const onDrop = useCallback(
+    (acceptedFiles: File[]) => {
+      const picked = acceptedFiles[0];
+      if (!picked) return;
+      setFile(picked);
+      if (!title) setTitle(picked.name.replace(/\.[^/.]+$/, ""));
+    },
+    [title]
+  );
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    accept: {
+      "audio/*": [".mp3", ".wav", ".m4a"],
+      "video/*": [".mp4", ".webm"],
+    },
+    maxSize: 500 * 1024 * 1024,
+    multiple: false,
+  });
+
+  const handleProcess = async () => {
+    setErrorMessage("");
+    setResult(null);
+
+    if (!title.trim()) {
+      setErrorMessage("أدخل عنواناً للمحاضرة.");
+      return;
+    }
+
+    if (!isLoggedIn) {
+      setErrorMessage("يجب تسجيل الدخول أولاً.");
+      return;
+    }
+
+    setStatus("uploading");
+    setProgress(10);
+
+    try {
+      const { data: sessionData } = await supabase.auth.getSession();
+      const user = sessionData.session?.user;
+      const accessToken = sessionData.session?.access_token;
+      if (!user || !accessToken) {
+        setErrorMessage("يجب تسجيل الدخول.");
+        setStatus("error");
+        return;
+      }
+
+      const fileType =
+        activeTab === "youtube"
+          ? "youtube"
+          : activeTab === "text"
+            ? "audio"
+            : file?.type.startsWith("video")
+              ? "video"
+              : "audio";
+
+      let transcriptText = manualText.trim();
+
+      const { data: record, error: insertError } = await supabase
+        .from("transcriptions")
+        .insert({
+          user_id: user.id,
+          title: title.trim(),
+          file_type: fileType,
+          source_url: activeTab === "youtube" ? youtubeUrl.trim() || null : null,
+          transcript_text: activeTab === "text" ? transcriptText : null,
+          status: "processing",
+        })
+        .select()
+        .single();
+
+      if (insertError || !record) throw insertError || new Error("تعذر إنشاء السجل.");
+
+      setProgress(30);
+
+      if (file && activeTab === "upload") {
+        const fileName = `${user.id}/${Date.now()}-${file.name}`;
+        const { error: uploadError } = await supabase.storage
+          .from("transcriptions")
+          .upload(fileName, file, { upsert: false });
+
+        if (uploadError) throw uploadError;
+
+        const { data: publicUrl } = supabase.storage.from("transcriptions").getPublicUrl(fileName);
+
+        await supabase
+          .from("transcriptions")
+          .update({ file_url: publicUrl?.publicUrl || fileName })
+          .eq("id", record.id);
+
+        transcriptText = WHISPER_PLACEHOLDER;
+        setProgress(60);
+      }
+
+      if (activeTab === "youtube") {
+        await supabase
+          .from("transcriptions")
+          .update({ status: "pending", source_url: youtubeUrl.trim() })
+          .eq("id", record.id);
+        setProgress(100);
+        setStatus("done");
+        setErrorMessage("تم حفظ رابط يوتيوب. التفريغ التلقائي قيد التطوير — استخدم تبويب «نص مباشر» للتحليل الآن.");
+        return;
+      }
+
+      if (activeTab === "upload" && (!transcriptText || transcriptText === WHISPER_PLACEHOLDER)) {
+        await supabase
+          .from("transcriptions")
+          .update({ status: "pending" })
+          .eq("id", record.id);
+        setProgress(100);
+        setStatus("done");
+        setErrorMessage("تم رفع الملف بنجاح. للتحليل الذكي الصق النص المُفرَّغ في تبويب «نص مباشر».");
+        return;
+      }
+
+      if (!transcriptText || transcriptText.length < 40) {
+        throw new Error("أدخل نصاً مُفرَّغاً كافياً (40 حرفاً على الأقل).");
+      }
+
+      setStatus("processing");
+      setProgress(70);
+
+      const res = await fetch("/api/transcribe", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify({
+          transcript_text: transcriptText,
+          title: title.trim(),
+          transcription_id: record.id,
+        }),
+      });
+
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        await supabase.from("transcriptions").update({ status: "error" }).eq("id", record.id);
+        throw new Error(data?.error || "فشل التحليل.");
+      }
+
+      setProgress(100);
+      setResult(data.analysis as AnalysisResult);
+      setStatus("done");
+    } catch (err) {
+      console.error(err);
+      setStatus("error");
+      setErrorMessage(err instanceof Error ? err.message : "حدث خطأ غير متوقع.");
+    }
+  };
+
+  return (
+    <div dir="rtl" className="min-h-screen bg-[#FAF5EA] py-8">
+      <div className="mx-auto max-w-4xl px-4">
+        <Link href="/" className="text-sm font-bold text-[#164E3C] hover:underline">
+          ← مجالس العلم
+        </Link>
+        <h1 className="mt-2 text-3xl font-bold text-[#164E3C]">🎙️ تفريغ المحاضرات</h1>
+        <p className="mb-8 text-[#5B5446]">حوّل الصوت والفيديو إلى نص مع تلخيص ذكي واستخراج الفوائد</p>
+
+        {!isLoggedIn && (
+          <div className="mb-6 rounded-xl border border-amber-200 bg-amber-50 p-4 text-amber-900">
+            يجب <Link href="/login?next=/transcribe" className="font-bold underline">تسجيل الدخول</Link> لاستخدام التفريغ.
+          </div>
+        )}
+
+        <div className="mb-6 flex gap-2 rounded-xl border border-[#E0D7C4] bg-white p-1 shadow-sm">
+          {[
+            { id: "upload" as const, label: "📁 رفع ملف" },
+            { id: "youtube" as const, label: "▶️ يوتيوب" },
+            { id: "text" as const, label: "📝 نص مباشر" },
+          ].map((tab) => (
+            <button
+              key={tab.id}
+              type="button"
+              onClick={() => setActiveTab(tab.id)}
+              className={`flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-all ${
+                activeTab === tab.id ? "bg-[#1F6E54] text-white shadow" : "text-[#5B5446] hover:bg-[#F0E8D6]"
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
+        <div className="space-y-4 rounded-2xl border border-[#E0D7C4] bg-white p-6 shadow-sm">
+          <div>
+            <label className="mb-1 block text-sm font-medium text-[#5B5446]">عنوان المحاضرة *</label>
+            <input
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="مثال: شرح الأربعين النووية - الدرس الأول"
+              className="w-full rounded-xl border border-[#E0D7C4] px-4 py-3 text-right outline-none focus:ring-2 focus:ring-[#1F6E54]"
+            />
+          </div>
+
+          {activeTab === "upload" && (
+            <div
+              {...getRootProps()}
+              className={`cursor-pointer rounded-xl border-2 border-dashed p-12 text-center transition-all ${
+                isDragActive ? "border-[#1F6E54] bg-[#CFE0D3]/40" : "border-[#E0D7C4] hover:border-[#1F6E54]/60"
+              }`}
+            >
+              <input {...getInputProps()} />
+              <div className="mb-3 text-4xl">🎵</div>
+              {file ? (
+                <p className="font-medium text-[#164E3C]">{file.name}</p>
+              ) : (
+                <>
+                  <p className="font-medium text-[#5B5446]">اسحب الملف هنا أو اضغط للاختيار</p>
+                  <p className="mt-1 text-sm text-[#5B5446]/70">MP3, MP4, WAV, M4A — حتى 500MB</p>
+                </>
+              )}
+            </div>
+          )}
+
+          {activeTab === "youtube" && (
+            <div>
+              <label className="mb-1 block text-sm font-medium text-[#5B5446]">رابط يوتيوب</label>
+              <input
+                value={youtubeUrl}
+                onChange={(e) => setYoutubeUrl(e.target.value)}
+                placeholder="https://youtube.com/watch?v=..."
+                className="w-full rounded-xl border border-[#E0D7C4] px-4 py-3 text-right outline-none focus:ring-2 focus:ring-[#1F6E54]"
+              />
+            </div>
+          )}
+
+          {activeTab === "text" && (
+            <div>
+              <label className="mb-1 block text-sm font-medium text-[#5B5446]">أدخل النص المُفرَّغ مسبقاً</label>
+              <textarea
+                value={manualText}
+                onChange={(e) => setManualText(e.target.value)}
+                rows={8}
+                placeholder="الصق النص هنا لتلخيصه واستخراج فوائده..."
+                className="w-full resize-none rounded-xl border border-[#E0D7C4] px-4 py-3 text-right outline-none focus:ring-2 focus:ring-[#1F6E54]"
+              />
+            </div>
+          )}
+
+          {status !== "idle" && (
+            <div>
+              <div className="mb-1 flex justify-between text-sm">
+                <span className="text-[#5B5446]">
+                  {status === "uploading"
+                    ? "⏫ جاري الرفع..."
+                    : status === "processing"
+                      ? "🧠 Claude يحلل المحتوى..."
+                      : status === "done"
+                        ? "✅ اكتملت المعالجة"
+                        : "❌ حدث خطأ"}
+                </span>
+                <span className="font-medium text-[#164E3C]">{progress}%</span>
+              </div>
+              <div className="h-2 w-full rounded-full bg-[#E0D7C4]">
+                <div
+                  className="h-2 rounded-full bg-[#1F6E54] transition-all duration-500"
+                  style={{ width: `${progress}%` }}
+                />
+              </div>
+            </div>
+          )}
+
+          {errorMessage && (
+            <p className="rounded-lg bg-amber-50 p-3 text-sm text-amber-900" role="alert">
+              {errorMessage}
+            </p>
+          )}
+
+          <button
+            type="button"
+            onClick={handleProcess}
+            disabled={!isLoggedIn || status === "uploading" || status === "processing"}
+            className="w-full rounded-xl bg-[#1F6E54] py-4 text-lg font-bold text-white transition-all hover:bg-[#164E3C] disabled:opacity-50"
+          >
+            {status === "uploading" || status === "processing" ? "⏳ جاري المعالجة..." : "🚀 ابدأ التحليل الذكي"}
+          </button>
+        </div>
+
+        {result && (
+          <div className="mt-8 space-y-6">
+            {result.summary && (
+              <div className="rounded-2xl border border-[#E0D7C4] bg-white p-6 shadow-sm">
+                <h2 className="mb-4 text-xl font-bold text-[#164E3C]">📋 الملخص الذكي</h2>
+                <p className="text-lg leading-relaxed text-[#241F18]">{result.summary}</p>
+              </div>
+            )}
+
+            {result.benefits && result.benefits.length > 0 && (
+              <div className="rounded-2xl border border-[#E0D7C4] bg-white p-6 shadow-sm">
+                <h2 className="mb-4 text-xl font-bold text-[#164E3C]">
+                  💡 الفوائد المستخرجة ({result.benefits.length})
+                </h2>
+                <div className="space-y-3">
+                  {result.benefits.map((b, i) => (
+                    <div key={i} className="flex gap-3 rounded-xl border border-amber-200 bg-amber-50 p-4">
+                      {b.timestamp && (
+                        <span className="mt-1 shrink-0 text-sm font-bold text-amber-700">{b.timestamp}</span>
+                      )}
+                      <div className="flex-1">
+                        <p className="text-[#241F18]">{b.benefit}</p>
+                        {b.category && (
+                          <span className="mt-1 inline-block rounded-full bg-amber-200 px-2 py-0.5 text-xs text-amber-900">
+                            {b.category}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {result.key_quotes && result.key_quotes.length > 0 && (
+              <div className="rounded-2xl border border-[#E0D7C4] bg-white p-6 shadow-sm">
+                <h2 className="mb-4 text-xl font-bold text-[#164E3C]">💬 أبرز الاقتباسات</h2>
+                <div className="space-y-3">
+                  {result.key_quotes.map((q, i) => (
+                    <blockquote key={i} className="border-r-4 border-[#1F6E54] pr-4 italic text-[#5B5446]">
+                      {q}
+                    </blockquote>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
