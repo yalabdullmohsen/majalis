@@ -10,6 +10,13 @@ type ChatMessage = {
 
 export const FAILURE_MESSAGE = "تعذر تشغيل المساعد الآن، حاول لاحقًا.";
 
+const WELCOME_MESSAGE: ChatMessage = {
+  id: "welcome",
+  role: "assistant",
+  content:
+    "مرحبًا بك في المساعد العلمي. اكتب سؤالك وسأجيب بإرشاد علمي عام دون ادعاء الإفتاء.",
+};
+
 function createId() {
   return typeof crypto !== "undefined" && "randomUUID" in crypto
     ? crypto.randomUUID()
@@ -22,7 +29,7 @@ function pickAnswer(data: AssistantResponse): string | null {
 }
 
 export default function AssistantPage() {
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [messages, setMessages] = useState<ChatMessage[]>([WELCOME_MESSAGE]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const bottomRef = useRef<HTMLDivElement | null>(null);
@@ -52,16 +59,16 @@ export default function AssistantPage() {
       role: "user",
       content: trimmed,
     };
-    const nextMessages = [...messages, userMessage];
+    const history = [...messages, userMessage].filter((message) => message.id !== WELCOME_MESSAGE.id);
 
-    setMessages(nextMessages);
+    setMessages((current) => [...current, userMessage]);
     setInput("");
     setLoading(true);
 
     try {
       const { response, data } = await callAssistantApi({
         message: trimmed,
-        messages: nextMessages.map(({ role, content }) => ({ role, content })),
+        messages: history.map(({ role, content }) => ({ role, content })),
       });
 
       if (response.status === 429 || response.status === 400) {
@@ -94,40 +101,48 @@ export default function AssistantPage() {
   };
 
   return (
-    <div className="assistant-page assistant-page-minimal">
-      <section className="assistant-chat" aria-label="المساعد العلمي">
-        {messages.length > 0 && (
-          <div className="assistant-messages" aria-live="polite">
-            {messages.map((message) => (
-              <article
-                key={message.id}
-                className={`assistant-message assistant-message-${message.role}${
-                  message.isFailure ? " assistant-message-failure" : ""
-                }`}
-              >
-                <p>{message.content}</p>
-              </article>
-            ))}
-            <div ref={bottomRef} />
-          </div>
-        )}
+    <div className="assistant-page">
+      <header className="assistant-header">
+        <h1>المساعد العلمي</h1>
+        <p>
+          مساعد ذكي يرشدك في المسائل العلمية العامة داخل مجالس العلم. الفتوى الخاصة تُعرض على
+          عالم مختص.
+        </p>
+      </header>
 
-        {loading && (
-          <div className="assistant-loading" role="status">
-            جار الإرسال...
-          </div>
-        )}
+      <section className="assistant-chat" aria-label="محادثة المساعد العلمي">
+        <div className="assistant-messages" aria-live="polite">
+          {messages.map((message) => (
+            <article
+              key={message.id}
+              className={`assistant-message assistant-message-${message.role}${
+                message.isFailure ? " assistant-message-failure" : ""
+              }`}
+            >
+              <span>{message.role === "user" ? "أنت" : "المساعد العلمي"}</span>
+              <p>{message.content}</p>
+            </article>
+          ))}
+
+          {loading && (
+            <div className="assistant-loading" role="status">
+              المساعد يراجع السؤال...
+            </div>
+          )}
+
+          <div ref={bottomRef} />
+        </div>
 
         <form onSubmit={submit} className="assistant-form">
           <textarea
             value={input}
             onChange={(event) => setInput(event.target.value)}
             placeholder="اكتب سؤالك هنا..."
-            rows={2}
+            rows={3}
             disabled={loading}
           />
           <button type="submit" disabled={loading || !input.trim()}>
-            {loading ? "..." : "إرسال"}
+            {loading ? "جار الإرسال..." : "إرسال"}
           </button>
         </form>
       </section>

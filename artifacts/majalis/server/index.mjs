@@ -84,6 +84,8 @@ function prerenderPath(urlPath) {
     if (existsSync(rootSeo)) return rootSeo;
     return path.join(distDir, "index.html");
   }
+  const nestedSeo = path.join(distDir, urlPath.slice(1), "index.seo.html");
+  if (existsSync(nestedSeo)) return nestedSeo;
   const nested = path.join(distDir, urlPath.slice(1), "index.html");
   if (existsSync(nested)) return nested;
   return path.join(distDir, "index.html");

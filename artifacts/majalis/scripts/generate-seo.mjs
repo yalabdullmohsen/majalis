@@ -1,4 +1,4 @@
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile, unlink } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -103,8 +103,15 @@ for (const route of seoConfig.routes.filter((r) => r.sitemap)) {
       ? publicDir
       : resolve(publicDir, route.path.slice(1));
   await mkdir(routeDir, { recursive: true });
-  const filename = route.path === "/" ? "index.seo.html" : "index.html";
-  await writeFile(resolve(routeDir, filename), prerenderHtml(route), "utf8");
+  await writeFile(resolve(routeDir, "index.seo.html"), prerenderHtml(route), "utf8");
+
+  if (route.path !== "/") {
+    try {
+      await unlink(resolve(routeDir, "index.html"));
+    } catch {
+      // legacy stub may not exist
+    }
+  }
 }
 
 console.log(`Generated sitemap.xml, robots.txt, and ${seoConfig.routes.filter((r) => r.sitemap).length} prerender pages for ${seoConfig.siteUrl}`);
