@@ -169,7 +169,7 @@ export async function getMyAchievements(userId: string) {
 // ─── Admin CRUD ────────────────────────────────────────────────────────────────
 
 export async function adminGetStats() {
-  const [sheikhs, lessonsRes, library, miracles, fawaidTotal, pendingFawaid, qa] = await Promise.all([
+  const [sheikhs, lessonsRes, library, miracles, fawaidTotal, pendingFawaid, qa, quizPublished] = await Promise.all([
     supabase.from("sheikhs").select("*", { count: "exact", head: true }),
     supabase.from("lessons").select("status"),
     supabase.from("library_items").select("*", { count: "exact", head: true }),
@@ -177,6 +177,7 @@ export async function adminGetStats() {
     supabase.from("fawaid").select("*", { count: "exact", head: true }),
     supabase.from("fawaid").select("*", { count: "exact", head: true }).eq("status", "pending"),
     supabase.from("qa_questions").select("status"),
+    supabase.from("quiz_questions").select("*", { count: "exact", head: true }).eq("status", "published"),
   ]);
   const lessons = lessonsRes.data || [];
   const qaRows = qa.data || [];
@@ -191,6 +192,7 @@ export async function adminGetStats() {
     pendingFawaidCount: pendingFawaid.count ?? 0,
     qaTotal: qaRows.length,
     qaPublished: qaRows.filter((q: any) => q.status === "published").length,
+    quizCount: quizPublished.count ?? 0,
   };
 }
 
@@ -382,6 +384,46 @@ export async function adminDeleteQuestion(id: string) {
 export async function adminSetQuestionStatus(id: string, status: string) {
   return await supabase
     .from("qa_questions")
+    .update({ status, updated_at: new Date().toISOString() })
+    .eq("id", id);
+}
+
+// ─── المسابقات الشرعية ───────────────────────────────────────────────────────────
+
+export async function getQuizQuestions({ section, level }: { section?: string; level?: string } = {}) {
+  let q = supabase
+    .from("quiz_questions")
+    .select("*")
+    .eq("status", "published")
+    .order("created_at", { ascending: false });
+  if (section && section !== "الكل") q = q.eq("section", section);
+  if (level && level !== "الكل") q = q.eq("level", level);
+  const { data, error } = await q;
+  return { data: data || [], error };
+}
+
+export async function adminGetQuizQuestions() {
+  const { data, error } = await supabase
+    .from("quiz_questions")
+    .select("*")
+    .order("created_at", { ascending: false });
+  return { data: data || [], error };
+}
+
+export async function adminUpsertQuizQuestion(data: any) {
+  const { id, ...rest } = data;
+  rest.updated_at = new Date().toISOString();
+  if (id) return await supabase.from("quiz_questions").update(rest).eq("id", id);
+  return await supabase.from("quiz_questions").insert(rest);
+}
+
+export async function adminDeleteQuizQuestion(id: string) {
+  return await supabase.from("quiz_questions").delete().eq("id", id);
+}
+
+export async function adminSetQuizQuestionStatus(id: string, status: string) {
+  return await supabase
+    .from("quiz_questions")
     .update({ status, updated_at: new Date().toISOString() })
     .eq("id", id);
 }

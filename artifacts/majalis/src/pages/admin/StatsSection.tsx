@@ -21,6 +21,7 @@ export function StatsSection() {
     { label: "مواد المكتبة", value: stats.libraryCount, color: C.emeraldDeep, bg: C.parchmentDeep },
     { label: "مقالات الإعجاز", value: stats.miraclesCount, color: C.emeraldDeep, bg: C.parchmentDeep },
     { label: "الأسئلة والأجوبة", value: stats.qaTotal, color: C.emeraldDeep, bg: C.parchmentDeep },
+    { label: "أسئلة المسابقات", value: stats.quizCount, color: C.emeraldDeep, bg: C.parchmentDeep },
     { label: "إجمالي الفوائد", value: stats.fawaidTotal, color: C.emeraldDeep, bg: C.parchmentDeep },
     { label: "فوائد بانتظار الموافقة", value: stats.pendingFawaidCount, color: stats.pendingFawaidCount > 0 ? "#dc2626" : C.inkSoft, bg: stats.pendingFawaidCount > 0 ? "#FEE2E2" : C.parchmentDeep },
   ];

@@ -13,6 +13,7 @@ import LibraryPage from "@/pages/LibraryPage";
 import MiraclesPage from "@/pages/MiraclesPage";
 import FawaidPage from "@/pages/FawaidPage";
 import QaPage from "@/pages/QaPage";
+import QuizPage from "@/pages/QuizPage";
 import LoginPage from "@/pages/LoginPage";
 import NotFound from "@/pages/not-found";
 import { usePageSeo } from "@/lib/seo";
@@ -53,6 +54,7 @@ function Router() {
       <Route path="/miracles" component={MiraclesPage} />
       <Route path="/fawaid" component={FawaidPage} />
       <Route path="/qa" component={QaPage} />
+      <Route path="/quiz" component={QuizPage} />
       <Route path="/assistant"><LazyRoute component={AssistantPage} /></Route>
       <Route path="/condolences"><LazyRoute component={CondolencesPage} /></Route>
       <Route path="/transcribe"><LazyRoute component={TranscribePage} /></Route>

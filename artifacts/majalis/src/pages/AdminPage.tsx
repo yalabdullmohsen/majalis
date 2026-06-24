@@ -8,9 +8,10 @@ import { LibrarySection } from "@/pages/admin/LibrarySection";
 import { MiraclesSection } from "@/pages/admin/MiraclesSection";
 import { FawaidSection } from "@/pages/admin/FawaidSection";
 import { QaSection } from "@/pages/admin/QaSection";
+import { QuizSection } from "@/pages/admin/QuizSection";
 import { UsersSection } from "@/pages/admin/UsersSection";
 
-type Section = "stats" | "sheikhs" | "lessons" | "library" | "miracles" | "fawaid" | "qa" | "users";
+type Section = "stats" | "sheikhs" | "lessons" | "library" | "miracles" | "fawaid" | "qa" | "quiz" | "users";
 
 const NAV: { key: Section; label: string; icon: string }[] = [
   { key: "stats",    label: "نظرة عامة",       icon: "📊" },
@@ -20,6 +21,7 @@ const NAV: { key: Section; label: string; icon: string }[] = [
   { key: "miracles", label: "الإعجاز العلمي",    icon: "🌙" },
   { key: "fawaid",   label: "الفوائد",           icon: "✨" },
   { key: "qa",       label: "الأسئلة والأجوبة",  icon: "❓" },
+  { key: "quiz",     label: "المسابقات",          icon: "🏆" },
   { key: "users",    label: "المستخدمون",         icon: "🧑‍🤝‍🧑" },
 ];
 
@@ -80,6 +82,7 @@ export default function AdminPage() {
         {section === "miracles" && <MiraclesSection />}
         {section === "fawaid"   && <FawaidSection />}
         {section === "qa"       && <QaSection />}
+        {section === "quiz"     && <QuizSection />}
         {section === "users"    && <UsersSection />}
       </main>
     </div>
