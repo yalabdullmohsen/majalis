@@ -11,6 +11,7 @@ const TABS = [
   { href: "/miracles", label: "الإعجاز العلمي" },
   { href: "/fawaid", label: "الفوائد" },
   { href: "/qa", label: "الأسئلة والأجوبة" },
+  { href: "/assistant", label: "المساعد الذكي" },
   { href: "/about", label: "عن المنصة" },
 ];
 
