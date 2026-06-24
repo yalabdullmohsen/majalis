@@ -1714,3 +1714,39 @@ input, textarea, select { font-family: inherit; }
     width: 100%;
   }
 }
+
+/* ── استوديو بطاقات التعزية — طباعة بطاقة واحدة ── */
+@media print {
+  body[class*="print-design-"] header.sticky,
+  body[class*="print-design-"] .no-print {
+    display: none !important;
+  }
+
+  body[class*="print-design-"] .condolences-studio {
+    background: white !important;
+    min-height: auto !important;
+  }
+
+  body[class*="print-design-"] .condolence-design-wrap {
+    display: none !important;
+    break-inside: avoid;
+    border: none !important;
+    background: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  body.print-design-1 .condolence-design-wrap[data-design="design-1"],
+  body.print-design-2 .condolence-design-wrap[data-design="design-2"],
+  body.print-design-3 .condolence-design-wrap[data-design="design-3"],
+  body.print-design-4 .condolence-design-wrap[data-design="design-4"] {
+    display: block !important;
+    page-break-inside: avoid;
+  }
+
+  body[class*="print-design-"] .condolence-design {
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    box-shadow: none !important;
+  }
+}
