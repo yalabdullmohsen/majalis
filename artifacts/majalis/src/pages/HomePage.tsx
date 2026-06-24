@@ -1,12 +1,14 @@
 import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { Link, useLocation } from "wouter";
 import { getLessons, getSheikhs, getApprovedFawaid, getLibrary, getMiracles, getQaQuestions } from "@/lib/supabase";
-import { Loading } from "@/components/ui-common";
+import { DEMO_LESSONS, DEMO_SHEIKHS, DEMO_QA } from "@/lib/demo-content";
+import { Loading, ErrorState } from "@/components/ui-common";
 
 const FEATURES = [
   { href: "/lessons", icon: "📚", title: "الدروس والدورات", desc: "دروس علمية شرعية موثقة ومعتمدة" },
   { href: "/sheikhs", icon: "👳", title: "المشايخ والدعاة", desc: "نخبة من المشايخ المعتمدين" },
   { href: "/library", icon: "🏛", title: "المكتبة العلمية", desc: "كتب ومتون وتفريغات ومقالات" },
+  { href: "/assistant", icon: "🤖", title: "المساعد العلمي", desc: "إرشاد ذكي للبحث داخل المنصة" },
   { href: "/miracles", icon: "🌌", title: "الإعجاز العلمي", desc: "مقالات موثقة من الكتاب والسنة" },
   { href: "/qa", icon: "❓", title: "الأسئلة والأجوبة", desc: "أجوبة علمية مدعمة بالأدلة" },
   { href: "/fawaid", icon: "💎", title: "الفوائد", desc: "فوائد دينية مختارة ومراجعة" },
@@ -61,15 +63,6 @@ function SectionHead({ eyebrow, title, subtitle, href }: { eyebrow: string; titl
   );
 }
 
-function EmptyCard({ text }: { text: string }) {
-  return (
-    <div className="home-empty-card">
-      <span>قريبا</span>
-      <p>{text}</p>
-    </div>
-  );
-}
-
 export default function HomePage() {
   const [lessons, setLessons] = useState<any[]>([]);
   const [sheikhs, setSheikhs] = useState<any[]>([]);
@@ -79,10 +72,12 @@ export default function HomePage() {
   const [qa, setQa] = useState<any[]>([]);
   const [term, setTerm] = useState("");
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   const [, navigate] = useLocation();
 
-  useEffect(() => {
+  const loadHome = () => {
     setLoading(true);
+    setError("");
     Promise.all([getLessons(), getSheikhs(), getApprovedFawaid(), getLibrary(), getMiracles(), getQaQuestions()])
       .then(([l, s, f, lib, m, q]) => {
         setLessons(l.data || []);
@@ -92,17 +87,32 @@ export default function HomePage() {
         setMiracles(m.data || []);
         setQa(q.data || []);
       })
+      .catch(() => setError("تعذر تحميل محتوى الصفحة الرئيسية."))
       .finally(() => setLoading(false));
+  };
+
+  useEffect(() => {
+    loadHome();
   }, []);
+
+  const usingDemoLessons = lessons.length === 0;
+  const usingDemoSheikhs = sheikhs.length === 0;
+  const displayedLessons = (usingDemoLessons ? DEMO_LESSONS : lessons).slice(0, 3);
+  const displayedSheikhs = (usingDemoSheikhs ? DEMO_SHEIKHS : (sheikhs.filter((s) => s.is_verified).length ? sheikhs.filter((s) => s.is_verified) : sheikhs)).slice(0, 4);
+  const displayedLibrary = (library.length ? library : FALLBACK_LIBRARY).slice(0, 4);
+  const displayedMiracles = (miracles.length ? miracles : FALLBACK_MIRACLES).slice(0, 3);
+  const displayedFawaid = (fawaid.length ? fawaid : FALLBACK_FAWAID).slice(0, 3);
+  const displayedQa = (qa.length ? qa : DEMO_QA).slice(0, 3);
+  const heroLesson = displayedLessons[0];
 
   const stats = useMemo(
     () => [
-      { label: "الدروس", value: lessons.length, suffix: "+" },
-      { label: "المشايخ", value: sheikhs.length, suffix: "+" },
-      { label: "الكتب والمواد", value: library.length, suffix: "+" },
-      { label: "الفوائد", value: fawaid.length, suffix: "+" },
+      { label: "الدروس", value: usingDemoLessons ? DEMO_LESSONS.length : lessons.length, suffix: "+" },
+      { label: "المشايخ", value: usingDemoSheikhs ? DEMO_SHEIKHS.length : sheikhs.length, suffix: "+" },
+      { label: "الكتب والمواد", value: library.length || FALLBACK_LIBRARY.length, suffix: "+" },
+      { label: "الفوائد", value: fawaid.length || FALLBACK_FAWAID.length, suffix: "+" },
     ],
-    [fawaid.length, lessons.length, library.length, sheikhs.length]
+    [fawaid.length, lessons.length, library.length, sheikhs.length, usingDemoLessons, usingDemoSheikhs]
   );
 
   const submitSearch = (e: FormEvent) => {
@@ -111,12 +121,6 @@ export default function HomePage() {
     if (q) navigate(`/search/${encodeURIComponent(q)}`);
   };
 
-  const featuredSheikhs = sheikhs.filter((s) => s.is_verified).slice(0, 4);
-  const displayedSheikhs = (featuredSheikhs.length ? featuredSheikhs : sheikhs).slice(0, 4);
-  const displayedLibrary = (library.length ? library : FALLBACK_LIBRARY).slice(0, 4);
-  const displayedMiracles = (miracles.length ? miracles : FALLBACK_MIRACLES).slice(0, 3);
-  const displayedFawaid = (fawaid.length ? fawaid : FALLBACK_FAWAID).slice(0, 3);
-
   return (
     <div className="home-page">
       <section className="home-hero">
@@ -124,9 +128,9 @@ export default function HomePage() {
         <div className="home-container home-hero-grid">
           <div className="home-hero-copy">
             <p className="home-kicker">المنصة العلمية الشرعية</p>
-            <h1>مجالس العلم تجمع الدروس والمحاضرات والدورات والكتب والفوائد والأسئلة الشرعية</h1>
+            <h1>مجالس العلم — دروسك وكتبك ومشايخك في مكان واحد</h1>
             <p className="home-hero-text">
-              مجالس العلم منصة علمية شرعية متخصصة تجمع الدروس والمحاضرات والدورات والكتب والفوائد والأسئلة الشرعية في مكان واحد بطريقة احترافية ومنظمة، لتسهيل الوصول إلى المحتوى العلمي الموثوق.
+              منصة عربية تجمع الدروس والمحاضرات والدورات والكتب والفوائد والأسئلة الشرعية بطريقة منظمة، مع مساعد علمي يرشدك داخل المحتوى دون ادعاء الإفتاء.
             </p>
             <form onSubmit={submitSearch} className="home-search" aria-label="البحث في المنصة">
               <span aria-hidden="true">🔎</span>
@@ -141,8 +145,8 @@ export default function HomePage() {
               <Link href="/lessons" className="home-primary-action">
                 استعرض أحدث الدروس
               </Link>
-              <Link href="/library" className="home-secondary-action">
-                تصفح المكتبة
+              <Link href="/assistant" className="home-secondary-action">
+                جرّب المساعد العلمي
               </Link>
             </div>
           </div>
@@ -150,13 +154,13 @@ export default function HomePage() {
           <div className="home-hero-card" aria-label="ملخص محتوى المنصة">
             <div className="home-hero-card-top">
               <span>مجلس اليوم</span>
-              <strong>{lessons[0]?.category || "علم شرعي"}</strong>
+              <strong>{heroLesson?.category || "علم شرعي"}</strong>
             </div>
-            <h2>{lessons[0]?.title || "ابدأ رحلتك العلمية من درس موثق ومختصر"}</h2>
-            <p>{lessons[0]?.description || "اختر من الدروس والمقالات والفوائد ما يناسب وقتك واهتمامك، ثم واصل التعلم عبر أقسام المنصة."}</p>
+            <h2>{heroLesson?.title || "ابدأ رحلتك العلمية من درس موثق ومختصر"}</h2>
+            <p>{heroLesson?.description || "اختر من الدروس والمقالات والفوائد ما يناسب وقتك واهتمامك، ثم واصل التعلم عبر أقسام المنصة."}</p>
             <div className="home-hero-meta">
-              <span>{lessons[0]?.sheikhs?.name || "مشايخ معتمدون"}</span>
-              <span>{lessons[0]?.city || "متاح للجميع"}</span>
+              <span>{heroLesson?.sheikhs?.name || "مشايخ معتمدون"}</span>
+              <span>{heroLesson?.city || "متاح للجميع"}</span>
             </div>
           </div>
         </div>
@@ -164,147 +168,155 @@ export default function HomePage() {
 
       <main className="home-container home-main">
         {loading && <Loading />}
-        <section className="home-stats" aria-label="إحصائيات المنصة">
-          {stats.map((stat) => (
-            <div key={stat.label} className="home-stat-card">
-              <strong>{stat.value}{stat.value > 0 ? stat.suffix : ""}</strong>
-              <span>{stat.label}</span>
-            </div>
-          ))}
-        </section>
+        {error && <ErrorState text={error} onRetry={loadHome} />}
 
-        <section className="home-feature-grid" aria-label="أقسام المنصة">
-          {FEATURES.map((feature) => (
-            <Link key={feature.href} href={feature.href} className="home-feature-card">
-              <span className="home-feature-icon" aria-hidden="true">{feature.icon}</span>
-              <h3>{feature.title}</h3>
-              <p>{feature.desc}</p>
-            </Link>
-          ))}
-        </section>
+        {!error && (
+          <>
+            <section className="home-stats" aria-label="إحصائيات المنصة">
+              {stats.map((stat) => (
+                <div key={stat.label} className="home-stat-card">
+                  <strong>{stat.value}{stat.suffix}</strong>
+                  <span>{stat.label}</span>
+                </div>
+              ))}
+            </section>
 
-        <section className="home-section">
-          <SectionHead eyebrow="أحدث الإضافات" title="أحدث الدروس" subtitle="بطاقات مختصرة تساعدك على اختيار مجلسك القادم بسرعة." href="/lessons" />
-          {lessons.length > 0 ? (
-            <div className="home-lessons-grid">
-              {lessons.slice(0, 3).map((lesson: any) => (
-                <Link key={lesson.id} href="/lessons" className="home-lesson-card">
-                  <div className="home-card-glow" />
-                  <div className="home-card-row">
-                    <span className="home-tag">{lesson.category || "درس علمي"}</span>
-                    <span>{lesson.delivery || "حضور"}</span>
-                  </div>
-                  <h3>{lesson.title}</h3>
-                  {lesson.description && <p>{excerpt(lesson.description, 120)}</p>}
-                  <div className="home-lesson-meta">
-                    <span>{lesson.sheikhs?.name || "شيخ معتمد"}</span>
-                    <span>{[lesson.mosque, lesson.city].filter(Boolean).join(" - ") || "متاح قريبا"}</span>
-                  </div>
+            <section className="home-feature-grid" aria-label="أقسام المنصة">
+              {FEATURES.map((feature) => (
+                <Link key={feature.href} href={feature.href} className="home-feature-card">
+                  <span className="home-feature-icon" aria-hidden="true">{feature.icon}</span>
+                  <h3>{feature.title}</h3>
+                  <p>{feature.desc}</p>
                 </Link>
               ))}
-            </div>
-          ) : (
-            <EmptyCard text="سيتم عرض أحدث الدروس المعتمدة هنا فور إضافتها." />
-          )}
-        </section>
+            </section>
 
-        <section className="home-section home-sheikhs-section">
-          <SectionHead eyebrow="أهل العلم" title="أبرز المشايخ" subtitle="تعرف على المشايخ والدعاة المعتمدين وتخصصاتهم." href="/sheikhs" />
-          {displayedSheikhs.length > 0 ? (
-            <div className="home-sheikhs-grid">
-              {displayedSheikhs.map((sheikh: any) => {
-                const image = getSheikhImage(sheikh);
-                return (
-                  <Link key={sheikh.id} href={`/sheikhs/${sheikh.id}`} className="home-sheikh-card">
-                    <div className="home-sheikh-photo">
-                      {image ? <img src={image} alt={sheikh.name || "شيخ"} /> : <span>{sheikh.name?.charAt(0) || "ع"}</span>}
+            <section className="home-section">
+              <SectionHead eyebrow="أحدث الإضافات" title="أحدث الدروس" subtitle="بطاقات مختصرة تساعدك على اختيار مجلسك القادم بسرعة." href="/lessons" />
+              {usingDemoLessons && (
+                <p className="home-demo-note">نعرض دروسًا تجريبية حتى يُضاف محتوى حي من لوحة الإدارة.</p>
+              )}
+              <div className="home-lessons-grid">
+                {displayedLessons.map((lesson: any) => (
+                  <Link key={lesson.id} href="/lessons" className="home-lesson-card">
+                    <div className="home-card-glow" />
+                    <div className="home-card-row">
+                      <span className="home-tag">{lesson.category || "درس علمي"}</span>
+                      <span>{lesson.delivery || "حضور"}</span>
                     </div>
-                    <h3>{sheikh.name}</h3>
-                    <p>{sheikh.ijazah || sheikh.city || "شيخ معتمد في منصة مجالس العلم"}</p>
-                    <div className="home-sheikh-tags">
-                      {sheikh.is_verified && <span>معتمد</span>}
-                      {(sheikh.specialties || []).slice(0, 2).map((specialty: string) => (
-                        <span key={specialty}>{specialty}</span>
-                      ))}
+                    <h3>{lesson.title}</h3>
+                    {lesson.description && <p>{excerpt(lesson.description, 120)}</p>}
+                    <div className="home-lesson-meta">
+                      <span>{lesson.sheikhs?.name || "شيخ معتمد"}</span>
+                      <span>{[lesson.mosque, lesson.city].filter(Boolean).join(" - ") || "متاح قريبا"}</span>
                     </div>
                   </Link>
-                );
-              })}
-            </div>
-          ) : (
-            <EmptyCard text="سيظهر هنا أبرز المشايخ عند اعتماد ملفاتهم العلمية." />
-          )}
-        </section>
+                ))}
+              </div>
+            </section>
 
-        <section className="home-section home-library-section">
-          <SectionHead eyebrow="الأرشيف العلمي" title="المكتبة العلمية" subtitle="كتب ومتون وتفريغات منظمة للوصول السريع إلى المادة المناسبة." href="/library" />
-          <div className="home-library-grid">
-            {displayedLibrary.map((item: any) => (
-              <Link key={item.id} href="/library" className="home-library-card">
-                <span className="home-library-icon">{item.type === "كتاب" ? "📕" : item.type === "متن" ? "📜" : "📝"}</span>
-                <div>
-                  <span className="home-tag">{item.type || "مادة علمية"}</span>
-                  <h3>{item.title}</h3>
-                  <p>{item.description || item.category || "مادة مختارة ضمن المكتبة العلمية."}</p>
+            <section className="home-section home-sheikhs-section">
+              <SectionHead eyebrow="أهل العلم" title="أبرز المشايخ" subtitle="تعرف على المشايخ والدعاة المعتمدين وتخصصاتهم." href="/sheikhs" />
+              <div className="home-sheikhs-grid">
+                {displayedSheikhs.map((sheikh: any) => {
+                  const image = getSheikhImage(sheikh);
+                  return (
+                    <Link key={sheikh.id} href={usingDemoSheikhs ? "/sheikhs" : `/sheikhs/${sheikh.id}`} className="home-sheikh-card">
+                      <div className="home-sheikh-photo">
+                        {image ? <img src={image} alt={sheikh.name || "شيخ"} /> : <span>{sheikh.name?.charAt(0) || "ع"}</span>}
+                      </div>
+                      <h3>{sheikh.name}</h3>
+                      <p>{sheikh.ijazah || sheikh.city || "شيخ معتمد في منصة مجالس العلم"}</p>
+                      <div className="home-sheikh-tags">
+                        {sheikh.is_verified && <span>معتمد</span>}
+                        {(sheikh.specialties || []).slice(0, 2).map((specialty: string) => (
+                          <span key={specialty}>{specialty}</span>
+                        ))}
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+            </section>
+
+            <section className="home-section home-library-section">
+              <SectionHead eyebrow="الأرشيف العلمي" title="المكتبة العلمية" subtitle="كتب ومتون وتفريغات منظمة للوصول السريع إلى المادة المناسبة." href="/library" />
+              <div className="home-library-grid">
+                {displayedLibrary.map((item: any) => (
+                  <Link key={item.id} href="/library" className="home-library-card">
+                    <span className="home-library-icon">{item.type === "كتاب" ? "📕" : item.type === "متن" ? "📜" : "📝"}</span>
+                    <div>
+                      <span className="home-tag">{item.type || "مادة علمية"}</span>
+                      <h3>{item.title}</h3>
+                      <p>{item.description || item.category || "مادة مختارة ضمن المكتبة العلمية."}</p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </section>
+
+            <section className="home-section home-two-column">
+              <div>
+                <SectionHead eyebrow="علم وإيمان" title="الإعجاز العلمي" subtitle="قراءات موثقة تربط العلم بآيات التفكر." href="/miracles" />
+                <div className="home-miracle-list">
+                  {displayedMiracles.map((item: any) => (
+                    <Link key={item.id} href="/miracles" className="home-miracle-card">
+                      <div>
+                        <span className="home-tag">{item.source_type || "موثق"}</span>
+                        {item.category && <span className="home-soft-tag">{item.category}</span>}
+                      </div>
+                      <h3>{item.title}</h3>
+                      {item.reference && <p>{item.reference}</p>}
+                    </Link>
+                  ))}
                 </div>
-              </Link>
-            ))}
-          </div>
-        </section>
+              </div>
 
-        <section className="home-section home-two-column">
-          <div>
-            <SectionHead eyebrow="علم وإيمان" title="الإعجاز العلمي" subtitle="قراءات موثقة تربط العلم بآيات التفكر." href="/miracles" />
-            <div className="home-miracle-list">
-              {displayedMiracles.map((item: any) => (
-                <Link key={item.id} href="/miracles" className="home-miracle-card">
-                  <div>
-                    <span className="home-tag">{item.source_type || "موثق"}</span>
-                    {item.category && <span className="home-soft-tag">{item.category}</span>}
-                  </div>
-                  <h3>{item.title}</h3>
-                  {item.reference && <p>{item.reference}</p>}
-                </Link>
-              ))}
-            </div>
-          </div>
+              <div>
+                <SectionHead eyebrow="مختارات نافعة" title="الفوائد المختارة" subtitle="فوائد قصيرة مراجعة تصلح للتأمل والمشاركة." href="/fawaid" />
+                <div className="home-fawaid-list">
+                  {displayedFawaid.map((item: any) => (
+                    <article key={item.id} className="home-fawaid-card">
+                      <p>“{item.text}”</p>
+                      {item.author_name && <span>{item.author_name}</span>}
+                    </article>
+                  ))}
+                </div>
+              </div>
+            </section>
 
-          <div>
-            <SectionHead eyebrow="مختارات نافعة" title="الفوائد المختارة" subtitle="فوائد قصيرة مراجعة تصلح للتأمل والمشاركة." href="/fawaid" />
-            <div className="home-fawaid-list">
-              {displayedFawaid.map((item: any) => (
-                <article key={item.id} className="home-fawaid-card">
-                  <p>“{item.text}”</p>
-                  {item.author_name && <span>{item.author_name}</span>}
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
+            <section className="home-section">
+              <SectionHead eyebrow="إجابات موثقة" title="أسئلة شائعة من المنصة" subtitle="نماذج من الأسئلة المنشورة بإجابات علمية مدعمة." href="/qa" />
+              <div className="home-qa-grid">
+                {displayedQa.map((item: any) => (
+                  <Link key={item.id} href="/qa" className="home-qa-card">
+                    <span>{item.qa_categories?.name || "سؤال وجواب"}</span>
+                    <h3>{item.question}</h3>
+                  </Link>
+                ))}
+              </div>
+            </section>
 
-        {qa.length > 0 && (
-          <section className="home-section">
-            <SectionHead eyebrow="إجابات موثقة" title="أسئلة شائعة من المنصة" subtitle="نماذج من الأسئلة المنشورة بإجابات علمية مدعمة." href="/qa" />
-            <div className="home-qa-grid">
-              {qa.slice(0, 3).map((item: any) => (
-                <Link key={item.id} href="/qa" className="home-qa-card">
-                  <span>{item.qa_categories?.name || "سؤال وجواب"}</span>
-                  <h3>{item.question}</h3>
-                </Link>
+            <section className="home-cta-banner">
+              <div>
+                <p className="home-eyebrow">المساعد العلمي</p>
+                <h2>اسأل وابحث داخل المنصة بسرعة</h2>
+                <p>المساعد يرشدك إلى الدروس والمشايخ والكتب، ويحيل الفتوى الخاصة إلى أهل العلم.</p>
+              </div>
+              <Link href="/assistant" className="home-primary-action">افتح المساعد العلمي</Link>
+            </section>
+
+            <section className="home-trust-strip">
+              {TRUST_POINTS.map((point) => (
+                <div key={point.title}>
+                  <span>{point.icon}</span>
+                  <h3>{point.title}</h3>
+                  <p>{point.desc}</p>
+                </div>
               ))}
-            </div>
-          </section>
+            </section>
+          </>
         )}
-
-        <section className="home-trust-strip">
-          {TRUST_POINTS.map((point) => (
-            <div key={point.title}>
-              <span>{point.icon}</span>
-              <h3>{point.title}</h3>
-              <p>{point.desc}</p>
-            </div>
-          ))}
-        </section>
       </main>
     </div>
   );

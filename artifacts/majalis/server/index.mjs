@@ -1,5 +1,6 @@
 import express from "express";
 import path from "node:path";
+import { existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import assistantHandler from "../api/assistant.js";
 import { createRateLimiter } from "./rate-limit.mjs";
@@ -44,6 +45,17 @@ app.get("/api/healthz", (_req, res) => {
   res.json({ ok: true, service: "majalis-web" });
 });
 
+function prerenderPath(urlPath) {
+  if (urlPath === "/") {
+    const rootSeo = path.join(distDir, "index.seo.html");
+    if (existsSync(rootSeo)) return rootSeo;
+    return path.join(distDir, "index.html");
+  }
+  const nested = path.join(distDir, urlPath.slice(1), "index.html");
+  if (existsSync(nested)) return nested;
+  return path.join(distDir, "index.html");
+}
+
 app.use(express.static(distDir, { index: false, maxAge: "1h" }));
 
 app.use((req, res, next) => {
@@ -53,7 +65,9 @@ app.use((req, res, next) => {
   if (req.path.startsWith("/api/")) {
     return next();
   }
-  res.sendFile(path.join(distDir, "index.html"));
+  const ua = req.headers["user-agent"] || "";
+  const isBot = /googlebot|bingbot|yandex|baiduspider|duckduckbot|slurp|facebookexternalhit|twitterbot|linkedinbot|whatsapp|telegrambot/i.test(ua);
+  res.sendFile(isBot ? prerenderPath(req.path) : path.join(distDir, "index.html"));
 });
 
 app.use("/api", (_req, res) => {

@@ -37,7 +37,13 @@ function routeForPath(path: string) {
   if (exact) return exact;
 
   if (normalized.startsWith("/search/")) {
-    return requiredRoute("/search");
+    const term = decodeURIComponent(normalized.slice("/search/".length));
+    return {
+      ...requiredRoute("/search"),
+      title: `نتائج البحث: ${term} | مجالس العلم`,
+      description: `نتائج البحث عن «${term}» في الدروس والمشايخ والمكتبة والفوائد داخل مجالس العلم.`,
+      robots: "noindex, follow",
+    };
   }
 
   if (normalized.startsWith("/sheikhs/")) {
@@ -88,6 +94,7 @@ export function usePageSeo(path: string) {
     upsertMeta("name", "description", route.description);
     upsertMeta("name", "keywords", keywords);
     upsertMeta("name", "robots", robots);
+    upsertMeta("name", "theme-color", "#164E3C");
 
     upsertMeta("property", "og:site_name", seoData.siteName);
     upsertMeta("property", "og:locale", "ar_AR");
@@ -96,11 +103,13 @@ export function usePageSeo(path: string) {
     upsertMeta("property", "og:description", route.description);
     upsertMeta("property", "og:url", canonical);
     upsertMeta("property", "og:image", image);
+    upsertMeta("property", "og:image:alt", seoData.siteName);
 
     upsertMeta("name", "twitter:card", "summary_large_image");
     upsertMeta("name", "twitter:title", route.title);
     upsertMeta("name", "twitter:description", route.description);
     upsertMeta("name", "twitter:image", image);
+    upsertMeta("name", "twitter:url", canonical);
 
     upsertCanonical(canonical);
   }, [path]);

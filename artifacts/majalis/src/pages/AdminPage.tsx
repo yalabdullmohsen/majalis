@@ -1,8 +1,5 @@
 import { useState } from "react";
-import { Link } from "wouter";
 import { C } from "@/lib/theme";
-import { useAuth } from "@/components/AuthProvider";
-import { Loading } from "@/components/ui-common";
 import { StatsSection } from "@/pages/admin/StatsSection";
 import { SheikhsSection } from "@/pages/admin/SheikhsSection";
 import { LessonsSection } from "@/pages/admin/LessonsSection";
@@ -26,28 +23,7 @@ const NAV: { key: Section; label: string; icon: string }[] = [
 ];
 
 export default function AdminPage() {
-  const { isAdmin, isLoggedIn, loading: authLoading } = useAuth() as any;
   const [section, setSection] = useState<Section>("stats");
-
-  if (authLoading) return <Loading />;
-  if (!isLoggedIn) {
-    return (
-      <div style={{ maxWidth: "24rem", margin: "5rem auto", padding: "2rem", textAlign: "center", background: C.panel, borderRadius: "0.5rem", border: `1px solid ${C.line}` }}>
-        <p style={{ fontSize: "2rem", marginBottom: "0.75rem" }}>🔒</p>
-        <p style={{ color: C.inkSoft, marginBottom: "1rem", fontSize: "0.9375rem" }}>يجب تسجيل الدخول للوصول إلى لوحة التحكم.</p>
-        <Link href="/login" style={{ color: C.emeraldDeep, textDecoration: "underline", fontSize: "0.875rem" }}>تسجيل الدخول</Link>
-      </div>
-    );
-  }
-  if (!isAdmin) {
-    return (
-      <div style={{ maxWidth: "24rem", margin: "5rem auto", padding: "2rem", textAlign: "center", background: C.panel, borderRadius: "0.5rem", border: `1px solid ${C.line}` }}>
-        <p style={{ fontSize: "2rem", marginBottom: "0.75rem" }}>🔒</p>
-        <p style={{ color: C.inkSoft, marginBottom: "1rem", fontSize: "0.9375rem" }}>لوحة تحكم مجالس العلم للمشرفين فقط.</p>
-        <Link href="/" style={{ color: C.emeraldDeep, textDecoration: "underline", fontSize: "0.875rem" }}>العودة للرئيسية</Link>
-      </div>
-    );
-  }
 
   return (
     <div style={{ display: "flex", minHeight: "calc(100vh - 60px)", background: C.parchment }}>

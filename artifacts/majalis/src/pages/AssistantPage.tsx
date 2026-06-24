@@ -14,10 +14,28 @@ const WELCOME_MESSAGE: ChatMessage = {
     "مرحبًا بك في المساعد العلمي. اسألني عن الدروس أو المشايخ أو الكتب داخل منصة مجالس العلم، وسأجيب بإرشاد علمي عام دون ادعاء الإفتاء.",
 };
 
+const QUICK_PROMPTS = [
+  "أرشدني إلى دروس في العقيدة",
+  "من أبرز المشايخ في التفسير؟",
+  "اقترح كتبًا للمبتدئين في طلب العلم",
+  "كيف أبحث عن درس في الفقه؟",
+];
+
 function createId() {
   return typeof crypto !== "undefined" && "randomUUID" in crypto
     ? crypto.randomUUID()
     : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+}
+
+function extractError(data: unknown): string | null {
+  if (!data || typeof data !== "object") return null;
+  const record = data as Record<string, unknown>;
+  if (typeof record.error === "string") return record.error;
+  if (record.error && typeof record.error === "object") {
+    const nested = record.error as Record<string, unknown>;
+    if (typeof nested.message === "string") return nested.message;
+  }
+  return null;
 }
 
 export default function AssistantPage() {
@@ -25,22 +43,27 @@ export default function AssistantPage() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [serviceReady, setServiceReady] = useState<boolean | null>(null);
   const bottomRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
   }, [messages, loading]);
 
-  const submit = async (event: FormEvent) => {
-    event.preventDefault();
+  useEffect(() => {
+    fetch("/api/healthz")
+      .then((res) => setServiceReady(res.ok))
+      .catch(() => setServiceReady(false));
+  }, []);
 
-    const question = input.trim();
-    if (!question || loading) return;
+  const sendQuestion = async (question: string) => {
+    const trimmed = question.trim();
+    if (!trimmed || loading) return;
 
     const userMessage: ChatMessage = {
       id: createId(),
       role: "user",
-      content: question,
+      content: trimmed,
     };
     const nextMessages = [...messages, userMessage];
 
@@ -61,14 +84,9 @@ export default function AssistantPage() {
       });
 
       const data = await response.json().catch(() => ({}));
+      const serverError = extractError(data);
 
       if (!response.ok) {
-        const serverError =
-          typeof data?.error === "string"
-            ? data.error
-            : typeof data?.error?.message === "string"
-              ? data.error.message
-              : null;
         if (response.status === 429) {
           throw new Error(serverError || "تم تجاوز الحد المسموح. يرجى الانتظار دقيقة ثم المحاولة مجددًا.");
         }
@@ -81,7 +99,9 @@ export default function AssistantPage() {
       const assistantMessage: ChatMessage = {
         id: createId(),
         role: "assistant",
-        content: data?.reply || "لم يرجع المساعد ردًا واضحًا.",
+        content: typeof data?.reply === "string" && data.reply.trim()
+          ? data.reply
+          : "لم يرجع المساعد ردًا واضحًا.",
       };
 
       setMessages((current) => [...current, assistantMessage]);
@@ -96,6 +116,11 @@ export default function AssistantPage() {
     }
   };
 
+  const submit = async (event: FormEvent) => {
+    event.preventDefault();
+    await sendQuestion(input);
+  };
+
   return (
     <div className="assistant-page">
       <section className="assistant-hero" aria-labelledby="assistant-title">
@@ -104,6 +129,11 @@ export default function AssistantPage() {
         <p>
           رفيق بحث عربي يساعدك في الوصول إلى الدروس والمشايخ والكتب والفوائد داخل مجالس العلم، مع التزام واضح بأن الفتوى الخاصة تُحال إلى أهل العلم المختصين.
         </p>
+        {serviceReady === false && (
+          <p className="assistant-service-warning" role="alert">
+            خدمة المساعد غير متصلة حاليًا. تأكد من تشغيل الخادم وضبط ANTHROPIC_API_KEY.
+          </p>
+        )}
         <div className="assistant-links" aria-label="روابط سريعة">
           <Link href="/lessons">الدروس</Link>
           <Link href="/sheikhs">المشايخ</Link>
@@ -116,6 +146,14 @@ export default function AssistantPage() {
         <div className="assistant-guidelines">
           <strong>تنبيه منهجي</strong>
           <span>يعطي المساعد إرشادًا عامًا، وعند طلب فتوى قطعية سيقول: "هذه مسألة تحتاج إلى عالم مختص".</span>
+        </div>
+
+        <div className="assistant-quick-prompts" aria-label="أسئلة مقترحة">
+          {QUICK_PROMPTS.map((prompt) => (
+            <button key={prompt} type="button" disabled={loading} onClick={() => sendQuestion(prompt)}>
+              {prompt}
+            </button>
+          ))}
         </div>
 
         <div className="assistant-messages" aria-live="polite">
@@ -136,9 +174,12 @@ export default function AssistantPage() {
         </div>
 
         {error && (
-          <p className="assistant-error" role="alert">
-            {error}
-          </p>
+          <div className="assistant-error-wrap" role="alert">
+            <p className="assistant-error">{error}</p>
+            <button type="button" className="assistant-retry-btn" onClick={() => setError("")}>
+              إغلاق
+            </button>
+          </div>
         )}
 
         <form onSubmit={submit} className="assistant-form">

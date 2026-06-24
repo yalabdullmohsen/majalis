@@ -1,5 +1,6 @@
 import { Switch, Route, Router as WouterRouter, useLocation } from "wouter";
 import { AuthProvider } from "@/components/AuthProvider";
+import { AdminRouteGuard } from "@/components/AdminRouteGuard";
 import NavBar from "@/components/NavBar";
 import HomePage from "@/pages/HomePage";
 import AboutPage from "@/pages/AboutPage";
@@ -41,7 +42,11 @@ function Router() {
       <Route path="/assistant" component={AssistantPage} />
       <Route path="/condolences" component={CondolencesPage} />
       <Route path="/login" component={LoginPage} />
-      <Route path="/admin" component={AdminPage} />
+      <Route path="/admin">
+        <AdminRouteGuard>
+          <AdminPage />
+        </AdminRouteGuard>
+      </Route>
       <Route component={NotFound} />
     </Switch>
   );

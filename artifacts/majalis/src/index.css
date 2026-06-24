@@ -681,6 +681,44 @@ input, textarea, select { font-family: inherit; }
   font-size: 0.88rem;
 }
 
+.home-demo-note {
+  font-size: 0.8125rem;
+  color: var(--majalis-brass-deep);
+  background: var(--majalis-parchment-deep);
+  border: 1px solid var(--majalis-line);
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.home-cta-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+  padding: clamp(1.25rem, 4vw, 2rem);
+  border-radius: 1.25rem;
+  border: 1px solid var(--majalis-line);
+  background: linear-gradient(135deg, #f0e8d6, #fff);
+  box-shadow: var(--majalis-shadow);
+}
+
+.home-cta-banner h2 {
+  font-family: Amiri, Georgia, serif;
+  color: var(--majalis-emerald-deep);
+  font-size: clamp(1.35rem, 4vw, 2rem);
+  margin: 0.35rem 0;
+}
+
+.home-cta-banner p {
+  color: var(--majalis-ink-soft);
+  max-width: 36rem;
+  line-height: 1.8;
+}
+
 @media (max-width: 1050px) {
   .home-hero-grid,
   .home-two-column {
@@ -855,6 +893,60 @@ input, textarea, select { font-family: inherit; }
   background: rgba(255, 255, 255, 0.08);
   font-size: 0.86rem;
   font-weight: 800;
+}
+
+.assistant-service-warning {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  background: rgba(254, 226, 226, 0.15);
+  border: 1px solid rgba(254, 202, 202, 0.45);
+  color: #fecaca;
+  font-size: 0.875rem;
+}
+
+.assistant-quick-prompts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--majalis-line);
+  background: var(--majalis-panel);
+}
+
+.assistant-quick-prompts button {
+  border: 1px solid var(--majalis-line);
+  border-radius: 999px;
+  padding: 0.4rem 0.75rem;
+  background: var(--majalis-parchment-deep);
+  color: var(--majalis-emerald-deep);
+  font-size: 0.78rem;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.assistant-quick-prompts button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.assistant-error-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin: 0 1rem;
+}
+
+.assistant-retry-btn {
+  border: 1px solid #fecaca;
+  background: #fff;
+  color: #8a1f1f;
+  border-radius: 0.5rem;
+  padding: 0.35rem 0.75rem;
+  font-family: inherit;
+  cursor: pointer;
+  flex-shrink: 0;
 }
 
 .assistant-chat {

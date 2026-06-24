@@ -3,6 +3,13 @@ import { Link, useLocation } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { C } from "@/lib/theme";
 
+function getNextPath() {
+  if (typeof window === "undefined") return "/";
+  const params = new URLSearchParams(window.location.search);
+  const next = params.get("next");
+  return next && next.startsWith("/") && !next.startsWith("//") ? next : "/";
+}
+
 export default function LoginPage() {
   const [mode, setMode] = useState<"login" | "register">("login");
   const [email, setEmail] = useState("");
@@ -13,6 +20,7 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const { login, register } = useAuth() as any;
   const [, navigate] = useLocation();
+  const nextPath = getNextPath();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,12 +31,12 @@ export default function LoginPage() {
       if (mode === "login") {
         const { error } = await login(email, password);
         if (error) throw error;
-        navigate("/");
+        navigate(nextPath);
       } else {
         const { data, error } = await register(email, password, fullName);
         if (error) throw error;
         if (data?.session) {
-          navigate("/");
+          navigate(nextPath);
         } else {
           setSuccess(
             "تم إنشاء حسابك بنجاح. يرجى فتح بريدك الإلكتروني وتأكيد حسابك قبل تسجيل الدخول."

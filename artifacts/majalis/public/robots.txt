@@ -1,4 +1,8 @@
+# https://majlisilm.com/robots.txt
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /login
 
+Host: majlisilm.com
 Sitemap: https://majlisilm.com/sitemap.xml
