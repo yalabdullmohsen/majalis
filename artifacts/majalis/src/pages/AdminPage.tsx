@@ -34,7 +34,7 @@ export default function AdminPage() {
     return (
       <div style={{ maxWidth: "24rem", margin: "5rem auto", padding: "2rem", textAlign: "center", background: C.panel, borderRadius: "0.5rem", border: `1px solid ${C.line}` }}>
         <p style={{ fontSize: "2rem", marginBottom: "0.75rem" }}>🔒</p>
-        <p style={{ color: C.inkSoft, marginBottom: "1rem", fontSize: "0.9375rem" }}>هذه الصفحة للمشرفين فقط.</p>
+        <p style={{ color: C.inkSoft, marginBottom: "1rem", fontSize: "0.9375rem" }}>لوحة تحكم مجالس العلم للمشرفين فقط.</p>
         <Link href="/" style={{ color: C.emeraldDeep, textDecoration: "underline", fontSize: "0.875rem" }}>العودة للرئيسية</Link>
       </div>
     );
@@ -49,7 +49,7 @@ export default function AdminPage() {
         padding: "1.5rem 0",
       }}>
         <p style={{ fontSize: "0.6875rem", fontWeight: 700, color: C.inkSoft, padding: "0 1rem", marginBottom: "0.75rem", letterSpacing: "0.06em" }}>
-          لوحة التحكم
+          لوحة تحكم مجالس العلم
         </p>
         <nav>
           {NAV.map(n => (

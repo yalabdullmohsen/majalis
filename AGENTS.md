@@ -2,7 +2,7 @@
 
 ## Cursor Cloud specific instructions
 
-This is a **pnpm workspace monorepo** (Node.js 24, TypeScript 5.9) for **مجالس (Majalis)**, an
+This is a **pnpm workspace monorepo** (Node.js 24, TypeScript 5.9) for **مجالس العلم (Majalis Al-Ilm)**, an
 Arabic RTL Islamic scholarly platform. The primary product is the web app; there are also a mobile
 (Expo) app, a small Express push-notification API server, and a few marketing/design artifacts.
 
@@ -14,8 +14,8 @@ requires `BASE_PATH`) or it throws on startup** — this is the most common non-
 
 | Service | Dev command | Required env | Port |
 |---|---|---|---|
-| Majalis web (primary) | `pnpm --filter @workspace/majalis run dev` | `PORT=24216 BASE_PATH=/` | 24216 |
-| Majalis mobile (Expo) | `pnpm --filter @workspace/majalis-mobile run dev` | `PORT=18881` | 18881 |
+| Majalis Al-Ilm web (primary) | `pnpm --filter @workspace/majalis run dev` | `PORT=24216 BASE_PATH=/` | 24216 |
+| Majalis Al-Ilm mobile (Expo) | `pnpm --filter @workspace/majalis-mobile run dev` | `PORT=18881` | 18881 |
 | API server (push only) | `pnpm --filter @workspace/api-server run dev` | `PORT=8080` | 8080 |
 | Pitch / Promo / Mockup (optional) | `pnpm --filter @workspace/<name> run dev` | `PORT=...` | see `artifact.toml` |
 

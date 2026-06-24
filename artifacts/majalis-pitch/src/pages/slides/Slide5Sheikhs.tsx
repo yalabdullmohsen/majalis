@@ -247,7 +247,7 @@ export default function Slide5Sheikhs() {
           color: "#CFE0D3",
         }}
       >
-        مجالس
+        مجالس العلم
       </div>
     </div>
   );

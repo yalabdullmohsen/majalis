@@ -56,7 +56,7 @@ export default function HomeScreen() {
       {/* Header */}
       <View style={[styles.header, { paddingTop: topPad + 20, backgroundColor: colors.primary }]}>
         <Text style={[styles.headerSub, { color: colors.accent }]}>المنصة العلمية الشرعية</Text>
-        <Text style={[styles.headerTitle, { color: "#FFFFFF" }]}>مجالس</Text>
+        <Text style={[styles.headerTitle, { color: "#FFFFFF" }]}>مجالس العلم</Text>
         <Text style={[styles.headerDesc, { color: "rgba(255,255,255,0.8)" }]}>
           الدروس والمشايخ والمكتبة في مكان واحد
         </Text>

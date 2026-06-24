@@ -1,6 +1,6 @@
 kind = "slides"
 previewPath = "/majalis-pitch/"
-title = "مجالس — عرض تقديمي"
+title = "مجالس العلم — عرض تقديمي"
 version = "1.0.0"
 id = "artifacts/majalis-pitch"
 router = "path"

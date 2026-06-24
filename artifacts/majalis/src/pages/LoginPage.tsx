@@ -36,7 +36,7 @@ export default function LoginPage() {
     <div style={{ maxWidth: "24rem", margin: "4rem auto", padding: "0 1.25rem" }}>
       <div style={{ padding: "2rem", borderRadius: "0.5rem", border: `1px solid ${C.line}`, background: C.panel }}>
         <h1 style={{ fontSize: "1.25rem", fontWeight: 700, color: C.emeraldDeep, fontFamily: "Amiri, serif", textAlign: "center", marginBottom: "1.5rem" }}>
-          {mode === "login" ? "تسجيل الدخول" : "إنشاء حساب"}
+          {mode === "login" ? "تسجيل الدخول إلى مجالس العلم" : "إنشاء حساب في مجالس العلم"}
         </h1>
 
         {error && (

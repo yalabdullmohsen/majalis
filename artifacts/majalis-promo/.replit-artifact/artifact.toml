@@ -1,6 +1,6 @@
 kind = "video"
 previewPath = "/majalis-promo/"
-title = "مجالس — فيديو ترويجي"
+title = "مجالس العلم — فيديو ترويجي"
 version = "1.0.0"
 id = "artifacts/majalis-promo"
 router = "path"

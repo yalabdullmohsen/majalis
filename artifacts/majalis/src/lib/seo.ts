@@ -43,8 +43,8 @@ function routeForPath(path: string) {
   if (normalized.startsWith("/sheikhs/")) {
     return {
       ...requiredRoute("/sheikhs"),
-      title: "صفحة الشيخ | المجلس العلمي",
-      description: "تعرف على صفحة الشيخ ودروسه وبياناته العلمية داخل المجلس العلمي.",
+      title: "صفحة الشيخ | مجالس العلم",
+      description: "تعرف على صفحة الشيخ ودروسه وبياناته العلمية داخل مجالس العلم.",
     };
   }
 

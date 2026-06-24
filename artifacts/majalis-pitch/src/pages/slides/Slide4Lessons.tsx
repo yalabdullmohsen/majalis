@@ -207,7 +207,7 @@ export default function Slide4Lessons() {
           letterSpacing: "0.05em",
         }}
       >
-        مجالس
+        مجالس العلم
       </div>
     </div>
   );
