@@ -39,7 +39,7 @@ export function StatsSection() {
 
   return (
     <div>
-      <h2 style={{ fontSize: "1.125rem", fontWeight: 700, color: C.emeraldDeep, marginBottom: "1.5rem", fontFamily: "Amiri, serif" }}>
+      <h2 style={{ fontSize: "1.125rem", fontWeight: 700, color: C.emeraldDeep, marginBottom: "1.5rem" }}>
         نظرة عامة على المحتوى
       </h2>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(155px, 1fr))", gap: "1rem", marginBottom: "2rem" }}>
@@ -52,7 +52,7 @@ export function StatsSection() {
       </div>
 
       <div style={{ background: ready ? "#E8F5E9" : "#FEF3C7", border: `1px solid ${ready ? C.emerald : C.brass}`, borderRadius: "0.5rem", padding: "1.25rem", marginBottom: "1.5rem" }}>
-        <h3 style={{ margin: "0 0 0.5rem", fontSize: "1rem", fontWeight: 700, color: ready ? C.emeraldDeep : "#92400E", fontFamily: "Amiri, serif" }}>
+        <h3 style={{ margin: "0 0 0.5rem", fontSize: "1rem", fontWeight: 700, color: ready ? C.emeraldDeep : "#92400E" }}>
           {ready ? "جاهزية الإطلاق ✓" : "جاهزية الإطلاق — أقسام بحاجة إلى محتوى"}
         </h3>
         {ready ? (

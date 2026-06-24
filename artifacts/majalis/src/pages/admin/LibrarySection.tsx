@@ -51,7 +51,7 @@ export function LibrarySection() {
   return (
     <div>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.25rem" }}>
-        <h2 style={{ margin: 0, fontSize: "1.125rem", fontWeight: 700, color: C.emeraldDeep, fontFamily: "Amiri, serif" }}>المكتبة العلمية ({items.length})</h2>
+        <h2 style={{ margin: 0, fontSize: "1.125rem", fontWeight: 700, color: C.emeraldDeep }}>المكتبة العلمية ({items.length})</h2>
         <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
           <BulkImport
             title="استيراد مواد المكتبة"

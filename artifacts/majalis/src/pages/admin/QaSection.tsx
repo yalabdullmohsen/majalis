@@ -101,7 +101,7 @@ export function QaSection() {
   return (
     <div>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem", flexWrap: "wrap", gap: "0.75rem" }}>
-        <h2 style={{ margin: 0, fontSize: "1.125rem", fontWeight: 700, color: C.emeraldDeep, fontFamily: "Amiri, serif", display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap" }}>
+        <h2 style={{ margin: 0, fontSize: "1.125rem", fontWeight: 700, color: C.emeraldDeep, display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap" }}>
           الأسئلة والأجوبة ({items.length})
           <span style={{ padding: "0.1rem 0.5rem", borderRadius: "0.75rem", background: C.sage, color: C.emeraldDeep, fontSize: "0.7rem" }}>{publishedCount} منشور</span>
           <span style={{ padding: "0.1rem 0.5rem", borderRadius: "0.75rem", background: C.parchmentDeep, color: C.inkSoft, fontSize: "0.7rem" }}>{draftCount} مسودة</span>

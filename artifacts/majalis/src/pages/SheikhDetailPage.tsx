@@ -38,7 +38,7 @@ export default function SheikhDetailPage({ params }: { params: { id: string } })
           />
           <div style={{ flex: 1, minWidth: 0 }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "0.75rem", flexWrap: "wrap" }}>
-              <h1 style={{ fontSize: "1.5rem", fontWeight: 700, color: C.emeraldDeep, fontFamily: "Amiri, serif", margin: 0 }}>{sheikh.name}</h1>
+              <h1 style={{ fontSize: "1.5rem", fontWeight: 700, color: C.emeraldDeep, margin: 0 }}>{sheikh.name}</h1>
               {sheikh.is_verified && (
                 <span style={{ fontSize: "0.75rem", padding: "0.25rem 0.75rem", borderRadius: "0.25rem", background: C.sage, color: C.emeraldDeep }}>شيخ معتمد</span>
               )}
@@ -79,7 +79,7 @@ export default function SheikhDetailPage({ params }: { params: { id: string } })
 
       {lessons.length > 0 && (
         <div>
-          <h2 style={{ fontSize: "1.125rem", fontWeight: 700, color: C.emeraldDeep, fontFamily: "Amiri, serif", marginBottom: "1rem" }}>دروس الشيخ</h2>
+          <h2 style={{ fontSize: "1.125rem", fontWeight: 700, color: C.emeraldDeep, marginBottom: "1rem" }}>دروس الشيخ</h2>
           <div style={{ display: "grid", gap: "0.75rem" }}>
             {lessons.map((l: any) => (
               <div key={l.id} style={{ padding: "1rem", borderRadius: "0.375rem", border: `1px solid ${C.line}`, background: C.panel }}>

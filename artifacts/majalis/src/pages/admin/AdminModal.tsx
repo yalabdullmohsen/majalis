@@ -50,7 +50,7 @@ export function AdminModal({ title, open, onClose, onSave, saving, children }: A
       >
         <div style={{ padding: "1rem 1.25rem", borderBottom: `1px solid ${C.line}`, display: "flex", justifyContent: "space-between", alignItems: "center", flexShrink: 0 }}>
           <button onClick={onClose} style={{ background: "none", border: "none", cursor: "pointer", color: C.inkSoft, fontSize: "1.25rem", lineHeight: 1, padding: "0.25rem 0.5rem" }}>✕</button>
-          <h2 style={{ margin: 0, fontSize: "1.0625rem", fontWeight: 700, color: C.emeraldDeep, fontFamily: "Amiri, serif" }}>{title}</h2>
+          <h2 style={{ margin: 0, fontSize: "1.0625rem", fontWeight: 700, color: C.emeraldDeep }}>{title}</h2>
         </div>
         <div style={{ flex: 1, overflowY: "auto", padding: "1.25rem" }}>
           {children}

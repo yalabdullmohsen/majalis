@@ -32,7 +32,7 @@ export class ErrorBoundary extends Component<Props, State> {
             textAlign: "center",
           }}
         >
-          <h1 style={{ fontFamily: "Amiri, serif", color: C.emeraldDeep, marginBottom: "0.75rem", fontSize: "1.35rem" }}>
+          <h1 style={{ color: C.emeraldDeep, marginBottom: "0.75rem", fontSize: "1.35rem" }}>
             حدث خطأ غير متوقع
           </h1>
           <p style={{ color: "#b91c1c", marginBottom: "1rem", lineHeight: 1.7, fontSize: "0.9rem" }}>

@@ -4,7 +4,7 @@ export function PageHeader({ eyebrow, title, subtitle }: { eyebrow?: string; tit
   return (
     <div style={{ marginBottom: "1.5rem" }}>
       {eyebrow && <p style={{ fontSize: "0.875rem", marginBottom: "0.5rem", color: C.brassDeep }}>{eyebrow}</p>}
-      <h1 style={{ fontSize: "1.5rem", fontWeight: 700, marginBottom: "0.75rem", color: C.emeraldDeep, fontFamily: "Amiri, serif" }}>
+      <h1 style={{ fontSize: "1.5rem", fontWeight: 700, marginBottom: "0.75rem", color: C.emeraldDeep }}>
         {title}
       </h1>
       {subtitle && <p style={{ fontSize: "0.875rem", lineHeight: "1.75", color: C.inkSoft }}>{subtitle}</p>}

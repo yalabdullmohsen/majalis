@@ -152,7 +152,7 @@ export default function QuizPage() {
           </p>
 
           <div style={{ padding: "1.25rem", borderRadius: "0.75rem", border: `1px solid ${C.line}`, background: C.panel, marginBottom: "1rem" }}>
-            <p style={{ margin: 0, fontSize: "1.125rem", fontWeight: 700, color: C.emeraldDeep, lineHeight: 1.8, fontFamily: "Amiri, serif" }}>
+            <p style={{ margin: 0, fontSize: "1.125rem", fontWeight: 700, color: C.emeraldDeep, lineHeight: 1.8 }}>
               {current.question}
             </p>
           </div>
@@ -198,7 +198,7 @@ export default function QuizPage() {
       {phase === "done" && (
         <div style={{ textAlign: "center", marginTop: "2rem", padding: "2rem 1rem", borderRadius: "1rem", border: `1px solid ${C.line}`, background: C.panel }}>
           <p style={{ fontSize: "3rem", margin: "0 0 0.5rem" }}>🎉</p>
-          <h2 style={{ margin: "0 0 0.5rem", color: C.emeraldDeep, fontFamily: "Amiri, serif" }}>انتهت المسابقة</h2>
+          <h2 style={{ margin: "0 0 0.5rem", color: C.emeraldDeep }}>انتهت المسابقة</h2>
           <p style={{ fontSize: "2rem", fontWeight: 700, color: C.emerald, margin: "0.5rem 0 1.5rem" }}>
             {score} / {deck.length}
           </p>

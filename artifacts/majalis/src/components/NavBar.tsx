@@ -123,9 +123,7 @@ export default function NavBar() {
             alt="المجلس العلمي"
             className="navbar-logo"
           />
-          <span style={{ fontWeight: 700, fontSize: "1.125rem", fontFamily: "Amiri, serif", whiteSpace: "nowrap" }}>
-            المجلس العلمي
-          </span>
+          <span className="site-brand-name">المجلس العلمي</span>
         </Link>
 
         {!isMobile && (

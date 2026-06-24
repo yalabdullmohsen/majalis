@@ -158,6 +158,7 @@ export default function HomePage() {
           </div>
 
           <div className="home-hero-card" aria-label="ملخص محتوى المنصة">
+            <img src="/logo.png" alt="" className="home-hero-card-logo" aria-hidden="true" />
             <div className="home-hero-card-top">
               <span>مجلس اليوم</span>
               <strong>{heroLesson?.category || "علم شرعي"}</strong>

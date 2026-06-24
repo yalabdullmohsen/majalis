@@ -48,7 +48,7 @@ export function FawaidSection() {
   return (
     <div>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem", flexWrap: "wrap", gap: "0.75rem" }}>
-        <h2 style={{ margin: 0, fontSize: "1.125rem", fontWeight: 700, color: C.emeraldDeep, fontFamily: "Amiri, serif", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+        <h2 style={{ margin: 0, fontSize: "1.125rem", fontWeight: 700, color: C.emeraldDeep, display: "flex", alignItems: "center", gap: "0.5rem" }}>
           الفوائد ({items.length})
           {pendingCount > 0 && (
             <span style={{ padding: "0.1rem 0.5rem", borderRadius: "0.75rem", background: "#dc2626", color: "#fff", fontSize: "0.75rem" }}>{pendingCount} بانتظار الموافقة</span>

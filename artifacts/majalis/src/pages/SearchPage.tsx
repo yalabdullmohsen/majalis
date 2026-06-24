@@ -20,7 +20,7 @@ function Group({ title, items, render }: { title: string; items: any[]; render: 
   if (items.length === 0) return null;
   return (
     <div style={{ marginBottom: "2rem" }}>
-      <h2 style={{ fontSize: "1.125rem", fontWeight: 700, color: C.emeraldDeep, fontFamily: "Amiri, serif", margin: "0 0 0.875rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+      <h2 style={{ fontSize: "1.125rem", fontWeight: 700, color: C.emeraldDeep, margin: "0 0 0.875rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
         {title}
         <span style={{ fontSize: "0.7rem", fontWeight: 700, color: C.brassDeep, background: C.parchmentDeep, padding: "0.1rem 0.5rem", borderRadius: "999px" }}>{items.length}</span>
       </h2>
@@ -127,7 +127,7 @@ export default function SearchPage() {
 
   return (
     <div className="page-shell narrow search-page">
-      <h1 style={{ fontSize: "1.75rem", fontWeight: 700, color: C.emeraldDeep, fontFamily: "Amiri, serif", margin: "0 0 1.25rem" }}>
+      <h1 style={{ fontSize: "1.75rem", fontWeight: 700, color: C.emeraldDeep, margin: "0 0 1.25rem" }}>
         البحث
       </h1>
 

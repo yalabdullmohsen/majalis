@@ -7,7 +7,7 @@ export const FONT_OPTIONS: {
   label: string;
   description: string;
 }[] = [
-  { id: "default", label: "افتراضي", description: "خط واضح للواجهة" },
+  { id: "default", label: "Cairo", description: "الخط الرسمي — Cairo SemiBold" },
   { id: "ruqaa", label: "رقعة", description: "خط رقعة بسيط للعرض" },
   { id: "naskh", label: "نسخ", description: "خط نسخ للقراءة الطويلة" },
 ];
