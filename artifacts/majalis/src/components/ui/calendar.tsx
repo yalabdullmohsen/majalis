@@ -6,10 +6,21 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
 } from "lucide-react"
-import { DayButton, DayPicker, getDefaultClassNames } from "react-day-picker"
+import { DayButton, DayPicker, getDefaultClassNames, type RootProps } from "react-day-picker"
 
 import { cn } from "@/lib/utils"
 import { Button, buttonVariants } from "@/components/ui/button"
+
+function assignElementRef<T>(ref: unknown, node: T | null) {
+  if (typeof ref === "function") {
+    ref(node)
+    return
+  }
+
+  if (ref && typeof ref === "object" && "current" in ref) {
+    ;(ref as React.RefObject<T | null>).current = node
+  }
+}
 
 function Calendar({
   className,
@@ -125,11 +136,18 @@ function Calendar({
         ...classNames,
       }}
       components={{
-        Root: ({ className, rootRef, ...props }) => {
+        Root: ({ className, rootRef, ...props }: RootProps) => {
+          const setRootRef = React.useCallback(
+            (node: HTMLDivElement | null) => {
+              assignElementRef(rootRef, node)
+            },
+            [rootRef],
+          )
+
           return (
             <div
               data-slot="calendar"
-              ref={rootRef as React.Ref<HTMLDivElement>}
+              ref={setRootRef}
               className={cn(className)}
               {...props}
             />
