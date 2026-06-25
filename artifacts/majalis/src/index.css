@@ -2457,29 +2457,37 @@ input, textarea, select { font-family: inherit; }
   top: 0;
   pointer-events: none;
   opacity: 0;
+  z-index: -1;
 }
 
 .cond-card {
   --cond-scale: 1;
+  --cond-family-size: 42px;
+  --cond-name-size: 60px;
+  --cond-closing-size: 78px;
   position: relative;
   overflow: hidden;
   box-sizing: border-box;
-  background: #0a0a0a;
-  color: #ffffff;
+  background: #080808;
+  color: #f8f8f8;
   direction: rtl;
+  font-feature-settings: "liga" 1, "calt" 1;
 }
 
 .cond-card__bg {
   position: absolute;
   inset: 0;
-  background: linear-gradient(168deg, #050505 0%, #121212 42%, #0a0a0a 100%);
+  background:
+    radial-gradient(ellipse 90% 60% at 50% 0%, rgba(255, 255, 255, 0.04) 0%, transparent 55%),
+    radial-gradient(ellipse 80% 50% at 50% 100%, rgba(255, 255, 255, 0.03) 0%, transparent 50%),
+    linear-gradient(175deg, #050505 0%, #0e0e0e 48%, #080808 100%);
   pointer-events: none;
 }
 
 .cond-card__frame {
   position: absolute;
-  inset: calc(18px * var(--cond-scale));
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  inset: calc(20px * var(--cond-scale));
+  border: 1px solid rgba(255, 255, 255, 0.16);
   pointer-events: none;
 }
 
@@ -2492,160 +2500,189 @@ input, textarea, select { font-family: inherit; }
   text-align: center;
   height: 100%;
   box-sizing: border-box;
-  padding: calc(44px * var(--cond-scale)) calc(52px * var(--cond-scale)) calc(36px * var(--cond-scale));
+  padding:
+    calc(36px * var(--cond-scale))
+    calc(44px * var(--cond-scale))
+    calc(32px * var(--cond-scale));
   overflow: hidden;
+  gap: calc(10px * var(--cond-scale));
 }
 
-.cond-card__header {
+.cond-card__ornament {
+  display: block;
+  width: min(88%, calc(880px * var(--cond-scale)));
+  height: calc(28px * var(--cond-scale));
+  margin: 0 auto calc(8px * var(--cond-scale));
+  color: rgba(255, 255, 255, 0.45);
+  flex-shrink: 0;
+}
+
+.cond-card__ornament--flip {
+  transform: scaleY(-1);
+  margin: calc(6px * var(--cond-scale)) auto 0;
+}
+
+.cond-card__top {
   flex: 0 0 auto;
   width: 100%;
-  max-width: 92%;
+  max-width: 96%;
 }
 
-.cond-card__intro-top {
-  margin: 0;
-  font-family: "Amiri", "Scheherazade New", "Noto Naskh Arabic", serif;
+.cond-card__bismillah {
+  margin: 0 0 calc(10px * var(--cond-scale));
+  font-family: "Amiri Quran", "Amiri", "Aref Ruqaa", "Scheherazade New", "Noto Naskh Arabic", serif;
   font-size: calc(34px * var(--cond-scale));
-  font-weight: 700;
-  line-height: 1.35;
-  color: #ffffff;
-}
-
-.cond-card__intro-mid {
-  margin: calc(8px * var(--cond-scale)) 0 0;
-  font-family: "Amiri", "Scheherazade New", "Noto Naskh Arabic", serif;
-  font-size: calc(24px * var(--cond-scale));
   font-weight: 400;
-  line-height: 1.55;
-  color: #f2f2f2;
+  line-height: 1.45;
+  color: #ffffff;
+  letter-spacing: 0.01em;
 }
 
-.cond-card__hero-zone {
-  flex: 0 1 auto;
+.cond-card__ayah {
+  margin: 0 0 calc(8px * var(--cond-scale));
+  font-family: "Amiri Quran", "Amiri", "Aref Ruqaa", "Scheherazade New", "Noto Naskh Arabic", serif;
+  font-size: calc(32px * var(--cond-scale));
+  font-weight: 400;
+  line-height: 1.65;
+  color: #f5f5f5;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.cond-card__sadaq {
+  margin: 0;
+  font-family: "Aref Ruqaa", "Amiri", "Scheherazade New", "Noto Naskh Arabic", serif;
+  font-size: calc(22px * var(--cond-scale));
+  font-weight: 400;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.cond-card__body {
+  flex: 1 1 auto;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
-  max-width: 94%;
-  margin: calc(18px * var(--cond-scale)) auto;
-  max-height: 34%;
+  max-width: 92%;
+  min-height: 0;
+  gap: calc(6px * var(--cond-scale));
   overflow: hidden;
 }
 
-.cond-card__hero {
+.cond-card__intro,
+.cond-card__middle {
   margin: 0;
-  font-family: "Amiri Quran", "Amiri", "Scheherazade New", "Noto Naskh Arabic", serif;
-  font-size: calc(54px * var(--cond-scale));
+  font-family: "Aref Ruqaa", "Amiri", "Scheherazade New", "Noto Naskh Arabic", serif;
+  font-size: calc(30px * var(--cond-scale));
   font-weight: 400;
   line-height: 1.55;
+  color: #f0f0f0;
+  max-width: 100%;
+}
+
+.cond-card__family {
+  margin: calc(4px * var(--cond-scale)) 0;
+  font-family: "Aref Ruqaa", "Amiri", "Scheherazade New", "Noto Naskh Arabic", serif;
+  font-size: calc(var(--cond-family-size) * var(--cond-scale));
+  font-weight: 700;
+  line-height: 1.4;
   color: #ffffff;
   max-width: 100%;
-  word-break: normal;
-  overflow-wrap: normal;
-}
-
-.cond-card--preview .cond-card__hero {
-  font-size: calc(42px * var(--cond-scale));
-  line-height: 1.5;
-}
-
-.cond-card__main {
-  flex: 0 0 auto;
-  width: 100%;
-  max-width: 88%;
-}
-
-.cond-card__transition {
-  margin: 0 0 calc(10px * var(--cond-scale));
-  font-family: "Amiri", "Scheherazade New", "Noto Naskh Arabic", serif;
-  font-size: calc(26px * var(--cond-scale));
-  font-weight: 400;
-  line-height: 1.5;
-  color: #ffffff;
+  overflow-wrap: anywhere;
 }
 
 .cond-card__name {
-  margin: 0 0 calc(14px * var(--cond-scale));
-  font-family: "Amiri", "Scheherazade New", "Noto Naskh Arabic", serif;
-  font-size: calc(38px * var(--cond-scale));
+  margin: calc(8px * var(--cond-scale)) 0 calc(6px * var(--cond-scale));
+  font-family: "Amiri Quran", "Amiri", "Aref Ruqaa", "Scheherazade New", serif;
+  font-size: calc(var(--cond-name-size) * var(--cond-scale));
   font-weight: 700;
-  line-height: 1.45;
+  line-height: 1.35;
   color: #ffffff;
-}
-
-.cond-card__details {
-  margin: 0 0 calc(12px * var(--cond-scale));
-  padding: 0;
-  width: 100%;
-}
-
-.cond-card__detail-row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: calc(6px * var(--cond-scale));
-  margin: 0 0 calc(6px * var(--cond-scale));
-  font-family: "Amiri", "Scheherazade New", "Noto Naskh Arabic", serif;
-  font-size: calc(22px * var(--cond-scale));
-  line-height: 1.55;
-  color: #f5f5f5;
-}
-
-.cond-card__detail-row dt {
-  margin: 0;
-  font-weight: 700;
-  color: #ffffff;
-}
-
-.cond-card__detail-row dd {
-  margin: 0;
-  font-weight: 400;
-  color: #f2f2f2;
-}
-
-.cond-card__extra {
-  margin: calc(8px * var(--cond-scale)) 0 0;
-  font-family: "Amiri", "Scheherazade New", "Noto Naskh Arabic", serif;
-  font-size: calc(20px * var(--cond-scale));
-  line-height: 1.6;
-  color: #f0f0f0;
   max-width: 100%;
-  word-break: normal;
-}
-
-.cond-card__footer {
-  margin-top: auto;
-  flex-shrink: 0;
-  width: 100%;
-  max-width: 90%;
-  padding-top: calc(10px * var(--cond-scale));
-}
-
-.cond-card__divider {
-  width: calc(100px * var(--cond-scale));
-  height: 1px;
-  margin: 0 auto calc(12px * var(--cond-scale));
-  background: rgba(255, 255, 255, 0.28);
+  overflow-wrap: anywhere;
 }
 
 .cond-card__dua {
-  margin: 0;
-  font-family: "Amiri", "Scheherazade New", "Noto Naskh Arabic", serif;
+  margin: calc(6px * var(--cond-scale)) 0 0;
+  font-family: "Aref Ruqaa", "Amiri", "Scheherazade New", "Noto Naskh Arabic", serif;
+  font-size: calc(28px * var(--cond-scale));
+  font-weight: 400;
+  line-height: 1.62;
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.cond-card__extra {
+  margin: calc(6px * var(--cond-scale)) 0 0;
+  font-family: "Aref Ruqaa", "Amiri", "Scheherazade New", serif;
   font-size: calc(24px * var(--cond-scale));
   font-weight: 400;
-  line-height: 1.55;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.cond-card__bottom {
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: 96%;
+  margin-top: auto;
+  padding-top: calc(4px * var(--cond-scale));
+}
+
+.cond-card__closing {
+  margin: 0;
+  font-family: "Amiri Quran", "Amiri", "Aref Ruqaa", "Scheherazade New", "Noto Naskh Arabic", serif;
+  font-size: calc(var(--cond-closing-size) * var(--cond-scale));
+  font-weight: 700;
+  line-height: 1.45;
   color: #ffffff;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  letter-spacing: 0.01em;
 }
 
 .cond-card__logo {
   position: absolute;
-  bottom: calc(20px * var(--cond-scale));
+  bottom: calc(24px * var(--cond-scale));
   left: 50%;
   transform: translateX(-50%);
-  width: calc(48px * var(--cond-scale));
-  height: calc(48px * var(--cond-scale));
+  width: calc(40px * var(--cond-scale));
+  height: calc(40px * var(--cond-scale));
   object-fit: contain;
-  opacity: 0.9;
+  opacity: 0.75;
+}
+
+.cond-card--square .cond-card__inner {
+  padding:
+    calc(28px * var(--cond-scale))
+    calc(36px * var(--cond-scale))
+    calc(24px * var(--cond-scale));
+  gap: calc(6px * var(--cond-scale));
+}
+
+.cond-card--square .cond-card__ayah {
+  font-size: calc(28px * var(--cond-scale));
+  line-height: 1.55;
+}
+
+.cond-card--square .cond-card__dua {
+  font-size: calc(24px * var(--cond-scale));
+  line-height: 1.55;
+}
+
+.cond-card--square .cond-card__intro,
+.cond-card--square .cond-card__middle {
+  font-size: calc(26px * var(--cond-scale));
+}
+
+.cond-card--preview .cond-card__closing {
+  font-size: calc((var(--cond-closing-size) * 0.92) * var(--cond-scale));
 }
 
 .template-action-row--three {
@@ -2853,229 +2890,29 @@ input, textarea, select { font-family: inherit; }
   margin-inline: auto;
 }
 
+/* ── Legacy condolence canvas aliases (unused — kept for print hooks) ── */
 .cond-export-wrap {
   will-change: transform;
 }
 
-/* ── Card canvas (1080 export) ── */
-.cond-card {
-  position: relative;
-  overflow: hidden;
-  box-sizing: border-box;
-  color: #fff;
-  background: linear-gradient(160deg, #0a0a0a 0%, #151515 45%, #0d0d0d 100%);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  padding: 3.5rem 2.75rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.cond-pattern-bg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  opacity: 0.9;
-}
-
-.cond-corner-svg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-
-.cond-deco-circle {
-  position: absolute;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  pointer-events: none;
-}
-
-.cond-deco-circle--1 {
-  width: 520px;
-  height: 520px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.cond-deco-circle--2 {
-  width: 380px;
-  height: 380px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border-color: rgba(255, 255, 255, 0.12);
-}
-
-.cond-deco-circle--3 {
-  width: 240px;
-  height: 240px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border-color: rgba(255, 255, 255, 0.18);
-}
-
-.cond-inner {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 1.25rem;
-  width: 100%;
-}
-
-.cond-headline {
-  font-size: clamp(2rem, 4.5vw, 3.25rem);
-  font-weight: 700;
-  line-height: 1.65;
-  color: #fff;
-  letter-spacing: 0.02em;
-}
-
-.cond-headline--sm {
-  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
-}
-
-.cond-hero-text {
-  font-size: clamp(2.4rem, 5vw, 4rem);
-  font-weight: 700;
-  line-height: 1.5;
-  color: #fff;
-}
-
-.cond-hero-text--baqiya,
-.cond-hero-text--bashshir {
-  font-size: clamp(2.8rem, 6vw, 4.5rem);
-}
-
-.cond-sub {
-  font-size: clamp(1rem, 2vw, 1.35rem);
-  color: rgba(255, 255, 255, 0.72);
-  margin: 0;
-}
-
-.cond-name {
-  font-size: clamp(1.6rem, 3.2vw, 2.6rem);
-  font-weight: 700;
-  color: #fff;
-  margin: 0;
-  line-height: 1.55;
-}
-
-.cond-name--large {
-  font-size: clamp(2rem, 4vw, 3.2rem);
-}
-
-.cond-details {
-  width: min(100%, 820px);
-  display: grid;
-  gap: 0.65rem;
-  padding: 1rem 1.25rem;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 0.75rem;
-  background: rgba(255, 255, 255, 0.04);
-}
-
-.cond-details p {
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-}
-
-.cond-details span {
-  font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.55);
-}
-
-.cond-details strong {
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: #fff;
-}
-
-.cond-extra {
-  margin-top: 0.35rem !important;
-  font-size: 1.05rem !important;
-  line-height: 1.75;
-  color: rgba(255, 255, 255, 0.88) !important;
-  white-space: pre-wrap;
-}
-
-.cond-footer-verse {
-  font-size: 1.05rem;
-  color: rgba(255, 255, 255, 0.65);
-  margin: 0;
-}
-
-.cond-ayah {
-  font-size: clamp(1.1rem, 2.2vw, 1.5rem);
-  color: rgba(255, 255, 255, 0.75);
-  margin: 0;
-  line-height: 1.8;
-}
-
-.cond-divider {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  width: min(100%, 420px);
-}
-
-.cond-divider span {
-  flex: 1;
-  height: 1px;
-  background: rgba(255, 255, 255, 0.25);
-}
-
-.cond-circle-frame {
-  position: relative;
-  width: min(100%, 520px);
-  aspect-ratio: 1;
-  display: grid;
-  place-items: center;
-}
-
-.cond-circle-frame__ring {
-  position: absolute;
-  inset: 0;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  box-shadow: inset 0 0 0 12px rgba(255, 255, 255, 0.03);
-}
-
-.cond-circle-frame__content {
-  position: relative;
-  z-index: 1;
-  padding: 1.5rem;
-}
-
-.cond-official-badge {
-  padding: 0.35rem 1.25rem;
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  border-radius: 999px;
-  font-size: 1rem;
-  letter-spacing: 0.06em;
-  color: rgba(255, 255, 255, 0.9);
-}
-
-.cond-official-box {
-  width: min(100%, 860px);
-  padding: 1.25rem 1.5rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-}
-
+.cond-pattern-bg,
+.cond-corner-svg,
+.cond-deco-circle,
+.cond-inner,
+.cond-headline,
+.cond-hero-text,
+.cond-sub,
+.cond-name,
+.cond-details,
+.cond-extra,
+.cond-footer-verse,
+.cond-ayah,
+.cond-divider,
+.cond-circle-frame,
+.cond-official-badge,
+.cond-official-box,
 .cond-crescent {
-  opacity: 0.7;
+  /* superseded by .cond-card official template */
 }
 
 @media (max-width: 960px) {
@@ -4955,6 +4792,19 @@ input, textarea, select { font-family: inherit; }
   gap: 1.5rem;
   grid-template-columns: minmax(280px, 380px) 1fr;
   align-items: start;
+}
+
+.cond-page-inner--single {
+  grid-template-columns: 1fr;
+  max-width: 40rem;
+  margin-inline: auto;
+}
+
+.cond-export-note {
+  margin: 0.25rem 0 0;
+  font-size: 0.78rem;
+  color: var(--majalis-ink-soft);
+  line-height: 1.6;
 }
 
 .cond-form-panel {

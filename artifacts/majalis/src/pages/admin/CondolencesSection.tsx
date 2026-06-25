@@ -35,6 +35,7 @@ export function CondolencesSection() {
           size: form.size,
           showLogo: form.showLogo,
           extraText: form.extraText,
+          familyName: form.familyName,
         },
       });
       showSuccess("تم حفظ إعدادات قوالب التعزية.");
@@ -124,7 +125,7 @@ export function CondolencesSection() {
       />
 
       <p style={{ color: C.inkSoft, fontSize: "0.875rem", lineHeight: 1.8, marginBottom: "1.5rem" }}>
-        إدارة القالب الرسمي للتعزية — خلفية سوداء، جاهز للمشاركة على واتساب وإنستغرام.
+        القالب الرسمي: بسم الله، آية سورة الفجر، نص تعزية، دعاء، و«إنا لله وإنا إليه راجعون» — خلفية سوداء راقية.
       </p>
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 18rem), 1fr))", gap: "1.5rem" }}>
@@ -150,9 +151,8 @@ export function CondolencesSection() {
           <CondolenceCard
             form={{
               ...form,
+              familyName: form.familyName || "أسرة آل … (معاينة)",
               name: form.name || "اسم المتوفى (معاينة)",
-              day: form.day || "الثلاثاء",
-              deathDate: form.deathDate || "2026/6/23",
             }}
             width={dims.previewW}
             height={dims.previewH}
