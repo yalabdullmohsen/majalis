@@ -114,20 +114,22 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
       </header>
 
       <div className="lesson-unified-card__body">
-        {!compact && (lesson.lessonImage || lesson.sheikhImage) && (
-          <div className="lesson-unified-card__media">
-            {lesson.lessonImage && (
-              <LazyImage src={lesson.lessonImage} alt={lesson.title} className="lesson-unified-card__poster" />
-            )}
-            {lesson.sheikhImage && (
-              <SheikhAvatar src={lesson.sheikhImage} name={lesson.sheikhName} size={56} />
+        <div className={`lesson-unified-card__top${compact ? " lesson-unified-card__top--compact" : ""}`}>
+          {lesson.sheikhImage && (
+            <SheikhAvatar src={lesson.sheikhImage} name={lesson.sheikhName} size={compact ? 48 : 56} />
+          )}
+          <div className="lesson-unified-card__headline">
+            <h3 className="lesson-unified-card__title">{lesson.title}</h3>
+            {lesson.sheikhName && (
+              <p className="lesson-unified-card__sheikh">{lesson.sheikhName}</p>
             )}
           </div>
-        )}
+        </div>
 
-        <h3 className="lesson-unified-card__title">{lesson.title}</h3>
-        {lesson.sheikhName && (
-          <p className="lesson-unified-card__sheikh">{lesson.sheikhName}</p>
+        {!compact && lesson.lessonImage && (
+          <div className="lesson-unified-card__media">
+            <LazyImage src={lesson.lessonImage} alt={lesson.title} className="lesson-unified-card__poster" />
+          </div>
         )}
 
         {flags.length > 0 && (

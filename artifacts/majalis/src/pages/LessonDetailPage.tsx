@@ -92,7 +92,6 @@ export default function LessonDetailPage({ params }: { params: { id: string } })
   if (!unified) return <Empty text="لم يُعثر على الدرس." />;
 
   const sheikhName = unified.sheikhName;
-  const sheikhId = lesson?.sheikh_id || lesson?.sheikhs?.id;
   const { day, time, dateLabel } = lesson ? extractLessonSchedule(lesson) : { day: unified.day, time: unified.time, dateLabel: unified.gregorianDate };
   const mapsEmbed = buildMapsEmbed(unified.mapsUrl, unified.mosque, unified.region);
 
@@ -126,13 +125,7 @@ export default function LessonDetailPage({ params }: { params: { id: string } })
           />
           <div className="lesson-detail-hero__copy">
             {hasValue(sheikhName) && (
-              sheikhId ? (
-                <Link href={`/sheikhs/${sheikhId}`} className="lesson-detail-sheikh-link">
-                  {sheikhName}
-                </Link>
-              ) : (
-                <p className="lesson-card-pro__sheikh">{sheikhName}</p>
-              )
+              <p className="lesson-card-pro__sheikh">{sheikhName}</p>
             )}
             <h1 className="lesson-detail-title">{unified.title}</h1>
             <div className="lesson-detail-tags">

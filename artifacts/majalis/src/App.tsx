@@ -1,5 +1,5 @@
 import { Suspense, lazy, type ComponentType } from "react";
-import { Switch, Route, Router as WouterRouter, useLocation } from "wouter";
+import { Redirect, Route, Switch, Router as WouterRouter, useLocation } from "wouter";
 import { AuthProvider } from "@/components/AuthProvider";
 import { FontPreferenceProvider } from "@/components/FontPreferenceProvider";
 import { AdminRouteGuard } from "@/components/AdminRouteGuard";
@@ -19,13 +19,7 @@ const CalendarPage = lazy(() => import("@/pages/CalendarPage"));
 const SearchPage = lazy(() => import("@/pages/SearchPage"));
 const LessonsPage = lazy(() => import("@/pages/LessonsPage"));
 const LessonDetailPage = lazy(() => import("@/pages/LessonDetailPage"));
-const KuwaitLessonsPage = lazy(() => import("@/pages/KuwaitLessonsPage"));
-const CurrentLessonsPage = lazy(() => import("@/pages/CurrentLessonsPage"));
-const AnnouncementsPage = lazy(() => import("@/pages/AnnouncementsPage"));
 const ScientificAnnouncementDetailPage = lazy(() => import("@/pages/ScientificAnnouncementDetailPage"));
-const CoursesPage = lazy(() => import("@/pages/CoursesPage"));
-const SheikhsPage = lazy(() => import("@/pages/SheikhsPage"));
-const SheikhDetailPage = lazy(() => import("@/pages/SheikhDetailPage"));
 const LibraryPage = lazy(() => import("@/pages/LibraryPage"));
 const MiraclesPage = lazy(() => import("@/pages/MiraclesPage"));
 const FawaidPage = lazy(() => import("@/pages/FawaidPage"));
@@ -75,15 +69,15 @@ function Router() {
       <Route path="/search/:q"><SafeLazyRoute component={SearchPage} /></Route>
       <Route path="/search"><SafeLazyRoute component={SearchPage} /></Route>
       <Route path="/scientific-announcements/:id"><SafeLazyRoute component={ScientificAnnouncementDetailPage} /></Route>
-      <Route path="/lessons/current"><SafeLazyRoute component={CurrentLessonsPage} /></Route>
+      <Route path="/lessons/current"><Redirect to="/lessons" /></Route>
       <Route path="/lessons/:id"><SafeLazyRoute component={LessonDetailPage} /></Route>
       <Route path="/lessons"><SafeLazyRoute component={LessonsPage} /></Route>
       <Route path="/calendar"><SafeLazyRoute component={CalendarPage} /></Route>
-      <Route path="/kuwait-lessons"><SafeLazyRoute component={KuwaitLessonsPage} /></Route>
-      <Route path="/announcements"><SafeLazyRoute component={AnnouncementsPage} /></Route>
-      <Route path="/courses"><SafeLazyRoute component={CoursesPage} /></Route>
-      <Route path="/sheikhs/:id"><SafeLazyRoute component={SheikhDetailPage} /></Route>
-      <Route path="/sheikhs"><SafeLazyRoute component={SheikhsPage} /></Route>
+      <Route path="/kuwait-lessons"><Redirect to="/lessons" /></Route>
+      <Route path="/announcements"><Redirect to="/lessons" /></Route>
+      <Route path="/courses"><Redirect to="/lessons?tab=courses" /></Route>
+      <Route path="/sheikhs/:id"><Redirect to="/lessons" /></Route>
+      <Route path="/sheikhs"><Redirect to="/lessons" /></Route>
       <Route path="/library"><SafeLazyRoute component={LibraryPage} /></Route>
       <Route path="/miracles"><SafeLazyRoute component={MiraclesPage} /></Route>
       <Route path="/fawaid"><SafeLazyRoute component={FawaidPage} /></Route>

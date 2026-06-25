@@ -39,7 +39,7 @@ export const lessonAds: LessonAd[] = [
     id: "othman-tafsir-nahl",
     provider: "الموقع الرسمي للشيخ عثمان الخميس",
     teacher: "د. عثمان بن محمد الخميس",
-    teacherImage: "/images/teachers/othman-alkhamees.svg",
+    teacherImage: "/sheikhs/othman-alkhamees.svg",
     posterImage: "/images/posters/othman-tafsir-nahl.svg",
     title: "تفسير سورة النحل",
     shortDescription:
@@ -67,7 +67,7 @@ export const lessonAds: LessonAd[] = [
     id: "othman-sahih-muslim",
     provider: "الموقع الرسمي للشيخ عثمان الخميس",
     teacher: "د. عثمان بن محمد الخميس",
-    teacherImage: "/images/teachers/othman-alkhamees.svg",
+    teacherImage: "/sheikhs/othman-alkhamees.svg",
     posterImage: "/images/posters/othman-sahih-muslim.svg",
     title: "قراءة كتاب صحيح مسلم",
     shortDescription:
@@ -96,7 +96,7 @@ export const lessonAds: LessonAd[] = [
     id: "othman-talkhis-mukhtasar-almuqni",
     provider: "الموقع الرسمي للشيخ عثمان الخميس",
     teacher: "د. عثمان بن محمد الخميس",
-    teacherImage: "/images/teachers/othman-alkhamees.svg",
+    teacherImage: "/sheikhs/othman-alkhamees.svg",
     posterImage: "/images/posters/othman-talkhis-almuqni.svg",
     title: "شرح كتاب تلخيص مختصر المقنع",
     shortDescription:
@@ -126,7 +126,7 @@ export const lessonAds: LessonAd[] = [
     id: "rashed-fundamental-course",
     provider: "إدارة مساجد الجهراء – المراقبة الثقافية",
     teacher: "د. راشد صليهم فهد الصليهم",
-    teacherImage: "/images/teachers/rashed-alsulayyim.svg",
+    teacherImage: "/sheikhs/rashed-alsulayyim.svg",
     posterImage: "/images/posters/rashed-fundamental-course.svg",
     title: "الدورة العلمية التأصيلية",
     shortDescription: "برنامج علمي أسبوعي بثلاث جلسات متتابعة في اليوم نفسه.",
@@ -168,7 +168,7 @@ export const lessonAds: LessonAd[] = [
     id: "mansour-altafsir-alwadih",
     provider: "دروس الكويت",
     teacher: "د. منصور بن ناصر الخالدي",
-    teacherImage: "/images/teachers/mansour-alkhalidi.svg",
+    teacherImage: "/sheikhs/mansour-alkhalidi.svg",
     posterImage: "/images/posters/mansour-friday-reading.svg",
     title: "قراءة كتب متنوعة والتفسير الواضح",
     shortDescription:
@@ -194,7 +194,7 @@ export const lessonAds: LessonAd[] = [
     id: "osama-shatti-prayer-book",
     provider: "منصة الأندلس التعليمية",
     teacher: "الشيخ أسامة الشطي",
-    teacherImage: "/images/teachers/osama-alshatti.svg",
+    teacherImage: "/sheikhs/osama-alshatti.svg",
     posterImage: "/images/posters/osama-shatti-prayer-book.svg",
     title: "شرح كتاب الصلاة من إعانة الطالب",
     shortDescription:

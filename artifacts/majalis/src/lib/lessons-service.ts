@@ -107,3 +107,14 @@ export async function getKuwaitLessonById(id: string) {
   const { lesson } = await fetchLessonById(id);
   return lesson;
 }
+
+/** Alias موحّد — يجلب الدروس والدورات والمحاضرات من مصدر واحد. */
+export const getUnifiedLessons = fetchLessons;
+
+export async function getUnifiedActiveLessons() {
+  return fetchActiveLessons();
+}
+
+export async function getUnifiedLessonsSplit() {
+  return fetchLessonsSplit();
+}

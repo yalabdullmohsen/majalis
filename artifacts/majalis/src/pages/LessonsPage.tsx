@@ -17,7 +17,14 @@ import { regionsForGovernorate } from "@/lib/kuwait-regions";
 import { fromKuwaitLesson } from "@/lib/unified-lesson-card";
 import { registerForLesson, unregisterFromLesson, getMyRegistrations } from "@/lib/supabase";
 
-type TabId = "all" | "courses";
+type TabId = "all" | "lessons" | "courses" | "lectures";
+
+const TAB_LABELS: Record<TabId, string> = {
+  all: "الكل",
+  lessons: "دروس",
+  courses: "دورات",
+  lectures: "محاضرات",
+};
 
 function useTabFromUrl(): [TabId, (tab: TabId) => void] {
   const [, setLocation] = useLocation();
@@ -32,7 +39,7 @@ function useTabFromUrl(): [TabId, (tab: TabId) => void] {
 
   const setTab = useCallback(
     (next: TabId) => {
-      setLocation(next === "courses" ? "/lessons?tab=courses" : "/lessons");
+      setLocation(next === "all" ? "/lessons" : `/lessons?tab=${next}`);
       setTabState(next);
     },
     [setLocation],
@@ -44,7 +51,16 @@ function useTabFromUrl(): [TabId, (tab: TabId) => void] {
 function readTabFromUrl(): TabId {
   if (typeof window === "undefined") return "all";
   const params = new URLSearchParams(window.location.search);
-  return params.get("tab") === "courses" ? "courses" : "all";
+  const value = params.get("tab");
+  if (value === "courses" || value === "lessons" || value === "lectures") return value;
+  return "all";
+}
+
+function filterByTab(lessons: KuwaitLessonRecord[], tab: TabId): KuwaitLessonRecord[] {
+  if (tab === "courses") return lessons.filter((l) => l.isCourse || l.activityType === "دورة");
+  if (tab === "lectures") return lessons.filter((l) => l.activityType === "محاضرة");
+  if (tab === "lessons") return lessons.filter((l) => !l.isCourse && l.activityType !== "دورة" && l.activityType !== "محاضرة");
+  return lessons;
 }
 
 export default function LessonsPage() {
@@ -78,12 +94,17 @@ export default function LessonsPage() {
     }
   }, [isLoggedIn, user]);
 
-  const tabLessons = useMemo(() => {
-    if (tab === "courses") {
-      return activeLessons.filter((l) => l.isCourse || l.activityType === "دورة");
-    }
-    return activeLessons.filter((l) => !l.isCourse);
-  }, [activeLessons, tab]);
+  const tabLessons = useMemo(() => filterByTab(activeLessons, tab), [activeLessons, tab]);
+
+  const tabCounts = useMemo(
+    () => ({
+      all: activeLessons.length,
+      lessons: filterByTab(activeLessons, "lessons").length,
+      courses: filterByTab(activeLessons, "courses").length,
+      lectures: filterByTab(activeLessons, "lectures").length,
+    }),
+    [activeLessons],
+  );
 
   const options = useMemo(() => extractFilterOptions(tabLessons), [tabLessons]);
 
@@ -150,28 +171,22 @@ export default function LessonsPage() {
       />
 
       <div className="kuwait-tabs" role="tablist" aria-label="تبويبات الدروس">
-        <button
-          type="button"
-          role="tab"
-          aria-selected={tab === "all"}
-          className={`kuwait-tab${tab === "all" ? " kuwait-tab--active" : ""}`}
-          onClick={() => setTab("all")}
-        >
-          جميع الدروس ({activeLessons.filter((l) => !l.isCourse).length})
-        </button>
-        <button
-          type="button"
-          role="tab"
-          aria-selected={tab === "courses"}
-          className={`kuwait-tab${tab === "courses" ? " kuwait-tab--active" : ""}`}
-          onClick={() => setTab("courses")}
-        >
-          الدورات العلمية ({activeLessons.filter((l) => l.isCourse || l.activityType === "دورة").length})
-        </button>
+        {(Object.keys(TAB_LABELS) as TabId[]).map((tabId) => (
+          <button
+            key={tabId}
+            type="button"
+            role="tab"
+            aria-selected={tab === tabId}
+            className={`kuwait-tab${tab === tabId ? " kuwait-tab--active" : ""}`}
+            onClick={() => setTab(tabId)}
+          >
+            {TAB_LABELS[tabId]} ({tabCounts[tabId]})
+          </button>
+        ))}
       </div>
 
       <div className="page-stats-row">
-        <span>{stats.total} {tab === "courses" ? "دورة" : "درس"}</span>
+        <span>{stats.total} {tab === "courses" ? "دورة" : tab === "lectures" ? "محاضرة" : "درس"}</span>
         <span>{stats.categories} تصنيف</span>
       </div>
 
@@ -281,7 +296,7 @@ export default function LessonsPage() {
       {loading ? (
         <Loading />
       ) : filtered.length === 0 ? (
-        <p className="lessons-empty-state">لا توجد {tab === "courses" ? "دورات" : "دروس"} مطابقة حاليًا.</p>
+        <p className="lessons-empty-state">لا توجد {TAB_LABELS[tab]} مطابقة حاليًا.</p>
       ) : (
         <div className="page-card-grid lesson-unified-grid">
           {filtered.map((lesson) => (

@@ -9,6 +9,10 @@ const EXTRACTION_PHRASES = [
   /بيانات\s+أولية/giu,
   /مصدر\s+الإعلان/giu,
   /مستخرج(?:ة)?\s+من/giu,
+  /قائمة\s+المشايخ/giu,
+  /أحدث\s+المشايخ/giu,
+  /بيانات\s+تجريبية/giu,
+  /نص\s+تجريبي/giu,
 ];
 
 /** Clean user-visible text from markdown artifacts. */

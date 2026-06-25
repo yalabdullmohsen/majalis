@@ -1,15 +1,18 @@
 import { useState, type FormEvent } from "react";
 import { Link, useLocation } from "wouter";
+import { HomeUpcomingLessons } from "@/components/home/HomeUpcomingLessons";
+import { HomeUpcomingCourses } from "@/components/home/HomeUpcomingCourses";
+import { HomePrayerTimes } from "@/components/home/HomePrayerTimes";
+import { HomeDailyFaida } from "@/components/home/HomeDailyFaida";
+import { HomeDailyDhikr } from "@/components/home/HomeDailyDhikr";
+import { HomeDailyHadith } from "@/components/home/HomeDailyHadith";
+import { HomeDailyQuestion } from "@/components/home/HomeDailyQuestion";
 import { HomeHeroBanner } from "@/components/home/HomeHeroBanner";
 import { HomeSunnahByTime } from "@/components/home/HomeSunnahByTime";
 import { HomeFeatureCards } from "@/components/home/HomeFeatureCards";
 import { HomeDailyProgress } from "@/components/home/HomeDailyProgress";
 import { HomeMoreSections } from "@/components/home/HomeMoreSections";
 import { HomeIslamicOccasions } from "@/components/home/HomeIslamicOccasions";
-import { HomeUpcomingLessons } from "@/components/home/HomeUpcomingLessons";
-import { HomeDailyStrip } from "@/components/home/HomeDailyStrip";
-import { HomeLatestQa } from "@/components/home/HomeLatestQa";
-import { HomeLatestSheikhs } from "@/components/home/HomeLatestSheikhs";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
 
 export default function HomePage() {
@@ -53,16 +56,19 @@ export default function HomePage() {
       </section>
 
       <main className="home-container home-main home-main--v3">
+        <HomeUpcomingLessons />
+        <HomeUpcomingCourses />
+        <HomePrayerTimes />
+        <HomeDailyFaida />
+        <HomeDailyDhikr />
+        <HomeDailyHadith />
+        <HomeDailyQuestion />
         <HomeHeroBanner />
         <HomeSunnahByTime />
         <HomeFeatureCards />
         <HomeDailyProgress />
         <HomeMoreSections />
         <HomeIslamicOccasions />
-        <HomeUpcomingLessons />
-        <HomeDailyStrip />
-        <HomeLatestQa />
-        <HomeLatestSheikhs />
       </main>
     </div>
   );

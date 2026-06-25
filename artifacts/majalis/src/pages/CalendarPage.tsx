@@ -146,7 +146,7 @@ export default function CalendarPage() {
       <PageHeader
         eyebrow="التقويم العلمي"
         title="تقويم الدروس"
-        subtitle="عرض شهري وأسبوعي ويومي لدروس الكويت والإعلانات."
+        subtitle="عرض شهري وأسبوعي ويومي للدروس والدورات والمحاضرات."
       />
 
       <div className="cal-toolbar ui-card">

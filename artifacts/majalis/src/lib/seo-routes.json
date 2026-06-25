@@ -15,7 +15,7 @@
     {
       "path": "/",
       "title": "المجلس العلمي",
-      "description": "منصة علمية تجمع الدروس والمشايخ والكتب والفوائد في مكان واحد.",
+      "description": "منصة علمية تجمع الدروس والدورات والفوائد في مكان واحد.",
       "keywords": [
         "المجلس العلمي",
         "دروس شرعية",
@@ -70,9 +70,9 @@
         "دروس شرعية",
         "جداول الدروس"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "daily",
-      "priority": 0.87
+      "priority": 0.3
     },
     {
       "path": "/adhkar",
@@ -173,9 +173,9 @@
         "جداول الدروس",
         "دورات علمية"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "daily",
-      "priority": 0.9
+      "priority": 0.3
     },
     {
       "path": "/lessons/current",
@@ -186,9 +186,9 @@
         "دروس حالية",
         "مساجد الكويت"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "daily",
-      "priority": 0.88
+      "priority": 0.3
     },
     {
       "path": "/courses",
@@ -200,24 +200,22 @@
         "جداول أسبوعية",
         "دورات علمية"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "weekly",
-      "priority": 0.86
+      "priority": 0.3
     },
     {
       "path": "/sheikhs",
-      "title": "المشايخ والدعاة | المجلس العلمي",
-      "description": "دليل المشايخ والدعاة المعتمدين مع تخصصاتهم ودروسهم وسيرهم العلمية.",
+      "title": "الدروس | المجلس العلمي",
+      "description": "جميع الدروس والدورات والمحاضرات العلمية في مكان واحد.",
       "keywords": [
-        "مشايخ",
-        "دعاة",
-        "علماء",
-        "دروس المشايخ",
-        "إجازات علمية"
+        "دروس شرعية",
+        "دورات علمية",
+        "محاضرات"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "weekly",
-      "priority": 0.85
+      "priority": 0.3
     },
     {
       "path": "/library",

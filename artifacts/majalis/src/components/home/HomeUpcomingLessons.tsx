@@ -6,13 +6,21 @@ import { loadKuwaitLessons } from "@/lib/lessons-service";
 import { sortKuwaitLessons, type KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 import { fromKuwaitLesson } from "@/lib/unified-lesson-card";
 
+function isCourse(lesson: KuwaitLessonRecord) {
+  return lesson.isCourse || lesson.activityType === "دورة";
+}
+
 export function HomeUpcomingLessons() {
   const [lessons, setLessons] = useState<KuwaitLessonRecord[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     loadKuwaitLessons()
-      .then((items) => setLessons(sortKuwaitLessons(items).slice(0, 4)))
+      .then((items) =>
+        setLessons(
+          sortKuwaitLessons(items.filter((l) => !isCourse(l) && l.activityType !== "محاضرة")).slice(0, 4),
+        ),
+      )
       .catch(() => setLessons([]))
       .finally(() => setLoading(false));
   }, []);
@@ -27,7 +35,7 @@ export function HomeUpcomingLessons() {
         </div>
         <div className="home-section-head-links">
           <Link href="/calendar" className="home-section-link">التقويم</Link>
-          <Link href="/lessons" className="home-section-link">كل الدروس</Link>
+          <Link href="/lessons?tab=lessons" className="home-section-link">كل الدروس</Link>
         </div>
       </div>
 

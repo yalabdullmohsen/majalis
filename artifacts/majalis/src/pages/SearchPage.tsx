@@ -6,7 +6,7 @@ import { displayText } from "@/lib/display-text";
 import { SearchSkeleton } from "@/components/ui-common";
 import { SearchSuggestions } from "@/components/SearchSuggestions";
 import { SheikhAvatar } from "@/components/lessons/SheikhAvatar";
-import { resolveSheikhImageUrl, resolveLessonSheikhImage } from "@/lib/sheikh-image";
+import { resolveLessonSheikhImage } from "@/lib/sheikh-image";
 import { searchLocalExtensions } from "@/lib/local-search-ext";
 
 const EMPTY: SearchResults = {
@@ -102,7 +102,6 @@ export default function SearchPage() {
   const total =
     results.lessons.length +
     results.miracles.length +
-    results.sheikhs.length +
     results.qa.length +
     results.fawaid.length +
     results.adhkar.length +
@@ -125,7 +124,7 @@ export default function SearchPage() {
           value={term}
           onChange={setTerm}
           onSubmit={submitSearch}
-          placeholder="ابحث في الدروس والمشايخ والفوائد والأسئلة والأذكار..."
+          placeholder="ابحث في الدروس والفوائد والأسئلة والأذكار..."
         />
         <button type="submit">بحث</button>
       </form>
@@ -158,19 +157,6 @@ export default function SearchPage() {
                     meta={l.speaker_name || l.sheikhs?.name || l.category}
                     avatarSrc={resolveLessonSheikhImage(l)}
                     avatarName={l.speaker_name || l.sheikhs?.name || "شيخ"}
-                  />
-                )}
-              />
-              <Group
-                title="المشايخ"
-                items={results.sheikhs}
-                render={(s) => (
-                  <ResultRow
-                    key={s.id}
-                    href={`/sheikhs/${s.id}`}
-                    title={s.name}
-                    avatarSrc={resolveSheikhImageUrl(s)}
-                    avatarName={s.name}
                   />
                 )}
               />

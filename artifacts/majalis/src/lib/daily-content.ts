@@ -1,5 +1,6 @@
 import { SEED_FAWAID } from "./fawaid-seed";
 import { filterQualityFawaid } from "./content-quality";
+import { ADHKAR_ITEMS } from "./adhkar-seed";
 
 export type DailyHadithEntry = {
   id: string;
@@ -216,6 +217,13 @@ export const DAILY_FAIDA_POOL: DailyFaidaEntry[] = [
   },
 ];
 
+export type DailyDhikrEntry = {
+  id: string;
+  text: string;
+  category?: string;
+  source?: string;
+};
+
 export function getDailyHadith(date = new Date()) {
   return pickDailyItem(DAILY_HADITH_POOL, date);
 }
@@ -226,4 +234,19 @@ export function getDailyAyah(date = new Date()) {
 
 export function getDailyFaida(date = new Date()) {
   return pickDailyItem(DAILY_FAIDA_POOL, date);
+}
+
+export function getDailyDhikr(date = new Date()): DailyDhikrEntry {
+  const pool = ADHKAR_ITEMS.filter((item) => item.categoryId === "adh-morning" || item.categoryId === "adh-evening");
+  const item = pickDailyItem(pool.length > 0 ? pool : ADHKAR_ITEMS, date);
+  return {
+    id: item.id,
+    text: item.text,
+    category: item.categoryId === "adh-morning" ? "أذكار الصباح" : "أذكار المساء",
+    source: item.source,
+  };
+}
+
+export function getDailyQa<T extends { id?: string }>(items: T[], date = new Date()): T {
+  return pickDailyItem(items, date);
 }

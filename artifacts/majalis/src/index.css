@@ -7789,6 +7789,41 @@ input, textarea, select { font-family: inherit; }
 .nawawi-text { line-height: 2; }
 .nawawi-source { font-size: 0.85rem; color: var(--majalis-brass-deep); font-weight: 700; }
 
+.lesson-unified-card__top {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.lesson-unified-card__top--compact {
+  margin-bottom: 0.35rem;
+}
+
+.lesson-unified-card__headline {
+  flex: 1;
+  min-width: 0;
+}
+
+.lesson-unified-card--compact .lesson-unified-card__title {
+  font-size: 1rem;
+}
+
+.home-prayer-widget {
+  display: grid;
+  gap: 1rem;
+}
+
+.home-prayer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 0.75rem;
+}
+
+.home-daily-single .home-daily-card {
+  max-width: 100%;
+}
+
 @media (max-width: 720px) {
   .home-feature-grid--v3 { grid-template-columns: repeat(2, 1fr); }
   .navbar-v3__tabs { display: none; }

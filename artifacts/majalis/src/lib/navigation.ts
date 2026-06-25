@@ -19,7 +19,6 @@ export const NAV_GROUPS: NavGroup[] = [
       { href: "/search", label: "البحث" },
       { href: "/lessons", label: "الدروس" },
       { href: "/calendar", label: "التقويم" },
-      { href: "/sheikhs", label: "المشايخ" },
       { href: "/fawaid", label: "الفوائد" },
       { href: "/qa", label: "الأسئلة" },
     ],

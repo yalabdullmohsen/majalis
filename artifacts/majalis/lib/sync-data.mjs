@@ -9,6 +9,7 @@ import {
 } from "./prayer-times-core.mjs";
 import { getSupabaseAdmin, isMissingTableError } from "./supabase-admin.mjs";
 import { OCCASION_SYNC_META } from "./islamic-occasions-sync-meta.mjs";
+import { runDailyPlatformSync } from "./daily-platform-sync.mjs";
 
 const PRAYER_DAYS_AHEAD = 7;
 
@@ -171,20 +172,22 @@ export async function syncIslamicOccasions(admin = getSupabaseAdmin()) {
   return { ok: true, skipped: false, count: rows.length };
 }
 
-/** Daily sync — prayer times + upcoming occasions only (no adhkar/hadith/fatwa). */
+/** Daily sync — prayer times, occasions, lessons maintenance, daily content marker. */
 export async function runDailyDataSync() {
   const admin = getSupabaseAdmin();
-  const [prayer, occasions] = await Promise.all([
+  const [prayer, occasions, platform] = await Promise.all([
     syncPrayerTimes(admin),
     syncIslamicOccasions(admin),
+    runDailyPlatformSync(),
   ]);
 
   return {
-    ok: prayer.ok || occasions.ok || (prayer.skipped && occasions.skipped),
+    ok: prayer.ok || occasions.ok || platform.ok || (prayer.skipped && occasions.skipped),
     at: new Date().toISOString(),
     city: KUWAIT_CITY,
     governorate: KUWAIT_GOVERNORATE,
     prayer,
     occasions,
+    platform,
   };
 }
