@@ -1,19 +1,30 @@
 /**
- * Client service for AI Knowledge Engine admin & search.
+ * Auto Knowledge Engine — client service
  */
 
-export type KnowledgePipelineStats = {
-  sources_active?: number;
-  sources_total?: number;
-  items_today?: number;
+export type AkeEngineStats = {
+  connectors_active?: number;
+  connectors_healthy?: number;
+  connectors_total?: number;
+  items_new_today?: number;
   items_published_today?: number;
   items_review?: number;
   items_rejected?: number;
   items_duplicate?: number;
+  items_archived?: number;
+  broken_links?: number;
   avg_quality?: number;
-  top_categories?: Array<{ category: string; cnt: number }>;
+  avg_trust?: number;
   runs_recent?: Array<Record<string, unknown>>;
-  section_completion?: Record<string, number>;
+  connectors_health?: Array<{
+    slug: string;
+    name: string;
+    health_status: string;
+    last_sync_at?: string;
+    items_published?: number;
+    broken_links?: number;
+    is_active?: boolean;
+  }>;
 };
 
 export type KnowledgeSearchResult = {
@@ -41,36 +52,54 @@ export type KnowledgeRecommendation = {
   record_id?: string;
 };
 
-async function adminFetch(action: string, body?: Record<string, unknown>) {
+function authHeaders(): Record<string, string> {
   const secret = import.meta.env.VITE_ADMIN_API_SECRET || import.meta.env.VITE_CRON_SECRET;
   const headers: Record<string, string> = { "Content-Type": "application/json" };
   if (secret) headers.Authorization = `Bearer ${secret}`;
+  return headers;
+}
 
-  const res = await fetch(`/api/admin/knowledge-pipeline?action=${action}`, {
+async function akeAdminFetch(action: string, body?: Record<string, unknown>) {
+  const res = await fetch(`/api/admin/auto-knowledge-engine?action=${action}`, {
     method: body ? "POST" : "GET",
-    headers,
+    headers: authHeaders(),
     body: body ? JSON.stringify({ action, ...body }) : undefined,
   });
-  if (!res.ok) throw new Error(`Knowledge API ${action} failed`);
+  if (!res.ok) throw new Error(`AKE API ${action} failed`);
   return res.json();
 }
 
-export async function fetchKnowledgeStats(days = 7): Promise<{
-  stats: KnowledgePipelineStats | null;
-  usingSeed?: boolean;
+export async function fetchAkeStats(days = 7): Promise<{
+  stats: AkeEngineStats | null;
+  usingLegacy?: boolean;
 }> {
   try {
-    return await adminFetch("stats", { days });
+    const json = await akeAdminFetch("stats", { days });
+    return { stats: json.stats, usingLegacy: json.usingLegacy };
   } catch {
-    return { stats: null, usingSeed: true };
+    try {
+      const res = await fetch(`/api/admin/knowledge-pipeline?action=stats&days=${days}`, {
+        headers: authHeaders(),
+      });
+      if (!res.ok) return { stats: null };
+      const json = await res.json();
+      return { stats: json.stats, usingLegacy: true };
+    } catch {
+      return { stats: null };
+    }
   }
 }
 
-export async function runKnowledgePipelineManual(opts?: {
+export async function runAkeEngineManual(opts?: {
   maxItems?: number;
-  skipPublish?: boolean;
+  checkLinks?: boolean;
+  connectorSlug?: string;
 }) {
-  return adminFetch("run", opts || {});
+  return akeAdminFetch("run", opts || {});
+}
+
+export async function runAkeHealthCheck() {
+  return akeAdminFetch("health");
 }
 
 export async function searchKnowledgeHybrid(query: string, limit = 20): Promise<KnowledgeSearchResult[]> {
@@ -78,7 +107,7 @@ export async function searchKnowledgeHybrid(query: string, limit = 20): Promise<
     const res = await fetch(`/api/knowledge-search?q=${encodeURIComponent(query)}&limit=${limit}`);
     if (!res.ok) return [];
     const json = await res.json();
-    return json.results || [];
+    return json.results || json.items || [];
   } catch {
     return [];
   }
@@ -90,16 +119,12 @@ export async function fetchKnowledgeRecommendations(opts: {
   limit?: number;
 }): Promise<{ items: KnowledgeRecommendation[]; algorithm: string; source_title?: string }> {
   try {
-    const params = new URLSearchParams({ action: "recommend" });
+    const params = new URLSearchParams();
     if (opts.kind) params.set("kind", opts.kind);
     if (opts.recordId) params.set("recordId", opts.recordId);
     if (opts.limit) params.set("limit", String(opts.limit));
 
-    const secret = import.meta.env.VITE_ADMIN_API_SECRET || import.meta.env.VITE_CRON_SECRET;
-    const headers: Record<string, string> = {};
-    if (secret) headers.Authorization = `Bearer ${secret}`;
-
-    const res = await fetch(`/api/admin/knowledge-pipeline?${params}`, { headers });
+    const res = await fetch(`/api/knowledge-recommendations?${params}`);
     if (!res.ok) return { items: [], algorithm: "none" };
     return res.json();
   } catch {
@@ -107,4 +132,11 @@ export async function fetchKnowledgeRecommendations(opts: {
   }
 }
 
-export const OFFICIAL_SOURCE_COUNT = 8;
+/** @deprecated use fetchAkeStats */
+export const fetchKnowledgeStats = fetchAkeStats;
+
+/** @deprecated use runAkeEngineManual */
+export const runKnowledgePipelineManual = runAkeEngineManual;
+
+export type KnowledgePipelineStats = AkeEngineStats;
+export const OFFICIAL_SOURCE_COUNT = 17;

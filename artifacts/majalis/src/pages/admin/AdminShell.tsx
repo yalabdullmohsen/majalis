@@ -27,7 +27,7 @@ export type AdminSection =
 export const ADMIN_NAV: { key: AdminSection; label: string }[] = [
   { key: "dashboard", label: "لوحة التحكم" },
   { key: "aggregator", label: "محرك التجميع" },
-  { key: "knowledge-engine", label: "محرك المعرفة" },
+  { key: "knowledge-engine", label: "Auto Knowledge Engine" },
   { key: "lessons", label: "الدروس" },
   { key: "sheikhs", label: "المشايخ" },
   { key: "library", label: "المكتبة" },
