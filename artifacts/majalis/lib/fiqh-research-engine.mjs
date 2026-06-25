@@ -67,7 +67,7 @@ export function toCitation(item, excerpt) {
 
 export function buildSummary(items, query) {
   if (!items.length) {
-    return `لم نجد مواد منشورة مطابقة لسؤالك: «${query}». جرّب كلمات أخرى أو تصفّح التصنيفات.`;
+    return "لا توجد مادة موثقة كافية في قاعدة بيانات المنصة للإجابة عن هذا السؤال.";
   }
   const intro = `وفق المواد المنشورة في المجمع الفقهي، إليك ما يرتبط بسؤالك «${query}»:`;
   const bullets = items.slice(0, 5).map((item, i) => {
@@ -75,6 +75,18 @@ export function buildSummary(items, query) {
     return `${i + 1}. ${item.title}: ${String(snippet).slice(0, 160)}${snippet && snippet.length > 160 ? "…" : ""}`;
   });
   return [intro, ...bullets].join("\n");
+}
+
+export const FIQH_NO_VERIFIED_MATERIAL_MSG =
+  "لا توجد مادة موثقة كافية في قاعدة بيانات المنصة للإجابة عن هذا السؤال.";
+
+export function isVerifiedPublishedItem(item) {
+  if (item.status !== "published") return false;
+  return (
+    item.confidence_level === "source_verified" &&
+    item.source_name &&
+    item.source_url
+  ) || item.documentation_level === "official_verified";
 }
 
 export async function searchPublishedItems(admin, query, filters = {}) {
@@ -218,7 +230,8 @@ export async function runFiqhResearchQuery(admin, { query, filters = {}, session
     return { ok: true, answer, citations: [], retrievalMode: "text" };
   }
 
-  const items = await searchPublishedItems(admin, query, filters);
+  const rawItems = await searchPublishedItems(admin, query, filters);
+  const items = rawItems.filter(isVerifiedPublishedItem);
   let summary = buildSummary(items, query);
   let retrievalMode = "text";
 

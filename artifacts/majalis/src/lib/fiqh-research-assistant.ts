@@ -1,9 +1,11 @@
 import { advancedSearchFiqhCouncil } from "./fiqh-council-service";
 import {
   FIQH_RESEARCH_DISCLAIMER,
+  FIQH_NO_VERIFIED_MATERIAL_MSG,
   toResearchCitation,
   type FiqhResearchCitation,
 } from "./fiqh-citation";
+import { isVerifiedPublicItem } from "./fiqh-council-trust";
 import type { FiqhAdvancedSearchOptions, FiqhCouncilItem } from "./fiqh-council-types";
 
 export type FiqhResearchAnswer = {
@@ -38,10 +40,10 @@ export function looksLikePersonalFatwaRequest(query: string): boolean {
 
 export function buildResearchSummary(items: FiqhCouncilItem[], query: string): string {
   if (!items.length) {
-    return `لم نجد مواد منشورة مطابقة لسؤالك: «${query}». جرّب كلمات أخرى أو تصفّح التصنيفات.`;
+    return FIQH_NO_VERIFIED_MATERIAL_MSG;
   }
 
-  const intro = `وفق المواد المنشورة في المجمع الفقهي، إليك ما يرتبط بسؤالك «${query}»:`;
+  const intro = `وفق المواد المنشورة والموثقة في المجمع الفقهي، إليك ما يرتبط بسؤالك «${query}»:`;
   const bullets = items.slice(0, 5).map((item, i) => {
     const snippet = item.summary || item.ruling_text || item.title;
     return `${i + 1}. ${item.title}: ${snippet?.slice(0, 160)}${snippet && snippet.length > 160 ? "…" : ""}`;
@@ -86,9 +88,11 @@ export async function searchForResearchAssistant(
     limit: filters.limit || 10,
   });
 
+  const verified = data.filter(isVerifiedPublicItem);
+
   return {
-    answer: buildResearchAnswer(data, query),
-    items: data,
+    answer: buildResearchAnswer(verified, query),
+    items: verified,
     usingSeed,
   };
 }

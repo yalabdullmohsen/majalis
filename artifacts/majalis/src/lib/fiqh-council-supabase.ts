@@ -325,6 +325,83 @@ export async function adminDismissUnansweredQuestion(id: string) {
   }).eq("id", id);
 }
 
+export async function adminGetSuggestedRelations(status: "pending" | "approved" | "rejected" | "merged" = "pending") {
+  const { data, error } = await supabase
+    .from("fiqh_council_suggested_relations")
+    .select("*, item:fiqh_council_items!fiqh_council_suggested_relations_item_id_fkey(*), related_item:fiqh_council_items!fiqh_council_suggested_relations_related_item_id_fkey(*)")
+    .eq("status", status)
+    .order("similarity_score", { ascending: false })
+    .limit(50);
+  if (error) {
+    if (isMissingTableError(error)) return { data: [], error: null };
+    return { data: [], error };
+  }
+  return { data: data || [], error: null };
+}
+
+export async function adminUpsertSuggestedRelation(payload: {
+  item_id: string;
+  related_item_id: string;
+  similarity_score: number;
+  match_reasons: string[];
+}) {
+  return supabase.from("fiqh_council_suggested_relations").upsert(
+    { ...payload, status: "pending" },
+    { onConflict: "item_id,related_item_id" },
+  );
+}
+
+export async function adminApproveSuggestedRelation(id: string, relationType = "related") {
+  const { data: row } = await supabase
+    .from("fiqh_council_suggested_relations")
+    .select("*")
+    .eq("id", id)
+    .maybeSingle();
+
+  if (row) {
+    await supabase.from("fiqh_council_relations").upsert({
+      item_id: row.item_id,
+      related_item_id: row.related_item_id,
+      relation_type: relationType,
+      source: "auto_approved",
+    }, { onConflict: "item_id,related_item_id,relation_type" });
+  }
+
+  return supabase.from("fiqh_council_suggested_relations").update({
+    status: "approved",
+    reviewed_at: now(),
+  }).eq("id", id);
+}
+
+export async function adminRejectSuggestedRelation(id: string, notes?: string) {
+  return supabase.from("fiqh_council_suggested_relations").update({
+    status: "rejected",
+    review_notes: notes || null,
+    reviewed_at: now(),
+  }).eq("id", id);
+}
+
+export async function adminMergeSuggestedRelation(id: string) {
+  return supabase.from("fiqh_council_suggested_relations").update({
+    status: "merged",
+    reviewed_at: now(),
+  }).eq("id", id);
+}
+
+export async function adminGetRelationAuditLog(limit = 20) {
+  const { data, error } = await supabase
+    .from("fiqh_council_audit")
+    .select("*")
+    .ilike("action", "%relation%")
+    .order("created_at", { ascending: false })
+    .limit(limit);
+  if (error) {
+    if (isMissingTableError(error)) return { data: [], error: null };
+    return { data: [], error };
+  }
+  return { data: data || [], error: null };
+}
+
 // Legacy wrappers for fiqh_council_decisions table (kept for other admin sections)
 export {
   adminGetAllFiqhDecisions,

@@ -1,6 +1,8 @@
 import { arabicMatchAny } from "./arabic-search";
 import { findPotentialDuplicates } from "./fiqh-council-dedup";
 import { matchNawazilTopic, NAWAZIL_TOPICS } from "./fiqh-council-nawazil";
+import { isVerifiedPublicItem } from "./fiqh-council-trust";
+import { FIQH_ISSUES_PUBLISHED_SEED } from "./fiqh-issues-seed";
 import {
   FIQH_COUNCIL_PUBLISHED_SEED,
   FIQH_COUNCIL_ALL_SEED,
@@ -15,6 +17,7 @@ import {
   type FiqhCouncilItem,
   type FiqhItemStatus,
   type FiqhItemType,
+  type FiqhPublicStats,
 } from "./fiqh-council-types";
 import { supabase, isSupabaseConfigured } from "./supabase";
 import { logSupabaseError } from "./supabase-config";
@@ -38,6 +41,7 @@ function filterSeed(items: FiqhCouncilItem[], opts?: FiqhCouncilListOptions, pub
     result = result.filter((item) => item.status === opts.status);
   } else if (publicOnly) {
     result = result.filter((item) => item.status === "published");
+    result = result.filter((item) => isVerifiedPublicItem(item));
   }
 
   if (opts?.type && opts.type !== "الكل") {
@@ -137,7 +141,8 @@ export async function getFiqhCouncilItems(opts?: FiqhCouncilListOptions) {
 }
 
 export async function getFiqhCouncilItemBySlug(slug: string) {
-  const fallback = findFiqhCouncilItemBySlug(slug);
+  const fallbackRaw = findFiqhCouncilItemBySlug(slug);
+  const fallback = fallbackRaw && isVerifiedPublicItem(fallbackRaw) ? fallbackRaw : null;
   if (!isConfigured) return { data: fallback, usingSeed: true };
 
   try {
@@ -152,7 +157,9 @@ export async function getFiqhCouncilItemBySlug(slug: string) {
       if (isMissingTableError(error)) return { data: fallback, usingSeed: true };
       throw error;
     }
-    return { data: (data as FiqhCouncilItem) || fallback, usingSeed: !data && !!fallback };
+    const item = data as FiqhCouncilItem | null;
+    const verified = item && isVerifiedPublicItem(item) ? item : null;
+    return { data: verified || fallback, usingSeed: !verified && !!fallback };
   } catch (err) {
     logSupabaseError("getFiqhCouncilItemBySlug", err, { slug });
     return { data: fallback, usingSeed: true };
@@ -184,15 +191,20 @@ export async function getFiqhMaterialRelations(item: FiqhCouncilItem, limit = 3)
   const others = all.filter((i) => i.slug !== item.slug);
   const itemTags = new Set(item.tags || []);
 
-  const sameCategory = others
-    .filter((i) => i.category === item.category)
-    .slice(0, limit)
-    .map(toRelationItem);
+  const approved = await getApprovedRelationsForItem(item.id || item.slug);
+  const approvedItems = approved
+    .map((r) => others.find((o) => o.id === r.related_item_id || o.slug === r.related_item_id))
+    .filter(Boolean) as FiqhCouncilItem[];
 
-  const sameSource = others
-    .filter((i) => item.source_name && i.source_name === item.source_name)
-    .slice(0, limit)
-    .map(toRelationItem);
+  const sameCategory = [
+    ...approvedItems.filter((i) => i.category === item.category).map(toRelationItem),
+    ...others.filter((i) => i.category === item.category).map(toRelationItem),
+  ].slice(0, limit);
+
+  const sameSource = [
+    ...approvedItems.filter((i) => item.source_name && i.source_name === item.source_name).map(toRelationItem),
+    ...others.filter((i) => item.source_name && i.source_name === item.source_name).map(toRelationItem),
+  ].slice(0, limit);
 
   const sameTags = others
     .filter((i) => (i.tags || []).some((t) => itemTags.has(t)))
@@ -205,6 +217,84 @@ export async function getFiqhMaterialRelations(item: FiqhCouncilItem, limit = 3)
     .map(toRelationItem);
 
   return { sameCategory, sameSource, sameTags, relatedType };
+}
+
+async function getApprovedRelationsForItem(itemKey: string) {
+  if (!isConfigured) return [];
+  try {
+    const { data, error } = await supabase
+      .from("fiqh_council_relations")
+      .select("*")
+      .or(`item_id.eq.${itemKey},related_item_id.eq.${itemKey}`)
+      .limit(20);
+    if (error) return [];
+    return data || [];
+  } catch {
+    return [];
+  }
+}
+
+function computePublicStatsFromSeed(): FiqhPublicStats {
+  const published = FIQH_COUNCIL_PUBLISHED_SEED.filter(isVerifiedPublicItem);
+  const catMap = new Map<string, number>();
+  for (const item of published) {
+    catMap.set(item.category, (catMap.get(item.category) || 0) + 1);
+  }
+  return {
+    resolutions: published.filter((i) => i.type === "resolution").length,
+    fatwas: published.filter((i) => i.type === "fatwa").length,
+    recommendations: published.filter((i) => i.type === "recommendation").length,
+    research: published.filter((i) => i.type === "research").length,
+    issues: FIQH_ISSUES_PUBLISHED_SEED.length,
+    pending_review: FIQH_COUNCIL_ADMIN_ONLY_SEED.length,
+    top_categories: [...catMap.entries()]
+      .map(([category, cnt]) => ({ category, cnt }))
+      .sort((a, b) => b.cnt - a.cnt),
+    top_viewed: [...published]
+      .sort((a, b) => (b.views_count || 0) - (a.views_count || 0))
+      .slice(0, 8)
+      .map((i) => ({
+        slug: i.slug,
+        title: i.title,
+        views_count: i.views_count || 0,
+        type: i.type,
+        category: i.category,
+      })),
+    latest: [...published]
+      .sort((a, b) => (b.published_at || "").localeCompare(a.published_at || ""))
+      .slice(0, 8)
+      .map((i) => ({
+        slug: i.slug,
+        title: i.title,
+        published_at: i.published_at || "",
+        type: i.type,
+        category: i.category,
+      })),
+    top_sources: Array.from(
+      [...published]
+        .filter((i) => i.source_name)
+        .reduce<Map<string, number>>((acc, i) => {
+          acc.set(i.source_name!, (acc.get(i.source_name!) || 0) + 1);
+          return acc;
+        }, new Map()),
+    )
+      .map(([source_name, cnt]) => ({ source_name, cnt }))
+      .sort((a, b) => b.cnt - a.cnt)
+      .slice(0, 8),
+  };
+}
+
+export async function getFiqhCouncilPublicStats(): Promise<{ data: FiqhPublicStats; usingSeed: boolean }> {
+  const seedStats = computePublicStatsFromSeed();
+  if (!isConfigured) return { data: seedStats, usingSeed: true };
+
+  try {
+    const { data, error } = await supabase.rpc("fiqh_council_public_stats");
+    if (error || !data) return { data: seedStats, usingSeed: true };
+    return { data: data as FiqhPublicStats, usingSeed: false };
+  } catch {
+    return { data: seedStats, usingSeed: true };
+  }
 }
 
 export async function incrementFiqhCouncilViews(slug: string) {

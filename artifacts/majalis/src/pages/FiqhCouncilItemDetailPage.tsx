@@ -8,7 +8,9 @@ import {
   getFiqhMaterialRelations,
   incrementFiqhCouncilViews,
 } from "@/lib/fiqh-council-service";
-import { FiqhCitationButton } from "@/components/fiqh-council/FiqhCitationButton";
+import { FiqhCitationMenu } from "@/components/fiqh-council/FiqhCitationButton";
+import { FiqhExportButton } from "@/components/fiqh-council/FiqhExportButton";
+import { FiqhVerifiedBadge } from "@/components/fiqh-council/FiqhVerifiedBadge";
 import { FiqhItemRelations } from "@/components/fiqh-council/FiqhItemRelations";
 import { FIQH_RESEARCH_DISCLAIMER } from "@/lib/fiqh-citation";
 import type { FiqhMaterialRelations } from "@/lib/fiqh-council-service";
@@ -134,6 +136,8 @@ export default function FiqhCouncilItemDetailPage({ params }: { params: { slug: 
         <p className="fiqh-council-views">{item.views_count.toLocaleString("ar")} مشاهدة</p>
       )}
 
+      <FiqhVerifiedBadge item={item} />
+
       <section className="content-detail-evidence ui-card fiqh-detail-info-table">
         <h2>بيانات القرار</h2>
         <table className="fiqh-info-table">
@@ -179,7 +183,8 @@ export default function FiqhCouncilItemDetailPage({ params }: { params: { slug: 
       )}
 
       <div className="fiqh-detail-actions">
-        <FiqhCitationButton item={item} />
+        <FiqhCitationMenu item={item} />
+        <FiqhExportButton item={item} />
         <Link href={fiqhCompareHref([item.slug])} className="fiqh-council-section-link">
           إضافة للمقارنة
         </Link>

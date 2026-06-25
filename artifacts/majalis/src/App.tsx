@@ -52,6 +52,10 @@ const FiqhCouncilNawazilPage = lazy(() => import("@/pages/FiqhCouncilNawazilPage
 const FiqhCouncilComparePage = lazy(() => import("@/pages/FiqhCouncilComparePage"));
 const FiqhCouncilAdvancedSearchPage = lazy(() => import("@/pages/FiqhCouncilAdvancedSearchPage"));
 const FiqhCouncilResearchAssistantPage = lazy(() => import("@/pages/FiqhCouncilResearchAssistantPage"));
+const FiqhCouncilIssuesPage = lazy(() => import("@/pages/FiqhCouncilIssuesPage"));
+const FiqhCouncilIssueDetailPage = lazy(() => import("@/pages/FiqhCouncilIssueDetailPage"));
+const FiqhCouncilTopicIndexPage = lazy(() => import("@/pages/FiqhCouncilTopicIndexPage"));
+const FiqhCouncilStatsPage = lazy(() => import("@/pages/FiqhCouncilStatsPage"));
 const FiqhCouncilPage = lazy(() => import("@/pages/FiqhCouncilPage"));
 const FiqhCouncilItemDetailPage = lazy(() => import("@/pages/FiqhCouncilItemDetailPage"));
 const FatwaPage = lazy(() => import("@/pages/FatwaPage"));
@@ -130,6 +134,10 @@ function Router() {
       <Route path="/cards"><SafeLazyRoute component={CardsPage} /></Route>
       <Route path="/annual-courses/:id"><SafeLazyRoute component={AnnualCourseDetailPage} /></Route>
       <Route path="/annual-courses"><SafeLazyRoute component={AnnualCoursesPage} /></Route>
+      <Route path="/fiqh-council/issues/:slug"><SafeLazyRoute component={FiqhCouncilIssueDetailPage} /></Route>
+      <Route path="/fiqh-council/issues"><SafeLazyRoute component={FiqhCouncilIssuesPage} /></Route>
+      <Route path="/fiqh-council/index"><SafeLazyRoute component={FiqhCouncilTopicIndexPage} /></Route>
+      <Route path="/fiqh-council/stats"><SafeLazyRoute component={FiqhCouncilStatsPage} /></Route>
       <Route path="/fiqh-council/resolutions"><SafeLazyRoute component={FiqhCouncilResolutionsPage} /></Route>
       <Route path="/fiqh-council/fatwas"><SafeLazyRoute component={FiqhCouncilFatwasPage} /></Route>
       <Route path="/fiqh-council/recommendations"><SafeLazyRoute component={FiqhCouncilRecommendationsPage} /></Route>

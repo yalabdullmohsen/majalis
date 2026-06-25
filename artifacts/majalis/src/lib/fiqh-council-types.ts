@@ -68,6 +68,7 @@ export type FiqhCouncilItem = {
   rejected_at?: string;
   rejection_reason?: string;
   nawazil_topic?: string;
+  documentation_level?: "official_verified" | "imported_needs_review" | "admin_summary" | "rejected" | "archived";
   created_at?: string;
   updated_at?: string;
   /** Search relevance rank from RPC */
@@ -130,6 +131,104 @@ export type FiqhAuditEntry = {
   notes?: string;
   created_at?: string;
 };
+
+export type FiqhCouncilIssue = {
+  id: string;
+  slug: string;
+  title: string;
+  summary?: string;
+  description?: string;
+  category: string;
+  subcategory?: string;
+  ruling_summary?: string;
+  evidence_summary?: string;
+  documentation_level?: "official_verified" | "imported_needs_review" | "admin_summary" | "rejected" | "archived";
+  status?: "draft" | "review" | "published" | "archived";
+  views_count?: number;
+  published_at?: string;
+  updated_at?: string;
+  created_at?: string;
+  /** Populated on detail fetch */
+  items?: FiqhCouncilItem[];
+  timeline?: FiqhTimelineEvent[];
+};
+
+export type FiqhTimelineEvent = {
+  id: string;
+  issue_id?: string;
+  event_type: "first_research" | "first_resolution" | "later_resolution" | "recommendation" | "update" | "statement" | "other";
+  title: string;
+  description?: string;
+  event_date?: string;
+  item_id?: string;
+  sort_order?: number;
+  /** Populated from item */
+  item?: FiqhCouncilItem;
+};
+
+export type FiqhSuggestedRelation = {
+  id: string;
+  item_id: string;
+  related_item_id: string;
+  similarity_score: number;
+  match_reasons: string[];
+  status: "pending" | "approved" | "rejected" | "merged";
+  reviewed_by?: string;
+  review_notes?: string;
+  created_at?: string;
+  reviewed_at?: string;
+  item?: FiqhCouncilItem;
+  related_item?: FiqhCouncilItem;
+};
+
+export type FiqhApprovedRelation = {
+  id: string;
+  item_id: string;
+  related_item_id: string;
+  relation_type: "similar" | "related" | "same_topic" | "same_source" | "same_category";
+  source?: "manual" | "auto_approved";
+  created_at?: string;
+  related_item?: FiqhCouncilItem;
+};
+
+export type FiqhPublicStats = {
+  resolutions: number;
+  fatwas: number;
+  recommendations: number;
+  research: number;
+  issues: number;
+  pending_review: number;
+  top_categories: Array<{ category: string; cnt: number }>;
+  top_viewed: Array<{ slug: string; title: string; views_count: number; type: string; category: string }>;
+  latest: Array<{ slug: string; title: string; published_at: string; type: string; category: string }>;
+  top_sources: Array<{ source_name: string; cnt: number }>;
+};
+
+export const FIQH_TIMELINE_EVENT_LABELS: Record<FiqhTimelineEvent["event_type"], string> = {
+  first_research: "أول بحث",
+  first_resolution: "أول قرار",
+  later_resolution: "قرار لاحق",
+  recommendation: "توصية",
+  update: "تحديث",
+  statement: "بيان",
+  other: "حدث",
+};
+
+export const FIQH_TOPIC_INDEX_SECTIONS = [
+  { key: "worship", label: "العبادات", categories: ["العبادات", "الحج والعمرة", "الزكاة والوقف"] },
+  { key: "transactions", label: "المعاملات", categories: ["المعاملات", "الاقتصاد الإسلامي"] },
+  { key: "family", label: "الأسرة", categories: ["الأسرة"] },
+  { key: "nawazil", label: "النوازل", categories: ["النوازل المعاصرة", "القضايا المعاصرة", "الطب والنوازل"] },
+  { key: "economy", label: "الاقتصاد", categories: ["الاقتصاد الإسلامي", "الزكاة والوقف"] },
+  { key: "medicine", label: "الطب", categories: ["الطب والنوازل"] },
+  { key: "minorities", label: "الأقليات", categories: ["الأقليات المسلمة"] },
+  { key: "technology", label: "التقنية", nawazilTopics: ["crypto", "ai", "digital"] },
+  { key: "ai", label: "الذكاء الاصطناعي", nawazilTopics: ["ai"] },
+] as const;
+
+export function fiqhIssueHref(slug: string) {
+  return `/fiqh-council/issues/${slug}`;
+}
 
 export type FiqhAdvancedSearchOptions = {
   query?: string;

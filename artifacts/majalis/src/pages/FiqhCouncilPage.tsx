@@ -17,6 +17,9 @@ import {
 
 const SUBNAV_LINKS = [
   { href: "/fiqh-council", label: "الرئيسية" },
+  { href: "/fiqh-council/issues", label: "المسائل" },
+  { href: "/fiqh-council/index", label: "الفهرس" },
+  { href: "/fiqh-council/stats", label: "الإحصائيات" },
   { href: "/fiqh-council/resolutions", label: "القرارات" },
   { href: "/fiqh-council/fatwas", label: "الفتاوى" },
   { href: "/fiqh-council/recommendations", label: "التوصيات" },
@@ -287,6 +290,9 @@ export function FiqhCouncilHubPage() {
       <FiqhCouncilSearchBox placeholder="ابحث في قرارات وفتاوى وتوصيات المجمع..." />
 
       <div className="fiqh-hub-quick-links">
+        <Link href="/fiqh-council/issues" className="fiqh-hub-quick-link">المسائل الفقهية</Link>
+        <Link href="/fiqh-council/index" className="fiqh-hub-quick-link">الفهرس الموضوعي</Link>
+        <Link href="/fiqh-council/stats" className="fiqh-hub-quick-link">الإحصائيات</Link>
         <Link href="/fiqh-council/search" className="fiqh-hub-quick-link">البحث المتقدم</Link>
         <Link href="/fiqh-council/nawazil" className="fiqh-hub-quick-link">فقه النوازل</Link>
         <Link href="/fiqh-council/research-assistant" className="fiqh-hub-quick-link">مساعد الباحث</Link>

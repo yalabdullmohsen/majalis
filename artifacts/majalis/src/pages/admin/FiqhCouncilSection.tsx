@@ -22,7 +22,13 @@ import {
   adminSetFiqhResearchEnabled,
   adminLinkUnansweredQuestion,
   adminDismissUnansweredQuestion,
+  adminGetSuggestedRelations,
+  adminApproveSuggestedRelation,
+  adminRejectSuggestedRelation,
+  adminMergeSuggestedRelation,
+  adminUpsertSuggestedRelation,
 } from "@/lib/fiqh-council-supabase";
+import { scanAllPotentialRelations } from "@/lib/fiqh-relation-engine";
 import { getFiqhCouncilReviewItems } from "@/lib/fiqh-council-service";
 import {
   FIQH_COUNCIL_CATEGORIES,
@@ -40,7 +46,7 @@ import { Loading } from "@/components/ui-common";
 import { AdminModal, Field, inputSt, selectSt, textareaSt } from "./AdminModal";
 import { useAdminShell } from "./AdminShell";
 
-type AdminTab = "stats" | "items" | "review" | "duplicates" | "research" | "sync";
+type AdminTab = "stats" | "items" | "review" | "duplicates" | "relations" | "research" | "sync";
 
 const EMPTY = {
   title: "",
@@ -97,6 +103,9 @@ export function FiqhCouncilSection() {
   const [researchLogs, setResearchLogs] = useState<any[]>([]);
   const [researchAnalytics, setResearchAnalytics] = useState<any>(null);
   const [unanswered, setUnanswered] = useState<any[]>([]);
+  const [suggestedRelations, setSuggestedRelations] = useState<any[]>([]);
+  const [localRelationScan, setLocalRelationScan] = useState<any[]>([]);
+  const [scanningRelations, setScanningRelations] = useState(false);
   const [assistantEnabled, setAssistantEnabled] = useState(true);
   const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -122,7 +131,8 @@ export function FiqhCouncilSection() {
       adminGetFiqhResearchLogs(25),
       adminGetFiqhResearchAnalytics(30),
       adminGetFiqhUnanswered(20),
-    ]).then(([allRes, reviewRes, sourcesRes, jobsRes, dupRes, statsRes, auditRes, logsRes, analyticsRes, unansweredRes]) => {
+      adminGetSuggestedRelations("pending"),
+    ]).then(([allRes, reviewRes, sourcesRes, jobsRes, dupRes, statsRes, auditRes, logsRes, analyticsRes, unansweredRes, relRes]) => {
       setItems(allRes.data);
       setReviewItems(reviewRes.data);
       setSources(sourcesRes.data);
@@ -133,6 +143,7 @@ export function FiqhCouncilSection() {
       setResearchLogs(logsRes.data);
       setResearchAnalytics(analyticsRes.data);
       setUnanswered(unansweredRes.data);
+      setSuggestedRelations(relRes.data);
       if (allRes.error && allRes.usingSeed) showError("تعذّر تحميل البيانات — عرض البذور المحلية.");
     }).finally(() => setLoading(false));
   };
@@ -245,6 +256,45 @@ export function FiqhCouncilSection() {
     loadItems();
   };
 
+  const handleScanRelations = async () => {
+    setScanningRelations(true);
+    const scan = scanAllPotentialRelations(items, 0.55);
+    setLocalRelationScan(scan.slice(0, 30));
+    for (const row of scan.slice(0, 20)) {
+      await adminUpsertSuggestedRelation({
+        item_id: row.itemId,
+        related_item_id: row.match.relatedItemId,
+        similarity_score: row.match.score,
+        match_reasons: row.match.reasons,
+      });
+    }
+    const { data } = await adminGetSuggestedRelations("pending");
+    setSuggestedRelations(data);
+    setScanningRelations(false);
+    showSuccess(`تم فحص ${scan.length} علاقة محتملة`);
+  };
+
+  const handleApproveRelation = async (id: string) => {
+    const { error } = await adminApproveSuggestedRelation(id);
+    if (error) showError(error.message);
+    else showSuccess("تم اعتماد العلاقة");
+    loadItems();
+  };
+
+  const handleRejectRelation = async (id: string) => {
+    const { error } = await adminRejectSuggestedRelation(id);
+    if (error) showError(error.message);
+    else showSuccess("تم رفض العلاقة");
+    loadItems();
+  };
+
+  const handleMergeRelation = async (id: string) => {
+    const { error } = await adminMergeSuggestedRelation(id);
+    if (error) showError(error.message);
+    else showSuccess("تم وسم العلاقة كمكررة");
+    loadItems();
+  };
+
   const renderItemCard = (item: any) => (
     <div key={item.id} style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.375rem", padding: "1rem" }}>
       <strong>{item.title}</strong>
@@ -293,6 +343,7 @@ export function FiqhCouncilSection() {
           ["items", `جميع العناصر (${items.length})`],
           ["review", `قيد المراجعة (${reviewItems.length})`],
           ["duplicates", `احتمالات التكرار (${duplicates.length})`],
+          ["relations", `مراجعة العلاقات (${suggestedRelations.length})`],
           ["research", "مساعد الباحث"],
           ["sync", "المزامنة"],
         ] as const).map(([key, label]) => (
@@ -357,6 +408,57 @@ export function FiqhCouncilSection() {
               </div>
             </div>
           ))}
+        </div>
+      ) : tab === "relations" ? (
+        <div style={{ display: "grid", gap: "1rem" }}>
+          <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", alignItems: "center" }}>
+            <button
+              type="button"
+              onClick={handleScanRelations}
+              disabled={scanningRelations}
+              style={{ padding: "0.5rem 1rem", cursor: scanningRelations ? "wait" : "pointer" }}
+            >
+              {scanningRelations ? "جارٍ الفحص..." : "فحص علاقات مقترحة"}
+            </button>
+            <span style={{ fontSize: "0.8125rem", color: C.inkSoft }}>
+              معلّقة: {suggestedRelations.length} · محلية: {localRelationScan.length}
+            </span>
+          </div>
+
+          {suggestedRelations.length === 0 && localRelationScan.length === 0 ? (
+            <p style={{ fontSize: "0.875rem", color: C.inkSoft }}>لا توجد علاقات مقترحة — شغّل الفحص.</p>
+          ) : (
+            <div style={{ display: "grid", gap: "0.75rem" }}>
+              {(suggestedRelations.length ? suggestedRelations : localRelationScan.map((row, i) => ({
+                id: `local-${i}`,
+                item_id: row.itemId,
+                related_item_id: row.match.relatedItemId,
+                similarity_score: row.match.score,
+                match_reasons: row.match.reasons,
+                item: items.find((x) => x.id === row.itemId),
+                related_item: items.find((x) => x.id === row.match.relatedItemId),
+              }))).map((rel: any) => (
+                <div key={rel.id} className="fiqh-sync-job">
+                  <strong>تشابه {((rel.similarity_score || 0) * 100).toFixed(0)}%</strong>
+                  <p style={{ margin: "0.35rem 0", fontSize: "0.8125rem" }}>
+                    {rel.item?.title || rel.item_id} ↔ {rel.related_item?.title || rel.related_item_id}
+                  </p>
+                  <p style={{ margin: 0, fontSize: "0.75rem", color: C.inkSoft }}>
+                    {(rel.match_reasons || []).join(" · ")}
+                  </p>
+                  <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.35rem" }}>
+                    {!String(rel.id).startsWith("local-") && (
+                      <>
+                        <button type="button" style={{ fontSize: "0.75rem", cursor: "pointer" }} onClick={() => handleApproveRelation(rel.id)}>اعتماد</button>
+                        <button type="button" style={{ fontSize: "0.75rem", cursor: "pointer" }} onClick={() => handleRejectRelation(rel.id)}>رفض</button>
+                        <button type="button" style={{ fontSize: "0.75rem", cursor: "pointer" }} onClick={() => handleMergeRelation(rel.id)}>دمج</button>
+                      </>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       ) : tab === "research" ? (
         <div style={{ display: "grid", gap: "1rem" }}>

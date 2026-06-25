@@ -211,6 +211,24 @@
     <priority>0.83</priority>
   </url>
   <url>
+    <loc>https://majlisilm.com/fiqh-council/issues</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.89</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/fiqh-council/index</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.87</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/fiqh-council/stats</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.82</priority>
+  </url>
+  <url>
     <loc>https://majlisilm.com/fiqh-council/archive</loc>
     <lastmod>2026-06-25</lastmod>
     <changefreq>monthly</changefreq>
