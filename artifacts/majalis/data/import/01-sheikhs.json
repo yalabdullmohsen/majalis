@@ -1,0 +1,48 @@
+[
+  {
+    "name": "د. عثمان بن محمد الخميس",
+    "city": "العاصمة",
+    "bio": "عالم أصولي ومفسر، له مجالس علمية أسبوعية ثابتة في مساجد منطقة الصديق.",
+    "specialties": [
+      "تفسير",
+      "فقه",
+      "حديث"
+    ],
+    "is_verified": true,
+    "photo_url": "https://www.majlisilm.com/images/teachers/othman-alkhamees.svg"
+  },
+  {
+    "name": "د. راشد صليهم فهد الصليهم",
+    "city": "العاصمة",
+    "bio": "أستاذ مشارك في جامعة الكويت، يقدّم دورة علمية تأصيلية أسبوعية في القيروان.",
+    "specialties": [
+      "عقيدة",
+      "حديث",
+      "أصول"
+    ],
+    "is_verified": true,
+    "photo_url": "https://www.majlisilm.com/images/teachers/rashed-alsulayyim.svg"
+  },
+  {
+    "name": "د. منصور بن ناصر الخالدي",
+    "city": "العاصمة",
+    "bio": "داعية ومحاضر، مجلس أسبوعي في التفسير والقراءة بعد صلاة الفجر.",
+    "specialties": [
+      "تفسير",
+      "قراءة"
+    ],
+    "is_verified": true,
+    "photo_url": "https://www.majlisilm.com/images/teachers/mansour-alkhalidi.svg"
+  },
+  {
+    "name": "الشيخ أسامة الشطي",
+    "city": "العاصمة",
+    "bio": "إمام وخطيب، يقدّم برنامجًا علميًا في الفقه عبر منصة الأندلس.",
+    "specialties": [
+      "فقه",
+      "تربية"
+    ],
+    "is_verified": true,
+    "photo_url": "https://www.majlisilm.com/images/teachers/osama-alshatti.svg"
+  }
+]
