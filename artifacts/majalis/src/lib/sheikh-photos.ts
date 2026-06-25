@@ -4,7 +4,7 @@ import { sheikhNameKey } from "@/lib/sheikh-name";
 const SHEIKH_PHOTOS: Record<string, string> = {
   "عثمان بن محمد الخميس": "/sheikhs/othman-alkhamees.jpg",
   "راشد صليهم فهد الصليهم": "/sheikhs/rashed-alsulayyim.svg",
-  "منصور بن ناصر الخالدي": "/sheikhs/mansour-alkhalidi.svg",
+  "منصور بن ناصر الخالدي": "/sheikhs/mansour-alkhalidi.jpg",
   "أسامة الشطي": "/sheikhs/osama-alshatti.svg",
   "سالم بن سعد الطويل": "/sheikhs/salem-altaweel.jpg",
   "سالم الطويل": "/sheikhs/salem-altaweel.jpg",

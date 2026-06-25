@@ -142,7 +142,7 @@ const lessonAds = [
   {
     id: "mansour-altafsir-alwadih",
     teacher: "د. منصور بن ناصر الخالدي",
-    teacherImage: "/images/teachers/mansour-alkhalidi.svg",
+    teacherImage: "/sheikhs/mansour-alkhalidi.jpg",
     title: "قراءة كتب متنوعة والتفسير الواضح",
     shortDescription: "مجلس أسبوعي بعد الفجر بصيغة قراءة وتعليق، مع مكان مخصص للنساء.",
     tags: ["تفسير", "قراءة", "جمعة", "حضوري"],
@@ -198,7 +198,7 @@ const sheikhMeta = {
     city: "العاصمة",
     bio: "داعية ومحاضر، مجلس أسبوعي في التفسير والقراءة بعد صلاة الفجر.",
     specialties: ["تفسير", "قراءة"],
-    photo: "/images/teachers/mansour-alkhalidi.svg",
+    photo: "/sheikhs/mansour-alkhalidi.jpg",
   },
   "الشيخ أسامة الشطي": {
     city: "العاصمة",

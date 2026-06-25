@@ -168,7 +168,7 @@ export const lessonAds: LessonAd[] = [
     id: "mansour-altafsir-alwadih",
     provider: "دروس الكويت",
     teacher: "د. منصور بن ناصر الخالدي",
-    teacherImage: "/sheikhs/mansour-alkhalidi.svg",
+    teacherImage: "/sheikhs/mansour-alkhalidi.jpg",
     posterImage: "/images/posters/mansour-friday-reading.svg",
     title: "قراءة كتب متنوعة والتفسير الواضح",
     shortDescription:
