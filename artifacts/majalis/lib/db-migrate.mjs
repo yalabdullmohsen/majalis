@@ -118,7 +118,7 @@ export async function applyMigrations(options = {}) {
       error: `Migration files missing: ${available.missing.join(", ")}`,
       migrationsDir: available.dir,
       tried: available.tried,
-      databaseUrl: dbResolved,
+      databaseUrl: { source: dbResolved.source, configured: Boolean(dbResolved.rawConfigured), urlRedacted: dbResolved.urlRedacted },
     };
   }
 
@@ -157,7 +157,7 @@ export async function applyMigrations(options = {}) {
       error: err.message,
       stack: err.stack,
       results,
-      databaseUrl: dbResolved,
+      databaseUrl: { source: dbResolved.source, configured: Boolean(dbResolved.rawConfigured), urlRedacted: dbResolved.urlRedacted },
       hint: "Set DATABASE_URL to Supavisor pooler URL (IPv4) or SUPABASE_ACCESS_TOKEN on Vercel",
       projectRef,
       migrationsDir: available.dir,

@@ -261,20 +261,25 @@ export async function getPgClient() {
   }
 
   const pg = await import("pg");
-  const client = new pg.default.Client({
-    connectionString: url,
-    ssl: pgSsl(url),
-    connectionTimeoutMillis: 8_000,
-  });
+  let lastError;
 
-  try {
-    await client.connect();
-    return { client, source, url: url.replace(/:([^:@/]+)@/, ":***@") };
-  } catch (err) {
-    await client.end().catch(() => {});
-    err.connectionSource = source;
-    throw err;
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    const client = new pg.default.Client({
+      connectionString: url,
+      ssl: pgSsl(url),
+      connectionTimeoutMillis: 8_000,
+    });
+    try {
+      await client.connect();
+      return { client, source, url: url.replace(/:([^:@/]+)@/, ":***@") };
+    } catch (err) {
+      lastError = err;
+      await client.end().catch(() => {});
+    }
   }
+
+  lastError.connectionSource = source;
+  throw lastError;
 }
 
 export async function testDatabaseConnection() {
