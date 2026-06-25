@@ -2449,7 +2449,7 @@ input, textarea, select { font-family: inherit; }
   }
 }
 
-/* ── Condolences black & white card ── */
+/* ── Condolence official card (black) ── */
 .cond-bw-export-host {
   position: fixed;
   left: -9999px;
@@ -2458,61 +2458,203 @@ input, textarea, select { font-family: inherit; }
   opacity: 0;
 }
 
-.cond-bw-card--preview .cond-bw-verse-top {
-  font-size: clamp(1.75rem, 5vw, 2.25rem);
+.cond-card {
+  --cond-scale: 1;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  background: #0a0a0a;
+  color: #ffffff;
+  direction: rtl;
 }
 
-.cond-bw-card--preview .cond-bw-verse-mid {
-  font-size: clamp(1.1rem, 3vw, 1.35rem);
+.cond-card__bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(168deg, #050505 0%, #121212 42%, #0a0a0a 100%);
+  pointer-events: none;
 }
 
-.cond-bw-card--preview .cond-bw-hero {
-  font-size: clamp(2rem, 6vw, 2.75rem);
+.cond-card__frame {
+  position: absolute;
+  inset: calc(18px * var(--cond-scale));
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  pointer-events: none;
 }
 
-.cond-bw-card--preview .cond-bw-name {
-  font-size: clamp(1.35rem, 4vw, 1.75rem);
+.cond-card__inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+  box-sizing: border-box;
+  padding: calc(44px * var(--cond-scale)) calc(52px * var(--cond-scale)) calc(36px * var(--cond-scale));
+  overflow: hidden;
 }
 
-.cond-bw-card--preview .cond-bw-transition {
-  font-size: 1rem;
+.cond-card__header {
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: 92%;
 }
 
-.cond-bw-card--preview .cond-bw-meta {
-  font-size: 0.95rem;
+.cond-card__intro-top {
+  margin: 0;
+  font-family: "Amiri", "Scheherazade New", "Noto Naskh Arabic", serif;
+  font-size: calc(34px * var(--cond-scale));
+  font-weight: 700;
+  line-height: 1.35;
+  color: #ffffff;
 }
 
-.cond-bw-card--preview .cond-bw-extra {
-  font-size: 0.9rem;
+.cond-card__intro-mid {
+  margin: calc(8px * var(--cond-scale)) 0 0;
+  font-family: "Amiri", "Scheherazade New", "Noto Naskh Arabic", serif;
+  font-size: calc(24px * var(--cond-scale));
+  font-weight: 400;
+  line-height: 1.55;
+  color: #f2f2f2;
 }
 
-.cond-bw-card:not(.cond-bw-card--preview) .cond-bw-verse-top {
-  font-size: 52px;
+.cond-card__hero-zone {
+  flex: 0 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 94%;
+  margin: calc(18px * var(--cond-scale)) auto;
+  max-height: 34%;
+  overflow: hidden;
 }
 
-.cond-bw-card:not(.cond-bw-card--preview) .cond-bw-verse-mid {
-  font-size: 34px;
+.cond-card__hero {
+  margin: 0;
+  font-family: "Amiri Quran", "Amiri", "Scheherazade New", "Noto Naskh Arabic", serif;
+  font-size: calc(54px * var(--cond-scale));
+  font-weight: 400;
+  line-height: 1.55;
+  color: #ffffff;
+  max-width: 100%;
+  word-break: normal;
+  overflow-wrap: normal;
 }
 
-.cond-bw-card:not(.cond-bw-card--preview) .cond-bw-hero {
-  font-size: 76px;
-  color: #fff;
+.cond-card--preview .cond-card__hero {
+  font-size: calc(42px * var(--cond-scale));
+  line-height: 1.5;
 }
 
-.cond-bw-card:not(.cond-bw-card--preview) .cond-bw-name {
-  font-size: 44px;
+.cond-card__main {
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: 88%;
 }
 
-.cond-bw-card:not(.cond-bw-card--preview) .cond-bw-transition {
-  font-size: 30px;
+.cond-card__transition {
+  margin: 0 0 calc(10px * var(--cond-scale));
+  font-family: "Amiri", "Scheherazade New", "Noto Naskh Arabic", serif;
+  font-size: calc(26px * var(--cond-scale));
+  font-weight: 400;
+  line-height: 1.5;
+  color: #ffffff;
 }
 
-.cond-bw-card:not(.cond-bw-card--preview) .cond-bw-meta {
-  font-size: 28px;
+.cond-card__name {
+  margin: 0 0 calc(14px * var(--cond-scale));
+  font-family: "Amiri", "Scheherazade New", "Noto Naskh Arabic", serif;
+  font-size: calc(38px * var(--cond-scale));
+  font-weight: 700;
+  line-height: 1.45;
+  color: #ffffff;
 }
 
-.cond-bw-card:not(.cond-bw-card--preview) .cond-bw-extra {
-  font-size: 26px;
+.cond-card__details {
+  margin: 0 0 calc(12px * var(--cond-scale));
+  padding: 0;
+  width: 100%;
+}
+
+.cond-card__detail-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: calc(6px * var(--cond-scale));
+  margin: 0 0 calc(6px * var(--cond-scale));
+  font-family: "Amiri", "Scheherazade New", "Noto Naskh Arabic", serif;
+  font-size: calc(22px * var(--cond-scale));
+  line-height: 1.55;
+  color: #f5f5f5;
+}
+
+.cond-card__detail-row dt {
+  margin: 0;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.cond-card__detail-row dd {
+  margin: 0;
+  font-weight: 400;
+  color: #f2f2f2;
+}
+
+.cond-card__extra {
+  margin: calc(8px * var(--cond-scale)) 0 0;
+  font-family: "Amiri", "Scheherazade New", "Noto Naskh Arabic", serif;
+  font-size: calc(20px * var(--cond-scale));
+  line-height: 1.6;
+  color: #f0f0f0;
+  max-width: 100%;
+  word-break: normal;
+}
+
+.cond-card__footer {
+  margin-top: auto;
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 90%;
+  padding-top: calc(10px * var(--cond-scale));
+}
+
+.cond-card__divider {
+  width: calc(100px * var(--cond-scale));
+  height: 1px;
+  margin: 0 auto calc(12px * var(--cond-scale));
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.cond-card__dua {
+  margin: 0;
+  font-family: "Amiri", "Scheherazade New", "Noto Naskh Arabic", serif;
+  font-size: calc(24px * var(--cond-scale));
+  font-weight: 400;
+  line-height: 1.55;
+  color: #ffffff;
+}
+
+.cond-card__logo {
+  position: absolute;
+  bottom: calc(20px * var(--cond-scale));
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(48px * var(--cond-scale));
+  height: calc(48px * var(--cond-scale));
+  object-fit: contain;
+  opacity: 0.9;
+}
+
+.template-action-row--three {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+@media (max-width: 640px) {
+  .template-action-row--three {
+    grid-template-columns: 1fr;
+  }
 }
 
 .condolences-page__shell {

@@ -17,7 +17,7 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
 }
 
 export default function CondolencesPage() {
-  const cardRef = useRef<HTMLDivElement>(null);
+  const previewPanelRef = useRef<HTMLElement>(null);
   const exportRef = useRef<HTMLDivElement>(null);
   const [form, setForm] = useState<CondolenceForm>(defaultCondolenceForm);
   const [downloading, setDownloading] = useState(false);
@@ -30,8 +30,12 @@ export default function CondolencesPage() {
 
   const resetForm = () => setForm(defaultCondolenceForm);
 
+  const scrollToPreview = () => {
+    previewPanelRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   const downloadImage = async () => {
-    const el = exportRef.current ?? cardRef.current;
+    const el = exportRef.current;
     if (!el) return;
     setDownloading(true);
     try {
@@ -40,7 +44,7 @@ export default function CondolencesPage() {
         pixelRatio: 1,
         width: dims.width,
         height: dims.height,
-        backgroundColor: "#000000",
+        backgroundColor: "#0a0a0a",
         cacheBust: true,
       });
 
@@ -61,16 +65,25 @@ export default function CondolencesPage() {
         <section className="ui-card cond-form-panel">
           <h1 className="cond-page-title">قوالب العزاء</h1>
           <p className="cond-page-desc">
-            اكتب البيانات ثم حمّل البطاقة للمشاركة — بدون حقوق أو شعار افتراضي.
+            بطاقة تعزية رسمية بخلفية سوداء — جاهزة للمشاركة على واتساب وإنستغرام.
           </p>
 
           <div className="cond-form-fields">
-            <Field label="الاسم">
+            <Field label="اسم المتوفى">
               <input
                 value={form.name}
                 onChange={(e) => update("name", e.target.value)}
                 className="cond-input"
-                placeholder="اسم المتوفى"
+                placeholder="اكتب اسم المتوفى"
+              />
+            </Field>
+
+            <Field label="اليوم">
+              <input
+                value={form.day}
+                onChange={(e) => update("day", e.target.value)}
+                className="cond-input"
+                placeholder="مثال: الثلاثاء"
               />
             </Field>
 
@@ -79,7 +92,7 @@ export default function CondolencesPage() {
                 value={form.deathDate}
                 onChange={(e) => update("deathDate", e.target.value)}
                 className="cond-input"
-                placeholder="مثال: الثلاثاء 2026/6/23"
+                placeholder="مثال: 2026/6/23"
               />
             </Field>
 
@@ -106,7 +119,8 @@ export default function CondolencesPage() {
                 value={form.extraText}
                 onChange={(e) => update("extraText", e.target.value)}
                 className="cond-input cond-textarea"
-                placeholder="مثال: نسأل الله له الرحمة والمغفرة"
+                placeholder="نص اختياري إن رغبت"
+                rows={3}
               />
             </Field>
 
@@ -116,8 +130,8 @@ export default function CondolencesPage() {
                 onChange={(e) => update("size", e.target.value as CondolenceForm["size"])}
                 className="cond-input"
               >
+                <option value="story">طولي 1080×1350 — إنستغرام / واتساب</option>
                 <option value="square">مربع 1080×1080 — واتساب</option>
-                <option value="story">طولي 1080×1350 — إنستغرام</option>
               </select>
             </Field>
 
@@ -130,9 +144,9 @@ export default function CondolencesPage() {
               <span>إظهار الشعار (اختياري)</span>
             </label>
 
-            <div className="template-action-row">
-              <button type="button" onClick={resetForm} className="ui-card-btn template-btn template-btn--ghost">
-                إعادة ضبط
+            <div className="template-action-row template-action-row--three">
+              <button type="button" onClick={scrollToPreview} className="ui-card-btn template-btn template-btn--ghost">
+                معاينة
               </button>
               <button
                 type="button"
@@ -142,14 +156,16 @@ export default function CondolencesPage() {
               >
                 {downloading ? "جارٍ التحميل..." : "تحميل الصورة"}
               </button>
+              <button type="button" onClick={resetForm} className="ui-card-btn template-btn template-btn--ghost">
+                إعادة ضبط
+              </button>
             </div>
           </div>
         </section>
 
-        <section className="cond-preview-panel">
+        <section ref={previewPanelRef} className="cond-preview-panel" id="cond-preview-panel">
           <h2 className="cond-preview-title">معاينة</h2>
           <CondolenceCard
-            ref={cardRef}
             form={form}
             width={dims.previewW}
             height={dims.previewH}

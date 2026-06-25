@@ -1,8 +1,8 @@
 import { forwardRef } from "react";
-import { Ornament } from "./Ornament";
 
 export type CondolenceForm = {
   name: string;
+  day: string;
   deathDate: string;
   burialTime: string;
   condolencePlace: string;
@@ -13,21 +13,25 @@ export type CondolenceForm = {
 
 export const defaultCondolenceForm: CondolenceForm = {
   name: "",
+  day: "",
   deathDate: "",
   burialTime: "",
   condolencePlace: "",
   extraText: "",
-  size: "square",
+  size: "story",
   showLogo: false,
 };
 
-export const CARD_FONT =
+export const VERSE_INNA = "إِنَّا لِلَّهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ";
+
+export const THULUTH_FONT =
+  '"Amiri Quran", "Amiri", "Scheherazade New", "Noto Naskh Arabic", serif';
+
+export const BODY_FONT =
   '"Amiri", "Scheherazade New", "Noto Naskh Arabic", serif';
 
-export const VERSE_INNA = "\u0625\u0646\u0627 \u0644\u0644\u0647 \u0648\u0625\u0646\u0627 \u0625\u0644\u064a\u0647 \u0631\u0627\u062c\u0639\u0648\u0646";
-
 export const EXPORT_SIZES = {
-  square: { width: 1080, height: 1080, previewW: 480, previewH: 480 },
+  square: { width: 1080, height: 1080, previewW: 432, previewH: 432 },
   story: { width: 1080, height: 1350, previewW: 432, previewH: 540 },
 } as const;
 
@@ -41,72 +45,72 @@ type Props = {
 
 export const CondolenceCard = forwardRef<HTMLDivElement, Props>(function CondolenceCard(
   { form, width, height, preview = false, className = "" },
-  ref
+  ref,
 ) {
-  const hasDetails = form.deathDate || form.burialTime || form.condolencePlace;
+  const scale = width / 1080;
+
+  const detailRows = [
+    form.day.trim() ? { label: "اليوم", value: form.day.trim() } : null,
+    form.deathDate.trim() ? { label: "التاريخ", value: form.deathDate.trim() } : null,
+    form.burialTime.trim() ? { label: "وقت الدفن", value: form.burialTime.trim() } : null,
+    form.condolencePlace.trim() ? { label: "مكان العزاء", value: form.condolencePlace.trim() } : null,
+  ].filter(Boolean) as { label: string; value: string }[];
 
   return (
     <div
       ref={ref}
-      className={`cond-bw-card relative overflow-hidden bg-black text-white shadow-2xl ${preview ? "cond-bw-card--preview" : ""} ${className}`}
+      className={`cond-card ${preview ? "cond-card--preview" : ""} ${className}`.trim()}
       style={{
         width,
         height,
-        fontFamily: CARD_FONT,
+        ["--cond-scale" as string]: scale,
       }}
+      dir="rtl"
     >
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08),transparent_55%)]" />
-      <div className="pointer-events-none absolute inset-6 border border-white/20" />
-      <div className="pointer-events-none absolute inset-x-10 top-10 h-px bg-gradient-to-r from-transparent via-[#c9a962]/60 to-transparent" />
-      <div className="pointer-events-none absolute left-8 top-8 h-16 w-16 border-l border-t border-white/50" />
-      <div className="pointer-events-none absolute right-8 top-8 h-16 w-16 border-r border-t border-white/50" />
-      <div className="pointer-events-none absolute bottom-8 left-8 h-16 w-16 border-b border-l border-white/50" />
-      <div className="pointer-events-none absolute bottom-8 right-8 h-16 w-16 border-b border-r border-white/50" />
+      <div className="cond-card__bg" aria-hidden="true" />
+      <div className="cond-card__frame" aria-hidden="true" />
 
-      <div className="relative z-10 flex h-full flex-col items-center justify-center px-10 text-center">
-        <p className="cond-bw-verse-top mb-3 font-bold leading-tight tracking-wide">
-          وبشر الصابرين
-        </p>
-        <p className="cond-bw-verse-mid mb-6 leading-relaxed">
-          الذين إذا أصابتهم مصيبة قالوا
-        </p>
-        <p className="cond-bw-hero mb-8 font-black leading-[1.25]">
-          {VERSE_INNA}
-        </p>
+      <div className="cond-card__inner">
+        <header className="cond-card__header">
+          <p className="cond-card__intro-top">وبشر الصابرين</p>
+          <p className="cond-card__intro-mid">الذين إذا أصابتهم مصيبة قالوا</p>
+        </header>
 
-        <Ornament />
+        <div className="cond-card__hero-zone">
+          <p className="cond-card__hero">{VERSE_INNA}</p>
+        </div>
 
-        {form.name.trim() && (
-          <div className="mt-7 space-y-2">
-            <p className="cond-bw-transition text-white/80">انتقل إلى رحمة الله تعالى</p>
-            <p className="cond-bw-name font-bold leading-snug">{form.name.trim()}</p>
-          </div>
-        )}
+        <div className="cond-card__main">
+          <p className="cond-card__transition">انتقل إلى رحمة الله تعالى</p>
 
-        {hasDetails && (
-          <div className="cond-bw-meta mt-6 leading-relaxed text-white/85">
-            {form.deathDate && <p>الوفاة: {form.deathDate}</p>}
-            {form.burialTime && <p>الدفن: {form.burialTime}</p>}
-            {form.condolencePlace && <p>{form.condolencePlace}</p>}
-          </div>
-        )}
+          {form.name.trim() ? (
+            <p className="cond-card__name">{form.name.trim()}</p>
+          ) : null}
 
-        {form.extraText.trim() && (
-          <p className="cond-bw-extra mt-5 max-w-[80%] leading-relaxed text-white/75">
-            {form.extraText.trim()}
-          </p>
-        )}
+          {detailRows.length > 0 ? (
+            <dl className="cond-card__details">
+              {detailRows.map((row) => (
+                <div key={row.label} className="cond-card__detail-row">
+                  <dt>{row.label}:</dt>
+                  <dd>{row.value}</dd>
+                </div>
+              ))}
+            </dl>
+          ) : null}
 
-        {form.showLogo && (
-          <img
-            src="/logo.png"
-            alt=""
-            className="cond-bw-logo mt-6"
-            aria-hidden="true"
-          />
-        )}
+          {form.extraText.trim() ? (
+            <p className="cond-card__extra">{form.extraText.trim()}</p>
+          ) : null}
+        </div>
 
-        <Ornament small />
+        <footer className="cond-card__footer">
+          <div className="cond-card__divider" aria-hidden="true" />
+          <p className="cond-card__dua">رحمه الله وأسكنه فسيح جناته</p>
+        </footer>
+
+        {form.showLogo ? (
+          <img src="/logo.png" alt="" className="cond-card__logo" aria-hidden="true" />
+        ) : null}
       </div>
     </div>
   );
