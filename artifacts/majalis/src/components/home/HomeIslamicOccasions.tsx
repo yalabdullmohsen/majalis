@@ -1,13 +1,29 @@
+import { useEffect, useState } from "react";
 import { Link } from "wouter";
+import { Loading } from "@/components/ui-common";
 import {
-  daysUntilOccasion,
-  estimateHijriDate,
-  ISLAMIC_OCCASIONS,
-} from "@/lib/islamic-occasions-seed";
+  loadIslamicOccasions,
+  sortOccasionsByUpcoming,
+  type IslamicOccasionView,
+} from "@/lib/islamic-occasions";
 
 export function HomeIslamicOccasions() {
-  const today = estimateHijriDate();
-  const items = ISLAMIC_OCCASIONS.slice(0, 4);
+  const [items, setItems] = useState<IslamicOccasionView[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let active = true;
+    loadIslamicOccasions()
+      .then((rows) => {
+        if (active) setItems(sortOccasionsByUpcoming(rows).slice(0, 4));
+      })
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+    return () => {
+      active = false;
+    };
+  }, []);
 
   return (
     <section className="home-section" aria-labelledby="occasions-heading">
@@ -19,24 +35,25 @@ export function HomeIslamicOccasions() {
         </div>
         <Link href="/occasions" className="home-section-link">كل المناسبات</Link>
       </div>
-      <div className="home-occasions-grid">
-        {items.map((occasion) => {
-          const remaining = daysUntilOccasion(occasion, today);
-          return (
+      {loading ? (
+        <Loading />
+      ) : (
+        <div className="home-occasions-grid">
+          {items.map((occasion) => (
             <Link key={occasion.id} href="/occasions" className="home-occasion-card ui-card">
               <strong>{occasion.name}</strong>
               <p>{occasion.summary}</p>
               <span className="home-occasion-card__meta">
-                {remaining != null
-                  ? remaining === 0
+                {occasion.daysRemaining != null
+                  ? occasion.daysRemaining === 0
                     ? "اليوم أو قريب"
-                    : `بعد ${remaining} يوم تقريباً`
+                    : `بعد ${occasion.daysRemaining} يوم تقريباً`
                   : "موسمية"}
               </span>
             </Link>
-          );
-        })}
-      </div>
+          ))}
+        </div>
+      )}
     </section>
   );
 }

@@ -1,12 +1,28 @@
-import { PageHeader } from "@/components/ui-common";
+import { useEffect, useState } from "react";
+import { Loading, PageHeader } from "@/components/ui-common";
 import {
-  daysUntilOccasion,
-  estimateHijriDate,
-  ISLAMIC_OCCASIONS,
-} from "@/lib/islamic-occasions-seed";
+  loadIslamicOccasions,
+  sortOccasionsByUpcoming,
+  type IslamicOccasionView,
+} from "@/lib/islamic-occasions";
 
 export default function OccasionsPage() {
-  const today = estimateHijriDate();
+  const [occasions, setOccasions] = useState<IslamicOccasionView[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let active = true;
+    loadIslamicOccasions()
+      .then((rows) => {
+        if (active) setOccasions(sortOccasionsByUpcoming(rows));
+      })
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+    return () => {
+      active = false;
+    };
+  }, []);
 
   return (
     <div className="page-shell">
@@ -16,21 +32,27 @@ export default function OccasionsPage() {
         subtitle="مناسبات معتمدة مع الأعمال المستحبة والأدلة الصحيحة."
       />
 
-      <div className="occasions-list">
-        {ISLAMIC_OCCASIONS.map((occasion) => {
-          const remaining = daysUntilOccasion(occasion, today);
-          return (
+      {loading ? (
+        <Loading />
+      ) : (
+        <div className="occasions-list">
+          {occasions.map((occasion) => (
             <article key={occasion.id} className="occasion-detail ui-card">
               <header className="occasion-detail__head">
                 <h2>{occasion.name}</h2>
                 <span>
-                  {remaining != null
-                    ? remaining === 0
+                  {occasion.daysRemaining != null
+                    ? occasion.daysRemaining === 0
                       ? "قريب"
-                      : `بعد ${remaining} يوم تقريباً`
+                      : `بعد ${occasion.daysRemaining} يوم تقريباً`
                     : "موسمية"}
                 </span>
               </header>
+              {occasion.nextGregorian && (
+                <p className="occasion-detail__date">
+                  التاريخ الميلادي التقريبي: {occasion.nextGregorian}
+                </p>
+              )}
               <p>{occasion.summary}</p>
               <h3>الأعمال المستحبة</h3>
               <ul>
@@ -42,9 +64,9 @@ export default function OccasionsPage() {
                 <strong>الدليل:</strong> {occasion.evidence}
               </p>
             </article>
-          );
-        })}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

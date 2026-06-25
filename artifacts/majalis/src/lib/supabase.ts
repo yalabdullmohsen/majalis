@@ -12,7 +12,7 @@ import {
 } from "./demo-content";
 import { DEMO_QUIZ_QUESTIONS } from "./quiz-seed";
 import { ADHKAR_CATEGORIES, filterAdhkar } from "./adhkar-seed";
-import { safeSupabaseQuery } from "./safe-supabase";
+import { safeSupabaseQuery, isMissingSchemaError } from "./safe-supabase";
 
 /** Columns that exist on the live `sheikhs` table (no image_url / avatar_url). */
 const SHEIKH_EMBED = "sheikhs(id, name, city, photo_url)";
@@ -988,4 +988,61 @@ export async function searchEverything(term: string): Promise<SearchResults> {
   }
 
   return fallback;
+}
+
+export type PrayerTimesRow = {
+  date: string;
+  fajr: string;
+  sunrise: string;
+  dhuhr: string;
+  asr: string;
+  maghrib: string;
+  isha: string;
+};
+
+export type IslamicOccasionCacheRow = {
+  occasion_id: string;
+  next_gregorian_date: string | null;
+  days_remaining: number | null;
+  hijri_label: string | null;
+  synced_at: string;
+};
+
+export async function getPrayerTimesFromDb(dateKey: string) {
+  if (!isConfigured) return null;
+
+  try {
+    const { data, error } = await supabase
+      .from("prayer_times")
+      .select("date, fajr, sunrise, dhuhr, asr, maghrib, isha")
+      .eq("city", "الكويت")
+      .eq("governorate", "العاصمة")
+      .eq("date", dateKey)
+      .maybeSingle();
+
+    if (error) {
+      if (isMissingSchemaError(error)) return null;
+      logSupabaseError("getPrayerTimesFromDb", error, { dateKey });
+      return null;
+    }
+
+    return (data as PrayerTimesRow | null) ?? null;
+  } catch (err) {
+    logSupabaseError("getPrayerTimesFromDb", err, { dateKey });
+    return null;
+  }
+}
+
+export async function getIslamicOccasionsCacheFromDb() {
+  const fallback: IslamicOccasionCacheRow[] = [];
+  const result = await safeSupabaseQuery(
+    "getIslamicOccasionsCacheFromDb",
+    () =>
+      supabase
+        .from("islamic_occasions_cache")
+        .select("occasion_id, next_gregorian_date, days_remaining, hijri_label, synced_at")
+        .order("days_remaining", { ascending: true }),
+    fallback,
+  );
+  return result.data;
 }

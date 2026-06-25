@@ -9,6 +9,12 @@
       "maxDuration": 30
     }
   },
+  "crons": [
+    {
+      "path": "/api/cron/sync-data",
+      "schedule": "5 21 * * *"
+    }
+  ],
   "rewrites": [
     {
       "source": "/api/(.*)",

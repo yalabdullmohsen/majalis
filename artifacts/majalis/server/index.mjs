@@ -8,6 +8,7 @@ import assistantHealthHandler from "../api/assistant/health.js";
 import testAnthropicHandler from "../api/test-anthropic.js";
 import transcribeHandler from "../api/transcribe.js";
 import prayerTimesHandler from "../api/prayer-times.js";
+import syncDataHandler from "../api/cron/sync-data.js";
 import { createRateLimiter } from "./rate-limit.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -78,6 +79,8 @@ app.post("/api/test-anthropic", runHandler(testAnthropicHandler, "test-anthropic
 app.post("/api/transcribe", express.json({ limit: "2mb" }), transcribeRateLimit, runHandler(transcribeHandler, "transcribe"));
 
 app.get("/api/prayer-times", runHandler(prayerTimesHandler, "prayer-times"));
+app.get("/api/cron/sync-data", runHandler(syncDataHandler, "cron-sync-data"));
+app.post("/api/cron/sync-data", runHandler(syncDataHandler, "cron-sync-data"));
 
 app.get("/api/healthz", (_req, res) => {
   res.json({ ok: true, service: "majalis-web" });

@@ -228,6 +228,29 @@ export function computePrayerStatus(prayers: PrayerSlot[]): PrayerStatus {
 /** Never throws — always returns usable prayer times. */
 export async function fetchPrayerTimes(): Promise<PrayerTimesPayload> {
   try {
+    const { getPrayerTimesFromDb } = await import("./supabase");
+    const row = await getPrayerTimesFromDb(kuwaitDateKey());
+    if (row) {
+      const timings: Record<string, string> = {
+        Fajr: row.fajr,
+        Sunrise: row.sunrise,
+        Dhuhr: row.dhuhr,
+        Asr: row.asr,
+        Maghrib: row.maghrib,
+        Isha: row.isha,
+      };
+      return {
+        ...buildPayload(timings, { timezone: "Asia/Kuwait" }, {
+          gregorian: { date: kuwaitDateParam() },
+        }),
+        source: "Supabase (مواقيت محدّثة)",
+      };
+    }
+  } catch {
+    // fall through
+  }
+
+  try {
     const response = await fetch("/api/prayer-times", {
       headers: { Accept: "application/json" },
     });
