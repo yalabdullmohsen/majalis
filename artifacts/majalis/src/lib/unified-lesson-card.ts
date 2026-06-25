@@ -1,12 +1,22 @@
 import { cleanDisplayText } from "./display-text";
 import { extractLessonSchedule } from "./lesson-display";
-import type { KuwaitLessonRecord } from "./kuwait-lessons";
+import { formatSheikhName } from "./sheikh-name";
+import {
+  cleanTimeText,
+  computeNextOccurrenceMs,
+  formatGregorianDate,
+  formatHijriDate,
+  formatRelativeTime,
+} from "./lesson-time";
+import type { ActivityType, KuwaitLessonRecord } from "./kuwait-lessons";
+import { getRelativeStatusLabel } from "./kuwait-lessons";
 
 export type UnifiedLesson = {
   id: string;
   title: string;
   sheikhName: string;
   sheikhImage?: string;
+  lessonImage?: string;
   category: string;
   day: string;
   time: string;
@@ -14,41 +24,58 @@ export type UnifiedLesson = {
   region: string;
   governorate: string;
   sortKey: number;
+  nextOccurrenceMs: number;
   statusLabel: string;
   detailsHref: string;
   note?: string;
+  description?: string;
   archived?: boolean;
+  gregorianDate?: string;
+  hijriDate?: string;
+  activityType?: ActivityType;
+  sessionCount?: number;
+  linkedLessons?: string[];
+  hasLiveStream?: boolean;
+  hasRecording?: boolean;
+  mapsUrl?: string;
+  streamUrl?: string;
+  siteUrl?: string;
+  qrCodeUrl?: string;
+  keywords?: string[];
 };
-
-const PROXIMITY_LABELS: Record<number, string> = {
-  0: "اليوم",
-  1: "غداً",
-};
-
-function proximityLabel(sortKey: number, day: string): string {
-  if (PROXIMITY_LABELS[sortKey]) return PROXIMITY_LABELS[sortKey];
-  if (sortKey >= 2 && sortKey <= 6) return `بعد ${sortKey} أيام`;
-  if (day) return day;
-  return "نشط";
-}
 
 export function fromKuwaitLesson(lesson: KuwaitLessonRecord, archived = false): UnifiedLesson {
   return {
     id: lesson.id,
     title: cleanDisplayText(lesson.title),
-    sheikhName: cleanDisplayText(lesson.sheikhName),
+    sheikhName: formatSheikhName(lesson.sheikhName.replace(/^الشيخ:\s*/u, "")) || cleanDisplayText(lesson.sheikhName),
     sheikhImage: lesson.sheikhImage,
+    lessonImage: lesson.lessonImage,
     category: cleanDisplayText(lesson.category) || "أخرى",
     day: cleanDisplayText(lesson.day),
-    time: cleanDisplayText(lesson.time),
+    time: cleanTimeText(cleanDisplayText(lesson.time)),
     mosque: cleanDisplayText(lesson.mosque),
     region: cleanDisplayText(lesson.region),
     governorate: cleanDisplayText(lesson.governorate),
-    sortKey: lesson.sortKey,
-    statusLabel: archived ? "منتهٍ" : proximityLabel(lesson.sortKey, lesson.day),
+    sortKey: lesson.nextOccurrenceMs,
+    nextOccurrenceMs: lesson.nextOccurrenceMs,
+    statusLabel: getRelativeStatusLabel(lesson, archived),
     detailsHref: `/lessons/${lesson.id}`,
     note: lesson.note ? cleanDisplayText(lesson.note) : undefined,
+    description: lesson.description ? cleanDisplayText(lesson.description) : undefined,
     archived,
+    gregorianDate: lesson.gregorianDate,
+    hijriDate: lesson.hijriDate,
+    activityType: lesson.activityType,
+    sessionCount: lesson.sessionCount,
+    linkedLessons: lesson.linkedLessons,
+    hasLiveStream: lesson.hasLiveStream,
+    hasRecording: lesson.hasRecording,
+    mapsUrl: lesson.mapsUrl,
+    streamUrl: lesson.streamUrl,
+    siteUrl: lesson.siteUrl,
+    qrCodeUrl: lesson.qrCodeUrl,
+    keywords: lesson.keywords,
   };
 }
 
@@ -66,25 +93,40 @@ export function fromDbLesson(lesson: {
   speaker_name?: string;
   sheikhs?: { name?: string };
   sortKey?: number;
+  stream_url?: string;
+  maps_url?: string;
+  website_url?: string;
+  recording_url?: string;
 }): UnifiedLesson {
   const sheikhName = lesson.sheikhs?.name || lesson.speaker_name || "";
   const { day, time } = extractLessonSchedule(lesson);
-  const sortKey = lesson.sortKey ?? 99;
+  const nextMs = computeNextOccurrenceMs(day, time);
+  const nextDate = new Date(nextMs);
 
   return {
     id: lesson.id,
     title: cleanDisplayText(lesson.title),
-    sheikhName: cleanDisplayText(sheikhName),
+    sheikhName: formatSheikhName(sheikhName),
     category: cleanDisplayText(lesson.category) || "أخرى",
     day: cleanDisplayText(day),
-    time: cleanDisplayText(time),
+    time: cleanTimeText(cleanDisplayText(time)),
     mosque: cleanDisplayText(lesson.mosque),
     region: cleanDisplayText(lesson.region),
     governorate: cleanDisplayText(lesson.city),
-    sortKey,
-    statusLabel: proximityLabel(sortKey, day),
+    sortKey: lesson.sortKey ?? nextMs,
+    nextOccurrenceMs: nextMs,
+    statusLabel: formatRelativeTime(nextMs),
     detailsHref: `/lessons/${lesson.id}`,
     note: lesson.description ? cleanDisplayText(lesson.description) : undefined,
+    description: lesson.description ? cleanDisplayText(lesson.description) : undefined,
+    gregorianDate: day ? formatGregorianDate(nextDate) : undefined,
+    hijriDate: day ? formatHijriDate(nextDate) : undefined,
+    hasLiveStream: Boolean(lesson.stream_url),
+    hasRecording: Boolean(lesson.recording_url),
+    mapsUrl: lesson.maps_url,
+    streamUrl: lesson.stream_url,
+    siteUrl: lesson.website_url,
+    activityType: "درس",
   };
 }
 
@@ -92,12 +134,17 @@ export function buildLessonCopyText(lesson: UnifiedLesson): string {
   const lines = [
     lesson.title,
     lesson.sheikhName,
+    lesson.activityType ? `نوع النشاط: ${lesson.activityType}` : "",
     `التصنيف: ${lesson.category}`,
     lesson.day ? `اليوم: ${lesson.day}` : "",
+    lesson.gregorianDate ? `التاريخ: ${lesson.gregorianDate}` : "",
+    lesson.hijriDate ? `التاريخ الهجري: ${lesson.hijriDate}` : "",
     lesson.time ? `الوقت: ${lesson.time}` : "",
     lesson.mosque ? `المسجد: ${lesson.mosque}` : "",
     lesson.region ? `المنطقة: ${lesson.region}` : "",
     lesson.governorate ? `المحافظة: ${lesson.governorate}` : "",
+    lesson.hasLiveStream ? "يوجد بث مباشر" : "",
+    lesson.hasRecording ? "يوجد تسجيل" : "",
     `الحالة: ${lesson.statusLabel}`,
   ].filter(Boolean);
 
@@ -106,9 +153,53 @@ export function buildLessonCopyText(lesson: UnifiedLesson): string {
   return lines.join("\n");
 }
 
+export function buildLessonShareUrl(lesson: UnifiedLesson): string {
+  if (typeof window === "undefined") return lesson.detailsHref;
+  return `${window.location.origin}${lesson.detailsHref}`;
+}
+
 export function prominenceClass(sortKey: number, archived?: boolean): string {
   if (archived) return "lesson-unified-card--archived";
-  if (sortKey === 0) return "lesson-unified-card--today";
-  if (sortKey === 1) return "lesson-unified-card--soon";
+  const now = Date.now();
+  const diffHours = (sortKey - now) / (60 * 60 * 1000);
+  if (diffHours <= 0) return "lesson-unified-card--today";
+  if (diffHours <= 24) return "lesson-unified-card--soon";
   return "";
+}
+
+export function buildCalendarIcsFromUnified(lesson: UnifiedLesson): string {
+  const start = new Date(lesson.nextOccurrenceMs);
+  const y = start.getUTCFullYear();
+  const m = String(start.getUTCMonth() + 1).padStart(2, "0");
+  const d = String(start.getUTCDate()).padStart(2, "0");
+  const dt = `${y}${m}${d}`;
+
+  const lines = [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//AlMajlisAlIlmi//Lessons//AR",
+    "CALSCALE:GREGORIAN",
+    "BEGIN:VEVENT",
+    `UID:${lesson.id}@majlisilm.com`,
+    `DTSTAMP:${dt}T120000Z`,
+    `DTSTART;VALUE=DATE:${dt}`,
+    `SUMMARY:${lesson.title} — ${lesson.sheikhName}`,
+    `DESCRIPTION:${(lesson.description || lesson.note || "").replace(/\n/g, " ")}`,
+    `LOCATION:${lesson.mosque}، ${lesson.region}`,
+    "END:VEVENT",
+    "END:VCALENDAR",
+  ];
+  return lines.join("\r\n");
+}
+
+export function downloadUnifiedCalendar(lesson: UnifiedLesson) {
+  const blob = new Blob([buildCalendarIcsFromUnified(lesson)], {
+    type: "text/calendar;charset=utf-8",
+  });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `درس-${lesson.title}.ics`;
+  a.click();
+  URL.revokeObjectURL(url);
 }

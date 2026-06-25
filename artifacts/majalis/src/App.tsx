@@ -75,12 +75,12 @@ function Router() {
       <Route path="/search/:q"><SafeLazyRoute component={SearchPage} /></Route>
       <Route path="/search"><SafeLazyRoute component={SearchPage} /></Route>
       <Route path="/scientific-announcements/:id"><SafeLazyRoute component={ScientificAnnouncementDetailPage} /></Route>
+      <Route path="/lessons/current"><SafeLazyRoute component={CurrentLessonsPage} /></Route>
       <Route path="/lessons/:id"><SafeLazyRoute component={LessonDetailPage} /></Route>
       <Route path="/lessons"><SafeLazyRoute component={LessonsPage} /></Route>
       <Route path="/calendar"><SafeLazyRoute component={CalendarPage} /></Route>
       <Route path="/kuwait-lessons"><SafeLazyRoute component={KuwaitLessonsPage} /></Route>
       <Route path="/announcements"><SafeLazyRoute component={AnnouncementsPage} /></Route>
-      <Route path="/lessons/current"><SafeLazyRoute component={CurrentLessonsPage} /></Route>
       <Route path="/courses"><SafeLazyRoute component={CoursesPage} /></Route>
       <Route path="/sheikhs/:id"><SafeLazyRoute component={SheikhDetailPage} /></Route>
       <Route path="/sheikhs"><SafeLazyRoute component={SheikhsPage} /></Route>

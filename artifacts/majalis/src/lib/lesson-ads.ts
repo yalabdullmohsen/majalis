@@ -53,7 +53,7 @@ export const lessonAds: LessonAd[] = [
       {
         label: "المجلس الأسبوعي",
         day: "الجمعة",
-        time: "بعد صلاة المغرب بتوقيت الكويت",
+        time: "بعد صلاة المغرب",
         venue: "مسجد موضي",
         district: "منطقة الصديق – قطعة 4 – شارع 407",
         mapUrl: "https://maps.app.goo.gl/4EjbJEgGmsnGWENBA",
@@ -81,7 +81,7 @@ export const lessonAds: LessonAd[] = [
       {
         label: "المجلس الأسبوعي",
         day: "السبت",
-        time: "10:00 صباحًا بتوقيت الكويت",
+        time: "10:00 صباحًا",
         venue: "مسجد الياقوت",
         district: "منطقة الصديق – قطعة 7 – شارع 706",
         mapUrl: "https://maps.app.goo.gl/5Bwe3w794cvREzGG8",
@@ -110,7 +110,7 @@ export const lessonAds: LessonAd[] = [
       {
         label: "المجلس الأسبوعي",
         day: "الأربعاء",
-        time: "بعد صلاة المغرب بتوقيت الكويت",
+        time: "بعد صلاة المغرب",
         venue: "مسجد الياقوت",
         district: "منطقة الصديق – قطعة 7 – شارع 706",
         mapUrl: "https://maps.app.goo.gl/5Bwe3w794cvREzGG8",

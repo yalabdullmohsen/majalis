@@ -24,10 +24,10 @@ export function ScientificAnnouncementsSection({
     >
       <div className="sci-ann-section__head">
         <div>
-          <p className="home-eyebrow">إعلانات رسمية</p>
+          <p className="home-eyebrow">محتوى علمي</p>
           <h2 id="scientific-announcements-heading">إعلانات ودروس علمية</h2>
           <p className="sci-ann-section__lead">
-            دروس ومحاضرات ودورات مستخرجة من الإعلانات الرسمية — مع التفاصيل والمواعيد.
+            دروس ومحاضرات ودورات علمية مع التفاصيل والمواعيد.
           </p>
         </div>
         {showViewAll && (

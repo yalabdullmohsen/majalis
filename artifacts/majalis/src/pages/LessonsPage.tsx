@@ -1,36 +1,74 @@
-import { useEffect, useMemo, useState } from "react";
-import { GOVERNORATES } from "@/lib/theme";
-import { PageHeader, Loading, Chip } from "@/components/ui-common";
+import { useEffect, useMemo, useState, useCallback } from "react";
+import { useLocation } from "wouter";
+import { PageHeader, Loading } from "@/components/ui-common";
 import { useAuth } from "@/components/AuthProvider";
 import { UnifiedLessonCard } from "@/components/lessons/UnifiedLessonCard";
 import { LessonsContactCard } from "@/components/lessons/LessonsContactCard";
-import { ScientificAnnouncementsSection } from "@/components/scientific/ScientificAnnouncementsSection";
 import {
   DEFAULT_KUWAIT_FILTERS,
+  buildSearchSuggestions,
+  extractFilterOptions,
   filterKuwaitLessons,
   loadAllKuwaitLessonsSplit,
-  sortKuwaitLessons,
+  type KuwaitLessonFilters,
   type KuwaitLessonRecord,
 } from "@/lib/kuwait-lessons";
+import { regionsForGovernorate } from "@/lib/kuwait-regions";
 import { fromKuwaitLesson } from "@/lib/unified-lesson-card";
 import { registerForLesson, unregisterFromLesson, getMyRegistrations } from "@/lib/supabase";
 
-const CATEGORIES = ["الكل", "تفسير", "فقه", "عقيدة", "حديث", "سيرة", "تجويد", "أخرى"];
+type TabId = "all" | "courses";
+
+function useTabFromUrl(): [TabId, (tab: TabId) => void] {
+  const [, setLocation] = useLocation();
+  const [tab, setTabState] = useState<TabId>(() => readTabFromUrl());
+
+  useEffect(() => {
+    const sync = () => setTabState(readTabFromUrl());
+    sync();
+    window.addEventListener("popstate", sync);
+    return () => window.removeEventListener("popstate", sync);
+  }, []);
+
+  const setTab = useCallback(
+    (next: TabId) => {
+      setLocation(next === "courses" ? "/lessons?tab=courses" : "/lessons");
+      setTabState(next);
+    },
+    [setLocation],
+  );
+
+  return [tab, setTab];
+}
+
+function readTabFromUrl(): TabId {
+  if (typeof window === "undefined") return "all";
+  const params = new URLSearchParams(window.location.search);
+  return params.get("tab") === "courses" ? "courses" : "all";
+}
 
 export default function LessonsPage() {
-  const [lessons, setLessons] = useState<KuwaitLessonRecord[]>([]);
+  const [activeLessons, setActiveLessons] = useState<KuwaitLessonRecord[]>([]);
+  const [archivedLessons, setArchivedLessons] = useState<KuwaitLessonRecord[]>([]);
   const [loading, setLoading] = useState(true);
-  const [category, setCategory] = useState("الكل");
-  const [city, setCity] = useState("كل المحافظات");
-  const [search, setSearch] = useState("");
+  const [filters, setFilters] = useState<KuwaitLessonFilters>(DEFAULT_KUWAIT_FILTERS);
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
   const [myReg, setMyReg] = useState<string[]>([]);
+  const [tab, setTab] = useTabFromUrl();
   const { user, isLoggedIn } = useAuth() as any;
 
   useEffect(() => {
     setLoading(true);
     loadAllKuwaitLessonsSplit()
-      .then(({ active }) => setLessons(sortKuwaitLessons(active)))
-      .catch(() => setLessons([]))
+      .then(({ active, archived }) => {
+        setActiveLessons(active);
+        setArchivedLessons(archived);
+      })
+      .catch(() => {
+        setActiveLessons([]);
+        setArchivedLessons([]);
+      })
       .finally(() => setLoading(false));
   }, []);
 
@@ -40,14 +78,45 @@ export default function LessonsPage() {
     }
   }, [isLoggedIn, user]);
 
-  const filtered = useMemo(() => {
-    return filterKuwaitLessons(lessons, {
-      ...DEFAULT_KUWAIT_FILTERS,
-      search,
-      category,
-      governorate: city,
+  const tabLessons = useMemo(() => {
+    if (tab === "courses") {
+      return activeLessons.filter((l) => l.isCourse || l.activityType === "دورة");
+    }
+    return activeLessons.filter((l) => !l.isCourse);
+  }, [activeLessons, tab]);
+
+  const options = useMemo(() => extractFilterOptions(tabLessons), [tabLessons]);
+
+  const regionOptions = useMemo(() => {
+    if (filters.governorate === "كل المحافظات") return options.regions;
+    return ["كل المناطق", ...regionsForGovernorate(filters.governorate)];
+  }, [filters.governorate, options.regions]);
+
+  const filtered = useMemo(
+    () => filterKuwaitLessons(tabLessons, filters),
+    [tabLessons, filters],
+  );
+
+  const filteredArchived = useMemo(
+    () => filterKuwaitLessons(archivedLessons, filters),
+    [archivedLessons, filters],
+  );
+
+  useEffect(() => {
+    if (!filters.search.trim()) {
+      setSuggestions([]);
+      return;
+    }
+    setSuggestions(buildSearchSuggestions([...tabLessons, ...archivedLessons], filters.search));
+  }, [filters.search, tabLessons, archivedLessons]);
+
+  const setFilter = <K extends keyof KuwaitLessonFilters>(key: K, value: KuwaitLessonFilters[K]) => {
+    setFilters((prev) => {
+      const next = { ...prev, [key]: value };
+      if (key === "governorate") next.region = "كل المناطق";
+      return next;
     });
-  }, [lessons, search, category, city]);
+  };
 
   const toggleReg = async (lessonId: string) => {
     if (!isLoggedIn) return alert("يرجى تسجيل الدخول أولاً");
@@ -75,44 +144,144 @@ export default function LessonsPage() {
   return (
     <div className="page-shell">
       <PageHeader
-        eyebrow="دروس معتمدة"
-        title="الدروس والدورات"
-        subtitle="استعرض الدروس العلمية الشرعية المعتمدة مرتّبة حسب أقرب موعد."
+        eyebrow="المجلس العلمي"
+        title="الدروس"
+        subtitle="جميع الدروس والمحاضرات والدورات العلمية في مكان واحد — مرتّبة حسب أقرب موعد."
       />
 
+      <div className="kuwait-tabs" role="tablist" aria-label="تبويبات الدروس">
+        <button
+          type="button"
+          role="tab"
+          aria-selected={tab === "all"}
+          className={`kuwait-tab${tab === "all" ? " kuwait-tab--active" : ""}`}
+          onClick={() => setTab("all")}
+        >
+          جميع الدروس ({activeLessons.filter((l) => !l.isCourse).length})
+        </button>
+        <button
+          type="button"
+          role="tab"
+          aria-selected={tab === "courses"}
+          className={`kuwait-tab${tab === "courses" ? " kuwait-tab--active" : ""}`}
+          onClick={() => setTab("courses")}
+        >
+          الدورات العلمية ({activeLessons.filter((l) => l.isCourse || l.activityType === "دورة").length})
+        </button>
+      </div>
+
       <div className="page-stats-row">
-        <span>{stats.total} درس</span>
+        <span>{stats.total} {tab === "courses" ? "دورة" : "درس"}</span>
         <span>{stats.categories} تصنيف</span>
       </div>
 
-      <form
-        className="page-search-form"
-        onSubmit={(e) => {
-          e.preventDefault();
-        }}
-      >
+      <form className="page-search-form lessons-search-form" onSubmit={(e) => e.preventDefault()}>
         <input
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          placeholder="ابحث عن درس..."
+          value={filters.search}
+          onChange={(e) => setFilter("search", e.target.value)}
+          onFocus={() => setShowSuggestions(true)}
+          onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
+          placeholder="ابحث: عنوان، شيخ، مسجد، منطقة، تصنيف..."
+          aria-autocomplete="list"
         />
+        {showSuggestions && suggestions.length > 0 && (
+          <ul className="lessons-search-suggestions" role="listbox">
+            {suggestions.map((item) => (
+              <li key={item}>
+                <button type="button" onMouseDown={() => setFilter("search", item)}>
+                  {item}
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
       </form>
 
-      <div className="page-chip-row">
-        {CATEGORIES.map((c) => (
-          <Chip key={c} active={category === c} onClick={() => setCategory(c)}>{c}</Chip>
-        ))}
-      </div>
-      <div className="page-chip-row">
-        {["كل المحافظات", ...GOVERNORATES].map((g) => (
-          <Chip key={g} active={city === g} onClick={() => setCity(g)}>{g}</Chip>
-        ))}
+      <div className="kuwait-filters-grid">
+        <label>
+          المحافظة
+          <select value={filters.governorate} onChange={(e) => setFilter("governorate", e.target.value)}>
+            {options.governorates.map((v) => (
+              <option key={v} value={v}>{v}</option>
+            ))}
+          </select>
+        </label>
+        <label>
+          المنطقة
+          <select value={filters.region} onChange={(e) => setFilter("region", e.target.value)}>
+            {regionOptions.map((v) => (
+              <option key={v} value={v}>{v}</option>
+            ))}
+          </select>
+        </label>
+        <label>
+          الشيخ
+          <select value={filters.sheikh} onChange={(e) => setFilter("sheikh", e.target.value)}>
+            {options.sheikhs.map((v) => (
+              <option key={v} value={v}>{v === "كل المشايخ" ? v : `الشيخ: ${v}`}</option>
+            ))}
+          </select>
+        </label>
+        <label>
+          التصنيف
+          <select value={filters.category} onChange={(e) => setFilter("category", e.target.value)}>
+            {options.categories.map((v) => (
+              <option key={v} value={v}>{v}</option>
+            ))}
+          </select>
+        </label>
+        <label>
+          اليوم
+          <select value={filters.day} onChange={(e) => setFilter("day", e.target.value)}>
+            {options.days.map((v) => (
+              <option key={v} value={v}>{v}</option>
+            ))}
+          </select>
+        </label>
+        <label>
+          الوقت
+          <select value={filters.timeSlot} onChange={(e) => setFilter("timeSlot", e.target.value)}>
+            {options.timeSlots.map((v) => (
+              <option key={v} value={v}>{v}</option>
+            ))}
+          </select>
+        </label>
+        <label>
+          نوع النشاط
+          <select value={filters.activityType} onChange={(e) => setFilter("activityType", e.target.value)}>
+            {options.activityTypes.map((v) => (
+              <option key={v} value={v}>{v}</option>
+            ))}
+          </select>
+        </label>
+        <label>
+          نوع المحتوى
+          <select value={filters.contentKind} onChange={(e) => setFilter("contentKind", e.target.value)}>
+            {options.contentKinds.map((v) => (
+              <option key={v} value={v}>{v}</option>
+            ))}
+          </select>
+        </label>
+        <label>
+          بث مباشر
+          <select
+            value={filters.hasLiveStream === null ? "الكل" : filters.hasLiveStream ? "نعم" : "لا"}
+            onChange={(e) => {
+              const v = e.target.value;
+              setFilter("hasLiveStream", v === "الكل" ? null : v === "نعم");
+            }}
+          >
+            <option value="الكل">الكل</option>
+            <option value="نعم">يوجد بث</option>
+            <option value="لا">بدون بث</option>
+          </select>
+        </label>
       </div>
 
       {loading ? (
         <Loading />
       ) : filtered.length === 0 ? (
-        <p className="lessons-empty-state">لا توجد دروس متاحة حاليًا.</p>
+        <p className="lessons-empty-state">لا توجد {tab === "courses" ? "دورات" : "دروس"} مطابقة حاليًا.</p>
       ) : (
         <div className="page-card-grid lesson-unified-grid">
           {filtered.map((lesson) => (
@@ -127,9 +296,21 @@ export default function LessonsPage() {
         </div>
       )}
 
-      <LessonsContactCard />
+      {!loading && filteredArchived.length > 0 && (
+        <section className="lessons-past-section" aria-labelledby="past-lessons-heading">
+          <h2 id="past-lessons-heading" className="lessons-past-section__title">الدروس السابقة</h2>
+          <div className="page-card-grid lesson-unified-grid">
+            {filteredArchived.map((lesson) => (
+              <UnifiedLessonCard
+                key={`archived-${lesson.id}`}
+                lesson={fromKuwaitLesson(lesson, true)}
+              />
+            ))}
+          </div>
+        </section>
+      )}
 
-      <ScientificAnnouncementsSection showViewAll={false} className="lessons-sci-ann" />
+      <LessonsContactCard />
     </div>
   );
 }

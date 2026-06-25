@@ -1,4 +1,7 @@
 import { lessonAds, type LessonAd } from "@/lib/lesson-ads";
+import { resolveGovernorate, resolveRegion } from "@/lib/kuwait-regions";
+import { formatSheikhName } from "@/lib/sheikh-name";
+import { cleanTimeText } from "@/lib/lesson-time";
 
 export type KuwaitLesson = {
   id: string;
@@ -32,34 +35,23 @@ function categoryForAd(ad: LessonAd): string {
   return "أخرى";
 }
 
-function regionFromDistrict(district: string): string {
-  const part = district.split("–")[0]?.split("-")[0]?.trim();
-  return part || district.trim();
-}
-
-function governorateFromDistrict(district: string): string {
-  if (district.includes("القيروان") || district.includes("الفردوس")) return "العاصمة";
-  if (district.includes("الجهراء")) return "الجهراء";
-  if (district.includes("حولي")) return "حولي";
-  return "العاصمة";
-}
-
 function lessonsFromAds(): KuwaitLesson[] {
   const rows: KuwaitLesson[] = [];
 
   for (const ad of lessonAds) {
     ad.sessions.forEach((session, idx) => {
       const genericLabel = session.label === "المجلس الأسبوعي" || session.label === "البرنامج الأسبوعي";
+      const region = resolveRegion(session.district);
       rows.push({
         id: `kw-${ad.id}-${idx}`,
-        sheikhName: ad.teacher,
+        sheikhName: formatSheikhName(ad.teacher),
         sheikhImage: ad.teacherImage,
         title: genericLabel ? ad.title : `${ad.title} ${session.label}`,
         day: session.day,
-        time: session.time,
+        time: cleanTimeText(session.time),
         mosque: session.venue,
-        region: regionFromDistrict(session.district),
-        governorate: governorateFromDistrict(session.district),
+        region,
+        governorate: resolveGovernorate(session.district),
         category: categoryForAd(ad),
         status: "نشط",
         note: session.note || ad.shortDescription,

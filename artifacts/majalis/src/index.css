@@ -7380,6 +7380,137 @@ input, textarea, select { font-family: inherit; }
   display: none;
 }
 
+.lesson-unified-card__media {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.lesson-unified-card__poster {
+  width: 100%;
+  max-width: 8rem;
+  height: auto;
+  border-radius: 0.5rem;
+  object-fit: cover;
+}
+
+.lesson-unified-card__flags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.lesson-unified-card__flag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(26, 60, 46, 0.08);
+  color: var(--majalis-emerald-deep);
+}
+
+.lesson-unified-card__qr {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.lesson-unified-card__qr-img {
+  width: 5rem;
+  height: 5rem;
+  object-fit: contain;
+  border-radius: 0.35rem;
+  border: 1px solid var(--majalis-line);
+  background: #fff;
+}
+
+.lessons-search-form {
+  position: relative;
+}
+
+.lessons-search-suggestions {
+  position: absolute;
+  inset-inline: 0;
+  top: calc(100% + 0.25rem);
+  z-index: 20;
+  margin: 0;
+  padding: 0.35rem;
+  list-style: none;
+  border: 1px solid var(--majalis-line);
+  border-radius: 0.65rem;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(26, 60, 46, 0.08);
+}
+
+.lessons-search-suggestions li button {
+  width: 100%;
+  text-align: right;
+  border: 0;
+  background: transparent;
+  padding: 0.55rem 0.65rem;
+  border-radius: 0.45rem;
+  font-family: inherit;
+  font-size: 0.88rem;
+  cursor: pointer;
+}
+
+.lessons-search-suggestions li button:hover {
+  background: rgba(26, 60, 46, 0.06);
+}
+
+.lessons-past-section {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--majalis-line);
+}
+
+.lessons-past-section__title {
+  margin: 0 0 1rem;
+  font-size: 1.15rem;
+  color: var(--majalis-emerald-deep);
+}
+
+.lessons-similar-section {
+  margin-top: 2rem;
+}
+
+.lessons-similar-section h2 {
+  margin: 0 0 1rem;
+  font-size: 1.15rem;
+  color: var(--majalis-emerald-deep);
+}
+
+.lesson-detail-summary {
+  margin: 0.5rem 0 0;
+  color: var(--majalis-ink-soft);
+  line-height: 1.65;
+}
+
+.lesson-detail-map iframe {
+  width: 100%;
+  min-height: 280px;
+  border: 0;
+  border-radius: 0.75rem;
+}
+
+.lesson-detail-linked {
+  margin: 0;
+  padding-inline-start: 1.25rem;
+  line-height: 1.8;
+}
+
+.lesson-detail-actions--row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.lesson-detail-qr img {
+  width: 7rem;
+  height: 7rem;
+  object-fit: contain;
+  margin-top: 1rem;
+}
+
 .lessons-empty-state {
   margin: 2rem 0;
   padding: 1.5rem;

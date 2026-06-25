@@ -1,3 +1,5 @@
+import { formatSheikhName } from "@/lib/sheikh-name";
+
 export type AnnouncementTemplate =
   | "weekly-lesson"
   | "course"
@@ -341,7 +343,7 @@ export function downloadCalendar(lesson: CurrentLesson) {
 export function buildShareText(lesson: CurrentLesson) {
   const lines = [
     lesson.announcementType,
-    `فضيلة الشيخ ${lesson.sheikhName}`,
+    formatSheikhName(lesson.sheikhName),
     lesson.title,
     `${lesson.day} — ${lesson.time}`,
     `${lesson.mosque} — ${lesson.region}`,

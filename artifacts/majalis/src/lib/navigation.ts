@@ -127,8 +127,7 @@ export const HOME_FEATURE_CARDS = [
 ] as const;
 
 export const HOME_MORE_SECTIONS = [
-  { href: "/announcements", title: "إعلانات الدروس", description: "جداول ومواعيد" },
-  { href: "/kuwait-lessons", title: "دروس الكويت", description: "مرجع المساجد" },
+  { href: "/lessons", title: "الدروس", description: "دروس ودورات ومحاضرات" },
   { href: "/assistant", title: "المساعد العلمي", description: "إرشاد داخل المنصة" },
   { href: "/condolences", title: "قوالب العزاء", description: "تعزية وإعلان وفاة" },
   { href: "/library", title: "المكتبة", description: "كتب ومتون" },
