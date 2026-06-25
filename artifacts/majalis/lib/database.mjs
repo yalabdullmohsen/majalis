@@ -60,14 +60,26 @@ export function parsePostgresUrl(urlStr) {
   }
 }
 
+/** True when password looks like a template placeholder. */
+function isPlaceholderPassword(password) {
+  if (!password) return true;
+  return /\[YOUR-PASSWORD\]|\[password\]|\[pass\]|your-db-password|replace-with|changeme/i.test(password);
+}
+
+function resolvePassword(parsed) {
+  if (parsed?.password && !isPlaceholderPassword(parsed.password)) return parsed.password;
+  return pick("SUPABASE_DB_PASSWORD", "POSTGRES_PASSWORD", "PGPASSWORD", "DB_PASSWORD");
+}
+
 /** True when URL is Supabase Transaction Pooler (port 6543, pooler host, postgres.{ref} user). */
 export function isTransactionPoolerUrl(urlStr) {
   const parsed = parsePostgresUrl(urlStr);
   if (!parsed) return false;
+  const ref = parsed.ref || getProjectRef();
   return (
     parsed.isPoolerHost &&
     parsed.port === TRANSACTION_POOLER_PORT &&
-    /^postgres\.[^.]+$/.test(parsed.user)
+    parsed.user === `postgres.${ref}`
   );
 }
 
@@ -78,35 +90,50 @@ export function buildTransactionPoolerUrl(ref, password, options = {}) {
   return `postgresql://postgres.${ref}:${enc}@${host}:${TRANSACTION_POOLER_PORT}/postgres`;
 }
 
-/** Normalize any Supabase DATABASE_URL to Transaction Pooler format. */
+/** Normalize any Supabase DATABASE_URL to canonical Transaction Pooler format. */
 export function normalizeToTransactionPooler(urlStr) {
   if (!urlStr) {
     return { url: "", source: "none", normalized: false, reason: "empty" };
   }
 
   const parsed = parsePostgresUrl(urlStr);
-  if (!parsed?.ref || !parsed.password) {
-    return { url: urlStr, source: "direct_env", normalized: false, reason: "unparsed" };
+  const ref = parsed?.ref || getProjectRef();
+  const password = resolvePassword(parsed);
+
+  if (!ref || !password) {
+    return { url: urlStr, source: "direct_env", normalized: false, reason: "missing_ref_or_password" };
   }
 
-  if (isTransactionPoolerUrl(urlStr)) {
-    const expectedHost = getPoolerHost();
-    if (parsed.host === expectedHost) {
-      return { url: urlStr, source: "pooler_env", normalized: false, reason: "already_correct" };
-    }
-    const url = buildTransactionPoolerUrl(parsed.ref, parsed.password, { host: expectedHost });
-    return { url, source: "pooler_env", normalized: true, reason: "host_corrected", fromHost: parsed.host };
+  if (isPlaceholderPassword(password)) {
+    return { url: urlStr, source: "direct_env", normalized: false, reason: "placeholder_password" };
   }
 
-  const url = buildTransactionPoolerUrl(parsed.ref, parsed.password);
+  const url = buildTransactionPoolerUrl(ref, password);
+  const alreadyCanonical = isTransactionPoolerUrl(urlStr) && parsed.host === getPoolerHost();
+
+  if (alreadyCanonical) {
+    return { url, source: "pooler_env", normalized: false, reason: "already_correct" };
+  }
+
+  const reason = parsed.isDirectSupabaseHost
+    ? "direct_ipv6_rewritten"
+    : parsed.isPoolerHost
+      ? "pooler_user_canonicalized"
+      : "non_pooler_rewritten";
+
   return {
     url,
-    source: "pooler_normalized",
-    normalized: true,
-    reason: parsed.isDirectSupabaseHost ? "direct_ipv6_rewritten" : "non_pooler_rewritten",
+    source: alreadyCanonical ? "pooler_env" : "pooler_normalized",
+    normalized: !alreadyCanonical,
+    reason,
     fromHost: parsed.host,
     fromPort: parsed.port,
+    fromUser: parsed.user,
   };
+}
+
+export function redactDatabaseUrl(urlStr) {
+  return String(urlStr || "").replace(/:([^:@/]+)@/, ":***@");
 }
 
 /** Describe DATABASE_URL configuration for health checks (no secrets). */
@@ -119,10 +146,11 @@ export function describeDatabaseUrlConfig() {
     "POSTGRES_URL_NON_POOLING",
   );
   const parsed = parsePostgresUrl(raw);
-  const expected = parsed?.ref && parsed?.password
-    ? buildTransactionPoolerUrl(parsed.ref, parsed.password)
-    : "";
+  const password = resolvePassword(parsed);
   const resolved = normalizeToTransactionPooler(raw);
+  const expected = parsed?.ref && password && !isPlaceholderPassword(password)
+    ? buildTransactionPoolerUrl(parsed.ref, password)
+    : "";
 
   return {
     configured: Boolean(raw),
@@ -132,8 +160,9 @@ export function describeDatabaseUrlConfig() {
     rawUser: parsed?.user ? parsed.user.replace(/^(postgres\.)(.+)$/, "$1***") : null,
     expectedPoolerHost: getPoolerHost(),
     expectedPoolerPort: TRANSACTION_POOLER_PORT,
-    matchesExpectedPooler: Boolean(raw && expected && raw.replace(/:[^:@/]+@/, ":***@") === expected.replace(/:[^:@/]+@/, ":***@")),
-    needsVercelUpdate: Boolean(raw && !isTransactionPoolerUrl(raw)),
+    matchesExpectedPooler: Boolean(raw && expected && redactDatabaseUrl(raw) === redactDatabaseUrl(expected)),
+    needsVercelUpdate: Boolean(raw && (!isTransactionPoolerUrl(raw) || isPlaceholderPassword(parsed?.password))),
+    hasPlaceholderPassword: isPlaceholderPassword(parsed?.password),
     normalized: resolved.normalized,
     normalizeReason: resolved.reason || null,
     connectionSource: resolved.source,
@@ -170,6 +199,7 @@ export function resolveDatabaseUrl() {
     const normalized = normalizeToTransactionPooler(raw);
     return {
       url: normalized.url,
+      urlRedacted: redactDatabaseUrl(normalized.url),
       source: normalized.source,
       rawConfigured: Boolean(raw),
       normalized: normalized.normalized,
@@ -182,6 +212,7 @@ export function resolveDatabaseUrl() {
     const normalized = normalizeToTransactionPooler(databaseUrl);
     return {
       url: normalized.url,
+      urlRedacted: redactDatabaseUrl(normalized.url),
       source: normalized.source,
       rawConfigured: true,
       normalized: normalized.normalized,
@@ -189,7 +220,7 @@ export function resolveDatabaseUrl() {
     };
   }
 
-  return { url: "", source: "none", rawConfigured: false, normalized: false };
+  return { url: "", urlRedacted: "", source: "none", rawConfigured: false, normalized: false };
 }
 
 let _pool = null;
@@ -217,8 +248,15 @@ export async function getPgClient() {
   const { url, source } = resolveDatabaseUrl();
   if (!url) {
     throw new Error(
-      "DATABASE_URL not configured — set Transaction Pooler URL on Vercel: " +
-      "postgresql://postgres.[ref]:[password]@aws-1-ap-northeast-1.pooler.supabase.com:6543/postgres",
+      "DATABASE_URL not configured — set Supabase Transaction Pooler URL on Vercel " +
+      "(postgresql://postgres.[ref]:[password]@aws-1-ap-northeast-1.pooler.supabase.com:6543/postgres)",
+    );
+  }
+
+  if (isPlaceholderPassword(parsePostgresUrl(url)?.password)) {
+    throw new Error(
+      "DATABASE_URL contains a placeholder password — replace YOUR_ACTUAL_DB_PASSWORD in Vercel env " +
+      "with the database password from Supabase Dashboard → Project Settings → Database",
     );
   }
 

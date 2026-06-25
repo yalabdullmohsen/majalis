@@ -14,7 +14,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const maxItems = Number(req.query?.maxItems || req.body?.maxItems || 40);
+    const maxItems = Number(req.query?.maxItems || req.body?.maxItems || 15);
     const skipPublish = req.query?.skipPublish === "1" || req.body?.skipPublish === true;
     const result = await runKnowledgeSync({ triggerType: "cron", maxItems, skipPublish });
     sendJson(res, 200, result);

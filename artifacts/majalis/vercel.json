@@ -9,6 +9,14 @@
       "maxDuration": 60,
       "includeFiles": "supabase/**"
     },
+    "api/cron/knowledge-sync.js": {
+      "maxDuration": 60,
+      "includeFiles": "supabase/**"
+    },
+    "api/cron/sync-data.js": {
+      "maxDuration": 60,
+      "includeFiles": "supabase/**"
+    },
     "api/cron/bootstrap-database.js": {
       "maxDuration": 60,
       "includeFiles": "supabase/**"

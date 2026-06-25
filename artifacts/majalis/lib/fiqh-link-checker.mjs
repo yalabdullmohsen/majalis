@@ -1,4 +1,4 @@
-import { getSupabaseAdmin } from "./supabase-admin.mjs";
+import { getSupabaseAdmin, isMissingTableError } from "./supabase-admin.mjs";
 
 const TIMEOUT_MS = 8000;
 
@@ -45,7 +45,12 @@ export async function runFiqhLinkCheck(opts = {}) {
     .order("link_checked_at", { ascending: true, nullsFirst: true })
     .limit(limit);
 
-  if (error) throw error;
+  if (error) {
+    if (isMissingTableError(error)) {
+      return { ok: true, skipped: true, reason: "fiqh_council_items table not found", checked: 0, broken: 0, redirected: 0 };
+    }
+    throw error;
+  }
 
   let checked = 0;
   let broken = 0;

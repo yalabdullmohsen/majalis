@@ -178,14 +178,24 @@ export async function syncIslamicOccasions(admin = getSupabaseAdmin()) {
 /** Daily sync — prayer times, occasions, lessons maintenance, daily content marker. */
 export async function runDailyDataSync() {
   const admin = getSupabaseAdmin();
-  const [prayer, occasions, platform, fiqh, knowledge, autoContent] = await Promise.all([
+  const [prayerR, occasionsR, platformR, fiqhR, knowledgeR, autoContentR] = await Promise.allSettled([
     syncPrayerTimes(admin),
     syncIslamicOccasions(admin),
     runDailyPlatformSync(),
     runFiqhCouncilSync({ triggerType: "cron" }),
-    runKnowledgeSync({ triggerType: "cron", maxItems: 25 }),
-    runAutoContentSync(),
+    runKnowledgeSync({ triggerType: "cron", maxItems: 10 }),
+    runAutoContentSync({ skipSchemaCheck: true }),
   ]);
+
+  const unwrap = (r, fallback = { ok: false, error: "failed" }) =>
+    r.status === "fulfilled" ? r.value : { ok: false, error: r.reason?.message || "failed" };
+
+  const prayer = unwrap(prayerR);
+  const occasions = unwrap(occasionsR);
+  const platform = unwrap(platformR);
+  const fiqh = unwrap(fiqhR);
+  const knowledge = unwrap(knowledgeR);
+  const autoContent = unwrap(autoContentR);
 
   return {
     ok: prayer.ok || occasions.ok || platform.ok || fiqh.ok || knowledge.ok || autoContent.ok || (prayer.skipped && occasions.skipped),
