@@ -55,7 +55,13 @@ export default async function handler(req, res) {
       const conn = await testDatabaseConnection();
       sendJson(res, conn.ok ? 200 : 500, {
         ...conn,
-        resolved: resolveDatabaseUrl(),
+        resolved: {
+          urlRedacted: resolveDatabaseUrl().urlRedacted,
+          source: resolveDatabaseUrl().source,
+          rawConfigured: resolveDatabaseUrl().rawConfigured,
+          normalized: resolveDatabaseUrl().normalized,
+          normalizeReason: resolveDatabaseUrl().normalizeReason,
+        },
       });
       return;
     }

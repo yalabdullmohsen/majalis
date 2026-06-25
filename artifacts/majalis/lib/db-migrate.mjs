@@ -203,7 +203,7 @@ export async function applyMigrations(options = {}) {
       schema: verify,
       via: source,
       migrationsDir: available.dir,
-      databaseUrl: { source: dbResolved.source, configured: Boolean(dbResolved.url) },
+      databaseUrl: { source: dbResolved.source, configured: Boolean(dbResolved.rawConfigured), urlRedacted: dbResolved.urlRedacted },
     };
   } finally {
     await client.end().catch(() => {});
