@@ -245,6 +245,9 @@ importers:
       html2canvas:
         specifier: ^1.4.1
         version: 1.4.1
+      pg:
+        specifier: ^8.16.0
+        version: 8.20.0
     devDependencies:
       '@eslint/js':
         specifier: ^10.0.1

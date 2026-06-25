@@ -29,6 +29,57 @@ async function logPipelineEvent(supabase, payload) {
   }
 }
 
+async function logVerification(supabase, payload) {
+  if (!supabase) return;
+  try {
+    await supabase.from("verification_logs").insert(payload);
+  } catch {
+    /* table may not exist pre-migration */
+  }
+}
+
+async function logPublishing(supabase, payload) {
+  if (!supabase) return;
+  try {
+    await supabase.from("publishing_history").insert(payload);
+  } catch {
+    /* table may not exist pre-migration */
+  }
+}
+
+async function cacheDuplicate(supabase, externalKey, title, sourceName) {
+  if (!supabase) return;
+  try {
+    await supabase.from("duplicate_cache").upsert({
+      content_hash: externalKey,
+      external_key: externalKey,
+      source_name: sourceName,
+      title,
+      detected_at: new Date().toISOString(),
+    }, { onConflict: "content_hash" });
+  } catch {
+    /* ignore */
+  }
+}
+
+async function updateSourceHealth(supabase, source, health) {
+  if (!supabase || !source?.id) return;
+  try {
+    await supabase.from("source_health").upsert({
+      source_id: source.id,
+      source_name: source.name,
+      source_url: source.url,
+      health_status: health.ok ? "healthy" : "down",
+      items_found: health.items || 0,
+      last_checked: new Date().toISOString(),
+      last_success: health.ok ? new Date().toISOString() : null,
+      error_message: health.error || null,
+    }, { onConflict: "source_id" });
+  } catch {
+    /* ignore */
+  }
+}
+
 async function fetchWithRetry(url, logger, label) {
   let lastError;
   for (let attempt = 1; attempt <= FETCH_RETRIES; attempt++) {
@@ -157,6 +208,7 @@ async function processRssItem(supabase, source, rssItem, runId, logger) {
 
   if (exists) {
     logger.log("dedup", `Skipped — ${SKIP_REASONS.DUPLICATE}`, { detail: { title: rssItem.title } });
+    await cacheDuplicate(supabase, externalKey, rssItem.title, source.name);
     return { action: "skipped", reason: SKIP_REASONS.DUPLICATE, externalKey };
   }
 
@@ -178,6 +230,14 @@ async function processRssItem(supabase, source, rssItem, runId, logger) {
     return { action: "failed", reason: SKIP_REASONS.SOURCE_VERIFY_FAILED, externalKey };
   }
   logger.log("validate", "Source validated successfully");
+  await logVerification(supabase, {
+    entity_type: "auto_imported_content",
+    external_key: externalKey,
+    verification_status: "verified",
+    trust_score: source.trust_level || 80,
+    checks: verification,
+    errors: [],
+  });
 
   logger.log("classify", "Detecting content category...");
   const contentType = detectContentType(rssItem.title, rssItem.description);
@@ -256,6 +316,16 @@ async function processRssItem(supabase, source, rssItem, runId, logger) {
   logger.log("save", `Saved Successfully (id: ${inserted.id})`);
   if (autoPublish) {
     logger.log("publish", `Published — visible at /updates/auto/${inserted.slug}`);
+    await logPublishing(supabase, {
+      content_id: inserted.id,
+      content_type: contentType,
+      slug: inserted.slug,
+      action: "auto_publish",
+      status: "published",
+      quality_score: record.quality_score,
+      trust_level: source.trust_level,
+      metadata: { source_name: source.name, external_key: externalKey },
+    });
   }
 
   await logPipelineEvent(supabase, {
@@ -395,6 +465,7 @@ export async function runAutoContentSync({ triggerType = "cron" } = {}) {
           error_details: { url: source.url, xmlLength: xml.length },
         });
         sourceResults.push({ name: source.name, ok: false, reason, items: 0 });
+        await updateSourceHealth(supabase, source, { ok: false, items: 0, error: reason });
         continue;
       }
 
@@ -456,6 +527,7 @@ export async function runAutoContentSync({ triggerType = "cron" } = {}) {
 
       sourcesOk++;
       sourceResults.push({ name: source.name, ok: true, imported, published, skipped, failed, items: rssItems.length });
+      await updateSourceHealth(supabase, source, { ok: true, items: rssItems.length });
     } catch (error) {
       sourcesFailed++;
       failed++;
@@ -473,6 +545,7 @@ export async function runAutoContentSync({ triggerType = "cron" } = {}) {
         duration_ms: Date.now() - sourceStarted,
       });
       sourceResults.push({ name: source.name, ok: false, reason, items: 0 });
+      await updateSourceHealth(supabase, source, { ok: false, items: 0, error: reason });
     }
 
     totalImported += imported;

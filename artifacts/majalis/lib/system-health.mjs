@@ -16,7 +16,7 @@ const CRON_ROUTES = [
   { path: "/api/cron/system-health", schedule: "45 */6 * * *", label: "System Health Monitor" },
   { path: "/api/cron/sync-fiqh-council", schedule: "0 6 * * *", label: "Fiqh Council Sync" },
   { path: "/api/cron/check-fiqh-links", schedule: "0 7 * * *", label: "Fiqh Link Check" },
-  { path: "/api/cron/sync-data", schedule: "5 21 * * *", label: "Platform Data Sync" },
+  { path: "/api/cron/apply-migrations", schedule: "0 5 * * 0", label: "Schema Migrations (weekly verify)" },
 ];
 
 export async function getSystemHealth() {
@@ -36,14 +36,14 @@ export async function getSystemHealth() {
   if (admin) {
     try {
       const { data } = await admin
-        .from("ake_queue")
+        .from("ake_job_queue")
         .select("status")
-        .in("status", ["pending", "processing", "failed"]);
+        .in("status", ["pending", "running", "failed"]);
       const rows = data || [];
       queue = {
         status: rows.length > 0 ? "active" : "idle",
         pending: rows.filter((r) => r.status === "pending").length,
-        processing: rows.filter((r) => r.status === "processing").length,
+        processing: rows.filter((r) => r.status === "running").length,
         failed: rows.filter((r) => r.status === "failed").length,
       };
     } catch {

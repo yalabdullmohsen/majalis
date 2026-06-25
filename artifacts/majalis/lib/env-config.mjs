@@ -2,12 +2,35 @@
  * Central environment configuration — single source of truth for all services.
  */
 
+import { timingSafeEqual } from "node:crypto";
+
 function pick(...keys) {
   for (const k of keys) {
     const v = String(process.env[k] || "").trim();
     if (v) return v;
   }
   return "";
+}
+
+function buildDatabaseUrlFromParts() {
+  const password = pick("SUPABASE_DB_PASSWORD", "POSTGRES_PASSWORD", "DB_PASSWORD");
+  const supabaseUrl = pick("SUPABASE_URL", "VITE_SUPABASE_URL");
+  if (!password || !supabaseUrl) return "";
+  try {
+    const ref = new URL(supabaseUrl).hostname.split(".")[0];
+    const region = pick("SUPABASE_REGION") || "us-east-1";
+    return `postgresql://postgres.${ref}:${encodeURIComponent(password)}@aws-0-${region}.pooler.supabase.com:6543/postgres`;
+  } catch {
+    return "";
+  }
+}
+
+function safeEqual(a, b) {
+  if (!a || !b) return false;
+  const bufA = Buffer.from(a);
+  const bufB = Buffer.from(b);
+  if (bufA.length !== bufB.length) return false;
+  return timingSafeEqual(bufA, bufB);
 }
 
 export function getEnvConfig() {
@@ -18,6 +41,13 @@ export function getEnvConfig() {
   const adminSecret = pick("ADMIN_API_SECRET", "CRON_SECRET", "VITE_CRON_SECRET");
   const openaiKey = pick("OPENAI_API_KEY");
   const anthropicKey = pick("ANTHROPIC_API_KEY");
+  const databaseUrl = pick(
+    "DATABASE_URL",
+    "SUPABASE_DB_URL",
+    "POSTGRES_URL",
+    "POSTGRES_PRISMA_URL",
+    "POSTGRES_URL_NON_POOLING",
+  ) || buildDatabaseUrlFromParts();
 
   return {
     supabaseUrl,
@@ -27,7 +57,9 @@ export function getEnvConfig() {
     adminSecret,
     openaiKey,
     anthropicKey,
+    databaseUrl,
     nodeEnv: process.env.NODE_ENV || "development",
+    vercelEnv: process.env.VERCEL_ENV || "",
   };
 }
 
@@ -40,6 +72,7 @@ export function getEnvStatus() {
     CRON_SECRET: Boolean(env.cronSecret),
     OPENAI_API_KEY: Boolean(env.openaiKey),
     ANTHROPIC_API_KEY: Boolean(env.anthropicKey),
+    DATABASE_URL: Boolean(env.databaseUrl),
   };
 }
 
@@ -52,18 +85,52 @@ export function validateCronEnv() {
   return { ok: missing.length === 0, missing, env: getEnvStatus() };
 }
 
+/**
+ * Extract cron secret from request headers.
+ * Supports: Authorization Bearer, x-cron-secret, x-cron-auth
+ */
+export function extractCronSecretFromRequest(req) {
+  const authHeader = String(req.headers?.authorization || req.headers?.Authorization || "").trim();
+  if (authHeader.toLowerCase().startsWith("bearer ")) {
+    return authHeader.slice(7).trim();
+  }
+  return String(
+    req.headers?.["x-cron-secret"] ||
+    req.headers?.["x-cron-auth"] ||
+    "",
+  ).trim();
+}
+
 export function validateCronAuth(req) {
-  if (req.headers["x-vercel-cron"] === "1") return true;
+  // Vercel Cron — always trusted when header present
+  if (req.headers?.["x-vercel-cron"] === "1") return true;
+
   const env = getEnvConfig();
-  if (!env.cronSecret) return env.nodeEnv !== "production";
-  const auth = String(req.headers.authorization || "").replace("Bearer ", "").trim();
-  return auth === env.cronSecret;
+  const configured = env.cronSecret;
+
+  // Dev/local: allow unauthenticated when no secret configured
+  if (!configured) {
+    return env.nodeEnv !== "production";
+  }
+
+  const provided = extractCronSecretFromRequest(req);
+  if (!provided) return false;
+
+  return safeEqual(provided, configured);
 }
 
 export function validateAdminAuth(req) {
-  if (req.headers["x-vercel-cron"] === "1") return true;
+  if (req.headers?.["x-vercel-cron"] === "1") return true;
+
   const env = getEnvConfig();
-  if (!env.adminSecret) return env.nodeEnv !== "production";
-  const auth = String(req.headers.authorization || "").replace("Bearer ", "").trim();
-  return auth === env.adminSecret;
+  const configured = env.adminSecret;
+
+  if (!configured) {
+    return env.nodeEnv !== "production";
+  }
+
+  const provided = extractCronSecretFromRequest(req);
+  if (!provided) return false;
+
+  return safeEqual(provided, configured);
 }
