@@ -34,14 +34,25 @@ export default function HomePage() {
       )}
 
       <section className="home-hero home-hero--v3">
-        <div className="home-hero-pattern" />
+        <div className="home-hero-pattern" aria-hidden="true" />
         <div className="home-container home-hero-grid home-hero-grid--v3">
-          <div className="home-hero-copy">
-            <div className="home-hero-brand">
-              <img src="/logo.png" alt="المجلس العلمي" className="home-hero-logo" />
-              <p className="home-kicker">المنصة العلمية الشرعية</p>
+          <div className="home-hero-copy home-hero-copy--v3">
+            <div className="home-hero-logo-card">
+              <img
+                src="/logo.png"
+                alt="المجلس العلمي"
+                className="home-hero-logo"
+                width={96}
+                height={96}
+                loading="eager"
+                decoding="async"
+              />
             </div>
-            <h1 className="home-hero-title">المجلس العلمي</h1>
+            <p className="home-kicker home-kicker--v3">المنصة العلمية الشرعية</p>
+            <h1 className="home-hero-title home-hero-title--v3">المجلس العلمي</h1>
+            <p className="home-hero-lead home-hero-lead--v3">
+              منصة علمية شرعية تجمع الدروس والفتاوى والقرارات والأذكار والمحتوى الموثّق في مكان واحد.
+            </p>
             <form onSubmit={submitSearch} className="home-search home-search--v3" aria-label="البحث في المنصة">
               <input
                 value={term}
@@ -50,7 +61,9 @@ export default function HomePage() {
               />
               <button type="submit">بحث</button>
             </form>
-            <Link href="/assistant" className="home-hero-assistant-link">المساعد العلمي</Link>
+            <Link href="/assistant" className="home-hero-assistant-link home-hero-assistant-link--v3">
+              المساعد العلمي
+            </Link>
           </div>
         </div>
       </section>

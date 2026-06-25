@@ -84,8 +84,12 @@ export default function NavBar() {
   };
 
   const adminLoginLink = (
-    <Link href="/login?next=/admin" className="navbar-login">
-      دخول المسؤول
+    <Link
+      href="/login?next=/admin"
+      className={isMobile ? "navbar-login navbar-login--mobile" : "navbar-login"}
+      aria-label="دخول المسؤول"
+    >
+      {isMobile ? "دخول" : "دخول المسؤول"}
     </Link>
   );
 
@@ -96,14 +100,22 @@ export default function NavBar() {
           <div className="navbar-v3__start">
             <button
               type="button"
-              className="navbar-menu-btn"
+              className="navbar-menu-btn navbar-menu-btn--drawer"
               onClick={() => setDrawer(true)}
               aria-label="فتح القائمة الجانبية"
             >
               القائمة
             </button>
             <Link href="/" className="navbar-brand">
-              <img src="/logo.png" alt="المجلس العلمي" className="navbar-logo" width={40} height={40} />
+              <img
+                src="/logo.png"
+                alt=""
+                className="navbar-logo"
+                width={40}
+                height={40}
+                loading="eager"
+                decoding="async"
+              />
               <span className="site-brand-name">المجلس العلمي</span>
             </Link>
           </div>
@@ -138,11 +150,18 @@ export default function NavBar() {
             {isMobile && (
               <>
                 {isAdmin ? (
-                  <Link href="/admin" className="navbar-login navbar-login--compact">لوحة التحكم</Link>
+                  <Link href="/admin" className="navbar-login navbar-login--mobile" aria-label="لوحة التحكم">
+                    لوحة
+                  </Link>
                 ) : (
                   adminLoginLink
                 )}
-                <button type="button" className="navbar-menu-btn" onClick={() => setOpen((o) => !o)}>
+                <button
+                  type="button"
+                  className="navbar-menu-btn navbar-menu-btn--more"
+                  onClick={() => setOpen((o) => !o)}
+                  aria-expanded={open}
+                >
                   {open ? "إغلاق" : "المزيد"}
                 </button>
               </>

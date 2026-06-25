@@ -4,7 +4,7 @@ html {
   font-size: 16px;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  overflow-x: clip;
+  overflow-x: hidden;
 }
 
 :root {
@@ -40,6 +40,17 @@ html[data-font="naskh"] {
   --font-body: "Noto Naskh Arabic", "Cairo", "Tajawal", serif;
 }
 
+:root {
+  --mobile-header-h: clamp(4rem, 11vw, 4.5rem);
+  --mobile-touch-min: 48px;
+  --mobile-radius: 0.75rem;
+  --mobile-gap: clamp(0.65rem, 2.8vw, 1rem);
+  --mobile-padding-x: clamp(0.65rem, 3.5vw, 1rem);
+  --card-radius: 1rem;
+  --card-padding: clamp(0.875rem, 3vw, 1.125rem);
+  --card-shadow: 0 8px 28px rgba(36, 31, 24, 0.07);
+}
+
 body {
   font-family: var(--font-body);
   font-weight: 600;
@@ -51,8 +62,8 @@ body {
   -webkit-font-smoothing: antialiased;
   word-break: break-word;
   overflow-wrap: anywhere;
-  overflow-x: clip;
-  max-width: 100vw;
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 h1,
@@ -134,7 +145,7 @@ input, textarea, select { font-family: inherit; }
     radial-gradient(circle at top right, rgba(176, 141, 46, 0.14), transparent 32rem),
     linear-gradient(180deg, #fbf7ed 0%, var(--majalis-parchment) 42%, #f6eedf 100%);
   min-height: 100vh;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 .home-container {
@@ -7760,21 +7771,59 @@ input, textarea, select { font-family: inherit; }
 .home-sheikh-card p { margin: 0; font-size: 0.82rem; color: var(--majalis-ink-soft); }
 
 .navbar-v3__inner {
-  max-width: 72rem; margin: 0 auto; padding: 0.65rem 1rem;
-  display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 0.65rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
 }
-.navbar-v3__start, .navbar-v3__end { display: flex; align-items: center; gap: 0.5rem; }
+
+.navbar-v3__start,
+.navbar-v3__end {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .navbar-v3__tabs { display: flex; gap: 0.2rem; flex-wrap: wrap; justify-content: center; flex: 1; }
-.navbar-brand { display: flex; align-items: center; gap: 0.55rem; text-decoration: none; color: var(--majalis-emerald-deep); min-width: 0; }
-.navbar-menu-btn, .navbar-logout {
-  border: 1px solid var(--majalis-line); background: #fff; border-radius: 0.45rem;
-  padding: 0.4rem 0.75rem; font-family: inherit; font-weight: 700; font-size: 0.82rem; cursor: pointer;
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  text-decoration: none;
+  color: var(--majalis-emerald-deep);
+  min-width: 0;
 }
+
+.navbar-menu-btn,
+.navbar-logout {
+  border: 1px solid var(--majalis-line);
+  background: #fff;
+  border-radius: 0.45rem;
+  padding: 0.4rem 0.75rem;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
 .navbar-login {
-  font-size: 0.82rem; font-weight: 700; padding: 0.4rem 0.85rem; border-radius: 0.45rem;
-  background: var(--majalis-emerald); color: var(--majalis-parchment); text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 0.4rem 0.85rem;
+  border-radius: 0.45rem;
+  background: var(--majalis-emerald);
+  color: var(--majalis-parchment);
+  text-decoration: none;
   white-space: nowrap;
 }
+
 .navbar-login--compact {
   font-size: 0.75rem;
   padding: 0.35rem 0.65rem;
@@ -8064,7 +8113,8 @@ input, textarea, select { font-family: inherit; }
 .app-shell {
   --assistant-fab-size: 3.35rem;
   --assistant-fab-gap: calc(1rem + env(safe-area-inset-bottom, 0px));
-  overflow-x: clip;
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 .app-main {
@@ -9914,5 +9964,442 @@ body.assistant-panel-open {
   .fiqh-research-msg--user,
   .fiqh-research-msg--assistant {
     margin-inline: 0;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   Mobile-First Responsive System — المجلس العلمي
+   Breakpoints: 360 · 390 · 430 · 640 · 768 · 1024 · 1280 · 1536
+   Desktop (≥880px) unchanged unless noted
+   ═══════════════════════════════════════════════════════════════════ */
+
+.app-shell {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+.page-shell,
+.home-container,
+.content-hub-page {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+img,
+video,
+svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ── Hero v3: logo card + mobile stack ── */
+.home-hero-copy--v3 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--mobile-gap);
+  width: 100%;
+}
+
+.home-hero-logo-card {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(0.5rem, 2.5vw, 0.75rem);
+  background: rgba(255, 255, 255, 0.97);
+  border: 1px solid rgba(250, 245, 234, 0.35);
+  border-radius: 1.15rem;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+  line-height: 0;
+}
+
+.home-hero-logo-card .home-hero-logo {
+  width: clamp(4.75rem, 24vw, 6.5rem);
+  height: clamp(4.75rem, 24vw, 6.5rem);
+  max-width: none;
+  margin: 0;
+  padding: 0.15rem;
+  background: transparent;
+  box-shadow: none;
+  object-fit: contain;
+  object-position: center;
+}
+
+.home-kicker--v3 {
+  margin: 0;
+  text-align: center;
+}
+
+.home-hero-title--v3 {
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1.15;
+  white-space: nowrap;
+  margin: 0;
+  text-wrap: nowrap;
+}
+
+.home-hero-lead--v3 {
+  color: rgba(250, 245, 234, 0.9);
+  font-size: clamp(0.9rem, 3.2vw, 1.05rem);
+  line-height: 1.75;
+  max-width: 36rem;
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.home-search--v3 {
+  width: 100%;
+  max-width: 100%;
+  min-height: 56px;
+  height: 56px;
+  margin-top: 0;
+  border-radius: 999px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: stretch;
+  overflow: hidden;
+}
+
+.home-search--v3 input {
+  min-width: 0;
+  width: 100%;
+  min-height: 48px;
+  font-size: clamp(0.85rem, 3.5vw, 0.95rem);
+}
+
+.home-search--v3 button {
+  flex-shrink: 0;
+  min-width: 4.25rem;
+  min-height: var(--mobile-touch-min);
+  height: 100%;
+  font-size: 0.85rem;
+  border-radius: 999px;
+}
+
+.home-hero-assistant-link--v3 {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--mobile-touch-min);
+  padding: 0 1rem;
+  margin-top: 0;
+  border-radius: var(--mobile-radius);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(250, 245, 234, 0.25);
+}
+
+.home-hero-grid--v3 {
+  padding-block: clamp(1.25rem, 5vw, 2rem) clamp(1.5rem, 5vw, 2.5rem);
+  gap: var(--mobile-gap);
+}
+
+.home-main--v3 {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 4vw, 1.5rem);
+  padding-bottom: clamp(1.5rem, 5vw, 2rem);
+}
+
+/* ── Unified cards (mobile) ── */
+.ui-card,
+.home-feature-card,
+.home-feature-card--v3,
+.page-card,
+.home-lesson-card,
+.home-sheikh-card,
+.home-banner,
+.home-sunnah-card {
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+}
+
+/* ── Touch-friendly buttons (mobile base) ── */
+@media (max-width: 879px) {
+  .navbar-v3 {
+    min-height: var(--mobile-header-h);
+    max-height: 4.5rem;
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+
+  .navbar-v3__inner {
+    min-height: calc(var(--mobile-header-h) - env(safe-area-inset-top, 0px));
+    max-height: 4.5rem;
+    padding: 0.35rem var(--mobile-padding-x);
+    gap: 0.35rem;
+  }
+
+  .navbar-v3__start {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .navbar-v3__end {
+    flex: 0 0 auto;
+    flex-shrink: 0;
+    gap: 0.35rem;
+  }
+
+  .navbar-brand {
+    overflow: hidden;
+    flex-shrink: 1;
+    min-width: 0;
+  }
+
+  .site-brand-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: clamp(0.82rem, 3.2vw, 0.95rem);
+    max-width: clamp(5.5rem, 28vw, 9rem);
+  }
+
+  .navbar-logo {
+    width: 36px;
+    height: 36px;
+    max-width: 36px;
+    max-height: 36px;
+    flex-shrink: 0;
+    object-fit: contain;
+    object-position: center;
+  }
+
+  .navbar-menu-btn,
+  .navbar-logout {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    flex-shrink: 0;
+    padding: 0;
+    min-width: 4.25rem;
+    width: 4.25rem;
+    height: var(--mobile-touch-min);
+    min-height: var(--mobile-touch-min);
+    line-height: 1;
+    font-size: clamp(0.72rem, 3vw, 0.82rem);
+  }
+
+  .navbar-menu-btn--more {
+    min-width: 3.65rem;
+    width: 3.65rem;
+  }
+
+  .navbar-login--mobile {
+    font-size: clamp(0.68rem, 2.8vw, 0.75rem);
+    padding: 0 0.5rem;
+    min-width: 2.75rem;
+    max-width: 3.75rem;
+    height: var(--mobile-touch-min);
+    min-height: var(--mobile-touch-min);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-shrink: 0;
+  }
+
+  .navbar-mobile-panel {
+    padding: 0.65rem var(--mobile-padding-x) 0.85rem;
+  }
+
+  .navbar-search-form {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .navbar-search-submit {
+    min-height: var(--mobile-touch-min);
+    min-width: 3.5rem;
+    white-space: nowrap;
+  }
+
+  .home-container {
+    padding-inline: var(--mobile-padding-x);
+  }
+
+  .home-section {
+    margin-bottom: clamp(1.25rem, 4vw, 1.75rem);
+  }
+
+  .home-section-head h2,
+  .home-section-title {
+    font-size: clamp(1.05rem, 4.5vw, 1.25rem);
+    line-height: 1.35;
+  }
+
+  .page-action-btn,
+  .ui-card-btn,
+  .template-btn,
+  .home-search button,
+  .home-banner__btn,
+  .home-primary-action,
+  .home-secondary-action {
+    min-height: var(--mobile-touch-min);
+    border-radius: var(--mobile-radius);
+    font-size: clamp(0.82rem, 3.2vw, 0.9rem);
+  }
+
+  .page-search-form,
+  .search-page-form {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .page-search-form input,
+  .search-page-form input {
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  .page-card-grid,
+  .page-card-grid--compact {
+    gap: var(--mobile-gap);
+  }
+
+  .ui-card,
+  .home-feature-card,
+  .home-feature-card--v3,
+  .page-card,
+  .home-lesson-card {
+    padding: var(--card-padding);
+  }
+
+  .home-feature-grid--v3 {
+    gap: var(--mobile-gap);
+  }
+
+  .assistant-fab {
+    min-height: var(--mobile-touch-min);
+  }
+}
+
+/* 430px — large phones */
+@media (max-width: 430px) {
+  .site-brand-name {
+    max-width: clamp(4.5rem, 24vw, 7rem);
+  }
+
+  .navbar-menu-btn {
+    min-width: 3.85rem;
+    width: 3.85rem;
+    font-size: 0.72rem;
+  }
+
+  .home-hero-title--v3 {
+    font-size: clamp(1.85rem, 7vw, 2.35rem);
+  }
+}
+
+/* 390px — iPhone 13/14/15 */
+@media (max-width: 390px) {
+  .navbar-v3__inner {
+    padding-inline: 0.55rem;
+    gap: 0.28rem;
+  }
+
+  .site-brand-name {
+    max-width: 4.25rem;
+    font-size: 0.78rem;
+  }
+
+  .navbar-menu-btn--drawer {
+    min-width: 3.55rem;
+    width: 3.55rem;
+  }
+
+  .home-feature-grid--v3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 360px — iPhone SE / small Android */
+@media (max-width: 360px) {
+  .navbar-menu-btn,
+  .navbar-menu-btn--more {
+    min-width: 3.35rem;
+    width: 3.35rem;
+    font-size: 0.68rem;
+  }
+
+  .navbar-login--mobile {
+    max-width: 3.25rem;
+    min-width: 2.5rem;
+    font-size: 0.65rem;
+  }
+
+  .home-hero-title--v3 {
+    font-size: clamp(1.65rem, 8vw, 2rem);
+  }
+
+  .home-hero-lead--v3 {
+    font-size: 0.85rem;
+  }
+}
+
+/* 640px — phablets / small tablets */
+@media (max-width: 640px) {
+  .home-feature-grid--v3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .content-card-grid,
+  .content-card-grid--qa {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 768px — tablets portrait */
+@media (max-width: 768px) {
+  .home-hero-grid {
+    grid-template-columns: 1fr;
+    padding-block: clamp(1.5rem, 5vw, 2.5rem);
+  }
+
+  .home-two-column,
+  .home-kuwait-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .fiqh-council-subnav {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .fiqh-council-subnav::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Desktop-only: preserve original hero title scale */
+@media (min-width: 880px) {
+  .home-hero-title--v3 {
+    font-size: clamp(1.85rem, 4.5vw, 2.5rem);
+    white-space: normal;
+    text-wrap: balance;
+  }
+
+  .home-hero-copy--v3 {
+    align-items: flex-start;
+    text-align: start;
+  }
+
+  .home-kicker--v3 {
+    text-align: start;
+  }
+
+  .home-search--v3 {
+    max-width: 36rem;
+    height: auto;
+    min-height: auto;
+    border-radius: 0.75rem;
+  }
+
+  .home-hero-assistant-link--v3 {
+    background: transparent;
+    border: none;
+    padding: 0;
+    min-height: auto;
   }
 }
