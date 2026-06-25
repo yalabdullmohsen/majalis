@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { PageHeader, Loading, Empty } from "@/components/ui-common";
-import { getPlatformUpdates } from "@/lib/platform-content-service";
+import { getMergedPlatformUpdates } from "@/lib/auto-content-service";
 import { UPDATE_TYPES } from "@/lib/platform-types";
 import { usePageView } from "@/hooks/usePageView";
+import type { MergedUpdateItem } from "@/lib/auto-content/auto-content-utils";
 
 const TYPE_COLORS: Record<string, string> = {
   قرار: "#164E3C",
@@ -25,7 +26,7 @@ function formatDate(iso?: string) {
 }
 
 export default function UpdatesPage() {
-  const [items, setItems] = useState<any[]>([]);
+  const [items, setItems] = useState<MergedUpdateItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("الكل");
 
@@ -33,7 +34,7 @@ export default function UpdatesPage() {
 
   useEffect(() => {
     setLoading(true);
-    getPlatformUpdates(100)
+    getMergedPlatformUpdates(100)
       .then(({ data }) => setItems(data))
       .finally(() => setLoading(false));
   }, []);
@@ -45,7 +46,7 @@ export default function UpdatesPage() {
       <PageHeader
         eyebrow="النشاط العلمي"
         title="آخر المستجدات"
-        subtitle="قرارات وفتاوى ودروس ودورات وكتب وإعلانات — مرتّبة زمنياً."
+        subtitle="قرارات وفتاوى ودروس ودورات وكتب وإعلانات — مرتّبة زمنياً. يُحدَّث تلقائياً كل 6 ساعات من مصادر موثوقة."
       />
 
       <div className="content-hub-chips">
@@ -68,7 +69,7 @@ export default function UpdatesPage() {
       ) : (
         <div className="updates-timeline">
           {filtered.map((item) => (
-            <article key={item.id} className="updates-timeline-item ui-card">
+            <article key={`${item.isAuto ? "auto" : "platform"}-${item.id}`} className="updates-timeline-item ui-card">
               <div className="updates-timeline-meta">
                 <span
                   className="updates-type-badge"
@@ -76,6 +77,11 @@ export default function UpdatesPage() {
                 >
                   {item.update_type}
                 </span>
+                {item.isAuto && (
+                  <span className="updates-type-badge" style={{ background: "#0F766E", marginInlineStart: "0.35rem" }}>
+                    مصدر موثوق
+                  </span>
+                )}
                 <time dateTime={item.published_at}>{formatDate(item.published_at)}</time>
               </div>
               {item.source_url ? (
@@ -86,6 +92,11 @@ export default function UpdatesPage() {
                 <h2 className="updates-timeline-title">{item.title}</h2>
               )}
               {item.summary && <p className="updates-timeline-summary">{item.summary}</p>}
+              {item.isAuto && item.source_name && (
+                <p className="updates-timeline-summary" style={{ fontSize: "0.8125rem", opacity: 0.85 }}>
+                  المصدر: {item.source_name}
+                </p>
+              )}
             </article>
           ))}
         </div>
