@@ -5,6 +5,7 @@ import { FontPreferenceProvider } from "@/components/FontPreferenceProvider";
 import { AdminRouteGuard } from "@/components/AdminRouteGuard";
 import NavBar from "@/components/NavBar";
 import SiteFooter from "@/components/SiteFooter";
+import { AssistantFloatingWidget } from "@/components/assistant/AssistantFloatingWidget";
 import HomePage from "@/pages/HomePage";
 import AboutPage from "@/pages/AboutPage";
 import PrivacyPage from "@/pages/PrivacyPage";
@@ -137,13 +138,14 @@ function App() {
     <FontPreferenceProvider>
       <AuthProvider>
         <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-          <div style={{ minHeight: "100vh", direction: "rtl" }}>
+          <div className="app-shell" style={{ minHeight: "100vh", direction: "rtl" }}>
             <SeoManager />
             <NavBar />
-            <main>
+            <main className="app-main">
               <Router />
             </main>
             <SiteFooter />
+            <AssistantFloatingWidget />
           </div>
         </WouterRouter>
       </AuthProvider>

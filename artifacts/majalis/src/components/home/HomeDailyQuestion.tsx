@@ -25,7 +25,7 @@ export function HomeDailyQuestion() {
   }, []);
 
   return (
-    <section className="home-section home-daily-single" aria-labelledby="daily-qa-heading">
+    <section className="home-section home-daily-single home-daily-qa" aria-labelledby="daily-qa-heading">
       <div className="home-section-head">
         <div>
           <p className="home-eyebrow">فوائد سريعة</p>
@@ -37,8 +37,14 @@ export function HomeDailyQuestion() {
         <Loading />
       ) : question ? (
         <Link href="/qa" className="home-qa-card ui-card home-daily-card">
-          <h3>{cleanDisplayText(question.question)}</h3>
-          {question.category && <span className="page-tag">{cleanDisplayText(question.category)}</span>}
+          <div className="home-qa-card__body">
+            <h3 className="home-qa-card__question">{cleanDisplayText(question.question)}</h3>
+          </div>
+          {question.category && (
+            <footer className="home-qa-card__footer">
+              <span className="home-qa-chip">{cleanDisplayText(question.category)}</span>
+            </footer>
+          )}
         </Link>
       ) : (
         <p className="lessons-empty-state">لا يوجد سؤال متاح حالياً.</p>
