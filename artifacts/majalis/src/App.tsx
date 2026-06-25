@@ -42,8 +42,12 @@ const OccasionsPage = lazy(() => import("@/pages/OccasionsPage"));
 const ArbaeenNawawiPage = lazy(() => import("@/pages/ArbaeenNawawiPage"));
 const AnnualCoursesPage = lazy(() => import("@/pages/AnnualCoursesPage"));
 const AnnualCourseDetailPage = lazy(() => import("@/pages/AnnualCourseDetailPage"));
+const FiqhCouncilResolutionsPage = lazy(() => import("@/pages/FiqhCouncilResolutionsPage"));
+const FiqhCouncilFatwasPage = lazy(() => import("@/pages/FiqhCouncilFatwasPage"));
+const FiqhCouncilResearchPage = lazy(() => import("@/pages/FiqhCouncilResearchPage"));
+const FiqhCouncilCategoriesPage = lazy(() => import("@/pages/FiqhCouncilCategoriesPage"));
 const FiqhCouncilPage = lazy(() => import("@/pages/FiqhCouncilPage"));
-const FiqhCouncilDetailPage = lazy(() => import("@/pages/FiqhCouncilDetailPage"));
+const FiqhCouncilItemDetailPage = lazy(() => import("@/pages/FiqhCouncilItemDetailPage"));
 const FatwaPage = lazy(() => import("@/pages/FatwaPage"));
 const FatwaDetailPage = lazy(() => import("@/pages/FatwaDetailPage"));
 const RulingsPage = lazy(() => import("@/pages/RulingsPage"));
@@ -120,7 +124,11 @@ function Router() {
       <Route path="/cards"><SafeLazyRoute component={CardsPage} /></Route>
       <Route path="/annual-courses/:id"><SafeLazyRoute component={AnnualCourseDetailPage} /></Route>
       <Route path="/annual-courses"><SafeLazyRoute component={AnnualCoursesPage} /></Route>
-      <Route path="/fiqh-council/:id"><SafeLazyRoute component={FiqhCouncilDetailPage} /></Route>
+      <Route path="/fiqh-council/resolutions"><SafeLazyRoute component={FiqhCouncilResolutionsPage} /></Route>
+      <Route path="/fiqh-council/fatwas"><SafeLazyRoute component={FiqhCouncilFatwasPage} /></Route>
+      <Route path="/fiqh-council/research"><SafeLazyRoute component={FiqhCouncilResearchPage} /></Route>
+      <Route path="/fiqh-council/categories"><SafeLazyRoute component={FiqhCouncilCategoriesPage} /></Route>
+      <Route path="/fiqh-council/:slug"><SafeLazyRoute component={FiqhCouncilItemDetailPage} /></Route>
       <Route path="/fiqh-council"><SafeLazyRoute component={FiqhCouncilPage} /></Route>
       <Route path="/fatwa/:id"><SafeLazyRoute component={FatwaDetailPage} /></Route>
       <Route path="/fatwa"><SafeLazyRoute component={FatwaPage} /></Route>

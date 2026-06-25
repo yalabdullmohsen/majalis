@@ -1,11 +1,11 @@
 {
   "fiqh_decisions": [
-    { "id": "fiqh-crypto-2024", "title": "حكم التعامل بالعملات الرقمية (المشفّرة)", "category": "الاقتصاد" },
-    { "id": "fiqh-organ-donation", "title": "حكم التبرع بالأعضاء بعد الوفاة", "category": "الطب" },
-    { "id": "fiqh-minorities-rights", "title": "حقوق الأقليات المسلمة في البلدان غير الإسلامية", "category": "الأقليات المسلمة" },
-    { "id": "fiqh-marriage-contract", "title": "ضوابط عقد النكاح الإلكتروني", "category": "الأسرة" },
-    { "id": "fiqh-zakat-stocks", "title": "زكاة الأسهم والصناديق الاستثمارية", "category": "العبادات" },
-    { "id": "fiqh-collective-fatwa-hajj", "title": "فتوى جماعية: حكم تأخير الحج لمن استطاع مادياً", "category": "العبادات" }
+    { "id": "fiqh-crypto-2024", "slug": "fiqh-crypto-2024", "title": "حكم التعامل بالعملات الرقمية (المشفّرة)", "category": "الاقتصاد الإسلامي", "type": "resolution" },
+    { "id": "fiqh-organ-donation", "slug": "fiqh-organ-donation", "title": "حكم التبرع بالأعضاء بعد الوفاة", "category": "الطب والنوازل", "type": "recommendation" },
+    { "id": "fiqh-minorities-rights", "slug": "fiqh-minorities-rights", "title": "حقوق الأقليات المسلمة في البلدان غير الإسلامية", "category": "الأقليات المسلمة", "type": "ruling" },
+    { "id": "fiqh-marriage-contract", "slug": "fiqh-marriage-contract", "title": "ضوابط عقد النكاح الإلكتروني", "category": "الأسرة", "type": "research" },
+    { "id": "fiqh-zakat-stocks", "slug": "fiqh-zakat-stocks", "title": "زكاة الأسهم والصناديق الاستثمارية", "category": "الزكاة والوقف", "type": "resolution" },
+    { "id": "fiqh-collective-fatwa-hajj", "slug": "fiqh-collective-fatwa-hajj", "title": "فتوى جماعية: حكم تأخير الحج لمن استطاع مادياً", "category": "الحج والعمرة", "type": "fatwa" }
   ],
   "fatwas": [
     { "id": "fatwa-prayer-combine", "question": "هل يجوز الجمع بين الصلاتين للمسافر؟", "category": "الصلاة" },

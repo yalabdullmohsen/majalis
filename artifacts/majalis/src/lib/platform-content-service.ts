@@ -1,5 +1,11 @@
 import { arabicMatchAny } from "./arabic-search";
-import { FIQH_COUNCIL_SEED, findFiqhDecisionById } from "./fiqh-council-seed";
+import {
+  getFiqhDecisions,
+  getFiqhDecisionById,
+  getRelatedFiqhDecisions,
+  searchFiqhCouncilSeed,
+  FIQH_COUNCIL_SEED,
+} from "./fiqh-council-service";
 import { FATWA_SEED, findFatwaById } from "./fatwa-seed";
 import { RULINGS_SEED, findRulingById } from "./rulings-seed";
 import { ANNUAL_COURSES_SEED, findAnnualCourseById } from "./annual-courses-seed";
@@ -9,7 +15,6 @@ import { logSupabaseError } from "./supabase-config";
 import type {
   AnnualCourse,
   Fatwa,
-  FiqhDecision,
   PlatformUpdate,
   ShariaRuling,
 } from "./platform-types";
@@ -26,77 +31,12 @@ function filterBySearch<T>(items: T[], fields: (keyof T | string)[], query?: str
   );
 }
 
-// ─── Fiqh Council ────────────────────────────────────────────────────────────
-
-export async function getFiqhDecisions(opts?: { category?: string; search?: string; type?: string }) {
-  let items = [...FIQH_COUNCIL_SEED];
-  if (opts?.category && opts.category !== "الكل") {
-    items = items.filter((d) => d.category === opts.category);
-  }
-  if (opts?.type && opts.type !== "الكل") {
-    items = items.filter((d) => d.decision_type === opts.type);
-  }
-  items = filterBySearch(items, ["title", "summary", "body", "category"], opts?.search);
-
-  if (!isConfigured) return { data: items, usingSeed: true };
-
-  try {
-    let query = supabase
-      .from("fiqh_council_decisions")
-      .select("*")
-      .eq("status", "approved")
-      .is("archived_at", null)
-      .order("decision_date", { ascending: false, nullsFirst: false });
-
-    if (opts?.category && opts.category !== "الكل") {
-      query = query.eq("category", opts.category);
-    }
-    if (opts?.type && opts.type !== "الكل") {
-      query = query.eq("decision_type", opts.type);
-    }
-
-    const { data, error } = await query;
-    if (error) throw error;
-
-    let result = (data || []) as FiqhDecision[];
-    if (opts?.search?.trim()) {
-      result = filterBySearch(result, ["title", "summary", "body"], opts.search);
-    }
-    if (result.length === 0 && items.length > 0) {
-      return { data: items, usingSeed: true };
-    }
-    return { data: result, usingSeed: false };
-  } catch (err) {
-    logSupabaseError("getFiqhDecisions", err);
-    return { data: items, usingSeed: true };
-  }
-}
-
-export async function getFiqhDecisionById(id: string) {
-  const fallback = findFiqhDecisionById(id);
-  if (!isConfigured) return { data: fallback, usingSeed: true };
-
-  try {
-    const byId = await supabase
-      .from("fiqh_council_decisions")
-      .select("*")
-      .eq("id", id)
-      .eq("status", "approved")
-      .maybeSingle();
-    if (byId.data) return { data: byId.data as FiqhDecision, usingSeed: false };
-
-    const byKey = await supabase
-      .from("fiqh_council_decisions")
-      .select("*")
-      .eq("external_key", id)
-      .eq("status", "approved")
-      .maybeSingle();
-    return { data: (byKey.data as FiqhDecision) || fallback, usingSeed: !byKey.data && !!fallback };
-  } catch (err) {
-    logSupabaseError("getFiqhDecisionById", err, { id });
-    return { data: fallback, usingSeed: true };
-  }
-}
+export {
+  getFiqhDecisions,
+  getFiqhDecisionById,
+  getRelatedFiqhDecisions,
+  FIQH_COUNCIL_SEED,
+};
 
 // ─── Fatwas ──────────────────────────────────────────────────────────────────
 
@@ -290,11 +230,6 @@ export async function getPlatformUpdates(limit = 50) {
 
 // ─── Related content ─────────────────────────────────────────────────────────
 
-export async function getRelatedFiqhDecisions(currentId: string, category?: string, limit = 4) {
-  const { data } = await getFiqhDecisions({ category });
-  return data.filter((d) => d.id !== currentId).slice(0, limit);
-}
-
 export async function getRelatedFatwas(currentId: string, category?: string, limit = 4) {
   const { data } = await getFatwas({ category });
   return data.filter((f) => f.id !== currentId).slice(0, limit);
@@ -310,11 +245,10 @@ export async function getRelatedCourses(currentId: string, limit = 4) {
   return data.filter((c) => c.id !== currentId).slice(0, limit);
 }
 
-// Re-export seeds for search fallback
 export {
-  FIQH_COUNCIL_SEED,
   FATWA_SEED,
   RULINGS_SEED,
   ANNUAL_COURSES_SEED,
   UPDATES_SEED,
+  searchFiqhCouncilSeed,
 };

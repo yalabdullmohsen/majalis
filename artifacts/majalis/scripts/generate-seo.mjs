@@ -170,10 +170,11 @@ const lessonEntries = lessonRows.map((row) => {
 
 const platformEntries = [
   ...(PLATFORM_SEED.fiqh_decisions || []).map((row) => ({
-    path: `/fiqh-council/${row.id}`,
+    path: `/fiqh-council/${row.slug || row.id}`,
     title: `${row.title} | ${seoConfig.siteName}`,
     description: row.title,
     priority: 0.7,
+    robots: "index, follow",
   })),
   ...(PLATFORM_SEED.fatwas || []).map((row) => ({
     path: `/fatwa/${row.id}`,
@@ -230,7 +231,7 @@ Sitemap: ${seoConfig.siteUrl}/sitemap.xml
 const rssItems = [
   ...(PLATFORM_SEED.fiqh_decisions || []).slice(0, 5).map((row) => ({
     title: row.title,
-    link: absoluteUrl(`/fiqh-council/${row.id}`),
+    link: absoluteUrl(`/fiqh-council/${row.slug || row.id}`),
     description: row.title,
   })),
   ...(PLATFORM_SEED.fatwas || []).slice(0, 5).map((row) => ({
@@ -299,9 +300,9 @@ for (const row of lessonRows) {
 
 const platformPrerender = [
   ...(PLATFORM_SEED.fiqh_decisions || []).map((row) => ({
-    dir: resolve(seoPrerenderDir, "fiqh-council", row.id),
+    dir: resolve(seoPrerenderDir, "fiqh-council", row.slug || row.id),
     route: {
-      path: `/fiqh-council/${row.id}`,
+      path: `/fiqh-council/${row.slug || row.id}`,
       title: `${row.title} | ${seoConfig.siteName}`,
       description: row.title,
       ogType: "article",

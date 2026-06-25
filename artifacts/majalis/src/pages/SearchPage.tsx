@@ -263,7 +263,7 @@ export default function SearchPage() {
                 title="المجمع الفقهي"
                 items={results.fiqh_decisions || []}
                 render={(d) => (
-                  <ResultRow key={d.id} href={`/fiqh-council/${d.id}`} title={displayText(d.title)} meta={d.searchMeta || d.category} />
+                  <ResultRow key={d.id} href={`/fiqh-council/${d.slug || d.id}`} title={displayText(d.title)} meta={d.searchMeta || d.category} />
                 )}
               />
               <Group

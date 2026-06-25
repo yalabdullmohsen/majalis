@@ -464,6 +464,42 @@
       "priority": 0.88
     },
     {
+      "path": "/fiqh-council/resolutions",
+      "title": "قرارات المجمع الفقهي | المجلس العلمي",
+      "description": "قرارات المجمع الفقهي الإسلامي في القضايا المعاصرة — مع تصنيف ومراجع.",
+      "keywords": ["المجمع الفقهي", "قرارات فقهية", "فقه معاصر"],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.84
+    },
+    {
+      "path": "/fiqh-council/fatwas",
+      "title": "الفتاوى الجماعية | المجمع الفقهي — المجلس العلمي",
+      "description": "فتاوى جماعية صادرة عن المجمع الفقهي الإسلامي — مع أدلة ومراجع.",
+      "keywords": ["فتاوى جماعية", "المجمع الفقهي", "فقه"],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.84
+    },
+    {
+      "path": "/fiqh-council/research",
+      "title": "بحوث المجمع الفقهي | المجلس العلمي",
+      "description": "بحوث ودراسات فقهية في القضايا المعاصرة — منظمة وقابلة للبحث.",
+      "keywords": ["بحوث فقهية", "المجمع الفقهي", "فقه معاصر"],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.83
+    },
+    {
+      "path": "/fiqh-council/categories",
+      "title": "التصنيفات الفقهية | المجمع الفقهي — المجلس العلمي",
+      "description": "تصفّح محتوى المجمع الفقهي حسب التصنيفات الفقهية.",
+      "keywords": ["تصنيفات فقهية", "المجمع الفقهي"],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.82
+    },
+    {
       "path": "/fatwa",
       "title": "الفتاوى الشرعية | المجلس العلمي",
       "description": "مركز الفتاوى — أحدث الفتاوى والأكثر قراءة والأكثر بحثاً، مكتوبة وصوتية.",

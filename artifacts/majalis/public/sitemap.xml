@@ -163,6 +163,30 @@
     <priority>0.88</priority>
   </url>
   <url>
+    <loc>https://majlisilm.com/fiqh-council/resolutions</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.84</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/fiqh-council/fatwas</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.84</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/fiqh-council/research</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.83</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/fiqh-council/categories</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.82</priority>
+  </url>
+  <url>
     <loc>https://majlisilm.com/fatwa</loc>
     <lastmod>2026-06-25</lastmod>
     <changefreq>daily</changefreq>
