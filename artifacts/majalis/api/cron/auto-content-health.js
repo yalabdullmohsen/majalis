@@ -1,12 +1,10 @@
 import { sendJson } from "../_http.js";
-import { runAutoContentSync } from "../../lib/auto-content/auto-content-sync.mjs";
+import { getAutoContentHealth } from "../../lib/auto-content/auto-content-sync.mjs";
 
 function verifyCronAuth(req) {
   if (req.headers["x-vercel-cron"] === "1") return true;
-
   const secret = String(process.env.CRON_SECRET || "").trim();
   if (!secret) return process.env.NODE_ENV !== "production";
-
   const auth = String(req.headers.authorization || "").replace("Bearer ", "").trim();
   return auth === secret;
 }
@@ -23,10 +21,9 @@ export default async function handler(req, res) {
   }
 
   try {
-    const result = await runAutoContentSync({ triggerType: "cron" });
-    const status = result.ok ? 200 : (result.error === "Supabase not configured" ? 503 : 500);
-    sendJson(res, status, result);
+    const health = await getAutoContentHealth();
+    sendJson(res, health.ok ? 200 : 503, health);
   } catch (error) {
-    sendJson(res, 500, { ok: false, error: error.message, logs: [] });
+    sendJson(res, 500, { ok: false, error: error.message });
   }
 }

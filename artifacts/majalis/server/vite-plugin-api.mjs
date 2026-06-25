@@ -9,6 +9,7 @@ import knowledgeSyncHandler from "../api/cron/knowledge-sync.js";
 import knowledgePipelineHandler from "../api/admin/knowledge-pipeline.js";
 import knowledgeSearchHandler from "../api/knowledge-search.js";
 import autoContentSyncHandler from "../api/cron/auto-content-sync.js";
+import autoContentHealthHandler from "../api/cron/auto-content-health.js";
 import autoContentHandler from "../api/auto-content.js";
 import autoContentAdminHandler from "../api/admin/auto-content.js";
 import { createRateLimiter } from "./rate-limit.mjs";
@@ -39,6 +40,7 @@ const API_ROUTES = [
   { prefix: "/api/admin/knowledge-pipeline", handler: knowledgePipelineHandler, allowGet: true },
   { prefix: "/api/knowledge-search", handler: knowledgeSearchHandler, allowGet: true },
   { prefix: "/api/cron/auto-content-sync", handler: autoContentSyncHandler, allowGet: true, exact: true },
+  { prefix: "/api/cron/auto-content-health", handler: autoContentHealthHandler, allowGet: true, exact: true },
   { prefix: "/api/auto-content", handler: autoContentHandler, allowGet: true },
   { prefix: "/api/admin/auto-content", handler: autoContentAdminHandler, allowGet: true },
   { prefix: "/api/fiqh-research-assistant", handler: fiqhResearchAssistantHandler, rateLimit: fiqhResearchRateLimit, allowGet: true },

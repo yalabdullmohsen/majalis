@@ -59,7 +59,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS trusted_sources_url_uidx ON trusted_sources(ur
 -- ── Seed official RSS sources (replace URLs if needed) ────────────────────
 INSERT INTO trusted_sources (name, source_type, url, category, trust_level)
 VALUES
-  ('الأكاديمية الإسلامية للفقه (OIC-IIFA)', 'rss', 'https://www.iifa-aifi.org/ar/rss', 'قرارات', 95),
+  ('الأكاديمية الإسلامية للفقه (OIC-IIFA)', 'rss', 'https://www.iifa-aifi.org/ar/feed', 'قرارات', 95),
   ('IslamWeb — الأخبار', 'rss', 'https://www.islamweb.net/ar/rss/news', 'أخبار', 90)
 ON CONFLICT (url) DO NOTHING;
 

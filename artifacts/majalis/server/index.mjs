@@ -13,6 +13,7 @@ import knowledgeSyncHandler from "../api/cron/knowledge-sync.js";
 import knowledgePipelineHandler from "../api/admin/knowledge-pipeline.js";
 import knowledgeSearchHandler from "../api/knowledge-search.js";
 import autoContentSyncHandler from "../api/cron/auto-content-sync.js";
+import autoContentHealthHandler from "../api/cron/auto-content-health.js";
 import autoContentHandler from "../api/auto-content.js";
 import autoContentAdminHandler from "../api/admin/auto-content.js";
 import fiqhResearchAssistantHandler from "../api/fiqh-research-assistant.js";
@@ -105,6 +106,8 @@ app.get("/api/knowledge-search", runHandler(knowledgeSearchHandler, "knowledge-s
 app.post("/api/knowledge-search", express.json({ limit: "16kb" }), runHandler(knowledgeSearchHandler, "knowledge-search"));
 app.get("/api/cron/auto-content-sync", runHandler(autoContentSyncHandler, "auto-content-sync"));
 app.post("/api/cron/auto-content-sync", runHandler(autoContentSyncHandler, "auto-content-sync"));
+app.get("/api/cron/auto-content-health", runHandler(autoContentHealthHandler, "auto-content-health"));
+app.post("/api/cron/auto-content-health", runHandler(autoContentHealthHandler, "auto-content-health"));
 app.get("/api/auto-content", runHandler(autoContentHandler, "auto-content"));
 app.get("/api/admin/auto-content", runHandler(autoContentAdminHandler, "auto-content-admin"));
 app.post("/api/admin/auto-content", express.json({ limit: "16kb" }), runHandler(autoContentAdminHandler, "auto-content-admin"));

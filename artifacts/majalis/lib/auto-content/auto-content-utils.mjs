@@ -85,6 +85,15 @@ export function verifySourceUrl(originalUrl, sourceUrl, trustLevel = 80) {
     errors.push("unsupported_protocol");
   }
 
+  // High-trust official sources: validate URL format only, skip strict domain match
+  if (trustLevel >= 90) {
+    return {
+      verified: errors.length === 0,
+      errors,
+      trustLevel,
+    };
+  }
+
   const sourceHost = parsedSource.hostname.replace(/^www\./, "");
   const originalHost = parsedOriginal.hostname.replace(/^www\./, "");
   const sameDomain =
@@ -156,28 +165,81 @@ export async function ensureUniqueSlug(supabase, baseSlug) {
 
 export function extractRssItems(xml) {
   const items = [];
-  const matches = xml.match(/<item>[\s\S]*?<\/item>/gi) || [];
 
-  for (const item of matches.slice(0, 20)) {
-    const title = cleanText(
-      item.match(/<title><!\[CDATA\[(.*?)\]\]><\/title>/s)?.[1]
-      || item.match(/<title>(.*?)<\/title>/s)?.[1]
-      || "",
-    );
-    const link = cleanText(item.match(/<link>(.*?)<\/link>/s)?.[1] || "");
-    const description = cleanText(
-      item.match(/<description><!\[CDATA\[(.*?)\]\]><\/description>/s)?.[1]
-      || item.match(/<description>(.*?)<\/description>/s)?.[1]
-      || "",
-    );
-    const pubDate = cleanText(item.match(/<pubDate>(.*?)<\/pubDate>/s)?.[1] || "");
+  const rssMatches = xml.match(/<item>[\s\S]*?<\/item>/gi) || [];
+  for (const item of rssMatches.slice(0, 20)) {
+    const parsed = parseRssItem(item);
+    if (parsed) items.push(parsed);
+  }
 
-    if (title && link) {
-      items.push({ title, link, description, pubDate });
+  if (items.length === 0) {
+    const atomMatches = xml.match(/<entry>[\s\S]*?<\/entry>/gi) || [];
+    for (const entry of atomMatches.slice(0, 20)) {
+      const parsed = parseAtomEntry(entry);
+      if (parsed) items.push(parsed);
     }
   }
 
   return items;
+}
+
+function parseRssItem(item) {
+  const title = cleanText(
+    item.match(/<title><!\[CDATA\[(.*?)\]\]><\/title>/s)?.[1]
+    || item.match(/<title>(.*?)<\/title>/s)?.[1]
+    || "",
+  );
+  const link = cleanText(item.match(/<link>(.*?)<\/link>/s)?.[1] || "");
+  const description = cleanText(
+    item.match(/<description><!\[CDATA\[(.*?)\]\]><\/description>/s)?.[1]
+    || item.match(/<description>(.*?)<\/description>/s)?.[1]
+    || item.match(/<content:encoded><!\[CDATA\[(.*?)\]\]><\/content:encoded>/s)?.[1]
+    || "",
+  );
+  const pubDate = cleanText(item.match(/<pubDate>(.*?)<\/pubDate>/s)?.[1] || "");
+
+  if (title && link) return { title, link, description, pubDate };
+  return null;
+}
+
+function parseAtomEntry(entry) {
+  const title = cleanText(
+    entry.match(/<title[^>]*><!\[CDATA\[(.*?)\]\]><\/title>/s)?.[1]
+    || entry.match(/<title[^>]*>(.*?)<\/title>/s)?.[1]
+    || "",
+  );
+  const link =
+    cleanText(entry.match(/<link[^>]*href="([^"]+)"/s)?.[1] || "")
+    || cleanText(entry.match(/<link>(.*?)<\/link>/s)?.[1] || "");
+  const description = cleanText(
+    entry.match(/<summary[^>]*><!\[CDATA\[(.*?)\]\]><\/summary>/s)?.[1]
+    || entry.match(/<summary[^>]*>(.*?)<\/summary>/s)?.[1]
+    || entry.match(/<content[^>]*><!\[CDATA\[(.*?)\]\]><\/content>/s)?.[1]
+    || "",
+  );
+  const pubDate = cleanText(entry.match(/<published>(.*?)<\/published>/s)?.[1]
+    || entry.match(/<updated>(.*?)<\/updated>/s)?.[1] || "");
+
+  if (title && link) return { title, link, description, pubDate };
+  return null;
+}
+
+export async function probeFeedUrl(url, timeoutMs = 12000) {
+  try {
+    const response = await fetch(url, {
+      headers: { "User-Agent": "MajlisIlmBot/2.0", Accept: "application/rss+xml, application/xml, */*" },
+      signal: AbortSignal.timeout(timeoutMs),
+      redirect: "follow",
+    });
+    if (!response.ok) return { ok: false, reason: `HTTP ${response.status}`, items: 0 };
+    const xml = await response.text();
+    const items = extractRssItems(xml);
+    if (items.length === 0) return { ok: false, reason: "No RSS", items: 0, bytes: xml.length };
+    return { ok: true, items: items.length, bytes: xml.length };
+  } catch (err) {
+    const reason = err.name === "TimeoutError" ? "Timeout" : err.message;
+    return { ok: false, reason, items: 0 };
+  }
 }
 
 export async function aiAnalyzeContent({ title, description, sourceName }) {

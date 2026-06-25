@@ -2,6 +2,7 @@ import { sendJson } from "../_http.js";
 import {
   runAutoContentSync,
   getAutoContentPipelineStats,
+  getAutoContentHealth,
 } from "../../lib/auto-content/auto-content-sync.mjs";
 
 function verifyAdminAuth(req) {
@@ -32,7 +33,13 @@ export default async function handler(req, res) {
 
     if (action === "run") {
       const result = await runAutoContentSync({ triggerType: "manual" });
-      sendJson(res, result.ok ? 200 : 500, result);
+      sendJson(res, result.ok ? 200 : 503, result);
+      return;
+    }
+
+    if (action === "health") {
+      const health = await getAutoContentHealth();
+      sendJson(res, health.ok ? 200 : 503, health);
       return;
     }
 
