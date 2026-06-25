@@ -71,6 +71,13 @@ export default function FiqhCouncilSessionDetailPage({ params }: { params: { slu
   if (!session) return <Empty text="الجلسة غير موجودة أو غير منشورة." />;
 
   const grouped = groupSessionItems(session.items);
+  const copyText = [
+    session.session_title,
+    session.session_number ? `الجلسة: ${session.session_number}` : "",
+    session.start_date ? `التاريخ: ${session.start_date}` : "",
+    session.official_source_url ? `المصدر: ${session.official_source_url}` : "",
+    typeof window !== "undefined" ? `رابط المنصة: ${window.location.href}` : "",
+  ].filter(Boolean).join(" | ");
 
   const renderList = (title: string, list: typeof session.items) => {
     if (!list?.length) return null;
@@ -104,6 +111,7 @@ export default function FiqhCouncilSessionDetailPage({ params }: { params: { slu
         subtitle={`${FIQH_SESSION_STATUS_LABELS[session.status]} · ${FIQH_VERIFICATION_STATUS_LABELS[session.verification_status]}`}
         meta={[session.session_number && `الجلسة ${session.session_number}`, session.start_date].filter(Boolean).join(" · ")}
         body={session.agenda || ""}
+        copyText={copyText}
         shareUrl={typeof window !== "undefined" ? window.location.href : undefined}
       >
         <section className="content-detail-evidence ui-card fiqh-detail-info-table">
