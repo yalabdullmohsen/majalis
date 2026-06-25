@@ -13,6 +13,7 @@ import { HomeFeatureCards } from "@/components/home/HomeFeatureCards";
 import { HomeDailyProgress } from "@/components/home/HomeDailyProgress";
 import { HomeMoreSections } from "@/components/home/HomeMoreSections";
 import { HomeIslamicOccasions } from "@/components/home/HomeIslamicOccasions";
+import { HomeLatestUpdates } from "@/components/home/HomeLatestUpdates";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
 
 export default function HomePage() {
@@ -70,6 +71,7 @@ export default function HomePage() {
 
       <main className="home-container home-main home-main--v3">
         <HomeUpcomingLessons />
+        <HomeLatestUpdates />
         <HomeUpcomingCourses />
         <HomePrayerTimes />
         <HomeDailyFaida />

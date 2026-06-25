@@ -1,13 +1,6 @@
-import { createClient } from "@supabase/supabase-js";
+import { getSupabaseAdmin } from "./supabase-admin.mjs";
 
 const TIMEOUT_MS = 8000;
-
-function getAdminClient() {
-  const url = (process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || "").replace(/\/+$/, "");
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
-  if (!url || !key) return null;
-  return createClient(url, key, { auth: { persistSession: false } });
-}
 
 async function checkUrl(url) {
   const controller = new AbortController();
@@ -37,7 +30,7 @@ async function checkUrl(url) {
 }
 
 export async function runFiqhLinkCheck(opts = {}) {
-  const admin = getAdminClient();
+  const admin = getSupabaseAdmin();
   if (!admin) {
     return { ok: false, message: "Supabase service role غير مهيأ." };
   }

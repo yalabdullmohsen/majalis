@@ -23,8 +23,24 @@
       "schedule": "0 */6 * * *"
     },
     {
+      "path": "/api/cron/auto-knowledge-sync",
+      "schedule": "30 */6 * * *"
+    },
+    {
       "path": "/api/cron/auto-content-sync",
       "schedule": "0 */6 * * *"
+    },
+    {
+      "path": "/api/cron/auto-content-health",
+      "schedule": "15 */6 * * *"
+    },
+    {
+      "path": "/api/cron/system-health",
+      "schedule": "45 */6 * * *"
+    },
+    {
+      "path": "/api/cron/connector-health",
+      "schedule": "0 * * * *"
     },
     {
       "path": "/api/cron/check-fiqh-links",

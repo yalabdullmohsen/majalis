@@ -8,10 +8,15 @@ import syncDataHandler from "../api/cron/sync-data.js";
 import knowledgeSyncHandler from "../api/cron/knowledge-sync.js";
 import knowledgePipelineHandler from "../api/admin/knowledge-pipeline.js";
 import knowledgeSearchHandler from "../api/knowledge-search.js";
-import autoContentSyncHandler from "../api/cron/auto-content-sync.js";
 import autoContentHealthHandler from "../api/cron/auto-content-health.js";
+import autoContentSyncHandler from "../api/cron/auto-content-sync.js";
+import systemHealthHandler from "../api/cron/system-health.js";
 import autoContentHandler from "../api/auto-content.js";
 import autoContentAdminHandler from "../api/admin/auto-content.js";
+import autoKnowledgeSyncHandler from "../api/cron/auto-knowledge-sync.js";
+import connectorHealthHandler from "../api/cron/connector-health.js";
+import autoKnowledgeAdminHandler from "../api/admin/auto-knowledge-engine.js";
+import knowledgeRecommendationsHandler from "../api/knowledge-recommendations.js";
 import { createRateLimiter } from "./rate-limit.mjs";
 
 const assistantRateLimit = createRateLimiter({
@@ -41,8 +46,13 @@ const API_ROUTES = [
   { prefix: "/api/knowledge-search", handler: knowledgeSearchHandler, allowGet: true },
   { prefix: "/api/cron/auto-content-sync", handler: autoContentSyncHandler, allowGet: true, exact: true },
   { prefix: "/api/cron/auto-content-health", handler: autoContentHealthHandler, allowGet: true, exact: true },
+  { prefix: "/api/cron/system-health", handler: systemHealthHandler, allowGet: true, exact: true },
+  { prefix: "/api/cron/auto-knowledge-sync", handler: autoKnowledgeSyncHandler, allowGet: true, exact: true },
+  { prefix: "/api/cron/connector-health", handler: connectorHealthHandler, allowGet: true, exact: true },
   { prefix: "/api/auto-content", handler: autoContentHandler, allowGet: true },
+  { prefix: "/api/knowledge-recommendations", handler: knowledgeRecommendationsHandler, allowGet: true },
   { prefix: "/api/admin/auto-content", handler: autoContentAdminHandler, allowGet: true },
+  { prefix: "/api/admin/auto-knowledge-engine", handler: autoKnowledgeAdminHandler, allowGet: true },
   { prefix: "/api/fiqh-research-assistant", handler: fiqhResearchAssistantHandler, rateLimit: fiqhResearchRateLimit, allowGet: true },
   { prefix: "/api/assistant", handler: assistantHandler, rateLimit: assistantRateLimit, allowGet: true },
   { prefix: "/api/test-anthropic", handler: testAnthropicHandler, allowGet: true },

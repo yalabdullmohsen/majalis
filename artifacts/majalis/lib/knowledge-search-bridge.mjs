@@ -40,7 +40,30 @@ export async function searchEverything(query, limit = 20) {
     .eq("status", "approved")
     .limit(limit);
 
-  return (lessons || [])
+  const { data: autoContent } = await admin
+    .from("auto_imported_content")
+    .select("id, title, summary, slug, content_type, source_name")
+    .eq("status", "published")
+    .eq("verification_status", "verified")
+    .limit(limit);
+
+  const autoResults = (autoContent || [])
+    .filter((item) => matchAny([item.title, item.summary, item.source_name, item.content_type], query))
+    .map((item) => ({
+      id: item.id,
+      title: item.title,
+      summary: item.summary,
+      kind: item.content_type || "update",
+      slug: item.slug,
+      href: `/updates/auto/${item.slug}`,
+      rank: 6,
+    }));
+
+  const lessonResults = (lessons || [])
     .filter((l) => matchAny([l.title, l.description, l.category], query))
     .map((l) => ({ ...l, kind: "lesson", rank: 3 }));
+
+  return [...autoResults, ...lessonResults]
+    .sort((a, b) => (b.rank || 0) - (a.rank || 0))
+    .slice(0, limit);
 }

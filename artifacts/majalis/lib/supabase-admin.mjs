@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
+import { getEnvConfig } from "./env-config.mjs";
 
 function normalizeSupabaseUrl(raw) {
   const v = String(raw || "").trim();
@@ -10,10 +11,9 @@ function normalizeSupabaseUrl(raw) {
 }
 
 export function getSupabaseAdmin() {
-  const url = normalizeSupabaseUrl(
-    process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || "",
-  );
-  const key = String(process.env.SUPABASE_SERVICE_ROLE_KEY || "").trim();
+  const { supabaseUrl, serviceRoleKey } = getEnvConfig();
+  const url = normalizeSupabaseUrl(supabaseUrl);
+  const key = String(serviceRoleKey || "").trim();
   if (!url || !key) return null;
   return createClient(url, key, { auth: { persistSession: false, autoRefreshToken: false } });
 }

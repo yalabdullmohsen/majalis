@@ -1,4 +1,5 @@
 import { getSupabaseAdmin } from "../supabase-admin.mjs";
+import { getEnvStatus } from "../env-config.mjs";
 import {
   aiAnalyzeContent,
   calculateQualityScore,
@@ -83,28 +84,65 @@ function shouldAutoPublish(record, source) {
 }
 
 async function ensureTrustedSources(supabase, logger) {
-  const { data: existing, error } = await supabase.from("trusted_sources").select("id").limit(1);
+  const { data: existing, error } = await supabase.from("trusted_sources").select("id, name, url, is_active");
   if (error) throw new Error(`Database error loading sources: ${error.message}`);
-  if (existing && existing.length > 0) {
-    logger.log("sources", `Loaded existing sources from database`);
-    return false;
+
+  if (!existing || existing.length === 0) {
+    logger.warn("sources", "No Sources in database — seeding official trusted sources...");
+    const rows = OFFICIAL_TRUSTED_SOURCES.map((s) => ({
+      name: s.name,
+      source_type: s.source_type,
+      url: s.url,
+      category: s.category,
+      trust_level: s.trust_level,
+      is_active: s.is_active !== false,
+    }));
+    const { error: seedError } = await supabase.from("trusted_sources").upsert(rows, { onConflict: "url" });
+    if (seedError) throw new Error(`Failed to seed sources: ${seedError.message}`);
+    logger.log("sources", `Seeded ${rows.length} official trusted sources`);
+    return true;
   }
 
-  logger.warn("sources", "No Sources in database — seeding official trusted sources...");
-  const rows = OFFICIAL_TRUSTED_SOURCES.map((s) => ({
-    name: s.name,
-    source_type: s.source_type,
-    url: s.url,
-    category: s.category,
-    trust_level: s.trust_level,
-    is_active: s.is_active !== false,
-  }));
+  let updated = 0;
+  for (const official of OFFICIAL_TRUSTED_SOURCES) {
+    const match = (existing || []).find(
+      (row) =>
+        row.name === official.name ||
+        row.url === official.url ||
+        (official.official_site && String(row.url || "").includes(new URL(official.official_site).hostname)),
+    );
 
-  const { error: seedError } = await supabase.from("trusted_sources").upsert(rows, { onConflict: "url" });
-  if (seedError) throw new Error(`Failed to seed sources: ${seedError.message}`);
+    const payload = {
+      name: official.name,
+      source_type: official.source_type,
+      url: official.url,
+      category: official.category,
+      trust_level: official.trust_level,
+      is_active: official.is_active !== false,
+      updated_at: new Date().toISOString(),
+    };
 
-  logger.log("sources", `Seeded ${rows.length} official trusted sources`);
-  return true;
+    if (match) {
+      const needsUpdate =
+        match.url !== official.url ||
+        match.is_active !== (official.is_active !== false) ||
+        match.name !== official.name;
+      if (needsUpdate) {
+        await supabase.from("trusted_sources").update(payload).eq("id", match.id);
+        updated += 1;
+      }
+    } else {
+      await supabase.from("trusted_sources").insert(payload);
+      updated += 1;
+    }
+  }
+
+  if (updated > 0) {
+    logger.log("sources", `Synced ${updated} official source(s) — URLs and active flags updated`);
+  } else {
+    logger.log("sources", "Loaded existing sources from database");
+  }
+  return updated > 0;
 }
 
 async function processRssItem(supabase, source, rssItem, runId, logger) {
@@ -244,14 +282,7 @@ export async function runAutoContentSync({ triggerType = "cron" } = {}) {
   const logger = createPipelineLogger();
   logger.log("start", "Cron Started");
 
-  const envStatus = {
-    SUPABASE_URL: Boolean(process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL),
-    SUPABASE_SERVICE_ROLE_KEY: Boolean(process.env.SUPABASE_SERVICE_ROLE_KEY),
-    SUPABASE_ANON_KEY: Boolean(process.env.SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY),
-    CRON_SECRET: Boolean(process.env.CRON_SECRET),
-    OPENAI_API_KEY: Boolean(process.env.OPENAI_API_KEY),
-    ANTHROPIC_API_KEY: Boolean(process.env.ANTHROPIC_API_KEY),
-  };
+  const envStatus = getEnvStatus();
   logger.log("env", "Loaded Environment", { detail: envStatus });
 
   const supabase = getSupabaseAdmin();
@@ -510,14 +541,7 @@ export async function getAutoContentHealth() {
   const logger = createPipelineLogger();
   const supabase = getSupabaseAdmin();
 
-  const env = {
-    SUPABASE_URL: Boolean(process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL),
-    SUPABASE_SERVICE_ROLE_KEY: Boolean(process.env.SUPABASE_SERVICE_ROLE_KEY),
-    SUPABASE_ANON_KEY: Boolean(process.env.SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY),
-    CRON_SECRET: Boolean(process.env.CRON_SECRET),
-    OPENAI_API_KEY: Boolean(process.env.OPENAI_API_KEY),
-    ANTHROPIC_API_KEY: Boolean(process.env.ANTHROPIC_API_KEY),
-  };
+  const env = getEnvStatus();
 
   const health = {
     ok: true,

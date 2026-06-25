@@ -1,0 +1,75 @@
+import { useEffect, useState } from "react";
+import { Link } from "wouter";
+import { fetchLiveAutoContent, autoContentToUpdateItem } from "@/lib/auto-content-service";
+import type { MergedUpdateItem } from "@/lib/auto-content/auto-content-utils";
+import { displayText } from "@/lib/display-text";
+
+const TYPE_LABELS: Record<string, string> = {
+  fatwa: "فتوى",
+  decision: "قرار",
+  article: "مقال",
+  news: "خبر",
+  general: "تحديث",
+};
+
+function formatDate(iso?: string | null) {
+  if (!iso) return "";
+  try {
+    return new Intl.DateTimeFormat("ar-SA", { dateStyle: "medium" }).format(new Date(iso));
+  } catch {
+    return "";
+  }
+}
+
+export function HomeLatestUpdates() {
+  const [items, setItems] = useState<MergedUpdateItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let active = true;
+    fetchLiveAutoContent(6)
+      .then((data) => {
+        if (!active) return;
+        setItems(data.map(autoContentToUpdateItem));
+      })
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  if (loading || items.length === 0) return null;
+
+  return (
+    <section className="home-section" aria-labelledby="latest-updates-heading">
+      <div className="home-section-head">
+        <div>
+          <p className="home-eyebrow">محتوى موثّق</p>
+          <h2 id="latest-updates-heading">آخر التحديثات من المصادر الرسمية</h2>
+        </div>
+        <Link href="/updates" className="home-section-link">جميع التحديثات</Link>
+      </div>
+      <div className="home-more-grid">
+        {items.map((item) => (
+          <Link
+            key={item.id}
+            href={item.source_url || `/updates/auto/${item.slug}`}
+            className="home-more-card ui-card"
+          >
+            <span className="page-tag">{TYPE_LABELS[item.update_type] || "تحديث"}</span>
+            <strong>{displayText(item.title)}</strong>
+            {item.summary && <span>{displayText(item.summary.slice(0, 120))}{item.summary.length > 120 ? "…" : ""}</span>}
+            <span className="home-daily-meta">
+              {item.source_name && <span>{item.source_name}</span>}
+              {item.published_at && <span>{formatDate(item.published_at)}</span>}
+            </span>
+          </Link>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+export default HomeLatestUpdates;

@@ -1,12 +1,6 @@
 import { sendJson } from "../_http.js";
+import { validateCronAuth } from "../../lib/env-config.mjs";
 import { runFiqhLinkCheck } from "../../lib/fiqh-link-checker.mjs";
-
-function verifyCronAuth(req) {
-  if (req.headers["x-vercel-cron"] === "1") return true;
-  const secret = String(process.env.CRON_SECRET || "").trim();
-  if (!secret) return process.env.NODE_ENV !== "production";
-  return String(req.headers.authorization || "") === `Bearer ${secret}`;
-}
 
 export default async function handler(req, res) {
   if (req.method !== "GET" && req.method !== "POST") {
@@ -14,7 +8,7 @@ export default async function handler(req, res) {
     return;
   }
 
-  if (!verifyCronAuth(req)) {
+  if (!validateCronAuth(req)) {
     sendJson(res, 401, { ok: false, message: "غير مصرح." });
     return;
   }

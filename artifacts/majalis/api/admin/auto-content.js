@@ -1,22 +1,14 @@
 import { sendJson } from "../_http.js";
+import { validateAdminAuth } from "../../lib/env-config.mjs";
 import {
   runAutoContentSync,
   getAutoContentPipelineStats,
   getAutoContentHealth,
 } from "../../lib/auto-content/auto-content-sync.mjs";
-
-function verifyAdminAuth(req) {
-  if (req.headers["x-vercel-cron"] === "1") return true;
-
-  const secret = String(process.env.ADMIN_API_SECRET || process.env.CRON_SECRET || "").trim();
-  if (!secret) return process.env.NODE_ENV !== "production";
-
-  const auth = String(req.headers.authorization || "").replace("Bearer ", "").trim();
-  return auth === secret;
-}
+import { getSystemHealth } from "../../lib/system-health.mjs";
 
 export default async function handler(req, res) {
-  if (!verifyAdminAuth(req)) {
+  if (!validateAdminAuth(req)) {
     sendJson(res, 401, { ok: false, error: "Unauthorized" });
     return;
   }
@@ -39,6 +31,12 @@ export default async function handler(req, res) {
 
     if (action === "health") {
       const health = await getAutoContentHealth();
+      sendJson(res, health.ok ? 200 : 503, health);
+      return;
+    }
+
+    if (action === "system") {
+      const health = await getSystemHealth();
       sendJson(res, health.ok ? 200 : 503, health);
       return;
     }
