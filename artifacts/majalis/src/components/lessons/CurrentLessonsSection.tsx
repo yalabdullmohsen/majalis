@@ -14,13 +14,13 @@ export function CurrentLessonsSection() {
       <div className="la-section-bar">
         <div>
           <p className="la-section-bar__eyebrow">الدروس الحالية</p>
-          <h2 id="lesson-announcements-heading">إعلانات الالمجلس العلميية والبرامج التعليمية</h2>
+          <h2 id="lesson-announcements-heading">إعلانات المجلس العلمي والبرامج التعليمية</h2>
           <p className="la-section-bar__sub">
             عرض موحّد ونظيف للدروس: صورة الشيخ، الموعد، المكان، وروابط مباشرة للخريطة والبث
             والمادة العلمية — بدون الاعتماد على QR داخل الصورة.
           </p>
         </div>
-        <Link href="/announcements" className="la-section-bar__link">
+        <Link href="/lessons" className="la-section-bar__link">
           عرض الكل
         </Link>
       </div>
@@ -32,11 +32,11 @@ export function CurrentLessonsSection() {
       </div>
 
       <div className="home-container la-home-cta-row">
-        <Link href="/announcements" className="la-home-cta">
-          جميع إعلانات الدروس
+        <Link href="/lessons" className="la-home-cta">
+          جميع الدروس
         </Link>
-        <Link href="/courses" className="la-home-cta la-home-cta--outline">
-          الدورات الكاملة
+        <Link href="/lessons?tab=courses" className="la-home-cta la-home-cta--outline">
+          الدورات العلمية
         </Link>
       </div>
 

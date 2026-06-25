@@ -1,5 +1,7 @@
 import { format, parseISO } from "date-fns";
 import { arSA } from "date-fns/locale";
+import { formatSheikhName } from "@/lib/sheikh-name";
+import { cleanTimeText } from "@/lib/lesson-time";
 import {
   SCIENTIFIC_ANNOUNCEMENTS,
   type ScientificAnnouncement,
@@ -7,6 +9,14 @@ import {
 
 export type { ScientificAnnouncement, AnnouncementKind, BroadcastLink } from "./scientific-announcements-seed";
 export { SCIENTIFIC_ANNOUNCEMENTS };
+
+function normalizeAnnouncement(item: ScientificAnnouncement): ScientificAnnouncement {
+  return {
+    ...item,
+    sheikh: formatSheikhName(item.sheikh) || item.sheikh,
+    time: item.time ? cleanTimeText(item.time) : item.time,
+  };
+}
 
 const DAY_MAP: Record<string, number> = {
   الأحد: 0,
@@ -32,11 +42,12 @@ export type ScientificCalendarEvent = {
 };
 
 export function getScientificAnnouncements(): ScientificAnnouncement[] {
-  return SCIENTIFIC_ANNOUNCEMENTS;
+  return SCIENTIFIC_ANNOUNCEMENTS.map(normalizeAnnouncement);
 }
 
 export function getScientificAnnouncementById(id: string): ScientificAnnouncement | undefined {
-  return SCIENTIFIC_ANNOUNCEMENTS.find((item) => item.id === id);
+  const item = SCIENTIFIC_ANNOUNCEMENTS.find((entry) => entry.id === id);
+  return item ? normalizeAnnouncement(item) : undefined;
 }
 
 export function getLocationLabel(item: ScientificAnnouncement): string {
@@ -80,7 +91,7 @@ export function buildShareText(item: ScientificAnnouncement): string {
 }
 
 export function buildCalendarEventsFromAnnouncements(
-  items: ScientificAnnouncement[] = SCIENTIFIC_ANNOUNCEMENTS,
+  items: ScientificAnnouncement[] = getScientificAnnouncements(),
 ): ScientificCalendarEvent[] {
   const events: ScientificCalendarEvent[] = [];
 

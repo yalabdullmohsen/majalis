@@ -67,7 +67,7 @@ export function FavoriteButton({ contentType, contentId, className = "", compact
       aria-pressed={bookmarked}
       aria-label={bookmarked ? "إزالة من المفضلة" : "إضافة للمفضلة"}
     >
-      {bookmarked ? "في المفضلة" : "إضافة للمفضلة"}
+      {bookmarked ? (compact ? "محفوظ" : "في المفضلة") : compact ? "حفظ" : "إضافة للمفضلة"}
     </button>
   );
 }

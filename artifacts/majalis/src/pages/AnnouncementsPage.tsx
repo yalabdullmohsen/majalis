@@ -31,8 +31,8 @@ export default function AnnouncementsPage() {
         <div className="home-container la-page-hero__inner">
           <div className="la-page-hero__chips">
             <span className="la-ribbon">إعلانات الدروس</span>
-            <Link href="/courses" className="la-link-chip">
-              الدورات الكاملة
+            <Link href="/lessons?tab=courses" className="la-link-chip">
+              الدورات العلمية
             </Link>
           </div>
           <h1 className="la-page-title">إعلانات الدروس والدورات</h1>

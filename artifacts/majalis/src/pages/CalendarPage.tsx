@@ -56,7 +56,7 @@ function eventsFromLessons(lessons: KuwaitLessonRecord[]): CalendarEvent[] {
     time: l.time,
     day: l.day,
     description: l.note,
-    href: "/kuwait-lessons",
+    href: `/lessons/${l.id}`,
   }));
 }
 

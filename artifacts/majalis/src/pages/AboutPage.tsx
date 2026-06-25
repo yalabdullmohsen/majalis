@@ -30,7 +30,7 @@ export default function AboutPage() {
         <p>
           <Link href="/lessons">الدروس</Link>
           {" · "}
-          <Link href="/kuwait-lessons">دروس الكويت</Link>
+          <Link href="/lessons?tab=courses">الدورات العلمية</Link>
           {" · "}
           <Link href="/contact">تواصل معنا</Link>
         </p>

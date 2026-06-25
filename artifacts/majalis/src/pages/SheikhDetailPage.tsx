@@ -125,7 +125,7 @@ export default function SheikhDetailPage({ params }: { params: { id: string } })
                     <div><dt>الفترة</dt><dd>{formatPeriod(course)}</dd></div>
                   )}
                 </dl>
-                <Link href={`/courses#${course.id}`} className="ui-card-btn">
+                <Link href={`/lessons?tab=courses#${course.id}`} className="ui-card-btn">
                   عرض الدورة
                 </Link>
               </article>
@@ -151,7 +151,7 @@ export default function SheikhDetailPage({ params }: { params: { id: string } })
                     )}
                   </ul>
                 )}
-                <Link href={`/courses#${item.id}`} className="ui-card-btn">
+                <Link href={`/lessons?tab=courses#${item.id}`} className="ui-card-btn">
                   متابعة السلسلة
                 </Link>
               </article>

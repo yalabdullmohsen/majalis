@@ -127,7 +127,9 @@ export function CurrentLessonCard({ lesson, compact = false, showDetailsLink = t
     }
   };
 
-  const detailsHref = lesson.courseId ? `/courses#${lesson.courseId}` : "/announcements";
+  const detailsHref = lesson.courseId
+    ? `/lessons?tab=courses#${lesson.courseId}`
+    : "/lessons";
 
   return (
     <article className={compact ? "la-card la-card--compact" : "la-card"}>
@@ -139,8 +141,7 @@ export function CurrentLessonCard({ lesson, compact = false, showDetailsLink = t
         <div className="la-poster__hero">
           <div className="la-poster__avatar-col">
             <SheikhAvatar name={lesson.sheikhName} src={sheikhImage} size={compact ? 80 : 100} />
-            <p className="la-poster__honorific">فضيلة الشيخ</p>
-            <p className="la-poster__sheikh">{lesson.sheikhName}</p>
+            <p className="la-poster__sheikh">الشيخ: {lesson.sheikhName}</p>
           </div>
 
           <div className="la-poster__body">
