@@ -10,7 +10,15 @@ type Props = {
   onSubmit: (event: React.FormEvent) => void;
   bottomRef: RefObject<HTMLDivElement | null>;
   compact?: boolean;
+  onQuickPrompt?: (text: string) => void;
+  quickPrompts?: string[];
 };
+
+const DEFAULT_QUICK_PROMPTS = [
+  "ما حكم صيام يوم عرفة؟",
+  "ما هي أذكار الصباح؟",
+  "كيف أبدأ طلب العلم؟",
+];
 
 export function AssistantChatView({
   messages,
@@ -20,9 +28,27 @@ export function AssistantChatView({
   onSubmit,
   bottomRef,
   compact = false,
+  onQuickPrompt,
+  quickPrompts = DEFAULT_QUICK_PROMPTS,
 }: Props) {
+  const showPrompts = compact && onQuickPrompt && messages.length <= 1;
+
   return (
     <div className={`assistant-chat-view${compact ? " assistant-chat-view--compact" : ""}`}>
+      {showPrompts && (
+        <div className="assistant-quick-prompts assistant-quick-prompts--panel">
+          {quickPrompts.map((prompt) => (
+            <button
+              key={prompt}
+              type="button"
+              disabled={loading}
+              onClick={() => onQuickPrompt(prompt)}
+            >
+              {prompt}
+            </button>
+          ))}
+        </div>
+      )}
       <div className="assistant-messages" aria-live="polite">
         {messages.map((message) => (
           <article

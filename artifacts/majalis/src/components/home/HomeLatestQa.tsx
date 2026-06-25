@@ -32,8 +32,16 @@ export function HomeLatestQa() {
         <div className="home-qa-grid">
           {items.map((item) => (
             <Link key={item.id} href="/qa" className="home-qa-card ui-card">
-              <h3>{cleanDisplayText(item.question)}</h3>
-              {item.category && <span className="page-tag">{cleanDisplayText(item.category)}</span>}
+              <div className="home-qa-card__body">
+                <h3 className="home-qa-card__question">{cleanDisplayText(item.question)}</h3>
+              </div>
+              {(item.qa_categories?.name || item.category) && (
+                <footer className="home-qa-card__footer">
+                  <span className="home-qa-chip">
+                    {cleanDisplayText(item.qa_categories?.name || item.category)}
+                  </span>
+                </footer>
+              )}
             </Link>
           ))}
         </div>

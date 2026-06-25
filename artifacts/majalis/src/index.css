@@ -705,10 +705,13 @@ input, textarea, select { font-family: inherit; }
   transition: transform 0.16s ease, box-shadow 0.16s ease;
 }
 
-.home-miracle-card h3,
-.home-qa-card h3 {
+.home-miracle-card h3 {
   font-size: 1.12rem;
   margin: 0.75rem 0 0.3rem;
+}
+
+.home-qa-card__question {
+  margin: 0;
 }
 
 .home-fawaid-card {
@@ -723,8 +726,7 @@ input, textarea, select { font-family: inherit; }
   margin-bottom: 0.65rem;
 }
 
-.home-fawaid-card span,
-.home-qa-card span {
+.home-fawaid-card span {
   color: var(--majalis-brass-deep);
   font-size: 0.82rem;
   font-weight: 800;
@@ -7895,6 +7897,10 @@ input, textarea, select { font-family: inherit; }
 }
 
 .app-main {
+  padding-bottom: 0;
+}
+
+body.has-assistant-fab .app-main {
   padding-bottom: calc(var(--assistant-fab-size) + var(--assistant-fab-gap) + 0.5rem);
 }
 
@@ -7997,6 +8003,30 @@ body.assistant-panel-open {
   padding: 0.85rem 1rem 0.35rem;
   border-bottom: 1px solid var(--majalis-line);
   background: linear-gradient(180deg, #fff, var(--majalis-parchment-deep));
+}
+
+.assistant-panel__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-shrink: 0;
+}
+
+.assistant-panel__full-link {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--majalis-emerald-deep);
+  text-decoration: none;
+  padding: 0.35rem 0.55rem;
+  border-radius: 0.45rem;
+  border: 1px solid var(--majalis-line);
+  background: #fff;
+  white-space: nowrap;
+}
+
+.assistant-quick-prompts--panel {
+  border-bottom: 1px solid var(--majalis-line);
+  margin: 0;
 }
 
 .assistant-panel__eyebrow {

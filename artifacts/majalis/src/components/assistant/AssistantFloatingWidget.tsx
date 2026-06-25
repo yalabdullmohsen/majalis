@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useLocation } from "wouter";
+import { useEffect, useRef, useState } from "react";
+import { Link, useLocation } from "wouter";
 import { Sparkles, X } from "lucide-react";
 import { useAssistantChat } from "@/hooks/useAssistantChat";
 import { AssistantChatView } from "./AssistantChatView";
@@ -8,6 +8,7 @@ export function AssistantFloatingWidget() {
   const [location] = useLocation();
   const [open, setOpen] = useState(false);
   const chat = useAssistantChat();
+  const closeRef = useRef<HTMLButtonElement>(null);
 
   const hiddenOnPage = location === "/assistant" || location.startsWith("/admin");
 
@@ -16,12 +17,22 @@ export function AssistantFloatingWidget() {
   }, [location]);
 
   useEffect(() => {
+    if (hiddenOnPage) {
+      document.body.classList.remove("has-assistant-fab");
+      return;
+    }
+    document.body.classList.add("has-assistant-fab");
+    return () => document.body.classList.remove("has-assistant-fab");
+  }, [hiddenOnPage]);
+
+  useEffect(() => {
     if (!open) return;
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") setOpen(false);
     };
     document.body.classList.add("assistant-panel-open");
     window.addEventListener("keydown", onKeyDown);
+    closeRef.current?.focus();
     return () => {
       document.body.classList.remove("assistant-panel-open");
       window.removeEventListener("keydown", onKeyDown);
@@ -64,14 +75,20 @@ export function AssistantFloatingWidget() {
                 <p className="assistant-panel__eyebrow">إرشاد علمي</p>
                 <h2 id="assistant-panel-title">المساعد العلمي</h2>
               </div>
-              <button
-                type="button"
-                className="assistant-panel__close"
-                onClick={() => setOpen(false)}
-                aria-label="إغلاق"
-              >
-                <X size={20} aria-hidden="true" />
-              </button>
+              <div className="assistant-panel__actions">
+                <Link href="/assistant" className="assistant-panel__full-link" onClick={() => setOpen(false)}>
+                  صفحة كاملة
+                </Link>
+                <button
+                  ref={closeRef}
+                  type="button"
+                  className="assistant-panel__close"
+                  onClick={() => setOpen(false)}
+                  aria-label="إغلاق"
+                >
+                  <X size={20} aria-hidden="true" />
+                </button>
+              </div>
             </header>
             <p className="assistant-panel__intro">
               مساعد ذكي للإرشاد العلمي العام. الفتوى الخاصة تُعرض على عالم مختص.
@@ -83,6 +100,7 @@ export function AssistantFloatingWidget() {
               loading={chat.loading}
               onInputChange={chat.setInput}
               onSubmit={chat.submit}
+              onQuickPrompt={chat.sendQuestion}
               bottomRef={chat.bottomRef}
             />
           </section>
