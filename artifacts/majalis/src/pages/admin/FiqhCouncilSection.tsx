@@ -4,7 +4,13 @@ import {
   adminUpsertFiqhCouncilItem,
   adminDeleteFiqhCouncilItem,
   adminSetFiqhCouncilItemStatus,
+  adminGetFiqhCouncilSources,
+  adminGetFiqhSyncJobs,
+  adminGetFiqhSyncLogs,
+  adminTriggerFiqhSync,
+  adminArchiveFiqhCouncilItem,
 } from "@/lib/fiqh-council-supabase";
+import { getFiqhCouncilReviewItems } from "@/lib/fiqh-council-service";
 import {
   FIQH_COUNCIL_CATEGORIES,
   FIQH_ITEM_TYPES,
@@ -13,11 +19,15 @@ import {
   fiqhItemHref,
   type FiqhItemStatus,
   type FiqhItemType,
+  type FiqhCouncilSource,
+  type FiqhSyncJob,
 } from "@/lib/fiqh-council-types";
 import { C } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
 import { AdminModal, Field, inputSt, selectSt, textareaSt } from "./AdminModal";
 import { useAdminShell } from "./AdminShell";
+
+type AdminTab = "items" | "review" | "sync";
 
 const EMPTY = {
   title: "",
@@ -33,6 +43,7 @@ const EMPTY = {
   session_number: "",
   session_date: "",
   tags: "",
+  evidence: "",
   status: "draft" as FiqhItemStatus,
 };
 
@@ -45,10 +56,31 @@ function slugify(title: string) {
     .slice(0, 80) || `fiqh-${Date.now()}`;
 }
 
+function parseEvidence(raw: string) {
+  if (!raw.trim()) return [];
+  return raw.split("\n").map((line) => {
+    const [type, ...rest] = line.split("|");
+    const text = rest.join("|").trim();
+    return { type: type.trim(), text };
+  }).filter((e) => e.text);
+}
+
+function formatEvidence(items?: { type?: string; text?: string; source?: string }[]) {
+  if (!items?.length) return "";
+  return items.map((e) => [e.type, e.text, e.source].filter(Boolean).join(" | ")).join("\n");
+}
+
 export function FiqhCouncilSection() {
   const { showSuccess, showError } = useAdminShell();
+  const [tab, setTab] = useState<AdminTab>("items");
   const [items, setItems] = useState<any[]>([]);
+  const [reviewItems, setReviewItems] = useState<any[]>([]);
+  const [sources, setSources] = useState<FiqhCouncilSource[]>([]);
+  const [syncJobs, setSyncJobs] = useState<FiqhSyncJob[]>([]);
+  const [syncLogs, setSyncLogs] = useState<any[]>([]);
+  const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [syncing, setSyncing] = useState(false);
   const [open, setOpen] = useState(false);
   const [previewSlug, setPreviewSlug] = useState<string | null>(null);
   const [form, setForm] = useState<any>(EMPTY);
@@ -57,20 +89,35 @@ export function FiqhCouncilSection() {
   const [filterType, setFilterType] = useState("الكل");
   const [adminSearch, setAdminSearch] = useState("");
 
-  const load = () => {
+  const loadItems = () => {
     setLoading(true);
-    adminGetAllFiqhCouncilItems()
-      .then(({ data, error, usingSeed }) => {
-        setItems(data);
-        if (error && usingSeed) showError("تعذّر تحميل البيانات — عرض البذور المحلية.");
-      })
-      .finally(() => setLoading(false));
+    Promise.all([
+      adminGetAllFiqhCouncilItems(),
+      getFiqhCouncilReviewItems(),
+      adminGetFiqhCouncilSources(),
+      adminGetFiqhSyncJobs(15),
+    ]).then(([allRes, reviewRes, sourcesRes, jobsRes]) => {
+      setItems(allRes.data);
+      setReviewItems(reviewRes.data);
+      setSources(sourcesRes.data);
+      setSyncJobs(jobsRes.data);
+      if (allRes.error && allRes.usingSeed) showError("تعذّر تحميل البيانات — عرض البذور المحلية.");
+    }).finally(() => setLoading(false));
   };
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => { loadItems(); }, []);
+
+  useEffect(() => {
+    if (!selectedJobId) {
+      setSyncLogs([]);
+      return;
+    }
+    adminGetFiqhSyncLogs(selectedJobId).then(({ data }) => setSyncLogs(data));
+  }, [selectedJobId]);
 
   const filtered = useMemo(() => {
-    return items.filter((item) => {
+    const pool = tab === "review" ? reviewItems : items;
+    return pool.filter((item) => {
       if (filterStatus !== "الكل" && item.status !== filterStatus) return false;
       if (filterType !== "الكل" && item.type !== filterType) return false;
       if (adminSearch.trim()) {
@@ -80,7 +127,7 @@ export function FiqhCouncilSection() {
       }
       return true;
     });
-  }, [items, filterStatus, filterType, adminSearch]);
+  }, [items, reviewItems, tab, filterStatus, filterType, adminSearch]);
 
   const set = (k: string, v: unknown) => setForm((f: any) => ({ ...f, [k]: v }));
 
@@ -91,6 +138,7 @@ export function FiqhCouncilSection() {
     const payload = {
       ...form,
       slug,
+      evidence: typeof form.evidence === "string" ? parseEvidence(form.evidence) : form.evidence,
       tags: String(form.tags || "")
         .split(/[,،]/)
         .map((t: string) => t.trim())
@@ -101,7 +149,7 @@ export function FiqhCouncilSection() {
     if (error) return showError(`تعذّر الحفظ: ${error.message}`);
     showSuccess("تم حفظ العنصر");
     setOpen(false);
-    load();
+    loadItems();
   };
 
   const handleDelete = async (id: string) => {
@@ -109,20 +157,62 @@ export function FiqhCouncilSection() {
     const { error } = await adminDeleteFiqhCouncilItem(id);
     if (error) showError(error.message);
     else showSuccess("تم الحذف");
-    load();
+    loadItems();
   };
 
   const handleStatus = async (id: string, status: FiqhItemStatus) => {
     const { error } = await adminSetFiqhCouncilItemStatus(id, status);
     if (error) showError(error.message);
     else showSuccess(status === "published" ? "تم النشر" : status === "archived" ? "تمت الأرشفة" : "تم تحديث الحالة");
-    load();
+    loadItems();
   };
+
+  const handleArchive = async (id: string) => {
+    const { error } = await adminArchiveFiqhCouncilItem(id);
+    if (error) showError(error.message);
+    else showSuccess("تمت الأرشفة");
+    loadItems();
+  };
+
+  const handleManualSync = async () => {
+    setSyncing(true);
+    const { ok, error, result } = await adminTriggerFiqhSync();
+    setSyncing(false);
+    if (!ok) return showError(error || "فشلت المزامنة");
+    showSuccess(`تمت المزامنة: ${JSON.stringify(result?.summary || result || "نجح")}`);
+    loadItems();
+  };
+
+  const renderItemCard = (item: any) => (
+    <div key={item.id} style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.375rem", padding: "1rem" }}>
+      <strong>{item.title}</strong>
+      <p style={{ margin: "0.5rem 0", fontSize: "0.875rem", color: C.inkSoft }}>
+        {FIQH_ITEM_TYPE_LABELS[item.type as FiqhItemType]} · {item.category} · {FIQH_ITEM_STATUS_LABELS[item.status as FiqhItemStatus] || item.status}
+        {item.validation_status && <> · تحقق: {item.validation_status}</>}
+        {item.external_id && <> · {item.external_id}</>}
+      </p>
+      <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+        <button onClick={() => { setForm({ ...item, tags: (item.tags || []).join("، "), evidence: formatEvidence(item.evidence) }); setOpen(true); }} style={{ fontSize: "0.75rem", cursor: "pointer" }}>تعديل</button>
+        {item.status !== "published" && (
+          <button onClick={() => handleStatus(item.id, "published")} style={{ fontSize: "0.75rem", cursor: "pointer" }}>نشر</button>
+        )}
+        {item.status === "published" && (
+          <button onClick={() => handleStatus(item.id, "draft")} style={{ fontSize: "0.75rem", cursor: "pointer" }}>إلغاء النشر</button>
+        )}
+        {item.status !== "archived" && (
+          <button onClick={() => handleArchive(item.id)} style={{ fontSize: "0.75rem", cursor: "pointer" }}>أرشفة</button>
+        )}
+        <button onClick={() => setPreviewSlug(item.slug)} style={{ fontSize: "0.75rem", cursor: "pointer" }}>معاينة</button>
+        <a href={fiqhItemHref(item.slug)} target="_blank" rel="noopener noreferrer" style={{ fontSize: "0.75rem" }}>فتح</a>
+        <button onClick={() => handleDelete(item.id)} style={{ fontSize: "0.75rem", color: "#dc2626", cursor: "pointer" }}>حذف</button>
+      </div>
+    </div>
+  );
 
   return (
     <div className="fiqh-council-admin">
       <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "1rem", flexWrap: "wrap", gap: "0.75rem" }}>
-        <h2 style={{ margin: 0, color: C.emeraldDeep }}>المجمع الفقهي ({filtered.length})</h2>
+        <h2 style={{ margin: 0, color: C.emeraldDeep }}>المجمع الفقهي الإسلامي ({filtered.length})</h2>
         <button
           onClick={() => { setForm({ ...EMPTY }); setOpen(true); }}
           style={{ padding: "0.5rem 1rem", background: C.emerald, color: C.parchment, border: "none", borderRadius: "0.375rem", cursor: "pointer" }}
@@ -131,49 +221,125 @@ export function FiqhCouncilSection() {
         </button>
       </div>
 
-      <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1rem" }}>
-        <select value={filterType} onChange={(e) => setFilterType(e.target.value)} style={selectSt}>
-          <option value="الكل">كل الأنواع</option>
-          {FIQH_ITEM_TYPES.map((t) => <option key={t} value={t}>{FIQH_ITEM_TYPE_LABELS[t]}</option>)}
-        </select>
-        <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)} style={selectSt}>
-          <option value="الكل">كل الحالات</option>
-          {Object.entries(FIQH_ITEM_STATUS_LABELS).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
-        </select>
-        <input
-          value={adminSearch}
-          onChange={(e) => setAdminSearch(e.target.value)}
-          placeholder="بحث..."
-          style={{ ...inputSt, flex: 1, minWidth: "140px" }}
-        />
+      <div className="fiqh-council-admin-tabs">
+        {([
+          ["items", `جميع العناصر (${items.length})`],
+          ["review", `قيد المراجعة (${reviewItems.length})`],
+          ["sync", "المزامنة"],
+        ] as const).map(([key, label]) => (
+          <button
+            key={key}
+            type="button"
+            className={tab === key ? "fiqh-council-admin-tab fiqh-council-admin-tab--active" : "fiqh-council-admin-tab"}
+            onClick={() => setTab(key)}
+          >
+            {label}
+          </button>
+        ))}
       </div>
 
-      {loading ? <Loading /> : (
-        <div style={{ display: "grid", gap: "0.75rem" }}>
-          {filtered.map((item) => (
-            <div key={item.id} style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.375rem", padding: "1rem" }}>
-              <strong>{item.title}</strong>
-              <p style={{ margin: "0.5rem 0", fontSize: "0.875rem", color: C.inkSoft }}>
-                {FIQH_ITEM_TYPE_LABELS[item.type as FiqhItemType]} · {item.category} · {FIQH_ITEM_STATUS_LABELS[item.status as FiqhItemStatus] || item.status}
-              </p>
-              <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
-                <button onClick={() => { setForm({ ...item, tags: (item.tags || []).join("، ") }); setOpen(true); }} style={{ fontSize: "0.75rem", cursor: "pointer" }}>تعديل</button>
-                {item.status !== "published" && (
-                  <button onClick={() => handleStatus(item.id, "published")} style={{ fontSize: "0.75rem", cursor: "pointer" }}>نشر</button>
-                )}
-                {item.status === "published" && (
-                  <button onClick={() => handleStatus(item.id, "draft")} style={{ fontSize: "0.75rem", cursor: "pointer" }}>إلغاء النشر</button>
-                )}
-                {item.status !== "archived" && (
-                  <button onClick={() => handleStatus(item.id, "archived")} style={{ fontSize: "0.75rem", cursor: "pointer" }}>أرشفة</button>
-                )}
-                <button onClick={() => setPreviewSlug(item.slug)} style={{ fontSize: "0.75rem", cursor: "pointer" }}>معاينة</button>
-                <a href={fiqhItemHref(item.slug)} target="_blank" rel="noopener noreferrer" style={{ fontSize: "0.75rem" }}>فتح</a>
-                <button onClick={() => handleDelete(item.id)} style={{ fontSize: "0.75rem", color: "#dc2626", cursor: "pointer" }}>حذف</button>
+      {tab === "sync" ? (
+        <div style={{ display: "grid", gap: "1rem" }}>
+          <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", alignItems: "center" }}>
+            <button
+              onClick={handleManualSync}
+              disabled={syncing}
+              style={{ padding: "0.5rem 1rem", background: C.emerald, color: C.parchment, border: "none", borderRadius: "0.375rem", cursor: syncing ? "wait" : "pointer" }}
+            >
+              {syncing ? "جارٍ المزامنة..." : "تشغيل المزامنة يدوياً"}
+            </button>
+            <span style={{ fontSize: "0.8125rem", color: C.inkSoft }}>
+              المصادر الرسمية: {sources.length} · آخر عمليات: {syncJobs.length}
+            </span>
+          </div>
+
+          <section>
+            <h3 style={{ fontSize: "0.9375rem", color: C.emeraldDeep }}>المصادر الرسمية</h3>
+            {sources.length === 0 ? (
+              <p style={{ fontSize: "0.8125rem", color: C.inkSoft }}>لا توجد مصادر — نفّذ migration v6 على Supabase.</p>
+            ) : (
+              <div style={{ display: "grid", gap: "0.5rem" }}>
+                {sources.map((src) => (
+                  <div key={src.id} className="fiqh-sync-job">
+                    <strong>{src.name}</strong>
+                    <div style={{ color: C.inkSoft, marginTop: "0.25rem" }}>
+                      {src.organization} · {src.source_type} · {src.is_active ? "نشط" : "معطّل"}
+                      {src.last_sync_at && <> · آخر مزامنة: {new Date(src.last_sync_at).toLocaleString("ar")}</>}
+                    </div>
+                  </div>
+                ))}
               </div>
-            </div>
-          ))}
+            )}
+          </section>
+
+          <section>
+            <h3 style={{ fontSize: "0.9375rem", color: C.emeraldDeep }}>سجل عمليات التحديث</h3>
+            {syncJobs.length === 0 ? (
+              <p style={{ fontSize: "0.8125rem", color: C.inkSoft }}>لا توجد عمليات مزامنة بعد.</p>
+            ) : (
+              <div style={{ display: "grid", gap: "0.5rem" }}>
+                {syncJobs.map((job) => (
+                  <button
+                    key={job.id}
+                    type="button"
+                    className="fiqh-sync-job"
+                    style={{ textAlign: "right", cursor: "pointer", width: "100%" }}
+                    onClick={() => setSelectedJobId(job.id === selectedJobId ? null : job.id)}
+                  >
+                    <strong>{job.status}</strong> · {job.trigger_type}
+                    <div style={{ color: C.inkSoft, marginTop: "0.25rem" }}>
+                      جلب: {job.total_fetched} · جديد: {job.inserted_count} · تحديث: {job.updated_count} · تخطّي: {job.skipped_count} · تكرار: {job.duplicate_count} · أخطاء: {job.error_count}
+                      {job.created_at && <> · {new Date(job.created_at).toLocaleString("ar")}</>}
+                    </div>
+                  </button>
+                ))}
+              </div>
+            )}
+          </section>
+
+          {selectedJobId && syncLogs.length > 0 && (
+            <section>
+              <h3 style={{ fontSize: "0.9375rem", color: C.emeraldDeep }}>تفاصيل السجل</h3>
+              <div style={{ display: "grid", gap: "0.35rem", maxHeight: "16rem", overflowY: "auto" }}>
+                {syncLogs.map((log: any) => (
+                  <div key={log.id} className="fiqh-sync-job" style={{ fontSize: "0.75rem" }}>
+                    [{log.level || log.status}] {log.message || log.action}
+                    {log.external_id && <> · {log.external_id}</>}
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
         </div>
+      ) : (
+        <>
+          <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1rem" }}>
+            <select value={filterType} onChange={(e) => setFilterType(e.target.value)} style={selectSt}>
+              <option value="الكل">كل الأنواع</option>
+              {FIQH_ITEM_TYPES.map((t) => <option key={t} value={t}>{FIQH_ITEM_TYPE_LABELS[t]}</option>)}
+            </select>
+            <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)} style={selectSt}>
+              <option value="الكل">كل الحالات</option>
+              {Object.entries(FIQH_ITEM_STATUS_LABELS).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
+            </select>
+            <input
+              value={adminSearch}
+              onChange={(e) => setAdminSearch(e.target.value)}
+              placeholder="بحث..."
+              style={{ ...inputSt, flex: 1, minWidth: "140px" }}
+            />
+          </div>
+
+          {loading ? <Loading /> : (
+            <div style={{ display: "grid", gap: "0.75rem" }}>
+              {filtered.length === 0 ? (
+                <p style={{ color: C.inkSoft, fontSize: "0.875rem" }}>
+                  {tab === "review" ? "لا توجد عناصر بانتظار المراجعة." : "لا توجد عناصر."}
+                </p>
+              ) : filtered.map(renderItemCard)}
+            </div>
+          )}
+        </>
       )}
 
       {previewSlug && (
@@ -201,6 +367,9 @@ export function FiqhCouncilSection() {
         <Field label="الملخص"><textarea style={textareaSt} value={form.summary || ""} onChange={(e) => set("summary", e.target.value)} rows={2} /></Field>
         <Field label="المحتوى"><textarea style={textareaSt} value={form.content || ""} onChange={(e) => set("content", e.target.value)} rows={5} /></Field>
         <Field label="نص الحكم / الفتوى"><textarea style={textareaSt} value={form.ruling_text || ""} onChange={(e) => set("ruling_text", e.target.value)} rows={3} /></Field>
+        <Field label="الأدلة (نوع|نص|مصدر — سطر لكل دليل)">
+          <textarea style={textareaSt} value={form.evidence || ""} onChange={(e) => set("evidence", e.target.value)} rows={3} placeholder="قرآن|يَا أَيُّهَا..." />
+        </Field>
         <Field label="المصدر"><input style={inputSt} value={form.source_name || ""} onChange={(e) => set("source_name", e.target.value)} /></Field>
         <Field label="رابط المصدر"><input style={inputSt} value={form.source_url || ""} onChange={(e) => set("source_url", e.target.value)} /></Field>
         <Field label="المجلس"><input style={inputSt} value={form.council_name || ""} onChange={(e) => set("council_name", e.target.value)} /></Field>

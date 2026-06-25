@@ -8706,8 +8706,14 @@ body.assistant-panel-open {
   text-decoration: none;
 }
 
-.fiqh-council-subnav-link:hover {
+.fiqh-council-subnav-link:hover,
+.fiqh-council-subnav-link--active {
   background: rgba(22, 78, 60, 0.06);
+}
+
+.fiqh-council-subnav-link--active {
+  border-color: rgba(22, 78, 60, 0.35);
+  font-weight: 700;
 }
 
 .fiqh-council-section {
@@ -8807,6 +8813,99 @@ body.assistant-panel-open {
   margin: 0.75rem 0 0;
   font-size: 0.8125rem;
   color: #6b7280;
+}
+
+.fiqh-search-box {
+  position: relative;
+  margin: 0 0 1.25rem;
+}
+
+.fiqh-search-dropdown {
+  position: absolute;
+  inset-inline: 0;
+  top: calc(100% + 0.35rem);
+  z-index: 40;
+  max-height: 22rem;
+  overflow-y: auto;
+  padding: 0.65rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(22, 78, 60, 0.12);
+  background: #fff;
+  box-shadow: 0 12px 32px rgba(36, 31, 24, 0.12);
+}
+
+.fiqh-search-hint {
+  margin: 0.35rem 0;
+  font-size: 0.8125rem;
+  color: #6b7280;
+}
+
+.fiqh-search-label {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.fiqh-search-suggestions {
+  margin-bottom: 0.65rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid rgba(22, 78, 60, 0.08);
+}
+
+.fiqh-search-result {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.55rem 0.65rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.fiqh-search-result:hover {
+  background: rgba(22, 78, 60, 0.05);
+}
+
+.fiqh-search-result strong {
+  color: var(--fiqh-accent, #164e3c);
+  font-size: 0.875rem;
+}
+
+.fiqh-search-result span {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.fiqh-council-admin-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.fiqh-council-admin-tab {
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid rgba(22, 78, 60, 0.15);
+  background: #fff;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.8125rem;
+}
+
+.fiqh-council-admin-tab--active {
+  background: rgba(22, 78, 60, 0.08);
+  border-color: rgba(22, 78, 60, 0.3);
+  font-weight: 700;
+}
+
+.fiqh-sync-job {
+  padding: 0.85rem;
+  border: 1px solid rgba(22, 78, 60, 0.12);
+  border-radius: 0.5rem;
+  background: #fff;
+  font-size: 0.8125rem;
 }
 
 .updates-timeline {

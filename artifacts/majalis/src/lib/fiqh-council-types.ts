@@ -35,8 +35,47 @@ export type FiqhCouncilItem = {
   status?: FiqhItemStatus;
   views_count?: number;
   published_at?: string;
+  archived_at?: string;
+  external_id?: string;
+  source_id?: string;
+  content_hash?: string;
+  validation_status?: "pending" | "valid" | "invalid" | "needs_review";
+  validation_errors?: string[];
+  last_synced_at?: string;
+  sync_job_id?: string;
   created_at?: string;
   updated_at?: string;
+};
+
+export type FiqhCouncilSource = {
+  id: string;
+  slug: string;
+  name: string;
+  organization: string;
+  source_type: "json_manifest" | "rss" | "api" | "manual";
+  base_url: string;
+  feed_url?: string;
+  trust_level: "official" | "verified" | "disabled";
+  is_active: boolean;
+  last_sync_at?: string;
+  last_sync_status?: string;
+};
+
+export type FiqhSyncJob = {
+  id: string;
+  source_id?: string;
+  trigger_type: "cron" | "manual" | "retry";
+  status: "pending" | "running" | "completed" | "failed" | "partial";
+  started_at?: string;
+  finished_at?: string;
+  total_fetched: number;
+  inserted_count: number;
+  updated_count: number;
+  skipped_count: number;
+  duplicate_count: number;
+  error_count: number;
+  summary?: Record<string, unknown>;
+  created_at?: string;
 };
 
 export const FIQH_COUNCIL_CATEGORIES: FiqhCouncilCategory[] = [

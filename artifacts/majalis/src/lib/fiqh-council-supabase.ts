@@ -4,7 +4,7 @@ import {
   FIQH_COUNCIL_ALL_SEED,
   FIQH_COUNCIL_ADMIN_ONLY_SEED,
 } from "./fiqh-council-seed";
-import type { FiqhCouncilItem, FiqhItemStatus } from "./fiqh-council-types";
+import type { FiqhCouncilItem, FiqhItemStatus, FiqhCouncilSource, FiqhSyncJob } from "./fiqh-council-types";
 
 const TABLE = "fiqh_council_items";
 const now = () => new Date().toISOString();
@@ -83,6 +83,75 @@ export async function adminGetFiqhCouncilItemPreview(slug: string) {
 
 export function getAdminOnlySeedItems() {
   return FIQH_COUNCIL_ADMIN_ONLY_SEED;
+}
+
+export async function adminGetFiqhCouncilSources() {
+  const { data, error } = await supabase
+    .from("fiqh_council_sources")
+    .select("*")
+    .order("name");
+  if (error) {
+    if (isMissingTableError(error)) return { data: [] as FiqhCouncilSource[], error: null };
+    return { data: [], error };
+  }
+  return { data: (data || []) as FiqhCouncilSource[], error: null };
+}
+
+export async function adminGetFiqhSyncJobs(limit = 20) {
+  const { data, error } = await supabase
+    .from("fiqh_council_sync_jobs")
+    .select("*, fiqh_council_sources(name, slug)")
+    .order("created_at", { ascending: false })
+    .limit(limit);
+  if (error) {
+    if (isMissingTableError(error)) return { data: [] as FiqhSyncJob[], error: null };
+    return { data: [], error };
+  }
+  return { data: (data || []) as FiqhSyncJob[], error: null };
+}
+
+export async function adminGetFiqhSyncLogs(jobId: string, limit = 50) {
+  const { data, error } = await supabase
+    .from("fiqh_council_sync_logs")
+    .select("*")
+    .eq("job_id", jobId)
+    .order("created_at", { ascending: false })
+    .limit(limit);
+  if (error) {
+    if (isMissingTableError(error)) return { data: [], error: null };
+    return { data: [], error };
+  }
+  return { data: data || [], error: null };
+}
+
+export async function adminTriggerFiqhSync(sourceSlugs?: string[]) {
+  const { data: { session } } = await supabase.auth.getSession();
+  const token = session?.access_token;
+  if (!token) return { ok: false, error: "يجب تسجيل الدخول" };
+
+  const res = await fetch("/api/admin/sync-fiqh-council", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ sourceSlugs: sourceSlugs || null }),
+  });
+
+  const json = await res.json().catch(() => ({}));
+  if (!res.ok) return { ok: false, error: json.message || "فشلت المزامنة" };
+  return { ok: true, result: json };
+}
+
+export async function adminArchiveFiqhCouncilItem(id: string) {
+  if (String(id).startsWith("seed-")) {
+    return { data: null, error: { message: "لا يمكن أرشفة بيانات البذور المحلية" } };
+  }
+  return await supabase.from(TABLE).update({
+    status: "archived",
+    archived_at: now(),
+    updated_at: now(),
+  }).eq("id", id);
 }
 
 // Legacy wrappers for fiqh_council_decisions table (kept for other admin sections)

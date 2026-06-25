@@ -19,7 +19,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { href: "/search", label: "البحث" },
       { href: "/lessons", label: "الدروس" },
       { href: "/annual-courses", label: "الدورات العلمية" },
-      { href: "/fiqh-council", label: "المجمع الفقهي" },
+      { href: "/fiqh-council", label: "المجمع الفقهي الإسلامي" },
       { href: "/fatwa", label: "الفتاوى" },
       { href: "/rulings", label: "الأحكام الشرعية" },
       { href: "/updates", label: "آخر المستجدات" },
@@ -74,6 +74,7 @@ export const NAV_GROUPS: NavGroup[] = [
 export const PRIMARY_NAV = [
   { href: "/", label: "الرئيسية" },
   { href: "/lessons", label: "الدروس" },
+  { href: "/fiqh-council", label: "المجمع الفقهي الإسلامي" },
   { href: "/quran", label: "القرآن" },
   { href: "/adhkar", label: "الأذكار" },
   { href: "/prayer-times", label: "الصلاة" },
@@ -132,7 +133,7 @@ export const HOME_FEATURE_CARDS = [
 
 export const HOME_MORE_SECTIONS = [
   { href: "/lessons", title: "الدروس", description: "دروس ودورات ومحاضرات" },
-  { href: "/fiqh-council", title: "المجمع الفقهي", description: "قرارات وبحوث فقهية" },
+  { href: "/fiqh-council", title: "المجمع الفقهي الإسلامي", description: "قرارات وفتاوى وتوصيات رسمية" },
   { href: "/fatwa", title: "الفتاوى", description: "مركز الفتاوى الشرعية" },
   { href: "/rulings", title: "الأحكام الشرعية", description: "مكتبة الأحكام والأدلة" },
   { href: "/annual-courses", title: "الدورات العلمية", description: "برامج ودورات سنوية" },

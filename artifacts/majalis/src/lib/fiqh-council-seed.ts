@@ -5,6 +5,7 @@ export const FIQH_COUNCIL_PUBLISHED_SEED: FiqhCouncilItem[] = [
   {
     id: "seed-fiqh-crypto-2024",
     slug: "fiqh-crypto-2024",
+    external_id: "seed:fiqh-crypto-2024",
     title: "حكم التعامل بالعملات الرقمية (المشفّرة)",
     summary: "بيان حول حكم التعامل بالعملات الرقمية من حيث البيع والشراء والاستثمار.",
     content: `قرّر المجمع الفقهي أن التعامل بالعملات الرقمية يخضع لأحكام العُملات والمعاملات المالية في الشريعة.
@@ -35,6 +36,7 @@ export const FIQH_COUNCIL_PUBLISHED_SEED: FiqhCouncilItem[] = [
   {
     id: "seed-fiqh-organ-donation",
     slug: "fiqh-organ-donation",
+    external_id: "seed:fiqh-organ-donation",
     title: "حكم التبرع بالأعضاء بعد الوفاة",
     summary: "توصية بشأن التبرع بالأعضاء لإنقاذ حياة المرضى وفق ضوابط شرعية.",
     content: `**التوصية:**
@@ -61,6 +63,7 @@ export const FIQH_COUNCIL_PUBLISHED_SEED: FiqhCouncilItem[] = [
   {
     id: "seed-fiqh-minorities-rights",
     slug: "fiqh-minorities-rights",
+    external_id: "seed:fiqh-minorities-rights",
     title: "حقوق الأقليات المسلمة في البلدان غير الإسلامية",
     summary: "بيان يؤكّد حقوق المسلمين في ممارسة شعائرهم والحفاظ على هويتهم.",
     content: `**البيان:**
@@ -82,6 +85,7 @@ export const FIQH_COUNCIL_PUBLISHED_SEED: FiqhCouncilItem[] = [
   {
     id: "seed-fiqh-marriage-contract",
     slug: "fiqh-marriage-contract",
+    external_id: "seed:fiqh-marriage-contract",
     title: "ضوابط عقد النكاح الإلكتروني",
     summary: "بحث في صحة عقد النكاح عبر الوسائل الإلكترونية والشروط اللازمة.",
     content: `**البحث:**
@@ -103,6 +107,7 @@ export const FIQH_COUNCIL_PUBLISHED_SEED: FiqhCouncilItem[] = [
   {
     id: "seed-fiqh-zakat-stocks",
     slug: "fiqh-zakat-stocks",
+    external_id: "seed:fiqh-zakat-stocks",
     title: "زكاة الأسهم والصناديق الاستثمارية",
     summary: "قرار يبيّن كيفية إخراج زكاة الأسهم والصناديق الاستثمارية.",
     content: `**القرار:**
@@ -125,6 +130,7 @@ export const FIQH_COUNCIL_PUBLISHED_SEED: FiqhCouncilItem[] = [
   {
     id: "seed-fiqh-collective-fatwa-hajj",
     slug: "fiqh-collective-fatwa-hajj",
+    external_id: "seed:fiqh-collective-fatwa-hajj",
     title: "فتوى جماعية: حكم تأخير الحج لمن استطاع مادياً",
     summary: "فتوى جماعية بشأن وجوب الحج على الفور لمن توفرت شروطه.",
     content: `**الفتوى:**

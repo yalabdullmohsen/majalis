@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState, type ReactNode } from "react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { PageHeader, Loading, Empty } from "@/components/ui-common";
 import { PlatformContentCard } from "@/components/platform/ContentDetailLayout";
+import { FiqhCouncilSearchBox } from "@/components/fiqh-council/FiqhCouncilSearchBox";
 import { getFiqhCouncilItems, getFiqhCouncilCategoryCounts } from "@/lib/fiqh-council-service";
 import {
   FIQH_COUNCIL_CATEGORIES,
@@ -13,6 +14,35 @@ import {
   type FiqhCouncilCategory,
   type FiqhItemType,
 } from "@/lib/fiqh-council-types";
+
+const SUBNAV_LINKS = [
+  { href: "/fiqh-council", label: "الرئيسية" },
+  { href: "/fiqh-council/resolutions", label: "القرارات" },
+  { href: "/fiqh-council/fatwas", label: "الفتاوى" },
+  { href: "/fiqh-council/recommendations", label: "التوصيات" },
+  { href: "/fiqh-council/research", label: "البحوث" },
+  { href: "/fiqh-council/categories", label: "التصنيفات" },
+  { href: "/fiqh-council/archive", label: "الأرشيف" },
+] as const;
+
+export function FiqhCouncilSubnav() {
+  const [location] = useLocation();
+  return (
+    <nav className="fiqh-council-subnav" aria-label="أقسام المجمع الفقهي">
+      {SUBNAV_LINKS.map(({ href, label }) => (
+        <Link
+          key={href}
+          href={href}
+          className={location === href || location.startsWith(`${href}?`)
+            ? "fiqh-council-subnav-link fiqh-council-subnav-link--active"
+            : "fiqh-council-subnav-link"}
+        >
+          {label}
+        </Link>
+      ))}
+    </nav>
+  );
+}
 
 function useDebouncedValue<T>(value: T, delayMs = 350): T {
   const [debounced, setDebounced] = useState(value);
@@ -162,13 +192,7 @@ export function FiqhCouncilListPage({
     <div className="page-shell narrow content-hub-page fiqh-council-page">
       <PageHeader eyebrow={eyebrow} title={title} subtitle={subtitle} />
 
-      <nav className="fiqh-council-subnav" aria-label="أقسام المجمع الفقهي">
-        <Link href="/fiqh-council" className="fiqh-council-subnav-link">الرئيسية</Link>
-        <Link href="/fiqh-council/resolutions" className="fiqh-council-subnav-link">القرارات</Link>
-        <Link href="/fiqh-council/fatwas" className="fiqh-council-subnav-link">الفتاوى الجماعية</Link>
-        <Link href="/fiqh-council/research" className="fiqh-council-subnav-link">البحوث</Link>
-        <Link href="/fiqh-council/categories" className="fiqh-council-subnav-link">التصنيفات</Link>
-      </nav>
+      <FiqhCouncilSubnav />
 
       {extra}
 
@@ -217,34 +241,25 @@ export function FiqhCouncilHubPage() {
   const [latest, setLatest] = useState<any[]>([]);
   const [resolutions, setResolutions] = useState<any[]>([]);
   const [fatwas, setFatwas] = useState<any[]>([]);
+  const [recommendations, setRecommendations] = useState<any[]>([]);
   const [categoryCounts, setCategoryCounts] = useState<Record<string, number>>({});
-  const [search, setSearch] = useState("");
-  const [searchResults, setSearchResults] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const debouncedSearch = useDebouncedValue(search);
 
   useEffect(() => {
     Promise.all([
       getFiqhCouncilItems({ limit: 6 }),
       getFiqhCouncilItems({ type: "resolution", limit: 4 }),
       getFiqhCouncilItems({ type: "fatwa", limit: 4 }),
+      getFiqhCouncilItems({ type: "recommendation", limit: 4 }),
       getFiqhCouncilCategoryCounts(),
-    ]).then(([all, res, fat, counts]) => {
+    ]).then(([all, res, fat, rec, counts]) => {
       setLatest(all.data);
       setResolutions(res.data);
       setFatwas(fat.data);
+      setRecommendations(rec.data);
       setCategoryCounts(counts);
     }).finally(() => setLoading(false));
   }, []);
-
-  useEffect(() => {
-    if (!debouncedSearch.trim()) {
-      setSearchResults([]);
-      return;
-    }
-    getFiqhCouncilItems({ search: debouncedSearch, limit: 8 })
-      .then(({ data }) => setSearchResults(data));
-  }, [debouncedSearch]);
 
   return (
     <div className="page-shell narrow content-hub-page fiqh-council-page fiqh-council-hub">
@@ -254,38 +269,9 @@ export function FiqhCouncilHubPage() {
         subtitle={FIQH_COUNCIL_INTRO}
       />
 
-      <nav className="fiqh-council-subnav" aria-label="أقسام المجمع الفقهي">
-        <Link href="/fiqh-council/resolutions" className="fiqh-council-subnav-link">القرارات</Link>
-        <Link href="/fiqh-council/fatwas" className="fiqh-council-subnav-link">الفتاوى الجماعية</Link>
-        <Link href="/fiqh-council/research" className="fiqh-council-subnav-link">البحوث</Link>
-        <Link href="/fiqh-council/categories" className="fiqh-council-subnav-link">التصنيفات</Link>
-      </nav>
+      <FiqhCouncilSubnav />
 
-      <input
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        placeholder="ابحث في قرارات وفتاوى المجمع..."
-        className="page-search-input full content-hub-search"
-        aria-label="بحث في المجمع الفقهي"
-      />
-
-      {debouncedSearch.trim() && searchResults.length > 0 && (
-        <section className="fiqh-council-section">
-          <h2 className="fiqh-council-section-title">نتائج البحث</h2>
-          <div className="page-card-grid">
-            {searchResults.map((item) => (
-              <PlatformContentCard
-                key={item.slug}
-                href={fiqhItemHref(item.slug)}
-                title={item.title}
-                tag={FIQH_ITEM_TYPE_LABELS[item.type as FiqhItemType]}
-                meta={formatFiqhItemMeta(item)}
-                summary={item.summary}
-              />
-            ))}
-          </div>
-        </section>
-      )}
+      <FiqhCouncilSearchBox placeholder="ابحث في قرارات وفتاوى وتوصيات المجمع..." />
 
       {loading ? <Loading /> : (
         <>
@@ -329,6 +315,25 @@ export function FiqhCouncilHubPage() {
 
           <section className="fiqh-council-section">
             <div className="fiqh-council-section-header">
+              <h2 className="fiqh-council-section-title">أحدث التوصيات</h2>
+              <Link href="/fiqh-council/recommendations" className="fiqh-council-section-link">عرض الكل</Link>
+            </div>
+            <div className="page-card-grid">
+              {recommendations.map((item) => (
+                <PlatformContentCard
+                  key={item.slug}
+                  href={fiqhItemHref(item.slug)}
+                  title={item.title}
+                  tag={FIQH_ITEM_TYPE_LABELS.recommendation}
+                  meta={formatFiqhItemMeta(item)}
+                  summary={item.summary}
+                />
+              ))}
+            </div>
+          </section>
+
+          <section className="fiqh-council-section">
+            <div className="fiqh-council-section-header">
               <h2 className="fiqh-council-section-title">التصنيفات الفقهية</h2>
               <Link href="/fiqh-council/categories" className="fiqh-council-section-link">جميع التصنيفات</Link>
             </div>
@@ -345,6 +350,7 @@ export function FiqhCouncilHubPage() {
           <section className="fiqh-council-section">
             <div className="fiqh-council-section-header">
               <h2 className="fiqh-council-section-title">آخر المحتوى</h2>
+              <Link href="/fiqh-council/archive" className="fiqh-council-section-link">الأرشيف</Link>
             </div>
             <div className="page-card-grid">
               {latest.map((item) => (

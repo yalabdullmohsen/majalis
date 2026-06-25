@@ -1,0 +1,40 @@
+{
+  "source_slug": "islamweb-majlis",
+  "organization": "IslamWeb.net",
+  "trust_level": "official",
+  "items": [
+    {
+      "external_id": "islamweb-fiqh-crypto-2024",
+      "title": "حكم التعامل بالعملات الرقمية (المشفّرة)",
+      "type": "resolution",
+      "category": "الاقتصاد الإسلامي",
+      "summary": "بيان المجمع الفقهي حول التعامل بالعملات الرقمية — مرجع رسمي على IslamWeb.",
+      "source_url": "https://www.islamweb.net/fatwa/",
+      "source_name": "IslamWeb — المجمع الفقهي",
+      "session_date": "2024-03-15",
+      "tags": ["عملات رقمية", "اقتصاد"]
+    },
+    {
+      "external_id": "islamweb-fiqh-organ-donation",
+      "title": "حكم التبرع بالأعضاء بعد الوفاة",
+      "type": "recommendation",
+      "category": "الطب والنوازل",
+      "summary": "توصية المجمع الفقهي بشأن التبرع بالأعضاء وفق ضوابط شرعية.",
+      "source_url": "https://www.islamweb.net/fatwa/",
+      "source_name": "IslamWeb — المجمع الفقهي",
+      "session_date": "2023-11-08",
+      "tags": ["تبرع", "أعضاء"]
+    },
+    {
+      "external_id": "islamweb-fiqh-zakat-stocks",
+      "title": "زكاة الأسهم والصناديق الاستثمارية",
+      "type": "resolution",
+      "category": "الزكاة والوقف",
+      "summary": "قرار المجمع الفقهي حول زكاة الأسهم والصناديق الاستثمارية.",
+      "source_url": "https://www.islamweb.net/fatwa/",
+      "source_name": "IslamWeb — المجمع الفقهي",
+      "session_date": "2022-12-05",
+      "tags": ["زكاة", "أسهم"]
+    }
+  ]
+}
