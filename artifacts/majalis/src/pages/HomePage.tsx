@@ -10,12 +10,12 @@ import { HomeDailyAyah } from "@/components/home/HomeDailyAyah";
 import { HomeKuwaitLessons } from "@/components/home/HomeKuwaitLessons";
 
 const FEATURES = [
-  { href: "/lessons", icon: "📚", title: "الدروس والدورات", desc: "دروس علمية شرعية موثقة ومعتمدة" },
-  { href: "/kuwait-lessons", icon: "🕌", title: "دروس الكويت", desc: "مرجع شامل للدروس في مساجد الكويت" },
-  { href: "/library", icon: "🏛", title: "المكتبة العلمية", desc: "كتب ومتون وتفريغات ومقالات" },
-  { href: "/assistant", icon: "🤖", title: "المساعد العلمي", desc: "إرشاد ذكي للبحث داخل المنصة" },
-  { href: "/miracles", icon: "🌌", title: "الإعجاز العلمي", desc: "مقالات موثقة من الكتاب والسنة" },
-  { href: "/qa", icon: "❓", title: "الأسئلة والأجوبة", desc: "أجوبة علمية مدعمة بالأدلة" },
+  { href: "/lessons", title: "الدروس والدورات", desc: "دروس علمية شرعية موثقة ومعتمدة" },
+  { href: "/kuwait-lessons", title: "دروس الكويت", desc: "مرجع شامل للدروس في مساجد الكويت" },
+  { href: "/library", title: "المكتبة العلمية", desc: "كتب ومتون وتفريغات ومقالات" },
+  { href: "/assistant", title: "المساعد العلمي", desc: "إرشاد ذكي للبحث داخل المنصة" },
+  { href: "/miracles", title: "الإعجاز العلمي", desc: "مقالات موثقة من الكتاب والسنة" },
+  { href: "/qa", title: "الأسئلة والأجوبة", desc: "أجوبة علمية مدعمة بالأدلة" },
 ];
 
 const FALLBACK_LIBRARY = [
@@ -102,7 +102,6 @@ export default function HomePage() {
               <p className="home-maintenance-banner">{HOME_MAINTENANCE_MESSAGE}</p>
             </div>
             <form onSubmit={submitSearch} className="home-search" aria-label="البحث في المنصة">
-              <span aria-hidden="true">🔎</span>
               <input
                 value={term}
                 onChange={(e) => setTerm(e.target.value)}
@@ -136,7 +135,6 @@ export default function HomePage() {
               <div className="home-feature-grid home-feature-grid--compact">
                 {FEATURES.map((feature) => (
                   <Link key={feature.href} href={feature.href} className="ui-card home-feature-card">
-                    <span className="home-feature-icon" aria-hidden="true">{feature.icon}</span>
                     <h3>{feature.title}</h3>
                     <p>{feature.desc}</p>
                   </Link>
@@ -149,7 +147,6 @@ export default function HomePage() {
               <div className="home-library-grid">
                 {displayedLibrary.map((item: any) => (
                   <Link key={item.id} href="/library" className="ui-card home-library-card">
-                    <span className="home-library-icon">{item.type === "كتاب" ? "📕" : item.type === "متن" ? "📜" : "📝"}</span>
                     <div>
                       <span className="home-tag">{item.type || "مادة علمية"}</span>
                       <h3>{item.title}</h3>

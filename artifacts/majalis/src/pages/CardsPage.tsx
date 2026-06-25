@@ -14,42 +14,45 @@ type Template = {
   swatch: string;
 };
 
+const DEFAULT_QUOTE = "إنما الأعمال بالنيات، وإنما لكل امرئ ما نوى";
+const DEFAULT_SOURCE = "متفق عليه";
+
 const TEMPLATES: Template[] = [
   {
-    id: "emerald",
-    name: "أخضر المجلس",
-    bg: "linear-gradient(145deg, #164E3C 0%, #1F6E54 100%)",
-    textColor: "#FAF5EA",
-    subColor: "#CFE0D3",
-    border: "2px solid rgba(250, 245, 234, 0.35)",
-    swatch: "#164E3C",
-  },
-  {
-    id: "parchment",
-    name: "عاجي هادئ",
-    bg: "linear-gradient(180deg, #FAF5EA 0%, #F0E8D6 100%)",
-    textColor: "#164E3C",
-    subColor: "#5B5446",
-    border: "2px solid #E0D7C4",
-    swatch: "#FAF5EA",
-  },
-  {
-    id: "brass",
-    name: "ذهبي راقٍ",
-    bg: "linear-gradient(135deg, #241F18 0%, #3d3428 100%)",
-    textColor: "#B08D2E",
-    subColor: "#FAF5EA",
-    border: "2px solid #B08D2E",
-    swatch: "#241F18",
+    id: "classic_black",
+    name: "أسود هادئ",
+    bg: "linear-gradient(160deg, #0f0f0f 0%, #1a1a1a 100%)",
+    textColor: "#ffffff",
+    subColor: "#c9a962",
+    border: "1px solid rgba(201, 169, 98, 0.45)",
+    swatch: "#0f0f0f",
   },
   {
     id: "clean_white",
     name: "أبيض نظيف",
-    bg: "#FFFFFF",
+    bg: "#ffffff",
     textColor: "#164E3C",
     subColor: "#5B5446",
-    border: "2px solid #1F6E54",
-    swatch: "#FFFFFF",
+    border: "1px solid #164E3C",
+    swatch: "#ffffff",
+  },
+  {
+    id: "gold_elegant",
+    name: "ذهبي خفيف",
+    bg: "linear-gradient(135deg, #1a1814 0%, #2a241c 100%)",
+    textColor: "#d4b86a",
+    subColor: "#f5f0e6",
+    border: "1px solid #c9a962",
+    swatch: "#1a1814",
+  },
+  {
+    id: "emerald",
+    name: "أخضر داكن",
+    bg: "linear-gradient(145deg, #0d2e24 0%, #164E3C 100%)",
+    textColor: "#FAF5EA",
+    subColor: "#CFE0D3",
+    border: "1px solid rgba(250, 245, 234, 0.3)",
+    swatch: "#164E3C",
   },
 ];
 
@@ -60,8 +63,8 @@ const SIZE_MAP: Record<SizeKey, { width: number; height: number; label: string }
 };
 
 export default function CardsPage() {
-  const [quote, setQuote] = useState("إنما الأعمال بالنيات، وإنما لكل امرئ ما نوى");
-  const [source, setSource] = useState("متفق عليه");
+  const [quote, setQuote] = useState(DEFAULT_QUOTE);
+  const [source, setSource] = useState(DEFAULT_SOURCE);
   const [selectedTemplate, setSelectedTemplate] = useState(TEMPLATES[0]);
   const [size, setSize] = useState<SizeKey>("square");
   const [showLogo, setShowLogo] = useState(false);
@@ -75,6 +78,14 @@ export default function CardsPage() {
     [dimensions.width, dimensions.height]
   );
 
+  const resetForm = () => {
+    setQuote(DEFAULT_QUOTE);
+    setSource(DEFAULT_SOURCE);
+    setSelectedTemplate(TEMPLATES[0]);
+    setSize("square");
+    setShowLogo(false);
+  };
+
   const downloadCard = async () => {
     if (!cardRef.current) return;
     setIsGenerating(true);
@@ -85,7 +96,7 @@ export default function CardsPage() {
         backgroundColor: null,
       });
       const link = document.createElement("a");
-      link.download = `بطاقة-المجلس-${Date.now()}.png`;
+      link.download = `بطاقة-${Date.now()}.png`;
       link.href = canvas.toDataURL("image/png", 1.0);
       link.click();
     } finally {
@@ -97,9 +108,10 @@ export default function CardsPage() {
     <div dir="rtl" className="cards-page">
       <div className="cards-page-inner">
         <Link href="/" className="cards-back-link">
-          ← المجلس العلمي
+          المجلس العلمي
         </Link>
         <h1 className="cards-page-title">البطاقات الدعوية</h1>
+        <p className="cond-page-desc">صمّم بطاقة للمشاركة على واتساب وإنستغرام — بدون حقوق أو شعار افتراضي.</p>
 
         <div className="cards-layout">
           <div className="cards-controls">
@@ -155,16 +167,21 @@ export default function CardsPage() {
 
             <label className="cond-checkbox">
               <input type="checkbox" checked={showLogo} onChange={(e) => setShowLogo(e.target.checked)} />
-              <span>إظهار الشعار على البطاقة</span>
+              <span>إظهار الشعار (اختياري)</span>
             </label>
 
-            <button type="button" onClick={downloadCard} disabled={isGenerating} className="ui-card-btn cards-download-btn">
-              {isGenerating ? "جاري الإنشاء..." : "تحميل البطاقة PNG"}
-            </button>
+            <div className="template-action-row">
+              <button type="button" className="ui-card-btn template-btn template-btn--ghost" onClick={resetForm}>
+                إعادة ضبط
+              </button>
+              <button type="button" onClick={downloadCard} disabled={isGenerating} className="ui-card-btn template-btn template-btn--primary">
+                {isGenerating ? "جاري الإنشاء..." : "تحميل الصورة"}
+              </button>
+            </div>
           </div>
 
           <div className="cards-preview-wrap">
-            <h2>المعاينة</h2>
+            <h2>معاينة</h2>
             <div
               className="cards-preview-frame"
               style={{

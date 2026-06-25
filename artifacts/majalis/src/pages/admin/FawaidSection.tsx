@@ -93,12 +93,12 @@ export function FawaidSection() {
                   <div style={{ display: "flex", gap: "0.5rem" }}>
                     {item.status !== "approved" && (
                       <button onClick={() => moderate(item.id, "approved")} style={{ padding: "0.25rem 0.75rem", borderRadius: "0.25rem", background: C.emerald, color: C.parchment, border: "none", cursor: "pointer", fontSize: "0.75rem", fontFamily: "inherit" }}>
-                        قبول ✓
+                        قبول
                       </button>
                     )}
                     {item.status !== "rejected" && (
                       <button onClick={() => moderate(item.id, "rejected")} style={{ padding: "0.25rem 0.75rem", borderRadius: "0.25rem", background: C.panel, color: "#dc2626", border: `1px solid ${C.line}`, cursor: "pointer", fontSize: "0.75rem", fontFamily: "inherit" }}>
-                        رفض ✗
+                        رفض
                       </button>
                     )}
                     {item.status === "approved" && (

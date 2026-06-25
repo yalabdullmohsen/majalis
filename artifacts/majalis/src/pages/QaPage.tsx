@@ -2,9 +2,8 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   getQaCategories,
   getQaQuestions,
-  isSupabaseConfigured,
 } from "@/lib/supabase";
-import { C, QA_RULING_COLORS, QA_REVIEW_LABELS, QA_DISCLAIMER } from "@/lib/theme";
+import { C, QA_RULING_COLORS, QA_DISCLAIMER } from "@/lib/theme";
 import {
   PageHeader,
   Empty,
@@ -17,7 +16,6 @@ import { DEMO_QA, DEMO_QA_CATEGORIES, demoNoticeText, isDemoId } from "@/lib/dem
 function Disclaimer() {
   return (
     <div className="qa-disclaimer">
-      <span aria-hidden="true">⚠️</span>
       <p>{QA_DISCLAIMER}</p>
     </div>
   );
@@ -28,22 +26,6 @@ function RulingBadge({ ruling }: { ruling: string }) {
   return (
     <span className="qa-badge" style={{ background: c.bg, color: c.text }}>
       {ruling}
-    </span>
-  );
-}
-
-function ReviewBadge({ status }: { status: string }) {
-  const approved = status === "approved";
-  return (
-    <span
-      className="qa-badge"
-      style={{
-        background: approved ? "#D1FAE5" : "#FEF3C7",
-        color: approved ? "#065F46" : "#92400E",
-      }}
-    >
-      {approved ? "✓ " : "↻ "}
-      {QA_REVIEW_LABELS[status] || status}
     </span>
   );
 }
@@ -71,15 +53,9 @@ export default function QaPage() {
   const loadCategories = useCallback(async () => {
     setCategoriesLoading(true);
     try {
-      const { data, error: fetchError, usingDemo: demo } = await getQaCategories();
-      if (fetchError && !demo) {
-        setCategories(DEMO_QA_CATEGORIES.filter((c) => c.id !== "all"));
-        console.error("[majalis:QaPage] categories", fetchError);
-      } else {
-        setCategories(data);
-      }
-    } catch (err) {
-      console.error("[majalis:QaPage] categories", err);
+      const { data } = await getQaCategories();
+      setCategories(data?.length ? data : DEMO_QA_CATEGORIES.filter((c) => c.id !== "all"));
+    } catch {
       setCategories(DEMO_QA_CATEGORIES.filter((c) => c.id !== "all"));
     } finally {
       setCategoriesLoading(false);
@@ -93,10 +69,8 @@ export default function QaPage() {
         categoryId,
         search: debouncedSearch,
       });
-
-      setUsingDemo(demo);
+      setUsingDemo(Boolean(demo));
       setItems(data.length > 0 ? data : DEMO_QA);
-      if (data.length === 0) setUsingDemo(true);
     } catch {
       setUsingDemo(true);
       setItems(DEMO_QA);
@@ -115,7 +89,7 @@ export default function QaPage() {
 
   const chips = useMemo(
     () => [{ id: "all", name: "الكل" }, ...categories],
-    [categories]
+    [categories],
   );
 
   const emptyMessage = useMemo(() => {
@@ -123,19 +97,17 @@ export default function QaPage() {
       return `لا توجد أسئلة مطابقة لـ «${debouncedSearch.trim()}».`;
     }
     if (categoryId !== "all") {
-      return "لا توجد أسئلة في هذا التصنيف بعد.";
+      return "لا توجد أسئلة في هذا التصنيف.";
     }
-    return "لا توجد أسئلة منشورة بعد. سيتم عرض المحتوى فور إضافته من لوحة التحكم.";
+    return "لا توجد أسئلة منشورة.";
   }, [categoryId, debouncedSearch]);
 
-  const showDemoNotice = usingDemo;
-
   return (
-    <div className="page-shell narrow qa-page">
+    <div className="page-shell narrow content-hub-page qa-page">
       <PageHeader
         eyebrow="المجلس العلمي"
         title="الأسئلة والأجوبة الدينية"
-        subtitle="مجموعة من الأسئلة والأجوبة العلمية المدعّمة بالأدلة الشرعية والمراجع، مرتّبة حسب التصنيف."
+        subtitle="أسئلة وأجوبة علمية عامة مرتّبة حسب الأقسام."
       />
 
       <Disclaimer />
@@ -144,11 +116,11 @@ export default function QaPage() {
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         placeholder="ابحث في الأسئلة والأجوبة..."
-        className="page-search-input full qa-search-input"
+        className="page-search-input full content-hub-search"
         aria-label="بحث في الأسئلة والأجوبة"
       />
 
-      <div className="qa-chip-row">
+      <div className="content-hub-chips">
         {categoriesLoading ? (
           <QaSkeleton count={3} />
         ) : (
@@ -159,7 +131,7 @@ export default function QaPage() {
                 key={cat.id}
                 type="button"
                 onClick={() => setCategoryId(cat.id)}
-                className={active ? "qa-chip qa-chip--active" : "qa-chip"}
+                className={active ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
               >
                 {cat.name}
               </button>
@@ -168,81 +140,56 @@ export default function QaPage() {
         )}
       </div>
 
-      {showDemoNotice && <DemoNotice text={demoNoticeText("الأسئلة والأجوبة")} />}
-
-      {!isSupabaseConfigured() && !showDemoNotice && (
-        <p className="qa-config-hint">
-          Supabase غير مُعدّ — يُعرض محتوى تجريبي حتى يُفعَّل الاتصال بقاعدة البيانات.
-        </p>
-      )}
+      {usingDemo && <DemoNotice text={demoNoticeText("الأسئلة والأجوبة")} />}
 
       {loading ? (
-        <QaSkeleton count={5} />
+        <QaSkeleton count={6} />
       ) : items.length === 0 ? (
         <Empty text={emptyMessage} />
       ) : (
-        <>
-          <div className="qa-list">
-            {items.map((q: any) => {
-              const open = openId === q.id;
-              const catName = q.qa_categories?.name;
-              return (
-                <article key={q.id} className="qa-item">
-                  <button
-                    type="button"
-                    onClick={() => setOpenId(open ? null : q.id)}
-                    className={open ? "qa-item__head qa-item__head--open" : "qa-item__head"}
-                    aria-expanded={open}
-                  >
-                    <span className="qa-item__chevron" aria-hidden="true">
-                      ◂
-                    </span>
-                    <span className="qa-item__summary">
-                      <span className="qa-item__question">{q.question}</span>
-                      <span className="qa-item__meta">
-                        {catName && <span className="qa-item__category">{catName}</span>}
-                        {q.ruling_type && <RulingBadge ruling={q.ruling_type} />}
-                        {q.review_status && <ReviewBadge status={q.review_status} />}
-                      </span>
-                    </span>
-                  </button>
+        <div className="content-card-grid content-card-grid--qa">
+          {items.map((q: any) => {
+            const open = openId === q.id;
+            const catName = q.qa_categories?.name;
+            return (
+              <article key={q.id} className={`content-mini-card content-mini-card--qa${open ? " is-open" : ""}`}>
+                <button
+                  type="button"
+                  className="content-mini-card__head"
+                  onClick={() => setOpenId(open ? null : q.id)}
+                  aria-expanded={open}
+                >
+                  <span className="content-mini-card__question">{q.question}</span>
+                  <span className="content-mini-card__meta-row">
+                    {catName && <span className="content-mini-card__tag">{catName}</span>}
+                    {q.ruling_type && <RulingBadge ruling={q.ruling_type} />}
+                  </span>
+                </button>
 
-                  {open && (
-                    <div className="qa-item__body">
-                      <p className="qa-item__answer">{q.answer}</p>
-
-                      {q.evidence && (
-                        <div className="qa-item__evidence">
-                          <p className="qa-item__evidence-label">الدليل الشرعي</p>
-                          <p>{q.evidence}</p>
-                        </div>
-                      )}
-
-                      <div className="qa-item__footer">
-                        {q.reference ? (
-                          <p>
-                            <strong>المرجع:</strong> {q.reference}
-                          </p>
-                        ) : (
-                          <span />
-                        )}
-                        {q.created_at && (
-                          <p>{new Date(q.created_at).toLocaleDateString("ar-KW")}</p>
-                        )}
+                {open && (
+                  <div className="content-mini-card__details">
+                    <p className="content-mini-card__answer">{q.answer}</p>
+                    {q.evidence && (
+                      <div className="content-mini-card__evidence">
+                        <strong>الدليل:</strong> {q.evidence}
                       </div>
-
-                      {!isDemoId(q.id) && (
-                        <div className="qa-item__actions">
-                          <ContentActions contentType="qa" contentId={q.id} />
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </article>
-              );
-            })}
-          </div>
-        </>
+                    )}
+                    {q.reference && (
+                      <p className="content-mini-card__ref">
+                        <strong>المرجع:</strong> {q.reference}
+                      </p>
+                    )}
+                    {!isDemoId(q.id) && (
+                      <div className="content-mini-card__actions">
+                        <ContentActions contentType="qa" contentId={q.id} />
+                      </div>
+                    )}
+                  </div>
+                )}
+              </article>
+            );
+          })}
+        </div>
       )}
     </div>
   );

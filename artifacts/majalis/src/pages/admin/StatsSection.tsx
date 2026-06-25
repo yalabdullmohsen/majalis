@@ -53,7 +53,7 @@ export function StatsSection() {
 
       <div style={{ background: ready ? "#E8F5E9" : "#FEF3C7", border: `1px solid ${ready ? C.emerald : C.brass}`, borderRadius: "0.5rem", padding: "1.25rem", marginBottom: "1.5rem" }}>
         <h3 style={{ margin: "0 0 0.5rem", fontSize: "1rem", fontWeight: 700, color: ready ? C.emeraldDeep : "#92400E" }}>
-          {ready ? "جاهزية الإطلاق ✓" : "جاهزية الإطلاق — أقسام بحاجة إلى محتوى"}
+          {ready ? "جاهزية الإطلاق" : "جاهزية الإطلاق — أقسام بحاجة إلى محتوى"}
         </h3>
         {ready ? (
           <p style={{ margin: 0, color: C.emeraldDeep, fontSize: "0.875rem", lineHeight: "1.8" }}>

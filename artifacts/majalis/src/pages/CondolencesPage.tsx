@@ -28,6 +28,8 @@ export default function CondolencesPage() {
     setForm((prev) => ({ ...prev, [key]: value }));
   };
 
+  const resetForm = () => setForm(defaultCondolenceForm);
+
   const downloadImage = async () => {
     const el = exportRef.current ?? cardRef.current;
     if (!el) return;
@@ -59,7 +61,7 @@ export default function CondolencesPage() {
         <section className="ui-card cond-form-panel">
           <h1 className="cond-page-title">قوالب العزاء</h1>
           <p className="cond-page-desc">
-            اكتب البيانات ثم حمّل البطاقة للمشاركة في واتساب أو إنستغرام.
+            اكتب البيانات ثم حمّل البطاقة للمشاركة — بدون حقوق أو شعار افتراضي.
           </p>
 
           <div className="cond-form-fields">
@@ -125,17 +127,22 @@ export default function CondolencesPage() {
                 checked={form.showLogo}
                 onChange={(e) => update("showLogo", e.target.checked)}
               />
-              <span>إظهار الشعار على البطاقة</span>
+              <span>إظهار الشعار (اختياري)</span>
             </label>
 
-            <button
-              type="button"
-              onClick={downloadImage}
-              disabled={downloading}
-              className="ui-card-btn cond-download-btn"
-            >
-              {downloading ? "جارٍ التحميل..." : "تحميل الصورة PNG"}
-            </button>
+            <div className="template-action-row">
+              <button type="button" onClick={resetForm} className="ui-card-btn template-btn template-btn--ghost">
+                إعادة ضبط
+              </button>
+              <button
+                type="button"
+                onClick={downloadImage}
+                disabled={downloading}
+                className="ui-card-btn template-btn template-btn--primary"
+              >
+                {downloading ? "جارٍ التحميل..." : "تحميل الصورة"}
+              </button>
+            </div>
           </div>
         </section>
 

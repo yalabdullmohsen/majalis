@@ -7,7 +7,7 @@ import { C } from "@/lib/theme";
 const HIDDEN_NAV_HREFS = new Set(["/sheikhs", "/transcribe"]);
 
 const NEW_NAV_ITEMS = [
-  { href: "/cards", label: "🎨 البطاقات" },
+  { href: "/cards", label: "البطاقات" },
   { href: "/condolences", label: "قوالب العزاء" },
 ];
 
@@ -22,8 +22,8 @@ const TABS = [
   { href: "/miracles", label: "الإعجاز العلمي" },
   { href: "/fawaid", label: "الفوائد" },
   { href: "/qa", label: "الأسئلة والأجوبة" },
-  { href: "/quiz", label: "🏆 المسابقات" },
-  { href: "/transcribe", label: "🎙️ تفريغ" },
+  { href: "/quiz", label: "المسابقات" },
+  { href: "/transcribe", label: "تفريغ" },
   ...NEW_NAV_ITEMS,
   { href: "/assistant", label: "المساعد الذكي" },
   { href: "/about", label: "عن المنصة" },
@@ -71,8 +71,8 @@ function SearchBox({ onSubmitDone }: { onSubmitDone?: () => void }) {
         placeholder="بحث..."
         style={{ border: "none", outline: "none", background: "transparent", fontSize: "0.8125rem", fontFamily: "inherit", padding: "0.3rem 0.5rem", color: C.ink, width: "8.5rem" }}
       />
-      <button type="submit" aria-label="بحث" style={{ border: "none", background: C.emerald, color: C.parchment, borderRadius: "0.375rem", cursor: "pointer", padding: "0.3rem 0.55rem", fontSize: "0.8rem" }}>
-        🔍
+      <button type="submit" aria-label="بحث" style={{ border: "none", background: C.emerald, color: C.parchment, borderRadius: "0.375rem", cursor: "pointer", padding: "0.3rem 0.65rem", fontSize: "0.75rem", fontWeight: 700 }}>
+        بحث
       </button>
     </form>
   );
@@ -153,8 +153,8 @@ export default function NavBar() {
           ))}
 
           {isMobile && (
-            <button onClick={() => setOpen((o) => !o)} aria-label="القائمة" style={{ border: `1px solid ${C.line}`, background: C.panel, borderRadius: "0.5rem", padding: "0.4rem 0.6rem", cursor: "pointer", fontSize: "1.1rem", lineHeight: 1, color: C.emeraldDeep }}>
-              {open ? "✕" : "☰"}
+            <button onClick={() => setOpen((o) => !o)} aria-label={open ? "إغلاق القائمة" : "فتح القائمة"} style={{ border: `1px solid ${C.line}`, background: C.panel, borderRadius: "0.5rem", padding: "0.4rem 0.75rem", cursor: "pointer", fontSize: "0.8rem", fontWeight: 700, lineHeight: 1, color: C.emeraldDeep }}>
+              {open ? "إغلاق" : "القائمة"}
             </button>
           )}
         </div>

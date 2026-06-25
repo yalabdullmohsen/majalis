@@ -56,7 +56,8 @@ export const CondolenceCard = forwardRef<HTMLDivElement, Props>(function Condole
       }}
     >
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08),transparent_55%)]" />
-      <div className="pointer-events-none absolute inset-6 border border-white/25" />
+      <div className="pointer-events-none absolute inset-6 border border-white/20" />
+      <div className="pointer-events-none absolute inset-x-10 top-10 h-px bg-gradient-to-r from-transparent via-[#c9a962]/60 to-transparent" />
       <div className="pointer-events-none absolute left-8 top-8 h-16 w-16 border-l border-t border-white/50" />
       <div className="pointer-events-none absolute right-8 top-8 h-16 w-16 border-r border-t border-white/50" />
       <div className="pointer-events-none absolute bottom-8 left-8 h-16 w-16 border-b border-l border-white/50" />

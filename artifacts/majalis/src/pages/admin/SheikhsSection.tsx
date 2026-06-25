@@ -138,7 +138,7 @@ export function SheikhsSection() {
                   <td style={{ padding: "0.625rem 0.75rem", color: C.inkSoft }}>{item.city || "—"}</td>
                   <td style={{ padding: "0.625rem 0.75rem" }}>
                     <span style={{ padding: "0.125rem 0.5rem", borderRadius: "0.25rem", background: item.is_verified ? C.sage : C.parchmentDeep, color: item.is_verified ? C.emeraldDeep : C.inkSoft, fontSize: "0.75rem" }}>
-                      {item.is_verified ? "معتمد ✓" : "غير معتمد"}
+                      {item.is_verified ? "معتمد" : "غير معتمد"}
                     </span>
                   </td>
                   <td style={{ padding: "0.625rem 0.75rem", color: C.inkSoft, maxWidth: "180px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>

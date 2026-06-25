@@ -44,9 +44,11 @@ export default function NotificationBell() {
         type="button"
         onClick={() => setOpen(!open)}
         aria-label="الإشعارات"
-        className="relative p-2 rounded-full hover:bg-gray-100 transition-colors"
+        className="relative p-2 rounded-full hover:bg-gray-100 transition-colors notification-bell-btn"
       >
-        <span className="text-2xl">🔔</span>
+        <svg className="notification-bell-icon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+          <path fill="currentColor" d="M12 2a5 5 0 0 0-5 5v2.1c0 .9-.3 1.8-.9 2.5L4.8 14.2A1 1 0 0 0 5.7 16H18.3a1 1 0 0 0 .9-1.5l-1.3-2.6a4 4 0 0 1-.9-2.5V7a5 5 0 0 0-5-5zm0 20a2.5 2.5 0 0 0 2.45-2h-4.9A2.5 2.5 0 0 0 12 22z"/>
+        </svg>
         {unread > 0 && (
           <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
             {unread > 9 ? "9+" : unread}

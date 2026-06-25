@@ -68,36 +68,26 @@ export function HomePrayerTimes() {
 
   return (
     <section className="home-section" aria-labelledby="prayer-times-heading">
-      <div className="home-section-head">
-        <div>
-          <p className="home-eyebrow">الكويت – محافظة العاصمة</p>
-          <h2 id="prayer-times-heading">مواقيت الصلاة — الكويت</h2>
-          {data.date.readable && <p className="home-prayer-date">{data.date.readable}</p>}
-        </div>
-      </div>
+      <h2 id="prayer-times-heading" className="prayer-section-title">
+        مواقيت الصلاة في الكويت
+      </h2>
 
       {status && (
-        <div className="prayer-status-card ui-card">
-          <div className="prayer-status-grid">
-            <div className="prayer-status-block prayer-status-block--current">
-              <span className="prayer-status-label">الصلاة الحالية</span>
-              <strong>{status.current?.icon} {status.current?.name || "—"}</strong>
-              <span>{status.current?.time || "—"}</span>
+        <div className="prayer-status-card ui-card prayer-status-card--compact">
+          <div className="prayer-status-grid prayer-status-grid--three">
+            <div className="prayer-status-block prayer-status-block--previous">
+              <span className="prayer-status-label">الصلاة السابقة</span>
+              <strong>{status.previous?.name || "—"}</strong>
+              <span>{status.previous?.time || "—"}</span>
             </div>
             <div className="prayer-status-block prayer-status-block--next">
               <span className="prayer-status-label">الصلاة القادمة</span>
-              <strong>{status.next?.icon} {status.next?.name || "—"}</strong>
+              <strong>{status.next?.name || "—"}</strong>
               <span>{status.next?.time || "—"}</span>
             </div>
             <div className="prayer-status-block prayer-status-block--remaining">
               <span className="prayer-status-label">الوقت المتبقي</span>
               <strong className="prayer-countdown">{status.remainingLabel}</strong>
-              <span>حتى {status.next?.name || "الصلاة القادمة"}</span>
-            </div>
-            <div className="prayer-status-block prayer-status-block--previous">
-              <span className="prayer-status-label">الصلاة السابقة</span>
-              <strong>{status.previous?.icon} {status.previous?.name || "—"}</strong>
-              <span>{status.previous?.time || "—"}</span>
             </div>
           </div>
         </div>
@@ -105,14 +95,12 @@ export function HomePrayerTimes() {
 
       <div className="home-prayer-grid ui-card">
         {data.prayers.map((item) => {
-          const isCurrent = status?.current?.key === item.key;
           const isNext = status?.next?.key === item.key;
           return (
             <div
               key={item.key}
-              className={`home-prayer-cell${isCurrent ? " is-current" : ""}${isNext ? " is-next" : ""}`}
+              className={`home-prayer-cell${isNext ? " is-next" : ""}`}
             >
-              <span className="home-prayer-icon" aria-hidden="true">{item.icon}</span>
               <span className="home-prayer-name">{item.name}</span>
               <strong className="home-prayer-time">{item.time}</strong>
             </div>

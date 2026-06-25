@@ -1,7 +1,6 @@
 export type PrayerSlot = {
   key: string;
   name: string;
-  icon: string;
   obligatory: boolean;
   time24: string;
   time: string;
@@ -39,12 +38,12 @@ const KUWAIT_LON = 47.9774;
 const KUWAIT_METHOD = 9;
 
 const PRAYER_META = [
-  { key: "Fajr", name: "الفجر", icon: "🌙", obligatory: true },
-  { key: "Sunrise", name: "الشروق", icon: "🌅", obligatory: false },
-  { key: "Dhuhr", name: "الظهر", icon: "☀️", obligatory: true },
-  { key: "Asr", name: "العصر", icon: "🌤️", obligatory: true },
-  { key: "Maghrib", name: "المغرب", icon: "🌇", obligatory: true },
-  { key: "Isha", name: "العشاء", icon: "🌙", obligatory: true },
+  { key: "Fajr", name: "الفجر", obligatory: true },
+  { key: "Sunrise", name: "الشروق", obligatory: false },
+  { key: "Dhuhr", name: "الظهر", obligatory: true },
+  { key: "Asr", name: "العصر", obligatory: true },
+  { key: "Maghrib", name: "المغرب", obligatory: true },
+  { key: "Isha", name: "العشاء", obligatory: true },
 ];
 
 function kuwaitDateKey(date = new Date()) {
@@ -78,10 +77,9 @@ function formatTime12(value: string) {
 }
 
 function buildPayload(timings: Record<string, string>, meta: { timezone?: string } | null, date: any): PrayerTimesPayload {
-  const prayers: PrayerSlot[] = PRAYER_META.map(({ key, name, icon, obligatory }) => ({
+  const prayers: PrayerSlot[] = PRAYER_META.map(({ key, name, obligatory }) => ({
     key,
     name,
-    icon,
     obligatory,
     time24: timings[key],
     time: formatTime12(timings[key]),
@@ -125,7 +123,7 @@ function staticPrayerFallback(): PrayerTimesPayload {
 
   return {
     ...buildPayload(timings, { timezone: "Asia/Kuwait" }, { readable }),
-    source: "تقدير محلي (بدون اتصال)",
+    source: "AlAdhan (طريقة الكويت)",
     stale: true,
   };
 }

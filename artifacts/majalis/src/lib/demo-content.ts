@@ -1,4 +1,8 @@
 import { arabicMatchAny } from "./arabic-search";
+import { SEED_QA, QA_CATEGORIES, filterSeedQa } from "./qa-seed";
+import { SEED_FAWAID, FAWAID_CATEGORIES, filterSeedFawaid } from "./fawaid-seed";
+
+export { FAWAID_CATEGORIES, filterSeedFawaid };
 
 export const DEMO_LESSONS = [
   {
@@ -159,88 +163,14 @@ export const DEMO_MIRACLES = [
   },
 ];
 
-export const DEMO_FAWAID = [
-  {
-    id: "demo-fawaid-1",
-    text: "العلم ميراث النبوة، وكل مجلس علم خطوة إلى بصيرة أوسع.",
-    author_name: "المجلس العلمي",
-  },
-  {
-    id: "demo-fawaid-2",
-    text: "صلاح القلب يبدأ بسؤال صادق واتباع للدليل.",
-    author_name: "فائدة مختارة",
-  },
-  {
-    id: "demo-fawaid-3",
-    text: "من ثمرات طلب العلم: تواضع أكثر وخوف من الجهل.",
-    author_name: "فائدة مختارة",
-  },
-];
+export const DEMO_FAWAID = SEED_FAWAID;
 
-export const DEMO_QA = [
-  {
-    id: "demo-qa-1",
-    question: "ما أهمية طلب العلم الشرعي؟",
-    answer: "طلب العلم الشرعي فريضة على كل مسلم، وهو سبيل معرفة دين الله والعمل به على بصيرة.",
-    category_id: "demo-cat-1",
-    ruling_type: null,
-    evidence: "قال ﷺ: «طلب العلم فريضة على كل مسلم».",
-    reference: "سنن ابن ماجه",
-    status: "published",
-    review_status: "approved",
-    created_at: new Date().toISOString(),
-    qa_categories: { name: "تأصيل", slug: "foundations" },
-  },
-  {
-    id: "demo-qa-2",
-    question: "كيف أبدأ في حفظ القرآن؟",
-    answer: "ابدأ بسورة قصيرة مثل الفاتحة أو الإخلاص، وردّد على شيخ متقن، وثبّت المراجعة اليومية.",
-    category_id: "demo-cat-2",
-    ruling_type: "سنة",
-    evidence: null,
-    reference: null,
-    status: "published",
-    review_status: "approved",
-    created_at: new Date().toISOString(),
-    qa_categories: { name: "قرآن", slug: "quran" },
-  },
-  {
-    id: "demo-qa-3",
-    question: "ما حكم صيام يوم عرفة لغير الحاج؟",
-    answer: "صيام يوم عرفة لغير الحاج سنة مؤكدة، وهو من أفضل الأيام التي يُستحب صيامها.",
-    category_id: "demo-cat-3",
-    ruling_type: "سنة",
-    evidence: "عن أبي قتادة رضي الله عنه أن النبي ﷺ سُئل عن صوم يوم عرفة فقال: «يُكفِّر السنة الماضية والباقية».",
-    reference: "صحيح مسلم",
-    status: "published",
-    review_status: "approved",
-    created_at: new Date().toISOString(),
-    qa_categories: { name: "أحكام شرعية", slug: "rulings" },
-  },
-  {
-    id: "demo-qa-4",
-    question: "هل الصلاة واجبة؟",
-    answer: "نعم، الصلاة واجبة على كل مسلم بالغ عاقل، وهي ركن من أركان الإسلام.",
-    category_id: "demo-cat-3",
-    ruling_type: "حلال",
-    evidence: "قال تعالى: ﴿وَأَقِيمُوا الصَّلَاةَ وَآتُوا الزَّكَاةَ﴾",
-    reference: "القرآن الكريم",
-    status: "published",
-    review_status: "approved",
-    created_at: new Date().toISOString(),
-    qa_categories: { name: "أحكام شرعية", slug: "rulings" },
-  },
-];
+export const DEMO_QA = SEED_QA;
 
-export const DEMO_QA_CATEGORIES = [
-  { id: "all", name: "الكل" },
-  { id: "demo-cat-1", name: "تأصيل", slug: "foundations" },
-  { id: "demo-cat-2", name: "قرآن", slug: "quran" },
-  { id: "demo-cat-3", name: "أحكام شرعية", slug: "rulings" },
-];
+export const DEMO_QA_CATEGORIES = [{ id: "all", name: "الكل" }, ...QA_CATEGORIES];
 
 export function isDemoId(id: string) {
-  return id.startsWith("demo-");
+  return id.startsWith("demo-") || id.startsWith("seed-");
 }
 
 export function demoNoticeText(section: string) {
@@ -282,7 +212,7 @@ export function searchDemoContent(term: string): DemoSearchResults {
   );
 
   const fawaid = DEMO_FAWAID.filter((f) =>
-    arabicMatchAny([f.text, f.author_name], q)
+    arabicMatchAny([f.text, f.author_name, f.category, f.source], q)
   );
 
   return { lessons, library, miracles: [], sheikhs, qa, fawaid };
@@ -295,15 +225,5 @@ export function filterDemoQa({
   categoryId?: string;
   search?: string;
 }) {
-  let items = DEMO_QA.filter((q) => q.status === "published");
-  if (categoryId && categoryId !== "all") {
-    items = items.filter((q) => q.category_id === categoryId);
-  }
-  if (search?.trim()) {
-    const s = search.trim();
-    items = items.filter((q) =>
-      arabicMatchAny([q.question, q.answer, q.evidence, q.reference, q.qa_categories?.name], s)
-    );
-  }
-  return items;
+  return filterSeedQa({ categoryId, search });
 }

@@ -5048,3 +5048,242 @@ input, textarea, select { font-family: inherit; }
     grid-template-columns: 1fr;
   }
 }
+
+/* ── Prayer times (compact) ── */
+.prayer-section-title {
+  color: var(--majalis-emerald-deep);
+  font-size: clamp(1.25rem, 3vw, 1.5rem);
+  margin: 0 0 1rem;
+  font-weight: 700;
+}
+
+.prayer-status-grid--three {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+@media (max-width: 720px) {
+  .prayer-status-grid--three {
+    grid-template-columns: 1fr;
+  }
+}
+
+.home-prayer-cell.is-current {
+  background: transparent;
+}
+
+/* ── Content hub (QA + Fawaid) ── */
+.content-hub-page {
+  padding-bottom: 3rem;
+}
+
+.content-hub-search {
+  margin-bottom: 0.85rem;
+}
+
+.content-hub-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-bottom: 1.25rem;
+}
+
+.content-hub-chip {
+  border: 1px solid var(--majalis-line);
+  background: var(--majalis-panel);
+  color: var(--majalis-ink-soft);
+  border-radius: 999px;
+  padding: 0.4rem 0.85rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.content-hub-chip--active {
+  background: var(--majalis-emerald);
+  border-color: var(--majalis-emerald);
+  color: var(--majalis-parchment);
+}
+
+.content-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 0.85rem;
+}
+
+.content-card-grid--qa {
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+.content-mini-card {
+  border: 1px solid var(--majalis-line);
+  background: var(--majalis-panel);
+  border-radius: 0.85rem;
+  padding: 1rem 1.05rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  min-height: 100%;
+}
+
+.content-mini-card__tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--majalis-emerald-deep);
+  background: var(--majalis-sage);
+  border-radius: 999px;
+  padding: 0.15rem 0.55rem;
+}
+
+.content-mini-card__body,
+.content-mini-card__answer {
+  margin: 0;
+  color: var(--majalis-ink);
+  font-size: 0.92rem;
+  line-height: 1.75;
+}
+
+.content-mini-card__head {
+  border: none;
+  background: transparent;
+  padding: 0;
+  text-align: right;
+  cursor: pointer;
+  font-family: inherit;
+  width: 100%;
+}
+
+.content-mini-card__question {
+  display: block;
+  font-weight: 700;
+  color: var(--majalis-emerald-deep);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 0.45rem;
+}
+
+.content-mini-card__meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.content-mini-card__meta {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--majalis-ink-soft);
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.content-mini-card__toggle {
+  align-self: flex-start;
+  border: none;
+  background: transparent;
+  color: var(--majalis-emerald);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+  font-family: inherit;
+}
+
+.content-mini-card__details {
+  border-top: 1px solid var(--majalis-line);
+  padding-top: 0.65rem;
+}
+
+.content-mini-card__evidence,
+.content-mini-card__ref {
+  font-size: 0.85rem;
+  color: var(--majalis-ink-soft);
+  line-height: 1.7;
+  margin: 0.35rem 0 0;
+}
+
+.content-submit-panel {
+  margin-top: 2rem;
+  padding: 1.25rem;
+}
+
+.content-submit-panel h2 {
+  font-size: 1rem;
+  color: var(--majalis-emerald-deep);
+  margin: 0 0 1rem;
+}
+
+.content-submit-form textarea,
+.content-submit-form input {
+  width: 100%;
+  border: 1px solid var(--majalis-line);
+  border-radius: 0.65rem;
+  padding: 0.75rem;
+  margin-bottom: 0.65rem;
+  font-family: inherit;
+  background: var(--majalis-parchment);
+  color: var(--majalis-ink);
+}
+
+.content-submit-form button {
+  border: none;
+  background: var(--majalis-emerald);
+  color: var(--majalis-parchment);
+  border-radius: 0.5rem;
+  padding: 0.55rem 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.content-submit-error {
+  color: #b91c1c;
+  font-size: 0.875rem;
+  margin-bottom: 0.75rem;
+}
+
+.content-submit-success {
+  color: var(--majalis-emerald-deep);
+  font-size: 0.875rem;
+}
+
+/* ── Template actions ── */
+.template-action-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+}
+
+.template-btn {
+  width: 100%;
+  min-height: 44px;
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.template-btn--ghost {
+  background: var(--majalis-panel);
+  color: var(--majalis-ink);
+  border: 1px solid var(--majalis-line);
+}
+
+.template-btn--primary {
+  background: var(--majalis-emerald);
+  color: var(--majalis-parchment);
+}
+
+.notification-bell-icon {
+  color: var(--majalis-emerald-deep);
+}
+
+@media (max-width: 640px) {
+  .content-card-grid,
+  .content-card-grid--qa {
+    grid-template-columns: 1fr;
+  }
+
+  .template-action-row {
+    grid-template-columns: 1fr;
+  }
+}
