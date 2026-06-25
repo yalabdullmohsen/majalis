@@ -9,7 +9,7 @@ export type SearchSuggestion = {
   label: string;
   meta?: string;
   href: string;
-  group: "lessons" | "sheikhs" | "fawaid" | "qa" | "adhkar";
+  group: "lessons" | "fawaid" | "qa" | "adhkar";
 };
 
 const MAX_PER_GROUP = 4;
@@ -103,7 +103,6 @@ export function buildSearchSuggestions(query: string, limit = 12): SearchSuggest
 
 export const SUGGESTION_GROUP_LABELS: Record<SearchSuggestion["group"], string> = {
   lessons: "دروس",
-  sheikhs: "مشايخ",
   fawaid: "فوائد",
   qa: "أسئلة",
   adhkar: "أذكار",

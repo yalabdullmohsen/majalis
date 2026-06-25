@@ -41,7 +41,7 @@ function routeForPath(path: string) {
     return {
       ...requiredRoute("/search"),
       title: `نتائج البحث: ${term} | المجلس العلمي`,
-      description: `نتائج البحث عن «${term}» في الدروس والمشايخ والمكتبة والفوائد داخل المجلس العلمي.`,
+      description: `نتائج البحث عن «${term}» في الدروس والمكتبة والفوائد داخل المجلس العلمي.`,
       robots: "noindex, follow",
     };
   }

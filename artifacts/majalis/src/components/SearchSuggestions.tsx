@@ -19,7 +19,7 @@ export function SearchSuggestions({
   value,
   onChange,
   onSubmit,
-  placeholder = "ابحث في الدروس والمشايخ والفوائد والأسئلة والأذكار...",
+  placeholder = "ابحث في الدروس والفوائد والأسئلة والأذكار...",
   inputClassName = "",
   compact = false,
 }: Props) {
