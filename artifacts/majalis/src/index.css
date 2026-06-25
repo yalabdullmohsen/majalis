@@ -2695,6 +2695,278 @@ input, textarea, select { font-family: inherit; }
   }
 }
 
+/* ── Death announcement card (إعلان وفاة رسمي) ── */
+.cond-death {
+  --cond-scale: 1;
+  --cond-death-verse: 72px;
+  --cond-death-name: 58px;
+  --cond-death-address: 38px;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  background: #0a0a0a;
+  color: #fafafa;
+  direction: rtl;
+  text-align: center;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: geometricPrecision;
+}
+
+.cond-death__bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #070707 0%, #0f0f0f 50%, #0a0a0a 100%);
+  pointer-events: none;
+}
+
+.cond-death__frame {
+  position: absolute;
+  inset: calc(22px * var(--cond-scale));
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  pointer-events: none;
+}
+
+.cond-death__corner {
+  position: absolute;
+  width: calc(36px * var(--cond-scale));
+  height: calc(36px * var(--cond-scale));
+  color: rgba(255, 255, 255, 0.38);
+  pointer-events: none;
+}
+
+.cond-death__corner--tl {
+  top: calc(26px * var(--cond-scale));
+  right: calc(26px * var(--cond-scale));
+}
+
+.cond-death__corner--tr {
+  top: calc(26px * var(--cond-scale));
+  left: calc(26px * var(--cond-scale));
+  transform: scaleX(-1);
+}
+
+.cond-death__corner--bl {
+  bottom: calc(26px * var(--cond-scale));
+  right: calc(26px * var(--cond-scale));
+  transform: scaleY(-1);
+}
+
+.cond-death__corner--br {
+  bottom: calc(26px * var(--cond-scale));
+  left: calc(26px * var(--cond-scale));
+  transform: scale(-1, -1);
+}
+
+.cond-death__inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  box-sizing: border-box;
+  padding:
+    calc(48px * var(--cond-scale))
+    calc(52px * var(--cond-scale))
+    calc(44px * var(--cond-scale));
+  overflow: hidden;
+  gap: calc(12px * var(--cond-scale));
+}
+
+.cond-death__head {
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: 96%;
+}
+
+.cond-death__verse {
+  margin: 0;
+  font-family: "Aref Ruqaa", "Amiri", "Scheherazade New", "Noto Naskh Arabic", "Cairo", serif;
+  font-size: calc(var(--cond-death-verse) * var(--cond-scale));
+  font-weight: 700;
+  line-height: 1.42;
+  color: #ffffff;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.cond-death__body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 94%;
+  min-height: 0;
+  gap: calc(10px * var(--cond-scale));
+  overflow: hidden;
+}
+
+.cond-death__transition {
+  margin: 0;
+  font-family: "Aref Ruqaa", "Amiri", "Scheherazade New", "Noto Naskh Arabic", "Cairo", serif;
+  font-size: calc(42px * var(--cond-scale));
+  font-weight: 400;
+  line-height: 1.45;
+  color: #f5f5f5;
+}
+
+.cond-death__name {
+  margin: calc(4px * var(--cond-scale)) 0;
+  font-family: "Aref Ruqaa", "Amiri", "Scheherazade New", "Noto Naskh Arabic", "Cairo", serif;
+  font-size: calc(var(--cond-death-name) * var(--cond-scale));
+  font-weight: 700;
+  line-height: 1.35;
+  color: #ffffff;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.cond-death__detail {
+  margin: 0;
+  font-family: "Aref Ruqaa", "Amiri", "Scheherazade New", "Noto Naskh Arabic", "Cairo", serif;
+  font-size: calc(var(--cond-death-address) * var(--cond-scale));
+  font-weight: 400;
+  line-height: 1.55;
+  color: #f0f0f0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.cond-death__phone {
+  margin: calc(4px * var(--cond-scale)) 0 0;
+  font-family: "Aref Ruqaa", "Amiri", "Scheherazade New", "Noto Naskh Arabic", "Cairo", serif;
+  font-size: calc(44px * var(--cond-scale));
+  font-weight: 700;
+  line-height: 1.4;
+  color: #ffffff;
+  letter-spacing: 0.02em;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  direction: rtl;
+}
+
+.cond-death__foot {
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: 94%;
+  display: flex;
+  flex-direction: column;
+  gap: calc(10px * var(--cond-scale));
+}
+
+.cond-death__closing {
+  margin: 0;
+  font-family: "Aref Ruqaa", "Amiri", "Scheherazade New", "Noto Naskh Arabic", "Cairo", serif;
+  font-size: calc(34px * var(--cond-scale));
+  font-weight: 400;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.92);
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.cond-death__extra {
+  margin: 0;
+  font-family: "Aref Ruqaa", "Amiri", "Scheherazade New", "Noto Naskh Arabic", "Cairo", serif;
+  font-size: calc(32px * var(--cond-scale));
+  font-weight: 400;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.cond-death--preview .cond-death__verse {
+  font-size: calc((var(--cond-death-verse) * 0.94) * var(--cond-scale));
+}
+
+/* ── Condolences page: template picker & gender ── */
+.cond-template-picker {
+  display: grid;
+  gap: 0.65rem;
+  margin-bottom: 1.1rem;
+}
+
+.cond-template-picker__btn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--majalis-line);
+  background: var(--majalis-panel);
+  cursor: pointer;
+  font-family: inherit;
+  text-align: right;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.cond-template-picker__btn strong {
+  color: var(--majalis-emerald-deep);
+  font-size: 0.95rem;
+}
+
+.cond-template-picker__btn span {
+  color: var(--majalis-ink-soft);
+  font-size: 0.8rem;
+  line-height: 1.55;
+}
+
+.cond-template-picker__btn--active {
+  border-color: var(--majalis-emerald);
+  background: var(--majalis-sage);
+}
+
+.cond-gender-fieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cond-gender-fieldset legend {
+  margin-bottom: 0.5rem;
+}
+
+.cond-gender-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.cond-gender-option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 0.65rem;
+  border: 1px solid var(--majalis-line);
+  background: var(--majalis-panel);
+  cursor: pointer;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--majalis-ink-soft);
+}
+
+.cond-gender-option input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cond-gender-option--active {
+  border-color: var(--majalis-emerald);
+  background: var(--majalis-sage);
+  color: var(--majalis-emerald-deep);
+}
+
 .condolences-page__shell {
   width: min(100%, 72rem);
   margin: 0 auto;

@@ -2,9 +2,18 @@ import { useRef, useState } from "react";
 import * as htmlToImage from "html-to-image";
 import {
   CondolenceCard,
-  EXPORT_SIZES,
   type CondolenceForm,
 } from "@/components/condolences/CondolenceCard";
+import {
+  DeathAnnouncementCard,
+  defaultDeathAnnouncementForm,
+  type DeathAnnouncementForm,
+} from "@/components/condolences/DeathAnnouncementCard";
+import {
+  CONDOLENCE_TEMPLATES,
+  EXPORT_SIZES,
+  type CondolenceTemplateId,
+} from "@/lib/condolence-shared";
 import { getCondolenceDefaults, isCondolencesEnabled } from "@/lib/site-settings";
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
@@ -16,10 +25,37 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
   );
 }
 
+function GenderOption({
+  value,
+  checked,
+  label,
+  onChange,
+}: {
+  value: "male" | "female";
+  checked: boolean;
+  label: string;
+  onChange: (v: "male" | "female") => void;
+}) {
+  return (
+    <label className={`cond-gender-option${checked ? " cond-gender-option--active" : ""}`}>
+      <input
+        type="radio"
+        name="deceased-gender"
+        value={value}
+        checked={checked}
+        onChange={() => onChange(value)}
+      />
+      <span>{label}</span>
+    </label>
+  );
+}
+
 export default function CondolencesPage() {
   const previewPanelRef = useRef<HTMLElement>(null);
   const exportRef = useRef<HTMLDivElement>(null);
-  const [form, setForm] = useState<CondolenceForm>(() => getCondolenceDefaults());
+  const [templateId, setTemplateId] = useState<CondolenceTemplateId>("official");
+  const [officialForm, setOfficialForm] = useState<CondolenceForm>(() => getCondolenceDefaults());
+  const [deathForm, setDeathForm] = useState<DeathAnnouncementForm>(defaultDeathAnnouncementForm);
   const [downloading, setDownloading] = useState(false);
 
   if (!isCondolencesEnabled()) {
@@ -34,12 +70,23 @@ export default function CondolencesPage() {
   }
 
   const dims = EXPORT_SIZES.story;
+  const isDeath = templateId === "death-announcement";
 
-  const update = <K extends keyof CondolenceForm>(key: K, value: CondolenceForm[K]) => {
-    setForm((prev) => ({ ...prev, [key]: value }));
+  const updateOfficial = <K extends keyof CondolenceForm>(key: K, value: CondolenceForm[K]) => {
+    setOfficialForm((prev) => ({ ...prev, [key]: value }));
   };
 
-  const resetForm = () => setForm(getCondolenceDefaults());
+  const updateDeath = <K extends keyof DeathAnnouncementForm>(key: K, value: DeathAnnouncementForm[K]) => {
+    setDeathForm((prev) => ({ ...prev, [key]: value }));
+  };
+
+  const resetForm = () => {
+    if (isDeath) {
+      setDeathForm(defaultDeathAnnouncementForm);
+    } else {
+      setOfficialForm(getCondolenceDefaults());
+    }
+  };
 
   const scrollToPreview = () => {
     previewPanelRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -61,8 +108,10 @@ export default function CondolencesPage() {
       });
 
       const link = document.createElement("a");
-      const slug = form.name.trim() || form.familyName.trim() || "بطاقة";
-      link.download = `تعزية-${slug}.png`;
+      const slug = isDeath
+        ? deathForm.name.trim() || "إعلان"
+        : officialForm.name.trim() || officialForm.familyName.trim() || "بطاقة";
+      link.download = isDeath ? `إعلان-وفاة-${slug}.png` : `تعزية-${slug}.png`;
       link.href = dataUrl;
       link.click();
     } catch {
@@ -78,39 +127,152 @@ export default function CondolencesPage() {
         <section className="ui-card cond-form-panel">
           <h1 className="cond-page-title">قوالب العزاء</h1>
           <p className="cond-page-desc">
-            بطاقة تعزية رسمية بخط عربي أنيق — جاهزة للطباعة والنشر على واتساب وإنستغرام و X.
+            اختر القالب، عبّئ البيانات، وحمّل صورة جاهزة للمشاركة على واتساب وإنستغرام.
           </p>
 
+          <div className="cond-template-picker" role="tablist" aria-label="اختيار القالب">
+            {CONDOLENCE_TEMPLATES.map((t) => (
+              <button
+                key={t.id}
+                type="button"
+                role="tab"
+                aria-selected={templateId === t.id}
+                className={`cond-template-picker__btn${templateId === t.id ? " cond-template-picker__btn--active" : ""}`}
+                onClick={() => setTemplateId(t.id)}
+              >
+                <strong>{t.label}</strong>
+                <span>{t.description}</span>
+              </button>
+            ))}
+          </div>
+
           <div className="cond-form-fields">
-            <Field label="اسم الأسرة أو الجهة">
-              <input
-                value={form.familyName}
-                onChange={(e) => update("familyName", e.target.value)}
-                className="cond-input"
-                placeholder="مثال: أسرة آل محمد / جمعية خيرية"
-                autoComplete="off"
-              />
-            </Field>
+            {isDeath ? (
+              <>
+                <fieldset className="cond-gender-fieldset">
+                  <legend className="cond-form-label">الجنس</legend>
+                  <div className="cond-gender-row">
+                    <GenderOption
+                      value="male"
+                      checked={deathForm.gender === "male"}
+                      label="ذكر"
+                      onChange={(v) => updateDeath("gender", v)}
+                    />
+                    <GenderOption
+                      value="female"
+                      checked={deathForm.gender === "female"}
+                      label="أنثى"
+                      onChange={(v) => updateDeath("gender", v)}
+                    />
+                  </div>
+                </fieldset>
 
-            <Field label="اسم المتوفى">
-              <input
-                value={form.name}
-                onChange={(e) => update("name", e.target.value)}
-                className="cond-input"
-                placeholder="اكتب اسم المتوفى"
-                autoComplete="off"
-              />
-            </Field>
+                <Field label={deathForm.gender === "male" ? "اسم المتوفى" : "اسم المتوفاة"}>
+                  <input
+                    value={deathForm.name}
+                    onChange={(e) => updateDeath("name", e.target.value)}
+                    className="cond-input"
+                    placeholder="اكتب الاسم كاملًا"
+                    autoComplete="off"
+                  />
+                </Field>
 
-            <Field label="نص إضافي اختياري">
-              <textarea
-                value={form.extraText}
-                onChange={(e) => update("extraText", e.target.value)}
-                className="cond-input cond-textarea"
-                placeholder="نص اختياري يظهر أسفل الدعاء إن رغبت"
-                rows={3}
-              />
-            </Field>
+                <Field label="اليوم">
+                  <input
+                    value={deathForm.day}
+                    onChange={(e) => updateDeath("day", e.target.value)}
+                    className="cond-input"
+                    placeholder="مثال: الخميس"
+                    autoComplete="off"
+                  />
+                </Field>
+
+                <Field label="الصلاة">
+                  <input
+                    value={deathForm.prayer}
+                    onChange={(e) => updateDeath("prayer", e.target.value)}
+                    className="cond-input"
+                    placeholder="مثال: العشاء، العصر، المغرب"
+                    autoComplete="off"
+                  />
+                </Field>
+
+                <Field label="اسم المقبرة">
+                  <input
+                    value={deathForm.cemetery}
+                    onChange={(e) => updateDeath("cemetery", e.target.value)}
+                    className="cond-input"
+                    placeholder="مثال: الصليبيخات، صبحان، الجهراء"
+                    autoComplete="off"
+                  />
+                </Field>
+
+                <Field label="عنوان العزاء">
+                  <input
+                    value={deathForm.condolenceAddress}
+                    onChange={(e) => updateDeath("condolenceAddress", e.target.value)}
+                    className="cond-input"
+                    placeholder="مثال: منزل العائلة — منطقة …"
+                    autoComplete="off"
+                  />
+                </Field>
+
+                <Field label="رقم الهاتف">
+                  <input
+                    value={deathForm.phone}
+                    onChange={(e) => updateDeath("phone", e.target.value)}
+                    className="cond-input"
+                    placeholder="مثال: 99999999"
+                    inputMode="tel"
+                    autoComplete="off"
+                    dir="ltr"
+                    style={{ textAlign: "left" }}
+                  />
+                </Field>
+
+                <Field label="دعاء إضافي اختياري">
+                  <textarea
+                    value={deathForm.extraDua}
+                    onChange={(e) => updateDeath("extraDua", e.target.value)}
+                    className="cond-input cond-textarea"
+                    placeholder="يظهر أسفل البطاقة إن رغبت"
+                    rows={3}
+                  />
+                </Field>
+              </>
+            ) : (
+              <>
+                <Field label="اسم الأسرة أو الجهة">
+                  <input
+                    value={officialForm.familyName}
+                    onChange={(e) => updateOfficial("familyName", e.target.value)}
+                    className="cond-input"
+                    placeholder="مثال: أسرة آل محمد / جمعية خيرية"
+                    autoComplete="off"
+                  />
+                </Field>
+
+                <Field label="اسم المتوفى">
+                  <input
+                    value={officialForm.name}
+                    onChange={(e) => updateOfficial("name", e.target.value)}
+                    className="cond-input"
+                    placeholder="اكتب اسم المتوفى"
+                    autoComplete="off"
+                  />
+                </Field>
+
+                <Field label="نص إضافي اختياري">
+                  <textarea
+                    value={officialForm.extraText}
+                    onChange={(e) => updateOfficial("extraText", e.target.value)}
+                    className="cond-input cond-textarea"
+                    placeholder="نص اختياري يظهر أسفل الدعاء إن رغبت"
+                    rows={3}
+                  />
+                </Field>
+              </>
+            )}
 
             <div className="template-action-row template-action-row--three">
               <button type="button" onClick={scrollToPreview} className="ui-card-btn template-btn template-btn--ghost">
@@ -135,22 +297,20 @@ export default function CondolencesPage() {
 
         <section ref={previewPanelRef} className="cond-preview-panel" id="cond-preview-panel">
           <h2 className="cond-preview-title">معاينة مباشرة</h2>
-          <CondolenceCard
-            form={{ ...form, size: "story" }}
-            width={dims.previewW}
-            height={dims.previewH}
-            preview
-          />
+          {isDeath ? (
+            <DeathAnnouncementCard form={deathForm} width={dims.previewW} height={dims.previewH} preview />
+          ) : (
+            <CondolenceCard form={{ ...officialForm, size: "story" }} width={dims.previewW} height={dims.previewH} preview />
+          )}
         </section>
       </div>
 
       <div className="cond-bw-export-host" aria-hidden="true">
-        <CondolenceCard
-          ref={exportRef}
-          form={{ ...form, size: "story" }}
-          width={dims.width}
-          height={dims.height}
-        />
+        {isDeath ? (
+          <DeathAnnouncementCard ref={exportRef} form={deathForm} width={dims.width} height={dims.height} />
+        ) : (
+          <CondolenceCard ref={exportRef} form={{ ...officialForm, size: "story" }} width={dims.width} height={dims.height} />
+        )}
       </div>
     </main>
   );

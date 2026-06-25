@@ -125,7 +125,7 @@ export function CondolencesSection() {
       />
 
       <p style={{ color: C.inkSoft, fontSize: "0.875rem", lineHeight: 1.8, marginBottom: "1.5rem" }}>
-        القالب الرسمي: بسم الله، آية سورة الفجر، نص تعزية، دعاء، و«إنا لله وإنا إليه راجعون» — خلفية سوداء راقية.
+        قالبان متاحان: «تعزية رسمية» و«إعلان وفاة رسمي» — خلفية سوداء، خط عربي واضح، جاهز للمشاركة.
       </p>
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 18rem), 1fr))", gap: "1.5rem" }}>

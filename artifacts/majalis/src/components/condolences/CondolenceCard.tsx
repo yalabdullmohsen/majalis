@@ -9,6 +9,7 @@ import {
   CONDOLENCE_MIDDLE,
   CONDOLENCE_SADAQ,
 } from "@/lib/condolence-content";
+import { EXPORT_SIZES, fitFontSize } from "@/lib/condolence-shared";
 
 export type CondolenceForm = {
   familyName: string;
@@ -26,16 +27,7 @@ export const defaultCondolenceForm: CondolenceForm = {
   showLogo: false,
 };
 
-export const THULUTH_FONT =
-  '"Amiri Quran", "Amiri", "Aref Ruqaa", "Scheherazade New", "Noto Naskh Arabic", serif';
-
-export const BODY_FONT =
-  '"Aref Ruqaa", "Amiri", "Scheherazade New", "Noto Naskh Arabic", serif';
-
-export const EXPORT_SIZES = {
-  square: { width: 1080, height: 1080, previewW: 400, previewH: 400 },
-  story: { width: 1080, height: 1350, previewW: 432, previewH: 540 },
-} as const;
+export { EXPORT_SIZES } from "@/lib/condolence-shared";
 
 type Props = {
   form: CondolenceForm;
@@ -44,14 +36,6 @@ type Props = {
   preview?: boolean;
   className?: string;
 };
-
-function fitFontSize(text: string, base: number, min: number, softMax: number, hardMax: number): number {
-  const len = text.trim().length;
-  if (len <= softMax) return base;
-  if (len >= hardMax) return min;
-  const ratio = (len - softMax) / (hardMax - softMax);
-  return Math.round(base - (base - min) * ratio);
-}
 
 function IslamicOrnament({ flip }: { flip?: boolean }) {
   return (
