@@ -141,16 +141,16 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
         )}
 
         <div className="lesson-unified-card__meta">
-          <MetaCell label="نوع النشاط" value={lesson.activityType} />
+          {!compact && <MetaCell label="نوع النشاط" value={lesson.activityType} />}
           <MetaCell label="اليوم" value={lesson.day} />
-          <MetaCell label="التاريخ" value={lesson.gregorianDate} />
-          <MetaCell label="التاريخ الهجري" value={lesson.hijriDate} />
+          {!compact && <MetaCell label="التاريخ" value={lesson.gregorianDate} />}
+          {!compact && <MetaCell label="التاريخ الهجري" value={lesson.hijriDate} />}
           <MetaCell label="الوقت" value={lesson.time} />
-          <MetaCell label="المسجد" value={lesson.mosque} />
+          <MetaCell label="المكان" value={lesson.mosque} />
           <MetaCell label="المنطقة" value={lesson.region} />
-          <MetaCell label="المحافظة" value={lesson.governorate} />
-          {lesson.linkedLessons && lesson.linkedLessons.length > 0 && (
-            <MetaCell label="الدروس المرتبطة" value={lesson.linkedLessons.join(" · ")} />
+          {!compact && <MetaCell label="المحافظة" value={lesson.governorate} />}
+          {!compact && lesson.linkedLessons && lesson.linkedLessons.length > 0 && (
+            <MetaCell label="الجلسات" value={lesson.linkedLessons.join(" · ")} />
           )}
         </div>
 
@@ -166,34 +166,38 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
 
         <div className="lesson-unified-card__actions">
           <Link href={lesson.detailsHref} className="lesson-unified-card__btn lesson-unified-card__btn--primary">
-            عرض التفاصيل
+            التفاصيل
           </Link>
-          <button type="button" className="lesson-unified-card__btn lesson-unified-card__btn--secondary" onClick={handleShare}>
-            مشاركة
-          </button>
-          <button type="button" className="lesson-unified-card__btn lesson-unified-card__btn--secondary" onClick={handleCopyLink}>
-            {linkCopied ? "تم النسخ" : "نسخ الرابط"}
-          </button>
-          <button type="button" className="lesson-unified-card__btn lesson-unified-card__btn--secondary" onClick={handleCopy}>
-            {copied ? "تم النسخ" : "نسخ البيانات"}
-          </button>
-          <FavoriteButton contentType="lesson" contentId={lesson.id} compact className="lesson-unified-card__btn lesson-unified-card__btn--ghost" />
-          <button
-            type="button"
-            className="lesson-unified-card__btn lesson-unified-card__btn--ghost"
-            onClick={() => downloadUnifiedCalendar(lesson)}
-          >
-            إضافة للتقويم
-          </button>
-          {lesson.streamUrl && (
-            <a href={lesson.streamUrl} target="_blank" rel="noopener noreferrer" className="lesson-unified-card__btn lesson-unified-card__btn--ghost">
-              رابط البث
-            </a>
-          )}
-          {lesson.mapsUrl && (
-            <a href={lesson.mapsUrl} target="_blank" rel="noopener noreferrer" className="lesson-unified-card__btn lesson-unified-card__btn--ghost">
-              رابط الموقع
-            </a>
+          {!compact && (
+            <>
+              <button type="button" className="lesson-unified-card__btn lesson-unified-card__btn--secondary" onClick={handleShare}>
+                مشاركة
+              </button>
+              <button type="button" className="lesson-unified-card__btn lesson-unified-card__btn--secondary" onClick={handleCopyLink}>
+                {linkCopied ? "تم النسخ" : "نسخ الرابط"}
+              </button>
+              <button type="button" className="lesson-unified-card__btn lesson-unified-card__btn--secondary" onClick={handleCopy}>
+                {copied ? "تم النسخ" : "نسخ البيانات"}
+              </button>
+              <FavoriteButton contentType="lesson" contentId={lesson.id} compact className="lesson-unified-card__btn lesson-unified-card__btn--ghost" />
+              <button
+                type="button"
+                className="lesson-unified-card__btn lesson-unified-card__btn--ghost"
+                onClick={() => downloadUnifiedCalendar(lesson)}
+              >
+                إضافة للتقويم
+              </button>
+              {lesson.streamUrl && (
+                <a href={lesson.streamUrl} target="_blank" rel="noopener noreferrer" className="lesson-unified-card__btn lesson-unified-card__btn--ghost">
+                  رابط البث
+                </a>
+              )}
+              {lesson.mapsUrl && (
+                <a href={lesson.mapsUrl} target="_blank" rel="noopener noreferrer" className="lesson-unified-card__btn lesson-unified-card__btn--ghost">
+                  الموقع
+                </a>
+              )}
+            </>
           )}
           {showRegister && onToggleRegister && (
             <button

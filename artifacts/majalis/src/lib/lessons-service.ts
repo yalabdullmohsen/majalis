@@ -1,7 +1,8 @@
 /**
  * دالة موحدة لجلب الدروس:
  * 1. المصدر الأساسي: public.lessons في Supabase
- * 2. Fallback: LESSONS_SEED فقط عند فراغ الجدول أو عدم تهيئة Supabase
+ * 2. دمج صفوف catalog/seed غير الموجودة في Supabase (بدون تكرار)
+ * 3. Fallback كامل للـ seed عند فراغ الجدول
  */
 import { fetchApprovedLessonsFromDb } from "@/lib/supabase";
 import { LESSONS_SEED, findSeedLessonById, type LessonSeedRow } from "@/lib/lessons-seed";
@@ -13,7 +14,7 @@ import {
   splitKuwaitLessons,
 } from "@/lib/kuwait-lessons";
 
-export type LessonsSource = "supabase" | "seed";
+export type LessonsSource = "supabase" | "seed" | "merged";
 
 export type FetchLessonsResult = {
   lessons: KuwaitLessonRecord[];
@@ -24,8 +25,16 @@ let cachedResult: FetchLessonsResult | null = null;
 let cacheTs = 0;
 const CACHE_MS = 60_000;
 
-function rowsFromSeed(): LessonSeedRow[] {
-  return LESSONS_SEED;
+function seedKey(row: LessonSeedRow): string {
+  return String(row.external_key || row.id);
+}
+
+function mergeDbWithSeed(dbRows: KuwaitLessonRecord[]): KuwaitLessonRecord[] {
+  const seen = new Set(dbRows.map((l) => l.id));
+  const supplemental = LESSONS_SEED.filter((row) => !seen.has(seedKey(row))).map((row) =>
+    mapLessonRow({ ...row, source: "seed" }),
+  );
+  return dedupeKuwaitLessons([...dbRows, ...supplemental]);
 }
 
 /** جلب جميع الدروس المعتمدة — المصدر الموحد للمنصة. */
@@ -38,8 +47,10 @@ export async function fetchLessons(options?: { bypassCache?: boolean }): Promise
   try {
     const { data } = await fetchApprovedLessonsFromDb();
     if (data.length > 0) {
-      const lessons = dedupeKuwaitLessons(data.map(mapLessonRow));
-      cachedResult = { lessons: sortKuwaitLessons(lessons), source: "supabase" };
+      const dbMapped = dedupeKuwaitLessons(data.map((row) => mapLessonRow({ ...row, source: "supabase" })));
+      const lessons = sortKuwaitLessons(mergeDbWithSeed(dbMapped));
+      const source: LessonsSource = lessons.length > dbMapped.length ? "merged" : "supabase";
+      cachedResult = { lessons, source };
       cacheTs = now;
       return cachedResult;
     }
@@ -47,7 +58,7 @@ export async function fetchLessons(options?: { bypassCache?: boolean }): Promise
     /* fallback below */
   }
 
-  const lessons = dedupeKuwaitLessons(rowsFromSeed().map(mapLessonRow));
+  const lessons = dedupeKuwaitLessons(LESSONS_SEED.map((row) => mapLessonRow({ ...row, source: "seed" })));
   cachedResult = { lessons: sortKuwaitLessons(lessons), source: "seed" };
   cacheTs = now;
   return cachedResult;
@@ -74,10 +85,8 @@ export async function fetchLessonById(id: string): Promise<{
   const found = lessons.find((l) => l.id === id);
   if (found) return { lesson: found, source };
 
-  if (source === "supabase") {
-    const seedRow = findSeedLessonById(id);
-    if (seedRow) return { lesson: mapLessonRow(seedRow), source: "seed" };
-  }
+  const seedRow = findSeedLessonById(id);
+  if (seedRow) return { lesson: mapLessonRow(seedRow), source: "seed" };
 
   return { lesson: null, source };
 }
@@ -87,7 +96,6 @@ export function invalidateLessonsCache() {
   cacheTs = 0;
 }
 
-/** جلب الدروس النشطة — للصفحة الرئيسية والتقويم. */
 export async function loadKuwaitLessons() {
   const { active } = await fetchLessonsSplit();
   return active;

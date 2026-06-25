@@ -1,24 +1,9 @@
-import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { Loading } from "@/components/ui-common";
-import {
-  computePrayerStatus,
-  fetchPrayerTimes,
-  type PrayerTimesPayload,
-} from "@/lib/prayer-times";
+import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 
 export function HomePrayerTimes() {
-  const [data, setData] = useState<PrayerTimesPayload | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetchPrayerTimes()
-      .then(setData)
-      .catch(() => setData(null))
-      .finally(() => setLoading(false));
-  }, []);
-
-  const status = data ? computePrayerStatus(data.prayers) : null;
+  const { data, countdown, loading } = usePrayerCountdown();
   const obligatory = data?.prayers.filter((p) => p.obligatory) || [];
 
   return (
@@ -27,26 +12,31 @@ export function HomePrayerTimes() {
         <div>
           <p className="home-eyebrow">العبادة</p>
           <h2 id="home-prayer-heading">مواقيت الصلاة</h2>
-          <p>مواقيت الصلاة في الكويت مع العد التنازلي للصلاة القادمة.</p>
+          <p>مواقيت الصلاة في الكويت مع عدّاد تنازلي حيّ.</p>
         </div>
         <Link href="/prayer-times" className="home-section-link">التفاصيل</Link>
       </div>
 
       {loading ? (
         <Loading />
-      ) : data && status ? (
+      ) : data && countdown ? (
         <div className="home-prayer-widget">
           <div className="prayer-status-card ui-card">
             <p className="prayer-status-card__label">الصلاة القادمة</p>
-            <h3>{status.next?.name || "غير محدد"}</h3>
-            <p className="prayer-status-card__countdown">{status.remainingLabel}</p>
+            <h3>{countdown.next?.name || "غير محدد"}</h3>
+            <p className="prayer-status-card__countdown prayer-countdown-hms" aria-live="polite">
+              {countdown.remainingHms}
+            </p>
+            {countdown.current && (
+              <p className="prayer-status-card__current">الوقت الحالي: {countdown.current.name}</p>
+            )}
             <p className="prayer-status-card__date">{data.date.readable || data.date.gregorian}</p>
           </div>
           <div className="home-prayer-grid">
             {obligatory.map((p) => (
               <div
                 key={p.key}
-                className={`prayer-time-cell ui-card${status.next?.key === p.key ? " is-next" : ""}`}
+                className={`prayer-time-cell ui-card${countdown.next?.key === p.key ? " is-next" : ""}`}
               >
                 <span>{p.name}</span>
                 <strong>{p.time}</strong>

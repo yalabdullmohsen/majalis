@@ -52,10 +52,10 @@ export function buildSearchSuggestions(query: string, limit = 12): SearchSuggest
       id: sheikh.id,
       label: sheikh.name,
       meta: sheikh.city,
-      href: `/sheikhs/${sheikh.id}`,
-      group: "sheikhs",
+      href: `/lessons`,
+      group: "lessons",
     });
-    if (results.filter((r) => r.group === "sheikhs").length >= MAX_PER_GROUP) break;
+    if (results.filter((r) => r.group === "lessons").length >= MAX_PER_GROUP) break;
   }
 
   for (const f of SEED_FAWAID) {

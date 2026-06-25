@@ -41,10 +41,9 @@ const isConfigured = isSupabaseConfigured();
 
 export { isSupabaseConfigured, formatSupabaseError };
 
-// @ts-ignore
 export const supabase = isConfigured
   ? createClient(url, key)
-  : createClient("https://placeholder.supabase.co", "placeholder-anon-key-placeholder-anon-key-placeholder-anon-key-p");
+  : createClient("https://placeholder.supabase.co", "placeholder-anon-key-placeholder-anon-key-placeholder-anon-key-p" as string);
 
 export async function signUp(email: string, password: string, fullName: string) {
   return await supabase.auth.signUp({
@@ -69,8 +68,10 @@ export async function getCurrentUser() {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return null;
 
-    let { data: profile, error: profileError } = await supabase
+    let profile;
+    const { data: initialProfile, error: profileError } = await supabase
       .from("profiles").select("*").eq("id", user.id).single();
+    profile = initialProfile;
 
     if (profileError) {
       logSupabaseError("getCurrentUser.profile", profileError);

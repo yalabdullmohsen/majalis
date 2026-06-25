@@ -190,7 +190,7 @@ export function isOccurrencePast(day: string, time: string, recurring = true, no
   const targetDay = DAY_INDEX[day];
   if (targetDay == null) return false;
 
-  let daysUntil = (targetDay - clock.weekday + 7) % 7;
+  const daysUntil = (targetDay - clock.weekday + 7) % 7;
   const timeMinutes = parseTimeToMinutes(time) ?? PRAYER_TIME_MINUTES.المغرب;
   const nowMinutes = clock.hour * 60 + clock.minute;
 

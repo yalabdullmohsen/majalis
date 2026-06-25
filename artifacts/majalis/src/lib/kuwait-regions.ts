@@ -31,6 +31,11 @@ const REGION_TO_GOVERNORATE: Record<string, string> = {
   النسيم: "الجهراء",
   العيون: "الجهراء",
   تيماء: "الجهراء",
+  إشبيلية: "الفروانية",
+  الرحاب: "الفروانية",
+  الرابية: "الفروانية",
+  خيطان: "الفروانية",
+  "صباح الأحمد": "الأحمدي",
   "صباح السالم": "مبارك الكبير",
   القرين: "مبارك الكبير",
   القصور: "مبارك الكبير",
@@ -51,7 +56,7 @@ const GOVERNORATE_KEYWORDS: [string, string][] = [
 function normalizeRegionKey(value: string): string {
   return value
     .replace(/^منطقة\s+/u, "")
-    .replace(/\s*[–\-].*$/u, "")
+    .replace(/\s*[–-].*$/u, "")
     .replace(/\s*قطعة.*$/u, "")
     .trim();
 }
@@ -59,7 +64,7 @@ function normalizeRegionKey(value: string): string {
 export function resolveRegion(raw: string): string {
   const text = String(raw || "").trim();
   if (!text) return "";
-  const fromDistrict = text.match(/منطقة\s+([^\s–\-]+)/u)?.[1];
+  const fromDistrict = text.match(/منطقة\s+([^\s–-]+)/u)?.[1];
   if (fromDistrict) return fromDistrict.trim();
   const key = normalizeRegionKey(text);
   if (REGION_TO_GOVERNORATE[key]) return key;
@@ -69,7 +74,7 @@ export function resolveRegion(raw: string): string {
   return key || text;
 }
 
-export function resolveGovernorate(regionRaw: string, fallback = "العاصمة"): string {
+export function resolveGovernorate(regionRaw: string, fallback = ""): string {
   const region = resolveRegion(regionRaw);
   if (region && REGION_TO_GOVERNORATE[region]) return REGION_TO_GOVERNORATE[region];
 
@@ -79,6 +84,22 @@ export function resolveGovernorate(regionRaw: string, fallback = "العاصمة
   }
 
   return fallback;
+}
+
+/** للواجهة — لا تُخمّن محافظة غير مؤكدة */
+export function resolveGovernorateForUi(governorateRaw: string, regionRaw: string): string {
+  if (governorateRaw && governorateRaw !== "غير محدد") {
+    for (const [, gov] of GOVERNORATE_KEYWORDS) {
+      if (governorateRaw.includes(gov)) return gov;
+    }
+  }
+  const fromRegion = resolveGovernorate(regionRaw, "");
+  return fromRegion;
+}
+
+export function displayGovernorate(governorate: string): string {
+  if (!governorate || governorate === "غير محدد") return "";
+  return governorate;
 }
 
 export function regionsForGovernorate(governorate: string): string[] {

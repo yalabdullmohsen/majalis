@@ -179,6 +179,54 @@ function formatRemaining(ms: number): string {
   return `${seconds} ث`;
 }
 
+export type PrayerCountdown = PrayerStatus & {
+  remainingHms: string;
+};
+
+function kuwaitNowParts(): { minutes: number; seconds: number } {
+  const parts = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Asia/Kuwait",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
+  }).formatToParts(new Date());
+
+  const hour = Number(parts.find((p) => p.type === "hour")?.value || 0);
+  const minute = Number(parts.find((p) => p.type === "minute")?.value || 0);
+  const second = Number(parts.find((p) => p.type === "second")?.value || 0);
+  return { minutes: hour * 60 + minute, seconds: second };
+}
+
+function formatHms(totalSeconds: number): string {
+  const safe = Math.max(0, totalSeconds);
+  const hours = Math.floor(safe / 3600);
+  const minutes = Math.floor((safe % 3600) / 60);
+  const seconds = safe % 60;
+  return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+}
+
+export function computePrayerCountdown(prayers: PrayerSlot[]): PrayerCountdown {
+  const status = computePrayerStatus(prayers);
+  const now = kuwaitNowParts();
+  let remainingSeconds = 0;
+
+  if (status.next?.minutes != null) {
+    if (status.next.minutes > now.minutes) {
+      remainingSeconds = (status.next.minutes - now.minutes) * 60 - now.seconds;
+    } else {
+      remainingSeconds = ((24 * 60 - now.minutes) + status.next.minutes) * 60 - now.seconds;
+    }
+  }
+
+  return {
+    ...status,
+    remainingMs: remainingSeconds * 1000,
+    remainingLabel: formatHms(remainingSeconds),
+    remainingHms: formatHms(remainingSeconds),
+  };
+}
+
 export function computePrayerStatus(prayers: PrayerSlot[]): PrayerStatus {
   const nowMinutes = kuwaitNowMinutes();
   const obligatory = prayers.filter((p) => OBLIGATORY_KEYS.has(p.key) && p.minutes != null);

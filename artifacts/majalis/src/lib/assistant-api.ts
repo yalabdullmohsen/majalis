@@ -29,7 +29,7 @@ export async function callAssistantApi(
   });
 
   const contentType = response.headers.get("content-type") || "";
-  let data: AssistantResponse = {};
+  let data: AssistantResponse;
 
   if (contentType.includes("application/json")) {
     data = (await response.json().catch(() => ({}))) as AssistantResponse;

@@ -31,7 +31,7 @@ export function HomeUpcomingLessons() {
         <div>
           <p className="home-eyebrow">جدول الأسبوع</p>
           <h2 id="upcoming-lessons-heading">الدروس القادمة</h2>
-          <p>دروس علمية في مساجد الكويت مرتّبة حسب أقرب موعد.</p>
+          <p>دروس علمية مرتّبة حسب أقرب موعد.</p>
         </div>
         <div className="home-section-head-links">
           <Link href="/calendar" className="home-section-link">التقويم</Link>

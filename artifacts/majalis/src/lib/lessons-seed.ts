@@ -3,7 +3,8 @@
  * يُستخدم فقط عندما يكون جدول public.lessons فارغًا أو Supabase غير مهيأ.
  */
 import { lessonAds, type LessonAd } from "@/lib/lesson-ads";
-import { resolveGovernorate, resolveRegion } from "@/lib/kuwait-regions";
+import { buildCatalogLessonRows } from "@/lib/lessons-catalog";
+import { resolveGovernorateForUi, resolveRegion } from "@/lib/kuwait-regions";
 import { cleanTimeText } from "@/lib/lesson-time";
 
 export type LessonSeedRow = {
@@ -65,7 +66,7 @@ function activityTypeForAd(ad: LessonAd): LessonSeedRow["activity_type"] {
 function rowFromAdSession(ad: LessonAd, sessionIndex: number): LessonSeedRow {
   const session = ad.sessions[sessionIndex];
   const region = resolveRegion(session.district);
-  const governorate = resolveGovernorate(session.district);
+  const governorate = resolveGovernorateForUi("", session.district);
   const genericLabel =
     session.label === "المجلس الأسبوعي" || session.label === "البرنامج الأسبوعي";
   const title = genericLabel ? ad.title : `${ad.title} — ${session.label}`;
@@ -109,7 +110,9 @@ function rowFromAdSession(ad: LessonAd, sessionIndex: number): LessonSeedRow {
 
 /** صفوف Seed بشكل جدول Supabase lessons — المصدر الوحيد للبيانات الاحتياطية. */
 export function buildLessonsSeed(): LessonSeedRow[] {
-  return lessonAds.flatMap((ad) => ad.sessions.map((_session, idx) => rowFromAdSession(ad, idx)));
+  const fromAds = lessonAds.flatMap((ad) => ad.sessions.map((_session, idx) => rowFromAdSession(ad, idx)));
+  const fromCatalog = buildCatalogLessonRows();
+  return [...fromAds, ...fromCatalog];
 }
 
 export const LESSONS_SEED: LessonSeedRow[] = buildLessonsSeed();

@@ -1,6 +1,6 @@
 import { GOVERNORATES } from "@/lib/theme";
 import { resolveLessonSheikhImage } from "@/lib/sheikh-image";
-import { resolveGovernorate, resolveRegion } from "@/lib/kuwait-regions";
+import { resolveGovernorateForUi, resolveRegion, displayGovernorate } from "@/lib/kuwait-regions";
 import { formatSheikhName, sheikhNameKey } from "@/lib/sheikh-name";
 import {
   cleanTimeText,
@@ -146,7 +146,9 @@ export function mapLessonRow(row: any): KuwaitLessonRecord {
   const day = row.day_of_week || row.day || parseDayFromSchedule(row.schedule);
   const rawSheikh = row.sheikhs?.name || row.speaker_name || "";
   const region = resolveRegion(row.region || "");
-  const governorate = resolveGovernorate(row.region || row.city || "", row.city || "العاصمة");
+  const governorate = displayGovernorate(
+    resolveGovernorateForUi(row.city || "", row.region || row.city || ""),
+  );
   const tags = Array.isArray(row.keywords) ? row.keywords : Array.isArray(row.tags) ? row.tags : [];
   const delivery = String(row.delivery || "");
   const hasLiveStream =

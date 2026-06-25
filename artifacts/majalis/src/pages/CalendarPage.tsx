@@ -15,11 +15,6 @@ import {
 import { arSA } from "date-fns/locale";
 import { loadKuwaitLessons } from "@/lib/lessons-service";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
-import {
-  buildCalendarEventsFromAnnouncements,
-  type ScientificCalendarEvent,
-} from "@/lib/scientific-announcements";
-import { ScientificAnnouncementsSection } from "@/components/scientific/ScientificAnnouncementsSection";
 import { PageHeader, Loading } from "@/components/ui-common";
 
 type ViewMode = "month" | "week" | "day";
@@ -55,9 +50,10 @@ function eventsFromLessons(lessons: KuwaitLessonRecord[]): CalendarEvent[] {
     mosque: l.mosque,
     time: l.time,
     day: l.day,
+    date: l.startDate || undefined,
     description: l.note,
     href: `/lessons/${l.id}`,
-    recurring: l.recurring !== false,
+    recurring: l.recurring !== false && !l.startDate,
   }));
 }
 
@@ -75,21 +71,6 @@ function eventsForDate(date: Date, events: CalendarEvent[]): CalendarEvent[] {
   });
 }
 
-function fromScientificEvents(items: ScientificCalendarEvent[]): CalendarEvent[] {
-  return items.map((item) => ({
-    id: item.id,
-    title: item.title,
-    sheikh: item.sheikh,
-    mosque: item.mosque,
-    time: item.time,
-    day: item.day,
-    date: item.date,
-    recurring: item.recurring,
-    description: item.description,
-    href: item.href,
-  }));
-}
-
 function EventModal({ event, onClose }: { event: CalendarEvent; onClose: () => void }) {
   return (
     <div className="cal-modal-backdrop" onClick={onClose} role="presentation">
@@ -97,7 +78,7 @@ function EventModal({ event, onClose }: { event: CalendarEvent; onClose: () => v
         <h3>{event.title}</h3>
         <dl className="cal-modal-meta">
           <div><dt>الشيخ</dt><dd>{event.sheikh}</dd></div>
-          <div><dt>المسجد</dt><dd>{event.mosque}</dd></div>
+          <div><dt>المكان</dt><dd>{event.mosque}</dd></div>
           <div><dt>اليوم</dt><dd>{event.day}</dd></div>
           <div><dt>الوقت</dt><dd>{event.time}</dd></div>
         </dl>
@@ -120,10 +101,9 @@ export default function CalendarPage() {
   const [modalEvent, setModalEvent] = useState<CalendarEvent | null>(null);
 
   useEffect(() => {
-    const scientific = fromScientificEvents(buildCalendarEventsFromAnnouncements());
     loadKuwaitLessons()
-      .then((lessons) => setEvents([...eventsFromLessons(lessons), ...scientific]))
-      .catch(() => setEvents(scientific))
+      .then((lessons) => setEvents(eventsFromLessons(lessons)))
+      .catch(() => setEvents([]))
       .finally(() => setLoading(false));
   }, []);
 
@@ -256,8 +236,6 @@ export default function CalendarPage() {
           )}
         </>
       )}
-
-      <ScientificAnnouncementsSection limit={4} showViewAll />
 
       {modalEvent && <EventModal event={modalEvent} onClose={() => setModalEvent(null)} />}
     </div>

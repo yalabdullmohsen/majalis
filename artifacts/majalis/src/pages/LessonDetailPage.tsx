@@ -154,7 +154,7 @@ export default function LessonDetailPage({ params }: { params: { id: string } })
             <div><dt>الوقت</dt><dd>{cleanTimeText(time || unified.time)}</dd></div>
           )}
           {hasValue(unified.mosque) && (
-            <div><dt>المسجد</dt><dd>{unified.mosque}</dd></div>
+            <div><dt>المكان</dt><dd>{unified.mosque}</dd></div>
           )}
           {hasValue(unified.region) && (
             <div><dt>المنطقة</dt><dd>{unified.region}</dd></div>

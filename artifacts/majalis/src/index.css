@@ -7588,7 +7588,70 @@ input, textarea, select { font-family: inherit; }
 .home-hero--v3 { padding-block: 1.5rem 1rem; }
 .home-hero-grid--v3 { grid-template-columns: 1fr; }
 .home-main--v3 { padding-bottom: 2rem; }
-.home-search--v3 { max-width: 36rem; margin-top: 1rem; }
+.home-search--v3 {
+  max-width: 36rem;
+  margin-top: 1rem;
+  grid-template-columns: 1fr auto;
+  padding: 0.35rem;
+  gap: 0.5rem;
+}
+
+.home-search--v3 button {
+  padding: 0.55rem 1rem;
+  font-size: 0.82rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 6px 16px rgba(176, 141, 46, 0.22);
+}
+
+.home-search--v3 input {
+  padding: 0.65rem 0.75rem;
+  font-size: 0.92rem;
+}
+
+.prayer-countdown-hms {
+  font-variant-numeric: tabular-nums;
+  font-size: clamp(1.35rem, 4vw, 1.85rem);
+  letter-spacing: 0.04em;
+  font-weight: 800;
+  color: var(--majalis-emerald-deep);
+}
+
+.lesson-unified-card--compact {
+  padding-bottom: 0.65rem;
+}
+
+.lesson-unified-card--compact .lesson-unified-card__header {
+  padding: 0.45rem 0.65rem;
+}
+
+.lesson-unified-card--compact .lesson-unified-card__body {
+  padding: 0.55rem 0.65rem 0.65rem;
+  gap: 0.45rem;
+}
+
+.lesson-unified-card--compact .lesson-unified-card__meta {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.35rem;
+}
+
+.lesson-unified-card--compact .lesson-unified-card__meta-cell strong {
+  font-size: 0.82rem;
+}
+
+.lesson-unified-card--compact .lesson-unified-card__actions {
+  margin-top: 0.25rem;
+}
+
+.lesson-unified-card--compact .lesson-unified-card__btn {
+  min-height: 34px;
+  padding: 0.35rem 0.65rem;
+  font-size: 0.78rem;
+}
+
+.lesson-unified-card--compact .lesson-unified-card__note,
+.lesson-unified-card--compact .lesson-unified-card__flags {
+  display: none;
+}
 .home-hero-assistant-link {
   display: inline-block;
   margin-top: 0.75rem;

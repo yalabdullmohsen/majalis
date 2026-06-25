@@ -151,7 +151,7 @@ export function buildLessonCopyText(lesson: UnifiedLesson): string {
     lesson.gregorianDate ? `التاريخ: ${lesson.gregorianDate}` : "",
     lesson.hijriDate ? `التاريخ الهجري: ${lesson.hijriDate}` : "",
     lesson.time ? `الوقت: ${lesson.time}` : "",
-    lesson.mosque ? `المسجد: ${lesson.mosque}` : "",
+    lesson.mosque ? `المكان: ${lesson.mosque}` : "",
     lesson.region ? `المنطقة: ${lesson.region}` : "",
     lesson.governorate ? `المحافظة: ${lesson.governorate}` : "",
     lesson.hasLiveStream ? "يوجد بث مباشر" : "",
