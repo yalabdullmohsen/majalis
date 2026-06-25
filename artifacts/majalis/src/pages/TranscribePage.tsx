@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import { validateMediaUpload, safeUploadFileName, MAX_MEDIA_BYTES } from "@/lib/file-validation";
 import { sanitizeText } from "@/lib/sanitize";
 import { Link } from "wouter";
-import { useDropzone } from "react-dropzone";
+import { useDropzone, type FileRejection } from "react-dropzone";
 import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/components/AuthProvider";
 
@@ -32,7 +32,7 @@ export default function TranscribePage() {
   const [errorMessage, setErrorMessage] = useState("");
 
   const onDrop = useCallback(
-    (acceptedFiles: File[], rejectedFiles: { errors: { code: string }[] }[]) => {
+    (acceptedFiles: File[], rejectedFiles: FileRejection[]) => {
       if (rejectedFiles.length > 0) {
         const code = rejectedFiles[0]?.errors[0]?.code;
         if (code === "file-too-large") {

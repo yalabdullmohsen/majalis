@@ -64,7 +64,7 @@ export function buildSearchSuggestions(query: string, limit = 12): SearchSuggest
     pushUnique(results, seen, {
       id: f.id,
       label: f.text.slice(0, 72) + (f.text.length > 72 ? "…" : ""),
-      meta: f.author_name,
+      meta: f.author_name ?? undefined,
       href: `/fawaid?q=${encodeURIComponent(q)}`,
       group: "fawaid",
     });

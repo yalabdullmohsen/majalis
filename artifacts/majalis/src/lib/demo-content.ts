@@ -1,10 +1,6 @@
 import { arabicMatchAny } from "./arabic-search";
 import { SEED_QA, QA_CATEGORIES, filterSeedQa } from "./qa-seed";
 import { SEED_FAWAID, FAWAID_CATEGORIES, filterSeedFawaid } from "./fawaid-seed";
-import { ADHKAR_CATEGORIES, filterAdhkar } from "./adhkar-seed";
-
-import { SEED_QA, QA_CATEGORIES, filterSeedQa } from "./qa-seed";
-import { SEED_FAWAID, FAWAID_CATEGORIES, filterSeedFawaid } from "./fawaid-seed";
 import { filterQualityFawaid } from "./content-quality";
 import { ADHKAR_CATEGORIES, filterAdhkar } from "./adhkar-seed";
 import { lessonAds } from "./lesson-ads";
