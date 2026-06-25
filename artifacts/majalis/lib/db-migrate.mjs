@@ -8,6 +8,14 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { getEnvConfig } from "./env-config.mjs";
 
+function pick(...keys) {
+  for (const k of keys) {
+    const v = String(process.env[k] || "").trim();
+    if (v) return v;
+  }
+  return "";
+}
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = join(__dirname, "../../..");
 
@@ -38,11 +46,56 @@ function loadSql(relativePath) {
   return readFileSync(full, "utf8");
 }
 
+async function applyViaManagementApi(sql, projectRef, accessToken) {
+  const res = await fetch(`https://api.supabase.com/v1/projects/${projectRef}/database/query`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ query: sql }),
+  });
+  const text = await res.text();
+  if (!res.ok) throw new Error(`Management API ${res.status}: ${text.slice(0, 200)}`);
+  return { ok: true, via: "management_api" };
+}
+
+function getProjectRef() {
+  const url = getEnvConfig().supabaseUrl;
+  if (!url) return "";
+  try {
+    return new URL(url).hostname.split(".")[0];
+  } catch {
+    return "";
+  }
+}
+
 export async function applyMigrations(options = {}) {
   const files = options.files || MIGRATION_FILES;
   const results = [];
-  let client;
+  const accessToken = pick("SUPABASE_ACCESS_TOKEN", "SUPABASE_MANAGEMENT_TOKEN");
+  const projectRef = getProjectRef();
 
+  // Try Management API first if token available
+  if (accessToken && projectRef) {
+    for (const file of files) {
+      const started = Date.now();
+      const sql = loadSql(file);
+      try {
+        await applyViaManagementApi(sql, projectRef, accessToken);
+        results.push({ file, ok: true, via: "management_api", durationMs: Date.now() - started });
+      } catch (err) {
+        results.push({ file, ok: false, error: err.message, via: "management_api", durationMs: Date.now() - started });
+        if (!options.continueOnError) break;
+      }
+    }
+    if (results.every((r) => r.ok)) {
+      const verify = await verifySchema();
+      return { ok: verify.ok, results, schema: verify, via: "management_api" };
+    }
+  }
+
+  let client;
   try {
     client = await getPgClient();
 

@@ -30,6 +30,12 @@ export default async function handler(req, res) {
       schema: verify,
     });
   } catch (error) {
-    sendJson(res, 500, { ok: false, error: error.message });
+    const env = getEnvStatus();
+    sendJson(res, 500, {
+      ok: false,
+      error: error.message,
+      hint: "Add DATABASE_URL to Vercel (Supabase Dashboard → Settings → Database → Connection string URI), then retry. Or run supabase/auto_engine_production_complete.sql in SQL Editor.",
+      env,
+    });
   }
 }
