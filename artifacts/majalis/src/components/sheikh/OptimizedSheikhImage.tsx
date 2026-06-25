@@ -8,10 +8,10 @@ import {
 } from "@/lib/sheikh-image-process";
 
 const LEGACY_SIZE: Record<string, number> = {
-  sm: 64,
-  md: 80,
-  lg: 100,
-  xl: 120,
+  sm: 72,
+  md: 88,
+  lg: 108,
+  xl: 128,
 };
 
 type SizeProp = number | keyof typeof LEGACY_SIZE | "responsive";
@@ -30,15 +30,15 @@ export type OptimizedSheikhImageProps = {
 };
 
 function resolveOutputSize(size: SizeProp): number {
-  if (size === "responsive") return 160;
-  if (typeof size === "number") return Math.max(size, 48);
-  return LEGACY_SIZE[size] ?? 96;
+  if (size === "responsive") return 192;
+  if (typeof size === "number") return Math.max(size, 56);
+  return LEGACY_SIZE[size] ?? 112;
 }
 
 function resolveCssSize(size: SizeProp): number | undefined {
   if (size === "responsive") return undefined;
   if (typeof size === "number") return size;
-  return LEGACY_SIZE[size] ?? 96;
+  return LEGACY_SIZE[size] ?? 112;
 }
 
 function aspectClass(aspectRatio: OptimizedSheikhImageProps["aspectRatio"], variant: SheikhImageVariant) {
@@ -114,6 +114,7 @@ export function OptimizedSheikhImage({
     setLoading(false);
   };
 
+  const isLogo = isSheikhFallbackLogo(resolvedSrc);
   const rootClass = [
     "optimized-sheikh-image",
     aspectClass(aspectRatio, variant),
@@ -121,7 +122,7 @@ export function OptimizedSheikhImage({
     isResponsive ? "optimized-sheikh-image--responsive" : "",
     loading ? "optimized-sheikh-image--loading" : "",
     processed ? "optimized-sheikh-image--processed" : "optimized-sheikh-image--css",
-    failed || isSheikhFallbackLogo(resolvedSrc) ? "optimized-sheikh-image--fallback" : "",
+    isLogo || failed ? "optimized-sheikh-image--logo-fallback" : "",
     className,
   ]
     .filter(Boolean)
@@ -140,10 +141,22 @@ export function OptimizedSheikhImage({
   const imgSizes =
     cssSize !== undefined
       ? `${cssSize}px`
-      : "(min-width: 768px) 6.25rem, 5rem";
+      : "(min-width: 768px) 7.75rem, 6.5rem";
+
+  const imgStyle = {
+    objectFit: "cover" as const,
+    objectPosition,
+  };
 
   return (
-    <div className={rootClass} style={style} aria-busy={loading}>
+    <div
+      className={rootClass}
+      style={{
+        ...style,
+        ["--sheikh-object-position" as string]: objectPosition,
+      }}
+      aria-busy={loading}
+    >
       {loading && (
         <div className="optimized-sheikh-image__skeleton" aria-hidden="true">
           <span className="optimized-sheikh-image__skeleton-shimmer" />
@@ -155,7 +168,7 @@ export function OptimizedSheikhImage({
         sizes={srcSet ? imgSizes : undefined}
         alt={name}
         className="optimized-sheikh-image__img"
-        style={!processed && !isSheikhFallbackLogo(resolvedSrc) ? { objectPosition } : undefined}
+        style={imgStyle}
         loading={priority ? "eager" : "lazy"}
         decoding="async"
         width={cssSize ?? outputSize}

@@ -8297,28 +8297,30 @@ body.assistant-panel-open {
 }
 
 .optimized-sheikh-image--responsive {
-  width: 5rem;
+  width: 6.5rem;
 }
 
 @media (min-width: 768px) {
   .optimized-sheikh-image--responsive {
-    width: 6.25rem;
+    width: 7.75rem;
   }
 }
 
 .optimized-sheikh-image__img {
+  position: absolute;
+  inset: 0;
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 50% 36%;
+  object-position: var(--sheikh-object-position, 50% 36%);
   opacity: 0;
   transition: opacity 0.28s ease;
 }
 
 .optimized-sheikh-image--processed .optimized-sheikh-image__img,
-.optimized-sheikh-image--fallback .optimized-sheikh-image__img,
-.optimized-sheikh-image--css .optimized-sheikh-image__img {
+.optimized-sheikh-image--css .optimized-sheikh-image__img,
+.optimized-sheikh-image--logo-fallback .optimized-sheikh-image__img {
   opacity: 1;
 }
 
@@ -8326,9 +8328,9 @@ body.assistant-panel-open {
   filter: contrast(1.04) brightness(1.02) saturate(1.03);
 }
 
-.optimized-sheikh-image--fallback .optimized-sheikh-image__img {
+.optimized-sheikh-image--logo-fallback .optimized-sheikh-image__img {
   object-fit: contain;
-  padding: 0.65rem;
+  padding: 0.55rem;
   background: linear-gradient(180deg, #f3ebd8 0%, #faf6ee 100%);
 }
 
@@ -8365,10 +8367,14 @@ body.assistant-panel-open {
 .optimized-sheikh-image.sheikh-avatar-ring,
 .search-result-avatar.optimized-sheikh-image {
   border-radius: 999px;
+  width: 3.75rem;
+  height: 3.75rem;
+  min-width: 3.75rem;
+  min-height: 3.75rem;
 }
 
 .lesson-detail-hero .optimized-sheikh-image--portrait {
-  width: clamp(6.5rem, 18vw, 7.75rem);
+  width: clamp(7.5rem, 22vw, 9.5rem);
   border-radius: 1rem;
 }
 

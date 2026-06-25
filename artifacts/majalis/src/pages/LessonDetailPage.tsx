@@ -137,7 +137,7 @@ export default function LessonDetailPage({ params }: { params: { id: string } })
           <OptimizedSheikhImage
             src={kuwaitLesson?.sheikhImage || resolveLessonSheikhImage(lesson)}
             name={sheikhName || "شيخ"}
-            size={124}
+            size={136}
             variant="portrait"
             priority
           />

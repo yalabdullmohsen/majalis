@@ -52,7 +52,7 @@ function ResultRow({
     <Link href={href} style={{ textDecoration: "none" }}>
       <div className="search-result-row">
         {avatarName && (
-          <SheikhAvatar src={avatarSrc} name={avatarName} size={48} className="search-result-avatar" />
+          <SheikhAvatar src={avatarSrc} name={avatarName} size={56} className="search-result-avatar" />
         )}
         <div className="search-result-copy">
           <span>{title}</span>

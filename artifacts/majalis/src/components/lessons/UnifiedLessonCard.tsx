@@ -115,7 +115,7 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
 
       <div className="lesson-unified-card__body">
         <div className={`lesson-unified-card__top${compact ? " lesson-unified-card__top--compact" : ""}`}>
-          <SheikhAvatar src={lesson.sheikhImage} name={lesson.sheikhName} size={compact ? 48 : 56} />
+          <SheikhAvatar src={lesson.sheikhImage} name={lesson.sheikhName} size={compact ? 64 : 76} />
           <div className="lesson-unified-card__headline">
             <h3 className="lesson-unified-card__title">{lesson.title}</h3>
             {lesson.sheikhName && (

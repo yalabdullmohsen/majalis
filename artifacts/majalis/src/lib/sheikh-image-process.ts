@@ -166,25 +166,24 @@ function drawSubject(
   bounds: Bounds,
   width: number,
   height: number,
-  variant: SheikhImageVariant,
   focal: SheikhFocalPoint,
 ) {
   const cropW = bounds.right - bounds.left + 1;
   const cropH = bounds.bottom - bounds.top + 1;
-  const scaleBoost = focal.scale ?? 1;
-  const fillRatio = variant === "avatar" ? 0.86 : 0.8;
-  const scale = (Math.min(width, height) * fillRatio * scaleBoost) / Math.max(cropW, cropH);
+  const scaleBoost = focal.scale ?? 1.02;
+  const scale = Math.max(width / cropW, height / cropH) * scaleBoost;
   const drawW = cropW * scale;
   const drawH = cropH * scale;
 
-  const eyeRatio = 0.33;
-  const targetEyeY = height * (variant === "avatar" ? 0.38 : 0.34);
-  const eyeYInSource = bounds.top + cropH * eyeRatio;
   const focalX = bounds.left + cropW * (focal.x / 100);
-  const drawX = width * 0.5 - (focalX - bounds.left) * scale;
-  const drawY = targetEyeY - (eyeYInSource - bounds.top) * scale;
+  const focalY = bounds.top + cropH * (focal.y / 100);
+  const drawX = width * (focal.x / 100) - (focalX - bounds.left) * scale;
+  const drawY = height * (focal.y / 100) - (focalY - bounds.top) * scale;
 
   ctx.save();
+  ctx.beginPath();
+  ctx.rect(0, 0, width, height);
+  ctx.clip();
   ctx.filter = "contrast(1.07) brightness(1.03) saturate(1.04)";
   ctx.drawImage(img, bounds.left, bounds.top, cropW, cropH, drawX, drawY, drawW, drawH);
   ctx.restore();
@@ -238,7 +237,7 @@ async function renderProcessed(
 
   drawBrandBackground(ctx, outW, outH);
   drawBlurredBackdrop(ctx, img, outW, outH);
-  drawSubject(ctx, img, scaledBounds, outW, outH, variant, focal);
+  drawSubject(ctx, img, scaledBounds, outW, outH, focal);
 
   const blob = await canvasToBlob(canvas);
   return { url: URL.createObjectURL(blob), width: outW, height: outH };
