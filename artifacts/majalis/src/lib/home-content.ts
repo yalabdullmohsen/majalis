@@ -54,7 +54,7 @@ function lessonsFromAds(): KuwaitLesson[] {
         id: `kw-${ad.id}-${idx}`,
         sheikhName: ad.teacher,
         sheikhImage: ad.teacherImage,
-        title: genericLabel ? ad.title : `${ad.title} — ${session.label}`,
+        title: genericLabel ? ad.title : `${ad.title} ${session.label}`,
         day: session.day,
         time: session.time,
         mosque: session.venue,

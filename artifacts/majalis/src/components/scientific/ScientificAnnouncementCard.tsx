@@ -42,7 +42,12 @@ export function ScientificAnnouncementCard({ item, compact = false }: Props) {
         {item.bookTitle && !compact && (
           <p className="sci-ann-card__book">
             {item.bookTitle}
-            {item.bookAuthor ? ` — ${item.bookAuthor}` : ""}
+            {item.bookAuthor ? (
+              <>
+                <span className="sci-ann-card__book-sep" aria-hidden="true"> · </span>
+                {item.bookAuthor}
+              </>
+            ) : null}
           </p>
         )}
 

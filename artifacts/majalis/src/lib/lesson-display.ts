@@ -1,3 +1,5 @@
+import { cleanDisplayText } from "./display-text";
+
 const KUWAIT_DAYS = [
   "السبت",
   "الأحد",
@@ -31,10 +33,11 @@ export function extractLessonSchedule(lesson: {
   start_date?: string;
   end_date?: string;
 }): LessonScheduleParts {
-  const day =
+  const day = cleanDisplayText(
     lesson.day_of_week?.trim() ||
-    KUWAIT_DAYS.find((d) => lesson.schedule?.includes(d)) ||
-    "";
+      KUWAIT_DAYS.find((d) => lesson.schedule?.includes(d)) ||
+      "",
+  );
 
   let time = lesson.lesson_time?.trim() || "";
   if (!time && lesson.schedule?.trim()) {
@@ -45,6 +48,7 @@ export function extractLessonSchedule(lesson: {
       time = parts[0];
     }
   }
+  time = cleanDisplayText(time);
 
   let dateLabel = "";
   if (lesson.start_date) {

@@ -262,7 +262,7 @@ export default function CalendarPage() {
                   {selectedEvents.map((ev) => (
                     <button key={ev.id} type="button" className="cal-day-item" onClick={() => setModalEvent(ev)}>
                       <strong>{ev.title}</strong>
-                      <span>{ev.sheikh} — {ev.mosque}</span>
+                      <span>{ev.sheikh} · {ev.mosque}</span>
                       <span>{ev.time}</span>
                     </button>
                   ))}

@@ -1,70 +1,75 @@
 import { useEffect, useMemo, useState } from "react";
-import { getLessons, registerForLesson, unregisterFromLesson, getMyRegistrations } from "@/lib/supabase";
-import { DEMO_LESSONS } from "@/lib/demo-content";
 import { GOVERNORATES } from "@/lib/theme";
-import { PageHeader, Loading, Empty, Chip } from "@/components/ui-common";
+import { PageHeader, Loading, Chip } from "@/components/ui-common";
 import { useAuth } from "@/components/AuthProvider";
-import { LessonCard } from "@/components/lessons/LessonCard";
+import { UnifiedLessonCard } from "@/components/lessons/UnifiedLessonCard";
+import { LessonsContactCard } from "@/components/lessons/LessonsContactCard";
 import { ScientificAnnouncementsSection } from "@/components/scientific/ScientificAnnouncementsSection";
+import {
+  DEFAULT_KUWAIT_FILTERS,
+  filterKuwaitLessons,
+  loadAllKuwaitLessonsSplit,
+  sortKuwaitLessons,
+  type KuwaitLessonRecord,
+} from "@/lib/kuwait-lessons";
+import { fromKuwaitLesson } from "@/lib/unified-lesson-card";
+import { registerForLesson, unregisterFromLesson, getMyRegistrations } from "@/lib/supabase";
 
 const CATEGORIES = ["الكل", "تفسير", "فقه", "عقيدة", "حديث", "سيرة", "تجويد", "أخرى"];
 
 export default function LessonsPage() {
-  const [lessons, setLessons] = useState<any[]>([]);
+  const [lessons, setLessons] = useState<KuwaitLessonRecord[]>([]);
   const [loading, setLoading] = useState(true);
-  const [usingDemo, setUsingDemo] = useState(false);
   const [category, setCategory] = useState("الكل");
   const [city, setCity] = useState("كل المحافظات");
   const [search, setSearch] = useState("");
   const [myReg, setMyReg] = useState<string[]>([]);
   const { user, isLoggedIn } = useAuth() as any;
 
-  const fetchLessons = async () => {
-    setLoading(true);
-    try {
-      const { data, usingSeed } = await getLessons({ category, city, search });
-      setLessons(data);
-      setUsingDemo(Boolean(usingSeed));
-    } catch {
-      setLessons(DEMO_LESSONS);
-      setUsingDemo(true);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
-    fetchLessons();
-  }, [category, city]);
+    setLoading(true);
+    loadAllKuwaitLessonsSplit()
+      .then(({ active }) => setLessons(sortKuwaitLessons(active)))
+      .catch(() => setLessons([]))
+      .finally(() => setLoading(false));
+  }, []);
 
   useEffect(() => {
     if (isLoggedIn && user?.id) {
-      getMyRegistrations(user.id).then(setMyReg);
+      getMyRegistrations(user.id).then(setMyReg).catch(() => setMyReg([]));
     }
   }, [isLoggedIn, user]);
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    fetchLessons();
-  };
+  const filtered = useMemo(() => {
+    return filterKuwaitLessons(lessons, {
+      ...DEFAULT_KUWAIT_FILTERS,
+      search,
+      category,
+      governorate: city,
+    });
+  }, [lessons, search, category, city]);
 
   const toggleReg = async (lessonId: string) => {
     if (!isLoggedIn) return alert("يرجى تسجيل الدخول أولاً");
-    if (myReg.includes(lessonId)) {
-      await unregisterFromLesson(user.id, lessonId);
-      setMyReg(myReg.filter((id) => id !== lessonId));
-    } else {
-      await registerForLesson(user.id, lessonId);
-      setMyReg([...myReg, lessonId]);
+    try {
+      if (myReg.includes(lessonId)) {
+        await unregisterFromLesson(user.id, lessonId);
+        setMyReg(myReg.filter((id) => id !== lessonId));
+      } else {
+        await registerForLesson(user.id, lessonId);
+        setMyReg([...myReg, lessonId]);
+      }
+    } catch {
+      /* silent */
     }
   };
 
   const stats = useMemo(
     () => ({
-      total: lessons.length,
-      categories: new Set(lessons.map((l) => l.category).filter(Boolean)).size,
+      total: filtered.length,
+      categories: new Set(filtered.map((l) => l.category).filter(Boolean)).size,
     }),
-    [lessons],
+    [filtered],
   );
 
   return (
@@ -72,7 +77,7 @@ export default function LessonsPage() {
       <PageHeader
         eyebrow="دروس معتمدة"
         title="الدروس والدورات"
-        subtitle="استعرض الدروس العلمية الشرعية المعتمدة وسجّل حضورك."
+        subtitle="استعرض الدروس العلمية الشرعية المعتمدة مرتّبة حسب أقرب موعد."
       />
 
       <div className="page-stats-row">
@@ -80,13 +85,17 @@ export default function LessonsPage() {
         <span>{stats.categories} تصنيف</span>
       </div>
 
-      <form onSubmit={handleSearch} className="page-search-form">
+      <form
+        className="page-search-form"
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+      >
         <input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="ابحث عن درس..."
         />
-        <button type="submit">بحث</button>
       </form>
 
       <div className="page-chip-row">
@@ -102,21 +111,23 @@ export default function LessonsPage() {
 
       {loading ? (
         <Loading />
-      ) : lessons.length === 0 ? (
-        <Empty text="لا توجد دروس." />
+      ) : filtered.length === 0 ? (
+        <p className="lessons-empty-state">لا توجد دروس متاحة حاليًا.</p>
       ) : (
-        <div className="page-card-grid lesson-cards-grid">
-          {lessons.map((l) => (
-            <LessonCard
-              key={l.id}
-              lesson={l}
-              showRegister={isLoggedIn && !usingDemo}
-              registered={myReg.includes(l.id)}
-              onToggleRegister={() => toggleReg(l.id)}
+        <div className="page-card-grid lesson-unified-grid">
+          {filtered.map((lesson) => (
+            <UnifiedLessonCard
+              key={lesson.id}
+              lesson={fromKuwaitLesson(lesson)}
+              showRegister={isLoggedIn && !lesson.id.startsWith("kw-")}
+              registered={myReg.includes(lesson.id)}
+              onToggleRegister={() => toggleReg(lesson.id)}
             />
           ))}
         </div>
       )}
+
+      <LessonsContactCard />
 
       <ScientificAnnouncementsSection showViewAll={false} className="lessons-sci-ann" />
     </div>

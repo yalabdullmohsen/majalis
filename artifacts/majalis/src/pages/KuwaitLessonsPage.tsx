@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import { PageHeader, Loading, Empty } from "@/components/ui-common";
+import { PageHeader, Loading } from "@/components/ui-common";
+import { LessonsContactCard } from "@/components/lessons/LessonsContactCard";
 import { KuwaitLessonCard } from "@/components/kuwait/KuwaitLessonCard";
 import {
   DEFAULT_KUWAIT_FILTERS,
@@ -146,16 +147,20 @@ export default function KuwaitLessonsPage() {
       {loading && <Loading />}
 
       {!loading && filtered.length === 0 && (
-        <Empty text={tab === "active" ? "لا توجد دروس مطابقة للبحث حاليًا." : "لا توجد دروس مؤرشفة مطابقة."} />
+        <p className="lessons-empty-state">
+          {tab === "active" ? "لا توجد دروس متاحة حاليًا." : "لا توجد دروس مؤرشفة مطابقة."}
+        </p>
       )}
 
       {!loading && filtered.length > 0 && (
-        <div className="page-card-grid lesson-cards-grid kuwait-lessons-grid">
+        <div className="page-card-grid lesson-unified-grid kuwait-lessons-grid">
           {filtered.map((lesson) => (
             <KuwaitLessonCard key={lesson.id} lesson={lesson} archived={tab === "archive"} />
           ))}
         </div>
       )}
+
+      {!loading && tab === "active" && <LessonsContactCard />}
     </div>
   );
 }
