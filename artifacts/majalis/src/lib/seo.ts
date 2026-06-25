@@ -92,6 +92,38 @@ function routeForPath(path: string) {
     };
   }
 
+  if (normalized.startsWith("/fiqh-council/")) {
+    return {
+      ...requiredRoute("/fiqh-council"),
+      title: "قرار المجمع الفقهي | المجلس العلمي",
+      description: "تفاصيل قرار أو بحث أو توصية من المجمع الفقهي الإسلامي.",
+    };
+  }
+
+  if (normalized.startsWith("/fatwa/")) {
+    return {
+      ...requiredRoute("/fatwa"),
+      title: "فتوى شرعية | المجلس العلمي",
+      description: "تفاصيل فتوى شرعية — السؤال والجواب والمراجع.",
+    };
+  }
+
+  if (normalized.startsWith("/rulings/")) {
+    return {
+      ...requiredRoute("/rulings"),
+      title: "حكم شرعي | المجلس العلمي",
+      description: "تفاصيل حكم شرعي مع الأدلة والمراجع.",
+    };
+  }
+
+  if (normalized.startsWith("/annual-courses/")) {
+    return {
+      ...requiredRoute("/annual-courses"),
+      title: "دورة علمية | المجلس العلمي",
+      description: "تفاصيل دورة علمية — الجدول والمشايخ والتسجيل.",
+    };
+  }
+
   return requiredRoute("/404");
 }
 

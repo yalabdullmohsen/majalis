@@ -1,0 +1,62 @@
+import { useEffect, useState } from "react";
+import { adminGetAllFatwas, adminUpsertFatwa, adminDeleteFatwa, adminSetPlatformContentStatus } from "@/lib/platform-supabase";
+import { FATWA_SEED } from "@/lib/fatwa-seed";
+import { FATWA_CATEGORIES } from "@/lib/platform-types";
+import { C } from "@/lib/theme";
+import { Loading } from "@/components/ui-common";
+import { AdminModal, Field, inputSt, selectSt, textareaSt } from "./AdminModal";
+import { useAdminShell } from "./AdminShell";
+
+const EMPTY = { question: "", answer: "", summary: "", category: "فقه عام", format: "written", mufti_name: "", status: "approved" };
+
+export function FatwaAdminSection() {
+  const { showSuccess, showError } = useAdminShell();
+  const [items, setItems] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [open, setOpen] = useState(false);
+  const [form, setForm] = useState<any>(EMPTY);
+  const [saving, setSaving] = useState(false);
+
+  const load = () => {
+    setLoading(true);
+    adminGetAllFatwas().then(({ data }) => { setItems(data.length > 0 ? data : FATWA_SEED); setLoading(false); });
+  };
+  useEffect(() => { load(); }, []);
+
+  const set = (k: string, v: unknown) => setForm((f: any) => ({ ...f, [k]: v }));
+
+  return (
+    <div>
+      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "1rem" }}>
+        <h2 style={{ margin: 0, color: C.emeraldDeep }}>الفتاوى ({items.length})</h2>
+        <button onClick={() => { setForm({ ...EMPTY }); setOpen(true); }} style={{ padding: "0.5rem 1rem", background: C.emerald, color: C.parchment, border: "none", borderRadius: "0.375rem", cursor: "pointer" }}>+ إضافة</button>
+      </div>
+      {loading ? <Loading /> : items.map((item) => (
+        <div key={item.id} style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.375rem", padding: "1rem", marginBottom: "0.75rem" }}>
+          <strong>{item.question}</strong>
+          <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.5rem" }}>
+            <button onClick={() => { setForm({ ...item }); setOpen(true); }} style={{ fontSize: "0.75rem" }}>تعديل</button>
+            {item.status !== "approved" && <button onClick={() => adminSetPlatformContentStatus("fatwas", item.id, "approved").then(load)} style={{ fontSize: "0.75rem" }}>نشر</button>}
+            <button onClick={() => { if (confirm("حذف؟")) adminDeleteFatwa(item.id).then(load); }} style={{ fontSize: "0.75rem", color: "#dc2626" }}>حذف</button>
+          </div>
+        </div>
+      ))}
+      <AdminModal open={open} onClose={() => setOpen(false)} title="فتوى" onSave={async () => {
+        if (!form.question?.trim() || !form.answer?.trim()) return showError("السؤال والجواب مطلوبان");
+        setSaving(true);
+        const { error } = await adminUpsertFatwa(form);
+        setSaving(false);
+        if (error) return showError(error.message);
+        showSuccess("تم الحفظ"); setOpen(false); load();
+      }} saving={saving}>
+        <Field label="السؤال"><textarea style={textareaSt} value={form.question || ""} onChange={(e) => set("question", e.target.value)} rows={2} /></Field>
+        <Field label="الجواب"><textarea style={textareaSt} value={form.answer || ""} onChange={(e) => set("answer", e.target.value)} rows={6} /></Field>
+        <Field label="التصنيف"><select style={selectSt} value={form.category} onChange={(e) => set("category", e.target.value)}>{FATWA_CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}</select></Field>
+        <Field label="الصيغة"><select style={selectSt} value={form.format} onChange={(e) => set("format", e.target.value)}><option value="written">مكتوبة</option><option value="audio">صوتية</option><option value="both">كلاهما</option></select></Field>
+        <Field label="المفتي"><input style={inputSt} value={form.mufti_name || ""} onChange={(e) => set("mufti_name", e.target.value)} /></Field>
+        <Field label="رابط صوتي"><input style={inputSt} value={form.audio_url || ""} onChange={(e) => set("audio_url", e.target.value)} /></Field>
+        <Field label="الحالة"><select style={selectSt} value={form.status || "approved"} onChange={(e) => set("status", e.target.value)}><option value="approved">منشور</option><option value="pending">معلّق</option></select></Field>
+      </AdminModal>
+    </div>
+  );
+}

@@ -1,0 +1,320 @@
+import { arabicMatchAny } from "./arabic-search";
+import { FIQH_COUNCIL_SEED, findFiqhDecisionById } from "./fiqh-council-seed";
+import { FATWA_SEED, findFatwaById } from "./fatwa-seed";
+import { RULINGS_SEED, findRulingById } from "./rulings-seed";
+import { ANNUAL_COURSES_SEED, findAnnualCourseById } from "./annual-courses-seed";
+import { UPDATES_SEED, getSortedUpdates } from "./updates-seed";
+import { supabase, isSupabaseConfigured } from "./supabase";
+import { logSupabaseError } from "./supabase-config";
+import type {
+  AnnualCourse,
+  Fatwa,
+  FiqhDecision,
+  PlatformUpdate,
+  ShariaRuling,
+} from "./platform-types";
+
+const isConfigured = isSupabaseConfigured();
+
+function filterBySearch<T>(items: T[], fields: (keyof T | string)[], query?: string): T[] {
+  if (!query?.trim()) return items;
+  return items.filter((item) =>
+    arabicMatchAny(
+      fields.map((f) => String((item as Record<string, unknown>)[f as string] ?? "")),
+      query.trim(),
+    ),
+  );
+}
+
+// ─── Fiqh Council ────────────────────────────────────────────────────────────
+
+export async function getFiqhDecisions(opts?: { category?: string; search?: string; type?: string }) {
+  let items = [...FIQH_COUNCIL_SEED];
+  if (opts?.category && opts.category !== "الكل") {
+    items = items.filter((d) => d.category === opts.category);
+  }
+  if (opts?.type && opts.type !== "الكل") {
+    items = items.filter((d) => d.decision_type === opts.type);
+  }
+  items = filterBySearch(items, ["title", "summary", "body", "category"], opts?.search);
+
+  if (!isConfigured) return { data: items, usingSeed: true };
+
+  try {
+    let query = supabase
+      .from("fiqh_council_decisions")
+      .select("*")
+      .eq("status", "approved")
+      .is("archived_at", null)
+      .order("decision_date", { ascending: false, nullsFirst: false });
+
+    if (opts?.category && opts.category !== "الكل") {
+      query = query.eq("category", opts.category);
+    }
+    if (opts?.type && opts.type !== "الكل") {
+      query = query.eq("decision_type", opts.type);
+    }
+
+    const { data, error } = await query;
+    if (error) throw error;
+
+    let result = (data || []) as FiqhDecision[];
+    if (opts?.search?.trim()) {
+      result = filterBySearch(result, ["title", "summary", "body"], opts.search);
+    }
+    if (result.length === 0 && items.length > 0) {
+      return { data: items, usingSeed: true };
+    }
+    return { data: result, usingSeed: false };
+  } catch (err) {
+    logSupabaseError("getFiqhDecisions", err);
+    return { data: items, usingSeed: true };
+  }
+}
+
+export async function getFiqhDecisionById(id: string) {
+  const fallback = findFiqhDecisionById(id);
+  if (!isConfigured) return { data: fallback, usingSeed: true };
+
+  try {
+    const byId = await supabase
+      .from("fiqh_council_decisions")
+      .select("*")
+      .eq("id", id)
+      .eq("status", "approved")
+      .maybeSingle();
+    if (byId.data) return { data: byId.data as FiqhDecision, usingSeed: false };
+
+    const byKey = await supabase
+      .from("fiqh_council_decisions")
+      .select("*")
+      .eq("external_key", id)
+      .eq("status", "approved")
+      .maybeSingle();
+    return { data: (byKey.data as FiqhDecision) || fallback, usingSeed: !byKey.data && !!fallback };
+  } catch (err) {
+    logSupabaseError("getFiqhDecisionById", err, { id });
+    return { data: fallback, usingSeed: true };
+  }
+}
+
+// ─── Fatwas ──────────────────────────────────────────────────────────────────
+
+export async function getFatwas(opts?: { category?: string; search?: string; format?: string }) {
+  let items = [...FATWA_SEED];
+  if (opts?.category && opts.category !== "الكل") {
+    items = items.filter((f) => f.category === opts.category);
+  }
+  if (opts?.format && opts.format !== "الكل") {
+    items = items.filter((f) => f.format === opts.format || f.format === "both");
+  }
+  items = filterBySearch(items, ["question", "answer", "summary", "category"], opts?.search);
+
+  if (!isConfigured) return { data: items, usingSeed: true };
+
+  try {
+    let query = supabase
+      .from("fatwas")
+      .select("*")
+      .eq("status", "approved")
+      .is("archived_at", null)
+      .order("created_at", { ascending: false });
+
+    if (opts?.category && opts.category !== "الكل") query = query.eq("category", opts.category);
+    if (opts?.format && opts.format !== "الكل") {
+      query = query.or(`format.eq.${opts.format},format.eq.both`);
+    }
+
+    const { data, error } = await query;
+    if (error) throw error;
+
+    let result = (data || []) as Fatwa[];
+    if (opts?.search?.trim()) {
+      result = filterBySearch(result, ["question", "answer"], opts.search);
+    }
+    if (result.length === 0 && items.length > 0) return { data: items, usingSeed: true };
+    return { data: result, usingSeed: false };
+  } catch (err) {
+    logSupabaseError("getFatwas", err);
+    return { data: items, usingSeed: true };
+  }
+}
+
+export async function getFatwaById(id: string) {
+  const fallback = findFatwaById(id);
+  if (!isConfigured) return { data: fallback, usingSeed: true };
+
+  try {
+    const byId = await supabase.from("fatwas").select("*").eq("id", id).eq("status", "approved").maybeSingle();
+    if (byId.data) return { data: byId.data as Fatwa, usingSeed: false };
+
+    const byKey = await supabase.from("fatwas").select("*").eq("external_key", id).eq("status", "approved").maybeSingle();
+    return { data: (byKey.data as Fatwa) || fallback, usingSeed: !byKey.data && !!fallback };
+  } catch (err) {
+    logSupabaseError("getFatwaById", err, { id });
+    return { data: fallback, usingSeed: true };
+  }
+}
+
+// ─── Sharia Rulings ──────────────────────────────────────────────────────────
+
+export async function getShariaRulings(opts?: { category?: string; search?: string }) {
+  let items = [...RULINGS_SEED];
+  if (opts?.category && opts.category !== "الكل") {
+    items = items.filter((r) => r.category === opts.category);
+  }
+  items = filterBySearch(items, ["title", "summary", "body", "category"], opts?.search);
+
+  if (!isConfigured) return { data: items, usingSeed: true };
+
+  try {
+    let query = supabase
+      .from("sharia_rulings")
+      .select("*")
+      .eq("status", "approved")
+      .is("archived_at", null)
+      .order("created_at", { ascending: false });
+
+    if (opts?.category && opts.category !== "الكل") query = query.eq("category", opts.category);
+
+    const { data, error } = await query;
+    if (error) throw error;
+
+    let result = (data || []) as ShariaRuling[];
+    if (opts?.search?.trim()) {
+      result = filterBySearch(result, ["title", "body"], opts.search);
+    }
+    if (result.length === 0 && items.length > 0) return { data: items, usingSeed: true };
+    return { data: result, usingSeed: false };
+  } catch (err) {
+    logSupabaseError("getShariaRulings", err);
+    return { data: items, usingSeed: true };
+  }
+}
+
+export async function getShariaRulingById(id: string) {
+  const fallback = findRulingById(id);
+  if (!isConfigured) return { data: fallback, usingSeed: true };
+
+  try {
+    const byId = await supabase.from("sharia_rulings").select("*").eq("id", id).eq("status", "approved").maybeSingle();
+    if (byId.data) return { data: byId.data as ShariaRuling, usingSeed: false };
+
+    const byKey = await supabase.from("sharia_rulings").select("*").eq("external_key", id).eq("status", "approved").maybeSingle();
+    return { data: (byKey.data as ShariaRuling) || fallback, usingSeed: !byKey.data && !!fallback };
+  } catch (err) {
+    logSupabaseError("getShariaRulingById", err, { id });
+    return { data: fallback, usingSeed: true };
+  }
+}
+
+// ─── Annual Courses ──────────────────────────────────────────────────────────
+
+export async function getAnnualCourses(opts?: { type?: string; search?: string; year?: number }) {
+  let items = [...ANNUAL_COURSES_SEED];
+  if (opts?.type && opts.type !== "الكل") {
+    items = items.filter((c) => c.course_type === opts.type);
+  }
+  if (opts?.year) {
+    items = items.filter((c) => c.year === opts.year);
+  }
+  items = filterBySearch(items, ["title", "summary", "body"], opts?.search);
+
+  if (!isConfigured) return { data: items, usingSeed: true };
+
+  try {
+    let query = supabase
+      .from("annual_courses")
+      .select("*")
+      .eq("status", "approved")
+      .is("archived_at", null)
+      .order("year", { ascending: false, nullsFirst: false });
+
+    if (opts?.type && opts.type !== "الكل") query = query.eq("course_type", opts.type);
+    if (opts?.year) query = query.eq("year", opts.year);
+
+    const { data, error } = await query;
+    if (error) throw error;
+
+    let result = (data || []) as AnnualCourse[];
+    if (opts?.search?.trim()) {
+      result = filterBySearch(result, ["title", "summary"], opts.search);
+    }
+    if (result.length === 0 && items.length > 0) return { data: items, usingSeed: true };
+    return { data: result, usingSeed: false };
+  } catch (err) {
+    logSupabaseError("getAnnualCourses", err);
+    return { data: items, usingSeed: true };
+  }
+}
+
+export async function getAnnualCourseById(id: string) {
+  const fallback = findAnnualCourseById(id);
+  if (!isConfigured) return { data: fallback, usingSeed: true };
+
+  try {
+    const byId = await supabase.from("annual_courses").select("*").eq("id", id).eq("status", "approved").maybeSingle();
+    if (byId.data) return { data: byId.data as AnnualCourse, usingSeed: false };
+
+    const byKey = await supabase.from("annual_courses").select("*").eq("external_key", id).eq("status", "approved").maybeSingle();
+    return { data: (byKey.data as AnnualCourse) || fallback, usingSeed: !byKey.data && !!fallback };
+  } catch (err) {
+    logSupabaseError("getAnnualCourseById", err, { id });
+    return { data: fallback, usingSeed: true };
+  }
+}
+
+// ─── Updates ─────────────────────────────────────────────────────────────────
+
+export async function getPlatformUpdates(limit = 50) {
+  const fallback = getSortedUpdates(limit);
+  if (!isConfigured) return { data: fallback, usingSeed: true };
+
+  try {
+    const { data, error } = await supabase
+      .from("platform_updates")
+      .select("*")
+      .eq("status", "approved")
+      .order("published_at", { ascending: false })
+      .limit(limit);
+
+    if (error) throw error;
+    const result = (data || []) as PlatformUpdate[];
+    if (result.length === 0 && fallback.length > 0) return { data: fallback, usingSeed: true };
+    return { data: result, usingSeed: false };
+  } catch (err) {
+    logSupabaseError("getPlatformUpdates", err);
+    return { data: fallback, usingSeed: true };
+  }
+}
+
+// ─── Related content ─────────────────────────────────────────────────────────
+
+export async function getRelatedFiqhDecisions(currentId: string, category?: string, limit = 4) {
+  const { data } = await getFiqhDecisions({ category });
+  return data.filter((d) => d.id !== currentId).slice(0, limit);
+}
+
+export async function getRelatedFatwas(currentId: string, category?: string, limit = 4) {
+  const { data } = await getFatwas({ category });
+  return data.filter((f) => f.id !== currentId).slice(0, limit);
+}
+
+export async function getRelatedRulings(currentId: string, category?: string, limit = 4) {
+  const { data } = await getShariaRulings({ category });
+  return data.filter((r) => r.id !== currentId).slice(0, limit);
+}
+
+export async function getRelatedCourses(currentId: string, limit = 4) {
+  const { data } = await getAnnualCourses();
+  return data.filter((c) => c.id !== currentId).slice(0, limit);
+}
+
+// Re-export seeds for search fallback
+export {
+  FIQH_COUNCIL_SEED,
+  FATWA_SEED,
+  RULINGS_SEED,
+  ANNUAL_COURSES_SEED,
+  UPDATES_SEED,
+};

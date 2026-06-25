@@ -16,3 +16,6 @@ Allow: /
 
 Host: majlisilm.com
 Sitemap: https://majlisilm.com/sitemap.xml
+
+# RSS Feed
+# https://majlisilm.com/feed.xml

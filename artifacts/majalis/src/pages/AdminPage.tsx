@@ -12,6 +12,11 @@ import { CondolencesSection } from "@/pages/admin/CondolencesSection";
 import { UsersSection } from "@/pages/admin/UsersSection";
 import { SettingsSection } from "@/pages/admin/SettingsSection";
 import { ReportsSection } from "@/pages/admin/ReportsSection";
+import { FiqhCouncilSection } from "@/pages/admin/FiqhCouncilSection";
+import { FatwaAdminSection } from "@/pages/admin/FatwaAdminSection";
+import { RulingsSection } from "@/pages/admin/RulingsSection";
+import { AnnualCoursesSection } from "@/pages/admin/AnnualCoursesSection";
+import { UpdatesSection } from "@/pages/admin/UpdatesSection";
 
 export default function AdminPage() {
   const [section, setSection] = useState<AdminSection>("dashboard");
@@ -30,6 +35,11 @@ export default function AdminPage() {
       {section === "users" && <UsersSection />}
       {section === "settings" && <SettingsSection />}
       {section === "reports" && <ReportsSection />}
+      {section === "fiqh-council" && <FiqhCouncilSection />}
+      {section === "fatwa" && <FatwaAdminSection />}
+      {section === "rulings" && <RulingsSection />}
+      {section === "annual-courses" && <AnnualCoursesSection />}
+      {section === "updates" && <UpdatesSection />}
     </AdminShell>
   );
 }

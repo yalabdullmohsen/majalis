@@ -13,6 +13,7 @@ import {
 import { LESSONS_SEED, findSeedLessonById } from "./lessons-seed";
 import { DEMO_QUIZ_QUESTIONS } from "./quiz-seed";
 import { ADHKAR_CATEGORIES, filterAdhkar } from "./adhkar-seed";
+import { searchPlatformSeed } from "./platform-search";
 import { safeSupabaseQuery, isMissingSchemaError } from "./safe-supabase";
 
 /** Columns that exist on the live `sheikhs` table (no image_url / avatar_url). */
@@ -835,6 +836,11 @@ export type SearchResults = {
   qa: any[];
   fawaid: any[];
   adhkar: any[];
+  fiqh_decisions?: any[];
+  fatwas?: any[];
+  rulings?: any[];
+  courses?: any[];
+  updates?: any[];
   error?: string | null;
   usingDemo?: boolean;
 };
@@ -847,6 +853,11 @@ const EMPTY_SEARCH: SearchResults = {
   qa: [],
   fawaid: [],
   adhkar: [],
+  fiqh_decisions: [],
+  fatwas: [],
+  rulings: [],
+  courses: [],
+  updates: [],
 };
 
 function mergeUniqueById<T extends { id: string }>(rows: T[]): T[] {
@@ -1015,6 +1026,7 @@ async function searchEverythingFallback(term: string): Promise<SearchResults> {
     miracles: miracles.data,
     fawaid: fawaid.data,
     adhkar: adhkar.data,
+    ...searchPlatformSeed(term),
     error: null,
     usingDemo: false,
   };
@@ -1026,7 +1038,8 @@ export async function searchEverything(term: string): Promise<SearchResults> {
 
   if (!isConfigured) {
     const demo = searchDemoContent(query);
-    return { ...demo, usingDemo: true, error: null };
+    const platform = searchPlatformSeed(query);
+    return { ...demo, ...platform, usingDemo: true, error: null };
   }
 
   try {
@@ -1039,6 +1052,7 @@ export async function searchEverything(term: string): Promise<SearchResults> {
         category: ADHKAR_CATEGORIES.find((c) => c.id === item.categoryId)?.name,
         source: item.source,
       }));
+      const platformFallback = searchPlatformSeed(query);
       return {
         lessons: data.lessons || [],
         library: data.library || [],
@@ -1047,6 +1061,11 @@ export async function searchEverything(term: string): Promise<SearchResults> {
         qa: data.qa || [],
         fawaid: data.fawaid || [],
         adhkar,
+        fiqh_decisions: data.fiqh_decisions?.length ? data.fiqh_decisions : platformFallback.fiqh_decisions,
+        fatwas: data.fatwas?.length ? data.fatwas : platformFallback.fatwas,
+        rulings: data.rulings?.length ? data.rulings : platformFallback.rulings,
+        courses: data.courses?.length ? data.courses : platformFallback.courses,
+        updates: data.updates?.length ? data.updates : platformFallback.updates,
         usingDemo: false,
         error: null,
       };
@@ -1060,30 +1079,43 @@ export async function searchEverything(term: string): Promise<SearchResults> {
   }
 
   const fallback = await searchEverythingFallback(query);
+  const platform = searchPlatformSeed(query);
+  const merged = { ...fallback, ...platform };
   const total =
-    fallback.lessons.length +
-    fallback.library.length +
-    fallback.miracles.length +
-    fallback.sheikhs.length +
-    fallback.qa.length +
-    fallback.fawaid.length +
-    fallback.adhkar.length;
+    merged.lessons.length +
+    merged.library.length +
+    merged.miracles.length +
+    merged.sheikhs.length +
+    merged.qa.length +
+    merged.fawaid.length +
+    merged.adhkar.length +
+    (merged.fiqh_decisions?.length || 0) +
+    (merged.fatwas?.length || 0) +
+    (merged.rulings?.length || 0) +
+    (merged.courses?.length || 0) +
+    (merged.updates?.length || 0);
 
   if (total === 0) {
     const demo = searchDemoContent(query);
+    const demoPlatform = searchPlatformSeed(query);
     const demoTotal =
       demo.lessons.length +
       demo.library.length +
       demo.sheikhs.length +
       demo.qa.length +
       demo.fawaid.length +
-      demo.adhkar.length;
+      demo.adhkar.length +
+      demoPlatform.fiqh_decisions.length +
+      demoPlatform.fatwas.length +
+      demoPlatform.rulings.length +
+      demoPlatform.courses.length +
+      demoPlatform.updates.length;
     if (demoTotal > 0) {
-      return { ...demo, usingDemo: true, error: fallback.error ?? null };
+      return { ...demo, ...demoPlatform, usingDemo: true, error: fallback.error ?? null };
     }
   }
 
-  return fallback;
+  return merged;
 }
 
 export type PrayerTimesRow = {

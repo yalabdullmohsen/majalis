@@ -14,7 +14,12 @@ export type AdminSection =
   | "condolences"
   | "users"
   | "settings"
-  | "reports";
+  | "reports"
+  | "fiqh-council"
+  | "fatwa"
+  | "rulings"
+  | "annual-courses"
+  | "updates";
 
 export const ADMIN_NAV: { key: AdminSection; label: string }[] = [
   { key: "dashboard", label: "لوحة التحكم" },
@@ -28,6 +33,11 @@ export const ADMIN_NAV: { key: AdminSection; label: string }[] = [
   { key: "condolences", label: "قوالب التعزية" },
   { key: "users", label: "المستخدمون" },
   { key: "reports", label: "التقارير" },
+  { key: "fiqh-council", label: "المجمع الفقهي" },
+  { key: "fatwa", label: "الفتاوى" },
+  { key: "rulings", label: "الأحكام الشرعية" },
+  { key: "annual-courses", label: "الدورات العلمية" },
+  { key: "updates", label: "المستجدات" },
   { key: "settings", label: "الإعدادات" },
 ];
 

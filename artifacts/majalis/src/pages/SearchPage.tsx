@@ -20,6 +20,11 @@ const EMPTY: SearchResults = {
   qa: [],
   fawaid: [],
   adhkar: [],
+  fiqh_decisions: [],
+  fatwas: [],
+  rulings: [],
+  courses: [],
+  updates: [],
 };
 
 function Group({ title, items, render, id }: { title: string; items: any[]; render: (i: any) => React.ReactNode; id?: string }) {
@@ -136,6 +141,11 @@ export default function SearchPage() {
     results.qa.length +
     results.fawaid.length +
     results.adhkar.length +
+    (results.fiqh_decisions?.length || 0) +
+    (results.fatwas?.length || 0) +
+    (results.rulings?.length || 0) +
+    (results.courses?.length || 0) +
+    (results.updates?.length || 0) +
     localExtra.occasions.length +
     localExtra.nawawi.length +
     localExtra.quran.length;
@@ -155,7 +165,7 @@ export default function SearchPage() {
           value={term}
           onChange={setTerm}
           onSubmit={submitSearch}
-          placeholder="ابحث في الدروس والفوائد والأسئلة والأذكار..."
+          placeholder="ابحث في الدروس والفتاوى والقرارات والدورات..."
         />
         <button type="submit">بحث</button>
       </form>
@@ -247,6 +257,41 @@ export default function SearchPage() {
                 items={localExtra.quran}
                 render={(s) => (
                   <ResultRow key={s.id} href={s.href} title={s.title} meta={s.meta} />
+                )}
+              />
+              <Group
+                title="المجمع الفقهي"
+                items={results.fiqh_decisions || []}
+                render={(d) => (
+                  <ResultRow key={d.id} href={`/fiqh-council/${d.id}`} title={displayText(d.title)} meta={d.searchMeta || d.category} />
+                )}
+              />
+              <Group
+                title="الفتاوى"
+                items={results.fatwas || []}
+                render={(f) => (
+                  <ResultRow key={f.id} href={`/fatwa/${f.id}`} title={displayText(f.question)} meta={f.searchMeta || f.category} />
+                )}
+              />
+              <Group
+                title="الأحكام الشرعية"
+                items={results.rulings || []}
+                render={(r) => (
+                  <ResultRow key={r.id} href={`/rulings/${r.id}`} title={displayText(r.title)} meta={r.searchMeta || r.category} />
+                )}
+              />
+              <Group
+                title="الدورات العلمية"
+                items={results.courses || []}
+                render={(c) => (
+                  <ResultRow key={c.id} href={`/annual-courses/${c.id}`} title={displayText(c.title)} meta={c.searchMeta || c.course_type} />
+                )}
+              />
+              <Group
+                title="آخر المستجدات"
+                items={results.updates || []}
+                render={(u) => (
+                  <ResultRow key={u.id} href="/updates" title={displayText(u.title)} meta={u.searchMeta || u.update_type} />
                 )}
               />
               <Group

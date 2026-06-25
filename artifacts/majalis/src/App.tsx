@@ -40,6 +40,15 @@ const TasbihPage = lazy(() => import("@/pages/TasbihPage"));
 const DailyWirdPage = lazy(() => import("@/pages/DailyWirdPage"));
 const OccasionsPage = lazy(() => import("@/pages/OccasionsPage"));
 const ArbaeenNawawiPage = lazy(() => import("@/pages/ArbaeenNawawiPage"));
+const AnnualCoursesPage = lazy(() => import("@/pages/AnnualCoursesPage"));
+const AnnualCourseDetailPage = lazy(() => import("@/pages/AnnualCourseDetailPage"));
+const FiqhCouncilPage = lazy(() => import("@/pages/FiqhCouncilPage"));
+const FiqhCouncilDetailPage = lazy(() => import("@/pages/FiqhCouncilDetailPage"));
+const FatwaPage = lazy(() => import("@/pages/FatwaPage"));
+const FatwaDetailPage = lazy(() => import("@/pages/FatwaDetailPage"));
+const RulingsPage = lazy(() => import("@/pages/RulingsPage"));
+const RulingDetailPage = lazy(() => import("@/pages/RulingDetailPage"));
+const UpdatesPage = lazy(() => import("@/pages/UpdatesPage"));
 const AdminPage = lazy(() => import("@/pages/AdminPage"));
 const AdminDashboardPage = lazy(() => import("@/pages/admin/AdminDashboardPage"));
 
@@ -109,6 +118,15 @@ function Router() {
       <Route path="/occasions"><SafeLazyRoute component={OccasionsPage} /></Route>
       <Route path="/arbaeen-nawawi"><SafeLazyRoute component={ArbaeenNawawiPage} /></Route>
       <Route path="/cards"><SafeLazyRoute component={CardsPage} /></Route>
+      <Route path="/annual-courses/:id"><SafeLazyRoute component={AnnualCourseDetailPage} /></Route>
+      <Route path="/annual-courses"><SafeLazyRoute component={AnnualCoursesPage} /></Route>
+      <Route path="/fiqh-council/:id"><SafeLazyRoute component={FiqhCouncilDetailPage} /></Route>
+      <Route path="/fiqh-council"><SafeLazyRoute component={FiqhCouncilPage} /></Route>
+      <Route path="/fatwa/:id"><SafeLazyRoute component={FatwaDetailPage} /></Route>
+      <Route path="/fatwa"><SafeLazyRoute component={FatwaPage} /></Route>
+      <Route path="/rulings/:id"><SafeLazyRoute component={RulingDetailPage} /></Route>
+      <Route path="/rulings"><SafeLazyRoute component={RulingsPage} /></Route>
+      <Route path="/updates"><SafeLazyRoute component={UpdatesPage} /></Route>
       <Route path="/login"><SafeLazyRoute component={LoginPage} /></Route>
       <Route path="/admin/dashboard">
         <AdminRouteGuard>

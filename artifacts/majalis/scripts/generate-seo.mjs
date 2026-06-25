@@ -7,6 +7,9 @@ const appRoot = resolve(__dirname, "..");
 const LESSONS_SEED = JSON.parse(
   await readFile(resolve(__dirname, "lessons-seed.snapshot.json"), "utf8"),
 );
+const PLATFORM_SEED = JSON.parse(
+  await readFile(resolve(__dirname, "platform-seed.snapshot.json"), "utf8"),
+);
 const publicDir = resolve(appRoot, "public");
 const seoPrerenderDir = resolve(appRoot, "seo-prerender");
 const seoConfigPath = resolve(appRoot, "src/lib/seo-routes.json");
@@ -165,9 +168,39 @@ const lessonEntries = lessonRows.map((row) => {
   return `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${buildDate}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.72</priority>\n  </url>`;
 });
 
+const platformEntries = [
+  ...(PLATFORM_SEED.fiqh_decisions || []).map((row) => ({
+    path: `/fiqh-council/${row.id}`,
+    title: `${row.title} | ${seoConfig.siteName}`,
+    description: row.title,
+    priority: 0.7,
+  })),
+  ...(PLATFORM_SEED.fatwas || []).map((row) => ({
+    path: `/fatwa/${row.id}`,
+    title: `${row.question} | ${seoConfig.siteName}`,
+    description: row.question,
+    priority: 0.71,
+  })),
+  ...(PLATFORM_SEED.rulings || []).map((row) => ({
+    path: `/rulings/${row.id}`,
+    title: `${row.title} | ${seoConfig.siteName}`,
+    description: row.title,
+    priority: 0.69,
+  })),
+  ...(PLATFORM_SEED.courses || []).map((row) => ({
+    path: `/annual-courses/${row.id}`,
+    title: `${row.title} | ${seoConfig.siteName}`,
+    description: row.title,
+    priority: 0.68,
+  })),
+].map((row) => {
+  const loc = escapeXml(absoluteUrl(row.path));
+  return `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${buildDate}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>${row.priority}</priority>\n  </url>`;
+});
+
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${[...staticEntries, ...lessonEntries].join("\n")}
+${[...staticEntries, ...lessonEntries, ...platformEntries].join("\n")}
 </urlset>
 `;
 
@@ -189,11 +222,42 @@ Allow: /
 
 Host: ${seoConfig.siteUrl.replace(/^https?:\/\//, "")}
 Sitemap: ${seoConfig.siteUrl}/sitemap.xml
+
+# RSS Feed
+# ${seoConfig.siteUrl}/feed.xml
+`;
+
+const rssItems = [
+  ...(PLATFORM_SEED.fiqh_decisions || []).slice(0, 5).map((row) => ({
+    title: row.title,
+    link: absoluteUrl(`/fiqh-council/${row.id}`),
+    description: row.title,
+  })),
+  ...(PLATFORM_SEED.fatwas || []).slice(0, 5).map((row) => ({
+    title: row.question,
+    link: absoluteUrl(`/fatwa/${row.id}`),
+    description: row.question,
+  })),
+];
+
+const feed = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>${escapeXml(seoConfig.siteName)}</title>
+    <link>${escapeXml(seoConfig.siteUrl)}</link>
+    <description>آخر المستجدات العلمية — قرارات وفتاوى ودورات</description>
+    <language>ar</language>
+    <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
+    <atom:link href="${escapeXml(absoluteUrl("/feed.xml"))}" rel="self" type="application/rss+xml"/>
+    ${rssItems.map((item) => `<item><title>${escapeXml(item.title)}</title><link>${escapeXml(item.link)}</link><description>${escapeXml(item.description)}</description><pubDate>${new Date().toUTCString()}</pubDate></item>`).join("\n    ")}
+  </channel>
+</rss>
 `;
 
 await mkdir(publicDir, { recursive: true });
 await writeFile(resolve(publicDir, "sitemap.xml"), sitemap, "utf8");
 await writeFile(resolve(publicDir, "robots.txt"), robots, "utf8");
+await writeFile(resolve(publicDir, "feed.xml"), feed, "utf8");
 
 for (const route of staticRoutes) {
   const routeDir =
@@ -233,6 +297,51 @@ for (const row of lessonRows) {
   );
 }
 
+const platformPrerender = [
+  ...(PLATFORM_SEED.fiqh_decisions || []).map((row) => ({
+    dir: resolve(seoPrerenderDir, "fiqh-council", row.id),
+    route: {
+      path: `/fiqh-council/${row.id}`,
+      title: `${row.title} | ${seoConfig.siteName}`,
+      description: row.title,
+      ogType: "article",
+    },
+  })),
+  ...(PLATFORM_SEED.fatwas || []).map((row) => ({
+    dir: resolve(seoPrerenderDir, "fatwa", row.id),
+    route: {
+      path: `/fatwa/${row.id}`,
+      title: `${row.question} | ${seoConfig.siteName}`,
+      description: row.question,
+      ogType: "article",
+    },
+  })),
+  ...(PLATFORM_SEED.rulings || []).map((row) => ({
+    dir: resolve(seoPrerenderDir, "rulings", row.id),
+    route: {
+      path: `/rulings/${row.id}`,
+      title: `${row.title} | ${seoConfig.siteName}`,
+      description: row.title,
+      ogType: "article",
+    },
+  })),
+  ...(PLATFORM_SEED.courses || []).map((row) => ({
+    dir: resolve(seoPrerenderDir, "annual-courses", row.id),
+    route: {
+      path: `/annual-courses/${row.id}`,
+      title: `${row.title} | ${seoConfig.siteName}`,
+      description: row.title,
+      ogType: "website",
+    },
+  })),
+];
+
+for (const item of platformPrerender) {
+  await mkdir(item.dir, { recursive: true });
+  await writeFile(resolve(item.dir, "index.html"), prerenderHtml(item.route), "utf8");
+}
+
+const totalUrls = staticRoutes.length + lessonRows.length + platformPrerender.length;
 console.log(
-  `Generated sitemap.xml (${staticRoutes.length + lessonRows.length} URLs), robots.txt, and ${staticRoutes.length + lessonRows.length} prerender pages for ${seoConfig.siteUrl}`,
+  `Generated sitemap.xml (${totalUrls} URLs), robots.txt, feed.xml, and ${staticRoutes.length + platformPrerender.length + lessonRows.length} prerender pages for ${seoConfig.siteUrl}`,
 );

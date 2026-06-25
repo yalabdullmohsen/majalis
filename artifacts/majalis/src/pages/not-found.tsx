@@ -16,9 +16,12 @@ export default function NotFound() {
           <Link href="/" style={{ borderRadius: "999px", background: C.emerald, color: C.parchment, padding: "0.75rem 1.25rem", fontWeight: 800 }}>
             العودة للرئيسية
           </Link>
-          <Link href="/search" style={{ borderRadius: "999px", border: `1px solid ${C.line}`, color: C.emeraldDeep, padding: "0.75rem 1.25rem", fontWeight: 800, background: C.parchment }}>
-            البحث في الموقع
-          </Link>
+        <Link href="/fiqh-council" style={{ borderRadius: "999px", border: `1px solid ${C.line}`, color: C.emeraldDeep, padding: "0.75rem 1.25rem", fontWeight: 800, background: C.parchment }}>
+          المجمع الفقهي
+        </Link>
+        <Link href="/fatwa" style={{ borderRadius: "999px", border: `1px solid ${C.line}`, color: C.emeraldDeep, padding: "0.75rem 1.25rem", fontWeight: 800, background: C.parchment }}>
+          الفتاوى
+        </Link>
         </div>
       </section>
     </div>
