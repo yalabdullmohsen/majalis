@@ -23,7 +23,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const result = await runAutoContentSync();
+    const result = await runAutoContentSync({ triggerType: "cron" });
     sendJson(res, result.ok ? 200 : 500, result);
   } catch (error) {
     sendJson(res, 500, { ok: false, error: error.message });

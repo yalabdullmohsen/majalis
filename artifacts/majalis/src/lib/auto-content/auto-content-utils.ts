@@ -37,6 +37,20 @@ export function detectContentType(title: string, text: string): string {
   return "article";
 }
 
+export function mapContentTypeToUpdateType(contentType: string): string {
+  const map: Record<string, string> = {
+    fatwa: "فتوى",
+    resolution: "قرار",
+    recommendation: "قرار",
+    hadith: "خبر علمي",
+    adhkar: "خبر علمي",
+    scientific_miracle: "خبر علمي",
+    benefit: "خبر علمي",
+    article: "خبر علمي",
+  };
+  return map[contentType] || "خبر علمي";
+}
+
 export function calculateQualityScore(item: {
   title?: string;
   summary?: string;
@@ -44,14 +58,20 @@ export function calculateQualityScore(item: {
   source_url?: string;
   category?: string;
   tags?: string[];
+  seo_title?: string;
+  seo_description?: string;
+  source_verified?: boolean;
 }): number {
   let score = 0;
-  if (item.title) score += 20;
-  if (item.summary) score += 20;
-  if (item.content && item.content.length > 300) score += 20;
-  if (item.source_url) score += 20;
+  if (item.title) score += 15;
+  if (item.summary) score += 15;
+  if (item.content && item.content.length > 300) score += 15;
+  if (item.source_url) score += 10;
   if (item.category) score += 10;
   if (item.tags && item.tags.length > 0) score += 10;
+  if (item.seo_title) score += 10;
+  if (item.seo_description) score += 10;
+  if (item.source_verified) score += 5;
   return Math.min(score, 100);
 }
 
@@ -71,6 +91,13 @@ export type AutoImportedContent = {
   verification_status: string;
   status: string;
   quality_score: number;
+  seo_title?: string;
+  seo_description?: string;
+  structured_data?: Record<string, unknown>;
+  source_verified?: boolean;
+  pipeline_stage?: string;
+  ai_analysis?: Record<string, unknown>;
+  error_details?: Record<string, unknown>;
   published_at?: string;
   created_at: string;
   updated_at: string;
@@ -89,13 +116,49 @@ export type TrustedSource = {
 
 export type AutoImportLog = {
   id: string;
+  run_id?: string;
   source_id?: string;
   status: string;
   message?: string;
+  pipeline_stage?: string;
+  error_details?: Record<string, unknown>;
+  duration_ms?: number;
+  item_title?: string;
+  item_external_key?: string;
   imported_count: number;
   skipped_count: number;
   failed_count: number;
   created_at: string;
+};
+
+export type AutoImportRun = {
+  id: string;
+  trigger_type: string;
+  status: string;
+  sources_total: number;
+  sources_ok: number;
+  sources_failed: number;
+  imported_count: number;
+  skipped_count: number;
+  failed_count: number;
+  duration_ms?: number;
+  error_summary?: string;
+  started_at: string;
+  finished_at?: string;
+};
+
+export type MergedUpdateItem = {
+  id: string;
+  title: string;
+  summary?: string;
+  update_type: string;
+  source_url?: string;
+  published_at?: string;
+  slug?: string;
+  isAuto?: boolean;
+  source_name?: string;
+  seo_title?: string;
+  seo_description?: string;
 };
 
 export const PUBLIC_AUTO_CONTENT_FILTER = {
