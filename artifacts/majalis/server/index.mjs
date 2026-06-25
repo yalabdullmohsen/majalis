@@ -94,7 +94,14 @@ function prerenderPath(urlPath) {
     if (existsSync(distRootSeo)) return distRootSeo;
     return path.join(distDir, "index.html");
   }
-  const nestedSeo = path.join(seoPrerenderDir, urlPath.slice(1), "index.html");
+
+  const normalized = urlPath.replace(/\/+$/, "") || "/";
+  if (normalized.startsWith("/lessons/") && normalized !== "/lessons") {
+    const lessonSeo = path.join(seoPrerenderDir, normalized.slice(1), "index.html");
+    if (existsSync(lessonSeo)) return lessonSeo;
+  }
+
+  const nestedSeo = path.join(seoPrerenderDir, normalized.slice(1), "index.html");
   if (existsSync(nestedSeo)) return nestedSeo;
   return path.join(distDir, "index.html");
 }

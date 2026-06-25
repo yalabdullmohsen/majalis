@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --config vite.config.ts --host 0.0.0.0",
-    "generate:seo": "node scripts/generate-seo.mjs",
+    "generate:seo": "tsx scripts/generate-seo.mjs",
     "generate:quiz": "node scripts/generate-quiz-questions.mjs",
     "generate:content": "node scripts/generate-content-seed.mjs",
     "build": "pnpm run generate:seo && vite build --config vite.config.ts",

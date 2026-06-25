@@ -23,6 +23,7 @@ import {
 } from "@/lib/lessons-service";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 import { cleanTimeText } from "@/lib/lesson-time";
+import { useLessonSeo } from "@/lib/seo";
 
 function buildMapsEmbed(url?: string, mosque?: string, region?: string) {
   if (url?.includes("google.com/maps") || url?.includes("goo.gl/maps") || url?.includes("maps.app")) {
@@ -87,6 +88,38 @@ export default function LessonDetailPage({ params }: { params: { id: string } })
     if (lesson) return fromDbLesson(lesson);
     return null;
   }, [kuwaitLesson, lesson]);
+
+  const seoLesson = useMemo((): KuwaitLessonRecord | null => {
+    if (kuwaitLesson) return kuwaitLesson;
+    if (!lesson || !unified) return null;
+    return {
+      id: unified.id,
+      title: unified.title,
+      sheikhName: unified.sheikhName,
+      sheikhImage: resolveLessonSheikhImage(lesson),
+      lessonImage: lesson.poster_image_url,
+      governorate: unified.governorate || "",
+      region: unified.region || "",
+      mosque: unified.mosque || "",
+      day: unified.day || "",
+      time: unified.time || "",
+      category: unified.category || "أخرى",
+      note: unified.note,
+      description: unified.description,
+      keywords: Array.isArray(lesson.keywords) ? lesson.keywords : undefined,
+      gregorianDate: unified.gregorianDate,
+      hijriDate: unified.hijriDate,
+      activityType: unified.activityType || "درس",
+      sessionCount: unified.sessionCount,
+      hasLiveStream: unified.hasLiveStream,
+      hasRecording: unified.hasRecording,
+      sortKey: unified.sortKey,
+      nextOccurrenceMs: unified.nextOccurrenceMs,
+      isCourse: unified.activityType === "دورة",
+    };
+  }, [kuwaitLesson, lesson, unified]);
+
+  useLessonSeo(seoLesson, `/lessons/${params.id}`);
 
   if (loading) return <Loading />;
   if (!unified) return <Empty text="لم يُعثر على الدرس." />;
@@ -232,7 +265,7 @@ export default function LessonDetailPage({ params }: { params: { id: string } })
 
         {unified.qrCodeUrl && (
           <div className="lesson-detail-qr">
-            <img src={unified.qrCodeUrl} alt="QR Code" loading="lazy" decoding="async" />
+            <img src={unified.qrCodeUrl} alt={`رمز QR للدرس: ${unified.title}`} title={unified.title} loading="lazy" decoding="async" />
           </div>
         )}
       </article>

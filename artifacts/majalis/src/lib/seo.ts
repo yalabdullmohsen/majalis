@@ -1,5 +1,13 @@
 import { useEffect } from "react";
 import seoData from "./seo-routes.json";
+import {
+  breadcrumbJsonLd,
+  defaultSiteJsonLd,
+  lessonJsonLd,
+  lessonSeoMeta,
+  webPageJsonLd,
+} from "./seo-structured-data";
+import type { KuwaitLessonRecord } from "./kuwait-lessons";
 
 type SeoRoute = {
   path: string;
@@ -7,9 +15,23 @@ type SeoRoute = {
   description: string;
   keywords: string[];
   robots?: string;
+  ogType?: string;
+};
+
+export type PageSeoOptions = {
+  path: string;
+  title: string;
+  description: string;
+  keywords?: string[];
+  robots?: string;
+  image?: string;
+  ogType?: string;
+  canonicalPath?: string;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 };
 
 const routes = seoData.routes as SeoRoute[];
+const JSON_LD_ID = "majalis-json-ld";
 
 function requiredRoute(path: string) {
   const route = routes.find((item) => item.path === path);
@@ -23,7 +45,7 @@ function absoluteUrl(path: string) {
   return new URL(path, seoData.siteUrl).toString();
 }
 
-function normalizePath(path: string) {
+export function normalizePath(path: string) {
   const cleanPath = path.split("?")[0].split("#")[0] || "/";
   if (cleanPath !== "/" && cleanPath.endsWith("/")) {
     return cleanPath.slice(0, -1);
@@ -46,11 +68,11 @@ function routeForPath(path: string) {
     };
   }
 
-  if (normalized.startsWith("/sheikhs/")) {
+  if (normalized.startsWith("/sheikhs/") || normalized === "/sheikhs") {
     return {
-      ...requiredRoute("/sheikhs"),
-      title: "صفحة الشيخ | المجلس العلمي",
-      description: "تعرف على صفحة الشيخ ودروسه وبياناته العلمية داخل المجلس العلمي.",
+      ...requiredRoute("/lessons"),
+      title: "الدروس | المجلس العلمي",
+      description: "جميع الدروس والدورات والمحاضرات العلمية في مكان واحد.",
     };
   }
 
@@ -93,40 +115,124 @@ function upsertCanonical(href: string) {
   element.setAttribute("href", href);
 }
 
+function upsertJsonLd(data: Record<string, unknown> | Record<string, unknown>[]) {
+  const payload = Array.isArray(data) ? data : [data];
+  let element = document.getElementById(JSON_LD_ID) as HTMLScriptElement | null;
+  if (!element) {
+    element = document.createElement("script");
+    element.id = JSON_LD_ID;
+    element.type = "application/ld+json";
+    document.head.appendChild(element);
+  }
+  element.textContent = JSON.stringify(payload.length === 1 ? payload[0] : payload);
+}
+
+export function applyPageSeo(options: PageSeoOptions) {
+  const normalized = normalizePath(options.path);
+  const canonical = absoluteUrl(options.canonicalPath || normalized);
+  const image = options.image || absoluteUrl(seoData.defaultImage);
+  const keywords = [...new Set([...(options.keywords || []), ...seoData.defaultKeywords])].join(", ");
+  const robots = options.robots || "index, follow";
+  const ogType = options.ogType || "website";
+
+  document.documentElement.lang = "ar";
+  document.documentElement.dir = "rtl";
+  document.title = options.title;
+
+  upsertMeta("name", "description", options.description);
+  upsertMeta("name", "keywords", keywords);
+  upsertMeta("name", "robots", robots);
+  upsertMeta("name", "theme-color", "#164E3C");
+  upsertMeta("name", "author", seoData.siteName);
+
+  upsertMeta("property", "og:site_name", seoData.siteName);
+  upsertMeta("property", "og:locale", "ar_AR");
+  upsertMeta("property", "og:type", ogType);
+  upsertMeta("property", "og:title", options.title);
+  upsertMeta("property", "og:description", options.description);
+  upsertMeta("property", "og:url", canonical);
+  upsertMeta("property", "og:image", image);
+  upsertMeta("property", "og:image:alt", options.title);
+
+  upsertMeta("name", "twitter:card", "summary_large_image");
+  upsertMeta("name", "twitter:title", options.title);
+  upsertMeta("name", "twitter:description", options.description);
+  upsertMeta("name", "twitter:image", image);
+  upsertMeta("name", "twitter:url", canonical);
+
+  upsertCanonical(canonical);
+
+  if (options.jsonLd) {
+    upsertJsonLd(options.jsonLd);
+  } else if (normalized === "/") {
+    upsertJsonLd(defaultSiteJsonLd());
+  }
+}
+
+function breadcrumbForPath(normalized: string) {
+  if (normalized === "/") return null;
+  const segments = normalized.split("/").filter(Boolean);
+  const items = [{ name: "الرئيسية", path: "/" }];
+  let current = "";
+  for (const segment of segments) {
+    current += `/${segment}`;
+    const matched = routes.find((route) => route.path === current);
+    items.push({
+      name: matched?.title.split(" | ")[0] || segment,
+      path: current,
+    });
+  }
+  return items.length > 1 ? breadcrumbJsonLd(items) : null;
+}
+
 export function usePageSeo(path: string) {
   useEffect(() => {
     const route = routeForPath(path);
     const normalized = normalizePath(path);
-    const canonicalPath = route.path === "/404" ? "/404" : normalized;
-    const canonical = absoluteUrl(canonicalPath);
-    const image = absoluteUrl(seoData.defaultImage);
-    const keywords = [...new Set([...route.keywords, ...seoData.defaultKeywords])].join(", ");
-    const robots = route.robots || "index, follow";
+    const robots =
+      route.path === "/404" && normalized !== "/404"
+        ? "noindex, follow"
+        : route.robots || "index, follow";
+    const breadcrumbs = breadcrumbForPath(normalized);
+    const pageSchema = webPageJsonLd(route.title, route.description, normalized);
+    const jsonLd =
+      normalized === "/"
+        ? defaultSiteJsonLd()
+        : [pageSchema, ...(breadcrumbs ? [breadcrumbs] : []), ...defaultSiteJsonLd()];
 
-    document.documentElement.lang = "ar";
-    document.documentElement.dir = "rtl";
-    document.title = route.title;
-
-    upsertMeta("name", "description", route.description);
-    upsertMeta("name", "keywords", keywords);
-    upsertMeta("name", "robots", robots);
-    upsertMeta("name", "theme-color", "#164E3C");
-
-    upsertMeta("property", "og:site_name", seoData.siteName);
-    upsertMeta("property", "og:locale", "ar_AR");
-    upsertMeta("property", "og:type", "website");
-    upsertMeta("property", "og:title", route.title);
-    upsertMeta("property", "og:description", route.description);
-    upsertMeta("property", "og:url", canonical);
-    upsertMeta("property", "og:image", image);
-    upsertMeta("property", "og:image:alt", seoData.siteName);
-
-    upsertMeta("name", "twitter:card", "summary_large_image");
-    upsertMeta("name", "twitter:title", route.title);
-    upsertMeta("name", "twitter:description", route.description);
-    upsertMeta("name", "twitter:image", image);
-    upsertMeta("name", "twitter:url", canonical);
-
-    upsertCanonical(canonical);
+    applyPageSeo({
+      path: normalized,
+      title: route.title,
+      description: route.description,
+      keywords: route.keywords,
+      robots,
+      ogType: route.ogType || "website",
+      canonicalPath: normalized,
+      jsonLd,
+    });
   }, [path]);
+}
+
+export function useLessonSeo(lesson: KuwaitLessonRecord | null, path: string) {
+  useEffect(() => {
+    if (!lesson) return;
+
+    const meta = lessonSeoMeta(lesson);
+    const breadcrumbs = breadcrumbJsonLd([
+      { name: "الرئيسية", path: "/" },
+      { name: "الدروس", path: "/lessons" },
+      { name: lesson.title, path: meta.canonicalPath },
+    ]);
+
+    applyPageSeo({
+      path,
+      title: meta.title,
+      description: meta.description,
+      keywords: meta.keywords,
+      image: meta.image,
+      ogType: meta.ogType,
+      canonicalPath: meta.canonicalPath,
+      jsonLd: [lessonJsonLd(lesson), breadcrumbs, ...defaultSiteJsonLd()],
+    });
+  }, [lesson, path]);
 }
