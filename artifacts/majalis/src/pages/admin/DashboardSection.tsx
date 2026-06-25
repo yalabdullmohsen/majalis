@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { adminGetDashboardStats, adminResolveReport } from "@/lib/supabase";
+import { getCmsDashboardStats } from "@/lib/cms/supabase-cms";
+import { CMS_KIND_LABELS, type CmsContentKind } from "@/lib/cms/content-types";
 import { getTopSearchQueries } from "@/lib/search-history";
 import { isSupabaseConfigured } from "@/lib/supabase-config";
 import { C } from "@/lib/theme";
@@ -16,10 +18,15 @@ export function DashboardSection() {
   const [loading, setLoading] = useState(true);
   const [localSearches, setLocalSearches] = useState<{ query: string; count: number }[]>([]);
 
+  const [cmsStats, setCmsStats] = useState<Awaited<ReturnType<typeof getCmsDashboardStats>> | null>(null);
+
   const load = () => {
     setLoading(true);
-    adminGetDashboardStats()
-      .then((result) => setData(result))
+    Promise.all([adminGetDashboardStats(), getCmsDashboardStats()])
+      .then(([result, cms]) => {
+        setData(result);
+        setCmsStats(cms);
+      })
       .finally(() => setLoading(false));
     setLocalSearches(getTopSearchQueries(6));
   };
@@ -82,7 +89,24 @@ export function DashboardSection() {
         </section>
 
         <section style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.625rem", padding: "1.25rem" }}>
-          <h3 style={{ margin: "0 0 0.75rem", color: C.emeraldDeep, fontSize: "1rem" }}>آخر التحديثات</h3>
+          <h3 style={{ margin: "0 0 0.75rem", color: C.emeraldDeep, fontSize: "1rem" }}>فهرس CMS</h3>
+          {cmsStats ? (
+            <ul style={{ margin: 0, paddingInlineStart: "1.1rem", color: C.inkSoft, fontSize: "0.875rem", lineHeight: 1.9 }}>
+              <li>إجمالي المفهرس: {cmsStats.indexTotal.toLocaleString("ar")}</li>
+              <li>عمليات استيراد: {cmsStats.importJobsTotal.toLocaleString("ar")}</li>
+              <li>سجل تدقيق اليوم: {cmsStats.auditLogsToday.toLocaleString("ar")}</li>
+              <li>مجدولة للنشر: {cmsStats.scheduledCount.toLocaleString("ar")}</li>
+              {Object.entries(cmsStats.indexByKind).slice(0, 5).map(([k, v]) => (
+                <li key={k}>{CMS_KIND_LABELS[k as CmsContentKind] || k}: {v}</li>
+              ))}
+            </ul>
+          ) : (
+            <p style={{ margin: 0, color: C.inkSoft, fontSize: "0.875rem" }}>نفّذ cms_platform_v4.sql لتفعيل الفهرس الموحّد</p>
+          )}
+        </section>
+
+        <section style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.625rem", padding: "1.25rem" }}>
+          <h3 style={{ margin: "0 0 0.75rem", color: C.emeraldDeep, fontSize: "1rem" }}>آخر تحديثات الدروس</h3>
           {recentLessons.length === 0 ? (
             <p style={{ margin: 0, color: C.inkSoft, fontSize: "0.875rem" }}>لا توجد تحديثات حديثة.</p>
           ) : (

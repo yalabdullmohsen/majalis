@@ -11,6 +11,7 @@ import { QaSection } from "@/pages/admin/QaSection";
 import { CondolencesSection } from "@/pages/admin/CondolencesSection";
 import { UsersSection } from "@/pages/admin/UsersSection";
 import { SettingsSection } from "@/pages/admin/SettingsSection";
+import { AggregatorSection } from "@/pages/admin/AggregatorSection";
 import { ReportsSection } from "@/pages/admin/ReportsSection";
 import { FiqhCouncilSection } from "@/pages/admin/FiqhCouncilSection";
 import { FatwaAdminSection } from "@/pages/admin/FatwaAdminSection";
@@ -24,6 +25,7 @@ export default function AdminPage() {
   return (
     <AdminShell section={section} onSectionChange={setSection}>
       {section === "dashboard" && <DashboardSection />}
+      {section === "aggregator" && <AggregatorSection />}
       {section === "lessons" && <LessonsSection />}
       {section === "sheikhs" && <SheikhsSection />}
       {section === "library" && <LibrarySection />}

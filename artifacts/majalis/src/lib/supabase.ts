@@ -19,6 +19,7 @@ import { safeSupabaseQuery, isMissingSchemaError } from "./safe-supabase";
 /** Columns that exist on the live `sheikhs` table (no image_url / avatar_url). */
 const SHEIKH_EMBED = "sheikhs(id, name, city, photo_url)";
 const SHEIKH_EMBED_MIN = "sheikhs(name, photo_url)";
+import { writeAuditLog } from "@/lib/cms/audit-log";
 import { validateSheikhImage, safeUploadFileName } from "./file-validation";
 import { sanitizeFormRecord } from "./sanitize";
 import { isSupabaseConfigured, formatSupabaseError, logSupabaseError } from "./supabase-config";
@@ -591,6 +592,16 @@ export async function adminUpsertLesson(data: any) {
   const result = id
     ? await supabase.from("lessons").update(sanitized).eq("id", id)
     : await supabase.from("lessons").insert(sanitized);
+
+  if (!result.error) {
+    void writeAuditLog({
+      action: id ? "update" : "create",
+      table_name: "lessons",
+      record_id: id,
+      content_kind: sanitized.is_course ? "course" : sanitized.activity_type === "محاضرة" ? "lecture" : "lesson",
+      metadata: { external_key: sanitized.external_key, title: sanitized.title },
+    });
+  }
 
   return result;
 }

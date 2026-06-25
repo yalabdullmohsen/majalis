@@ -4,6 +4,7 @@ import { C } from "@/lib/theme";
 
 export type AdminSection =
   | "dashboard"
+  | "aggregator"
   | "lessons"
   | "sheikhs"
   | "library"
@@ -23,6 +24,7 @@ export type AdminSection =
 
 export const ADMIN_NAV: { key: AdminSection; label: string }[] = [
   { key: "dashboard", label: "لوحة التحكم" },
+  { key: "aggregator", label: "محرك التجميع" },
   { key: "lessons", label: "الدروس" },
   { key: "sheikhs", label: "المشايخ" },
   { key: "library", label: "المكتبة" },
