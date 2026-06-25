@@ -4,7 +4,14 @@ import {
   FIQH_COUNCIL_ALL_SEED,
   FIQH_COUNCIL_ADMIN_ONLY_SEED,
 } from "./fiqh-council-seed";
-import type { FiqhCouncilItem, FiqhItemStatus, FiqhCouncilSource, FiqhSyncJob } from "./fiqh-council-types";
+import type {
+  FiqhCouncilItem,
+  FiqhItemStatus,
+  FiqhCouncilSource,
+  FiqhSyncJob,
+  FiqhDuplicateRecord,
+  FiqhAuditEntry,
+} from "./fiqh-council-types";
 
 const TABLE = "fiqh_council_items";
 const now = () => new Date().toISOString();
@@ -65,13 +72,68 @@ export async function adminDeleteFiqhCouncilItem(id: string) {
   return await supabase.from(TABLE).delete().eq("id", id);
 }
 
-export async function adminSetFiqhCouncilItemStatus(id: string, status: FiqhItemStatus) {
+async function writeFiqhAudit(entry: {
+  item_id?: string;
+  action: string;
+  from_status?: string;
+  to_status?: string;
+  notes?: string;
+  payload?: Record<string, unknown>;
+}) {
+  const { data: { user } } = await supabase.auth.getUser();
+  await supabase.from("fiqh_council_audit").insert({
+    ...entry,
+    actor_id: user?.id,
+    actor_email: user?.email,
+    payload: entry.payload || {},
+  });
+}
+
+export async function adminSetFiqhCouncilItemStatus(id: string, status: FiqhItemStatus, notes?: string) {
   if (String(id).startsWith("seed-")) {
     return { data: null, error: { message: "لا يمكن تغيير حالة بيانات البذور المحلية" } };
   }
+  const { data: current } = await supabase.from(TABLE).select("status").eq("id", id).maybeSingle();
   const payload: Record<string, unknown> = { status, updated_at: now() };
   if (status === "published") payload.published_at = now();
-  return await supabase.from(TABLE).update(payload).eq("id", id);
+  if (status === "approved") payload.approved_at = now();
+  if (status === "archived") payload.archived_at = now();
+  if (status === "rejected") payload.rejected_at = now();
+  const result = await supabase.from(TABLE).update(payload).eq("id", id);
+  if (!result.error) {
+    await writeFiqhAudit({
+      item_id: id,
+      action: `status_${status}`,
+      from_status: current?.status,
+      to_status: status,
+      notes,
+    });
+  }
+  return result;
+}
+
+export async function adminApproveFiqhCouncilItem(id: string) {
+  return adminSetFiqhCouncilItemStatus(id, "approved", "اعتماد المحتوى");
+}
+
+export async function adminRejectFiqhCouncilItem(id: string, reason: string) {
+  if (String(id).startsWith("seed-")) {
+    return { data: null, error: { message: "لا يمكن رفض بيانات البذور المحلية" } };
+  }
+  const result = await supabase.from(TABLE).update({
+    status: "rejected",
+    rejection_reason: reason,
+    rejected_at: now(),
+    updated_at: now(),
+  }).eq("id", id);
+  if (!result.error) {
+    await writeFiqhAudit({ item_id: id, action: "reject", to_status: "rejected", notes: reason });
+  }
+  return result;
+}
+
+export async function adminPublishFiqhCouncilItem(id: string) {
+  return adminSetFiqhCouncilItemStatus(id, "published", "نشر للعامة");
 }
 
 export async function adminGetFiqhCouncilItemPreview(slug: string) {
@@ -147,11 +209,62 @@ export async function adminArchiveFiqhCouncilItem(id: string) {
   if (String(id).startsWith("seed-")) {
     return { data: null, error: { message: "لا يمكن أرشفة بيانات البذور المحلية" } };
   }
-  return await supabase.from(TABLE).update({
+  const result = await supabase.from(TABLE).update({
     status: "archived",
     archived_at: now(),
     updated_at: now(),
   }).eq("id", id);
+  if (!result.error) {
+    await writeFiqhAudit({ item_id: id, action: "archive", to_status: "archived" });
+  }
+  return result;
+}
+
+export async function adminGetFiqhDuplicates(limit = 30) {
+  const { data, error } = await supabase
+    .from("fiqh_council_duplicates")
+    .select("*")
+    .eq("status", "pending")
+    .order("similarity_score", { ascending: false })
+    .limit(limit);
+  if (error) {
+    if (isMissingTableError(error)) return { data: [] as FiqhDuplicateRecord[], error: null };
+    return { data: [], error };
+  }
+  return { data: (data || []) as FiqhDuplicateRecord[], error: null };
+}
+
+export async function adminResolveDuplicate(id: string, action: "merged" | "ignored") {
+  const { data: { user } } = await supabase.auth.getUser();
+  return supabase.from("fiqh_council_duplicates").update({
+    status: action,
+    resolved_by: user?.id,
+    resolved_at: now(),
+  }).eq("id", id);
+}
+
+export async function adminGetFiqhAuditLog(itemId?: string, limit = 30) {
+  let query = supabase.from("fiqh_council_audit").select("*").order("created_at", { ascending: false }).limit(limit);
+  if (itemId) query = query.eq("item_id", itemId);
+  const { data, error } = await query;
+  if (error) {
+    if (isMissingTableError(error)) return { data: [] as FiqhAuditEntry[], error: null };
+    return { data: [], error };
+  }
+  return { data: (data || []) as FiqhAuditEntry[], error: null };
+}
+
+export async function adminGetFiqhStats() {
+  const { data: items } = await adminGetAllFiqhCouncilItems();
+  const all = items || [];
+  return {
+    total: all.length,
+    published: all.filter((i) => i.status === "published").length,
+    needsReview: all.filter((i) => ["imported", "needs_review", "review", "approved"].includes(i.status || "")).length,
+    draft: all.filter((i) => i.status === "draft").length,
+    archived: all.filter((i) => i.status === "archived").length,
+    rejected: all.filter((i) => i.status === "rejected").length,
+  };
 }
 
 // Legacy wrappers for fiqh_council_decisions table (kept for other admin sections)

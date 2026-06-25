@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "wouter";
 import { Loading, Empty } from "@/components/ui-common";
 import { ContentDetailLayout, RelatedLinks } from "@/components/platform/ContentDetailLayout";
 import {
@@ -8,7 +9,10 @@ import {
 } from "@/lib/fiqh-council-service";
 import {
   fiqhItemHref,
+  fiqhCompareHref,
   formatFiqhItemMeta,
+  FIQH_CONFIDENCE_LABELS,
+  FIQH_SUMMARY_SOURCE_LABELS,
   type FiqhCouncilItem,
 } from "@/lib/fiqh-council-types";
 import { applyPageSeo } from "@/lib/seo";
@@ -117,11 +121,32 @@ export default function FiqhCouncilItemDetailPage({ params }: { params: { slug: 
         <p className="fiqh-council-views">{item.views_count.toLocaleString("ar")} مشاهدة</p>
       )}
 
-      {item.ruling_text && item.content && (
-        <DetailSection title="نص الحكم">
+      {(item.confidence_level || item.summary_source) && (
+        <p className="fiqh-detail-trust">
+          {item.confidence_level && <span>{FIQH_CONFIDENCE_LABELS[item.confidence_level]}</span>}
+          {item.summary_source && <span> · {FIQH_SUMMARY_SOURCE_LABELS[item.summary_source]}</span>}
+        </p>
+      )}
+
+      {item.key_points && item.key_points.length > 0 && (
+        <DetailSection title="النقاط الرئيسية">
+          <ul className="fiqh-key-points">
+            {item.key_points.map((point, i) => <li key={i}>{point}</li>)}
+          </ul>
+        </DetailSection>
+      )}
+
+      {item.ruling_text && (
+        <DetailSection title="الحكم / التوصية">
           <p>{item.ruling_text}</p>
         </DetailSection>
       )}
+
+      <div className="fiqh-detail-actions">
+        <Link href={fiqhCompareHref([item.slug])} className="fiqh-council-section-link">
+          إضافة للمقارنة
+        </Link>
+      </div>
 
       {item.evidence && item.evidence.length > 0 && (
         <DetailSection title="الأدلة">

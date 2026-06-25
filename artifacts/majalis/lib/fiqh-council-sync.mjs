@@ -8,6 +8,7 @@ import { readFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { getSupabaseAdmin, isMissingTableError } from "./supabase-admin.mjs";
+import { findPotentialDuplicates } from "./fiqh-council-dedup.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = resolve(__dirname, "../data");
@@ -232,7 +233,17 @@ async function writeSyncLog(admin, jobId, sourceId, entry) {
   });
 }
 
-async function upsertItem(admin, sourceId, jobId, raw) {
+async function recordDuplicate(admin, itemId, candidateId, match) {
+  await admin.from("fiqh_council_duplicates").upsert({
+    item_id: itemId,
+    candidate_id: candidateId,
+    similarity_score: match.score,
+    match_reasons: match.reasons,
+    status: "pending",
+  }, { onConflict: "item_id,candidate_id" });
+}
+
+async function upsertItem(admin, sourceId, jobId, raw, existingPool = []) {
   const cleaned = {
     external_id: String(raw.external_id).trim(),
     title: stripHtml(raw.title),
@@ -266,6 +277,21 @@ async function upsertItem(admin, sourceId, jobId, raw) {
     return { action: "skip", item_id: existing.id, reason: "unchanged" };
   }
 
+  const dupMatches = findPotentialDuplicates(
+    { ...cleaned, content_hash: hash },
+    existingPool.filter((e) => !(e.source_id === sourceId && e.external_id === cleaned.external_id)),
+  );
+
+  if (!existing?.id && dupMatches.length > 0 && dupMatches[0].score >= 0.85) {
+    return {
+      action: "duplicate",
+      item_id: dupMatches[0].candidateId,
+      duplicate_of: dupMatches[0].candidateSlug,
+      score: dupMatches[0].score,
+      reasons: dupMatches[0].reasons,
+    };
+  }
+
   const { data, error } = await admin.rpc("fiqh_council_sync_upsert", {
     p_source_id: sourceId,
     p_external_id: cleaned.external_id,
@@ -282,6 +308,10 @@ async function upsertItem(admin, sourceId, jobId, raw) {
     p_tags: cleaned.tags,
     p_content_hash: hash,
     p_sync_job_id: jobId,
+    p_subcategory: cleaned.subcategory || null,
+    p_decision_number: cleaned.decision_number || null,
+    p_nawazil_topic: cleaned.nawazil_topic || null,
+    p_imported_content: cleaned.content,
   });
 
   if (error) {
@@ -292,7 +322,15 @@ async function upsertItem(admin, sourceId, jobId, raw) {
   }
 
   const action = data?.action || (existing?.id ? "update" : "insert");
-  return { action, item_id: data?.id, hash };
+  const itemId = data?.id;
+
+  if (itemId && dupMatches.length > 0) {
+    for (const m of dupMatches.slice(0, 3)) {
+      await recordDuplicate(admin, itemId, m.candidateId, m);
+    }
+  }
+
+  return { action, item_id: itemId, hash, duplicate_matches: dupMatches };
 }
 
 async function syncSource(admin, sourceDef, triggerType = "cron") {
@@ -313,6 +351,13 @@ async function syncSource(admin, sourceDef, triggerType = "cron") {
     rawItems = await fetchRssItems(sourceDef.feed_url);
   }
 
+  const { data: existingItems } = await admin
+    .from("fiqh_council_items")
+    .select("id, slug, title, source_url, session_number, session_date, tags, content_hash, external_id, source_id")
+    .limit(500);
+
+  const existingPool = existingItems || [];
+
   const result = {
     slug: sourceDef.slug,
     total_fetched: rawItems.length,
@@ -327,13 +372,22 @@ async function syncSource(admin, sourceDef, triggerType = "cron") {
 
   for (const raw of rawItems) {
     try {
-      const outcome = await upsertItem(admin, sourceId, jobId, raw);
+      const outcome = await upsertItem(admin, sourceId, jobId, raw, existingPool);
       if (outcome.action === "insert") {
         result.inserted_count += 1;
         await writeSyncLog(admin, jobId, sourceId, { action: "insert", external_id: raw.external_id, item_id: outcome.item_id });
       } else if (outcome.action === "update") {
         result.updated_count += 1;
         await writeSyncLog(admin, jobId, sourceId, { action: "update", external_id: raw.external_id, item_id: outcome.item_id });
+      } else if (outcome.action === "duplicate") {
+        result.duplicate_count += 1;
+        await writeSyncLog(admin, jobId, sourceId, {
+          action: "duplicate",
+          external_id: raw.external_id,
+          item_id: outcome.item_id,
+          message: `تشابه مع ${outcome.duplicate_of}`,
+          payload: { score: outcome.score, reasons: outcome.reasons },
+        });
       } else if (outcome.action === "skip") {
         result.skipped_count += 1;
         await writeSyncLog(admin, jobId, sourceId, { action: "skip", external_id: raw.external_id, message: outcome.reason });
@@ -360,6 +414,8 @@ async function syncSource(admin, sourceDef, triggerType = "cron") {
       last_sync_at: new Date().toISOString(),
       last_sync_status: result.error_count > 0 ? "partial" : "completed",
       last_sync_summary: result.summary,
+      items_imported_count: result.inserted_count + result.updated_count,
+      last_error_log: result.errors?.length ? result.errors : [],
       updated_at: new Date().toISOString(),
     })
     .eq("id", sourceId);

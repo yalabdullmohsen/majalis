@@ -1,4 +1,6 @@
 import { arabicMatchAny } from "./arabic-search";
+import { findPotentialDuplicates } from "./fiqh-council-dedup";
+import { matchNawazilTopic, NAWAZIL_TOPICS } from "./fiqh-council-nawazil";
 import {
   FIQH_COUNCIL_PUBLISHED_SEED,
   FIQH_COUNCIL_ALL_SEED,
@@ -7,6 +9,8 @@ import {
 } from "./fiqh-council-seed";
 import {
   FIQH_ITEM_TYPE_LABELS,
+  FIQH_REVIEW_STATUSES,
+  type FiqhAdvancedSearchOptions,
   type FiqhCouncilCategory,
   type FiqhCouncilItem,
   type FiqhItemStatus,
@@ -61,8 +65,12 @@ function filterSeed(items: FiqhCouncilItem[], opts?: FiqhCouncilListOptions, pub
           item.content,
           item.ruling_text,
           item.category,
+          item.subcategory,
           item.source_name,
+          item.decision_number,
+          item.session_number,
           ...(item.tags || []),
+          ...(item.key_points || []),
           ...(item.evidence || []).flatMap((e) => [e.text, e.source, e.type]),
         ],
         opts.search!.trim(),
@@ -71,6 +79,9 @@ function filterSeed(items: FiqhCouncilItem[], opts?: FiqhCouncilListOptions, pub
   }
 
   result.sort((a, b) => {
+    const scoreA = (a.views_count || 0) + (a.rank || 0) * 100;
+    const scoreB = (b.views_count || 0) + (b.rank || 0) * 100;
+    if (opts?.search?.trim() && scoreB !== scoreA) return scoreB - scoreA;
     const da = a.session_date || a.published_at || a.created_at || "";
     const db = b.session_date || b.published_at || b.created_at || "";
     return db.localeCompare(da);
@@ -250,20 +261,173 @@ async function getFiqhCouncilItemsAdmin(opts?: FiqhCouncilListOptions) {
 }
 
 export async function getFiqhCouncilReviewItems(limit = 50) {
+  const reviewStatuses = FIQH_REVIEW_STATUSES;
   if (!isConfigured) {
-    return { data: FIQH_COUNCIL_ADMIN_ONLY_SEED.filter((i) => i.status === "review"), usingSeed: true };
+    return {
+      data: FIQH_COUNCIL_ADMIN_ONLY_SEED.filter((i) => reviewStatuses.includes(i.status as FiqhItemStatus)),
+      usingSeed: true,
+    };
   }
   try {
     const { data, error } = await supabase
       .from(TABLE)
       .select("*")
-      .in("status", ["review", "draft"])
+      .in("status", reviewStatuses)
       .order("updated_at", { ascending: false })
       .limit(limit);
     if (error) throw error;
     return { data: (data || []) as FiqhCouncilItem[], usingSeed: false };
   } catch (err) {
     logSupabaseError("getFiqhCouncilReviewItems", err);
+    return { data: [], usingSeed: true };
+  }
+}
+
+export async function getMostViewedFiqhCouncilItems(limit = 6) {
+  const { data } = await getFiqhCouncilItems({ limit: 50 });
+  return [...data].sort((a, b) => (b.views_count || 0) - (a.views_count || 0)).slice(0, limit);
+}
+
+export async function getFiqhCouncilItemsBySlugs(slugs: string[]) {
+  const unique = [...new Set(slugs.filter(Boolean))];
+  if (!unique.length) return { data: [] as FiqhCouncilItem[], usingSeed: true };
+
+  if (!isConfigured) {
+    const data = unique
+      .map((s) => findFiqhCouncilItemBySlug(s))
+      .filter(Boolean) as FiqhCouncilItem[];
+    return { data, usingSeed: true };
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from(TABLE)
+      .select("*")
+      .in("slug", unique)
+      .eq("status", "published");
+    if (error) throw error;
+    const rows = (data || []) as FiqhCouncilItem[];
+    const ordered = unique.map((s) => rows.find((r) => r.slug === s)).filter(Boolean) as FiqhCouncilItem[];
+    return { data: ordered.length ? ordered : unique.map((s) => findFiqhCouncilItemBySlug(s)).filter(Boolean) as FiqhCouncilItem[], usingSeed: !ordered.length };
+  } catch (err) {
+    logSupabaseError("getFiqhCouncilItemsBySlugs", err);
+    return {
+      data: unique.map((s) => findFiqhCouncilItemBySlug(s)).filter(Boolean) as FiqhCouncilItem[],
+      usingSeed: true,
+    };
+  }
+}
+
+export async function getNawazilTopicItems(topicSlug: string, limit = 12) {
+  const topic = NAWAZIL_TOPICS.find((t) => t.slug === topicSlug);
+  if (!topic) return { data: [] as FiqhCouncilItem[], usingSeed: true };
+
+  const { data } = await getFiqhCouncilItems({ limit: 100 });
+  const matched = data.filter((item) => matchNawazilTopic(topic, item)).slice(0, limit);
+  return { data: matched, usingSeed: false };
+}
+
+export async function getAllNawazilItems(limit = 50) {
+  const { data } = await getFiqhCouncilItems({ limit: 100 });
+  const matched = data.filter((item) =>
+    NAWAZIL_TOPICS.some((topic) => matchNawazilTopic(topic, item)),
+  ).slice(0, limit);
+  return { data: matched, usingSeed: false };
+}
+
+export async function advancedSearchFiqhCouncil(opts: FiqhAdvancedSearchOptions) {
+  const seedResults = filterSeed(FIQH_COUNCIL_PUBLISHED_SEED, {
+    type: opts.type,
+    category: opts.category as FiqhCouncilCategory,
+    search: opts.query,
+    year: opts.year,
+    source: opts.source,
+    limit: opts.limit,
+  });
+
+  if (opts.subcategory) {
+    seedResults.splice(0, seedResults.length, ...seedResults.filter((i) => i.subcategory === opts.subcategory));
+  }
+  if (opts.nawazilTopic) {
+    const topic = NAWAZIL_TOPICS.find((t) => t.slug === opts.nawazilTopic);
+    if (topic) seedResults.splice(0, seedResults.length, ...seedResults.filter((i) => matchNawazilTopic(topic, i)));
+  }
+  if (opts.decisionNumber) {
+    const q = opts.decisionNumber.trim();
+    seedResults.splice(0, seedResults.length, ...seedResults.filter((i) => i.decision_number?.includes(q)));
+  }
+
+  if (!isConfigured) return { data: seedResults, usingSeed: true };
+
+  try {
+    const { data, error } = await supabase.rpc("search_fiqh_council_advanced", {
+      query: opts.query || null,
+      p_type: opts.type && opts.type !== "الكل" ? opts.type : null,
+      p_category: opts.category && opts.category !== "الكل" ? opts.category : null,
+      p_subcategory: opts.subcategory || null,
+      p_source: opts.source || null,
+      p_year: opts.year && opts.year !== "الكل" ? opts.year : null,
+      p_tags: opts.tags?.length ? opts.tags : null,
+      p_nawazil_topic: opts.nawazilTopic || null,
+      p_decision_number: opts.decisionNumber || null,
+      result_limit: opts.limit || 30,
+    });
+    if (error) {
+      if (isMissingTableError(error)) return { data: seedResults, usingSeed: true };
+      throw error;
+    }
+    const rows = (data || []) as FiqhCouncilItem[];
+    if (rows.length === 0 && seedResults.length > 0) return { data: seedResults, usingSeed: true };
+    return { data: rows, usingSeed: false };
+  } catch (err) {
+    logSupabaseError("advancedSearchFiqhCouncil", err);
+    return { data: seedResults, usingSeed: true };
+  }
+}
+
+export function compareFiqhItems(items: FiqhCouncilItem[]) {
+  const allTags = [...new Set(items.flatMap((i) => i.tags || []))];
+  const sharedTags = allTags.filter((t) => items.every((i) => (i.tags || []).includes(t)));
+  const categories = [...new Set(items.map((i) => i.category))];
+  const sources = [...new Set(items.map((i) => i.source_name).filter(Boolean))];
+
+  return {
+    items,
+    sharedTags,
+    agreementPoints: sharedTags.length ? [`وسوم مشتركة: ${sharedTags.join("، ")}`] : [],
+    differencePoints: [
+      categories.length > 1 ? `تصنيفات مختلفة: ${categories.join(" / ")}` : "",
+      sources.length > 1 ? `مصادر مختلفة: ${sources.join(" / ")}` : "",
+      items.some((i) => i.ruling_text) && items.some((i) => !i.ruling_text) ? "اختلاف في وجود نص حكم صريح" : "",
+    ].filter(Boolean),
+  };
+}
+
+export function detectSeedDuplicates(incoming: FiqhCouncilItem, pool = FIQH_COUNCIL_ALL_SEED) {
+  return findPotentialDuplicates(incoming, pool);
+}
+
+export async function getPublicFiqhSources() {
+  if (!isConfigured) {
+    return {
+      data: [
+        { id: "seed-src-1", slug: "islamweb-majlis", name: "IslamWeb — المجمع الفقهي", organization: "IslamWeb.net", source_type: "json_manifest" as const, base_url: "https://www.islamweb.net", trust_level: "official" as const, is_active: true },
+        { id: "seed-src-2", slug: "iifa-oic", name: "الأكاديمية الإسلامية للفقه", organization: "OIC", source_type: "rss" as const, base_url: "https://www.iifa-aifi.org", trust_level: "official" as const, is_active: true },
+      ],
+      usingSeed: true,
+    };
+  }
+  try {
+    const { data, error } = await supabase
+      .from("fiqh_council_sources")
+      .select("*")
+      .eq("is_active", true)
+      .eq("trust_level", "official")
+      .order("name");
+    if (error) throw error;
+    return { data: data || [], usingSeed: false };
+  } catch (err) {
+    logSupabaseError("getPublicFiqhSources", err);
     return { data: [], usingSeed: true };
   }
 }

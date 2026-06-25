@@ -12,6 +12,8 @@ import {
   type FiqhItemType,
 } from "@/lib/fiqh-council-types";
 import { usePageView } from "@/hooks/usePageView";
+import { FiqhCouncilSubnav } from "./FiqhCouncilPage";
+import { FIQH_CATEGORY_TREE } from "@/lib/fiqh-council-categories";
 
 export default function FiqhCouncilCategoriesPage() {
   const search = useSearch();
@@ -46,12 +48,23 @@ export default function FiqhCouncilCategoriesPage() {
         subtitle="تصفّح محتوى المجمع الفقهي حسب التصنيفات الفقهية."
       />
 
-      <nav className="fiqh-council-subnav" aria-label="أقسام المجمع الفقهي">
-        <Link href="/fiqh-council" className="fiqh-council-subnav-link">الرئيسية</Link>
-        <Link href="/fiqh-council/resolutions" className="fiqh-council-subnav-link">القرارات</Link>
-        <Link href="/fiqh-council/fatwas" className="fiqh-council-subnav-link">الفتاوى الجماعية</Link>
-        <Link href="/fiqh-council/research" className="fiqh-council-subnav-link">البحوث</Link>
-      </nav>
+      <FiqhCouncilSubnav />
+
+      <section className="fiqh-council-section">
+        <h2 className="fiqh-council-section-title">التصنيف الهرمي</h2>
+        <div className="fiqh-category-tree">
+          {FIQH_CATEGORY_TREE.map((main) => (
+            <div key={main.slug} className="fiqh-category-tree-main">
+              <strong>{main.name}</strong>
+              <div className="content-hub-chips">
+                {main.children?.map((sub) => (
+                  <span key={sub.slug} className="content-hub-chip">{sub.name}</span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
 
       <div className="fiqh-council-category-grid">
         <Link

@@ -3,7 +3,7 @@ import { Link, useLocation } from "wouter";
 import { PageHeader, Loading, Empty } from "@/components/ui-common";
 import { PlatformContentCard } from "@/components/platform/ContentDetailLayout";
 import { FiqhCouncilSearchBox } from "@/components/fiqh-council/FiqhCouncilSearchBox";
-import { getFiqhCouncilItems, getFiqhCouncilCategoryCounts } from "@/lib/fiqh-council-service";
+import { getFiqhCouncilItems, getFiqhCouncilCategoryCounts, getMostViewedFiqhCouncilItems, getAllNawazilItems, getPublicFiqhSources } from "@/lib/fiqh-council-service";
 import {
   FIQH_COUNCIL_CATEGORIES,
   FIQH_COUNCIL_INTRO,
@@ -20,8 +20,11 @@ const SUBNAV_LINKS = [
   { href: "/fiqh-council/resolutions", label: "القرارات" },
   { href: "/fiqh-council/fatwas", label: "الفتاوى" },
   { href: "/fiqh-council/recommendations", label: "التوصيات" },
+  { href: "/fiqh-council/nawazil", label: "فقه النوازل" },
   { href: "/fiqh-council/research", label: "البحوث" },
   { href: "/fiqh-council/categories", label: "التصنيفات" },
+  { href: "/fiqh-council/search", label: "البحث" },
+  { href: "/fiqh-council/compare", label: "المقارنة" },
   { href: "/fiqh-council/archive", label: "الأرشيف" },
 ] as const;
 
@@ -242,6 +245,9 @@ export function FiqhCouncilHubPage() {
   const [resolutions, setResolutions] = useState<any[]>([]);
   const [fatwas, setFatwas] = useState<any[]>([]);
   const [recommendations, setRecommendations] = useState<any[]>([]);
+  const [nawazil, setNawazil] = useState<any[]>([]);
+  const [mostViewed, setMostViewed] = useState<any[]>([]);
+  const [sources, setSources] = useState<any[]>([]);
   const [categoryCounts, setCategoryCounts] = useState<Record<string, number>>({});
   const [loading, setLoading] = useState(true);
 
@@ -251,13 +257,19 @@ export function FiqhCouncilHubPage() {
       getFiqhCouncilItems({ type: "resolution", limit: 4 }),
       getFiqhCouncilItems({ type: "fatwa", limit: 4 }),
       getFiqhCouncilItems({ type: "recommendation", limit: 4 }),
+      getAllNawazilItems(4),
+      getMostViewedFiqhCouncilItems(4),
       getFiqhCouncilCategoryCounts(),
-    ]).then(([all, res, fat, rec, counts]) => {
+      getPublicFiqhSources(),
+    ]).then(([all, res, fat, rec, naw, viewed, counts, srcRes]) => {
       setLatest(all.data);
       setResolutions(res.data);
       setFatwas(fat.data);
       setRecommendations(rec.data);
+      setNawazil(naw.data);
+      setMostViewed(viewed);
       setCategoryCounts(counts);
+      setSources(srcRes.data);
     }).finally(() => setLoading(false));
   }, []);
 
@@ -272,6 +284,12 @@ export function FiqhCouncilHubPage() {
       <FiqhCouncilSubnav />
 
       <FiqhCouncilSearchBox placeholder="ابحث في قرارات وفتاوى وتوصيات المجمع..." />
+
+      <div className="fiqh-hub-quick-links">
+        <Link href="/fiqh-council/search" className="fiqh-hub-quick-link">البحث المتقدم</Link>
+        <Link href="/fiqh-council/nawazil" className="fiqh-hub-quick-link">فقه النوازل</Link>
+        <Link href="/fiqh-council/compare" className="fiqh-hub-quick-link">مقارنة القرارات</Link>
+      </div>
 
       {loading ? <Loading /> : (
         <>
@@ -334,6 +352,43 @@ export function FiqhCouncilHubPage() {
 
           <section className="fiqh-council-section">
             <div className="fiqh-council-section-header">
+              <h2 className="fiqh-council-section-title">فقه النوازل</h2>
+              <Link href="/fiqh-council/nawazil" className="fiqh-council-section-link">عرض الكل</Link>
+            </div>
+            <div className="page-card-grid">
+              {nawazil.map((item) => (
+                <PlatformContentCard
+                  key={item.slug}
+                  href={fiqhItemHref(item.slug)}
+                  title={item.title}
+                  tag={FIQH_ITEM_TYPE_LABELS[item.type as FiqhItemType]}
+                  meta={formatFiqhItemMeta(item)}
+                  summary={item.summary}
+                />
+              ))}
+            </div>
+          </section>
+
+          <section className="fiqh-council-section">
+            <div className="fiqh-council-section-header">
+              <h2 className="fiqh-council-section-title">الأكثر قراءة</h2>
+            </div>
+            <div className="page-card-grid">
+              {mostViewed.map((item) => (
+                <PlatformContentCard
+                  key={item.slug}
+                  href={fiqhItemHref(item.slug)}
+                  title={item.title}
+                  tag={FIQH_ITEM_TYPE_LABELS[item.type as FiqhItemType]}
+                  meta={formatFiqhItemMeta(item)}
+                  summary={item.summary}
+                />
+              ))}
+            </div>
+          </section>
+
+          <section className="fiqh-council-section">
+            <div className="fiqh-council-section-header">
               <h2 className="fiqh-council-section-title">التصنيفات الفقهية</h2>
               <Link href="/fiqh-council/categories" className="fiqh-council-section-link">جميع التصنيفات</Link>
             </div>
@@ -343,6 +398,25 @@ export function FiqhCouncilHubPage() {
                   <span className="fiqh-council-category-name">{cat}</span>
                   <span className="fiqh-council-category-count">{categoryCounts[cat] || 0} عنصر</span>
                 </Link>
+              ))}
+            </div>
+          </section>
+
+          <section className="fiqh-council-section">
+            <div className="fiqh-council-section-header">
+              <h2 className="fiqh-council-section-title">المصادر الرسمية</h2>
+            </div>
+            <div className="fiqh-sources-grid">
+              {sources.map((src) => (
+                <div key={src.id || src.slug} className="fiqh-source-card">
+                  <strong>{src.name}</strong>
+                  <span>{src.organization}</span>
+                  {src.official_url && (
+                    <a href={src.official_url} target="_blank" rel="noopener noreferrer" className="fiqh-council-section-link">
+                      الموقع الرسمي
+                    </a>
+                  )}
+                </div>
               ))}
             </div>
           </section>

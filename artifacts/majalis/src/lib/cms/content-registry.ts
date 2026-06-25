@@ -204,7 +204,14 @@ export const CONTENT_REGISTRY: Record<CmsContentKind, ContentTableConfig> = {
     externalKeyField: "external_id",
     publishedField: "published_at",
     archivedField: "archived_at",
-    statusMap: { published: "published", pending: "review", draft: "draft", archived: "archived" },
+    statusMap: {
+      published: "published",
+      pending: "needs_review",
+      approved: "approved",
+      draft: "draft",
+      archived: "archived",
+      rejected: "rejected",
+    },
     publicRoute: (id: string) => `/fiqh-council/${id}`,
   },
   sharia_ruling: {

@@ -9,6 +9,13 @@ import {
   adminGetFiqhSyncLogs,
   adminTriggerFiqhSync,
   adminArchiveFiqhCouncilItem,
+  adminApproveFiqhCouncilItem,
+  adminRejectFiqhCouncilItem,
+  adminPublishFiqhCouncilItem,
+  adminGetFiqhDuplicates,
+  adminResolveDuplicate,
+  adminGetFiqhStats,
+  adminGetFiqhAuditLog,
 } from "@/lib/fiqh-council-supabase";
 import { getFiqhCouncilReviewItems } from "@/lib/fiqh-council-service";
 import {
@@ -27,7 +34,7 @@ import { Loading } from "@/components/ui-common";
 import { AdminModal, Field, inputSt, selectSt, textareaSt } from "./AdminModal";
 import { useAdminShell } from "./AdminShell";
 
-type AdminTab = "items" | "review" | "sync";
+type AdminTab = "stats" | "items" | "review" | "duplicates" | "sync";
 
 const EMPTY = {
   title: "",
@@ -78,6 +85,9 @@ export function FiqhCouncilSection() {
   const [sources, setSources] = useState<FiqhCouncilSource[]>([]);
   const [syncJobs, setSyncJobs] = useState<FiqhSyncJob[]>([]);
   const [syncLogs, setSyncLogs] = useState<any[]>([]);
+  const [duplicates, setDuplicates] = useState<any[]>([]);
+  const [stats, setStats] = useState<Record<string, number>>({});
+  const [auditLog, setAuditLog] = useState<any[]>([]);
   const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [syncing, setSyncing] = useState(false);
@@ -96,11 +106,17 @@ export function FiqhCouncilSection() {
       getFiqhCouncilReviewItems(),
       adminGetFiqhCouncilSources(),
       adminGetFiqhSyncJobs(15),
-    ]).then(([allRes, reviewRes, sourcesRes, jobsRes]) => {
+      adminGetFiqhDuplicates(),
+      adminGetFiqhStats(),
+      adminGetFiqhAuditLog(undefined, 20),
+    ]).then(([allRes, reviewRes, sourcesRes, jobsRes, dupRes, statsRes, auditRes]) => {
       setItems(allRes.data);
       setReviewItems(reviewRes.data);
       setSources(sourcesRes.data);
       setSyncJobs(jobsRes.data);
+      setDuplicates(dupRes.data);
+      setStats(statsRes);
+      setAuditLog(auditRes.data);
       if (allRes.error && allRes.usingSeed) showError("تعذّر تحميل البيانات — عرض البذور المحلية.");
     }).finally(() => setLoading(false));
   };
@@ -167,6 +183,36 @@ export function FiqhCouncilSection() {
     loadItems();
   };
 
+  const handleApprove = async (id: string) => {
+    const { error } = await adminApproveFiqhCouncilItem(id);
+    if (error) showError(error.message);
+    else showSuccess("تم الاعتماد");
+    loadItems();
+  };
+
+  const handleReject = async (id: string) => {
+    const reason = prompt("سبب الرفض:");
+    if (!reason?.trim()) return;
+    const { error } = await adminRejectFiqhCouncilItem(id, reason.trim());
+    if (error) showError(error.message);
+    else showSuccess("تم الرفض");
+    loadItems();
+  };
+
+  const handlePublish = async (id: string) => {
+    const { error } = await adminPublishFiqhCouncilItem(id);
+    if (error) showError(error.message);
+    else showSuccess("تم النشر");
+    loadItems();
+  };
+
+  const handleResolveDup = async (id: string, action: "merged" | "ignored") => {
+    const { error } = await adminResolveDuplicate(id, action);
+    if (error) showError(error.message);
+    else showSuccess(action === "merged" ? "تم الدمج" : "تم التجاهل");
+    loadItems();
+  };
+
   const handleArchive = async (id: string) => {
     const { error } = await adminArchiveFiqhCouncilItem(id);
     if (error) showError(error.message);
@@ -194,7 +240,11 @@ export function FiqhCouncilSection() {
       <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
         <button onClick={() => { setForm({ ...item, tags: (item.tags || []).join("، "), evidence: formatEvidence(item.evidence) }); setOpen(true); }} style={{ fontSize: "0.75rem", cursor: "pointer" }}>تعديل</button>
         {item.status !== "published" && (
-          <button onClick={() => handleStatus(item.id, "published")} style={{ fontSize: "0.75rem", cursor: "pointer" }}>نشر</button>
+          <>
+            <button onClick={() => handleApprove(item.id)} style={{ fontSize: "0.75rem", cursor: "pointer" }}>اعتماد</button>
+            <button onClick={() => handlePublish(item.id)} style={{ fontSize: "0.75rem", cursor: "pointer" }}>نشر</button>
+            <button onClick={() => handleReject(item.id)} style={{ fontSize: "0.75rem", cursor: "pointer", color: "#dc2626" }}>رفض</button>
+          </>
         )}
         {item.status === "published" && (
           <button onClick={() => handleStatus(item.id, "draft")} style={{ fontSize: "0.75rem", cursor: "pointer" }}>إلغاء النشر</button>
@@ -223,8 +273,10 @@ export function FiqhCouncilSection() {
 
       <div className="fiqh-council-admin-tabs">
         {([
+          ["stats", "الإحصائيات"],
           ["items", `جميع العناصر (${items.length})`],
           ["review", `قيد المراجعة (${reviewItems.length})`],
+          ["duplicates", `احتمالات التكرار (${duplicates.length})`],
           ["sync", "المزامنة"],
         ] as const).map(([key, label]) => (
           <button
@@ -238,7 +290,58 @@ export function FiqhCouncilSection() {
         ))}
       </div>
 
-      {tab === "sync" ? (
+      {tab === "stats" ? (
+        <div>
+          <div className="fiqh-admin-stats">
+            {[
+              ["total", "الإجمالي"],
+              ["published", "منشور"],
+              ["needsReview", "مراجعة"],
+              ["draft", "مسودة"],
+              ["archived", "مؤرشف"],
+              ["rejected", "مرفوض"],
+            ].map(([key, label]) => (
+              <div key={key} className="fiqh-admin-stat">
+                <strong>{stats[key] ?? 0}</strong>
+                <span>{label}</span>
+              </div>
+            ))}
+          </div>
+          <section style={{ marginTop: "1rem" }}>
+            <h3 style={{ fontSize: "0.9375rem", color: C.emeraldDeep }}>سجل الاعتماد</h3>
+            {auditLog.length === 0 ? (
+              <p style={{ fontSize: "0.8125rem", color: C.inkSoft }}>لا توجد عمليات بعد.</p>
+            ) : (
+              <div style={{ display: "grid", gap: "0.35rem" }}>
+                {auditLog.map((entry: any) => (
+                  <div key={entry.id} className="fiqh-sync-job" style={{ fontSize: "0.75rem" }}>
+                    {entry.action} · {entry.from_status} → {entry.to_status}
+                    {entry.actor_email && <> · {entry.actor_email}</>}
+                    {entry.created_at && <> · {new Date(entry.created_at).toLocaleString("ar")}</>}
+                  </div>
+                ))}
+              </div>
+            )}
+          </section>
+        </div>
+      ) : tab === "duplicates" ? (
+        <div style={{ display: "grid", gap: "0.75rem" }}>
+          {duplicates.length === 0 ? (
+            <p style={{ color: C.inkSoft, fontSize: "0.875rem" }}>لا توجد احتمالات تكرار.</p>
+          ) : duplicates.map((dup: any) => (
+            <div key={dup.id} className="fiqh-sync-job">
+              <strong>تشابه {(dup.similarity_score * 100).toFixed(0)}%</strong>
+              <p style={{ margin: "0.35rem 0", fontSize: "0.8125rem", color: C.inkSoft }}>
+                {(dup.match_reasons || []).join(" · ")}
+              </p>
+              <div style={{ display: "flex", gap: "0.5rem" }}>
+                <button onClick={() => handleResolveDup(dup.id, "merged")} style={{ fontSize: "0.75rem", cursor: "pointer" }}>دمج</button>
+                <button onClick={() => handleResolveDup(dup.id, "ignored")} style={{ fontSize: "0.75rem", cursor: "pointer" }}>تجاهل</button>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : tab === "sync" ? (
         <div style={{ display: "grid", gap: "1rem" }}>
           <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", alignItems: "center" }}>
             <button
