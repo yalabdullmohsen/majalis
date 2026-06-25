@@ -13,8 +13,8 @@ import {
   subMonths,
 } from "date-fns";
 import { arSA } from "date-fns/locale";
-import { loadKuwaitLessons, type KuwaitLessonRecord } from "@/lib/kuwait-lessons";
-import { lessonAds } from "@/lib/lesson-ads";
+import { loadKuwaitLessons } from "@/lib/lessons-service";
+import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 import {
   buildCalendarEventsFromAnnouncements,
   type ScientificCalendarEvent,
@@ -57,22 +57,8 @@ function eventsFromLessons(lessons: KuwaitLessonRecord[]): CalendarEvent[] {
     day: l.day,
     description: l.note,
     href: `/lessons/${l.id}`,
+    recurring: l.recurring !== false,
   }));
-}
-
-function eventsFromAds(): CalendarEvent[] {
-  return lessonAds.flatMap((ad) =>
-    ad.sessions.map((session, idx) => ({
-      id: `${ad.id}-${idx}`,
-      title: ad.title,
-      sheikh: ad.teacher,
-      mosque: session.venue,
-      time: session.time,
-      day: session.day,
-      description: ad.shortDescription,
-      href: "/announcements",
-    })),
-  );
 }
 
 function eventsForDate(date: Date, events: CalendarEvent[]): CalendarEvent[] {
@@ -136,10 +122,8 @@ export default function CalendarPage() {
   useEffect(() => {
     const scientific = fromScientificEvents(buildCalendarEventsFromAnnouncements());
     loadKuwaitLessons()
-      .then((lessons) =>
-        setEvents([...eventsFromLessons(lessons), ...eventsFromAds(), ...scientific]),
-      )
-      .catch(() => setEvents([...eventsFromAds(), ...scientific]))
+      .then((lessons) => setEvents([...eventsFromLessons(lessons), ...scientific]))
+      .catch(() => setEvents(scientific))
       .finally(() => setLoading(false));
   }, []);
 

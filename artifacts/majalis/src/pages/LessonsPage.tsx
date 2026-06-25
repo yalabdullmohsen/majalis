@@ -9,10 +9,10 @@ import {
   buildSearchSuggestions,
   extractFilterOptions,
   filterKuwaitLessons,
-  loadAllKuwaitLessonsSplit,
   type KuwaitLessonFilters,
   type KuwaitLessonRecord,
 } from "@/lib/kuwait-lessons";
+import { loadAllKuwaitLessonsSplit } from "@/lib/lessons-service";
 import { regionsForGovernorate } from "@/lib/kuwait-regions";
 import { fromKuwaitLesson } from "@/lib/unified-lesson-card";
 import { registerForLesson, unregisterFromLesson, getMyRegistrations } from "@/lib/supabase";

@@ -3,38 +3,12 @@ import { SEED_QA, QA_CATEGORIES, filterSeedQa } from "./qa-seed";
 import { SEED_FAWAID, FAWAID_CATEGORIES, filterSeedFawaid } from "./fawaid-seed";
 import { filterQualityFawaid } from "./content-quality";
 import { ADHKAR_CATEGORIES, filterAdhkar } from "./adhkar-seed";
-import { lessonAds } from "./lesson-ads";
+import { LESSONS_SEED } from "./lessons-seed";
 
 export { FAWAID_CATEGORIES, filterSeedFawaid };
 
-export const DEMO_LESSONS = lessonAds.flatMap((ad) =>
-  ad.sessions.map((session, idx) => ({
-    id: `demo-kw-${ad.id}-${idx}`,
-    title: ad.title,
-    category: ad.tags.includes("تفسير")
-      ? "تفسير"
-      : ad.tags.includes("فقه")
-        ? "فقه"
-        : ad.tags.includes("حديث")
-          ? "حديث"
-          : ad.tags.includes("عقيدة")
-            ? "عقيدة"
-            : "أخرى",
-    mosque: session.venue,
-    city: "العاصمة",
-    region: session.district.split("–")[0]?.trim() || session.district,
-    delivery: ad.tags.includes("بث مباشر") ? "كلاهما" : "حضور فقط",
-    audience: ad.hasWomenSection ? "الكل" : "رجال",
-    schedule: `${session.day} — ${session.time}`,
-    day_of_week: session.day,
-    lesson_time: session.time,
-    description: session.note || ad.shortDescription,
-    speaker_name: ad.teacher,
-    status: "approved",
-    keywords: ad.tags,
-    sheikhs: { name: ad.teacher },
-  })),
-);
+/** @deprecated استخدم LESSONS_SEED من lessons-seed.ts */
+export const DEMO_LESSONS = LESSONS_SEED;
 
 export const DEMO_SHEIKHS = [
   {

@@ -97,6 +97,17 @@ export function fromDbLesson(lesson: {
   maps_url?: string;
   website_url?: string;
   recording_url?: string;
+  live_url?: string;
+  book_url?: string;
+  video_url?: string;
+  audio_url?: string;
+  poster_image_url?: string;
+  activity_type?: string;
+  is_course?: boolean;
+  course_id?: string;
+  session_count?: number;
+  linked_titles?: string[];
+  external_key?: string;
 }): UnifiedLesson {
   const sheikhName = lesson.sheikhs?.name || lesson.speaker_name || "";
   const { day, time } = extractLessonSchedule(lesson);
@@ -121,12 +132,12 @@ export function fromDbLesson(lesson: {
     description: lesson.description ? cleanDisplayText(lesson.description) : undefined,
     gregorianDate: day ? formatGregorianDate(nextDate) : undefined,
     hijriDate: day ? formatHijriDate(nextDate) : undefined,
-    hasLiveStream: Boolean(lesson.stream_url),
-    hasRecording: Boolean(lesson.recording_url),
+    hasLiveStream: Boolean(lesson.live_url || lesson.stream_url),
+    hasRecording: Boolean(lesson.video_url || lesson.audio_url || lesson.recording_url),
     mapsUrl: lesson.maps_url,
-    streamUrl: lesson.stream_url,
-    siteUrl: lesson.website_url,
-    activityType: "درس",
+    streamUrl: lesson.live_url || lesson.stream_url,
+    siteUrl: lesson.book_url || lesson.website_url,
+    activityType: (lesson.activity_type as UnifiedLesson["activityType"]) || "درس",
   };
 }
 

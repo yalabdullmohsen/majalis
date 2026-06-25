@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { Loading } from "@/components/ui-common";
 import { UnifiedLessonCard } from "@/components/lessons/UnifiedLessonCard";
-import { loadKuwaitLessons, sortKuwaitLessons, type KuwaitLessonRecord } from "@/lib/kuwait-lessons";
+import { loadKuwaitLessons } from "@/lib/lessons-service";
+import { sortKuwaitLessons, type KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 import { fromKuwaitLesson } from "@/lib/unified-lesson-card";
 
 export function HomeUpcomingLessons() {

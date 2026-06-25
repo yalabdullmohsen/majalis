@@ -10,6 +10,7 @@ import {
   filterDemoQa,
   searchDemoContent,
 } from "./demo-content";
+import { LESSONS_SEED, findSeedLessonById } from "./lessons-seed";
 import { DEMO_QUIZ_QUESTIONS } from "./quiz-seed";
 import { ADHKAR_CATEGORIES, filterAdhkar } from "./adhkar-seed";
 import { safeSupabaseQuery, isMissingSchemaError } from "./safe-supabase";
@@ -165,25 +166,34 @@ function filterLessonsList(
   return result;
 }
 
+export async function fetchApprovedLessonsFromDb() {
+  if (!isConfigured) return { data: [] as any[], error: null, usingSeed: true };
+
+  try {
+    const { data, error } = await supabase
+      .from("lessons")
+      .select(`*, ${SHEIKH_EMBED}`)
+      .eq("status", "approved")
+      .order("created_at", { ascending: false });
+
+    if (error) throw error;
+    return { data: data || [], error: null, usingSeed: false };
+  } catch (err) {
+    logSupabaseError("fetchApprovedLessonsFromDb", err);
+    return { data: [], error: err, usingSeed: true };
+  }
+}
+
 export async function getLessons({ category, city, search }: { category?: string; city?: string; search?: string } = {}) {
-  const fallback = filterLessonsList(DEMO_LESSONS, { category, city, search });
+  const fallback = filterLessonsList(LESSONS_SEED, { category, city, search });
 
   if (!isConfigured) {
     return { data: fallback, error: null, usingSeed: true };
   }
 
   try {
-    let q = supabase
-      .from("lessons")
-      .select(`*, ${SHEIKH_EMBED}`)
-      .eq("status", "approved")
-      .order("created_at", { ascending: false });
-    if (category && category !== "الكل") q = q.eq("category", category);
-    if (city && city !== "كل المحافظات") q = q.eq("city", city);
-    const { data, error } = await q;
-    if (error) throw error;
-
-    const result = filterLessonsList(data || [], { category, city, search });
+    const { data } = await fetchApprovedLessonsFromDb();
+    const result = filterLessonsList(data, { category, city, search });
     if (result.length === 0 && fallback.length > 0) {
       return { data: fallback, error: null, usingSeed: true };
     }
@@ -195,59 +205,45 @@ export async function getLessons({ category, city, search }: { category?: string
 }
 
 export async function getLessonById(id: string) {
-  const fallback = DEMO_LESSONS.find((l) => l.id === id) || null;
+  const fallback = findSeedLessonById(id) || DEMO_LESSONS.find((l) => l.id === id) || null;
 
   if (!isConfigured) {
     return { lesson: fallback, error: null, usingSeed: true };
   }
 
   try {
-    const { data, error } = await supabase
+    const byId = await supabase
       .from("lessons")
       .select(`*, ${SHEIKH_EMBED}`)
       .eq("id", id)
       .eq("status", "approved")
       .maybeSingle();
-    if (error) throw error;
-    return { lesson: data || fallback, error: null, usingSeed: !data && !!fallback };
+
+    if (byId.error) throw byId.error;
+    if (byId.data) return { lesson: byId.data, error: null, usingSeed: false };
+
+    const byExternalKey = await supabase
+      .from("lessons")
+      .select(`*, ${SHEIKH_EMBED}`)
+      .eq("external_key", id)
+      .eq("status", "approved")
+      .maybeSingle();
+
+    if (byExternalKey.error) throw byExternalKey.error;
+    return {
+      lesson: byExternalKey.data || fallback,
+      error: null,
+      usingSeed: !byExternalKey.data && !!fallback,
+    };
   } catch (err) {
     logSupabaseError("getLessonById", err, { id });
     return { lesson: fallback, error: null, usingSeed: true };
   }
 }
 
+/** @deprecated استخدم fetchApprovedLessonsFromDb عبر lessons-service */
 export async function getKuwaitLessonsFromDb() {
-  if (!isConfigured) return { data: [], error: null, usingSeed: true };
-
-  try {
-    const { data, error } = await supabase
-      .from("lessons")
-      .select(`*, ${SHEIKH_EMBED}`)
-      .eq("status", "approved")
-      .order("created_at", { ascending: false });
-
-    if (error) throw error;
-
-    const kuwaitGovernorates = new Set([
-      "العاصمة",
-      "حولي",
-      "الفروانية",
-      "الجهراء",
-      "الأحمدي",
-      "مبارك الكبير",
-      "الكويت",
-    ]);
-
-    const filtered = (data || []).filter((row: any) => {
-      const city = String(row.city || "").trim();
-      return !city || kuwaitGovernorates.has(city) || city.includes("الكويت");
-    });
-
-    return { data: filtered, error: null, usingSeed: false };
-  } catch (err) {
-    logSupabaseError("getKuwaitLessonsFromDb", err);
-    return { data: [], error: null, usingSeed: true };
-  }
+  return fetchApprovedLessonsFromDb();
 }
 
 export async function registerForLesson(userId: string, lessonId: string) {

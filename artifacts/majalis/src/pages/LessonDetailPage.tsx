@@ -20,8 +20,8 @@ import { cleanDisplayText } from "@/lib/display-text";
 import {
   getKuwaitLessonById,
   loadAllKuwaitLessonsSplit,
-  type KuwaitLessonRecord,
-} from "@/lib/kuwait-lessons";
+} from "@/lib/lessons-service";
+import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 import { cleanTimeText } from "@/lib/lesson-time";
 
 function buildMapsEmbed(url?: string, mosque?: string, region?: string) {
@@ -44,34 +44,30 @@ export default function LessonDetailPage({ params }: { params: { id: string } })
 
   useEffect(() => {
     setLoading(true);
-    const staticLesson = getKuwaitLessonById(params.id);
+    getKuwaitLessonById(params.id)
+      .then((staticLesson) => {
+        if (staticLesson) {
+          setKuwaitLesson(staticLesson);
+          setLesson(null);
+          return loadAllKuwaitLessonsSplit().then(({ active }) => {
+            const related = active
+              .filter(
+                (l) =>
+                  l.id !== staticLesson.id &&
+                  (l.category === staticLesson.category ||
+                    l.sheikhName === staticLesson.sheikhName ||
+                    l.region === staticLesson.region),
+              )
+              .slice(0, 3);
+            setSimilar(related);
+          });
+        }
 
-    if (staticLesson) {
-      setKuwaitLesson(staticLesson);
-      setLesson(null);
-      loadAllKuwaitLessonsSplit()
-        .then(({ active }) => {
-          const related = active
-            .filter(
-              (l) =>
-                l.id !== staticLesson.id &&
-                (l.category === staticLesson.category ||
-                  l.sheikhName === staticLesson.sheikhName ||
-                  l.region === staticLesson.region),
-            )
-            .slice(0, 3);
-          setSimilar(related);
-        })
-        .finally(() => setLoading(false));
-      return;
-    }
-
-    getLessonById(params.id)
-      .then(({ lesson: dbLesson }) => {
-        setLesson(dbLesson);
-        setKuwaitLesson(null);
-        if (dbLesson) {
-          loadAllKuwaitLessonsSplit().then(({ active }) => {
+        return getLessonById(params.id).then(({ lesson: dbLesson }) => {
+          setLesson(dbLesson);
+          setKuwaitLesson(null);
+          if (!dbLesson) return undefined;
+          return loadAllKuwaitLessonsSplit().then(({ active }) => {
             const related = active
               .filter(
                 (l) =>
@@ -81,7 +77,7 @@ export default function LessonDetailPage({ params }: { params: { id: string } })
               .slice(0, 3);
             setSimilar(related);
           });
-        }
+        });
       })
       .finally(() => setLoading(false));
   }, [params.id]);

@@ -7,7 +7,14 @@ alter table lessons
   add column if not exists end_date date,
   add column if not exists speaker_name text,
   add column if not exists sheikh_image_url text,
-  add column if not exists external_key text;
+  add column if not exists external_key text,
+  add column if not exists maps_url text,
+  add column if not exists poster_image_url text,
+  add column if not exists activity_type text default 'درس',
+  add column if not exists is_course boolean default false,
+  add column if not exists course_id text,
+  add column if not exists session_count integer,
+  add column if not exists linked_titles text[];
 
 create unique index if not exists lessons_external_key_uidx
   on lessons (external_key)

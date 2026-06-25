@@ -1,6 +1,4 @@
 import { GOVERNORATES } from "@/lib/theme";
-import { KUWAIT_LESSONS } from "@/lib/home-content";
-import { getKuwaitLessonsFromDb } from "@/lib/supabase";
 import { resolveLessonSheikhImage } from "@/lib/sheikh-image";
 import { resolveGovernorate, resolveRegion } from "@/lib/kuwait-regions";
 import { formatSheikhName, sheikhNameKey } from "@/lib/sheikh-name";
@@ -12,9 +10,6 @@ import {
   formatRelativeTime,
   isOccurrencePast,
 } from "@/lib/lesson-time";
-import { cleanDisplayText } from "@/lib/display-text";
-import { DEMO_COURSES, type Course } from "@/lib/current-lessons";
-import { lessonAds, type LessonAd } from "@/lib/lesson-ads";
 
 export type ActivityType = "درس" | "محاضرة" | "دورة";
 
@@ -51,6 +46,7 @@ export type KuwaitLessonRecord = {
   recurring?: boolean;
   courseId?: string;
   isCourse?: boolean;
+  source?: "supabase" | "seed";
 };
 
 export type KuwaitLessonFilters = {
@@ -91,7 +87,6 @@ export const KUWAIT_CATEGORIES = [
 ];
 
 export const ACTIVITY_TYPES = ["الكل", "درس", "محاضرة", "دورة"] as const;
-
 export const CONTENT_KINDS = ["الكل", "دورة", "محاضرة", "درس"] as const;
 
 function normalizeText(value: string) {
@@ -115,27 +110,29 @@ function parseDayFromSchedule(schedule?: string): string {
   return day || schedule.trim();
 }
 
-function activityFromTags(tags: string[] = [], category?: string): ActivityType {
+function activityFromRow(row: any): ActivityType {
+  if (row.activity_type) return row.activity_type as ActivityType;
+  if (row.is_course) return "دورة";
+  const tags: string[] = Array.isArray(row.keywords) ? row.keywords : Array.isArray(row.tags) ? row.tags : [];
   if (tags.some((t) => t.includes("دورة"))) return "دورة";
   if (tags.some((t) => t.includes("محاضرة"))) return "محاضرة";
-  if (category === "course") return "دورة";
   return "درس";
 }
 
-function enrichScheduleFields(lesson: Omit<KuwaitLessonRecord, "sortKey" | "nextOccurrenceMs"> & {
-  sortKey?: number;
-  nextOccurrenceMs?: number;
-}): KuwaitLessonRecord {
+function enrichScheduleFields(
+  lesson: Omit<KuwaitLessonRecord, "sortKey" | "nextOccurrenceMs"> & {
+    sortKey?: number;
+    nextOccurrenceMs?: number;
+  },
+): KuwaitLessonRecord {
   const recurring = lesson.recurring !== false;
-  const nextMs =
-    lesson.nextOccurrenceMs ??
-    computeNextOccurrenceMs(lesson.day, lesson.time);
+  const nextMs = lesson.nextOccurrenceMs ?? computeNextOccurrenceMs(lesson.day, lesson.time);
   const nextDate = new Date(nextMs);
 
   return {
     ...lesson,
     time: cleanTimeText(lesson.time),
-    sheikhName: formatSheikhName(lesson.sheikhName) || lesson.sheikhName,
+    sheikhName: formatSheikhName(lesson.sheikhName.replace(/^الشيخ:\s*/u, "")) || lesson.sheikhName,
     sortKey: lesson.sortKey ?? nextMs,
     nextOccurrenceMs: nextMs,
     gregorianDate: lesson.gregorianDate || (lesson.day ? formatGregorianDate(nextDate) : undefined),
@@ -144,46 +141,27 @@ function enrichScheduleFields(lesson: Omit<KuwaitLessonRecord, "sortKey" | "next
   };
 }
 
-function mapStaticLesson(lesson: (typeof KUWAIT_LESSONS)[number]): KuwaitLessonRecord {
-  const region = resolveRegion(lesson.region);
-  const governorate = resolveGovernorate(lesson.region, lesson.governorate || "العاصمة");
-
-  return enrichScheduleFields({
-    id: lesson.id,
-    title: lesson.title,
-    sheikhName: lesson.sheikhName,
-    sheikhImage: lesson.sheikhImage,
-    governorate,
-    region,
-    mosque: lesson.mosque,
-    day: lesson.day,
-    time: lesson.time,
-    category: lesson.category || "أخرى",
-    note: lesson.note,
-    description: lesson.note,
-    endDate: lesson.status === "منتهٍ" ? "2000-01-01" : null,
-    activityType: "درس",
-    recurring: true,
-  });
-}
-
-function mapDbLesson(row: any): KuwaitLessonRecord {
-  const day = row.day_of_week || parseDayFromSchedule(row.schedule);
+/** تحويل صف Supabase أو Seed إلى نموذج العرض الموحد. */
+export function mapLessonRow(row: any): KuwaitLessonRecord {
+  const day = row.day_of_week || row.day || parseDayFromSchedule(row.schedule);
   const rawSheikh = row.sheikhs?.name || row.speaker_name || "";
   const region = resolveRegion(row.region || "");
   const governorate = resolveGovernorate(row.region || row.city || "", row.city || "العاصمة");
-
-  const tags = Array.isArray(row.tags) ? row.tags : [];
+  const tags = Array.isArray(row.keywords) ? row.keywords : Array.isArray(row.tags) ? row.tags : [];
   const delivery = String(row.delivery || "");
   const hasLiveStream =
+    Boolean(row.live_url) ||
     tags.some((t: string) => /بث|مباشر|live/i.test(t)) ||
     /بث|مباشر|live/i.test(delivery);
 
+  const id = String(row.external_key || row.id || "");
+
   return enrichScheduleFields({
-    id: row.id,
+    id,
     title: row.title,
     sheikhName: rawSheikh,
-    sheikhImage: resolveLessonSheikhImage(row),
+    sheikhImage: row.sheikh_image_url || resolveLessonSheikhImage(row),
+    lessonImage: row.poster_image_url,
     governorate,
     region,
     mosque: row.mosque || "",
@@ -195,100 +173,17 @@ function mapDbLesson(row: any): KuwaitLessonRecord {
     keywords: tags,
     endDate: row.end_date || null,
     startDate: row.start_date || null,
-    activityType: activityFromTags(tags),
+    activityType: activityFromRow(row),
+    sessionCount: row.session_count,
+    linkedLessons: row.linked_titles,
     hasLiveStream,
-    hasRecording: Boolean(row.recording_url),
-    mapsUrl: row.maps_url || undefined,
-    streamUrl: row.stream_url || undefined,
-    siteUrl: row.website_url || undefined,
-    recurring: !row.end_date,
-  });
-}
-
-function mapCourseToRecord(course: Course): KuwaitLessonRecord {
-  const primary = course.lessons[0];
-  const region = resolveRegion(course.region);
-  const governorate = resolveGovernorate(course.region);
-
-  return enrichScheduleFields({
-    id: course.id,
-    title: course.title,
-    sheikhName: course.sheikhName,
-    sheikhImage: course.sheikh_image_url || course.sheikhImage,
-    governorate,
-    region,
-    mosque: course.mosque,
-    day: primary?.day || course.weeklySchedule[0]?.day || "",
-    time: primary?.time || course.weeklySchedule[0]?.time || "",
-    category: primary?.category || "تأصيل",
-    description: course.description,
-    note: course.description,
-    endDate: course.endDate || null,
-    startDate: course.startDate || null,
-    activityType: "دورة",
-    sessionCount: course.lectures.length || course.weeklySchedule.length,
-    linkedLessons: course.lectures.map((l) => l.title),
-    mapsUrl: course.mapsUrl,
-    streamUrl: course.streamUrl,
-    siteUrl: course.bookUrl,
-    isCourse: true,
-    courseId: course.id,
-    hasLiveStream: Boolean(course.streamUrl),
-    recurring: !course.endDate,
-  });
-}
-
-function categoryFromAdTags(tags: string[]): string {
-  const map: Record<string, string> = {
-    تفسير: "تفسير",
-    فقه: "فقه",
-    حديث: "حديث",
-    عقيدة: "عقيدة",
-    سنة: "حديث",
-  };
-  for (const tag of tags) {
-    if (map[tag]) return map[tag];
-  }
-  return "أخرى";
-}
-
-function mapAdSession(ad: LessonAd, sessionIndex: number): KuwaitLessonRecord {
-  const session = ad.sessions[sessionIndex];
-  const region = resolveRegion(session.district);
-  const governorate = resolveGovernorate(session.district);
-  const genericLabel =
-    session.label === "المجلس الأسبوعي" || session.label === "البرنامج الأسبوعي";
-  const title = genericLabel ? ad.title : `${ad.title} — ${session.label}`;
-  const activityType = activityFromTags(ad.tags, ad.category);
-
-  return enrichScheduleFields({
-    id: `kw-${ad.id}-${sessionIndex}`,
-    title,
-    sheikhName: ad.teacher,
-    sheikhImage: ad.teacherImage,
-    lessonImage: ad.posterImage,
-    governorate,
-    region,
-    mosque: session.venue,
-    day: session.day,
-    time: session.time,
-    category: categoryFromAdTags(ad.tags),
-    note: session.note || ad.shortDescription,
-    description: ad.detailIntro || ad.shortDescription,
-    keywords: ad.tags,
-    startDate: ad.startDate || null,
-    activityType,
-    sessionCount: ad.sessions.length > 1 ? ad.sessions.length : undefined,
-    linkedLessons:
-      ad.sessions.length > 1 ? ad.sessions.map((s) => s.label).filter(Boolean) : undefined,
-    hasLiveStream: ad.tags.some((t) => /بث|مباشر/i.test(t)) || Boolean(session.liveUrl),
-    hasRecording: Boolean(session.referenceUrl),
-    mapsUrl: session.mapUrl,
-    streamUrl: session.liveUrl,
-    siteUrl: session.referenceUrl,
-    isCourse: ad.category === "course",
-    courseId: ad.category === "course" ? ad.id : undefined,
-    recurring: true,
+    hasRecording: Boolean(row.video_url || row.audio_url),
+    mapsUrl: row.maps_url,
+    streamUrl: row.live_url,
+    siteUrl: row.book_url,
+    isCourse: Boolean(row.is_course),
+    courseId: row.course_id,
+    recurring: row.is_recurring !== false && !row.end_date,
   });
 }
 
@@ -313,86 +208,31 @@ function isExpired(lesson: KuwaitLessonRecord): boolean {
 export function splitKuwaitLessons(lessons: KuwaitLessonRecord[]) {
   const active: KuwaitLessonRecord[] = [];
   const archived: KuwaitLessonRecord[] = [];
-
   for (const lesson of lessons) {
     if (isExpired(lesson)) archived.push(lesson);
     else active.push(lesson);
   }
-
   return {
     active: sortKuwaitLessons(active),
     archived: sortKuwaitLessons(archived),
   };
 }
 
-async function fetchAllKuwaitLessons(): Promise<KuwaitLessonRecord[]> {
-  const staticFromAds = lessonAds.flatMap((ad, _idx) =>
-    ad.sessions.map((_session, sessionIndex) => mapAdSession(ad, sessionIndex)),
-  );
-
-  try {
-    const { data } = await getKuwaitLessonsFromDb();
-    const mapped = (data || []).map(mapDbLesson);
-    const courses = DEMO_COURSES.map(mapCourseToRecord);
-    const staticMapped = KUWAIT_LESSONS.map(mapStaticLesson);
-    return dedupeKuwaitLessons([...mapped, ...staticFromAds, ...courses, ...staticMapped]);
-  } catch {
-    const courses = DEMO_COURSES.map(mapCourseToRecord);
-    return dedupeKuwaitLessons([
-      ...staticFromAds,
-      ...courses,
-      ...KUWAIT_LESSONS.map(mapStaticLesson),
-    ]);
-  }
-}
-
-export async function loadKuwaitLessons(): Promise<KuwaitLessonRecord[]> {
-  const all = await fetchAllKuwaitLessons();
-  return splitKuwaitLessons(all).active;
-}
-
-export async function loadKuwaitLessonsArchive(): Promise<KuwaitLessonRecord[]> {
-  const all = await fetchAllKuwaitLessons();
-  return splitKuwaitLessons(all).archived;
-}
-
-export async function loadAllKuwaitLessonsSplit() {
-  const all = await fetchAllKuwaitLessons();
-  return splitKuwaitLessons(all);
-}
-
-export function getKuwaitLessonById(id: string): KuwaitLessonRecord | null {
-  const staticFromAds = lessonAds.flatMap((ad) =>
-    ad.sessions.map((_session, sessionIndex) => mapAdSession(ad, sessionIndex)),
-  );
-  const courses = DEMO_COURSES.map(mapCourseToRecord);
-  const all = dedupeKuwaitLessons([
-    ...staticFromAds,
-    ...courses,
-    ...KUWAIT_LESSONS.map(mapStaticLesson),
-  ]);
-  return all.find((l) => l.id === id) || null;
-}
-
 export function dedupeKuwaitLessons(lessons: KuwaitLessonRecord[]): KuwaitLessonRecord[] {
   const seen = new Set<string>();
   const result: KuwaitLessonRecord[] = [];
-
   for (const lesson of lessons) {
     const key = lessonDedupeKey(lesson);
     if (seen.has(key)) continue;
     seen.add(key);
     result.push(lesson);
   }
-
   return result;
 }
 
 export function sortKuwaitLessons(lessons: KuwaitLessonRecord[]): KuwaitLessonRecord[] {
   return [...lessons].sort((a, b) => {
-    if (a.nextOccurrenceMs !== b.nextOccurrenceMs) {
-      return a.nextOccurrenceMs - b.nextOccurrenceMs;
-    }
+    if (a.nextOccurrenceMs !== b.nextOccurrenceMs) return a.nextOccurrenceMs - b.nextOccurrenceMs;
     const gov = a.governorate.localeCompare(b.governorate, "ar");
     if (gov !== 0) return gov;
     const sheikh = a.sheikhName.localeCompare(b.sheikhName, "ar");
@@ -429,40 +269,21 @@ export function filterKuwaitLessons(
   const search = normalizeText(filters.search);
 
   return lessons.filter((lesson) => {
-    if (filters.governorate !== "كل المحافظات" && lesson.governorate !== filters.governorate) {
-      return false;
-    }
-    if (filters.region !== "كل المناطق" && lesson.region !== filters.region) {
-      return false;
-    }
+    if (filters.governorate !== "كل المحافظات" && lesson.governorate !== filters.governorate) return false;
+    if (filters.region !== "كل المناطق" && lesson.region !== filters.region) return false;
     if (filters.mosque !== "كل المساجد" && !normalizeText(lesson.mosque).includes(normalizeText(filters.mosque))) {
       return false;
     }
-    if (
-      filters.sheikh !== "كل المشايخ" &&
-      sheikhNameKey(lesson.sheikhName) !== sheikhNameKey(filters.sheikh)
-    ) {
+    if (filters.sheikh !== "كل المشايخ" && sheikhNameKey(lesson.sheikhName) !== sheikhNameKey(filters.sheikh)) {
       return false;
     }
-    if (filters.day !== "الكل" && lesson.day !== filters.day) {
-      return false;
-    }
-    if (filters.category !== "الكل" && lesson.category !== filters.category) {
-      return false;
-    }
-    if (filters.activityType !== "الكل" && lesson.activityType !== filters.activityType) {
-      return false;
-    }
+    if (filters.day !== "الكل" && lesson.day !== filters.day) return false;
+    if (filters.category !== "الكل" && lesson.category !== filters.category) return false;
+    if (filters.activityType !== "الكل" && lesson.activityType !== filters.activityType) return false;
     if (filters.contentKind !== "الكل") {
-      if (filters.contentKind === "دورة" && !lesson.isCourse && lesson.activityType !== "دورة") {
-        return false;
-      }
-      if (filters.contentKind === "محاضرة" && lesson.activityType !== "محاضرة") {
-        return false;
-      }
-      if (filters.contentKind === "درس" && (lesson.isCourse || lesson.activityType === "دورة")) {
-        return false;
-      }
+      if (filters.contentKind === "دورة" && !lesson.isCourse && lesson.activityType !== "دورة") return false;
+      if (filters.contentKind === "محاضرة" && lesson.activityType !== "محاضرة") return false;
+      if (filters.contentKind === "درس" && (lesson.isCourse || lesson.activityType === "دورة")) return false;
     }
     if (filters.hasLiveStream === true && !lesson.hasLiveStream) return false;
     if (filters.hasLiveStream === false && lesson.hasLiveStream) return false;
