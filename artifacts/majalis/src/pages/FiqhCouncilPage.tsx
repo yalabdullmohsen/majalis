@@ -24,6 +24,7 @@ const SUBNAV_LINKS = [
   { href: "/fiqh-council/research", label: "البحوث" },
   { href: "/fiqh-council/categories", label: "التصنيفات" },
   { href: "/fiqh-council/search", label: "البحث" },
+  { href: "/fiqh-council/research-assistant", label: "مساعد الباحث" },
   { href: "/fiqh-council/compare", label: "المقارنة" },
   { href: "/fiqh-council/archive", label: "الأرشيف" },
 ] as const;
@@ -288,7 +289,7 @@ export function FiqhCouncilHubPage() {
       <div className="fiqh-hub-quick-links">
         <Link href="/fiqh-council/search" className="fiqh-hub-quick-link">البحث المتقدم</Link>
         <Link href="/fiqh-council/nawazil" className="fiqh-hub-quick-link">فقه النوازل</Link>
-        <Link href="/fiqh-council/compare" className="fiqh-hub-quick-link">مقارنة القرارات</Link>
+        <Link href="/fiqh-council/research-assistant" className="fiqh-hub-quick-link">مساعد الباحث</Link>
       </div>
 
       {loading ? <Loading /> : (

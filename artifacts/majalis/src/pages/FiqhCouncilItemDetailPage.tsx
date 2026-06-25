@@ -5,14 +5,20 @@ import { ContentDetailLayout, RelatedLinks } from "@/components/platform/Content
 import {
   getFiqhCouncilItemBySlug,
   getRelatedFiqhCouncilItems,
+  getFiqhMaterialRelations,
   incrementFiqhCouncilViews,
 } from "@/lib/fiqh-council-service";
+import { FiqhCitationButton } from "@/components/fiqh-council/FiqhCitationButton";
+import { FiqhItemRelations } from "@/components/fiqh-council/FiqhItemRelations";
+import { FIQH_RESEARCH_DISCLAIMER } from "@/lib/fiqh-citation";
+import type { FiqhMaterialRelations } from "@/lib/fiqh-council-service";
 import {
   fiqhItemHref,
   fiqhCompareHref,
   formatFiqhItemMeta,
   FIQH_CONFIDENCE_LABELS,
   FIQH_SUMMARY_SOURCE_LABELS,
+  FIQH_ITEM_TYPE_LABELS,
   type FiqhCouncilItem,
 } from "@/lib/fiqh-council-types";
 import { applyPageSeo } from "@/lib/seo";
@@ -32,6 +38,7 @@ function DetailSection({ title, children }: { title: string; children: React.Rea
 export default function FiqhCouncilItemDetailPage({ params }: { params: { slug: string } }) {
   const [item, setItem] = useState<FiqhCouncilItem | null>(null);
   const [related, setRelated] = useState<FiqhCouncilItem[]>([]);
+  const [relations, setRelations] = useState<FiqhMaterialRelations | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -41,7 +48,10 @@ export default function FiqhCouncilItemDetailPage({ params }: { params: { slug: 
         setItem(data);
         if (data) {
           incrementFiqhCouncilViews(data.slug);
-          return getRelatedFiqhCouncilItems(data.slug, data.category).then(setRelated);
+          return Promise.all([
+            getRelatedFiqhCouncilItems(data.slug, data.category).then(setRelated),
+            getFiqhMaterialRelations(data).then(setRelations),
+          ]);
         }
         return undefined;
       })
@@ -65,14 +75,17 @@ export default function FiqhCouncilItemDetailPage({ params }: { params: { slug: 
       jsonLd: [
         {
           "@context": "https://schema.org",
-          "@type": "Article",
+          "@type": item.type === "research" ? "ScholarlyArticle" : "Legislation",
           headline: item.title,
           description,
           datePublished: item.published_at || item.session_date || item.created_at,
           author: item.council_name
             ? { "@type": "Organization", name: item.council_name }
-            : undefined,
+            : item.source_name
+              ? { "@type": "Organization", name: item.source_name }
+              : undefined,
           inLanguage: "ar",
+          url: `https://majlisilm.com${path}`,
         },
         breadcrumbJsonLd([
           { name: "الرئيسية", path: "/" },
@@ -121,6 +134,29 @@ export default function FiqhCouncilItemDetailPage({ params }: { params: { slug: 
         <p className="fiqh-council-views">{item.views_count.toLocaleString("ar")} مشاهدة</p>
       )}
 
+      <section className="content-detail-evidence ui-card fiqh-detail-info-table">
+        <h2>بيانات القرار</h2>
+        <table className="fiqh-info-table">
+          <tbody>
+            <tr><th>النوع</th><td>{FIQH_ITEM_TYPE_LABELS[item.type]}</td></tr>
+            <tr><th>التصنيف</th><td>{item.category}{item.subcategory ? ` / ${item.subcategory}` : ""}</td></tr>
+            {item.decision_number && <tr><th>رقم القرار</th><td>{item.decision_number}</td></tr>}
+            {item.session_number && <tr><th>الجلسة</th><td>{item.session_number}</td></tr>}
+            {item.session_date && <tr><th>التاريخ</th><td>{item.session_date}</td></tr>}
+            {item.source_name && <tr><th>المصدر</th><td>{item.source_name}</td></tr>}
+            {item.council_name && <tr><th>الجهة</th><td>{item.council_name}</td></tr>}
+          </tbody>
+        </table>
+      </section>
+
+      {item.summary && (
+        <DetailSection title="ملخص تنفيذي">
+          <p>{item.summary}</p>
+        </DetailSection>
+      )}
+
+      <p className="fiqh-research-disclaimer-inline">{FIQH_RESEARCH_DISCLAIMER}</p>
+
       {(item.confidence_level || item.summary_source) && (
         <p className="fiqh-detail-trust">
           {item.confidence_level && <span>{FIQH_CONFIDENCE_LABELS[item.confidence_level]}</span>}
@@ -143,6 +179,7 @@ export default function FiqhCouncilItemDetailPage({ params }: { params: { slug: 
       )}
 
       <div className="fiqh-detail-actions">
+        <FiqhCitationButton item={item} />
         <Link href={fiqhCompareHref([item.slug])} className="fiqh-council-section-link">
           إضافة للمقارنة
         </Link>
@@ -181,6 +218,8 @@ export default function FiqhCouncilItemDetailPage({ params }: { params: { slug: 
           <p>{item.council_name} — الجلسة {item.session_number}</p>
         </DetailSection>
       )}
+
+      {relations && <FiqhItemRelations relations={relations} />}
     </ContentDetailLayout>
   );
 }

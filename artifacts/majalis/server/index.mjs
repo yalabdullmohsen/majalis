@@ -9,6 +9,7 @@ import testAnthropicHandler from "../api/test-anthropic.js";
 import transcribeHandler from "../api/transcribe.js";
 import prayerTimesHandler from "../api/prayer-times.js";
 import syncDataHandler from "../api/cron/sync-data.js";
+import fiqhResearchAssistantHandler from "../api/fiqh-research-assistant.js";
 import { createRateLimiter } from "./rate-limit.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -77,6 +78,15 @@ app.post("/api/assistant", express.json({ limit: "32kb" }), assistantRateLimit, 
 app.get("/api/test-anthropic", runHandler(testAnthropicHandler, "test-anthropic"));
 app.post("/api/test-anthropic", runHandler(testAnthropicHandler, "test-anthropic"));
 app.post("/api/transcribe", express.json({ limit: "2mb" }), transcribeRateLimit, runHandler(transcribeHandler, "transcribe"));
+
+const fiqhResearchRateLimit = createRateLimiter({
+  windowMs: 60_000,
+  max: 20,
+  keyPrefix: "fiqh-research",
+});
+
+app.get("/api/fiqh-research-assistant", runHandler(fiqhResearchAssistantHandler, "fiqh-research"));
+app.post("/api/fiqh-research-assistant", express.json({ limit: "32kb" }), fiqhResearchRateLimit, runHandler(fiqhResearchAssistantHandler, "fiqh-research"));
 
 app.get("/api/prayer-times", runHandler(prayerTimesHandler, "prayer-times"));
 app.get("/api/cron/sync-data", runHandler(syncDataHandler, "cron-sync-data"));

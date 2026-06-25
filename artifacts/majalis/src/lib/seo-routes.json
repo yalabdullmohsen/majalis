@@ -504,9 +504,19 @@
       "title": "البحث المتقدم | المجمع الفقهي — المجلس العلمي",
       "description": "بحث متقدم في قرارات وفتاوى المجمع الفقهي — بالعنوان والنص والمصدر والتصنيف.",
       "keywords": ["بحث فقهي", "المجمع الفقهي", "قرارات فقهية"],
-      "sitemap": true,
+      "sitemap": false,
+      "robots": "noindex, follow",
       "changefreq": "weekly",
       "priority": 0.84
+    },
+    {
+      "path": "/fiqh-council/research-assistant",
+      "title": "مساعد الباحث الفقهي | المجمع الفقهي — المجلس العلمي",
+      "description": "مساعد بحث فقهي متخصص — يبحث في القرارات والفتاوى المنشورة ويُلخّص النتائج مع المصادر والمراجع.",
+      "keywords": ["مساعد الباحث الفقهي", "بحث فقهي", "المجمع الفقهي", "قرارات فقهية"],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.87
     },
     {
       "path": "/fiqh-council/compare",

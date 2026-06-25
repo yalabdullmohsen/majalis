@@ -164,6 +164,49 @@ export async function getRelatedFiqhCouncilItems(currentSlug: string, category?:
   return data.filter((item) => item.slug !== currentSlug).slice(0, limit);
 }
 
+export type FiqhMaterialRelations = {
+  sameCategory: { slug: string; title: string; meta?: string }[];
+  sameSource: { slug: string; title: string; meta?: string }[];
+  sameTags: { slug: string; title: string; meta?: string }[];
+  relatedType: { slug: string; title: string; meta?: string }[];
+};
+
+function toRelationItem(item: FiqhCouncilItem) {
+  return {
+    slug: item.slug,
+    title: item.title,
+    meta: [FIQH_ITEM_TYPE_LABELS[item.type], item.category].filter(Boolean).join(" · "),
+  };
+}
+
+export async function getFiqhMaterialRelations(item: FiqhCouncilItem, limit = 3): Promise<FiqhMaterialRelations> {
+  const { data: all } = await getFiqhCouncilItems({ limit: 100 });
+  const others = all.filter((i) => i.slug !== item.slug);
+  const itemTags = new Set(item.tags || []);
+
+  const sameCategory = others
+    .filter((i) => i.category === item.category)
+    .slice(0, limit)
+    .map(toRelationItem);
+
+  const sameSource = others
+    .filter((i) => item.source_name && i.source_name === item.source_name)
+    .slice(0, limit)
+    .map(toRelationItem);
+
+  const sameTags = others
+    .filter((i) => (i.tags || []).some((t) => itemTags.has(t)))
+    .slice(0, limit)
+    .map(toRelationItem);
+
+  const relatedType = others
+    .filter((i) => i.type === item.type && i.category !== item.category)
+    .slice(0, limit)
+    .map(toRelationItem);
+
+  return { sameCategory, sameSource, sameTags, relatedType };
+}
+
 export async function incrementFiqhCouncilViews(slug: string) {
   if (!isConfigured) return;
   try {

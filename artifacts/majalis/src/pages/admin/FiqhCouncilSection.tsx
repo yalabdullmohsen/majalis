@@ -16,6 +16,12 @@ import {
   adminResolveDuplicate,
   adminGetFiqhStats,
   adminGetFiqhAuditLog,
+  adminGetFiqhResearchLogs,
+  adminGetFiqhResearchAnalytics,
+  adminGetFiqhUnanswered,
+  adminSetFiqhResearchEnabled,
+  adminLinkUnansweredQuestion,
+  adminDismissUnansweredQuestion,
 } from "@/lib/fiqh-council-supabase";
 import { getFiqhCouncilReviewItems } from "@/lib/fiqh-council-service";
 import {
@@ -34,7 +40,7 @@ import { Loading } from "@/components/ui-common";
 import { AdminModal, Field, inputSt, selectSt, textareaSt } from "./AdminModal";
 import { useAdminShell } from "./AdminShell";
 
-type AdminTab = "stats" | "items" | "review" | "duplicates" | "sync";
+type AdminTab = "stats" | "items" | "review" | "duplicates" | "research" | "sync";
 
 const EMPTY = {
   title: "",
@@ -88,6 +94,10 @@ export function FiqhCouncilSection() {
   const [duplicates, setDuplicates] = useState<any[]>([]);
   const [stats, setStats] = useState<Record<string, number>>({});
   const [auditLog, setAuditLog] = useState<any[]>([]);
+  const [researchLogs, setResearchLogs] = useState<any[]>([]);
+  const [researchAnalytics, setResearchAnalytics] = useState<any>(null);
+  const [unanswered, setUnanswered] = useState<any[]>([]);
+  const [assistantEnabled, setAssistantEnabled] = useState(true);
   const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [syncing, setSyncing] = useState(false);
@@ -109,7 +119,10 @@ export function FiqhCouncilSection() {
       adminGetFiqhDuplicates(),
       adminGetFiqhStats(),
       adminGetFiqhAuditLog(undefined, 20),
-    ]).then(([allRes, reviewRes, sourcesRes, jobsRes, dupRes, statsRes, auditRes]) => {
+      adminGetFiqhResearchLogs(25),
+      adminGetFiqhResearchAnalytics(30),
+      adminGetFiqhUnanswered(20),
+    ]).then(([allRes, reviewRes, sourcesRes, jobsRes, dupRes, statsRes, auditRes, logsRes, analyticsRes, unansweredRes]) => {
       setItems(allRes.data);
       setReviewItems(reviewRes.data);
       setSources(sourcesRes.data);
@@ -117,6 +130,9 @@ export function FiqhCouncilSection() {
       setDuplicates(dupRes.data);
       setStats(statsRes);
       setAuditLog(auditRes.data);
+      setResearchLogs(logsRes.data);
+      setResearchAnalytics(analyticsRes.data);
+      setUnanswered(unansweredRes.data);
       if (allRes.error && allRes.usingSeed) showError("تعذّر تحميل البيانات — عرض البذور المحلية.");
     }).finally(() => setLoading(false));
   };
@@ -277,6 +293,7 @@ export function FiqhCouncilSection() {
           ["items", `جميع العناصر (${items.length})`],
           ["review", `قيد المراجعة (${reviewItems.length})`],
           ["duplicates", `احتمالات التكرار (${duplicates.length})`],
+          ["research", "مساعد الباحث"],
           ["sync", "المزامنة"],
         ] as const).map(([key, label]) => (
           <button
@@ -340,6 +357,121 @@ export function FiqhCouncilSection() {
               </div>
             </div>
           ))}
+        </div>
+      ) : tab === "research" ? (
+        <div style={{ display: "grid", gap: "1rem" }}>
+          <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", flexWrap: "wrap" }}>
+            <button
+              type="button"
+              onClick={async () => {
+                const next = !assistantEnabled;
+                await adminSetFiqhResearchEnabled(next);
+                setAssistantEnabled(next);
+                showSuccess(next ? "تم تفعيل المساعد" : "تم تعطيل المساعد");
+              }}
+              style={{ padding: "0.5rem 1rem", cursor: "pointer" }}
+            >
+              {assistantEnabled ? "تعطيل مساعد الباحث" : "تفعيل مساعد الباحث"}
+            </button>
+            <span style={{ fontSize: "0.8125rem", color: C.inkSoft }}>
+              عمليات بحث: {researchAnalytics?.total_searches ?? researchLogs.length} · غير مجاب: {researchAnalytics?.unanswered_count ?? unanswered.length}
+            </span>
+          </div>
+
+          {researchAnalytics?.top_queries?.length > 0 && (
+            <section>
+              <h3 style={{ fontSize: "0.9375rem", color: C.emeraldDeep }}>أكثر الأسئلة بحثاً</h3>
+              <div style={{ display: "grid", gap: "0.35rem" }}>
+                {researchAnalytics.top_queries.map((row: any) => (
+                  <div key={row.query} className="fiqh-sync-job" style={{ fontSize: "0.8125rem" }}>
+                    {row.query} — {row.cnt} مرة
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {researchAnalytics?.top_categories?.length > 0 && (
+            <section>
+              <h3 style={{ fontSize: "0.9375rem", color: C.emeraldDeep }}>أكثر التصنيفات بحثاً</h3>
+              <div style={{ display: "grid", gap: "0.35rem" }}>
+                {researchAnalytics.top_categories.map((row: any) => (
+                  <div key={row.category} className="fiqh-sync-job" style={{ fontSize: "0.8125rem" }}>
+                    {row.category} — {row.cnt} مرة
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {researchAnalytics?.top_keywords?.length > 0 && (
+            <section>
+              <h3 style={{ fontSize: "0.9375rem", color: C.emeraldDeep }}>كلمات مفتاحية متكررة</h3>
+              <div style={{ display: "grid", gap: "0.35rem" }}>
+                {researchAnalytics.top_keywords.map((row: any) => (
+                  <div key={row.keyword} className="fiqh-sync-job" style={{ fontSize: "0.8125rem" }}>
+                    {row.keyword} — {row.cnt} مرة
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          <section>
+            <h3 style={{ fontSize: "0.9375rem", color: C.emeraldDeep }}>أسئلة بلا نتائج</h3>
+            {unanswered.length === 0 ? (
+              <p style={{ fontSize: "0.8125rem", color: C.inkSoft }}>لا توجد أسئلة مفتوحة.</p>
+            ) : (
+              <div style={{ display: "grid", gap: "0.5rem" }}>
+                {unanswered.map((q: any) => (
+                  <div key={q.id} className="fiqh-sync-job">
+                    <strong>{q.query}</strong>
+                    <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.35rem", flexWrap: "wrap", alignItems: "center" }}>
+                      <select
+                        id={`link-${q.id}`}
+                        defaultValue=""
+                        style={{ ...selectSt, fontSize: "0.75rem", minWidth: "12rem" }}
+                      >
+                        <option value="">ربط بمادة فقهية...</option>
+                        {items.filter((i) => i.status === "published").slice(0, 80).map((item) => (
+                          <option key={item.id} value={item.id}>{item.title.slice(0, 60)}</option>
+                        ))}
+                      </select>
+                      <button
+                        type="button"
+                        style={{ fontSize: "0.75rem", cursor: "pointer" }}
+                        onClick={() => {
+                          const sel = document.getElementById(`link-${q.id}`) as HTMLSelectElement | null;
+                          const itemId = sel?.value;
+                          if (!itemId) return showError("اختر مادة فقهية للربط");
+                          adminLinkUnansweredQuestion(q.id, itemId).then(({ error }) => {
+                            if (error) showError(error.message);
+                            else showSuccess("تم ربط السؤال بالمادة");
+                            loadItems();
+                          });
+                        }}
+                      >
+                        ربط
+                      </button>
+                      <button type="button" style={{ fontSize: "0.75rem", cursor: "pointer" }} onClick={() => adminDismissUnansweredQuestion(q.id).then(loadItems)}>تجاهل</button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </section>
+
+          <section>
+            <h3 style={{ fontSize: "0.9375rem", color: C.emeraldDeep }}>آخر عمليات البحث</h3>
+            <div style={{ display: "grid", gap: "0.35rem", maxHeight: "16rem", overflowY: "auto" }}>
+              {researchLogs.map((log: any) => (
+                <div key={log.id} className="fiqh-sync-job" style={{ fontSize: "0.75rem" }}>
+                  {log.query} — {log.result_count} نتيجة · {log.retrieval_mode}
+                  {log.created_at && <> · {new Date(log.created_at).toLocaleString("ar")}</>}
+                </div>
+              ))}
+            </div>
+          </section>
         </div>
       ) : tab === "sync" ? (
         <div style={{ display: "grid", gap: "1rem" }}>

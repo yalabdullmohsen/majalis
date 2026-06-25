@@ -267,6 +267,64 @@ export async function adminGetFiqhStats() {
   };
 }
 
+export async function adminGetFiqhResearchLogs(limit = 30) {
+  const { data, error } = await supabase
+    .from("fiqh_research_search_logs")
+    .select("*")
+    .order("created_at", { ascending: false })
+    .limit(limit);
+  if (error) {
+    if (isMissingTableError(error)) return { data: [], error: null };
+    return { data: [], error };
+  }
+  return { data: data || [], error: null };
+}
+
+export async function adminGetFiqhResearchAnalytics(days = 30) {
+  const { data, error } = await supabase.rpc("fiqh_research_analytics", { days });
+  if (error) {
+    if (isMissingTableError(error)) return { data: null, error: null };
+    return { data: null, error };
+  }
+  return { data, error: null };
+}
+
+export async function adminGetFiqhUnanswered(limit = 30) {
+  const { data, error } = await supabase
+    .from("fiqh_research_unanswered")
+    .select("*")
+    .eq("status", "open")
+    .order("created_at", { ascending: false })
+    .limit(limit);
+  if (error) {
+    if (isMissingTableError(error)) return { data: [], error: null };
+    return { data: [], error };
+  }
+  return { data: data || [], error: null };
+}
+
+export async function adminSetFiqhResearchEnabled(enabled: boolean) {
+  return supabase
+    .from("fiqh_research_settings")
+    .update({ is_enabled: enabled, updated_at: now() })
+    .eq("id", 1);
+}
+
+export async function adminLinkUnansweredQuestion(id: string, itemId: string) {
+  return supabase.from("fiqh_research_unanswered").update({
+    status: "linked",
+    linked_item_id: itemId,
+    resolved_at: now(),
+  }).eq("id", id);
+}
+
+export async function adminDismissUnansweredQuestion(id: string) {
+  return supabase.from("fiqh_research_unanswered").update({
+    status: "dismissed",
+    resolved_at: now(),
+  }).eq("id", id);
+}
+
 // Legacy wrappers for fiqh_council_decisions table (kept for other admin sections)
 export {
   adminGetAllFiqhDecisions,
