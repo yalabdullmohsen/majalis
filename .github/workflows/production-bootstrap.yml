@@ -25,6 +25,25 @@ jobs:
 
       - run: pnpm install
 
+      - name: Verify Transaction Pooler DATABASE_URL
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          if [ -z "$DATABASE_URL" ]; then
+            echo "Skip: set DATABASE_URL GitHub secret to Supabase Transaction Pooler URL"
+            echo "Format: postgresql://postgres.[ref]:[pass]@aws-1-ap-northeast-1.pooler.supabase.com:6543/postgres"
+            exit 0
+          fi
+          node --input-type=module -e "
+          import { isTransactionPoolerUrl, describeDatabaseUrlConfig } from './artifacts/majalis/lib/database.mjs';
+          if (!isTransactionPoolerUrl(process.env.DATABASE_URL)) {
+            console.error('DATABASE_URL must use Supabase Transaction Pooler (port 6543, *.pooler.supabase.com)');
+            console.error(describeDatabaseUrlConfig());
+            process.exit(1);
+          }
+          console.log('DATABASE_URL is valid Transaction Pooler format');
+          "
+
       - name: Apply SQL migrations
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}

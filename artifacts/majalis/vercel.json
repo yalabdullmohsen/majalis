@@ -5,6 +5,14 @@
   "buildCommand": "pnpm run build",
   "outputDirectory": "dist",
   "functions": {
+    "api/cron/auto-knowledge-sync.js": {
+      "maxDuration": 60,
+      "includeFiles": "supabase/**"
+    },
+    "api/cron/bootstrap-database.js": {
+      "maxDuration": 60,
+      "includeFiles": "supabase/**"
+    },
     "api/**/*.js": {
       "maxDuration": 30,
       "includeFiles": "supabase/**"

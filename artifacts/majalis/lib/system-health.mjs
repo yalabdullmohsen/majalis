@@ -4,6 +4,7 @@
 
 import { getEnvConfig, getEnvStatus, validateCronEnv } from "./env-config.mjs";
 import { getSupabaseAdmin } from "./supabase-admin.mjs";
+import { describeDatabaseUrlConfig, testDatabaseConnection } from "./database.mjs";
 import { getAutoContentHealth, getAutoContentPipelineStats } from "./auto-content/auto-content-sync.mjs";
 import { getAutoKnowledgeEngineStats } from "./auto-knowledge-engine/orchestrator.mjs";
 
@@ -25,11 +26,14 @@ export async function getSystemHealth() {
   const envStatus = getEnvStatus();
   const envValidation = validateCronEnv();
 
-  const [autoContentHealth, akeStats, pipelineStats] = await Promise.all([
+  const [autoContentHealth, akeStats, pipelineStats, dbConn] = await Promise.all([
     getAutoContentHealth().catch((e) => ({ ok: false, error: e.message })),
     getAutoKnowledgeEngineStats(7).catch((e) => ({ ok: false, stats: {}, usingLegacy: true, error: e.message })),
     getAutoContentPipelineStats(5).catch((e) => ({ ok: false, error: e.message })),
+    testDatabaseConnection().catch((e) => ({ ok: false, error: e.message })),
   ]);
+
+  const databaseUrlConfig = describeDatabaseUrlConfig();
 
   const admin = getSupabaseAdmin();
   let queue = { status: "unknown", pending: 0, processing: 0, failed: 0 };
@@ -58,6 +62,10 @@ export async function getSystemHealth() {
   if (!envValidation.ok) errors.push(`Missing env: ${envValidation.missing.join(", ")}`);
   if (!admin) errors.push("Supabase service role not configured");
   if (autoContentHealth.database?.status === "error") errors.push(autoContentHealth.database.error);
+  if (databaseUrlConfig.needsVercelUpdate) {
+    errors.push("DATABASE_URL must be Supabase Transaction Pooler (port 6543) — update in Vercel env");
+  }
+  if (dbConn.ok === false) errors.push(`PostgreSQL pooler: ${dbConn.error}`);
   if (akeStats.usingLegacy) errors.push("AKE migration pending — run auto_knowledge_engine_v13.sql");
 
   return {
@@ -93,6 +101,14 @@ export async function getSystemHealth() {
       url: Boolean(env.supabaseUrl),
       serviceRole: Boolean(env.serviceRoleKey),
       anonKey: Boolean(env.anonKey),
+    },
+    database: {
+      status: dbConn.ok ? "connected" : "error",
+      source: dbConn.source || databaseUrlConfig.connectionSource,
+      urlConfig: databaseUrlConfig,
+      connection: dbConn.ok
+        ? { ping: dbConn.ping, publicTables: dbConn.publicTables, durationMs: dbConn.durationMs }
+        : { error: dbConn.error },
     },
     cron: {
       secretConfigured: Boolean(env.cronSecret),

@@ -14,30 +14,25 @@ function pick(...keys) {
 
 function buildDatabaseUrlFromParts() {
   const host = pick("POSTGRES_HOST", "PGHOST");
-  const user = pick("POSTGRES_USER", "PGUSER") || "postgres";
+  let user = pick("POSTGRES_USER", "PGUSER") || "postgres";
   const password = pick("POSTGRES_PASSWORD", "PGPASSWORD", "SUPABASE_DB_PASSWORD", "DB_PASSWORD");
   const database = pick("POSTGRES_DATABASE", "PGDATABASE") || "postgres";
-  const port = pick("POSTGRES_PORT", "PGPORT") || "5432";
+  const port = pick("POSTGRES_PORT", "PGPORT") || "6543";
 
   if (host && password) {
-    return `postgresql://${encodeURIComponent(user)}:${encodeURIComponent(password)}@${host}:${port}/${database}?sslmode=require`;
-  }
-
-  const supabaseUrl = pick("SUPABASE_URL", "VITE_SUPABASE_URL");
-  if (!password || !supabaseUrl) return "";
-  try {
-    const ref = new URL(supabaseUrl).hostname.split(".")[0];
-    const regions = ["us-east-1", "eu-west-1", "eu-central-1", "ap-southeast-1"];
-    for (const region of regions) {
-      const pooler = `postgresql://postgres.${ref}:${encodeURIComponent(password)}@aws-0-${region}.pooler.supabase.com:6543/postgres?sslmode=require`;
-      if (process.env.DATABASE_URL) return process.env.DATABASE_URL;
-      // Return first candidate — actual connect test happens in database.mjs
-      return pooler;
+    if (!user.includes(".")) {
+      const supabaseUrl = pick("SUPABASE_URL", "VITE_SUPABASE_URL");
+      if (supabaseUrl) {
+        try {
+          user = `postgres.${new URL(supabaseUrl).hostname.split(".")[0]}`;
+        } catch {
+          /* keep user */
+        }
+      }
     }
-    return `postgresql://postgres:${encodeURIComponent(password)}@db.${ref}.supabase.co:5432/postgres?sslmode=require`;
-  } catch {
-    return "";
+    return `postgresql://${encodeURIComponent(user)}:${encodeURIComponent(password)}@${host}:${port}/${database}`;
   }
+  return "";
 }
 
 /** Sync resolved URL into process.env.DATABASE_URL for pg/drizzle consumers. */
@@ -49,9 +44,6 @@ export function syncDatabaseUrlEnv() {
     "POSTGRES_PRISMA_URL",
     "POSTGRES_URL_NON_POOLING",
   ) || buildDatabaseUrlFromParts();
-  if (url && !process.env.DATABASE_URL) {
-    process.env.DATABASE_URL = url;
-  }
   return url;
 }
 
