@@ -1,0 +1,170 @@
+import { createContext, useCallback, useContext, useState, type ReactNode } from "react";
+import { Link } from "wouter";
+import { C } from "@/lib/theme";
+
+export type AdminSection =
+  | "lessons"
+  | "sheikhs"
+  | "adhkar"
+  | "fawaid"
+  | "qa"
+  | "condolences"
+  | "users"
+  | "settings"
+  | "reports";
+
+export const ADMIN_NAV: { key: AdminSection; label: string }[] = [
+  { key: "lessons", label: "الدروس" },
+  { key: "sheikhs", label: "المشايخ" },
+  { key: "adhkar", label: "الأذكار" },
+  { key: "fawaid", label: "الفوائد" },
+  { key: "qa", label: "الأسئلة" },
+  { key: "condolences", label: "قوالب التعزية" },
+  { key: "users", label: "المستخدمون" },
+  { key: "settings", label: "الإعدادات" },
+  { key: "reports", label: "التقارير" },
+];
+
+type Flash = { type: "success" | "error"; message: string } | null;
+
+type AdminShellContextValue = {
+  flash: Flash;
+  showSuccess: (message: string) => void;
+  showError: (message: string) => void;
+  clearFlash: () => void;
+};
+
+const AdminShellContext = createContext<AdminShellContextValue | null>(null);
+
+export function useAdminShell() {
+  const ctx = useContext(AdminShellContext);
+  if (!ctx) throw new Error("useAdminShell must be used within AdminShell");
+  return ctx;
+}
+
+function FlashBanner({ flash, onClose }: { flash: Flash; onClose: () => void }) {
+  if (!flash) return null;
+  const isError = flash.type === "error";
+  return (
+    <div
+      role="alert"
+      style={{
+        marginBottom: "1rem",
+        padding: "0.75rem 1rem",
+        borderRadius: "0.5rem",
+        border: `1px solid ${isError ? "#dc2626" : C.emerald}`,
+        background: isError ? "#FEE2E2" : "#E8F5E9",
+        color: isError ? "#991B1B" : C.emeraldDeep,
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        gap: "1rem",
+        fontSize: "0.875rem",
+      }}
+    >
+      <span>{flash.message}</span>
+      <button
+        type="button"
+        onClick={onClose}
+        aria-label="إغلاق"
+        style={{ background: "none", border: "none", cursor: "pointer", fontSize: "1.1rem", lineHeight: 1, color: "inherit" }}
+      >
+        ×
+      </button>
+    </div>
+  );
+}
+
+type AdminShellProps = {
+  section: AdminSection;
+  onSectionChange: (section: AdminSection) => void;
+  children: ReactNode;
+};
+
+export function AdminShell({ section, onSectionChange, children }: AdminShellProps) {
+  const [flash, setFlash] = useState<Flash>(null);
+
+  const showSuccess = useCallback((message: string) => {
+    setFlash({ type: "success", message });
+    window.setTimeout(() => setFlash(null), 5000);
+  }, []);
+
+  const showError = useCallback((message: string) => {
+    setFlash({ type: "error", message });
+    window.setTimeout(() => setFlash(null), 7000);
+  }, []);
+
+  const clearFlash = useCallback(() => setFlash(null), []);
+
+  return (
+    <AdminShellContext.Provider value={{ flash, showSuccess, showError, clearFlash }}>
+      <div style={{ display: "flex", minHeight: "calc(100vh - 60px)", background: C.parchment }}>
+        <aside
+          style={{
+            width: "220px",
+            flexShrink: 0,
+            borderLeft: `1px solid ${C.line}`,
+            background: C.parchmentDeep,
+            padding: "1.5rem 0",
+          }}
+        >
+          <p
+            style={{
+              fontSize: "0.6875rem",
+              fontWeight: 700,
+              color: C.inkSoft,
+              padding: "0 1rem",
+              marginBottom: "0.75rem",
+              letterSpacing: "0.06em",
+            }}
+          >
+            لوحة تحكم المجلس العلمي
+          </p>
+          <Link
+            href="/"
+            style={{
+              display: "block",
+              padding: "0.5rem 1rem",
+              marginBottom: "0.75rem",
+              textDecoration: "none",
+              fontSize: "0.75rem",
+              color: C.brassDeep,
+            }}
+          >
+            ← العودة للموقع
+          </Link>
+          <nav>
+            {ADMIN_NAV.map((n) => (
+              <button
+                key={n.key}
+                type="button"
+                onClick={() => onSectionChange(n.key)}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  width: "100%",
+                  padding: "0.625rem 1rem",
+                  border: "none",
+                  borderRight: `3px solid ${section === n.key ? C.emerald : "transparent"}`,
+                  background: section === n.key ? C.sage : "transparent",
+                  color: section === n.key ? C.emeraldDeep : C.inkSoft,
+                  fontWeight: section === n.key ? 700 : 400,
+                  fontSize: "0.8125rem",
+                  cursor: "pointer",
+                  fontFamily: "inherit",
+                  textAlign: "right",
+                }}
+              >
+                {n.label}
+              </button>
+            ))}
+          </nav>
+        </aside>
+        <main style={{ flex: 1, padding: "1.75rem 2rem 3rem", overflow: "auto", minWidth: 0 }}>
+          <FlashBanner flash={flash} onClose={clearFlash} />
+          {children}
+        </main>
+      </div>
+    </AdminShellContext.Provider>
+  );
+}

@@ -2,10 +2,10 @@ import { useRef, useState } from "react";
 import * as htmlToImage from "html-to-image";
 import {
   CondolenceCard,
-  defaultCondolenceForm,
   EXPORT_SIZES,
   type CondolenceForm,
 } from "@/components/condolences/CondolenceCard";
+import { getCondolenceDefaults, isCondolencesEnabled } from "@/lib/site-settings";
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
@@ -19,8 +19,19 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
 export default function CondolencesPage() {
   const previewPanelRef = useRef<HTMLElement>(null);
   const exportRef = useRef<HTMLDivElement>(null);
-  const [form, setForm] = useState<CondolenceForm>(defaultCondolenceForm);
+  const [form, setForm] = useState<CondolenceForm>(() => getCondolenceDefaults());
   const [downloading, setDownloading] = useState(false);
+
+  if (!isCondolencesEnabled()) {
+    return (
+      <main dir="rtl" className="cond-page">
+        <div className="cond-page-inner" style={{ textAlign: "center", padding: "4rem 1rem" }}>
+          <h1 className="cond-page-title">قوالب العزاء</h1>
+          <p className="cond-page-desc">صفحة التعزية غير متاحة حاليًا.</p>
+        </div>
+      </main>
+    );
+  }
 
   const dims = EXPORT_SIZES[form.size];
 
@@ -28,7 +39,7 @@ export default function CondolencesPage() {
     setForm((prev) => ({ ...prev, [key]: value }));
   };
 
-  const resetForm = () => setForm(defaultCondolenceForm);
+  const resetForm = () => setForm(getCondolenceDefaults());
 
   const scrollToPreview = () => {
     previewPanelRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });

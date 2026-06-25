@@ -1,83 +1,29 @@
 import { useState } from "react";
-import { Link } from "wouter";
-import { C } from "@/lib/theme";
-import { StatsSection } from "@/pages/admin/StatsSection";
-import { SheikhsSection } from "@/pages/admin/SheikhsSection";
+import { AdminShell, type AdminSection } from "@/pages/admin/AdminShell";
 import { LessonsSection } from "@/pages/admin/LessonsSection";
-import { MiraclesSection } from "@/pages/admin/MiraclesSection";
+import { SheikhsSection } from "@/pages/admin/SheikhsSection";
+import { AdhkarSection } from "@/pages/admin/AdhkarSection";
 import { FawaidSection } from "@/pages/admin/FawaidSection";
 import { QaSection } from "@/pages/admin/QaSection";
-import { QuizSection } from "@/pages/admin/QuizSection";
+import { CondolencesSection } from "@/pages/admin/CondolencesSection";
 import { UsersSection } from "@/pages/admin/UsersSection";
-
-type Section = "stats" | "sheikhs" | "lessons" | "miracles" | "fawaid" | "qa" | "quiz" | "users";
-
-const NAV: { key: Section; label: string }[] = [
-  { key: "stats", label: "نظرة عامة" },
-  { key: "sheikhs", label: "المشايخ" },
-  { key: "lessons", label: "الدروس" },
-  { key: "miracles", label: "الإعجاز العلمي" },
-  { key: "fawaid", label: "الفوائد" },
-  { key: "qa", label: "الأسئلة والأجوبة" },
-  { key: "quiz", label: "المسابقات" },
-  { key: "users", label: "المستخدمون" },
-];
+import { SettingsSection } from "@/pages/admin/SettingsSection";
+import { ReportsSection } from "@/pages/admin/ReportsSection";
 
 export default function AdminPage() {
-  const [section, setSection] = useState<Section>("stats");
+  const [section, setSection] = useState<AdminSection>("lessons");
 
   return (
-    <div style={{ display: "flex", minHeight: "calc(100vh - 60px)", background: C.parchment }}>
-      <aside style={{
-        width: "210px", flexShrink: 0,
-        borderLeft: `1px solid ${C.line}`,
-        background: C.parchmentDeep,
-        padding: "1.5rem 0",
-      }}>
-        <p style={{ fontSize: "0.6875rem", fontWeight: 700, color: C.inkSoft, padding: "0 1rem", marginBottom: "0.75rem", letterSpacing: "0.06em" }}>
-          لوحة تحكم المجلس العلمي
-        </p>
-        <Link
-          href="/admin/dashboard"
-          style={{
-            display: "flex", alignItems: "center", gap: "0.625rem",
-            padding: "0.625rem 1rem", marginBottom: "0.5rem",
-            textDecoration: "none", fontSize: "0.8125rem",
-            color: C.brassDeep, fontWeight: 600,
-          }}
-        >
-          لوحة متقدمة
-        </Link>
-        <nav>
-          {NAV.map(n => (
-            <button
-              key={n.key}
-              onClick={() => setSection(n.key)}
-              style={{
-                display: "flex", alignItems: "center", gap: "0.625rem",
-                width: "100%", padding: "0.625rem 1rem",
-                border: "none", background: section === n.key ? C.sage : "transparent",
-                color: section === n.key ? C.emeraldDeep : C.inkSoft,
-                fontWeight: section === n.key ? 700 : 400,
-                fontSize: "0.8125rem", cursor: "pointer", fontFamily: "inherit",
-                textAlign: "right",
-              }}
-            >
-              {n.label}
-            </button>
-          ))}
-        </nav>
-      </aside>
-      <main style={{ flex: 1, padding: "2rem", overflow: "auto" }}>
-        {section === "stats" && <StatsSection />}
-        {section === "sheikhs" && <SheikhsSection />}
-        {section === "lessons" && <LessonsSection />}
-        {section === "miracles" && <MiraclesSection />}
-        {section === "fawaid" && <FawaidSection />}
-        {section === "qa" && <QaSection />}
-        {section === "quiz" && <QuizSection />}
-        {section === "users" && <UsersSection />}
-      </main>
-    </div>
+    <AdminShell section={section} onSectionChange={setSection}>
+      {section === "lessons" && <LessonsSection />}
+      {section === "sheikhs" && <SheikhsSection />}
+      {section === "adhkar" && <AdhkarSection />}
+      {section === "fawaid" && <FawaidSection />}
+      {section === "qa" && <QaSection />}
+      {section === "condolences" && <CondolencesSection />}
+      {section === "users" && <UsersSection />}
+      {section === "settings" && <SettingsSection />}
+      {section === "reports" && <ReportsSection />}
+    </AdminShell>
   );
 }

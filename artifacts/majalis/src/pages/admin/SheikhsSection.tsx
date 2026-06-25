@@ -22,6 +22,7 @@ const BTN_DEL: React.CSSProperties = { ...BTN_EDIT, color: "#dc2626" };
 export function SheikhsSection() {
   const [items, setItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState<any>(EMPTY);
   const [saving, setSaving] = useState(false);
@@ -100,9 +101,16 @@ export function SheikhsSection() {
   };
   const set = (k: string, v: any) => setForm((f: any) => ({ ...f, [k]: v }));
 
+  const filtered = items.filter((item) => {
+    const q = search.trim();
+    if (!q) return true;
+    const hay = `${item.name} ${item.city ?? ""} ${(item.specialties || []).join(" ")}`;
+    return hay.includes(q);
+  });
+
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.25rem" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.875rem", flexWrap: "wrap", gap: "0.75rem" }}>
         <h2 style={{ margin: 0, fontSize: "1.125rem", fontWeight: 700, color: C.emeraldDeep }}>المشايخ ({items.length})</h2>
         <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
           <BulkImport
@@ -120,6 +128,7 @@ export function SheikhsSection() {
           <button onClick={openAdd} style={{ padding: "0.5rem 1.25rem", borderRadius: "0.375rem", background: C.emerald, color: C.parchment, border: "none", cursor: "pointer", fontFamily: "inherit", fontSize: "0.875rem", fontWeight: 600 }}>+ إضافة شيخ</button>
         </div>
       </div>
+      <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="بحث في المشايخ..." style={{ ...inputSt, maxWidth: "20rem", marginBottom: "1rem" }} />
 
       {loading ? <Loading /> : (
         <div style={{ overflowX: "auto" }}>
@@ -132,7 +141,7 @@ export function SheikhsSection() {
               </tr>
             </thead>
             <tbody>
-              {items.map(item => (
+              {filtered.map(item => (
                 <tr key={item.id} style={{ borderBottom: `1px solid ${C.line}` }}>
                   <td style={{ padding: "0.625rem 0.75rem", color: C.ink, fontWeight: 600 }}>{item.name}</td>
                   <td style={{ padding: "0.625rem 0.75rem", color: C.inkSoft }}>{item.city || "—"}</td>
@@ -155,7 +164,7 @@ export function SheikhsSection() {
               ))}
             </tbody>
           </table>
-          {items.length === 0 && <p style={{ textAlign: "center", color: C.inkSoft, padding: "2rem" }}>لا يوجد مشايخ — ابدأ بإضافة أول شيخ</p>}
+          {filtered.length === 0 && <p style={{ textAlign: "center", color: C.inkSoft, padding: "2rem" }}>{search ? "لا يوجد مشايخ مطابقون" : "لا يوجد مشايخ — ابدأ بإضافة أول شيخ"}</p>}
         </div>
       )}
 

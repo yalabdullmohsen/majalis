@@ -54,6 +54,14 @@ function routeForPath(path: string) {
     };
   }
 
+  if (normalized.startsWith("/lessons/")) {
+    return {
+      ...requiredRoute("/lessons"),
+      title: "تفاصيل الدرس | المجلس العلمي",
+      description: "تفاصيل الدرس الشرعي — الشيخ، المكان، الجدول، والوصف داخل المجلس العلمي.",
+    };
+  }
+
   return requiredRoute("/404");
 }
 

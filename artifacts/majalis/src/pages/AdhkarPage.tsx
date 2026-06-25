@@ -2,10 +2,10 @@ import { useEffect, useMemo, useState } from "react";
 import { useLocation } from "wouter";
 import {
   ADHKAR_CATEGORIES,
-  ADHKAR_ITEMS,
   filterAdhkar,
   getAdhkarByCategory,
 } from "@/lib/adhkar-seed";
+import { getPublishedAdhkarItems } from "@/lib/adhkar-admin";
 import { PageHeader, Empty } from "@/components/ui-common";
 import { AdhkarCard } from "@/components/adhkar/AdhkarCard";
 
@@ -49,6 +49,7 @@ export default function AdhkarPage() {
   const [category, setCategory] = useState("all");
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebouncedValue(search);
+  const publishedItems = useMemo(() => getPublishedAdhkarItems(), [location]);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -61,11 +62,15 @@ export default function AdhkarPage() {
 
   const items = useMemo(() => {
     if (debouncedSearch.trim()) {
-      return filterAdhkar(debouncedSearch, category === "all" ? undefined : category);
+      const filtered = filterAdhkar(debouncedSearch, category === "all" ? undefined : category);
+      const publishedIds = new Set(publishedItems.map((i) => i.id));
+      return filtered.filter((i) => publishedIds.has(i.id));
     }
-    if (category === "all") return ADHKAR_ITEMS;
-    return getAdhkarByCategory(category);
-  }, [debouncedSearch, category]);
+    if (category === "all") return publishedItems;
+    return getAdhkarByCategory(category).filter((i) =>
+      publishedItems.some((p) => p.id === i.id),
+    );
+  }, [debouncedSearch, category, publishedItems]);
 
   const activeCategory = ADHKAR_CATEGORIES.find((c) => c.id === category);
 
@@ -78,7 +83,7 @@ export default function AdhkarPage() {
       />
 
       <div className="adhkar-stats-row page-stats-row">
-        <span>{ADHKAR_ITEMS.length} ذكر</span>
+        <span>{publishedItems.length} ذكر</span>
         <span>{FEATURED_CATEGORIES.length} قسم</span>
       </div>
 

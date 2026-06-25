@@ -39,6 +39,8 @@ export function LessonsSection() {
   const [items, setItems] = useState<any[]>([]);
   const [sheikhs, setSheikhs] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState<any>(EMPTY);
   const [saving, setSaving] = useState(false);
@@ -69,9 +71,17 @@ export function LessonsSection() {
   };
   const set = (k: string, v: any) => setForm((f: any) => ({ ...f, [k]: v }));
 
+  const filtered = items.filter((item) => {
+    if (statusFilter !== "all" && item.status !== statusFilter) return false;
+    const q = search.trim();
+    if (!q) return true;
+    const hay = `${item.title} ${item.sheikhs?.name ?? ""} ${item.category ?? ""} ${item.city ?? ""} ${item.mosque ?? ""}`;
+    return hay.includes(q);
+  });
+
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.25rem" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.875rem", flexWrap: "wrap", gap: "0.75rem" }}>
         <h2 style={{ margin: 0, fontSize: "1.125rem", fontWeight: 700, color: C.emeraldDeep }}>الدروس ({items.length})</h2>
         <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
           <BulkImport
@@ -92,6 +102,13 @@ export function LessonsSection() {
           <button onClick={openAdd} style={{ padding: "0.5rem 1.25rem", borderRadius: "0.375rem", background: C.emerald, color: C.parchment, border: "none", cursor: "pointer", fontFamily: "inherit", fontSize: "0.875rem", fontWeight: 600 }}>+ إضافة درس</button>
         </div>
       </div>
+      <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1rem" }}>
+        <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="بحث في الدروس..." style={{ ...inputSt, maxWidth: "20rem", flex: "1 1 12rem" }} />
+        <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} style={{ ...selectSt, width: "auto" }}>
+          <option value="all">كل الحالات</option>
+          {Object.entries(STATUSES).map(([v, l]) => <option key={v} value={v}>{l}</option>)}
+        </select>
+      </div>
 
       {loading ? <Loading /> : (
         <div style={{ overflowX: "auto" }}>
@@ -104,7 +121,7 @@ export function LessonsSection() {
               </tr>
             </thead>
             <tbody>
-              {items.map(item => {
+              {filtered.map(item => {
                 const sc = STATUS_COLORS[item.status] || { bg: C.parchmentDeep, text: C.inkSoft };
                 return (
                   <tr key={item.id} style={{ borderBottom: `1px solid ${C.line}` }}>
@@ -129,7 +146,7 @@ export function LessonsSection() {
               })}
             </tbody>
           </table>
-          {items.length === 0 && <p style={{ textAlign: "center", color: C.inkSoft, padding: "2rem" }}>لا توجد دروس — ابدأ بإضافة أول درس</p>}
+          {filtered.length === 0 && <p style={{ textAlign: "center", color: C.inkSoft, padding: "2rem" }}>{search || statusFilter !== "all" ? "لا توجد دروس مطابقة" : "لا توجد دروس — ابدأ بإضافة أول درس"}</p>}
         </div>
       )}
 

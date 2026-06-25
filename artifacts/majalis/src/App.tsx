@@ -11,6 +11,7 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { usePageSeo } from "@/lib/seo";
 import { Loading } from "@/components/ui-common";
 
+const CalendarPage = lazy(() => import("@/pages/CalendarPage"));
 const SearchPage = lazy(() => import("@/pages/SearchPage"));
 const LessonsPage = lazy(() => import("@/pages/LessonsPage"));
 const LessonDetailPage = lazy(() => import("@/pages/LessonDetailPage"));
@@ -59,6 +60,7 @@ function Router() {
       <Route path="/search"><SafeLazyRoute component={SearchPage} /></Route>
       <Route path="/lessons/:id"><SafeLazyRoute component={LessonDetailPage} /></Route>
       <Route path="/lessons"><SafeLazyRoute component={LessonsPage} /></Route>
+      <Route path="/calendar"><SafeLazyRoute component={CalendarPage} /></Route>
       <Route path="/kuwait-lessons"><SafeLazyRoute component={KuwaitLessonsPage} /></Route>
       <Route path="/announcements"><SafeLazyRoute component={AnnouncementsPage} /></Route>
       <Route path="/lessons/current"><SafeLazyRoute component={CurrentLessonsPage} /></Route>

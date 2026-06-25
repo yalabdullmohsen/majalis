@@ -20,6 +20,7 @@ export function FawaidSection() {
   const [items, setItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("all");
+  const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState<any>(EMPTY_FAWAID);
   const [saving, setSaving] = useState(false);
@@ -42,7 +43,13 @@ export function FawaidSection() {
     setOpen(false); load();
   };
 
-  const filtered = filter === "all" ? items : items.filter(i => i.status === filter);
+  const filtered = items
+    .filter((i) => filter === "all" || i.status === filter)
+    .filter((i) => {
+      const q = search.trim();
+      if (!q) return true;
+      return `${i.text} ${i.author_name ?? ""}`.includes(q);
+    });
   const pendingCount = items.filter(i => i.status === "pending").length;
 
   return (
@@ -64,6 +71,8 @@ export function FawaidSection() {
           <button onClick={openAdd} style={{ padding: "0.5rem 1.25rem", borderRadius: "0.375rem", background: C.emerald, color: C.parchment, border: "none", cursor: "pointer", fontFamily: "inherit", fontSize: "0.875rem", fontWeight: 600 }}>+ إضافة فائدة</button>
         </div>
       </div>
+
+      <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="بحث في الفوائد..." style={{ ...inputSt, maxWidth: "20rem", marginBottom: "0.75rem" }} />
 
       <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1.25rem" }}>
           {FILTERS.map(([v, l]) => (

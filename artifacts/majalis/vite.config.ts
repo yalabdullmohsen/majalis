@@ -54,7 +54,8 @@ export default defineConfig({
         manualChunks(id) {
           if (id.includes("node_modules")) {
             if (id.includes("@supabase")) return "supabase";
-            if (id.includes("html2canvas")) return "html2canvas";
+            if (id.includes("html2canvas") || id.includes("html-to-image")) return "html2canvas";
+            if (id.includes("date-fns")) return "date-fns";
             if (id.includes("react") || id.includes("wouter")) return "vendor";
           }
         },

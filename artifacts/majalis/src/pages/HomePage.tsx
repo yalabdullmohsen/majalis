@@ -7,9 +7,11 @@ import { Loading } from "@/components/ui-common";
 import { HomePrayerTimes } from "@/components/home/HomePrayerTimes";
 import { HomeDailyStrip } from "@/components/home/HomeDailyStrip";
 import { HomeKuwaitLessons } from "@/components/home/HomeKuwaitLessons";
+import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
 
 const FEATURES = [
   { href: "/lessons", title: "الدروس والدورات", desc: "دروس علمية شرعية موثقة ومعتمدة" },
+  { href: "/calendar", title: "تقويم الدروس", desc: "جدول شهري وأسبوعي لدروس الكويت" },
   { href: "/kuwait-lessons", title: "دروس الكويت", desc: "مرجع شامل للدروس في مساجد الكويت" },
   { href: "/fawaid", title: "الفوائد", desc: "مختارات نافعة من العلم الشرعي" },
   { href: "/adhkar", title: "الأذكار", desc: "أذكار يومية من القرآن والسنة الصحيحة" },
@@ -76,6 +78,11 @@ export default function HomePage() {
 
   return (
     <div className="home-page">
+      {isMaintenanceMode() && (
+        <div role="status" style={{ background: "#FEF3C7", borderBottom: "1px solid #d97706", padding: "0.75rem 1rem", textAlign: "center", fontSize: "0.875rem", color: "#92400E" }}>
+          {getSiteSettings().maintenanceMessage}
+        </div>
+      )}
       <section className="home-hero">
         <div className="home-hero-pattern" />
         <div className="home-container home-hero-grid home-hero-grid--compact">
