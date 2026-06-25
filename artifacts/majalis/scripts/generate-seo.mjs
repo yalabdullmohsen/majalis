@@ -1,10 +1,12 @@
 import { mkdir, readFile, writeFile, unlink } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { LESSONS_SEED } from "../src/lib/lessons-seed.ts";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const appRoot = resolve(__dirname, "..");
+const LESSONS_SEED = JSON.parse(
+  await readFile(resolve(__dirname, "lessons-seed.snapshot.json"), "utf8"),
+);
 const publicDir = resolve(appRoot, "public");
 const seoPrerenderDir = resolve(appRoot, "seo-prerender");
 const seoConfigPath = resolve(appRoot, "src/lib/seo-routes.json");
