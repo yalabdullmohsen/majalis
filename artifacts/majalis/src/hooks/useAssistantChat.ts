@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { callAssistantApi, type AssistantResponse } from "@/lib/assistant-api";
+import { resolveFounderQuestion } from "@/lib/assistant-founder";
 
 export type ChatMessage = {
   id: string;
@@ -64,6 +65,16 @@ export function useAssistantChat() {
     setMessages((current) => [...current, userMessage]);
     setInput("");
     setLoading(true);
+
+    const founderAnswer = resolveFounderQuestion(trimmed);
+    if (founderAnswer) {
+      setMessages((current) => [
+        ...current,
+        { id: createId(), role: "assistant", content: founderAnswer },
+      ]);
+      setLoading(false);
+      return;
+    }
 
     try {
       const { response, data } = await callAssistantApi({
