@@ -39,13 +39,21 @@ export default function CondolencesPage() {
     if (!el) return;
     setDownloading(true);
     try {
+      if (document.fonts?.ready) {
+        await document.fonts.ready;
+      }
+      await new Promise((resolve) => requestAnimationFrame(() => resolve(undefined)));
+
+      const pixelRatio = Math.max(2, Math.min(window.devicePixelRatio || 2, 3));
+
       const dataUrl = await htmlToImage.toPng(el, {
         quality: 1,
-        pixelRatio: 1,
+        pixelRatio,
         width: dims.width,
         height: dims.height,
-        backgroundColor: "#0a0a0a",
+        backgroundColor: "#0F0F0F",
         cacheBust: true,
+        skipFonts: false,
       });
 
       const link = document.createElement("a");
@@ -65,7 +73,7 @@ export default function CondolencesPage() {
         <section className="ui-card cond-form-panel">
           <h1 className="cond-page-title">قوالب العزاء</h1>
           <p className="cond-page-desc">
-            بطاقة تعزية رسمية بخلفية سوداء — جاهزة للمشاركة على واتساب وإنستغرام.
+            بطاقة تعزية رسمية بخلفية سوداء مطفية — خط عربي فخم، جاهزة للمشاركة والطباعة بدقة عالية.
           </p>
 
           <div className="cond-form-fields">
