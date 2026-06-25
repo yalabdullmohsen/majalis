@@ -1,15 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
 import { getApprovedFawaid, submitFawaid } from "@/lib/supabase";
 import { arabicMatchAny } from "@/lib/arabic-search";
-import { DEMO_FAWAID } from "@/lib/demo-content";
-import { FAWAID_CATEGORIES } from "@/lib/fawaid-seed";
+import { DEMO_FAWAID, FAWAID_CATEGORIES } from "@/lib/demo-content";
 import { canSubmitForm } from "@/lib/form-rate-limit";
 import { PageHeader, Loading, Empty } from "@/components/ui-common";
 import { useAuth } from "@/components/AuthProvider";
 import { FaidahCard } from "@/components/fawaid/FaidahCard";
 
-const DISPLAY_CATEGORIES = [
-  "الكل",
+const LEGACY_CATEGORIES = [
   "فوائد قرآنية",
   "فوائد حديثية",
   "فوائد عقدية",
@@ -19,11 +17,7 @@ const DISPLAY_CATEGORIES = [
   "فوائد سلوكية",
 ] as const;
 
-function normalizeCategory(category?: string) {
-  if (!category) return category;
-  if (category === "آداب وأخلاق") return "فوائد سلوكية";
-  return category;
-}
+const DISPLAY_CATEGORIES = ["الكل", ...FAWAID_CATEGORIES, ...LEGACY_CATEGORIES.filter((c) => !FAWAID_CATEGORIES.includes(c as never))] as const;
 
 function useDebouncedValue<T>(value: T, delayMs = 350): T {
   const [debounced, setDebounced] = useState(value);
@@ -60,11 +54,7 @@ export default function FawaidPage() {
   }, []);
 
   const normalized = useMemo(
-    () =>
-      fawaid.map((f) => ({
-        ...f,
-        category: normalizeCategory(f.category),
-      })),
+    () => fawaid,
     [fawaid],
   );
 

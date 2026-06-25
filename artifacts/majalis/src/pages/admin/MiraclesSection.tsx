@@ -6,7 +6,7 @@ import { Loading } from "@/components/ui-common";
 import { AdminModal, Field, inputSt, textareaSt } from "./AdminModal";
 import { BulkImport } from "./BulkImport";
 
-const EMPTY: any = { title: "", category: "", summary: "", status: "approved" };
+const EMPTY: any = { title: "", category: "", body: "", status: "approved" };
 
 export function MiraclesSection() {
   const [items, setItems] = useState<any[]>([]);
@@ -31,7 +31,7 @@ export function MiraclesSection() {
   const filtered = items.filter((item) => {
     const q = search.trim();
     if (!q) return true;
-    return `${item.title} ${item.category ?? ""} ${item.summary ?? ""}`.includes(q);
+    return `${item.title} ${item.category ?? ""} ${item.body ?? item.summary ?? ""}`.includes(q);
   });
 
   const handleSave = async () => {
@@ -41,7 +41,7 @@ export function MiraclesSection() {
       ...form,
       title: sanitizeText(form.title, 300),
       category: sanitizeText(form.category, 120),
-      summary: sanitizeText(form.summary, 6000),
+      body: sanitizeText(form.body ?? form.summary ?? "", 6000),
     });
     setSaving(false);
     setOpen(false);
@@ -55,7 +55,7 @@ export function MiraclesSection() {
         <div style={{ display: "flex", gap: "0.5rem" }}>
           <BulkImport
             title="استيراد مقالات"
-            template={[{ title: "الإعجاز في خلق الإنسان", category: "بيولوجيا", summary: "ملخص المقال...", status: "approved" }]}
+            template={[{ title: "الإعجاز في خلق الإنسان", category: "الأجنة", body: "ملخص المقال...", status: "approved" }]}
             importRow={(row) => adminUpsertMiracle({ status: "approved", ...row })}
             onDone={load}
           />
@@ -94,7 +94,7 @@ export function MiraclesSection() {
       <AdminModal open={open} title={form.id ? "تعديل مقال" : "إضافة مقال"} onClose={() => setOpen(false)} onSave={handleSave} saving={saving}>
         <Field label="العنوان"><input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} style={inputSt} /></Field>
         <Field label="التصنيف"><input value={form.category || ""} onChange={(e) => setForm({ ...form, category: e.target.value })} style={inputSt} /></Field>
-        <Field label="الملخص"><textarea value={form.summary || ""} onChange={(e) => setForm({ ...form, summary: e.target.value })} style={textareaSt} rows={6} /></Field>
+        <Field label="المحتوى"><textarea value={form.body || form.summary || ""} onChange={(e) => setForm({ ...form, body: e.target.value })} style={textareaSt} rows={6} /></Field>
       </AdminModal>
     </div>
   );

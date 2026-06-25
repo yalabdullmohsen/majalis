@@ -4,12 +4,12 @@ import {
   DEMO_FAWAID,
   DEMO_LIBRARY,
   DEMO_LESSONS,
-  DEMO_MIRACLES,
   DEMO_QA_CATEGORIES,
   DEMO_SHEIKHS,
   filterDemoQa,
   searchDemoContent,
 } from "./demo-content";
+import { filterMiraclesSeed, searchMiraclesSeed } from "./miracles-seed";
 import { LESSONS_SEED, findSeedLessonById } from "./lessons-seed";
 import { DEMO_QUIZ_QUESTIONS } from "./quiz-seed";
 import { ADHKAR_CATEGORIES, filterAdhkar } from "./adhkar-seed";
@@ -321,15 +321,10 @@ export async function getLibrary({ type, category }: { type?: string; category?:
 }
 
 export async function getMiracles({ category, sourceType }: { category?: string; sourceType?: string } = {}) {
-  const filterSeed = (rows: typeof DEMO_MIRACLES) => {
-    let result = rows;
-    if (category) result = result.filter((r) => r.category === category);
-    if (sourceType) result = result.filter((r) => r.source_type === sourceType);
-    return result;
-  };
+  const filterSeed = () => filterMiraclesSeed({ category, sourceType });
 
   if (!isConfigured) {
-    return { data: filterSeed(DEMO_MIRACLES), error: null, usingSeed: true };
+    return { data: filterSeed(), error: null, usingSeed: true };
   }
 
   try {
@@ -340,12 +335,12 @@ export async function getMiracles({ category, sourceType }: { category?: string;
     if (error) throw error;
     const rows = data || [];
     if (rows.length === 0) {
-      return { data: filterSeed(DEMO_MIRACLES), error: null, usingSeed: true };
+      return { data: filterSeed(), error: null, usingSeed: true };
     }
     return { data: rows, error: null, usingSeed: false };
   } catch (err) {
     logSupabaseError("getMiracles", err);
-    return { data: filterSeed(DEMO_MIRACLES), error: null, usingSeed: true };
+    return { data: filterSeed(), error: null, usingSeed: true };
   }
 }
 
@@ -969,6 +964,12 @@ async function searchQaFallback(term: string) {
 }
 
 async function searchMiraclesFallback(term: string) {
+  if (!isConfigured) {
+    return {
+      data: searchMiraclesSeed(term).map((m) => ({ id: m.id, title: m.title, category: m.category, body: m.body })),
+      errors: [] as any[],
+    };
+  }
   const like = ilikePattern(term);
   const { data, error } = await supabase
     .from("scientific_miracles")
@@ -977,8 +978,12 @@ async function searchMiraclesFallback(term: string) {
     .or(`title.ilike.${like},body.ilike.${like}`)
     .limit(15);
   if (error) logSupabaseError("searchMiraclesFallback", error, { term });
+  const dbRows = (data || []).filter((m: any) => arabicMatchAny([m.title, m.body, m.category], term));
+  if (dbRows.length > 0) {
+    return { data: dbRows, errors: error ? [error] : [] };
+  }
   return {
-    data: (data || []).filter((m: any) => arabicMatchAny([m.title, m.body, m.category], term)),
+    data: searchMiraclesSeed(term).map((m) => ({ id: m.id, title: m.title, category: m.category, body: m.body })),
     errors: error ? [error] : [],
   };
 }

@@ -3,8 +3,12 @@ import { getMiracles } from "@/lib/supabase";
 import { C } from "@/lib/theme";
 import { PageHeader, Loading, Empty, Chip } from "@/components/ui-common";
 
-const CATEGORIES = ["الكل", "فلك", "طب", "جيولوجيا", "بيولوجيا", "فيزياء", "أخرى"];
+import { MIRACLE_CATEGORIES } from "@/lib/miracles-seed";
+
+const CATEGORIES = MIRACLE_CATEGORIES;
 const SOURCE_TYPES = ["الكل", "قرآن", "سنة"];
+const DISCLAIMER =
+  "تنبيه: الملاحظات العلمية قد تتطور مع البحث، والقرآن لا يُبنى على نظريات غير مستقرة؛ نعرض ما يُستدل به للتفكر لا كحكم علمي نهائي.";
 
 export default function MiraclesPage() {
   const [items, setItems] = useState<any[]>([]);
@@ -31,6 +35,10 @@ export default function MiraclesPage() {
         title="الإعجاز العلمي"
         subtitle="مقالات موثّقة تربط الاكتشافات العلمية بالآيات القرآنية والأحاديث النبوية."
       />
+
+      <p style={{ fontSize: "0.8125rem", color: C.inkSoft, lineHeight: 1.7, marginBottom: "1.25rem", padding: "0.75rem 1rem", borderRadius: "0.375rem", background: C.parchmentDeep, border: `1px solid ${C.line}` }}>
+        {DISCLAIMER}
+      </p>
 
       <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "0.75rem" }}>
         {CATEGORIES.map((c) => (

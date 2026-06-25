@@ -132,7 +132,7 @@ export default function SearchPage() {
         ...unifiedRows.filter((row) => !seen.has(row.id)),
       ];
 
-      setResults({ ...r, lessons: mergedLessons, sheikhs: [] });
+      setResults({ ...r, lessons: mergedLessons });
     } catch {
       setFiqhResults([]);
       setFiqhQuery(false);
@@ -147,7 +147,7 @@ export default function SearchPage() {
         return;
       }
       const demo = searchDemoContent(query);
-      setResults({ ...demo, usingDemo: true, error: null, adhkar: demo.adhkar || [], sheikhs: [] });
+      setResults({ ...demo, usingDemo: true, error: null, adhkar: demo.adhkar || [] });
     } finally {
       setLoading(false);
     }
