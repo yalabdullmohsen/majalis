@@ -12,6 +12,7 @@ import syncDataHandler from "../api/cron/sync-data.js";
 import knowledgeSyncHandler from "../api/cron/knowledge-sync.js";
 import knowledgePipelineHandler from "../api/admin/knowledge-pipeline.js";
 import knowledgeSearchHandler from "../api/knowledge-search.js";
+import autoContentSyncHandler from "../api/cron/auto-content-sync.js";
 import fiqhResearchAssistantHandler from "../api/fiqh-research-assistant.js";
 import { createRateLimiter } from "./rate-limit.mjs";
 
@@ -100,6 +101,8 @@ app.get("/api/admin/knowledge-pipeline", runHandler(knowledgePipelineHandler, "k
 app.post("/api/admin/knowledge-pipeline", express.json({ limit: "32kb" }), runHandler(knowledgePipelineHandler, "knowledge-pipeline"));
 app.get("/api/knowledge-search", runHandler(knowledgeSearchHandler, "knowledge-search"));
 app.post("/api/knowledge-search", express.json({ limit: "16kb" }), runHandler(knowledgeSearchHandler, "knowledge-search"));
+app.get("/api/cron/auto-content-sync", runHandler(autoContentSyncHandler, "auto-content-sync"));
+app.post("/api/cron/auto-content-sync", runHandler(autoContentSyncHandler, "auto-content-sync"));
 
 app.get("/api/healthz", (_req, res) => {
   res.json({ ok: true, service: "majalis-web" });

@@ -8,6 +8,7 @@ import syncDataHandler from "../api/cron/sync-data.js";
 import knowledgeSyncHandler from "../api/cron/knowledge-sync.js";
 import knowledgePipelineHandler from "../api/admin/knowledge-pipeline.js";
 import knowledgeSearchHandler from "../api/knowledge-search.js";
+import autoContentSyncHandler from "../api/cron/auto-content-sync.js";
 import { createRateLimiter } from "./rate-limit.mjs";
 
 const assistantRateLimit = createRateLimiter({
@@ -35,6 +36,7 @@ const API_ROUTES = [
   { prefix: "/api/cron/knowledge-sync", handler: knowledgeSyncHandler, allowGet: true, exact: true },
   { prefix: "/api/admin/knowledge-pipeline", handler: knowledgePipelineHandler, allowGet: true },
   { prefix: "/api/knowledge-search", handler: knowledgeSearchHandler, allowGet: true },
+  { prefix: "/api/cron/auto-content-sync", handler: autoContentSyncHandler, allowGet: true, exact: true },
   { prefix: "/api/fiqh-research-assistant", handler: fiqhResearchAssistantHandler, rateLimit: fiqhResearchRateLimit, allowGet: true },
   { prefix: "/api/assistant", handler: assistantHandler, rateLimit: assistantRateLimit, allowGet: true },
   { prefix: "/api/test-anthropic", handler: testAnthropicHandler, allowGet: true },

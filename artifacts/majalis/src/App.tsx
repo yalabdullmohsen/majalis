@@ -67,6 +67,7 @@ const RulingDetailPage = lazy(() => import("@/pages/RulingDetailPage"));
 const UpdatesPage = lazy(() => import("@/pages/UpdatesPage"));
 const AdminPage = lazy(() => import("@/pages/AdminPage"));
 const AdminDashboardPage = lazy(() => import("@/pages/admin/AdminDashboardPage"));
+const AutoContentPage = lazy(() => import("@/pages/admin/AutoContentPage"));
 const FiqhReviewPage = lazy(() => import("@/pages/admin/FiqhReviewPage"));
 const FiqhQualityPage = lazy(() => import("@/pages/admin/FiqhQualityPage"));
 
@@ -162,6 +163,15 @@ function Router() {
       <Route path="/rulings"><SafeLazyRoute component={RulingsPage} /></Route>
       <Route path="/updates"><SafeLazyRoute component={UpdatesPage} /></Route>
       <Route path="/login"><SafeLazyRoute component={LoginPage} /></Route>
+      <Route path="/admin/auto-content">
+        <AdminRouteGuard>
+          <ErrorBoundary>
+            <Suspense fallback={<Loading />}>
+              <AutoContentPage />
+            </Suspense>
+          </ErrorBoundary>
+        </AdminRouteGuard>
+      </Route>
       <Route path="/admin/fiqh-review">
         <AdminRouteGuard>
           <ErrorBoundary>

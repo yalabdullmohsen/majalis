@@ -154,6 +154,19 @@ export function AdminShell({ section, onSectionChange, children }: AdminShellPro
             </p>
           )}
           <Link
+            href="/admin/auto-content"
+            style={{
+              display: "block",
+              padding: "0.5rem 1rem",
+              marginBottom: "0.35rem",
+              textDecoration: "none",
+              fontSize: "0.75rem",
+              color: C.brassDeep,
+            }}
+          >
+            الاستيراد التلقائي
+          </Link>
+          <Link
             href="/"
             style={{
               display: "block",
