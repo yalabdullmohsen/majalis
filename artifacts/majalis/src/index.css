@@ -8264,3 +8264,118 @@ body.assistant-panel-open {
     transform: none;
   }
 }
+
+/* ── Optimized sheikh portraits (display-time processing layer) ── */
+.optimized-sheikh-image {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: 1rem;
+  border: 1.5px solid #c8a24a;
+  background: linear-gradient(180deg, #f3ebd8 0%, #faf6ee 100%);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.65) inset,
+    0 4px 14px rgba(36, 31, 24, 0.1);
+  contain: layout style paint;
+}
+
+.optimized-sheikh-image--ratio-1-1 {
+  aspect-ratio: 1 / 1;
+}
+
+.optimized-sheikh-image--ratio-4-5 {
+  aspect-ratio: 4 / 5;
+}
+
+.optimized-sheikh-image--ratio-3-4 {
+  aspect-ratio: 3 / 4;
+}
+
+.optimized-sheikh-image--avatar {
+  border-radius: 999px;
+}
+
+.optimized-sheikh-image--responsive {
+  width: 5rem;
+}
+
+@media (min-width: 768px) {
+  .optimized-sheikh-image--responsive {
+    width: 6.25rem;
+  }
+}
+
+.optimized-sheikh-image__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 36%;
+  opacity: 0;
+  transition: opacity 0.28s ease;
+}
+
+.optimized-sheikh-image--processed .optimized-sheikh-image__img,
+.optimized-sheikh-image--fallback .optimized-sheikh-image__img,
+.optimized-sheikh-image--css .optimized-sheikh-image__img {
+  opacity: 1;
+}
+
+.optimized-sheikh-image--css .optimized-sheikh-image__img {
+  filter: contrast(1.04) brightness(1.02) saturate(1.03);
+}
+
+.optimized-sheikh-image--fallback .optimized-sheikh-image__img {
+  object-fit: contain;
+  padding: 0.65rem;
+  background: linear-gradient(180deg, #f3ebd8 0%, #faf6ee 100%);
+}
+
+.optimized-sheikh-image__skeleton {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #ebe3d1 0%, #f5efe3 100%);
+  overflow: hidden;
+}
+
+.optimized-sheikh-image__skeleton-shimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    110deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.45) 45%,
+    transparent 100%
+  );
+  animation: optimized-sheikh-shimmer 1.35s ease-in-out infinite;
+}
+
+@keyframes optimized-sheikh-shimmer {
+  0% { transform: translateX(-120%); }
+  100% { transform: translateX(120%); }
+}
+
+.optimized-sheikh-image--loading .optimized-sheikh-image__img {
+  opacity: 0;
+}
+
+/* Backward compatibility with legacy avatar wrappers */
+.sheikh-avatar-ring.optimized-sheikh-image,
+.optimized-sheikh-image.sheikh-avatar-ring,
+.search-result-avatar.optimized-sheikh-image {
+  border-radius: 999px;
+}
+
+.lesson-detail-hero .optimized-sheikh-image--portrait {
+  width: clamp(6.5rem, 18vw, 7.75rem);
+  border-radius: 1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .optimized-sheikh-image__img,
+  .optimized-sheikh-image__skeleton-shimmer {
+    animation: none;
+    transition: none;
+  }
+}

@@ -6,7 +6,7 @@ import ContentActions from "@/components/ContentActions";
 import { isDemoId } from "@/lib/demo-content";
 import { extractLessonSchedule, hasValue } from "@/lib/lesson-display";
 import { resolveLessonSheikhImage } from "@/lib/sheikh-image";
-import { SheikhAvatar } from "@/components/lessons/SheikhAvatar";
+import { OptimizedSheikhImage } from "@/components/sheikh/OptimizedSheikhImage";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { UnifiedLessonCard } from "@/components/lessons/UnifiedLessonCard";
 import {
@@ -134,10 +134,12 @@ export default function LessonDetailPage({ params }: { params: { id: string } })
 
       <article className="ui-card lesson-detail-card">
         <div className="lesson-detail-hero">
-          <SheikhAvatar
+          <OptimizedSheikhImage
             src={kuwaitLesson?.sheikhImage || resolveLessonSheikhImage(lesson)}
             name={sheikhName || "شيخ"}
-            size={120}
+            size={124}
+            variant="portrait"
+            priority
           />
           <div className="lesson-detail-hero__copy">
             {hasValue(sheikhName) && (
