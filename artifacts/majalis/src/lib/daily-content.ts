@@ -1,4 +1,5 @@
 import { SEED_FAWAID } from "./fawaid-seed";
+import { filterQualityFawaid } from "./content-quality";
 
 export type DailyHadithEntry = {
   id: string;
@@ -163,8 +164,10 @@ export const DAILY_AYAH_POOL: DailyAyahEntry[] = [
   },
 ];
 
-const curatedFawaid = SEED_FAWAID.filter(
-  (f) => f.source === "القرآن الكريم" || f.author_name === "المجلس العلمي",
+const curatedFawaid = filterQualityFawaid(
+  SEED_FAWAID.filter(
+    (f) => f.source === "القرآن الكريم" || f.author_name === "المجلس العلمي",
+  ),
 ).slice(0, 14);
 
 export const DAILY_FAIDA_POOL: DailyFaidaEntry[] = [

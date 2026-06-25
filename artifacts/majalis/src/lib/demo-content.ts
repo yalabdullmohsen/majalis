@@ -3,66 +3,42 @@ import { SEED_QA, QA_CATEGORIES, filterSeedQa } from "./qa-seed";
 import { SEED_FAWAID, FAWAID_CATEGORIES, filterSeedFawaid } from "./fawaid-seed";
 import { ADHKAR_CATEGORIES, filterAdhkar } from "./adhkar-seed";
 
+import { SEED_QA, QA_CATEGORIES, filterSeedQa } from "./qa-seed";
+import { SEED_FAWAID, FAWAID_CATEGORIES, filterSeedFawaid } from "./fawaid-seed";
+import { filterQualityFawaid } from "./content-quality";
+import { ADHKAR_CATEGORIES, filterAdhkar } from "./adhkar-seed";
+import { lessonAds } from "./lesson-ads";
+
 export { FAWAID_CATEGORIES, filterSeedFawaid };
 
-export const DEMO_LESSONS = [
-  {
-    id: "demo-lesson-1",
-    title: "المجلس العلمي — مقدمة في العقيدة الصحيحة",
-    category: "عقيدة",
-    mosque: "مسجد النور",
-    city: "الرياض",
-    delivery: "حضور",
-    audience: "الكل",
-    schedule: "السبت 8م",
-    description: "درس تمهيدي يعرّف طالب العلم بأصول الاعتقاد على منهج أهل السنة.",
-    speaker_name: "الشيخ عبدالله بن باز",
-    keywords: ["المجلس العلمي", "عقيدة", "الإسلام", "أهل السنة"],
-    sheikhs: { name: "الشيخ عبدالله بن باز" },
-  },
-  {
-    id: "demo-lesson-2",
-    title: "أحكام الطهارة للمبتدئين",
-    category: "فقه",
-    mosque: "مركز الهدى",
-    city: "جدة",
-    delivery: "حضور",
-    audience: "رجال",
-    schedule: "الأحد 7م",
-    description: "شرح مبسّط لأحكام الوضوء والغسل والتيمم مع أمثلة عملية.",
-    speaker_name: "الشيخ محمد بن صالح العثيمين",
-    keywords: ["فقه", "طهارة", "أحكام"],
-    sheikhs: { name: "الشيخ محمد بن صالح العثيمين" },
-  },
-  {
-    id: "demo-lesson-3",
-    title: "تفسير سورة الفاتحة",
-    category: "تفسير",
-    mosque: "جامع الصفا",
-    city: "الدمام",
-    delivery: "بث",
-    audience: "الكل",
-    schedule: "الجمعة بعد العصر",
-    description: "تفسير موجز لسورة الفاتحة مع بيان معانيها وأسرارها.",
-    speaker_name: "الشيخ أحمد المفسر",
-    keywords: ["تفسير", "قرآن"],
-    sheikhs: { name: "الشيخ أحمد المفسر" },
-  },
-  {
-    id: "demo-lesson-4",
-    title: "مجلس علم — علم الحديث عند الإمام الألباني",
-    category: "حديث",
-    mosque: "مركز الإمام الألباني",
-    city: "عمان",
-    delivery: "حضور",
-    audience: "الكل",
-    schedule: "الثلاثاء 6م",
-    description: "مجلس علمي في مصطلح الحديث ومنهج الإمام محمد ناصر الدين الألباني رحمه الله.",
-    speaker_name: "الشيخ محمد ناصر الدين الألباني",
-    keywords: ["حديث", "الألباني", "المجلس العلمي", "سنة"],
-    sheikhs: { name: "الشيخ محمد ناصر الدين الألباني" },
-  },
-];
+export const DEMO_LESSONS = lessonAds.flatMap((ad) =>
+  ad.sessions.map((session, idx) => ({
+    id: `demo-kw-${ad.id}-${idx}`,
+    title: ad.title,
+    category: ad.tags.includes("تفسير")
+      ? "تفسير"
+      : ad.tags.includes("فقه")
+        ? "فقه"
+        : ad.tags.includes("حديث")
+          ? "حديث"
+          : ad.tags.includes("عقيدة")
+            ? "عقيدة"
+            : "أخرى",
+    mosque: session.venue,
+    city: "العاصمة",
+    region: session.district.split("–")[0]?.trim() || session.district,
+    delivery: ad.tags.includes("بث مباشر") ? "كلاهما" : "حضور فقط",
+    audience: ad.hasWomenSection ? "الكل" : "رجال",
+    schedule: `${session.day} — ${session.time}`,
+    day_of_week: session.day,
+    lesson_time: session.time,
+    description: session.note || ad.shortDescription,
+    speaker_name: ad.teacher,
+    status: "approved",
+    keywords: ad.tags,
+    sheikhs: { name: ad.teacher },
+  })),
+);
 
 export const DEMO_SHEIKHS = [
   {
@@ -164,7 +140,7 @@ export const DEMO_MIRACLES = [
   },
 ];
 
-export const DEMO_FAWAID = SEED_FAWAID;
+export const DEMO_FAWAID = filterQualityFawaid(SEED_FAWAID);
 
 export const DEMO_QA = SEED_QA;
 
@@ -175,7 +151,7 @@ export function isDemoId(id: string) {
 }
 
 export function demoNoticeText(section: string) {
-  return `لا توجد بيانات حية في ${section} بعد. نعرض محتوى تجريبيًا حتى يضيف المشرف موادًا معتمدة.`;
+  return `يعرض ${section} من مراجع المنصة المحلية. يمكن تحديث المحتوى من لوحة التحكم.`;
 }
 
 export type DemoSearchResults = {

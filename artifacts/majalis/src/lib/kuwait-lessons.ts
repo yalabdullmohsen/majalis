@@ -111,14 +111,14 @@ function mapStaticLesson(lesson: (typeof KUWAIT_LESSONS)[number]): KuwaitLessonR
     title: lesson.title,
     sheikhName: lesson.sheikhName,
     sheikhImage: lesson.sheikhImage,
-    governorate: "العاصمة",
+    governorate: lesson.governorate || "العاصمة",
     region: lesson.region,
     mosque: lesson.mosque,
     day: lesson.day,
     time: lesson.time,
-    category: "تفسير",
+    category: lesson.category || "أخرى",
     note: lesson.note,
-    endDate: null,
+    endDate: lesson.status === "منتهٍ" ? "2000-01-01" : null,
     sortKey: computeNextDaySortKey(lesson.day),
   };
 }

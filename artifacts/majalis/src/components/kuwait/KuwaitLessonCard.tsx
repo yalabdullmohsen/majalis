@@ -23,6 +23,7 @@ export function KuwaitLessonCard({ lesson, compact = false, archived = false }: 
           {hasValue(lesson.category) && (
             <span className="page-tag">{lesson.category}</span>
           )}
+          <span className="page-soft-tag page-soft-tag--active">نشط</span>
         </div>
       </div>
 

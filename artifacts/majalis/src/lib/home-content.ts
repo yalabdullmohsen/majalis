@@ -1,3 +1,5 @@
+import { lessonAds, type LessonAd } from "@/lib/lesson-ads";
+
 export type KuwaitLesson = {
   id: string;
   sheikhName: string;
@@ -7,71 +9,79 @@ export type KuwaitLesson = {
   time: string;
   mosque: string;
   region: string;
+  governorate: string;
+  category: string;
+  status: "نشط" | "منتهٍ";
   note?: string;
 };
 
-export type DailyHadith = {
-  text: string;
-  narrator: string;
-  source: string;
-  meaning: string;
+const CATEGORY_FROM_TAGS: Record<string, string> = {
+  تفسير: "تفسير",
+  فقه: "فقه",
+  حديث: "حديث",
+  عقيدة: "عقيدة",
+  سنة: "حديث",
+  "دورة علمية": "تأصيل",
+  "برنامج تعليمي": "فقه",
 };
 
-export type DailyAyah = {
-  text: string;
-  surah: string;
-  ayahNumber: number;
-  meaning: string;
-};
+function categoryForAd(ad: LessonAd): string {
+  for (const tag of ad.tags) {
+    if (CATEGORY_FROM_TAGS[tag]) return CATEGORY_FROM_TAGS[tag];
+  }
+  return "أخرى";
+}
 
-export const KUWAIT_LESSONS: KuwaitLesson[] = [
-  {
-    id: "kw-1",
-    sheikhName: "عثمان بن محمد الخميس",
-    sheikhImage: "/images/teachers/othman-alkhamees.svg",
-    title: "تفسير سورة النحل",
-    day: "الجمعة",
-    time: "بعد صلاة المغرب",
-    mosque: "مسجد موضي",
-    region: "الصديق",
-    note: "يوجد مكان مخصص للنساء",
-  },
-  {
-    id: "kw-2",
-    sheikhName: "عثمان بن محمد الخميس",
-    sheikhImage: "/images/teachers/othman-alkhamees.svg",
-    title: "شرح كتاب تلخيص مختصر المقنع",
-    day: "الأربعاء",
-    time: "بعد صلاة المغرب",
-    mosque: "مسجد الياقوت",
-    region: "الصديق",
-    note: "يوجد مكان مخصص للنساء",
-  },
-  {
-    id: "kw-3",
-    sheikhName: "راشد طليم فهد الطليم",
-    sheikhImage: "/images/teachers/rashed-alsulayyim.svg",
-    title: "الدورة العلمية التأصيلية",
-    day: "الاثنين",
-    time: "قبل المغرب بساعة، بعد المغرب، بعد العشاء",
-    mosque: "مسجد أبي واقد الليثي",
-    region: "القيروان",
-  },
-];
+function regionFromDistrict(district: string): string {
+  const part = district.split("–")[0]?.split("-")[0]?.trim();
+  return part || district.trim();
+}
 
-export const DAILY_HADITH: DailyHadith = {
-  text: "من كان يؤمن بالله واليوم الآخر فليقل خيرًا أو ليصمت.",
+function governorateFromDistrict(district: string): string {
+  if (district.includes("القيروان") || district.includes("الفردوس")) return "العاصمة";
+  if (district.includes("الجهراء")) return "الجهراء";
+  if (district.includes("حولي")) return "حولي";
+  return "العاصمة";
+}
+
+function lessonsFromAds(): KuwaitLesson[] {
+  const rows: KuwaitLesson[] = [];
+
+  for (const ad of lessonAds) {
+    ad.sessions.forEach((session, idx) => {
+      const genericLabel = session.label === "المجلس الأسبوعي" || session.label === "البرنامج الأسبوعي";
+      rows.push({
+        id: `kw-${ad.id}-${idx}`,
+        sheikhName: ad.teacher,
+        sheikhImage: ad.teacherImage,
+        title: genericLabel ? ad.title : `${ad.title} — ${session.label}`,
+        day: session.day,
+        time: session.time,
+        mosque: session.venue,
+        region: regionFromDistrict(session.district),
+        governorate: governorateFromDistrict(session.district),
+        category: categoryForAd(ad),
+        status: "نشط",
+        note: session.note || ad.shortDescription,
+      });
+    });
+  }
+
+  return rows;
+}
+
+export const KUWAIT_LESSONS: KuwaitLesson[] = lessonsFromAds();
+
+export const DAILY_HADITH = {
+  text: "مَنْ سَلَكَ طَرِيقًا يَلْتَمِسُ فِيهِ عِلْمًا سَهَّلَ اللَّهُ لَهُ طَرِيقًا إِلَى الْجَنَّةِ",
   narrator: "أبو هريرة رضي الله عنه",
-  source: "متفق عليه",
-  meaning: "حث على كف اللسان عن الشر والغيبة والكذب، والاقتصار على الكلام النافع.",
+  source: "رواه مسلم",
+  meaning: "السعي في طلب العلم سبب لتيسير طريق الجنة.",
 };
 
-export const DAILY_AYAH: DailyAyah = {
-  text: "إِنَّ مَعَ الْعُسْرِ يُسْرًا",
-  surah: "سورة الشرح",
-  ayahNumber: 6,
-  meaning: "بعد الشدة يسر، ومع كل ضيق مخرج وفرج من الله تعالى.",
+export const DAILY_AYAH = {
+  text: "وَقُل رَّبِّ زِدْنِي عِلْمًا",
+  surah: "سورة طه",
+  ayahNumber: 114,
+  meaning: "من أعظم الأدعية أن يسأل العبد ربه زيادة العلم النافع.",
 };
-
-export const HOME_MAINTENANCE_MESSAGE =
-  "جارٍ التعديل على الموقع وتعبئة البيانات من قبل بو عبد المحسن... انتظرونا.";

@@ -5,7 +5,7 @@ export function HomeDailyAyah() {
 
   return (
     <article className="ui-card home-daily-card home-daily-card--ayah">
-      <p className="home-daily-label">آية اليوم</p>
+          <p className="home-daily-label">آية اليوم ومعناها</p>
       <p className="home-ayah-text">{ayah.text}</p>
       <p className="home-daily-meta">
         <strong>{ayah.surah}</strong> — الآية {ayah.ayahNumber}
