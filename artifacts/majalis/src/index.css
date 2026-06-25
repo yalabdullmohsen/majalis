@@ -9,10 +9,12 @@ html {
 :root {
   --majalis-ink: #241F18;
   --majalis-ink-soft: #5B5446;
+  --majalis-charcoal: #1A1A1A;
   --majalis-parchment: #FAF5EA;
   --majalis-parchment-deep: #F0E8D6;
   --majalis-panel: #FFFFFF;
   --majalis-emerald: #1F6E54;
+  --majalis-emerald-mid: #2D8A6E;
   --majalis-emerald-deep: #164E3C;
   --majalis-brass: #B08D2E;
   --majalis-brass-deep: #8A6D1E;
@@ -5493,5 +5495,460 @@ input, textarea, select { font-family: inherit; }
 
   .template-action-row {
     grid-template-columns: 1fr;
+  }
+}
+
+/* ── Production launch: homepage, calendar, adhkar, footer ── */
+.home-hero--launch .home-hero-title {
+  font-size: clamp(1.75rem, 4vw, 2.35rem);
+  color: var(--majalis-parchment);
+  margin: 0.35rem 0 0.5rem;
+}
+
+.home-hero--launch .home-hero-lead {
+  color: rgba(250, 245, 234, 0.88);
+  font-size: clamp(0.95rem, 2vw, 1.05rem);
+  max-width: 32rem;
+  margin-bottom: 1rem;
+}
+
+.site-footer {
+  background: var(--majalis-charcoal);
+  color: var(--majalis-parchment);
+  margin-top: 3rem;
+  padding: 2.5rem 1rem 1.5rem;
+}
+
+.site-footer-inner {
+  max-width: 72rem;
+  margin: 0 auto;
+  display: grid;
+  gap: 1.5rem;
+}
+
+.site-footer-brand {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.site-footer-logo {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+.site-footer-brand p {
+  color: rgba(250, 245, 234, 0.75);
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+}
+
+.site-footer-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 1.25rem;
+}
+
+.site-footer-nav a {
+  color: rgba(250, 245, 234, 0.85);
+  font-size: 0.875rem;
+}
+
+.site-footer-nav a:hover {
+  color: var(--majalis-brass);
+}
+
+.site-footer-copy {
+  font-size: 0.78rem;
+  color: rgba(250, 245, 234, 0.55);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 1rem;
+}
+
+.home-sheikhs-grid,
+.home-latest-grid,
+.home-stats-grid {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.home-sheikhs-grid {
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+
+.home-latest-grid {
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
+
+.home-stats-grid {
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+}
+
+.home-sheikh-card {
+  display: flex;
+  gap: 0.85rem;
+  align-items: center;
+  padding: 1rem;
+}
+
+.home-sheikh-card h3 {
+  font-size: 0.95rem;
+  margin-bottom: 0.2rem;
+}
+
+.home-sheikh-card p {
+  font-size: 0.78rem;
+  color: var(--majalis-ink-soft);
+}
+
+.home-stat-card {
+  text-align: center;
+  padding: 1.25rem 0.75rem;
+}
+
+.home-stat-card strong {
+  display: block;
+  font-size: 2rem;
+  color: var(--majalis-emerald-deep);
+  line-height: 1.1;
+}
+
+.home-stat-card span {
+  font-size: 0.82rem;
+  color: var(--majalis-ink-soft);
+}
+
+.home-latest-card h3 {
+  font-size: 0.95rem;
+  margin: 0.45rem 0 0.25rem;
+  line-height: 1.55;
+}
+
+.home-latest-card p {
+  font-size: 0.8rem;
+  color: var(--majalis-ink-soft);
+}
+
+.lesson-urgency--urgent {
+  border-right: 4px solid var(--majalis-emerald-deep);
+}
+
+.lesson-urgency--soon {
+  border-right: 4px solid var(--majalis-emerald);
+}
+
+.lesson-urgency--week {
+  border-right: 4px solid var(--majalis-emerald-mid, #2D8A6E);
+  background: linear-gradient(to left, rgba(207, 224, 211, 0.35), transparent 40%);
+}
+
+.lesson-urgency--later {
+  border-right: 4px solid var(--majalis-line);
+  opacity: 0.92;
+}
+
+.lesson-urgency-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  margin-bottom: 0.35rem;
+}
+
+.lesson-urgency-badge--urgent {
+  background: var(--majalis-emerald-deep);
+  color: var(--majalis-parchment);
+}
+
+.lesson-urgency-badge--soon {
+  background: var(--majalis-emerald);
+  color: var(--majalis-parchment);
+}
+
+.lesson-urgency-badge--week {
+  background: var(--majalis-sage);
+  color: var(--majalis-emerald-deep);
+}
+
+.lesson-urgency-badge--later {
+  background: var(--majalis-parchment-deep);
+  color: var(--majalis-ink-soft);
+}
+
+.fawaid-spotlight-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-bottom: 1rem;
+}
+
+.fawaid-spotlight {
+  margin-bottom: 1.25rem;
+  padding: 1.15rem;
+}
+
+.fawaid-spotlight p {
+  font-size: 1.05rem;
+  line-height: 1.85;
+  margin-bottom: 0.65rem;
+}
+
+.adhkar-page .adhkar-list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.adhkar-item-toggle {
+  width: 100%;
+  text-align: right;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 0;
+}
+
+.adhkar-text {
+  font-size: 1.05rem;
+  line-height: 1.9;
+  margin: 0.5rem 0;
+}
+
+.adhkar-count {
+  font-size: 0.78rem;
+  color: var(--majalis-emerald-deep);
+  font-weight: 700;
+}
+
+.adhkar-meta {
+  border-top: 1px solid var(--majalis-line);
+  padding-top: 0.75rem;
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+  color: var(--majalis-ink-soft);
+}
+
+.adhkar-category-desc {
+  color: var(--majalis-ink-soft);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.calendar-page .cal-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.cal-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.cal-nav-btn {
+  border: 1px solid var(--majalis-line);
+  background: var(--majalis-panel);
+  border-radius: 0.5rem;
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+
+.cal-view-tabs {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.cal-view-tab {
+  border: 1px solid var(--majalis-line);
+  background: var(--majalis-panel);
+  border-radius: 0.5rem;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.cal-view-tab.is-active {
+  background: var(--majalis-emerald-deep);
+  color: var(--majalis-parchment);
+  border-color: var(--majalis-emerald-deep);
+}
+
+.cal-month {
+  padding: 1rem;
+}
+
+.cal-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.35rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--majalis-ink-soft);
+  text-align: center;
+}
+
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.35rem;
+}
+
+.cal-cell {
+  aspect-ratio: 1;
+  border: 1px solid var(--majalis-line);
+  border-radius: 0.5rem;
+  background: var(--majalis-panel);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.cal-cell.is-selected {
+  border-color: var(--majalis-emerald);
+  background: var(--majalis-sage);
+}
+
+.cal-cell.is-outside {
+  opacity: 0.45;
+}
+
+.cal-cell-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--majalis-emerald);
+}
+
+.cal-week {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.5rem;
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+.cal-week-col {
+  min-width: 100px;
+}
+
+.cal-week-head {
+  width: 100%;
+  border: none;
+  background: var(--majalis-parchment-deep);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  font-weight: 700;
+  font-size: 0.78rem;
+  cursor: pointer;
+  font-family: inherit;
+  margin-bottom: 0.5rem;
+}
+
+.cal-week-head.is-selected {
+  background: var(--majalis-emerald-deep);
+  color: var(--majalis-parchment);
+}
+
+.cal-event-chip,
+.cal-day-item {
+  width: 100%;
+  text-align: right;
+  border: 1px solid var(--majalis-line);
+  background: var(--majalis-panel);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  margin-bottom: 0.35rem;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.78rem;
+}
+
+.cal-day {
+  padding: 1rem;
+}
+
+.cal-day-list {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.cal-day-item strong {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.cal-empty {
+  color: var(--majalis-ink-soft);
+  font-size: 0.9rem;
+  padding: 1rem 0;
+}
+
+.cal-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 26, 26, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 1rem;
+}
+
+.cal-modal {
+  max-width: 28rem;
+  width: 100%;
+  padding: 1.25rem;
+}
+
+.cal-modal-meta {
+  display: grid;
+  gap: 0.35rem;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+}
+
+.cal-modal-meta dt {
+  font-weight: 700;
+  display: inline;
+}
+
+.cal-modal-meta dd {
+  display: inline;
+  margin-inline-start: 0.35rem;
+}
+
+.cal-modal-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+  .cal-week {
+    grid-template-columns: 1fr;
+  }
+
+  .cal-grid {
+    gap: 0.2rem;
+  }
+
+  .cal-cell-num {
+    font-size: 0.75rem;
   }
 }

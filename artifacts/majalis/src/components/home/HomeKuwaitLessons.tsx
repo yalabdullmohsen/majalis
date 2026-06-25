@@ -3,6 +3,16 @@ import { Link } from "wouter";
 import { Loading } from "@/components/ui-common";
 import { KuwaitLessonCard } from "@/components/kuwait/KuwaitLessonCard";
 import { loadKuwaitLessons, type KuwaitLessonRecord } from "@/lib/kuwait-lessons";
+import { computeUrgency } from "@/lib/lesson-urgency";
+
+function sortByUrgency(lessons: KuwaitLessonRecord[]) {
+  const order = { urgent: 0, soon: 1, week: 2, later: 3 };
+  return [...lessons].sort((a, b) => {
+    const ua = computeUrgency(a.day);
+    const ub = computeUrgency(b.day);
+    return order[ua.level] - order[ub.level] || a.sortKey - b.sortKey;
+  });
+}
 
 export function HomeKuwaitLessons() {
   const [lessons, setLessons] = useState<KuwaitLessonRecord[]>([]);
@@ -12,8 +22,9 @@ export function HomeKuwaitLessons() {
   useEffect(() => {
     loadKuwaitLessons()
       .then((items) => {
-        setTotal(items.length);
-        setLessons(items.slice(0, 3));
+        const sorted = sortByUrgency(items);
+        setTotal(sorted.length);
+        setLessons(sorted.slice(0, 3));
       })
       .finally(() => setLoading(false));
   }, []);
@@ -22,9 +33,9 @@ export function HomeKuwaitLessons() {
     <section className="home-section" aria-labelledby="kuwait-lessons-heading">
       <div className="home-section-head">
         <div>
-          <p className="home-eyebrow">الكويت</p>
+          <p className="home-eyebrow">الدروس القادمة</p>
           <h2 id="kuwait-lessons-heading">دروس الكويت</h2>
-          <p>دروس علمية محدّثة في مساجد الكويت.</p>
+          <p>مرتبة حسب أقرب موعد.</p>
         </div>
         <Link href="/kuwait-lessons" className="home-section-link">عرض الكل</Link>
       </div>
@@ -33,7 +44,7 @@ export function HomeKuwaitLessons() {
         <Loading />
       ) : (
         <>
-          <p className="kuwait-lessons-count">{total} درس متاح في الكويت</p>
+          <p className="kuwait-lessons-count">{total} درس متاح</p>
           <div className="home-kuwait-grid">
             {lessons.map((lesson) => (
               <KuwaitLessonCard key={lesson.id} lesson={lesson} compact />

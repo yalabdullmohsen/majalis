@@ -4,7 +4,7 @@ import { useAuth } from "./AuthProvider";
 import NotificationBell from "./NotificationBell";
 import { C } from "@/lib/theme";
 
-const HIDDEN_NAV_HREFS = new Set(["/sheikhs", "/transcribe"]);
+const HIDDEN_NAV_HREFS = new Set(["/transcribe", "/library"]);
 
 const NEW_NAV_ITEMS = [
   { href: "/cards", label: "البطاقات" },
@@ -14,16 +14,18 @@ const NEW_NAV_ITEMS = [
 const TABS = [
   { href: "/", label: "الرئيسية" },
   { href: "/announcements", label: "إعلانات الدروس" },
+  { href: "/calendar", label: "التقويم" },
   { href: "/courses", label: "الدورات" },
   { href: "/lessons", label: "الدروس" },
   { href: "/kuwait-lessons", label: "دروس الكويت" },
   { href: "/sheikhs", label: "المشايخ" },
-  { href: "/library", label: "المكتبة" },
+  { href: "/adhkar", label: "الأذكار" },
   { href: "/miracles", label: "الإعجاز العلمي" },
   { href: "/fawaid", label: "الفوائد" },
   { href: "/qa", label: "الأسئلة والأجوبة" },
   { href: "/quiz", label: "المسابقات" },
   { href: "/transcribe", label: "تفريغ" },
+  { href: "/library", label: "المكتبة" },
   ...NEW_NAV_ITEMS,
   { href: "/assistant", label: "المساعد الذكي" },
   { href: "/about", label: "عن المنصة" },

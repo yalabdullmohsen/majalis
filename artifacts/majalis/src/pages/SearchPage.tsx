@@ -14,6 +14,8 @@ const EMPTY: SearchResults = {
   sheikhs: [],
   qa: [],
   fawaid: [],
+  adhkar: [],
+  categories: [],
 };
 
 function Group({ title, items, render }: { title: string; items: any[]; render: (i: any) => React.ReactNode }) {
@@ -102,11 +104,12 @@ export default function SearchPage() {
 
   const total =
     results.lessons.length +
-    results.library.length +
     results.miracles.length +
     results.sheikhs.length +
     results.qa.length +
-    results.fawaid.length;
+    results.fawaid.length +
+    (results.adhkar?.length || 0) +
+    (results.categories?.length || 0);
 
   return (
     <div className="page-shell narrow search-page">
@@ -118,7 +121,7 @@ export default function SearchPage() {
         <input
           value={term}
           onChange={(e) => setTerm(e.target.value)}
-          placeholder="ابحث في الدروس والمشايخ والمكتبة والإعجاز العلمي..."
+          placeholder="ابحث في الدروس والمشايخ والفوائد والأذكار..."
           autoFocus
           aria-label="كلمة البحث"
         />
@@ -171,9 +174,16 @@ export default function SearchPage() {
                 )}
               />
               <Group
-                title="المكتبة"
-                items={results.library}
-                render={(it) => <ResultRow key={it.id} href="/library" title={it.title} meta={it.type} />}
+                title="الأذكار"
+                items={results.adhkar || []}
+                render={(a) => (
+                  <ResultRow key={a.id} href="/adhkar" title={a.text.slice(0, 120)} meta={a.source} />
+                )}
+              />
+              <Group
+                title="التصنيفات"
+                items={results.categories || []}
+                render={(c) => <ResultRow key={c.id} href={c.href} title={c.name} />}
               />
               <Group
                 title="الإعجاز العلمي"

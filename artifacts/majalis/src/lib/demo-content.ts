@@ -1,6 +1,8 @@
 import { arabicMatchAny } from "./arabic-search";
-import { SEED_QA, QA_CATEGORIES, filterSeedQa } from "./qa-seed";
+import { SEED_QA, QA_CATEGORIES } from "./qa-seed";
 import { SEED_FAWAID, FAWAID_CATEGORIES, filterSeedFawaid } from "./fawaid-seed";
+import { ADHKAR_CATEGORIES, ADHKAR_ITEMS } from "./adhkar-seed";
+import { QA_EXTRA, QA_EXTRA_CATEGORIES } from "./qa-extended-seed";
 
 export { FAWAID_CATEGORIES, filterSeedFawaid };
 
@@ -165,9 +167,13 @@ export const DEMO_MIRACLES = [
 
 export const DEMO_FAWAID = SEED_FAWAID;
 
-export const DEMO_QA = SEED_QA;
+export const DEMO_QA = [...SEED_QA, ...QA_EXTRA];
 
-export const DEMO_QA_CATEGORIES = [{ id: "all", name: "الكل" }, ...QA_CATEGORIES];
+export const DEMO_QA_CATEGORIES = [
+  { id: "all", name: "الكل" },
+  ...QA_CATEGORIES,
+  ...QA_EXTRA_CATEGORIES,
+];
 
 export function isDemoId(id: string) {
   return id.startsWith("demo-") || id.startsWith("seed-");
@@ -184,12 +190,22 @@ export type DemoSearchResults = {
   sheikhs: typeof DEMO_SHEIKHS;
   qa: typeof DEMO_QA;
   fawaid: typeof DEMO_FAWAID;
+  adhkar: typeof ADHKAR_ITEMS;
+  categories: { id: string; name: string; href: string }[];
 };
+
+const SEARCH_CATEGORIES = [
+  { id: "lessons", name: "الدروس", href: "/lessons" },
+  { id: "fawaid", name: "الفوائد", href: "/fawaid" },
+  { id: "qa", name: "الأسئلة", href: "/qa" },
+  { id: "adhkar", name: "الأذكار", href: "/adhkar" },
+  { id: "miracles", name: "الإعجاز العلمي", href: "/miracles" },
+];
 
 export function searchDemoContent(term: string): DemoSearchResults {
   const q = term.trim();
   if (!q) {
-    return { lessons: [], library: [], miracles: [], sheikhs: [], qa: [], fawaid: [] };
+    return { lessons: [], library: [], miracles: [], sheikhs: [], qa: [], fawaid: [], adhkar: [], categories: [] };
   }
 
   const lessons = DEMO_LESSONS.filter((l) =>
@@ -203,10 +219,6 @@ export function searchDemoContent(term: string): DemoSearchResults {
     arabicMatchAny([s.name, s.bio, s.ijazah, s.city, ...(s.specialties || [])], q)
   );
 
-  const library = DEMO_LIBRARY.filter((it) =>
-    arabicMatchAny([it.title, it.description, it.category, it.type], q)
-  );
-
   const qa = DEMO_QA.filter((x) =>
     arabicMatchAny([x.question, x.answer, x.qa_categories?.name, x.reference], q)
   );
@@ -215,7 +227,13 @@ export function searchDemoContent(term: string): DemoSearchResults {
     arabicMatchAny([f.text, f.author_name, f.category, f.source], q)
   );
 
-  return { lessons, library, miracles: [], sheikhs, qa, fawaid };
+  const adhkar = ADHKAR_ITEMS.filter((a) =>
+    arabicMatchAny([a.text, a.source, a.reference, ...a.keywords], q)
+  );
+
+  const categories = SEARCH_CATEGORIES.filter((c) => arabicMatchAny([c.name], q));
+
+  return { lessons, library: [], miracles: [], sheikhs, qa, fawaid, adhkar, categories };
 }
 
 export function filterDemoQa({
@@ -225,5 +243,15 @@ export function filterDemoQa({
   categoryId?: string;
   search?: string;
 }) {
-  return filterSeedQa({ categoryId, search });
+  let items = DEMO_QA.filter((q) => q.status === "published");
+  if (categoryId && categoryId !== "all") {
+    items = items.filter((q) => q.category_id === categoryId);
+  }
+  if (search?.trim()) {
+    const s = search.trim();
+    items = items.filter((q) =>
+      arabicMatchAny([q.question, q.answer, q.evidence, q.reference, q.qa_categories?.name], s)
+    );
+  }
+  return items;
 }

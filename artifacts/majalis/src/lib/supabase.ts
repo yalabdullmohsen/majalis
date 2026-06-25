@@ -707,6 +707,8 @@ export type SearchResults = {
   sheikhs: any[];
   qa: any[];
   fawaid: any[];
+  adhkar?: any[];
+  categories?: { id: string; name: string; href: string }[];
   error?: string | null;
   usingDemo?: boolean;
 };
@@ -718,6 +720,8 @@ const EMPTY_SEARCH: SearchResults = {
   sheikhs: [],
   qa: [],
   fawaid: [],
+  adhkar: [],
+  categories: [],
 };
 
 function mergeUniqueById<T extends { id: string }>(rows: T[]): T[] {
@@ -893,11 +897,13 @@ export async function searchEverything(term: string): Promise<SearchResults> {
     if (!error && data) {
       return {
         lessons: data.lessons || [],
-        library: data.library || [],
+        library: [],
         miracles: data.miracles || [],
         sheikhs: data.sheikhs || [],
         qa: data.qa || [],
         fawaid: data.fawaid || [],
+        adhkar: [],
+        categories: [],
         usingDemo: false,
         error: null,
       };

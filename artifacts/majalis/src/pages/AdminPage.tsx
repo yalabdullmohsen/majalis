@@ -4,21 +4,17 @@ import { C } from "@/lib/theme";
 import { StatsSection } from "@/pages/admin/StatsSection";
 import { SheikhsSection } from "@/pages/admin/SheikhsSection";
 import { LessonsSection } from "@/pages/admin/LessonsSection";
-import { LibrarySection } from "@/pages/admin/LibrarySection";
-import { MiraclesSection } from "@/pages/admin/MiraclesSection";
 import { FawaidSection } from "@/pages/admin/FawaidSection";
 import { QaSection } from "@/pages/admin/QaSection";
 import { QuizSection } from "@/pages/admin/QuizSection";
 import { UsersSection } from "@/pages/admin/UsersSection";
 
-type Section = "stats" | "sheikhs" | "lessons" | "library" | "miracles" | "fawaid" | "qa" | "quiz" | "users";
+type Section = "stats" | "sheikhs" | "lessons" | "fawaid" | "qa" | "quiz" | "users";
 
 const NAV: { key: Section; label: string }[] = [
   { key: "stats", label: "نظرة عامة" },
-  { key: "sheikhs", label: "المشايخ" },
   { key: "lessons", label: "الدروس" },
-  { key: "library", label: "المكتبة" },
-  { key: "miracles", label: "الإعجاز العلمي" },
+  { key: "sheikhs", label: "المشايخ" },
   { key: "fawaid", label: "الفوائد" },
   { key: "qa", label: "الأسئلة والأجوبة" },
   { key: "quiz", label: "المسابقات" },
@@ -74,8 +70,6 @@ export default function AdminPage() {
         {section === "stats" && <StatsSection />}
         {section === "sheikhs" && <SheikhsSection />}
         {section === "lessons" && <LessonsSection />}
-        {section === "library" && <LibrarySection />}
-        {section === "miracles" && <MiraclesSection />}
         {section === "fawaid" && <FawaidSection />}
         {section === "qa" && <QaSection />}
         {section === "quiz" && <QuizSection />}

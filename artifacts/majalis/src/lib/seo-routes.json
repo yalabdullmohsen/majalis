@@ -103,6 +103,33 @@
       "priority": 0.85
     },
     {
+      "path": "/kuwait-lessons",
+      "title": "دروس الكويت | المجلس العلمي",
+      "description": "دروس علمية في مساجد الكويت مع فلترة حسب المحافظة والمسجد والشيخ.",
+      "keywords": ["دروس الكويت", "مساجد الكويت", "دروس شرعية"],
+      "sitemap": true,
+      "changefreq": "daily",
+      "priority": 0.9
+    },
+    {
+      "path": "/adhkar",
+      "title": "الأذكار | المجلس العلمي",
+      "description": "أذكار وأدعية من القرآن والسنة الصحيحة مع المصدر والتخريج.",
+      "keywords": ["أذكار", "أدعية", "ذكر الله"],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.82
+    },
+    {
+      "path": "/calendar",
+      "title": "التقويم العلمي | المجلس العلمي",
+      "description": "تقويم الدروس الشرعية — عرض شهري وأسبوعي ويومي.",
+      "keywords": ["تقويم", "جدول الدروس", "دروس الكويت"],
+      "sitemap": true,
+      "changefreq": "daily",
+      "priority": 0.85
+    },
+    {
       "path": "/library",
       "title": "المكتبة العلمية | المجلس العلمي",
       "description": "مكتبة علمية تضم كتبًا ومتونًا وتفريغات وملخصات وموادًا صوتية ومرئية لطالب العلم.",
@@ -113,9 +140,8 @@
         "تفريغات",
         "ملخصات شرعية"
       ],
-      "sitemap": true,
-      "changefreq": "weekly",
-      "priority": 0.85
+      "sitemap": false,
+      "robots": "noindex, nofollow"
     },
     {
       "path": "/miracles",
@@ -213,9 +239,8 @@
         "تلخيص دروس",
         "فوائد علمية"
       ],
-      "sitemap": true,
-      "changefreq": "weekly",
-      "priority": 0.72
+      "sitemap": false,
+      "robots": "noindex, nofollow"
     },
     {
       "path": "/condolences",

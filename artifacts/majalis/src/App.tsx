@@ -21,9 +21,12 @@ import QaPage from "@/pages/QaPage";
 import QuizPage from "@/pages/QuizPage";
 import LoginPage from "@/pages/LoginPage";
 import TranscribePage from "@/pages/TranscribePage";
+import AdhkarPage from "@/pages/AdhkarPage";
+import CalendarPage from "@/pages/CalendarPage";
 import AssistantPage from "@/pages/AssistantPage";
 import NotFound from "@/pages/not-found";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { SiteFooter } from "@/components/SiteFooter";
 import { usePageSeo } from "@/lib/seo";
 import { Loading } from "@/components/ui-common";
 
@@ -67,6 +70,8 @@ function Router() {
       <Route path="/fawaid" component={FawaidPage} />
       <Route path="/qa" component={QaPage} />
       <Route path="/quiz" component={QuizPage} />
+      <Route path="/adhkar" component={AdhkarPage} />
+      <Route path="/calendar" component={CalendarPage} />
       <Route path="/assistant">
         <ErrorBoundary>
           <AssistantPage />
@@ -114,6 +119,7 @@ function App() {
             <main>
               <Router />
             </main>
+            <SiteFooter />
           </div>
         </WouterRouter>
       </AuthProvider>

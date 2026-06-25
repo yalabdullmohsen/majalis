@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { getDailyFaid, getRandomFaid } from "@/lib/daily-content";
 import { getApprovedFawaid, submitFawaid } from "@/lib/supabase";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { DEMO_FAWAID, FAWAID_CATEGORIES, demoNoticeText, isDemoId } from "@/lib/demo-content";
@@ -28,6 +29,7 @@ export default function FawaidPage() {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState("");
+  const [highlight, setHighlight] = useState<any | null>(null);
   const { user, isLoggedIn } = useAuth() as any;
   const debouncedSearch = useDebouncedValue(search);
 
@@ -92,6 +94,23 @@ export default function FawaidPage() {
       />
 
       {usingDemo && <DemoNotice text={demoNoticeText("الفوائد")} />}
+
+      <div className="fawaid-spotlight-row">
+        <button type="button" className="ui-card-btn" onClick={() => setHighlight(getDailyFaid())}>
+          فائدة اليوم
+        </button>
+        <button type="button" className="ui-card-btn ui-card-btn--ghost" onClick={() => setHighlight(getRandomFaid())}>
+          فائدة عشوائية
+        </button>
+      </div>
+
+      {highlight && (
+        <article className="ui-card fawaid-spotlight">
+          <p>{highlight.text}</p>
+          {highlight.category && <span className="home-tag">{highlight.category}</span>}
+          <ContentActions text={highlight.text} title="فائدة" />
+        </article>
+      )}
 
       <input
         value={search}
