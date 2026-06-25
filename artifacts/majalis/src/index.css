@@ -7451,3 +7451,214 @@ input, textarea, select { font-family: inherit; }
     flex: 1 1 calc(50% - 0.25rem);
   }
 }
+
+/* ── Platform v3: home, nav, worship pages ── */
+.home-page--v3 { background: var(--majalis-parchment); }
+.home-hero--v3 { padding-block: 1.5rem 1rem; }
+.home-hero-grid--v3 { grid-template-columns: 1fr; }
+.home-main--v3 { padding-bottom: 2rem; }
+.home-search--v3 { max-width: 36rem; margin-top: 1rem; }
+.home-hero-assistant-link {
+  display: inline-block;
+  margin-top: 0.75rem;
+  color: var(--majalis-brass-deep);
+  font-weight: 700;
+  text-decoration: none;
+  font-size: 0.88rem;
+}
+
+.home-banner {
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+  background: linear-gradient(135deg, #fff 0%, #f3ede0 100%);
+  border: 1px solid var(--majalis-line);
+}
+.home-banner__title { margin: 0.35rem 0; color: var(--majalis-emerald-deep); font-size: 1.35rem; }
+.home-banner__lead { margin: 0; color: var(--majalis-ink-soft); line-height: 1.7; }
+.home-banner__prayer { margin: 0.75rem 0 0; font-weight: 700; color: var(--majalis-brass-deep); }
+.home-banner__actions { display: flex; gap: 0.5rem; margin-top: 1rem; flex-wrap: wrap; }
+.home-banner__btn {
+  min-height: 42px; padding: 0.55rem 1rem; border-radius: 0.5rem; font-weight: 700;
+  text-decoration: none; font-size: 0.88rem;
+}
+.home-banner__btn--primary { background: var(--majalis-emerald-deep); color: var(--majalis-parchment); }
+.home-banner__btn--secondary { background: #fff; color: var(--majalis-emerald-deep); border: 1px solid var(--majalis-line); }
+
+.home-sunnah-card { padding: 1rem 1.15rem; margin-bottom: 1.25rem; }
+.home-sunnah-card__period { font-weight: 700; color: var(--majalis-brass-deep); margin: 0.25rem 0 0; }
+.home-sunnah-card__list { list-style: none; margin: 0.85rem 0 0; padding: 0; display: grid; gap: 0.45rem; }
+.home-sunnah-card__link {
+  display: block; padding: 0.65rem 0.85rem; border-radius: 0.55rem;
+  background: var(--majalis-parchment-deep); color: var(--majalis-emerald-deep);
+  text-decoration: none; font-weight: 700; font-size: 0.9rem;
+}
+
+.home-feature-grid--v3 {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 9.5rem), 1fr));
+  margin: 0;
+}
+.home-feature-card--v3 {
+  min-height: 8.5rem;
+  text-decoration: none;
+  color: inherit;
+  border: 1px solid var(--majalis-line);
+  background: #fff;
+}
+.home-feature-card--v3:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--majalis-shadow);
+}
+.home-feature-icon--v3 {
+  color: var(--majalis-emerald-deep);
+  background: var(--majalis-sage);
+}
+
+.home-progress-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
+  gap: 0.75rem;
+}
+.home-progress-card {
+  padding: 0.85rem;
+  text-decoration: none;
+  color: inherit;
+}
+.home-progress-card__head { display: flex; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.5rem; }
+.home-progress-card__bar {
+  height: 6px; border-radius: 999px; background: var(--majalis-parchment-deep); overflow: hidden;
+}
+.home-progress-card__bar span {
+  display: block; height: 100%; background: var(--majalis-emerald); border-radius: inherit;
+}
+.home-progress-card__meta { margin: 0.45rem 0 0; font-size: 0.82rem; color: var(--majalis-ink-soft); }
+
+.home-more-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 11rem), 1fr)); gap: 0.75rem;
+}
+.home-more-card {
+  padding: 0.85rem; text-decoration: none; color: inherit; display: grid; gap: 0.25rem;
+}
+.home-more-card strong { color: var(--majalis-emerald-deep); }
+.home-more-card span { font-size: 0.84rem; color: var(--majalis-ink-soft); }
+
+.home-occasions-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr)); gap: 0.75rem;
+}
+.home-occasion-card {
+  padding: 1rem; text-decoration: none; color: inherit; display: grid; gap: 0.45rem;
+}
+.home-occasion-card strong { color: var(--majalis-emerald-deep); }
+.home-occasion-card p { margin: 0; font-size: 0.88rem; color: var(--majalis-ink-soft); line-height: 1.65; }
+.home-occasion-card__meta { font-size: 0.78rem; font-weight: 700; color: var(--majalis-brass-deep); }
+
+.home-sheikhs-grid--v3 {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 10rem), 1fr));
+}
+.home-sheikh-card {
+  padding: 1rem; text-align: center; text-decoration: none; color: inherit; display: grid; gap: 0.5rem; justify-items: center;
+}
+.home-sheikh-card h3 { margin: 0; font-size: 0.95rem; color: var(--majalis-emerald-deep); }
+.home-sheikh-card p { margin: 0; font-size: 0.82rem; color: var(--majalis-ink-soft); }
+
+.navbar-v3__inner {
+  max-width: 72rem; margin: 0 auto; padding: 0.65rem 1rem;
+  display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;
+}
+.navbar-v3__start, .navbar-v3__end { display: flex; align-items: center; gap: 0.5rem; }
+.navbar-v3__tabs { display: flex; gap: 0.2rem; flex-wrap: wrap; justify-content: center; flex: 1; }
+.navbar-brand { display: flex; align-items: center; gap: 0.55rem; text-decoration: none; color: var(--majalis-emerald-deep); min-width: 0; }
+.navbar-menu-btn, .navbar-logout {
+  border: 1px solid var(--majalis-line); background: #fff; border-radius: 0.45rem;
+  padding: 0.4rem 0.75rem; font-family: inherit; font-weight: 700; font-size: 0.82rem; cursor: pointer;
+}
+.navbar-login {
+  font-size: 0.82rem; font-weight: 700; padding: 0.4rem 0.85rem; border-radius: 0.45rem;
+  background: var(--majalis-emerald); color: var(--majalis-parchment); text-decoration: none;
+}
+.navbar-auth { display: flex; align-items: center; gap: 0.45rem; font-size: 0.78rem; color: var(--majalis-ink-soft); }
+.navbar-mobile-panel { border-top: 1px solid var(--majalis-line); padding: 0.75rem 1rem 1rem; }
+
+.side-nav-backdrop {
+  position: fixed; inset: 0; background: rgba(26,26,26,0.45); z-index: 60;
+}
+.side-nav-drawer {
+  position: fixed; top: 0; bottom: 0; right: 0; width: min(20rem, 92vw);
+  background: var(--majalis-parchment); border-left: 1px solid var(--majalis-line);
+  overflow-y: auto; padding: 1rem; z-index: 61;
+}
+.side-nav-drawer__head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+.side-nav-group { margin-bottom: 1rem; }
+.side-nav-group__title {
+  margin: 0 0 0.35rem; font-size: 0.75rem; font-weight: 800; color: var(--majalis-brass-deep);
+}
+.side-nav-link {
+  display: block; padding: 0.5rem 0.65rem; border-radius: 0.45rem; text-decoration: none;
+  font-size: 0.88rem; font-weight: 600; margin-bottom: 0.15rem;
+}
+
+.site-footer--v3 { margin-top: 2rem; }
+.site-footer-inner--v3 { max-width: 72rem; }
+.site-footer-groups {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: 1rem; margin-top: 1rem;
+}
+.site-footer-group p { margin: 0 0 0.35rem; font-weight: 700; color: var(--majalis-emerald-deep); font-size: 0.88rem; }
+.site-footer-group nav { display: grid; gap: 0.25rem; }
+
+.prayer-status-card { padding: 1.25rem; margin-bottom: 1rem; text-align: center; }
+.prayer-status-card__label { margin: 0; font-size: 0.82rem; color: var(--majalis-ink-soft); }
+.prayer-status-card h2 { margin: 0.35rem 0; color: var(--majalis-emerald-deep); }
+.prayer-status-card__countdown { font-size: 1.5rem; font-weight: 800; color: var(--majalis-brass-deep); margin: 0; }
+.prayer-times-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr)); gap: 0.65rem; }
+.prayer-time-cell { padding: 0.85rem; text-align: center; }
+.prayer-time-cell.is-next { border-color: var(--majalis-emerald); background: var(--majalis-sage); }
+
+.qibla-panel { padding: 1.25rem; text-align: center; }
+.qibla-compass {
+  width: 12rem; height: 12rem; margin: 1rem auto; border-radius: 50%;
+  border: 2px solid var(--majalis-line); position: relative; background: #fff;
+}
+.qibla-compass__needle {
+  position: absolute; inset: 15%; border-radius: 50%;
+  border-top: 3px solid var(--majalis-emerald-deep);
+}
+.qibla-meta, .qibla-help { color: var(--majalis-ink-soft); font-size: 0.9rem; }
+
+.quran-toolbar { display: grid; gap: 0.65rem; padding: 1rem; margin-bottom: 1rem; }
+.quran-search, .quran-select { width: 100%; min-height: 42px; font-family: inherit; }
+.quran-reader { padding: 1.25rem; }
+.quran-ayah { margin: 0 0 0.85rem; line-height: 2; }
+.quran-ayah-num {
+  display: inline-flex; width: 1.6rem; height: 1.6rem; align-items: center; justify-content: center;
+  border-radius: 50%; background: var(--majalis-sage); font-size: 0.72rem; margin-left: 0.35rem;
+}
+.quran-page--night { background: #1a1a1a; color: #eee; }
+.quran-page--night .ui-card { background: #242424; color: #eee; border-color: #333; }
+
+.radio-grid { display: grid; gap: 0.65rem; margin-bottom: 1rem; }
+.radio-card { padding: 1rem; text-align: right; cursor: pointer; font-family: inherit; width: 100%; }
+.radio-card.is-active { border-color: var(--majalis-emerald); background: var(--majalis-sage); }
+.radio-player { padding: 1rem; }
+.radio-audio, .quran-audio { width: 100%; }
+
+.tasbih-page-card { padding: 1.25rem; text-align: center; }
+.tasbih-phrase { font-size: 1.2rem; font-weight: 700; color: var(--majalis-emerald-deep); }
+
+.wird-card { padding: 1.25rem; display: grid; gap: 0.75rem; }
+.wird-card label { display: grid; gap: 0.35rem; font-weight: 700; font-size: 0.88rem; }
+.wird-card input, .wird-card select { min-height: 42px; font-family: inherit; }
+.wird-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+.occasions-list, .nawawi-grid { display: grid; gap: 1rem; }
+.occasion-detail, .nawawi-card { padding: 1.15rem; }
+.occasion-detail__head { display: flex; justify-content: space-between; gap: 0.5rem; align-items: baseline; }
+.nawawi-num {
+  display: inline-block; padding: 0.2rem 0.55rem; border-radius: 999px;
+  background: var(--majalis-sage); font-size: 0.78rem; font-weight: 800;
+}
+.nawawi-text { line-height: 2; }
+.nawawi-source { font-size: 0.85rem; color: var(--majalis-brass-deep); font-weight: 700; }
+
+@media (max-width: 720px) {
+  .home-feature-grid--v3 { grid-template-columns: repeat(2, 1fr); }
+  .navbar-v3__tabs { display: none; }
+}

@@ -7,6 +7,7 @@ import { SearchSkeleton } from "@/components/ui-common";
 import { SearchSuggestions } from "@/components/SearchSuggestions";
 import { SheikhAvatar } from "@/components/lessons/SheikhAvatar";
 import { resolveSheikhImageUrl, resolveLessonSheikhImage } from "@/lib/sheikh-image";
+import { searchLocalExtensions } from "@/lib/local-search-ext";
 
 const EMPTY: SearchResults = {
   lessons: [],
@@ -96,13 +97,18 @@ export default function SearchPage() {
     if (t) navigate(`/search/${encodeURIComponent(t)}`);
   };
 
+  const localExtra = q.trim() ? searchLocalExtensions(q) : { occasions: [], nawawi: [], quran: [] };
+
   const total =
     results.lessons.length +
     results.miracles.length +
     results.sheikhs.length +
     results.qa.length +
     results.fawaid.length +
-    results.adhkar.length;
+    results.adhkar.length +
+    localExtra.occasions.length +
+    localExtra.nawawi.length +
+    localExtra.quran.length;
 
   return (
     <div className="page-shell narrow search-page">
@@ -203,6 +209,27 @@ export default function SearchPage() {
                     title={displayText(a.text)}
                     meta={a.category || a.source}
                   />
+                )}
+              />
+              <Group
+                title="المناسبات"
+                items={localExtra.occasions}
+                render={(o) => (
+                  <ResultRow key={o.id} href={o.href} title={o.title} meta={o.meta} />
+                )}
+              />
+              <Group
+                title="الأربعون النووية"
+                items={localExtra.nawawi}
+                render={(h) => (
+                  <ResultRow key={h.id} href={h.href} title={h.title} meta={h.meta} />
+                )}
+              />
+              <Group
+                title="القرآن"
+                items={localExtra.quran}
+                render={(s) => (
+                  <ResultRow key={s.id} href={s.href} title={s.title} meta={s.meta} />
                 )}
               />
               <Group

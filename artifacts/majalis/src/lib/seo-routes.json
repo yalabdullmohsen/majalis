@@ -91,6 +91,78 @@
       "priority": 0.82
     },
     {
+      "path": "/quran",
+      "title": "القرآن الكريم | المجلس العلمي",
+      "description": "قراءة القرآن الكريم، تلاوة صوتية، وبحث في السور.",
+      "keywords": ["القرآن", "تلاوة", "سور"],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.9
+    },
+    {
+      "path": "/quran-radio",
+      "title": "إذاعة القرآن | المجلس العلمي",
+      "description": "بث مباشر لإذاعات قرآنية موثوقة.",
+      "keywords": ["إذاعة القرآن", "راديو قرآن"],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.78
+    },
+    {
+      "path": "/prayer-times",
+      "title": "مواقيت الصلاة | المجلس العلمي",
+      "description": "مواقيت الصلاة في الكويت مع العد التنازلي للصlaة القادمة.",
+      "keywords": ["مواقيت الصلاة", "الكويت"],
+      "sitemap": true,
+      "changefreq": "daily",
+      "priority": 0.88
+    },
+    {
+      "path": "/qibla",
+      "title": "القبلة | المجلس العلمي",
+      "description": "اتجاه القبلة بحسب موقعك.",
+      "keywords": ["القبلة", "اتجاه الكعبة"],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.75
+    },
+    {
+      "path": "/tasbih",
+      "title": "التسابيح | المجلس العلمي",
+      "description": "مسبحة إلكترونية للتسبيح والتهليل والاستغفار.",
+      "keywords": ["تسبيح", "مسبحة"],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.78
+    },
+    {
+      "path": "/daily-wird",
+      "title": "الورد اليومي | المجلس العلمي",
+      "description": "متابعة الورد اليومي من القرآن.",
+      "keywords": ["ورد", "قرآن"],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.8
+    },
+    {
+      "path": "/occasions",
+      "title": "المناسبات الإسلامية | المجلس العلمي",
+      "description": "مناسبات إسلامية معتمدة مع الأعمال المستحبة والأدلة.",
+      "keywords": ["مناسبات", "رمضان", "عيد"],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.8
+    },
+    {
+      "path": "/arbaeen-nawawi",
+      "title": "الأربعون النووية | المجلس العلمي",
+      "description": "الأربعون النووية مع شرح مختصر وفوائد ومصدر.",
+      "keywords": ["الأربعون النووية", "حديث"],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.82
+    },
+    {
       "path": "/announcements",
       "title": "إعلانات الدروس | المجلس العلمي",
       "description": "إعلانات الدروس والدورات الشرعية في مساجد الكويت — جداول أسبوعية، مواقع المساجد، وتحميل الإعلانات.",
