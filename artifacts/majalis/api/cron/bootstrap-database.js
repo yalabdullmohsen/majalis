@@ -133,11 +133,17 @@ export default async function handler(req, res) {
     migrationStep = "verify_published_content";
     steps.content = await getPublishedAutoContentFeed({ limit: 10 });
 
-    const ok = steps.sync?.ok && (steps.content?.items?.length > 0 || steps.sync?.published > 0);
+    const infrastructureOk =
+      steps.connection?.ok &&
+      steps.supabaseAuth?.ok &&
+      steps.schema?.ok &&
+      steps.migrations?.ok;
+    const ok = infrastructureOk && steps.sync?.ok !== false;
     migrationStep = "complete";
 
-    sendJson(res, ok ? 200 : 500, {
+    sendJson(res, infrastructureOk ? 200 : 500, {
       ok,
+      infrastructureOk,
       step: migrationStep,
       steps: {
         databaseUrl: steps.databaseUrl,
