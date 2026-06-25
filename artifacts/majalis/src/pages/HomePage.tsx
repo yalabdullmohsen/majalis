@@ -2,6 +2,7 @@ import { useEffect, useState, type FormEvent } from "react";
 import { Link, useLocation } from "wouter";
 import { HomeDailyStrip } from "@/components/home/HomeDailyStrip";
 import { HomeUpcomingLessons } from "@/components/home/HomeUpcomingLessons";
+import { ScientificAnnouncementsSection } from "@/components/scientific/ScientificAnnouncementsSection";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
 
 const QUICK_LINKS = [
@@ -57,6 +58,7 @@ export default function HomePage() {
 
       <main className="home-container home-main home-main--launch">
         <HomeUpcomingLessons />
+        <ScientificAnnouncementsSection limit={4} />
         <HomeDailyStrip />
 
         <section className="home-section home-quick-links" aria-label="روابط سريعة">

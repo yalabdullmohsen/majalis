@@ -15,6 +15,11 @@ import {
 import { arSA } from "date-fns/locale";
 import { loadKuwaitLessons, type KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 import { lessonAds } from "@/lib/lesson-ads";
+import {
+  buildCalendarEventsFromAnnouncements,
+  type ScientificCalendarEvent,
+} from "@/lib/scientific-announcements";
+import { ScientificAnnouncementsSection } from "@/components/scientific/ScientificAnnouncementsSection";
 import { PageHeader, Loading } from "@/components/ui-common";
 
 type ViewMode = "month" | "week" | "day";
@@ -26,6 +31,8 @@ type CalendarEvent = {
   mosque: string;
   time: string;
   day: string;
+  date?: string;
+  recurring?: boolean;
   description?: string;
   href: string;
 };
@@ -70,7 +77,31 @@ function eventsFromAds(): CalendarEvent[] {
 
 function eventsForDate(date: Date, events: CalendarEvent[]): CalendarEvent[] {
   const weekday = date.getDay();
-  return events.filter((e) => DAY_MAP[e.day] === weekday);
+  const dateStr = format(date, "yyyy-MM-dd");
+  return events.filter((e) => {
+    if (e.date && e.recurring === false) {
+      return e.date === dateStr;
+    }
+    if (e.recurring !== false && e.day) {
+      return DAY_MAP[e.day] === weekday;
+    }
+    return false;
+  });
+}
+
+function fromScientificEvents(items: ScientificCalendarEvent[]): CalendarEvent[] {
+  return items.map((item) => ({
+    id: item.id,
+    title: item.title,
+    sheikh: item.sheikh,
+    mosque: item.mosque,
+    time: item.time,
+    day: item.day,
+    date: item.date,
+    recurring: item.recurring,
+    description: item.description,
+    href: item.href,
+  }));
 }
 
 function EventModal({ event, onClose }: { event: CalendarEvent; onClose: () => void }) {
@@ -103,9 +134,12 @@ export default function CalendarPage() {
   const [modalEvent, setModalEvent] = useState<CalendarEvent | null>(null);
 
   useEffect(() => {
+    const scientific = fromScientificEvents(buildCalendarEventsFromAnnouncements());
     loadKuwaitLessons()
-      .then((lessons) => setEvents([...eventsFromLessons(lessons), ...eventsFromAds()]))
-      .catch(() => setEvents(eventsFromAds()))
+      .then((lessons) =>
+        setEvents([...eventsFromLessons(lessons), ...eventsFromAds(), ...scientific]),
+      )
+      .catch(() => setEvents([...eventsFromAds(), ...scientific]))
       .finally(() => setLoading(false));
   }, []);
 
@@ -238,6 +272,8 @@ export default function CalendarPage() {
           )}
         </>
       )}
+
+      <ScientificAnnouncementsSection limit={4} showViewAll />
 
       {modalEvent && <EventModal event={modalEvent} onClose={() => setModalEvent(null)} />}
     </div>

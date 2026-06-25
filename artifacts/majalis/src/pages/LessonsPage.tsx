@@ -5,6 +5,7 @@ import { GOVERNORATES } from "@/lib/theme";
 import { PageHeader, Loading, Empty, Chip } from "@/components/ui-common";
 import { useAuth } from "@/components/AuthProvider";
 import { LessonCard } from "@/components/lessons/LessonCard";
+import { ScientificAnnouncementsSection } from "@/components/scientific/ScientificAnnouncementsSection";
 
 const CATEGORIES = ["الكل", "تفسير", "فقه", "عقيدة", "حديث", "سيرة", "تجويد", "أخرى"];
 
@@ -116,6 +117,8 @@ export default function LessonsPage() {
           ))}
         </div>
       )}
+
+      <ScientificAnnouncementsSection showViewAll={false} className="lessons-sci-ann" />
     </div>
   );
 }

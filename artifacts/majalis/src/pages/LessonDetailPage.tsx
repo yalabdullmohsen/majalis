@@ -9,6 +9,7 @@ import { extractLessonSchedule, hasValue } from "@/lib/lesson-display";
 import { resolveLessonSheikhImage } from "@/lib/sheikh-image";
 import { SheikhAvatar } from "@/components/lessons/SheikhAvatar";
 import { FavoriteButton } from "@/components/FavoriteButton";
+import { ScientificAnnouncementsSection } from "@/components/scientific/ScientificAnnouncementsSection";
 
 export default function LessonDetailPage({ params }: { params: { id: string } }) {
   const [lesson, setLesson] = useState<any>(null);
@@ -97,6 +98,8 @@ export default function LessonDetailPage({ params }: { params: { id: string } })
           )}
         </div>
       </article>
+
+      <ScientificAnnouncementsSection limit={3} />
     </div>
   );
 }

@@ -22,6 +22,7 @@ const LessonDetailPage = lazy(() => import("@/pages/LessonDetailPage"));
 const KuwaitLessonsPage = lazy(() => import("@/pages/KuwaitLessonsPage"));
 const CurrentLessonsPage = lazy(() => import("@/pages/CurrentLessonsPage"));
 const AnnouncementsPage = lazy(() => import("@/pages/AnnouncementsPage"));
+const ScientificAnnouncementDetailPage = lazy(() => import("@/pages/ScientificAnnouncementDetailPage"));
 const CoursesPage = lazy(() => import("@/pages/CoursesPage"));
 const SheikhsPage = lazy(() => import("@/pages/SheikhsPage"));
 const SheikhDetailPage = lazy(() => import("@/pages/SheikhDetailPage"));
@@ -65,6 +66,7 @@ function Router() {
       <Route path="/contact" component={ContactPage} />
       <Route path="/search/:q"><SafeLazyRoute component={SearchPage} /></Route>
       <Route path="/search"><SafeLazyRoute component={SearchPage} /></Route>
+      <Route path="/scientific-announcements/:id"><SafeLazyRoute component={ScientificAnnouncementDetailPage} /></Route>
       <Route path="/lessons/:id"><SafeLazyRoute component={LessonDetailPage} /></Route>
       <Route path="/lessons"><SafeLazyRoute component={LessonsPage} /></Route>
       <Route path="/calendar"><SafeLazyRoute component={CalendarPage} /></Route>

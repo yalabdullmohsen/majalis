@@ -6886,3 +6886,327 @@ input, textarea, select { font-family: inherit; }
     flex-direction: column;
   }
 }
+
+/* ── Scientific announcements ── */
+.sci-ann-section {
+  margin-top: 2.5rem;
+  padding-top: 0.5rem;
+}
+
+.sci-ann-section__head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.sci-ann-section__lead {
+  margin: 0.35rem 0 0;
+  color: var(--majalis-ink-soft);
+  font-size: 0.92rem;
+  line-height: 1.7;
+  max-width: 38rem;
+}
+
+.sci-ann-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+  gap: 1rem;
+}
+
+.sci-ann-card {
+  border: 1px solid var(--majalis-line);
+  border-radius: 0.85rem;
+  background: linear-gradient(180deg, #faf8f4 0%, #f5f2eb 100%);
+  overflow: hidden;
+  box-shadow: 0 1px 0 rgba(26, 60, 46, 0.04);
+}
+
+.sci-ann-card__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: var(--majalis-emerald-deep);
+  color: var(--majalis-parchment);
+}
+
+.sci-ann-card__ribbon {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.sci-ann-card__badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  background: rgba(212, 175, 95, 0.22);
+  color: #f5e6c8;
+  border: 1px solid rgba(212, 175, 95, 0.35);
+}
+
+.sci-ann-card__body {
+  padding: 1rem;
+  display: grid;
+  gap: 0.65rem;
+}
+
+.sci-ann-card__title {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.55;
+  color: var(--majalis-emerald-deep);
+}
+
+.sci-ann-card__sheikh {
+  margin: 0;
+  font-weight: 700;
+  color: #9a6b2e;
+  font-size: 0.92rem;
+}
+
+.sci-ann-card__book {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--majalis-ink-soft);
+  line-height: 1.65;
+}
+
+.sci-ann-card__meta {
+  display: grid;
+  gap: 0.45rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 0.55rem;
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(26, 60, 46, 0.08);
+}
+
+.sci-ann-card__meta-row {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.sci-ann-card__meta-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--majalis-ink-soft);
+}
+
+.sci-ann-card__meta-row strong {
+  font-size: 0.88rem;
+  color: var(--majalis-ink);
+  line-height: 1.5;
+}
+
+.sci-ann-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.sci-ann-card__tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.25rem 0.55rem;
+  border-radius: 999px;
+  background: rgba(212, 175, 95, 0.14);
+  color: #7a5a24;
+  border: 1px solid rgba(212, 175, 95, 0.28);
+}
+
+.sci-ann-card__actions,
+.sci-ann-detail__links,
+.sci-ann-detail__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.sci-ann-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0.55rem 0.9rem;
+  border-radius: 0.55rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  font-family: inherit;
+  text-decoration: none;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.sci-ann-btn--primary {
+  background: var(--majalis-emerald-deep);
+  color: var(--majalis-parchment);
+  border-color: var(--majalis-emerald-deep);
+}
+
+.sci-ann-btn--secondary {
+  background: #fff;
+  color: var(--majalis-emerald-deep);
+  border-color: rgba(26, 60, 46, 0.18);
+}
+
+.sci-ann-card--compact .sci-ann-card__book,
+.sci-ann-card--compact .sci-ann-card__tags {
+  display: none;
+}
+
+.sci-ann-detail-page {
+  padding-bottom: 3rem;
+}
+
+.sci-ann-detail__back {
+  display: inline-block;
+  margin-bottom: 1rem;
+  color: var(--majalis-brass-deep);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.sci-ann-detail {
+  border: 1px solid var(--majalis-line);
+  border-radius: 1rem;
+  background: linear-gradient(180deg, #faf8f4 0%, #f5f2eb 100%);
+  overflow: hidden;
+}
+
+.sci-ann-detail__poster img {
+  width: 100%;
+  max-height: 20rem;
+  object-fit: cover;
+  display: block;
+}
+
+.sci-ann-detail__header {
+  padding: 1.25rem 1.25rem 0.75rem;
+}
+
+.sci-ann-detail__ribbon {
+  display: inline-block;
+  margin-bottom: 0.65rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 0.45rem;
+  background: var(--majalis-emerald-deep);
+  color: var(--majalis-parchment);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.sci-ann-detail__header h1 {
+  margin: 0 0 0.5rem;
+  font-size: clamp(1.25rem, 3.5vw, 1.65rem);
+  line-height: 1.55;
+  color: var(--majalis-emerald-deep);
+}
+
+.sci-ann-detail__sheikh {
+  margin: 0;
+  font-weight: 700;
+  color: #9a6b2e;
+}
+
+.sci-ann-detail__block {
+  padding: 0 1.25rem 1rem;
+}
+
+.sci-ann-detail__block h2 {
+  margin: 0 0 0.65rem;
+  font-size: 1rem;
+  color: var(--majalis-emerald-deep);
+}
+
+.sci-ann-detail__meta {
+  display: grid;
+  gap: 0.55rem;
+  margin: 0 1.25rem 1rem;
+  padding: 1rem;
+  border-radius: 0.65rem;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(26, 60, 46, 0.08);
+}
+
+.sci-ann-detail__row {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.sci-ann-detail__row dt {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--majalis-ink-soft);
+}
+
+.sci-ann-detail__row dd {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.sci-ann-detail__muted {
+  margin: 0 0 0.75rem;
+  color: var(--majalis-ink-soft);
+  font-size: 0.85rem;
+}
+
+.sci-ann-detail__map {
+  border-radius: 0.65rem;
+  overflow: hidden;
+  border: 1px solid var(--majalis-line);
+  aspect-ratio: 16 / 10;
+}
+
+.sci-ann-detail__map iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.sci-ann-detail__notes {
+  margin: 0;
+  padding-inline-start: 1.15rem;
+  color: var(--majalis-ink-soft);
+  line-height: 1.75;
+  font-size: 0.92rem;
+}
+
+.sci-ann-detail__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  padding: 0 1.25rem 1rem;
+}
+
+.sci-ann-detail__actions {
+  padding: 1rem 1.25rem 1.25rem;
+  border-top: 1px solid rgba(26, 60, 46, 0.08);
+}
+
+.lessons-sci-ann {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--majalis-line);
+}
+
+@media (max-width: 720px) {
+  .sci-ann-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sci-ann-section__head {
+    flex-direction: column;
+  }
+
+  .sci-ann-card__actions .sci-ann-btn,
+  .sci-ann-detail__actions .sci-ann-btn {
+    flex: 1 1 calc(50% - 0.25rem);
+  }
+}

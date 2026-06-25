@@ -62,6 +62,14 @@ function routeForPath(path: string) {
     };
   }
 
+  if (normalized.startsWith("/scientific-announcements/")) {
+    return {
+      ...requiredRoute("/lessons"),
+      title: "تفاصيل الإعلان العلمي | المجلس العلمي",
+      description: "تفاصيل إعلان درس أو محاضرة علمية — الشيخ، المتن، الموعد، المكان، والروابط.",
+    };
+  }
+
   return requiredRoute("/404");
 }
 
