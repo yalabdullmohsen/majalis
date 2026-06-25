@@ -11,6 +11,7 @@ import { getSupabaseAdmin, isMissingTableError } from "./supabase-admin.mjs";
 import { OCCASION_SYNC_META } from "./islamic-occasions-sync-meta.mjs";
 import { runDailyPlatformSync } from "./daily-platform-sync.mjs";
 import { runFiqhCouncilSync } from "./fiqh-council-sync.mjs";
+import { runKnowledgeSync } from "./knowledge-sync.mjs";
 
 const PRAYER_DAYS_AHEAD = 7;
 
@@ -176,15 +177,16 @@ export async function syncIslamicOccasions(admin = getSupabaseAdmin()) {
 /** Daily sync — prayer times, occasions, lessons maintenance, daily content marker. */
 export async function runDailyDataSync() {
   const admin = getSupabaseAdmin();
-  const [prayer, occasions, platform, fiqh] = await Promise.all([
+  const [prayer, occasions, platform, fiqh, knowledge] = await Promise.all([
     syncPrayerTimes(admin),
     syncIslamicOccasions(admin),
     runDailyPlatformSync(),
     runFiqhCouncilSync({ triggerType: "cron" }),
+    runKnowledgeSync({ triggerType: "cron", maxItems: 25 }),
   ]);
 
   return {
-    ok: prayer.ok || occasions.ok || platform.ok || fiqh.ok || (prayer.skipped && occasions.skipped),
+    ok: prayer.ok || occasions.ok || platform.ok || fiqh.ok || knowledge.ok || (prayer.skipped && occasions.skipped),
     at: new Date().toISOString(),
     city: KUWAIT_CITY,
     governorate: KUWAIT_GOVERNORATE,
@@ -192,5 +194,6 @@ export async function runDailyDataSync() {
     occasions,
     platform,
     fiqh,
+    knowledge,
   };
 }

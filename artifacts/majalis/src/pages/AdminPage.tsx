@@ -18,6 +18,7 @@ import { FatwaAdminSection } from "@/pages/admin/FatwaAdminSection";
 import { RulingsSection } from "@/pages/admin/RulingsSection";
 import { AnnualCoursesSection } from "@/pages/admin/AnnualCoursesSection";
 import { UpdatesSection } from "@/pages/admin/UpdatesSection";
+import { KnowledgeEngineSection } from "@/pages/admin/KnowledgeEngineSection";
 
 export default function AdminPage() {
   const [section, setSection] = useState<AdminSection>("dashboard");
@@ -26,6 +27,7 @@ export default function AdminPage() {
     <AdminShell section={section} onSectionChange={setSection}>
       {section === "dashboard" && <DashboardSection />}
       {section === "aggregator" && <AggregatorSection />}
+      {section === "knowledge-engine" && <KnowledgeEngineSection />}
       {section === "lessons" && <LessonsSection />}
       {section === "sheikhs" && <SheikhsSection />}
       {section === "library" && <LibrarySection />}

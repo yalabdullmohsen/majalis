@@ -16,6 +16,7 @@ import {
   mergeFiqhSearchResults,
   type FiqhGlobalSearchRow,
 } from "@/lib/fiqh-global-search";
+import { searchKnowledgeHybrid, type KnowledgeSearchResult } from "@/lib/knowledge-engine-service";
 
 const EMPTY: SearchResults = {
   lessons: [],
@@ -96,6 +97,7 @@ export default function SearchPage() {
   const [term, setTerm] = useState(q);
   const [results, setResults] = useState<SearchResults>(EMPTY);
   const [fiqhResults, setFiqhResults] = useState<FiqhGlobalSearchRow[]>([]);
+  const [knowledgeResults, setKnowledgeResults] = useState<KnowledgeSearchResult[]>([]);
   const [fiqhQuery, setFiqhQuery] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -110,11 +112,14 @@ export default function SearchPage() {
     void trackSearchQuery(query);
 
     try {
-      const [r, unifiedMatches, fiqhBoost] = await Promise.all([
+      const [r, unifiedMatches, fiqhBoost, knowledge] = await Promise.all([
         searchEverything(query),
         searchUnifiedLessons(query),
         searchFiqhCouncilForGlobal(query, 12),
+        searchKnowledgeHybrid(query, 12),
       ]);
+
+      setKnowledgeResults(knowledge);
 
       const mergedFiqh = mergeFiqhSearchResults(r.fiqh_decisions || [], fiqhBoost.rows);
       setFiqhResults(mergedFiqh);
@@ -136,6 +141,7 @@ export default function SearchPage() {
     } catch {
       setFiqhResults([]);
       setFiqhQuery(false);
+      setKnowledgeResults([]);
       const unifiedMatches = await searchUnifiedLessons(query);
       if (unifiedMatches.length > 0) {
         setResults({
@@ -167,6 +173,7 @@ export default function SearchPage() {
 
   const total =
     fiqhResults.length +
+    knowledgeResults.length +
     results.lessons.length +
     results.miracles.length +
     results.qa.length +
@@ -217,6 +224,21 @@ export default function SearchPage() {
               <p className="search-page-summary">
                 {total} نتيجة لـ «<span>{q}</span>»
               </p>
+              {knowledgeResults.length > 0 && (
+                <Group
+                  title="محرك المعرفة"
+                  id="knowledge-engine"
+                  items={knowledgeResults}
+                  render={(k: KnowledgeSearchResult) => (
+                    <ResultRow
+                      key={k.id}
+                      href="/search"
+                      title={displayText(k.title)}
+                      meta={[k.category, k.scholar, k.verification_status === "verified" ? "موثق" : "مراجعة"].filter(Boolean).join(" · ")}
+                    />
+                  )}
+                />
+              )}
               {fiqhResults.length > 0 && (
                 <Group
                   title={fiqhQuery ? "من المجمع الفقهي الإسلامي" : "نتائج المجمع الفقهي"}

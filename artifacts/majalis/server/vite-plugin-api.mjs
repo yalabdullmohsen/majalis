@@ -5,6 +5,9 @@ import transcribeHandler from "../api/transcribe.js";
 import prayerTimesHandler from "../api/prayer-times.js";
 import fiqhResearchAssistantHandler from "../api/fiqh-research-assistant.js";
 import syncDataHandler from "../api/cron/sync-data.js";
+import knowledgeSyncHandler from "../api/cron/knowledge-sync.js";
+import knowledgePipelineHandler from "../api/admin/knowledge-pipeline.js";
+import knowledgeSearchHandler from "../api/knowledge-search.js";
 import { createRateLimiter } from "./rate-limit.mjs";
 
 const assistantRateLimit = createRateLimiter({
@@ -29,6 +32,9 @@ const API_ROUTES = [
   { prefix: "/api/assistant/health", handler: assistantHealthHandler, allowGet: true, exact: true },
   { prefix: "/api/prayer-times", handler: prayerTimesHandler, allowGet: true, exact: true },
   { prefix: "/api/cron/sync-data", handler: syncDataHandler, allowGet: true, exact: true },
+  { prefix: "/api/cron/knowledge-sync", handler: knowledgeSyncHandler, allowGet: true, exact: true },
+  { prefix: "/api/admin/knowledge-pipeline", handler: knowledgePipelineHandler, allowGet: true },
+  { prefix: "/api/knowledge-search", handler: knowledgeSearchHandler, allowGet: true },
   { prefix: "/api/fiqh-research-assistant", handler: fiqhResearchAssistantHandler, rateLimit: fiqhResearchRateLimit, allowGet: true },
   { prefix: "/api/assistant", handler: assistantHandler, rateLimit: assistantRateLimit, allowGet: true },
   { prefix: "/api/test-anthropic", handler: testAnthropicHandler, allowGet: true },

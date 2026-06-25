@@ -19,6 +19,10 @@
       "schedule": "0 6 * * *"
     },
     {
+      "path": "/api/cron/knowledge-sync",
+      "schedule": "0 */6 * * *"
+    },
+    {
       "path": "/api/cron/check-fiqh-links",
       "schedule": "0 7 * * *"
     }

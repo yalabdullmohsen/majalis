@@ -21,11 +21,13 @@ export type AdminSection =
   | "fatwa"
   | "rulings"
   | "annual-courses"
-  | "updates";
+  | "updates"
+  | "knowledge-engine";
 
 export const ADMIN_NAV: { key: AdminSection; label: string }[] = [
   { key: "dashboard", label: "لوحة التحكم" },
   { key: "aggregator", label: "محرك التجميع" },
+  { key: "knowledge-engine", label: "محرك المعرفة" },
   { key: "lessons", label: "الدروس" },
   { key: "sheikhs", label: "المشايخ" },
   { key: "library", label: "المكتبة" },

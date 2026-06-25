@@ -6,6 +6,7 @@ import { canSubmitForm } from "@/lib/form-rate-limit";
 import { PageHeader, Loading, Empty } from "@/components/ui-common";
 import { useAuth } from "@/components/AuthProvider";
 import { FaidahCard } from "@/components/fawaid/FaidahCard";
+import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 
 const LEGACY_CATEGORIES = [
   "فوائد قرآنية",
@@ -139,6 +140,8 @@ export default function FawaidPage() {
           ))}
         </div>
       )}
+
+      <RelatedKnowledge kind="fawaid" title="فوائد ذات صلة" />
 
       {isLoggedIn && (
         <div className="ui-card content-submit-panel">
