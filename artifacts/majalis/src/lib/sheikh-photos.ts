@@ -2,7 +2,7 @@ import { sheikhNameKey } from "@/lib/sheikh-name";
 
 /** Local sheikh portrait paths — official portraits in public/sheikhs. */
 const SHEIKH_PHOTOS: Record<string, string> = {
-  "عثمان بن محمد الخميس": "/sheikhs/othman-alkhamees.svg",
+  "عثمان بن محمد الخميس": "/sheikhs/othman-alkhamees.jpg",
   "راشد صليهم فهد الصليهم": "/sheikhs/rashed-alsulayyim.svg",
   "منصور بن ناصر الخالدي": "/sheikhs/mansour-alkhalidi.svg",
   "أسامة الشطي": "/sheikhs/osama-alshatti.svg",

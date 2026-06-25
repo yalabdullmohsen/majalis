@@ -39,7 +39,7 @@ export const lessonAds: LessonAd[] = [
     id: "othman-tafsir-nahl",
     provider: "الموقع الرسمي للشيخ عثمان الخميس",
     teacher: "د. عثمان بن محمد الخميس",
-    teacherImage: "/sheikhs/othman-alkhamees.svg",
+    teacherImage: "/sheikhs/othman-alkhamees.jpg",
     posterImage: "/images/posters/othman-tafsir-nahl.svg",
     title: "تفسير سورة النحل",
     shortDescription:
@@ -67,7 +67,7 @@ export const lessonAds: LessonAd[] = [
     id: "othman-sahih-muslim",
     provider: "الموقع الرسمي للشيخ عثمان الخميس",
     teacher: "د. عثمان بن محمد الخميس",
-    teacherImage: "/sheikhs/othman-alkhamees.svg",
+    teacherImage: "/sheikhs/othman-alkhamees.jpg",
     posterImage: "/images/posters/othman-sahih-muslim.svg",
     title: "قراءة كتاب صحيح مسلم",
     shortDescription:
@@ -96,7 +96,7 @@ export const lessonAds: LessonAd[] = [
     id: "othman-talkhis-mukhtasar-almuqni",
     provider: "الموقع الرسمي للشيخ عثمان الخميس",
     teacher: "د. عثمان بن محمد الخميس",
-    teacherImage: "/sheikhs/othman-alkhamees.svg",
+    teacherImage: "/sheikhs/othman-alkhamees.jpg",
     posterImage: "/images/posters/othman-talkhis-almuqni.svg",
     title: "شرح كتاب تلخيص مختصر المقنع",
     shortDescription:

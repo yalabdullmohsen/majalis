@@ -51,7 +51,7 @@ const lessonAds = [
   {
     id: "othman-tafsir-nahl",
     teacher: "د. عثمان بن محمد الخميس",
-    teacherImage: "/images/teachers/othman-alkhamees.svg",
+    teacherImage: "/sheikhs/othman-alkhamees.jpg",
     title: "تفسير سورة النحل",
     shortDescription: "درس أسبوعي ثابت، والمتابعة الحالية تبدأ من الآية 40.",
     tags: ["تفسير", "أسبوعي", "حضوري", "بث مباشر"],
@@ -70,7 +70,7 @@ const lessonAds = [
   {
     id: "othman-sahih-muslim",
     teacher: "د. عثمان بن محمد الخميس",
-    teacherImage: "/images/teachers/othman-alkhamees.svg",
+    teacherImage: "/sheikhs/othman-alkhamees.jpg",
     title: "قراءة كتاب صحيح مسلم",
     shortDescription: "درس أسبوعي ثابت، والمتابعة الحالية تبدأ من الحديث 989 عند الصفحة 400.",
     tags: ["حديث", "أسبوعي", "حضوري", "بث مباشر"],
@@ -89,7 +89,7 @@ const lessonAds = [
   {
     id: "othman-talkhis-mukhtasar-almuqni",
     teacher: "د. عثمان بن محمد الخميس",
-    teacherImage: "/images/teachers/othman-alkhamees.svg",
+    teacherImage: "/sheikhs/othman-alkhamees.jpg",
     title: "شرح كتاب تلخيص مختصر المقنع",
     shortDescription: "درس أسبوعي ثابت في الفقه.",
     tags: ["فقه", "أسبوعي", "حضوري", "بث مباشر"],
@@ -186,7 +186,7 @@ const sheikhMeta = {
     city: "العاصمة",
     bio: "عالم أصولي ومفسر، له مجالس علمية أسبوعية ثابتة في مساجد منطقة الصديق.",
     specialties: ["تفسير", "فقه", "حديث"],
-    photo: "/images/teachers/othman-alkhamees.svg",
+    photo: "/sheikhs/othman-alkhamees.jpg",
   },
   "د. راشد صليهم فهد الصليهم": {
     city: "العاصمة",
