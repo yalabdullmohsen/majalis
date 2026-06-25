@@ -2,74 +2,161 @@ import { sendJson } from "../_http.js";
 import { validateCronAuth } from "../../lib/env-config.mjs";
 import { applyMigrations, ensureSchemaReady, verifySchema } from "../../lib/db-migrate.mjs";
 import { testDatabaseConnection, resolveDatabaseUrl } from "../../lib/database.mjs";
-import { runAutoContentSync } from "../../lib/auto-content/auto-content-sync.mjs";
-import { getPublishedAutoContentFeed } from "../../lib/auto-content/auto-content-sync.mjs";
+import { listAvailableMigrations } from "../../lib/migration-paths.mjs";
+import { runAutoContentSync, getPublishedAutoContentFeed } from "../../lib/auto-content/auto-content-sync.mjs";
+import { getSupabaseAdmin } from "../../lib/supabase-admin.mjs";
+import { logBootstrapError, serializeError } from "../../lib/bootstrap-debug.mjs";
+
+/** Current pipeline step — updated before each phase for error context. */
+let migrationStep = "init";
+
+function debugPayload(error, extra = {}) {
+  const dbResolved = resolveDatabaseUrl();
+  return {
+    ok: false,
+    step: migrationStep,
+    migrationStep,
+    error: serializeError(error),
+    message: error?.message || String(error),
+    stack: error?.stack || null,
+    databaseUrlExists: Boolean(dbResolved.url),
+    databaseUrlSource: dbResolved.source,
+    ...extra,
+  };
+}
+
+async function testSupabaseAuth() {
+  const admin = getSupabaseAdmin();
+  if (!admin) return { ok: false, error: "Supabase admin not configured (SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY missing)" };
+  const { error } = await admin.from("auto_imported_content").select("id").limit(1);
+  if (error) return { ok: false, error: error.message, code: error.code };
+  return { ok: true };
+}
 
 export default async function handler(req, res) {
-  if (!validateCronAuth(req)) {
-    sendJson(res, 401, { ok: false, error: "Unauthorized" });
-    return;
-  }
-
-  const action = req.query?.action || req.body?.action || "full";
+  migrationStep = "auth";
 
   try {
+    if (!validateCronAuth(req)) {
+      sendJson(res, 401, { ok: false, error: "Unauthorized" });
+      return;
+    }
+
+    const action = req.query?.action || req.body?.action || "full";
+
     if (action === "verify") {
+      migrationStep = "verify_schema";
       sendJson(res, 200, await verifySchema());
       return;
     }
 
     if (action === "connection") {
+      migrationStep = "test_connection";
       const conn = await testDatabaseConnection();
-      sendJson(res, conn.ok ? 200 : 503, { ...conn, resolved: resolveDatabaseUrl() });
-      return;
-    }
-
-    if (action === "migrate") {
-      const result = await applyMigrations({ continueOnError: false });
-      sendJson(res, result.ok ? 200 : 503, result);
-      return;
-    }
-
-    // Full bootstrap: connection → migrations → sync → verify
-    const started = Date.now();
-    const steps = {};
-
-    steps.databaseUrl = resolveDatabaseUrl();
-    steps.connection = await testDatabaseConnection().catch((e) => ({ ok: false, error: e.message }));
-
-    steps.schema = await ensureSchemaReady();
-    if (!steps.schema.ok) {
-      sendJson(res, 503, {
-        ok: false,
-        step: "schema",
-        steps,
-        durationMs: Date.now() - started,
+      sendJson(res, conn.ok ? 200 : 500, {
+        ...conn,
+        resolved: { source: resolveDatabaseUrl().source, configured: Boolean(resolveDatabaseUrl().url) },
       });
       return;
     }
 
-    steps.sync = await runAutoContentSync({ triggerType: "bootstrap" });
+    if (action === "migrate") {
+      migrationStep = "apply_migrations";
+      const migrations = listAvailableMigrations();
+      const result = await applyMigrations({ continueOnError: false });
+      sendJson(res, result.ok ? 200 : 500, { migrations, ...result });
+      return;
+    }
+
+    // Full bootstrap: env → connection → migrations → schema → sync → verify
+    const started = Date.now();
+    const steps = {};
+
+    migrationStep = "resolve_database_url";
+    steps.databaseUrl = {
+      exists: Boolean(resolveDatabaseUrl().url),
+      source: resolveDatabaseUrl().source,
+    };
+
+    migrationStep = "list_migrations";
+    steps.migrations = listAvailableMigrations();
+    if (!steps.migrations.ok) {
+      const err = new Error(
+        `Migration files missing: ${steps.migrations.missing?.join(", ") || "unknown"} (dir=${steps.migrations.dir})`,
+      );
+      logBootstrapError(migrationStep, err, steps);
+      sendJson(res, 500, debugPayload(err, { steps, durationMs: Date.now() - started }));
+      return;
+    }
+
+    migrationStep = "test_postgresql_connection";
+    steps.connection = await testDatabaseConnection();
+    if (!steps.connection.ok) {
+      const err = new Error(steps.connection.error || "PostgreSQL connection failed");
+      err.stack = steps.connection.stack || err.stack;
+      logBootstrapError(migrationStep, err, { connection: steps.connection, databaseUrlExists: steps.databaseUrl.exists });
+      sendJson(res, 500, debugPayload(err, { steps, connectionResult: steps.connection, durationMs: Date.now() - started }));
+      return;
+    }
+
+    migrationStep = "supabase_auth";
+    steps.supabaseAuth = await testSupabaseAuth();
+    if (!steps.supabaseAuth.ok) {
+      const err = new Error(`Supabase authentication failed: ${steps.supabaseAuth.error}`);
+      logBootstrapError(migrationStep, err, steps);
+      sendJson(res, 500, debugPayload(err, { steps, durationMs: Date.now() - started }));
+      return;
+    }
+
+    migrationStep = "ensure_schema_ready";
+    steps.schema = await ensureSchemaReady();
+    if (!steps.schema.ok) {
+      const schemaErr =
+        steps.schema.migration?.results?.find((r) => !r.ok)?.error ||
+        steps.schema.migration?.error ||
+        JSON.stringify(steps.schema.schema?.checks || {});
+      const err = new Error(`ensureSchemaReady() failed: ${schemaErr}`);
+      logBootstrapError(migrationStep, err, steps);
+      sendJson(res, 500, debugPayload(err, { steps, durationMs: Date.now() - started }));
+      return;
+    }
+
+    migrationStep = "auto_content_sync";
+    steps.sync = await runAutoContentSync({ triggerType: "bootstrap", skipSchemaCheck: true });
+
+    migrationStep = "verify_published_content";
     steps.content = await getPublishedAutoContentFeed({ limit: 10 });
 
     const ok = steps.sync?.ok && (steps.content?.items?.length > 0 || steps.sync?.published > 0);
-    sendJson(res, ok ? 200 : 503, {
+    migrationStep = "complete";
+
+    sendJson(res, ok ? 200 : 500, {
       ok,
+      step: migrationStep,
       steps: {
         databaseUrl: steps.databaseUrl,
-        connection: { ok: steps.connection?.ok, source: steps.connection?.source },
-        schema: { ok: steps.schema?.ok },
+        migrations: { ok: steps.migrations.ok, present: steps.migrations.present },
+        connection: { ok: steps.connection.ok, source: steps.connection.source },
+        supabaseAuth: steps.supabaseAuth,
+        schema: { ok: steps.schema.ok, migrated: steps.schema.migrated },
         sync: {
           ok: steps.sync?.ok,
           imported: steps.sync?.imported,
           published: steps.sync?.published,
           failed: steps.sync?.failed,
+          error: steps.sync?.error,
         },
         content: { count: steps.content?.items?.length ?? 0 },
       },
       durationMs: Date.now() - started,
     });
   } catch (error) {
-    sendJson(res, 500, { ok: false, error: error.message, resolved: resolveDatabaseUrl() });
+    logBootstrapError(migrationStep, error, {
+      databaseUrlExists: Boolean(resolveDatabaseUrl().url),
+    });
+    console.error("[bootstrap-database] unhandled error object:", error);
+    console.error("[bootstrap-database] error.message:", error?.message);
+    console.error("[bootstrap-database] error.stack:", error?.stack);
+    sendJson(res, 500, debugPayload(error, { unhandled: true }));
   }
 }

@@ -1,18 +1,32 @@
 /**
  * Unified database connection — single source for DATABASE_URL resolution.
  * Supports: pg, drizzle (lib/db), Supabase migrations, cron bootstrap.
+ *
+ * Supabase direct hosts (db.{ref}.supabase.co) are IPv6-only; Vercel serverless
+ * is IPv4-only and fails with ENOTFOUND. Pooler URLs (Supavisor) use IPv4.
  */
 
 import { getEnvConfig } from "./env-config.mjs";
 
+const POOLER_PREFIXES = ["aws-1", "aws-0"];
 const POOLER_REGIONS = [
-  "us-east-1",
-  "us-west-1",
-  "eu-west-1",
-  "eu-central-1",
-  "ap-southeast-1",
   "ap-northeast-1",
+  "ap-northeast-2",
+  "ap-southeast-1",
+  "ap-southeast-2",
+  "ap-south-1",
+  "us-east-1",
+  "us-east-2",
+  "us-west-1",
+  "us-west-2",
+  "eu-west-1",
+  "eu-west-2",
+  "eu-central-1",
+  "eu-central-2",
+  "eu-north-1",
   "sa-east-1",
+  "ca-central-1",
+  "me-central-1",
 ];
 
 function pick(...keys) {
@@ -33,6 +47,30 @@ export function getProjectRef() {
   }
 }
 
+/** Parse postgres URL into components (password, ref, host). */
+export function parsePostgresUrl(urlStr) {
+  if (!urlStr) return null;
+  try {
+    const u = new URL(urlStr);
+    const user = decodeURIComponent(u.username || "");
+    const password = decodeURIComponent(u.password || "");
+    const host = u.hostname;
+    const dbRefFromHost = host.match(/^db\.([^.]+)\.supabase\.co$/)?.[1] || "";
+    const dbRefFromUser = user.match(/^postgres\.(.+)$/)?.[1] || "";
+    return {
+      user,
+      password,
+      host,
+      port: u.port || "5432",
+      database: u.pathname.replace(/^\//, "") || "postgres",
+      ref: dbRefFromHost || dbRefFromUser || getProjectRef(),
+      isDirectSupabaseHost: /^db\.[^.]+\.supabase\.co$/.test(host),
+    };
+  } catch {
+    return null;
+  }
+}
+
 /** Build DATABASE_URL from POSTGRES_* component env vars (Vercel Supabase integration). */
 function buildFromPostgresComponents() {
   const host = pick("POSTGRES_HOST", "PGHOST");
@@ -47,14 +85,26 @@ function buildFromPostgresComponents() {
   return "";
 }
 
-/** Build pooler URL from project ref + password. */
+/** Build Supavisor pooler URLs from project ref + password. */
 function buildPoolerUrls(ref, password) {
   if (!ref || !password) return [];
   const enc = encodeURIComponent(password);
-  return POOLER_REGIONS.flatMap((region) => [
-    `postgresql://postgres.${ref}:${enc}@aws-0-${region}.pooler.supabase.com:6543/postgres?sslmode=require`,
-    `postgresql://postgres.${ref}:${enc}@aws-0-${region}.pooler.supabase.com:5432/postgres?sslmode=require`,
-  ]);
+  const urls = [];
+  for (const prefix of POOLER_PREFIXES) {
+    for (const region of POOLER_REGIONS) {
+      for (const port of [6543, 5432]) {
+        urls.push({
+          url: `postgresql://postgres.${ref}:${enc}@${prefix}-${region}.pooler.supabase.com:${port}/postgres`,
+          source: `pooler_${prefix}_${region}_${port}`,
+        });
+        urls.push({
+          url: `postgresql://postgres:${enc}@${prefix}-${region}.pooler.supabase.com:${port}/postgres?options=reference%3D${ref}`,
+          source: `pooler_options_${prefix}_${region}_${port}`,
+        });
+      }
+    }
+  }
+  return urls;
 }
 
 /** Build direct connection URL. */
@@ -83,18 +133,39 @@ export function resolveDatabaseUrl() {
 }
 
 export function listCandidateDatabaseUrls() {
-  const ref = getProjectRef();
-  const password = pick("POSTGRES_PASSWORD", "PGPASSWORD", "SUPABASE_DB_PASSWORD", "DB_PASSWORD");
+  const seen = new Set();
   const candidates = [];
 
+  function add(url, source) {
+    if (!url || seen.has(url)) return;
+    seen.add(url);
+    candidates.push({ url, source });
+  }
+
   const resolved = resolveDatabaseUrl();
-  if (resolved.url) candidates.push(resolved);
+  const parsed = parsePostgresUrl(resolved.url);
+  const ref = parsed?.ref || getProjectRef();
+  const password =
+    parsed?.password ||
+    pick("POSTGRES_PASSWORD", "PGPASSWORD", "SUPABASE_DB_PASSWORD", "DB_PASSWORD");
+
+  // Prefer IPv4 pooler before direct IPv6-only Supabase host (Vercel / IPv4-only networks).
+  if (ref && password) {
+    for (const { url, source } of buildPoolerUrls(ref, password)) {
+      add(url, source);
+    }
+  }
+
+  if (resolved.url) {
+    if (parsed?.isDirectSupabaseHost) {
+      add(resolved.url, `${resolved.source}_ipv6_direct`);
+    } else {
+      add(resolved.url, resolved.source);
+    }
+  }
 
   if (ref && password) {
-    candidates.push({ url: buildDirectUrl(ref, password), source: "direct_db_host" });
-    for (const url of buildPoolerUrls(ref, password)) {
-      candidates.push({ url, source: "pooler" });
-    }
+    add(buildDirectUrl(ref, password), "direct_db_host");
   }
 
   return candidates;
@@ -103,7 +174,8 @@ export function listCandidateDatabaseUrls() {
 let _pool = null;
 
 export async function getPgPool() {
-  const { url } = resolveDatabaseUrl();
+  const candidates = listCandidateDatabaseUrls();
+  const url = candidates[0]?.url;
   if (!url) return null;
   if (_pool) return _pool;
   const pg = await import("pg");
@@ -141,12 +213,28 @@ export async function getPgClient() {
     }
   }
 
-  throw new Error(`All database connection attempts failed: ${JSON.stringify(errors.slice(0, 3))}`);
+  throw new Error(`All database connection attempts failed: ${JSON.stringify(errors.slice(0, 5))}`);
 }
 
 export async function testDatabaseConnection() {
   const started = Date.now();
-  const { client, source } = await getPgClient();
+  const dbResolved = resolveDatabaseUrl();
+  let clientInfo;
+
+  try {
+    clientInfo = await getPgClient();
+  } catch (err) {
+    return {
+      ok: false,
+      error: err.message,
+      durationMs: Date.now() - started,
+      databaseUrlExists: Boolean(dbResolved.url),
+      databaseUrlSource: dbResolved.source,
+      candidatesTried: listCandidateDatabaseUrls().length,
+    };
+  }
+
+  const { client, source } = clientInfo;
 
   try {
     const { rows: ping } = await client.query("SELECT 1 AS ok");
@@ -172,6 +260,7 @@ export async function testDatabaseConnection() {
       ok: true,
       source,
       durationMs: Date.now() - started,
+      databaseUrlExists: Boolean(dbResolved.url),
       ping: ping[0]?.ok === 1,
       version: String(version[0]?.version || "").slice(0, 60),
       publicTables: tables[0]?.n ?? 0,
@@ -183,7 +272,14 @@ export async function testDatabaseConnection() {
     };
   } catch (err) {
     await client.query("ROLLBACK").catch(() => {});
-    return { ok: false, source, error: err.message, durationMs: Date.now() - started };
+    return {
+      ok: false,
+      source,
+      error: err.message,
+      stack: err.stack,
+      durationMs: Date.now() - started,
+      databaseUrlExists: Boolean(dbResolved.url),
+    };
   } finally {
     await client.end().catch(() => {});
   }

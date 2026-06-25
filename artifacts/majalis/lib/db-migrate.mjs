@@ -4,10 +4,13 @@
  * Falls back to Supabase Management API when access token available.
  */
 
-import { readFileSync, readdirSync } from "node:fs";
-import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
+import { readFileSync } from "node:fs";
 import { getPgClient, getProjectRef, resolveDatabaseUrl } from "./database.mjs";
+import {
+  MIGRATION_FILES,
+  listAvailableMigrations,
+  migrationFilePath,
+} from "./migration-paths.mjs";
 
 function pick(...keys) {
   for (const k of keys) {
@@ -17,19 +20,8 @@ function pick(...keys) {
   return "";
 }
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const REPO_ROOT = join(__dirname, "../../..");
-
-const MIGRATION_FILES = [
-  "supabase/auto_content_pipeline.sql",
-  "supabase/auto_content_pipeline_v2.sql",
-  "supabase/auto_engine_production_complete.sql",
-  "supabase/knowledge_engine_v12.sql",
-  "supabase/auto_knowledge_engine_v13.sql",
-];
-
-function loadSql(relativePath) {
-  return readFileSync(join(REPO_ROOT, relativePath), "utf8");
+function loadSql(filename) {
+  return readFileSync(migrationFilePath(filename), "utf8");
 }
 
 async function applyViaManagementApiMigrations(sql, projectRef, accessToken, name) {
@@ -97,6 +89,16 @@ export async function ensureSchemaReady() {
   const ready = await isSchemaReady();
   if (ready) return { ok: true, alreadyReady: true };
 
+  const available = listAvailableMigrations();
+  if (!available.ok) {
+    return {
+      ok: false,
+      error: `Migration files missing: ${available.missing.join(", ")}`,
+      migrationsDir: available.dir,
+      tried: available.tried,
+    };
+  }
+
   const migration = await applyMigrations({ continueOnError: false });
   const verify = await verifySchema();
   return { ok: verify.ok, migrated: true, migration, schema: verify };
@@ -108,13 +110,24 @@ export async function applyMigrations(options = {}) {
   const accessToken = pick("SUPABASE_ACCESS_TOKEN", "SUPABASE_MANAGEMENT_TOKEN", "SUPABASE_PAT");
   const projectRef = getProjectRef();
   const dbResolved = resolveDatabaseUrl();
+  const available = listAvailableMigrations();
+
+  if (!available.ok) {
+    return {
+      ok: false,
+      error: `Migration files missing: ${available.missing.join(", ")}`,
+      migrationsDir: available.dir,
+      tried: available.tried,
+      databaseUrl: dbResolved,
+    };
+  }
 
   // Management API path (no DATABASE_URL needed)
   if (accessToken && projectRef) {
     for (const file of files) {
       const started = Date.now();
       const sql = loadSql(file);
-      const name = file.replace(/^supabase\//, "").replace(".sql", "");
+      const name = file.replace(/\.sql$/, "");
       try {
         await applyViaManagementApiMigrations(sql, projectRef, accessToken, name);
         results.push({ file, ok: true, via: "management_api_migrations", durationMs: Date.now() - started });
@@ -142,10 +155,12 @@ export async function applyMigrations(options = {}) {
     return {
       ok: false,
       error: err.message,
+      stack: err.stack,
       results,
       databaseUrl: dbResolved,
-      hint: "Set DATABASE_URL or POSTGRES_URL or POSTGRES_PASSWORD or SUPABASE_ACCESS_TOKEN on Vercel",
+      hint: "Set DATABASE_URL to Supavisor pooler URL (IPv4) or SUPABASE_ACCESS_TOKEN on Vercel",
       projectRef,
+      migrationsDir: available.dir,
     };
   }
 
@@ -158,7 +173,7 @@ export async function applyMigrations(options = {}) {
         await client.query(sql);
         results.push({ file, ok: true, via: source, durationMs: Date.now() - started });
       } catch (err) {
-        results.push({ file, ok: false, error: err.message, via: source, durationMs: Date.now() - started });
+        results.push({ file, ok: false, error: err.message, stack: err.stack, via: source, durationMs: Date.now() - started });
         if (!options.continueOnError) throw err;
       }
     }
@@ -187,6 +202,7 @@ export async function applyMigrations(options = {}) {
       requiredColumns: cols.map((c) => c.column_name),
       schema: verify,
       via: source,
+      migrationsDir: available.dir,
       databaseUrl: { source: dbResolved.source, configured: Boolean(dbResolved.url) },
     };
   } finally {
@@ -195,6 +211,5 @@ export async function applyMigrations(options = {}) {
 }
 
 export async function listMigrationFiles() {
-  const supabaseDir = join(REPO_ROOT, "supabase");
-  return readdirSync(supabaseDir).filter((f) => f.endsWith(".sql")).sort();
+  return listAvailableMigrations().allSqlInDir || [];
 }
