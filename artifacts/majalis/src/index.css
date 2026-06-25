@@ -9,6 +9,7 @@ html {
 :root {
   --majalis-ink: #241F18;
   --majalis-ink-soft: #5B5446;
+  --majalis-charcoal: #1A1A1A;
   --majalis-parchment: #FAF5EA;
   --majalis-parchment-deep: #F0E8D6;
   --majalis-panel: #FFFFFF;
@@ -5427,5 +5428,120 @@ input, textarea, select { font-family: inherit; }
 
   .template-action-row {
     grid-template-columns: 1fr;
+  }
+}
+
+/* ── Phase 1: identity polish ── */
+.home-hero-title {
+  font-size: clamp(1.85rem, 4.5vw, 2.5rem);
+  font-weight: 700;
+  color: var(--majalis-parchment);
+  margin: 0.35rem 0 0.5rem;
+  line-height: 1.25;
+}
+
+.home-hero-lead {
+  color: rgba(250, 245, 234, 0.88);
+  font-size: clamp(0.95rem, 2.2vw, 1.05rem);
+  max-width: 34rem;
+  margin-bottom: 1.15rem;
+  line-height: 1.75;
+}
+
+.navbar-logo {
+  width: auto;
+  height: 44px;
+  max-height: 44px;
+  max-width: 44px;
+  object-fit: contain;
+}
+
+.home-hero-logo {
+  width: clamp(3.25rem, 8vw, 4.25rem);
+  height: clamp(3.25rem, 8vw, 4.25rem);
+  object-fit: contain;
+}
+
+.home-section {
+  margin-bottom: clamp(2rem, 5vw, 2.75rem);
+}
+
+.home-section-head {
+  margin-bottom: 1rem;
+}
+
+.home-feature-grid--compact {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0;
+  gap: 0.85rem;
+}
+
+.home-feature-card {
+  min-height: 130px;
+  padding: 1rem 1.05rem;
+}
+
+.home-feature-card h3 {
+  font-size: 1rem;
+  margin-bottom: 0.35rem;
+}
+
+.home-feature-card p {
+  font-size: 0.85rem;
+  line-height: 1.65;
+}
+
+.home-two-column {
+  gap: 1.25rem;
+}
+
+.home-primary-action,
+.home-secondary-action,
+.home-search button {
+  min-height: 44px;
+}
+
+.ui-card-btn {
+  min-height: 44px;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.content-hub-chip {
+  min-height: 40px;
+}
+
+@media (max-width: 900px) {
+  .home-feature-grid--compact {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .home-two-column {
+    grid-template-columns: 1fr;
+  }
+
+  .home-kuwait-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .home-feature-grid--compact {
+    grid-template-columns: 1fr;
+  }
+
+  .home-hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .home-search {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .home-search button {
+    width: 100%;
   }
 }

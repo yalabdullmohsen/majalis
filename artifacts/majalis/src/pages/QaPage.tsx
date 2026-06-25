@@ -11,6 +11,7 @@ import {
   QaSkeleton,
 } from "@/components/ui-common";
 import ContentActions from "@/components/ContentActions";
+import { displayText } from "@/lib/display-text";
 import { DEMO_QA, DEMO_QA_CATEGORIES, demoNoticeText, isDemoId } from "@/lib/demo-content";
 
 function Disclaimer() {
@@ -159,7 +160,7 @@ export default function QaPage() {
                   onClick={() => setOpenId(open ? null : q.id)}
                   aria-expanded={open}
                 >
-                  <span className="content-mini-card__question">{q.question}</span>
+                  <span className="content-mini-card__question">{displayText(q.question)}</span>
                   <span className="content-mini-card__meta-row">
                     {catName && <span className="content-mini-card__tag">{catName}</span>}
                     {q.ruling_type && <RulingBadge ruling={q.ruling_type} />}
@@ -168,15 +169,15 @@ export default function QaPage() {
 
                 {open && (
                   <div className="content-mini-card__details">
-                    <p className="content-mini-card__answer">{q.answer}</p>
+                    <p className="content-mini-card__answer">{displayText(q.answer)}</p>
                     {q.evidence && (
                       <div className="content-mini-card__evidence">
-                        <strong>الدليل:</strong> {q.evidence}
+                        <strong>الدليل:</strong> {displayText(q.evidence)}
                       </div>
                     )}
                     {q.reference && (
                       <p className="content-mini-card__ref">
-                        <strong>المرجع:</strong> {q.reference}
+                        <strong>المرجع:</strong> {displayText(q.reference)}
                       </p>
                     )}
                     {!isDemoId(q.id) && (

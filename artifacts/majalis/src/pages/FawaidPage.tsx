@@ -6,6 +6,7 @@ import { canSubmitForm } from "@/lib/form-rate-limit";
 import { PageHeader, Loading, Empty, DemoNotice } from "@/components/ui-common";
 import { useAuth } from "@/components/AuthProvider";
 import ContentActions from "@/components/ContentActions";
+import { displayText } from "@/lib/display-text";
 
 function useDebouncedValue<T>(value: T, delayMs = 350): T {
   const [debounced, setDebounced] = useState(value);
@@ -122,8 +123,9 @@ export default function FawaidPage() {
         <div className="content-card-grid">
           {displayItems.map((f: any) => {
             const open = expandedId === f.id;
-            const long = f.text.length > 140;
-            const preview = long && !open ? `${f.text.slice(0, 140)}...` : f.text;
+            const cleaned = displayText(f.text);
+            const long = cleaned.length > 140;
+            const preview = long && !open ? `${cleaned.slice(0, 140)}...` : cleaned;
             return (
               <article key={f.id} className="content-mini-card">
                 {f.category && <span className="content-mini-card__tag">{f.category}</span>}

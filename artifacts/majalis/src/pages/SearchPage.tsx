@@ -3,6 +3,7 @@ import { Link, useParams, useLocation } from "wouter";
 import { C } from "@/lib/theme";
 import { searchEverything, type SearchResults } from "@/lib/supabase";
 import { demoNoticeText, searchDemoContent } from "@/lib/demo-content";
+import { displayText } from "@/lib/display-text";
 import { DemoNotice, SearchSkeleton } from "@/components/ui-common";
 import { SheikhAvatar } from "@/components/lessons/SheikhAvatar";
 import { resolveSheikhImageUrl, resolveLessonSheikhImage } from "@/lib/sheikh-image";
@@ -102,7 +103,6 @@ export default function SearchPage() {
 
   const total =
     results.lessons.length +
-    results.library.length +
     results.miracles.length +
     results.sheikhs.length +
     results.qa.length +
@@ -118,7 +118,7 @@ export default function SearchPage() {
         <input
           value={term}
           onChange={(e) => setTerm(e.target.value)}
-          placeholder="ابحث في الدروس والمشايخ والمكتبة والإعجاز العلمي..."
+          placeholder="ابحث في الدروس والمشايخ والفوائد والأسئلة..."
           autoFocus
           aria-label="كلمة البحث"
         />
@@ -150,7 +150,7 @@ export default function SearchPage() {
                   <ResultRow
                     key={l.id}
                     href="/lessons"
-                    title={l.title}
+                    title={displayText(l.title)}
                     meta={l.speaker_name || l.sheikhs?.name || l.category}
                     avatarSrc={resolveLessonSheikhImage(l)}
                     avatarName={l.speaker_name || l.sheikhs?.name || "شيخ"}
@@ -171,24 +171,19 @@ export default function SearchPage() {
                 )}
               />
               <Group
-                title="المكتبة"
-                items={results.library}
-                render={(it) => <ResultRow key={it.id} href="/library" title={it.title} meta={it.type} />}
-              />
-              <Group
                 title="الإعجاز العلمي"
                 items={results.miracles}
-                render={(m) => <ResultRow key={m.id} href="/miracles" title={m.title} meta={m.category} />}
+                render={(m) => <ResultRow key={m.id} href="/miracles" title={displayText(m.title)} meta={m.category} />}
               />
               <Group
                 title="الأسئلة والأجوبة"
                 items={results.qa}
-                render={(x) => <ResultRow key={x.id} href="/qa" title={x.question} meta={x.qa_categories?.name} />}
+                render={(x) => <ResultRow key={x.id} href="/qa" title={displayText(x.question)} meta={x.qa_categories?.name} />}
               />
               <Group
                 title="الفوائد"
                 items={results.fawaid}
-                render={(f) => <ResultRow key={f.id} href="/fawaid" title={f.text} meta={f.author_name} />}
+                render={(f) => <ResultRow key={f.id} href="/fawaid" title={displayText(f.text)} meta={f.author_name} />}
               />
             </>
           )}

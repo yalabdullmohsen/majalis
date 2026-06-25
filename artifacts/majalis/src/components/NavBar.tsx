@@ -4,7 +4,7 @@ import { useAuth } from "./AuthProvider";
 import NotificationBell from "./NotificationBell";
 import { C } from "@/lib/theme";
 
-const HIDDEN_NAV_HREFS = new Set(["/sheikhs", "/transcribe"]);
+const HIDDEN_NAV_HREFS = new Set(["/transcribe", "/library"]);
 
 const NEW_NAV_ITEMS = [
   { href: "/cards", label: "البطاقات" },
@@ -121,7 +121,7 @@ export default function NavBar() {
           }}
         >
           <img
-            src="/logo-icon.png"
+            src="/logo.png"
             alt="المجلس العلمي"
             className="navbar-logo"
           />

@@ -1,6 +1,7 @@
 export const C = {
   ink: "#241F18",
   inkSoft: "#5B5446",
+  charcoal: "#1A1A1A",
   parchment: "#FAF5EA",
   parchmentDeep: "#F0E8D6",
   panel: "#FFFFFF",
