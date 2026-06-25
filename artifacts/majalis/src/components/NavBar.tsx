@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "wouter";
 import { useAuth } from "./AuthProvider";
 import NotificationBell from "./NotificationBell";
+import { SearchSuggestions } from "./SearchSuggestions";
 import { C } from "@/lib/theme";
 
 const HIDDEN_NAV_HREFS = new Set(["/transcribe", "/library"]);
@@ -55,23 +56,29 @@ function tabStyle(active: boolean): React.CSSProperties {
 function SearchBox({ onSubmitDone }: { onSubmitDone?: () => void }) {
   const [term, setTerm] = useState("");
   const [, navigate] = useLocation();
-  const submit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const q = term.trim();
+  const submit = (value: string) => {
+    const q = value.trim();
     if (!q) return;
     navigate(`/search/${encodeURIComponent(q)}`);
     setTerm("");
     onSubmitDone?.();
   };
   return (
-    <form onSubmit={submit} style={{ display: "flex", alignItems: "center", background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.5rem", padding: "0.15rem 0.15rem 0.15rem 0.5rem" }}>
-      <input
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        submit(term);
+      }}
+      className="navbar-search-form"
+    >
+      <SearchSuggestions
         value={term}
-        onChange={(e) => setTerm(e.target.value)}
+        onChange={setTerm}
+        onSubmit={submit}
         placeholder="بحث..."
-        style={{ border: "none", outline: "none", background: "transparent", fontSize: "0.8125rem", fontFamily: "inherit", padding: "0.3rem 0.5rem", color: C.ink, width: "8.5rem" }}
+        compact
       />
-      <button type="submit" aria-label="بحث" style={{ border: "none", background: C.emerald, color: C.parchment, borderRadius: "0.375rem", cursor: "pointer", padding: "0.3rem 0.65rem", fontSize: "0.75rem", fontWeight: 700 }}>
+      <button type="submit" aria-label="بحث" className="navbar-search-submit">
         بحث
       </button>
     </form>

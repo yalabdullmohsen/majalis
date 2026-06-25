@@ -11,6 +11,7 @@ import {
   searchDemoContent,
 } from "./demo-content";
 import { DEMO_QUIZ_QUESTIONS } from "./quiz-seed";
+import { ADHKAR_CATEGORIES, filterAdhkar } from "./adhkar-seed";
 import { safeSupabaseQuery } from "./safe-supabase";
 import { validateSheikhImage, safeUploadFileName } from "./file-validation";
 import { formatSupabaseError, isSupabaseConfigured, logSupabaseError } from "./supabase-config";
@@ -112,7 +113,11 @@ export async function getSheikhById(id: string) {
     if (sheikhError) throw sheikhError;
 
     const { data: lessons, error: lessonsError } = await supabase
-      .from("lessons").select("*").eq("sheikh_id", id).eq("status", "approved");
+      .from("lessons")
+      .select("*, sheikhs(name, image_url, photo_url)")
+      .eq("sheikh_id", id)
+      .eq("status", "approved")
+      .order("created_at", { ascending: false });
     if (lessonsError) throw lessonsError;
 
     return { sheikh, lessons: lessons || [] };
@@ -182,6 +187,28 @@ export async function getLessons({ category, city, search }: { category?: string
   } catch (err) {
     logSupabaseError("getLessons", err);
     return { data: fallback, error: null, usingSeed: true };
+  }
+}
+
+export async function getLessonById(id: string) {
+  const fallback = DEMO_LESSONS.find((l) => l.id === id) || null;
+
+  if (!isConfigured) {
+    return { lesson: fallback, error: null, usingSeed: true };
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from("lessons")
+      .select("*, sheikhs(id, name, city, image_url, photo_url, avatar_url)")
+      .eq("id", id)
+      .eq("status", "approved")
+      .maybeSingle();
+    if (error) throw error;
+    return { lesson: data || fallback, error: null, usingSeed: !data && !!fallback };
+  } catch (err) {
+    logSupabaseError("getLessonById", err, { id });
+    return { lesson: fallback, error: null, usingSeed: true };
   }
 }
 
@@ -707,6 +734,7 @@ export type SearchResults = {
   sheikhs: any[];
   qa: any[];
   fawaid: any[];
+  adhkar: any[];
   error?: string | null;
   usingDemo?: boolean;
 };
@@ -718,6 +746,7 @@ const EMPTY_SEARCH: SearchResults = {
   sheikhs: [],
   qa: [],
   fawaid: [],
+  adhkar: [],
 };
 
 function mergeUniqueById<T extends { id: string }>(rows: T[]): T[] {
@@ -847,14 +876,25 @@ async function searchFawaidFallback(term: string) {
   };
 }
 
+async function searchAdhkarFallback(term: string) {
+  const items = filterAdhkar(term).slice(0, 15).map((item) => ({
+    id: item.id,
+    text: item.text,
+    category: ADHKAR_CATEGORIES.find((c) => c.id === item.categoryId)?.name,
+    source: item.source,
+  }));
+  return { data: items, errors: [] as any[] };
+}
+
 async function searchEverythingFallback(term: string): Promise<SearchResults> {
-  const [lessons, sheikhs, library, qa, miracles, fawaid] = await Promise.all([
+  const [lessons, sheikhs, library, qa, miracles, fawaid, adhkar] = await Promise.all([
     searchLessonsFallback(term),
     searchSheikhsFallback(term),
     searchLibraryFallback(term),
     searchQaFallback(term),
     searchMiraclesFallback(term),
     searchFawaidFallback(term),
+    searchAdhkarFallback(term),
   ]);
 
   const errors = [
@@ -864,6 +904,7 @@ async function searchEverythingFallback(term: string): Promise<SearchResults> {
     ...qa.errors,
     ...miracles.errors,
     ...fawaid.errors,
+    ...adhkar.errors,
   ];
 
   return {
@@ -873,6 +914,7 @@ async function searchEverythingFallback(term: string): Promise<SearchResults> {
     qa: qa.data,
     miracles: miracles.data,
     fawaid: fawaid.data,
+    adhkar: adhkar.data,
     error: null,
     usingDemo: false,
   };
@@ -891,6 +933,12 @@ export async function searchEverything(term: string): Promise<SearchResults> {
     const { data, error } = await supabase.rpc("search_platform", { query });
 
     if (!error && data) {
+      const adhkar = filterAdhkar(query).slice(0, 15).map((item) => ({
+        id: item.id,
+        text: item.text,
+        category: ADHKAR_CATEGORIES.find((c) => c.id === item.categoryId)?.name,
+        source: item.source,
+      }));
       return {
         lessons: data.lessons || [],
         library: data.library || [],
@@ -898,6 +946,7 @@ export async function searchEverything(term: string): Promise<SearchResults> {
         sheikhs: data.sheikhs || [],
         qa: data.qa || [],
         fawaid: data.fawaid || [],
+        adhkar,
         usingDemo: false,
         error: null,
       };
@@ -917,7 +966,8 @@ export async function searchEverything(term: string): Promise<SearchResults> {
     fallback.miracles.length +
     fallback.sheikhs.length +
     fallback.qa.length +
-    fallback.fawaid.length;
+    fallback.fawaid.length +
+    fallback.adhkar.length;
 
   if (total === 0) {
     const demo = searchDemoContent(query);
@@ -926,7 +976,8 @@ export async function searchEverything(term: string): Promise<SearchResults> {
       demo.library.length +
       demo.sheikhs.length +
       demo.qa.length +
-      demo.fawaid.length;
+      demo.fawaid.length +
+      demo.adhkar.length;
     if (demoTotal > 0) {
       return { ...demo, usingDemo: true, error: fallback.error ?? null };
     }

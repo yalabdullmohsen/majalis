@@ -32,8 +32,8 @@ export function resolveLessonSheikhImage(lesson: {
 }
 
 export function parseLessonSchedule(schedule?: string): { day: string; time: string } {
-  if (!schedule?.trim()) return { day: "—", time: "—" };
+  if (!schedule?.trim()) return { day: "", time: "" };
   const parts = schedule.trim().split(/\s+/);
-  if (parts.length === 1) return { day: parts[0], time: "—" };
+  if (parts.length === 1) return { day: parts[0], time: "" };
   return { day: parts[0], time: parts.slice(1).join(" ") };
 }

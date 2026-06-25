@@ -5,33 +5,41 @@ import {
   DEFAULT_KUWAIT_FILTERS,
   extractFilterOptions,
   filterKuwaitLessons,
-  loadKuwaitLessons,
+  loadAllKuwaitLessonsSplit,
   type KuwaitLessonFilters,
   type KuwaitLessonRecord,
 } from "@/lib/kuwait-lessons";
 
+type TabId = "active" | "archive";
+
 export default function KuwaitLessonsPage() {
-  const [lessons, setLessons] = useState<KuwaitLessonRecord[]>([]);
+  const [activeLessons, setActiveLessons] = useState<KuwaitLessonRecord[]>([]);
+  const [archivedLessons, setArchivedLessons] = useState<KuwaitLessonRecord[]>([]);
   const [loading, setLoading] = useState(true);
+  const [tab, setTab] = useState<TabId>("active");
   const [filters, setFilters] = useState<KuwaitLessonFilters>(DEFAULT_KUWAIT_FILTERS);
 
-  const load = () => {
-    setLoading(true);
-    loadKuwaitLessons()
-      .then(setLessons)
-      .catch(() => setLessons([]))
-      .finally(() => setLoading(false));
-  };
-
   useEffect(() => {
-    load();
+    setLoading(true);
+    loadAllKuwaitLessonsSplit()
+      .then(({ active, archived }) => {
+        setActiveLessons(active);
+        setArchivedLessons(archived);
+      })
+      .catch(() => {
+        setActiveLessons([]);
+        setArchivedLessons([]);
+      })
+      .finally(() => setLoading(false));
   }, []);
 
-  const options = useMemo(() => extractFilterOptions(lessons), [lessons]);
+  const sourceLessons = tab === "active" ? activeLessons : archivedLessons;
+
+  const options = useMemo(() => extractFilterOptions(sourceLessons), [sourceLessons]);
 
   const filtered = useMemo(
-    () => filterKuwaitLessons(lessons, filters),
-    [lessons, filters],
+    () => filterKuwaitLessons(sourceLessons, filters),
+    [sourceLessons, filters],
   );
 
   const setFilter = <K extends keyof KuwaitLessonFilters>(key: K, value: KuwaitLessonFilters[K]) => {
@@ -46,8 +54,29 @@ export default function KuwaitLessonsPage() {
         subtitle="مرجع شامل للدروس الشرعية في مساجد الكويت — محدّث وقابل للإدارة من لوحة التحكم."
       />
 
+      <div className="kuwait-tabs" role="tablist" aria-label="تبويبات دروس الكويت">
+        <button
+          type="button"
+          role="tab"
+          aria-selected={tab === "active"}
+          className={`kuwait-tab${tab === "active" ? " kuwait-tab--active" : ""}`}
+          onClick={() => setTab("active")}
+        >
+          الدروس الحالية ({activeLessons.length})
+        </button>
+        <button
+          type="button"
+          role="tab"
+          aria-selected={tab === "archive"}
+          className={`kuwait-tab${tab === "archive" ? " kuwait-tab--active" : ""}`}
+          onClick={() => setTab("archive")}
+        >
+          الأرشيف ({archivedLessons.length})
+        </button>
+      </div>
+
       <div className="page-stats-row kuwait-lessons-stats">
-        <span>{filtered.length} درس متاح</span>
+        <span>{filtered.length} {tab === "active" ? "درس متاح" : "درس مؤرشف"}</span>
         <span>{options.sheikhs.length - 1} شيخ</span>
         <span>{options.mosques.length - 1} مسجد</span>
       </div>
@@ -117,13 +146,13 @@ export default function KuwaitLessonsPage() {
       {loading && <Loading />}
 
       {!loading && filtered.length === 0 && (
-        <Empty text="لا توجد دروس مطابقة للبحث حاليًا." />
+        <Empty text={tab === "active" ? "لا توجد دروس مطابقة للبحث حاليًا." : "لا توجد دروس مؤرشفة مطابقة."} />
       )}
 
       {!loading && filtered.length > 0 && (
-        <div className="home-kuwait-grid kuwait-lessons-grid">
+        <div className="page-card-grid lesson-cards-grid kuwait-lessons-grid">
           {filtered.map((lesson) => (
-            <KuwaitLessonCard key={lesson.id} lesson={lesson} />
+            <KuwaitLessonCard key={lesson.id} lesson={lesson} archived={tab === "archive"} />
           ))}
         </div>
       )}

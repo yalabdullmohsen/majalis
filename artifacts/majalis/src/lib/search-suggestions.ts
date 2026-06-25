@@ -1,0 +1,110 @@
+import { arabicMatchAny } from "@/lib/arabic-search";
+import { ADHKAR_CATEGORIES, ADHKAR_ITEMS } from "@/lib/adhkar-seed";
+import { DEMO_LESSONS, DEMO_SHEIKHS } from "@/lib/demo-content";
+import { SEED_FAWAID } from "@/lib/fawaid-seed";
+import { SEED_QA } from "@/lib/qa-seed";
+
+export type SearchSuggestion = {
+  id: string;
+  label: string;
+  meta?: string;
+  href: string;
+  group: "lessons" | "sheikhs" | "fawaid" | "qa" | "adhkar";
+};
+
+const MAX_PER_GROUP = 4;
+
+function pushUnique(
+  list: SearchSuggestion[],
+  seen: Set<string>,
+  item: SearchSuggestion,
+) {
+  const key = `${item.group}:${item.id}`;
+  if (seen.has(key)) return;
+  seen.add(key);
+  list.push(item);
+}
+
+export function buildSearchSuggestions(query: string, limit = 12): SearchSuggestion[] {
+  const q = query.trim();
+  if (q.length < 2) return [];
+
+  const results: SearchSuggestion[] = [];
+  const seen = new Set<string>();
+
+  for (const lesson of DEMO_LESSONS) {
+    if (results.length >= limit) break;
+    if (!arabicMatchAny([lesson.title, lesson.description, lesson.speaker_name, lesson.category], q)) continue;
+    pushUnique(results, seen, {
+      id: lesson.id,
+      label: lesson.title,
+      meta: lesson.speaker_name || lesson.sheikhs?.name,
+      href: `/lessons/${lesson.id}`,
+      group: "lessons",
+    });
+    if (results.filter((r) => r.group === "lessons").length >= MAX_PER_GROUP) break;
+  }
+
+  for (const sheikh of DEMO_SHEIKHS) {
+    if (results.length >= limit) break;
+    if (!arabicMatchAny([sheikh.name, sheikh.bio, ...(sheikh.specialties || [])], q)) continue;
+    pushUnique(results, seen, {
+      id: sheikh.id,
+      label: sheikh.name,
+      meta: sheikh.city,
+      href: `/sheikhs/${sheikh.id}`,
+      group: "sheikhs",
+    });
+    if (results.filter((r) => r.group === "sheikhs").length >= MAX_PER_GROUP) break;
+  }
+
+  for (const f of SEED_FAWAID) {
+    if (results.length >= limit) break;
+    if (!arabicMatchAny([f.text, f.author_name, f.category], q)) continue;
+    pushUnique(results, seen, {
+      id: f.id,
+      label: f.text.slice(0, 72) + (f.text.length > 72 ? "…" : ""),
+      meta: f.author_name,
+      href: `/fawaid?q=${encodeURIComponent(q)}`,
+      group: "fawaid",
+    });
+    if (results.filter((r) => r.group === "fawaid").length >= MAX_PER_GROUP) break;
+  }
+
+  for (const item of SEED_QA) {
+    if (results.length >= limit) break;
+    if (!arabicMatchAny([item.question, item.answer, item.reference], q)) continue;
+    pushUnique(results, seen, {
+      id: item.id,
+      label: item.question.slice(0, 72) + (item.question.length > 72 ? "…" : ""),
+      meta: item.qa_categories?.name,
+      href: `/qa?q=${encodeURIComponent(q)}`,
+      group: "qa",
+    });
+    if (results.filter((r) => r.group === "qa").length >= MAX_PER_GROUP) break;
+  }
+
+  for (const adhkar of ADHKAR_ITEMS) {
+    if (results.length >= limit) break;
+    if (!arabicMatchAny([adhkar.text, ...(adhkar.keywords || []), adhkar.source, adhkar.reference], q)) continue;
+    const category = ADHKAR_CATEGORIES.find((c) => c.id === adhkar.categoryId);
+    pushUnique(results, seen, {
+      id: adhkar.id,
+      label: adhkar.text.slice(0, 72) + (adhkar.text.length > 72 ? "…" : ""),
+      meta: category?.name,
+      href: `/search/${encodeURIComponent(q)}#adhkar`,
+      group: "adhkar",
+    });
+    if (results.filter((r) => r.group === "adhkar").length >= MAX_PER_GROUP) break;
+  }
+
+  return results.slice(0, limit);
+}
+
+export const SUGGESTION_GROUP_LABELS: Record<SearchSuggestion["group"], string> = {
+  lessons: "دروس",
+  sheikhs: "مشايخ",
+  fawaid: "فوائد",
+  qa: "أسئلة",
+  adhkar: "أذكار",
+};

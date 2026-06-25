@@ -150,6 +150,45 @@ function isExpired(lesson: KuwaitLessonRecord): boolean {
   return end.getTime() < Date.now();
 }
 
+export function splitKuwaitLessons(lessons: KuwaitLessonRecord[]) {
+  const active: KuwaitLessonRecord[] = [];
+  const archived: KuwaitLessonRecord[] = [];
+  for (const lesson of lessons) {
+    if (isExpired(lesson)) archived.push(lesson);
+    else active.push(lesson);
+  }
+  return {
+    active: sortKuwaitLessons(active),
+    archived: sortKuwaitLessons(archived),
+  };
+}
+
+async function fetchAllKuwaitLessons(): Promise<KuwaitLessonRecord[]> {
+  try {
+    const { data } = await getKuwaitLessonsFromDb();
+    const mapped = (data || []).map(mapDbLesson);
+    const staticMapped = KUWAIT_LESSONS.map(mapStaticLesson);
+    return dedupeKuwaitLessons([...mapped, ...staticMapped]);
+  } catch {
+    return dedupeKuwaitLessons(KUWAIT_LESSONS.map(mapStaticLesson));
+  }
+}
+
+export async function loadKuwaitLessons(): Promise<KuwaitLessonRecord[]> {
+  const all = await fetchAllKuwaitLessons();
+  return splitKuwaitLessons(all).active;
+}
+
+export async function loadKuwaitLessonsArchive(): Promise<KuwaitLessonRecord[]> {
+  const all = await fetchAllKuwaitLessons();
+  return splitKuwaitLessons(all).archived;
+}
+
+export async function loadAllKuwaitLessonsSplit() {
+  const all = await fetchAllKuwaitLessons();
+  return splitKuwaitLessons(all);
+}
+
 export function dedupeKuwaitLessons(lessons: KuwaitLessonRecord[]): KuwaitLessonRecord[] {
   const seen = new Set<string>();
   const result: KuwaitLessonRecord[] = [];
@@ -240,19 +279,6 @@ export function extractFilterOptions(lessons: KuwaitLessonRecord[]) {
     days: KUWAIT_DAYS,
     categories: KUWAIT_CATEGORIES,
   };
-}
-
-export async function loadKuwaitLessons(): Promise<KuwaitLessonRecord[]> {
-  try {
-    const { data } = await getKuwaitLessonsFromDb();
-    const mapped = (data || []).map(mapDbLesson);
-    const staticMapped = KUWAIT_LESSONS.map(mapStaticLesson);
-    const merged = dedupeKuwaitLessons([...mapped, ...staticMapped]).filter((l) => !isExpired(l));
-    return sortKuwaitLessons(merged);
-  } catch {
-    const staticMapped = KUWAIT_LESSONS.map(mapStaticLesson);
-    return sortKuwaitLessons(staticMapped.filter((l) => !isExpired(l)));
-  }
 }
 
 export const DEFAULT_KUWAIT_FILTERS: KuwaitLessonFilters = {

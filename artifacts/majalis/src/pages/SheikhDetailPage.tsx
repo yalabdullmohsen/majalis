@@ -1,96 +1,163 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
-import { getSheikhById } from "@/lib/supabase";
-import { C } from "@/lib/theme";
 import { Loading, Empty } from "@/components/ui-common";
-import ContentActions from "@/components/ContentActions";
 import { SheikhAvatar } from "@/components/lessons/SheikhAvatar";
+import { FavoriteButton } from "@/components/FavoriteButton";
+import { LessonCard } from "@/components/lessons/LessonCard";
+import { loadSheikhContent } from "@/lib/sheikh-content";
 import { resolveSheikhImageUrl } from "@/lib/sheikh-image";
+import { hasValue } from "@/lib/lesson-display";
+import { formatPeriod, formatWeeklySchedule } from "@/lib/current-lessons";
+import { isDemoId } from "@/lib/demo-content";
 
 export default function SheikhDetailPage({ params }: { params: { id: string } }) {
-  const [sheikh, setSheikh] = useState<any>(null);
-  const [lessons, setLessons] = useState<any[]>([]);
+  const [bundle, setBundle] = useState<Awaited<ReturnType<typeof loadSheikhContent>>>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getSheikhById(params.id).then(({ sheikh, lessons }) => {
-      setSheikh(sheikh);
-      setLessons(lessons);
-      setLoading(false);
-    });
+    setLoading(true);
+    loadSheikhContent(params.id)
+      .then(setBundle)
+      .finally(() => setLoading(false));
   }, [params.id]);
 
   if (loading) return <Loading />;
-  if (!sheikh) return <Empty text="لم يُعثر على الشيخ." />;
+  if (!bundle?.sheikh) return <Empty text="لم يُعثر على الشيخ." />;
+
+  const { sheikh, lessons, courses, series, socialLinks } = bundle;
+  const bio = sheikh.bio || sheikh.biography;
 
   return (
-    <div style={{ maxWidth: "48rem", margin: "0 auto", padding: "2.5rem 1.25rem 4rem" }}>
-      <Link href="/sheikhs" style={{ fontSize: "0.875rem", color: C.brassDeep, textDecoration: "none", display: "inline-block", marginBottom: "1.5rem" }}>
+    <div className="page-shell sheikh-detail-page">
+      <Link href="/sheikhs" className="lesson-detail-back">
         ← العودة إلى المشايخ
       </Link>
 
-      <div style={{ padding: "1.5rem", borderRadius: "0.5rem", border: `1px solid ${C.line}`, background: C.panel, marginBottom: "1.5rem" }}>
-        <div style={{ display: "flex", alignItems: "flex-start", gap: "1rem", marginBottom: "1rem" }}>
+      <section className="ui-card sheikh-detail-hero">
+        <div className="sheikh-detail-hero__main">
           <SheikhAvatar
             src={resolveSheikhImageUrl(sheikh)}
             name={sheikh.name}
-            size={100}
+            size={128}
+            className="sheikh-detail-avatar"
           />
-          <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "0.75rem", flexWrap: "wrap" }}>
-              <h1 style={{ fontSize: "1.5rem", fontWeight: 700, color: C.emeraldDeep, margin: 0 }}>{sheikh.name}</h1>
+          <div className="sheikh-detail-hero__copy">
+            <div className="sheikh-detail-hero__title-row">
+              <h1 className="sheikh-detail-name">{sheikh.name}</h1>
               {sheikh.is_verified && (
-                <span style={{ fontSize: "0.75rem", padding: "0.25rem 0.75rem", borderRadius: "0.25rem", background: C.sage, color: C.emeraldDeep }}>شيخ معتمد</span>
+                <span className="sheikh-detail-badge">شيخ معتمد</span>
+              )}
+            </div>
+            {hasValue(bio) && (
+              <p className="sheikh-detail-bio">{bio}</p>
+            )}
+            <div className="sheikh-detail-meta-row">
+              {hasValue(sheikh.city) && (
+                <span className="page-soft-tag">{sheikh.city}</span>
+              )}
+              {sheikh.years_experience && (
+                <span className="page-soft-tag">{sheikh.years_experience} سنة خبرة</span>
+              )}
+              {Array.isArray(sheikh.specialties) && sheikh.specialties.length > 0 && (
+                <span className="page-soft-tag">{sheikh.specialties.join("، ")}</span>
+              )}
+            </div>
+            <div className="sheikh-detail-actions-row">
+              {!isDemoId(sheikh.id) && (
+                <FavoriteButton contentType="scholar" contentId={sheikh.id} />
               )}
             </div>
           </div>
         </div>
 
-        {sheikh.ijazah && (
-          <p style={{ fontSize: "0.875rem", color: C.brassDeep, marginBottom: "0.75rem" }}>
-            <strong>الإجازة:</strong> {sheikh.ijazah}
-          </p>
-        )}
-        {sheikh.city && (
-          <p style={{ fontSize: "0.875rem", color: C.inkSoft, marginBottom: "0.5rem" }}>
-            <strong>المحافظة:</strong> {sheikh.city}
-            {sheikh.years_experience && ` · ${sheikh.years_experience} سنة خبرة`}
-          </p>
-        )}
-        {sheikh.specialties?.length > 0 && (
-          <div style={{ marginBottom: "0.75rem" }}>
-            <p style={{ fontSize: "0.875rem", fontWeight: 700, color: C.ink, marginBottom: "0.25rem" }}>التخصصات:</p>
-            <p style={{ fontSize: "0.875rem", color: C.inkSoft }}>{sheikh.specialties.join("، ")}</p>
+        {socialLinks.length > 0 && (
+          <div className="sheikh-detail-social">
+            <h2 className="sheikh-detail-section-title">حساباته الرسمية</h2>
+            <div className="sheikh-detail-social-links">
+              {socialLinks.map((link) => (
+                <a
+                  key={link.url}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="sheikh-social-link"
+                >
+                  {link.label}
+                </a>
+              ))}
+            </div>
           </div>
         )}
-        {sheikh.bio && (
-          <p style={{ fontSize: "0.875rem", color: C.ink, lineHeight: "1.75", marginBottom: "0.75rem" }}>{sheikh.bio}</p>
-        )}
-        {sheikh.biography && (
-          <div>
-            <p style={{ fontSize: "0.875rem", fontWeight: 700, color: C.ink, marginBottom: "0.25rem" }}>السيرة العلمية:</p>
-            <p style={{ fontSize: "0.875rem", color: C.ink, lineHeight: "1.75" }}>{sheikh.biography}</p>
-          </div>
-        )}
-        <div style={{ marginTop: "1rem" }}>
-          <ContentActions contentType="scholar" contentId={sheikh.id} />
-        </div>
-      </div>
+      </section>
 
       {lessons.length > 0 && (
-        <div>
-          <h2 style={{ fontSize: "1.125rem", fontWeight: 700, color: C.emeraldDeep, marginBottom: "1rem" }}>دروس الشيخ</h2>
-          <div style={{ display: "grid", gap: "0.75rem" }}>
-            {lessons.map((l: any) => (
-              <div key={l.id} style={{ padding: "1rem", borderRadius: "0.375rem", border: `1px solid ${C.line}`, background: C.panel }}>
-                <p style={{ fontWeight: 700, color: C.ink, marginBottom: "0.25rem" }}>{l.title}</p>
-                <p style={{ fontSize: "0.75rem", color: C.inkSoft }}>
-                  {[l.mosque, l.city, l.schedule].filter(Boolean).join(" · ")}
-                </p>
-              </div>
+        <section className="sheikh-detail-section">
+          <h2 className="sheikh-detail-section-title">جميع الدروس ({lessons.length})</h2>
+          <div className="page-card-grid lesson-cards-grid">
+            {lessons.map((lesson: any) => (
+              <LessonCard key={lesson.id} lesson={lesson} />
             ))}
           </div>
-        </div>
+        </section>
+      )}
+
+      {courses.length > 0 && (
+        <section className="sheikh-detail-section">
+          <h2 className="sheikh-detail-section-title">جميع الدورات ({courses.length})</h2>
+          <div className="sheikh-courses-grid">
+            {courses.map((course) => (
+              <article key={course.id} className="ui-card sheikh-course-card">
+                <h3 className="lesson-card-pro__title">{course.title}</h3>
+                {hasValue(course.description) && (
+                  <p className="sheikh-course-desc">{course.description}</p>
+                )}
+                <dl className="lesson-card-pro__meta">
+                  {hasValue(course.mosque) && (
+                    <div><dt>المسجد</dt><dd>{course.mosque}</dd></div>
+                  )}
+                  {hasValue(course.region) && (
+                    <div><dt>المنطقة</dt><dd>{course.region}</dd></div>
+                  )}
+                  {course.weeklySchedule?.length > 0 && (
+                    <div><dt>الجدول</dt><dd>{formatWeeklySchedule(course.weeklySchedule)}</dd></div>
+                  )}
+                  {(course.startDate || course.endDate || course.periodLabel) && (
+                    <div><dt>الفترة</dt><dd>{formatPeriod(course)}</dd></div>
+                  )}
+                </dl>
+                <Link href={`/courses#${course.id}`} className="ui-card-btn">
+                  عرض الدورة
+                </Link>
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {series.length > 0 && (
+        <section className="sheikh-detail-section">
+          <h2 className="sheikh-detail-section-title">جميع السلاسل ({series.length})</h2>
+          <div className="sheikh-series-grid">
+            {series.map((item) => (
+              <article key={`series-${item.id}`} className="ui-card sheikh-series-card">
+                <h3 className="lesson-card-pro__title">{item.title}</h3>
+                {item.lectures && item.lectures.length > 0 && (
+                  <ul className="sheikh-series-list">
+                    {item.lectures.slice(0, 6).map((lecture) => (
+                      <li key={lecture.id}>{lecture.title}</li>
+                    ))}
+                    {item.lectures.length > 6 && (
+                      <li className="sheikh-series-more">+ {item.lectures.length - 6} محاضرات أخرى</li>
+                    )}
+                  </ul>
+                )}
+                <Link href={`/courses#${item.id}`} className="ui-card-btn">
+                  متابعة السلسلة
+                </Link>
+              </article>
+            ))}
+          </div>
+        </section>
       )}
     </div>
   );

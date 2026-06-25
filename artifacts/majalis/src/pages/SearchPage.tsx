@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link, useParams, useLocation } from "wouter";
-import { C } from "@/lib/theme";
 import { searchEverything, type SearchResults } from "@/lib/supabase";
 import { demoNoticeText, searchDemoContent } from "@/lib/demo-content";
 import { displayText } from "@/lib/display-text";
 import { DemoNotice, SearchSkeleton } from "@/components/ui-common";
+import { SearchSuggestions } from "@/components/SearchSuggestions";
 import { SheikhAvatar } from "@/components/lessons/SheikhAvatar";
 import { resolveSheikhImageUrl, resolveLessonSheikhImage } from "@/lib/sheikh-image";
 
@@ -15,17 +15,18 @@ const EMPTY: SearchResults = {
   sheikhs: [],
   qa: [],
   fawaid: [],
+  adhkar: [],
 };
 
-function Group({ title, items, render }: { title: string; items: any[]; render: (i: any) => React.ReactNode }) {
+function Group({ title, items, render, id }: { title: string; items: any[]; render: (i: any) => React.ReactNode; id?: string }) {
   if (items.length === 0) return null;
   return (
-    <div style={{ marginBottom: "2rem" }}>
-      <h2 style={{ fontSize: "1.125rem", fontWeight: 700, color: C.emeraldDeep, margin: "0 0 0.875rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+    <div id={id} className="search-results-group" style={{ marginBottom: "2rem" }}>
+      <h2 className="search-results-group-title">
         {title}
-        <span style={{ fontSize: "0.7rem", fontWeight: 700, color: C.brassDeep, background: C.parchmentDeep, padding: "0.1rem 0.5rem", borderRadius: "999px" }}>{items.length}</span>
+        <span className="search-results-count">{items.length}</span>
       </h2>
-      <div style={{ display: "grid", gap: "0.625rem" }}>{items.map(render)}</div>
+      <div className="search-results-list">{items.map(render)}</div>
     </div>
   );
 }
@@ -83,7 +84,7 @@ export default function SearchPage() {
       setUsingDemo(!!r.usingDemo);
     } catch {
       const demo = searchDemoContent(query);
-      setResults({ ...demo, usingDemo: true, error: null });
+      setResults({ ...demo, usingDemo: true, error: null, adhkar: demo.adhkar || [] });
       setUsingDemo(true);
     } finally {
       setLoading(false);
@@ -95,9 +96,8 @@ export default function SearchPage() {
     runSearch(q);
   }, [q]);
 
-  const submit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const t = term.trim();
+  const submitSearch = (value: string) => {
+    const t = value.trim();
     if (t) navigate(`/search/${encodeURIComponent(t)}`);
   };
 
@@ -106,27 +106,31 @@ export default function SearchPage() {
     results.miracles.length +
     results.sheikhs.length +
     results.qa.length +
-    results.fawaid.length;
+    results.fawaid.length +
+    results.adhkar.length;
 
   return (
     <div className="page-shell narrow search-page">
-      <h1 style={{ fontSize: "1.75rem", fontWeight: 700, color: C.emeraldDeep, margin: "0 0 1.25rem" }}>
-        البحث
-      </h1>
+      <h1 className="search-page-title">البحث</h1>
 
-      <form onSubmit={submit} className="page-search-form">
-        <input
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          submitSearch(term);
+        }}
+        className="page-search-form search-page-form"
+      >
+        <SearchSuggestions
           value={term}
-          onChange={(e) => setTerm(e.target.value)}
-          placeholder="ابحث في الدروس والمشايخ والفوائد والأسئلة..."
-          autoFocus
-          aria-label="كلمة البحث"
+          onChange={setTerm}
+          onSubmit={submitSearch}
+          placeholder="ابحث في الدروس والمشايخ والفوائد والأسئلة والأذكار..."
         />
         <button type="submit">بحث</button>
       </form>
 
       {!q.trim() ? (
-        <p style={{ textAlign: "center", color: C.inkSoft, padding: "2rem 0" }}>
+        <p className="search-page-hint">
           اكتب كلمة للبحث في محتوى المنصة (عنوان المجلس، اسم الشيخ، الوصف، الكلمات المفتاحية).
         </p>
       ) : loading ? (
@@ -135,13 +139,13 @@ export default function SearchPage() {
         <>
           {usingDemo && <DemoNotice text={demoNoticeText("البحث")} />}
           {total === 0 ? (
-            <p style={{ textAlign: "center", color: C.inkSoft, padding: "2rem 0" }}>
+            <p className="search-page-hint">
               لا توجد نتائج مطابقة لـ «{q}».
             </p>
           ) : (
             <>
-              <p style={{ fontSize: "0.8125rem", color: C.inkSoft, margin: "0 0 1.5rem" }}>
-                {total} نتيجة لـ «<span style={{ fontWeight: 700, color: C.ink }}>{q}</span>»
+              <p className="search-page-summary">
+                {total} نتيجة لـ «<span>{q}</span>»
               </p>
               <Group
                 title="الدروس"
@@ -149,7 +153,7 @@ export default function SearchPage() {
                 render={(l) => (
                   <ResultRow
                     key={l.id}
-                    href="/lessons"
+                    href={`/lessons/${l.id}`}
                     title={displayText(l.title)}
                     meta={l.speaker_name || l.sheikhs?.name || l.category}
                     avatarSrc={resolveLessonSheikhImage(l)}
@@ -171,19 +175,48 @@ export default function SearchPage() {
                 )}
               />
               <Group
-                title="الإعجاز العلمي"
-                items={results.miracles}
-                render={(m) => <ResultRow key={m.id} href="/miracles" title={displayText(m.title)} meta={m.category} />}
+                title="الفوائد"
+                items={results.fawaid}
+                render={(f) => (
+                  <ResultRow
+                    key={f.id}
+                    href="/fawaid"
+                    title={displayText(f.text)}
+                    meta={f.author_name}
+                  />
+                )}
               />
               <Group
                 title="الأسئلة والأجوبة"
                 items={results.qa}
-                render={(x) => <ResultRow key={x.id} href="/qa" title={displayText(x.question)} meta={x.qa_categories?.name} />}
+                render={(x) => (
+                  <ResultRow
+                    key={x.id}
+                    href="/qa"
+                    title={displayText(x.question)}
+                    meta={x.qa_categories?.name}
+                  />
+                )}
               />
               <Group
-                title="الفوائد"
-                items={results.fawaid}
-                render={(f) => <ResultRow key={f.id} href="/fawaid" title={displayText(f.text)} meta={f.author_name} />}
+                title="الأذكار"
+                id="adhkar"
+                items={results.adhkar}
+                render={(a) => (
+                  <ResultRow
+                    key={a.id}
+                    href={`/search/${encodeURIComponent(q)}#adhkar`}
+                    title={displayText(a.text)}
+                    meta={a.category || a.source}
+                  />
+                )}
+              />
+              <Group
+                title="الإعجاز العلمي"
+                items={results.miracles}
+                render={(m) => (
+                  <ResultRow key={m.id} href="/miracles" title={displayText(m.title)} meta={m.category} />
+                )}
               />
             </>
           )}

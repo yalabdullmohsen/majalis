@@ -1,6 +1,7 @@
 import { arabicMatchAny } from "./arabic-search";
 import { SEED_QA, QA_CATEGORIES, filterSeedQa } from "./qa-seed";
 import { SEED_FAWAID, FAWAID_CATEGORIES, filterSeedFawaid } from "./fawaid-seed";
+import { ADHKAR_CATEGORIES, filterAdhkar } from "./adhkar-seed";
 
 export { FAWAID_CATEGORIES, filterSeedFawaid };
 
@@ -184,12 +185,13 @@ export type DemoSearchResults = {
   sheikhs: typeof DEMO_SHEIKHS;
   qa: typeof DEMO_QA;
   fawaid: typeof DEMO_FAWAID;
+  adhkar: { id: string; text: string; category?: string; source?: string }[];
 };
 
 export function searchDemoContent(term: string): DemoSearchResults {
   const q = term.trim();
   if (!q) {
-    return { lessons: [], library: [], miracles: [], sheikhs: [], qa: [], fawaid: [] };
+    return { lessons: [], library: [], miracles: [], sheikhs: [], qa: [], fawaid: [], adhkar: [] };
   }
 
   const lessons = DEMO_LESSONS.filter((l) =>
@@ -215,7 +217,14 @@ export function searchDemoContent(term: string): DemoSearchResults {
     arabicMatchAny([f.text, f.author_name, f.category, f.source], q)
   );
 
-  return { lessons, library, miracles: [], sheikhs, qa, fawaid };
+  const adhkar = filterAdhkar(q).slice(0, 15).map((item) => ({
+    id: item.id,
+    text: item.text,
+    category: ADHKAR_CATEGORIES.find((c) => c.id === item.categoryId)?.name,
+    source: item.source,
+  }));
+
+  return { lessons, library, miracles: [], sheikhs, qa, fawaid, adhkar };
 }
 
 export function filterDemoQa({
