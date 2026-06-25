@@ -10,7 +10,7 @@ import { getSiteSettings, updateSiteSettings } from "@/lib/site-settings";
 import { C } from "@/lib/theme";
 import { AdminSectionToolbar } from "./AdminSectionToolbar";
 import { useAdminShell } from "./AdminShell";
-import { Field, inputSt, selectSt, textareaSt } from "./AdminModal";
+import { Field, selectSt, textareaSt } from "./AdminModal";
 
 export function CondolencesSection() {
   const { showSuccess, showError } = useAdminShell();

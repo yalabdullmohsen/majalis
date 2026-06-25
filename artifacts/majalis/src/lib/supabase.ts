@@ -488,7 +488,8 @@ export async function adminGetLessons() {
 }
 
 export async function adminUpsertLesson(data: any) {
-  const { id, sheikhs, ...rest } = data;
+  const { id, ...rest } = data;
+  delete rest.sheikhs;
   if (!rest.end_date) rest.end_date = null;
   if (!rest.speaker_name) rest.speaker_name = null;
   if (!rest.region) rest.region = null;
@@ -509,7 +510,8 @@ export async function adminGetLibrary() {
 }
 
 export async function adminUpsertLibraryItem(data: any) {
-  const { id, sheikhs, ...rest } = data;
+  const { id, ...rest } = data;
+  delete rest.sheikhs;
   if (id) return await supabase.from("library_items").update(rest).eq("id", id);
   return await supabase.from("library_items").insert(rest);
 }
@@ -646,7 +648,8 @@ export async function adminGetQuestions() {
 }
 
 export async function adminUpsertQuestion(data: any) {
-  const { id, qa_categories, ...rest } = data;
+  const { id, ...rest } = data;
+  delete rest.qa_categories;
   if (!rest.ruling_type) rest.ruling_type = null;
   if (!rest.category_id) rest.category_id = null;
   rest.updated_at = new Date().toISOString();
@@ -898,7 +901,7 @@ async function searchEverythingFallback(term: string): Promise<SearchResults> {
     searchAdhkarFallback(term),
   ]);
 
-  const errors = [
+  void [
     ...lessons.errors,
     ...sheikhs.errors,
     ...library.errors,

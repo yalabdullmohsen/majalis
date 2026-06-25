@@ -8,6 +8,7 @@ import { SearchSuggestions } from "@/components/SearchSuggestions";
 import { SheikhAvatar } from "@/components/lessons/SheikhAvatar";
 import { resolveLessonSheikhImage } from "@/lib/sheikh-image";
 import { searchLocalExtensions } from "@/lib/local-search-ext";
+import { lessonRecordToSearchRow, searchUnifiedLessons } from "@/lib/lessons-service";
 
 const EMPTY: SearchResults = {
   lessons: [],
@@ -77,11 +78,32 @@ export default function SearchPage() {
     setLoading(true);
 
     try {
-      const r = await searchEverything(query);
-      setResults(r);
+      const [r, unifiedMatches] = await Promise.all([
+        searchEverything(query),
+        searchUnifiedLessons(query),
+      ]);
+
+      const unifiedRows = unifiedMatches.map(lessonRecordToSearchRow);
+      const seen = new Set((r.lessons || []).map((l: { id: string }) => l.id));
+      const mergedLessons = [
+        ...(r.lessons || []),
+        ...unifiedRows.filter((row) => !seen.has(row.id)),
+      ];
+
+      setResults({ ...r, lessons: mergedLessons, sheikhs: [] });
     } catch {
+      const unifiedMatches = await searchUnifiedLessons(query);
+      if (unifiedMatches.length > 0) {
+        setResults({
+          ...EMPTY,
+          lessons: unifiedMatches.map(lessonRecordToSearchRow),
+          usingDemo: false,
+          error: null,
+        });
+        return;
+      }
       const demo = searchDemoContent(query);
-      setResults({ ...demo, usingDemo: true, error: null, adhkar: demo.adhkar || [] });
+      setResults({ ...demo, usingDemo: true, error: null, adhkar: demo.adhkar || [], sheikhs: [] });
     } finally {
       setLoading(false);
     }

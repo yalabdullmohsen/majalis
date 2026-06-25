@@ -55,7 +55,8 @@ export function LessonsSection() {
 
   const openAdd = () => { setForm({ ...EMPTY }); setOpen(true); };
   const openEdit = (item: any) => {
-    const { sheikhs: _s, ...rest } = item;
+    const rest = { ...item };
+    delete rest.sheikhs;
     setForm({ ...EMPTY, ...rest, sheikh_id: item.sheikh_id || "" });
     setOpen(true);
   };

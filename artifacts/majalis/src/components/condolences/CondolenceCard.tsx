@@ -9,7 +9,7 @@ import {
   CONDOLENCE_MIDDLE,
   CONDOLENCE_SADAQ,
 } from "@/lib/condolence-content";
-import { EXPORT_SIZES, fitFontSize } from "@/lib/condolence-shared";
+import { fitFontSize } from "@/lib/condolence-shared";
 
 export type CondolenceForm = {
   familyName: string;

@@ -8,7 +8,9 @@ import { fetchApprovedLessonsFromDb } from "@/lib/supabase";
 import { LESSONS_SEED, findSeedLessonById, type LessonSeedRow } from "@/lib/lessons-seed";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 import {
+  DEFAULT_KUWAIT_FILTERS,
   dedupeKuwaitLessons,
+  filterKuwaitLessons,
   mapLessonRow,
   sortKuwaitLessons,
   splitKuwaitLessons,
@@ -96,33 +98,61 @@ export function invalidateLessonsCache() {
   cacheTs = 0;
 }
 
-export async function loadKuwaitLessons() {
-  const { active } = await fetchLessonsSplit();
-  return active;
-}
-
-export async function loadKuwaitLessonsArchive() {
-  const { archived } = await fetchLessonsSplit();
-  return archived;
-}
-
-export async function loadAllKuwaitLessonsSplit() {
-  const { active, archived, source } = await fetchLessonsSplit();
-  return { active, archived, source };
-}
-
-export async function getKuwaitLessonById(id: string) {
-  const { lesson } = await fetchLessonById(id);
-  return lesson;
-}
-
 /** Alias موحّد — يجلب الدروس والدورات والمحاضرات من مصدر واحد. */
 export const getUnifiedLessons = fetchLessons;
 
 export async function getUnifiedActiveLessons() {
-  return fetchActiveLessons();
+  const { active, source } = await fetchLessonsSplit();
+  return { lessons: active, source };
 }
 
 export async function getUnifiedLessonsSplit() {
   return fetchLessonsSplit();
+}
+
+export async function getUnifiedLessonById(id: string) {
+  const { lesson, source } = await fetchLessonById(id);
+  return { lesson, source };
+}
+
+/** بحث في الدروس الموحّدة — للصفحة الرئيسية والبحث والتقويم. */
+export async function searchUnifiedLessons(query: string, limit = 24): Promise<KuwaitLessonRecord[]> {
+  const trimmed = query.trim();
+  if (!trimmed) return [];
+
+  const { lessons } = await getUnifiedLessons();
+  const matched = filterKuwaitLessons(lessons, { ...DEFAULT_KUWAIT_FILTERS, search: trimmed });
+  return matched.slice(0, limit);
+}
+
+/** تحويل سجل درس موحّد إلى شكل نتائج البحث. */
+export function lessonRecordToSearchRow(lesson: KuwaitLessonRecord) {
+  return {
+    id: lesson.id,
+    title: lesson.title,
+    speaker_name: lesson.sheikhName.replace(/^الشيخ:\s*/u, ""),
+    category: lesson.category,
+    mosque: lesson.mosque,
+    city: lesson.governorate,
+    sheikhs: { name: lesson.sheikhName.replace(/^الشيخ:\s*/u, ""), photo_url: lesson.sheikhImage },
+    keywords: lesson.keywords,
+  };
+}
+
+/** @deprecated استخدم getUnifiedActiveLessons */
+export async function loadKuwaitLessons() {
+  const { lessons } = await getUnifiedActiveLessons();
+  return lessons;
+}
+
+/** @deprecated استخدم getUnifiedLessonsSplit */
+export async function loadAllKuwaitLessonsSplit() {
+  const { active, archived, source } = await getUnifiedLessonsSplit();
+  return { active, archived, source };
+}
+
+/** @deprecated استخدم getUnifiedLessonById */
+export async function getKuwaitLessonById(id: string) {
+  const { lesson } = await getUnifiedLessonById(id);
+  return lesson;
 }

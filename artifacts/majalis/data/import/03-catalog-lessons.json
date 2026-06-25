@@ -16,8 +16,11 @@
     "status": "approved",
     "activity_type": "درس",
     "is_course": false,
-    "keywords": ["عقيدة", "حديث", "أسبوعي", "بث مباشر"],
-    "live_url": "https://www.saltaweel.com"
+    "keywords": ["عقيدة", "حديث", "أسبوعي", "بث مباشر", "سالم الطويل", "التوحيد"],
+    "live_url": "https://www.saltaweel.com",
+    "book_url": "https://www.saltaweel.com",
+    "organizer": "مجلس الشيخ سالم بن سعد الطويل",
+    "contact_phone": "0096555199147"
   },
   {
     "external_key": "course-ijazati-taah-2026-0",
@@ -30,7 +33,7 @@
     "day_of_week": "الأحد",
     "lesson_time": "بعد صلاة المغرب",
     "schedule": "الأحد — بعد صلاة المغرب",
-    "description": "ملتقى إجازتي طاعة — وزارة الشؤون الإسلامية وجمعية الهداية الخيرية. الجلسة الأولى.",
+    "description": "ملتقى إجازتي طاعة — ليس في العمر إجازة. وزارة الشؤون الإسلامية وجمعية الهداية الخيرية. الجلسة الأولى.",
     "audience": "الكل",
     "delivery": "كلاهما",
     "status": "approved",
@@ -39,7 +42,9 @@
     "course_id": "course-ijazati-taah-2026",
     "session_count": 5,
     "start_date": "2026-06-21",
-    "keywords": ["دورة", "محاضرة", "ملتقى", "حضوري", "بث"]
+    "organizer": "وزارة الشؤون الإسلامية — إدارة مساجد محافظة الفروانية — جمعية الهداية الخيرية",
+    "contact_phone": "60789104",
+    "keywords": ["دورة", "محاضرة", "ملتقى", "حضوري", "بث", "إجازتي طاعة"]
   },
   {
     "external_key": "course-ijazati-taah-2026-1",

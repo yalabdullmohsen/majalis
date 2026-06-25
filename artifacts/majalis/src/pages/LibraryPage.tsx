@@ -8,8 +8,6 @@ import { isDemoId } from "@/lib/demo-content";
 
 const TYPES = ["الكل", "كتاب", "متن", "تفريغ", "ملخص", "مقال", "صوت", "مرئي"];
 
-const TYPE_ICON: Record<string, string> = {};
-
 export default function LibraryPage() {
   const [items, setItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);

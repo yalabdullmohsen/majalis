@@ -18,8 +18,8 @@ import {
 } from "@/lib/unified-lesson-card";
 import { cleanDisplayText } from "@/lib/display-text";
 import {
-  getKuwaitLessonById,
-  loadAllKuwaitLessonsSplit,
+  getUnifiedLessonById,
+  getUnifiedLessonsSplit,
 } from "@/lib/lessons-service";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 import { cleanTimeText } from "@/lib/lesson-time";
@@ -44,12 +44,12 @@ export default function LessonDetailPage({ params }: { params: { id: string } })
 
   useEffect(() => {
     setLoading(true);
-    getKuwaitLessonById(params.id)
-      .then((staticLesson) => {
+    getUnifiedLessonById(params.id)
+      .then(({ lesson: staticLesson }) => {
         if (staticLesson) {
           setKuwaitLesson(staticLesson);
           setLesson(null);
-          return loadAllKuwaitLessonsSplit().then(({ active }) => {
+          return getUnifiedLessonsSplit().then(({ active }) => {
             const related = active
               .filter(
                 (l) =>
@@ -67,7 +67,7 @@ export default function LessonDetailPage({ params }: { params: { id: string } })
           setLesson(dbLesson);
           setKuwaitLesson(null);
           if (!dbLesson) return undefined;
-          return loadAllKuwaitLessonsSplit().then(({ active }) => {
+          return getUnifiedLessonsSplit().then(({ active }) => {
             const related = active
               .filter(
                 (l) =>

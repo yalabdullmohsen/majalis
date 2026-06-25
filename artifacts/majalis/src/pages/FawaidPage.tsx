@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { getApprovedFawaid, submitFawaid } from "@/lib/supabase";
 import { arabicMatchAny } from "@/lib/arabic-search";
-import { DEMO_FAWAID, isDemoId } from "@/lib/demo-content";
+import { DEMO_FAWAID } from "@/lib/demo-content";
 import { FAWAID_CATEGORIES } from "@/lib/fawaid-seed";
 import { canSubmitForm } from "@/lib/form-rate-limit";
 import { PageHeader, Loading, Empty } from "@/components/ui-common";

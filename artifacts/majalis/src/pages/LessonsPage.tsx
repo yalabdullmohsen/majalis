@@ -12,7 +12,7 @@ import {
   type KuwaitLessonFilters,
   type KuwaitLessonRecord,
 } from "@/lib/kuwait-lessons";
-import { loadAllKuwaitLessonsSplit } from "@/lib/lessons-service";
+import { getUnifiedLessonsSplit } from "@/lib/lessons-service";
 import { regionsForGovernorate } from "@/lib/kuwait-regions";
 import { fromKuwaitLesson } from "@/lib/unified-lesson-card";
 import { registerForLesson, unregisterFromLesson, getMyRegistrations } from "@/lib/supabase";
@@ -76,7 +76,7 @@ export default function LessonsPage() {
 
   useEffect(() => {
     setLoading(true);
-    loadAllKuwaitLessonsSplit()
+    getUnifiedLessonsSplit()
       .then(({ active, archived }) => {
         setActiveLessons(active);
         setArchivedLessons(archived);

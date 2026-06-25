@@ -1,6 +1,6 @@
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { ADHKAR_CATEGORIES, ADHKAR_ITEMS } from "@/lib/adhkar-seed";
-import { DEMO_LESSONS, DEMO_SHEIKHS } from "@/lib/demo-content";
+import { LESSONS_SEED } from "@/lib/lessons-seed";
 import { SEED_FAWAID } from "@/lib/fawaid-seed";
 import { SEED_QA } from "@/lib/qa-seed";
 
@@ -32,27 +32,14 @@ export function buildSearchSuggestions(query: string, limit = 12): SearchSuggest
   const results: SearchSuggestion[] = [];
   const seen = new Set<string>();
 
-  for (const lesson of DEMO_LESSONS) {
+  for (const lesson of LESSONS_SEED) {
     if (results.length >= limit) break;
-    if (!arabicMatchAny([lesson.title, lesson.description, lesson.speaker_name, lesson.category], q)) continue;
+    if (!arabicMatchAny([lesson.title, lesson.description, lesson.speaker_name, lesson.category, ...(lesson.keywords || [])], q)) continue;
     pushUnique(results, seen, {
       id: lesson.id,
       label: lesson.title,
-      meta: lesson.speaker_name || lesson.sheikhs?.name,
+      meta: lesson.speaker_name,
       href: `/lessons/${lesson.id}`,
-      group: "lessons",
-    });
-    if (results.filter((r) => r.group === "lessons").length >= MAX_PER_GROUP) break;
-  }
-
-  for (const sheikh of DEMO_SHEIKHS) {
-    if (results.length >= limit) break;
-    if (!arabicMatchAny([sheikh.name, sheikh.bio, ...(sheikh.specialties || [])], q)) continue;
-    pushUnique(results, seen, {
-      id: sheikh.id,
-      label: sheikh.name,
-      meta: sheikh.city,
-      href: `/lessons`,
       group: "lessons",
     });
     if (results.filter((r) => r.group === "lessons").length >= MAX_PER_GROUP) break;

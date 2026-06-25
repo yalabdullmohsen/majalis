@@ -13,7 +13,7 @@ import {
   subMonths,
 } from "date-fns";
 import { arSA } from "date-fns/locale";
-import { loadKuwaitLessons } from "@/lib/lessons-service";
+import { getUnifiedActiveLessons } from "@/lib/lessons-service";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 import { PageHeader, Loading } from "@/components/ui-common";
 
@@ -101,8 +101,8 @@ export default function CalendarPage() {
   const [modalEvent, setModalEvent] = useState<CalendarEvent | null>(null);
 
   useEffect(() => {
-    loadKuwaitLessons()
-      .then((lessons) => setEvents(eventsFromLessons(lessons)))
+    getUnifiedActiveLessons()
+      .then(({ lessons }) => setEvents(eventsFromLessons(lessons)))
       .catch(() => setEvents([]))
       .finally(() => setLoading(false));
   }, []);

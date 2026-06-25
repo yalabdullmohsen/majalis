@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { Loading } from "@/components/ui-common";
 import { UnifiedLessonCard } from "@/components/lessons/UnifiedLessonCard";
-import { loadKuwaitLessons } from "@/lib/lessons-service";
+import { getUnifiedActiveLessons } from "@/lib/lessons-service";
 import { sortKuwaitLessons, type KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 import { fromKuwaitLesson } from "@/lib/unified-lesson-card";
 
@@ -15,8 +15,8 @@ export function HomeUpcomingLessons() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    loadKuwaitLessons()
-      .then((items) =>
+    getUnifiedActiveLessons()
+      .then(({ lessons: items }) =>
         setLessons(
           sortKuwaitLessons(items.filter((l) => !isCourse(l) && l.activityType !== "محاضرة")).slice(0, 4),
         ),
