@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { adminGetLessons, adminUpsertLesson, adminDeleteLesson, adminGetSheikhs } from "@/lib/supabase";
+import { invalidateLessonsCache } from "@/lib/lessons-service";
+import { sanitizeText } from "@/lib/sanitize";
 import { C, GOVERNORATES } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
 import { AdminModal, Field, FieldRow, inputSt, selectSt, textareaSt } from "./AdminModal";
@@ -62,13 +64,28 @@ export function LessonsSection() {
   };
   const handleDelete = async (id: string, title: string) => {
     if (!confirm(`هل تريد حذف الدرس "${title}"؟`)) return;
-    await adminDeleteLesson(id); load();
+    const { error } = await adminDeleteLesson(id);
+    if (!error) invalidateLessonsCache();
+    load();
   };
   const handleSave = async () => {
     if (!form.title.trim()) return alert("عنوان الدرس مطلوب");
     setSaving(true);
-    await adminUpsertLesson({ ...form, sheikh_id: form.sheikh_id || null });
-    setSaving(false); setOpen(false); load();
+    const payload = {
+      ...form,
+      title: sanitizeText(form.title, 500),
+      speaker_name: sanitizeText(form.speaker_name, 200),
+      description: sanitizeText(form.description, 8000),
+      mosque: sanitizeText(form.mosque, 400),
+      region: sanitizeText(form.region, 400),
+      schedule: sanitizeText(form.schedule, 300),
+      sheikh_id: form.sheikh_id || null,
+    };
+    const { error } = await adminUpsertLesson(payload);
+    setSaving(false);
+    if (!error) invalidateLessonsCache();
+    setOpen(false);
+    load();
   };
   const set = (k: string, v: any) => setForm((f: any) => ({ ...f, [k]: v }));
 
@@ -98,7 +115,10 @@ export function LessonsSection() {
               }
               return adminUpsertLesson({ audience: "الكل", delivery: "حضور فقط", status: "approved", ...rest, sheikh_id });
             }}
-            onDone={load}
+            onDone={() => {
+              invalidateLessonsCache();
+              load();
+            }}
           />
           <button onClick={openAdd} style={{ padding: "0.5rem 1.25rem", borderRadius: "0.375rem", background: C.emerald, color: C.parchment, border: "none", cursor: "pointer", fontFamily: "inherit", fontSize: "0.875rem", fontWeight: 600 }}>+ إضافة درس</button>
         </div>

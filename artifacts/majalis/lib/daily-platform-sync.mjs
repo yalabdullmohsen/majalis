@@ -28,7 +28,31 @@ export async function archiveExpiredLessons(admin = getSupabaseAdmin()) {
     return logStep("archiveExpiredLessons", { ok: false, error: error.message, count: 0 });
   }
 
-  return logStep("archiveExpiredLessons", { ok: true, count: data?.length || 0, archived: (data || []).map((r) => r.external_key || r.id) });
+  const ids = (data || []).map((row) => row.id).filter(Boolean);
+  if (ids.length === 0) {
+    return logStep("archiveExpiredLessons", { ok: true, count: 0, archived: [] });
+  }
+
+  const { error: updateError } = await admin
+    .from("lessons")
+    .update({ archived_at: new Date().toISOString(), is_recurring: false })
+    .in("id", ids)
+    .is("archived_at", null);
+
+  if (updateError) {
+    return logStep("archiveExpiredLessons", {
+      ok: false,
+      error: updateError.message,
+      count: ids.length,
+      archived: ids,
+    });
+  }
+
+  return logStep("archiveExpiredLessons", {
+    ok: true,
+    count: ids.length,
+    archived: (data || []).map((r) => r.external_key || r.id),
+  });
 }
 
 /** Detect duplicate external_key rows (report only — no destructive delete). */

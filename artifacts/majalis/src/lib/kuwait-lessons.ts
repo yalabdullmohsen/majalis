@@ -1,4 +1,5 @@
 import { GOVERNORATES } from "@/lib/theme";
+import { arabicIncludes } from "@/lib/arabic-search";
 import { resolveLessonSheikhImage } from "@/lib/sheikh-image";
 import { resolveGovernorateForUi, resolveRegion, displayGovernorate } from "@/lib/kuwait-regions";
 import { formatSheikhName, sheikhNameKey } from "@/lib/sheikh-name";
@@ -47,6 +48,7 @@ export type KuwaitLessonRecord = {
   courseId?: string;
   isCourse?: boolean;
   source?: "supabase" | "seed";
+  archivedAt?: string | null;
 };
 
 export type KuwaitLessonFilters = {
@@ -186,10 +188,12 @@ export function mapLessonRow(row: any): KuwaitLessonRecord {
     isCourse: Boolean(row.is_course),
     courseId: row.course_id,
     recurring: row.is_recurring !== false && !row.end_date,
+    archivedAt: row.archived_at || null,
   });
 }
 
 function isExpired(lesson: KuwaitLessonRecord): boolean {
+  if (lesson.archivedAt) return true;
   if (lesson.endDate) {
     const end = new Date(`${lesson.endDate}T23:59:59+03:00`);
     if (!Number.isNaN(end.getTime()) && end.getTime() < Date.now()) return true;
@@ -292,27 +296,33 @@ export function filterKuwaitLessons(
     if (!matchesTimeSlot(lesson.time, filters.timeSlot)) return false;
 
     if (search) {
-      const haystack = [
-        lesson.title,
-        lesson.sheikhName,
-        lesson.mosque,
-        lesson.region,
-        lesson.governorate,
-        lesson.day,
-        lesson.time,
-        lesson.category,
-        lesson.note,
-        lesson.description,
-        ...(lesson.keywords || []),
-        ...(lesson.linkedLessons || []),
-      ]
-        .filter(Boolean)
-        .join(" ")
-        .toLowerCase();
-      if (!haystack.includes(search)) return false;
+      if (!arabicMatchLesson(lesson, search)) return false;
     }
     return true;
   });
+}
+
+function arabicMatchLesson(lesson: KuwaitLessonRecord, search: string): boolean {
+  return arabicIncludes(
+    [
+      lesson.title,
+      lesson.sheikhName,
+      lesson.mosque,
+      lesson.region,
+      lesson.governorate,
+      lesson.day,
+      lesson.time,
+      lesson.category,
+      lesson.activityType,
+      lesson.note,
+      lesson.description,
+      ...(lesson.keywords || []),
+      ...(lesson.linkedLessons || []),
+    ]
+      .filter(Boolean)
+      .join(" "),
+    search,
+  );
 }
 
 export function buildSearchSuggestions(lessons: KuwaitLessonRecord[], query: string, limit = 8): string[] {

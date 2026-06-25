@@ -115,9 +115,7 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
 
       <div className="lesson-unified-card__body">
         <div className={`lesson-unified-card__top${compact ? " lesson-unified-card__top--compact" : ""}`}>
-          {lesson.sheikhImage && (
-            <SheikhAvatar src={lesson.sheikhImage} name={lesson.sheikhName} size={compact ? 48 : 56} />
-          )}
+          <SheikhAvatar src={lesson.sheikhImage} name={lesson.sheikhName} size={compact ? 48 : 56} />
           <div className="lesson-unified-card__headline">
             <h3 className="lesson-unified-card__title">{lesson.title}</h3>
             {lesson.sheikhName && (
@@ -156,7 +154,7 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
 
         {!compact && lesson.qrCodeUrl && (
           <div className="lesson-unified-card__qr">
-            <LazyImage src={lesson.qrCodeUrl} alt="QR Code" className="lesson-unified-card__qr-img" />
+            <LazyImage src={lesson.qrCodeUrl} alt={`رمز QR: ${lesson.title}`} className="lesson-unified-card__qr-img" />
           </div>
         )}
 

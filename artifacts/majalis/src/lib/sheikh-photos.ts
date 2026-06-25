@@ -6,6 +6,16 @@ const SHEIKH_PHOTOS: Record<string, string> = {
   "راشد صليهم فهد الصليهم": "/sheikhs/rashed-alsulayyim.svg",
   "منصور بن ناصر الخالدي": "/sheikhs/mansour-alkhalidi.svg",
   "أسامة الشطي": "/sheikhs/osama-alshatti.svg",
+  "سالم بن سعد الطويل": "/sheikhs/salem-altaweel.svg",
+  "سالم الطويل": "/sheikhs/salem-altaweel.svg",
+  "حسين بن مبارك المويزري": "/sheikhs/hussein-muwaiziri.svg",
+  "دهام أبو خشبة": "/sheikhs/daham-abukhashba.svg",
+  "نصار خالد نصار العجمي": "/sheikhs/nasar-alajmi.svg",
+  "حامد علي المسعد": "/sheikhs/hamed-almesaad.svg",
+  "فيصل زويد": "/sheikhs/faisal-zowaid.svg",
+  "سعد هزاع العتيبي": "/sheikhs/saad-otaibi.svg",
+  "بندر محمد الميموني": "/sheikhs/bandar-almaimouni.svg",
+  "مطلق جاسر مطلق الجاسر": "/sheikhs/mutlaq-aljasser.svg",
 };
 
 /** Resolve a local sheikh photo from name; falls back to logo.png. */

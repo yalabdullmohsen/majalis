@@ -86,7 +86,12 @@ export default function SearchPage() {
       const unifiedRows = unifiedMatches.map(lessonRecordToSearchRow);
       const seen = new Set((r.lessons || []).map((l: { id: string }) => l.id));
       const mergedLessons = [
-        ...(r.lessons || []),
+        ...(r.lessons || []).map((row: any) => ({
+          ...row,
+          searchMeta: [row.speaker_name || row.sheikhs?.name, row.mosque, row.region || row.city, row.category]
+            .filter(Boolean)
+            .join(" · "),
+        })),
         ...unifiedRows.filter((row) => !seen.has(row.id)),
       ];
 
@@ -176,7 +181,7 @@ export default function SearchPage() {
                     key={l.id}
                     href={`/lessons/${l.id}`}
                     title={displayText(l.title)}
-                    meta={l.speaker_name || l.sheikhs?.name || l.category}
+                    meta={l.searchMeta || l.speaker_name || l.sheikhs?.name || l.category}
                     avatarSrc={resolveLessonSheikhImage(l)}
                     avatarName={l.speaker_name || l.sheikhs?.name || "شيخ"}
                   />

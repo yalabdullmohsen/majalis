@@ -7,14 +7,14 @@
 import { fetchApprovedLessonsFromDb } from "@/lib/supabase";
 import { LESSONS_SEED, findSeedLessonById, type LessonSeedRow } from "@/lib/lessons-seed";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
+import { sheikhNameKey } from "@/lib/sheikh-name";
 import {
-  DEFAULT_KUWAIT_FILTERS,
   dedupeKuwaitLessons,
-  filterKuwaitLessons,
   mapLessonRow,
   sortKuwaitLessons,
   splitKuwaitLessons,
 } from "@/lib/kuwait-lessons";
+import { rankLessonsBySearch, buildLessonSearchMeta } from "@/lib/lesson-search";
 
 export type LessonsSource = "supabase" | "seed" | "merged";
 
@@ -115,14 +115,30 @@ export async function getUnifiedLessonById(id: string) {
   return { lesson, source };
 }
 
-/** بحث في الدروس الموحّدة — للصفحة الرئيسية والبحث والتقويم. */
+/** بحث في الدروس الموحّدة — ترتيب حسب الصلة. */
 export async function searchUnifiedLessons(query: string, limit = 24): Promise<KuwaitLessonRecord[]> {
   const trimmed = query.trim();
   if (!trimmed) return [];
 
   const { lessons } = await getUnifiedLessons();
-  const matched = filterKuwaitLessons(lessons, { ...DEFAULT_KUWAIT_FILTERS, search: trimmed });
-  return matched.slice(0, limit);
+  return rankLessonsBySearch(lessons, trimmed, limit);
+}
+
+/** دروس مشابهة دون جلب القائمة كاملة مرتين. */
+export async function fetchRelatedLessons(
+  lesson: KuwaitLessonRecord,
+  limit = 3,
+): Promise<KuwaitLessonRecord[]> {
+  const { lessons } = await fetchLessons();
+  return lessons
+    .filter(
+      (candidate) =>
+        candidate.id !== lesson.id &&
+        (candidate.category === lesson.category ||
+          sheikhNameKey(candidate.sheikhName) === sheikhNameKey(lesson.sheikhName) ||
+          candidate.region === lesson.region),
+    )
+    .slice(0, limit);
 }
 
 /** تحويل سجل درس موحّد إلى شكل نتائج البحث. */
@@ -133,9 +149,11 @@ export function lessonRecordToSearchRow(lesson: KuwaitLessonRecord) {
     speaker_name: lesson.sheikhName.replace(/^الشيخ:\s*/u, ""),
     category: lesson.category,
     mosque: lesson.mosque,
+    region: lesson.region,
     city: lesson.governorate,
     sheikhs: { name: lesson.sheikhName.replace(/^الشيخ:\s*/u, ""), photo_url: lesson.sheikhImage },
     keywords: lesson.keywords,
+    searchMeta: buildLessonSearchMeta(lesson),
   };
 }
 

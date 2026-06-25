@@ -91,6 +91,17 @@ export function SettingsSection() {
           </div>
         </section>
 
+        <section style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.5rem", padding: "1.25rem" }}>
+          <h3 style={{ margin: "0 0 1rem", color: C.emeraldDeep, fontSize: "1rem" }}>التحديث التلقائي</h3>
+          <p style={{ margin: "0 0 0.75rem", fontSize: "0.875rem", color: C.inkSoft, lineHeight: 1.7 }}>
+            يعمل cron يوميًا على: مواقيت الصلاة، المناسبات، أرشفة الدروس المنتهية، وفحص الروابط.
+            المسار: <code>/api/cron/sync-data</code> — يتطلب <code>CRON_SECRET</code> في الإنتاج.
+          </p>
+          <p style={{ margin: 0, fontSize: "0.8125rem", color: C.inkSoft }}>
+            سؤال اليوم والحديث والفوائد تُدوّر تلقائيًا حسب تاريخ الكويت. المحتوى الجديد يُضاف من لوحة الإدارة ثم يُعتمد قبل النشر.
+          </p>
+        </section>
+
         <section style={{ background: "#E8F5E9", border: `1px solid ${C.emerald}`, borderRadius: "0.5rem", padding: "1.25rem" }}>
           <h3 style={{ margin: "0 0 0.5rem", color: C.emeraldDeep, fontSize: "1rem" }}>الأمان</h3>
           <ul style={{ margin: 0, paddingInlineStart: "1.25rem", fontSize: "0.875rem", color: C.emeraldDeep, lineHeight: 1.9 }}>

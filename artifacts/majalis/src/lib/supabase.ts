@@ -19,6 +19,7 @@ import { safeSupabaseQuery, isMissingSchemaError } from "./safe-supabase";
 const SHEIKH_EMBED = "sheikhs(id, name, city, photo_url)";
 const SHEIKH_EMBED_MIN = "sheikhs(name, photo_url)";
 import { validateSheikhImage, safeUploadFileName } from "./file-validation";
+import { sanitizeFormRecord } from "./sanitize";
 import { formatSupabaseError, isSupabaseConfigured, logSupabaseError } from "./supabase-config";
 
 // Normalize to the bare project origin (https://xxx.supabase.co).
@@ -175,6 +176,7 @@ export async function fetchApprovedLessonsFromDb() {
       .from("lessons")
       .select(`*, ${SHEIKH_EMBED}`)
       .eq("status", "approved")
+      .is("archived_at", null)
       .order("created_at", { ascending: false });
 
     if (error) throw error;
@@ -490,12 +492,42 @@ export async function adminGetLessons() {
 export async function adminUpsertLesson(data: any) {
   const { id, ...rest } = data;
   delete rest.sheikhs;
-  if (!rest.end_date) rest.end_date = null;
-  if (!rest.speaker_name) rest.speaker_name = null;
-  if (!rest.region) rest.region = null;
-  if (!rest.day_of_week) rest.day_of_week = null;
-  if (id) return await supabase.from("lessons").update(rest).eq("id", id);
-  return await supabase.from("lessons").insert(rest);
+
+  const sanitized = sanitizeFormRecord(rest, {
+    title: { max: 500 },
+    speaker_name: { max: 200 },
+    description: { max: 8000 },
+    mosque: { max: 400 },
+    city: { max: 120 },
+    region: { max: 400 },
+    category: { max: 80 },
+    schedule: { max: 300 },
+    day_of_week: { max: 40 },
+    lesson_time: { max: 80 },
+    delivery: { max: 80 },
+    audience: { max: 80 },
+    external_key: { max: 120 },
+    activity_type: { max: 40 },
+    course_id: { max: 120 },
+    live_url: { type: "url" },
+    book_url: { type: "url" },
+    maps_url: { type: "url" },
+    video_url: { type: "url" },
+    audio_url: { type: "url" },
+    sheikh_image_url: { type: "url", max: 2048 },
+    poster_image_url: { type: "url", max: 2048 },
+  }) as typeof rest;
+
+  if (!sanitized.end_date) sanitized.end_date = null;
+  if (!sanitized.speaker_name) sanitized.speaker_name = null;
+  if (!sanitized.region) sanitized.region = null;
+  if (!sanitized.day_of_week) sanitized.day_of_week = null;
+
+  const result = id
+    ? await supabase.from("lessons").update(sanitized).eq("id", id)
+    : await supabase.from("lessons").insert(sanitized);
+
+  return result;
 }
 
 export async function adminDeleteLesson(id: string) {

@@ -7,6 +7,7 @@ import {
   type ScientificAnnouncement,
 } from "@/lib/scientific-announcements-seed";
 import { resolveRegion, resolveGovernorateForUi } from "@/lib/kuwait-regions";
+import { resolveLocalSheikhPhoto } from "@/lib/sheikh-photos";
 import { cleanTimeText } from "@/lib/lesson-time";
 import type { LessonSeedRow } from "@/lib/lessons-seed";
 
@@ -48,7 +49,7 @@ function rowFromAnnouncement(item: ScientificAnnouncement, sessionIndex = 0): Le
     external_key: externalKey,
     title,
     speaker_name: item.sheikh,
-    sheikh_image_url: item.sheikh.includes("سالم") ? "/logo.png" : undefined,
+    sheikh_image_url: resolveLocalSheikhPhoto(item.sheikh),
     poster_image_url: item.posterImage,
     category: categoryFromTags(item.tags),
     city: governorate,

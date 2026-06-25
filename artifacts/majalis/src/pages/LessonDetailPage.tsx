@@ -18,10 +18,11 @@ import {
 } from "@/lib/unified-lesson-card";
 import { cleanDisplayText } from "@/lib/display-text";
 import {
+  fetchRelatedLessons,
   getUnifiedLessonById,
-  getUnifiedLessonsSplit,
 } from "@/lib/lessons-service";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
+import { mapLessonRow } from "@/lib/kuwait-lessons";
 import { cleanTimeText } from "@/lib/lesson-time";
 import { useLessonSeo } from "@/lib/seo";
 
@@ -50,34 +51,14 @@ export default function LessonDetailPage({ params }: { params: { id: string } })
         if (staticLesson) {
           setKuwaitLesson(staticLesson);
           setLesson(null);
-          return getUnifiedLessonsSplit().then(({ active }) => {
-            const related = active
-              .filter(
-                (l) =>
-                  l.id !== staticLesson.id &&
-                  (l.category === staticLesson.category ||
-                    l.sheikhName === staticLesson.sheikhName ||
-                    l.region === staticLesson.region),
-              )
-              .slice(0, 3);
-            setSimilar(related);
-          });
+          return fetchRelatedLessons(staticLesson).then(setSimilar);
         }
 
         return getLessonById(params.id).then(({ lesson: dbLesson }) => {
           setLesson(dbLesson);
           setKuwaitLesson(null);
           if (!dbLesson) return undefined;
-          return getUnifiedLessonsSplit().then(({ active }) => {
-            const related = active
-              .filter(
-                (l) =>
-                  l.id !== params.id &&
-                  (l.category === dbLesson.category || l.region === dbLesson.region),
-              )
-              .slice(0, 3);
-            setSimilar(related);
-          });
+          return fetchRelatedLessons(mapLessonRow(dbLesson)).then(setSimilar);
         });
       })
       .finally(() => setLoading(false));
