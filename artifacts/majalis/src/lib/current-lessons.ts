@@ -313,10 +313,10 @@ export function buildCalendarIcs(lesson: CurrentLesson): string {
   const lines = [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
-    "PRODID:-//Majalis//Lesson Announcements//AR",
+    "PRODID:-//AlMajlisAlIlmi//Lesson Announcements//AR",
     "CALSCALE:GREGORIAN",
     "BEGIN:VEVENT",
-    `UID:${lesson.id}@majalis`,
+    `UID:${lesson.id}@majlisilm.com`,
     `DTSTAMP:${dt}T120000Z`,
     `DTSTART;VALUE=DATE:${dt}`,
     `SUMMARY:${lesson.title} — ${lesson.sheikhName}`,

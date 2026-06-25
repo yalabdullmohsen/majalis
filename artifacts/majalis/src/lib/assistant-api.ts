@@ -19,11 +19,8 @@ export type AssistantResponse = {
 
 export async function callAssistantApi(
   body: { message: string; messages: { role: string; content: string }[] },
-  logPrefix = "[assistant-ui]",
 ): Promise<{ response: Response; data: AssistantResponse; endpoint: string }> {
   const endpoint = getAssistantEndpoint();
-
-  console.log(`${logPrefix} before fetch`, { endpoint, method: "POST", message: body.message });
 
   const response = await fetch(endpoint, {
     method: "POST",
@@ -37,12 +34,7 @@ export async function callAssistantApi(
   if (contentType.includes("application/json")) {
     data = (await response.json().catch(() => ({}))) as AssistantResponse;
   } else {
-    const raw = await response.text().catch(() => "");
-    console.error(`${logPrefix} non-JSON response`, {
-      status: response.status,
-      contentType,
-      preview: raw.slice(0, 120),
-    });
+    await response.text().catch(() => "");
     data = {
       ok: false,
       message: "تعذر تشغيل المساعد الآن، حاول لاحقًا.",
@@ -50,38 +42,19 @@ export async function callAssistantApi(
     };
   }
 
-  console.log(`${logPrefix} after fetch`, {
-    endpoint,
-    status: response.status,
-    ok: data.ok,
-    fallback: data.fallback,
-    hasAnswer: Boolean(data.answer || data.reply),
-  });
-
   return { response, data, endpoint };
 }
 
-export async function checkAssistantAvailability(logPrefix = "[assistant-ui]"): Promise<boolean> {
+export async function checkAssistantAvailability(): Promise<boolean> {
   const endpoint = getAssistantEndpoint();
-  console.log(`${logPrefix} checking availability`, { endpoint });
 
   try {
     const response = await fetch(endpoint);
     const contentType = response.headers.get("content-type") || "";
-
-    if (!contentType.includes("application/json")) {
-      console.warn(`${logPrefix} availability check returned non-JSON`, {
-        status: response.status,
-        contentType,
-      });
-      return false;
-    }
-
+    if (!contentType.includes("application/json")) return false;
     const data = (await response.json()) as AssistantResponse;
-    console.log(`${logPrefix} availability`, { available: data.available });
     return Boolean(data.available);
-  } catch (error) {
-    console.error(`${logPrefix} availability check failed`, error);
+  } catch {
     return false;
   }
 }

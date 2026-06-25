@@ -1,6 +1,6 @@
 kind = "web"
 previewPath = "/"
-title = "مجالس العلم"
+title = "المجلس العلمي"
 version = "1.0.0"
 id = "artifacts/majalis"
 router = "path"

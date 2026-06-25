@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { getQaCategories, getQaQuestions } from "@/lib/supabase";
 import { QA_DISCLAIMER } from "@/lib/theme";
-import { PageHeader, Empty, DemoNotice, QaSkeleton } from "@/components/ui-common";
-import { DEMO_QA, DEMO_QA_CATEGORIES, demoNoticeText } from "@/lib/demo-content";
+import { PageHeader, Empty, QaSkeleton } from "@/components/ui-common";
+import { DEMO_QA, DEMO_QA_CATEGORIES } from "@/lib/demo-content";
 import { QaCard } from "@/components/qa/QaCard";
 import {
   pickRandomQaItem,
@@ -33,7 +33,6 @@ export default function QaPage() {
   const [categories, setCategories] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [categoriesLoading, setCategoriesLoading] = useState(true);
-  const [usingDemo, setUsingDemo] = useState(false);
   const [categoryId, setCategoryId] = useState("all");
   const [search, setSearch] = useState("");
   const [sortMode, setSortMode] = useState<QaSortMode>("default");
@@ -55,14 +54,12 @@ export default function QaPage() {
   const loadQuestions = useCallback(async () => {
     setLoading(true);
     try {
-      const { data, usingDemo: demo } = await getQaQuestions({
+      const { data } = await getQaQuestions({
         categoryId,
         search: debouncedSearch,
       });
-      setUsingDemo(Boolean(demo));
       setItems(data.length > 0 ? data : DEMO_QA);
     } catch {
-      setUsingDemo(true);
       setItems(DEMO_QA);
     } finally {
       setLoading(false);
@@ -176,7 +173,6 @@ export default function QaPage() {
         </section>
       )}
 
-      {usingDemo && <DemoNotice text={demoNoticeText("الأسئلة والأجوبة")} />}
 
       {loading ? (
         <QaSkeleton count={6} />

@@ -5,31 +5,29 @@ import NotificationBell from "./NotificationBell";
 import { SearchSuggestions } from "./SearchSuggestions";
 import { C } from "@/lib/theme";
 
-const HIDDEN_NAV_HREFS = new Set(["/transcribe", "/library"]);
-
-const NEW_NAV_ITEMS = [
-  { href: "/cards", label: "البطاقات" },
-  { href: "/condolences", label: "قوالب العزاء" },
-];
+/** Routes kept working but hidden from main navigation (incomplete or secondary). */
+const HIDDEN_NAV_HREFS = new Set([
+  "/library",
+  "/transcribe",
+  "/quiz",
+  "/courses",
+  "/miracles",
+  "/cards",
+]);
 
 const TABS = [
   { href: "/", label: "الرئيسية" },
   { href: "/announcements", label: "إعلانات الدروس" },
-  { href: "/courses", label: "الدورات" },
   { href: "/lessons", label: "الدروس" },
   { href: "/calendar", label: "التقويم" },
   { href: "/kuwait-lessons", label: "دروس الكويت" },
   { href: "/sheikhs", label: "المشايخ" },
-  { href: "/library", label: "المكتبة" },
-  { href: "/miracles", label: "الإعجاز العلمي" },
   { href: "/fawaid", label: "الفوائد" },
   { href: "/adhkar", label: "الأذكار" },
-  { href: "/qa", label: "الأسئلة والأجوبة" },
-  { href: "/quiz", label: "المسابقات" },
-  { href: "/transcribe", label: "تفريغ" },
-  ...NEW_NAV_ITEMS,
-  { href: "/assistant", label: "المساعد الذكي" },
-  { href: "/about", label: "عن المنصة" },
+  { href: "/qa", label: "الأسئلة" },
+  { href: "/condolences", label: "قوالب العزاء" },
+  { href: "/assistant", label: "المساعد العلمي" },
+  { href: "/about", label: "من نحن" },
 ].filter((tab) => !HIDDEN_NAV_HREFS.has(tab.href));
 
 function useIsMobile() {
@@ -87,25 +85,6 @@ function SearchBox({ onSubmitDone }: { onSubmitDone?: () => void }) {
   );
 }
 
-function MobileQuickNav({ location }: { location: string }) {
-  return (
-    <nav className="mobile-quick-nav" aria-label="أدوات سريعة">
-      {NEW_NAV_ITEMS.map((item) => {
-        const active = location === item.href;
-        return (
-          <Link
-            key={item.href}
-            href={item.href}
-            className={`mobile-quick-nav-item${active ? " active" : ""}`}
-          >
-            {item.label}
-          </Link>
-        );
-      })}
-    </nav>
-  );
-}
-
 export default function NavBar() {
   const { isLoggedIn, isAdmin, user, logout } = useAuth() as any;
   const [location] = useLocation();
@@ -133,6 +112,8 @@ export default function NavBar() {
             src="/logo.png"
             alt="المجلس العلمي"
             className="navbar-logo"
+            width={40}
+            height={40}
           />
           <span className="site-brand-name">المجلس العلمي</span>
         </Link>
@@ -140,7 +121,7 @@ export default function NavBar() {
         {!isMobile && (
           <nav style={{ display: "flex", alignItems: "center", gap: "0.25rem", overflowX: "auto", flex: 1, justifyContent: "center" }}>
             {TABS.map((t) => (
-              <Link key={t.href} href={t.href} style={tabStyle(location === t.href)}>{t.label}</Link>
+              <Link key={t.href} href={t.href} style={tabStyle(location === t.href || (t.href !== "/" && location.startsWith(t.href)))}>{t.label}</Link>
             ))}
             {isAdmin && (
               <Link href="/admin" style={{ ...tabStyle(location.startsWith("/admin")), color: location.startsWith("/admin") ? C.emeraldDeep : C.brassDeep }}>لوحة التحكم</Link>
@@ -168,8 +149,6 @@ export default function NavBar() {
           )}
         </div>
       </div>
-
-      {isMobile && !open && <MobileQuickNav location={location} />}
 
       {isMobile && open && (
         <div style={{ borderTop: `1px solid ${C.line}`, background: C.parchment, padding: "0.75rem 1rem 1rem" }}>

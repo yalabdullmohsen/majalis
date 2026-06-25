@@ -125,5 +125,5 @@ app.use("/api", (_req, res) => {
 });
 
 app.listen(port, "0.0.0.0", () => {
-  console.log(`Majalis web server listening on http://0.0.0.0:${port}`);
+  console.log(`المجلس العلمي — الخادم يعمل على http://0.0.0.0:${port}`);
 });

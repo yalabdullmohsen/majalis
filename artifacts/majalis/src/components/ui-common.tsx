@@ -45,15 +45,6 @@ export function ErrorState({ text, onRetry }: { text: string; onRetry?: () => vo
     </div>
   );
 }
-
-export function DemoNotice({ text }: { text: string }) {
-  return (
-    <p style={{ fontSize: "0.8125rem", color: C.brassDeep, background: C.parchmentDeep, border: `1px solid ${C.line}`, borderRadius: "0.375rem", padding: "0.75rem 1rem", marginBottom: "1rem", lineHeight: 1.6 }}>
-      {text}
-    </p>
-  );
-}
-
 export function Empty({ text }: { text: string }) {
   return <p style={{ textAlign: "center", padding: "2.5rem 0", color: C.inkSoft }}>{text}</p>;
 }

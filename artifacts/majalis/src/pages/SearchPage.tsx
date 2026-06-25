@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, useParams, useLocation } from "wouter";
 import { searchEverything, type SearchResults } from "@/lib/supabase";
-import { demoNoticeText, searchDemoContent } from "@/lib/demo-content";
+import { searchDemoContent } from "@/lib/demo-content";
 import { displayText } from "@/lib/display-text";
-import { DemoNotice, SearchSkeleton } from "@/components/ui-common";
+import { SearchSkeleton } from "@/components/ui-common";
 import { SearchSuggestions } from "@/components/SearchSuggestions";
 import { SheikhAvatar } from "@/components/lessons/SheikhAvatar";
 import { resolveSheikhImageUrl, resolveLessonSheikhImage } from "@/lib/sheikh-image";
@@ -66,26 +66,21 @@ export default function SearchPage() {
   const [term, setTerm] = useState(q);
   const [results, setResults] = useState<SearchResults>(EMPTY);
   const [loading, setLoading] = useState(false);
-  const [usingDemo, setUsingDemo] = useState(false);
 
   const runSearch = async (query: string) => {
     if (!query.trim()) {
       setResults(EMPTY);
-      setUsingDemo(false);
       return;
     }
 
     setLoading(true);
-    setUsingDemo(false);
 
     try {
       const r = await searchEverything(query);
       setResults(r);
-      setUsingDemo(!!r.usingDemo);
     } catch {
       const demo = searchDemoContent(query);
       setResults({ ...demo, usingDemo: true, error: null, adhkar: demo.adhkar || [] });
-      setUsingDemo(true);
     } finally {
       setLoading(false);
     }
@@ -137,7 +132,6 @@ export default function SearchPage() {
         <SearchSkeleton />
       ) : (
         <>
-          {usingDemo && <DemoNotice text={demoNoticeText("البحث")} />}
           {total === 0 ? (
             <p className="search-page-hint">
               لا توجد نتائج مطابقة لـ «{q}».

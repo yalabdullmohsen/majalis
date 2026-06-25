@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { getApprovedFawaid, submitFawaid } from "@/lib/supabase";
 import { arabicMatchAny } from "@/lib/arabic-search";
-import { DEMO_FAWAID, demoNoticeText, isDemoId } from "@/lib/demo-content";
+import { DEMO_FAWAID, isDemoId } from "@/lib/demo-content";
 import { FAWAID_CATEGORIES } from "@/lib/fawaid-seed";
 import { canSubmitForm } from "@/lib/form-rate-limit";
-import { PageHeader, Loading, Empty, DemoNotice } from "@/components/ui-common";
+import { PageHeader, Loading, Empty } from "@/components/ui-common";
 import { useAuth } from "@/components/AuthProvider";
 import { FaidahCard } from "@/components/fawaid/FaidahCard";
 
@@ -37,7 +37,6 @@ function useDebouncedValue<T>(value: T, delayMs = 350): T {
 export default function FawaidPage() {
   const [fawaid, setFawaid] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [usingDemo, setUsingDemo] = useState(false);
   const [category, setCategory] = useState("الكل");
   const [search, setSearch] = useState("");
   const [text, setText] = useState("");
@@ -51,13 +50,11 @@ export default function FawaidPage() {
   useEffect(() => {
     setLoading(true);
     getApprovedFawaid()
-      .then(({ data, usingSeed }) => {
+      .then(({ data }) => {
         setFawaid(data);
-        setUsingDemo(Boolean(usingSeed));
       })
       .catch(() => {
         setFawaid(DEMO_FAWAID);
-        setUsingDemo(true);
       })
       .finally(() => setLoading(false));
   }, []);
@@ -119,8 +116,6 @@ export default function FawaidPage() {
         <span>{displayItems.length} فائدة</span>
         <span>{FAWAID_CATEGORIES.length} تصنيف</span>
       </div>
-
-      {usingDemo && <DemoNotice text={demoNoticeText("الفوائد")} />}
 
       <input
         value={search}

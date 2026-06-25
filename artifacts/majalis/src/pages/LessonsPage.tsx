@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { getLessons, registerForLesson, unregisterFromLesson, getMyRegistrations } from "@/lib/supabase";
-import { DEMO_LESSONS, demoNoticeText } from "@/lib/demo-content";
+import { DEMO_LESSONS } from "@/lib/demo-content";
 import { GOVERNORATES } from "@/lib/theme";
-import { PageHeader, Loading, Empty, Chip, DemoNotice } from "@/components/ui-common";
+import { PageHeader, Loading, Empty, Chip } from "@/components/ui-common";
 import { useAuth } from "@/components/AuthProvider";
 import { LessonCard } from "@/components/lessons/LessonCard";
 
@@ -98,8 +98,6 @@ export default function LessonsPage() {
           <Chip key={g} active={city === g} onClick={() => setCity(g)}>{g}</Chip>
         ))}
       </div>
-
-      {usingDemo && <DemoNotice text={demoNoticeText("الدروس")} />}
 
       {loading ? (
         <Loading />

@@ -6598,6 +6598,17 @@ input, textarea, select { font-family: inherit; }
   gap: 1.25rem;
 }
 
+.site-footer-brand {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.site-footer-logo {
+  flex-shrink: 0;
+  border-radius: 0.375rem;
+}
+
 .site-footer-brand strong {
   display: block;
   color: var(--majalis-emerald-deep);

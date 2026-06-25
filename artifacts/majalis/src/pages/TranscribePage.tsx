@@ -17,7 +17,7 @@ type AnalysisResult = {
   key_quotes?: string[];
 };
 
-const WHISPER_PLACEHOLDER = "// سيتم التفريغ عبر Whisper API عند ربطه";
+const PENDING_WHISPER_TRANSCRIPT = "__pending_whisper__";
 
 export default function TranscribePage() {
   const { isLoggedIn } = useAuth() as { isLoggedIn: boolean };
@@ -140,7 +140,7 @@ export default function TranscribePage() {
           .update({ file_url: publicUrl?.publicUrl || fileName })
           .eq("id", record.id);
 
-        transcriptText = WHISPER_PLACEHOLDER;
+        transcriptText = PENDING_WHISPER_TRANSCRIPT;
         setProgress(60);
       }
 
@@ -155,7 +155,7 @@ export default function TranscribePage() {
         return;
       }
 
-      if (activeTab === "upload" && (!transcriptText || transcriptText === WHISPER_PLACEHOLDER)) {
+      if (activeTab === "upload" && (!transcriptText || transcriptText === PENDING_WHISPER_TRANSCRIPT)) {
         await supabase
           .from("transcriptions")
           .update({ status: "pending" })

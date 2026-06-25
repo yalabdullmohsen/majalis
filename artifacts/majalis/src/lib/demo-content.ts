@@ -150,10 +150,6 @@ export function isDemoId(id: string) {
   return id.startsWith("demo-") || id.startsWith("seed-");
 }
 
-export function demoNoticeText(section: string) {
-  return `يعرض ${section} من مراجع المنصة المحلية. يمكن تحديث المحتوى من لوحة التحكم.`;
-}
-
 export type DemoSearchResults = {
   lessons: typeof DEMO_LESSONS;
   library: typeof DEMO_LIBRARY;

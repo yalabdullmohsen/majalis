@@ -4,25 +4,22 @@ import { resolveSheikhImageUrl, resolveLessonSheikhImage, parseLessonSchedule } 
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { getSheikhs } from "@/lib/supabase";
-import { DEMO_SHEIKHS, demoNoticeText } from "@/lib/demo-content";
-import { PageHeader, Loading, Empty, DemoNotice } from "@/components/ui-common";
+import { DEMO_SHEIKHS } from "@/lib/demo-content";
+import { PageHeader, Loading, Empty } from "@/components/ui-common";
 
 export default function SheikhsPage() {
   const [sheikhs, setSheikhs] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [usingDemo, setUsingDemo] = useState(false);
   const [search, setSearch] = useState("");
   const [verifiedOnly, setVerifiedOnly] = useState(false);
 
   const loadSheikhs = async () => {
     setLoading(true);
     try {
-      const { data, usingSeed } = await getSheikhs();
+      const { data } = await getSheikhs();
       setSheikhs(data);
-      setUsingDemo(Boolean(usingSeed));
     } catch {
       setSheikhs(DEMO_SHEIKHS);
-      setUsingDemo(true);
     } finally {
       setLoading(false);
     }
@@ -70,7 +67,6 @@ export default function SheikhsPage() {
         </button>
       </div>
 
-      {usingDemo && <DemoNotice text={demoNoticeText("المشايخ")} />}
 
       {loading ? (
         <Loading />
@@ -79,7 +75,7 @@ export default function SheikhsPage() {
       ) : (
         <div className="page-card-grid sheikhs-grid">
           {filtered.map((s: any) => (
-            <Link key={s.id} href={usingDemo ? "/sheikhs" : `/sheikhs/${s.id}`} className="page-card sheikh-card">
+            <Link key={s.id} href={`/sheikhs/${s.id}`} className="page-card sheikh-card">
               <div className="sheikh-card-top">
                 <SheikhAvatar
                   src={resolveSheikhImageUrl(s)}

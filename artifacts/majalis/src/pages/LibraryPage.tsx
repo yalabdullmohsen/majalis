@@ -1,8 +1,8 @@
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { useEffect, useMemo, useState } from "react";
 import { getLibrary } from "@/lib/supabase";
-import { DEMO_LIBRARY, demoNoticeText } from "@/lib/demo-content";
-import { PageHeader, Loading, Empty, Chip, DemoNotice } from "@/components/ui-common";
+import { DEMO_LIBRARY } from "@/lib/demo-content";
+import { PageHeader, Loading, Empty, Chip } from "@/components/ui-common";
 import ContentActions from "@/components/ContentActions";
 import { isDemoId } from "@/lib/demo-content";
 
@@ -13,19 +13,16 @@ const TYPE_ICON: Record<string, string> = {};
 export default function LibraryPage() {
   const [items, setItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [usingDemo, setUsingDemo] = useState(false);
   const [type, setType] = useState("الكل");
   const [search, setSearch] = useState("");
 
   const loadLibrary = async () => {
     setLoading(true);
     try {
-      const { data, usingSeed } = await getLibrary({ type: type === "الكل" ? undefined : type });
+      const { data } = await getLibrary({ type: type === "الكل" ? undefined : type });
       setItems(data);
-      setUsingDemo(Boolean(usingSeed));
     } catch {
       setItems(DEMO_LIBRARY);
-      setUsingDemo(true);
     } finally {
       setLoading(false);
     }
@@ -66,7 +63,6 @@ export default function LibraryPage() {
         ))}
       </div>
 
-      {usingDemo && <DemoNotice text={demoNoticeText("المكتبة")} />}
 
       {loading ? (
         <Loading />

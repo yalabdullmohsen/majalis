@@ -2,9 +2,8 @@ import { useEffect, useMemo, useState } from "react";
 import { getQuizQuestions } from "@/lib/supabase";
 import { DEMO_QUIZ_QUESTIONS, type QuizQuestion } from "@/lib/quiz-seed";
 import { isQuizAnswerCorrect, shuffleQuizQuestions } from "@/lib/quiz-utils";
-import { demoNoticeText } from "@/lib/demo-content";
 import { C } from "@/lib/theme";
-import { PageHeader, Loading, Empty, Chip, DemoNotice } from "@/components/ui-common";
+import { PageHeader, Loading, Empty, Chip } from "@/components/ui-common";
 
 type Phase = "setup" | "playing" | "done";
 
@@ -17,7 +16,6 @@ function uniqueSections(items: QuizQuestion[]) {
 export default function QuizPage() {
   const [pool, setPool] = useState<QuizQuestion[]>([]);
   const [loading, setLoading] = useState(true);
-  const [usingDemo, setUsingDemo] = useState(false);
   const [section, setSection] = useState("الكل");
   const [count, setCount] = useState<number>(10);
   const [phase, setPhase] = useState<Phase>("setup");
@@ -32,10 +30,8 @@ export default function QuizPage() {
     getQuizQuestions().then(({ data, error }) => {
       if (error || data.length === 0) {
         setPool(DEMO_QUIZ_QUESTIONS);
-        setUsingDemo(true);
       } else {
         setPool(data);
-        setUsingDemo(false);
       }
       setLoading(false);
     });
@@ -102,8 +98,6 @@ export default function QuizPage() {
         title="المسابقات الشرعية"
         subtitle="أسئلة تعليمية في الأنبياء والصحابة والسيرة والأحكام والصالحين — اختر القسم وابدأ."
       />
-
-      {usingDemo && <DemoNotice text={demoNoticeText("المسابقات")} />}
 
       {phase === "setup" && (
         <>
