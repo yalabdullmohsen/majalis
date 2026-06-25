@@ -8221,6 +8221,38 @@ body.assistant-panel-open {
   }
 }
 
+.skip-link {
+  position: absolute;
+  inset-inline-start: 1rem;
+  top: -3rem;
+  z-index: 100;
+  padding: 0.5rem 0.875rem;
+  border-radius: 0.375rem;
+  background: var(--majalis-emerald-deep);
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+.search-suggestions-clear {
+  display: block;
+  width: 100%;
+  margin-top: 0.35rem;
+  padding: 0.35rem 0.5rem;
+  border: none;
+  background: transparent;
+  color: var(--majalis-ink-soft);
+  font-family: inherit;
+  font-size: 0.75rem;
+  cursor: pointer;
+  text-align: right;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .assistant-fab,
   .assistant-panel,

@@ -5,6 +5,7 @@ import {
   SUGGESTION_GROUP_LABELS,
   type SearchSuggestion,
 } from "@/lib/search-suggestions";
+import { getSearchHistory, clearSearchHistory } from "@/lib/search-history";
 
 type Props = {
   value: string;
@@ -31,6 +32,8 @@ export function SearchSuggestions({
     () => buildSearchSuggestions(value),
     [value],
   );
+
+  const history = useMemo(() => getSearchHistory(), [open, value]);
 
   useEffect(() => {
     setActiveIndex(-1);
@@ -100,6 +103,31 @@ export function SearchSuggestions({
         className={inputClassName}
         autoComplete="off"
       />
+
+      {open && value.trim().length < 2 && history.length > 0 && (
+        <div className="search-suggestions-panel" role="listbox" aria-label="سجل البحث">
+          <div className="search-suggestions-group">
+            <p className="search-suggestions-group-label">بحثت سابقًا</p>
+            {history.map((item) => (
+              <button
+                key={item}
+                type="button"
+                className="search-suggestion-item"
+                onClick={() => {
+                  onChange(item);
+                  onSubmit(item);
+                  setOpen(false);
+                }}
+              >
+                <span className="search-suggestion-label">{item}</span>
+              </button>
+            ))}
+            <button type="button" className="search-suggestions-clear" onClick={() => { clearSearchHistory(); setOpen(false); }}>
+              مسح السجل
+            </button>
+          </div>
+        </div>
+      )}
 
       {open && value.trim().length >= 2 && suggestions.length > 0 && (
         <div className="search-suggestions-panel" role="listbox">

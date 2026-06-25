@@ -64,15 +64,10 @@ export function SettingsSection() {
         </section>
 
         <section style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.5rem", padding: "1.25rem" }}>
-          <h3 style={{ margin: "0 0 1rem", color: C.emeraldDeep, fontSize: "1rem" }}>أقسام إضافية</h3>
+          <h3 style={{ margin: "0 0 1rem", color: C.emeraldDeep, fontSize: "1rem" }}>أقسام المحتوى</h3>
           <p style={{ margin: "0 0 0.75rem", fontSize: "0.875rem", color: C.inkSoft, lineHeight: 1.7 }}>
-            أقسام المحتوى الإضافية متاحة عبر الروابط التالية:
+            يمكن إدارة الدروس والمكتبة والإعجاز العلمي والفوائد والأسئلة والأذكار من القائمة الجانبية في لوحة الإدارة.
           </p>
-          <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
-            <Link href="/admin" style={{ padding: "0.4rem 0.75rem", borderRadius: "0.375rem", border: `1px solid ${C.line}`, textDecoration: "none", color: C.emeraldDeep, fontSize: "0.8125rem" }}>
-              الإعجاز العلمي · المسابقات (عبر API)
-            </Link>
-          </div>
         </section>
 
         <section style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.5rem", padding: "1.25rem" }}>

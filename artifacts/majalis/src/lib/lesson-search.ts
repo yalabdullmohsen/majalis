@@ -1,4 +1,5 @@
 import { arabicIncludes } from "@/lib/arabic-search";
+import { expandSearchTerms } from "@/lib/search-synonyms";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 
 function searchFields(lesson: KuwaitLessonRecord): string[] {
@@ -28,19 +29,28 @@ export function scoreLessonSearch(lesson: KuwaitLessonRecord, query: string): nu
   const title = lesson.title || "";
   const sheikh = lesson.sheikhName || "";
 
-  if (arabicIncludes(title, q)) score += title.length <= q.length + 4 ? 120 : 80;
-  if (arabicIncludes(sheikh, q)) score += 70;
-  if (arabicIncludes(lesson.mosque, q)) score += 55;
-  if (arabicIncludes(lesson.region, q)) score += 45;
-  if (arabicIncludes(lesson.governorate, q)) score += 40;
-  if (arabicIncludes(lesson.category, q)) score += 35;
-  if (lesson.keywords?.some((k) => arabicIncludes(k, q))) score += 30;
-  if (arabicIncludes(lesson.description, q) || arabicIncludes(lesson.note, q)) score += 25;
-  if (arabicIncludes(lesson.day, q) || arabicIncludes(lesson.time, q)) score += 15;
+  const terms = expandSearchTerms(q);
+
+  for (const term of terms) {
+    if (arabicIncludes(title, term)) score += title.length <= term.length + 4 ? 120 : 80;
+    if (arabicIncludes(sheikh, term)) score += 70;
+    if (arabicIncludes(lesson.mosque, term)) score += 55;
+    if (arabicIncludes(lesson.region, term)) score += 45;
+    if (arabicIncludes(lesson.governorate, term)) score += 40;
+    if (arabicIncludes(lesson.category, term)) score += 35;
+    if (lesson.keywords?.some((k) => arabicIncludes(k, term))) score += 30;
+    if (arabicIncludes(lesson.description, term) || arabicIncludes(lesson.note, term)) score += 25;
+    if (arabicIncludes(lesson.day, term) || arabicIncludes(lesson.time, term)) score += 15;
+  }
 
   if (score === 0) {
     const haystack = searchFields(lesson).join(" ");
-    if (arabicIncludes(haystack, q)) score += 10;
+    for (const term of terms) {
+      if (arabicIncludes(haystack, term)) {
+        score += 10;
+        break;
+      }
+    }
   }
 
   if (score > 0 && !lesson.archivedAt) score += 5;

@@ -37,5 +37,23 @@ CREATE TRIGGER sheikhs_touch_updated_at
   BEFORE UPDATE ON sheikhs
   FOR EACH ROW EXECUTE FUNCTION touch_updated_at();
 
+-- ── سجل البحث ──
+CREATE TABLE IF NOT EXISTS search_queries (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  query TEXT NOT NULL,
+  searched_at TIMESTAMPTZ DEFAULT now()
+);
+
+CREATE INDEX IF NOT EXISTS search_queries_at_idx ON search_queries (searched_at DESC);
+CREATE INDEX IF NOT EXISTS search_queries_query_idx ON search_queries (query);
+
+ALTER TABLE IF EXISTS search_queries ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "anyone_insert_search_queries" ON search_queries;
+CREATE POLICY "anyone_insert_search_queries" ON search_queries FOR INSERT WITH CHECK (true);
+
+DROP POLICY IF EXISTS "admin_read_search_queries" ON search_queries;
+CREATE POLICY "admin_read_search_queries" ON search_queries FOR SELECT USING (is_admin());
+
 -- ── تقييد INSERT على content_views (مستخدم مسجل أو anon مع rate limit على التطبيق) ──
 -- RLS موجود مسبقًا — هذا تعليق توثيقي فقط

@@ -25,6 +25,7 @@ import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 import { mapLessonRow } from "@/lib/kuwait-lessons";
 import { cleanTimeText } from "@/lib/lesson-time";
 import { useLessonSeo } from "@/lib/seo";
+import { usePageView } from "@/hooks/usePageView";
 
 function buildMapsEmbed(url?: string, mosque?: string, region?: string) {
   if (url?.includes("google.com/maps") || url?.includes("goo.gl/maps") || url?.includes("maps.app")) {
@@ -101,6 +102,7 @@ export default function LessonDetailPage({ params }: { params: { id: string } })
   }, [kuwaitLesson, lesson, unified]);
 
   useLessonSeo(seoLesson, `/lessons/${params.id}`);
+  usePageView("lesson", params.id);
 
   if (loading) return <Loading />;
   if (!unified) return <Empty text="لم يُعثر على الدرس." />;

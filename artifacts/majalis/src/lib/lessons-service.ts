@@ -156,21 +156,3 @@ export function lessonRecordToSearchRow(lesson: KuwaitLessonRecord) {
     searchMeta: buildLessonSearchMeta(lesson),
   };
 }
-
-/** @deprecated استخدم getUnifiedActiveLessons */
-export async function loadKuwaitLessons() {
-  const { lessons } = await getUnifiedActiveLessons();
-  return lessons;
-}
-
-/** @deprecated استخدم getUnifiedLessonsSplit */
-export async function loadAllKuwaitLessonsSplit() {
-  const { active, archived, source } = await getUnifiedLessonsSplit();
-  return { active, archived, source };
-}
-
-/** @deprecated استخدم getUnifiedLessonById */
-export async function getKuwaitLessonById(id: string) {
-  const { lesson } = await getUnifiedLessonById(id);
-  return lesson;
-}

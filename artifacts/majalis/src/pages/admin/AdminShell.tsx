@@ -3,8 +3,11 @@ import { Link } from "wouter";
 import { C } from "@/lib/theme";
 
 export type AdminSection =
+  | "dashboard"
   | "lessons"
   | "sheikhs"
+  | "library"
+  | "miracles"
   | "adhkar"
   | "fawaid"
   | "qa"
@@ -14,15 +17,18 @@ export type AdminSection =
   | "reports";
 
 export const ADMIN_NAV: { key: AdminSection; label: string }[] = [
+  { key: "dashboard", label: "لوحة التحكم" },
   { key: "lessons", label: "الدروس" },
   { key: "sheikhs", label: "المشايخ" },
-  { key: "adhkar", label: "الأذكار" },
+  { key: "library", label: "المكتبة" },
+  { key: "miracles", label: "الإعجاز العلمي" },
   { key: "fawaid", label: "الفوائد" },
+  { key: "adhkar", label: "الأذكار" },
   { key: "qa", label: "الأسئلة" },
   { key: "condolences", label: "قوالب التعزية" },
   { key: "users", label: "المستخدمون" },
-  { key: "settings", label: "الإعدادات" },
   { key: "reports", label: "التقارير" },
+  { key: "settings", label: "الإعدادات" },
 ];
 
 type Flash = { type: "success" | "error"; message: string } | null;

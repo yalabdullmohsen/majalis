@@ -9,6 +9,8 @@ import { SheikhAvatar } from "@/components/lessons/SheikhAvatar";
 import { resolveLessonSheikhImage } from "@/lib/sheikh-image";
 import { searchLocalExtensions } from "@/lib/local-search-ext";
 import { lessonRecordToSearchRow, searchUnifiedLessons } from "@/lib/lessons-service";
+import { addSearchHistory } from "@/lib/search-history";
+import { trackSearchQuery } from "@/lib/content-analytics";
 
 const EMPTY: SearchResults = {
   lessons: [],
@@ -76,6 +78,8 @@ export default function SearchPage() {
     }
 
     setLoading(true);
+    addSearchHistory(query);
+    void trackSearchQuery(query);
 
     try {
       const [r, unifiedMatches] = await Promise.all([

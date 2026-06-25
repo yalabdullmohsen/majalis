@@ -1,3 +1,5 @@
+import { expandSearchTerms } from "@/lib/search-synonyms";
+
 function expandArabicVariants(normalized: string): string[] {
   const variants = new Set<string>([normalized]);
   if (!normalized) return [];
@@ -31,10 +33,13 @@ export function arabicIncludes(haystack: string | null | undefined, needle: stri
   if (!haystack) return false;
 
   const hayVariants = expandArabicVariants(normalizeArabic(haystack));
-  const needleVariants = expandArabicVariants(normalizeArabic(needle));
+  const needles = expandSearchTerms(needle);
 
   return hayVariants.some((h) =>
-    needleVariants.some((n) => n.length > 0 && h.includes(n))
+    needles.some((raw) => {
+      const needleVariants = expandArabicVariants(normalizeArabic(raw));
+      return needleVariants.some((n) => n.length > 0 && h.includes(n));
+    }),
   );
 }
 
@@ -50,21 +55,24 @@ export function arabicSearchPatterns(term: string): string[] {
   const base = term.trim();
   if (!base) return [];
 
-  const variants = new Set<string>([base]);
-  const hamzaMap: Record<string, string[]> = {
-    ا: ["أ", "إ", "آ", "ٱ"],
-    و: ["ؤ"],
-    ي: ["ئ", "ى"],
-    ه: ["ة"],
-  };
+  const variants = new Set<string>();
+  for (const expanded of expandSearchTerms(base)) {
+    variants.add(expanded);
+    const hamzaMap: Record<string, string[]> = {
+      ا: ["أ", "إ", "آ", "ٱ"],
+      و: ["ؤ"],
+      ي: ["ئ", "ى"],
+      ه: ["ة"],
+    };
 
-  for (const [plain, forms] of Object.entries(hamzaMap)) {
-    for (const form of forms) {
-      if (base.includes(form)) {
-        variants.add(base.split(form).join(plain));
-      }
-      if (base.includes(plain)) {
-        for (const f of forms) variants.add(base.split(plain).join(f));
+    for (const [plain, forms] of Object.entries(hamzaMap)) {
+      for (const form of forms) {
+        if (expanded.includes(form)) {
+          variants.add(expanded.split(form).join(plain));
+        }
+        if (expanded.includes(plain)) {
+          for (const f of forms) variants.add(expanded.split(plain).join(f));
+        }
       }
     }
   }

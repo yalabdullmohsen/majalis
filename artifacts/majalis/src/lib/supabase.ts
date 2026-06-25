@@ -20,7 +20,7 @@ const SHEIKH_EMBED = "sheikhs(id, name, city, photo_url)";
 const SHEIKH_EMBED_MIN = "sheikhs(name, photo_url)";
 import { validateSheikhImage, safeUploadFileName } from "./file-validation";
 import { sanitizeFormRecord } from "./sanitize";
-import { formatSupabaseError, isSupabaseConfigured, logSupabaseError } from "./supabase-config";
+import { isSupabaseConfigured, formatSupabaseError, logSupabaseError } from "./supabase-config";
 
 // Normalize to the bare project origin (https://xxx.supabase.co).
 // The supabase-js client appends /rest/v1, /auth/v1, etc. itself, so any
@@ -244,11 +244,6 @@ export async function getLessonById(id: string) {
   }
 }
 
-/** @deprecated استخدم fetchApprovedLessonsFromDb عبر lessons-service */
-export async function getKuwaitLessonsFromDb() {
-  return fetchApprovedLessonsFromDb();
-}
-
 export async function registerForLesson(userId: string, lessonId: string) {
   return await supabase
     .from("lesson_registrations")
@@ -403,7 +398,12 @@ export async function adminGetDashboardStats() {
     { count: reports },
     { count: trans },
     { count: todayViews },
+    { count: sheikhs },
     { data: recentReports },
+    { data: lessonRows },
+    { data: recentLessons },
+    { data: viewRows },
+    { data: searchRows },
   ] = await Promise.all([
     supabase.from("profiles").select("*", { count: "exact", head: true }),
     supabase.from("lessons").select("*", { count: "exact", head: true }),
@@ -413,8 +413,59 @@ export async function adminGetDashboardStats() {
     supabase.from("error_reports").select("*", { count: "exact", head: true }).eq("status", "pending"),
     supabase.from("transcriptions").select("*", { count: "exact", head: true }),
     supabase.from("content_views").select("*", { count: "exact", head: true }).gte("viewed_at", startOfDay.toISOString()),
-    supabase.from("error_reports").select("*").eq("status", "pending").order("created_at", { ascending: false }).limit(5),
+    supabase.from("sheikhs").select("*", { count: "exact", head: true }),
+    supabase.from("error_reports").select("*").eq("status", "pending").order("created_at", { ascending: false }).limit(8),
+    supabase.from("lessons").select("activity_type, is_course, status"),
+    supabase.from("lessons").select("id, title, updated_at, activity_type").order("updated_at", { ascending: false }).limit(6),
+    supabase.from("content_views").select("content_type, content_id").eq("content_type", "lesson").order("viewed_at", { ascending: false }).limit(300),
+    supabase.from("search_queries").select("query").order("searched_at", { ascending: false }).limit(200),
   ]);
+
+  const rows = lessonRows || [];
+  const coursesCount = rows.filter((l: any) => l.is_course || l.activity_type === "دورة").length;
+  const lecturesCount = rows.filter((l: any) => l.activity_type === "محاضرة").length;
+  const lessonsCount = rows.filter((l: any) => l.status === "approved" && !l.is_course && l.activity_type !== "دورة" && l.activity_type !== "محاضرة").length;
+
+  const viewCounts = new Map<string, number>();
+  for (const row of viewRows || []) {
+    const id = String(row.content_id);
+    viewCounts.set(id, (viewCounts.get(id) || 0) + 1);
+  }
+  const topViewedIds = [...viewCounts.entries()]
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 5)
+    .map(([id, views]) => ({ id, views }));
+
+  let topViewedLessons: { id: string; title: string; views: number }[] = [];
+  if (topViewedIds.length > 0) {
+    const { data: titles } = await supabase
+      .from("lessons")
+      .select("id, title, external_key")
+      .in("id", topViewedIds.map((v) => v.id));
+    topViewedLessons = topViewedIds.map((item) => {
+      const match = (titles || []).find((t: any) => t.id === item.id);
+      return { id: match?.external_key || item.id, title: match?.title || item.id, views: item.views };
+    });
+  }
+
+  const searchCounts = new Map<string, number>();
+  for (const row of searchRows || []) {
+    const q = String(row.query || "").trim();
+    if (!q) continue;
+    searchCounts.set(q, (searchCounts.get(q) || 0) + 1);
+  }
+  const topSearches = [...searchCounts.entries()]
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 8)
+    .map(([query, count]) => ({ query, count }));
+
+  let serverOk = false;
+  try {
+    const res = await fetch("/api/healthz", { signal: AbortSignal.timeout(4000) });
+    serverOk = res.ok;
+  } catch {
+    /* offline */
+  }
 
   return {
     stats: {
@@ -426,9 +477,22 @@ export async function adminGetDashboardStats() {
       pendingReports: reports || 0,
       todayViews: todayViews || 0,
       totalTranscriptions: trans || 0,
+      totalSheikhs: sheikhs || 0,
+      coursesCount,
+      lecturesCount,
+      regularLessonsCount: lessonsCount,
+      dbConnected: isSupabaseConfigured(),
+      serverOk,
     },
     recentReports: recentReports || [],
+    recentLessons: recentLessons || [],
+    topViewedLessons,
+    topSearches,
   };
+}
+
+export async function adminResolveReport(id: string) {
+  return await supabase.from("error_reports").update({ status: "resolved" }).eq("id", id);
 }
 
 export async function adminGetSheikhs() {
