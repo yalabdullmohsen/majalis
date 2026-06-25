@@ -205,7 +205,7 @@ export default function SearchPage() {
                 render={(a) => (
                   <ResultRow
                     key={a.id}
-                    href={`/search/${encodeURIComponent(q)}#adhkar`}
+                    href="/adhkar"
                     title={displayText(a.text)}
                     meta={a.category || a.source}
                   />

@@ -92,7 +92,7 @@ export function buildSearchSuggestions(query: string, limit = 12): SearchSuggest
       id: adhkar.id,
       label: adhkar.text.slice(0, 72) + (adhkar.text.length > 72 ? "…" : ""),
       meta: category?.name,
-      href: `/search/${encodeURIComponent(q)}#adhkar`,
+      href: `/adhkar?cat=${encodeURIComponent(category?.slug || "morning")}`,
       group: "adhkar",
     });
     if (results.filter((r) => r.group === "adhkar").length >= MAX_PER_GROUP) break;

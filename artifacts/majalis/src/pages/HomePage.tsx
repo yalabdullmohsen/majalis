@@ -5,14 +5,14 @@ import { DEMO_QA } from "@/lib/demo-content";
 import { displayText } from "@/lib/display-text";
 import { Loading } from "@/components/ui-common";
 import { HomePrayerTimes } from "@/components/home/HomePrayerTimes";
-import { HomeDailyHadith } from "@/components/home/HomeDailyHadith";
-import { HomeDailyAyah } from "@/components/home/HomeDailyAyah";
+import { HomeDailyStrip } from "@/components/home/HomeDailyStrip";
 import { HomeKuwaitLessons } from "@/components/home/HomeKuwaitLessons";
 
 const FEATURES = [
   { href: "/lessons", title: "الدروس والدورات", desc: "دروس علمية شرعية موثقة ومعتمدة" },
   { href: "/kuwait-lessons", title: "دروس الكويت", desc: "مرجع شامل للدروس في مساجد الكويت" },
   { href: "/fawaid", title: "الفوائد", desc: "مختارات نافعة من العلم الشرعي" },
+  { href: "/adhkar", title: "الأذكار", desc: "أذكار يومية من القرآن والسنة الصحيحة" },
   { href: "/qa", title: "الأسئلة والأجوبة", desc: "أجوبة علمية مدعمة بالأدلة" },
   { href: "/miracles", title: "الإعجاز العلمي", desc: "مقالات موثقة من الكتاب والسنة" },
   { href: "/sheikhs", title: "المشايخ", desc: "دليل العلماء والدعاة المعتمدين" },
@@ -110,8 +110,7 @@ export default function HomePage() {
 
       <main className="home-container home-main">
         <HomePrayerTimes />
-        <HomeDailyHadith />
-        <HomeDailyAyah />
+        <HomeDailyStrip />
         <HomeKuwaitLessons />
 
         {loading && <Loading />}

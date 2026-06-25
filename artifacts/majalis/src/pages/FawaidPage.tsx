@@ -1,12 +1,29 @@
 import { useEffect, useMemo, useState } from "react";
 import { getApprovedFawaid, submitFawaid } from "@/lib/supabase";
 import { arabicMatchAny } from "@/lib/arabic-search";
-import { DEMO_FAWAID, FAWAID_CATEGORIES, demoNoticeText, isDemoId } from "@/lib/demo-content";
+import { DEMO_FAWAID, demoNoticeText, isDemoId } from "@/lib/demo-content";
+import { FAWAID_CATEGORIES } from "@/lib/fawaid-seed";
 import { canSubmitForm } from "@/lib/form-rate-limit";
 import { PageHeader, Loading, Empty, DemoNotice } from "@/components/ui-common";
 import { useAuth } from "@/components/AuthProvider";
-import ContentActions from "@/components/ContentActions";
-import { displayText } from "@/lib/display-text";
+import { FaidahCard } from "@/components/fawaid/FaidahCard";
+
+const DISPLAY_CATEGORIES = [
+  "الكل",
+  "فوائد قرآنية",
+  "فوائد حديثية",
+  "فوائد عقدية",
+  "فوائد فقهية",
+  "فوائد تربوية",
+  "فوائد دعوية",
+  "فوائد سلوكية",
+] as const;
+
+function normalizeCategory(category?: string) {
+  if (!category) return category;
+  if (category === "آداب وأخلاق") return "فوائد سلوكية";
+  return category;
+}
 
 function useDebouncedValue<T>(value: T, delayMs = 350): T {
   const [debounced, setDebounced] = useState(value);
@@ -23,7 +40,6 @@ export default function FawaidPage() {
   const [usingDemo, setUsingDemo] = useState(false);
   const [category, setCategory] = useState("الكل");
   const [search, setSearch] = useState("");
-  const [expandedId, setExpandedId] = useState<string | null>(null);
   const [text, setText] = useState("");
   const [authorName, setAuthorName] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -46,8 +62,17 @@ export default function FawaidPage() {
       .finally(() => setLoading(false));
   }, []);
 
+  const normalized = useMemo(
+    () =>
+      fawaid.map((f) => ({
+        ...f,
+        category: normalizeCategory(f.category),
+      })),
+    [fawaid],
+  );
+
   const displayItems = useMemo(() => {
-    let items = fawaid;
+    let items = normalized;
     if (category !== "الكل") {
       items = items.filter((f) => f.category === category);
     }
@@ -58,9 +83,7 @@ export default function FawaidPage() {
       );
     }
     return items;
-  }, [fawaid, category, debouncedSearch]);
-
-  const chips = useMemo(() => ["الكل", ...FAWAID_CATEGORIES], []);
+  }, [normalized, category, debouncedSearch]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -85,12 +108,17 @@ export default function FawaidPage() {
   };
 
   return (
-    <div className="page-shell narrow content-hub-page">
+    <div className="page-shell narrow content-hub-page fawaid-page">
       <PageHeader
         eyebrow="مختارات نافعة"
         title="الفوائد"
-        subtitle="فوائد شرعية مختصرة ومنظمة حسب الأقسام."
+        subtitle="فوائد شرعية موثقة ومنظمة — مع نسخ ومشاركة وحفظ وتكبير الخط."
       />
+
+      <div className="page-stats-row">
+        <span>{displayItems.length} فائدة</span>
+        <span>{FAWAID_CATEGORIES.length} تصنيف</span>
+      </div>
 
       {usingDemo && <DemoNotice text={demoNoticeText("الفوائد")} />}
 
@@ -103,7 +131,7 @@ export default function FawaidPage() {
       />
 
       <div className="content-hub-chips">
-        {chips.map((cat) => (
+        {DISPLAY_CATEGORIES.map((cat) => (
           <button
             key={cat}
             type="button"
@@ -120,39 +148,10 @@ export default function FawaidPage() {
       ) : displayItems.length === 0 ? (
         <Empty text={debouncedSearch.trim() ? `لا توجد فوائد مطابقة لـ «${debouncedSearch.trim()}».` : "لا توجد فوائد في هذا القسم."} />
       ) : (
-        <div className="content-card-grid">
-          {displayItems.map((f: any) => {
-            const open = expandedId === f.id;
-            const cleaned = displayText(f.text);
-            const long = cleaned.length > 140;
-            const preview = long && !open ? `${cleaned.slice(0, 140)}...` : cleaned;
-            return (
-              <article key={f.id} className="content-mini-card">
-                {f.category && <span className="content-mini-card__tag">{f.category}</span>}
-                <p className="content-mini-card__body">{preview}</p>
-                {long && (
-                  <button
-                    type="button"
-                    className="content-mini-card__toggle"
-                    onClick={() => setExpandedId(open ? null : f.id)}
-                  >
-                    {open ? "إخفاء" : "عرض كامل"}
-                  </button>
-                )}
-                {(f.source || f.author_name) && (
-                  <p className="content-mini-card__meta">
-                    {f.source && <span>{f.source}</span>}
-                    {f.author_name && <span>{f.author_name}</span>}
-                  </p>
-                )}
-                {!isDemoId(f.id) && (
-                  <div className="content-mini-card__actions">
-                    <ContentActions contentType="benefit" contentId={f.id} />
-                  </div>
-                )}
-              </article>
-            );
-          })}
+        <div className="faidah-grid">
+          {displayItems.map((f) => (
+            <FaidahCard key={f.id} item={f} />
+          ))}
         </div>
       )}
 

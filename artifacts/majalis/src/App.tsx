@@ -23,6 +23,7 @@ const SheikhDetailPage = lazy(() => import("@/pages/SheikhDetailPage"));
 const LibraryPage = lazy(() => import("@/pages/LibraryPage"));
 const MiraclesPage = lazy(() => import("@/pages/MiraclesPage"));
 const FawaidPage = lazy(() => import("@/pages/FawaidPage"));
+const AdhkarPage = lazy(() => import("@/pages/AdhkarPage"));
 const QaPage = lazy(() => import("@/pages/QaPage"));
 const QuizPage = lazy(() => import("@/pages/QuizPage"));
 const LoginPage = lazy(() => import("@/pages/LoginPage"));
@@ -67,6 +68,7 @@ function Router() {
       <Route path="/library"><SafeLazyRoute component={LibraryPage} /></Route>
       <Route path="/miracles"><SafeLazyRoute component={MiraclesPage} /></Route>
       <Route path="/fawaid"><SafeLazyRoute component={FawaidPage} /></Route>
+      <Route path="/adhkar"><SafeLazyRoute component={AdhkarPage} /></Route>
       <Route path="/qa"><SafeLazyRoute component={QaPage} /></Route>
       <Route path="/quiz"><SafeLazyRoute component={QuizPage} /></Route>
       <Route path="/assistant">

@@ -22,6 +22,7 @@ const TABS = [
   { href: "/library", label: "المكتبة" },
   { href: "/miracles", label: "الإعجاز العلمي" },
   { href: "/fawaid", label: "الفوائد" },
+  { href: "/adhkar", label: "الأذكار" },
   { href: "/qa", label: "الأسئلة والأجوبة" },
   { href: "/quiz", label: "المسابقات" },
   { href: "/transcribe", label: "تفريغ" },

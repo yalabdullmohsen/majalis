@@ -1,33 +1,21 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { getQaCategories, getQaQuestions } from "@/lib/supabase";
+import { QA_DISCLAIMER } from "@/lib/theme";
+import { PageHeader, Empty, DemoNotice, QaSkeleton } from "@/components/ui-common";
+import { DEMO_QA, DEMO_QA_CATEGORIES, demoNoticeText } from "@/lib/demo-content";
+import { QaCard } from "@/components/qa/QaCard";
 import {
-  getQaCategories,
-  getQaQuestions,
-} from "@/lib/supabase";
-import { C, QA_RULING_COLORS, QA_DISCLAIMER } from "@/lib/theme";
-import {
-  PageHeader,
-  Empty,
-  DemoNotice,
-  QaSkeleton,
-} from "@/components/ui-common";
-import ContentActions from "@/components/ContentActions";
-import { displayText } from "@/lib/display-text";
-import { DEMO_QA, DEMO_QA_CATEGORIES, demoNoticeText, isDemoId } from "@/lib/demo-content";
+  pickRandomQaItem,
+  QA_SORT_LABELS,
+  sortQaItems,
+  type QaSortMode,
+} from "@/lib/qa-utils";
 
 function Disclaimer() {
   return (
     <div className="qa-disclaimer">
       <p>{QA_DISCLAIMER}</p>
     </div>
-  );
-}
-
-function RulingBadge({ ruling }: { ruling: string }) {
-  const c = QA_RULING_COLORS[ruling] || { bg: C.parchmentDeep, text: C.inkSoft };
-  return (
-    <span className="qa-badge" style={{ background: c.bg, color: c.text }}>
-      {ruling}
-    </span>
   );
 }
 
@@ -48,7 +36,8 @@ export default function QaPage() {
   const [usingDemo, setUsingDemo] = useState(false);
   const [categoryId, setCategoryId] = useState("all");
   const [search, setSearch] = useState("");
-  const [openId, setOpenId] = useState<string | null>(null);
+  const [sortMode, setSortMode] = useState<QaSortMode>("default");
+  const [randomId, setRandomId] = useState<string | null>(null);
   const debouncedSearch = useDebouncedValue(search);
 
   const loadCategories = useCallback(async () => {
@@ -93,6 +82,21 @@ export default function QaPage() {
     [categories],
   );
 
+  const sortedItems = useMemo(
+    () => sortQaItems(items, sortMode === "random" ? "default" : sortMode),
+    [items, sortMode],
+  );
+
+  const randomItem = useMemo(() => {
+    if (!randomId) return null;
+    return items.find((q) => q.id === randomId) || null;
+  }, [items, randomId]);
+
+  const handleRandom = () => {
+    const picked = pickRandomQaItem(items);
+    if (picked) setRandomId(picked.id);
+  };
+
   const emptyMessage = useMemo(() => {
     if (debouncedSearch.trim()) {
       return `لا توجد أسئلة مطابقة لـ «${debouncedSearch.trim()}».`;
@@ -108,10 +112,15 @@ export default function QaPage() {
       <PageHeader
         eyebrow="المجلس العلمي"
         title="الأسئلة والأجوبة الدينية"
-        subtitle="أسئلة وأجوبة علمية عامة مرتّبة حسب الأقسام."
+        subtitle="أسئلة علمية منظمة — بحث، تصنيف، وأحدث الأسئلة والأكثر مشاهدة."
       />
 
       <Disclaimer />
+
+      <div className="page-stats-row">
+        <span>{sortedItems.length} سؤال</span>
+        <span>{categories.length} تصنيف</span>
+      </div>
 
       <input
         value={search}
@@ -141,55 +150,43 @@ export default function QaPage() {
         )}
       </div>
 
+      <div className="qa-sort-row">
+        {(Object.keys(QA_SORT_LABELS) as QaSortMode[]).map((mode) => (
+          <button
+            key={mode}
+            type="button"
+            className={`content-hub-chip${sortMode === mode ? " content-hub-chip--active" : ""}`}
+            onClick={() => {
+              setSortMode(mode);
+              if (mode === "random") handleRandom();
+            }}
+          >
+            {QA_SORT_LABELS[mode]}
+          </button>
+        ))}
+      </div>
+
+      {randomItem && (
+        <section className="qa-random-highlight">
+          <h2 className="qa-random-title">سؤال عشوائي</h2>
+          <QaCard item={randomItem} defaultOpen />
+          <button type="button" className="qa-random-refresh" onClick={handleRandom}>
+            سؤال آخر
+          </button>
+        </section>
+      )}
+
       {usingDemo && <DemoNotice text={demoNoticeText("الأسئلة والأجوبة")} />}
 
       {loading ? (
         <QaSkeleton count={6} />
-      ) : items.length === 0 ? (
+      ) : sortedItems.length === 0 ? (
         <Empty text={emptyMessage} />
       ) : (
-        <div className="content-card-grid content-card-grid--qa">
-          {items.map((q: any) => {
-            const open = openId === q.id;
-            const catName = q.qa_categories?.name;
-            return (
-              <article key={q.id} className={`content-mini-card content-mini-card--qa${open ? " is-open" : ""}`}>
-                <button
-                  type="button"
-                  className="content-mini-card__head"
-                  onClick={() => setOpenId(open ? null : q.id)}
-                  aria-expanded={open}
-                >
-                  <span className="content-mini-card__question">{displayText(q.question)}</span>
-                  <span className="content-mini-card__meta-row">
-                    {catName && <span className="content-mini-card__tag">{catName}</span>}
-                    {q.ruling_type && <RulingBadge ruling={q.ruling_type} />}
-                  </span>
-                </button>
-
-                {open && (
-                  <div className="content-mini-card__details">
-                    <p className="content-mini-card__answer">{displayText(q.answer)}</p>
-                    {q.evidence && (
-                      <div className="content-mini-card__evidence">
-                        <strong>الدليل:</strong> {displayText(q.evidence)}
-                      </div>
-                    )}
-                    {q.reference && (
-                      <p className="content-mini-card__ref">
-                        <strong>المرجع:</strong> {displayText(q.reference)}
-                      </p>
-                    )}
-                    {!isDemoId(q.id) && (
-                      <div className="content-mini-card__actions">
-                        <ContentActions contentType="qa" contentId={q.id} />
-                      </div>
-                    )}
-                  </div>
-                )}
-              </article>
-            );
-          })}
+        <div className="qa-grid">
+          {sortedItems.map((q) => (
+            <QaCard key={q.id} item={q} defaultOpen={q.id === randomId} />
+          ))}
         </div>
       )}
     </div>

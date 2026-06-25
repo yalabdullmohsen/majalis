@@ -6057,3 +6057,314 @@ input, textarea, select { font-family: inherit; }
     justify-content: center;
   }
 }
+
+/* ── Phase 3: Adhkar, reading tools, daily strip ── */
+.adhkar-grid,
+.faidah-grid,
+.qa-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.adhkar-card,
+.faidah-card,
+.qa-card {
+  padding: 1.1rem 1.15rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.adhkar-card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.adhkar-card__count {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--majalis-emerald-deep);
+}
+
+.adhkar-card__text,
+.faidah-card__body,
+.qa-card__question,
+.qa-card__answer {
+  line-height: 1.9;
+  color: var(--majalis-ink);
+}
+
+.adhkar-card__meta {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0;
+}
+
+.adhkar-card__meta div {
+  display: flex;
+  gap: 0.35rem;
+  font-size: 0.8125rem;
+}
+
+.adhkar-card__meta dt {
+  color: var(--majalis-ink-soft);
+  font-weight: 600;
+  min-width: 3.5rem;
+}
+
+.adhkar-card__meta dd {
+  margin: 0;
+  font-weight: 700;
+  color: var(--majalis-ink);
+}
+
+.adhkar-category-desc,
+.adhkar-stats-row {
+  margin-bottom: 0.75rem;
+}
+
+.adhkar-chips {
+  margin-bottom: 0.5rem;
+}
+
+.tasbeeh-counter {
+  padding: 0.75rem;
+  border-radius: 0.85rem;
+  background: var(--majalis-parchment);
+  border: 1px solid var(--majalis-line);
+}
+
+.tasbeeh-counter__head {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8125rem;
+  margin-bottom: 0.5rem;
+}
+
+.tasbeeh-counter__bar {
+  height: 0.35rem;
+  background: rgba(224, 215, 196, 0.8);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 0.65rem;
+}
+
+.tasbeeh-counter__bar span {
+  display: block;
+  height: 100%;
+  background: var(--majalis-emerald);
+  border-radius: inherit;
+  transition: width 0.15s ease;
+}
+
+.tasbeeh-counter__actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.tasbeeh-counter__btn {
+  flex: 1;
+  min-height: 40px;
+  border-radius: 0.65rem;
+  border: 1px solid var(--majalis-line);
+  background: var(--majalis-panel);
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.tasbeeh-counter__btn--ghost {
+  background: transparent;
+  color: var(--majalis-ink-soft);
+}
+
+.tasbeeh-counter__done {
+  margin: 0.5rem 0 0;
+  font-size: 0.8125rem;
+  color: var(--majalis-emerald-deep);
+  font-weight: 700;
+}
+
+.reading-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.35rem;
+  border-top: 1px solid rgba(224, 215, 196, 0.7);
+}
+
+.reading-toolbar__group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  align-items: center;
+}
+
+.reading-toolbar__btn {
+  min-height: 36px;
+  padding: 0.35rem 0.75rem;
+  border-radius: 0.6rem;
+  border: 1px solid var(--majalis-line);
+  background: var(--majalis-panel);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  color: var(--majalis-ink-soft);
+}
+
+.reading-toolbar__btn--active,
+.reading-toolbar__btn:hover {
+  border-color: var(--majalis-emerald);
+  color: var(--majalis-emerald-deep);
+}
+
+.reading-toolbar__size {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--majalis-ink-soft);
+  min-width: 2.5rem;
+  text-align: center;
+}
+
+.reading-text {
+  transition: font-size 0.12s ease;
+}
+
+.reading-text--mode {
+  padding: 0.85rem;
+  border-radius: 0.75rem;
+  background: var(--majalis-parchment);
+  border: 1px solid var(--majalis-line);
+}
+
+.faidah-card__meta,
+.qa-card__ref,
+.qa-card__evidence {
+  font-size: 0.8125rem;
+  color: var(--majalis-ink-soft);
+  line-height: 1.75;
+}
+
+.faidah-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.qa-card__head {
+  width: 100%;
+  text-align: right;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.qa-card__meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.qa-card__views {
+  font-size: 0.6875rem;
+  color: var(--majalis-ink-soft);
+  font-weight: 700;
+}
+
+.qa-card__body {
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(224, 215, 196, 0.7);
+}
+
+.qa-sort-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0.75rem 0 1rem;
+}
+
+.qa-random-highlight {
+  margin-bottom: 1.25rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  background: rgba(207, 224, 211, 0.25);
+  border: 1px solid rgba(31, 110, 84, 0.15);
+}
+
+.qa-random-title {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+  color: var(--majalis-emerald-deep);
+}
+
+.qa-random-refresh {
+  margin-top: 0.75rem;
+  min-height: 40px;
+  padding: 0.45rem 1rem;
+  border-radius: 0.65rem;
+  border: 1px solid var(--majalis-line);
+  background: var(--majalis-panel);
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.home-daily-strip-lead {
+  margin: 0.25rem 0 0;
+  color: var(--majalis-ink-soft);
+  font-size: 0.875rem;
+}
+
+.home-daily-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+}
+
+.home-daily-label {
+  margin: 0 0 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--majalis-brass-deep);
+  letter-spacing: 0.02em;
+}
+
+.home-daily-card {
+  padding: 1.15rem 1.2rem;
+  height: 100%;
+}
+
+.home-daily-faida-text {
+  margin: 0.5rem 0 0.75rem;
+  line-height: 1.85;
+  color: var(--majalis-ink);
+}
+
+.home-daily-link {
+  display: inline-block;
+  margin-top: 0.5rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--majalis-emerald-deep);
+  text-decoration: none;
+}
+
+@media (max-width: 720px) {
+  .reading-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .reading-toolbar__group {
+    justify-content: center;
+  }
+}
