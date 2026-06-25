@@ -1,4 +1,5 @@
 import { Link, useLocation } from "wouter";
+import { useAuth } from "./AuthProvider";
 import { NAV_GROUPS } from "@/lib/navigation";
 import { C } from "@/lib/theme";
 
@@ -9,6 +10,7 @@ type Props = {
 
 export function SideNavDrawer({ open, onClose }: Props) {
   const [location] = useLocation();
+  const { isAdmin } = useAuth();
   if (!open) return null;
 
   return (
@@ -48,6 +50,36 @@ export function SideNavDrawer({ open, onClose }: Props) {
             </nav>
           </div>
         ))}
+        <div className="side-nav-group side-nav-group--admin">
+          <p className="side-nav-group__title">الإدارة</p>
+          <nav>
+            {isAdmin ? (
+              <Link
+                href="/admin"
+                onClick={onClose}
+                className="side-nav-link"
+                style={{
+                  color: location.startsWith("/admin") ? C.emeraldDeep : C.inkSoft,
+                  background: location.startsWith("/admin") ? C.sage : "transparent",
+                }}
+              >
+                لوحة التحكم
+              </Link>
+            ) : (
+              <Link
+                href="/login?next=/admin"
+                onClick={onClose}
+                className="side-nav-link side-nav-link--admin"
+                style={{
+                  color: location === "/login" ? C.emeraldDeep : C.inkSoft,
+                  background: location === "/login" ? C.sage : "transparent",
+                }}
+              >
+                دخول المسؤول
+              </Link>
+            )}
+          </nav>
+        </div>
       </aside>
     </div>
   );

@@ -1,134 +1,140 @@
-import { useState } from "react";
-import { useLocation } from "wouter";
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
-import { C } from "@/lib/theme";
+import { ADMIN_ACCESS_DENIED_MESSAGE, mapAuthError } from "@/lib/auth-messages";
+import { isSupabaseConfigured } from "@/lib/supabase-config";
+import { Loading } from "@/components/ui-common";
 
 function getNextPath() {
-  if (typeof window === "undefined") return "/";
+  if (typeof window === "undefined") return "/admin";
   const params = new URLSearchParams(window.location.search);
   const next = params.get("next");
-  return next && next.startsWith("/") && !next.startsWith("//") ? next : "/";
+  if (next && next.startsWith("/") && !next.startsWith("//")) return next;
+  return "/admin";
 }
 
 export default function LoginPage() {
-  const [mode, setMode] = useState<"login" | "register">("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [fullName, setFullName] = useState("");
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  const [denied, setDenied] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { login, register } = useAuth() as any;
+  const { login, logout, refreshUser, isAdmin, isLoggedIn, loading: authLoading } = useAuth();
   const [, navigate] = useLocation();
   const nextPath = getNextPath();
+  const authEnabled = isSupabaseConfigured();
+
+  useEffect(() => {
+    if (authLoading) return;
+    if (isLoggedIn && isAdmin) {
+      navigate(nextPath);
+    }
+  }, [authLoading, isLoggedIn, isAdmin, navigate, nextPath]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
-    setSuccess("");
-    setLoading(true);
-    try {
-      if (mode === "login") {
-        const { error } = await login(email, password);
-        if (error) throw error;
-        navigate(nextPath);
-      } else {
-        const { data, error } = await register(email, password, fullName);
-        if (error) throw error;
-        if (data?.session) {
-          navigate(nextPath);
-        } else {
-          setSuccess(
-            "تم إنشاء حسابك بنجاح. يرجى فتح بريدك الإلكتروني وتأكيد حسابك قبل تسجيل الدخول."
-          );
-          setMode("login");
-        }
-      }
-    } catch (err: any) {
-      const message = err.message || "حدث خطأ، يرجى المحاولة مجدداً.";
-      if (message.toLowerCase().includes("email not confirmed")) {
-        setError("يرجى تأكيد بريدك الإلكتروني أولاً من الرابط المرسل إليك.");
-      } else {
-        setError(message);
-      }
+    if (!authEnabled) {
+      setError(mapAuthError(null));
+      return;
     }
-    setLoading(false);
+
+    setError("");
+    setDenied(false);
+    setLoading(true);
+
+    try {
+      const { error: signInError } = await login(email.trim(), password);
+      if (signInError) throw signInError;
+
+      const current = await refreshUser();
+      if (current?.profile?.role === "admin") {
+        navigate(nextPath);
+        return;
+      }
+
+      await logout();
+      setDenied(true);
+      setError(ADMIN_ACCESS_DENIED_MESSAGE);
+    } catch (err) {
+      setError(mapAuthError(err));
+    } finally {
+      setLoading(false);
+    }
   };
 
+  if (authLoading) {
+    return (
+      <div className="login-page">
+        <Loading />
+      </div>
+    );
+  }
+
   return (
-    <div style={{ maxWidth: "24rem", margin: "4rem auto", padding: "0 1.25rem" }}>
-      <div style={{ padding: "2rem", borderRadius: "0.5rem", border: `1px solid ${C.line}`, background: C.panel }}>
-        <div style={{ textAlign: "center", marginBottom: "1.25rem" }}>
+    <div className="login-page">
+      <div className="login-card">
+        <div className="login-card__header">
           <img src="/logo.png" alt="المجلس العلمي" className="login-logo" />
-          <p style={{ margin: "0.75rem 0 0", fontSize: "1rem", fontWeight: 700, color: C.emeraldDeep }}>المجلس العلمي</p>
+          <p className="login-card__brand">المجلس العلمي</p>
+          <h1 className="login-card__title">دخول المسؤول</h1>
+          <p className="login-card__subtitle">سجّل الدخول للوصول إلى لوحة التحكم</p>
         </div>
-        <h1 style={{ fontSize: "1.125rem", fontWeight: 700, color: C.emeraldDeep, textAlign: "center", marginBottom: "1.5rem" }}>
-          {mode === "login" ? "تسجيل الدخول" : "إنشاء حساب"}
-        </h1>
+
+        {!authEnabled && (
+          <p className="login-alert login-alert--error" role="alert">
+            {mapAuthError(null)}
+          </p>
+        )}
 
         {error && (
-          <p style={{ color: "#dc2626", fontSize: "0.875rem", marginBottom: "1rem", padding: "0.5rem", background: "#fef2f2", borderRadius: "0.375rem", textAlign: "center" }}>
+          <p className="login-alert login-alert--error" role="alert">
             {error}
           </p>
         )}
 
-        {success && (
-          <p style={{ color: "#166534", fontSize: "0.875rem", marginBottom: "1rem", padding: "0.75rem", background: "#ecfdf5", borderRadius: "0.375rem", textAlign: "center", lineHeight: 1.6 }}>
-            {success}
+        {denied && (
+          <p className="login-alert login-alert--warn" role="status">
+            {ADMIN_ACCESS_DENIED_MESSAGE}
           </p>
         )}
 
-        <form onSubmit={handleSubmit}>
-          {mode === "register" && (
-            <div style={{ marginBottom: "0.75rem" }}>
-              <label style={{ fontSize: "0.875rem", color: C.ink, display: "block", marginBottom: "0.25rem" }}>الاسم الكامل</label>
-              <input
-                type="text"
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
-                required
-                style={{ width: "100%", padding: "0.5rem 0.75rem", borderRadius: "0.375rem", border: `1px solid ${C.line}`, fontSize: "0.875rem", fontFamily: "inherit", outline: "none", background: C.parchment, color: C.ink }}
-              />
-            </div>
-          )}
-          <div style={{ marginBottom: "0.75rem" }}>
-            <label style={{ fontSize: "0.875rem", color: C.ink, display: "block", marginBottom: "0.25rem" }}>البريد الإلكتروني</label>
+        <form onSubmit={handleSubmit} className="login-form">
+          <div className="login-field">
+            <label htmlFor="admin-email">البريد الإلكتروني</label>
             <input
+              id="admin-email"
               type="email"
+              autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              style={{ width: "100%", padding: "0.5rem 0.75rem", borderRadius: "0.375rem", border: `1px solid ${C.line}`, fontSize: "0.875rem", fontFamily: "inherit", outline: "none", background: C.parchment, color: C.ink }}
+              disabled={loading || !authEnabled}
             />
           </div>
-          <div style={{ marginBottom: "1.25rem" }}>
-            <label style={{ fontSize: "0.875rem", color: C.ink, display: "block", marginBottom: "0.25rem" }}>كلمة المرور</label>
+
+          <div className="login-field">
+            <label htmlFor="admin-password">كلمة المرور</label>
             <input
+              id="admin-password"
               type="password"
+              autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              style={{ width: "100%", padding: "0.5rem 0.75rem", borderRadius: "0.375rem", border: `1px solid ${C.line}`, fontSize: "0.875rem", fontFamily: "inherit", outline: "none", background: C.parchment, color: C.ink }}
+              disabled={loading || !authEnabled}
             />
           </div>
-          <button
-            type="submit"
-            disabled={loading}
-            style={{ width: "100%", padding: "0.625rem", borderRadius: "0.375rem", background: C.emerald, color: C.parchment, border: "none", cursor: "pointer", fontSize: "0.875rem", fontWeight: 700, fontFamily: "inherit", opacity: loading ? 0.7 : 1 }}
-          >
-            {loading ? "جارٍ المعالجة..." : mode === "login" ? "دخول" : "إنشاء الحساب"}
+
+          <button type="submit" className="login-submit" disabled={loading || !authEnabled}>
+            {loading ? "جارٍ التحقق..." : "تسجيل الدخول"}
           </button>
         </form>
 
-        <p style={{ textAlign: "center", marginTop: "1rem", fontSize: "0.875rem", color: C.inkSoft }}>
-          {mode === "login" ? "ليس لديك حساب؟ " : "لديك حساب؟ "}
-          <button
-            onClick={() => { setMode(mode === "login" ? "register" : "login"); setError(""); }}
-            style={{ color: C.emeraldDeep, background: "none", border: "none", cursor: "pointer", fontFamily: "inherit", fontSize: "0.875rem", textDecoration: "underline" }}
-          >
-            {mode === "login" ? "سجّل الآن" : "سجّل دخولك"}
-          </button>
-        </p>
+        <div className="login-actions">
+          <Link href="/" className="login-back-link">
+            العودة للصفحة الرئيسية
+          </Link>
+        </div>
       </div>
     </div>
   );

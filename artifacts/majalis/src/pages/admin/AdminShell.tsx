@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useState, type ReactNode } from "react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
+import { useAuth } from "@/components/AuthProvider";
 import { C } from "@/lib/theme";
 
 export type AdminSection =
@@ -101,6 +102,8 @@ type AdminShellProps = {
 
 export function AdminShell({ section, onSectionChange, children }: AdminShellProps) {
   const [flash, setFlash] = useState<Flash>(null);
+  const { logout, user } = useAuth();
+  const [, navigate] = useLocation();
 
   const showSuccess = useCallback((message: string) => {
     setFlash({ type: "success", message });
@@ -113,6 +116,11 @@ export function AdminShell({ section, onSectionChange, children }: AdminShellPro
   }, []);
 
   const clearFlash = useCallback(() => setFlash(null), []);
+
+  const handleLogout = async () => {
+    await logout();
+    navigate("/login");
+  };
 
   return (
     <AdminShellContext.Provider value={{ flash, showSuccess, showError, clearFlash }}>
@@ -138,12 +146,17 @@ export function AdminShell({ section, onSectionChange, children }: AdminShellPro
           >
             لوحة تحكم المجلس العلمي
           </p>
+          {user?.profile?.full_name && (
+            <p style={{ fontSize: "0.75rem", color: C.inkSoft, padding: "0 1rem", marginBottom: "0.5rem" }}>
+              {user.profile.full_name}
+            </p>
+          )}
           <Link
             href="/"
             style={{
               display: "block",
               padding: "0.5rem 1rem",
-              marginBottom: "0.75rem",
+              marginBottom: "0.35rem",
               textDecoration: "none",
               fontSize: "0.75rem",
               color: C.brassDeep,
@@ -151,7 +164,14 @@ export function AdminShell({ section, onSectionChange, children }: AdminShellPro
           >
             ← العودة للموقع
           </Link>
-          <nav>
+          <button
+            type="button"
+            onClick={handleLogout}
+            className="admin-logout-btn"
+          >
+            تسجيل الخروج
+          </button>
+          <nav style={{ marginTop: "0.75rem" }}>
             {ADMIN_NAV.map((n) => (
               <button
                 key={n.key}

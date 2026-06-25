@@ -1,24 +1,48 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { supabase, getCurrentUser, signIn, signUp, signOut } from "@/lib/supabase";
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { getCurrentUser, signIn, signOut, signUp, supabase } from "@/lib/supabase";
 
-const AuthContext = createContext<any>(null);
+export type AuthUser = Awaited<ReturnType<typeof getCurrentUser>>;
+
+type AuthContextValue = {
+  user: AuthUser;
+  loading: boolean;
+  isLoggedIn: boolean;
+  isAdmin: boolean;
+  isSheikh: boolean;
+  login: typeof signIn;
+  register: typeof signUp;
+  logout: () => Promise<{ error: unknown | null }>;
+  refreshUser: () => Promise<AuthUser>;
+};
+
+const AuthContext = createContext<AuthContextValue | null>(null);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<AuthUser>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    getCurrentUser().then((u) => {
-      setUser(u);
-      setLoading(false);
-    });
-    const { data: sub } = supabase.auth.onAuthStateChange(async () => {
-      setUser(await getCurrentUser());
-    });
-    return () => sub.subscription.unsubscribe();
+  const refreshUser = useCallback(async () => {
+    const next = await getCurrentUser();
+    setUser(next);
+    return next;
   }, []);
 
-  const value = {
+  useEffect(() => {
+    refreshUser().finally(() => setLoading(false));
+
+    const { data: sub } = supabase.auth.onAuthStateChange(async () => {
+      await refreshUser();
+    });
+    return () => sub.subscription.unsubscribe();
+  }, [refreshUser]);
+
+  const logout = useCallback(async () => {
+    const result = await signOut();
+    setUser(null);
+    return result;
+  }, []);
+
+  const value = useMemo<AuthContextValue>(() => ({
     user,
     loading,
     isLoggedIn: !!user,
@@ -26,8 +50,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     isSheikh: user?.profile?.role === "sheikh",
     login: signIn,
     register: signUp,
-    logout: signOut,
-  };
+    logout,
+    refreshUser,
+  }), [user, loading, logout, refreshUser]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

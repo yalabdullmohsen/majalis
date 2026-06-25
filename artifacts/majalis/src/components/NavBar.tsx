@@ -63,7 +63,8 @@ function SearchBox({ onSubmitDone }: { onSubmitDone?: () => void }) {
 }
 
 export default function NavBar() {
-  const { isLoggedIn, isAdmin, user, logout } = useAuth() as any;
+  const { isAdmin, user, logout } = useAuth();
+  const [, navigate] = useLocation();
   const [location] = useLocation();
   const isMobile = useIsMobile();
   const [open, setOpen] = useState(false);
@@ -76,6 +77,17 @@ export default function NavBar() {
 
   const isActive = (href: string) =>
     location === href || (href !== "/" && location.startsWith(href));
+
+  const handleLogout = async () => {
+    await logout();
+    navigate("/login");
+  };
+
+  const adminLoginLink = (
+    <Link href="/login?next=/admin" className="navbar-login">
+      دخول المسؤول
+    </Link>
+  );
 
   return (
     <>
@@ -113,19 +125,27 @@ export default function NavBar() {
 
           <div className="navbar-v3__end">
             {!isMobile && <SearchBox />}
-            {!isMobile && (isLoggedIn ? (
-              <div className="navbar-auth">
-                <NotificationBell />
-                <span>{user?.profile?.full_name || "مرحبًا"}</span>
-                <button type="button" onClick={logout} className="navbar-logout">خروج</button>
-              </div>
-            ) : (
-              <Link href="/login" className="navbar-login">دخول</Link>
-            ))}
+            {!isMobile && (
+              isAdmin ? (
+                <div className="navbar-auth">
+                  <NotificationBell />
+                  <span>{user?.profile?.full_name || "المسؤول"}</span>
+                  <Link href="/admin" className="navbar-admin-link">لوحة التحكم</Link>
+                  <button type="button" onClick={handleLogout} className="navbar-logout">خروج</button>
+                </div>
+              ) : adminLoginLink
+            )}
             {isMobile && (
-              <button type="button" className="navbar-menu-btn" onClick={() => setOpen((o) => !o)}>
-                {open ? "إغلاق" : "المزيد"}
-              </button>
+              <>
+                {isAdmin ? (
+                  <Link href="/admin" className="navbar-login navbar-login--compact">لوحة التحكم</Link>
+                ) : (
+                  adminLoginLink
+                )}
+                <button type="button" className="navbar-menu-btn" onClick={() => setOpen((o) => !o)}>
+                  {open ? "إغلاق" : "المزيد"}
+                </button>
+              </>
             )}
           </div>
         </div>
@@ -139,6 +159,20 @@ export default function NavBar() {
                   {t.label}
                 </Link>
               ))}
+              {isAdmin ? (
+                <>
+                  <Link href="/admin" style={{ ...tabStyle(location.startsWith("/admin")), display: "block", padding: "0.6rem 0.75rem" }}>
+                    لوحة التحكم
+                  </Link>
+                  <button type="button" onClick={handleLogout} className="navbar-logout navbar-logout--block">
+                    تسجيل الخروج
+                  </button>
+                </>
+              ) : (
+                <Link href="/login?next=/admin" style={{ ...tabStyle(location === "/login"), display: "block", padding: "0.6rem 0.75rem" }}>
+                  دخول المسؤول
+                </Link>
+              )}
             </nav>
           </div>
         )}
