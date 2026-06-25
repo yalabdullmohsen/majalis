@@ -4,12 +4,17 @@ import { PageHeader, Loading, Empty } from "@/components/ui-common";
 import { PlatformContentCard } from "@/components/platform/ContentDetailLayout";
 import { FiqhCouncilSearchBox } from "@/components/fiqh-council/FiqhCouncilSearchBox";
 import { getFiqhCouncilItems, getFiqhCouncilCategoryCounts, getMostViewedFiqhCouncilItems, getAllNawazilItems, getPublicFiqhSources } from "@/lib/fiqh-council-service";
+import { getFiqhIssues } from "@/lib/fiqh-council-issues-service";
+import { getFiqhLiveData, unavailableLabel } from "@/lib/fiqh-council-sessions-service";
 import {
   FIQH_COUNCIL_CATEGORIES,
   FIQH_COUNCIL_INTRO,
   FIQH_ITEM_TYPES,
   FIQH_ITEM_TYPE_LABELS,
+  FIQH_SESSION_STATUS_LABELS,
   fiqhItemHref,
+  fiqhIssueHref,
+  fiqhSessionHref,
   formatFiqhItemMeta,
   type FiqhCouncilCategory,
   type FiqhItemType,
@@ -17,6 +22,7 @@ import {
 
 const SUBNAV_LINKS = [
   { href: "/fiqh-council", label: "الرئيسية" },
+  { href: "/fiqh-council/live", label: "البيانات الحية" },
   { href: "/fiqh-council/issues", label: "المسائل" },
   { href: "/fiqh-council/index", label: "الفهرس" },
   { href: "/fiqh-council/stats", label: "الإحصائيات" },
@@ -253,6 +259,8 @@ export function FiqhCouncilHubPage() {
   const [mostViewed, setMostViewed] = useState<any[]>([]);
   const [sources, setSources] = useState<any[]>([]);
   const [categoryCounts, setCategoryCounts] = useState<Record<string, number>>({});
+  const [topIssues, setTopIssues] = useState<any[]>([]);
+  const [liveData, setLiveData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -265,7 +273,9 @@ export function FiqhCouncilHubPage() {
       getMostViewedFiqhCouncilItems(4),
       getFiqhCouncilCategoryCounts(),
       getPublicFiqhSources(),
-    ]).then(([all, res, fat, rec, naw, viewed, counts, srcRes]) => {
+      getFiqhIssues({ limit: 4 }),
+      getFiqhLiveData(),
+    ]).then(([all, res, fat, rec, naw, viewed, counts, srcRes, issuesRes, liveRes]) => {
       setLatest(all.data);
       setResolutions(res.data);
       setFatwas(fat.data);
@@ -274,6 +284,8 @@ export function FiqhCouncilHubPage() {
       setMostViewed(viewed);
       setCategoryCounts(counts);
       setSources(srcRes.data);
+      setTopIssues(issuesRes.data);
+      setLiveData(liveRes.data);
     }).finally(() => setLoading(false));
   }, []);
 
@@ -290,16 +302,68 @@ export function FiqhCouncilHubPage() {
       <FiqhCouncilSearchBox placeholder="ابحث في قرارات وفتاوى وتوصيات المجمع..." />
 
       <div className="fiqh-hub-quick-links">
+        <Link href="/fiqh-council/live" className="fiqh-hub-quick-link fiqh-hub-quick-link--primary">عرض البيانات الحية</Link>
+        <Link href="/fiqh-council/search" className="fiqh-hub-quick-link">البحث في قرارات المجمع</Link>
         <Link href="/fiqh-council/issues" className="fiqh-hub-quick-link">المسائل الفقهية</Link>
         <Link href="/fiqh-council/index" className="fiqh-hub-quick-link">الفهرس الموضوعي</Link>
         <Link href="/fiqh-council/stats" className="fiqh-hub-quick-link">الإحصائيات</Link>
-        <Link href="/fiqh-council/search" className="fiqh-hub-quick-link">البحث المتقدم</Link>
         <Link href="/fiqh-council/nawazil" className="fiqh-hub-quick-link">فقه النوازل</Link>
         <Link href="/fiqh-council/research-assistant" className="fiqh-hub-quick-link">مساعد الباحث</Link>
       </div>
 
+      {!loading && liveData && (
+        <section className="fiqh-hub-live-banner ui-card">
+          <div className="fiqh-hub-live-col">
+            <h2 className="fiqh-council-section-title">آخر جلسة</h2>
+            {liveData.last_session ? (
+              <>
+                <p><strong>{liveData.last_session.session_title}</strong></p>
+                <p className="fiqh-hub-live-meta">
+                  {FIQH_SESSION_STATUS_LABELS[liveData.last_session.status as keyof typeof FIQH_SESSION_STATUS_LABELS] ??
+                    liveData.last_session.status}
+                  {liveData.last_session.start_date && ` · ${liveData.last_session.start_date}`}
+                </p>
+                <Link href={fiqhSessionHref(liveData.last_session.slug)} className="fiqh-council-section-link">تفاصيل الجلسة</Link>
+              </>
+            ) : (
+              <p className="fiqh-live-unavailable">لم تُنشر بيانات موثقة بعد.</p>
+            )}
+          </div>
+          <div className="fiqh-hub-live-col">
+            <h2 className="fiqh-council-section-title">الجلسة القادمة</h2>
+            {liveData.upcoming_session ? (
+              <>
+                <p><strong>{liveData.upcoming_session.session_title}</strong></p>
+                <p className="fiqh-hub-live-meta">{unavailableLabel(liveData.upcoming_session.start_date)}</p>
+              </>
+            ) : (
+              <p className="fiqh-live-unavailable">لم تُنشر بيانات موثقة بعد.</p>
+            )}
+          </div>
+        </section>
+      )}
+
       {loading ? <Loading /> : (
         <>
+          <section className="fiqh-council-section">
+            <div className="fiqh-council-section-header">
+              <h2 className="fiqh-council-section-title">أهم المسائل الفقهية</h2>
+              <Link href="/fiqh-council/issues" className="fiqh-council-section-link">عرض الكل</Link>
+            </div>
+            <div className="page-card-grid">
+              {topIssues.map((issue) => (
+                <PlatformContentCard
+                  key={issue.slug}
+                  href={fiqhIssueHref(issue.slug)}
+                  title={issue.title}
+                  tag="مسألة فقهية"
+                  meta={issue.category}
+                  summary={issue.ruling_summary || issue.summary}
+                />
+              ))}
+            </div>
+          </section>
+
           <section className="fiqh-council-section">
             <div className="fiqh-council-section-header">
               <h2 className="fiqh-council-section-title">أحدث القرارات</h2>

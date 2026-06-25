@@ -68,6 +68,7 @@ export type FiqhCouncilItem = {
   rejected_at?: string;
   rejection_reason?: string;
   nawazil_topic?: string;
+  session_id?: string;
   documentation_level?: "official_verified" | "imported_needs_review" | "admin_summary" | "rejected" | "archived";
   created_at?: string;
   updated_at?: string;
@@ -131,6 +132,73 @@ export type FiqhAuditEntry = {
   notes?: string;
   created_at?: string;
 };
+
+export type FiqhCouncilSession = {
+  id: string;
+  slug: string;
+  council_source_id?: string;
+  session_title: string;
+  session_number?: string;
+  session_type?: string;
+  status: "upcoming" | "active" | "completed" | "archived" | "unknown";
+  start_date?: string;
+  end_date?: string;
+  location?: string;
+  country?: string;
+  city?: string;
+  agenda?: string;
+  topics?: string[];
+  resolutions_count?: number;
+  recommendations_count?: number;
+  fatwas_count?: number;
+  official_source_url?: string;
+  official_document_url?: string;
+  verification_status: "verified" | "pending" | "unavailable";
+  publish_status?: "draft" | "needs_review" | "verified_pending_publish" | "published" | "archived";
+  published_at?: string;
+  updated_at?: string;
+  created_at?: string;
+  /** Populated on detail */
+  items?: FiqhCouncilItem[];
+};
+
+export type FiqhLiveData = {
+  last_session: FiqhCouncilSession | null;
+  upcoming_session: FiqhCouncilSession | null;
+  latest_resolutions: Array<{ slug: string; title: string; category?: string; session_date?: string }>;
+  latest_recommendations: Array<{ slug: string; title: string; category?: string; session_date?: string }>;
+  latest_fatwas: Array<{ slug: string; title: string; category?: string; session_date?: string }>;
+};
+
+export type FiqhAdminAlert = {
+  id: string;
+  alert_type: string;
+  title: string;
+  message?: string;
+  entity_type?: string;
+  entity_id?: string;
+  severity: "info" | "warning" | "error";
+  is_read: boolean;
+  created_at?: string;
+};
+
+export const FIQH_SESSION_STATUS_LABELS: Record<FiqhCouncilSession["status"], string> = {
+  upcoming: "قادمة",
+  active: "جارية",
+  completed: "منعقدة",
+  archived: "مؤرشفة",
+  unknown: "غير محددة",
+};
+
+export const FIQH_VERIFICATION_STATUS_LABELS: Record<FiqhCouncilSession["verification_status"], string> = {
+  verified: "مؤكد من مصدر رسمي",
+  pending: "بانتظار التحديث",
+  unavailable: "غير متوفر",
+};
+
+export function fiqhSessionHref(slug: string) {
+  return `/fiqh-council/sessions/${slug}`;
+}
 
 export type FiqhCouncilIssue = {
   id: string;

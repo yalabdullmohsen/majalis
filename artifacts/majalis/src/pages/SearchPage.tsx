@@ -11,6 +11,11 @@ import { searchLocalExtensions } from "@/lib/local-search-ext";
 import { lessonRecordToSearchRow, searchUnifiedLessons } from "@/lib/lessons-service";
 import { addSearchHistory } from "@/lib/search-history";
 import { trackSearchQuery } from "@/lib/content-analytics";
+import {
+  searchFiqhCouncilForGlobal,
+  mergeFiqhSearchResults,
+  type FiqhGlobalSearchRow,
+} from "@/lib/fiqh-global-search";
 
 const EMPTY: SearchResults = {
   lessons: [],
@@ -68,12 +73,30 @@ function ResultRow({
   );
 }
 
+function FiqhResultRow({ row }: { row: FiqhGlobalSearchRow }) {
+  return (
+    <Link href={row.href} style={{ textDecoration: "none" }}>
+      <div className="search-result-row search-result-row--fiqh">
+        <div className="search-result-copy">
+          <span>{displayText(row.title)}</span>
+          <span className="search-result-meta">
+            {row.searchMeta || row.kindLabel}
+            {row.verified && <span className="fiqh-search-verified-badge">موثق</span>}
+          </span>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
 export default function SearchPage() {
   const params = useParams();
   const [, navigate] = useLocation();
   const q = params.q ? decodeURIComponent(params.q) : "";
   const [term, setTerm] = useState(q);
   const [results, setResults] = useState<SearchResults>(EMPTY);
+  const [fiqhResults, setFiqhResults] = useState<FiqhGlobalSearchRow[]>([]);
+  const [fiqhQuery, setFiqhQuery] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const runSearch = async (query: string) => {
@@ -87,10 +110,15 @@ export default function SearchPage() {
     void trackSearchQuery(query);
 
     try {
-      const [r, unifiedMatches] = await Promise.all([
+      const [r, unifiedMatches, fiqhBoost] = await Promise.all([
         searchEverything(query),
         searchUnifiedLessons(query),
+        searchFiqhCouncilForGlobal(query, 12),
       ]);
+
+      const mergedFiqh = mergeFiqhSearchResults(r.fiqh_decisions || [], fiqhBoost.rows);
+      setFiqhResults(mergedFiqh);
+      setFiqhQuery(fiqhBoost.isFiqhQuery);
 
       const unifiedRows = unifiedMatches.map(lessonRecordToSearchRow);
       const seen = new Set((r.lessons || []).map((l: { id: string }) => l.id));
@@ -106,6 +134,8 @@ export default function SearchPage() {
 
       setResults({ ...r, lessons: mergedLessons, sheikhs: [] });
     } catch {
+      setFiqhResults([]);
+      setFiqhQuery(false);
       const unifiedMatches = await searchUnifiedLessons(query);
       if (unifiedMatches.length > 0) {
         setResults({
@@ -136,12 +166,12 @@ export default function SearchPage() {
   const localExtra = q.trim() ? searchLocalExtensions(q) : { occasions: [], nawawi: [], quran: [] };
 
   const total =
+    fiqhResults.length +
     results.lessons.length +
     results.miracles.length +
     results.qa.length +
     results.fawaid.length +
     results.adhkar.length +
-    (results.fiqh_decisions?.length || 0) +
     (results.fatwas?.length || 0) +
     (results.rulings?.length || 0) +
     (results.courses?.length || 0) +
@@ -187,6 +217,16 @@ export default function SearchPage() {
               <p className="search-page-summary">
                 {total} نتيجة لـ «<span>{q}</span>»
               </p>
+              {fiqhResults.length > 0 && (
+                <Group
+                  title={fiqhQuery ? "من المجمع الفقهي الإسلامي" : "نتائج المجمع الفقهي"}
+                  id="fiqh-council"
+                  items={fiqhResults}
+                  render={(row: FiqhGlobalSearchRow) => (
+                    <FiqhResultRow key={row.id} row={row} />
+                  )}
+                />
+              )}
               <Group
                 title="الدروس"
                 items={results.lessons}
@@ -259,13 +299,15 @@ export default function SearchPage() {
                   <ResultRow key={s.id} href={s.href} title={s.title} meta={s.meta} />
                 )}
               />
-              <Group
-                title="المجمع الفقهي"
-                items={results.fiqh_decisions || []}
-                render={(d) => (
-                  <ResultRow key={d.id} href={`/fiqh-council/${d.slug || d.id}`} title={displayText(d.title)} meta={d.searchMeta || d.category} />
-                )}
-              />
+              {fiqhResults.length === 0 && (
+                <Group
+                  title="المجمع الفقهي"
+                  items={results.fiqh_decisions || []}
+                  render={(d) => (
+                    <ResultRow key={d.id} href={`/fiqh-council/${d.slug || d.id}`} title={displayText(d.title)} meta={d.searchMeta || d.category} />
+                  )}
+                />
+              )}
               <Group
                 title="الفتاوى"
                 items={results.fatwas || []}

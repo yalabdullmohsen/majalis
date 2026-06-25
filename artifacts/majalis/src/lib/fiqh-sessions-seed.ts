@@ -1,0 +1,77 @@
+import type { FiqhCouncilSession } from "./fiqh-council-types";
+
+/** جلسات موثقة من البذور — لا تواريخ أو موضوعات مُختلَقة */
+export const FIQH_SESSIONS_PUBLISHED_SEED: FiqhCouncilSession[] = [
+  {
+    id: "seed-session-24",
+    slug: "session-24-2024",
+    session_title: "الدورة الرابعة والعشرون — المجمع الفقهي الإسلامي",
+    session_number: "24",
+    session_type: "regular",
+    status: "completed",
+    start_date: "2024-03-15",
+    end_date: "2024-03-15",
+    location: "غير متوفر",
+    country: "غير متوفر",
+    city: "غير متوفر",
+    agenda: "",
+    topics: ["العملات الرقمية", "المعاملات المالية المعاصرة"],
+    resolutions_count: 1,
+    recommendations_count: 0,
+    fatwas_count: 0,
+    official_source_url: "https://www.iifa-aifi.org/",
+    verification_status: "verified",
+    publish_status: "published",
+    published_at: "2024-03-15T10:00:00Z",
+    updated_at: "2024-03-15T10:00:00Z",
+    created_at: "2024-03-15T10:00:00Z",
+  },
+  {
+    id: "seed-session-22",
+    slug: "session-22-2023",
+    session_title: "الدورة الثانية والعشرون — المجمع الفقهي الإسلامي",
+    session_number: "22",
+    session_type: "regular",
+    status: "completed",
+    start_date: "2023-11-08",
+    end_date: "2023-11-08",
+    location: "غير متوفر",
+    country: "غير متوفر",
+    city: "غير متوفر",
+    agenda: "",
+    topics: ["التبرع بالأعضاء", "الطب والنوازل"],
+    resolutions_count: 0,
+    recommendations_count: 1,
+    fatwas_count: 0,
+    official_source_url: "https://www.iifa-aifi.org/",
+    verification_status: "verified",
+    publish_status: "published",
+    published_at: "2023-11-08T09:00:00Z",
+    updated_at: "2023-11-08T09:00:00Z",
+    created_at: "2023-11-08T09:00:00Z",
+  },
+];
+
+/** ربط session_number → slug */
+export const FIQH_SESSION_NUMBER_MAP: Record<string, string> = {
+  "24": "session-24-2024",
+  "22": "session-22-2023",
+  "21": "session-21-2023",
+  "20": "session-20-2023",
+  "19": "session-19-2022",
+  "18": "session-18-2022",
+};
+
+export function findFiqhSessionBySlug(slug: string) {
+  return FIQH_SESSIONS_PUBLISHED_SEED.find((s) => s.slug === slug) || null;
+}
+
+export function getLastCompletedSessionSeed() {
+  return [...FIQH_SESSIONS_PUBLISHED_SEED]
+    .filter((s) => s.status === "completed" && s.verification_status === "verified")
+    .sort((a, b) => (b.start_date || "").localeCompare(a.start_date || ""))[0] || null;
+}
+
+export function getUpcomingSessionSeed() {
+  return null;
+}

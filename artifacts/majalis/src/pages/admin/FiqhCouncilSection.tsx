@@ -27,15 +27,24 @@ import {
   adminRejectSuggestedRelation,
   adminMergeSuggestedRelation,
   adminUpsertSuggestedRelation,
+  adminGetFiqhSessions,
+  adminUpsertFiqhSession,
+  adminArchiveFiqhSession,
+  adminGetFiqhAlerts,
+  adminMarkFiqhAlertRead,
 } from "@/lib/fiqh-council-supabase";
 import { scanAllPotentialRelations } from "@/lib/fiqh-relation-engine";
 import { getFiqhCouncilReviewItems } from "@/lib/fiqh-council-service";
+import { FIQH_SESSIONS_PUBLISHED_SEED } from "@/lib/fiqh-sessions-seed";
 import {
   FIQH_COUNCIL_CATEGORIES,
   FIQH_ITEM_TYPES,
   FIQH_ITEM_TYPE_LABELS,
   FIQH_ITEM_STATUS_LABELS,
+  FIQH_SESSION_STATUS_LABELS,
+  FIQH_VERIFICATION_STATUS_LABELS,
   fiqhItemHref,
+  fiqhSessionHref,
   type FiqhItemStatus,
   type FiqhItemType,
   type FiqhCouncilSource,
@@ -46,7 +55,7 @@ import { Loading } from "@/components/ui-common";
 import { AdminModal, Field, inputSt, selectSt, textareaSt } from "./AdminModal";
 import { useAdminShell } from "./AdminShell";
 
-type AdminTab = "stats" | "items" | "review" | "duplicates" | "relations" | "research" | "sync";
+type AdminTab = "stats" | "items" | "review" | "duplicates" | "relations" | "research" | "sessions" | "sync";
 
 const EMPTY = {
   title: "",
@@ -106,6 +115,8 @@ export function FiqhCouncilSection() {
   const [suggestedRelations, setSuggestedRelations] = useState<any[]>([]);
   const [localRelationScan, setLocalRelationScan] = useState<any[]>([]);
   const [scanningRelations, setScanningRelations] = useState(false);
+  const [sessions, setSessions] = useState<any[]>([]);
+  const [alerts, setAlerts] = useState<any[]>([]);
   const [assistantEnabled, setAssistantEnabled] = useState(true);
   const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -132,7 +143,9 @@ export function FiqhCouncilSection() {
       adminGetFiqhResearchAnalytics(30),
       adminGetFiqhUnanswered(20),
       adminGetSuggestedRelations("pending"),
-    ]).then(([allRes, reviewRes, sourcesRes, jobsRes, dupRes, statsRes, auditRes, logsRes, analyticsRes, unansweredRes, relRes]) => {
+      adminGetFiqhSessions(30),
+      adminGetFiqhAlerts(25),
+    ]).then(([allRes, reviewRes, sourcesRes, jobsRes, dupRes, statsRes, auditRes, logsRes, analyticsRes, unansweredRes, relRes, sessionsRes, alertsRes]) => {
       setItems(allRes.data);
       setReviewItems(reviewRes.data);
       setSources(sourcesRes.data);
@@ -144,6 +157,14 @@ export function FiqhCouncilSection() {
       setResearchAnalytics(analyticsRes.data);
       setUnanswered(unansweredRes.data);
       setSuggestedRelations(relRes.data);
+      setSessions(sessionsRes.data?.length ? sessionsRes.data : FIQH_SESSIONS_PUBLISHED_SEED);
+      const computedAlerts = [
+        ...(reviewRes.data.length ? [{ id: "local-review", title: `${reviewRes.data.length} عناصر بانتظار المراجعة`, alert_type: "needs_review", severity: "warning", is_read: false }] : []),
+        ...(dupRes.data.length ? [{ id: "local-dup", title: `${dupRes.data.length} احتمالات تكرار`, alert_type: "duplicate_found", severity: "info", is_read: false }] : []),
+        ...(unansweredRes.data.length ? [{ id: "local-unanswered", title: `${unansweredRes.data.length} أسئلة بلا نتائج`, alert_type: "needs_review", severity: "info", is_read: false }] : []),
+        ...(jobsRes.data.some((j: FiqhSyncJob) => j.status === "failed") ? [{ id: "local-sync-fail", title: "فشل في آخر مزامنة", alert_type: "sync_failed", severity: "error", is_read: false }] : []),
+      ];
+      setAlerts([...computedAlerts, ...(alertsRes.data || [])]);
       if (allRes.error && allRes.usingSeed) showError("تعذّر تحميل البيانات — عرض البذور المحلية.");
     }).finally(() => setLoading(false));
   };
@@ -345,6 +366,7 @@ export function FiqhCouncilSection() {
           ["duplicates", `احتمالات التكرار (${duplicates.length})`],
           ["relations", `مراجعة العلاقات (${suggestedRelations.length})`],
           ["research", "مساعد الباحث"],
+          ["sessions", `الجلسات (${sessions.length})`],
           ["sync", "المزامنة"],
         ] as const).map(([key, label]) => (
           <button
@@ -357,6 +379,23 @@ export function FiqhCouncilSection() {
           </button>
         ))}
       </div>
+
+      {alerts.filter((a) => !a.is_read).length > 0 && (
+        <section className="fiqh-admin-alerts ui-card" style={{ marginBottom: "1rem" }}>
+          <h3 style={{ fontSize: "0.9375rem", color: C.emeraldDeep, margin: "0 0 0.5rem" }}>إشعارات الإدارة</h3>
+          <div style={{ display: "grid", gap: "0.35rem" }}>
+            {alerts.filter((a) => !a.is_read).slice(0, 8).map((alert) => (
+              <div key={alert.id} className="fiqh-sync-job" style={{ fontSize: "0.8125rem" }}>
+                <strong>{alert.title}</strong>
+                {alert.message && <span style={{ color: C.inkSoft }}> — {alert.message}</span>}
+                {!String(alert.id).startsWith("local-") && (
+                  <button type="button" style={{ marginInlineStart: "0.5rem", fontSize: "0.75rem", cursor: "pointer" }} onClick={() => adminMarkFiqhAlertRead(alert.id).then(loadItems)}>تم</button>
+                )}
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {tab === "stats" ? (
         <div>
@@ -574,6 +613,35 @@ export function FiqhCouncilSection() {
               ))}
             </div>
           </section>
+        </div>
+      ) : tab === "sessions" ? (
+        <div style={{ display: "grid", gap: "1rem" }}>
+          <p style={{ fontSize: "0.8125rem", color: C.inkSoft }}>
+            إدارة جلسات المجمع — لا تُنشر للعامة إلا بعد التوثيق والاعتماد.
+          </p>
+          {sessions.length === 0 ? (
+            <p style={{ fontSize: "0.875rem", color: C.inkSoft }}>لا توجد جلسات — أضف من Supabase أو migration v10.</p>
+          ) : (
+            <div style={{ display: "grid", gap: "0.75rem" }}>
+              {sessions.map((s: any) => (
+                <div key={s.id} className="fiqh-sync-job">
+                  <strong>{s.session_title}</strong>
+                  <p style={{ margin: "0.35rem 0", fontSize: "0.8125rem", color: C.inkSoft }}>
+                    {FIQH_SESSION_STATUS_LABELS[s.status as keyof typeof FIQH_SESSION_STATUS_LABELS] || s.status}
+                    {" · "}{FIQH_VERIFICATION_STATUS_LABELS[s.verification_status as keyof typeof FIQH_VERIFICATION_STATUS_LABELS] || s.verification_status}
+                    {s.start_date && <> · {s.start_date}</>}
+                  </p>
+                  <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+                    {s.publish_status === "published" && (
+                      <a href={fiqhSessionHref(s.slug)} target="_blank" rel="noopener noreferrer" style={{ fontSize: "0.75rem" }}>معاينة</a>
+                    )}
+                    <button type="button" style={{ fontSize: "0.75rem", cursor: "pointer" }} onClick={() => adminUpsertFiqhSession({ ...s, publish_status: "published", verification_status: "verified" }).then(loadItems)}>نشر</button>
+                    <button type="button" style={{ fontSize: "0.75rem", cursor: "pointer" }} onClick={() => adminArchiveFiqhSession(s.id).then(loadItems)}>أرشفة</button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       ) : tab === "sync" ? (
         <div style={{ display: "grid", gap: "1rem" }}>

@@ -9611,6 +9611,105 @@ body.assistant-panel-open {
   margin-top: 1rem;
 }
 
+.fiqh-live-page .fiqh-live-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  margin-bottom: 1rem;
+}
+
+.fiqh-live-block h2 {
+  font-size: 1rem;
+  color: var(--emerald-deep, #164e3c);
+  margin: 0 0 0.75rem;
+}
+
+.fiqh-live-meta {
+  display: grid;
+  gap: 0.35rem;
+  font-size: 0.875rem;
+}
+
+.fiqh-live-meta dt {
+  font-weight: 600;
+  color: var(--emerald-deep, #164e3c);
+}
+
+.fiqh-live-unavailable {
+  color: var(--ink-soft, #5c5348);
+  font-size: 0.875rem;
+  font-style: italic;
+}
+
+.fiqh-live-topics ul {
+  margin: 0.35rem 0 0;
+  padding-right: 1.25rem;
+}
+
+.fiqh-trust-box {
+  margin: 1rem 0;
+  padding: 1rem;
+}
+
+.fiqh-trust-box-title {
+  font-size: 0.9375rem;
+  color: var(--emerald-deep, #164e3c);
+  margin: 0 0 0.75rem;
+}
+
+.fiqh-trust-box-list {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+  font-size: 0.8125rem;
+}
+
+.fiqh-trust-box-list dt {
+  font-weight: 600;
+  color: var(--ink-soft, #5c5348);
+}
+
+.fiqh-trust-box-list dd {
+  margin: 0.15rem 0 0;
+}
+
+.fiqh-hub-live-banner {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  margin-bottom: 1.5rem;
+  padding: 1.25rem;
+}
+
+.fiqh-hub-live-meta {
+  font-size: 0.8125rem;
+  color: var(--ink-soft, #5c5348);
+}
+
+.fiqh-hub-quick-link--primary {
+  background: rgba(22, 78, 60, 0.1);
+  font-weight: 700;
+}
+
+.search-result-row--fiqh {
+  border-inline-start: 3px solid var(--emerald, #1b5e3b);
+}
+
+.fiqh-search-verified-badge {
+  display: inline-block;
+  margin-inline-start: 0.5rem;
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+  background: rgba(22, 78, 60, 0.1);
+  color: var(--emerald-deep, #164e3c);
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.fiqh-admin-alerts {
+  padding: 1rem;
+}
+
 @media (max-width: 640px) {
   .fiqh-citation-menu,
   .fiqh-export-actions,

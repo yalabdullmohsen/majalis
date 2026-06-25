@@ -402,6 +402,65 @@ export async function adminGetRelationAuditLog(limit = 20) {
   return { data: data || [], error: null };
 }
 
+export async function adminGetFiqhSessions(limit = 50) {
+  const { data, error } = await supabase
+    .from("fiqh_council_sessions")
+    .select("*")
+    .order("start_date", { ascending: false })
+    .limit(limit);
+  if (error) {
+    if (isMissingTableError(error)) return { data: [], error: null };
+    return { data: [], error };
+  }
+  return { data: data || [], error: null };
+}
+
+export async function adminUpsertFiqhSession(payload: Record<string, unknown>) {
+  return supabase.from("fiqh_council_sessions").upsert({
+    ...payload,
+    updated_at: now(),
+  });
+}
+
+export async function adminArchiveFiqhSession(id: string) {
+  return supabase.from("fiqh_council_sessions").update({
+    status: "archived",
+    publish_status: "archived",
+    updated_at: now(),
+  }).eq("id", id);
+}
+
+export async function adminGetFiqhAlerts(limit = 30) {
+  const { data, error } = await supabase
+    .from("fiqh_council_admin_alerts")
+    .select("*")
+    .order("created_at", { ascending: false })
+    .limit(limit);
+  if (error) {
+    if (isMissingTableError(error)) return { data: [], error: null };
+    return { data: [], error };
+  }
+  return { data: data || [], error: null };
+}
+
+export async function adminMarkFiqhAlertRead(id: string) {
+  return supabase.from("fiqh_council_admin_alerts").update({ is_read: true }).eq("id", id);
+}
+
+export async function adminCreateFiqhAlert(payload: {
+  alert_type: string;
+  title: string;
+  message?: string;
+  entity_type?: string;
+  entity_id?: string;
+  severity?: "info" | "warning" | "error";
+}) {
+  return supabase.from("fiqh_council_admin_alerts").insert({
+    ...payload,
+    severity: payload.severity || "info",
+  });
+}
+
 // Legacy wrappers for fiqh_council_decisions table (kept for other admin sections)
 export {
   adminGetAllFiqhDecisions,

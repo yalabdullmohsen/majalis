@@ -407,6 +407,7 @@ async function syncSource(admin, sourceDef, triggerType = "cron") {
   }
 
   await finishSyncJob(admin, jobId, result);
+  await syncSessionsFromImportedItems(admin, sourceId);
 
   await admin
     .from("fiqh_council_sources")
@@ -422,6 +423,55 @@ async function syncSource(admin, sourceDef, triggerType = "cron") {
 
   log("source-done", result);
   return { ok: result.error_count === 0 || result.inserted_count + result.updated_count > 0, jobId, ...result };
+}
+
+/** يجمّع الجلسات من العناصر المستوردة — لا ينشر تلقائياً */
+async function syncSessionsFromImportedItems(admin, sourceId) {
+  try {
+    const { data: items } = await admin
+      .from("fiqh_council_items")
+      .select("session_number, session_date, title, type, source_name, source_url")
+      .eq("source_id", sourceId)
+      .not("session_number", "is", null);
+
+    if (!items?.length) return;
+
+    const groups = new Map();
+    for (const item of items) {
+      const key = `${item.session_number}:${item.session_date || "unknown"}`;
+      if (!groups.has(key)) groups.set(key, []);
+      groups.get(key).push(item);
+    }
+
+    for (const [key, group] of groups) {
+      const [session_number, start_date] = key.split(":");
+      const slug = `session-${session_number}-${(start_date !== "unknown" ? start_date : "draft").slice(0, 4)}`;
+      await admin.from("fiqh_council_sessions").upsert({
+        slug,
+        session_title: `الدورة ${session_number} — المجمع الفقهي`,
+        session_number,
+        status: "completed",
+        start_date: start_date !== "unknown" ? start_date : null,
+        official_source_url: group[0]?.source_url || null,
+        verification_status: "pending",
+        publish_status: "needs_review",
+        resolutions_count: group.filter((i) => i.type === "resolution").length,
+        recommendations_count: group.filter((i) => i.type === "recommendation").length,
+        fatwas_count: group.filter((i) => i.type === "fatwa").length,
+        topics: [...new Set(group.map((i) => i.title).slice(0, 5))],
+        updated_at: new Date().toISOString(),
+      }, { onConflict: "slug" });
+
+      await admin.from("fiqh_council_admin_alerts").insert({
+        alert_type: "new_session",
+        title: `جلسة جديدة بانتظار المراجعة: ${session_number}`,
+        message: `${group.length} عنصر مرتبط`,
+        severity: "info",
+      });
+    }
+  } catch {
+    /* optional — ignore if tables missing */
+  }
 }
 
 /** Main entry — sync all official sources. Safe to call from cron. */

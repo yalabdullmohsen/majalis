@@ -27,5 +27,19 @@
     { "id": "course-ramadan-intensive", "title": "البرنامج العلمي الرمضاني", "course_type": "موسمية" },
     { "id": "course-alfiqh-almuqaran", "title": "برنامج الفقه المقارن", "course_type": "برنامج" },
     { "id": "mutoon-alfiyyah", "title": "متن الألفية في النحو", "course_type": "متن" }
+  ],
+  "fiqh_sessions": [
+    {
+      "slug": "session-24-2024",
+      "title": "الدورة الرابعة والعشرون — المجمع الفقهي الإسلامي",
+      "verification_status": "verified",
+      "publish_status": "published"
+    },
+    {
+      "slug": "session-22-2023",
+      "title": "الدورة الثانية والعشرون — المجمع الفقهي الإسلامي",
+      "verification_status": "verified",
+      "publish_status": "published"
+    }
   ]
 }

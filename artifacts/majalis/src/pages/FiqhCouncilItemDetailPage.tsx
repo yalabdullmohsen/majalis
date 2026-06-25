@@ -11,6 +11,9 @@ import {
 import { FiqhCitationMenu } from "@/components/fiqh-council/FiqhCitationButton";
 import { FiqhExportButton } from "@/components/fiqh-council/FiqhExportButton";
 import { FiqhVerifiedBadge } from "@/components/fiqh-council/FiqhVerifiedBadge";
+import { FiqhTrustBox } from "@/components/fiqh-council/FiqhTrustBox";
+import { FIQH_SESSION_NUMBER_MAP } from "@/lib/fiqh-sessions-seed";
+import { fiqhSessionHref } from "@/lib/fiqh-council-types";
 import { FiqhItemRelations } from "@/components/fiqh-council/FiqhItemRelations";
 import { FIQH_RESEARCH_DISCLAIMER } from "@/lib/fiqh-citation";
 import type { FiqhMaterialRelations } from "@/lib/fiqh-council-service";
@@ -138,6 +141,8 @@ export default function FiqhCouncilItemDetailPage({ params }: { params: { slug: 
 
       <FiqhVerifiedBadge item={item} />
 
+      <FiqhTrustBox item={item} />
+
       <section className="content-detail-evidence ui-card fiqh-detail-info-table">
         <h2>بيانات القرار</h2>
         <table className="fiqh-info-table">
@@ -145,7 +150,17 @@ export default function FiqhCouncilItemDetailPage({ params }: { params: { slug: 
             <tr><th>النوع</th><td>{FIQH_ITEM_TYPE_LABELS[item.type]}</td></tr>
             <tr><th>التصنيف</th><td>{item.category}{item.subcategory ? ` / ${item.subcategory}` : ""}</td></tr>
             {item.decision_number && <tr><th>رقم القرار</th><td>{item.decision_number}</td></tr>}
-            {item.session_number && <tr><th>الجلسة</th><td>{item.session_number}</td></tr>}
+            {item.session_number && (
+              <tr>
+                <th>الجلسة</th>
+                <td>
+                  {item.session_number}
+                  {FIQH_SESSION_NUMBER_MAP[item.session_number] && (
+                    <> — <Link href={fiqhSessionHref(FIQH_SESSION_NUMBER_MAP[item.session_number])}>صفحة الجلسة</Link></>
+                  )}
+                </td>
+              </tr>
+            )}
             {item.session_date && <tr><th>التاريخ</th><td>{item.session_date}</td></tr>}
             {item.source_name && <tr><th>المصدر</th><td>{item.source_name}</td></tr>}
             {item.council_name && <tr><th>الجهة</th><td>{item.council_name}</td></tr>}

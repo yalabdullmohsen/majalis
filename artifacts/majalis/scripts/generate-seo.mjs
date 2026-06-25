@@ -168,6 +168,10 @@ const lessonEntries = lessonRows.map((row) => {
   return `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${buildDate}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.72</priority>\n  </url>`;
 });
 
+const verifiedFiqhSessions = (PLATFORM_SEED.fiqh_sessions || []).filter(
+  (row) => row.verification_status === "verified" && row.publish_status === "published",
+);
+
 const platformEntries = [
   ...(PLATFORM_SEED.fiqh_decisions || []).map((row) => ({
     path: `/fiqh-council/${row.slug || row.id}`,
@@ -193,6 +197,13 @@ const platformEntries = [
     title: `${row.title} | ${seoConfig.siteName}`,
     description: row.title,
     priority: 0.68,
+  })),
+  ...verifiedFiqhSessions.map((row) => ({
+    path: `/fiqh-council/sessions/${row.slug}`,
+    title: `${row.title} | ${seoConfig.siteName}`,
+    description: row.title,
+    priority: 0.69,
+    robots: "index, follow",
   })),
 ].map((row) => {
   const loc = escapeXml(absoluteUrl(row.path));
@@ -315,6 +326,16 @@ const platformPrerender = [
       title: `${row.question} | ${seoConfig.siteName}`,
       description: row.question,
       ogType: "article",
+    },
+  })),
+  ...verifiedFiqhSessions.map((row) => ({
+    dir: resolve(seoPrerenderDir, "fiqh-council", "sessions", row.slug),
+    route: {
+      path: `/fiqh-council/sessions/${row.slug}`,
+      title: `${row.title} | ${seoConfig.siteName}`,
+      description: row.title,
+      ogType: "article",
+      robots: "index, follow",
     },
   })),
   ...(PLATFORM_SEED.rulings || []).map((row) => ({
