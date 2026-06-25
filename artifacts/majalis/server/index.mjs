@@ -13,7 +13,7 @@ import { createRateLimiter } from "./rate-limit.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const appRoot = path.resolve(__dirname, "..");
-const distDir = path.resolve(appRoot, "dist/public");
+const distDir = path.resolve(appRoot, "dist");
 const seoPrerenderDir = path.resolve(appRoot, "seo-prerender");
 
 const rawPort = process.env.PORT || "24216";
