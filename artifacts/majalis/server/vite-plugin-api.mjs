@@ -12,6 +12,7 @@ import autoContentHealthHandler from "../api/cron/auto-content-health.js";
 import autoContentSyncHandler from "../api/cron/auto-content-sync.js";
 import systemHealthHandler from "../api/cron/system-health.js";
 import applyMigrationsHandler from "../api/cron/apply-migrations.js";
+import bootstrapDatabaseHandler from "../api/cron/bootstrap-database.js";
 import autoContentHandler from "../api/auto-content.js";
 import autoContentAdminHandler from "../api/admin/auto-content.js";
 import autoKnowledgeSyncHandler from "../api/cron/auto-knowledge-sync.js";
@@ -49,6 +50,7 @@ const API_ROUTES = [
   { prefix: "/api/cron/auto-content-health", handler: autoContentHealthHandler, allowGet: true, exact: true },
   { prefix: "/api/cron/system-health", handler: systemHealthHandler, allowGet: true, exact: true },
   { prefix: "/api/cron/apply-migrations", handler: applyMigrationsHandler, allowGet: true, exact: true },
+  { prefix: "/api/cron/bootstrap-database", handler: bootstrapDatabaseHandler, allowGet: true, exact: true },
   { prefix: "/api/cron/auto-knowledge-sync", handler: autoKnowledgeSyncHandler, allowGet: true, exact: true },
   { prefix: "/api/cron/connector-health", handler: connectorHealthHandler, allowGet: true, exact: true },
   { prefix: "/api/auto-content", handler: autoContentHandler, allowGet: true },

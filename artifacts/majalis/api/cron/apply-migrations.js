@@ -1,13 +1,9 @@
 import { sendJson } from "../_http.js";
 import { validateCronAuth } from "../../lib/env-config.mjs";
 import { applyMigrations, verifySchema } from "../../lib/db-migrate.mjs";
+import { testDatabaseConnection, resolveDatabaseUrl } from "../../lib/database.mjs";
 
 export default async function handler(req, res) {
-  if (req.method !== "GET" && req.method !== "POST") {
-    sendJson(res, 405, { ok: false, error: "Method not allowed" });
-    return;
-  }
-
   if (!validateCronAuth(req)) {
     sendJson(res, 401, { ok: false, error: "Unauthorized" });
     return;
@@ -17,8 +13,14 @@ export default async function handler(req, res) {
 
   try {
     if (action === "verify") {
-      const result = await verifySchema();
-      sendJson(res, result.ok ? 200 : 503, result);
+      const schema = await verifySchema();
+      sendJson(res, schema.ok ? 200 : 503, schema);
+      return;
+    }
+
+    if (action === "test") {
+      const conn = await testDatabaseConnection();
+      sendJson(res, conn.ok ? 200 : 503, { connection: conn, resolved: resolveDatabaseUrl() });
       return;
     }
 
@@ -28,14 +30,14 @@ export default async function handler(req, res) {
       ok: result.ok && verify.ok,
       migrations: result,
       schema: verify,
+      resolved: resolveDatabaseUrl(),
     });
   } catch (error) {
-    const env = getEnvStatus();
     sendJson(res, 500, {
       ok: false,
       error: error.message,
-      hint: "Add DATABASE_URL to Vercel (Supabase Dashboard → Settings → Database → Connection string URI), then retry. Or run supabase/auto_engine_production_complete.sql in SQL Editor.",
-      env,
+      resolved: resolveDatabaseUrl(),
+      hint: "Add DATABASE_URL or POSTGRES_URL or POSTGRES_PASSWORD or SUPABASE_ACCESS_TOKEN to Vercel",
     });
   }
 }

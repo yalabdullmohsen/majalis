@@ -1,12 +1,13 @@
 /**
  * Apply SQL migrations to Supabase Postgres.
- * Requires DATABASE_URL (or SUPABASE_DB_URL / POSTGRES_URL).
+ * Resolves DATABASE_URL automatically from all env sources.
+ * Falls back to Supabase Management API when access token available.
  */
 
 import { readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { getEnvConfig } from "./env-config.mjs";
+import { getPgClient, getProjectRef, resolveDatabaseUrl } from "./database.mjs";
 
 function pick(...keys) {
   for (const k of keys) {
@@ -27,26 +28,25 @@ const MIGRATION_FILES = [
   "supabase/auto_knowledge_engine_v13.sql",
 ];
 
-async function getPgClient() {
-  const { databaseUrl } = getEnvConfig();
-  if (!databaseUrl) {
-    throw new Error("DATABASE_URL not configured — cannot apply SQL migrations");
-  }
-  const pg = await import("pg");
-  const client = new pg.default.Client({
-    connectionString: databaseUrl,
-    ssl: databaseUrl.includes("supabase") ? { rejectUnauthorized: false } : undefined,
-  });
-  await client.connect();
-  return client;
-}
-
 function loadSql(relativePath) {
-  const full = join(REPO_ROOT, relativePath);
-  return readFileSync(full, "utf8");
+  return readFileSync(join(REPO_ROOT, relativePath), "utf8");
 }
 
-async function applyViaManagementApi(sql, projectRef, accessToken) {
+async function applyViaManagementApiMigrations(sql, projectRef, accessToken, name) {
+  const res = await fetch(`https://api.supabase.com/v1/projects/${projectRef}/database/migrations`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ query: sql, name }),
+  });
+  const text = await res.text();
+  if (!res.ok) throw new Error(`Management API migrations ${res.status}: ${text.slice(0, 300)}`);
+  return { ok: true, via: "management_api_migrations" };
+}
+
+async function applyViaManagementApiQuery(sql, projectRef, accessToken) {
   const res = await fetch(`https://api.supabase.com/v1/projects/${projectRef}/database/query`, {
     method: "POST",
     headers: {
@@ -56,88 +56,8 @@ async function applyViaManagementApi(sql, projectRef, accessToken) {
     body: JSON.stringify({ query: sql }),
   });
   const text = await res.text();
-  if (!res.ok) throw new Error(`Management API ${res.status}: ${text.slice(0, 200)}`);
-  return { ok: true, via: "management_api" };
-}
-
-function getProjectRef() {
-  const url = getEnvConfig().supabaseUrl;
-  if (!url) return "";
-  try {
-    return new URL(url).hostname.split(".")[0];
-  } catch {
-    return "";
-  }
-}
-
-export async function applyMigrations(options = {}) {
-  const files = options.files || MIGRATION_FILES;
-  const results = [];
-  const accessToken = pick("SUPABASE_ACCESS_TOKEN", "SUPABASE_MANAGEMENT_TOKEN");
-  const projectRef = getProjectRef();
-
-  // Try Management API first if token available
-  if (accessToken && projectRef) {
-    for (const file of files) {
-      const started = Date.now();
-      const sql = loadSql(file);
-      try {
-        await applyViaManagementApi(sql, projectRef, accessToken);
-        results.push({ file, ok: true, via: "management_api", durationMs: Date.now() - started });
-      } catch (err) {
-        results.push({ file, ok: false, error: err.message, via: "management_api", durationMs: Date.now() - started });
-        if (!options.continueOnError) break;
-      }
-    }
-    if (results.every((r) => r.ok)) {
-      const verify = await verifySchema();
-      return { ok: verify.ok, results, schema: verify, via: "management_api" };
-    }
-  }
-
-  let client;
-  try {
-    client = await getPgClient();
-
-    for (const file of files) {
-      const started = Date.now();
-      const sql = loadSql(file);
-      try {
-        await client.query(sql);
-        results.push({ file, ok: true, durationMs: Date.now() - started });
-      } catch (err) {
-        results.push({ file, ok: false, error: err.message, durationMs: Date.now() - started });
-        if (!options.continueOnError) throw err;
-      }
-    }
-
-    const { rows: tables } = await client.query(`
-      SELECT table_name FROM information_schema.tables
-      WHERE table_schema = 'public'
-        AND table_name IN (
-          'auto_import_runs','auto_imported_content','auto_import_logs','trusted_sources',
-          'ai_generation_jobs','verification_logs','duplicate_cache','publishing_history',
-          'source_health','source_statistics','auto_publish_queue',
-          'ake_connectors','ake_job_queue','ake_engine_runs','schema_migrations'
-        )
-      ORDER BY table_name
-    `);
-
-    const { rows: cols } = await client.query(`
-      SELECT column_name FROM information_schema.columns
-      WHERE table_schema = 'public' AND table_name = 'auto_imported_content'
-        AND column_name IN ('seo_title','source_verified','pipeline_stage')
-    `);
-
-    return {
-      ok: results.every((r) => r.ok),
-      results,
-      tablesFound: tables.map((t) => t.table_name),
-      requiredColumns: cols.map((c) => c.column_name),
-    };
-  } finally {
-    if (client) await client.end().catch(() => {});
-  }
+  if (!res.ok) throw new Error(`Management API query ${res.status}: ${text.slice(0, 300)}`);
+  return { ok: true, via: "management_api_query" };
 }
 
 export async function verifySchema() {
@@ -160,12 +80,118 @@ export async function verifySchema() {
 
   const { error: colErr } = await admin
     .from("auto_imported_content")
-    .select("seo_title, source_verified, pipeline_stage")
+    .select("seo_title, source_verified, pipeline_stage, ai_analysis")
     .limit(0);
   checks.auto_imported_content_v2_columns = colErr ? colErr.message : "ok";
 
   const ok = Object.values(checks).every((v) => v === "ok");
   return { ok, checks };
+}
+
+export async function isSchemaReady() {
+  const result = await verifySchema();
+  return result.ok === true;
+}
+
+export async function ensureSchemaReady() {
+  const ready = await isSchemaReady();
+  if (ready) return { ok: true, alreadyReady: true };
+
+  const migration = await applyMigrations({ continueOnError: false });
+  const verify = await verifySchema();
+  return { ok: verify.ok, migrated: true, migration, schema: verify };
+}
+
+export async function applyMigrations(options = {}) {
+  const files = options.files || MIGRATION_FILES;
+  const results = [];
+  const accessToken = pick("SUPABASE_ACCESS_TOKEN", "SUPABASE_MANAGEMENT_TOKEN", "SUPABASE_PAT");
+  const projectRef = getProjectRef();
+  const dbResolved = resolveDatabaseUrl();
+
+  // Management API path (no DATABASE_URL needed)
+  if (accessToken && projectRef) {
+    for (const file of files) {
+      const started = Date.now();
+      const sql = loadSql(file);
+      const name = file.replace(/^supabase\//, "").replace(".sql", "");
+      try {
+        await applyViaManagementApiMigrations(sql, projectRef, accessToken, name);
+        results.push({ file, ok: true, via: "management_api_migrations", durationMs: Date.now() - started });
+      } catch (err) {
+        try {
+          await applyViaManagementApiQuery(sql, projectRef, accessToken);
+          results.push({ file, ok: true, via: "management_api_query", durationMs: Date.now() - started });
+        } catch (err2) {
+          results.push({ file, ok: false, error: err2.message, durationMs: Date.now() - started });
+          if (!options.continueOnError) break;
+        }
+      }
+    }
+    if (results.length > 0 && results.every((r) => r.ok)) {
+      const verify = await verifySchema();
+      return { ok: verify.ok, results, schema: verify, via: "management_api", databaseUrl: dbResolved };
+    }
+  }
+
+  // pg direct path
+  let clientInfo;
+  try {
+    clientInfo = await getPgClient();
+  } catch (err) {
+    return {
+      ok: false,
+      error: err.message,
+      results,
+      databaseUrl: dbResolved,
+      hint: "Set DATABASE_URL or POSTGRES_URL or POSTGRES_PASSWORD or SUPABASE_ACCESS_TOKEN on Vercel",
+      projectRef,
+    };
+  }
+
+  const { client, source } = clientInfo;
+  try {
+    for (const file of files) {
+      const started = Date.now();
+      const sql = loadSql(file);
+      try {
+        await client.query(sql);
+        results.push({ file, ok: true, via: source, durationMs: Date.now() - started });
+      } catch (err) {
+        results.push({ file, ok: false, error: err.message, via: source, durationMs: Date.now() - started });
+        if (!options.continueOnError) throw err;
+      }
+    }
+
+    const { rows: tables } = await client.query(`
+      SELECT table_name FROM information_schema.tables
+      WHERE table_schema = 'public'
+        AND table_name IN (
+          'auto_import_runs','auto_imported_content','schema_migrations',
+          'ai_generation_jobs','verification_logs','ake_connectors','ake_job_queue'
+        )
+      ORDER BY table_name
+    `);
+
+    const { rows: cols } = await client.query(`
+      SELECT column_name FROM information_schema.columns
+      WHERE table_schema = 'public' AND table_name = 'auto_imported_content'
+        AND column_name IN ('seo_title','source_verified','pipeline_stage','ai_analysis')
+    `);
+
+    const verify = await verifySchema();
+    return {
+      ok: results.every((r) => r.ok) && verify.ok,
+      results,
+      tablesFound: tables.map((t) => t.table_name),
+      requiredColumns: cols.map((c) => c.column_name),
+      schema: verify,
+      via: source,
+      databaseUrl: { source: dbResolved.source, configured: Boolean(dbResolved.url) },
+    };
+  } finally {
+    await client.end().catch(() => {});
+  }
 }
 
 export async function listMigrationFiles() {

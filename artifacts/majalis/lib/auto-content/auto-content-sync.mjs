@@ -1,5 +1,6 @@
 import { getSupabaseAdmin } from "../supabase-admin.mjs";
-import { getEnvStatus } from "../env-config.mjs";
+import { getEnvStatus, syncDatabaseUrlEnv } from "../env-config.mjs";
+import { ensureSchemaReady } from "../db-migrate.mjs";
 import {
   aiAnalyzeContent,
   calculateQualityScore,
@@ -348,12 +349,36 @@ async function processRssItem(supabase, source, rssItem, runId, logger) {
   };
 }
 
-export async function runAutoContentSync({ triggerType = "cron" } = {}) {
+export async function runAutoContentSync({ triggerType = "cron", skipSchemaCheck = false } = {}) {
   const logger = createPipelineLogger();
   logger.log("start", "Cron Started");
 
+  syncDatabaseUrlEnv();
   const envStatus = getEnvStatus();
   logger.log("env", "Loaded Environment", { detail: envStatus });
+
+  if (!skipSchemaCheck) {
+    logger.log("database", "Verifying schema migrations...");
+    const schema = await ensureSchemaReady();
+    if (!schema.ok) {
+      logger.error("database", "Schema not ready — migrations required", { detail: schema });
+      return {
+        ok: false,
+        error: "Schema migrations required",
+        reason: "Run /api/cron/apply-migrations or set DATABASE_URL on Vercel",
+        schema,
+        env: envStatus,
+        ...logger.summary(),
+        imported: 0,
+        published: 0,
+        skipped: 0,
+        failed: 0,
+      };
+    }
+    if (schema.migrated) {
+      logger.log("database", "Schema migrations applied successfully");
+    }
+  }
 
   const supabase = getSupabaseAdmin();
   if (!supabase) {

@@ -16,6 +16,7 @@ import autoContentHealthHandler from "../api/cron/auto-content-health.js";
 import autoContentSyncHandler from "../api/cron/auto-content-sync.js";
 import systemHealthHandler from "../api/cron/system-health.js";
 import applyMigrationsHandler from "../api/cron/apply-migrations.js";
+import bootstrapDatabaseHandler from "../api/cron/bootstrap-database.js";
 import autoContentHandler from "../api/auto-content.js";
 import autoContentAdminHandler from "../api/admin/auto-content.js";
 import autoKnowledgeSyncHandler from "../api/cron/auto-knowledge-sync.js";
@@ -118,6 +119,8 @@ app.get("/api/cron/system-health", runHandler(systemHealthHandler, "system-healt
 app.post("/api/cron/system-health", runHandler(systemHealthHandler, "system-health"));
 app.get("/api/cron/apply-migrations", runHandler(applyMigrationsHandler, "apply-migrations"));
 app.post("/api/cron/apply-migrations", runHandler(applyMigrationsHandler, "apply-migrations"));
+app.get("/api/cron/bootstrap-database", runHandler(bootstrapDatabaseHandler, "bootstrap-database"));
+app.post("/api/cron/bootstrap-database", runHandler(bootstrapDatabaseHandler, "bootstrap-database"));
 app.get("/api/cron/auto-knowledge-sync", runHandler(autoKnowledgeSyncHandler, "auto-knowledge-sync"));
 app.post("/api/cron/auto-knowledge-sync", runHandler(autoKnowledgeSyncHandler, "auto-knowledge-sync"));
 app.get("/api/cron/connector-health", runHandler(connectorHealthHandler, "connector-health"));

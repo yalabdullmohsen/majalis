@@ -13,16 +13,46 @@ function pick(...keys) {
 }
 
 function buildDatabaseUrlFromParts() {
-  const password = pick("SUPABASE_DB_PASSWORD", "POSTGRES_PASSWORD", "DB_PASSWORD");
+  const host = pick("POSTGRES_HOST", "PGHOST");
+  const user = pick("POSTGRES_USER", "PGUSER") || "postgres";
+  const password = pick("POSTGRES_PASSWORD", "PGPASSWORD", "SUPABASE_DB_PASSWORD", "DB_PASSWORD");
+  const database = pick("POSTGRES_DATABASE", "PGDATABASE") || "postgres";
+  const port = pick("POSTGRES_PORT", "PGPORT") || "5432";
+
+  if (host && password) {
+    return `postgresql://${encodeURIComponent(user)}:${encodeURIComponent(password)}@${host}:${port}/${database}?sslmode=require`;
+  }
+
   const supabaseUrl = pick("SUPABASE_URL", "VITE_SUPABASE_URL");
   if (!password || !supabaseUrl) return "";
   try {
     const ref = new URL(supabaseUrl).hostname.split(".")[0];
-    const region = pick("SUPABASE_REGION") || "us-east-1";
-    return `postgresql://postgres.${ref}:${encodeURIComponent(password)}@aws-0-${region}.pooler.supabase.com:6543/postgres`;
+    const regions = ["us-east-1", "eu-west-1", "eu-central-1", "ap-southeast-1"];
+    for (const region of regions) {
+      const pooler = `postgresql://postgres.${ref}:${encodeURIComponent(password)}@aws-0-${region}.pooler.supabase.com:6543/postgres?sslmode=require`;
+      if (process.env.DATABASE_URL) return process.env.DATABASE_URL;
+      // Return first candidate — actual connect test happens in database.mjs
+      return pooler;
+    }
+    return `postgresql://postgres:${encodeURIComponent(password)}@db.${ref}.supabase.co:5432/postgres?sslmode=require`;
   } catch {
     return "";
   }
+}
+
+/** Sync resolved URL into process.env.DATABASE_URL for pg/drizzle consumers. */
+export function syncDatabaseUrlEnv() {
+  const url = pick(
+    "DATABASE_URL",
+    "SUPABASE_DB_URL",
+    "POSTGRES_URL",
+    "POSTGRES_PRISMA_URL",
+    "POSTGRES_URL_NON_POOLING",
+  ) || buildDatabaseUrlFromParts();
+  if (url && !process.env.DATABASE_URL) {
+    process.env.DATABASE_URL = url;
+  }
+  return url;
 }
 
 function safeEqual(a, b) {
@@ -34,6 +64,7 @@ function safeEqual(a, b) {
 }
 
 export function getEnvConfig() {
+  syncDatabaseUrlEnv();
   const supabaseUrl = pick("SUPABASE_URL", "VITE_SUPABASE_URL");
   const serviceRoleKey = pick("SUPABASE_SERVICE_ROLE_KEY");
   const anonKey = pick("SUPABASE_ANON_KEY", "VITE_SUPABASE_ANON_KEY");
@@ -73,6 +104,9 @@ export function getEnvStatus() {
     OPENAI_API_KEY: Boolean(env.openaiKey),
     ANTHROPIC_API_KEY: Boolean(env.anthropicKey),
     DATABASE_URL: Boolean(env.databaseUrl),
+    POSTGRES_URL: Boolean(pick("POSTGRES_URL")),
+    POSTGRES_PASSWORD: Boolean(pick("POSTGRES_PASSWORD", "SUPABASE_DB_PASSWORD")),
+    SUPABASE_ACCESS_TOKEN: Boolean(pick("SUPABASE_ACCESS_TOKEN", "SUPABASE_MANAGEMENT_TOKEN")),
   };
 }
 
