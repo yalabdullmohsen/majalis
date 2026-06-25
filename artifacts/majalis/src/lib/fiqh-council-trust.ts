@@ -1,4 +1,9 @@
 import type { FiqhCouncilItem, FiqhCouncilIssue } from "./fiqh-council-types";
+import {
+  getItemCompletionScore,
+  MIN_FIQH_COMPLETION_SCORE,
+  verifyFiqhItem,
+} from "./fiqh-verification-service";
 
 export type FiqhDocumentationLevel =
   | "official_verified"
@@ -35,9 +40,12 @@ export function getDocumentationLevel(
   return "imported_needs_review";
 }
 
-/** عنصر منشور وموثق — يُعرض للعامة ويُستخدم في مساعد الباحث */
+/** عنصر منشور وموثق ومكتمل — يُعرض للعامة */
 export function isVerifiedPublicItem(item: FiqhCouncilItem): boolean {
   if (item.status !== "published") return false;
+  if (getItemCompletionScore(item) < MIN_FIQH_COMPLETION_SCORE) return false;
+  if (!isOfficialSourceVerified(item)) return false;
+  if (item.link_status === "broken" || item.link_status === "timeout") return false;
   return getDocumentationLevel(item) === "official_verified";
 }
 
@@ -57,4 +65,9 @@ export function isOfficialSourceVerified(
 
 export function isPublicIssue(issue: FiqhCouncilIssue): boolean {
   return issue.status === "published" && issue.documentation_level === "official_verified";
+}
+
+/** تحقق قبل النشر — يُستخدم في الإدارة */
+export function canPublishFiqhItem(item: FiqhCouncilItem, existingItems?: FiqhCouncilItem[]) {
+  return verifyFiqhItem(item, { existingItems }).canPublish;
 }

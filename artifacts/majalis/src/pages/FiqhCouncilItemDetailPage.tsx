@@ -12,6 +12,7 @@ import { FiqhCitationMenu } from "@/components/fiqh-council/FiqhCitationButton";
 import { FiqhExportButton } from "@/components/fiqh-council/FiqhExportButton";
 import { FiqhVerifiedBadge } from "@/components/fiqh-council/FiqhVerifiedBadge";
 import { FiqhTrustBox } from "@/components/fiqh-council/FiqhTrustBox";
+import { isPublicDisplayableItem } from "@/lib/fiqh-council-trust";
 import { FIQH_SESSION_NUMBER_MAP } from "@/lib/fiqh-sessions-seed";
 import { fiqhSessionHref } from "@/lib/fiqh-council-types";
 import { FiqhItemRelations } from "@/components/fiqh-council/FiqhItemRelations";
@@ -141,7 +142,7 @@ export default function FiqhCouncilItemDetailPage({ params }: { params: { slug: 
 
       <FiqhVerifiedBadge item={item} />
 
-      <FiqhTrustBox item={item} />
+      {isPublicDisplayableItem(item) && <FiqhTrustBox item={item} publicMode />}
 
       <section className="content-detail-evidence ui-card fiqh-detail-info-table">
         <h2>بيانات القرار</h2>

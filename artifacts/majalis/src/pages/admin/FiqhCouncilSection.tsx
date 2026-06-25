@@ -54,6 +54,7 @@ import { C } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
 import { AdminModal, Field, inputSt, selectSt, textareaSt } from "./AdminModal";
 import { useAdminShell } from "./AdminShell";
+import { FiqhCompletionBarFromItem } from "@/components/fiqh-council/FiqhCompletionBar";
 
 type AdminTab = "stats" | "items" | "review" | "duplicates" | "relations" | "research" | "sessions" | "sync";
 
@@ -324,6 +325,7 @@ export function FiqhCouncilSection() {
         {item.validation_status && <> · تحقق: {item.validation_status}</>}
         {item.external_id && <> · {item.external_id}</>}
       </p>
+      <FiqhCompletionBarFromItem item={item} className="fiqh-admin-item-completion" />
       <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
         <button onClick={() => { setForm({ ...item, tags: (item.tags || []).join("، "), evidence: formatEvidence(item.evidence) }); setOpen(true); }} style={{ fontSize: "0.75rem", cursor: "pointer" }}>تعديل</button>
         {item.status !== "published" && (
@@ -348,14 +350,18 @@ export function FiqhCouncilSection() {
 
   return (
     <div className="fiqh-council-admin">
-      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "1rem", flexWrap: "wrap", gap: "0.75rem" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "1rem", flexWrap: "wrap", gap: "0.75rem", alignItems: "center" }}>
         <h2 style={{ margin: 0, color: C.emeraldDeep }}>المجمع الفقهي الإسلامي ({filtered.length})</h2>
-        <button
-          onClick={() => { setForm({ ...EMPTY }); setOpen(true); }}
-          style={{ padding: "0.5rem 1rem", background: C.emerald, color: C.parchment, border: "none", borderRadius: "0.375rem", cursor: "pointer" }}
-        >
-          + إضافة
-        </button>
+        <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+          <a href="/admin/fiqh-review" style={{ fontSize: "0.8125rem", color: C.emeraldDeep }}>المراجعة العلمية</a>
+          <a href="/admin/fiqh-quality" style={{ fontSize: "0.8125rem", color: C.emeraldDeep }}>جودة البيانات</a>
+          <button
+            onClick={() => { setForm({ ...EMPTY }); setOpen(true); }}
+            style={{ padding: "0.5rem 1rem", background: C.emerald, color: C.parchment, border: "none", borderRadius: "0.375rem", cursor: "pointer" }}
+          >
+            + إضافة
+          </button>
+        </div>
       </div>
 
       <div className="fiqh-council-admin-tabs">

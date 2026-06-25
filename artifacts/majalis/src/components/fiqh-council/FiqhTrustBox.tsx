@@ -9,6 +9,7 @@ type Props = {
   verificationStatus?: FiqhCouncilSession["verification_status"] | "verified" | "pending" | "unavailable";
   item?: Partial<Pick<FiqhCouncilItem, "source_name" | "source_url" | "confidence_level" | "updated_at">>;
   className?: string;
+  publicMode?: boolean;
 };
 
 export function FiqhTrustBox({
@@ -18,6 +19,7 @@ export function FiqhTrustBox({
   verificationStatus,
   item,
   className = "fiqh-trust-box ui-card",
+  publicMode = false,
 }: Props) {
   const verified = item
     ? isOfficialSourceVerified(item)
@@ -55,12 +57,14 @@ export function FiqhTrustBox({
         </div>
         <div>
           <dt>حالة البيانات</dt>
-          <dd>{statusLabel}</dd>
+          <dd>{publicMode ? "موثق" : statusLabel}</dd>
         </div>
-        <div>
-          <dt>موثق</dt>
-          <dd>{verified ? "نعم — مصدر رسمي ورابط متوفر" : "لا — يحتاج مراجعة أو مصدر"}</dd>
-        </div>
+        {!publicMode && (
+          <div>
+            <dt>موثق</dt>
+            <dd>{verified ? "نعم — مصدر رسمي ورابط متوفر" : "لا — يحتاج مراجعة أو مصدر"}</dd>
+          </div>
+        )}
       </dl>
     </aside>
   );

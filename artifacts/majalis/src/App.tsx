@@ -67,6 +67,8 @@ const RulingDetailPage = lazy(() => import("@/pages/RulingDetailPage"));
 const UpdatesPage = lazy(() => import("@/pages/UpdatesPage"));
 const AdminPage = lazy(() => import("@/pages/AdminPage"));
 const AdminDashboardPage = lazy(() => import("@/pages/admin/AdminDashboardPage"));
+const FiqhReviewPage = lazy(() => import("@/pages/admin/FiqhReviewPage"));
+const FiqhQualityPage = lazy(() => import("@/pages/admin/FiqhQualityPage"));
 
 function SeoManager() {
   const [location] = useLocation();
@@ -160,6 +162,24 @@ function Router() {
       <Route path="/rulings"><SafeLazyRoute component={RulingsPage} /></Route>
       <Route path="/updates"><SafeLazyRoute component={UpdatesPage} /></Route>
       <Route path="/login"><SafeLazyRoute component={LoginPage} /></Route>
+      <Route path="/admin/fiqh-review">
+        <AdminRouteGuard>
+          <ErrorBoundary>
+            <Suspense fallback={<Loading />}>
+              <FiqhReviewPage />
+            </Suspense>
+          </ErrorBoundary>
+        </AdminRouteGuard>
+      </Route>
+      <Route path="/admin/fiqh-quality">
+        <AdminRouteGuard>
+          <ErrorBoundary>
+            <Suspense fallback={<Loading />}>
+              <FiqhQualityPage />
+            </Suspense>
+          </ErrorBoundary>
+        </AdminRouteGuard>
+      </Route>
       <Route path="/admin/dashboard">
         <AdminRouteGuard>
           <ErrorBoundary>

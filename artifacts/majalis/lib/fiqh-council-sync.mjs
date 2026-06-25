@@ -233,6 +233,23 @@ async function writeSyncLog(admin, jobId, sourceId, entry) {
   });
 }
 
+function calcCompletionScore(item) {
+  let score = 0;
+  if (item.title?.trim()) score += 10;
+  if (item.content?.trim() || item.ruling_text?.trim()) score += 20;
+  if (item.summary?.trim()) score += 10;
+  if (item.source_name?.trim()) score += 10;
+  if (item.source_url?.trim() && /^https?:\/\//i.test(item.source_url)) score += 15;
+  if (item.type) score += 5;
+  if (item.category?.trim()) score += 10;
+  if (item.session_date) score += 5;
+  if (item.session_number || item.session_id) score += 5;
+  if (item.tags?.length) score += 5;
+  if (item.evidence?.length) score += 5;
+  if (item.key_points?.length) score += 5;
+  return Math.min(100, score);
+}
+
 async function recordDuplicate(admin, itemId, candidateId, match) {
   await admin.from("fiqh_council_duplicates").upsert({
     item_id: itemId,
@@ -323,6 +340,26 @@ async function upsertItem(admin, sourceId, jobId, raw, existingPool = []) {
 
   const action = data?.action || (existing?.id ? "update" : "insert");
   const itemId = data?.id;
+
+  if (itemId) {
+    const completion_score = calcCompletionScore(cleaned);
+    await admin.from("fiqh_council_items").update({
+      completion_score,
+      link_status: "unchecked",
+      updated_at: new Date().toISOString(),
+    }).eq("id", itemId);
+
+    if (action === "insert") {
+      await admin.from("fiqh_council_admin_alerts").insert({
+        alert_type: "needs_review",
+        title: `مادة جديدة تحتاج مراجعة: ${cleaned.title}`,
+        message: `درجة الاكتمال: ${completion_score}%`,
+        entity_type: "fiqh_council_item",
+        entity_id: itemId,
+        severity: completion_score >= 80 ? "info" : "warning",
+      });
+    }
+  }
 
   if (itemId && dupMatches.length > 0) {
     for (const m of dupMatches.slice(0, 3)) {

@@ -70,6 +70,11 @@ export type FiqhCouncilItem = {
   nawazil_topic?: string;
   session_id?: string;
   documentation_level?: "official_verified" | "imported_needs_review" | "admin_summary" | "rejected" | "archived";
+  completion_score?: number;
+  link_status?: "ok" | "redirect" | "broken" | "timeout" | "unchecked";
+  link_checked_at?: string;
+  redirect_url?: string;
+  verification_issues?: Array<{ code: string; message: string; severity: string }>;
   created_at?: string;
   updated_at?: string;
   /** Search relevance rank from RPC */
@@ -131,6 +136,33 @@ export type FiqhAuditEntry = {
   to_status?: string;
   notes?: string;
   created_at?: string;
+};
+
+export type FiqhReviewLog = {
+  id: string;
+  item_id?: string;
+  session_id?: string;
+  action: string;
+  actor_id?: string;
+  actor_email?: string;
+  notes?: string;
+  from_status?: string;
+  to_status?: string;
+  completion_score?: number;
+  verification_issues?: Array<{ code: string; message: string; severity: string }>;
+  created_at?: string;
+};
+
+export type FiqhQualityStats = {
+  published_count: number;
+  needs_review_count: number;
+  missing_source_count: number;
+  missing_category_count: number;
+  broken_links_count: number;
+  duplicate_pending_count: number;
+  avg_completion_score: number;
+  last_sync_at?: string;
+  last_review_at?: string;
 };
 
 export type FiqhCouncilSession = {

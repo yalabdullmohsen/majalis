@@ -1,7 +1,17 @@
 import type { FiqhCouncilItem } from "./fiqh-council-types";
+import { calculateCompletionScore } from "./fiqh-verification-service";
+
+function withQualityFields(item: FiqhCouncilItem): FiqhCouncilItem {
+  const score = calculateCompletionScore(item);
+  return {
+    ...item,
+    completion_score: score,
+    link_status: item.source_url ? "ok" : "unchecked",
+  };
+}
 
 /** عناصر منشورة للجمهور — محتوى منظم دون تفاصيل غير موثقة */
-export const FIQH_COUNCIL_PUBLISHED_SEED: FiqhCouncilItem[] = [
+const RAW_PUBLISHED_SEED: FiqhCouncilItem[] = [
   {
     id: "seed-fiqh-crypto-2024",
     slug: "fiqh-crypto-2024",
@@ -192,8 +202,10 @@ export const FIQH_COUNCIL_PUBLISHED_SEED: FiqhCouncilItem[] = [
   },
 ];
 
+export const FIQH_COUNCIL_PUBLISHED_SEED: FiqhCouncilItem[] = RAW_PUBLISHED_SEED.map(withQualityFields);
+
 /** مسودات للوحة الإدارة فقط — لا تُعرض للجمهور */
-export const FIQH_COUNCIL_ADMIN_ONLY_SEED: FiqhCouncilItem[] = [
+const RAW_ADMIN_ONLY_SEED: FiqhCouncilItem[] = [
   {
     id: "seed-fiqh-draft-islamic-finance",
     slug: "draft-islamic-finance-placeholder",
@@ -225,6 +237,8 @@ export const FIQH_COUNCIL_ADMIN_ONLY_SEED: FiqhCouncilItem[] = [
     created_at: "2026-01-02T00:00:00Z",
   },
 ];
+
+export const FIQH_COUNCIL_ADMIN_ONLY_SEED: FiqhCouncilItem[] = RAW_ADMIN_ONLY_SEED.map(withQualityFields);
 
 export const FIQH_COUNCIL_ALL_SEED: FiqhCouncilItem[] = [
   ...FIQH_COUNCIL_PUBLISHED_SEED,

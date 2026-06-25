@@ -45,6 +45,9 @@ function scoreItem(item: FiqhCouncilItem, baseRank = 0): number {
   let score = baseRank;
   if (isVerifiedPublicItem(item)) score += 50;
   if (isOfficialSourceVerified(item)) score += 30;
+  const completion = item.completion_score ?? 0;
+  score += completion / 5;
+  if (item.session_id || item.session_number) score += 8;
   score += (item.views_count || 0) / 100;
   if (item.session_date) {
     const year = Number(item.session_date.slice(0, 4));
