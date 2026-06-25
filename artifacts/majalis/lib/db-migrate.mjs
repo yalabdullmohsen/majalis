@@ -143,7 +143,7 @@ export async function applyMigrations(options = {}) {
     }
     if (results.length > 0 && results.every((r) => r.ok)) {
       const verify = await verifySchema();
-      return { ok: verify.ok, results, schema: verify, via: "management_api", databaseUrl: dbResolved };
+      return { ok: verify.ok, results, schema: verify, via: "management_api", databaseUrl: { source: dbResolved.source, urlRedacted: dbResolved.urlRedacted } };
     }
   }
 
