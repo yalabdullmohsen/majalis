@@ -13,6 +13,10 @@ import {
 import { DEMO_QUIZ_QUESTIONS } from "./quiz-seed";
 import { ADHKAR_CATEGORIES, filterAdhkar } from "./adhkar-seed";
 import { safeSupabaseQuery } from "./safe-supabase";
+
+/** Columns that exist on the live `sheikhs` table (no image_url / avatar_url). */
+const SHEIKH_EMBED = "sheikhs(id, name, city, photo_url)";
+const SHEIKH_EMBED_MIN = "sheikhs(name, photo_url)";
 import { validateSheikhImage, safeUploadFileName } from "./file-validation";
 import { formatSupabaseError, isSupabaseConfigured, logSupabaseError } from "./supabase-config";
 
@@ -114,7 +118,7 @@ export async function getSheikhById(id: string) {
 
     const { data: lessons, error: lessonsError } = await supabase
       .from("lessons")
-      .select("*, sheikhs(name, image_url, photo_url)")
+      .select(`*, ${SHEIKH_EMBED_MIN}`)
       .eq("sheikh_id", id)
       .eq("status", "approved")
       .order("created_at", { ascending: false });
@@ -171,7 +175,7 @@ export async function getLessons({ category, city, search }: { category?: string
   try {
     let q = supabase
       .from("lessons")
-      .select("*, sheikhs(name, city, image_url, photo_url)")
+      .select(`*, ${SHEIKH_EMBED}`)
       .eq("status", "approved")
       .order("created_at", { ascending: false });
     if (category && category !== "الكل") q = q.eq("category", category);
@@ -200,7 +204,7 @@ export async function getLessonById(id: string) {
   try {
     const { data, error } = await supabase
       .from("lessons")
-      .select("*, sheikhs(id, name, city, image_url, photo_url, avatar_url)")
+      .select(`*, ${SHEIKH_EMBED}`)
       .eq("id", id)
       .eq("status", "approved")
       .maybeSingle();
@@ -218,7 +222,7 @@ export async function getKuwaitLessonsFromDb() {
   try {
     const { data, error } = await supabase
       .from("lessons")
-      .select("*, sheikhs(name, city, image_url, photo_url, avatar_url)")
+      .select(`*, ${SHEIKH_EMBED}`)
       .eq("status", "approved")
       .order("created_at", { ascending: false });
 
@@ -764,7 +768,7 @@ async function searchLessonsFallback(term: string) {
     const like = ilikePattern(p);
     return supabase
       .from("lessons")
-      .select("id, title, category, description, mosque, schedule, sheikhs(name, image_url, photo_url)")
+      .select(`id, title, category, description, mosque, schedule, ${SHEIKH_EMBED_MIN}`)
       .eq("status", "approved")
       .or(`title.ilike.${like},description.ilike.${like},category.ilike.${like},mosque.ilike.${like},city.ilike.${like}`)
       .limit(40);
@@ -799,7 +803,7 @@ async function searchSheikhsFallback(term: string) {
   const patterns = arabicSearchPatterns(term);
   const responses = await Promise.all(
     patterns.map((p) =>
-      supabase.from("sheikhs").select("id, name, bio, specialties, image_url, photo_url").ilike("name", ilikePattern(p)).limit(20)
+      supabase.from("sheikhs").select("id, name, bio, specialties, photo_url").ilike("name", ilikePattern(p)).limit(20)
     )
   );
   const rows = mergeUniqueById(responses.flatMap((r) => r.data || [])).filter((s: any) =>
