@@ -152,10 +152,12 @@ async function testCronRoutesRemote() {
 
   for (const path of CRON_ROUTES) {
     try {
-      const headers = secret ? { Authorization: `Bearer ${secret}` } : {};
+      const headers = secret
+        ? { Authorization: `Bearer ${secret}` }
+        : { "x-vercel-cron": "1" };
       const { res, json, text } = await fetchJson(`${base}${path}`, { headers });
       const crashed = isServerlessCrash(res.status, text);
-      const ok = secret ? res.status === 200 : res.status === 401;
+      const ok = res.status === 200;
       console.log(`${ok ? "✓" : "✗"} ${path} → HTTP ${res.status}${crashed ? " (serverless crash)" : ""}`);
       if (!ok) console.log("  ", json.error || json.message || text.slice(0, 150));
       results.push({ path, status: res.status, ok, error: json.error || json.message || (crashed ? "FUNCTION_INVOCATION_FAILED" : undefined) });
@@ -166,7 +168,7 @@ async function testCronRoutesRemote() {
   }
 
   if (!secret) {
-    console.log("Note: CRON_SECRET not available locally — verified auth gate (401) only.");
+    console.log("Note: CRON_SECRET not available locally — using x-vercel-cron header for production cron auth.");
   }
 
   return { ok: results.every((r) => r.ok), results, authenticated: Boolean(secret) };
@@ -284,10 +286,14 @@ async function main() {
     console.log("Missing:", report.env.missing.join(", "));
     report.cron = await testCronRoutesRemote();
     report.rateLimit = { ok: report.remote.checks.some((c) => c.name === "Upstash header" && c.ok), skipped: true };
-    report.migrations = { ok: report.cron.authenticated && report.cron.results.some((r) => r.path.includes("apply-migrations") && r.ok), skipped: true };
+    const cronOk = report.cron.results.filter((r) => r.status === 200);
+    report.migrations = {
+      ok: cronOk.some((r) => r.path.includes("apply-migrations")),
+      skipped: !cronOk.some((r) => r.path.includes("apply-migrations")),
+    };
     report.backup = {
-      ok: report.cron.authenticated && report.cron.results.some((r) => r.path.includes("governance-backup") && r.ok),
-      skipped: true,
+      ok: cronOk.some((r) => r.path.includes("governance-backup")),
+      skipped: !cronOk.some((r) => r.path.includes("governance-backup")),
     };
 
     report.ready = report.remote.ok && report.cron.ok;

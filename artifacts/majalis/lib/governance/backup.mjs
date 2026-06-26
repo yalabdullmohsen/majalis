@@ -10,12 +10,22 @@ import { getSupabaseAdmin } from "../supabase-admin.mjs";
 import { logGovernanceEvent } from "./audit.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const BACKUP_DIR = path.resolve(__dirname, "../../data/backups");
+
+function getBackupDir() {
+  if (process.env.MAJLIS_BACKUP_DIR?.trim()) {
+    return path.resolve(process.env.MAJLIS_BACKUP_DIR.trim());
+  }
+  if (process.env.VERCEL || process.env.VERCEL_ENV) {
+    return path.join("/tmp", "majlis-backups");
+  }
+  return path.resolve(__dirname, "../../data/backups");
+}
 
 export async function runBackupCheck(admin, opts = {}) {
   admin = admin || getSupabaseAdmin();
   const runId = crypto.randomUUID();
   const started = new Date().toISOString();
+  const BACKUP_DIR = getBackupDir();
 
   const result = {
     id: runId,
@@ -119,6 +129,7 @@ export async function getBackupHistory(admin, limit = 10) {
 }
 
 export function loadBackupSample(tableName) {
+  const BACKUP_DIR = getBackupDir();
   if (!existsSync(BACKUP_DIR)) return null;
   try {
     const match = readdirSync(BACKUP_DIR).find((f) => f.startsWith(tableName));
@@ -134,6 +145,7 @@ export function loadBackupSample(tableName) {
  */
 export async function runRestoreTest(admin, opts = {}) {
   const started = Date.now();
+  const BACKUP_DIR = getBackupDir();
   const result = {
     status: "running",
     tests: [],
