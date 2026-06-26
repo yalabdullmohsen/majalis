@@ -1,9 +1,8 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "framework": "vite",
+  "framework": "nextjs",
   "installCommand": "cd ../.. && pnpm install",
-  "buildCommand": "pnpm run build:vite",
-  "outputDirectory": "dist",
+  "buildCommand": "pnpm run build",
   "functions": {
     "api/index.js": {
       "maxDuration": 60,
@@ -96,10 +95,6 @@
     {
       "source": "/api/(.*)",
       "destination": "/api/index"
-    },
-    {
-      "source": "/((?!api/).*)",
-      "destination": "/index.html"
     }
   ]
 }
