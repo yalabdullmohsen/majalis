@@ -2,7 +2,22 @@
  * Distributed rate limiting — Upstash Redis in production, in-memory fallback in dev only.
  */
 
+import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
+
 const buckets = new Map();
+
+function getUpstashCredentials() {
+  const url =
+    process.env.UPSTASH_REDIS_REST_URL ||
+    process.env.KV_REST_API_URL ||
+    "";
+  const token =
+    process.env.UPSTASH_REDIS_REST_TOKEN ||
+    process.env.KV_REST_API_TOKEN ||
+    "";
+  return { url: url.trim(), token: token.trim() };
+}
 
 function isProductionEnv() {
   return (
@@ -37,35 +52,33 @@ function inMemoryCheck(key, windowMs, max) {
   return { allowed: true, remaining: max - entry.count, resetAt: entry.resetAt };
 }
 
-let upstashLimiter = null;
+let upstashRedis = null;
 let upstashInitAttempted = false;
+let upstashInitError = null;
 
-async function getUpstashLimiter(windowMs, max) {
-  if (upstashInitAttempted) return upstashLimiter;
+function getUpstashRedis() {
+  if (upstashInitAttempted) return upstashRedis;
   upstashInitAttempted = true;
 
-  const url = process.env.UPSTASH_REDIS_REST_URL || "";
-  const token = process.env.UPSTASH_REDIS_REST_TOKEN || "";
+  const { url, token } = getUpstashCredentials();
   if (!url || !token) return null;
 
   try {
-    const { Ratelimit } = await import("@upstash/ratelimit");
-    const { Redis } = await import("@upstash/redis");
-    const redis = new Redis({ url, token });
-    upstashLimiter = { redis, Ratelimit, windowMs, max };
-    return upstashLimiter;
-  } catch {
+    upstashRedis = new Redis({ url, token });
+    return upstashRedis;
+  } catch (err) {
+    upstashInitError = String(err?.message || err);
     return null;
   }
 }
 
 export async function checkRateLimit(key, { windowMs = 60_000, max = 20 } = {}) {
-  const upstash = await getUpstashLimiter(windowMs, max);
-  if (upstash) {
+  const redis = getUpstashRedis();
+  if (redis) {
     try {
-      const limiter = new upstash.Ratelimit({
-        redis: upstash.redis,
-        limiter: upstash.Ratelimit.slidingWindow(max, `${Math.ceil(windowMs / 1000)} s`),
+      const limiter = new Ratelimit({
+        redis,
+        limiter: Ratelimit.slidingWindow(max, `${Math.ceil(windowMs / 1000)} s`),
         prefix: "majalis",
       });
       const result = await limiter.limit(key);
@@ -89,12 +102,16 @@ export async function checkRateLimit(key, { windowMs = 60_000, max = 20 } = {}) 
   }
 
   if (isProductionEnv()) {
+    const { url, token } = getUpstashCredentials();
     return {
       allowed: false,
       remaining: 0,
       resetAt: Date.now() + windowMs,
       backend: "redis_required",
-      error: "UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN required in production",
+      error: upstashInitError ||
+        (!url || !token
+          ? "UPSTASH_REDIS_REST_URL/TOKEN or KV_REST_API_URL/TOKEN required in production"
+          : "Upstash Redis client failed to initialize"),
     };
   }
 
@@ -127,5 +144,6 @@ export function createRateLimiter({ windowMs = 60_000, max = 20, keyPrefix = "" 
 }
 
 export function isRedisRateLimitConfigured() {
-  return Boolean(process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN);
+  const { url, token } = getUpstashCredentials();
+  return Boolean(url && token);
 }

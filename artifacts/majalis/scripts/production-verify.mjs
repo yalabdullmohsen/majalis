@@ -253,8 +253,33 @@ async function testRemoteProduction() {
   const upstashHeaderCheck = await fetch(`${base}/api/assistant/health`);
   const backend = upstashHeaderCheck.headers.get("x-ratelimit-backend");
   if (backend) {
-    console.log(`${backend === "upstash" ? "✓" : "✗"} Upstash header on API → ${backend}`);
-    checks.push({ name: "Upstash header", ok: backend === "upstash", status: upstashHeaderCheck.status, backend });
+    const ok = backend === "upstash" || backend === "redis";
+    console.log(`${ok ? "✓" : "✗"} Upstash header on API → ${backend}`);
+    checks.push({ name: "Upstash header", ok, status: upstashHeaderCheck.status, backend });
+  }
+
+  for (const [name, path, body] of [
+    ["Assistant rate limit", "/api/assistant", { message: "verify" }],
+    ["Transcribe rate limit", "/api/transcribe", { audio: "" }],
+  ]) {
+    try {
+      const res = await fetch(`${base}${path}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      const text = await res.text();
+      const backendHeader = (res.headers.get("x-ratelimit-backend") || "").toLowerCase();
+      const ok = backendHeader === "upstash" || backendHeader === "redis";
+      console.log(
+        `${ok ? "✓" : "✗"} ${name} → HTTP ${res.status}${backendHeader ? ` (backend: ${backendHeader})` : ""}`,
+      );
+      if (!ok) console.log("  ", text.slice(0, 120));
+      checks.push({ name, ok, status: res.status, backend: backendHeader });
+    } catch (err) {
+      console.log(`✗ ${name} → ${err.message}`);
+      checks.push({ name, ok: false, status: 0, error: err.message });
+    }
   }
 
   return { ok: checks.every((c) => c.ok), checks };
@@ -285,7 +310,14 @@ async function main() {
     console.log("\n⚠ Local server secrets missing — running remote production checks only.");
     console.log("Missing:", report.env.missing.join(", "));
     report.cron = await testCronRoutesRemote();
-    report.rateLimit = { ok: report.remote.checks.some((c) => c.name === "Upstash header" && c.ok), skipped: true };
+    report.rateLimit = {
+      ok: report.remote.checks.some(
+        (c) =>
+          (c.name === "Assistant rate limit" || c.name === "Transcribe rate limit") &&
+          (c.backend === "upstash" || c.backend === "redis"),
+      ),
+      skipped: false,
+    };
     const cronOk = report.cron.results.filter((r) => r.status === 200);
     report.migrations = {
       ok: cronOk.some((r) => r.path.includes("apply-migrations")),
@@ -296,7 +328,10 @@ async function main() {
       skipped: !cronOk.some((r) => r.path.includes("governance-backup")),
     };
 
-    report.ready = report.remote.ok && report.cron.ok;
+    report.ready =
+      report.remote.ok &&
+      report.cron.ok &&
+      report.rateLimit.ok;
   }
 
   section("Summary");
