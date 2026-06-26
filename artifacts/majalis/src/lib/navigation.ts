@@ -66,7 +66,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { href: "/prayer-times", label: "مواقيت الصلاة" },
       { href: "/qibla", label: "القبلة" },
       { href: "/occasions", label: "المناسبات الإسلامية" },
-      { href: "/about", label: "الإعدادات" },
+      { href: "/settings", label: "الإعدادات" },
     ],
   },
 ];
@@ -133,7 +133,6 @@ export const HOME_FEATURE_CARDS = [
 
 export const HOME_MORE_SECTIONS = [
   { href: "/lessons", title: "الدروس", description: "دروس ودورات ومحاضرات" },
-  { href: "/fiqh-council", title: "المجمع الفقهي الإسلامي", description: "قرارات وفتاوى وتوصيات رسمية" },
   { href: "/fatwa", title: "الفتاوى", description: "مركز الفتاوى الشرعية" },
   { href: "/rulings", title: "الأحكام الشرعية", description: "مكتبة الأحكام والأدلة" },
   { href: "/annual-courses", title: "الدورات العلمية", description: "برامج ودورات سنوية" },

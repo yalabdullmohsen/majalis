@@ -8,9 +8,9 @@ import { PRIMARY_NAV } from "@/lib/navigation";
 import { C } from "@/lib/theme";
 
 function useIsMobile() {
-  const [mobile, setMobile] = useState(typeof window !== "undefined" ? window.innerWidth < 880 : false);
+  const [mobile, setMobile] = useState(typeof window !== "undefined" ? window.innerWidth <= 879 : false);
   useEffect(() => {
-    const onResize = () => setMobile(window.innerWidth < 880);
+    const onResize = () => setMobile(window.innerWidth <= 879);
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
   }, []);
