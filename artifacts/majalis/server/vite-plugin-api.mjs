@@ -1,24 +1,18 @@
-import { dispatchApiRequest, matchApiRoute, sendJson } from "../lib/api-dispatch.mjs";
-
-async function readJsonBody(req) {
-  const chunks = [];
-  for await (const chunk of req) {
-    chunks.push(chunk);
-  }
-  const raw = Buffer.concat(chunks).toString("utf8");
-  if (!raw) return {};
-  try {
-    return JSON.parse(raw);
-  } catch {
-    return null;
-  }
-}
-
 export function majalisApiPlugin() {
   return {
     name: "majalis-api",
     configureServer(server) {
+      let dispatchModule;
+
+      async function getDispatch() {
+        if (!dispatchModule) {
+          dispatchModule = await import("../lib/api-dispatch.mjs");
+        }
+        return dispatchModule;
+      }
+
       server.middlewares.use(async (req, res, next) => {
+        const { matchApiRoute, sendJson } = await getDispatch();
         const route = matchApiRoute(req.url);
         if (!route) return next();
 
@@ -51,13 +45,22 @@ export function majalisApiPlugin() {
         }
 
         const runPost = async () => {
-          const body = await readJsonBody(req);
-          if (body === null && route.prefix !== "/api/test-anthropic") {
-            sendJson(res, 400, { ok: false, message: "اكتب سؤالك أولًا." });
-            return;
+          const chunks = [];
+          for await (const chunk of req) {
+            chunks.push(chunk);
+          }
+          const raw = Buffer.concat(chunks).toString("utf8");
+          let body = {};
+          if (raw) {
+            try {
+              body = JSON.parse(raw);
+            } catch {
+              sendJson(res, 400, { ok: false, message: "اكتب سؤالك أولًا." });
+              return;
+            }
           }
 
-          req.body = body ?? {};
+          req.body = body;
           try {
             await route.handler(req, res);
           } catch (error) {

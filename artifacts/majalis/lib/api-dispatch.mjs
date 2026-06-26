@@ -123,8 +123,20 @@ export const API_ROUTES = [
   { prefix: "/api/transcribe", handler: transcribeHandler, rateLimit: transcribeRateLimit },
 ];
 
-export function matchApiRoute(url) {
-  const path = (url || "").split("?")[0];
+export function resolveRequestPath(req) {
+  const headerPath =
+    req.headers?.["x-vercel-original-path"] ||
+    req.headers?.["x-invoke-path"] ||
+    req.headers?.["x-forwarded-uri"];
+  const raw = headerPath || req.url || "/";
+  return String(raw).split("?")[0];
+}
+
+export function matchApiRoute(urlOrReq) {
+  const path =
+    typeof urlOrReq === "string"
+      ? urlOrReq.split("?")[0]
+      : resolveRequestPath(urlOrReq);
   return API_ROUTES.find((route) =>
     route.exact ? path === route.prefix : path === route.prefix || path.startsWith(`${route.prefix}/`) || path.startsWith(`${route.prefix}?`),
   );
@@ -159,7 +171,7 @@ export function sendJson(res, status, payload) {
 }
 
 export async function dispatchApiRequest(req, res) {
-  const route = matchApiRoute(req.url);
+  const route = matchApiRoute(req);
   if (!route) {
     sendJson(res, 404, { ok: false, message: "المسار غير موجود." });
     return;
