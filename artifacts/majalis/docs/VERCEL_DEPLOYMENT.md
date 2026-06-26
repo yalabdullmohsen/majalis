@@ -36,7 +36,7 @@ pnpm run build
 | `dist/public` | خاص بمشاريع pitch/promo فقط — يسبب 404 |
 | `next build` | المشروع Vite وليس Next.js |
 | `.next` كـ Output | ليس مخرج هذا المشروع |
-| Framework: Next.js | يكسر SPA routing ويعطي 404 |
+| `next.config.mjs` في جذر المشروع | Vercel يكتشف Next.js تلقائيًا — أعد تسميته إلى `.legacy` |
 
 ---
 

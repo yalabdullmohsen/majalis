@@ -43,3 +43,6 @@ jobs:
 
       - name: Build
         run: pnpm --filter @workspace/majalis run build
+
+      - name: Verify deploy output
+        run: pnpm --filter @workspace/majalis run verify:deploy

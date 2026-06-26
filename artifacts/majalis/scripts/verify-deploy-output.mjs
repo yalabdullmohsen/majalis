@@ -65,9 +65,10 @@ if (existsSync(vercelJsonPath)) {
     pass("vercel.json framework is vite");
   }
 
-  const buildCmd = vercel.buildCommand || "";
-  if (/\bnext\s+build\b/.test(buildCmd)) {
-    fail(`vercel.json buildCommand runs Next.js: "${buildCmd}"`);
+  if (existsSync(join(appRoot, "next.config.mjs"))) {
+    fail("next.config.mjs exists — Vercel may auto-detect Next.js; rename to .legacy");
+  } else {
+    pass("next.config.mjs not present (Vercel will not auto-detect Next.js)");
   }
 } else {
   warn("vercel.json not found — configure Vercel dashboard manually (Framework: Vite, Output: dist)");
