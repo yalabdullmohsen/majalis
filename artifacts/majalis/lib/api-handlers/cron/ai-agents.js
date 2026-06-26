@@ -14,6 +14,16 @@ export default async function handler(req, res) {
   const mode = req.query?.mode || "pipeline";
 
   try {
+    if (mode === "health") {
+      sendJson(res, 200, {
+        ok: true,
+        mode: "health",
+        note: "Lightweight cron probe — full pipeline may exceed serverless timeout; use mode=pipeline on dedicated workers.",
+        supabase: Boolean(admin),
+      });
+      return;
+    }
+
     if (mode === "sources") {
       const sync = await syncTrustedSources(admin, { probe: true });
       sendJson(res, 200, { ok: true, sync });

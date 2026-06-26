@@ -34,12 +34,25 @@ node scripts/import-content.mjs --type=adhkar --file=data/imports/adhkar.sample.
 
 ## ملفات الأمثلة
 
-- `lessons.sample.json`
-- `sheikhs.sample.json`
-- `questions.sample.json`
-- `adhkar.sample.json`
-- `books.sample.json`
-- `quran-surahs.sample.json`
+| النوع | JSON | CSV |
+|-------|------|-----|
+| lessons | `lessons.sample.json` | `lessons.sample.csv` |
+| sheikhs | `sheikhs.sample.json` | `sheikhs.sample.csv` |
+| questions | `questions.sample.json` | `questions.sample.csv` |
+| books | `books.sample.json` | `books.sample.csv` |
+| adhkar | `adhkar.sample.json` | — |
+| quran surahs | `quran-surahs.sample.json` | — |
+
+بيانات تجريبية Phase 2: `trial/*.phase2.json`
+
+## متغيرات البيئة
+
+- `VITE_SUPABASE_URL` — عنوان المشروع
+- `SUPABASE_SERVICE_ROLE_KEY` — مفتاح الخادم (لا تستخدم anon key)
+
+## لوحة الإدارة
+
+زر **«استيراد من ملف»** في قسم Content Aggregator (`/admin`) — يستدعي `/api/admin/content-import` ويدعم JSON و CSV.
 
 ## التحقق (Validation)
 

@@ -1,6 +1,6 @@
 import { resolveContentType, TYPE_REGISTRY } from "./registry.mjs";
 import { validateRow } from "./validators.mjs";
-import { parseContentFile } from "./parsers.mjs";
+import { parseContentFile, parseContentString } from "./parsers.mjs";
 import { dedupeRows } from "./dedupe.mjs";
 import { mapRowToPayload } from "./mappers.mjs";
 import { importToSupabase, getSupabaseAdmin } from "./supabase-importer.mjs";
@@ -10,6 +10,23 @@ import { importToStaged } from "./staged.mjs";
  * @param {{ rootDir: string, type: string, filePath: string, dryRun?: boolean }} opts
  */
 export async function runContentImport(opts) {
+  let rows;
+  try {
+    rows = parseContentFile(opts.filePath);
+  } catch (err) {
+    return {
+      ok: false,
+      type: opts.type,
+      errors: [`تعذر قراءة الملف: ${err.message}`],
+    };
+  }
+  return runContentImportRows({ ...opts, rows });
+}
+
+/**
+ * @param {{ rootDir: string, type: string, rows: Record<string, unknown>[], dryRun?: boolean, source?: string }} opts
+ */
+export async function runContentImportRows(opts) {
   const def = resolveContentType(opts.type);
   if (!def) {
     return {
@@ -20,16 +37,7 @@ export async function runContentImport(opts) {
   }
 
   const started = Date.now();
-  let rows;
-  try {
-    rows = parseContentFile(opts.filePath);
-  } catch (err) {
-    return {
-      ok: false,
-      type: def.type,
-      errors: [`تعذر قراءة الملف: ${err.message}`],
-    };
-  }
+  const rows = opts.rows || [];
 
   const validationErrors = [];
   const validRows = [];
@@ -61,7 +69,7 @@ export async function runContentImport(opts) {
     label: def.label,
     target: def.target,
     dryRun: Boolean(opts.dryRun),
-    file: opts.filePath,
+    file: opts.source || opts.filePath || "inline",
     duration_ms: Date.now() - started,
     stats: {
       read: rows.length,
@@ -77,6 +85,27 @@ export async function runContentImport(opts) {
     importErrors: importReport.errors || [],
     stagedPath: importReport.stagedPath || null,
   };
+}
+
+/** @deprecated use runContentImportRows — kept for API string uploads */
+export async function runContentImportFromString(opts) {
+  let rows;
+  try {
+    rows = parseContentString(opts.content, opts.filename || "upload.json");
+  } catch (err) {
+    return {
+      ok: false,
+      type: opts.type,
+      errors: [`تعذر تحليل المحتوى: ${err.message}`],
+    };
+  }
+  return runContentImportRows({
+    rootDir: opts.rootDir,
+    type: opts.type,
+    rows,
+    dryRun: opts.dryRun,
+    source: opts.filename,
+  });
 }
 
 export function printImportReport(report) {

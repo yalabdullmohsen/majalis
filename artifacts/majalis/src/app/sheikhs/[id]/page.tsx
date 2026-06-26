@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import {
-  fetchAllSheikhIds,
   fetchSheikhByIdForServer,
 } from "../../../../lib/supabase/server-data";
 import SheikhDetailClient from "@/components/seo/SheikhDetailClient";

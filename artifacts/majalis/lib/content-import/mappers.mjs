@@ -7,6 +7,17 @@ function pick(row, ...keys) {
   return "";
 }
 
+function parseSpecialties(row) {
+  if (Array.isArray(row.specialties)) return row.specialties;
+  if (row.specialty) return [String(row.specialty).trim()];
+  const raw = row.specialties;
+  if (typeof raw === "string" && raw.includes("|")) {
+    return raw.split("|").map((s) => s.trim()).filter(Boolean);
+  }
+  if (raw) return [String(raw).trim()];
+  return [];
+}
+
 /**
  * @param {string} type
  * @param {Record<string, unknown>} row
@@ -23,7 +34,7 @@ export function mapRowToPayload(type, row) {
         bio: pick(row, "bio", "biography"),
         city: pick(row, "city") || null,
         photo_url: pick(row, "photo_url", "image_url") || null,
-        specialties: Array.isArray(row.specialties) ? row.specialties : row.specialty ? [String(row.specialty)] : [],
+        specialties: parseSpecialties(row),
         is_verified: row.is_verified !== false,
         ijazah: pick(row, "ijazah") || null,
         years_experience: row.years_experience != null ? Number(row.years_experience) : null,

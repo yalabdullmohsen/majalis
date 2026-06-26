@@ -184,10 +184,19 @@ async function scanSupabaseTables(admin, options) {
       const result = await runReviewGate(item, { seenHashes, checkLinks: options.checkLinks });
       if (!section_stats[type]) section_stats[type] = { total: 0, verified: 0, needs_review: 0, rejected: 0, duplicate: 0 };
       section_stats[type].total += 1;
-      if (result.verification_status === 'verified') verified += 1, section_stats[type].verified += 1;
-      else if (result.verification_status === 'duplicate') duplicates += 1, section_stats[type].duplicate += 1;
-      else if (result.verification_status === 'rejected') rejected += 1, section_stats[type].rejected += 1;
-      else needs_review += 1, section_stats[type].needs_review += 1;
+      if (result.verification_status === "verified") {
+        verified += 1;
+        section_stats[type].verified += 1;
+      } else if (result.verification_status === "duplicate") {
+        duplicates += 1;
+        section_stats[type].duplicate += 1;
+      } else if (result.verification_status === "rejected") {
+        rejected += 1;
+        section_stats[type].rejected += 1;
+      } else {
+        needs_review += 1;
+        section_stats[type].needs_review += 1;
+      }
       const linkCheck = result.checks?.find((c) => c.name === 'source_link');
       if (linkCheck && !linkCheck.passed) broken_links += 1;
       if (options.persist) {

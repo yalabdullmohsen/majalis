@@ -68,3 +68,31 @@ export function parseContentFile(filePath) {
   if (lower.endsWith(".csv")) return parseCsvFile(filePath);
   return parseJsonFile(filePath);
 }
+
+/**
+ * Parse in-memory file content (for API uploads).
+ * @param {string} content
+ * @param {string} filename
+ */
+export function parseContentString(content, filename = "upload.json") {
+  const lower = String(filename).toLowerCase();
+  if (lower.endsWith(".csv")) {
+    const lines = content.replace(/^\uFEFF/, "").split(/\r?\n/).filter((l) => l.trim());
+    if (lines.length < 2) return [];
+    const headers = splitCsvLine(lines[0]);
+    const rows = [];
+    for (let i = 1; i < lines.length; i++) {
+      const cells = splitCsvLine(lines[i]);
+      if (cells.every((c) => !c.trim())) continue;
+      /** @type {Record<string, string>} */
+      const row = {};
+      headers.forEach((h, idx) => {
+        row[h.trim()] = (cells[idx] ?? "").trim();
+      });
+      rows.push(row);
+    }
+    return rows;
+  }
+  const parsed = JSON.parse(content.trim());
+  return Array.isArray(parsed) ? parsed : [parsed];
+}

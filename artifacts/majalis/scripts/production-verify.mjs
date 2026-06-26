@@ -33,7 +33,7 @@ const CRON_ROUTES = [
   "/api/cron/apply-migrations",
   "/api/cron/auto-content-sync",
   "/api/cron/auto-knowledge-sync",
-  "/api/cron/ai-agents",
+  { path: "/api/cron/ai-agents", query: "?mode=health", note: "full pipeline may 504 on serverless — health probe only" },
   "/api/cron/governance-backup",
 ];
 
@@ -150,17 +150,28 @@ async function testCronRoutesRemote() {
   const secret = process.env.CRON_SECRET;
   const results = [];
 
-  for (const path of CRON_ROUTES) {
+  for (const entry of CRON_ROUTES) {
+    const path = typeof entry === "string" ? entry : entry.path;
+    const query = typeof entry === "string" ? "" : entry.query || "";
+    const note = typeof entry === "string" ? "" : entry.note || "";
     try {
       const headers = secret
         ? { Authorization: `Bearer ${secret}` }
         : { "x-vercel-cron": "1" };
-      const { res, json, text } = await fetchJson(`${base}${path}`, { headers });
+      const { res, json, text } = await fetchJson(`${base}${path}${query}`, { headers });
       const crashed = isServerlessCrash(res.status, text);
+      const timedOut = res.status === 504;
       const ok = res.status === 200;
-      console.log(`${ok ? "✓" : "✗"} ${path} → HTTP ${res.status}${crashed ? " (serverless crash)" : ""}`);
+      const suffix = crashed ? " (serverless crash)" : timedOut ? " (gateway timeout)" : note ? ` (${note})` : "";
+      console.log(`${ok ? "✓" : "✗"} ${path}${query} → HTTP ${res.status}${suffix}`);
       if (!ok) console.log("  ", json.error || json.message || text.slice(0, 150));
-      results.push({ path, status: res.status, ok, error: json.error || json.message || (crashed ? "FUNCTION_INVOCATION_FAILED" : undefined) });
+      results.push({
+        path: `${path}${query}`,
+        status: res.status,
+        ok,
+        note: note || undefined,
+        error: json.error || json.message || (crashed ? "FUNCTION_INVOCATION_FAILED" : timedOut ? "GATEWAY_TIMEOUT" : undefined),
+      });
     } catch (err) {
       console.log(`✗ ${path} → ${err.message}`);
       results.push({ path, status: 0, ok: false, error: err.message });

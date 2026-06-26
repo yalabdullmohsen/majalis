@@ -27,7 +27,7 @@ export async function importToSupabase(admin, type, payloads, opts = {}) {
       imported: 0,
       skipped: 0,
       failed: payloads.length,
-      errors: ["Supabase غير مهيأ — أضف SUPABASE_URL و SUPABASE_SERVICE_ROLE_KEY"],
+      errors: ["Supabase غير مهيأ — أضف VITE_SUPABASE_URL و SUPABASE_SERVICE_ROLE_KEY"],
     };
   }
 

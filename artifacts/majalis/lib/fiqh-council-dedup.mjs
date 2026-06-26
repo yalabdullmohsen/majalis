@@ -13,7 +13,7 @@ function normalize(s) {
 function tokenSet(text) {
   return new Set(
     normalize(text)
-      .split(/[\s،,.؛;:!?\-]+/)
+      .split(/[\s،,.؛;:!?-]+/)
       .filter((w) => w.length > 2),
   );
 }

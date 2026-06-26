@@ -149,7 +149,7 @@ export async function syncIslamicOccasions(admin = getSupabaseAdmin()) {
       continue;
     }
 
-    const target = nextHijriOccasion(item.hijriMonth, item.hijriDay, hijri);
+    const target = nextHijriOccurrence(item.hijriMonth, item.hijriDay, hijri);
     const gregorianKey = await hijriToGregorianKey(target.day, target.month, target.year);
     const remaining = Math.max(0, daysBetween(todayKey, gregorianKey));
     rows.push({
