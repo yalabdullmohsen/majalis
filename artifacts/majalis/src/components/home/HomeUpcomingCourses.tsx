@@ -16,7 +16,10 @@ export function HomeUpcomingCourses() {
 
   useEffect(() => {
     getUnifiedActiveLessons()
-      .then(({ lessons: items }) => setCourses(sortKuwaitLessons(items.filter(isCourse)).slice(0, 4)))
+      .then(({ lessons: items }) => {
+        const safeItems = Array.isArray(items) ? items : [];
+        setCourses(sortKuwaitLessons(safeItems.filter(isCourse)).slice(0, 4));
+      })
       .catch(() => setCourses([]))
       .finally(() => setLoading(false));
   }, []);

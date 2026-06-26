@@ -122,6 +122,39 @@ html[data-theme="dark"] .settings-choice {
   color: var(--majalis-ink);
 }
 
+.home-section-error {
+  border: 1px solid #f59e0b;
+  border-radius: 1rem;
+  background: #fef3c7;
+  color: #78350f;
+  padding: 1rem;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.home-section-error button {
+  width: fit-content;
+  min-height: 40px;
+  border: 1px solid #d97706;
+  border-radius: 0.5rem;
+  background: #fff7ed;
+  color: #78350f;
+  padding: 0 0.85rem;
+  font-family: inherit;
+  font-weight: 800;
+}
+
+html[data-theme="dark"] .home-section-error {
+  background: #3a2a12;
+  border-color: #b45309;
+  color: #fde68a;
+}
+
+html[data-theme="dark"] .home-section-error button {
+  background: var(--majalis-panel);
+  color: var(--majalis-ink);
+}
+
 h1,
 h2,
 h3,

@@ -27,9 +27,13 @@ export const PROGRESS_TASKS: ProgressTask[] = [
 type DayProgress = Record<ProgressTaskId, number>;
 
 function todayKey() {
-  return new Intl.DateTimeFormat("en-CA", {
-    timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone || "Asia/Kuwait",
-  }).format(new Date());
+  try {
+    return new Intl.DateTimeFormat("en-CA", {
+      timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone || "Asia/Kuwait",
+    }).format(new Date());
+  } catch {
+    return new Date().toISOString().slice(0, 10);
+  }
 }
 
 function readStore(): Record<string, DayProgress> {
@@ -69,7 +73,9 @@ export function setTaskProgress(taskId: ProgressTaskId, value: number) {
   day[taskId] = Math.max(0, value);
   store[key] = day;
   writeStore(store);
-  window.dispatchEvent(new CustomEvent("majalis-progress-updated"));
+  if (typeof window !== "undefined") {
+    window.dispatchEvent(new CustomEvent("majalis-progress-updated"));
+  }
 }
 
 export function incrementTaskProgress(taskId: ProgressTaskId, delta = 1) {

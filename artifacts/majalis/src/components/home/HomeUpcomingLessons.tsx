@@ -16,11 +16,12 @@ export function HomeUpcomingLessons() {
 
   useEffect(() => {
     getUnifiedActiveLessons()
-      .then(({ lessons: items }) =>
+      .then(({ lessons: items }) => {
+        const safeItems = Array.isArray(items) ? items : [];
         setLessons(
-          sortKuwaitLessons(items.filter((l) => !isCourse(l) && l.activityType !== "محاضرة")).slice(0, 4),
-        ),
-      )
+          sortKuwaitLessons(safeItems.filter((l) => !isCourse(l) && l.activityType !== "محاضرة")).slice(0, 4),
+        );
+      })
       .catch(() => setLessons([]))
       .finally(() => setLoading(false));
   }, []);

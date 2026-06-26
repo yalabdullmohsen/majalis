@@ -15,7 +15,11 @@ export function HomeDailyQuestion() {
         const items = data || [];
         if (items.length > 0) {
           const picked = getDailyQa(items);
-          setQuestion({ question: picked.question, category: picked.qa_categories?.name || picked.category });
+          if (picked?.question) {
+            setQuestion({ question: picked.question, category: picked.qa_categories?.name || picked.category });
+          } else {
+            setQuestion(null);
+          }
         } else {
           setQuestion(null);
         }
