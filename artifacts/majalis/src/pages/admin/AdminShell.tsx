@@ -24,7 +24,8 @@ export type AdminSection =
   | "updates"
   | "knowledge-engine"
   | "scholarly-verification"
-  | "search-analytics";
+  | "search-analytics"
+  | "digital-learning";
 
 export const ADMIN_NAV: { key: AdminSection; label: string }[] = [
   { key: "dashboard", label: "لوحة التحكم" },
@@ -32,6 +33,7 @@ export const ADMIN_NAV: { key: AdminSection; label: string }[] = [
   { key: "knowledge-engine", label: "Auto Knowledge Engine" },
   { key: "scholarly-verification", label: "التوثيق العلمي" },
   { key: "search-analytics", label: "تحليل البحث" },
+  { key: "digital-learning", label: "التعليم الرقمي" },
   { key: "lessons", label: "الدروس" },
   { key: "sheikhs", label: "المشايخ" },
   { key: "library", label: "المكتبة" },

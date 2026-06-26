@@ -23,6 +23,8 @@ import intelligentSearchHandler from "../api/intelligent-search.js";
 import topicContentHandler from "../api/topic-content.js";
 import contentRelationsHandler from "../api/content-relations.js";
 import searchAnalyticsHandler from "../api/admin/search-analytics.js";
+import digitalLearningHandler from "../api/digital-learning.js";
+import digitalLearningAdminHandler from "../api/admin/digital-learning.js";
 import scholarlySearchHandler from "../api/scholarly-search.js";
 import { createRateLimiter } from "./rate-limit.mjs";
 
@@ -65,6 +67,8 @@ const API_ROUTES = [
   { prefix: "/api/content-relations", handler: contentRelationsHandler, allowGet: true },
   { prefix: "/api/scholarly-search", handler: scholarlySearchHandler, allowGet: true },
   { prefix: "/api/admin/search-analytics", handler: searchAnalyticsHandler, allowGet: true },
+  { prefix: "/api/digital-learning", handler: digitalLearningHandler, allowGet: true },
+  { prefix: "/api/admin/digital-learning", handler: digitalLearningAdminHandler, allowGet: true },
   { prefix: "/api/admin/auto-content", handler: autoContentAdminHandler, allowGet: true },
   { prefix: "/api/admin/auto-knowledge-engine", handler: autoKnowledgeAdminHandler, allowGet: true },
   { prefix: "/api/fiqh-research-assistant", handler: fiqhResearchAssistantHandler, rateLimit: fiqhResearchRateLimit, allowGet: true },

@@ -1,0 +1,11 @@
+export { getAllPaths, getPathWithModules, getPathStats, LEVEL_LABELS } from "./paths.mjs";
+export { enrollInPath, updateModuleProgress, getUserProgress, getUserStats, suggestNextModule, recordAchievement } from "./progress.mjs";
+export { getQuiz, gradeQuiz, submitQuizAttempt, getAllQuizzes } from "./quiz-engine.mjs";
+export { issueCertificate, verifyCertificate, getUserCertificates } from "./certificates.mjs";
+export { getCalendarEvents, subscribeToEvent, getUserCalendarSubscriptions } from "./calendar.mjs";
+export { saveToLibrary, getLibrary, saveNote, getNotes, recordSearchHistory, getSearchHistory } from "./library.mjs";
+export { sendLearningNotification, getNotificationRules, triggerDailyNotifications } from "./notifications.mjs";
+export { generateLessonInsights } from "./ai-lesson.mjs";
+export { getAdminLearningStats } from "./analytics.mjs";
+export { generateDigitalLearningReport } from "./report.mjs";
+export { LEARNING_PATHS, getPathBySlug, getModulesForPath, DEMO_QUIZZES } from "./paths-seed.mjs";

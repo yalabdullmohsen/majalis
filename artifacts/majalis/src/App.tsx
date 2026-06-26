@@ -73,6 +73,12 @@ const AdminDashboardPage = lazy(() => import("@/pages/admin/AdminDashboardPage")
 const AutoContentPage = lazy(() => import("@/pages/admin/AutoContentPage"));
 const FiqhReviewPage = lazy(() => import("@/pages/admin/FiqhReviewPage"));
 const FiqhQualityPage = lazy(() => import("@/pages/admin/FiqhQualityPage"));
+const LearningPathsPage = lazy(() => import("@/pages/learning/LearningPathsPage"));
+const LearningPathDetailPage = lazy(() => import("@/pages/learning/LearningPathDetailPage"));
+const MyLearningPage = lazy(() => import("@/pages/MyLearningPage"));
+const LearningQuizPage = lazy(() => import("@/pages/learning/LearningQuizPage"));
+const LearningCalendarPage = lazy(() => import("@/pages/learning/LearningCalendarPage"));
+const CertificateVerifyPage = lazy(() => import("@/pages/learning/CertificateVerifyPage"));
 
 function SeoManager() {
   const [location] = useLocation();
@@ -118,6 +124,14 @@ function Router() {
       <Route path="/adhkar"><SafeLazyRoute component={AdhkarPage} /></Route>
       <Route path="/qa"><SafeLazyRoute component={QaPage} /></Route>
       <Route path="/quiz"><SafeLazyRoute component={QuizPage} /></Route>
+      <Route path="/learning/paths/:slug"><SafeLazyRoute component={LearningPathDetailPage} /></Route>
+      <Route path="/learning/paths"><SafeLazyRoute component={LearningPathsPage} /></Route>
+      <Route path="/learning/quiz/:slug"><SafeLazyRoute component={LearningQuizPage} /></Route>
+      <Route path="/learning/quiz"><SafeLazyRoute component={LearningQuizPage} /></Route>
+      <Route path="/learning/calendar"><SafeLazyRoute component={LearningCalendarPage} /></Route>
+      <Route path="/learning/certificates/:code"><SafeLazyRoute component={CertificateVerifyPage} /></Route>
+      <Route path="/my-learning"><SafeLazyRoute component={MyLearningPage} /></Route>
+      <Route path="/learning"><Redirect to="/learning/paths" /></Route>
       <Route path="/assistant">
         <ErrorBoundary>
           <Suspense fallback={<Loading />}>

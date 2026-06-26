@@ -141,5 +141,7 @@ export const HOME_MORE_SECTIONS = [
   { href: "/assistant", title: "المساعد العلمي", description: "إرشاد داخل المنصة" },
   { href: "/condolences", title: "قوالب العزاء", description: "تعزية وإعلان وفاة" },
   { href: "/library", title: "المكتبة", description: "كتب ومتون" },
+  { href: "/learning/paths", title: "المسارات العلمية", description: "تعلم منظم من المبتدئ للمتقدم" },
+  { href: "/my-learning", title: "لوحتي التعليمية", description: "تقدمك وإنجازاتك" },
   { href: "/quiz", title: "المسابقات", description: "اختبر معلوماتك" },
 ] as const;
