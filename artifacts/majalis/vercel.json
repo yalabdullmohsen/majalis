@@ -5,24 +5,8 @@
   "buildCommand": "pnpm run build",
   "outputDirectory": "dist",
   "functions": {
-    "api/cron/auto-knowledge-sync.js": {
+    "api/index.js": {
       "maxDuration": 60,
-      "includeFiles": "supabase/**"
-    },
-    "api/cron/knowledge-sync.js": {
-      "maxDuration": 60,
-      "includeFiles": "supabase/**"
-    },
-    "api/cron/sync-data.js": {
-      "maxDuration": 60,
-      "includeFiles": "supabase/**"
-    },
-    "api/cron/bootstrap-database.js": {
-      "maxDuration": 60,
-      "includeFiles": "supabase/**"
-    },
-    "api/**/*.js": {
-      "maxDuration": 30,
       "includeFiles": "supabase/**"
     }
   },
@@ -99,7 +83,7 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "/api/$1"
+      "destination": "/api/index"
     },
     {
       "source": "/((?!api/).*)",

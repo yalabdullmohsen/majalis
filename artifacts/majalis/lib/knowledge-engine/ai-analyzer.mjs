@@ -3,7 +3,7 @@
  * NEVER generates hadith, fatwas, rulings, or scholar attributions.
  */
 
-import { ASSISTANT_MODEL } from "../../api/anthropic-config.js";
+import { ASSISTANT_MODEL } from "../api/anthropic-config.mjs";
 import { FORBIDDEN_AI_GENERATION } from "./sources-registry.mjs";
 
 const ANALYSIS_SYSTEM = `أنت محلل محتوى علمي شرعي في منصة "المجلس العلمي".
