@@ -23,6 +23,7 @@ export const MIGRATION_FILES = [
   "open_platform_v1.sql",
   "governance_v1.sql",
   "verified_knowledge_platform_v1.sql",
+  "reasoning_engine_v1.sql",
 ];
 
 export function resolveMigrationsDir() {

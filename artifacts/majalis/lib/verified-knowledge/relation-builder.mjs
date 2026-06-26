@@ -18,13 +18,14 @@ const REL = {
 export async function linkContentToRef(admin, fromRefId, toRefId, relationType, metadata = {}) {
   if (!admin || !fromRefId || !toRefId || fromRefId === toRefId) return { created: false };
   try {
-    return await createRelation(admin, {
-      from_ref_id: fromRefId,
-      to_ref_id: toRefId,
-      relation_type: relationType,
-      relevance_score: metadata.relevance_score ?? 0.7,
+    const result = await createRelation(admin, {
+      fromRefId,
+      toRefId,
+      relationType,
+      score: metadata.relevance_score ?? 0.7,
       metadata,
     });
+    return { created: result.ok === true };
   } catch {
     return { created: false };
   }

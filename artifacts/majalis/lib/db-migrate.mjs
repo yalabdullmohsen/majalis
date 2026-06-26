@@ -71,6 +71,9 @@ export async function verifySchema() {
     "verified_hadith_items",
     "import_operations_log",
     "knowledge_quality_reports",
+    "reasoning_query_logs",
+    "reasoning_quality_issues",
+    "reasoning_inference_runs",
   ];
 
   for (const table of tables) {

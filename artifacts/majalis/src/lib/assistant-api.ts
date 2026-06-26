@@ -15,6 +15,16 @@ export type AssistantResponse = {
   reply?: string;
   message?: string;
   fallback?: boolean;
+  grounded?: boolean;
+  no_evidence?: boolean;
+  confidence?: number;
+  citations?: Array<{
+    title: string;
+    href: string;
+    source_name?: string | null;
+    trust_score?: number;
+  }>;
+  retrieval_mode?: string;
 };
 
 export async function callAssistantApi(
