@@ -5,7 +5,7 @@ import {
   filterAdhkar,
   getAdhkarByCategory,
 } from "@/lib/adhkar-seed";
-import { getPublishedAdhkarItems } from "@/lib/adhkar-admin";
+import { getPublishedAdhkarItems, preloadAdhkarCatalog } from "@/lib/adhkar-admin";
 import { PageHeader, Empty } from "@/components/ui-common";
 import { AdhkarCard } from "@/components/adhkar/AdhkarCard";
 
@@ -49,6 +49,10 @@ export default function AdhkarPage() {
   const [category, setCategory] = useState("all");
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebouncedValue(search);
+  useEffect(() => {
+    preloadAdhkarCatalog();
+  }, []);
+
   const publishedItems = useMemo(() => getPublishedAdhkarItems(), [location]);
 
   useEffect(() => {

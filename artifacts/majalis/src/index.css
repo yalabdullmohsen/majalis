@@ -8109,6 +8109,73 @@ input, textarea, select { font-family: inherit; }
   max-width: 100%;
 }
 
+.daily-content-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border, rgba(0, 0, 0, 0.08));
+}
+
+.daily-action-btn {
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid var(--border, rgba(0, 0, 0, 0.12));
+  background: var(--surface, #fff);
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.daily-action-btn.is-active {
+  background: var(--emerald, #059669);
+  color: #fff;
+  border-color: transparent;
+}
+
+.hadith-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.hadith-select,
+.hadith-search {
+  flex: 1 1 200px;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border, rgba(0, 0, 0, 0.12));
+}
+
+.hadith-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.hadith-card__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.hadith-num {
+  font-weight: 600;
+  opacity: 0.7;
+}
+
+.hadith-grade {
+  font-size: 0.8rem;
+  color: var(--emerald, #059669);
+}
+
+.hadith-card__text {
+  line-height: 1.8;
+}
+
 /* ── App shell & floating assistant ── */
 .app-shell {
   --assistant-fab-size: 3.35rem;

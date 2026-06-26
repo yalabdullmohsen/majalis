@@ -1,0 +1,100 @@
+{
+  "collections": [
+    {
+      "key": "bukhari",
+      "label": "صحيح البخاري",
+      "count": 7589
+    },
+    {
+      "key": "muslim",
+      "label": "صحيح مسلم",
+      "count": 7563
+    },
+    {
+      "key": "nawawi",
+      "label": "الأربعون النووية",
+      "count": 42
+    },
+    {
+      "key": "tirmidhi",
+      "label": "سنن الترمذي",
+      "count": 3998
+    },
+    {
+      "key": "abudawud",
+      "label": "سنن أبي داود",
+      "count": 5274
+    },
+    {
+      "key": "nasai",
+      "label": "سنن النسائي",
+      "count": 5765
+    },
+    {
+      "key": "ibnmajah",
+      "label": "سنن ابن ماجه",
+      "count": 4343
+    },
+    {
+      "key": "malik",
+      "label": "موطأ مالك",
+      "count": 1858
+    },
+    {
+      "key": "qudsi",
+      "label": "الأحاديث القدسية",
+      "count": 40
+    },
+    {
+      "key": "dehlawi",
+      "label": "اللؤلؤ والمرجان",
+      "count": 40
+    },
+    {
+      "key": "riyadh",
+      "label": "رياض الصالحين",
+      "count": 1896,
+      "curated": true,
+      "source": "https://sunnah.com/riyadussalihin"
+    },
+    {
+      "key": "bulugh",
+      "label": "بلوغ المرام",
+      "count": 1358,
+      "curated": true,
+      "source": "https://sunnah.com/bulugh"
+    },
+    {
+      "key": "umdat",
+      "label": "عمدة الأحكام",
+      "count": 918,
+      "curated": true,
+      "source": "https://sunnah.com/umdat"
+    }
+  ],
+  "totalHadiths": 40684,
+  "curated": [
+    {
+      "key": "riyadh",
+      "label": "رياض الصالحين",
+      "compiler": "الإمام النووي",
+      "count": 1896,
+      "source": "https://sunnah.com/riyadussalihin"
+    },
+    {
+      "key": "bulugh",
+      "label": "بلوغ المرام",
+      "compiler": "الإمام ابن حجر",
+      "count": 1358,
+      "source": "https://sunnah.com/bulugh"
+    },
+    {
+      "key": "umdat",
+      "label": "عمدة الأحكام",
+      "compiler": "الإمام عبد الغني المقدسي",
+      "count": 918,
+      "source": "https://sunnah.com/umdat"
+    }
+  ],
+  "importedAt": "2026-06-26T00:12:12.461Z"
+}

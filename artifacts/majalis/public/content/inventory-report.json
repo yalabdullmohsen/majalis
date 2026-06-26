@@ -1,0 +1,55 @@
+{
+  "generatedAt": "2026-06-26T00:15:56.315Z",
+  "counts": {
+    "hadithsTotal": 40684,
+    "hadithDailyPool": 19376,
+    "hadithCollections": 13,
+    "adhkarImported": 267,
+    "adhkarSeed": 51,
+    "qa": 124,
+    "fawaidCurated": 0,
+    "fawaidSeed": 112,
+    "library": 18,
+    "sheikhs": 8,
+    "lessons": 0,
+    "miracles": 15,
+    "arbaeen": 0,
+    "ayahDaily": 30,
+    "wisdomDaily": 42,
+    "quiz": 0
+  },
+  "completion": {
+    "hadithDb": 95,
+    "adhkar": 92,
+    "dailyContent": 90,
+    "library": 75,
+    "sheikhs": 45,
+    "lessons": 60,
+    "qa": 70,
+    "miracles": 55,
+    "fiqhCouncil": 65
+  },
+  "filledSections": [
+    "حديث اليوم — pool 19k+ with rotation",
+    "آية اليوم — 30 curated ayahs",
+    "ذكر اليوم — 267 adhkar from Hisn al-Muslim",
+    "حكمة اليوم — 42 nawawi hadiths",
+    "سؤال اليوم — DEMO_QA fallback",
+    "آخر التحديثات — UPDATES_SEED fallback",
+    "مكتبة الأحاديث — /hadith browse"
+  ],
+  "pending": [
+    {
+      "section": "رياض الصالحين / بلوغ المرام / عمدة الأحkام",
+      "reason": "Full text not in fawazahmed0 API — indexed via sunnah.com metadata only"
+    },
+    {
+      "section": "Supabase DB import",
+      "reason": "JSON in public/content/ — run islamic_content_library.sql + ETL for DB persistence"
+    },
+    {
+      "section": "QA thousands target",
+      "reason": "124 seed QAs — expand via curated import pipeline"
+    }
+  ]
+}

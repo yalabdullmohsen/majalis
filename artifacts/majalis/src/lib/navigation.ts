@@ -51,6 +51,7 @@ export const NAV_GROUPS: NavGroup[] = [
     id: "sunnah",
     title: "السنة",
     links: [
+      { href: "/hadith", label: "مكتبة الأحاديث" },
       { href: "/arbaeen-nawawi", label: "الأربعون النووية" },
       { href: "/adhkar", label: "سنن مؤقتة" },
       { href: "/adhkar?cat=misc", label: "سنن غير مؤقتة" },

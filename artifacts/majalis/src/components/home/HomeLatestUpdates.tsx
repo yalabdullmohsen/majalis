@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { fetchLiveAutoContent, autoContentToUpdateItem } from "@/lib/auto-content-service";
 import type { MergedUpdateItem } from "@/lib/auto-content/auto-content-utils";
+import { UPDATES_SEED } from "@/lib/updates-seed";
 import { displayText } from "@/lib/display-text";
 
 const TYPE_LABELS: Record<string, string> = {
@@ -21,6 +22,19 @@ function formatDate(iso?: string | null) {
   }
 }
 
+function seedToMerged(item: (typeof UPDATES_SEED)[number]): MergedUpdateItem {
+  return {
+    id: item.id,
+    slug: item.id,
+    title: item.title,
+    summary: item.summary,
+    update_type: item.update_type,
+    source_name: "المجلس العلمي",
+    source_url: item.source_url,
+    published_at: item.published_at,
+  };
+}
+
 export function HomeLatestUpdates() {
   const [items, setItems] = useState<MergedUpdateItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -30,7 +44,14 @@ export function HomeLatestUpdates() {
     fetchLiveAutoContent(6)
       .then((data) => {
         if (!active) return;
-        setItems(data.map(autoContentToUpdateItem));
+        if (data.length > 0) {
+          setItems(data.map(autoContentToUpdateItem));
+        } else {
+          setItems(UPDATES_SEED.slice(0, 6).map(seedToMerged));
+        }
+      })
+      .catch(() => {
+        if (active) setItems(UPDATES_SEED.slice(0, 6).map(seedToMerged));
       })
       .finally(() => {
         if (active) setLoading(false);
@@ -40,14 +61,14 @@ export function HomeLatestUpdates() {
     };
   }, []);
 
-  if (loading || items.length === 0) return null;
+  if (loading) return null;
 
   return (
     <section className="home-section" aria-labelledby="latest-updates-heading">
       <div className="home-section-head">
         <div>
           <p className="home-eyebrow">محتوى موثّق</p>
-          <h2 id="latest-updates-heading">آخر التحديثات من المصادر الرسمية</h2>
+          <h2 id="latest-updates-heading">آخر التحديثات</h2>
         </div>
         <Link href="/updates" className="home-section-link">جميع التحديثات</Link>
       </div>
@@ -60,7 +81,12 @@ export function HomeLatestUpdates() {
           >
             <span className="page-tag">{TYPE_LABELS[item.update_type] || "تحديث"}</span>
             <strong>{displayText(item.title)}</strong>
-            {item.summary && <span>{displayText(item.summary.slice(0, 120))}{item.summary.length > 120 ? "…" : ""}</span>}
+            {item.summary && (
+              <span>
+                {displayText(item.summary.slice(0, 120))}
+                {item.summary.length > 120 ? "…" : ""}
+              </span>
+            )}
             <span className="home-daily-meta">
               {item.source_name && <span>{item.source_name}</span>}
               {item.published_at && <span>{formatDate(item.published_at)}</span>}

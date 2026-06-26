@@ -39,6 +39,7 @@ const QiblaPage = lazy(() => import("@/pages/QiblaPage"));
 const TasbihPage = lazy(() => import("@/pages/TasbihPage"));
 const DailyWirdPage = lazy(() => import("@/pages/DailyWirdPage"));
 const OccasionsPage = lazy(() => import("@/pages/OccasionsPage"));
+const HadithPage = lazy(() => import("@/pages/HadithPage"));
 const ArbaeenNawawiPage = lazy(() => import("@/pages/ArbaeenNawawiPage"));
 const AnnualCoursesPage = lazy(() => import("@/pages/AnnualCoursesPage"));
 const AnnualCourseDetailPage = lazy(() => import("@/pages/AnnualCourseDetailPage"));
@@ -136,6 +137,7 @@ function Router() {
       <Route path="/tasbih"><SafeLazyRoute component={TasbihPage} /></Route>
       <Route path="/daily-wird"><SafeLazyRoute component={DailyWirdPage} /></Route>
       <Route path="/occasions"><SafeLazyRoute component={OccasionsPage} /></Route>
+      <Route path="/hadith"><SafeLazyRoute component={HadithPage} /></Route>
       <Route path="/arbaeen-nawawi"><SafeLazyRoute component={ArbaeenNawawiPage} /></Route>
       <Route path="/cards"><SafeLazyRoute component={CardsPage} /></Route>
       <Route path="/annual-courses/:id"><SafeLazyRoute component={AnnualCourseDetailPage} /></Route>

@@ -1,5 +1,34 @@
 import { ADHKAR_ITEMS, type AdhkarItem } from "./adhkar-seed";
 
+let mergedAdhkarCache: AdhkarItem[] | null = null;
+
+async function loadMergedAdhkar(): Promise<AdhkarItem[]> {
+  if (mergedAdhkarCache) return mergedAdhkarCache;
+  try {
+    const res = await fetch("/content/adhkar-full.json");
+    if (res.ok) {
+      const imported = (await res.json()) as AdhkarItem[];
+      const seedIds = new Set(getBaseAdhkarItems().map((i) => i.id));
+      mergedAdhkarCache = [...ADHKAR_ITEMS, ...imported.filter((i) => !seedIds.has(i.id))];
+      return mergedAdhkarCache;
+    }
+  } catch {
+    /* fallback */
+  }
+  mergedAdhkarCache = ADHKAR_ITEMS;
+  return mergedAdhkarCache;
+}
+
+export function getBaseAdhkarItems(): AdhkarItem[] {
+  return mergedAdhkarCache ?? ADHKAR_ITEMS;
+}
+
+export function preloadAdhkarCatalog() {
+  void loadMergedAdhkar().then((items) => {
+    mergedAdhkarCache = items;
+  });
+}
+
 const STORAGE_KEY = "majalis-adhkar-admin";
 
 export type AdhkarAdminState = {
@@ -37,11 +66,12 @@ export function getAdhkarAdminState(): AdhkarAdminState {
 
 export function getAllAdhkarForAdmin(): AdhkarItem[] {
   const state = loadState();
-  const merged = ADHKAR_ITEMS.map((item) => ({
+  const base = getBaseAdhkarItems();
+  const merged = base.map((item) => ({
     ...item,
     ...(state.overrides[item.id] ?? {}),
   }));
-  const seedIds = new Set(ADHKAR_ITEMS.map((i) => i.id));
+  const seedIds = new Set(getBaseAdhkarItems().map((i) => i.id));
   const customs = state.customItems.filter((i) => !seedIds.has(i.id));
   return [...merged, ...customs];
 }

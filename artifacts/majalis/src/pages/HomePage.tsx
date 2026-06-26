@@ -12,6 +12,8 @@ import { HomeSunnahByTime } from "@/components/home/HomeSunnahByTime";
 import { HomeFeatureCards } from "@/components/home/HomeFeatureCards";
 import { HomeDailyProgress } from "@/components/home/HomeDailyProgress";
 import { HomeMoreSections } from "@/components/home/HomeMoreSections";
+import { HomeDailyAyah } from "@/components/home/HomeDailyAyah";
+import { HomeDailyWisdom } from "@/components/home/HomeDailyWisdom";
 import { HomeIslamicOccasions } from "@/components/home/HomeIslamicOccasions";
 import { HomeLatestUpdates } from "@/components/home/HomeLatestUpdates";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
@@ -77,6 +79,8 @@ export default function HomePage() {
         <HomeDailyFaida />
         <HomeDailyDhikr />
         <HomeDailyHadith />
+        <HomeDailyAyah />
+        <HomeDailyWisdom />
         <HomeDailyQuestion />
         <HomeHeroBanner />
         <HomeSunnahByTime />
