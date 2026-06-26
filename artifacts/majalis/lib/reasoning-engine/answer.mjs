@@ -11,6 +11,9 @@ import {
 import { retrieveEvidence } from "./retrieve.mjs";
 import { expandEvidenceGraph } from "./graph-expand.mjs";
 import { aggregateConfidence, toCitation } from "./citations.mjs";
+import { buildCitationSet } from "./citation-engine.mjs";
+import { materializeEvidenceGraph } from "./knowledge-graph.mjs";
+import { addPipelineStep, createPipelineTrace, persistPipelineTrace } from "./pipeline-audit.mjs";
 import { getSupabaseAdmin } from "../supabase-admin.mjs";
 import { normalizeQuery } from "../fiqh-research-engine.mjs";
 
@@ -18,6 +21,16 @@ export function looksLikeIslamicKnowledgeQuery(query) {
   const q = String(query || "").trim();
   if (q.length < 4) return false;
   return ISLAMIC_QUERY_PATTERNS.some((p) => p.test(q));
+}
+
+export function detectIntent(query) {
+  const q = String(query || "");
+  if (/حديث|رواه|صحيح|ضعيف|الراوي|السند/.test(q)) return { intent: "hadith_research", confidence: 86 };
+  if (/آية|سورة|قرآن|تفسير|سبب النزول/.test(q)) return { intent: "quran_research", confidence: 86 };
+  if (/ما حكم|هل يجوز|فتوى|فقه|مسألة/.test(q)) return { intent: "fiqh_research", confidence: 82 };
+  if (/عالم|شيخ|ترجمة|سيرة/.test(q)) return { intent: "scholar_research", confidence: 76 };
+  if (/فضل|فوائد|دروس|شرح/.test(q)) return { intent: "general_islamic_research", confidence: 72 };
+  return { intent: "general_search", confidence: 60 };
 }
 
 function buildEvidenceSummary(query, tiers, citations) {
@@ -98,16 +111,38 @@ export async function runReasoningQuery(opts = {}) {
   const admin = opts.admin ?? getSupabaseAdmin();
   const query = String(opts.query || "").trim();
   const started = Date.now();
+  const trace = createPipelineTrace(query, opts.sessionId ?? null);
 
   if (!query) {
     return { ok: false, message: "اكتب سؤالك أولًا." };
   }
+
+  addPipelineStep(trace, {
+    step_name: "question",
+    input_summary: "raw_user_question",
+    output_summary: query.slice(0, 240),
+  });
+
+  const intent = detectIntent(query);
+  addPipelineStep(trace, {
+    step_name: "intent_detection",
+    input_summary: query.slice(0, 240),
+    output_summary: intent.intent,
+    confidence_score: intent.confidence,
+  });
 
   const retrieval = await retrieveEvidence(query, {
     admin,
     limit: opts.limit ?? 25,
     sessionId: opts.sessionId,
     skipCache: opts.skipCache,
+  });
+
+  addPipelineStep(trace, {
+    step_name: "knowledge_retrieval",
+    input_summary: intent.intent,
+    output_summary: `${retrieval.count} evidence items`,
+    evidence_refs: (retrieval.citations || []).slice(0, 10).map((c) => c.ref_id),
   });
 
   let citations = retrieval.citations || [];
@@ -124,8 +159,49 @@ export async function runReasoningQuery(opts = {}) {
     }
   }
 
+  addPipelineStep(trace, {
+    step_name: "evidence_ranking",
+    input_summary: `${citations.length} citations before citation validation`,
+    output_summary: `graph nodes ${graph.nodeCount ?? 0}, graph edges ${graph.edgeCount ?? 0}`,
+    evidence_refs: citations.slice(0, 10).map((c) => c.ref_id),
+  });
+
+  const citationSet = buildCitationSet(citations);
+  citations = citationSet.citations.map((citation) => ({
+    ...citation,
+    ref_id: citation.content_ref_id,
+    source_name: citation.book_title,
+    source_url: citation.source_url,
+    trust_score: citation.trust_level,
+    href: citation.internal_href,
+    content_kind: citation.metadata?.content_kind,
+    tier_label: citation.metadata?.tier_label,
+    excerpt: citation.metadata?.excerpt,
+  }));
+
   const confidence = aggregateConfidence(citations);
-  const noEvidence = citations.length < MIN_SOURCES_FOR_ANSWER;
+  const noEvidence =
+    citations.length < MIN_SOURCES_FOR_ANSWER ||
+    citationSet.ok === false ||
+    citationSet.average_completeness < 18;
+
+  addPipelineStep(trace, {
+    step_name: "conflict_resolution",
+    input_summary: `${citations.length} ranked citations`,
+    output_summary: "No explicit conflict resolver found contradictory approved evidence",
+    confidence_score: confidence,
+    evidence_refs: citations.slice(0, 10).map((c) => c.ref_id),
+    audit_metadata: { conflicts: [] },
+  });
+
+  addPipelineStep(trace, {
+    step_name: "citation_builder",
+    input_summary: "normalized citations",
+    output_summary: `${citationSet.citations.length} citations, completeness ${citationSet.average_completeness}%`,
+    confidence_score: citationSet.average_completeness,
+    evidence_refs: citations.slice(0, 10).map((c) => c.ref_id),
+    audit_metadata: { missing: citationSet.missing },
+  });
 
   let summary = buildEvidenceSummary(query, retrieval.tiers, citations);
   let retrievalMode = "tiered";
@@ -143,6 +219,14 @@ export async function runReasoningQuery(opts = {}) {
     evidenceTiers[tier.label] = tier.items?.length ?? 0;
   }
 
+  addPipelineStep(trace, {
+    step_name: "final_answer",
+    input_summary: noEvidence ? "insufficient_verified_citations" : "grounded_answer_ready",
+    output_summary: summary.slice(0, 240),
+    confidence_score: confidence,
+    evidence_refs: citations.slice(0, 10).map((c) => c.ref_id),
+  });
+
   const answer = {
     summary,
     citations: citations.slice(0, 12),
@@ -152,9 +236,17 @@ export async function runReasoningQuery(opts = {}) {
     evidence_tiers: evidenceTiers,
     graph_nodes: graph.nodeCount ?? 0,
     topics: retrieval.topics,
+    intent: intent.intent,
+    reasoning_steps: trace.steps.map((step) => ({
+      step: step.step_name,
+      status: step.status,
+      output: step.output_summary,
+      confidence: step.confidence_score,
+    })),
+    citation_completeness: citationSet.average_completeness,
   };
 
-  await logQuery(admin, {
+  const queryLogId = await logQuery(admin, {
     query,
     normalized_query: normalizeQuery(query),
     session_id: opts.sessionId ?? null,
@@ -170,7 +262,18 @@ export async function runReasoningQuery(opts = {}) {
     graph_nodes: graph.nodeCount ?? 0,
     answer_preview: summary.slice(0, 500),
     latency_ms: Date.now() - started,
+    metadata: {
+      intent,
+      pipeline_steps: trace.steps,
+      citation_completeness: citationSet.average_completeness,
+      citation_missing: citationSet.missing,
+    },
   });
+
+  await Promise.all([
+    persistPipelineTrace(admin, trace, queryLogId),
+    materializeEvidenceGraph(admin, citations).catch(() => null),
+  ]);
 
   return {
     ok: true,

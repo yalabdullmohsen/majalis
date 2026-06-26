@@ -9,6 +9,7 @@ import { runRelationInference } from "./inference.mjs";
 import { scanReasoningQuality, autoFixQualityIssues } from "./quality.mjs";
 import { getReasoningDashboard } from "./dashboard.mjs";
 import { retrieveEvidence } from "./retrieve.mjs";
+import { seedOfficialKnowledgeGraph } from "./knowledge-graph.mjs";
 
 export async function runReasoningCycle(opts = {}) {
   const admin = getSupabaseAdmin();
@@ -28,6 +29,10 @@ export async function runReasoningCycle(opts = {}) {
       result.inference = await runRelationInference(admin, {
         limit: opts.inferenceLimit ?? 150,
       });
+    }
+
+    if (opts.seedOfficialGraph !== false) {
+      result.official_graph = await seedOfficialKnowledgeGraph(admin);
     }
 
     if (opts.qualityScan !== false) {
@@ -64,6 +69,8 @@ export async function runReasoningCycle(opts = {}) {
       outcome: result.errors.length ? "partial" : "success",
       metadata: {
         relations_created: result.inference?.created ?? 0,
+          official_graph_nodes: result.official_graph?.nodes ?? 0,
+          official_graph_edges: result.official_graph?.edges ?? 0,
         issues_found: result.quality?.count ?? 0,
         duration_ms: Date.now() - started,
       },
@@ -83,3 +90,5 @@ export { getReasoningDashboard, getTopLinkedEntities } from "./dashboard.mjs";
 export { runRelationInference } from "./inference.mjs";
 export { scanReasoningQuality, autoFixQualityIssues } from "./quality.mjs";
 export { expandEvidenceGraph } from "./graph-expand.mjs";
+export { seedOfficialKnowledgeGraph, materializeEvidenceGraph } from "./knowledge-graph.mjs";
+export { buildCitationSet, validateCitation, normalizeCitation } from "./citation-engine.mjs";

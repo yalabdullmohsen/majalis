@@ -74,6 +74,13 @@ export async function verifySchema() {
     "reasoning_query_logs",
     "reasoning_quality_issues",
     "reasoning_inference_runs",
+    "kg_nodes",
+    "kg_edges",
+    "kg_citations",
+    "reasoning_pipeline_steps",
+    "quran_surah_profiles",
+    "hadith_profiles",
+    "fiqh_issue_profiles",
   ];
 
   for (const table of tables) {

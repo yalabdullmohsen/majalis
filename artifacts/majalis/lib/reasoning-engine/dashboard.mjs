@@ -9,12 +9,20 @@ export async function getReasoningDashboard(admin) {
   admin = admin ?? getSupabaseAdmin();
 
   let stats = {};
+  let phase4 = {};
   if (admin) {
     try {
       const { data } = await admin.rpc("reasoning_engine_stats");
       stats = data || {};
     } catch {
       /* RPC may not exist yet */
+    }
+
+    try {
+      const { data } = await admin.rpc("kg_phase4_stats");
+      phase4 = data || {};
+    } catch {
+      /* Phase 4 migration may not exist yet */
     }
   }
 
@@ -76,6 +84,10 @@ export async function getReasoningDashboard(admin) {
     graph: {
       relations: stats.relations_count ?? relations.total ?? 0,
       relation_types: topTopics,
+      phase4_nodes: phase4.nodes ?? 0,
+      phase4_edges: phase4.edges ?? 0,
+      citations: phase4.citations ?? 0,
+      pipeline_steps_24h: phase4.pipeline_steps_24h ?? 0,
     },
     queries: {
       last_24h: stats.queries_24h ?? 0,

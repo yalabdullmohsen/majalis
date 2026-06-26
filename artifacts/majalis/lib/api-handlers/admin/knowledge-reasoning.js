@@ -9,6 +9,7 @@ import {
   retrieveEvidence,
   scanReasoningQuality,
   autoFixQualityIssues,
+  seedOfficialKnowledgeGraph,
 } from "../../../lib/reasoning-engine/orchestrator.mjs";
 
 export default async function handler(req, res) {
@@ -69,6 +70,12 @@ export default async function handler(req, res) {
         inferenceLimit: req.body?.inferenceLimit ?? 100,
       });
       sendJson(res, 200, { ok: true, ...result });
+      return;
+    }
+
+    if (action === "seed-official-graph") {
+      const result = await seedOfficialKnowledgeGraph(admin);
+      sendJson(res, 200, { ok: true, result });
       return;
     }
 

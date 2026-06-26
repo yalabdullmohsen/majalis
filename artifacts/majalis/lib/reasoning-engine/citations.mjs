@@ -13,7 +13,9 @@ export function resolveHref(item) {
     lesson: `/lessons/${id}`,
     lessons: `/lessons/${id}`,
     hadith: `/arbaeen-nawawi#${id}`,
+    verified_hadith: `/arbaeen-nawawi#${id}`,
     adhkar: `/adhkar`,
+    verified_adhkar: `/adhkar`,
     fatwa: `/fatwa/${id}`,
     fiqh_decision: `/fiqh-council/${id}`,
     fiqh_council: `/fiqh-council/${id}`,
@@ -60,6 +62,16 @@ export function toCitation(item, tier = null) {
     tier_label: tier?.label ?? null,
     updated_at: item.updated_at || item.last_updated || null,
     verification_status: item.verification_status || null,
+    book_title: item.book_title || item.source_name || null,
+    author_name: item.author_name || item.author || item.scholar || null,
+    edition: item.edition || null,
+    volume: item.volume || null,
+    page: item.page || null,
+    chapter: item.chapter || item.category || null,
+    hadith_number: item.hadith_number || item.number || null,
+    ayah_ref: item.ayah_ref || null,
+    hadith_grade: item.hadith_grade || item.grade || null,
+    verification: item.verification || item.verification_status || null,
   };
 }
 
