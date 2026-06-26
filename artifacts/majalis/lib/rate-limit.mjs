@@ -7,16 +7,37 @@ import { Redis } from "@upstash/redis";
 
 const buckets = new Map();
 
+function stripQuotes(value) {
+  return String(value || "")
+    .trim()
+    .replace(/^["']|["']$/g, "")
+    .trim();
+}
+
 function getUpstashCredentials() {
-  const url =
-    process.env.UPSTASH_REDIS_REST_URL ||
-    process.env.KV_REST_API_URL ||
-    "";
-  const token =
-    process.env.UPSTASH_REDIS_REST_TOKEN ||
-    process.env.KV_REST_API_TOKEN ||
-    "";
+  let url = process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL || "";
+  let token = process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN || "";
+
+  url = stripQuotes(url.replace(/^UPSTASH_REDIS_REST_URL=/, "").replace(/^KV_REST_API_URL=/, ""));
+  token = stripQuotes(token.replace(/^UPSTASH_REDIS_REST_TOKEN=/, "").replace(/^KV_REST_API_TOKEN=/, ""));
+
+  // Recover from a single env var accidentally containing both URL and token lines.
+  if (url.includes("UPSTASH_REDIS_REST_TOKEN=")) {
+    const [urlPart, tokenPart = ""] = url.split("UPSTASH_REDIS_REST_TOKEN=");
+    url = stripQuotes(urlPart.replace(/^UPSTASH_REDIS_REST_URL=/, ""));
+    if (!token) token = stripQuotes(tokenPart);
+  }
+
+  const urlMatch = url.match(/https:\/\/[^\s"'\\]+/);
+  if (urlMatch) url = urlMatch[0];
+
   return { url: url.trim(), token: token.trim() };
+}
+
+function sanitizeRateLimitError(message) {
+  return String(message || "")
+    .replace(/UPSTASH_REDIS_REST_TOKEN=["']?[^"'\s]+["']?/gi, "UPSTASH_REDIS_REST_TOKEN=[redacted]")
+    .replace(/gQ[A-Za-z0-9+/=_-]{20,}/g, "[redacted-token]");
 }
 
 function isProductionEnv() {
@@ -66,7 +87,7 @@ function getUpstashRedis() {
     upstashInitError = null;
     return upstashRedis;
   } catch (err) {
-    upstashInitError = String(err?.message || err);
+    upstashInitError = sanitizeRateLimitError(String(err?.message || err));
     return null;
   } finally {
     upstashInitAttempted = true;
@@ -96,7 +117,7 @@ export async function checkRateLimit(key, { windowMs = 60_000, max = 20 } = {}) 
           remaining: 0,
           resetAt: Date.now() + windowMs,
           backend: "upstash_error",
-          error: String(err?.message || err),
+          error: sanitizeRateLimitError(String(err?.message || err)),
         };
       }
     }
@@ -109,16 +130,20 @@ export async function checkRateLimit(key, { windowMs = 60_000, max = 20 } = {}) 
       remaining: 0,
       resetAt: Date.now() + windowMs,
       backend: "redis_required",
-      error: upstashInitError ||
-        (!url || !token
-          ? "UPSTASH_REDIS_REST_URL/TOKEN or KV_REST_API_URL/TOKEN required in production"
-          : "Upstash Redis client failed to initialize"),
+      error: sanitizeRateLimitError(
+        upstashInitError ||
+          (!url || !token
+            ? "UPSTASH_REDIS_REST_URL/TOKEN or KV_REST_API_URL/TOKEN required in production"
+            : "Upstash Redis client failed to initialize"),
+      ),
     };
   }
 
   const mem = inMemoryCheck(key, windowMs, max);
   return { ...mem, backend: "memory" };
 }
+
+export { sanitizeRateLimitError };
 
 export function createRateLimiter({ windowMs = 60_000, max = 20, keyPrefix = "" } = {}) {
   return async (req, res, next) => {

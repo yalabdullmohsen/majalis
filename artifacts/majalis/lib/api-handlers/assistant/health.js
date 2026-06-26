@@ -1,6 +1,6 @@
 import { sendJson } from "../../api/_http.mjs";
 import { isProduction } from "../../api/_security.mjs";
-import { checkRateLimit, isRedisRateLimitConfigured } from "../../../lib/rate-limit.mjs";
+import { checkRateLimit, isRedisRateLimitConfigured, sanitizeRateLimitError } from "../../../lib/rate-limit.mjs";
 
 export default async function handler(req, res) {
   if (req.method === "OPTIONS") {
@@ -24,7 +24,7 @@ export default async function handler(req, res) {
       configured: isRedisRateLimitConfigured(),
       backend: rateLimitProbe.backend,
       allowed: rateLimitProbe.allowed,
-      error: rateLimitProbe.error || null,
+      error: sanitizeRateLimitError(rateLimitProbe.error) || null,
     },
     ...(isProduction() ? {} : { runtime: "server" }),
   });
