@@ -4,6 +4,7 @@ import {
   fetchSheikhByIdForServer,
 } from "../../../../lib/supabase/server-data";
 import SheikhDetailClient from "@/components/seo/SheikhDetailClient";
+import { personJsonLd, breadcrumbJsonLd } from "@/lib/seo-structured-data";
 
 export const dynamic = "force-dynamic";
 export const dynamicParams = true;
@@ -56,5 +57,29 @@ export default async function SheikhDetailPage({ params }: PageProps) {
     notFound();
   }
 
-  return <SheikhDetailClient sheikh={sheikh} lessons={lessons} />;
+  const jsonLd = [
+    breadcrumbJsonLd([
+      { name: "الرئيسية", path: "/" },
+      { name: "المشايخ", path: "/sheikhs" },
+      { name: sheikh.name, path: `/sheikhs/${sheikh.id}` },
+    ]),
+    personJsonLd({
+      name: sheikh.name,
+      description: sheikh.bio || undefined,
+      url: `/sheikhs/${sheikh.id}`,
+      image: sheikh.photo_url || undefined,
+      jobTitle: sheikh.ijazah || "عالم",
+      knowsAbout: Array.isArray(sheikh.specialties) ? sheikh.specialties : undefined,
+    }),
+  ];
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <SheikhDetailClient sheikh={sheikh} lessons={lessons} />
+    </>
+  );
 }

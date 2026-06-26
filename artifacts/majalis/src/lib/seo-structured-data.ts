@@ -168,6 +168,26 @@ export function webPageJsonLd(title: string, description: string, path: string) 
   };
 }
 
+export function personJsonLd(person: {
+  name: string;
+  description?: string;
+  url: string;
+  image?: string;
+  jobTitle?: string;
+  knowsAbout?: string[];
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: person.name,
+    description: person.description,
+    url: absoluteUrl(person.url),
+    image: person.image ? absoluteUrl(person.image.startsWith("http") ? person.image : person.image) : undefined,
+    jobTitle: person.jobTitle ?? "عالم",
+    knowsAbout: person.knowsAbout,
+  };
+}
+
 export function defaultSiteJsonLd() {
   return [organizationJsonLd(), websiteJsonLd()];
 }

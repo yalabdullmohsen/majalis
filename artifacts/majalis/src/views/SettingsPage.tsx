@@ -180,7 +180,7 @@ export default function SettingsPage() {
 
       <LegalSection title="الإشعارات">
         <ToggleRow label="إشعارات الدروس" checked={preferences.lessonNotifications} onChange={(value) => update("lessonNotifications", value)} />
-        <ToggleRow label="إشعارات الدروس" checked={preferences.lectureNotifications} onChange={(value) => update("lectureNotifications", value)} />
+        <ToggleRow label="إشعارات الدورات" checked={preferences.lectureNotifications} onChange={(value) => update("lectureNotifications", value)} />
         <ToggleRow label="إشعارات المحتوى الجديد" checked={preferences.contentNotifications} onChange={(value) => update("contentNotifications", value)} />
         <ToggleRow label="إشعارات التحديثات" checked={preferences.updateNotifications} onChange={(value) => update("updateNotifications", value)} />
         <ToggleRow label="إشعارات المناسبات الإسلامية" checked={preferences.occasionNotifications} onChange={(value) => update("occasionNotifications", value)} />

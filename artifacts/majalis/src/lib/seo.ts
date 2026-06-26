@@ -68,11 +68,16 @@ function routeForPath(path: string) {
     };
   }
 
-  if (normalized.startsWith("/sheikhs/") || normalized === "/sheikhs") {
+  if (normalized === "/sheikhs") {
+    return requiredRoute("/sheikhs");
+  }
+
+  if (normalized.startsWith("/sheikhs/")) {
+    const name = decodeURIComponent(normalized.slice("/sheikhs/".length));
     return {
-      ...requiredRoute("/lessons"),
-      title: "الدروس | المجلس العلمي",
-      description: "جميع الدروس والدورات العلمية في مكان واحد.",
+      ...requiredRoute("/sheikhs"),
+      title: `${name} | المجلس العلمي`,
+      description: `ملف الشيخ ${name} — سيرة وإجازات ودروس مرتبطة على المجلس العلمي.`,
     };
   }
 

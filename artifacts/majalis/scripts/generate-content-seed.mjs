@@ -9,6 +9,7 @@ const fawaidSeedPath = path.resolve(root, "src/lib/fawaid-seed.ts");
 
 const QA_CATEGORIES = [
   { id: "seed-cat-aqeedah", name: "العقيدة", slug: "aqeedah" },
+  { id: "seed-cat-tahara", name: "الطهارة", slug: "tahara" },
   { id: "seed-cat-salah", name: "الصلاة", slug: "salah" },
   { id: "seed-cat-zakat", name: "الزكاة", slug: "zakat" },
   { id: "seed-cat-sawm", name: "الصيام", slug: "sawm" },
@@ -16,6 +17,7 @@ const QA_CATEGORIES = [
   { id: "seed-cat-seerah", name: "السيرة", slug: "seerah" },
   { id: "seed-cat-quran", name: "القرآن", slug: "quran" },
   { id: "seed-cat-hadith", name: "الحديث", slug: "hadith" },
+  { id: "seed-cat-adhkar", name: "الأذكار", slug: "adhkar" },
   { id: "seed-cat-adab", name: "الآداب", slug: "adab" },
 ];
 
@@ -32,7 +34,7 @@ const FAWAID_CATEGORIES = [
 const QUIZ_TO_QA_CAT = {
   "الأنبياء|الرسل": "العقيدة",
   "الأحكام|الصلاة": "الصلاة",
-  "الأحكام|الطهارة": "الصلاة",
+  "الأحكام|الطهارة": "الطهارة",
   "الأحكام|الزكاة": "الزكاة",
   "الأحكام|الصيام": "الصيام",
   "الأحكام|الحج": "الحج",
@@ -77,6 +79,23 @@ function extractQuizRows(source) {
 function qa(q, a, ruling = null, evidence = null, reference = null) {
   return [q, a, ruling, evidence, reference];
 }
+
+const MANUAL_QA_ROWS = {
+  الطهارة: [
+    qa("ما حكم من نسي مسح رأسه في الوضوء؟", "الجواب: يجوز؛ فإن مسح بعض الرأس يكفي عن الكل.", "واجب", "السنة", "متفق عليه"),
+    qa("هل يجوز الوضوء بماء مغلوب عليه؟", "الجواب: نعم؛ ما لم يتغير اسمه أو صفته.", "جائز", "الإجماع", "الفقه العام"),
+    qa("ما حكم ترك غسل جزء من الوجه في الوضوء؟", "الجواب: لا يصح الوضوء حتى يُغسل الجزء.", "واجب", "القرآن والسنة", "الفقه"),
+    qa("هل يجوز التيمم قبل وقت الصلاة؟", "الجواب: نعم عند فقد الماء أو العجز عن استعماله.", "جائز", "القرآن", "سورة المائدة"),
+    qa("ما حكم من شك في عدد غسلات الوضوء؟", "الجواب: يبني على اليقين؛ وهو الأقل.", "واجب", "السنة", "البيهقي"),
+  ],
+  الأذكار: [
+    qa("ما حكم قول «سبحان الله» بعد الصلاة؟", "الجواب: سنة مؤكدة؛ ثلاثاً وثلاثين.", "سنة", "البخاري ومسلم", "صحيح مسلم"),
+    qa("ما أفضل ذكر بعد الفجر؟", "الجواب: قراءة آية الكرسي والمعوذات.", "سنة", "السنة", "أبو داود"),
+    qa("هل يجوز الجهر بالأذكار بعد الصلاة؟", "الجواب: جائز؛ والسر أفضل إلا ما دلّ دليل على الجهر.", "جائز", "السنة", "الفقه"),
+    qa("ما حكم من ترك أذكار الصباح والمساء؟", "الجواب: فاته خير كثير؛ وليس كبيرة إذا لم يُهمل عمداً.", null, "السنة", "الأذكار النبوية"),
+    qa("ما فائدة الاستغفار في الأذكار؟", "الجواب: مغفرة الذنوب وفرج الهم.", "مستحب", "القرآن", "سورة نوح"),
+  ],
+};
 
 function fw(text, source = null, author = null) {
   return [text, source, author];
@@ -227,6 +246,14 @@ function buildQaByCategory() {
     const row = qa("ما دلالة هذه الآية؟", body, null, body.split("—")[0]?.trim() ?? null, CAT.quran + " الكريم");
     buckets[CAT.quran].push(row);
     globalPool.push(row);
+  }
+
+  for (const [catName, rows] of Object.entries(MANUAL_QA_ROWS)) {
+    if (!buckets[catName]) buckets[catName] = [];
+    for (const row of rows) {
+      buckets[catName].push(row);
+      globalPool.push(row);
+    }
   }
 
   const out = {};

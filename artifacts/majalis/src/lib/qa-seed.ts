@@ -8,6 +8,11 @@ export const QA_CATEGORIES = [
     "slug": "aqeedah"
   },
   {
+    "id": "seed-cat-tahara",
+    "name": "الطهارة",
+    "slug": "tahara"
+  },
+  {
     "id": "seed-cat-salah",
     "name": "الصلاة",
     "slug": "salah"
@@ -41,6 +46,11 @@ export const QA_CATEGORIES = [
     "id": "seed-cat-hadith",
     "name": "الحديث",
     "slug": "hadith"
+  },
+  {
+    "id": "seed-cat-adhkar",
+    "name": "الأذكار",
+    "slug": "adhkar"
   },
   {
     "id": "seed-cat-adab",
@@ -212,8 +222,8 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-11",
-    "question": "ما فائدة العقيدة الطحاوية — شرح مختصر؟",
-    "answer": "ملخص منظم لأهم مسائل العقيدة في متن الطحاوية.",
+    "question": "من أول الخلفاء الراشدين؟",
+    "answer": "الجواب: أبو بكر الصديق.",
     "category_id": "seed-cat-aqeedah",
     "ruling_type": null,
     "evidence": null,
@@ -228,8 +238,8 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-12",
-    "question": "ما فائدة متن الآجرومية؟",
-    "answer": "متن كلاسيكي في النحو العربي مع شرح مبسّط.",
+    "question": "من ثاني الخلفاء الراشدين؟",
+    "answer": "الجواب: عمر بن الخطاب.",
     "category_id": "seed-cat-aqeedah",
     "ruling_type": null,
     "evidence": null,
@@ -244,8 +254,8 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-13",
-    "question": "ما فائدة تفريغ: أصول طلب العلم في المجلس العلمي؟",
-    "answer": "تفريغ درس علمي عن آداب طلب العلم ومراتبه.",
+    "question": "من ثالث الخلفاء الراشدين؟",
+    "answer": "الجواب: عثمان بن عفان.",
     "category_id": "seed-cat-aqeedah",
     "ruling_type": null,
     "evidence": null,
@@ -260,25 +270,25 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-14",
-    "question": "ما فائدة ملخص: أركان الإسلام؟",
-    "answer": "ملخص مرئي لأركان الإسلام الخمسة.",
-    "category_id": "seed-cat-aqeedah",
-    "ruling_type": null,
+    "question": "بماذا يتطهر المسلم عند عدم وجود الماء؟",
+    "answer": "الجواب: التيمم.",
+    "category_id": "seed-cat-tahara",
+    "ruling_type": "واجب",
     "evidence": null,
     "reference": null,
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-01T22:00:00.000Z",
     "qa_categories": {
-      "name": "العقيدة",
-      "slug": "aqeedah"
+      "name": "الطهارة",
+      "slug": "tahara"
     }
   },
   {
     "id": "seed-qa-15",
-    "question": "ما أول ما يحاسب عليه العبد من عمله؟",
-    "answer": "الجواب: الصلاة.",
-    "category_id": "seed-cat-salah",
+    "question": "ما الطهارة المطلوبة قبل الصلاة؟",
+    "answer": "الجواب: الوضوء.",
+    "category_id": "seed-cat-tahara",
     "ruling_type": "واجب",
     "evidence": null,
     "reference": null,
@@ -286,95 +296,95 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-01T23:00:00.000Z",
     "qa_categories": {
-      "name": "الصلاة",
-      "slug": "salah"
+      "name": "الطهارة",
+      "slug": "tahara"
     }
   },
   {
     "id": "seed-qa-16",
-    "question": "كم عدد الصلوات المفروضة في اليوم والليلة؟",
-    "answer": "الجواب: خمس صلوات.",
-    "category_id": "seed-cat-salah",
+    "question": "ما حكم من نسي مسح رأسه في الوضوء؟",
+    "answer": "الجواب: يجوز؛ فإن مسح بعض الرأس يكفي عن الكل.",
+    "category_id": "seed-cat-tahara",
     "ruling_type": "واجب",
-    "evidence": null,
-    "reference": null,
+    "evidence": "السنة",
+    "reference": "متفق عليه",
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-02T00:00:00.000Z",
     "qa_categories": {
-      "name": "الصلاة",
-      "slug": "salah"
+      "name": "الطهارة",
+      "slug": "tahara"
     }
   },
   {
     "id": "seed-qa-17",
-    "question": "ما القبلة التي يتجه إليها المسلمون في الصلاة؟",
-    "answer": "الجواب: الكعبة.",
-    "category_id": "seed-cat-salah",
-    "ruling_type": "واجب",
-    "evidence": null,
-    "reference": null,
+    "question": "هل يجوز الوضوء بماء مغلوب عليه؟",
+    "answer": "الجواب: نعم؛ ما لم يتغير اسمه أو صفته.",
+    "category_id": "seed-cat-tahara",
+    "ruling_type": "جائز",
+    "evidence": "الإجماع",
+    "reference": "الفقه العام",
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-02T01:00:00.000Z",
     "qa_categories": {
-      "name": "الصلاة",
-      "slug": "salah"
+      "name": "الطهارة",
+      "slug": "tahara"
     }
   },
   {
     "id": "seed-qa-18",
-    "question": "بماذا يتطهر المسلم عند عدم وجود الماء؟",
-    "answer": "الجواب: التيمم.",
-    "category_id": "seed-cat-salah",
+    "question": "ما حكم ترك غسل جزء من الوجه في الوضوء؟",
+    "answer": "الجواب: لا يصح الوضوء حتى يُغسل الجزء.",
+    "category_id": "seed-cat-tahara",
     "ruling_type": "واجب",
-    "evidence": null,
-    "reference": null,
+    "evidence": "القرآن والسنة",
+    "reference": "الفقه",
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-02T02:00:00.000Z",
     "qa_categories": {
-      "name": "الصلاة",
-      "slug": "salah"
+      "name": "الطهارة",
+      "slug": "tahara"
     }
   },
   {
     "id": "seed-qa-19",
-    "question": "ما الطهارة المطلوبة قبل الصلاة؟",
-    "answer": "الجواب: الوضوء.",
-    "category_id": "seed-cat-salah",
-    "ruling_type": "واجب",
-    "evidence": null,
-    "reference": null,
+    "question": "هل يجوز التيمم قبل وقت الصلاة؟",
+    "answer": "الجواب: نعم عند فقد الماء أو العجز عن استعماله.",
+    "category_id": "seed-cat-tahara",
+    "ruling_type": "جائز",
+    "evidence": "القرآن",
+    "reference": "سورة المائدة",
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-02T03:00:00.000Z",
     "qa_categories": {
-      "name": "الصلاة",
-      "slug": "salah"
+      "name": "الطهارة",
+      "slug": "tahara"
     }
   },
   {
     "id": "seed-qa-20",
-    "question": "من أول الرسل إلى أهل الأرض بعد آدم؟",
-    "answer": "الجواب: نوح عليه السلام.",
-    "category_id": "seed-cat-salah",
-    "ruling_type": null,
-    "evidence": null,
-    "reference": null,
+    "question": "ما حكم من شك في عدد غسلات الوضوء؟",
+    "answer": "الجواب: يبني على اليقين؛ وهو الأقل.",
+    "category_id": "seed-cat-tahara",
+    "ruling_type": "واجب",
+    "evidence": "السنة",
+    "reference": "البيهقي",
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-02T04:00:00.000Z",
     "qa_categories": {
-      "name": "الصلاة",
-      "slug": "salah"
+      "name": "الطهارة",
+      "slug": "tahara"
     }
   },
   {
     "id": "seed-qa-21",
-    "question": "من النبي الذي اتخذه الله خليلاً؟",
-    "answer": "الجواب: إبراهيم عليه السلام.",
-    "category_id": "seed-cat-salah",
+    "question": "من أول الرسل إلى أهل الأرض بعد آدم؟",
+    "answer": "الجواب: نوح عليه السلام.",
+    "category_id": "seed-cat-tahara",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -382,15 +392,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-02T05:00:00.000Z",
     "qa_categories": {
-      "name": "الصلاة",
-      "slug": "salah"
+      "name": "الطهارة",
+      "slug": "tahara"
     }
   },
   {
     "id": "seed-qa-22",
-    "question": "من النبي الذي كلمه الله تكليماً؟",
-    "answer": "الجواب: موسى عليه السلام.",
-    "category_id": "seed-cat-salah",
+    "question": "من النبي الذي اتخذه الله خليلاً؟",
+    "answer": "الجواب: إبراهيم عليه السلام.",
+    "category_id": "seed-cat-tahara",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -398,15 +408,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-02T06:00:00.000Z",
     "qa_categories": {
-      "name": "الصلاة",
-      "slug": "salah"
+      "name": "الطهارة",
+      "slug": "tahara"
     }
   },
   {
     "id": "seed-qa-23",
-    "question": "من النبي الذي أرسل إلى قوم عاد؟",
-    "answer": "الجواب: هود عليه السلام.",
-    "category_id": "seed-cat-salah",
+    "question": "من النبي الذي كلمه الله تكليماً؟",
+    "answer": "الجواب: موسى عليه السلام.",
+    "category_id": "seed-cat-tahara",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -414,15 +424,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-02T07:00:00.000Z",
     "qa_categories": {
-      "name": "الصلاة",
-      "slug": "salah"
+      "name": "الطهارة",
+      "slug": "tahara"
     }
   },
   {
     "id": "seed-qa-24",
-    "question": "من النبي الذي أرسل إلى قوم ثمود؟",
-    "answer": "الجواب: صالح عليه السلام.",
-    "category_id": "seed-cat-salah",
+    "question": "من النبي الذي أرسل إلى قوم عاد؟",
+    "answer": "الجواب: هود عليه السلام.",
+    "category_id": "seed-cat-tahara",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -430,15 +440,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-02T08:00:00.000Z",
     "qa_categories": {
-      "name": "الصلاة",
-      "slug": "salah"
+      "name": "الطهارة",
+      "slug": "tahara"
     }
   },
   {
     "id": "seed-qa-25",
-    "question": "من النبي الذي ابتلعه الحوت؟",
-    "answer": "الجواب: يونس عليه السلام.",
-    "category_id": "seed-cat-salah",
+    "question": "من النبي الذي أرسل إلى قوم ثمود؟",
+    "answer": "الجواب: صالح عليه السلام.",
+    "category_id": "seed-cat-tahara",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -446,15 +456,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-02T09:00:00.000Z",
     "qa_categories": {
-      "name": "الصلاة",
-      "slug": "salah"
+      "name": "الطهارة",
+      "slug": "tahara"
     }
   },
   {
     "id": "seed-qa-26",
-    "question": "من النبي الذي رفعه الله إليه؟",
-    "answer": "الجواب: عيسى عليه السلام.",
-    "category_id": "seed-cat-salah",
+    "question": "من النبي الذي ابتلعه الحوت؟",
+    "answer": "الجواب: يونس عليه السلام.",
+    "category_id": "seed-cat-tahara",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -462,16 +472,16 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-02T10:00:00.000Z",
     "qa_categories": {
-      "name": "الصلاة",
-      "slug": "salah"
+      "name": "الطهارة",
+      "slug": "tahara"
     }
   },
   {
     "id": "seed-qa-27",
-    "question": "من والد إسماعيل عليه السلام؟",
-    "answer": "الجواب: إبراهيم عليه السلام.",
+    "question": "ما أول ما يحاسب عليه العبد من عمله؟",
+    "answer": "الجواب: الصلاة.",
     "category_id": "seed-cat-salah",
-    "ruling_type": null,
+    "ruling_type": "واجب",
     "evidence": null,
     "reference": null,
     "status": "published",
@@ -484,9 +494,9 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-28",
-    "question": "ما العبادة المالية الواجبة على المال بشروطها؟",
-    "answer": "الجواب: الزكاة.",
-    "category_id": "seed-cat-zakat",
+    "question": "كم عدد الصلوات المفروضة في اليوم والليلة؟",
+    "answer": "الجواب: خمس صلوات.",
+    "category_id": "seed-cat-salah",
     "ruling_type": "واجب",
     "evidence": null,
     "reference": null,
@@ -494,31 +504,31 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-02T12:00:00.000Z",
     "qa_categories": {
-      "name": "الزكاة",
-      "slug": "zakat"
+      "name": "الصلاة",
+      "slug": "salah"
     }
   },
   {
     "id": "seed-qa-29",
-    "question": "من أول الرسل إلى أهل الأرض بعد آدم؟",
-    "answer": "الجواب: نوح عليه السلام.",
-    "category_id": "seed-cat-zakat",
-    "ruling_type": null,
+    "question": "ما القبلة التي يتجه إليها المسلمون في الصلاة؟",
+    "answer": "الجواب: الكعبة.",
+    "category_id": "seed-cat-salah",
+    "ruling_type": "واجب",
     "evidence": null,
     "reference": null,
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-02T13:00:00.000Z",
     "qa_categories": {
-      "name": "الزكاة",
-      "slug": "zakat"
+      "name": "الصلاة",
+      "slug": "salah"
     }
   },
   {
     "id": "seed-qa-30",
-    "question": "من النبي الذي اتخذه الله خليلاً؟",
-    "answer": "الجواب: إبراهيم عليه السلام.",
-    "category_id": "seed-cat-zakat",
+    "question": "من أول الرسل إلى أهل الأرض بعد آدم؟",
+    "answer": "الجواب: نوح عليه السلام.",
+    "category_id": "seed-cat-salah",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -526,15 +536,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-02T14:00:00.000Z",
     "qa_categories": {
-      "name": "الزكاة",
-      "slug": "zakat"
+      "name": "الصلاة",
+      "slug": "salah"
     }
   },
   {
     "id": "seed-qa-31",
-    "question": "من النبي الذي كلمه الله تكليماً؟",
-    "answer": "الجواب: موسى عليه السلام.",
-    "category_id": "seed-cat-zakat",
+    "question": "من النبي الذي اتخذه الله خليلاً؟",
+    "answer": "الجواب: إبراهيم عليه السلام.",
+    "category_id": "seed-cat-salah",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -542,15 +552,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-02T15:00:00.000Z",
     "qa_categories": {
-      "name": "الزكاة",
-      "slug": "zakat"
+      "name": "الصلاة",
+      "slug": "salah"
     }
   },
   {
     "id": "seed-qa-32",
-    "question": "من النبي الذي أرسل إلى قوم عاد؟",
-    "answer": "الجواب: هود عليه السلام.",
-    "category_id": "seed-cat-zakat",
+    "question": "من النبي الذي كلمه الله تكليماً؟",
+    "answer": "الجواب: موسى عليه السلام.",
+    "category_id": "seed-cat-salah",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -558,15 +568,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-02T16:00:00.000Z",
     "qa_categories": {
-      "name": "الزكاة",
-      "slug": "zakat"
+      "name": "الصلاة",
+      "slug": "salah"
     }
   },
   {
     "id": "seed-qa-33",
-    "question": "من النبي الذي أرسل إلى قوم ثمود؟",
-    "answer": "الجواب: صالح عليه السلام.",
-    "category_id": "seed-cat-zakat",
+    "question": "من النبي الذي أرسل إلى قوم عاد؟",
+    "answer": "الجواب: هود عليه السلام.",
+    "category_id": "seed-cat-salah",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -574,15 +584,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-02T17:00:00.000Z",
     "qa_categories": {
-      "name": "الزكاة",
-      "slug": "zakat"
+      "name": "الصلاة",
+      "slug": "salah"
     }
   },
   {
     "id": "seed-qa-34",
-    "question": "من النبي الذي ابتلعه الحوت؟",
-    "answer": "الجواب: يونس عليه السلام.",
-    "category_id": "seed-cat-zakat",
+    "question": "من النبي الذي أرسل إلى قوم ثمود؟",
+    "answer": "الجواب: صالح عليه السلام.",
+    "category_id": "seed-cat-salah",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -590,15 +600,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-02T18:00:00.000Z",
     "qa_categories": {
-      "name": "الزكاة",
-      "slug": "zakat"
+      "name": "الصلاة",
+      "slug": "salah"
     }
   },
   {
     "id": "seed-qa-35",
-    "question": "من النبي الذي رفعه الله إليه؟",
-    "answer": "الجواب: عيسى عليه السلام.",
-    "category_id": "seed-cat-zakat",
+    "question": "من النبي الذي ابتلعه الحوت؟",
+    "answer": "الجواب: يونس عليه السلام.",
+    "category_id": "seed-cat-salah",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -606,15 +616,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-02T19:00:00.000Z",
     "qa_categories": {
-      "name": "الزكاة",
-      "slug": "zakat"
+      "name": "الصلاة",
+      "slug": "salah"
     }
   },
   {
     "id": "seed-qa-36",
-    "question": "من والد إسماعيل عليه السلام؟",
-    "answer": "الجواب: إبراهيم عليه السلام.",
-    "category_id": "seed-cat-zakat",
+    "question": "من النبي الذي رفعه الله إليه؟",
+    "answer": "الجواب: عيسى عليه السلام.",
+    "category_id": "seed-cat-salah",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -622,15 +632,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-02T20:00:00.000Z",
     "qa_categories": {
-      "name": "الزكاة",
-      "slug": "zakat"
+      "name": "الصلاة",
+      "slug": "salah"
     }
   },
   {
     "id": "seed-qa-37",
-    "question": "من النبي الذي سخر الله له الريح؟",
-    "answer": "الجواب: سليمان عليه السلام.",
-    "category_id": "seed-cat-zakat",
+    "question": "من والد إسماعيل عليه السلام؟",
+    "answer": "الجواب: إبراهيم عليه السلام.",
+    "category_id": "seed-cat-salah",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -638,15 +648,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-02T21:00:00.000Z",
     "qa_categories": {
-      "name": "الزكاة",
-      "slug": "zakat"
+      "name": "الصلاة",
+      "slug": "salah"
     }
   },
   {
     "id": "seed-qa-38",
-    "question": "من النبي الذي اشتهر بالصبر على البلاء؟",
-    "answer": "الجواب: أيوب عليه السلام.",
-    "category_id": "seed-cat-zakat",
+    "question": "من النبي الذي سخر الله له الريح؟",
+    "answer": "الجواب: سليمان عليه السلام.",
+    "category_id": "seed-cat-salah",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -654,15 +664,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-02T22:00:00.000Z",
     "qa_categories": {
-      "name": "الزكاة",
-      "slug": "zakat"
+      "name": "الصلاة",
+      "slug": "salah"
     }
   },
   {
     "id": "seed-qa-39",
-    "question": "من أول الخلفاء الراشدين؟",
-    "answer": "الجواب: أبو بكر الصديق.",
-    "category_id": "seed-cat-zakat",
+    "question": "من النبي الذي اشتهر بالصبر على البلاء؟",
+    "answer": "الجواب: أيوب عليه السلام.",
+    "category_id": "seed-cat-salah",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -670,16 +680,16 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-02T23:00:00.000Z",
     "qa_categories": {
-      "name": "الزكاة",
-      "slug": "zakat"
+      "name": "الصلاة",
+      "slug": "salah"
     }
   },
   {
     "id": "seed-qa-40",
-    "question": "من ثاني الخلفاء الراشدين؟",
-    "answer": "الجواب: عمر بن الخطاب.",
+    "question": "ما العبادة المالية الواجبة على المال بشروطها؟",
+    "answer": "الجواب: الزكاة.",
     "category_id": "seed-cat-zakat",
-    "ruling_type": null,
+    "ruling_type": "واجب",
     "evidence": null,
     "reference": null,
     "status": "published",
@@ -692,41 +702,41 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-41",
-    "question": "في أي شهر يصوم المسلمون؟",
-    "answer": "الجواب: رمضان.",
-    "category_id": "seed-cat-sawm",
-    "ruling_type": "واجب",
+    "question": "من أول الرسل إلى أهل الأرض بعد آدم؟",
+    "answer": "الجواب: نوح عليه السلام.",
+    "category_id": "seed-cat-zakat",
+    "ruling_type": null,
     "evidence": null,
     "reference": null,
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-03T01:00:00.000Z",
     "qa_categories": {
-      "name": "الصيام",
-      "slug": "sawm"
+      "name": "الزكاة",
+      "slug": "zakat"
     }
   },
   {
     "id": "seed-qa-42",
-    "question": "ما الوجبة التي تكون قبل الفجر للصائم؟",
-    "answer": "الجواب: السحور.",
-    "category_id": "seed-cat-sawm",
-    "ruling_type": "واجب",
+    "question": "من النبي الذي اتخذه الله خليلاً؟",
+    "answer": "الجواب: إبراهيم عليه السلام.",
+    "category_id": "seed-cat-zakat",
+    "ruling_type": null,
     "evidence": null,
     "reference": null,
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-03T02:00:00.000Z",
     "qa_categories": {
-      "name": "الصيام",
-      "slug": "sawm"
+      "name": "الزكاة",
+      "slug": "zakat"
     }
   },
   {
     "id": "seed-qa-43",
-    "question": "من أول الرسل إلى أهل الأرض بعد آدم؟",
-    "answer": "الجواب: نوح عليه السلام.",
-    "category_id": "seed-cat-sawm",
+    "question": "من النبي الذي كلمه الله تكليماً؟",
+    "answer": "الجواب: موسى عليه السلام.",
+    "category_id": "seed-cat-zakat",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -734,15 +744,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-03T03:00:00.000Z",
     "qa_categories": {
-      "name": "الصيام",
-      "slug": "sawm"
+      "name": "الزكاة",
+      "slug": "zakat"
     }
   },
   {
     "id": "seed-qa-44",
-    "question": "من النبي الذي اتخذه الله خليلاً؟",
-    "answer": "الجواب: إبراهيم عليه السلام.",
-    "category_id": "seed-cat-sawm",
+    "question": "من النبي الذي أرسل إلى قوم عاد؟",
+    "answer": "الجواب: هود عليه السلام.",
+    "category_id": "seed-cat-zakat",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -750,15 +760,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-03T04:00:00.000Z",
     "qa_categories": {
-      "name": "الصيام",
-      "slug": "sawm"
+      "name": "الزكاة",
+      "slug": "zakat"
     }
   },
   {
     "id": "seed-qa-45",
-    "question": "من النبي الذي كلمه الله تكليماً؟",
-    "answer": "الجواب: موسى عليه السلام.",
-    "category_id": "seed-cat-sawm",
+    "question": "من النبي الذي أرسل إلى قوم ثمود؟",
+    "answer": "الجواب: صالح عليه السلام.",
+    "category_id": "seed-cat-zakat",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -766,15 +776,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-03T05:00:00.000Z",
     "qa_categories": {
-      "name": "الصيام",
-      "slug": "sawm"
+      "name": "الزكاة",
+      "slug": "zakat"
     }
   },
   {
     "id": "seed-qa-46",
-    "question": "من النبي الذي أرسل إلى قوم عاد؟",
-    "answer": "الجواب: هود عليه السلام.",
-    "category_id": "seed-cat-sawm",
+    "question": "من النبي الذي ابتلعه الحوت؟",
+    "answer": "الجواب: يونس عليه السلام.",
+    "category_id": "seed-cat-zakat",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -782,15 +792,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-03T06:00:00.000Z",
     "qa_categories": {
-      "name": "الصيام",
-      "slug": "sawm"
+      "name": "الزكاة",
+      "slug": "zakat"
     }
   },
   {
     "id": "seed-qa-47",
-    "question": "من النبي الذي أرسل إلى قوم ثمود؟",
-    "answer": "الجواب: صالح عليه السلام.",
-    "category_id": "seed-cat-sawm",
+    "question": "من النبي الذي رفعه الله إليه؟",
+    "answer": "الجواب: عيسى عليه السلام.",
+    "category_id": "seed-cat-zakat",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -798,15 +808,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-03T07:00:00.000Z",
     "qa_categories": {
-      "name": "الصيام",
-      "slug": "sawm"
+      "name": "الزكاة",
+      "slug": "zakat"
     }
   },
   {
     "id": "seed-qa-48",
-    "question": "من النبي الذي ابتلعه الحوت؟",
-    "answer": "الجواب: يونس عليه السلام.",
-    "category_id": "seed-cat-sawm",
+    "question": "من والد إسماعيل عليه السلام؟",
+    "answer": "الجواب: إبراهيم عليه السلام.",
+    "category_id": "seed-cat-zakat",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -814,15 +824,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-03T08:00:00.000Z",
     "qa_categories": {
-      "name": "الصيام",
-      "slug": "sawm"
+      "name": "الزكاة",
+      "slug": "zakat"
     }
   },
   {
     "id": "seed-qa-49",
-    "question": "من النبي الذي رفعه الله إليه؟",
-    "answer": "الجواب: عيسى عليه السلام.",
-    "category_id": "seed-cat-sawm",
+    "question": "من النبي الذي سخر الله له الريح؟",
+    "answer": "الجواب: سليمان عليه السلام.",
+    "category_id": "seed-cat-zakat",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -830,15 +840,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-03T09:00:00.000Z",
     "qa_categories": {
-      "name": "الصيام",
-      "slug": "sawm"
+      "name": "الزكاة",
+      "slug": "zakat"
     }
   },
   {
     "id": "seed-qa-50",
-    "question": "من والد إسماعيل عليه السلام؟",
-    "answer": "الجواب: إبراهيم عليه السلام.",
-    "category_id": "seed-cat-sawm",
+    "question": "من النبي الذي اشتهر بالصبر على البلاء؟",
+    "answer": "الجواب: أيوب عليه السلام.",
+    "category_id": "seed-cat-zakat",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -846,15 +856,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-03T10:00:00.000Z",
     "qa_categories": {
-      "name": "الصيام",
-      "slug": "sawm"
+      "name": "الزكاة",
+      "slug": "zakat"
     }
   },
   {
     "id": "seed-qa-51",
-    "question": "من النبي الذي سخر الله له الريح؟",
-    "answer": "الجواب: سليمان عليه السلام.",
-    "category_id": "seed-cat-sawm",
+    "question": "من أول الخلفاء الراشدين؟",
+    "answer": "الجواب: أبو بكر الصديق.",
+    "category_id": "seed-cat-zakat",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -862,15 +872,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-03T11:00:00.000Z",
     "qa_categories": {
-      "name": "الصيام",
-      "slug": "sawm"
+      "name": "الزكاة",
+      "slug": "zakat"
     }
   },
   {
     "id": "seed-qa-52",
-    "question": "من النبي الذي اشتهر بالصبر على البلاء؟",
-    "answer": "الجواب: أيوب عليه السلام.",
-    "category_id": "seed-cat-sawm",
+    "question": "من ثاني الخلفاء الراشدين؟",
+    "answer": "الجواب: عمر بن الخطاب.",
+    "category_id": "seed-cat-zakat",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -878,16 +888,16 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-03T12:00:00.000Z",
     "qa_categories": {
-      "name": "الصيام",
-      "slug": "sawm"
+      "name": "الزكاة",
+      "slug": "zakat"
     }
   },
   {
     "id": "seed-qa-53",
-    "question": "من أول الخلفاء الراشدين؟",
-    "answer": "الجواب: أبو بكر الصديق.",
+    "question": "في أي شهر يصوم المسلمون؟",
+    "answer": "الجواب: رمضان.",
     "category_id": "seed-cat-sawm",
-    "ruling_type": null,
+    "ruling_type": "واجب",
     "evidence": null,
     "reference": null,
     "status": "published",
@@ -900,9 +910,9 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-54",
-    "question": "ما الركن الأعظم في الحج؟",
-    "answer": "الجواب: الوقوف بعرفة.",
-    "category_id": "seed-cat-hajj",
+    "question": "ما الوجبة التي تكون قبل الفجر للصائم؟",
+    "answer": "الجواب: السحور.",
+    "category_id": "seed-cat-sawm",
     "ruling_type": "واجب",
     "evidence": null,
     "reference": null,
@@ -910,31 +920,31 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-03T14:00:00.000Z",
     "qa_categories": {
-      "name": "الحج",
-      "slug": "hajj"
+      "name": "الصيام",
+      "slug": "sawm"
     }
   },
   {
     "id": "seed-qa-55",
-    "question": "ما البيت الذي يقصده المسلمون في الحج؟",
-    "answer": "الجواب: الكعبة.",
-    "category_id": "seed-cat-hajj",
-    "ruling_type": "واجب",
+    "question": "من أول الرسل إلى أهل الأرض بعد آدم؟",
+    "answer": "الجواب: نوح عليه السلام.",
+    "category_id": "seed-cat-sawm",
+    "ruling_type": null,
     "evidence": null,
     "reference": null,
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-03T15:00:00.000Z",
     "qa_categories": {
-      "name": "الحج",
-      "slug": "hajj"
+      "name": "الصيام",
+      "slug": "sawm"
     }
   },
   {
     "id": "seed-qa-56",
-    "question": "من أول الرسل إلى أهل الأرض بعد آدم؟",
-    "answer": "الجواب: نوح عليه السلام.",
-    "category_id": "seed-cat-hajj",
+    "question": "من النبي الذي اتخذه الله خليلاً؟",
+    "answer": "الجواب: إبراهيم عليه السلام.",
+    "category_id": "seed-cat-sawm",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -942,15 +952,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-03T16:00:00.000Z",
     "qa_categories": {
-      "name": "الحج",
-      "slug": "hajj"
+      "name": "الصيام",
+      "slug": "sawm"
     }
   },
   {
     "id": "seed-qa-57",
-    "question": "من النبي الذي اتخذه الله خليلاً؟",
-    "answer": "الجواب: إبراهيم عليه السلام.",
-    "category_id": "seed-cat-hajj",
+    "question": "من النبي الذي كلمه الله تكليماً؟",
+    "answer": "الجواب: موسى عليه السلام.",
+    "category_id": "seed-cat-sawm",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -958,15 +968,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-03T17:00:00.000Z",
     "qa_categories": {
-      "name": "الحج",
-      "slug": "hajj"
+      "name": "الصيام",
+      "slug": "sawm"
     }
   },
   {
     "id": "seed-qa-58",
-    "question": "من النبي الذي كلمه الله تكليماً؟",
-    "answer": "الجواب: موسى عليه السلام.",
-    "category_id": "seed-cat-hajj",
+    "question": "من النبي الذي أرسل إلى قوم عاد؟",
+    "answer": "الجواب: هود عليه السلام.",
+    "category_id": "seed-cat-sawm",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -974,15 +984,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-03T18:00:00.000Z",
     "qa_categories": {
-      "name": "الحج",
-      "slug": "hajj"
+      "name": "الصيام",
+      "slug": "sawm"
     }
   },
   {
     "id": "seed-qa-59",
-    "question": "من النبي الذي أرسل إلى قوم عاد؟",
-    "answer": "الجواب: هود عليه السلام.",
-    "category_id": "seed-cat-hajj",
+    "question": "من النبي الذي أرسل إلى قوم ثمود؟",
+    "answer": "الجواب: صالح عليه السلام.",
+    "category_id": "seed-cat-sawm",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -990,15 +1000,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-03T19:00:00.000Z",
     "qa_categories": {
-      "name": "الحج",
-      "slug": "hajj"
+      "name": "الصيام",
+      "slug": "sawm"
     }
   },
   {
     "id": "seed-qa-60",
-    "question": "من النبي الذي أرسل إلى قوم ثمود؟",
-    "answer": "الجواب: صالح عليه السلام.",
-    "category_id": "seed-cat-hajj",
+    "question": "من النبي الذي ابتلعه الحوت؟",
+    "answer": "الجواب: يونس عليه السلام.",
+    "category_id": "seed-cat-sawm",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -1006,15 +1016,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-03T20:00:00.000Z",
     "qa_categories": {
-      "name": "الحج",
-      "slug": "hajj"
+      "name": "الصيام",
+      "slug": "sawm"
     }
   },
   {
     "id": "seed-qa-61",
-    "question": "من النبي الذي ابتلعه الحوت؟",
-    "answer": "الجواب: يونس عليه السلام.",
-    "category_id": "seed-cat-hajj",
+    "question": "من النبي الذي رفعه الله إليه؟",
+    "answer": "الجواب: عيسى عليه السلام.",
+    "category_id": "seed-cat-sawm",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -1022,15 +1032,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-03T21:00:00.000Z",
     "qa_categories": {
-      "name": "الحج",
-      "slug": "hajj"
+      "name": "الصيام",
+      "slug": "sawm"
     }
   },
   {
     "id": "seed-qa-62",
-    "question": "من النبي الذي رفعه الله إليه؟",
-    "answer": "الجواب: عيسى عليه السلام.",
-    "category_id": "seed-cat-hajj",
+    "question": "من والد إسماعيل عليه السلام؟",
+    "answer": "الجواب: إبراهيم عليه السلام.",
+    "category_id": "seed-cat-sawm",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -1038,15 +1048,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-03T22:00:00.000Z",
     "qa_categories": {
-      "name": "الحج",
-      "slug": "hajj"
+      "name": "الصيام",
+      "slug": "sawm"
     }
   },
   {
     "id": "seed-qa-63",
-    "question": "من والد إسماعيل عليه السلام؟",
-    "answer": "الجواب: إبراهيم عليه السلام.",
-    "category_id": "seed-cat-hajj",
+    "question": "من النبي الذي سخر الله له الريح؟",
+    "answer": "الجواب: سليمان عليه السلام.",
+    "category_id": "seed-cat-sawm",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -1054,15 +1064,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-03T23:00:00.000Z",
     "qa_categories": {
-      "name": "الحج",
-      "slug": "hajj"
+      "name": "الصيام",
+      "slug": "sawm"
     }
   },
   {
     "id": "seed-qa-64",
-    "question": "من النبي الذي سخر الله له الريح؟",
-    "answer": "الجواب: سليمان عليه السلام.",
-    "category_id": "seed-cat-hajj",
+    "question": "من النبي الذي اشتهر بالصبر على البلاء؟",
+    "answer": "الجواب: أيوب عليه السلام.",
+    "category_id": "seed-cat-sawm",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -1070,15 +1080,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-04T00:00:00.000Z",
     "qa_categories": {
-      "name": "الحج",
-      "slug": "hajj"
+      "name": "الصيام",
+      "slug": "sawm"
     }
   },
   {
     "id": "seed-qa-65",
-    "question": "من النبي الذي اشتهر بالصبر على البلاء؟",
-    "answer": "الجواب: أيوب عليه السلام.",
-    "category_id": "seed-cat-hajj",
+    "question": "من أول الخلفاء الراشدين؟",
+    "answer": "الجواب: أبو بكر الصديق.",
+    "category_id": "seed-cat-sawm",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -1086,16 +1096,16 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-04T01:00:00.000Z",
     "qa_categories": {
-      "name": "الحج",
-      "slug": "hajj"
+      "name": "الصيام",
+      "slug": "sawm"
     }
   },
   {
     "id": "seed-qa-66",
-    "question": "من أول الخلفاء الراشدين؟",
-    "answer": "الجواب: أبو بكر الصديق.",
+    "question": "ما الركن الأعظم في الحج؟",
+    "answer": "الجواب: الوقوف بعرفة.",
     "category_id": "seed-cat-hajj",
-    "ruling_type": null,
+    "ruling_type": "واجب",
     "evidence": null,
     "reference": null,
     "status": "published",
@@ -1108,25 +1118,25 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-67",
-    "question": "من أول الخلفاء الراشدين؟",
-    "answer": "الجواب: أبو بكر الصديق.",
-    "category_id": "seed-cat-seerah",
-    "ruling_type": null,
+    "question": "ما البيت الذي يقصده المسلمون في الحج؟",
+    "answer": "الجواب: الكعبة.",
+    "category_id": "seed-cat-hajj",
+    "ruling_type": "واجب",
     "evidence": null,
     "reference": null,
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-04T03:00:00.000Z",
     "qa_categories": {
-      "name": "السيرة",
-      "slug": "seerah"
+      "name": "الحج",
+      "slug": "hajj"
     }
   },
   {
     "id": "seed-qa-68",
-    "question": "من ثاني الخلفاء الراشدين؟",
-    "answer": "الجواب: عمر بن الخطاب.",
-    "category_id": "seed-cat-seerah",
+    "question": "من أول الرسل إلى أهل الأرض بعد آدم؟",
+    "answer": "الجواب: نوح عليه السلام.",
+    "category_id": "seed-cat-hajj",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -1134,15 +1144,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-04T04:00:00.000Z",
     "qa_categories": {
-      "name": "السيرة",
-      "slug": "seerah"
+      "name": "الحج",
+      "slug": "hajj"
     }
   },
   {
     "id": "seed-qa-69",
-    "question": "من ثالث الخلفاء الراشدين؟",
-    "answer": "الجواب: عثمان بن عفان.",
-    "category_id": "seed-cat-seerah",
+    "question": "من النبي الذي اتخذه الله خليلاً؟",
+    "answer": "الجواب: إبراهيم عليه السلام.",
+    "category_id": "seed-cat-hajj",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -1150,15 +1160,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-04T05:00:00.000Z",
     "qa_categories": {
-      "name": "السيرة",
-      "slug": "seerah"
+      "name": "الحج",
+      "slug": "hajj"
     }
   },
   {
     "id": "seed-qa-70",
-    "question": "من رابع الخلفاء الراشدين؟",
-    "answer": "الجواب: علي بن أبي طالب.",
-    "category_id": "seed-cat-seerah",
+    "question": "من النبي الذي كلمه الله تكليماً؟",
+    "answer": "الجواب: موسى عليه السلام.",
+    "category_id": "seed-cat-hajj",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -1166,15 +1176,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-04T06:00:00.000Z",
     "qa_categories": {
-      "name": "السيرة",
-      "slug": "seerah"
+      "name": "الحج",
+      "slug": "hajj"
     }
   },
   {
     "id": "seed-qa-71",
-    "question": "من الصحابي الملقب بذي النورين؟",
-    "answer": "الجواب: عثمان بن عفان.",
-    "category_id": "seed-cat-seerah",
+    "question": "من النبي الذي أرسل إلى قوم عاد؟",
+    "answer": "الجواب: هود عليه السلام.",
+    "category_id": "seed-cat-hajj",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -1182,15 +1192,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-04T07:00:00.000Z",
     "qa_categories": {
-      "name": "السيرة",
-      "slug": "seerah"
+      "name": "الحج",
+      "slug": "hajj"
     }
   },
   {
     "id": "seed-qa-72",
-    "question": "من الصحابي الملقب بالفاروق؟",
-    "answer": "الجواب: عمر بن الخطاب.",
-    "category_id": "seed-cat-seerah",
+    "question": "من النبي الذي أرسل إلى قوم ثمود؟",
+    "answer": "الجواب: صالح عليه السلام.",
+    "category_id": "seed-cat-hajj",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -1198,15 +1208,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-04T08:00:00.000Z",
     "qa_categories": {
-      "name": "السيرة",
-      "slug": "seerah"
+      "name": "الحج",
+      "slug": "hajj"
     }
   },
   {
     "id": "seed-qa-73",
-    "question": "من أول الرجال إسلاماً؟",
-    "answer": "الجواب: أبو بكر الصديق.",
-    "category_id": "seed-cat-seerah",
+    "question": "من النبي الذي ابتلعه الحوت؟",
+    "answer": "الجواب: يونس عليه السلام.",
+    "category_id": "seed-cat-hajj",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -1214,15 +1224,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-04T09:00:00.000Z",
     "qa_categories": {
-      "name": "السيرة",
-      "slug": "seerah"
+      "name": "الحج",
+      "slug": "hajj"
     }
   },
   {
     "id": "seed-qa-74",
-    "question": "من أول الصبيان إسلاماً؟",
-    "answer": "الجواب: علي بن أبي طالب.",
-    "category_id": "seed-cat-seerah",
+    "question": "من النبي الذي رفعه الله إليه؟",
+    "answer": "الجواب: عيسى عليه السلام.",
+    "category_id": "seed-cat-hajj",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -1230,15 +1240,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-04T10:00:00.000Z",
     "qa_categories": {
-      "name": "السيرة",
-      "slug": "seerah"
+      "name": "الحج",
+      "slug": "hajj"
     }
   },
   {
     "id": "seed-qa-75",
-    "question": "من أم المؤمنين ابنة أبي بكر؟",
-    "answer": "الجواب: عائشة رضي الله عنها.",
-    "category_id": "seed-cat-seerah",
+    "question": "من والد إسماعيل عليه السلام؟",
+    "answer": "الجواب: إبراهيم عليه السلام.",
+    "category_id": "seed-cat-hajj",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -1246,15 +1256,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-04T11:00:00.000Z",
     "qa_categories": {
-      "name": "السيرة",
-      "slug": "seerah"
+      "name": "الحج",
+      "slug": "hajj"
     }
   },
   {
     "id": "seed-qa-76",
-    "question": "في أي غار نزل الوحي أول مرة؟",
-    "answer": "الجواب: غار حراء.",
-    "category_id": "seed-cat-seerah",
+    "question": "من النبي الذي سخر الله له الريح؟",
+    "answer": "الجواب: سليمان عليه السلام.",
+    "category_id": "seed-cat-hajj",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -1262,15 +1272,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-04T12:00:00.000Z",
     "qa_categories": {
-      "name": "السيرة",
-      "slug": "seerah"
+      "name": "الحج",
+      "slug": "hajj"
     }
   },
   {
     "id": "seed-qa-77",
-    "question": "من أول من آمن من النساء؟",
-    "answer": "الجواب: خديجة بنت خويلد.",
-    "category_id": "seed-cat-seerah",
+    "question": "من النبي الذي اشتهر بالصبر على البلاء؟",
+    "answer": "الجواب: أيوب عليه السلام.",
+    "category_id": "seed-cat-hajj",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -1278,15 +1288,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-04T13:00:00.000Z",
     "qa_categories": {
-      "name": "السيرة",
-      "slug": "seerah"
+      "name": "الحج",
+      "slug": "hajj"
     }
   },
   {
     "id": "seed-qa-78",
-    "question": "إلى أي مدينة هاجر النبي صلى الله عليه وسلم؟",
-    "answer": "الجواب: المدينة المنورة.",
-    "category_id": "seed-cat-seerah",
+    "question": "من أول الخلفاء الراشدين؟",
+    "answer": "الجواب: أبو بكر الصديق.",
+    "category_id": "seed-cat-hajj",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -1294,13 +1304,13 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-04T14:00:00.000Z",
     "qa_categories": {
-      "name": "السيرة",
-      "slug": "seerah"
+      "name": "الحج",
+      "slug": "hajj"
     }
   },
   {
     "id": "seed-qa-79",
-    "question": "من صاحب النبي صلى الله عليه وسلم في الهجرة؟",
+    "question": "من أول الخلفاء الراشدين؟",
     "answer": "الجواب: أبو بكر الصديق.",
     "category_id": "seed-cat-seerah",
     "ruling_type": null,
@@ -1316,8 +1326,8 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-80",
-    "question": "ما أول مسجد أسسه النبي صلى الله عليه وسلم بعد الهجرة؟",
-    "answer": "الجواب: مسجد قباء.",
+    "question": "من ثاني الخلفاء الراشدين؟",
+    "answer": "الجواب: عمر بن الخطاب.",
     "category_id": "seed-cat-seerah",
     "ruling_type": null,
     "evidence": null,
@@ -1332,8 +1342,8 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-81",
-    "question": "ما أول غزوة كبرى في الإسلام؟",
-    "answer": "الجواب: غزوة بدر.",
+    "question": "من ثالث الخلفاء الراشدين؟",
+    "answer": "الجواب: عثمان بن عفان.",
     "category_id": "seed-cat-seerah",
     "ruling_type": null,
     "evidence": null,
@@ -1348,8 +1358,8 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-82",
-    "question": "في أي غزوة وقع حفر الخندق؟",
-    "answer": "الجواب: غزوة الخندق.",
+    "question": "من رابع الخلفاء الراشدين؟",
+    "answer": "الجواب: علي بن أبي طالب.",
     "category_id": "seed-cat-seerah",
     "ruling_type": null,
     "evidence": null,
@@ -1364,8 +1374,8 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-83",
-    "question": "ما الغزوة التي وقعت في السنة الثالثة للهجرة؟",
-    "answer": "الجواب: غزوة أحد.",
+    "question": "من الصحابي الملقب بذي النورين؟",
+    "answer": "الجواب: عثمان بن عفان.",
     "category_id": "seed-cat-seerah",
     "ruling_type": null,
     "evidence": null,
@@ -1380,8 +1390,8 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-84",
-    "question": "ما اسم الصلح الذي عقده النبي صلى الله عليه وسلم مع قريش؟",
-    "answer": "الجواب: صلح الحديبية.",
+    "question": "من الصحابي الملقب بالفاروق؟",
+    "answer": "الجواب: عمر بن الخطاب.",
     "category_id": "seed-cat-seerah",
     "ruling_type": null,
     "evidence": null,
@@ -1396,8 +1406,8 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-85",
-    "question": "ما الحدث الذي دخل فيه النبي صلى الله عليه وسلم مكة فاتحاً؟",
-    "answer": "الجواب: فتح مكة.",
+    "question": "من أول الرجال إسلاماً؟",
+    "answer": "الجواب: أبو بكر الصديق.",
     "category_id": "seed-cat-seerah",
     "ruling_type": null,
     "evidence": null,
@@ -1412,9 +1422,9 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-86",
-    "question": "ما فائدة العقيدة الطحاوية — شرح مختصر؟",
-    "answer": "ملخص منظم لأهم مسائل العقيدة في متن الطحاوية.",
-    "category_id": "seed-cat-quran",
+    "question": "من أول الصبيان إسلاماً؟",
+    "answer": "الجواب: علي بن أبي طالب.",
+    "category_id": "seed-cat-seerah",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -1422,15 +1432,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-04T22:00:00.000Z",
     "qa_categories": {
-      "name": "القرآن",
-      "slug": "quran"
+      "name": "السيرة",
+      "slug": "seerah"
     }
   },
   {
     "id": "seed-qa-87",
-    "question": "ما فائدة متن الآجرومية؟",
-    "answer": "متن كلاسيكي في النحو العربي مع شرح مبسّط.",
-    "category_id": "seed-cat-quran",
+    "question": "من أم المؤمنين ابنة أبي بكر؟",
+    "answer": "الجواب: عائشة رضي الله عنها.",
+    "category_id": "seed-cat-seerah",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -1438,15 +1448,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-04T23:00:00.000Z",
     "qa_categories": {
-      "name": "القرآن",
-      "slug": "quran"
+      "name": "السيرة",
+      "slug": "seerah"
     }
   },
   {
     "id": "seed-qa-88",
-    "question": "ما فائدة تفريغ: أصول طلب العلم في المجلس العلمي؟",
-    "answer": "تفريغ درس علمي عن آداب طلب العلم ومراتبه.",
-    "category_id": "seed-cat-quran",
+    "question": "في أي غار نزل الوحي أول مرة؟",
+    "answer": "الجواب: غار حراء.",
+    "category_id": "seed-cat-seerah",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -1454,15 +1464,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-05T00:00:00.000Z",
     "qa_categories": {
-      "name": "القرآن",
-      "slug": "quran"
+      "name": "السيرة",
+      "slug": "seerah"
     }
   },
   {
     "id": "seed-qa-89",
-    "question": "ما فائدة ملخص: أركان الإسلام؟",
-    "answer": "ملخص مرئي لأركان الإسلام الخمسة.",
-    "category_id": "seed-cat-quran",
+    "question": "من أول من آمن من النساء؟",
+    "answer": "الجواب: خديجة بنت خويلد.",
+    "category_id": "seed-cat-seerah",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -1470,31 +1480,31 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-05T01:00:00.000Z",
     "qa_categories": {
-      "name": "القرآن",
-      "slug": "quran"
+      "name": "السيرة",
+      "slug": "seerah"
     }
   },
   {
     "id": "seed-qa-90",
-    "question": "ما دلالة هذه الآية؟",
-    "answer": "قال تعالى: ﴿إِنَّ فِي خَلْقِ السَّمَاوَاتِ وَالْأَرْضِ وَاخْتِلَافِ اللَّيْلِ وَالنَّهَارِ لَآيَاتٍ لِّأُولِي الْأَلْبَابِ﴾ — دلالة على عظمة الخالق في نظام الكون.",
-    "category_id": "seed-cat-quran",
+    "question": "إلى أي مدينة هاجر النبي صلى الله عليه وسلم؟",
+    "answer": "الجواب: المدينة المنورة.",
+    "category_id": "seed-cat-seerah",
     "ruling_type": null,
-    "evidence": "قال تعالى: ﴿إِنَّ فِي خَلْقِ السَّمَاوَاتِ وَالْأَرْضِ وَاخْتِلَافِ اللَّيْلِ وَالنَّهَارِ لَآيَاتٍ لِّأُولِي الْأَلْبَابِ﴾",
-    "reference": "القرآن الكريم",
+    "evidence": null,
+    "reference": null,
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-05T02:00:00.000Z",
     "qa_categories": {
-      "name": "القرآن",
-      "slug": "quran"
+      "name": "السيرة",
+      "slug": "seerah"
     }
   },
   {
     "id": "seed-qa-91",
-    "question": "من أول الرسل إلى أهل الأرض بعد آدم؟",
-    "answer": "الجواب: نوح عليه السلام.",
-    "category_id": "seed-cat-quran",
+    "question": "من صاحب النبي صلى الله عليه وسلم في الهجرة؟",
+    "answer": "الجواب: أبو بكر الصديق.",
+    "category_id": "seed-cat-seerah",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -1502,15 +1512,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-05T03:00:00.000Z",
     "qa_categories": {
-      "name": "القرآن",
-      "slug": "quran"
+      "name": "السيرة",
+      "slug": "seerah"
     }
   },
   {
     "id": "seed-qa-92",
-    "question": "من النبي الذي اتخذه الله خليلاً؟",
-    "answer": "الجواب: إبراهيم عليه السلام.",
-    "category_id": "seed-cat-quran",
+    "question": "ما أول مسجد أسسه النبي صلى الله عليه وسلم بعد الهجرة؟",
+    "answer": "الجواب: مسجد قباء.",
+    "category_id": "seed-cat-seerah",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -1518,15 +1528,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-05T04:00:00.000Z",
     "qa_categories": {
-      "name": "القرآن",
-      "slug": "quran"
+      "name": "السيرة",
+      "slug": "seerah"
     }
   },
   {
     "id": "seed-qa-93",
-    "question": "من النبي الذي كلمه الله تكليماً؟",
-    "answer": "الجواب: موسى عليه السلام.",
-    "category_id": "seed-cat-quran",
+    "question": "ما أول غزوة كبرى في الإسلام؟",
+    "answer": "الجواب: غزوة بدر.",
+    "category_id": "seed-cat-seerah",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -1534,15 +1544,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-05T05:00:00.000Z",
     "qa_categories": {
-      "name": "القرآن",
-      "slug": "quran"
+      "name": "السيرة",
+      "slug": "seerah"
     }
   },
   {
     "id": "seed-qa-94",
-    "question": "من النبي الذي أرسل إلى قوم عاد؟",
-    "answer": "الجواب: هود عليه السلام.",
-    "category_id": "seed-cat-quran",
+    "question": "في أي غزوة وقع حفر الخندق؟",
+    "answer": "الجواب: غزوة الخندق.",
+    "category_id": "seed-cat-seerah",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -1550,15 +1560,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-05T06:00:00.000Z",
     "qa_categories": {
-      "name": "القرآن",
-      "slug": "quran"
+      "name": "السيرة",
+      "slug": "seerah"
     }
   },
   {
     "id": "seed-qa-95",
-    "question": "من النبي الذي أرسل إلى قوم ثمود؟",
-    "answer": "الجواب: صالح عليه السلام.",
-    "category_id": "seed-cat-quran",
+    "question": "ما الغزوة التي وقعت في السنة الثالثة للهجرة؟",
+    "answer": "الجواب: غزوة أحد.",
+    "category_id": "seed-cat-seerah",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -1566,15 +1576,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-05T07:00:00.000Z",
     "qa_categories": {
-      "name": "القرآن",
-      "slug": "quran"
+      "name": "السيرة",
+      "slug": "seerah"
     }
   },
   {
     "id": "seed-qa-96",
-    "question": "من النبي الذي ابتلعه الحوت؟",
-    "answer": "الجواب: يونس عليه السلام.",
-    "category_id": "seed-cat-quran",
+    "question": "ما اسم الصلح الذي عقده النبي صلى الله عليه وسلم مع قريش؟",
+    "answer": "الجواب: صلح الحديبية.",
+    "category_id": "seed-cat-seerah",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -1582,15 +1592,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-05T08:00:00.000Z",
     "qa_categories": {
-      "name": "القرآن",
-      "slug": "quran"
+      "name": "السيرة",
+      "slug": "seerah"
     }
   },
   {
     "id": "seed-qa-97",
-    "question": "من النبي الذي رفعه الله إليه؟",
-    "answer": "الجواب: عيسى عليه السلام.",
-    "category_id": "seed-cat-quran",
+    "question": "ما الحدث الذي دخل فيه النبي صلى الله عليه وسلم مكة فاتحاً؟",
+    "answer": "الجواب: فتح مكة.",
+    "category_id": "seed-cat-seerah",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -1598,14 +1608,14 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-05T09:00:00.000Z",
     "qa_categories": {
-      "name": "القرآن",
-      "slug": "quran"
+      "name": "السيرة",
+      "slug": "seerah"
     }
   },
   {
     "id": "seed-qa-98",
-    "question": "من والد إسماعيل عليه السلام؟",
-    "answer": "الجواب: إبراهيم عليه السلام.",
+    "question": "من أول الرسل إلى أهل الأرض بعد آدم؟",
+    "answer": "الجواب: نوح عليه السلام.",
     "category_id": "seed-cat-quran",
     "ruling_type": null,
     "evidence": null,
@@ -1620,9 +1630,9 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-99",
-    "question": "من أكثر الصحابة رواية للحديث؟",
-    "answer": "الجواب: أبو هريرة.",
-    "category_id": "seed-cat-hadith",
+    "question": "من النبي الذي اتخذه الله خليلاً؟",
+    "answer": "الجواب: إبراهيم عليه السلام.",
+    "category_id": "seed-cat-quran",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -1630,15 +1640,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-05T11:00:00.000Z",
     "qa_categories": {
-      "name": "الحديث",
-      "slug": "hadith"
+      "name": "القرآن",
+      "slug": "quran"
     }
   },
   {
     "id": "seed-qa-100",
-    "question": "من مؤسس المذهب الحنفي؟",
-    "answer": "الجواب: أبو حنيفة النعمان.",
-    "category_id": "seed-cat-hadith",
+    "question": "من النبي الذي كلمه الله تكليماً؟",
+    "answer": "الجواب: موسى عليه السلام.",
+    "category_id": "seed-cat-quran",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -1646,15 +1656,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-05T12:00:00.000Z",
     "qa_categories": {
-      "name": "الحديث",
-      "slug": "hadith"
+      "name": "القرآن",
+      "slug": "quran"
     }
   },
   {
     "id": "seed-qa-101",
-    "question": "من مؤسس المذهب المالكي؟",
-    "answer": "الجواب: مالك بن أنس.",
-    "category_id": "seed-cat-hadith",
+    "question": "من النبي الذي أرسل إلى قوم عاد؟",
+    "answer": "الجواب: هود عليه السلام.",
+    "category_id": "seed-cat-quran",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -1662,15 +1672,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-05T13:00:00.000Z",
     "qa_categories": {
-      "name": "الحديث",
-      "slug": "hadith"
+      "name": "القرآن",
+      "slug": "quran"
     }
   },
   {
     "id": "seed-qa-102",
-    "question": "من مؤسس المذهب الشافعي؟",
-    "answer": "الجواب: محمد بن إدريس الشافعي.",
-    "category_id": "seed-cat-hadith",
+    "question": "من النبي الذي أرسل إلى قوم ثمود؟",
+    "answer": "الجواب: صالح عليه السلام.",
+    "category_id": "seed-cat-quran",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -1678,15 +1688,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-05T14:00:00.000Z",
     "qa_categories": {
-      "name": "الحديث",
-      "slug": "hadith"
+      "name": "القرآن",
+      "slug": "quran"
     }
   },
   {
     "id": "seed-qa-103",
-    "question": "من مؤسس المذهب الحنبلي؟",
-    "answer": "الجواب: أحمد بن حنبل.",
-    "category_id": "seed-cat-hadith",
+    "question": "من النبي الذي ابتلعه الحوت؟",
+    "answer": "الجواب: يونس عليه السلام.",
+    "category_id": "seed-cat-quran",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -1694,15 +1704,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-05T15:00:00.000Z",
     "qa_categories": {
-      "name": "الحديث",
-      "slug": "hadith"
+      "name": "القرآن",
+      "slug": "quran"
     }
   },
   {
     "id": "seed-qa-104",
-    "question": "من صاحب صحيح البخاري؟",
-    "answer": "الجواب: محمد بن إسماعيل البخاري.",
-    "category_id": "seed-cat-hadith",
+    "question": "من النبي الذي رفعه الله إليه؟",
+    "answer": "الجواب: عيسى عليه السلام.",
+    "category_id": "seed-cat-quran",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -1710,15 +1720,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-05T16:00:00.000Z",
     "qa_categories": {
-      "name": "الحديث",
-      "slug": "hadith"
+      "name": "القرآن",
+      "slug": "quran"
     }
   },
   {
     "id": "seed-qa-105",
-    "question": "من صاحب صحيح مسلم؟",
-    "answer": "الجواب: مسلم بن الحجاج.",
-    "category_id": "seed-cat-hadith",
+    "question": "من والد إسماعيل عليه السلام؟",
+    "answer": "الجواب: إبراهيم عليه السلام.",
+    "category_id": "seed-cat-quran",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -1726,15 +1736,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-05T17:00:00.000Z",
     "qa_categories": {
-      "name": "الحديث",
-      "slug": "hadith"
+      "name": "القرآن",
+      "slug": "quran"
     }
   },
   {
     "id": "seed-qa-106",
-    "question": "من الإمام المعروف بإمام دار الهجرة؟",
-    "answer": "الجواب: مالك بن أنس.",
-    "category_id": "seed-cat-hadith",
+    "question": "من النبي الذي سخر الله له الريح؟",
+    "answer": "الجواب: سليمان عليه السلام.",
+    "category_id": "seed-cat-quran",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -1742,15 +1752,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-05T18:00:00.000Z",
     "qa_categories": {
-      "name": "الحديث",
-      "slug": "hadith"
+      "name": "القرآن",
+      "slug": "quran"
     }
   },
   {
     "id": "seed-qa-107",
-    "question": "من الإمام صاحب كتاب الموطأ؟",
-    "answer": "الجواب: مالك بن أنس.",
-    "category_id": "seed-cat-hadith",
+    "question": "من النبي الذي اشتهر بالصبر على البلاء؟",
+    "answer": "الجواب: أيوب عليه السلام.",
+    "category_id": "seed-cat-quran",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -1758,15 +1768,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-05T19:00:00.000Z",
     "qa_categories": {
-      "name": "الحديث",
-      "slug": "hadith"
+      "name": "القرآن",
+      "slug": "quran"
     }
   },
   {
     "id": "seed-qa-108",
-    "question": "من أول الرسل إلى أهل الأرض بعد آدم؟",
-    "answer": "الجواب: نوح عليه السلام.",
-    "category_id": "seed-cat-hadith",
+    "question": "من أول الخلفاء الراشدين؟",
+    "answer": "الجواب: أبو بكر الصديق.",
+    "category_id": "seed-cat-quran",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -1774,15 +1784,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-05T20:00:00.000Z",
     "qa_categories": {
-      "name": "الحديث",
-      "slug": "hadith"
+      "name": "القرآن",
+      "slug": "quran"
     }
   },
   {
     "id": "seed-qa-109",
-    "question": "من النبي الذي اتخذه الله خليلاً؟",
-    "answer": "الجواب: إبراهيم عليه السلام.",
-    "category_id": "seed-cat-hadith",
+    "question": "من ثاني الخلفاء الراشدين؟",
+    "answer": "الجواب: عمر بن الخطاب.",
+    "category_id": "seed-cat-quran",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -1790,15 +1800,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-05T21:00:00.000Z",
     "qa_categories": {
-      "name": "الحديث",
-      "slug": "hadith"
+      "name": "القرآن",
+      "slug": "quran"
     }
   },
   {
     "id": "seed-qa-110",
-    "question": "من النبي الذي كلمه الله تكليماً؟",
-    "answer": "الجواب: موسى عليه السلام.",
-    "category_id": "seed-cat-hadith",
+    "question": "من ثالث الخلفاء الراشدين؟",
+    "answer": "الجواب: عثمان بن عفان.",
+    "category_id": "seed-cat-quran",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -1806,14 +1816,14 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-05T22:00:00.000Z",
     "qa_categories": {
-      "name": "الحديث",
-      "slug": "hadith"
+      "name": "القرآن",
+      "slug": "quran"
     }
   },
   {
     "id": "seed-qa-111",
-    "question": "من النبي الذي أرسل إلى قوم عاد؟",
-    "answer": "الجواب: هود عليه السلام.",
+    "question": "من أكثر الصحابة رواية للحديث؟",
+    "answer": "الجواب: أبو هريرة.",
     "category_id": "seed-cat-hadith",
     "ruling_type": null,
     "evidence": null,
@@ -1828,73 +1838,73 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-112",
-    "question": "ما أهمية طلب العلم الشرعي؟",
-    "answer": "طلب العلم الشرعي فريضة على كل مسلم، وهو سبيل معرفة دين الله والعمل به على بصيرة.",
-    "category_id": "seed-cat-adab",
+    "question": "من مؤسس المذهب الحنفي؟",
+    "answer": "الجواب: أبو حنيفة النعمان.",
+    "category_id": "seed-cat-hadith",
     "ruling_type": null,
-    "evidence": "قال ﷺ: «طلب العلم فريضة على كل مسلم».",
-    "reference": "سنن ابن ماجه",
+    "evidence": null,
+    "reference": null,
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-06T00:00:00.000Z",
     "qa_categories": {
-      "name": "الآداب",
-      "slug": "adab"
+      "name": "الحديث",
+      "slug": "hadith"
     }
   },
   {
     "id": "seed-qa-113",
-    "question": "كيف أبدأ في حفظ القرآن؟",
-    "answer": "ابدأ بسورة قصيرة مثل الفاتحة أو الإخلاص، وردّد على شيخ متقن، وثبّت المراجعة اليومية.",
-    "category_id": "seed-cat-adab",
-    "ruling_type": "سنة",
+    "question": "من مؤسس المذهب المالكي؟",
+    "answer": "الجواب: مالك بن أنس.",
+    "category_id": "seed-cat-hadith",
+    "ruling_type": null,
     "evidence": null,
     "reference": null,
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-06T01:00:00.000Z",
     "qa_categories": {
-      "name": "الآداب",
-      "slug": "adab"
+      "name": "الحديث",
+      "slug": "hadith"
     }
   },
   {
     "id": "seed-qa-114",
-    "question": "ما حكم صيام يوم عرفة لغير الحاج؟",
-    "answer": "صيام يوم عرفة لغير الحاج سنة مؤكدة، وهو من أفضل الأيام التي يُستحب صيامها.",
-    "category_id": "seed-cat-adab",
-    "ruling_type": "سنة",
-    "evidence": "عن أبي قتادة رضي الله عنه أن النبي ﷺ سُئل عن صوم يوم عرفة فقال: «يُكفِّر السنة الماضية والباقية».",
-    "reference": "صحيح مسلم",
+    "question": "من مؤسس المذهب الشافعي؟",
+    "answer": "الجواب: محمد بن إدريس الشافعي.",
+    "category_id": "seed-cat-hadith",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-06T02:00:00.000Z",
     "qa_categories": {
-      "name": "الآداب",
-      "slug": "adab"
+      "name": "الحديث",
+      "slug": "hadith"
     }
   },
   {
     "id": "seed-qa-115",
-    "question": "هل الصلاة واجبة؟",
-    "answer": "نعم، الصلاة واجبة على كل مسلم بالغ عاقل، وهي ركن من أركان الإسلام.",
-    "category_id": "seed-cat-adab",
-    "ruling_type": "حلال",
-    "evidence": "قال تعالى: ﴿وَأَقِيمُوا الصَّلَاةَ وَآتُوا الزَّكَاةَ﴾",
-    "reference": "القرآن الكريم",
+    "question": "من مؤسس المذهب الحنبلي؟",
+    "answer": "الجواب: أحمد بن حنبل.",
+    "category_id": "seed-cat-hadith",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-06T03:00:00.000Z",
     "qa_categories": {
-      "name": "الآداب",
-      "slug": "adab"
+      "name": "الحديث",
+      "slug": "hadith"
     }
   },
   {
     "id": "seed-qa-116",
-    "question": "ما فائدة العقيدة الطحاوية — شرح مختصر؟",
-    "answer": "ملخص منظم لأهم مسائل العقيدة في متن الطحاوية.",
-    "category_id": "seed-cat-adab",
+    "question": "من صاحب صحيح البخاري؟",
+    "answer": "الجواب: محمد بن إسماعيل البخاري.",
+    "category_id": "seed-cat-hadith",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -1902,15 +1912,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-06T04:00:00.000Z",
     "qa_categories": {
-      "name": "الآداب",
-      "slug": "adab"
+      "name": "الحديث",
+      "slug": "hadith"
     }
   },
   {
     "id": "seed-qa-117",
-    "question": "ما فائدة متن الآجرومية؟",
-    "answer": "متن كلاسيكي في النحو العربي مع شرح مبسّط.",
-    "category_id": "seed-cat-adab",
+    "question": "من صاحب صحيح مسلم؟",
+    "answer": "الجواب: مسلم بن الحجاج.",
+    "category_id": "seed-cat-hadith",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -1918,15 +1928,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-06T05:00:00.000Z",
     "qa_categories": {
-      "name": "الآداب",
-      "slug": "adab"
+      "name": "الحديث",
+      "slug": "hadith"
     }
   },
   {
     "id": "seed-qa-118",
-    "question": "ما فائدة تفريغ: أصول طلب العلم في المجلس العلمي؟",
-    "answer": "تفريغ درس علمي عن آداب طلب العلم ومراتبه.",
-    "category_id": "seed-cat-adab",
+    "question": "من الإمام المعروف بإمام دار الهجرة؟",
+    "answer": "الجواب: مالك بن أنس.",
+    "category_id": "seed-cat-hadith",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -1934,15 +1944,15 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-06T06:00:00.000Z",
     "qa_categories": {
-      "name": "الآداب",
-      "slug": "adab"
+      "name": "الحديث",
+      "slug": "hadith"
     }
   },
   {
     "id": "seed-qa-119",
-    "question": "ما فائدة ملخص: أركان الإسلام؟",
-    "answer": "ملخص مرئي لأركان الإسلام الخمسة.",
-    "category_id": "seed-cat-adab",
+    "question": "من الإمام صاحب كتاب الموطأ؟",
+    "answer": "الجواب: مالك بن أنس.",
+    "category_id": "seed-cat-hadith",
     "ruling_type": null,
     "evidence": null,
     "reference": null,
@@ -1950,12 +1960,284 @@ export const SEED_QA = [
     "review_status": "approved",
     "created_at": "2024-01-06T07:00:00.000Z",
     "qa_categories": {
-      "name": "الآداب",
-      "slug": "adab"
+      "name": "الحديث",
+      "slug": "hadith"
     }
   },
   {
     "id": "seed-qa-120",
+    "question": "من أول الرسل إلى أهل الأرض بعد آدم؟",
+    "answer": "الجواب: نوح عليه السلام.",
+    "category_id": "seed-cat-hadith",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-06T08:00:00.000Z",
+    "qa_categories": {
+      "name": "الحديث",
+      "slug": "hadith"
+    }
+  },
+  {
+    "id": "seed-qa-121",
+    "question": "من النبي الذي اتخذه الله خليلاً؟",
+    "answer": "الجواب: إبراهيم عليه السلام.",
+    "category_id": "seed-cat-hadith",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-06T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الحديث",
+      "slug": "hadith"
+    }
+  },
+  {
+    "id": "seed-qa-122",
+    "question": "من النبي الذي كلمه الله تكليماً؟",
+    "answer": "الجواب: موسى عليه السلام.",
+    "category_id": "seed-cat-hadith",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-06T10:00:00.000Z",
+    "qa_categories": {
+      "name": "الحديث",
+      "slug": "hadith"
+    }
+  },
+  {
+    "id": "seed-qa-123",
+    "question": "من النبي الذي أرسل إلى قوم عاد؟",
+    "answer": "الجواب: هود عليه السلام.",
+    "category_id": "seed-cat-hadith",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-06T11:00:00.000Z",
+    "qa_categories": {
+      "name": "الحديث",
+      "slug": "hadith"
+    }
+  },
+  {
+    "id": "seed-qa-124",
+    "question": "ما حكم قول «سبحان الله» بعد الصلاة؟",
+    "answer": "الجواب: سنة مؤكدة؛ ثلاثاً وثلاثين.",
+    "category_id": "seed-cat-adhkar",
+    "ruling_type": "سنة",
+    "evidence": "البخاري ومسلم",
+    "reference": "صحيح مسلم",
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-06T12:00:00.000Z",
+    "qa_categories": {
+      "name": "الأذكار",
+      "slug": "adhkar"
+    }
+  },
+  {
+    "id": "seed-qa-125",
+    "question": "ما أفضل ذكر بعد الفجر؟",
+    "answer": "الجواب: قراءة آية الكرسي والمعوذات.",
+    "category_id": "seed-cat-adhkar",
+    "ruling_type": "سنة",
+    "evidence": "السنة",
+    "reference": "أبو داود",
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-06T13:00:00.000Z",
+    "qa_categories": {
+      "name": "الأذكار",
+      "slug": "adhkar"
+    }
+  },
+  {
+    "id": "seed-qa-126",
+    "question": "هل يجوز الجهر بالأذكار بعد الصلاة؟",
+    "answer": "الجواب: جائز؛ والسر أفضل إلا ما دلّ دليل على الجهر.",
+    "category_id": "seed-cat-adhkar",
+    "ruling_type": "جائز",
+    "evidence": "السنة",
+    "reference": "الفقه",
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-06T14:00:00.000Z",
+    "qa_categories": {
+      "name": "الأذكار",
+      "slug": "adhkar"
+    }
+  },
+  {
+    "id": "seed-qa-127",
+    "question": "ما حكم من ترك أذكار الصباح والمساء؟",
+    "answer": "الجواب: فاته خير كثير؛ وليس كبيرة إذا لم يُهمل عمداً.",
+    "category_id": "seed-cat-adhkar",
+    "ruling_type": null,
+    "evidence": "السنة",
+    "reference": "الأذكار النبوية",
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-06T15:00:00.000Z",
+    "qa_categories": {
+      "name": "الأذكار",
+      "slug": "adhkar"
+    }
+  },
+  {
+    "id": "seed-qa-128",
+    "question": "ما فائدة الاستغفار في الأذكار؟",
+    "answer": "الجواب: مغفرة الذنوب وفرج الهم.",
+    "category_id": "seed-cat-adhkar",
+    "ruling_type": "مستحب",
+    "evidence": "القرآن",
+    "reference": "سورة نوح",
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-06T16:00:00.000Z",
+    "qa_categories": {
+      "name": "الأذكار",
+      "slug": "adhkar"
+    }
+  },
+  {
+    "id": "seed-qa-129",
+    "question": "من أول الرسل إلى أهل الأرض بعد آدم؟",
+    "answer": "الجواب: نوح عليه السلام.",
+    "category_id": "seed-cat-adhkar",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-06T17:00:00.000Z",
+    "qa_categories": {
+      "name": "الأذكار",
+      "slug": "adhkar"
+    }
+  },
+  {
+    "id": "seed-qa-130",
+    "question": "من النبي الذي اتخذه الله خليلاً؟",
+    "answer": "الجواب: إبراهيم عليه السلام.",
+    "category_id": "seed-cat-adhkar",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-06T18:00:00.000Z",
+    "qa_categories": {
+      "name": "الأذكار",
+      "slug": "adhkar"
+    }
+  },
+  {
+    "id": "seed-qa-131",
+    "question": "من النبي الذي كلمه الله تكليماً؟",
+    "answer": "الجواب: موسى عليه السلام.",
+    "category_id": "seed-cat-adhkar",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-06T19:00:00.000Z",
+    "qa_categories": {
+      "name": "الأذكار",
+      "slug": "adhkar"
+    }
+  },
+  {
+    "id": "seed-qa-132",
+    "question": "من النبي الذي أرسل إلى قوم عاد؟",
+    "answer": "الجواب: هود عليه السلام.",
+    "category_id": "seed-cat-adhkar",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-06T20:00:00.000Z",
+    "qa_categories": {
+      "name": "الأذكار",
+      "slug": "adhkar"
+    }
+  },
+  {
+    "id": "seed-qa-133",
+    "question": "من النبي الذي أرسل إلى قوم ثمود؟",
+    "answer": "الجواب: صالح عليه السلام.",
+    "category_id": "seed-cat-adhkar",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-06T21:00:00.000Z",
+    "qa_categories": {
+      "name": "الأذكار",
+      "slug": "adhkar"
+    }
+  },
+  {
+    "id": "seed-qa-134",
+    "question": "من النبي الذي ابتلعه الحوت؟",
+    "answer": "الجواب: يونس عليه السلام.",
+    "category_id": "seed-cat-adhkar",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-06T22:00:00.000Z",
+    "qa_categories": {
+      "name": "الأذكار",
+      "slug": "adhkar"
+    }
+  },
+  {
+    "id": "seed-qa-135",
+    "question": "من النبي الذي رفعه الله إليه؟",
+    "answer": "الجواب: عيسى عليه السلام.",
+    "category_id": "seed-cat-adhkar",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-06T23:00:00.000Z",
+    "qa_categories": {
+      "name": "الأذكار",
+      "slug": "adhkar"
+    }
+  },
+  {
+    "id": "seed-qa-136",
+    "question": "من والد إسماعيل عليه السلام؟",
+    "answer": "الجواب: إبراهيم عليه السلام.",
+    "category_id": "seed-cat-adhkar",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-07T00:00:00.000Z",
+    "qa_categories": {
+      "name": "الأذكار",
+      "slug": "adhkar"
+    }
+  },
+  {
+    "id": "seed-qa-137",
     "question": "من أول الرسل إلى أهل الأرض بعد آدم؟",
     "answer": "الجواب: نوح عليه السلام.",
     "category_id": "seed-cat-adab",
@@ -1964,14 +2246,14 @@ export const SEED_QA = [
     "reference": null,
     "status": "published",
     "review_status": "approved",
-    "created_at": "2024-01-06T08:00:00.000Z",
+    "created_at": "2024-01-07T01:00:00.000Z",
     "qa_categories": {
       "name": "الآداب",
       "slug": "adab"
     }
   },
   {
-    "id": "seed-qa-121",
+    "id": "seed-qa-138",
     "question": "من النبي الذي اتخذه الله خليلاً؟",
     "answer": "الجواب: إبراهيم عليه السلام.",
     "category_id": "seed-cat-adab",
@@ -1980,14 +2262,14 @@ export const SEED_QA = [
     "reference": null,
     "status": "published",
     "review_status": "approved",
-    "created_at": "2024-01-06T09:00:00.000Z",
+    "created_at": "2024-01-07T02:00:00.000Z",
     "qa_categories": {
       "name": "الآداب",
       "slug": "adab"
     }
   },
   {
-    "id": "seed-qa-122",
+    "id": "seed-qa-139",
     "question": "من النبي الذي كلمه الله تكليماً؟",
     "answer": "الجواب: موسى عليه السلام.",
     "category_id": "seed-cat-adab",
@@ -1996,14 +2278,14 @@ export const SEED_QA = [
     "reference": null,
     "status": "published",
     "review_status": "approved",
-    "created_at": "2024-01-06T10:00:00.000Z",
+    "created_at": "2024-01-07T03:00:00.000Z",
     "qa_categories": {
       "name": "الآداب",
       "slug": "adab"
     }
   },
   {
-    "id": "seed-qa-123",
+    "id": "seed-qa-140",
     "question": "من النبي الذي أرسل إلى قوم عاد؟",
     "answer": "الجواب: هود عليه السلام.",
     "category_id": "seed-cat-adab",
@@ -2012,14 +2294,14 @@ export const SEED_QA = [
     "reference": null,
     "status": "published",
     "review_status": "approved",
-    "created_at": "2024-01-06T11:00:00.000Z",
+    "created_at": "2024-01-07T04:00:00.000Z",
     "qa_categories": {
       "name": "الآداب",
       "slug": "adab"
     }
   },
   {
-    "id": "seed-qa-124",
+    "id": "seed-qa-141",
     "question": "من النبي الذي أرسل إلى قوم ثمود؟",
     "answer": "الجواب: صالح عليه السلام.",
     "category_id": "seed-cat-adab",
@@ -2028,7 +2310,135 @@ export const SEED_QA = [
     "reference": null,
     "status": "published",
     "review_status": "approved",
-    "created_at": "2024-01-06T12:00:00.000Z",
+    "created_at": "2024-01-07T05:00:00.000Z",
+    "qa_categories": {
+      "name": "الآداب",
+      "slug": "adab"
+    }
+  },
+  {
+    "id": "seed-qa-142",
+    "question": "من النبي الذي ابتلعه الحوت؟",
+    "answer": "الجواب: يونس عليه السلام.",
+    "category_id": "seed-cat-adab",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-07T06:00:00.000Z",
+    "qa_categories": {
+      "name": "الآداب",
+      "slug": "adab"
+    }
+  },
+  {
+    "id": "seed-qa-143",
+    "question": "من النبي الذي رفعه الله إليه؟",
+    "answer": "الجواب: عيسى عليه السلام.",
+    "category_id": "seed-cat-adab",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-07T07:00:00.000Z",
+    "qa_categories": {
+      "name": "الآداب",
+      "slug": "adab"
+    }
+  },
+  {
+    "id": "seed-qa-144",
+    "question": "من والد إسماعيل عليه السلام؟",
+    "answer": "الجواب: إبراهيم عليه السلام.",
+    "category_id": "seed-cat-adab",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-07T08:00:00.000Z",
+    "qa_categories": {
+      "name": "الآداب",
+      "slug": "adab"
+    }
+  },
+  {
+    "id": "seed-qa-145",
+    "question": "من النبي الذي سخر الله له الريح؟",
+    "answer": "الجواب: سليمان عليه السلام.",
+    "category_id": "seed-cat-adab",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-07T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الآداب",
+      "slug": "adab"
+    }
+  },
+  {
+    "id": "seed-qa-146",
+    "question": "من النبي الذي اشتهر بالصبر على البلاء؟",
+    "answer": "الجواب: أيوب عليه السلام.",
+    "category_id": "seed-cat-adab",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-07T10:00:00.000Z",
+    "qa_categories": {
+      "name": "الآداب",
+      "slug": "adab"
+    }
+  },
+  {
+    "id": "seed-qa-147",
+    "question": "من أول الخلفاء الراشدين؟",
+    "answer": "الجواب: أبو بكر الصديق.",
+    "category_id": "seed-cat-adab",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-07T11:00:00.000Z",
+    "qa_categories": {
+      "name": "الآداب",
+      "slug": "adab"
+    }
+  },
+  {
+    "id": "seed-qa-148",
+    "question": "من ثاني الخلفاء الراشدين؟",
+    "answer": "الجواب: عمر بن الخطاب.",
+    "category_id": "seed-cat-adab",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-07T12:00:00.000Z",
+    "qa_categories": {
+      "name": "الآداب",
+      "slug": "adab"
+    }
+  },
+  {
+    "id": "seed-qa-149",
+    "question": "من ثالث الخلفاء الراشدين؟",
+    "answer": "الجواب: عثمان بن عفان.",
+    "category_id": "seed-cat-adab",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-07T13:00:00.000Z",
     "qa_categories": {
       "name": "الآداب",
       "slug": "adab"
