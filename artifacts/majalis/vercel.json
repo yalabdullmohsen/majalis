@@ -2,6 +2,12 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "installCommand": "cd ../.. && pnpm install",
   "buildCommand": "pnpm run build",
+  "functions": {
+    "api/index.js": {
+      "maxDuration": 60,
+      "includeFiles": "{lib/**,supabase/**,data/**}"
+    }
+  },
   "crons": [
     {
       "path": "/api/cron/sync-data",
@@ -82,6 +88,12 @@
     {
       "path": "/api/cron/knowledge-reasoning",
       "schedule": "30 11 * * *"
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/index"
     }
   ]
 }
