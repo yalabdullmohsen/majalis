@@ -1,8 +1,16 @@
 /**
- * Distributed rate limiting — Upstash Redis in production, in-memory fallback for local dev.
+ * Distributed rate limiting — Upstash Redis in production, in-memory fallback in dev only.
  */
 
 const buckets = new Map();
+
+function isProductionEnv() {
+  return (
+    process.env.NODE_ENV === "production" ||
+    process.env.VERCEL_ENV === "production" ||
+    process.env.VERCEL_ENV === "preview"
+  );
+}
 
 function getClientIp(req) {
   return (
@@ -67,9 +75,27 @@ export async function checkRateLimit(key, { windowMs = 60_000, max = 20 } = {}) 
         resetAt: result.reset,
         backend: "upstash",
       };
-    } catch {
-      /* fall through to in-memory */
+    } catch (err) {
+      if (isProductionEnv()) {
+        return {
+          allowed: false,
+          remaining: 0,
+          resetAt: Date.now() + windowMs,
+          backend: "upstash_error",
+          error: String(err?.message || err),
+        };
+      }
     }
+  }
+
+  if (isProductionEnv()) {
+    return {
+      allowed: false,
+      remaining: 0,
+      resetAt: Date.now() + windowMs,
+      backend: "redis_required",
+      error: "UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN required in production",
+    };
   }
 
   const mem = inMemoryCheck(key, windowMs, max);

@@ -63,6 +63,9 @@ export async function verifySchema() {
     "ai_generation_jobs", "verification_logs", "duplicate_cache", "publishing_history",
     "source_health", "source_statistics", "auto_publish_queue",
     "ake_connectors", "ake_job_queue",
+    "governance_user_roles", "governance_audit_log", "governance_content_lifecycle",
+    "governance_lifecycle_history", "governance_reviews", "governance_backup_runs",
+    "governance_security_audits",
   ];
 
   for (const table of tables) {
