@@ -24,6 +24,7 @@ export default async function handler(req, res) {
       configured: isRedisRateLimitConfigured(),
       backend: rateLimitProbe.backend,
       allowed: rateLimitProbe.allowed,
+      error: rateLimitProbe.error || null,
     },
     ...(isProduction() ? {} : { runtime: "server" }),
   });

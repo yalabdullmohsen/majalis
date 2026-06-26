@@ -57,18 +57,19 @@ let upstashInitAttempted = false;
 let upstashInitError = null;
 
 function getUpstashRedis() {
-  if (upstashInitAttempted) return upstashRedis;
-  upstashInitAttempted = true;
-
   const { url, token } = getUpstashCredentials();
   if (!url || !token) return null;
+  if (upstashRedis) return upstashRedis;
 
   try {
     upstashRedis = new Redis({ url, token });
+    upstashInitError = null;
     return upstashRedis;
   } catch (err) {
     upstashInitError = String(err?.message || err);
     return null;
+  } finally {
+    upstashInitAttempted = true;
   }
 }
 

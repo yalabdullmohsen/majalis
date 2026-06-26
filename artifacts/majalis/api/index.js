@@ -1,4 +1,5 @@
 import "./_deps.mjs";
+import "../lib/rate-limit.mjs";
 
 let dispatchPromise;
 
