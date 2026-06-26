@@ -15,20 +15,30 @@ function stripQuotes(value) {
 }
 
 function getUpstashCredentials() {
-  let url = process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL || "";
-  let token = process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN || "";
+  const rawUrl = process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL || "";
+  const rawToken = process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN || "";
+  const blob = `${rawUrl}\n${rawToken}`;
 
-  url = stripQuotes(url.replace(/^UPSTASH_REDIS_REST_URL=/, "").replace(/^KV_REST_API_URL=/, ""));
-  token = stripQuotes(token.replace(/^UPSTASH_REDIS_REST_TOKEN=/, "").replace(/^KV_REST_API_TOKEN=/, ""));
+  let url = rawUrl;
+  let token = rawToken;
 
-  // Recover from a single env var accidentally containing both URL and token lines.
-  if (url.includes("UPSTASH_REDIS_REST_TOKEN=")) {
-    const [urlPart, tokenPart = ""] = url.split("UPSTASH_REDIS_REST_TOKEN=");
-    url = stripQuotes(urlPart.replace(/^UPSTASH_REDIS_REST_URL=/, ""));
-    if (!token) token = stripQuotes(tokenPart);
+  const urlFromBlob = blob.match(/https:\/\/[^\s"'\\]+/);
+  if (urlFromBlob) url = urlFromBlob[0];
+
+  const tokenFromBlob =
+    blob.match(/UPSTASH_REDIS_REST_TOKEN=["']?([^"'\s\\n]+)/i)?.[1] ||
+    blob.match(/KV_REST_API_TOKEN=["']?([^"'\s\\n]+)/i)?.[1];
+  if (tokenFromBlob) token = tokenFromBlob;
+
+  url = stripQuotes(String(url).replace(/^UPSTASH_REDIS_REST_URL=/, "").replace(/^KV_REST_API_URL=/, ""));
+  token = stripQuotes(String(token).replace(/^UPSTASH_REDIS_REST_TOKEN=/, "").replace(/^KV_REST_API_TOKEN=/, ""));
+
+  if (token.includes("UPSTASH_REDIS_REST_URL=") || token.includes("https://")) {
+    const nested = token.match(/UPSTASH_REDIS_REST_TOKEN=["']?([^"'\s\\n]+)/i)?.[1];
+    if (nested) token = nested;
   }
 
-  const urlMatch = url.match(/https:\/\/[^\s"'\\]+/);
+  const urlMatch = String(url).match(/https:\/\/[^\s"'\\]+/);
   if (urlMatch) url = urlMatch[0];
 
   return { url: url.trim(), token: token.trim() };
