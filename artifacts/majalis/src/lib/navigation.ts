@@ -84,6 +84,24 @@ export const PRIMARY_NAV = [
   { href: "/prayer-times", label: "الصلاة" },
 ];
 
+/** Mobile "المزيد" dropdown — full site navigation */
+export const MOBILE_MORE_NAV = [
+  { href: "/lessons", label: "الدروس" },
+  { href: "/lessons", label: "المشايخ" },
+  { href: "/library", label: "المكتبة" },
+  { href: "/qa", label: "الأسئلة" },
+  { href: "/quran", label: "القرآن" },
+  { href: "/adhkar", label: "الأذكار" },
+  { href: "/quran-radio", label: "إذاعة القرآن" },
+  { href: "/quran-live", label: "البث المباشر" },
+  { href: "/quran/tajweed", label: "التجويد" },
+  { href: "/quran/surah-stories", label: "قصص السور" },
+  { href: "/tasbih", label: "عداد التسبيح" },
+  { href: "/prayer-ranks", label: "مراتب الصلاة" },
+  { href: "/settings", label: "الإعدادات" },
+  { href: "/contact", label: "تواصل معنا" },
+];
+
 export const HOME_FEATURE_CARDS = [
   {
     href: "/quran",

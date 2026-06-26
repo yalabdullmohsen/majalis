@@ -20,12 +20,12 @@ export function formatSupabaseError(error: unknown): string {
   }
 
   if (error instanceof Error) return sanitizeClientMessage(error.message);
-  return "حدث خطأ غير متوقع أثناء الاتصال بقاعدة البيانات.";
+  return "تعذّر إتمام العملية. حاول مجددًا.";
 }
 
 function sanitizeClientMessage(message: string): string {
   const msg = message.trim();
-  if (!msg) return "حدث خطأ غير متوقع.";
+  if (!msg) return "تعذّر إتمام العملية. حاول مجددًا.";
   if (
     /VITE_|NEXT_PUBLIC|ANTHROPIC|SERVICE_ROLE|API_KEY|stack|\/assets\//i.test(msg)
   ) {

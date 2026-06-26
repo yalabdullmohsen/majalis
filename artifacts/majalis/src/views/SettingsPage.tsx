@@ -62,7 +62,10 @@ export default function SettingsPage() {
               تسجيل الخروج
             </button>
           ) : (
-            <Link href="/login" className="page-action-btn">تسجيل الدخول</Link>
+            <>
+              <Link href="/login" className="page-action-btn">تسجيل الدخول</Link>
+              <Link href="/register" className="page-action-btn page-action-btn--secondary">إنشاء حساب</Link>
+            </>
           )}
           <button type="button" className="settings-danger-btn" disabled title="تحتاج تأكيداً عبر نظام الحساب">
             حذف الحساب

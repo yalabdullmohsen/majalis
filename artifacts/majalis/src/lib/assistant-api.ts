@@ -8,6 +8,13 @@ export function getAssistantEndpoint(): string {
   return ASSISTANT_PATH;
 }
 
+export type SafetyClassification =
+  | "general_guidance"
+  | "fiqh_answer"
+  | "requires_scholar"
+  | "insufficient_sources"
+  | "blocked_sensitive_fatwa";
+
 export type AssistantResponse = {
   ok?: boolean;
   available?: boolean;
@@ -18,6 +25,8 @@ export type AssistantResponse = {
   grounded?: boolean;
   no_evidence?: boolean;
   confidence?: number;
+  safety_classification?: SafetyClassification;
+  disclaimer?: string;
   citations?: Array<{
     title: string;
     href: string;

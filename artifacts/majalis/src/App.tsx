@@ -31,6 +31,7 @@ const AdhkarPage = lazy(() => import("@/views/AdhkarPage"));
 const QaPage = lazy(() => import("@/views/QaPage"));
 const QuizPage = lazy(() => import("@/views/QuizPage"));
 const LoginPage = lazy(() => import("@/views/LoginPage"));
+const RegisterPage = lazy(() => import("@/views/RegisterPage"));
 const TranscribePage = lazy(() => import("@/views/TranscribePage"));
 const AssistantPage = lazy(() => import("@/views/AssistantPage"));
 const CondolencesPage = lazy(() => import("@/views/CondolencesPage"));
@@ -194,6 +195,8 @@ function Router() {
       <Route path="/updates"><SafeLazyRoute component={UpdatesPage} /></Route>
       <Route path="/developers"><SafeLazyRoute component={DeveloperPage} /></Route>
       <Route path="/login"><SafeLazyRoute component={LoginPage} /></Route>
+      <Route path="/register"><SafeLazyRoute component={RegisterPage} /></Route>
+      <Route path="/auth/register"><Redirect to="/register" /></Route>
       <Route path="/admin/auto-content">
         <AdminRouteGuard>
           <ErrorBoundary>

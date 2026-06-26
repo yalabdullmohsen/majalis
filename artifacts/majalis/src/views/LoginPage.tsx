@@ -6,11 +6,15 @@ import { isSupabaseConfigured } from "@/lib/supabase-config";
 import { Loading } from "@/components/ui-common";
 
 function getNextPath() {
-  if (typeof window === "undefined") return "/admin";
+  if (typeof window === "undefined") return "/";
   const params = new URLSearchParams(window.location.search);
   const next = params.get("next");
   if (next && next.startsWith("/") && !next.startsWith("//")) return next;
-  return "/admin";
+  return "/";
+}
+
+function isAdminLogin(nextPath: string) {
+  return nextPath.startsWith("/admin");
 }
 
 export default function LoginPage() {
@@ -22,14 +26,21 @@ export default function LoginPage() {
   const { login, logout, refreshUser, isAdmin, isLoggedIn, loading: authLoading } = useAuth();
   const [, navigate] = useLocation();
   const nextPath = getNextPath();
+  const adminLogin = isAdminLogin(nextPath);
   const authEnabled = isSupabaseConfigured();
 
   useEffect(() => {
     if (authLoading) return;
-    if (isLoggedIn && isAdmin) {
-      navigate(nextPath);
+    if (isLoggedIn) {
+      if (adminLogin && isAdmin) {
+        navigate(nextPath);
+        return;
+      }
+      if (!adminLogin) {
+        navigate(nextPath);
+      }
     }
-  }, [authLoading, isLoggedIn, isAdmin, navigate, nextPath]);
+  }, [authLoading, isLoggedIn, isAdmin, navigate, nextPath, adminLogin]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,14 +58,19 @@ export default function LoginPage() {
       if (signInError) throw signInError;
 
       const current = await refreshUser();
-      if (current?.profile?.role === "admin") {
-        navigate(nextPath);
+
+      if (adminLogin) {
+        if (current?.profile?.role === "admin" || current?.governance_role === "super_admin") {
+          navigate(nextPath);
+          return;
+        }
+        await logout();
+        setDenied(true);
+        setError(ADMIN_ACCESS_DENIED_MESSAGE);
         return;
       }
 
-      await logout();
-      setDenied(true);
-      setError(ADMIN_ACCESS_DENIED_MESSAGE);
+      navigate(nextPath);
     } catch (err) {
       setError(mapAuthError(err));
     } finally {
@@ -76,8 +92,10 @@ export default function LoginPage() {
         <div className="login-card__header">
           <img src="/logo.png" alt="المجلس العلمي" className="login-logo" />
           <p className="login-card__brand">المجلس العلمي</p>
-          <h1 className="login-card__title">دخول المسؤول</h1>
-          <p className="login-card__subtitle">سجّل الدخول للوصول إلى لوحة التحكم</p>
+          <h1 className="login-card__title">{adminLogin ? "دخول المسؤول" : "تسجيل الدخول"}</h1>
+          <p className="login-card__subtitle">
+            {adminLogin ? "سجّل الدخول للوصول إلى لوحة التحكم" : "سجّل الدخول للوصول إلى حسابك"}
+          </p>
         </div>
 
         {!authEnabled && (
@@ -100,9 +118,9 @@ export default function LoginPage() {
 
         <form onSubmit={handleSubmit} className="login-form">
           <div className="login-field">
-            <label htmlFor="admin-email">البريد الإلكتروني</label>
+            <label htmlFor="login-email">البريد الإلكتروني</label>
             <input
-              id="admin-email"
+              id="login-email"
               type="email"
               autoComplete="email"
               value={email}
@@ -113,9 +131,9 @@ export default function LoginPage() {
           </div>
 
           <div className="login-field">
-            <label htmlFor="admin-password">كلمة المرور</label>
+            <label htmlFor="login-password">كلمة المرور</label>
             <input
-              id="admin-password"
+              id="login-password"
               type="password"
               autoComplete="current-password"
               value={password}
@@ -131,6 +149,11 @@ export default function LoginPage() {
         </form>
 
         <div className="login-actions">
+          {!adminLogin && (
+            <Link href="/register" className="login-back-link login-back-link--primary">
+              إنشاء حساب جديد
+            </Link>
+          )}
           <Link href="/" className="login-back-link">
             العودة للصفحة الرئيسية
           </Link>

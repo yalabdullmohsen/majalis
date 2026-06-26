@@ -1,72 +1,64 @@
 import { Component, type ErrorInfo, type ReactNode } from "react";
 import { C } from "@/lib/theme";
+import { copyErrorId, createErrorId, logClientError } from "@/lib/error-report";
 
 type Props = { children: ReactNode };
-type State = { error: Error | null; reportSaved: boolean; errorId: string };
+type State = { error: Error | null; copied: boolean; errorId: string; componentStack: string | null };
 
-function userFacingErrorMessage(error: Error): string {
+function userFacingBody(): string {
+  return "حدث خلل أثناء تحميل هذا القسم. يمكنك إعادة المحاولة أو العودة للرئيسية.";
+}
+
+function isChunkLoadError(error: Error): boolean {
   const msg = (error.message || "").toLowerCase();
-
-  if (
+  return (
     msg.includes("failed to fetch dynamically imported module") ||
     msg.includes("loading chunk") ||
     msg.includes("chunkloaderror") ||
     msg.includes("/assets/") ||
     msg.includes("importing a module script failed")
-  ) {
-    return "تعذر تحميل هذه الصفحة. حدّث المتصفح أو حاول مجددًا.";
-  }
-
-  return "تعذر عرض هذه الصفحة. حاول مجددًا.";
+  );
 }
 
 export class ErrorBoundary extends Component<Props, State> {
-  state: State = { error: null, reportSaved: false, errorId: "" };
+  state: State = { error: null, copied: false, errorId: "", componentStack: null };
 
-  static getDerivedStateFromError(error: Error): State {
-    return { error, reportSaved: false, errorId: `MJL-${Date.now().toString(36).toUpperCase()}` };
+  static getDerivedStateFromError(error: Error): Partial<State> {
+    return { error, copied: false, errorId: createErrorId("ERR"), componentStack: null };
   }
 
   componentDidCatch(error: Error, info: ErrorInfo) {
-    const report = {
+    const errorId = this.state.errorId || createErrorId("ERR");
+    this.setState({ componentStack: info.componentStack ?? null, errorId });
+
+    void logClientError({
+      errorId,
       message: error.message,
+      name: error.name,
       stack: error.stack,
       componentStack: info.componentStack,
-      url: typeof window !== "undefined" ? window.location.href : "",
+      route: typeof window !== "undefined" ? window.location.pathname : "",
+      userAgent: typeof navigator !== "undefined" ? navigator.userAgent : "",
       at: new Date().toISOString(),
-    };
-    if (import.meta.env?.DEV) {
-      console.error("[majalis:ErrorBoundary]", report);
-    }
-    try {
-      const key = "majalis-error-reports-v1";
-      const reports = JSON.parse(window.localStorage.getItem(key) || "[]");
-      reports.unshift(report);
-      window.localStorage.setItem(key, JSON.stringify(reports.slice(0, 10)));
-    } catch {
-      /* localStorage may be unavailable */
-    }
+    });
   }
 
-  reset = () => this.setState({ error: null, reportSaved: false, errorId: "" });
+  reset = () => this.setState({ error: null, copied: false, errorId: "", componentStack: null });
 
-  report = () => {
-    try {
-      const detail = encodeURIComponent(
-        `URL: ${window.location.href}\nError: ${this.state.error?.message || "unknown"}\n\n${this.state.error?.stack || ""}`,
-      );
-      window.open(`mailto:support@majlisilm.com?subject=Majalis%20Error%20Report&body=${detail}`, "_blank", "noopener,noreferrer");
-      this.setState({ reportSaved: true });
-    } catch {
-      this.setState({ reportSaved: true });
-    }
+  copyId = async () => {
+    const ok = await copyErrorId(this.state.errorId);
+    if (ok) this.setState({ copied: true });
   };
 
   render() {
     if (this.state.error) {
+      const isDev = import.meta.env?.DEV;
+      const chunkError = isChunkLoadError(this.state.error);
+
       return (
         <div
           role="alert"
+          className="error-boundary-page"
           style={{
             maxWidth: "40rem",
             margin: "3rem auto",
@@ -78,82 +70,35 @@ export class ErrorBoundary extends Component<Props, State> {
           }}
         >
           <h1 style={{ color: C.emeraldDeep, marginBottom: "0.75rem", fontSize: "1.35rem" }}>
-            تعذر عرض الصفحة
+            تعذر عرض هذه الصفحة
           </h1>
           <p style={{ color: C.inkSoft, marginBottom: "1rem", lineHeight: 1.7, fontSize: "0.95rem" }}>
-            {userFacingErrorMessage(this.state.error)}
+            {chunkError
+              ? "تعذر تحميل هذه الصفحة. حدّث المتصفح أو حاول مجددًا."
+              : userFacingBody()}
           </p>
           <p style={{ color: C.inkSoft, marginBottom: "1rem", fontSize: "0.82rem" }}>
             رقم التتبع: <code>{this.state.errorId}</code>
           </p>
           <div style={{ display: "flex", justifyContent: "center", gap: "0.5rem", flexWrap: "wrap" }}>
-            <button
-              type="button"
-              onClick={this.reset}
-              style={{
-                padding: "0.55rem 1.1rem",
-                borderRadius: "0.5rem",
-                background: C.emerald,
-                color: C.parchment,
-                border: "none",
-                cursor: "pointer",
-                fontFamily: "inherit",
-                fontWeight: 700,
-              }}
-            >
+            <button type="button" onClick={this.reset} className="error-boundary-btn error-boundary-btn--primary">
               إعادة المحاولة
             </button>
-            <button
-              type="button"
-              onClick={() => window.location.reload()}
-              style={{
-                padding: "0.55rem 1.1rem",
-                borderRadius: "0.5rem",
-                background: C.panel,
-                color: C.emeraldDeep,
-                border: `1px solid ${C.line}`,
-                cursor: "pointer",
-                fontFamily: "inherit",
-                fontWeight: 700,
-              }}
-            >
-              تحديث الصفحة
-            </button>
-            <button
-              type="button"
-              onClick={this.report}
-              style={{
-                padding: "0.55rem 1.1rem",
-                borderRadius: "0.5rem",
-                background: C.parchment,
-                color: C.inkSoft,
-                border: `1px solid ${C.line}`,
-                cursor: "pointer",
-                fontFamily: "inherit",
-                fontWeight: 700,
-              }}
-            >
-              الإبلاغ عن الخطأ
-            </button>
-            <a
-              href="/"
-              style={{
-                padding: "0.55rem 1.1rem",
-                borderRadius: "0.5rem",
-                background: C.panel,
-                color: C.emeraldDeep,
-                border: `1px solid ${C.line}`,
-                fontFamily: "inherit",
-                fontWeight: 700,
-              }}
-            >
+            <a href="/" className="error-boundary-btn error-boundary-btn--secondary">
               العودة للرئيسية
             </a>
+            <button type="button" onClick={this.copyId} className="error-boundary-btn error-boundary-btn--ghost">
+              {this.state.copied ? "تم النسخ" : "نسخ رقم الخطأ"}
+            </button>
           </div>
-          {this.state.reportSaved && (
-            <p style={{ color: C.inkSoft, marginTop: "0.75rem", fontSize: "0.85rem" }}>
-              تم تجهيز تقرير الخطأ ونسخه في سجل المتصفح المحلي.
-            </p>
+
+          {isDev && (
+            <details style={{ marginTop: "1.25rem", textAlign: "right", fontSize: "0.78rem", color: C.inkSoft }}>
+              <summary style={{ cursor: "pointer", fontWeight: 700 }}>تفاصيل للمطور</summary>
+              <pre style={{ overflow: "auto", marginTop: "0.5rem", whiteSpace: "pre-wrap", direction: "ltr", textAlign: "left" }}>
+                {`name: ${this.state.error.name}\nmessage: ${this.state.error.message}\nroute: ${typeof window !== "undefined" ? window.location.pathname : ""}\nuserAgent: ${typeof navigator !== "undefined" ? navigator.userAgent : ""}\n\ncomponentStack:${this.state.componentStack || ""}\n\nstack:\n${this.state.error.stack || ""}`}
+              </pre>
+            </details>
           )}
         </div>
       );
@@ -177,29 +122,21 @@ export class SectionErrorBoundary extends Component<SectionBoundaryProps, Sectio
   state: SectionBoundaryState = { error: null, errorId: "" };
 
   static getDerivedStateFromError(error: Error): SectionBoundaryState {
-    return { error, errorId: `SEC-${Date.now().toString(36).toUpperCase()}` };
+    return { error, errorId: createErrorId("SEC") };
   }
 
   componentDidCatch(error: Error, info: ErrorInfo) {
-    const report = {
-      section: this.props.name,
+    void logClientError({
+      errorId: this.state.errorId || createErrorId("SEC"),
       message: error.message,
+      name: error.name,
       stack: error.stack,
       componentStack: info.componentStack,
-      url: typeof window !== "undefined" ? window.location.href : "",
+      section: this.props.name,
+      route: typeof window !== "undefined" ? window.location.pathname : "",
+      userAgent: typeof navigator !== "undefined" ? navigator.userAgent : "",
       at: new Date().toISOString(),
-    };
-    if (import.meta.env?.DEV) {
-      console.error("[majalis:SectionErrorBoundary]", report);
-    }
-    try {
-      const key = "majalis-section-error-reports-v1";
-      const reports = JSON.parse(window.localStorage.getItem(key) || "[]");
-      reports.unshift(report);
-      window.localStorage.setItem(key, JSON.stringify(reports.slice(0, 20)));
-    } catch {
-      /* ignore */
-    }
+    });
   }
 
   reset = () => this.setState({ error: null, errorId: "" });

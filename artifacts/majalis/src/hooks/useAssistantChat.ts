@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { callAssistantApi, type AssistantResponse } from "@/lib/assistant-api";
+import { callAssistantApi, type AssistantResponse, type SafetyClassification } from "@/lib/assistant-api";
 import { resolveFounderQuestion } from "@/lib/assistant-founder";
 
 export type ChatMessage = {
@@ -10,6 +10,8 @@ export type ChatMessage = {
   citations?: AssistantResponse["citations"];
   grounded?: boolean;
   confidence?: number;
+  safetyClassification?: SafetyClassification;
+  disclaimer?: string;
 };
 
 export const ASSISTANT_FAILURE_MESSAGE = "تعذر تشغيل المساعد الآن، حاول لاحقًا.";
@@ -102,6 +104,8 @@ export function useAssistantChat() {
             citations: data.citations,
             grounded: data.grounded,
             confidence: data.confidence,
+            safetyClassification: data.safety_classification,
+            disclaimer: data.disclaimer,
           },
         ]);
         return;

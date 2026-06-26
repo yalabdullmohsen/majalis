@@ -7,7 +7,14 @@ import {
   runReasoningQuery,
   looksLikeIslamicKnowledgeQuery,
 } from "../../lib/reasoning-engine/answer.mjs";
-import { NO_EVIDENCE_MESSAGE } from "../../lib/reasoning-engine/constants.mjs";
+import {
+  ISLAMIC_SYSTEM_PROMPT,
+  buildGroundedPayload,
+  buildInsufficientSourcesPayload,
+  buildScholarRedirectAnswer,
+  classifyIslamicQuery,
+  shouldBlockUnsourcedIslamicFallback,
+} from "../../lib/islamic-answer-guardrails.mjs";
 
 export const maxDuration = 30;
 
@@ -18,24 +25,7 @@ const ASSISTANT_MODEL = "claude-haiku-4-5";
 const UNAVAILABLE_MESSAGE = "المساعد العلمي غير متاح حالياً. نعمل على تفعيله قريبًا.";
 const FAILURE_MESSAGE = "تعذر تشغيل المساعد الآن، حاول لاحقًا.";
 
-const SYSTEM_PROMPT =
-  `أنت المساعد الذكي الرسمي لمنصة المجلس العلمي. أجب بأدب واختصار، ولا تصدر فتوى خاصة، وانصح بسؤال أهل العلم في النوازل. ${FOUNDER_SYSTEM_NOTE}`;
-
-const DEFINITIVE_FATWA_PATTERNS = [
-  /فتوى/,
-  /أفتني/,
-  /ما حكم/,
-  /هل يجوز/,
-  /يجوز لي/,
-  /حلال/,
-  /حرام/,
-  /واجب/,
-  /فرض/,
-  /تبطل/,
-  /صحة صلات/,
-  /طلاق/,
-  /زكاة/,
-];
+const SYSTEM_PROMPT = `${ISLAMIC_SYSTEM_PROMPT} ${FOUNDER_SYSTEM_NOTE}`;
 
 function fallbackPayload(message = FAILURE_MESSAGE) {
   return { ok: false, message, fallback: true };
@@ -97,10 +87,6 @@ function extractUserMessage(body) {
 
   const messages = sanitizeMessages(body?.messages);
   return [...messages].reverse().find((message) => message.role === "user")?.content || "";
-}
-
-function looksLikeDefinitiveFatwaRequest(text) {
-  return DEFINITIVE_FATWA_PATTERNS.some((pattern) => pattern.test(text));
 }
 
 function successPayload(answer, extra = {}) {
@@ -192,24 +178,33 @@ async function handleAssistantRequest(req, res) {
     return;
   }
 
-  if (looksLikeDefinitiveFatwaRequest(userMessage)) {
-    sendJson(
-      res,
-      200,
-      successPayload(
-        'هذه مسألة تحتاج إلى عالم مختص. يمكنني مساعدتك بإرشاد عام: ابحث في المنصة عن كلمات المسألة أو اسم الشيخ المناسب، ثم اعرض الواقعة بتفاصيلها على عالم مؤهل.',
-      ),
-    );
+  const safetyClassification = classifyIslamicQuery(userMessage);
+  const scholarRedirect = buildScholarRedirectAnswer(safetyClassification);
+  if (scholarRedirect) {
+    sendJson(res, 200, successPayload(scholarRedirect, {
+      grounded: true,
+      safety_classification: safetyClassification,
+      citations: [],
+      confidence: 0,
+      disclaimer: "هذه إجابة تعليمية مختصرة وليست فتوى شخصية ملزمة.",
+    }));
     return;
   }
 
   const founderAnswer = resolveFounderQuestion(userMessage);
   if (founderAnswer) {
-    sendJson(res, 200, successPayload(founderAnswer));
+    sendJson(res, 200, successPayload(founderAnswer, {
+      safety_classification: "general_guidance",
+      disclaimer: "هذه إجابة تعليمية مختصرة وليست فتوى شخصية ملزمة.",
+    }));
     return;
   }
 
-  if (looksLikeIslamicKnowledgeQuery(userMessage)) {
+  const isIslamicQuery =
+    looksLikeIslamicKnowledgeQuery(userMessage) ||
+    shouldBlockUnsourcedIslamicFallback(userMessage);
+
+  if (isIslamicQuery) {
     try {
       const grounded = await runReasoningQuery({
         query: userMessage,
@@ -219,27 +214,37 @@ async function handleAssistantRequest(req, res) {
       });
 
       if (grounded.ok && !grounded.answer?.noEvidence) {
-        sendJson(res, 200, successPayload(grounded.answer.summary, {
-          grounded: true,
-          citations: grounded.answer.citations,
-          confidence: grounded.confidence,
+        const payload = buildGroundedPayload(
+          grounded.answer.summary,
+          grounded.answer.citations,
+          grounded.confidence ?? 0,
+          safetyClassification === "general_guidance" ? "fiqh_answer" : safetyClassification,
+        );
+
+        if (payload.no_evidence) {
+          sendJson(res, 200, successPayload(payload.answer, payload));
+          return;
+        }
+
+        sendJson(res, 200, successPayload(payload.answer, {
+          ...payload,
           retrieval_mode: grounded.retrievalMode,
         }));
         return;
       }
 
       if (grounded.ok && grounded.answer?.noEvidence) {
-        sendJson(res, 200, successPayload(NO_EVIDENCE_MESSAGE, {
-          grounded: true,
-          no_evidence: true,
-          citations: [],
-          confidence: 0,
-        }));
+        const payload = buildInsufficientSourcesPayload();
+        sendJson(res, 200, successPayload(payload.answer, payload));
         return;
       }
     } catch (groundedErr) {
-      console.error("[assistant] Grounded reasoning failed, falling back:", groundedErr);
+      console.error("[assistant] Grounded reasoning failed:", groundedErr);
     }
+
+    const payload = buildInsufficientSourcesPayload();
+    sendJson(res, 200, successPayload(payload.answer, payload));
+    return;
   }
 
   try {
@@ -251,7 +256,13 @@ async function handleAssistantRequest(req, res) {
       return;
     }
 
-    sendJson(res, 200, successPayload(answer));
+    sendJson(res, 200, successPayload(answer, {
+      safety_classification: "general_guidance",
+      disclaimer: "هذه إجابة تعليمية مختصرة وليست فتوى شخصية ملزمة.",
+      citations: [],
+      confidence: 0.5,
+      grounded: false,
+    }));
   } catch (error) {
     console.error("[assistant] Anthropic API failed:", error);
     sendJson(res, 200, fallbackPayload(FAILURE_MESSAGE));

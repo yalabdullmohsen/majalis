@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "wouter";
 import { C } from "@/lib/theme";
 
 export default function NotFound() {

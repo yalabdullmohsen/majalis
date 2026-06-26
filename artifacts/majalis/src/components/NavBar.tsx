@@ -1,13 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import { Link, useLocation } from "wouter";
 import { useAuth } from "./AuthProvider";
 import NotificationBell from "./NotificationBell";
 import { SearchSuggestions } from "./SearchSuggestions";
 import { SideNavDrawer } from "./SideNavDrawer";
-import { PRIMARY_NAV } from "@/lib/navigation";
+import { MOBILE_MORE_NAV, PRIMARY_NAV } from "@/lib/navigation";
 import { C } from "@/lib/theme";
 
 function useIsMobile() {
@@ -35,11 +34,11 @@ function tabStyle(active: boolean): React.CSSProperties {
 
 function SearchBox({ onSubmitDone }: { onSubmitDone?: () => void }) {
   const [term, setTerm] = useState("");
-  const router = useRouter();
+  const [, navigate] = useLocation();
   const submit = (value: string) => {
     const q = value.trim();
     if (!q) return;
-    router.push(`/search/${encodeURIComponent(q)}`);
+    navigate(`/search/${encodeURIComponent(q)}`);
     setTerm("");
     onSubmitDone?.();
   };
@@ -66,34 +65,75 @@ function SearchBox({ onSubmitDone }: { onSubmitDone?: () => void }) {
 }
 
 export default function NavBar() {
-  const { isAdmin, user, logout } = useAuth();
-  const router = useRouter();
-  const location = usePathname() ?? "/";
+  const { isAdmin, isLoggedIn, user, logout } = useAuth();
+  const [location, navigate] = useLocation();
   const isMobile = useIsMobile();
   const [open, setOpen] = useState(false);
   const [drawer, setDrawer] = useState(false);
+  const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setOpen(false);
     setDrawer(false);
   }, [location]);
 
-  const isActive = (href: string) =>
-    location === href || (href !== "/" && location.startsWith(href));
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    const onPointer = (e: MouseEvent | TouchEvent) => {
+      const target = e.target as Node;
+      if (panelRef.current && !panelRef.current.contains(target)) {
+        const btn = document.querySelector(".navbar-menu-btn--more");
+        if (btn && btn.contains(target)) return;
+        setOpen(false);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    document.addEventListener("mousedown", onPointer);
+    document.addEventListener("touchstart", onPointer);
+    document.body.classList.add("navbar-more-open");
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.removeEventListener("mousedown", onPointer);
+      document.removeEventListener("touchstart", onPointer);
+      document.body.classList.remove("navbar-more-open");
+    };
+  }, [open]);
+
+  const isActive = (href: string) => {
+    const path = href.split("?")[0];
+    return location === href || location === path || (path !== "/" && location.startsWith(path));
+  };
 
   const handleLogout = async () => {
     await logout();
-    router.push("/login");
+    navigate("/login");
   };
 
-  const adminLoginLink = (
-    <Link
-      href="/login?next=/admin"
-      className={isMobile ? "navbar-login navbar-login--mobile" : "navbar-login"}
-      aria-label="دخول المسؤول"
-    >
-      {isMobile ? "دخول" : "دخول المسؤول"}
-    </Link>
+  const authLinks = isLoggedIn ? (
+    <div className="navbar-auth">
+      {isAdmin && <NotificationBell />}
+      <span>{user?.profile?.full_name || user?.email || "حسابي"}</span>
+      {isAdmin && (
+        <Link href="/admin" className="navbar-admin-link">
+          لوحة التحكم
+        </Link>
+      )}
+      <button type="button" onClick={handleLogout} className="navbar-logout">
+        خروج
+      </button>
+    </div>
+  ) : (
+    <div className="navbar-auth navbar-auth--guest">
+      <Link href="/login" className="navbar-login">
+        دخول
+      </Link>
+      <Link href="/register" className="navbar-register">
+        إنشاء حساب
+      </Link>
+    </div>
   );
 
   return (
@@ -124,7 +164,7 @@ export default function NavBar() {
           </div>
 
           {!isMobile && (
-            <nav className="navbar-v3__tabs">
+            <nav className="navbar-v3__tabs" aria-label="التنقل الرئيسي">
               {PRIMARY_NAV.map((t) => (
                 <Link key={t.href} href={t.href} style={tabStyle(isActive(t.href))}>
                   {t.label}
@@ -140,30 +180,34 @@ export default function NavBar() {
 
           <div className="navbar-v3__end">
             {!isMobile && <SearchBox />}
-            {!isMobile && (
-              isAdmin ? (
-                <div className="navbar-auth">
-                  <NotificationBell />
-                  <span>{user?.profile?.full_name || "المسؤول"}</span>
-                  <Link href="/admin" className="navbar-admin-link">لوحة التحكم</Link>
-                  <button type="button" onClick={handleLogout} className="navbar-logout">خروج</button>
-                </div>
-              ) : adminLoginLink
-            )}
+            {!isMobile && authLinks}
             {isMobile && (
               <>
-                {isAdmin ? (
+                {!isLoggedIn && (
+                  <Link href="/register" className="navbar-register navbar-register--mobile" aria-label="إنشاء حساب">
+                    حساب
+                  </Link>
+                )}
+                {!isLoggedIn ? (
+                  <Link href="/login" className="navbar-login navbar-login--mobile" aria-label="تسجيل الدخول">
+                    دخول
+                  </Link>
+                ) : isAdmin ? (
                   <Link href="/admin" className="navbar-login navbar-login--mobile" aria-label="لوحة التحكم">
                     لوحة
                   </Link>
                 ) : (
-                  adminLoginLink
+                  <Link href="/settings" className="navbar-login navbar-login--mobile" aria-label="حسابي">
+                    حسابي
+                  </Link>
                 )}
                 <button
                   type="button"
                   className="navbar-menu-btn navbar-menu-btn--more"
                   onClick={() => setOpen((o) => !o)}
                   aria-expanded={open}
+                  aria-controls="navbar-mobile-more-panel"
+                  aria-haspopup="true"
                 >
                   {open ? "إغلاق" : "المزيد"}
                 </button>
@@ -173,27 +217,56 @@ export default function NavBar() {
         </div>
 
         {isMobile && open && (
-          <div className="navbar-mobile-panel">
+          <div
+            id="navbar-mobile-more-panel"
+            ref={panelRef}
+            className="navbar-mobile-panel"
+            role="dialog"
+            aria-label="قائمة المزيد"
+          >
             <SearchBox onSubmitDone={() => setOpen(false)} />
-            <nav>
-              {PRIMARY_NAV.map((t) => (
-                <Link key={t.href} href={t.href} style={{ ...tabStyle(isActive(t.href)), display: "block", padding: "0.6rem 0.75rem" }}>
+            <nav aria-label="روابط المزيد">
+              {MOBILE_MORE_NAV.map((t) => (
+                <Link
+                  key={t.href}
+                  href={t.href}
+                  onClick={() => setOpen(false)}
+                  style={{ ...tabStyle(isActive(t.href)), display: "block", padding: "0.6rem 0.75rem" }}
+                >
                   {t.label}
                 </Link>
               ))}
               {isAdmin ? (
                 <>
-                  <Link href="/admin" style={{ ...tabStyle(location.startsWith("/admin")), display: "block", padding: "0.6rem 0.75rem" }}>
+                  <Link
+                    href="/admin"
+                    onClick={() => setOpen(false)}
+                    style={{ ...tabStyle(location.startsWith("/admin")), display: "block", padding: "0.6rem 0.75rem" }}
+                  >
                     لوحة التحكم
                   </Link>
                   <button type="button" onClick={handleLogout} className="navbar-logout navbar-logout--block">
                     تسجيل الخروج
                   </button>
                 </>
+              ) : isLoggedIn ? (
+                <>
+                  <Link href="/settings" onClick={() => setOpen(false)} style={{ ...tabStyle(isActive("/settings")), display: "block", padding: "0.6rem 0.75rem" }}>
+                    الإعدادات
+                  </Link>
+                  <button type="button" onClick={handleLogout} className="navbar-logout navbar-logout--block">
+                    تسجيل الخروج
+                  </button>
+                </>
               ) : (
-                <Link href="/login?next=/admin" style={{ ...tabStyle(location === "/login"), display: "block", padding: "0.6rem 0.75rem" }}>
-                  دخول المسؤول
-                </Link>
+                <>
+                  <Link href="/login" onClick={() => setOpen(false)} style={{ ...tabStyle(isActive("/login")), display: "block", padding: "0.6rem 0.75rem" }}>
+                    تسجيل الدخول
+                  </Link>
+                  <Link href="/register" onClick={() => setOpen(false)} style={{ ...tabStyle(isActive("/register")), display: "block", padding: "0.6rem 0.75rem" }}>
+                    إنشاء حساب
+                  </Link>
+                </>
               )}
             </nav>
           </div>

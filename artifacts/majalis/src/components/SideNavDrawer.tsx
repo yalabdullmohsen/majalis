@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { Link, useLocation } from "wouter";
 import {
   BookOpen,
   BookMarked,
@@ -23,6 +22,7 @@ import {
   Sparkles,
   Sun,
   Tv,
+  UserPlus,
   X,
 } from "lucide-react";
 import { useAuth } from "./AuthProvider";
@@ -63,8 +63,8 @@ type Props = {
 };
 
 export function SideNavDrawer({ open, onClose }: Props) {
-  const pathname = usePathname() ?? "/";
-  const { isAdmin } = useAuth();
+  const [pathname] = useLocation();
+  const { isAdmin, isLoggedIn } = useAuth();
 
   useEffect(() => {
     if (!open) return;
@@ -125,6 +125,29 @@ export function SideNavDrawer({ open, onClose }: Props) {
               </nav>
             </div>
           ))}
+
+          <div className="side-nav-group side-nav-group--v2">
+            <p className="side-nav-group__title">الحساب</p>
+            <nav>
+              {!isLoggedIn ? (
+                <>
+                  <Link href="/login" onClick={onClose} className="side-nav-link side-nav-link--v2">
+                    <Settings size={18} />
+                    <span>دخول</span>
+                  </Link>
+                  <Link href="/register" onClick={onClose} className="side-nav-link side-nav-link--v2">
+                    <UserPlus size={18} />
+                    <span>إنشاء حساب</span>
+                  </Link>
+                </>
+              ) : (
+                <Link href="/settings" onClick={onClose} className={`side-nav-link side-nav-link--v2${pathname.startsWith("/settings") ? " is-active" : ""}`}>
+                  <Settings size={18} />
+                  <span>الإعدادات</span>
+                </Link>
+              )}
+            </nav>
+          </div>
 
           <div className="side-nav-group side-nav-group--v2 side-nav-group--admin">
             <p className="side-nav-group__title">الإدارة</p>

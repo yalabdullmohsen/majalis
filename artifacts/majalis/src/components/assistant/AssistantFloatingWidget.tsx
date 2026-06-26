@@ -1,14 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { Link, useLocation } from "wouter";
 import { Sparkles, X } from "lucide-react";
 import { useAssistantChat } from "@/hooks/useAssistantChat";
 import { AssistantChatView } from "./AssistantChatView";
 
 export function AssistantFloatingWidget() {
-  const location = usePathname() ?? "/";
+  const [location] = useLocation();
   const [open, setOpen] = useState(false);
   const chat = useAssistantChat();
   const closeRef = useRef<HTMLButtonElement>(null);

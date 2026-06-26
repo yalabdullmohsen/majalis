@@ -15,10 +15,25 @@ type Props = {
 };
 
 const DEFAULT_QUICK_PROMPTS = [
-  "ما حكم صيام يوم عرفة؟",
   "ما هي أذكار الصباح؟",
   "كيف أبدأ طلب العلم؟",
+  "ما فضل قراءة القرآن؟",
 ];
+
+function safetyLabel(classification: string): string {
+  switch (classification) {
+    case "fiqh_answer":
+      return "إجابة فقهية مستندة";
+    case "requires_scholar":
+      return "تحتاج أهل العلم";
+    case "insufficient_sources":
+      return "مصادر غير كافية";
+    case "blocked_sensitive_fatwa":
+      return "مسألة حساسة";
+    default:
+      return "إرشاد عام";
+  }
+}
 
 export function AssistantChatView({
   messages,
@@ -67,9 +82,15 @@ export function AssistantChatView({
             {message.role === "assistant" && !message.isFailure ? (
               <>
                 <AssistantReply content={message.content} />
+                {message.confidence != null && message.grounded && (
+                  <p className="assistant-confidence" style={{ marginTop: "0.5rem", fontSize: "0.78rem", color: "var(--majalis-ink-soft)" }}>
+                    مستوى الثقة: {Math.round(message.confidence * (message.confidence <= 1 ? 100 : 1))}%
+                    {message.safetyClassification && ` — ${safetyLabel(message.safetyClassification)}`}
+                  </p>
+                )}
                 {message.citations && message.citations.length > 0 && (
                   <div className="assistant-citations" style={{ marginTop: "0.75rem", fontSize: "0.8rem" }}>
-                    <p style={{ fontWeight: 600, marginBottom: "0.25rem" }}>المراجع ({message.citations.length})</p>
+                    <p style={{ fontWeight: 600, marginBottom: "0.25rem" }}>المصادر ({message.citations.length})</p>
                     <ul style={{ margin: 0, paddingRight: "1.25rem" }}>
                       {message.citations.slice(0, 6).map((cite, i) => (
                         <li key={`${cite.href}-${i}`}>
@@ -81,6 +102,9 @@ export function AssistantChatView({
                     </ul>
                   </div>
                 )}
+                <p className="assistant-disclaimer" style={{ marginTop: "0.75rem", fontSize: "0.78rem", color: "var(--majalis-brass-deep)" }}>
+                  {message.disclaimer || "هذه إجابة تعليمية مختصرة وليست فتوى شخصية ملزمة."}
+                </p>
               </>
             ) : (
               <p>{message.content}</p>
