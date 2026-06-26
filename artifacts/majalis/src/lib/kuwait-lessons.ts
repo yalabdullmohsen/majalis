@@ -1,4 +1,6 @@
 import { GOVERNORATES } from "@/lib/theme";
+import { resolveLessonPosterUrl } from "@/lib/lesson-image";
+import { normalizeActivityType } from "@/lib/activity-label";
 import { arabicIncludes } from "@/lib/arabic-search";
 import { resolveLessonSheikhImage } from "@/lib/sheikh-image";
 import { resolveGovernorateForUi, resolveRegion, displayGovernorate } from "@/lib/kuwait-regions";
@@ -12,7 +14,7 @@ import {
   isOccurrencePast,
 } from "@/lib/lesson-time";
 
-export type ActivityType = "درس" | "محاضرة" | "دورة";
+export type ActivityType = "درس" | "دورة";
 
 export type KuwaitLessonRecord = {
   id: string;
@@ -88,8 +90,8 @@ export const KUWAIT_CATEGORIES = [
   "أخرى",
 ];
 
-export const ACTIVITY_TYPES = ["الكل", "درس", "محاضرة", "دورة"] as const;
-export const CONTENT_KINDS = ["الكل", "دورة", "محاضرة", "درس"] as const;
+export const ACTIVITY_TYPES = ["الكل", "درس", "دورة"] as const;
+export const CONTENT_KINDS = ["الكل", "دورة", "درس"] as const;
 
 function normalizeText(value: string) {
   return String(value || "").trim().toLowerCase();
@@ -113,12 +115,8 @@ function parseDayFromSchedule(schedule?: string): string {
 }
 
 function activityFromRow(row: any): ActivityType {
-  if (row.activity_type) return row.activity_type as ActivityType;
   if (row.is_course) return "دورة";
-  const tags: string[] = Array.isArray(row.keywords) ? row.keywords : Array.isArray(row.tags) ? row.tags : [];
-  if (tags.some((t) => t.includes("دورة"))) return "دورة";
-  if (tags.some((t) => t.includes("محاضرة"))) return "محاضرة";
-  return "درس";
+  return normalizeActivityType(row.activity_type);
 }
 
 function enrichScheduleFields(
@@ -165,7 +163,7 @@ export function mapLessonRow(row: any): KuwaitLessonRecord {
     title: row.title,
     sheikhName: rawSheikh,
     sheikhImage: row.sheikh_image_url || resolveLessonSheikhImage(row),
-    lessonImage: row.poster_image_url,
+    lessonImage: resolveLessonPosterUrl(row.poster_image_url),
     governorate,
     region,
     mosque: row.mosque || "",
@@ -288,7 +286,6 @@ export function filterKuwaitLessons(
     if (filters.activityType !== "الكل" && lesson.activityType !== filters.activityType) return false;
     if (filters.contentKind !== "الكل") {
       if (filters.contentKind === "دورة" && !lesson.isCourse && lesson.activityType !== "دورة") return false;
-      if (filters.contentKind === "محاضرة" && lesson.activityType !== "محاضرة") return false;
       if (filters.contentKind === "درس" && (lesson.isCourse || lesson.activityType === "دورة")) return false;
     }
     if (filters.hasLiveStream === true && !lesson.hasLiveStream) return false;

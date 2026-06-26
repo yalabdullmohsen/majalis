@@ -73,7 +73,7 @@ export default function TranscribePage() {
     setResult(null);
 
     if (!sanitizeText(title, 200)) {
-      setErrorMessage("أدخل عنواناً للمحاضرة.");
+      setErrorMessage("أدخل عنواناً للدرس.");
       return;
     }
 
@@ -208,7 +208,7 @@ export default function TranscribePage() {
         <Link href="/" className="text-sm font-bold text-[#164E3C] hover:underline">
           ← المجلس العلمي
         </Link>
-        <h1 className="mt-2 text-2xl font-bold text-[#164E3C]">تفريغ المحاضرات</h1>
+        <h1 className="mt-2 text-2xl font-bold text-[#164E3C]">تفريغ الدروس</h1>
         <p className="mb-8 text-[#5B5446]">حوّل الصوت والفيديو إلى نص مع تلخيص ذكي واستخراج الفوائد</p>
 
         {!isLoggedIn && (
@@ -238,7 +238,7 @@ export default function TranscribePage() {
 
         <div className="space-y-4 rounded-2xl border border-[#E0D7C4] bg-white p-6 shadow-sm">
           <div>
-            <label className="mb-1 block text-sm font-medium text-[#5B5446]">عنوان المحاضرة *</label>
+            <label className="mb-1 block text-sm font-medium text-[#5B5446]">عنوان الدرس *</label>
             <input
               value={title}
               onChange={(e) => setTitle(e.target.value)}

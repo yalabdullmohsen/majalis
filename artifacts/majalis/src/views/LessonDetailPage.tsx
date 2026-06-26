@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
-import { getLessonById } from "@/lib/supabase";
+import { getLessonById, getSheikhs } from "@/lib/supabase";
 import { Loading, Empty } from "@/components/ui-common";
 import ContentActions from "@/components/ContentActions";
 import { isDemoId } from "@/lib/demo-content";
@@ -19,6 +19,8 @@ import {
 import { cleanDisplayText } from "@/lib/display-text";
 import {
   fetchRelatedLessons,
+  fetchSameSheikhLessons,
+  fetchSeriesLessons,
   getUnifiedLessonById,
 } from "@/lib/lessons-service";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
@@ -26,6 +28,10 @@ import { mapLessonRow } from "@/lib/kuwait-lessons";
 import { cleanTimeText } from "@/lib/lesson-time";
 import { useLessonSeo } from "@/lib/seo";
 import { usePageView } from "@/hooks/usePageView";
+import { fetchLessonEngagementStats, type LessonEngagementStats } from "@/lib/lesson-stats";
+import { normalizeActivityLabel } from "@/lib/activity-label";
+import { resolveLessonPosterUrl } from "@/lib/lesson-image";
+import { sheikhNameKey } from "@/lib/sheikh-name";
 
 function buildMapsEmbed(url?: string, mosque?: string, region?: string) {
   if (url?.includes("google.com/maps") || url?.includes("goo.gl/maps") || url?.includes("maps.app")) {
@@ -39,6 +45,22 @@ function buildMapsEmbed(url?: string, mosque?: string, region?: string) {
   return null;
 }
 
+function inferLessonLevel(category?: string): string {
+  if (!category) return "عام";
+  if (category === "تأصيل") return "متقدم";
+  if (category === "تجويد") return "مبتدئ";
+  return "عام";
+}
+
+function StatPill({ label, value }: { label: string; value: number | string }) {
+  return (
+    <div className="lesson-detail-stat">
+      <span>{label}</span>
+      <strong>{typeof value === "number" ? value.toLocaleString("ar") : value}</strong>
+    </div>
+  );
+}
+
 export default function LessonDetailPage({
   params,
   initialLesson,
@@ -49,11 +71,29 @@ export default function LessonDetailPage({
   const [lesson, setLesson] = useState<any>(null);
   const [kuwaitLesson, setKuwaitLesson] = useState<KuwaitLessonRecord | null>(initialLesson ?? null);
   const [similar, setSimilar] = useState<KuwaitLessonRecord[]>([]);
+  const [sameSheikh, setSameSheikh] = useState<KuwaitLessonRecord[]>([]);
+  const [seriesLessons, setSeriesLessons] = useState<KuwaitLessonRecord[]>([]);
+  const [sheikhBio, setSheikhBio] = useState<string>("");
+  const [stats, setStats] = useState<LessonEngagementStats>({ views: 0, saves: 0, shares: 0 });
   const [loading, setLoading] = useState(!initialLesson);
 
   useEffect(() => {
     if (initialLesson) {
-      fetchRelatedLessons(initialLesson).then(setSimilar).catch(() => setSimilar([]));
+      Promise.all([
+        fetchRelatedLessons(initialLesson),
+        fetchSameSheikhLessons(initialLesson),
+        fetchSeriesLessons(initialLesson),
+        fetchLessonEngagementStats(initialLesson.id),
+      ]).then(([related, sheikhLessons, series, engagement]) => {
+        setSimilar(related);
+        setSameSheikh(sheikhLessons);
+        setSeriesLessons(series);
+        setStats(engagement);
+      }).catch(() => {
+        setSimilar([]);
+        setSameSheikh([]);
+        setSeriesLessons([]);
+      });
       return;
     }
 
@@ -65,18 +105,51 @@ export default function LessonDetailPage({
         if (staticLesson) {
           setKuwaitLesson(staticLesson);
           setLesson(null);
-          return fetchRelatedLessons(staticLesson).then(setSimilar);
+          return Promise.all([
+            fetchRelatedLessons(staticLesson),
+            fetchSameSheikhLessons(staticLesson),
+            fetchSeriesLessons(staticLesson),
+            fetchLessonEngagementStats(staticLesson.id),
+          ]).then(([related, sheikhLessons, series, engagement]) => {
+            setSimilar(related);
+            setSameSheikh(sheikhLessons);
+            setSeriesLessons(series);
+            setStats(engagement);
+          });
         }
 
         return getLessonById(params.id).then(({ lesson: dbLesson }) => {
           setLesson(dbLesson);
           setKuwaitLesson(null);
           if (!dbLesson) return undefined;
-          return fetchRelatedLessons(mapLessonRow(dbLesson)).then(setSimilar);
+          const mapped = mapLessonRow(dbLesson);
+          return Promise.all([
+            fetchRelatedLessons(mapped),
+            fetchSameSheikhLessons(mapped),
+            fetchSeriesLessons(mapped),
+            fetchLessonEngagementStats(mapped.id),
+          ]).then(([related, sheikhLessons, series, engagement]) => {
+            setSimilar(related);
+            setSameSheikh(sheikhLessons);
+            setSeriesLessons(series);
+            setStats(engagement);
+          });
         });
       })
       .finally(() => setLoading(false));
   }, [params.id, initialLesson]);
+
+  useEffect(() => {
+    const name = kuwaitLesson?.sheikhName || lesson?.speaker_name || lesson?.sheikhs?.name;
+    if (!name) return;
+    getSheikhs()
+      .then(({ data }) => {
+        const key = sheikhNameKey(name);
+        const match = (data || []).find((s: { name?: string; bio?: string }) => sheikhNameKey(s.name || "") === key);
+        if (match?.bio) setSheikhBio(match.bio);
+      })
+      .catch(() => undefined);
+  }, [kuwaitLesson, lesson]);
 
   const unified = useMemo(() => {
     if (kuwaitLesson) return fromKuwaitLesson(kuwaitLesson);
@@ -92,7 +165,7 @@ export default function LessonDetailPage({
       title: unified.title,
       sheikhName: unified.sheikhName,
       sheikhImage: resolveLessonSheikhImage(lesson),
-      lessonImage: lesson.poster_image_url,
+      lessonImage: resolveLessonPosterUrl(lesson.poster_image_url),
       governorate: unified.governorate || "",
       region: unified.region || "",
       mosque: unified.mosque || "",
@@ -104,7 +177,7 @@ export default function LessonDetailPage({
       keywords: Array.isArray(lesson.keywords) ? lesson.keywords : undefined,
       gregorianDate: unified.gregorianDate,
       hijriDate: unified.hijriDate,
-      activityType: unified.activityType || "درس",
+      activityType: normalizeActivityLabel(unified.activityType) as KuwaitLessonRecord["activityType"],
       sessionCount: unified.sessionCount,
       hasLiveStream: unified.hasLiveStream,
       hasRecording: unified.hasRecording,
@@ -121,8 +194,15 @@ export default function LessonDetailPage({
   if (!unified) return <Empty text="لم يُعثر على الدرس." />;
 
   const sheikhName = unified.sheikhName;
+  const sheikhImage = kuwaitLesson?.sheikhImage || resolveLessonSheikhImage(lesson);
+  const hasSheikhPhoto = Boolean(sheikhImage && !sheikhImage.includes("logo"));
   const { day, time, dateLabel } = lesson ? extractLessonSchedule(lesson) : { day: unified.day, time: unified.time, dateLabel: unified.gregorianDate };
   const mapsEmbed = buildMapsEmbed(unified.mapsUrl, unified.mosque, unified.region);
+  const activityLabel = normalizeActivityLabel(unified.activityType);
+  const keywords = unified.keywords || [];
+  const tags = [...new Set([unified.category, activityLabel, ...(keywords.slice(0, 6))].filter(Boolean))];
+  const level = inferLessonLevel(unified.category);
+  const addedDate = lesson?.created_at || lesson?.updated_at || unified.gregorianDate;
 
   const handleShare = async () => {
     const url = buildLessonShareUrl(unified);
@@ -141,19 +221,29 @@ export default function LessonDetailPage({
 
   return (
     <div className="page-shell narrow lesson-detail-page">
+      <nav className="lesson-detail-breadcrumb" aria-label="مسار التصفح">
+        <Link href="/">الرئيسية</Link>
+        <span aria-hidden="true"> / </span>
+        <Link href="/lessons">الدروس</Link>
+        <span aria-hidden="true"> / </span>
+        <span>{unified.title}</span>
+      </nav>
+
       <Link href="/lessons" className="lesson-detail-back">
         ← العودة إلى الدروس
       </Link>
 
       <article className="ui-card lesson-detail-card">
-        <div className="lesson-detail-hero">
-          <OptimizedSheikhImage
-            src={kuwaitLesson?.sheikhImage || resolveLessonSheikhImage(lesson)}
-            name={sheikhName || "شيخ"}
-            size={136}
-            variant="portrait"
-            priority
-          />
+        <div className={`lesson-detail-hero${hasSheikhPhoto ? "" : " lesson-detail-hero--text-only"}`}>
+          {hasSheikhPhoto && (
+            <OptimizedSheikhImage
+              src={sheikhImage}
+              name={sheikhName || "شيخ"}
+              size={136}
+              variant="portrait"
+              priority
+            />
+          )}
           <div className="lesson-detail-hero__copy">
             {hasValue(sheikhName) && (
               <p className="lesson-card-pro__sheikh">{sheikhName}</p>
@@ -161,14 +251,26 @@ export default function LessonDetailPage({
             <h1 className="lesson-detail-title">{unified.title}</h1>
             <div className="lesson-detail-tags">
               {hasValue(unified.category) && <span className="page-tag">{unified.category}</span>}
-              {unified.activityType && <span className="page-soft-tag">{unified.activityType}</span>}
+              <span className="page-soft-tag">{activityLabel}</span>
+              <span className="page-soft-tag">المستوى: {level}</span>
+              <span className="page-soft-tag">اللغة: العربية</span>
               {unified.hasLiveStream && <span className="page-soft-tag">بث مباشر</span>}
               {unified.hasRecording && <span className="page-soft-tag">تسجيل</span>}
             </div>
-            {unified.note && (
-              <p className="lesson-detail-summary">{cleanDisplayText(unified.note)}</p>
+            {(unified.note || unified.description) && (
+              <p className="lesson-detail-summary">
+                {cleanDisplayText(unified.note || unified.description?.slice(0, 220) || "")}
+              </p>
             )}
           </div>
+        </div>
+
+        <div className="lesson-detail-stats-row">
+          <StatPill label="المشاهدات" value={stats.views} />
+          <StatPill label="الحفظ" value={stats.saves} />
+          {unified.sessionCount != null && unified.sessionCount > 0 && (
+            <StatPill label="اللقاءات" value={unified.sessionCount} />
+          )}
         </div>
 
         <dl className="lesson-card-pro__meta lesson-detail-meta">
@@ -193,8 +295,8 @@ export default function LessonDetailPage({
           {hasValue(unified.governorate) && (
             <div><dt>المحافظة</dt><dd>{unified.governorate}</dd></div>
           )}
-          {unified.sessionCount != null && unified.sessionCount > 0 && (
-            <div><dt>عدد اللقاءات</dt><dd>{unified.sessionCount}</dd></div>
+          {addedDate && (
+            <div><dt>تاريخ الإضافة</dt><dd>{String(addedDate).slice(0, 10)}</dd></div>
           )}
         </dl>
 
@@ -202,6 +304,35 @@ export default function LessonDetailPage({
           <div className="lesson-detail-body">
             <h2>عن الدرس</h2>
             <p>{cleanDisplayText(unified.description)}</p>
+          </div>
+        )}
+
+        {sheikhBio && (
+          <div className="lesson-detail-body">
+            <h2>نبذة الشيخ</h2>
+            <p>{cleanDisplayText(sheikhBio)}</p>
+          </div>
+        )}
+
+        {keywords.length > 0 && (
+          <div className="lesson-detail-body">
+            <h2>الكلمات المفتاحية</h2>
+            <div className="lesson-detail-tags">
+              {keywords.map((kw) => (
+                <span key={kw} className="page-soft-tag">{kw}</span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {tags.length > 0 && (
+          <div className="lesson-detail-body">
+            <h2>الوسوم</h2>
+            <div className="lesson-detail-tags">
+              {tags.map((tag) => (
+                <span key={tag} className="page-soft-tag">{tag}</span>
+              ))}
+            </div>
           </div>
         )}
 
@@ -267,6 +398,28 @@ export default function LessonDetailPage({
           </div>
         )}
       </article>
+
+      {seriesLessons.length > 0 && (
+        <section className="lessons-similar-section" aria-labelledby="series-lessons-heading">
+          <h2 id="series-lessons-heading">السلسلة المرتبطة</h2>
+          <div className="page-card-grid lesson-unified-grid">
+            {seriesLessons.map((item) => (
+              <UnifiedLessonCard key={item.id} lesson={fromKuwaitLesson(item)} compact />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {sameSheikh.length > 0 && (
+        <section className="lessons-similar-section" aria-labelledby="same-sheikh-heading">
+          <h2 id="same-sheikh-heading">دروس الشيخ نفسه</h2>
+          <div className="page-card-grid lesson-unified-grid">
+            {sameSheikh.map((item) => (
+              <UnifiedLessonCard key={item.id} lesson={fromKuwaitLesson(item)} compact />
+            ))}
+          </div>
+        </section>
+      )}
 
       {similar.length > 0 && (
         <section className="lessons-similar-section" aria-labelledby="similar-lessons-heading">

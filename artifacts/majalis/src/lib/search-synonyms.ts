@@ -4,7 +4,7 @@ const SYNONYM_GROUPS: string[][] = [
   ["تفسير", "tafsir", "تفسيري", "قرآن"],
   ["حديث", "سنة", "hadith", "sunna", "سنّة"],
   ["عقيدة", "توحيد", "aqeedah", "عقائد"],
-  ["دروس", "درس", "محاضرات", "محاضرة", "lesson", "lessons"],
+  ["دروس", "درس", "lesson", "lessons"],
   ["دورة", "دورات", "course", "courses", "ملتقى"],
   ["شيخ", "مشايخ", "speaker", "sheikh"],
   ["مسجد", "جامع", "mosque"],

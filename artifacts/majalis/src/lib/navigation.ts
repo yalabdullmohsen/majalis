@@ -136,7 +136,7 @@ export const HOME_FEATURE_CARDS = [
 ] as const;
 
 export const HOME_MORE_SECTIONS = [
-  { href: "/lessons", title: "الدروس", description: "دروس ودورات ومحاضرات" },
+  { href: "/lessons", title: "الدروس", description: "دروس ودورات علمية" },
   { href: "/fatwa", title: "الفتاوى", description: "مركز الفتاوى الشرعية" },
   { href: "/prayer-ranks", title: "مراتب الناس في الصلاة", description: "مراتب الخشوع وحضور القلب" },
   { href: "/rulings", title: "الأحكام الشرعية", description: "مكتبة الأحكام والأدلة" },

@@ -1,3 +1,4 @@
+import { resolveLessonPosterUrl } from "@/lib/lesson-image";
 import { cleanDisplayText } from "./display-text";
 import { extractLessonSchedule } from "./lesson-display";
 import { formatSheikhName } from "./sheikh-name";
@@ -50,7 +51,7 @@ export function fromKuwaitLesson(lesson: KuwaitLessonRecord, archived = false): 
     title: cleanDisplayText(lesson.title),
     sheikhName: formatSheikhName(lesson.sheikhName.replace(/^الشيخ:\s*/u, "")) || cleanDisplayText(lesson.sheikhName),
     sheikhImage: lesson.sheikhImage,
-    lessonImage: lesson.lessonImage,
+    lessonImage: resolveLessonPosterUrl(lesson.lessonImage),
     category: cleanDisplayText(lesson.category) || "أخرى",
     day: cleanDisplayText(lesson.day),
     time: cleanTimeText(cleanDisplayText(lesson.time)),

@@ -107,7 +107,7 @@ export const CMS_CONTENT_KINDS: CmsContentKind[] = [
 
 export const CMS_KIND_LABELS: Record<CmsContentKind, string> = {
   lesson: "درس",
-  lecture: "محاضرة",
+  lecture: "درس",
   course: "دورة",
   sheikh: "شيخ",
   book: "كتاب",

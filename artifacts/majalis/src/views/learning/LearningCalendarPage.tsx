@@ -8,7 +8,7 @@ import { fetchLearningCalendar, subscribeLearningEvent } from "@/lib/digital-lea
 const TYPE_LABELS: Record<string, string> = {
   lesson: "درس",
   course: "دورة",
-  lecture: "محاضرة",
+  lecture: "درس",
   conference: "مؤتمر",
   occasion: "مناسبة",
 };
@@ -31,7 +31,7 @@ export default function LearningCalendarPage() {
 
   return (
     <div className="page-shell narrow">
-      <PageHeader title="التقويم العلمي" subtitle="الدروس والدورات والمحاضرات والمناسبات" />
+      <PageHeader title="التقويم العلمي" subtitle="الدروس والدورات والمناسبات" />
 
       <div style={{ display: "grid", gap: "0.75rem" }}>
         {events.map((ev) => (

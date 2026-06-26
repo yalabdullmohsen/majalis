@@ -12,7 +12,7 @@ function isCourse(lesson: KuwaitLessonRecord) {
 
 function pickUpcomingLessons(items: KuwaitLessonRecord[]) {
   return sortKuwaitLessons(
-    items.filter((lesson) => !isCourse(lesson) && lesson.activityType !== "محاضرة"),
+    items.filter((lesson) => !isCourse(lesson) && lesson.activityType !== "دورة"),
   ).slice(0, 4);
 }
 

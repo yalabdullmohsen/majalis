@@ -54,10 +54,10 @@ function SafeHomeSection({ name, children }: { name: string; children: React.Rea
   return <SectionErrorBoundary name={name}>{children}</SectionErrorBoundary>;
 }
 
-const LECTURE_ITEMS = [
-  { title: "محاضرات الأسبوع", href: "/lessons?type=lecture", meta: "محاضرات", summary: "مختارات صوتية ومرئية مرتبة حسب التاريخ والشيخ." },
-  { title: "محاضرات العقيدة", href: "/search/محاضرة عقيدة", meta: "العقيدة", summary: "مواد موثقة في أصول الاعتقاد والتوحيد." },
-  { title: "محاضرات الآداب", href: "/search/محاضرة آداب", meta: "التزكية", summary: "محاضرات نافعة في السلوك والآداب." },
+const FEATURED_LESSON_ITEMS = [
+  { title: "دروس الأسبوع", href: "/lessons", meta: "دروس", summary: "مختارات مرتبة حسب التاريخ والشيخ." },
+  { title: "دروس العقيدة", href: "/search/درس عقيدة", meta: "العقيدة", summary: "مواد موثقة في أصول الاعتقاد والتوحيد." },
+  { title: "دروس الآداب", href: "/search/درس آداب", meta: "التزكية", summary: "دروس نافعة في السلوك والآداب." },
 ];
 
 const KHUTBA_ITEMS = [
@@ -184,7 +184,7 @@ export default function HomePage({
       <main className="home-container home-main home-main--v3">
         <SafeHomeSection name="أحدث الدروس"><HomeUpcomingLessons initialLessons={initialFeaturedLessons} /></SafeHomeSection>
         <SafeHomeSection name="الدورات العلمية"><HomeUpcomingCourses /></SafeHomeSection>
-        <SafeHomeSection name="المحاضرات"><HomeContentRail title="المحاضرات" subtitle="مختارات حديثة للدروس والمحاضرات الصوتية والمرئية." items={LECTURE_ITEMS} /></SafeHomeSection>
+        <SafeHomeSection name="دروس مختارة"><HomeContentRail title="دروس مختارة" subtitle="مختارات حديثة للدروس الصوتية والمرئية." items={FEATURED_LESSON_ITEMS} /></SafeHomeSection>
         <SafeHomeSection name="المشايخ"><HomeContentRail title="المشايخ" subtitle="الوصول إلى العلماء والمشايخ والدروس المرتبطة بهم." items={SCHOLAR_ITEMS} /></SafeHomeSection>
         <SafeHomeSection name="القرآن"><HomeContentRail title="القرآن الكريم" subtitle="مصحف — تجويد — تلاوات — بث — إذاعات." items={QURAN_ITEMS} /></SafeHomeSection>
         <SafeHomeSection name="المكتبة"><HomeContentRail title="المكتبة" subtitle="كتب ومتون ومسارات علمية." items={LIBRARY_ITEMS} /></SafeHomeSection>

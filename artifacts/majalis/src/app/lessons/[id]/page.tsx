@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { breadcrumbJsonLd, lessonJsonLd } from "@/lib/seo-structured-data";
 import {
   fetchLessonByIdForServer,
 } from "../../../../lib/supabase/server-data";
@@ -58,6 +59,22 @@ export default async function LessonDetailPage({ params }: PageProps) {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            breadcrumbJsonLd([
+              { name: "الرئيسية", path: "/" },
+              { name: "الدروس", path: "/lessons" },
+              { name: lesson.title, path: `/lessons/${lesson.id}` },
+            ]),
+          ),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(lessonJsonLd(lesson)) }}
+      />
       <article className="page-shell" aria-label={lesson.title}>
         <h1>{lesson.title}</h1>
         {lesson.sheikhName && <p className="seo-listing-intro">الشيخ: {lesson.sheikhName}</p>}

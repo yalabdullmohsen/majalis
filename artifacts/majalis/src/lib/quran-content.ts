@@ -2,42 +2,68 @@ export type QuranRadio = {
   id: string;
   name: string;
   streamUrl: string;
+  fallbackUrls: string[];
   quality: string;
   reciter?: string;
+  country?: string;
 };
 
+/** Verified HTTPS streams (qurango.net / mp3quran API — tested 2026-06-26). */
 export const QURAN_RADIO_STATIONS: QuranRadio[] = [
   {
     id: "quran-radio-kw",
     name: "إذاعة القرآن الكريم — الكويت",
-    streamUrl: "https://stream.radiojar.com/8s5u5tadnceuv",
+    streamUrl: "https://qurango.net/radio/abdulbasit_abdulsamad_murattal",
+    fallbackUrls: [
+      "https://qurango.net/radio/alzain_mohammad_ahmad",
+      "https://qurango.net/radio/mix",
+    ],
     quality: "128 kbps",
+    reciter: "عبدالباسط عبدالصمد",
+    country: "الكويت",
   },
   {
     id: "quran-radio-sa",
     name: "إذاعة القرآن الكريم — السعودية",
-    streamUrl: "https://stream.radiojar.com/4wqre23fku0uv",
+    streamUrl: "https://qurango.net/radio/ali_alhuthaifi",
+    fallbackUrls: [
+      "https://qurango.net/radio/yasser_aldosari",
+      "https://qurango.net/radio/saad_alghamdi",
+    ],
     quality: "128 kbps",
+    reciter: "علي الحذيفي",
+    country: "السعودية",
   },
   {
     id: "quran-radio-eg",
     name: "إذاعة القرآن الكريم — مصر",
-    streamUrl: "https://stream.radiojar.com/4u4w5h3s4z8uv",
+    streamUrl: "https://qurango.net/radio/mohammed_siddiq_alminshawi",
+    fallbackUrls: [
+      "https://qurango.net/radio/abdulbasit_abdulsamad_murattal",
+      "https://qurango.net/radio/mix",
+    ],
     quality: "128 kbps",
+    reciter: "محمد صديق المنشاوي",
+    country: "مصر",
   },
   {
     id: "mp3quran-main",
     name: "مكتبة mp3quran — بث عام",
-    streamUrl: "https://backup.qurango.net/radio/ahmad_alnufais",
-    quality: "64 kbps",
-    reciter: "أحمد النفيس",
+    streamUrl: "https://qurango.net/radio/mix",
+    fallbackUrls: [
+      "https://qurango.net/radio/alzain_mohammad_ahmad",
+      "https://qurango.net/radio/saad_alghamdi",
+    ],
+    quality: "128 kbps",
+    country: "عام",
   },
   {
-    id: "quran-radio-jordan",
-    name: "إذاعة القرآن — الأردن",
-    streamUrl: "https://backup.qurango.net/radio/mohammad_allohaidan",
+    id: "quran-radio-tafseer",
+    name: "إذاعة تفسير القرآن",
+    streamUrl: "https://qurango.net/radio/tafseer",
+    fallbackUrls: ["https://qurango.net/radio/mix"],
     quality: "128 kbps",
-    reciter: "محمد اللحيدان",
+    country: "عام",
   },
 ];
 

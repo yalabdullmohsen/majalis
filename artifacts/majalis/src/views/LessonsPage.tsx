@@ -17,13 +17,12 @@ import { regionsForGovernorate } from "@/lib/kuwait-regions";
 import { fromKuwaitLesson } from "@/lib/unified-lesson-card";
 import { registerForLesson, unregisterFromLesson, getMyRegistrations } from "@/lib/supabase";
 
-type TabId = "all" | "lessons" | "courses" | "lectures";
+type TabId = "all" | "lessons" | "courses";
 
 const TAB_LABELS: Record<TabId, string> = {
   all: "الكل",
   lessons: "دروس",
   courses: "دورات",
-  lectures: "محاضرات",
 };
 
 function useTabFromUrl(): [TabId, (tab: TabId) => void] {
@@ -52,14 +51,13 @@ function readTabFromUrl(): TabId {
   if (typeof window === "undefined") return "all";
   const params = new URLSearchParams(window.location.search);
   const value = params.get("tab");
-  if (value === "courses" || value === "lessons" || value === "lectures") return value;
+  if (value === "courses" || value === "lessons") return value;
   return "all";
 }
 
 function filterByTab(lessons: KuwaitLessonRecord[], tab: TabId): KuwaitLessonRecord[] {
   if (tab === "courses") return lessons.filter((l) => l.isCourse || l.activityType === "دورة");
-  if (tab === "lectures") return lessons.filter((l) => l.activityType === "محاضرة");
-  if (tab === "lessons") return lessons.filter((l) => !l.isCourse && l.activityType !== "دورة" && l.activityType !== "محاضرة");
+  if (tab === "lessons") return lessons.filter((l) => !l.isCourse && l.activityType !== "دورة");
   return lessons;
 }
 
@@ -108,7 +106,6 @@ export default function LessonsPage({
       all: activeLessons.length,
       lessons: filterByTab(activeLessons, "lessons").length,
       courses: filterByTab(activeLessons, "courses").length,
-      lectures: filterByTab(activeLessons, "lectures").length,
     }),
     [activeLessons],
   );
@@ -174,7 +171,7 @@ export default function LessonsPage({
       <PageHeader
         eyebrow="المجلس العلمي"
         title="الدروس"
-        subtitle="جميع الدروس والمحاضرات والدورات العلمية في مكان واحد — مرتّبة حسب أقرب موعد."
+        subtitle="جميع الدروس والدورات العلمية في مكان واحد — مرتّبة حسب أقرب موعد."
       />
 
       <div className="kuwait-tabs" role="tablist" aria-label="تبويبات الدروس">
@@ -193,7 +190,7 @@ export default function LessonsPage({
       </div>
 
       <div className="page-stats-row">
-        <span>{stats.total} {tab === "courses" ? "دورة" : tab === "lectures" ? "محاضرة" : "درس"}</span>
+        <span>{stats.total} {tab === "courses" ? "دورة" : "درس"}</span>
         <span>{stats.categories} تصنيف</span>
       </div>
 

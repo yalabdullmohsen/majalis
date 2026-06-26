@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { PageHeader } from "@/components/ui-common";
 import { QURAN_RADIO_STATIONS } from "@/lib/quran-content";
 import { useUserPreferences } from "@/components/UserPreferencesProvider";
+import { useQuranRadioPlayer } from "@/hooks/useQuranRadioPlayer";
 
 const LAST_RADIO_KEY = "majalis-last-radio-v1";
 
@@ -16,12 +17,28 @@ function getLastRadio(): string {
   }
 }
 
+const STATE_LABELS: Record<string, string> = {
+  live: "● البث مباشر",
+  fallback: "● متصل (احتياطي)",
+  connecting: "○ جاري الاتصال…",
+  paused: "○ متوقف",
+  idle: "○ جاهز",
+};
+
 export default function QuranRadioPage() {
   const [active, setActive] = useState(getLastRadio);
-  const [playing, setPlaying] = useState(false);
-  const audioRef = useRef<HTMLAudioElement>(null);
   const { preferences, updatePreferences } = useUserPreferences();
   const station = QURAN_RADIO_STATIONS.find((s) => s.id === active);
+  const {
+    playing,
+    playerState,
+    statusMessage,
+    activeQuality,
+    toggle,
+    reconnect,
+    pause,
+    play,
+  } = useQuranRadioPlayer(station, { volume: Number(preferences.radioVolume) });
 
   useEffect(() => {
     try {
@@ -31,29 +48,26 @@ export default function QuranRadioPage() {
     }
   }, [active]);
 
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-    audio.volume = Number(preferences.radioVolume) / 100;
-  }, [preferences.radioVolume, station]);
-
-  const togglePlay = (id: string) => {
+  const selectStation = (id: string) => {
+    if (active === id && playing) {
+      pause();
+      return;
+    }
     setActive(id);
-    setTimeout(() => {
-      const audio = audioRef.current;
-      if (!audio) return;
-      if (playing && active === id) {
-        audio.pause();
-        setPlaying(false);
-      } else {
-        audio.play().then(() => setPlaying(true)).catch(() => setPlaying(false));
-      }
-    }, 50);
+    if (active !== id) {
+      setTimeout(play, 80);
+    } else {
+      play();
+    }
   };
 
   return (
-    <div className="page-shell">
-      <PageHeader eyebrow="القرآن" title="إذاعات القرآن الكريم" subtitle="بث مباشر لإذاعات قرآنية موثوقة — الكويت والسعودية وغيرها." />
+    <div className="page-shell quran-radio-page">
+      <PageHeader
+        eyebrow="القرآن"
+        title="إذاعات القرآن الكريم"
+        subtitle="بث مباشر HTTPS لإذاعات قرآنية موثوقة — مع رابط احتياطي تلقائي."
+      />
 
       <nav className="quran-subnav" aria-label="أقسام القرآن">
         <Link href="/quran" className="quran-subnav__link">المصحف</Link>
@@ -69,11 +83,13 @@ export default function QuranRadioPage() {
             key={item.id}
             type="button"
             className={`radio-card ui-card${active === item.id ? " is-active" : ""}`}
-            onClick={() => togglePlay(item.id)}
+            onClick={() => selectStation(item.id)}
+            aria-pressed={active === item.id && playing}
           >
             <strong>{item.name}</strong>
             <span>{item.quality}</span>
             {item.reciter && <span>{item.reciter}</span>}
+            {item.country && <span>{item.country}</span>}
             <span className="radio-card__status">
               {active === item.id && playing ? "● يعمل" : "تشغيل"}
             </span>
@@ -82,9 +98,29 @@ export default function QuranRadioPage() {
       </div>
 
       {station && (
-        <div className="radio-player ui-card">
-          <p><strong>{station.name}</strong></p>
-          <p className="settings-note">جودة البث: {station.quality}</p>
+        <div className="radio-player ui-card" aria-live="polite">
+          <div className="radio-player__header">
+            <div>
+              <p className="radio-player__name"><strong>{station.name}</strong></p>
+              {station.reciter && <p className="settings-note">القارئ: {station.reciter}</p>}
+            </div>
+            <span className={`radio-live-badge radio-live-badge--${playerState}`}>
+              {STATE_LABELS[playerState] || STATE_LABELS.idle}
+            </span>
+          </div>
+
+          <p className="settings-note">جودة البث: {activeQuality}</p>
+          {statusMessage && <p className="radio-player__status">{statusMessage}</p>}
+
+          <div className="radio-player__controls">
+            <button type="button" className="lesson-unified-card__btn lesson-unified-card__btn--primary" onClick={toggle}>
+              {playing ? "إيقاف" : "تشغيل"}
+            </button>
+            <button type="button" className="lesson-unified-card__btn lesson-unified-card__btn--secondary" onClick={reconnect}>
+              إعادة الاتصال
+            </button>
+          </div>
+
           <label className="settings-field">
             <span>مستوى الصوت</span>
             <input
@@ -95,14 +131,6 @@ export default function QuranRadioPage() {
               onChange={(e) => updatePreferences({ radioVolume: e.target.value })}
             />
           </label>
-          <audio
-            ref={audioRef}
-            controls
-            src={station.streamUrl}
-            className="radio-audio"
-            onPlay={() => setPlaying(true)}
-            onPause={() => setPlaying(false)}
-          />
         </div>
       )}
     </div>

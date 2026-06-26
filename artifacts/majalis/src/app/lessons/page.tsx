@@ -9,7 +9,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const count = active.length;
   return {
     title: "الدروس الشرعية",
-    description: `جميع الدروس والمحاضرات والدورات الشرعية — ${count} درس ودورة معتمدة مع بحث وفلاتر للمكان والتصنيف.`,
+    description: `جميع الدروس والدورات الشرعية — ${count} درس ودورة معتمدة مع بحث وفلاتر للمكان والتصنيف.`,
     openGraph: {
       title: "الدروس الشرعية | المجلس العلمي",
       description: `استعرض ${count} درساً ودورة شرعية معتمدة — جداول ومواقع وروابط.`,

@@ -24,7 +24,7 @@ export type LessonSeedRow = {
   start_date?: string;
   end_date?: string | null;
   is_recurring: boolean;
-  activity_type: "درس" | "محاضرة" | "دورة";
+  activity_type: "درس" | "دورة";
   is_course: boolean;
   course_id?: string;
   session_count?: number;

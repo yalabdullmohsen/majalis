@@ -209,7 +209,7 @@ function recordToPayload(record: CmsContentRecord): Record<string, unknown> {
     payload.is_course = true;
     payload.activity_type = "دورة";
   } else if (record.kind === "lecture") {
-    payload.activity_type = "محاضرة";
+    payload.activity_type = "درس";
   }
 
   // Merge raw metadata fields

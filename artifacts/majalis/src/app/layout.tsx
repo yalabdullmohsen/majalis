@@ -18,7 +18,7 @@ const almarai = Almarai({
 });
 
 const siteDescription =
-  "منصة علمية عربية تجمع الدروس الشرعية والدورات والمحاضرات والقرآن والأذكار والفوائد في مكان واحد لطالب العلم.";
+  "منصة علمية عربية تجمع الدروس الشرعية والدورات والقرآن والأذكار والفوائد في مكان واحد لطالب العلم.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://majlisilm.com"),

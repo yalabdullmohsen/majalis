@@ -16,7 +16,7 @@ export function organizationJsonLd() {
     url: SITE_URL,
     logo: absoluteUrl(seoData.defaultImage),
     description:
-      "منصة علمية عربية تجمع الدروس الشرعية والدورات والمحاضرات والقرآن والأذكار والفوائد في مكان واحد.",
+      "منصة علمية عربية تجمع الدروس الشرعية والدورات والقرآن والأذكار والفوائد في مكان واحد.",
     inLanguage: "ar",
     sameAs: [SITE_URL],
   };
@@ -62,7 +62,6 @@ export function breadcrumbJsonLd(items: { name: string; path: string }[]) {
 
 function lessonEventType(lesson: KuwaitLessonRecord) {
   if (lesson.isCourse || lesson.activityType === "دورة") return "Course";
-  if (lesson.activityType === "محاضرة") return "Event";
   return "EducationEvent";
 }
 
@@ -134,7 +133,7 @@ export function lessonSeoMeta(lesson: KuwaitLessonRecord) {
     lesson.activityType,
     "دروس شرعية",
     "دروس علمية",
-    "محاضرات إسلامية",
+    "دروس شرعية",
     "دورات شرعية",
     "طلب العلم",
     SITE_NAME,

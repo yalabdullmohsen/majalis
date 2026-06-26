@@ -72,7 +72,7 @@ function routeForPath(path: string) {
     return {
       ...requiredRoute("/lessons"),
       title: "الدروس | المجلس العلمي",
-      description: "جميع الدروس والدورات والمحاضرات العلمية في مكان واحد.",
+      description: "جميع الدروس والدورات العلمية في مكان واحد.",
     };
   }
 
@@ -88,7 +88,7 @@ function routeForPath(path: string) {
     return {
       ...requiredRoute("/lessons"),
       title: "تفاصيل الإعلان العلمي | المجلس العلمي",
-      description: "تفاصيل إعلان درس أو محاضرة علمية — الشيخ، المتن، الموعد، المكان، والروابط.",
+      description: "تفاصيل إعلان درس علمي — الشيخ، المتن، الموعد، المكان، والروابط.",
     };
   }
 

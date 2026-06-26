@@ -141,6 +141,38 @@ export async function fetchRelatedLessons(
     .slice(0, limit);
 }
 
+/** دروس نفس الشيخ. */
+export async function fetchSameSheikhLessons(
+  lesson: KuwaitLessonRecord,
+  limit = 4,
+): Promise<KuwaitLessonRecord[]> {
+  const key = sheikhNameKey(lesson.sheikhName);
+  if (!key) return [];
+  const { lessons } = await fetchLessons();
+  return lessons
+    .filter((candidate) => candidate.id !== lesson.id && sheikhNameKey(candidate.sheikhName) === key)
+    .slice(0, limit);
+}
+
+/** دروس نفس السلسلة/الدورة. */
+export async function fetchSeriesLessons(
+  lesson: KuwaitLessonRecord,
+  limit = 6,
+): Promise<KuwaitLessonRecord[]> {
+  if (!lesson.courseId && !lesson.linkedLessons?.length) return [];
+  const { lessons } = await fetchLessons();
+  return lessons
+    .filter((candidate) => {
+      if (candidate.id === lesson.id) return false;
+      if (lesson.courseId && candidate.courseId === lesson.courseId) return true;
+      if (lesson.linkedLessons?.length && candidate.linkedLessons?.length) {
+        return candidate.title.split("—")[0]?.trim() === lesson.title.split("—")[0]?.trim();
+      }
+      return false;
+    })
+    .slice(0, limit);
+}
+
 /** تحويل سجل درس موحّد إلى شكل نتائج البحث. */
 export function lessonRecordToSearchRow(lesson: KuwaitLessonRecord) {
   return {

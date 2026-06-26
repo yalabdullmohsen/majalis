@@ -67,7 +67,7 @@ export function levelLabel(level: string) {
 const MODULE_LABELS: Record<string, string> = {
   lesson: "درس",
   book: "كتاب",
-  lecture: "محاضرة",
+  lecture: "درس",
   quiz: "اختبار",
   task: "مهمة",
   video: "فيديو",

@@ -53,7 +53,7 @@ export function DashboardSection() {
   const cards = [
     { label: "الدروس", value: stats.totalLessons, tone: C.emeraldDeep },
     { label: "دورات", value: stats.coursesCount, tone: C.emeraldDeep },
-    { label: "محاضرات", value: stats.lecturesCount, tone: C.emeraldDeep },
+    { label: "دروس", value: stats.lecturesCount, tone: C.emeraldDeep },
     { label: "دروس عادية", value: stats.regularLessonsCount, tone: C.emeraldDeep },
     { label: "المشايخ", value: stats.totalSheikhs, tone: C.brassDeep },
     { label: "المستخدمون", value: stats.totalUsers, tone: "#1d4ed8" },

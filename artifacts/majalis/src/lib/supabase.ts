@@ -15,6 +15,7 @@ import { DEMO_QUIZ_QUESTIONS } from "./quiz-seed";
 import { ADHKAR_CATEGORIES, filterAdhkar } from "./adhkar-seed";
 import { searchPlatformSeed } from "./platform-search";
 import { safeSupabaseQuery, isMissingSchemaError } from "./safe-supabase";
+import { normalizeActivityType } from "./activity-label";
 
 /** Columns that exist on the live `sheikhs` table (no image_url / avatar_url). */
 const SHEIKH_EMBED = "sheikhs(id, name, city, photo_url)";
@@ -444,8 +445,8 @@ export async function adminGetDashboardStats() {
 
   const rows = lessonRows || [];
   const coursesCount = rows.filter((l: any) => l.is_course || l.activity_type === "دورة").length;
-  const lecturesCount = rows.filter((l: any) => l.activity_type === "محاضرة").length;
-  const lessonsCount = rows.filter((l: any) => l.status === "approved" && !l.is_course && l.activity_type !== "دورة" && l.activity_type !== "محاضرة").length;
+  const lecturesCount = rows.filter((l: any) => normalizeActivityType(l.activity_type) === "درس" && !l.is_course).length;
+  const lessonsCount = rows.filter((l: any) => l.status === "approved" && !l.is_course && l.activity_type !== "دورة").length;
 
   const viewCounts = new Map<string, number>();
   for (const row of viewRows || []) {

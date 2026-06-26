@@ -20,7 +20,6 @@ function categoryFromTags(tags: string[]): string {
 
 function activityType(item: ScientificAnnouncement): LessonSeedRow["activity_type"] {
   if (item.kind === "online_course" || item.tags.some((t) => t.includes("دورة"))) return "دورة";
-  if (item.tags.some((t) => t.includes("محاضرة") || t.includes("ملتقى"))) return "محاضرة";
   return "درس";
 }
 

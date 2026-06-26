@@ -29,7 +29,6 @@ function categoryForAd(ad: LessonAd): string {
 
 function activityTypeForAd(ad: LessonAd): LessonSeedRow["activity_type"] {
   if (ad.category === "course" || ad.tags.some((t) => t.includes("دورة"))) return "دورة";
-  if (ad.tags.some((t) => t.includes("محاضرة"))) return "محاضرة";
   return "درس";
 }
 

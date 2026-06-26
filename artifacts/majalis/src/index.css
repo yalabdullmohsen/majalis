@@ -11140,3 +11140,136 @@ svg {
     min-height: auto;
   }
 }
+
+/* Production sprint — lesson detail + radio player */
+.lesson-detail-breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.8125rem;
+  color: var(--majalis-ink-soft);
+}
+
+.lesson-detail-breadcrumb a {
+  color: var(--majalis-brass-deep);
+  text-decoration: none;
+}
+
+.lesson-detail-hero--text-only .lesson-detail-hero__copy {
+  width: 100%;
+}
+
+.lesson-detail-stats-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin: 0.75rem 0 1rem;
+}
+
+.lesson-detail-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.55rem 0.85rem;
+  border-radius: 0.65rem;
+  background: var(--majalis-panel);
+  border: 1px solid var(--majalis-line);
+  min-width: 5.5rem;
+}
+
+.lesson-detail-stat span {
+  font-size: 0.75rem;
+  color: var(--majalis-ink-soft);
+}
+
+.lesson-detail-stat strong {
+  font-size: 1rem;
+  color: var(--majalis-emerald-deep);
+}
+
+.radio-player__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.radio-player__name {
+  margin: 0;
+}
+
+.radio-player__status {
+  margin: 0.35rem 0 0.75rem;
+  color: var(--majalis-ink-soft);
+  font-size: 0.875rem;
+}
+
+.radio-player__controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.radio-live-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.radio-live-badge--live,
+.radio-live-badge--fallback {
+  background: rgba(31, 110, 84, 0.12);
+  color: var(--majalis-emerald-deep);
+}
+
+.radio-live-badge--connecting {
+  background: rgba(180, 130, 40, 0.12);
+  color: var(--majalis-brass-deep);
+}
+
+.radio-live-badge--paused,
+.radio-live-badge--idle {
+  background: var(--majalis-panel);
+  color: var(--majalis-ink-soft);
+}
+
+.quran-radio-page .radio-card {
+  min-height: 7.5rem;
+}
+
+@media (max-width: 640px) {
+  .lesson-detail-page {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+
+  .lesson-detail-actions--row {
+    flex-direction: column;
+  }
+
+  .lesson-detail-actions--row .lesson-unified-card__btn {
+    min-height: 44px;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .lesson-detail-hero {
+    flex-direction: column;
+  }
+
+  .radio-player__header {
+    flex-direction: column;
+  }
+
+  .quran-subnav {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 0.25rem;
+  }
+}
