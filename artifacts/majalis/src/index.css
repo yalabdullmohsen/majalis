@@ -5746,6 +5746,18 @@ html[data-theme="dark"] .home-page {
   gap: 0.55rem;
 }
 
+.tasbih-wird-list::-webkit-scrollbar,
+.fiqh-mobile-category-deck::-webkit-scrollbar,
+.fiqh-chip-strip::-webkit-scrollbar {
+  display: none;
+}
+
+.tasbih-wird-list,
+.fiqh-mobile-category-deck,
+.fiqh-chip-strip {
+  scrollbar-width: none;
+}
+
 .tasbih-wird-tab {
   border: 1px solid var(--majalis-line);
   border-radius: 0.85rem;
@@ -9388,7 +9400,7 @@ body.assistant-panel-open {
   padding: 0.9rem 1rem;
   border-radius: 0.75rem;
   border: 1px solid rgba(22, 78, 60, 0.12);
-  background: #fff;
+  background: var(--majalis-panel);
   text-decoration: none;
   transition: box-shadow 0.15s ease, transform 0.15s ease;
 }
@@ -9407,7 +9419,7 @@ body.assistant-panel-open {
 }
 
 .fiqh-council-category-count {
-  color: #6b7280;
+  color: var(--majalis-ink-soft);
   font-size: 0.75rem;
 }
 
@@ -10841,6 +10853,20 @@ svg {
 
   .fiqh-mobile-category-card {
     scroll-snap-align: start;
+    min-height: 5.5rem;
+  }
+
+  .fiqh-council-category-grid {
+    grid-template-columns: repeat(auto-fit, minmax(5rem, 1fr));
+    gap: 0.55rem;
+  }
+
+  .fiqh-council-category-card {
+    min-height: var(--mobile-touch-min);
+    padding: 0.75rem;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
   }
 
   .fiqh-council-filter-row {
