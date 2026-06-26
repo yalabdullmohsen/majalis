@@ -267,7 +267,12 @@ const feed = `<?xml version="1.0" encoding="UTF-8"?>
 `;
 
 await mkdir(publicDir, { recursive: true });
-await writeFile(resolve(publicDir, "sitemap.xml"), sitemap, "utf8");
+// sitemap.xml is generated dynamically by Next.js src/app/sitemap.ts — do not write a static copy.
+try {
+  await unlink(resolve(publicDir, "sitemap.xml"));
+} catch {
+  /* optional */
+}
 await writeFile(resolve(publicDir, "robots.txt"), robots, "utf8");
 await writeFile(resolve(publicDir, "feed.xml"), feed, "utf8");
 
@@ -365,5 +370,5 @@ for (const item of platformPrerender) {
 
 const totalUrls = staticRoutes.length + lessonRows.length + platformPrerender.length;
 console.log(
-  `Generated sitemap.xml (${totalUrls} URLs), robots.txt, feed.xml, and ${staticRoutes.length + platformPrerender.length + lessonRows.length} prerender pages for ${seoConfig.siteUrl}`,
+  `Generated robots.txt, feed.xml, and ${staticRoutes.length + platformPrerender.length + lessonRows.length} prerender pages for ${seoConfig.siteUrl} (sitemap served by Next.js app/sitemap.ts)`,
 );

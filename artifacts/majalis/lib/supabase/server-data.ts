@@ -100,9 +100,16 @@ export async function fetchLessonByIdForServer(id: string): Promise<KuwaitLesson
   return data ? mapLessonRow({ ...data, source: "supabase" }) : null;
 }
 
+function lessonRouteId(row: { id?: string | number; external_key?: string | null }): string {
+  return String(row.external_key || row.id || "");
+}
+
 export async function fetchAllLessonIds(): Promise<string[]> {
   const ids = new Set<string>();
-  LESSONS_SEED.forEach((row) => ids.add(String(row.id)));
+  LESSONS_SEED.forEach((row) => {
+    const routeId = lessonRouteId(row);
+    if (routeId) ids.add(routeId);
+  });
 
   if (!isSupabaseConfiguredServer()) {
     return [...ids];
@@ -111,10 +118,13 @@ export async function fetchAllLessonIds(): Promise<string[]> {
   const supabase = createStaticClient();
   const { data } = await supabase
     .from("lessons")
-    .select("id")
+    .select("id, external_key")
     .eq("status", "approved");
 
-  (data || []).forEach((row) => ids.add(String(row.id)));
+  (data || []).forEach((row) => {
+    const routeId = lessonRouteId(row);
+    if (routeId) ids.add(routeId);
+  });
   return [...ids];
 }
 
@@ -144,8 +154,21 @@ export async function fetchSheikhByIdForServer(id: string) {
 }
 
 export async function fetchAllSheikhIds(): Promise<string[]> {
-  const sheikhs = await fetchSheikhsForServer();
-  return sheikhs.map((row) => String(row.id));
+  const ids = new Set<string>();
+  DEMO_SHEIKHS.forEach((row) => ids.add(String(row.id)));
+
+  if (!isSupabaseConfiguredServer()) {
+    return [...ids];
+  }
+
+  const supabase = createStaticClient();
+  const { data, error } = await supabase.from("sheikhs").select("id").order("name");
+  if (error || !data?.length) {
+    return [...ids];
+  }
+
+  data.forEach((row) => ids.add(String(row.id)));
+  return [...ids];
 }
 
 export async function fetchLibraryForServer() {
@@ -165,8 +188,26 @@ export async function fetchLibraryForServer() {
 }
 
 export async function fetchAllLibraryIds(): Promise<string[]> {
-  const items = await fetchLibraryForServer();
-  return items.map((row) => String(row.id));
+  const ids = new Set<string>();
+  DEMO_LIBRARY.forEach((row) => ids.add(String(row.id)));
+
+  if (!isSupabaseConfiguredServer()) {
+    return [...ids];
+  }
+
+  const supabase = createStaticClient();
+  const { data, error } = await supabase
+    .from("library_items")
+    .select("id")
+    .eq("status", "approved")
+    .order("created_at", { ascending: false });
+
+  if (error || !data?.length) {
+    return [...ids];
+  }
+
+  data.forEach((row) => ids.add(String(row.id)));
+  return [...ids];
 }
 
 export async function fetchFawaidForServer() {
@@ -225,12 +266,21 @@ export async function fetchMiraclesForServer() {
   return data;
 }
 
-export async function fetchSitemapEntries() {
-  const [lessonIds, sheikhIds, libraryIds] = await Promise.all([
-    fetchAllLessonIds(),
-    fetchAllSheikhIds(),
-    fetchAllLibraryIds(),
-  ]);
+export async function fetchSitemapEntries(): Promise<{
+  lessonIds: string[];
+  sheikhIds: string[];
+  libraryIds: string[];
+}> {
+  try {
+    const [lessonIds, sheikhIds, libraryIds] = await Promise.all([
+      fetchAllLessonIds(),
+      fetchAllSheikhIds(),
+      fetchAllLibraryIds(),
+    ]);
 
-  return { lessonIds, sheikhIds, libraryIds };
+    return { lessonIds, sheikhIds, libraryIds };
+  } catch (error) {
+    console.error("[majalis:sitemap] Failed to fetch dynamic sitemap entries", error);
+    return { lessonIds: [], sheikhIds: [], libraryIds: [] };
+  }
 }
