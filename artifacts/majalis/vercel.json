@@ -1,12 +1,13 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "framework": "nextjs",
+  "framework": "vite",
   "installCommand": "cd ../.. && pnpm install",
-  "buildCommand": "pnpm run build",
+  "buildCommand": "pnpm run build:vite",
+  "outputDirectory": "dist",
   "functions": {
     "api/index.js": {
       "maxDuration": 60,
-      "includeFiles": "{lib/**,supabase/**}"
+      "includeFiles": "{lib/**,supabase/**,data/**}"
     }
   },
   "crons": [
@@ -95,6 +96,10 @@
     {
       "source": "/api/(.*)",
       "destination": "/api/index"
+    },
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
     }
   ]
 }
