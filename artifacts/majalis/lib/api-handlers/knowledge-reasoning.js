@@ -1,5 +1,5 @@
-import { sendJson } from "../../api/_http.mjs";
-import { runReasoningQuery } from "../../../lib/reasoning-engine/answer.mjs";
+import { sendJson } from "../api/_http.mjs";
+import { runReasoningQuery } from "../reasoning-engine/answer.mjs";
 import { createHash } from "node:crypto";
 
 function sessionId(req) {
