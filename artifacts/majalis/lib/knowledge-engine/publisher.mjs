@@ -93,6 +93,27 @@ function buildRecord(item, analysis) {
           status: item.verification_status === "verified" ? "published" : "draft",
         },
       };
+    case "lesson":
+    case "lecture":
+    case "course":
+      return {
+        table: "lessons",
+        record: {
+          ...base,
+          title: analysis.ai_title || item.raw_title,
+          speaker_name: analysis.ai_scholar || item.source_attribution,
+          description: analysis.ai_summary || item.raw_body,
+          category: analysis.ai_category || "أخرى",
+          mosque: analysis.ai_location || item.raw_location,
+          city: analysis.ai_city || "الكويت",
+          schedule: analysis.ai_schedule || item.raw_schedule,
+          lesson_time: analysis.ai_time || item.raw_time,
+          activity_type: kind === "course" ? "دورة" : kind === "lecture" ? "محاضرة" : "درس",
+          is_course: kind === "course",
+          book_url: item.raw_url || item.source_url,
+          status: item.verification_status === "verified" ? "approved" : "pending",
+        },
+      };
     default:
       return null;
   }

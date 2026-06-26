@@ -1,0 +1,100 @@
+{
+  "version": 1,
+  "updated_at": "2026-06-26",
+  "policy": {
+    "no_social_scraping": true,
+    "require_source_url": true,
+    "require_official_channel": true,
+    "notes": "لا يُرصد Instagram/Telegram مباشرة. يُفضّل RSS أو موقع رسمي أو manifest موثق."
+  },
+  "sources": [
+    {
+      "slug": "othman-alkhamees-official",
+      "name": "الموقع الرسمي للشيخ عثمان الخميس",
+      "connector_type": "manifest",
+      "trust_level": 5,
+      "official_url": "https://reach.link/othmanalkhamees",
+      "manifest_file": "import/02-kuwait-lessons.json",
+      "manifest_filter": { "speaker_prefix": "د. عثمان" },
+      "allowed_kinds": ["lesson", "lecture", "course"],
+      "sync_interval_h": 6,
+      "is_active": true,
+      "auto_publish": true,
+      "estimated_daily_items": 3,
+      "legal_basis": "official_link_in_provider_field"
+    },
+    {
+      "slug": "kuwait-lessons-curated",
+      "name": "إعلانات دروس الكويت — manifest موثق",
+      "connector_type": "manifest",
+      "trust_level": 4,
+      "official_url": "https://www.majlisilm.com/lessons",
+      "manifest_file": "import/02-kuwait-lessons.json",
+      "allowed_kinds": ["lesson", "lecture", "course"],
+      "sync_interval_h": 12,
+      "is_active": true,
+      "auto_publish": true,
+      "estimated_daily_items": 8,
+      "legal_basis": "curated_from_official_provider_links"
+    },
+    {
+      "slug": "scientific-announcements-kw",
+      "name": "إعلانات علمية — الكويت",
+      "connector_type": "manifest",
+      "trust_level": 4,
+      "official_url": "https://www.majlisilm.com/lessons",
+      "manifest_file": "kuwait-scientific-announcements.json",
+      "allowed_kinds": ["lesson", "lecture", "course"],
+      "sync_interval_h": 12,
+      "is_active": true,
+      "auto_publish": true,
+      "estimated_daily_items": 6,
+      "legal_basis": "official_website_urls_in_manifest"
+    },
+    {
+      "slug": "saltaweel-official",
+      "name": "مجلس الشيخ سالم الطويل — الموقع الرسمي",
+      "connector_type": "official_site",
+      "trust_level": 5,
+      "official_url": "https://www.saltaweel.com",
+      "rss_url": null,
+      "api_url": null,
+      "allowed_kinds": ["lesson"],
+      "sync_interval_h": 24,
+      "is_active": true,
+      "auto_publish": false,
+      "estimated_daily_items": 2,
+      "legal_basis": "official_website_only",
+      "notes": "يُفضّل RSS/API رسمي عند توفره — حالياً manifest فقط"
+    },
+    {
+      "slug": "drooss-kw",
+      "name": "دروس الكويت (@drooss_kw)",
+      "connector_type": "pending_official",
+      "trust_level": 0,
+      "official_url": null,
+      "instagram_handle": "drooss_kw",
+      "allowed_kinds": ["lesson", "lecture"],
+      "sync_interval_h": 0,
+      "is_active": false,
+      "auto_publish": false,
+      "legal_basis": "blocked_until_official_channel",
+      "notes": "لا يُرصد Instagram. أضف RSS/موقع/API رسمي لتفعيل الموصل.",
+      "future_connector": "official_rss_or_api"
+    },
+    {
+      "slug": "kfas-sharia-events",
+      "name": "KFAS — الشؤون الشرعية (فعاليات)",
+      "connector_type": "rss",
+      "trust_level": 5,
+      "official_url": "https://kfas.org.kw",
+      "rss_url": null,
+      "allowed_kinds": ["lecture", "course"],
+      "sync_interval_h": 24,
+      "is_active": false,
+      "auto_publish": false,
+      "legal_basis": "pending_official_rss_url",
+      "notes": "يحتاج رابط RSS رسمي للفعاليات الشرعية"
+    }
+  ]
+}

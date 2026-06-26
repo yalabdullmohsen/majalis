@@ -1,5 +1,7 @@
 [
   {
+    "id": "kw-tafsir-nahl-khamis",
+    "external_key": "kw-tafsir-nahl-khamis",
     "title": "تفسير سورة النحل",
     "sheikh_name": "د. عثمان بن محمد الخميس",
     "speaker_name": "د. عثمان بن محمد الخميس",
@@ -11,11 +13,15 @@
     "lesson_time": "بعد صلاة المغرب",
     "schedule": "الجمعة — بعد صلاة المغرب",
     "description": "المتابعة الحالية: البداية من الآية رقم 40. · درس أسبوعي ثابت، والمتابعة الحالية تبدأ من الآية 40.",
+    "source_url": "https://reach.link/othmanalkhamees",
     "audience": "الكل",
     "delivery": "كلاهما",
-    "status": "approved"
+    "status": "approved",
+    "is_recurring": true
   },
   {
+    "id": "kw-muslim-reading-khamis",
+    "external_key": "kw-muslim-reading-khamis",
     "title": "قراءة كتاب صحيح مسلم",
     "sheikh_name": "د. عثمان بن محمد الخميس",
     "speaker_name": "د. عثمان بن محمد الخميس",
@@ -27,11 +33,15 @@
     "lesson_time": "10:00 صباحًا",
     "schedule": "السبت — 10:00 صباحًا",
     "description": "المتابعة الحالية: الحديث 989 – الصفحة 400. · درس أسبوعي ثابت، والمتابعة الحالية تبدأ من الحديث 989 عند الصفحة 400.",
+    "source_url": "https://reach.link/othmanalkhamees",
     "audience": "الكل",
     "delivery": "كلاهما",
-    "status": "approved"
+    "status": "approved",
+    "is_recurring": true
   },
   {
+    "id": "kw-muqni-khamis",
+    "external_key": "kw-muqni-khamis",
     "title": "شرح كتاب تلخيص مختصر المقنع",
     "sheikh_name": "د. عثمان بن محمد الخميس",
     "speaker_name": "د. عثمان بن محمد الخميس",
@@ -43,11 +53,15 @@
     "lesson_time": "بعد صلاة المغرب",
     "schedule": "الأربعاء — بعد صلاة المغرب",
     "description": "آخر التحديثات: «المحرمات إلى أمد» ثم «باب الشروط في النكاح – القسم الثاني». · درس أسبوعي ثابت في الفقه.",
+    "source_url": "https://reach.link/othmanalkhamees",
     "audience": "الكل",
     "delivery": "كلاهما",
-    "status": "approved"
+    "status": "approved",
+    "is_recurring": true
   },
   {
+    "id": "kw-bulogh-session1",
+    "external_key": "kw-bulogh-session1",
     "title": "الدورة العلمية التأصيلية — بلوغ المرام من أدلة الأحكام",
     "sheikh_name": "د. راشد صليهم فهد الصليهم",
     "speaker_name": "د. راشد صليهم فهد الصليهم",
@@ -59,11 +73,15 @@
     "lesson_time": "6:00 م",
     "schedule": "الاثنين — 6:00 م",
     "description": "الجلسة الأولى — قبل المغرب بساعة. · برنامج علمي أسبوعي بثلاث جلسات متتابعة في اليوم نفسه.",
+    "source_url": "https://www.majlisilm.com/lessons",
     "audience": "الكل",
     "delivery": "حضور فقط",
-    "status": "approved"
+    "status": "approved",
+    "is_recurring": true
   },
   {
+    "id": "kw-qawaed-session2",
+    "external_key": "kw-qawaed-session2",
     "title": "الدورة العلمية التأصيلية — القواعد المثلى في صفات الله وأسمائه الحسنى",
     "sheikh_name": "د. راشد صليهم فهد الصليهم",
     "speaker_name": "د. راشد صليهم فهد الصليهم",
@@ -75,11 +93,15 @@
     "lesson_time": "7:20 م",
     "schedule": "الاثنين — 7:20 م",
     "description": "الجلسة الثانية — وقت المغرب. · برنامج علمي أسبوعي بثلاث جلسات متتابعة في اليوم نفسه.",
+    "source_url": "https://www.majlisilm.com/lessons",
     "audience": "الكل",
     "delivery": "حضور فقط",
-    "status": "approved"
+    "status": "approved",
+    "is_recurring": true
   },
   {
+    "id": "kw-sunnah-science-session3",
+    "external_key": "kw-sunnah-science-session3",
     "title": "الدورة العلمية التأصيلية — قراءة في كتاب دعوى تعارض السنة النبوية مع العلم التجريبي",
     "sheikh_name": "د. راشد صليهم فهد الصليهم",
     "speaker_name": "د. راشد صليهم فهد الصليهم",
@@ -91,11 +113,15 @@
     "lesson_time": "8:50 م",
     "schedule": "الاثنين — 8:50 م",
     "description": "الجلسة الثالثة — بعد العشاء. · برنامج علمي أسبوعي بثلاث جلسات متتابعة في اليوم نفسه.",
+    "source_url": "https://www.majlisilm.com/lessons",
     "audience": "الكل",
     "delivery": "حضور فقط",
-    "status": "approved"
+    "status": "approved",
+    "is_recurring": true
   },
   {
+    "id": "kw-khalidi-fajr",
+    "external_key": "kw-khalidi-fajr",
     "title": "قراءة كتب متنوعة والتفسير الواضح",
     "sheikh_name": "د. منصور بن ناصر الخالدي",
     "speaker_name": "د. منصور بن ناصر الخالدي",
@@ -107,11 +133,15 @@
     "lesson_time": "بعد صلاة الفجر",
     "schedule": "الجمعة — بعد صلاة الفجر",
     "description": "يوجد مكان مخصص للنساء. · مجلس أسبوعي بعد الفجر بصيغة قراءة وتعليق، مع مكان مخصص للنساء.",
+    "source_url": "https://www.majlisilm.com/lessons",
     "audience": "الكل",
     "delivery": "حضور فقط",
-    "status": "approved"
+    "status": "approved",
+    "is_recurring": true
   },
   {
+    "id": "kw-shati-salah",
+    "external_key": "kw-shati-salah",
     "title": "شرح كتاب الصلاة من إعانة الطالب",
     "sheikh_name": "الشيخ أسامة الشطي",
     "speaker_name": "الشيخ أسامة الشطي",
@@ -123,8 +153,11 @@
     "lesson_time": "6:00 مساءً إلى صلاة العشاء",
     "schedule": "الثلاثاء — 6:00 مساءً إلى صلاة العشاء",
     "description": "ابتداءً من يوم الثلاثاء 2026/06/09، مع نقل مباشر عبر قناة معهد الأندلس الشرعي. · برنامج حضوري في المسجد، مع نقل مباشر عبر معهد الأندلس.",
+    "source_url": "https://www.majlisilm.com/lessons",
+    "live_url": "https://www.majlisilm.com/lessons",
     "audience": "الكل",
     "delivery": "كلاهما",
-    "status": "approved"
+    "status": "approved",
+    "is_recurring": true
   }
 ]

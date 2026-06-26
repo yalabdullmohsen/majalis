@@ -22,13 +22,15 @@ export type AdminSection =
   | "rulings"
   | "annual-courses"
   | "updates"
-  | "knowledge-engine";
+  | "knowledge-engine"
+  | "lesson-sync";
 
 export const ADMIN_NAV: { key: AdminSection; label: string }[] = [
   { key: "dashboard", label: "لوحة التحكم" },
   { key: "aggregator", label: "محرك التجميع" },
   { key: "knowledge-engine", label: "Auto Knowledge Engine" },
   { key: "lessons", label: "الدروس" },
+  { key: "lesson-sync", label: "مزامنة الدروس" },
   { key: "sheikhs", label: "المشايخ" },
   { key: "library", label: "المكتبة" },
   { key: "miracles", label: "الإعجاز العلمي" },

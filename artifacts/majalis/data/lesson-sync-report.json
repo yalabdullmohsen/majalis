@@ -1,0 +1,90 @@
+{
+  "generated_at": "2026-06-26T00:25:03.034Z",
+  "connected_sources": [
+    {
+      "id": "othman-alkhamees-official",
+      "name": "الموقع الرسمي للشيخ عثمان الخميس",
+      "type": "manifest",
+      "auto_publish": true,
+      "official_url": "https://reach.link/othmanalkhamees",
+      "estimated_daily_items": 3
+    },
+    {
+      "id": "kuwait-lessons-curated",
+      "name": "إعلانات دروس الكويت — manifest موثق",
+      "type": "manifest",
+      "auto_publish": true,
+      "official_url": "https://www.majlisilm.com/lessons",
+      "estimated_daily_items": 8
+    },
+    {
+      "id": "scientific-announcements-kw",
+      "name": "إعلانات علمية — الكويت",
+      "type": "manifest",
+      "auto_publish": true,
+      "official_url": "https://www.majlisilm.com/lessons",
+      "estimated_daily_items": 6
+    },
+    {
+      "id": "saltaweel-official",
+      "name": "مجلس الشيخ سالم الطويل — الموقع الرسمي",
+      "type": "official_site",
+      "auto_publish": false,
+      "official_url": "https://www.saltaweel.com",
+      "estimated_daily_items": 2
+    }
+  ],
+  "pending_integrations": [
+    {
+      "id": "drooss-kw",
+      "name": "دروس الكويت (@drooss_kw)",
+      "type": "pending_official",
+      "notes": "لا يُرصد Instagram. أضف RSS/موقع/API رسمي لتفعيل الموصل.",
+      "official_url": null
+    },
+    {
+      "id": "kfas-sharia-events",
+      "name": "KFAS — الشؤون الشرعية (فعاليات)",
+      "type": "rss",
+      "notes": "يحتاج رابط RSS رسمي للفعاليات الشرعية",
+      "official_url": "https://kfas.org.kw"
+    }
+  ],
+  "estimated_daily_import_capacity": 19,
+  "automation_rate_percent": 40,
+  "last_sync": {
+    "started_at": "2026-06-26T00:24:57.990Z",
+    "finished_at": "2026-06-26T00:25:03.034Z",
+    "status": "completed_with_errors",
+    "stats": {
+      "fetched": 17,
+      "normalized": 17,
+      "new": 0,
+      "updated": 0,
+      "duplicates": 0,
+      "review": 3,
+      "errors": 1,
+      "ai_used": 0,
+      "archived": 0,
+      "published": 14
+    }
+  },
+  "constraints": {
+    "legal": [
+      "لا مراقبة Instagram/Telegram — فقط قنوات رسمية أو manifest موثق",
+      "يتطلب source_url أو official_url لكل إعلان",
+      "مصادر pending_official تنتظر RSS/API رسمي"
+    ],
+    "technical": [
+      "يتطلب SUPABASE_URL و SUPABASE_SERVICE_ROLE_KEY للنشر",
+      "استخراج AI اختياري عبر OPENAI_API_KEY",
+      "official_site يستخدم heuristics HTML — يُفضّل RSS/API عند التوفر"
+    ]
+  },
+  "policy": {
+    "no_social_scraping": true,
+    "require_source_url": true,
+    "require_official_channel": true,
+    "notes": "لا يُرصد Instagram/Telegram مباشرة. يُفضّل RSS أو موقع رسمي أو manifest موثق."
+  }
+}
