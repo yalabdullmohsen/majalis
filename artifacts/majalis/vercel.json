@@ -98,6 +98,10 @@
       "destination": "/api/index"
     },
     {
+      "source": "/favicon.ico",
+      "destination": "/favicon.png"
+    },
+    {
       "source": "/((?!api/).*)",
       "destination": "/index.html"
     }
