@@ -6,8 +6,7 @@
   "outputDirectory": "dist",
   "functions": {
     "api/index.js": {
-      "maxDuration": 60,
-      "includeFiles": "supabase/**"
+      "maxDuration": 60
     }
   },
   "crons": [
