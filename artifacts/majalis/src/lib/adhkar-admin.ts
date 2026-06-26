@@ -1,4 +1,4 @@
-import { ADHKAR_ITEMS, type AdhkarItem } from "./adhkar-seed";
+import { ADHKAR_ITEMS, getAllAdhkarItems, type AdhkarItem } from "./adhkar-seed";
 
 const STORAGE_KEY = "majalis-adhkar-admin";
 
@@ -37,11 +37,12 @@ export function getAdhkarAdminState(): AdhkarAdminState {
 
 export function getAllAdhkarForAdmin(): AdhkarItem[] {
   const state = loadState();
-  const merged = ADHKAR_ITEMS.map((item) => ({
+  const base = getAllAdhkarItems();
+  const merged = base.map((item) => ({
     ...item,
     ...(state.overrides[item.id] ?? {}),
   }));
-  const seedIds = new Set(ADHKAR_ITEMS.map((i) => i.id));
+  const seedIds = new Set(getAllAdhkarItems().map((i) => i.id));
   const customs = state.customItems.filter((i) => !seedIds.has(i.id));
   return [...merged, ...customs];
 }

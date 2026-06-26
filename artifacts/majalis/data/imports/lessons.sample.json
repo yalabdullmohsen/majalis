@@ -1,0 +1,26 @@
+[
+  {
+    "title": "شرح كتاب التوحيد",
+    "description": "درس أسبوعي في العقيدة — يتناول أصول التوحيد ونواقض الإسلام.",
+    "sheikh_name": "د. عثمان بن محمد الخميس",
+    "day_of_week": "السبت",
+    "lesson_time": "10:00 صباحًا",
+    "mosque": "مسجد الياقوت",
+    "city": "العاصمة",
+    "region": "منطقة الصديق",
+    "category": "عقيدة",
+    "source_url": "https://www.majlisilm.com/lessons"
+  },
+  {
+    "title": "تفسير سورة الملك",
+    "description": "درس تفسيري أسبوعي مع التركيز على فضائل السورة وأحكامها.",
+    "sheikh_name": "د. منصور بن ناصر الخالدي",
+    "day_of_week": "الجمعة",
+    "lesson_time": "بعد صلاة الفجر",
+    "mosque": "مسجد العلاء بن عقبة",
+    "city": "العاصمة",
+    "region": "الفردوس",
+    "category": "تفسير",
+    "source_url": "https://www.majlisilm.com/lessons"
+  }
+]

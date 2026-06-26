@@ -1,0 +1,17 @@
+[
+  {
+    "name": "د. عثمان بن محمد الخميس",
+    "city": "العاصمة",
+    "bio": "عالم أصولي ومفسر، له مجالس علمية أسبوعية ثابتة.",
+    "specialties": ["تفسير", "فقه", "حديث"],
+    "is_verified": true,
+    "photo_url": "https://www.majlisilm.com/sheikhs/othman-alkhamees.jpg"
+  },
+  {
+    "name": "د. راشد صليهم فهد الصليهم",
+    "city": "العاصمة",
+    "bio": "أستاذ مشارك، يقدّم دورة علمية تأصيلية أسبوعية.",
+    "specialties": ["عقيدة", "أصول", "حديث"],
+    "is_verified": true
+  }
+]

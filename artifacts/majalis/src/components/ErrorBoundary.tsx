@@ -78,7 +78,7 @@ export class ErrorBoundary extends Component<Props, State> {
           }}
         >
           <h1 style={{ color: C.emeraldDeep, marginBottom: "0.75rem", fontSize: "1.35rem" }}>
-            حدث خطأ غير متوقع
+            تعذر عرض الصفحة
           </h1>
           <p style={{ color: C.inkSoft, marginBottom: "1rem", lineHeight: 1.7, fontSize: "0.95rem" }}>
             {userFacingErrorMessage(this.state.error)}

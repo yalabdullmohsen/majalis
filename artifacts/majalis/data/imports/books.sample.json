@@ -1,0 +1,18 @@
+[
+  {
+    "title": "عقيدة الواسطية",
+    "type": "كتاب",
+    "category": "عقيدة",
+    "description": "رسالة مختصرة في عقيدة أهل السنة والجماعة للإمام ابن تيمية.",
+    "external_url": "https://www.majlisilm.com/library",
+    "status": "approved"
+  },
+  {
+    "title": "رياض الصالحين",
+    "type": "كتاب",
+    "category": "حديث",
+    "description": "مختارات من الأحاديث النبوية الشريفة للإمام النووي.",
+    "external_url": "https://www.majlisilm.com/library",
+    "status": "approved"
+  }
+]

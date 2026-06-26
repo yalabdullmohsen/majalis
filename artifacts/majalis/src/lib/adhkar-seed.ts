@@ -1,3 +1,5 @@
+import importBundle from "./content-import-bundle.json";
+
 export type AdhkarCategory = {
   id: string;
   name: string;
@@ -374,13 +376,19 @@ export const ADHKAR_ITEMS: AdhkarItem[] = [
   },
 ];
 
+export function getAllAdhkarItems(): AdhkarItem[] {
+  const imported = ((importBundle as { adhkar?: AdhkarItem[] }).adhkar || []) as AdhkarItem[];
+  const ids = new Set(ADHKAR_ITEMS.map((i) => i.id));
+  return [...ADHKAR_ITEMS, ...imported.filter((i) => !ids.has(i.id))];
+}
+
 export function getAdhkarByCategory(categoryId: string): AdhkarItem[] {
-  return ADHKAR_ITEMS.filter((a) => a.categoryId === categoryId);
+  return getAllAdhkarItems().filter((a) => a.categoryId === categoryId);
 }
 
 export function filterAdhkar(search: string, categoryId?: string): AdhkarItem[] {
   const q = search.trim().toLowerCase();
-  let items = ADHKAR_ITEMS;
+  let items = getAllAdhkarItems();
   if (categoryId && categoryId !== "all") {
     items = items.filter((a) => a.categoryId === categoryId);
   }

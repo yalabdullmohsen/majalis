@@ -1,5 +1,5 @@
 import { arabicMatchAny } from "@/lib/arabic-search";
-import { ADHKAR_CATEGORIES, ADHKAR_ITEMS } from "@/lib/adhkar-seed";
+import { ADHKAR_CATEGORIES, getAllAdhkarItems } from "@/lib/adhkar-seed";
 import { LESSONS_SEED } from "@/lib/lessons-seed";
 import { SEED_FAWAID } from "@/lib/fawaid-seed";
 import { SEED_QA } from "@/lib/qa-seed";
@@ -71,7 +71,7 @@ export function buildSearchSuggestions(query: string, limit = 12): SearchSuggest
     if (results.filter((r) => r.group === "qa").length >= MAX_PER_GROUP) break;
   }
 
-  for (const adhkar of ADHKAR_ITEMS) {
+  for (const adhkar of getAllAdhkarItems()) {
     if (results.length >= limit) break;
     if (!arabicMatchAny([adhkar.text, ...(adhkar.keywords || []), adhkar.source, adhkar.reference], q)) continue;
     const category = ADHKAR_CATEGORIES.find((c) => c.id === adhkar.categoryId);

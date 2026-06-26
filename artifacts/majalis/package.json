@@ -10,6 +10,7 @@
     "generate:sheikhs": "node scripts/generate-sheikh-portraits.mjs",
     "generate:quiz": "node scripts/generate-quiz-questions.mjs",
     "generate:content": "node scripts/generate-content-seed.mjs",
+    "import:content": "node scripts/import-content.mjs",
     "build": "next build",
     "build:vite": "pnpm run generate:seo && vite build --config vite.config.ts",
     "start": "next start --port ${PORT:-24216}",

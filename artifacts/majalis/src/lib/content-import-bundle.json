@@ -1,0 +1,51 @@
+{
+  "adhkar": [
+    {
+      "id": "adh-import-c78a7908ac8bdb23",
+      "categoryId": "adh-morning",
+      "text": "اللَّهُمَّ بِكَ أَصْبَحْنَا، وَبِكَ أَمْسَيْنَا، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ، وَإِلَيْكَ النُّشُورُ",
+      "count": 1,
+      "source": "رواه الترمذي",
+      "narrator": "عبد الله بن مسعود",
+      "grade": "صحيح",
+      "keywords": []
+    },
+    {
+      "id": "adh-import-af74c52db6f63c11",
+      "categoryId": "adh-evening",
+      "text": "أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ",
+      "count": 3,
+      "source": "رواه مسلم",
+      "grade": "صحيح",
+      "keywords": []
+    }
+  ],
+  "quran_surahs": [
+    {
+      "number": 1,
+      "name": "الفاتحة",
+      "englishName": "Al-Fatihah",
+      "ayahs": 7,
+      "revelation": "مكية",
+      "summary": "أعظم سور القرآن، تُعدل ثلثه في المعنى.",
+      "themes": [
+        "توحيد",
+        "عبادة",
+        "هداية"
+      ]
+    },
+    {
+      "number": 112,
+      "name": "الإخلاص",
+      "englishName": "Al-Ikhlas",
+      "ayahs": 4,
+      "revelation": "مكية",
+      "summary": "سورة التوحيد الخالص.",
+      "themes": [
+        "توحيد",
+        "إخلاص"
+      ]
+    }
+  ],
+  "quran_topics": []
+}
