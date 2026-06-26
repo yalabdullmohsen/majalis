@@ -83,8 +83,8 @@ export function SideNavDrawer({ open, onClose }: Props) {
   }, []);
 
   useEffect(() => {
-    if (open) close();
-  }, [pathname, open, close]);
+    close();
+  }, [pathname, close]);
 
   useEffect(() => {
     if (!open) {

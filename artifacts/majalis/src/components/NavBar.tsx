@@ -224,6 +224,13 @@ export default function NavBar() {
         </div>
 
         {isMobile && open && (
+          <>
+          <button
+            type="button"
+            className="navbar-more-backdrop"
+            aria-label="إغلاق قائمة المزيد"
+            onClick={() => setOpen(false)}
+          />
           <div
             id="navbar-mobile-more-panel"
             ref={panelRef}
@@ -277,6 +284,7 @@ export default function NavBar() {
               )}
             </nav>
           </div>
+          </>
         )}
       </header>
       <SideNavDrawer open={drawer} onClose={closeDrawer} />

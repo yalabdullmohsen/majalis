@@ -8434,6 +8434,18 @@ html[data-theme="dark"] .navbar-login {
   height: var(--mobile-touch-min);
   min-height: var(--mobile-touch-min);
 }
+.navbar-more-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 54;
+  border: none;
+  padding: 0;
+  margin: 0;
+  background: rgba(22, 18, 12, 0.35);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
 .navbar-mobile-panel {
   position: relative;
   z-index: 55;
