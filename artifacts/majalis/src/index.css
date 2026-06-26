@@ -8655,7 +8655,7 @@ body.navbar-more-open .navbar-v3 { z-index: 60; }
   top: 0;
   right: 0;
   width: min(100%, 20rem);
-  max-width: 92vw;
+  max-width: 85vw;
   height: 100%;
   height: 100dvh;
   z-index: 1201;

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { Link, useLocation } from "wouter";
 import {
   BookOpen,
@@ -112,7 +113,8 @@ export function SideNavDrawer({ open, onClose }: Props) {
 
   if (!open) return null;
 
-  const handleBackdropClose = () => {
+  const handleBackdropClose = (event: React.PointerEvent) => {
+    event.preventDefault();
     close();
   };
 
@@ -120,16 +122,15 @@ export function SideNavDrawer({ open, onClose }: Props) {
     close();
   };
 
-  return (
+  const drawer = (
     <div
       className="side-nav-backdrop--v2"
-      onClick={handleBackdropClose}
+      onPointerDown={handleBackdropClose}
       role="presentation"
-      aria-hidden={false}
     >
       <aside
         className="side-nav-drawer--v2"
-        onClick={(e) => e.stopPropagation()}
+        onPointerDown={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
         aria-label="القائمة الجانبية"
@@ -141,11 +142,15 @@ export function SideNavDrawer({ open, onClose }: Props) {
           </div>
           <button
             type="button"
-            onClick={close}
+            onPointerDown={(e) => {
+              e.stopPropagation();
+              close();
+            }}
             aria-label="إغلاق"
             className="side-nav-close"
           >
-            <X size={22} />
+            <X size={22} aria-hidden="true" />
+            <span className="sr-only">إغلاق</span>
           </button>
         </div>
 
@@ -227,6 +232,8 @@ export function SideNavDrawer({ open, onClose }: Props) {
       </aside>
     </div>
   );
+
+  return createPortal(drawer, document.body);
 }
 
 export default SideNavDrawer;
