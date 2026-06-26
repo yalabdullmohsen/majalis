@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { getSupabaseAdmin, isMissingTableError } from '../supabase-admin.mjs';
@@ -10,7 +11,9 @@ import { suggestMetadataWithAi, detectConflicts } from './ai-suggest.mjs';
 import { VERIFICATION_STATUS } from './utils.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const REPORT_PATH = path.resolve(__dirname, '../../data/scholarly-verification-report.json');
+const REPORT_PATH = process.env.VERCEL
+  ? path.join(os.tmpdir(), 'scholarly-verification-report.json')
+  : path.resolve(__dirname, '../../data/scholarly-verification-report.json');
 
 function log(scope, data) {
   console.info(`[scholarly-verification:${scope}]`, JSON.stringify({ at: new Date().toISOString(), ...data }));
@@ -132,7 +135,11 @@ export async function runScholarlyVerificationScan(options = {}) {
   };
 
   fs.mkdirSync(path.dirname(REPORT_PATH), { recursive: true });
-  fs.writeFileSync(REPORT_PATH, JSON.stringify(report, null, 2), 'utf8');
+  try {
+    fs.writeFileSync(REPORT_PATH, JSON.stringify(report, null, 2), 'utf8');
+  } catch (writeError) {
+    log('report-write-skipped', { path: REPORT_PATH, error: writeError.message });
+  }
 
   if (admin && persist) {
     await admin.from('scholarly_verification_runs').insert({

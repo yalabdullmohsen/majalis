@@ -84,11 +84,16 @@ export async function scanReasoningQuality(admin, opts = {}) {
     }
   }
 
-  const { count: dupHadith } = await admin
-    .from("verified_hadith_items")
-    .select("*", { count: "exact", head: true })
-    .eq("verification_status", "duplicate")
-    .catch(() => ({ count: 0 }));
+  let dupHadith = 0;
+  try {
+    const { count } = await admin
+      .from("verified_hadith_items")
+      .select("*", { count: "exact", head: true })
+      .eq("verification_status", "duplicate");
+    dupHadith = count ?? 0;
+  } catch {
+    dupHadith = 0;
+  }
 
   if ((dupHadith ?? 0) > 0) {
     issues.push({
