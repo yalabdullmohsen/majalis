@@ -19,6 +19,11 @@ import autoKnowledgeSyncHandler from "../api/cron/auto-knowledge-sync.js";
 import connectorHealthHandler from "../api/cron/connector-health.js";
 import autoKnowledgeAdminHandler from "../api/admin/auto-knowledge-engine.js";
 import knowledgeRecommendationsHandler from "../api/knowledge-recommendations.js";
+import intelligentSearchHandler from "../api/intelligent-search.js";
+import topicContentHandler from "../api/topic-content.js";
+import contentRelationsHandler from "../api/content-relations.js";
+import searchAnalyticsHandler from "../api/admin/search-analytics.js";
+import scholarlySearchHandler from "../api/scholarly-search.js";
 import { createRateLimiter } from "./rate-limit.mjs";
 
 const assistantRateLimit = createRateLimiter({
@@ -55,6 +60,11 @@ const API_ROUTES = [
   { prefix: "/api/cron/connector-health", handler: connectorHealthHandler, allowGet: true, exact: true },
   { prefix: "/api/auto-content", handler: autoContentHandler, allowGet: true },
   { prefix: "/api/knowledge-recommendations", handler: knowledgeRecommendationsHandler, allowGet: true },
+  { prefix: "/api/intelligent-search", handler: intelligentSearchHandler, allowGet: true },
+  { prefix: "/api/topic-content", handler: topicContentHandler, allowGet: true },
+  { prefix: "/api/content-relations", handler: contentRelationsHandler, allowGet: true },
+  { prefix: "/api/scholarly-search", handler: scholarlySearchHandler, allowGet: true },
+  { prefix: "/api/admin/search-analytics", handler: searchAnalyticsHandler, allowGet: true },
   { prefix: "/api/admin/auto-content", handler: autoContentAdminHandler, allowGet: true },
   { prefix: "/api/admin/auto-knowledge-engine", handler: autoKnowledgeAdminHandler, allowGet: true },
   { prefix: "/api/fiqh-research-assistant", handler: fiqhResearchAssistantHandler, rateLimit: fiqhResearchRateLimit, allowGet: true },

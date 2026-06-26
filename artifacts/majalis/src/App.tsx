@@ -18,6 +18,8 @@ import { Loading } from "@/components/ui-common";
 
 const CalendarPage = lazy(() => import("@/pages/CalendarPage"));
 const SearchPage = lazy(() => import("@/pages/SearchPage"));
+const TopicPage = lazy(() => import("@/pages/TopicPage"));
+const TopicsIndexPage = lazy(() => import("@/pages/TopicsIndexPage"));
 const LessonsPage = lazy(() => import("@/pages/LessonsPage"));
 const LessonDetailPage = lazy(() => import("@/pages/LessonDetailPage"));
 const ScientificAnnouncementDetailPage = lazy(() => import("@/pages/ScientificAnnouncementDetailPage"));
@@ -98,6 +100,8 @@ function Router() {
       <Route path="/contact" component={ContactPage} />
       <Route path="/search/:q"><SafeLazyRoute component={SearchPage} /></Route>
       <Route path="/search"><SafeLazyRoute component={SearchPage} /></Route>
+      <Route path="/topics/:slug"><SafeLazyRoute component={TopicPage} /></Route>
+      <Route path="/topics"><SafeLazyRoute component={TopicsIndexPage} /></Route>
       <Route path="/scientific-announcements/:id"><SafeLazyRoute component={ScientificAnnouncementDetailPage} /></Route>
       <Route path="/lessons/current"><Redirect to="/lessons" /></Route>
       <Route path="/lessons/:id"><SafeLazyRoute component={LessonDetailPage} /></Route>

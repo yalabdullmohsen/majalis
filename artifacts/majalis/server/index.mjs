@@ -23,6 +23,11 @@ import autoKnowledgeSyncHandler from "../api/cron/auto-knowledge-sync.js";
 import connectorHealthHandler from "../api/cron/connector-health.js";
 import autoKnowledgeAdminHandler from "../api/admin/auto-knowledge-engine.js";
 import knowledgeRecommendationsHandler from "../api/knowledge-recommendations.js";
+import intelligentSearchHandler from "../api/intelligent-search.js";
+import topicContentHandler from "../api/topic-content.js";
+import contentRelationsHandler from "../api/content-relations.js";
+import searchAnalyticsHandler from "../api/admin/search-analytics.js";
+import scholarlySearchHandler from "../api/scholarly-search.js";
 import fiqhResearchAssistantHandler from "../api/fiqh-research-assistant.js";
 import { createRateLimiter } from "./rate-limit.mjs";
 
@@ -127,6 +132,14 @@ app.get("/api/cron/connector-health", runHandler(connectorHealthHandler, "connec
 app.post("/api/cron/connector-health", runHandler(connectorHealthHandler, "connector-health"));
 app.get("/api/auto-content", runHandler(autoContentHandler, "auto-content"));
 app.get("/api/knowledge-recommendations", runHandler(knowledgeRecommendationsHandler, "knowledge-recommendations"));
+app.get("/api/intelligent-search", runHandler(intelligentSearchHandler, "intelligent-search"));
+app.post("/api/intelligent-search", express.json({ limit: "16kb" }), runHandler(intelligentSearchHandler, "intelligent-search"));
+app.get("/api/topic-content", runHandler(topicContentHandler, "topic-content"));
+app.get("/api/content-relations", runHandler(contentRelationsHandler, "content-relations"));
+app.post("/api/content-relations", express.json({ limit: "8kb" }), runHandler(contentRelationsHandler, "content-relations"));
+app.get("/api/scholarly-search", runHandler(scholarlySearchHandler, "scholarly-search"));
+app.get("/api/admin/search-analytics", runHandler(searchAnalyticsHandler, "search-analytics"));
+app.post("/api/admin/search-analytics", express.json({ limit: "8kb" }), runHandler(searchAnalyticsHandler, "search-analytics"));
 app.get("/api/admin/auto-content", runHandler(autoContentAdminHandler, "auto-content-admin"));
 app.post("/api/admin/auto-content", express.json({ limit: "16kb" }), runHandler(autoContentAdminHandler, "auto-content-admin"));
 app.get("/api/admin/auto-knowledge-engine", runHandler(autoKnowledgeAdminHandler, "auto-knowledge-admin"));
