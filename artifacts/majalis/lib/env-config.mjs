@@ -97,6 +97,8 @@ export function getEnvStatus() {
     OPENAI_API_KEY: Boolean(env.openaiKey),
     ANTHROPIC_API_KEY: Boolean(env.anthropicKey),
     DATABASE_URL: Boolean(env.databaseUrl),
+    UPSTASH_REDIS_REST_URL: Boolean(pick("UPSTASH_REDIS_REST_URL", "KV_REST_API_URL")),
+    UPSTASH_REDIS_REST_TOKEN: Boolean(pick("UPSTASH_REDIS_REST_TOKEN", "KV_REST_API_TOKEN")),
     POSTGRES_URL: Boolean(pick("POSTGRES_URL")),
     POSTGRES_PASSWORD: Boolean(pick("POSTGRES_PASSWORD", "SUPABASE_DB_PASSWORD")),
     SUPABASE_ACCESS_TOKEN: Boolean(pick("SUPABASE_ACCESS_TOKEN", "SUPABASE_MANAGEMENT_TOKEN")),

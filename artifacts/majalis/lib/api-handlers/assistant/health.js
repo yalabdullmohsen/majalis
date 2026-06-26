@@ -1,5 +1,6 @@
 import { sendJson } from "../../api/_http.mjs";
 import { isProduction } from "../../api/_security.mjs";
+import { checkRateLimit, isRedisRateLimitConfigured } from "../../../lib/rate-limit.mjs";
 
 export default async function handler(req, res) {
   if (req.method === "OPTIONS") {
@@ -14,10 +15,16 @@ export default async function handler(req, res) {
   }
 
   const configured = Boolean((process.env.ANTHROPIC_API_KEY || "").trim());
+  const rateLimitProbe = await checkRateLimit("assistant-health", { windowMs: 60_000, max: 100 });
 
   sendJson(res, 200, {
     ok: true,
     available: configured,
+    rateLimit: {
+      configured: isRedisRateLimitConfigured(),
+      backend: rateLimitProbe.backend,
+      allowed: rateLimitProbe.allowed,
+    },
     ...(isProduction() ? {} : { runtime: "server" }),
   });
 }
