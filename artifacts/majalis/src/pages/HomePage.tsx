@@ -67,14 +67,50 @@ const SCHOLAR_ITEMS = [
 
 const LIBRARY_ITEMS = [
   { title: "المكتبة العلمية", href: "/library", meta: "كتب", summary: "كتب ومتون وروابط بحث داخل المنصة." },
-  { title: "الفوائد", href: "/fawaid", meta: "فوائد", summary: "فوائد مختصرة قابلة للمراجعة والحفظ." },
-  { title: "الأسئلة والأجوبة", href: "/qa", meta: "أسئلة", summary: "إجابات مصنفة مع المراجع والكلمات المفتاحية." },
+  { title: "كتب التفسير", href: "/search/تفسير", meta: "تفسير", summary: "روابط بحث في كتب التفسير المعتمدة." },
+  { title: "متون ودروس", href: "/learning/paths", meta: "مسارات", summary: "ربط المكتبة بالمسارات التعليمية." },
 ];
 
 const QURAN_ITEMS = [
   { title: "القرآن الكريم", href: "/quran", meta: "قراءة", summary: "سور القرآن مع بيانات علمية وروابط تفسير." },
   { title: "إذاعة القرآن", href: "/quran-radio", meta: "استماع", summary: "بث مباشر لتلاوات القرآن الكريم." },
   { title: "الورد اليومي", href: "/daily-wird", meta: "متابعة", summary: "خطة قراءة يومية محفوظة محلياً." },
+];
+
+const HADITH_ITEMS = [
+  { title: "الأربعون النووية", href: "/arbaeen-nawawi", meta: "حديث", summary: "أحاديث جامعة مع عرض منظم." },
+  { title: "بحث في الحديث", href: "/search/حديث", meta: "بحث", summary: "ابحث في الأحاديث والشروح المرتبطة." },
+  { title: "المساعد الموثق", href: "/assistant", meta: "استدلال", summary: "إجابات لا تنسب حديثاً بلا مصدر." },
+];
+
+const ADHKAR_ITEMS = [
+  { title: "أذكار الصباح", href: "/adhkar?cat=morning", meta: "صباح", summary: "أذكار يومية موثقة مع التكرار." },
+  { title: "أذكار المساء", href: "/adhkar?cat=evening", meta: "مساء", summary: "ورد المساء محفوظ وميسر." },
+  { title: "عداد التسبيح", href: "/tasbih", meta: "Offline", summary: "أوراد متعددة وإحصاءات يومية." },
+];
+
+const QA_ITEMS = [
+  { title: "الأسئلة الشرعية", href: "/qa", meta: "أسئلة", summary: "إجابات مصنفة مع مراجع وكلمات مفتاحية." },
+  { title: "أسئلة الصلاة", href: "/qa?q=الصلاة", meta: "الصلاة", summary: "مسائل الصلاة والوضوء والخشوع." },
+  { title: "أسئلة العقيدة", href: "/qa?q=العقيدة", meta: "العقيدة", summary: "أسئلة التوحيد والإيمان." },
+];
+
+const FAWAID_ITEMS = [
+  { title: "الفوائد العلمية", href: "/fawaid", meta: "فوائد", summary: "فوائد مختصرة قابلة للمراجعة والحفظ." },
+  { title: "فوائد القرآن", href: "/search/فوائد القرآن", meta: "قرآن", summary: "لطائف وفوائد مرتبطة بالآيات." },
+  { title: "فوائد الحديث", href: "/search/فوائد الحديث", meta: "حديث", summary: "فوائد مستنبطة من السنة." },
+];
+
+const WORSHIP_TOOLS_ITEMS = [
+  { title: "مواقيت الصلاة", href: "/prayer-times", meta: "الصلاة", summary: "مواقيت وعدّاد وتتبع يومي." },
+  { title: "مراتب الناس في الصلاة", href: "/prayer-ranks", meta: "تربية", summary: "مراتب الخشوع وحضور القلب." },
+  { title: "القبلة", href: "/qibla", meta: "أداة", summary: "تحديد اتجاه القبلة بسهولة." },
+];
+
+const SEARCH_ASSISTANT_ITEMS = [
+  { title: "محرك البحث الذكي", href: "/search", meta: "بحث", summary: "بحث عربي في الدروس والأسئلة والكتب والأحاديث." },
+  { title: "المساعد الشرعي", href: "/assistant", meta: "AI", summary: "إجابة مختصرة ثم تفصيل مع المصادر عند توفرها." },
+  { title: "الباحث الفقهي", href: "/fiqh-council/research-assistant", meta: "فقه", summary: "بحث موثق في مواد المجمع الفقهي." },
 ];
 
 export default function HomePage() {
@@ -136,13 +172,19 @@ export default function HomePage() {
         <HomeContentRail title="المحاضرات" subtitle="مختارات حديثة للدروس والمحاضرات الصوتية والمرئية." items={LECTURE_ITEMS} />
         <HomeContentRail title="الخطب" subtitle="محتوى عملي للخطباء والدعاة مرتب حسب الموضوع والموسم." items={KHUTBA_ITEMS} />
         <HomeContentRail title="المشايخ" subtitle="الوصول إلى العلماء والمشايخ والدروس المرتبطة بهم." items={SCHOLAR_ITEMS} />
-        <HomeContentRail title="المكتبة والفوائد والأسئلة" subtitle="محتوى معرفي موثق قبل الخدمات والأدوات." items={LIBRARY_ITEMS} />
-        <HomeDailyFaida />
-        <HomeDailyQuestion />
         <HomeContentRail title="القرآن الكريم" subtitle="قراءة وتدبر واستماع مع روابط تفسير." items={QURAN_ITEMS} />
-        <HomeLatestUpdates />
-        <HomePrayerTimes />
+        <HomeContentRail title="الأحاديث" subtitle="الأحاديث والشروح والبحث في السنة." items={HADITH_ITEMS} />
+        <HomeContentRail title="الأذكار" subtitle="أوراد يومية وعداد تسبيح احترافي." items={ADHKAR_ITEMS} />
         <HomeDailyDhikr />
+        <HomeContentRail title="الأسئلة الشرعية" subtitle="أسئلة وأجوبة موثقة ومصنفة." items={QA_ITEMS} />
+        <HomeDailyQuestion />
+        <HomeContentRail title="المكتبة" subtitle="كتب ومتون ومسارات علمية." items={LIBRARY_ITEMS} />
+        <HomeContentRail title="الفوائد" subtitle="فوائد مختصرة ومنظمة لطالب العلم." items={FAWAID_ITEMS} />
+        <HomeDailyFaida />
+        <HomeContentRail title="أدوات العبادة" subtitle="أدوات عملية للمتابعة اليومية." items={WORSHIP_TOOLS_ITEMS} />
+        <HomePrayerTimes />
+        <HomeContentRail title="البحث والمساعد" subtitle="بحث ذكي ومساعد شرعي مقيد بالمصادر." items={SEARCH_ASSISTANT_ITEMS} />
+        <HomeLatestUpdates />
         <HomeDailyHadith />
         <HomeDailyProgress />
         <HomeFeatureCards />
