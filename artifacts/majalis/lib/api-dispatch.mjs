@@ -1,54 +1,3 @@
-import assistantHandler from "./api-handlers/assistant.js";
-import assistantHealthHandler from "./api-handlers/assistant/health.js";
-import testAnthropicHandler from "./api-handlers/test-anthropic.js";
-import transcribeHandler from "./api-handlers/transcribe.js";
-import prayerTimesHandler from "./api-handlers/prayer-times.js";
-import fiqhResearchAssistantHandler from "./api-handlers/fiqh-research-assistant.js";
-import syncDataHandler from "./api-handlers/cron/sync-data.js";
-import knowledgeSyncHandler from "./api-handlers/cron/knowledge-sync.js";
-import knowledgePipelineHandler from "./api-handlers/admin/knowledge-pipeline.js";
-import knowledgeSearchHandler from "./api-handlers/knowledge-search.js";
-import autoContentHealthHandler from "./api-handlers/cron/auto-content-health.js";
-import autoContentSyncHandler from "./api-handlers/cron/auto-content-sync.js";
-import systemHealthHandler from "./api-handlers/cron/system-health.js";
-import applyMigrationsHandler from "./api-handlers/cron/apply-migrations.js";
-import bootstrapDatabaseHandler from "./api-handlers/cron/bootstrap-database.js";
-import autoContentHandler from "./api-handlers/auto-content.js";
-import autoContentAdminHandler from "./api-handlers/admin/auto-content.js";
-import autoKnowledgeSyncHandler from "./api-handlers/cron/auto-knowledge-sync.js";
-import connectorHealthHandler from "./api-handlers/cron/connector-health.js";
-import autoKnowledgeAdminHandler from "./api-handlers/admin/auto-knowledge-engine.js";
-import knowledgeRecommendationsHandler from "./api-handlers/knowledge-recommendations.js";
-import intelligentSearchHandler from "./api-handlers/intelligent-search.js";
-import topicContentHandler from "./api-handlers/topic-content.js";
-import contentRelationsHandler from "./api-handlers/content-relations.js";
-import searchAnalyticsHandler from "./api-handlers/admin/search-analytics.js";
-import digitalLearningHandler from "./api-handlers/digital-learning.js";
-import digitalLearningAdminHandler from "./api-handlers/admin/digital-learning.js";
-import autonomousOrchestratorHandler from "./api-handlers/cron/autonomous-orchestrator.js";
-import autonomousAiAdminHandler from "./api-handlers/admin/autonomous-ai.js";
-import dailyContentHandler from "./api-handlers/daily-content.js";
-import globalReferenceHandler from "./api-handlers/global-reference.js";
-import globalReferenceAdminHandler from "./api-handlers/admin/global-reference.js";
-import globalReferenceReviewHandler from "./api-handlers/cron/global-reference-review.js";
-import islamicIntelligenceHandler from "./api-handlers/cron/islamic-intelligence.js";
-import islamicIntelligenceAdminHandler from "./api-handlers/admin/islamic-intelligence.js";
-import v1Handler from "./api-handlers/v1.js";
-import v2Handler from "./api-handlers/v2.js";
-import v3Handler from "./api-handlers/v3.js";
-import openPlatformAdminHandler from "./api-handlers/admin/open-platform.js";
-import governanceAdminHandler from "./api-handlers/admin/governance.js";
-import governanceBackupHandler from "./api-handlers/cron/governance-backup.js";
-import aiAgentsAdminHandler from "./api-handlers/admin/ai-agents.js";
-import aiAgentsCronHandler from "./api-handlers/cron/ai-agents.js";
-import scholarlySearchHandler from "./api-handlers/scholarly-search.js";
-import scholarlyVerificationAdminHandler from "./api-handlers/admin/scholarly-verification.js";
-import scholarlyVerificationCronHandler from "./api-handlers/cron/scholarly-verification.js";
-import checkFiqhLinksAdminHandler from "./api-handlers/admin/check-fiqh-links.js";
-import checkFiqhLinksCronHandler from "./api-handlers/cron/check-fiqh-links.js";
-import syncFiqhCouncilAdminHandler from "./api-handlers/admin/sync-fiqh-council.js";
-import syncFiqhCouncilCronHandler from "./api-handlers/cron/sync-fiqh-council.js";
-import healthzHandler from "./api-handlers/healthz.js";
 import { createRateLimiter } from "../server/rate-limit.mjs";
 
 const assistantRateLimit = createRateLimiter({
@@ -69,59 +18,72 @@ const fiqhResearchRateLimit = createRateLimiter({
   keyPrefix: "fiqh-research",
 });
 
+/** Route table uses dynamic imports so Vercel bundles one lightweight function entrypoint. */
 export const API_ROUTES = [
-  { prefix: "/api/healthz", handler: healthzHandler, allowGet: true, exact: true },
-  { prefix: "/api/assistant/health", handler: assistantHealthHandler, allowGet: true, exact: true },
-  { prefix: "/api/prayer-times", handler: prayerTimesHandler, allowGet: true, exact: true },
-  { prefix: "/api/cron/sync-data", handler: syncDataHandler, allowGet: true, exact: true },
-  { prefix: "/api/cron/knowledge-sync", handler: knowledgeSyncHandler, allowGet: true, exact: true },
-  { prefix: "/api/cron/sync-fiqh-council", handler: syncFiqhCouncilCronHandler, allowGet: true, exact: true },
-  { prefix: "/api/cron/check-fiqh-links", handler: checkFiqhLinksCronHandler, allowGet: true, exact: true },
-  { prefix: "/api/cron/scholarly-verification", handler: scholarlyVerificationCronHandler, allowGet: true, exact: true },
-  { prefix: "/api/admin/knowledge-pipeline", handler: knowledgePipelineHandler, allowGet: true },
-  { prefix: "/api/admin/check-fiqh-links", handler: checkFiqhLinksAdminHandler, allowGet: true },
-  { prefix: "/api/admin/sync-fiqh-council", handler: syncFiqhCouncilAdminHandler, allowGet: true },
-  { prefix: "/api/admin/scholarly-verification", handler: scholarlyVerificationAdminHandler, allowGet: true },
-  { prefix: "/api/knowledge-search", handler: knowledgeSearchHandler, allowGet: true },
-  { prefix: "/api/cron/auto-content-sync", handler: autoContentSyncHandler, allowGet: true, exact: true },
-  { prefix: "/api/cron/auto-content-health", handler: autoContentHealthHandler, allowGet: true, exact: true },
-  { prefix: "/api/cron/system-health", handler: systemHealthHandler, allowGet: true, exact: true },
-  { prefix: "/api/cron/apply-migrations", handler: applyMigrationsHandler, allowGet: true, exact: true },
-  { prefix: "/api/cron/bootstrap-database", handler: bootstrapDatabaseHandler, allowGet: true, exact: true },
-  { prefix: "/api/cron/auto-knowledge-sync", handler: autoKnowledgeSyncHandler, allowGet: true, exact: true },
-  { prefix: "/api/cron/connector-health", handler: connectorHealthHandler, allowGet: true, exact: true },
-  { prefix: "/api/auto-content", handler: autoContentHandler, allowGet: true },
-  { prefix: "/api/knowledge-recommendations", handler: knowledgeRecommendationsHandler, allowGet: true },
-  { prefix: "/api/intelligent-search", handler: intelligentSearchHandler, allowGet: true },
-  { prefix: "/api/topic-content", handler: topicContentHandler, allowGet: true },
-  { prefix: "/api/content-relations", handler: contentRelationsHandler, allowGet: true },
-  { prefix: "/api/scholarly-search", handler: scholarlySearchHandler, allowGet: true },
-  { prefix: "/api/admin/search-analytics", handler: searchAnalyticsHandler, allowGet: true },
-  { prefix: "/api/digital-learning", handler: digitalLearningHandler, allowGet: true },
-  { prefix: "/api/admin/digital-learning", handler: digitalLearningAdminHandler, allowGet: true },
-  { prefix: "/api/cron/autonomous-orchestrator", handler: autonomousOrchestratorHandler, allowGet: true, exact: true },
-  { prefix: "/api/admin/autonomous-ai", handler: autonomousAiAdminHandler, allowGet: true },
-  { prefix: "/api/daily-content", handler: dailyContentHandler, allowGet: true },
-  { prefix: "/api/global-reference", handler: globalReferenceHandler, allowGet: true },
-  { prefix: "/api/admin/global-reference", handler: globalReferenceAdminHandler, allowGet: true },
-  { prefix: "/api/cron/global-reference-review", handler: globalReferenceReviewHandler, allowGet: true, exact: true },
-  { prefix: "/api/cron/islamic-intelligence", handler: islamicIntelligenceHandler, allowGet: true, exact: true },
-  { prefix: "/api/admin/islamic-intelligence", handler: islamicIntelligenceAdminHandler, allowGet: true },
-  { prefix: "/api/v1", handler: v1Handler, allowGet: true },
-  { prefix: "/api/v2", handler: v2Handler, allowGet: true },
-  { prefix: "/api/v3", handler: v3Handler, allowGet: true },
-  { prefix: "/api/admin/open-platform", handler: openPlatformAdminHandler, allowGet: true },
-  { prefix: "/api/admin/governance", handler: governanceAdminHandler, allowGet: true },
-  { prefix: "/api/cron/governance-backup", handler: governanceBackupHandler, allowGet: true, exact: true },
-  { prefix: "/api/admin/ai-agents", handler: aiAgentsAdminHandler, allowGet: true },
-  { prefix: "/api/cron/ai-agents", handler: aiAgentsCronHandler, allowGet: true, exact: true },
-  { prefix: "/api/admin/auto-content", handler: autoContentAdminHandler, allowGet: true },
-  { prefix: "/api/admin/auto-knowledge-engine", handler: autoKnowledgeAdminHandler, allowGet: true },
-  { prefix: "/api/fiqh-research-assistant", handler: fiqhResearchAssistantHandler, rateLimit: fiqhResearchRateLimit, allowGet: true },
-  { prefix: "/api/assistant", handler: assistantHandler, rateLimit: assistantRateLimit, allowGet: true },
-  { prefix: "/api/test-anthropic", handler: testAnthropicHandler, allowGet: true },
-  { prefix: "/api/transcribe", handler: transcribeHandler, rateLimit: transcribeRateLimit },
+  { prefix: "/api/healthz", module: "./api-handlers/healthz.js", allowGet: true, exact: true },
+  { prefix: "/api/assistant/health", module: "./api-handlers/assistant/health.js", allowGet: true, exact: true },
+  { prefix: "/api/prayer-times", module: "./api-handlers/prayer-times.js", allowGet: true, exact: true },
+  { prefix: "/api/cron/sync-data", module: "./api-handlers/cron/sync-data.js", allowGet: true, exact: true },
+  { prefix: "/api/cron/knowledge-sync", module: "./api-handlers/cron/knowledge-sync.js", allowGet: true, exact: true },
+  { prefix: "/api/cron/sync-fiqh-council", module: "./api-handlers/cron/sync-fiqh-council.js", allowGet: true, exact: true },
+  { prefix: "/api/cron/check-fiqh-links", module: "./api-handlers/cron/check-fiqh-links.js", allowGet: true, exact: true },
+  { prefix: "/api/cron/scholarly-verification", module: "./api-handlers/cron/scholarly-verification.js", allowGet: true, exact: true },
+  { prefix: "/api/admin/knowledge-pipeline", module: "./api-handlers/admin/knowledge-pipeline.js", allowGet: true },
+  { prefix: "/api/admin/check-fiqh-links", module: "./api-handlers/admin/check-fiqh-links.js", allowGet: true },
+  { prefix: "/api/admin/sync-fiqh-council", module: "./api-handlers/admin/sync-fiqh-council.js", allowGet: true },
+  { prefix: "/api/admin/scholarly-verification", module: "./api-handlers/admin/scholarly-verification.js", allowGet: true },
+  { prefix: "/api/knowledge-search", module: "./api-handlers/knowledge-search.js", allowGet: true },
+  { prefix: "/api/cron/auto-content-sync", module: "./api-handlers/cron/auto-content-sync.js", allowGet: true, exact: true },
+  { prefix: "/api/cron/auto-content-health", module: "./api-handlers/cron/auto-content-health.js", allowGet: true, exact: true },
+  { prefix: "/api/cron/system-health", module: "./api-handlers/cron/system-health.js", allowGet: true, exact: true },
+  { prefix: "/api/cron/apply-migrations", module: "./api-handlers/cron/apply-migrations.js", allowGet: true, exact: true },
+  { prefix: "/api/cron/bootstrap-database", module: "./api-handlers/cron/bootstrap-database.js", allowGet: true, exact: true },
+  { prefix: "/api/cron/auto-knowledge-sync", module: "./api-handlers/cron/auto-knowledge-sync.js", allowGet: true, exact: true },
+  { prefix: "/api/cron/connector-health", module: "./api-handlers/cron/connector-health.js", allowGet: true, exact: true },
+  { prefix: "/api/auto-content", module: "./api-handlers/auto-content.js", allowGet: true },
+  { prefix: "/api/knowledge-recommendations", module: "./api-handlers/knowledge-recommendations.js", allowGet: true },
+  { prefix: "/api/intelligent-search", module: "./api-handlers/intelligent-search.js", allowGet: true },
+  { prefix: "/api/topic-content", module: "./api-handlers/topic-content.js", allowGet: true },
+  { prefix: "/api/content-relations", module: "./api-handlers/content-relations.js", allowGet: true },
+  { prefix: "/api/scholarly-search", module: "./api-handlers/scholarly-search.js", allowGet: true },
+  { prefix: "/api/admin/search-analytics", module: "./api-handlers/admin/search-analytics.js", allowGet: true },
+  { prefix: "/api/digital-learning", module: "./api-handlers/digital-learning.js", allowGet: true },
+  { prefix: "/api/admin/digital-learning", module: "./api-handlers/admin/digital-learning.js", allowGet: true },
+  { prefix: "/api/cron/autonomous-orchestrator", module: "./api-handlers/cron/autonomous-orchestrator.js", allowGet: true, exact: true },
+  { prefix: "/api/admin/autonomous-ai", module: "./api-handlers/admin/autonomous-ai.js", allowGet: true },
+  { prefix: "/api/daily-content", module: "./api-handlers/daily-content.js", allowGet: true },
+  { prefix: "/api/global-reference", module: "./api-handlers/global-reference.js", allowGet: true },
+  { prefix: "/api/admin/global-reference", module: "./api-handlers/admin/global-reference.js", allowGet: true },
+  { prefix: "/api/cron/global-reference-review", module: "./api-handlers/cron/global-reference-review.js", allowGet: true, exact: true },
+  { prefix: "/api/cron/islamic-intelligence", module: "./api-handlers/cron/islamic-intelligence.js", allowGet: true, exact: true },
+  { prefix: "/api/admin/islamic-intelligence", module: "./api-handlers/admin/islamic-intelligence.js", allowGet: true },
+  { prefix: "/api/v1", module: "./api-handlers/v1.js", allowGet: true },
+  { prefix: "/api/v2", module: "./api-handlers/v2.js", allowGet: true },
+  { prefix: "/api/v3", module: "./api-handlers/v3.js", allowGet: true },
+  { prefix: "/api/admin/open-platform", module: "./api-handlers/admin/open-platform.js", allowGet: true },
+  { prefix: "/api/admin/governance", module: "./api-handlers/admin/governance.js", allowGet: true },
+  { prefix: "/api/cron/governance-backup", module: "./api-handlers/cron/governance-backup.js", allowGet: true, exact: true },
+  { prefix: "/api/admin/ai-agents", module: "./api-handlers/admin/ai-agents.js", allowGet: true },
+  { prefix: "/api/cron/ai-agents", module: "./api-handlers/cron/ai-agents.js", allowGet: true, exact: true },
+  { prefix: "/api/admin/auto-content", module: "./api-handlers/admin/auto-content.js", allowGet: true },
+  { prefix: "/api/admin/auto-knowledge-engine", module: "./api-handlers/admin/auto-knowledge-engine.js", allowGet: true },
+  { prefix: "/api/fiqh-research-assistant", module: "./api-handlers/fiqh-research-assistant.js", rateLimit: fiqhResearchRateLimit, allowGet: true },
+  { prefix: "/api/assistant", module: "./api-handlers/assistant.js", rateLimit: assistantRateLimit, allowGet: true },
+  { prefix: "/api/test-anthropic", module: "./api-handlers/test-anthropic.js", allowGet: true },
+  { prefix: "/api/transcribe", module: "./api-handlers/transcribe.js", rateLimit: transcribeRateLimit },
 ];
+
+const handlerCache = new Map();
+
+async function loadHandler(route) {
+  if (handlerCache.has(route.module)) {
+    return handlerCache.get(route.module);
+  }
+  const mod = await import(route.module);
+  const handler = mod.default;
+  handlerCache.set(route.module, handler);
+  return handler;
+}
 
 export function resolveRequestPath(req) {
   const headerPath =
@@ -177,6 +139,8 @@ export async function dispatchApiRequest(req, res) {
     return;
   }
 
+  const handler = await loadHandler(route);
+
   if (req.method === "OPTIONS") {
     res.statusCode = 204;
     res.end();
@@ -186,7 +150,7 @@ export async function dispatchApiRequest(req, res) {
   if (req.method === "GET" && route.allowGet) {
     req.body = {};
     try {
-      await route.handler(req, res);
+      await handler(req, res);
     } catch (error) {
       console.error(`${route.prefix} GET handler failed`, error);
       if (!res.headersSent) {
@@ -210,7 +174,7 @@ export async function dispatchApiRequest(req, res) {
 
     req.body = body ?? {};
     try {
-      await route.handler(req, res);
+      await handler(req, res);
     } catch (error) {
       console.error(`${route.prefix} POST handler failed`, error);
       if (!res.headersSent) {
@@ -225,3 +189,11 @@ export async function dispatchApiRequest(req, res) {
     await runPost();
   }
 }
+
+/** Dev server helper: resolve handler for a matched route without caching importers. */
+export async function getDevRouteHandler(route) {
+  const mod = await import(route.module);
+  return mod.default;
+}
+
+export { assistantRateLimit, transcribeRateLimit, fiqhResearchRateLimit };

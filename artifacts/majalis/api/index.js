@@ -1,5 +1,5 @@
-export default async function handler(_req, res) {
-  res.statusCode = 200;
-  res.setHeader("Content-Type", "application/json; charset=utf-8");
-  res.end(JSON.stringify({ ok: true, service: "majlisilm-api" }));
+import { dispatchApiRequest } from "../lib/api-dispatch.mjs";
+
+export default async function handler(req, res) {
+  return dispatchApiRequest(req, res);
 }

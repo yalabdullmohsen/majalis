@@ -12,7 +12,7 @@ export function majalisApiPlugin() {
       }
 
       server.middlewares.use(async (req, res, next) => {
-        const { matchApiRoute, sendJson } = await getDispatch();
+        const { matchApiRoute, sendJson, getDevRouteHandler } = await getDispatch();
         const route = matchApiRoute(req.url);
         if (!route) return next();
 
@@ -22,10 +22,12 @@ export function majalisApiPlugin() {
           return;
         }
 
+        const handler = await getDevRouteHandler(route);
+
         if (req.method === "GET" && route.allowGet) {
           req.body = {};
           try {
-            await route.handler(req, res);
+            await handler(req, res);
           } catch (error) {
             console.error(`${route.prefix} dev GET handler failed`, error);
             if (!res.headersSent) {
@@ -62,7 +64,7 @@ export function majalisApiPlugin() {
 
           req.body = body;
           try {
-            await route.handler(req, res);
+            await handler(req, res);
           } catch (error) {
             console.error(`${route.prefix} dev handler failed`, error);
             if (!res.headersSent) {
