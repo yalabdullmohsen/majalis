@@ -8,7 +8,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { getSupabaseAdmin } = await import("../lib/supabase-admin.mjs");
+    const { getSupabaseAdmin } = await import("../../lib/supabase-admin.mjs");
     const admin = getSupabaseAdmin();
     const date = req.query?.date || undefined;
     const type = req.query?.type || undefined;

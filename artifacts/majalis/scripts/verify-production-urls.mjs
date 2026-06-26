@@ -9,26 +9,35 @@ const base = process.argv.find((a) => a.startsWith("--base="))?.slice(7) || "htt
 const pages = [
   "/",
   "/lessons",
-  "/qa",
+  "/sheikhs",
   "/library",
+  "/qa",
   "/quran",
   "/quran-live",
-  "/tasbih",
+  "/quran-radio",
   "/prayer-times",
-  "/sitemap.xml",
-  "/robots.txt",
-  "/site.webmanifest",
-  "/manifest.webmanifest",
-  "/favicon.png",
+  "/calendar",
+  "/tasbih",
+  "/prayer-ranks",
+  "/about",
+  "/contact",
   "/search",
-  "/assistant",
   "/admin",
   "/login",
+  "/register",
+  "/sitemap.xml",
+  "/robots.txt",
+  "/favicon.ico",
+  "/manifest.webmanifest",
+  "/site.webmanifest",
+  "/assistant",
 ];
 
 const apis = [
   "/api/healthz",
   "/api/knowledge-search?q=صلاة",
+  "/api/daily-content",
+  "/api/prayer-times?city=Kuwait",
 ];
 
 let failed = 0;
