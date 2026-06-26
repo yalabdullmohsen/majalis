@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import {
   BookOpen,
@@ -62,42 +62,89 @@ type Props = {
   onClose: () => void;
 };
 
+function lockBodyScroll(locked: boolean) {
+  if (locked) {
+    document.body.classList.add("side-nav-open");
+  } else {
+    document.body.classList.remove("side-nav-open");
+  }
+}
+
 export function SideNavDrawer({ open, onClose }: Props) {
   const [pathname] = useLocation();
   const { isAdmin, isLoggedIn } = useAuth();
 
+  const close = useCallback(() => {
+    onClose();
+  }, [onClose]);
+
   useEffect(() => {
-    if (!open) return;
-    document.body.classList.add("side-nav-open");
+    lockBodyScroll(false);
+  }, []);
+
+  useEffect(() => {
+    if (open) close();
+  }, [pathname, open, close]);
+
+  useEffect(() => {
+    if (!open) {
+      lockBodyScroll(false);
+      return;
+    }
+
+    lockBodyScroll(true);
+
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") close();
     };
+
+    const onPopState = () => close();
+
     window.addEventListener("keydown", onKey);
+    window.addEventListener("popstate", onPopState);
+
     return () => {
-      document.body.classList.remove("side-nav-open");
+      lockBodyScroll(false);
       window.removeEventListener("keydown", onKey);
+      window.removeEventListener("popstate", onPopState);
     };
-  }, [open, onClose]);
+  }, [open, close]);
+
+  if (!open) return null;
+
+  const handleBackdropClose = () => {
+    close();
+  };
+
+  const handleLinkClick = () => {
+    close();
+  };
 
   return (
     <div
-      className={`side-nav-backdrop side-nav-backdrop--v2${open ? " is-open" : ""}`}
-      onClick={onClose}
+      className="side-nav-backdrop--v2"
+      onClick={handleBackdropClose}
       role="presentation"
-      aria-hidden={!open}
+      aria-hidden={false}
     >
       <aside
-        className={`side-nav-drawer side-nav-drawer--v2${open ? " is-open" : ""}`}
+        className="side-nav-drawer--v2"
         onClick={(e) => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
         aria-label="القائمة الجانبية"
-        aria-hidden={!open}
       >
         <div className="side-nav-drawer__head side-nav-drawer__head--v2">
           <div className="side-nav-drawer__brand">
             <img src="/logo.png" alt="" width={36} height={36} />
             <strong>المجلس العلمي</strong>
           </div>
-          <button type="button" onClick={onClose} aria-label="إغلاق" className="side-nav-close">
+          <button
+            type="button"
+            onClick={close}
+            aria-label="إغلاق"
+            className="side-nav-close"
+          >
             <X size={22} />
           </button>
         </div>
@@ -108,13 +155,16 @@ export function SideNavDrawer({ open, onClose }: Props) {
               <p className="side-nav-group__title">{group.title}</p>
               <nav>
                 {group.links.map((link) => {
-                  const active = pathname === link.href || pathname.startsWith(`${link.href}/`) || pathname.startsWith(`${link.href}?`);
+                  const active =
+                    pathname === link.href ||
+                    pathname.startsWith(`${link.href}/`) ||
+                    pathname.startsWith(`${link.href}?`);
                   const Icon = ICONS[link.href.split("?")[0]] || BookOpen;
                   return (
                     <Link
                       key={link.href}
                       href={link.href}
-                      onClick={onClose}
+                      onClick={handleLinkClick}
                       className={`side-nav-link side-nav-link--v2${active ? " is-active" : ""}`}
                     >
                       <Icon size={18} aria-hidden="true" />
@@ -131,17 +181,21 @@ export function SideNavDrawer({ open, onClose }: Props) {
             <nav>
               {!isLoggedIn ? (
                 <>
-                  <Link href="/login" onClick={onClose} className="side-nav-link side-nav-link--v2">
+                  <Link href="/login" onClick={handleLinkClick} className="side-nav-link side-nav-link--v2">
                     <Settings size={18} />
                     <span>دخول</span>
                   </Link>
-                  <Link href="/register" onClick={onClose} className="side-nav-link side-nav-link--v2">
+                  <Link href="/register" onClick={handleLinkClick} className="side-nav-link side-nav-link--v2">
                     <UserPlus size={18} />
                     <span>إنشاء حساب</span>
                   </Link>
                 </>
               ) : (
-                <Link href="/settings" onClick={onClose} className={`side-nav-link side-nav-link--v2${pathname.startsWith("/settings") ? " is-active" : ""}`}>
+                <Link
+                  href="/settings"
+                  onClick={handleLinkClick}
+                  className={`side-nav-link side-nav-link--v2${pathname.startsWith("/settings") ? " is-active" : ""}`}
+                >
                   <Settings size={18} />
                   <span>الإعدادات</span>
                 </Link>
@@ -153,12 +207,16 @@ export function SideNavDrawer({ open, onClose }: Props) {
             <p className="side-nav-group__title">الإدارة</p>
             <nav>
               {isAdmin ? (
-                <Link href="/admin" onClick={onClose} className={`side-nav-link side-nav-link--v2${pathname.startsWith("/admin") ? " is-active" : ""}`}>
+                <Link
+                  href="/admin"
+                  onClick={handleLinkClick}
+                  className={`side-nav-link side-nav-link--v2${pathname.startsWith("/admin") ? " is-active" : ""}`}
+                >
                   <Settings size={18} />
                   <span>لوحة التحكم</span>
                 </Link>
               ) : (
-                <Link href="/login?next=/admin" onClick={onClose} className="side-nav-link side-nav-link--v2">
+                <Link href="/login?next=/admin" onClick={handleLinkClick} className="side-nav-link side-nav-link--v2">
                   <Settings size={18} />
                   <span>دخول المسؤول</span>
                 </Link>

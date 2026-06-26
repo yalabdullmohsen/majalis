@@ -47,6 +47,14 @@ export class ErrorBoundary extends Component<Props, State> {
     if (ok) this.setState({ copied: true });
   };
 
+  report = () => {
+    const detail = encodeURIComponent(
+      `Error ID: ${this.state.errorId}\nURL: ${typeof window !== "undefined" ? window.location.href : ""}\nMessage: ${this.state.error?.message || "unknown"}`,
+    );
+    window.open(`mailto:support@majlisilm.com?subject=MJL%20Error%20${this.state.errorId}&body=${detail}`, "_blank", "noopener,noreferrer");
+    this.setState({ copied: true });
+  };
+
   render() {
     if (this.state.error) {
       const isDev = import.meta.env?.DEV;
@@ -87,7 +95,16 @@ export class ErrorBoundary extends Component<Props, State> {
             <button type="button" onClick={this.copyId} className="error-boundary-btn error-boundary-btn--ghost">
               {this.state.copied ? "تم النسخ" : "نسخ رقم الخطأ"}
             </button>
+            <button type="button" onClick={this.report} className="error-boundary-btn error-boundary-btn--ghost">
+              الإبلاغ عن الخطأ
+            </button>
           </div>
+
+          {this.state.copied && (
+            <p style={{ color: C.inkSoft, marginTop: "0.75rem", fontSize: "0.85rem" }}>
+              تم تجهيز تقرير الخطأ.
+            </p>
+          )}
 
           {isDev && (
             <details style={{ marginTop: "1.25rem", textAlign: "right", fontSize: "0.78rem", color: C.inkSoft }}>

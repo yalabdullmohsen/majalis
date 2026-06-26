@@ -7,19 +7,30 @@ const base = process.argv.find((a) => a.startsWith("--base="))?.slice(7) || "htt
 
 const PAGES = [
   "/",
+  "/search",
   "/lessons",
+  "/sheikhs",
+  "/library",
+  "/qa",
   "/quran",
   "/quran-live",
-  "/quran/tajweed",
-  "/quran/surah-stories",
   "/quran-radio",
-  "/qa",
-  "/library",
+  "/quran/tajweed",
+  "/tajweed",
+  "/quran/surah-stories",
+  "/surah-stories",
+  "/prayer-times",
+  "/prayer-ranks",
+  "/calendar",
   "/assistant",
-  "/settings",
   "/login",
   "/register",
+  "/settings",
   "/admin",
+  "/contact",
+  "/about",
+  "/sitemap.xml",
+  "/robots.txt",
 ];
 
 let failed = 0;
@@ -32,6 +43,10 @@ for (const path of PAGES) {
     if (res.status !== 200) {
       console.error(`✗ ${path} → HTTP ${res.status}`);
       failed++;
+      continue;
+    }
+    if (path.endsWith(".xml") || path.endsWith(".txt")) {
+      console.log(`✓ ${path}`);
       continue;
     }
     if (html.includes("/src/main.tsx")) {

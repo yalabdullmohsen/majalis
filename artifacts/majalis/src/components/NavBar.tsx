@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "wouter";
 import { useAuth } from "./AuthProvider";
 import NotificationBell from "./NotificationBell";
@@ -71,6 +71,13 @@ export default function NavBar() {
   const [open, setOpen] = useState(false);
   const [drawer, setDrawer] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
+
+  const closeDrawer = useCallback(() => setDrawer(false), []);
+
+  useEffect(() => {
+    document.body.classList.remove("side-nav-open");
+    document.body.classList.remove("navbar-more-open");
+  }, []);
 
   useEffect(() => {
     setOpen(false);
@@ -272,7 +279,7 @@ export default function NavBar() {
           </div>
         )}
       </header>
-      <SideNavDrawer open={drawer} onClose={() => setDrawer(false)} />
+      <SideNavDrawer open={drawer} onClose={closeDrawer} />
     </>
   );
 }
