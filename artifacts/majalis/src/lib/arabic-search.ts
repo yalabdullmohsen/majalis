@@ -28,6 +28,43 @@ export function normalizeArabic(text: string): string {
     .toLowerCase();
 }
 
+function editDistanceAtMostOne(a: string, b: string): boolean {
+  if (a === b) return true;
+  if (Math.abs(a.length - b.length) > 1) return false;
+  let i = 0;
+  let j = 0;
+  let edits = 0;
+  while (i < a.length && j < b.length) {
+    if (a[i] === b[j]) {
+      i += 1;
+      j += 1;
+      continue;
+    }
+    edits += 1;
+    if (edits > 1) return false;
+    if (a.length > b.length) i += 1;
+    else if (b.length > a.length) j += 1;
+    else {
+      i += 1;
+      j += 1;
+    }
+  }
+  return edits + (a.length - i) + (b.length - j) <= 1;
+}
+
+function fuzzyWordIncludes(haystack: string, needle: string): boolean {
+  const needleWords = needle.split(" ").filter((word) => word.length >= 4);
+  if (!needleWords.length) return false;
+  const hayWords = haystack.split(" ").filter((word) => word.length >= 4);
+  return needleWords.every((needleWord) =>
+    hayWords.some((hayWord) =>
+      hayWord.includes(needleWord) ||
+      needleWord.includes(hayWord) ||
+      editDistanceAtMostOne(hayWord, needleWord),
+    ),
+  );
+}
+
 export function arabicIncludes(haystack: string | null | undefined, needle: string): boolean {
   if (!needle.trim()) return true;
   if (!haystack) return false;
@@ -38,7 +75,7 @@ export function arabicIncludes(haystack: string | null | undefined, needle: stri
   return hayVariants.some((h) =>
     needles.some((raw) => {
       const needleVariants = expandArabicVariants(normalizeArabic(raw));
-      return needleVariants.some((n) => n.length > 0 && h.includes(n));
+      return needleVariants.some((n) => n.length > 0 && (h.includes(n) || fuzzyWordIncludes(h, n)));
     }),
   );
 }

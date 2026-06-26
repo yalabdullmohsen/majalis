@@ -1,14 +1,16 @@
 {
   "name": "المجلس العلمي",
   "short_name": "المجلس العلمي",
-  "description": "منصة علمية تجمع الدروس والمشايخ والكتب والفوائد في مكان واحد.",
+  "description": "منصة علمية شرعية موثقة للدروس والدورات والقرآن والأذكار والأسئلة والمساعد الشرعي.",
   "lang": "ar",
   "dir": "rtl",
-  "start_url": "/",
+  "start_url": "/?source=pwa",
   "scope": "/",
   "display": "standalone",
   "background_color": "#FAF5EA",
   "theme_color": "#1F6E54",
+  "orientation": "portrait-primary",
+  "categories": ["education", "books", "lifestyle"],
   "icons": [
     {
       "src": "/favicon.png",
