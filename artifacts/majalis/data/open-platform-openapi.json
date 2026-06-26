@@ -1,0 +1,2268 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Majalis Open Islamic Platform API",
+    "description": "Official API for Islamic scholarly content — Quran, Hadith, Fatwas, Lessons, and more.",
+    "version": "v1",
+    "contact": {
+      "name": "المجلس العلمي",
+      "url": "https://majalis.app"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://majalis.app",
+      "description": "Production"
+    },
+    {
+      "url": "http://localhost:5173",
+      "description": "Development"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Meta",
+      "description": "API metadata"
+    },
+    {
+      "name": "Search",
+      "description": "Text and semantic search"
+    },
+    {
+      "name": "Content",
+      "description": "Content resources"
+    },
+    {
+      "name": "Topics",
+      "description": "Islamic topic hubs"
+    },
+    {
+      "name": "Relations",
+      "description": "Knowledge graph"
+    },
+    {
+      "name": "Sources",
+      "description": "Trusted sources"
+    },
+    {
+      "name": "Webhooks",
+      "description": "Event notifications"
+    }
+  ],
+  "paths": {
+    "/api/v1": {
+      "get": {
+        "summary": "API root — list available endpoints",
+        "tags": [
+          "Meta"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "API info"
+          }
+        }
+      }
+    },
+    "/api/v1/resources": {
+      "get": {
+        "summary": "List all content resources",
+        "tags": [
+          "Resources"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resource list"
+          }
+        }
+      }
+    },
+    "/api/v1/search": {
+      "get": {
+        "summary": "Unified search",
+        "tags": [
+          "Search"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Search query"
+          },
+          {
+            "name": "mode",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "text",
+                "semantic",
+                "hybrid"
+              ]
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by content type"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "default": 20,
+              "maximum": 100
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "updated_at",
+                "created_at",
+                "title"
+              ]
+            }
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Search results with pagination"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          }
+        }
+      }
+    },
+    "/api/v1/topics": {
+      "get": {
+        "summary": "List Islamic topics",
+        "tags": [
+          "Topics"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Topic list"
+          }
+        }
+      }
+    },
+    "/api/v1/topics/{slug}": {
+      "get": {
+        "summary": "Get topic content hub",
+        "tags": [
+          "Topics"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Topic sections"
+          }
+        }
+      }
+    },
+    "/api/v1/relations": {
+      "get": {
+        "summary": "Get content relations graph",
+        "tags": [
+          "Relations"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "ref",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Global ref ID"
+          },
+          {
+            "name": "depth",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "default": 2
+            }
+          },
+          {
+            "name": "graph",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "1",
+                "0"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Relations or graph"
+          }
+        }
+      }
+    },
+    "/api/v1/sources": {
+      "get": {
+        "summary": "List trusted scholarly sources",
+        "tags": [
+          "Sources"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Source registry"
+          }
+        }
+      }
+    },
+    "/api/v1/quran": {
+      "get": {
+        "summary": "List Quran",
+        "tags": [
+          "Content"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "القرآن list"
+          }
+        }
+      }
+    },
+    "/api/v1/quran/{id}": {
+      "get": {
+        "summary": "Get Quran item",
+        "tags": [
+          "Content"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Single item"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/api/v1/hadith": {
+      "get": {
+        "summary": "List Hadith",
+        "tags": [
+          "Content"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "الأحاديث list"
+          }
+        }
+      }
+    },
+    "/api/v1/hadith/{id}": {
+      "get": {
+        "summary": "Get Hadith item",
+        "tags": [
+          "Content"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Single item"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/api/v1/adhkar": {
+      "get": {
+        "summary": "List Adhkar",
+        "tags": [
+          "Content"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "الأذكار list"
+          }
+        }
+      }
+    },
+    "/api/v1/adhkar/{id}": {
+      "get": {
+        "summary": "Get Adhkar item",
+        "tags": [
+          "Content"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Single item"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/api/v1/dua": {
+      "get": {
+        "summary": "List Duas",
+        "tags": [
+          "Content"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "الأدعية list"
+          }
+        }
+      }
+    },
+    "/api/v1/dua/{id}": {
+      "get": {
+        "summary": "Get Duas item",
+        "tags": [
+          "Content"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Single item"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/api/v1/fawaid": {
+      "get": {
+        "summary": "List Benefits",
+        "tags": [
+          "Content"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "الفوائد list"
+          }
+        }
+      }
+    },
+    "/api/v1/fawaid/{id}": {
+      "get": {
+        "summary": "Get Benefits item",
+        "tags": [
+          "Content"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Single item"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/api/v1/book": {
+      "get": {
+        "summary": "List Books",
+        "tags": [
+          "Content"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "الكتب list"
+          }
+        }
+      }
+    },
+    "/api/v1/book/{id}": {
+      "get": {
+        "summary": "Get Books item",
+        "tags": [
+          "Content"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Single item"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/api/v1/author": {
+      "get": {
+        "summary": "List Authors",
+        "tags": [
+          "Content"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "المؤلفون list"
+          }
+        }
+      }
+    },
+    "/api/v1/author/{id}": {
+      "get": {
+        "summary": "Get Authors item",
+        "tags": [
+          "Content"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Single item"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/api/v1/sheikh": {
+      "get": {
+        "summary": "List Scholars",
+        "tags": [
+          "Content"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "المشايخ list"
+          }
+        }
+      }
+    },
+    "/api/v1/sheikh/{id}": {
+      "get": {
+        "summary": "Get Scholars item",
+        "tags": [
+          "Content"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Single item"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/api/v1/lesson": {
+      "get": {
+        "summary": "List Lessons",
+        "tags": [
+          "Content"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "الدروس list"
+          }
+        }
+      }
+    },
+    "/api/v1/lesson/{id}": {
+      "get": {
+        "summary": "Get Lessons item",
+        "tags": [
+          "Content"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Single item"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/api/v1/lecture": {
+      "get": {
+        "summary": "List Lectures",
+        "tags": [
+          "Content"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "المحاضرات list"
+          }
+        }
+      }
+    },
+    "/api/v1/lecture/{id}": {
+      "get": {
+        "summary": "Get Lectures item",
+        "tags": [
+          "Content"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Single item"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/api/v1/course": {
+      "get": {
+        "summary": "List Courses",
+        "tags": [
+          "Content"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "الدورات list"
+          }
+        }
+      }
+    },
+    "/api/v1/course/{id}": {
+      "get": {
+        "summary": "Get Courses item",
+        "tags": [
+          "Content"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Single item"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/api/v1/fatwa": {
+      "get": {
+        "summary": "List Fatwas",
+        "tags": [
+          "Content"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "الفتاوى list"
+          }
+        }
+      }
+    },
+    "/api/v1/fatwa/{id}": {
+      "get": {
+        "summary": "Get Fatwas item",
+        "tags": [
+          "Content"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Single item"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/api/v1/fiqh_decision": {
+      "get": {
+        "summary": "List Fiqh Council Decisions",
+        "tags": [
+          "Content"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "قرارات المجامع الفقهية list"
+          }
+        }
+      }
+    },
+    "/api/v1/fiqh_decision/{id}": {
+      "get": {
+        "summary": "Get Fiqh Council Decisions item",
+        "tags": [
+          "Content"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Single item"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/api/v1/article": {
+      "get": {
+        "summary": "List Articles",
+        "tags": [
+          "Content"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "المقالات list"
+          }
+        }
+      }
+    },
+    "/api/v1/article/{id}": {
+      "get": {
+        "summary": "Get Articles item",
+        "tags": [
+          "Content"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Single item"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/api/v1/miracle": {
+      "get": {
+        "summary": "List Scientific Miracles",
+        "tags": [
+          "Content"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "الإعجاز العلمي list"
+          }
+        }
+      }
+    },
+    "/api/v1/miracle/{id}": {
+      "get": {
+        "summary": "Get Scientific Miracles item",
+        "tags": [
+          "Content"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Single item"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/api/v1/occasion": {
+      "get": {
+        "summary": "List Islamic Occasions",
+        "tags": [
+          "Content"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "المناسبات الإسلامية list"
+          }
+        }
+      }
+    },
+    "/api/v1/occasion/{id}": {
+      "get": {
+        "summary": "Get Islamic Occasions item",
+        "tags": [
+          "Content"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Single item"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/api/v1/calendar": {
+      "get": {
+        "summary": "List Islamic Calendar",
+        "tags": [
+          "Content"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "التقويم الإسلامي list"
+          }
+        }
+      }
+    },
+    "/api/v1/calendar/{id}": {
+      "get": {
+        "summary": "Get Islamic Calendar item",
+        "tags": [
+          "Content"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Single item"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/api/v1/qa": {
+      "get": {
+        "summary": "List Q&A",
+        "tags": [
+          "Content"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "الأسئلة list"
+          }
+        }
+      }
+    },
+    "/api/v1/qa/{id}": {
+      "get": {
+        "summary": "Get Q&A item",
+        "tags": [
+          "Content"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Single item"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/api/v1/ruling": {
+      "get": {
+        "summary": "List Sharia Rulings",
+        "tags": [
+          "Content"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "الأحكام الشرعية list"
+          }
+        }
+      }
+    },
+    "/api/v1/ruling/{id}": {
+      "get": {
+        "summary": "Get Sharia Rulings item",
+        "tags": [
+          "Content"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Single item"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/api/v1/update": {
+      "get": {
+        "summary": "List Updates",
+        "tags": [
+          "Content"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "التحديثات list"
+          }
+        }
+      }
+    },
+    "/api/v1/update/{id}": {
+      "get": {
+        "summary": "Get Updates item",
+        "tags": [
+          "Content"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Single item"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/api/v1/prayer_times": {
+      "get": {
+        "summary": "List Prayer Times",
+        "tags": [
+          "Content"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "مواقيت الصلاة list"
+          }
+        }
+      }
+    },
+    "/api/v1/prayer_times/{id}": {
+      "get": {
+        "summary": "Get Prayer Times item",
+        "tags": [
+          "Content"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Single item"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/api/v1/knowledge": {
+      "get": {
+        "summary": "List Knowledge",
+        "tags": [
+          "Content"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "المعرفة list"
+          }
+        }
+      }
+    },
+    "/api/v1/knowledge/{id}": {
+      "get": {
+        "summary": "Get Knowledge item",
+        "tags": [
+          "Content"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Single item"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-Key",
+        "description": "API key (maj_...)"
+      },
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Bearer token (API key or OAuth)"
+      }
+    },
+    "schemas": {
+      "OpenPlatformItem": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string"
+          },
+          "ref_id": {
+            "type": "string",
+            "example": "majalis:fatwa:123"
+          },
+          "title": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "author": {
+            "type": "string"
+          },
+          "source_url": {
+            "type": "string"
+          },
+          "verification_status": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Pagination": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer"
+          },
+          "limit": {
+            "type": "integer"
+          },
+          "total": {
+            "type": "integer"
+          },
+          "total_pages": {
+            "type": "integer"
+          },
+          "has_next": {
+            "type": "boolean"
+          },
+          "has_prev": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "type": "boolean",
+            "example": false
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "x-webhook-events": [
+    "content.created",
+    "content.updated",
+    "content.deleted",
+    "course.completed",
+    "fatwa.published",
+    "fiqh_decision.published",
+    "lesson.published",
+    "source.updated"
+  ],
+  "x-rate-limits": {
+    "free": {
+      "requests_per_minute": 60,
+      "requests_per_day": 5000
+    },
+    "standard": {
+      "requests_per_minute": 120,
+      "requests_per_day": 25000
+    },
+    "partner": {
+      "requests_per_minute": 300,
+      "requests_per_day": 100000
+    }
+  },
+  "x-versions": {
+    "v1": {
+      "label": "Stable",
+      "deprecated": false,
+      "sunset": null
+    },
+    "v2": {
+      "label": "Enhanced",
+      "deprecated": false,
+      "sunset": null,
+      "features": [
+        "enriched_metadata",
+        "global_ref",
+        "verification_status"
+      ]
+    },
+    "v3": {
+      "label": "Beta",
+      "deprecated": false,
+      "sunset": null,
+      "features": [
+        "relations",
+        "webhooks",
+        "semantic_search",
+        "field_selection"
+      ]
+    }
+  },
+  "x-resources": [
+    {
+      "name": "quran",
+      "description": "القرآن (Quran)"
+    },
+    {
+      "name": "hadith",
+      "description": "الأحاديث (Hadith)"
+    },
+    {
+      "name": "adhkar",
+      "description": "الأذكار (Adhkar)"
+    },
+    {
+      "name": "dua",
+      "description": "الأدعية (Duas)"
+    },
+    {
+      "name": "fawaid",
+      "description": "الفوائد (Benefits)"
+    },
+    {
+      "name": "book",
+      "description": "الكتب (Books)"
+    },
+    {
+      "name": "author",
+      "description": "المؤلفون (Authors)"
+    },
+    {
+      "name": "sheikh",
+      "description": "المشايخ (Scholars)"
+    },
+    {
+      "name": "lesson",
+      "description": "الدروس (Lessons)"
+    },
+    {
+      "name": "lecture",
+      "description": "المحاضرات (Lectures)"
+    },
+    {
+      "name": "course",
+      "description": "الدورات (Courses)"
+    },
+    {
+      "name": "fatwa",
+      "description": "الفتاوى (Fatwas)"
+    },
+    {
+      "name": "fiqh_decision",
+      "description": "قرارات المجامع الفقهية (Fiqh Council Decisions)"
+    },
+    {
+      "name": "article",
+      "description": "المقالات (Articles)"
+    },
+    {
+      "name": "miracle",
+      "description": "الإعجاز العلمي (Scientific Miracles)"
+    },
+    {
+      "name": "occasion",
+      "description": "المناسبات الإسلامية (Islamic Occasions)"
+    },
+    {
+      "name": "calendar",
+      "description": "التقويم الإسلامي (Islamic Calendar)"
+    },
+    {
+      "name": "qa",
+      "description": "الأسئلة (Q&A)"
+    },
+    {
+      "name": "ruling",
+      "description": "الأحكام الشرعية (Sharia Rulings)"
+    },
+    {
+      "name": "update",
+      "description": "التحديثات (Updates)"
+    },
+    {
+      "name": "prayer_times",
+      "description": "مواقيت الصلاة (Prayer Times)"
+    },
+    {
+      "name": "knowledge",
+      "description": "المعرفة (Knowledge)"
+    }
+  ]
+}

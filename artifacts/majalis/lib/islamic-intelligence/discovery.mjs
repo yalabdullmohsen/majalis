@@ -6,6 +6,7 @@ import crypto from "node:crypto";
 import { getSupabaseAdmin } from "../supabase-admin.mjs";
 import { getAllSources, checkSourceConnection } from "../global-reference/sources.mjs";
 import { runIngestPipelines } from "../autonomous-ai/stages.mjs";
+import { agentListContent } from "../open-platform/internal-client.mjs";
 import { verifyContentItem } from "../scholarly-verification/orchestrator.mjs";
 
 const DISCOVERY_TYPES = ["book", "fatwa", "decision", "lesson", "course", "article"];
@@ -57,6 +58,20 @@ export async function runKnowledgeDiscovery(admin, opts = {}) {
     discovery.items_rejected = ingest.rejected || 0;
   } catch {
     /* ingest optional */
+  }
+
+  try {
+    const apiContent = await agentListContent(admin, "fatwa", { limit: 5, version: "v2" });
+    if (apiContent?.data?.length) {
+      discovery.discoveries.push({
+        type: "api_unified",
+        status: "via_open_platform",
+        count: apiContent.data.length,
+        source: "internal_api",
+      });
+    }
+  } catch {
+    /* internal API optional */
   }
 
   if (admin && opts.verifyNew !== false) {

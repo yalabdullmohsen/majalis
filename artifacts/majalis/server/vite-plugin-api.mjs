@@ -33,6 +33,10 @@ import globalReferenceAdminHandler from "../api/admin/global-reference.js";
 import globalReferenceReviewHandler from "../api/cron/global-reference-review.js";
 import islamicIntelligenceHandler from "../api/cron/islamic-intelligence.js";
 import islamicIntelligenceAdminHandler from "../api/admin/islamic-intelligence.js";
+import v1Handler from "../api/v1.js";
+import v2Handler from "../api/v2.js";
+import v3Handler from "../api/v3.js";
+import openPlatformAdminHandler from "../api/admin/open-platform.js";
 import scholarlySearchHandler from "../api/scholarly-search.js";
 import { createRateLimiter } from "./rate-limit.mjs";
 
@@ -85,6 +89,10 @@ const API_ROUTES = [
   { prefix: "/api/cron/global-reference-review", handler: globalReferenceReviewHandler, allowGet: true },
   { prefix: "/api/cron/islamic-intelligence", handler: islamicIntelligenceHandler, allowGet: true },
   { prefix: "/api/admin/islamic-intelligence", handler: islamicIntelligenceAdminHandler, allowGet: true },
+  { prefix: "/api/v1", handler: v1Handler, allowGet: true },
+  { prefix: "/api/v2", handler: v2Handler, allowGet: true },
+  { prefix: "/api/v3", handler: v3Handler, allowGet: true },
+  { prefix: "/api/admin/open-platform", handler: openPlatformAdminHandler, allowGet: true },
   { prefix: "/api/admin/auto-content", handler: autoContentAdminHandler, allowGet: true },
   { prefix: "/api/admin/auto-knowledge-engine", handler: autoKnowledgeAdminHandler, allowGet: true },
   { prefix: "/api/fiqh-research-assistant", handler: fiqhResearchAssistantHandler, rateLimit: fiqhResearchRateLimit, allowGet: true },
