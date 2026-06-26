@@ -19,6 +19,7 @@ export const MIGRATION_FILES = [
   "digital_learning_v1.sql",
   "autonomous_ai_v1.sql",
   "global_reference_v1.sql",
+  "islamic_intelligence_v1.sql",
 ];
 
 export function resolveMigrationsDir() {

@@ -27,7 +27,8 @@ export type AdminSection =
   | "search-analytics"
   | "digital-learning"
   | "autonomous-ai"
-  | "global-reference";
+  | "global-reference"
+  | "islamic-intelligence";
 
 export const ADMIN_NAV: { key: AdminSection; label: string }[] = [
   { key: "dashboard", label: "لوحة التحكم" },
@@ -38,6 +39,7 @@ export const ADMIN_NAV: { key: AdminSection; label: string }[] = [
   { key: "digital-learning", label: "التعليم الرقمي" },
   { key: "autonomous-ai", label: "المنظومة الذاتية" },
   { key: "global-reference", label: "المرجع العالمي" },
+  { key: "islamic-intelligence", label: "الاستخبارات العلمية" },
   { key: "lessons", label: "الدروس" },
   { key: "sheikhs", label: "المشايخ" },
   { key: "library", label: "المكتبة" },

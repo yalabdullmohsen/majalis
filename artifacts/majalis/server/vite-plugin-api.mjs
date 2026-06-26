@@ -31,6 +31,8 @@ import dailyContentHandler from "../api/daily-content.js";
 import globalReferenceHandler from "../api/global-reference.js";
 import globalReferenceAdminHandler from "../api/admin/global-reference.js";
 import globalReferenceReviewHandler from "../api/cron/global-reference-review.js";
+import islamicIntelligenceHandler from "../api/cron/islamic-intelligence.js";
+import islamicIntelligenceAdminHandler from "../api/admin/islamic-intelligence.js";
 import scholarlySearchHandler from "../api/scholarly-search.js";
 import { createRateLimiter } from "./rate-limit.mjs";
 
@@ -81,6 +83,8 @@ const API_ROUTES = [
   { prefix: "/api/global-reference", handler: globalReferenceHandler, allowGet: true },
   { prefix: "/api/admin/global-reference", handler: globalReferenceAdminHandler, allowGet: true },
   { prefix: "/api/cron/global-reference-review", handler: globalReferenceReviewHandler, allowGet: true },
+  { prefix: "/api/cron/islamic-intelligence", handler: islamicIntelligenceHandler, allowGet: true },
+  { prefix: "/api/admin/islamic-intelligence", handler: islamicIntelligenceAdminHandler, allowGet: true },
   { prefix: "/api/admin/auto-content", handler: autoContentAdminHandler, allowGet: true },
   { prefix: "/api/admin/auto-knowledge-engine", handler: autoKnowledgeAdminHandler, allowGet: true },
   { prefix: "/api/fiqh-research-assistant", handler: fiqhResearchAssistantHandler, rateLimit: fiqhResearchRateLimit, allowGet: true },

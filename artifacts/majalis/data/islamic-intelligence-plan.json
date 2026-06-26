@@ -1,0 +1,89 @@
+{
+  "generated_at": "2026-06-26T00:58:53.309Z",
+  "principle": "المنصة تدير نفسها — لا تُنشئ معلومات شرعية بلا مصدر",
+  "phases": [
+    {
+      "phase": 1,
+      "title": "الاستقرار والدمج",
+      "priority": "critical",
+      "items": [
+        {
+          "task": "دمج PRs #36-43 في main",
+          "impact": "critical",
+          "benefit": "منصة موحدة"
+        },
+        {
+          "task": "تطبيق islamic_intelligence_v1.sql",
+          "impact": "high",
+          "benefit": "تخزين تقارير الوكلاء"
+        },
+        {
+          "task": "Backfill Global IDs + relations",
+          "impact": "high",
+          "benefit": "شبكة معرفية كاملة"
+        },
+        {
+          "task": "تفعيل cron islamic-intelligence",
+          "impact": "high",
+          "benefit": "مراقبة ذاتية 24/7"
+        }
+      ]
+    },
+    {
+      "phase": 2,
+      "title": "الذكاء التشغيلي",
+      "priority": "high",
+      "items": [
+        {
+          "task": "ربط Content Planner → Discovery pipeline",
+          "impact": "high",
+          "benefit": "إثراء تلقائي للفجوات"
+        },
+        {
+          "task": "Human review queue UI",
+          "impact": "high",
+          "benefit": "مراجعة الفتاوى قبل النشر"
+        },
+        {
+          "task": "Email/push للتقرير الأسبوعي",
+          "impact": "medium",
+          "benefit": "إشعار الإدارة"
+        },
+        {
+          "task": "Redis cache للبحث",
+          "impact": "medium",
+          "benefit": "أداء <100ms"
+        }
+      ]
+    },
+    {
+      "phase": 3,
+      "title": "الريادة",
+      "priority": "medium",
+      "items": [
+        {
+          "task": "Open Intelligence API",
+          "impact": "high",
+          "benefit": "تكامل خارجي"
+        },
+        {
+          "task": "Multi-agent conflict resolution",
+          "impact": "medium",
+          "benefit": "دقة علمية"
+        },
+        {
+          "task": "Predictive content planning (ML)",
+          "impact": "medium",
+          "benefit": "توقع احتياجات المستخدم"
+        }
+      ]
+    }
+  ],
+  "stability_gates": [
+    "All 9 agents run successfully weekly",
+    "Zero unsourced religious text published",
+    "Search latency < 1s",
+    "Quality avg > 70",
+    "Security score > 85"
+  ]
+}

@@ -24,6 +24,7 @@ import { SearchAnalyticsSection } from "@/pages/admin/SearchAnalyticsSection";
 import { DigitalLearningSection } from "@/pages/admin/DigitalLearningSection";
 import { AutonomousAiSection } from "@/pages/admin/AutonomousAiSection";
 import { GlobalReferenceSection } from "@/pages/admin/GlobalReferenceSection";
+import { IslamicIntelligenceSection } from "@/pages/admin/IslamicIntelligenceSection";
 
 export default function AdminPage() {
   const [section, setSection] = useState<AdminSection>("dashboard");
@@ -38,6 +39,7 @@ export default function AdminPage() {
       {section === "digital-learning" && <DigitalLearningSection />}
       {section === "autonomous-ai" && <AutonomousAiSection />}
       {section === "global-reference" && <GlobalReferenceSection />}
+      {section === "islamic-intelligence" && <IslamicIntelligenceSection />}
       {section === "lessons" && <LessonsSection />}
       {section === "sheikhs" && <SheikhsSection />}
       {section === "library" && <LibrarySection />}
