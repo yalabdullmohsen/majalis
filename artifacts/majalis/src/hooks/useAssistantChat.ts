@@ -7,6 +7,9 @@ export type ChatMessage = {
   role: "user" | "assistant";
   content: string;
   isFailure?: boolean;
+  citations?: AssistantResponse["citations"];
+  grounded?: boolean;
+  confidence?: number;
 };
 
 export const ASSISTANT_FAILURE_MESSAGE = "تعذر تشغيل المساعد الآن، حاول لاحقًا.";
@@ -92,7 +95,14 @@ export function useAssistantChat() {
       if (data.ok && answer) {
         setMessages((current) => [
           ...current,
-          { id: createId(), role: "assistant", content: answer },
+          {
+            id: createId(),
+            role: "assistant",
+            content: answer,
+            citations: data.citations,
+            grounded: data.grounded,
+            confidence: data.confidence,
+          },
         ]);
         return;
       }

@@ -3,6 +3,11 @@ import {
   FOUNDER_SYSTEM_NOTE,
   resolveFounderQuestion,
 } from "../../lib/assistant-founder.mjs";
+import {
+  runReasoningQuery,
+  looksLikeIslamicKnowledgeQuery,
+} from "../../lib/reasoning-engine/answer.mjs";
+import { NO_EVIDENCE_MESSAGE } from "../../lib/reasoning-engine/constants.mjs";
 
 export const maxDuration = 30;
 
@@ -98,8 +103,8 @@ function looksLikeDefinitiveFatwaRequest(text) {
   return DEFINITIVE_FATWA_PATTERNS.some((pattern) => pattern.test(text));
 }
 
-function successPayload(answer) {
-  return { ok: true, answer, reply: answer };
+function successPayload(answer, extra = {}) {
+  return { ok: true, answer, reply: answer, ...extra };
 }
 
 async function callAnthropic(message) {
@@ -202,6 +207,39 @@ async function handleAssistantRequest(req, res) {
   if (founderAnswer) {
     sendJson(res, 200, successPayload(founderAnswer));
     return;
+  }
+
+  if (looksLikeIslamicKnowledgeQuery(userMessage)) {
+    try {
+      const grounded = await runReasoningQuery({
+        query: userMessage,
+        synthesize: true,
+        expandGraph: true,
+        limit: 20,
+      });
+
+      if (grounded.ok && !grounded.answer?.noEvidence) {
+        sendJson(res, 200, successPayload(grounded.answer.summary, {
+          grounded: true,
+          citations: grounded.answer.citations,
+          confidence: grounded.confidence,
+          retrieval_mode: grounded.retrievalMode,
+        }));
+        return;
+      }
+
+      if (grounded.ok && grounded.answer?.noEvidence) {
+        sendJson(res, 200, successPayload(NO_EVIDENCE_MESSAGE, {
+          grounded: true,
+          no_evidence: true,
+          citations: [],
+          confidence: 0,
+        }));
+        return;
+      }
+    } catch (groundedErr) {
+      console.error("[assistant] Grounded reasoning failed, falling back:", groundedErr);
+    }
   }
 
   try {

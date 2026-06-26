@@ -28,6 +28,22 @@ html {
   --font-body: var(--font-primary);
 }
 
+html[data-theme="dark"] {
+  --majalis-ink: #F7F1E6;
+  --majalis-ink-soft: #C9BFAE;
+  --majalis-charcoal: #FDF8EF;
+  --majalis-parchment: #111A16;
+  --majalis-parchment-deep: #19251F;
+  --majalis-panel: #1C2A23;
+  --majalis-emerald: #4FB58E;
+  --majalis-emerald-deep: #8FD7B8;
+  --majalis-brass: #D7B957;
+  --majalis-brass-deep: #F1D776;
+  --majalis-sage: #254234;
+  --majalis-line: #355244;
+  --majalis-shadow: 0 22px 70px rgba(0, 0, 0, 0.35);
+}
+
 html[data-font="default"] {
   --font-body: var(--font-primary);
 }
@@ -54,8 +70,8 @@ html[data-font="naskh"] {
 body {
   font-family: var(--font-body);
   font-weight: 600;
-  background: #FAF5EA;
-  color: #241F18;
+  background: var(--majalis-parchment);
+  color: var(--majalis-ink);
   line-height: 1.7;
   letter-spacing: 0;
   text-rendering: optimizeLegibility;
@@ -64,6 +80,46 @@ body {
   overflow-wrap: anywhere;
   overflow-x: hidden;
   max-width: 100%;
+}
+
+html[data-theme="dark"] img:not(.navbar-logo) {
+  filter: brightness(0.92) contrast(1.05);
+}
+
+html[data-theme="dark"] input,
+html[data-theme="dark"] textarea,
+html[data-theme="dark"] select {
+  background: var(--majalis-panel);
+  color: var(--majalis-ink);
+  border-color: var(--majalis-line);
+}
+
+html[data-theme="dark"] .app-shell,
+html[data-theme="dark"] .app-main,
+html[data-theme="dark"] .legal-page,
+html[data-theme="dark"] .page-shell {
+  background: var(--majalis-parchment);
+  color: var(--majalis-ink);
+}
+
+html[data-theme="dark"] .navbar-v3 {
+  background: var(--majalis-parchment) !important;
+  border-color: var(--majalis-line) !important;
+}
+
+html[data-theme="dark"] .legal-page-hero {
+  background:
+    radial-gradient(circle at top right, rgba(79, 181, 142, 0.2), transparent 20rem),
+    linear-gradient(135deg, #08110e, #14251f) !important;
+  color: var(--majalis-ink) !important;
+}
+
+html[data-theme="dark"] .legal-page-body,
+html[data-theme="dark"] .legal-section,
+html[data-theme="dark"] .settings-account-card,
+html[data-theme="dark"] .settings-choice {
+  background: var(--majalis-panel);
+  color: var(--majalis-ink);
 }
 
 h1,
@@ -136,6 +192,103 @@ input, textarea, select { font-family: inherit; }
   text-align: center;
 }
 
+.settings-account-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem;
+  border: 1px solid var(--majalis-line);
+  border-radius: 1rem;
+  background: var(--majalis-panel);
+}
+
+.settings-avatar {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: var(--majalis-sage);
+  color: var(--majalis-emerald-deep);
+  font-size: 1.7rem;
+  font-weight: 800;
+}
+
+.settings-note {
+  color: var(--majalis-ink-soft);
+  font-size: 0.85rem;
+  margin-top: 0.35rem;
+}
+
+.settings-actions,
+.settings-option-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.settings-option-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+}
+
+.settings-choice {
+  border: 1px solid var(--majalis-line);
+  border-radius: 0.9rem;
+  background: var(--majalis-panel);
+  color: var(--majalis-ink);
+  padding: 0.85rem;
+  text-align: right;
+  display: grid;
+  gap: 0.25rem;
+}
+
+.settings-choice span {
+  color: var(--majalis-ink-soft);
+  font-size: 0.82rem;
+}
+
+.settings-choice.is-active {
+  border-color: var(--majalis-emerald);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--majalis-emerald) 20%, transparent);
+}
+
+.settings-field,
+.settings-toggle-row {
+  display: grid;
+  gap: 0.35rem;
+  margin-top: 1rem;
+  font-weight: 700;
+}
+
+.settings-field select,
+.settings-field input[type="range"] {
+  min-height: 2.75rem;
+}
+
+.settings-toggle-row {
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--majalis-line);
+}
+
+.settings-danger-btn {
+  padding: 0.625rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #dc2626;
+  color: #991b1b;
+  background: #fee2e2;
+  font-weight: 800;
+}
+
+.settings-danger-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
 @keyframes majalis-spin {
   to { transform: rotate(360deg); }
 }
@@ -146,6 +299,12 @@ input, textarea, select { font-family: inherit; }
     linear-gradient(180deg, #fbf7ed 0%, var(--majalis-parchment) 42%, #f6eedf 100%);
   min-height: 100vh;
   overflow-x: hidden;
+}
+
+html[data-theme="dark"] .home-page {
+  background:
+    radial-gradient(circle at top right, rgba(79, 181, 142, 0.14), transparent 32rem),
+    linear-gradient(180deg, #0d1713 0%, var(--majalis-parchment) 48%, #101c17 100%);
 }
 
 .home-container {
@@ -7801,13 +7960,19 @@ input, textarea, select { font-family: inherit; }
 .navbar-menu-btn,
 .navbar-logout {
   border: 1px solid var(--majalis-line);
-  background: #fff;
+  background: var(--majalis-panel);
+  color: var(--majalis-ink);
   border-radius: 0.45rem;
   padding: 0.4rem 0.75rem;
   font-family: inherit;
   font-weight: 700;
   font-size: 0.82rem;
   cursor: pointer;
+}
+
+html[data-theme="dark"] .navbar-search-submit,
+html[data-theme="dark"] .navbar-login {
+  color: #07110e;
 }
 
 .navbar-login {
@@ -8042,6 +8207,64 @@ input, textarea, select { font-family: inherit; }
 .quran-toolbar { display: grid; gap: 0.65rem; padding: 1rem; margin-bottom: 1rem; }
 .quran-search, .quran-select { width: 100%; min-height: 42px; font-family: inherit; }
 .quran-reader { padding: 1.25rem; }
+.quran-surah-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+.quran-surah-meta,
+.quran-source-note {
+  color: var(--majalis-ink-soft);
+  font-size: 0.88rem;
+}
+.quran-trust-badge {
+  flex-shrink: 0;
+  border: 1px solid var(--majalis-line);
+  border-radius: 999px;
+  padding: 0.25rem 0.7rem;
+  color: var(--majalis-emerald-deep);
+  background: var(--majalis-sage);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+.quran-science-card {
+  border: 1px solid var(--majalis-line);
+  border-radius: 1rem;
+  background: color-mix(in srgb, var(--majalis-panel) 78%, var(--majalis-sage));
+  padding: 1rem;
+  margin-bottom: 1.25rem;
+}
+.quran-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 0.6rem;
+  margin: 0.75rem 0;
+  color: var(--majalis-ink-soft);
+}
+.quran-link-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+.quran-link-row a {
+  border: 1px solid var(--majalis-line);
+  border-radius: 999px;
+  padding: 0.35rem 0.75rem;
+  background: var(--majalis-panel);
+  color: var(--majalis-emerald-deep);
+  font-weight: 800;
+}
+.quran-error {
+  border: 1px solid #f59e0b;
+  border-radius: 0.75rem;
+  background: #fef3c7;
+  color: #78350f;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
 .quran-ayah { margin: 0 0 0.85rem; line-height: 2; }
 .quran-ayah-num {
   display: inline-flex; width: 1.6rem; height: 1.6rem; align-items: center; justify-content: center;
@@ -8049,6 +8272,7 @@ input, textarea, select { font-family: inherit; }
 }
 .quran-page--night { background: #1a1a1a; color: #eee; }
 .quran-page--night .ui-card { background: #242424; color: #eee; border-color: #333; }
+.quran-page--night .quran-science-card { background: #202b25; border-color: #355244; }
 
 .radio-grid { display: grid; gap: 0.65rem; margin-bottom: 1rem; }
 .radio-card { padding: 1rem; text-align: right; cursor: pointer; font-family: inherit; width: 100%; }
@@ -10035,9 +10259,9 @@ svg {
   font-size: clamp(2rem, 6vw, 3.5rem);
   font-weight: 800;
   line-height: 1.15;
-  white-space: nowrap;
   margin: 0;
-  text-wrap: nowrap;
+  text-wrap: balance;
+  overflow-wrap: normal;
 }
 
 .home-hero-lead--v3 {

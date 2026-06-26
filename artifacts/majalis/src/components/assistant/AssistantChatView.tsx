@@ -65,7 +65,23 @@ export function AssistantChatView({
               {message.role === "user" ? "أنت" : "المساعد العلمي"}
             </span>
             {message.role === "assistant" && !message.isFailure ? (
-              <AssistantReply content={message.content} />
+              <>
+                <AssistantReply content={message.content} />
+                {message.citations && message.citations.length > 0 && (
+                  <div className="assistant-citations" style={{ marginTop: "0.75rem", fontSize: "0.8rem" }}>
+                    <p style={{ fontWeight: 600, marginBottom: "0.25rem" }}>المراجع ({message.citations.length})</p>
+                    <ul style={{ margin: 0, paddingRight: "1.25rem" }}>
+                      {message.citations.slice(0, 6).map((cite, i) => (
+                        <li key={`${cite.href}-${i}`}>
+                          <a href={cite.href}>{cite.title}</a>
+                          {cite.source_name && ` — ${cite.source_name}`}
+                          {cite.trust_score != null && ` (${Math.round(cite.trust_score)}%)`}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </>
             ) : (
               <p>{message.content}</p>
             )}

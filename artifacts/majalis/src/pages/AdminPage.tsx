@@ -20,6 +20,8 @@ import { AnnualCoursesSection } from "@/pages/admin/AnnualCoursesSection";
 import { UpdatesSection } from "@/pages/admin/UpdatesSection";
 import { KnowledgeEngineSection } from "@/pages/admin/KnowledgeEngineSection";
 import { ScholarlyVerificationSection } from "@/pages/admin/ScholarlyVerificationSection";
+import { VerifiedKnowledgeSection } from "@/pages/admin/VerifiedKnowledgeSection";
+import { KnowledgeReasoningSection } from "@/pages/admin/KnowledgeReasoningSection";
 import { SearchAnalyticsSection } from "@/pages/admin/SearchAnalyticsSection";
 import { DigitalLearningSection } from "@/pages/admin/DigitalLearningSection";
 import { AutonomousAiSection } from "@/pages/admin/AutonomousAiSection";
@@ -37,6 +39,8 @@ export default function AdminPage() {
       {section === "aggregator" && <AggregatorSection />}
       {section === "knowledge-engine" && <KnowledgeEngineSection />}
       {section === "scholarly-verification" && <ScholarlyVerificationSection />}
+      {section === "verified-knowledge" && <VerifiedKnowledgeSection />}
+      {section === "knowledge-reasoning" && <KnowledgeReasoningSection />}
       {section === "search-analytics" && <SearchAnalyticsSection />}
       {section === "digital-learning" && <DigitalLearningSection />}
       {section === "autonomous-ai" && <AutonomousAiSection />}

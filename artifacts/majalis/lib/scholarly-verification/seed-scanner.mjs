@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { parseAdhkarFromSeedFile, parseArbaeenFromSeedFile } from '../verified-knowledge/seed-parsers.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const MAJALIS_ROOT = path.resolve(__dirname, '../..');
@@ -120,41 +121,27 @@ function loadQaFromSeed() {
 }
 
 function loadArbaeen() {
-  try {
-    const p = path.join(MAJALIS_ROOT, 'src/lib/arbaeen-nawawi-seed.ts');
-    const text = fs.readFileSync(p, 'utf8');
-    const nums = text.match(/number:\s*(\d+)/g) ?? [];
-    return nums.map((n, i) => ({
-      number: n.replace('number:', '').trim(),
-      id: `arbaeen-${i}`,
-      title: `حديث ${i + 1}`,
-      text: 'حديث من الأربعين النووية',
-      source_url: 'https://sunnah.com/nawawi40',
-      source_name: 'الأربعون النووية',
-      category: 'حديث',
-      trust_level: 95,
-    }));
-  } catch {
-    return [];
-  }
+  return parseArbaeenFromSeedFile().map((item) => ({
+    id: item.id,
+    title: item.title,
+    text: item.text,
+    source_url: item.source_url,
+    source_name: item.source_name,
+    category: 'حديث',
+    trust_level: 95,
+  }));
 }
 
 function loadAdhkar() {
-  try {
-    const p = path.join(MAJALIS_ROOT, 'src/lib/adhkar-seed.ts');
-    const text = fs.readFileSync(p, 'utf8');
-    const ids = text.match(/id:\s*"([^"]+)"/g) ?? [];
-    return ids.map((id, i) => ({
-      id: id.replace(/id:\s*"/, '').replace('"', ''),
-      text: 'ذكر',
-      category: 'أذكار',
-      source_url: 'https://hisn.alim.net',
-      source_name: 'حصn المسلم',
-      trust_level: 90,
-    }));
-  } catch {
-    return [];
-  }
+  const { items } = parseAdhkarFromSeedFile();
+  return items.map((item) => ({
+    id: item.id,
+    text: item.text,
+    category: item.category_id,
+    source_url: item.source_url,
+    source_name: item.source_name ?? 'حصn المسلم',
+    trust_level: 95,
+  }));
 }
 
 function loadLibrary() {

@@ -1,16 +1,16 @@
 export const C = {
-  ink: "#241F18",
-  inkSoft: "#5B5446",
-  charcoal: "#1A1A1A",
-  parchment: "#FAF5EA",
-  parchmentDeep: "#F0E8D6",
-  panel: "#FFFFFF",
-  emerald: "#1F6E54",
-  emeraldDeep: "#164E3C",
-  brass: "#B08D2E",
-  brassDeep: "#8A6D1E",
-  sage: "#CFE0D3",
-  line: "#E0D7C4",
+  ink: "var(--majalis-ink)",
+  inkSoft: "var(--majalis-ink-soft)",
+  charcoal: "var(--majalis-charcoal)",
+  parchment: "var(--majalis-parchment)",
+  parchmentDeep: "var(--majalis-parchment-deep)",
+  panel: "var(--majalis-panel)",
+  emerald: "var(--majalis-emerald)",
+  emeraldDeep: "var(--majalis-emerald-deep)",
+  brass: "var(--majalis-brass)",
+  brassDeep: "var(--majalis-brass-deep)",
+  sage: "var(--majalis-sage)",
+  line: "var(--majalis-line)",
 };
 
 export const GOVERNORATES = [

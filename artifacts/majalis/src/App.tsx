@@ -2,6 +2,7 @@ import { Suspense, lazy, type ComponentType } from "react";
 import { Redirect, Route, Switch, Router as WouterRouter, useLocation } from "wouter";
 import { AuthProvider } from "@/components/AuthProvider";
 import { FontPreferenceProvider } from "@/components/FontPreferenceProvider";
+import { ThemePreferenceProvider } from "@/components/ThemePreferenceProvider";
 import { AdminRouteGuard } from "@/components/AdminRouteGuard";
 import NavBar from "@/components/NavBar";
 import SiteFooter from "@/components/SiteFooter";
@@ -42,6 +43,7 @@ const TasbihPage = lazy(() => import("@/pages/TasbihPage"));
 const DailyWirdPage = lazy(() => import("@/pages/DailyWirdPage"));
 const OccasionsPage = lazy(() => import("@/pages/OccasionsPage"));
 const ArbaeenNawawiPage = lazy(() => import("@/pages/ArbaeenNawawiPage"));
+const SettingsPage = lazy(() => import("@/pages/SettingsPage"));
 const AnnualCoursesPage = lazy(() => import("@/pages/AnnualCoursesPage"));
 const AnnualCourseDetailPage = lazy(() => import("@/pages/AnnualCourseDetailPage"));
 const FiqhCouncilResolutionsPage = lazy(() => import("@/pages/FiqhCouncilResolutionsPage"));
@@ -105,6 +107,7 @@ function Router() {
       <Route path="/privacy" component={PrivacyPage} />
       <Route path="/terms" component={TermsPage} />
       <Route path="/contact" component={ContactPage} />
+      <Route path="/settings"><SafeLazyRoute component={SettingsPage} /></Route>
       <Route path="/search/:q"><SafeLazyRoute component={SearchPage} /></Route>
       <Route path="/search"><SafeLazyRoute component={SearchPage} /></Route>
       <Route path="/topics/:slug"><SafeLazyRoute component={TopicPage} /></Route>
@@ -237,22 +240,24 @@ function Router() {
 
 function App() {
   return (
-    <FontPreferenceProvider>
-      <AuthProvider>
-        <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-          <div className="app-shell" style={{ minHeight: "100vh", direction: "rtl" }}>
-            <a href="#main-content" className="skip-link">تخطّي إلى المحتوى</a>
-            <SeoManager />
-            <NavBar />
-            <main id="main-content" className="app-main" tabIndex={-1}>
-              <Router />
-            </main>
-            <SiteFooter />
-            <AssistantFloatingWidget />
-          </div>
-        </WouterRouter>
-      </AuthProvider>
-    </FontPreferenceProvider>
+    <ThemePreferenceProvider>
+      <FontPreferenceProvider>
+        <AuthProvider>
+          <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+            <div className="app-shell" style={{ minHeight: "100vh", direction: "rtl" }}>
+              <a href="#main-content" className="skip-link">تخطّي إلى المحتوى</a>
+              <SeoManager />
+              <NavBar />
+              <main id="main-content" className="app-main" tabIndex={-1}>
+                <Router />
+              </main>
+              <SiteFooter />
+              <AssistantFloatingWidget />
+            </div>
+          </WouterRouter>
+        </AuthProvider>
+      </FontPreferenceProvider>
+    </ThemePreferenceProvider>
   );
 }
 
