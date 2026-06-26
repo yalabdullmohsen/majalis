@@ -1,42 +1,49 @@
 /**
- * Open Platform — per-key rate limiting (in-memory + tier config).
+ * Open Platform — per-key rate limiting (Upstash Redis + in-memory fallback).
  */
 
+import { checkRateLimit as coreCheck } from "../rate-limit.mjs";
 import { RATE_LIMITS } from "./config.mjs";
 
-const windows = new Map();
-
-export function checkRateLimit(keyId, tier = "free") {
+export async function checkRateLimit(keyId, tier = "free") {
   const limits = RATE_LIMITS[tier] || RATE_LIMITS.free;
-  const now = Date.now();
-  const minuteKey = `${keyId}:minute:${Math.floor(now / 60_000)}`;
-  const dayKey = `${keyId}:day:${Math.floor(now / 86400000)}`;
+  const minute = await coreCheck(`${keyId}:minute`, {
+    windowMs: 60_000,
+    max: limits.requests_per_minute,
+  });
 
-  const minuteCount = (windows.get(minuteKey) || 0) + 1;
-  const dayCount = (windows.get(dayKey) || 0) + 1;
-
-  windows.set(minuteKey, minuteCount);
-  windows.set(dayKey, dayCount);
-
-  if (windows.size > 10_000) {
-    const oldest = windows.keys().next().value;
-    windows.delete(oldest);
+  if (!minute.allowed) {
+    return {
+      ok: false,
+      retry_after: Math.ceil((minute.resetAt - Date.now()) / 1000),
+      limit: limits.requests_per_minute,
+      window: "minute",
+      backend: minute.backend,
+    };
   }
 
-  if (minuteCount > limits.requests_per_minute) {
-    return { ok: false, retry_after: 60 - (now % 60_000) / 1000, limit: limits.requests_per_minute, window: "minute" };
-  }
+  const day = await coreCheck(`${keyId}:day`, {
+    windowMs: 86_400_000,
+    max: limits.requests_per_day,
+  });
 
-  if (dayCount > limits.requests_per_day) {
-    return { ok: false, retry_after: 86400 - (now % 86400000) / 1000, limit: limits.requests_per_day, window: "day" };
+  if (!day.allowed) {
+    return {
+      ok: false,
+      retry_after: Math.ceil((day.resetAt - Date.now()) / 1000),
+      limit: limits.requests_per_day,
+      window: "day",
+      backend: day.backend,
+    };
   }
 
   return {
     ok: true,
     remaining: {
-      minute: limits.requests_per_minute - minuteCount,
-      day: limits.requests_per_day - dayCount,
+      minute: minute.remaining,
+      day: day.remaining,
     },
     limits,
+    backend: minute.backend || day.backend,
   };
 }

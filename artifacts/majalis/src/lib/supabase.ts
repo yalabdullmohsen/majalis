@@ -94,7 +94,31 @@ export async function getCurrentUser() {
       profile = created;
     }
 
-    return { ...user, profile };
+    const LEGACY_MAP: Record<string, string> = {
+      admin: "super_admin",
+      sheikh: "scientific_reviewer",
+      user: "read_only",
+    };
+
+    let governanceRole: string | undefined;
+    try {
+      const { data: govRow } = await supabase
+        .from("governance_user_roles")
+        .select("role_id")
+        .eq("user_id", user.id)
+        .maybeSingle();
+      if (govRow?.role_id) governanceRole = govRow.role_id;
+    } catch {
+      /* RLS may block until migration — fall back to legacy map */
+    }
+
+    const resolvedGovernanceRole = governanceRole || LEGACY_MAP[profile?.role || "user"] || "read_only";
+
+    return {
+      ...user,
+      profile: { ...profile, governance_role: resolvedGovernanceRole },
+      governance_role: resolvedGovernanceRole,
+    };
   } catch (err) {
     logSupabaseError("getCurrentUser", err);
     return null;

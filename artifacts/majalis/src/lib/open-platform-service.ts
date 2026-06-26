@@ -2,6 +2,8 @@
  * Open Islamic Platform — client service
  */
 
+import { adminFetch as apiFetch } from "@/lib/admin-api";
+
 export type ApiKey = {
   id: string;
   name: string;
@@ -21,16 +23,9 @@ export type OpenPlatformDashboard = {
   cache: { entries: number; max: number };
 };
 
-function authHeaders(): Record<string, string> {
-  const secret = import.meta.env.VITE_ADMIN_API_SECRET || import.meta.env.VITE_CRON_SECRET;
-  const headers: Record<string, string> = { "Content-Type": "application/json" };
-  if (secret) headers.Authorization = `Bearer ${secret}`;
-  return headers;
-}
-
 export async function fetchOpenPlatformDashboard(): Promise<OpenPlatformDashboard | null> {
   try {
-    const res = await fetch("/api/admin/open-platform?action=dashboard", { headers: authHeaders() });
+    const res = await apiFetch("/api/admin/open-platform?action=dashboard");
     if (!res.ok) return null;
     return res.json();
   } catch {
@@ -39,58 +34,46 @@ export async function fetchOpenPlatformDashboard(): Promise<OpenPlatformDashboar
 }
 
 export async function createApiKey(name: string, scopes = ["read", "search"], tier = "free") {
-  const res = await fetch("/api/admin/open-platform?action=create-key", {
-    method: "POST",
-    headers: authHeaders(),
-    body: JSON.stringify({ name, scopes, tier }),
-  });
+  const res = await apiFetch("/api/admin/open-platform?action=create-key", { method: "POST", body: JSON.stringify({ name, scopes, tier }) });
   if (!res.ok) throw new Error("Failed to create key");
   return res.json();
 }
 
 export async function revokeApiKey(keyId: string) {
-  const res = await fetch("/api/admin/open-platform?action=revoke-key", {
-    method: "POST",
-    headers: authHeaders(),
-    body: JSON.stringify({ key_id: keyId }),
-  });
+  const res = await apiFetch("/api/admin/open-platform?action=revoke-key", { method: "POST", body: JSON.stringify({ key_id: keyId }) });
   if (!res.ok) throw new Error("Failed to revoke key");
   return res.json();
 }
 
 export async function fetchApiLogs(limit = 50) {
-  const res = await fetch(`/api/admin/open-platform?action=logs&limit=${limit}`, { headers: authHeaders() });
+  const res = await apiFetch(`/api/admin/open-platform?action=logs&limit=${limit}`);
   if (!res.ok) return [];
   const json = await res.json();
   return json.logs || [];
 }
 
 export async function createWebhook(url: string, events: string[], name?: string) {
-  const res = await fetch("/api/admin/open-platform?action=create-webhook", {
-    method: "POST",
-    headers: authHeaders(),
-    body: JSON.stringify({ url, events, name }),
-  });
+  const res = await apiFetch("/api/admin/open-platform?action=create-webhook", { method: "POST", body: JSON.stringify({ url, events, name }) });
   if (!res.ok) throw new Error("Failed to create webhook");
   return res.json();
 }
 
 export async function fetchWebhooks() {
-  const res = await fetch("/api/admin/open-platform?action=webhooks", { headers: authHeaders() });
+  const res = await apiFetch("/api/admin/open-platform?action=webhooks");
   if (!res.ok) return [];
   const json = await res.json();
   return json.webhooks || [];
 }
 
 export async function generateOpenPlatformReport() {
-  const res = await fetch("/api/admin/open-platform?action=report", { headers: authHeaders() });
+  const res = await apiFetch("/api/admin/open-platform?action=report");
   if (!res.ok) return null;
   const json = await res.json();
   return json.report;
 }
 
 export async function fetchReleasePlan() {
-  const res = await fetch("/api/admin/open-platform?action=plan", { headers: authHeaders() });
+  const res = await apiFetch("/api/admin/open-platform?action=plan");
   if (!res.ok) return null;
   const json = await res.json();
   return json.plan;

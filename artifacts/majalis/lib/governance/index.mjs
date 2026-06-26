@@ -5,7 +5,8 @@ export { getContentLifecycle, transitionLifecycle, runAutoLifecycleStages, canTr
 export { runScientificReview, submitHumanReview, getReviewQueue } from "./review.mjs";
 export { getQualityMetrics } from "./quality.mjs";
 export { getGovernanceMonitoring } from "./monitoring.mjs";
-export { runBackupCheck, getBackupHistory } from "./backup.mjs";
+export { runBackupCheck, getBackupHistory, runRestoreTest } from "./backup.mjs";
+export { syncLegacyRolesToGovernance, getUserGovernanceRole } from "./role-sync.mjs";
 export { runGovernanceSecurityAudit } from "./security.mjs";
 export { getScalabilityAssessment } from "./performance.mjs";
 export { generateTechnicalDocs } from "./docs.mjs";

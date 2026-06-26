@@ -1,5 +1,6 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { getCurrentUser, signIn, signOut, signUp, supabase } from "@/lib/supabase";
+import { ADMIN_GOVERNANCE_ROLES, LEGACY_ROLE_MAP } from "@/lib/governance-service";
 
 export type AuthUser = Awaited<ReturnType<typeof getCurrentUser>>;
 
@@ -42,17 +43,24 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return result;
   }, []);
 
-  const value = useMemo<AuthContextValue>(() => ({
-    user,
-    loading,
-    isLoggedIn: !!user,
-    isAdmin: user?.profile?.role === "admin",
-    isSheikh: user?.profile?.role === "sheikh",
-    login: signIn,
-    register: signUp,
-    logout,
-    refreshUser,
-  }), [user, loading, logout, refreshUser]);
+  const value = useMemo<AuthContextValue>(() => {
+    const governanceRole =
+      user?.governance_role ||
+      LEGACY_ROLE_MAP[user?.profile?.role || "user"] ||
+      "read_only";
+
+    return {
+      user,
+      loading,
+      isLoggedIn: !!user,
+      isAdmin: ADMIN_GOVERNANCE_ROLES.includes(governanceRole),
+      isSheikh: governanceRole === "scientific_reviewer" || user?.profile?.role === "sheikh",
+      login: signIn,
+      register: signUp,
+      logout,
+      refreshUser,
+    };
+  }, [user, loading, logout, refreshUser]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

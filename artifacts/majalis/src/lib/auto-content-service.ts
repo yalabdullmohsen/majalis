@@ -1,3 +1,4 @@
+import { adminFetch as apiFetch } from "@/lib/admin-api";
 import { supabase } from "@/lib/supabase";
 import type {
   AutoImportedContent,
@@ -162,11 +163,7 @@ export async function getMergedPlatformUpdates(limit = 100): Promise<{ data: Mer
 }
 
 export async function triggerAutoContentSync() {
-  const secret = import.meta.env.VITE_CRON_SECRET || "";
-  const res = await fetch("/api/admin/auto-content?action=run", {
-    method: "POST",
-    headers: secret ? { Authorization: `Bearer ${secret}` } : {},
-  });
+  const res = await apiFetch("/api/admin/auto-content?action=run", { method: "POST" });
   if (!res.ok) {
     const json = await res.json().catch(() => ({}));
     throw new Error(json.error || "فشل المزامنة");
@@ -175,10 +172,7 @@ export async function triggerAutoContentSync() {
 }
 
 export async function fetchAutoContentPipelineStats() {
-  const secret = import.meta.env.VITE_CRON_SECRET || "";
-  const res = await fetch("/api/admin/auto-content?action=stats", {
-    headers: secret ? { Authorization: `Bearer ${secret}` } : {},
-  });
+  const res = await apiFetch("/api/admin/auto-content?action=stats");
   if (!res.ok) return null;
   return res.json();
 }

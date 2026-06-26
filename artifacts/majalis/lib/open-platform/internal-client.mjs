@@ -3,7 +3,8 @@
  * All agents use this instead of direct DB access — single unified path.
  */
 
-import { listResource, getResourceItem, openSearch, listTopics, getTopic, listResources } from "./content.mjs";
+import { listResource, getResourceItem, listTopics, getTopic, listResources } from "./content.mjs";
+import { openSearch } from "./search.mjs";
 import { getRelations } from "../global-reference/relations.mjs";
 import { getAllSources } from "../global-reference/sources.mjs";
 

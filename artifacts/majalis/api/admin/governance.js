@@ -1,5 +1,5 @@
 import { sendJson } from "../_http.js";
-import { validateAdminAuth } from "../../lib/env-config.mjs";
+import { requireAdminAccess } from "../../lib/admin-auth.mjs";
 import { getSupabaseAdmin } from "../../lib/supabase-admin.mjs";
 import {
   getGovernanceDashboard,
@@ -13,6 +13,7 @@ import {
   getRolesForUser,
   runGovernanceSecurityAudit,
   runBackupCheck,
+  runRestoreTest,
   getQualityMetrics,
   getGovernanceMonitoring,
   generateGovernanceReport,
@@ -21,12 +22,11 @@ import {
   ROLES,
   LIFECYCLE_STAGES,
 } from "../../lib/governance/index.mjs";
+import { syncLegacyRolesToGovernance } from "../../lib/governance/role-sync.mjs";
 
 export default async function handler(req, res) {
-  if (!validateAdminAuth(req)) {
-    sendJson(res, 401, { ok: false, error: "Unauthorized" });
-    return;
-  }
+  const auth = await requireAdminAccess(req, res, sendJson);
+  if (!auth) return;
 
   const action = req.query?.action || req.body?.action || "dashboard";
   const admin = getSupabaseAdmin();
@@ -128,6 +128,18 @@ export default async function handler(req, res) {
     if (action === "backup") {
       const backup = await runBackupCheck(admin, { exportSamples: true });
       sendJson(res, 200, { ok: true, backup });
+      return;
+    }
+
+    if (action === "restore-test") {
+      const restore = await runRestoreTest(admin, { exportFirst: true, actorId: auth.userId || "admin" });
+      sendJson(res, 200, { ok: true, restore });
+      return;
+    }
+
+    if (action === "sync-roles") {
+      const sync = await syncLegacyRolesToGovernance(admin, { assignedBy: auth.userId || null });
+      sendJson(res, 200, { ok: true, sync });
       return;
     }
 

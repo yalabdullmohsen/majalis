@@ -20,6 +20,7 @@ const CRON_ROUTES = [
   { path: "/api/cron/scholarly-verification", schedule: "0 8 * * *", label: "Scholarly Verification" },
   { path: "/api/cron/global-reference-review", schedule: "0 9 * * 0", label: "Global Reference Review (weekly)" },
   { path: "/api/cron/governance-backup", schedule: "0 4 * * 0", label: "Governance Backup (weekly)" },
+  { path: "/api/cron/ai-agents", schedule: "30 */6 * * *", label: "AI Agents Pipeline" },
   { path: "/api/cron/apply-migrations", schedule: "0 5 * * 0", label: "Schema Migrations (weekly verify)" },
 ];
 

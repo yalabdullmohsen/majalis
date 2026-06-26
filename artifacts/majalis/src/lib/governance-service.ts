@@ -1,6 +1,8 @@
 /**
- * Enterprise Governance — client service
+ * Enterprise Governance — client service (Supabase JWT auth, no client secrets).
  */
+
+import { adminFetch } from "@/lib/admin-api";
 
 export type GovernanceDashboard = {
   monitoring?: {
@@ -25,16 +27,9 @@ export type GovernanceDashboard = {
   review_queue?: Array<{ content_kind: string; content_id: string; status: string }>;
 };
 
-function authHeaders(): Record<string, string> {
-  const secret = import.meta.env.VITE_ADMIN_API_SECRET || import.meta.env.VITE_CRON_SECRET;
-  const headers: Record<string, string> = { "Content-Type": "application/json" };
-  if (secret) headers.Authorization = `Bearer ${secret}`;
-  return headers;
-}
-
 export async function fetchGovernanceDashboard(): Promise<GovernanceDashboard | null> {
   try {
-    const res = await fetch("/api/admin/governance?action=dashboard", { headers: authHeaders() });
+    const res = await adminFetch("/api/admin/governance?action=dashboard");
     if (!res.ok) return null;
     return res.json();
   } catch {
@@ -43,38 +38,60 @@ export async function fetchGovernanceDashboard(): Promise<GovernanceDashboard | 
 }
 
 export async function runSecurityAudit() {
-  const res = await fetch("/api/admin/governance?action=security", { headers: authHeaders() });
+  const res = await adminFetch("/api/admin/governance?action=security");
   if (!res.ok) throw new Error("Security audit failed");
   const json = await res.json();
   return json.audit;
 }
 
 export async function runBackupCheck() {
-  const res = await fetch("/api/admin/governance?action=backup", { method: "POST", headers: authHeaders() });
+  const res = await adminFetch("/api/admin/governance?action=backup", { method: "POST" });
   if (!res.ok) throw new Error("Backup failed");
   const json = await res.json();
   return json.backup;
 }
 
+export async function runRestoreTest() {
+  const res = await adminFetch("/api/admin/governance?action=restore-test", { method: "POST" });
+  if (!res.ok) throw new Error("Restore test failed");
+  const json = await res.json();
+  return json.restore;
+}
+
 export async function generateGovernanceReport() {
-  const res = await fetch("/api/admin/governance?action=report", { headers: authHeaders() });
+  const res = await adminFetch("/api/admin/governance?action=report");
   if (!res.ok) return null;
   const json = await res.json();
   return json.report;
 }
 
 export async function fetchReviewQueue() {
-  const res = await fetch("/api/admin/governance?action=reviews", { headers: authHeaders() });
+  const res = await adminFetch("/api/admin/governance?action=reviews");
   if (!res.ok) return [];
   const json = await res.json();
   return json.reviews || [];
 }
 
 export async function fetchMaintenancePlan() {
-  const res = await fetch("/api/admin/governance?action=maintenance-plan", { headers: authHeaders() });
+  const res = await adminFetch("/api/admin/governance?action=maintenance-plan");
   if (!res.ok) return null;
   const json = await res.json();
   return json.plan;
+}
+
+export async function assignGovernanceRole(userId: string, roleId: string) {
+  const res = await adminFetch("/api/admin/governance?action=assign-role", {
+    method: "POST",
+    body: JSON.stringify({ userId, roleId }),
+  });
+  if (!res.ok) throw new Error("Role assignment failed");
+  return res.json();
+}
+
+export async function syncLegacyRoles() {
+  const res = await adminFetch("/api/admin/governance?action=sync-roles", { method: "POST" });
+  if (!res.ok) throw new Error("Role sync failed");
+  return res.json();
 }
 
 export const GOVERNANCE_ROLES = [
@@ -93,4 +110,15 @@ export const GOVERNANCE_ROLES = [
 export const LIFECYCLE_STAGES = [
   "draft", "ai_processing", "source_verification", "editorial_review",
   "scientific_review", "approval", "publish", "scheduled_review", "archive",
+];
+
+export const LEGACY_ROLE_MAP: Record<string, string> = {
+  admin: "super_admin",
+  sheikh: "scientific_reviewer",
+  user: "read_only",
+};
+
+export const ADMIN_GOVERNANCE_ROLES = [
+  "super_admin", "system_admin", "content_manager",
+  "scientific_reviewer", "editor", "moderator",
 ];

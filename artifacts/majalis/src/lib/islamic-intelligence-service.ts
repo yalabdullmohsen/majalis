@@ -2,6 +2,8 @@
  * Islamic Intelligence Platform — client service
  */
 
+import { adminFetch as apiFetch } from "@/lib/admin-api";
+
 export type IntelligenceAgent = {
   id: string;
   label: string;
@@ -49,16 +51,9 @@ export type IntelligenceReport = {
   content_quality_assessment: { score: number; verification_pct: number };
 };
 
-function authHeaders(): Record<string, string> {
-  const secret = import.meta.env.VITE_ADMIN_API_SECRET || import.meta.env.VITE_CRON_SECRET;
-  const headers: Record<string, string> = { "Content-Type": "application/json" };
-  if (secret) headers.Authorization = `Bearer ${secret}`;
-  return headers;
-}
-
 export async function fetchIntelligenceDashboard(): Promise<IntelligenceDashboard | null> {
   try {
-    const res = await fetch("/api/admin/islamic-intelligence?action=dashboard", { headers: authHeaders() });
+    const res = await apiFetch("/api/admin/islamic-intelligence?action=dashboard");
     if (!res.ok) return null;
     return res.json();
   } catch {
@@ -68,7 +63,7 @@ export async function fetchIntelligenceDashboard(): Promise<IntelligenceDashboar
 
 export async function fetchIntelligenceAnalytics(days = 30): Promise<IntelligenceAnalytics | null> {
   try {
-    const res = await fetch(`/api/admin/islamic-intelligence?action=analytics&days=${days}`, { headers: authHeaders() });
+    const res = await apiFetch(`/api/admin/islamic-intelligence?action=analytics&days=${days}`);
     if (!res.ok) return null;
     const json = await res.json();
     return json.analytics;
@@ -78,41 +73,33 @@ export async function fetchIntelligenceAnalytics(days = 30): Promise<Intelligenc
 }
 
 export async function runIntelligencePlatform(mode = "full") {
-  const res = await fetch("/api/admin/islamic-intelligence?action=run", {
-    method: "POST",
-    headers: authHeaders(),
-    body: JSON.stringify({ mode, checkLinks: true }),
-  });
+  const res = await apiFetch("/api/admin/islamic-intelligence?action=run", { method: "POST", body: JSON.stringify({ mode, checkLinks: true }) });
   if (!res.ok) throw new Error("Run failed");
   return res.json();
 }
 
 export async function runIntelligenceAgent(agentId: string) {
-  const res = await fetch("/api/admin/islamic-intelligence?action=run-agent", {
-    method: "POST",
-    headers: authHeaders(),
-    body: JSON.stringify({ agent: agentId }),
-  });
+  const res = await apiFetch("/api/admin/islamic-intelligence?action=run-agent", { method: "POST", body: JSON.stringify({ agent: agentId }) });
   if (!res.ok) throw new Error("Agent run failed");
   return res.json();
 }
 
 export async function generateIntelligenceReport(): Promise<IntelligenceReport | null> {
-  const res = await fetch("/api/admin/islamic-intelligence?action=report", { headers: authHeaders() });
+  const res = await apiFetch("/api/admin/islamic-intelligence?action=report");
   if (!res.ok) return null;
   const json = await res.json();
   return json.report;
 }
 
 export async function generateWeeklyIntelligenceReport() {
-  const res = await fetch("/api/admin/islamic-intelligence?action=weekly-report", { headers: authHeaders() });
+  const res = await apiFetch("/api/admin/islamic-intelligence?action=weekly-report");
   if (!res.ok) return null;
   const json = await res.json();
   return json.report;
 }
 
 export async function fetchDevelopmentPlan() {
-  const res = await fetch("/api/admin/islamic-intelligence?action=plan", { headers: authHeaders() });
+  const res = await apiFetch("/api/admin/islamic-intelligence?action=plan");
   if (!res.ok) return null;
   const json = await res.json();
   return json.plan;

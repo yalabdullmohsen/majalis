@@ -2,6 +2,8 @@
  * Global Scholarly Reference System — client service
  */
 
+import { adminFetch as apiFetch } from "@/lib/admin-api";
+
 export type GlobalRef = {
   ref_id: string;
   content_kind: string;
@@ -30,16 +32,9 @@ export type ReferenceDashboard = {
   sources: Array<{ slug: string; name: string; trust_level: number; connection_status?: string }>;
 };
 
-function authHeaders(): Record<string, string> {
-  const secret = import.meta.env.VITE_ADMIN_API_SECRET || import.meta.env.VITE_CRON_SECRET;
-  const headers: Record<string, string> = { "Content-Type": "application/json" };
-  if (secret) headers.Authorization = `Bearer ${secret}`;
-  return headers;
-}
-
 export async function fetchReferenceDashboard(): Promise<ReferenceDashboard | null> {
   try {
-    const res = await fetch("/api/admin/global-reference?action=dashboard", { headers: authHeaders() });
+    const res = await apiFetch("/api/admin/global-reference?action=dashboard");
     if (!res.ok) return null;
     return res.json();
   } catch {
@@ -60,27 +55,27 @@ export async function fetchRelationGraph(refId: string, depth = 2) {
 }
 
 export async function runReferenceReview() {
-  const res = await fetch("/api/admin/global-reference?action=review", { method: "POST", headers: authHeaders() });
+  const res = await apiFetch("/api/admin/global-reference?action=review", { method: "POST" });
   if (!res.ok) throw new Error("Review failed");
   return res.json();
 }
 
 export async function generateReferenceReport() {
-  const res = await fetch("/api/admin/global-reference?action=report", { headers: authHeaders() });
+  const res = await apiFetch("/api/admin/global-reference?action=report");
   if (!res.ok) return null;
   const json = await res.json();
   return json.report;
 }
 
 export async function fetchThreeYearRoadmap() {
-  const res = await fetch("/api/admin/global-reference?action=roadmap", { headers: authHeaders() });
+  const res = await apiFetch("/api/admin/global-reference?action=roadmap");
   if (!res.ok) return null;
   const json = await res.json();
   return json.roadmap;
 }
 
 export async function auditSources() {
-  const res = await fetch("/api/admin/global-reference?action=audit-sources", { method: "POST", headers: authHeaders() });
+  const res = await apiFetch("/api/admin/global-reference?action=audit-sources", { method: "POST" });
   if (!res.ok) return [];
   const json = await res.json();
   return json.results || [];

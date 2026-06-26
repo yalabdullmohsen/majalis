@@ -51,7 +51,7 @@ export async function deliverWebhook(admin, event, payload) {
   };
 
   for (const hook of hooks || []) {
-    if (!hook events?.includes(event) && !hook events?.includes("*")) continue;
+    if (!hook.events?.includes(event) && !hook.events?.includes("*")) continue;
 
     try {
       const signature = signWebhookPayload(body, hook.secret);

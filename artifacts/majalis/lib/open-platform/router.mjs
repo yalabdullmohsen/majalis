@@ -44,7 +44,7 @@ export async function handleOpenPlatformRequest(req, res, version = "v1") {
     return formatError(res, auth.error);
   }
 
-  const rateCheck = checkRateLimit(auth.keyRecord.id, auth.keyRecord.tier);
+  const rateCheck = await checkRateLimit(auth.keyRecord.id, auth.keyRecord.tier);
   if (!rateCheck.ok) {
     res.setHeader("Retry-After", String(Math.ceil(rateCheck.retry_after)));
     return formatError(res, ERROR_CODES.RATE_LIMITED, { retry_after: rateCheck.retry_after, window: rateCheck.window });

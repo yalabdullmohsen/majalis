@@ -1,5 +1,5 @@
 import { sendJson } from "../_http.js";
-import { validateAdminAuth } from "../../lib/env-config.mjs";
+import { requireAdminAccess } from "../../lib/admin-auth.mjs";
 import {
   runScholarlyVerificationScan,
   getScholarlyDashboard,
@@ -8,10 +8,8 @@ import {
 } from "../../lib/scholarly-verification/orchestrator.mjs";
 
 export default async function handler(req, res) {
-  if (!validateAdminAuth(req)) {
-    sendJson(res, 401, { ok: false, error: "Unauthorized" });
-    return;
-  }
+  const auth = await requireAdminAccess(req, res, sendJson);
+  if (!auth) return;
 
   const action = req.query?.action || req.body?.action || "dashboard";
 

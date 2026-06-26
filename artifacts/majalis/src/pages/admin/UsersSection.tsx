@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { adminGetUsers, adminUpdateUserRole } from "@/lib/supabase";
+import { assignGovernanceRole, syncLegacyRoles, LEGACY_ROLE_MAP } from "@/lib/governance-service";
 import { C } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
 
@@ -26,11 +27,20 @@ export function UsersSection() {
     setLoading(true);
     adminGetUsers().then(({ data }) => { setUsers(data); setLoading(false); });
   };
-  useEffect(() => { load(); }, []);
+  useEffect(() => {
+    load();
+    syncLegacyRoles().catch(() => undefined);
+  }, []);
 
   const handleRoleChange = async (userId: string, newRole: string) => {
     setUpdatingId(userId);
     await adminUpdateUserRole(userId, newRole);
+    const governanceRole = LEGACY_ROLE_MAP[newRole] || "read_only";
+    try {
+      await assignGovernanceRole(userId, governanceRole);
+    } catch {
+      /* governance table may not exist yet */
+    }
     setUpdatingId(null);
     load();
   };

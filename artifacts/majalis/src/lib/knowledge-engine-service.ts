@@ -2,6 +2,8 @@
  * Auto Knowledge Engine — client service
  */
 
+import { adminFetch as apiFetch } from "@/lib/admin-api";
+
 export type AkeEngineStats = {
   connectors_active?: number;
   connectors_healthy?: number;
@@ -52,17 +54,9 @@ export type KnowledgeRecommendation = {
   record_id?: string;
 };
 
-function authHeaders(): Record<string, string> {
-  const secret = import.meta.env.VITE_ADMIN_API_SECRET || import.meta.env.VITE_CRON_SECRET;
-  const headers: Record<string, string> = { "Content-Type": "application/json" };
-  if (secret) headers.Authorization = `Bearer ${secret}`;
-  return headers;
-}
-
 async function akeAdminFetch(action: string, body?: Record<string, unknown>) {
-  const res = await fetch(`/api/admin/auto-knowledge-engine?action=${action}`, {
+  const res = await apiFetch(`/api/admin/auto-knowledge-engine?action=${action}`, {
     method: body ? "POST" : "GET",
-    headers: authHeaders(),
     body: body ? JSON.stringify({ action, ...body }) : undefined,
   });
   if (!res.ok) throw new Error(`AKE API ${action} failed`);
@@ -78,9 +72,7 @@ export async function fetchAkeStats(days = 7): Promise<{
     return { stats: json.stats, usingLegacy: json.usingLegacy };
   } catch {
     try {
-      const res = await fetch(`/api/admin/knowledge-pipeline?action=stats&days=${days}`, {
-        headers: authHeaders(),
-      });
+      const res = await apiFetch(`/api/admin/knowledge-pipeline?action=stats&days=${days}`);
       if (!res.ok) return { stats: null };
       const json = await res.json();
       return { stats: json.stats, usingLegacy: true };
@@ -128,10 +120,7 @@ export async function fetchSystemHealth(): Promise<SystemHealth | null> {
     return await akeAdminFetch("system");
   } catch {
     try {
-      const secret = import.meta.env.VITE_ADMIN_API_SECRET || import.meta.env.VITE_CRON_SECRET;
-      const res = await fetch("/api/admin/auto-content?action=system", {
-        headers: secret ? { Authorization: `Bearer ${secret}` } : {},
-      });
+      const res = await apiFetch("/api/admin/auto-content?action=system");
       if (!res.ok) return null;
       return res.json();
     } catch {

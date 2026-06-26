@@ -7,6 +7,7 @@ import { getSupabaseAdmin } from "../supabase-admin.mjs";
 import { runSecurityAudit as runAutonomousSecurity } from "../autonomous-ai/security.mjs";
 import { runSecurityAssistant } from "../islamic-intelligence/security.mjs";
 import { getEnvConfig, validateCronEnv } from "../env-config.mjs";
+import { isRedisRateLimitConfigured } from "../rate-limit.mjs";
 import { logGovernanceEvent } from "./audit.mjs";
 
 const GOVERNANCE_SECURITY_CHECKS = [
@@ -34,9 +35,11 @@ const GOVERNANCE_SECURITY_CHECKS = [
   {
     id: "admin_secret_server_only",
     category: "Secrets",
-    check: () => !process.env.VITE_ADMIN_API_SECRET || process.env.NODE_ENV !== "production",
-    message: "Admin secret should be server-only in production",
-    severity: "warning",
+    check: () =>
+      (!process.env.VITE_ADMIN_API_SECRET && !process.env.VITE_CRON_SECRET) ||
+      process.env.NODE_ENV !== "production",
+    message: "Admin/cron secrets must be server-only (no VITE_ prefix) in production",
+    severity: "critical",
   },
   {
     id: "cron_secret",
@@ -48,9 +51,9 @@ const GOVERNANCE_SECURITY_CHECKS = [
   {
     id: "rate_limiting",
     category: "Rate Limiting",
-    check: () => true,
-    message: "Rate limiting on assistant, transcribe, fiqh-research, Open Platform API",
-    severity: "info",
+    check: () => isRedisRateLimitConfigured() || process.env.NODE_ENV !== "production",
+    message: "Upstash Redis rate limiting for serverless (UPSTASH_REDIS_REST_URL)",
+    severity: process.env.NODE_ENV === "production" ? "critical" : "info",
   },
   {
     id: "security_headers",

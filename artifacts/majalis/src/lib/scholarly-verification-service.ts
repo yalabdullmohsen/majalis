@@ -2,6 +2,8 @@
  * Scholarly Verification — admin client service
  */
 
+import { adminFetch as apiFetch } from "@/lib/admin-api";
+
 export type ScholarlySectionStats = {
   total: number;
   verified: number;
@@ -42,17 +44,9 @@ export type ScholarlySearchResult = {
   quality_score?: number;
 };
 
-function authHeaders(): Record<string, string> {
-  const secret = import.meta.env.VITE_ADMIN_API_SECRET || import.meta.env.VITE_CRON_SECRET;
-  const headers: Record<string, string> = { "Content-Type": "application/json" };
-  if (secret) headers.Authorization = `Bearer ${secret}`;
-  return headers;
-}
-
 async function svFetch(action: string, body?: Record<string, unknown>) {
-  const res = await fetch(`/api/admin/scholarly-verification?action=${action}`, {
+  const res = await apiFetch(`/api/admin/scholarly-verification?action=${action}`, {
     method: body ? "POST" : "GET",
-    headers: authHeaders(),
     body: body ? JSON.stringify({ action, ...body }) : undefined,
   });
   if (!res.ok) throw new Error(`Scholarly verification API ${action} failed`);

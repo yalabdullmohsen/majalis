@@ -2,6 +2,8 @@
  * Autonomous AI Platform — client service
  */
 
+import { adminFetch as apiFetch } from "@/lib/admin-api";
+
 export type AutonomousObservability = {
   ok: boolean;
   cronJobs?: Array<{ name: string; schedule: string; path: string; status: string }>;
@@ -32,18 +34,11 @@ export type AutonomousReport = {
   improvement_plan: string[];
 };
 
-function authHeaders(): Record<string, string> {
-  const secret = import.meta.env.VITE_ADMIN_API_SECRET || import.meta.env.VITE_CRON_SECRET;
-  const headers: Record<string, string> = { "Content-Type": "application/json" };
-  if (secret) headers.Authorization = `Bearer ${secret}`;
-  return headers;
-}
 
-async function adminFetch(action: string, body?: Record<string, unknown>) {
-  const res = await fetch(`/api/admin/autonomous-ai?action=${action}`, {
+async function autonomousApi(action: string, body?: Record<string, unknown>) {
+  const res = await apiFetch(`/api/admin/autonomous-ai?action=${action}`, {
     method: body ? "POST" : "GET",
-    headers: authHeaders(),
-    body: body ? JSON.stringify({ action, ...body }) : undefined,
+    body: body ? JSON.stringify(body) : undefined,
   });
   if (!res.ok) throw new Error(`Autonomous AI API ${action} failed`);
   return res.json();
@@ -51,7 +46,7 @@ async function adminFetch(action: string, body?: Record<string, unknown>) {
 
 export async function fetchAutonomousDashboard(): Promise<AutonomousObservability | null> {
   try {
-    const json = await adminFetch("dashboard");
+    const json = await autonomousApi("dashboard");
     return json;
   } catch {
     return null;
@@ -59,17 +54,17 @@ export async function fetchAutonomousDashboard(): Promise<AutonomousObservabilit
 }
 
 export async function runAutonomousPipeline(opts?: { mode?: string; checkLinks?: boolean }) {
-  return adminFetch("run", opts);
+  return autonomousApi("run", opts);
 }
 
 export async function runSecurityAudit() {
-  const json = await adminFetch("security");
+  const json = await autonomousApi("security");
   return json.audit;
 }
 
 export async function generateAutonomousReport(): Promise<AutonomousReport | null> {
   try {
-    const json = await adminFetch("report");
+    const json = await autonomousApi("report");
     return json.report;
   } catch {
     return null;
@@ -86,7 +81,7 @@ export async function fetchDailyContent(type?: string) {
 }
 
 export async function fetchPipelineEvents(limit = 30) {
-  const json = await adminFetch("events");
+  const json = await autonomousApi("events");
   return (json.events || []).slice(0, limit);
 }
 

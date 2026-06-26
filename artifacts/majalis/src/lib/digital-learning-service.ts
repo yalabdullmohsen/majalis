@@ -2,6 +2,8 @@
  * Digital Learning Platform — client service
  */
 
+import { adminFetch as apiFetch } from "@/lib/admin-api";
+
 export type LearningPath = {
   slug: string;
   title: string;
@@ -165,22 +167,15 @@ export async function fetchLessonInsights(body: { pathSlug: string; moduleId: st
   return dlFetch("ai-insights", { method: "POST", body });
 }
 
-function authHeaders(): Record<string, string> {
-  const secret = import.meta.env.VITE_ADMIN_API_SECRET || import.meta.env.VITE_CRON_SECRET;
-  const headers: Record<string, string> = { "Content-Type": "application/json" };
-  if (secret) headers.Authorization = `Bearer ${secret}`;
-  return headers;
-}
-
 export async function fetchAdminLearningStats() {
-  const res = await fetch("/api/admin/digital-learning?action=dashboard", { headers: authHeaders() });
+  const res = await apiFetch("/api/admin/digital-learning?action=dashboard");
   if (!res.ok) return null;
   const json = await res.json();
   return json.stats;
 }
 
 export async function generateLearningReport() {
-  const res = await fetch("/api/admin/digital-learning?action=report", { headers: authHeaders() });
+  const res = await apiFetch("/api/admin/digital-learning?action=report");
   if (!res.ok) return null;
   const json = await res.json();
   return json.report;

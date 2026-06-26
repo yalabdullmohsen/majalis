@@ -60,8 +60,9 @@ export function getEnvConfig() {
   const supabaseUrl = pick("SUPABASE_URL", "VITE_SUPABASE_URL");
   const serviceRoleKey = pick("SUPABASE_SERVICE_ROLE_KEY");
   const anonKey = pick("SUPABASE_ANON_KEY", "VITE_SUPABASE_ANON_KEY");
-  const cronSecret = pick("CRON_SECRET", "VITE_CRON_SECRET");
-  const adminSecret = pick("ADMIN_API_SECRET", "CRON_SECRET", "VITE_CRON_SECRET");
+  const isProd = process.env.NODE_ENV === "production" || process.env.VERCEL_ENV === "production";
+  const cronSecret = pick("CRON_SECRET", ...(isProd ? [] : ["VITE_CRON_SECRET"]));
+  const adminSecret = pick("ADMIN_API_SECRET", "CRON_SECRET", ...(isProd ? [] : ["VITE_CRON_SECRET"]));
   const openaiKey = pick("OPENAI_API_KEY");
   const anthropicKey = pick("ANTHROPIC_API_KEY");
   const databaseUrl = pick(

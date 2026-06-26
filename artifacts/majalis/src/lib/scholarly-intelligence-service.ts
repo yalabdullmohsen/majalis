@@ -2,6 +2,8 @@
  * Scholarly Intelligence Engine — client service
  */
 
+import { adminFetch as apiFetch } from "@/lib/admin-api";
+
 export type IntelligentSearchResult = {
   id?: string;
   kind: string;
@@ -167,18 +169,9 @@ export async function fetchContentRelations(opts: {
   }
 }
 
-function authHeaders(): Record<string, string> {
-  const secret = import.meta.env.VITE_ADMIN_API_SECRET || import.meta.env.VITE_CRON_SECRET;
-  const headers: Record<string, string> = { "Content-Type": "application/json" };
-  if (secret) headers.Authorization = `Bearer ${secret}`;
-  return headers;
-}
-
 export async function fetchSearchAnalytics(days = 30): Promise<SearchAnalytics | null> {
   try {
-    const res = await fetch(`/api/admin/search-analytics?action=dashboard&days=${days}`, {
-      headers: authHeaders(),
-    });
+    const res = await apiFetch(`/api/admin/search-analytics?action=dashboard&days=${days}`);
     if (!res.ok) return null;
     const json = await res.json();
     return json.analytics;
@@ -189,9 +182,7 @@ export async function fetchSearchAnalytics(days = 30): Promise<SearchAnalytics |
 
 export async function generateIntelligenceReport(): Promise<Record<string, unknown> | null> {
   try {
-    const res = await fetch("/api/admin/search-analytics?action=report", {
-      headers: authHeaders(),
-    });
+    const res = await apiFetch("/api/admin/search-analytics?action=report");
     if (!res.ok) return null;
     const json = await res.json();
     return json.report;
