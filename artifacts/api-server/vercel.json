@@ -1,5 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "ignoreCommand": "echo 'api-server artifact is served outside this Vercel project; skipping Vercel rebuild' && exit 0",
   "installCommand": "cd ../.. && pnpm install --frozen-lockfile",
   "buildCommand": "cd ../.. && pnpm --filter @workspace/api-server run build",
   "functions": {
