@@ -1,5 +1,6 @@
 import { join } from "node:path";
 import { runContentImport } from "./engine.mjs";
+import { ensureContentImportSchema } from "./ensure-schema.mjs";
 
 /** @typedef {{ type: string, file: string, label: string, verifyPath: string }} TrialSpec */
 
@@ -37,6 +38,20 @@ export const PHASE2_TRIAL_SPECS = [
  * @param {{ dryRun?: boolean }} opts
  */
 export async function runPhase2TrialImport(rootDir, opts = {}) {
+  if (!opts.dryRun) {
+    const schema = await ensureContentImportSchema();
+    if (!schema.ok) {
+      return {
+        ok: false,
+        dryRun: false,
+        schemaError: schema.error,
+        totals: { read: 0, imported: 0, skipped: 0, failed: 0, invalid: 0 },
+        reports: [],
+        verifyLinks: [],
+      };
+    }
+  }
+
   const reports = [];
 
   for (const spec of PHASE2_TRIAL_SPECS) {

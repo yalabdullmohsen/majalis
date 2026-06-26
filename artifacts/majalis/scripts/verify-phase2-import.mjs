@@ -15,12 +15,9 @@ if (!url || !key) {
 
 const sb = createClient(url, key);
 
-async function count(table, filter) {
-  let q = sb.from(table).select("*", { count: "exact", head: true });
-  if (filter) q = filter(q);
-  const { count, error } = await q;
-  if (error) return { count: 0, error: error.message };
-  return { count: count ?? 0 };
+async function columnExists(table, column) {
+  const { error } = await sb.from(table).select(column).limit(0);
+  return !error;
 }
 
 async function main() {
@@ -29,12 +26,21 @@ async function main() {
   const sheikh = await sb.from("sheikhs").select("id, name").ilike("name", "%Phase2%").maybeSingle();
   checks.push({ name: "sheikhs Phase2", ok: Boolean(sheikh.data), detail: sheikh.data?.name || sheikh.error?.message });
 
-  const lesson = await sb
-    .from("lessons")
-    .select("id, title, external_key")
-    .or("external_key.eq.phase2-import-lesson-001,title.ilike.%Phase 2%")
-    .maybeSingle();
-  checks.push({ name: "lessons Phase2", ok: Boolean(lesson.data), detail: lesson.data?.external_key || lesson.data?.title || lesson.error?.message });
+  const hasExternalKey = await columnExists("lessons", "external_key");
+  let lessonQuery = sb.from("lessons").select("id, title").ilike("title", "%Phase 2%").eq("status", "approved");
+  if (hasExternalKey) {
+    lessonQuery = sb
+      .from("lessons")
+      .select("id, title, external_key")
+      .or("external_key.eq.phase2-import-lesson-001,title.ilike.%Phase 2%")
+      .eq("status", "approved");
+  }
+  const lesson = await lessonQuery.maybeSingle();
+  checks.push({
+    name: "lessons Phase2",
+    ok: Boolean(lesson.data),
+    detail: lesson.data?.external_key || lesson.data?.title || lesson.error?.message,
+  });
 
   const question = await sb
     .from("qa_questions")
@@ -56,8 +62,9 @@ async function main() {
   try {
     const res = await fetch(`${base}/api/intelligent-search?q=Phase2&limit=5`);
     const json = await res.json();
-    searchOk = (json.count ?? json.results?.length ?? 0) > 0;
-    checks.push({ name: "search Phase2", ok: searchOk, detail: `count=${json.count ?? json.results?.length ?? 0}` });
+    const count = json.count ?? json.results?.length ?? json.items?.length ?? 0;
+    searchOk = count > 0;
+    checks.push({ name: "search Phase2", ok: searchOk, detail: `count=${count}` });
   } catch (e) {
     checks.push({ name: "search Phase2", ok: false, detail: String(e.message || e) });
   }

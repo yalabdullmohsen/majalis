@@ -72,11 +72,18 @@ export function Phase2TrialImport({ onDone }: Phase2TrialImportProps) {
     setError(null);
     setResult(null);
     try {
-      const res = await adminFetch("/api/admin/content-import", {
+      let res = await adminFetch("/api/admin/content-import", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action: "phase2-trial", dryRun }),
       });
+      if (res.status === 404) {
+        res = await adminFetch("/api/cron/bootstrap-database?action=phase2-trial-import", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ dryRun }),
+        });
+      }
       const json = await res.json();
       if (!res.ok && !json.reports) {
         setError(json.error || `HTTP ${res.status}`);

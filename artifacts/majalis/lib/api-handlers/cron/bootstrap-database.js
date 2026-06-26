@@ -6,6 +6,12 @@ import { listAvailableMigrations } from "../../../lib/migration-paths.mjs";
 import { runAutoContentSync, getPublishedAutoContentFeed } from "../../../lib/auto-content/auto-content-sync.mjs";
 import { getSupabaseAdmin } from "../../../lib/supabase-admin.mjs";
 import { logBootstrapError, serializeError } from "../../../lib/bootstrap-debug.mjs";
+import { runPhase2TrialImport } from "../../../lib/content-import/phase2-trial.mjs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const __bootstrapDir = dirname(fileURLToPath(import.meta.url));
+const APP_ROOT = join(__bootstrapDir, "../../..");
 
 /** Current pipeline step — updated before each phase for error context. */
 let migrationStep = "init";
@@ -71,6 +77,14 @@ export default async function handler(req, res) {
       const migrations = listAvailableMigrations();
       const result = await applyMigrations({ continueOnError: false });
       sendJson(res, result.ok ? 200 : 500, { migrations, ...result });
+      return;
+    }
+
+    if (action === "phase2-trial-import") {
+      migrationStep = "phase2_trial_import";
+      const dryRun = req.query?.dryRun === "1" || req.body?.dryRun === true;
+      const result = await runPhase2TrialImport(APP_ROOT, { dryRun });
+      sendJson(res, result.ok ? 200 : 422, { ok: result.ok, action, ...result });
       return;
     }
 

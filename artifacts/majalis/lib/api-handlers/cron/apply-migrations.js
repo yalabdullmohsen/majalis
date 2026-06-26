@@ -2,6 +2,7 @@ import { sendJson } from "../../api/_http.mjs";
 import { validateCronAuth } from "../../../lib/env-config.mjs";
 import { applyMigrations, verifySchema } from "../../../lib/db-migrate.mjs";
 import { testDatabaseConnection, resolveDatabaseUrl } from "../../../lib/database.mjs";
+import { ensureContentImportSchema } from "../../../lib/content-import/ensure-schema.mjs";
 
 function resolvedMeta() {
   const r = resolveDatabaseUrl();
@@ -32,6 +33,12 @@ export default async function handler(req, res) {
     if (action === "test") {
       const conn = await testDatabaseConnection();
       sendJson(res, conn.ok ? 200 : 500, { connection: conn, resolved: resolvedMeta() });
+      return;
+    }
+
+    if (action === "content-import-schema") {
+      const result = await ensureContentImportSchema();
+      sendJson(res, result.ok ? 200 : 500, result);
       return;
     }
 

@@ -26,6 +26,7 @@ export const MIGRATION_FILES = [
   "reasoning_engine_v1.sql",
   "knowledge_graph_phase4_v1.sql",
   "qa_phase4_seed.sql",
+  "kuwait_lessons_extend.sql",
 ];
 
 export function resolveMigrationsDir() {
