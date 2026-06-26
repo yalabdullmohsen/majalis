@@ -94,6 +94,34 @@ html[data-theme="dark"] select {
   border-color: var(--majalis-line);
 }
 
+html[data-theme="dark"] .app-shell,
+html[data-theme="dark"] .app-main,
+html[data-theme="dark"] .legal-page,
+html[data-theme="dark"] .page-shell {
+  background: var(--majalis-parchment);
+  color: var(--majalis-ink);
+}
+
+html[data-theme="dark"] .navbar-v3 {
+  background: var(--majalis-parchment) !important;
+  border-color: var(--majalis-line) !important;
+}
+
+html[data-theme="dark"] .legal-page-hero {
+  background:
+    radial-gradient(circle at top right, rgba(79, 181, 142, 0.2), transparent 20rem),
+    linear-gradient(135deg, #08110e, #14251f) !important;
+  color: var(--majalis-ink) !important;
+}
+
+html[data-theme="dark"] .legal-page-body,
+html[data-theme="dark"] .legal-section,
+html[data-theme="dark"] .settings-account-card,
+html[data-theme="dark"] .settings-choice {
+  background: var(--majalis-panel);
+  color: var(--majalis-ink);
+}
+
 h1,
 h2,
 h3,
