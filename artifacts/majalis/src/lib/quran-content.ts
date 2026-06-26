@@ -14,6 +14,18 @@ export const QURAN_RADIO_STATIONS: QuranRadio[] = [
     quality: "128 kbps",
   },
   {
+    id: "quran-radio-sa",
+    name: "إذاعة القرآن الكريم — السعودية",
+    streamUrl: "https://stream.radiojar.com/4wqre23fku0uv",
+    quality: "128 kbps",
+  },
+  {
+    id: "quran-radio-eg",
+    name: "إذاعة القرآن الكريم — مصر",
+    streamUrl: "https://stream.radiojar.com/4u4w5h3s4z8uv",
+    quality: "128 kbps",
+  },
+  {
     id: "mp3quran-main",
     name: "مكتبة mp3quran — بث عام",
     streamUrl: "https://backup.qurango.net/radio/ahmad_alnufais",
@@ -21,10 +33,11 @@ export const QURAN_RADIO_STATIONS: QuranRadio[] = [
     reciter: "أحمد النفيس",
   },
   {
-    id: "quran-radio-sa",
-    name: "إذاعة القرآن الكريم — السعودية",
-    streamUrl: "https://stream.radiojar.com/4wqre23fku0uv",
+    id: "quran-radio-jordan",
+    name: "إذاعة القرآن — الأردن",
+    streamUrl: "https://backup.qurango.net/radio/mohammad_allohaidan",
     quality: "128 kbps",
+    reciter: "محمد اللحيدان",
   },
 ];
 
@@ -195,12 +208,48 @@ export function getSurahMeta(surahNumber: number) {
 }
 
 export async function fetchSurahAyahs(surahNumber: number) {
+  const cached = getCachedSurahAyahs(surahNumber);
+  if (cached) return cached;
+
   const response = await fetch(`https://api.alquran.cloud/v1/surah/${surahNumber}/quran-uthmani`, {
     signal: AbortSignal.timeout(15_000),
   });
   if (!response.ok) throw new Error("تعذر تحميل السورة");
   const json = await response.json();
-  return json.data.ayahs as { numberInSurah: number; text: string }[];
+  const ayahs = json.data.ayahs as { numberInSurah: number; text: string }[];
+  cacheSurahAyahs(surahNumber, ayahs);
+  return ayahs;
+}
+
+const CACHE_PREFIX = "majalis-quran-cache-v1-";
+
+function cacheSurahAyahs(surahNumber: number, ayahs: { numberInSurah: number; text: string }[]) {
+  try {
+    localStorage.setItem(`${CACHE_PREFIX}${surahNumber}`, JSON.stringify({ ayahs, at: Date.now() }));
+  } catch {
+    /* quota exceeded — ignore */
+  }
+}
+
+export function getCachedSurahAyahs(surahNumber: number): { numberInSurah: number; text: string }[] | null {
+  try {
+    const raw = localStorage.getItem(`${CACHE_PREFIX}${surahNumber}`);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    return parsed.ayahs || null;
+  } catch {
+    return null;
+  }
+}
+
+export function clearQuranCache() {
+  try {
+    Object.keys(localStorage)
+      .filter((k) => k.startsWith(CACHE_PREFIX))
+      .forEach((k) => localStorage.removeItem(k));
+  } catch {
+    /* ignore */
+  }
 }
 
 export function getQuranAudioUrl(surah: number, reciter = "ar.alafasy") {

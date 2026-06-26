@@ -15,7 +15,7 @@
     "start": "next start --port ${PORT:-24216}",
     "serve": "next start --port ${PORT:-24216}",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "lint": "eslint src app lib --ext .ts,.tsx --max-warnings 50"
+    "lint": "eslint src lib --ext .ts,.tsx --max-warnings 50"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

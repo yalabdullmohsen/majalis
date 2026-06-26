@@ -6,6 +6,7 @@ import { AuthProvider } from "@/components/AuthProvider";
 import { FontPreferenceProvider } from "@/components/FontPreferenceProvider";
 import { SiteFooter } from "@/components/SiteFooter";
 import { ThemePreferenceProvider } from "@/components/ThemePreferenceProvider";
+import { UserPreferencesProvider } from "@/components/UserPreferencesProvider";
 
 const NavBar = dynamic(() => import("@/components/NavBar"), {
   ssr: false,
@@ -21,7 +22,8 @@ export function AppShell({ children }: { children: ReactNode }) {
   return (
     <ThemePreferenceProvider>
       <FontPreferenceProvider>
-        <AuthProvider>
+        <UserPreferencesProvider>
+          <AuthProvider>
           <div className="app-shell" style={{ minHeight: "100vh", direction: "rtl" }}>
             <a href="#main-content" className="skip-link">
               تخطّي إلى المحتوى
@@ -33,7 +35,8 @@ export function AppShell({ children }: { children: ReactNode }) {
             <SiteFooter />
             <AssistantFloatingWidget />
           </div>
-        </AuthProvider>
+          </AuthProvider>
+        </UserPreferencesProvider>
       </FontPreferenceProvider>
     </ThemePreferenceProvider>
   );

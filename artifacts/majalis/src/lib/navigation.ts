@@ -32,8 +32,11 @@ export const NAV_GROUPS: NavGroup[] = [
     id: "quran",
     title: "القرآن",
     links: [
-      { href: "/quran", label: "القرآن الكريم" },
-      { href: "/quran-radio", label: "إذاعة القرآن" },
+      { href: "/quran", label: "المصحف الشريف" },
+      { href: "/quran/tajweed", label: "علم التجويد" },
+      { href: "/quran/surah-stories", label: "قصص السور" },
+      { href: "/quran-live", label: "البث المباشر" },
+      { href: "/quran-radio", label: "إذاعات القرآن" },
       { href: "/daily-wird", label: "الورد اليومي" },
     ],
   },
@@ -75,8 +78,8 @@ export const NAV_GROUPS: NavGroup[] = [
 export const PRIMARY_NAV = [
   { href: "/", label: "الرئيسية" },
   { href: "/lessons", label: "الدروس" },
-  { href: "/fiqh-council", label: "المجمع الفقهي الإسلامي" },
   { href: "/quran", label: "القرآن" },
+  { href: "/library", label: "المكتبة" },
   { href: "/adhkar", label: "الأذكار" },
   { href: "/prayer-times", label: "الصلاة" },
 ];

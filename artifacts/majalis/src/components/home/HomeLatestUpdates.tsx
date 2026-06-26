@@ -31,7 +31,12 @@ export function HomeLatestUpdates() {
       .then((data) => {
         if (!active) return;
         const safeData = Array.isArray(data) ? data : [];
-        setItems(safeData.map(autoContentToUpdateItem).filter((item) => item?.title));
+        setItems(safeData.map(autoContentToUpdateItem).filter((item) => {
+          if (!item?.title) return false;
+          const src = (item.source_name || "").toLowerCase();
+          const url = (item.source_url || "").toLowerCase();
+          return !src.includes("فقه") && !url.includes("fiqh-council");
+        }));
       })
       .catch(() => {
         if (active) setItems([]);

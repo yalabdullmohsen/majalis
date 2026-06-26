@@ -79,8 +79,11 @@ const LIBRARY_ITEMS = [
 ];
 
 const QURAN_ITEMS = [
-  { title: "القرآن الكريم", href: "/quran", meta: "قراءة", summary: "سور القرآن مع بيانات علمية وروابط تفسير." },
-  { title: "إذاعة القرآن", href: "/quran-radio", meta: "استماع", summary: "بث مباشر لتلاوات القرآن الكريم." },
+  { title: "المصحف الشريف", href: "/quran", meta: "قراءة", summary: "114 سورة بالرسم العثماني مع تلاوات وتفسير." },
+  { title: "علم التجويد", href: "/quran/tajweed", meta: "تجويد", summary: "دروس التجويد مع أمثلة واختبارات." },
+  { title: "قصص السور", href: "/quran/surah-stories", meta: "موسوعة", summary: "موسوعة قصص السور الموثقة." },
+  { title: "البث المباشر", href: "/quran-live", meta: "بث", summary: "قنوات القرآن والحرمين الشريفين." },
+  { title: "إذاعات القرآن", href: "/quran-radio", meta: "استماع", summary: "إذاعات الكويت والسعودية وغيرها." },
   { title: "الورد اليومي", href: "/daily-wird", meta: "متابعة", summary: "خطة قراءة يومية محفوظة محلياً." },
 ];
 
@@ -117,7 +120,6 @@ const WORSHIP_TOOLS_ITEMS = [
 const SEARCH_ASSISTANT_ITEMS = [
   { title: "محرك البحث الذكي", href: "/search", meta: "بحث", summary: "بحث عربي في الدروس والأسئلة والكتب والأحاديث." },
   { title: "المساعد الشرعي", href: "/assistant", meta: "AI", summary: "إجابة مختصرة ثم تفصيل مع المصادر عند توفرها." },
-  { title: "الباحث الفقهي", href: "/fiqh-council/research-assistant", meta: "فقه", summary: "بحث موثق في مواد المجمع الفقهي." },
 ];
 
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
@@ -183,21 +185,20 @@ export default function HomePage({
         <SafeHomeSection name="أحدث الدروس"><HomeUpcomingLessons initialLessons={initialFeaturedLessons} /></SafeHomeSection>
         <SafeHomeSection name="الدورات العلمية"><HomeUpcomingCourses /></SafeHomeSection>
         <SafeHomeSection name="المحاضرات"><HomeContentRail title="المحاضرات" subtitle="مختارات حديثة للدروس والمحاضرات الصوتية والمرئية." items={LECTURE_ITEMS} /></SafeHomeSection>
-        <SafeHomeSection name="الخطب"><HomeContentRail title="الخطب" subtitle="محتوى عملي للخطباء والدعاة مرتب حسب الموضوع والموسم." items={KHUTBA_ITEMS} /></SafeHomeSection>
         <SafeHomeSection name="المشايخ"><HomeContentRail title="المشايخ" subtitle="الوصول إلى العلماء والمشايخ والدروس المرتبطة بهم." items={SCHOLAR_ITEMS} /></SafeHomeSection>
-        <SafeHomeSection name="القرآن"><HomeContentRail title="القرآن الكريم" subtitle="قراءة وتدبر واستماع مع روابط تفسير." items={QURAN_ITEMS} /></SafeHomeSection>
-        <SafeHomeSection name="الأحاديث"><HomeContentRail title="الأحاديث" subtitle="الأحاديث والشروح والبحث في السنة." items={HADITH_ITEMS} /></SafeHomeSection>
-        <SafeHomeSection name="الأذكار"><HomeContentRail title="الأذكار" subtitle="أوراد يومية وعداد تسبيح احترافي." items={ADHKAR_ITEMS} /></SafeHomeSection>
-        <SafeHomeSection name="ذكر اليوم"><HomeDailyDhikr /></SafeHomeSection>
-        <SafeHomeSection name="الأسئلة الشرعية"><HomeContentRail title="الأسئلة الشرعية" subtitle="أسئلة وأجوبة موثقة ومصنفة." items={QA_ITEMS} /></SafeHomeSection>
-        <SafeHomeSection name="سؤال اليوم"><HomeDailyQuestion /></SafeHomeSection>
+        <SafeHomeSection name="القرآن"><HomeContentRail title="القرآن الكريم" subtitle="مصحف — تجويد — تلاوات — بث — إذاعات." items={QURAN_ITEMS} /></SafeHomeSection>
         <SafeHomeSection name="المكتبة"><HomeContentRail title="المكتبة" subtitle="كتب ومتون ومسارات علمية." items={LIBRARY_ITEMS} /></SafeHomeSection>
         <SafeHomeSection name="الفوائد"><HomeContentRail title="الفوائد" subtitle="فوائد مختصرة ومنظمة لطالب العلم." items={FAWAID_ITEMS} /></SafeHomeSection>
-        <SafeHomeSection name="فائدة اليوم"><HomeDailyFaida /></SafeHomeSection>
+        <SafeHomeSection name="الأسئلة الشرعية"><HomeContentRail title="الأسئلة الشرعية" subtitle="أسئلة وأجوبة موثقة ومصنفة." items={QA_ITEMS} /></SafeHomeSection>
         <SafeHomeSection name="أدوات العبادة"><HomeContentRail title="أدوات العبادة" subtitle="أدوات عملية للمتابعة اليومية." items={WORSHIP_TOOLS_ITEMS} /></SafeHomeSection>
         <SafeHomeSection name="مواقيت الصلاة"><HomePrayerTimes /></SafeHomeSection>
+        <SafeHomeSection name="ذكر اليوم"><HomeDailyDhikr /></SafeHomeSection>
+        <SafeHomeSection name="سؤال اليوم"><HomeDailyQuestion /></SafeHomeSection>
+        <SafeHomeSection name="فائدة اليوم"><HomeDailyFaida /></SafeHomeSection>
+        <SafeHomeSection name="الأحاديث"><HomeContentRail title="الأحاديث" subtitle="الأحاديث والشروح والبحث في السنة." items={HADITH_ITEMS} /></SafeHomeSection>
+        <SafeHomeSection name="الأذكار"><HomeContentRail title="الأذكار" subtitle="أوراد يومية وعداد تسبيح احترافي." items={ADHKAR_ITEMS} /></SafeHomeSection>
+        <SafeHomeSection name="الخطب"><HomeContentRail title="الخطب" subtitle="محتوى عملي للخطباء والدعاة." items={KHUTBA_ITEMS} /></SafeHomeSection>
         <SafeHomeSection name="البحث والمساعد"><HomeContentRail title="البحث والمساعد" subtitle="بحث ذكي ومساعد شرعي مقيد بالمصادر." items={SEARCH_ASSISTANT_ITEMS} /></SafeHomeSection>
-        <SafeHomeSection name="آخر التحديثات"><HomeLatestUpdates /></SafeHomeSection>
         <SafeHomeSection name="حديث اليوم"><HomeDailyHadith /></SafeHomeSection>
         <SafeHomeSection name="تقدمك اليومي"><HomeDailyProgress /></SafeHomeSection>
         <SafeHomeSection name="روابط سريعة"><HomeFeatureCards /></SafeHomeSection>
@@ -205,6 +206,7 @@ export default function HomePage({
         <SafeHomeSection name="سنن اليوم"><HomeSunnahByTime /></SafeHomeSection>
         <SafeHomeSection name="المساعد"><HomeHeroBanner /></SafeHomeSection>
         <SafeHomeSection name="المناسبات"><HomeIslamicOccasions /></SafeHomeSection>
+        <SafeHomeSection name="آخر التحديثات"><HomeLatestUpdates /></SafeHomeSection>
       </main>
     </div>
   );
