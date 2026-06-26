@@ -5603,6 +5603,366 @@ html[data-theme="dark"] .home-page {
   margin-bottom: 0.45rem;
 }
 
+/* ── Content-first homepage rails ─────────────────────────────────────────── */
+.home-content-rail__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 0.85rem;
+}
+
+.home-content-card {
+  display: grid;
+  gap: 0.45rem;
+  min-height: 100%;
+  padding: 1rem;
+  border: 1px solid var(--majalis-line);
+  border-radius: 1rem;
+  background: var(--majalis-panel);
+  color: var(--majalis-ink);
+  box-shadow: var(--card-shadow);
+  transition: transform 0.18s ease, border-color 0.18s ease;
+}
+
+.home-content-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--majalis-emerald);
+}
+
+.home-content-card__meta {
+  width: fit-content;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  background: var(--majalis-sage);
+  color: var(--majalis-emerald-deep);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.home-content-card p {
+  margin: 0;
+  color: var(--majalis-ink-soft);
+  font-size: 0.88rem;
+}
+
+/* ── Fiqh council mobile filters ──────────────────────────────────────────── */
+.fiqh-filter-toggle {
+  display: none;
+  width: 100%;
+  min-height: 48px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  border: 1px solid var(--majalis-line);
+  border-radius: 0.85rem;
+  background: var(--majalis-panel);
+  color: var(--majalis-emerald-deep);
+  padding: 0 0.9rem;
+  font-family: inherit;
+  font-weight: 800;
+  margin-bottom: 0.75rem;
+}
+
+.fiqh-filter-toggle span {
+  color: var(--majalis-ink-soft);
+  font-size: 0.78rem;
+}
+
+.fiqh-filter-panel {
+  display: block;
+}
+
+.fiqh-chip-strip {
+  align-items: center;
+}
+
+.fiqh-mobile-category-deck {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: 0.75rem;
+  margin: 1rem 0 1.25rem;
+}
+
+.fiqh-mobile-category-card {
+  display: grid;
+  gap: 0.25rem;
+  border: 1px solid var(--majalis-line);
+  border-radius: 1rem;
+  padding: 0.9rem;
+  background: var(--majalis-panel);
+  color: var(--majalis-ink);
+  min-height: 5rem;
+}
+
+.fiqh-mobile-category-card span {
+  color: var(--majalis-ink-soft);
+  font-size: 0.82rem;
+}
+
+/* ── Professional tasbih counter ─────────────────────────────────────────── */
+.tasbih-pro-page {
+  max-width: 66rem;
+}
+
+.tasbih-stats-grid,
+.prayer-stat-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.tasbih-stat {
+  padding: 0.9rem;
+}
+
+.tasbih-stat span,
+.prayer-status-card__label {
+  color: var(--majalis-ink-soft);
+  font-size: 0.78rem;
+}
+
+.tasbih-stat strong {
+  display: block;
+  color: var(--majalis-emerald-deep);
+  font-size: 1.45rem;
+}
+
+.tasbih-layout {
+  display: grid;
+  grid-template-columns: minmax(13rem, 0.8fr) minmax(0, 1.4fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+.tasbih-wird-list,
+.tasbih-pro-card,
+.tasbih-add-card,
+.tasbih-achievements {
+  padding: 1rem;
+}
+
+.tasbih-wird-list {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.tasbih-wird-tab {
+  border: 1px solid var(--majalis-line);
+  border-radius: 0.85rem;
+  background: var(--majalis-panel);
+  color: var(--majalis-ink);
+  padding: 0.75rem;
+  text-align: right;
+  display: grid;
+  gap: 0.2rem;
+  font-family: inherit;
+}
+
+.tasbih-wird-tab.is-active {
+  border-color: var(--majalis-emerald);
+  background: color-mix(in srgb, var(--majalis-sage) 65%, var(--majalis-panel));
+}
+
+.tasbih-wird-tab small,
+.tasbih-progress-label,
+.tasbih-saved,
+.tasbih-offline-note {
+  color: var(--majalis-ink-soft);
+  font-size: 0.82rem;
+}
+
+.tasbih-main-button {
+  width: min(100%, 19rem);
+  aspect-ratio: 1;
+  margin: 1rem auto;
+  border-radius: 999px;
+  border: 6px solid var(--majalis-sage);
+  background:
+    radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--majalis-brass) 35%, transparent), transparent 35%),
+    var(--majalis-emerald);
+  color: var(--majalis-parchment);
+  display: grid;
+  place-items: center;
+  align-content: center;
+  box-shadow: 0 1rem 2.5rem rgba(0, 0, 0, 0.16);
+}
+
+.tasbih-main-button span {
+  font-size: clamp(3rem, 12vw, 5rem);
+  font-weight: 900;
+  line-height: 1;
+}
+
+.tasbih-main-button small {
+  font-weight: 800;
+}
+
+.tasbih-pro-bar {
+  margin-top: 0.75rem;
+}
+
+.tasbih-actions-grid,
+.tasbih-add-row {
+  display: flex;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.tasbih-target-field {
+  display: grid;
+  gap: 0.35rem;
+  margin-top: 1rem;
+  font-weight: 800;
+}
+
+.tasbih-target-field input,
+.tasbih-add-row input {
+  min-height: 44px;
+  border: 1px solid var(--majalis-line);
+  border-radius: 0.65rem;
+  padding: 0 0.75rem;
+  background: var(--majalis-panel);
+  color: var(--majalis-ink);
+  font-family: inherit;
+}
+
+.tasbih-offline-note {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+/* ── Prayer tracking ─────────────────────────────────────────────────────── */
+.prayer-tracker-card {
+  margin-top: 1rem;
+  padding: 1rem;
+}
+
+.prayer-tracker-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.prayer-tracker-head strong {
+  color: var(--majalis-emerald-deep);
+  font-size: 2rem;
+}
+
+.prayer-tracker-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 0.75rem;
+}
+
+.prayer-track-cell {
+  border: 1px solid var(--majalis-line);
+  border-radius: 0.9rem;
+  padding: 0.85rem;
+  background: var(--majalis-panel);
+  display: grid;
+  gap: 0.75rem;
+}
+
+.prayer-track-cell.is-done {
+  border-color: var(--majalis-emerald);
+}
+
+.prayer-track-cell.is-missed {
+  border-color: #dc2626;
+}
+
+.prayer-track-cell header,
+.prayer-track-actions,
+.prayer-track-options {
+  display: flex;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.prayer-track-actions button,
+.prayer-track-options select {
+  min-height: 40px;
+  border-radius: 0.55rem;
+  border: 1px solid var(--majalis-line);
+  background: var(--majalis-panel);
+  color: var(--majalis-ink);
+  padding: 0 0.65rem;
+  font-family: inherit;
+}
+
+.prayer-stat-strip {
+  margin: 1rem 0 0;
+}
+
+.prayer-stat-strip span {
+  border: 1px solid var(--majalis-line);
+  border-radius: 0.75rem;
+  padding: 0.65rem;
+  background: var(--majalis-parchment-deep);
+  text-align: center;
+}
+
+/* ── Prayer ranks page ───────────────────────────────────────────────────── */
+.prayer-ranks-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.prayer-ranks-source,
+.prayer-ranks-notes {
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.prayer-ranks-timeline {
+  display: grid;
+  gap: 1rem;
+  position: relative;
+}
+
+.prayer-rank-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.prayer-rank-card__num {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: var(--majalis-emerald);
+  color: var(--majalis-parchment);
+  font-weight: 900;
+}
+
+.prayer-rank-card__eyebrow,
+.prayer-rank-card__meta {
+  color: var(--majalis-ink-soft);
+  font-size: 0.85rem;
+}
+
+.prayer-rank-card__text {
+  color: var(--majalis-ink);
+  line-height: 1.9;
+}
+
+.prayer-rank-card__meta {
+  display: grid;
+  gap: 0.35rem;
+}
+
 .content-mini-card__meta-row {
   display: flex;
   flex-wrap: wrap;
@@ -10435,6 +10795,100 @@ svg {
     min-height: var(--mobile-touch-min);
     min-width: 3.5rem;
     white-space: nowrap;
+  }
+
+  .content-hub-chips,
+  .fiqh-chip-strip {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 0.25rem;
+    scroll-snap-type: x proximity;
+  }
+
+  .content-hub-chip {
+    min-height: var(--mobile-touch-min);
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+
+  .fiqh-filter-toggle {
+    display: inline-flex;
+  }
+
+  .fiqh-filter-panel {
+    display: none;
+    border: 1px solid var(--majalis-line);
+    border-radius: 1rem;
+    padding: 0.85rem;
+    background: var(--majalis-panel);
+    margin-bottom: 1rem;
+  }
+
+  .fiqh-filter-panel.is-open {
+    display: block;
+  }
+
+  .fiqh-mobile-category-deck {
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(10rem, 72%);
+    grid-template-columns: none;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+    padding-bottom: 0.25rem;
+  }
+
+  .fiqh-mobile-category-card {
+    scroll-snap-align: start;
+  }
+
+  .fiqh-council-filter-row {
+    grid-template-columns: 1fr;
+  }
+
+  .fiqh-hub-quick-link,
+  .tasbeeh-counter__btn,
+  .ui-card-btn {
+    min-height: var(--mobile-touch-min);
+  }
+
+  .tasbih-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .tasbih-wird-list {
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(12rem, 75%);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .tasbih-main-button {
+    width: min(100%, 16rem);
+  }
+
+  .home-content-rail__grid,
+  .prayer-tracker-grid,
+  .prayer-times-grid,
+  .content-card-grid,
+  .content-card-grid--qa {
+    grid-template-columns: 1fr;
+  }
+
+  .prayer-track-cell header,
+  .prayer-track-actions,
+  .prayer-track-options {
+    align-items: stretch;
+  }
+
+  .prayer-track-actions button,
+  .prayer-track-options select {
+    flex: 1 1 8rem;
+  }
+
+  .prayer-rank-card {
+    grid-template-columns: 1fr;
   }
 
   .home-container {

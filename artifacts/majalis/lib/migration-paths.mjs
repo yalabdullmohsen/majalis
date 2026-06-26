@@ -25,6 +25,7 @@ export const MIGRATION_FILES = [
   "verified_knowledge_platform_v1.sql",
   "reasoning_engine_v1.sql",
   "knowledge_graph_phase4_v1.sql",
+  "qa_phase4_seed.sql",
 ];
 
 export function resolveMigrationsDir() {

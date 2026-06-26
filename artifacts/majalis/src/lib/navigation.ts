@@ -64,6 +64,7 @@ export const NAV_GROUPS: NavGroup[] = [
     title: "الأدوات",
     links: [
       { href: "/prayer-times", label: "مواقيت الصلاة" },
+      { href: "/prayer-ranks", label: "مراتب الناس في الصلاة" },
       { href: "/qibla", label: "القبلة" },
       { href: "/occasions", label: "المناسبات الإسلامية" },
       { href: "/settings", label: "الإعدادات" },
@@ -134,6 +135,7 @@ export const HOME_FEATURE_CARDS = [
 export const HOME_MORE_SECTIONS = [
   { href: "/lessons", title: "الدروس", description: "دروس ودورات ومحاضرات" },
   { href: "/fatwa", title: "الفتاوى", description: "مركز الفتاوى الشرعية" },
+  { href: "/prayer-ranks", title: "مراتب الناس في الصلاة", description: "مراتب الخشوع وحضور القلب" },
   { href: "/rulings", title: "الأحكام الشرعية", description: "مكتبة الأحكام والأدلة" },
   { href: "/annual-courses", title: "الدورات العلمية", description: "برامج ودورات سنوية" },
   { href: "/updates", title: "آخر المستجدات", description: "قرارات وفتاوى ودروس جديدة" },
