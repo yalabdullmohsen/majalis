@@ -62,12 +62,20 @@ export default function QuranPage() {
 
       <div className="quran-toolbar ui-card">
         <input
+          name="quran-surah-search"
+          aria-label="بحث عن سورة"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="بحث عن سورة..."
           className="quran-search"
         />
-        <select value={surah} onChange={(e) => setSurah(Number(e.target.value))} className="quran-select">
+        <select
+          name="quran-surah-select"
+          aria-label="اختيار السورة"
+          value={surah}
+          onChange={(e) => setSurah(Number(e.target.value))}
+          className="quran-select"
+        >
           {surahs.map((s) => (
             <option key={s.number} value={s.number}>
               {s.number}. {s.name} — {s.englishName}

@@ -66,7 +66,12 @@ function ToggleRow({
   return (
     <label className="settings-toggle-row">
       <span>{label}</span>
-      <input type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)} />
+      <input
+        type="checkbox"
+        name={label.replace(/\s+/g, "-")}
+        checked={checked}
+        onChange={(e) => onChange(e.target.checked)}
+      />
     </label>
   );
 }
@@ -127,7 +132,7 @@ export default function SettingsPage() {
         <p className="settings-note">الوضع الحالي: {resolvedTheme === "dark" ? "ليلي" : "نهاري"}</p>
         <label className="settings-field">
           <span>حجم واجهة الموقع</span>
-          <select value={settings.fontSize} onChange={(e) => update("fontSize", e.target.value)}>
+          <select name="interface-font-size" value={settings.fontSize} onChange={(e) => update("fontSize", e.target.value)}>
             <option>صغير</option>
             <option>متوسط</option>
             <option>كبير</option>
@@ -135,14 +140,14 @@ export default function SettingsPage() {
         </label>
         <label className="settings-field">
           <span>لغة الواجهة</span>
-          <select value={settings.interfaceLanguage} onChange={(e) => update("interfaceLanguage", e.target.value)}>
+          <select name="interface-language" value={settings.interfaceLanguage} onChange={(e) => update("interfaceLanguage", e.target.value)}>
             <option>العربية</option>
             <option disabled>English (قريباً)</option>
           </select>
         </label>
         <label className="settings-field">
           <span>اتجاه الصفحة</span>
-          <select value={settings.direction} onChange={(e) => update("direction", e.target.value as "rtl" | "ltr")}>
+          <select name="interface-direction" value={settings.direction} onChange={(e) => update("direction", e.target.value as "rtl" | "ltr")}>
             <option value="rtl">RTL — عربي</option>
             <option value="ltr">LTR — تجريبي</option>
           </select>
@@ -167,6 +172,7 @@ export default function SettingsPage() {
           <span>حجم نص القراءة</span>
           <input
             type="range"
+            name="reading-text-size"
             min="16"
             max="28"
             value={settings.readingTextSize}
@@ -176,7 +182,7 @@ export default function SettingsPage() {
         </label>
         <label className="settings-field">
           <span>تباعد الأسطر</span>
-          <select value={settings.readingSpacing} onChange={(e) => update("readingSpacing", e.target.value)}>
+          <select name="reading-spacing" value={settings.readingSpacing} onChange={(e) => update("readingSpacing", e.target.value)}>
             <option>متوسط</option>
             <option>واسع</option>
             <option>واسع جداً</option>
@@ -220,7 +226,7 @@ export default function SettingsPage() {
         <ToggleRow label="تشغيل الاقتراحات الذكية" checked={settings.aiSuggestions} onChange={(value) => update("aiSuggestions", value)} />
         <label className="settings-field">
           <span>مستوى عرض المصادر</span>
-          <select value={settings.sourceDetailLevel} onChange={(e) => update("sourceDetailLevel", e.target.value)}>
+          <select name="ai-source-detail-level" value={settings.sourceDetailLevel} onChange={(e) => update("sourceDetailLevel", e.target.value)}>
             <option>مختصر</option>
             <option>تفصيلي</option>
             <option>كامل مع روابط</option>
