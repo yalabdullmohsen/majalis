@@ -19,7 +19,7 @@ const CRON_ROUTES = [
   { path: "/api/cron/check-fiqh-links", schedule: "0 7 * * *", label: "Fiqh Link Check" },
   { path: "/api/cron/scholarly-verification", schedule: "0 8 * * *", label: "Scholarly Verification" },
   { path: "/api/cron/global-reference-review", schedule: "0 9 * * 0", label: "Global Reference Review (weekly)" },
-  { path: "/api/cron/islamic-intelligence", schedule: "0 6 * * *", label: "Islamic Intelligence Platform (daily)" },
+  { path: "/api/cron/governance-backup", schedule: "0 4 * * 0", label: "Governance Backup (weekly)" },
   { path: "/api/cron/apply-migrations", schedule: "0 5 * * 0", label: "Schema Migrations (weekly verify)" },
 ];
 

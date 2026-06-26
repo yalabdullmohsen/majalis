@@ -1,0 +1,71 @@
+{
+  "generated_at": "2026-06-26T01:09:15.356Z",
+  "principle": "الصيانة الوقائية قبل التوسع",
+  "schedule": [
+    {
+      "frequency": "daily",
+      "tasks": [
+        "مراجعة queue",
+        "فحص cron jobs",
+        "مراقبة AI agents"
+      ]
+    },
+    {
+      "frequency": "weekly",
+      "tasks": [
+        "backup verification",
+        "security audit",
+        "quality KPI review",
+        "audit log cleanup"
+      ]
+    },
+    {
+      "frequency": "monthly",
+      "tasks": [
+        "RLS policy review",
+        "migration verify",
+        "performance assessment",
+        "documentation update"
+      ]
+    },
+    {
+      "frequency": "quarterly",
+      "tasks": [
+        "DR recovery test",
+        "RBAC audit",
+        "penetration review",
+        "capacity planning"
+      ]
+    }
+  ],
+  "phases": [
+    {
+      "phase": 1,
+      "title": "استقرار الإنتاج",
+      "items": [
+        "دمج PRs #36-45",
+        "تطبيق governance_v1.sql",
+        "Assign governance roles to staff",
+        "Enable Supabase PITR"
+      ]
+    },
+    {
+      "phase": 2,
+      "title": "تشغيل تحريري",
+      "items": [
+        "Review queue UI workflow",
+        "Email notifications for pending reviews",
+        "SLA timers for editorial stages"
+      ]
+    },
+    {
+      "phase": 3,
+      "title": "نضج مؤسسي",
+      "items": [
+        "SSO for editorial staff",
+        "Distributed cache (Redis)",
+        "External alerting (Slack/PagerDuty)"
+      ]
+    }
+  ]
+}

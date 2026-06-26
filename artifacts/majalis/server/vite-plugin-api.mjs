@@ -37,6 +37,8 @@ import v1Handler from "../api/v1.js";
 import v2Handler from "../api/v2.js";
 import v3Handler from "../api/v3.js";
 import openPlatformAdminHandler from "../api/admin/open-platform.js";
+import governanceAdminHandler from "../api/admin/governance.js";
+import governanceBackupHandler from "../api/cron/governance-backup.js";
 import scholarlySearchHandler from "../api/scholarly-search.js";
 import { createRateLimiter } from "./rate-limit.mjs";
 
@@ -93,6 +95,8 @@ const API_ROUTES = [
   { prefix: "/api/v2", handler: v2Handler, allowGet: true },
   { prefix: "/api/v3", handler: v3Handler, allowGet: true },
   { prefix: "/api/admin/open-platform", handler: openPlatformAdminHandler, allowGet: true },
+  { prefix: "/api/admin/governance", handler: governanceAdminHandler, allowGet: true },
+  { prefix: "/api/cron/governance-backup", handler: governanceBackupHandler, allowGet: true },
   { prefix: "/api/admin/auto-content", handler: autoContentAdminHandler, allowGet: true },
   { prefix: "/api/admin/auto-knowledge-engine", handler: autoKnowledgeAdminHandler, allowGet: true },
   { prefix: "/api/fiqh-research-assistant", handler: fiqhResearchAssistantHandler, rateLimit: fiqhResearchRateLimit, allowGet: true },
