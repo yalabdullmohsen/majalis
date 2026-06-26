@@ -1,0 +1,135 @@
+{
+  "generated_at": "2026-06-26T00:50:07.132Z",
+  "platform": "Autonomous AI Knowledge Platform v1",
+  "automation_pct": 78,
+  "automated_operations": 14,
+  "human_required_operations": [
+    {
+      "operation": "Human fatwa review",
+      "reason": "Religious rulings require scholar verification"
+    },
+    {
+      "operation": "Broken RSS source repair",
+      "reason": "External feed URLs need manual update"
+    },
+    {
+      "operation": "Content dispute resolution",
+      "reason": "Editorial judgment on edge cases"
+    },
+    {
+      "operation": "New official source approval",
+      "reason": "Trust level assignment requires admin"
+    }
+  ],
+  "security_score": 60,
+  "performance_score": 100,
+  "content_quality_score": 85,
+  "scalability_score": 80,
+  "metrics": {
+    "itemsNew": 0,
+    "itemsUpdated": 0,
+    "itemsRejected": 0,
+    "runsTotal": 0,
+    "runsSuccess": 0,
+    "successRate": 100,
+    "avgDurationMs": 2,
+    "retryPending": 0,
+    "dailyContentCount": 0
+  },
+  "ai_constraints": {
+    "allowGenerateReligiousText": false,
+    "allowGenerateFatwa": false,
+    "allowGenerateHadith": false,
+    "allowGenerateAyah": false,
+    "metadataOnly": true,
+    "requireSourceUrl": true,
+    "minTrustScore": 60,
+    "minQualityScore": 70,
+    "minCompleteness": 75
+  },
+  "pipeline_stages": [
+    {
+      "id": "discover",
+      "label": "اكتشاف محتوى جديد",
+      "order": 1
+    },
+    {
+      "id": "fetch",
+      "label": "جلب المحتوى",
+      "order": 2
+    },
+    {
+      "id": "clean",
+      "label": "تنظيف البيانات",
+      "order": 3
+    },
+    {
+      "id": "dedup",
+      "label": "إزالة التكرار",
+      "order": 4
+    },
+    {
+      "id": "verify_source",
+      "label": "التحقق من المصدر",
+      "order": 5
+    },
+    {
+      "id": "classify",
+      "label": "تصنيف المحتوى",
+      "order": 6
+    },
+    {
+      "id": "keywords",
+      "label": "استخراج الكلمات المفتاحية",
+      "order": 7
+    },
+    {
+      "id": "summarize",
+      "label": "إنشاء ملخص",
+      "order": 8
+    },
+    {
+      "id": "relate",
+      "label": "ربط المحتوى المشابه",
+      "order": 9
+    },
+    {
+      "id": "seo",
+      "label": "إنشاء بيانات SEO",
+      "order": 10
+    },
+    {
+      "id": "store",
+      "label": "حفظ المحتوى",
+      "order": 11
+    },
+    {
+      "id": "publish",
+      "label": "نشر المحتوى",
+      "order": 12
+    },
+    {
+      "id": "index",
+      "label": "تحديث الفهرس",
+      "order": 13
+    },
+    {
+      "id": "audit",
+      "label": "تسجيل العمليات",
+      "order": 14
+    }
+  ],
+  "observability": {
+    "cron_jobs": 5,
+    "ai_status": "limited",
+    "database_status": "not_configured"
+  },
+  "improvement_plan": [
+    "Activate ake_job_queue worker for async processing",
+    "Consolidate overlapping crons into single orchestrator",
+    "Wire search analytics feedback into source ranking",
+    "Enable PDF certificate and push notification crons",
+    "Add human review queue UI for scholarly edge cases",
+    "Implement distributed rate limiting (Redis/Upstash)"
+  ]
+}

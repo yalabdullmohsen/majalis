@@ -22,6 +22,7 @@ import { KnowledgeEngineSection } from "@/pages/admin/KnowledgeEngineSection";
 import { ScholarlyVerificationSection } from "@/pages/admin/ScholarlyVerificationSection";
 import { SearchAnalyticsSection } from "@/pages/admin/SearchAnalyticsSection";
 import { DigitalLearningSection } from "@/pages/admin/DigitalLearningSection";
+import { AutonomousAiSection } from "@/pages/admin/AutonomousAiSection";
 
 export default function AdminPage() {
   const [section, setSection] = useState<AdminSection>("dashboard");
@@ -34,6 +35,7 @@ export default function AdminPage() {
       {section === "scholarly-verification" && <ScholarlyVerificationSection />}
       {section === "search-analytics" && <SearchAnalyticsSection />}
       {section === "digital-learning" && <DigitalLearningSection />}
+      {section === "autonomous-ai" && <AutonomousAiSection />}
       {section === "lessons" && <LessonsSection />}
       {section === "sheikhs" && <SheikhsSection />}
       {section === "library" && <LibrarySection />}
