@@ -15,8 +15,16 @@ if (Number.isNaN(port) || port <= 0) {
 
 const basePath = process.env.BASE_PATH || "/";
 
+const commitHash = process.env.VERCEL_GIT_COMMIT_SHA || process.env.GIT_COMMIT || "dev";
+const buildId = process.env.VERCEL_DEPLOYMENT_ID || process.env.BUILD_ID || "local";
+
 export default defineConfig({
   base: basePath,
+  define: {
+    "import.meta.env.VITE_COMMIT_HASH": JSON.stringify(commitHash),
+    "import.meta.env.VITE_BUILD_ID": JSON.stringify(buildId),
+    "import.meta.env.VITE_VERCEL_GIT_COMMIT_SHA": JSON.stringify(process.env.VERCEL_GIT_COMMIT_SHA || ""),
+  },
   plugins: [
     react(),
     tailwindcss(),

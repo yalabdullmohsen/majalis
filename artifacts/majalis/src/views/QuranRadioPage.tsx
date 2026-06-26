@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
+import { Link } from "wouter";
 import { PageHeader } from "@/components/ui-common";
 import { QURAN_RADIO_STATIONS } from "@/lib/quran-content";
 import { useUserPreferences } from "@/components/UserPreferencesProvider";

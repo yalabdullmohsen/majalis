@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "wouter";
 import { PageHeader, Empty } from "@/components/ui-common";
 
 export default function SheikhsPageClient({

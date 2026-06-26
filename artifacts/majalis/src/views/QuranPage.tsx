@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import Link from "next/link";
+import { Link } from "wouter";
 import { PageHeader, Loading } from "@/components/ui-common";
 import { useThemePreference } from "@/components/ThemePreferenceProvider";
 import { useUserPreferences } from "@/components/UserPreferencesProvider";

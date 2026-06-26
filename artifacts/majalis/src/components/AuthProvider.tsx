@@ -29,6 +29,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [authApi, setAuthApi] = useState<SupabaseAuthModule | null>(null);
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.__MAJALIS_USER_ID__ = user?.id ?? null;
+    }
+  }, [user]);
+
+  useEffect(() => {
     let active = true;
     let unsubscribe: (() => void) | undefined;
 

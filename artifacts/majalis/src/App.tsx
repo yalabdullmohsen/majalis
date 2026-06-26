@@ -1,8 +1,9 @@
 import { Suspense, lazy, type ComponentType } from "react";
-import { Redirect, Route, Switch, Router as WouterRouter, useLocation } from "wouter";
+import { Redirect, Route, Switch, Router as WouterRouter, useLocation, useRoute } from "wouter";
 import { AuthProvider } from "@/components/AuthProvider";
 import { FontPreferenceProvider } from "@/components/FontPreferenceProvider";
 import { ThemePreferenceProvider } from "@/components/ThemePreferenceProvider";
+import { UserPreferencesProvider } from "@/components/UserPreferencesProvider";
 import { AdminRouteGuard } from "@/components/AdminRouteGuard";
 import NavBar from "@/components/NavBar";
 import SiteFooter from "@/components/SiteFooter";
@@ -37,6 +38,12 @@ const AssistantPage = lazy(() => import("@/views/AssistantPage"));
 const CondolencesPage = lazy(() => import("@/views/CondolencesPage"));
 const CardsPage = lazy(() => import("@/views/CardsPage"));
 const QuranPage = lazy(() => import("@/views/QuranPage"));
+const QuranTajweedPage = lazy(() => import("@/views/QuranTajweedPage"));
+const QuranLivePage = lazy(() => import("@/views/QuranLivePage"));
+const SurahStoriesPage = lazy(() => import("@/views/SurahStoriesPage"));
+const SurahStoryDetailPage = lazy(() =>
+  import("@/views/SurahStoriesPage").then((m) => ({ default: m.SurahStoryDetailPage })),
+);
 const QuranRadioPage = lazy(() => import("@/views/QuranRadioPage"));
 const PrayerTimesPage = lazy(() => import("@/views/PrayerTimesPage"));
 const PrayerRanksPage = lazy(() => import("@/views/PrayerRanksPage"));
@@ -93,11 +100,18 @@ function SeoManager() {
 
 function SafeLazyRoute({ component: Component }: { component: ComponentType }) {
   return (
-    <ErrorBoundary>
-      <Suspense fallback={<Loading />}>
-        <Component />
-      </Suspense>
-    </ErrorBoundary>
+    <Suspense fallback={<Loading />}>
+      <Component />
+    </Suspense>
+  );
+}
+
+function SurahStoryDetailRoute() {
+  const [, params] = useRoute("/quran/surah-stories/:number");
+  return (
+    <Suspense fallback={<Loading />}>
+      <SurahStoryDetailPage surahNumber={Number(params?.number) || 1} />
+    </Suspense>
   );
 }
 
@@ -105,9 +119,7 @@ function Router() {
   return (
     <Switch>
       <Route path="/">
-        <ErrorBoundary>
-          <HomePage />
-        </ErrorBoundary>
+        <HomePage />
       </Route>
       <Route path="/about" component={AboutPage} />
       <Route path="/privacy" component={PrivacyPage} />
@@ -158,6 +170,10 @@ function Router() {
         </ErrorBoundary>
       </Route>
       <Route path="/quran-radio"><SafeLazyRoute component={QuranRadioPage} /></Route>
+      <Route path="/quran-live"><SafeLazyRoute component={QuranLivePage} /></Route>
+      <Route path="/quran/tajweed"><SafeLazyRoute component={QuranTajweedPage} /></Route>
+      <Route path="/quran/surah-stories/:number"><SurahStoryDetailRoute /></Route>
+      <Route path="/quran/surah-stories"><SafeLazyRoute component={SurahStoriesPage} /></Route>
       <Route path="/quran"><SafeLazyRoute component={QuranPage} /></Route>
       <Route path="/prayer-times"><SafeLazyRoute component={PrayerTimesPage} /></Route>
       <Route path="/prayer-ranks"><SafeLazyRoute component={PrayerRanksPage} /></Route>
@@ -251,7 +267,8 @@ function App() {
   return (
     <ThemePreferenceProvider>
       <FontPreferenceProvider>
-        <AuthProvider>
+        <UserPreferencesProvider>
+          <AuthProvider>
           <WouterRouter base={(import.meta.env.BASE_URL || "/").replace(/\/$/, "")}>
             <div className="app-shell" style={{ minHeight: "100vh", direction: "rtl" }}>
               <a href="#main-content" className="skip-link">تخطّي إلى المحتوى</a>
@@ -264,7 +281,8 @@ function App() {
               <AssistantFloatingWidget />
             </div>
           </WouterRouter>
-        </AuthProvider>
+          </AuthProvider>
+        </UserPreferencesProvider>
       </FontPreferenceProvider>
     </ThemePreferenceProvider>
   );

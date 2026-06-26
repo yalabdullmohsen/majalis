@@ -1,6 +1,6 @@
 import { Component, type ErrorInfo, type ReactNode } from "react";
 import { C } from "@/lib/theme";
-import { copyErrorId, createErrorId, logClientError } from "@/lib/error-report";
+import { buildErrorReport, copyErrorId, createErrorId, logClientError } from "@/lib/error-report";
 
 type Props = { children: ReactNode };
 type State = { error: Error | null; copied: boolean; errorId: string; componentStack: string | null };
@@ -24,23 +24,20 @@ export class ErrorBoundary extends Component<Props, State> {
   state: State = { error: null, copied: false, errorId: "", componentStack: null };
 
   static getDerivedStateFromError(error: Error): Partial<State> {
-    return { error, copied: false, errorId: createErrorId("ERR"), componentStack: null };
+    return { error, copied: false, errorId: createErrorId("MJL"), componentStack: null };
   }
 
   componentDidCatch(error: Error, info: ErrorInfo) {
-    const errorId = this.state.errorId || createErrorId("ERR");
+    const errorId = this.state.errorId || createErrorId("MJL");
     this.setState({ componentStack: info.componentStack ?? null, errorId });
 
-    void logClientError({
-      errorId,
-      message: error.message,
-      name: error.name,
-      stack: error.stack,
-      componentStack: info.componentStack,
-      route: typeof window !== "undefined" ? window.location.pathname : "",
-      userAgent: typeof navigator !== "undefined" ? navigator.userAgent : "",
-      at: new Date().toISOString(),
-    });
+    void logClientError(
+      buildErrorReport(error, {
+        errorId,
+        componentStack: info.componentStack,
+        component: "ErrorBoundary",
+      }),
+    );
   }
 
   reset = () => this.setState({ error: null, copied: false, errorId: "", componentStack: null });
@@ -126,17 +123,14 @@ export class SectionErrorBoundary extends Component<SectionBoundaryProps, Sectio
   }
 
   componentDidCatch(error: Error, info: ErrorInfo) {
-    void logClientError({
-      errorId: this.state.errorId || createErrorId("SEC"),
-      message: error.message,
-      name: error.name,
-      stack: error.stack,
-      componentStack: info.componentStack,
-      section: this.props.name,
-      route: typeof window !== "undefined" ? window.location.pathname : "",
-      userAgent: typeof navigator !== "undefined" ? navigator.userAgent : "",
-      at: new Date().toISOString(),
-    });
+    void logClientError(
+      buildErrorReport(error, {
+        errorId: this.state.errorId || createErrorId("SEC"),
+        componentStack: info.componentStack,
+        section: this.props.name,
+        component: this.props.name,
+      }),
+    );
   }
 
   reset = () => this.setState({ error: null, errorId: "" });

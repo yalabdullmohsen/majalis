@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
+import { Link } from "wouter";
 import { PageHeader } from "@/components/ui-common";
 import {
   LIVE_STREAM_CHANNELS,
