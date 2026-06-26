@@ -1,3 +1,5 @@
+import "./_deps.mjs";
+
 let dispatchPromise;
 
 async function getDispatch() {
