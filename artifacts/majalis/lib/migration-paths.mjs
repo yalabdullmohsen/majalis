@@ -22,6 +22,7 @@ export const MIGRATION_FILES = [
   "islamic_intelligence_v1.sql",
   "open_platform_v1.sql",
   "governance_v1.sql",
+  "verified_knowledge_platform_v1.sql",
 ];
 
 export function resolveMigrationsDir() {

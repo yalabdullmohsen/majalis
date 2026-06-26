@@ -66,6 +66,11 @@ export async function verifySchema() {
     "governance_user_roles", "governance_audit_log", "governance_content_lifecycle",
     "governance_lifecycle_history", "governance_reviews", "governance_backup_runs",
     "governance_security_audits",
+    "verified_adhkar_categories",
+    "verified_adhkar_items",
+    "verified_hadith_items",
+    "import_operations_log",
+    "knowledge_quality_reports",
   ];
 
   for (const table of tables) {
