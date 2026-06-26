@@ -180,7 +180,7 @@ CREATE TABLE IF NOT EXISTS fiqh_issue_profiles (
   madhhab_positions jsonb NOT NULL DEFAULT '{}'::jsonb,
   disagreement_reason text,
   tarjih text,
-  references jsonb NOT NULL DEFAULT '[]'::jsonb,
+  "references" jsonb NOT NULL DEFAULT '[]'::jsonb,
   citation_ids uuid[] NOT NULL DEFAULT '{}',
   trust_level smallint NOT NULL DEFAULT 90,
   updated_at timestamptz NOT NULL DEFAULT now()

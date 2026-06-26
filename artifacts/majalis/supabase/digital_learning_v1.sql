@@ -235,24 +235,40 @@ ALTER TABLE user_calendar_subscriptions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE learning_ai_summaries ENABLE ROW LEVEL SECURITY;
 
 -- Public read for published paths/modules/quizzes
-CREATE POLICY IF NOT EXISTS learning_paths_public_read ON learning_paths FOR SELECT USING (status = 'published');
-CREATE POLICY IF NOT EXISTS learning_modules_public_read ON learning_modules FOR SELECT USING (true);
-CREATE POLICY IF NOT EXISTS learning_quizzes_public_read ON learning_quizzes FOR SELECT USING (status = 'published');
-CREATE POLICY IF NOT EXISTS learning_quiz_questions_public_read ON learning_quiz_questions FOR SELECT USING (true);
-CREATE POLICY IF NOT EXISTS learning_calendar_public_read ON learning_calendar_events FOR SELECT USING (is_public = true);
-CREATE POLICY IF NOT EXISTS learning_certificates_verify ON learning_certificates FOR SELECT USING (true);
+DROP POLICY IF EXISTS learning_paths_public_read ON learning_paths;
+CREATE POLICY learning_paths_public_read ON learning_paths FOR SELECT USING (status = 'published');
+DROP POLICY IF EXISTS learning_modules_public_read ON learning_modules;
+CREATE POLICY learning_modules_public_read ON learning_modules FOR SELECT USING (true);
+DROP POLICY IF EXISTS learning_quizzes_public_read ON learning_quizzes;
+CREATE POLICY learning_quizzes_public_read ON learning_quizzes FOR SELECT USING (status = 'published');
+DROP POLICY IF EXISTS learning_quiz_questions_public_read ON learning_quiz_questions;
+CREATE POLICY learning_quiz_questions_public_read ON learning_quiz_questions FOR SELECT USING (true);
+DROP POLICY IF EXISTS learning_calendar_public_read ON learning_calendar_events;
+CREATE POLICY learning_calendar_public_read ON learning_calendar_events FOR SELECT USING (is_public = true);
+DROP POLICY IF EXISTS learning_certificates_verify ON learning_certificates;
+CREATE POLICY learning_certificates_verify ON learning_certificates FOR SELECT USING (true);
 
 -- User-owned data
-CREATE POLICY IF NOT EXISTS user_enrollments_own ON user_path_enrollments FOR ALL USING (auth.uid() = user_id);
-CREATE POLICY IF NOT EXISTS user_progress_own ON user_module_progress FOR ALL USING (auth.uid() = user_id);
-CREATE POLICY IF NOT EXISTS user_quiz_attempts_own ON learning_quiz_attempts FOR ALL USING (auth.uid() = user_id);
-CREATE POLICY IF NOT EXISTS user_certificates_own ON learning_certificates FOR SELECT USING (auth.uid() = user_id);
-CREATE POLICY IF NOT EXISTS user_library_own ON user_learning_library FOR ALL USING (auth.uid() = user_id);
-CREATE POLICY IF NOT EXISTS user_notes_own ON user_learning_notes FOR ALL USING (auth.uid() = user_id);
-CREATE POLICY IF NOT EXISTS user_weekly_own ON user_weekly_plans FOR ALL USING (auth.uid() = user_id);
-CREATE POLICY IF NOT EXISTS user_achievements_own ON user_learning_achievements FOR SELECT USING (auth.uid() = user_id);
-CREATE POLICY IF NOT EXISTS user_calendar_sub_own ON user_calendar_subscriptions FOR ALL USING (auth.uid() = user_id);
-CREATE POLICY IF NOT EXISTS user_ai_summaries_own ON learning_ai_summaries FOR SELECT USING (auth.uid() = user_id OR user_id IS NULL);
+DROP POLICY IF EXISTS user_enrollments_own ON user_path_enrollments;
+CREATE POLICY user_enrollments_own ON user_path_enrollments FOR ALL USING (auth.uid() = user_id);
+DROP POLICY IF EXISTS user_progress_own ON user_module_progress;
+CREATE POLICY user_progress_own ON user_module_progress FOR ALL USING (auth.uid() = user_id);
+DROP POLICY IF EXISTS user_quiz_attempts_own ON learning_quiz_attempts;
+CREATE POLICY user_quiz_attempts_own ON learning_quiz_attempts FOR ALL USING (auth.uid() = user_id);
+DROP POLICY IF EXISTS user_certificates_own ON learning_certificates;
+CREATE POLICY user_certificates_own ON learning_certificates FOR SELECT USING (auth.uid() = user_id);
+DROP POLICY IF EXISTS user_library_own ON user_learning_library;
+CREATE POLICY user_library_own ON user_learning_library FOR ALL USING (auth.uid() = user_id);
+DROP POLICY IF EXISTS user_notes_own ON user_learning_notes;
+CREATE POLICY user_notes_own ON user_learning_notes FOR ALL USING (auth.uid() = user_id);
+DROP POLICY IF EXISTS user_weekly_own ON user_weekly_plans;
+CREATE POLICY user_weekly_own ON user_weekly_plans FOR ALL USING (auth.uid() = user_id);
+DROP POLICY IF EXISTS user_achievements_own ON user_learning_achievements;
+CREATE POLICY user_achievements_own ON user_learning_achievements FOR SELECT USING (auth.uid() = user_id);
+DROP POLICY IF EXISTS user_calendar_sub_own ON user_calendar_subscriptions;
+CREATE POLICY user_calendar_sub_own ON user_calendar_subscriptions FOR ALL USING (auth.uid() = user_id);
+DROP POLICY IF EXISTS user_ai_summaries_own ON learning_ai_summaries;
+CREATE POLICY user_ai_summaries_own ON learning_ai_summaries FOR SELECT USING (auth.uid() = user_id OR user_id IS NULL);
 
 -- ── Seed learning paths ────────────────────────────────────────────────────
 INSERT INTO learning_paths (slug, title, title_en, description, level, category, sort_order, estimated_hours) VALUES

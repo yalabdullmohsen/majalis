@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS global_content_refs (
   publisher text,
   author text,
   verifier text,
-  references jsonb DEFAULT '[]',
+  "references" jsonb DEFAULT '[]',
   last_reviewed_at timestamptz,
   created_at timestamptz DEFAULT now(),
   updated_at timestamptz DEFAULT now()
@@ -153,10 +153,14 @@ ALTER TABLE content_relations ENABLE ROW LEVEL SECURITY;
 ALTER TABLE scholarly_sources ENABLE ROW LEVEL SECURITY;
 ALTER TABLE reference_quality_scores ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY IF NOT EXISTS global_refs_public_read ON global_content_refs FOR SELECT USING (true);
-CREATE POLICY IF NOT EXISTS content_relations_public_read ON content_relations FOR SELECT USING (true);
-CREATE POLICY IF NOT EXISTS scholarly_sources_public_read ON scholarly_sources FOR SELECT USING (is_active = true);
-CREATE POLICY IF NOT EXISTS quality_scores_public_read ON reference_quality_scores FOR SELECT USING (true);
+DROP POLICY IF EXISTS global_refs_public_read ON global_content_refs;
+CREATE POLICY global_refs_public_read ON global_content_refs FOR SELECT USING (true);
+DROP POLICY IF EXISTS content_relations_public_read ON content_relations;
+CREATE POLICY content_relations_public_read ON content_relations FOR SELECT USING (true);
+DROP POLICY IF EXISTS scholarly_sources_public_read ON scholarly_sources;
+CREATE POLICY scholarly_sources_public_read ON scholarly_sources FOR SELECT USING (is_active = true);
+DROP POLICY IF EXISTS quality_scores_public_read ON reference_quality_scores;
+CREATE POLICY quality_scores_public_read ON reference_quality_scores FOR SELECT USING (true);
 
 GRANT SELECT ON global_content_refs TO authenticated, anon;
 GRANT SELECT ON content_relations TO authenticated, anon;
