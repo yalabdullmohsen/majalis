@@ -30,7 +30,11 @@ export function HomeLatestUpdates() {
     fetchLiveAutoContent(6)
       .then((data) => {
         if (!active) return;
-        setItems(data.map(autoContentToUpdateItem));
+        const safeData = Array.isArray(data) ? data : [];
+        setItems(safeData.map(autoContentToUpdateItem).filter((item) => item?.title));
+      })
+      .catch(() => {
+        if (active) setItems([]);
       })
       .finally(() => {
         if (active) setLoading(false);

@@ -15,7 +15,10 @@ export function HomeIslamicOccasions() {
     let active = true;
     loadIslamicOccasions()
       .then((rows) => {
-        if (active) setItems(sortOccasionsByUpcoming(rows).slice(0, 4));
+        if (active) setItems(sortOccasionsByUpcoming(Array.isArray(rows) ? rows : []).slice(0, 4));
+      })
+      .catch(() => {
+        if (active) setItems([]);
       })
       .finally(() => {
         if (active) setLoading(false);

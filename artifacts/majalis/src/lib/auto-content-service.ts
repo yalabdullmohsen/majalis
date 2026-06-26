@@ -1,5 +1,6 @@
 import { adminFetch as apiFetch } from "@/lib/admin-api";
 import { supabase } from "@/lib/supabase";
+import { isSupabaseConfigured } from "@/lib/supabase-config";
 import type {
   AutoImportedContent,
   AutoImportLog,
@@ -97,6 +98,7 @@ export async function getPublishedAutoContentBySlug(slug: string) {
 }
 
 export async function fetchLiveAutoContent(limit = 20): Promise<AutoImportedContent[]> {
+  if (!isSupabaseConfigured()) return [];
   try {
     const res = await fetch(`/api/auto-content?limit=${limit}`);
     if (!res.ok) return [];

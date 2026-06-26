@@ -1,5 +1,5 @@
-const CACHE_NAME = "majalis-shell-v1";
-const SHELL_URLS = ["/", "/settings", "/tasbih", "/prayer-times", "/prayer-ranks", "/quran", "/adhkar"];
+const CACHE_NAME = "majalis-shell-v2";
+const SHELL_URLS = ["/"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
@@ -27,13 +27,13 @@ self.addEventListener("fetch", (event) => {
 
   if (req.mode === "navigate") {
     event.respondWith(
-      fetch(req)
+      fetch(req, { cache: "no-store" })
         .then((res) => {
           const copy = res.clone();
           caches.open(CACHE_NAME).then((cache) => cache.put("/", copy)).catch(() => undefined);
           return res;
         })
-        .catch(() => caches.match(req).then((cached) => cached || caches.match("/"))),
+        .catch(() => caches.match("/")),
     );
     return;
   }
