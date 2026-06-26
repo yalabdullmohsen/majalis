@@ -30,7 +30,7 @@ export const LIVE_STREAM_CHANNELS: LiveStreamChannel[] = [
   {
     id: "sunnah-tv",
     name: "قناة السنة النبوية",
-    description: "برامج ومحاضرات في السنة النبوية.",
+    description: "برامج ودروس في السنة النبوية.",
     category: "sunnah",
     streamUrl: "https://stream.radiojar.com/4wqre23fku0uv",
     quality: "128 kbps",

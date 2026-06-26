@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { fetchQaForServer } from "../../../lib/supabase/server-data";
 import QaPageClient from "@/components/seo/QaPageClient";
+import { faqPageJsonLd } from "@/lib/seo-structured-data";
 
 export const dynamic = "force-dynamic";
 
@@ -22,8 +23,19 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function QaPage() {
   const { categories, questions } = await fetchQaForServer();
 
+  const faqJsonLd = faqPageJsonLd(
+    questions.slice(0, 50).map((item) => ({
+      question: item.question,
+      answer: String(item.answer || "").slice(0, 500),
+    })),
+  );
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
       <section className="page-shell" aria-label="فهرس الأسئلة">
         <h1 className="home-section-title">الأسئلة والأجوبة</h1>
         <p className="seo-listing-intro">
