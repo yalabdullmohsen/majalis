@@ -1,5 +1,8 @@
+"use client";
+
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "wouter";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "./AuthProvider";
 import NotificationBell from "./NotificationBell";
 import { SearchSuggestions } from "./SearchSuggestions";
@@ -32,11 +35,11 @@ function tabStyle(active: boolean): React.CSSProperties {
 
 function SearchBox({ onSubmitDone }: { onSubmitDone?: () => void }) {
   const [term, setTerm] = useState("");
-  const [, navigate] = useLocation();
+  const router = useRouter();
   const submit = (value: string) => {
     const q = value.trim();
     if (!q) return;
-    navigate(`/search/${encodeURIComponent(q)}`);
+    router.push(`/search/${encodeURIComponent(q)}`);
     setTerm("");
     onSubmitDone?.();
   };
@@ -64,8 +67,8 @@ function SearchBox({ onSubmitDone }: { onSubmitDone?: () => void }) {
 
 export default function NavBar() {
   const { isAdmin, user, logout } = useAuth();
-  const [, navigate] = useLocation();
-  const [location] = useLocation();
+  const router = useRouter();
+  const location = usePathname() ?? "/";
   const isMobile = useIsMobile();
   const [open, setOpen] = useState(false);
   const [drawer, setDrawer] = useState(false);
@@ -80,7 +83,7 @@ export default function NavBar() {
 
   const handleLogout = async () => {
     await logout();
-    navigate("/login");
+    router.push("/login");
   };
 
   const adminLoginLink = (

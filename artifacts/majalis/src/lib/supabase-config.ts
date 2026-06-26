@@ -35,9 +35,11 @@ function sanitizeClientMessage(message: string): string {
   return msg;
 }
 
+import { getSupabaseAnonKeyEnv, getSupabaseUrlEnv } from "./supabase-env";
+
 export function isSupabaseConfigured(): boolean {
-  const url = (import.meta.env.VITE_SUPABASE_URL as string || "").trim();
-  const key = (import.meta.env.VITE_SUPABASE_ANON_KEY as string || "").trim();
+  const url = getSupabaseUrlEnv();
+  const key = getSupabaseAnonKeyEnv();
   if (!url.startsWith("http") || key.length <= 20) return false;
   if (/placeholder|_supabase/i.test(url) || /placeholder/i.test(key)) return false;
   try {

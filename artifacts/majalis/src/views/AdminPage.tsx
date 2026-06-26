@@ -1,0 +1,69 @@
+import { useState } from "react";
+import { AdminShell, type AdminSection } from "@/views/admin/AdminShell";
+import { DashboardSection } from "@/views/admin/DashboardSection";
+import { LessonsSection } from "@/views/admin/LessonsSection";
+import { SheikhsSection } from "@/views/admin/SheikhsSection";
+import { LibrarySection } from "@/views/admin/LibrarySection";
+import { MiraclesSection } from "@/views/admin/MiraclesSection";
+import { AdhkarSection } from "@/views/admin/AdhkarSection";
+import { FawaidSection } from "@/views/admin/FawaidSection";
+import { QaSection } from "@/views/admin/QaSection";
+import { CondolencesSection } from "@/views/admin/CondolencesSection";
+import { UsersSection } from "@/views/admin/UsersSection";
+import { SettingsSection } from "@/views/admin/SettingsSection";
+import { AggregatorSection } from "@/views/admin/AggregatorSection";
+import { ReportsSection } from "@/views/admin/ReportsSection";
+import { FiqhCouncilSection } from "@/views/admin/FiqhCouncilSection";
+import { FatwaAdminSection } from "@/views/admin/FatwaAdminSection";
+import { RulingsSection } from "@/views/admin/RulingsSection";
+import { AnnualCoursesSection } from "@/views/admin/AnnualCoursesSection";
+import { UpdatesSection } from "@/views/admin/UpdatesSection";
+import { KnowledgeEngineSection } from "@/views/admin/KnowledgeEngineSection";
+import { ScholarlyVerificationSection } from "@/views/admin/ScholarlyVerificationSection";
+import { VerifiedKnowledgeSection } from "@/views/admin/VerifiedKnowledgeSection";
+import { KnowledgeReasoningSection } from "@/views/admin/KnowledgeReasoningSection";
+import { SearchAnalyticsSection } from "@/views/admin/SearchAnalyticsSection";
+import { DigitalLearningSection } from "@/views/admin/DigitalLearningSection";
+import { AutonomousAiSection } from "@/views/admin/AutonomousAiSection";
+import { GlobalReferenceSection } from "@/views/admin/GlobalReferenceSection";
+import { IslamicIntelligenceSection } from "@/views/admin/IslamicIntelligenceSection";
+import { OpenPlatformSection } from "@/views/admin/OpenPlatformSection";
+import { GovernanceSection } from "@/views/admin/GovernanceSection";
+
+export default function AdminPage() {
+  const [section, setSection] = useState<AdminSection>("dashboard");
+
+  return (
+    <AdminShell section={section} onSectionChange={setSection}>
+      {section === "dashboard" && <DashboardSection />}
+      {section === "aggregator" && <AggregatorSection />}
+      {section === "knowledge-engine" && <KnowledgeEngineSection />}
+      {section === "scholarly-verification" && <ScholarlyVerificationSection />}
+      {section === "verified-knowledge" && <VerifiedKnowledgeSection />}
+      {section === "knowledge-reasoning" && <KnowledgeReasoningSection />}
+      {section === "search-analytics" && <SearchAnalyticsSection />}
+      {section === "digital-learning" && <DigitalLearningSection />}
+      {section === "autonomous-ai" && <AutonomousAiSection />}
+      {section === "global-reference" && <GlobalReferenceSection />}
+      {section === "islamic-intelligence" && <IslamicIntelligenceSection />}
+      {section === "open-platform" && <OpenPlatformSection />}
+      {section === "governance" && <GovernanceSection />}
+      {section === "lessons" && <LessonsSection />}
+      {section === "sheikhs" && <SheikhsSection />}
+      {section === "library" && <LibrarySection />}
+      {section === "miracles" && <MiraclesSection />}
+      {section === "adhkar" && <AdhkarSection />}
+      {section === "fawaid" && <FawaidSection />}
+      {section === "qa" && <QaSection />}
+      {section === "condolences" && <CondolencesSection />}
+      {section === "users" && <UsersSection />}
+      {section === "settings" && <SettingsSection />}
+      {section === "reports" && <ReportsSection />}
+      {section === "fiqh-council" && <FiqhCouncilSection />}
+      {section === "fatwa" && <FatwaAdminSection />}
+      {section === "rulings" && <RulingsSection />}
+      {section === "annual-courses" && <AnnualCoursesSection />}
+      {section === "updates" && <UpdatesSection />}
+    </AdminShell>
+  );
+}

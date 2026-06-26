@@ -10,21 +10,32 @@ function isCourse(lesson: KuwaitLessonRecord) {
   return lesson.isCourse || lesson.activityType === "دورة";
 }
 
-export function HomeUpcomingLessons() {
-  const [lessons, setLessons] = useState<KuwaitLessonRecord[]>([]);
-  const [loading, setLoading] = useState(true);
+function pickUpcomingLessons(items: KuwaitLessonRecord[]) {
+  return sortKuwaitLessons(
+    items.filter((lesson) => !isCourse(lesson) && lesson.activityType !== "محاضرة"),
+  ).slice(0, 4);
+}
+
+export function HomeUpcomingLessons({
+  initialLessons,
+}: {
+  initialLessons?: KuwaitLessonRecord[];
+} = {}) {
+  const [lessons, setLessons] = useState<KuwaitLessonRecord[]>(
+    initialLessons ? pickUpcomingLessons(initialLessons) : [],
+  );
+  const [loading, setLoading] = useState(!initialLessons);
 
   useEffect(() => {
+    if (initialLessons) return;
     getUnifiedActiveLessons()
       .then(({ lessons: items }) => {
         const safeItems = Array.isArray(items) ? items : [];
-        setLessons(
-          sortKuwaitLessons(safeItems.filter((l) => !isCourse(l) && l.activityType !== "محاضرة")).slice(0, 4),
-        );
+        setLessons(pickUpcomingLessons(safeItems));
       })
       .catch(() => setLessons([]))
       .finally(() => setLoading(false));
-  }, []);
+  }, [initialLessons]);
 
   return (
     <section className="home-section" aria-labelledby="upcoming-lessons-heading">

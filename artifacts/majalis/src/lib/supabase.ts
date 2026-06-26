@@ -23,6 +23,7 @@ import { writeAuditLog } from "@/lib/cms/audit-log";
 import { validateSheikhImage, safeUploadFileName } from "./file-validation";
 import { sanitizeFormRecord } from "./sanitize";
 import { isSupabaseConfigured, formatSupabaseError, logSupabaseError } from "./supabase-config";
+import { getSupabaseAnonKeyEnv, getSupabaseUrlEnv } from "./supabase-env";
 
 // Normalize to the bare project origin (https://xxx.supabase.co).
 // The supabase-js client appends /rest/v1, /auth/v1, etc. itself, so any
@@ -37,8 +38,8 @@ function normalizeSupabaseUrl(raw: string): string {
   }
 }
 
-const url = normalizeSupabaseUrl(import.meta.env.VITE_SUPABASE_URL as string);
-const key = (import.meta.env.VITE_SUPABASE_ANON_KEY as string || "").trim();
+const url = normalizeSupabaseUrl(getSupabaseUrlEnv());
+const key = getSupabaseAnonKeyEnv();
 
 const isConfigured = isSupabaseConfigured();
 

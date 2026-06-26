@@ -35,7 +35,7 @@ export class ErrorBoundary extends Component<Props, State> {
       url: typeof window !== "undefined" ? window.location.href : "",
       at: new Date().toISOString(),
     };
-    if (import.meta.env.DEV) {
+    if (import.meta.env?.DEV) {
       console.error("[majalis:ErrorBoundary]", report);
     }
     try {
@@ -189,7 +189,7 @@ export class SectionErrorBoundary extends Component<SectionBoundaryProps, Sectio
       url: typeof window !== "undefined" ? window.location.href : "",
       at: new Date().toISOString(),
     };
-    if (import.meta.env.DEV) {
+    if (import.meta.env?.DEV) {
       console.error("[majalis:SectionErrorBoundary]", report);
     }
     try {

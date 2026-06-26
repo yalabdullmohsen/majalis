@@ -1,0 +1,113 @@
+@import "../index.css";
+
+:root {
+  --font-primary: var(--font-almarai), "Almarai", "Cairo", "Segoe UI", Tahoma, system-ui, sans-serif;
+  --font-display: var(--font-amiri), "Amiri", "Almarai", serif;
+}
+
+.seo-skeleton {
+  border-radius: 0.5rem;
+  background: linear-gradient(
+    90deg,
+    #FAF5EA 0%,
+    #F0E8D6 45%,
+    #FAF5EA 100%
+  );
+  background-size: 200% 100%;
+  animation: seo-shimmer 1.4s ease-in-out infinite;
+}
+
+.seo-skeleton--header {
+  height: 7rem;
+  margin-bottom: 1.25rem;
+}
+
+.seo-skeleton--search {
+  height: 3rem;
+  margin-bottom: 1rem;
+}
+
+.seo-skeleton-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.seo-skeleton--chip {
+  width: 5.5rem;
+  height: 2rem;
+}
+
+.seo-skeleton-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+}
+
+.seo-skeleton--card {
+  min-height: 10rem;
+}
+
+.home-stats-bar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
+  gap: 0.75rem;
+  margin: 0 auto 1.5rem;
+  max-width: 72rem;
+  padding: 0 1.25rem;
+}
+
+.home-stats-bar__item {
+  background: #FFFFFF;
+  border: 1px solid #E0D7C4;
+  border-radius: 0.75rem;
+  padding: 0.85rem 1rem;
+  text-align: center;
+}
+
+.home-stats-bar__value {
+  display: block;
+  color: #1F6E54;
+  font-size: 1.35rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.home-stats-bar__label {
+  display: block;
+  color: #5B5446;
+  font-size: 0.82rem;
+  margin-top: 0.25rem;
+}
+
+.seo-listing-intro {
+  margin-bottom: 1.25rem;
+  color: #5B5446;
+  line-height: 1.8;
+}
+
+.seo-listing-links {
+  display: grid;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.seo-listing-links a {
+  color: #164E3C;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.seo-listing-links a:hover {
+  color: #1F6E54;
+}
+
+@keyframes seo-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
