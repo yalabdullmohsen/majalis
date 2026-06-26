@@ -1,4 +1,4 @@
-import { createRateLimiter } from "../server/rate-limit.mjs";
+import { createRateLimiter } from "./rate-limit.mjs";
 
 const assistantRateLimit = createRateLimiter({
   windowMs: 60_000,
@@ -79,7 +79,8 @@ async function loadHandler(route) {
   if (handlerCache.has(route.module)) {
     return handlerCache.get(route.module);
   }
-  const mod = await import(route.module);
+  const href = new URL(route.module, import.meta.url).href;
+  const mod = await import(href);
   const handler = mod.default;
   handlerCache.set(route.module, handler);
   return handler;
@@ -192,7 +193,8 @@ export async function dispatchApiRequest(req, res) {
 
 /** Dev server helper: resolve handler for a matched route without caching importers. */
 export async function getDevRouteHandler(route) {
-  const mod = await import(route.module);
+  const href = new URL(route.module, import.meta.url).href;
+  const mod = await import(href);
   return mod.default;
 }
 
