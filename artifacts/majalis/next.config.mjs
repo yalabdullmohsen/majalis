@@ -7,6 +7,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  // Required for pnpm monorepo deploys on Vercel (trace deps outside app root).
+  outputFileTracingRoot: path.resolve(__dirname, "../.."),
   transpilePackages: ["@workspace/api-client-react"],
   eslint: {
     ignoreDuringBuilds: true,
