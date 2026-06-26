@@ -19,6 +19,7 @@ import { RulingsSection } from "@/pages/admin/RulingsSection";
 import { AnnualCoursesSection } from "@/pages/admin/AnnualCoursesSection";
 import { UpdatesSection } from "@/pages/admin/UpdatesSection";
 import { KnowledgeEngineSection } from "@/pages/admin/KnowledgeEngineSection";
+import { ScholarlyVerificationSection } from "@/pages/admin/ScholarlyVerificationSection";
 
 export default function AdminPage() {
   const [section, setSection] = useState<AdminSection>("dashboard");
@@ -28,6 +29,7 @@ export default function AdminPage() {
       {section === "dashboard" && <DashboardSection />}
       {section === "aggregator" && <AggregatorSection />}
       {section === "knowledge-engine" && <KnowledgeEngineSection />}
+      {section === "scholarly-verification" && <ScholarlyVerificationSection />}
       {section === "lessons" && <LessonsSection />}
       {section === "sheikhs" && <SheikhsSection />}
       {section === "library" && <LibrarySection />}

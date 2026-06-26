@@ -17,6 +17,7 @@ import {
   MIN_AUTO_PUBLISH_TRUST,
 } from "./trusted-sources-seed.mjs";
 import { createPipelineLogger, SKIP_REASONS } from "./pipeline-logger.mjs";
+import { applyScholarlyGateToAutoContentRecord } from "../scholarly-verification/bridge.mjs";
 
 const FETCH_RETRIES = 3;
 const FETCH_TIMEOUT_MS = 20000;
@@ -287,7 +288,8 @@ async function processRssItem(supabase, source, rssItem, runId, logger) {
 
   record.quality_score = calculateQualityScore(record);
 
-  const autoPublish = shouldAutoPublish(record, source);
+  const scholarly = await applyScholarlyGateToAutoContentRecord(record, source, { checkLinks: false });
+  let autoPublish = scholarly.autoPublish && shouldAutoPublish(record, source);
   if (autoPublish) {
     record.status = "published";
     record.verification_status = "verified";

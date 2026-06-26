@@ -1,0 +1,297 @@
+{
+  "generated_at": "2026-06-26T00:35:10.313Z",
+  "started_at": "2026-06-26T00:35:10.306Z",
+  "items_scanned": 231,
+  "seed_items": 231,
+  "verified_count": 1,
+  "needs_review_count": 113,
+  "rejected_count": 0,
+  "duplicate_count": 117,
+  "broken_links_count": 0,
+  "documentation_completeness_percent": 0,
+  "section_stats": {
+    "lesson": {
+      "total": 14,
+      "verified": 0,
+      "needs_review": 14,
+      "rejected": 0,
+      "duplicate": 0
+    },
+    "qa_question": {
+      "total": 125,
+      "verified": 0,
+      "needs_review": 58,
+      "rejected": 0,
+      "duplicate": 67
+    },
+    "adhkar": {
+      "total": 51,
+      "verified": 1,
+      "needs_review": 0,
+      "rejected": 0,
+      "duplicate": 50
+    },
+    "library_item": {
+      "total": 18,
+      "verified": 0,
+      "needs_review": 18,
+      "rejected": 0,
+      "duplicate": 0
+    },
+    "sheikh": {
+      "total": 1,
+      "verified": 0,
+      "needs_review": 1,
+      "rejected": 0,
+      "duplicate": 0
+    },
+    "fawaid": {
+      "total": 1,
+      "verified": 0,
+      "needs_review": 1,
+      "rejected": 0,
+      "duplicate": 0
+    },
+    "fiqh_council_item": {
+      "total": 6,
+      "verified": 0,
+      "needs_review": 6,
+      "rejected": 0,
+      "duplicate": 0
+    },
+    "fatwa": {
+      "total": 5,
+      "verified": 0,
+      "needs_review": 5,
+      "rejected": 0,
+      "duplicate": 0
+    },
+    "sharia_ruling": {
+      "total": 6,
+      "verified": 0,
+      "needs_review": 6,
+      "rejected": 0,
+      "duplicate": 0
+    },
+    "annual_course": {
+      "total": 4,
+      "verified": 0,
+      "needs_review": 4,
+      "rejected": 0,
+      "duplicate": 0
+    }
+  },
+  "readiness_score": 0,
+  "sample_failures": [
+    {
+      "content_type": "lesson",
+      "content_id": "lesson-ad-0",
+      "title": "تفسير سورة النحل",
+      "verification_status": "needs_review",
+      "quality_score": 69,
+      "completeness_score": 80,
+      "can_publish": false,
+      "errors": []
+    },
+    {
+      "content_type": "lesson",
+      "content_id": "lesson-ad-1",
+      "title": "قراءة كتاب صحيح مسلم",
+      "verification_status": "needs_review",
+      "quality_score": 69,
+      "completeness_score": 80,
+      "can_publish": false,
+      "errors": []
+    },
+    {
+      "content_type": "lesson",
+      "content_id": "lesson-ad-2",
+      "title": "شرح كتاب تلخيص مختصر المقنع",
+      "verification_status": "needs_review",
+      "quality_score": 69,
+      "completeness_score": 80,
+      "can_publish": false,
+      "errors": []
+    },
+    {
+      "content_type": "lesson",
+      "content_id": "lesson-ad-3",
+      "title": "الدورة العلمية التأصيلية",
+      "verification_status": "needs_review",
+      "quality_score": 69,
+      "completeness_score": 80,
+      "can_publish": false,
+      "errors": []
+    },
+    {
+      "content_type": "lesson",
+      "content_id": "lesson-ad-4",
+      "title": "قراءة كتب متنوعة والتفسير الواضح",
+      "verification_status": "needs_review",
+      "quality_score": 69,
+      "completeness_score": 80,
+      "can_publish": false,
+      "errors": []
+    },
+    {
+      "content_type": "lesson",
+      "content_id": "lesson-ad-5",
+      "title": "شرح كتاب الصلاة من إعانة الطالب",
+      "verification_status": "needs_review",
+      "quality_score": 69,
+      "completeness_score": 80,
+      "can_publish": false,
+      "errors": []
+    },
+    {
+      "content_type": "qa_question",
+      "content_id": "seed-qa-1",
+      "title": "من أول الرسل إلى أهل الأرض بعد آدم؟",
+      "verification_status": "needs_review",
+      "quality_score": 100,
+      "completeness_score": 80,
+      "can_publish": false,
+      "errors": []
+    },
+    {
+      "content_type": "qa_question",
+      "content_id": "seed-qa-2",
+      "title": "من النبي الذي اتخذه الله خليلاً؟",
+      "verification_status": "needs_review",
+      "quality_score": 100,
+      "completeness_score": 80,
+      "can_publish": false,
+      "errors": []
+    },
+    {
+      "content_type": "qa_question",
+      "content_id": "seed-qa-3",
+      "title": "من النبي الذي كلمه الله تكليماً؟",
+      "verification_status": "needs_review",
+      "quality_score": 100,
+      "completeness_score": 80,
+      "can_publish": false,
+      "errors": []
+    },
+    {
+      "content_type": "qa_question",
+      "content_id": "seed-qa-4",
+      "title": "من النبي الذي أرسل إلى قوم عاد؟",
+      "verification_status": "needs_review",
+      "quality_score": 100,
+      "completeness_score": 80,
+      "can_publish": false,
+      "errors": []
+    },
+    {
+      "content_type": "qa_question",
+      "content_id": "seed-qa-5",
+      "title": "من النبي الذي أرسل إلى قوم ثمود؟",
+      "verification_status": "needs_review",
+      "quality_score": 100,
+      "completeness_score": 80,
+      "can_publish": false,
+      "errors": []
+    },
+    {
+      "content_type": "qa_question",
+      "content_id": "seed-qa-6",
+      "title": "من النبي الذي ابتلعه الحوت؟",
+      "verification_status": "needs_review",
+      "quality_score": 100,
+      "completeness_score": 80,
+      "can_publish": false,
+      "errors": []
+    },
+    {
+      "content_type": "qa_question",
+      "content_id": "seed-qa-7",
+      "title": "من النبي الذي رفعه الله إليه؟",
+      "verification_status": "needs_review",
+      "quality_score": 100,
+      "completeness_score": 80,
+      "can_publish": false,
+      "errors": []
+    },
+    {
+      "content_type": "qa_question",
+      "content_id": "seed-qa-8",
+      "title": "من والد إسماعيل عليه السلام؟",
+      "verification_status": "needs_review",
+      "quality_score": 100,
+      "completeness_score": 80,
+      "can_publish": false,
+      "errors": []
+    },
+    {
+      "content_type": "qa_question",
+      "content_id": "seed-qa-9",
+      "title": "من النبي الذي سخر الله له الريح؟",
+      "verification_status": "needs_review",
+      "quality_score": 100,
+      "completeness_score": 80,
+      "can_publish": false,
+      "errors": []
+    },
+    {
+      "content_type": "qa_question",
+      "content_id": "seed-qa-10",
+      "title": "من النبي الذي اشتهر بالصبر على البلاء؟",
+      "verification_status": "needs_review",
+      "quality_score": 100,
+      "completeness_score": 80,
+      "can_publish": false,
+      "errors": []
+    },
+    {
+      "content_type": "qa_question",
+      "content_id": "seed-qa-11",
+      "title": "ما فائدة العقيدة الطحاوية — شرح مختصر؟",
+      "verification_status": "needs_review",
+      "quality_score": 100,
+      "completeness_score": 80,
+      "can_publish": false,
+      "errors": []
+    },
+    {
+      "content_type": "qa_question",
+      "content_id": "seed-qa-12",
+      "title": "ما فائدة متن الآجرومية؟",
+      "verification_status": "needs_review",
+      "quality_score": 100,
+      "completeness_score": 80,
+      "can_publish": false,
+      "errors": []
+    },
+    {
+      "content_type": "qa_question",
+      "content_id": "seed-qa-13",
+      "title": "ما فائدة تفريغ: أصول طلب العلم في المجلس العلمي؟",
+      "verification_status": "needs_review",
+      "quality_score": 100,
+      "completeness_score": 80,
+      "can_publish": false,
+      "errors": []
+    },
+    {
+      "content_type": "qa_question",
+      "content_id": "seed-qa-14",
+      "title": "ما فائدة ملخص: أركان الإسلام؟",
+      "verification_status": "needs_review",
+      "quality_score": 100,
+      "completeness_score": 80,
+      "can_publish": false,
+      "errors": []
+    }
+  ],
+  "next_priorities": [
+    "إكمال source_url و source_name لكل عنصر seed",
+    "مراجعة 14 عنصر في lesson",
+    "مراجعة 58 عنصر في qa_question",
+    "مراجعة 18 عنصر في library_item",
+    "مراجعة 1 عنصر في sheikh",
+    "مراجعة 1 عنصر في fawaid",
+    "مراجعة 6 عنصر في fiqh_council_item",
+    "مراجعة 5 عنصر في fatwa"
+  ]
+}
