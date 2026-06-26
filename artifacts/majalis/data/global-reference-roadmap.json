@@ -1,0 +1,140 @@
+{
+  "generated_at": "2026-06-26T00:54:37.865Z",
+  "horizon": "3 years",
+  "principle": "لا تطوير جديد قبل استقرار الأنظمة الحالية",
+  "phases": [
+    {
+      "year": 1,
+      "title": "الاستقرار والتوحيد",
+      "priority": "critical",
+      "items": [
+        {
+          "task": "تطبيق جميع SQL migrations في الإنتاج",
+          "impact": "high",
+          "difficulty": "low",
+          "dependency": "none",
+          "benefit": "استقرار البيانات"
+        },
+        {
+          "task": "تسجيل Global ID لجميع المحتويات الموجودة",
+          "impact": "high",
+          "difficulty": "medium",
+          "dependency": "SQL",
+          "benefit": "تتبع كامل"
+        },
+        {
+          "task": "توحيد registries المصادر الثلاثة",
+          "impact": "high",
+          "difficulty": "medium",
+          "dependency": "SQL",
+          "benefit": "ثقة موحدة"
+        },
+        {
+          "task": "تفعيل content_relations لجميع العناصر",
+          "impact": "high",
+          "difficulty": "medium",
+          "dependency": "Global IDs",
+          "benefit": "شبكة معرفية"
+        },
+        {
+          "task": "دمج PRs #36-42 واختبار شامل",
+          "impact": "critical",
+          "difficulty": "medium",
+          "dependency": "all branches",
+          "benefit": "منصة موحدة"
+        }
+      ]
+    },
+    {
+      "year": 2,
+      "title": "النضج والتوسع",
+      "priority": "high",
+      "items": [
+        {
+          "task": "Knowledge Graph كامل مع graph_entities/edges",
+          "impact": "high",
+          "difficulty": "high",
+          "dependency": "Year 1",
+          "benefit": "استكشاف ذكي"
+        },
+        {
+          "task": "فهرسة 40k+ حadith من content-architecture",
+          "impact": "high",
+          "difficulty": "medium",
+          "dependency": "Global IDs",
+          "benefit": "مرجع حديثي"
+        },
+        {
+          "task": "API عام للمراجع الخارجية (Global Ref API)",
+          "impact": "medium",
+          "difficulty": "medium",
+          "dependency": "Year 1",
+          "benefit": "مرجع عالمي"
+        },
+        {
+          "task": "Distributed rate limiting + CDN",
+          "impact": "medium",
+          "difficulty": "medium",
+          "dependency": "stability",
+          "benefit": "أداء عالمي"
+        },
+        {
+          "task": "Human review queue UI",
+          "impact": "high",
+          "difficulty": "medium",
+          "dependency": "review engine",
+          "benefit": "جودة محتوى"
+        }
+      ]
+    },
+    {
+      "year": 3,
+      "title": "الريادة العالمية",
+      "priority": "medium",
+      "items": [
+        {
+          "task": "Open Scholarly Reference API (REST + GraphQL)",
+          "impact": "high",
+          "difficulty": "high",
+          "dependency": "Year 2 API",
+          "benefit": "اعتراف عالمي"
+        },
+        {
+          "task": "Multi-language support (EN/FR/UR)",
+          "impact": "medium",
+          "difficulty": "high",
+          "dependency": "stable platform",
+          "benefit": "وصول عالمي"
+        },
+        {
+          "task": "Academic institution partnerships",
+          "impact": "high",
+          "difficulty": "high",
+          "dependency": "API + trust",
+          "benefit": "مصداقية"
+        },
+        {
+          "task": "Blockchain verification for certificates",
+          "impact": "low",
+          "difficulty": "high",
+          "dependency": "certificates",
+          "benefit": "تحقق لا يُزوّر"
+        },
+        {
+          "task": "AI-powered conflict detection across corpora",
+          "impact": "medium",
+          "difficulty": "high",
+          "dependency": "Knowledge Graph",
+          "benefit": "دقة علمية"
+        }
+      ]
+    }
+  ],
+  "stability_gates": [
+    "All cron jobs success rate > 95%",
+    "Average search latency < 1s",
+    "Verification coverage > 80%",
+    "Zero critical security findings",
+    "All migrations applied in production"
+  ]
+}

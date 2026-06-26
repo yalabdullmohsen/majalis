@@ -23,6 +23,7 @@ import { ScholarlyVerificationSection } from "@/pages/admin/ScholarlyVerificatio
 import { SearchAnalyticsSection } from "@/pages/admin/SearchAnalyticsSection";
 import { DigitalLearningSection } from "@/pages/admin/DigitalLearningSection";
 import { AutonomousAiSection } from "@/pages/admin/AutonomousAiSection";
+import { GlobalReferenceSection } from "@/pages/admin/GlobalReferenceSection";
 
 export default function AdminPage() {
   const [section, setSection] = useState<AdminSection>("dashboard");
@@ -36,6 +37,7 @@ export default function AdminPage() {
       {section === "search-analytics" && <SearchAnalyticsSection />}
       {section === "digital-learning" && <DigitalLearningSection />}
       {section === "autonomous-ai" && <AutonomousAiSection />}
+      {section === "global-reference" && <GlobalReferenceSection />}
       {section === "lessons" && <LessonsSection />}
       {section === "sheikhs" && <SheikhsSection />}
       {section === "library" && <LibrarySection />}

@@ -14,6 +14,11 @@ export const MIGRATION_FILES = [
   "auto_engine_production_complete.sql",
   "knowledge_engine_v12.sql",
   "auto_knowledge_engine_v13.sql",
+  "scholarly_verification_v1.sql",
+  "scholarly_intelligence_v1.sql",
+  "digital_learning_v1.sql",
+  "autonomous_ai_v1.sql",
+  "global_reference_v1.sql",
 ];
 
 export function resolveMigrationsDir() {

@@ -17,6 +17,8 @@ const CRON_ROUTES = [
   { path: "/api/cron/system-health", schedule: "45 */6 * * *", label: "System Health Monitor" },
   { path: "/api/cron/sync-fiqh-council", schedule: "0 6 * * *", label: "Fiqh Council Sync" },
   { path: "/api/cron/check-fiqh-links", schedule: "0 7 * * *", label: "Fiqh Link Check" },
+  { path: "/api/cron/scholarly-verification", schedule: "0 8 * * *", label: "Scholarly Verification" },
+  { path: "/api/cron/global-reference-review", schedule: "0 9 * * 0", label: "Global Reference Review (weekly)" },
   { path: "/api/cron/apply-migrations", schedule: "0 5 * * 0", label: "Schema Migrations (weekly verify)" },
 ];
 
