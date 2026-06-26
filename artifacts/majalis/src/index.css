@@ -7960,13 +7960,19 @@ html[data-theme="dark"] .home-page {
 .navbar-menu-btn,
 .navbar-logout {
   border: 1px solid var(--majalis-line);
-  background: #fff;
+  background: var(--majalis-panel);
+  color: var(--majalis-ink);
   border-radius: 0.45rem;
   padding: 0.4rem 0.75rem;
   font-family: inherit;
   font-weight: 700;
   font-size: 0.82rem;
   cursor: pointer;
+}
+
+html[data-theme="dark"] .navbar-search-submit,
+html[data-theme="dark"] .navbar-login {
+  color: #07110e;
 }
 
 .navbar-login {
