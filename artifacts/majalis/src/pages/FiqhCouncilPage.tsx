@@ -93,6 +93,7 @@ export function FiqhCouncilFilters({
   onSource,
   showType = true,
 }: FilterProps) {
+  const [filtersOpen, setFiltersOpen] = useState(false);
   const years = useMemo(() => {
     const current = new Date().getFullYear();
     return ["الكل", ...Array.from({ length: 8 }, (_, i) => String(current - i))];
@@ -108,54 +109,66 @@ export function FiqhCouncilFilters({
         aria-label="بحث في المجمع الفقهي"
       />
 
-      {showType && (
-        <div className="content-hub-chips">
-          <span className="fiqh-council-filter-label">النوع</span>
-          {["الكل", ...FIQH_ITEM_TYPES].map((t) => (
+      <button
+        type="button"
+        className="fiqh-filter-toggle"
+        onClick={() => setFiltersOpen((open) => !open)}
+        aria-expanded={filtersOpen}
+      >
+        {filtersOpen ? "إخفاء الفلاتر" : "تصفية النتائج"}
+        <span>{category !== "الكل" ? category : type !== "الكل" ? FIQH_ITEM_TYPE_LABELS[type as FiqhItemType] : "الكل"}</span>
+      </button>
+
+      <div className={`fiqh-filter-panel${filtersOpen ? " is-open" : ""}`}>
+        {showType && (
+          <div className="content-hub-chips fiqh-chip-strip">
+            <span className="fiqh-council-filter-label">النوع</span>
+            {["الكل", ...FIQH_ITEM_TYPES].map((t) => (
+              <button
+                key={t}
+                type="button"
+                onClick={() => onType(t)}
+                className={type === t ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
+              >
+                {t === "الكل" ? "الكل" : FIQH_ITEM_TYPE_LABELS[t as FiqhItemType]}
+              </button>
+            ))}
+          </div>
+        )}
+
+        <div className="content-hub-chips fiqh-chip-strip">
+          <span className="fiqh-council-filter-label">التصنيف</span>
+          {["الكل", ...FIQH_COUNCIL_CATEGORIES].map((cat) => (
             <button
-              key={t}
+              key={cat}
               type="button"
-              onClick={() => onType(t)}
-              className={type === t ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
+              onClick={() => onCategory(cat)}
+              className={category === cat ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
             >
-              {t === "الكل" ? "الكل" : FIQH_ITEM_TYPE_LABELS[t as FiqhItemType]}
+              {cat}
             </button>
           ))}
         </div>
-      )}
 
-      <div className="content-hub-chips">
-        <span className="fiqh-council-filter-label">التصنيف</span>
-        {["الكل", ...FIQH_COUNCIL_CATEGORIES].map((cat) => (
-          <button
-            key={cat}
-            type="button"
-            onClick={() => onCategory(cat)}
-            className={category === cat ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
-          >
-            {cat}
-          </button>
-        ))}
-      </div>
-
-      <div className="fiqh-council-filter-row">
-        <label className="fiqh-council-select-label">
-          السنة
-          <select value={year} onChange={(e) => onYear(e.target.value)} className="fiqh-council-select">
-            {years.map((y) => (
-              <option key={y} value={y}>{y}</option>
-            ))}
-          </select>
-        </label>
-        <label className="fiqh-council-select-label">
-          المصدر
-          <input
-            value={source}
-            onChange={(e) => onSource(e.target.value)}
-            placeholder="اسم المصدر"
-            className="fiqh-council-source-input"
-          />
-        </label>
+        <div className="fiqh-council-filter-row">
+          <label className="fiqh-council-select-label">
+            السنة
+            <select value={year} onChange={(e) => onYear(e.target.value)} className="fiqh-council-select">
+              {years.map((y) => (
+                <option key={y} value={y}>{y}</option>
+              ))}
+            </select>
+          </label>
+          <label className="fiqh-council-select-label">
+            المصدر
+            <input
+              value={source}
+              onChange={(e) => onSource(e.target.value)}
+              placeholder="اسم المصدر"
+              className="fiqh-council-source-input"
+            />
+          </label>
+        </div>
       </div>
     </div>
   );
@@ -264,7 +277,8 @@ export function FiqhCouncilHubPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    Promise.all([
+    let cancelled = false;
+    Promise.allSettled([
       getFiqhCouncilItems({ limit: 6 }),
       getFiqhCouncilItems({ type: "resolution", limit: 4 }),
       getFiqhCouncilItems({ type: "fatwa", limit: 4 }),
@@ -275,18 +289,27 @@ export function FiqhCouncilHubPage() {
       getPublicFiqhSources(),
       getFiqhIssues({ limit: 4 }),
       getFiqhLiveData(),
-    ]).then(([all, res, fat, rec, naw, viewed, counts, srcRes, issuesRes, liveRes]) => {
-      setLatest(all.data);
-      setResolutions(res.data);
-      setFatwas(fat.data);
-      setRecommendations(rec.data);
-      setNawazil(naw.data);
-      setMostViewed(viewed);
-      setCategoryCounts(counts);
-      setSources(srcRes.data);
-      setTopIssues(issuesRes.data);
-      setLiveData(liveRes.data);
-    }).finally(() => setLoading(false));
+    ]).then((results) => {
+      if (cancelled) return;
+      const value = <T,>(index: number, fallback: T): T =>
+        results[index]?.status === "fulfilled" ? (results[index] as PromiseFulfilledResult<T>).value : fallback;
+
+      setLatest(value(0, { data: [] }).data);
+      setResolutions(value(1, { data: [] }).data);
+      setFatwas(value(2, { data: [] }).data);
+      setRecommendations(value(3, { data: [] }).data);
+      setNawazil(value(4, { data: [] }).data);
+      setMostViewed(value(5, []));
+      setCategoryCounts(value(6, {}));
+      setSources(value(7, { data: [] }).data);
+      setTopIssues(value(8, { data: [] }).data);
+      setLiveData(value(9, { data: null }).data);
+    }).finally(() => {
+      if (!cancelled) setLoading(false);
+    });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   return (
@@ -310,6 +333,15 @@ export function FiqhCouncilHubPage() {
         <Link href="/fiqh-council/nawazil" className="fiqh-hub-quick-link">فقه النوازل</Link>
         <Link href="/fiqh-council/research-assistant" className="fiqh-hub-quick-link">مساعد الباحث</Link>
       </div>
+
+      <section className="fiqh-mobile-category-deck" aria-label="تصنيفات المجمع الفقهي">
+        {FIQH_COUNCIL_CATEGORIES.map((cat) => (
+          <Link key={cat} href={`/fiqh-council/search?category=${encodeURIComponent(cat)}`} className="fiqh-mobile-category-card">
+            <strong>{cat}</strong>
+            <span>{categoryCounts[cat] ?? 0} مادة</span>
+          </Link>
+        ))}
+      </section>
 
       {!loading && liveData && (
         <section className="fiqh-hub-live-banner ui-card">
@@ -345,7 +377,7 @@ export function FiqhCouncilHubPage() {
 
       {loading ? <Loading /> : (
         <>
-          <section className="fiqh-council-section">
+          {topIssues.length > 0 && <section className="fiqh-council-section">
             <div className="fiqh-council-section-header">
               <h2 className="fiqh-council-section-title">أهم المسائل الفقهية</h2>
               <Link href="/fiqh-council/issues" className="fiqh-council-section-link">عرض الكل</Link>
@@ -362,7 +394,7 @@ export function FiqhCouncilHubPage() {
                 />
               ))}
             </div>
-          </section>
+          </section>}
 
           <section className="fiqh-council-section">
             <div className="fiqh-council-section-header">

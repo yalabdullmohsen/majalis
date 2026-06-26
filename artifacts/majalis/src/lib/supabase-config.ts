@@ -38,7 +38,15 @@ function sanitizeClientMessage(message: string): string {
 export function isSupabaseConfigured(): boolean {
   const url = (import.meta.env.VITE_SUPABASE_URL as string || "").trim();
   const key = (import.meta.env.VITE_SUPABASE_ANON_KEY as string || "").trim();
-  return url.startsWith("http") && key.length > 20;
+  if (!url.startsWith("http") || key.length <= 20) return false;
+  if (/placeholder|_supabase/i.test(url) || /placeholder/i.test(key)) return false;
+  try {
+    const host = new URL(url).host;
+    const ref = host.split(".")[0] || "";
+    return host.endsWith(".supabase.co") && /^[a-z0-9-]+$/i.test(ref) && ref.length >= 8;
+  } catch {
+    return false;
+  }
 }
 
 export function logSupabaseError(scope: string, error: unknown, extra?: Record<string, unknown>) {
