@@ -6,39 +6,9 @@ import { lessonAds, type LessonAd } from "@/lib/lesson-ads";
 import { buildCatalogLessonRows } from "@/lib/lessons-catalog";
 import { resolveGovernorateForUi, resolveRegion } from "@/lib/kuwait-regions";
 import { cleanTimeText } from "@/lib/lesson-time";
+import type { LessonSeedRow } from "@/lib/lessons-types";
 
-export type LessonSeedRow = {
-  id: string;
-  external_key: string;
-  title: string;
-  speaker_name: string;
-  sheikh_image_url?: string;
-  poster_image_url?: string;
-  category: string;
-  city: string;
-  region: string;
-  mosque: string;
-  day_of_week: string;
-  lesson_time: string;
-  schedule: string;
-  description?: string;
-  audience: string;
-  delivery: string;
-  status: "approved";
-  keywords: string[];
-  live_url?: string;
-  book_url?: string;
-  maps_url?: string;
-  start_date?: string;
-  end_date?: string | null;
-  is_recurring: boolean;
-  activity_type: "درس" | "محاضرة" | "دورة";
-  is_course: boolean;
-  course_id?: string;
-  session_count?: number;
-  linked_titles?: string[];
-  sheikhs?: { name: string };
-};
+export type { LessonSeedRow } from "@/lib/lessons-types";
 
 const CATEGORY_FROM_TAGS: Record<string, string> = {
   تفسير: "تفسير",
@@ -65,6 +35,9 @@ function activityTypeForAd(ad: LessonAd): LessonSeedRow["activity_type"] {
 
 function rowFromAdSession(ad: LessonAd, sessionIndex: number): LessonSeedRow {
   const session = ad.sessions[sessionIndex];
+  if (!session) {
+    throw new Error(`Missing session ${sessionIndex} for lesson ad ${ad.id}`);
+  }
   const region = resolveRegion(session.district);
   const governorate = resolveGovernorateForUi("", session.district);
   const genericLabel =
@@ -110,7 +83,9 @@ function rowFromAdSession(ad: LessonAd, sessionIndex: number): LessonSeedRow {
 
 /** صفوف Seed بشكل جدول Supabase lessons — المصدر الوحيد للبيانات الاحتياطية. */
 export function buildLessonsSeed(): LessonSeedRow[] {
-  const fromAds = lessonAds.flatMap((ad) => ad.sessions.map((_session, idx) => rowFromAdSession(ad, idx)));
+  const fromAds = lessonAds.flatMap((ad) =>
+    ad.sessions.map((_session, idx) => rowFromAdSession(ad, idx)),
+  );
   const fromCatalog = buildCatalogLessonRows();
   return [...fromAds, ...fromCatalog];
 }

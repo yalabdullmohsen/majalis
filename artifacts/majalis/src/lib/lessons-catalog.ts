@@ -9,7 +9,7 @@ import {
 import { resolveRegion, resolveGovernorateForUi } from "@/lib/kuwait-regions";
 import { resolveLocalSheikhPhoto } from "@/lib/sheikh-photos";
 import { cleanTimeText } from "@/lib/lesson-time";
-import type { LessonSeedRow } from "@/lib/lessons-seed";
+import type { LessonSeedRow } from "@/lib/lessons-types";
 
 function categoryFromTags(tags: string[]): string {
   for (const tag of tags) {

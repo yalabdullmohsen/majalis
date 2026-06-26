@@ -1,0 +1,33 @@
+/** Shared lesson seed row shape — avoids circular imports between seed and catalog. */
+export type LessonSeedRow = {
+  id: string;
+  external_key: string;
+  title: string;
+  speaker_name: string;
+  sheikh_image_url?: string;
+  poster_image_url?: string;
+  category: string;
+  city: string;
+  region: string;
+  mosque: string;
+  day_of_week: string;
+  lesson_time: string;
+  schedule: string;
+  description?: string;
+  audience: string;
+  delivery: string;
+  status: "approved";
+  keywords: string[];
+  live_url?: string;
+  book_url?: string;
+  maps_url?: string;
+  start_date?: string;
+  end_date?: string | null;
+  is_recurring: boolean;
+  activity_type: "درس" | "محاضرة" | "دورة";
+  is_course: boolean;
+  course_id?: string;
+  session_count?: number;
+  linked_titles?: string[];
+  sheikhs?: { name: string };
+};

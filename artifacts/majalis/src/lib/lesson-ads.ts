@@ -245,6 +245,8 @@ export function getLessonAdById(id: string) {
 export function filterLessonAds(items: LessonAd[], filters: LessonAdFilters) {
   return items.filter((item) => {
     const session = item.sessions[0];
+    if (!session) return false;
+
     if (filters.teacher && filters.teacher !== "الكل" && item.teacher !== filters.teacher) {
       return false;
     }
