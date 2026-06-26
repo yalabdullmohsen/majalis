@@ -1,13 +1,15 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation } from "wouter";
 import { useAuth } from "./AuthProvider";
 import NotificationBell from "./NotificationBell";
 import { SearchSuggestions } from "./SearchSuggestions";
 import { SideNavDrawer } from "./SideNavDrawer";
-import { MOBILE_MORE_NAV, PRIMARY_NAV } from "@/lib/navigation";
+import { MobileMoreMenu } from "./MobileMoreMenu";
+import { PRIMARY_NAV } from "@/lib/navigation";
 import { C } from "@/lib/theme";
+import { useMobileNavState } from "@/hooks/useMobileNavState";
 
 function useIsMobile() {
   const [mobile, setMobile] = useState(typeof window !== "undefined" ? window.innerWidth <= 879 : false);
@@ -68,46 +70,7 @@ export default function NavBar() {
   const { isAdmin, isLoggedIn, user, logout } = useAuth();
   const [location, navigate] = useLocation();
   const isMobile = useIsMobile();
-  const [open, setOpen] = useState(false);
-  const [drawer, setDrawer] = useState(false);
-  const panelRef = useRef<HTMLDivElement>(null);
-
-  const closeDrawer = useCallback(() => setDrawer(false), []);
-
-  useEffect(() => {
-    document.body.classList.remove("side-nav-open");
-    document.body.classList.remove("navbar-more-open");
-  }, []);
-
-  useEffect(() => {
-    setOpen(false);
-    setDrawer(false);
-  }, [location]);
-
-  useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
-    };
-    const onPointer = (e: MouseEvent | TouchEvent) => {
-      const target = e.target as Node;
-      if (panelRef.current && !panelRef.current.contains(target)) {
-        const btn = document.querySelector(".navbar-menu-btn--more");
-        if (btn && btn.contains(target)) return;
-        setOpen(false);
-      }
-    };
-    window.addEventListener("keydown", onKey);
-    document.addEventListener("mousedown", onPointer);
-    document.addEventListener("touchstart", onPointer);
-    document.body.classList.add("navbar-more-open");
-    return () => {
-      window.removeEventListener("keydown", onKey);
-      document.removeEventListener("mousedown", onPointer);
-      document.removeEventListener("touchstart", onPointer);
-      document.body.classList.remove("navbar-more-open");
-    };
-  }, [open]);
+  const { drawerOpen, moreOpen, openDrawer, closeDrawer, closeMore, toggleMore, closeAll } = useMobileNavState();
 
   const isActive = (href: string) => {
     const path = href.split("?")[0];
@@ -115,6 +78,7 @@ export default function NavBar() {
   };
 
   const handleLogout = async () => {
+    closeAll();
     await logout();
     navigate("/login");
   };
@@ -151,7 +115,9 @@ export default function NavBar() {
             <button
               type="button"
               className="navbar-menu-btn navbar-menu-btn--drawer"
-              onClick={() => setDrawer(true)}
+              onClick={openDrawer}
+              aria-expanded={drawerOpen}
+              aria-controls="mobile-side-nav-drawer"
               aria-label="فتح القائمة الجانبية"
             >
               القائمة
@@ -211,83 +177,34 @@ export default function NavBar() {
                 <button
                   type="button"
                   className="navbar-menu-btn navbar-menu-btn--more"
-                  onClick={() => setOpen((o) => !o)}
-                  aria-expanded={open}
+                  onClick={toggleMore}
+                  aria-expanded={moreOpen}
                   aria-controls="navbar-mobile-more-panel"
                   aria-haspopup="true"
                 >
-                  {open ? "إغلاق" : "المزيد"}
+                  {moreOpen ? "إغلاق" : "المزيد"}
                 </button>
               </>
             )}
           </div>
         </div>
-
-        {isMobile && open && (
-          <>
-          <button
-            type="button"
-            className="navbar-more-backdrop"
-            aria-label="إغلاق قائمة المزيد"
-            onClick={() => setOpen(false)}
-          />
-          <div
-            id="navbar-mobile-more-panel"
-            ref={panelRef}
-            className="navbar-mobile-panel"
-            role="dialog"
-            aria-label="قائمة المزيد"
-          >
-            <SearchBox onSubmitDone={() => setOpen(false)} />
-            <nav aria-label="روابط المزيد">
-              {MOBILE_MORE_NAV.map((t) => (
-                <Link
-                  key={t.href}
-                  href={t.href}
-                  onClick={() => setOpen(false)}
-                  style={{ ...tabStyle(isActive(t.href)), display: "block", padding: "0.6rem 0.75rem" }}
-                >
-                  {t.label}
-                </Link>
-              ))}
-              {isAdmin ? (
-                <>
-                  <Link
-                    href="/admin"
-                    onClick={() => setOpen(false)}
-                    style={{ ...tabStyle(location.startsWith("/admin")), display: "block", padding: "0.6rem 0.75rem" }}
-                  >
-                    لوحة التحكم
-                  </Link>
-                  <button type="button" onClick={handleLogout} className="navbar-logout navbar-logout--block">
-                    تسجيل الخروج
-                  </button>
-                </>
-              ) : isLoggedIn ? (
-                <>
-                  <Link href="/settings" onClick={() => setOpen(false)} style={{ ...tabStyle(isActive("/settings")), display: "block", padding: "0.6rem 0.75rem" }}>
-                    الإعدادات
-                  </Link>
-                  <button type="button" onClick={handleLogout} className="navbar-logout navbar-logout--block">
-                    تسجيل الخروج
-                  </button>
-                </>
-              ) : (
-                <>
-                  <Link href="/login" onClick={() => setOpen(false)} style={{ ...tabStyle(isActive("/login")), display: "block", padding: "0.6rem 0.75rem" }}>
-                    تسجيل الدخول
-                  </Link>
-                  <Link href="/register" onClick={() => setOpen(false)} style={{ ...tabStyle(isActive("/register")), display: "block", padding: "0.6rem 0.75rem" }}>
-                    إنشاء حساب
-                  </Link>
-                </>
-              )}
-            </nav>
-          </div>
-          </>
-        )}
       </header>
-      <SideNavDrawer open={drawer} onClose={closeDrawer} />
+
+      <SideNavDrawer open={drawerOpen} onClose={closeDrawer} />
+
+      {isMobile && (
+        <MobileMoreMenu
+          open={moreOpen}
+          onClose={closeMore}
+          isActive={isActive}
+          isAdmin={isAdmin}
+          isLoggedIn={isLoggedIn}
+          onLogout={handleLogout}
+          searchBox={<SearchBox onSubmitDone={closeMore} />}
+          tabStyle={tabStyle}
+          location={location}
+        />
+      )}
     </>
   );
 }

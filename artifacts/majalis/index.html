@@ -70,6 +70,9 @@
           storedFont === "ruqaa" || storedFont === "naskh" || storedFont === "default"
             ? storedFont
             : "default";
+        document.body.classList.remove("side-nav-open", "navbar-more-open", "mobile-nav-body-lock");
+        document.body.style.removeProperty("overflow");
+        document.body.style.removeProperty("touch-action");
       } catch (error) {}
     </script>
     <div id="root"></div>

@@ -1,4 +1,4 @@
-const CACHE_NAME = "majalis-shell-v2";
+const CACHE_NAME = "majalis-shell-v3";
 const SHELL_URLS = ["/"];
 
 self.addEventListener("install", (event) => {

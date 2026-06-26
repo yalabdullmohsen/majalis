@@ -1,6 +1,5 @@
 "use client";
 
-import { useCallback, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { Link, useLocation } from "wouter";
 import {
@@ -63,94 +62,37 @@ type Props = {
   onClose: () => void;
 };
 
-function lockBodyScroll(locked: boolean) {
-  if (locked) {
-    document.body.classList.add("side-nav-open");
-  } else {
-    document.body.classList.remove("side-nav-open");
-  }
-}
-
 export function SideNavDrawer({ open, onClose }: Props) {
   const [pathname] = useLocation();
   const { isAdmin, isLoggedIn } = useAuth();
 
-  const close = useCallback(() => {
-    onClose();
-  }, [onClose]);
+  if (!open || typeof document === "undefined") return null;
 
-  useEffect(() => {
-    lockBodyScroll(false);
-  }, []);
-
-  useEffect(() => {
-    close();
-  }, [pathname, close]);
-
-  useEffect(() => {
-    if (!open) {
-      lockBodyScroll(false);
-      return;
-    }
-
-    lockBodyScroll(true);
-
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") close();
-    };
-
-    const onPopState = () => close();
-
-    window.addEventListener("keydown", onKey);
-    window.addEventListener("popstate", onPopState);
-
-    return () => {
-      lockBodyScroll(false);
-      window.removeEventListener("keydown", onKey);
-      window.removeEventListener("popstate", onPopState);
-    };
-  }, [open, close]);
-
-  if (!open) return null;
-
-  const handleBackdropClose = (event: React.PointerEvent) => {
-    event.preventDefault();
-    close();
-  };
-
-  const handleLinkClick = () => {
-    close();
-  };
+  const close = () => onClose();
 
   const drawer = (
-    <div
-      className="side-nav-backdrop--v2"
-      onPointerDown={handleBackdropClose}
-      role="presentation"
-    >
+    <div className="mobile-nav-layer mobile-nav-layer--drawer" role="presentation">
+      <button
+        type="button"
+        className="mobile-nav-backdrop"
+        aria-label="إغلاق القائمة الجانبية"
+        onClick={close}
+      />
       <aside
+        id="mobile-side-nav-drawer"
         className="side-nav-drawer--v2"
-        onPointerDown={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
         aria-label="القائمة الجانبية"
+        onClick={(event) => event.stopPropagation()}
       >
         <div className="side-nav-drawer__head side-nav-drawer__head--v2">
           <div className="side-nav-drawer__brand">
             <img src="/logo.png" alt="" width={36} height={36} />
             <strong>المجلس العلمي</strong>
           </div>
-          <button
-            type="button"
-            onPointerDown={(e) => {
-              e.stopPropagation();
-              close();
-            }}
-            aria-label="إغلاق"
-            className="side-nav-close"
-          >
+          <button type="button" onClick={close} aria-label="إغلاق" className="side-nav-close">
             <X size={22} aria-hidden="true" />
-            <span className="sr-only">إغلاق</span>
           </button>
         </div>
 
@@ -169,7 +111,7 @@ export function SideNavDrawer({ open, onClose }: Props) {
                     <Link
                       key={link.href}
                       href={link.href}
-                      onClick={handleLinkClick}
+                      onClick={close}
                       className={`side-nav-link side-nav-link--v2${active ? " is-active" : ""}`}
                     >
                       <Icon size={18} aria-hidden="true" />
@@ -186,11 +128,11 @@ export function SideNavDrawer({ open, onClose }: Props) {
             <nav>
               {!isLoggedIn ? (
                 <>
-                  <Link href="/login" onClick={handleLinkClick} className="side-nav-link side-nav-link--v2">
+                  <Link href="/login" onClick={close} className="side-nav-link side-nav-link--v2">
                     <Settings size={18} />
                     <span>دخول</span>
                   </Link>
-                  <Link href="/register" onClick={handleLinkClick} className="side-nav-link side-nav-link--v2">
+                  <Link href="/register" onClick={close} className="side-nav-link side-nav-link--v2">
                     <UserPlus size={18} />
                     <span>إنشاء حساب</span>
                   </Link>
@@ -198,7 +140,7 @@ export function SideNavDrawer({ open, onClose }: Props) {
               ) : (
                 <Link
                   href="/settings"
-                  onClick={handleLinkClick}
+                  onClick={close}
                   className={`side-nav-link side-nav-link--v2${pathname.startsWith("/settings") ? " is-active" : ""}`}
                 >
                   <Settings size={18} />
@@ -214,14 +156,14 @@ export function SideNavDrawer({ open, onClose }: Props) {
               {isAdmin ? (
                 <Link
                   href="/admin"
-                  onClick={handleLinkClick}
+                  onClick={close}
                   className={`side-nav-link side-nav-link--v2${pathname.startsWith("/admin") ? " is-active" : ""}`}
                 >
                   <Settings size={18} />
                   <span>لوحة التحكم</span>
                 </Link>
               ) : (
-                <Link href="/login?next=/admin" onClick={handleLinkClick} className="side-nav-link side-nav-link--v2">
+                <Link href="/login?next=/admin" onClick={close} className="side-nav-link side-nav-link--v2">
                   <Settings size={18} />
                   <span>دخول المسؤول</span>
                 </Link>

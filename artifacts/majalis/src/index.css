@@ -8435,16 +8435,8 @@ html[data-theme="dark"] .navbar-login {
   min-height: var(--mobile-touch-min);
 }
 .navbar-more-backdrop {
-  position: fixed;
-  inset: 0;
-  z-index: 54;
-  border: none;
-  padding: 0;
-  margin: 0;
-  background: rgba(22, 18, 12, 0.35);
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
+  /* legacy — replaced by .mobile-nav-backdrop (portaled to body) */
+  display: none;
 }
 .navbar-mobile-panel {
   position: relative;
@@ -8458,6 +8450,48 @@ html[data-theme="dark"] .navbar-login {
 }
 body.navbar-more-open { overflow: hidden; }
 body.navbar-more-open .navbar-v3 { z-index: 60; }
+
+/* Mobile nav overlays — always portaled to document.body (avoids sticky header stacking bugs) */
+.mobile-nav-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 1300;
+  pointer-events: auto;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mobile-nav-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border: none;
+  padding: 0;
+  margin: 0;
+  background: rgba(22, 18, 12, 0.45);
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mobile-nav-layer--drawer .side-nav-drawer--v2 {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+}
+
+.mobile-nav-layer--more .navbar-mobile-panel--portaled {
+  position: absolute;
+  top: calc(3.25rem + env(safe-area-inset-top, 0px));
+  right: 0;
+  left: 0;
+  z-index: 1;
+  max-height: min(70vh, calc(100dvh - 4.5rem - env(safe-area-inset-top, 0px)));
+}
+
+body.mobile-nav-body-lock {
+  overflow: hidden;
+}
 
 .error-boundary-btn {
   padding: 0.55rem 1.1rem;
@@ -8639,26 +8673,16 @@ body.navbar-more-open .navbar-v3 { z-index: 60; }
   font-weight: 700;
 }
 
-/* Mobile side nav v2 — must live in index.css (Vite production bundle) */
+/* Mobile side nav v2 — drawer panel (backdrop/layer in .mobile-nav-layer above) */
 .side-nav-backdrop--v2 {
-  position: fixed;
-  inset: 0;
-  z-index: 1200;
-  background: rgba(22, 18, 12, 0.45);
-  pointer-events: auto;
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
+  display: none;
 }
 
 .side-nav-drawer--v2 {
-  position: fixed;
-  top: 0;
-  right: 0;
   width: min(100%, 20rem);
   max-width: 85vw;
   height: 100%;
   height: 100dvh;
-  z-index: 1201;
   background: var(--majalis-parchment);
   border-left: 1px solid var(--majalis-line);
   transform: translateX(0);
@@ -8743,7 +8767,6 @@ html[data-theme="dark"] .side-nav-link--v2.is-active {
 
 body.side-nav-open {
   overflow: hidden;
-  touch-action: none;
 }
 
 .side-nav-group { margin-bottom: 1rem; }
