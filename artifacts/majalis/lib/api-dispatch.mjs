@@ -65,6 +65,7 @@ export const API_ROUTES = [
   { prefix: "/api/cron/governance-backup", module: "./api-handlers/cron/governance-backup.js", allowGet: true, exact: true },
   { prefix: "/api/admin/ai-agents", module: "./api-handlers/admin/ai-agents.js", allowGet: true },
   { prefix: "/api/admin/content-import", module: "./api-handlers/admin/content-import.js" },
+  { prefix: "/api/cron/import-phase2-trial", module: "./api-handlers/cron/import-phase2-trial.js", allowGet: true, exact: true },
   { prefix: "/api/cron/ai-agents", module: "./api-handlers/cron/ai-agents.js", allowGet: true, exact: true },
   { prefix: "/api/cron/verified-knowledge", module: "./api-handlers/cron/verified-knowledge.js", allowGet: true, exact: true },
   { prefix: "/api/admin/verified-knowledge", module: "./api-handlers/admin/verified-knowledge.js", allowGet: true },

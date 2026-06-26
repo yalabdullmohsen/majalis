@@ -5,6 +5,43 @@ function normalizeName(name) {
   return String(name || "").trim().toLowerCase();
 }
 
+function slugifyCategory(name) {
+  return String(name || "")
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, "-")
+    .replace(/[^\w\u0600-\u06FF-]+/g, "")
+    .slice(0, 80) || "general";
+}
+
+async function ensureQaCategory(admin, name, catByName) {
+  const key = normalizeName(name);
+  if (!key) return null;
+  if (catByName.has(key)) return catByName.get(key);
+
+  const { data: created, error } = await admin
+    .from("qa_categories")
+    .insert({ name: String(name).trim(), slug: slugifyCategory(name) })
+    .select("id")
+    .single();
+
+  if (error) {
+    const { data: existing } = await admin
+      .from("qa_categories")
+      .select("id, name")
+      .ilike("name", String(name).trim())
+      .maybeSingle();
+    if (existing?.id) {
+      catByName.set(key, existing.id);
+      return existing.id;
+    }
+    throw error;
+  }
+
+  catByName.set(key, created.id);
+  return created.id;
+}
+
 /**
  * @param {import("@supabase/supabase-js").SupabaseClient | null} admin
  * @param {string} type
@@ -180,10 +217,10 @@ async function importQuestions(admin, payloads, opts) {
 
   for (let i = 0; i < payloads.length; i++) {
     const raw = payloads[i];
-    const { category_name, confidence, ...rest } = raw;
+    const { category_name, confidence: _confidence, ...rest } = raw;
     const payload = { ...rest };
     if (category_name) {
-      payload.category_id = catByName.get(normalizeName(category_name)) || null;
+      payload.category_id = await ensureQaCategory(admin, category_name, catByName);
     }
 
     const key = dedupeKeyForRow("questions", payload);

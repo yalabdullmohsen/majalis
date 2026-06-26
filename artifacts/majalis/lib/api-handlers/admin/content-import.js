@@ -3,6 +3,7 @@ import { fileURLToPath } from "node:url";
 import { sendJson } from "../../api/_http.mjs";
 import { requireAdminAccess } from "../../../lib/admin-auth.mjs";
 import { runContentImportRows, runContentImportFromString } from "../../../lib/content-import/engine.mjs";
+import { runPhase2TrialImport } from "../../../lib/content-import/phase2-trial.mjs";
 import { CONTENT_TYPES } from "../../../lib/content-import/registry.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -18,8 +19,21 @@ export default async function handler(req, res) {
   }
 
   const body = req.body || {};
-  const type = String(body.type || req.query?.type || "").trim();
+  const action = String(body.action || req.query?.action || "").trim();
   const dryRun = body.dryRun === true || req.query?.dryRun === "1";
+
+  if (action === "phase2-trial") {
+    try {
+      const result = await runPhase2TrialImport(APP_ROOT, { dryRun });
+      sendJson(res, result.ok ? 200 : 422, { ok: result.ok, ...result });
+    } catch (err) {
+      console.error("[admin/content-import:phase2-trial]", err);
+      sendJson(res, 500, { ok: false, error: String(err.message || err) });
+    }
+    return;
+  }
+
+  const type = String(body.type || req.query?.type || "").trim();
 
   if (!type) {
     sendJson(res, 400, {
