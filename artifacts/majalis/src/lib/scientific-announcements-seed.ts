@@ -127,10 +127,10 @@ export const SCIENTIFIC_ANNOUNCEMENTS: ScientificAnnouncement[] = [
     contactPhone: "60789104",
     socialHandle: "@dwhedayakew",
     notes: [
-      "جميع المحاضرات بعد صلاة المغرب.",
+      "جميع الدروس بعد صلاة المغرب.",
       "سيتم بث الأنشطة عبر حسابات الجمعية.",
     ],
-    tags: ["محاضرة", "ملتقى", "حضوري", "بث"],
+    tags: ["درس", "ملتقى", "حضوري", "بث"],
     kind: "one_time",
   },
   {
@@ -149,10 +149,10 @@ export const SCIENTIFIC_ANNOUNCEMENTS: ScientificAnnouncement[] = [
     contactPhone: "60789104",
     socialHandle: "@dwhedayakew",
     notes: [
-      "جميع المحاضرات بعد صلاة المغرب.",
+      "جميع الدروس بعد صلاة المغرب.",
       "سيتم بث الأنشطة عبر حسابات الجمعية.",
     ],
-    tags: ["محاضرة", "ملتقى", "حضوري", "بث"],
+    tags: ["درس", "ملتقى", "حضوري", "بث"],
     kind: "one_time",
   },
   {
@@ -171,10 +171,10 @@ export const SCIENTIFIC_ANNOUNCEMENTS: ScientificAnnouncement[] = [
     contactPhone: "60789104",
     socialHandle: "@dwhedayakew",
     notes: [
-      "جميع المحاضرات بعد صلاة المغرب.",
+      "جميع الدروس بعد صلاة المغرب.",
       "سيتم بث الأنشطة عبر حسابات الجمعية.",
     ],
-    tags: ["محاضرة", "ملتقى", "حضوري", "بث"],
+    tags: ["درس", "ملتقى", "حضوري", "بث"],
     kind: "one_time",
   },
   {
@@ -193,10 +193,10 @@ export const SCIENTIFIC_ANNOUNCEMENTS: ScientificAnnouncement[] = [
     contactPhone: "60789104",
     socialHandle: "@dwhedayakew",
     notes: [
-      "جميع المحاضرات بعد صلاة المغرب.",
+      "جميع الدروس بعد صلاة المغرب.",
       "سيتم بث الأنشطة عبر حسابات الجمعية.",
     ],
-    tags: ["محاضرة", "ملتقى", "حضوري", "بث"],
+    tags: ["درس", "ملتقى", "حضوري", "بث"],
     kind: "one_time",
   },
   {
@@ -215,10 +215,10 @@ export const SCIENTIFIC_ANNOUNCEMENTS: ScientificAnnouncement[] = [
     contactPhone: "60789104",
     socialHandle: "@dwhedayakew",
     notes: [
-      "جميع المحاضرات بعد صلاة المغرب.",
+      "جميع الدروس بعد صلاة المغرب.",
       "سيتم بث الأنشطة عبر حسابات الجمعية.",
     ],
-    tags: ["محاضرة", "ملتقى", "حضوري", "بث"],
+    tags: ["درس", "ملتقى", "حضوري", "بث"],
     kind: "one_time",
   },
   {
