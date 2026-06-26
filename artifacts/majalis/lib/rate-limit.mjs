@@ -15,27 +15,34 @@ function stripQuotes(value) {
 }
 
 function getUpstashCredentials() {
-  const rawUrl = process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL || "";
-  const rawToken = process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN || "";
-  const blob = `${rawUrl}\n${rawToken}`;
+  let url = stripQuotes(process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL || "");
+  let token = stripQuotes(process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN || "");
 
-  let url = rawUrl;
-  let token = rawToken;
+  url = String(url).replace(/^UPSTASH_REDIS_REST_URL=/, "").replace(/^KV_REST_API_URL=/, "");
+  token = String(token).replace(/^UPSTASH_REDIS_REST_TOKEN=/, "").replace(/^KV_REST_API_TOKEN=/, "");
+  url = stripQuotes(url);
+  token = stripQuotes(token);
 
-  const urlFromBlob = blob.match(/https:\/\/[^\s"'\\]+/);
-  if (urlFromBlob) url = urlFromBlob[0];
+  const urlLooksMalformed =
+    url.includes("UPSTASH_REDIS_REST_TOKEN=") ||
+    url.includes("UPSTASH_REDIS_REST_URL=") ||
+    url.includes("\n");
+  const tokenLooksMalformed =
+    token.includes("UPSTASH_REDIS_REST_URL=") ||
+    token.includes("UPSTASH_REDIS_REST_TOKEN=") ||
+    token.includes("https://") ||
+    token.includes("\n");
 
-  const tokenFromBlob =
-    blob.match(/UPSTASH_REDIS_REST_TOKEN=["']?([^"'\s\\n]+)/i)?.[1] ||
-    blob.match(/KV_REST_API_TOKEN=["']?([^"'\s\\n]+)/i)?.[1];
-  if (tokenFromBlob) token = tokenFromBlob;
+  // Only recover from combined paste when values are not already clean separate vars.
+  if (urlLooksMalformed || tokenLooksMalformed || !url || !token) {
+    const blob = `${process.env.UPSTASH_REDIS_REST_URL || ""}\n${process.env.UPSTASH_REDIS_REST_TOKEN || ""}`;
+    const urlFromBlob = blob.match(/https:\/\/[^\s"'\\]+/);
+    if (urlFromBlob && (!url || urlLooksMalformed)) url = urlFromBlob[0];
 
-  url = stripQuotes(String(url).replace(/^UPSTASH_REDIS_REST_URL=/, "").replace(/^KV_REST_API_URL=/, ""));
-  token = stripQuotes(String(token).replace(/^UPSTASH_REDIS_REST_TOKEN=/, "").replace(/^KV_REST_API_TOKEN=/, ""));
-
-  if (token.includes("UPSTASH_REDIS_REST_URL=") || token.includes("https://")) {
-    const nested = token.match(/UPSTASH_REDIS_REST_TOKEN=["']?([^"'\s\\n]+)/i)?.[1];
-    if (nested) token = nested;
+    const tokenFromBlob =
+      blob.match(/UPSTASH_REDIS_REST_TOKEN=["']?([^"'\s\\n]+)/i)?.[1] ||
+      blob.match(/KV_REST_API_TOKEN=["']?([^"'\s\\n]+)/i)?.[1];
+    if (tokenFromBlob && (!token || tokenLooksMalformed)) token = tokenFromBlob;
   }
 
   const urlMatch = String(url).match(/https:\/\/[^\s"'\\]+/);
@@ -98,6 +105,7 @@ function getUpstashRedis() {
     return upstashRedis;
   } catch (err) {
     upstashInitError = sanitizeRateLimitError(String(err?.message || err));
+    upstashRedis = null;
     return null;
   } finally {
     upstashInitAttempted = true;
@@ -121,6 +129,11 @@ export async function checkRateLimit(key, { windowMs = 60_000, max = 20 } = {}) 
         backend: "upstash",
       };
     } catch (err) {
+      const message = String(err?.message || err);
+      if (/WRONGPASS|unauthorized|invalid auth token/i.test(message)) {
+        upstashRedis = null;
+        upstashInitAttempted = false;
+      }
       if (isProductionEnv()) {
         return {
           allowed: false,
