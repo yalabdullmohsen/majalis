@@ -30,6 +30,7 @@ export const MIGRATION_FILES = [
   "smart_cms_v5.sql",
   "lesson_import_drafts_v1.sql",
   "trusted_lesson_sources_v1.sql",
+  "kuwait_instagram_sources_v1.sql",
 ];
 
 export function resolveMigrationsDir() {

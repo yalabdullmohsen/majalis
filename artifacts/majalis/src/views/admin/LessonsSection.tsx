@@ -122,7 +122,7 @@ export function LessonsSection() {
             }}
           />
           <Link
-            href="/admin/automation/sources"
+            href="/admin/sources"
             style={{ padding: "0.5rem 1rem", borderRadius: "0.375rem", background: "#FEF3C7", color: "#92400E", textDecoration: "none", fontFamily: "inherit", fontSize: "0.875rem", fontWeight: 600, display: "inline-flex", alignItems: "center" }}
           >
             أتمتة المصادر

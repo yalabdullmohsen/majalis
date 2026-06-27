@@ -102,12 +102,18 @@ function AutomationSourcesContent() {
         </div>
       </div>
 
+      <div style={{ background: "#EFF6FF", border: "1px solid #BFDBFE", borderRadius: "0.5rem", padding: "0.75rem 1rem", marginBottom: "1rem", fontSize: "0.8125rem", color: "#1E40AF" }}>
+        <strong>Instagram:</strong> إذا تعذّر جلب المنشورات، استخدم Instagram Graph API أو{' '}
+        <Link href="/admin/content-import/image">رفع صورة</Link> أو{' '}
+        <Link href="/admin/content-import/url">رابط + صورة</Link>. المصادر تبقى محفوظة للفحص عند توفر Connector.
+      </div>
+
       <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1rem", flexWrap: "wrap" }}>
         <button type="button" disabled={busy} onClick={() => { setForm({ ...EMPTY }); setShowForm(true); }} style={{ padding: "0.5rem 1rem", background: C.emerald, color: C.parchment, border: "none", borderRadius: "0.375rem", cursor: "pointer", fontFamily: "inherit" }}>
           + إضافة مصدر
         </button>
-        <button type="button" disabled={busy} onClick={() => onRunMonitor()} style={{ padding: "0.5rem 1rem", background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.375rem", cursor: "pointer", fontFamily: "inherit" }}>
-          تشغيل المراقبة الآن
+        <button type="button" disabled={busy} onClick={() => onRunMonitor()} style={{ padding: "0.5rem 1rem", background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.375rem", cursor: "pointer", fontFamily: "inherit", fontWeight: 600 }}>
+          فحص الآن (كل المصادر)
         </button>
       </div>
 
@@ -149,7 +155,11 @@ function AutomationSourcesContent() {
                 <div>
                   <strong style={{ color: C.emeraldDeep }}>{s.name}</strong>
                   <p style={{ margin: "0.25rem 0", fontSize: "0.8125rem", color: C.inkSoft }}>
-                    {s.source_type} · {s.trust_level} · {s.active ? "نشط" : "معطّل"}
+                    {(s as TrustedLessonSource & { config?: { source_subtype?: string; handle?: string } }).config?.handle || s.source_type}
+                    {" · "}
+                    {(s as TrustedLessonSource & { config?: { source_subtype?: string } }).config?.source_subtype || s.category}
+                    {" · "}
+                    {s.trust_level} · {s.active ? "نشط" : "معطّل"}
                     {s.auto_publish_allowed ? " · Auto-Publish ✓" : ""}
                   </p>
                   <a href={s.url} target="_blank" rel="noopener noreferrer" style={{ fontSize: "0.75rem", wordBreak: "break-all" }}>{s.url}</a>
@@ -166,7 +176,9 @@ function AutomationSourcesContent() {
                     Auto-Publish
                   </button>
                   <button type="button" disabled={busy} onClick={() => { setForm(s); setShowForm(true); }} style={{ fontSize: "0.75rem", padding: "0.25rem 0.5rem", cursor: "pointer", fontFamily: "inherit" }}>تعديل</button>
-                  <button type="button" disabled={busy} onClick={() => onRunMonitor(s.id)} style={{ fontSize: "0.75rem", padding: "0.25rem 0.5rem", cursor: "pointer", fontFamily: "inherit" }}>فحص</button>
+                  <button type="button" disabled={busy} onClick={() => onRunMonitor(s.id)} style={{ fontSize: "0.75rem", padding: "0.25rem 0.5rem", cursor: "pointer", fontFamily: "inherit", fontWeight: 600, color: C.emeraldDeep }}>
+                    فحص الآن
+                  </button>
                 </div>
               </div>
             </article>

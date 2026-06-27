@@ -12,6 +12,7 @@ import { writeAutomationAudit } from "./automation-audit.mjs";
 import { createLessonImportDraft } from "./lesson-import-draft.mjs";
 import { publishLessonDraft } from "./publish-lesson.mjs";
 import { getSupabaseAdmin } from "../supabase-admin.mjs";
+import { discoverInstagramSource, enrichParsedFromSourceConfig, INSTAGRAM_CONNECTOR_HINTS } from "./instagram-connector.mjs";
 import { resolveSheikhIdForDraft } from "./lesson-import-actions.mjs";
 
 async function parseRssItems(xml) {
@@ -87,6 +88,7 @@ async function extractFromItem(item, source) {
     if (source.country && !parsed.country) parsed.country = source.country;
     if (source.category && !parsed.category) parsed.category = source.category;
     parsed.source_url = sourceUrl;
+    parsed = enrichParsedFromSourceConfig(parsed, source);
   } catch (err) {
     parsed = {
       title: item.title || "",
@@ -101,8 +103,49 @@ async function extractFromItem(item, source) {
   return { parsed, extractedText, confidenceScore, imageUrl, imageHash };
 }
 
-export async function processAutomationItem({ source, item }) {
+export async function processAutomationItem({ source, item, connectorHint }) {
   const sourceUrl = item.link || source.url;
+
+  if (item.connectorPending || connectorHint) {
+    const draft = await createLessonImportDraft({
+      sourceType: source.source_type,
+      sourceUrl,
+      imageUrl: null,
+      extractedText: item.description || "",
+      parsedPayload: enrichParsedFromSourceConfig(
+        { title: item.title || source.name, description: item.description || "", source_url: sourceUrl },
+        source,
+      ),
+      confidenceScore: 0,
+      warnings: INSTAGRAM_CONNECTOR_HINTS.map((h) => ({ field: "connector", message: h })),
+      missingFields: ["poster_image", "date", "lesson_time", "speaker_name"],
+      createdBy: null,
+      status: "needs_review",
+      sourceId: source.id,
+      automationStatus: "pending_review",
+      decisionReason: connectorHint || "instagram_connector_required",
+    });
+    await writeAutomationAudit({
+      sourceId: source.id,
+      sourceUrl,
+      extractedText: item.description || "",
+      parsedPayload: { title: item.title },
+      confidenceScore: 0,
+      decision: "pending_review",
+      reason: connectorHint || "instagram_connector_required",
+      draftId: draft.draft?.id,
+    });
+    return {
+      decision: "pending_review",
+      autoPublished: false,
+      draftId: draft.draft?.id,
+      sourceUrl,
+      title: item.title,
+      reason: connectorHint || "instagram_connector_required",
+      connectorRequired: true,
+    };
+  }
+
   const { parsed, extractedText, confidenceScore, imageUrl, imageHash, extractError } = await extractFromItem(item, source);
   const sheikhMatch = await matchSheikhByName(parsed.speaker_name);
   const duplicate = await findDuplicateLesson({ parsed, sourceUrl, imageHash });
@@ -215,21 +258,32 @@ export async function processAutomationItem({ source, item }) {
 async function discoverItems(source) {
   const feedUrl = source.feed_url || (source.source_type === "rss" ? source.url : null);
 
+  if (source.source_type === "instagram") {
+    const ig = await discoverInstagramSource(source);
+    return { items: ig.items, connectorHint: ig.connectorRequired ? ig.hint : null, instagramLimited: ig.instagramLimited };
+  }
+
   if (feedUrl || source.source_type === "rss") {
     const imported = await importFromUrl(feedUrl || source.url);
     const items = await parseRssItems(imported.rawText || imported.description || "");
-    return items.length ? items : [{ title: imported.title, link: source.url, description: imported.description, imageUrl: imported.imageUrl }];
+    return {
+      items: items.length ? items : [{ title: imported.title, link: source.url, description: imported.description, imageUrl: imported.imageUrl }],
+      connectorHint: null,
+    };
   }
 
   const imported = await importFromUrl(source.url);
-  return [
-    {
-      title: imported.title,
-      link: imported.finalUrl || source.url,
-      description: imported.description,
-      imageUrl: imported.imageUrl,
-    },
-  ];
+  return {
+    items: [
+      {
+        title: imported.title,
+        link: imported.finalUrl || source.url,
+        description: imported.description,
+        imageUrl: imported.imageUrl,
+      },
+    ],
+    connectorHint: null,
+  };
 }
 
 export async function runLessonSourceMonitor({ dryRun = false, sourceId = null } = {}) {
@@ -245,21 +299,31 @@ export async function runLessonSourceMonitor({ dryRun = false, sourceId = null }
   let duplicates = 0;
   let errors = 0;
 
+  let connectorNeeded = 0;
+
   for (const source of sources) {
     try {
-      const items = await discoverItems(source);
+      const { items, connectorHint } = await discoverItems(source);
       for (const item of items) {
         if (dryRun) {
-          results.push({ source: source.name, item: item.link, dryRun: true });
+          results.push({ source: source.name, item: item.link, dryRun: true, connectorHint });
           continue;
         }
-        const outcome = await processAutomationItem({ source, item });
-        results.push({ source: source.name, ...outcome });
+        const outcome = await processAutomationItem({ source, item, connectorHint });
+        results.push({ source: source.name, ...outcome, connectorHint });
+        if (outcome.connectorRequired) connectorNeeded += 1;
         if (outcome.autoPublished) published += 1;
         else if (outcome.decision === "duplicate") duplicates += 1;
         else review += 1;
       }
       await updateSourceCheckStatus(source.id, { success: true });
+      if (connectorHint) {
+        const admin = getSupabaseAdmin();
+        await admin
+          ?.from("trusted_lesson_sources")
+          .update({ last_error: String(connectorHint).slice(0, 500) })
+          .eq("id", source.id);
+      }
     } catch (err) {
       errors += 1;
       await updateSourceCheckStatus(source.id, { success: false, error: err.message });
@@ -274,6 +338,7 @@ export async function runLessonSourceMonitor({ dryRun = false, sourceId = null }
     pendingReview: review,
     duplicates,
     errors,
+    connectorNeeded,
     results,
   };
 }

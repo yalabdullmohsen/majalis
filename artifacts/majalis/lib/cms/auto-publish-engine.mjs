@@ -18,12 +18,14 @@ export function validateAutomationRequiredFields(parsed, { sourceUrl, imageUrl }
   const missing = [];
   if (!pick(parsed, "title")) missing.push("title");
   if (!pick(parsed, "speaker_name", "sheikh_name")) missing.push("speaker_name");
-  if (!pick(parsed, "start_date", "gregorian_date")) missing.push("date");
+  const dateStr = pick(parsed, "start_date", "gregorian_date");
+  const dayOfWeek = pick(parsed, "day_of_week", "day");
+  if (!dateStr && !dayOfWeek) missing.push("date");
   if (!pick(parsed, "lesson_time", "time")) missing.push("lesson_time");
-  if (!pick(parsed, "mosque", "location")) missing.push("mosque");
-  if (!pick(parsed, "region") && !pick(parsed, "mosque", "location")) missing.push("region_or_mosque");
+  const hasPlace = pick(parsed, "mosque", "location") || pick(parsed, "live_url");
+  if (!hasPlace) missing.push("place_or_live");
   if (!sourceUrl) missing.push("source_url");
-  if (!imageUrl && !sourceUrl) missing.push("poster_or_source");
+  if (!imageUrl) missing.push("poster_image");
   return missing;
 }
 
@@ -101,8 +103,14 @@ export function evaluateAutoPublish({
   }
 
   const mosque = pick(parsed, "mosque", "location");
-  if (!mosque) {
-    reasons.push("المكان غير واضح");
+  const liveUrl = pick(parsed, "live_url");
+  const hasPlace = Boolean(mosque || liveUrl);
+  if (!hasPlace) {
+    reasons.push("المكان أو رابط البث غير واضح");
+  }
+
+  if (!imageUrl) {
+    reasons.push("صورة الإعلان مطلوبة للنشر التلقائي");
   }
 
   const hasSheikh = Boolean(sheikhMatch?.matched?.id || pick(parsed, "speaker_name"));
@@ -122,9 +130,10 @@ export function evaluateAutoPublish({
     missing.length === 0 &&
     validation.canPublish &&
     title.length >= 4 &&
-    mosque &&
+    hasPlace &&
     hasSheikh &&
     sourceUrl &&
+    imageUrl &&
     (dateStr ? isFutureDate(dateStr) : Boolean(dayOfWeek));
 
   if (canAuto) {
