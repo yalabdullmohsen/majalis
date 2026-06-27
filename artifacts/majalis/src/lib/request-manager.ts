@@ -5,7 +5,9 @@
 
 import { measureAsync } from "@/lib/performance-monitor";
 
-export const REQUEST_TIMEOUT_MS = 3000;
+export const REQUEST_TIMEOUT_MS = 8000;
+/** Hard ceiling for page/route loading guards — never show loading longer than this. */
+export const PAGE_LOAD_TIMEOUT_MS = 8000;
 /** No timeout — use for long-running import job polling and batch uploads. */
 export const REQUEST_NO_TIMEOUT = 0;
 export const REQUEST_MAX_RETRIES = 1;
@@ -123,31 +125,46 @@ export class RequestManager {
     const linked = mergeSignals(opts.signal, controller.signal);
 
     const exec = async (): Promise<T> => {
-      let lastError: unknown;
-      for (let attempt = 0; attempt <= retries; attempt++) {
-        const attemptController = new AbortController();
-        const timeoutId =
-          timeoutMs != null ? window.setTimeout(() => attemptController.abort(), timeoutMs) : undefined;
-        const signal = mergeSignals(linked, attemptController.signal);
+      const hardCapMs = timeoutMs ?? PAGE_LOAD_TIMEOUT_MS;
+      const hardCap =
+        hardCapMs != null
+          ? new Promise<never>((_, reject) => {
+              window.setTimeout(
+                () => reject(new RequestTimeoutError(`${label}:hard-cap`, hardCapMs)),
+                hardCapMs + 500,
+              );
+            })
+          : null;
 
-        try {
-          const result = await measureAsync("query", label, () => fn(signal!), { attempt });
-          if (timeoutId != null) window.clearTimeout(timeoutId);
-          return result;
-        } catch (err) {
-          if (timeoutId != null) window.clearTimeout(timeoutId);
-          lastError = err;
-          if (attempt < retries) {
-            await sleep(200, linked).catch(() => {});
-            continue;
+      const runAttempts = async (): Promise<T> => {
+        let lastError: unknown;
+        for (let attempt = 0; attempt <= retries; attempt++) {
+          const attemptController = new AbortController();
+          const timeoutId =
+            timeoutMs != null ? window.setTimeout(() => attemptController.abort(), timeoutMs) : undefined;
+          const signal = mergeSignals(linked, attemptController.signal);
+
+          try {
+            const result = await measureAsync("query", label, () => fn(signal!), { attempt });
+            if (timeoutId != null) window.clearTimeout(timeoutId);
+            return result;
+          } catch (err) {
+            if (timeoutId != null) window.clearTimeout(timeoutId);
+            lastError = err;
+            if (attempt < retries) {
+              await sleep(200, linked).catch(() => {});
+              continue;
+            }
           }
         }
-      }
 
-      if ((lastError as Error)?.name === "AbortError") {
-        throw new RequestTimeoutError(label, timeoutMs ?? REQUEST_TIMEOUT_MS);
-      }
-      throw lastError;
+        if ((lastError as Error)?.name === "AbortError") {
+          throw new RequestTimeoutError(label, timeoutMs ?? REQUEST_TIMEOUT_MS);
+        }
+        throw lastError;
+      };
+
+      return hardCap ? Promise.race([runAttempts(), hardCap]) : runAttempts();
     };
 
     const promise = exec().finally(() => {

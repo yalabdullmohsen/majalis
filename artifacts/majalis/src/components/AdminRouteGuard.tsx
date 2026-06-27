@@ -26,7 +26,14 @@ export function AdminRouteGuard({ children }: { children: React.ReactNode }) {
   if (loading) return <Loading />;
 
   if (!isLoggedIn) {
-    return <Loading />;
+    return (
+      <div className="login-page">
+        <div className="login-card">
+          <p className="ds-empty">جاري التحويل إلى صفحة الدخول…</p>
+          <Link href="/login?next=/admin" className="login-back-link">الذهاب لتسجيل الدخول</Link>
+        </div>
+      </div>
+    );
   }
 
   if (denied || !isAdmin) {

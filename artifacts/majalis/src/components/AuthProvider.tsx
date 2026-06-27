@@ -3,7 +3,7 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { ADMIN_GOVERNANCE_ROLES, LEGACY_ROLE_MAP } from "@/lib/governance-roles";
 import { hasUnrestrictedAdminAccess, isOwnerProfile, isOwnerAuthUser, resolveUserEmail } from "@/lib/owner-config";
-import { RequestManager } from "@/lib/request-manager";
+import { RequestManager, PAGE_LOAD_TIMEOUT_MS } from "@/lib/request-manager";
 
 type SupabaseAuthModule = typeof import("@/lib/supabase");
 
@@ -41,6 +41,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     let active = true;
     let unsubscribe: (() => void) | undefined;
+    const authTimeout = window.setTimeout(() => {
+      if (active) setLoading(false);
+    }, PAGE_LOAD_TIMEOUT_MS);
 
     import("@/lib/supabase-bootstrap")
       .then(({ bootstrapSupabaseFromServer, resetSupabaseClient }) =>
@@ -60,6 +63,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       })
       .finally(() => {
         if (active) setLoading(false);
+        window.clearTimeout(authTimeout);
       });
 
     import("@/lib/supabase-bootstrap")
@@ -83,6 +87,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     return () => {
       active = false;
+      window.clearTimeout(authTimeout);
       unsubscribe?.();
     };
   }, []);

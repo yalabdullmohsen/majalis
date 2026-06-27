@@ -3,6 +3,7 @@ import { getQaCategories, getQaQuestions } from "@/lib/supabase";
 import { RequestManager } from "@/lib/request-manager";
 import { QA_DISCLAIMER } from "@/lib/theme";
 import { PageHeader, Empty, QaSkeleton } from "@/components/ui-common";
+import { PageLoadingGuard } from "@/components/PageLoadingGuard";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
 import { DEMO_QA, DEMO_QA_CATEGORIES } from "@/lib/demo-content";
 import { QaCard } from "@/components/qa/QaCard";
@@ -236,11 +237,12 @@ export default function QaPage({
         </section>
       )}
 
-      {loading ? (
-        <QaSkeleton count={6} />
-      ) : sortedItems.length === 0 ? (
-        <Empty text={emptyMessage} />
-      ) : (
+      <PageLoadingGuard
+        loading={loading}
+        empty={!loading && sortedItems.length === 0}
+        emptyText={emptyMessage}
+        onRetry={loadQuestions}
+      >
         <div className="qa-grid">
           {sortedItems.map((q) => (
             <div key={q.id} onMouseEnter={() => markQaSeen(q.id)}>
@@ -248,7 +250,7 @@ export default function QaPage({
             </div>
           ))}
         </div>
-      )}
+      </PageLoadingGuard>
 
       <aside className="ds-filters-panel ds-filters-panel--desktop">
         <div className="ds-filters-panel__head">

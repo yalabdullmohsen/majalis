@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { ErrorState, QaSkeleton } from "@/components/ui-common";
-import { REQUEST_TIMEOUT_MS } from "@/lib/request-manager";
+import { PAGE_LOAD_TIMEOUT_MS } from "@/lib/request-manager";
 
 /** Suspense fallback that never hangs — skeleton then error with retry. */
 export function LazyRouteFallback() {
   const [timedOut, setTimedOut] = useState(false);
 
   useEffect(() => {
-    const id = window.setTimeout(() => setTimedOut(true), REQUEST_TIMEOUT_MS);
+    const id = window.setTimeout(() => setTimedOut(true), PAGE_LOAD_TIMEOUT_MS);
     return () => window.clearTimeout(id);
   }, []);
 

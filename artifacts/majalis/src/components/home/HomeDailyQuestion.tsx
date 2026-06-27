@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
-import { Loading } from "@/components/ui-common";
+import { PageLoadingGuard } from "@/components/PageLoadingGuard";
+import { RequestManager } from "@/lib/request-manager";
 import { getQaQuestions } from "@/lib/supabase";
 import { getDailyQa } from "@/lib/daily-content";
 import { cleanDisplayText } from "@/lib/display-text";
@@ -10,7 +11,7 @@ export function HomeDailyQuestion() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getQaQuestions()
+    void RequestManager.run("home:daily-question", () => getQaQuestions())
       .then(({ data }) => {
         const items = data || [];
         if (items.length > 0) {
@@ -37,22 +38,22 @@ export function HomeDailyQuestion() {
         </div>
         <Link href="/qa" className="home-section-link">كل الأسئلة</Link>
       </div>
-      {loading ? (
-        <Loading />
-      ) : question ? (
-        <Link href="/qa" className="home-qa-card ui-card home-daily-card">
-          <div className="home-qa-card__body">
-            <h3 className="home-qa-card__question">{cleanDisplayText(question.question)}</h3>
-          </div>
-          {question.category && (
-            <footer className="home-qa-card__footer">
-              <span className="home-qa-chip">{cleanDisplayText(question.category)}</span>
-            </footer>
-          )}
-        </Link>
-      ) : (
-        <p className="lessons-empty-state">لا يوجد سؤال متاح حالياً.</p>
-      )}
+      <PageLoadingGuard loading={loading} empty={!loading && !question} emptyText="لا توجد بيانات حالياً">
+        {question ? (
+          <Link href="/qa" className="home-qa-card ui-card home-daily-card">
+            <div className="home-qa-card__body">
+              <h3 className="home-qa-card__question">{cleanDisplayText(question.question)}</h3>
+            </div>
+            {question.category && (
+              <footer className="home-qa-card__footer">
+                <span className="home-qa-chip">{cleanDisplayText(question.category)}</span>
+              </footer>
+            )}
+          </Link>
+        ) : (
+          <span />
+        )}
+      </PageLoadingGuard>
     </section>
   );
 }
