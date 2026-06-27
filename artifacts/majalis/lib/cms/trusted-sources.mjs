@@ -184,6 +184,20 @@ export async function upsertTrustedSource(payload) {
   return { ok: true, source: mapContentSourceToLegacy({ ...inserted, trust_score: trustLevelToScore(inserted.trust_level), rss_url: inserted.feed_url }) };
 }
 
+export async function updateSourceDiscoverySnapshot(id, discoveredUrls = []) {
+  const admin = getSupabaseAdmin();
+  if (!admin || !id) return;
+
+  const urls = [...new Set(discoveredUrls.filter(Boolean))].slice(0, 100);
+  const { data } = await admin.from(PRIMARY_TABLE).select("config").eq("id", id).maybeSingle();
+  const config = { ...(data?.config || {}), last_discovered_urls: urls };
+
+  const { error } = await admin.from(PRIMARY_TABLE).update({ config, updated_at: new Date().toISOString() }).eq("id", id);
+  if (!error) return;
+
+  await admin.from(LEGACY_TABLE).update({ updated_at: new Date().toISOString() }).eq("id", id);
+}
+
 export async function updateSourceCheckStatus(id, { success, error: errMsg, seenUrls } = {}) {
   const admin = getSupabaseAdmin();
   if (!admin) return;

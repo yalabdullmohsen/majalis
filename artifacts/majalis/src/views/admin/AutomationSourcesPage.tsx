@@ -24,7 +24,7 @@ const EMPTY: TrustedLessonSource = {
   country: "الكويت",
   city: "العاصمة",
   category: "دروس",
-  active: false,
+  active: true,
 };
 
 const inputSt: React.CSSProperties = {
@@ -91,21 +91,22 @@ function AutomationSourcesContent() {
     <div>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "0.75rem", marginBottom: "1rem" }}>
         <div>
-          <h2 style={{ margin: "0 0 0.35rem", color: C.emeraldDeep }}>مصادر الدروس المعتمدة</h2>
+          <h2 style={{ margin: "0 0 0.35rem", color: C.emeraldDeep }}>مصادر المحتوى — أضف وانسَ</h2>
           <p style={{ margin: 0, color: C.inkSoft, fontSize: "0.875rem" }}>
-            مصادر موثوقة فقط — لا بحث عشوائي. Auto-Publish للمصادر official/trusted بثقة ≥95% + حقول كاملة.
+            أضف مصدرًا واحدًا (إنستغرام، موقع، RSS، تيليجرام، يوتيوب، X…) — النظام يتابعه كل 15 دقيقة ويستخرج وينشر تلقائيًا.
           </p>
         </div>
-        <div style={{ display: "flex", gap: "0.5rem", fontSize: "0.8125rem" }}>
+        <div style={{ display: "flex", gap: "0.5rem", fontSize: "0.8125rem", flexWrap: "wrap" }}>
+          <Link href="/admin/automation/dashboard" style={{ color: C.emeraldDeep }}>لوحة المراقبة</Link>
           <Link href="/admin/review-center" style={{ color: C.emeraldDeep }}>مركز المراجعة</Link>
           <Link href="/admin" style={{ color: C.emeraldDeep }}>← لوحة الإدارة</Link>
         </div>
       </div>
 
-      <div style={{ background: "#EFF6FF", border: "1px solid #BFDBFE", borderRadius: "0.5rem", padding: "0.75rem 1rem", marginBottom: "1rem", fontSize: "0.8125rem", color: "#1E40AF" }}>
-        <strong>Instagram:</strong> إذا تعذّر جلب المنشورات، استخدم Instagram Graph API أو{' '}
-        <Link href="/admin/content-import/image">رفع صورة</Link> أو{' '}
-        <Link href="/admin/content-import/url">رابط + صورة</Link>. المصادر تبقى محفوظة للفحص عند توفر Connector.
+      <div style={{ background: "#ECFDF5", border: "1px solid #A7F3D0", borderRadius: "0.5rem", padding: "0.75rem 1rem", marginBottom: "1rem", fontSize: "0.8125rem", color: "#065F46" }}>
+        <strong>Phase 5:</strong> بعد الحفظ يُنشأ Job تلقائي (كل 15 دقيقة) — Vision AI + Matching + SEO بدون build جديد.
+        {" "}
+        <strong>Instagram:</strong> يتطلب Graph API للجلب الكامل؛ بدونه تُنشأ مسودات للمراجعة.
       </div>
 
       <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1rem", flexWrap: "wrap" }}>
@@ -121,16 +122,17 @@ function AutomationSourcesContent() {
         <section style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.625rem", padding: "1rem", marginBottom: "1rem" }}>
           <h3 style={{ margin: "0 0 0.75rem", color: C.emeraldDeep }}>{form.id ? "تعديل مصدر" : "مصدر جديد"}</h3>
           <div style={{ display: "grid", gap: "0.75rem", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))" }}>
-            <input placeholder="الاسم" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} style={inputSt} />
-            <input placeholder="URL" value={form.url} onChange={(e) => setForm({ ...form, url: e.target.value })} style={inputSt} dir="ltr" />
+            <input placeholder="اسم المصدر" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} style={inputSt} />
+            <input placeholder="الرابط" value={form.url} onChange={(e) => setForm({ ...form, url: e.target.value })} style={inputSt} dir="ltr" />
             <select value={form.source_type} onChange={(e) => setForm({ ...form, source_type: e.target.value, platform: e.target.value })} style={inputSt}>
               {SOURCE_TYPES.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
             </select>
+            <input placeholder="الدولة" value={form.country || ""} onChange={(e) => setForm({ ...form, country: e.target.value })} style={inputSt} />
+            <input placeholder="المدينة" value={form.city || ""} onChange={(e) => setForm({ ...form, city: e.target.value })} style={inputSt} />
             <select value={form.trust_level} onChange={(e) => setForm({ ...form, trust_level: e.target.value })} style={inputSt}>
               {TRUST_LEVELS.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
             </select>
             <input placeholder="feed URL (RSS)" value={form.feed_url || ""} onChange={(e) => setForm({ ...form, feed_url: e.target.value })} style={inputSt} dir="ltr" />
-            <input placeholder="المدينة" value={form.city || ""} onChange={(e) => setForm({ ...form, city: e.target.value })} style={inputSt} />
             <label style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.875rem" }}>
               <input type="checkbox" checked={form.auto_publish_allowed} onChange={(e) => setForm({ ...form, auto_publish_allowed: e.target.checked })} />
               Auto-Publish

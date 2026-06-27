@@ -19,6 +19,7 @@ function mapDraftToLesson(extracted, opts = {}) {
     title: d.title,
     speaker_name: d.speaker_name || d.sheikh_name || null,
     sheikh_id: opts.sheikhId || null,
+    mosque_id: opts.mosqueId || null,
     mosque: d.mosque || d.location || null,
     city: d.city || d.governorate || "العاصمة",
     region: d.region || null,
@@ -58,6 +59,7 @@ function mapDraftToLesson(extracted, opts = {}) {
 export async function publishLessonDraft({
   extracted,
   sheikhId,
+  mosqueId,
   imageUrl,
   sourceUrl,
   sourceId,
@@ -77,6 +79,7 @@ export async function publishLessonDraft({
 
   const payload = mapDraftToLesson(extracted, {
     sheikhId,
+    mosqueId,
     imageUrl,
     sourceUrl,
     sourceId,

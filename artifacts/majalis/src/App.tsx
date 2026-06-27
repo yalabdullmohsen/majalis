@@ -85,6 +85,7 @@ const LessonImportImagePage = lazy(() => import("@/views/admin/LessonImportImage
 const LessonImportUrlPage = lazy(() => import("@/views/admin/LessonImportUrlPage"));
 const AutomationSourcesPage = lazy(() => import("@/views/admin/AutomationSourcesPage"));
 const AutomationReviewPage = lazy(() => import("@/views/admin/AutomationReviewPage"));
+const AutomationDashboardPage = lazy(() => import("@/views/admin/AutomationDashboardPage"));
 const AdminDashboardPage = lazy(() => import("@/views/admin/AdminDashboardPage"));
 const AutoContentPage = lazy(() => import("@/views/admin/AutoContentPage"));
 const FiqhReviewPage = lazy(() => import("@/views/admin/FiqhReviewPage"));
@@ -233,6 +234,15 @@ function Router() {
           <ErrorBoundary>
             <Suspense fallback={<Loading />}>
               <AutomationSourcesPage />
+            </Suspense>
+          </ErrorBoundary>
+        </AdminRouteGuard>
+      </Route>
+      <Route path="/admin/automation/dashboard">
+        <AdminRouteGuard>
+          <ErrorBoundary>
+            <Suspense fallback={<Loading />}>
+              <AutomationDashboardPage />
             </Suspense>
           </ErrorBoundary>
         </AdminRouteGuard>

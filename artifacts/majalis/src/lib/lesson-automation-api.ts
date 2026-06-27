@@ -84,6 +84,10 @@ export async function listAutomationRuns(limit = 20) {
   return postAutomation({ action: "list-runs", limit });
 }
 
+export async function getAutomationDashboard() {
+  return postAutomation({ action: "dashboard" });
+}
+
 export const TRUST_LEVELS = [
   ["official", "رسمي"],
   ["trusted", "موثوق"],
@@ -96,7 +100,9 @@ export const SOURCE_TYPES = [
   ["website", "موقع"],
   ["rss", "RSS"],
   ["telegram", "Telegram"],
+  ["whatsapp", "WhatsApp"],
   ["youtube", "YouTube"],
   ["x", "X"],
+  ["facebook", "Facebook"],
   ["manual", "يدوي"],
 ] as const;

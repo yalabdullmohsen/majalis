@@ -11,6 +11,10 @@ import {
 import { listAutomationAudit } from "../../../lib/cms/automation-audit.mjs";
 import { runLessonSourceMonitor } from "../../../lib/cms/lesson-source-monitor.mjs";
 import { listAutomationRuns } from "../../../lib/cms/automation-runs.mjs";
+import { registerSourceMonitorJob } from "../../../lib/cms/source-monitor-jobs.mjs";
+import { listAutomationStepLogs } from "../../../lib/cms/automation-step-logs.mjs";
+import { listSourceMonitorJobs } from "../../../lib/cms/source-monitor-jobs.mjs";
+import { listSupportedConnectors } from "../../../lib/cms/connectors/index.mjs";
 import { countPendingAutomationDrafts } from "../../../lib/cms/automation-notifications.mjs";
 import { listLessonImportDrafts, getLessonImportDraft } from "../../../lib/cms/lesson-import-draft.mjs";
 import { handleLessonImportApprove, handleLessonImportReject } from "../../../lib/cms/lesson-import-actions.mjs";
@@ -31,6 +35,9 @@ export default async function handler(req, res) {
 
     if (action === "upsert-source") {
       const result = await upsertTrustedSource(body.source || body);
+      if (result.ok && result.source?.id) {
+        await registerSourceMonitorJob(result.source.id, { intervalMinutes: body.interval_minutes || 15 });
+      }
       sendJson(res, result.ok ? 200 : 422, result);
       return;
     }
@@ -142,6 +149,33 @@ export default async function handler(req, res) {
       return;
     }
 
+    if (action === "dashboard") {
+      const sources = await listTrustedSources({ activeOnly: false });
+      const runs = await listAutomationRuns({ limit: 10 });
+      const jobs = await listSourceMonitorJobs();
+      const steps = await listAutomationStepLogs({ limit: 20 });
+      const pendingCount = await countPendingAutomationDrafts();
+      const audit = await listAutomationAudit({ limit: 50 });
+      sendJson(res, 200, {
+        ok: true,
+        stats: {
+          sourcesCount: sources.length,
+          activeSources: sources.filter((s) => s.active).length,
+          pendingReview: pendingCount,
+          autoPublished: audit.filter((a) => a.decision === "approved").length,
+          duplicates: audit.filter((a) => a.decision === "duplicate").length,
+          errors: runs.reduce((n, r) => n + (r.items_errors || 0), 0),
+          lastRun: runs[0] || null,
+        },
+        sources,
+        runs,
+        jobs,
+        recentSteps: steps,
+        connectors: listSupportedConnectors(),
+      });
+      return;
+    }
+
     sendJson(res, 400, {
       ok: false,
       error: "unknown_action",
@@ -155,6 +189,7 @@ export default async function handler(req, res) {
         "list-review",
         "list-runs",
         "re-analyze",
+        "dashboard",
         "approve-draft",
         "reject-draft",
       ],
