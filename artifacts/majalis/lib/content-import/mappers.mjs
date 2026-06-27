@@ -78,20 +78,27 @@ export function mapRowToPayload(type, row) {
         author_name: pick(row, "author_name", "source", "author") || null,
         status: pick(row, "status") || "approved",
       };
-    case "adhkar":
-      return {
-        id: pick(row, "id") || `adh-import-${hashKey([row.text, row.category])}`,
-        category: pick(row, "category", "categoryId"),
-        category_id: mapAdhkarCategoryId(pick(row, "category", "categoryId")),
-        text: pick(row, "text"),
-        count: Number(row.count) || 1,
-        source: pick(row, "source"),
-        source_name: pick(row, "source"),
-        narrator: pick(row, "narrator") || undefined,
-        grade: pick(row, "grade") || undefined,
-        reference: pick(row, "reference") || undefined,
-        keywords: Array.isArray(row.keywords) ? row.keywords : [],
+    case "adhkar": {
+      const normalized = {
+        ...row,
+        count: row.count ?? row.repeat_count,
+        source: pick(row, "source", "source_name"),
+        category: pick(row, "category", "categoryId", "category_id"),
       };
+      return {
+        id: pick(normalized, "id") || `adh-import-${hashKey([normalized.text, normalized.category])}`,
+        category: normalized.category,
+        category_id: mapAdhkarCategoryId(normalized.category),
+        text: pick(normalized, "text"),
+        count: Number(normalized.count) || 1,
+        source: normalized.source,
+        source_name: normalized.source,
+        narrator: pick(normalized, "narrator") || undefined,
+        grade: pick(normalized, "grade") || undefined,
+        reference: pick(normalized, "reference") || undefined,
+        keywords: Array.isArray(normalized.keywords) ? normalized.keywords : [],
+      };
+    }
     case "rulings":
       return {
         external_key: pick(row, "external_key", "slug", "id") || `ruling-${hashKey([row.title, row.category])}`,

@@ -13,7 +13,7 @@ node scripts/import-content.mjs --type=lessons --file=data/imports/lessons.sampl
 # استيراد فعلي (يتطلب Supabase service role)
 node scripts/import-content.mjs --type=questions --file=data/imports/questions.sample.json
 
-# أنواع staged (adhkar, quran_surahs, quran_topics) → data/imports/staged/
+node scripts/import-content.mjs --type=adhkar --file=data/imports/adhkar.sample.csv --dry-run
 node scripts/import-content.mjs --type=adhkar --file=data/imports/adhkar.sample.json
 ```
 
@@ -28,9 +28,7 @@ node scripts/import-content.mjs --type=adhkar --file=data/imports/adhkar.sample.
 | articles | Supabase | `library_items` |
 | questions | Supabase | `qa_questions` |
 | benefits | Supabase | `fawaid` |
-| adhkar | staged + bundle | `src/lib/content-import-bundle.json` |
-| quran_surahs | staged | bundle |
-| quran_topics | staged | bundle |
+| adhkar | Supabase | `verified_adhkar_items` |
 
 ## ملفات الأمثلة
 
@@ -40,8 +38,7 @@ node scripts/import-content.mjs --type=adhkar --file=data/imports/adhkar.sample.
 | sheikhs | `sheikhs.sample.json` | `sheikhs.sample.csv` |
 | questions | `questions.sample.json` | `questions.sample.csv` |
 | books | `books.sample.json` | `books.sample.csv` |
-| adhkar | `adhkar.sample.json` | — |
-| quran surahs | `quran-surahs.sample.json` | — |
+| adhkar | `adhkar.sample.json` | `adhkar.sample.csv` — see `adhkar.schema.md` |
 
 بيانات تجريبية Phase 2: `trial/*.phase2.json`
 
@@ -57,6 +54,16 @@ node scripts/import-content.mjs --type=adhkar --file=data/imports/adhkar.sample.
 ## التحقق (Validation)
 
 كل نوع له حقول مطلوبة. العناصر الناقصة تُرفض وتُسجّل في تقرير الأخطاء.
+
+### الأذكار (adhkar)
+
+الحقول المطلوبة: `text`, `category`, `source`, و **`count` أو `repeat_count`** (عدد التكرار).
+
+- الاسم المفضّل في CSV الجديد: `count`
+- للتوافق مع جداول قديمة: `repeat_count` مقبول أيضًا
+- بدائل: `source_name` → `source`، `categoryId` / `category_id` → `category`
+
+راجع `adhkar.schema.md` للتفاصيل الكاملة.
 
 ## عدم الحذف
 
