@@ -1,16 +1,18 @@
 import { useRef, useState } from "react";
 import { adminFetch } from "@/lib/admin-api";
 import { C } from "@/lib/theme";
+import { chunkRows, parseImportFile, UPLOAD_BATCH_SIZE } from "@/lib/import-parse";
 
 const IMPORT_TYPES = [
   { value: "lessons", label: "الدروس" },
   { value: "sheikhs", label: "المشايخ" },
-  { value: "questions", label: "الأسئلة" },
-  { value: "books", label: "الكتب" },
+  { value: "questions", label: "الأسئلة (QA)" },
+  { value: "books", label: "المكتب" },
+  { value: "articles", label: "المقالات" },
   { value: "courses", label: "الدورات" },
   { value: "benefits", label: "الفوائد" },
   { value: "adhkar", label: "الأذكار" },
-  { value: "quran_surahs", label: "سور القرآن" },
+  { value: "rulings", label: "الفتاوى" },
 ];
 
 const BTN: React.CSSProperties = {
@@ -39,8 +41,33 @@ type ImportReport = {
   importErrors?: string[];
 };
 
+type JobProgress = {
+  status: string;
+  progress_pct: number;
+  processed_rows: number;
+  total_rows: number;
+  imported: number;
+  skipped: number;
+  failed: number;
+  validation_errors?: string[];
+  import_errors?: string[];
+};
+
 interface ContentFileImportProps {
   onDone?: () => void;
+}
+
+async function pollJobProgress(jobId: string, onUpdate: (job: JobProgress) => void): Promise<JobProgress | null> {
+  for (let i = 0; i < 600; i++) {
+    const res = await adminFetch(`/api/admin/content-import?action=progress&jobId=${encodeURIComponent(jobId)}`);
+    const json = await res.json();
+    if (json.ok && json.job) {
+      onUpdate(json.job);
+      if (json.job.status === "completed" || json.job.status === "failed") return json.job;
+    }
+    await new Promise((r) => setTimeout(r, 500));
+  }
+  return null;
 }
 
 export function ContentFileImport({ onDone }: ContentFileImportProps) {
@@ -49,15 +76,126 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
   const [type, setType] = useState("lessons");
   const [filename, setFilename] = useState("");
   const [running, setRunning] = useState(false);
+  const [phase, setPhase] = useState("");
+  const [progressPct, setProgressPct] = useState(0);
   const [report, setReport] = useState<ImportReport | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const close = () => {
     setOpen(false);
     setRunning(false);
+    setPhase("");
+    setProgressPct(0);
     setReport(null);
     setError(null);
     setFilename("");
+  };
+
+  const runInlineImport = async (file: File, rows: Record<string, unknown>[]) => {
+    setPhase("جارٍ الرفع والاستيراد…");
+    setProgressPct(10);
+
+    const res = await adminFetch("/api/admin/content-import", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ type, rows, filename: file.name }),
+    });
+    const json = await res.json();
+    setProgressPct(100);
+
+    if (!res.ok && !json.report) {
+      const debugLine = json.debug?.guard ? ` [${json.debug.guard}]` : "";
+      throw new Error((json.userMessageAr || json.userMessage || json.error || json.message || `HTTP ${res.status}`) + debugLine);
+    }
+
+    setReport(json.report || json);
+    if (json.report?.ok && json.report.stats?.imported) onDone?.();
+  };
+
+  const runBatchedImport = async (file: File, rows: Record<string, unknown>[]) => {
+    setPhase("بدء مهمة الاستيراد…");
+    setProgressPct(2);
+
+    const startRes = await adminFetch("/api/admin/content-import", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "start", type, filename: file.name, totalRows: rows.length }),
+    });
+    const startJson = await startRes.json();
+    if (!startRes.ok || !startJson.jobId) {
+      throw new Error(startJson.error || "تعذر بدء مهمة الاستيراد");
+    }
+
+    const jobId = startJson.jobId as string;
+    const batches = chunkRows(rows, UPLOAD_BATCH_SIZE);
+
+    for (let i = 0; i < batches.length; i++) {
+      setPhase(`رفع الدفعة ${i + 1} من ${batches.length}…`);
+      const pct = Math.round(((i + 1) / batches.length) * 35);
+      setProgressPct(pct);
+
+      const stageRes = await adminFetch("/api/admin/content-import", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "stage",
+          jobId,
+          rows: batches[i],
+          startIndex: i * UPLOAD_BATCH_SIZE,
+        }),
+      });
+      const stageJson = await stageRes.json();
+      if (!stageRes.ok) throw new Error(stageJson.error || `فشل رفع الدفعة ${i + 1}`);
+    }
+
+    setPhase("التحقق والاستيراد إلى Supabase…");
+    setProgressPct(42);
+
+    const commitRes = await adminFetch("/api/admin/content-import", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "commit", jobId }),
+    });
+
+    const finalJob = await pollJobProgress(jobId, (job) => {
+      setProgressPct(Math.max(42, job.progress_pct || 0));
+      setPhase(
+        job.status === "validating"
+          ? "التحقق من الصفوف…"
+          : job.status === "importing"
+            ? "الاستيراد الجماعي…"
+            : job.status === "completed"
+              ? "اكتمل"
+              : job.status === "failed"
+                ? "فشل"
+                : "جارٍ المعالجة…",
+      );
+    });
+
+    const commitJson = await commitRes.json();
+    const importReport = commitJson.report as ImportReport | undefined;
+
+    if (importReport) {
+      setReport(importReport);
+      if (importReport.ok && importReport.stats?.imported) onDone?.();
+      return;
+    }
+
+    if (finalJob) {
+      setReport({
+        ok: finalJob.status === "completed",
+        stats: {
+          read: finalJob.total_rows,
+          imported: finalJob.imported,
+          skipped: finalJob.skipped,
+          failed: finalJob.failed,
+          invalid: finalJob.validation_errors?.length || 0,
+        },
+        validationErrors: finalJob.validation_errors,
+        importErrors: finalJob.import_errors,
+      });
+      if (finalJob.status === "completed" && finalJob.imported) onDone?.();
+    }
   };
 
   const runImport = async (file: File) => {
@@ -65,22 +203,21 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
     setReport(null);
     setError(null);
     setFilename(file.name);
+    setProgressPct(0);
 
     try {
       const content = await file.text();
-      const res = await adminFetch("/api/admin/content-import", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ type, content, filename: file.name }),
-      });
-      const json = await res.json();
-      if (!res.ok && !json.report) {
-        const debugLine = json.debug?.guard ? ` [${json.debug.guard}]` : "";
-        setError((json.userMessageAr || json.userMessage || json.error || `HTTP ${res.status}`) + debugLine);
-        return;
+      const rows = parseImportFile(content, file.name);
+
+      if (!rows.length) {
+        throw new Error("الملف فارغ أو لا يحتوي على صفوف صالحة");
       }
-      setReport(json.report || json);
-      if (json.report?.ok && json.report.stats?.imported) onDone?.();
+
+      if (rows.length <= 5000) {
+        await runInlineImport(file, rows);
+      } else {
+        await runBatchedImport(file, rows);
+      }
     } catch (e) {
       setError(String((e as Error).message || e));
     } finally {
@@ -137,8 +274,8 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
               استيراد من ملف (JSON / CSV)
             </h2>
             <p style={{ margin: "0 0 1rem", fontSize: "0.85rem", color: C.inkSoft, lineHeight: 1.8 }}>
-              يستخدم محرك Content Import Engine نفسه — يدعم ملفات JSON و CSV من مجلد{" "}
-              <code style={{ direction: "ltr" }}>data/imports/</code>.
+              يُحلَّل الملف في الذاكرة ويُستورد مباشرة إلى Supabase — بدون كتابة على نظام الملفات (متوافق
+              مع Vercel). يدعم حتى 100,000 صف مع تتبع التقدّم المباشر.
             </p>
 
             <label style={{ display: "block", marginBottom: "0.75rem", fontSize: "0.875rem" }}>
@@ -190,6 +327,31 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
               </p>
             )}
 
+            {running && (
+              <div style={{ marginTop: "0.875rem" }}>
+                <div
+                  style={{
+                    height: "8px",
+                    borderRadius: "4px",
+                    background: C.line,
+                    overflow: "hidden",
+                  }}
+                >
+                  <div
+                    style={{
+                      height: "100%",
+                      width: `${progressPct}%`,
+                      background: C.emerald,
+                      transition: "width 0.3s ease",
+                    }}
+                  />
+                </div>
+                <p style={{ margin: "0.35rem 0 0", fontSize: "0.8125rem", color: C.inkSoft }}>
+                  {phase} ({progressPct}%)
+                </p>
+              </div>
+            )}
+
             {error && (
               <p style={{ margin: "0.75rem 0 0", color: "#92400E", fontSize: "0.875rem" }}>{error}</p>
             )}
@@ -212,9 +374,10 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
                   <p style={{ margin: "0.5rem 0 0" }}>
                     قرئ {report.stats.read} · استورد {report.stats.imported} · تخطى {report.stats.skipped} ·
                     فشل {report.stats.failed}
+                    {report.stats.invalid ? ` · مرفوض ${report.stats.invalid}` : ""}
                   </p>
                 )}
-                {[...(report.validationErrors || []), ...(report.importErrors || [])].slice(0, 5).map((msg) => (
+                {[...(report.validationErrors || []), ...(report.importErrors || [])].slice(0, 20).map((msg) => (
                   <p key={msg} style={{ margin: "0.25rem 0 0", color: "#92400E", fontSize: "0.8125rem" }}>
                     • {msg}
                   </p>

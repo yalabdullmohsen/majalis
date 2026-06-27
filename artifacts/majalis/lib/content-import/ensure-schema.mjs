@@ -7,6 +7,7 @@ import { readFileSync } from "node:fs";
 import { getSupabaseAdmin } from "../supabase-admin.mjs";
 import { getPgClient } from "../database.mjs";
 import { migrationFilePath } from "../migration-paths.mjs";
+import { ensureImportTables } from "./import-jobs.mjs";
 
 const CONTENT_IMPORT_MIGRATION = "kuwait_lessons_extend.sql";
 
@@ -27,7 +28,9 @@ export async function ensureContentImportSchema() {
   }
 
   const ready = await lessonsImportColumnsReady(admin);
-  if (ready.ok) return { ok: true, alreadyReady: true };
+  await ensureImportTables(admin);
+
+  if (ready.ok) return { ok: true, alreadyReady: true, importJobs: true };
 
   if (!ready.missing) {
     return { ok: false, error: ready.error || "lessons schema check failed" };

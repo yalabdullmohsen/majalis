@@ -1,5 +1,7 @@
 /** Per-type validation schemas. Missing required fields → reject row. */
 
+export const MAX_VALIDATION_ERRORS = 200;
+
 function req(row, field) {
   const v = row[field];
   if (v == null) return false;
@@ -40,14 +42,6 @@ export const SCHEMAS = {
     label: "ذكر",
     required: ["text", "category", "count", "source"],
   },
-  quran_surahs: {
-    label: "سورة",
-    required: ["number", "name", "ayahs"],
-  },
-  quran_topics: {
-    label: "موضوع قرآني",
-    required: ["title", "summary", "category"],
-  },
   articles: {
     label: "مقال",
     required: ["title", "description", "category", "source_url"],
@@ -55,6 +49,11 @@ export const SCHEMAS = {
   benefits: {
     label: "فائدة",
     required: ["text"],
+  },
+  rulings: {
+    label: "فتوى",
+    required: ["title", "category"],
+    oneOf: [["body", "summary"]],
   },
 };
 
