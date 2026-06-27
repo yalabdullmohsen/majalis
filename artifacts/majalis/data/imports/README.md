@@ -49,7 +49,17 @@ node scripts/import-content.mjs --type=adhkar --file=data/imports/adhkar.sample.
 
 ## لوحة الإدارة
 
-زر **«استيراد من ملف»** في قسم Content Aggregator (`/admin`) — يستدعي `/api/admin/content-import` ويدعم JSON و CSV.
+زر **«استيراد من ملف»** في قسم Content Aggregator (`/admin`) — يستخدم **مهام استيراد غير متزامنة**:
+
+1. **تحليل** الملف محليًا في المتصفح (CSV/JSON)
+2. **start** — إنشاء `job_id`
+3. **stage** — رفع الدفعات (2000 صف/دفعة)
+4. **commit** — إرجاع فوري (HTTP 202) ومعالجة في الخلفية
+5. **poll** — تتبع التقدّم كل ثانية حتى `completed` أو `failed`
+
+لا توجد مهلة 3 ثوانٍ على طلبات الاستيراد — التقدّم يُعرض عبر: رفع → تحليل → تحقق → استيراد → اكتمال.
+
+Cron احتياطي: `/api/cron/process-import-jobs` (كل دقيقة) لاستئناف المهام العالقة.
 
 ## التحقق (Validation)
 

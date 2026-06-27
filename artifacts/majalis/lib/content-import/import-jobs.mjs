@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS content_import_jobs (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   type TEXT NOT NULL,
   status TEXT NOT NULL DEFAULT 'pending',
+  phase TEXT NOT NULL DEFAULT 'pending',
   filename TEXT,
   total_rows INT NOT NULL DEFAULT 0,
   processed_rows INT NOT NULL DEFAULT 0,
@@ -19,6 +20,8 @@ CREATE TABLE IF NOT EXISTS content_import_jobs (
   validation_errors JSONB NOT NULL DEFAULT '[]'::jsonb,
   import_errors JSONB NOT NULL DEFAULT '[]'::jsonb,
   report JSONB,
+  timings JSONB,
+  execution_mode TEXT,
   created_by UUID,
   started_at TIMESTAMPTZ NOT NULL DEFAULT now(),
   completed_at TIMESTAMPTZ,
@@ -33,10 +36,18 @@ CREATE TABLE IF NOT EXISTS content_import_staging (
 );
 
 CREATE INDEX IF NOT EXISTS idx_content_import_staging_job ON content_import_staging (job_id);
+CREATE INDEX IF NOT EXISTS idx_content_import_jobs_status ON content_import_jobs (status);
+
+ALTER TABLE content_import_jobs ADD COLUMN IF NOT EXISTS phase TEXT NOT NULL DEFAULT 'pending';
+ALTER TABLE content_import_jobs ADD COLUMN IF NOT EXISTS timings JSONB;
+ALTER TABLE content_import_jobs ADD COLUMN IF NOT EXISTS execution_mode TEXT;
 `;
 
 /** @type {Map<string, object>} */
 const localJobs = new Map();
+
+/** @type {Set<string>} */
+const processingLocks = new Set();
 
 export async function ensureImportTables(admin) {
   if (!admin) return false;
@@ -60,6 +71,7 @@ export async function createImportJob({ type, filename, totalRows, createdBy }) 
     id: crypto.randomUUID(),
     type,
     status: "pending",
+    phase: "pending",
     filename: filename || null,
     total_rows: totalRows || 0,
     processed_rows: 0,
@@ -69,6 +81,8 @@ export async function createImportJob({ type, filename, totalRows, createdBy }) 
     progress_pct: 0,
     validation_errors: [],
     import_errors: [],
+    timings: null,
+    execution_mode: null,
     started_at: new Date().toISOString(),
   };
 
@@ -82,6 +96,7 @@ export async function createImportJob({ type, filename, totalRows, createdBy }) 
         total_rows: totalRows || 0,
         created_by: createdBy || null,
         status: "pending",
+        phase: "pending",
       })
       .select("id, started_at")
       .single();
@@ -105,6 +120,7 @@ export async function updateImportJob(jobId, patch) {
 
   const row = {
     status: merged.status,
+    phase: merged.phase,
     processed_rows: merged.processed_rows,
     imported: merged.imported,
     skipped: merged.skipped,
@@ -113,6 +129,8 @@ export async function updateImportJob(jobId, patch) {
     validation_errors: merged.validation_errors,
     import_errors: merged.import_errors,
     report: merged.report,
+    timings: merged.timings,
+    execution_mode: merged.execution_mode,
     completed_at: merged.completed_at,
     updated_at: merged.updated_at,
   };
@@ -126,7 +144,34 @@ export async function getImportJob(jobId) {
   const admin = getSupabaseAdmin();
   if (!admin) return null;
   const { data } = await admin.from("content_import_jobs").select("*").eq("id", jobId).maybeSingle();
+  if (data) localJobs.set(jobId, data);
   return data;
+}
+
+export function tryAcquireProcessingLock(jobId) {
+  if (processingLocks.has(jobId)) return false;
+  processingLocks.add(jobId);
+  return true;
+}
+
+export function releaseProcessingLock(jobId) {
+  processingLocks.delete(jobId);
+}
+
+export async function listQueuedImportJobs(limit = 5) {
+  const admin = getSupabaseAdmin();
+  if (!admin) {
+    return [...localJobs.values()]
+      .filter((j) => j.status === "queued" || j.status === "processing")
+      .slice(0, limit);
+  }
+  const { data } = await admin
+    .from("content_import_jobs")
+    .select("*")
+    .in("status", ["queued", "processing"])
+    .order("started_at", { ascending: true })
+    .limit(limit);
+  return data || [];
 }
 
 export async function stageImportRows(jobId, payloads, startIndex = 0) {
@@ -165,7 +210,7 @@ export async function loadStagedPayloads(jobId) {
 
   const all = [];
   let from = 0;
-  const page = 2000;
+  const page = 5000;
   while (true) {
     const { data, error } = await admin
       .from("content_import_staging")
@@ -182,7 +227,11 @@ export async function loadStagedPayloads(jobId) {
 }
 
 export async function clearStaging(jobId) {
-  localJobs.delete(jobId);
+  const local = localJobs.get(jobId);
+  if (local) {
+    delete local.staged;
+    localJobs.set(jobId, local);
+  }
   const admin = getSupabaseAdmin();
   if (admin) {
     await admin.from("content_import_staging").delete().eq("job_id", jobId);
