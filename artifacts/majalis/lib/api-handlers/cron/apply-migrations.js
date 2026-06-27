@@ -4,6 +4,7 @@ import { applyMigrations, verifySchema } from "../../../lib/db-migrate.mjs";
 import { testDatabaseConnection, resolveDatabaseUrl } from "../../../lib/database.mjs";
 import { ensureContentImportSchema } from "../../../lib/content-import/ensure-schema.mjs";
 import { runActivationMigrations } from "../../../lib/migration-runner.mjs";
+import { ACTIVATION_TABLES } from "../../../lib/table-probe.mjs";
 import { assertServiceSecrets } from "../../../lib/service-guard.mjs";
 
 function resolvedMeta() {
@@ -71,13 +72,19 @@ export default async function handler(req, res) {
       return;
     }
 
-    const result = await applyMigrations({ continueOnError: true });
+    const result = await applyMigrations({ continueOnError: false, trackApplied: true });
     const verifyAfter = await verifySchema();
-    const ok = result.ok && verifyAfter.ok;
+    let activation = null;
+    const activationMissing = ACTIVATION_TABLES.filter((t) => verifyAfter.checks?.[t] !== "ok");
+    if (activationMissing.length > 0 || req.query?.activation === "1" || req.body?.activation === true) {
+      activation = await runActivationMigrations({ seedRulings: req.query?.seed !== "0" });
+    }
+    const ok = result.ok && verifyAfter.ok && (!activation || activation.ok);
     sendJson(res, ok ? 200 : 500, {
       ok,
       migrations: result,
       schema: verifyAfter,
+      activation,
       resolved: resolvedMeta(),
     });
   } catch (error) {

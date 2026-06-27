@@ -94,14 +94,23 @@ export function DashboardSection() {
             <ul style={{ margin: 0, paddingInlineStart: "1.1rem", color: C.inkSoft, fontSize: "0.875rem", lineHeight: 1.9 }}>
               <li>إجمالي المفهرس: {cmsStats.indexTotal.toLocaleString("ar")}</li>
               <li>عمليات استيراد: {cmsStats.importJobsTotal.toLocaleString("ar")}</li>
+              <li>أذكار موثقة: {cmsStats.verifiedAdhkarTotal.toLocaleString("ar")}</li>
               <li>سجل تدقيق اليوم: {cmsStats.auditLogsToday.toLocaleString("ar")}</li>
               <li>مجدولة للنشر: {cmsStats.scheduledCount.toLocaleString("ar")}</li>
+              {cmsStats.lastImportAt && (
+                <li>
+                  آخر استيراد: {cmsStats.lastImportType} ({cmsStats.lastImportImported ?? 0} صف) — {cmsStats.lastImportStatus}
+                </li>
+              )}
               {Object.entries(cmsStats.indexByKind).slice(0, 5).map(([k, v]) => (
                 <li key={k}>{CMS_KIND_LABELS[k as CmsContentKind] || k}: {v}</li>
               ))}
+              {cmsStats.sources.length > 0 && (
+                <li style={{ fontSize: "0.75rem" }}>مصادر: {cmsStats.sources.join("، ")}</li>
+              )}
             </ul>
           ) : (
-            <p style={{ margin: 0, color: C.inkSoft, fontSize: "0.875rem" }}>نفّذ cms_platform_v4.sql لتفعيل الفهرس الموحّد</p>
+            <p style={{ margin: 0, color: C.inkSoft, fontSize: "0.875rem" }}>جاري تحميل إحصائيات CMS…</p>
           )}
         </section>
 

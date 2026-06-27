@@ -99,8 +99,9 @@ export function AggregatorSection() {
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))", gap: "0.75rem", marginBottom: "1.5rem" }}>
         {[
-          { label: "فهرس CMS", value: stats.indexTotal },
+          { label: "فهرس CMS / محتوى", value: stats.indexTotal },
           { label: "عمليات استيراد", value: stats.importJobsTotal },
+          { label: "أذكار موثقة", value: stats.verifiedAdhkarTotal },
           { label: "مفاتيح dedup", value: stats.duplicateKeys },
           { label: "مجدولة", value: stats.scheduledCount },
           { label: "مؤرشفة", value: stats.archivedCount },
@@ -112,6 +113,21 @@ export function AggregatorSection() {
           </div>
         ))}
       </div>
+
+      {(stats.lastImportAt || stats.sources.length > 0) && (
+        <p style={{ margin: "0 0 1.25rem", fontSize: "0.8125rem", color: C.inkSoft, lineHeight: 1.7 }}>
+          {stats.lastImportAt && (
+            <>
+              آخر استيراد: {stats.lastImportType || "—"} — {stats.lastImportStatus || "—"}
+              {stats.lastImportImported != null ? ` (${stats.lastImportImported} صف)` : ""}
+              {" · "}
+              {new Date(stats.lastImportAt).toLocaleString("ar")}
+              <br />
+            </>
+          )}
+          {stats.sources.length > 0 && <>مصادر العداد: {stats.sources.join("، ")}</>}
+        </p>
+      )}
 
       <section style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.625rem", padding: "1.25rem", marginBottom: "1.5rem" }}>
         <h3 style={{ margin: "0 0 1rem", color: C.emeraldDeep }}>استيراد محتوى (JSON)</h3>
@@ -152,12 +168,14 @@ export function AggregatorSection() {
         <section style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.625rem", padding: "1.25rem" }}>
           <h3 style={{ margin: "0 0 0.75rem", color: C.emeraldDeep, fontSize: "1rem" }}>آخر عمليات الاستيراد</h3>
           {jobs.length === 0 ? (
-            <p style={{ color: C.inkSoft, fontSize: "0.875rem" }}>لا توجد عمليات بعد — نفّذ migration cms_platform_v4.sql</p>
+            <p style={{ color: C.inkSoft, fontSize: "0.875rem" }}>لا توجد عمليات استيراد بعد</p>
           ) : (
             <ul style={{ margin: 0, paddingInlineStart: "1.1rem", fontSize: "0.8125rem", lineHeight: 1.9 }}>
               {jobs.map((j) => (
                 <li key={j.id}>
-                  {CMS_KIND_LABELS[j.content_kind as CmsContentKind] || j.content_kind} — {j.status} ({j.inserted_count}+{j.updated_count})
+                  {CMS_KIND_LABELS[j.content_kind as CmsContentKind] || j.content_kind}
+                  {j.filename ? ` (${j.filename})` : ""} — {j.status} ({j.inserted_count} استورد · {j.updated_count} تخطى)
+                  {j.total_rows != null ? ` / ${j.total_rows} صف` : ""}
                 </li>
               ))}
             </ul>

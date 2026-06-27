@@ -7,15 +7,7 @@ import { applyMigrations } from "./db-migrate.mjs";
 import { ACTIVATION_MIGRATION_FILES, migrationFilePath } from "./migration-paths.mjs";
 import { probeTables, ACTIVATION_TABLES, countTableRows } from "./table-probe.mjs";
 import { seedRulingsFromFilesystem } from "./rulings-db-seed.mjs";
-
-const ENSURE_TRACKING_SQL = `
-CREATE TABLE IF NOT EXISTS schema_migrations (
-  migration_name TEXT PRIMARY KEY,
-  applied_at TIMESTAMPTZ NOT NULL DEFAULT now(),
-  checksum TEXT,
-  duration_ms INT
-);
-`;
+import { ensureTrackingTable, getAppliedMigrationNames } from "./migration-tracker.mjs";
 
 /** Expected tables after each activation migration file. */
 const STEP_TABLE_CHECKS = {
@@ -32,20 +24,11 @@ function shaShort(text) {
   return String(h >>> 0);
 }
 
-async function ensureTrackingTable(client) {
-  if (client?.query) {
-    await client.query(ENSURE_TRACKING_SQL);
-    return { via: "pg" };
-  }
-  return { via: "skipped_no_pg" };
-}
-
 export async function getAppliedMigrations(client) {
   if (!client?.query) return [];
   try {
-    await client.query(ENSURE_TRACKING_SQL);
-    const { rows } = await client.query("SELECT migration_name FROM schema_migrations ORDER BY applied_at");
-    return rows.map((r) => r.migration_name);
+    await ensureTrackingTable(client);
+    return getAppliedMigrationNames(client);
   } catch {
     return [];
   }
@@ -59,6 +42,7 @@ export async function runActivationMigrations(options = {}) {
   const migration = await applyMigrations({
     files,
     continueOnError: false,
+    trackApplied: true,
   });
 
   const after = await probeTables(ACTIVATION_TABLES);

@@ -254,10 +254,24 @@ EXCEPTION WHEN undefined_table THEN NULL;
 END $$;
 
 -- ── 7. Audit log enhancements ───────────────────────────────────────────
-ALTER TABLE admin_audit_logs
-  ADD COLUMN IF NOT EXISTS content_kind cms_content_kind,
-  ADD COLUMN IF NOT EXISTS ip_address TEXT,
-  ADD COLUMN IF NOT EXISTS user_agent TEXT;
+DO $$
+BEGIN
+  IF EXISTS (
+    SELECT 1 FROM information_schema.tables
+    WHERE table_schema = 'public' AND table_name = 'admin_audit_logs'
+  ) THEN
+    IF NOT EXISTS (
+      SELECT 1 FROM information_schema.columns
+      WHERE table_schema = 'public' AND table_name = 'admin_audit_logs' AND column_name = 'table_name'
+    ) THEN
+      ALTER TABLE admin_audit_logs ADD COLUMN table_name TEXT NOT NULL DEFAULT 'unknown';
+    END IF;
+    ALTER TABLE admin_audit_logs ADD COLUMN IF NOT EXISTS content_kind cms_content_kind;
+    ALTER TABLE admin_audit_logs ADD COLUMN IF NOT EXISTS ip_address TEXT;
+    ALTER TABLE admin_audit_logs ADD COLUMN IF NOT EXISTS user_agent TEXT;
+  END IF;
+EXCEPTION WHEN undefined_table THEN NULL;
+END $$;
 
 CREATE INDEX IF NOT EXISTS admin_audit_logs_table_idx ON admin_audit_logs (table_name, created_at DESC);
 CREATE INDEX IF NOT EXISTS admin_audit_logs_user_idx ON admin_audit_logs (user_id, created_at DESC);

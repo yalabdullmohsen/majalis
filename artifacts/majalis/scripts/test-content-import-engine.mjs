@@ -7,7 +7,7 @@ import { validateAllRows } from "../lib/content-import/engine.mjs";
 import { mapRowToPayload } from "../lib/content-import/mappers.mjs";
 import { dedupeRows } from "../lib/content-import/dedupe.mjs";
 import { resolveContentType, CONTENT_TYPES } from "../lib/content-import/registry.mjs";
-import { readFileSync } from "node:fs";
+import { readFileSync, existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -166,6 +166,15 @@ test("import watchdog constants and terminal statuses", async () => {
   assert(TERMINAL_JOB_STATUSES.has("failed"), "failed terminal");
   assert(TERMINAL_JOB_STATUSES.has("cancelled"), "cancelled terminal");
   assert(ACTIVE_JOB_STATUSES.includes("queued"), "queued is active");
+});
+
+test("platform bootstrap compat migration exists", () => {
+  const compat = join(root, "supabase/platform_bootstrap_compat_v1.sql");
+  assert(existsSync(compat), "platform_bootstrap_compat_v1.sql exists");
+  const sql = readFileSync(compat, "utf8");
+  assert(sql.includes("admin_audit_logs"), "compat fixes admin_audit_logs");
+  assert(sql.includes("schema_migrations"), "compat upgrades schema_migrations");
+  assert(sql.includes("table_name"), "compat adds table_name column");
 });
 
 test("process-import-jobs cron runs watchdog", () => {

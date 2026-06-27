@@ -20,9 +20,34 @@ export function migrationChecksum(text) {
   return String(h >>> 0);
 }
 
+const LEGACY_TRACKING_UPGRADE_SQL = `
+DO $$
+BEGIN
+  IF EXISTS (
+    SELECT 1 FROM information_schema.tables
+    WHERE table_schema = 'public' AND table_name = 'schema_migrations'
+  ) THEN
+    ALTER TABLE schema_migrations ADD COLUMN IF NOT EXISTS checksum TEXT;
+    ALTER TABLE schema_migrations ADD COLUMN IF NOT EXISTS duration_ms INT;
+    ALTER TABLE schema_migrations ADD COLUMN IF NOT EXISTS applied_at TIMESTAMPTZ DEFAULT now();
+    IF EXISTS (
+      SELECT 1 FROM information_schema.columns
+      WHERE table_schema = 'public' AND table_name = 'schema_migrations' AND column_name = 'id'
+    ) THEN
+      BEGIN
+        ALTER TABLE schema_migrations
+          ADD CONSTRAINT schema_migrations_migration_name_key UNIQUE (migration_name);
+      EXCEPTION WHEN duplicate_object OR duplicate_table THEN NULL;
+      END;
+    END IF;
+  END IF;
+END $$;
+`;
+
 export async function ensureTrackingTable(client) {
   if (!client?.query) return false;
   await client.query(ENSURE_TRACKING_SQL);
+  await client.query(LEGACY_TRACKING_UPGRADE_SQL);
   return true;
 }
 

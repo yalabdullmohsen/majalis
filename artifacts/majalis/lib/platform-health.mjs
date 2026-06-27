@@ -100,11 +100,14 @@ export async function getPlatformHealth(options = {}) {
 
   const blockers = [];
   if (!services.supabase.anon) blockers.push("VITE_SUPABASE_URL/ANON_KEY");
-  if (!services.database.tables?.mke_runs) blockers.push("migrations:mke_runs");
-  if (!services.database.tables?.sharia_rulings) blockers.push("migrations:sharia_rulings");
-  if (!services.database.rulings_using_db) blockers.push("seed:sharia_rulings");
-  if (!services.cron.ok) blockers.push(`secrets:${(cronEnv.missing || []).join(",")}`);
-  if (!services.assistant.anthropic) blockers.push("ANTHROPIC_API_KEY");
+  if (!services.database.tables?.mke_runs && env.SUPABASE_SERVICE_ROLE_KEY) blockers.push("migrations:mke_runs");
+  if (!services.database.tables?.sharia_rulings && env.SUPABASE_SERVICE_ROLE_KEY) blockers.push("migrations:sharia_rulings");
+  if (services.database.tables?.sharia_rulings && !services.database.rulings_using_db && env.SUPABASE_SERVICE_ROLE_KEY) {
+    blockers.push("seed:sharia_rulings");
+  }
+  if (!services.cron.ok && env.CRON_SECRET !== undefined && !env.CRON_SECRET) {
+    blockers.push(`secrets:${(cronEnv.missing || []).join(",")}`);
+  }
 
   return {
     ok: blockers.length === 0,

@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import { adminImportFetch } from "@/lib/admin-api";
 import { C } from "@/lib/theme";
 import { chunkRows, parseImportFile, UPLOAD_BATCH_SIZE } from "@/lib/import-parse";
@@ -32,15 +33,30 @@ const KICK_AFTER_MS = 3000;
 const POLL_TIMEOUT_MS = 120_000;
 const TERMINAL_STATUSES = new Set(["completed", "failed", "cancelled"]);
 
+const IMPORT_TARGET_TABLES: Record<string, string> = {
+  lessons: "lessons",
+  sheikhs: "sheikhs",
+  questions: "qa_questions",
+  books: "library_items",
+  articles: "library_items",
+  courses: "lessons",
+  benefits: "fawaid",
+  adhkar: "verified_adhkar_items",
+  rulings: "sharia_rulings",
+};
+
 type ImportReport = {
   ok: boolean;
   label?: string;
+  jobId?: string;
+  targetTable?: string;
   stats?: {
     read: number;
     imported: number;
     skipped: number;
     failed: number;
     invalid: number;
+    rejected?: number;
   };
   validationErrors?: string[];
   importErrors?: string[];
@@ -92,18 +108,46 @@ function phaseLabel(phase: string): string {
   }
 }
 
-function jobToReport(job: JobProgress): ImportReport {
+function jobToReport(job: JobProgress, importType: string, jobId?: string): ImportReport {
+  const rejected = job.validation_errors?.length || 0;
+  const imported = job.imported ?? job.report?.stats?.imported ?? 0;
+  const read = job.total_rows ?? job.report?.stats?.read ?? 0;
+  const targetTable = IMPORT_TARGET_TABLES[importType] || "—";
+
   if (job.report) {
-    return { ...job.report, timings: job.timings || job.report.timings };
+    const ok =
+      job.status === "completed" &&
+      imported > 0 &&
+      (job.failed ?? job.report.stats?.failed ?? 0) === 0;
+    return {
+      ...job.report,
+      ok,
+      jobId: jobId || job.report.jobId,
+      targetTable,
+      stats: {
+        read,
+        imported,
+        skipped: job.skipped ?? job.report.stats?.skipped ?? 0,
+        failed: job.failed ?? job.report.stats?.failed ?? 0,
+        invalid: rejected || job.report.stats?.invalid || 0,
+        rejected: rejected || job.report.stats?.invalid || 0,
+      },
+      timings: job.timings || job.report.timings,
+    };
   }
+  const failed = job.failed ?? 0;
+  const ok = job.status === "completed" && imported > 0 && failed === 0;
   return {
-    ok: job.status === "completed",
+    ok,
+    jobId,
+    targetTable,
     stats: {
-      read: job.total_rows,
-      imported: job.imported,
+      read,
+      imported,
       skipped: job.skipped,
-      failed: job.failed,
-      invalid: job.validation_errors?.length || 0,
+      failed,
+      invalid: rejected,
+      rejected,
     },
     validationErrors: job.validation_errors,
     importErrors: job.import_errors,
@@ -166,6 +210,7 @@ async function pollJobUntilDone(
 }
 
 export function ContentFileImport({ onDone }: ContentFileImportProps) {
+  const queryClient = useQueryClient();
   const inputRef = useRef<HTMLInputElement>(null);
   const retryFileRef = useRef<File | null>(null);
   const [open, setOpen] = useState(false);
@@ -190,13 +235,27 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
     retryFileRef.current = null;
   };
 
-  const applyJobResult = (job: JobProgress) => {
-    const importReport = jobToReport(job);
+  const applyJobResult = (job: JobProgress, jobId: string) => {
+    const importReport = jobToReport(job, type, jobId);
     setReport(importReport);
 
+    const imported = importReport.stats?.imported ?? 0;
+    const rejected = importReport.stats?.rejected ?? importReport.stats?.invalid ?? 0;
+    const msgs = [...(job.validation_errors || []), ...(job.import_errors || [])];
+
     if (job.status === "failed" || job.status === "cancelled") {
-      const msgs = [...(job.validation_errors || []), ...(job.import_errors || [])];
       setError(msgs[0] || (job.status === "cancelled" ? "أُلغيت المهمة" : "فشل الاستيراد"));
+      setCanRetry(true);
+      return;
+    }
+
+    if (job.status === "completed" && imported === 0) {
+      const detail =
+        msgs[0] ||
+        (rejected > 0
+          ? `لم يُستورد أي صف — ${rejected} صف مرفوض`
+          : "اكتملت المهمة دون استيراد أي صف — تحقق من محتوى الملف أو سجلات الخادم");
+      setError(detail);
       setCanRetry(true);
       return;
     }
@@ -204,7 +263,11 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
     if (importReport.ok) {
       setError(null);
       setCanRetry(false);
+      void queryClient.invalidateQueries({ queryKey: ["adhkar"] });
       onDone?.();
+    } else if (job.status === "completed") {
+      setError(msgs[0] || `اكتمل مع ${importReport.stats?.failed ?? 0} فشل`);
+      setCanRetry(true);
     }
   };
 
@@ -268,16 +331,25 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
         imported: commitJson.report?.stats?.imported ?? 0,
         skipped: commitJson.report?.stats?.skipped ?? 0,
         failed: commitJson.report?.stats?.failed ?? 0,
-        report: commitJson.report,
+        report: {
+          ...commitJson.report,
+          jobId,
+          targetTable: commitJson.targetTable || IMPORT_TARGET_TABLES[type],
+        },
         timings: commitJson.timings,
         import_errors: commitJson.report?.importErrors,
         validation_errors: commitJson.report?.validationErrors,
       };
       setProgressPct(100);
       setPhase(phaseLabel(syncJob.phase));
-      applyJobResult(syncJob);
-      if (!commitJson.ok) {
-        throw new Error(commitJson.error || syncJob.import_errors?.[0] || "فشل الاستيراد");
+      applyJobResult(syncJob, jobId);
+      const imported = syncJob.imported ?? 0;
+      if (commitJson.status === "failed" || !commitJson.ok || imported === 0) {
+        throw new Error(
+          commitJson.error ||
+            syncJob.import_errors?.[0] ||
+            (imported === 0 ? "اكتملت المهمة دون استيراد أي صف" : "فشل الاستيراد"),
+        );
       }
       return;
     }
@@ -287,13 +359,20 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
       setPhase(phaseLabel(job.phase || job.status));
     });
 
-    applyJobResult(finalJob);
+    applyJobResult(finalJob, jobId);
     if (timedOut) {
       setCanRetry(true);
       throw new Error(finalJob.import_errors?.[0] || "انتهت مهلة الاستيراد");
     }
     if (finalJob.status === "failed" || finalJob.status === "cancelled") {
       throw new Error(finalJob.import_errors?.[0] || "فشل الاستيراد");
+    }
+    if (finalJob.status === "completed" && (finalJob.imported ?? 0) === 0) {
+      throw new Error(
+        finalJob.import_errors?.[0] ||
+          finalJob.validation_errors?.[0] ||
+          "اكتملت المهمة دون استيراد أي صف",
+      );
     }
   };
 
@@ -478,11 +557,19 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
                 <p style={{ margin: 0, fontWeight: 600 }}>
                   {report.ok ? "✓ نجح الاستيراد" : "✗ اكتمل مع أخطاء"} — {report.label || type}
                 </p>
+                {report.jobId && (
+                  <p style={{ margin: "0.35rem 0 0", fontSize: "0.8125rem", color: C.inkSoft }}>
+                    معرّف المهمة: <code>{report.jobId}</code>
+                    {report.targetTable ? ` · الجدول: ${report.targetTable}` : ""}
+                  </p>
+                )}
                 {report.stats && (
                   <p style={{ margin: "0.5rem 0 0" }}>
                     قرئ {report.stats.read} · استورد {report.stats.imported} · تخطى {report.stats.skipped} ·
                     فشل {report.stats.failed}
-                    {report.stats.invalid ? ` · مرفوض ${report.stats.invalid}` : ""}
+                    {(report.stats.rejected ?? report.stats.invalid)
+                      ? ` · مرفوض ${report.stats.rejected ?? report.stats.invalid}`
+                      : ""}
                   </p>
                 )}
                 {report.timings && (
