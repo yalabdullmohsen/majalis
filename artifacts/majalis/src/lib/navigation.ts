@@ -34,7 +34,7 @@ export const NAV_GROUPS: NavGroup[] = [
     links: [
       { href: "/quran", label: "المصحف الشريف" },
       { href: "/quran/tajweed", label: "علم التجويد" },
-      { href: "/quran/surah-stories", label: "قصص السور" },
+      { href: "/quran/surah-stories", label: "قصص القرآن" },
       { href: "/quran-live", label: "البث المباشر" },
       { href: "/quran-radio", label: "إذاعات القرآن" },
       { href: "/daily-wird", label: "الورد اليومي" },
@@ -95,7 +95,7 @@ export const MOBILE_MORE_NAV = [
   { href: "/quran-radio", label: "إذاعة القرآن" },
   { href: "/quran-live", label: "البث المباشر" },
   { href: "/quran/tajweed", label: "التجويد" },
-  { href: "/quran/surah-stories", label: "قصص السور" },
+  { href: "/quran/surah-stories", label: "قصص القرآن" },
   { href: "/tasbih", label: "عداد التسبيح" },
   { href: "/prayer-ranks", label: "مراتب الصلاة" },
   { href: "/settings", label: "الإعدادات" },

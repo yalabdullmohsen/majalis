@@ -53,7 +53,7 @@ export async function upsertSourceScore(source, crawlResult = {}) {
     source_id: source.id,
     source_url: source.source_url,
     trust_score: source.trust_score ?? 70,
-    popularity_score: prev.popularity_score ?? source.priority * 10 ?? 50,
+    popularity_score: prev.popularity_score ?? (source.priority ?? 5) * 10,
     activity_score: activity,
     freshness_score: freshness,
     health_score: health,

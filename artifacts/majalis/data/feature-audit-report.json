@@ -1,0 +1,520 @@
+{
+  "at": "2026-06-27T15:07:07.846Z",
+  "branch": "cursor/feature-delivery-audit-92e6",
+  "mainHead": "11d665a",
+  "production": true,
+  "productionUrl": "https://www.majlisilm.com",
+  "env": {
+    "VITE_SUPABASE_URL": true,
+    "VITE_SUPABASE_ANON_KEY": true,
+    "SUPABASE_URL": false,
+    "SUPABASE_ANON_KEY": false,
+    "SUPABASE_SERVICE_ROLE_KEY": false,
+    "DATABASE_URL": false,
+    "CRON_SECRET": false,
+    "OPENAI_API_KEY": false,
+    "ANTHROPIC_API_KEY": false,
+    "INSTAGRAM_GRAPH_ACCESS_TOKEN": false,
+    "INSTAGRAM_BUSINESS_ACCOUNT_ID": false,
+    "INSTAGRAM_APP_ID": false,
+    "INSTAGRAM_APP_SECRET": false
+  },
+  "apiResults": {
+    "/api/healthz": {
+      "status": 200,
+      "ok": true,
+      "json": {
+        "ok": true,
+        "service": "majlisilm-web"
+      },
+      "text": "{\"ok\":true,\"service\":\"majlisilm-web\"}"
+    },
+    "/api/assistant/health": {
+      "status": 200,
+      "ok": true,
+      "json": {
+        "ok": true,
+        "available": true,
+        "rateLimit": {
+          "configured": true,
+          "backend": "upstash",
+          "allowed": true,
+          "error": null
+        }
+      },
+      "text": "{\"ok\":true,\"available\":true,\"rateLimit\":{\"configured\":true,\"backend\":\"upstash\",\"allowed\":true,\"error\":null}}"
+    },
+    "/api/assistant": {
+      "status": 500,
+      "ok": false,
+      "json": {
+        "ok": false,
+        "message": "تعذر تشغيل واجهة API.",
+        "error": "Cannot find module '/var/task/artifacts/majalis/reasoning-engine/constants.mjs' imported from /var/task/artifacts/majalis/lib/islamic-answer-guardrails.mjs"
+      },
+      "text": "{\"ok\":false,\"message\":\"تعذر تشغيل واجهة API.\",\"error\":\"Cannot find module '/var/task/artifacts/majalis/reasoning-engine/constants.mjs' imported from /var/task/artifacts/majalis/lib/islamic-answer-guar"
+    },
+    "/api/knowledge-search?q=صلاة": {
+      "status": 200,
+      "ok": true,
+      "json": {
+        "ok": true,
+        "query": "صلاة",
+        "count": 5,
+        "results": [
+          {
+            "id": "e69c576d-27c2-4c52-9586-abd27f088c28",
+            "title": "كم عدد أولي العزم من الرسل وما أسماؤهم؟",
+            "summary": "أولو العزم من الرسل خمسة، وهم: نوح وإبراهيم وموسى وعيسى ومحمد عليهم الصلاة والسلام، وقد خصّهم الله بالصبر والثبات في الدعوة.",
+            "kind": "qa",
+            "href": "/qa#e69c576d-27c2-4c52-9586-abd27f088c28",
+            "rank": 4,
+            "source": "platform"
+          },
+          {
+            "id": "a2384a73-aafe-4085-8bbd-fd6fe9192d14",
+            "title": "ما معنى توحيد العبادة؟",
+            "summary": "إفراد الله تعالى بجميع أنواع العبادة كالدعاء والصلاة والذبح والنذر، فلا يصرف منها شيء لغير الله.",
+            "kind": "qa",
+            "href": "/qa#a2384a73-aafe-4085-8bbd-fd6fe9192d14",
+            "rank": 4,
+            "source": "platform"
+          },
+          {
+            "id": "69e6b7b0-db1e-435f-91d0-9c567bd862c9",
+            "title": "هل الوضوء شرط لصحة الصلاة؟",
+            "summary": "نعم، الطهارة شرط لصحة الصلاة عند القدرة.",
+            "kind": "qa",
+            "href": "/qa#69e6b7b0-db1e-435f-91d0-9c567bd862c9",
+            "rank": 4,
+            "source": "platform"
+          },
+          {
+            "id": "0a702636-595f-4af3-b907-77e5bbc91542",
+            "title": "ما حق المسلم على أخيه عند الوفاة؟",
+            "summary": "من حقوقه تغسيله وتكفينه والصلاة عليه ودفنه والدعاء له.",
+            "kind": "qa",
+            "href": "/qa#0a702636-595f-4af3-b907-77e5bbc91542",
+            "rank": 4,
+            "source": "platform"
+          },
+          {
+            "id": "70d4458c-2d36-44fc-90e0-722f4ad0d0b1",
+            "title": "ما فضل صلاة الجماعة؟",
+            "summary": "صلاة الجماعة أفضل من صلاة الفرد بدرجات عظيمة، وهي من شعائر الإسلام الظاهرة.",
+            "kind": "qa",
+            "href": "/qa#70d4458c-2d36-44fc-90e0-722f4ad0d0b1",
+            "rank": 4,
+            "source": "platform"
+          }
+        ],
+        "sources": {
+          "knowledge": 0,
+          "platform": 5
+        }
+      },
+      "text": "{\"ok\":true,\"query\":\"صلاة\",\"count\":5,\"results\":[{\"id\":\"e69c576d-27c2-4c52-9586-abd27f088c28\",\"title\":\"كم عدد أولي العزم من الرسل وما أسماؤهم؟\",\"summary\":\"أولو العزم من الرسل خمسة، وهم: نوح وإبراهيم ومو"
+    }
+  },
+  "features": [
+    {
+      "id": "quran-v2",
+      "name": "صفحة القرآن الجديدة (v2)",
+      "phase": 1,
+      "pr": 72,
+      "branch": "cursor/ux-redesign-quran-qa-lessons-92e6",
+      "mergedToMain": false,
+      "inCode": true,
+      "hasRoute": true,
+      "productionOk": false,
+      "needsMigration": false,
+      "migrations": [],
+      "needsSecrets": [],
+      "usesMock": false,
+      "hasUi": true,
+      "tested": false,
+      "status": "Partial",
+      "routes": [
+        "/quran"
+      ]
+    },
+    {
+      "id": "quran-stories",
+      "name": "قصص القرآن",
+      "phase": 1,
+      "pr": 72,
+      "branch": "cursor/ux-redesign-quran-qa-lessons-92e6",
+      "mergedToMain": false,
+      "inCode": true,
+      "hasRoute": true,
+      "productionOk": true,
+      "needsMigration": false,
+      "migrations": [],
+      "needsSecrets": [],
+      "usesMock": true,
+      "hasUi": true,
+      "tested": false,
+      "status": "Partial",
+      "routes": [
+        "/quran/surah-stories"
+      ]
+    },
+    {
+      "id": "qa-taxonomy",
+      "name": "تصحيح تصنيف الأسئلة",
+      "phase": 2,
+      "pr": 72,
+      "branch": "cursor/ux-redesign-quran-qa-lessons-92e6",
+      "mergedToMain": false,
+      "inCode": true,
+      "hasRoute": true,
+      "productionOk": false,
+      "needsMigration": true,
+      "migrations": [
+        "supabase/qa_categories_fix_v1.sql"
+      ],
+      "needsSecrets": [],
+      "usesMock": true,
+      "hasUi": true,
+      "tested": false,
+      "status": "Partial",
+      "routes": [
+        "/qa"
+      ]
+    },
+    {
+      "id": "lessons-v2",
+      "name": "صفحة الدروس الجديدة (v2)",
+      "phase": 1,
+      "pr": 72,
+      "branch": "cursor/ux-redesign-quran-qa-lessons-92e6",
+      "mergedToMain": false,
+      "inCode": true,
+      "hasRoute": true,
+      "productionOk": false,
+      "needsMigration": false,
+      "migrations": [],
+      "needsSecrets": [],
+      "usesMock": true,
+      "hasUi": true,
+      "tested": false,
+      "status": "Partial",
+      "routes": [
+        "/lessons"
+      ]
+    },
+    {
+      "id": "mobile-nav",
+      "name": "القائمة على الجوال",
+      "phase": 1,
+      "pr": null,
+      "branch": null,
+      "mergedToMain": true,
+      "inCode": true,
+      "hasRoute": true,
+      "productionOk": true,
+      "needsMigration": false,
+      "migrations": [],
+      "needsSecrets": [],
+      "usesMock": false,
+      "hasUi": true,
+      "tested": true,
+      "status": "Done",
+      "routes": [
+        "/"
+      ]
+    },
+    {
+      "id": "assistant",
+      "name": "المساعد العلمي",
+      "phase": 1,
+      "pr": null,
+      "branch": null,
+      "mergedToMain": true,
+      "inCode": true,
+      "hasRoute": true,
+      "productionOk": true,
+      "needsMigration": false,
+      "migrations": [],
+      "needsSecrets": [
+        "ANTHROPIC_API_KEY"
+      ],
+      "usesMock": true,
+      "hasUi": true,
+      "tested": false,
+      "status": "Blocked by Missing Secrets",
+      "routes": [
+        "/assistant"
+      ]
+    },
+    {
+      "id": "lesson-automation",
+      "name": "أتمتة مصادر الدروس",
+      "phase": 4,
+      "pr": null,
+      "branch": null,
+      "mergedToMain": true,
+      "inCode": true,
+      "hasRoute": true,
+      "productionOk": true,
+      "needsMigration": true,
+      "migrations": [
+        "supabase/trusted_lesson_sources_v1.sql"
+      ],
+      "needsSecrets": [
+        "SUPABASE_SERVICE_ROLE_KEY",
+        "CRON_SECRET"
+      ],
+      "usesMock": false,
+      "hasUi": true,
+      "tested": false,
+      "status": "Blocked by Missing Secrets",
+      "routes": [
+        "/admin/sources",
+        "/admin/automation/center"
+      ]
+    },
+    {
+      "id": "instagram-graph",
+      "name": "Instagram Graph API + Manual Assist",
+      "phase": 4,
+      "pr": 70,
+      "branch": null,
+      "mergedToMain": true,
+      "inCode": true,
+      "hasRoute": true,
+      "productionOk": true,
+      "needsMigration": false,
+      "migrations": [],
+      "needsSecrets": [
+        "INSTAGRAM_GRAPH_ACCESS_TOKEN",
+        "INSTAGRAM_BUSINESS_ACCOUNT_ID",
+        "INSTAGRAM_APP_ID",
+        "INSTAGRAM_APP_SECRET"
+      ],
+      "usesMock": true,
+      "hasUi": true,
+      "tested": false,
+      "status": "Blocked by Missing Secrets",
+      "routes": [
+        "/admin/integrations/instagram"
+      ]
+    },
+    {
+      "id": "mke",
+      "name": "Majlis Knowledge Engine",
+      "phase": 4,
+      "pr": 71,
+      "branch": "cursor/majlis-autonomous-platform-92e6",
+      "mergedToMain": false,
+      "inCode": true,
+      "hasRoute": true,
+      "productionOk": false,
+      "needsMigration": false,
+      "migrations": [],
+      "needsSecrets": [
+        "SUPABASE_SERVICE_ROLE_KEY",
+        "CRON_SECRET",
+        "OPENAI_API_KEY"
+      ],
+      "usesMock": false,
+      "hasUi": true,
+      "tested": false,
+      "status": "Partial",
+      "routes": [
+        "/admin/automation/platform"
+      ]
+    },
+    {
+      "id": "sharia-rulings",
+      "name": "موسوعة الأحكام الشرعية",
+      "phase": 5,
+      "pr": 74,
+      "branch": "cursor/sharia-rulings-encyclopedia-92e6",
+      "mergedToMain": false,
+      "inCode": true,
+      "hasRoute": true,
+      "productionOk": false,
+      "needsMigration": true,
+      "migrations": [
+        "supabase/sharia_rulings_encyclopedia_v1.sql"
+      ],
+      "needsSecrets": [],
+      "usesMock": true,
+      "hasUi": true,
+      "tested": false,
+      "status": "Partial",
+      "routes": [
+        "/rulings"
+      ]
+    },
+    {
+      "id": "qa-fawaid-adhkar",
+      "name": "الأسئلة والفوائد والأذكار",
+      "phase": 5,
+      "pr": null,
+      "branch": null,
+      "mergedToMain": true,
+      "inCode": true,
+      "hasRoute": true,
+      "productionOk": true,
+      "needsMigration": false,
+      "migrations": [],
+      "needsSecrets": [],
+      "usesMock": true,
+      "hasUi": true,
+      "tested": false,
+      "status": "Not Production Complete",
+      "routes": [
+        "/qa",
+        "/fawaid",
+        "/adhkar"
+      ]
+    },
+    {
+      "id": "settings-dark",
+      "name": "الإعدادات والوضع الليلي",
+      "phase": 1,
+      "pr": null,
+      "branch": null,
+      "mergedToMain": true,
+      "inCode": true,
+      "hasRoute": true,
+      "productionOk": false,
+      "needsMigration": false,
+      "migrations": [],
+      "needsSecrets": [],
+      "usesMock": false,
+      "hasUi": true,
+      "tested": false,
+      "status": "Blocked by Deployment",
+      "routes": [
+        "/settings"
+      ]
+    },
+    {
+      "id": "search",
+      "name": "البحث",
+      "phase": 1,
+      "pr": null,
+      "branch": null,
+      "mergedToMain": true,
+      "inCode": true,
+      "hasRoute": true,
+      "productionOk": true,
+      "needsMigration": false,
+      "migrations": [],
+      "needsSecrets": [],
+      "usesMock": true,
+      "hasUi": true,
+      "tested": false,
+      "status": "Not Production Complete",
+      "routes": [
+        "/search"
+      ]
+    },
+    {
+      "id": "admin-dashboard",
+      "name": "Admin Dashboard",
+      "phase": 3,
+      "pr": null,
+      "branch": null,
+      "mergedToMain": true,
+      "inCode": true,
+      "hasRoute": true,
+      "productionOk": false,
+      "needsMigration": false,
+      "migrations": [],
+      "needsSecrets": [
+        "SUPABASE_SERVICE_ROLE_KEY"
+      ],
+      "usesMock": false,
+      "hasUi": true,
+      "tested": false,
+      "status": "Blocked by Deployment",
+      "routes": [
+        "/admin",
+        "/admin/dashboard"
+      ]
+    },
+    {
+      "id": "auto-publish",
+      "name": "Auto Publish",
+      "phase": 4,
+      "pr": null,
+      "branch": null,
+      "mergedToMain": true,
+      "inCode": true,
+      "hasRoute": true,
+      "productionOk": true,
+      "needsMigration": false,
+      "migrations": [],
+      "needsSecrets": [
+        "CRON_SECRET",
+        "SUPABASE_SERVICE_ROLE_KEY"
+      ],
+      "usesMock": false,
+      "hasUi": true,
+      "tested": false,
+      "status": "Blocked by Missing Secrets",
+      "routes": [
+        "/admin/auto-content"
+      ]
+    },
+    {
+      "id": "sitemap-rss",
+      "name": "Sitemap / RSS",
+      "phase": 1,
+      "pr": null,
+      "branch": null,
+      "mergedToMain": true,
+      "inCode": true,
+      "hasRoute": true,
+      "productionOk": false,
+      "needsMigration": false,
+      "migrations": [],
+      "needsSecrets": [],
+      "usesMock": false,
+      "hasUi": true,
+      "tested": false,
+      "status": "Blocked by Deployment",
+      "routes": [
+        "/sitemap.xml",
+        "/feed.xml"
+      ]
+    },
+    {
+      "id": "knowledge-graph",
+      "name": "Knowledge Graph",
+      "phase": 4,
+      "pr": null,
+      "branch": null,
+      "mergedToMain": true,
+      "inCode": true,
+      "hasRoute": true,
+      "productionOk": false,
+      "needsMigration": true,
+      "migrations": [
+        "supabase/knowledge_graph_phase4_v1.sql"
+      ],
+      "needsSecrets": [
+        "SUPABASE_SERVICE_ROLE_KEY"
+      ],
+      "usesMock": false,
+      "hasUi": true,
+      "tested": false,
+      "status": "Blocked by Deployment",
+      "routes": [
+        "/admin"
+      ]
+    }
+  ],
+  "summary": {
+    "total": 17,
+    "done": 1,
+    "partial": 6,
+    "blocked": 8,
+    "missing": 0,
+    "notProductionComplete": 2
+  }
+}

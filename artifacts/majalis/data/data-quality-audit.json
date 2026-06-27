@@ -1,0 +1,572 @@
+{
+  "at": "2026-06-27T14:09:45.304Z",
+  "counts": {
+    "qa": 169,
+    "lessons": 0,
+    "sheikhs": 8
+  },
+  "issues": {
+    "qa": [
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-14",
+        "key": "من أول الرسل إلى أهل الأرض بعد آدم؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-15",
+        "key": "من النبي الذي اتخذه الله خليلاً؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-16",
+        "key": "من النبي الذي كلمه الله تكليماً؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-17",
+        "key": "من النبي الذي أرسل إلى قوم عاد؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-18",
+        "key": "من النبي الذي أرسل إلى قوم ثمود؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-19",
+        "key": "من النبي الذي ابتلعه الحوت؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-20",
+        "key": "من النبي الذي رفعه الله إليه؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-21",
+        "key": "من والد إسماعيل عليه السلام؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-22",
+        "key": "من النبي الذي سخر الله له الريح؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-23",
+        "key": "من النبي الذي اشتهر بالصبر على البلاء؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-24",
+        "key": "من أول الخلفاء الراشدين؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-25",
+        "key": "من ثاني الخلفاء الراشدين؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-26",
+        "key": "من ثالث الخلفاء الراشدين؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-27",
+        "key": "من أول الخلفاء الراشدين؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-28",
+        "key": "من ثاني الخلفاء الراشدين؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-29",
+        "key": "من ثالث الخلفاء الراشدين؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-36",
+        "key": "من أول الرسل إلى أهل الأرض بعد آدم؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-37",
+        "key": "من النبي الذي اتخذه الله خليلاً؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-38",
+        "key": "من النبي الذي كلمه الله تكليماً؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-39",
+        "key": "من النبي الذي أرسل إلى قوم عاد؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-47",
+        "key": "من أول الرسل إلى أهل الأرض بعد آدم؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-48",
+        "key": "من النبي الذي اتخذه الله خليلاً؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-49",
+        "key": "من النبي الذي كلمه الله تكليماً؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-50",
+        "key": "من النبي الذي أرسل إلى قوم عاد؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-51",
+        "key": "من النبي الذي أرسل إلى قوم ثمود؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-52",
+        "key": "من النبي الذي ابتلعه الحوت؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-56",
+        "key": "من أول الرسل إلى أهل الأرض بعد آدم؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-57",
+        "key": "من النبي الذي اتخذه الله خليلاً؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-58",
+        "key": "من النبي الذي كلمه الله تكليماً؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-59",
+        "key": "من النبي الذي أرسل إلى قوم عاد؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-60",
+        "key": "من النبي الذي أرسل إلى قوم ثمود؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-61",
+        "key": "من النبي الذي ابتلعه الحوت؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-62",
+        "key": "من النبي الذي رفعه الله إليه؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-63",
+        "key": "من والد إسماعيل عليه السلام؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-64",
+        "key": "من النبي الذي سخر الله له الريح؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-65",
+        "key": "من النبي الذي اشتهر بالصبر على البلاء؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-67",
+        "key": "من أول الرسل إلى أهل الأرض بعد آدم؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-68",
+        "key": "من النبي الذي اتخذه الله خليلاً؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-69",
+        "key": "من النبي الذي كلمه الله تكليماً؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-70",
+        "key": "من النبي الذي أرسل إلى قوم عاد؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-71",
+        "key": "من النبي الذي أرسل إلى قوم ثمود؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-72",
+        "key": "من النبي الذي ابتلعه الحوت؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-73",
+        "key": "من النبي الذي رفعه الله إليه؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-74",
+        "key": "من والد إسماعيل عليه السلام؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-75",
+        "key": "من النبي الذي سخر الله له الريح؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-76",
+        "key": "من النبي الذي اشتهر بالصبر على البلاء؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-77",
+        "key": "من أول الخلفاء الراشدين؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-78",
+        "key": "من ثاني الخلفاء الراشدين؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-81",
+        "key": "من أول الرسل إلى أهل الأرض بعد آدم؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-82",
+        "key": "من النبي الذي اتخذه الله خليلاً؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-83",
+        "key": "من النبي الذي كلمه الله تكليماً؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-84",
+        "key": "من النبي الذي أرسل إلى قوم عاد؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-85",
+        "key": "من النبي الذي أرسل إلى قوم ثمود؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-86",
+        "key": "من النبي الذي ابتلعه الحوت؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-87",
+        "key": "من النبي الذي رفعه الله إليه؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-88",
+        "key": "من والد إسماعيل عليه السلام؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-89",
+        "key": "من النبي الذي سخر الله له الريح؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-90",
+        "key": "من النبي الذي اشتهر بالصبر على البلاء؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-91",
+        "key": "من أول الخلفاء الراشدين؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-94",
+        "key": "من أول الرسل إلى أهل الأرض بعد آدم؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-95",
+        "key": "من النبي الذي اتخذه الله خليلاً؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-96",
+        "key": "من النبي الذي كلمه الله تكليماً؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-97",
+        "key": "من النبي الذي أرسل إلى قوم عاد؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-98",
+        "key": "من النبي الذي أرسل إلى قوم ثمود؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-99",
+        "key": "من النبي الذي ابتلعه الحوت؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-100",
+        "key": "من النبي الذي رفعه الله إليه؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-101",
+        "key": "من والد إسماعيل عليه السلام؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-102",
+        "key": "من النبي الذي سخر الله له الريح؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-103",
+        "key": "من النبي الذي اشتهر بالصبر على البلاء؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-104",
+        "key": "من أول الخلفاء الراشدين؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-115",
+        "key": "من أول الرسل إلى أهل الأرض بعد آدم؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-116",
+        "key": "من النبي الذي اتخذه الله خليلاً؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-117",
+        "key": "من النبي الذي كلمه الله تكليماً؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-118",
+        "key": "من أول الرسل إلى أهل الأرض بعد آدم؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-119",
+        "key": "من النبي الذي اتخذه الله خليلاً؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-120",
+        "key": "من النبي الذي كلمه الله تكليماً؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-121",
+        "key": "من النبي الذي أرسل إلى قوم عاد؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-122",
+        "key": "من النبي الذي أرسل إلى قوم ثمود؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-123",
+        "key": "من النبي الذي ابتلعه الحوت؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-124",
+        "key": "من النبي الذي رفعه الله إليه؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-125",
+        "key": "من والد إسماعيل عليه السلام؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-126",
+        "key": "من النبي الذي سخر الله له الريح؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-127",
+        "key": "من النبي الذي اشتهر بالصبر على البلاء؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-128",
+        "key": "من أول الخلفاء الراشدين؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-129",
+        "key": "من ثاني الخلفاء الراشدين؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-130",
+        "key": "من ثالث الخلفاء الراشدين؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-140",
+        "key": "من أول الرسل إلى أهل الأرض بعد آدم؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-141",
+        "key": "من النبي الذي اتخذه الله خليلاً؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-142",
+        "key": "من النبي الذي كلمه الله تكليماً؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-143",
+        "key": "من النبي الذي أرسل إلى قوم عاد؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-149",
+        "key": "من أول الرسل إلى أهل الأرض بعد آدم؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-150",
+        "key": "من النبي الذي اتخذه الله خليلاً؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-151",
+        "key": "من النبي الذي كلمه الله تكليماً؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-152",
+        "key": "من النبي الذي أرسل إلى قوم عاد؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-153",
+        "key": "من النبي الذي أرسل إلى قوم ثمود؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-154",
+        "key": "من النبي الذي ابتلعه الحوت؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-155",
+        "key": "من النبي الذي رفعه الله إليه؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-156",
+        "key": "من والد إسماعيل عليه السلام؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-157",
+        "key": "من أول الرسل إلى أهل الأرض بعد آدم؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-158",
+        "key": "من النبي الذي اتخذه الله خليلاً؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-159",
+        "key": "من النبي الذي كلمه الله تكليماً؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-160",
+        "key": "من النبي الذي أرسل إلى قوم عاد؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-161",
+        "key": "من النبي الذي أرسل إلى قوم ثمود؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-162",
+        "key": "من النبي الذي ابتلعه الحوت؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-163",
+        "key": "من النبي الذي رفعه الله إليه؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-164",
+        "key": "من والد إسماعيل عليه السلام؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-165",
+        "key": "من النبي الذي سخر الله له الريح؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-166",
+        "key": "من النبي الذي اشتهر بالصبر على البلاء؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-167",
+        "key": "من أول الخلفاء الراشدين؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-168",
+        "key": "من ثاني الخلفاء الراشدين؟"
+      },
+      {
+        "type": "duplicate_question",
+        "id": "seed-qa-169",
+        "key": "من ثالث الخلفاء الراشدين؟"
+      }
+    ],
+    "lessons": [],
+    "sheikhs": []
+  },
+  "summary": {
+    "totalIssues": 111
+  }
+}

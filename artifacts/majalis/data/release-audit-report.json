@@ -1,0 +1,1001 @@
+{
+  "at": "2026-06-27T15:19:18.662Z",
+  "durationMs": 25677,
+  "releaseGateVersion": 1,
+  "branch": "cursor/production-recovery-release-gate-92e6",
+  "mainHead": "11d665a",
+  "production": true,
+  "productionUrl": "https://majlisilm.com",
+  "productionBundle": "/assets/index-C0Di0meB.js",
+  "env": {
+    "VITE_SUPABASE_URL": true,
+    "VITE_SUPABASE_ANON_KEY": true,
+    "SUPABASE_URL": false,
+    "SUPABASE_ANON_KEY": false,
+    "SUPABASE_SERVICE_ROLE_KEY": false,
+    "DATABASE_URL": false,
+    "POSTGRES_URL": false,
+    "POSTGRES_PASSWORD": false,
+    "CRON_SECRET": false,
+    "OPENAI_API_KEY": false,
+    "ANTHROPIC_API_KEY": false,
+    "INSTAGRAM_GRAPH_ACCESS_TOKEN": false,
+    "INSTAGRAM_BUSINESS_ACCOUNT_ID": false,
+    "INSTAGRAM_APP_ID": false,
+    "INSTAGRAM_APP_SECRET": false,
+    "JWT_SECRET": false,
+    "ADMIN_API_SECRET": false
+  },
+  "gate": {
+    "code": true,
+    "typescript": true,
+    "build": true,
+    "migration": true,
+    "merge": false,
+    "productionDeploy": true,
+    "route": true,
+    "api": true,
+    "ui": true,
+    "featureVerified": false,
+    "secrets": {
+      "supabase": false,
+      "cron": false,
+      "anthropic": false,
+      "openai": false,
+      "instagram": false,
+      "database": false
+    }
+  },
+  "releaseGateChecks": [
+    "code",
+    "typescript",
+    "build",
+    "migration",
+    "merge",
+    "productionDeploy",
+    "route",
+    "api",
+    "ui",
+    "featureVerified"
+  ],
+  "buildSteps": [
+    {
+      "ok": true,
+      "name": "typescript",
+      "ms": 8892,
+      "output": "\n> workspace@0.0.0 typecheck /workspace\n> pnpm run typecheck:libs && pnpm -r --filter \"./artifacts/**\" --filter \"./scripts\" --if-present run typecheck\n\n\n> workspace@0.0.0 typecheck:libs /workspace\n> tsc --build\n\nScope: 7 of 12 workspace projects\nartifacts/api-server typecheck$ tsc -p tsconfig.json --noEmit\nartifacts/majalis typecheck$ tsc -p tsconfig.json --noEmit\nartifacts/majalis-mobile typecheck$ tsc -p tsconfig.json --noEmit\nartifacts/majalis-pitch typecheck$ tsc -p tsconfig.json --noEmit\nartifacts/api-server typecheck: Done\nartifacts/majalis-promo typecheck$ tsc -p tsconfig.json --noEmit\nartifacts/majalis-pitch typecheck: Done\nartifacts/mockup-sandbox typecheck$ tsc -p tsconfig.json --noEmit\nartifacts/majalis-mobile typecheck: Done\nscripts typecheck$ tsc -p tsconfig.json --noEmit\nscripts typecheck: Done\nartifacts/majalis-promo typecheck: Done\nartifacts/mockup-sandbox typecheck: Done\nartifacts/majalis typecheck: Done\n"
+    },
+    {
+      "ok": true,
+      "name": "lint",
+      "ms": 5153,
+      "output": "\n> @workspace/majalis@0.0.0 lint /workspace/artifacts/majalis\n> eslint src lib --ext .ts,.tsx --max-warnings 50\n\n\n/workspace/artifacts/majalis/src/components/MobileMoreMenu.tsx\n  4:16  warning  'useLocation' is defined but never used  @typescript-eslint/no-unused-vars\n\n✖ 1 problem (0 errors, 1 warning)\n\n"
+    }
+  ],
+  "openPrs": {
+    "count": 22,
+    "prs": [
+      {
+        "createdAt": "2026-06-24T22:44:55Z",
+        "headRefName": "cursor/platform-v2-92e6",
+        "number": 21,
+        "title": "feat(majalis): تطوير منصة المجلس العلمي v2 — صفحات، إدارة، قاعدة بيانات",
+        "url": "https://github.com/yalabdullmohsen/majalis/pull/21"
+      },
+      {
+        "createdAt": "2026-06-25T00:42:15Z",
+        "headRefName": "cursor/zaghloul-miracles-library-92e6",
+        "number": 22,
+        "title": "feat(miracles): فهرس سلسلة زغلول النجار ومعالجة الحلقة الأولى",
+        "url": "https://github.com/yalabdullmohsen/majalis/pull/22"
+      },
+      {
+        "createdAt": "2026-06-25T00:53:30Z",
+        "headRefName": "cursor/condolence-card-pro-92e6",
+        "number": 23,
+        "title": "feat(condolences): بطاقة تعزية رسمية بخط عربي فخم وجودة Retina",
+        "url": "https://github.com/yalabdullmohsen/majalis/pull/23"
+      },
+      {
+        "createdAt": "2026-06-25T01:06:48Z",
+        "headRefName": "cursor/production-launch-92e6",
+        "number": 24,
+        "title": "feat(majalis): إطلاق Production — homepage، أذكار، تقويم، بحث",
+        "url": "https://github.com/yalabdullmohsen/majalis/pull/24"
+      },
+      {
+        "createdAt": "2026-06-25T21:23:34Z",
+        "headRefName": "cursor/auto-content-full-integration-92e6",
+        "number": 32,
+        "title": "Complete Auto Content Pipeline full integration",
+        "url": "https://github.com/yalabdullmohsen/majalis/pull/32"
+      },
+      {
+        "createdAt": "2026-06-26T00:18:11Z",
+        "headRefName": "cursor/content-architecture-92e6",
+        "number": 36,
+        "title": "feat(content): مكتبة محتوى شرعي — 40k+ حديث ونظام المحتوى اليومي",
+        "url": "https://github.com/yalabdullmohsen/majalis/pull/36"
+      },
+      {
+        "createdAt": "2026-06-26T00:25:35Z",
+        "headRefName": "cursor/kuwait-lessons-sync-92e6",
+        "number": 37,
+        "title": "نظام مزامنة إعلانات الدروس الكويتية التلقائي",
+        "url": "https://github.com/yalabdullmohsen/majalis/pull/37"
+      },
+      {
+        "createdAt": "2026-06-26T00:29:21Z",
+        "headRefName": "cursor/knowledge-graph-audit-92e6",
+        "number": 38,
+        "title": "Phase 0: تقرير مراجعة Knowledge Graph",
+        "url": "https://github.com/yalabdullmohsen/majalis/pull/38"
+      },
+      {
+        "createdAt": "2026-06-27T00:10:28Z",
+        "headRefName": "cursor/fadat-lesson-92e6",
+        "number": 58,
+        "title": "إضافة درس «فاضت» — د. محمد ضاوي العصيمي",
+        "url": "https://github.com/yalabdullmohsen/majalis/pull/58"
+      },
+      {
+        "createdAt": "2026-06-27T01:00:52Z",
+        "headRefName": "cursor/ux-reading-quran-92e6",
+        "number": 60,
+        "title": "feat(ux): reading settings, sin jeem game, and Quran hub rebuild",
+        "url": "https://github.com/yalabdullmohsen/majalis/pull/60"
+      },
+      {
+        "createdAt": "2026-06-27T01:04:45Z",
+        "headRefName": "cursor/calm-design-sinjeem-92e6",
+        "number": 61,
+        "title": "feat(design): calm UI, surah stories redesign, sin jeem teams",
+        "url": "https://github.com/yalabdullmohsen/majalis/pull/61"
+      },
+      {
+        "createdAt": "2026-06-27T01:14:00Z",
+        "headRefName": "cursor/professional-platform-92e6",
+        "number": 62,
+        "title": "feat(platform): 16 professional features for scholarly reference platform",
+        "url": "https://github.com/yalabdullmohsen/majalis/pull/62"
+      },
+      {
+        "createdAt": "2026-06-27T01:21:57Z",
+        "headRefName": "cursor/library-tajweed-92e6",
+        "number": 63,
+        "title": "feat(library): professional book catalog + tajweed page redesign",
+        "url": "https://github.com/yalabdullmohsen/majalis/pull/63"
+      },
+      {
+        "createdAt": "2026-06-27T01:25:13Z",
+        "headRefName": "cursor/auth-fix-92e6",
+        "number": 64,
+        "title": "fix(auth): إصلاح جذري لتسجيل الدخول والتسجيل — Supabase env + إزالة التعطيل",
+        "url": "https://github.com/yalabdullmohsen/majalis/pull/64"
+      },
+      {
+        "createdAt": "2026-06-27T01:29:19Z",
+        "headRefName": "cursor/assistant-fix-92e6",
+        "number": 65,
+        "title": "fix(assistant): إصلاح المساعد العلمي — import مكسور + تصنيف عربي + API flow",
+        "url": "https://github.com/yalabdullmohsen/majalis/pull/65"
+      },
+      {
+        "createdAt": "2026-06-27T01:35:02Z",
+        "headRefName": "cursor/stability-refactor-92e6",
+        "number": 66,
+        "title": "refactor(stability): القضاء على انهيار الصفحات + إعادة هيكلة الرئيسية",
+        "url": "https://github.com/yalabdullmohsen/majalis/pull/66"
+      },
+      {
+        "createdAt": "2026-06-27T01:47:47Z",
+        "headRefName": "cursor/terminology-unify-92e6",
+        "number": 67,
+        "title": "توحيد المصطلحات وإعادة تنظيم الصفحة الرئيسية",
+        "url": "https://github.com/yalabdullmohsen/majalis/pull/67"
+      },
+      {
+        "createdAt": "2026-06-27T13:55:48Z",
+        "headRefName": "cursor/majlis-autonomous-platform-92e6",
+        "number": 71,
+        "title": "Majlis Knowledge Engine v1 — Autonomous Platform 1.0",
+        "url": "https://github.com/yalabdullmohsen/majalis/pull/71"
+      },
+      {
+        "createdAt": "2026-06-27T14:11:51Z",
+        "headRefName": "cursor/ux-redesign-quran-qa-lessons-92e6",
+        "number": 72,
+        "title": "Rebuild Quran, QA, and Lessons UX with category taxonomy fix",
+        "url": "https://github.com/yalabdullmohsen/majalis/pull/72"
+      },
+      {
+        "createdAt": "2026-06-27T14:22:13Z",
+        "headRefName": "cursor/autonomous-platform-v2-92e6",
+        "number": 73,
+        "title": "MKE v2.0: Autonomous Platform — intelligence layers on existing engine",
+        "url": "https://github.com/yalabdullmohsen/majalis/pull/73"
+      },
+      {
+        "createdAt": "2026-06-27T14:33:39Z",
+        "headRefName": "cursor/sharia-rulings-encyclopedia-92e6",
+        "number": 74,
+        "title": "موسوعة الأحكام الشرعية — بنية قابلة للتوسع + 248 حكم موثق",
+        "url": "https://github.com/yalabdullmohsen/majalis/pull/74"
+      },
+      {
+        "createdAt": "2026-06-27T15:07:31Z",
+        "headRefName": "cursor/feature-delivery-audit-92e6",
+        "number": 75,
+        "title": "Feature delivery audit system — verify:features + /admin/feature-status",
+        "url": "https://github.com/yalabdullmohsen/majalis/pull/75"
+      }
+    ]
+  },
+  "branchesAheadOfMain": {
+    "count": 29,
+    "branches": [
+      {
+        "branch": "cursor/homepage-upgrade-5e4b",
+        "commitsAhead": 10
+      },
+      {
+        "branch": "cursor/priority1-web-stability-5e4b",
+        "commitsAhead": 7
+      },
+      {
+        "branch": "cursor/priority2-user-content-5e4b",
+        "commitsAhead": 6
+      },
+      {
+        "branch": "cursor/majlis-launch-polish-5e4b",
+        "commitsAhead": 5
+      },
+      {
+        "branch": "cursor/library-tajweed-92e6",
+        "commitsAhead": 4
+      },
+      {
+        "branch": "cursor/professional-platform-92e6",
+        "commitsAhead": 3
+      },
+      {
+        "branch": "cursor/stability-refactor-92e6",
+        "commitsAhead": 3
+      },
+      {
+        "branch": "cursor/ux-redesign-quran-qa-lessons-92e6",
+        "commitsAhead": 3
+      },
+      {
+        "branch": "cursor/assistant-fix-92e6",
+        "commitsAhead": 2
+      },
+      {
+        "branch": "cursor/autonomous-platform-v2-92e6",
+        "commitsAhead": 2
+      },
+      {
+        "branch": "cursor/calm-design-sinjeem-92e6",
+        "commitsAhead": 2
+      },
+      {
+        "branch": "cursor/fadat-lesson-92e6",
+        "commitsAhead": 2
+      },
+      {
+        "branch": "cursor/production-launch-92e6",
+        "commitsAhead": 2
+      },
+      {
+        "branch": "cursor/security-rls-priority0-5e4b",
+        "commitsAhead": 2
+      },
+      {
+        "branch": "cursor/add-majlis-seo-cc5e",
+        "commitsAhead": 1
+      },
+      {
+        "branch": "cursor/auth-fix-92e6",
+        "commitsAhead": 1
+      },
+      {
+        "branch": "cursor/auto-content-full-integration-92e6",
+        "commitsAhead": 1
+      },
+      {
+        "branch": "cursor/condolence-card-pro-92e6",
+        "commitsAhead": 1
+      },
+      {
+        "branch": "cursor/content-architecture-92e6",
+        "commitsAhead": 1
+      },
+      {
+        "branch": "cursor/feature-delivery-audit-92e6",
+        "commitsAhead": 1
+      },
+      {
+        "branch": "cursor/improve-majalis-platform-9167",
+        "commitsAhead": 1
+      },
+      {
+        "branch": "cursor/knowledge-graph-audit-92e6",
+        "commitsAhead": 1
+      },
+      {
+        "branch": "cursor/kuwait-lessons-sync-92e6",
+        "commitsAhead": 1
+      },
+      {
+        "branch": "cursor/majlis-autonomous-platform-92e6",
+        "commitsAhead": 1
+      },
+      {
+        "branch": "cursor/platform-v2-92e6",
+        "commitsAhead": 1
+      },
+      {
+        "branch": "cursor/sharia-rulings-encyclopedia-92e6",
+        "commitsAhead": 1
+      },
+      {
+        "branch": "cursor/terminology-unify-92e6",
+        "commitsAhead": 1
+      },
+      {
+        "branch": "cursor/ux-reading-quran-92e6",
+        "commitsAhead": 1
+      },
+      {
+        "branch": "cursor/zaghloul-miracles-library-92e6",
+        "commitsAhead": 1
+      }
+    ]
+  },
+  "crons": [
+    {
+      "path": "/api/cron/sync-data",
+      "schedule": "5 21 * * *"
+    },
+    {
+      "path": "/api/cron/sync-fiqh-council",
+      "schedule": "0 6 * * *"
+    },
+    {
+      "path": "/api/cron/knowledge-sync",
+      "schedule": "0 2 * * *"
+    },
+    {
+      "path": "/api/cron/auto-knowledge-sync",
+      "schedule": "30 2 * * *"
+    },
+    {
+      "path": "/api/cron/auto-content-sync",
+      "schedule": "0 3 * * *"
+    },
+    {
+      "path": "/api/cron/auto-content-health",
+      "schedule": "15 3 * * *"
+    },
+    {
+      "path": "/api/cron/system-health",
+      "schedule": "45 3 * * *"
+    },
+    {
+      "path": "/api/cron/connector-health",
+      "schedule": "0 4 * * *"
+    },
+    {
+      "path": "/api/cron/bootstrap-database",
+      "schedule": "0 5 * * *"
+    },
+    {
+      "path": "/api/cron/import-phase2-trial",
+      "schedule": "30 5 * * *"
+    },
+    {
+      "path": "/api/cron/apply-migrations",
+      "schedule": "0 4 * * 0"
+    },
+    {
+      "path": "/api/cron/check-fiqh-links",
+      "schedule": "0 7 * * *"
+    },
+    {
+      "path": "/api/cron/scholarly-verification",
+      "schedule": "0 8 * * *"
+    },
+    {
+      "path": "/api/cron/autonomous-orchestrator",
+      "schedule": "15 8 * * *"
+    },
+    {
+      "path": "/api/cron/global-reference-review",
+      "schedule": "0 9 * * 0"
+    },
+    {
+      "path": "/api/cron/islamic-intelligence",
+      "schedule": "0 10 * * *"
+    },
+    {
+      "path": "/api/cron/governance-backup",
+      "schedule": "0 4 * * 0"
+    },
+    {
+      "path": "/api/cron/ai-agents",
+      "schedule": "30 10 * * *"
+    },
+    {
+      "path": "/api/cron/verified-knowledge",
+      "schedule": "0 11 * * *"
+    },
+    {
+      "path": "/api/cron/source-monitor",
+      "schedule": "*/15 * * * *"
+    },
+    {
+      "path": "/api/cron/lesson-intelligence",
+      "schedule": "*/15 * * * *"
+    },
+    {
+      "path": "/api/cron/monitor-sources",
+      "schedule": "0 6 * * *"
+    },
+    {
+      "path": "/api/cron/knowledge-reasoning",
+      "schedule": "30 11 * * *"
+    }
+  ],
+  "tables": {
+    "lessons": true,
+    "qa_questions": true,
+    "qa_categories": true,
+    "profiles": true,
+    "trusted_lesson_sources": true,
+    "lesson_import_drafts": true,
+    "automation_runs": true,
+    "automation_step_logs": true,
+    "learning_paths": true,
+    "mke_runs": false,
+    "mke_source_plugins": false,
+    "mke_decisions": false,
+    "mke_queue_jobs": false,
+    "sharia_rulings": false,
+    "kg_nodes": true,
+    "kg_edges": true,
+    "auto_imported_content": true,
+    "auto_publish_queue": true,
+    "fiqh_council_items": false
+  },
+  "missingCoreTables": [],
+  "routeResults": {
+    "/": {
+      "status": 200,
+      "ok": true,
+      "overflowRisk": false
+    },
+    "/quran": {
+      "status": 200,
+      "ok": true,
+      "overflowRisk": false
+    },
+    "/quran/surah-stories": {
+      "status": 200,
+      "ok": true,
+      "overflowRisk": false
+    },
+    "/rulings": {
+      "status": 200,
+      "ok": true,
+      "overflowRisk": false
+    },
+    "/qa": {
+      "status": 200,
+      "ok": true,
+      "overflowRisk": false
+    },
+    "/lessons": {
+      "status": 200,
+      "ok": true,
+      "overflowRisk": false
+    },
+    "/library": {
+      "status": 200,
+      "ok": true,
+      "overflowRisk": false
+    },
+    "/miracles": {
+      "status": 200,
+      "ok": true,
+      "overflowRisk": false
+    },
+    "/fawaid": {
+      "status": 200,
+      "ok": true,
+      "overflowRisk": false
+    },
+    "/search": {
+      "status": 200,
+      "ok": true,
+      "overflowRisk": false
+    },
+    "/admin": {
+      "status": 200,
+      "ok": true,
+      "overflowRisk": false
+    },
+    "/admin/feature-status": {
+      "status": 200,
+      "ok": true,
+      "overflowRisk": false
+    },
+    "/assistant": {
+      "status": 200,
+      "ok": true,
+      "overflowRisk": false
+    },
+    "/calendar": {
+      "status": 200,
+      "ok": true,
+      "overflowRisk": false
+    },
+    "/prayer-times": {
+      "status": 200,
+      "ok": true,
+      "overflowRisk": false
+    }
+  },
+  "apiResults": {
+    "/api/healthz": {
+      "status": 200,
+      "ok": true,
+      "authRequired": false,
+      "snippet": "{\"ok\":true,\"service\":\"majlisilm-web\"}"
+    },
+    "/api/assistant/health": {
+      "status": 200,
+      "ok": true,
+      "authRequired": false,
+      "snippet": "{\"ok\":true,\"available\":true,\"rateLimit\":{\"configured\":true,\"backend\":\"upstash\",\"allowed\":true,\"error\":null}}"
+    },
+    "/api/knowledge-search?q=صلاة": {
+      "status": 200,
+      "ok": true,
+      "authRequired": false,
+      "snippet": "{\"ok\":true,\"query\":\"صلاة\",\"count\":5,\"results\":[{\"id\":\"e69c576d-27c2-4c52-9586-abd27f088c28\",\"title\":\"كم عدد أولي العزم م"
+    },
+    "/api/daily-content": {
+      "status": 200,
+      "ok": true,
+      "authRequired": false,
+      "snippet": "{\"ok\":true,\"content\":[{\"id\":\"4c4ba434-e13e-4188-951f-7aab201786a1\",\"content_date\":\"2026-06-27\",\"content_type\":\"ayah\",\"co"
+    },
+    "/api/intelligent-search?q=صلاة": {
+      "status": 200,
+      "ok": true,
+      "authRequired": false,
+      "snippet": "{\"ok\":true,\"query\":\"صلاة\",\"query_info\":{\"normalized\":\"صلاه\",\"expanded_terms\":[\"صلاة\",\"صلوات\",\"الجماعة\",\"الفريضة\"]},\"coun"
+    },
+    "/api/prayer-times?city=Kuwait": {
+      "status": 200,
+      "ok": true,
+      "authRequired": false,
+      "snippet": "{\"ok\":true,\"city\":\"الكويت – محافظة العاصمة\",\"timezone\":\"Asia/Kuwait\",\"method\":\"Kuwait\",\"source\":\"Supabase (مواقيت محدّثة"
+    },
+    "/api/cron/system-health": {
+      "status": 401,
+      "ok": true,
+      "authRequired": true,
+      "snippet": "{\"ok\":false,\"error\":\"Unauthorized\"}"
+    },
+    "/api/cron/auto-content-health": {
+      "status": 401,
+      "ok": true,
+      "authRequired": true,
+      "snippet": "{\"ok\":false,\"error\":\"Unauthorized\"}"
+    },
+    "/api/cron/connector-health": {
+      "status": 401,
+      "ok": true,
+      "authRequired": true,
+      "snippet": "{\"ok\":false,\"error\":\"Unauthorized\"}"
+    }
+  },
+  "mobile": {
+    "ok": true,
+    "results": {
+      "/": {
+        "ok": true,
+        "overflow": false,
+        "consoleErrors": []
+      },
+      "/quran": {
+        "ok": true,
+        "overflow": false,
+        "consoleErrors": []
+      },
+      "/quran/surah-stories": {
+        "ok": true,
+        "overflow": false,
+        "consoleErrors": []
+      },
+      "/rulings": {
+        "ok": true,
+        "overflow": false,
+        "consoleErrors": []
+      },
+      "/qa": {
+        "ok": true,
+        "overflow": false,
+        "consoleErrors": []
+      },
+      "/lessons": {
+        "ok": true,
+        "overflow": false,
+        "consoleErrors": []
+      },
+      "/library": {
+        "ok": true,
+        "overflow": false,
+        "consoleErrors": []
+      },
+      "/miracles": {
+        "ok": true,
+        "overflow": false,
+        "consoleErrors": []
+      },
+      "/fawaid": {
+        "ok": true,
+        "overflow": false,
+        "consoleErrors": []
+      },
+      "/search": {
+        "ok": true,
+        "overflow": false,
+        "consoleErrors": []
+      }
+    }
+  },
+  "features": [
+    {
+      "id": "homepage",
+      "name": "الصفحة الرئيسية",
+      "pr": null,
+      "branch": null,
+      "phase": 1,
+      "deliveryState": "Ready",
+      "blockReason": "Deploy",
+      "blockDetail": "Merged to main but not in Production bundle",
+      "routes": [
+        "/"
+      ],
+      "usesMock": false
+    },
+    {
+      "id": "quran-v2",
+      "name": "صفحة القرآن (v2 UX)",
+      "pr": 72,
+      "branch": "cursor/ux-redesign-quran-qa-lessons-92e6",
+      "phase": 1,
+      "deliveryState": "Ready",
+      "blockReason": "Merge",
+      "blockDetail": "Branch cursor/ux-redesign-quran-qa-lessons-92e6 not merged to main",
+      "routes": [
+        "/quran"
+      ],
+      "usesMock": false
+    },
+    {
+      "id": "quran-stories",
+      "name": "قصص سور القرآن",
+      "pr": 72,
+      "branch": "cursor/ux-redesign-quran-qa-lessons-92e6",
+      "phase": 1,
+      "deliveryState": "Ready",
+      "blockReason": "Merge",
+      "blockDetail": "Branch cursor/ux-redesign-quran-qa-lessons-92e6 not merged to main",
+      "routes": [
+        "/quran/surah-stories"
+      ],
+      "usesMock": false
+    },
+    {
+      "id": "qa-taxonomy",
+      "name": "الأسئلة والأجوبة (تصنيف v2)",
+      "pr": 72,
+      "branch": "cursor/ux-redesign-quran-qa-lessons-92e6",
+      "phase": 2,
+      "deliveryState": "Ready",
+      "blockReason": "Merge",
+      "blockDetail": "Branch cursor/ux-redesign-quran-qa-lessons-92e6 not merged to main",
+      "routes": [
+        "/qa"
+      ],
+      "usesMock": false
+    },
+    {
+      "id": "lessons-v2",
+      "name": "الدروس الشرعية (v2 UX)",
+      "pr": 72,
+      "branch": "cursor/ux-redesign-quran-qa-lessons-92e6",
+      "phase": 1,
+      "deliveryState": "Ready",
+      "blockReason": "Merge",
+      "blockDetail": "Branch cursor/ux-redesign-quran-qa-lessons-92e6 not merged to main",
+      "routes": [
+        "/lessons"
+      ],
+      "usesMock": false
+    },
+    {
+      "id": "sharia-rulings",
+      "name": "الأحكام الشرعية / موسوعة",
+      "pr": 74,
+      "branch": "cursor/sharia-rulings-encyclopedia-92e6",
+      "phase": 5,
+      "deliveryState": "Ready",
+      "blockReason": "Merge",
+      "blockDetail": "Branch cursor/sharia-rulings-encyclopedia-92e6 not merged to main",
+      "routes": [
+        "/rulings"
+      ],
+      "usesMock": true
+    },
+    {
+      "id": "library",
+      "name": "المكتبة",
+      "pr": null,
+      "branch": null,
+      "phase": 1,
+      "deliveryState": "Production",
+      "blockReason": null,
+      "blockDetail": null,
+      "routes": [
+        "/library"
+      ],
+      "usesMock": false
+    },
+    {
+      "id": "miracles",
+      "name": "الإعجاز العلمي",
+      "pr": null,
+      "branch": null,
+      "phase": 1,
+      "deliveryState": "Production",
+      "blockReason": null,
+      "blockDetail": null,
+      "routes": [
+        "/miracles"
+      ],
+      "usesMock": false
+    },
+    {
+      "id": "fawaid",
+      "name": "الفوائد",
+      "pr": null,
+      "branch": null,
+      "phase": 1,
+      "deliveryState": "Production",
+      "blockReason": null,
+      "blockDetail": null,
+      "routes": [
+        "/fawaid"
+      ],
+      "usesMock": false
+    },
+    {
+      "id": "search",
+      "name": "البحث",
+      "pr": null,
+      "branch": null,
+      "phase": 1,
+      "deliveryState": "Production",
+      "blockReason": null,
+      "blockDetail": null,
+      "routes": [
+        "/search"
+      ],
+      "usesMock": false
+    },
+    {
+      "id": "mobile-nav",
+      "name": "القائمة على الجوال",
+      "pr": null,
+      "branch": null,
+      "phase": 1,
+      "deliveryState": "Production",
+      "blockReason": null,
+      "blockDetail": null,
+      "routes": [
+        "/"
+      ],
+      "usesMock": false
+    },
+    {
+      "id": "assistant",
+      "name": "المساعد العلمي",
+      "pr": null,
+      "branch": null,
+      "phase": 1,
+      "deliveryState": "Blocked",
+      "blockReason": "Secret",
+      "blockDetail": "ANTHROPIC_API_KEY",
+      "routes": [
+        "/assistant"
+      ],
+      "usesMock": true
+    },
+    {
+      "id": "admin-dashboard",
+      "name": "لوحة الإدارة",
+      "pr": null,
+      "branch": null,
+      "phase": 3,
+      "deliveryState": "Production",
+      "blockReason": null,
+      "blockDetail": null,
+      "routes": [
+        "/admin",
+        "/admin/dashboard"
+      ],
+      "usesMock": false
+    },
+    {
+      "id": "feature-status",
+      "name": "Release Gate — Feature Status",
+      "pr": null,
+      "branch": null,
+      "phase": 0,
+      "deliveryState": "Production",
+      "blockReason": null,
+      "blockDetail": null,
+      "routes": [
+        "/admin/feature-status"
+      ],
+      "usesMock": false
+    },
+    {
+      "id": "lesson-automation",
+      "name": "أتمتة مصادر الدروس",
+      "pr": null,
+      "branch": null,
+      "phase": 4,
+      "deliveryState": "Blocked",
+      "blockReason": "Secret",
+      "blockDetail": "SUPABASE_SERVICE_ROLE_KEY, CRON_SECRET",
+      "routes": [
+        "/admin/sources"
+      ],
+      "usesMock": false
+    },
+    {
+      "id": "instagram-graph",
+      "name": "Instagram Graph + Manual Assist",
+      "pr": null,
+      "branch": null,
+      "phase": 4,
+      "deliveryState": "Blocked",
+      "blockReason": "Secret",
+      "blockDetail": "INSTAGRAM_GRAPH_ACCESS_TOKEN, INSTAGRAM_BUSINESS_ACCOUNT_ID",
+      "routes": [
+        "/admin/integrations/instagram"
+      ],
+      "usesMock": true
+    },
+    {
+      "id": "mke-v2",
+      "name": "Majlis Knowledge Engine v2",
+      "pr": 73,
+      "branch": "cursor/autonomous-platform-v2-92e6",
+      "phase": 4,
+      "deliveryState": "Ready",
+      "blockReason": "Merge",
+      "blockDetail": "Branch cursor/autonomous-platform-v2-92e6 not merged to main",
+      "routes": [
+        "/admin/automation/platform"
+      ],
+      "usesMock": false
+    },
+    {
+      "id": "auto-publish",
+      "name": "Auto Content Pipeline",
+      "pr": null,
+      "branch": null,
+      "phase": 4,
+      "deliveryState": "Blocked",
+      "blockReason": "Secret",
+      "blockDetail": "CRON_SECRET, SUPABASE_SERVICE_ROLE_KEY",
+      "routes": [
+        "/admin/auto-content"
+      ],
+      "usesMock": false
+    },
+    {
+      "id": "knowledge-graph",
+      "name": "Knowledge Graph",
+      "pr": null,
+      "branch": null,
+      "phase": 4,
+      "deliveryState": "Blocked",
+      "blockReason": "Secret",
+      "blockDetail": "SUPABASE_SERVICE_ROLE_KEY",
+      "routes": [
+        "/admin"
+      ],
+      "usesMock": false
+    },
+    {
+      "id": "digital-learning",
+      "name": "التعلم الرقمي",
+      "pr": null,
+      "branch": null,
+      "phase": 3,
+      "deliveryState": "Production",
+      "blockReason": null,
+      "blockDetail": null,
+      "routes": [
+        "/learning/paths"
+      ],
+      "usesMock": false
+    },
+    {
+      "id": "fiqh-council",
+      "name": "مجلس الفقه",
+      "pr": null,
+      "branch": null,
+      "phase": 3,
+      "deliveryState": "Production",
+      "blockReason": null,
+      "blockDetail": null,
+      "routes": [
+        "/fiqh-council"
+      ],
+      "usesMock": false
+    },
+    {
+      "id": "sitemap-rss",
+      "name": "Sitemap / RSS",
+      "pr": null,
+      "branch": null,
+      "phase": 1,
+      "deliveryState": "Ready",
+      "blockReason": "Deploy",
+      "blockDetail": "Merged to main but not in Production bundle",
+      "routes": [
+        "/sitemap.xml"
+      ],
+      "usesMock": false
+    },
+    {
+      "id": "settings-dark",
+      "name": "الإعدادات والوضع الليلي",
+      "pr": null,
+      "branch": null,
+      "phase": 1,
+      "deliveryState": "Ready",
+      "blockReason": "Deploy",
+      "blockDetail": "Merged to main but not in Production bundle",
+      "routes": [
+        "/settings"
+      ],
+      "usesMock": false
+    }
+  ],
+  "deliverySummary": {
+    "production": 9,
+    "ready": 9,
+    "blocked": 5,
+    "prOnly": 6
+  },
+  "manualInterventionRequired": [
+    "SUPABASE_SERVICE_ROLE_KEY in Vercel",
+    "CRON_SECRET in Vercel",
+    "DATABASE_URL or POSTGRES_* in Vercel (for migrations cron)",
+    "ANTHROPIC_API_KEY for assistant",
+    "OPENAI_API_KEY for vision/MKE (optional)",
+    "INSTAGRAM_GRAPH_* for Instagram automation",
+    "Apply optional SQL migrations in Supabase SQL Editor",
+    "Merge or close 22 open PRs",
+    "Confirm Vercel Production Branch = main (Dashboard → Settings → Git)"
+  ]
+}
