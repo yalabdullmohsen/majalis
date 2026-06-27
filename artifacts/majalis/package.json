@@ -23,6 +23,7 @@
     "verify:kuwait-instagram": "node scripts/test-kuwait-instagram-sources.mjs",
     "verify:lesson-intelligence": "node scripts/verify-lesson-intelligence.mjs",
     "verify:instagram-phase7": "node scripts/verify-instagram-phase7.mjs",
+    "verify:instagram-production": "node scripts/verify-instagram-production.mjs",
     "test:kuwait-sources": "node scripts/test-kuwait-instagram-sources.mjs",
     "smoke:nav": "node scripts/smoke-nav-menu.mjs",
     "build": "pnpm run generate:seo && vite build --config vite.config.ts",
