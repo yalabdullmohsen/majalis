@@ -1,0 +1,58 @@
+{
+  "generated_at": "2026-06-26T00:00:00.000Z",
+  "scope": "Global Islamic Knowledge Graph — Phase 0 Audit",
+  "branch_audited": "main + unmerged feature branches",
+  "methodology": [
+    "Schema review across supabase/*.sql migrations",
+    "Route and page inventory in src/",
+    "Seed/manifest/import file counts",
+    "Pipeline review: AKE, auto-content, fiqh, lesson-sync",
+    "Cross-branch comparison with cursor/content-architecture-92e6"
+  ],
+  "executive_summary": {
+    "verdict": "Foundation exists — not a Knowledge Graph yet",
+    "strengths": [
+      "Multi-layer ingestion (AKE v13, auto-content, fiqh sync, lesson-sync)",
+      "AI metadata enrichment pipeline with quality gates",
+      "Hybrid search (FTS + trigram) across platform tables",
+      "Fiqh council has explicit relation edges (fiqh_council_relations)",
+      "CMS polymorphic index (cms_content_index) for cross-content search",
+      "Daily content rotation (deterministic, Kuwait timezone)",
+      "No Lorem Ipsum in src; placeholder fiqh items filtered from public"
+    ],
+    "critical_gaps": [
+      "No unified entity model (scholar, book, hadith, ayah, topic as first-class nodes)",
+      "No global edge table spanning all content types",
+      "Three content silos: CMS tables, knowledge_items, auto_imported_content",
+      "Semantic search RPCs exist but are not wired to SearchPage",
+      "knowledge_items.related_ids, ai_persons, ai_books, ai_evidence columns never populated in app code",
+      "Quran ayah text not stored locally — fetched from external API",
+      "Hadith corpus on main is tiny (47); 40,684 hadith work exists on unmerged branch",
+      "No dedicated duas database",
+      "Fawaid/QA far below target (hundreds vs tens of thousands)",
+      "Most AKE connectors inactive in production registry"
+    ],
+    "overall_readiness_percent": 22,
+    "recommended_next_phase": "Design knowledge_entities + knowledge_edges schema, unify silos, merge content-architecture branch"
+  },
+  "content_inventory": {
+    "quran": { "surahs_metadata": 114, "local_ayah_text": 0, "daily_ayah_pool": 7, "tafsir_local": 0, "asbab_al_nuzul": 0, "source": "api.alquran.cloud", "completion_percent": 15 },
+    "sunnah_hadith": { "arbaeen_nawawi": 40, "daily_hadith_pool": 7, "hadith_db_on_main": 47, "hadith_db_on_content_arch_branch": 40684, "completion_percent": 5 },
+    "adhkar": { "categories": 22, "items": 31, "completion_percent": 12 },
+    "duas": { "dedicated_database": false, "completion_percent": 0 },
+    "fawaid": { "seed_total": 152, "target": "tens_of_thousands", "completion_percent": 2 },
+    "books_library": { "library_seed": 18, "full_text_books": 0, "completion_percent": 8 },
+    "sheikhs": { "seed_total": 8, "import_kuwait": 4, "datasets_unified": false, "completion_percent": 15 },
+    "lessons": { "lessons_seed": 17, "completion_percent": 20 },
+    "fatwas": { "seed": 5, "completion_percent": 3 },
+    "fiqh_council": { "published_items": 6, "categories": 27, "completion_percent": 25 },
+    "qa": { "seed": 124, "completion_percent": 15 },
+    "relations_estimated": 15
+  },
+  "section_completion_matrix": {
+    "quran": 15, "hadith_corpus": 5, "adhkar": 12, "duas": 0, "fawaid": 2,
+    "library": 8, "sheikhs": 15, "lessons": 20, "fatwas": 3, "fiqh_council": 25,
+    "qa": 15, "daily_content": 35, "knowledge_graph": 5, "semantic_search": 10,
+    "ai_auto_linking": 15, "global_relationships": 5
+  }
+}
