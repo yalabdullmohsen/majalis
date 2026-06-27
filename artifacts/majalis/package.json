@@ -27,6 +27,7 @@
     "test:kuwait-sources": "node scripts/test-kuwait-instagram-sources.mjs",
     "smoke:nav": "node scripts/smoke-nav-menu.mjs",
     "verify:features": "node scripts/verify-features.mjs",
+    "verify:production-complete": "node scripts/verify-production-complete.mjs --production",
     "build": "pnpm run generate:seo && vite build --config vite.config.ts",
     "build:next": "next build",
     "preview": "vite preview --config vite.config.ts --host 0.0.0.0",

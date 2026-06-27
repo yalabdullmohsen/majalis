@@ -12,6 +12,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { execSync } from "node:child_process";
+import { classifyDelivery } from "../lib/release-gate.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
@@ -135,24 +136,14 @@ async function checkApi(endpoint) {
 }
 
 function resolveStatus(feature, ctx) {
-  const codeOk = feature.codeMarkers.every((m) => ctx.codeHits[m]);
-  const merged = feature.branch ? ctx.mergedBranches[feature.branch] : true;
-  const prodOk =
-    !production ||
-    (feature.productionMarkers?.every((m) => ctx.prodHits[m]) &&
-      !(feature.blockedProductionMarkers || []).some((m) => ctx.prodBlocked[m]));
-  const secretsOk = (feature.requiredSecrets || []).every((k) => ctx.env[k]);
-  const routeOk =
-    !production || (feature.routes || []).every((r) => ctx.routes[r]?.ok !== false);
-
-  if (!codeOk) return "Missing";
-  if (!merged && feature.branch) return "Partial";
-  if (production && !prodOk) return merged ? "Blocked by Deployment" : "Partial";
-  if (!secretsOk) return "Blocked by Missing Secrets";
-  if (feature.usesMock && production) return "Not Production Complete";
-  if (!routeOk && production) return "Blocked by Deployment";
-  if (codeOk && merged && (!production || prodOk)) return "Done";
-  return "Partial";
+  const { state, reason, detail } = classifyDelivery(feature, ctx);
+  if (state === "Production") return "Done";
+  if (state === "Ready") return reason === "Deploy" ? "Blocked by Deployment" : "Partial";
+  if (reason === "Secret") return "Blocked by Missing Secrets";
+  if (reason === "Migration") return "Blocked by Migration";
+  if (reason === "Mock") return "Not Production Complete";
+  if (reason === "Merge") return "Partial";
+  return detail || "Blocked";
 }
 
 async function main() {
@@ -195,7 +186,25 @@ async function main() {
   }
 
   const rows = registry.features.map((f) => {
-    const status = resolveStatus(f, { codeHits, mergedBranches, prodHits, prodBlocked, routes, env });
+    const delivery = classifyDelivery(f, {
+      production,
+      codeHits,
+      mergedBranches,
+      prodHits,
+      prodBlocked,
+      env,
+      tables: {},
+      migrations: Object.fromEntries((f.migrations || []).map((m) => [m, true])),
+    });
+    const status = resolveStatus(f, {
+      production,
+      codeHits,
+      mergedBranches,
+      prodHits,
+      prodBlocked,
+      routes,
+      env,
+    });
     return {
       id: f.id,
       name: f.name,
@@ -216,6 +225,8 @@ async function main() {
       hasUi: f.codeMarkers.some((m) => grepCode(m)),
       tested: production ? status === "Done" : null,
       status,
+      deliveryState: delivery.state,
+      blockReason: delivery.reason,
       routes: f.routes,
     };
   });
