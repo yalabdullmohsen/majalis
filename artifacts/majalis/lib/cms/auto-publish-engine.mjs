@@ -22,7 +22,7 @@ export function validateAutomationRequiredFields(parsed, { sourceUrl, imageUrl }
   const dayOfWeek = pick(parsed, "day_of_week", "day");
   if (!dateStr && !dayOfWeek) missing.push("date");
   if (!pick(parsed, "lesson_time", "time")) missing.push("lesson_time");
-  const hasPlace = pick(parsed, "mosque", "location") || pick(parsed, "live_url");
+  const hasPlace = pick(parsed, "mosque", "location") || pick(parsed, "region") || pick(parsed, "live_url");
   if (!hasPlace) missing.push("place_or_live");
   if (!sourceUrl) missing.push("source_url");
   if (!imageUrl) missing.push("poster_image");
@@ -103,8 +103,9 @@ export function evaluateAutoPublish({
   }
 
   const mosque = pick(parsed, "mosque", "location");
+  const region = pick(parsed, "region");
   const liveUrl = pick(parsed, "live_url");
-  const hasPlace = Boolean(mosque || liveUrl);
+  const hasPlace = Boolean(mosque || region || liveUrl);
   if (!hasPlace) {
     reasons.push("المكان أو رابط البث غير واضح");
   }

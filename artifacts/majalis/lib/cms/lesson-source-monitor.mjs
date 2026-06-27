@@ -1,6 +1,7 @@
 /**
- * Monitor trusted content sources → extract → pending_review draft (Phase 3).
- * No direct publish without human review unless MAJALIS_AUTO_PUBLISH=1.
+ * Monitor trusted content sources → extract → auto-publish or pending_review draft.
+ * Phase 4: auto-publish when trusted source + all rules pass.
+ * Emergency kill switch: MAJALIS_AUTO_PUBLISH=0
  */
 import { importFromUrl } from "./url-importer.mjs";
 import { extractLessonFromText, extractLessonFromImage, isVisionEnabled } from "./lesson-extractor.mjs";
@@ -18,7 +19,8 @@ import { resolveSheikhIdForDraft } from "./lesson-import-actions.mjs";
 import { startAutomationRun, finishAutomationRun } from "./automation-runs.mjs";
 import { notifyAdminsNewDrafts } from "./automation-notifications.mjs";
 
-const AUTO_PUBLISH_ENABLED = process.env.MAJALIS_AUTO_PUBLISH === "1";
+/** Phase 4 enabled by default; set MAJALIS_AUTO_PUBLISH=0 to disable globally. */
+const AUTO_PUBLISH_KILL_SWITCH = process.env.MAJALIS_AUTO_PUBLISH === "0";
 
 async function parseRssItems(xml) {
   const items = [];
@@ -186,8 +188,8 @@ export async function processAutomationItem({ source, item, connectorHint }) {
     return { decision: "duplicate", sourceUrl, reason: evaluation.duplicate?.message, isNew: false };
   }
 
-  // Phase 3: no direct publish — human review required (opt-in via MAJALIS_AUTO_PUBLISH=1)
-  const mayAutoPublish = AUTO_PUBLISH_ENABLED && source.auto_publish_allowed && evaluation.autoPublish;
+  // Phase 4: auto-publish when evaluation passes (trusted sources only)
+  const mayAutoPublish = !AUTO_PUBLISH_KILL_SWITCH && evaluation.autoPublish;
 
   if (mayAutoPublish) {
     const draftStub = { id: null, matched_sheikh_id: sheikhMatch.matched?.id, source_url: sourceUrl };
@@ -214,11 +216,11 @@ export async function processAutomationItem({ source, item, connectorHint }) {
       decision = "pending_review";
       reason = publish.validation?.errors?.map((e) => e.message).join(" — ") || publish.error || "publish_failed";
     }
+  } else if (evaluation.autoPublish && AUTO_PUBLISH_KILL_SWITCH) {
+    decision = "pending_review";
+    reason = reason ? `${reason} — Auto-Publish معطّل (kill switch)` : "Auto-Publish معطّل (kill switch)";
   } else {
     decision = "pending_review";
-    if (evaluation.autoPublish && !AUTO_PUBLISH_ENABLED) {
-      reason = reason ? `${reason} — مراجعة بشرية مطلوبة (Phase 3)` : "مراجعة بشرية مطلوبة (Phase 3)";
-    }
   }
 
   if (!lessonId) {
@@ -399,7 +401,7 @@ export async function runLessonSourceMonitor({ dryRun = false, sourceId = null, 
     itemsSkipped: skipped,
     itemsErrors: errors,
     durationMs: Date.now() - startedAt,
-    metadata: { sourcesChecked: sources.length, connectorNeeded, autoPublishEnabled: AUTO_PUBLISH_ENABLED },
+    metadata: { sourcesChecked: sources.length, connectorNeeded, autoPublishKillSwitch: AUTO_PUBLISH_KILL_SWITCH },
   });
 
   return {
@@ -413,7 +415,7 @@ export async function runLessonSourceMonitor({ dryRun = false, sourceId = null, 
     skipped,
     errors,
     connectorNeeded,
-    autoPublishEnabled: AUTO_PUBLISH_ENABLED,
+    autoPublishKillSwitch: AUTO_PUBLISH_KILL_SWITCH,
     runId: runStart.runId,
     results,
   };
@@ -424,4 +426,4 @@ export function simulateAutoPublishScenario({ source, parsed, confidenceScore, s
   return evaluateAutoPublish({ source, parsed, confidenceScore, duplicate, sheikhMatch, sourceUrl, imageUrl });
 }
 
-export { AUTO_PUBLISH_ENABLED };
+export { AUTO_PUBLISH_KILL_SWITCH };

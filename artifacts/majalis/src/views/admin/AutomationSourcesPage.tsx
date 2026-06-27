@@ -93,7 +93,7 @@ function AutomationSourcesContent() {
         <div>
           <h2 style={{ margin: "0 0 0.35rem", color: C.emeraldDeep }}>مصادر الدروس المعتمدة</h2>
           <p style={{ margin: 0, color: C.inkSoft, fontSize: "0.875rem" }}>
-            مصادر موثوقة فقط — لا بحث عشوائي. Auto-Publish للمصادر الرسمية/الموثوقة بثقة ≥95%.
+            مصادر موثوقة فقط — لا بحث عشوائي. Auto-Publish للمصادر official/trusted بثقة ≥95% + حقول كاملة.
           </p>
         </div>
         <div style={{ display: "flex", gap: "0.5rem", fontSize: "0.8125rem" }}>
