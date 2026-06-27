@@ -109,6 +109,26 @@ export function mapRowToPayload(type, row) {
         surahRefs: Array.isArray(row.surahRefs) ? row.surahRefs : [],
         keywords: Array.isArray(row.keywords) ? row.keywords : [],
       };
+    case "rulings":
+      return {
+        title: pick(row, "title"),
+        summary: pick(row, "summary") || null,
+        body: pick(row, "body", "summary", "title"),
+        category: pick(row, "category"),
+        subcategory: pick(row, "subcategory") || null,
+        keywords: Array.isArray(row.keywords) ? row.keywords : [],
+        external_key: pick(row, "external_key") || `import-${hashKey([row.title, row.category])}`,
+        importance_score: row.importance_score != null ? Number(row.importance_score) : 50,
+        status: pick(row, "status") || "approved",
+      };
+    case "categories":
+      return {
+        name: pick(row, "name"),
+        slug: pick(row, "slug") || pick(row, "name").toLowerCase().replace(/\s+/g, "-"),
+        description: pick(row, "description") || null,
+        sort_order: row.sort_order != null ? Number(row.sort_order) : null,
+        icon: pick(row, "icon") || null,
+      };
     default:
       return { ...row };
   }

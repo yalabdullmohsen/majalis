@@ -46,6 +46,15 @@ function canAccessAdmin(roleId) {
   return ADMIN_PERMISSIONS.some((p) => hasPermission(roleId, p));
 }
 
+export function canImportContent(roleId) {
+  return (
+    hasPermission(roleId, "import") ||
+    hasPermission(roleId, "content.edit") ||
+    hasPermission(roleId, "content.create") ||
+    hasPermission(roleId, "content.*")
+  );
+}
+
 async function validateJwtSession(req) {
   const authHeader = String(req.headers?.authorization || req.headers?.Authorization || "").trim();
   if (!authHeader.toLowerCase().startsWith("bearer ")) return null;
@@ -104,7 +113,25 @@ export async function validateAdminAccess(req, opts = {}) {
   if (!session.ok) return session;
 
   if (opts.permission && !hasPermission(session.role, opts.permission)) {
-    return { ok: false, status: 403, error: "permission_denied", permission: opts.permission };
+    return {
+      ok: false,
+      status: 403,
+      error: "permission_denied",
+      permission: opts.permission,
+      userMessage: "Missing database permission.",
+      userMessageAr: "ليس لديك صلاحية تنفيذ هذا الإجراء.",
+    };
+  }
+
+  if (opts.requireImport && !canImportContent(session.role)) {
+    return {
+      ok: false,
+      status: 403,
+      error: "permission_denied",
+      permission: "import",
+      userMessage: "Missing database permission.",
+      userMessageAr: "ليس لديك صلاحية استيراد المحتوى.",
+    };
   }
 
   return session;
@@ -113,7 +140,13 @@ export async function validateAdminAccess(req, opts = {}) {
 export async function requireAdminAccess(req, res, sendJson, opts = {}) {
   const auth = await validateAdminAccess(req, opts);
   if (!auth.ok) {
-    sendJson(res, auth.status || 401, { ok: false, error: auth.error || "unauthorized" });
+    sendJson(res, auth.status || 401, {
+      ok: false,
+      error: auth.error || "unauthorized",
+      userMessage: auth.userMessage || (auth.error === "unauthorized" ? "Session expired or not signed in." : "Missing database permission."),
+      userMessageAr: auth.userMessageAr || "تعذّر التحقق من الصلاحيات.",
+      reason: auth.error,
+    });
     return null;
   }
   return auth;

@@ -1,10 +1,9 @@
 import { resolveContentType, TYPE_REGISTRY } from "./registry.mjs";
-import { validateRow } from "./validators.mjs";
+import { validateRow, validateFileRows } from "./validators.mjs";
 import { parseContentFile, parseContentString } from "./parsers.mjs";
 import { dedupeRows } from "./dedupe.mjs";
 import { mapRowToPayload } from "./mappers.mjs";
-import { importToSupabase, getSupabaseAdmin } from "./supabase-importer.mjs";
-import { importToStaged } from "./staged.mjs";
+import { importBatchToSupabase } from "./batch-importer.mjs";
 
 /**
  * @param {{ rootDir: string, type: string, filePath: string, dryRun?: boolean }} opts
@@ -51,12 +50,7 @@ export async function runContentImportRows(opts) {
   const payloads = unique.map((row) => mapRowToPayload(def.type, row));
 
   let importReport;
-  if (def.target === "staged") {
-    importReport = importToStaged(opts.rootDir, def.type, payloads, { dryRun: opts.dryRun });
-  } else {
-    const admin = getSupabaseAdmin();
-    importReport = await importToSupabase(admin, def.type, payloads, { dryRun: opts.dryRun });
-  }
+  importReport = await importBatchToSupabase(def.type, payloads, { dryRun: opts.dryRun });
 
   const ok =
     validationErrors.length === 0 &&

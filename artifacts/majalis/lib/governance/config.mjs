@@ -15,7 +15,7 @@ export const ROLES = {
     label: "System Administrator",
     label_ar: "مدير النظام",
     level: 90,
-    permissions: ["system.*", "users.manage", "audit.read", "backup.*", "cron.run", "security.*"],
+    permissions: ["system.*", "users.manage", "audit.read", "backup.*", "cron.run", "security.*", "import", "content.edit", "content.*"],
   },
   content_manager: {
     id: "content_manager",
@@ -36,7 +36,7 @@ export const ROLES = {
     label: "Editor",
     label_ar: "محرر",
     level: 70,
-    permissions: ["content.edit", "content.create", "lifecycle.submit", "review.editorial", "content.read"],
+    permissions: ["content.edit", "content.create", "lifecycle.submit", "review.editorial", "content.read", "import"],
   },
   author: {
     id: "author",
@@ -57,7 +57,7 @@ export const ROLES = {
     label: "Moderator",
     label_ar: "مشرف",
     level: 60,
-    permissions: ["content.moderate", "review.editorial", "content.read", "users.read"],
+    permissions: ["content.moderate", "review.editorial", "content.read", "users.read", "import", "content.edit"],
   },
   analytics_viewer: {
     id: "analytics_viewer",

@@ -56,6 +56,14 @@ export const SCHEMAS = {
     label: "فائدة",
     required: ["text"],
   },
+  rulings: {
+    label: "حكم",
+    required: ["title", "body", "category"],
+  },
+  categories: {
+    label: "تصنيف",
+    required: ["name", "slug"],
+  },
 };
 
 /**
@@ -109,4 +117,51 @@ export function validateRow(type, row, index) {
   }
 
   return { ok: errors.length === 0, errors };
+}
+
+const MAX_FIELD_LENGTH = 50_000;
+
+/**
+ * File-level validation: empty rows, long text, row count.
+ * @param {string} type
+ * @param {Record<string, unknown>[]} rows
+ */
+export function validateFileRows(type, rows) {
+  const errors = [];
+  let validCount = 0;
+  let invalidCount = 0;
+
+  if (rows.length === 0) {
+    errors.push("الملف لا يحتوي على صفوف بيانات");
+    return { ok: false, errors, validCount: 0, invalidCount: 0 };
+  }
+
+  rows.forEach((row, index) => {
+    const line = index + 1;
+    let rowInvalid = false;
+
+    for (const [k, v] of Object.entries(row)) {
+      if (typeof v === "string" && v.length > MAX_FIELD_LENGTH) {
+        errors.push(`السطر ${line}: الحقل «${k}» أطول من الحد المسموح (${MAX_FIELD_LENGTH})`);
+        rowInvalid = true;
+      }
+    }
+
+    const emptyRequired = Object.values(row).every((v) => v == null || String(v).trim() === "");
+    if (emptyRequired) {
+      errors.push(`السطر ${line}: صف فارغ`);
+      rowInvalid = true;
+    }
+
+    const result = validateRow(type, row, index);
+    if (!result.ok) {
+      errors.push(...result.errors.slice(0, 3));
+      rowInvalid = true;
+    }
+
+    if (rowInvalid) invalidCount++;
+    else validCount++;
+  });
+
+  return { ok: errors.length === 0, errors: errors.slice(0, 200), validCount, invalidCount };
 }
