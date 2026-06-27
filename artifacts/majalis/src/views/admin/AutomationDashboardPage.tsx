@@ -59,6 +59,7 @@ function AutomationDashboardContent() {
           </p>
         </div>
         <div style={{ display: "flex", gap: "0.75rem", fontSize: "0.8125rem" }}>
+          <Link href="/admin/automation/platform" style={{ color: C.emeraldDeep }}>MKE Platform</Link>
           <Link href="/admin/sources" style={{ color: C.emeraldDeep }}>المصادر</Link>
           <Link href="/admin/review-center" style={{ color: C.emeraldDeep }}>مركز المراجعة</Link>
         </div>

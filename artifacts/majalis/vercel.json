@@ -100,6 +100,10 @@
       "schedule": "0 6 * * *"
     },
     {
+      "path": "/api/cron/majlis-knowledge-engine",
+      "schedule": "5,35 * * * *"
+    },
+    {
       "path": "/api/cron/knowledge-reasoning",
       "schedule": "30 11 * * *"
     }

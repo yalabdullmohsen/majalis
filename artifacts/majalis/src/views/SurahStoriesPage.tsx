@@ -13,14 +13,14 @@ export default function SurahStoriesPage() {
     <div className="page-shell surah-stories-page">
       <PageHeader
         eyebrow="القرآن"
-        title="موسوعة قصص السور"
+        title="قصص القرآن"
         subtitle="114 سورة — سبب التسمية، زمان ومكان النزول، المحاور، والقصص القرآنية الموثقة."
       />
 
       <nav className="quran-subnav" aria-label="أقسام القرآن">
         <Link href="/quran" className="quran-subnav__link">المصحف</Link>
         <Link href="/quran/tajweed" className="quran-subnav__link">التجويد</Link>
-        <Link href="/quran/surah-stories" className="quran-subnav__link is-active">قصص السور</Link>
+        <Link href="/quran/surah-stories" className="quran-subnav__link is-active">قصص القرآن</Link>
         <Link href="/quran-live" className="quran-subnav__link">البث المباشر</Link>
         <Link href="/quran-radio" className="quran-subnav__link">الإذاعات</Link>
       </nav>
@@ -30,7 +30,7 @@ export default function SurahStoriesPage() {
         placeholder="ابحث في السور..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        aria-label="بحث في قصص السور"
+        aria-label="بحث في قصص القرآن"
       />
 
       <div className="surah-stories-grid">

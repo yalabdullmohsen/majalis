@@ -93,6 +93,15 @@ export async function verifySchema() {
     "lesson_sources",
     "lesson_intelligence_runs",
     "lesson_intelligence_extractions",
+    // Majlis Knowledge Engine v1
+    "mke_source_plugins",
+    "mke_runs",
+    "mke_decisions",
+    "mke_vision_analyses",
+    "mke_graph_links",
+    "mke_change_log",
+    "mke_quality_flags",
+    "mke_queue_jobs",
   ];
 
   for (const table of tables) {
