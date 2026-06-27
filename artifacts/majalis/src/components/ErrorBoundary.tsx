@@ -9,7 +9,7 @@ function userFacingBody(): string {
   return "حدث خلل أثناء تحميل هذا القسم. يمكنك إعادة المحاولة أو العودة للرئيسية.";
 }
 
-function isChunkLoadError(error: Error): boolean {
+export function isChunkLoadError(error: Error): boolean {
   const msg = (error.message || "").toLowerCase();
   return (
     msg.includes("failed to fetch dynamically imported module") ||
@@ -20,6 +20,7 @@ function isChunkLoadError(error: Error): boolean {
   );
 }
 
+/** Last-resort boundary — only catastrophic failures outside route/section boundaries. */
 export class ErrorBoundary extends Component<Props, State> {
   state: State = { error: null, copied: false, errorId: "", componentStack: null };
 
@@ -35,7 +36,7 @@ export class ErrorBoundary extends Component<Props, State> {
       buildErrorReport(error, {
         errorId,
         componentStack: info.componentStack,
-        component: "ErrorBoundary",
+        component: "ErrorBoundary:root",
       }),
     );
   }
@@ -122,20 +123,66 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 }
 
-type SectionBoundaryProps = {
+type NamedBoundaryProps = {
   name: string;
   children: ReactNode;
+  variant?: "section" | "route" | "widget";
 };
 
-type SectionBoundaryState = {
+type NamedBoundaryState = {
   error: Error | null;
   errorId: string;
 };
 
-export class SectionErrorBoundary extends Component<SectionBoundaryProps, SectionBoundaryState> {
-  state: SectionBoundaryState = { error: null, errorId: "" };
+function BoundaryFallback({
+  name,
+  errorId,
+  error,
+  variant,
+  onReset,
+}: {
+  name: string;
+  errorId: string;
+  error: Error;
+  variant: "section" | "route" | "widget";
+  onReset: () => void;
+}) {
+  const chunkError = isChunkLoadError(error);
+  const className =
+    variant === "route"
+      ? "route-error-fallback"
+      : variant === "widget"
+        ? "widget-error-fallback"
+        : "home-section-error";
 
-  static getDerivedStateFromError(error: Error): SectionBoundaryState {
+  return (
+    <div className={className} role="alert">
+      <strong>
+        {variant === "route"
+          ? "تعذر تحميل هذه الصفحة"
+          : `تعذر عرض ${name}`}
+      </strong>
+      <p>
+        {chunkError
+          ? "حدّث الصفحة أو أعد المحاولة — قد يكون التحديث الأخير للموقع لم يكتمل بعد."
+          : "بقيت بقية المنصة تعمل. يمكنك إعادة المحاولة أو الانتقال لقسم آخر."}
+      </p>
+      <small>رقم التتبع: {errorId}</small>
+      <div className="error-fallback-actions">
+        <button type="button" onClick={onReset}>إعادة المحاولة</button>
+        {variant === "route" && (
+          <a href="/" className="error-boundary-btn error-boundary-btn--secondary">الرئيسية</a>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/** Contains errors inside a homepage section — page keeps working. */
+export class SectionErrorBoundary extends Component<NamedBoundaryProps, NamedBoundaryState> {
+  state: NamedBoundaryState = { error: null, errorId: "" };
+
+  static getDerivedStateFromError(error: Error): NamedBoundaryState {
     return { error, errorId: createErrorId("SEC") };
   }
 
@@ -154,14 +201,76 @@ export class SectionErrorBoundary extends Component<SectionBoundaryProps, Sectio
 
   render() {
     if (!this.state.error) return this.props.children;
-
     return (
-      <section className="home-section-error" role="alert">
-        <strong>تعذر عرض قسم {this.props.name}</strong>
-        <p>بقيت الصفحة تعمل، ويمكنك إعادة محاولة تحميل هذا القسم فقط.</p>
-        <small>رقم التتبع: {this.state.errorId}</small>
-        <button type="button" onClick={this.reset}>إعادة المحاولة</button>
-      </section>
+      <BoundaryFallback
+        name={this.props.name}
+        errorId={this.state.errorId}
+        error={this.state.error}
+        variant={this.props.variant ?? "section"}
+        onReset={this.reset}
+      />
     );
+  }
+}
+
+/** Contains errors inside a lazy route — NavBar/Footer stay visible. */
+export class RouteErrorBoundary extends Component<NamedBoundaryProps, NamedBoundaryState> {
+  state: NamedBoundaryState = { error: null, errorId: "" };
+
+  static getDerivedStateFromError(error: Error): NamedBoundaryState {
+    return { error, errorId: createErrorId("RTE") };
+  }
+
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    void logClientError(
+      buildErrorReport(error, {
+        errorId: this.state.errorId || createErrorId("RTE"),
+        componentStack: info.componentStack,
+        section: this.props.name,
+        component: `Route:${this.props.name}`,
+        route: typeof window !== "undefined" ? window.location.pathname : "",
+      }),
+    );
+  }
+
+  reset = () => this.setState({ error: null, errorId: "" });
+
+  render() {
+    if (!this.state.error) return this.props.children;
+    return (
+      <BoundaryFallback
+        name={this.props.name}
+        errorId={this.state.errorId}
+        error={this.state.error}
+        variant="route"
+        onReset={this.reset}
+      />
+    );
+  }
+}
+
+/** Contains errors in chrome widgets (NavBar, assistant FAB). */
+export class WidgetErrorBoundary extends Component<NamedBoundaryProps, NamedBoundaryState> {
+  state: NamedBoundaryState = { error: null, errorId: "" };
+
+  static getDerivedStateFromError(error: Error): NamedBoundaryState {
+    return { error, errorId: createErrorId("WGT") };
+  }
+
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    void logClientError(
+      buildErrorReport(error, {
+        errorId: this.state.errorId || createErrorId("WGT"),
+        componentStack: info.componentStack,
+        component: `Widget:${this.props.name}`,
+      }),
+    );
+  }
+
+  reset = () => this.setState({ error: null, errorId: "" });
+
+  render() {
+    if (!this.state.error) return this.props.children;
+    return null;
   }
 }

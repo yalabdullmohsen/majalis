@@ -14,7 +14,10 @@ export function HomePrayerTimes() {
           <h2 id="home-prayer-heading">مواقيت الصلاة</h2>
           <p>مواقيت الصلاة في الكويت مع عدّاد تنازلي حيّ.</p>
         </div>
-        <Link href="/prayer-times" className="home-section-link">التفاصيل</Link>
+        <div className="home-section-head-links">
+          <Link href="/calendar" className="home-section-link">التقويم</Link>
+          <Link href="/prayer-times" className="home-section-link">مواقيت الصلاة</Link>
+        </div>
       </div>
 
       {loading ? (

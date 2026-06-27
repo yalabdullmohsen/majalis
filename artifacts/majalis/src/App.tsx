@@ -1,4 +1,4 @@
-import { Suspense, lazy, type ComponentType } from "react";
+import { Suspense, type ComponentType } from "react";
 import { Redirect, Route, Switch, Router as WouterRouter, useLocation, useRoute } from "wouter";
 import { AuthProvider } from "@/components/AuthProvider";
 import { FontPreferenceProvider } from "@/components/FontPreferenceProvider";
@@ -14,83 +14,84 @@ import PrivacyPage from "@/views/PrivacyPage";
 import TermsPage from "@/views/TermsPage";
 import ContactPage from "@/views/ContactPage";
 import NotFound from "@/views/not-found";
-import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { RouteErrorBoundary, WidgetErrorBoundary } from "@/components/ErrorBoundary";
 import { usePageSeo } from "@/lib/seo";
 import { Loading } from "@/components/ui-common";
+import { lazyWithRetry } from "@/lib/lazy-with-retry";
 
-const CalendarPage = lazy(() => import("@/views/CalendarPage"));
-const SearchPage = lazy(() => import("@/views/SearchPage"));
-const TopicPage = lazy(() => import("@/views/TopicPage"));
-const TopicsIndexPage = lazy(() => import("@/views/TopicsIndexPage"));
-const LessonsPage = lazy(() => import("@/views/LessonsPage"));
-const LessonDetailPage = lazy(() => import("@/views/LessonDetailPage"));
-const ScientificAnnouncementDetailPage = lazy(() => import("@/views/ScientificAnnouncementDetailPage"));
-const LibraryPage = lazy(() => import("@/views/LibraryPage"));
-const MiraclesPage = lazy(() => import("@/views/MiraclesPage"));
-const FawaidPage = lazy(() => import("@/views/FawaidPage"));
-const AdhkarPage = lazy(() => import("@/views/AdhkarPage"));
-const QaPage = lazy(() => import("@/views/QaPage"));
-const QuizPage = lazy(() => import("@/views/QuizPage"));
-const LoginPage = lazy(() => import("@/views/LoginPage"));
-const RegisterPage = lazy(() => import("@/views/RegisterPage"));
-const TranscribePage = lazy(() => import("@/views/TranscribePage"));
-const AssistantPage = lazy(() => import("@/views/AssistantPage"));
-const CondolencesPage = lazy(() => import("@/views/CondolencesPage"));
-const CardsPage = lazy(() => import("@/views/CardsPage"));
-const QuranPage = lazy(() => import("@/views/QuranPage"));
-const QuranTajweedPage = lazy(() => import("@/views/QuranTajweedPage"));
-const QuranLivePage = lazy(() => import("@/views/QuranLivePage"));
-const SurahStoriesPage = lazy(() => import("@/views/SurahStoriesPage"));
-const SurahStoryDetailPage = lazy(() =>
+const CalendarPage = lazyWithRetry(() => import("@/views/CalendarPage"));
+const SearchPage = lazyWithRetry(() => import("@/views/SearchPage"));
+const TopicPage = lazyWithRetry(() => import("@/views/TopicPage"));
+const TopicsIndexPage = lazyWithRetry(() => import("@/views/TopicsIndexPage"));
+const LessonsPage = lazyWithRetry(() => import("@/views/LessonsPage"));
+const LessonDetailPage = lazyWithRetry(() => import("@/views/LessonDetailPage"));
+const ScientificAnnouncementDetailPage = lazyWithRetry(() => import("@/views/ScientificAnnouncementDetailPage"));
+const LibraryPage = lazyWithRetry(() => import("@/views/LibraryPage"));
+const MiraclesPage = lazyWithRetry(() => import("@/views/MiraclesPage"));
+const FawaidPage = lazyWithRetry(() => import("@/views/FawaidPage"));
+const AdhkarPage = lazyWithRetry(() => import("@/views/AdhkarPage"));
+const QaPage = lazyWithRetry(() => import("@/views/QaPage"));
+const QuizPage = lazyWithRetry(() => import("@/views/QuizPage"));
+const LoginPage = lazyWithRetry(() => import("@/views/LoginPage"));
+const RegisterPage = lazyWithRetry(() => import("@/views/RegisterPage"));
+const TranscribePage = lazyWithRetry(() => import("@/views/TranscribePage"));
+const AssistantPage = lazyWithRetry(() => import("@/views/AssistantPage"));
+const CondolencesPage = lazyWithRetry(() => import("@/views/CondolencesPage"));
+const CardsPage = lazyWithRetry(() => import("@/views/CardsPage"));
+const QuranPage = lazyWithRetry(() => import("@/views/QuranPage"));
+const QuranTajweedPage = lazyWithRetry(() => import("@/views/QuranTajweedPage"));
+const QuranLivePage = lazyWithRetry(() => import("@/views/QuranLivePage"));
+const SurahStoriesPage = lazyWithRetry(() => import("@/views/SurahStoriesPage"));
+const SurahStoryDetailPage = lazyWithRetry(() =>
   import("@/views/SurahStoriesPage").then((m) => ({ default: m.SurahStoryDetailPage })),
 );
-const QuranRadioPage = lazy(() => import("@/views/QuranRadioPage"));
-const PrayerTimesPage = lazy(() => import("@/views/PrayerTimesPage"));
-const PrayerRanksPage = lazy(() => import("@/views/PrayerRanksPage"));
-const QiblaPage = lazy(() => import("@/views/QiblaPage"));
-const TasbihPage = lazy(() => import("@/views/TasbihPage"));
-const DailyWirdPage = lazy(() => import("@/views/DailyWirdPage"));
-const OccasionsPage = lazy(() => import("@/views/OccasionsPage"));
-const ArbaeenNawawiPage = lazy(() => import("@/views/ArbaeenNawawiPage"));
-const SettingsPage = lazy(() => import("@/views/SettingsPage"));
-const AnnualCoursesPage = lazy(() => import("@/views/AnnualCoursesPage"));
-const AnnualCourseDetailPage = lazy(() => import("@/views/AnnualCourseDetailPage"));
-const FiqhCouncilResolutionsPage = lazy(() => import("@/views/FiqhCouncilResolutionsPage"));
-const FiqhCouncilFatwasPage = lazy(() => import("@/views/FiqhCouncilFatwasPage"));
-const FiqhCouncilRecommendationsPage = lazy(() => import("@/views/FiqhCouncilRecommendationsPage"));
-const FiqhCouncilResearchPage = lazy(() => import("@/views/FiqhCouncilResearchPage"));
-const FiqhCouncilCategoriesPage = lazy(() => import("@/views/FiqhCouncilCategoriesPage"));
-const FiqhCouncilArchivePage = lazy(() => import("@/views/FiqhCouncilArchivePage"));
-const FiqhCouncilNawazilPage = lazy(() => import("@/views/FiqhCouncilNawazilPage"));
-const FiqhCouncilComparePage = lazy(() => import("@/views/FiqhCouncilComparePage"));
-const FiqhCouncilAdvancedSearchPage = lazy(() => import("@/views/FiqhCouncilAdvancedSearchPage"));
-const FiqhCouncilResearchAssistantPage = lazy(() => import("@/views/FiqhCouncilResearchAssistantPage"));
-const FiqhCouncilLivePage = lazy(() => import("@/views/FiqhCouncilLivePage"));
-const FiqhCouncilSessionDetailPage = lazy(() => import("@/views/FiqhCouncilSessionDetailPage"));
-const FiqhCouncilIssuesPage = lazy(() => import("@/views/FiqhCouncilIssuesPage"));
-const FiqhCouncilIssueDetailPage = lazy(() => import("@/views/FiqhCouncilIssueDetailPage"));
-const FiqhCouncilTopicIndexPage = lazy(() => import("@/views/FiqhCouncilTopicIndexPage"));
-const FiqhCouncilStatsPage = lazy(() => import("@/views/FiqhCouncilStatsPage"));
-const FiqhCouncilPage = lazy(() => import("@/views/FiqhCouncilPage"));
-const FiqhCouncilItemDetailPage = lazy(() => import("@/views/FiqhCouncilItemDetailPage"));
-const FatwaPage = lazy(() => import("@/views/FatwaPage"));
-const FatwaDetailPage = lazy(() => import("@/views/FatwaDetailPage"));
-const RulingsPage = lazy(() => import("@/views/RulingsPage"));
-const RulingDetailPage = lazy(() => import("@/views/RulingDetailPage"));
-const UpdatesPage = lazy(() => import("@/views/UpdatesPage"));
-const AutoContentDetailPage = lazy(() => import("@/views/AutoContentDetailPage"));
-const DeveloperPage = lazy(() => import("@/views/DeveloperPage"));
-const AdminPage = lazy(() => import("@/views/AdminPage"));
-const AdminDashboardPage = lazy(() => import("@/views/admin/AdminDashboardPage"));
-const AutoContentPage = lazy(() => import("@/views/admin/AutoContentPage"));
-const FiqhReviewPage = lazy(() => import("@/views/admin/FiqhReviewPage"));
-const FiqhQualityPage = lazy(() => import("@/views/admin/FiqhQualityPage"));
-const LearningPathsPage = lazy(() => import("@/views/learning/LearningPathsPage"));
-const LearningPathDetailPage = lazy(() => import("@/views/learning/LearningPathDetailPage"));
-const MyLearningPage = lazy(() => import("@/views/MyLearningPage"));
-const LearningQuizPage = lazy(() => import("@/views/learning/LearningQuizPage"));
-const LearningCalendarPage = lazy(() => import("@/views/learning/LearningCalendarPage"));
-const CertificateVerifyPage = lazy(() => import("@/views/learning/CertificateVerifyPage"));
+const QuranRadioPage = lazyWithRetry(() => import("@/views/QuranRadioPage"));
+const PrayerTimesPage = lazyWithRetry(() => import("@/views/PrayerTimesPage"));
+const PrayerRanksPage = lazyWithRetry(() => import("@/views/PrayerRanksPage"));
+const QiblaPage = lazyWithRetry(() => import("@/views/QiblaPage"));
+const TasbihPage = lazyWithRetry(() => import("@/views/TasbihPage"));
+const DailyWirdPage = lazyWithRetry(() => import("@/views/DailyWirdPage"));
+const OccasionsPage = lazyWithRetry(() => import("@/views/OccasionsPage"));
+const ArbaeenNawawiPage = lazyWithRetry(() => import("@/views/ArbaeenNawawiPage"));
+const SettingsPage = lazyWithRetry(() => import("@/views/SettingsPage"));
+const AnnualCoursesPage = lazyWithRetry(() => import("@/views/AnnualCoursesPage"));
+const AnnualCourseDetailPage = lazyWithRetry(() => import("@/views/AnnualCourseDetailPage"));
+const FiqhCouncilResolutionsPage = lazyWithRetry(() => import("@/views/FiqhCouncilResolutionsPage"));
+const FiqhCouncilFatwasPage = lazyWithRetry(() => import("@/views/FiqhCouncilFatwasPage"));
+const FiqhCouncilRecommendationsPage = lazyWithRetry(() => import("@/views/FiqhCouncilRecommendationsPage"));
+const FiqhCouncilResearchPage = lazyWithRetry(() => import("@/views/FiqhCouncilResearchPage"));
+const FiqhCouncilCategoriesPage = lazyWithRetry(() => import("@/views/FiqhCouncilCategoriesPage"));
+const FiqhCouncilArchivePage = lazyWithRetry(() => import("@/views/FiqhCouncilArchivePage"));
+const FiqhCouncilNawazilPage = lazyWithRetry(() => import("@/views/FiqhCouncilNawazilPage"));
+const FiqhCouncilComparePage = lazyWithRetry(() => import("@/views/FiqhCouncilComparePage"));
+const FiqhCouncilAdvancedSearchPage = lazyWithRetry(() => import("@/views/FiqhCouncilAdvancedSearchPage"));
+const FiqhCouncilResearchAssistantPage = lazyWithRetry(() => import("@/views/FiqhCouncilResearchAssistantPage"));
+const FiqhCouncilLivePage = lazyWithRetry(() => import("@/views/FiqhCouncilLivePage"));
+const FiqhCouncilSessionDetailPage = lazyWithRetry(() => import("@/views/FiqhCouncilSessionDetailPage"));
+const FiqhCouncilIssuesPage = lazyWithRetry(() => import("@/views/FiqhCouncilIssuesPage"));
+const FiqhCouncilIssueDetailPage = lazyWithRetry(() => import("@/views/FiqhCouncilIssueDetailPage"));
+const FiqhCouncilTopicIndexPage = lazyWithRetry(() => import("@/views/FiqhCouncilTopicIndexPage"));
+const FiqhCouncilStatsPage = lazyWithRetry(() => import("@/views/FiqhCouncilStatsPage"));
+const FiqhCouncilPage = lazyWithRetry(() => import("@/views/FiqhCouncilPage"));
+const FiqhCouncilItemDetailPage = lazyWithRetry(() => import("@/views/FiqhCouncilItemDetailPage"));
+const FatwaPage = lazyWithRetry(() => import("@/views/FatwaPage"));
+const FatwaDetailPage = lazyWithRetry(() => import("@/views/FatwaDetailPage"));
+const RulingsPage = lazyWithRetry(() => import("@/views/RulingsPage"));
+const RulingDetailPage = lazyWithRetry(() => import("@/views/RulingDetailPage"));
+const UpdatesPage = lazyWithRetry(() => import("@/views/UpdatesPage"));
+const AutoContentDetailPage = lazyWithRetry(() => import("@/views/AutoContentDetailPage"));
+const DeveloperPage = lazyWithRetry(() => import("@/views/DeveloperPage"));
+const AdminPage = lazyWithRetry(() => import("@/views/AdminPage"));
+const AdminDashboardPage = lazyWithRetry(() => import("@/views/admin/AdminDashboardPage"));
+const AutoContentPage = lazyWithRetry(() => import("@/views/admin/AutoContentPage"));
+const FiqhReviewPage = lazyWithRetry(() => import("@/views/admin/FiqhReviewPage"));
+const FiqhQualityPage = lazyWithRetry(() => import("@/views/admin/FiqhQualityPage"));
+const LearningPathsPage = lazyWithRetry(() => import("@/views/learning/LearningPathsPage"));
+const LearningPathDetailPage = lazyWithRetry(() => import("@/views/learning/LearningPathDetailPage"));
+const MyLearningPage = lazyWithRetry(() => import("@/views/MyLearningPage"));
+const LearningQuizPage = lazyWithRetry(() => import("@/views/learning/LearningQuizPage"));
+const LearningCalendarPage = lazyWithRetry(() => import("@/views/learning/LearningCalendarPage"));
+const CertificateVerifyPage = lazyWithRetry(() => import("@/views/learning/CertificateVerifyPage"));
 
 function SeoManager() {
   const [location] = useLocation();
@@ -98,20 +99,25 @@ function SeoManager() {
   return null;
 }
 
-function SafeLazyRoute({ component: Component }: { component: ComponentType }) {
+function SafeLazyRoute({ component: Component, name }: { component: ComponentType; name?: string }) {
+  const routeName = name || Component.displayName || Component.name || "الصفحة";
   return (
-    <Suspense fallback={<Loading />}>
-      <Component />
-    </Suspense>
+    <RouteErrorBoundary name={routeName}>
+      <Suspense fallback={<Loading />}>
+        <Component />
+      </Suspense>
+    </RouteErrorBoundary>
   );
 }
 
 function SurahStoryDetailRoute() {
   const [, params] = useRoute("/quran/surah-stories/:number");
   return (
-    <Suspense fallback={<Loading />}>
-      <SurahStoryDetailPage surahNumber={Number(params?.number) || 1} />
-    </Suspense>
+    <RouteErrorBoundary name="قصة السورة">
+      <Suspense fallback={<Loading />}>
+        <SurahStoryDetailPage surahNumber={Number(params?.number) || 1} />
+      </Suspense>
+    </RouteErrorBoundary>
   );
 }
 
@@ -119,7 +125,9 @@ function Router() {
   return (
     <Switch>
       <Route path="/">
-        <HomePage />
+        <RouteErrorBoundary name="الرئيسية">
+          <HomePage />
+        </RouteErrorBoundary>
       </Route>
       <Route path="/about" component={AboutPage} />
       <Route path="/privacy" component={PrivacyPage} />
@@ -155,19 +163,19 @@ function Router() {
       <Route path="/my-learning"><SafeLazyRoute component={MyLearningPage} /></Route>
       <Route path="/learning"><Redirect to="/learning/paths" /></Route>
       <Route path="/assistant">
-        <ErrorBoundary>
+        <RouteErrorBoundary name="المساعد العلمي">
           <Suspense fallback={<Loading />}>
             <AssistantPage />
           </Suspense>
-        </ErrorBoundary>
+        </RouteErrorBoundary>
       </Route>
       <Route path="/condolences"><SafeLazyRoute component={CondolencesPage} /></Route>
       <Route path="/transcribe">
-        <ErrorBoundary>
+        <RouteErrorBoundary name="النسخ">
           <Suspense fallback={<Loading />}>
             <TranscribePage />
           </Suspense>
-        </ErrorBoundary>
+        </RouteErrorBoundary>
       </Route>
       <Route path="/quran-radio"><SafeLazyRoute component={QuranRadioPage} /></Route>
       <Route path="/quran-live"><SafeLazyRoute component={QuranLivePage} /></Route>
@@ -217,47 +225,47 @@ function Router() {
       <Route path="/auth/register"><Redirect to="/register" /></Route>
       <Route path="/admin/auto-content">
         <AdminRouteGuard>
-          <ErrorBoundary>
+          <RouteErrorBoundary name="إدارة المحتوى">
             <Suspense fallback={<Loading />}>
               <AutoContentPage />
             </Suspense>
-          </ErrorBoundary>
+          </RouteErrorBoundary>
         </AdminRouteGuard>
       </Route>
       <Route path="/admin/fiqh-review">
         <AdminRouteGuard>
-          <ErrorBoundary>
+          <RouteErrorBoundary name="مراجعة الفقه">
             <Suspense fallback={<Loading />}>
               <FiqhReviewPage />
             </Suspense>
-          </ErrorBoundary>
+          </RouteErrorBoundary>
         </AdminRouteGuard>
       </Route>
       <Route path="/admin/fiqh-quality">
         <AdminRouteGuard>
-          <ErrorBoundary>
+          <RouteErrorBoundary name="جودة الفقه">
             <Suspense fallback={<Loading />}>
               <FiqhQualityPage />
             </Suspense>
-          </ErrorBoundary>
+          </RouteErrorBoundary>
         </AdminRouteGuard>
       </Route>
       <Route path="/admin/dashboard">
         <AdminRouteGuard>
-          <ErrorBoundary>
+          <RouteErrorBoundary name="لوحة التحكم">
             <Suspense fallback={<Loading />}>
               <AdminDashboardPage />
             </Suspense>
-          </ErrorBoundary>
+          </RouteErrorBoundary>
         </AdminRouteGuard>
       </Route>
       <Route path="/admin">
         <AdminRouteGuard>
-          <ErrorBoundary>
+          <RouteErrorBoundary name="الإدارة">
             <Suspense fallback={<Loading />}>
               <AdminPage />
             </Suspense>
-          </ErrorBoundary>
+          </RouteErrorBoundary>
         </AdminRouteGuard>
       </Route>
       <Route component={NotFound} />
@@ -275,12 +283,16 @@ function App() {
             <div className="app-shell" style={{ minHeight: "100vh", direction: "rtl" }}>
               <a href="#main-content" className="skip-link">تخطّي إلى المحتوى</a>
               <SeoManager />
-              <NavBar />
+              <WidgetErrorBoundary name="NavBar">
+                <NavBar />
+              </WidgetErrorBoundary>
               <main id="main-content" className="app-main" tabIndex={-1}>
                 <Router />
               </main>
               <SiteFooter />
-              <AssistantFloatingWidget />
+              <WidgetErrorBoundary name="AssistantWidget">
+                <AssistantFloatingWidget />
+              </WidgetErrorBoundary>
             </div>
           </WouterRouter>
           </AuthProvider>

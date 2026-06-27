@@ -1,41 +1,43 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useState, type FormEvent, type ReactNode } from "react";
 import { Link, useLocation } from "wouter";
 import { SectionErrorBoundary } from "@/components/ErrorBoundary";
+import { HomeLatestLessons } from "@/components/home/HomeLatestLessons";
 import { HomeUpcomingLessons } from "@/components/home/HomeUpcomingLessons";
 import { HomeUpcomingCourses } from "@/components/home/HomeUpcomingCourses";
-import { HomePrayerTimes } from "@/components/home/HomePrayerTimes";
-import { HomeDailyFaida } from "@/components/home/HomeDailyFaida";
-import { HomeDailyDhikr } from "@/components/home/HomeDailyDhikr";
-import { HomeDailyHadith } from "@/components/home/HomeDailyHadith";
-import { HomeDailyQuestion } from "@/components/home/HomeDailyQuestion";
-import { HomeHeroBanner } from "@/components/home/HomeHeroBanner";
-import { HomeSunnahByTime } from "@/components/home/HomeSunnahByTime";
-import { HomeFeatureCards } from "@/components/home/HomeFeatureCards";
-import { HomeDailyProgress } from "@/components/home/HomeDailyProgress";
-import { HomeMoreSections } from "@/components/home/HomeMoreSections";
-import { HomeIslamicOccasions } from "@/components/home/HomeIslamicOccasions";
+import { HomeMediaSection } from "@/components/home/HomeMediaSection";
+import { HomeCalendarSection } from "@/components/home/HomeCalendarSection";
 import { HomeLatestUpdates } from "@/components/home/HomeLatestUpdates";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
+import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
+
+type RailItem = { title: string; href: string; meta: string; summary: string };
 
 function HomeContentRail({
   title,
   subtitle,
+  kicker,
   items,
+  moreHref,
+  moreLabel = "عرض المزيد",
 }: {
   title: string;
   subtitle: string;
-  items: { title: string; href: string; meta: string; summary: string }[];
+  kicker?: string;
+  items: RailItem[];
+  moreHref?: string;
+  moreLabel?: string;
 }) {
   return (
     <section className="home-section home-content-rail">
       <div className="home-section-head">
         <div>
-          <p className="home-section-kicker">المحتوى العلمي</p>
+          {kicker && <p className="home-section-kicker">{kicker}</p>}
           <h2 className="home-section-title">{title}</h2>
           <p className="home-section-subtitle">{subtitle}</p>
         </div>
+        {moreHref && <Link href={moreHref} className="home-section-link">{moreLabel}</Link>}
       </div>
       <div className="home-content-rail__grid">
         {items.map((item) => (
@@ -50,79 +52,57 @@ function HomeContentRail({
   );
 }
 
-function SafeHomeSection({ name, children }: { name: string; children: React.ReactNode }) {
-  return <SectionErrorBoundary name={name}>{children}</SectionErrorBoundary>;
+function SafeHomeSection({
+  name,
+  band,
+  children,
+}: {
+  name: string;
+  band?: "even" | "odd";
+  children: ReactNode;
+}) {
+  return (
+    <div className={band ? `home-section-band home-section-band--${band}` : undefined}>
+      <SectionErrorBoundary name={name}>{children}</SectionErrorBoundary>
+    </div>
+  );
 }
 
-const FEATURED_LESSON_ITEMS = [
-  { title: "دروس الأسبوع", href: "/lessons", meta: "دروس", summary: "مختارات مرتبة حسب التاريخ والشيخ." },
-  { title: "دروس العقيدة", href: "/search/درس عقيدة", meta: "العقيدة", summary: "مواد موثقة في أصول الاعتقاد والتوحيد." },
-  { title: "دروس الآداب", href: "/search/درس آداب", meta: "التزكية", summary: "دروس نافعة في السلوك والآداب." },
+const SCHOLAR_ITEMS: RailItem[] = [
+  { title: "دروس المشايخ", href: "/lessons", meta: "المشايخ", summary: "تصفّح الدروس حسب الشيخ والسلسلة." },
+  { title: "مسارات التعلم", href: "/learning/paths", meta: "تعلم", summary: "مسارات منظمة من المبتدئ إلى المتقدم." },
+  { title: "المكتبة", href: "/library", meta: "كتب", summary: "كتب ومتون مرتبطة بالدروس." },
 ];
 
-const KHUTBA_ITEMS = [
-  { title: "خطب الجمعة", href: "/search/خطبة الجمعة", meta: "الخطب", summary: "موضوعات جاهزة للخطباء والدعاة مع مصادر داخلية." },
-  { title: "خطب المناسبات", href: "/occasions", meta: "المواسم", summary: "ربط الخطب بالمناسبات الإسلامية والتقويم." },
-  { title: "مواد الخطباء", href: "/library", meta: "المكتبة", summary: "كتب ومتون ومواد مساعدة لإعداد الخطب." },
+const QURAN_ITEMS: RailItem[] = [
+  { title: "المصحف الشريف", href: "/quran", meta: "قراءة", summary: "114 سورة بالرسم العثماني." },
+  { title: "علم التجويد", href: "/quran/tajweed", meta: "تجويد", summary: "دروس وأمثلة صوتية." },
+  { title: "قصص السور", href: "/quran/surah-stories", meta: "موسوعة", summary: "قصص السور الموثقة." },
 ];
 
-const SCHOLAR_ITEMS = [
-  { title: "المشايخ والدروس", href: "/lessons", meta: "المشايخ", summary: "تصفّح الدروس حسب الشيخ والسلسلة والتصنيف." },
-  { title: "مسارات التعلم", href: "/learning/paths", meta: "تعلم", summary: "مسارات منظمة لطالب العلم من المبتدئ للمتقدم." },
-  { title: "المساعد العلمي", href: "/assistant", meta: "AI", summary: "بحث موثق داخل قاعدة معرفة المجلس العلمي." },
+const ADHKAR_ITEMS: RailItem[] = [
+  { title: "أذكار الصباح", href: "/adhkar?cat=morning", meta: "صباح", summary: "أذكار يومية مع التكرار." },
+  { title: "أذكار المساء", href: "/adhkar?cat=evening", meta: "مساء", summary: "ورد المساء." },
+  { title: "عداد التسبيح", href: "/tasbih", meta: "Offline", summary: "أوراد وإحصاءات يومية." },
 ];
 
-const LIBRARY_ITEMS = [
-  { title: "المكتبة العلمية", href: "/library", meta: "كتب", summary: "كتب ومتون وروابط بحث داخل المنصة." },
-  { title: "كتب التفسير", href: "/search/تفسير", meta: "تفسير", summary: "روابط بحث في كتب التفسير المعتمدة." },
-  { title: "متون ودروس", href: "/learning/paths", meta: "مسارات", summary: "ربط المكتبة بالمسارات التعليمية." },
-];
-
-const QURAN_ITEMS = [
-  { title: "المصحف الشريف", href: "/quran", meta: "قراءة", summary: "114 سورة بالرسم العثماني مع تلاوات وتفسير." },
-  { title: "علم التجويد", href: "/quran/tajweed", meta: "تجويد", summary: "دروس التجويد مع أمثلة واختبارات." },
-  { title: "قصص السور", href: "/quran/surah-stories", meta: "موسوعة", summary: "موسوعة قصص السور الموثقة." },
-  { title: "البث المباشر", href: "/quran-live", meta: "بث", summary: "قنوات القرآن والحرمين الشريفين." },
-  { title: "إذاعات القرآن", href: "/quran-radio", meta: "استماع", summary: "إذاعات الكويت والسعودية وغيرها." },
-  { title: "الورد اليومي", href: "/daily-wird", meta: "متابعة", summary: "خطة قراءة يومية محفوظة محلياً." },
-];
-
-const HADITH_ITEMS = [
-  { title: "الأربعون النووية", href: "/arbaeen-nawawi", meta: "حديث", summary: "أحاديث جامعة مع عرض منظم." },
-  { title: "بحث في الحديث", href: "/search/حديث", meta: "بحث", summary: "ابحث في الأحاديث والشروح المرتبطة." },
-  { title: "المساعد الموثق", href: "/assistant", meta: "استدلال", summary: "إجابات لا تنسب حديثاً بلا مصدر." },
-];
-
-const ADHKAR_ITEMS = [
-  { title: "أذكار الصباح", href: "/adhkar?cat=morning", meta: "صباح", summary: "أذكار يومية موثقة مع التكرار." },
-  { title: "أذكار المساء", href: "/adhkar?cat=evening", meta: "مساء", summary: "ورد المساء محفوظ وميسر." },
-  { title: "عداد التسبيح", href: "/tasbih", meta: "Offline", summary: "أوراد متعددة وإحصاءات يومية." },
-];
-
-const QA_ITEMS = [
-  { title: "الأسئلة الشرعية", href: "/qa", meta: "أسئلة", summary: "إجابات مصنفة مع مراجع وكلمات مفتاحية." },
-  { title: "أسئلة الصلاة", href: "/qa?q=الصلاة", meta: "الصلاة", summary: "مسائل الصلاة والوضوء والخشوع." },
+const QA_ITEMS: RailItem[] = [
+  { title: "الأسئلة الشرعية", href: "/qa", meta: "أسئلة", summary: "إجابات مصنّفة وموثقة." },
+  { title: "أسئلة الصلاة", href: "/qa?q=الصلاة", meta: "الصلاة", summary: "مسائل الصلاة والوضوء." },
   { title: "أسئلة العقيدة", href: "/qa?q=العقيدة", meta: "العقيدة", summary: "أسئلة التوحيد والإيمان." },
 ];
 
-const FAWAID_ITEMS = [
-  { title: "الفوائد العلمية", href: "/fawaid", meta: "فوائد", summary: "فوائد مختصرة قابلة للمراجعة والحفظ." },
-  { title: "فوائد القرآن", href: "/search/فوائد القرآن", meta: "قرآن", summary: "لطائف وفوائد مرتبطة بالآيات." },
-  { title: "فوائد الحديث", href: "/search/فوائد الحديث", meta: "حديث", summary: "فوائد مستنبطة من السنة." },
+const FAWAID_ITEMS: RailItem[] = [
+  { title: "الفوائد العلمية", href: "/fawaid", meta: "فوائد", summary: "فوائد مختصرة للمراجعة." },
+  { title: "فوائد القرآن", href: "/search/فوائد القرآن", meta: "قرآن", summary: "لطائف مرتبطة بالآيات." },
+  { title: "الأربعون النووية", href: "/arbaeen-nawawi", meta: "حديث", summary: "أحاديث جامعة منظمة." },
 ];
 
-const WORSHIP_TOOLS_ITEMS = [
-  { title: "مواقيت الصلاة", href: "/prayer-times", meta: "الصلاة", summary: "مواقيت وعدّاد وتتبع يومي." },
-  { title: "مراتب الناس في الصلاة", href: "/prayer-ranks", meta: "تربية", summary: "مراتب الخشوع وحضور القلب." },
-  { title: "القبلة", href: "/qibla", meta: "أداة", summary: "تحديد اتجاه القبلة بسهولة." },
+const LIBRARY_ITEMS: RailItem[] = [
+  { title: "المكتبة العلمية", href: "/library", meta: "كتب", summary: "كتب ومتون وروابط بحث." },
+  { title: "كتب التفسير", href: "/search/تفسير", meta: "تفسير", summary: "بحث في كتب التفسير." },
+  { title: "المجمع الفقهي", href: "/fiqh-council", meta: "فتاوى", summary: "قرارات وفتاوى جماعية." },
 ];
-
-const SEARCH_ASSISTANT_ITEMS = [
-  { title: "محرك البحث الذكي", href: "/search", meta: "بحث", summary: "بحث عربي في الدروس والأسئلة والكتب والأحاديث." },
-  { title: "المساعد الشرعي", href: "/assistant", meta: "AI", summary: "إجابة مختصرة ثم تفصيل مع المصادر عند توفرها." },
-];
-
-import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 
 export default function HomePage({
   initialFeaturedLessons,
@@ -146,7 +126,7 @@ export default function HomePage({
         </div>
       )}
 
-      <section className="home-hero home-hero--v3">
+      <section className="home-hero home-hero--v3 home-section-band home-section-band--hero">
         <div className="home-hero-pattern" aria-hidden="true" />
         <div className="home-container home-hero-grid home-hero-grid--v3">
           <div className="home-hero-copy home-hero-copy--v3">
@@ -155,8 +135,8 @@ export default function HomePage({
                 src="/logo.png"
                 alt="المجلس العلمي"
                 className="home-hero-logo"
-                width={96}
-                height={96}
+                width={88}
+                height={88}
                 loading="eager"
                 decoding="async"
               />
@@ -164,7 +144,7 @@ export default function HomePage({
             <p className="home-kicker home-kicker--v3">المنصة العلمية الشرعية</p>
             <h1 className="home-hero-title home-hero-title--v3">المجلس العلمي</h1>
             <p className="home-hero-lead home-hero-lead--v3">
-              منصة علمية شرعية تجمع الدروس والفتاوى والقرارات والأذكار والمحتوى الموثّق في مكان واحد.
+              دروس وفتاوى وقرآن وأذكار ومحتوى موثّق في مكان واحد.
             </p>
             <form onSubmit={submitSearch} className="home-search home-search--v3" aria-label="البحث في المنصة">
               <input
@@ -182,31 +162,89 @@ export default function HomePage({
       </section>
 
       <main className="home-container home-main home-main--v3">
-        <SafeHomeSection name="أحدث الدروس"><HomeUpcomingLessons initialLessons={initialFeaturedLessons} /></SafeHomeSection>
-        <SafeHomeSection name="الدورات العلمية"><HomeUpcomingCourses /></SafeHomeSection>
-        <SafeHomeSection name="دروس قادمة"><HomeContentRail title="دروس قادمة" subtitle="دروس ومختارات قريبة — صوتية ومرئية." items={FEATURED_LESSON_ITEMS} /></SafeHomeSection>
-        <SafeHomeSection name="المشايخ"><HomeContentRail title="المشايخ" subtitle="الوصول إلى العلماء والمشايخ والدروس المرتبطة بهم." items={SCHOLAR_ITEMS} /></SafeHomeSection>
-        <SafeHomeSection name="القرآن"><HomeContentRail title="القرآن الكريم" subtitle="مصحف — تجويد — تلاوات — بث — إذاعات." items={QURAN_ITEMS} /></SafeHomeSection>
-        <SafeHomeSection name="الأذكار"><HomeContentRail title="الأذكار" subtitle="أوراد يومية وعداد تسبيح احترافي." items={ADHKAR_ITEMS} /></SafeHomeSection>
-        <SafeHomeSection name="الأسئلة الشرعية"><HomeContentRail title="الأسئلة الشرعية" subtitle="أسئلة وأجوبة موثقة ومصنفة." items={QA_ITEMS} /></SafeHomeSection>
-        <SafeHomeSection name="المكتبة"><HomeContentRail title="المكتبة" subtitle="كتب ومتون ومسارات علمية." items={LIBRARY_ITEMS} /></SafeHomeSection>
-        <SafeHomeSection name="الفوائد"><HomeContentRail title="الفوائد" subtitle="فوائد مختصرة ومنظمة لطالب العلم." items={FAWAID_ITEMS} /></SafeHomeSection>
-        <SafeHomeSection name="أدوات العبادة"><HomeContentRail title="أدوات العبادة" subtitle="أدوات عملية للمتابعة اليومية." items={WORSHIP_TOOLS_ITEMS} /></SafeHomeSection>
-        <SafeHomeSection name="مواقيت الصلاة"><HomePrayerTimes /></SafeHomeSection>
-        <SafeHomeSection name="ذكر اليوم"><HomeDailyDhikr /></SafeHomeSection>
-        <SafeHomeSection name="سؤال اليوم"><HomeDailyQuestion /></SafeHomeSection>
-        <SafeHomeSection name="فائدة اليوم"><HomeDailyFaida /></SafeHomeSection>
-        <SafeHomeSection name="الأحاديث"><HomeContentRail title="الأحاديث" subtitle="الأحاديث والشروح والبحث في السنة." items={HADITH_ITEMS} /></SafeHomeSection>
-        <SafeHomeSection name="الخطب"><HomeContentRail title="الخطب" subtitle="محتوى عملي للخطباء والدعاة." items={KHUTBA_ITEMS} /></SafeHomeSection>
-        <SafeHomeSection name="البحث والمساعد"><HomeContentRail title="البحث والمساعد" subtitle="بحث ذكي ومساعد شرعي مقيد بالمصادر." items={SEARCH_ASSISTANT_ITEMS} /></SafeHomeSection>
-        <SafeHomeSection name="حديث اليوم"><HomeDailyHadith /></SafeHomeSection>
-        <SafeHomeSection name="تقدمك اليومي"><HomeDailyProgress /></SafeHomeSection>
-        <SafeHomeSection name="روابط سريعة"><HomeFeatureCards /></SafeHomeSection>
-        <SafeHomeSection name="بقية الأقسام"><HomeMoreSections /></SafeHomeSection>
-        <SafeHomeSection name="سنن اليوم"><HomeSunnahByTime /></SafeHomeSection>
-        <SafeHomeSection name="المساعد"><HomeHeroBanner /></SafeHomeSection>
-        <SafeHomeSection name="المناسبات"><HomeIslamicOccasions /></SafeHomeSection>
-        <SafeHomeSection name="آخر التحديثات"><HomeLatestUpdates /></SafeHomeSection>
+        <SafeHomeSection name="أحدث الدروس" band="odd">
+          <HomeLatestLessons initialLessons={initialFeaturedLessons} />
+        </SafeHomeSection>
+
+        <SafeHomeSection name="الدروس القادمة" band="even">
+          <HomeUpcomingLessons initialLessons={initialFeaturedLessons} />
+        </SafeHomeSection>
+
+        <SafeHomeSection name="الدورات العلمية" band="odd">
+          <HomeUpcomingCourses />
+        </SafeHomeSection>
+
+        <SafeHomeSection name="المشايخ" band="even">
+          <HomeContentRail
+            kicker="العلماء"
+            title="المشايخ"
+            subtitle="الوصول إلى المشايخ والدروس المرتبطة بهم."
+            items={SCHOLAR_ITEMS}
+            moreHref="/lessons"
+          />
+        </SafeHomeSection>
+
+        <SafeHomeSection name="القرآن الكريم" band="odd">
+          <HomeContentRail
+            kicker="الكتاب العزيز"
+            title="القرآن الكريم"
+            subtitle="قراءة وتجويد وقصص السور."
+            items={QURAN_ITEMS}
+            moreHref="/quran"
+          />
+        </SafeHomeSection>
+
+        <SafeHomeSection name="الأذكار" band="even">
+          <HomeContentRail
+            kicker="العبادة اليومية"
+            title="الأذكار"
+            subtitle="أوراد يومية وعداد تسبيح."
+            items={ADHKAR_ITEMS}
+            moreHref="/adhkar"
+          />
+        </SafeHomeSection>
+
+        <SafeHomeSection name="الأسئلة الشرعية" band="odd">
+          <HomeContentRail
+            kicker="فتاوى وأسئلة"
+            title="الأسئلة الشرعية"
+            subtitle="أسئلة وأجوبة مصنّفة."
+            items={QA_ITEMS}
+            moreHref="/qa"
+          />
+        </SafeHomeSection>
+
+        <SafeHomeSection name="الفوائد" band="even">
+          <HomeContentRail
+            kicker="لطائف علمية"
+            title="الفوائد"
+            subtitle="فوائد مختصرة لطالب العلم."
+            items={FAWAID_ITEMS}
+            moreHref="/fawaid"
+          />
+        </SafeHomeSection>
+
+        <SafeHomeSection name="المكتبة" band="odd">
+          <HomeContentRail
+            kicker="مراجع"
+            title="المكتبة"
+            subtitle="كتب ومتون ومسارات علمية."
+            items={LIBRARY_ITEMS}
+            moreHref="/library"
+          />
+        </SafeHomeSection>
+
+        <SafeHomeSection name="الإذاعات والبث" band="even">
+          <HomeMediaSection />
+        </SafeHomeSection>
+
+        <SafeHomeSection name="التقويم" band="odd">
+          <HomeCalendarSection />
+        </SafeHomeSection>
+
+        <SafeHomeSection name="آخر الإضافات" band="even">
+          <HomeLatestUpdates />
+        </SafeHomeSection>
       </main>
     </div>
   );

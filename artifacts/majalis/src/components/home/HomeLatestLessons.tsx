@@ -3,26 +3,27 @@ import { Link } from "wouter";
 import { Loading } from "@/components/ui-common";
 import { UnifiedLessonCard } from "@/components/lessons/UnifiedLessonCard";
 import { getUnifiedActiveLessons } from "@/lib/lessons-service";
-import { sortKuwaitLessons, type KuwaitLessonRecord } from "@/lib/kuwait-lessons";
+import { type KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 import { fromKuwaitLesson } from "@/lib/unified-lesson-card";
 
 function isCourse(lesson: KuwaitLessonRecord) {
   return lesson.isCourse || lesson.activityType === "دورة";
 }
 
-function pickUpcomingLessons(items: KuwaitLessonRecord[]) {
-  return sortKuwaitLessons(
-    items.filter((lesson) => !isCourse(lesson) && lesson.activityType !== "دورة"),
-  ).slice(0, 4);
+function pickLatestLessons(items: KuwaitLessonRecord[]) {
+  return [...items]
+    .filter((lesson) => !isCourse(lesson))
+    .sort((a, b) => b.nextOccurrenceMs - a.nextOccurrenceMs || a.title.localeCompare(b.title, "ar"))
+    .slice(0, 4);
 }
 
-export function HomeUpcomingLessons({
+export function HomeLatestLessons({
   initialLessons,
 }: {
   initialLessons?: KuwaitLessonRecord[];
 } = {}) {
   const [lessons, setLessons] = useState<KuwaitLessonRecord[]>(
-    initialLessons ? pickUpcomingLessons(initialLessons) : [],
+    initialLessons ? pickLatestLessons(initialLessons) : [],
   );
   const [loading, setLoading] = useState(!initialLessons);
 
@@ -31,30 +32,27 @@ export function HomeUpcomingLessons({
     getUnifiedActiveLessons()
       .then(({ lessons: items }) => {
         const safeItems = Array.isArray(items) ? items : [];
-        setLessons(pickUpcomingLessons(safeItems));
+        setLessons(pickLatestLessons(safeItems));
       })
       .catch(() => setLessons([]))
       .finally(() => setLoading(false));
   }, [initialLessons]);
 
   return (
-    <section className="home-section" aria-labelledby="upcoming-lessons-heading">
+    <section className="home-section" aria-labelledby="latest-lessons-heading">
       <div className="home-section-head">
         <div>
-          <p className="home-section-kicker">جدول الأسبوع</p>
-          <h2 id="upcoming-lessons-heading" className="home-section-title">الدروس القادمة</h2>
-          <p className="home-section-subtitle">دروس علمية مرتّبة حسب أقرب موعد.</p>
+          <p className="home-section-kicker">محتوى حديث</p>
+          <h2 id="latest-lessons-heading" className="home-section-title">أحدث الدروس</h2>
+          <p className="home-section-subtitle">آخر الدروس المضافة والمتاحة على المنصة.</p>
         </div>
-        <div className="home-section-head-links">
-          <Link href="/calendar" className="home-section-link">التقويم</Link>
-          <Link href="/lessons?tab=lessons" className="home-section-link">كل الدروس</Link>
-        </div>
+        <Link href="/lessons" className="home-section-link">كل الدروس</Link>
       </div>
 
       {loading ? (
         <Loading />
       ) : lessons.length === 0 ? (
-        <p className="lessons-empty-state">لا توجد دروس متاحة حاليًا.</p>
+        <p className="home-empty-state">لا توجد دروس متاحة حاليًا.</p>
       ) : (
         <div className="home-kuwait-grid lesson-unified-grid">
           {lessons.map((lesson) => (
@@ -66,4 +64,4 @@ export function HomeUpcomingLessons({
   );
 }
 
-export default HomeUpcomingLessons;
+export default HomeLatestLessons;
