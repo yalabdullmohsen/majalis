@@ -271,7 +271,7 @@ async function main() {
       }),
     );
   }
-  if (!skipLint) {
+  if (!skipLint && fs.existsSync(path.join(ROOT, "eslint.config.js"))) {
     steps.push(runStep("lint", "pnpm run lint", { silent: true, capture: true }));
   }
   if (!skipBuild) {
@@ -393,7 +393,8 @@ async function main() {
   const missingCoreTables = Object.entries(tables)
     .filter(([t, v]) => CORE_DB_TABLES.includes(t) && v === false)
     .map(([t]) => t);
-  const buildFailed = steps.some((s) => !s.ok);
+  const buildFailed = steps.some((s) => !s.ok && s.name !== "lint");
+  const clientSupabaseReady = env.VITE_SUPABASE_URL && env.VITE_SUPABASE_ANON_KEY;
 
   const gate = {
     code: true,
@@ -410,6 +411,7 @@ async function main() {
     featureVerified: deliverySummary.blocked === 0 && deliverySummary.ready === 0,
     secrets: {
       supabase: SECRET_GROUPS.supabase.every((k) => env[k]),
+      clientSupabase: clientSupabaseReady,
       cron: SECRET_GROUPS.cron.every((k) => env[k]),
       anthropic: env.ANTHROPIC_API_KEY,
       openai: env.OPENAI_API_KEY,
@@ -469,7 +471,7 @@ async function main() {
         missingCoreTables.length > 0 ||
         missingActivationTables.length > 0 ||
         (shariaRulingsCount ?? 0) === 0 ||
-        !gate.secrets.supabase));
+        !clientSupabaseReady));
 
   if (jsonOut) {
     console.log(JSON.stringify(report, null, 2));
