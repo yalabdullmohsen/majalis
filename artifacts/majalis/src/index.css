@@ -6938,10 +6938,37 @@ html[data-theme="dark"] .home-page {
 }
 
 .reading-text--mode {
-  padding: 0.85rem;
-  border-radius: 0.75rem;
+  padding: 1.35rem 1.5rem;
+  border-radius: 0.85rem;
   background: var(--majalis-parchment);
   border: 1px solid var(--majalis-line);
+  margin: 0;
+}
+
+.reading-text--quiet {
+  letter-spacing: 0.01em;
+}
+
+.reading-toolbar--compact {
+  margin-top: 0.5rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--majalis-line);
+}
+
+.qa-card__toggle-hint {
+  margin-inline-start: auto;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--majalis-emerald-deep);
+}
+
+.qa-card--open .qa-card__body {
+  animation: qa-reveal 0.2s ease-out;
+}
+
+@keyframes qa-reveal {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .faidah-card__meta,

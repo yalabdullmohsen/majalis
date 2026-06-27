@@ -321,3 +321,242 @@ html[data-theme="dark"] .seo-skeleton {
 html[data-theme="dark"] .home-stats-bar__value {
   color: #9fd4bc;
 }
+
+/* ── Quran hub v2, sin jeem, reading UX ── */
+.quran-hub-search {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.quran-hub-search .quran-search.full {
+  flex: 1;
+  min-width: min(100%, 16rem);
+}
+
+.quran-hub-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.quran-surah-grid {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr));
+}
+
+.quran-surah-card {
+  display: flex;
+  gap: 0.85rem;
+  padding: 1rem;
+  text-decoration: none;
+  color: inherit;
+  transition: box-shadow 0.2s, transform 0.15s;
+}
+
+.quran-surah-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(22, 18, 12, 0.08);
+}
+
+.quran-surah-card__num {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  background: #E8F3ED;
+  color: #1F6E54;
+  flex-shrink: 0;
+}
+
+.quran-surah-card__name {
+  margin: 0 0 0.25rem;
+  font-size: 1.05rem;
+  color: #1F6E54;
+}
+
+.quran-surah-card__meta,
+.quran-surah-card__time {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--color-ink-soft, #5B5446);
+  line-height: 1.6;
+}
+
+.quran-index-grid {
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 10rem), 1fr));
+}
+
+.quran-index-grid--dense {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 7rem), 1fr));
+}
+
+.quran-index-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.85rem;
+  text-decoration: none;
+  color: inherit;
+  text-align: center;
+}
+
+.quran-index-card strong {
+  color: #1F6E54;
+}
+
+.quran-index-card span {
+  font-size: 0.75rem;
+  color: var(--color-ink-soft, #5B5446);
+}
+
+.quran-search-results {
+  margin-bottom: 1rem;
+}
+
+.quran-search-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.quran-search-list a {
+  display: grid;
+  gap: 0.25rem;
+  text-decoration: none;
+  color: inherit;
+  padding: 0.65rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-line, #E0D7C4);
+}
+
+.quran-tafsir-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 0.75rem;
+}
+
+.quran-tafsir-tab {
+  border: 1px solid rgba(31, 110, 84, 0.25);
+  background: transparent;
+  border-radius: 999px;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+.quran-tafsir-tab.is-active {
+  background: #1F6E54;
+  color: #fff;
+  border-color: #1F6E54;
+}
+
+.quran-virtual-list {
+  max-height: min(70vh, 42rem);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.quran-ayah-row {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.85rem 0.5rem;
+  border-bottom: 1px solid rgba(224, 215, 196, 0.6);
+  cursor: pointer;
+}
+
+.quran-ayah-row.is-highlighted {
+  background: rgba(31, 110, 84, 0.07);
+  border-radius: 0.5rem;
+}
+
+.quran-ayah-row__text {
+  margin: 0;
+  line-height: 2.1;
+}
+
+.quran-ayah-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
+}
+
+.quran-ayah-action {
+  border: 1px solid var(--color-line, #E0D7C4);
+  background: var(--color-panel, #fff);
+  border-radius: 999px;
+  padding: 0.2rem 0.55rem;
+  font-size: 0.72rem;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+
+.sin-jeem-page .sin-jeem-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.sin-jeem-card {
+  padding: 1.35rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.sin-jeem-card__question {
+  margin: 0;
+  font-size: 1.15rem;
+  line-height: 1.85;
+}
+
+.sin-jeem-reveal-btn {
+  width: 100%;
+  max-width: 20rem;
+}
+
+.sin-jeem-verdict {
+  font-size: 1.35rem;
+  font-weight: 800;
+  margin: 0 0 0.5rem;
+}
+
+.sin-jeem-verdict--yes { color: #1F6E54; }
+.sin-jeem-verdict--no { color: #92400E; }
+
+.sin-jeem-explanation {
+  margin: 0;
+  line-height: 1.9;
+  color: var(--color-ink-soft, #5B5446);
+}
+
+.sin-jeem-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--color-line, #E0D7C4);
+}
+
+@media (max-width: 879px) {
+  .quran-surah-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .quran-virtual-list {
+    max-height: none;
+  }
+}

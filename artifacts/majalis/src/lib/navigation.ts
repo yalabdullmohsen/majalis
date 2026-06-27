@@ -26,6 +26,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { href: "/calendar", label: "التقويم" },
       { href: "/fawaid", label: "الفوائد" },
       { href: "/qa", label: "الأسئلة" },
+      { href: "/sin-jeem", label: "سين وجيم" },
     ],
   },
   {

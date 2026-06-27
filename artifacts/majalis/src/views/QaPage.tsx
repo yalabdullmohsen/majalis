@@ -1,3 +1,4 @@
+import { Link } from "wouter";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { getQaCategories, getQaQuestions } from "@/lib/supabase";
 import { QA_DISCLAIMER } from "@/lib/theme";
@@ -156,6 +157,7 @@ export default function QaPage({
       </div>
 
       <div className="qa-sort-row">
+        <Link href="/sin-jeem" className="content-hub-chip">سين وجيم</Link>
         {(Object.keys(QA_SORT_LABELS) as QaSortMode[]).map((mode) => (
           <button
             key={mode}

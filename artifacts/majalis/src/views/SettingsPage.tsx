@@ -112,7 +112,8 @@ export default function SettingsPage() {
         </label>
       </LegalSection>
 
-      <LegalSection title="القراءة">
+      <LegalSection title="إعدادات القراءة">
+        <p className="settings-note">تُطبَّق هذه الإعدادات على صفحات الأسئلة والفوائد والأذكار وجميع صفحات القراءة.</p>
         <div className="settings-option-grid" role="group" aria-label="اختيار الخط">
           {FONT_OPTIONS.map((option) => (
             <button
