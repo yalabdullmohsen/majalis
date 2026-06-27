@@ -3,9 +3,10 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { PageHeader } from "@/components/ui-common";
-import { QURAN_RADIO_STATIONS } from "@/lib/quran-content";
+import { QURAN_RADIO_STATIONS } from "@/lib/quran-radio-stations";
 import { useUserPreferences } from "@/components/UserPreferencesProvider";
 import { useQuranRadioPlayer } from "@/hooks/useQuranRadioPlayer";
+import "@/styles/quran-media.css";
 
 const LAST_RADIO_KEY = "majalis-last-radio-v1";
 
@@ -19,10 +20,10 @@ function getLastRadio(): string {
 
 const STATE_LABELS: Record<string, string> = {
   live: "● البث مباشر",
-  fallback: "● متصل (احتياطي)",
   connecting: "○ جاري الاتصال…",
   paused: "○ متوقف",
   idle: "○ جاهز",
+  error: "✗ تعذّر البث",
 };
 
 export default function QuranRadioPage() {
@@ -33,7 +34,7 @@ export default function QuranRadioPage() {
     playing,
     playerState,
     statusMessage,
-    activeQuality,
+    nowPlaying,
     toggle,
     reconnect,
     pause,
@@ -66,7 +67,7 @@ export default function QuranRadioPage() {
       <PageHeader
         eyebrow="القرآن"
         title="إذاعات القرآن الكريم"
-        subtitle="بث مباشر HTTPS لإذاعات قرآنية موثوقة — مع رابط احتياطي تلقائي."
+        subtitle="بث مباشر لقرّاء موثوقين — كل إذاعة بصوت القارئ المسمّى."
       />
 
       <nav className="quran-subnav" aria-label="أقسام القرآن">
@@ -77,42 +78,79 @@ export default function QuranRadioPage() {
         <Link href="/quran-radio" className="quran-subnav__link is-active">الإذاعات</Link>
       </nav>
 
-      <div className="radio-grid">
-        {QURAN_RADIO_STATIONS.map((item) => (
-          <button
-            key={item.id}
-            type="button"
-            className={`radio-card ui-card${active === item.id ? " is-active" : ""}`}
-            onClick={() => selectStation(item.id)}
-            aria-pressed={active === item.id && playing}
-          >
-            <strong>{item.name}</strong>
-            <span>{item.quality}</span>
-            {item.reciter && <span>{item.reciter}</span>}
-            {item.country && <span>{item.country}</span>}
-            <span className="radio-card__status">
-              {active === item.id && playing ? "● يعمل" : "تشغيل"}
-            </span>
-          </button>
-        ))}
-      </div>
+      <ol className="quran-radio-list" aria-label="قائمة إذاعات القرآن">
+        {QURAN_RADIO_STATIONS.map((item, index) => {
+          const isActive = active === item.id;
+          return (
+            <li key={item.id}>
+              <article
+                className={`quran-radio-card ui-card${isActive ? " is-active" : ""}${isActive && playerState === "error" ? " has-error" : ""}`}
+              >
+                <div className="quran-radio-card__meta">
+                  <span className="quran-radio-card__index">{index + 1}</span>
+                  <div className="quran-radio-card__body">
+                    <h2 className="quran-radio-card__reciter">{item.reciterName}</h2>
+                    <dl className="quran-radio-card__details">
+                      <div>
+                        <dt>نوع القراءة</dt>
+                        <dd>{item.readingType}</dd>
+                      </div>
+                      <div>
+                        <dt>الجودة</dt>
+                        <dd>{item.quality}</dd>
+                      </div>
+                      {isActive && (
+                        <div>
+                          <dt>السورة الحالية</dt>
+                          <dd>{nowPlaying || "—"}</dd>
+                        </div>
+                      )}
+                    </dl>
+                  </div>
+                </div>
+                <div className="quran-radio-card__actions">
+                  <span
+                    className={`quran-radio-card__status quran-radio-card__status--${isActive ? playerState : "idle"}`}
+                    aria-live="polite"
+                  >
+                    {isActive ? STATE_LABELS[playerState] || statusMessage : "جاهز"}
+                  </span>
+                  <button
+                    type="button"
+                    className="lesson-unified-card__btn lesson-unified-card__btn--primary"
+                    onClick={() => selectStation(item.id)}
+                    aria-pressed={isActive && playing}
+                  >
+                    {isActive && playing ? "إيقاف" : "تشغيل"}
+                  </button>
+                </div>
+              </article>
+            </li>
+          );
+        })}
+      </ol>
 
       {station && (
-        <div className="radio-player ui-card" aria-live="polite">
-          <div className="radio-player__header">
+        <div className={`quran-radio-player ui-card${playerState === "error" ? " quran-radio-player--error" : ""}`} aria-live="polite">
+          <div className="quran-radio-player__header">
             <div>
-              <p className="radio-player__name"><strong>{station.name}</strong></p>
-              {station.reciter && <p className="settings-note">القارئ: {station.reciter}</p>}
+              <p className="quran-radio-player__label">الإذاعة النشطة</p>
+              <p className="quran-radio-player__reciter">{station.reciterName}</p>
+              <p className="quran-radio-player__type">{station.readingType} · {station.quality}</p>
             </div>
             <span className={`radio-live-badge radio-live-badge--${playerState}`}>
-              {STATE_LABELS[playerState] || STATE_LABELS.idle}
+              {STATE_LABELS[playerState] || statusMessage}
             </span>
           </div>
 
-          <p className="settings-note">جودة البث: {activeQuality}</p>
-          {statusMessage && <p className="radio-player__status">{statusMessage}</p>}
+          {statusMessage && playerState === "error" && (
+            <p className="quran-radio-player__error" role="alert">{statusMessage}</p>
+          )}
+          {statusMessage && playerState !== "error" && (
+            <p className="quran-radio-player__status">{statusMessage}</p>
+          )}
 
-          <div className="radio-player__controls">
+          <div className="quran-radio-player__controls">
             <button type="button" className="lesson-unified-card__btn lesson-unified-card__btn--primary" onClick={toggle}>
               {playing ? "إيقاف" : "تشغيل"}
             </button>
@@ -131,6 +169,7 @@ export default function QuranRadioPage() {
               onChange={(e) => updatePreferences({ radioVolume: e.target.value })}
             />
           </label>
+          <p className="settings-note">يُفضّل ضبط الصوت من الإعدادات العامة أيضاً.</p>
         </div>
       )}
     </div>

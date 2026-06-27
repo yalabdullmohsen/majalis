@@ -1,65 +1,41 @@
+/** Official HLS live streams — verified HTTP 200 (2026-06-27). */
 export type LiveStreamChannel = {
   id: string;
   name: string;
   description: string;
-  category: "quran" | "sunnah" | "makkah" | "madinah";
   streamUrl: string;
-  fallbackUrl?: string;
-  poster?: string;
+  poster: string;
   quality: string;
-  status: "live" | "unknown";
   source: string;
 };
 
-/**
- * Public HLS/audio streams — may require network access.
- * Fallback URLs provided where official streams change.
- */
 export const LIVE_STREAM_CHANNELS: LiveStreamChannel[] = [
   {
-    id: "quran-tv",
-    name: "قناة القرآن الكريم",
-    description: "بث مباشر لتلاوات وبرامج قرآنية.",
-    category: "quran",
-    streamUrl: "https://win.holymakkah.net/servlet/WebMEDIA?media=quran",
-    fallbackUrl: "https://stream.radiojar.com/8s5u5tadnceuv",
-    quality: "متوسط",
-    status: "live",
-    source: "مصادر بث عامة",
-  },
-  {
-    id: "sunnah-tv",
-    name: "قناة السنة النبوية",
-    description: "برامج ودروس في السنة النبوية.",
-    category: "sunnah",
-    streamUrl: "https://stream.radiojar.com/4wqre23fku0uv",
-    quality: "128 kbps",
-    status: "live",
-    source: "إذاعة السعودية — بث عام",
-  },
-  {
-    id: "makkah-live",
-    name: "قناة المسجد الحرام",
-    description: "بث مباشر من المسجد الحرام — صلاة وتراويح.",
-    category: "makkah",
-    streamUrl: "https://win.holymakkah.net/servlet/WebMEDIA?media=makkah",
-    fallbackUrl: "https://stream.radiojar.com/8s5u5tadnceuv",
-    poster: "/logo.png",
+    id: "makkah-haram",
+    name: "بث الحرم المكي",
+    description: "بث مباشر من المسجد الحرام — صلاة وقرآن على مدار الساعة.",
+    streamUrl: "https://cdn-globecast.akamaized.net/live/eds/saudi_quran/hls_roku/index.m3u8",
+    poster: "/images/live/makkah.svg",
     quality: "HD",
-    status: "live",
-    source: "Holymakkah — بث عام",
+    source: "هيئة الإذاعة والتلفزيون — قناة القرآن الكريم",
   },
   {
-    id: "madinah-live",
-    name: "قناة المسجد النبوي",
-    description: "بث مباشر من المسجد النبوي الشريف.",
-    category: "madinah",
-    streamUrl: "https://win.holymakkah.net/servlet/WebMEDIA?media=madinah",
-    fallbackUrl: "https://stream.radiojar.com/4wqre23fku0uv",
-    poster: "/logo.png",
+    id: "madinah-nabawi",
+    name: "بث المسجد النبوي",
+    description: "بث مباشر من المسجد النبوي الشريف — صلوات وأذكار.",
+    streamUrl: "https://cdn-globecast.akamaized.net/live/eds/saudi_sunnah/hls_roku/index.m3u8",
+    poster: "/images/live/madinah.svg",
     quality: "HD",
-    status: "live",
-    source: "Holymakkah — بث عام",
+    source: "هيئة الإذاعة والتلفزيون — قناة السنة النبوية",
+  },
+  {
+    id: "ithraa",
+    name: "قناة إثراء",
+    description: "قناة إثراء الكويت — برامج دينية وثقافية.",
+    streamUrl: "https://live.kwikmotion.com/kwktvethraa/kwktvethraa/playlist.m3u8",
+    poster: "/images/live/ithraa.svg",
+    quality: "HD",
+    source: "تلفزيون الكويت — قناة إثراء",
   },
 ];
 
