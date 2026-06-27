@@ -11808,3 +11808,96 @@ body.has-assistant-fab .app-main {
   padding: 0.5rem;
 }
 
+/* Feature Status Dashboard */
+.admin-feature-status-page {
+  padding-bottom: 2rem;
+}
+
+.admin-feature-status__head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.admin-feature-status__eyebrow {
+  font-size: 0.75rem;
+  color: var(--majalis-ink-soft);
+  margin: 0 0 0.25rem;
+}
+
+.admin-feature-status__intro {
+  margin: 0.5rem 0 0;
+  font-size: 0.9rem;
+  color: var(--majalis-ink-soft);
+  max-width: 42rem;
+}
+
+.admin-feature-status__actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+
+.admin-feature-status__env-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
+  font-size: 0.8rem;
+}
+
+.env-ok { color: #15803d; }
+.env-missing { color: #b91c1c; }
+
+.admin-feature-status__table-scroll {
+  overflow-x: auto;
+}
+
+.admin-feature-status__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.admin-feature-status__table th,
+.admin-feature-status__table td {
+  border-bottom: 1px solid #e2e8f0;
+  padding: 0.5rem 0.4rem;
+  text-align: right;
+  vertical-align: top;
+}
+
+.feature-status-badge {
+  display: inline-block;
+  padding: 0.15rem 0.45rem;
+  border-radius: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.feature-status-badge--done { background: #dcfce7; color: #166534; }
+.feature-status-badge--partial { background: #fef9c3; color: #854d0e; }
+.feature-status-badge--blocked { background: #fee2e2; color: #991b1b; }
+.feature-status-badge--mock { background: #e0e7ff; color: #3730a3; }
+.feature-status-badge--missing { background: #f1f5f9; color: #475569; }
+
+.admin-feature-status__notes {
+  font-size: 0.78rem;
+  color: var(--majalis-ink-soft);
+  max-width: 14rem;
+}
+
+.admin-feature-status__cli {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: var(--majalis-ink-soft);
+}
+
+.admin-feature-status__error {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-color: #fca5a5;
+  background: #fef2f2;
+}
