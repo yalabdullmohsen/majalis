@@ -14,6 +14,7 @@ import { C } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
 import { AdminShell } from "@/views/admin/AdminShell";
 import { InstagramManualAssistPanel } from "@/views/admin/InstagramManualAssistPanel";
+import { TrustedKnowledgeSourcesPanel } from "@/views/admin/TrustedKnowledgeSourcesPanel";
 
 const EMPTY: TrustedLessonSource = {
   name: "",
@@ -47,6 +48,7 @@ function formatDt(iso?: string) {
 }
 
 function AutomationSourcesContent() {
+  const [tab, setTab] = useState<"knowledge" | "lessons">("knowledge");
   const [sources, setSources] = useState<TrustedLessonSource[]>([]);
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
@@ -54,12 +56,13 @@ function AutomationSourcesContent() {
   const [showForm, setShowForm] = useState(false);
 
   const load = useCallback(() => {
+    if (tab !== "lessons") return;
     setLoading(true);
     listTrustedLessonSources()
       .then((r) => setSources((r.sources as TrustedLessonSource[]) || []))
       .catch(() => setSources([]))
       .finally(() => setLoading(false));
-  }, []);
+  }, [tab]);
 
   useEffect(() => {
     load();
@@ -112,6 +115,17 @@ function AutomationSourcesContent() {
         <strong>Instagram:</strong> يتطلب Graph API للجلب الكامل؛ بدونه تُنشأ مسودات للمراجعة.
       </div>
 
+      <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1rem", flexWrap: "wrap" }}>
+        <button type="button" onClick={() => setTab("knowledge")} style={{ padding: "0.45rem 0.9rem", background: tab === "knowledge" ? C.emeraldDeep : C.panel, color: tab === "knowledge" ? "#fff" : C.ink, border: `1px solid ${C.line}`, borderRadius: "0.375rem", cursor: "pointer", fontFamily: "inherit", fontWeight: 600 }}>
+          مصادر المعرفة (TKN)
+        </button>
+        <button type="button" onClick={() => setTab("lessons")} style={{ padding: "0.45rem 0.9rem", background: tab === "lessons" ? C.emeraldDeep : C.panel, color: tab === "lessons" ? "#fff" : C.ink, border: `1px solid ${C.line}`, borderRadius: "0.375rem", cursor: "pointer", fontFamily: "inherit", fontWeight: 600 }}>
+          مصادر الدروس (Phase 5 CMS)
+        </button>
+      </div>
+
+      {tab === "knowledge" ? <TrustedKnowledgeSourcesPanel /> : (
+      <>
       <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1rem", flexWrap: "wrap" }}>
         <button type="button" disabled={busy} onClick={() => { setForm({ ...EMPTY }); setShowForm(true); }} style={{ padding: "0.5rem 1rem", background: C.emerald, color: C.parchment, border: "none", borderRadius: "0.375rem", cursor: "pointer", fontFamily: "inherit" }}>
           + إضافة مصدر
@@ -190,6 +204,8 @@ function AutomationSourcesContent() {
             </article>
           ))}
         </div>
+      )}
+      </>
       )}
     </div>
   );

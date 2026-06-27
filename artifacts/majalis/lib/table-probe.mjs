@@ -22,6 +22,9 @@ export const ACTIVATION_TABLES = [
   "akp_content_fingerprints",
   "akp_review_queue",
   "akp_dead_letter_jobs",
+  "tkn_platform_settings",
+  "tkn_source_operations_log",
+  "tkn_retry_queue",
 ];
 
 export async function probeTableAdmin(table) {

@@ -44,6 +44,13 @@ export default async function handler(req, res) {
       } catch {
         /* optional */
       }
+      let tknDashboard = null;
+      try {
+        const { getTknDashboard } = await import("../../../lib/trusted-knowledge-network/index.mjs");
+        tknDashboard = await getTknDashboard();
+      } catch {
+        /* optional */
+      }
       sendJson(res, 200, {
         ok: true,
         engineVersion: ENGINE_VERSION,
@@ -53,6 +60,7 @@ export default async function handler(req, res) {
         platforms: listSupportedPlatforms(),
         stats: monitoring,
         akp: akpDashboard,
+        tkn: tknDashboard,
         legacyMetrics: await getEngineMetrics(),
       });
       return;

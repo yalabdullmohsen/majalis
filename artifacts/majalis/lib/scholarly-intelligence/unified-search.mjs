@@ -163,6 +163,8 @@ export async function unifiedSearch(opts = {}) {
   allResults = allResults.slice(0, limit);
 
   const groups = groupByKind(allResults);
+  const { buildRelatedSections } = await import("../trusted-knowledge-network/search.mjs");
+  const related_sections = buildRelatedSections(allResults);
   const response_ms = Date.now() - start;
 
   const payload = {
@@ -175,6 +177,7 @@ export async function unifiedSearch(opts = {}) {
     count: allResults.length,
     results: allResults,
     groups,
+    related_sections,
     topics: matchedTopics.map((t) => ({ slug: t.slug, title: t.title })),
     response_ms,
     cached: false,

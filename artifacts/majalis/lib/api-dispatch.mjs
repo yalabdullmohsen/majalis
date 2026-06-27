@@ -92,6 +92,7 @@ export const API_ROUTES = [
   { prefix: "/api/admin/lesson-automation", module: "./api-handlers/admin/lesson-automation.js" },
   { prefix: "/api/admin/instagram-integration", module: "./api-handlers/admin/instagram-integration.js" },
   { prefix: "/api/admin/majlis-knowledge-engine", module: "./api-handlers/admin/majlis-knowledge-engine.js" },
+  { prefix: "/api/admin/trusted-knowledge-network", module: "./api-handlers/admin/trusted-knowledge-network.js" },
   { prefix: "/api/admin/source-monitor", module: "./api-handlers/admin/source-monitor.js" },
   { prefix: "/api/cron/monitor-sources", module: "./api-handlers/cron/monitor-sources.js", allowGet: true, exact: true },
   { prefix: "/api/cron/lesson-source-monitor", module: "./api-handlers/cron/lesson-source-monitor.js", allowGet: true, exact: true },

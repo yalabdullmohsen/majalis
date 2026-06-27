@@ -2,7 +2,8 @@
  * Monitoring — structured logs, DLQ, alerts, metrics, health checks.
  */
 import { getSupabaseAdmin } from "../supabase-admin.mjs";
-import { CONTENT_PIPELINES, CRON_SCHEDULES, PLATFORM_VERSION, DAILY_QUOTAS } from "./config.mjs";
+import { CONTENT_PIPELINES, CRON_SCHEDULES, PLATFORM_VERSION } from "./config.mjs";
+import { loadPlatformSettings } from "../trusted-knowledge-network/settings.mjs";
 import { kuwaitDateString, periodStart } from "./normalize.mjs";
 import { getQueueStats } from "../majlis-knowledge-engine/queue.mjs";
 
@@ -112,11 +113,15 @@ export async function getPlatformDashboard() {
   monthStart.setDate(1);
   monthStart.setHours(0, 0, 0, 0);
 
+  const { dailyQuotas, weeklyQuotas } = await loadPlatformSettings();
   const pipelineStats = {};
   for (const [type, pipeline] of Object.entries(CONTENT_PIPELINES)) {
+    const quota = pipeline.quotaPeriod === "weekly"
+      ? (weeklyQuotas[type] ?? pipeline.quota)
+      : (dailyQuotas[type] ?? pipeline.quota);
     pipelineStats[type] = {
       label: pipeline.label,
-      quota: pipeline.quota,
+      quota,
       quotaPeriod: pipeline.quotaPeriod,
       publishedToday: await countPublishedToday(type),
     };
@@ -168,7 +173,7 @@ export async function getPlatformDashboard() {
     platformVersion: PLATFORM_VERSION,
     date: kuwaitDateString(),
     pipelines: pipelineStats,
-    quotas: DAILY_QUOTAS,
+    quotas: dailyQuotas,
     cronSchedules: CRON_SCHEDULES,
     counts: {
       today: {

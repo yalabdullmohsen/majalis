@@ -54,6 +54,7 @@ jobs:
         run: |
           cd artifacts/majalis
           pnpm run verify:autonomous-platform
+          pnpm run verify:trusted-knowledge-network
           pnpm run verify:majlis-knowledge-engine
           pnpm run verify:import-jobs-integrity
 

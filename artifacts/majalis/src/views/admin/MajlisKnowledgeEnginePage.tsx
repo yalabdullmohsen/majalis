@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link } from "wouter";
 import { getMkeDashboard, runMkeEngine } from "@/lib/majlis-knowledge-engine-api";
+import { getTknDashboard } from "@/lib/trusted-knowledge-network-api";
 import { C } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
 import { AdminShell } from "@/views/admin/AdminShell";
@@ -81,6 +82,7 @@ function MajlisKnowledgeEngineContent() {
   const [engineVersion, setEngineVersion] = useState("2.0.0");
   const [stats, setStats] = useState<MkeStats | null>(null);
   const [akp, setAkp] = useState<AkpStats | null>(null);
+  const [tkn, setTkn] = useState<Record<string, unknown> | null>(null);
   const [platforms, setPlatforms] = useState<Array<{ type: string; adapter: string }>>([]);
   const [intelligenceLayers, setIntelligenceLayers] = useState<Array<{ id: string; label: string }>>([]);
   const [pipelineStages, setPipelineStages] = useState<Array<{ id: string; label: string }>>([]);
@@ -88,17 +90,17 @@ function MajlisKnowledgeEngineContent() {
 
   const load = useCallback(() => {
     setLoading(true);
-    getMkeDashboard()
-      .then((r) => {
+    Promise.all([
+      getMkeDashboard().then((r) => {
         setEngineVersion(r.engineVersion || "2.0.0");
         setStats((r.stats as MkeStats) || null);
         setAkp((r.akp as AkpStats) || null);
         setPlatforms(r.platforms || []);
         setIntelligenceLayers(r.intelligenceLayers || []);
         setPipelineStages(r.pipelineStages || []);
-      })
-      .catch(() => setStats(null))
-      .finally(() => setLoading(false));
+      }).catch(() => setStats(null)),
+      getTknDashboard().then((r) => setTkn((r.dashboard as Record<string, unknown>) || null)).catch(() => setTkn(null)),
+    ]).finally(() => setLoading(false));
   }, []);
 
   useEffect(() => { load(); }, [load]);
@@ -177,6 +179,22 @@ function MajlisKnowledgeEngineContent() {
               </>
             )}
           </div>
+
+          {tkn && (
+            <section style={{ marginBottom: "1.25rem" }}>
+              <h3 style={{ color: C.emeraldDeep, fontSize: "0.9375rem" }}>Trusted Knowledge Network (Phase 5)</h3>
+              <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", marginTop: "0.5rem" }}>
+                <StatCard label="مستورد اليوم" value={(tkn.today as { imported?: number })?.imported ?? 0} />
+                <StatCard label="منشور" value={(tkn.today as { published?: number })?.published ?? 0} />
+                <StatCard label="مرفوض" value={(tkn.today as { rejected?: number })?.rejected ?? 0} color="#991B1B" />
+                <StatCard label="Retry Queue" value={(tkn.queue as { retry?: number })?.retry ?? 0} />
+                <StatCard label="متوسط الاستيراد (ms)" value={(tkn.performance as { avgImportMs?: number })?.avgImportMs ?? "—"} />
+                {(tkn.sources as { best?: { name?: string } })?.best && (
+                  <StatCard label="أفضل مصدر" value={(tkn.sources as { best?: { name?: string } }).best?.name?.slice(0, 12) ?? "—"} />
+                )}
+              </div>
+            </section>
+          )}
 
           {akp?.pipelines && (
             <section style={{ marginBottom: "1.25rem" }}>

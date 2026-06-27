@@ -11,6 +11,8 @@ import { verifyContent, enqueueReview } from "../verification.mjs";
 import { publishContentRecord } from "../publisher.mjs";
 import { logStructured, moveToDeadLetter } from "../monitoring.mjs";
 import { periodStart } from "../normalize.mjs";
+import { getQuotaForPipeline } from "../../trusted-knowledge-network/settings.mjs";
+import { processContentItem } from "../../trusted-knowledge-network/pipeline.mjs";
 
 async function startPipelineRun(pipeline, triggerType, mode) {
   const admin = getSupabaseAdmin();
@@ -121,7 +123,8 @@ export async function runContentPipeline(contentType, opts = {}) {
   };
 
   const alreadyPublished = await countPublishedInPeriod(contentType);
-  const remainingQuota = Math.max(0, pipeline.quota - alreadyPublished);
+  const pipelineQuota = await getQuotaForPipeline(contentType);
+  const remainingQuota = Math.max(0, pipelineQuota - alreadyPublished);
   if (remainingQuota <= 0 && !opts.force) {
     summary.metadata.quotaMet = true;
     await finishPipelineRun(runId, summary, startedAt);
@@ -156,60 +159,28 @@ export async function runContentPipeline(contentType, opts = {}) {
       item._contentType = contentType;
 
       try {
-        const dup = await checkDuplicate({ contentType, record: item, source });
-        if (dup.duplicate) {
-          summary.duplicates += 1;
-          await logMkeDecision({ source, record: item, decision: "duplicate", confidence: 1, runId });
-          continue;
-        }
-
-        const verification = await verifyContent({ contentType, record: item, source });
-        await logQualityReport({ source, record: item, verification, runId });
-
-        const autoPublish = source.publication_policy?.auto_publish
-          && source.trust_score >= (source.publication_policy?.min_trust ?? 80)
-          && verification.ok;
-
-        if (!verification.ok) {
-          if (source.publication_policy?.review_on_fail !== false) {
-            await enqueueReview({ contentType, record: item, source, verification, pipelineRunId: runId });
-            summary.reviewQueued += 1;
-            await logMkeDecision({ source, record: item, decision: "pending_review", confidence: 0.5, runId });
-          } else {
-            summary.rejected += 1;
-            await logMkeDecision({ source, record: item, decision: "rejected", confidence: 0.3, runId });
-          }
-          continue;
-        }
-
-        if (!autoPublish && !opts.forcePublish) {
-          await enqueueReview({ contentType, record: item, source, verification, pipelineRunId: runId });
-          summary.reviewQueued += 1;
-          await logMkeDecision({ source, record: item, decision: "pending_review", confidence: 0.85, runId });
-          continue;
-        }
-
-        const pub = await publishContentRecord({
-          contentType,
+        const result = await processContentItem({
           record: item,
+          contentType,
           source,
-          fingerprint: dup.fingerprint,
-          pipelineRunId: runId,
+          runId,
+          forcePublish: opts.forcePublish,
         });
 
-        if (pub.ok) {
+        if (result.decision === "published") {
           summary.published += 1;
           processed += 1;
           await logMkeDecision({ source, record: item, decision: "approved", confidence: 0.95, runId });
+        } else if (result.decision === "duplicate") {
+          summary.duplicates += 1;
+          await logMkeDecision({ source, record: item, decision: "duplicate", confidence: 1, runId });
+        } else if (result.decision === "review_queued") {
+          summary.reviewQueued += 1;
+          await logMkeDecision({ source, record: item, decision: "pending_review", confidence: 0.85, runId });
         } else {
-          summary.errors += 1;
-          await moveToDeadLetter({
-            queueName: "akp-pipeline",
-            jobType: `publish_${contentType}`,
-            payload: item,
-            error: pub.error,
-            failureReason: "publish_failed",
-          });
+          summary.rejected += 1;
+          summary.errors += result.ok ? 0 : 1;
+          await logMkeDecision({ source, record: item, decision: "rejected", confidence: 0.3, runId });
         }
       } catch (err) {
         summary.errors += 1;

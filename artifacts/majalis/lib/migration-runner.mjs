@@ -20,6 +20,7 @@ const STEP_TABLE_CHECKS = {
   "majlis_knowledge_engine_v1.sql": ["mke_source_plugins", "mke_runs", "mke_decisions", "mke_queue_jobs"],
   "majlis_knowledge_engine_v2.sql": ["mke_quality_reports"],
   "autonomous_platform_v1.sql": ["akp_content_sources", "akp_pipeline_runs"],
+  "trusted_knowledge_network_v1.sql": ["tkn_platform_settings", "tkn_source_operations_log", "tkn_retry_queue"],
 };
 
 const ACTIVATION_TABLE_TARGETS = [
