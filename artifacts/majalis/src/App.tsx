@@ -17,6 +17,7 @@ import NotFound from "@/views/not-found";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { usePageSeo } from "@/lib/seo";
 import { Loading } from "@/components/ui-common";
+import { lazyWithRetry } from "@/lib/lazy-with-retry";
 
 const CalendarPage = lazy(() => import("@/views/CalendarPage"));
 const SearchPage = lazy(() => import("@/views/SearchPage"));
@@ -31,8 +32,8 @@ const FawaidPage = lazy(() => import("@/views/FawaidPage"));
 const AdhkarPage = lazy(() => import("@/views/AdhkarPage"));
 const QaPage = lazy(() => import("@/views/QaPage"));
 const QuizPage = lazy(() => import("@/views/QuizPage"));
-const LoginPage = lazy(() => import("@/views/LoginPage"));
-const RegisterPage = lazy(() => import("@/views/RegisterPage"));
+const LoginPage = lazyWithRetry(() => import("@/views/LoginPage"), "LoginPage");
+const RegisterPage = lazyWithRetry(() => import("@/views/RegisterPage"), "RegisterPage");
 const TranscribePage = lazy(() => import("@/views/TranscribePage"));
 const AssistantPage = lazy(() => import("@/views/AssistantPage"));
 const CondolencesPage = lazy(() => import("@/views/CondolencesPage"));
@@ -80,20 +81,20 @@ const RulingDetailPage = lazy(() => import("@/views/RulingDetailPage"));
 const UpdatesPage = lazy(() => import("@/views/UpdatesPage"));
 const AutoContentDetailPage = lazy(() => import("@/views/AutoContentDetailPage"));
 const DeveloperPage = lazy(() => import("@/views/DeveloperPage"));
-const AdminPage = lazy(() => import("@/views/AdminPage"));
-const LessonImportImagePage = lazy(() => import("@/views/admin/LessonImportImagePage"));
-const LessonImportUrlPage = lazy(() => import("@/views/admin/LessonImportUrlPage"));
-const AutomationSourcesPage = lazy(() => import("@/views/admin/AutomationSourcesPage"));
-const AutomationReviewPage = lazy(() => import("@/views/admin/AutomationReviewPage"));
-const AutomationDashboardPage = lazy(() => import("@/views/admin/AutomationDashboardPage"));
-const AutomationCenterPage = lazy(() => import("@/views/admin/AutomationCenterPage"));
-const InstagramIntegrationPage = lazy(() => import("@/views/admin/InstagramIntegrationPage"));
-const MajlisKnowledgeEnginePage = lazy(() => import("@/views/admin/MajlisKnowledgeEnginePage"));
-const AdminDashboardPage = lazy(() => import("@/views/admin/AdminDashboardPage"));
-const AutoContentPage = lazy(() => import("@/views/admin/AutoContentPage"));
-const FiqhReviewPage = lazy(() => import("@/views/admin/FiqhReviewPage"));
-const FiqhQualityPage = lazy(() => import("@/views/admin/FiqhQualityPage"));
-const FeatureStatusPage = lazy(() => import("@/views/admin/FeatureStatusPage"));
+const AdminPage = lazyWithRetry(() => import("@/views/AdminPage"), "AdminPage");
+const LessonImportImagePage = lazyWithRetry(() => import("@/views/admin/LessonImportImagePage"), "LessonImportImagePage");
+const LessonImportUrlPage = lazyWithRetry(() => import("@/views/admin/LessonImportUrlPage"), "LessonImportUrlPage");
+const AutomationSourcesPage = lazyWithRetry(() => import("@/views/admin/AutomationSourcesPage"), "AutomationSourcesPage");
+const AutomationReviewPage = lazyWithRetry(() => import("@/views/admin/AutomationReviewPage"), "AutomationReviewPage");
+const AutomationDashboardPage = lazyWithRetry(() => import("@/views/admin/AutomationDashboardPage"), "AutomationDashboardPage");
+const AutomationCenterPage = lazyWithRetry(() => import("@/views/admin/AutomationCenterPage"), "AutomationCenterPage");
+const InstagramIntegrationPage = lazyWithRetry(() => import("@/views/admin/InstagramIntegrationPage"), "InstagramIntegrationPage");
+const MajlisKnowledgeEnginePage = lazyWithRetry(() => import("@/views/admin/MajlisKnowledgeEnginePage"), "MajlisKnowledgeEnginePage");
+const AdminDashboardPage = lazyWithRetry(() => import("@/views/admin/AdminDashboardPage"), "AdminDashboardPage");
+const AutoContentPage = lazyWithRetry(() => import("@/views/admin/AutoContentPage"), "AutoContentPage");
+const FiqhReviewPage = lazyWithRetry(() => import("@/views/admin/FiqhReviewPage"), "FiqhReviewPage");
+const FiqhQualityPage = lazyWithRetry(() => import("@/views/admin/FiqhQualityPage"), "FiqhQualityPage");
+const FeatureStatusPage = lazyWithRetry(() => import("@/views/admin/FeatureStatusPage"), "FeatureStatusPage");
 const LearningPathsPage = lazy(() => import("@/views/learning/LearningPathsPage"));
 const LearningPathDetailPage = lazy(() => import("@/views/learning/LearningPathDetailPage"));
 const MyLearningPage = lazy(() => import("@/views/MyLearningPage"));
@@ -121,6 +122,18 @@ function SurahStoryDetailRoute() {
     <Suspense fallback={<Loading />}>
       <SurahStoryDetailPage surahNumber={Number(params?.number) || 1} />
     </Suspense>
+  );
+}
+
+function AdminLazyRoute({ component: Component }: { component: ComponentType }) {
+  return (
+    <AdminRouteGuard>
+      <ErrorBoundary>
+        <Suspense fallback={<Loading />}>
+          <Component />
+        </Suspense>
+      </ErrorBoundary>
+    </AdminRouteGuard>
   );
 }
 
@@ -224,150 +237,26 @@ function Router() {
       <Route path="/login"><SafeLazyRoute component={LoginPage} /></Route>
       <Route path="/register"><SafeLazyRoute component={RegisterPage} /></Route>
       <Route path="/auth/register"><Redirect to="/register" /></Route>
-      <Route path="/admin/sources">
-        <AdminRouteGuard>
-          <ErrorBoundary>
-            <Suspense fallback={<Loading />}>
-              <AutomationSourcesPage />
-            </Suspense>
-          </ErrorBoundary>
-        </AdminRouteGuard>
-      </Route>
-      <Route path="/admin/automation/sources">
-        <AdminRouteGuard>
-          <ErrorBoundary>
-            <Suspense fallback={<Loading />}>
-              <AutomationSourcesPage />
-            </Suspense>
-          </ErrorBoundary>
-        </AdminRouteGuard>
-      </Route>
-      <Route path="/admin/automation/dashboard">
-        <AdminRouteGuard>
-          <ErrorBoundary>
-            <Suspense fallback={<Loading />}>
-              <AutomationDashboardPage />
-            </Suspense>
-          </ErrorBoundary>
-        </AdminRouteGuard>
-      </Route>
-      <Route path="/admin/automation/platform">
-        <AdminRouteGuard>
-          <ErrorBoundary>
-            <Suspense fallback={<Loading />}>
-              <MajlisKnowledgeEnginePage />
-            </Suspense>
-          </ErrorBoundary>
-        </AdminRouteGuard>
-      </Route>
-      <Route path="/admin/automation/center">
-        <AdminRouteGuard>
-          <ErrorBoundary>
-            <Suspense fallback={<Loading />}>
-              <AutomationCenterPage />
-            </Suspense>
-          </ErrorBoundary>
-        </AdminRouteGuard>
-      </Route>
-      <Route path="/admin/integrations/instagram">
-        <AdminRouteGuard>
-          <ErrorBoundary>
-            <Suspense fallback={<Loading />}>
-              <InstagramIntegrationPage />
-            </Suspense>
-          </ErrorBoundary>
-        </AdminRouteGuard>
-      </Route>
-      <Route path="/admin/review-center">
-        <AdminRouteGuard>
-          <ErrorBoundary>
-            <Suspense fallback={<Loading />}>
-              <AutomationReviewPage />
-            </Suspense>
-          </ErrorBoundary>
-        </AdminRouteGuard>
-      </Route>
-      <Route path="/admin/automation/review">
-        <AdminRouteGuard>
-          <ErrorBoundary>
-            <Suspense fallback={<Loading />}>
-              <AutomationReviewPage />
-            </Suspense>
-          </ErrorBoundary>
-        </AdminRouteGuard>
-      </Route>
-      <Route path="/admin/content-import/url">
-        <AdminRouteGuard>
-          <ErrorBoundary>
-            <Suspense fallback={<Loading />}>
-              <LessonImportUrlPage />
-            </Suspense>
-          </ErrorBoundary>
-        </AdminRouteGuard>
-      </Route>
-      <Route path="/admin/content-import/image">
-        <AdminRouteGuard>
-          <ErrorBoundary>
-            <Suspense fallback={<Loading />}>
-              <LessonImportImagePage />
-            </Suspense>
-          </ErrorBoundary>
-        </AdminRouteGuard>
-      </Route>
-      <Route path="/admin/auto-content">
-        <AdminRouteGuard>
-          <ErrorBoundary>
-            <Suspense fallback={<Loading />}>
-              <AutoContentPage />
-            </Suspense>
-          </ErrorBoundary>
-        </AdminRouteGuard>
-      </Route>
-      <Route path="/admin/fiqh-review">
-        <AdminRouteGuard>
-          <ErrorBoundary>
-            <Suspense fallback={<Loading />}>
-              <FiqhReviewPage />
-            </Suspense>
-          </ErrorBoundary>
-        </AdminRouteGuard>
-      </Route>
-      <Route path="/admin/fiqh-quality">
-        <AdminRouteGuard>
-          <ErrorBoundary>
-            <Suspense fallback={<Loading />}>
-              <FiqhQualityPage />
-            </Suspense>
-          </ErrorBoundary>
-        </AdminRouteGuard>
-      </Route>
-      <Route path="/admin/feature-status">
-        <AdminRouteGuard>
-          <ErrorBoundary>
-            <Suspense fallback={<Loading />}>
-              <FeatureStatusPage />
-            </Suspense>
-          </ErrorBoundary>
-        </AdminRouteGuard>
-      </Route>
-      <Route path="/admin/dashboard">
-        <AdminRouteGuard>
-          <ErrorBoundary>
-            <Suspense fallback={<Loading />}>
-              <AdminDashboardPage />
-            </Suspense>
-          </ErrorBoundary>
-        </AdminRouteGuard>
-      </Route>
-      <Route path="/admin">
-        <AdminRouteGuard>
-          <ErrorBoundary>
-            <Suspense fallback={<Loading />}>
-              <AdminPage />
-            </Suspense>
-          </ErrorBoundary>
-        </AdminRouteGuard>
-      </Route>
+      <Route path="/admin/sources"><AdminLazyRoute component={AutomationSourcesPage} /></Route>
+      <Route path="/admin/automation/sources"><AdminLazyRoute component={AutomationSourcesPage} /></Route>
+      <Route path="/admin/automation/dashboard"><AdminLazyRoute component={AutomationDashboardPage} /></Route>
+      <Route path="/admin/automation/platform"><AdminLazyRoute component={MajlisKnowledgeEnginePage} /></Route>
+      <Route path="/admin/automation/center"><AdminLazyRoute component={AutomationCenterPage} /></Route>
+      <Route path="/admin/automation"><Redirect to="/admin/automation/center" /></Route>
+      <Route path="/admin/integrations/instagram"><AdminLazyRoute component={InstagramIntegrationPage} /></Route>
+      <Route path="/admin/review-center"><AdminLazyRoute component={AutomationReviewPage} /></Route>
+      <Route path="/admin/automation/review"><AdminLazyRoute component={AutomationReviewPage} /></Route>
+      <Route path="/admin/content-import/url"><AdminLazyRoute component={LessonImportUrlPage} /></Route>
+      <Route path="/admin/content-import/image"><AdminLazyRoute component={LessonImportImagePage} /></Route>
+      <Route path="/admin/import"><Redirect to="/admin/content-import/url" /></Route>
+      <Route path="/admin/content"><Redirect to="/admin/auto-content" /></Route>
+      <Route path="/admin/auto-content"><AdminLazyRoute component={AutoContentPage} /></Route>
+      <Route path="/admin/fiqh-review"><AdminLazyRoute component={FiqhReviewPage} /></Route>
+      <Route path="/admin/fiqh-quality"><AdminLazyRoute component={FiqhQualityPage} /></Route>
+      <Route path="/admin/feature-status"><AdminLazyRoute component={FeatureStatusPage} /></Route>
+      <Route path="/admin/dashboard"><AdminLazyRoute component={AdminDashboardPage} /></Route>
+      <Route path="/admin/users"><Redirect to="/admin?section=users" /></Route>
+      <Route path="/admin"><AdminLazyRoute component={AdminPage} /></Route>
       <Route component={NotFound} />
     </Switch>
   );

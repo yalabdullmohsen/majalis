@@ -14,6 +14,7 @@ type AuthContextValue = {
   isLoggedIn: boolean;
   isAdmin: boolean;
   isOwner: boolean;
+  isSuperAdmin: boolean;
   isSheikh: boolean;
   login: SupabaseAuthModule["signIn"];
   register: SupabaseAuthModule["signUp"];
@@ -106,7 +107,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         governanceRole,
       });
 
-    const isAdmin = isOwner || ADMIN_GOVERNANCE_ROLES.includes(governanceRole);
+    const isSuperAdmin =
+      isOwner ||
+      governanceRole === "super_admin" ||
+      user?.profile?.is_super_admin === true ||
+      user?.profile?.role === "super_admin";
+
+    const isAdmin = isSuperAdmin || ADMIN_GOVERNANCE_ROLES.includes(governanceRole);
 
     return {
       user,
@@ -114,6 +121,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       isLoggedIn: !!user,
       isAdmin,
       isOwner,
+      isSuperAdmin,
       isSheikh: governanceRole === "scientific_reviewer" || user?.profile?.role === "sheikh",
       login: authApi?.signIn ?? noopAuth,
       register: authApi?.signUp ?? noopAuth,

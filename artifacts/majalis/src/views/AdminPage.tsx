@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useLocation } from "wouter";
 import { AdminShell, type AdminSection } from "@/views/admin/AdminShell";
 import { DashboardSection } from "@/views/admin/DashboardSection";
 import { LessonsSection } from "@/views/admin/LessonsSection";
@@ -32,7 +33,20 @@ import { GovernanceSection } from "@/views/admin/GovernanceSection";
 import { SmartCmsSection } from "@/views/admin/SmartCmsSection";
 
 export default function AdminPage() {
-  const [section, setSection] = useState<AdminSection>("dashboard");
+  const [location] = useLocation();
+  const initialSection = (() => {
+    if (typeof window === "undefined") return "dashboard" as AdminSection;
+    const params = new URLSearchParams(window.location.search);
+    const section = params.get("section");
+    return (section as AdminSection) || "dashboard";
+  })();
+  const [section, setSection] = useState<AdminSection>(initialSection);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const next = params.get("section") as AdminSection | null;
+    if (next) setSection(next);
+  }, [location]);
 
   return (
     <AdminShell section={section} onSectionChange={setSection}>

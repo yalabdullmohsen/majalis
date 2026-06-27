@@ -37,6 +37,8 @@
     "promote:owner": "node scripts/promote-owner.mjs",
     "apply:owner-bootstrap": "node scripts/apply-owner-bootstrap.mjs",
     "verify:owner-bootstrap": "node scripts/verify-owner-bootstrap.mjs",
+    "verify:owner": "node scripts/verify-owner-bootstrap.mjs",
+    "verify:feature-health": "node scripts/verify-feature-health.mjs",
     "bootstrap:platform": "node scripts/run-platform-bootstrap.mjs",
     "bootstrap:platform:status": "node scripts/run-platform-bootstrap.mjs status",
     "build": "pnpm run generate:seo && pnpm run generate:rulings && vite build --config vite.config.ts",

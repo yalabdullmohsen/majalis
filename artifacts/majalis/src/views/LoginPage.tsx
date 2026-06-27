@@ -2,9 +2,28 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { ADMIN_ACCESS_DENIED_MESSAGE, mapAuthError } from "@/lib/auth-messages";
+import { hasUnrestrictedAdminAccess, isOwnerAuthUser, resolveUserEmail } from "@/lib/owner-config";
 import { isSupabaseConfigured } from "@/lib/supabase-config";
 import { bootstrapSupabaseFromServer } from "@/lib/supabase-bootstrap";
+import { preloadRoute } from "@/lib/lazy-with-retry";
 import { Loading } from "@/components/ui-common";
+
+function canAccessAdminUser(current: Awaited<ReturnType<typeof import("@/lib/supabase").getCurrentUser>>) {
+  if (!current) return false;
+  return (
+    current.is_owner === true ||
+    isOwnerAuthUser(current, current.profile) ||
+    hasUnrestrictedAdminAccess({
+      email: resolveUserEmail(current),
+      profile: current.profile,
+      governanceRole: current.governance_role,
+    }) ||
+    current.governance_role === "super_admin" ||
+    current.profile?.role === "admin" ||
+    current.profile?.role === "super_admin" ||
+    current.profile?.is_owner === true
+  );
+}
 
 function getNextPath() {
   if (typeof window === "undefined") return "/";
@@ -67,13 +86,8 @@ export default function LoginPage() {
       const current = await refreshUser();
 
       if (adminLogin) {
-        const canAccessAdmin =
-          current?.is_owner === true ||
-          current?.governance_role === "super_admin" ||
-          current?.profile?.role === "admin" ||
-          current?.profile?.role === "super_admin" ||
-          current?.profile?.is_owner === true;
-        if (canAccessAdmin) {
+        if (canAccessAdminUser(current)) {
+          preloadRoute(() => import("@/views/AdminPage"));
           navigate(nextPath);
           return;
         }
