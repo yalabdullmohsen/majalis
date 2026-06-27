@@ -159,6 +159,10 @@ export async function handleLessonImportApprove(body, auth, sendJson, res) {
     sheikhId,
     imageUrl: draft.image_url,
     sourceUrl: draft.source_url,
+    sourceId: draft.source_id,
+    confidenceScore: draft.confidence_score,
+    importedBy: draft.source_id ? "admin_review" : null,
+    posterImageHash: draft.image_hash,
     userId: auth.user?.id,
     draftId: draft.id,
   });

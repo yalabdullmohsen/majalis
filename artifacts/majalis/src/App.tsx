@@ -83,6 +83,8 @@ const DeveloperPage = lazy(() => import("@/views/DeveloperPage"));
 const AdminPage = lazy(() => import("@/views/AdminPage"));
 const LessonImportImagePage = lazy(() => import("@/views/admin/LessonImportImagePage"));
 const LessonImportUrlPage = lazy(() => import("@/views/admin/LessonImportUrlPage"));
+const AutomationSourcesPage = lazy(() => import("@/views/admin/AutomationSourcesPage"));
+const AutomationReviewPage = lazy(() => import("@/views/admin/AutomationReviewPage"));
 const AdminDashboardPage = lazy(() => import("@/views/admin/AdminDashboardPage"));
 const AutoContentPage = lazy(() => import("@/views/admin/AutoContentPage"));
 const FiqhReviewPage = lazy(() => import("@/views/admin/FiqhReviewPage"));
@@ -217,6 +219,24 @@ function Router() {
       <Route path="/login"><SafeLazyRoute component={LoginPage} /></Route>
       <Route path="/register"><SafeLazyRoute component={RegisterPage} /></Route>
       <Route path="/auth/register"><Redirect to="/register" /></Route>
+      <Route path="/admin/automation/sources">
+        <AdminRouteGuard>
+          <ErrorBoundary>
+            <Suspense fallback={<Loading />}>
+              <AutomationSourcesPage />
+            </Suspense>
+          </ErrorBoundary>
+        </AdminRouteGuard>
+      </Route>
+      <Route path="/admin/automation/review">
+        <AdminRouteGuard>
+          <ErrorBoundary>
+            <Suspense fallback={<Loading />}>
+              <AutomationReviewPage />
+            </Suspense>
+          </ErrorBoundary>
+        </AdminRouteGuard>
+      </Route>
       <Route path="/admin/content-import/url">
         <AdminRouteGuard>
           <ErrorBoundary>

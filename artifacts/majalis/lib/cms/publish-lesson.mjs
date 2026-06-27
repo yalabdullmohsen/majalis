@@ -48,10 +48,25 @@ function mapDraftToLesson(extracted, opts = {}) {
     slug: d.slug || null,
     published_at: new Date().toISOString(),
     source_url: sourceUrl || d.source_url || d.registration_url || null,
+    source_id: opts.sourceId || null,
+    confidence_score: opts.confidenceScore ?? null,
+    imported_by: opts.importedBy || null,
+    poster_image_hash: opts.posterImageHash || null,
   };
 }
 
-export async function publishLessonDraft({ extracted, sheikhId, imageUrl, sourceUrl, userId, draftId }) {
+export async function publishLessonDraft({
+  extracted,
+  sheikhId,
+  imageUrl,
+  sourceUrl,
+  sourceId,
+  confidenceScore,
+  importedBy,
+  posterImageHash,
+  userId,
+  draftId,
+}) {
   const validation = validateLessonDraft(extracted);
   if (!validation.canPublish) {
     return { ok: false, validation };
@@ -60,7 +75,15 @@ export async function publishLessonDraft({ extracted, sheikhId, imageUrl, source
   const admin = getSupabaseAdmin();
   if (!admin) return { ok: false, error: "supabase_admin_missing" };
 
-  const payload = mapDraftToLesson(extracted, { sheikhId, imageUrl, sourceUrl });
+  const payload = mapDraftToLesson(extracted, {
+    sheikhId,
+    imageUrl,
+    sourceUrl,
+    sourceId,
+    confidenceScore,
+    importedBy,
+    posterImageHash,
+  });
 
   const { data: existing } = await admin
     .from("lessons")

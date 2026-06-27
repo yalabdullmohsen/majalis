@@ -17,6 +17,10 @@ export async function createLessonImportDraft({
   notes,
   createdBy,
   status = "needs_review",
+  sourceId,
+  automationStatus = "manual",
+  decisionReason,
+  imageHash,
 }) {
   const admin = getSupabaseAdmin();
   if (!admin) return { ok: false, error: "supabase_admin_missing" };
@@ -37,6 +41,10 @@ export async function createLessonImportDraft({
       suggested_sheikh: suggestedSheikh || null,
       notes: notes || null,
       created_by: createdBy || null,
+      source_id: sourceId || null,
+      automation_status: automationStatus,
+      decision_reason: decisionReason || null,
+      image_hash: imageHash || null,
     })
     .select()
     .single();

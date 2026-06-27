@@ -119,6 +119,22 @@ export function SmartCmsSection() {
 
       <div style={{ display: "grid", gap: "1rem", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", marginBottom: "1.5rem" }}>
         <section style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.625rem", padding: "1rem" }}>
+          <h3 style={{ margin: "0 0 0.75rem", fontSize: "0.9375rem", color: C.emeraldDeep }}>أتمتة المصادر المعتمدة</h3>
+          <a
+            href="/admin/automation/sources"
+            style={{ display: "inline-block", padding: "0.5rem 1rem", background: "#FEF3C7", color: "#92400E", borderRadius: "0.375rem", textDecoration: "none", fontFamily: "inherit", fontWeight: 600, fontSize: "0.875rem", marginInlineEnd: "0.5rem" }}
+          >
+            مصادر + Auto-Publish
+          </a>
+          <a
+            href="/admin/automation/review"
+            style={{ display: "inline-block", padding: "0.5rem 1rem", background: "#FFEDD5", color: "#C2410C", borderRadius: "0.375rem", textDecoration: "none", fontFamily: "inherit", fontWeight: 600, fontSize: "0.875rem" }}
+          >
+            مركز المراجعة
+          </a>
+        </section>
+
+        <section style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.625rem", padding: "1rem" }}>
           <h3 style={{ margin: "0 0 0.75rem", fontSize: "0.9375rem", color: C.emeraldDeep }}>إضافة درس من صورة</h3>
           <a
             href="/admin/content-import/image"
