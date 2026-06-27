@@ -1,11 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useLocation } from "wouter";
-import {
-  ADHKAR_CATEGORIES,
-  filterAdhkar,
-  getAdhkarByCategory,
-} from "@/lib/adhkar-seed";
-import { getPublishedAdhkarItems } from "@/lib/adhkar-admin";
+import { ADHKAR_CATEGORIES } from "@/lib/adhkar-seed";
+import { usePublishedAdhkarItems } from "@/lib/adhkar-service";
 import { PageHeader, Empty } from "@/components/ui-common";
 import { AdhkarCard } from "@/components/adhkar/AdhkarCard";
 
@@ -49,7 +45,7 @@ export default function AdhkarPage() {
   const [category, setCategory] = useState("all");
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebouncedValue(search);
-  const publishedItems = useMemo(() => getPublishedAdhkarItems(), [location]);
+  const { data: publishedItems = [], isLoading, isError } = usePublishedAdhkarItems();
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -61,14 +57,18 @@ export default function AdhkarPage() {
   }, [location]);
 
   const items = useMemo(() => {
-    if (debouncedSearch.trim()) {
-      const filtered = filterAdhkar(debouncedSearch, category === "all" ? undefined : category);
-      const publishedIds = new Set(publishedItems.map((i) => i.id));
-      return filtered.filter((i) => publishedIds.has(i.id));
+    const q = debouncedSearch.trim().toLowerCase();
+    let list = publishedItems;
+    if (category !== "all") {
+      list = list.filter((i) => i.categoryId === category);
     }
-    if (category === "all") return publishedItems;
-    return getAdhkarByCategory(category).filter((i) =>
-      publishedItems.some((p) => p.id === i.id),
+    if (!q) return list;
+    return list.filter(
+      (a) =>
+        a.text.includes(q) ||
+        a.keywords.some((k: string) => k.includes(q)) ||
+        a.source?.includes(q) ||
+        a.reference?.includes(q),
     );
   }, [debouncedSearch, category, publishedItems]);
 
@@ -119,7 +119,11 @@ export default function AdhkarPage() {
         <p className="adhkar-category-desc">{activeCategory.description}</p>
       )}
 
-      {items.length === 0 ? (
+      {isLoading ? (
+        <p className="adhkar-loading-hint">جاري تحميل الأذكار…</p>
+      ) : isError ? (
+        <Empty text="تعذّر تحميل الأذكار من قاعدة البيانات." />
+      ) : items.length === 0 ? (
         <Empty text="لا توجد أذكار مطابقة." />
       ) : (
         <div className="adhkar-grid">

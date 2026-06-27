@@ -23,7 +23,7 @@ import {
   jobLog,
 } from "../../../lib/content-import/import-jobs.mjs";
 import { runPhase2TrialImport } from "../../../lib/content-import/phase2-trial.mjs";
-import { CONTENT_TYPES } from "../../../lib/content-import/registry.mjs";
+import { CONTENT_TYPES, resolveContentType } from "../../../lib/content-import/registry.mjs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -126,7 +126,11 @@ export default async function handler(req, res) {
       totalRows,
       createdBy: auth.userId || null,
     });
-    sendJson(res, started.ok ? 200 : 400, started);
+    const typeDef = resolveContentType(type);
+    sendJson(res, started.ok ? 200 : 400, {
+      ...started,
+      targetTable: typeDef?.table || null,
+    });
     return;
   }
 
@@ -164,11 +168,14 @@ export default async function handler(req, res) {
     const job = await getImportJob(jobId);
     const rowCount = Math.max(job?.total_rows || 0, job?.processed_rows || 0);
     const authHeader = req.headers?.authorization || req.headers?.Authorization || "";
+    const typeDef = resolveContentType(job?.type);
+    const targetTable = typeDef?.table || null;
 
     jobLog(jobId, "commit", {
       rowCount,
       sync_threshold: IMPORT_SYNC_ROW_THRESHOLD,
       execution: rowCount <= IMPORT_SYNC_ROW_THRESHOLD ? "sync" : "async",
+      targetTable,
     });
 
     if (rowCount <= IMPORT_SYNC_ROW_THRESHOLD) {
@@ -180,6 +187,7 @@ export default async function handler(req, res) {
           jobId,
           status,
           sync: true,
+          targetTable,
           report: result.report || null,
           timings: result.timings || null,
           error: result.error || null,
@@ -199,6 +207,7 @@ export default async function handler(req, res) {
       jobId,
       status: "queued",
       async: true,
+      targetTable,
       execution: mode.mode,
     });
     return;
