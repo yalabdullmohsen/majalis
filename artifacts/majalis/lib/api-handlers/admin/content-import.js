@@ -7,10 +7,21 @@ import {
   processImportJob,
   processQueuedImportJobs,
   getImportJobProgress,
+  runImportJobWatchdog,
   UPLOAD_BATCH_SIZE,
 } from "../../../lib/content-import/engine.mjs";
-import { scheduleImportProcessing, triggerImportWorkerFetch, WORKER_SECRET } from "../../../lib/content-import/import-worker.mjs";
-import { recoverImportJobIntegrity } from "../../../lib/content-import/import-jobs.mjs";
+import {
+  scheduleImportProcessing,
+  triggerImportWorkerFetch,
+  WORKER_SECRET,
+  IMPORT_SYNC_ROW_THRESHOLD,
+} from "../../../lib/content-import/import-worker.mjs";
+import {
+  recoverImportJobIntegrity,
+  cancelImportJob,
+  getImportJob,
+  jobLog,
+} from "../../../lib/content-import/import-jobs.mjs";
 import { runPhase2TrialImport } from "../../../lib/content-import/phase2-trial.mjs";
 import { CONTENT_TYPES } from "../../../lib/content-import/registry.mjs";
 import { dirname, join } from "node:path";
@@ -22,6 +33,16 @@ const APP_ROOT = join(__dirname, "../../..");
 function isImportWorkerRequest(req) {
   const header = req.headers?.["x-import-worker"] || req.headers?.["X-Import-Worker"];
   return WORKER_SECRET && header === WORKER_SECRET;
+}
+
+function isKickableStatus(status) {
+  return ["queued", "processing", "parsing", "validating", "importing", "uploading"].includes(status);
+}
+
+async function respondWithProgress(res, jobId) {
+  await runImportJobWatchdog();
+  const progress = await getImportJobProgress(jobId);
+  sendJson(res, progress.ok ? 200 : 404, progress);
 }
 
 export default async function handler(req, res) {
@@ -43,8 +64,19 @@ export default async function handler(req, res) {
       sendJson(res, 400, { ok: false, error: "missing_job_id" });
       return;
     }
-    const progress = await getImportJobProgress(jobId);
-    sendJson(res, progress.ok ? 200 : 404, progress);
+
+    const kick = query.kick === "1" || body.kick === true;
+    if (kick) {
+      const snap = await getImportJobProgress(jobId);
+      if (snap.ok && snap.job && isKickableStatus(snap.job.status)) {
+        jobLog(jobId, "progress_kick", { status: snap.job.status, phase: snap.job.phase });
+        void processImportJob(jobId, { dryRun }).catch((err) => {
+          jobLog(jobId, "progress_kick_failed", { error: String(err.message || err) });
+        });
+      }
+    }
+
+    await respondWithProgress(res, jobId);
     return;
   }
 
@@ -125,16 +157,42 @@ export default async function handler(req, res) {
     }
 
     if (queued.alreadyDone) {
-      sendJson(res, 200, { ok: true, jobId, status: "completed" });
+      await respondWithProgress(res, jobId);
+      return;
+    }
+
+    const job = await getImportJob(jobId);
+    const rowCount = Math.max(job?.total_rows || 0, job?.processed_rows || 0);
+    const authHeader = req.headers?.authorization || req.headers?.Authorization || "";
+
+    jobLog(jobId, "commit", {
+      rowCount,
+      sync_threshold: IMPORT_SYNC_ROW_THRESHOLD,
+      execution: rowCount <= IMPORT_SYNC_ROW_THRESHOLD ? "sync" : "async",
+    });
+
+    if (rowCount <= IMPORT_SYNC_ROW_THRESHOLD) {
+      try {
+        const result = await processImportJob(jobId, { dryRun });
+        const status = result.status || (result.ok ? "completed" : "failed");
+        sendJson(res, result.ok ? 200 : 422, {
+          ok: result.ok,
+          jobId,
+          status,
+          sync: true,
+          report: result.report || null,
+          timings: result.timings || null,
+          error: result.error || null,
+        });
+      } catch (err) {
+        console.error("[admin/content-import:commit:sync]", err);
+        sendJson(res, 500, { ok: false, jobId, error: String(err.message || err), status: "failed" });
+      }
       return;
     }
 
     const mode = scheduleImportProcessing(res, jobId, { dryRun });
-    const authHeader = req.headers?.authorization || req.headers?.Authorization || "";
-
-    if (mode.mode === "detached") {
-      void triggerImportWorkerFetch(jobId, authHeader);
-    }
+    void triggerImportWorkerFetch(jobId, authHeader);
 
     sendJson(res, 202, {
       ok: true,
@@ -143,6 +201,17 @@ export default async function handler(req, res) {
       async: true,
       execution: mode.mode,
     });
+    return;
+  }
+
+  if (action === "cancel") {
+    const jobId = String(body.jobId || "").trim();
+    if (!jobId) {
+      sendJson(res, 400, { ok: false, error: "missing_job_id" });
+      return;
+    }
+    const cancelled = await cancelImportJob(jobId, body.reason || undefined);
+    sendJson(res, 200, cancelled);
     return;
   }
 
@@ -180,8 +249,7 @@ export default async function handler(req, res) {
       sendJson(res, 400, { ok: false, error: "missing_job_id" });
       return;
     }
-    const progress = await getImportJobProgress(jobId);
-    sendJson(res, progress.ok ? 200 : 404, progress);
+    await respondWithProgress(res, jobId);
     return;
   }
 

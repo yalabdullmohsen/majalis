@@ -3,8 +3,12 @@
  */
 
 import { processImportJob } from "./engine.mjs";
+import { jobLog } from "./import-jobs.mjs";
 
 const WORKER_SECRET = process.env.IMPORT_WORKER_SECRET || process.env.CRON_SECRET || "";
+
+/** Rows at or below this count are processed synchronously in the commit handler. */
+export const IMPORT_SYNC_ROW_THRESHOLD = Number(process.env.IMPORT_SYNC_ROW_THRESHOLD) || 5000;
 
 /**
  * Schedule import processing after HTTP response (Vercel waitUntil).
@@ -14,21 +18,25 @@ const WORKER_SECRET = process.env.IMPORT_WORKER_SECRET || process.env.CRON_SECRE
  */
 export function scheduleImportProcessing(res, jobId, opts = {}) {
   const work = processImportJob(jobId, opts).catch((err) => {
+    jobLog(jobId, "worker_process_failed", { error: String(err.message || err), stack: err?.stack });
     console.error(`[content-import:worker] job ${jobId} failed`, err);
   });
 
   if (res && typeof res.waitUntil === "function") {
     res.waitUntil(work);
-    return { mode: "waitUntil" };
+    jobLog(jobId, "worker_scheduled", { mode: "waitUntil" });
+    return { mode: "waitUntil", work };
   }
 
   if (typeof globalThis.waitUntil === "function") {
     globalThis.waitUntil(work);
-    return { mode: "globalWaitUntil" };
+    jobLog(jobId, "worker_scheduled", { mode: "globalWaitUntil" });
+    return { mode: "globalWaitUntil", work };
   }
 
   void work;
-  return { mode: "detached" };
+  jobLog(jobId, "worker_scheduled", { mode: "detached" });
+  return { mode: "detached", work };
 }
 
 /**
@@ -48,6 +56,8 @@ export async function triggerImportWorkerFetch(jobId, authHeader = "") {
   };
   if (authHeader) headers.Authorization = authHeader;
 
+  jobLog(jobId, "worker_fetch_trigger", { host: host.replace(/\/\/.*@/, "//") });
+
   try {
     const res = await fetch(`${host}/api/admin/content-import`, {
       method: "POST",
@@ -56,10 +66,16 @@ export async function triggerImportWorkerFetch(jobId, authHeader = "") {
     });
     if (!res.ok) {
       const text = await res.text().catch(() => "");
+      jobLog(jobId, "worker_fetch_failed", { status: res.status, body: text.slice(0, 200) });
       console.warn(`[content-import:worker] trigger returned ${res.status}: ${text.slice(0, 200)}`);
+      return { ok: false, status: res.status };
     }
+    jobLog(jobId, "worker_fetch_ok", { status: res.status });
+    return { ok: true, status: res.status };
   } catch (err) {
+    jobLog(jobId, "worker_fetch_error", { error: String(err?.message || err) });
     console.warn("[content-import:worker] trigger fetch failed", err?.message || err);
+    return { ok: false, error: String(err?.message || err) };
   }
 }
 

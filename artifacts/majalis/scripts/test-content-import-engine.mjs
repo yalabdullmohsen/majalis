@@ -148,11 +148,30 @@ test("production import modules do not reference staged filesystem paths", () =>
   }
 });
 
-test("content-import API disables inline import", () => {
+test("content-import API uses async job flow with sync commit for small jobs", () => {
   const src = readFileSync(join(root, "lib/api-handlers/admin/content-import.js"), "utf8");
   assert(src.includes("use_async_job_flow"), "inline import must be disabled");
   assert(src.includes("queueImportJob"), "must queue async jobs");
-  assert(!src.includes("runContentImportRows"), "must not run sync import in API");
+  assert(src.includes("processImportJob"), "must process jobs on commit");
+  assert(src.includes("IMPORT_SYNC_ROW_THRESHOLD"), "sync threshold for small files");
+  assert(!src.includes("runContentImportRows"), "must not run inline sync import in API");
+});
+
+test("import watchdog constants and terminal statuses", async () => {
+  const { IMPORT_WATCHDOG_MS, TERMINAL_JOB_STATUSES, ACTIVE_JOB_STATUSES } = await import(
+    "../lib/content-import/import-jobs.mjs"
+  );
+  assert(IMPORT_WATCHDOG_MS === 60_000, "watchdog is 60s");
+  assert(TERMINAL_JOB_STATUSES.has("completed"), "completed terminal");
+  assert(TERMINAL_JOB_STATUSES.has("failed"), "failed terminal");
+  assert(TERMINAL_JOB_STATUSES.has("cancelled"), "cancelled terminal");
+  assert(ACTIVE_JOB_STATUSES.includes("queued"), "queued is active");
+});
+
+test("process-import-jobs cron runs watchdog", () => {
+  const src = readFileSync(join(root, "lib/api-handlers/cron/process-import-jobs.js"), "utf8");
+  assert(src.includes("runImportJobWatchdog"), "cron must run watchdog");
+  assert(src.includes("processQueuedImportJobs"), "cron must process queue");
 });
 
 test("staging aborts when job id is not persisted", async () => {

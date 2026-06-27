@@ -100,18 +100,30 @@ async function runProductionApiImport() {
     body: JSON.stringify({ action: "commit", jobId: started.jobId, dryRun }),
   });
   const committed = await commitRes.json();
-  if (!commitRes.ok || !committed.ok) {
+  if (!commitRes.ok && commitRes.status !== 202) {
     throw new Error(`production commit failed: ${commitRes.status} ${JSON.stringify(committed)}`);
   }
 
+  if (committed.sync && committed.status === "completed") {
+    console.log(`✓ production adhkar.csv sync import OK — job ${started.jobId}`);
+    return { ok: true, jobId: started.jobId, rows: rows.length, sync: true };
+  }
+
+  if (committed.sync && committed.status === "failed") {
+    throw new Error(`production sync import failed: ${JSON.stringify(committed)}`);
+  }
+
   for (let i = 0; i < 120; i++) {
-    const progRes = await fetch(`${base}?action=progress&jobId=${started.jobId}`, { headers });
+    const kick = i >= 3 ? "&kick=1" : "";
+    const progRes = await fetch(`${base}?action=progress&jobId=${started.jobId}${kick}`, { headers });
     const prog = await progRes.json();
     if (prog.job?.status === "completed" || prog.job?.status === "failed") {
       if (prog.job.status === "failed") {
         throw new Error(`production import failed: ${JSON.stringify(prog.job.import_errors)}`);
       }
-      console.log(`✓ production adhkar.csv import OK — job ${started.jobId}`);
+      console.log(
+        `✓ production adhkar.csv import OK — job ${started.jobId} (${prog.job.imported} imported, ${prog.job.progress_pct}%)`,
+      );
       return { ok: true, jobId: started.jobId, rows: rows.length };
     }
     await sleep(1000);
@@ -124,7 +136,12 @@ async function main() {
 
   if (production) {
     const result = await runProductionApiImport();
-    if (!result.skipped) process.exit(0);
+    if (!result.skipped) {
+      process.exit(result.ok ? 0 : 1);
+    }
+    console.log("Falling back to local dry-run (no ADMIN_IMPORT_JWT)\n");
+    await runLocalImport();
+    process.exit(0);
   }
 
   await runLocalImport();

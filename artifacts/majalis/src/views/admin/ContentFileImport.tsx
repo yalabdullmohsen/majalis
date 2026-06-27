@@ -28,7 +28,9 @@ const BTN: React.CSSProperties = {
 };
 
 const POLL_INTERVAL_MS = 1000;
-const TERMINAL_STATUSES = new Set(["completed", "failed"]);
+const KICK_AFTER_MS = 3000;
+const POLL_TIMEOUT_MS = 120_000;
+const TERMINAL_STATUSES = new Set(["completed", "failed", "cancelled"]);
 
 type ImportReport = {
   ok: boolean;
@@ -73,39 +75,99 @@ function phaseLabel(phase: string): string {
       return "رفع البيانات";
     case "queued":
       return "في قائمة الانتظار";
+    case "processing":
+      return "بدء المعالجة";
     case "validating":
       return "التحقق من الصفوف";
     case "importing":
       return "الاستيراد إلى قاعدة البيانات";
     case "completed":
-      return "اكتمل";
+      return "اكتمل بنجاح";
     case "failed":
-      return "فشل";
+      return "فشل الاستيراد";
+    case "cancelled":
+      return "أُلغيت المهمة";
     default:
       return "جارٍ المعالجة";
   }
+}
+
+function jobToReport(job: JobProgress): ImportReport {
+  if (job.report) {
+    return { ...job.report, timings: job.timings || job.report.timings };
+  }
+  return {
+    ok: job.status === "completed",
+    stats: {
+      read: job.total_rows,
+      imported: job.imported,
+      skipped: job.skipped,
+      failed: job.failed,
+      invalid: job.validation_errors?.length || 0,
+    },
+    validationErrors: job.validation_errors,
+    importErrors: job.import_errors,
+    timings: job.timings,
+  };
 }
 
 interface ContentFileImportProps {
   onDone?: () => void;
 }
 
-async function pollJobUntilDone(jobId: string, onUpdate: (job: JobProgress) => void): Promise<JobProgress> {
+async function pollJobUntilDone(
+  jobId: string,
+  onUpdate: (job: JobProgress) => void,
+): Promise<{ job: JobProgress; timedOut: boolean }> {
+  const started = Date.now();
+  let kicked = false;
+  let lastPct = -1;
+
   for (;;) {
-    const res = await adminImportFetch(
-      `/api/admin/content-import?action=progress&jobId=${encodeURIComponent(jobId)}`,
-    );
+    const elapsed = Date.now() - started;
+    const shouldKick = !kicked && elapsed >= KICK_AFTER_MS;
+    const url = `/api/admin/content-import?action=progress&jobId=${encodeURIComponent(jobId)}${shouldKick ? "&kick=1" : ""}`;
+
+    if (shouldKick) kicked = true;
+
+    const res = await adminImportFetch(url);
     const json = await res.json();
+
     if (json.ok && json.job) {
-      onUpdate(json.job);
-      if (TERMINAL_STATUSES.has(json.job.status)) return json.job;
+      const job = json.job as JobProgress;
+      onUpdate(job);
+      if (TERMINAL_STATUSES.has(job.status)) {
+        return { job, timedOut: false };
+      }
+      if (job.progress_pct !== lastPct) {
+        lastPct = job.progress_pct;
+      }
     }
+
+    if (elapsed >= POLL_TIMEOUT_MS) {
+      const fallback: JobProgress = json.job || {
+        status: "failed",
+        phase: "failed",
+        progress_pct: lastPct >= 0 ? lastPct : 40,
+        processed_rows: 0,
+        total_rows: 0,
+        imported: 0,
+        skipped: 0,
+        failed: 0,
+        import_errors: [
+          "انتهت مهلة انتظار الاستيراد (120 ثانية). حاول مرة أخرى — إذا تكرّر، تحقق من إعدادات الخادم.",
+        ],
+      };
+      return { job: fallback, timedOut: true };
+    }
+
     await new Promise((r) => setTimeout(r, POLL_INTERVAL_MS));
   }
 }
 
 export function ContentFileImport({ onDone }: ContentFileImportProps) {
   const inputRef = useRef<HTMLInputElement>(null);
+  const retryFileRef = useRef<File | null>(null);
   const [open, setOpen] = useState(false);
   const [type, setType] = useState("lessons");
   const [filename, setFilename] = useState("");
@@ -114,6 +176,7 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
   const [progressPct, setProgressPct] = useState(0);
   const [report, setReport] = useState<ImportReport | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [canRetry, setCanRetry] = useState(false);
 
   const close = () => {
     setOpen(false);
@@ -122,36 +185,33 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
     setProgressPct(0);
     setReport(null);
     setError(null);
+    setCanRetry(false);
     setFilename("");
+    retryFileRef.current = null;
   };
 
   const applyJobResult = (job: JobProgress) => {
-    const importReport = job.report;
-    if (importReport) {
-      setReport({ ...importReport, timings: job.timings || importReport.timings });
-      if (importReport.ok && importReport.stats?.imported) onDone?.();
+    const importReport = jobToReport(job);
+    setReport(importReport);
+
+    if (job.status === "failed" || job.status === "cancelled") {
+      const msgs = [...(job.validation_errors || []), ...(job.import_errors || [])];
+      setError(msgs[0] || (job.status === "cancelled" ? "أُلغيت المهمة" : "فشل الاستيراد"));
+      setCanRetry(true);
       return;
     }
 
-    setReport({
-      ok: job.status === "completed",
-      stats: {
-        read: job.total_rows,
-        imported: job.imported,
-        skipped: job.skipped,
-        failed: job.failed,
-        invalid: job.validation_errors?.length || 0,
-      },
-      validationErrors: job.validation_errors,
-      importErrors: job.import_errors,
-      timings: job.timings,
-    });
-    if (job.status === "completed" && job.imported) onDone?.();
+    if (importReport.ok) {
+      setError(null);
+      setCanRetry(false);
+      onDone?.();
+    }
   };
 
   const runAsyncImport = async (file: File, rows: Record<string, unknown>[]) => {
     setPhase("تحليل الملف");
     setProgressPct(2);
+    setCanRetry(false);
 
     const startRes = await adminImportFetch("/api/admin/content-import", {
       method: "POST",
@@ -182,7 +242,7 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
         }),
       });
       const stageJson = await stageRes.json();
-      if (!stageRes.ok) throw new Error(stageJson.error || `فشل رفع الدفعة ${i + 1}`);
+      if (!stageRes.ok) throw new Error(stageJson.error || stageJson.code || `فشل رفع الدفعة ${i + 1}`);
     }
 
     setPhase("بدء المعالجة في الخلفية");
@@ -198,12 +258,43 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
       throw new Error(commitJson.error || commitJson.message || "تعذر إرسال مهمة الاستيراد");
     }
 
-    const finalJob = await pollJobUntilDone(jobId, (job) => {
+    if (commitJson.sync && TERMINAL_STATUSES.has(commitJson.status)) {
+      const syncJob: JobProgress = {
+        status: commitJson.status,
+        phase: commitJson.status,
+        progress_pct: 100,
+        processed_rows: rows.length,
+        total_rows: rows.length,
+        imported: commitJson.report?.stats?.imported ?? 0,
+        skipped: commitJson.report?.stats?.skipped ?? 0,
+        failed: commitJson.report?.stats?.failed ?? 0,
+        report: commitJson.report,
+        timings: commitJson.timings,
+        import_errors: commitJson.report?.importErrors,
+        validation_errors: commitJson.report?.validationErrors,
+      };
+      setProgressPct(100);
+      setPhase(phaseLabel(syncJob.phase));
+      applyJobResult(syncJob);
+      if (!commitJson.ok) {
+        throw new Error(commitJson.error || syncJob.import_errors?.[0] || "فشل الاستيراد");
+      }
+      return;
+    }
+
+    const { job: finalJob, timedOut } = await pollJobUntilDone(jobId, (job) => {
       setProgressPct(Math.max(40, job.progress_pct || 0));
       setPhase(phaseLabel(job.phase || job.status));
     });
 
     applyJobResult(finalJob);
+    if (timedOut) {
+      setCanRetry(true);
+      throw new Error(finalJob.import_errors?.[0] || "انتهت مهلة الاستيراد");
+    }
+    if (finalJob.status === "failed" || finalJob.status === "cancelled") {
+      throw new Error(finalJob.import_errors?.[0] || "فشل الاستيراد");
+    }
   };
 
   const runImport = async (file: File) => {
@@ -212,6 +303,7 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
     setError(null);
     setFilename(file.name);
     setProgressPct(0);
+    retryFileRef.current = file;
 
     try {
       const content = await file.text();
@@ -225,6 +317,7 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
       await runAsyncImport(file, rows);
     } catch (e) {
       setError(String((e as Error).message || e));
+      setCanRetry(true);
     } finally {
       setRunning(false);
     }
@@ -234,6 +327,11 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
     const file = e.target.files?.[0];
     if (file) void runImport(file);
     e.target.value = "";
+  };
+
+  const retryImport = () => {
+    const file = retryFileRef.current;
+    if (file) void runImport(file);
   };
 
   return (
@@ -279,8 +377,8 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
               استيراد من ملف (JSON / CSV)
             </h2>
             <p style={{ margin: "0 0 1rem", fontSize: "0.85rem", color: C.inkSoft, lineHeight: 1.8 }}>
-              يُحلَّل الملف محليًا ثم تُرفع الدفعات إلى مهمة استيراد غير متزامنة — بدون مهلة زمنية
-              ثابتة. يدعم حتى 100,000 صف مع تتبع التقدّم كل ثانية.
+              يُحلَّل الملف محليًا ثم تُرفع الدفعات إلى مهمة استيراد — الملفات الصغيرة تُعالَج فورًا،
+              والكبيرة في الخلفية مع تتبع التقدّم كل ثانية.
             </p>
 
             <label style={{ display: "block", marginBottom: "0.75rem", fontSize: "0.875rem" }}>
@@ -321,6 +419,11 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
               >
                 {running ? "جارٍ الاستيراد…" : "اختيار ملف"}
               </button>
+              {canRetry && !running && (
+                <button type="button" onClick={retryImport} style={{ ...BTN, borderColor: "#92400E", color: "#92400E" }}>
+                  إعادة المحاولة
+                </button>
+              )}
               <button type="button" onClick={close} disabled={running} style={BTN}>
                 إغلاق
               </button>
@@ -373,7 +476,7 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
                 }}
               >
                 <p style={{ margin: 0, fontWeight: 600 }}>
-                  {report.ok ? "✓ نجح الاستيراد" : "✗ اكتمل مع أخطاء"} — {report.label}
+                  {report.ok ? "✓ نجح الاستيراد" : "✗ اكتمل مع أخطاء"} — {report.label || type}
                 </p>
                 {report.stats && (
                   <p style={{ margin: "0.5rem 0 0" }}>
