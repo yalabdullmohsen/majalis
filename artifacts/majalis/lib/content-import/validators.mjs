@@ -13,6 +13,37 @@ function oneOf(row, fields) {
   return fields.some((f) => req(row, f));
 }
 
+const BENEFITS_TEXT_ALIASES = [
+  "text",
+  "faidah",
+  "fawaid",
+  "benefit",
+  "content",
+  "body",
+  "description",
+  "summary",
+  "النص",
+  "الفائدة",
+  "فائدة",
+];
+
+/** Normalize benefits/fawaid row aliases before validation (common CSV export headers). */
+export function normalizeBenefitsRow(row) {
+  const out = { ...row };
+  if (!req(out, "text")) {
+    for (const key of BENEFITS_TEXT_ALIASES) {
+      if (key !== "text" && req(out, key)) {
+        out.text = out[key];
+        break;
+      }
+    }
+  }
+  if (!req(out, "author_name") && req(out, "author")) out.author_name = out.author;
+  if (!req(out, "author_name") && req(out, "source")) out.author_name = out.source;
+  if (!req(out, "author_name") && req(out, "المصدر")) out.author_name = out["المصدر"];
+  return out;
+}
+
 /** Normalize adhkar row aliases before validation (repeat_count → count, source_name → source). */
 export function normalizeAdhkarRow(row) {
   const out = { ...row };
@@ -83,7 +114,8 @@ export function validateRow(type, row, index) {
   const schema = SCHEMAS[type];
   if (!schema) return { ok: false, errors: [`نوع غير معروف: ${type}`] };
 
-  const normalized = type === "adhkar" ? normalizeAdhkarRow(row) : row;
+  const normalized =
+    type === "adhkar" ? normalizeAdhkarRow(row) : type === "benefits" ? normalizeBenefitsRow(row) : row;
   const errors = [];
   const line = index + 1;
 

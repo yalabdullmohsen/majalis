@@ -44,6 +44,12 @@ jobs:
       - name: Build
         run: pnpm --filter @workspace/majalis run build
 
+      - name: Content import tests
+        run: |
+          cd artifacts/majalis
+          pnpm run test:content-import
+          pnpm run test:content-import-e2e
+
       - name: Verify deploy output
         run: pnpm --filter @workspace/majalis run verify:deploy
 
