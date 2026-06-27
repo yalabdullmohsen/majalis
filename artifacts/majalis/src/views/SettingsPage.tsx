@@ -10,6 +10,7 @@ import { FONT_OPTIONS, type FontPreference } from "@/lib/font-preference";
 import { THEME_OPTIONS, type ThemePreference } from "@/lib/theme-preference";
 import { clearQuranCache } from "@/lib/quran-content";
 import { DEFAULT_PREFERENCES, type UserPreferences } from "@/lib/user-preferences";
+import { useQuranPreferences, type QuranFontId } from "@/hooks/useQuranPreferences";
 
 function ToggleRow({
   label,
@@ -38,6 +39,7 @@ export default function SettingsPage() {
   const { preference: fontPreference, setPreference: setFontPreference } = useFontPreference();
   const { preference: themePreference, resolvedTheme, setPreference: setThemePreference } = useThemePreference();
   const { preferences, updatePreferences } = useUserPreferences();
+  const { prefs: quranPrefs, setPref: setQuranPref, bumpFont } = useQuranPreferences();
 
   const update = <K extends keyof UserPreferences>(key: K, value: UserPreferences[K]) => {
     updatePreferences({ [key]: value });
@@ -152,19 +154,38 @@ export default function SettingsPage() {
       <LegalSection title="القرآن والإذاعة">
         <label className="settings-field">
           <span>حجم خط المصحف</span>
-          <input type="range" min="16" max="36" value={preferences.quranFontScale} onChange={(e) => update("quranFontScale", e.target.value)} />
+          <input
+            type="range"
+            min="18"
+            max="40"
+            value={quranPrefs.fontScale}
+            onChange={(e) => setQuranPref("fontScale", Number(e.target.value))}
+          />
+          <strong>{quranPrefs.fontScale}px</strong>
         </label>
+        <label className="settings-field">
+          <span>خط المصحف</span>
+          <select
+            value={quranPrefs.fontId}
+            onChange={(e) => setQuranPref("fontId", e.target.value as QuranFontId)}
+          >
+            <option value="uthmani">عثماني</option>
+            <option value="naskh">نسخ</option>
+            <option value="amiri">أميري</option>
+          </select>
+        </label>
+        <ToggleRow label="أرقام الآيات" checked={quranPrefs.showAyahNumbers} onChange={(v) => setQuranPref("showAyahNumbers", v)} />
+        <ToggleRow label="علامات الوقف" checked={quranPrefs.showWaqf} onChange={(v) => setQuranPref("showWaqf", v)} />
+        <ToggleRow label="وضع القراءة" checked={quranPrefs.readingMode} onChange={(v) => setQuranPref("readingMode", v)} />
+        <ToggleRow label="إخفاء التشكيل" checked={quranPrefs.hideTashkeel} onChange={(v) => setQuranPref("hideTashkeel", v)} />
+        <ToggleRow label="وضع ليلي للمصحف" checked={quranPrefs.nightMode} onChange={(v) => setQuranPref("nightMode", v)} />
+        <div className="settings-actions">
+          <button type="button" className="ds-btn ds-btn--ghost" onClick={() => bumpFont(2)}>تكبير خط المصحف</button>
+          <button type="button" className="ds-btn ds-btn--ghost" onClick={() => bumpFont(-2)}>تصغير خط المصحف</button>
+        </div>
         <label className="settings-field">
           <span>مستوى صوت الإذاعة</span>
           <input type="range" min="0" max="100" value={preferences.radioVolume} onChange={(e) => update("radioVolume", e.target.value)} />
-        </label>
-        <label className="settings-field">
-          <span>جودة المشغل</span>
-          <select value={preferences.playerQuality} onChange={(e) => update("playerQuality", e.target.value)}>
-            <option value="64">64 kbps</option>
-            <option value="128">128 kbps</option>
-            <option value="192">192 kbps</option>
-          </select>
         </label>
         <button type="button" className="ui-card-btn" onClick={() => clearQuranCache()}>مسح ذاكرة المصحف المحلية</button>
       </LegalSection>

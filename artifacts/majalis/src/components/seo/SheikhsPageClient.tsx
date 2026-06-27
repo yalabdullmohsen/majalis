@@ -9,7 +9,7 @@ export default function SheikhsPageClient({
   sheikhs: any[];
 }) {
   return (
-    <div className="page-shell">
+    <div className="page-shell ds-page">
       <PageHeader
         eyebrow="نخبة معتمدة"
         title="المشايخ والدعاة"

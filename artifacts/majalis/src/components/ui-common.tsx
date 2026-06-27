@@ -2,51 +2,42 @@ import { C } from "@/lib/theme";
 
 export function PageHeader({ eyebrow, title, subtitle }: { eyebrow?: string; title: string; subtitle?: string }) {
   return (
-    <div style={{ marginBottom: "1.5rem" }}>
-      {eyebrow && <p style={{ fontSize: "0.875rem", marginBottom: "0.5rem", color: C.brassDeep }}>{eyebrow}</p>}
-      <h1 style={{ fontSize: "1.5rem", fontWeight: 700, marginBottom: "0.75rem", color: C.emeraldDeep }}>
-        {title}
-      </h1>
-      {subtitle && <p style={{ fontSize: "0.875rem", lineHeight: "1.75", color: C.inkSoft }}>{subtitle}</p>}
-    </div>
+    <header className="ds-page-header">
+      {eyebrow && <p className="ds-page-header__eyebrow">{eyebrow}</p>}
+      <h1 className="ds-page-header__title">{title}</h1>
+      {subtitle && <p className="ds-page-header__subtitle">{subtitle}</p>}
+    </header>
   );
 }
 
-export function Card({ children }: { children: React.ReactNode }) {
-  return (
-    <div style={{ borderRadius: "0.375rem", border: `1px solid ${C.line}`, padding: "1.25rem", background: C.panel }}>
-      {children}
-    </div>
-  );
+export function Card({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return <div className={`ui-card ds-card ${className}`.trim()}>{children}</div>;
 }
 
 export function Loading() {
   return (
-    <div style={{ textAlign: "center", padding: "2.5rem 0" }} role="status" aria-live="polite">
-      <p style={{ color: C.inkSoft, marginBottom: "0.75rem" }}>جارٍ التحميل...</p>
-      <div style={{ width: "2rem", height: "2rem", margin: "0 auto", border: `3px solid ${C.line}`, borderTopColor: C.emerald, borderRadius: "50%", animation: "majalis-spin 0.8s linear infinite" }} />
+    <div className="ds-empty" role="status" aria-live="polite">
+      <div className="ds-skeleton" style={{ width: "2rem", height: "2rem", borderRadius: "50%", margin: "0 auto 0.75rem" }} />
+      <p>جارٍ التحميل...</p>
     </div>
   );
 }
 
 export function ErrorState({ text, onRetry }: { text: string; onRetry?: () => void }) {
   return (
-    <div style={{ textAlign: "center", padding: "2.5rem 1rem", borderRadius: "0.5rem", border: `1px solid ${C.line}`, background: C.parchmentDeep }}>
-      <p style={{ color: "#b91c1c", marginBottom: onRetry ? "1rem" : 0 }} role="alert">{text}</p>
+    <div className="ui-card ds-empty" role="alert">
+      <p style={{ color: "#b91c1c", marginBottom: onRetry ? "0.75rem" : 0 }}>{text}</p>
       {onRetry && (
-        <button
-          type="button"
-          onClick={onRetry}
-          style={{ padding: "0.5rem 1rem", borderRadius: "0.375rem", background: C.emerald, color: C.parchment, border: "none", cursor: "pointer", fontFamily: "inherit" }}
-        >
+        <button type="button" className="ds-btn ds-btn--primary" onClick={onRetry}>
           إعادة المحاولة
         </button>
       )}
     </div>
   );
 }
+
 export function Empty({ text }: { text: string }) {
-  return <p style={{ textAlign: "center", padding: "2.5rem 0", color: C.inkSoft }}>{text}</p>;
+  return <p className="ds-empty">{text}</p>;
 }
 
 export function QaSkeleton({ count = 4 }: { count?: number }) {
@@ -54,8 +45,8 @@ export function QaSkeleton({ count = 4 }: { count?: number }) {
     <div className="qa-skeleton-list" aria-hidden="true">
       {Array.from({ length: count }).map((_, i) => (
         <div key={i} className="qa-skeleton-item">
-          <div className="qa-skeleton-line qa-skeleton-line--title" />
-          <div className="qa-skeleton-line qa-skeleton-line--meta" />
+          <div className="qa-skeleton-line qa-skeleton-line--title ds-skeleton" />
+          <div className="qa-skeleton-line qa-skeleton-line--meta ds-skeleton" />
         </div>
       ))}
     </div>
@@ -67,8 +58,8 @@ export function SearchSkeleton() {
     <div className="qa-skeleton-list" aria-hidden="true">
       {Array.from({ length: 5 }).map((_, i) => (
         <div key={i} className="qa-skeleton-item qa-skeleton-item--row">
-          <div className="qa-skeleton-line qa-skeleton-line--title" />
-          <div className="qa-skeleton-line qa-skeleton-line--chip" />
+          <div className="qa-skeleton-line qa-skeleton-line--title ds-skeleton" />
+          <div className="qa-skeleton-line qa-skeleton-line--chip ds-skeleton" />
         </div>
       ))}
     </div>
@@ -78,14 +69,15 @@ export function SearchSkeleton() {
 export function Chip({ active, children, onClick }: { active?: boolean; children: React.ReactNode; onClick?: () => void }) {
   return (
     <button
+      type="button"
       onClick={onClick}
-      style={
-        active
-          ? { fontSize: "0.875rem", padding: "0.375rem 0.75rem", borderRadius: "0.375rem", border: `1px solid ${C.emerald}`, background: C.emerald, color: C.parchment, cursor: "pointer", fontFamily: "inherit", whiteSpace: "nowrap" }
-          : { fontSize: "0.875rem", padding: "0.375rem 0.75rem", borderRadius: "0.375rem", border: `1px solid ${C.line}`, background: C.panel, color: C.inkSoft, cursor: "pointer", fontFamily: "inherit", whiteSpace: "nowrap" }
-      }
+      className={`ds-btn ds-btn--sm ${active ? "ds-btn--primary" : "ds-btn--ghost"}`}
+      aria-pressed={active}
     >
       {children}
     </button>
   );
 }
+
+/** @deprecated inline C still exported for legacy admin panels */
+export { C };

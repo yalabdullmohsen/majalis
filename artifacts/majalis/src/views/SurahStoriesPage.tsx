@@ -10,7 +10,7 @@ export default function SurahStoriesPage() {
   const stories = search.trim() ? searchSurahStories(search) : getAllSurahStories();
 
   return (
-    <div className="page-shell surah-stories-page">
+    <div className="page-shell surah-stories-page ds-page">
       <PageHeader
         eyebrow="القرآن"
         title="قصص القرآن"

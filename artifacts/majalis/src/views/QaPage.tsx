@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { getQaCategories, getQaQuestions } from "@/lib/supabase";
 import { QA_DISCLAIMER } from "@/lib/theme";
 import { PageHeader, Empty, QaSkeleton } from "@/components/ui-common";
+import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
 import { DEMO_QA, DEMO_QA_CATEGORIES } from "@/lib/demo-content";
 import { QaCard } from "@/components/qa/QaCard";
 import { QA_CANONICAL_CATEGORIES } from "@/lib/qa-categories";
@@ -47,6 +48,7 @@ export default function QaPage({
   const [search, setSearch] = useState("");
   const [sortMode, setSortMode] = useState<QaSortMode>("default");
   const [randomId, setRandomId] = useState<string | null>(null);
+  const [filtersOpen, setFiltersOpen] = useState(false);
   const debouncedSearch = useDebouncedValue(search);
 
   const items = useMemo(() => normalizeQaItems(rawItems), [rawItems]);
@@ -145,34 +147,15 @@ export default function QaPage({
     [items],
   );
 
-  return (
-    <div className="page-shell narrow content-hub-page qa-page qa-page-v2">
-      <PageHeader
-        eyebrow="المجلس العلمي"
-        title="الأسئلة والأجوبة الدينية"
-        subtitle="تصنيفات واضحة — بحث محسّن — أحدث الأسئلة والأكثر مشاهدة."
+  const filtersPanel = (
+    <>
+      <input
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        placeholder="ابحث في الأسئلة والأجوبة..."
+        className="page-search-input full content-hub-search qa-v2-search"
+        aria-label="بحث في الأسئلة والأجوبة"
       />
-
-      <Disclaimer />
-
-      <div className="page-stats-row">
-        <span>{items.length} سؤال</span>
-        <span>{categoryGrid.length} تصنيف</span>
-        {correctionsCount > 0 && (
-          <span className="qa-corrections-badge">تم تصحيح {correctionsCount} تصنيف</span>
-        )}
-      </div>
-
-      <div className="qa-v2-search-row">
-        <input
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          placeholder="ابحث في الأسئلة والأجوبة..."
-          className="page-search-input full content-hub-search qa-v2-search"
-          aria-label="بحث في الأسئلة والأجوبة"
-        />
-      </div>
-
       <div className="qa-sort-row qa-v2-sort-row">
         {(Object.keys(QA_SORT_LABELS) as QaSortMode[]).map((mode) => (
           <button
@@ -188,7 +171,6 @@ export default function QaPage({
           </button>
         ))}
       </div>
-
       <section className="qa-v2-categories" aria-labelledby="qa-categories-heading">
         <h2 id="qa-categories-heading" className="qa-v2-section-title">التصنيفات</h2>
         {categoriesLoading ? (
@@ -212,18 +194,40 @@ export default function QaPage({
               >
                 <span className="qa-v2-category-card__name">{cat.name}</span>
                 <span className="qa-v2-category-card__count">{cat.count}</span>
-                <span className="qa-v2-category-card__desc">{cat.description}</span>
               </button>
             ))}
           </div>
         )}
       </section>
+    </>
+  );
+
+  return (
+    <div className="page-shell narrow content-hub-page qa-page qa-page-v2 ds-page">
+      <PageHeader
+        eyebrow="المجلس العلمي"
+        title="الأسئلة والأجوبة"
+        subtitle="أحدث الأسئلة والأجوبة الشرعية الموثقة."
+      />
+
+      <Disclaimer />
+
+      <div className="ds-section__head">
+        <div className="page-stats-row" style={{ marginBottom: 0 }}>
+          <span>{sortedItems.length} سؤال</span>
+          <span>{categoryGrid.length} تصنيف</span>
+          {correctionsCount > 0 && (
+            <span className="qa-corrections-badge">تم تصحيح {correctionsCount} تصنيف</span>
+          )}
+        </div>
+        <FilterToggle onClick={() => setFiltersOpen(true)} label="بحث وتصفية" />
+      </div>
 
       {randomItem && (
         <section className="qa-random-highlight">
           <h2 className="qa-random-title">سؤال عشوائي</h2>
           <QaCard item={randomItem} defaultOpen />
-          <button type="button" className="qa-random-refresh" onClick={handleRandom}>
+          <button type="button" className="qa-random-refresh ds-btn ds-btn--ghost ds-btn--sm" onClick={handleRandom}>
             سؤال آخر
           </button>
         </section>
@@ -242,6 +246,17 @@ export default function QaPage({
           ))}
         </div>
       )}
+
+      <aside className="ds-filters-panel ds-filters-panel--desktop">
+        <div className="ds-filters-panel__head">
+          <h2>بحث وتصفية</h2>
+        </div>
+        {filtersPanel}
+      </aside>
+
+      <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="بحث وتصفية">
+        {filtersPanel}
+      </FilterBottomSheet>
     </div>
   );
 }

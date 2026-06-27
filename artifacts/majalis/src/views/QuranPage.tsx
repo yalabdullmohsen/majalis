@@ -27,7 +27,7 @@ export default function QuranPage() {
   const {
     surah, setSurah, meta, targetAyah, setAyah, ayahs, loading, error, stats, lastPos, prevSurah, nextSurah,
   } = useQuranSurah();
-  const { prefs, setPref, bumpFont } = useQuranPreferences();
+  const { prefs, setPref } = useQuranPreferences();
   const audio = useQuranAudio(surah, targetAyah);
   const { resolvedTheme } = useThemePreference();
 
@@ -105,9 +105,6 @@ export default function QuranPage() {
 
       {/* 4. Reading toolbar */}
       <QuranToolbar
-        prefs={prefs}
-        onBumpFont={bumpFont}
-        onSetPref={setPref}
         surahSearch={surahSearch}
         onSurahSearch={setSurahSearch}
         onJumpAyah={setAyah}

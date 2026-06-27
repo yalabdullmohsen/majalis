@@ -270,7 +270,7 @@ export default function SearchPage() {
   const total = intelligentTotal > 0 ? intelligentTotal : legacyTotal;
 
   return (
-    <div className="page-shell narrow search-page">
+    <div className="page-shell narrow search-page ds-page">
       <h1 className="search-page-title">البحث العلمي</h1>
 
       <form
@@ -286,23 +286,21 @@ export default function SearchPage() {
           onSubmit={submitSearch}
           placeholder="ابحث في القرآن والحديث والفتاوى والدروس والكتب..."
         />
-        <button type="submit">بحث</button>
+        <button type="submit" className="ds-btn ds-btn--primary">بحث</button>
       </form>
 
-      <div style={{ display: "flex", gap: "0.75rem", marginBottom: "1rem", flexWrap: "wrap", alignItems: "center" }}>
-        <button type="button" onClick={() => setShowFilters(!showFilters)} style={{ fontSize: "0.875rem" }}>
+      <div className="search-toolbar">
+        <button type="button" className="ds-filter-toggle" style={{ display: "inline-flex" }} onClick={() => setShowFilters(!showFilters)}>
           {showFilters ? "إخفاء الفلاتر" : "بحث متقدم"}
         </button>
-        <Link href="/topics" style={{ fontSize: "0.875rem" }}>الموضوعات العلمية</Link>
+        <Link href="/topics" className="ds-section__link">الموضوعات العلمية</Link>
         {responseMs !== null && (
-          <span style={{ fontSize: "0.75rem", color: "var(--ink-soft)" }}>
-            {responseMs} ms
-          </span>
+          <span className="search-result-meta">{responseMs} ms</span>
         )}
       </div>
 
       {showFilters && (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: "0.5rem", marginBottom: "1rem" }}>
+        <div className="search-filters-grid">
           <select value={filters.type} onChange={(e) => setFilters({ ...filters, type: e.target.value })}>
             <option value="">كل الأنواع</option>
             <option value="lesson">دروس</option>
@@ -350,10 +348,10 @@ export default function SearchPage() {
               </p>
 
               {matchedTopics.length > 0 && (
-                <div style={{ marginBottom: "1.5rem", display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
-                  <span style={{ fontSize: "0.875rem", fontWeight: 600 }}>موضوعات ذات صلة:</span>
+                <div className="search-topic-chips">
+                  <span className="search-result-meta" style={{ fontWeight: 700 }}>موضوعات ذات صلة:</span>
                   {matchedTopics.map((t) => (
-                    <Link key={t.slug} href={`/topics/${t.slug}`} style={{ fontSize: "0.8125rem", padding: "0.25rem 0.625rem", borderRadius: "999px", background: "var(--panel-soft, #f3f4f6)" }}>
+                    <Link key={t.slug} href={`/topics/${t.slug}`} className="search-topic-chip">
                       {t.title}
                     </Link>
                   ))}

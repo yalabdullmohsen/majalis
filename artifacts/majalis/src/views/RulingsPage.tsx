@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { PageHeader, Loading, Empty } from "@/components/ui-common";
+import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
 import { RulingCard } from "@/components/rulings/RulingCard";
 import { RulingCategoryGrid } from "@/components/rulings/RulingCategoryGrid";
 import { RulingFilters } from "@/components/rulings/RulingFilters";
@@ -35,6 +36,7 @@ export default function RulingsPage() {
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState<RulingSortMode>("importance");
   const [showAdvanced, setShowAdvanced] = useState(false);
+  const [filtersOpen, setFiltersOpen] = useState(false);
   const debouncedSearch = useDebouncedValue(search);
 
   usePageView("rulings", null);
@@ -86,45 +88,29 @@ export default function RulingsPage() {
     setSubcategory(sub);
   };
 
-  return (
-    <div className="page-shell narrow content-hub-page rulings-encyclopedia-page">
-      <PageHeader
-        eyebrow="موسوعة الفقه"
-        title="الأحكام الشرعية"
-        subtitle="مكتبة علمية شاملة للأحكام — موثقة بالأدلة والمراجع، قابلة للبحث والتصفح."
-      />
-
-      <div className="page-stats-row ruling-stats-bar">
-        <span>{encyclopediaTotal || total} حكم</span>
-        <span>{mainCategories} قسم رئيسي</span>
-        <span>{stats.length} تصنيف فرعي</span>
-      </div>
-
+  const filtersPanel = (
+    <>
       <input
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        placeholder="ابحث في العنوان، الدليل، الآيات، الأحاديث، العلماء، الكلمات المفتاحية..."
+        placeholder="ابحث في العنوان، الدليل، الآيات..."
         className="page-search-input full content-hub-search"
         aria-label="بحث في موسوعة الأحكام الشرعية"
       />
-
       <RulingFilters
         sort={sort}
         onSortChange={setSort}
         showAdvanced={showAdvanced}
         onToggleAdvanced={() => setShowAdvanced((v) => !v)}
       />
-
-      {showAdvanced && (
+      {showAdvanced ? (
         <RulingCategoryGrid
           stats={stats}
           activeCategory={category}
           activeSubcategory={subcategory}
           onSelect={handleCategorySelect}
         />
-      )}
-
-      {!showAdvanced && (
+      ) : (
         <div className="content-hub-chips ruling-quick-chips">
           <button
             type="button"
@@ -154,6 +140,25 @@ export default function RulingsPage() {
           </button>
         </div>
       )}
+    </>
+  );
+
+  return (
+    <div className="page-shell narrow content-hub-page rulings-encyclopedia-page ds-page">
+      <PageHeader
+        eyebrow="موسوعة الفقه"
+        title="الأحكام الشرعية"
+        subtitle="مكتبة علمية شاملة للأحكام — موثقة بالأدلة والمراجع."
+      />
+
+      <div className="ds-section__head">
+        <div className="page-stats-row ruling-stats-bar" style={{ marginBottom: 0 }}>
+          <span>{encyclopediaTotal || total} حكم</span>
+          <span>{mainCategories} قسم</span>
+          <span>{stats.length} تصنيف</span>
+        </div>
+        <FilterToggle onClick={() => setFiltersOpen(true)} label="بحث وتصفية" />
+      </div>
 
       {loading ? (
         <Loading />
@@ -190,6 +195,17 @@ export default function RulingsPage() {
           )}
         </>
       )}
+
+      <aside className="ds-filters-panel ds-filters-panel--desktop">
+        <div className="ds-filters-panel__head">
+          <h2>بحث وتصفية</h2>
+        </div>
+        {filtersPanel}
+      </aside>
+
+      <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="بحث وتصفية">
+        {filtersPanel}
+      </FilterBottomSheet>
     </div>
   );
 }

@@ -328,7 +328,7 @@ export default function LessonsPage({
   );
 
   return (
-    <div className="page-shell lessons-page-v2">
+    <div className="page-shell lessons-page-v2 ds-page">
       <PageHeader
         eyebrow="المجلس العلمي"
         title="الدروس"

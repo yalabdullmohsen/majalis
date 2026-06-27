@@ -4,6 +4,7 @@ import { arabicMatchAny } from "@/lib/arabic-search";
 import { DEMO_FAWAID, FAWAID_CATEGORIES } from "@/lib/demo-content";
 import { canSubmitForm } from "@/lib/form-rate-limit";
 import { PageHeader, Loading, Empty } from "@/components/ui-common";
+import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
 import { useAuth } from "@/components/AuthProvider";
 import { FaidahCard } from "@/components/fawaid/FaidahCard";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
@@ -43,6 +44,7 @@ export default function FawaidPage({
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState("");
+  const [filtersOpen, setFiltersOpen] = useState(false);
   const { user, isLoggedIn } = useAuth() as any;
   const debouncedSearch = useDebouncedValue(search);
 
@@ -59,10 +61,7 @@ export default function FawaidPage({
       .finally(() => setLoading(false));
   }, [initialFawaid]);
 
-  const normalized = useMemo(
-    () => fawaid,
-    [fawaid],
-  );
+  const normalized = useMemo(() => fawaid, [fawaid]);
 
   const displayItems = useMemo(() => {
     let items = normalized;
@@ -100,19 +99,8 @@ export default function FawaidPage({
     }
   };
 
-  return (
-    <div className="page-shell narrow content-hub-page fawaid-page">
-      <PageHeader
-        eyebrow="مختارات نافعة"
-        title="الفوائد"
-        subtitle="فوائد شرعية موثقة ومنظمة — مع نسخ ومشاركة وحفظ وتكبير الخط."
-      />
-
-      <div className="page-stats-row">
-        <span>{displayItems.length} فائدة</span>
-        <span>{FAWAID_CATEGORIES.length} تصنيف</span>
-      </div>
-
+  const filtersPanel = (
+    <>
       <input
         value={search}
         onChange={(e) => setSearch(e.target.value)}
@@ -120,7 +108,6 @@ export default function FawaidPage({
         className="page-search-input full content-hub-search"
         aria-label="بحث في الفوائد"
       />
-
       <div className="content-hub-chips">
         {DISPLAY_CATEGORIES.map((cat) => (
           <button
@@ -132,6 +119,24 @@ export default function FawaidPage({
             {cat}
           </button>
         ))}
+      </div>
+    </>
+  );
+
+  return (
+    <div className="page-shell narrow content-hub-page fawaid-page ds-page">
+      <PageHeader
+        eyebrow="مختارات نافعة"
+        title="الفوائد"
+        subtitle="فوائد شرعية موثقة ومنظمة."
+      />
+
+      <div className="ds-section__head">
+        <div className="page-stats-row" style={{ marginBottom: 0 }}>
+          <span>{displayItems.length} فائدة</span>
+          <span>{FAWAID_CATEGORIES.length} تصنيف</span>
+        </div>
+        <FilterToggle onClick={() => setFiltersOpen(true)} label="بحث وتصفية" />
       </div>
 
       {loading ? (
@@ -174,6 +179,17 @@ export default function FawaidPage({
           )}
         </div>
       )}
+
+      <aside className="ds-filters-panel ds-filters-panel--desktop">
+        <div className="ds-filters-panel__head">
+          <h2>بحث وتصفية</h2>
+        </div>
+        {filtersPanel}
+      </aside>
+
+      <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="بحث وتصفية">
+        {filtersPanel}
+      </FilterBottomSheet>
     </div>
   );
 }
