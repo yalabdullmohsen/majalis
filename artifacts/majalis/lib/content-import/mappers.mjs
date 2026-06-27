@@ -81,33 +81,32 @@ export function mapRowToPayload(type, row) {
     case "adhkar":
       return {
         id: pick(row, "id") || `adh-import-${hashKey([row.text, row.category])}`,
-        categoryId: mapAdhkarCategoryId(pick(row, "category", "categoryId")),
+        category: pick(row, "category", "categoryId"),
+        category_id: mapAdhkarCategoryId(pick(row, "category", "categoryId")),
         text: pick(row, "text"),
         count: Number(row.count) || 1,
         source: pick(row, "source"),
+        source_name: pick(row, "source"),
         narrator: pick(row, "narrator") || undefined,
         grade: pick(row, "grade") || undefined,
         reference: pick(row, "reference") || undefined,
         keywords: Array.isArray(row.keywords) ? row.keywords : [],
       };
-    case "quran_surahs":
+    case "rulings":
       return {
-        number: Number(row.number),
-        name: pick(row, "name"),
-        englishName: pick(row, "englishName", "english_name") || "",
-        ayahs: Number(row.ayahs),
-        revelation: pick(row, "revelation") || "مكية",
-        summary: pick(row, "summary", "description") || "",
-        themes: Array.isArray(row.themes) ? row.themes : [],
-      };
-    case "quran_topics":
-      return {
-        id: pick(row, "id") || `qtopic-${hashKey([row.title, row.category])}`,
+        external_key: pick(row, "external_key", "slug", "id") || `ruling-${hashKey([row.title, row.category])}`,
         title: pick(row, "title"),
-        summary: pick(row, "summary", "description"),
-        category: pick(row, "category"),
-        surahRefs: Array.isArray(row.surahRefs) ? row.surahRefs : [],
+        summary: pick(row, "summary") || null,
+        body: pick(row, "body", "summary", "title"),
+        category: pick(row, "category") || "فقه عام",
+        subcategory: pick(row, "subcategory") || null,
         keywords: Array.isArray(row.keywords) ? row.keywords : [],
+        evidence: Array.isArray(row.evidence) ? row.evidence : [],
+        references: Array.isArray(row.references) ? row.references : [],
+        status: pick(row, "status") || "approved",
+        verification_status: pick(row, "verification_status") || "approved",
+        importance_score: row.importance_score != null ? Number(row.importance_score) : 50,
+        published_at: pick(row, "published_at") || new Date().toISOString(),
       };
     default:
       return { ...row };

@@ -1,0 +1,112 @@
+#!/usr/bin/env node
+/**
+ * Unit tests for Vercel-safe content import engine (no filesystem on import path).
+ */
+import { parseCsvString, parseJsonString, parseContentString } from "../lib/content-import/parsers.mjs";
+import { validateAllRows } from "../lib/content-import/engine.mjs";
+import { mapRowToPayload } from "../lib/content-import/mappers.mjs";
+import { dedupeRows } from "../lib/content-import/dedupe.mjs";
+import { resolveContentType, CONTENT_TYPES } from "../lib/content-import/registry.mjs";
+import { readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const root = join(__dirname, "..");
+
+let passed = 0;
+let failed = 0;
+
+function assert(cond, msg) {
+  if (cond) {
+    passed++;
+    return;
+  }
+  failed++;
+  console.error(`✗ ${msg}`);
+}
+
+function test(name, fn) {
+  try {
+    fn();
+    console.log(`✓ ${name}`);
+  } catch (err) {
+    failed++;
+    console.error(`✗ ${name}: ${err.message}`);
+  }
+}
+
+test("registry includes required production types", () => {
+  for (const t of ["lessons", "questions", "adhkar", "books", "benefits", "rulings"]) {
+    assert(resolveContentType(t), `missing type ${t}`);
+    assert(CONTENT_TYPES.includes(t), `CONTENT_TYPES missing ${t}`);
+  }
+});
+
+test("parse CSV in memory", () => {
+  const csv = "title,description,category,source_url,sheikh_name,mosque\nدرس,وصف,فقه,https://x.com,شيخ,مسجد";
+  const rows = parseCsvString(csv);
+  assert(rows.length === 1, "expected 1 row");
+  assert(rows[0].title === "درس", "title parsed");
+});
+
+test("parse JSON in memory", () => {
+  const rows = parseJsonString('[{"text":"فائدة"}]');
+  assert(rows.length === 1 && rows[0].text === "فائدة", "json row");
+});
+
+test("parseContentString detects csv by filename", () => {
+  const rows = parseContentString("a,b\n1,2", "test.csv");
+  assert(rows.length === 1, "csv via filename");
+});
+
+test("validation rejects invalid lesson row", () => {
+  const { validationErrors, allValid } = validateAllRows("lessons", [{ title: "only title" }]);
+  assert(!allValid, "should fail validation");
+  assert(validationErrors.length > 0, "should have errors");
+});
+
+test("validation accepts valid benefit row", () => {
+  const { allValid } = validateAllRows("benefits", [{ text: "فائدة نافعة" }]);
+  assert(allValid, "benefit should pass");
+});
+
+test("validation accepts valid ruling row", () => {
+  const { allValid } = validateAllRows("rulings", [{ title: "حكم", category: "صلاة", body: "الجواب" }]);
+  assert(allValid, "ruling should pass");
+});
+
+test("dedupe removes duplicate rows in file", () => {
+  const rows = [{ text: "x" }, { text: "x" }];
+  const { unique, duplicates } = dedupeRows(rows, "benefits");
+  assert(unique.length === 1, "one unique");
+  assert(duplicates.length === 1, "one duplicate");
+});
+
+test("mapper produces adhkar payload with category_id", () => {
+  const payload = mapRowToPayload("adhkar", {
+    text: "سبحان الله",
+    category: "صباح",
+    count: 3,
+    source: "مسلم",
+  });
+  assert(payload.category_id?.startsWith("adh-"), "category_id mapped");
+  assert(payload.text === "سبحان الله", "text preserved");
+});
+
+test("production import modules do not reference staged filesystem paths", () => {
+  const files = [
+    "lib/content-import/engine.mjs",
+    "lib/content-import/bulk-importer.mjs",
+    "lib/api-handlers/admin/content-import.js",
+  ];
+  for (const rel of files) {
+    const src = readFileSync(join(root, rel), "utf8");
+    assert(!src.includes("importToStaged"), `${rel} must not import staged`);
+    assert(!src.includes("writeFileSync"), `${rel} must not write files`);
+    assert(!src.includes("data/imports/staged"), `${rel} must not use staged path`);
+  }
+});
+
+console.log(`\nContent Import Engine tests: ${passed} passed, ${failed} failed`);
+process.exit(failed ? 1 : 0);
