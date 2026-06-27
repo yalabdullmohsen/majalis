@@ -27,6 +27,7 @@
     "verify:majlis-knowledge-engine": "node scripts/verify-majlis-knowledge-engine.mjs",
     "test:kuwait-sources": "node scripts/test-kuwait-instagram-sources.mjs",
     "smoke:nav": "node scripts/smoke-nav-menu.mjs",
+    "smoke:mobile": "node scripts/smoke-mobile-routes.mjs",
     "build": "pnpm run generate:seo && vite build --config vite.config.ts",
     "build:next": "next build",
     "preview": "vite preview --config vite.config.ts --host 0.0.0.0",
