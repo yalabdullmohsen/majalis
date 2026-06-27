@@ -2,7 +2,7 @@
 
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { ADMIN_GOVERNANCE_ROLES, LEGACY_ROLE_MAP } from "@/lib/governance-roles";
-import { hasUnrestrictedAdminAccess, isOwnerProfile } from "@/lib/owner-config";
+import { hasUnrestrictedAdminAccess, isOwnerProfile, isOwnerAuthUser, resolveUserEmail } from "@/lib/owner-config";
 
 type SupabaseAuthModule = typeof import("@/lib/supabase");
 
@@ -99,8 +99,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const isOwner =
       user?.is_owner === true ||
       isOwnerProfile(user?.profile) ||
+      isOwnerAuthUser(user, user?.profile) ||
       hasUnrestrictedAdminAccess({
-        email: user?.email,
+        email: resolveUserEmail(user),
         profile: user?.profile,
         governanceRole,
       });

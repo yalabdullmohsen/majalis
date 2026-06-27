@@ -16,7 +16,7 @@ import { ADHKAR_CATEGORIES, filterAdhkar } from "./adhkar-seed";
 import { searchPlatformSeed } from "./platform-search";
 import { safeSupabaseQuery, isMissingSchemaError } from "./safe-supabase";
 import { normalizeActivityType } from "./activity-label";
-import { isBootstrapOwnerEmail, isOwnerProfile, hasUnrestrictedAdminAccess } from "./owner-config";
+import { isBootstrapOwnerEmail, isOwnerProfile, hasUnrestrictedAdminAccess, resolveUserEmail } from "./owner-config";
 
 /** Columns that exist on the live `sheikhs` table (no image_url / avatar_url). */
 const SHEIKH_EMBED = "sheikhs(id, name, city, photo_url)";
@@ -119,7 +119,7 @@ export async function getCurrentUser() {
 
     const resolvedGovernanceRole = governanceRole || LEGACY_MAP[profile?.role || "user"] || "read_only";
     const ownerAccess = hasUnrestrictedAdminAccess({
-      email: user.email,
+      email: resolveUserEmail(user),
       profile,
       governanceRole: resolvedGovernanceRole,
     });
@@ -130,13 +130,13 @@ export async function getCurrentUser() {
       profile: {
         ...profile,
         governance_role: effectiveGovernanceRole,
-        is_owner: profile?.is_owner === true || isBootstrapOwnerEmail(user.email),
+        is_owner: profile?.is_owner === true || isBootstrapOwnerEmail(resolveUserEmail(user)),
         is_super_admin: profile?.is_super_admin === true || ownerAccess,
         is_admin: profile?.is_admin === true || ownerAccess,
         status: profile?.status || "active",
       },
       governance_role: effectiveGovernanceRole,
-      is_owner: isOwnerProfile(profile) || isBootstrapOwnerEmail(user.email),
+      is_owner: isOwnerProfile(profile) || isBootstrapOwnerEmail(resolveUserEmail(user)),
     };
   } catch (err) {
     logSupabaseError("getCurrentUser", err);

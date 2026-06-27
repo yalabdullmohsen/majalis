@@ -8,6 +8,23 @@ export function normalizeOwnerEmail(email: string | null | undefined): string {
   return String(email || "").trim().toLowerCase();
 }
 
+/** Resolve email from Supabase Auth user (JWT may omit top-level email). */
+export function resolveUserEmail(user: { email?: string | null; user_metadata?: { email?: string } | null; identities?: Array<{ identity_data?: { email?: string }; email?: string }> } | null | undefined): string {
+  if (!user) return "";
+  const candidates = [
+    user.email,
+    user.user_metadata?.email,
+    ...(Array.isArray(user.identities)
+      ? user.identities.map((i) => i?.identity_data?.email || i?.email)
+      : []),
+  ];
+  for (const c of candidates) {
+    const normalized = normalizeOwnerEmail(c);
+    if (normalized) return normalized;
+  }
+  return "";
+}
+
 export function isBootstrapOwnerEmail(email: string | null | undefined): boolean {
   const normalized = normalizeOwnerEmail(email);
   if (!normalized) return false;
@@ -34,6 +51,14 @@ export function isOwnerUser(
   profile: OwnerProfileLike | null | undefined,
 ): boolean {
   if (isBootstrapOwnerEmail(email)) return true;
+  return isOwnerProfile(profile);
+}
+
+export function isOwnerAuthUser(
+  user: { email?: string | null; user_metadata?: { email?: string } | null } | null | undefined,
+  profile: OwnerProfileLike | null | undefined,
+): boolean {
+  if (isBootstrapOwnerEmail(resolveUserEmail(user))) return true;
   return isOwnerProfile(profile);
 }
 

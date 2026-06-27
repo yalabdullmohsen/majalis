@@ -75,7 +75,8 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
       });
       const json = await res.json();
       if (!res.ok && !json.report) {
-        setError(json.userMessageAr || json.userMessage || json.error || `HTTP ${res.status}`);
+        const debugLine = json.debug?.guard ? ` [${json.debug.guard}]` : "";
+        setError((json.userMessageAr || json.userMessage || json.error || `HTTP ${res.status}`) + debugLine);
         return;
       }
       setReport(json.report || json);

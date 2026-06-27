@@ -13,6 +13,7 @@ import {
   isOwnerProfile,
   isOwnerUser,
   hasUnrestrictedAdminAccess,
+  resolveUserEmail,
 } from "./owner-config.mjs";
 
 const ADMIN_PERMISSIONS = [
@@ -49,9 +50,10 @@ function isAdminRole(roleId) {
 }
 
 function buildAuthContext({ user, profile, governanceRole }) {
+  const email = resolveUserEmail(user);
   const isOwner = isOwnerUser(user, profile);
   const unrestricted = hasUnrestrictedAdminAccess({
-    email: user?.email,
+    email,
     profile,
     role: governanceRole,
   });
@@ -59,10 +61,49 @@ function buildAuthContext({ user, profile, governanceRole }) {
   return {
     user,
     profile,
+    email,
     governanceRole,
     isOwner,
     unrestricted,
     effectiveRole: unrestricted ? "super_admin" : governanceRole,
+  };
+}
+
+function enrichAuthSession(session) {
+  if (!session?.ok) return session;
+  const email = session.email || resolveUserEmail(session.user);
+  const isOwner = session.isOwner === true || isOwnerUser(session.user, session.profile);
+  const unrestricted =
+    session.unrestricted === true ||
+    hasUnrestrictedAdminAccess({
+      email,
+      profile: session.profile,
+      role: session.governanceRole || session.role,
+    });
+  const effectiveRole = unrestricted ? "super_admin" : session.role || session.governanceRole;
+
+  return {
+    ...session,
+    email,
+    isOwner,
+    unrestricted,
+    role: effectiveRole,
+    effectiveRole,
+    isAdmin: isOwner || unrestricted || isAdminRole(effectiveRole),
+  };
+}
+
+function authDebugSnapshot(ctx, guard) {
+  const email = ctx?.email || resolveUserEmail(ctx?.user);
+  return {
+    guard,
+    email: email || null,
+    resolvedRole: ctx?.effectiveRole || ctx?.role || ctx?.governanceRole || null,
+    isAdmin: ctx?.isAdmin === true || isAdminRole(ctx?.effectiveRole || ctx?.role),
+    isOwner: ctx?.isOwner === true || isOwnerUser(ctx?.user, ctx?.profile),
+    unrestricted: ctx?.unrestricted === true,
+    bootstrapOwner: isBootstrapOwnerEmail(email),
+    canImport: canImportContent(ctx),
   };
 }
 
@@ -77,14 +118,35 @@ export function hasPermission(ctx, permission) {
     return roleHasPermission(ctx, permission);
   }
   if (ctx?.unrestricted || ctx?.isOwner) return true;
-  if (hasUnrestrictedAdminAccess(ctx)) return true;
+  const email = ctx?.email || resolveUserEmail(ctx?.user);
+  if (isBootstrapOwnerEmail(email)) return true;
+  if (
+    hasUnrestrictedAdminAccess({
+      email,
+      profile: ctx?.profile,
+      role: ctx?.governanceRole || ctx?.effectiveRole || ctx?.role,
+    })
+  ) {
+    return true;
+  }
   const role = ctx?.effectiveRole || ctx?.governanceRole || ctx?.role || resolveRole(ctx);
   return roleHasPermission(role, permission);
 }
 
 export function canImportContent(ctx) {
-  if (typeof ctx === "object" && (ctx?.unrestricted || ctx?.isOwner || hasUnrestrictedAdminAccess(ctx))) {
-    return true;
+  if (typeof ctx === "object" && ctx) {
+    const email = ctx.email || resolveUserEmail(ctx.user);
+    if (ctx.unrestricted || ctx.isOwner) return true;
+    if (isBootstrapOwnerEmail(email)) return true;
+    if (
+      hasUnrestrictedAdminAccess({
+        email,
+        profile: ctx.profile,
+        role: ctx.governanceRole || ctx.effectiveRole || ctx.role,
+      })
+    ) {
+      return true;
+    }
   }
   const role = typeof ctx === "string" ? ctx : ctx?.effectiveRole || ctx?.governanceRole || ctx?.role;
   return (
@@ -143,7 +205,7 @@ async function validateJwtSession(req) {
 
   profile = await loadProfile(admin, client, user.id);
 
-  if (isBootstrapOwnerEmail(user.email) || isOwnerProfile(profile)) {
+  if (isBootstrapOwnerEmail(resolveUserEmail(user)) || isOwnerProfile(profile)) {
     governanceRole = "super_admin";
   } else if (admin) {
     const roles = await getRolesForUser(admin, user.id);
@@ -163,11 +225,13 @@ async function validateJwtSession(req) {
     method: "session",
     user,
     userId: user.id,
+    email: ctx.email,
     role: ctx.effectiveRole,
     governanceRole,
     profile,
     isOwner: ctx.isOwner,
     unrestricted: ctx.unrestricted,
+    isAdmin: ctx.isOwner || ctx.unrestricted || isAdminRole(ctx.effectiveRole),
     permissions: (perm) => hasPermission(ctx, perm),
   };
 }
@@ -186,9 +250,11 @@ export async function validateAdminAccess(req, opts = {}) {
   }
   if (!session.ok) return session;
 
-  const ctx = session;
+  const ctx = enrichAuthSession(session);
 
   if (opts.permission && !hasPermission(ctx, opts.permission)) {
+    const debug = authDebugSnapshot(ctx, "admin-auth.mjs:validateAdminAccess:permission");
+    console.error("[admin-auth] permission_denied", debug);
     return {
       ok: false,
       status: 403,
@@ -196,10 +262,13 @@ export async function validateAdminAccess(req, opts = {}) {
       permission: opts.permission,
       userMessage: "Missing database permission.",
       userMessageAr: "ليس لديك صلاحية تنفيذ هذا الإجراء.",
+      debug,
     };
   }
 
   if (opts.requireImport && !canImportContent(ctx)) {
+    const debug = authDebugSnapshot(ctx, "admin-auth.mjs:validateAdminAccess:requireImport");
+    console.error("[admin-auth] import permission_denied", debug);
     return {
       ok: false,
       status: 403,
@@ -207,10 +276,11 @@ export async function validateAdminAccess(req, opts = {}) {
       permission: "import",
       userMessage: "Missing database permission.",
       userMessageAr: "ليس لديك صلاحية استيراد المحتوى.",
+      debug,
     };
   }
 
-  return session;
+  return ctx;
 }
 
 export async function requireAdminAccess(req, res, sendJson, opts = {}) {
@@ -224,6 +294,7 @@ export async function requireAdminAccess(req, res, sendJson, opts = {}) {
         (auth.error === "unauthorized" ? "Session expired or not signed in." : "Missing database permission."),
       userMessageAr: auth.userMessageAr || "تعذّر التحقق من الصلاحيات.",
       reason: auth.error,
+      debug: auth.debug || undefined,
     });
     return null;
   }
