@@ -1,11 +1,13 @@
-import { formatSupabaseError, isSupabaseConfigured } from "./supabase-config";
+import { formatSupabaseError, isSupabaseConfigured, logSupabaseConfigStatus } from "./supabase-config";
 
 export function mapAuthError(error: unknown): string {
-  if (!isSupabaseConfigured()) {
-    return "تسجيل الدخول غير متاح حالياً. يرجى التواصل مع إدارة الموقع.";
+  if (!error) {
+    if (!isSupabaseConfigured()) {
+      logSupabaseConfigStatus();
+      return "تعذّر الاتصال بخادم المصادقة. تحقق من إعدادات Supabase على الخادم.";
+    }
+    return "تعذّر تسجيل الدخول. تحقق من البيانات وحاول مجدداً.";
   }
-
-  if (!error) return "تعذّر تسجيل الدخول. تحقق من البيانات وحاول مجدداً.";
 
   const msg = String((error as { message?: string }).message || "").toLowerCase();
 

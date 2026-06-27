@@ -23,7 +23,12 @@ const SHEIKH_EMBED_MIN = "sheikhs(name, photo_url)";
 import { writeAuditLog } from "@/lib/cms/audit-log";
 import { validateSheikhImage, safeUploadFileName } from "./file-validation";
 import { sanitizeFormRecord } from "./sanitize";
-import { isSupabaseConfigured, formatSupabaseError, logSupabaseError } from "./supabase-config";
+import {
+  isSupabaseConfigured,
+  formatSupabaseError,
+  logSupabaseError,
+  logSupabaseConfigStatus,
+} from "./supabase-config";
 import { getSupabaseAnonKeyEnv, getSupabaseUrlEnv } from "./supabase-env";
 
 // Normalize to the bare project origin (https://xxx.supabase.co).
@@ -44,11 +49,19 @@ const key = getSupabaseAnonKeyEnv();
 
 const isConfigured = isSupabaseConfigured();
 
+logSupabaseConfigStatus();
+
 export { isSupabaseConfigured, formatSupabaseError };
 
-export const supabase = isConfigured
-  ? createClient(url, key)
-  : createClient("https://placeholder.supabase.co", "placeholder-anon-key-placeholder-anon-key-placeholder-anon-key-p" as string);
+const supabaseAuthOptions = {
+  auth: {
+    persistSession: true,
+    autoRefreshToken: true,
+    detectSessionInUrl: true,
+  },
+} as const;
+
+export const supabase = createClient(url, key, supabaseAuthOptions);
 
 export async function signUp(email: string, password: string, fullName: string) {
   return await supabase.auth.signUp({

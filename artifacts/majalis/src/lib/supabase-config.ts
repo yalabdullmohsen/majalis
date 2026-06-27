@@ -41,7 +41,7 @@ export function isSupabaseConfigured(): boolean {
   const url = getSupabaseUrlEnv();
   const key = getSupabaseAnonKeyEnv();
   if (!url.startsWith("http") || key.length <= 20) return false;
-  if (/placeholder|_supabase/i.test(url) || /placeholder/i.test(key)) return false;
+  if (/placeholder|not-configured/i.test(url) || /placeholder|not-configured/i.test(key)) return false;
   try {
     const host = new URL(url).host;
     const ref = host.split(".")[0] || "";
@@ -49,6 +49,31 @@ export function isSupabaseConfigured(): boolean {
   } catch {
     return false;
   }
+}
+
+let configStatusLogged = false;
+
+/** Log once when Supabase env vars are missing or invalid (console only — not shown to users). */
+export function logSupabaseConfigStatus(): void {
+  if (configStatusLogged) return;
+  configStatusLogged = true;
+
+  const url = getSupabaseUrlEnv();
+  const key = getSupabaseAnonKeyEnv();
+
+  if (isSupabaseConfigured()) {
+    if (import.meta.env.DEV) {
+      console.info("[majalis:supabase] Auth configured:", new URL(url).host);
+    }
+    return;
+  }
+
+  console.error(
+    "[majalis:supabase] Supabase auth is NOT configured. " +
+      "Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in Vercel (Production, Preview, Development). " +
+      "On Vercel you may also set SUPABASE_URL / SUPABASE_ANON_KEY — they are mapped at build time. " +
+      `Diagnostics: url=${url ? "present" : "MISSING"}, anonKey=${key ? "present" : "MISSING"}`,
+  );
 }
 
 export function logSupabaseError(scope: string, error: unknown, extra?: Record<string, unknown>) {

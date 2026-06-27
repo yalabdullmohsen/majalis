@@ -18,12 +18,27 @@ const basePath = process.env.BASE_PATH || "/";
 const commitHash = process.env.VERCEL_GIT_COMMIT_SHA || process.env.GIT_COMMIT || "dev";
 const buildId = process.env.VERCEL_DEPLOYMENT_ID || process.env.BUILD_ID || "local";
 
+// Bake Supabase credentials into the client bundle at build time.
+// Vite only exposes VITE_* to import.meta.env; map common Vercel names here.
+const supabaseUrl =
+  process.env.VITE_SUPABASE_URL ||
+  process.env.NEXT_PUBLIC_SUPABASE_URL ||
+  process.env.SUPABASE_URL ||
+  "";
+const supabaseAnonKey =
+  process.env.VITE_SUPABASE_ANON_KEY ||
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
+  process.env.SUPABASE_ANON_KEY ||
+  "";
+
 export default defineConfig({
   base: basePath,
   define: {
     "import.meta.env.VITE_COMMIT_HASH": JSON.stringify(commitHash),
     "import.meta.env.VITE_BUILD_ID": JSON.stringify(buildId),
     "import.meta.env.VITE_VERCEL_GIT_COMMIT_SHA": JSON.stringify(process.env.VERCEL_GIT_COMMIT_SHA || ""),
+    "import.meta.env.VITE_SUPABASE_URL": JSON.stringify(supabaseUrl),
+    "import.meta.env.VITE_SUPABASE_ANON_KEY": JSON.stringify(supabaseAnonKey),
   },
   plugins: [
     react(),

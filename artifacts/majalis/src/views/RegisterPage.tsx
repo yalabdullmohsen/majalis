@@ -2,7 +2,6 @@ import { FormEvent, useEffect, useState } from "react";
 import { Link, useLocation } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { mapAuthError } from "@/lib/auth-messages";
-import { isSupabaseConfigured } from "@/lib/supabase-config";
 import { supabase } from "@/lib/supabase";
 
 export default function RegisterPage() {
@@ -15,7 +14,6 @@ export default function RegisterPage() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const authEnabled = isSupabaseConfigured();
 
   useEffect(() => {
     if (!authLoading && user) navigate("/");
@@ -34,11 +32,6 @@ export default function RegisterPage() {
     e.preventDefault();
     setError(null);
     setSuccess(null);
-
-    if (!authEnabled) {
-      setError(mapAuthError(null));
-      return;
-    }
 
     const validationError = validate();
     if (validationError) {
@@ -69,8 +62,8 @@ export default function RegisterPage() {
       }
 
       setSuccess("تم إنشاء حسابك. راجع بريدك الإلكتروني لتأكيد الحساب ثم سجّل الدخول.");
-    } catch {
-      setError("حدث خطأ أثناء إنشاء الحساب. حاول مجدداً.");
+    } catch (err) {
+      setError(mapAuthError(err));
     } finally {
       setLoading(false);
     }
@@ -88,12 +81,6 @@ export default function RegisterPage() {
           <p className="login-card__subtitle">انضم للمنصة للمتابعة والوصول إلى المحتوى</p>
         </div>
 
-        {!authEnabled && (
-          <p className="login-alert login-alert--error" role="alert">
-            {mapAuthError(null)}
-          </p>
-        )}
-
         <form onSubmit={handleSubmit} className="login-form" noValidate>
           <div className="login-field">
             <label htmlFor="register-name">الاسم</label>
@@ -105,7 +92,7 @@ export default function RegisterPage() {
               onChange={(e) => setFullName(e.target.value)}
               required
               minLength={2}
-              disabled={loading || !authEnabled}
+              disabled={loading}
             />
           </div>
 
@@ -118,7 +105,7 @@ export default function RegisterPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              disabled={loading || !authEnabled}
+              disabled={loading}
             />
           </div>
 
@@ -132,7 +119,7 @@ export default function RegisterPage() {
               onChange={(e) => setPassword(e.target.value)}
               required
               minLength={8}
-              disabled={loading || !authEnabled}
+              disabled={loading}
             />
           </div>
 
@@ -146,7 +133,7 @@ export default function RegisterPage() {
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
               minLength={8}
-              disabled={loading || !authEnabled}
+              disabled={loading}
             />
           </div>
 
@@ -161,7 +148,7 @@ export default function RegisterPage() {
             </p>
           )}
 
-          <button type="submit" className="login-submit" disabled={loading || !authEnabled}>
+          <button type="submit" className="login-submit" disabled={loading}>
             {loading ? "جاري الإنشاء…" : "إنشاء حساب"}
           </button>
         </form>

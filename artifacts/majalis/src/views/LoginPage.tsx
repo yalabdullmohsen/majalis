@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { ADMIN_ACCESS_DENIED_MESSAGE, mapAuthError } from "@/lib/auth-messages";
-import { isSupabaseConfigured } from "@/lib/supabase-config";
 import { Loading } from "@/components/ui-common";
 
 function getNextPath() {
@@ -27,7 +26,6 @@ export default function LoginPage() {
   const [, navigate] = useLocation();
   const nextPath = getNextPath();
   const adminLogin = isAdminLogin(nextPath);
-  const authEnabled = isSupabaseConfigured();
 
   useEffect(() => {
     if (authLoading) return;
@@ -44,11 +42,6 @@ export default function LoginPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!authEnabled) {
-      setError(mapAuthError(null));
-      return;
-    }
-
     setError("");
     setDenied(false);
     setLoading(true);
@@ -98,12 +91,6 @@ export default function LoginPage() {
           </p>
         </div>
 
-        {!authEnabled && (
-          <p className="login-alert login-alert--error" role="alert">
-            {mapAuthError(null)}
-          </p>
-        )}
-
         {error && (
           <p className="login-alert login-alert--error" role="alert">
             {error}
@@ -126,7 +113,7 @@ export default function LoginPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              disabled={loading || !authEnabled}
+              disabled={loading}
             />
           </div>
 
@@ -139,11 +126,11 @@ export default function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              disabled={loading || !authEnabled}
+              disabled={loading}
             />
           </div>
 
-          <button type="submit" className="login-submit" disabled={loading || !authEnabled}>
+          <button type="submit" className="login-submit" disabled={loading}>
             {loading ? "جارٍ التحقق..." : "تسجيل الدخول"}
           </button>
         </form>

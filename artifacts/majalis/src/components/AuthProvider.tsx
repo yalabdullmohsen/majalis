@@ -2,10 +2,9 @@
 
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { ADMIN_GOVERNANCE_ROLES, LEGACY_ROLE_MAP } from "@/lib/governance-roles";
+import { getCurrentUser, signIn, signOut, signUp, supabase } from "@/lib/supabase";
 
-type SupabaseAuthModule = typeof import("@/lib/supabase");
-
-export type AuthUser = Awaited<ReturnType<SupabaseAuthModule["getCurrentUser"]>>;
+export type AuthUser = Awaited<ReturnType<typeof getCurrentUser>>;
 
 type AuthContextValue = {
   user: AuthUser;
@@ -13,20 +12,17 @@ type AuthContextValue = {
   isLoggedIn: boolean;
   isAdmin: boolean;
   isSheikh: boolean;
-  login: SupabaseAuthModule["signIn"];
-  register: SupabaseAuthModule["signUp"];
+  login: typeof signIn;
+  register: typeof signUp;
   logout: () => Promise<{ error: unknown | null }>;
   refreshUser: () => Promise<AuthUser>;
 };
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
-const noopAuth = async () => ({ data: null, error: new Error("Auth not ready") } as never);
-
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<AuthUser>(null);
   const [loading, setLoading] = useState(true);
-  const [authApi, setAuthApi] = useState<SupabaseAuthModule | null>(null);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -36,48 +32,45 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     let active = true;
-    let unsubscribe: (() => void) | undefined;
 
-    import("@/lib/supabase")
-      .then((mod) => {
-        if (!active) return;
-        setAuthApi(mod);
-
-        return mod.getCurrentUser().then((next) => {
-          if (active) setUser(next);
-        });
-      })
-      .finally(() => {
-        if (active) setLoading(false);
-      });
-
-    import("@/lib/supabase").then((mod) => {
-      const { data: sub } = mod.supabase.auth.onAuthStateChange(async () => {
-        const next = await mod.getCurrentUser();
+    const loadUser = async () => {
+      try {
+        const next = await getCurrentUser();
         if (active) setUser(next);
-      });
-      unsubscribe = () => sub.subscription.unsubscribe();
+      } finally {
+        if (active) setLoading(false);
+      }
+    };
+
+    void loadUser();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
+      if (!active) return;
+      if (!session?.user) {
+        setUser(null);
+        return;
+      }
+      const next = await getCurrentUser();
+      if (active) setUser(next);
     });
 
     return () => {
       active = false;
-      unsubscribe?.();
+      subscription.unsubscribe();
     };
   }, []);
 
   const refreshUser = useCallback(async () => {
-    if (!authApi) return null;
-    const next = await authApi.getCurrentUser();
+    const next = await getCurrentUser();
     setUser(next);
     return next;
-  }, [authApi]);
+  }, []);
 
   const logout = useCallback(async () => {
-    if (!authApi) return { error: null };
-    const result = await authApi.signOut();
+    const result = await signOut();
     setUser(null);
     return result;
-  }, [authApi]);
+  }, []);
 
   const value = useMemo<AuthContextValue>(() => {
     const governanceRole =
@@ -91,12 +84,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       isLoggedIn: !!user,
       isAdmin: ADMIN_GOVERNANCE_ROLES.includes(governanceRole),
       isSheikh: governanceRole === "scientific_reviewer" || user?.profile?.role === "sheikh",
-      login: authApi?.signIn ?? noopAuth,
-      register: authApi?.signUp ?? noopAuth,
+      login: signIn,
+      register: signUp,
       logout,
       refreshUser,
     };
-  }, [authApi, user, loading, logout, refreshUser]);
+  }, [user, loading, logout, refreshUser]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
