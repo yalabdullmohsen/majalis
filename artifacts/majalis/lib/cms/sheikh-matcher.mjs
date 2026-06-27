@@ -51,9 +51,9 @@ export async function matchSheikhByName(name) {
     score: bestScore,
     proposedDraft: {
       name: String(name).trim(),
-      status: "draft",
+      status: "pending",
       is_verified: false,
-      bio: "مسودة — أُنشئت تلقائياً من استيراد درس",
+      needs_verification: true,
     },
   };
 }

@@ -28,6 +28,7 @@ export const MIGRATION_FILES = [
   "qa_phase4_seed.sql",
   "kuwait_lessons_extend.sql",
   "smart_cms_v5.sql",
+  "lesson_import_drafts_v1.sql",
 ];
 
 export function resolveMigrationsDir() {

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "wouter";
 import { adminGetLessons, adminUpsertLesson, adminDeleteLesson, adminGetSheikhs } from "@/lib/supabase";
 import { invalidateLessonsCache } from "@/lib/lessons-service";
 import { sanitizeText } from "@/lib/sanitize";
@@ -120,6 +121,12 @@ export function LessonsSection() {
               load();
             }}
           />
+          <Link
+            href="/admin/content-import/image"
+            style={{ padding: "0.5rem 1rem", borderRadius: "0.375rem", background: "#DBEAFE", color: "#1D4ED8", textDecoration: "none", fontFamily: "inherit", fontSize: "0.875rem", fontWeight: 600, display: "inline-flex", alignItems: "center" }}
+          >
+            إضافة درس من صورة
+          </Link>
           <button onClick={openAdd} style={{ padding: "0.5rem 1.25rem", borderRadius: "0.375rem", background: C.emerald, color: C.parchment, border: "none", cursor: "pointer", fontFamily: "inherit", fontSize: "0.875rem", fontWeight: 600 }}>+ إضافة درس</button>
         </div>
       </div>

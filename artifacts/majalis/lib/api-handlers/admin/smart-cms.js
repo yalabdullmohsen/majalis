@@ -36,7 +36,7 @@ export default async function handler(req, res) {
         return;
       }
       const result = await extractLessonFromImage({ imageBase64, mimeType });
-      const sheikhMatch = await matchSheikhByName(result.extracted.speaker_name);
+      const sheikhMatch = await matchSheikhByName(result.extracted?.speaker_name);
       const draft = await createContentDraft({
         sourceType: "image",
         extracted: result.extracted,
@@ -45,9 +45,17 @@ export default async function handler(req, res) {
         matchedSheikhId: sheikhMatch.matched?.id,
         proposedSheikh: sheikhMatch.proposedDraft,
         createdBy: auth.user?.id,
-        metadata: { confidence: result.extracted.confidence },
+        metadata: { confidence: result.extracted?.confidence, vision_enabled: result.visionEnabled !== false },
       });
-      sendJson(res, draft.ok ? 200 : 422, { ok: draft.ok, ...result, sheikhMatch, draft: draft.draft, error: draft.error });
+      sendJson(res, draft.ok ? 200 : 422, {
+        ok: draft.ok,
+        vision_enabled: result.visionEnabled !== false,
+        message: result.message,
+        ...result,
+        sheikhMatch,
+        draft: draft.draft,
+        error: draft.error,
+      });
       return;
     }
 
@@ -102,8 +110,10 @@ export default async function handler(req, res) {
           .from("sheikhs")
           .insert({
             name: draft.proposed_sheikh.name,
-            bio: draft.proposed_sheikh.bio || "",
+            bio: "",
             is_verified: false,
+            status: "pending",
+            needs_verification: true,
           })
           .select()
           .single();

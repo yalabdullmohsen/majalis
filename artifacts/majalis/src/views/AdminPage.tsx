@@ -28,6 +28,7 @@ import { AutonomousAiSection } from "@/views/admin/AutonomousAiSection";
 import { GlobalReferenceSection } from "@/views/admin/GlobalReferenceSection";
 import { IslamicIntelligenceSection } from "@/views/admin/IslamicIntelligenceSection";
 import { OpenPlatformSection } from "@/views/admin/OpenPlatformSection";
+import { GovernanceSection } from "@/views/admin/GovernanceSection";
 import { SmartCmsSection } from "@/views/admin/SmartCmsSection";
 
 export default function AdminPage() {

@@ -1,5 +1,11 @@
 import { createRateLimiter } from "./rate-limit.mjs";
 
+const lessonFromImageRateLimit = createRateLimiter({
+  windowMs: 60_000,
+  max: 10,
+  keyPrefix: "lesson-from-image",
+});
+
 const assistantRateLimit = createRateLimiter({
   windowMs: 60_000,
   max: 15,
@@ -67,6 +73,7 @@ export const API_ROUTES = [
   { prefix: "/api/sitemap", module: "./api-handlers/sitemap.js", allowGet: true, exact: true },
   { prefix: "/api/feed", module: "./api-handlers/feed.js", allowGet: true, exact: true },
   { prefix: "/api/admin/smart-cms", module: "./api-handlers/admin/smart-cms.js" },
+  { prefix: "/api/admin/lesson-from-image", module: "./api-handlers/admin/lesson-from-image.js", rateLimit: lessonFromImageRateLimit },
   { prefix: "/api/cron/monitor-sources", module: "./api-handlers/cron/monitor-sources.js", allowGet: true, exact: true },
   { prefix: "/api/admin/content-import", module: "./api-handlers/admin/content-import.js" },
   { prefix: "/api/cron/import-phase2-trial", module: "./api-handlers/cron/import-phase2-trial.js", allowGet: true, exact: true },
@@ -210,4 +217,4 @@ export async function getDevRouteHandler(route) {
   return mod.default;
 }
 
-export { assistantRateLimit, transcribeRateLimit, fiqhResearchRateLimit };
+export { assistantRateLimit, transcribeRateLimit, fiqhResearchRateLimit, lessonFromImageRateLimit };

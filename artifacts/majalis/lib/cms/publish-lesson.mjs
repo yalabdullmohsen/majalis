@@ -7,6 +7,13 @@ import { writeRevisionLogs } from "./audit-revision.mjs";
 
 function mapDraftToLesson(extracted, opts = {}) {
   const d = extracted || {};
+  const hasLive = Boolean(d.has_live_stream || d.live_url);
+  const hasWomen = Boolean(
+    d.has_women_section || (d.women_section && String(d.women_section).trim()),
+  );
+  const startDate = d.start_date || d.gregorian_date || null;
+  const keywords = Array.isArray(d.keywords) ? d.keywords.filter(Boolean) : [];
+
   return {
     title: d.title,
     speaker_name: d.speaker_name || d.sheikh_name || null,
@@ -14,13 +21,15 @@ function mapDraftToLesson(extracted, opts = {}) {
     mosque: d.mosque || d.location || null,
     city: d.city || d.governorate || "العاصمة",
     region: d.region || null,
+    country: d.country || "الكويت",
     category: d.category || "أخرى",
     day_of_week: d.day_of_week || d.day || null,
     lesson_time: d.lesson_time || d.time || null,
     schedule: d.schedule || d.day_of_week || null,
     description: d.description || d.raw_ocr_text?.slice(0, 2000) || null,
-    delivery: d.live_url ? "بث مباشر" : "حضور فقط",
-    audience: d.women_section ? "الكل" : "رجال",
+    delivery: hasLive ? (d.mosque ? "كلاهما" : "بث مباشر") : "حضور فقط",
+    audience: hasWomen ? "الكل" : "رجال",
+    has_women_place: hasWomen,
     status: "approved",
     activity_type: d.is_course ? "دورة" : d.activity_type || "درس",
     is_course: Boolean(d.is_course),
@@ -28,9 +37,15 @@ function mapDraftToLesson(extracted, opts = {}) {
     maps_url: d.maps_url || null,
     website_url: d.registration_url || d.website_url || null,
     poster_image_url: d.poster_image_url || opts.imageUrl || null,
-    external_key: d.external_key || buildExternalKey(d),
+    organizer: d.organizer || null,
+    cooperative_org: d.cooperative_org || null,
+    contact_phone: d.phone || d.contact_phone || null,
+    start_date: startDate || null,
     end_date: d.end_date || null,
+    keywords: keywords.length ? keywords : null,
+    external_key: d.external_key || buildExternalKey(d),
     slug: d.slug || null,
+    published_at: new Date().toISOString(),
   };
 }
 

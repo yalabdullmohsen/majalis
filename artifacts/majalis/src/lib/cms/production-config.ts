@@ -6,7 +6,8 @@ import { isSupabaseConfigured } from "@/lib/supabase-config";
 
 function envFlag(name: string): boolean {
   if (typeof import.meta !== "undefined" && import.meta.env) {
-    const v = import.meta.env[name];
+    const env = import.meta.env as ImportMetaEnv & Record<string, string | undefined>;
+    const v = env[name];
     if (v === "1" || v === "true") return true;
     if (v === "0" || v === "false") return false;
   }
