@@ -2014,7 +2014,7 @@ html[data-theme="dark"] .home-page {
 .page-shell {
   max-width: 56rem;
   margin: 0 auto;
-  padding: 2.5rem clamp(1rem, 4vw, 1.25rem) 4rem;
+  padding: 1.75rem clamp(1rem, 4vw, 1.25rem) 3rem;
 }
 
 .page-shell.narrow {
@@ -4867,28 +4867,27 @@ html[data-theme="dark"] .home-page {
 
 .ui-card {
   border: 1px solid rgba(224, 215, 196, 0.9);
-  border-radius: 1.15rem;
+  border-radius: 0.75rem;
   background: var(--majalis-panel);
-  box-shadow: 0 8px 28px rgba(36, 31, 24, 0.07);
-  transition: transform 0.16s ease, box-shadow 0.16s ease;
+  box-shadow: 0 1px 3px rgba(36, 31, 24, 0.05);
+  transition: box-shadow 0.16s ease, border-color 0.16s ease;
 }
 
 .ui-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 14px 36px rgba(36, 31, 24, 0.1);
+  box-shadow: 0 2px 8px rgba(36, 31, 24, 0.07);
 }
 
 .ui-card-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 44px;
-  padding: 0.65rem 1.15rem;
-  border-radius: 0.75rem;
+  min-height: 2.35rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 0.625rem;
   background: var(--majalis-emerald);
   color: var(--majalis-parchment);
-  font-weight: 700;
-  font-size: 0.88rem;
+  font-weight: 600;
+  font-size: 0.8125rem;
   text-align: center;
   transition: background 0.15s ease;
 }

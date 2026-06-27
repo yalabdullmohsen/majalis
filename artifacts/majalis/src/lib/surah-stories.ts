@@ -6,12 +6,17 @@ export type SurahStory = {
   namingReason: string;
   revelationTime: string;
   revelationPlace: string;
+  revelationType: "مكية" | "مدنية";
   ayahCount: number;
+  storySummary: string;
+  fullStory: string;
   mainThemes: string[];
   mainStories: string[];
   keyRulings: string[];
   lessons: string[];
   keyTopics: string[];
+  highlightAyahs: { ref: string; label: string }[];
+  relatedSurahs: { number: number; name: string; reason: string }[];
   virtues: string;
   connectionToPrevious: string;
   keywords: string[];
@@ -65,24 +70,83 @@ function buildStories(meta: SurahMeta): string[] {
   ];
 }
 
+function buildStorySummary(meta: SurahMeta, stories: string[], namingReason: string): string {
+  const lead = stories[0] || meta.mainTopics[0] || namingReason;
+  const second =
+    meta.themes[0] ||
+    (meta.revelation === "مكية" ? "تركز على التوحيد والإيمان" : "تتناول أحكاماً وبناء المجتمع");
+  const line1 = lead.length > 72 ? `${lead.slice(0, 70)}…` : lead;
+  const line2 = second.length > 72 ? `${second.slice(0, 70)}…` : second;
+  return `${line1} — ${line2}`;
+}
+
+function buildFullStory(meta: SurahMeta, stories: string[]): string {
+  const intro =
+    meta.revelation === "مكية"
+      ? `سورة ${meta.name} من السور المكية، وتُعرّف القارئ بأساسيات الإيمان والموعظة.`
+      : `سورة ${meta.name} من السور المدنية، وترتبط بتشريعات وبناء الحياة الإسلامية.`;
+  const body = stories.map((s, i) => `${i + 1}. ${s}`).join("\n\n");
+  return `${intro}\n\n${body}`;
+}
+
+function buildHighlightAyahs(number: number, name: string): { ref: string; label: string }[] {
+  const known: Record<number, { ref: string; label: string }[]> = {
+    1: [{ ref: "1:1", label: "افتتاح القرآن" }, { ref: "1:5", label: "طلب الهداية" }],
+    2: [{ ref: "2:255", label: "آية الكرسي" }, { ref: "2:286", label: "خاتمة السورة" }],
+    12: [{ ref: "12:3", label: "أحسن القصص" }, { ref: "12:100", label: "لقاء يعقوب" }],
+    18: [{ ref: "18:10", label: "أصحاب الكهف" }, { ref: "18:83", label: "ذو القرنين" }],
+    36: [{ ref: "36:1", label: "يس" }, { ref: "36:82", label: "إنما أمره إذا أراد شيئاً" }],
+    112: [{ ref: "112:1", label: "قل هو الله أحد" }],
+  };
+  if (known[number]) return known[number];
+  return [{ ref: `${number}:1`, label: `افتتاح سورة ${name}` }];
+}
+
+function buildRelatedSurahs(number: number, meta: SurahMeta): { number: number; name: string; reason: string }[] {
+  const related: { number: number; name: string; reason: string }[] = [];
+  if (number > 1) {
+    const prev = getSurahMeta(number - 1);
+    related.push({ number: prev.number, name: prev.name, reason: "السورة السابقة في المصحف" });
+  }
+  if (number < 114) {
+    const next = getSurahMeta(number + 1);
+    related.push({ number: next.number, name: next.name, reason: "السورة التالية في المصحف" });
+  }
+  const themePeer = [36, 55, 67, 112].find(
+    (n) => n !== number && meta.themes.some((t) => getSurahMeta(n).themes.includes(t)),
+  );
+  if (themePeer) {
+    const peer = getSurahMeta(themePeer);
+    related.push({ number: peer.number, name: peer.name, reason: "موضوع قرآني مشابه" });
+  }
+  return related.slice(0, 3);
+}
+
 export function getSurahStory(surahNumber: number): SurahStory {
   const meta = getSurahMeta(surahNumber);
+  const namingReason = buildNamingReason(meta);
+  const mainStories = buildStories(meta);
   return {
     number: meta.number,
     name: meta.name,
-    namingReason: buildNamingReason(meta),
+    namingReason,
     revelationTime: meta.revelationOrder
       ? `ترتيب النزول: ${meta.revelationOrder}`
       : meta.revelation === "مكية"
         ? "نزلت في مكة — قبل الهجرة"
         : "نزلت في المدينة — بعد الهجرة",
     revelationPlace: meta.revelation === "مكية" ? "مكة المكرمة" : "المدينة المنورة",
+    revelationType: meta.revelation,
     ayahCount: meta.ayahs,
+    storySummary: buildStorySummary(meta, mainStories, namingReason),
+    fullStory: buildFullStory(meta, mainStories),
     mainThemes: meta.themes,
-    mainStories: buildStories(meta),
+    mainStories,
     keyRulings: meta.keyRulings,
     lessons: meta.keyBenefits,
     keyTopics: meta.mainTopics,
+    highlightAyahs: buildHighlightAyahs(meta.number, meta.name),
+    relatedSurahs: buildRelatedSurahs(meta.number, meta),
     virtues: meta.virtues || "الفضل العام لتلاوة القرآن — لا تُثبت فضيلة خاصة إلا بدليل.",
     connectionToPrevious: meta.openingClosingConnection,
     keywords: [...meta.themes, ...meta.mainTopics.slice(0, 3), meta.name],

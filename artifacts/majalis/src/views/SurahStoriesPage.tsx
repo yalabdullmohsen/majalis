@@ -1,46 +1,61 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Link } from "wouter";
 import { PageHeader } from "@/components/ui-common";
+import { QuranSubnav } from "@/components/quran/QuranSubnav";
 import { getAllSurahStories, getSurahStory, searchSurahStories } from "@/lib/surah-stories";
+
+function parseAyahLink(ref: string): string {
+  const [surah, ayah] = ref.split(":");
+  return `/quran/surah/${surah}?ayah=${ayah}`;
+}
 
 export default function SurahStoriesPage() {
   const [search, setSearch] = useState("");
-  const stories = search.trim() ? searchSurahStories(search) : getAllSurahStories();
+  const stories = useMemo(
+    () => (search.trim() ? searchSurahStories(search) : getAllSurahStories()),
+    [search],
+  );
 
   return (
-    <div className="page-shell surah-stories-page">
+    <div className="page-shell surah-stories-page calm-page">
       <PageHeader
         eyebrow="القرآن"
-        title="موسوعة قصص السور"
-        subtitle="114 سورة — سبب التسمية، زمان ومكان النزول، المحاور، والقصص القرآنية الموثقة."
+        title="قصص السور"
+        subtitle="114 سورة — ملخصات سريعة وقراءة مريحة للقصص القرآنية الموثقة."
       />
 
-      <nav className="quran-subnav" aria-label="أقسام القرآن">
-        <Link href="/quran" className="quran-subnav__link">المصحف</Link>
-        <Link href="/quran/tajweed" className="quran-subnav__link">التجويد</Link>
-        <Link href="/quran/surah-stories" className="quran-subnav__link is-active">قصص السور</Link>
-        <Link href="/quran-live" className="quran-subnav__link">البث المباشر</Link>
-        <Link href="/quran-radio" className="quran-subnav__link">الإذاعات</Link>
-      </nav>
+      <QuranSubnav />
 
-      <input
-        className="quran-search ui-card"
-        placeholder="ابحث في السور..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        aria-label="بحث في قصص السور"
-      />
+      <div className="surah-stories-toolbar">
+        <input
+          className="page-search-input full"
+          placeholder="ابحث بالاسم أو الرقم..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          aria-label="بحث في قصص السور"
+        />
+        <span className="surah-stories-count">{stories.length} سورة</span>
+      </div>
 
-      <div className="surah-stories-grid">
+      <div className="surah-stories-grid surah-stories-grid--compact">
         {stories.map((s) => (
-          <Link key={s.number} href={`/quran/surah-stories/${s.number}`} className="surah-story-card ui-card">
-            <span className="surah-story-num">{s.number}</span>
-            <strong>{s.name}</strong>
-            <p>{s.namingReason.slice(0, 80)}{s.namingReason.length > 80 ? "…" : ""}</p>
-            <span className="surah-story-meta">{s.ayahCount} آية · {s.revelationPlace}</span>
-          </Link>
+          <article key={s.number} className="surah-story-card-v2">
+            <div className="surah-story-card-v2__head">
+              <span className="surah-story-card-v2__num">{s.number}</span>
+              <div>
+                <h2 className="surah-story-card-v2__name">{s.name}</h2>
+                <p className="surah-story-card-v2__meta">
+                  {s.revelationType} · {s.ayahCount} آية
+                </p>
+              </div>
+            </div>
+            <p className="surah-story-card-v2__summary">{s.storySummary}</p>
+            <Link href={`/quran/surah-stories/${s.number}`} className="calm-btn calm-btn--primary">
+              اقرأ القصة
+            </Link>
+          </article>
         ))}
       </div>
     </div>
@@ -49,26 +64,81 @@ export default function SurahStoriesPage() {
 
 export function SurahStoryDetailPage({ surahNumber }: { surahNumber: number }) {
   const story = getSurahStory(surahNumber >= 1 && surahNumber <= 114 ? surahNumber : 1);
+  const prev = story.number > 1 ? story.number - 1 : null;
+  const next = story.number < 114 ? story.number + 1 : null;
 
   return (
-    <div className="page-shell surah-story-detail">
-      <PageHeader eyebrow={`سورة ${story.number}`} title={story.name} subtitle={story.revelationPlace} />
+    <div className="page-shell surah-story-detail calm-page calm-reading">
+      <nav className="surah-story-detail-nav" aria-label="تنقل القصص">
+        <Link href="/quran/surah-stories" className="calm-btn calm-btn--ghost">← كل القصص</Link>
+        <div className="surah-story-detail-nav__pager">
+          {prev && <Link href={`/quran/surah-stories/${prev}`} className="calm-btn calm-btn--ghost">السابقة</Link>}
+          {next && <Link href={`/quran/surah-stories/${next}`} className="calm-btn calm-btn--ghost">التالية</Link>}
+        </div>
+      </nav>
 
-      <article className="ui-card surah-story-article">
-        <section><h2>سبب التسمية</h2><p>{story.namingReason}</p></section>
-        <section><h2>زمان ومكان النزول</h2><p>{story.revelationTime} — {story.revelationPlace}</p></section>
-        <section><h2>عدد الآيات</h2><p>{story.ayahCount} آية</p></section>
-        <section><h2>المحاور الرئيسية</h2><ul>{story.mainThemes.map((t) => <li key={t}>{t}</li>)}</ul></section>
-        <section><h2>أبرز القصص</h2><ul>{story.mainStories.map((t) => <li key={t}>{t}</li>)}</ul></section>
-        <section><h2>أبرز الأحكام</h2><ul>{story.keyRulings.map((t) => <li key={t}>{t}</li>)}</ul></section>
-        <section><h2>الدروس المستفادة</h2><ul>{story.lessons.map((t) => <li key={t}>{t}</li>)}</ul></section>
-        <section><h2>أهم الموضوعات</h2><ul>{story.keyTopics.map((t) => <li key={t}>{t}</li>)}</ul></section>
-        <section><h2>فضل السورة</h2><p>{story.virtues}</p></section>
-        <section><h2>المناسبة مع السورة السابقة</h2><p>{story.connectionToPrevious}</p></section>
-        <section><h2>الكلمات المفتاحية</h2><p>{story.keywords.join("، ")}</p></section>
-        <section><h2>المصادر العلمية</h2><ul>{story.sources.map((t) => <li key={t}>{t}</li>)}</ul></section>
-        <p className="quran-source-note">{story.trustNote} · آخر مراجعة: {story.lastReviewed}</p>
-        <Link href={`/quran?surah=${story.number}`} className="page-action-btn">قراءة السورة</Link>
+      <header className="surah-story-detail-hero">
+        <p className="page-eyebrow">سورة {story.number}</p>
+        <h1 className="surah-story-detail-title">{story.name}</h1>
+        <p className="surah-story-detail-lead">
+          {story.revelationType} · {story.ayahCount} آية · {story.revelationPlace}
+        </p>
+      </header>
+
+      <article className="surah-story-article-v2">
+        <section className="surah-story-section">
+          <h2>سبب التسمية</h2>
+          <p>{story.namingReason}</p>
+        </section>
+
+        <section className="surah-story-section">
+          <h2>المحاور الرئيسة</h2>
+          <ul>{story.mainThemes.map((t) => <li key={t}>{t}</li>)}</ul>
+        </section>
+
+        <section className="surah-story-section surah-story-section--prose">
+          <h2>القصة</h2>
+          {story.fullStory.split("\n\n").map((para) => (
+            <p key={para.slice(0, 24)}>{para}</p>
+          ))}
+        </section>
+
+        <section className="surah-story-section">
+          <h2>أهم الدروس المستفادة</h2>
+          <ul>{story.lessons.map((t) => <li key={t}>{t}</li>)}</ul>
+        </section>
+
+        <section className="surah-story-section">
+          <h2>أبرز الآيات</h2>
+          <ul className="surah-story-ayah-links">
+            {story.highlightAyahs.map((a) => (
+              <li key={a.ref}>
+                <Link href={parseAyahLink(a.ref)}>{a.label} ({a.ref})</Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        {story.relatedSurahs.length > 0 && (
+          <section className="surah-story-section">
+            <h2>سور مرتبطة</h2>
+            <ul className="surah-story-related">
+              {story.relatedSurahs.map((r) => (
+                <li key={r.number}>
+                  <Link href={`/quran/surah-stories/${r.number}`}>{r.name}</Link>
+                  <span>{r.reason}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        <footer className="surah-story-footer">
+          <p className="quran-source-note">{story.trustNote}</p>
+          <Link href={`/quran/surah/${story.number}`} className="calm-btn calm-btn--primary">
+            قراءة السورة في المصحف
+          </Link>
+        </footer>
       </article>
     </div>
   );

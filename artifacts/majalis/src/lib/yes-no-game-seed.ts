@@ -32,7 +32,7 @@ export const YES_NO_CATEGORIES: YesNoCategory[] = [
 export const YES_NO_QUESTIONS: YesNoQuestion[] = [
   { id: "aq-1", category: "العقيدة", question: "الإيمان بالقدر ركن من أركان الإيمان.", answer: true, explanation: "جاء في حديث جبريل عليه السلام أن الإيمان: «أن تؤمن بالله وملائكته وكتبه ورسله واليوم الآخر وتؤمن بالقدر خيره وشره»." },
   { id: "aq-2", category: "العقيدة", question: "يجوز للمسلم أن يطلب الشفاعة من الأموات.", answer: false, explanation: "الشفاعة الحقيقية لله تعالى، وما جاز من شفاعة النبي ﷺ وغيره فبإذن الله وبعد استئذانه." },
-  { id: "fq-1", category: "الفقه", question: "الوitr سنة مؤكدة في رمضان وغيره.", answer: true, explanation: "الوitr سنة مؤكدة، وفي رمضان له أجر أعظم لكنه ليس واجباً." },
+  { id: "fq-1", category: "الفقه", question: "الوتر سنة مؤكدة في رمضان وغيره.", answer: true, explanation: "الوتر سنة مؤكدة، وفي رمضان له أجر أعظم لكنه ليس واجباً." },
   { id: "fq-2", category: "الفقه", question: "يجوز للمسافر أن يقصر الصلاة الرباعية في السفر الطويل.", answer: true, explanation: "القصر للمسافر في الصلاة الرباعية رخصة ثابتة في السنة." },
   { id: "sr-1", category: "السيرة", question: "هاجر النبي ﷺ من مكة إلى المدينة.", answer: true, explanation: "الهجرة النبوية من مكة إلى يثرب (المدينة) في عام 622م." },
   { id: "sr-2", category: "السيرة", question: "ولد النبي ﷺ في المدينة المنورة.", answer: false, explanation: "ولد النبي ﷺ في مكة المكرمة عام الفيل." },

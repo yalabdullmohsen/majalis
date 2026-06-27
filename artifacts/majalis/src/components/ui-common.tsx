@@ -2,13 +2,11 @@ import { C } from "@/lib/theme";
 
 export function PageHeader({ eyebrow, title, subtitle }: { eyebrow?: string; title: string; subtitle?: string }) {
   return (
-    <div style={{ marginBottom: "1.5rem" }}>
-      {eyebrow && <p style={{ fontSize: "0.875rem", marginBottom: "0.5rem", color: C.brassDeep }}>{eyebrow}</p>}
-      <h1 style={{ fontSize: "1.5rem", fontWeight: 700, marginBottom: "0.75rem", color: C.emeraldDeep }}>
-        {title}
-      </h1>
-      {subtitle && <p style={{ fontSize: "0.875rem", lineHeight: "1.75", color: C.inkSoft }}>{subtitle}</p>}
-    </div>
+    <header className="page-header calm-header">
+      {eyebrow && <p className="page-eyebrow">{eyebrow}</p>}
+      <h1 className="page-title">{title}</h1>
+      {subtitle && <p className="page-subtitle">{subtitle}</p>}
+    </header>
   );
 }
 

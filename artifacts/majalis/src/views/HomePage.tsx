@@ -81,7 +81,7 @@ const LIBRARY_ITEMS = [
 const QURAN_ITEMS = [
   { title: "المصحف الشريف", href: "/quran", meta: "قراءة", summary: "114 سورة بالرسم العثماني مع تلاوات وتفسير." },
   { title: "علم التجويد", href: "/quran/tajweed", meta: "تجويد", summary: "دروس التجويد مع أمثلة واختبارات." },
-  { title: "قصص السور", href: "/quran/surah-stories", meta: "موسوعة", summary: "موسوعة قصص السور الموثقة." },
+  { title: "قصص السور", href: "/quran/surah-stories", meta: "114 سورة", summary: "ملخصات سريعة وقصص قرآنية موثقة." },
   { title: "البث المباشر", href: "/quran-live", meta: "بث", summary: "قنوات القرآن والحرمين الشريفين." },
   { title: "إذاعات القرآن", href: "/quran-radio", meta: "استماع", summary: "إذاعات الكويت والسعودية وغيرها." },
   { title: "الورد اليومي", href: "/daily-wird", meta: "متابعة", summary: "خطة قراءة يومية محفوظة محلياً." },

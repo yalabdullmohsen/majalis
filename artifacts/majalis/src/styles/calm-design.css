@@ -1,0 +1,383 @@
+/* Calm design system — Apple / Notion / Medium inspired, Islamic identity preserved */
+
+.calm-page {
+  --calm-radius: 0.625rem;
+  --calm-radius-lg: 0.75rem;
+}
+
+.calm-header,
+.page-header.calm-header {
+  margin-bottom: 1.25rem;
+}
+
+.page-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--majalis-brass-deep, #B08D2E);
+  margin: 0 0 0.35rem;
+}
+
+.page-title {
+  font-size: clamp(1.15rem, 3vw, 1.35rem);
+  font-weight: 650;
+  line-height: 1.35;
+  color: var(--majalis-emerald-deep);
+  margin: 0 0 0.4rem;
+}
+
+.page-subtitle {
+  font-size: 0.8125rem;
+  line-height: 1.65;
+  color: var(--majalis-ink-soft);
+  margin: 0;
+  max-width: 38rem;
+}
+
+.calm-panel {
+  border: 1px solid rgba(224, 215, 196, 0.75);
+  border-radius: var(--calm-radius-lg);
+  background: var(--majalis-panel);
+  padding: 1rem 1.1rem;
+  margin-bottom: 0.85rem;
+  box-shadow: 0 1px 2px rgba(36, 31, 24, 0.04);
+}
+
+.calm-section-title {
+  font-size: 0.875rem;
+  font-weight: 650;
+  margin: 0 0 0.65rem;
+  color: var(--majalis-emerald-deep);
+}
+
+.calm-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.25rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--calm-radius);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  border: 1px solid transparent;
+  text-decoration: none;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.calm-btn--primary {
+  background: var(--majalis-emerald);
+  color: var(--majalis-parchment);
+}
+
+.calm-btn--primary:hover {
+  background: var(--majalis-emerald-deep);
+}
+
+.calm-btn--secondary {
+  background: rgba(31, 110, 84, 0.08);
+  color: var(--majalis-emerald-deep);
+  border-color: rgba(31, 110, 84, 0.2);
+}
+
+.calm-btn--ghost {
+  background: transparent;
+  color: var(--majalis-ink-soft);
+  border-color: var(--majalis-line);
+}
+
+.calm-btn--ghost:hover,
+.calm-btn--ghost.is-active {
+  background: rgba(31, 110, 84, 0.06);
+  color: var(--majalis-emerald-deep);
+}
+
+.calm-reading {
+  max-width: 42rem;
+}
+
+/* Global calm overrides for cards/buttons on calm pages */
+.calm-page .ui-card {
+  border-radius: var(--calm-radius-lg);
+  box-shadow: 0 1px 3px rgba(36, 31, 24, 0.05);
+}
+
+.calm-page .ui-card:hover {
+  transform: none;
+  box-shadow: 0 2px 6px rgba(36, 31, 24, 0.06);
+}
+
+.calm-page .page-action-btn,
+.calm-page .ui-card-btn {
+  min-height: 2.25rem;
+  padding: 0.4rem 0.85rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  border-radius: var(--calm-radius);
+  box-shadow: none;
+}
+
+/* Surah stories v2 */
+.surah-stories-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.surah-stories-count {
+  font-size: 0.75rem;
+  color: var(--majalis-ink-soft);
+}
+
+.surah-stories-grid--compact {
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+}
+
+.surah-story-card-v2 {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 0.85rem 0.95rem;
+  border: 1px solid rgba(224, 215, 196, 0.8);
+  border-radius: var(--calm-radius-lg);
+  background: var(--majalis-panel);
+}
+
+.surah-story-card-v2__head {
+  display: flex;
+  gap: 0.65rem;
+  align-items: flex-start;
+}
+
+.surah-story-card-v2__num {
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: rgba(31, 110, 84, 0.1);
+  color: var(--majalis-emerald-deep);
+  flex-shrink: 0;
+}
+
+.surah-story-card-v2__name {
+  margin: 0;
+  font-size: 0.9375rem;
+  font-weight: 650;
+  color: var(--majalis-emerald-deep);
+}
+
+.surah-story-card-v2__meta {
+  margin: 0.15rem 0 0;
+  font-size: 0.72rem;
+  color: var(--majalis-ink-soft);
+}
+
+.surah-story-card-v2__summary {
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: var(--majalis-ink-soft);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.surah-story-detail-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.surah-story-detail-nav__pager {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.surah-story-detail-hero {
+  margin-bottom: 1.25rem;
+}
+
+.surah-story-detail-title {
+  font-size: clamp(1.2rem, 3.5vw, 1.45rem);
+  font-weight: 650;
+  margin: 0 0 0.35rem;
+  color: var(--majalis-emerald-deep);
+}
+
+.surah-story-detail-lead {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--majalis-ink-soft);
+}
+
+.surah-story-article-v2 {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.surah-story-section h2 {
+  font-size: 0.875rem;
+  font-weight: 650;
+  margin: 0 0 0.5rem;
+  color: var(--majalis-emerald-deep);
+}
+
+.surah-story-section p,
+.surah-story-section li {
+  font-size: 0.875rem;
+  line-height: 1.85;
+  color: var(--majalis-ink);
+}
+
+.surah-story-section ul {
+  margin: 0;
+  padding-inline-start: 1.15rem;
+}
+
+.surah-story-section--prose p {
+  margin: 0 0 0.85rem;
+}
+
+.surah-story-ayah-links a,
+.surah-story-related a {
+  color: var(--majalis-emerald-deep);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.surah-story-related li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  margin-bottom: 0.5rem;
+}
+
+.surah-story-related span {
+  font-size: 0.75rem;
+  color: var(--majalis-ink-soft);
+}
+
+.surah-story-footer {
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--majalis-line);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Sin Jeem hub */
+.sin-jeem-hub-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.sin-jeem-stats-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  font-size: 0.8125rem;
+  color: var(--majalis-ink-soft);
+}
+
+.sin-jeem-leaderboard {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.sin-jeem-leaderboard li {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8125rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid rgba(224, 215, 196, 0.5);
+}
+
+.sin-jeem-scoreboard {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+  margin-bottom: 0.75rem;
+}
+
+.sin-jeem-team-score {
+  border: 2px solid;
+  border-radius: var(--calm-radius);
+  padding: 0.55rem 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8125rem;
+}
+
+.sin-jeem-turn {
+  font-size: 0.75rem;
+  color: var(--majalis-ink-soft);
+  margin: 0 0 0.75rem;
+}
+
+.sin-jeem-team-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.75rem;
+}
+
+.sin-jeem-team-setup {
+  display: grid;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.sin-jeem-card__question {
+  margin: 0.35rem 0 0.75rem;
+  font-size: 1rem;
+  line-height: 1.75;
+  font-weight: 550;
+}
+
+.sin-jeem-verdict {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0 0 0.35rem;
+}
+
+.sin-jeem-verdict--yes { color: var(--majalis-emerald-deep); }
+.sin-jeem-verdict--no { color: #92400E; }
+
+.sin-jeem-explanation {
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: 1.8;
+  color: var(--majalis-ink-soft);
+}
+
+.sin-jeem-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.75rem;
+  padding-top: 0.65rem;
+  border-top: 1px solid var(--majalis-line);
+}
+
+@media (max-width: 879px) {
+  .surah-stories-grid--compact {
+    grid-template-columns: 1fr;
+  }
+}
