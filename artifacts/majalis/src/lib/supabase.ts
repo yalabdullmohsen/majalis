@@ -3,7 +3,6 @@ import { getSupabaseClient, bootstrapSupabaseFromServer } from "./supabase-boots
 import { arabicMatchAny, arabicSearchPatterns, ilikePattern } from "./arabic-search";
 import {
   DEMO_FAWAID,
-  DEMO_LIBRARY,
   DEMO_LESSONS,
   DEMO_QA_CATEGORIES,
   DEMO_SHEIKHS,
@@ -15,6 +14,14 @@ import { LESSONS_SEED, findSeedLessonById } from "./lessons-seed";
 import { DEMO_QUIZ_QUESTIONS } from "./quiz-seed";
 import { ADHKAR_CATEGORIES, filterAdhkar } from "./adhkar-seed";
 import { searchPlatformSeed } from "./platform-search";
+import {
+  filterLibraryCatalog,
+  getLibraryBookById,
+  mergeLibraryWithCatalog,
+  normalizeLibraryRow,
+  searchLibraryCatalog,
+  sortLibraryItems,
+} from "./library-service";
 import { safeSupabaseQuery, isMissingSchemaError } from "./safe-supabase";
 import { normalizeActivityType } from "./activity-label";
 import { isBootstrapOwnerEmail, isOwnerProfile, hasUnrestrictedAdminAccess, resolveUserEmail } from "./owner-config";
@@ -337,15 +344,13 @@ export async function moderateFawaid(id: string, status: string) {
 }
 
 export async function getLibrary({ type, category }: { type?: string; category?: string } = {}) {
-  const filterSeed = (rows: typeof DEMO_LIBRARY) => {
-    let result = rows;
-    if (type) result = result.filter((r) => r.type === type);
-    if (category) result = result.filter((r) => r.category === category);
-    return result;
-  };
+  const catalogFiltered = filterLibraryCatalog({
+    category: category && category !== "الكل" ? category : undefined,
+    type: type && type !== "الكل" ? type : undefined,
+  });
 
   if (!isConfigured) {
-    return { data: allowSeedFallback() ? filterSeed(DEMO_LIBRARY) : [], error: null, usingSeed: allowSeedFallback() };
+    return { data: catalogFiltered, error: null, usingSeed: true };
   }
 
   try {
@@ -354,15 +359,42 @@ export async function getLibrary({ type, category }: { type?: string; category?:
     if (category) q = q.eq("category", category);
     const { data, error } = await q.order("created_at", { ascending: false });
     if (error) throw error;
-    const rows = data || [];
+    const rows = (data || []).map((row) => normalizeLibraryRow(row));
     if (allowSeedFallback() && rows.length === 0) {
-      return { data: filterSeed(DEMO_LIBRARY), error: null, usingSeed: true };
+      return { data: catalogFiltered, error: null, usingSeed: true };
     }
-    return { data: rows, error: null, usingSeed: false };
+    const merged = sortLibraryItems(mergeLibraryWithCatalog(rows));
+    let result = merged;
+    if (category && category !== "الكل") result = result.filter((row) => row.category === category);
+    if (type && type !== "الكل") result = result.filter((row) => row.type === type);
+    return { data: result, error: null, usingSeed: false };
   } catch (err) {
     logSupabaseError("getLibrary", err);
-    return { data: allowSeedFallback() ? filterSeed(DEMO_LIBRARY) : [], error: null, usingSeed: allowSeedFallback() };
+    return { data: allowSeedFallback() ? catalogFiltered : [], error: null, usingSeed: allowSeedFallback() };
   }
+}
+
+export async function getLibraryItemById(id: string) {
+  if (!id) return { data: null, error: null };
+
+  if (isConfigured) {
+    try {
+      const { data, error } = await supabase
+        .from("library_items")
+        .select("*")
+        .eq("id", id)
+        .eq("status", "approved")
+        .maybeSingle();
+      if (!error && data) {
+        return { data: normalizeLibraryRow(data), error: null };
+      }
+    } catch (err) {
+      logSupabaseError("getLibraryItemById", err);
+    }
+  }
+
+  const catalog = getLibraryBookById(id);
+  return { data: catalog, error: catalog ? null : new Error("not found") };
 }
 
 export async function getMiracles({ category, sourceType }: { category?: string; sourceType?: string } = {}) {
@@ -984,9 +1016,22 @@ async function searchLibraryFallback(term: string) {
     })
   );
   const rows = mergeUniqueById(responses.flatMap((r) => r.data || [])).filter((it: any) =>
-    arabicMatchAny([it.title, it.description, it.category, it.type], term)
+    arabicMatchAny([it.title, it.description, it.category, it.type, it.author, it.author_name], term)
   );
-  return { data: rows, errors: responses.map((r) => r.error).filter(Boolean) };
+  if (rows.length > 0) {
+    return { data: rows, errors: responses.map((r) => r.error).filter(Boolean) };
+  }
+  return {
+    data: searchLibraryCatalog(term).map((book) => ({
+      id: book.id,
+      title: book.title,
+      type: book.type,
+      description: book.description,
+      category: book.category,
+      author: book.author,
+    })),
+    errors: responses.map((r) => r.error).filter(Boolean),
+  };
 }
 
 async function searchQaFallback(term: string) {

@@ -21,7 +21,7 @@ const inventory = {
   miracles: countMatches("src/lib/miracles-seed.ts", /id: "miracle-/g),
   fawaidCurated: countMatches("src/lib/fawaid-curated-seed.ts", /fawaid-curated-/g),
   fawaidSeed: countMatches("src/lib/fawaid-seed.ts", /"id": "seed-fawaid-/g),
-  library: countMatches("src/lib/library-seed.ts", /id: "lib-/g),
+  library: countMatches("src/lib/library-catalog.ts", /id: "book-/g),
   sheikhs: countMatches("src/lib/sheikhs-seed.ts", /id: "sheikh-/g),
   lessons: countMatches("src/lib/lessons-seed.ts", /id: "/g),
   qa: countMatches("src/lib/qa-seed.ts", /"id":/g),

@@ -255,6 +255,7 @@ export default function SearchPage() {
   const legacyTotal =
     fiqhResults.length +
     results.lessons.length +
+    results.library.length +
     results.miracles.length +
     results.qa.length +
     results.fawaid.length +
@@ -397,6 +398,14 @@ export default function SearchPage() {
                   />
                   <Group title="الفوائد" items={results.fawaid} render={(f) => (
                     <ResultRow key={f.id} href="/fawaid" title={displayText(f.text)} meta={f.author_name} />
+                  )} />
+                  <Group title="المكتبة" items={results.library} render={(book) => (
+                    <ResultRow
+                      key={book.id}
+                      href={`/library/${book.id}`}
+                      title={displayText(book.title)}
+                      meta={[book.author || book.author_name, book.category].filter(Boolean).join(" · ")}
+                    />
                   )} />
                   <Group title="الأسئلة والأجوبة" items={results.qa} render={(x) => (
                     <ResultRow key={x.id} href="/qa" title={displayText(x.question)} meta={x.qa_categories?.name} />
