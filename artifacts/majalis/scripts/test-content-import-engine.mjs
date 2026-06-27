@@ -155,6 +155,25 @@ test("content-import API disables inline import", () => {
   assert(!src.includes("runContentImportRows"), "must not run sync import in API");
 });
 
+test("staging aborts when job id is not persisted", async () => {
+  const { stageImportRows } = await import("../lib/content-import/import-jobs.mjs");
+  const fakeJobId = "00000000-0000-4000-8000-000000000099";
+  const staged = await stageImportRows(fakeJobId, [{ text: "x" }], 0);
+  const adminConfigured = Boolean(process.env.SUPABASE_SERVICE_ROLE_KEY);
+  if (adminConfigured) {
+    assert(!staged.ok, "staging must fail for non-existent job when admin configured");
+    assert(staged.code === "job_not_persisted" || staged.code === "job_lookup_failed", "staging error code");
+  } else {
+    assert(!staged.ok && staged.code === "job_not_found", "memory mode rejects unknown job");
+  }
+});
+
+test("startImportJob returns error when createImportJob fails", async () => {
+  const { startImportJob } = await import("../lib/content-import/engine.mjs");
+  const bad = await startImportJob({ type: "not-a-real-type", filename: "x.csv", totalRows: 1 });
+  assert(!bad.ok && bad.code === "unsupported_type", "unsupported type rejected");
+});
+
 test("async job queue and dry-run process benefits", async () => {
   const { startImportJob, stageImportBatch, queueImportJob, processImportJob } = await import(
     "../lib/content-import/engine.mjs"

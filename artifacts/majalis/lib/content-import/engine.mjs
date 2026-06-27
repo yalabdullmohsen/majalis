@@ -183,15 +183,29 @@ export async function runContentImportFromString(opts) {
 export async function startImportJob({ type, filename, totalRows, createdBy }) {
   const def = resolveContentType(type);
   if (!def) {
-    return { ok: false, error: `unsupported_type: ${type}` };
+    return { ok: false, error: `unsupported_type: ${type}`, code: "unsupported_type" };
   }
-  const job = await createImportJob({
+  const created = await createImportJob({
     type: def.type,
     filename,
     totalRows: totalRows || 0,
     createdBy,
   });
-  return { ok: true, jobId: job.id, type: def.type, label: def.label };
+  if (!created.ok) {
+    return {
+      ok: false,
+      error: created.error || "job_create_failed",
+      code: created.code || "job_create_failed",
+    };
+  }
+  return {
+    ok: true,
+    jobId: created.id,
+    type: def.type,
+    label: def.label,
+    persisted: created.persisted,
+    via: created.via,
+  };
 }
 
 export async function stageImportBatch(jobId, rows, startIndex) {
@@ -202,7 +216,13 @@ export async function stageImportBatch(jobId, rows, startIndex) {
   }
 
   const staged = await stageImportRows(jobId, rows, startIndex);
-  if (!staged.ok) return { ok: false, error: staged.error || "stage_failed" };
+  if (!staged.ok) {
+    return {
+      ok: false,
+      error: staged.error || "stage_failed",
+      code: staged.code || "stage_failed",
+    };
+  }
 
   const processed = (job.processed_rows || 0) + rows.length;
   const total = Math.max(job.total_rows || 0, processed);

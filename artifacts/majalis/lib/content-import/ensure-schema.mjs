@@ -7,7 +7,7 @@ import { readFileSync } from "node:fs";
 import { getSupabaseAdmin } from "../supabase-admin.mjs";
 import { getPgClient } from "../database.mjs";
 import { migrationFilePath } from "../migration-paths.mjs";
-import { ensureImportTables } from "./import-jobs.mjs";
+import { ensureImportTables, recoverImportJobIntegrity } from "./import-jobs.mjs";
 
 const CONTENT_IMPORT_MIGRATION = "kuwait_lessons_extend.sql";
 
@@ -28,9 +28,19 @@ export async function ensureContentImportSchema() {
   }
 
   const ready = await lessonsImportColumnsReady(admin);
-  await ensureImportTables(admin);
+  const importJobs = await ensureImportTables(admin);
+  const integrity = importJobs.ok ? await recoverImportJobIntegrity() : { ok: false, error: importJobs.error };
 
-  if (ready.ok) return { ok: true, alreadyReady: true, importJobs: true };
+  if (ready.ok) {
+    return {
+      ok: importJobs.ok,
+      alreadyReady: true,
+      importJobs: importJobs.ok,
+      importJobsVia: importJobs.via,
+      integrity,
+      error: importJobs.ok ? undefined : importJobs.error,
+    };
+  }
 
   if (!ready.missing) {
     return { ok: false, error: ready.error || "lessons schema check failed" };
@@ -58,5 +68,5 @@ export async function ensureContentImportSchema() {
     return { ok: false, error: `Migration applied but columns still missing: ${after.error}` };
   }
 
-  return { ok: true, migrated: true, file: CONTENT_IMPORT_MIGRATION };
+  return { ok: true, migrated: true, file: CONTENT_IMPORT_MIGRATION, importJobs, integrity };
 }
