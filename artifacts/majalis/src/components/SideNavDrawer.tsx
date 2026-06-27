@@ -79,7 +79,7 @@ export function SideNavDrawer({ open, onClose }: Props) {
         onClick={close}
       />
       <aside
-        id="mobile-side-nav-drawer"
+        id="main-navigation-drawer"
         className="side-nav-drawer--v2"
         role="dialog"
         aria-modal="true"

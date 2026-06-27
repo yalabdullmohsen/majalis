@@ -70,7 +70,7 @@ export default function NavBar() {
   const { isAdmin, isLoggedIn, user, logout } = useAuth();
   const [location, navigate] = useLocation();
   const isMobile = useIsMobile();
-  const { drawerOpen, moreOpen, openDrawer, closeDrawer, closeMore, toggleMore, closeAll } = useMobileNavState();
+  const { isMenuOpen, moreOpen, toggleMenu, closeMenu, closeMore, toggleMore, closeAll } = useMobileNavState();
 
   const isActive = (href: string) => {
     const path = href.split("?")[0];
@@ -109,18 +109,21 @@ export default function NavBar() {
 
   return (
     <>
-      <header className="navbar-v3 sticky top-0 z-50 border-b" style={{ background: C.parchment, borderColor: C.line }}>
+      <header
+        className={`navbar-v3 sticky top-0 border-b${isMenuOpen || moreOpen ? " navbar-v3--menu-open" : ""}`}
+        style={{ background: C.parchment, borderColor: C.line }}
+      >
         <div className="navbar-v3__inner">
           <div className="navbar-v3__start">
             <button
               type="button"
               className="navbar-menu-btn navbar-menu-btn--drawer"
-              onClick={openDrawer}
-              aria-expanded={drawerOpen}
-              aria-controls="mobile-side-nav-drawer"
-              aria-label="فتح القائمة الجانبية"
+              onClick={toggleMenu}
+              aria-expanded={isMenuOpen}
+              aria-controls="main-navigation-drawer"
+              aria-label={isMenuOpen ? "إغلاق القائمة" : "فتح القائمة"}
             >
-              القائمة
+              {isMenuOpen ? "إغلاق" : "القائمة"}
             </button>
             <Link href="/" className="navbar-brand">
               <img
@@ -190,7 +193,7 @@ export default function NavBar() {
         </div>
       </header>
 
-      <SideNavDrawer open={drawerOpen} onClose={closeDrawer} />
+      <SideNavDrawer open={isMenuOpen} onClose={closeMenu} />
 
       {isMobile && (
         <MobileMoreMenu

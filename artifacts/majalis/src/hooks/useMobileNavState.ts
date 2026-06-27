@@ -1,35 +1,52 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useLocation } from "wouter";
-import { applyMobileNavBodyLock, releaseMobileNavBodyLock, resetMobileNavBodyLock } from "@/lib/mobile-nav-body-lock";
+import {
+  applyMobileNavBodyLock,
+  purgeStaleMobileNavLayers,
+  releaseMobileNavBodyLock,
+  resetMobileNavBodyLock,
+} from "@/lib/mobile-nav-body-lock";
 
 export function useMobileNavState() {
   const [location] = useLocation();
-  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
   const prevLocation = useRef(location);
 
-  const closeDrawer = useCallback(() => setDrawerOpen(false), []);
+  const closeMenu = useCallback(() => setIsMenuOpen(false), []);
   const closeMore = useCallback(() => setMoreOpen(false), []);
 
   const closeAll = useCallback(() => {
-    setDrawerOpen(false);
+    setIsMenuOpen(false);
     setMoreOpen(false);
     releaseMobileNavBodyLock();
   }, []);
 
-  const openDrawer = useCallback(() => {
+  const toggleMenu = useCallback(() => {
     setMoreOpen(false);
-    setDrawerOpen(true);
+    setIsMenuOpen((open) => !open);
+  }, []);
+
+  const openMenu = useCallback(() => {
+    setMoreOpen(false);
+    setIsMenuOpen(true);
   }, []);
 
   const toggleMore = useCallback(() => {
-    setDrawerOpen(false);
+    setIsMenuOpen(false);
     setMoreOpen((open) => !open);
   }, []);
 
   useEffect(() => {
     resetMobileNavBodyLock();
+    purgeStaleMobileNavLayers();
   }, []);
+
+  useEffect(() => {
+    if (!isMenuOpen && !moreOpen) {
+      purgeStaleMobileNavLayers();
+    }
+  }, [isMenuOpen, moreOpen]);
 
   useEffect(() => {
     if (prevLocation.current === location) return;
@@ -61,19 +78,24 @@ export function useMobileNavState() {
   }, [closeAll]);
 
   useEffect(() => {
-    if (!drawerOpen && !moreOpen) {
+    if (!isMenuOpen && !moreOpen) {
       releaseMobileNavBodyLock();
       return;
     }
     applyMobileNavBodyLock();
     return () => releaseMobileNavBodyLock();
-  }, [drawerOpen, moreOpen]);
+  }, [isMenuOpen, moreOpen]);
 
   return {
-    drawerOpen,
+    isMenuOpen,
+    setIsMenuOpen,
+    drawerOpen: isMenuOpen,
     moreOpen,
-    openDrawer,
-    closeDrawer,
+    toggleMenu,
+    openMenu,
+    closeMenu,
+    openDrawer: openMenu,
+    closeDrawer: closeMenu,
     closeMore,
     toggleMore,
     closeAll,
