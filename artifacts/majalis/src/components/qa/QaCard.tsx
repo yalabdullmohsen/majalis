@@ -22,8 +22,6 @@ type Props = {
 
 export function QaCard({ item, defaultOpen = false }: Props) {
   const [open, setOpen] = useState(defaultOpen);
-  const [fontSize, setFontSize] = useState(100);
-  const [readingMode, setReadingMode] = useState(false);
   const catName = item.qa_categories?.name;
   const question = displayText(item.question);
   const answer = displayText(item.answer);
@@ -37,9 +35,7 @@ export function QaCard({ item, defaultOpen = false }: Props) {
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
       >
-        <ReadingText fontSize={fontSize} readingMode={false} className="qa-card__question">
-          {question}
-        </ReadingText>
+        <ReadingText className="qa-card__question">{question}</ReadingText>
         <div className="qa-card__meta-row">
           {catName && <span className="page-tag">{catName}</span>}
           {item.ruling_type && <RulingBadge ruling={item.ruling_type} />}
@@ -49,9 +45,7 @@ export function QaCard({ item, defaultOpen = false }: Props) {
 
       {open && (
         <div className="qa-card__body">
-          <ReadingText fontSize={fontSize} readingMode={readingMode} className="qa-card__answer">
-            {answer}
-          </ReadingText>
+          <ReadingText className="qa-card__answer">{answer}</ReadingText>
           {item.evidence && (
             <div className="qa-card__evidence">
               <strong>الدليل:</strong> {displayText(item.evidence)}
@@ -68,10 +62,6 @@ export function QaCard({ item, defaultOpen = false }: Props) {
             contentType="qa"
             contentId={item.id}
             showSave={!isDemoId(item.id)}
-            fontSize={fontSize}
-            onFontSizeChange={setFontSize}
-            readingMode={readingMode}
-            onReadingModeChange={setReadingMode}
           />
         </div>
       )}

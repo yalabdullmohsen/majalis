@@ -35,11 +35,14 @@ function sanitizeClientMessage(message: string): string {
   return msg;
 }
 
-import { getSupabaseAnonKeyEnv, getSupabaseUrlEnv } from "./supabase-env";
+import {
+  getEffectiveSupabaseAnonKey,
+  getEffectiveSupabaseUrl,
+} from "./supabase-bootstrap";
 
 export function isSupabaseConfigured(): boolean {
-  const url = getSupabaseUrlEnv();
-  const key = getSupabaseAnonKeyEnv();
+  const url = getEffectiveSupabaseUrl();
+  const key = getEffectiveSupabaseAnonKey();
   if (!url.startsWith("http") || key.length <= 20) return false;
   if (/placeholder|_supabase/i.test(url) || /placeholder/i.test(key)) return false;
   try {
@@ -50,6 +53,9 @@ export function isSupabaseConfigured(): boolean {
     return false;
   }
 }
+
+/** Re-export for modules that check bootstrap state */
+export { isEffectiveSupabaseConfigured } from "./supabase-bootstrap";
 
 export function logSupabaseError(scope: string, error: unknown, extra?: Record<string, unknown>) {
   console.error(`[majalis:${scope}]`, error, extra ?? "");

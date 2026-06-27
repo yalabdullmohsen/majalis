@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { ADHKAR_CATEGORIES, type AdhkarItem } from "@/lib/adhkar-seed";
 import { ReadingToolbar } from "@/components/reading/ReadingToolbar";
 import { ReadingText } from "@/components/reading/ReadingText";
@@ -9,8 +8,6 @@ type Props = {
 };
 
 export function AdhkarCard({ item }: Props) {
-  const [fontSize, setFontSize] = useState(100);
-  const [readingMode, setReadingMode] = useState(false);
   const category = ADHKAR_CATEGORIES.find((c) => c.id === item.categoryId);
 
   return (
@@ -20,9 +17,7 @@ export function AdhkarCard({ item }: Props) {
         <span className="adhkar-card__count">× {item.count}</span>
       </div>
 
-      <ReadingText fontSize={fontSize} readingMode={readingMode} className="adhkar-card__text">
-        {item.text}
-      </ReadingText>
+      <ReadingText className="adhkar-card__text">{item.text}</ReadingText>
 
       <dl className="adhkar-card__meta">
         {item.narrator && (
@@ -41,14 +36,7 @@ export function AdhkarCard({ item }: Props) {
 
       <TasbeehCounter target={item.count} />
 
-      <ReadingToolbar
-        text={item.text}
-        title={category?.name || "ذكر"}
-        fontSize={fontSize}
-        onFontSizeChange={setFontSize}
-        readingMode={readingMode}
-        onReadingModeChange={setReadingMode}
-      />
+      <ReadingToolbar text={item.text} title={category?.name || "ذكر"} />
     </article>
   );
 }

@@ -1,4 +1,4 @@
-import { createClient } from "@supabase/supabase-js";
+import { getSupabaseClient, bootstrapSupabaseFromServer } from "./supabase-bootstrap";
 import { arabicMatchAny, arabicSearchPatterns, ilikePattern } from "./arabic-search";
 import {
   DEMO_FAWAID,
@@ -26,12 +26,10 @@ import { validateSheikhImage, safeUploadFileName } from "./file-validation";
 import { sanitizeFormRecord } from "./sanitize";
 import { isSupabaseConfigured, formatSupabaseError, logSupabaseError } from "./supabase-config";
 import { allowSeedFallback } from "@/lib/cms/production-config";
-import { getSupabaseAnonKeyEnv, getSupabaseUrlEnv } from "./supabase-env";
+
+export { bootstrapSupabaseFromServer };
 
 // Normalize to the bare project origin (https://xxx.supabase.co).
-// The supabase-js client appends /rest/v1, /auth/v1, etc. itself, so any
-// path (e.g. a stray "/rest/v1/") or trailing slash in the env value must be
-// stripped — otherwise requests become ".../rest/v1//auth/v1/signup" → PGRST125.
 function normalizeSupabaseUrl(raw: string): string {
   const v = (raw || "").trim();
   try {
@@ -41,16 +39,19 @@ function normalizeSupabaseUrl(raw: string): string {
   }
 }
 
-const url = normalizeSupabaseUrl(getSupabaseUrlEnv());
-const key = getSupabaseAnonKeyEnv();
-
 const isConfigured = isSupabaseConfigured();
 
 export { isSupabaseConfigured, formatSupabaseError };
 
-export const supabase = isConfigured
-  ? createClient(url, key)
-  : createClient("https://placeholder.supabase.co", "placeholder-anon-key-placeholder-anon-key-placeholder-anon-key-p" as string);
+/** Lazy proxy — picks up runtime config after bootstrapSupabaseFromServer() */
+export const supabase = new Proxy({} as ReturnType<typeof getSupabaseClient>, {
+  get(_target, prop) {
+    const client = getSupabaseClient();
+    const value = (client as unknown as Record<string | symbol, unknown>)[prop];
+    if (typeof value === "function") return (value as (...args: unknown[]) => unknown).bind(client);
+    return value;
+  },
+});
 
 export async function signUp(email: string, password: string, fullName: string) {
   return await supabase.auth.signUp({

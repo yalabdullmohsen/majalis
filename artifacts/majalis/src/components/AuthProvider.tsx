@@ -40,7 +40,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     let active = true;
     let unsubscribe: (() => void) | undefined;
 
-    import("@/lib/supabase")
+    import("@/lib/supabase-bootstrap")
+      .then(({ bootstrapSupabaseFromServer, resetSupabaseClient }) =>
+        bootstrapSupabaseFromServer().then(() => resetSupabaseClient()),
+      )
+      .then(() => import("@/lib/supabase"))
       .then((mod) => {
         if (!active) return;
         setAuthApi(mod);
@@ -53,7 +57,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         if (active) setLoading(false);
       });
 
-    import("@/lib/supabase").then((mod) => {
+    import("@/lib/supabase-bootstrap")
+      .then(({ bootstrapSupabaseFromServer, resetSupabaseClient }) =>
+        bootstrapSupabaseFromServer().then(() => resetSupabaseClient()),
+      )
+      .then(() => import("@/lib/supabase"))
+      .then((mod) => {
       const { data: sub } = mod.supabase.auth.onAuthStateChange(async () => {
         const next = await mod.getCurrentUser();
         if (active) setUser(next);

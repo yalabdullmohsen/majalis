@@ -3,7 +3,9 @@ import { Link, useLocation } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { mapAuthError } from "@/lib/auth-messages";
 import { isSupabaseConfigured } from "@/lib/supabase-config";
+import { bootstrapSupabaseFromServer } from "@/lib/supabase-bootstrap";
 import { supabase } from "@/lib/supabase";
+import { Loading } from "@/components/ui-common";
 
 export default function RegisterPage() {
   const { register, user, loading: authLoading } = useAuth();
@@ -15,7 +17,13 @@ export default function RegisterPage() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const authEnabled = isSupabaseConfigured();
+  const [authReady, setAuthReady] = useState(isSupabaseConfigured());
+  const authEnabled = authReady;
+
+  useEffect(() => {
+    if (authReady) return;
+    void bootstrapSupabaseFromServer().then((ok) => setAuthReady(ok || isSupabaseConfigured()));
+  }, [authReady]);
 
   useEffect(() => {
     if (!authLoading && user) navigate("/");
@@ -76,7 +84,13 @@ export default function RegisterPage() {
     }
   };
 
-  if (authLoading) return null;
+  if (authLoading || !authReady) {
+    return (
+      <div className="login-page">
+        <Loading />
+      </div>
+    );
+  }
 
   return (
     <div className="login-page">

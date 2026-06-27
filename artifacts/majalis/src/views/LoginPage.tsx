@@ -3,6 +3,7 @@ import { Link, useLocation } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { ADMIN_ACCESS_DENIED_MESSAGE, mapAuthError } from "@/lib/auth-messages";
 import { isSupabaseConfigured } from "@/lib/supabase-config";
+import { bootstrapSupabaseFromServer } from "@/lib/supabase-bootstrap";
 import { Loading } from "@/components/ui-common";
 
 function getNextPath() {
@@ -23,11 +24,17 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const [denied, setDenied] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [authReady, setAuthReady] = useState(isSupabaseConfigured());
   const { login, logout, refreshUser, isAdmin, isLoggedIn, loading: authLoading } = useAuth();
   const [, navigate] = useLocation();
   const nextPath = getNextPath();
   const adminLogin = isAdminLogin(nextPath);
-  const authEnabled = isSupabaseConfigured();
+  const authEnabled = authReady;
+
+  useEffect(() => {
+    if (authReady) return;
+    void bootstrapSupabaseFromServer().then((ok) => setAuthReady(ok || isSupabaseConfigured()));
+  }, [authReady]);
 
   useEffect(() => {
     if (authLoading) return;
@@ -84,7 +91,7 @@ export default function LoginPage() {
     }
   };
 
-  if (authLoading) {
+  if (authLoading || !authReady) {
     return (
       <div className="login-page">
         <Loading />

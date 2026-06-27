@@ -1,4 +1,5 @@
 import { useCallback, useState } from "react";
+import { Link } from "wouter";
 import { FavoriteButton } from "@/components/FavoriteButton";
 
 type Props = {
@@ -6,10 +7,6 @@ type Props = {
   title?: string;
   contentType?: string;
   contentId?: string;
-  fontSize?: number;
-  onFontSizeChange?: (size: number) => void;
-  readingMode?: boolean;
-  onReadingModeChange?: (enabled: boolean) => void;
   showSave?: boolean;
 };
 
@@ -22,34 +19,15 @@ async function copyText(text: string) {
   }
 }
 
+/** Minimal actions only — reading prefs live in /settings */
 export function ReadingToolbar({
   text,
   title = "نص",
   contentType,
   contentId,
-  fontSize: controlledSize,
-  onFontSizeChange,
-  readingMode: controlledReading,
-  onReadingModeChange,
   showSave = false,
 }: Props) {
-  const [internalSize, setInternalSize] = useState(100);
-  const [internalReading, setInternalReading] = useState(false);
   const [copied, setCopied] = useState(false);
-
-  const fontSize = controlledSize ?? internalSize;
-  const readingMode = controlledReading ?? internalReading;
-
-  const setFontSize = (size: number) => {
-    const next = Math.min(140, Math.max(85, size));
-    if (onFontSizeChange) onFontSizeChange(next);
-    else setInternalSize(next);
-  };
-
-  const setReadingMode = (enabled: boolean) => {
-    if (onReadingModeChange) onReadingModeChange(enabled);
-    else setInternalReading(enabled);
-  };
 
   const handleCopy = useCallback(async () => {
     const ok = await copyText(text);
@@ -66,33 +44,15 @@ export function ReadingToolbar({
         await navigator.share(payload);
         return;
       } catch {
-        /* user cancelled */
+        /* cancelled */
       }
     }
-    await copyText(text);
-    setCopied(true);
-    window.setTimeout(() => setCopied(false), 1800);
-  }, [text, title]);
+    await handleCopy();
+  }, [text, title, handleCopy]);
 
   return (
-    <div className="reading-toolbar" data-font-size={fontSize} data-reading-mode={readingMode}>
+    <div className="reading-toolbar reading-toolbar--minimal">
       <div className="reading-toolbar__group">
-        <button type="button" className="reading-toolbar__btn" onClick={() => setFontSize(fontSize - 5)} aria-label="تصغير الخط">
-          أ−
-        </button>
-        <span className="reading-toolbar__size">{fontSize}%</span>
-        <button type="button" className="reading-toolbar__btn" onClick={() => setFontSize(fontSize + 5)} aria-label="تكبير الخط">
-          أ+
-        </button>
-      </div>
-      <div className="reading-toolbar__group">
-        <button
-          type="button"
-          className={`reading-toolbar__btn${readingMode ? " reading-toolbar__btn--active" : ""}`}
-          onClick={() => setReadingMode(!readingMode)}
-        >
-          {readingMode ? "خروج القراءة" : "وضع القراءة"}
-        </button>
         <button type="button" className="reading-toolbar__btn" onClick={handleCopy}>
           {copied ? "تم النسخ" : "نسخ"}
         </button>
@@ -102,6 +62,9 @@ export function ReadingToolbar({
         {showSave && contentType && contentId && (
           <FavoriteButton contentType={contentType} contentId={contentId} compact />
         )}
+        <Link href="/settings" className="reading-toolbar__btn reading-toolbar__settings">
+          إعدادات القراءة
+        </Link>
       </div>
     </div>
   );

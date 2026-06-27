@@ -2,8 +2,8 @@ import { arabicMatchAny } from "@/lib/arabic-search";
 import { useEffect, useMemo, useState } from "react";
 import { getLibrary } from "@/lib/supabase";
 import { DEMO_LIBRARY } from "@/lib/demo-content";
-import { PageHeader, Loading, Empty, Chip } from "@/components/ui-common";
-import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
+import { Loading, Empty, Chip } from "@/components/ui-common";
+import { ContentHubLayout } from "@/components/layout/ContentHubLayout";
 import ContentActions from "@/components/ContentActions";
 import { isDemoId } from "@/lib/demo-content";
 
@@ -41,7 +41,7 @@ export default function LibraryPage({
     const s = search.trim();
     if (!s) return items;
     return items.filter((it) =>
-      arabicMatchAny([it.title, it.description, it.category, it.type], s)
+      arabicMatchAny([it.title, it.description, it.category, it.type], s),
     );
   }, [items, search]);
 
@@ -62,18 +62,16 @@ export default function LibraryPage({
   );
 
   return (
-    <div className="page-shell ds-page">
-      <PageHeader
-        eyebrow="الأرشيف العلمي"
-        title="المكتبة العلمية"
-        subtitle="كتب ومتون وتفريغات وملخصات ومقالات وصوتيات ومرئيات."
-      />
-
-      <div className="ds-section__head">
-        <p className="ds-section__title" style={{ margin: 0 }}>{filtered.length} مادة</p>
-        <FilterToggle onClick={() => setFiltersOpen(true)} label="بحث وتصفية" />
-      </div>
-
+    <ContentHubLayout
+      className="content-hub"
+      eyebrow="الأرشيف العلمي"
+      title="المكتبة العلمية"
+      subtitle="كتب ومتون وتفريغات وملخصات ومقالات وصوتيات ومرئيات."
+      stats={[{ label: "مادة", value: filtered.length }]}
+      filters={filtersPanel}
+      filtersOpen={filtersOpen}
+      onFiltersOpenChange={setFiltersOpen}
+    >
       {loading ? (
         <Loading />
       ) : filtered.length === 0 ? (
@@ -100,17 +98,6 @@ export default function LibraryPage({
           ))}
         </div>
       )}
-
-      <aside className="ds-filters-panel ds-filters-panel--desktop">
-        <div className="ds-filters-panel__head">
-          <h2>بحث وتصفية</h2>
-        </div>
-        {filtersPanel}
-      </aside>
-
-      <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="بحث وتصفية">
-        {filtersPanel}
-      </FilterBottomSheet>
-    </div>
+    </ContentHubLayout>
   );
 }
