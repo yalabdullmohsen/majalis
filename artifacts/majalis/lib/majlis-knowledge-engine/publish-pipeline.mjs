@@ -125,8 +125,13 @@ export async function executePublishPipeline({
 
     await enqueueJob({
       jobType: "notify_subscribers",
-      payload: { lessonId: pub.lesson.id, title: pub.lesson.title },
-      priority: 3,
+      payload: { lesson: pub.lesson, source },
+      priority: 7,
+    });
+    await enqueueJob({
+      jobType: "search_index",
+      payload: { lesson: pub.lesson },
+      priority: 4,
     });
 
     return {

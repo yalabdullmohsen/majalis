@@ -37,6 +37,7 @@ export const MIGRATION_FILES = [
   "lesson_intelligence_v6.sql",
   "instagram_graph_phase7_v1.sql",
   "majlis_knowledge_engine_v1.sql",
+  "majlis_knowledge_engine_v2.sql",
 ];
 
 export function resolveMigrationsDir() {

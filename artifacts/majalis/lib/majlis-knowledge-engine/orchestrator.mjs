@@ -14,8 +14,13 @@ import { resolveEntities } from "../cms/lesson-intelligence/entity-resolver.mjs"
 
 import { ENGINE_VERSION, PIPELINE_STAGES, PERFORMANCE } from "./config.mjs";
 import { listRegisteredSources, discoverFromSource } from "./source-registry.mjs";
-import { analyzeContentItem } from "./vision-intelligence.mjs";
-import { makeContentDecision } from "./decision-engine.mjs";
+import { analyzeContentItemV2 } from "./vision-intelligence-v2.mjs";
+import { makeMultiStageDecision } from "./decision-engine-v2.mjs";
+import { runQualityEngine } from "./quality-engine.mjs";
+import { buildPriorityQueue, upsertSourceScore, markDiscoveryComplete } from "./discovery-intelligence.mjs";
+import { runSelfHealing } from "./self-healing.mjs";
+import { processNotificationQueue } from "./notification-platform.mjs";
+import { indexLessonForSearch } from "./search-intelligence.mjs";
 import { executePublishPipeline } from "./publish-pipeline.mjs";
 import { applyContentUpdate, findExistingLessonBySourceUrl } from "./update-engine.mjs";
 import { archiveExpiredLessons } from "./expiry-engine.mjs";
@@ -66,7 +71,7 @@ async function processDiscoveredItem({ source, item, runId }) {
   const sourceUrl = item.link || item.url || source.source_url;
 
   const existing = await findExistingLessonBySourceUrl(sourceUrl);
-  const vision = await analyzeContentItem({ source, item });
+  const vision = await analyzeContentItemV2({ source, item });
   const parsed = vision.parsed || {};
   const images = item.mediaUrls || (item.imageUrl ? [item.imageUrl] : []);
   const imageUrl = item.imageUrl || images[0] || null;
@@ -77,6 +82,18 @@ async function processDiscoveredItem({ source, item, runId }) {
     hasSourceUrl: Boolean(sourceUrl),
     fieldCompleteness: fieldCompletenessScore(parsed),
   });
+
+  const quality = await runQualityEngine({
+    parsed,
+    source,
+    sourceUrl,
+    imageUrl,
+    visionMetrics: vision.metrics,
+  });
+
+  if (!quality.ok && quality.severity === "reject") {
+    return { outcome: "rejected", reasons: quality.blockers };
+  }
 
   if (existing) {
     const update = await applyContentUpdate({
@@ -94,7 +111,7 @@ async function processDiscoveredItem({ source, item, runId }) {
   let perceptualHash = null;
 
   const entities = await resolveEntities({ parsed, source, sourceUrl });
-  const decision = await makeContentDecision({
+  const decision = await makeMultiStageDecision({
     source,
     parsed,
     confidenceScore,
@@ -105,6 +122,7 @@ async function processDiscoveredItem({ source, item, runId }) {
     sheikhMatch: entities.sheikhMatch,
     mosqueMatch: entities.mosqueId ? { id: entities.mosqueId } : null,
     visionMetrics: vision.metrics,
+    quality,
   });
 
   if (AUTO_PUBLISH_KILL) {
@@ -177,14 +195,30 @@ export async function runMajlisKnowledgeEngine(opts = {}) {
       summary.stagesCompleted.push("queue");
     }
 
-    // Stage: Source intelligence (unified registry)
-    if (mode === "sources" || mode === "full") {
-      const sources = await listRegisteredSources({ activeOnly: true });
-      const maxSources = opts.maxSources ?? PERFORMANCE.cronMaxSources;
+    // Stage: Self-healing + notifications (v2)
+    if (mode === "full" || mode === "heal") {
+      summary.metadata.selfHeal = await runSelfHealing({ runId });
+      summary.metadata.notifications = await processNotificationQueue({ batchSize: 10 });
+      summary.stagesCompleted.push("self_heal", "notify");
+    }
 
-      for (const source of sources.slice(0, maxSources)) {
+    // Stage: Source intelligence (unified registry + priority queue)
+    if (mode === "sources" || mode === "full") {
+      const allSources = await listRegisteredSources({ activeOnly: true });
+      const sources = await buildPriorityQueue(allSources, {
+        maxItems: opts.maxSources ?? PERFORMANCE.cronMaxSources,
+      });
+      for (const source of sources) {
         summary.sourcesScanned += 1;
         const discovery = await discoverFromSource(source);
+
+        await upsertSourceScore(source, {
+          ok: discovery.ok,
+          itemsFound: discovery.items?.length ?? 0,
+          durationMs: discovery.durationMs,
+          error: discovery.error,
+        });
+        await markDiscoveryComplete(source.id, discovery);
 
         if (!discovery.ok) {
           summary.errors += 1;
@@ -192,7 +226,7 @@ export async function runMajlisKnowledgeEngine(opts = {}) {
         }
 
         if (discovery.manualAssistMode && !(discovery.items?.length)) {
-          continue; // skip empty manual-assist without items
+          continue;
         }
 
         const items = (discovery.items || []).slice(0, PERFORMANCE.cronMaxItemsPerSource);
@@ -300,3 +334,5 @@ export { listRegisteredSources, listSupportedPlatforms, upsertSourcePlugin } fro
 export { analyzeImage, analyzeContentItem, getVisionStatus } from "./vision-intelligence.mjs";
 export { makeContentDecision } from "./decision-engine.mjs";
 export { runQualityChecks } from "./quality-control.mjs";
+export { makeMultiStageDecision } from "./decision-engine-v2.mjs";
+export { runQualityEngine } from "./quality-engine.mjs";

@@ -7,16 +7,24 @@ import {
   runMajlisKnowledgeEngine,
   runMkeHealthCheck,
   getEngineMetrics,
+  getPlatformMonitoring,
   listRegisteredSources,
   listSupportedPlatforms,
   upsertSourcePlugin,
   analyzeImage,
+  analyzeImageV2,
   getVisionStatus,
   makeContentDecision,
+  makeMultiStageDecision,
   runQualityChecks,
+  runQualityEngine,
+  intelligentSearch,
+  recommendForLesson,
+  runSelfHealing,
   ENGINE_VERSION,
   PIPELINE_STAGES,
   SUPPORTED_SOURCE_TYPES,
+  INTELLIGENCE_LAYERS,
 } from "../../../lib/majlis-knowledge-engine/index.mjs";
 
 export default async function handler(req, res) {
@@ -28,15 +36,22 @@ export default async function handler(req, res) {
 
   try {
     if (action === "dashboard" || action === "metrics") {
-      const metrics = await getEngineMetrics();
+      const monitoring = await getPlatformMonitoring();
       sendJson(res, 200, {
         ok: true,
         engineVersion: ENGINE_VERSION,
+        intelligenceLayers: INTELLIGENCE_LAYERS,
         pipelineStages: PIPELINE_STAGES,
         supportedSourceTypes: SUPPORTED_SOURCE_TYPES.length,
         platforms: listSupportedPlatforms(),
-        stats: metrics,
+        stats: monitoring,
+        legacyMetrics: await getEngineMetrics(),
       });
+      return;
+    }
+
+    if (action === "monitoring") {
+      sendJson(res, 200, { ok: true, ...(await getPlatformMonitoring()) });
       return;
     }
 
@@ -102,12 +117,64 @@ export default async function handler(req, res) {
     }
 
     if (action === "quality-check") {
-      const quality = await runQualityChecks({
+      const fn = body.v2 !== false ? runQualityEngine : runQualityChecks;
+      const quality = await fn({
         parsed: body.parsed,
+        source: body.source,
         sourceUrl: body.sourceUrl,
+        imageUrl: body.imageUrl,
         imageHash: body.imageHash,
+        visionMetrics: body.visionMetrics,
       });
       sendJson(res, 200, { ok: true, ...quality });
+      return;
+    }
+
+    if (action === "decide-v2") {
+      const decision = await makeMultiStageDecision({
+        source: body.source,
+        parsed: body.parsed,
+        confidenceScore: body.confidenceScore,
+        sourceUrl: body.sourceUrl,
+        imageUrl: body.imageUrl,
+        visionMetrics: body.visionMetrics,
+        quality: body.quality,
+      });
+      sendJson(res, 200, decision);
+      return;
+    }
+
+    if (action === "search") {
+      const results = await intelligentSearch(body.query || body.q, { limit: body.limit });
+      sendJson(res, 200, { ok: true, ...results });
+      return;
+    }
+
+    if (action === "recommend") {
+      const rec = await recommendForLesson(body.lessonId, { limit: body.limit ?? 8 });
+      sendJson(res, 200, { ok: true, ...rec });
+      return;
+    }
+
+    if (action === "self-heal") {
+      const result = await runSelfHealing();
+      sendJson(res, 200, { ok: result.ok, ...result });
+      return;
+    }
+
+    if (action === "analyze-image-v2") {
+      if (!body.imageBase64) {
+        sendJson(res, 400, { ok: false, error: "imageBase64_required" });
+        return;
+      }
+      const buffer = Buffer.from(body.imageBase64, "base64");
+      const result = await analyzeImageV2({
+        imageBuffer: buffer,
+        mimeType: body.mimeType || "image/jpeg",
+        caption: body.caption,
+        sourceUrl: body.sourceUrl,
+      });
+      sendJson(res, 200, result);
       return;
     }
 
@@ -115,8 +182,9 @@ export default async function handler(req, res) {
       ok: false,
       error: "unknown_action",
       actions: [
-        "dashboard", "health", "list-sources", "upsert-source", "run",
-        "vision-status", "analyze-image", "decide", "quality-check",
+        "dashboard", "monitoring", "health", "list-sources", "upsert-source", "run",
+        "vision-status", "analyze-image", "analyze-image-v2", "decide", "decide-v2",
+        "quality-check", "search", "recommend", "self-heal",
       ],
     });
   } catch (err) {

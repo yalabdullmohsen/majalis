@@ -1,8 +1,13 @@
 /**
- * Async queue — retry logic, rate limiting, non-blocking jobs.
+ * Async queue — retry logic, rate limiting, real job handlers (v2).
  */
 import { getSupabaseAdmin } from "../supabase-admin.mjs";
 import { QUEUE_DEFAULTS } from "./config.mjs";
+import { analyzeImageV2 } from "./vision-intelligence-v2.mjs";
+import { linkPublishedLesson } from "./graph-linker.mjs";
+import { notifyLessonPublished } from "./notification-platform.mjs";
+import { indexLessonForSearch } from "./search-intelligence.mjs";
+import { markSeoRefresh } from "../cms/seo-refresh.mjs";
 
 export async function enqueueJob({ jobType, payload, priority = 5, maxRetries = QUEUE_DEFAULTS.maxRetries }) {
   const admin = getSupabaseAdmin();
@@ -84,15 +89,40 @@ export async function processQueue({ batchSize = QUEUE_DEFAULTS.batchSize, runId
 }
 
 async function executeJob(job, { runId }) {
+  const payload = job.payload || {};
+
   switch (job.job_type) {
-    case "notify_subscribers":
-      return { ok: true, notified: false, reason: "push_api_optional", lessonId: job.payload?.lessonId };
-    case "vision_analyze":
-      return { ok: true, deferred: true };
-    case "graph_link":
-      return { ok: true, deferred: true };
-    case "seo_refresh":
+    case "notify_subscribers": {
+      const lesson = payload.lesson || { id: payload.lessonId, title: payload.title };
+      return notifyLessonPublished({ lesson, source: payload.source, userIds: payload.userIds });
+    }
+    case "vision_analyze": {
+      if (!payload.imageBase64) return { ok: false, error: "missing_image" };
+      const buffer = Buffer.from(payload.imageBase64, "base64");
+      return analyzeImageV2({
+        imageBuffer: buffer,
+        mimeType: payload.mimeType || "image/jpeg",
+        caption: payload.caption,
+        sourceUrl: payload.sourceUrl,
+        source: payload.source,
+      });
+    }
+    case "graph_link": {
+      if (!payload.lessonId) return { ok: false, error: "missing_lesson_id" };
+      return linkPublishedLesson({
+        lessonId: payload.lessonId,
+        parsed: payload.parsed || {},
+        source: payload.source,
+        runId,
+      });
+    }
+    case "seo_refresh": {
+      await markSeoRefresh();
       return { ok: true, endpoints: ["/sitemap.xml", "/feed.xml"] };
+    }
+    case "search_index": {
+      return indexLessonForSearch(payload.lesson || { id: payload.lessonId });
+    }
     default:
       return { ok: true, skipped: true, jobType: job.job_type };
   }
@@ -102,7 +132,7 @@ export async function getQueueStats() {
   const admin = getSupabaseAdmin();
   if (!admin) return { pending: 0, running: 0, failed: 0 };
 
-  const counts = { pending: 0, running: 0, failed: 0, completed: 0 };
+  const counts = { pending: 0, running: 0, failed: 0, completed: 0, retry: 0 };
   for (const status of Object.keys(counts)) {
     try {
       const { count } = await admin
