@@ -88,6 +88,7 @@ const AutomationReviewPage = lazy(() => import("@/views/admin/AutomationReviewPa
 const AutomationDashboardPage = lazy(() => import("@/views/admin/AutomationDashboardPage"));
 const AutomationCenterPage = lazy(() => import("@/views/admin/AutomationCenterPage"));
 const InstagramIntegrationPage = lazy(() => import("@/views/admin/InstagramIntegrationPage"));
+const MajlisKnowledgeEnginePage = lazy(() => import("@/views/admin/MajlisKnowledgeEnginePage"));
 const AdminDashboardPage = lazy(() => import("@/views/admin/AdminDashboardPage"));
 const AutoContentPage = lazy(() => import("@/views/admin/AutoContentPage"));
 const FiqhReviewPage = lazy(() => import("@/views/admin/FiqhReviewPage"));
@@ -245,6 +246,15 @@ function Router() {
           <ErrorBoundary>
             <Suspense fallback={<Loading />}>
               <AutomationDashboardPage />
+            </Suspense>
+          </ErrorBoundary>
+        </AdminRouteGuard>
+      </Route>
+      <Route path="/admin/automation/platform">
+        <AdminRouteGuard>
+          <ErrorBoundary>
+            <Suspense fallback={<Loading />}>
+              <MajlisKnowledgeEnginePage />
             </Suspense>
           </ErrorBoundary>
         </AdminRouteGuard>
