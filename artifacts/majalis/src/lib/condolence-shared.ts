@@ -18,11 +18,9 @@ export const EXPORT_SIZES = {
   story: { width: 1080, height: 1350, previewW: 432, previewH: 540 },
 } as const;
 
-export const THULUTH_FONT =
-  '"Aref Ruqaa", "Amiri", "Scheherazade New", "Noto Naskh Arabic", "Cairo", serif';
+export const THULUTH_FONT = '"Cairo", sans-serif';
 
-export const BODY_FONT =
-  '"Aref Ruqaa", "Amiri", "Scheherazade New", "Noto Naskh Arabic", "Cairo", serif';
+export const BODY_FONT = '"Cairo", sans-serif';
 
 export function fitFontSize(
   text: string,

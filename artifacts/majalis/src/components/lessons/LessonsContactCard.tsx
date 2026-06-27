@@ -1,13 +1,15 @@
-const PHONE_E164 = "+96597400062";
-const PHONE_DISPLAY = "(965) 97400062";
+import { CONTACT_PHONE_DISPLAY, CONTACT_PHONE_E164, CONTACT_EMAIL } from "@/views/ContactPage";
 
 export function LessonsContactCard() {
   return (
-    <aside className="lessons-contact-card" aria-label="تواصل مع القائم على الموقع">
-      <h3 className="lessons-contact-card__title">تواصل مع القائم على الموقع</h3>
+    <aside className="lessons-contact-card" aria-label="تواصل معنا">
+      <h3 className="lessons-contact-card__title">تواصل معنا</h3>
       <div className="lessons-contact-card__links">
-        <a href={`tel:${PHONE_E164}`} className="lessons-contact-card__phone">
-          {PHONE_DISPLAY}
+        <a href={`mailto:${CONTACT_EMAIL}`} className="lessons-contact-card__email">
+          {CONTACT_EMAIL}
+        </a>
+        <a href={`tel:${CONTACT_PHONE_E164}`} className="lessons-contact-card__phone">
+          {CONTACT_PHONE_DISPLAY}
         </a>
         <a
           href={`https://wa.me/96597400062`}

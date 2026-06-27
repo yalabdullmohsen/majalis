@@ -12,6 +12,7 @@ import { ANNUAL_COURSES_SEED, findAnnualCourseById } from "./annual-courses-seed
 import { UPDATES_SEED, getSortedUpdates } from "./updates-seed";
 import { supabase, isSupabaseConfigured } from "./supabase";
 import { logSupabaseError } from "./supabase-config";
+import { allowSeedFallback } from "@/lib/cms/production-config";
 import type {
   AnnualCourse,
   Fatwa,
@@ -41,7 +42,7 @@ export {
 // ─── Fatwas ──────────────────────────────────────────────────────────────────
 
 export async function getFatwas(opts?: { category?: string; search?: string; format?: string }) {
-  let items = [...FATWA_SEED];
+  let items = allowSeedFallback() ? [...FATWA_SEED] : [];
   if (opts?.category && opts.category !== "الكل") {
     items = items.filter((f) => f.category === opts.category);
   }
@@ -50,7 +51,7 @@ export async function getFatwas(opts?: { category?: string; search?: string; for
   }
   items = filterBySearch(items, ["question", "answer", "summary", "category"], opts?.search);
 
-  if (!isConfigured) return { data: items, usingSeed: true };
+  if (!isConfigured) return { data: items, usingSeed: false };
 
   try {
     let query = supabase
@@ -72,17 +73,17 @@ export async function getFatwas(opts?: { category?: string; search?: string; for
     if (opts?.search?.trim()) {
       result = filterBySearch(result, ["question", "answer"], opts.search);
     }
-    if (result.length === 0 && items.length > 0) return { data: items, usingSeed: true };
+    if (result.length === 0 && items.length > 0 && allowSeedFallback()) return { data: items, usingSeed: false };
     return { data: result, usingSeed: false };
   } catch (err) {
     logSupabaseError("getFatwas", err);
-    return { data: items, usingSeed: true };
+    return { data: allowSeedFallback() ? items : [], usingSeed: false };
   }
 }
 
 export async function getFatwaById(id: string) {
-  const fallback = findFatwaById(id);
-  if (!isConfigured) return { data: fallback, usingSeed: true };
+  const fallback = allowSeedFallback() ? findFatwaById(id) : null;
+  if (!isConfigured) return { data: fallback, usingSeed: false };
 
   try {
     const byId = await supabase.from("fatwas").select("*").eq("id", id).eq("status", "approved").maybeSingle();
@@ -92,7 +93,7 @@ export async function getFatwaById(id: string) {
     return { data: (byKey.data as Fatwa) || fallback, usingSeed: !byKey.data && !!fallback };
   } catch (err) {
     logSupabaseError("getFatwaById", err, { id });
-    return { data: fallback, usingSeed: true };
+    return { data: fallback, usingSeed: false };
   }
 }
 
@@ -117,7 +118,7 @@ export async function getShariaRulingById(id: string) {
 // ─── Annual Courses ──────────────────────────────────────────────────────────
 
 export async function getAnnualCourses(opts?: { type?: string; search?: string; year?: number }) {
-  let items = [...ANNUAL_COURSES_SEED];
+  let items = allowSeedFallback() ? [...ANNUAL_COURSES_SEED] : [];
   if (opts?.type && opts.type !== "الكل") {
     items = items.filter((c) => c.course_type === opts.type);
   }
@@ -126,7 +127,7 @@ export async function getAnnualCourses(opts?: { type?: string; search?: string; 
   }
   items = filterBySearch(items, ["title", "summary", "body"], opts?.search);
 
-  if (!isConfigured) return { data: items, usingSeed: true };
+  if (!isConfigured) return { data: items, usingSeed: false };
 
   try {
     let query = supabase
@@ -146,17 +147,17 @@ export async function getAnnualCourses(opts?: { type?: string; search?: string; 
     if (opts?.search?.trim()) {
       result = filterBySearch(result, ["title", "summary"], opts.search);
     }
-    if (result.length === 0 && items.length > 0) return { data: items, usingSeed: true };
+    if (result.length === 0 && items.length > 0 && allowSeedFallback()) return { data: items, usingSeed: false };
     return { data: result, usingSeed: false };
   } catch (err) {
     logSupabaseError("getAnnualCourses", err);
-    return { data: items, usingSeed: true };
+    return { data: allowSeedFallback() ? items : [], usingSeed: false };
   }
 }
 
 export async function getAnnualCourseById(id: string) {
-  const fallback = findAnnualCourseById(id);
-  if (!isConfigured) return { data: fallback, usingSeed: true };
+  const fallback = allowSeedFallback() ? findAnnualCourseById(id) : null;
+  if (!isConfigured) return { data: fallback, usingSeed: false };
 
   try {
     const byId = await supabase.from("annual_courses").select("*").eq("id", id).eq("status", "approved").maybeSingle();
@@ -166,15 +167,15 @@ export async function getAnnualCourseById(id: string) {
     return { data: (byKey.data as AnnualCourse) || fallback, usingSeed: !byKey.data && !!fallback };
   } catch (err) {
     logSupabaseError("getAnnualCourseById", err, { id });
-    return { data: fallback, usingSeed: true };
+    return { data: fallback, usingSeed: false };
   }
 }
 
 // ─── Updates ─────────────────────────────────────────────────────────────────
 
 export async function getPlatformUpdates(limit = 50) {
-  const fallback = getSortedUpdates(limit);
-  if (!isConfigured) return { data: fallback, usingSeed: true };
+  const fallback = allowSeedFallback() ? getSortedUpdates(limit) : [];
+  if (!isConfigured) return { data: fallback, usingSeed: false };
 
   try {
     const { data, error } = await supabase
@@ -186,11 +187,11 @@ export async function getPlatformUpdates(limit = 50) {
 
     if (error) throw error;
     const result = (data || []) as PlatformUpdate[];
-    if (result.length === 0 && fallback.length > 0) return { data: fallback, usingSeed: true };
+    if (result.length === 0 && fallback.length > 0 && allowSeedFallback()) return { data: fallback, usingSeed: false };
     return { data: result, usingSeed: false };
   } catch (err) {
     logSupabaseError("getPlatformUpdates", err);
-    return { data: fallback, usingSeed: true };
+    return { data: allowSeedFallback() ? fallback : [], usingSeed: false };
   }
 }
 

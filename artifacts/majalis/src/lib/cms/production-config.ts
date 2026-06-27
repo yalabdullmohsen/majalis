@@ -30,7 +30,14 @@ export function isProductionContentMode(): boolean {
   return nodeEnv === "production";
 }
 
-/** Seed/demo data is allowed only outside production content mode. */
+/** Seed/demo data is never shown on the live site. */
 export function allowSeedFallback(): boolean {
-  return !isProductionContentMode();
+  return false;
+}
+
+/** Returns seed fallback only when allowed; otherwise empty array or null. */
+export function resolveSeedFallback<T>(fallback: T): T {
+  if (allowSeedFallback()) return fallback;
+  if (Array.isArray(fallback)) return [] as T;
+  return null as T;
 }

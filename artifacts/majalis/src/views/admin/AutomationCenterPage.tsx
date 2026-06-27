@@ -89,7 +89,7 @@ function AutomationCenterContent() {
     <div>
       <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "0.75rem", marginBottom: "1rem" }}>
         <div>
-          <h2 style={{ margin: "0 0 0.35rem", color: C.emeraldDeep }}>Automation Center — Phase 6</h2>
+          <h2 style={{ margin: "0 0 0.35rem", color: C.emeraldDeep }}>مركز الأتمتة</h2>
           <p style={{ margin: 0, color: C.inkSoft, fontSize: "0.875rem" }}>
             Lesson Intelligence Engine — اكتشاف وجمع وتحليل ونشر الدروس من جميع المصادر الرسمية.
           </p>
@@ -104,7 +104,7 @@ function AutomationCenterContent() {
             تشغيل المحرك الآن
           </button>
           <Link href="/admin/sources" style={{ color: C.emeraldDeep }}>المصادر</Link>
-          <Link href="/admin/automation/dashboard" style={{ color: C.emeraldDeep }}>لوحة Phase 5</Link>
+          <Link href="/admin/automation/dashboard" style={{ color: C.emeraldDeep }}>لوحة المراقبة</Link>
           <Link href="/admin/review-center" style={{ color: C.emeraldDeep }}>مركز المراجعة</Link>
         </div>
       </div>

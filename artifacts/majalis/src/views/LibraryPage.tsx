@@ -2,7 +2,7 @@ import { arabicMatchAny } from "@/lib/arabic-search";
 import { useEffect, useMemo, useState } from "react";
 import { getLibrary } from "@/lib/supabase";
 import { RequestManager } from "@/lib/request-manager";
-import { DEMO_LIBRARY } from "@/lib/demo-content";
+import { sortLibraryItems } from "@/lib/library-seed";
 import { Empty, Chip } from "@/components/ui-common";
 import { PageLoadingGuard } from "@/components/PageLoadingGuard";
 import { ContentHubLayout } from "@/components/layout/ContentHubLayout";
@@ -28,9 +28,9 @@ export default function LibraryPage({
       const { data } = await RequestManager.run("library:list", () =>
         getLibrary({ type: type === "الكل" ? undefined : type }),
       );
-      setItems(data);
+      setItems(sortLibraryItems(data || []));
     } catch {
-      setItems(DEMO_LIBRARY);
+      setItems([]);
     } finally {
       setLoading(false);
     }

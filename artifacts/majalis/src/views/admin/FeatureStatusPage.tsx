@@ -305,10 +305,10 @@ export default function FeatureStatusPage() {
                     <th>الميزة</th>
                     <th>PR</th>
                     <th>Route</th>
-                    <th>Mock</th>
+                    <th>محلي</th>
                     <th>الحالة</th>
                     <th>السبب</th>
-                    <th>اختبار</th>
+                    <th>تحقق</th>
                   </tr>
                 </thead>
                 <tbody>

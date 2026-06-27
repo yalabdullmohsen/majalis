@@ -4,7 +4,7 @@ type Props = {
   ayah: { numberInSurah: number; text: string };
   active: boolean;
   showNumber: boolean;
-  fontSize: number;
+  fontSize?: number;
   fontFamily: string;
   hideTashkeel: boolean;
   tafsir?: string;
@@ -69,7 +69,7 @@ export function AyahCard({
   return (
     <article
       className={`quran-v2-ayah-card${active ? " is-active" : ""}`}
-      style={{ fontSize: `${fontSize}px`, fontFamily }}
+      style={{ fontSize: fontSize ? `${fontSize}px` : "var(--quran-font-size)", fontFamily }}
       onClick={onSelect}
     >
       {showNumber && (

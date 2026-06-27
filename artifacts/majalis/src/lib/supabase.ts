@@ -27,6 +27,7 @@ import { validateSheikhImage, safeUploadFileName } from "./file-validation";
 import { sanitizeFormRecord } from "./sanitize";
 import { isSupabaseConfigured, formatSupabaseError, logSupabaseError } from "./supabase-config";
 import { allowSeedFallback } from "@/lib/cms/production-config";
+import { sortLibraryItems } from "./library-seed";
 
 export { bootstrapSupabaseFromServer };
 
@@ -155,9 +156,7 @@ export async function getSheikhs() {
 
 export async function getSheikhById(id: string) {
   if (!isConfigured) {
-    const sheikh = DEMO_SHEIKHS.find((s) => s.id === id) || null;
-    const lessons = DEMO_LESSONS.filter((l) => l.sheikhs?.name === sheikh?.name);
-    return { sheikh, lessons };
+    return { sheikh: null, lessons: [] as any[] };
   }
 
   try {
@@ -176,6 +175,9 @@ export async function getSheikhById(id: string) {
     return { sheikh, lessons: lessons || [] };
   } catch (err) {
     logSupabaseError("getSheikhById", err, { id });
+    if (!allowSeedFallback()) {
+      return { sheikh: null, lessons: [] as any[] };
+    }
     const sheikh = DEMO_SHEIKHS.find((s) => s.id === id) || DEMO_SHEIKHS[0] || null;
     const lessons = DEMO_LESSONS.filter((l) => l.sheikhs?.name === sheikh?.name);
     return { sheikh, lessons };
@@ -354,7 +356,7 @@ export async function getLibrary({ type, category }: { type?: string; category?:
     if (category) q = q.eq("category", category);
     const { data, error } = await q.order("created_at", { ascending: false });
     if (error) throw error;
-    const rows = data || [];
+    const rows = sortLibraryItems(data || []);
     if (allowSeedFallback() && rows.length === 0) {
       return { data: filterSeed(DEMO_LIBRARY), error: null, usingSeed: true };
     }
@@ -366,10 +368,10 @@ export async function getLibrary({ type, category }: { type?: string; category?:
 }
 
 export async function getMiracles({ category, sourceType }: { category?: string; sourceType?: string } = {}) {
-  const filterSeed = () => filterMiraclesSeed({ category, sourceType });
+  const filterSeed = () => (allowSeedFallback() ? filterMiraclesSeed({ category, sourceType }) : []);
 
   if (!isConfigured) {
-    return { data: filterSeed(), error: null, usingSeed: true };
+    return { data: filterSeed(), error: null, usingSeed: false };
   }
 
   try {
@@ -379,13 +381,13 @@ export async function getMiracles({ category, sourceType }: { category?: string;
     const { data, error } = await q.order("created_at", { ascending: false });
     if (error) throw error;
     const rows = data || [];
-    if (rows.length === 0) {
+    if (rows.length === 0 && allowSeedFallback()) {
       return { data: filterSeed(), error: null, usingSeed: true };
     }
     return { data: rows, error: null, usingSeed: false };
   } catch (err) {
     logSupabaseError("getMiracles", err);
-    return { data: filterSeed(), error: null, usingSeed: true };
+    return { data: filterSeed(), error: null, usingSeed: false };
   }
 }
 
@@ -718,7 +720,7 @@ export async function adminUpdateUserRole(userId: string, role: string) {
 
 export async function getQaCategories() {
   if (!isConfigured) {
-    return { data: DEMO_QA_CATEGORIES.filter((c) => c.id !== "all"), error: null, usingDemo: true };
+    return { data: [] as typeof DEMO_QA_CATEGORIES, error: null, usingDemo: false };
   }
 
   const { data, error } = await supabase
@@ -728,7 +730,11 @@ export async function getQaCategories() {
 
   if (error) {
     logSupabaseError("getQaCategories", error);
-    return { data: DEMO_QA_CATEGORIES.filter((c) => c.id !== "all"), error: null, usingDemo: true };
+    return {
+      data: allowSeedFallback() ? DEMO_QA_CATEGORIES.filter((c) => c.id !== "all") : [],
+      error: null,
+      usingDemo: false,
+    };
   }
 
   return { data: data || [], error: null, usingDemo: false };
@@ -820,6 +826,7 @@ export async function adminSetQuestionStatus(id: string, status: string) {
 
 export async function getQuizQuestions({ section, level }: { section?: string; level?: string } = {}) {
   const filterSeed = () => {
+    if (!allowSeedFallback()) return [] as typeof DEMO_QUIZ_QUESTIONS;
     let rows = DEMO_QUIZ_QUESTIONS.filter((q) => q.status !== "draft");
     if (section && section !== "الكل") rows = rows.filter((q) => q.section === section);
     if (level && level !== "الكل") rows = rows.filter((q) => q.level === level);
@@ -827,7 +834,7 @@ export async function getQuizQuestions({ section, level }: { section?: string; l
   };
 
   if (!isConfigured) {
-    return { data: filterSeed(), error: null, usingSeed: true };
+    return { data: filterSeed(), error: null, usingSeed: false };
   }
 
   try {
@@ -842,12 +849,12 @@ export async function getQuizQuestions({ section, level }: { section?: string; l
     if (error) throw error;
     const rows = data || [];
     if (rows.length === 0) {
-      return { data: filterSeed(), error: null, usingSeed: true };
+      return { data: filterSeed(), error: null, usingSeed: false };
     }
     return { data: rows, error: null, usingSeed: false };
   } catch (err) {
     logSupabaseError("getQuizQuestions", err);
-    return { data: filterSeed(), error: null, usingSeed: true };
+    return { data: filterSeed(), error: null, usingSeed: false };
   }
 }
 
@@ -1098,9 +1105,7 @@ export async function searchEverything(term: string): Promise<SearchResults> {
   if (!query) return { ...EMPTY_SEARCH };
 
   if (!isConfigured) {
-    const demo = searchDemoContent(query);
-    const platform = searchPlatformSeed(query);
-    return { ...demo, ...platform, usingDemo: true, error: null };
+    return { ...EMPTY_SEARCH, usingDemo: false, error: null };
   }
 
   try {
@@ -1156,7 +1161,7 @@ export async function searchEverything(term: string): Promise<SearchResults> {
     (merged.courses?.length || 0) +
     (merged.updates?.length || 0);
 
-  if (total === 0) {
+  if (total === 0 && allowSeedFallback()) {
     const demo = searchDemoContent(query);
     const demoPlatform = searchPlatformSeed(query);
     const demoTotal =

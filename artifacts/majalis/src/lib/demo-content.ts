@@ -40,11 +40,8 @@ export const DEMO_QA_CATEGORIES = [{ id: "all", name: "الكل" }, ...QA_CATEGO
 export function isDemoId(id: string) {
   return (
     id.startsWith("demo-") ||
-    id.startsWith("seed-") ||
-    id.startsWith("fawaid-curated-") ||
-    id.startsWith("lib-") ||
-    id.startsWith("sheikh-") ||
-    id.startsWith("miracle-")
+    id.startsWith("seed-qa-") ||
+    id.startsWith("fawaid-curated-")
   );
 }
 

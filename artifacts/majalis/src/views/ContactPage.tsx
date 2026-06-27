@@ -1,5 +1,9 @@
 import { LegalBackLink, LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
 
+const CONTACT_EMAIL = "yalabdullmohsen1@gmail.com";
+const CONTACT_PHONE_E164 = "+96597400062";
+const CONTACT_PHONE_DISPLAY = "+965 97400062";
+
 export default function ContactPage() {
   return (
     <LegalPageLayout eyebrow="التواصل" title="تواصل معنا">
@@ -12,7 +16,13 @@ export default function ContactPage() {
 
       <LegalSection title="البريد الإلكتروني">
         <p>
-          <a href="mailto:info@majlisilm.com">info@majlisilm.com</a>
+          <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+        </p>
+      </LegalSection>
+
+      <LegalSection title="الهاتف">
+        <p>
+          <a href={`tel:${CONTACT_PHONE_E164}`}>{CONTACT_PHONE_DISPLAY}</a>
         </p>
       </LegalSection>
 
@@ -33,3 +43,5 @@ export default function ContactPage() {
     </LegalPageLayout>
   );
 }
+
+export { CONTACT_EMAIL, CONTACT_PHONE_E164, CONTACT_PHONE_DISPLAY };

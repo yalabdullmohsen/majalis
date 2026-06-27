@@ -109,8 +109,8 @@ function MajlisKnowledgeEngineContent() {
           </p>
         </div>
         <div style={{ display: "flex", gap: "0.75rem", fontSize: "0.8125rem", alignItems: "center" }}>
-          <Link href="/admin/automation/dashboard" style={{ color: C.emeraldDeep }}>Phase 5</Link>
-          <Link href="/admin/automation/center" style={{ color: C.emeraldDeep }}>Phase 6</Link>
+          <Link href="/admin/automation/dashboard" style={{ color: C.emeraldDeep }}>مراقبة الأتمتة</Link>
+          <Link href="/admin/automation/center" style={{ color: C.emeraldDeep }}>مركز الأتمتة</Link>
           <Link href="/admin/sources" style={{ color: C.emeraldDeep }}>المصادر</Link>
           <button
             type="button"

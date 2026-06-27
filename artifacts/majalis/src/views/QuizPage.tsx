@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { getQuizQuestions } from "@/lib/supabase";
-import { DEMO_QUIZ_QUESTIONS, type QuizQuestion } from "@/lib/quiz-seed";
+import type { QuizQuestion } from "@/lib/quiz-seed";
 import { isQuizAnswerCorrect, shuffleQuizQuestions } from "@/lib/quiz-utils";
 import { C } from "@/lib/theme";
 import { PageHeader, Loading, Empty, Chip } from "@/components/ui-common";
@@ -27,12 +27,8 @@ export default function QuizPage() {
   const [score, setScore] = useState(0);
 
   useEffect(() => {
-    getQuizQuestions().then(({ data, error }) => {
-      if (error || data.length === 0) {
-        setPool(DEMO_QUIZ_QUESTIONS);
-      } else {
-        setPool(data);
-      }
+    getQuizQuestions().then(({ data }) => {
+      setPool(data || []);
       setLoading(false);
     });
   }, []);

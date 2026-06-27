@@ -21,7 +21,7 @@ html {
   --majalis-sage: #CFE0D3;
   --majalis-line: #E0D7C4;
   --majalis-shadow: 0 22px 70px rgba(36, 31, 24, 0.12);
-  --font-primary: "Cairo", "Tajawal", "Segoe UI", Tahoma, system-ui, sans-serif;
+  --font-primary: "Cairo", sans-serif;
   --font-ui: var(--font-primary);
   --font-display: var(--font-primary);
   --font-reading: var(--font-primary);
@@ -46,14 +46,6 @@ html[data-theme="dark"] {
 
 html[data-font="default"] {
   --font-body: var(--font-primary);
-}
-
-html[data-font="ruqaa"] {
-  --font-body: "Aref Ruqaa", "Cairo", "Tajawal", serif;
-}
-
-html[data-font="naskh"] {
-  --font-body: "Noto Naskh Arabic", "Cairo", "Tajawal", serif;
 }
 
 :root {
@@ -2738,7 +2730,7 @@ html[data-theme="dark"] .home-page {
 
 .cond-card__bismillah {
   margin: 0 0 calc(10px * var(--cond-scale));
-  font-family: "Amiri Quran", "Amiri", "Aref Ruqaa", "Scheherazade New", "Noto Naskh Arabic", serif;
+  font-family: var(--font-primary);
   font-size: calc(34px * var(--cond-scale));
   font-weight: 400;
   line-height: 1.45;
@@ -2748,7 +2740,7 @@ html[data-theme="dark"] .home-page {
 
 .cond-card__ayah {
   margin: 0 0 calc(8px * var(--cond-scale));
-  font-family: "Amiri Quran", "Amiri", "Aref Ruqaa", "Scheherazade New", "Noto Naskh Arabic", serif;
+  font-family: var(--font-primary);
   font-size: calc(32px * var(--cond-scale));
   font-weight: 400;
   line-height: 1.65;
@@ -2759,7 +2751,7 @@ html[data-theme="dark"] .home-page {
 
 .cond-card__sadaq {
   margin: 0;
-  font-family: "Aref Ruqaa", "Amiri", "Scheherazade New", "Noto Naskh Arabic", serif;
+  font-family: var(--font-primary);
   font-size: calc(22px * var(--cond-scale));
   font-weight: 400;
   line-height: 1.5;
@@ -2782,7 +2774,7 @@ html[data-theme="dark"] .home-page {
 .cond-card__intro,
 .cond-card__middle {
   margin: 0;
-  font-family: "Aref Ruqaa", "Amiri", "Scheherazade New", "Noto Naskh Arabic", serif;
+  font-family: var(--font-primary);
   font-size: calc(30px * var(--cond-scale));
   font-weight: 400;
   line-height: 1.55;
@@ -2792,7 +2784,7 @@ html[data-theme="dark"] .home-page {
 
 .cond-card__family {
   margin: calc(4px * var(--cond-scale)) 0;
-  font-family: "Aref Ruqaa", "Amiri", "Scheherazade New", "Noto Naskh Arabic", serif;
+  font-family: var(--font-primary);
   font-size: calc(var(--cond-family-size) * var(--cond-scale));
   font-weight: 700;
   line-height: 1.4;
@@ -2803,7 +2795,7 @@ html[data-theme="dark"] .home-page {
 
 .cond-card__name {
   margin: calc(8px * var(--cond-scale)) 0 calc(6px * var(--cond-scale));
-  font-family: "Amiri Quran", "Amiri", "Aref Ruqaa", "Scheherazade New", serif;
+  font-family: var(--font-primary);
   font-size: calc(var(--cond-name-size) * var(--cond-scale));
   font-weight: 700;
   line-height: 1.35;
@@ -2814,7 +2806,7 @@ html[data-theme="dark"] .home-page {
 
 .cond-card__dua {
   margin: calc(6px * var(--cond-scale)) 0 0;
-  font-family: "Aref Ruqaa", "Amiri", "Scheherazade New", "Noto Naskh Arabic", serif;
+  font-family: var(--font-primary);
   font-size: calc(28px * var(--cond-scale));
   font-weight: 400;
   line-height: 1.62;
@@ -2825,7 +2817,7 @@ html[data-theme="dark"] .home-page {
 
 .cond-card__extra {
   margin: calc(6px * var(--cond-scale)) 0 0;
-  font-family: "Aref Ruqaa", "Amiri", "Scheherazade New", serif;
+  font-family: var(--font-primary);
   font-size: calc(24px * var(--cond-scale));
   font-weight: 400;
   line-height: 1.6;
@@ -2845,7 +2837,7 @@ html[data-theme="dark"] .home-page {
 
 .cond-card__closing {
   margin: 0;
-  font-family: "Amiri Quran", "Amiri", "Aref Ruqaa", "Scheherazade New", "Noto Naskh Arabic", serif;
+  font-family: var(--font-primary);
   font-size: calc(var(--cond-closing-size) * var(--cond-scale));
   font-weight: 700;
   line-height: 1.45;
@@ -2991,7 +2983,7 @@ html[data-theme="dark"] .home-page {
 
 .cond-death__verse {
   margin: 0;
-  font-family: "Aref Ruqaa", "Amiri", "Scheherazade New", "Noto Naskh Arabic", "Cairo", serif;
+  font-family: var(--font-primary);
   font-size: calc(var(--cond-death-verse) * var(--cond-scale));
   font-weight: 700;
   line-height: 1.42;
@@ -3015,7 +3007,7 @@ html[data-theme="dark"] .home-page {
 
 .cond-death__transition {
   margin: 0;
-  font-family: "Aref Ruqaa", "Amiri", "Scheherazade New", "Noto Naskh Arabic", "Cairo", serif;
+  font-family: var(--font-primary);
   font-size: calc(42px * var(--cond-scale));
   font-weight: 400;
   line-height: 1.45;
@@ -3024,7 +3016,7 @@ html[data-theme="dark"] .home-page {
 
 .cond-death__name {
   margin: calc(4px * var(--cond-scale)) 0;
-  font-family: "Aref Ruqaa", "Amiri", "Scheherazade New", "Noto Naskh Arabic", "Cairo", serif;
+  font-family: var(--font-primary);
   font-size: calc(var(--cond-death-name) * var(--cond-scale));
   font-weight: 700;
   line-height: 1.35;
@@ -3035,7 +3027,7 @@ html[data-theme="dark"] .home-page {
 
 .cond-death__detail {
   margin: 0;
-  font-family: "Aref Ruqaa", "Amiri", "Scheherazade New", "Noto Naskh Arabic", "Cairo", serif;
+  font-family: var(--font-primary);
   font-size: calc(var(--cond-death-address) * var(--cond-scale));
   font-weight: 400;
   line-height: 1.55;
@@ -3046,7 +3038,7 @@ html[data-theme="dark"] .home-page {
 
 .cond-death__phone {
   margin: calc(4px * var(--cond-scale)) 0 0;
-  font-family: "Aref Ruqaa", "Amiri", "Scheherazade New", "Noto Naskh Arabic", "Cairo", serif;
+  font-family: var(--font-primary);
   font-size: calc(44px * var(--cond-scale));
   font-weight: 700;
   line-height: 1.4;
@@ -3068,7 +3060,7 @@ html[data-theme="dark"] .home-page {
 
 .cond-death__closing {
   margin: 0;
-  font-family: "Aref Ruqaa", "Amiri", "Scheherazade New", "Noto Naskh Arabic", "Cairo", serif;
+  font-family: var(--font-primary);
   font-size: calc(34px * var(--cond-scale));
   font-weight: 400;
   line-height: 1.55;
@@ -3079,7 +3071,7 @@ html[data-theme="dark"] .home-page {
 
 .cond-death__extra {
   margin: 0;
-  font-family: "Aref Ruqaa", "Amiri", "Scheherazade New", "Noto Naskh Arabic", "Cairo", serif;
+  font-family: var(--font-primary);
   font-size: calc(32px * var(--cond-scale));
   font-weight: 400;
   line-height: 1.6;

@@ -13,7 +13,6 @@ import { Loading } from "@/components/ui-common";
 import { AdminSectionToolbar } from "./AdminSectionToolbar";
 import { useAdminShell } from "./AdminShell";
 import { ContentFileImport } from "./ContentFileImport";
-import { Phase2TrialImport } from "./Phase2TrialImport";
 
 const monoTextarea: React.CSSProperties = {
   width: "100%", boxSizing: "border-box", minHeight: "12rem", resize: "vertical",
@@ -90,10 +89,7 @@ export function AggregatorSection() {
       <AdminSectionToolbar
         title="محرك تجميع المحتوى (Content Aggregator)"
         actions={
-          <>
-            <Phase2TrialImport onDone={load} />
-            <ContentFileImport onDone={load} />
-          </>
+          <ContentFileImport onDone={load} />
         }
       />
 

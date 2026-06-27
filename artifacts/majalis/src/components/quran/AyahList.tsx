@@ -63,10 +63,7 @@ export function AyahList({
 
   const visible = ayahs.slice(start, end);
 
-  const fontFamily =
-    prefs.fontId === "amiri" ? "Amiri, serif" :
-    prefs.fontId === "naskh" ? "Noto Naskh Arabic, serif" :
-    "inherit";
+  const fontFamily = "var(--font-primary)";
 
   return (
     <section className={`quran-v2-ayah-section ui-card${prefs.readingMode ? " is-reading-mode" : ""}`} aria-label="آيات السورة">
@@ -84,7 +81,7 @@ export function AyahList({
                 ayah={a}
                 active={a.numberInSurah === targetAyah}
                 showNumber={prefs.showAyahNumbers}
-                fontSize={prefs.fontScale}
+                fontSize={undefined}
                 fontFamily={fontFamily}
                 hideTashkeel={prefs.hideTashkeel}
                 tafsir={tafsirByAyah?.get(a.numberInSurah)}

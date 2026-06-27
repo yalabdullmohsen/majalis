@@ -53,7 +53,7 @@ function AutomationDashboardContent() {
     <div>
       <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "0.75rem", marginBottom: "1rem" }}>
         <div>
-          <h2 style={{ margin: "0 0 0.35rem", color: C.emeraldDeep }}>لوحة مراقبة الأتمتة — Phase 5</h2>
+          <h2 style={{ margin: "0 0 0.35rem", color: C.emeraldDeep }}>لوحة مراقبة الأتمتة</h2>
           <p style={{ margin: 0, color: C.inkSoft, fontSize: "0.875rem" }}>
             أضف مصدرًا وانسَ — النظام يتابع كل 15 دقيقة ويستخرج وينشر تلقائيًا.
           </p>
@@ -84,7 +84,7 @@ function AutomationDashboardContent() {
           <section>
             <h3 style={{ color: C.emeraldDeep, fontSize: "0.9375rem" }}>آخر خطوات Pipeline</h3>
             <div style={{ display: "grid", gap: "0.35rem" }}>
-              {steps.length === 0 && <p style={{ color: C.inkSoft, fontSize: "0.8125rem" }}>لا سجلات بعد — طبّق migration Phase 5.</p>}
+              {steps.length === 0 && <p style={{ color: C.inkSoft, fontSize: "0.8125rem" }}>لا سجلات بعد — شغّل مهمة الأتمتة من لوحة التحكم.</p>}
               {steps.map((s, i) => (
                 <div key={i} style={{ fontSize: "0.75rem", padding: "0.35rem 0.5rem", background: C.parchmentDeep, borderRadius: "0.25rem" }}>
                   <strong>{s.step}</strong> · {s.status} · {s.detail?.slice(0, 80) || ""}

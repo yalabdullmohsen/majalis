@@ -27,7 +27,7 @@ export default function QuranPage() {
   const {
     surah, setSurah, meta, targetAyah, setAyah, ayahs, loading, error, stats, lastPos, prevSurah, nextSurah,
   } = useQuranSurah();
-  const { prefs, setPref } = useQuranPreferences();
+  const { prefs } = useQuranPreferences();
   const audio = useQuranAudio(surah, targetAyah);
   const { resolvedTheme } = useThemePreference();
 

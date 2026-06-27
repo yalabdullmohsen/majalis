@@ -107,7 +107,7 @@ function AutomationSourcesContent() {
       </div>
 
       <div style={{ background: "#ECFDF5", border: "1px solid #A7F3D0", borderRadius: "0.5rem", padding: "0.75rem 1rem", marginBottom: "1rem", fontSize: "0.8125rem", color: "#065F46" }}>
-        <strong>Phase 5:</strong> بعد الحفظ يُنشأ Job تلقائي (كل 15 دقيقة) — Vision AI + Matching + SEO بدون build جديد.
+        <strong>ملاحظة:</strong> بعد الحفظ يُنشأ Job تلقائي (كل 15 دقيقة) — Vision AI + Matching + SEO بدون build جديد.
         {" "}
         <strong>Instagram:</strong> يتطلب Graph API للجلب الكامل؛ بدونه تُنشأ مسودات للمراجعة.
       </div>

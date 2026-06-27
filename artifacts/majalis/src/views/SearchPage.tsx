@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams, useLocation } from "wouter";
 import { searchEverything, type SearchResults } from "@/lib/supabase";
-import { searchDemoContent } from "@/lib/demo-content";
 import { displayText } from "@/lib/display-text";
 import { SearchSkeleton } from "@/components/ui-common";
 import { SearchSuggestions } from "@/components/SearchSuggestions";
@@ -232,8 +231,7 @@ export default function SearchPage() {
         });
         return;
       }
-      const demo = searchDemoContent(query);
-      setResults({ ...demo, usingDemo: true, error: null, adhkar: demo.adhkar || [] });
+      setResults({ ...EMPTY, usingDemo: false, error: null });
     } finally {
       setLoading(false);
     }

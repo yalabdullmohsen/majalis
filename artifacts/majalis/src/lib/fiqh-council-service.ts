@@ -21,6 +21,7 @@ import {
 } from "./fiqh-council-types";
 import { supabase, isSupabaseConfigured } from "./supabase";
 import { logSupabaseError } from "./supabase-config";
+import { allowSeedFallback } from "@/lib/cms/production-config";
 
 const isConfigured = isSupabaseConfigured();
 const TABLE = "fiqh_council_items";
@@ -100,9 +101,13 @@ function isMissingTableError(err: unknown) {
   return msg.includes("fiqh_council_items") || msg.includes("does not exist") || msg.includes("42P01");
 }
 
+function publishedSeedList(opts?: FiqhCouncilListOptions) {
+  return allowSeedFallback() ? filterSeed([...FIQH_COUNCIL_PUBLISHED_SEED], opts) : [];
+}
+
 export async function getFiqhCouncilItems(opts?: FiqhCouncilListOptions) {
-  const seedItems = filterSeed([...FIQH_COUNCIL_PUBLISHED_SEED], opts);
-  if (!isConfigured) return { data: seedItems, usingSeed: true };
+  const seedItems = publishedSeedList(opts);
+  if (!isConfigured) return { data: seedItems, usingSeed: false };
 
   try {
     let query = supabase
@@ -131,19 +136,19 @@ export async function getFiqhCouncilItems(opts?: FiqhCouncilListOptions) {
       result = filterSeed(result, { ...opts, status: "published" });
     }
     if (result.length === 0 && seedItems.length > 0) {
-      return { data: seedItems, usingSeed: true };
+      return { data: seedItems, usingSeed: false };
     }
     return { data: result, usingSeed: false };
   } catch (err) {
     logSupabaseError("getFiqhCouncilItems", err);
-    return { data: seedItems, usingSeed: true };
+    return { data: seedItems, usingSeed: false };
   }
 }
 
 export async function getFiqhCouncilItemBySlug(slug: string) {
-  const fallbackRaw = findFiqhCouncilItemBySlug(slug);
+  const fallbackRaw = allowSeedFallback() ? findFiqhCouncilItemBySlug(slug) : null;
   const fallback = fallbackRaw && isVerifiedPublicItem(fallbackRaw) ? fallbackRaw : null;
-  if (!isConfigured) return { data: fallback, usingSeed: true };
+  if (!isConfigured) return { data: fallback, usingSeed: false };
 
   try {
     const { data, error } = await supabase

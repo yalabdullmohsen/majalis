@@ -33,12 +33,7 @@ function seedKey(row: LessonSeedRow): string {
 }
 
 function mergeDbWithSeed(dbRows: KuwaitLessonRecord[]): KuwaitLessonRecord[] {
-  if (!allowSeedFallback()) return dbRows;
-  const seen = new Set(dbRows.map((l) => l.id));
-  const supplemental = LESSONS_SEED.filter((row) => !seen.has(seedKey(row))).map((row) =>
-    mapLessonRow({ ...row, source: "seed" }),
-  );
-  return dedupeKuwaitLessons([...dbRows, ...supplemental]);
+  return dbRows;
 }
 
 /** جلب جميع الدروس المعتمدة — المصدر الموحد للمنصة. */
@@ -64,14 +59,17 @@ export async function fetchLessons(options?: { bypassCache?: boolean }): Promise
       cacheTs = now;
       return cachedResult;
     }
+    const seeded = sortKuwaitLessons(
+      dedupeKuwaitLessons(LESSONS_SEED.map((row) => mapLessonRow(row))),
+    );
+    cachedResult = { lessons: seeded, source: "seed" };
+    cacheTs = now;
+    return cachedResult;
   } catch {
-    /* fallback below */
+    cachedResult = { lessons: [], source: "supabase" };
+    cacheTs = now;
+    return cachedResult;
   }
-
-  const lessons = dedupeKuwaitLessons(LESSONS_SEED.map((row) => mapLessonRow({ ...row, source: "seed" })));
-  cachedResult = { lessons: sortKuwaitLessons(lessons), source: "seed" };
-  cacheTs = now;
-  return cachedResult;
 }
 
 export async function fetchActiveLessons(): Promise<FetchLessonsResult & { active: KuwaitLessonRecord[] }> {

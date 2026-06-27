@@ -69,7 +69,7 @@ function InstagramIntegrationContent() {
     <div>
       <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "0.75rem", marginBottom: "1rem" }}>
         <div>
-          <h2 style={{ margin: "0 0 0.35rem", color: C.emeraldDeep }}>Instagram Graph API — Phase 7</h2>
+          <h2 style={{ margin: "0 0 0.35rem", color: C.emeraldDeep }}>تكامل Instagram</h2>
           <p style={{ margin: 0, color: C.inkSoft, fontSize: "0.875rem" }}>
             ربط Meta Business لجلب المنشورات تلقائيًا. بدون ربط: Manual Assist Mode من{" "}
             <Link href="/admin/sources" style={{ color: C.emeraldDeep }}>/admin/sources</Link>.
@@ -93,7 +93,7 @@ function InstagramIntegrationContent() {
             </div>
             <div style={{ marginTop: "0.75rem", display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
               <button type="button" disabled={busy} onClick={onTest} style={{ padding: "0.4rem 0.75rem", background: C.emeraldDeep, color: "#fff", border: "none", borderRadius: "0.375rem", cursor: "pointer", fontFamily: "inherit" }}>
-                Test Connection
+                تحقق من الاتصال
               </button>
               <button type="button" disabled={busy} onClick={onRefreshInfo} style={{ padding: "0.4rem 0.75rem", background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.375rem", cursor: "pointer", fontFamily: "inherit" }}>
                 Refresh Token Info

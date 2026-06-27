@@ -241,7 +241,7 @@ function AutomationReviewContent() {
           {tab === "auto" && autoPublished.map((a) => (
             <AuditCard key={a.id} record={a} />
           ))}
-          {tab === "auto" && autoPublished.length === 0 && <p style={{ color: C.inkSoft }}>لا توجد عناصر منشورة تلقائيًا بعد — تظهر هنا عند اجتياز شروط Phase 4.</p>}
+          {tab === "auto" && autoPublished.length === 0 && <p style={{ color: C.inkSoft }}>لا توجد عناصر منشورة تلقائيًا بعد — تظهر هنا عند اجتياز شروط النشر الآلي.</p>}
 
           {tab === "duplicate" && duplicates.map((a) => (
             <AuditCard key={a.id} record={a} />
