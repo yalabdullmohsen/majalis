@@ -98,5 +98,15 @@ export function validateRow(type, row, index) {
     }
   }
 
+  if (type === "questions") {
+    const text = `${row.question || ""} ${row.answer || ""}`;
+    const cat = String(row.category_slug || row.category || row.category_name || "").toLowerCase();
+    const prophetRe =
+      /(?:من (?:أول|ال)?(?:رسل|نبي|أنبياء)|نوح|إبراهيم|موسى|عيسى|قصص? (?:الأنبياء|المرسلين)|عليه(?:ه)?\s*السلام)/i;
+    if (prophetRe.test(text) && (cat.includes("aqeedah") || cat.includes("عقيدة"))) {
+      errors.push(`السطر ${line}: سؤال عن الأنبياء لا ينتمي لتصنيف العقيدة — استخدم anbiya/الأنبياء`);
+    }
+  }
+
   return { ok: errors.length === 0, errors };
 }

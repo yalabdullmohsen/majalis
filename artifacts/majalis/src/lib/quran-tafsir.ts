@@ -49,6 +49,22 @@ export const TAFSIR_SOURCES: TafsirSource[] = [
     description: "معالم التنزيل — تفسير بالمأثور مع تركيز على الأحكام.",
     searchHref: (surah) => `/search/${encodeURIComponent(`معالم التنزيل ${surah}`)}`,
   },
+  {
+    id: "qurtubi",
+    name: "تفسير القرطبي",
+    author: "القرطبي",
+    edition: "qurtubi",
+    description: "الجامع لأحكام القرآن — تفسير فقهي شامل.",
+    searchHref: (surah) => `/search/${encodeURIComponent(`تفسير القرطبي ${surah}`)}`,
+  },
+  {
+    id: "jalalayn",
+    name: "تفسير الجلالين",
+    author: "الجلالين",
+    edition: "jalalayn",
+    description: "تفسير الجلال الدين المحلي والسيوطي — مختصر وواضح.",
+    searchHref: (surah) => `/search/${encodeURIComponent(`تفسير الجلالين ${surah}`)}`,
+  },
 ];
 
 export type TafsirAyah = {
