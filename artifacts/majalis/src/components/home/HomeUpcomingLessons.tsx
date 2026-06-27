@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { Loading } from "@/components/ui-common";
-import { UnifiedLessonCard } from "@/components/lessons/UnifiedLessonCard";
+import { HomeLessonCard } from "@/components/home/HomeLessonCard";
 import { getUnifiedActiveLessons } from "@/lib/lessons-service";
 import { sortKuwaitLessons, type KuwaitLessonRecord } from "@/lib/kuwait-lessons";
-import { fromKuwaitLesson } from "@/lib/unified-lesson-card";
 
 function isCourse(lesson: KuwaitLessonRecord) {
   return lesson.isCourse || lesson.activityType === "دورة";
@@ -58,7 +57,7 @@ export function HomeUpcomingLessons({
       ) : (
         <div className="home-kuwait-grid lesson-unified-grid">
           {lessons.map((lesson) => (
-            <UnifiedLessonCard key={lesson.id} lesson={fromKuwaitLesson(lesson)} compact />
+            <HomeLessonCard key={lesson.id} lesson={lesson} />
           ))}
         </div>
       )}

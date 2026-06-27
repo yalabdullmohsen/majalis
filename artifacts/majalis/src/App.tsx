@@ -24,6 +24,7 @@ const TopicPage = lazy(() => import("@/views/TopicPage"));
 const TopicsIndexPage = lazy(() => import("@/views/TopicsIndexPage"));
 const LessonsPage = lazy(() => import("@/views/LessonsPage"));
 const LessonDetailPage = lazy(() => import("@/views/LessonDetailPage"));
+const SheikhDetailPage = lazy(() => import("@/views/SheikhDetailPage"));
 const ScientificAnnouncementDetailPage = lazy(() => import("@/views/ScientificAnnouncementDetailPage"));
 const LibraryPage = lazy(() => import("@/views/LibraryPage"));
 const MiraclesPage = lazy(() => import("@/views/MiraclesPage"));
@@ -98,10 +99,26 @@ function SeoManager() {
   return null;
 }
 
-function SafeLazyRoute({ component: Component }: { component: ComponentType }) {
+function SafeLazyRoute({ component: Component, ...rest }: { component: ComponentType<any> }) {
   return (
     <Suspense fallback={<Loading />}>
-      <Component />
+      <Component {...rest} />
+    </Suspense>
+  );
+}
+
+function LessonDetailRoute(props: { id: string }) {
+  return (
+    <Suspense fallback={<Loading />}>
+      <LessonDetailPage params={{ id: props.id }} />
+    </Suspense>
+  );
+}
+
+function SheikhDetailRoute(props: { id: string }) {
+  return (
+    <Suspense fallback={<Loading />}>
+      <SheikhDetailPage params={{ id: props.id }} />
     </Suspense>
   );
 }
@@ -132,13 +149,13 @@ function Router() {
       <Route path="/topics"><SafeLazyRoute component={TopicsIndexPage} /></Route>
       <Route path="/scientific-announcements/:id"><SafeLazyRoute component={ScientificAnnouncementDetailPage} /></Route>
       <Route path="/lessons/current"><Redirect to="/lessons" /></Route>
-      <Route path="/lessons/:id"><SafeLazyRoute component={LessonDetailPage} /></Route>
+      <Route path="/lessons/:id">{(params) => <LessonDetailRoute id={params.id} />}</Route>
       <Route path="/lessons"><SafeLazyRoute component={LessonsPage} /></Route>
       <Route path="/calendar"><SafeLazyRoute component={CalendarPage} /></Route>
       <Route path="/kuwait-lessons"><Redirect to="/lessons" /></Route>
       <Route path="/announcements"><Redirect to="/lessons" /></Route>
       <Route path="/courses"><Redirect to="/lessons?tab=courses" /></Route>
-      <Route path="/sheikhs/:id"><Redirect to="/lessons" /></Route>
+      <Route path="/sheikhs/:id">{(params) => <SheikhDetailRoute id={params.id} />}</Route>
       <Route path="/sheikhs"><Redirect to="/lessons" /></Route>
       <Route path="/library"><SafeLazyRoute component={LibraryPage} /></Route>
       <Route path="/miracles"><SafeLazyRoute component={MiraclesPage} /></Route>

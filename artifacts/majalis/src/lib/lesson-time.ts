@@ -45,6 +45,20 @@ export function cleanTimeText(time: string): string {
     .trim();
 }
 
+/** وقت مختصر للبطاقات — مثل «بعد المغرب». */
+export function formatShortLessonTime(time: string): string {
+  const t = cleanTimeText(time);
+  if (!t) return "";
+  if (/مغرب/u.test(t)) return "بعد المغرب";
+  if (/فجر/u.test(t)) return "بعد الفجر";
+  if (/عصر/u.test(t)) return "بعد العصر";
+  if (/ظهر/u.test(t)) return "بعد الظهر";
+  if (/عشاء/u.test(t)) return "بعد العشاء";
+  if (/الصباح|صباح/u.test(t)) return "صباحاً";
+  if (/مساء/u.test(t)) return "مساءً";
+  return t.length > 24 ? `${t.slice(0, 22).trim()}…` : t;
+}
+
 export function getKuwaitClock(date = new Date()): KuwaitClock {
   const parts = new Intl.DateTimeFormat("en-US", {
     timeZone: KUWAIT_TZ,

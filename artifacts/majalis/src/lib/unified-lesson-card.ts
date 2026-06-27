@@ -46,6 +46,7 @@ export type UnifiedLesson = {
   keywords?: string[];
   organizer?: string;
   coOrganizer?: string;
+  hasWomenPlace?: boolean;
   posterDisplayUrl?: string;
 };
 
@@ -93,6 +94,7 @@ export function fromKuwaitLesson(lesson: KuwaitLessonRecord, archived = false): 
     keywords: lesson.keywords,
     organizer: lesson.organizer,
     coOrganizer: lesson.coOrganizer,
+    hasWomenPlace: lesson.hasWomenPlace,
   };
 }
 
@@ -127,6 +129,8 @@ export function fromDbLesson(lesson: {
   external_key?: string;
   organizer?: string;
   co_organizer?: string;
+  has_women_place?: boolean;
+  audience?: string;
   keywords?: string[];
 }): UnifiedLesson {
   const sheikhName = lesson.sheikhs?.name || lesson.speaker_name || "";
@@ -163,6 +167,7 @@ export function fromDbLesson(lesson: {
     activityType: (lesson.activity_type as UnifiedLesson["activityType"]) || "درس",
     organizer: lesson.organizer,
     coOrganizer: lesson.co_organizer,
+    hasWomenPlace: lesson.has_women_place === true || lesson.audience === "الكل",
     keywords: lesson.keywords,
   };
 }

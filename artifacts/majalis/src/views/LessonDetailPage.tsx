@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link } from "wouter";
+import { Link, useRoute } from "wouter";
 import { getLessonById, getSheikhs } from "@/lib/supabase";
 import { Loading, Empty } from "@/components/ui-common";
 import ContentActions from "@/components/ContentActions";
@@ -33,6 +33,11 @@ import { fetchLessonEngagementStats, type LessonEngagementStats } from "@/lib/le
 import { normalizeActivityLabel } from "@/lib/activity-label";
 import { resolveLessonPosterDisplayUrl } from "@/lib/lesson-image";
 import { sheikhNameKey } from "@/lib/sheikh-name";
+import {
+  resolveKuwaitSheikhProfile,
+  sheikhProfileHref,
+  type KuwaitSheikhProfile,
+} from "@/lib/kuwait-sheikh-profiles";
 
 function buildMapsEmbed(url?: string, mosque?: string, region?: string) {
   if (url?.includes("google.com/maps") || url?.includes("goo.gl/maps") || url?.includes("maps.app")) {
@@ -63,18 +68,20 @@ function StatPill({ label, value }: { label: string; value: number | string }) {
 }
 
 export default function LessonDetailPage({
-  params,
+  params: paramsProp,
   initialLesson,
 }: {
-  params: { id: string };
+  params?: { id: string };
   initialLesson?: KuwaitLessonRecord | null;
 }) {
+  const [, routeParams] = useRoute("/lessons/:id");
+  const params = paramsProp ?? routeParams ?? { id: "" };
   const [lesson, setLesson] = useState<any>(null);
   const [kuwaitLesson, setKuwaitLesson] = useState<KuwaitLessonRecord | null>(initialLesson ?? null);
   const [similar, setSimilar] = useState<KuwaitLessonRecord[]>([]);
   const [sameSheikh, setSameSheikh] = useState<KuwaitLessonRecord[]>([]);
   const [seriesLessons, setSeriesLessons] = useState<KuwaitLessonRecord[]>([]);
-  const [sheikhBio, setSheikhBio] = useState<string>("");
+  const [sheikhProfile, setSheikhProfile] = useState<KuwaitSheikhProfile | null>(null);
   const [stats, setStats] = useState<LessonEngagementStats>({ views: 0, saves: 0, shares: 0 });
   const [loading, setLoading] = useState(!initialLesson);
   const [linkCopied, setLinkCopied] = useState(false);
@@ -143,14 +150,37 @@ export default function LessonDetailPage({
 
   useEffect(() => {
     const name = kuwaitLesson?.sheikhName || lesson?.speaker_name || lesson?.sheikhs?.name;
-    if (!name) return;
+    if (!name) {
+      setSheikhProfile(null);
+      return;
+    }
+
+    const localProfile = resolveKuwaitSheikhProfile(name);
+    if (localProfile) {
+      setSheikhProfile(localProfile);
+      return;
+    }
+
     getSheikhs()
       .then(({ data }) => {
         const key = sheikhNameKey(name);
         const match = (data || []).find((s: { name?: string; bio?: string }) => sheikhNameKey(s.name || "") === key);
-        if (match?.bio) setSheikhBio(match.bio);
+        if (match?.bio) {
+          setSheikhProfile({
+            id: key.replace(/\s+/g, "-"),
+            name,
+            fullName: match.name || name,
+            country: "الكويت",
+            specialties: [],
+            bio: match.bio,
+            needs_verification: false,
+            sources: [],
+          });
+        } else {
+          setSheikhProfile(null);
+        }
       })
-      .catch(() => undefined);
+      .catch(() => setSheikhProfile(null));
   }, [kuwaitLesson, lesson]);
 
   const unified = useMemo(() => {
@@ -184,6 +214,11 @@ export default function LessonDetailPage({
   const posterUrl = unified.posterDisplayUrl || resolveLessonPosterDisplayUrl(kuwaitLesson?.lessonImage || lesson?.poster_image_url);
   const organizer = kuwaitLesson?.organizer || lesson?.organizer;
   const coOrganizer = kuwaitLesson?.coOrganizer || lesson?.co_organizer;
+  const hasWomenPlace =
+    kuwaitLesson?.hasWomenPlace ||
+    lesson?.has_women_place === true ||
+    lesson?.audience === "الكل";
+  const locationFull = [unified.mosque, unified.region, unified.governorate].filter(Boolean).join(" — ");
 
   const handleShare = async () => {
     const url = buildLessonShareUrl(unified);
@@ -249,7 +284,13 @@ export default function LessonDetailPage({
           )}
           <div className="lesson-detail-hero__copy">
             {hasValue(sheikhName) && (
-              <p className="lesson-card-pro__sheikh">{sheikhName}</p>
+              sheikhProfile ? (
+                <Link href={sheikhProfileHref(sheikhProfile)} className="lesson-card-pro__sheikh lesson-detail-sheikh-link">
+                  {sheikhName}
+                </Link>
+              ) : (
+                <p className="lesson-card-pro__sheikh">{sheikhName}</p>
+              )
             )}
             <h1 className="lesson-detail-title">{unified.title}</h1>
             <div className="lesson-detail-tags">
@@ -289,21 +330,17 @@ export default function LessonDetailPage({
           {hasValue(time || unified.time) && (
             <div><dt>الوقت</dt><dd>{cleanTimeText(time || unified.time)}</dd></div>
           )}
-          {hasValue(unified.mosque) && (
-            <div><dt>المكان</dt><dd>{unified.mosque}</dd></div>
-          )}
-          {hasValue(unified.region) && (
-            <div><dt>المنطقة</dt><dd>{unified.region}</dd></div>
-          )}
-          {hasValue(unified.governorate) && (
-            <div><dt>المحافظة</dt><dd>{unified.governorate}</dd></div>
+          {hasValue(locationFull) && (
+            <div><dt>المكان</dt><dd>{locationFull}</dd></div>
           )}
           {hasValue(organizer) && (
             <div><dt>الجهة المنظمة</dt><dd>{organizer}</dd></div>
           )}
           {hasValue(coOrganizer) && (
-            <div><dt>الجهة المتعاونة</dt><dd>{coOrganizer}</dd></div>
+            <div><dt>بالتعاون مع</dt><dd>{coOrganizer}</dd></div>
           )}
+          <div><dt>مكان للنساء</dt><dd>{hasWomenPlace ? "نعم — يوجد مكان مخصص" : "غير محدد"}</dd></div>
+          <div><dt>بث مباشر</dt><dd>{unified.hasLiveStream ? "نعم" : "لا"}</dd></div>
           {addedDate && (
             <div><dt>تاريخ الإضافة</dt><dd>{String(addedDate).slice(0, 10)}</dd></div>
           )}
@@ -316,10 +353,30 @@ export default function LessonDetailPage({
           </div>
         )}
 
-        {sheikhBio && (
+        {sheikhProfile && (
           <div className="lesson-detail-body">
-            <h2>نبذة الشيخ</h2>
-            <p>{cleanDisplayText(sheikhBio)}</p>
+            <h2>نبذة عن الشيخ</h2>
+            <p>{cleanDisplayText(sheikhProfile.bio)}</p>
+            {sheikhProfile.needs_verification && (
+              <p className="sheikh-detail-verify-note" role="note">
+                هذه المعلومات بحاجة إلى تحقق إضافي.
+              </p>
+            )}
+            {sheikhProfile.sources.length > 0 && (
+              <ul className="sheikh-detail-sources sheikh-detail-sources--inline">
+                {sheikhProfile.sources.map((source) => (
+                  <li key={source.source_url}>
+                    <a href={source.source_url} target="_blank" rel="noopener noreferrer">
+                      {source.source_title}
+                    </a>
+                    {source.verified && <span className="sheikh-detail-source-badge is-verified">موثّق</span>}
+                  </li>
+                ))}
+              </ul>
+            )}
+            <Link href={sheikhProfileHref(sheikhProfile)} className="lesson-unified-card__btn lesson-unified-card__btn--ghost">
+              الملف الكامل للشيخ
+            </Link>
           </div>
         )}
 

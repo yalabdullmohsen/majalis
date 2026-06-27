@@ -51,6 +51,7 @@ export type KuwaitLessonRecord = {
   isCourse?: boolean;
   organizer?: string;
   coOrganizer?: string;
+  hasWomenPlace?: boolean;
   source?: "supabase" | "seed";
   archivedAt?: string | null;
 };
@@ -211,6 +212,7 @@ export function mapLessonRow(row: any): KuwaitLessonRecord {
     recurring: row.is_recurring !== false && !row.end_date,
     organizer: row.organizer || undefined,
     coOrganizer: row.co_organizer || undefined,
+    hasWomenPlace: row.has_women_place === true || row.audience === "الكل",
     archivedAt: row.archived_at || null,
   });
 }
