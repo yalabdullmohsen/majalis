@@ -9,11 +9,22 @@ import { getSupabaseAdmin } from "./supabase-admin.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = join(__dirname, "../public/data/rulings-encyclopedia");
+const PUBLIC_DATA_PATH = "/data/rulings-encyclopedia";
 
-function loadSeedItems() {
+function resolvePublicBaseUrl() {
+  if (process.env.MAJALIS_PRODUCTION_URL) {
+    return process.env.MAJALIS_PRODUCTION_URL.replace(/\/$/, "");
+  }
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL.replace(/^https?:\/\//, "")}`;
+  }
+  return "https://www.majlisilm.com";
+}
+
+function loadSeedItemsFromFilesystem() {
   const manifestPath = join(DATA_DIR, "manifest.json");
   if (!existsSync(manifestPath)) {
-    return { items: [], total: 0, error: "manifest.json not found" };
+    return null;
   }
   const manifest = JSON.parse(readFileSync(manifestPath, "utf8"));
   const items = [];
@@ -23,7 +34,58 @@ function loadSeedItems() {
     const rows = JSON.parse(readFileSync(chunkPath, "utf8"));
     if (Array.isArray(rows)) items.push(...rows);
   }
-  return { items, total: items.length, manifestVersion: manifest.version };
+  return { items, total: items.length, manifestVersion: manifest.version, source: "filesystem" };
+}
+
+async function fetchJson(url) {
+  const res = await fetch(url, { headers: { accept: "application/json" } });
+  if (!res.ok) {
+    throw new Error(`HTTP ${res.status} for ${url}`);
+  }
+  return res.json();
+}
+
+async function loadSeedItemsFromHttp(baseUrl = resolvePublicBaseUrl()) {
+  const manifestUrl = `${baseUrl}${PUBLIC_DATA_PATH}/manifest.json`;
+  const manifest = await fetchJson(manifestUrl);
+  const items = [];
+  for (const chunk of manifest.chunks || []) {
+    const chunkUrl = `${baseUrl}${PUBLIC_DATA_PATH}/${chunk.file}`;
+    try {
+      const rows = await fetchJson(chunkUrl);
+      if (Array.isArray(rows)) items.push(...rows);
+    } catch {
+      // Skip missing chunk files; continue with partial seed.
+    }
+  }
+  return {
+    items,
+    total: items.length,
+    manifestVersion: manifest.version,
+    source: "http",
+    baseUrl,
+  };
+}
+
+async function loadSeedItems(options = {}) {
+  const local = loadSeedItemsFromFilesystem();
+  if (local?.items?.length) {
+    return local;
+  }
+
+  try {
+    const remote = await loadSeedItemsFromHttp(options.baseUrl);
+    if (remote.items.length > 0) {
+      return remote;
+    }
+    return { items: [], total: 0, error: "no_seed_items", source: remote.source };
+  } catch (error) {
+    return {
+      items: [],
+      total: 0,
+      error: local ? "no_seed_items" : error.message || "manifest.json not found",
+    };
+  }
 }
 
 function toDbRow(item) {
@@ -54,12 +116,12 @@ function toDbRow(item) {
 }
 
 export async function seedRulingsFromFilesystem(options = {}) {
-  const { items, total, error, manifestVersion } = loadSeedItems();
+  const { items, total, error, manifestVersion, source } = await loadSeedItems(options);
   if (error) return { ok: false, error };
   if (items.length === 0) return { ok: false, error: "no_seed_items" };
 
   if (options.dryRun) {
-    return { ok: true, dryRun: true, total, manifestVersion };
+    return { ok: true, dryRun: true, total, manifestVersion, source };
   }
 
   const admin = getSupabaseAdmin();
@@ -94,9 +156,15 @@ export async function seedRulingsFromFilesystem(options = {}) {
     skipped,
     errors: errors.slice(0, 5),
     manifestVersion,
+    source,
   };
 }
 
 export function getSeedItemCount() {
-  return loadSeedItems().total;
+  return loadSeedItemsFromFilesystem()?.total ?? 0;
+}
+
+export async function getSeedItemCountAsync(options = {}) {
+  const loaded = await loadSeedItems(options);
+  return loaded.total ?? 0;
 }
