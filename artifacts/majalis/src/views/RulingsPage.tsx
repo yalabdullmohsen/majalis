@@ -1,9 +1,16 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { PageHeader, Loading, Empty } from "@/components/ui-common";
-import { PlatformContentCard } from "@/components/platform/ContentDetailLayout";
-import { getShariaRulings } from "@/lib/platform-content-service";
-import { RULING_CATEGORIES } from "@/lib/platform-types";
+import { RulingCard } from "@/components/rulings/RulingCard";
+import { RulingCategoryGrid } from "@/components/rulings/RulingCategoryGrid";
+import { RulingFilters } from "@/components/rulings/RulingFilters";
+import {
+  getRulingsEncyclopedia,
+  getRulingCategoryStats,
+  getRulingsEncyclopediaTotal,
+} from "@/lib/rulings-service";
+import type { CategoryStat, RulingSortMode, ShariaRulingExtended } from "@/lib/rulings-types";
 import { usePageView } from "@/hooks/usePageView";
+import { RULINGS_CATEGORY_TREE } from "@/lib/rulings-categories";
 
 function useDebouncedValue<T>(value: T, delayMs = 350): T {
   const [debounced, setDebounced] = useState(value);
@@ -14,72 +21,174 @@ function useDebouncedValue<T>(value: T, delayMs = 350): T {
   return debounced;
 }
 
+const PAGE_SIZE = 24;
+
 export default function RulingsPage() {
-  const [items, setItems] = useState<any[]>([]);
+  const [items, setItems] = useState<ShariaRulingExtended[]>([]);
+  const [total, setTotal] = useState(0);
+  const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
+  const [stats, setStats] = useState<CategoryStat[]>([]);
+  const [encyclopediaTotal, setEncyclopediaTotal] = useState(0);
   const [category, setCategory] = useState("الكل");
+  const [subcategory, setSubcategory] = useState<string | undefined>();
   const [search, setSearch] = useState("");
+  const [sort, setSort] = useState<RulingSortMode>("importance");
+  const [showAdvanced, setShowAdvanced] = useState(false);
   const debouncedSearch = useDebouncedValue(search);
 
   usePageView("rulings", null);
 
-  useEffect(() => {
+  const loadStats = useCallback(async () => {
+    const [catStats, totalCount] = await Promise.all([
+      getRulingCategoryStats(),
+      getRulingsEncyclopediaTotal(),
+    ]);
+    setStats(catStats);
+    setEncyclopediaTotal(totalCount);
+  }, []);
+
+  const loadRulings = useCallback(async () => {
     setLoading(true);
-    getShariaRulings({ category, search: debouncedSearch })
-      .then(({ data }) => setItems(data))
-      .finally(() => setLoading(false));
-  }, [category, debouncedSearch]);
+    try {
+      const result = await getRulingsEncyclopedia({
+        category,
+        subcategory,
+        search: debouncedSearch,
+        sort,
+        page,
+        limit: PAGE_SIZE,
+      });
+      setItems(result.data);
+      setTotal(result.total);
+    } finally {
+      setLoading(false);
+    }
+  }, [category, subcategory, debouncedSearch, sort, page]);
+
+  useEffect(() => {
+    loadStats();
+  }, [loadStats]);
+
+  useEffect(() => {
+    setPage(1);
+  }, [category, subcategory, debouncedSearch, sort]);
+
+  useEffect(() => {
+    loadRulings();
+  }, [loadRulings]);
+
+  const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+  const mainCategories = RULINGS_CATEGORY_TREE.length;
+
+  const handleCategorySelect = (cat: string, sub?: string) => {
+    setCategory(cat);
+    setSubcategory(sub);
+  };
 
   return (
-    <div className="page-shell narrow content-hub-page">
+    <div className="page-shell narrow content-hub-page rulings-encyclopedia-page">
       <PageHeader
-        eyebrow="مكتبة الفقه"
+        eyebrow="موسوعة الفقه"
         title="الأحكام الشرعية"
-        subtitle="مكتبة شاملة للأحكام في العبادات والمعاملات والأسرة — مرتبطة بالأدلة والمراجع."
+        subtitle="مكتبة علمية شاملة للأحكام — موثقة بالأدلة والمراجع، قابلة للبحث والتصفح."
       />
 
-      <div className="page-stats-row">
-        <span>{items.length} حكم</span>
-        <span>{RULING_CATEGORIES.length} قسم</span>
+      <div className="page-stats-row ruling-stats-bar">
+        <span>{encyclopediaTotal || total} حكم</span>
+        <span>{mainCategories} قسم رئيسي</span>
+        <span>{stats.length} تصنيف فرعي</span>
       </div>
 
       <input
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        placeholder="ابحث في الأحكام..."
+        placeholder="ابحث في العنوان، الدليل، الآيات، الأحاديث، العلماء، الكلمات المفتاحية..."
         className="page-search-input full content-hub-search"
-        aria-label="بحث في الأحكام الشرعية"
+        aria-label="بحث في موسوعة الأحكام الشرعية"
       />
 
-      <div className="content-hub-chips">
-        {["الكل", ...RULING_CATEGORIES].map((cat) => (
+      <RulingFilters
+        sort={sort}
+        onSortChange={setSort}
+        showAdvanced={showAdvanced}
+        onToggleAdvanced={() => setShowAdvanced((v) => !v)}
+      />
+
+      {showAdvanced && (
+        <RulingCategoryGrid
+          stats={stats}
+          activeCategory={category}
+          activeSubcategory={subcategory}
+          onSelect={handleCategorySelect}
+        />
+      )}
+
+      {!showAdvanced && (
+        <div className="content-hub-chips ruling-quick-chips">
           <button
-            key={cat}
             type="button"
-            onClick={() => setCategory(cat)}
-            className={category === cat ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
+            className={category === "الكل" ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
+            onClick={() => handleCategorySelect("الكل")}
           >
-            {cat}
+            الكل ({encyclopediaTotal || total})
           </button>
-        ))}
-      </div>
+          {RULINGS_CATEGORY_TREE.slice(0, 8).map((cat) => {
+            const count = stats.filter((s) => s.category === cat.name).reduce((n, s) => n + s.count, 0);
+            if (!count) return null;
+            return (
+              <button
+                key={cat.slug}
+                type="button"
+                className={
+                  category === cat.name ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"
+                }
+                onClick={() => handleCategorySelect(cat.name)}
+              >
+                {cat.icon} {cat.name} ({count})
+              </button>
+            );
+          })}
+          <button type="button" className="content-hub-chip" onClick={() => setShowAdvanced(true)}>
+            المزيد...
+          </button>
+        </div>
+      )}
 
       {loading ? (
         <Loading />
       ) : items.length === 0 ? (
         <Empty text="لا توجد أحكام مطابقة." />
       ) : (
-        <div className="page-card-grid">
-          {items.map((item) => (
-            <PlatformContentCard
-              key={item.id}
-              href={`/rulings/${item.id}`}
-              title={item.title}
-              tag={item.category}
-              summary={item.summary}
-            />
-          ))}
-        </div>
+        <>
+          <div className="ruling-card-grid">
+            {items.map((item) => (
+              <RulingCard key={item.id} ruling={item} />
+            ))}
+          </div>
+
+          {totalPages > 1 && (
+            <nav className="ruling-pagination" aria-label="ترقيم الصفحات">
+              <button
+                type="button"
+                disabled={page <= 1}
+                onClick={() => setPage((p) => Math.max(1, p - 1))}
+              >
+                السابق
+              </button>
+              <span>
+                صفحة {page} من {totalPages} ({total} حكم)
+              </span>
+              <button
+                type="button"
+                disabled={page >= totalPages}
+                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+              >
+                التالي
+              </button>
+            </nav>
+          )}
+        </>
       )}
     </div>
   );

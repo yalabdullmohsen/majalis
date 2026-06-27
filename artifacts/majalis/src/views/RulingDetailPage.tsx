@@ -1,22 +1,27 @@
 import { useEffect, useState } from "react";
 import { Loading, Empty } from "@/components/ui-common";
 import { ContentDetailLayout, RelatedLinks } from "@/components/platform/ContentDetailLayout";
-import { getShariaRulingById, getRelatedRulings } from "@/lib/platform-content-service";
+import { RulingDetailSections } from "@/components/rulings/RulingDetailSections";
+import { getRulingById, getRelatedRulingsEncyclopedia } from "@/lib/rulings-service";
+import { buildRulingRelations } from "@/lib/rulings-relations";
+import type { ShariaRulingExtended } from "@/lib/rulings-types";
 import { applyPageSeo } from "@/lib/seo";
 import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
 import { usePageView } from "@/hooks/usePageView";
 
 export default function RulingDetailPage({ params }: { params: { id: string } }) {
-  const [item, setItem] = useState<any>(null);
-  const [related, setRelated] = useState<any[]>([]);
+  const [item, setItem] = useState<ShariaRulingExtended | null>(null);
+  const [related, setRelated] = useState<ShariaRulingExtended[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);
-    getShariaRulingById(params.id)
+    getRulingById(params.id)
       .then(({ data }) => {
         setItem(data);
-        if (data) return getRelatedRulings(data.id, data.category).then(setRelated);
+        if (data) {
+          return getRelatedRulingsEncyclopedia(data.id, data.category, data.subcategory).then(setRelated);
+        }
         return undefined;
       })
       .finally(() => setLoading(false));
@@ -29,9 +34,9 @@ export default function RulingDetailPage({ params }: { params: { id: string } })
     const path = `/rulings/${item.id}`;
     applyPageSeo({
       path,
-      title: `${item.title} | الأحكام الشرعية — المجلس العلمي`,
+      title: `${item.title} | موسوعة الأحكام — المجلس العلمي`,
       description: item.summary || item.body?.slice(0, 160) || item.title,
-      keywords: [...(item.keywords || []), item.category, "أحكام شرعية", "فقه"],
+      keywords: [...(item.keywords || []), item.category, item.subcategory || "", "أحكام شرعية", "فقه"],
       ogType: "article",
       canonicalPath: path,
       jsonLd: [
@@ -55,18 +60,19 @@ export default function RulingDetailPage({ params }: { params: { id: string } })
   if (!item) return <Empty text="الحكم غير موجود." />;
 
   const copyText = [item.title, item.summary, item.body].filter(Boolean).join("\n\n");
-  const allRefs = [...(item.evidence || []), ...(item.references || [])];
+  const relations = buildRulingRelations(item);
 
   return (
     <ContentDetailLayout
       breadcrumbs={[
         { label: "الرئيسية", href: "/" },
         { label: "الأحكام الشرعية", href: "/rulings" },
+        { label: item.category, href: `/rulings?category=${encodeURIComponent(item.category)}` },
         { label: item.title },
       ]}
       title={item.title}
       subtitle={item.summary}
-      meta={item.category}
+      meta={[item.category, item.subcategory].filter(Boolean).join(" · ")}
       tags={item.keywords}
       body={item.body}
       copyText={copyText}
@@ -75,25 +81,12 @@ export default function RulingDetailPage({ params }: { params: { id: string } })
           items={related.map((r) => ({
             href: `/rulings/${r.id}`,
             title: r.title,
-            meta: r.category,
+            meta: [r.category, r.subcategory].filter(Boolean).join(" · "),
           }))}
         />
       }
     >
-      {allRefs.length > 0 && (
-        <section className="content-detail-evidence ui-card">
-          <h2>الأدلة والمراجع</h2>
-          <ul>
-            {allRefs.map((ref: any, i: number) => (
-              <li key={i}>
-                {ref.type && <strong>{ref.type}: </strong>}
-                {ref.text}
-                {ref.source && <> — <em>{ref.source}</em></>}
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
+      <RulingDetailSections ruling={item} relations={relations} />
     </ContentDetailLayout>
   );
 }
