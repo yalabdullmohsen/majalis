@@ -35,6 +35,8 @@
     "verify:production-complete": "node scripts/verify-production-complete.mjs --production",
     "apply:activation-migrations": "node scripts/apply-activation-migrations.mjs",
     "promote:owner": "node scripts/promote-owner.mjs",
+    "apply:owner-bootstrap": "node scripts/apply-owner-bootstrap.mjs",
+    "verify:owner-bootstrap": "node scripts/verify-owner-bootstrap.mjs",
     "build": "pnpm run generate:seo && pnpm run generate:rulings && vite build --config vite.config.ts",
     "build:next": "next build",
     "preview": "vite preview --config vite.config.ts --host 0.0.0.0",

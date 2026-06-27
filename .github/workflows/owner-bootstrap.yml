@@ -1,0 +1,62 @@
+name: Owner Bootstrap
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "artifacts/majalis/supabase/owner_bootstrap_v1.sql"
+      - "artifacts/majalis/lib/owner-promotion.mjs"
+      - "artifacts/majalis/lib/owner-config.mjs"
+      - ".github/workflows/owner-bootstrap.yml"
+
+jobs:
+  promote-owner:
+    runs-on: ubuntu-latest
+    if: github.repository == 'yalabdullmohsen/majalis'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: "pnpm"
+
+      - run: pnpm install
+
+      - name: Apply owner SQL migration
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+        run: |
+          cd artifacts/majalis
+          pnpm run apply:owner-bootstrap || echo "Skip SQL: database credentials not configured"
+
+      - name: Promote bootstrap owners via service role
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          if [ -z "$SUPABASE_SERVICE_ROLE_KEY" ]; then
+            echo "Skip promote: SUPABASE_SERVICE_ROLE_KEY not configured"
+            exit 0
+          fi
+          pnpm --filter @workspace/majalis run promote:owner
+
+      - name: Trigger production owner bootstrap cron
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          if [ -z "$CRON_SECRET" ]; then
+            echo "Skip cron: CRON_SECRET not configured"
+            exit 0
+          fi
+          curl -sf -H "Authorization: Bearer $CRON_SECRET" \
+            "https://www.majlisilm.com/api/cron/bootstrap-owner?action=promote-all"
