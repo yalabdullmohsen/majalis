@@ -24,10 +24,27 @@ type ApiFeature = {
   detail?: string | null;
 };
 
+type BootstrapFlags = {
+  databaseReady?: boolean;
+  migrationsApplied?: boolean;
+  seedCompleted?: boolean;
+  productionReady?: boolean;
+  lastRun?: string | null;
+  lastStatus?: string | null;
+  lastError?: string | null;
+  ownerActions?: Array<{ secret: string; addTo: string; hint: string }>;
+};
+
 type HealthPayload = {
   ok: boolean;
   at?: string;
   blockers?: string[];
+  bootstrap?: BootstrapFlags;
+  bootstrapDetail?: {
+    ownerActions?: BootstrapFlags["ownerActions"];
+    migrationStatus?: { appliedCount: number; pendingCount: number; pending: string[] };
+    counts?: { qa_categories: number | null; sharia_rulings: number | null };
+  };
   env?: Record<string, boolean>;
   secretGroups?: Record<string, { ok: boolean; missing: string[] }>;
   services?: {
@@ -76,7 +93,7 @@ export default function FeatureStatusPage() {
     try {
       const res = await adminFetch("/api/admin/feature-health");
       const json = (await res.json()) as HealthPayload;
-      if (!res.ok) throw new Error(json.error || `HTTP ${res.status}`);
+      if (!res.ok && !json.bootstrap) throw new Error(json.error || `HTTP ${res.status}`);
       setHealth(json);
     } catch (err) {
       setError(err instanceof Error ? err.message : "تعذر تحميل حالة الميزات");
@@ -85,6 +102,21 @@ export default function FeatureStatusPage() {
       setLoading(false);
     }
   }, []);
+
+  const runBootstrap = useCallback(async () => {
+    setActivating(true);
+    setActivateResult(null);
+    try {
+      const res = await adminFetch("/api/admin/platform-bootstrap?action=run");
+      const json = await res.json();
+      setActivateResult(JSON.stringify(json, null, 2));
+      await load();
+    } catch (err) {
+      setActivateResult(err instanceof Error ? err.message : "فشل Self Bootstrap");
+    } finally {
+      setActivating(false);
+    }
+  }, [load]);
 
   const runActivation = useCallback(async (action: string) => {
     setActivating(true);
@@ -126,10 +158,18 @@ export default function FeatureStatusPage() {
           <button
             type="button"
             className="ui-card-btn ui-card-btn--primary"
+            onClick={runBootstrap}
+            disabled={activating}
+          >
+            {activating ? "جاري التهيئة…" : "Self Bootstrap كامل"}
+          </button>
+          <button
+            type="button"
+            className="ui-card-btn"
             onClick={() => runActivation("migrate")}
             disabled={activating}
           >
-            {activating ? "جاري التفعيل…" : "تشغيل Activation Migrations"}
+            Activation Migrations فقط
           </button>
           <Link href="/admin" className="ui-card-btn ui-card-btn--ghost">
             لوحة التحكم
@@ -148,6 +188,53 @@ export default function FeatureStatusPage() {
         <Loading />
       ) : (
         <>
+          <section className="ui-card admin-feature-status__bootstrap">
+            <h2>Self Bootstrap</h2>
+            <div className="admin-feature-status__bootstrap-grid">
+              {(
+                [
+                  ["databaseReady", "Database Ready"],
+                  ["migrationsApplied", "Migrations Applied"],
+                  ["seedCompleted", "Seed Completed"],
+                  ["productionReady", "Production Ready"],
+                ] as const
+              ).map(([key, label]) => {
+                const ok = health?.bootstrap?.[key] === true;
+                return (
+                  <div key={key} className={`admin-bootstrap-flag${ok ? " admin-bootstrap-flag--ok" : ""}`}>
+                    <strong>{ok ? "✅" : "⛔"}</strong>
+                    <span>{label}</span>
+                  </div>
+                );
+              })}
+            </div>
+            {health?.bootstrap?.lastError && (
+              <p className="admin-feature-status__error" role="alert">
+                آخر خطأ: {health.bootstrap.lastError}
+              </p>
+            )}
+            {(health?.bootstrap?.ownerActions?.length || health?.bootstrapDetail?.ownerActions?.length) ? (
+              <div className="admin-bootstrap-owner-actions">
+                <h3>مطلوب من مالك المشروع (Secrets)</h3>
+                <ul>
+                  {(health.bootstrap?.ownerActions || health.bootstrapDetail?.ownerActions || []).map((a) => (
+                    <li key={a.secret}>
+                      <code>{a.secret}</code> — {a.hint}
+                      <br />
+                      <small>{a.addTo}</small>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+            {health?.bootstrapDetail?.migrationStatus && (
+              <p style={{ fontSize: "0.8125rem", color: "var(--ds-ink-soft)" }}>
+                Migrations: {health.bootstrapDetail.migrationStatus.appliedCount} applied,{" "}
+                {health.bootstrapDetail.migrationStatus.pendingCount} pending
+              </p>
+            )}
+          </section>
+
           <section className="ui-card admin-feature-status__deploy">
             <h2>Release Gate — {health?.ok ? "✅ Operational" : "⛔ BLOCKED"}</h2>
             {health?.at && <p>آخر فحص: {health.at}</p>}

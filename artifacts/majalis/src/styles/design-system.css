@@ -1366,3 +1366,42 @@ hr.decorative,
     display: none;
   }
 }
+
+/* Admin bootstrap status flags */
+.admin-bootstrap-flag {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.625rem;
+  border: 1px solid var(--ds-line-color);
+  border-radius: var(--ds-radius);
+  font-size: var(--ds-text-xs);
+  background: var(--majalis-panel, #fff);
+}
+
+.admin-bootstrap-flag--ok {
+  border-color: var(--ds-emerald-muted);
+  background: var(--ds-emerald-soft);
+}
+
+.admin-feature-status__bootstrap-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
+  gap: var(--ds-space-2);
+  margin: var(--ds-space-3) 0;
+}
+
+.admin-bootstrap-owner-actions {
+  margin-top: var(--ds-space-3);
+  padding: var(--ds-space-3);
+  border-radius: var(--ds-radius);
+  background: #fff8e6;
+  border: 1px solid #e8d5a0;
+  font-size: var(--ds-text-sm);
+}
+
+.admin-bootstrap-owner-actions ul {
+  margin: 0.5rem 0 0;
+  padding-inline-start: 1.25rem;
+}

@@ -11,6 +11,12 @@ import {
   listAvailableMigrations,
   migrationFilePath,
 } from "./migration-paths.mjs";
+import {
+  ensureTrackingTable,
+  getAppliedMigrationNames,
+  recordAppliedMigration,
+  migrationChecksum,
+} from "./migration-tracker.mjs";
 
 function pick(...keys) {
   for (const k of keys) {
@@ -207,12 +213,29 @@ export async function applyMigrations(options = {}) {
 
   const { client, source } = clientInfo;
   try {
+    if (options.trackApplied) {
+      await ensureTrackingTable(client);
+    }
+    const appliedSet = options.trackApplied
+      ? new Set(await getAppliedMigrationNames(client))
+      : new Set();
+
     for (const file of files) {
+      if (appliedSet.has(file)) {
+        results.push({ file, ok: true, skipped: true, via: "already_applied", durationMs: 0 });
+        continue;
+      }
+
       const started = Date.now();
       const sql = loadSql(file);
+      const checksum = migrationChecksum(sql);
       try {
         await client.query(sql);
-        results.push({ file, ok: true, via: source, durationMs: Date.now() - started });
+        const durationMs = Date.now() - started;
+        if (options.trackApplied) {
+          await recordAppliedMigration(client, file, checksum, durationMs);
+        }
+        results.push({ file, ok: true, via: source, durationMs });
       } catch (err) {
         results.push({ file, ok: false, error: err.message, stack: err.stack, via: source, durationMs: Date.now() - started });
         if (!options.continueOnError) throw err;

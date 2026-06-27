@@ -3,17 +3,37 @@ import { requireAdminAccess } from "../../../lib/admin-auth.mjs";
 import { runActivationMigrations, ACTIVATION_ROLLBACK_SQL } from "../../../lib/migration-runner.mjs";
 import { getPlatformHealth } from "../../../lib/platform-health.mjs";
 import { seedRulingsFromFilesystem } from "../../../lib/rulings-db-seed.mjs";
+import {
+  runPlatformBootstrap,
+  getPlatformBootstrapStatus,
+} from "../../../lib/platform-bootstrap.mjs";
 
 export default async function handler(req, res) {
-  const auth = await requireAdminAccess(req);
-  if (!auth.ok) return sendJson(res, auth.status, { ok: false, error: auth.error });
+  const auth = await requireAdminAccess(req, res, sendJson);
+  if (!auth) return;
 
   const action = req.query?.action || req.body?.action || "status";
 
   try {
     if (action === "status" || action === "health") {
-      const health = await getPlatformHealth({ skipRemote: false });
-      return sendJson(res, health.ok ? 200 : 503, health);
+      const [health, bootstrap] = await Promise.all([
+        getPlatformHealth({ skipRemote: false }),
+        getPlatformBootstrapStatus(),
+      ]);
+      return sendJson(res, health.ok && bootstrap.ok ? 200 : 503, { ok: health.ok && bootstrap.ok, health, bootstrap });
+    }
+
+    if (action === "bootstrap" || action === "self-bootstrap") {
+      const result = await runPlatformBootstrap({
+        forceMigrations: req.query?.force === "1",
+        skipProductionTests: req.query?.skipTests === "1",
+      });
+      return sendJson(res, result.ok ? 200 : 500, result);
+    }
+
+    if (action === "bootstrap-status") {
+      const status = await getPlatformBootstrapStatus();
+      return sendJson(res, 200, status);
     }
 
     if (action === "migrate") {

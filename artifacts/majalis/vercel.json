@@ -44,6 +44,10 @@
       "schedule": "0 4 * * *"
     },
     {
+      "path": "/api/cron/platform-bootstrap",
+      "schedule": "30 4 * * *"
+    },
+    {
       "path": "/api/cron/bootstrap-database",
       "schedule": "0 5 * * *"
     },

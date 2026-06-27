@@ -1,5 +1,6 @@
 import { sendJson } from "../api/_http.mjs";
 import { getPlatformHealth, probeProductionRoutes } from "../../../lib/platform-health.mjs";
+import { getPlatformBootstrapStatus } from "../../../lib/platform-bootstrap.mjs";
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -31,13 +32,14 @@ async function probeApi(base, pathname, method = "GET", body) {
 }
 
 export default async function handler(req, res) {
-  const auth = await requireAdminAccess(req);
-  if (!auth.ok) return sendJson(res, auth.status, { ok: false, error: auth.error });
+  const auth = await requireAdminAccess(req, res, sendJson);
+  if (!auth) return;
 
   const registry = JSON.parse(readFileSync(REGISTRY_PATH, "utf8"));
   const base = registry.productionUrl || "https://www.majlisilm.com";
 
   const health = await getPlatformHealth({ skipRemote: false });
+  const bootstrapStatus = await getPlatformBootstrapStatus();
   const routeChecks = await probeProductionRoutes(
     registry.features.flatMap((f) => f.routes || []).filter((v, i, a) => a.indexOf(v) === i),
   );
@@ -71,14 +73,16 @@ export default async function handler(req, res) {
     return { id: f.id, name: f.name, delivery: delivery.state, reason: delivery.reason, detail: delivery.detail };
   });
 
-  return sendJson(res, health.ok ? 200 : 503, {
-    ok: health.ok,
+  return sendJson(res, health.ok && bootstrapStatus.bootstrap?.productionReady ? 200 : 503, {
+    ok: health.ok && bootstrapStatus.bootstrap?.productionReady === true,
     at: health.at,
     productionUrl: base,
     blockers: health.blockers,
     env: health.env,
     secretGroups: health.secretGroups,
     services: health.services,
+    bootstrap: bootstrapStatus.bootstrap,
+    bootstrapDetail: bootstrapStatus,
     tables: health.services?.database?.tables,
     routeChecks,
     apiChecks,
