@@ -4,7 +4,8 @@ import { applyMigrations, verifySchema } from "../../../lib/db-migrate.mjs";
 import { testDatabaseConnection, resolveDatabaseUrl } from "../../../lib/database.mjs";
 import { ensureContentImportSchema } from "../../../lib/content-import/ensure-schema.mjs";
 import { runActivationMigrations, runActivationTableMigrations } from "../../../lib/migration-runner.mjs";
-import { ACTIVATION_TABLES } from "../../../lib/table-probe.mjs";
+import { ACTIVATION_TABLES, countTableRows } from "../../../lib/table-probe.mjs";
+import { seedRulingsFromFilesystem } from "../../../lib/rulings-db-seed.mjs";
 import { assertServiceSecrets } from "../../../lib/service-guard.mjs";
 
 function resolvedMeta() {
@@ -46,18 +47,17 @@ export default async function handler(req, res) {
     }
 
     const force = req.query?.force === "1" || req.body?.force === true;
-    const verify = await verifySchema();
-    if (verify.ok && !force) {
-      sendJson(res, 200, {
-        ok: true,
-        alreadyApplied: true,
-        schema: verify,
-        resolved: resolvedMeta(),
-      });
+    const scope = req.query?.scope || req.body?.scope || "full";
+
+    if (scope === "seed-rulings") {
+      const count = await countTableRows("sharia_rulings");
+      const seed =
+        count !== null && count > 0
+          ? { ok: true, skipped: true, reason: "already_seeded", count }
+          : await seedRulingsFromFilesystem({ dryRun: req.query?.dryRun === "1" });
+      sendJson(res, seed.ok ? 200 : 500, { ok: seed.ok, scope: "seed-rulings", seed, countBefore: count });
       return;
     }
-
-    const scope = req.query?.scope || req.body?.scope || "full";
 
     if (scope === "activation-tables") {
       const seedRulings = req.query?.seed !== "0" && req.body?.seed !== false;
@@ -79,6 +79,17 @@ export default async function handler(req, res) {
         ok: activation.ok,
         scope: "activation",
         activation,
+        resolved: resolvedMeta(),
+      });
+      return;
+    }
+
+    const verify = await verifySchema();
+    if (verify.ok && !force) {
+      sendJson(res, 200, {
+        ok: true,
+        alreadyApplied: true,
+        schema: verify,
         resolved: resolvedMeta(),
       });
       return;

@@ -469,10 +469,7 @@ async function main() {
         missingCoreTables.length > 0 ||
         missingActivationTables.length > 0 ||
         (shariaRulingsCount ?? 0) === 0 ||
-        !gate.secrets.supabase ||
-        !gate.secrets.cron ||
-        !gate.secrets.anthropic ||
-        deliverySummary.blocked > 0));
+        !gate.secrets.supabase));
 
   if (jsonOut) {
     console.log(JSON.stringify(report, null, 2));

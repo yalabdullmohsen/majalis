@@ -290,18 +290,17 @@ export async function runPlatformBootstrap(options = {}) {
     );
     await updateBootstrapRun(runId, { current_step: "probe_tables", steps });
 
-    // 4. Apply migrations (tracked, ordered — skips already-applied files only)
-    const migration = await applyMigrations({
-      continueOnError: false,
-      trackApplied: true,
-    });
+    // 4. Apply activation-table migrations (sharia + MKE) — skip risky full migration sweep
+    const { runActivationTableMigrations } = await import("./migration-runner.mjs");
+    const migration = await runActivationTableMigrations({ seedRulings: options.seedOwners !== false });
     steps.push(
       stepResult("apply_migrations", migration.ok, {
-        applied: migration.results?.filter((r) => r.ok && !r.skipped)?.length ?? 0,
-        skipped: migration.results?.filter((r) => r.skipped)?.length ?? 0,
-        failed: migration.results?.find((r) => !r.ok),
-        error: migration.error,
+        applied: migration.migration?.results?.filter((r) => r.ok && !r.skipped)?.length ?? 0,
+        skipped: migration.migration?.results?.filter((r) => r.skipped)?.length ?? 0,
+        failed: migration.migration?.results?.find((r) => !r.ok),
+        error: migration.migration?.error,
         missingTablesBefore: beforeProbe.missing,
+        seed: migration.seed,
       }),
     );
     await updateBootstrapRun(runId, { current_step: "apply_migrations", steps });
@@ -310,9 +309,10 @@ export async function runPlatformBootstrap(options = {}) {
         runId,
         steps,
         "apply_migrations",
-        migration.error ||
-          migration.results?.find((r) => !r.ok)?.error ||
-          "Migration apply failed",
+        migration.migration?.error ||
+          migration.migration?.results?.find((r) => !r.ok)?.error ||
+          migration.missing?.join(", ") ||
+          "Activation migration apply failed",
         buildOwnerActions(["DATABASE_URL", "SUPABASE_ACCESS_TOKEN"]),
       );
     }
