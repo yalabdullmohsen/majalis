@@ -40,6 +40,8 @@
     "verify:owner": "node scripts/verify-owner-bootstrap.mjs",
     "verify:feature-health": "node scripts/verify-feature-health.mjs",
     "verify:no-infinite-loading": "node scripts/verify-no-infinite-loading.mjs",
+    "test:content-import": "node scripts/test-content-import-engine.mjs",
+    "verify:content-import-vercel": "node scripts/verify-content-import-vercel.mjs",
     "bootstrap:platform": "node scripts/run-platform-bootstrap.mjs",
     "bootstrap:platform:status": "node scripts/run-platform-bootstrap.mjs status",
     "build": "pnpm run generate:seo && pnpm run generate:rulings && vite build --config vite.config.ts",

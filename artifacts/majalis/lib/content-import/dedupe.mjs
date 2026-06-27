@@ -38,11 +38,9 @@ export function dedupeKeyForRow(type, row) {
     case "benefits":
       return hashKey([row.text]);
     case "adhkar":
-      return hashKey([row.text, row.category || row.categoryId]);
-    case "quran_surahs":
-      return hashKey([row.number, row.name]);
-    case "quran_topics":
-      return hashKey([row.title, row.category]);
+      return hashKey([row.text, row.category || row.categoryId || row.category_id]);
+    case "rulings":
+      return hashKey([row.external_key || row.title, row.category]);
     default:
       return hashKey([JSON.stringify(row)]);
   }
