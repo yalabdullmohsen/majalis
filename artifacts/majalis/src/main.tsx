@@ -8,6 +8,7 @@ import { resetMobileNavBodyLock } from "./lib/mobile-nav-body-lock";
 import { bootstrapSupabaseFromServer, resetSupabaseClient } from "./lib/supabase-bootstrap";
 import { createAppQueryClient } from "./lib/query-client";
 import { PERF_SLOW_MS } from "./lib/performance-monitor";
+import { registerProductionServiceWorker } from "./lib/service-worker";
 import "./index.css";
 import "./styles/design-system.css";
 import "./styles/rulings-encyclopedia.css";
@@ -20,9 +21,8 @@ initClientErrorReporting();
 
 async function mount() {
   const started = performance.now();
-  await bootstrapSupabaseFromServer();
-  resetSupabaseClient();
 
+  // Render immediately — do not block the shell on Supabase bootstrap.
   createRoot(document.getElementById("root")!).render(
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
@@ -30,6 +30,10 @@ async function mount() {
       </QueryClientProvider>
     </ErrorBoundary>,
   );
+
+  void bootstrapSupabaseFromServer()
+    .then(() => resetSupabaseClient())
+    .catch(() => {});
 
   const renderMs = Math.round(performance.now() - started);
   if (renderMs > PERF_SLOW_MS) {
@@ -39,10 +43,4 @@ async function mount() {
 
 void mount();
 
-if ("serviceWorker" in navigator && import.meta.env.PROD) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("/sw.js").catch((error) => {
-      console.warn("[majalis:pwa] service worker registration failed", error);
-    });
-  });
-}
+registerProductionServiceWorker();

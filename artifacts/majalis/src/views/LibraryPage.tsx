@@ -3,7 +3,8 @@ import { useEffect, useMemo, useState } from "react";
 import { getLibrary } from "@/lib/supabase";
 import { RequestManager } from "@/lib/request-manager";
 import { DEMO_LIBRARY } from "@/lib/demo-content";
-import { Loading, Empty, Chip } from "@/components/ui-common";
+import { Empty, Chip } from "@/components/ui-common";
+import { PageLoadingGuard } from "@/components/PageLoadingGuard";
 import { ContentHubLayout } from "@/components/layout/ContentHubLayout";
 import ContentActions from "@/components/ContentActions";
 import { isDemoId } from "@/lib/demo-content";
@@ -75,11 +76,12 @@ export default function LibraryPage({
       filtersOpen={filtersOpen}
       onFiltersOpenChange={setFiltersOpen}
     >
-      {loading ? (
-        <Loading />
-      ) : filtered.length === 0 ? (
-        <Empty text={items.length === 0 ? "لا توجد مواد بعد." : "لا توجد نتائج مطابقة."} />
-      ) : (
+      <PageLoadingGuard
+        loading={loading}
+        empty={!loading && filtered.length === 0}
+        emptyText={items.length === 0 ? "لا توجد بيانات حالياً" : "لا توجد نتائج مطابقة."}
+        onRetry={loadLibrary}
+      >
         <div className="page-card-grid">
           {filtered.map((item: any) => (
             <article key={item.id} className="page-card library-card">
@@ -100,7 +102,7 @@ export default function LibraryPage({
             </article>
           ))}
         </div>
-      )}
+      </PageLoadingGuard>
     </ContentHubLayout>
   );
 }

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState, useCallback } from "react";
 import { useLocation } from "wouter";
-import { PageHeader, Loading, ErrorState, Empty } from "@/components/ui-common";
+import { PageHeader, ErrorState, Empty } from "@/components/ui-common";
+import { PageLoadingGuard } from "@/components/PageLoadingGuard";
 import { useAuth } from "@/components/AuthProvider";
 import { UnifiedLessonCard } from "@/components/lessons/UnifiedLessonCard";
 import { LessonsContactCard } from "@/components/lessons/LessonsContactCard";
@@ -374,13 +375,13 @@ export default function LessonsPage({
 
       <div className="lessons-v2-layout">
         <main className="lessons-v2-main">
-          {loading ? (
-            <Loading />
-          ) : loadError ? (
-            <ErrorState text={loadError} onRetry={() => window.location.reload()} />
-          ) : activeLessons.length === 0 && archivedLessons.length === 0 ? (
-            <Empty text="لا توجد بيانات حالياً" />
-          ) : (
+          <PageLoadingGuard
+            loading={loading}
+            error={loadError}
+            empty={!loading && !loadError && activeLessons.length === 0 && archivedLessons.length === 0}
+            emptyText="لا توجد بيانات حالياً"
+            onRetry={() => window.location.reload()}
+          >
             <>
               {!filters.search && filters.governorate === "كل المحافظات" && (
                 <>
@@ -419,7 +420,7 @@ export default function LessonsPage({
                 </section>
               )}
             </>
-          )}
+          </PageLoadingGuard>
         </main>
 
         <aside className="lessons-v2-sidebar">

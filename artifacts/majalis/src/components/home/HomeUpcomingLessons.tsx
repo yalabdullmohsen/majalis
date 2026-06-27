@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
-import { Loading } from "@/components/ui-common";
+import { PageLoadingGuard } from "@/components/PageLoadingGuard";
+import { RequestManager } from "@/lib/request-manager";
 import { UnifiedLessonCard } from "@/components/lessons/UnifiedLessonCard";
 import { getUnifiedActiveLessons } from "@/lib/lessons-service";
 import { sortKuwaitLessons, type KuwaitLessonRecord } from "@/lib/kuwait-lessons";
@@ -28,7 +29,7 @@ export function HomeUpcomingLessons({
 
   useEffect(() => {
     if (initialLessons) return;
-    getUnifiedActiveLessons()
+    void RequestManager.run("home:upcoming-lessons", () => getUnifiedActiveLessons())
       .then(({ lessons: items }) => {
         const safeItems = Array.isArray(items) ? items : [];
         setLessons(pickUpcomingLessons(safeItems));
@@ -51,17 +52,17 @@ export function HomeUpcomingLessons({
         </div>
       </div>
 
-      {loading ? (
-        <Loading />
-      ) : lessons.length === 0 ? (
-        <p className="lessons-empty-state">لا توجد دروس متاحة حاليًا.</p>
-      ) : (
+      <PageLoadingGuard
+        loading={loading}
+        empty={!loading && lessons.length === 0}
+        emptyText="لا توجد بيانات حالياً"
+      >
         <div className="home-kuwait-grid lesson-unified-grid">
           {lessons.map((lesson) => (
             <UnifiedLessonCard key={lesson.id} lesson={fromKuwaitLesson(lesson)} compact />
           ))}
         </div>
-      )}
+      </PageLoadingGuard>
     </section>
   );
 }

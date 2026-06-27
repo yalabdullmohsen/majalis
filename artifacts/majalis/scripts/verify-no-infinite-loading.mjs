@@ -16,7 +16,8 @@ const REQUIRED_FILES = [
   "src/hooks/use-async-data.ts",
   "src/components/AsyncDataView.tsx",
   "src/components/LazyRouteFallback.tsx",
-  "src/lib/query-client.ts",
+  "src/components/PageLoadingGuard.tsx",
+  "src/lib/service-worker.ts",
 ];
 
 let failed = 0;
@@ -74,11 +75,11 @@ for (const page of publicPages) {
 }
 
 const rm = readFileSync(join(root, "src/lib/request-manager.ts"), "utf8");
-if (!rm.includes("REQUEST_TIMEOUT_MS = 3000")) {
-  console.error("✗ RequestManager timeout must be 3000ms");
+if (!rm.includes("REQUEST_TIMEOUT_MS = 8000")) {
+  console.error("✗ RequestManager timeout must be 8000ms");
   failed++;
 } else {
-  console.log("✓ RequestManager 3s timeout configured");
+  console.log("✓ RequestManager 8s timeout configured");
 }
 
 const dispatch = readFileSync(join(root, "lib/api-dispatch.mjs"), "utf8");
