@@ -17,6 +17,7 @@ import {
   updateBootstrapRun,
   finishBootstrapRun,
   getLatestBootstrapRun,
+  isBootstrapRunning,
 } from "./platform-bootstrap-state.mjs";
 
 const PRODUCTION_BASE = process.env.MAJALIS_PRODUCTION_URL || "https://www.majlisilm.com";
@@ -230,6 +231,22 @@ function buildBootstrapFlags(steps, productionReady) {
  * Full self-bootstrap pipeline — stops on first failure.
  */
 export async function runPlatformBootstrap(options = {}) {
+  if (!options.force && (await isBootstrapRunning())) {
+    return {
+      ok: false,
+      stoppedAt: "concurrent_run",
+      error: "Bootstrap already running — wait for the current run to finish",
+      steps: [],
+      ownerActions: [],
+      bootstrap: {
+        databaseReady: false,
+        migrationsApplied: false,
+        seedCompleted: false,
+        productionReady: false,
+      },
+    };
+  }
+
   const steps = [];
   const run = await startBootstrapRun("precheck_secrets");
   const runId = run?.id;

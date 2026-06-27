@@ -97,6 +97,50 @@ export async function finishBootstrapRun(runId, { ok, error, ownerActions, steps
   });
 }
 
+export async function isBootstrapRunning() {
+  const pgRow = await withPg(async (client) => {
+    const { rows } = await client.query(
+      `SELECT id, started_at, current_step
+       FROM platform_bootstrap_runs
+       WHERE status = 'running'
+       ORDER BY started_at DESC
+       LIMIT 1`,
+    );
+    return rows[0] || null;
+  });
+  if (pgRow) {
+    const ageMs = Date.now() - new Date(pgRow.started_at).getTime();
+    if (ageMs > 15 * 60 * 1000) {
+      await withPg(async (client) => {
+        await client.query(
+          `UPDATE platform_bootstrap_runs SET
+            status = 'failed',
+            completed_at = now(),
+            error = 'stale running lock (>15m)',
+            current_step = 'stale_lock'
+           WHERE id = $1 AND status = 'running'`,
+          [pgRow.id],
+        );
+      });
+      return false;
+    }
+    return true;
+  }
+
+  const admin = getSupabaseAdmin();
+  if (!admin) return false;
+  const { data } = await admin
+    .from("platform_bootstrap_runs")
+    .select("id, started_at, status")
+    .eq("status", "running")
+    .order("started_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  if (!data) return false;
+  const ageMs = Date.now() - new Date(data.started_at).getTime();
+  return ageMs <= 15 * 60 * 1000;
+}
+
 export async function getLatestBootstrapRun() {
   const pgRow = await withPg(async (client) => {
     const { rows } = await client.query(
