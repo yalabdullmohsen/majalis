@@ -59,6 +59,9 @@ export type RulingListResult = {
   page: number;
   limit: number;
   usingSeed: boolean;
+  /** True when DB table exists but has zero rows — run seed migration. */
+  needsSeed?: boolean;
+  dbError?: string;
 };
 
 export type CategoryStat = {

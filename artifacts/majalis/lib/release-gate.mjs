@@ -54,6 +54,7 @@ export const USER_FACING_ROUTES = [
 export const PRODUCTION_APIS = [
   { path: "/api/healthz", method: "GET", expectOk: true },
   { path: "/api/assistant/health", method: "GET", expectOk: true },
+  { path: "/api/assistant", method: "POST", expectOk: true },
   { path: "/api/knowledge-search?q=صلاة", method: "GET", expectOk: true },
   { path: "/api/daily-content", method: "GET", expectOk: true },
   { path: "/api/intelligent-search?q=صلاة", method: "GET", expectOk: true },

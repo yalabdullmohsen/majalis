@@ -1,40 +1,14 @@
+import { sendJson } from "../api/_http.mjs";
+import { getPlatformHealth, probeProductionRoutes } from "../../../lib/platform-health.mjs";
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { sendJson } from "../api/_http.mjs";
-import { getEnvStatus } from "../env-config.mjs";
-import { validateAdminAuth } from "../env-config.mjs";
-import { getSupabaseAdmin } from "../supabase-admin.mjs";
+import { requireAdminAccess } from "../../../lib/admin-auth.mjs";
+import { classifyDelivery } from "../../../lib/release-gate.mjs";
+import { grepCode } from "../../../lib/release-gate-utils.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REGISTRY_PATH = join(__dirname, "../../data/feature-registry.json");
-
-const TABLE_CHECKS = [
-  "qa_categories",
-  "qa_questions",
-  "lessons",
-  "trusted_lesson_sources",
-  "lesson_import_drafts",
-  "automation_runs",
-  "mke_runs",
-  "mke_decisions",
-  "kg_nodes",
-  "kg_edges",
-  "sharia_rulings",
-];
-
-async function probeUrl(base, pathname) {
-  try {
-    const res = await fetch(`${base}${pathname}`, { redirect: "follow" });
-    const text = await res.text();
-    return {
-      status: res.status,
-      ok: res.status === 200 && !text.includes("تعذر عرض هذه الصفحة"),
-    };
-  } catch (err) {
-    return { status: 0, ok: false, error: err.message };
-  }
-}
 
 async function probeApi(base, pathname, method = "GET", body) {
   try {
@@ -57,67 +31,57 @@ async function probeApi(base, pathname, method = "GET", body) {
 }
 
 export default async function handler(req, res) {
-  if (!validateAdminAuth(req)) {
-    return sendJson(res, 401, { ok: false, error: "Unauthorized" });
-  }
+  const auth = await requireAdminAccess(req);
+  if (!auth.ok) return sendJson(res, auth.status, { ok: false, error: auth.error });
 
   const registry = JSON.parse(readFileSync(REGISTRY_PATH, "utf8"));
   const base = registry.productionUrl || "https://www.majlisilm.com";
-  const env = getEnvStatus();
 
-  const tables = {};
-  try {
-    const admin = getSupabaseAdmin();
-    for (const table of TABLE_CHECKS) {
-      const { error } = await admin.from(table).select("*").limit(0);
-      tables[table] = error ? error.message : "ok";
-    }
-  } catch (err) {
-    tables._error = err.message;
-  }
-
-  const routeChecks = {};
-  for (const f of registry.features) {
-    for (const r of f.routes || []) {
-      if (!routeChecks[r]) routeChecks[r] = await probeUrl(base, r);
-    }
-  }
+  const health = await getPlatformHealth({ skipRemote: false });
+  const routeChecks = await probeProductionRoutes(
+    registry.features.flatMap((f) => f.routes || []).filter((v, i, a) => a.indexOf(v) === i),
+  );
 
   const apiChecks = {
     healthz: await probeApi(base, "/api/healthz"),
     assistantHealth: await probeApi(base, "/api/assistant/health"),
     assistantPost: await probeApi(base, "/api/assistant", "POST", { message: "ما حكم الوضوء؟" }),
     knowledgeSearch: await probeApi(base, "/api/knowledge-search?q=صلاة"),
+    productionActivate: await probeApi(base, "/api/admin/production-activate?action=health"),
   };
 
-  let bundleMarker = null;
-  try {
-    const html = await fetch(`${base}/`).then((r) => r.text());
-    const m = html.match(/\/assets\/index-[^"]+\.js/);
-    if (m) {
-      const js = await fetch(`${base}${m[0]}`).then((r) => r.text());
-      bundleMarker = {
-        hasQuranV2: js.includes("quran-v2"),
-        hasLessonsV2: js.includes("lessons-page-v2"),
-        hasQaV2: js.includes("qa-page-v2"),
-        hasMousou3a: js.includes("موسوعة قصص"),
-        hasQuranStoriesLabel: js.includes("قصص القرآن"),
-        vercelPr: js.match(/VITE_VERCEL_GIT_PULL_REQUEST_ID:"(\d+)"/)?.[1] || null,
-      };
-    }
-  } catch {
-    /* ignore */
-  }
+  const features = registry.features.map((f) => {
+    const delivery = classifyDelivery(f, {
+      production: true,
+      codeHits: Object.fromEntries(f.codeMarkers.map((m) => [m, grepCode(m)])),
+      mergedBranches: {},
+      env: health.env,
+      tables: Object.fromEntries(
+        (f.requiredTables || []).map((t) => [t, health.services?.database?.tables?.[t] === true]),
+      ),
+      migrations: Object.fromEntries(
+        (f.migrations || []).map((m) => [
+          m,
+          (f.requiredTables || []).every((t) => health.services?.database?.tables?.[t] === true),
+        ]),
+      ),
+      prodHits: {},
+      prodBlocked: {},
+    });
+    return { id: f.id, name: f.name, delivery: delivery.state, reason: delivery.reason, detail: delivery.detail };
+  });
 
-  return sendJson(res, 200, {
-    ok: true,
-    at: new Date().toISOString(),
+  return sendJson(res, health.ok ? 200 : 503, {
+    ok: health.ok,
+    at: health.at,
     productionUrl: base,
-    env,
-    tables,
+    blockers: health.blockers,
+    env: health.env,
+    secretGroups: health.secretGroups,
+    services: health.services,
+    tables: health.services?.database?.tables,
     routeChecks,
     apiChecks,
-    bundleMarker,
-    features: registry.features,
+    features,
   });
 }

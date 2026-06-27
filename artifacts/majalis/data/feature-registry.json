@@ -82,7 +82,7 @@
       "requiredSecrets": ["VITE_SUPABASE_URL"],
       "requiredTables": ["sharia_rulings"],
       "migrations": ["sharia_rulings_encyclopedia_v1.sql"],
-      "usesMock": true,
+      "usesMock": false,
       "phase": 5
     },
     {

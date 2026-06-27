@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link } from "wouter";
 import { Loading } from "@/components/ui-common";
+import { adminFetch } from "@/lib/admin-api";
 import registry from "../../../data/feature-registry.json";
 
 type FeatureRow = {
@@ -15,95 +16,65 @@ type FeatureRow = {
   requiredSecrets?: string[];
 };
 
+type ApiFeature = {
+  id: string;
+  name: string;
+  delivery: string;
+  reason?: string | null;
+  detail?: string | null;
+};
+
 type HealthPayload = {
   ok: boolean;
+  at?: string;
+  blockers?: string[];
   env?: Record<string, boolean>;
-  tables?: Record<string, string>;
+  secretGroups?: Record<string, { ok: boolean; missing: string[] }>;
+  services?: {
+    database?: {
+      ok?: boolean;
+      tables?: Record<string, boolean>;
+      sharia_rulings_count?: number | null;
+      rulings_using_db?: boolean;
+      rulings_seed_available?: number;
+    };
+    assistant?: { ok?: boolean; anthropic?: boolean };
+    mke?: { ok?: boolean; error?: string };
+    cron?: { ok?: boolean; missing?: string[] };
+    supabase?: { ok?: boolean; serviceRole?: boolean };
+    automation?: { ok?: boolean };
+  };
+  tables?: Record<string, boolean>;
   routeChecks?: Record<string, { ok: boolean; status: number }>;
   apiChecks?: Record<string, { ok: boolean; status: number; detail?: unknown }>;
-  bundleMarker?: {
-    hasQuranV2?: boolean;
-    hasLessonsV2?: boolean;
-    hasQaV2?: boolean;
-    hasMousou3a?: boolean;
-    hasQuranStoriesLabel?: boolean;
-    vercelPr?: string | null;
-  };
+  features?: ApiFeature[];
   error?: string;
 };
 
-const STATUS_LABEL: Record<string, string> = {
-  done: "منفذة",
-  partial: "جزئية",
-  blocked: "محجوبة",
-  mock: "Mock فقط",
-  missing: "غير موجودة",
+const DELIVERY_LABEL: Record<string, string> = {
+  Production: "Production",
+  Ready: "Ready",
+  Blocked: "Blocked",
 };
 
-function statusClass(s: string) {
-  if (s === "done") return "feature-status-badge feature-status-badge--done";
-  if (s === "partial") return "feature-status-badge feature-status-badge--partial";
-  if (s === "blocked") return "feature-status-badge feature-status-badge--blocked";
-  if (s === "mock") return "feature-status-badge feature-status-badge--mock";
-  return "feature-status-badge feature-status-badge--missing";
-}
-
-function inferStatus(f: FeatureRow, health: HealthPayload | null): { key: string; label: string; notes: string[] } {
-  const notes: string[] = [];
-  const bm = health?.bundleMarker;
-
-  if (f.id === "quran-v2") {
-    if (bm?.hasQuranV2) return { key: "done", label: STATUS_LABEL.done, notes: ["bundle يحتوي quran-v2"] };
-    notes.push("Production bundle لا يحتوي quran-v2 — PR #72 غير مدمج");
-    return { key: "partial", label: STATUS_LABEL.partial, notes };
-  }
-  if (f.id === "lessons-v2") {
-    if (bm?.hasLessonsV2) return { key: "done", label: STATUS_LABEL.done, notes: [] };
-    notes.push("Production bundle لا يحتوي lessons-page-v2");
-    return { key: "partial", label: STATUS_LABEL.partial, notes };
-  }
-  if (f.id === "qa-taxonomy") {
-    if (bm?.hasQaV2) return { key: "done", label: STATUS_LABEL.done, notes: [] };
-    notes.push("Production bundle لا يحتوي qa-page-v2");
-    return { key: "partial", label: STATUS_LABEL.partial, notes };
-  }
-  if (f.id === "quran-stories") {
-    if (bm?.hasMousou3a) notes.push("Production ما زال يعرض «موسوعة»");
-    if (bm?.hasQuranStoriesLabel) return { key: "done", label: STATUS_LABEL.done, notes };
-    return { key: "partial", label: STATUS_LABEL.partial, notes };
-  }
-  if (f.id === "assistant") {
-    const post = health?.apiChecks?.assistantPost;
-    if (post && !post.ok) notes.push(`POST /api/assistant → HTTP ${post.status}`);
-    if (post?.ok) return { key: "done", label: STATUS_LABEL.done, notes };
-    return { key: "blocked", label: "لا تعمل", notes };
-  }
-  if (f.id === "instagram-graph") {
-    const missing = (f.requiredSecrets || []).filter((k) => !health?.env?.[k]);
-    if (missing.length) {
-      notes.push(`Secrets ناقصة: ${missing.join(", ")}`);
-      return { key: "blocked", label: "تحتاج Secret", notes };
-    }
-  }
-  if (f.usesMock) {
-    notes.push("تعتمد على seed/mock عند غياب Supabase");
-    return { key: "mock", label: STATUS_LABEL.mock, notes };
-  }
-  const routeOk = (f.routes || []).every((r) => health?.routeChecks?.[r]?.ok !== false);
-  if (routeOk) return { key: "done", label: STATUS_LABEL.done, notes };
-  return { key: "partial", label: STATUS_LABEL.partial, notes: ["Route غير متاح على Production"] };
+function deliveryClass(s: string) {
+  if (s === "Production") return "feature-status-badge feature-status-badge--done";
+  if (s === "Ready") return "feature-status-badge feature-status-badge--partial";
+  return "feature-status-badge feature-status-badge--blocked";
 }
 
 export default function FeatureStatusPage() {
   const [health, setHealth] = useState<HealthPayload | null>(null);
   const [loading, setLoading] = useState(true);
+  const [activating, setActivating] = useState(false);
+  const [activateResult, setActivateResult] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const load = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch("/api/admin/feature-health");
+      const res = await adminFetch("/api/admin/feature-health");
       const json = (await res.json()) as HealthPayload;
       if (!res.ok) throw new Error(json.error || `HTTP ${res.status}`);
       setHealth(json);
@@ -115,25 +86,50 @@ export default function FeatureStatusPage() {
     }
   }, []);
 
+  const runActivation = useCallback(async (action: string) => {
+    setActivating(true);
+    setActivateResult(null);
+    try {
+      const res = await adminFetch(`/api/admin/production-activate?action=${action}`);
+      const json = await res.json();
+      setActivateResult(JSON.stringify(json, null, 2));
+      await load();
+    } catch (err) {
+      setActivateResult(err instanceof Error ? err.message : "فشل التفعيل");
+    } finally {
+      setActivating(false);
+    }
+  }, [load]);
+
   useEffect(() => {
     load();
   }, [load]);
 
   const features = registry.features as FeatureRow[];
+  const apiFeatures = health?.features ?? [];
+  const featureById = Object.fromEntries(apiFeatures.map((f) => [f.id, f]));
 
   return (
     <div className="page-shell admin-feature-status-page">
       <header className="admin-feature-status__head ui-card">
         <div>
-          <p className="admin-feature-status__eyebrow">Principal Engineer Audit</p>
-          <h1>حالة الميزات — Feature Status</h1>
+          <p className="admin-feature-status__eyebrow">Production Activation</p>
+          <h1>حالة المنصة — Platform Health</h1>
           <p className="admin-feature-status__intro">
-            لا تُعتبر الميزة منفذة إلا إذا: موجودة في الكود، مدمجة في main، منشورة على Production، وتعمل من الواجهة.
+            Release Gate يعتمد على فحوصات حقيقية: جداول DB، Secrets، APIs، Cron، MKE، والأتمتة.
           </p>
         </div>
         <div className="admin-feature-status__actions">
           <button type="button" className="ui-card-btn" onClick={load} disabled={loading}>
-            {loading ? "جاري الفحص…" : "إعادة الاختبار"}
+            {loading ? "جاري الفحص…" : "إعادة الفحص"}
+          </button>
+          <button
+            type="button"
+            className="ui-card-btn ui-card-btn--primary"
+            onClick={() => runActivation("migrate")}
+            disabled={activating}
+          >
+            {activating ? "جاري التفعيل…" : "تشغيل Activation Migrations"}
           </button>
           <Link href="/admin" className="ui-card-btn ui-card-btn--ghost">
             لوحة التحكم
@@ -144,7 +140,7 @@ export default function FeatureStatusPage() {
       {error && (
         <div className="ui-card admin-feature-status__error" role="alert">
           {error}
-          <p>تأكد من تسجيل الدخول كمسؤول ووجود ADMIN_API_SECRET على الخادم.</p>
+          <p>تأكد من تسجيل الدخول كمسؤول.</p>
         </div>
       )}
 
@@ -152,31 +148,64 @@ export default function FeatureStatusPage() {
         <Loading />
       ) : (
         <>
-          {health?.bundleMarker && (
-            <section className="ui-card admin-feature-status__deploy">
-              <h2>Production Bundle</h2>
+          <section className="ui-card admin-feature-status__deploy">
+            <h2>Release Gate — {health?.ok ? "✅ Operational" : "⛔ BLOCKED"}</h2>
+            {health?.at && <p>آخر فحص: {health.at}</p>}
+            {health?.blockers?.length ? (
               <ul>
-                <li>quran-v2: {health.bundleMarker.hasQuranV2 ? "✅" : "❌"}</li>
-                <li>lessons-v2: {health.bundleMarker.hasLessonsV2 ? "✅" : "❌"}</li>
-                <li>qa-v2: {health.bundleMarker.hasQaV2 ? "✅" : "❌"}</li>
-                <li>«موسوعة» في قصص القرآن: {health.bundleMarker.hasMousou3a ? "⚠️ نعم" : "✅ لا"}</li>
-                {health.bundleMarker.vercelPr && (
-                  <li>Vercel PR deploy: #{health.bundleMarker.vercelPr}</li>
-                )}
+                {health.blockers.map((b) => (
+                  <li key={b}>⛔ {b}</li>
+                ))}
               </ul>
-            </section>
-          )}
+            ) : (
+              <p>لا توجد عوائق — جميع الفحوصات الأساسية ناجحة.</p>
+            )}
+          </section>
 
-          {health?.env && (
+          {health?.secretGroups && (
             <section className="ui-card admin-feature-status__env">
-              <h2>Health Check — Secrets (موجود/ناقص فقط)</h2>
+              <h2>Secrets Groups</h2>
               <div className="admin-feature-status__env-grid">
-                {Object.entries(health.env).map(([key, ok]) => (
-                  <span key={key} className={ok ? "env-ok" : "env-missing"}>
-                    {ok ? "✓" : "✗"} {key}
+                {Object.entries(health.secretGroups).map(([group, g]) => (
+                  <span key={group} className={g.ok ? "env-ok" : "env-missing"}>
+                    {g.ok ? "✓" : "✗"} {group}
+                    {!g.ok && g.missing.length > 0 ? ` (${g.missing.join(", ")})` : ""}
                   </span>
                 ))}
               </div>
+            </section>
+          )}
+
+          {health?.services && (
+            <section className="ui-card admin-feature-status__deploy">
+              <h2>Services</h2>
+              <ul>
+                <li>Database: {health.services.database?.ok ? "✅" : "❌"}</li>
+                <li>
+                  sharia_rulings: {health.services.database?.rulings_using_db ? "✅ DB" : "❌"} (
+                  {health.services.database?.sharia_rulings_count ?? 0} rows, seed:{" "}
+                  {health.services.database?.rulings_seed_available ?? 0})
+                </li>
+                <li>Supabase service role: {health.services.supabase?.serviceRole ? "✅" : "❌"}</li>
+                <li>Cron secrets: {health.services.cron?.ok ? "✅" : "❌"}</li>
+                <li>Assistant (Anthropic): {health.services.assistant?.anthropic ? "✅" : "❌"}</li>
+                <li>MKE: {health.services.mke?.ok ? "✅" : "❌"}</li>
+                <li>Automation: {health.services.automation?.ok ? "✅" : "❌"}</li>
+              </ul>
+              {health.services.database?.tables && (
+                <details>
+                  <summary>Activation tables</summary>
+                  <div className="admin-feature-status__env-grid">
+                    {Object.entries(health.services.database.tables)
+                      .filter(([t]) => !t.includes("__detail"))
+                      .map(([t, ok]) => (
+                      <span key={t} className={ok ? "env-ok" : "env-missing"}>
+                        {ok ? "✓" : "✗"} {t}
+                      </span>
+                    ))}
+                  </div>
+                </details>
+              )}
             </section>
           )}
 
@@ -190,15 +219,15 @@ export default function FeatureStatusPage() {
                     <th>PR</th>
                     <th>Route</th>
                     <th>Mock</th>
-                    <th>Migration</th>
                     <th>الحالة</th>
-                    <th>ملاحظات</th>
+                    <th>السبب</th>
                     <th>اختبار</th>
                   </tr>
                 </thead>
                 <tbody>
                   {features.map((f) => {
-                    const st = inferStatus(f, health);
+                    const api = featureById[f.id];
+                    const delivery = api?.delivery || "Blocked";
                     return (
                       <tr key={f.id}>
                         <td>
@@ -215,14 +244,17 @@ export default function FeatureStatusPage() {
                           ))}
                         </td>
                         <td>{f.usesMock ? "نعم" : "لا"}</td>
-                        <td>{f.migrations?.length ? f.migrations.join(", ") : "—"}</td>
                         <td>
-                          <span className={statusClass(st.key)}>{st.label}</span>
+                          <span className={deliveryClass(delivery)}>
+                            {DELIVERY_LABEL[delivery] || delivery}
+                          </span>
                         </td>
                         <td className="admin-feature-status__notes">
-                          {st.notes.map((n) => (
-                            <div key={n}>{n}</div>
-                          ))}
+                          {api?.reason && (
+                            <div>
+                              {api.reason}: {api.detail}
+                            </div>
+                          )}
                         </td>
                         <td>
                           {f.routes?.[0] && (
@@ -256,11 +288,18 @@ export default function FeatureStatusPage() {
               </ul>
             </section>
           )}
+
+          {activateResult && (
+            <section className="ui-card">
+              <h2>نتيجة التفعيل</h2>
+              <pre style={{ overflow: "auto", maxHeight: 320, fontSize: 12 }}>{activateResult}</pre>
+            </section>
+          )}
         </>
       )}
 
       <p className="admin-feature-status__cli">
-        CLI: <code>pnpm run verify:features --production</code>
+        CLI: <code>pnpm run verify:production-complete</code>
       </p>
     </div>
   );

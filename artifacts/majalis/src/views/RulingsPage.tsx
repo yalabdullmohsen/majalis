@@ -29,6 +29,7 @@ export default function RulingsPage() {
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
+  const [dbState, setDbState] = useState<{ needsSeed?: boolean; dbError?: string }>({});
   const [stats, setStats] = useState<CategoryStat[]>([]);
   const [encyclopediaTotal, setEncyclopediaTotal] = useState(0);
   const [category, setCategory] = useState("الكل");
@@ -63,6 +64,7 @@ export default function RulingsPage() {
       });
       setItems(result.data);
       setTotal(result.total);
+      setDbState({ needsSeed: result.needsSeed, dbError: result.dbError });
     } finally {
       setLoading(false);
     }
@@ -163,7 +165,17 @@ export default function RulingsPage() {
       {loading ? (
         <Loading />
       ) : items.length === 0 ? (
-        <Empty text="لا توجد أحكام مطابقة." />
+        <Empty
+          text={
+            dbState.needsSeed
+              ? "قاعدة البيانات جاهزة لكن لم تُستورد الأحكام بعد. شغّل Production Activation من لوحة الإدارة."
+              : dbState.dbError === "table_missing"
+                ? "جدول sharia_rulings غير موجود — طبّق migrations التفعيل أولاً."
+                : dbState.dbError
+                  ? `تعذّر تحميل الأحكام: ${dbState.dbError}`
+                  : "لا توجد أحكام مطابقة."
+          }
+        />
       ) : (
         <>
           <div className="ruling-card-grid">

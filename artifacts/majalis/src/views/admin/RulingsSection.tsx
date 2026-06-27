@@ -42,8 +42,9 @@ export function RulingsSection() {
 
   const load = async () => {
     setLoading(true);
-    const [{ data: dbData }, seedData] = await Promise.all([adminGetAllRulings(), getAllRulingsForAdmin()]);
-    setItems(dbData.length > 0 ? (dbData as ShariaRulingExtended[]) : seedData);
+    const [{ data: dbData }, serviceData] = await Promise.all([adminGetAllRulings(), getAllRulingsForAdmin()]);
+    const merged = dbData.length > 0 ? dbData : serviceData;
+    setItems(merged as ShariaRulingExtended[]);
     setLoading(false);
   };
 

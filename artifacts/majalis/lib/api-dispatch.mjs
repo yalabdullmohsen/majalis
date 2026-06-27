@@ -42,6 +42,7 @@ export const API_ROUTES = [
   { prefix: "/api/cron/scholarly-verification", module: "./api-handlers/cron/scholarly-verification.js", allowGet: true, exact: true },
   { prefix: "/api/admin/knowledge-pipeline", module: "./api-handlers/admin/knowledge-pipeline.js", allowGet: true },
   { prefix: "/api/admin/feature-health", module: "./api-handlers/admin/feature-health.js", allowGet: true, exact: true },
+  { prefix: "/api/admin/production-activate", module: "./api-handlers/admin/production-activate.js", allowGet: true },
   { prefix: "/api/admin/check-fiqh-links", module: "./api-handlers/admin/check-fiqh-links.js", allowGet: true },
   { prefix: "/api/admin/sync-fiqh-council", module: "./api-handlers/admin/sync-fiqh-council.js", allowGet: true },
   { prefix: "/api/admin/scholarly-verification", module: "./api-handlers/admin/scholarly-verification.js", allowGet: true },

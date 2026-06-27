@@ -25,6 +25,8 @@ import {
   RELEASE_GATE_CHECKS,
   classifyDelivery,
 } from "../lib/release-gate.mjs";
+import { grepCode } from "../lib/release-gate-utils.mjs";
+import { probeTables, ACTIVATION_TABLES, countTableRows } from "../lib/table-probe.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
@@ -91,18 +93,6 @@ function envPresent(key) {
     if (process.env[alt]) return true;
   }
   return false;
-}
-
-function grepCode(marker) {
-  try {
-    const out = execSync(
-      `rg -l "${marker.replace(/"/g, '\\"')}" "${ROOT}" --glob '!node_modules' --glob '!dist' 2>/dev/null || true`,
-      { encoding: "utf8" },
-    ).trim();
-    return out.length > 0;
-  } catch {
-    return false;
-  }
 }
 
 function gitMerged(branch) {
@@ -308,6 +298,13 @@ async function main() {
     tables[t] = await checkTable(t);
   }
 
+  const activationProbe = await probeTables(ACTIVATION_TABLES);
+  const activationTables = Object.fromEntries(
+    ACTIVATION_TABLES.map((t) => [t, activationProbe[t] === true]),
+  );
+  const shariaRulingsCount = await countTableRows("sharia_rulings");
+  const missingActivationTables = ACTIVATION_TABLES.filter((t) => !activationTables[t]);
+
   // --- Migrations on disk ---
   const { MIGRATION_FILES } = await import("../lib/migration-paths.mjs");
   const migrations = Object.fromEntries(MIGRATION_FILES.map((f) => [f, true]));
@@ -403,6 +400,8 @@ async function main() {
     typescript: skipTypecheck || steps.find((s) => s.name === "typescript")?.ok !== false,
     build: skipBuild || steps.find((s) => s.name === "build")?.ok !== false,
     migration: missingCoreTables.length === 0,
+    activationTables: missingActivationTables.length === 0,
+    rulingsSeeded: (shariaRulingsCount ?? 0) > 0,
     merge: openPrs.length === 0,
     productionDeploy: production ? Boolean(prodBundlePath) : null,
     route: production ? routeFailures.length === 0 : null,
@@ -437,6 +436,9 @@ async function main() {
     crons: readCrons(),
     tables,
     missingCoreTables,
+    activationTables,
+    missingActivationTables,
+    shariaRulingsCount,
     routeResults: production ? routeResults : undefined,
     apiResults: production ? apiResults : undefined,
     mobile: production ? mobileResults : undefined,
@@ -449,9 +451,9 @@ async function main() {
       !env.ANTHROPIC_API_KEY && "ANTHROPIC_API_KEY for assistant",
       !env.OPENAI_API_KEY && "OPENAI_API_KEY for vision/MKE (optional)",
       !env.INSTAGRAM_GRAPH_ACCESS_TOKEN && "INSTAGRAM_GRAPH_* for Instagram automation",
-      missingCoreTables.length === 0 &&
-        OPTIONAL_DB_TABLES.some((t) => tables[t] === false) &&
-        "Apply optional SQL migrations in Supabase SQL Editor",
+      missingActivationTables.length > 0 &&
+        `Apply activation migrations: ${missingActivationTables.join(", ")}`,
+      (shariaRulingsCount ?? 0) === 0 && "Seed sharia_rulings via /api/admin/production-activate?action=seed-rulings",
       openPrs.length > 0 && `Merge or close ${openPrs.length} open PRs`,
       "Confirm Vercel Production Branch = main (Dashboard → Settings → Git)",
     ].filter(Boolean),
@@ -465,6 +467,11 @@ async function main() {
       (routeFailures.length > 0 ||
         apiFailures.length > 0 ||
         missingCoreTables.length > 0 ||
+        missingActivationTables.length > 0 ||
+        (shariaRulingsCount ?? 0) === 0 ||
+        !gate.secrets.supabase ||
+        !gate.secrets.cron ||
+        !gate.secrets.anthropic ||
         deliverySummary.blocked > 0));
 
   if (jsonOut) {
@@ -502,6 +509,13 @@ async function main() {
 
       console.log("\n── APIs ──");
       console.log(apiFailures.length ? `✗ Failed: ${apiFailures.join(", ")}` : "✓ Core APIs OK");
+
+      console.log("\n── Activation tables ──");
+      console.log(
+        missingActivationTables.length
+          ? `✗ Missing: ${missingActivationTables.join(", ")}`
+          : `✓ All ${ACTIVATION_TABLES.length} activation tables present (${shariaRulingsCount ?? 0} rulings)`,
+      );
 
       console.log("\n── Database (core) ──");
       console.log(

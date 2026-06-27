@@ -1,9 +1,10 @@
 import { sendJson } from "../../api/_http.mjs";
 import { validateCronAuth } from "../../../lib/env-config.mjs";
 import { applyMigrations, verifySchema } from "../../../lib/db-migrate.mjs";
-import { ACTIVATION_MIGRATION_FILES } from "../../../lib/migration-paths.mjs";
 import { testDatabaseConnection, resolveDatabaseUrl } from "../../../lib/database.mjs";
 import { ensureContentImportSchema } from "../../../lib/content-import/ensure-schema.mjs";
+import { runActivationMigrations } from "../../../lib/migration-runner.mjs";
+import { assertServiceSecrets } from "../../../lib/service-guard.mjs";
 
 function resolvedMeta() {
   const r = resolveDatabaseUrl();
@@ -56,9 +57,21 @@ export default async function handler(req, res) {
     }
 
     const scope = req.query?.scope || req.body?.scope || "full";
-    const migrationFiles = scope === "activation" ? ACTIVATION_MIGRATION_FILES : undefined;
 
-    const result = await applyMigrations({ continueOnError: true, files: migrationFiles });
+    if (scope === "activation") {
+      assertServiceSecrets("migrations");
+      const seedRulings = req.query?.seed !== "0" && req.body?.seed !== false;
+      const activation = await runActivationMigrations({ seedRulings });
+      sendJson(res, activation.ok ? 200 : 500, {
+        ok: activation.ok,
+        scope: "activation",
+        activation,
+        resolved: resolvedMeta(),
+      });
+      return;
+    }
+
+    const result = await applyMigrations({ continueOnError: true });
     const verifyAfter = await verifySchema();
     const ok = result.ok && verifyAfter.ok;
     sendJson(res, ok ? 200 : 500, {
