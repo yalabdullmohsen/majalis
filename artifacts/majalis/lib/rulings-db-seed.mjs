@@ -15,6 +15,9 @@ function resolvePublicBaseUrl() {
   if (process.env.MAJALIS_PRODUCTION_URL) {
     return process.env.MAJALIS_PRODUCTION_URL.replace(/\/$/, "");
   }
+  if (process.env.VERCEL_ENV === "production") {
+    return "https://www.majlisilm.com";
+  }
   if (process.env.VERCEL_URL) {
     return `https://${process.env.VERCEL_URL.replace(/^https?:\/\//, "")}`;
   }
@@ -45,12 +48,17 @@ async function fetchJson(url) {
   return res.json();
 }
 
+function chunkPublicUrl(baseUrl, chunkFile) {
+  const parts = chunkFile.split("/").map((part) => encodeURIComponent(part));
+  return `${baseUrl}${PUBLIC_DATA_PATH}/${parts.join("/")}`;
+}
+
 async function loadSeedItemsFromHttp(baseUrl = resolvePublicBaseUrl()) {
   const manifestUrl = `${baseUrl}${PUBLIC_DATA_PATH}/manifest.json`;
   const manifest = await fetchJson(manifestUrl);
   const items = [];
   for (const chunk of manifest.chunks || []) {
-    const chunkUrl = `${baseUrl}${PUBLIC_DATA_PATH}/${chunk.file}`;
+    const chunkUrl = chunkPublicUrl(baseUrl, chunk.file);
     try {
       const rows = await fetchJson(chunkUrl);
       if (Array.isArray(rows)) items.push(...rows);

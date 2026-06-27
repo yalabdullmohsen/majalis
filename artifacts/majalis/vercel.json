@@ -7,7 +7,7 @@
   "functions": {
     "api/index.js": {
       "maxDuration": 60,
-      "includeFiles": "{lib/**,supabase/**,data/**}"
+      "includeFiles": "{lib/**,supabase/**,data/**,public/data/rulings-encyclopedia/**}"
     }
   },
   "crons": [
