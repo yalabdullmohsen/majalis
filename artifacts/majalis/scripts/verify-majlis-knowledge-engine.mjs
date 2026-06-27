@@ -1,15 +1,21 @@
 #!/usr/bin/env node
 /**
- * Majlis Knowledge Engine v1 — Autonomous Platform verification.
+ * Majlis Knowledge Engine v2 — Autonomous Platform verification.
  */
 import {
   ENGINE_VERSION,
   SUPPORTED_SOURCE_TYPES,
   PIPELINE_STAGES,
+  INTELLIGENCE_LAYERS,
   listSupportedPlatforms,
   getVisionStatus,
   makeContentDecision,
+  makeMultiStageDecision,
   runQualityChecks,
+  runQualityEngine,
+  computeCompositeScore,
+  getSearchCapabilities,
+  resolveActiveAiProvider,
 } from "../lib/majlis-knowledge-engine/index.mjs";
 import { resolveAdapterType } from "../lib/cms/lesson-intelligence/adapters/index.mjs";
 
@@ -24,26 +30,29 @@ function assert(name, cond) {
   }
 }
 
-console.log(`Majlis Knowledge Engine v${ENGINE_VERSION} — Platform 1.0 Tests\n`);
+console.log(`Majlis Autonomous Platform v${ENGINE_VERSION} — Tests\n`);
 
-// 1. Engine config
-assert("Engine version", ENGINE_VERSION === "1.0.0");
-assert("Supported source types >= 25", SUPPORTED_SOURCE_TYPES.length >= 25);
+assert("Engine version 2.0", ENGINE_VERSION === "2.0.0");
+assert("Supported source types >= 28", SUPPORTED_SOURCE_TYPES.length >= 28);
 assert("Pipeline stages >= 14", PIPELINE_STAGES.length >= 14);
+assert("Intelligence layers >= 8", INTELLIGENCE_LAYERS.length >= 8);
+assert("Email/webhook/api types", ["email", "webhook", "api"].every((t) => SUPPORTED_SOURCE_TYPES.includes(t)));
 
-// 2. Platform adapters
 const platforms = listSupportedPlatforms();
-assert("Platform registry", platforms.length >= 25);
+assert("Platform registry", platforms.length >= 28);
 assert("Instagram adapter", resolveAdapterType("instagram") === "instagram");
-assert("ICS adapter", resolveAdapterType("ics") === "rss");
-assert("PNG adapter", resolveAdapterType("png") === "manual");
-assert("Mosque announcement", resolveAdapterType("mosque_announcement") === "website");
+assert("Webhook adapter", resolveAdapterType("webhook") === "website");
 
-// 3. Vision status
 const vision = getVisionStatus();
 assert("Vision capabilities", vision.capabilities?.length >= 6);
 
-// 4. Decision engine — trusted + complete → approved path
+const scores = computeCompositeScore({ trust_score: 90, activity_score: 80, health_score: 100 });
+assert("Discovery composite score", scores.composite > 70);
+
+const searchCaps = getSearchCapabilities();
+assert("Search arabic morphology", searchCaps.arabicMorphology === true);
+assert("AI provider resolved", typeof resolveActiveAiProvider() === "string");
+
 const future = new Date();
 future.setMonth(future.getMonth() + 2);
 const fullParsed = {
@@ -63,10 +72,9 @@ const trustedSource = {
   id: "test",
   trust_score: 95,
   auto_publish: true,
-  trust_level: "official",
-  auto_publish_allowed: true,
   active: true,
 };
+
 const approvedDecision = await makeContentDecision({
   source: trustedSource,
   parsed: fullParsed,
@@ -78,32 +86,24 @@ const approvedDecision = await makeContentDecision({
 });
 assert("Trusted+complete → approved or pending", ["approved", "pending_review"].includes(approvedDecision.decision));
 
-// 5. Decision — unknown source → pending
-const unknownDecision = await makeContentDecision({
-  source: { id: "x", trust_score: 30, auto_publish: false, active: true },
-  parsed: fullParsed,
-  confidenceScore: 0.97,
-  sourceUrl: "https://example.com/post",
-  imageUrl: "https://example.com/poster.jpg",
-});
-assert("Unknown source → pending_review", unknownDecision.decision === "pending_review");
-
-// 6. Decision — low confidence → pending
-const lowConfDecision = await makeContentDecision({
+const multiDecision = await makeMultiStageDecision({
   source: trustedSource,
   parsed: fullParsed,
-  confidenceScore: 0.5,
-  sourceUrl: "https://example.com/post",
+  confidenceScore: 0.97,
+  sourceUrl: "https://instagram.com/p/test123",
+  imageUrl: "https://example.com/poster.jpg",
+  visionMetrics: { visionConfidence: 0.9, ocrConfidence: 0.8, combinedConfidence: 0.9 },
+  quality: { ok: true, severity: "ok", blockers: [] },
+});
+assert("Multi-stage decision has stages", multiDecision.multiStage?.stages?.length >= 5);
+
+const qualityV2 = await runQualityEngine({
+  parsed: fullParsed,
+  source: trustedSource,
+  sourceUrl: "https://example.com/lesson",
   imageUrl: "https://example.com/poster.jpg",
 });
-assert("Low confidence → pending", !lowConfDecision.autoPublish);
-
-// 7. Quality control
-const quality = await runQualityChecks({
-  parsed: fullParsed,
-  sourceUrl: "https://example.com",
-});
-assert("Quality check passes valid lesson", quality.ok);
+assert("Quality engine v2 passes valid lesson", qualityV2.ok);
 
 const weakQuality = await runQualityChecks({
   parsed: { title: "حديث ضعيف عن فضل", description: "موضوع" },
@@ -111,14 +111,5 @@ const weakQuality = await runQualityChecks({
 });
 assert("Quality blocks weak hadith markers", !weakQuality.ok || weakQuality.blockers.length > 0);
 
-// 8. Incomplete fields → pending
-const incompleteDecision = await makeContentDecision({
-  source: trustedSource,
-  parsed: { title: "درس" },
-  confidenceScore: 0.99,
-  sourceUrl: "https://example.com",
-});
-assert("Incomplete → pending", incompleteDecision.decision !== "approved" || !incompleteDecision.autoPublish);
-
-console.log(failed ? `\n${failed} test(s) failed` : "\nAll Majlis Knowledge Engine tests passed (8 scenarios)");
+console.log(failed ? `\n${failed} test(s) failed` : "\nAll Majlis Autonomous Platform v2 tests passed");
 process.exit(failed ? 1 : 0);

@@ -3,7 +3,21 @@
  * All content operations route through this engine.
  */
 
-export const ENGINE_VERSION = "1.0.0";
+export const ENGINE_VERSION = "2.0.0";
+
+/** Autonomous OS intelligence layers (v2). */
+export const INTELLIGENCE_LAYERS = [
+  { id: "source", label: "Source Intelligence", module: "source-registry" },
+  { id: "discovery", label: "Discovery Intelligence", module: "discovery-intelligence" },
+  { id: "vision", label: "Vision Intelligence", module: "vision-intelligence-v2" },
+  { id: "knowledge", label: "Knowledge Intelligence", module: "graph-linker" },
+  { id: "decision", label: "Decision Intelligence", module: "decision-engine-v2" },
+  { id: "quality", label: "Quality Intelligence", module: "quality-engine" },
+  { id: "publishing", label: "Publishing Intelligence", module: "publish-pipeline" },
+  { id: "monitoring", label: "Monitoring Intelligence", module: "monitoring-intelligence" },
+  { id: "self_heal", label: "Self Healing", module: "self-healing" },
+  { id: "learning", label: "Self Learning", module: "metrics" },
+];
 
 /** Source types supported without code changes — mapped via adapters + DB config. */
 export const SUPPORTED_SOURCE_TYPES = [
@@ -14,6 +28,7 @@ export const SUPPORTED_SOURCE_TYPES = [
   "image", "png", "jpg", "jpeg", "webp", "manual",
   "mosque_announcement", "association_announcement", "university_announcement",
   "ministry_announcement", "scholar_website", "mosque_website",
+  "email", "webhook", "api",
 ];
 
 export const PIPELINE_STAGES = [

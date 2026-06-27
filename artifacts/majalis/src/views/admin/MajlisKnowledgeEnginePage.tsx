@@ -7,6 +7,10 @@ import { AdminShell } from "@/views/admin/AdminShell";
 
 type MkeStats = {
   engineVersion?: string;
+  health?: { score?: number; status?: string };
+  intelligenceLayers?: Array<{ id: string; label: string }>;
+  subsystems?: Record<string, unknown>;
+  counts?: Record<string, number>;
   sourcesTotal?: number;
   platformsSupported?: number;
   drafts?: number;
@@ -14,10 +18,10 @@ type MkeStats = {
   publishedToday?: number;
   duplicates?: number;
   rejected?: number;
-  vision?: { visionEnabled?: boolean; capabilities?: string[] };
+  vision?: { visionEnabled?: boolean; capabilities?: string[]; fallback?: string };
   instagram?: { configured?: boolean; manualAssistMode?: boolean };
   database?: { status?: string };
-  search?: { status?: string };
+  search?: { status?: string; embeddings?: boolean };
   queue?: { pending?: number; failed?: number };
   extractionMetrics?: {
     visionAccuracy?: number | null;
@@ -54,9 +58,10 @@ function StatusBadge({ ok, label }: { ok: boolean; label: string }) {
 function MajlisKnowledgeEngineContent() {
   const [loading, setLoading] = useState(true);
   const [running, setRunning] = useState(false);
-  const [engineVersion, setEngineVersion] = useState("1.0.0");
+  const [engineVersion, setEngineVersion] = useState("2.0.0");
   const [stats, setStats] = useState<MkeStats | null>(null);
   const [platforms, setPlatforms] = useState<Array<{ type: string; adapter: string }>>([]);
+  const [intelligenceLayers, setIntelligenceLayers] = useState<Array<{ id: string; label: string }>>([]);
   const [pipelineStages, setPipelineStages] = useState<Array<{ id: string; label: string }>>([]);
   const [runResult, setRunResult] = useState<string | null>(null);
 
@@ -64,9 +69,10 @@ function MajlisKnowledgeEngineContent() {
     setLoading(true);
     getMkeDashboard()
       .then((r) => {
-        setEngineVersion(r.engineVersion || "1.0.0");
-        setStats(r.stats || null);
+        setEngineVersion(r.engineVersion || "2.0.0");
+        setStats((r.stats as MkeStats) || null);
         setPlatforms(r.platforms || []);
+        setIntelligenceLayers(r.intelligenceLayers || []);
         setPipelineStages(r.pipelineStages || []);
       })
       .catch(() => setStats(null))
@@ -96,10 +102,10 @@ function MajlisKnowledgeEngineContent() {
       <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "0.75rem", marginBottom: "1rem" }}>
         <div>
           <h2 style={{ margin: "0 0 0.35rem", color: C.emeraldDeep }}>
-            Majlis Knowledge Engine v{engineVersion}
+            Majlis Autonomous Platform v{engineVersion}
           </h2>
           <p style={{ margin: 0, color: C.inkSoft, fontSize: "0.875rem" }}>
-            المنصة الذاتية — اكتشاف · تحليل · تحقق · ربط · نشر · تحديث
+            نظام تشغيل ذاتي 24/7 — اكتشاف · جودة · قرار · نشر · شفاء · تعلم
           </p>
         </div>
         <div style={{ display: "flex", gap: "0.75rem", fontSize: "0.8125rem", alignItems: "center" }}>
@@ -132,23 +138,37 @@ function MajlisKnowledgeEngineContent() {
       {loading ? <Loading /> : (
         <>
           <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", marginBottom: "1.25rem" }}>
-            <StatCard label="المصادر" value={stats?.sourcesTotal ?? 0} />
+            <StatCard label="صحة النظام" value={stats?.health?.score ?? "—"} color={stats?.health?.status === "healthy" ? C.emeraldDeep : "#92400E"} />
+            <StatCard label="المصادر" value={stats?.counts?.sources ?? stats?.subsystems?.sources ? (stats.subsystems as { sources?: { total?: number } }).sources?.total ?? stats?.sourcesTotal ?? 0 : stats?.sourcesTotal ?? 0} />
             <StatCard label="المنصات" value={stats?.platformsSupported ?? platforms.length} />
-            <StatCard label="مسودات" value={stats?.drafts ?? 0} />
-            <StatCard label="بانتظار المراجعة" value={stats?.pendingReview ?? 0} color="#92400E" />
-            <StatCard label="منشور اليوم" value={stats?.publishedToday ?? 0} />
-            <StatCard label="مكرر" value={stats?.duplicates ?? 0} />
-            <StatCard label="مرفوض" value={stats?.rejected ?? 0} color="#991B1B" />
-            <StatCard label="Queue" value={stats?.queue?.pending ?? 0} />
+            <StatCard label="مسودات" value={stats?.counts?.drafts ?? stats?.drafts ?? 0} />
+            <StatCard label="بانتظار المراجعة" value={stats?.counts?.pendingReview ?? stats?.pendingReview ?? 0} color="#92400E" />
+            <StatCard label="منشور اليوم" value={stats?.counts?.publishedToday ?? stats?.publishedToday ?? 0} />
+            <StatCard label="Queue" value={stats?.subsystems?.queue ? (stats.subsystems.queue as { pending?: number }).pending ?? 0 : stats?.queue?.pending ?? 0} />
+            <StatCard label="Self-Heal" value={stats?.counts?.self_heal_log ?? "—"} />
           </div>
+
+          {intelligenceLayers.length > 0 && (
+            <section style={{ marginBottom: "1.25rem" }}>
+              <h3 style={{ color: C.emeraldDeep, fontSize: "0.9375rem" }}>Intelligence Layers ({intelligenceLayers.length})</h3>
+              <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginTop: "0.5rem" }}>
+                {intelligenceLayers.map((l) => (
+                  <span key={l.id} style={{ fontSize: "0.75rem", padding: "0.25rem 0.5rem", background: C.parchmentDeep, borderRadius: "0.25rem" }}>
+                    {l.label}
+                  </span>
+                ))}
+              </div>
+            </section>
+          )}
 
           <section style={{ marginBottom: "1.25rem" }}>
             <h3 style={{ color: C.emeraldDeep, fontSize: "0.9375rem" }}>حالة الخدمات</h3>
             <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginTop: "0.5rem" }}>
               <StatusBadge ok={stats?.vision?.visionEnabled ?? false} label="Vision AI" />
-              <StatusBadge ok={stats?.instagram?.configured ?? false} label="Instagram Graph" />
+              <StatusBadge ok={(stats?.subsystems?.vision as { visionEnabled?: boolean })?.visionEnabled ?? stats?.vision?.visionEnabled ?? false} label="Vision v2" />
               <StatusBadge ok={stats?.database?.status === "connected"} label="Database" />
-              <StatusBadge ok={stats?.search?.status === "embeddings_ready"} label="Smart Search" />
+              <StatusBadge ok={stats?.search?.embeddings ?? stats?.search?.status === "embeddings_ready"} label="Semantic Search" />
+              <StatusBadge ok={Boolean(stats?.subsystems?.notifications)} label="Notifications" />
             </div>
           </section>
 
