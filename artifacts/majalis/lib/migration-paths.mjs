@@ -21,6 +21,7 @@ export const MIGRATION_FILES = [
   "auto_content_pipeline.sql",
   "auto_content_pipeline_v2.sql",
   "auto_engine_production_complete.sql",
+  "platform_bootstrap_compat_v1.sql",
   "knowledge_engine_v12.sql",
   "auto_knowledge_engine_v13.sql",
   "scholarly_verification_v1.sql",

@@ -76,7 +76,7 @@ export default async function handler(req, res) {
     if (action === "migrate") {
       migrationStep = "apply_migrations";
       const migrations = listAvailableMigrations();
-      const result = await applyMigrations({ continueOnError: false });
+      const result = await applyMigrations({ continueOnError: false, trackApplied: true });
       sendJson(res, result.ok ? 200 : 500, { migrations, ...result });
       return;
     }
@@ -139,6 +139,17 @@ export default async function handler(req, res) {
       const err = new Error(`ensureSchemaReady() failed: ${schemaErr}`);
       logBootstrapError(migrationStep, err, steps);
       sendJson(res, 500, debugPayload(err, { steps, durationMs: Date.now() - started }));
+      return;
+    }
+
+    migrationStep = "activation_migrations";
+    const { runActivationMigrations } = await import("../../../lib/migration-runner.mjs");
+    steps.activation = await runActivationMigrations({ seedRulings: true });
+    if (!steps.activation.ok) {
+      const actErr = steps.activation.migration?.error ||
+        `Missing activation tables: ${(steps.activation.missing || []).join(", ")}`;
+      logBootstrapError(migrationStep, new Error(actErr), steps);
+      sendJson(res, 500, debugPayload(new Error(actErr), { steps, durationMs: Date.now() - started }));
       return;
     }
 

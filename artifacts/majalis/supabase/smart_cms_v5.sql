@@ -66,18 +66,41 @@ CREATE INDEX IF NOT EXISTS content_revision_log_record_idx
   ON content_revision_log (table_name, record_id, changed_at DESC);
 
 -- Extend admin_audit_logs with old/new snapshots when missing
-ALTER TABLE admin_audit_logs
-  ADD COLUMN IF NOT EXISTS old_values JSONB,
-  ADD COLUMN IF NOT EXISTS new_values JSONB;
+DO $$
+BEGIN
+  IF EXISTS (
+    SELECT 1 FROM information_schema.tables
+    WHERE table_schema = 'public' AND table_name = 'admin_audit_logs'
+  ) THEN
+    IF NOT EXISTS (
+      SELECT 1 FROM information_schema.columns
+      WHERE table_schema = 'public' AND table_name = 'admin_audit_logs' AND column_name = 'table_name'
+    ) THEN
+      ALTER TABLE admin_audit_logs ADD COLUMN table_name TEXT NOT NULL DEFAULT 'unknown';
+    END IF;
+    ALTER TABLE admin_audit_logs ADD COLUMN IF NOT EXISTS old_values JSONB;
+    ALTER TABLE admin_audit_logs ADD COLUMN IF NOT EXISTS new_values JSONB;
+  END IF;
+EXCEPTION WHEN undefined_table THEN NULL;
+END $$;
 
--- Trusted monitoring sources (RSS / social / official sites)
-INSERT INTO content_sources (slug, name, source_type, base_url, config, is_active)
-VALUES
-  ('instagram-kuwait-lessons', 'Instagram — دروس الكويت', 'api', 'https://www.instagram.com', '{"platform":"instagram"}', false),
-  ('youtube-kuwait-lessons', 'YouTube — قنوات علمية', 'rss', 'https://www.youtube.com', '{"platform":"youtube"}', false),
-  ('telegram-kuwait-lessons', 'Telegram — قنوات علمية', 'api', 'https://t.me', '{"platform":"telegram"}', false),
-  ('official-kuwait-mosques', 'مواقع المساجد الرسمية', 'rss', null, '{"platform":"website"}', false)
-ON CONFLICT (slug) DO NOTHING;
+-- Trusted monitoring sources (Phase 3 table — skip if not deployed yet)
+DO $$
+BEGIN
+  IF EXISTS (
+    SELECT 1 FROM information_schema.tables
+    WHERE table_schema = 'public' AND table_name = 'trusted_content_sources'
+  ) THEN
+    INSERT INTO trusted_content_sources (name, source_type, platform, url, config, active)
+    VALUES
+      ('Instagram — دروس الكويت', 'api', 'instagram', 'https://www.instagram.com', '{"platform":"instagram"}'::jsonb, false),
+      ('YouTube — قنوات علمية', 'rss', 'youtube', 'https://www.youtube.com', '{"platform":"youtube"}'::jsonb, false),
+      ('Telegram — قنوات علمية', 'api', 'telegram', 'https://t.me', '{"platform":"telegram"}'::jsonb, false),
+      ('مواقع المساجد الرسمية', 'rss', 'website', 'https://example.com/mosques', '{"platform":"website"}'::jsonb, false)
+    ON CONFLICT DO NOTHING;
+  END IF;
+EXCEPTION WHEN undefined_column OR undefined_table OR unique_violation THEN NULL;
+END $$;
 
 -- RLS
 ALTER TABLE content_drafts ENABLE ROW LEVEL SECURITY;

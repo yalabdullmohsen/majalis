@@ -317,14 +317,23 @@ export async function runPlatformBootstrap(options = {}) {
       );
     }
 
-    // 5. Verify schema
+    // 5. Verify schema + activation tables
     const afterProbe = await probeRequiredTables();
     const schema = await verifySchema();
+    let activation = null;
+    if (afterProbe.missing.length > 0) {
+      const { runActivationMigrations } = await import("./migration-runner.mjs");
+      activation = await runActivationMigrations({ seedRulings: true });
+      const afterActivation = await probeRequiredTables();
+      afterProbe.missing = afterActivation.missing;
+      afterProbe.present = afterActivation.present;
+    }
     const migrationsOk = afterProbe.missing.length === 0;
     steps.push(
       stepResult("verify_schema", migrationsOk && schema.ok !== false, {
         missing: afterProbe.missing,
         schemaOk: schema.ok,
+        activation,
       }),
     );
     await updateBootstrapRun(runId, { current_step: "verify_schema", steps });

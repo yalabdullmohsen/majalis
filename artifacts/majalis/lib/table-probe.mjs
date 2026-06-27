@@ -14,6 +14,9 @@ export const ACTIVATION_TABLES = [
   "mke_decisions",
   "mke_quality_reports",
   "mke_source_plugins",
+  "content_import_jobs",
+  "content_import_staging",
+  "verified_adhkar_items",
 ];
 
 export async function probeTableAdmin(table) {
@@ -35,7 +38,14 @@ export async function probeTableAnon(table) {
     const res = await fetch(`${url}/rest/v1/${table}?select=id&limit=1`, {
       headers: { apikey: key, Authorization: `Bearer ${key}` },
     });
-    if (res.status === 404 || res.status === 406) return { ok: false, missing: true, status: res.status };
+    const body = await res.text();
+    if (body.includes("Could not find") || body.includes("PGRST205") || res.status === 404) {
+      return { ok: false, missing: true, status: res.status };
+    }
+    // RLS / policy restriction — table exists but anon cannot read rows
+    if ([400, 401, 403, 406].includes(res.status)) {
+      return { ok: true, restricted: true, status: res.status };
+    }
     return { ok: res.status === 200, status: res.status };
   } catch (err) {
     return { ok: false, error: err.message };
@@ -55,8 +65,31 @@ export async function probeTables(tables = ACTIVATION_TABLES) {
 
 export async function countTableRows(table) {
   const admin = getSupabaseAdmin();
-  if (!admin) return null;
-  const { count, error } = await admin.from(table).select("id", { count: "exact", head: true });
-  if (error) return null;
-  return count ?? 0;
+  if (admin) {
+    const { count, error } = await admin.from(table).select("id", { count: "exact", head: true });
+    if (error) return null;
+    return count ?? 0;
+  }
+
+  const url = (process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL || "").replace(/\/+$/, "");
+  const key = process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY || "";
+  if (!url || !key) return null;
+  try {
+    const res = await fetch(`${url}/rest/v1/${table}?select=id`, {
+      headers: {
+        apikey: key,
+        Authorization: `Bearer ${key}`,
+        Prefer: "count=exact",
+      },
+    });
+    if (res.status === 404) return null;
+    const range = res.headers.get("content-range");
+    if (range) {
+      const total = range.split("/")[1];
+      if (total && total !== "*") return Number(total);
+    }
+    return res.ok ? 0 : null;
+  } catch {
+    return null;
+  }
 }

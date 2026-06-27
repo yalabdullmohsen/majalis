@@ -25,11 +25,26 @@ for (const path of ["/api/healthz", "/api/public-config", "/api/admin/auth-conte
 }
 
 try {
-  const res = await fetch(`${PRODUCTION}/api/client-error-log?id=MJL-20260627-211329-4BBJR6`);
-  const json = await res.json();
-  record("error log lookup", json.ok === true, json.report?.message?.slice(0, 60) || "missing");
+  const testId = `MJL-TEST-${Date.now()}`;
+  const postRes = await fetch(`${PRODUCTION}/api/client-error-log`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      errorId: testId,
+      message: "feature-health probe",
+      route: "/verify-feature-health",
+    }),
+  });
+  const postJson = await postRes.json().catch(() => ({}));
+  const posted = postRes.ok && postJson.ok === true;
+
+  const getRes = await fetch(`${PRODUCTION}/api/client-error-log?id=${encodeURIComponent(testId)}`);
+  const getJson = await getRes.json().catch(() => ({}));
+  const lookedUp = getRes.ok && getJson.ok === true && getJson.report?.errorId === testId;
+
+  record("error log roundtrip", posted && lookedUp, lookedUp ? testId : postJson.message || "lookup failed");
 } catch (err) {
-  record("error log lookup", false, err.message);
+  record("error log roundtrip", false, err.message);
 }
 
 const failed = checks.filter((c) => !c.ok);
