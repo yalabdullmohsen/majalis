@@ -34,6 +34,7 @@ export const MIGRATION_FILES = [
   "kuwait_instagram_sources_v2.sql",
   "smart_source_monitoring_v1.sql",
   "automation_phase5_v1.sql",
+  "lesson_intelligence_v6.sql",
 ];
 
 export function resolveMigrationsDir() {

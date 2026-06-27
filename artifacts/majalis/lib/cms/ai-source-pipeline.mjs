@@ -5,6 +5,8 @@ import { extractLessonFromText, extractLessonFromImage, isVisionEnabled } from "
 import { importFromUrl } from "./url-importer.mjs";
 import { detectCourseFromParsed, ensureCourseRecord } from "./course-handler.mjs";
 import { logAutomationStep } from "./automation-step-logs.mjs";
+import { computeSourceTrustScore, computeExtractionConfidence } from "./lesson-intelligence/trust-scorer.mjs";
+import { fieldCompletenessScore } from "./lesson-intelligence/dedup-engine.mjs";
 
 async function fetchImageBuffer(imageUrl) {
   const res = await fetch(imageUrl, {
@@ -90,7 +92,28 @@ export async function runAiSourcePipeline({ item, source, sourceUrl, runId }) {
       if (course.courseId) parsed.course_id = course.courseId;
     }
 
-    return { parsed, extractedText, confidenceScore, imageUrl, visionEnabled: isVisionEnabled() };
+    // Phase 6 — intelligence confidence overlay (additive)
+    const sourceTrust = computeSourceTrustScore({
+      source_type: source.source_type,
+      trust_score: source.trust_level === "official" ? 100 : source.trust_level === "trusted" ? 98 : 80,
+      config: source.config,
+    });
+    confidenceScore = computeExtractionConfidence({
+      sourceTrust,
+      extractionConfidence: confidenceScore,
+      hasImage: Boolean(imageUrl),
+      hasSourceUrl: Boolean(sourceUrl),
+      fieldCompleteness: fieldCompletenessScore(parsed),
+    });
+    await logAutomationStep({
+      runId,
+      sourceId: source.id,
+      step: "intelligence",
+      status: "ok",
+      detail: `trust=${sourceTrust} conf=${Math.round(confidenceScore * 100)}%`,
+    });
+
+    return { parsed, extractedText, confidenceScore, imageUrl, visionEnabled: isVisionEnabled(), sourceTrust };
   } catch (err) {
     await logAutomationStep({ runId, sourceId: source.id, step: "extraction", status: "error", detail: String(err.message || err) });
     return {

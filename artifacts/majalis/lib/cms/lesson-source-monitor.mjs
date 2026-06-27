@@ -9,6 +9,7 @@ import { matchSheikhByName } from "./sheikh-matcher.mjs";
 import { listTrustedSources, updateSourceCheckStatus, updateSourceDiscoverySnapshot } from "./trusted-sources.mjs";
 import { evaluateAutoPublish } from "./auto-publish-engine.mjs";
 import { findDuplicateLesson } from "./lesson-duplicate-detector.mjs";
+import { findIntelligenceDuplicate } from "./lesson-intelligence/dedup-engine.mjs";
 import { findDuplicateSourceUrl } from "./lesson-import-draft.mjs";
 import { writeAutomationAudit } from "./automation-audit.mjs";
 import { createLessonImportDraft } from "./lesson-import-draft.mjs";
@@ -35,6 +36,8 @@ const UPDATE_DUPLICATE_REASONS = new Set([
   "duplicate_image_hash",
   "similar_lesson",
   "duplicate_external_key",
+  "intelligence_fuzzy_match",
+  "perceptual_hash_match",
 ]);
 
 async function discoverItems(source) {
@@ -118,7 +121,9 @@ export async function processAutomationItem({ source, item, connectorHint, runId
 
   const { parsed, extractedText, confidenceScore, imageUrl, imageHash, extractError } = await extractFromItem(item, source, runId);
   const sheikhMatch = await matchSheikhByName(parsed.speaker_name);
-  const duplicate = await findDuplicateLesson({ parsed, sourceUrl, imageHash });
+  const duplicate = process.env.MAJALIS_INTELLIGENCE === "0"
+    ? await findDuplicateLesson({ parsed, sourceUrl, imageHash })
+    : await findIntelligenceDuplicate({ parsed, sourceUrl, imageHash, sourceId: source.id });
 
   const shouldUpdate = duplicate.isDuplicate && duplicate.lesson && UPDATE_DUPLICATE_REASONS.has(duplicate.reason);
   if (duplicate.isDuplicate && !shouldUpdate) {

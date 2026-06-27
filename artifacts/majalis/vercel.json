@@ -92,7 +92,7 @@
       "schedule": "*/15 * * * *"
     },
     {
-      "path": "/api/cron/lesson-source-monitor",
+      "path": "/api/cron/lesson-intelligence",
       "schedule": "*/15 * * * *"
     },
     {

@@ -15,6 +15,14 @@ import { registerSourceMonitorJob } from "../../../lib/cms/source-monitor-jobs.m
 import { listAutomationStepLogs } from "../../../lib/cms/automation-step-logs.mjs";
 import { listSourceMonitorJobs } from "../../../lib/cms/source-monitor-jobs.mjs";
 import { listSupportedConnectors } from "../../../lib/cms/connectors/index.mjs";
+import {
+  runLessonIntelligenceEngine,
+  getIntelligenceCenterStats,
+  listLessonSources,
+  upsertLessonSource,
+  listSupportedAdapters,
+  EXTRACTOR_IDS,
+} from "../../../lib/cms/lesson-intelligence/index.mjs";
 import { countPendingAutomationDrafts } from "../../../lib/cms/automation-notifications.mjs";
 import { listLessonImportDrafts, getLessonImportDraft } from "../../../lib/cms/lesson-import-draft.mjs";
 import { handleLessonImportApprove, handleLessonImportReject } from "../../../lib/cms/lesson-import-actions.mjs";
@@ -149,6 +157,41 @@ export default async function handler(req, res) {
       return;
     }
 
+    if (action === "intelligence-center") {
+      const stats = await getIntelligenceCenterStats();
+      const lessonSources = await listLessonSources();
+      sendJson(res, 200, {
+        ok: true,
+        stats,
+        lessonSources,
+        adapters: listSupportedAdapters(),
+        extractors: EXTRACTOR_IDS,
+      });
+      return;
+    }
+
+    if (action === "list-lesson-sources") {
+      const sources = await listLessonSources({ activeOnly: body.activeOnly === true });
+      sendJson(res, 200, { ok: true, sources });
+      return;
+    }
+
+    if (action === "upsert-lesson-source") {
+      const result = await upsertLessonSource(body.source || body);
+      sendJson(res, result.ok ? 200 : 422, result);
+      return;
+    }
+
+    if (action === "run-intelligence") {
+      const result = await runLessonIntelligenceEngine({
+        sourceId: body.sourceId || null,
+        dryRun: body.dryRun === true,
+        runType: "manual",
+      });
+      sendJson(res, 200, result);
+      return;
+    }
+
     if (action === "dashboard") {
       const sources = await listTrustedSources({ activeOnly: false });
       const runs = await listAutomationRuns({ limit: 10 });
@@ -190,6 +233,10 @@ export default async function handler(req, res) {
         "list-runs",
         "re-analyze",
         "dashboard",
+        "intelligence-center",
+        "list-lesson-sources",
+        "upsert-lesson-source",
+        "run-intelligence",
         "approve-draft",
         "reject-draft",
       ],

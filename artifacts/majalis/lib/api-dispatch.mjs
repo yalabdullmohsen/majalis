@@ -85,6 +85,7 @@ export const API_ROUTES = [
   { prefix: "/api/admin/source-monitor", module: "./api-handlers/admin/source-monitor.js" },
   { prefix: "/api/cron/monitor-sources", module: "./api-handlers/cron/monitor-sources.js", allowGet: true, exact: true },
   { prefix: "/api/cron/lesson-source-monitor", module: "./api-handlers/cron/lesson-source-monitor.js", allowGet: true, exact: true },
+  { prefix: "/api/cron/lesson-intelligence", module: "./api-handlers/cron/lesson-intelligence.js", allowGet: true, exact: true },
   { prefix: "/api/cron/source-monitor", module: "./api-handlers/cron/source-monitor.js", allowGet: true, exact: true },
   { prefix: "/api/admin/content-import", module: "./api-handlers/admin/content-import.js" },
   { prefix: "/api/cron/import-phase2-trial", module: "./api-handlers/cron/import-phase2-trial.js", allowGet: true, exact: true },

@@ -21,6 +21,7 @@
     "verify:lesson-automation": "node scripts/verify-lesson-automation.mjs",
     "verify:phase5-automation": "node scripts/verify-phase5-automation.mjs",
     "verify:kuwait-instagram": "node scripts/test-kuwait-instagram-sources.mjs",
+    "verify:lesson-intelligence": "node scripts/verify-lesson-intelligence.mjs",
     "test:kuwait-sources": "node scripts/test-kuwait-instagram-sources.mjs",
     "smoke:nav": "node scripts/smoke-nav-menu.mjs",
     "build": "pnpm run generate:seo && vite build --config vite.config.ts",

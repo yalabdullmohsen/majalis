@@ -88,6 +88,18 @@ export async function getAutomationDashboard() {
   return postAutomation({ action: "dashboard" });
 }
 
+export async function getIntelligenceCenter() {
+  return postAutomation({ action: "intelligence-center" });
+}
+
+export async function runIntelligenceEngine(opts?: { sourceId?: string; dryRun?: boolean }) {
+  return postAutomation({ action: "run-intelligence", ...opts });
+}
+
+export async function listLessonSources(activeOnly = false) {
+  return postAutomation({ action: "list-lesson-sources", activeOnly });
+}
+
 export const TRUST_LEVELS = [
   ["official", "رسمي"],
   ["trusted", "موثوق"],
