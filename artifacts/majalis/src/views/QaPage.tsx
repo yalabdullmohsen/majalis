@@ -4,6 +4,7 @@ import { QA_DISCLAIMER } from "@/lib/theme";
 import { PageHeader, Empty, QaSkeleton } from "@/components/ui-common";
 import { DEMO_QA, DEMO_QA_CATEGORIES } from "@/lib/demo-content";
 import { QaCard } from "@/components/qa/QaCard";
+import { T } from "@/lib/terminology";
 import {
   pickRandomQaItem,
   QA_SORT_LABELS,
@@ -116,8 +117,8 @@ export default function QaPage({
     <div className="page-shell narrow content-hub-page qa-page">
       <PageHeader
         eyebrow="المجلس العلمي"
-        title="الأسئلة والأجوبة الدينية"
-        subtitle="أسئلة علمية منظمة — بحث، تصنيف، وأحدث الأسئلة والأكثر مشاهدة."
+        title={T.qaPageTitle}
+        subtitle={T.qaPageSubtitle}
       />
 
       <Disclaimer />
@@ -130,9 +131,9 @@ export default function QaPage({
       <input
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        placeholder="ابحث في الأسئلة والأجوبة..."
+        placeholder={T.qaSearchPlaceholder}
         className="page-search-input full content-hub-search"
-        aria-label="بحث في الأسئلة والأجوبة"
+        aria-label={T.qaSearchPlaceholder}
       />
 
       <div className="content-hub-chips">

@@ -5,6 +5,7 @@ import { getCmsDashboardStats } from "@/lib/cms/supabase-cms";
 import { CMS_KIND_LABELS, type CmsContentKind } from "@/lib/cms/content-types";
 import { getTopSearchQueries } from "@/lib/search-history";
 import { isSupabaseConfigured } from "@/lib/supabase-config";
+import { T } from "@/lib/terminology";
 import { C } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
 import { AdminSectionToolbar } from "./AdminSectionToolbar";
@@ -60,7 +61,7 @@ export function DashboardSection() {
     { label: "مشاهدات اليوم", value: stats.todayViews, tone: "#475569" },
     { label: "الكتب", value: stats.totalBooks, tone: C.brassDeep },
     { label: "الفوائد", value: stats.totalBenefits, tone: C.emeraldDeep },
-    { label: "الأسئلة", value: stats.totalQA, tone: C.emeraldDeep },
+    { label: T.adminQa, value: stats.totalQA, tone: C.emeraldDeep },
     { label: "بلاغات معلّقة", value: stats.pendingReports, tone: stats.pendingReports ? "#dc2626" : C.inkSoft },
     { label: "التفريغات", value: stats.totalTranscriptions, tone: "#0f766e" },
   ];

@@ -153,7 +153,7 @@ export default function QuranPage() {
         <Link href="/quran/tajweed" className="quran-subnav__link">التجويد</Link>
         <Link href="/quran/surah-stories" className="quran-subnav__link">قصص السور</Link>
         <Link href="/quran-live" className="quran-subnav__link">البث المباشر</Link>
-        <Link href="/quran-radio" className="quran-subnav__link">الإذاعات</Link>
+        <Link href="/quran-radio" className="quran-subnav__link">إذاعات القرآن</Link>
         <Link href="/daily-wird" className="quran-subnav__link">الورد اليومي</Link>
       </nav>
 

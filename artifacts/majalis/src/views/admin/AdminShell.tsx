@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useState, type ReactNode } from "react";
 import { Link, useLocation } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
+import { T } from "@/lib/terminology";
 import { C } from "@/lib/theme";
 
 export type AdminSection =
@@ -54,7 +55,7 @@ export const ADMIN_NAV: { key: AdminSection; label: string }[] = [
   { key: "miracles", label: "الإعجاز العلمي" },
   { key: "fawaid", label: "الفوائد" },
   { key: "adhkar", label: "الأذكار" },
-  { key: "qa", label: "الأسئلة" },
+  { key: "qa", label: T.adminQa },
   { key: "condolences", label: "قوالب التعزية" },
   { key: "users", label: "المستخدمون" },
   { key: "reports", label: "التقارير" },
@@ -62,7 +63,7 @@ export const ADMIN_NAV: { key: AdminSection; label: string }[] = [
   { key: "fatwa", label: "الفتاوى" },
   { key: "rulings", label: "الأحكام الشرعية" },
   { key: "annual-courses", label: "الدورات العلمية" },
-  { key: "updates", label: "المستجدات" },
+  { key: "updates", label: T.adminUpdates },
   { key: "settings", label: "الإعدادات" },
 ];
 

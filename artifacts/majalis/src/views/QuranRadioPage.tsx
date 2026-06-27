@@ -74,7 +74,7 @@ export default function QuranRadioPage() {
         <Link href="/quran/tajweed" className="quran-subnav__link">التجويد</Link>
         <Link href="/quran/surah-stories" className="quran-subnav__link">قصص السور</Link>
         <Link href="/quran-live" className="quran-subnav__link">البث المباشر</Link>
-        <Link href="/quran-radio" className="quran-subnav__link is-active">الإذاعات</Link>
+        <Link href="/quran-radio" className="quran-subnav__link is-active">إذاعات القرآن</Link>
       </nav>
 
       <div className="radio-grid">

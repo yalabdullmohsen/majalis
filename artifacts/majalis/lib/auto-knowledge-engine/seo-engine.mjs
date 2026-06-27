@@ -98,7 +98,7 @@ function buildBreadcrumb(path, title) {
   else if (path?.includes("/fawaid")) crumbs.push({ name: "الفوائد", path: "/fawaid" });
   else if (path?.includes("/library")) crumbs.push({ name: "المكتبة", path: "/library" });
   else if (path?.includes("/lessons")) crumbs.push({ name: "الدروس", path: "/lessons" });
-  else if (path?.includes("/updates")) crumbs.push({ name: "المستجدات", path: "/updates" });
+  else if (path?.includes("/updates")) crumbs.push({ name: "آخر الإضافات", path: "/updates" });
   else crumbs.push({ name: "المحتوى", path: "/search" });
   crumbs.push({ name: title.slice(0, 60), path: path || "/" });
   return crumbs;

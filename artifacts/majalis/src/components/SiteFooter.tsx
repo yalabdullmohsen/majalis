@@ -1,21 +1,23 @@
 import { Link } from "wouter";
 
+import { T } from "@/lib/terminology";
+
 const FOOTER_GROUPS = [
   {
     title: "المحتوى",
     links: [
-      { href: "/lessons", label: "الدروس" },
-      { href: "/fawaid", label: "الفوائد" },
-      { href: "/qa", label: "الأسئلة" },
+      { href: "/lessons", label: T.lessons },
+      { href: "/fawaid", label: T.fawaid },
+      { href: "/qa", label: T.qa },
     ],
   },
   {
     title: "العبادة",
     links: [
       { href: "/quran", label: "القرآن" },
-      { href: "/adhkar", label: "الأذكار" },
-      { href: "/prayer-times", label: "مواقيت الصلاة" },
-      { href: "/tasbih", label: "التسابيح" },
+      { href: "/adhkar", label: T.adhkar },
+      { href: "/prayer-times", label: T.prayerTimes },
+      { href: "/tasbih", label: T.tasbih },
     ],
   },
   {

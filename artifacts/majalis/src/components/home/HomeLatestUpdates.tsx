@@ -3,13 +3,14 @@ import { Link } from "wouter";
 import { fetchLiveAutoContent, autoContentToUpdateItem } from "@/lib/auto-content-service";
 import type { MergedUpdateItem } from "@/lib/auto-content/auto-content-utils";
 import { displayText } from "@/lib/display-text";
+import { T } from "@/lib/terminology";
 
 const TYPE_LABELS: Record<string, string> = {
   fatwa: "فتوى",
   decision: "قرار",
   article: "مقال",
   news: "خبر",
-  general: "تحديث",
+  general: "إضافة",
 };
 
 function formatDate(iso?: string | null) {
@@ -55,10 +56,10 @@ export function HomeLatestUpdates() {
     <section className="home-section" aria-labelledby="latest-updates-heading">
       <div className="home-section-head">
         <div>
-          <p className="home-eyebrow">محتوى موثّق</p>
-          <h2 id="latest-updates-heading">آخر التحديثات من المصادر الرسمية</h2>
+          <p className="home-eyebrow">نشاط المنصة</p>
+          <h2 id="latest-updates-heading">{T.updatesHomeTitle}</h2>
         </div>
-        <Link href="/updates" className="home-section-link">جميع التحديثات</Link>
+        <Link href="/updates" className="home-section-link">{T.updatesHomeLink}</Link>
       </div>
       <div className="home-more-grid">
         {items.map((item) => (
@@ -67,7 +68,7 @@ export function HomeLatestUpdates() {
             href={item.source_url || `/updates/auto/${item.slug}`}
             className="home-more-card ui-card"
           >
-            <span className="page-tag">{TYPE_LABELS[item.update_type] || "تحديث"}</span>
+            <span className="page-tag">{TYPE_LABELS[item.update_type] || "إضافة"}</span>
             <strong>{displayText(item.title)}</strong>
             {item.summary && <span>{displayText(item.summary.slice(0, 120))}{item.summary.length > 120 ? "…" : ""}</span>}
             <span className="home-daily-meta">

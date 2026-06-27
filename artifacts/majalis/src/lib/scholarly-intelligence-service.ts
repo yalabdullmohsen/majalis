@@ -3,6 +3,7 @@
  */
 
 import { adminFetch as apiFetch } from "@/lib/admin-api";
+import { T } from "@/lib/terminology";
 
 export type IntelligentSearchResult = {
   id?: string;
@@ -199,7 +200,7 @@ export const SECTION_LABELS: Record<keyof TopicSection, string> = {
   lessons: "الدروس",
   scholars: "العلماء",
   articles: "المقالات",
-  qa: "الأسئلة والأجوبة",
+  qa: T.qa,
   fawaid: "الفوائد",
   fiqh: "المجمع الفقهي",
   courses: "الدورات",

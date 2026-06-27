@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { PageHeader, Loading, Empty } from "@/components/ui-common";
+import { T } from "@/lib/terminology";
 import { getMergedPlatformUpdates } from "@/lib/auto-content-service";
 import { UPDATE_TYPES } from "@/lib/platform-types";
 import { usePageView } from "@/hooks/usePageView";
@@ -44,9 +45,9 @@ export default function UpdatesPage() {
   return (
     <div className="page-shell narrow content-hub-page">
       <PageHeader
-        eyebrow="النشاط العلمي"
-        title="آخر المستجدات"
-        subtitle="قرارات وفتاوى ودروس ودورات وكتب وإعلانات — مرتّبة زمنياً. يُحدَّث تلقائياً كل 6 ساعات من مصادر موثوقة."
+        eyebrow="نشاط المنصة"
+        title={T.updatesPageTitle}
+        subtitle={T.updatesPageSubtitle}
       />
 
       <div className="content-hub-chips">
@@ -65,7 +66,7 @@ export default function UpdatesPage() {
       {loading ? (
         <Loading />
       ) : filtered.length === 0 ? (
-        <Empty text="لا توجد مستجدات." />
+        <Empty text={T.updatesEmpty} />
       ) : (
         <div className="updates-timeline">
           {filtered.map((item) => (

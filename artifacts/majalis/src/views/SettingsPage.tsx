@@ -10,6 +10,7 @@ import { FONT_OPTIONS, type FontPreference } from "@/lib/font-preference";
 import { THEME_OPTIONS, type ThemePreference } from "@/lib/theme-preference";
 import { clearQuranCache } from "@/lib/quran-content";
 import { DEFAULT_PREFERENCES, type UserPreferences } from "@/lib/user-preferences";
+import { T } from "@/lib/terminology";
 
 function ToggleRow({
   label,
@@ -189,7 +190,7 @@ export default function SettingsPage() {
         <ToggleRow label="إشعارات المناسبات الإسلامية" checked={preferences.occasionNotifications} onChange={(value) => update("occasionNotifications", value)} />
       </LegalSection>
 
-      <LegalSection title="البحث والمساعد">
+      <LegalSection title={`${T.search} و${T.assistant}`}>
         <ToggleRow label="حفظ سجل البحث" checked={preferences.searchHistory} onChange={(v) => update("searchHistory", v)} />
         <ToggleRow label="إجابات المساعد التفصيلية" checked={preferences.assistantVerbose} onChange={(v) => update("assistantVerbose", v)} />
       </LegalSection>
@@ -224,7 +225,7 @@ export default function SettingsPage() {
             <option>كامل مع روابط</option>
           </select>
         </label>
-        <p className="settings-note">سجل الاستفسارات محفوظ في سجلات الخادم عند استخدام المساعد الموثق، ولا يُستخدم لإنشاء أحكام بلا مصادر.</p>
+        <p className="settings-note">سجل الاستفسارات محفوظ في سجلات الخادم عند استخدام {T.assistant}، ولا يُستخدم لإنشاء أحكام بلا مصادر.</p>
       </LegalSection>
 
       <LegalBackLink />

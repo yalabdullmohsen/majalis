@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { T } from "@/lib/terminology";
 import {
   adminGetQuestions,
   adminUpsertQuestion,
@@ -102,7 +102,7 @@ export function QaSection() {
     <div>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem", flexWrap: "wrap", gap: "0.75rem" }}>
         <h2 style={{ margin: 0, fontSize: "1.125rem", fontWeight: 700, color: C.emeraldDeep, display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap" }}>
-          الأسئلة والأجوبة ({items.length})
+          {T.adminQa} ({items.length})
           <span style={{ padding: "0.1rem 0.5rem", borderRadius: "0.75rem", background: C.sage, color: C.emeraldDeep, fontSize: "0.7rem" }}>{publishedCount} منشور</span>
           <span style={{ padding: "0.1rem 0.5rem", borderRadius: "0.75rem", background: C.parchmentDeep, color: C.inkSoft, fontSize: "0.7rem" }}>{draftCount} مسودة</span>
           {reviewCount > 0 && (
@@ -111,7 +111,7 @@ export function QaSection() {
         </h2>
         <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
           <BulkImport
-            title="استيراد الأسئلة والأجوبة"
+            title={`استيراد ${T.adminQa}`}
             hint="يمكن ربط التصنيف باسمه عبر الحقل category_name (يُطابَق تلقائيًا)."
             template={[{ question: "ما حكم صيام يوم عرفة؟", answer: "صيام يوم عرفة سنة مؤكدة لغير الحاج…", category_name: "أحكام شرعية", ruling_type: "سنة", evidence: "حديث: «صيام يوم عرفة أحتسب على الله…»", reference: "صحيح مسلم", status: "published" }]}
             importRow={(row) => {

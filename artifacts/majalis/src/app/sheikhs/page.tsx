@@ -7,11 +7,11 @@ export const dynamic = "force-dynamic";
 export async function generateMetadata(): Promise<Metadata> {
   const sheikhs = await fetchSheikhsForServer();
   return {
-    title: "المشايخ والدعاة",
-    description: `${sheikhs.length} شيخ وعالم معتمد — سير وإجازات وتخصصات ودروس مرتبطة.`,
+    title: "المشايخ",
+    description: `${sheikhs.length} شيخ معتمد — سير وإجازات وتخصصات ودروس مرتبطة.`,
     openGraph: {
-      title: "المشايخ والدعاة | المجلس العلمي",
-      description: "تعرّف على المشايخ والدعاة المعتمدين ودروسهم.",
+      title: "المشايخ | المجلس العلمي",
+      description: "تعرّف على المشايخ المعتمدين ودروسهم.",
       locale: "ar_AR",
       type: "website",
       url: "https://majlisilm.com/sheikhs",

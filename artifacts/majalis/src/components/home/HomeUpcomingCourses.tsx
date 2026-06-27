@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { Loading } from "@/components/ui-common";
 import { UnifiedLessonCard } from "@/components/lessons/UnifiedLessonCard";
 import { getUnifiedActiveLessons } from "@/lib/lessons-service";
+import { T } from "@/lib/terminology";
 import { sortKuwaitLessons, type KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 import { fromKuwaitLesson } from "@/lib/unified-lesson-card";
 
@@ -31,7 +32,7 @@ export function HomeUpcomingCourses() {
       <div className="home-section-head">
         <div>
           <p className="home-eyebrow">برامج علمية</p>
-          <h2 id="upcoming-courses-heading">الدورات القادمة</h2>
+          <h2 id="upcoming-courses-heading">{T.courses}</h2>
           <p>دورات علمية منظّمة مرتّبة حسب أقرب موعد.</p>
         </div>
         <Link href="/lessons?tab=courses" className="home-section-link">كل الدورات</Link>

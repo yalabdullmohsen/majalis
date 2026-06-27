@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { adminGetDashboardStats, adminGetStats } from "@/lib/supabase";
 import { ADHKAR_ITEMS } from "@/lib/adhkar-seed";
 import { getPublishedAdhkarItems } from "@/lib/adhkar-admin";
+import { T } from "@/lib/terminology";
 import { C } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
 import { AdminSectionToolbar } from "./AdminSectionToolbar";
@@ -27,7 +28,7 @@ export function ReportsSection() {
     { label: "المشايخ", value: stats?.sheikhsCount ?? 0 },
     { label: "الدروس", value: stats?.lessonsTotal ?? 0 },
     { label: "الفوائد", value: stats?.fawaidTotal ?? 0 },
-    { label: "الأسئلة", value: stats?.qaTotal ?? 0 },
+    { label: T.adminQa, value: stats?.qaTotal ?? 0 },
     { label: "الأذكار المنشورة", value: getPublishedAdhkarItems().length, total: ADHKAR_ITEMS.length },
     { label: "المستخدمون", value: dashboard?.totalUsers ?? 0 },
     { label: "فوائد معلّقة", value: stats?.pendingFawaidCount ?? 0, alert: (stats?.pendingFawaidCount ?? 0) > 0 },

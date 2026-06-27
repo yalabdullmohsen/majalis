@@ -3,6 +3,8 @@
 import { Link } from "wouter";
 import { PageHeader, Empty } from "@/components/ui-common";
 
+import { T } from "@/lib/terminology";
+
 export default function SheikhsPageClient({
   sheikhs,
 }: {
@@ -12,8 +14,8 @@ export default function SheikhsPageClient({
     <div className="page-shell">
       <PageHeader
         eyebrow="نخبة معتمدة"
-        title="المشايخ والدعاة"
-        subtitle="تعرّف على المشايخ والدعاة المعتمدين، وإجازاتهم وتخصصاتهم ودروسهم."
+        title={T.sheikhs}
+        subtitle="تعرّف على المشايخ المعتمدين، وإجازاتهم وتخصصاتهم ودروسهم."
       />
 
       {sheikhs.length === 0 ? (

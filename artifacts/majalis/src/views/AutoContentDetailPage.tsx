@@ -1,3 +1,4 @@
+import { T } from "@/lib/terminology";
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { Loading, Empty } from "@/components/ui-common";
@@ -33,9 +34,9 @@ export default function AutoContentDetailPage({ params }: { params: { slug: stri
     const path = `/updates/auto/${item.slug}`;
     applyPageSeo({
       path,
-      title: item.seo_title || `${item.title} | المستجدات — المجلس العلمي`,
+      title: item.seo_title || `${item.title} | ${T.updates} — ${T.siteName}`,
       description: item.seo_description || item.summary || item.title,
-      keywords: [...(item.tags || []), item.category || "", "مستجدات", "علوم شرعية"].filter(Boolean),
+      keywords: [...(item.tags || []), item.category || "", "إضافات", "علوم شرعية"].filter(Boolean),
       ogType: "article",
       canonicalPath: path,
       jsonLd: [
@@ -47,7 +48,7 @@ export default function AutoContentDetailPage({ params }: { params: { slug: stri
         },
         breadcrumbJsonLd([
           { name: "الرئيسية", path: "/" },
-          { name: "آخر المستجدات", path: "/updates" },
+          { name: T.updates, path: "/updates" },
           { name: item.title.slice(0, 60), path },
         ]),
       ],
@@ -63,7 +64,7 @@ export default function AutoContentDetailPage({ params }: { params: { slug: stri
     <ContentDetailLayout
       breadcrumbs={[
         { label: "الرئيسية", href: "/" },
-        { label: "آخر المستجدات", href: "/updates" },
+        { label: T.updates, href: "/updates" },
         { label: item.title.slice(0, 50) + (item.title.length > 50 ? "…" : "") },
       ]}
       title={item.title}

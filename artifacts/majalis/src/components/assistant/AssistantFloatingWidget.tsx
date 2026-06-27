@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "wouter";
 import { Sparkles, X } from "lucide-react";
 import { useAssistantChat } from "@/hooks/useAssistantChat";
+import { T } from "@/lib/terminology";
 import { AssistantChatView } from "./AssistantChatView";
 
 export function AssistantFloatingWidget() {
@@ -54,7 +55,7 @@ export function AssistantFloatingWidget() {
           title="المساعد العلمي"
         >
           <Sparkles size={22} strokeWidth={2} aria-hidden="true" />
-          <span className="assistant-fab__label">المساعد</span>
+          <span className="assistant-fab__label">{T.assistant}</span>
         </button>
       )}
 

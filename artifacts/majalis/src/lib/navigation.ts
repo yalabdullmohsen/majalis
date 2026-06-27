@@ -1,3 +1,5 @@
+import { T } from "@/lib/terminology";
+
 export type NavLink = {
   href: string;
   label: string;
@@ -15,39 +17,39 @@ export const NAV_GROUPS: NavGroup[] = [
     id: "content",
     title: "المحتوى",
     links: [
-      { href: "/", label: "الرئيسية" },
-      { href: "/search", label: "البحث" },
-      { href: "/lessons", label: "الدروس" },
-      { href: "/annual-courses", label: "الدورات العلمية" },
-      { href: "/fiqh-council", label: "المجمع الفقهي الإسلامي" },
-      { href: "/fatwa", label: "الفتاوى" },
-      { href: "/rulings", label: "الأحكام الشرعية" },
-      { href: "/updates", label: "آخر المستجدات" },
-      { href: "/calendar", label: "التقويم" },
-      { href: "/fawaid", label: "الفوائد" },
-      { href: "/qa", label: "الأسئلة" },
+      { href: "/", label: T.home },
+      { href: "/search", label: T.search },
+      { href: "/lessons", label: T.lessons },
+      { href: "/annual-courses", label: T.courses },
+      { href: "/fiqh-council", label: T.fiqhCouncil },
+      { href: "/fatwa", label: T.fatwa },
+      { href: "/rulings", label: T.rulings },
+      { href: "/updates", label: T.updates },
+      { href: "/calendar", label: T.calendar },
+      { href: "/fawaid", label: T.fawaid },
+      { href: "/qa", label: T.qa },
     ],
   },
   {
     id: "quran",
     title: "القرآن",
     links: [
-      { href: "/quran", label: "المصحف الشريف" },
-      { href: "/quran/tajweed", label: "علم التجويد" },
+      { href: "/quran", label: T.mushaf },
+      { href: "/quran/tajweed", label: T.tajweed },
       { href: "/quran/surah-stories", label: "قصص السور" },
-      { href: "/quran-live", label: "البث المباشر" },
-      { href: "/quran-radio", label: "إذاعات القرآن" },
+      { href: "/quran-live", label: T.quranLive },
+      { href: "/quran-radio", label: T.quranRadio },
       { href: "/daily-wird", label: "الورد اليومي" },
     ],
   },
   {
     id: "adhkar",
-    title: "الأذكار",
+    title: T.adhkar,
     links: [
       { href: "/adhkar?cat=morning", label: "أذكار الصباح" },
       { href: "/adhkar?cat=evening", label: "أذكار المساء" },
       { href: "/adhkar?cat=distress", label: "الدعاء" },
-      { href: "/tasbih", label: "التسابيح" },
+      { href: "/tasbih", label: T.tasbih },
     ],
   },
   {
@@ -66,7 +68,7 @@ export const NAV_GROUPS: NavGroup[] = [
     id: "tools",
     title: "الأدوات",
     links: [
-      { href: "/prayer-times", label: "مواقيت الصلاة" },
+      { href: "/prayer-times", label: T.prayerTimes },
       { href: "/prayer-ranks", label: "مراتب الناس في الصلاة" },
       { href: "/qibla", label: "القبلة" },
       { href: "/occasions", label: "المناسبات الإسلامية" },
@@ -76,27 +78,29 @@ export const NAV_GROUPS: NavGroup[] = [
 ];
 
 export const PRIMARY_NAV = [
-  { href: "/", label: "الرئيسية" },
-  { href: "/lessons", label: "الدروس" },
+  { href: "/", label: T.home },
+  { href: "/lessons", label: T.lessons },
   { href: "/quran", label: "القرآن" },
-  { href: "/library", label: "المكتبة" },
-  { href: "/adhkar", label: "الأذكار" },
+  { href: "/library", label: T.library },
+  { href: "/adhkar", label: T.adhkar },
   { href: "/prayer-times", label: "الصلاة" },
 ];
 
 /** Mobile "المزيد" dropdown — full site navigation */
 export const MOBILE_MORE_NAV = [
-  { href: "/lessons", label: "الدروس" },
-  { href: "/lessons", label: "المشايخ" },
-  { href: "/library", label: "المكتبة" },
-  { href: "/qa", label: "الأسئلة" },
-  { href: "/quran", label: "القرآن" },
-  { href: "/adhkar", label: "الأذكار" },
-  { href: "/quran-radio", label: "إذاعة القرآن" },
-  { href: "/quran-live", label: "البث المباشر" },
-  { href: "/quran/tajweed", label: "التجويد" },
+  { href: "/sheikhs", label: T.sheikhs },
+  { href: "/fatwa", label: T.fatwa },
+  { href: "/qa", label: T.qa },
+  { href: "/library", label: T.library },
+  { href: "/fawaid", label: T.fawaid },
+  { href: "/calendar", label: T.calendar },
+  { href: "/updates", label: T.updates },
+  { href: "/assistant", label: T.assistant },
+  { href: "/quran-radio", label: T.quranRadio },
+  { href: "/quran-live", label: T.quranLive },
+  { href: "/quran/tajweed", label: T.tajweed },
   { href: "/quran/surah-stories", label: "قصص السور" },
-  { href: "/tasbih", label: "عداد التسبيح" },
+  { href: "/tasbih", label: T.tasbih },
   { href: "/prayer-ranks", label: "مراتب الصلاة" },
   { href: "/settings", label: "الإعدادات" },
   { href: "/contact", label: "تواصل معنا" },
@@ -105,13 +109,13 @@ export const MOBILE_MORE_NAV = [
 export const HOME_FEATURE_CARDS = [
   {
     href: "/quran",
-    title: "القرآن الكريم",
+    title: T.quran,
     description: "قراءة وتلاوة وبحث",
     icon: "book-open",
   },
   {
     href: "/adhkar",
-    title: "الأذكار",
+    title: T.adhkar,
     description: "أذكار يومية موثقة",
     icon: "sparkles",
   },
@@ -123,19 +127,19 @@ export const HOME_FEATURE_CARDS = [
   },
   {
     href: "/prayer-times",
-    title: "مواقيت الصلاة",
+    title: T.prayerTimes,
     description: "مواقيت دقيقة للكويت",
     icon: "clock",
   },
   {
     href: "/tasbih",
-    title: "التسابيح",
+    title: T.tasbih,
     description: "مسبحة إلكترونية",
     icon: "circle-dot",
   },
   {
     href: "/quran-radio",
-    title: "إذاعة القرآن",
+    title: T.quranRadio,
     description: "بث مباشر للقرآن",
     icon: "radio",
   },
@@ -154,16 +158,16 @@ export const HOME_FEATURE_CARDS = [
 ] as const;
 
 export const HOME_MORE_SECTIONS = [
-  { href: "/lessons", title: "الدروس", description: "دروس ودورات علمية" },
-  { href: "/fatwa", title: "الفتاوى", description: "مركز الفتاوى الشرعية" },
-  { href: "/prayer-ranks", title: "مراتب الناس في الصلاة", description: "مراتب الخشوع وحضور القلب" },
-  { href: "/rulings", title: "الأحكام الشرعية", description: "مكتبة الأحكام والأدلة" },
-  { href: "/annual-courses", title: "الدورات العلمية", description: "برامج ودورات سنوية" },
-  { href: "/updates", title: "آخر المستجدات", description: "قرارات وفتاوى ودروس جديدة" },
-  { href: "/assistant", title: "المساعد العلمي", description: "إرشاد داخل المنصة" },
+  { href: "/adhkar", title: T.adhkar, description: "أذكار يومية موثقة" },
+  { href: "/prayer-times", title: T.prayerTimes, description: "مواقيت وعدّاد الصلاة" },
+  { href: "/arbaeen-nawawi", title: "الأربعون النووية", description: "أحاديث جامعة منظمة" },
+  { href: "/rulings", title: T.rulings, description: "مكتبة الأحكام والأدلة" },
+  { href: "/fiqh-council", title: T.fiqhCouncil, description: "قرارات وفتاوى جماعية" },
   { href: "/condolences", title: "قوالب العزاء", description: "تعزية وإعلان وفاة" },
-  { href: "/library", title: "المكتبة", description: "كتب ومتون" },
   { href: "/learning/paths", title: "المسارات العلمية", description: "تعلم منظم من المبتدئ للمتقدم" },
   { href: "/my-learning", title: "لوحتي التعليمية", description: "تقدمك وإنجازاتك" },
   { href: "/quiz", title: "المسابقات", description: "اختبر معلوماتك" },
+  { href: "/occasions", title: "المناسبات الإسلامية", description: "تقويم المواسم والأيام" },
+  { href: "/miracles", title: "الإعجاز العلمي", description: "مقالات علمية موثقة" },
+  { href: "/cards", title: "البطاقات الدعوية", description: "صمّم وشارك فوائد" },
 ] as const;

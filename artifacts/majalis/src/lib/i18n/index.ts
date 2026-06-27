@@ -34,7 +34,7 @@ const ar: Messages = {
   "nav.fatwa": "الفتاوى",
   "nav.rulings": "الأحكام الشرعية",
   "nav.courses": "الدورات العلمية",
-  "nav.updates": "آخر المستجدات",
+  "nav.updates": "آخر الإضافات",
   "nav.search": "البحث",
   "search.placeholder": "ابحث في المنصة...",
   "common.loading": "جارٍ التحميل...",

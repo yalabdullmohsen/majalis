@@ -257,7 +257,7 @@ const feed = `<?xml version="1.0" encoding="UTF-8"?>
   <channel>
     <title>${escapeXml(seoConfig.siteName)}</title>
     <link>${escapeXml(seoConfig.siteUrl)}</link>
-    <description>آخر المستجدات العلمية — قرارات وفتاوى ودورات</description>
+    <description>آخر الإضافات العلمية — دروس وفتاوى وقرارات ودورات</description>
     <language>ar</language>
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
     <atom:link href="${escapeXml(absoluteUrl("/feed.xml"))}" rel="self" type="application/rss+xml"/>

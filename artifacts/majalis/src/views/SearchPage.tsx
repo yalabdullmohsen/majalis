@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams, useLocation } from "wouter";
+import { T } from "@/lib/terminology";
 import { searchEverything, type SearchResults } from "@/lib/supabase";
 import { searchDemoContent } from "@/lib/demo-content";
 import { displayText } from "@/lib/display-text";
@@ -44,16 +45,16 @@ const KIND_GROUP_LABELS: Record<string, string> = {
   fatwas: "الفتاوى",
   ruling: "الأحكام الشرعية",
   rulings: "الأحكام الشرعية",
-  qa: "الأسئلة والأجوبة",
-  fawaid: "الفوائد",
-  adhkar: "الأذكار",
-  library: "المكتبة",
+  qa: T.qa,
+  fawaid: T.fawaid,
+  adhkar: T.adhkar,
+  library: T.library,
   miracle: "الإعجاز العلمي",
   miracles: "الإعجاز العلمي",
-  course: "الدورات العلمية",
-  courses: "الدورات العلمية",
-  update: "آخر المستجدات",
-  updates: "آخر المستجدات",
+  course: T.courses,
+  courses: T.courses,
+  update: T.updates,
+  updates: T.updates,
   fiqh_decision: "المجمع الفقهي",
   fiqh_council: "المجمع الفقهي",
   knowledge: "محرك المعرفة",
@@ -400,7 +401,7 @@ export default function SearchPage() {
                   <Group title="الفوائد" items={results.fawaid} render={(f) => (
                     <ResultRow key={f.id} href="/fawaid" title={displayText(f.text)} meta={f.author_name} />
                   )} />
-                  <Group title="الأسئلة والأجوبة" items={results.qa} render={(x) => (
+                  <Group title={T.qa} items={results.qa} render={(x) => (
                     <ResultRow key={x.id} href="/qa" title={displayText(x.question)} meta={x.qa_categories?.name} />
                   )} />
                   <Group title="الأذكار" id="adhkar" items={results.adhkar} render={(a) => (
@@ -429,7 +430,7 @@ export default function SearchPage() {
                   <Group title="الدورات العلمية" items={results.courses || []} render={(c) => (
                     <ResultRow key={c.id} href={`/annual-courses/${c.id}`} title={displayText(c.title)} meta={c.searchMeta || c.course_type} />
                   )} />
-                  <Group title="آخر المستجدات" items={results.updates || []} render={(u) => (
+                  <Group title={T.updates} items={results.updates || []} render={(u) => (
                     <ResultRow key={u.id} href="/updates" title={displayText(u.title)} meta={u.searchMeta || u.update_type} />
                   )} />
                   <Group title="الإعجاز العلمي" items={results.miracles} render={(m) => (

@@ -1,3 +1,4 @@
+import { T } from "@/lib/terminology";
 import { useRef, useState } from "react";
 import { adminFetch } from "@/lib/admin-api";
 import { C } from "@/lib/theme";
@@ -5,7 +6,7 @@ import { C } from "@/lib/theme";
 const IMPORT_TYPES = [
   { value: "lessons", label: "الدروس" },
   { value: "sheikhs", label: "المشايخ" },
-  { value: "questions", label: "الأسئلة" },
+  { value: "questions", label: T.adminQa },
   { value: "books", label: "الكتب" },
   { value: "courses", label: "الدورات" },
   { value: "benefits", label: "الفوائد" },
