@@ -2,7 +2,7 @@
 /**
  * Unit tests for Vercel-safe content import engine (no filesystem on import path).
  */
-import { parseCsvString, parseJsonString, parseContentString } from "../lib/content-import/parsers.mjs";
+import { parseCsvString, parseJsonString, parseContentString, parseContentFile } from "../lib/content-import/parsers.mjs";
 import { validateAllRows } from "../lib/content-import/engine.mjs";
 import { mapRowToPayload } from "../lib/content-import/mappers.mjs";
 import { dedupeRows } from "../lib/content-import/dedupe.mjs";
@@ -49,11 +49,39 @@ test("registry includes required production types", () => {
   }
 });
 
+test("registry resolves fawaid alias to benefits table", () => {
+  const def = resolveContentType("fawaid");
+  assert(def?.type === "benefits", "fawaid alias maps to benefits");
+  assert(def?.table === "fawaid", "benefits table is fawaid");
+});
+
 test("parse CSV in memory", () => {
   const csv = "title,description,category,source_url,sheikh_name,mosque\nدرس,وصف,فقه,https://x.com,شيخ,مسجد";
   const rows = parseCsvString(csv);
   assert(rows.length === 1, "expected 1 row");
   assert(rows[0].title === "درس", "title parsed");
+});
+
+test("parse semicolon CSV (Excel AR locale)", () => {
+  const csv = "text;author_name;category\nفائدة علمية;ابن القيم;فقه";
+  const rows = parseCsvString(csv);
+  assert(rows.length === 1, "semicolon csv row count");
+  assert(rows[0].text === "فائدة علمية", "semicolon csv text column");
+  assert(rows[0].author_name === "ابن القيم", "semicolon csv author column");
+});
+
+test("validation accepts benefit row with faidah alias column", () => {
+  const { allValid } = validateAllRows("benefits", [{ faidah: "فائدة نافعة", author: "البخاري" }]);
+  assert(allValid, "faidah alias should pass");
+});
+
+test("fawaid_500.csv validates after semicolon parse", () => {
+  const path = join(root, "data/imports/fawaid_500.csv");
+  assert(existsSync(path), "fawaid_500.csv exists");
+  const rows = parseContentFile(path);
+  assert(rows.length === 500, `fawaid_500.csv has ${rows.length} rows`);
+  const { allValid, validationErrors } = validateAllRows("benefits", rows);
+  assert(allValid, `fawaid_500 validates: ${validationErrors[0] || ""}`);
 });
 
 test("parse JSON in memory", () => {

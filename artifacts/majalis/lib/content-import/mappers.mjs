@@ -1,4 +1,5 @@
 import { hashKey, normalizeKey } from "./dedupe.mjs";
+import { normalizeBenefitsRow } from "./validators.mjs";
 
 function pick(row, ...keys) {
   for (const k of keys) {
@@ -72,12 +73,14 @@ export function mapRowToPayload(type, row) {
         confidence,
       };
     }
-    case "benefits":
+    case "benefits": {
+      const normalized = normalizeBenefitsRow(row);
       return {
-        text: pick(row, "text"),
-        author_name: pick(row, "author_name", "source", "author") || null,
-        status: pick(row, "status") || "approved",
+        text: pick(normalized, "text"),
+        author_name: pick(normalized, "author_name", "source", "author") || null,
+        status: pick(normalized, "status") || "approved",
       };
+    }
     case "adhkar": {
       const normalized = {
         ...row,

@@ -102,7 +102,7 @@ export async function getCmsDashboardStats(): Promise<CmsDashboardStats> {
       }),
     ]);
 
-    let indexByKind: Record<string, number> = {};
+    const indexByKind: Record<string, number> = {};
     if (cmsIndexTotal !== null) {
       sources.push("cms_content_index");
       const { data: kindRows } = await supabase.from("cms_content_index").select("content_kind");

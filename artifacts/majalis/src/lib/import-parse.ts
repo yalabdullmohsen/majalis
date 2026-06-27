@@ -2,40 +2,17 @@
  * Client-side CSV/JSON parsing for admin import (mirrors server parsers.mjs).
  */
 
-function splitCsvLine(line: string): string[] {
-  const out: string[] = [];
-  let cur = "";
-  let inQuotes = false;
-  for (let i = 0; i < line.length; i++) {
-    const ch = line[i];
-    if (ch === '"') {
-      if (inQuotes && line[i + 1] === '"') {
-        cur += '"';
-        i++;
-      } else {
-        inQuotes = !inQuotes;
-      }
-      continue;
-    }
-    if (ch === "," && !inQuotes) {
-      out.push(cur);
-      cur = "";
-      continue;
-    }
-    cur += ch;
-  }
-  out.push(cur);
-  return out;
-}
+import { detectCsvDelimiter, splitCsvLine } from "../../lib/content-import/csv-parse.mjs";
 
 export function parseCsvString(content: string): Record<string, unknown>[] {
   const lines = content.replace(/^\uFEFF/, "").split(/\r?\n/).filter((l) => l.trim());
   if (lines.length < 2) return [];
 
-  const headers = splitCsvLine(lines[0]);
+  const delimiter = detectCsvDelimiter(lines[0]);
+  const headers = splitCsvLine(lines[0], delimiter);
   const rows: Record<string, unknown>[] = [];
   for (let i = 1; i < lines.length; i++) {
-    const cells = splitCsvLine(lines[i]);
+    const cells = splitCsvLine(lines[i], delimiter);
     if (cells.every((c) => !c.trim())) continue;
     const row: Record<string, unknown> = {};
     headers.forEach((h, idx) => {

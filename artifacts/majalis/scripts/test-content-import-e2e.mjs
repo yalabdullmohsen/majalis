@@ -24,7 +24,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, "..");
 const production = process.argv.includes("--production");
 const PRODUCTION = process.env.MAJALIS_PRODUCTION_URL || "https://www.majlisilm.com";
-const CSV_PATH = join(root, "data/imports/adhkar.csv");
+const ADHKAR_CSV_PATH = join(root, "data/imports/adhkar.csv");
+const FAWAID_CSV_PATH = join(root, "data/imports/fawaid_500.csv");
 
 let passed = 0;
 let failed = 0;
@@ -58,36 +59,51 @@ async function countTable(sb, table, filter = null) {
   return count ?? 0;
 }
 
-async function testLocalImportPipeline() {
-  console.log("\n1) Local import pipeline (dry-run)");
-  if (!existsSync(CSV_PATH)) throw new Error(`Missing ${CSV_PATH}`);
+async function testImportCsvPipeline({ label, type, csvPath, table }) {
+  if (!existsSync(csvPath)) throw new Error(`Missing ${csvPath}`);
 
-  const rows = parseContentFile(CSV_PATH);
-  const { allValid } = validateAllRows("adhkar", rows);
-  assert(allValid, "adhkar.csv validates");
-  assert(rows.length >= 2, `adhkar.csv has ${rows.length} rows`);
+  const rows = parseContentFile(csvPath);
+  const { allValid, validationErrors } = validateAllRows(type, rows);
+  assert(allValid, `${label} validates${validationErrors[0] ? `: ${validationErrors[0]}` : ""}`);
+  assert(rows.length >= 2, `${label} has ${rows.length} rows`);
 
-  const typeDef = resolveContentType("adhkar");
-  assert(typeDef?.table === "verified_adhkar_items", "adhkar target table is verified_adhkar_items");
+  const typeDef = resolveContentType(type);
+  assert(typeDef?.table === table, `${type} target table is ${table}`);
 
   const started = await startImportJob({
-    type: "adhkar",
-    filename: "adhkar.csv",
+    type,
+    filename: csvPath.split("/").pop() || `${type}.csv`,
     totalRows: rows.length,
     createdBy: "e2e-test",
   });
-  assert(started.ok && started.jobId, "startImportJob creates job");
+  assert(started.ok && started.jobId, `${label}: startImportJob creates job`);
 
   const staged = await stageImportBatch(started.jobId, rows, 0);
-  assert(staged.ok, "stageImportBatch persists rows");
+  assert(staged.ok, `${label}: stageImportBatch persists rows`);
 
   const queued = await queueImportJob(started.jobId);
-  assert(queued.ok, "queueImportJob succeeds");
+  assert(queued.ok, `${label}: queueImportJob succeeds`);
 
   const result = await processImportJob(started.jobId, { dryRun: true });
-  assert(result.ok, "processImportJob dry-run ok");
-  assert(result.report?.stats?.imported === rows.length, `dry-run imported ${rows.length} rows`);
+  assert(result.ok, `${label}: processImportJob dry-run ok`);
+  assert(result.report?.stats?.imported === rows.length, `${label}: dry-run imported ${rows.length} rows`);
   return started.jobId;
+}
+
+async function testLocalImportPipeline() {
+  console.log("\n1) Local import pipeline (dry-run)");
+  await testImportCsvPipeline({
+    label: "adhkar.csv",
+    type: "adhkar",
+    csvPath: ADHKAR_CSV_PATH,
+    table: "verified_adhkar_items",
+  });
+  await testImportCsvPipeline({
+    label: "fawaid_500.csv",
+    type: "benefits",
+    csvPath: FAWAID_CSV_PATH,
+    table: "fawaid",
+  });
 }
 
 async function testSupabaseRowCounts() {

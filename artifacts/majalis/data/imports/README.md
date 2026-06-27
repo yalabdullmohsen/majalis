@@ -30,6 +30,8 @@ node scripts/import-content.mjs --type=adhkar --file=data/imports/adhkar.sample.
 | benefits | Supabase | `fawaid` |
 | adhkar | Supabase | `verified_adhkar_items` |
 
+CSV للفوائد: `fawaid_500.csv` (500 صف، فاصل `;` — Excel العربي). الحقل المطلوب: `text` (أو alias: `faidah`, `benefit`, `content`).
+
 ## ملفات الأمثلة
 
 | النوع | JSON | CSV |
@@ -39,6 +41,7 @@ node scripts/import-content.mjs --type=adhkar --file=data/imports/adhkar.sample.
 | questions | `questions.sample.json` | `questions.sample.csv` |
 | books | `books.sample.json` | `books.sample.csv` |
 | adhkar | `adhkar.sample.json` | `adhkar.sample.csv` — see `adhkar.schema.md` |
+| benefits (fawaid) | — | `fawaid_500.csv` (semicolon-delimited) |
 
 بيانات تجريبية Phase 2: `trial/*.phase2.json`
 
