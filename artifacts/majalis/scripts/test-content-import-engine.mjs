@@ -94,6 +94,39 @@ test("mapper produces adhkar payload with category_id", () => {
   assert(payload.text === "سبحان الله", "text preserved");
 });
 
+test("validation accepts adhkar row with count column", () => {
+  const { allValid } = validateAllRows("adhkar", [
+    { text: "سبحان الله", category: "صباح", count: 1, source: "مسلم" },
+  ]);
+  assert(allValid, "adhkar with count should pass");
+});
+
+test("validation accepts adhkar row with repeat_count alias", () => {
+  const { allValid } = validateAllRows("adhkar", [
+    { text: "الحمد لله", category: "مساء", repeat_count: 3, source_name: "البخاري" },
+  ]);
+  assert(allValid, "adhkar with repeat_count should pass");
+});
+
+test("validation rejects adhkar row missing count and repeat_count", () => {
+  const { allValid, validationErrors } = validateAllRows("adhkar", [
+    { text: "لا إله إلا الله", category: "صباح", source: "مسلم" },
+  ]);
+  assert(!allValid, "should fail without count");
+  assert(validationErrors.some((e) => e.includes("count")), "error mentions count");
+});
+
+test("mapper maps repeat_count to count in adhkar payload", () => {
+  const payload = mapRowToPayload("adhkar", {
+    text: "الحمد لله",
+    categoryId: "adh-morning",
+    repeat_count: 7,
+    source_name: "مسلم",
+  });
+  assert(payload.count === 7, "repeat_count mapped to count");
+  assert(payload.category_id === "adh-morning", "categoryId preserved");
+});
+
 test("production import modules do not reference staged filesystem paths", () => {
   const files = [
     "lib/content-import/engine.mjs",
