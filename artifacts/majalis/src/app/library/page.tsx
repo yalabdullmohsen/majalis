@@ -39,7 +39,7 @@ export default async function LibraryPage() {
           ))}
         </div>
       </section>
-      <LibraryPageClient initialItems={items} />
+      <LibraryPageClient />
     </>
   );
 }

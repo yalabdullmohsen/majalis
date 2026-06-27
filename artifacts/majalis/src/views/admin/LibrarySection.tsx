@@ -58,7 +58,7 @@ export function LibrarySection() {
         <div style={{ display: "flex", gap: "0.5rem" }}>
           <BulkImport
             title="استيراد المكتبة"
-            template={[{ title: "كتاب العلم", author: "ابن القيم", category: "عقيدة", item_type: "كتاب", status: "approved" }]}
+            template={[{ title: "كتاب العلم", author: "ابن القيم", category: "عقيدة", item_type: "كتاب", status: "approved", slug: "kitab-ilm" }]}
             importRow={(row) => adminUpsertLibraryItem({ status: "approved", ...row })}
             onDone={load}
           />

@@ -1,56 +1,77 @@
-import { arabicMatchAny } from "@/lib/arabic-search";
-import { useEffect, useMemo, useState } from "react";
-import { getLibrary } from "@/lib/supabase";
-import { DEMO_LIBRARY } from "@/lib/demo-content";
+import { useMemo, useState } from "react";
+import { Link } from "wouter";
 import { PageHeader, Loading, Empty, Chip } from "@/components/ui-common";
-import ContentActions from "@/components/ContentActions";
-import { isDemoId } from "@/lib/demo-content";
+import { getLibraryBookSummaries, searchLibraryCatalog } from "@/lib/library/catalog";
+import { arabicMatchAny } from "@/lib/arabic-search";
 
-const TYPES = ["الكل", "كتاب", "متن", "تفريغ", "ملخص", "مقال", "صوت", "مرئي"];
+const CATEGORIES = ["الكل", "تفسير", "حديث", "عقيدة", "فقه", "سيرة", "آداب", "أذكار", "لغة", "تأصيل"];
+const TYPES = ["الكل", "كتاب", "متن", "تفريغ", "ملخص"];
 
-export default function LibraryPage({
-  initialItems,
+function BookCard({
+  slug,
+  title,
+  author,
+  category,
+  type,
+  description,
+  coverHue,
+  chapterCount,
 }: {
-  initialItems?: any[];
-} = {}) {
-  const [items, setItems] = useState<any[]>(initialItems ?? []);
-  const [loading, setLoading] = useState(!initialItems);
+  slug: string;
+  title: string;
+  author: string;
+  category: string;
+  type: string;
+  description: string;
+  coverHue: number;
+  chapterCount: number;
+}) {
+  const initial = title.replace(/^[\s«»"]+/, "").slice(0, 1);
+  return (
+    <Link href={`/library/${slug}`} className="lib-card">
+      <div className="lib-card__cover" style={{ background: `linear-gradient(145deg, hsl(${coverHue} 42% 34%), hsl(${coverHue} 36% 24%))` }}>
+        <span>{initial}</span>
+      </div>
+      <div className="lib-card__body">
+        <div className="lib-card__head">
+          <strong>{title}</strong>
+          <span className="page-tag">{type}</span>
+        </div>
+        <p className="lib-card__author">{author}</p>
+        <p className="page-meta">{category} · {chapterCount} باب</p>
+        <p className="page-desc lib-card__desc">{description}</p>
+        <span className="lib-card__cta">فتح الكتاب ←</span>
+      </div>
+    </Link>
+  );
+}
+
+export default function LibraryPage() {
+  const books = useMemo(() => getLibraryBookSummaries(), []);
+  const [category, setCategory] = useState("الكل");
   const [type, setType] = useState("الكل");
   const [search, setSearch] = useState("");
 
-  const loadLibrary = async () => {
-    setLoading(true);
-    try {
-      const { data } = await getLibrary({ type: type === "الكل" ? undefined : type });
-      setItems(data);
-    } catch {
-      setItems(DEMO_LIBRARY);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    if (initialItems && type === "الكل") return;
-    loadLibrary();
-  }, [type, initialItems]);
-
-  const source = items;
-
   const filtered = useMemo(() => {
-    const s = search.trim();
-    if (!s) return source;
-    return source.filter((it) =>
-      arabicMatchAny([it.title, it.description, it.category, it.type], s)
+    let list = books;
+    if (category !== "الكل") list = list.filter((b) => b.category === category);
+    if (type !== "الكل") list = list.filter((b) => b.type === type);
+    const q = search.trim();
+    if (!q) return list;
+    const catalogHits = new Set(searchLibraryCatalog(q, 50).map((h) => h.bookSlug));
+    return list.filter(
+      (b) =>
+        catalogHits.has(b.slug) ||
+        arabicMatchAny([b.title, b.author, b.description, b.category], q),
     );
-  }, [source, search]);
+  }, [books, category, type, search]);
 
   return (
-    <div className="page-shell">
+    <div className="page-shell lib-page">
       <PageHeader
         eyebrow="الأرشيف العلمي"
         title="المكتبة العلمية"
-        subtitle="كتب ومتون وتفريغات وملخصات ومقالات وصوتيات ومرئيات شرعية معتمدة."
+        subtitle={`${books.length} كتاب ومرجع — كل كتاب له صفحة منظمة وفهرس وأبواب.`}
       />
 
       <input
@@ -60,38 +81,23 @@ export default function LibraryPage({
         className="page-search-input full"
       />
 
-      <div className="page-chip-row">
+      <div className="page-chip-row lib-filters">
+        {CATEGORIES.map((c) => (
+          <Chip key={c} active={category === c} onClick={() => setCategory(c)}>{c}</Chip>
+        ))}
+      </div>
+      <div className="page-chip-row lib-filters lib-filters--secondary">
         {TYPES.map((t) => (
           <Chip key={t} active={type === t} onClick={() => setType(t)}>{t}</Chip>
         ))}
       </div>
 
-
-      {loading ? (
-        <Loading />
-      ) : filtered.length === 0 ? (
-        <Empty text={items.length === 0 ? "لا توجد مواد بعد." : "لا توجد نتائج مطابقة."} />
+      {filtered.length === 0 ? (
+        <Empty text="لا توجد نتائج مطابقة." />
       ) : (
-        <div className="page-card-grid">
-          {filtered.map((item: any) => (
-            <article key={item.id} className="page-card library-card">
-              <div className="page-card-header">
-                <p>{item.title}</p>
-                <span className="page-tag">
-                  {item.type}
-                </span>
-              </div>
-              {item.category && <p className="page-meta">{item.category}</p>}
-              {item.description && <p className="page-desc">{item.description}</p>}
-              {(item.file_url || item.external_url) && (
-                <a href={item.file_url || item.external_url} target="_blank" rel="noreferrer" className="page-link">
-                  فتح المادة ←
-                </a>
-              )}
-              {!isDemoId(item.id) && (
-                <ContentActions contentType="book" contentId={item.id} />
-              )}
-            </article>
+        <div className="lib-grid">
+          {filtered.map((b) => (
+            <BookCard key={b.slug} {...b} />
           ))}
         </div>
       )}

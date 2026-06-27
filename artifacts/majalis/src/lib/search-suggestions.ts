@@ -93,7 +93,7 @@ export function buildSearchSuggestions(query: string, limit = GROUP_LIMIT): Sear
       id: book.id,
       label: book.title,
       meta: book.category,
-      href: `/library?q=${encodeURIComponent(book.title)}`,
+      href: `/library/${book.slug || book.id}`,
       group: "library",
     });
     if (groupCount(results, "library") >= MAX_PER_GROUP) break;

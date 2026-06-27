@@ -7,6 +7,7 @@ import { resetMobileNavBodyLock } from "./lib/mobile-nav-body-lock";
 import "./index.css";
 import "./styles/calm-design.css";
 import "./styles/platform-features.css";
+import "./styles/library-tajweed.css";
 
 resetMobileNavBodyLock();
 applyFontPreference(readFontPreference());

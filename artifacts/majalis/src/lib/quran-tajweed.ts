@@ -8,6 +8,8 @@ export type TajweedLesson = {
   practiceAyahs: { surah: number; ayahs: number[]; note: string }[];
   audioUrl?: string;
   quiz: { question: string; options: string[]; answer: number }[];
+  notes?: string[];
+  commonMistakes?: string[];
   illustration?: string;
   source: string;
   lastReviewed: string;
@@ -33,8 +35,10 @@ export const TAJWEED_LESSONS: TajweedLesson[] = [
     category: "مخارج الحروف",
     summary: "معرفة مواضع خروج الحروف من الفم والحلق واللسان.",
     explanation:
-      "مخارج الحروف هي المواضع التي تخرج منها الحروف عند النطق. العلماء قسّموها إلى ستةteen مخرجاً رئيسياً. إتقان المخارج أساس التلاوة الصحيحة.",
+      "مخارج الحروف هي المواضع التي تخرج منها الحروف عند النطق. العلماء قسّموها إلى ستة عشر مخرجاً رئيسياً. إتقان المخارج أساس التلاوة الصحيحة.",
     examples: ["الهمزة من أقصى الحلق", "العين من وسط اللسان", "الضاد من حافة اللسان"],
+    notes: ["يُستحسن التدرّب أمام مُجيز متقن.", "ابدأ ببطء ثم زِد السرعة بعد ضبط المخرج."],
+    commonMistakes: ["خلط الهاء بالهمزة", "إخراج الضاد من وسط اللسان بدل الحافة"],
     practiceAyahs: [{ surah: 1, ayahs: [1, 2, 3], note: "تطبيق مخارج الحروف في الفاتحة" }],
     quiz: [
       { question: "من أين يخرج حرف القاف؟", options: ["أقصى الحلق", "أقصى اللسان", "الشفتان", "الأنف"], answer: 1 },
