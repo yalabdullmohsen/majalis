@@ -1,32 +1,40 @@
 import { sendJson } from "../../api/_http.mjs";
 import { requireAdminAccess } from "../../../lib/admin-auth.mjs";
 import {
-  runContentImportRows,
   startImportJob,
   stageImportBatch,
-  commitImportJob,
+  queueImportJob,
+  processImportJob,
+  processQueuedImportJobs,
   getImportJobProgress,
   UPLOAD_BATCH_SIZE,
 } from "../../../lib/content-import/engine.mjs";
+import { scheduleImportProcessing, triggerImportWorkerFetch, WORKER_SECRET } from "../../../lib/content-import/import-worker.mjs";
 import { runPhase2TrialImport } from "../../../lib/content-import/phase2-trial.mjs";
 import { CONTENT_TYPES } from "../../../lib/content-import/registry.mjs";
-import { parseContentString } from "../../../lib/content-import/parsers.mjs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const APP_ROOT = join(__dirname, "../../..");
 
-const INLINE_ROW_LIMIT = 5000;
+function isImportWorkerRequest(req) {
+  const header = req.headers?.["x-import-worker"] || req.headers?.["X-Import-Worker"];
+  return WORKER_SECRET && header === WORKER_SECRET;
+}
 
 export default async function handler(req, res) {
-  const auth = await requireAdminAccess(req, res, sendJson, { requireImport: true });
-  if (!auth) return;
-
   const body = req.method === "POST" ? req.body || {} : {};
   const query = req.query || {};
   const action = String(body.action || query.action || "import").trim();
   const dryRun = body.dryRun === true || query.dryRun === "1";
+
+  const workerBypass = action === "process" && isImportWorkerRequest(req);
+
+  const auth = workerBypass
+    ? { userId: "import-worker", role: "owner" }
+    : await requireAdminAccess(req, res, sendJson, { requireImport: true });
+  if (!auth) return;
 
   if (req.method === "GET" && action === "progress") {
     const jobId = String(query.jobId || body.jobId || "").trim();
@@ -97,11 +105,58 @@ export default async function handler(req, res) {
       sendJson(res, 400, { ok: false, error: "missing_job_id" });
       return;
     }
+
+    const queued = await queueImportJob(jobId, { executionMode: "background" });
+    if (!queued.ok) {
+      sendJson(res, 422, queued);
+      return;
+    }
+
+    if (queued.alreadyDone) {
+      sendJson(res, 200, { ok: true, jobId, status: "completed" });
+      return;
+    }
+
+    const mode = scheduleImportProcessing(res, jobId, { dryRun });
+    const authHeader = req.headers?.authorization || req.headers?.Authorization || "";
+
+    if (mode.mode === "detached") {
+      void triggerImportWorkerFetch(jobId, authHeader);
+    }
+
+    sendJson(res, 202, {
+      ok: true,
+      jobId,
+      status: "queued",
+      async: true,
+      execution: mode.mode,
+    });
+    return;
+  }
+
+  if (action === "process") {
+    const jobId = String(body.jobId || "").trim();
+    if (!jobId) {
+      sendJson(res, 400, { ok: false, error: "missing_job_id" });
+      return;
+    }
     try {
-      const result = await commitImportJob(jobId, { dryRun });
+      const result = await processImportJob(jobId, { dryRun });
       sendJson(res, result.ok ? 200 : 422, result);
     } catch (err) {
-      console.error("[admin/content-import:commit]", err);
+      console.error("[admin/content-import:process]", err);
+      sendJson(res, 500, { ok: false, error: String(err.message || err) });
+    }
+    return;
+  }
+
+  if (action === "process-queue") {
+    try {
+      const limit = Number(body.limit) || 3;
+      const result = await processQueuedImportJobs(limit);
+      sendJson(res, 200, result);
+    } catch (err) {
+      console.error("[admin/content-import:process-queue]", err);
       sendJson(res, 500, { ok: false, error: String(err.message || err) });
     }
     return;
@@ -118,44 +173,10 @@ export default async function handler(req, res) {
     return;
   }
 
-  const type = String(body.type || query.type || "").trim();
-  if (!type) {
-    sendJson(res, 400, { ok: false, error: "missing_type", types: CONTENT_TYPES });
-    return;
-  }
-
-  try {
-    let rows = Array.isArray(body.rows) ? body.rows : null;
-
-    if (!rows && typeof body.content === "string" && body.content.trim()) {
-      rows = parseContentString(body.content, body.filename || "upload.json");
-    }
-
-    if (!rows) {
-      sendJson(res, 400, { ok: false, error: "missing_rows_or_content" });
-      return;
-    }
-
-    if (rows.length > INLINE_ROW_LIMIT) {
-      sendJson(res, 413, {
-        ok: false,
-        error: "payload_too_large",
-        message: `Use batched import (action=start/stage/commit) for more than ${INLINE_ROW_LIMIT} rows`,
-        uploadBatchSize: UPLOAD_BATCH_SIZE,
-      });
-      return;
-    }
-
-    const report = await runContentImportRows({
-      type,
-      rows,
-      dryRun,
-      source: body.filename || "admin-upload",
-    });
-
-    sendJson(res, report.ok ? 200 : 422, { ok: report.ok, report });
-  } catch (err) {
-    console.error("[admin/content-import]", err);
-    sendJson(res, 500, { ok: false, error: String(err.message || err) });
-  }
+  sendJson(res, 400, {
+    ok: false,
+    error: "use_async_job_flow",
+    message: "Use action=start → stage (batched) → commit → poll progress. Inline import is disabled.",
+    uploadBatchSize: UPLOAD_BATCH_SIZE,
+  });
 }

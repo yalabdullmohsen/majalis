@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { adminFetch } from "@/lib/admin-api";
+import { adminImportFetch } from "@/lib/admin-api";
 import { C } from "@/lib/theme";
 import { chunkRows, parseImportFile, UPLOAD_BATCH_SIZE } from "@/lib/import-parse";
 
@@ -27,6 +27,9 @@ const BTN: React.CSSProperties = {
   fontWeight: 600,
 };
 
+const POLL_INTERVAL_MS = 1000;
+const TERMINAL_STATUSES = new Set(["completed", "failed"]);
+
 type ImportReport = {
   ok: boolean;
   label?: string;
@@ -39,10 +42,17 @@ type ImportReport = {
   };
   validationErrors?: string[];
   importErrors?: string[];
+  timings?: {
+    parse_ms?: number;
+    validation_ms?: number;
+    database_ms?: number;
+    total_ms?: number;
+  };
 };
 
 type JobProgress = {
   status: string;
+  phase: string;
   progress_pct: number;
   processed_rows: number;
   total_rows: number;
@@ -51,23 +61,47 @@ type JobProgress = {
   failed: number;
   validation_errors?: string[];
   import_errors?: string[];
+  timings?: ImportReport["timings"];
+  report?: ImportReport;
 };
+
+function phaseLabel(phase: string): string {
+  switch (phase) {
+    case "parsing":
+      return "تحليل الملف";
+    case "uploading":
+      return "رفع البيانات";
+    case "queued":
+      return "في قائمة الانتظار";
+    case "validating":
+      return "التحقق من الصفوف";
+    case "importing":
+      return "الاستيراد إلى قاعدة البيانات";
+    case "completed":
+      return "اكتمل";
+    case "failed":
+      return "فشل";
+    default:
+      return "جارٍ المعالجة";
+  }
+}
 
 interface ContentFileImportProps {
   onDone?: () => void;
 }
 
-async function pollJobProgress(jobId: string, onUpdate: (job: JobProgress) => void): Promise<JobProgress | null> {
-  for (let i = 0; i < 600; i++) {
-    const res = await adminFetch(`/api/admin/content-import?action=progress&jobId=${encodeURIComponent(jobId)}`);
+async function pollJobUntilDone(jobId: string, onUpdate: (job: JobProgress) => void): Promise<JobProgress> {
+  for (;;) {
+    const res = await adminImportFetch(
+      `/api/admin/content-import?action=progress&jobId=${encodeURIComponent(jobId)}`,
+    );
     const json = await res.json();
     if (json.ok && json.job) {
       onUpdate(json.job);
-      if (json.job.status === "completed" || json.job.status === "failed") return json.job;
+      if (TERMINAL_STATUSES.has(json.job.status)) return json.job;
     }
-    await new Promise((r) => setTimeout(r, 500));
+    await new Promise((r) => setTimeout(r, POLL_INTERVAL_MS));
   }
-  return null;
 }
 
 export function ContentFileImport({ onDone }: ContentFileImportProps) {
@@ -91,50 +125,53 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
     setFilename("");
   };
 
-  const runInlineImport = async (file: File, rows: Record<string, unknown>[]) => {
-    setPhase("جارٍ الرفع والاستيراد…");
-    setProgressPct(10);
-
-    const res = await adminFetch("/api/admin/content-import", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ type, rows, filename: file.name }),
-    });
-    const json = await res.json();
-    setProgressPct(100);
-
-    if (!res.ok && !json.report) {
-      const debugLine = json.debug?.guard ? ` [${json.debug.guard}]` : "";
-      throw new Error((json.userMessageAr || json.userMessage || json.error || json.message || `HTTP ${res.status}`) + debugLine);
+  const applyJobResult = (job: JobProgress) => {
+    const importReport = job.report;
+    if (importReport) {
+      setReport({ ...importReport, timings: job.timings || importReport.timings });
+      if (importReport.ok && importReport.stats?.imported) onDone?.();
+      return;
     }
 
-    setReport(json.report || json);
-    if (json.report?.ok && json.report.stats?.imported) onDone?.();
+    setReport({
+      ok: job.status === "completed",
+      stats: {
+        read: job.total_rows,
+        imported: job.imported,
+        skipped: job.skipped,
+        failed: job.failed,
+        invalid: job.validation_errors?.length || 0,
+      },
+      validationErrors: job.validation_errors,
+      importErrors: job.import_errors,
+      timings: job.timings,
+    });
+    if (job.status === "completed" && job.imported) onDone?.();
   };
 
-  const runBatchedImport = async (file: File, rows: Record<string, unknown>[]) => {
-    setPhase("بدء مهمة الاستيراد…");
+  const runAsyncImport = async (file: File, rows: Record<string, unknown>[]) => {
+    setPhase("تحليل الملف");
     setProgressPct(2);
 
-    const startRes = await adminFetch("/api/admin/content-import", {
+    const startRes = await adminImportFetch("/api/admin/content-import", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ action: "start", type, filename: file.name, totalRows: rows.length }),
     });
     const startJson = await startRes.json();
     if (!startRes.ok || !startJson.jobId) {
-      throw new Error(startJson.error || "تعذر بدء مهمة الاستيراد");
+      throw new Error(startJson.error || startJson.message || "تعذر بدء مهمة الاستيراد");
     }
 
     const jobId = startJson.jobId as string;
     const batches = chunkRows(rows, UPLOAD_BATCH_SIZE);
 
     for (let i = 0; i < batches.length; i++) {
-      setPhase(`رفع الدفعة ${i + 1} من ${batches.length}…`);
-      const pct = Math.round(((i + 1) / batches.length) * 35);
+      setPhase(`رفع البيانات (${i + 1}/${batches.length})`);
+      const pct = Math.round(((i + 1) / batches.length) * 38);
       setProgressPct(pct);
 
-      const stageRes = await adminFetch("/api/admin/content-import", {
+      const stageRes = await adminImportFetch("/api/admin/content-import", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -148,54 +185,25 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
       if (!stageRes.ok) throw new Error(stageJson.error || `فشل رفع الدفعة ${i + 1}`);
     }
 
-    setPhase("التحقق والاستيراد إلى Supabase…");
-    setProgressPct(42);
+    setPhase("بدء المعالجة في الخلفية");
+    setProgressPct(40);
 
-    const commitRes = await adminFetch("/api/admin/content-import", {
+    const commitRes = await adminImportFetch("/api/admin/content-import", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ action: "commit", jobId }),
     });
+    const commitJson = await commitRes.json();
+    if (!commitRes.ok && commitRes.status !== 202) {
+      throw new Error(commitJson.error || commitJson.message || "تعذر إرسال مهمة الاستيراد");
+    }
 
-    const finalJob = await pollJobProgress(jobId, (job) => {
-      setProgressPct(Math.max(42, job.progress_pct || 0));
-      setPhase(
-        job.status === "validating"
-          ? "التحقق من الصفوف…"
-          : job.status === "importing"
-            ? "الاستيراد الجماعي…"
-            : job.status === "completed"
-              ? "اكتمل"
-              : job.status === "failed"
-                ? "فشل"
-                : "جارٍ المعالجة…",
-      );
+    const finalJob = await pollJobUntilDone(jobId, (job) => {
+      setProgressPct(Math.max(40, job.progress_pct || 0));
+      setPhase(phaseLabel(job.phase || job.status));
     });
 
-    const commitJson = await commitRes.json();
-    const importReport = commitJson.report as ImportReport | undefined;
-
-    if (importReport) {
-      setReport(importReport);
-      if (importReport.ok && importReport.stats?.imported) onDone?.();
-      return;
-    }
-
-    if (finalJob) {
-      setReport({
-        ok: finalJob.status === "completed",
-        stats: {
-          read: finalJob.total_rows,
-          imported: finalJob.imported,
-          skipped: finalJob.skipped,
-          failed: finalJob.failed,
-          invalid: finalJob.validation_errors?.length || 0,
-        },
-        validationErrors: finalJob.validation_errors,
-        importErrors: finalJob.import_errors,
-      });
-      if (finalJob.status === "completed" && finalJob.imported) onDone?.();
-    }
+    applyJobResult(finalJob);
   };
 
   const runImport = async (file: File) => {
@@ -207,17 +215,14 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
 
     try {
       const content = await file.text();
+      setPhase("تحليل الملف");
       const rows = parseImportFile(content, file.name);
 
       if (!rows.length) {
         throw new Error("الملف فارغ أو لا يحتوي على صفوف صالحة");
       }
 
-      if (rows.length <= 5000) {
-        await runInlineImport(file, rows);
-      } else {
-        await runBatchedImport(file, rows);
-      }
+      await runAsyncImport(file, rows);
     } catch (e) {
       setError(String((e as Error).message || e));
     } finally {
@@ -274,8 +279,8 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
               استيراد من ملف (JSON / CSV)
             </h2>
             <p style={{ margin: "0 0 1rem", fontSize: "0.85rem", color: C.inkSoft, lineHeight: 1.8 }}>
-              يُحلَّل الملف في الذاكرة ويُستورد مباشرة إلى Supabase — بدون كتابة على نظام الملفات (متوافق
-              مع Vercel). يدعم حتى 100,000 صف مع تتبع التقدّم المباشر.
+              يُحلَّل الملف محليًا ثم تُرفع الدفعات إلى مهمة استيراد غير متزامنة — بدون مهلة زمنية
+              ثابتة. يدعم حتى 100,000 صف مع تتبع التقدّم كل ثانية.
             </p>
 
             <label style={{ display: "block", marginBottom: "0.75rem", fontSize: "0.875rem" }}>
@@ -375,6 +380,13 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
                     قرئ {report.stats.read} · استورد {report.stats.imported} · تخطى {report.stats.skipped} ·
                     فشل {report.stats.failed}
                     {report.stats.invalid ? ` · مرفوض ${report.stats.invalid}` : ""}
+                  </p>
+                )}
+                {report.timings && (
+                  <p style={{ margin: "0.35rem 0 0", fontSize: "0.8125rem", color: C.inkSoft }}>
+                    تحليل {report.timings.parse_ms ?? "—"}ms · تحقق {report.timings.validation_ms ?? "—"}ms ·
+                    قاعدة البيانات {report.timings.database_ms ?? "—"}ms · الإجمالي{" "}
+                    {report.timings.total_ms ?? "—"}ms
                   </p>
                 )}
                 {[...(report.validationErrors || []), ...(report.importErrors || [])].slice(0, 20).map((msg) => (

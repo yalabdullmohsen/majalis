@@ -6,6 +6,8 @@
 import { measureAsync } from "@/lib/performance-monitor";
 
 export const REQUEST_TIMEOUT_MS = 3000;
+/** No timeout — use for long-running import job polling and batch uploads. */
+export const REQUEST_NO_TIMEOUT = 0;
 export const REQUEST_MAX_RETRIES = 1;
 
 export class RequestTimeoutError extends Error {
@@ -13,6 +15,11 @@ export class RequestTimeoutError extends Error {
     super(`Request timed out after ${ms}ms: ${label}`);
     this.name = "RequestTimeoutError";
   }
+}
+
+function resolveTimeoutMs(timeoutMs: number | undefined): number | null {
+  if (timeoutMs === REQUEST_NO_TIMEOUT || timeoutMs === Infinity) return null;
+  return timeoutMs ?? REQUEST_TIMEOUT_MS;
 }
 
 type RunOptions = {
@@ -71,23 +78,24 @@ export class RequestManager {
     init: RequestInit & { label?: string; timeoutMs?: number; retries?: number } = {},
   ): Promise<Response> {
     const label = init.label || String(input);
-    const timeoutMs = init.timeoutMs ?? REQUEST_TIMEOUT_MS;
+    const timeoutMs = resolveTimeoutMs(init.timeoutMs);
     const retries = init.retries ?? REQUEST_MAX_RETRIES;
 
     let lastError: unknown;
     for (let attempt = 0; attempt <= retries; attempt++) {
       const controller = new AbortController();
-      const timeoutId = window.setTimeout(() => controller.abort(), timeoutMs);
+      const timeoutId =
+        timeoutMs != null ? window.setTimeout(() => controller.abort(), timeoutMs) : undefined;
       const signal = mergeSignals(init.signal ?? undefined, controller.signal);
 
       try {
         const res = await measureAsync("fetch", label, () => fetch(input, { ...init, signal }), {
           attempt,
         });
-        window.clearTimeout(timeoutId);
+        if (timeoutId != null) window.clearTimeout(timeoutId);
         return res;
       } catch (err) {
-        window.clearTimeout(timeoutId);
+        if (timeoutId != null) window.clearTimeout(timeoutId);
         lastError = err;
         if (attempt < retries) {
           await sleep(200, init.signal ?? undefined).catch(() => {});
@@ -97,13 +105,13 @@ export class RequestManager {
     }
 
     if ((lastError as Error)?.name === "AbortError") {
-      throw new RequestTimeoutError(label, timeoutMs);
+      throw new RequestTimeoutError(label, timeoutMs ?? REQUEST_TIMEOUT_MS);
     }
     throw lastError;
   }
 
   static async run<T>(label: string, fn: (signal: AbortSignal) => Promise<T>, opts: RunOptions = {}): Promise<T> {
-    const timeoutMs = opts.timeoutMs ?? REQUEST_TIMEOUT_MS;
+    const timeoutMs = resolveTimeoutMs(opts.timeoutMs);
     const retries = opts.retries ?? REQUEST_MAX_RETRIES;
     const dedupeKey = opts.dedupeKey ?? label;
 
@@ -118,15 +126,16 @@ export class RequestManager {
       let lastError: unknown;
       for (let attempt = 0; attempt <= retries; attempt++) {
         const attemptController = new AbortController();
-        const timeoutId = window.setTimeout(() => attemptController.abort(), timeoutMs);
+        const timeoutId =
+          timeoutMs != null ? window.setTimeout(() => attemptController.abort(), timeoutMs) : undefined;
         const signal = mergeSignals(linked, attemptController.signal);
 
         try {
           const result = await measureAsync("query", label, () => fn(signal!), { attempt });
-          window.clearTimeout(timeoutId);
+          if (timeoutId != null) window.clearTimeout(timeoutId);
           return result;
         } catch (err) {
-          window.clearTimeout(timeoutId);
+          if (timeoutId != null) window.clearTimeout(timeoutId);
           lastError = err;
           if (attempt < retries) {
             await sleep(200, linked).catch(() => {});
@@ -136,7 +145,7 @@ export class RequestManager {
       }
 
       if ((lastError as Error)?.name === "AbortError") {
-        throw new RequestTimeoutError(label, timeoutMs);
+        throw new RequestTimeoutError(label, timeoutMs ?? REQUEST_TIMEOUT_MS);
       }
       throw lastError;
     };

@@ -26,14 +26,20 @@ function assert(cond, msg) {
   console.error(`✗ ${msg}`);
 }
 
+const pendingTests = [];
+
 function test(name, fn) {
-  try {
-    fn();
-    console.log(`✓ ${name}`);
-  } catch (err) {
-    failed++;
-    console.error(`✗ ${name}: ${err.message}`);
-  }
+  pendingTests.push(
+    (async () => {
+      try {
+        await fn();
+        console.log(`✓ ${name}`);
+      } catch (err) {
+        failed++;
+        console.error(`✗ ${name}: ${err.message}`);
+      }
+    })(),
+  );
 }
 
 test("registry includes required production types", () => {
@@ -98,6 +104,7 @@ test("production import modules do not reference staged filesystem paths", () =>
   const files = [
     "lib/content-import/engine.mjs",
     "lib/content-import/bulk-importer.mjs",
+    "lib/content-import/import-worker.mjs",
     "lib/api-handlers/admin/content-import.js",
   ];
   for (const rel of files) {
@@ -107,6 +114,31 @@ test("production import modules do not reference staged filesystem paths", () =>
     assert(!src.includes("data/imports/staged"), `${rel} must not use staged path`);
   }
 });
+
+test("content-import API disables inline import", () => {
+  const src = readFileSync(join(root, "lib/api-handlers/admin/content-import.js"), "utf8");
+  assert(src.includes("use_async_job_flow"), "inline import must be disabled");
+  assert(src.includes("queueImportJob"), "must queue async jobs");
+  assert(!src.includes("runContentImportRows"), "must not run sync import in API");
+});
+
+test("async job queue and dry-run process benefits", async () => {
+  const { startImportJob, stageImportBatch, queueImportJob, processImportJob } = await import(
+    "../lib/content-import/engine.mjs"
+  );
+  const rows = [{ text: "فائدة async" }, { text: "فائدة ثانية" }];
+  const started = await startImportJob({ type: "benefits", filename: "t.csv", totalRows: 2 });
+  assert(started.ok && started.jobId, "job started");
+  const staged = await stageImportBatch(started.jobId, rows, 0);
+  assert(staged.ok, "staged");
+  const queued = await queueImportJob(started.jobId);
+  assert(queued.ok, "queued");
+  const result = await processImportJob(started.jobId, { dryRun: true });
+  assert(result.ok, "processed dry-run");
+  assert(result.report?.stats?.imported === 2, "imported 2");
+});
+
+await Promise.all(pendingTests);
 
 console.log(`\nContent Import Engine tests: ${passed} passed, ${failed} failed`);
 process.exit(failed ? 1 : 0);

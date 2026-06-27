@@ -12,6 +12,17 @@ async function getDispatch() {
 
 export default async function handler(req, res) {
   try {
+    if (typeof res.waitUntil !== "function") {
+      try {
+        const vf = await import("@vercel/functions");
+        if (typeof vf.waitUntil === "function") {
+          res.waitUntil = (promise) => vf.waitUntil(promise);
+        }
+      } catch {
+        /* @vercel/functions optional in local dev */
+      }
+    }
+
     const { dispatchApiRequest } = await getDispatch();
     return await dispatchApiRequest(req, res);
   } catch (error) {
