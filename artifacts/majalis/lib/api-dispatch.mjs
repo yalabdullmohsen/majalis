@@ -115,6 +115,8 @@ export const API_ROUTES = [
   { prefix: "/api/admin/verified-knowledge", module: "./api-handlers/admin/verified-knowledge.js", allowGet: true },
   { prefix: "/api/knowledge-reasoning", module: "./api-handlers/knowledge-reasoning.js", allowGet: true },
   { prefix: "/api/admin/knowledge-reasoning", module: "./api-handlers/admin/knowledge-reasoning.js", allowGet: true },
+  { prefix: "/api/cron/content-scheduler", module: "./api-handlers/cron/content-scheduler.js", allowGet: true, exact: true },
+  { prefix: "/api/admin/content-production", module: "./api-handlers/admin/content-production.js", allowGet: true },
   { prefix: "/api/cron/knowledge-reasoning", module: "./api-handlers/cron/knowledge-reasoning.js", allowGet: true, exact: true },
   { prefix: "/api/admin/auto-content", module: "./api-handlers/admin/auto-content.js", allowGet: true },
   { prefix: "/api/admin/auto-knowledge-engine", module: "./api-handlers/admin/auto-knowledge-engine.js", allowGet: true },

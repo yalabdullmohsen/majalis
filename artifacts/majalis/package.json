@@ -33,6 +33,7 @@
     "smoke:nav": "node scripts/smoke-nav-menu.mjs",
     "smoke:mobile": "node scripts/smoke-mobile-routes.mjs",
     "verify:features": "node scripts/verify-features.mjs",
+    "verify:content-production": "node scripts/verify-content-production.mjs",
     "verify:production-complete": "node scripts/verify-production-complete.mjs --production",
     "apply:activation-migrations": "node scripts/apply-activation-migrations.mjs",
     "apply:production-activation": "node scripts/apply-production-activation-tables.mjs",
