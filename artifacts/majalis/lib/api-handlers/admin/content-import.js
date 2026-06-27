@@ -10,7 +10,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const APP_ROOT = join(__dirname, "../../..");
 
 export default async function handler(req, res) {
-  const auth = await requireAdminAccess(req, res, sendJson, { permission: "content.edit" });
+  const auth = await requireAdminAccess(req, res, sendJson, { requireImport: true });
   if (!auth) return;
 
   if (req.method !== "POST") {

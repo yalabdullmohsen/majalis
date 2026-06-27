@@ -2,6 +2,7 @@
 
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { ADMIN_GOVERNANCE_ROLES, LEGACY_ROLE_MAP } from "@/lib/governance-roles";
+import { hasUnrestrictedAdminAccess, isOwnerProfile } from "@/lib/owner-config";
 
 type SupabaseAuthModule = typeof import("@/lib/supabase");
 
@@ -12,6 +13,7 @@ type AuthContextValue = {
   loading: boolean;
   isLoggedIn: boolean;
   isAdmin: boolean;
+  isOwner: boolean;
   isSheikh: boolean;
   login: SupabaseAuthModule["signIn"];
   register: SupabaseAuthModule["signUp"];
@@ -85,11 +87,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       LEGACY_ROLE_MAP[user?.profile?.role || "user"] ||
       "read_only";
 
+    const isOwner =
+      user?.is_owner === true ||
+      isOwnerProfile(user?.profile) ||
+      hasUnrestrictedAdminAccess({
+        email: user?.email,
+        profile: user?.profile,
+        governanceRole,
+      });
+
+    const isAdmin = isOwner || ADMIN_GOVERNANCE_ROLES.includes(governanceRole);
+
     return {
       user,
       loading,
       isLoggedIn: !!user,
-      isAdmin: ADMIN_GOVERNANCE_ROLES.includes(governanceRole),
+      isAdmin,
+      isOwner,
       isSheikh: governanceRole === "scientific_reviewer" || user?.profile?.role === "sheikh",
       login: authApi?.signIn ?? noopAuth,
       register: authApi?.signUp ?? noopAuth,

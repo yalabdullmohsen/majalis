@@ -7,6 +7,7 @@ import { runAutoContentSync, getPublishedAutoContentFeed } from "../../../lib/au
 import { getSupabaseAdmin } from "../../../lib/supabase-admin.mjs";
 import { logBootstrapError, serializeError } from "../../../lib/bootstrap-debug.mjs";
 import { runPhase2TrialImport } from "../../../lib/content-import/phase2-trial.mjs";
+import { promoteAllBootstrapOwners } from "../../../lib/owner-promotion.mjs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -144,6 +145,12 @@ export default async function handler(req, res) {
     migrationStep = "auto_content_sync";
     steps.sync = await runAutoContentSync({ triggerType: "bootstrap", skipSchemaCheck: true });
 
+    migrationStep = "bootstrap_owners";
+    const adminClient = getSupabaseAdmin();
+    steps.ownerBootstrap = adminClient
+      ? await promoteAllBootstrapOwners(adminClient, { assignedBy: "bootstrap-database" })
+      : { ok: false, error: "supabase_admin_not_configured" };
+
     migrationStep = "verify_published_content";
     steps.content = await getPublishedAutoContentFeed({ limit: 10 });
 
@@ -172,6 +179,7 @@ export default async function handler(req, res) {
           failed: steps.sync?.failed,
           error: steps.sync?.error,
         },
+        ownerBootstrap: steps.ownerBootstrap,
         content: { count: steps.content?.items?.length ?? 0 },
       },
       durationMs: Date.now() - started,

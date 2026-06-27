@@ -108,9 +108,9 @@ export default async function handler(req, res) {
       const result = await assignRole(admin, {
         userId: req.body?.user_id,
         roleId: req.body?.role_id,
-        assignedBy: req.body?.assigned_by,
+        assignedBy: req.body?.assigned_by || auth.userId || "admin",
       });
-      sendJson(res, 200, result);
+      sendJson(res, result.ok ? 200 : 403, result);
       return;
     }
 

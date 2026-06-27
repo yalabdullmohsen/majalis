@@ -60,7 +60,13 @@ export default function LoginPage() {
       const current = await refreshUser();
 
       if (adminLogin) {
-        if (current?.profile?.role === "admin" || current?.governance_role === "super_admin") {
+        const canAccessAdmin =
+          current?.is_owner === true ||
+          current?.governance_role === "super_admin" ||
+          current?.profile?.role === "admin" ||
+          current?.profile?.role === "super_admin" ||
+          current?.profile?.is_owner === true;
+        if (canAccessAdmin) {
           navigate(nextPath);
           return;
         }
