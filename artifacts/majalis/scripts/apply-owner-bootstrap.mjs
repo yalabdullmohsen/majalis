@@ -14,8 +14,8 @@ const sqlPath = join(__dirname, "../supabase/owner_bootstrap_v1.sql");
 async function main() {
   const client = await getPgClient();
   if (!client) {
-    console.error("No DATABASE_URL / Postgres connection available.");
-    process.exit(1);
+    console.log(JSON.stringify({ ok: false, skipped: true, reason: "no_database_url" }));
+    process.exit(0);
   }
 
   const sql = readFileSync(sqlPath, "utf8");
