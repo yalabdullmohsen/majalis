@@ -41,6 +41,10 @@ export function dedupeKeyForRow(type, row) {
       return hashKey([row.text, row.category || row.categoryId || row.category_id]);
     case "rulings":
       return hashKey([row.external_key || row.title, row.category]);
+    case "hadith":
+      return hashKey([row.text, row.source_name, row.hadith_number]);
+    case "stories":
+      return hashKey([row.title, row.body]);
     default:
       return hashKey([JSON.stringify(row)]);
   }

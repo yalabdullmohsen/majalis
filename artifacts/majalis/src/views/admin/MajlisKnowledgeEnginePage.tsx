@@ -5,6 +5,26 @@ import { C } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
 import { AdminShell } from "@/views/admin/AdminShell";
 
+type AkpStats = {
+  platformVersion?: string;
+  readinessPct?: number;
+  counts?: {
+    today?: { items?: number; mkeRuns?: number };
+    sources?: number;
+    queuePending?: number;
+    queueFailed?: number;
+    published?: number;
+    rejected?: number;
+    dlq?: number;
+    reviewPending?: number;
+  };
+  pipelines?: Record<string, { label?: string; quota?: number; publishedToday?: number }>;
+  productionVelocity?: { itemsToday?: number; pctOfQuota?: number };
+  lastRun?: { started_at?: string; status?: string } | null;
+  lastError?: { message?: string; created_at?: string } | null;
+  services?: Record<string, { status?: string }>;
+};
+
 type MkeStats = {
   engineVersion?: string;
   health?: { score?: number; status?: string };
@@ -60,6 +80,7 @@ function MajlisKnowledgeEngineContent() {
   const [running, setRunning] = useState(false);
   const [engineVersion, setEngineVersion] = useState("2.0.0");
   const [stats, setStats] = useState<MkeStats | null>(null);
+  const [akp, setAkp] = useState<AkpStats | null>(null);
   const [platforms, setPlatforms] = useState<Array<{ type: string; adapter: string }>>([]);
   const [intelligenceLayers, setIntelligenceLayers] = useState<Array<{ id: string; label: string }>>([]);
   const [pipelineStages, setPipelineStages] = useState<Array<{ id: string; label: string }>>([]);
@@ -71,6 +92,7 @@ function MajlisKnowledgeEngineContent() {
       .then((r) => {
         setEngineVersion(r.engineVersion || "2.0.0");
         setStats((r.stats as MkeStats) || null);
+        setAkp((r.akp as AkpStats) || null);
         setPlatforms(r.platforms || []);
         setIntelligenceLayers(r.intelligenceLayers || []);
         setPipelineStages(r.pipelineStages || []);
@@ -146,7 +168,40 @@ function MajlisKnowledgeEngineContent() {
             <StatCard label="منشور اليوم" value={stats?.counts?.publishedToday ?? stats?.publishedToday ?? 0} />
             <StatCard label="Queue" value={stats?.subsystems?.queue ? (stats.subsystems.queue as { pending?: number }).pending ?? 0 : stats?.queue?.pending ?? 0} />
             <StatCard label="Self-Heal" value={stats?.counts?.self_heal_log ?? "—"} />
+            {akp && (
+              <>
+                <StatCard label="AKP جاهزية %" value={akp.readinessPct ?? "—"} />
+                <StatCard label="منشور AKP اليوم" value={akp.counts?.published ?? akp.productionVelocity?.itemsToday ?? 0} />
+                <StatCard label="DLQ" value={akp.counts?.dlq ?? 0} color="#991B1B" />
+                <StatCard label="مراجعة AKP" value={akp.counts?.reviewPending ?? 0} color="#92400E" />
+              </>
+            )}
           </div>
+
+          {akp?.pipelines && (
+            <section style={{ marginBottom: "1.25rem" }}>
+              <h3 style={{ color: C.emeraldDeep, fontSize: "0.9375rem" }}>خطوط الإنتاج (Phase 2)</h3>
+              <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", marginTop: "0.5rem" }}>
+                {Object.entries(akp.pipelines).map(([key, p]) => (
+                  <StatCard
+                    key={key}
+                    label={`${p.label || key} (${p.publishedToday ?? 0}/${p.quota ?? "—"})`}
+                    value={p.publishedToday ?? 0}
+                  />
+                ))}
+              </div>
+              {akp.lastRun && (
+                <p style={{ fontSize: "0.75rem", color: C.inkSoft, marginTop: "0.5rem" }}>
+                  آخر Run: {akp.lastRun.status} — {akp.lastRun.started_at ? new Date(akp.lastRun.started_at).toLocaleString("ar-KW") : "—"}
+                </p>
+              )}
+              {akp.lastError && (
+                <p style={{ fontSize: "0.75rem", color: "#991B1B", marginTop: "0.25rem" }}>
+                  آخر خطأ: {akp.lastError.message}
+                </p>
+              )}
+            </section>
+          )}
 
           {intelligenceLayers.length > 0 && (
             <section style={{ marginBottom: "1.25rem" }}>

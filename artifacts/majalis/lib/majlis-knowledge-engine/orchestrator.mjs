@@ -290,6 +290,22 @@ export async function runMajlisKnowledgeEngine(opts = {}) {
       }
     }
 
+    // Phase 2: Autonomous Knowledge Platform content pipelines
+    if (mode === "full" || mode === "content-ingest" || mode === "akp") {
+      try {
+        const { runAutonomousPlatform } = await import("../autonomous-platform/index.mjs");
+        summary.metadata.akp = await runAutonomousPlatform({
+          mode: opts.akpMode || "full",
+          triggerType,
+          maxItems: opts.maxItems,
+        });
+        summary.stagesCompleted.push("akp");
+      } catch (err) {
+        summary.metadata.akp = { error: err.message };
+        summary.errors += 1;
+      }
+    }
+
     // Stage: Expiry
     if (mode === "full" || mode === "expire") {
       const expiry = await archiveExpiredLessons({ runId });
