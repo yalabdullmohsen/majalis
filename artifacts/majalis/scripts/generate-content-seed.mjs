@@ -9,6 +9,8 @@ const fawaidSeedPath = path.resolve(root, "src/lib/fawaid-seed.ts");
 
 const QA_CATEGORIES = [
   { id: "seed-cat-aqeedah", name: "العقيدة", slug: "aqeedah" },
+  { id: "seed-cat-anbiya", name: "الأنبياء", slug: "anbiya" },
+  { id: "seed-cat-sahabah", name: "الصحابة", slug: "sahabah" },
   { id: "seed-cat-tahara", name: "الطهارة", slug: "tahara" },
   { id: "seed-cat-salah", name: "الصلاة", slug: "salah" },
   { id: "seed-cat-zakat", name: "الزكاة", slug: "zakat" },
@@ -32,7 +34,7 @@ const FAWAID_CATEGORIES = [
 ];
 
 const QUIZ_TO_QA_CAT = {
-  "الأنبياء|الرسل": "العقيدة",
+  "الأنبياء|الرسل": "الأنبياء",
   "الأحكام|الصلاة": "الصلاة",
   "الأحكام|الطهارة": "الطهارة",
   "الأحكام|الزكاة": "الزكاة",
@@ -44,20 +46,38 @@ const QUIZ_TO_QA_CAT = {
   "السيرة|الغزwات": "السيرة",
   "السيرة|الصلح": "السيرة",
   "السيرة|الفتح": "السيرة",
-  "الصحابة|السيرة": "السيرة",
-  "الصحابة|الخلفاء": "السيرة",
-  "الصحابة|الألقاب": "السيرة",
-  "الصحابة|أمهات المؤمنين": "السيرة",
+  "الصحابة|السيرة": "الصحابة",
+  "الصحابة|الخلفاء": "الصحابة",
+  "الصحابة|الألقاب": "الصحابة",
+  "الصحابة|أمهات المؤمنين": "الصحابة",
   "الصالحون|الحديث": "الحديث",
   "الصالحون|العلماء": "الحديث",
   "الصالحون|الفقh": "الحديث",
   "الصالحون|التفسير": "القرآn",
   "الصالحون|الزهد": "الآdاب",
-  "الصحابة|الحديث": "الحديث",
+  "الصحابة|الحديث": "الصحابة",
   "الألغاز الشرعية|عام": "الآdاب",
 };
 
 const CAT = Object.fromEntries(QA_CATEGORIES.map((c) => [c.slug, c.name]));
+const CAT_BY_NAME = Object.fromEntries(QA_CATEGORIES.map((c) => [c.name, c]));
+
+const ANBIYA_RE =
+  /(?:من\s+(?:أول\s+)?(?:ال)?(?:رسل|نبي|الأنبياء)|النبي الذي|إلى قوم (?:عاد|ثمود|لوط)|ابتلعه الحوت|كلمه الله|اتخذه.*خليل|نوح|إبراهيم|موسى|عيسى|يونس|هود|صالح|لوط|شعيب|ذو الكفل|قصص?\s*(?:الأنبياء|المرسلين)|عليه(?:ه)?\s*السلام)/i;
+
+const SAHABAH_RE =
+  /(?:صحاب(?:ي|ة)|رضي الله عن(?:ه|ها|هم)?|الخلفاء الراشد|أبو بكر|عمر بن|عثمان بن|علي بن|أمهات المؤمنين|من (?:أول|ثاني|ثالث|رابع) الخلفاء)/i;
+
+function resolveQaCategory(question, preferredCat) {
+  const text = String(question || "");
+  if (preferredCat.slug === "aqeedah" && ANBIYA_RE.test(text)) {
+    return CAT_BY_NAME["الأنبياء"] || preferredCat;
+  }
+  if (SAHABAH_RE.test(text) && ["aqeedah", "seerah"].includes(preferredCat.slug)) {
+    return CAT_BY_NAME["الصحابة"] || preferredCat;
+  }
+  return preferredCat;
+}
 const LESSON_TO_QA = {
   عقيدة: CAT.aqeedah,
   فقه: CAT.salah,
@@ -194,12 +214,20 @@ function extractSheikhBios(source) {
   return items;
 }
 
-function ensureMinRows(rows, min, fillerPool) {
+function ensureMinRows(rows, min, fillerPool, catName = null) {
   const out = dedupeRows([...rows]);
   let i = 0;
   while (out.length < min) {
     const item = fillerPool[i % fillerPool.length];
     const tagged = [item[0], ...item.slice(1)];
+    if (catName) {
+      const resolved = resolveQaCategory(tagged[0], CAT_BY_NAME[catName]);
+      if (resolved?.name !== catName && ANBIYA_RE.test(tagged[0])) {
+        i += 1;
+        if (i > fillerPool.length * 3) break;
+        continue;
+      }
+    }
     if (!out.some((r) => r[0] === tagged[0])) out.push(tagged);
     i += 1;
     if (i > fillerPool.length * 3) break;
@@ -258,7 +286,7 @@ function buildQaByCategory() {
 
   const out = {};
   for (const cat of QA_CATEGORIES) {
-    out[cat.name] = ensureMinRows(buckets[cat.name] ?? [], 13, globalPool).slice(0, Math.max(13, (buckets[cat.name] ?? []).length >= 13 ? (buckets[cat.name] ?? []).length : 13));
+    out[cat.name] = ensureMinRows(buckets[cat.name] ?? [], 13, globalPool, cat.name).slice(0, Math.max(13, (buckets[cat.name] ?? []).length >= 13 ? (buckets[cat.name] ?? []).length : 13));
     if (out[cat.name].length < 12) {
       throw new Error("Category " + cat.name + " has " + out[cat.name].length);
     }
@@ -337,18 +365,19 @@ function buildQaItems(qaByCategory) {
   const baseDate = new Date("2024-01-01T08:00:00.000Z").getTime();
   for (const cat of QA_CATEGORIES) {
     for (const [question, answer, ruling_type, evidence, reference] of qaByCategory[cat.name]) {
+      const resolved = resolveQaCategory(question, cat);
       items.push({
         id: "seed-qa-" + id,
         question,
         answer,
-        category_id: cat.id,
+        category_id: resolved.id,
         ruling_type: ruling_type ?? null,
         evidence: evidence ?? null,
         reference: reference ?? null,
         status: "published",
         review_status: "approved",
         created_at: new Date(baseDate + id * 3_600_000).toISOString(),
-        qa_categories: { name: cat.name, slug: cat.slug },
+        qa_categories: { name: resolved.name, slug: resolved.slug },
       });
       id += 1;
     }

@@ -88,10 +88,12 @@ const AutomationReviewPage = lazy(() => import("@/views/admin/AutomationReviewPa
 const AutomationDashboardPage = lazy(() => import("@/views/admin/AutomationDashboardPage"));
 const AutomationCenterPage = lazy(() => import("@/views/admin/AutomationCenterPage"));
 const InstagramIntegrationPage = lazy(() => import("@/views/admin/InstagramIntegrationPage"));
+const MajlisKnowledgeEnginePage = lazy(() => import("@/views/admin/MajlisKnowledgeEnginePage"));
 const AdminDashboardPage = lazy(() => import("@/views/admin/AdminDashboardPage"));
 const AutoContentPage = lazy(() => import("@/views/admin/AutoContentPage"));
 const FiqhReviewPage = lazy(() => import("@/views/admin/FiqhReviewPage"));
 const FiqhQualityPage = lazy(() => import("@/views/admin/FiqhQualityPage"));
+const FeatureStatusPage = lazy(() => import("@/views/admin/FeatureStatusPage"));
 const LearningPathsPage = lazy(() => import("@/views/learning/LearningPathsPage"));
 const LearningPathDetailPage = lazy(() => import("@/views/learning/LearningPathDetailPage"));
 const MyLearningPage = lazy(() => import("@/views/MyLearningPage"));
@@ -249,6 +251,15 @@ function Router() {
           </ErrorBoundary>
         </AdminRouteGuard>
       </Route>
+      <Route path="/admin/automation/platform">
+        <AdminRouteGuard>
+          <ErrorBoundary>
+            <Suspense fallback={<Loading />}>
+              <MajlisKnowledgeEnginePage />
+            </Suspense>
+          </ErrorBoundary>
+        </AdminRouteGuard>
+      </Route>
       <Route path="/admin/automation/center">
         <AdminRouteGuard>
           <ErrorBoundary>
@@ -326,6 +337,15 @@ function Router() {
           <ErrorBoundary>
             <Suspense fallback={<Loading />}>
               <FiqhQualityPage />
+            </Suspense>
+          </ErrorBoundary>
+        </AdminRouteGuard>
+      </Route>
+      <Route path="/admin/feature-status">
+        <AdminRouteGuard>
+          <ErrorBoundary>
+            <Suspense fallback={<Loading />}>
+              <FeatureStatusPage />
             </Suspense>
           </ErrorBoundary>
         </AdminRouteGuard>

@@ -45,7 +45,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-01-05T08:00:00Z",
     "created_at": "2024-01-05T08:00:00Z",
-    "updated_at": "2026-06-27T14:32:59.415Z"
+    "updated_at": "2026-06-27T15:23:52.738Z"
   },
   {
     "id": "ruling-prayer-pillars",
@@ -84,7 +84,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-06-27T14:32:59.416Z"
+    "updated_at": "2026-06-27T15:23:52.739Z"
   },
   {
     "id": "ruling-zakat-conditions",
@@ -123,7 +123,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-08-14T06:00:00Z",
     "created_at": "2023-08-14T06:00:00Z",
-    "updated_at": "2026-06-27T14:32:59.416Z"
+    "updated_at": "2026-06-27T15:23:52.739Z"
   },
   {
     "id": "ruling-hajj-pillars",
@@ -162,7 +162,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-06-01T05:00:00Z",
     "created_at": "2023-06-01T05:00:00Z",
-    "updated_at": "2026-06-27T14:32:59.416Z"
+    "updated_at": "2026-06-27T15:23:52.739Z"
   },
   {
     "id": "ruling-trade-conditions",
@@ -201,7 +201,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-04-22T04:00:00Z",
     "created_at": "2023-04-22T04:00:00Z",
-    "updated_at": "2026-06-27T14:32:59.416Z"
+    "updated_at": "2026-06-27T15:23:52.739Z"
   },
   {
     "id": "ruling-inheritance-shares",
@@ -240,7 +240,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-02-10T03:00:00Z",
     "created_at": "2023-02-10T03:00:00Z",
-    "updated_at": "2026-06-27T14:32:59.416Z"
+    "updated_at": "2026-06-27T15:23:52.739Z"
   },
   {
     "id": "ruling-wudu-nullifiers-part-1",
@@ -284,7 +284,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-01-05T08:00:00Z",
     "created_at": "2024-01-05T08:00:00Z",
-    "updated_at": "2026-06-27T14:32:59.415Z"
+    "updated_at": "2026-06-27T15:23:52.738Z"
   },
   {
     "id": "ruling-wudu-nullifiers-part-2",
@@ -328,7 +328,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-01-05T08:00:00Z",
     "created_at": "2024-01-05T08:00:00Z",
-    "updated_at": "2026-06-27T14:32:59.415Z"
+    "updated_at": "2026-06-27T15:23:52.738Z"
   },
   {
     "id": "ruling-wudu-nullifiers-part-3",
@@ -372,7 +372,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-01-05T08:00:00Z",
     "created_at": "2024-01-05T08:00:00Z",
-    "updated_at": "2026-06-27T14:32:59.415Z"
+    "updated_at": "2026-06-27T15:23:52.738Z"
   },
   {
     "id": "ruling-wudu-nullifiers-part-4",
@@ -416,7 +416,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-01-05T08:00:00Z",
     "created_at": "2024-01-05T08:00:00Z",
-    "updated_at": "2026-06-27T14:32:59.415Z"
+    "updated_at": "2026-06-27T15:23:52.738Z"
   },
   {
     "id": "ruling-wudu-nullifiers-part-5",
@@ -460,7 +460,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-01-05T08:00:00Z",
     "created_at": "2024-01-05T08:00:00Z",
-    "updated_at": "2026-06-27T14:32:59.415Z"
+    "updated_at": "2026-06-27T15:23:52.738Z"
   },
   {
     "id": "ruling-prayer-pillars-part-1",
@@ -499,7 +499,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-06-27T14:32:59.416Z"
+    "updated_at": "2026-06-27T15:23:52.739Z"
   },
   {
     "id": "ruling-prayer-pillars-part-2",
@@ -538,7 +538,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-06-27T14:32:59.416Z"
+    "updated_at": "2026-06-27T15:23:52.739Z"
   },
   {
     "id": "ruling-prayer-pillars-part-3",
@@ -577,7 +577,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-06-27T14:32:59.416Z"
+    "updated_at": "2026-06-27T15:23:52.739Z"
   },
   {
     "id": "ruling-prayer-pillars-part-4",
@@ -616,7 +616,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-06-27T14:32:59.416Z"
+    "updated_at": "2026-06-27T15:23:52.739Z"
   },
   {
     "id": "ruling-prayer-pillars-part-5",
@@ -655,7 +655,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-06-27T14:32:59.416Z"
+    "updated_at": "2026-06-27T15:23:52.739Z"
   },
   {
     "id": "ruling-prayer-pillars-part-6",
@@ -694,7 +694,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-06-27T14:32:59.416Z"
+    "updated_at": "2026-06-27T15:23:52.739Z"
   },
   {
     "id": "ruling-prayer-pillars-part-7",
@@ -733,7 +733,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-06-27T14:32:59.416Z"
+    "updated_at": "2026-06-27T15:23:52.739Z"
   },
   {
     "id": "ruling-prayer-pillars-part-8",
@@ -772,7 +772,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-06-27T14:32:59.416Z"
+    "updated_at": "2026-06-27T15:23:52.739Z"
   },
   {
     "id": "ruling-prayer-pillars-part-9",
@@ -811,7 +811,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-06-27T14:32:59.416Z"
+    "updated_at": "2026-06-27T15:23:52.739Z"
   },
   {
     "id": "ruling-prayer-pillars-part-10",
@@ -850,7 +850,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-06-27T14:32:59.416Z"
+    "updated_at": "2026-06-27T15:23:52.739Z"
   },
   {
     "id": "ruling-prayer-pillars-part-11",
@@ -889,7 +889,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-06-27T14:32:59.416Z"
+    "updated_at": "2026-06-27T15:23:52.739Z"
   },
   {
     "id": "ruling-prayer-pillars-part-12",
@@ -928,7 +928,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-06-27T14:32:59.416Z"
+    "updated_at": "2026-06-27T15:23:52.739Z"
   },
   {
     "id": "ruling-zakat-conditions-part-1",
@@ -967,7 +967,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-08-14T06:00:00Z",
     "created_at": "2023-08-14T06:00:00Z",
-    "updated_at": "2026-06-27T14:32:59.416Z"
+    "updated_at": "2026-06-27T15:23:52.739Z"
   },
   {
     "id": "ruling-zakat-conditions-part-2",
@@ -1006,7 +1006,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-08-14T06:00:00Z",
     "created_at": "2023-08-14T06:00:00Z",
-    "updated_at": "2026-06-27T14:32:59.416Z"
+    "updated_at": "2026-06-27T15:23:52.739Z"
   },
   {
     "id": "ruling-zakat-conditions-part-3",
@@ -1045,7 +1045,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-08-14T06:00:00Z",
     "created_at": "2023-08-14T06:00:00Z",
-    "updated_at": "2026-06-27T14:32:59.416Z"
+    "updated_at": "2026-06-27T15:23:52.739Z"
   },
   {
     "id": "ruling-zakat-conditions-part-4",
@@ -1084,7 +1084,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-08-14T06:00:00Z",
     "created_at": "2023-08-14T06:00:00Z",
-    "updated_at": "2026-06-27T14:32:59.416Z"
+    "updated_at": "2026-06-27T15:23:52.739Z"
   },
   {
     "id": "ruling-zakat-conditions-part-5",
@@ -1123,7 +1123,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-08-14T06:00:00Z",
     "created_at": "2023-08-14T06:00:00Z",
-    "updated_at": "2026-06-27T14:32:59.416Z"
+    "updated_at": "2026-06-27T15:23:52.739Z"
   },
   {
     "id": "ruling-zakat-conditions-part-6",
@@ -1162,7 +1162,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-08-14T06:00:00Z",
     "created_at": "2023-08-14T06:00:00Z",
-    "updated_at": "2026-06-27T14:32:59.416Z"
+    "updated_at": "2026-06-27T15:23:52.739Z"
   },
   {
     "id": "ruling-hajj-pillars-part-1",
@@ -1201,7 +1201,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-06-01T05:00:00Z",
     "created_at": "2023-06-01T05:00:00Z",
-    "updated_at": "2026-06-27T14:32:59.416Z"
+    "updated_at": "2026-06-27T15:23:52.739Z"
   },
   {
     "id": "ruling-hajj-pillars-part-2",
@@ -1240,7 +1240,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-06-01T05:00:00Z",
     "created_at": "2023-06-01T05:00:00Z",
-    "updated_at": "2026-06-27T14:32:59.416Z"
+    "updated_at": "2026-06-27T15:23:52.739Z"
   },
   {
     "id": "ruling-hajj-pillars-part-3",
@@ -1279,7 +1279,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-06-01T05:00:00Z",
     "created_at": "2023-06-01T05:00:00Z",
-    "updated_at": "2026-06-27T14:32:59.416Z"
+    "updated_at": "2026-06-27T15:23:52.739Z"
   },
   {
     "id": "ruling-hajj-pillars-part-4",
@@ -1318,7 +1318,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-06-01T05:00:00Z",
     "created_at": "2023-06-01T05:00:00Z",
-    "updated_at": "2026-06-27T14:32:59.416Z"
+    "updated_at": "2026-06-27T15:23:52.739Z"
   },
   {
     "id": "ruling-trade-conditions-part-1",
@@ -1357,7 +1357,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-04-22T04:00:00Z",
     "created_at": "2023-04-22T04:00:00Z",
-    "updated_at": "2026-06-27T14:32:59.416Z"
+    "updated_at": "2026-06-27T15:23:52.739Z"
   },
   {
     "id": "ruling-trade-conditions-part-2",
@@ -1396,7 +1396,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-04-22T04:00:00Z",
     "created_at": "2023-04-22T04:00:00Z",
-    "updated_at": "2026-06-27T14:32:59.416Z"
+    "updated_at": "2026-06-27T15:23:52.739Z"
   },
   {
     "id": "ruling-trade-conditions-part-3",
@@ -1435,7 +1435,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-04-22T04:00:00Z",
     "created_at": "2023-04-22T04:00:00Z",
-    "updated_at": "2026-06-27T14:32:59.416Z"
+    "updated_at": "2026-06-27T15:23:52.739Z"
   },
   {
     "id": "ruling-trade-conditions-part-4",
@@ -1474,7 +1474,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-04-22T04:00:00Z",
     "created_at": "2023-04-22T04:00:00Z",
-    "updated_at": "2026-06-27T14:32:59.416Z"
+    "updated_at": "2026-06-27T15:23:52.739Z"
   },
   {
     "id": "ruling-trade-conditions-part-5",
@@ -1513,7 +1513,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-04-22T04:00:00Z",
     "created_at": "2023-04-22T04:00:00Z",
-    "updated_at": "2026-06-27T14:32:59.416Z"
+    "updated_at": "2026-06-27T15:23:52.739Z"
   },
   {
     "id": "ruling-inheritance-shares-part-1",
@@ -1552,7 +1552,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-02-10T03:00:00Z",
     "created_at": "2023-02-10T03:00:00Z",
-    "updated_at": "2026-06-27T14:32:59.416Z"
+    "updated_at": "2026-06-27T15:23:52.739Z"
   },
   {
     "id": "ruling-inheritance-shares-part-2",
@@ -1591,7 +1591,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-02-10T03:00:00Z",
     "created_at": "2023-02-10T03:00:00Z",
-    "updated_at": "2026-06-27T14:32:59.416Z"
+    "updated_at": "2026-06-27T15:23:52.739Z"
   },
   {
     "id": "ruling-inheritance-shares-part-3",
@@ -1630,7 +1630,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-02-10T03:00:00Z",
     "created_at": "2023-02-10T03:00:00Z",
-    "updated_at": "2026-06-27T14:32:59.416Z"
+    "updated_at": "2026-06-27T15:23:52.739Z"
   },
   {
     "id": "ruling-inheritance-shares-part-4",
@@ -1669,7 +1669,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-02-10T03:00:00Z",
     "created_at": "2023-02-10T03:00:00Z",
-    "updated_at": "2026-06-27T14:32:59.416Z"
+    "updated_at": "2026-06-27T15:23:52.739Z"
   },
   {
     "id": "ruling-inheritance-shares-part-5",
@@ -1708,7 +1708,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-02-10T03:00:00Z",
     "created_at": "2023-02-10T03:00:00Z",
-    "updated_at": "2026-06-27T14:32:59.416Z"
+    "updated_at": "2026-06-27T15:23:52.739Z"
   },
   {
     "id": "issue-ruling-crypto-currency",
@@ -1748,9 +1748,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-crypto"
     ],
-    "published_at": "2026-06-27T14:32:59.420Z",
-    "created_at": "2026-06-27T14:32:59.420Z",
-    "updated_at": "2026-06-27T14:32:59.420Z"
+    "published_at": "2026-06-27T15:23:52.743Z",
+    "created_at": "2026-06-27T15:23:52.743Z",
+    "updated_at": "2026-06-27T15:23:52.743Z"
   },
   {
     "id": "issue-ruling-organ-donation",
@@ -1790,9 +1790,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-organ-donation"
     ],
-    "published_at": "2026-06-27T14:32:59.420Z",
-    "created_at": "2026-06-27T14:32:59.420Z",
-    "updated_at": "2026-06-27T14:32:59.420Z"
+    "published_at": "2026-06-27T15:23:52.743Z",
+    "created_at": "2026-06-27T15:23:52.743Z",
+    "updated_at": "2026-06-27T15:23:52.743Z"
   },
   {
     "id": "issue-ruling-muslim-minorities-rights",
@@ -1831,9 +1831,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-minorities"
     ],
-    "published_at": "2026-06-27T14:32:59.420Z",
-    "created_at": "2026-06-27T14:32:59.420Z",
-    "updated_at": "2026-06-27T14:32:59.420Z"
+    "published_at": "2026-06-27T15:23:52.743Z",
+    "created_at": "2026-06-27T15:23:52.743Z",
+    "updated_at": "2026-06-27T15:23:52.743Z"
   },
   {
     "id": "issue-ruling-zakat-stocks",
@@ -1872,9 +1872,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-zakat-stocks"
     ],
-    "published_at": "2026-06-27T14:32:59.420Z",
-    "created_at": "2026-06-27T14:32:59.420Z",
-    "updated_at": "2026-06-27T14:32:59.420Z"
+    "published_at": "2026-06-27T15:23:52.743Z",
+    "created_at": "2026-06-27T15:23:52.743Z",
+    "updated_at": "2026-06-27T15:23:52.743Z"
   },
   {
     "id": "issue-ruling-hajj-delay",
@@ -1913,9 +1913,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-hajj"
     ],
-    "published_at": "2026-06-27T14:32:59.420Z",
-    "created_at": "2026-06-27T14:32:59.420Z",
-    "updated_at": "2026-06-27T14:32:59.420Z"
+    "published_at": "2026-06-27T15:23:52.743Z",
+    "created_at": "2026-06-27T15:23:52.743Z",
+    "updated_at": "2026-06-27T15:23:52.743Z"
   },
   {
     "id": "fatwa-ruling-fatwa-prayer-combine",
@@ -1957,9 +1957,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
       "fatwa-prayer-combine"
     ],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.420Z",
-    "created_at": "2026-06-27T14:32:59.420Z",
-    "updated_at": "2026-06-27T14:32:59.420Z"
+    "published_at": "2026-06-27T15:23:52.742Z",
+    "created_at": "2026-06-27T15:23:52.742Z",
+    "updated_at": "2026-06-27T15:23:52.742Z"
   },
   {
     "id": "fatwa-ruling-fatwa-zakat-gold",
@@ -2000,9 +2000,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
       "fatwa-zakat-gold"
     ],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.420Z",
-    "created_at": "2026-06-27T14:32:59.420Z",
-    "updated_at": "2026-06-27T14:32:59.420Z"
+    "published_at": "2026-06-27T15:23:52.742Z",
+    "created_at": "2026-06-27T15:23:52.742Z",
+    "updated_at": "2026-06-27T15:23:52.742Z"
   },
   {
     "id": "fatwa-ruling-fatwa-music-voice",
@@ -2043,9 +2043,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
       "fatwa-music-voice"
     ],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.420Z",
-    "created_at": "2026-06-27T14:32:59.420Z",
-    "updated_at": "2026-06-27T14:32:59.420Z"
+    "published_at": "2026-06-27T15:23:52.742Z",
+    "created_at": "2026-06-27T15:23:52.742Z",
+    "updated_at": "2026-06-27T15:23:52.742Z"
   },
   {
     "id": "fatwa-ruling-fatwa-fasting-travel",
@@ -2087,9 +2087,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
       "fatwa-fasting-travel"
     ],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.420Z",
-    "created_at": "2026-06-27T14:32:59.420Z",
-    "updated_at": "2026-06-27T14:32:59.420Z"
+    "published_at": "2026-06-27T15:23:52.742Z",
+    "created_at": "2026-06-27T15:23:52.742Z",
+    "updated_at": "2026-06-27T15:23:52.742Z"
   },
   {
     "id": "fatwa-ruling-fatwa-inheritance-daughter",
@@ -2130,13 +2130,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
       "fatwa-inheritance-daughter"
     ],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.420Z",
-    "created_at": "2026-06-27T14:32:59.420Z",
-    "updated_at": "2026-06-27T14:32:59.420Z"
+    "published_at": "2026-06-27T15:23:52.743Z",
+    "created_at": "2026-06-27T15:23:52.743Z",
+    "updated_at": "2026-06-27T15:23:52.743Z"
   },
   {
-    "id": "qa-ruling-seed-qa-16",
-    "external_key": "qa-ruling-seed-qa-16",
+    "id": "qa-ruling-seed-qa-42",
+    "external_key": "qa-ruling-seed-qa-42",
     "title": "حكم من نسي مسح رأسه في الوضوء؟",
     "summary": "يجوز؛ فإن مسح بعض الرأس يكفي عن الكل.",
     "body": "**السؤال:** ما حكم من نسي مسح رأسه في الوضوء؟\n\n**الجواب:** يجوز؛ فإن مسح بعض الرأس يكفي عن الكل.",
@@ -2169,24 +2169,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 70,
-    "popularity_score": 173,
-    "view_count": 173,
+    "popularity_score": 397,
+    "view_count": 397,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-16"
+      "seed-qa-42"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
   },
   {
-    "id": "qa-ruling-seed-qa-17",
-    "external_key": "qa-ruling-seed-qa-17",
+    "id": "qa-ruling-seed-qa-43",
+    "external_key": "qa-ruling-seed-qa-43",
     "title": "يجوز الوضوء بماء مغلوب عليه؟",
     "summary": "نعم؛ ما لم يتغير اسمه أو صفته.",
     "body": "**السؤال:** هل يجوز الوضوء بماء مغلوب عليه؟\n\n**الجواب:** نعم؛ ما لم يتغير اسمه أو صفته.",
@@ -2219,24 +2219,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 70,
-    "popularity_score": 474,
-    "view_count": 474,
+    "popularity_score": 171,
+    "view_count": 171,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-17"
+      "seed-qa-43"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
   },
   {
-    "id": "qa-ruling-seed-qa-18",
-    "external_key": "qa-ruling-seed-qa-18",
+    "id": "qa-ruling-seed-qa-44",
+    "external_key": "qa-ruling-seed-qa-44",
     "title": "حكم ترك غسل جزء من الوجه في الوضوء؟",
     "summary": "لا يصح الوضوء حتى يُغسل الجزء.",
     "body": "**السؤال:** ما حكم ترك غسل جزء من الوجه في الوضوء؟\n\n**الجواب:** لا يصح الوضوء حتى يُغسل الجزء.",
@@ -2275,24 +2275,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 70,
-    "popularity_score": 129,
-    "view_count": 129,
+    "popularity_score": 169,
+    "view_count": 169,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-18"
+      "seed-qa-44"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
   },
   {
-    "id": "qa-ruling-seed-qa-19",
-    "external_key": "qa-ruling-seed-qa-19",
+    "id": "qa-ruling-seed-qa-45",
+    "external_key": "qa-ruling-seed-qa-45",
     "title": "يجوز التيمم قبل وقت الصلاة؟",
     "summary": "نعم عند فقد الماء أو العجز عن استعماله.",
     "body": "**السؤال:** هل يجوز التيمم قبل وقت الصلاة؟\n\n**الجواب:** نعم عند فقد الماء أو العجز عن استعماله.",
@@ -2331,24 +2331,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 70,
-    "popularity_score": 372,
-    "view_count": 372,
+    "popularity_score": 149,
+    "view_count": 149,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-19"
+      "seed-qa-45"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
   },
   {
-    "id": "qa-ruling-seed-qa-20",
-    "external_key": "qa-ruling-seed-qa-20",
+    "id": "qa-ruling-seed-qa-46",
+    "external_key": "qa-ruling-seed-qa-46",
     "title": "حكم من شك في عدد غسلات الوضوء؟",
     "summary": "يبني على اليقين؛ وهو الأقل.",
     "body": "**السؤال:** ما حكم من شك في عدد غسلات الوضوء؟\n\n**الجواب:** يبني على اليقين؛ وهو الأقل.",
@@ -2381,24 +2381,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 70,
-    "popularity_score": 400,
-    "view_count": 400,
+    "popularity_score": 488,
+    "view_count": 488,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-20"
+      "seed-qa-46"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
   },
   {
-    "id": "qa-ruling-seed-qa-124",
-    "external_key": "qa-ruling-seed-qa-124",
+    "id": "qa-ruling-seed-qa-144",
+    "external_key": "qa-ruling-seed-qa-144",
     "title": "حكم قول «سبحان الله» بعد الصلاة؟",
     "summary": "سنة مؤكدة؛ ثلاثاً وثلاثين.",
     "body": "**السؤال:** ما حكم قول «سبحان الله» بعد الصلاة؟\n\n**الجواب:** سنة مؤكدة؛ ثلاثاً وثلاثين.",
@@ -2431,24 +2431,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 70,
-    "popularity_score": 362,
-    "view_count": 362,
+    "popularity_score": 581,
+    "view_count": 581,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-124"
+      "seed-qa-144"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.742Z",
+    "created_at": "2026-06-27T15:23:52.742Z",
+    "updated_at": "2026-06-27T15:23:52.742Z"
   },
   {
-    "id": "qa-ruling-seed-qa-125",
-    "external_key": "qa-ruling-seed-qa-125",
+    "id": "qa-ruling-seed-qa-145",
+    "external_key": "qa-ruling-seed-qa-145",
     "title": "أفضل ذكر بعد الفجر؟",
     "summary": "قراءة آية الكرسي والمعوذات.",
     "body": "**السؤال:** ما أفضل ذكر بعد الفجر؟\n\n**الجواب:** قراءة آية الكرسي والمعوذات.",
@@ -2481,24 +2481,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 70,
-    "popularity_score": 247,
-    "view_count": 247,
+    "popularity_score": 452,
+    "view_count": 452,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-125"
+      "seed-qa-145"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.742Z",
+    "created_at": "2026-06-27T15:23:52.742Z",
+    "updated_at": "2026-06-27T15:23:52.742Z"
   },
   {
-    "id": "qa-ruling-seed-qa-126",
-    "external_key": "qa-ruling-seed-qa-126",
+    "id": "qa-ruling-seed-qa-146",
+    "external_key": "qa-ruling-seed-qa-146",
     "title": "يجوز الجهر بالأذكار بعد الصلاة؟",
     "summary": "جائز؛ والسر أفضل إلا ما دلّ دليل على الجهر.",
     "body": "**السؤال:** هل يجوز الجهر بالأذكار بعد الصلاة؟\n\n**الجواب:** جائز؛ والسر أفضل إلا ما دلّ دليل على الجهر.",
@@ -2531,24 +2531,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 70,
-    "popularity_score": 475,
-    "view_count": 475,
+    "popularity_score": 323,
+    "view_count": 323,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-126"
+      "seed-qa-146"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.419Z",
-    "created_at": "2026-06-27T14:32:59.419Z",
-    "updated_at": "2026-06-27T14:32:59.419Z"
+    "published_at": "2026-06-27T15:23:52.742Z",
+    "created_at": "2026-06-27T15:23:52.742Z",
+    "updated_at": "2026-06-27T15:23:52.742Z"
   },
   {
-    "id": "qa-ruling-seed-qa-127",
-    "external_key": "qa-ruling-seed-qa-127",
+    "id": "qa-ruling-seed-qa-147",
+    "external_key": "qa-ruling-seed-qa-147",
     "title": "حكم من ترك أذكار الصباح والمساء؟",
     "summary": "فاته خير كثير؛ وليس كبيرة إذا لم يُهمل عمداً.",
     "body": "**السؤال:** ما حكم من ترك أذكار الصباح والمساء؟\n\n**الجواب:** فاته خير كثير؛ وليس كبيرة إذا لم يُهمل عمداً.",
@@ -2580,24 +2580,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 70,
-    "popularity_score": 487,
-    "view_count": 487,
+    "popularity_score": 396,
+    "view_count": 396,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-127"
+      "seed-qa-147"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.419Z",
-    "created_at": "2026-06-27T14:32:59.419Z",
-    "updated_at": "2026-06-27T14:32:59.419Z"
+    "published_at": "2026-06-27T15:23:52.742Z",
+    "created_at": "2026-06-27T15:23:52.742Z",
+    "updated_at": "2026-06-27T15:23:52.742Z"
   },
   {
-    "id": "qa-ruling-seed-qa-128",
-    "external_key": "qa-ruling-seed-qa-128",
+    "id": "qa-ruling-seed-qa-148",
+    "external_key": "qa-ruling-seed-qa-148",
     "title": "فائدة الاستغفار في الأذكار؟",
     "summary": "مغفرة الذنوب وفرج الهم.",
     "body": "**السؤال:** ما فائدة الاستغفار في الأذكار؟\n\n**الجواب:** مغفرة الذنوب وفرج الهم.",
@@ -2636,20 +2636,20 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 70,
-    "popularity_score": 539,
-    "view_count": 539,
+    "popularity_score": 202,
+    "view_count": 202,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-128"
+      "seed-qa-148"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.419Z",
-    "created_at": "2026-06-27T14:32:59.419Z",
-    "updated_at": "2026-06-27T14:32:59.419Z"
+    "published_at": "2026-06-27T15:23:52.742Z",
+    "created_at": "2026-06-27T15:23:52.742Z",
+    "updated_at": "2026-06-27T15:23:52.742Z"
   },
   {
     "id": "curriculum-1",
@@ -2700,9 +2700,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.421Z",
-    "created_at": "2026-06-27T14:32:59.421Z",
-    "updated_at": "2026-06-27T14:32:59.421Z"
+    "published_at": "2026-06-27T15:23:52.744Z",
+    "created_at": "2026-06-27T15:23:52.744Z",
+    "updated_at": "2026-06-27T15:23:52.744Z"
   },
   {
     "id": "curriculum-2",
@@ -2747,9 +2747,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.421Z",
-    "created_at": "2026-06-27T14:32:59.421Z",
-    "updated_at": "2026-06-27T14:32:59.421Z"
+    "published_at": "2026-06-27T15:23:52.744Z",
+    "created_at": "2026-06-27T15:23:52.744Z",
+    "updated_at": "2026-06-27T15:23:52.744Z"
   },
   {
     "id": "curriculum-3",
@@ -2794,9 +2794,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.421Z",
-    "created_at": "2026-06-27T14:32:59.421Z",
-    "updated_at": "2026-06-27T14:32:59.421Z"
+    "published_at": "2026-06-27T15:23:52.744Z",
+    "created_at": "2026-06-27T15:23:52.744Z",
+    "updated_at": "2026-06-27T15:23:52.744Z"
   },
   {
     "id": "curriculum-4",
@@ -2841,9 +2841,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.421Z",
-    "created_at": "2026-06-27T14:32:59.421Z",
-    "updated_at": "2026-06-27T14:32:59.421Z"
+    "published_at": "2026-06-27T15:23:52.744Z",
+    "created_at": "2026-06-27T15:23:52.744Z",
+    "updated_at": "2026-06-27T15:23:52.744Z"
   },
   {
     "id": "curriculum-5",
@@ -2888,9 +2888,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.421Z",
-    "created_at": "2026-06-27T14:32:59.421Z",
-    "updated_at": "2026-06-27T14:32:59.421Z"
+    "published_at": "2026-06-27T15:23:52.744Z",
+    "created_at": "2026-06-27T15:23:52.744Z",
+    "updated_at": "2026-06-27T15:23:52.744Z"
   },
   {
     "id": "curriculum-6",
@@ -2935,9 +2935,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.421Z",
-    "created_at": "2026-06-27T14:32:59.421Z",
-    "updated_at": "2026-06-27T14:32:59.421Z"
+    "published_at": "2026-06-27T15:23:52.744Z",
+    "created_at": "2026-06-27T15:23:52.744Z",
+    "updated_at": "2026-06-27T15:23:52.744Z"
   },
   {
     "id": "curriculum-7",
@@ -2976,9 +2976,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.421Z",
-    "created_at": "2026-06-27T14:32:59.421Z",
-    "updated_at": "2026-06-27T14:32:59.421Z"
+    "published_at": "2026-06-27T15:23:52.744Z",
+    "created_at": "2026-06-27T15:23:52.744Z",
+    "updated_at": "2026-06-27T15:23:52.744Z"
   },
   {
     "id": "curriculum-8",
@@ -3023,9 +3023,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.421Z",
-    "created_at": "2026-06-27T14:32:59.421Z",
-    "updated_at": "2026-06-27T14:32:59.421Z"
+    "published_at": "2026-06-27T15:23:52.744Z",
+    "created_at": "2026-06-27T15:23:52.744Z",
+    "updated_at": "2026-06-27T15:23:52.744Z"
   },
   {
     "id": "curriculum-9",
@@ -3070,9 +3070,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.421Z",
-    "created_at": "2026-06-27T14:32:59.421Z",
-    "updated_at": "2026-06-27T14:32:59.421Z"
+    "published_at": "2026-06-27T15:23:52.744Z",
+    "created_at": "2026-06-27T15:23:52.744Z",
+    "updated_at": "2026-06-27T15:23:52.744Z"
   },
   {
     "id": "curriculum-10",
@@ -3117,9 +3117,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.421Z",
-    "created_at": "2026-06-27T14:32:59.421Z",
-    "updated_at": "2026-06-27T14:32:59.421Z"
+    "published_at": "2026-06-27T15:23:52.744Z",
+    "created_at": "2026-06-27T15:23:52.744Z",
+    "updated_at": "2026-06-27T15:23:52.744Z"
   },
   {
     "id": "curriculum-11",
@@ -3164,9 +3164,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.421Z",
-    "created_at": "2026-06-27T14:32:59.421Z",
-    "updated_at": "2026-06-27T14:32:59.421Z"
+    "published_at": "2026-06-27T15:23:52.744Z",
+    "created_at": "2026-06-27T15:23:52.744Z",
+    "updated_at": "2026-06-27T15:23:52.744Z"
   },
   {
     "id": "curriculum-12",
@@ -3211,9 +3211,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.421Z",
-    "created_at": "2026-06-27T14:32:59.421Z",
-    "updated_at": "2026-06-27T14:32:59.421Z"
+    "published_at": "2026-06-27T15:23:52.745Z",
+    "created_at": "2026-06-27T15:23:52.745Z",
+    "updated_at": "2026-06-27T15:23:52.745Z"
   },
   {
     "id": "curriculum-13",
@@ -3258,9 +3258,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.421Z",
-    "created_at": "2026-06-27T14:32:59.421Z",
-    "updated_at": "2026-06-27T14:32:59.421Z"
+    "published_at": "2026-06-27T15:23:52.745Z",
+    "created_at": "2026-06-27T15:23:52.745Z",
+    "updated_at": "2026-06-27T15:23:52.745Z"
   },
   {
     "id": "curriculum-14",
@@ -3305,9 +3305,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.421Z",
-    "created_at": "2026-06-27T14:32:59.421Z",
-    "updated_at": "2026-06-27T14:32:59.421Z"
+    "published_at": "2026-06-27T15:23:52.745Z",
+    "created_at": "2026-06-27T15:23:52.745Z",
+    "updated_at": "2026-06-27T15:23:52.745Z"
   },
   {
     "id": "curriculum-15",
@@ -3352,9 +3352,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.421Z",
-    "created_at": "2026-06-27T14:32:59.421Z",
-    "updated_at": "2026-06-27T14:32:59.421Z"
+    "published_at": "2026-06-27T15:23:52.745Z",
+    "created_at": "2026-06-27T15:23:52.745Z",
+    "updated_at": "2026-06-27T15:23:52.745Z"
   },
   {
     "id": "curriculum-16",
@@ -3393,9 +3393,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.421Z",
-    "created_at": "2026-06-27T14:32:59.421Z",
-    "updated_at": "2026-06-27T14:32:59.421Z"
+    "published_at": "2026-06-27T15:23:52.745Z",
+    "created_at": "2026-06-27T15:23:52.745Z",
+    "updated_at": "2026-06-27T15:23:52.745Z"
   },
   {
     "id": "curriculum-17",
@@ -3440,9 +3440,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.421Z",
-    "created_at": "2026-06-27T14:32:59.421Z",
-    "updated_at": "2026-06-27T14:32:59.421Z"
+    "published_at": "2026-06-27T15:23:52.745Z",
+    "created_at": "2026-06-27T15:23:52.745Z",
+    "updated_at": "2026-06-27T15:23:52.745Z"
   },
   {
     "id": "curriculum-18",
@@ -3487,9 +3487,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.421Z",
-    "created_at": "2026-06-27T14:32:59.421Z",
-    "updated_at": "2026-06-27T14:32:59.421Z"
+    "published_at": "2026-06-27T15:23:52.745Z",
+    "created_at": "2026-06-27T15:23:52.745Z",
+    "updated_at": "2026-06-27T15:23:52.745Z"
   },
   {
     "id": "curriculum-19",
@@ -3534,9 +3534,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.421Z",
-    "created_at": "2026-06-27T14:32:59.421Z",
-    "updated_at": "2026-06-27T14:32:59.421Z"
+    "published_at": "2026-06-27T15:23:52.745Z",
+    "created_at": "2026-06-27T15:23:52.745Z",
+    "updated_at": "2026-06-27T15:23:52.745Z"
   },
   {
     "id": "curriculum-20",
@@ -3581,9 +3581,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.421Z",
-    "created_at": "2026-06-27T14:32:59.421Z",
-    "updated_at": "2026-06-27T14:32:59.421Z"
+    "published_at": "2026-06-27T15:23:52.745Z",
+    "created_at": "2026-06-27T15:23:52.745Z",
+    "updated_at": "2026-06-27T15:23:52.745Z"
   },
   {
     "id": "curriculum-21",
@@ -3628,9 +3628,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.421Z",
-    "created_at": "2026-06-27T14:32:59.421Z",
-    "updated_at": "2026-06-27T14:32:59.421Z"
+    "published_at": "2026-06-27T15:23:52.745Z",
+    "created_at": "2026-06-27T15:23:52.745Z",
+    "updated_at": "2026-06-27T15:23:52.745Z"
   },
   {
     "id": "curriculum-22",
@@ -3669,9 +3669,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.421Z",
-    "created_at": "2026-06-27T14:32:59.421Z",
-    "updated_at": "2026-06-27T14:32:59.421Z"
+    "published_at": "2026-06-27T15:23:52.745Z",
+    "created_at": "2026-06-27T15:23:52.745Z",
+    "updated_at": "2026-06-27T15:23:52.745Z"
   },
   {
     "id": "curriculum-23",
@@ -3716,9 +3716,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.421Z",
-    "created_at": "2026-06-27T14:32:59.421Z",
-    "updated_at": "2026-06-27T14:32:59.421Z"
+    "published_at": "2026-06-27T15:23:52.745Z",
+    "created_at": "2026-06-27T15:23:52.745Z",
+    "updated_at": "2026-06-27T15:23:52.745Z"
   },
   {
     "id": "curriculum-24",
@@ -3763,9 +3763,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.421Z",
-    "created_at": "2026-06-27T14:32:59.421Z",
-    "updated_at": "2026-06-27T14:32:59.421Z"
+    "published_at": "2026-06-27T15:23:52.745Z",
+    "created_at": "2026-06-27T15:23:52.745Z",
+    "updated_at": "2026-06-27T15:23:52.745Z"
   },
   {
     "id": "curriculum-25",
@@ -3810,9 +3810,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.421Z",
-    "created_at": "2026-06-27T14:32:59.421Z",
-    "updated_at": "2026-06-27T14:32:59.421Z"
+    "published_at": "2026-06-27T15:23:52.745Z",
+    "created_at": "2026-06-27T15:23:52.745Z",
+    "updated_at": "2026-06-27T15:23:52.745Z"
   },
   {
     "id": "curriculum-26",
@@ -3857,9 +3857,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.421Z",
-    "created_at": "2026-06-27T14:32:59.421Z",
-    "updated_at": "2026-06-27T14:32:59.421Z"
+    "published_at": "2026-06-27T15:23:52.745Z",
+    "created_at": "2026-06-27T15:23:52.745Z",
+    "updated_at": "2026-06-27T15:23:52.745Z"
   },
   {
     "id": "curriculum-27",
@@ -3898,9 +3898,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.421Z",
-    "created_at": "2026-06-27T14:32:59.421Z",
-    "updated_at": "2026-06-27T14:32:59.421Z"
+    "published_at": "2026-06-27T15:23:52.745Z",
+    "created_at": "2026-06-27T15:23:52.745Z",
+    "updated_at": "2026-06-27T15:23:52.745Z"
   },
   {
     "id": "curriculum-28",
@@ -3945,9 +3945,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.421Z",
-    "created_at": "2026-06-27T14:32:59.421Z",
-    "updated_at": "2026-06-27T14:32:59.421Z"
+    "published_at": "2026-06-27T15:23:52.745Z",
+    "created_at": "2026-06-27T15:23:52.745Z",
+    "updated_at": "2026-06-27T15:23:52.745Z"
   },
   {
     "id": "curriculum-29",
@@ -3992,9 +3992,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.421Z",
-    "created_at": "2026-06-27T14:32:59.421Z",
-    "updated_at": "2026-06-27T14:32:59.421Z"
+    "published_at": "2026-06-27T15:23:52.745Z",
+    "created_at": "2026-06-27T15:23:52.745Z",
+    "updated_at": "2026-06-27T15:23:52.745Z"
   },
   {
     "id": "curriculum-30",
@@ -4039,9 +4039,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.421Z",
-    "created_at": "2026-06-27T14:32:59.421Z",
-    "updated_at": "2026-06-27T14:32:59.421Z"
+    "published_at": "2026-06-27T15:23:52.745Z",
+    "created_at": "2026-06-27T15:23:52.745Z",
+    "updated_at": "2026-06-27T15:23:52.745Z"
   },
   {
     "id": "curriculum-31",
@@ -4080,9 +4080,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.421Z",
-    "created_at": "2026-06-27T14:32:59.421Z",
-    "updated_at": "2026-06-27T14:32:59.421Z"
+    "published_at": "2026-06-27T15:23:52.745Z",
+    "created_at": "2026-06-27T15:23:52.745Z",
+    "updated_at": "2026-06-27T15:23:52.745Z"
   },
   {
     "id": "curriculum-32",
@@ -4127,9 +4127,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.421Z",
-    "created_at": "2026-06-27T14:32:59.421Z",
-    "updated_at": "2026-06-27T14:32:59.421Z"
+    "published_at": "2026-06-27T15:23:52.745Z",
+    "created_at": "2026-06-27T15:23:52.745Z",
+    "updated_at": "2026-06-27T15:23:52.745Z"
   },
   {
     "id": "curriculum-33",
@@ -4174,9 +4174,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.421Z",
-    "created_at": "2026-06-27T14:32:59.421Z",
-    "updated_at": "2026-06-27T14:32:59.421Z"
+    "published_at": "2026-06-27T15:23:52.745Z",
+    "created_at": "2026-06-27T15:23:52.745Z",
+    "updated_at": "2026-06-27T15:23:52.745Z"
   },
   {
     "id": "curriculum-34",
@@ -4221,9 +4221,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.421Z",
-    "created_at": "2026-06-27T14:32:59.421Z",
-    "updated_at": "2026-06-27T14:32:59.421Z"
+    "published_at": "2026-06-27T15:23:52.745Z",
+    "created_at": "2026-06-27T15:23:52.745Z",
+    "updated_at": "2026-06-27T15:23:52.745Z"
   },
   {
     "id": "curriculum-35",
@@ -4268,9 +4268,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.421Z",
-    "created_at": "2026-06-27T14:32:59.421Z",
-    "updated_at": "2026-06-27T14:32:59.421Z"
+    "published_at": "2026-06-27T15:23:52.745Z",
+    "created_at": "2026-06-27T15:23:52.745Z",
+    "updated_at": "2026-06-27T15:23:52.745Z"
   },
   {
     "id": "curriculum-36",
@@ -4315,20 +4315,20 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.421Z",
-    "created_at": "2026-06-27T14:32:59.421Z",
-    "updated_at": "2026-06-27T14:32:59.421Z"
+    "published_at": "2026-06-27T15:23:52.745Z",
+    "created_at": "2026-06-27T15:23:52.745Z",
+    "updated_at": "2026-06-27T15:23:52.745Z"
   },
   {
     "id": "qa-ruling-seed-qa-1",
     "external_key": "qa-ruling-seed-qa-1",
-    "title": "أول الرسل إلى أهل الأرض بعد آدم؟",
-    "summary": "نوح عليه السلام.",
-    "body": "**السؤال:** من أول الرسل إلى أهل الأرض بعد آدم؟\n\n**الجواب:** نوح عليه السلام.",
-    "category": "العقيدة",
-    "subcategory": "الإيمان",
+    "title": "أول الخلفاء الراشدين؟",
+    "summary": "أبو بكر الصديق.",
+    "body": "**السؤال:** من أول الخلفاء الراشدين؟\n\n**الجواب:** أبو بكر الصديق.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
     "subcategories": [
-      "الإيمان"
+      "طلب العلم"
     ],
     "quran_evidence": [],
     "sunnah_evidence": [],
@@ -4346,14 +4346,14 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
       }
     ],
     "keywords": [
-      "الإيمان",
-      "aqeedah",
-      "العقيدة"
+      "طلب العلم",
+      "sahabah",
+      "الصحابة"
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 103,
-    "view_count": 103,
+    "popularity_score": 397,
+    "view_count": 397,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -4363,20 +4363,20 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.740Z",
+    "created_at": "2026-06-27T15:23:52.740Z",
+    "updated_at": "2026-06-27T15:23:52.740Z"
   },
   {
     "id": "qa-ruling-seed-qa-2",
     "external_key": "qa-ruling-seed-qa-2",
-    "title": "النبي الذي اتخذه الله خليلاً؟",
-    "summary": "إبراهيم عليه السلام.",
-    "body": "**السؤال:** من النبي الذي اتخذه الله خليلاً؟\n\n**الجواب:** إبراهيم عليه السلام.",
-    "category": "العقيدة",
-    "subcategory": "الإيمان",
+    "title": "ثاني الخلفاء الراشدين؟",
+    "summary": "عمر بن الخطاب.",
+    "body": "**السؤال:** من ثاني الخلفاء الراشدين؟\n\n**الجواب:** عمر بن الخطاب.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
     "subcategories": [
-      "الإيمان"
+      "طلب العلم"
     ],
     "quran_evidence": [],
     "sunnah_evidence": [],
@@ -4394,14 +4394,14 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
       }
     ],
     "keywords": [
-      "الإيمان",
-      "aqeedah",
-      "العقيدة"
+      "طلب العلم",
+      "sahabah",
+      "الصحابة"
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 187,
-    "view_count": 187,
+    "popularity_score": 279,
+    "view_count": 279,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -4411,20 +4411,20 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.740Z",
+    "created_at": "2026-06-27T15:23:52.740Z",
+    "updated_at": "2026-06-27T15:23:52.740Z"
   },
   {
     "id": "qa-ruling-seed-qa-3",
     "external_key": "qa-ruling-seed-qa-3",
-    "title": "النبي الذي كلمه الله تكليماً؟",
-    "summary": "موسى عليه السلام.",
-    "body": "**السؤال:** من النبي الذي كلمه الله تكليماً؟\n\n**الجواب:** موسى عليه السلام.",
-    "category": "العقيدة",
-    "subcategory": "الإيمان",
+    "title": "ثالث الخلفاء الراشدين؟",
+    "summary": "عثمان بن عفان.",
+    "body": "**السؤال:** من ثالث الخلفاء الراشدين؟\n\n**الجواب:** عثمان بن عفان.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
     "subcategories": [
-      "الإيمان"
+      "طلب العلم"
     ],
     "quran_evidence": [],
     "sunnah_evidence": [],
@@ -4442,14 +4442,14 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
       }
     ],
     "keywords": [
-      "الإيمان",
-      "aqeedah",
-      "العقيدة"
+      "طلب العلم",
+      "sahabah",
+      "الصحابة"
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 258,
-    "view_count": 258,
+    "popularity_score": 232,
+    "view_count": 232,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -4459,20 +4459,20 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.740Z",
+    "created_at": "2026-06-27T15:23:52.740Z",
+    "updated_at": "2026-06-27T15:23:52.740Z"
   },
   {
     "id": "qa-ruling-seed-qa-4",
     "external_key": "qa-ruling-seed-qa-4",
-    "title": "النبي الذي أرسل إلى قوم عاد؟",
-    "summary": "هود عليه السلام.",
-    "body": "**السؤال:** من النبي الذي أرسل إلى قوم عاد؟\n\n**الجواب:** هود عليه السلام.",
-    "category": "العقيدة",
-    "subcategory": "الإيمان",
+    "title": "رابع الخلفاء الراشدين؟",
+    "summary": "علي بن أبي طالب.",
+    "body": "**السؤال:** من رابع الخلفاء الراشدين؟\n\n**الجواب:** علي بن أبي طالب.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
     "subcategories": [
-      "الإيمان"
+      "طلب العلم"
     ],
     "quran_evidence": [],
     "sunnah_evidence": [],
@@ -4490,14 +4490,14 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
       }
     ],
     "keywords": [
-      "الإيمان",
-      "aqeedah",
-      "العقيدة"
+      "طلب العلم",
+      "sahabah",
+      "الصحابة"
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 392,
-    "view_count": 392,
+    "popularity_score": 568,
+    "view_count": 568,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -4507,16 +4507,160 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.740Z",
+    "created_at": "2026-06-27T15:23:52.740Z",
+    "updated_at": "2026-06-27T15:23:52.740Z"
   },
   {
     "id": "qa-ruling-seed-qa-5",
     "external_key": "qa-ruling-seed-qa-5",
-    "title": "النبي الذي أرسل إلى قوم ثمود؟",
-    "summary": "صالح عليه السلام.",
-    "body": "**السؤال:** من النبي الذي أرسل إلى قوم ثمود؟\n\n**الجواب:** صالح عليه السلام.",
+    "title": "الصحابي الملقب بذي النورين؟",
+    "summary": "عثمان بن عفان.",
+    "body": "**السؤال:** من الصحابي الملقب بذي النورين؟\n\n**الجواب:** عثمان بن عفان.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
+    "subcategories": [
+      "طلب العلم"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "references": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "keywords": [
+      "طلب العلم",
+      "sahabah",
+      "الصحابة"
+    ],
+    "benefits": [],
+    "importance_score": 50,
+    "popularity_score": 465,
+    "view_count": 465,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
+      "seed-qa-5"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-06-27T15:23:52.740Z",
+    "created_at": "2026-06-27T15:23:52.740Z",
+    "updated_at": "2026-06-27T15:23:52.740Z"
+  },
+  {
+    "id": "qa-ruling-seed-qa-6",
+    "external_key": "qa-ruling-seed-qa-6",
+    "title": "الصحابي الملقب بالفاروق؟",
+    "summary": "عمر بن الخطاب.",
+    "body": "**السؤال:** من الصحابي الملقب بالفاروق؟\n\n**الجواب:** عمر بن الخطاب.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
+    "subcategories": [
+      "طلب العلم"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "references": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "keywords": [
+      "طلب العلم",
+      "sahabah",
+      "الصحابة"
+    ],
+    "benefits": [],
+    "importance_score": 50,
+    "popularity_score": 197,
+    "view_count": 197,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
+      "seed-qa-6"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-06-27T15:23:52.740Z",
+    "created_at": "2026-06-27T15:23:52.740Z",
+    "updated_at": "2026-06-27T15:23:52.740Z"
+  },
+  {
+    "id": "qa-ruling-seed-qa-7",
+    "external_key": "qa-ruling-seed-qa-7",
+    "title": "أكثر الصحابة رواية للحديث؟",
+    "summary": "أبو هريرة.",
+    "body": "**السؤال:** من أكثر الصحابة رواية للحديث؟\n\n**الجواب:** أبو هريرة.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
+    "subcategories": [
+      "طلب العلم"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "references": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "keywords": [
+      "طلب العلم",
+      "sahabah",
+      "الصحابة"
+    ],
+    "benefits": [],
+    "importance_score": 50,
+    "popularity_score": 484,
+    "view_count": 484,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
+      "seed-qa-7"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-06-27T15:23:52.740Z",
+    "created_at": "2026-06-27T15:23:52.740Z",
+    "updated_at": "2026-06-27T15:23:52.740Z"
+  },
+  {
+    "id": "qa-ruling-seed-qa-8",
+    "external_key": "qa-ruling-seed-qa-8",
+    "title": "أول الرجال إسلاماً؟",
+    "summary": "أبو بكر الصديق.",
+    "body": "**السؤال:** من أول الرجال إسلاماً؟\n\n**الجواب:** أبو بكر الصديق.",
     "category": "العقيدة",
     "subcategory": "الإيمان",
     "subcategories": [
@@ -4544,27 +4688,27 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 231,
-    "view_count": 231,
+    "popularity_score": 170,
+    "view_count": 170,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-5"
+      "seed-qa-8"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.740Z",
+    "created_at": "2026-06-27T15:23:52.740Z",
+    "updated_at": "2026-06-27T15:23:52.740Z"
   },
   {
-    "id": "qa-ruling-seed-qa-6",
-    "external_key": "qa-ruling-seed-qa-6",
-    "title": "النبي الذي ابتلعه الحوت؟",
-    "summary": "يونس عليه السلام.",
-    "body": "**السؤال:** من النبي الذي ابتلعه الحوت؟\n\n**الجواب:** يونس عليه السلام.",
+    "id": "qa-ruling-seed-qa-9",
+    "external_key": "qa-ruling-seed-qa-9",
+    "title": "أول الصبيان إسلاماً؟",
+    "summary": "علي بن أبي طالب.",
+    "body": "**السؤال:** من أول الصبيان إسلاماً؟\n\n**الجواب:** علي بن أبي طالب.",
     "category": "العقيدة",
     "subcategory": "الإيمان",
     "subcategories": [
@@ -4589,6 +4733,1206 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
       "الإيمان",
       "aqeedah",
       "العقيدة"
+    ],
+    "benefits": [],
+    "importance_score": 50,
+    "popularity_score": 487,
+    "view_count": 487,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
+      "seed-qa-9"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-06-27T15:23:52.740Z",
+    "created_at": "2026-06-27T15:23:52.740Z",
+    "updated_at": "2026-06-27T15:23:52.740Z"
+  },
+  {
+    "id": "qa-ruling-seed-qa-10",
+    "external_key": "qa-ruling-seed-qa-10",
+    "title": "أم المؤمنين ابنة أبي بكر؟",
+    "summary": "عائشة رضي الله عنها.",
+    "body": "**السؤال:** من أم المؤمنين ابنة أبي بكر؟\n\n**الجواب:** عائشة رضي الله عنها.",
+    "category": "العقيدة",
+    "subcategory": "الإيمان",
+    "subcategories": [
+      "الإيمان"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "references": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "keywords": [
+      "الإيمان",
+      "aqeedah",
+      "العقيدة"
+    ],
+    "benefits": [],
+    "importance_score": 50,
+    "popularity_score": 414,
+    "view_count": 414,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
+      "seed-qa-10"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-06-27T15:23:52.740Z",
+    "created_at": "2026-06-27T15:23:52.740Z",
+    "updated_at": "2026-06-27T15:23:52.740Z"
+  },
+  {
+    "id": "qa-ruling-seed-qa-11",
+    "external_key": "qa-ruling-seed-qa-11",
+    "title": "في أي غار نزل الوحي أول مرة؟",
+    "summary": "غار حراء.",
+    "body": "**السؤال:** في أي غار نزل الوحي أول مرة؟\n\n**الجواب:** غار حراء.",
+    "category": "العقيدة",
+    "subcategory": "الإيمان",
+    "subcategories": [
+      "الإيمان"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "references": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "keywords": [
+      "الإيمان",
+      "aqeedah",
+      "العقيدة"
+    ],
+    "benefits": [],
+    "importance_score": 50,
+    "popularity_score": 197,
+    "view_count": 197,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
+      "seed-qa-11"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-06-27T15:23:52.740Z",
+    "created_at": "2026-06-27T15:23:52.740Z",
+    "updated_at": "2026-06-27T15:23:52.740Z"
+  },
+  {
+    "id": "qa-ruling-seed-qa-12",
+    "external_key": "qa-ruling-seed-qa-12",
+    "title": "أول من آمن من النساء؟",
+    "summary": "خديجة بنت خويلد.",
+    "body": "**السؤال:** من أول من آمن من النساء؟\n\n**الجواب:** خديجة بنت خويلد.",
+    "category": "العقيدة",
+    "subcategory": "الإيمان",
+    "subcategories": [
+      "الإيمان"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "references": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "keywords": [
+      "الإيمان",
+      "aqeedah",
+      "العقيدة"
+    ],
+    "benefits": [],
+    "importance_score": 50,
+    "popularity_score": 477,
+    "view_count": 477,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
+      "seed-qa-12"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-06-27T15:23:52.740Z",
+    "created_at": "2026-06-27T15:23:52.740Z",
+    "updated_at": "2026-06-27T15:23:52.740Z"
+  },
+  {
+    "id": "qa-ruling-seed-qa-13",
+    "external_key": "qa-ruling-seed-qa-13",
+    "title": "إلى أي مدينة هاجر النبي صلى الله عليه وسلم؟",
+    "summary": "المدينة المنورة.",
+    "body": "**السؤال:** إلى أي مدينة هاجر النبي صلى الله عليه وسلم؟\n\n**الجواب:** المدينة المنورة.",
+    "category": "العقيدة",
+    "subcategory": "الإيمان",
+    "subcategories": [
+      "الإيمان"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "references": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "keywords": [
+      "الإيمان",
+      "aqeedah",
+      "العقيدة"
+    ],
+    "benefits": [],
+    "importance_score": 50,
+    "popularity_score": 178,
+    "view_count": 178,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
+      "seed-qa-13"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-06-27T15:23:52.740Z",
+    "created_at": "2026-06-27T15:23:52.740Z",
+    "updated_at": "2026-06-27T15:23:52.740Z"
+  },
+  {
+    "id": "qa-ruling-seed-qa-14",
+    "external_key": "qa-ruling-seed-qa-14",
+    "title": "أول الرسل إلى أهل الأرض بعد آدم؟",
+    "summary": "نوح عليه السلام.",
+    "body": "**السؤال:** من أول الرسل إلى أهل الأرض بعد آدم؟\n\n**الجواب:** نوح عليه السلام.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
+    "subcategories": [
+      "طلب العلم"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "references": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "keywords": [
+      "طلب العلم",
+      "anbiya",
+      "الأنبياء"
+    ],
+    "benefits": [],
+    "importance_score": 50,
+    "popularity_score": 498,
+    "view_count": 498,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
+      "seed-qa-14"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-06-27T15:23:52.740Z",
+    "created_at": "2026-06-27T15:23:52.740Z",
+    "updated_at": "2026-06-27T15:23:52.740Z"
+  },
+  {
+    "id": "qa-ruling-seed-qa-15",
+    "external_key": "qa-ruling-seed-qa-15",
+    "title": "النبي الذي اتخذه الله خليلاً؟",
+    "summary": "إبراهيم عليه السلام.",
+    "body": "**السؤال:** من النبي الذي اتخذه الله خليلاً؟\n\n**الجواب:** إبراهيم عليه السلام.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
+    "subcategories": [
+      "طلب العلم"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "references": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "keywords": [
+      "طلب العلم",
+      "anbiya",
+      "الأنبياء"
+    ],
+    "benefits": [],
+    "importance_score": 50,
+    "popularity_score": 239,
+    "view_count": 239,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
+      "seed-qa-15"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-06-27T15:23:52.740Z",
+    "created_at": "2026-06-27T15:23:52.740Z",
+    "updated_at": "2026-06-27T15:23:52.740Z"
+  },
+  {
+    "id": "qa-ruling-seed-qa-16",
+    "external_key": "qa-ruling-seed-qa-16",
+    "title": "النبي الذي كلمه الله تكليماً؟",
+    "summary": "موسى عليه السلام.",
+    "body": "**السؤال:** من النبي الذي كلمه الله تكليماً؟\n\n**الجواب:** موسى عليه السلام.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
+    "subcategories": [
+      "طلب العلم"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "references": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "keywords": [
+      "طلب العلم",
+      "anbiya",
+      "الأنبياء"
+    ],
+    "benefits": [],
+    "importance_score": 50,
+    "popularity_score": 124,
+    "view_count": 124,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
+      "seed-qa-16"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-06-27T15:23:52.740Z",
+    "created_at": "2026-06-27T15:23:52.740Z",
+    "updated_at": "2026-06-27T15:23:52.740Z"
+  },
+  {
+    "id": "qa-ruling-seed-qa-17",
+    "external_key": "qa-ruling-seed-qa-17",
+    "title": "النبي الذي أرسل إلى قوم عاد؟",
+    "summary": "هود عليه السلام.",
+    "body": "**السؤال:** من النبي الذي أرسل إلى قوم عاد؟\n\n**الجواب:** هود عليه السلام.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
+    "subcategories": [
+      "طلب العلم"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "references": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "keywords": [
+      "طلب العلم",
+      "anbiya",
+      "الأنبياء"
+    ],
+    "benefits": [],
+    "importance_score": 50,
+    "popularity_score": 590,
+    "view_count": 590,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
+      "seed-qa-17"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-06-27T15:23:52.740Z",
+    "created_at": "2026-06-27T15:23:52.740Z",
+    "updated_at": "2026-06-27T15:23:52.740Z"
+  },
+  {
+    "id": "qa-ruling-seed-qa-18",
+    "external_key": "qa-ruling-seed-qa-18",
+    "title": "النبي الذي أرسل إلى قوم ثمود؟",
+    "summary": "صالح عليه السلام.",
+    "body": "**السؤال:** من النبي الذي أرسل إلى قوم ثمود؟\n\n**الجواب:** صالح عليه السلام.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
+    "subcategories": [
+      "طلب العلم"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "references": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "keywords": [
+      "طلب العلم",
+      "anbiya",
+      "الأنبياء"
+    ],
+    "benefits": [],
+    "importance_score": 50,
+    "popularity_score": 549,
+    "view_count": 549,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
+      "seed-qa-18"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-06-27T15:23:52.740Z",
+    "created_at": "2026-06-27T15:23:52.740Z",
+    "updated_at": "2026-06-27T15:23:52.740Z"
+  },
+  {
+    "id": "qa-ruling-seed-qa-19",
+    "external_key": "qa-ruling-seed-qa-19",
+    "title": "النبي الذي ابتلعه الحوت؟",
+    "summary": "يونس عليه السلام.",
+    "body": "**السؤال:** من النبي الذي ابتلعه الحوت؟\n\n**الجواب:** يونس عليه السلام.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
+    "subcategories": [
+      "طلب العلم"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "references": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "keywords": [
+      "طلب العلم",
+      "anbiya",
+      "الأنبياء"
+    ],
+    "benefits": [],
+    "importance_score": 50,
+    "popularity_score": 119,
+    "view_count": 119,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
+      "seed-qa-19"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-06-27T15:23:52.740Z",
+    "created_at": "2026-06-27T15:23:52.740Z",
+    "updated_at": "2026-06-27T15:23:52.740Z"
+  },
+  {
+    "id": "qa-ruling-seed-qa-20",
+    "external_key": "qa-ruling-seed-qa-20",
+    "title": "النبي الذي رفعه الله إليه؟",
+    "summary": "عيسى عليه السلام.",
+    "body": "**السؤال:** من النبي الذي رفعه الله إليه؟\n\n**الجواب:** عيسى عليه السلام.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
+    "subcategories": [
+      "طلب العلم"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "references": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "keywords": [
+      "طلب العلم",
+      "anbiya",
+      "الأنبياء"
+    ],
+    "benefits": [],
+    "importance_score": 50,
+    "popularity_score": 530,
+    "view_count": 530,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
+      "seed-qa-20"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-06-27T15:23:52.740Z",
+    "created_at": "2026-06-27T15:23:52.740Z",
+    "updated_at": "2026-06-27T15:23:52.740Z"
+  },
+  {
+    "id": "qa-ruling-seed-qa-21",
+    "external_key": "qa-ruling-seed-qa-21",
+    "title": "والد إسماعيل عليه السلام؟",
+    "summary": "إبراهيم عليه السلام.",
+    "body": "**السؤال:** من والد إسماعيل عليه السلام؟\n\n**الجواب:** إبراهيم عليه السلام.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
+    "subcategories": [
+      "طلب العلم"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "references": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "keywords": [
+      "طلب العلم",
+      "anbiya",
+      "الأنبياء"
+    ],
+    "benefits": [],
+    "importance_score": 50,
+    "popularity_score": 593,
+    "view_count": 593,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
+      "seed-qa-21"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-06-27T15:23:52.740Z",
+    "created_at": "2026-06-27T15:23:52.740Z",
+    "updated_at": "2026-06-27T15:23:52.740Z"
+  },
+  {
+    "id": "qa-ruling-seed-qa-22",
+    "external_key": "qa-ruling-seed-qa-22",
+    "title": "النبي الذي سخر الله له الريح؟",
+    "summary": "سليمان عليه السلام.",
+    "body": "**السؤال:** من النبي الذي سخر الله له الريح؟\n\n**الجواب:** سليمان عليه السلام.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
+    "subcategories": [
+      "طلب العلم"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "references": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "keywords": [
+      "طلب العلم",
+      "anbiya",
+      "الأنبياء"
+    ],
+    "benefits": [],
+    "importance_score": 50,
+    "popularity_score": 223,
+    "view_count": 223,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
+      "seed-qa-22"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-06-27T15:23:52.740Z",
+    "created_at": "2026-06-27T15:23:52.740Z",
+    "updated_at": "2026-06-27T15:23:52.740Z"
+  },
+  {
+    "id": "qa-ruling-seed-qa-23",
+    "external_key": "qa-ruling-seed-qa-23",
+    "title": "النبي الذي اشتهر بالصبر على البلاء؟",
+    "summary": "أيوب عليه السلام.",
+    "body": "**السؤال:** من النبي الذي اشتهر بالصبر على البلاء؟\n\n**الجواب:** أيوب عليه السلام.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
+    "subcategories": [
+      "طلب العلم"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "references": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "keywords": [
+      "طلب العلم",
+      "anbiya",
+      "الأنبياء"
+    ],
+    "benefits": [],
+    "importance_score": 50,
+    "popularity_score": 592,
+    "view_count": 592,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
+      "seed-qa-23"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-06-27T15:23:52.740Z",
+    "created_at": "2026-06-27T15:23:52.740Z",
+    "updated_at": "2026-06-27T15:23:52.740Z"
+  },
+  {
+    "id": "qa-ruling-seed-qa-24",
+    "external_key": "qa-ruling-seed-qa-24",
+    "title": "أول الخلفاء الراشدين؟",
+    "summary": "أبو بكر الصديق.",
+    "body": "**السؤال:** من أول الخلفاء الراشدين؟\n\n**الجواب:** أبو بكر الصديق.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
+    "subcategories": [
+      "طلب العلم"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "references": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "keywords": [
+      "طلب العلم",
+      "anbiya",
+      "الأنبياء"
+    ],
+    "benefits": [],
+    "importance_score": 50,
+    "popularity_score": 371,
+    "view_count": 371,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
+      "seed-qa-24"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-06-27T15:23:52.740Z",
+    "created_at": "2026-06-27T15:23:52.740Z",
+    "updated_at": "2026-06-27T15:23:52.740Z"
+  },
+  {
+    "id": "qa-ruling-seed-qa-25",
+    "external_key": "qa-ruling-seed-qa-25",
+    "title": "ثاني الخلفاء الراشدين؟",
+    "summary": "عمر بن الخطاب.",
+    "body": "**السؤال:** من ثاني الخلفاء الراشدين؟\n\n**الجواب:** عمر بن الخطاب.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
+    "subcategories": [
+      "طلب العلم"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "references": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "keywords": [
+      "طلب العلم",
+      "anbiya",
+      "الأنبياء"
+    ],
+    "benefits": [],
+    "importance_score": 50,
+    "popularity_score": 102,
+    "view_count": 102,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
+      "seed-qa-25"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-06-27T15:23:52.740Z",
+    "created_at": "2026-06-27T15:23:52.740Z",
+    "updated_at": "2026-06-27T15:23:52.740Z"
+  },
+  {
+    "id": "qa-ruling-seed-qa-26",
+    "external_key": "qa-ruling-seed-qa-26",
+    "title": "ثالث الخلفاء الراشدين؟",
+    "summary": "عثمان بن عفان.",
+    "body": "**السؤال:** من ثالث الخلفاء الراشدين؟\n\n**الجواب:** عثمان بن عفان.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
+    "subcategories": [
+      "طلب العلم"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "references": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "keywords": [
+      "طلب العلم",
+      "anbiya",
+      "الأنبياء"
+    ],
+    "benefits": [],
+    "importance_score": 50,
+    "popularity_score": 580,
+    "view_count": 580,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
+      "seed-qa-26"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-06-27T15:23:52.740Z",
+    "created_at": "2026-06-27T15:23:52.740Z",
+    "updated_at": "2026-06-27T15:23:52.740Z"
+  },
+  {
+    "id": "qa-ruling-seed-qa-27",
+    "external_key": "qa-ruling-seed-qa-27",
+    "title": "أول الخلفاء الراشدين؟",
+    "summary": "أبو بكر الصديق.",
+    "body": "**السؤال:** من أول الخلفاء الراشدين؟\n\n**الجواب:** أبو بكر الصديق.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
+    "subcategories": [
+      "طلب العلم"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "references": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "keywords": [
+      "طلب العلم",
+      "sahabah",
+      "الصحابة"
+    ],
+    "benefits": [],
+    "importance_score": 50,
+    "popularity_score": 267,
+    "view_count": 267,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
+      "seed-qa-27"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-06-27T15:23:52.740Z",
+    "created_at": "2026-06-27T15:23:52.740Z",
+    "updated_at": "2026-06-27T15:23:52.740Z"
+  },
+  {
+    "id": "qa-ruling-seed-qa-28",
+    "external_key": "qa-ruling-seed-qa-28",
+    "title": "ثاني الخلفاء الراشدين؟",
+    "summary": "عمر بن الخطاب.",
+    "body": "**السؤال:** من ثاني الخلفاء الراشدين؟\n\n**الجواب:** عمر بن الخطاب.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
+    "subcategories": [
+      "طلب العلم"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "references": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "keywords": [
+      "طلب العلم",
+      "sahabah",
+      "الصحابة"
+    ],
+    "benefits": [],
+    "importance_score": 50,
+    "popularity_score": 326,
+    "view_count": 326,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
+      "seed-qa-28"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-06-27T15:23:52.740Z",
+    "created_at": "2026-06-27T15:23:52.740Z",
+    "updated_at": "2026-06-27T15:23:52.740Z"
+  },
+  {
+    "id": "qa-ruling-seed-qa-29",
+    "external_key": "qa-ruling-seed-qa-29",
+    "title": "ثالث الخلفاء الراشدين؟",
+    "summary": "عثمان بن عفان.",
+    "body": "**السؤال:** من ثالث الخلفاء الراشدين؟\n\n**الجواب:** عثمان بن عفان.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
+    "subcategories": [
+      "طلب العلم"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "references": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "keywords": [
+      "طلب العلم",
+      "sahabah",
+      "الصحابة"
+    ],
+    "benefits": [],
+    "importance_score": 50,
+    "popularity_score": 338,
+    "view_count": 338,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
+      "seed-qa-29"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-06-27T15:23:52.740Z",
+    "created_at": "2026-06-27T15:23:52.740Z",
+    "updated_at": "2026-06-27T15:23:52.740Z"
+  },
+  {
+    "id": "qa-ruling-seed-qa-30",
+    "external_key": "qa-ruling-seed-qa-30",
+    "title": "رابع الخلفاء الراشدين؟",
+    "summary": "علي بن أبي طالب.",
+    "body": "**السؤال:** من رابع الخلفاء الراشدين؟\n\n**الجواب:** علي بن أبي طالب.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
+    "subcategories": [
+      "طلب العلم"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "references": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "keywords": [
+      "طلب العلم",
+      "sahabah",
+      "الصحابة"
+    ],
+    "benefits": [],
+    "importance_score": 50,
+    "popularity_score": 170,
+    "view_count": 170,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
+      "seed-qa-30"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-06-27T15:23:52.740Z",
+    "created_at": "2026-06-27T15:23:52.740Z",
+    "updated_at": "2026-06-27T15:23:52.740Z"
+  },
+  {
+    "id": "qa-ruling-seed-qa-31",
+    "external_key": "qa-ruling-seed-qa-31",
+    "title": "الصحابي الملقب بذي النورين؟",
+    "summary": "عثمان بن عفان.",
+    "body": "**السؤال:** من الصحابي الملقب بذي النورين؟\n\n**الجواب:** عثمان بن عفان.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
+    "subcategories": [
+      "طلب العلم"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "references": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "keywords": [
+      "طلب العلم",
+      "sahabah",
+      "الصحابة"
+    ],
+    "benefits": [],
+    "importance_score": 50,
+    "popularity_score": 307,
+    "view_count": 307,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
+      "seed-qa-31"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-06-27T15:23:52.740Z",
+    "created_at": "2026-06-27T15:23:52.740Z",
+    "updated_at": "2026-06-27T15:23:52.740Z"
+  },
+  {
+    "id": "qa-ruling-seed-qa-32",
+    "external_key": "qa-ruling-seed-qa-32",
+    "title": "الصحابي الملقب بالفاروق؟",
+    "summary": "عمر بن الخطاب.",
+    "body": "**السؤال:** من الصحابي الملقب بالفاروق؟\n\n**الجواب:** عمر بن الخطاب.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
+    "subcategories": [
+      "طلب العلم"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "references": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "keywords": [
+      "طلب العلم",
+      "sahabah",
+      "الصحابة"
+    ],
+    "benefits": [],
+    "importance_score": 50,
+    "popularity_score": 239,
+    "view_count": 239,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
+      "seed-qa-32"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-06-27T15:23:52.740Z",
+    "created_at": "2026-06-27T15:23:52.740Z",
+    "updated_at": "2026-06-27T15:23:52.740Z"
+  },
+  {
+    "id": "qa-ruling-seed-qa-33",
+    "external_key": "qa-ruling-seed-qa-33",
+    "title": "أكثر الصحابة رواية للحديث؟",
+    "summary": "أبو هريرة.",
+    "body": "**السؤال:** من أكثر الصحابة رواية للحديث؟\n\n**الجواب:** أبو هريرة.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
+    "subcategories": [
+      "طلب العلم"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "references": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "keywords": [
+      "طلب العلم",
+      "sahabah",
+      "الصحابة"
+    ],
+    "benefits": [],
+    "importance_score": 50,
+    "popularity_score": 298,
+    "view_count": 298,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
+      "seed-qa-33"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-06-27T15:23:52.740Z",
+    "created_at": "2026-06-27T15:23:52.740Z",
+    "updated_at": "2026-06-27T15:23:52.740Z"
+  },
+  {
+    "id": "qa-ruling-seed-qa-34",
+    "external_key": "qa-ruling-seed-qa-34",
+    "title": "أول الرجال إسلاماً؟",
+    "summary": "أبو بكر الصديق.",
+    "body": "**السؤال:** من أول الرجال إسلاماً؟\n\n**الجواب:** أبو بكر الصديق.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
+    "subcategories": [
+      "طلب العلم"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "references": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "keywords": [
+      "طلب العلم",
+      "sahabah",
+      "الصحابة"
     ],
     "benefits": [],
     "importance_score": 50,
@@ -4599,24 +5943,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-6"
+      "seed-qa-34"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.740Z",
+    "created_at": "2026-06-27T15:23:52.740Z",
+    "updated_at": "2026-06-27T15:23:52.740Z"
   },
   {
-    "id": "qa-ruling-seed-qa-7",
-    "external_key": "qa-ruling-seed-qa-7",
-    "title": "النبي الذي رفعه الله إليه؟",
-    "summary": "عيسى عليه السلام.",
-    "body": "**السؤال:** من النبي الذي رفعه الله إليه؟\n\n**الجواب:** عيسى عليه السلام.",
-    "category": "العقيدة",
-    "subcategory": "الإيمان",
+    "id": "qa-ruling-seed-qa-35",
+    "external_key": "qa-ruling-seed-qa-35",
+    "title": "أول الصبيان إسلاماً؟",
+    "summary": "علي بن أبي طالب.",
+    "body": "**السؤال:** من أول الصبيان إسلاماً؟\n\n**الجواب:** علي بن أبي طالب.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
     "subcategories": [
-      "الإيمان"
+      "طلب العلم"
     ],
     "quran_evidence": [],
     "sunnah_evidence": [],
@@ -4634,9 +5978,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
       }
     ],
     "keywords": [
-      "الإيمان",
-      "aqeedah",
-      "العقيدة"
+      "طلب العلم",
+      "sahabah",
+      "الصحابة"
     ],
     "benefits": [],
     "importance_score": 50,
@@ -4647,24 +5991,120 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-7"
+      "seed-qa-35"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.740Z",
+    "created_at": "2026-06-27T15:23:52.740Z",
+    "updated_at": "2026-06-27T15:23:52.740Z"
   },
   {
-    "id": "qa-ruling-seed-qa-8",
-    "external_key": "qa-ruling-seed-qa-8",
-    "title": "والد إسماعيل عليه السلام؟",
+    "id": "qa-ruling-seed-qa-36",
+    "external_key": "qa-ruling-seed-qa-36",
+    "title": "أم المؤمنين ابنة أبي بكر؟",
+    "summary": "عائشة رضي الله عنها.",
+    "body": "**السؤال:** من أم المؤمنين ابنة أبي بكر؟\n\n**الجواب:** عائشة رضي الله عنها.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
+    "subcategories": [
+      "طلب العلم"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "references": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "keywords": [
+      "طلب العلم",
+      "sahabah",
+      "الصحابة"
+    ],
+    "benefits": [],
+    "importance_score": 50,
+    "popularity_score": 509,
+    "view_count": 509,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
+      "seed-qa-36"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-06-27T15:23:52.740Z",
+    "created_at": "2026-06-27T15:23:52.740Z",
+    "updated_at": "2026-06-27T15:23:52.740Z"
+  },
+  {
+    "id": "qa-ruling-seed-qa-37",
+    "external_key": "qa-ruling-seed-qa-37",
+    "title": "أول الرسل إلى أهل الأرض بعد آدم؟",
+    "summary": "نوح عليه السلام.",
+    "body": "**السؤال:** من أول الرسل إلى أهل الأرض بعد آدم؟\n\n**الجواب:** نوح عليه السلام.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
+    "subcategories": [
+      "طلب العلم"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "references": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "keywords": [
+      "طلب العلم",
+      "sahabah",
+      "الصحابة"
+    ],
+    "benefits": [],
+    "importance_score": 50,
+    "popularity_score": 172,
+    "view_count": 172,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
+      "seed-qa-37"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-06-27T15:23:52.740Z",
+    "created_at": "2026-06-27T15:23:52.740Z",
+    "updated_at": "2026-06-27T15:23:52.740Z"
+  },
+  {
+    "id": "qa-ruling-seed-qa-38",
+    "external_key": "qa-ruling-seed-qa-38",
+    "title": "النبي الذي اتخذه الله خليلاً؟",
     "summary": "إبراهيم عليه السلام.",
-    "body": "**السؤال:** من والد إسماعيل عليه السلام؟\n\n**الجواب:** إبراهيم عليه السلام.",
-    "category": "العقيدة",
-    "subcategory": "الإيمان",
+    "body": "**السؤال:** من النبي الذي اتخذه الله خليلاً؟\n\n**الجواب:** إبراهيم عليه السلام.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
     "subcategories": [
-      "الإيمان"
+      "طلب العلم"
     ],
     "quran_evidence": [],
     "sunnah_evidence": [],
@@ -4682,37 +6122,37 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
       }
     ],
     "keywords": [
-      "الإيمان",
-      "aqeedah",
-      "العقيدة"
+      "طلب العلم",
+      "sahabah",
+      "الصحابة"
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 378,
-    "view_count": 378,
+    "popularity_score": 402,
+    "view_count": 402,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-8"
+      "seed-qa-38"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.740Z",
+    "created_at": "2026-06-27T15:23:52.740Z",
+    "updated_at": "2026-06-27T15:23:52.740Z"
   },
   {
-    "id": "qa-ruling-seed-qa-9",
-    "external_key": "qa-ruling-seed-qa-9",
-    "title": "النبي الذي سخر الله له الريح؟",
-    "summary": "سليمان عليه السلام.",
-    "body": "**السؤال:** من النبي الذي سخر الله له الريح؟\n\n**الجواب:** سليمان عليه السلام.",
-    "category": "العقيدة",
-    "subcategory": "الإيمان",
+    "id": "qa-ruling-seed-qa-39",
+    "external_key": "qa-ruling-seed-qa-39",
+    "title": "النبي الذي كلمه الله تكليماً؟",
+    "summary": "موسى عليه السلام.",
+    "body": "**السؤال:** من النبي الذي كلمه الله تكليماً؟\n\n**الجواب:** موسى عليه السلام.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
     "subcategories": [
-      "الإيمان"
+      "طلب العلم"
     ],
     "quran_evidence": [],
     "sunnah_evidence": [],
@@ -4730,222 +6170,30 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
       }
     ],
     "keywords": [
-      "الإيمان",
-      "aqeedah",
-      "العقيدة"
+      "طلب العلم",
+      "sahabah",
+      "الصحابة"
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 169,
-    "view_count": 169,
+    "popularity_score": 229,
+    "view_count": 229,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-9"
+      "seed-qa-39"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.740Z",
+    "created_at": "2026-06-27T15:23:52.740Z",
+    "updated_at": "2026-06-27T15:23:52.740Z"
   },
   {
-    "id": "qa-ruling-seed-qa-10",
-    "external_key": "qa-ruling-seed-qa-10",
-    "title": "النبي الذي اشتهر بالصبر على البلاء؟",
-    "summary": "أيوب عليه السلام.",
-    "body": "**السؤال:** من النبي الذي اشتهر بالصبر على البلاء؟\n\n**الجواب:** أيوب عليه السلام.",
-    "category": "العقيدة",
-    "subcategory": "الإيمان",
-    "subcategories": [
-      "الإيمان"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "الإيمان",
-      "aqeedah",
-      "العقيدة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 527,
-    "view_count": 527,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-10"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-11",
-    "external_key": "qa-ruling-seed-qa-11",
-    "title": "أول الخلفاء الراشدين؟",
-    "summary": "أبو بكر الصديق.",
-    "body": "**السؤال:** من أول الخلفاء الراشدين؟\n\n**الجواب:** أبو بكر الصديق.",
-    "category": "العقيدة",
-    "subcategory": "الإيمان",
-    "subcategories": [
-      "الإيمان"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "الإيمان",
-      "aqeedah",
-      "العقيدة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 181,
-    "view_count": 181,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-11"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-12",
-    "external_key": "qa-ruling-seed-qa-12",
-    "title": "ثاني الخلفاء الراشدين؟",
-    "summary": "عمر بن الخطاب.",
-    "body": "**السؤال:** من ثاني الخلفاء الراشدين؟\n\n**الجواب:** عمر بن الخطاب.",
-    "category": "العقيدة",
-    "subcategory": "الإيمان",
-    "subcategories": [
-      "الإيمان"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "الإيمان",
-      "aqeedah",
-      "العقيدة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 423,
-    "view_count": 423,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-12"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-13",
-    "external_key": "qa-ruling-seed-qa-13",
-    "title": "ثالث الخلفاء الراشدين؟",
-    "summary": "عثمان بن عفان.",
-    "body": "**السؤال:** من ثالث الخلفاء الراشدين؟\n\n**الجواب:** عثمان بن عفان.",
-    "category": "العقيدة",
-    "subcategory": "الإيمان",
-    "subcategories": [
-      "الإيمان"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "الإيمان",
-      "aqeedah",
-      "العقيدة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 394,
-    "view_count": 394,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-13"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-14",
-    "external_key": "qa-ruling-seed-qa-14",
+    "id": "qa-ruling-seed-qa-40",
+    "external_key": "qa-ruling-seed-qa-40",
     "title": "بماذا يتطهر المسلم عند عدم وجود الماء؟",
     "summary": "التيمم.",
     "body": "**السؤال:** بماذا يتطهر المسلم عند عدم وجود الماء؟\n\n**الجواب:** التيمم.",
@@ -4977,24 +6225,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 321,
-    "view_count": 321,
+    "popularity_score": 328,
+    "view_count": 328,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-14"
+      "seed-qa-40"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.740Z",
+    "created_at": "2026-06-27T15:23:52.740Z",
+    "updated_at": "2026-06-27T15:23:52.740Z"
   },
   {
-    "id": "qa-ruling-seed-qa-15",
-    "external_key": "qa-ruling-seed-qa-15",
+    "id": "qa-ruling-seed-qa-41",
+    "external_key": "qa-ruling-seed-qa-41",
     "title": "الطهارة المطلوبة قبل الصلاة؟",
     "summary": "الوضوء.",
     "body": "**السؤال:** ما الطهارة المطلوبة قبل الصلاة؟\n\n**الجواب:** الوضوء.",
@@ -5026,24 +6274,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 558,
-    "view_count": 558,
+    "popularity_score": 418,
+    "view_count": 418,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-15"
+      "seed-qa-41"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.740Z",
+    "created_at": "2026-06-27T15:23:52.740Z",
+    "updated_at": "2026-06-27T15:23:52.740Z"
   },
   {
-    "id": "qa-ruling-seed-qa-21",
-    "external_key": "qa-ruling-seed-qa-21",
+    "id": "qa-ruling-seed-qa-47",
+    "external_key": "qa-ruling-seed-qa-47",
     "title": "أول الرسل إلى أهل الأرض بعد آدم؟",
     "summary": "نوح عليه السلام.",
     "body": "**السؤال:** من أول الرسل إلى أهل الأرض بعد آدم؟\n\n**الجواب:** نوح عليه السلام.",
@@ -5074,24 +6322,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 339,
-    "view_count": 339,
+    "popularity_score": 182,
+    "view_count": 182,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-21"
+      "seed-qa-47"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
   },
   {
-    "id": "qa-ruling-seed-qa-22",
-    "external_key": "qa-ruling-seed-qa-22",
+    "id": "qa-ruling-seed-qa-48",
+    "external_key": "qa-ruling-seed-qa-48",
     "title": "النبي الذي اتخذه الله خليلاً؟",
     "summary": "إبراهيم عليه السلام.",
     "body": "**السؤال:** من النبي الذي اتخذه الله خليلاً؟\n\n**الجواب:** إبراهيم عليه السلام.",
@@ -5122,24 +6370,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 171,
-    "view_count": 171,
+    "popularity_score": 396,
+    "view_count": 396,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-22"
+      "seed-qa-48"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
   },
   {
-    "id": "qa-ruling-seed-qa-23",
-    "external_key": "qa-ruling-seed-qa-23",
+    "id": "qa-ruling-seed-qa-49",
+    "external_key": "qa-ruling-seed-qa-49",
     "title": "النبي الذي كلمه الله تكليماً؟",
     "summary": "موسى عليه السلام.",
     "body": "**السؤال:** من النبي الذي كلمه الله تكليماً؟\n\n**الجواب:** موسى عليه السلام.",
@@ -5170,24 +6418,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 586,
-    "view_count": 586,
+    "popularity_score": 214,
+    "view_count": 214,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-23"
+      "seed-qa-49"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
   },
   {
-    "id": "qa-ruling-seed-qa-24",
-    "external_key": "qa-ruling-seed-qa-24",
+    "id": "qa-ruling-seed-qa-50",
+    "external_key": "qa-ruling-seed-qa-50",
     "title": "النبي الذي أرسل إلى قوم عاد؟",
     "summary": "هود عليه السلام.",
     "body": "**السؤال:** من النبي الذي أرسل إلى قوم عاد؟\n\n**الجواب:** هود عليه السلام.",
@@ -5218,24 +6466,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 359,
-    "view_count": 359,
+    "popularity_score": 571,
+    "view_count": 571,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-24"
+      "seed-qa-50"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
   },
   {
-    "id": "qa-ruling-seed-qa-25",
-    "external_key": "qa-ruling-seed-qa-25",
+    "id": "qa-ruling-seed-qa-51",
+    "external_key": "qa-ruling-seed-qa-51",
     "title": "النبي الذي أرسل إلى قوم ثمود؟",
     "summary": "صالح عليه السلام.",
     "body": "**السؤال:** من النبي الذي أرسل إلى قوم ثمود؟\n\n**الجواب:** صالح عليه السلام.",
@@ -5266,24 +6514,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 283,
-    "view_count": 283,
+    "popularity_score": 575,
+    "view_count": 575,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-25"
+      "seed-qa-51"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
   },
   {
-    "id": "qa-ruling-seed-qa-26",
-    "external_key": "qa-ruling-seed-qa-26",
+    "id": "qa-ruling-seed-qa-52",
+    "external_key": "qa-ruling-seed-qa-52",
     "title": "النبي الذي ابتلعه الحوت؟",
     "summary": "يونس عليه السلام.",
     "body": "**السؤال:** من النبي الذي ابتلعه الحوت؟\n\n**الجواب:** يونس عليه السلام.",
@@ -5314,24 +6562,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 237,
-    "view_count": 237,
+    "popularity_score": 330,
+    "view_count": 330,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-26"
+      "seed-qa-52"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
   },
   {
-    "id": "qa-ruling-seed-qa-27",
-    "external_key": "qa-ruling-seed-qa-27",
+    "id": "qa-ruling-seed-qa-53",
+    "external_key": "qa-ruling-seed-qa-53",
     "title": "أول ما يحاسب عليه العبد من عمله؟",
     "summary": "الصلاة.",
     "body": "**السؤال:** ما أول ما يحاسب عليه العبد من عمله؟\n\n**الجواب:** الصلاة.",
@@ -5363,24 +6611,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 540,
-    "view_count": 540,
+    "popularity_score": 277,
+    "view_count": 277,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-27"
+      "seed-qa-53"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
   },
   {
-    "id": "qa-ruling-seed-qa-28",
-    "external_key": "qa-ruling-seed-qa-28",
+    "id": "qa-ruling-seed-qa-54",
+    "external_key": "qa-ruling-seed-qa-54",
     "title": "كم عدد الصلوات المفروضة في اليوم والليلة؟",
     "summary": "خمس صلوات.",
     "body": "**السؤال:** كم عدد الصلوات المفروضة في اليوم والليلة؟\n\n**الجواب:** خمس صلوات.",
@@ -5412,24 +6660,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 413,
-    "view_count": 413,
+    "popularity_score": 260,
+    "view_count": 260,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-28"
+      "seed-qa-54"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
   },
   {
-    "id": "qa-ruling-seed-qa-29",
-    "external_key": "qa-ruling-seed-qa-29",
+    "id": "qa-ruling-seed-qa-55",
+    "external_key": "qa-ruling-seed-qa-55",
     "title": "القبلة التي يتجه إليها المسلمون في الصلاة؟",
     "summary": "الكعبة.",
     "body": "**السؤال:** ما القبلة التي يتجه إليها المسلمون في الصلاة؟\n\n**الجواب:** الكعبة.",
@@ -5461,24 +6709,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 235,
-    "view_count": 235,
+    "popularity_score": 145,
+    "view_count": 145,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-29"
+      "seed-qa-55"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
   },
   {
-    "id": "qa-ruling-seed-qa-30",
-    "external_key": "qa-ruling-seed-qa-30",
+    "id": "qa-ruling-seed-qa-56",
+    "external_key": "qa-ruling-seed-qa-56",
     "title": "أول الرسل إلى أهل الأرض بعد آدم؟",
     "summary": "نوح عليه السلام.",
     "body": "**السؤال:** من أول الرسل إلى أهل الأرض بعد آدم؟\n\n**الجواب:** نوح عليه السلام.",
@@ -5509,24 +6757,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 506,
-    "view_count": 506,
+    "popularity_score": 117,
+    "view_count": 117,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-30"
+      "seed-qa-56"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
   },
   {
-    "id": "qa-ruling-seed-qa-31",
-    "external_key": "qa-ruling-seed-qa-31",
+    "id": "qa-ruling-seed-qa-57",
+    "external_key": "qa-ruling-seed-qa-57",
     "title": "النبي الذي اتخذه الله خليلاً؟",
     "summary": "إبراهيم عليه السلام.",
     "body": "**السؤال:** من النبي الذي اتخذه الله خليلاً؟\n\n**الجواب:** إبراهيم عليه السلام.",
@@ -5557,171 +6805,27 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 443,
-    "view_count": 443,
+    "popularity_score": 491,
+    "view_count": 491,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-31"
+      "seed-qa-57"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
   },
   {
-    "id": "qa-ruling-seed-qa-32",
-    "external_key": "qa-ruling-seed-qa-32",
+    "id": "qa-ruling-seed-qa-58",
+    "external_key": "qa-ruling-seed-qa-58",
     "title": "النبي الذي كلمه الله تكليماً؟",
     "summary": "موسى عليه السلام.",
     "body": "**السؤال:** من النبي الذي كلمه الله تكليماً؟\n\n**الجواب:** موسى عليه السلام.",
-    "category": "الصلاة",
-    "subcategory": "أحكام الصلاة",
-    "subcategories": [
-      "أحكام الصلاة"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "أحكام الصلاة",
-      "salah",
-      "الصلاة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 343,
-    "view_count": 343,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-32"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-33",
-    "external_key": "qa-ruling-seed-qa-33",
-    "title": "النبي الذي أرسل إلى قوم عاد؟",
-    "summary": "هود عليه السلام.",
-    "body": "**السؤال:** من النبي الذي أرسل إلى قوم عاد؟\n\n**الجواب:** هود عليه السلام.",
-    "category": "الصلاة",
-    "subcategory": "أحكام الصلاة",
-    "subcategories": [
-      "أحكام الصلاة"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "أحكام الصلاة",
-      "salah",
-      "الصلاة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 486,
-    "view_count": 486,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-33"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-34",
-    "external_key": "qa-ruling-seed-qa-34",
-    "title": "النبي الذي أرسل إلى قوم ثمود؟",
-    "summary": "صالح عليه السلام.",
-    "body": "**السؤال:** من النبي الذي أرسل إلى قوم ثمود؟\n\n**الجواب:** صالح عليه السلام.",
-    "category": "الصلاة",
-    "subcategory": "أحكام الصلاة",
-    "subcategories": [
-      "أحكام الصلاة"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "أحكام الصلاة",
-      "salah",
-      "الصلاة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 432,
-    "view_count": 432,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-34"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-35",
-    "external_key": "qa-ruling-seed-qa-35",
-    "title": "النبي الذي ابتلعه الحوت؟",
-    "summary": "يونس عليه السلام.",
-    "body": "**السؤال:** من النبي الذي ابتلعه الحوت؟\n\n**الجواب:** يونس عليه السلام.",
     "category": "الصلاة",
     "subcategory": "أحكام الصلاة",
     "subcategories": [
@@ -5756,17 +6860,161 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-35"
+      "seed-qa-58"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
   },
   {
-    "id": "qa-ruling-seed-qa-36",
-    "external_key": "qa-ruling-seed-qa-36",
+    "id": "qa-ruling-seed-qa-59",
+    "external_key": "qa-ruling-seed-qa-59",
+    "title": "النبي الذي أرسل إلى قوم عاد؟",
+    "summary": "هود عليه السلام.",
+    "body": "**السؤال:** من النبي الذي أرسل إلى قوم عاد؟\n\n**الجواب:** هود عليه السلام.",
+    "category": "الصلاة",
+    "subcategory": "أحكام الصلاة",
+    "subcategories": [
+      "أحكام الصلاة"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "references": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "keywords": [
+      "أحكام الصلاة",
+      "salah",
+      "الصلاة"
+    ],
+    "benefits": [],
+    "importance_score": 50,
+    "popularity_score": 157,
+    "view_count": 157,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
+      "seed-qa-59"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
+  },
+  {
+    "id": "qa-ruling-seed-qa-60",
+    "external_key": "qa-ruling-seed-qa-60",
+    "title": "النبي الذي أرسل إلى قوم ثمود؟",
+    "summary": "صالح عليه السلام.",
+    "body": "**السؤال:** من النبي الذي أرسل إلى قوم ثمود؟\n\n**الجواب:** صالح عليه السلام.",
+    "category": "الصلاة",
+    "subcategory": "أحكام الصلاة",
+    "subcategories": [
+      "أحكام الصلاة"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "references": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "keywords": [
+      "أحكام الصلاة",
+      "salah",
+      "الصلاة"
+    ],
+    "benefits": [],
+    "importance_score": 50,
+    "popularity_score": 218,
+    "view_count": 218,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
+      "seed-qa-60"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
+  },
+  {
+    "id": "qa-ruling-seed-qa-61",
+    "external_key": "qa-ruling-seed-qa-61",
+    "title": "النبي الذي ابتلعه الحوت؟",
+    "summary": "يونس عليه السلام.",
+    "body": "**السؤال:** من النبي الذي ابتلعه الحوت؟\n\n**الجواب:** يونس عليه السلام.",
+    "category": "الصلاة",
+    "subcategory": "أحكام الصلاة",
+    "subcategories": [
+      "أحكام الصلاة"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "references": [
+      {
+        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "keywords": [
+      "أحكام الصلاة",
+      "salah",
+      "الصلاة"
+    ],
+    "benefits": [],
+    "importance_score": 50,
+    "popularity_score": 440,
+    "view_count": 440,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
+      "seed-qa-61"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
+  },
+  {
+    "id": "qa-ruling-seed-qa-62",
+    "external_key": "qa-ruling-seed-qa-62",
     "title": "النبي الذي رفعه الله إليه؟",
     "summary": "عيسى عليه السلام.",
     "body": "**السؤال:** من النبي الذي رفعه الله إليه؟\n\n**الجواب:** عيسى عليه السلام.",
@@ -5797,24 +7045,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 299,
-    "view_count": 299,
+    "popularity_score": 420,
+    "view_count": 420,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-36"
+      "seed-qa-62"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
   },
   {
-    "id": "qa-ruling-seed-qa-37",
-    "external_key": "qa-ruling-seed-qa-37",
+    "id": "qa-ruling-seed-qa-63",
+    "external_key": "qa-ruling-seed-qa-63",
     "title": "والد إسماعيل عليه السلام؟",
     "summary": "إبراهيم عليه السلام.",
     "body": "**السؤال:** من والد إسماعيل عليه السلام؟\n\n**الجواب:** إبراهيم عليه السلام.",
@@ -5845,24 +7093,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 148,
-    "view_count": 148,
+    "popularity_score": 398,
+    "view_count": 398,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-37"
+      "seed-qa-63"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
   },
   {
-    "id": "qa-ruling-seed-qa-38",
-    "external_key": "qa-ruling-seed-qa-38",
+    "id": "qa-ruling-seed-qa-64",
+    "external_key": "qa-ruling-seed-qa-64",
     "title": "النبي الذي سخر الله له الريح؟",
     "summary": "سليمان عليه السلام.",
     "body": "**السؤال:** من النبي الذي سخر الله له الريح؟\n\n**الجواب:** سليمان عليه السلام.",
@@ -5893,24 +7141,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 477,
-    "view_count": 477,
+    "popularity_score": 419,
+    "view_count": 419,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-38"
+      "seed-qa-64"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
   },
   {
-    "id": "qa-ruling-seed-qa-39",
-    "external_key": "qa-ruling-seed-qa-39",
+    "id": "qa-ruling-seed-qa-65",
+    "external_key": "qa-ruling-seed-qa-65",
     "title": "النبي الذي اشتهر بالصبر على البلاء؟",
     "summary": "أيوب عليه السلام.",
     "body": "**السؤال:** من النبي الذي اشتهر بالصبر على البلاء؟\n\n**الجواب:** أيوب عليه السلام.",
@@ -5941,24 +7189,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 415,
-    "view_count": 415,
+    "popularity_score": 473,
+    "view_count": 473,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-39"
+      "seed-qa-65"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
   },
   {
-    "id": "qa-ruling-seed-qa-40",
-    "external_key": "qa-ruling-seed-qa-40",
+    "id": "qa-ruling-seed-qa-66",
+    "external_key": "qa-ruling-seed-qa-66",
     "title": "العبادة المالية الواجبة على المال بشروطها؟",
     "summary": "الزكاة.",
     "body": "**السؤال:** ما العبادة المالية الواجبة على المال بشروطها؟\n\n**الجواب:** الزكاة.",
@@ -5990,24 +7238,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 522,
-    "view_count": 522,
+    "popularity_score": 498,
+    "view_count": 498,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-40"
+      "seed-qa-66"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
   },
   {
-    "id": "qa-ruling-seed-qa-41",
-    "external_key": "qa-ruling-seed-qa-41",
+    "id": "qa-ruling-seed-qa-67",
+    "external_key": "qa-ruling-seed-qa-67",
     "title": "أول الرسل إلى أهل الأرض بعد آدم؟",
     "summary": "نوح عليه السلام.",
     "body": "**السؤال:** من أول الرسل إلى أهل الأرض بعد آدم؟\n\n**الجواب:** نوح عليه السلام.",
@@ -6038,24 +7286,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 206,
-    "view_count": 206,
+    "popularity_score": 359,
+    "view_count": 359,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-41"
+      "seed-qa-67"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
   },
   {
-    "id": "qa-ruling-seed-qa-42",
-    "external_key": "qa-ruling-seed-qa-42",
+    "id": "qa-ruling-seed-qa-68",
+    "external_key": "qa-ruling-seed-qa-68",
     "title": "النبي الذي اتخذه الله خليلاً؟",
     "summary": "إبراهيم عليه السلام.",
     "body": "**السؤال:** من النبي الذي اتخذه الله خليلاً؟\n\n**الجواب:** إبراهيم عليه السلام.",
@@ -6086,24 +7334,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 197,
-    "view_count": 197,
+    "popularity_score": 325,
+    "view_count": 325,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-42"
+      "seed-qa-68"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
   },
   {
-    "id": "qa-ruling-seed-qa-43",
-    "external_key": "qa-ruling-seed-qa-43",
+    "id": "qa-ruling-seed-qa-69",
+    "external_key": "qa-ruling-seed-qa-69",
     "title": "النبي الذي كلمه الله تكليماً؟",
     "summary": "موسى عليه السلام.",
     "body": "**السؤال:** من النبي الذي كلمه الله تكليماً؟\n\n**الجواب:** موسى عليه السلام.",
@@ -6134,24 +7382,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 240,
-    "view_count": 240,
+    "popularity_score": 542,
+    "view_count": 542,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-43"
+      "seed-qa-69"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
   },
   {
-    "id": "qa-ruling-seed-qa-44",
-    "external_key": "qa-ruling-seed-qa-44",
+    "id": "qa-ruling-seed-qa-70",
+    "external_key": "qa-ruling-seed-qa-70",
     "title": "النبي الذي أرسل إلى قوم عاد؟",
     "summary": "هود عليه السلام.",
     "body": "**السؤال:** من النبي الذي أرسل إلى قوم عاد؟\n\n**الجواب:** هود عليه السلام.",
@@ -6182,24 +7430,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 270,
-    "view_count": 270,
+    "popularity_score": 109,
+    "view_count": 109,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-44"
+      "seed-qa-70"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
   },
   {
-    "id": "qa-ruling-seed-qa-45",
-    "external_key": "qa-ruling-seed-qa-45",
+    "id": "qa-ruling-seed-qa-71",
+    "external_key": "qa-ruling-seed-qa-71",
     "title": "النبي الذي أرسل إلى قوم ثمود؟",
     "summary": "صالح عليه السلام.",
     "body": "**السؤال:** من النبي الذي أرسل إلى قوم ثمود؟\n\n**الجواب:** صالح عليه السلام.",
@@ -6230,24 +7478,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 498,
-    "view_count": 498,
+    "popularity_score": 249,
+    "view_count": 249,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-45"
+      "seed-qa-71"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
   },
   {
-    "id": "qa-ruling-seed-qa-46",
-    "external_key": "qa-ruling-seed-qa-46",
+    "id": "qa-ruling-seed-qa-72",
+    "external_key": "qa-ruling-seed-qa-72",
     "title": "النبي الذي ابتلعه الحوت؟",
     "summary": "يونس عليه السلام.",
     "body": "**السؤال:** من النبي الذي ابتلعه الحوت؟\n\n**الجواب:** يونس عليه السلام.",
@@ -6278,24 +7526,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 426,
-    "view_count": 426,
+    "popularity_score": 325,
+    "view_count": 325,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-46"
+      "seed-qa-72"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
   },
   {
-    "id": "qa-ruling-seed-qa-47",
-    "external_key": "qa-ruling-seed-qa-47",
+    "id": "qa-ruling-seed-qa-73",
+    "external_key": "qa-ruling-seed-qa-73",
     "title": "النبي الذي رفعه الله إليه؟",
     "summary": "عيسى عليه السلام.",
     "body": "**السؤال:** من النبي الذي رفعه الله إليه؟\n\n**الجواب:** عيسى عليه السلام.",
@@ -6326,24 +7574,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 255,
-    "view_count": 255,
+    "popularity_score": 420,
+    "view_count": 420,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-47"
+      "seed-qa-73"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
   },
   {
-    "id": "qa-ruling-seed-qa-48",
-    "external_key": "qa-ruling-seed-qa-48",
+    "id": "qa-ruling-seed-qa-74",
+    "external_key": "qa-ruling-seed-qa-74",
     "title": "والد إسماعيل عليه السلام؟",
     "summary": "إبراهيم عليه السلام.",
     "body": "**السؤال:** من والد إسماعيل عليه السلام؟\n\n**الجواب:** إبراهيم عليه السلام.",
@@ -6374,24 +7622,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 115,
-    "view_count": 115,
+    "popularity_score": 446,
+    "view_count": 446,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-48"
+      "seed-qa-74"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
   },
   {
-    "id": "qa-ruling-seed-qa-49",
-    "external_key": "qa-ruling-seed-qa-49",
+    "id": "qa-ruling-seed-qa-75",
+    "external_key": "qa-ruling-seed-qa-75",
     "title": "النبي الذي سخر الله له الريح؟",
     "summary": "سليمان عليه السلام.",
     "body": "**السؤال:** من النبي الذي سخر الله له الريح؟\n\n**الجواب:** سليمان عليه السلام.",
@@ -6422,24 +7670,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 433,
-    "view_count": 433,
+    "popularity_score": 490,
+    "view_count": 490,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-49"
+      "seed-qa-75"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
   },
   {
-    "id": "qa-ruling-seed-qa-50",
-    "external_key": "qa-ruling-seed-qa-50",
+    "id": "qa-ruling-seed-qa-76",
+    "external_key": "qa-ruling-seed-qa-76",
     "title": "النبي الذي اشتهر بالصبر على البلاء؟",
     "summary": "أيوب عليه السلام.",
     "body": "**السؤال:** من النبي الذي اشتهر بالصبر على البلاء؟\n\n**الجواب:** أيوب عليه السلام.",
@@ -6470,24 +7718,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 233,
-    "view_count": 233,
+    "popularity_score": 563,
+    "view_count": 563,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-50"
+      "seed-qa-76"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
   },
   {
-    "id": "qa-ruling-seed-qa-51",
-    "external_key": "qa-ruling-seed-qa-51",
+    "id": "qa-ruling-seed-qa-77",
+    "external_key": "qa-ruling-seed-qa-77",
     "title": "أول الخلفاء الراشدين؟",
     "summary": "أبو بكر الصديق.",
     "body": "**السؤال:** من أول الخلفاء الراشدين؟\n\n**الجواب:** أبو بكر الصديق.",
@@ -6518,24 +7766,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 332,
-    "view_count": 332,
+    "popularity_score": 104,
+    "view_count": 104,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-51"
+      "seed-qa-77"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
   },
   {
-    "id": "qa-ruling-seed-qa-52",
-    "external_key": "qa-ruling-seed-qa-52",
+    "id": "qa-ruling-seed-qa-78",
+    "external_key": "qa-ruling-seed-qa-78",
     "title": "ثاني الخلفاء الراشدين؟",
     "summary": "عمر بن الخطاب.",
     "body": "**السؤال:** من ثاني الخلفاء الراشدين؟\n\n**الجواب:** عمر بن الخطاب.",
@@ -6566,24 +7814,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 565,
-    "view_count": 565,
+    "popularity_score": 173,
+    "view_count": 173,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-52"
+      "seed-qa-78"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
   },
   {
-    "id": "qa-ruling-seed-qa-53",
-    "external_key": "qa-ruling-seed-qa-53",
+    "id": "qa-ruling-seed-qa-79",
+    "external_key": "qa-ruling-seed-qa-79",
     "title": "في أي شهر يصوم المسلمون؟",
     "summary": "رمضان.",
     "body": "**السؤال:** في أي شهر يصوم المسلمون؟\n\n**الجواب:** رمضان.",
@@ -6615,24 +7863,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 348,
-    "view_count": 348,
+    "popularity_score": 167,
+    "view_count": 167,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-53"
+      "seed-qa-79"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
   },
   {
-    "id": "qa-ruling-seed-qa-54",
-    "external_key": "qa-ruling-seed-qa-54",
+    "id": "qa-ruling-seed-qa-80",
+    "external_key": "qa-ruling-seed-qa-80",
     "title": "الوجبة التي تكون قبل الفجر للصائم؟",
     "summary": "السحور.",
     "body": "**السؤال:** ما الوجبة التي تكون قبل الفجر للصائم؟\n\n**الجواب:** السحور.",
@@ -6664,24 +7912,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 476,
-    "view_count": 476,
+    "popularity_score": 458,
+    "view_count": 458,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-54"
+      "seed-qa-80"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
   },
   {
-    "id": "qa-ruling-seed-qa-55",
-    "external_key": "qa-ruling-seed-qa-55",
+    "id": "qa-ruling-seed-qa-81",
+    "external_key": "qa-ruling-seed-qa-81",
     "title": "أول الرسل إلى أهل الأرض بعد آدم؟",
     "summary": "نوح عليه السلام.",
     "body": "**السؤال:** من أول الرسل إلى أهل الأرض بعد آدم؟\n\n**الجواب:** نوح عليه السلام.",
@@ -6712,24 +7960,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 197,
-    "view_count": 197,
+    "popularity_score": 509,
+    "view_count": 509,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-55"
+      "seed-qa-81"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
   },
   {
-    "id": "qa-ruling-seed-qa-56",
-    "external_key": "qa-ruling-seed-qa-56",
+    "id": "qa-ruling-seed-qa-82",
+    "external_key": "qa-ruling-seed-qa-82",
     "title": "النبي الذي اتخذه الله خليلاً؟",
     "summary": "إبراهيم عليه السلام.",
     "body": "**السؤال:** من النبي الذي اتخذه الله خليلاً؟\n\n**الجواب:** إبراهيم عليه السلام.",
@@ -6760,24 +8008,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 261,
-    "view_count": 261,
+    "popularity_score": 347,
+    "view_count": 347,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-56"
+      "seed-qa-82"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
   },
   {
-    "id": "qa-ruling-seed-qa-57",
-    "external_key": "qa-ruling-seed-qa-57",
+    "id": "qa-ruling-seed-qa-83",
+    "external_key": "qa-ruling-seed-qa-83",
     "title": "النبي الذي كلمه الله تكليماً؟",
     "summary": "موسى عليه السلام.",
     "body": "**السؤال:** من النبي الذي كلمه الله تكليماً؟\n\n**الجواب:** موسى عليه السلام.",
@@ -6808,24 +8056,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 563,
-    "view_count": 563,
+    "popularity_score": 485,
+    "view_count": 485,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-57"
+      "seed-qa-83"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
   },
   {
-    "id": "qa-ruling-seed-qa-58",
-    "external_key": "qa-ruling-seed-qa-58",
+    "id": "qa-ruling-seed-qa-84",
+    "external_key": "qa-ruling-seed-qa-84",
     "title": "النبي الذي أرسل إلى قوم عاد؟",
     "summary": "هود عليه السلام.",
     "body": "**السؤال:** من النبي الذي أرسل إلى قوم عاد؟\n\n**الجواب:** هود عليه السلام.",
@@ -6856,24 +8104,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 182,
-    "view_count": 182,
+    "popularity_score": 133,
+    "view_count": 133,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-58"
+      "seed-qa-84"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
   },
   {
-    "id": "qa-ruling-seed-qa-59",
-    "external_key": "qa-ruling-seed-qa-59",
+    "id": "qa-ruling-seed-qa-85",
+    "external_key": "qa-ruling-seed-qa-85",
     "title": "النبي الذي أرسل إلى قوم ثمود؟",
     "summary": "صالح عليه السلام.",
     "body": "**السؤال:** من النبي الذي أرسل إلى قوم ثمود؟\n\n**الجواب:** صالح عليه السلام.",
@@ -6904,24 +8152,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 443,
-    "view_count": 443,
+    "popularity_score": 549,
+    "view_count": 549,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-59"
+      "seed-qa-85"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
   },
   {
-    "id": "qa-ruling-seed-qa-60",
-    "external_key": "qa-ruling-seed-qa-60",
+    "id": "qa-ruling-seed-qa-86",
+    "external_key": "qa-ruling-seed-qa-86",
     "title": "النبي الذي ابتلعه الحوت؟",
     "summary": "يونس عليه السلام.",
     "body": "**السؤال:** من النبي الذي ابتلعه الحوت؟\n\n**الجواب:** يونس عليه السلام.",
@@ -6952,24 +8200,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 586,
-    "view_count": 586,
+    "popularity_score": 364,
+    "view_count": 364,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-60"
+      "seed-qa-86"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
   },
   {
-    "id": "qa-ruling-seed-qa-61",
-    "external_key": "qa-ruling-seed-qa-61",
+    "id": "qa-ruling-seed-qa-87",
+    "external_key": "qa-ruling-seed-qa-87",
     "title": "النبي الذي رفعه الله إليه؟",
     "summary": "عيسى عليه السلام.",
     "body": "**السؤال:** من النبي الذي رفعه الله إليه؟\n\n**الجواب:** عيسى عليه السلام.",
@@ -7000,24 +8248,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 363,
-    "view_count": 363,
+    "popularity_score": 463,
+    "view_count": 463,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-61"
+      "seed-qa-87"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
   },
   {
-    "id": "qa-ruling-seed-qa-62",
-    "external_key": "qa-ruling-seed-qa-62",
+    "id": "qa-ruling-seed-qa-88",
+    "external_key": "qa-ruling-seed-qa-88",
     "title": "والد إسماعيل عليه السلام؟",
     "summary": "إبراهيم عليه السلام.",
     "body": "**السؤال:** من والد إسماعيل عليه السلام؟\n\n**الجواب:** إبراهيم عليه السلام.",
@@ -7048,24 +8296,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 446,
-    "view_count": 446,
+    "popularity_score": 252,
+    "view_count": 252,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-62"
+      "seed-qa-88"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
   },
   {
-    "id": "qa-ruling-seed-qa-63",
-    "external_key": "qa-ruling-seed-qa-63",
+    "id": "qa-ruling-seed-qa-89",
+    "external_key": "qa-ruling-seed-qa-89",
     "title": "النبي الذي سخر الله له الريح؟",
     "summary": "سليمان عليه السلام.",
     "body": "**السؤال:** من النبي الذي سخر الله له الريح؟\n\n**الجواب:** سليمان عليه السلام.",
@@ -7096,24 +8344,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 530,
-    "view_count": 530,
+    "popularity_score": 424,
+    "view_count": 424,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-63"
+      "seed-qa-89"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
   },
   {
-    "id": "qa-ruling-seed-qa-64",
-    "external_key": "qa-ruling-seed-qa-64",
+    "id": "qa-ruling-seed-qa-90",
+    "external_key": "qa-ruling-seed-qa-90",
     "title": "النبي الذي اشتهر بالصبر على البلاء؟",
     "summary": "أيوب عليه السلام.",
     "body": "**السؤال:** من النبي الذي اشتهر بالصبر على البلاء؟\n\n**الجواب:** أيوب عليه السلام.",
@@ -7144,24 +8392,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 305,
-    "view_count": 305,
+    "popularity_score": 217,
+    "view_count": 217,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-64"
+      "seed-qa-90"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
   },
   {
-    "id": "qa-ruling-seed-qa-65",
-    "external_key": "qa-ruling-seed-qa-65",
+    "id": "qa-ruling-seed-qa-91",
+    "external_key": "qa-ruling-seed-qa-91",
     "title": "أول الخلفاء الراشدين؟",
     "summary": "أبو بكر الصديق.",
     "body": "**السؤال:** من أول الخلفاء الراشدين؟\n\n**الجواب:** أبو بكر الصديق.",
@@ -7192,24 +8440,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 241,
-    "view_count": 241,
+    "popularity_score": 215,
+    "view_count": 215,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-65"
+      "seed-qa-91"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.741Z",
+    "created_at": "2026-06-27T15:23:52.741Z",
+    "updated_at": "2026-06-27T15:23:52.741Z"
   },
   {
-    "id": "qa-ruling-seed-qa-66",
-    "external_key": "qa-ruling-seed-qa-66",
+    "id": "qa-ruling-seed-qa-92",
+    "external_key": "qa-ruling-seed-qa-92",
     "title": "الركن الأعظم في الحج؟",
     "summary": "الوقوف بعرفة.",
     "body": "**السؤال:** ما الركن الأعظم في الحج؟\n\n**الجواب:** الوقوف بعرفة.",
@@ -7241,24 +8489,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 552,
-    "view_count": 552,
+    "popularity_score": 420,
+    "view_count": 420,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-66"
+      "seed-qa-92"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.742Z",
+    "created_at": "2026-06-27T15:23:52.742Z",
+    "updated_at": "2026-06-27T15:23:52.742Z"
   },
   {
-    "id": "qa-ruling-seed-qa-67",
-    "external_key": "qa-ruling-seed-qa-67",
+    "id": "qa-ruling-seed-qa-93",
+    "external_key": "qa-ruling-seed-qa-93",
     "title": "البيت الذي يقصده المسلمون في الحج؟",
     "summary": "الكعبة.",
     "body": "**السؤال:** ما البيت الذي يقصده المسلمون في الحج؟\n\n**الجواب:** الكعبة.",
@@ -7290,24 +8538,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 427,
-    "view_count": 427,
+    "popularity_score": 429,
+    "view_count": 429,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-67"
+      "seed-qa-93"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.742Z",
+    "created_at": "2026-06-27T15:23:52.742Z",
+    "updated_at": "2026-06-27T15:23:52.742Z"
   },
   {
-    "id": "qa-ruling-seed-qa-68",
-    "external_key": "qa-ruling-seed-qa-68",
+    "id": "qa-ruling-seed-qa-94",
+    "external_key": "qa-ruling-seed-qa-94",
     "title": "أول الرسل إلى أهل الأرض بعد آدم؟",
     "summary": "نوح عليه السلام.",
     "body": "**السؤال:** من أول الرسل إلى أهل الأرض بعد آدم؟\n\n**الجواب:** نوح عليه السلام.",
@@ -7338,24 +8586,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 223,
-    "view_count": 223,
+    "popularity_score": 220,
+    "view_count": 220,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-68"
+      "seed-qa-94"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.742Z",
+    "created_at": "2026-06-27T15:23:52.742Z",
+    "updated_at": "2026-06-27T15:23:52.742Z"
   },
   {
-    "id": "qa-ruling-seed-qa-69",
-    "external_key": "qa-ruling-seed-qa-69",
+    "id": "qa-ruling-seed-qa-95",
+    "external_key": "qa-ruling-seed-qa-95",
     "title": "النبي الذي اتخذه الله خليلاً؟",
     "summary": "إبراهيم عليه السلام.",
     "body": "**السؤال:** من النبي الذي اتخذه الله خليلاً؟\n\n**الجواب:** إبراهيم عليه السلام.",
@@ -7386,24 +8634,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 582,
-    "view_count": 582,
+    "popularity_score": 399,
+    "view_count": 399,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-69"
+      "seed-qa-95"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.742Z",
+    "created_at": "2026-06-27T15:23:52.742Z",
+    "updated_at": "2026-06-27T15:23:52.742Z"
   },
   {
-    "id": "qa-ruling-seed-qa-70",
-    "external_key": "qa-ruling-seed-qa-70",
+    "id": "qa-ruling-seed-qa-96",
+    "external_key": "qa-ruling-seed-qa-96",
     "title": "النبي الذي كلمه الله تكليماً؟",
     "summary": "موسى عليه السلام.",
     "body": "**السؤال:** من النبي الذي كلمه الله تكليماً؟\n\n**الجواب:** موسى عليه السلام.",
@@ -7434,24 +8682,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 303,
-    "view_count": 303,
+    "popularity_score": 244,
+    "view_count": 244,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-70"
+      "seed-qa-96"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.742Z",
+    "created_at": "2026-06-27T15:23:52.742Z",
+    "updated_at": "2026-06-27T15:23:52.742Z"
   },
   {
-    "id": "qa-ruling-seed-qa-71",
-    "external_key": "qa-ruling-seed-qa-71",
+    "id": "qa-ruling-seed-qa-97",
+    "external_key": "qa-ruling-seed-qa-97",
     "title": "النبي الذي أرسل إلى قوم عاد؟",
     "summary": "هود عليه السلام.",
     "body": "**السؤال:** من النبي الذي أرسل إلى قوم عاد؟\n\n**الجواب:** هود عليه السلام.",
@@ -7482,24 +8730,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 155,
-    "view_count": 155,
+    "popularity_score": 581,
+    "view_count": 581,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-71"
+      "seed-qa-97"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.742Z",
+    "created_at": "2026-06-27T15:23:52.742Z",
+    "updated_at": "2026-06-27T15:23:52.742Z"
   },
   {
-    "id": "qa-ruling-seed-qa-72",
-    "external_key": "qa-ruling-seed-qa-72",
+    "id": "qa-ruling-seed-qa-98",
+    "external_key": "qa-ruling-seed-qa-98",
     "title": "النبي الذي أرسل إلى قوم ثمود؟",
     "summary": "صالح عليه السلام.",
     "body": "**السؤال:** من النبي الذي أرسل إلى قوم ثمود؟\n\n**الجواب:** صالح عليه السلام.",
@@ -7530,24 +8778,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 181,
-    "view_count": 181,
+    "popularity_score": 402,
+    "view_count": 402,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-72"
+      "seed-qa-98"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.742Z",
+    "created_at": "2026-06-27T15:23:52.742Z",
+    "updated_at": "2026-06-27T15:23:52.742Z"
   },
   {
-    "id": "qa-ruling-seed-qa-73",
-    "external_key": "qa-ruling-seed-qa-73",
+    "id": "qa-ruling-seed-qa-99",
+    "external_key": "qa-ruling-seed-qa-99",
     "title": "النبي الذي ابتلعه الحوت؟",
     "summary": "يونس عليه السلام.",
     "body": "**السؤال:** من النبي الذي ابتلعه الحوت؟\n\n**الجواب:** يونس عليه السلام.",
@@ -7578,24 +8826,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 111,
-    "view_count": 111,
+    "popularity_score": 156,
+    "view_count": 156,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-73"
+      "seed-qa-99"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.742Z",
+    "created_at": "2026-06-27T15:23:52.742Z",
+    "updated_at": "2026-06-27T15:23:52.742Z"
   },
   {
-    "id": "qa-ruling-seed-qa-74",
-    "external_key": "qa-ruling-seed-qa-74",
+    "id": "qa-ruling-seed-qa-100",
+    "external_key": "qa-ruling-seed-qa-100",
     "title": "النبي الذي رفعه الله إليه؟",
     "summary": "عيسى عليه السلام.",
     "body": "**السؤال:** من النبي الذي رفعه الله إليه؟\n\n**الجواب:** عيسى عليه السلام.",
@@ -7626,24 +8874,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 556,
-    "view_count": 556,
+    "popularity_score": 409,
+    "view_count": 409,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-74"
+      "seed-qa-100"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.742Z",
+    "created_at": "2026-06-27T15:23:52.742Z",
+    "updated_at": "2026-06-27T15:23:52.742Z"
   },
   {
-    "id": "qa-ruling-seed-qa-75",
-    "external_key": "qa-ruling-seed-qa-75",
+    "id": "qa-ruling-seed-qa-101",
+    "external_key": "qa-ruling-seed-qa-101",
     "title": "والد إسماعيل عليه السلام؟",
     "summary": "إبراهيم عليه السلام.",
     "body": "**السؤال:** من والد إسماعيل عليه السلام؟\n\n**الجواب:** إبراهيم عليه السلام.",
@@ -7674,24 +8922,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 580,
-    "view_count": 580,
+    "popularity_score": 282,
+    "view_count": 282,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-75"
+      "seed-qa-101"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.742Z",
+    "created_at": "2026-06-27T15:23:52.742Z",
+    "updated_at": "2026-06-27T15:23:52.742Z"
   },
   {
-    "id": "qa-ruling-seed-qa-76",
-    "external_key": "qa-ruling-seed-qa-76",
+    "id": "qa-ruling-seed-qa-102",
+    "external_key": "qa-ruling-seed-qa-102",
     "title": "النبي الذي سخر الله له الريح؟",
     "summary": "سليمان عليه السلام.",
     "body": "**السؤال:** من النبي الذي سخر الله له الريح؟\n\n**الجواب:** سليمان عليه السلام.",
@@ -7722,24 +8970,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 226,
-    "view_count": 226,
+    "popularity_score": 366,
+    "view_count": 366,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-76"
+      "seed-qa-102"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.742Z",
+    "created_at": "2026-06-27T15:23:52.742Z",
+    "updated_at": "2026-06-27T15:23:52.742Z"
   },
   {
-    "id": "qa-ruling-seed-qa-77",
-    "external_key": "qa-ruling-seed-qa-77",
+    "id": "qa-ruling-seed-qa-103",
+    "external_key": "qa-ruling-seed-qa-103",
     "title": "النبي الذي اشتهر بالصبر على البلاء؟",
     "summary": "أيوب عليه السلام.",
     "body": "**السؤال:** من النبي الذي اشتهر بالصبر على البلاء؟\n\n**الجواب:** أيوب عليه السلام.",
@@ -7770,24 +9018,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 159,
-    "view_count": 159,
+    "popularity_score": 289,
+    "view_count": 289,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-77"
+      "seed-qa-103"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.742Z",
+    "created_at": "2026-06-27T15:23:52.742Z",
+    "updated_at": "2026-06-27T15:23:52.742Z"
   },
   {
-    "id": "qa-ruling-seed-qa-78",
-    "external_key": "qa-ruling-seed-qa-78",
+    "id": "qa-ruling-seed-qa-104",
+    "external_key": "qa-ruling-seed-qa-104",
     "title": "أول الخلفاء الراشدين؟",
     "summary": "أبو بكر الصديق.",
     "body": "**السؤال:** من أول الخلفاء الراشدين؟\n\n**الجواب:** أبو بكر الصديق.",
@@ -7818,438 +9066,6 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 541,
-    "view_count": 541,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-78"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-79",
-    "external_key": "qa-ruling-seed-qa-79",
-    "title": "أول الخلفاء الراشدين؟",
-    "summary": "أبو بكر الصديق.",
-    "body": "**السؤال:** من أول الخلفاء الراشدين؟\n\n**الجواب:** أبو بكر الصديق.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "seerah",
-      "السيرة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 593,
-    "view_count": 593,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-79"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-80",
-    "external_key": "qa-ruling-seed-qa-80",
-    "title": "ثاني الخلفاء الراشدين؟",
-    "summary": "عمر بن الخطاب.",
-    "body": "**السؤال:** من ثاني الخلفاء الراشدين؟\n\n**الجواب:** عمر بن الخطاب.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "seerah",
-      "السيرة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 259,
-    "view_count": 259,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-80"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-81",
-    "external_key": "qa-ruling-seed-qa-81",
-    "title": "ثالث الخلفاء الراشدين؟",
-    "summary": "عثمان بن عفان.",
-    "body": "**السؤال:** من ثالث الخلفاء الراشدين؟\n\n**الجواب:** عثمان بن عفان.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "seerah",
-      "السيرة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 253,
-    "view_count": 253,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-81"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-82",
-    "external_key": "qa-ruling-seed-qa-82",
-    "title": "رابع الخلفاء الراشدين؟",
-    "summary": "علي بن أبي طالب.",
-    "body": "**السؤال:** من رابع الخلفاء الراشدين؟\n\n**الجواب:** علي بن أبي طالب.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "seerah",
-      "السيرة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 486,
-    "view_count": 486,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-82"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-83",
-    "external_key": "qa-ruling-seed-qa-83",
-    "title": "الصحابي الملقب بذي النورين؟",
-    "summary": "عثمان بن عفان.",
-    "body": "**السؤال:** من الصحابي الملقب بذي النورين؟\n\n**الجواب:** عثمان بن عفان.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "seerah",
-      "السيرة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 516,
-    "view_count": 516,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-83"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-84",
-    "external_key": "qa-ruling-seed-qa-84",
-    "title": "الصحابي الملقب بالفاروق؟",
-    "summary": "عمر بن الخطاب.",
-    "body": "**السؤال:** من الصحابي الملقب بالفاروق؟\n\n**الجواب:** عمر بن الخطاب.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "seerah",
-      "السيرة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 277,
-    "view_count": 277,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-84"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-85",
-    "external_key": "qa-ruling-seed-qa-85",
-    "title": "أول الرجال إسلاماً؟",
-    "summary": "أبو بكر الصديق.",
-    "body": "**السؤال:** من أول الرجال إسلاماً؟\n\n**الجواب:** أبو بكر الصديق.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "seerah",
-      "السيرة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 339,
-    "view_count": 339,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-85"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-86",
-    "external_key": "qa-ruling-seed-qa-86",
-    "title": "أول الصبيان إسلاماً؟",
-    "summary": "علي بن أبي طالب.",
-    "body": "**السؤال:** من أول الصبيان إسلاماً؟\n\n**الجواب:** علي بن أبي طالب.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "seerah",
-      "السيرة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 171,
-    "view_count": 171,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-86"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-87",
-    "external_key": "qa-ruling-seed-qa-87",
-    "title": "أم المؤمنين ابنة أبي بكر؟",
-    "summary": "عائشة رضي الله عنها.",
-    "body": "**السؤال:** من أم المؤمنين ابنة أبي بكر؟\n\n**الجواب:** عائشة رضي الله عنها.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "seerah",
-      "السيرة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
     "popularity_score": 529,
     "view_count": 529,
     "search_count": 0,
@@ -8257,17 +9073,17 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-87"
+      "seed-qa-104"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.742Z",
+    "created_at": "2026-06-27T15:23:52.742Z",
+    "updated_at": "2026-06-27T15:23:52.742Z"
   },
   {
-    "id": "qa-ruling-seed-qa-88",
-    "external_key": "qa-ruling-seed-qa-88",
+    "id": "qa-ruling-seed-qa-105",
+    "external_key": "qa-ruling-seed-qa-105",
     "title": "في أي غار نزل الوحي أول مرة؟",
     "summary": "غار حراء.",
     "body": "**السؤال:** في أي غار نزل الوحي أول مرة؟\n\n**الجواب:** غار حراء.",
@@ -8298,24 +9114,24 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 477,
-    "view_count": 477,
+    "popularity_score": 348,
+    "view_count": 348,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
-      "seed-qa-88"
+      "seed-qa-105"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.742Z",
+    "created_at": "2026-06-27T15:23:52.742Z",
+    "updated_at": "2026-06-27T15:23:52.742Z"
   },
   {
-    "id": "qa-ruling-seed-qa-89",
-    "external_key": "qa-ruling-seed-qa-89",
+    "id": "qa-ruling-seed-qa-106",
+    "external_key": "qa-ruling-seed-qa-106",
     "title": "أول من آمن من النساء؟",
     "summary": "خديجة بنت خويلد.",
     "body": "**السؤال:** من أول من آمن من النساء؟\n\n**الجواب:** خديجة بنت خويلد.",
@@ -8346,824 +9162,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 495,
-    "view_count": 495,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-89"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-90",
-    "external_key": "qa-ruling-seed-qa-90",
-    "title": "إلى أي مدينة هاجر النبي صلى الله عليه وسلم؟",
-    "summary": "المدينة المنورة.",
-    "body": "**السؤال:** إلى أي مدينة هاجر النبي صلى الله عليه وسلم؟\n\n**الجواب:** المدينة المنورة.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "seerah",
-      "السيرة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 593,
-    "view_count": 593,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-90"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-91",
-    "external_key": "qa-ruling-seed-qa-91",
-    "title": "صاحب النبي صلى الله عليه وسلم في الهجرة؟",
-    "summary": "أبو بكر الصديق.",
-    "body": "**السؤال:** من صاحب النبي صلى الله عليه وسلم في الهجرة؟\n\n**الجواب:** أبو بكر الصديق.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "seerah",
-      "السيرة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 290,
-    "view_count": 290,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-91"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-92",
-    "external_key": "qa-ruling-seed-qa-92",
-    "title": "أول مسجد أسسه النبي صلى الله عليه وسلم بعد الهجرة؟",
-    "summary": "مسجد قباء.",
-    "body": "**السؤال:** ما أول مسجد أسسه النبي صلى الله عليه وسلم بعد الهجرة؟\n\n**الجواب:** مسجد قباء.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "seerah",
-      "السيرة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 184,
-    "view_count": 184,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-92"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-93",
-    "external_key": "qa-ruling-seed-qa-93",
-    "title": "أول غزوة كبرى في الإسلام؟",
-    "summary": "غزوة بدر.",
-    "body": "**السؤال:** ما أول غزوة كبرى في الإسلام؟\n\n**الجواب:** غزوة بدر.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "seerah",
-      "السيرة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 161,
-    "view_count": 161,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-93"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-94",
-    "external_key": "qa-ruling-seed-qa-94",
-    "title": "في أي غزوة وقع حفر الخندق؟",
-    "summary": "غزوة الخندق.",
-    "body": "**السؤال:** في أي غزوة وقع حفر الخندق؟\n\n**الجواب:** غزوة الخندق.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "seerah",
-      "السيرة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 110,
-    "view_count": 110,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-94"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-95",
-    "external_key": "qa-ruling-seed-qa-95",
-    "title": "الغزوة التي وقعت في السنة الثالثة للهجرة؟",
-    "summary": "غزوة أحد.",
-    "body": "**السؤال:** ما الغزوة التي وقعت في السنة الثالثة للهجرة؟\n\n**الجواب:** غزوة أحد.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "seerah",
-      "السيرة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 336,
-    "view_count": 336,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-95"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-96",
-    "external_key": "qa-ruling-seed-qa-96",
-    "title": "اسم الصلح الذي عقده النبي صلى الله عليه وسلم مع قريش؟",
-    "summary": "صلح الحديبية.",
-    "body": "**السؤال:** ما اسم الصلح الذي عقده النبي صلى الله عليه وسلم مع قريش؟\n\n**الجواب:** صلح الحديبية.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "seerah",
-      "السيرة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 123,
-    "view_count": 123,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-96"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-97",
-    "external_key": "qa-ruling-seed-qa-97",
-    "title": "الحدث الذي دخل فيه النبي صلى الله عليه وسلم مكة فاتحاً؟",
-    "summary": "فتح مكة.",
-    "body": "**السؤال:** ما الحدث الذي دخل فيه النبي صلى الله عليه وسلم مكة فاتحاً؟\n\n**الجواب:** فتح مكة.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "seerah",
-      "السيرة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 214,
-    "view_count": 214,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-97"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-98",
-    "external_key": "qa-ruling-seed-qa-98",
-    "title": "أول الرسل إلى أهل الأرض بعد آدم؟",
-    "summary": "نوح عليه السلام.",
-    "body": "**السؤال:** من أول الرسل إلى أهل الأرض بعد آدم؟\n\n**الجواب:** نوح عليه السلام.",
-    "category": "القرآن والحديث",
-    "subcategory": "أحكام القرآن",
-    "subcategories": [
-      "أحكام القرآن"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "أحكام القرآن",
-      "quran",
-      "القرآن"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 551,
-    "view_count": 551,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-98"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-99",
-    "external_key": "qa-ruling-seed-qa-99",
-    "title": "النبي الذي اتخذه الله خليلاً؟",
-    "summary": "إبراهيم عليه السلام.",
-    "body": "**السؤال:** من النبي الذي اتخذه الله خليلاً؟\n\n**الجواب:** إبراهيم عليه السلام.",
-    "category": "القرآن والحديث",
-    "subcategory": "أحكام القرآن",
-    "subcategories": [
-      "أحكام القرآن"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "أحكام القرآن",
-      "quran",
-      "القرآن"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 162,
-    "view_count": 162,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-99"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-100",
-    "external_key": "qa-ruling-seed-qa-100",
-    "title": "النبي الذي كلمه الله تكليماً؟",
-    "summary": "موسى عليه السلام.",
-    "body": "**السؤال:** من النبي الذي كلمه الله تكليماً؟\n\n**الجواب:** موسى عليه السلام.",
-    "category": "القرآن والحديث",
-    "subcategory": "أحكام القرآن",
-    "subcategories": [
-      "أحكام القرآن"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "أحكام القرآن",
-      "quran",
-      "القرآن"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 203,
-    "view_count": 203,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-100"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-101",
-    "external_key": "qa-ruling-seed-qa-101",
-    "title": "النبي الذي أرسل إلى قوم عاد؟",
-    "summary": "هود عليه السلام.",
-    "body": "**السؤال:** من النبي الذي أرسل إلى قوم عاد؟\n\n**الجواب:** هود عليه السلام.",
-    "category": "القرآن والحديث",
-    "subcategory": "أحكام القرآن",
-    "subcategories": [
-      "أحكام القرآن"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "أحكام القرآن",
-      "quran",
-      "القرآن"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 225,
-    "view_count": 225,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-101"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-102",
-    "external_key": "qa-ruling-seed-qa-102",
-    "title": "النبي الذي أرسل إلى قوم ثمود؟",
-    "summary": "صالح عليه السلام.",
-    "body": "**السؤال:** من النبي الذي أرسل إلى قوم ثمود؟\n\n**الجواب:** صالح عليه السلام.",
-    "category": "القرآن والحديث",
-    "subcategory": "أحكام القرآن",
-    "subcategories": [
-      "أحكام القرآن"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "أحكام القرآن",
-      "quran",
-      "القرآن"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 574,
-    "view_count": 574,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-102"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-103",
-    "external_key": "qa-ruling-seed-qa-103",
-    "title": "النبي الذي ابتلعه الحوت؟",
-    "summary": "يونس عليه السلام.",
-    "body": "**السؤال:** من النبي الذي ابتلعه الحوت؟\n\n**الجواب:** يونس عليه السلام.",
-    "category": "القرآن والحديث",
-    "subcategory": "أحكام القرآن",
-    "subcategories": [
-      "أحكام القرآن"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "أحكام القرآن",
-      "quran",
-      "القرآن"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 125,
-    "view_count": 125,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-103"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-104",
-    "external_key": "qa-ruling-seed-qa-104",
-    "title": "النبي الذي رفعه الله إليه؟",
-    "summary": "عيسى عليه السلام.",
-    "body": "**السؤال:** من النبي الذي رفعه الله إليه؟\n\n**الجواب:** عيسى عليه السلام.",
-    "category": "القرآن والحديث",
-    "subcategory": "أحكام القرآن",
-    "subcategories": [
-      "أحكام القرآن"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "أحكام القرآن",
-      "quran",
-      "القرآن"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 441,
-    "view_count": 441,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-104"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-105",
-    "external_key": "qa-ruling-seed-qa-105",
-    "title": "والد إسماعيل عليه السلام؟",
-    "summary": "إبراهيم عليه السلام.",
-    "body": "**السؤال:** من والد إسماعيل عليه السلام؟\n\n**الجواب:** إبراهيم عليه السلام.",
-    "category": "القرآن والحديث",
-    "subcategory": "أحكام القرآن",
-    "subcategories": [
-      "أحكام القرآن"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "أحكام القرآن",
-      "quran",
-      "القرآن"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 493,
-    "view_count": 493,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-105"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-106",
-    "external_key": "qa-ruling-seed-qa-106",
-    "title": "النبي الذي سخر الله له الريح؟",
-    "summary": "سليمان عليه السلام.",
-    "body": "**السؤال:** من النبي الذي سخر الله له الريح؟\n\n**الجواب:** سليمان عليه السلام.",
-    "category": "القرآن والحديث",
-    "subcategory": "أحكام القرآن",
-    "subcategories": [
-      "أحكام القرآن"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "أحكام القرآن",
-      "quran",
-      "القرآن"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 276,
-    "view_count": 276,
+    "popularity_score": 187,
+    "view_count": 187,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -9173,10 +9173,10 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-06-27T14:32:59.418Z",
-    "created_at": "2026-06-27T14:32:59.418Z",
-    "updated_at": "2026-06-27T14:32:59.418Z"
+    "published_at": "2026-06-27T15:23:52.742Z",
+    "created_at": "2026-06-27T15:23:52.742Z",
+    "updated_at": "2026-06-27T15:23:52.742Z"
   }
 ] as ShariaRulingExtended[];
 
-export const RULINGS_ENCYCLOPEDIA_TOTAL = 248;
+export const RULINGS_ENCYCLOPEDIA_TOTAL = 268;

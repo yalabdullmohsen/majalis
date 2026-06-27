@@ -9,6 +9,7 @@ import {
   buildSearchSuggestions,
   extractFilterOptions,
   filterKuwaitLessons,
+  sortKuwaitLessons,
   type KuwaitLessonFilters,
   type KuwaitLessonRecord,
 } from "@/lib/kuwait-lessons";
@@ -61,147 +62,44 @@ function filterByTab(lessons: KuwaitLessonRecord[], tab: TabId): KuwaitLessonRec
   return lessons;
 }
 
-export default function LessonsPage({
-  initialActive,
-  initialArchived,
+function LessonsFilterPanel({
+  filters,
+  setFilter,
+  options,
+  regionOptions,
+  suggestions,
+  showSuggestions,
+  setShowSuggestions,
+  onClose,
 }: {
-  initialActive?: KuwaitLessonRecord[];
-  initialArchived?: KuwaitLessonRecord[];
-} = {}) {
-  const [activeLessons, setActiveLessons] = useState<KuwaitLessonRecord[]>(initialActive ?? []);
-  const [archivedLessons, setArchivedLessons] = useState<KuwaitLessonRecord[]>(initialArchived ?? []);
-  const [loading, setLoading] = useState(!initialActive);
-  const [filters, setFilters] = useState<KuwaitLessonFilters>(DEFAULT_KUWAIT_FILTERS);
-  const [suggestions, setSuggestions] = useState<string[]>([]);
-  const [showSuggestions, setShowSuggestions] = useState(false);
-  const [myReg, setMyReg] = useState<string[]>([]);
-  const [tab, setTab] = useTabFromUrl();
-  const { user, isLoggedIn } = useAuth() as any;
-
-  useEffect(() => {
-    if (initialActive) return;
-    setLoading(true);
-    getUnifiedLessonsSplit()
-      .then(({ active, archived }) => {
-        setActiveLessons(active);
-        setArchivedLessons(archived);
-      })
-      .catch(() => {
-        setActiveLessons([]);
-        setArchivedLessons([]);
-      })
-      .finally(() => setLoading(false));
-  }, [initialActive]);
-
-  useEffect(() => {
-    if (isLoggedIn && user?.id) {
-      getMyRegistrations(user.id).then(setMyReg).catch(() => setMyReg([]));
-    }
-  }, [isLoggedIn, user]);
-
-  const tabLessons = useMemo(() => filterByTab(activeLessons, tab), [activeLessons, tab]);
-
-  const tabCounts = useMemo(
-    () => ({
-      all: activeLessons.length,
-      lessons: filterByTab(activeLessons, "lessons").length,
-      courses: filterByTab(activeLessons, "courses").length,
-    }),
-    [activeLessons],
-  );
-
-  const options = useMemo(() => extractFilterOptions(tabLessons), [tabLessons]);
-
-  const regionOptions = useMemo(() => {
-    if (filters.governorate === "كل المحافظات") return options.regions;
-    return ["كل المناطق", ...regionsForGovernorate(filters.governorate)];
-  }, [filters.governorate, options.regions]);
-
-  const filtered = useMemo(
-    () => filterKuwaitLessons(tabLessons, filters),
-    [tabLessons, filters],
-  );
-
-  const filteredArchived = useMemo(
-    () => filterKuwaitLessons(archivedLessons, filters),
-    [archivedLessons, filters],
-  );
-
-  useEffect(() => {
-    if (!filters.search.trim()) {
-      setSuggestions([]);
-      return;
-    }
-    setSuggestions(buildSearchSuggestions([...tabLessons, ...archivedLessons], filters.search));
-  }, [filters.search, tabLessons, archivedLessons]);
-
-  const setFilter = <K extends keyof KuwaitLessonFilters>(key: K, value: KuwaitLessonFilters[K]) => {
-    setFilters((prev) => {
-      const next = { ...prev, [key]: value };
-      if (key === "governorate") next.region = "كل المناطق";
-      return next;
-    });
-  };
-
-  const toggleReg = async (lessonId: string) => {
-    if (!isLoggedIn) return alert("يرجى تسجيل الدخول أولاً");
-    try {
-      if (myReg.includes(lessonId)) {
-        await unregisterFromLesson(user.id, lessonId);
-        setMyReg(myReg.filter((id) => id !== lessonId));
-      } else {
-        await registerForLesson(user.id, lessonId);
-        setMyReg([...myReg, lessonId]);
-      }
-    } catch {
-      /* silent */
-    }
-  };
-
-  const stats = useMemo(
-    () => ({
-      total: filtered.length,
-      categories: new Set(filtered.map((l) => l.category).filter(Boolean)).size,
-    }),
-    [filtered],
-  );
-
+  filters: KuwaitLessonFilters;
+  setFilter: <K extends keyof KuwaitLessonFilters>(key: K, value: KuwaitLessonFilters[K]) => void;
+  options: ReturnType<typeof extractFilterOptions>;
+  regionOptions: string[];
+  suggestions: string[];
+  showSuggestions: boolean;
+  setShowSuggestions: (v: boolean) => void;
+  onClose?: () => void;
+}) {
   return (
-    <div className="page-shell">
-      <PageHeader
-        eyebrow="المجلس العلمي"
-        title="الدروس"
-        subtitle="جميع الدروس والدورات العلمية في مكان واحد — مرتّبة حسب أقرب موعد."
-      />
-
-      <div className="kuwait-tabs" role="tablist" aria-label="تبويبات الدروس">
-        {(Object.keys(TAB_LABELS) as TabId[]).map((tabId) => (
-          <button
-            key={tabId}
-            type="button"
-            role="tab"
-            aria-selected={tab === tabId}
-            className={`kuwait-tab${tab === tabId ? " kuwait-tab--active" : ""}`}
-            onClick={() => setTab(tabId)}
-          >
-            {TAB_LABELS[tabId]} ({tabCounts[tabId]})
+    <div className="lessons-v2-filters ui-card">
+      <div className="lessons-v2-filters__head">
+        <h2>تصفية الدروس</h2>
+        {onClose && (
+          <button type="button" className="lessons-v2-filters__close" onClick={onClose} aria-label="إغلاق">
+            ×
           </button>
-        ))}
+        )}
       </div>
 
-      <div className="page-stats-row">
-        <span>{stats.total} {tab === "courses" ? "دورة" : "درس"}</span>
-        <span>{stats.categories} تصنيف</span>
-      </div>
-
-      <form className="page-search-form lessons-search-form" onSubmit={(e) => e.preventDefault()}>
+      <form className="lessons-v2-search" onSubmit={(e) => e.preventDefault()}>
         <input
           value={filters.search}
           onChange={(e) => setFilter("search", e.target.value)}
           onFocus={() => setShowSuggestions(true)}
           onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
-          placeholder="ابحث: عنوان، شيخ، مسجد، منطقة، تصنيف..."
-          aria-autocomplete="list"
+          placeholder="ابحث: عنوان، شيخ، مسجد..."
+          aria-label="بحث في الدروس"
         />
         {showSuggestions && suggestions.length > 0 && (
           <ul className="lessons-search-suggestions" role="listbox">
@@ -216,7 +114,7 @@ export default function LessonsPage({
         )}
       </form>
 
-      <div className="kuwait-filters-grid">
+      <div className="lessons-v2-filters-grid">
         <label>
           المحافظة
           <select value={filters.governorate} onChange={(e) => setFilter("governorate", e.target.value)}>
@@ -274,14 +172,6 @@ export default function LessonsPage({
           </select>
         </label>
         <label>
-          نوع المحتوى
-          <select value={filters.contentKind} onChange={(e) => setFilter("contentKind", e.target.value)}>
-            {options.contentKinds.map((v) => (
-              <option key={v} value={v}>{v}</option>
-            ))}
-          </select>
-        </label>
-        <label>
           بث مباشر
           <select
             value={filters.hasLiveStream === null ? "الكل" : filters.hasLiveStream ? "نعم" : "لا"}
@@ -296,37 +186,262 @@ export default function LessonsPage({
           </select>
         </label>
       </div>
+    </div>
+  );
+}
 
-      {loading ? (
-        <Loading />
-      ) : filtered.length === 0 ? (
-        <p className="lessons-empty-state">لا توجد {TAB_LABELS[tab]} مطابقة حاليًا.</p>
-      ) : (
-        <div className="page-card-grid lesson-unified-grid">
-          {filtered.map((lesson) => (
-            <UnifiedLessonCard
-              key={lesson.id}
-              lesson={fromKuwaitLesson(lesson)}
-              showRegister={isLoggedIn && !lesson.id.startsWith("kw-")}
-              registered={myReg.includes(lesson.id)}
-              onToggleRegister={() => toggleReg(lesson.id)}
-            />
+export default function LessonsPage({
+  initialActive,
+  initialArchived,
+}: {
+  initialActive?: KuwaitLessonRecord[];
+  initialArchived?: KuwaitLessonRecord[];
+} = {}) {
+  const [activeLessons, setActiveLessons] = useState<KuwaitLessonRecord[]>(initialActive ?? []);
+  const [archivedLessons, setArchivedLessons] = useState<KuwaitLessonRecord[]>(initialArchived ?? []);
+  const [loading, setLoading] = useState(!initialActive);
+  const [filters, setFilters] = useState<KuwaitLessonFilters>(DEFAULT_KUWAIT_FILTERS);
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const [myReg, setMyReg] = useState<string[]>([]);
+  const [tab, setTab] = useTabFromUrl();
+  const { user, isLoggedIn } = useAuth() as any;
+
+  useEffect(() => {
+    if (initialActive) return;
+    setLoading(true);
+    getUnifiedLessonsSplit()
+      .then(({ active, archived }) => {
+        setActiveLessons(active);
+        setArchivedLessons(archived);
+      })
+      .catch(() => {
+        setActiveLessons([]);
+        setArchivedLessons([]);
+      })
+      .finally(() => setLoading(false));
+  }, [initialActive]);
+
+  useEffect(() => {
+    if (isLoggedIn && user?.id) {
+      getMyRegistrations(user.id).then(setMyReg).catch(() => setMyReg([]));
+    }
+  }, [isLoggedIn, user]);
+
+  const tabLessons = useMemo(() => filterByTab(activeLessons, tab), [activeLessons, tab]);
+
+  const tabCounts = useMemo(
+    () => ({
+      all: activeLessons.length,
+      lessons: filterByTab(activeLessons, "lessons").length,
+      courses: filterByTab(activeLessons, "courses").length,
+    }),
+    [activeLessons],
+  );
+
+  const options = useMemo(() => extractFilterOptions(tabLessons), [tabLessons]);
+
+  const regionOptions = useMemo(() => {
+    if (filters.governorate === "كل المحافظات") return options.regions;
+    return ["كل المناطق", ...regionsForGovernorate(filters.governorate)];
+  }, [filters.governorate, options.regions]);
+
+  const filtered = useMemo(
+    () => sortKuwaitLessons(filterKuwaitLessons(tabLessons, filters)),
+    [tabLessons, filters],
+  );
+
+  const filteredArchived = useMemo(
+    () => filterKuwaitLessons(archivedLessons, filters),
+    [archivedLessons, filters],
+  );
+
+  const pageStats = useMemo(() => {
+    const sheikhs = new Set(activeLessons.map((l) => l.sheikhName).filter(Boolean));
+    const mosques = new Set(activeLessons.map((l) => l.mosque).filter(Boolean));
+    const courses = filterByTab(activeLessons, "courses").length;
+    const lessons = filterByTab(activeLessons, "lessons").length;
+    const latest = sortKuwaitLessons(activeLessons)[0];
+    return {
+      lessons,
+      courses,
+      sheikhs: sheikhs.size,
+      mosques: mosques.size,
+      lastUpdate: latest?.gregorianDate || "—",
+    };
+  }, [activeLessons]);
+
+  const featuredSections = useMemo(() => {
+    const sorted = sortKuwaitLessons(tabLessons);
+    const upcoming = sorted.slice(0, 4);
+    const popular = [...tabLessons]
+      .sort((a, b) => (b.keywords?.length || 0) - (a.keywords?.length || 0))
+      .slice(0, 4);
+    const featured = tabLessons.filter((l) => l.hasLiveStream).slice(0, 4);
+    return { upcoming, popular, featured: featured.length ? featured : upcoming.slice(0, 3) };
+  }, [tabLessons]);
+
+  useEffect(() => {
+    if (!filters.search.trim()) {
+      setSuggestions([]);
+      return;
+    }
+    setSuggestions(buildSearchSuggestions([...tabLessons, ...archivedLessons], filters.search));
+  }, [filters.search, tabLessons, archivedLessons]);
+
+  const setFilter = <K extends keyof KuwaitLessonFilters>(key: K, value: KuwaitLessonFilters[K]) => {
+    setFilters((prev) => {
+      const next = { ...prev, [key]: value };
+      if (key === "governorate") next.region = "كل المناطق";
+      return next;
+    });
+  };
+
+  const toggleReg = async (lessonId: string) => {
+    if (!isLoggedIn) return alert("يرجى تسجيل الدخول أولاً");
+    try {
+      if (myReg.includes(lessonId)) {
+        await unregisterFromLesson(user.id, lessonId);
+        setMyReg(myReg.filter((id) => id !== lessonId));
+      } else {
+        await registerForLesson(user.id, lessonId);
+        setMyReg([...myReg, lessonId]);
+      }
+    } catch {
+      /* silent */
+    }
+  };
+
+  const renderGrid = (lessons: KuwaitLessonRecord[], prefix = "") => (
+    <div className="page-card-grid lesson-unified-grid">
+      {lessons.map((lesson) => (
+        <UnifiedLessonCard
+          key={`${prefix}${lesson.id}`}
+          lesson={fromKuwaitLesson(lesson, prefix.startsWith("archived"))}
+          showRegister={isLoggedIn && !lesson.id.startsWith("kw-")}
+          registered={myReg.includes(lesson.id)}
+          onToggleRegister={() => toggleReg(lesson.id)}
+        />
+      ))}
+    </div>
+  );
+
+  return (
+    <div className="page-shell lessons-page-v2">
+      <PageHeader
+        eyebrow="المجلس العلمي"
+        title="الدروس"
+        subtitle="جميع الدروس والدورات العلمية — مرتّبة حسب أقرب موعد."
+      />
+
+      <div className="lessons-v2-stats">
+        <div className="lessons-v2-stat"><strong>{pageStats.lessons}</strong><span>درس</span></div>
+        <div className="lessons-v2-stat"><strong>{pageStats.courses}</strong><span>دورة</span></div>
+        <div className="lessons-v2-stat"><strong>{pageStats.sheikhs}</strong><span>شيخ</span></div>
+        <div className="lessons-v2-stat"><strong>{pageStats.mosques}</strong><span>مسجد</span></div>
+        <div className="lessons-v2-stat"><strong>{pageStats.lastUpdate}</strong><span>آخر تحديث</span></div>
+      </div>
+
+      <div className="lessons-v2-toolbar">
+        <div className="kuwait-tabs" role="tablist" aria-label="تبويبات الدروس">
+          {(Object.keys(TAB_LABELS) as TabId[]).map((tabId) => (
+            <button
+              key={tabId}
+              type="button"
+              role="tab"
+              aria-selected={tab === tabId}
+              className={`kuwait-tab${tab === tabId ? " kuwait-tab--active" : ""}`}
+              onClick={() => setTab(tabId)}
+            >
+              {TAB_LABELS[tabId]} ({tabCounts[tabId]})
+            </button>
           ))}
         </div>
-      )}
+        <button
+          type="button"
+          className="lessons-v2-filter-toggle"
+          onClick={() => setFiltersOpen(true)}
+          aria-label="فتح التصفية"
+        >
+          تصفية وبحث
+        </button>
+      </div>
 
-      {!loading && filteredArchived.length > 0 && (
-        <section className="lessons-past-section" aria-labelledby="past-lessons-heading">
-          <h2 id="past-lessons-heading" className="lessons-past-section__title">الدروس السابقة</h2>
-          <div className="page-card-grid lesson-unified-grid">
-            {filteredArchived.map((lesson) => (
-              <UnifiedLessonCard
-                key={`archived-${lesson.id}`}
-                lesson={fromKuwaitLesson(lesson, true)}
-              />
-            ))}
+      <div className="lessons-v2-layout">
+        <main className="lessons-v2-main">
+          {loading ? (
+            <Loading />
+          ) : (
+            <>
+              {!filters.search && filters.governorate === "كل المحافظات" && (
+                <>
+                  <section className="lessons-v2-section">
+                    <h2 className="lessons-v2-section__title">الأقرب موعدًا</h2>
+                    {renderGrid(featuredSections.upcoming)}
+                  </section>
+                  {featuredSections.featured.length > 0 && (
+                    <section className="lessons-v2-section">
+                      <h2 className="lessons-v2-section__title">المميز — بث مباشر</h2>
+                      {renderGrid(featuredSections.featured, "feat-")}
+                    </section>
+                  )}
+                  <section className="lessons-v2-section">
+                    <h2 className="lessons-v2-section__title">الشائع</h2>
+                    {renderGrid(featuredSections.popular, "pop-")}
+                  </section>
+                </>
+              )}
+
+              <section className="lessons-v2-section">
+                <h2 className="lessons-v2-section__title">
+                  {filtered.length} {tab === "courses" ? "دورة" : "درس"}
+                </h2>
+                {filtered.length === 0 ? (
+                  <p className="lessons-empty-state">لا توجد {TAB_LABELS[tab]} مطابقة حاليًا.</p>
+                ) : (
+                  renderGrid(filtered)
+                )}
+              </section>
+
+              {filteredArchived.length > 0 && (
+                <section className="lessons-past-section" aria-labelledby="past-lessons-heading">
+                  <h2 id="past-lessons-heading" className="lessons-past-section__title">الدروس السابقة</h2>
+                  {renderGrid(filteredArchived, "archived-")}
+                </section>
+              )}
+            </>
+          )}
+        </main>
+
+        <aside className="lessons-v2-sidebar">
+          <LessonsFilterPanel
+            filters={filters}
+            setFilter={setFilter}
+            options={options}
+            regionOptions={regionOptions}
+            suggestions={suggestions}
+            showSuggestions={showSuggestions}
+            setShowSuggestions={setShowSuggestions}
+          />
+        </aside>
+      </div>
+
+      {filtersOpen && (
+        <div className="lessons-v2-sheet-backdrop" onClick={() => setFiltersOpen(false)} role="presentation">
+          <div className="lessons-v2-sheet" onClick={(e) => e.stopPropagation()}>
+            <LessonsFilterPanel
+              filters={filters}
+              setFilter={setFilter}
+              options={options}
+              regionOptions={regionOptions}
+              suggestions={suggestions}
+              showSuggestions={showSuggestions}
+              setShowSuggestions={setShowSuggestions}
+              onClose={() => setFiltersOpen(false)}
+            />
           </div>
-        </section>
+        </div>
       )}
 
       <LessonsContactCard />
