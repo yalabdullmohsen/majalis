@@ -92,6 +92,7 @@ const AdminDashboardPage = lazy(() => import("@/views/admin/AdminDashboardPage")
 const AutoContentPage = lazy(() => import("@/views/admin/AutoContentPage"));
 const FiqhReviewPage = lazy(() => import("@/views/admin/FiqhReviewPage"));
 const FiqhQualityPage = lazy(() => import("@/views/admin/FiqhQualityPage"));
+const FeatureStatusPage = lazy(() => import("@/views/admin/FeatureStatusPage"));
 const LearningPathsPage = lazy(() => import("@/views/learning/LearningPathsPage"));
 const LearningPathDetailPage = lazy(() => import("@/views/learning/LearningPathDetailPage"));
 const MyLearningPage = lazy(() => import("@/views/MyLearningPage"));
@@ -326,6 +327,15 @@ function Router() {
           <ErrorBoundary>
             <Suspense fallback={<Loading />}>
               <FiqhQualityPage />
+            </Suspense>
+          </ErrorBoundary>
+        </AdminRouteGuard>
+      </Route>
+      <Route path="/admin/feature-status">
+        <AdminRouteGuard>
+          <ErrorBoundary>
+            <Suspense fallback={<Loading />}>
+              <FeatureStatusPage />
             </Suspense>
           </ErrorBoundary>
         </AdminRouteGuard>
