@@ -17,6 +17,11 @@ export const ACTIVATION_TABLES = [
   "content_import_jobs",
   "content_import_staging",
   "verified_adhkar_items",
+  "akp_content_sources",
+  "akp_pipeline_runs",
+  "akp_content_fingerprints",
+  "akp_review_queue",
+  "akp_dead_letter_jobs",
 ];
 
 export async function probeTableAdmin(table) {

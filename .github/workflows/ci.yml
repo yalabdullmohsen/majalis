@@ -50,6 +50,13 @@ jobs:
           pnpm run test:content-import
           pnpm run test:content-import-e2e
 
+      - name: Autonomous platform tests
+        run: |
+          cd artifacts/majalis
+          pnpm run verify:autonomous-platform
+          pnpm run verify:majlis-knowledge-engine
+          pnpm run verify:import-jobs-integrity
+
       - name: Verify deploy output
         run: pnpm --filter @workspace/majalis run verify:deploy
 

@@ -19,6 +19,7 @@ const STEP_TABLE_CHECKS = {
   "sharia_rulings_encyclopedia_v1.sql": ["sharia_rulings", "sharia_ruling_categories"],
   "majlis_knowledge_engine_v1.sql": ["mke_source_plugins", "mke_runs", "mke_decisions", "mke_queue_jobs"],
   "majlis_knowledge_engine_v2.sql": ["mke_quality_reports"],
+  "autonomous_platform_v1.sql": ["akp_content_sources", "akp_pipeline_runs"],
 };
 
 const ACTIVATION_TABLE_TARGETS = [
@@ -29,6 +30,8 @@ const ACTIVATION_TABLE_TARGETS = [
   "mke_decisions",
   "mke_quality_reports",
   "mke_source_plugins",
+  "akp_content_sources",
+  "akp_pipeline_runs",
 ];
 
 function shaShort(text) {

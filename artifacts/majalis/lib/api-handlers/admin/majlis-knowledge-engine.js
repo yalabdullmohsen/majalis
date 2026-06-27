@@ -37,6 +37,13 @@ export default async function handler(req, res) {
   try {
     if (action === "dashboard" || action === "metrics") {
       const monitoring = await getPlatformMonitoring();
+      let akpDashboard = null;
+      try {
+        const { getPlatformDashboard } = await import("../../../lib/autonomous-platform/index.mjs");
+        akpDashboard = await getPlatformDashboard();
+      } catch {
+        /* optional */
+      }
       sendJson(res, 200, {
         ok: true,
         engineVersion: ENGINE_VERSION,
@@ -45,8 +52,27 @@ export default async function handler(req, res) {
         supportedSourceTypes: SUPPORTED_SOURCE_TYPES.length,
         platforms: listSupportedPlatforms(),
         stats: monitoring,
+        akp: akpDashboard,
         legacyMetrics: await getEngineMetrics(),
       });
+      return;
+    }
+
+    if (action === "akp-run") {
+      const { runAutonomousPlatform } = await import("../../../lib/autonomous-platform/index.mjs");
+      const result = await runAutonomousPlatform({
+        mode: body.mode || "full",
+        triggerType: "admin",
+        maxItems: body.maxItems,
+      });
+      sendJson(res, result.ok ? 200 : 500, result);
+      return;
+    }
+
+    if (action === "akp-bootstrap") {
+      const { ensurePlatformBootstrap } = await import("../../../lib/autonomous-platform/index.mjs");
+      const result = await ensurePlatformBootstrap({ forceRun: body.forceRun, forceQueue: body.forceQueue });
+      sendJson(res, result.ok ? 200 : 500, result);
       return;
     }
 
@@ -183,6 +209,7 @@ export default async function handler(req, res) {
       error: "unknown_action",
       actions: [
         "dashboard", "monitoring", "health", "list-sources", "upsert-source", "run",
+        "akp-run", "akp-bootstrap",
         "vision-status", "analyze-image", "analyze-image-v2", "decide", "decide-v2",
         "quality-check", "search", "recommend", "self-heal",
       ],
