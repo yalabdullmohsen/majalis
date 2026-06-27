@@ -91,6 +91,10 @@ export const OPTIONAL_DB_TABLES = [
   "auto_imported_content",
   "auto_publish_queue",
   "fiqh_council_items",
+  "tkn_platform_settings",
+  "tkn_source_operations_log",
+  "tkn_retry_queue",
+  "tkn_pipeline_stage_logs",
 ];
 
 export const SECRET_GROUPS = {

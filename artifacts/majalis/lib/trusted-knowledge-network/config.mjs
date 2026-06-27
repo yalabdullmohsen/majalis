@@ -55,6 +55,13 @@ export const PIPELINE_STAGES = [
   { id: "search_index", label: "فهرسة البحث" },
 ];
 
+/** Cron schedules for TKN background jobs (vercel.json). */
+export const TKN_CRON_SCHEDULES = {
+  "tkn-retry-queue": "*/10 * * * *",
+  "tkn-health": "0 */6 * * *",
+  "tkn-fetch": "15 * * * *",
+};
+
 export const RELATED_SEARCH_SECTIONS = {
   quran: { label: "الآيات", kinds: ["quran"] },
   hadith: { label: "الأحاديث", kinds: ["hadith"] },

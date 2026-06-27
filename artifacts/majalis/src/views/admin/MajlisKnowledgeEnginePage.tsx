@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link } from "wouter";
 import { getMkeDashboard, runMkeEngine } from "@/lib/majlis-knowledge-engine-api";
-import { getTknDashboard } from "@/lib/trusted-knowledge-network-api";
+import { getTknDashboard, getTknSettings, updateTknQuotas } from "@/lib/trusted-knowledge-network-api";
 import { C } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
 import { AdminShell } from "@/views/admin/AdminShell";
@@ -83,6 +83,9 @@ function MajlisKnowledgeEngineContent() {
   const [stats, setStats] = useState<MkeStats | null>(null);
   const [akp, setAkp] = useState<AkpStats | null>(null);
   const [tkn, setTkn] = useState<Record<string, unknown> | null>(null);
+  const [quotas, setQuotas] = useState<Record<string, number>>({});
+  const [quotasBusy, setQuotasBusy] = useState(false);
+  const [quotasSaved, setQuotasSaved] = useState<string | null>(null);
   const [platforms, setPlatforms] = useState<Array<{ type: string; adapter: string }>>([]);
   const [intelligenceLayers, setIntelligenceLayers] = useState<Array<{ id: string; label: string }>>([]);
   const [pipelineStages, setPipelineStages] = useState<Array<{ id: string; label: string }>>([]);
@@ -100,6 +103,10 @@ function MajlisKnowledgeEngineContent() {
         setPipelineStages(r.pipelineStages || []);
       }).catch(() => setStats(null)),
       getTknDashboard().then((r) => setTkn((r.dashboard as Record<string, unknown>) || null)).catch(() => setTkn(null)),
+      getTknSettings().then((r) => {
+        const daily = (r.settings as { dailyQuotas?: Record<string, number> })?.dailyQuotas;
+        if (daily) setQuotas(daily);
+      }).catch(() => {}),
     ]).finally(() => setLoading(false));
   }, []);
 
@@ -118,6 +125,20 @@ function MajlisKnowledgeEngineContent() {
       setRunResult("✗ خطأ في التشغيل");
     } finally {
       setRunning(false);
+    }
+  };
+
+  const handleSaveQuotas = async () => {
+    setQuotasBusy(true);
+    setQuotasSaved(null);
+    try {
+      const r = await updateTknQuotas(quotas);
+      setQuotasSaved(r.ok ? "✓ تم حفظ الحصص اليومية" : `✗ ${r.error || "فشل الحفظ"}`);
+      load();
+    } catch {
+      setQuotasSaved("✗ خطأ في الحفظ");
+    } finally {
+      setQuotasBusy(false);
     }
   };
 
@@ -188,11 +209,46 @@ function MajlisKnowledgeEngineContent() {
                 <StatCard label="منشور" value={(tkn.today as { published?: number })?.published ?? 0} />
                 <StatCard label="مرفوض" value={(tkn.today as { rejected?: number })?.rejected ?? 0} color="#991B1B" />
                 <StatCard label="Retry Queue" value={(tkn.queue as { retry?: number })?.retry ?? 0} />
+                <StatCard label="Review Queue" value={(tkn.queue as { review?: number })?.review ?? 0} color="#92400E" />
+                <StatCard label="Dead Letter" value={(tkn.queue as { deadLetter?: number })?.deadLetter ?? 0} color="#991B1B" />
                 <StatCard label="متوسط الاستيراد (ms)" value={(tkn.performance as { avgImportMs?: number })?.avgImportMs ?? "—"} />
                 {(tkn.sources as { best?: { name?: string } })?.best && (
                   <StatCard label="أفضل مصدر" value={(tkn.sources as { best?: { name?: string } }).best?.name?.slice(0, 12) ?? "—"} />
                 )}
+                {(tkn.sources as { worst?: { name?: string } })?.worst && (
+                  <StatCard label="أسوأ مصدر" value={(tkn.sources as { worst?: { name?: string } }).worst?.name?.slice(0, 12) ?? "—"} color="#991B1B" />
+                )}
               </div>
+              {Object.keys(quotas).length > 0 && (
+                <div style={{ marginTop: "1rem", background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.5rem", padding: "1rem" }}>
+                  <h4 style={{ margin: "0 0 0.75rem", color: C.emeraldDeep, fontSize: "0.875rem" }}>الحصص اليومية (قابلة للتعديل)</h4>
+                  <div style={{ display: "grid", gap: "0.5rem", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))" }}>
+                    {Object.entries(quotas).map(([key, val]) => (
+                      <label key={key} style={{ fontSize: "0.8125rem" }}>
+                        {key}
+                        <input
+                          type="number"
+                          min={0}
+                          value={val}
+                          onChange={(e) => setQuotas({ ...quotas, [key]: Number(e.target.value) || 0 })}
+                          style={{ display: "block", width: "100%", marginTop: "0.25rem", padding: "0.4rem", borderRadius: "0.375rem", border: `1px solid ${C.line}`, fontFamily: "inherit" }}
+                        />
+                      </label>
+                    ))}
+                  </div>
+                  <div style={{ display: "flex", gap: "0.5rem", alignItems: "center", marginTop: "0.75rem" }}>
+                    <button
+                      type="button"
+                      disabled={quotasBusy}
+                      onClick={handleSaveQuotas}
+                      style={{ padding: "0.4rem 0.75rem", background: C.emeraldDeep, color: "#fff", border: "none", borderRadius: "0.375rem", cursor: quotasBusy ? "wait" : "pointer", fontSize: "0.8125rem" }}
+                    >
+                      {quotasBusy ? "جاري الحفظ…" : "حفظ الحصص"}
+                    </button>
+                    {quotasSaved && <span style={{ fontSize: "0.75rem", color: C.inkSoft }}>{quotasSaved}</span>}
+                  </div>
+                </div>
+              )}
             </section>
           )}
 

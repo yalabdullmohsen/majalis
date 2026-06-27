@@ -1,7 +1,7 @@
 /**
  * Trusted Knowledge Network — Phase 5 public API.
  */
-export { TKN_VERSION, SUPPORTED_SOURCE_TYPES, SOURCE_TYPE_LABELS, PIPELINE_STAGES, DEFAULT_DAILY_QUOTAS } from "./config.mjs";
+export { TKN_VERSION, SUPPORTED_SOURCE_TYPES, SOURCE_TYPE_LABELS, PIPELINE_STAGES, DEFAULT_DAILY_QUOTAS, TKN_CRON_SCHEDULES } from "./config.mjs";
 export { loadPlatformSettings, updatePlatformSettings, getQuotaForPipeline } from "./settings.mjs";
 export { listConnectors, fetchFromConnector } from "./connectors/index.mjs";
 export { processContentItem, syncSourceNow, normalizeRecord, extractKeywords, classifyRecord } from "./pipeline.mjs";

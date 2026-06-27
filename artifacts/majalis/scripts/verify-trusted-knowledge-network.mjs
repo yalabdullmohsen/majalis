@@ -10,12 +10,14 @@ import {
   SUPPORTED_SOURCE_TYPES,
   PIPELINE_STAGES,
   DEFAULT_DAILY_QUOTAS,
+  TKN_CRON_SCHEDULES,
   listConnectors,
   loadPlatformSettings,
   normalizeRecord,
   extractKeywords,
   classifyRecord,
   buildRelatedSections,
+  processRetryQueue,
 } from "../lib/trusted-knowledge-network/index.mjs";
 import { listAvailableMigrations } from "../lib/migration-paths.mjs";
 
@@ -77,6 +79,15 @@ test(available.present?.includes("trusted_knowledge_network_v1.sql"), "migration
 
 test(existsSync(join(root, "lib/api-handlers/admin/trusted-knowledge-network.js")), "admin API handler exists");
 test(existsSync(join(root, "src/views/admin/TrustedKnowledgeSourcesPanel.tsx")), "admin sources panel exists");
+
+test(Object.keys(TKN_CRON_SCHEDULES).length >= 3, `${Object.keys(TKN_CRON_SCHEDULES).length} TKN cron schedules`);
+test(existsSync(join(root, "lib/api-handlers/cron/trusted-knowledge-network.js")), "TKN cron handler exists");
+
+const vercelJson = readFileSync(join(root, "vercel.json"), "utf8");
+test(vercelJson.includes("tkn-retry-queue"), "vercel.json registers tkn-retry-queue cron");
+
+const retryResult = await processRetryQueue(0);
+test(typeof retryResult.ok === "boolean", "processRetryQueue runs");
 
 console.log(`\nTrusted Knowledge Network: ${passed} passed, ${failed} failed\n`);
 process.exit(failed ? 1 : 0);
