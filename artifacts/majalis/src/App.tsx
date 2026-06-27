@@ -87,6 +87,7 @@ const AutomationSourcesPage = lazy(() => import("@/views/admin/AutomationSources
 const AutomationReviewPage = lazy(() => import("@/views/admin/AutomationReviewPage"));
 const AutomationDashboardPage = lazy(() => import("@/views/admin/AutomationDashboardPage"));
 const AutomationCenterPage = lazy(() => import("@/views/admin/AutomationCenterPage"));
+const InstagramIntegrationPage = lazy(() => import("@/views/admin/InstagramIntegrationPage"));
 const AdminDashboardPage = lazy(() => import("@/views/admin/AdminDashboardPage"));
 const AutoContentPage = lazy(() => import("@/views/admin/AutoContentPage"));
 const FiqhReviewPage = lazy(() => import("@/views/admin/FiqhReviewPage"));
@@ -253,6 +254,15 @@ function Router() {
           <ErrorBoundary>
             <Suspense fallback={<Loading />}>
               <AutomationCenterPage />
+            </Suspense>
+          </ErrorBoundary>
+        </AdminRouteGuard>
+      </Route>
+      <Route path="/admin/integrations/instagram">
+        <AdminRouteGuard>
+          <ErrorBoundary>
+            <Suspense fallback={<Loading />}>
+              <InstagramIntegrationPage />
             </Suspense>
           </ErrorBoundary>
         </AdminRouteGuard>

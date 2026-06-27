@@ -15,7 +15,7 @@ import { writeAutomationAudit } from "./automation-audit.mjs";
 import { createLessonImportDraft } from "./lesson-import-draft.mjs";
 import { publishLessonDraft } from "./publish-lesson.mjs";
 import { getSupabaseAdmin } from "../supabase-admin.mjs";
-import { enrichParsedFromSourceConfig, INSTAGRAM_CONNECTOR_HINTS } from "./instagram-connector.mjs";
+import { enrichParsedFromSourceConfig, INSTAGRAM_CONNECTOR_HINTS, discoverInstagramSource } from "./instagram-connector.mjs";
 import { resolveSheikhIdForDraft } from "./lesson-import-actions.mjs";
 import { createAndEnrichSheikh } from "./sheikh-enricher.mjs";
 import { resolveMosqueIdForLesson } from "./mosque-matcher.mjs";
@@ -40,12 +40,22 @@ const UPDATE_DUPLICATE_REASONS = new Set([
   "perceptual_hash_match",
 ]);
 
-async function discoverItems(source) {
+async function discoverItems(source, runId) {
+  if (source.source_type === "instagram" || source.platform === "instagram") {
+    const ig = await discoverInstagramSource(source, { runId });
+    return {
+      items: ig.items || [],
+      connectorHint: ig.manualAssistMode ? ig.hint : ig.connectorRequired ? ig.hint : null,
+      manualAssistMode: ig.manualAssistMode,
+      connectorLabel: "Instagram",
+    };
+  }
   const connector = createSourceConnector(source);
   const result = await connector.discover();
   return {
     items: result.items || [],
     connectorHint: result.connectorHint || null,
+    manualAssistMode: result.manualAssistMode,
     connectorLabel: connector.label,
   };
 }
@@ -78,7 +88,7 @@ async function extractFromItem(item, source, runId) {
 export async function processAutomationItem({ source, item, connectorHint, runId }) {
   const sourceUrl = item.link || source.url;
 
-  if (item.connectorPending || connectorHint) {
+  if (item.connectorPending && !item.fromGraphApi && !item.fromManualAssist) {
     const draft = await createLessonImportDraft({
       sourceType: source.source_type,
       sourceUrl,
@@ -320,8 +330,37 @@ export async function runLessonSourceMonitor({ dryRun = false, sourceId = null, 
     const seenThisRun = [];
     const seenInRun = new Set();
     try {
-      const { items, connectorHint } = await discoverItems(source);
+      const { items, connectorHint, manualAssistMode } = await discoverItems(source, runStart.runId);
       const discoveredUrls = items.map((item) => item.link || source.url).filter(Boolean);
+
+      if (manualAssistMode && items.length === 0) {
+        await logAutomationStep({
+          runId: runStart.runId,
+          sourceId: source.id,
+          step: "connector_status",
+          status: "warn",
+          detail: connectorHint || "manual_assist_mode",
+        });
+        await updateSourceCheckStatus(source.id, {
+          success: true,
+          error: null,
+        });
+        const adminClient = getSupabaseAdmin();
+        await adminClient
+          ?.from("trusted_content_sources")
+          .update({
+            last_error: String(connectorHint || "Manual Assist Mode").slice(0, 500),
+            updated_at: new Date().toISOString(),
+          })
+          .eq("id", source.id);
+        results.push({
+          source: source.name,
+          manualAssistMode: true,
+          hint: connectorHint,
+          items: 0,
+        });
+        continue;
+      }
 
       for (const item of items) {
         itemsScanned += 1;
@@ -369,9 +408,10 @@ export async function runLessonSourceMonitor({ dryRun = false, sourceId = null, 
 
       const removed = detectRemovedSourcePosts(source, discoveredUrls);
       for (const removedUrl of removed.slice(0, 5)) {
-        const admin = getSupabaseAdmin();
-        const { data: lesson } = await admin
-          ?.from("lessons")
+        const adminClient = getSupabaseAdmin();
+        if (!adminClient) continue;
+        const { data: lesson } = await adminClient
+          .from("lessons")
           .select("id")
           .eq("source_url", removedUrl)
           .maybeSingle();

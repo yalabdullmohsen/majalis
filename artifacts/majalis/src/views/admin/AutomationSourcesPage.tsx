@@ -13,6 +13,7 @@ import {
 import { C } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
 import { AdminShell } from "@/views/admin/AdminShell";
+import { InstagramManualAssistPanel } from "@/views/admin/InstagramManualAssistPanel";
 
 const EMPTY: TrustedLessonSource = {
   name: "",
@@ -97,6 +98,7 @@ function AutomationSourcesContent() {
           </p>
         </div>
         <div style={{ display: "flex", gap: "0.5rem", fontSize: "0.8125rem", flexWrap: "wrap" }}>
+          <Link href="/admin/integrations/instagram" style={{ color: C.emeraldDeep }}>Instagram API</Link>
           <Link href="/admin/automation/center" style={{ color: C.emeraldDeep }}>Automation Center</Link>
           <Link href="/admin/automation/dashboard" style={{ color: C.emeraldDeep }}>لوحة المراقبة</Link>
           <Link href="/admin/review-center" style={{ color: C.emeraldDeep }}>مركز المراجعة</Link>
@@ -170,6 +172,7 @@ function AutomationSourcesContent() {
                     آخر فحص: {formatDt(s.last_checked_at)} · نجاح: {formatDt(s.last_success_at)} · أخطاء: {s.failure_count ?? 0}
                   </p>
                   {s.last_error && <p style={{ margin: 0, fontSize: "0.75rem", color: "#991B1B" }}>{s.last_error}</p>}
+                  <InstagramManualAssistPanel source={s} onDone={load} />
                 </div>
                 <div style={{ display: "flex", gap: "0.35rem", flexWrap: "wrap", alignItems: "flex-start" }}>
                   <button type="button" disabled={busy} onClick={() => toggleTrustedSource(s.id!, !s.active).then(load)} style={{ fontSize: "0.75rem", padding: "0.25rem 0.5rem", cursor: "pointer", fontFamily: "inherit" }}>

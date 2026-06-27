@@ -35,6 +35,7 @@ export const MIGRATION_FILES = [
   "smart_source_monitoring_v1.sql",
   "automation_phase5_v1.sql",
   "lesson_intelligence_v6.sql",
+  "instagram_graph_phase7_v1.sql",
 ];
 
 export function resolveMigrationsDir() {

@@ -7,10 +7,12 @@ export class InstagramConnector extends BaseSourceConnector {
     return {
       items: (result.items || []).map((item) => ({
         ...item,
-        externalId: item.link || this.source.url,
+        externalId: item.externalId || item.link || this.source.url,
       })),
-      connectorHint: result.connectorRequired ? result.hint : null,
+      connectorHint: result.manualAssistMode ? result.hint : result.connectorRequired ? result.hint : null,
+      manualAssistMode: result.manualAssistMode,
       instagramLimited: result.instagramLimited,
+      graphApi: result.graphApi,
     };
   }
 
