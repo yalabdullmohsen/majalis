@@ -7,7 +7,7 @@ import {
   FIQH_COUNCIL_SEED,
 } from "./fiqh-council-service";
 import { FATWA_SEED, findFatwaById } from "./fatwa-seed";
-import { RULINGS_SEED, findRulingById } from "./rulings-seed";
+import { RULINGS_SEED } from "./rulings-seed";
 import { ANNUAL_COURSES_SEED, findAnnualCourseById } from "./annual-courses-seed";
 import { UPDATES_SEED, getSortedUpdates } from "./updates-seed";
 import { supabase, isSupabaseConfigured } from "./supabase";
@@ -99,53 +99,19 @@ export async function getFatwaById(id: string) {
 // ─── Sharia Rulings ──────────────────────────────────────────────────────────
 
 export async function getShariaRulings(opts?: { category?: string; search?: string }) {
-  let items = [...RULINGS_SEED];
-  if (opts?.category && opts.category !== "الكل") {
-    items = items.filter((r) => r.category === opts.category);
-  }
-  items = filterBySearch(items, ["title", "summary", "body", "category"], opts?.search);
-
-  if (!isConfigured) return { data: items, usingSeed: true };
-
-  try {
-    let query = supabase
-      .from("sharia_rulings")
-      .select("*")
-      .eq("status", "approved")
-      .is("archived_at", null)
-      .order("created_at", { ascending: false });
-
-    if (opts?.category && opts.category !== "الكل") query = query.eq("category", opts.category);
-
-    const { data, error } = await query;
-    if (error) throw error;
-
-    let result = (data || []) as ShariaRuling[];
-    if (opts?.search?.trim()) {
-      result = filterBySearch(result, ["title", "body"], opts.search);
-    }
-    if (result.length === 0 && items.length > 0) return { data: items, usingSeed: true };
-    return { data: result, usingSeed: false };
-  } catch (err) {
-    logSupabaseError("getShariaRulings", err);
-    return { data: items, usingSeed: true };
-  }
+  const { getRulingsEncyclopedia } = await import("./rulings-service");
+  const result = await getRulingsEncyclopedia({
+    category: opts?.category,
+    search: opts?.search,
+    limit: 500,
+  });
+  return { data: result.data as ShariaRuling[], usingSeed: result.usingSeed };
 }
 
 export async function getShariaRulingById(id: string) {
-  const fallback = findRulingById(id);
-  if (!isConfigured) return { data: fallback, usingSeed: true };
-
-  try {
-    const byId = await supabase.from("sharia_rulings").select("*").eq("id", id).eq("status", "approved").maybeSingle();
-    if (byId.data) return { data: byId.data as ShariaRuling, usingSeed: false };
-
-    const byKey = await supabase.from("sharia_rulings").select("*").eq("external_key", id).eq("status", "approved").maybeSingle();
-    return { data: (byKey.data as ShariaRuling) || fallback, usingSeed: !byKey.data && !!fallback };
-  } catch (err) {
-    logSupabaseError("getShariaRulingById", err, { id });
-    return { data: fallback, usingSeed: true };
-  }
+  const { getRulingById } = await import("./rulings-service");
+  const result = await getRulingById(id);
+  return { data: result.data as ShariaRuling | null, usingSeed: result.usingSeed };
 }
 
 // ─── Annual Courses ──────────────────────────────────────────────────────────
@@ -236,8 +202,8 @@ export async function getRelatedFatwas(currentId: string, category?: string, lim
 }
 
 export async function getRelatedRulings(currentId: string, category?: string, limit = 4) {
-  const { data } = await getShariaRulings({ category });
-  return data.filter((r) => r.id !== currentId).slice(0, limit);
+  const { getRelatedRulingsEncyclopedia } = await import("./rulings-service");
+  return getRelatedRulingsEncyclopedia(currentId, category, undefined, limit) as Promise<ShariaRuling[]>;
 }
 
 export async function getRelatedCourses(currentId: string, limit = 4) {

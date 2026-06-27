@@ -5,6 +5,7 @@ import { applyFontPreference, readFontPreference } from "./lib/font-preference";
 import { initClientErrorReporting } from "./lib/error-report";
 import { resetMobileNavBodyLock } from "./lib/mobile-nav-body-lock";
 import "./index.css";
+import "./styles/rulings-encyclopedia.css";
 
 resetMobileNavBodyLock();
 applyFontPreference(readFontPreference());
