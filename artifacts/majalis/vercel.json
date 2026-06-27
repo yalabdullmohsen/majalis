@@ -12,6 +12,10 @@
   },
   "crons": [
     {
+      "path": "/api/cron/process-import-jobs",
+      "schedule": "* * * * *"
+    },
+    {
       "path": "/api/cron/sync-data",
       "schedule": "5 21 * * *"
     },

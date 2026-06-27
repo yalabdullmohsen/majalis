@@ -98,7 +98,8 @@ export const API_ROUTES = [
   { prefix: "/api/cron/lesson-intelligence", module: "./api-handlers/cron/lesson-intelligence.js", allowGet: true, exact: true },
   { prefix: "/api/cron/majlis-knowledge-engine", module: "./api-handlers/cron/majlis-knowledge-engine.js", allowGet: true, exact: true },
   { prefix: "/api/cron/source-monitor", module: "./api-handlers/cron/source-monitor.js", allowGet: true, exact: true },
-  { prefix: "/api/admin/content-import", module: "./api-handlers/admin/content-import.js" },
+  { prefix: "/api/admin/content-import", module: "./api-handlers/admin/content-import.js", timeoutMs: 58_000 },
+  { prefix: "/api/cron/process-import-jobs", module: "./api-handlers/cron/process-import-jobs.js", allowGet: true, exact: true },
   { prefix: "/api/cron/import-phase2-trial", module: "./api-handlers/cron/import-phase2-trial.js", allowGet: true, exact: true },
   { prefix: "/api/cron/ai-agents", module: "./api-handlers/cron/ai-agents.js", allowGet: true, exact: true },
   { prefix: "/api/cron/verified-knowledge", module: "./api-handlers/cron/verified-knowledge.js", allowGet: true, exact: true },
@@ -178,9 +179,9 @@ export function sendJson(res, status, payload) {
 const DEFAULT_HANDLER_TIMEOUT_MS = 25_000;
 const CRON_HANDLER_TIMEOUT_MS = 55_000;
 
-async function invokeHandler(handler, req, res, routePrefix) {
+async function invokeHandler(handler, req, res, routePrefix, routeOpts = {}) {
   const isCron = routePrefix.startsWith("/api/cron/");
-  const timeoutMs = isCron ? CRON_HANDLER_TIMEOUT_MS : DEFAULT_HANDLER_TIMEOUT_MS;
+  const timeoutMs = routeOpts.timeoutMs ?? (isCron ? CRON_HANDLER_TIMEOUT_MS : DEFAULT_HANDLER_TIMEOUT_MS);
 
   let finished = false;
   const timer = setTimeout(() => {
@@ -222,7 +223,7 @@ export async function dispatchApiRequest(req, res) {
   if (req.method === "GET" && route.allowGet) {
     req.body = {};
     try {
-      await invokeHandler(handler, req, res, route.prefix);
+      await invokeHandler(handler, req, res, route.prefix, route);
     } catch (error) {
       console.error(`${route.prefix} GET handler failed`, error);
       if (!res.headersSent) {
@@ -246,7 +247,7 @@ export async function dispatchApiRequest(req, res) {
 
     req.body = body ?? {};
     try {
-      await invokeHandler(handler, req, res, route.prefix);
+      await invokeHandler(handler, req, res, route.prefix, route);
     } catch (error) {
       console.error(`${route.prefix} POST handler failed`, error);
       if (!res.headersSent) {
