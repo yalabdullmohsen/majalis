@@ -112,6 +112,10 @@
       "schedule": "5,35 * * * *"
     },
     {
+      "path": "/api/cron/content-scheduler",
+      "schedule": "0 * * * *"
+    },
+    {
       "path": "/api/cron/knowledge-reasoning",
       "schedule": "30 11 * * *"
     }

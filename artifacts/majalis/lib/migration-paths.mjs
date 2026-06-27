@@ -64,6 +64,7 @@ export const MIGRATION_FILES = [
   "sharia_rulings_encyclopedia_v1.sql",
   "majlis_knowledge_engine_v1.sql",
   "majlis_knowledge_engine_v2.sql",
+  "content_production_v1.sql",
 ];
 
 export function resolveMigrationsDir() {
