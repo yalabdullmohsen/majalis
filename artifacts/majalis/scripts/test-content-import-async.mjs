@@ -17,7 +17,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, "..");
 const fixturesDir = join(root, "data/imports/test-fixtures");
 
-const SIZES = [100, 1000, 10_000, 100_000];
+const SIZES = [10, 100, 1000, 10_000, 100_000];
 
 let passed = 0;
 let failed = 0;

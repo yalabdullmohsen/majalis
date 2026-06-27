@@ -10,6 +10,7 @@ import {
   UPLOAD_BATCH_SIZE,
 } from "../../../lib/content-import/engine.mjs";
 import { scheduleImportProcessing, triggerImportWorkerFetch, WORKER_SECRET } from "../../../lib/content-import/import-worker.mjs";
+import { recoverImportJobIntegrity } from "../../../lib/content-import/import-jobs.mjs";
 import { runPhase2TrialImport } from "../../../lib/content-import/phase2-trial.mjs";
 import { CONTENT_TYPES } from "../../../lib/content-import/registry.mjs";
 import { dirname, join } from "node:path";
@@ -74,6 +75,17 @@ export default async function handler(req, res) {
     const totalRows = Number(body.totalRows) || 0;
     if (!type) {
       sendJson(res, 400, { ok: false, error: "missing_type", types: CONTENT_TYPES });
+      return;
+    }
+    const integrity = await recoverImportJobIntegrity();
+    if (!integrity.ok) {
+      console.error("[admin/content-import:start] integrity recovery failed", integrity);
+      sendJson(res, 503, {
+        ok: false,
+        error: "import_schema_not_ready",
+        code: "schema_not_ready",
+        detail: integrity.error,
+      });
       return;
     }
     const started = await startImportJob({

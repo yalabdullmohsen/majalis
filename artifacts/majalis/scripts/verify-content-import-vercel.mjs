@@ -20,7 +20,7 @@ const FORBIDDEN = [
   /from "\.\/staged\.mjs"/,
 ];
 
-const ALLOW_FS_READ = new Set(["parsers.mjs", "ensure-schema.mjs", "phase2-trial.mjs"]);
+const ALLOW_FS_READ = new Set(["parsers.mjs", "ensure-schema.mjs", "phase2-trial.mjs", "import-jobs.mjs"]);
 
 function walk(dir) {
   const out = [];

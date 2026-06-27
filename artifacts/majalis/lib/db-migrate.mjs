@@ -110,6 +110,8 @@ export async function verifySchema() {
     "mke_queue_jobs",
     "sharia_rulings",
     "sharia_ruling_categories",
+    "content_import_jobs",
+    "content_import_staging",
   ];
 
   for (const table of tables) {
