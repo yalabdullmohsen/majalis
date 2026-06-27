@@ -213,9 +213,11 @@ async function failRun(runId, steps, step, error, ownerActions = []) {
 
 function buildBootstrapFlags(steps, productionReady) {
   const byStep = Object.fromEntries(steps.map((s) => [s.step, s.ok]));
+  const dbConnected = byStep.database_connection === true;
+  const schemaVerified = byStep.verify_schema === true;
   return {
-    databaseReady: byStep.probe_tables === true || byStep.precheck_secrets === true,
-    migrationsApplied: byStep.apply_migrations === true && byStep.verify_schema === true,
+    databaseReady: dbConnected && schemaVerified,
+    migrationsApplied: byStep.apply_migrations === true && schemaVerified,
     seedCompleted:
       byStep.seed_categories === true &&
       byStep.seed_rulings === true &&
@@ -271,34 +273,31 @@ export async function runPlatformBootstrap(options = {}) {
     );
     await updateBootstrapRun(runId, { current_step: "probe_tables", steps });
 
-    // 4. Apply migrations (tracked, ordered, skip applied)
-    if (!beforeProbe.ok || options.forceMigrations) {
-      const migration = await applyMigrations({
-        continueOnError: false,
-        trackApplied: true,
-      });
-      steps.push(
-        stepResult("apply_migrations", migration.ok, {
-          applied: migration.results?.filter((r) => r.ok && !r.skipped)?.length ?? 0,
-          skipped: migration.results?.filter((r) => r.skipped)?.length ?? 0,
-          failed: migration.results?.find((r) => !r.ok),
-          error: migration.error,
-        }),
+    // 4. Apply migrations (tracked, ordered — skips already-applied files only)
+    const migration = await applyMigrations({
+      continueOnError: false,
+      trackApplied: true,
+    });
+    steps.push(
+      stepResult("apply_migrations", migration.ok, {
+        applied: migration.results?.filter((r) => r.ok && !r.skipped)?.length ?? 0,
+        skipped: migration.results?.filter((r) => r.skipped)?.length ?? 0,
+        failed: migration.results?.find((r) => !r.ok),
+        error: migration.error,
+        missingTablesBefore: beforeProbe.missing,
+      }),
+    );
+    await updateBootstrapRun(runId, { current_step: "apply_migrations", steps });
+    if (!migration.ok) {
+      return failRun(
+        runId,
+        steps,
+        "apply_migrations",
+        migration.error ||
+          migration.results?.find((r) => !r.ok)?.error ||
+          "Migration apply failed",
+        buildOwnerActions(["DATABASE_URL", "SUPABASE_ACCESS_TOKEN"]),
       );
-      await updateBootstrapRun(runId, { current_step: "apply_migrations", steps });
-      if (!migration.ok) {
-        return failRun(
-          runId,
-          steps,
-          "apply_migrations",
-          migration.error ||
-            migration.results?.find((r) => !r.ok)?.error ||
-            "Migration apply failed",
-          buildOwnerActions(["DATABASE_URL", "SUPABASE_ACCESS_TOKEN"]),
-        );
-      }
-    } else {
-      steps.push(stepResult("apply_migrations", true, { skipped: true, reason: "all_tables_present" }));
     }
 
     // 5. Verify schema
