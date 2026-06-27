@@ -2,7 +2,7 @@
  * Islamic Answer Guardrails — source-first, no independent fatwa.
  */
 
-import { REASONING_DISCLAIMER, NO_EVIDENCE_MESSAGE } from "../reasoning-engine/constants.mjs";
+import { REASONING_DISCLAIMER, NO_EVIDENCE_MESSAGE } from "./reasoning-engine/constants.mjs";
 
 export const ISLAMIC_DISCLAIMER =
   "هذه إجابة تعليمية مختصرة وليست فتوى شخصية ملزمة.";
@@ -131,8 +131,8 @@ export function buildGroundedPayload(summary, citations = [], confidence = 0, cl
 }
 
 export function shouldBlockUnsourcedIslamicFallback(query) {
-  return classifyIslamicQuery(query) !== "general_guidance" ||
-    /\b(حكم|فتو|يجوز|حرام|حلال|سنة|فرض|واجب|صلا|صوم|زكا|حج|عمر)\b/u.test(query);
+  if (classifyIslamicQuery(query) !== "general_guidance") return true;
+  return /(?:حكم|فتو|يجوز|حرام|حلال|سنة|فرض|واجب|صلا|صوم|زكا|حج|عمر)/u.test(query);
 }
 
 export { NO_EVIDENCE_MESSAGE, REASONING_DISCLAIMER };

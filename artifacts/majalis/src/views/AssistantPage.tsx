@@ -25,6 +25,7 @@ export default function AssistantPage() {
           loading={chat.loading}
           onInputChange={chat.setInput}
           onSubmit={chat.submit}
+          onRetry={chat.retryLastFailure}
           bottomRef={chat.bottomRef}
         />
       </section>

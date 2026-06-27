@@ -31,9 +31,10 @@ export function majalisApiPlugin() {
           } catch (error) {
             console.error(`${route.prefix} dev GET handler failed`, error);
             if (!res.headersSent) {
-              sendJson(res, 200, {
+              sendJson(res, 500, {
                 ok: false,
-                message: "تعذر تشغيل المساعد الآن، حاول لاحقًا.",
+                error_code: "INTERNAL_ERROR",
+                message: "تعذر تشغيل المساعد حالياً بسبب مشكلة تقنية، وتم تسجيل الخطأ.",
                 fallback: true,
               });
             }
@@ -68,9 +69,10 @@ export function majalisApiPlugin() {
           } catch (error) {
             console.error(`${route.prefix} dev handler failed`, error);
             if (!res.headersSent) {
-              sendJson(res, 200, {
+              sendJson(res, 500, {
                 ok: false,
-                message: "تعذر تشغيل المساعد الآن، حاول لاحقًا.",
+                error_code: "INTERNAL_ERROR",
+                message: "تعذر تشغيل المساعد حالياً بسبب مشكلة تقنية، وتم تسجيل الخطأ.",
                 fallback: true,
               });
             }

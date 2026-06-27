@@ -1,5 +1,10 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { callAssistantApi, type AssistantResponse, type SafetyClassification } from "@/lib/assistant-api";
+import {
+  callAssistantApi,
+  logAssistantFailure,
+  type AssistantResponse,
+  type SafetyClassification,
+} from "@/lib/assistant-api";
 import { resolveFounderQuestion } from "@/lib/assistant-founder";
 
 export type ChatMessage = {
@@ -7,6 +12,7 @@ export type ChatMessage = {
   role: "user" | "assistant";
   content: string;
   isFailure?: boolean;
+  retryQuestion?: string;
   citations?: AssistantResponse["citations"];
   grounded?: boolean;
   confidence?: number;
@@ -14,7 +20,8 @@ export type ChatMessage = {
   disclaimer?: string;
 };
 
-export const ASSISTANT_FAILURE_MESSAGE = "تعذر تشغيل المساعد الآن، حاول لاحقًا.";
+export const ASSISTANT_FAILURE_MESSAGE =
+  "تعذر تشغيل المساعد حالياً بسبب مشكلة تقنية، وتم تسجيل الخطأ.";
 
 export const ASSISTANT_WELCOME_MESSAGE: ChatMessage = {
   id: "welcome",
@@ -34,6 +41,21 @@ function pickAnswer(data: AssistantResponse): string | null {
   return typeof text === "string" && text.trim() ? text.trim() : null;
 }
 
+function pickUserFacingError(data: AssistantResponse, status: number): string {
+  const answer = pickAnswer(data);
+  if (answer && data.fallback) return answer;
+
+  if (typeof data.message === "string" && data.message.trim()) {
+    return data.message.trim();
+  }
+
+  if (status === 429) {
+    return "محاولات كثيرة. انتظر قليلاً ثم حاول مجدداً.";
+  }
+
+  return ASSISTANT_FAILURE_MESSAGE;
+}
+
 export function useAssistantChat() {
   const [messages, setMessages] = useState<ChatMessage[]>([ASSISTANT_WELCOME_MESSAGE]);
   const [input, setInput] = useState("");
@@ -44,14 +66,15 @@ export function useAssistantChat() {
     bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
   }, [messages, loading]);
 
-  const appendFailureMessage = () => {
+  const appendFailureMessage = (content: string, retryQuestion?: string) => {
     setMessages((current) => [
       ...current,
       {
         id: createId(),
         role: "assistant",
-        content: ASSISTANT_FAILURE_MESSAGE,
+        content,
         isFailure: true,
+        retryQuestion,
       },
     ]);
   };
@@ -82,19 +105,14 @@ export function useAssistantChat() {
     }
 
     try {
-      const { response, data } = await callAssistantApi({
+      const { response, data, endpoint } = await callAssistantApi({
         message: trimmed,
         messages: history.map(({ role, content }) => ({ role, content })),
       });
 
-      if (response.status === 429 || response.status === 400) {
-        appendFailureMessage();
-        return;
-      }
-
       const answer = pickAnswer(data);
 
-      if (data.ok && answer) {
+      if (data.ok !== false && answer) {
         setMessages((current) => [
           ...current,
           {
@@ -111,13 +129,29 @@ export function useAssistantChat() {
         return;
       }
 
-      appendFailureMessage();
+      const errorText = pickUserFacingError(data, response.status);
+      logAssistantFailure("send-question", {
+        endpoint,
+        status: response.status,
+        data,
+        reason: data.error_code || "no_answer_in_response",
+      });
+      appendFailureMessage(errorText, trimmed);
     } catch (caughtError) {
-      console.error("[assistant-ui] fetch error", caughtError);
-      appendFailureMessage();
+      logAssistantFailure("send-question-catch", {
+        endpoint: "/api/assistant",
+        status: 0,
+        reason: "network_or_fetch_error",
+        error: caughtError,
+      });
+      appendFailureMessage(ASSISTANT_FAILURE_MESSAGE, trimmed);
     } finally {
       setLoading(false);
     }
+  };
+
+  const retryLastFailure = async (question: string) => {
+    await sendQuestion(question);
   };
 
   const submit = async (event: FormEvent) => {
@@ -131,6 +165,7 @@ export function useAssistantChat() {
     setInput,
     loading,
     sendQuestion,
+    retryLastFailure,
     submit,
     bottomRef,
   };

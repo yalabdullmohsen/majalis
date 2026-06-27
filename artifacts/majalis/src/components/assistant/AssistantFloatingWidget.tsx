@@ -102,6 +102,7 @@ export function AssistantFloatingWidget() {
               loading={chat.loading}
               onInputChange={chat.setInput}
               onSubmit={chat.submit}
+              onRetry={chat.retryLastFailure}
               onQuickPrompt={chat.sendQuestion}
               bottomRef={chat.bottomRef}
             />

@@ -8,6 +8,7 @@ type Props = {
   loading: boolean;
   onInputChange: (value: string) => void;
   onSubmit: (event: React.FormEvent) => void;
+  onRetry?: (question: string) => void;
   bottomRef: RefObject<HTMLDivElement | null>;
   compact?: boolean;
   onQuickPrompt?: (text: string) => void;
@@ -41,6 +42,7 @@ export function AssistantChatView({
   loading,
   onInputChange,
   onSubmit,
+  onRetry,
   bottomRef,
   compact = false,
   onQuickPrompt,
@@ -107,7 +109,19 @@ export function AssistantChatView({
                 </p>
               </>
             ) : (
-              <p>{message.content}</p>
+              <>
+                <p>{message.content}</p>
+                {message.isFailure && message.retryQuestion && onRetry && (
+                  <button
+                    type="button"
+                    className="assistant-retry-btn"
+                    disabled={loading}
+                    onClick={() => onRetry(message.retryQuestion!)}
+                  >
+                    إعادة المحاولة
+                  </button>
+                )}
+              </>
             )}
           </article>
         ))}
