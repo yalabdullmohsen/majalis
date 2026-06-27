@@ -17,6 +17,23 @@ export const ACTIVATION_TABLES = [
   "content_import_jobs",
   "content_import_staging",
   "verified_adhkar_items",
+  "akp_content_sources",
+  "akp_pipeline_runs",
+  "akp_content_fingerprints",
+  "akp_review_queue",
+  "akp_dead_letter_jobs",
+  "content_scheduler_jobs",
+  "content_scheduler_runs",
+  "content_pipeline_sources",
+  "content_production_staging",
+  "content_production_review_queue",
+  "content_production_retry_queue",
+  "content_production_dead_letter",
+  "content_production_logs",
+  "content_production_health",
+  "content_production_alerts",
+  "content_dedup_registry",
+  "content_production_published",
 ];
 
 export async function probeTableAdmin(table) {

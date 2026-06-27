@@ -118,6 +118,38 @@
     {
       "path": "/api/cron/knowledge-reasoning",
       "schedule": "30 11 * * *"
+    },
+    {
+      "path": "/api/cron/autonomous-platform-fetch",
+      "schedule": "0 * * * *"
+    },
+    {
+      "path": "/api/cron/autonomous-platform-validate",
+      "schedule": "0 */2 * * *"
+    },
+    {
+      "path": "/api/cron/autonomous-platform-questions",
+      "schedule": "0 */3 * * *"
+    },
+    {
+      "path": "/api/cron/autonomous-platform-benefits",
+      "schedule": "0 */6 * * *"
+    },
+    {
+      "path": "/api/cron/autonomous-platform-reindex",
+      "schedule": "0 2 * * *"
+    },
+    {
+      "path": "/api/cron/autonomous-platform-audit",
+      "schedule": "0 4 * * 0"
+    },
+    {
+      "path": "/api/cron/autonomous-platform-cleanup",
+      "schedule": "0 3 1 * *"
+    },
+    {
+      "path": "/api/cron/autonomous-platform-bootstrap",
+      "schedule": "30 5 * * *"
     }
   ],
   "rewrites": [

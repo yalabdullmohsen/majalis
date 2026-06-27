@@ -318,7 +318,13 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
     });
     const commitJson = await commitRes.json();
     if (!commitRes.ok && commitRes.status !== 202) {
-      throw new Error(commitJson.error || commitJson.message || "تعذر إرسال مهمة الاستيراد");
+      const detail =
+        commitJson.error ||
+        commitJson.report?.validationErrors?.[0] ||
+        commitJson.report?.importErrors?.[0] ||
+        commitJson.message ||
+        "تعذر إرسال مهمة الاستيراد";
+      throw new Error(detail);
     }
 
     if (commitJson.sync && TERMINAL_STATUSES.has(commitJson.status)) {

@@ -10,6 +10,8 @@ export const CONTENT_TYPES = [
   "adhkar",
   "benefits",
   "rulings",
+  "hadith",
+  "stories",
 ];
 
 /** @typedef {{ type: string, label: string, table?: string, aliases?: string[] }} ContentTypeDef */
@@ -69,6 +71,18 @@ export const TYPE_REGISTRY = {
     label: "الفتاوى",
     table: "sharia_rulings",
     aliases: ["ruling", "fatwa", "fatwas"],
+  },
+  hadith: {
+    type: "hadith",
+    label: "الأحاديث",
+    table: "verified_hadith_items",
+    aliases: ["hadiths", "sunnah"],
+  },
+  stories: {
+    type: "stories",
+    label: "القصص",
+    table: "akp_stories",
+    aliases: ["story", "qisas"],
   },
 };
 
