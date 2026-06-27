@@ -237,6 +237,15 @@ function Router() {
           </ErrorBoundary>
         </AdminRouteGuard>
       </Route>
+      <Route path="/admin/review-center">
+        <AdminRouteGuard>
+          <ErrorBoundary>
+            <Suspense fallback={<Loading />}>
+              <AutomationReviewPage />
+            </Suspense>
+          </ErrorBoundary>
+        </AdminRouteGuard>
+      </Route>
       <Route path="/admin/automation/review">
         <AdminRouteGuard>
           <ErrorBoundary>

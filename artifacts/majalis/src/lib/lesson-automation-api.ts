@@ -76,6 +76,14 @@ export async function rejectAutomationDraft(draftId: string) {
   return postAutomation({ action: "reject-draft", draftId });
 }
 
+export async function reAnalyzeAutomationDraft(draftId: string) {
+  return postAutomation({ action: "re-analyze", draftId });
+}
+
+export async function listAutomationRuns(limit = 20) {
+  return postAutomation({ action: "list-runs", limit });
+}
+
 export const TRUST_LEVELS = [
   ["official", "رسمي"],
   ["trusted", "موثوق"],

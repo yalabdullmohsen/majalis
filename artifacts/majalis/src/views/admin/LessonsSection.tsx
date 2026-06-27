@@ -128,6 +128,12 @@ export function LessonsSection() {
             أتمتة المصادر
           </Link>
           <Link
+            href="/admin/review-center"
+            style={{ padding: "0.5rem 1rem", borderRadius: "0.375rem", background: "#FCE7F3", color: "#9D174D", textDecoration: "none", fontFamily: "inherit", fontSize: "0.875rem", fontWeight: 600, display: "inline-flex", alignItems: "center" }}
+          >
+            مركز المراجعة
+          </Link>
+          <Link
             href="/admin/content-import/image"
             style={{ padding: "0.5rem 1rem", borderRadius: "0.375rem", background: "#DBEAFE", color: "#1D4ED8", textDecoration: "none", fontFamily: "inherit", fontSize: "0.875rem", fontWeight: 600, display: "inline-flex", alignItems: "center" }}
           >

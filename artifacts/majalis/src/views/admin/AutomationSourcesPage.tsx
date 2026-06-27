@@ -97,7 +97,7 @@ function AutomationSourcesContent() {
           </p>
         </div>
         <div style={{ display: "flex", gap: "0.5rem", fontSize: "0.8125rem" }}>
-          <Link href="/admin/automation/review" style={{ color: C.emeraldDeep }}>مركز المراجعة</Link>
+          <Link href="/admin/review-center" style={{ color: C.emeraldDeep }}>مركز المراجعة</Link>
           <Link href="/admin" style={{ color: C.emeraldDeep }}>← لوحة الإدارة</Link>
         </div>
       </div>

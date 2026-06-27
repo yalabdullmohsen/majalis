@@ -2,7 +2,7 @@
 /**
  * Auto-publish rule scenarios (no network/DB).
  */
-import { simulateAutoPublishScenario } from "../lib/cms/lesson-source-monitor.mjs";
+import { simulateAutoPublishScenario, AUTO_PUBLISH_ENABLED } from "../lib/cms/lesson-source-monitor.mjs";
 
 let failed = 0;
 
@@ -90,6 +90,9 @@ const s4 = simulateAutoPublishScenario({
   imageUrl: "https://example.com/poster.jpg",
 });
 assert("scenario 4: duplicate → duplicate decision", s4.decision === "duplicate");
+
+// Phase 3: auto-publish disabled by default
+assert("Phase 3: auto-publish disabled by default", AUTO_PUBLISH_ENABLED === false);
 
 if (failed > 0) {
   console.error(`\n${failed} scenario(s) failed.`);

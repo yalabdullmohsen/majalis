@@ -10,9 +10,10 @@ import {
 } from "../../../lib/cms/trusted-sources.mjs";
 import { listAutomationAudit } from "../../../lib/cms/automation-audit.mjs";
 import { runLessonSourceMonitor } from "../../../lib/cms/lesson-source-monitor.mjs";
+import { listAutomationRuns } from "../../../lib/cms/automation-runs.mjs";
+import { countPendingAutomationDrafts } from "../../../lib/cms/automation-notifications.mjs";
 import { listLessonImportDrafts, getLessonImportDraft } from "../../../lib/cms/lesson-import-draft.mjs";
 import { handleLessonImportApprove, handleLessonImportReject } from "../../../lib/cms/lesson-import-actions.mjs";
-import { getSupabaseAdmin } from "../../../lib/supabase-admin.mjs";
 
 export default async function handler(req, res) {
   const auth = await requireAdminAccess(req, res, sendJson, { permission: "content.edit" });
@@ -79,7 +80,6 @@ export default async function handler(req, res) {
     }
 
     if (action === "list-review") {
-      const admin = getSupabaseAdmin();
       const drafts = await listLessonImportDrafts({
         status: body.status,
         limit: body.limit || 100,
@@ -89,6 +89,7 @@ export default async function handler(req, res) {
       const pending = drafts.filter((d) => d.automation_status === "pending_review" || d.status === "needs_review");
       const duplicates = audit.filter((a) => a.decision === "duplicate");
       const rejected = audit.filter((a) => a.decision === "rejected");
+      const pendingCount = await countPendingAutomationDrafts();
       sendJson(res, 200, {
         ok: true,
         drafts: pending,
@@ -96,7 +97,28 @@ export default async function handler(req, res) {
         duplicates,
         rejected,
         audit,
+        pendingCount,
       });
+      return;
+    }
+
+    if (action === "list-runs") {
+      const runs = await listAutomationRuns({ limit: body.limit || 20 });
+      sendJson(res, 200, { ok: true, runs });
+      return;
+    }
+
+    if (action === "re-analyze") {
+      const draft = await getLessonImportDraft(body.draftId);
+      if (!draft?.source_id) {
+        sendJson(res, 400, { ok: false, error: "missing_source_id" });
+        return;
+      }
+      const result = await runLessonSourceMonitor({
+        sourceId: draft.source_id,
+        runType: "re_analyze",
+      });
+      sendJson(res, 200, result);
       return;
     }
 
@@ -131,6 +153,8 @@ export default async function handler(req, res) {
         "run-monitor",
         "list-audit",
         "list-review",
+        "list-runs",
+        "re-analyze",
         "approve-draft",
         "reject-draft",
       ],

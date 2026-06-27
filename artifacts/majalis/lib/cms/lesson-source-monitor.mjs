@@ -1,6 +1,6 @@
 /**
- * Monitor trusted_lesson_sources → extract → auto-publish or review draft.
- * Only fetches configured trusted URLs — no open web search.
+ * Monitor trusted content sources → extract → pending_review draft (Phase 3).
+ * No direct publish without human review unless MAJALIS_AUTO_PUBLISH=1.
  */
 import { importFromUrl } from "./url-importer.mjs";
 import { extractLessonFromText, extractLessonFromImage, isVisionEnabled } from "./lesson-extractor.mjs";
@@ -8,12 +8,17 @@ import { matchSheikhByName } from "./sheikh-matcher.mjs";
 import { listTrustedSources, updateSourceCheckStatus } from "./trusted-sources.mjs";
 import { evaluateAutoPublish } from "./auto-publish-engine.mjs";
 import { findDuplicateLesson, hashImageBuffer } from "./lesson-duplicate-detector.mjs";
+import { findDuplicateSourceUrl } from "./lesson-import-draft.mjs";
 import { writeAutomationAudit } from "./automation-audit.mjs";
 import { createLessonImportDraft } from "./lesson-import-draft.mjs";
 import { publishLessonDraft } from "./publish-lesson.mjs";
 import { getSupabaseAdmin } from "../supabase-admin.mjs";
 import { discoverInstagramSource, enrichParsedFromSourceConfig, INSTAGRAM_CONNECTOR_HINTS } from "./instagram-connector.mjs";
 import { resolveSheikhIdForDraft } from "./lesson-import-actions.mjs";
+import { startAutomationRun, finishAutomationRun } from "./automation-runs.mjs";
+import { notifyAdminsNewDrafts } from "./automation-notifications.mjs";
+
+const AUTO_PUBLISH_ENABLED = process.env.MAJALIS_AUTO_PUBLISH === "1";
 
 async function parseRssItems(xml) {
   const items = [];
@@ -143,6 +148,7 @@ export async function processAutomationItem({ source, item, connectorHint }) {
       title: item.title,
       reason: connectorHint || "instagram_connector_required",
       connectorRequired: true,
+      isNew: true,
     };
   }
 
@@ -177,10 +183,13 @@ export async function processAutomationItem({ source, item, connectorHint }) {
       imageHash,
       similarityScore: duplicate.similarity_score,
     });
-    return { decision: "duplicate", sourceUrl, reason: evaluation.duplicate?.message };
+    return { decision: "duplicate", sourceUrl, reason: evaluation.duplicate?.message, isNew: false };
   }
 
-  if (evaluation.autoPublish) {
+  // Phase 3: no direct publish — human review required (opt-in via MAJALIS_AUTO_PUBLISH=1)
+  const mayAutoPublish = AUTO_PUBLISH_ENABLED && source.auto_publish_allowed && evaluation.autoPublish;
+
+  if (mayAutoPublish) {
     const draftStub = { id: null, matched_sheikh_id: sheikhMatch.matched?.id, source_url: sourceUrl };
     const sheikhId = await resolveSheikhIdForDraft(draftStub, parsed, null);
 
@@ -205,6 +214,11 @@ export async function processAutomationItem({ source, item, connectorHint }) {
       decision = "pending_review";
       reason = publish.validation?.errors?.map((e) => e.message).join(" — ") || publish.error || "publish_failed";
     }
+  } else {
+    decision = "pending_review";
+    if (evaluation.autoPublish && !AUTO_PUBLISH_ENABLED) {
+      reason = reason ? `${reason} — مراجعة بشرية مطلوبة (Phase 3)` : "مراجعة بشرية مطلوبة (Phase 3)";
+    }
   }
 
   if (!lessonId) {
@@ -222,12 +236,11 @@ export async function processAutomationItem({ source, item, connectorHint }) {
       createdBy: null,
       status: "needs_review",
       sourceId: source.id,
-      automationStatus: decision === "pending_review" ? "pending_review" : "manual",
+      automationStatus: "pending_review",
       decisionReason: reason,
       imageHash,
     });
     draftId = draft.draft?.id;
-    if (decision === "approved") decision = "pending_review";
   }
 
   await writeAutomationAudit({
@@ -252,11 +265,12 @@ export async function processAutomationItem({ source, item, connectorHint }) {
     sourceUrl,
     title: parsed.title,
     reason,
+    isNew: Boolean(draftId),
   };
 }
 
 async function discoverItems(source) {
-  const feedUrl = source.feed_url || (source.source_type === "rss" ? source.url : null);
+  const feedUrl = source.feed_url || source.rss_url || (source.source_type === "rss" ? source.url : null);
 
   if (source.source_type === "instagram") {
     const ig = await discoverInstagramSource(source);
@@ -286,9 +300,17 @@ async function discoverItems(source) {
   };
 }
 
-export async function runLessonSourceMonitor({ dryRun = false, sourceId = null } = {}) {
+function isUrlAlreadySeen(source, itemUrl) {
+  const seen = source.last_seen_urls || [];
+  return seen.includes(itemUrl);
+}
+
+export async function runLessonSourceMonitor({ dryRun = false, sourceId = null, runType = "source_monitor" } = {}) {
   const admin = getSupabaseAdmin();
   if (!admin) return { ok: false, error: "supabase_admin_missing", processed: 0 };
+
+  const runStart = await startAutomationRun({ runType, sourceId, metadata: { dryRun } });
+  const startedAt = runStart.startedAt || Date.now();
 
   let sources = await listTrustedSources({ activeOnly: true });
   if (sourceId) sources = sources.filter((s) => s.id === sourceId);
@@ -297,30 +319,60 @@ export async function runLessonSourceMonitor({ dryRun = false, sourceId = null }
   let published = 0;
   let review = 0;
   let duplicates = 0;
+  let skipped = 0;
   let errors = 0;
-
   let connectorNeeded = 0;
+  let itemsScanned = 0;
+  let newDrafts = 0;
+  const newDraftSources = new Set();
 
   for (const source of sources) {
+    const seenThisRun = [];
     try {
       const { items, connectorHint } = await discoverItems(source);
       for (const item of items) {
-        if (dryRun) {
-          results.push({ source: source.name, item: item.link, dryRun: true, connectorHint });
+        itemsScanned += 1;
+        const itemUrl = item.link || source.url;
+
+        if (isUrlAlreadySeen(source, itemUrl)) {
+          skipped += 1;
+          results.push({ source: source.name, item: itemUrl, skipped: true, reason: "already_seen" });
           continue;
         }
+
+        const prior = await findDuplicateSourceUrl(itemUrl);
+        if (prior?.isDuplicate) {
+          duplicates += 1;
+          seenThisRun.push(itemUrl);
+          results.push({ source: source.name, item: itemUrl, decision: "duplicate", reason: "already_imported" });
+          continue;
+        }
+
+        if (dryRun) {
+          results.push({ source: source.name, item: itemUrl, dryRun: true, connectorHint });
+          continue;
+        }
+
         const outcome = await processAutomationItem({ source, item, connectorHint });
+        seenThisRun.push(itemUrl);
         results.push({ source: source.name, ...outcome, connectorHint });
+
         if (outcome.connectorRequired) connectorNeeded += 1;
         if (outcome.autoPublished) published += 1;
         else if (outcome.decision === "duplicate") duplicates += 1;
-        else review += 1;
+        else if (outcome.isNew) {
+          review += 1;
+          newDrafts += 1;
+          newDraftSources.add(source.name);
+        } else review += 1;
       }
-      await updateSourceCheckStatus(source.id, { success: true });
+
+      const mergedSeen = [...new Set([...(source.last_seen_urls || []), ...seenThisRun])].slice(-50);
+      await updateSourceCheckStatus(source.id, { success: true, seenUrls: mergedSeen });
+
       if (connectorHint) {
-        const admin = getSupabaseAdmin();
         await admin
-          ?.from("trusted_lesson_sources")
+          .from("trusted_content_sources")
           .update({ last_error: String(connectorHint).slice(0, 500) })
           .eq("id", source.id);
       }
@@ -331,14 +383,38 @@ export async function runLessonSourceMonitor({ dryRun = false, sourceId = null }
     }
   }
 
+  if (newDrafts > 0 && !dryRun) {
+    await notifyAdminsNewDrafts({
+      newCount: newDrafts,
+      sourceName: newDraftSources.size === 1 ? [...newDraftSources][0] : null,
+      link: "/admin/review-center",
+    });
+  }
+
+  await finishAutomationRun(runStart.runId, {
+    startedAt,
+    itemsScanned,
+    itemsNew: newDrafts,
+    itemsDuplicate: duplicates,
+    itemsSkipped: skipped,
+    itemsErrors: errors,
+    durationMs: Date.now() - startedAt,
+    metadata: { sourcesChecked: sources.length, connectorNeeded, autoPublishEnabled: AUTO_PUBLISH_ENABLED },
+  });
+
   return {
     ok: true,
     sourcesChecked: sources.length,
+    itemsScanned,
     published,
     pendingReview: review,
+    newDrafts,
     duplicates,
+    skipped,
     errors,
     connectorNeeded,
+    autoPublishEnabled: AUTO_PUBLISH_ENABLED,
+    runId: runStart.runId,
     results,
   };
 }
@@ -347,3 +423,5 @@ export async function runLessonSourceMonitor({ dryRun = false, sourceId = null }
 export function simulateAutoPublishScenario({ source, parsed, confidenceScore, sheikhMatch, duplicate, sourceUrl, imageUrl }) {
   return evaluateAutoPublish({ source, parsed, confidenceScore, duplicate, sheikhMatch, sourceUrl, imageUrl });
 }
+
+export { AUTO_PUBLISH_ENABLED };
