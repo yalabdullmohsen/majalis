@@ -169,6 +169,7 @@ export default async function handler(req, res) {
         extracted: parsed,
         sheikhId,
         imageUrl: draft.image_url,
+        sourceUrl: draft.source_url,
         userId: auth.user?.id,
         draftId: draft.id,
       });

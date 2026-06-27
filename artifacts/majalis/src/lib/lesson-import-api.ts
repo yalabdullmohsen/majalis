@@ -30,6 +30,8 @@ export type ParsedLessonFields = {
   is_course?: boolean;
   activity_type?: string;
   end_date?: string;
+  platform?: string;
+  source_url?: string;
 };
 
 export type LessonImportResponse = {
@@ -51,14 +53,32 @@ export type LessonImportResponse = {
   draft_id?: string;
   draft?: Record<string, unknown>;
   image_url?: string;
+  source_url?: string;
+  platform?: string;
+  platform_label?: string;
+  duplicate?: {
+    isDuplicate?: boolean;
+    draft?: { id?: string; status?: string };
+    lesson?: { id?: string; title?: string };
+  };
+  partial?: boolean;
+  extraction_failed?: boolean;
   lesson?: Record<string, unknown>;
   validation?: { valid: boolean; errors: { field: string; message: string }[]; warnings: unknown[] };
   storage_uploaded?: boolean;
   storage_error?: string;
 };
 
-async function postLessonImport(body: Record<string, unknown>): Promise<LessonImportResponse> {
+async function postLessonFromImage(body: Record<string, unknown>): Promise<LessonImportResponse> {
   const res = await adminFetch("/api/admin/lesson-from-image", {
+    method: "POST",
+    body: JSON.stringify(body),
+  });
+  return res.json();
+}
+
+async function postLessonFromUrl(body: Record<string, unknown>): Promise<LessonImportResponse> {
+  const res = await adminFetch("/api/admin/lesson-from-url", {
     method: "POST",
     body: JSON.stringify(body),
   });
@@ -82,7 +102,7 @@ export async function extractLessonFromImageUpload(
   opts?: { sourceUrl?: string; notes?: string },
 ): Promise<LessonImportResponse> {
   const base64 = await fileToBase64(file);
-  return postLessonImport({
+  return postLessonFromImage({
     action: "extract",
     imageBase64: base64,
     mimeType: file.type || "image/jpeg",
@@ -91,32 +111,62 @@ export async function extractLessonFromImageUpload(
   });
 }
 
+export async function extractLessonFromUrl(url: string, notes?: string): Promise<LessonImportResponse> {
+  return postLessonFromUrl({ action: "extract", url, notes });
+}
+
 export async function saveLessonImportDraft(
   parsed: ParsedLessonFields,
-  opts?: { draftId?: string; imageUrl?: string; extractedText?: string; notes?: string },
+  opts?: { draftId?: string; imageUrl?: string; extractedText?: string; notes?: string; sourceUrl?: string },
 ) {
-  return postLessonImport({
+  return postLessonFromImage({
     action: opts?.draftId ? "update-draft" : "save-draft",
     draftId: opts?.draftId,
     parsed_fields: parsed,
     image_url: opts?.imageUrl,
     extracted_text: opts?.extractedText,
     notes: opts?.notes,
+    source_url: opts?.sourceUrl,
+    status: "draft",
+  });
+}
+
+export async function saveLessonImportFromUrl(
+  parsed: ParsedLessonFields,
+  opts?: { draftId?: string; imageUrl?: string; extractedText?: string; notes?: string; sourceUrl?: string },
+) {
+  return postLessonFromUrl({
+    action: opts?.draftId ? "update-draft" : "save-draft",
+    draftId: opts?.draftId,
+    parsed_fields: parsed,
+    image_url: opts?.imageUrl,
+    extracted_text: opts?.extractedText,
+    notes: opts?.notes,
+    source_url: opts?.sourceUrl,
+    source_type: "url",
     status: "draft",
   });
 }
 
 export async function approveLessonImportDraft(draftId: string, parsed: ParsedLessonFields) {
-  return postLessonImport({ action: "approve", draftId, parsed_fields: parsed });
+  return postLessonFromImage({ action: "approve", draftId, parsed_fields: parsed });
+}
+
+export async function approveLessonImportFromUrl(draftId: string, parsed: ParsedLessonFields) {
+  return postLessonFromUrl({ action: "approve", draftId, parsed_fields: parsed });
 }
 
 export async function rejectLessonImportDraft(draftId: string) {
-  return postLessonImport({ action: "reject", draftId });
+  return postLessonFromImage({ action: "reject", draftId });
+}
+
+export async function rejectLessonImportFromUrl(draftId: string) {
+  return postLessonFromUrl({ action: "reject", draftId });
 }
 
 export async function reExtractLessonImportDraft(draftId: string, file: File) {
   const base64 = await fileToBase64(file);
-  return postLessonImport({
+  return postLessonFromImage({
     action: "re-extract",
     draftId,
     imageBase64: base64,
@@ -124,12 +174,16 @@ export async function reExtractLessonImportDraft(draftId: string, file: File) {
   });
 }
 
+export async function reExtractLessonFromUrl(draftId: string) {
+  return postLessonFromUrl({ action: "re-extract", draftId });
+}
+
 export async function getLessonImportDraft(draftId: string) {
-  return postLessonImport({ action: "get", draftId });
+  return postLessonFromImage({ action: "get", draftId });
 }
 
 export async function listLessonImportDrafts(status?: string) {
-  return postLessonImport({ action: "list", status });
+  return postLessonFromImage({ action: "list", status });
 }
 
 export const FIELD_LABELS: Record<string, string> = {

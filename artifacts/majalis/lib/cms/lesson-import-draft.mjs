@@ -88,3 +88,53 @@ export async function setLessonImportDraftStatus(id, status, { reviewedBy, appro
   }
   return updateLessonImportDraft(id, patch);
 }
+
+function urlCandidates(normalizedUrl) {
+  const base = String(normalizedUrl || "").trim();
+  if (!base) return [];
+  const withSlash = base.endsWith("/") ? base : `${base}/`;
+  const withoutSlash = base.endsWith("/") ? base.slice(0, -1) : base;
+  return [...new Set([base, withSlash, withoutSlash])];
+}
+
+export async function findDuplicateSourceUrl(sourceUrl) {
+  const admin = getSupabaseAdmin();
+  if (!admin || !sourceUrl) return null;
+
+  const candidates = urlCandidates(sourceUrl);
+
+  const { data: drafts } = await admin
+    .from("lesson_import_drafts")
+    .select("id, status, source_url, created_at")
+    .in("source_url", candidates)
+    .neq("status", "rejected")
+    .order("created_at", { ascending: false })
+    .limit(1);
+
+  let lesson = null;
+  try {
+    const { data: lessonsBySource } = await admin
+      .from("lessons")
+      .select("id, title, source_url, website_url")
+      .in("source_url", candidates)
+      .limit(1);
+    lesson = lessonsBySource?.[0] || null;
+  } catch {
+    // source_url column may be missing on older schemas
+  }
+
+  if (!lesson) {
+    const { data: lessonsByWeb } = await admin
+      .from("lessons")
+      .select("id, title, website_url")
+      .in("website_url", candidates)
+      .limit(1);
+    lesson = lessonsByWeb?.[0] || null;
+  }
+
+  return {
+    draft: drafts?.[0] || null,
+    lesson,
+    isDuplicate: Boolean(drafts?.[0] || lesson),
+  };
+}

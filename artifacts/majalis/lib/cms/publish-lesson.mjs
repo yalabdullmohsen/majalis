@@ -7,6 +7,7 @@ import { writeRevisionLogs } from "./audit-revision.mjs";
 
 function mapDraftToLesson(extracted, opts = {}) {
   const d = extracted || {};
+  const sourceUrl = opts.sourceUrl;
   const hasLive = Boolean(d.has_live_stream || d.live_url);
   const hasWomen = Boolean(
     d.has_women_section || (d.women_section && String(d.women_section).trim()),
@@ -35,7 +36,7 @@ function mapDraftToLesson(extracted, opts = {}) {
     is_course: Boolean(d.is_course),
     live_url: d.live_url || null,
     maps_url: d.maps_url || null,
-    website_url: d.registration_url || d.website_url || null,
+    website_url: d.registration_url || d.website_url || sourceUrl || null,
     poster_image_url: d.poster_image_url || opts.imageUrl || null,
     organizer: d.organizer || null,
     cooperative_org: d.cooperative_org || null,
@@ -46,10 +47,11 @@ function mapDraftToLesson(extracted, opts = {}) {
     external_key: d.external_key || buildExternalKey(d),
     slug: d.slug || null,
     published_at: new Date().toISOString(),
+    source_url: sourceUrl || d.source_url || d.registration_url || null,
   };
 }
 
-export async function publishLessonDraft({ extracted, sheikhId, imageUrl, userId, draftId }) {
+export async function publishLessonDraft({ extracted, sheikhId, imageUrl, sourceUrl, userId, draftId }) {
   const validation = validateLessonDraft(extracted);
   if (!validation.canPublish) {
     return { ok: false, validation };
@@ -58,7 +60,7 @@ export async function publishLessonDraft({ extracted, sheikhId, imageUrl, userId
   const admin = getSupabaseAdmin();
   if (!admin) return { ok: false, error: "supabase_admin_missing" };
 
-  const payload = mapDraftToLesson(extracted, { sheikhId, imageUrl });
+  const payload = mapDraftToLesson(extracted, { sheikhId, imageUrl, sourceUrl });
 
   const { data: existing } = await admin
     .from("lessons")

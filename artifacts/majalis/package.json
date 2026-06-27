@@ -15,6 +15,7 @@
     "verify:phase2-import": "node scripts/verify-phase2-import.mjs",
     "verify:deploy": "node scripts/verify-deploy-output.mjs",
     "verify:production": "node scripts/verify-production-urls.mjs",
+    "verify:lesson-url-import": "node scripts/verify-lesson-url-import.mjs",
     "smoke:nav": "node scripts/smoke-nav-menu.mjs",
     "build": "pnpm run generate:seo && vite build --config vite.config.ts",
     "build:next": "next build",

@@ -2,20 +2,50 @@
  * Import lesson metadata from social / web URLs.
  */
 
+const SUPPORTED_PLATFORMS = new Set(["instagram", "youtube", "twitter", "telegram", "website"]);
+
 const PLATFORM_PATTERNS = [
-  { platform: "instagram", test: /instagram\.com/i },
-  { platform: "youtube", test: /youtube\.com|youtu\.be/i },
-  { platform: "twitter", test: /twitter\.com|x\.com/i },
-  { platform: "telegram", test: /t\.me|telegram/i },
-  { platform: "facebook", test: /facebook\.com|fb\.com/i },
+  { platform: "instagram", test: /instagram\.com/i, label: "Instagram" },
+  { platform: "youtube", test: /youtube\.com|youtu\.be/i, label: "YouTube" },
+  { platform: "twitter", test: /twitter\.com|x\.com/i, label: "X" },
+  { platform: "telegram", test: /t\.me|telegram\.(me|org)/i, label: "Telegram" },
+  { platform: "facebook", test: /facebook\.com|fb\.com/i, label: "Facebook" },
 ];
+
+export function normalizeImportUrl(raw) {
+  const u = String(raw || "").trim();
+  if (!u) return null;
+  try {
+    const parsed = new URL(u.startsWith("http") ? u : `https://${u}`);
+    if (!["http:", "https:"].includes(parsed.protocol)) return null;
+    parsed.hash = "";
+    let path = parsed.pathname.replace(/\/+$/, "");
+    if (path === "") path = "";
+    parsed.pathname = path || "/";
+    return parsed.toString();
+  } catch {
+    return null;
+  }
+}
+
+export function isSupportedImportPlatform(platform) {
+  return SUPPORTED_PLATFORMS.has(platform);
+}
+
+export function getPlatformLabel(platform) {
+  const found = PLATFORM_PATTERNS.find((p) => p.platform === platform);
+  if (found) return found.label;
+  if (platform === "website") return "صفحة ويب";
+  if (platform === "rss") return "RSS";
+  return platform;
+}
 
 export function detectPlatform(url) {
   const u = String(url || "");
   for (const p of PLATFORM_PATTERNS) {
     if (p.test.test(u)) return p.platform;
   }
-  if (/\.rss|feed|xml/i.test(u)) return "rss";
+  if (/\.rss|\/feed|\.xml$/i.test(u)) return "rss";
   return "website";
 }
 

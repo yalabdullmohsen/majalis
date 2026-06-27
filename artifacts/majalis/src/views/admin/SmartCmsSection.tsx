@@ -130,6 +130,17 @@ export function SmartCmsSection() {
         </section>
 
         <section style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.625rem", padding: "1rem" }}>
+          <h3 style={{ margin: "0 0 0.75rem", fontSize: "0.9375rem", color: C.emeraldDeep }}>إضافة درس من رابط</h3>
+          <a
+            href="/admin/content-import/url"
+            style={{ display: "inline-block", padding: "0.5rem 1rem", background: "#EDE9FE", color: "#5B21B6", borderRadius: "0.375rem", textDecoration: "none", fontFamily: "inherit", fontWeight: 600, fontSize: "0.875rem" }}
+          >
+            Instagram / X / YouTube / Telegram / موقع
+          </a>
+          <p style={{ fontSize: "0.75rem", color: C.inkSoft, marginTop: "0.5rem" }}>جلب + استخراج + مراجعة + اعتماد</p>
+        </section>
+
+        <section style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.625rem", padding: "1rem" }}>
           <h3 style={{ margin: "0 0 0.75rem", fontSize: "0.9375rem", color: C.emeraldDeep }}>رفع سريع (JSON)</h3>
           <input
             type="file"

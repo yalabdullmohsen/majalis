@@ -127,6 +127,12 @@ export function LessonsSection() {
           >
             إضافة درس من صورة
           </Link>
+          <Link
+            href="/admin/content-import/url"
+            style={{ padding: "0.5rem 1rem", borderRadius: "0.375rem", background: "#EDE9FE", color: "#5B21B6", textDecoration: "none", fontFamily: "inherit", fontSize: "0.875rem", fontWeight: 600, display: "inline-flex", alignItems: "center" }}
+          >
+            إضافة درس من رابط
+          </Link>
           <button onClick={openAdd} style={{ padding: "0.5rem 1.25rem", borderRadius: "0.375rem", background: C.emerald, color: C.parchment, border: "none", cursor: "pointer", fontFamily: "inherit", fontSize: "0.875rem", fontWeight: 600 }}>+ إضافة درس</button>
         </div>
       </div>
