@@ -1,5 +1,5 @@
 import { sendJson } from "../api/_http.mjs";
-import { getPlatformHealth } from "../../platform-health.mjs";
+import { getPlatformHealth } from "../platform-health.mjs";
 
 export default async function handler(req, res) {
   const lite = req.query?.lite === "1" || req.query?.full !== "1";
