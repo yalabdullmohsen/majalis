@@ -1,4 +1,4 @@
-import { sendJson } from "../api/_http.mjs";
+import { sendJson } from "../../api/_http.mjs";
 import { requireAdminAccess } from "../../../lib/admin-auth.mjs";
 import {
   runPlatformBootstrap,

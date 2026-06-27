@@ -14,6 +14,9 @@ import {
   tryAcquireProcessingLock,
   releaseProcessingLock,
   listQueuedImportJobs,
+  runImportJobWatchdog,
+  jobLog,
+  TERMINAL_JOB_STATUSES,
 } from "./import-jobs.mjs";
 
 const UPLOAD_BATCH_SIZE = 2000;
@@ -285,17 +288,21 @@ export async function queueImportJob(jobId, opts = {}) {
  */
 export async function processImportJob(jobId, opts = {}) {
   if (!tryAcquireProcessingLock(jobId)) {
+    jobLog(jobId, "process_skipped", { reason: "already_processing" });
     return { ok: true, jobId, skipped: true, reason: "already_processing" };
   }
 
   const totalStarted = Date.now();
-  const log = (msg, extra) => console.log(`[content-import:${jobId}] ${msg}`, extra ?? "");
 
   try {
     const job = await getImportJob(jobId);
-    if (!job) return { ok: false, error: "job_not_found" };
+    if (!job) {
+      jobLog(jobId, "process_aborted", { reason: "job_not_found" });
+      return { ok: false, error: "job_not_found" };
+    }
 
     if (job.status === "completed") return { ok: true, jobId, status: "completed" };
+    if (job.status === "cancelled") return { ok: false, jobId, status: "cancelled" };
     if (job.status === "failed" && !opts.force) return { ok: false, jobId, status: "failed" };
 
     const def = resolveContentType(job.type);
@@ -306,8 +313,17 @@ export async function processImportJob(jobId, opts = {}) {
         import_errors: [`unsupported_type: ${job.type}`],
         completed_at: new Date().toISOString(),
       });
+      jobLog(jobId, "process_failed", { reason: "unsupported_type", type: job.type });
       return { ok: false, error: "unsupported_type" };
     }
+
+    jobLog(jobId, "process_start", {
+      type: job.type,
+      filename: job.filename,
+      total_rows: job.total_rows,
+      previous_status: job.status,
+      previous_phase: job.phase,
+    });
 
     await updateImportJob(jobId, {
       status: "processing",
@@ -318,16 +334,17 @@ export async function processImportJob(jobId, opts = {}) {
     const parseStarted = Date.now();
     const rows = await loadStagedPayloads(jobId);
     const parse_ms = Date.now() - parseStarted;
-    log(`loaded ${rows.length} staged rows`, { parse_ms });
+    jobLog(jobId, "rows_loaded", { rows_parsed: rows.length, parse_ms });
 
     if (!rows.length) {
       await updateImportJob(jobId, {
         status: "failed",
         phase: "failed",
-        import_errors: ["لا توجد صفوف للاستيراد"],
+        import_errors: ["لا توجد صفوف للاستيراد — تأكد من اكتمال رفع الدفعات قبل commit"],
         timings: { parse_ms, total_ms: Date.now() - totalStarted },
         completed_at: new Date().toISOString(),
       });
+      jobLog(jobId, "process_failed", { reason: "empty_job", rows_staged: 0 });
       return { ok: false, error: "empty_job" };
     }
 
@@ -335,7 +352,8 @@ export async function processImportJob(jobId, opts = {}) {
       status: "validating",
       phase: "validating",
       total_rows: rows.length,
-      progress_pct: 45,
+      processed_rows: rows.length,
+      progress_pct: 50,
     });
 
     const report = await runContentImportRows({
@@ -344,12 +362,24 @@ export async function processImportJob(jobId, opts = {}) {
       dryRun: opts.dryRun,
       source: job.filename || jobId,
       onProgress: async (p) => {
+        const pct =
+          p.phase === "importing" && p.total
+            ? Math.min(99, 50 + Math.round(((p.processed || 0) / p.total) * 49))
+            : p.phase === "validating"
+              ? 50
+              : Math.max(50, p.pct ?? 50);
         await updateImportJob(jobId, {
           status: p.phase === "importing" ? "importing" : "validating",
-          phase: p.phase === "completed" ? "importing" : p.phase,
+          phase: p.phase === "completed" ? "importing" : p.phase || "validating",
           processed_rows: p.processed ?? rows.length,
           total_rows: p.total ?? rows.length,
-          progress_pct: Math.max(45, p.pct ?? 45),
+          progress_pct: pct,
+        });
+        jobLog(jobId, "phase_progress", {
+          phase: p.phase,
+          processed: p.processed,
+          total: p.total,
+          progress_pct: pct,
         });
       },
     });
@@ -361,16 +391,21 @@ export async function processImportJob(jobId, opts = {}) {
       total_ms: Date.now() - totalStarted,
     };
 
-    log("import finished", {
+    const finalStatus = report.ok ? "completed" : "failed";
+    jobLog(jobId, "process_finished", {
       ok: report.ok,
-      rows: rows.length,
-      imported: report.stats?.imported,
+      rows_parsed: rows.length,
+      rows_committed: report.stats?.imported ?? 0,
+      rows_skipped: report.stats?.skipped ?? 0,
+      rows_failed: report.stats?.failed ?? 0,
+      phase: finalStatus,
       ...timings,
+      errors: report.importErrors?.slice(0, 5),
     });
 
     await updateImportJob(jobId, {
-      status: report.ok ? "completed" : "failed",
-      phase: report.ok ? "completed" : "failed",
+      status: finalStatus,
+      phase: finalStatus,
       processed_rows: rows.length,
       total_rows: rows.length,
       imported: report.stats?.imported ?? 0,
@@ -384,14 +419,14 @@ export async function processImportJob(jobId, opts = {}) {
       completed_at: new Date().toISOString(),
     });
 
-    if (report.ok && !opts.dryRun) {
-      await clearStaging(jobId);
-    } else if (!report.ok) {
-      await clearStaging(jobId);
-    }
+    await clearStaging(jobId);
 
-    return { ok: report.ok, jobId, report, timings };
+    return { ok: report.ok, jobId, report, timings, status: finalStatus };
   } catch (err) {
+    jobLog(jobId, "process_fatal", {
+      error: String(err.message || err),
+      stack: err?.stack?.split("\n").slice(0, 5).join(" | "),
+    });
     console.error(`[content-import:${jobId}] fatal error`, err);
     await updateImportJob(jobId, {
       status: "failed",
@@ -400,7 +435,7 @@ export async function processImportJob(jobId, opts = {}) {
       timings: { total_ms: Date.now() - totalStarted },
       completed_at: new Date().toISOString(),
     }).catch(() => {});
-    return { ok: false, jobId, error: String(err.message || err) };
+    return { ok: false, jobId, error: String(err.message || err), status: "failed" };
   } finally {
     releaseProcessingLock(jobId);
   }
@@ -410,6 +445,7 @@ export async function processImportJob(jobId, opts = {}) {
  * Process all queued import jobs (cron / worker fallback).
  */
 export async function processQueuedImportJobs(limit = 3) {
+  await runImportJobWatchdog();
   const jobs = await listQueuedImportJobs(limit);
   const results = [];
   for (const job of jobs) {
@@ -417,6 +453,8 @@ export async function processQueuedImportJobs(limit = 3) {
   }
   return { ok: true, processed: results.length, results };
 }
+
+export { runImportJobWatchdog, TERMINAL_JOB_STATUSES };
 
 /**
  * @deprecated Use queueImportJob + processImportJob — kept for CLI compatibility.
@@ -428,10 +466,13 @@ export async function commitImportJob(jobId, opts = {}) {
 }
 
 export async function getImportJobProgress(jobId) {
+  await runImportJobWatchdog();
   const job = await getImportJob(jobId);
   if (!job) return { ok: false, error: "job_not_found" };
+  const terminal = TERMINAL_JOB_STATUSES.has(job.status);
   return {
     ok: true,
+    terminal,
     job: {
       id: job.id,
       type: job.type,
@@ -449,6 +490,7 @@ export async function getImportJobProgress(jobId) {
       timings: job.timings || null,
       report: job.report || null,
       completed_at: job.completed_at,
+      updated_at: job.updated_at,
     },
   };
 }

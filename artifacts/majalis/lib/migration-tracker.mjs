@@ -9,6 +9,9 @@ CREATE TABLE IF NOT EXISTS schema_migrations (
   checksum TEXT,
   duration_ms INT
 );
+ALTER TABLE schema_migrations ADD COLUMN IF NOT EXISTS checksum TEXT;
+ALTER TABLE schema_migrations ADD COLUMN IF NOT EXISTS duration_ms INT;
+ALTER TABLE schema_migrations ADD COLUMN IF NOT EXISTS applied_at TIMESTAMPTZ NOT NULL DEFAULT now();
 `;
 
 export function migrationChecksum(text) {

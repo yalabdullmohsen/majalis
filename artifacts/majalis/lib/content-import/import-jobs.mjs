@@ -17,8 +17,35 @@ const processingLocks = new Set();
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
+/** Jobs with no progress update for this long are marked failed by the watchdog. */
+export const IMPORT_WATCHDOG_MS = 60_000;
+
+export const TERMINAL_JOB_STATUSES = new Set(["completed", "failed", "cancelled"]);
+
+export const ACTIVE_JOB_STATUSES = [
+  "pending",
+  "uploading",
+  "queued",
+  "processing",
+  "parsing",
+  "validating",
+  "importing",
+];
+
 function logJobs(event, meta = {}) {
-  console.log(`[content-import:jobs] ${event}`, meta);
+  const jobId = meta.jobId || meta.job_id;
+  const payload = {
+    tag: "content-import:jobs",
+    event,
+    ...(jobId ? { job_id: jobId } : {}),
+    ...meta,
+    ts: new Date().toISOString(),
+  };
+  console.log(JSON.stringify(payload));
+}
+
+export function jobLog(jobId, event, meta = {}) {
+  logJobs(event, { jobId, ...meta });
 }
 
 function sanitizeCreatedBy(createdBy) {
@@ -343,16 +370,120 @@ export async function listQueuedImportJobs(limit = 5) {
   const admin = getSupabaseAdmin();
   if (!admin) {
     return [...localJobs.values()]
-      .filter((j) => j.status === "queued" || j.status === "processing")
+      .filter((j) => ACTIVE_JOB_STATUSES.includes(j.status) && !TERMINAL_JOB_STATUSES.has(j.status))
       .slice(0, limit);
   }
   const { data } = await admin
     .from("content_import_jobs")
     .select("*")
-    .in("status", ["queued", "processing"])
+    .in("status", ["queued", "processing", "validating", "importing", "parsing"])
     .order("started_at", { ascending: true })
     .limit(limit);
   return data || [];
+}
+
+/**
+ * Mark jobs stuck in active states with no progress for IMPORT_WATCHDOG_MS as failed.
+ * @returns {Promise<{ ok: boolean, failed: string[], count: number }>}
+ */
+export async function runImportJobWatchdog(admin = getSupabaseAdmin()) {
+  if (!admin) {
+    return { ok: true, failed: [], count: 0, via: "no_admin" };
+  }
+
+  const cutoff = new Date(Date.now() - IMPORT_WATCHDOG_MS).toISOString();
+  const reason =
+    "انتهت مهلة المعالجة — لم يُسجَّل تقدّم خلال 60 ثانية. أعد المحاولة أو تحقق من DATABASE_URL وSUPABASE_SERVICE_ROLE_KEY.";
+
+  try {
+    const { getPgClient } = await import("../database.mjs");
+    const { client } = await getPgClient();
+    try {
+      const { rows } = await client.query(
+        `UPDATE content_import_jobs
+         SET status = 'failed',
+             phase = 'failed',
+             import_errors = jsonb_build_array($2),
+             completed_at = now(),
+             updated_at = now()
+         WHERE completed_at IS NULL
+           AND status = ANY($1::text[])
+           AND updated_at < $3::timestamptz
+         RETURNING id, status, phase, type, filename`,
+        [ACTIVE_JOB_STATUSES.filter((s) => s !== "pending"), reason, cutoff],
+      );
+      for (const row of rows) {
+        jobLog(row.id, "watchdog_failed", {
+          previous_status: row.status,
+          previous_phase: row.phase,
+          type: row.type,
+          filename: row.filename,
+          watchdog_ms: IMPORT_WATCHDOG_MS,
+        });
+      }
+      return { ok: true, failed: rows.map((r) => r.id), count: rows.length, via: "postgres" };
+    } finally {
+      await client.end().catch(() => {});
+    }
+  } catch (pgErr) {
+    logJobs("watchdog_postgres_fallback", { error: pgErr.message });
+  }
+
+  const { data: stuck, error } = await admin
+    .from("content_import_jobs")
+    .select("id, status, phase, type, filename")
+    .in("status", ACTIVE_JOB_STATUSES.filter((s) => s !== "pending"))
+    .is("completed_at", null)
+    .lt("updated_at", cutoff)
+    .limit(50);
+
+  if (error) {
+    logJobs("watchdog_query_failed", { error: error.message });
+    return { ok: false, error: error.message, failed: [], count: 0 };
+  }
+
+  const failed = [];
+  for (const job of stuck || []) {
+    const { error: updErr } = await admin
+      .from("content_import_jobs")
+      .update({
+        status: "failed",
+        phase: "failed",
+        import_errors: [reason],
+        completed_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      })
+      .eq("id", job.id);
+    if (!updErr) {
+      failed.push(job.id);
+      jobLog(job.id, "watchdog_failed", {
+        previous_status: job.status,
+        previous_phase: job.phase,
+        type: job.type,
+        filename: job.filename,
+        watchdog_ms: IMPORT_WATCHDOG_MS,
+        via: "supabase",
+      });
+    }
+  }
+
+  return { ok: true, failed, count: failed.length, via: "supabase" };
+}
+
+export async function cancelImportJob(jobId, reason = "أُلغيت المهمة بواسطة المستخدم") {
+  const admin = getSupabaseAdmin();
+  await updateImportJob(jobId, {
+    status: "cancelled",
+    phase: "cancelled",
+    import_errors: [reason],
+    completed_at: new Date().toISOString(),
+  });
+  releaseProcessingLock(jobId);
+  if (admin) {
+    await clearStaging(jobId);
+  }
+  jobLog(jobId, "cancelled", { reason });
+  return { ok: true, jobId, status: "cancelled" };
 }
 
 export async function stageImportRows(jobId, payloads, startIndex = 0) {

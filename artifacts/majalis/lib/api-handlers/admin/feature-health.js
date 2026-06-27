@@ -1,4 +1,4 @@
-import { sendJson } from "../api/_http.mjs";
+import { sendJson } from "../../api/_http.mjs";
 import { getPlatformHealth, probeProductionRoutes } from "../../../lib/platform-health.mjs";
 import { getPlatformBootstrapStatus } from "../../../lib/platform-bootstrap.mjs";
 import { readFileSync } from "node:fs";
