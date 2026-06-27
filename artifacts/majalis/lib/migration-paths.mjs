@@ -31,6 +31,7 @@ export const MIGRATION_FILES = [
   "lesson_import_drafts_v1.sql",
   "trusted_lesson_sources_v1.sql",
   "kuwait_instagram_sources_v1.sql",
+  "kuwait_instagram_sources_v2.sql",
   "smart_source_monitoring_v1.sql",
   "automation_phase5_v1.sql",
 ];
