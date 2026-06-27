@@ -8344,6 +8344,39 @@ html[data-theme="dark"] .home-page {
   gap: 0.75rem;
 }
 
+.navbar-v3 {
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+  isolation: isolate;
+  transform: translateZ(0);
+}
+
+.navbar-v3--menu-open {
+  z-index: 10001;
+  /* Header sits above the portaled drawer so the toggle stays clickable; non-button areas pass clicks through */
+  pointer-events: none;
+}
+
+.navbar-v3--menu-open .navbar-menu-btn {
+  pointer-events: auto;
+}
+
+.navbar-menu-btn--drawer {
+  position: relative;
+  z-index: 10002;
+  pointer-events: auto;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Safety: orphaned portaled overlays must never block the header when menus are closed */
+body:not(.mobile-nav-body-lock) .mobile-nav-layer {
+  display: none !important;
+  pointer-events: none !important;
+}
+
 .navbar-v3__start,
 .navbar-v3__end {
   display: flex;
@@ -8455,7 +8488,7 @@ body.navbar-more-open .navbar-v3 { z-index: 60; }
 .mobile-nav-layer {
   position: fixed;
   inset: 0;
-  z-index: 1300;
+  z-index: 10000;
   pointer-events: auto;
   -webkit-tap-highlight-color: transparent;
 }

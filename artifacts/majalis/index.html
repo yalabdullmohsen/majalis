@@ -73,6 +73,9 @@
         document.body.classList.remove("side-nav-open", "navbar-more-open", "mobile-nav-body-lock");
         document.body.style.removeProperty("overflow");
         document.body.style.removeProperty("touch-action");
+        document.querySelectorAll(".mobile-nav-layer").forEach(function (el) {
+          el.remove();
+        });
       } catch (error) {}
     </script>
     <div id="root"></div>
