@@ -1,6 +1,7 @@
 import { sendJson } from "../../api/_http.mjs";
 import { validateCronAuth } from "../../../lib/env-config.mjs";
 import { applyMigrations, verifySchema } from "../../../lib/db-migrate.mjs";
+import { ACTIVATION_MIGRATION_FILES } from "../../../lib/migration-paths.mjs";
 import { testDatabaseConnection, resolveDatabaseUrl } from "../../../lib/database.mjs";
 import { ensureContentImportSchema } from "../../../lib/content-import/ensure-schema.mjs";
 
@@ -54,7 +55,10 @@ export default async function handler(req, res) {
       return;
     }
 
-    const result = await applyMigrations({ continueOnError: true });
+    const scope = req.query?.scope || req.body?.scope || "full";
+    const migrationFiles = scope === "activation" ? ACTIVATION_MIGRATION_FILES : undefined;
+
+    const result = await applyMigrations({ continueOnError: true, files: migrationFiles });
     const verifyAfter = await verifySchema();
     const ok = result.ok && verifyAfter.ok;
     sendJson(res, ok ? 200 : 500, {

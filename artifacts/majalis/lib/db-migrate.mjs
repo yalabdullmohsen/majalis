@@ -102,6 +102,8 @@ export async function verifySchema() {
     "mke_change_log",
     "mke_quality_flags",
     "mke_queue_jobs",
+    "sharia_rulings",
+    "sharia_ruling_categories",
   ];
 
   for (const table of tables) {

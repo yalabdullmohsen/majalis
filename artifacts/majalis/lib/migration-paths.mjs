@@ -8,6 +8,14 @@ import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
+export const ACTIVATION_MIGRATION_FILES = [
+  "qa_categories_fix_v1.sql",
+  "sharia_rulings_prereq.sql",
+  "sharia_rulings_encyclopedia_v1.sql",
+  "majlis_knowledge_engine_v1.sql",
+  "majlis_knowledge_engine_v2.sql",
+];
+
 export const MIGRATION_FILES = [
   "auto_content_pipeline.sql",
   "auto_content_pipeline_v2.sql",
@@ -36,6 +44,9 @@ export const MIGRATION_FILES = [
   "automation_phase5_v1.sql",
   "lesson_intelligence_v6.sql",
   "instagram_graph_phase7_v1.sql",
+  "qa_categories_fix_v1.sql",
+  "sharia_rulings_prereq.sql",
+  "sharia_rulings_encyclopedia_v1.sql",
   "majlis_knowledge_engine_v1.sql",
   "majlis_knowledge_engine_v2.sql",
 ];

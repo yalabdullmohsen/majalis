@@ -2,7 +2,7 @@
  * Islamic Answer Guardrails — source-first, no independent fatwa.
  */
 
-import { REASONING_DISCLAIMER, NO_EVIDENCE_MESSAGE } from "../reasoning-engine/constants.mjs";
+import { REASONING_DISCLAIMER, NO_EVIDENCE_MESSAGE } from "./reasoning-engine/constants.mjs";
 
 export const ISLAMIC_DISCLAIMER =
   "هذه إجابة تعليمية مختصرة وليست فتوى شخصية ملزمة.";
