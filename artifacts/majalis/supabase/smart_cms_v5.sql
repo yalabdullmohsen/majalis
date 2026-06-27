@@ -1,7 +1,23 @@
 -- =====================================================================
 --  Smart CMS v5 — مسودات ذكية + سجل مراجعات + مصادر مراقبة
---  نفّذ بعد: cms_platform_v4.sql
+--  نفّذ بعد: cms_platform_v4.sql (enums inlined below for bootstrap)
 -- =====================================================================
+
+DO $$ BEGIN
+  CREATE TYPE cms_content_kind AS ENUM (
+    'lesson', 'lecture', 'course', 'sheikh', 'book', 'fatwa', 'article',
+    'news', 'announcement', 'fawaid', 'qa', 'miracle',
+    'fiqh_decision', 'sharia_ruling', 'annual_course'
+  );
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
+
+DO $$ BEGIN
+  CREATE TYPE cms_workflow_status AS ENUM (
+    'draft', 'pending', 'approved', 'published', 'archived', 'rejected'
+  );
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
 
 CREATE TABLE IF NOT EXISTS content_drafts (
   id                UUID PRIMARY KEY DEFAULT gen_random_uuid(),
