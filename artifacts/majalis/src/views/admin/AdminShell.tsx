@@ -32,10 +32,12 @@ export type AdminSection =
   | "global-reference"
   | "islamic-intelligence"
   | "open-platform"
-  | "governance";
+  | "governance"
+  | "smart-cms";
 
 export const ADMIN_NAV: { key: AdminSection; label: string }[] = [
   { key: "dashboard", label: "لوحة التحكم" },
+  { key: "smart-cms", label: "CMS الذكي" },
   { key: "aggregator", label: "محرك التجميع" },
   { key: "knowledge-engine", label: "Auto Knowledge Engine" },
   { key: "scholarly-verification", label: "التوثيق العلمي" },

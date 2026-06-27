@@ -15,6 +15,7 @@ import {
   splitKuwaitLessons,
 } from "@/lib/kuwait-lessons";
 import { rankLessonsBySearch, buildLessonSearchMeta } from "@/lib/lesson-search";
+import { allowSeedFallback } from "@/lib/cms/production-config";
 
 export type LessonsSource = "supabase" | "seed" | "merged";
 
@@ -32,6 +33,7 @@ function seedKey(row: LessonSeedRow): string {
 }
 
 function mergeDbWithSeed(dbRows: KuwaitLessonRecord[]): KuwaitLessonRecord[] {
+  if (!allowSeedFallback()) return dbRows;
   const seen = new Set(dbRows.map((l) => l.id));
   const supplemental = LESSONS_SEED.filter((row) => !seen.has(seedKey(row))).map((row) =>
     mapLessonRow({ ...row, source: "seed" }),
@@ -51,8 +53,14 @@ export async function fetchLessons(options?: { bypassCache?: boolean }): Promise
     if (data.length > 0) {
       const dbMapped = dedupeKuwaitLessons(data.map((row) => mapLessonRow({ ...row, source: "supabase" })));
       const lessons = sortKuwaitLessons(mergeDbWithSeed(dbMapped));
-      const source: LessonsSource = lessons.length > dbMapped.length ? "merged" : "supabase";
+      const source: LessonsSource =
+        allowSeedFallback() && lessons.length > dbMapped.length ? "merged" : "supabase";
       cachedResult = { lessons, source };
+      cacheTs = now;
+      return cachedResult;
+    }
+    if (!allowSeedFallback()) {
+      cachedResult = { lessons: [], source: "supabase" };
       cacheTs = now;
       return cachedResult;
     }
@@ -87,7 +95,7 @@ export async function fetchLessonById(id: string): Promise<{
   const found = lessons.find((l) => l.id === id);
   if (found) return { lesson: found, source };
 
-  const seedRow = findSeedLessonById(id);
+  const seedRow = allowSeedFallback() ? findSeedLessonById(id) : null;
   if (seedRow) return { lesson: mapLessonRow(seedRow), source: "seed" };
 
   return { lesson: null, source };

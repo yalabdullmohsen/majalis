@@ -1,3 +1,4 @@
+/** DEV/INSTALL ONLY — Production content must come from Supabase (see production-config.ts). */
 export type LessonSession = {
   label: string;
   day: string;

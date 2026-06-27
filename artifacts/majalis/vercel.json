@@ -88,11 +88,23 @@
       "schedule": "0 11 * * *"
     },
     {
+      "path": "/api/cron/monitor-sources",
+      "schedule": "0 6 * * *"
+    },
+    {
       "path": "/api/cron/knowledge-reasoning",
       "schedule": "30 11 * * *"
     }
   ],
   "rewrites": [
+    {
+      "source": "/sitemap.xml",
+      "destination": "/api/sitemap"
+    },
+    {
+      "source": "/feed.xml",
+      "destination": "/api/feed"
+    },
     {
       "source": "/api/(.*)",
       "destination": "/api/index"

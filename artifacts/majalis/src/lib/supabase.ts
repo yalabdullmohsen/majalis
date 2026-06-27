@@ -24,6 +24,7 @@ import { writeAuditLog } from "@/lib/cms/audit-log";
 import { validateSheikhImage, safeUploadFileName } from "./file-validation";
 import { sanitizeFormRecord } from "./sanitize";
 import { isSupabaseConfigured, formatSupabaseError, logSupabaseError } from "./supabase-config";
+import { allowSeedFallback } from "@/lib/cms/production-config";
 import { getSupabaseAnonKeyEnv, getSupabaseUrlEnv } from "./supabase-env";
 
 // Normalize to the bare project origin (https://xxx.supabase.co).
@@ -215,30 +216,32 @@ export async function fetchApprovedLessonsFromDb() {
 }
 
 export async function getLessons({ category, city, search }: { category?: string; city?: string; search?: string } = {}) {
-  const fallback = filterLessonsList(LESSONS_SEED, { category, city, search });
+  const fallback = allowSeedFallback() ? filterLessonsList(LESSONS_SEED, { category, city, search }) : [];
 
   if (!isConfigured) {
-    return { data: fallback, error: null, usingSeed: true };
+    return { data: fallback, error: null, usingSeed: allowSeedFallback() };
   }
 
   try {
     const { data } = await fetchApprovedLessonsFromDb();
     const result = filterLessonsList(data, { category, city, search });
-    if (result.length === 0 && fallback.length > 0) {
+    if (allowSeedFallback() && result.length === 0 && fallback.length > 0) {
       return { data: fallback, error: null, usingSeed: true };
     }
     return { data: result, error: null, usingSeed: false };
   } catch (err) {
     logSupabaseError("getLessons", err);
-    return { data: fallback, error: null, usingSeed: true };
+    return { data: fallback, error: null, usingSeed: allowSeedFallback() };
   }
 }
 
 export async function getLessonById(id: string) {
-  const fallback = findSeedLessonById(id) || DEMO_LESSONS.find((l) => l.id === id) || null;
+  const fallback = allowSeedFallback()
+    ? findSeedLessonById(id) || DEMO_LESSONS.find((l) => l.id === id) || null
+    : null;
 
   if (!isConfigured) {
-    return { lesson: fallback, error: null, usingSeed: true };
+    return { lesson: fallback, error: null, usingSeed: allowSeedFallback() };
   }
 
   try {
@@ -325,7 +328,7 @@ export async function getLibrary({ type, category }: { type?: string; category?:
   };
 
   if (!isConfigured) {
-    return { data: filterSeed(DEMO_LIBRARY), error: null, usingSeed: true };
+    return { data: allowSeedFallback() ? filterSeed(DEMO_LIBRARY) : [], error: null, usingSeed: allowSeedFallback() };
   }
 
   try {
@@ -335,13 +338,13 @@ export async function getLibrary({ type, category }: { type?: string; category?:
     const { data, error } = await q.order("created_at", { ascending: false });
     if (error) throw error;
     const rows = data || [];
-    if (rows.length === 0) {
+    if (allowSeedFallback() && rows.length === 0) {
       return { data: filterSeed(DEMO_LIBRARY), error: null, usingSeed: true };
     }
     return { data: rows, error: null, usingSeed: false };
   } catch (err) {
     logSupabaseError("getLibrary", err);
-    return { data: filterSeed(DEMO_LIBRARY), error: null, usingSeed: true };
+    return { data: allowSeedFallback() ? filterSeed(DEMO_LIBRARY) : [], error: null, usingSeed: allowSeedFallback() };
   }
 }
 
@@ -717,9 +720,9 @@ export async function getQaCategories() {
 export async function getQaQuestions({ categoryId, search }: { categoryId?: string; search?: string } = {}) {
   if (!isConfigured) {
     return {
-      data: filterDemoQa({ categoryId, search }),
+      data: allowSeedFallback() ? filterDemoQa({ categoryId, search }) : [],
       error: null,
-      usingDemo: true,
+      usingDemo: allowSeedFallback(),
     };
   }
 
@@ -747,7 +750,7 @@ export async function getQaQuestions({ categoryId, search }: { categoryId?: stri
   if (error) {
     logSupabaseError("getQaQuestions", error, { categoryId, search });
     return {
-      data: filterDemoQa({ categoryId, search }),
+      data: allowSeedFallback() ? filterDemoQa({ categoryId, search }) : [],
       error: null,
       usingDemo: true,
     };

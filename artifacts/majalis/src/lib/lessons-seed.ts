@@ -1,6 +1,6 @@
 /**
- * مصدر Seed الوحيد للدروس — يُشتق من lesson-ads.ts ولا يُكرَّر في ملفات أخرى.
- * يُستخدم فقط عندما يكون جدول public.lessons فارغًا أو Supabase غير مهيأ.
+ * مصدر Seed للدروس — للتطوير والتثبيت الأول فقط.
+ * في Production (MAJALIS_PRODUCTION_CONTENT=1) لا يُستخدم كمصدر للمحتوى الحي.
  */
 import { lessonAds, type LessonAd } from "@/lib/lesson-ads";
 import { buildCatalogLessonRows } from "@/lib/lessons-catalog";

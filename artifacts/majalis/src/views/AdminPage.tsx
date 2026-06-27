@@ -28,7 +28,7 @@ import { AutonomousAiSection } from "@/views/admin/AutonomousAiSection";
 import { GlobalReferenceSection } from "@/views/admin/GlobalReferenceSection";
 import { IslamicIntelligenceSection } from "@/views/admin/IslamicIntelligenceSection";
 import { OpenPlatformSection } from "@/views/admin/OpenPlatformSection";
-import { GovernanceSection } from "@/views/admin/GovernanceSection";
+import { SmartCmsSection } from "@/views/admin/SmartCmsSection";
 
 export default function AdminPage() {
   const [section, setSection] = useState<AdminSection>("dashboard");
@@ -47,6 +47,7 @@ export default function AdminPage() {
       {section === "global-reference" && <GlobalReferenceSection />}
       {section === "islamic-intelligence" && <IslamicIntelligenceSection />}
       {section === "open-platform" && <OpenPlatformSection />}
+      {section === "smart-cms" && <SmartCmsSection />}
       {section === "governance" && <GovernanceSection />}
       {section === "lessons" && <LessonsSection />}
       {section === "sheikhs" && <SheikhsSection />}
