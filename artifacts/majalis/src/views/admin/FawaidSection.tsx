@@ -25,7 +25,7 @@ export function FawaidSection() {
   const [form, setForm] = useState<any>(EMPTY_FAWAID);
   const [saving, setSaving] = useState(false);
 
-  const load = () => { setLoading(true); adminGetAllFawaid().then(({ data }) => { setItems(data); setLoading(false); }); };
+  const load = () => { setLoading(true); adminGetAllFawaid().then(({ data }) => {  setItems(data); setLoading(false);  }).catch(() => {}).finally(() => setLoading(false)); };
   useEffect(() => { load(); }, []);
 
   const moderate = async (id: string, status: string) => { await moderateFawaid(id, status); load(); };

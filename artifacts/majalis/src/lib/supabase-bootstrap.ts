@@ -5,6 +5,7 @@
 
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import { getSupabaseAnonKeyEnv, getSupabaseUrlEnv } from "./supabase-env";
+import { RequestManager, REQUEST_TIMEOUT_MS } from "./request-manager";
 
 let runtimeUrl = "";
 let runtimeKey = "";
@@ -54,7 +55,11 @@ export async function bootstrapSupabaseFromServer(): Promise<boolean> {
 
   bootstrapPromise = (async () => {
     try {
-      const res = await fetch("/api/public-config", { credentials: "same-origin" });
+      const res = await RequestManager.fetch("/api/public-config", {
+        credentials: "same-origin",
+        label: "bootstrap:public-config",
+        timeoutMs: REQUEST_TIMEOUT_MS,
+      });
       if (!res.ok) return false;
       const json = await res.json();
       if (!json?.auth || !json.supabaseUrl || !json.supabaseAnonKey) return false;
@@ -72,6 +77,22 @@ export async function bootstrapSupabaseFromServer(): Promise<boolean> {
 
 let client: SupabaseClient | null = null;
 
+function supabaseGlobalFetch(input: RequestInfo | URL, init?: RequestInit): Promise<Response> {
+  return RequestManager.fetch(input, {
+    ...init,
+    label: `supabase:${String(input).slice(0, 120)}`,
+    timeoutMs: REQUEST_TIMEOUT_MS,
+    retries: 1,
+  });
+}
+
+function createConfiguredClient(url: string, key: string): SupabaseClient {
+  return createClient(url, key, {
+    auth: { persistSession: true, autoRefreshToken: true },
+    global: { fetch: supabaseGlobalFetch },
+  });
+}
+
 export function getSupabaseClient(): SupabaseClient {
   if (client && isEffectiveSupabaseConfigured()) {
     const url = getEffectiveSupabaseUrl();
@@ -79,19 +100,17 @@ export function getSupabaseClient(): SupabaseClient {
     // Recreate if runtime config arrived after placeholder init
     const currentUrl = (client as unknown as { supabaseUrl?: string }).supabaseUrl;
     if (currentUrl && currentUrl !== url) {
-      client = createClient(url, key, { auth: { persistSession: true, autoRefreshToken: true } });
+      client = createConfiguredClient(url, key);
     }
     return client;
   }
 
   if (isEffectiveSupabaseConfigured()) {
-    client = createClient(getEffectiveSupabaseUrl(), getEffectiveSupabaseAnonKey(), {
-      auth: { persistSession: true, autoRefreshToken: true },
-    });
+    client = createConfiguredClient(getEffectiveSupabaseUrl(), getEffectiveSupabaseAnonKey());
     return client;
   }
 
-  client = createClient(
+  client = createConfiguredClient(
     "https://placeholder.supabase.co",
     "placeholder-anon-key-placeholder-anon-key-placeholder-anon-key-p",
   );

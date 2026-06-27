@@ -1,3 +1,4 @@
+import { requestFetch } from "@/lib/request-manager";
 /**
  * Scholarly Verification — admin client service
  */
@@ -89,7 +90,7 @@ export async function publicScholarlySearch(filters: {
   if (filters.verification_status) params.set("status", filters.verification_status);
   if (filters.source_name) params.set("source", filters.source_name);
   if (filters.limit) params.set("limit", String(filters.limit));
-  const res = await fetch(`/api/scholarly-search?${params.toString()}`);
+  const res = await requestFetch(`/api/scholarly-search?${params.toString()}`);
   if (!res.ok) throw new Error("Scholarly search failed");
   return res.json();
 }

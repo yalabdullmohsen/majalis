@@ -5,6 +5,7 @@ import { invalidateLessonsCache } from "@/lib/lessons-service";
 import { sanitizeText } from "@/lib/sanitize";
 import { C, GOVERNORATES } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
+import { adminListLoad } from "@/lib/admin-list-load";
 import { AdminModal, Field, FieldRow, inputSt, selectSt, textareaSt } from "./AdminModal";
 import { BulkImport } from "./BulkImport";
 
@@ -49,9 +50,18 @@ export function LessonsSection() {
   const [saving, setSaving] = useState(false);
 
   const load = () => {
-    setLoading(true);
-    Promise.all([adminGetLessons(), adminGetSheikhs()]).then(([{ data: l }, { data: s }]) => {
-      setItems(l); setSheikhs(s); setLoading(false);
+    adminListLoad({
+      label: "admin:lessons",
+      setLoading,
+      load: () => Promise.all([adminGetLessons(), adminGetSheikhs()]),
+      onSuccess: ([{ data: l }, { data: s }]) => {
+        setItems(l);
+        setSheikhs(s);
+      },
+      onError: () => {
+        setItems([]);
+        setSheikhs([]);
+      },
     });
   };
   useEffect(() => { load(); }, []);

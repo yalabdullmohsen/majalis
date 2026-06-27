@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { getQaCategories, getQaQuestions } from "@/lib/supabase";
+import { RequestManager } from "@/lib/request-manager";
 import { QA_DISCLAIMER } from "@/lib/theme";
 import { PageHeader, Empty, QaSkeleton } from "@/components/ui-common";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
@@ -56,7 +57,7 @@ export default function QaPage({
   const loadCategories = useCallback(async () => {
     setCategoriesLoading(true);
     try {
-      const { data } = await getQaCategories();
+      const { data } = await RequestManager.run("qa:categories", () => getQaCategories());
       setCategories(data?.length ? data : DEMO_QA_CATEGORIES.filter((c) => c.id !== "all"));
     } catch {
       setCategories(DEMO_QA_CATEGORIES.filter((c) => c.id !== "all"));
@@ -68,10 +69,12 @@ export default function QaPage({
   const loadQuestions = useCallback(async () => {
     setLoading(true);
     try {
-      const { data } = await getQaQuestions({
-        categoryId: categorySlug === "all" ? undefined : categorySlug,
-        search: debouncedSearch,
-      });
+      const { data } = await RequestManager.run("qa:questions", () =>
+        getQaQuestions({
+          categoryId: categorySlug === "all" ? undefined : categorySlug,
+          search: debouncedSearch,
+        }),
+      );
       setRawItems(data.length > 0 ? data : DEMO_QA);
     } catch {
       setRawItems(DEMO_QA);

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { getApprovedFawaid, submitFawaid } from "@/lib/supabase";
+import { RequestManager } from "@/lib/request-manager";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { DEMO_FAWAID, FAWAID_CATEGORIES } from "@/lib/demo-content";
 import { canSubmitForm } from "@/lib/form-rate-limit";
@@ -51,7 +52,7 @@ export default function FawaidPage({
   useEffect(() => {
     if (initialFawaid) return;
     setLoading(true);
-    getApprovedFawaid()
+    RequestManager.run("fawaid:list", () => getApprovedFawaid())
       .then(({ data }) => {
         setFawaid(data);
       })

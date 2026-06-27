@@ -1,3 +1,4 @@
+import { requestFetch } from "@/lib/request-manager";
 export type PrayerSlot = {
   key: string;
   name: string;
@@ -134,7 +135,7 @@ async function fetchAlAdhanDirect(): Promise<PrayerTimesPayload> {
     `https://api.aladhan.com/v1/timings/${dateParam}` +
     `?latitude=${KUWAIT_LAT}&longitude=${KUWAIT_LON}&method=${KUWAIT_METHOD}`;
 
-  const response = await fetch(url, {
+  const response = await requestFetch(url, {
     headers: { Accept: "application/json" },
     signal: AbortSignal.timeout(12_000),
   });
@@ -299,7 +300,7 @@ export async function fetchPrayerTimes(): Promise<PrayerTimesPayload> {
   }
 
   try {
-    const response = await fetch("/api/prayer-times", {
+    const response = await requestFetch("/api/prayer-times", {
       headers: { Accept: "application/json" },
     });
 

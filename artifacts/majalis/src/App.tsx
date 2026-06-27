@@ -16,8 +16,8 @@ import ContactPage from "@/views/ContactPage";
 import NotFound from "@/views/not-found";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { usePageSeo } from "@/lib/seo";
-import { Loading } from "@/components/ui-common";
 import { lazyWithRetry } from "@/lib/lazy-with-retry";
+import { LazyRouteFallback } from "@/components/LazyRouteFallback";
 
 const CalendarPage = lazy(() => import("@/views/CalendarPage"));
 const SearchPage = lazy(() => import("@/views/SearchPage"));
@@ -110,7 +110,7 @@ function SeoManager() {
 
 function SafeLazyRoute({ component: Component }: { component: ComponentType }) {
   return (
-    <Suspense fallback={<Loading />}>
+    <Suspense fallback={<LazyRouteFallback />}>
       <Component />
     </Suspense>
   );
@@ -119,7 +119,7 @@ function SafeLazyRoute({ component: Component }: { component: ComponentType }) {
 function SurahStoryDetailRoute() {
   const [, params] = useRoute("/quran/surah-stories/:number");
   return (
-    <Suspense fallback={<Loading />}>
+    <Suspense fallback={<LazyRouteFallback />}>
       <SurahStoryDetailPage surahNumber={Number(params?.number) || 1} />
     </Suspense>
   );
@@ -129,7 +129,7 @@ function AdminLazyRoute({ component: Component }: { component: ComponentType }) 
   return (
     <AdminRouteGuard>
       <ErrorBoundary>
-        <Suspense fallback={<Loading />}>
+        <Suspense fallback={<LazyRouteFallback />}>
           <Component />
         </Suspense>
       </ErrorBoundary>
@@ -178,7 +178,7 @@ function Router() {
       <Route path="/learning"><Redirect to="/learning/paths" /></Route>
       <Route path="/assistant">
         <ErrorBoundary>
-          <Suspense fallback={<Loading />}>
+          <Suspense fallback={<LazyRouteFallback />}>
             <AssistantPage />
           </Suspense>
         </ErrorBoundary>
@@ -186,7 +186,7 @@ function Router() {
       <Route path="/condolences"><SafeLazyRoute component={CondolencesPage} /></Route>
       <Route path="/transcribe">
         <ErrorBoundary>
-          <Suspense fallback={<Loading />}>
+          <Suspense fallback={<LazyRouteFallback />}>
             <TranscribePage />
           </Suspense>
         </ErrorBoundary>

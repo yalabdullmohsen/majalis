@@ -1,3 +1,4 @@
+import { requestFetch } from "@/lib/request-manager";
 import type { FiqhResearchCitation } from "./fiqh-citation";
 
 export type { FiqhResearchCitation };
@@ -29,7 +30,7 @@ export async function callFiqhResearchAssistant(payload: {
   filters?: FiqhResearchFilters;
   sessionId?: string;
 }): Promise<FiqhResearchResponse> {
-  const res = await fetch("/api/fiqh-research-assistant", {
+  const res = await requestFetch("/api/fiqh-research-assistant", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
@@ -39,7 +40,7 @@ export async function callFiqhResearchAssistant(payload: {
 
 export async function checkFiqhResearchAvailable() {
   try {
-    const res = await fetch("/api/fiqh-research-assistant");
+    const res = await requestFetch("/api/fiqh-research-assistant");
     const data = await res.json();
     return Boolean(data?.ok);
   } catch {

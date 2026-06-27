@@ -1,3 +1,4 @@
+import { requestFetch } from "@/lib/request-manager";
 /**
  * Autonomous AI Platform — client service
  */
@@ -74,7 +75,7 @@ export async function generateAutonomousReport(): Promise<AutonomousReport | nul
 export async function fetchDailyContent(type?: string) {
   const params = new URLSearchParams();
   if (type) params.set("type", type);
-  const res = await fetch(`/api/daily-content?${params}`);
+  const res = await requestFetch(`/api/daily-content?${params}`);
   if (!res.ok) return [];
   const json = await res.json();
   return json.content || [];

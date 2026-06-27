@@ -1,3 +1,4 @@
+import { requestFetch } from "@/lib/request-manager";
 /**
  * Scholarly Intelligence Engine — client service
  */
@@ -103,7 +104,7 @@ export async function intelligentSearch(
   if (opts?.year) params.set("year", String(opts.year));
   params.set("sessionId", sessionId());
 
-  const res = await fetch(`/api/intelligent-search?${params}`);
+  const res = await requestFetch(`/api/intelligent-search?${params}`);
   if (!res.ok) return { ok: false, query, count: 0, results: [], groups: {}, topics: [] };
   return res.json();
 }
@@ -114,7 +115,7 @@ export async function trackSearchClick(opts: {
   kind?: string;
 }) {
   try {
-    await fetch("/api/intelligent-search", {
+    await requestFetch("/api/intelligent-search", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ action: "click", ...opts, sessionId: sessionId() }),
@@ -126,7 +127,7 @@ export async function trackSearchClick(opts: {
 
 export async function fetchTopicContent(slug: string): Promise<TopicContentResponse | null> {
   try {
-    const res = await fetch(`/api/topic-content?slug=${encodeURIComponent(slug)}`);
+    const res = await requestFetch(`/api/topic-content?slug=${encodeURIComponent(slug)}`);
     if (!res.ok) return null;
     return res.json();
   } catch {
@@ -136,7 +137,7 @@ export async function fetchTopicContent(slug: string): Promise<TopicContentRespo
 
 export async function fetchAllTopics(): Promise<Array<{ slug: string; title: string; category?: string }>> {
   try {
-    const res = await fetch("/api/topic-content");
+    const res = await requestFetch("/api/topic-content");
     if (!res.ok) return [];
     const json = await res.json();
     return json.topics || [];
@@ -160,7 +161,7 @@ export async function fetchContentRelations(opts: {
   if (opts.limit) params.set("limit", String(opts.limit));
 
   try {
-    const res = await fetch(`/api/content-relations?${params}`);
+    const res = await requestFetch(`/api/content-relations?${params}`);
     if (!res.ok) return { items: [], algorithm: "none" };
     const json = await res.json();
     return { items: json.items || [], algorithm: json.algorithm || "none" };

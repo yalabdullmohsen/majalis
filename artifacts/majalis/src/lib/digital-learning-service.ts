@@ -1,3 +1,4 @@
+import { requestFetch } from "@/lib/request-manager";
 /**
  * Digital Learning Platform — client service
  */
@@ -79,7 +80,7 @@ export function moduleLabel(type: string) {
 
 async function dlFetch(action: string, opts?: { method?: string; body?: Record<string, unknown>; params?: Record<string, string> }) {
   const params = new URLSearchParams({ action, ...(opts?.params || {}) });
-  const res = await fetch(`/api/digital-learning?${params}`, {
+  const res = await requestFetch(`/api/digital-learning?${params}`, {
     method: opts?.method || "GET",
     headers: opts?.body ? { "Content-Type": "application/json" } : undefined,
     body: opts?.body ? JSON.stringify(opts.body) : undefined,

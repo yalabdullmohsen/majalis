@@ -1,3 +1,4 @@
+import { requestFetch } from "@/lib/request-manager";
 /**
  * Auto Knowledge Engine — client service
  */
@@ -131,7 +132,7 @@ export async function fetchSystemHealth(): Promise<SystemHealth | null> {
 
 export async function searchKnowledgeHybrid(query: string, limit = 20): Promise<KnowledgeSearchResult[]> {
   try {
-    const res = await fetch(`/api/knowledge-search?q=${encodeURIComponent(query)}&limit=${limit}`);
+    const res = await requestFetch(`/api/knowledge-search?q=${encodeURIComponent(query)}&limit=${limit}`);
     if (!res.ok) return [];
     const json = await res.json();
     return json.results || json.items || [];
@@ -151,7 +152,7 @@ export async function fetchKnowledgeRecommendations(opts: {
     if (opts.recordId) params.set("recordId", opts.recordId);
     if (opts.limit) params.set("limit", String(opts.limit));
 
-    const res = await fetch(`/api/knowledge-recommendations?${params}`);
+    const res = await requestFetch(`/api/knowledge-recommendations?${params}`);
     if (!res.ok) return { items: [], algorithm: "none" };
     return res.json();
   } catch {

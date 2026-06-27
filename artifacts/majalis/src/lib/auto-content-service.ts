@@ -1,3 +1,4 @@
+import { requestFetch } from "@/lib/request-manager";
 import { adminFetch as apiFetch } from "@/lib/admin-api";
 import { supabase } from "@/lib/supabase";
 import { isSupabaseConfigured } from "@/lib/supabase-config";
@@ -100,7 +101,7 @@ export async function getPublishedAutoContentBySlug(slug: string) {
 export async function fetchLiveAutoContent(limit = 20): Promise<AutoImportedContent[]> {
   if (!isSupabaseConfigured()) return [];
   try {
-    const res = await fetch(`/api/auto-content?limit=${limit}`);
+    const res = await requestFetch(`/api/auto-content?limit=${limit}`);
     if (!res.ok) return [];
     const json = await res.json();
     return (json.items || []) as AutoImportedContent[];
@@ -111,7 +112,7 @@ export async function fetchLiveAutoContent(limit = 20): Promise<AutoImportedCont
 
 export async function fetchLiveAutoContentBySlug(slug: string): Promise<AutoImportedContent | null> {
   try {
-    const res = await fetch(`/api/auto-content?slug=${encodeURIComponent(slug)}`);
+    const res = await requestFetch(`/api/auto-content?slug=${encodeURIComponent(slug)}`);
     if (!res.ok) return null;
     const json = await res.json();
     return (json.item || json.items?.[0] || null) as AutoImportedContent | null;

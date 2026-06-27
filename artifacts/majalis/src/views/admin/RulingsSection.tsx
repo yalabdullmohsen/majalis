@@ -7,6 +7,7 @@ import { importRulingsFromText, RULINGS_CSV_TEMPLATE } from "@/lib/rulings-impor
 import { validateRuling, findSimilarRulings } from "@/lib/rulings-validator";
 import { C } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
+import { adminListLoad } from "@/lib/admin-list-load";
 import { AdminModal, Field, inputSt, selectSt, textareaSt } from "./AdminModal";
 import { useAdminShell } from "./AdminShell";
 import type { ShariaRulingExtended } from "@/lib/rulings-types";
@@ -40,12 +41,17 @@ export function RulingsSection() {
 
   const subcategoryOptions = useMemo(() => flattenCategories(), []);
 
-  const load = async () => {
-    setLoading(true);
-    const [{ data: dbData }, serviceData] = await Promise.all([adminGetAllRulings(), getAllRulingsForAdmin()]);
-    const merged = dbData.length > 0 ? dbData : serviceData;
-    setItems(merged as ShariaRulingExtended[]);
-    setLoading(false);
+  const load = () => {
+    adminListLoad({
+      label: "admin:rulings",
+      setLoading,
+      load: async () => {
+        const [{ data: dbData }, serviceData] = await Promise.all([adminGetAllRulings(), getAllRulingsForAdmin()]);
+        return (dbData.length > 0 ? dbData : serviceData) as ShariaRulingExtended[];
+      },
+      onSuccess: (merged) => setItems(merged),
+      onError: () => setItems([]),
+    });
   };
 
   useEffect(() => {

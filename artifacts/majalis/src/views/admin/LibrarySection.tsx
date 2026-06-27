@@ -19,10 +19,10 @@ export function LibrarySection() {
 
   const load = () => {
     setLoading(true);
-    adminGetLibrary().then(({ data }) => {
+    adminGetLibrary().then(({ data }) => { 
       setItems(data);
       setLoading(false);
-    });
+     }).catch(() => {}).finally(() => setLoading(false));
   };
 
   useEffect(() => {

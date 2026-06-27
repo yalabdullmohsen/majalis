@@ -11,6 +11,7 @@ import {
 } from "@/lib/rulings-service";
 import type { CategoryStat, RulingSortMode, ShariaRulingExtended } from "@/lib/rulings-types";
 import { usePageView } from "@/hooks/usePageView";
+import { RequestManager } from "@/lib/request-manager";
 import { RULINGS_CATEGORY_TREE } from "@/lib/rulings-categories";
 
 function useDebouncedValue<T>(value: T, delayMs = 350): T {
@@ -54,17 +55,23 @@ export default function RulingsPage() {
   const loadRulings = useCallback(async () => {
     setLoading(true);
     try {
-      const result = await getRulingsEncyclopedia({
-        category,
-        subcategory,
-        search: debouncedSearch,
-        sort,
-        page,
-        limit: PAGE_SIZE,
-      });
+      const result = await RequestManager.run("rulings:encyclopedia", () =>
+        getRulingsEncyclopedia({
+          category,
+          subcategory,
+          search: debouncedSearch,
+          sort,
+          page,
+          limit: PAGE_SIZE,
+        }),
+      );
       setItems(result.data);
       setTotal(result.total);
       setDbState({ needsSeed: result.needsSeed, dbError: result.dbError });
+    } catch (err) {
+      setItems([]);
+      setTotal(0);
+      setDbState({ dbError: String((err as Error)?.message || err) });
     } finally {
       setLoading(false);
     }

@@ -1,3 +1,4 @@
+import { requestFetch } from "@/lib/request-manager";
 import { getSupabaseClient, bootstrapSupabaseFromServer } from "./supabase-bootstrap";
 import { arabicMatchAny, arabicSearchPatterns, ilikePattern } from "./arabic-search";
 import {
@@ -502,7 +503,7 @@ export async function adminGetDashboardStats() {
 
   let serverOk = false;
   try {
-    const res = await fetch("/api/healthz", { signal: AbortSignal.timeout(4000) });
+    const res = await requestFetch("/api/healthz", { signal: AbortSignal.timeout(4000) });
     serverOk = res.ok;
   } catch {
     /* offline */

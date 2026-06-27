@@ -175,6 +175,35 @@ export function sendJson(res, status, payload) {
   res.end(JSON.stringify(payload));
 }
 
+const DEFAULT_HANDLER_TIMEOUT_MS = 25_000;
+const CRON_HANDLER_TIMEOUT_MS = 55_000;
+
+async function invokeHandler(handler, req, res, routePrefix) {
+  const isCron = routePrefix.startsWith("/api/cron/");
+  const timeoutMs = isCron ? CRON_HANDLER_TIMEOUT_MS : DEFAULT_HANDLER_TIMEOUT_MS;
+
+  let finished = false;
+  const timer = setTimeout(() => {
+    if (!finished && !res.headersSent) {
+      console.error(`[api] handler timeout ${routePrefix} after ${timeoutMs}ms`);
+      sendJson(res, 504, {
+        ok: false,
+        error: "handler_timeout",
+        message: "تعذر إكمال الطلب في الوقت المحدد.",
+        fallback: true,
+      });
+      finished = true;
+    }
+  }, timeoutMs);
+
+  try {
+    await handler(req, res);
+  } finally {
+    clearTimeout(timer);
+    finished = true;
+  }
+}
+
 export async function dispatchApiRequest(req, res) {
   const route = matchApiRoute(req);
   if (!route) {
@@ -193,7 +222,7 @@ export async function dispatchApiRequest(req, res) {
   if (req.method === "GET" && route.allowGet) {
     req.body = {};
     try {
-      await handler(req, res);
+      await invokeHandler(handler, req, res, route.prefix);
     } catch (error) {
       console.error(`${route.prefix} GET handler failed`, error);
       if (!res.headersSent) {
@@ -217,7 +246,7 @@ export async function dispatchApiRequest(req, res) {
 
     req.body = body ?? {};
     try {
-      await handler(req, res);
+      await invokeHandler(handler, req, res, route.prefix);
     } catch (error) {
       console.error(`${route.prefix} POST handler failed`, error);
       if (!res.headersSent) {

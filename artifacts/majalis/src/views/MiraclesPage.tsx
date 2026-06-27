@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { getMiracles } from "@/lib/supabase";
-import { PageHeader, Loading, Empty, Chip } from "@/components/ui-common";
+import { PageHeader, Empty, Chip } from "@/components/ui-common";
+import { AsyncDataView } from "@/components/AsyncDataView";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
 import { MIRACLE_CATEGORIES } from "@/lib/miracles-seed";
+import { safeLoadEffect } from "@/lib/safe-load";
 
 const CATEGORIES = MIRACLE_CATEGORIES;
 const SOURCE_TYPES = ["الكل", "قرآن", "سنة"];
@@ -16,22 +18,34 @@ export default function MiraclesPage({
 } = {}) {
   const [items, setItems] = useState<any[]>(initialItems ?? []);
   const [loading, setLoading] = useState(!initialItems);
+  const [error, setError] = useState<string | null>(null);
   const [category, setCategory] = useState("الكل");
   const [sourceType, setSourceType] = useState("الكل");
   const [expanded, setExpanded] = useState<string | null>(null);
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const [reloadKey, setReloadKey] = useState(0);
 
   useEffect(() => {
-    if (initialItems && category === "الكل" && sourceType === "الكل") return;
-    setLoading(true);
-    getMiracles({
-      category: category === "الكل" ? undefined : category,
-      sourceType: sourceType === "الكل" ? undefined : sourceType,
-    }).then(({ data }) => {
-      setItems(data);
-      setLoading(false);
-    });
-  }, [category, sourceType, initialItems]);
+    if (initialItems && category === "الكل" && sourceType === "الكل" && reloadKey === 0) return;
+
+    setError(null);
+    return safeLoadEffect(
+      setLoading,
+      () =>
+        getMiracles({
+          category: category === "الكل" ? undefined : category,
+          sourceType: sourceType === "الكل" ? undefined : sourceType,
+        }),
+      ({ data }) => setItems(data ?? []),
+      (msg) => {
+        setError(msg);
+        setItems([]);
+      },
+      { label: `miracles:${category}:${sourceType}:${reloadKey}` },
+    );
+  }, [category, sourceType, initialItems, reloadKey]);
+
+  const status = loading ? "loading" : error ? "error" : items.length === 0 ? "empty" : "success";
 
   const filterPanel = (
     <>
@@ -63,7 +77,12 @@ export default function MiraclesPage({
         <FilterToggle onClick={() => setFiltersOpen(true)} label="تصفية" />
       </div>
 
-      {loading ? <Loading /> : items.length === 0 ? <Empty text="لا توجد مقالات بعد." /> : (
+      <AsyncDataView
+        status={status}
+        error={error}
+        onRetry={() => setReloadKey((k) => k + 1)}
+        emptyText="لا توجد بيانات حالياً"
+      >
         <div className="ds-grid">
           {items.map((item: any) => (
             <article key={item.id} className="miracle-item">
@@ -97,7 +116,7 @@ export default function MiraclesPage({
             </article>
           ))}
         </div>
-      )}
+      </AsyncDataView>
 
       <aside className="ds-filters-panel ds-filters-panel--desktop">
         <div className="ds-filters-panel__head">

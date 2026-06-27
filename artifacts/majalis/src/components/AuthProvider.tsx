@@ -3,6 +3,7 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { ADMIN_GOVERNANCE_ROLES, LEGACY_ROLE_MAP } from "@/lib/governance-roles";
 import { hasUnrestrictedAdminAccess, isOwnerProfile, isOwnerAuthUser, resolveUserEmail } from "@/lib/owner-config";
+import { RequestManager } from "@/lib/request-manager";
 
 type SupabaseAuthModule = typeof import("@/lib/supabase");
 
@@ -43,16 +44,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     import("@/lib/supabase-bootstrap")
       .then(({ bootstrapSupabaseFromServer, resetSupabaseClient }) =>
-        bootstrapSupabaseFromServer().then(() => resetSupabaseClient()),
+        RequestManager.run("auth:bootstrap", () => bootstrapSupabaseFromServer().then(() => resetSupabaseClient())),
       )
       .then(() => import("@/lib/supabase"))
       .then((mod) => {
         if (!active) return;
         setAuthApi(mod);
 
-        return mod.getCurrentUser().then((next) => {
+        return RequestManager.run("auth:getCurrentUser", () => mod.getCurrentUser()).then((next) => {
           if (active) setUser(next);
         });
+      })
+      .catch(() => {
+        if (active) setUser(null);
       })
       .finally(() => {
         if (active) setLoading(false);
@@ -60,13 +64,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     import("@/lib/supabase-bootstrap")
       .then(({ bootstrapSupabaseFromServer, resetSupabaseClient }) =>
-        bootstrapSupabaseFromServer().then(() => resetSupabaseClient()),
+        RequestManager.run("auth:bootstrap:listener", () =>
+          bootstrapSupabaseFromServer().then(() => resetSupabaseClient()),
+        ),
       )
       .then(() => import("@/lib/supabase"))
       .then((mod) => {
       const { data: sub } = mod.supabase.auth.onAuthStateChange(async () => {
-        const next = await mod.getCurrentUser();
-        if (active) setUser(next);
+        try {
+          const next = await RequestManager.run("auth:onAuthStateChange", () => mod.getCurrentUser());
+          if (active) setUser(next);
+        } catch {
+          if (active) setUser(null);
+        }
       });
       unsubscribe = () => sub.subscription.unsubscribe();
     });

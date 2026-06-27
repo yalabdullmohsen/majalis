@@ -1,4 +1,5 @@
-const CACHE_NAME = "majalis-shell-v4";
+const CACHE_NAME = "majalis-shell-v5";
+const FETCH_TIMEOUT_MS = 3000;
 const SHELL_URLS = ["/"];
 
 self.addEventListener("install", (event) => {
@@ -27,7 +28,10 @@ self.addEventListener("fetch", (event) => {
 
   if (req.mode === "navigate") {
     event.respondWith(
-      fetch(req, { cache: "no-store" })
+      Promise.race([
+        fetch(req, { cache: "no-store" }),
+        new Promise((_, reject) => setTimeout(() => reject(new Error("sw_nav_timeout")), FETCH_TIMEOUT_MS)),
+      ])
         .then((res) => {
           const copy = res.clone();
           caches.open(CACHE_NAME).then((cache) => cache.put("/", copy)).catch(() => undefined);

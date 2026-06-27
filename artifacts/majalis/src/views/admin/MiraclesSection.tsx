@@ -18,10 +18,10 @@ export function MiraclesSection() {
 
   const load = () => {
     setLoading(true);
-    adminGetMiracles().then(({ data }) => {
+    adminGetMiracles().then(({ data }) => { 
       setItems(data);
       setLoading(false);
-    });
+     }).catch(() => {}).finally(() => setLoading(false));
   };
 
   useEffect(() => {

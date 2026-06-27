@@ -1,6 +1,7 @@
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { useEffect, useMemo, useState } from "react";
 import { getLibrary } from "@/lib/supabase";
+import { RequestManager } from "@/lib/request-manager";
 import { DEMO_LIBRARY } from "@/lib/demo-content";
 import { Loading, Empty, Chip } from "@/components/ui-common";
 import { ContentHubLayout } from "@/components/layout/ContentHubLayout";
@@ -23,7 +24,9 @@ export default function LibraryPage({
   const loadLibrary = async () => {
     setLoading(true);
     try {
-      const { data } = await getLibrary({ type: type === "الكل" ? undefined : type });
+      const { data } = await RequestManager.run("library:list", () =>
+        getLibrary({ type: type === "الكل" ? undefined : type }),
+      );
       setItems(data);
     } catch {
       setItems(DEMO_LIBRARY);

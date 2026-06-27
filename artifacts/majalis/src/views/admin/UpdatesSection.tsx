@@ -17,7 +17,7 @@ export function UpdatesSection() {
   const [form, setForm] = useState<any>(EMPTY);
   const [saving, setSaving] = useState(false);
 
-  const load = () => { setLoading(true); adminGetAllUpdates().then(({ data }) => { setItems(data.length > 0 ? data : UPDATES_SEED); setLoading(false); }); };
+  const load = () => { setLoading(true); adminGetAllUpdates().then(({ data }) => {  setItems(data.length > 0 ? data : UPDATES_SEED); setLoading(false);  }).catch(() => {}).finally(() => setLoading(false)); };
   useEffect(() => { load(); }, []);
   const set = (k: string, v: unknown) => setForm((f: any) => ({ ...f, [k]: v }));
 

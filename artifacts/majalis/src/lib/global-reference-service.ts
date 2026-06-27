@@ -1,3 +1,4 @@
+import { requestFetch } from "@/lib/request-manager";
 /**
  * Global Scholarly Reference System — client service
  */
@@ -43,13 +44,13 @@ export async function fetchReferenceDashboard(): Promise<ReferenceDashboard | nu
 }
 
 export async function resolveGlobalReference(refId: string) {
-  const res = await fetch(`/api/global-reference?action=resolve&ref=${encodeURIComponent(refId)}`);
+  const res = await requestFetch(`/api/global-reference?action=resolve&ref=${encodeURIComponent(refId)}`);
   if (!res.ok) return null;
   return res.json();
 }
 
 export async function fetchRelationGraph(refId: string, depth = 2) {
-  const res = await fetch(`/api/global-reference?action=graph&ref=${encodeURIComponent(refId)}&depth=${depth}`);
+  const res = await requestFetch(`/api/global-reference?action=graph&ref=${encodeURIComponent(refId)}&depth=${depth}`);
   if (!res.ok) return null;
   return res.json();
 }

@@ -17,7 +17,7 @@ export function AnnualCoursesSection() {
   const [form, setForm] = useState<any>(EMPTY);
   const [saving, setSaving] = useState(false);
 
-  const load = () => { setLoading(true); adminGetAllAnnualCourses().then(({ data }) => { setItems(data.length > 0 ? data : ANNUAL_COURSES_SEED); setLoading(false); }); };
+  const load = () => { setLoading(true); adminGetAllAnnualCourses().then(({ data }) => {  setItems(data.length > 0 ? data : ANNUAL_COURSES_SEED); setLoading(false);  }).catch(() => {}).finally(() => setLoading(false)); };
   useEffect(() => { load(); }, []);
   const set = (k: string, v: unknown) => setForm((f: any) => ({ ...f, [k]: v }));
 

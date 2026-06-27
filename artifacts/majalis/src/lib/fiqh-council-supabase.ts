@@ -1,3 +1,4 @@
+import { requestFetch } from "@/lib/request-manager";
 import { supabase } from "./supabase";
 import { logSupabaseError } from "./supabase-config";
 import {
@@ -290,7 +291,7 @@ export async function adminTriggerFiqhSync(sourceSlugs?: string[]) {
   const token = session?.access_token;
   if (!token) return { ok: false, error: "يجب تسجيل الدخول" };
 
-  const res = await fetch("/api/admin/sync-fiqh-council", {
+  const res = await requestFetch("/api/admin/sync-fiqh-council", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -619,7 +620,7 @@ export async function adminTriggerFiqhLinkCheck() {
   const token = session?.access_token;
   if (!token) return { ok: false, error: "يجب تسجيل الدخول" };
 
-  const res = await fetch("/api/admin/check-fiqh-links", {
+  const res = await requestFetch("/api/admin/check-fiqh-links", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

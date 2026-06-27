@@ -1,3 +1,4 @@
+import { requestFetch } from "@/lib/request-manager";
 const ASSISTANT_PATH = "/api/assistant";
 
 /** Absolute URL for assistant API (works with SPA + Vercel). */
@@ -41,11 +42,13 @@ export async function callAssistantApi(
 ): Promise<{ response: Response; data: AssistantResponse; endpoint: string }> {
   const endpoint = getAssistantEndpoint();
 
-  const response = await fetch(endpoint, {
+  const response = await requestFetch(endpoint, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
-  });
+    timeoutMs: 30_000,
+    label: "assistant:chat",
+  } as RequestInit);
 
   const contentType = response.headers.get("content-type") || "";
   let data: AssistantResponse;
@@ -68,7 +71,7 @@ export async function checkAssistantAvailability(): Promise<boolean> {
   const endpoint = getAssistantEndpoint();
 
   try {
-    const response = await fetch(endpoint);
+    const response = await requestFetch(endpoint);
     const contentType = response.headers.get("content-type") || "";
     if (!contentType.includes("application/json")) return false;
     const data = (await response.json()) as AssistantResponse;

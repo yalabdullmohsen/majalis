@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState, useCallback } from "react";
 import { useLocation } from "wouter";
-import { PageHeader, Loading } from "@/components/ui-common";
+import { PageHeader, Loading, ErrorState, Empty } from "@/components/ui-common";
 import { useAuth } from "@/components/AuthProvider";
 import { UnifiedLessonCard } from "@/components/lessons/UnifiedLessonCard";
 import { LessonsContactCard } from "@/components/lessons/LessonsContactCard";
@@ -14,6 +14,7 @@ import {
   type KuwaitLessonRecord,
 } from "@/lib/kuwait-lessons";
 import { getUnifiedLessonsSplit } from "@/lib/lessons-service";
+import { RequestManager } from "@/lib/request-manager";
 import { regionsForGovernorate } from "@/lib/kuwait-regions";
 import { fromKuwaitLesson } from "@/lib/unified-lesson-card";
 import { registerForLesson, unregisterFromLesson, getMyRegistrations } from "@/lib/supabase";
@@ -200,6 +201,7 @@ export default function LessonsPage({
   const [activeLessons, setActiveLessons] = useState<KuwaitLessonRecord[]>(initialActive ?? []);
   const [archivedLessons, setArchivedLessons] = useState<KuwaitLessonRecord[]>(initialArchived ?? []);
   const [loading, setLoading] = useState(!initialActive);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [filters, setFilters] = useState<KuwaitLessonFilters>(DEFAULT_KUWAIT_FILTERS);
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -211,12 +213,14 @@ export default function LessonsPage({
   useEffect(() => {
     if (initialActive) return;
     setLoading(true);
-    getUnifiedLessonsSplit()
+    setLoadError(null);
+    RequestManager.run("lessons:unified-split", () => getUnifiedLessonsSplit())
       .then(({ active, archived }) => {
         setActiveLessons(active);
         setArchivedLessons(archived);
       })
-      .catch(() => {
+      .catch((err) => {
+        setLoadError(String((err as Error)?.message || err));
         setActiveLessons([]);
         setArchivedLessons([]);
       })
@@ -372,6 +376,10 @@ export default function LessonsPage({
         <main className="lessons-v2-main">
           {loading ? (
             <Loading />
+          ) : loadError ? (
+            <ErrorState text={loadError} onRetry={() => window.location.reload()} />
+          ) : activeLessons.length === 0 && archivedLessons.length === 0 ? (
+            <Empty text="لا توجد بيانات حالياً" />
           ) : (
             <>
               {!filters.search && filters.governorate === "كل المحافظات" && (

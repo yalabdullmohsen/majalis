@@ -10,7 +10,7 @@ import ContactPage from "@/views/ContactPage";
 import NotFound from "@/views/not-found";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { usePageSeo } from "@/lib/seo";
-import { Loading } from "@/components/ui-common";
+import { LazyRouteFallback } from "@/components/LazyRouteFallback";
 
 const CalendarPage = lazy(() => import("@/views/CalendarPage"));
 const SearchPage = lazy(() => import("@/views/SearchPage"));
@@ -88,7 +88,7 @@ function SeoManager() {
 function SafeLazyRoute({ component: Component }: { component: ComponentType }) {
   return (
     <ErrorBoundary>
-      <Suspense fallback={<Loading />}>
+      <Suspense fallback={<LazyRouteFallback />}>
         <Component />
       </Suspense>
     </ErrorBoundary>
@@ -99,7 +99,7 @@ function SurahStoryDetailRoute() {
   const [, params] = useRoute("/quran/surah-stories/:number");
   return (
     <ErrorBoundary>
-      <Suspense fallback={<Loading />}>
+      <Suspense fallback={<LazyRouteFallback />}>
         <SurahStoryDetailPage surahNumber={Number(params?.number) || 1} />
       </Suspense>
     </ErrorBoundary>
@@ -139,7 +139,7 @@ export default function AppRoutes() {
         <Route path="/learning"><Redirect to="/learning/paths" /></Route>
         <Route path="/assistant">
           <ErrorBoundary>
-            <Suspense fallback={<Loading />}>
+            <Suspense fallback={<LazyRouteFallback />}>
               <AssistantPage />
             </Suspense>
           </ErrorBoundary>
@@ -147,7 +147,7 @@ export default function AppRoutes() {
         <Route path="/condolences"><SafeLazyRoute component={CondolencesPage} /></Route>
         <Route path="/transcribe">
           <ErrorBoundary>
-            <Suspense fallback={<Loading />}>
+            <Suspense fallback={<LazyRouteFallback />}>
               <TranscribePage />
             </Suspense>
           </ErrorBoundary>
@@ -197,7 +197,7 @@ export default function AppRoutes() {
         <Route path="/admin/auto-content">
           <AdminRouteGuard>
             <ErrorBoundary>
-              <Suspense fallback={<Loading />}>
+              <Suspense fallback={<LazyRouteFallback />}>
                 <AutoContentPage />
               </Suspense>
             </ErrorBoundary>
@@ -206,7 +206,7 @@ export default function AppRoutes() {
         <Route path="/admin/fiqh-review">
           <AdminRouteGuard>
             <ErrorBoundary>
-              <Suspense fallback={<Loading />}>
+              <Suspense fallback={<LazyRouteFallback />}>
                 <FiqhReviewPage />
               </Suspense>
             </ErrorBoundary>
@@ -215,7 +215,7 @@ export default function AppRoutes() {
         <Route path="/admin/fiqh-quality">
           <AdminRouteGuard>
             <ErrorBoundary>
-              <Suspense fallback={<Loading />}>
+              <Suspense fallback={<LazyRouteFallback />}>
                 <FiqhQualityPage />
               </Suspense>
             </ErrorBoundary>
@@ -224,7 +224,7 @@ export default function AppRoutes() {
         <Route path="/admin/dashboard">
           <AdminRouteGuard>
             <ErrorBoundary>
-              <Suspense fallback={<Loading />}>
+              <Suspense fallback={<LazyRouteFallback />}>
                 <AdminDashboardPage />
               </Suspense>
             </ErrorBoundary>
@@ -233,7 +233,7 @@ export default function AppRoutes() {
         <Route path="/admin">
           <AdminRouteGuard>
             <ErrorBoundary>
-              <Suspense fallback={<Loading />}>
+              <Suspense fallback={<LazyRouteFallback />}>
                 <AdminPage />
               </Suspense>
             </ErrorBoundary>

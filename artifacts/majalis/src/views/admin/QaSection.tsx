@@ -43,7 +43,7 @@ export function QaSection() {
 
   const load = () => {
     setLoading(true);
-    adminGetQuestions().then(({ data }) => { setItems(data); setLoading(false); });
+    adminGetQuestions().then(({ data }) => {  setItems(data); setLoading(false);  }).catch(() => {}).finally(() => setLoading(false));
   };
   useEffect(() => {
     load();

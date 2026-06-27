@@ -19,7 +19,7 @@ export function FatwaAdminSection() {
 
   const load = () => {
     setLoading(true);
-    adminGetAllFatwas().then(({ data }) => { setItems(data.length > 0 ? data : FATWA_SEED); setLoading(false); });
+    adminGetAllFatwas().then(({ data }) => {  setItems(data.length > 0 ? data : FATWA_SEED); setLoading(false);  }).catch(() => {}).finally(() => setLoading(false));
   };
   useEffect(() => { load(); }, []);
 

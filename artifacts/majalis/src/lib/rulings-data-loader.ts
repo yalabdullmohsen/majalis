@@ -1,3 +1,4 @@
+import { requestFetch } from "@/lib/request-manager";
 import type { ShariaRulingExtended } from "./rulings-types";
 
 export { RULINGS_ENCYCLOPEDIA_SEED, RULINGS_ENCYCLOPEDIA_TOTAL } from "./rulings-encyclopedia-seed.generated";
@@ -16,7 +17,7 @@ const BASE = "/data/rulings-encyclopedia";
 export async function loadRulingsManifest(): Promise<Manifest> {
   if (manifestCache) return manifestCache;
   try {
-    const res = await fetch(`${BASE}/manifest.json`);
+    const res = await requestFetch(`${BASE}/manifest.json`);
     if (!res.ok) throw new Error(String(res.status));
     manifestCache = (await res.json()) as Manifest;
     return manifestCache;
@@ -37,7 +38,7 @@ export async function loadAllRulingsFromChunks(): Promise<ShariaRulingExtended[]
   const chunks = await Promise.all(
     manifest.chunks.map(async (c) => {
       try {
-        const res = await fetch(`${BASE}/${c.file}`);
+        const res = await requestFetch(`${BASE}/${c.file}`);
         if (!res.ok) return [];
         return (await res.json()) as ShariaRulingExtended[];
       } catch {

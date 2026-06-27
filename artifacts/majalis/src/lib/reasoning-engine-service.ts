@@ -1,3 +1,4 @@
+import { requestFetch } from "@/lib/request-manager";
 /**
  * Islamic Knowledge Reasoning Engine — admin client service
  */
@@ -73,7 +74,7 @@ export async function autoFixReasoningGraph(inferenceLimit = 100) {
 }
 
 export async function publicReasoningQuery(query: string) {
-  const res = await fetch("/api/knowledge-reasoning", {
+  const res = await requestFetch("/api/knowledge-reasoning", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ query }),

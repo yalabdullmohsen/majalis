@@ -1,8 +1,9 @@
 /**
- * Admin API client — uses Supabase session JWT (no client-side secrets).
+ * Admin API client — uses Supabase session JWT + RequestManager (timeout/retry).
  */
 
 import { supabase } from "@/lib/supabase";
+import { RequestManager } from "@/lib/request-manager";
 
 export async function getAdminAuthHeaders(): Promise<Record<string, string>> {
   const headers: Record<string, string> = { "Content-Type": "application/json" };
@@ -19,5 +20,5 @@ export async function adminFetch(url: string, init: RequestInit = {}): Promise<R
     ...authHeaders,
     ...(init.headers as Record<string, string> | undefined),
   };
-  return fetch(url, { ...init, headers: merged });
+  return RequestManager.fetch(url, { ...init, headers: merged, label: `admin:${url}` });
 }

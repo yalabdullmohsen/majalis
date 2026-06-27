@@ -25,7 +25,7 @@ export function UsersSection() {
 
   const load = () => {
     setLoading(true);
-    adminGetUsers().then(({ data }) => { setUsers(data); setLoading(false); });
+    adminGetUsers().then(({ data }) => {  setUsers(data); setLoading(false);  }).catch(() => {}).finally(() => setLoading(false));
   };
   useEffect(() => {
     load();

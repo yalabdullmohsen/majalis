@@ -30,7 +30,7 @@ export function SheikhsSection() {
   const [imagePreview, setImagePreview] = useState<string>("");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const load = () => { setLoading(true); adminGetSheikhs().then(({ data }) => { setItems(data); setLoading(false); }); };
+  const load = () => { setLoading(true); adminGetSheikhs().then(({ data }) => {  setItems(data); setLoading(false);  }).catch(() => {}).finally(() => setLoading(false)); };
   useEffect(() => { load(); }, []);
 
   const openAdd = () => { setForm({ ...EMPTY }); setImageFile(null); setImagePreview(""); setOpen(true); };
