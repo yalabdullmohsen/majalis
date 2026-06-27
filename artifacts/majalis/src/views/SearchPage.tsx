@@ -10,6 +10,7 @@ import { resolveLessonSheikhImage } from "@/lib/sheikh-image";
 import { searchLocalExtensions } from "@/lib/local-search-ext";
 import { lessonRecordToSearchRow, searchUnifiedLessons } from "@/lib/lessons-service";
 import { addSearchHistory } from "@/lib/search-history";
+import { useUserActivity } from "@/components/UserActivityProvider";
 import { trackSearchQuery } from "@/lib/content-analytics";
 import {
   searchFiqhCouncilForGlobal,
@@ -160,6 +161,7 @@ export default function SearchPage() {
   const [responseMs, setResponseMs] = useState<number | null>(null);
   const [showFilters, setShowFilters] = useState(false);
   const [filters, setFilters] = useState({ type: "", author: "", status: "", language: "" });
+  const { trackSearch } = useUserActivity();
 
   const runSearch = async (query: string) => {
     if (!query.trim()) {
@@ -170,6 +172,7 @@ export default function SearchPage() {
 
     setLoading(true);
     addSearchHistory(query);
+    trackSearch();
     void trackSearchQuery(query);
 
     try {

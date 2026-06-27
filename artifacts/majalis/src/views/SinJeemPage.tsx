@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { PageHeader } from "@/components/ui-common";
+import { useTrackActivity } from "@/components/UserActivityProvider";
 import {
   YES_NO_CATEGORIES,
   filterYesNoQuestions,
@@ -45,6 +46,7 @@ function formatDuration(ms: number) {
 }
 
 export default function SinJeemPage() {
+  const track = useTrackActivity();
   const [view, setView] = useState<View>("hub");
   const [category, setCategory] = useState<YesNoCategory | "all">("all");
   const [teams, setTeams] = useState(DEFAULT_TEAMS);
@@ -106,6 +108,13 @@ export default function SinJeemPage() {
   const finishMatch = useCallback((final: MatchProgress) => {
     saveActiveMatch(null);
     recordMatchResult(final);
+    track({
+      kind: "sin-jeem",
+      id: final.config.category,
+      title: `سين وجيم — ${final.config.category}`,
+      href: "/sin-jeem",
+      meta: final.config.mode === "team" ? "فرق" : "فردي",
+    });
     const winner = getWinner(final);
     if (winner !== null && winner !== "tie") {
       pushLeaderboard({
@@ -118,7 +127,7 @@ export default function SinJeemPage() {
     setLeaderboard(getLeaderboard());
     setMatch(final);
     setView("results");
-  }, []);
+  }, [track]);
 
   const handleTeamAnswer = (team: 0 | 1, isCorrect: boolean) => {
     if (!match || !currentTeamQuestion) return;

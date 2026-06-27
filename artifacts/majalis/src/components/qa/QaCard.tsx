@@ -5,6 +5,8 @@ import { C, QA_RULING_COLORS } from "@/lib/theme";
 import { ReadingToolbar } from "@/components/reading/ReadingToolbar";
 import { ReadingText } from "@/components/reading/ReadingText";
 import { getQaViewCount } from "@/lib/qa-utils";
+import { useTrackActivity } from "@/components/UserActivityProvider";
+import { ContentSuggestions } from "@/components/platform/ContentSuggestions";
 
 function RulingBadge({ ruling }: { ruling: string }) {
   const c = QA_RULING_COLORS[ruling] || { bg: C.parchmentDeep, text: C.inkSoft };
@@ -22,12 +24,27 @@ type Props = {
 
 export function QaCard({ item, defaultOpen = false }: Props) {
   const [open, setOpen] = useState(defaultOpen);
+  const track = useTrackActivity();
   const catName = item.qa_categories?.name;
   const question = displayText(item.question);
   const answer = displayText(item.answer);
   const shareText = `${question}\n\n${answer}`;
 
-  const toggleOpen = () => setOpen((v) => !v);
+  const toggleOpen = () => {
+    setOpen((v) => {
+      const next = !v;
+      if (next) {
+        track({
+          kind: "qa",
+          id: String(item.id),
+          title: question.slice(0, 80),
+          href: `/qa?q=${encodeURIComponent(question.slice(0, 40))}`,
+          meta: catName,
+        });
+      }
+      return next;
+    });
+  };
 
   return (
     <article className={`ui-card qa-card${open ? " qa-card--open" : ""}`}>
@@ -49,7 +66,7 @@ export function QaCard({ item, defaultOpen = false }: Props) {
       </button>
 
       {open && (
-        <div className="qa-card__body">
+        <div className="qa-card__body reading-surface-target">
           <ReadingText readingMode className="qa-card__answer">
             {answer}
           </ReadingText>
@@ -69,6 +86,10 @@ export function QaCard({ item, defaultOpen = false }: Props) {
             contentType="qa"
             contentId={item.id}
             showSave={!isDemoId(item.id)}
+          />
+          <ContentSuggestions
+            keywords={[catName, item.ruling_type].filter(Boolean) as string[]}
+            category={catName}
           />
         </div>
       )}

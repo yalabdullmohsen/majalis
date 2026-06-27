@@ -1,5 +1,7 @@
 import { useCallback, useState } from "react";
 import { FavoriteButton } from "@/components/FavoriteButton";
+import { ShareCardModal } from "@/components/platform/ShareCardModal";
+import { BookmarkNoteButton } from "@/components/platform/BookmarkNoteButton";
 
 type Props = {
   text: string;
@@ -35,6 +37,8 @@ export function ReadingToolbar({
   hideReadingModeToggle = true,
 }: Props) {
   const [copied, setCopied] = useState(false);
+  const [shareOpen, setShareOpen] = useState(false);
+  const contentKey = contentType && contentId ? `${contentType}:${contentId}` : "";
 
   const handleCopy = useCallback(async () => {
     const ok = await copyText(text);
@@ -45,36 +49,52 @@ export function ReadingToolbar({
   }, [text]);
 
   const handleShare = useCallback(async () => {
-    const payload = { title, text };
     if (navigator.share) {
       try {
-        await navigator.share(payload);
+        await navigator.share({ title, text });
         return;
       } catch {
         /* user cancelled */
       }
     }
-    await copyText(text);
-    setCopied(true);
-    window.setTimeout(() => setCopied(false), 1800);
+    setShareOpen(true);
   }, [text, title]);
 
   return (
-    <div className="reading-toolbar reading-toolbar--compact">
-      <div className="reading-toolbar__group">
-        <button type="button" className="reading-toolbar__btn" onClick={handleCopy}>
-          {copied ? "تم النسخ" : "نسخ"}
-        </button>
-        <button type="button" className="reading-toolbar__btn" onClick={handleShare}>
-          مشاركة
-        </button>
-        {showSave && contentType && contentId && (
-          <FavoriteButton contentType={contentType} contentId={contentId} compact />
-        )}
+    <>
+      <div className="reading-toolbar reading-toolbar--compact">
+        <div className="reading-toolbar__group">
+          <button type="button" className="reading-toolbar__btn" onClick={handleCopy}>
+            {copied ? "تم النسخ" : "نسخ"}
+          </button>
+          <button type="button" className="reading-toolbar__btn" onClick={handleShare}>
+            مشاركة
+          </button>
+          {showSave && contentType && contentId && (
+            <FavoriteButton
+              contentType={contentType}
+              contentId={contentId}
+              title={title}
+              compact
+            />
+          )}
+          {contentKey && (
+            <BookmarkNoteButton
+              contentKey={contentKey}
+              title={title}
+              href={typeof window !== "undefined" ? window.location.pathname : "/"}
+            />
+          )}
+        </div>
+        {!hideFontControls || !hideReadingModeToggle ? null : null}
       </div>
-      {/* Legacy props kept for API compat; controls hidden by default */}
-      {!hideFontControls || !hideReadingModeToggle ? null : null}
-    </div>
+      <ShareCardModal
+        open={shareOpen}
+        onClose={() => setShareOpen(false)}
+        title={title}
+        subtitle={text.slice(0, 120)}
+      />
+    </>
   );
 }
 

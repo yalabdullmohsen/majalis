@@ -3,6 +3,7 @@ import { Redirect, Route, Switch, Router as WouterRouter, useLocation, useRoute 
 import { AuthProvider } from "@/components/AuthProvider";
 import { FontPreferenceProvider } from "@/components/FontPreferenceProvider";
 import { ThemePreferenceProvider } from "@/components/ThemePreferenceProvider";
+import { UserActivityProvider } from "@/components/UserActivityProvider";
 import { UserPreferencesProvider } from "@/components/UserPreferencesProvider";
 import { AdminRouteGuard } from "@/components/AdminRouteGuard";
 import NavBar from "@/components/NavBar";
@@ -104,6 +105,12 @@ const FiqhQualityPage = lazy(() => import("@/views/admin/FiqhQualityPage"));
 const LearningPathsPage = lazy(() => import("@/views/learning/LearningPathsPage"));
 const LearningPathDetailPage = lazy(() => import("@/views/learning/LearningPathDetailPage"));
 const MyLearningPage = lazy(() => import("@/views/MyLearningPage"));
+const ProfilePage = lazy(() => import("@/views/ProfilePage"));
+const DiscoverPage = lazy(() => import("@/views/DiscoverPage"));
+const ContinuePage = lazy(() => import("@/views/ContinuePage"));
+const FavoritesPage = lazy(() => import("@/views/FavoritesPage"));
+const StatsCenterPage = lazy(() => import("@/views/StatsCenterPage"));
+const ChallengesPage = lazy(() => import("@/views/ChallengesPage"));
 const LearningQuizPage = lazy(() => import("@/views/learning/LearningQuizPage"));
 const LearningCalendarPage = lazy(() => import("@/views/learning/LearningCalendarPage"));
 const CertificateVerifyPage = lazy(() => import("@/views/learning/CertificateVerifyPage"));
@@ -170,6 +177,12 @@ function Router() {
       <Route path="/learning/calendar"><SafeLazyRoute component={LearningCalendarPage} /></Route>
       <Route path="/learning/certificates/:code"><SafeLazyRoute component={CertificateVerifyPage} /></Route>
       <Route path="/my-learning"><SafeLazyRoute component={MyLearningPage} /></Route>
+      <Route path="/profile"><SafeLazyRoute component={ProfilePage} /></Route>
+      <Route path="/discover"><SafeLazyRoute component={DiscoverPage} /></Route>
+      <Route path="/continue"><SafeLazyRoute component={ContinuePage} /></Route>
+      <Route path="/favorites"><SafeLazyRoute component={FavoritesPage} /></Route>
+      <Route path="/stats"><SafeLazyRoute component={StatsCenterPage} /></Route>
+      <Route path="/challenges"><SafeLazyRoute component={ChallengesPage} /></Route>
       <Route path="/learning"><Redirect to="/learning/paths" /></Route>
       <Route path="/assistant">
         <ErrorBoundary>
@@ -294,6 +307,7 @@ function App() {
     <ThemePreferenceProvider>
       <FontPreferenceProvider>
         <UserPreferencesProvider>
+          <UserActivityProvider>
           <AuthProvider>
           <WouterRouter base={(import.meta.env.BASE_URL || "/").replace(/\/$/, "")}>
             <div className="app-shell" style={{ minHeight: "100vh", direction: "rtl" }}>
@@ -308,6 +322,7 @@ function App() {
             </div>
           </WouterRouter>
           </AuthProvider>
+          </UserActivityProvider>
         </UserPreferencesProvider>
       </FontPreferenceProvider>
     </ThemePreferenceProvider>

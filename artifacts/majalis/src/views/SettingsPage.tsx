@@ -1,6 +1,7 @@
 "use client";
 
 import { Link } from "wouter";
+import { useState } from "react";
 import { LegalBackLink, LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
 import { useAuth } from "@/components/AuthProvider";
 import { useFontPreference } from "@/components/FontPreferenceProvider";
@@ -8,6 +9,12 @@ import { useThemePreference } from "@/components/ThemePreferenceProvider";
 import { useUserPreferences } from "@/components/UserPreferencesProvider";
 import { FONT_OPTIONS, type FontPreference } from "@/lib/font-preference";
 import { THEME_OPTIONS, type ThemePreference } from "@/lib/theme-preference";
+import {
+  READING_SURFACE_OPTIONS,
+  readReadingSurface,
+  writeReadingSurface,
+  type ReadingSurface,
+} from "@/lib/reading-surface";
 import { clearQuranCache } from "@/lib/quran-content";
 import { DEFAULT_PREFERENCES, type UserPreferences } from "@/lib/user-preferences";
 
@@ -38,6 +45,7 @@ export default function SettingsPage() {
   const { preference: fontPreference, setPreference: setFontPreference } = useFontPreference();
   const { preference: themePreference, resolvedTheme, setPreference: setThemePreference } = useThemePreference();
   const { preferences, updatePreferences } = useUserPreferences();
+  const [readingSurface, setReadingSurface] = useState<ReadingSurface>(() => readReadingSurface());
 
   const update = <K extends keyof UserPreferences>(key: K, value: UserPreferences[K]) => {
     updatePreferences({ [key]: value });
@@ -57,6 +65,8 @@ export default function SettingsPage() {
           </div>
         </div>
         <div className="settings-actions">
+          <Link href="/profile" className="page-action-btn page-action-btn--secondary">لوحتي الشخصية</Link>
+          <Link href="/favorites" className="page-action-btn page-action-btn--secondary">المفضلة</Link>
           {isLoggedIn ? (
             <button type="button" className="page-action-btn" onClick={() => logout()}>
               تسجيل الخروج
@@ -114,6 +124,22 @@ export default function SettingsPage() {
 
       <LegalSection title="إعدادات القراءة">
         <p className="settings-note">تُطبَّق هذه الإعدادات على صفحات الأسئلة والفوائد والأذكار وجميع صفحات القراءة.</p>
+        <div className="settings-option-grid" role="group" aria-label="سطح القراءة">
+          {READING_SURFACE_OPTIONS.map((option) => (
+            <button
+              key={option.id}
+              type="button"
+              className={`settings-choice${readingSurface === option.id ? " is-active" : ""}`}
+              onClick={() => {
+                setReadingSurface(option.id);
+                writeReadingSurface(option.id);
+              }}
+            >
+              <strong>{option.label}</strong>
+              <span>{option.description}</span>
+            </button>
+          ))}
+        </div>
         <div className="settings-option-grid" role="group" aria-label="اختيار الخط">
           {FONT_OPTIONS.map((option) => (
             <button

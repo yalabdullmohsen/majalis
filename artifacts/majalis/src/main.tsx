@@ -6,6 +6,7 @@ import { initClientErrorReporting } from "./lib/error-report";
 import { resetMobileNavBodyLock } from "./lib/mobile-nav-body-lock";
 import "./index.css";
 import "./styles/calm-design.css";
+import "./styles/platform-features.css";
 
 resetMobileNavBodyLock();
 applyFontPreference(readFontPreference());

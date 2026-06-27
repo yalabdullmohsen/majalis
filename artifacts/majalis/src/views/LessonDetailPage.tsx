@@ -28,6 +28,9 @@ import { mapLessonRow } from "@/lib/kuwait-lessons";
 import { cleanTimeText } from "@/lib/lesson-time";
 import { useLessonSeo } from "@/lib/seo";
 import { usePageView } from "@/hooks/usePageView";
+import { useTrackActivity } from "@/components/UserActivityProvider";
+import { FollowButton } from "@/components/platform/FollowButton";
+import { ContentSuggestions } from "@/components/platform/ContentSuggestions";
 import { fetchLessonEngagementStats, type LessonEngagementStats } from "@/lib/lesson-stats";
 import { normalizeActivityLabel } from "@/lib/activity-label";
 import { resolveLessonPosterUrl } from "@/lib/lesson-image";
@@ -76,6 +79,7 @@ export default function LessonDetailPage({
   const [sheikhBio, setSheikhBio] = useState<string>("");
   const [stats, setStats] = useState<LessonEngagementStats>({ views: 0, saves: 0, shares: 0 });
   const [loading, setLoading] = useState(!initialLesson);
+  const track = useTrackActivity();
 
   useEffect(() => {
     if (initialLesson) {
@@ -156,6 +160,17 @@ export default function LessonDetailPage({
     if (lesson) return fromDbLesson(lesson);
     return null;
   }, [kuwaitLesson, lesson]);
+
+  useEffect(() => {
+    if (!unified) return;
+    track({
+      kind: "lesson",
+      id: unified.id,
+      title: unified.title,
+      href: `/lessons/${unified.id}`,
+      meta: unified.sheikhName,
+    });
+  }, [unified?.id, unified?.title, unified?.sheikhName, track]);
 
   const seoLesson = useMemo((): KuwaitLessonRecord | null => {
     if (kuwaitLesson) return kuwaitLesson;
@@ -364,7 +379,24 @@ export default function LessonDetailPage({
           <button type="button" className="lesson-unified-card__btn lesson-unified-card__btn--primary" onClick={handleShare}>
             مشاركة
           </button>
-          <FavoriteButton contentType="lesson" contentId={unified.id} />
+          <FavoriteButton contentType="lesson" contentId={unified.id} title={unified.title} href={`/lessons/${unified.id}`} />
+          {unified.sheikhName && (
+            <FollowButton
+              kind="sheikh"
+              id={unified.sheikhName}
+              label={unified.sheikhName}
+              href={`/lessons?q=${encodeURIComponent(unified.sheikhName)}`}
+            />
+          )}
+          {unified.category && (
+            <FollowButton
+              kind="category"
+              id={unified.category}
+              label={unified.category}
+              href={`/lessons?q=${encodeURIComponent(unified.category)}`}
+              compact
+            />
+          )}
           <button
             type="button"
             className="lesson-unified-card__btn lesson-unified-card__btn--secondary"
@@ -430,6 +462,13 @@ export default function LessonDetailPage({
             ))}
           </div>
         </section>
+      )}
+
+      {unified && (
+        <ContentSuggestions
+          keywords={[...(unified.keywords || []), unified.category, unified.sheikhName].filter(Boolean) as string[]}
+          category={unified.category}
+        />
       )}
     </div>
   );

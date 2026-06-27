@@ -9,6 +9,7 @@ import { AyahRow } from "@/components/quran/AyahRow";
 import { TafsirTabs } from "@/components/quran/TafsirTabs";
 import { useThemePreference } from "@/components/ThemePreferenceProvider";
 import { useUserPreferences } from "@/components/UserPreferencesProvider";
+import { useTrackActivity } from "@/components/UserActivityProvider";
 import {
   fetchSurahAyahs,
   getCachedSurahAyahs,
@@ -67,6 +68,7 @@ export default function QuranSurahPage({ surahNumber: propSurah }: Props) {
   const [showTafsir, setShowTafsir] = useState(false);
   const { resolvedTheme } = useThemePreference();
   const { preferences } = useUserPreferences();
+  const track = useTrackActivity();
 
   const reciter = getReciterById(reciterId) || QURAN_RECITERS[0];
   const tafsirSource = TAFSIR_SOURCES.find((t) => t.id === tafsirId) || TAFSIR_SOURCES[0];
@@ -121,7 +123,14 @@ export default function QuranSurahPage({ surahNumber: propSurah }: Props) {
 
   useEffect(() => {
     saveQuranPosition(surah, targetAyah);
-  }, [surah, targetAyah]);
+    track({
+      kind: "quran",
+      id: String(surah),
+      title: `سورة ${meta.name}`,
+      href: `/quran/surah/${surah}`,
+      meta: `آية ${targetAyah}`,
+    });
+  }, [surah, targetAyah, meta.name, track]);
 
   const prevSurah = getAdjacentSurah(surah, -1);
   const nextSurah = getAdjacentSurah(surah, 1);

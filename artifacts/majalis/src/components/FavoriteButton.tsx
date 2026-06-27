@@ -1,22 +1,46 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
+import { isFavorite, toggleFavorite, type FavoriteType } from "@/lib/local-favorites";
+
+const LOCAL_TYPE_MAP: Record<string, FavoriteType> = {
+  qa: "qa",
+  lesson: "lesson",
+  book: "book",
+  "surah-story": "surah-story",
+  faida: "faida",
+  "quran-ayah": "ayah",
+  ayah: "ayah",
+};
 
 type Props = {
   contentType: string;
   contentId: string;
+  title?: string;
+  href?: string;
   className?: string;
   compact?: boolean;
 };
 
-export function FavoriteButton({ contentType, contentId, className = "", compact = false }: Props) {
+export function FavoriteButton({
+  contentType,
+  contentId,
+  title = "محتوى محفوظ",
+  href = typeof window !== "undefined" ? window.location.pathname : "/",
+  className = "",
+  compact = false,
+}: Props) {
   const [bookmarked, setBookmarked] = useState(false);
   const [busy, setBusy] = useState(false);
+  const localType = LOCAL_TYPE_MAP[contentType];
 
   useEffect(() => {
     let cancelled = false;
     const load = async () => {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user || cancelled) return;
+      if (!user) {
+        if (localType && !cancelled) setBookmarked(isFavorite(localType, contentId));
+        return;
+      }
       const { data } = await supabase
         .from("bookmarks")
         .select("id")
@@ -27,8 +51,15 @@ export function FavoriteButton({ contentType, contentId, className = "", compact
       if (!cancelled) setBookmarked(Boolean(data));
     };
     load();
-    return () => { cancelled = true; };
-  }, [contentType, contentId]);
+    const onLocal = () => {
+      if (localType) setBookmarked(isFavorite(localType, contentId));
+    };
+    window.addEventListener("majalis-favorites-updated", onLocal);
+    return () => {
+      cancelled = true;
+      window.removeEventListener("majalis-favorites-updated", onLocal);
+    };
+  }, [contentType, contentId, localType]);
 
   const toggle = async () => {
     if (busy) return;
@@ -36,7 +67,11 @@ export function FavoriteButton({ contentType, contentId, className = "", compact
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
-        alert("يرجى تسجيل الدخول أولاً");
+        if (!localType) {
+          alert("يرجى تسجيل الدخول أولاً");
+          return;
+        }
+        setBookmarked(toggleFavorite({ type: localType, id: contentId, title, href }));
         return;
       }
       if (bookmarked) {

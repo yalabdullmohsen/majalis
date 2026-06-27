@@ -1,10 +1,14 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { PageHeader } from "@/components/ui-common";
 import { QuranSubnav } from "@/components/quran/QuranSubnav";
 import { getAllSurahStories, getSurahStory, searchSurahStories } from "@/lib/surah-stories";
+import { useTrackActivity } from "@/components/UserActivityProvider";
+import { LocalFavoriteButton } from "@/components/platform/LocalFavoriteButton";
+import { ContentSuggestions } from "@/components/platform/ContentSuggestions";
+import { BookmarkNoteButton } from "@/components/platform/BookmarkNoteButton";
 
 function parseAyahLink(ref: string): string {
   const [surah, ayah] = ref.split(":");
@@ -66,9 +70,20 @@ export function SurahStoryDetailPage({ surahNumber }: { surahNumber: number }) {
   const story = getSurahStory(surahNumber >= 1 && surahNumber <= 114 ? surahNumber : 1);
   const prev = story.number > 1 ? story.number - 1 : null;
   const next = story.number < 114 ? story.number + 1 : null;
+  const track = useTrackActivity();
+
+  useEffect(() => {
+    track({
+      kind: "surah-story",
+      id: String(story.number),
+      title: story.name,
+      href: `/quran/surah-stories/${story.number}`,
+      meta: story.mainThemes[0],
+    });
+  }, [story.number, story.name, story.mainThemes, track]);
 
   return (
-    <div className="page-shell surah-story-detail calm-page calm-reading">
+    <div className="page-shell surah-story-detail calm-page calm-reading reading-surface-target">
       <nav className="surah-story-detail-nav" aria-label="تنقل القصص">
         <Link href="/quran/surah-stories" className="calm-btn calm-btn--ghost">← كل القصص</Link>
         <div className="surah-story-detail-nav__pager">
@@ -134,10 +149,25 @@ export function SurahStoryDetailPage({ surahNumber }: { surahNumber: number }) {
         )}
 
         <footer className="surah-story-footer">
+          <div className="surah-story-actions">
+            <LocalFavoriteButton
+              type="surah-story"
+              id={String(story.number)}
+              title={story.name}
+              href={`/quran/surah-stories/${story.number}`}
+              meta={story.mainThemes[0]}
+            />
+            <BookmarkNoteButton
+              contentKey={`surah-story:${story.number}`}
+              title={story.name}
+              href={`/quran/surah-stories/${story.number}`}
+            />
+          </div>
           <p className="quran-source-note">{story.trustNote}</p>
           <Link href={`/quran/surah/${story.number}`} className="calm-btn calm-btn--primary">
             قراءة السورة في المصحف
           </Link>
+          <ContentSuggestions keywords={story.keywords} category={story.mainThemes[0]} />
         </footer>
       </article>
     </div>
