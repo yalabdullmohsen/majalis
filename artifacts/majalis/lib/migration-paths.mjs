@@ -9,8 +9,18 @@ import { fileURLToPath } from "node:url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export const ACTIVATION_MIGRATION_FILES = [
+  "owner_bootstrap_enum_v1.sql",
   "owner_bootstrap_v1.sql",
   "qa_categories_fix_v1.sql",
+  "sharia_rulings_prereq.sql",
+  "sharia_rulings_encyclopedia_v1.sql",
+  "majlis_knowledge_engine_v1.sql",
+  "majlis_knowledge_engine_v2.sql",
+];
+
+/** Production activation — sharia + MKE tables only (no owner/qa bootstrap). */
+export const ACTIVATION_TABLES_MIGRATION_FILES = [
+  "platform_bootstrap_compat_v1.sql",
   "sharia_rulings_prereq.sql",
   "sharia_rulings_encyclopedia_v1.sql",
   "majlis_knowledge_engine_v1.sql",
@@ -47,6 +57,7 @@ export const MIGRATION_FILES = [
   "automation_phase5_v1.sql",
   "lesson_intelligence_v6.sql",
   "instagram_graph_phase7_v1.sql",
+  "owner_bootstrap_enum_v1.sql",
   "owner_bootstrap_v1.sql",
   "qa_categories_fix_v1.sql",
   "sharia_rulings_prereq.sql",

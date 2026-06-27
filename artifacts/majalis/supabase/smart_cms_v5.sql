@@ -64,8 +64,6 @@ CREATE TABLE IF NOT EXISTS content_revision_log (
 
 CREATE INDEX IF NOT EXISTS content_revision_log_record_idx
   ON content_revision_log (table_name, record_id, changed_at DESC);
-
--- Extend admin_audit_logs with old/new snapshots when missing
 DO $$
 BEGIN
   IF EXISTS (

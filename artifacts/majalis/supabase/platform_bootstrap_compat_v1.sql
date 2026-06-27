@@ -64,14 +64,22 @@ BEGIN
     ALTER TABLE admin_audit_logs ADD COLUMN IF NOT EXISTS old_values JSONB;
     ALTER TABLE admin_audit_logs ADD COLUMN IF NOT EXISTS new_values JSONB;
     UPDATE admin_audit_logs SET table_name = 'unknown' WHERE table_name IS NULL;
+
+    IF EXISTS (
+      SELECT 1 FROM information_schema.columns
+      WHERE table_schema = 'public' AND table_name = 'admin_audit_logs' AND column_name = 'table_name'
+    ) THEN
+      EXECUTE 'CREATE INDEX IF NOT EXISTS admin_audit_logs_table_idx ON admin_audit_logs (table_name, created_at DESC)';
+    END IF;
+    IF EXISTS (
+      SELECT 1 FROM information_schema.columns
+      WHERE table_schema = 'public' AND table_name = 'admin_audit_logs' AND column_name = 'user_id'
+    ) THEN
+      EXECUTE 'CREATE INDEX IF NOT EXISTS admin_audit_logs_user_idx ON admin_audit_logs (user_id, created_at DESC)';
+    END IF;
   END IF;
 EXCEPTION WHEN undefined_table THEN NULL;
 END $$;
-
-CREATE INDEX IF NOT EXISTS admin_audit_logs_table_idx
-  ON admin_audit_logs (table_name, created_at DESC);
-CREATE INDEX IF NOT EXISTS admin_audit_logs_user_idx
-  ON admin_audit_logs (user_id, created_at DESC);
 
 -- ── 3. Bootstrap run history ────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS platform_bootstrap_runs (
