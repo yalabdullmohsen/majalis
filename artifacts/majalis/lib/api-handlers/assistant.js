@@ -82,7 +82,7 @@ function sanitizeMessages(messages) {
 }
 
 function extractUserMessage(body) {
-  const direct = String(body?.message || "").trim();
+  const direct = String(body?.message || body?.question || "").trim();
   if (direct) return direct;
 
   const messages = sanitizeMessages(body?.messages);

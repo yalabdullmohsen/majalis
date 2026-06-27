@@ -151,7 +151,7 @@ async function checkApi({ path: apiPath, method, expectOk }) {
       redirect: "follow",
       method,
       headers: method === "POST" ? { "Content-Type": "application/json" } : {},
-      body: method === "POST" ? JSON.stringify({ question: "ما حكم الوضوء؟" }) : undefined,
+      body: method === "POST" ? JSON.stringify({ message: "ما حكم الوضوء؟" }) : undefined,
     });
     const text = await res.text();
     let json = null;

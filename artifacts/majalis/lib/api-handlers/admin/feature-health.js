@@ -86,7 +86,7 @@ export default async function handler(req, res) {
   const apiChecks = {
     healthz: await probeApi(base, "/api/healthz"),
     assistantHealth: await probeApi(base, "/api/assistant/health"),
-    assistantPost: await probeApi(base, "/api/assistant", "POST", { question: "ما حكم الوضوء؟" }),
+    assistantPost: await probeApi(base, "/api/assistant", "POST", { message: "ما حكم الوضوء؟" }),
     knowledgeSearch: await probeApi(base, "/api/knowledge-search?q=صلاة"),
   };
 

@@ -119,7 +119,7 @@ async function checkApi(endpoint) {
       headers: endpoint.includes("assistant") && !endpoint.includes("health") ? { "Content-Type": "application/json" } : {},
       body:
         endpoint.includes("assistant") && !endpoint.includes("health")
-          ? JSON.stringify({ question: "ما حكم الوضوء؟" })
+          ? JSON.stringify({ message: "ما حكم الوضوء؟" })
           : undefined,
     });
     const text = await res.text();
