@@ -42,8 +42,9 @@ export default async function handler(req, res) {
       return;
     }
 
+    const force = req.query?.force === "1" || req.body?.force === true;
     const verify = await verifySchema();
-    if (verify.ok) {
+    if (verify.ok && !force) {
       sendJson(res, 200, {
         ok: true,
         alreadyApplied: true,

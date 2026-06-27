@@ -81,6 +81,18 @@ export async function verifySchema() {
     "quran_surah_profiles",
     "hadith_profiles",
     "fiqh_issue_profiles",
+    // Phase 4–7 — lesson automation + Instagram Graph API
+    "lesson_import_drafts",
+    "trusted_lesson_sources",
+    "trusted_content_sources",
+    "lesson_automation_audit",
+    "automation_runs",
+    "source_monitor_jobs",
+    "automation_step_logs",
+    "lesson_content_history",
+    "lesson_sources",
+    "lesson_intelligence_runs",
+    "lesson_intelligence_extractions",
   ];
 
   for (const table of tables) {
