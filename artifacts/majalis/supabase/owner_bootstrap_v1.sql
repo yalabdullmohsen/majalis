@@ -4,12 +4,7 @@
 -- =====================================================================
 
 -- Extend legacy enum so profiles.role can store super_admin
-DO $$ BEGIN
-  ALTER TYPE user_role ADD VALUE IF NOT EXISTS 'super_admin';
-EXCEPTION
-  WHEN duplicate_object THEN NULL;
-  WHEN undefined_object THEN NULL;
-END $$;
+-- (enum value added in owner_bootstrap_enum_v1.sql — separate transaction)
 
 -- Owner privilege columns on profiles
 ALTER TABLE profiles ADD COLUMN IF NOT EXISTS is_admin BOOLEAN NOT NULL DEFAULT false;

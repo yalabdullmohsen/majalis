@@ -3,7 +3,7 @@ import { validateCronAuth } from "../../../lib/env-config.mjs";
 import { applyMigrations, verifySchema } from "../../../lib/db-migrate.mjs";
 import { testDatabaseConnection, resolveDatabaseUrl } from "../../../lib/database.mjs";
 import { ensureContentImportSchema } from "../../../lib/content-import/ensure-schema.mjs";
-import { runActivationMigrations } from "../../../lib/migration-runner.mjs";
+import { runActivationMigrations, runActivationTableMigrations } from "../../../lib/migration-runner.mjs";
 import { ACTIVATION_TABLES } from "../../../lib/table-probe.mjs";
 import { assertServiceSecrets } from "../../../lib/service-guard.mjs";
 
@@ -58,6 +58,18 @@ export default async function handler(req, res) {
     }
 
     const scope = req.query?.scope || req.body?.scope || "full";
+
+    if (scope === "activation-tables") {
+      const seedRulings = req.query?.seed !== "0" && req.body?.seed !== false;
+      const activation = await runActivationTableMigrations({ seedRulings });
+      sendJson(res, activation.ok ? 200 : 500, {
+        ok: activation.ok,
+        scope: "activation-tables",
+        activation,
+        resolved: resolvedMeta(),
+      });
+      return;
+    }
 
     if (scope === "activation") {
       assertServiceSecrets("migrations");
