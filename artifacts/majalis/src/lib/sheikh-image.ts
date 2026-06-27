@@ -37,6 +37,7 @@ export function resolveSheikhImageUrl(source?: SheikhLike | string | null): stri
 export function resolveLessonSheikhImage(lesson: {
   sheikh_image_url?: string;
   sheikhImage?: string;
+  poster_image_url?: string;
   speaker_name?: string;
   sheikhs?: SheikhLike & { name?: string };
 }): string | undefined {
@@ -53,7 +54,11 @@ export function resolveLessonSheikhImage(lesson: {
   }
 
   const name = lesson.sheikhs?.name || lesson.speaker_name;
-  return resolveLocalSheikhPhoto(name);
+  const poster = lesson.poster_image_url?.trim();
+  const local = resolveLocalSheikhPhoto(name);
+  if (local && local !== "/logo.png") return local;
+  if (poster) return poster;
+  return local || undefined;
 }
 
 export function parseLessonSchedule(schedule?: string): { day: string; time: string } {

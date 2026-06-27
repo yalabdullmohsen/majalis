@@ -67,8 +67,9 @@ function lessonEventType(lesson: KuwaitLessonRecord) {
 
 export function lessonJsonLd(lesson: KuwaitLessonRecord) {
   const path = `/lessons/${lesson.id}`;
-  const image = lesson.sheikhImage || lesson.lessonImage || seoData.defaultImage;
+  const image = lesson.lessonImage || lesson.sheikhImage || seoData.defaultImage;
   const type = lessonEventType(lesson);
+  const organizerName = lesson.organizer || SITE_NAME;
 
   const base: Record<string, unknown> = {
     "@context": "https://schema.org",
@@ -80,8 +81,8 @@ export function lessonJsonLd(lesson: KuwaitLessonRecord) {
     inLanguage: "ar",
     organizer: {
       "@type": "Organization",
-      name: SITE_NAME,
-      url: SITE_URL,
+      name: organizerName,
+      url: lesson.organizer ? undefined : SITE_URL,
     },
     performer: {
       "@type": "Person",
@@ -100,6 +101,13 @@ export function lessonJsonLd(lesson: KuwaitLessonRecord) {
       : undefined,
     keywords: (lesson.keywords || [lesson.category]).join(", "),
   };
+
+  if (lesson.coOrganizer) {
+    base.contributor = {
+      "@type": "Organization",
+      name: lesson.coOrganizer,
+    };
+  }
 
   if (lesson.startDate || lesson.gregorianDate) {
     base.startDate = lesson.startDate || lesson.gregorianDate;
@@ -140,7 +148,7 @@ export function lessonSeoMeta(lesson: KuwaitLessonRecord) {
     ...(lesson.keywords || []),
   ].filter(Boolean);
 
-  const image = lesson.sheikhImage || lesson.lessonImage || seoData.defaultImage;
+  const image = lesson.lessonImage || lesson.sheikhImage || seoData.defaultImage;
 
   return {
     title,

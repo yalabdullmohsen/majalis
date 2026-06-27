@@ -320,10 +320,11 @@
     ],
     "live_url": "https://www.saltaweel.com",
     "book_url": "https://www.saltaweel.com",
-    "end_date": null,
     "is_recurring": true,
     "activity_type": "درس",
     "is_course": false,
+    "organizer": "مجلس الشيخ سالم بن سعد الطويل",
+    "has_women_place": true,
     "sheikhs": {
       "name": "سالم بن سعد الطويل"
     }
@@ -342,7 +343,7 @@
     "lesson_time": "بعد صلاة العصر",
     "schedule": "الاثنين — بعد صلاة العصر",
     "description": "خاص بالرجال. · المتن: روضة الأفهام في شرح زوائد المحرر على بلوغ المرام",
-    "audience": "الكل",
+    "audience": "رجال",
     "delivery": "حضور فقط",
     "status": "approved",
     "keywords": [
@@ -350,10 +351,10 @@
       "أسبوعي",
       "حضوري"
     ],
-    "end_date": null,
     "is_recurring": true,
     "activity_type": "درس",
     "is_course": false,
+    "has_women_place": false,
     "sheikhs": {
       "name": "الشيخ حسين بن مبارك المويزري"
     }
@@ -370,9 +371,9 @@
     "mosque": "مسجد أبو طاهر السلفي",
     "day_of_week": "الثلاثاء",
     "lesson_time": "بعد صلاة العصر",
-    "schedule": "الثلاثاء — بعد صلاة العصر",
+    "schedule": "الثلاثاء 2026-06-16 — بعد صلاة العصر",
     "description": "كل يوم ثلاثاء. · يبدأ من 16/6/2026. · المتن: عمدة الأحكام",
-    "audience": "الكل",
+    "audience": "رجال",
     "delivery": "حضور فقط",
     "status": "approved",
     "keywords": [
@@ -381,12 +382,55 @@
       "حضوري"
     ],
     "start_date": "2026-06-16",
-    "end_date": null,
+    "end_date": "2026-06-16",
     "is_recurring": true,
     "activity_type": "درس",
     "is_course": false,
+    "organizer": "بالتعاون مع إدارة مساجد الأحمدي",
+    "has_women_place": false,
     "sheikhs": {
       "name": "د. دهام أبو خشبة"
+    }
+  },
+  {
+    "id": "sci-fadat-dawwi-al-usaimi",
+    "external_key": "sci-fadat-dawwi-al-usaimi",
+    "title": "فاضت",
+    "speaker_name": "د. محمد ضاوي العصيمي",
+    "sheikh_image_url": "/images/posters/fadat-dawwi-al-usaimi.svg",
+    "poster_image_url": "/images/posters/fadat-dawwi-al-usaimi.svg",
+    "category": "الإيمان والرقائق",
+    "city": "الفروانية",
+    "region": "الرقعي",
+    "mosque": "مسجد حصن الصقر",
+    "day_of_week": "الثلاثاء",
+    "lesson_time": "بعد صلاة المغرب مباشرة",
+    "schedule": "الثلاثاء 2026-06-30 — بعد صلاة المغرب مباشرة",
+    "description": "درس إيماني يعالج رقة القلب وزيادة الإيمان وأثر المواعظ في حياة المسلم. · يهدف إلى تذكير المسلم بالله تعالى، وإحياء القلب، وتعظيم مراقبة الله، وترقيق النفس بالكتاب والسنة. · للرجال — يوجد مكان مخصص للنساء. · بث مباشر عبر إنستغرام.",
+    "audience": "الكل",
+    "delivery": "كلاهما",
+    "status": "approved",
+    "keywords": [
+      "إيمان",
+      "رقائق",
+      "تزكية",
+      "وعظ",
+      "درس علمي",
+      "بث مباشر",
+      "حضوري"
+    ],
+    "live_url": "https://www.instagram.com/dr_alosimi/",
+    "maps_url": "https://www.google.com/maps/search/?api=1&query=%D9%85%D8%B3%D8%AC%D8%AF+%D8%AD%D8%B5%D9%86+%D8%A7%D9%84%D8%B5%D9%82%D8%B1+%D8%A7%D9%84%D8%B1%D9%82%D8%B9%D9%8A+%D8%A7%D9%84%D9%83%D9%88%D9%8A%D8%AA",
+    "start_date": "2026-06-30",
+    "end_date": "2026-06-30",
+    "is_recurring": false,
+    "activity_type": "درس",
+    "is_course": false,
+    "organizer": "مسجد حصن الصقر",
+    "co_organizer": "الجمعية الكويتية لمهارات الحياة (مهارات)",
+    "has_women_place": true,
+    "sheikhs": {
+      "name": "د. محمد ضاوي العصيمي"
     }
   },
   {
@@ -401,19 +445,19 @@
     "mosque": "مسجد صقر الفرماوي",
     "day_of_week": "الأحد",
     "lesson_time": "بعد صلاة المغرب",
-    "schedule": "الأحد — بعد صلاة المغرب",
-    "description": "جميع المحاضرات بعد صلاة المغرب. · سيتم بث الأنشطة عبر حسابات الجمعية.",
-    "audience": "الكل",
+    "schedule": "الأحد 2026-06-21 — بعد صلاة المغرب",
+    "description": "جميع الدروس بعد صلاة المغرب. · سيتم بث الأنشطة عبر حسابات الجمعية.",
+    "audience": "رجال",
     "delivery": "كلاهما",
     "status": "approved",
     "keywords": [
-      "محاضرة",
+      "درس",
       "ملتقى",
       "حضوري",
       "بث"
     ],
     "start_date": "2026-06-21",
-    "end_date": null,
+    "end_date": "2026-06-21",
     "is_recurring": false,
     "activity_type": "دورة",
     "is_course": true,
@@ -426,6 +470,8 @@
       "الثبات حتى الممات",
       "حياة القلوب"
     ],
+    "organizer": "وزارة الشؤون الإسلامية — إدارة مساجد محافظة الفروانية — جمعية الهداية الخيرية (قسم الدعوة والإرشاد)",
+    "has_women_place": false,
     "sheikhs": {
       "name": "نصار خالد نصار العجمي"
     }
@@ -442,19 +488,19 @@
     "mosque": "مسجد سهل بن سعد",
     "day_of_week": "الثلاثاء",
     "lesson_time": "بعد صلاة المغرب",
-    "schedule": "الثلاثاء — بعد صلاة المغرب",
-    "description": "جميع المحاضرات بعد صلاة المغرب. · سيتم بث الأنشطة عبر حسابات الجمعية.",
-    "audience": "الكل",
+    "schedule": "الثلاثاء 2026-06-23 — بعد صلاة المغرب",
+    "description": "جميع الدروس بعد صلاة المغرب. · سيتم بث الأنشطة عبر حسابات الجمعية.",
+    "audience": "رجال",
     "delivery": "كلاهما",
     "status": "approved",
     "keywords": [
-      "محاضرة",
+      "درس",
       "ملتقى",
       "حضوري",
       "بث"
     ],
     "start_date": "2026-06-23",
-    "end_date": null,
+    "end_date": "2026-06-23",
     "is_recurring": false,
     "activity_type": "دورة",
     "is_course": true,
@@ -467,6 +513,8 @@
       "الثبات حتى الممات",
       "حياة القلوب"
     ],
+    "organizer": "وزارة الشؤون الإسلامية — إدارة مساجد محافظة الفروانية — جمعية الهداية الخيرية (قسم الدعوة والإرشاد)",
+    "has_women_place": false,
     "sheikhs": {
       "name": "حامد علي المسعد"
     }
@@ -483,19 +531,19 @@
     "mosque": "مسجد جبير بن مطعم",
     "day_of_week": "الأحد",
     "lesson_time": "بعد صلاة المغرب",
-    "schedule": "الأحد — بعد صلاة المغرب",
-    "description": "جميع المحاضرات بعد صلاة المغرب. · سيتم بث الأنشطة عبر حسابات الجمعية.",
-    "audience": "الكل",
+    "schedule": "الأحد 2026-06-28 — بعد صلاة المغرب",
+    "description": "جميع الدروس بعد صلاة المغرب. · سيتم بث الأنشطة عبر حسابات الجمعية.",
+    "audience": "رجال",
     "delivery": "كلاهما",
     "status": "approved",
     "keywords": [
-      "محاضرة",
+      "درس",
       "ملتقى",
       "حضوري",
       "بث"
     ],
     "start_date": "2026-06-28",
-    "end_date": null,
+    "end_date": "2026-06-28",
     "is_recurring": false,
     "activity_type": "دورة",
     "is_course": true,
@@ -508,6 +556,8 @@
       "الثبات حتى الممات",
       "حياة القلوب"
     ],
+    "organizer": "وزارة الشؤون الإسلامية — إدارة مساجد محافظة الفروانية — جمعية الهداية الخيرية (قسم الدعوة والإرشاد)",
+    "has_women_place": false,
     "sheikhs": {
       "name": "فيصل زويد"
     }
@@ -524,19 +574,19 @@
     "mosque": "مسجد محمد الحبيب",
     "day_of_week": "الاثنين",
     "lesson_time": "بعد صلاة المغرب",
-    "schedule": "الاثنين — بعد صلاة المغرب",
-    "description": "جميع المحاضرات بعد صلاة المغرب. · سيتم بث الأنشطة عبر حسابات الجمعية.",
-    "audience": "الكل",
+    "schedule": "الاثنين 2026-06-29 — بعد صلاة المغرب",
+    "description": "جميع الدروس بعد صلاة المغرب. · سيتم بث الأنشطة عبر حسابات الجمعية.",
+    "audience": "رجال",
     "delivery": "كلاهما",
     "status": "approved",
     "keywords": [
-      "محاضرة",
+      "درس",
       "ملتقى",
       "حضوري",
       "بث"
     ],
     "start_date": "2026-06-29",
-    "end_date": null,
+    "end_date": "2026-06-29",
     "is_recurring": false,
     "activity_type": "دورة",
     "is_course": true,
@@ -549,6 +599,8 @@
       "الثبات حتى الممات",
       "حياة القلوب"
     ],
+    "organizer": "وزارة الشؤون الإسلامية — إدارة مساجد محافظة الفروانية — جمعية الهداية الخيرية (قسم الدعوة والإرشاد)",
+    "has_women_place": false,
     "sheikhs": {
       "name": "سعد هزاع العتيبي"
     }
@@ -565,19 +617,19 @@
     "mosque": "مسجد مجاهد بن جبر",
     "day_of_week": "الثلاثاء",
     "lesson_time": "بعد صلاة المغرب",
-    "schedule": "الثلاثاء — بعد صلاة المغرب",
-    "description": "جميع المحاضرات بعد صلاة المغرب. · سيتم بث الأنشطة عبر حسابات الجمعية.",
-    "audience": "الكل",
+    "schedule": "الثلاثاء 2026-06-30 — بعد صلاة المغرب",
+    "description": "جميع الدروس بعد صلاة المغرب. · سيتم بث الأنشطة عبر حسابات الجمعية.",
+    "audience": "رجال",
     "delivery": "كلاهما",
     "status": "approved",
     "keywords": [
-      "محاضرة",
+      "درس",
       "ملتقى",
       "حضوري",
       "بث"
     ],
     "start_date": "2026-06-30",
-    "end_date": null,
+    "end_date": "2026-06-30",
     "is_recurring": false,
     "activity_type": "دورة",
     "is_course": true,
@@ -590,6 +642,8 @@
       "الثبات حتى الممات",
       "حياة القلوب"
     ],
+    "organizer": "وزارة الشؤون الإسلامية — إدارة مساجد محافظة الفروانية — جمعية الهداية الخيرية (قسم الدعوة والإرشاد)",
+    "has_women_place": false,
     "sheikhs": {
       "name": "بندر محمد الميموني"
     }
@@ -606,9 +660,9 @@
     "mosque": "",
     "day_of_week": "",
     "lesson_time": "",
-    "schedule": "",
+    "schedule": "2024-04-18 —",
     "description": "8 متون في 8 علوم خلال شهرين (حسب الإعلان الأصلي). · الدراسة مجانية عن بُعد — الدروس مسجلة. · متابعة يومية على التلغرام. · شهادة بعد اجتياز كل متن بنجاح. · جميع متون الدورة متاحة بصيغة PDF. · المتون: تفسير الفاتحة والمعوذات، من جوامع كلم النبي ﷺ، القول السديد، المسائل الفقهية للشيخ عبدالله بن خلف الدحيان، قصيدة السير إلى الله، الأرجوزة الميئية في السيرة، منظومة درة الطالب، مكارم الأخلاق لابن عثيمين.",
-    "audience": "الكل",
+    "audience": "رجال",
     "delivery": "حضور فقط",
     "status": "approved",
     "keywords": [
@@ -620,11 +674,13 @@
     ],
     "book_url": "https://www.academy.murtaqaa.com",
     "start_date": "2024-04-18",
-    "end_date": null,
+    "end_date": "2024-04-18",
     "is_recurring": false,
     "activity_type": "دورة",
     "is_course": true,
     "course_id": "course-talae-alilm-murtaqaa",
+    "organizer": "منصة معهد مرتقى — جمعية مرتقى العلمية",
+    "has_women_place": false,
     "sheikhs": {
       "name": "د. مطلق جاسر مطلق الجاسر"
     }

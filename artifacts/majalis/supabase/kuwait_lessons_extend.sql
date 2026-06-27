@@ -16,7 +16,9 @@ alter table lessons
   add column if not exists session_count integer,
   add column if not exists linked_titles text[],
   add column if not exists website_url text,
-  add column if not exists live_url text;
+  add column if not exists live_url text,
+  add column if not exists organizer text,
+  add column if not exists co_organizer text;
 
 create unique index if not exists lessons_external_key_uidx
   on lessons (external_key)

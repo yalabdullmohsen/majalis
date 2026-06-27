@@ -29,5 +29,8 @@ export type LessonSeedRow = {
   course_id?: string;
   session_count?: number;
   linked_titles?: string[];
+  organizer?: string;
+  co_organizer?: string;
+  has_women_place?: boolean;
   sheikhs?: { name: string };
 };

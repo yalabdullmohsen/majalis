@@ -123,6 +123,10 @@ function mapLesson(row, isCourse) {
     pick(row, "external_key") ||
     `import-${hashKey([row.title, sheikh, row.mosque, day, time])}`;
 
+  const eventDate = pick(row, "date", "start_date");
+  const isRecurring = pick(row, "is_recurring");
+  const recurring = isRecurring === false || isRecurring === "false" ? false : isRecurring !== true && isRecurring !== "true" ? !eventDate : true;
+
   return {
     title: pick(row, "title"),
     speaker_name: sheikh || null,
@@ -144,6 +148,15 @@ function mapLesson(row, isCourse) {
     website_url: pick(row, "source_url", "site_url") || null,
     maps_url: pick(row, "maps_url") || null,
     live_url: pick(row, "live_url", "stream_url") || null,
+    poster_image_url: pick(row, "poster_image_url") || null,
+    video_url: pick(row, "video_url", "recording_url") || null,
+    keywords: Array.isArray(row.keywords) ? row.keywords : [],
+    start_date: eventDate || null,
+    end_date: pick(row, "end_date") || (recurring === false && eventDate ? eventDate : null),
+    is_recurring: recurring,
+    organizer: pick(row, "organizer") || null,
+    co_organizer: pick(row, "co_organizer") || null,
+    has_women_place: Boolean(row.has_women_place),
   };
 }
 

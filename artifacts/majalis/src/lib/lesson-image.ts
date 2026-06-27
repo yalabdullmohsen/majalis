@@ -15,3 +15,8 @@ export function resolveLessonPosterUrl(url?: string | null): string | undefined 
   if (isPlaceholderLessonImage(url)) return undefined;
   return url?.trim() || undefined;
 }
+
+/** Always return poster path for detail/hero display (including announcement SVGs). */
+export function resolveLessonPosterDisplayUrl(url?: string | null): string | undefined {
+  return url?.trim() || undefined;
+}

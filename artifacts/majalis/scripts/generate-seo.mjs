@@ -58,6 +58,7 @@ function lessonDescription(row) {
 }
 
 function lessonJsonLdScript(row) {
+  const organizerName = row.organizer || seoConfig.siteName;
   const payload = {
     "@context": "https://schema.org",
     "@type": row.is_course || row.activity_type === "دورة" ? "Course" : "EducationEvent",
@@ -66,7 +67,11 @@ function lessonJsonLdScript(row) {
     url: absoluteUrl(`/lessons/${row.id}`),
     image: absoluteUrl(row.sheikh_image_url || row.poster_image_url || seoConfig.defaultImage),
     inLanguage: "ar",
-    organizer: { "@type": "Organization", name: seoConfig.siteName, url: seoConfig.siteUrl },
+    organizer: {
+      "@type": "Organization",
+      name: organizerName,
+      url: row.organizer ? undefined : seoConfig.siteUrl,
+    },
     performer: row.speaker_name ? { "@type": "Person", name: row.speaker_name } : undefined,
     location: row.mosque
       ? {
@@ -81,6 +86,11 @@ function lessonJsonLdScript(row) {
       : undefined,
     keywords: (row.keywords || [row.category]).join(", "),
   };
+  if (row.co_organizer) {
+    payload.contributor = { "@type": "Organization", name: row.co_organizer };
+  }
+  if (row.start_date) payload.startDate = row.start_date;
+  if (row.end_date) payload.endDate = row.end_date;
   return `<script type="application/ld+json">${JSON.stringify(payload)}</script>`;
 }
 

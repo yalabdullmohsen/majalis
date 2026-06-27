@@ -49,6 +49,8 @@ export type KuwaitLessonRecord = {
   recurring?: boolean;
   courseId?: string;
   isCourse?: boolean;
+  organizer?: string;
+  coOrganizer?: string;
   source?: "supabase" | "seed";
   archivedAt?: string | null;
 };
@@ -87,6 +89,7 @@ export const KUWAIT_CATEGORIES = [
   "سيرة",
   "تجويد",
   "تأصيل",
+  "الإيمان والرقائق",
   "أخرى",
 ];
 
@@ -126,7 +129,15 @@ function enrichScheduleFields(
   },
 ): KuwaitLessonRecord {
   const recurring = lesson.recurring !== false;
-  const nextMs = lesson.nextOccurrenceMs ?? computeNextOccurrenceMs(lesson.day, lesson.time);
+  const startDateMs =
+    !recurring && lesson.startDate
+      ? new Date(`${lesson.startDate}T12:00:00+03:00`).getTime()
+      : null;
+  const nextMs =
+    lesson.nextOccurrenceMs ??
+    (startDateMs && !Number.isNaN(startDateMs)
+      ? startDateMs
+      : computeNextOccurrenceMs(lesson.day, lesson.time));
   const nextDate = new Date(nextMs);
 
   return {
@@ -135,8 +146,20 @@ function enrichScheduleFields(
     sheikhName: formatSheikhName(lesson.sheikhName.replace(/^الشيخ:\s*/u, "")) || lesson.sheikhName,
     sortKey: lesson.sortKey ?? nextMs,
     nextOccurrenceMs: nextMs,
-    gregorianDate: lesson.gregorianDate || (lesson.day ? formatGregorianDate(nextDate) : undefined),
-    hijriDate: lesson.hijriDate || (lesson.day ? formatHijriDate(nextDate) : undefined),
+    gregorianDate:
+      lesson.gregorianDate ||
+      (lesson.startDate && !recurring
+        ? formatGregorianDate(new Date(`${lesson.startDate}T12:00:00+03:00`))
+        : lesson.day
+          ? formatGregorianDate(nextDate)
+          : undefined),
+    hijriDate:
+      lesson.hijriDate ||
+      (lesson.startDate && !recurring
+        ? formatHijriDate(new Date(`${lesson.startDate}T12:00:00+03:00`))
+        : lesson.day
+          ? formatHijriDate(nextDate)
+          : undefined),
     recurring,
   };
 }
@@ -163,7 +186,7 @@ export function mapLessonRow(row: any): KuwaitLessonRecord {
     title: row.title,
     sheikhName: rawSheikh,
     sheikhImage: row.sheikh_image_url || resolveLessonSheikhImage(row),
-    lessonImage: resolveLessonPosterUrl(row.poster_image_url),
+    lessonImage: row.poster_image_url || undefined,
     governorate,
     region,
     mosque: row.mosque || "",
@@ -181,11 +204,13 @@ export function mapLessonRow(row: any): KuwaitLessonRecord {
     hasLiveStream,
     hasRecording: Boolean(row.video_url || row.audio_url),
     mapsUrl: row.maps_url,
-    streamUrl: row.live_url,
+    streamUrl: row.video_url || row.audio_url || row.live_url,
     siteUrl: row.book_url,
     isCourse: Boolean(row.is_course),
     courseId: row.course_id,
     recurring: row.is_recurring !== false && !row.end_date,
+    organizer: row.organizer || undefined,
+    coOrganizer: row.co_organizer || undefined,
     archivedAt: row.archived_at || null,
   });
 }

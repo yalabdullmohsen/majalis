@@ -15,6 +15,7 @@ const SHEIKH_PHOTOS: Record<string, string> = {
   "فيصل زويد": "/sheikhs/faisal-zowaid.svg",
   "سعد هزاع العتيبي": "/sheikhs/saad-otaibi.svg",
   "بندر محمد الميموني": "/sheikhs/bandar-almaimouni.svg",
+  "محمد ضاوي العصيمي": "/images/posters/fadat-dawwi-al-usaimi.svg",
   "مطلق جاسر مطلق الجاسر": "/sheikhs/mutlaq-aljasser.svg",
 };
 

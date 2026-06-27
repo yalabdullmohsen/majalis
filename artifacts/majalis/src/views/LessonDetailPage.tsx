@@ -15,6 +15,7 @@ import {
   downloadUnifiedCalendar,
   fromDbLesson,
   fromKuwaitLesson,
+  streamActionLabel,
 } from "@/lib/unified-lesson-card";
 import { cleanDisplayText } from "@/lib/display-text";
 import {
@@ -30,7 +31,7 @@ import { useLessonSeo } from "@/lib/seo";
 import { usePageView } from "@/hooks/usePageView";
 import { fetchLessonEngagementStats, type LessonEngagementStats } from "@/lib/lesson-stats";
 import { normalizeActivityLabel } from "@/lib/activity-label";
-import { resolveLessonPosterUrl } from "@/lib/lesson-image";
+import { resolveLessonPosterDisplayUrl } from "@/lib/lesson-image";
 import { sheikhNameKey } from "@/lib/sheikh-name";
 
 function buildMapsEmbed(url?: string, mosque?: string, region?: string) {
@@ -76,6 +77,7 @@ export default function LessonDetailPage({
   const [sheikhBio, setSheikhBio] = useState<string>("");
   const [stats, setStats] = useState<LessonEngagementStats>({ views: 0, saves: 0, shares: 0 });
   const [loading, setLoading] = useState(!initialLesson);
+  const [linkCopied, setLinkCopied] = useState(false);
 
   useEffect(() => {
     if (initialLesson) {
@@ -159,33 +161,9 @@ export default function LessonDetailPage({
 
   const seoLesson = useMemo((): KuwaitLessonRecord | null => {
     if (kuwaitLesson) return kuwaitLesson;
-    if (!lesson || !unified) return null;
-    return {
-      id: unified.id,
-      title: unified.title,
-      sheikhName: unified.sheikhName,
-      sheikhImage: resolveLessonSheikhImage(lesson),
-      lessonImage: resolveLessonPosterUrl(lesson.poster_image_url),
-      governorate: unified.governorate || "",
-      region: unified.region || "",
-      mosque: unified.mosque || "",
-      day: unified.day || "",
-      time: unified.time || "",
-      category: unified.category || "أخرى",
-      note: unified.note,
-      description: unified.description,
-      keywords: Array.isArray(lesson.keywords) ? lesson.keywords : undefined,
-      gregorianDate: unified.gregorianDate,
-      hijriDate: unified.hijriDate,
-      activityType: normalizeActivityLabel(unified.activityType) as KuwaitLessonRecord["activityType"],
-      sessionCount: unified.sessionCount,
-      hasLiveStream: unified.hasLiveStream,
-      hasRecording: unified.hasRecording,
-      sortKey: unified.sortKey,
-      nextOccurrenceMs: unified.nextOccurrenceMs,
-      isCourse: unified.activityType === "دورة",
-    };
-  }, [kuwaitLesson, lesson, unified]);
+    if (lesson) return mapLessonRow(lesson);
+    return null;
+  }, [kuwaitLesson, lesson]);
 
   useLessonSeo(seoLesson, `/lessons/${params.id}`);
   usePageView("lesson", params.id);
@@ -203,6 +181,9 @@ export default function LessonDetailPage({
   const tags = [...new Set([unified.category, activityLabel, ...(keywords.slice(0, 6))].filter(Boolean))];
   const level = inferLessonLevel(unified.category);
   const addedDate = lesson?.created_at || lesson?.updated_at || unified.gregorianDate;
+  const posterUrl = unified.posterDisplayUrl || resolveLessonPosterDisplayUrl(kuwaitLesson?.lessonImage || lesson?.poster_image_url);
+  const organizer = kuwaitLesson?.organizer || lesson?.organizer;
+  const coOrganizer = kuwaitLesson?.coOrganizer || lesson?.co_organizer;
 
   const handleShare = async () => {
     const url = buildLessonShareUrl(unified);
@@ -217,6 +198,16 @@ export default function LessonDetailPage({
     }
     await navigator.clipboard.writeText(`${text}\n${url}`);
     alert("تم نسخ تفاصيل الدرس.");
+  };
+
+  const handleCopyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(buildLessonShareUrl(unified));
+      setLinkCopied(true);
+      setTimeout(() => setLinkCopied(false), 2000);
+    } catch {
+      /* silent */
+    }
   };
 
   return (
@@ -234,6 +225,18 @@ export default function LessonDetailPage({
       </Link>
 
       <article className="ui-card lesson-detail-card">
+        {posterUrl && (
+          <div className="lesson-detail-poster">
+            <img
+              src={posterUrl}
+              alt={`إعلان الدرس: ${unified.title}`}
+              loading="eager"
+              decoding="async"
+              width={720}
+              height={480}
+            />
+          </div>
+        )}
         <div className={`lesson-detail-hero${hasSheikhPhoto ? "" : " lesson-detail-hero--text-only"}`}>
           {hasSheikhPhoto && (
             <OptimizedSheikhImage
@@ -294,6 +297,12 @@ export default function LessonDetailPage({
           )}
           {hasValue(unified.governorate) && (
             <div><dt>المحافظة</dt><dd>{unified.governorate}</dd></div>
+          )}
+          {hasValue(organizer) && (
+            <div><dt>الجهة المنظمة</dt><dd>{organizer}</dd></div>
+          )}
+          {hasValue(coOrganizer) && (
+            <div><dt>الجهة المتعاونة</dt><dd>{coOrganizer}</dd></div>
           )}
           {addedDate && (
             <div><dt>تاريخ الإضافة</dt><dd>{String(addedDate).slice(0, 10)}</dd></div>
@@ -364,6 +373,9 @@ export default function LessonDetailPage({
           <button type="button" className="lesson-unified-card__btn lesson-unified-card__btn--primary" onClick={handleShare}>
             مشاركة
           </button>
+          <button type="button" className="lesson-unified-card__btn lesson-unified-card__btn--secondary" onClick={handleCopyLink}>
+            {linkCopied ? "تم نسخ الرابط" : "نسخ الرابط"}
+          </button>
           <FavoriteButton contentType="lesson" contentId={unified.id} />
           <button
             type="button"
@@ -374,7 +386,7 @@ export default function LessonDetailPage({
           </button>
           {unified.streamUrl && (
             <a href={unified.streamUrl} target="_blank" rel="noopener noreferrer" className="lesson-unified-card__btn lesson-unified-card__btn--ghost">
-              رابط البث
+              {streamActionLabel(unified)}
             </a>
           )}
           {unified.mapsUrl && (

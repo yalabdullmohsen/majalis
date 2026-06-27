@@ -1,11 +1,12 @@
 import { memo, useCallback, useEffect, useState } from "react";
-import { resolveLessonPosterUrl } from "@/lib/lesson-image";
+import { resolveLessonPosterDisplayUrl } from "@/lib/lesson-image";
 import { Link } from "wouter";
 import {
   buildLessonCopyText,
   buildLessonShareUrl,
   downloadUnifiedCalendar,
   prominenceClass,
+  streamActionLabel,
   type UnifiedLesson,
 } from "@/lib/unified-lesson-card";
 import { cleanDisplayText } from "@/lib/display-text";
@@ -99,7 +100,7 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
     await handleCopy();
   }, [lesson, handleCopy]);
 
-  const posterUrl = resolveLessonPosterUrl(lesson.lessonImage);
+  const posterUrl = resolveLessonPosterDisplayUrl(lesson.posterDisplayUrl ?? lesson.lessonImage);
   const flags = [
     lesson.hasLiveStream ? "بث مباشر" : "",
     lesson.hasRecording ? "تسجيل متاح" : "",
@@ -189,7 +190,7 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
               </button>
               {lesson.streamUrl && (
                 <a href={lesson.streamUrl} target="_blank" rel="noopener noreferrer" className="lesson-unified-card__btn lesson-unified-card__btn--ghost">
-                  رابط البث
+                  {streamActionLabel(lesson)}
                 </a>
               )}
               {lesson.mapsUrl && (

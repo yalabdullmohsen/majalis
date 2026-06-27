@@ -1,4 +1,5 @@
-import { resolveLessonPosterUrl } from "@/lib/lesson-image";
+import { resolveLessonPosterUrl, resolveLessonPosterDisplayUrl } from "@/lib/lesson-image";
+import { resolveLessonSheikhImage } from "@/lib/sheikh-image";
 import { cleanDisplayText } from "./display-text";
 import { extractLessonSchedule } from "./lesson-display";
 import { formatSheikhName } from "./sheikh-name";
@@ -43,7 +44,19 @@ export type UnifiedLesson = {
   siteUrl?: string;
   qrCodeUrl?: string;
   keywords?: string[];
+  organizer?: string;
+  coOrganizer?: string;
+  posterDisplayUrl?: string;
 };
+
+export function streamActionLabel(lesson: {
+  hasLiveStream?: boolean;
+  hasRecording?: boolean;
+}): string {
+  if (lesson.hasRecording) return "مشاهدة الدرس";
+  if (lesson.hasLiveStream) return "متابعة البث المباشر";
+  return "رابط البث";
+}
 
 export function fromKuwaitLesson(lesson: KuwaitLessonRecord, archived = false): UnifiedLesson {
   return {
@@ -52,6 +65,7 @@ export function fromKuwaitLesson(lesson: KuwaitLessonRecord, archived = false): 
     sheikhName: formatSheikhName(lesson.sheikhName.replace(/^الشيخ:\s*/u, "")) || cleanDisplayText(lesson.sheikhName),
     sheikhImage: lesson.sheikhImage,
     lessonImage: resolveLessonPosterUrl(lesson.lessonImage),
+    posterDisplayUrl: resolveLessonPosterDisplayUrl(lesson.lessonImage),
     category: cleanDisplayText(lesson.category) || "أخرى",
     day: cleanDisplayText(lesson.day),
     time: cleanTimeText(cleanDisplayText(lesson.time)),
@@ -77,6 +91,8 @@ export function fromKuwaitLesson(lesson: KuwaitLessonRecord, archived = false): 
     siteUrl: lesson.siteUrl,
     qrCodeUrl: lesson.qrCodeUrl,
     keywords: lesson.keywords,
+    organizer: lesson.organizer,
+    coOrganizer: lesson.coOrganizer,
   };
 }
 
@@ -109,6 +125,9 @@ export function fromDbLesson(lesson: {
   session_count?: number;
   linked_titles?: string[];
   external_key?: string;
+  organizer?: string;
+  co_organizer?: string;
+  keywords?: string[];
 }): UnifiedLesson {
   const sheikhName = lesson.sheikhs?.name || lesson.speaker_name || "";
   const { day, time } = extractLessonSchedule(lesson);
@@ -116,9 +135,12 @@ export function fromDbLesson(lesson: {
   const nextDate = new Date(nextMs);
 
   return {
-    id: lesson.id,
+    id: lesson.external_key || lesson.id,
     title: cleanDisplayText(lesson.title),
     sheikhName: formatSheikhName(sheikhName),
+    sheikhImage: resolveLessonSheikhImage(lesson),
+    lessonImage: resolveLessonPosterUrl(lesson.poster_image_url),
+    posterDisplayUrl: resolveLessonPosterDisplayUrl(lesson.poster_image_url),
     category: cleanDisplayText(lesson.category) || "أخرى",
     day: cleanDisplayText(day),
     time: cleanTimeText(cleanDisplayText(time)),
@@ -128,7 +150,7 @@ export function fromDbLesson(lesson: {
     sortKey: lesson.sortKey ?? nextMs,
     nextOccurrenceMs: nextMs,
     statusLabel: formatRelativeTime(nextMs),
-    detailsHref: `/lessons/${lesson.id}`,
+    detailsHref: `/lessons/${lesson.external_key || lesson.id}`,
     note: lesson.description ? cleanDisplayText(lesson.description) : undefined,
     description: lesson.description ? cleanDisplayText(lesson.description) : undefined,
     gregorianDate: day ? formatGregorianDate(nextDate) : undefined,
@@ -136,9 +158,12 @@ export function fromDbLesson(lesson: {
     hasLiveStream: Boolean(lesson.live_url || lesson.stream_url),
     hasRecording: Boolean(lesson.video_url || lesson.audio_url || lesson.recording_url),
     mapsUrl: lesson.maps_url,
-    streamUrl: lesson.live_url || lesson.stream_url,
+    streamUrl: lesson.video_url || lesson.audio_url || lesson.recording_url || lesson.live_url || lesson.stream_url,
     siteUrl: lesson.book_url || lesson.website_url,
     activityType: (lesson.activity_type as UnifiedLesson["activityType"]) || "درس",
+    organizer: lesson.organizer,
+    coOrganizer: lesson.co_organizer,
+    keywords: lesson.keywords,
   };
 }
 

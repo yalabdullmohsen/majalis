@@ -6448,6 +6448,22 @@ html[data-theme="dark"] .home-page {
   padding: clamp(1.15rem, 3vw, 1.5rem);
 }
 
+.lesson-detail-poster {
+  margin: 0 0 1.15rem;
+  border-radius: 0.85rem;
+  overflow: hidden;
+  background: var(--majalis-surface-muted, #f4f7f5);
+  border: 1px solid rgba(22, 78, 60, 0.08);
+}
+
+.lesson-detail-poster img {
+  display: block;
+  width: 100%;
+  max-height: min(72vh, 32rem);
+  object-fit: contain;
+  object-position: center top;
+}
+
 .lesson-detail-hero {
   display: flex;
   gap: 1rem;

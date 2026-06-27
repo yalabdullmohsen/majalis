@@ -12,6 +12,9 @@ import { cleanTimeText } from "@/lib/lesson-time";
 import type { LessonSeedRow } from "@/lib/lessons-types";
 
 function categoryFromTags(tags: string[]): string {
+  if (tags.some((t) => ["إيمان", "رقائق", "تزكية", "وعظ"].includes(t))) {
+    return "الإيمان والرقائق";
+  }
   for (const tag of tags) {
     if (["تفسير", "فقه", "عقيدة", "حديث", "سيرة", "تجويد", "تأصيل"].includes(tag)) return tag;
   }
@@ -43,26 +46,33 @@ function rowFromAnnouncement(item: ScientificAnnouncement, sessionIndex = 0): Le
   const hasLive =
     item.tags.some((t) => /بث|مباشر|live/i.test(t)) || Boolean(item.liveUrl);
 
+  const hasWomen = item.notes.some((n) => /نساء|نسخ/i.test(n));
+  const poster = item.posterImage || undefined;
+  const sheikhPhoto = resolveLocalSheikhPhoto(item.sheikh);
+  const usePosterAsSheikh = sheikhPhoto === "/logo.png" && poster;
+
   return {
     id: externalKey,
     external_key: externalKey,
     title,
     speaker_name: item.sheikh,
-    sheikh_image_url: resolveLocalSheikhPhoto(item.sheikh),
-    poster_image_url: item.posterImage,
+    sheikh_image_url: usePosterAsSheikh ? poster : sheikhPhoto,
+    poster_image_url: poster,
     category: categoryFromTags(item.tags),
     city: governorate,
     region,
     mosque: place,
     day_of_week: item.day || item.recurrenceDay || "",
     lesson_time: cleanTimeText(item.time || ""),
-    schedule: [item.day || item.recurrenceDay, cleanTimeText(item.time || "")]
-      .filter(Boolean)
-      .join(" — "),
+    schedule: item.date
+      ? `${item.day || ""} ${item.date} — ${cleanTimeText(item.time || "")}`.replace(/\s+/g, " ").trim()
+      : [item.day || item.recurrenceDay, cleanTimeText(item.time || "")]
+          .filter(Boolean)
+          .join(" — "),
     description: [...item.notes, item.bookTitle ? `المتن: ${item.bookTitle}` : ""]
       .filter(Boolean)
       .join(" · "),
-    audience: "الكل",
+    audience: hasWomen ? "الكل" : "رجال",
     delivery: hasLive ? "كلاهما" : "حضور فقط",
     status: "approved",
     keywords: item.tags,
@@ -70,13 +80,16 @@ function rowFromAnnouncement(item: ScientificAnnouncement, sessionIndex = 0): Le
     book_url: item.websiteUrl || item.registrationUrl,
     maps_url: item.mapUrl,
     start_date: item.date,
-    end_date: null,
+    end_date: item.date,
     is_recurring: item.kind === "weekly",
     activity_type: activityType(item),
     is_course: isCourse,
     course_id: isCourse ? item.id.replace(/-\d+$/, "") : undefined,
     session_count: isCourse ? undefined : undefined,
     linked_titles: undefined,
+    organizer: item.organizer,
+    co_organizer: item.coOrganizer,
+    has_women_place: hasWomen,
     sheikhs: { name: item.sheikh },
   };
 }
