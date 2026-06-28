@@ -1,102 +1,28 @@
 /**
  * Vision + OCR + AI enrichment for lesson posters (Arabic).
- * Falls back to manual entry when ANTHROPIC_API_KEY is missing.
+ * Uses unified fallback: Claude → OpenAI → Local OCR → Manual Review.
  */
 import Anthropic from "@anthropic-ai/sdk";
-import { validateLessonDraft, buildExternalKey, buildLessonSlug } from "./content-validator.mjs";
+import { validateLessonDraft } from "./content-validator.mjs";
+import {
+  emptyLessonPayload,
+  buildMissingFields,
+  normalizeExtractedPayload,
+  ENRICH_PROMPT,
+  EXTRACTION_PROMPT,
+} from "./lesson-extractor-shared.mjs";
+import {
+  analyzeLessonImageWithFallback,
+  hasAnyVisionProvider,
+  BILLING_USER_MESSAGE,
+} from "../ai/vision-provider-fallback.mjs";
 
 const MODEL = "claude-sonnet-4-6";
 
-const EXTRACTION_PROMPT = `أنت نظام استخراج بيانات لمنصة علمية إسلامية كويتية.
-من صورة إعلان درس/دورة، استخرج كل المعلومات بدقة.
-
-أعد JSON فقط بدون markdown:
-{
-  "title": "عنوان الدرس",
-  "speaker_name": "اسم الشيخ",
-  "gregorian_date": "YYYY-MM-DD إن وُجد",
-  "day_of_week": "اليوم بالعربية",
-  "lesson_time": "الوقت",
-  "mosque": "اسم المسجد",
-  "region": "المنطقة",
-  "city": "المحافظة",
-  "country": "الدولة",
-  "category": "تفسير|فقه|عقيدة|حديث|سيرة|تجويد|أخرى",
-  "description": "وصف مختصر",
-  "organizer": "الجهة المنظمة",
-  "cooperative_org": "الجهة المتعاونة إن وُجدت",
-  "has_live_stream": false,
-  "women_section": "مكان النساء إن ذُكر",
-  "has_women_section": false,
-  "phone": "رقم الهاتف",
-  "live_url": "رابط البث إن وُجد",
-  "registration_url": "رابط التسجيل",
-  "maps_url": "رابط الخريطة",
-  "links": [],
-  "is_course": false,
-  "activity_type": "درس",
-  "start_date": "YYYY-MM-DD إن وُجد",
-  "end_date": "YYYY-MM-DD إن وُجد",
-  "raw_ocr_text": "النص العربي الكامل المقروء من الصورة",
-  "keywords": ["كلمات", "مفتاحية"],
-  "slug": "مقترح-slug",
-  "confidence": 0.0
-}
-
-إذا لم تجد حقلًا اتركه فارغاً "" أو false. لا تخمّن fatwa أو أحكام.`;
-
-const ENRICH_PROMPT = `راجع بيانات الدرس التالية وأصلح:
-- الأخطاء الإملائية العربية
-- صيغة التاريخ والوقت
-- تصنيف الدرس
-- slug SEO بالإنجليزية/transliteration
-- meta description للSEO (≤160 حرف)
-
-أعد JSON:
-{
-  "corrected": { ...same fields as input... },
-  "suggestions": [{ "field": "", "old": "", "new": "", "reason": "" }],
-  "seo_title": "",
-  "seo_description": "",
-  "slug": ""
-}`;
+export { emptyLessonPayload, buildMissingFields };
 
 export function isVisionEnabled() {
-  return Boolean((process.env.ANTHROPIC_API_KEY || "").trim());
-}
-
-export function emptyLessonPayload() {
-  return {
-    title: "",
-    speaker_name: "",
-    gregorian_date: "",
-    day_of_week: "",
-    lesson_time: "",
-    mosque: "",
-    region: "",
-    city: "العاصمة",
-    country: "الكويت",
-    category: "",
-    description: "",
-    organizer: "",
-    cooperative_org: "",
-    has_live_stream: false,
-    women_section: "",
-    has_women_section: false,
-    phone: "",
-    live_url: "",
-    registration_url: "",
-    maps_url: "",
-    links: [],
-    is_course: false,
-    activity_type: "درس",
-    start_date: "",
-    end_date: "",
-    raw_ocr_text: "",
-    keywords: [],
-    slug: "",
-    confidence: 0,
-  };
+  return hasAnyVisionProvider();
 }
 
 function getClient() {
@@ -117,29 +43,6 @@ function parseJson(text) {
   }
 }
 
-async function callVision({ imageBase64, mimeType, textPrompt }) {
-  const client = getClient();
-  if (!client) return null;
-  const response = await client.messages.create({
-    model: MODEL,
-    max_tokens: 4096,
-    messages: [
-      {
-        role: "user",
-        content: [
-          {
-            type: "image",
-            source: { type: "base64", media_type: mimeType || "image/jpeg", data: imageBase64 },
-          },
-          { type: "text", text: textPrompt || EXTRACTION_PROMPT },
-        ],
-      },
-    ],
-  });
-  const block = response.content?.find((b) => b.type === "text");
-  return block?.text || "";
-}
-
 async function callText(prompt, data) {
   const client = getClient();
   if (!client) return null;
@@ -152,76 +55,53 @@ async function callText(prompt, data) {
   return block?.text || "";
 }
 
-function normalizePayload(extracted, enriched = {}) {
-  const corrected = enriched.corrected || {};
-  const merged = {
-    ...emptyLessonPayload(),
-    ...extracted,
-    ...corrected,
-    start_date: corrected.start_date || extracted.start_date || extracted.gregorian_date || "",
-    gregorian_date: extracted.gregorian_date || corrected.gregorian_date || extracted.start_date || "",
-    has_live_stream: Boolean(extracted.has_live_stream || extracted.live_url),
-    has_women_section: Boolean(
-      extracted.has_women_section || (extracted.women_section && String(extracted.women_section).trim()),
-    ),
-    seo_title: enriched.seo_title || extracted.title || "",
-    seo_description: enriched.seo_description || extracted.description || "",
-    slug: enriched.slug || extracted.slug || buildLessonSlug(extracted.title),
-    external_key: buildExternalKey({ ...extracted, ...corrected }),
-  };
-  return merged;
-}
-
-function buildMissingFields(data) {
-  const checks = [
-    { key: "title", label: "عنوان الدرس" },
-    { key: "speaker_name", label: "اسم الشيخ" },
-    { key: "day_of_week", label: "اليوم" },
-    { key: "lesson_time", label: "الوقت" },
-    { key: "mosque", label: "المسجد" },
-    { key: "city", label: "المحافظة" },
-  ];
-  return checks.filter((c) => !String(data[c.key] || "").trim()).map((c) => c.key);
-}
-
-export async function extractLessonFromImage({ imageBase64, mimeType = "image/jpeg" }) {
-  if (!isVisionEnabled()) {
-    const empty = emptyLessonPayload();
-    const validation = validateLessonDraft(empty);
-    return {
-      visionEnabled: false,
-      message: "الاستخراج التلقائي غير مفعّل. يمكنك إدخال البيانات يدويًا.",
-      extracted: empty,
-      extracted_text: "",
-      parsed_fields: empty,
-      confidence_score: 0,
-      aiSuggestions: [],
-      validation,
-      missing_fields: buildMissingFields(empty),
-      rawVision: "",
-    };
-  }
-
-  const visionText = await callVision({ imageBase64, mimeType });
-  const extracted = parseJson(visionText) || { raw_ocr_text: visionText, title: "" };
-
-  const enrichText = await callText(ENRICH_PROMPT, extracted);
-  const enriched = parseJson(enrichText) || { corrected: extracted, suggestions: [] };
-
-  const merged = normalizePayload(extracted, enriched);
-  const validation = validateLessonDraft(merged);
+function mapFallbackToLegacy(fallbackResult) {
+  const parsed = fallbackResult.parsed || emptyLessonPayload();
+  const validation = validateLessonDraft(parsed);
+  const providerUsed = fallbackResult.providerUsed || "manual_review";
+  const visionEnabled = providerUsed !== "manual_review";
+  const manualMode = providerUsed === "manual_review" || providerUsed === "ocr";
 
   return {
-    visionEnabled: true,
-    extracted: merged,
-    extracted_text: merged.raw_ocr_text || visionText,
-    parsed_fields: merged,
-    confidence_score: Number(merged.confidence) || 0,
-    aiSuggestions: enriched.suggestions || [],
+    visionEnabled,
+    manualReview: manualMode,
+    providerUsed,
+    message: fallbackResult.userMessage || (manualMode ? BILLING_USER_MESSAGE : undefined),
+    extracted: parsed,
+    extracted_text: fallbackResult.extractedText || parsed.raw_ocr_text || "",
+    parsed_fields: parsed,
+    confidence_score: (fallbackResult.confidence ?? Number(parsed.confidence)) || 0,
+    aiSuggestions: [],
     validation,
-    missing_fields: buildMissingFields(merged),
-    rawVision: visionText,
+    missing_fields: buildMissingFields(parsed),
+    warnings: fallbackResult.warnings || validation.warnings || [],
+    errorCode: fallbackResult.errorCode || null,
+    userMessage: fallbackResult.userMessage || null,
+    fields: fallbackResult.fields || null,
+    ok: fallbackResult.ok !== false,
   };
+}
+
+export async function extractLessonFromImage({ imageBase64, mimeType = "image/jpeg", sourceUrl, notes }) {
+  const fallback = await analyzeLessonImageWithFallback({
+    imageBase64,
+    mimeType,
+    sourceUrl,
+    notes,
+  });
+
+  if (fallback.providerUsed === "anthropic" || fallback.providerUsed === "openai") {
+    try {
+      const enrichText = await callText(ENRICH_PROMPT, fallback.parsed);
+      const enriched = parseJson(enrichText) || { corrected: fallback.parsed, suggestions: [] };
+      fallback.parsed = normalizeExtractedPayload(fallback.parsed, enriched);
+      fallback.confidence = Number(fallback.parsed.confidence) || fallback.confidence;
+    } catch {
+      /* enrichment optional — keep vision result */
+    }
+  }
+
+  return mapFallbackToLegacy(fallback);
 }
 
 export async function extractLessonFromText({ text, sourceUrl }) {
@@ -229,39 +109,58 @@ export async function extractLessonFromText({ text, sourceUrl }) {
     const empty = { ...emptyLessonPayload(), description: text?.slice(0, 500) || "" };
     return {
       visionEnabled: false,
+      manualReview: true,
+      providerUsed: "manual_review",
       message: "الاستخراج التلقائي غير مفعّل. يمكنك إدخال البيانات يدويًا.",
       extracted: empty,
       parsed_fields: empty,
       validation: validateLessonDraft(empty),
       missing_fields: buildMissingFields(empty),
+      ok: true,
     };
   }
 
-  const client = getClient();
-  const response = await client.messages.create({
-    model: MODEL,
-    max_tokens: 4096,
-    messages: [
-      {
-        role: "user",
-        content: `${EXTRACTION_PROMPT}\n\nالمصدر: ${sourceUrl || ""}\n\nالنص:\n${text}`,
-      },
-    ],
-  });
-  const block = response.content?.find((b) => b.type === "text");
-  const visionText = block?.text || "";
-  const extracted = parseJson(visionText) || { title: "", description: text?.slice(0, 500) };
-  const enrichText = await callText(ENRICH_PROMPT, extracted);
-  const enriched = parseJson(enrichText) || { corrected: extracted, suggestions: [] };
-  const merged = normalizePayload(extracted, enriched);
-  return {
-    visionEnabled: true,
-    extracted: merged,
-    parsed_fields: merged,
-    aiSuggestions: enriched.suggestions || [],
-    validation: validateLessonDraft(merged),
-    missing_fields: buildMissingFields(merged),
-  };
+  try {
+    const client = getClient();
+    if (!client) throw new Error("no_client");
+    const response = await client.messages.create({
+      model: MODEL,
+      max_tokens: 4096,
+      messages: [
+        {
+          role: "user",
+          content: `${EXTRACTION_PROMPT}\n\nالمصدر: ${sourceUrl || ""}\n\nالنص:\n${text}`,
+        },
+      ],
+    });
+    const block = response.content?.find((b) => b.type === "text");
+    const visionText = block?.text || "";
+    const extracted = parseJson(visionText) || { title: "", description: text?.slice(0, 500) };
+    const enrichText = await callText(ENRICH_PROMPT, extracted);
+    const enriched = parseJson(enrichText) || { corrected: extracted, suggestions: [] };
+    const merged = normalizeExtractedPayload(extracted, enriched);
+    return {
+      visionEnabled: true,
+      providerUsed: "anthropic",
+      extracted: merged,
+      parsed_fields: merged,
+      aiSuggestions: enriched.suggestions || [],
+      validation: validateLessonDraft(merged),
+      missing_fields: buildMissingFields(merged),
+      ok: true,
+    };
+  } catch {
+    const empty = { ...emptyLessonPayload(), description: text?.slice(0, 500) || "" };
+    return {
+      visionEnabled: false,
+      manualReview: true,
+      providerUsed: "manual_review",
+      message: BILLING_USER_MESSAGE,
+      extracted: empty,
+      parsed_fields: empty,
+      validation: validateLessonDraft(empty),
+      missing_fields: buildMissingFields(empty),
+      ok: true,
+    };
+  }
 }
-
-export { buildMissingFields };

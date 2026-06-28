@@ -146,6 +146,13 @@ export async function getSystemHealth() {
       openai: env.openaiKey ? "configured" : "fallback_mode",
       anthropic: env.anthropicKey ? "configured" : "not_used_by_pipeline",
       status: env.openaiKey || env.anthropicKey ? "ready" : "heuristic_fallback",
+      ...(await import("./ai/vision-provider-fallback.mjs").then((m) => {
+        const v = m.getVisionAiStatus();
+        return {
+          vision: v,
+          systemStatus: v.systemStatus,
+        };
+      }).catch(() => ({}))),
     },
     supabase: {
       status: admin ? (autoContentHealth.database?.status || "connected") : "not_configured",

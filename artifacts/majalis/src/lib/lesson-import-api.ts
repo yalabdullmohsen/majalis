@@ -67,6 +67,22 @@ export type LessonImportResponse = {
   validation?: { valid: boolean; errors: { field: string; message: string }[]; warnings: unknown[] };
   storage_uploaded?: boolean;
   storage_error?: string;
+  provider_used?: "anthropic" | "openai" | "ocr" | "manual_review";
+  provider_label?: string;
+  manual_review?: boolean;
+  user_message?: string;
+  error_code?: string;
+  fields?: {
+    title?: string;
+    sheikh?: string;
+    mosque?: string;
+    date?: string;
+    time?: string;
+    city?: string;
+    registrationUrl?: string;
+    phone?: string;
+    notes?: string;
+  };
 };
 
 async function postLessonFromImage(body: Record<string, unknown>): Promise<LessonImportResponse> {
@@ -117,7 +133,7 @@ export async function extractLessonFromUrl(url: string, notes?: string): Promise
 
 export async function saveLessonImportDraft(
   parsed: ParsedLessonFields,
-  opts?: { draftId?: string; imageUrl?: string; extractedText?: string; notes?: string; sourceUrl?: string },
+  opts?: { draftId?: string; imageUrl?: string; extractedText?: string; notes?: string; sourceUrl?: string; status?: string },
 ) {
   return postLessonFromImage({
     action: opts?.draftId ? "update-draft" : "save-draft",
@@ -127,8 +143,20 @@ export async function saveLessonImportDraft(
     extracted_text: opts?.extractedText,
     notes: opts?.notes,
     source_url: opts?.sourceUrl,
-    status: "draft",
+    status: opts?.status || "draft",
   });
+}
+
+export async function sendLessonImportToReview(
+  parsed: ParsedLessonFields,
+  opts?: { draftId?: string; imageUrl?: string; extractedText?: string; notes?: string },
+) {
+  return saveLessonImportDraft(parsed, { ...opts, status: "needs_review" });
+}
+
+export async function fetchVisionAiStatus(): Promise<Record<string, unknown>> {
+  const res = await adminFetch("/api/admin/ai-status", { method: "GET" });
+  return res.json();
 }
 
 export async function saveLessonImportFromUrl(

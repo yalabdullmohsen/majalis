@@ -94,6 +94,7 @@ export const API_ROUTES = [
   { prefix: "/api/feed", module: "./api-handlers/feed.js", allowGet: true, exact: true },
   { prefix: "/api/admin/smart-cms", module: "./api-handlers/admin/smart-cms.js" },
   { prefix: "/api/admin/lesson-from-image", module: "./api-handlers/admin/lesson-from-image.js", rateLimit: lessonFromImageRateLimit },
+  { prefix: "/api/admin/ai-status", module: "./api-handlers/admin/ai-status.js", allowGet: true },
   { prefix: "/api/admin/lesson-from-url", module: "./api-handlers/admin/lesson-from-url.js", rateLimit: lessonFromUrlRateLimit },
   { prefix: "/api/admin/lesson-automation", module: "./api-handlers/admin/lesson-automation.js" },
   { prefix: "/api/admin/instagram-integration", module: "./api-handlers/admin/instagram-integration.js" },

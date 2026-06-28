@@ -83,7 +83,12 @@ export default async function handler(req, res) {
         return;
       }
 
-      const result = await extractLessonFromImage({ imageBase64, mimeType: check.mime });
+      const result = await extractLessonFromImage({
+        imageBase64,
+        mimeType: check.mime,
+        sourceUrl: draft.source_url,
+        notes: body.notes,
+      });
       const sheikhMatch = await matchSheikhByName(result.extracted?.speaker_name);
       const parsed = result.parsed_fields || result.extracted;
       const imageHash = hashImageBuffer(buffer);
@@ -103,8 +108,6 @@ export default async function handler(req, res) {
       sendJson(res, 200, buildImportApiResponse({ result, sheikhMatch, draft: updated.draft, imageUrl: draft.image_url }));
       return;
     }
-
-    // Default: extract from image (create draft)
     const { imageBase64, mimeType = "image/jpeg", source_url: sourceUrl, notes } = body;
     if (!imageBase64) {
       sendJson(res, 400, { ok: false, error: "missing_image" });
@@ -128,7 +131,12 @@ export default async function handler(req, res) {
 
     const imageUrl = upload.ok ? upload.url : null;
 
-    const result = await extractLessonFromImage({ imageBase64, mimeType: check.mime });
+    const result = await extractLessonFromImage({
+      imageBase64,
+      mimeType: check.mime,
+      sourceUrl,
+      notes,
+    });
     const sheikhMatch = await matchSheikhByName(result.extracted?.speaker_name);
     const parsed = result.parsed_fields || result.extracted;
 
@@ -185,18 +193,31 @@ export default async function handler(req, res) {
               draft: duplicate.draft || null,
             }
           : { isDuplicate: false },
+        provider_used: result.providerUsed,
       },
     });
 
     sendJson(res, draft.ok ? 200 : 422, {
       ...payload,
-      ok: draft.ok,
+      ok: draft.ok && payload.ok !== false,
       error: draft.error,
       storage_uploaded: upload.ok,
       storage_error: upload.ok ? undefined : upload.error,
     });
   } catch (err) {
     console.error("[admin/lesson-from-image]", err);
-    sendJson(res, 500, { ok: false, error: String(err.message || err) });
+    sendJson(res, 200, {
+      ok: true,
+      manual_review: true,
+      provider_used: "manual_review",
+      provider_label: "مراجعة يدوية",
+      user_message:
+        "تعذر التحليل التلقائي حالياً. تم حفظ الصورة ويمكنك إدخال البيانات يدوياً أو إعادة المحاولة لاحقاً.",
+      message:
+        "تعذر التحليل التلقائي حالياً. تم حفظ الصورة ويمكنك إدخال البيانات يدوياً أو إعادة المحاولة لاحقاً.",
+      error_code: "unexpected_error",
+      parsed_fields: {},
+      vision_enabled: false,
+    });
   }
 }

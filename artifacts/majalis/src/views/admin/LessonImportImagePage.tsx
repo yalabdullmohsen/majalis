@@ -9,6 +9,7 @@ import {
   reExtractLessonImportDraft,
   rejectLessonImportDraft,
   saveLessonImportDraft,
+  sendLessonImportToReview,
   type ParsedLessonFields,
 } from "@/lib/lesson-import-api";
 import { C, GOVERNORATES } from "@/lib/theme";
@@ -34,6 +35,15 @@ const labelStyle: React.CSSProperties = {
   marginBottom: "0.25rem",
 };
 
+function ProviderBadge({ label, manual }: { label?: string; manual?: boolean }) {
+  const bg = manual ? "#FEF3C7" : "#DBEAFE";
+  const color = manual ? "#92400E" : "#1D4ED8";
+  return (
+    <span style={{ padding: "0.25rem 0.625rem", borderRadius: "999px", background: bg, color, fontSize: "0.75rem", fontWeight: 600 }}>
+      المزود: {label || "—"}
+    </span>
+  );
+}
 function ConfidenceBadge({ score }: { score: number }) {
   const pct = Math.round(score * 100);
   const color = pct >= 75 ? C.emeraldDeep : pct >= 45 ? "#92400E" : "#991B1B";
@@ -200,10 +210,18 @@ function LessonImportImageContent() {
   const [sourceUrl, setSourceUrl] = useState("");
   const [notes, setNotes] = useState("");
   const [lastFile, setLastFile] = useState<File | null>(null);
+  const [providerLabel, setProviderLabel] = useState("");
+  const [manualReview, setManualReview] = useState(false);
+  const [userMessage, setUserMessage] = useState("");
+  const formRef = useRef<HTMLDivElement>(null);
 
   const applyResponse = useCallback((res: Awaited<ReturnType<typeof extractLessonFromImageUpload>>) => {
     if (res.vision_enabled != null) setVisionEnabled(res.vision_enabled);
-    if (res.message) setVisionMessage(res.message);
+    const msg = res.user_message || res.message || "";
+    setUserMessage(msg);
+    setVisionMessage(msg);
+    setProviderLabel(res.provider_label || res.provider_used || "");
+    setManualReview(Boolean(res.manual_review || res.provider_used === "manual_review" || res.provider_used === "ocr"));
     if (res.draft_id) setDraftId(res.draft_id);
     if (res.image_url) setImageUrl(res.image_url);
     if (res.extracted_text != null) setExtractedText(res.extracted_text);
@@ -227,15 +245,11 @@ function LessonImportImageContent() {
     setBusy(true);
     try {
       const res = await extractLessonFromImageUpload(file, { sourceUrl: sourceUrl.trim() || undefined, notes: notes.trim() || undefined });
-      if (!res.ok) {
-        showError(res.error || res.message || "تعذر معالجة الصورة");
-        return;
-      }
       applyResponse(res);
       if (res.storage_error) {
-        showError(`تعذر رفع الصورة للتخزين: ${res.storage_error}`);
-      } else if (res.vision_enabled === false) {
-        showSuccess("تم رفع الصورة — أدخل البيانات يدويًا");
+        showError(`تعذر رفع الصورة للتخزين — يمكنك إدخال البيانات يدوياً.`);
+      } else if (res.manual_review || res.user_message) {
+        showSuccess(res.user_message || res.message || "تم حفظ الصورة — أدخل البيانات يدوياً");
       } else {
         showSuccess("تم استخراج البيانات — راجعها ثم اعتمد");
       }
@@ -325,7 +339,7 @@ function LessonImportImageContent() {
     try {
       const res = await reExtractLessonImportDraft(draftId, lastFile);
       if (!res.ok) {
-        showError(res.error || res.message || "تعذر إعادة الاستخراج");
+        showError(res.user_message || res.message || "تعذر إعادة الاستخراج — يمكنك الإدخال اليدوي");
         return;
       }
       applyResponse(res);
@@ -337,7 +351,34 @@ function LessonImportImageContent() {
     }
   };
 
-  const hasDraft = Boolean(draftId || imageUrl || parsed.title);
+  const onSendReview = async () => {
+    setBusy(true);
+    try {
+      const res = await sendLessonImportToReview(parsed, {
+        draftId: draftId || undefined,
+        imageUrl: imageUrl || undefined,
+        extractedText,
+        notes: notes.trim() || undefined,
+      });
+      if (!res.ok) {
+        showError(res.user_message || res.message || "تعذر الإرسال للمراجعة");
+        return;
+      }
+      if (res.draft_id) setDraftId(res.draft_id);
+      showSuccess("تم إرسال المسودة للمراجعة");
+    } catch {
+      showError("تعذر الإرسال للمراجعة");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const onManualEntry = () => {
+    formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    showSuccess("يمكنك إدخال بيانات الدرس يدوياً في النموذج أدناه");
+  };
+
+  const hasDraft = Boolean(draftId || imageUrl || parsed.title || lastFile);
 
   return (
     <div>
@@ -351,9 +392,9 @@ function LessonImportImageContent() {
         <Link href="/admin" style={{ fontSize: "0.8125rem", color: C.emeraldDeep }}>← العودة للوحة الإدارة</Link>
       </div>
 
-      {visionEnabled === false && (
+      {(visionEnabled === false || manualReview || userMessage) && (
         <div style={{ background: "#FEF3C7", border: "1px solid #FCD34D", borderRadius: "0.5rem", padding: "0.75rem 1rem", marginBottom: "1rem", fontSize: "0.875rem", color: "#92400E" }}>
-          {visionMessage || "الاستخراج التلقائي غير مفعّل. يمكنك إدخال البيانات يدويًا."}
+          {userMessage || visionMessage || "الاستخراج التلقائي غير متاح حالياً. يمكنك إدخال البيانات يدويًا أو إرسال الصورة للمراجعة."}
         </div>
       )}
 
@@ -392,6 +433,7 @@ function LessonImportImageContent() {
         <>
           <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1rem" }}>
             <ConfidenceBadge score={confidence} />
+            <ProviderBadge label={providerLabel} manual={manualReview} />
             <MissingBadge fields={missingFields} />
             {sheikhHint && (
               <span style={{ padding: "0.25rem 0.625rem", borderRadius: "999px", background: "#DBEAFE", color: "#1D4ED8", fontSize: "0.75rem" }}>
@@ -423,7 +465,7 @@ function LessonImportImageContent() {
               )}
             </section>
 
-            <section style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.625rem", padding: "1rem" }}>
+            <section ref={formRef} style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.625rem", padding: "1rem" }}>
               <h3 style={{ margin: "0 0 0.75rem", fontSize: "0.9375rem", color: C.emeraldDeep }}>2. مراجعة وتعديل الحقول</h3>
               <LessonImportForm parsed={parsed} onChange={setParsed} disabled={busy} />
             </section>
@@ -437,13 +479,25 @@ function LessonImportImageContent() {
               حفظ كمسودة
             </button>
             <button type="button" disabled={busy} onClick={onReExtract} style={{ padding: "0.5rem 1rem", background: C.panel, color: C.ink, border: `1px solid ${C.line}`, borderRadius: "0.375rem", cursor: "pointer", fontFamily: "inherit" }}>
-              إعادة استخراج
+              إعادة المحاولة
+            </button>
+            <button type="button" disabled={busy} onClick={onManualEntry} style={{ padding: "0.5rem 1rem", background: C.panel, color: C.emeraldDeep, border: `1px solid ${C.line}`, borderRadius: "0.375rem", cursor: "pointer", fontFamily: "inherit" }}>
+              إدخال يدوي
+            </button>
+            <button type="button" disabled={busy} onClick={onSendReview} style={{ padding: "0.5rem 1rem", background: "#DBEAFE", color: "#1D4ED8", border: "none", borderRadius: "0.375rem", cursor: "pointer", fontFamily: "inherit" }}>
+              إرسال للمراجعة
             </button>
             <button type="button" disabled={busy || !draftId} onClick={onReject} style={{ padding: "0.5rem 1rem", background: "#FEE2E2", color: "#991B1B", border: "none", borderRadius: "0.375rem", cursor: "pointer", fontFamily: "inherit" }}>
               رفض
             </button>
           </div>
         </>
+      )}
+
+      {hasDraft && !draftId && !parsed.title && (
+        <p style={{ fontSize: "0.8125rem", color: C.inkSoft, marginTop: "0.5rem" }}>
+          تم رفع الصورة — أكمل الحقول يدوياً ثم احفظ أو أرسل للمراجعة.
+        </p>
       )}
 
       {busy && (
