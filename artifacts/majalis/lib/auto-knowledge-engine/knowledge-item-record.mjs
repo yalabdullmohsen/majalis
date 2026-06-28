@@ -34,7 +34,7 @@ export function buildKnowledgeItemRecord({
 }) {
   return {
     source_id: connectorConfig.source_id || null,
-    pipeline_run_id: runId,
+    pipeline_run_id: null,
     external_id: item.external_id,
     content_kind: item.content_kind,
     raw_url: item.raw_url,
