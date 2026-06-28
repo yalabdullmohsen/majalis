@@ -1,10 +1,11 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 export type HlsPlayerState = "idle" | "loading" | "live" | "paused" | "error";
 
 const ALL_URLS_FAILED_MESSAGE = "تعذر تشغيل القناة حاليًا";
+const LOAD_TIMEOUT_MS = 20_000;
 
 type Options = {
   /** Ordered URLs — primary first, then fallbacks */
@@ -21,14 +22,23 @@ function normalizeUrls(streamUrls?: string[], streamUrl?: string): string[] {
 }
 
 export function useHlsPlayer({ streamUrls, streamUrl, autoplay = false }: Options) {
-  const urls = normalizeUrls(streamUrls, streamUrl);
+  const urls = useMemo(() => normalizeUrls(streamUrls, streamUrl), [streamUrls, streamUrl]);
+  const urlsKey = urls.join("\0");
+
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const hlsRef = useRef<{ destroy: () => void } | null>(null);
   const urlIndexRef = useRef(0);
-  const urlsKeyRef = useRef("");
+  const loadTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [state, setState] = useState<HlsPlayerState>("idle");
   const [errorMessage, setErrorMessage] = useState("");
   const [activeStreamUrl, setActiveStreamUrl] = useState<string | undefined>();
+
+  const clearLoadTimeout = useCallback(() => {
+    if (loadTimeoutRef.current) {
+      clearTimeout(loadTimeoutRef.current);
+      loadTimeoutRef.current = null;
+    }
+  }, []);
 
   const destroyHls = useCallback(() => {
     hlsRef.current?.destroy();
@@ -68,6 +78,7 @@ export function useHlsPlayer({ streamUrls, streamUrl, autoplay = false }: Option
   const loadCurrentUrl = useCallback(
     (video: HTMLVideoElement, startIndex = 0) => {
       if (!urls.length) {
+        clearLoadTimeout();
         setState("idle");
         setActiveStreamUrl(undefined);
         return;
@@ -82,23 +93,37 @@ export function useHlsPlayer({ streamUrls, streamUrl, autoplay = false }: Option
       setState("loading");
 
       destroyHls();
+      clearLoadTimeout();
       video.pause();
       video.removeAttribute("src");
       video.load();
 
+      loadTimeoutRef.current = setTimeout(() => {
+        if (tryNextUrl()) {
+          loadCurrentUrl(video, urlIndexRef.current);
+        } else {
+          setState("error");
+          setErrorMessage(ALL_URLS_FAILED_MESSAGE);
+          destroyHls();
+        }
+      }, LOAD_TIMEOUT_MS);
+
       const onAllFailed = () => {
+        clearLoadTimeout();
         setState("error");
         setErrorMessage(ALL_URLS_FAILED_MESSAGE);
         destroyHls();
       };
 
-      const startPlayback = () => {
+      const onStreamReady = () => {
+        clearLoadTimeout();
         if (autoplay) void video.play().catch(() => setState("paused"));
       };
 
       const attachNative = () => {
         const onNativeError = () => {
           video.removeEventListener("error", onNativeError);
+          clearLoadTimeout();
           if (tryNextUrl()) {
             loadCurrentUrl(video, urlIndexRef.current);
           } else {
@@ -108,7 +133,7 @@ export function useHlsPlayer({ streamUrls, streamUrl, autoplay = false }: Option
         video.addEventListener("error", onNativeError, { once: true });
         video.src = currentUrl;
         video.load();
-        startPlayback();
+        onStreamReady();
       };
 
       if (video.canPlayType("application/vnd.apple.mpegurl")) {
@@ -118,6 +143,7 @@ export function useHlsPlayer({ streamUrls, streamUrl, autoplay = false }: Option
 
       void import("hls.js").then(({ default: Hls }) => {
         if (!Hls.isSupported()) {
+          clearLoadTimeout();
           setState("error");
           setErrorMessage("المتصفح لا يدعم بث HLS. جرّب Safari أو حدّث المتصفح.");
           return;
@@ -127,9 +153,10 @@ export function useHlsPlayer({ streamUrls, streamUrl, autoplay = false }: Option
         hlsRef.current = hls;
         hls.loadSource(currentUrl);
         hls.attachMedia(video);
-        hls.on(Hls.Events.MANIFEST_PARSED, startPlayback);
+        hls.on(Hls.Events.MANIFEST_PARSED, onStreamReady);
         hls.on(Hls.Events.ERROR, (_event, data) => {
           if (!data.fatal) return;
+          clearLoadTimeout();
           destroyHls();
           if (tryNextUrl()) {
             loadCurrentUrl(video, urlIndexRef.current);
@@ -139,7 +166,7 @@ export function useHlsPlayer({ streamUrls, streamUrl, autoplay = false }: Option
         });
       });
     },
-    [autoplay, destroyHls, tryNextUrl, urls],
+    [autoplay, clearLoadTimeout, destroyHls, tryNextUrl, urls],
   );
 
   const reload = useCallback(() => {
@@ -149,11 +176,7 @@ export function useHlsPlayer({ streamUrls, streamUrl, autoplay = false }: Option
   }, [loadCurrentUrl, urls.length]);
 
   useEffect(() => {
-    const key = urls.join("\0");
-    if (key === urlsKeyRef.current) return;
-    urlsKeyRef.current = key;
-
-    if (!urls.length) {
+    if (!urlsKey) {
       setState("idle");
       setErrorMessage("");
       setActiveStreamUrl(undefined);
@@ -166,20 +189,24 @@ export function useHlsPlayer({ streamUrls, streamUrl, autoplay = false }: Option
     loadCurrentUrl(video, 0);
 
     return () => {
+      clearLoadTimeout();
       destroyHls();
       video.pause();
       video.removeAttribute("src");
       video.load();
     };
-  }, [urls, loadCurrentUrl, destroyHls]);
+  }, [urlsKey, loadCurrentUrl, destroyHls, clearLoadTimeout]);
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    const onPlaying = () => setState("live");
+    const onPlaying = () => {
+      clearLoadTimeout();
+      setState("live");
+    };
     const onPause = () => setState((s) => (s === "error" ? s : "paused"));
-    const onWaiting = () => setState((s) => (s === "error" ? s : "loading"));
+    const onWaiting = () => setState((s) => (s === "error" || s === "live" ? s : "loading"));
 
     video.addEventListener("playing", onPlaying);
     video.addEventListener("pause", onPause);
@@ -189,7 +216,7 @@ export function useHlsPlayer({ streamUrls, streamUrl, autoplay = false }: Option
       video.removeEventListener("pause", onPause);
       video.removeEventListener("waiting", onWaiting);
     };
-  }, [activeStreamUrl]);
+  }, [activeStreamUrl, clearLoadTimeout]);
 
   return {
     videoRef,

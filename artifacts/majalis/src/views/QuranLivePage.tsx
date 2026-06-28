@@ -41,7 +41,7 @@ export default function QuranLivePage() {
   const channel = getChannelById(activeId);
   const streamUrls = useMemo(
     () => (channel ? getChannelStreamUrls(channel) : []),
-    [channel],
+    [activeId],
   );
 
   const { videoRef, state, errorMessage, toggle, reload, play } = useHlsPlayer({
@@ -139,6 +139,7 @@ export default function QuranLivePage() {
               className="quran-live-player__video"
               controls
               playsInline
+              crossOrigin="anonymous"
               poster={channel.poster}
               aria-label={channel.name}
             />
