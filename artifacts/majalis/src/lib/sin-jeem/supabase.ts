@@ -1,4 +1,5 @@
 import { supabase } from "@/lib/supabase";
+import { isMissingSchemaError } from "@/lib/safe-supabase";
 import { SIN_JEEM_CATEGORIES } from "./categories-seed";
 import { getAllSinJeemQuestions, getMergedQuestionCount } from "./questions-bank";
 import type { GameStats, LeaderboardEntry, SinJeemQuestion } from "./types";
@@ -21,6 +22,7 @@ export async function fetchGameQuestions(opts?: {
     if (opts?.difficulty) query = query.eq("difficulty", opts.difficulty);
 
     const { data, error } = await query;
+    if (error && isMissingSchemaError(error)) return filterLocalQuestions(opts);
     if (error || !data?.length) return filterLocalQuestions(opts);
 
     return data.map((row) => ({
@@ -73,14 +75,18 @@ export async function fetchGameStats(): Promise<GameStats> {
   }
 
   try {
-    const [{ count: qCount }, { count: cCount }] = await Promise.all([
+    const [qRes, cRes] = await Promise.all([
       supabase.from("sin_jeem_questions").select("*", { count: "exact", head: true }).eq("status", "published"),
       supabase.from("sin_jeem_categories").select("*", { count: "exact", head: true }).eq("status", "published"),
     ]);
 
+    if (isMissingSchemaError(qRes.error) || isMissingSchemaError(cRes.error)) {
+      return { questionCount, categoryCount, playerCount, matchCount: local.matchCount };
+    }
+
     return {
-      questionCount: qCount || questionCount,
-      categoryCount: cCount || categoryCount,
+      questionCount: qRes.count || questionCount,
+      categoryCount: cRes.count || categoryCount,
       playerCount,
       matchCount: local.matchCount,
     };

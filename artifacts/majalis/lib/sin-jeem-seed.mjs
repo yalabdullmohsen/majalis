@@ -38,6 +38,24 @@ export const CATEGORY_SEED = [
   { slug: "mutoon", name_ar: "المتون العلمية", icon: "📚", sort_order: 136 },
   { slug: "scientific-miracles", name_ar: "الإعجاز العلمي", icon: "🔬", sort_order: 137 },
   { slug: "islamic-puzzles", name_ar: "الألغاز الإسلامية", icon: "🧩", sort_order: 140 },
+  // Subcategory slugs used as category_slug in question bank
+  { slug: "maki-madani", name_ar: "مكي ومدني", icon: "📖", parent_slug: "quran", sort_order: 4 },
+  { slug: "nawawi-40", name_ar: "الأربعون النووية", icon: "📿", parent_slug: "hadith", sort_order: 32 },
+  { slug: "nuh", name_ar: "نوح", icon: "🌊", parent_slug: "prophets", sort_order: 51 },
+  { slug: "ibrahim", name_ar: "إبراهيم", icon: "🕋", parent_slug: "prophets", sort_order: 52 },
+  { slug: "musa", name_ar: "موسى", icon: "📜", parent_slug: "prophets", sort_order: 53 },
+  { slug: "isa", name_ar: "عيسى", icon: "✨", parent_slug: "prophets", sort_order: 54 },
+  { slug: "muhammad", name_ar: "محمد ﷺ", icon: "🕌", parent_slug: "prophets", sort_order: 55 },
+  { slug: "khulafa-rashidun", name_ar: "الخلفاء الراشدون", icon: "⭐", parent_slug: "sahaba", sort_order: 62 },
+  { slug: "ghazwat", name_ar: "الغزوات", icon: "⚔️", parent_slug: "seera", sort_order: 41 },
+  { slug: "salah", name_ar: "الصلاة", icon: "🕌", parent_slug: "fiqh", sort_order: 71 },
+  { slug: "tahara", name_ar: "الطهارة", icon: "💧", parent_slug: "fiqh", sort_order: 72 },
+  { slug: "siyam", name_ar: "الصيام", icon: "🌙", parent_slug: "fiqh", sort_order: 73 },
+  { slug: "andalus", name_ar: "الأندلس", icon: "🏰", parent_slug: "islamic-history", sort_order: 121 },
+  { slug: "quran-puzzles", name_ar: "ألغاز قرآنية", icon: "🧩", parent_slug: "islamic-puzzles", sort_order: 141 },
+  { slug: "fiqh-puzzles", name_ar: "ألغاز فقهية", icon: "🧩", parent_slug: "islamic-puzzles", sort_order: 142 },
+  { slug: "bukhari", name_ar: "صحيح البخاري", icon: "📗", parent_slug: "hadith", sort_order: 33 },
+  { slug: "riyadh-salihin", name_ar: "رياض الصالحين", icon: "📘", parent_slug: "hadith", sort_order: 34 },
 ];
 
 function contentHash(text) {
