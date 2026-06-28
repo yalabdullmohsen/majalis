@@ -152,8 +152,9 @@ async function processConnector(admin, connectorConfig, runId, existingItems, op
       checkLinks: options.checkLinks || false,
     });
 
-    const toAnalyze = verified.filter((v) => !v.verification.isDuplicate);
-    stats.duplicate = verified.length - toAnalyze.length;
+    const maxItemsPerConnector = options.maxItemsPerConnector ?? (options.triggerType === "cron" ? 5 : 30);
+    const toAnalyze = verified.filter((v) => !v.verification.isDuplicate).slice(0, maxItemsPerConnector);
+    stats.duplicate = verified.filter((v) => v.verification.isDuplicate).length;
     stats.parsed = toAnalyze.filter((v) => v.verification.sourceVerified).length;
     if (stats.duplicate > 0) {
       stats.rejectionReasons.duplicate = stats.duplicate;
@@ -343,7 +344,11 @@ export async function runAutoKnowledgeEngine(options = {}) {
     if (connectorConfig.connector_type === "inactive") continue;
 
     akeLog("orchestrator", { action: "start_connector", slug: connectorConfig.slug });
-    const result = await processConnector(admin, connectorConfig, runId, existingItems, { checkLinks });
+    const result = await processConnector(admin, connectorConfig, runId, existingItems, {
+      checkLinks,
+      maxItemsPerConnector: options.maxItemsPerConnector,
+      triggerType,
+    });
 
     totals.fetched += result.fetched;
     totals.parsed += result.parsed || 0;
