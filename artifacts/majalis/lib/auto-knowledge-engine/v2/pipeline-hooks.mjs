@@ -16,7 +16,7 @@ export async function ensureV2Schema(admin) {
     if (!error) return { ok: true, skipped: true };
     const { applyMigrations } = await import("../../db-migrate.mjs");
     return await applyMigrations({
-      files: ["auto_knowledge_engine_v16_v2.sql"],
+      files: ["auto_knowledge_engine_v16_v2.sql", "auto_knowledge_engine_v16_v2_production.sql"],
       continueOnError: false,
       trackApplied: true,
     });
@@ -70,12 +70,15 @@ export async function postPublishV2({
 
   const settings = await loadV2Settings(admin);
 
+  const lessonId = pub?.target_table === "lessons" ? pub.target_record_id : null;
+
   if (item._unifiedFingerprint) {
     await registerUnifiedFingerprint({
       fingerprint: item._unifiedFingerprint,
       item,
       connectorConfig,
       knowledgeItemId: inserted.id,
+      lessonId,
     });
 
     const { data: fp } = await admin
@@ -104,6 +107,7 @@ export async function postPublishV2({
   if (item._lifecycleChange) {
     await applyLifecycleChange(admin, {
       knowledgeItemId: inserted.id,
+      lessonId,
       change: item._lifecycleChange,
       sourceSlug: connectorConfig.slug,
       sourceUrl: item.raw_url,

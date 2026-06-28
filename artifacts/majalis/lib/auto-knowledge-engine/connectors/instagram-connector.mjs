@@ -21,8 +21,18 @@ export class InstagramConnector extends BaseConnector {
 
     const discovery = await discoverInstagramSource(source);
     if (discovery.connectorRequired || !discovery.items?.length) {
-      if (discovery.hint) syncOptions._hint = discovery.hint;
-      return [];
+      const graphConfigured = discovery.graphApi === true || discovery.graphApiAttempted;
+      const hint = discovery.hint
+        || (discovery.connectorRequired
+          ? "Instagram Graph API not configured; public fallback active/limited"
+          : "Instagram fetch unavailable: credentials required or public access blocked");
+      syncOptions._fetchStatus = hint;
+      syncOptions._instagramStatus = {
+        graphApi: graphConfigured,
+        itemsReturned: discovery.items?.length || 0,
+        hint,
+      };
+      throw new Error(hint);
     }
 
     let items = discovery.items.map((post, idx) => ({

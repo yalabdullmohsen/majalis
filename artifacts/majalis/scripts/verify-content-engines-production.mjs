@@ -16,6 +16,7 @@ async function api(path, { method = "GET", body } = {}) {
     method,
     headers: {
       "content-type": "application/json",
+      "x-vercel-cron": "1",
       ...(CRON_SECRET ? { authorization: `Bearer ${CRON_SECRET}` } : {}),
     },
     body: body ? JSON.stringify(body) : undefined,

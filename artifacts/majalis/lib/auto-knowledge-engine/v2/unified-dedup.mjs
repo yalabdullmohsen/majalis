@@ -4,6 +4,7 @@
 import { getSupabaseAdmin } from "../../supabase-admin.mjs";
 import { normalizeUrl } from "../duplicate-detection.mjs";
 import { createHash } from "node:crypto";
+import { resolveConnectorAuthority, mapLegacyPriority } from "./source-quality.mjs";
 
 function normalizeTitle(title) {
   return String(title || "")
@@ -52,8 +53,11 @@ export async function checkUnifiedDuplicate(item, connectorConfig) {
       .maybeSingle();
 
     if (existing) {
-      const newPriority = connectorConfig.source_priority || connectorConfig.sourcePriority || 5;
-      const shouldMerge = newPriority >= (existing.source_priority || 5);
+      const newAuth = resolveConnectorAuthority(connectorConfig).authorityScore;
+      const existingAuth = existing.source_priority >= 1 && existing.source_priority <= 10
+        ? mapLegacyPriority(existing.source_priority)
+        : (existing.source_priority || 30);
+      const shouldMerge = newAuth >= existingAuth;
 
       return {
         isDuplicate: true,
@@ -62,6 +66,8 @@ export async function checkUnifiedDuplicate(item, connectorConfig) {
         match: existing,
         action: shouldMerge ? "merge_source" : "skip_lower_priority",
         knowledgeItemId: existing.knowledge_item_id,
+        authorityScore: newAuth,
+        existingAuthority: existingAuth,
       };
     }
 
@@ -102,7 +108,7 @@ export async function registerUnifiedFingerprint({
   const sourceEntry = {
     slug: connectorConfig.slug,
     url: item.raw_url || item.source_url,
-    priority: connectorConfig.source_priority || 5,
+    priority: resolveConnectorAuthority(connectorConfig).authorityScore,
     fetched_at: new Date().toISOString(),
   };
 
@@ -153,7 +159,7 @@ export async function registerUnifiedFingerprint({
       knowledge_item_id: knowledgeItemId || null,
       lesson_id: lessonId || null,
       primary_source_slug: connectorConfig.slug,
-      source_priority: connectorConfig.source_priority || 5,
+      source_priority: resolveConnectorAuthority(connectorConfig).authorityScore,
       source_count: 1,
       sources: [sourceEntry],
     })

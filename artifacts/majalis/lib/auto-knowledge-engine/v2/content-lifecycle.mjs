@@ -20,6 +20,21 @@ export function detectLifecycleChange(existingRow, newItem, extraction = {}) {
     changes.content = { old_hash: existingRow.content_hash, new_hash: newHash };
   }
 
+  const fieldPairs = [
+    ["title", newTitle, existingRow?.raw_title || existingRow?.ai_title],
+    ["speaker", fields.speaker_name || fields.scholar, existingRow?.extracted_fields?.speaker_name],
+    ["mosque", fields.mosque || fields.mosque_name, existingRow?.extracted_fields?.mosque],
+    ["location", fields.location, existingRow?.extracted_fields?.location],
+    ["date", fields.gregorian_date || fields.date || newItem.published_at, existingRow?.source_published_at],
+    ["time", fields.time, existingRow?.extracted_fields?.time],
+  ];
+
+  for (const [key, next, prev] of fieldPairs) {
+    if (next && prev && String(next).trim() !== String(prev).trim()) {
+      changes[key] = { from: prev, to: next };
+    }
+  }
+
   const cancelText = `${newTitle} ${newBody}`;
   if (CANCEL_PATTERNS.some((p) => p.test(cancelText))) {
     return { changeType: "cancelled", fieldChanges: changes, lifecycleStatus: "cancelled" };

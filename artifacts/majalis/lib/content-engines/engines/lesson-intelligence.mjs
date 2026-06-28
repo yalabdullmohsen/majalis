@@ -1,7 +1,7 @@
 /**
  * Lesson Intelligence Engine — delegates to Phase 6 engine.
  */
-import { runLessonIntelligenceEngine } from "../cms/lesson-intelligence/index.mjs";
+import { runLessonIntelligenceEngine } from "../../cms/lesson-intelligence/index.mjs";
 import { startEngineRun, finishEngineRun, createRunLogger } from "../run-manager.mjs";
 
 export async function run({ runType = "incremental", maxSources } = {}) {

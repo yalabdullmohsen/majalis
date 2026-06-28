@@ -267,13 +267,29 @@ async function processConnector(admin, connectorConfig, runId, existingItems, op
     }
 
     if (fetchResult.notModified) {
+      stats.fetchStatus = "not_modified";
       await updateConnectorHealth(admin, connectorConfig, fetchResult, health);
       return stats;
     }
 
     if (fetchResult.skipped) {
+      stats.fetchStatus = "skipped";
       await updateConnectorHealth(admin, connectorConfig, fetchResult, health);
       return stats;
+    }
+
+    if (stats.fetched === 0 && !fetchResult.error) {
+      const status = syncOptions._fetchStatus || syncOptions._hint || "zero_items_in_window";
+      stats.fetchStatus = status;
+      if (connectorConfig.id) {
+        try {
+          await admin.from("ake_connectors").update({
+            last_error: status,
+            health_status: "degraded",
+            updated_at: new Date().toISOString(),
+          }).eq("id", connectorConfig.id);
+        } catch { /* ignore */ }
+      }
     }
 
     const knownHashes = new Set(existingItems.map((i) => i.content_hash).filter(Boolean));
