@@ -8,6 +8,7 @@ import { registerFingerprint } from "./dedup.mjs";
 import { CONTENT_PIPELINES } from "./config.mjs";
 import { contentHash } from "./normalize.mjs";
 import { logStructured } from "./monitoring.mjs";
+import { guardPublishRecord, sanitizePublicRecord, enqueueRejectedTestContent } from "../production-guard.mjs";
 
 function slugify(text) {
   return String(text || "")
@@ -115,10 +116,22 @@ export async function publishContentRecord({ contentType, record, source, finger
   const pipeline = CONTENT_PIPELINES[contentType];
   if (!pipeline) return { ok: false, error: "unknown_pipeline" };
 
+  const guard = guardPublishRecord(record, { contentType, source: source?.slug });
+  if (!guard.allowed) {
+    const admin = getSupabaseAdmin();
+    await enqueueRejectedTestContent(admin, {
+      record,
+      reasons: guard.reasons,
+      source: "akp-publisher",
+      table: pipeline.targetTable,
+    });
+    return { ok: false, error: "test_content_rejected", reasons: guard.reasons };
+  }
+
   const admin = getSupabaseAdmin();
   if (!admin) return { ok: false, error: "no_admin" };
 
-  const payload = mapToImportPayload(contentType, record, source);
+  const payload = mapToImportPayload(contentType, sanitizePublicRecord(record), source);
   const started = Date.now();
 
   try {

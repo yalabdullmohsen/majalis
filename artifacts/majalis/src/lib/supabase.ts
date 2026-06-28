@@ -34,6 +34,8 @@ import { validateSheikhImage, safeUploadFileName } from "./file-validation";
 import { sanitizeFormRecord } from "./sanitize";
 import { isSupabaseConfigured, formatSupabaseError, logSupabaseError } from "./supabase-config";
 import { allowSeedFallback } from "@/lib/cms/production-config";
+import { filterPublicRecords } from "@/lib/production-guard";
+import { mapPublicFawaid } from "@/lib/public-content-sanitize";
 
 export { bootstrapSupabaseFromServer };
 
@@ -232,7 +234,8 @@ export async function fetchApprovedLessonsFromDb() {
       .order("created_at", { ascending: false });
 
     if (error) throw error;
-    return { data: data || [], error: null, usingSeed: false };
+    const rows = filterPublicRecords(data || []);
+    return { data: rows, error: null, usingSeed: false };
   } catch (err) {
     logSupabaseError("fetchApprovedLessonsFromDb", err);
     return { data: [], error: err, usingSeed: true };
@@ -318,11 +321,15 @@ export async function getMyRegistrations(userId: string) {
 }
 
 export async function getApprovedFawaid() {
-  return safeSupabaseQuery(
+  const result = await safeSupabaseQuery(
     "getApprovedFawaid",
     () => supabase.from("fawaid").select("*").eq("status", "approved").order("created_at", { ascending: false }),
     DEMO_FAWAID,
   );
+  return {
+    ...result,
+    data: filterPublicRecords(result.data || []).map((row) => mapPublicFawaid(row)),
+  };
 }
 
 export async function submitFawaid(userId: string, text: string, authorName: string) {
@@ -805,7 +812,7 @@ export async function getQaQuestions({ categoryId, search }: { categoryId?: stri
     };
   }
 
-  let result = data || [];
+  let result = filterPublicRecords(data || []);
   if (search?.trim()) {
     const s = search.trim();
     result = result.filter((x: any) =>
@@ -1143,6 +1150,7 @@ export async function searchEverything(term: string): Promise<SearchResults> {
   if (!query) return { ...EMPTY_SEARCH };
 
   if (!isConfigured) {
+    if (!allowSeedFallback()) return { ...EMPTY_SEARCH };
     const demo = searchDemoContent(query);
     const platform = searchPlatformSeed(query);
     return { ...demo, ...platform, usingDemo: true, error: null };
@@ -1160,18 +1168,18 @@ export async function searchEverything(term: string): Promise<SearchResults> {
       }));
       const platformFallback = searchPlatformSeed(query);
       return {
-        lessons: data.lessons || [],
-        library: data.library || [],
-        miracles: data.miracles || [],
-        sheikhs: data.sheikhs || [],
-        qa: data.qa || [],
-        fawaid: data.fawaid || [],
+        lessons: filterPublicRecords(data.lessons || []),
+        library: filterPublicRecords(data.library || []),
+        miracles: filterPublicRecords(data.miracles || []),
+        sheikhs: filterPublicRecords(data.sheikhs || []),
+        qa: filterPublicRecords(data.qa || []),
+        fawaid: filterPublicRecords(data.fawaid || []).map((row) => mapPublicFawaid(row)),
         adhkar,
-        fiqh_decisions: data.fiqh_decisions?.length ? data.fiqh_decisions : platformFallback.fiqh_decisions,
-        fatwas: data.fatwas?.length ? data.fatwas : platformFallback.fatwas,
-        rulings: data.rulings?.length ? data.rulings : platformFallback.rulings,
-        courses: data.courses?.length ? data.courses : platformFallback.courses,
-        updates: data.updates?.length ? data.updates : platformFallback.updates,
+        fiqh_decisions: data.fiqh_decisions?.length ? filterPublicRecords(data.fiqh_decisions) : platformFallback.fiqh_decisions,
+        fatwas: data.fatwas?.length ? filterPublicRecords(data.fatwas) : platformFallback.fatwas,
+        rulings: data.rulings?.length ? filterPublicRecords(data.rulings) : platformFallback.rulings,
+        courses: data.courses?.length ? filterPublicRecords(data.courses) : platformFallback.courses,
+        updates: data.updates?.length ? filterPublicRecords(data.updates) : platformFallback.updates,
         usingDemo: false,
         error: null,
       };
@@ -1201,7 +1209,7 @@ export async function searchEverything(term: string): Promise<SearchResults> {
     (merged.courses?.length || 0) +
     (merged.updates?.length || 0);
 
-  if (total === 0) {
+  if (total === 0 && allowSeedFallback()) {
     const demo = searchDemoContent(query);
     const demoPlatform = searchPlatformSeed(query);
     const demoTotal =

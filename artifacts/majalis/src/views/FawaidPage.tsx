@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { getApprovedFawaid, submitFawaid } from "@/lib/supabase";
 import { RequestManager } from "@/lib/request-manager";
 import { arabicMatchAny } from "@/lib/arabic-search";
-import { DEMO_FAWAID, FAWAID_CATEGORIES } from "@/lib/demo-content";
+import { FAWAID_CATEGORIES } from "@/lib/demo-content";
 import { canSubmitForm } from "@/lib/form-rate-limit";
 import { PageHeader, Loading, Empty } from "@/components/ui-common";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
@@ -57,7 +57,7 @@ export default function FawaidPage({
         setFawaid(data);
       })
       .catch(() => {
-        setFawaid(DEMO_FAWAID);
+        setFawaid([]);
       })
       .finally(() => setLoading(false));
   }, [initialFawaid]);

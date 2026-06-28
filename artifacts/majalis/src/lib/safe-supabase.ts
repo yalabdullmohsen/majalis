@@ -1,5 +1,6 @@
 import { isSupabaseConfigured, logSupabaseError } from "./supabase-config";
 import { RequestManager } from "./request-manager";
+import { allowSeedFallback } from "./cms/production-config";
 
 export type SafeReadResult<T> = {
   data: T;
@@ -52,16 +53,18 @@ export async function safeSupabaseQuery<T>(
   query: () => PromiseLike<{ data: T | null; error: unknown }>,
   fallback: T,
 ): Promise<SafeReadResult<T>> {
+  const effectiveFallback = (allowSeedFallback() ? fallback : (Array.isArray(fallback) ? [] : fallback)) as T;
+
   if (!isSupabaseConfigured()) {
-    return { data: fallback, error: null, usingSeed: true };
+    return { data: effectiveFallback, error: null, usingSeed: allowSeedFallback() };
   }
 
   try {
     const { data } = await timedQuery(scope, query);
-    return { data: (data ?? fallback) as T, error: null, usingSeed: false };
+    return { data: (data ?? effectiveFallback) as T, error: null, usingSeed: false };
   } catch (err) {
     logSupabaseError(scope, err);
-    return { data: fallback, error: null, usingSeed: true };
+    return { data: effectiveFallback, error: null, usingSeed: allowSeedFallback() };
   }
 }
 
@@ -71,8 +74,10 @@ export async function safeSupabaseRead<T>(
   read: () => Promise<T>,
   fallback: T,
 ): Promise<SafeReadResult<T>> {
+  const effectiveFallback = (allowSeedFallback() ? fallback : (Array.isArray(fallback) ? [] : fallback)) as T;
+
   if (!isSupabaseConfigured()) {
-    return { data: fallback, error: null, usingSeed: true };
+    return { data: effectiveFallback, error: null, usingSeed: allowSeedFallback() };
   }
 
   try {
@@ -80,7 +85,7 @@ export async function safeSupabaseRead<T>(
     return { data, error: null, usingSeed: false };
   } catch (err) {
     logSupabaseError(scope, err);
-    return { data: fallback, error: null, usingSeed: true };
+    return { data: effectiveFallback, error: null, usingSeed: allowSeedFallback() };
   }
 }
 

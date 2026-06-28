@@ -1,5 +1,7 @@
 import { LESSONS_SEED } from "@/lib/lessons-seed";
 import { DEMO_FAWAID, DEMO_QA, DEMO_QA_CATEGORIES, DEMO_SHEIKHS } from "@/lib/demo-content";
+import { allowSeedFallback } from "@/lib/cms/production-config";
+import { filterPublicRecords } from "@/lib/production-guard";
 import { getLibraryCatalog, mergeLibraryWithCatalog, normalizeLibraryRow } from "@/lib/library-service";
 import { filterMiraclesSeed } from "@/lib/miracles-seed";
 import { mapLessonRow, sortKuwaitLessons, dedupeKuwaitLessons, splitKuwaitLessons } from "@/lib/kuwait-lessons";
@@ -54,6 +56,7 @@ export async function fetchLessonsForServer(): Promise<{
   archived: KuwaitLessonRecord[];
 }> {
   if (!isSupabaseConfiguredServer()) {
+    if (!allowSeedFallback()) return { active: [], archived: [] };
     const lessons = dedupeKuwaitLessons(
       LESSONS_SEED.map((row) => mapLessonRow({ ...row, source: "seed" })),
     );
@@ -69,6 +72,7 @@ export async function fetchLessonsForServer(): Promise<{
     .order("created_at", { ascending: false });
 
   if (error || !data?.length) {
+    if (!allowSeedFallback()) return { active: [], archived: [] };
     const lessons = dedupeKuwaitLessons(
       LESSONS_SEED.map((row) => mapLessonRow({ ...row, source: "seed" })),
     );
@@ -77,7 +81,7 @@ export async function fetchLessonsForServer(): Promise<{
   }
 
   const mapped = dedupeKuwaitLessons(
-    data.map((row) => mapLessonRow({ ...row, source: "supabase" })),
+    filterPublicRecords(data).map((row) => mapLessonRow({ ...row, source: "supabase" })),
   );
   const sorted = sortKuwaitLessons(mapped);
   return splitKuwaitLessons(sorted);

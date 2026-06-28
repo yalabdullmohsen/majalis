@@ -379,7 +379,7 @@ export default function LessonsPage({
             loading={loading}
             error={loadError}
             empty={!loading && !loadError && activeLessons.length === 0 && archivedLessons.length === 0}
-            emptyText="لا توجد بيانات حالياً"
+            emptyText="لا توجد دروس متاحة حالياً"
             onRetry={() => window.location.reload()}
           >
             <>

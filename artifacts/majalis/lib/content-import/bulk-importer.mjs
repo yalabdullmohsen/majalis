@@ -6,6 +6,7 @@ import { getSupabaseAdmin } from "../supabase-admin.mjs";
 import { getPgClient } from "../database.mjs";
 import { dedupeKeyForRow } from "./dedupe.mjs";
 import { hashKey } from "./dedupe.mjs";
+import { guardPublishRecord, sanitizePublicRecord } from "../production-guard.mjs";
 
 const BATCH_SIZE = 500;
 const MAX_VALIDATION_ERRORS = 200;
@@ -332,7 +333,13 @@ async function importBenefits({ admin, pgClient, payloads, onProgress }) {
   const toInsert = [];
 
   for (let i = 0; i < payloads.length; i++) {
-    const row = payloads[i];
+    const row = sanitizePublicRecord(payloads[i]);
+    const guard = guardPublishRecord(row, { contentType: "benefits", table: "fawaid" });
+    if (!guard.allowed) {
+      report.skipped += 1;
+      report.errors.push(`rejected_test_content:${guard.reasons?.[0] || "test"}`);
+      continue;
+    }
     const key = dedupeKeyForRow("benefits", row);
     if (seen.has(key)) report.skipped++;
     else {
