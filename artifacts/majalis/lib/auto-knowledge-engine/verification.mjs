@@ -3,6 +3,7 @@
  */
 
 import { trustScoreFromLevel } from "./connector-base.mjs";
+import { detectDuplicate } from "./duplicate-detection.mjs";
 import { contentHash, jaccardSimilarity } from "../knowledge-engine/quality.mjs";
 
 export async function verifyUrlAlive(url, timeoutMs = 8000) {
@@ -56,27 +57,24 @@ export function verifyItem(item, connector, existingItems = []) {
   if (!author && connector?.entity_type === "publisher") warnings.push("missing_author");
 
   const h = contentHash(item.raw_title, item.raw_body, item.raw_url);
-  let isDuplicate = false;
-  let duplicateOf = null;
-  let duplicateScore = 0;
+  const dupResult = detectDuplicate(item, existingItems, connector);
+  let isDuplicate = dupResult.isDuplicate;
+  let duplicateOf = dupResult.duplicateOf;
+  let duplicateScore = dupResult.duplicateScore || 0;
 
-  for (const existing of existingItems) {
-    if (existing.external_id && item.external_id && existing.external_id === item.external_id) {
-      continue;
-    }
-    if (existing.content_hash === h) {
-      isDuplicate = true;
-      duplicateOf = existing.id;
-      duplicateScore = 1;
-      break;
-    }
-    const score = jaccardSimilarity(item.raw_title, existing.raw_title || existing.ai_title);
-    if (score > duplicateScore) {
-      duplicateScore = score;
-      if (score >= 0.88) {
+  if (!isDuplicate) {
+    for (const existing of existingItems) {
+      if (existing.external_id && item.external_id && existing.external_id === item.external_id) {
+        continue;
+      }
+      if (existing.content_hash === h) {
         isDuplicate = true;
         duplicateOf = existing.id;
+        duplicateScore = 1;
+        break;
       }
+      const score = jaccardSimilarity(item.raw_title, existing.raw_title || existing.ai_title);
+      if (score > duplicateScore) duplicateScore = score;
     }
   }
 

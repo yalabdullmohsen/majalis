@@ -35,6 +35,14 @@ export type AkeEngineStats = {
     month_published?: number;
     remaining_estimate?: number;
   };
+  realtime?: {
+    schedule?: string;
+    last_cycle_at?: string | null;
+    last_cycle_duration_ms?: number | null;
+    queue_drain?: string;
+    cycles_recent?: Array<Record<string, unknown>>;
+    open_alerts?: Array<Record<string, unknown>>;
+  };
   connectors_health?: Array<{
     slug: string;
     name: string;
@@ -45,6 +53,9 @@ export type AkeEngineStats = {
     is_active?: boolean;
     backfill_completed?: boolean;
     sync_cursor_at?: string;
+    poll_interval_minutes?: number;
+    last_checked_at?: string;
+    consecutive_failures?: number;
   }>;
 };
 

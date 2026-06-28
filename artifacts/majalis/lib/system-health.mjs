@@ -10,10 +10,11 @@ import { getAutoKnowledgeEngineStats } from "./auto-knowledge-engine/orchestrato
 import { getAkeRpcHealth } from "./auto-knowledge-engine/rpc-probe.mjs";
 
 const CRON_ROUTES = [
-  { path: "/api/cron/auto-knowledge-sync", schedule: "30 */6 * * *", label: "Auto Knowledge Engine (full)" },
+  { path: "/api/cron/auto-knowledge-sync", schedule: "*/15 * * * *", label: "Auto Knowledge Engine (continuous 15m)" },
+  { path: "/api/cron/ake-queue-drain", schedule: "* * * * *", label: "AKE Queue Drain" },
   { path: "/api/cron/auto-content-sync", schedule: "0 */6 * * *", label: "Auto Content Sync" },
-  { path: "/api/cron/knowledge-sync", schedule: "0 */6 * * *", label: "Knowledge Sync (legacy)" },
-  { path: "/api/cron/connector-health", schedule: "0 * * * *", label: "Connector Health" },
+  { path: "/api/cron/knowledge-sync", schedule: "0 2 * * *", label: "Knowledge Sync (legacy daily)" },
+  { path: "/api/cron/connector-health", schedule: "*/15 * * * *", label: "Connector Health" },
   { path: "/api/cron/auto-content-health", schedule: "15 */6 * * *", label: "Auto Content Health" },
   { path: "/api/cron/system-health", schedule: "45 */6 * * *", label: "System Health Monitor" },
   { path: "/api/cron/sync-fiqh-council", schedule: "0 6 * * *", label: "Fiqh Council Sync" },

@@ -31,6 +31,24 @@ import {
   finalizeRunSyncState,
   shouldCompleteConnectorBackfill,
 } from "./sync-state.mjs";
+import { enqueueFailedStage } from "./recovery.mjs";
+import { isPermanentFetchError } from "./connector-scheduler.mjs";
+
+async function ensureRealtimeSchema(admin) {
+  const { error } = await admin.from("ake_scheduler_state").select("id", { head: true, count: "exact" });
+  if (!error) return { ok: true, skipped: true };
+  if (!isMissingTableError(error)) return { ok: true, skipped: true };
+  try {
+    const { applyMigrations } = await import("../db-migrate.mjs");
+    return await applyMigrations({
+      files: ["auto_knowledge_engine_v15_realtime.sql"],
+      continueOnError: false,
+      trackApplied: true,
+    });
+  } catch (err) {
+    return { ok: false, error: String(err.message || err) };
+  }
+}
 
 async function ensureSyncSchema(admin) {
   const { error } = await admin.from("ake_sync_state").select("id", { head: true, count: "exact" });
@@ -180,6 +198,7 @@ async function processConnector(admin, connectorConfig, runId, existingItems, op
     limit: maxItemsPerConnector,
     maxItems: maxItemsPerConnector,
     manifestLimit: connectorImportMode === "backfill" ? 200 : 50,
+    connectorConfig,
   };
 
   const stats = {
@@ -218,6 +237,38 @@ async function processConnector(admin, connectorConfig, runId, existingItems, op
     stats.rawFetched = fetchResult.rawCount || stats.fetched;
     stats.skippedByDate = fetchResult.skippedByDate || 0;
     if (fetchResult.error) stats.errors.push(fetchResult.error);
+
+    if (fetchResult.crawlPatch && connectorConfig.id) {
+      try {
+        await admin.from("ake_connectors").update({
+          ...fetchResult.crawlPatch,
+          consecutive_failures: fetchResult.error ? undefined : 0,
+        }).eq("id", connectorConfig.id);
+      } catch {
+        /* ignore */
+      }
+    }
+
+    if (fetchResult.error && connectorConfig.id) {
+      const failures = (connectorConfig.consecutive_failures || 0) + 1;
+      try {
+        await admin.from("ake_connectors").update({
+          consecutive_failures: failures,
+          last_error: fetchResult.error,
+          failure_rate_pct: Math.min(100, failures * 10),
+        }).eq("id", connectorConfig.id);
+      } catch {
+        /* ignore */
+      }
+      if (isPermanentFetchError(fetchResult.error)) {
+        return stats;
+      }
+    }
+
+    if (fetchResult.notModified) {
+      await updateConnectorHealth(admin, connectorConfig, fetchResult, health);
+      return stats;
+    }
 
     if (fetchResult.skipped) {
       await updateConnectorHealth(admin, connectorConfig, fetchResult, health);
@@ -327,6 +378,13 @@ async function processConnector(admin, connectorConfig, runId, existingItems, op
 
       if (insErr) {
         stats.errors.push(insErr.message);
+        await enqueueFailedStage(admin, {
+          connectorId: connectorConfig.id,
+          knowledgeItemId: item._existingRow?.id,
+          stage: "insert",
+          error: insErr.message,
+          payload: { external_id: item.external_id },
+        });
         await auditLog(admin, {
           runId,
           connectorId: connectorConfig.id,
@@ -361,6 +419,12 @@ async function processConnector(admin, connectorConfig, runId, existingItems, op
         } else {
           stats.review++;
           noteRejection(pub.reason || "publish_failed");
+          await enqueueFailedStage(admin, {
+            connectorId: connectorConfig.id,
+            knowledgeItemId: inserted.id,
+            stage: "publish",
+            error: pub.reason || "publish_failed",
+          });
           await auditLog(admin, {
             runId,
             connectorId: connectorConfig.id,
@@ -446,6 +510,7 @@ export async function runAutoKnowledgeEngine(options = {}) {
     await ensureOfficialSources(admin);
     await ensureFiqhCouncilTable(admin);
     await ensureSyncSchema(admin);
+    await ensureRealtimeSchema(admin);
 
     globalState = await loadGlobalSyncState(admin);
     let connectorsPreview = await loadConnectors(admin);
@@ -476,6 +541,10 @@ export async function runAutoKnowledgeEngine(options = {}) {
 
   let connectors = await loadConnectors(admin);
   if (connectorSlug) connectors = connectors.filter((c) => c.slug === connectorSlug);
+  if (options.dueConnectorSlugs?.length) {
+    const dueSet = new Set(options.dueConnectorSlugs);
+    connectors = connectors.filter((c) => dueSet.has(c.slug));
+  }
   connectors = connectors.slice(0, maxConnectors);
 
   const totals = {
@@ -710,6 +779,9 @@ async function buildAkeStatsFallback(admin, days) {
     { count: rejectedCount },
     { count: duplicateCount },
     { data: connectors },
+    { data: cycleMetrics, error: cycleMetricsErr },
+    { data: scheduler, error: schedulerErr },
+    { data: openAlerts, error: alertsErr },
   ] = await Promise.all([
     admin.from("ake_connectors").select("id", { count: "exact", head: true }).eq("is_active", true),
     admin.from("ake_connectors").select("id", { count: "exact", head: true }),
@@ -722,7 +794,10 @@ async function buildAkeStatsFallback(admin, days) {
     admin.from("knowledge_items").select("id", { count: "exact", head: true }).eq("verification_status", "needs_review"),
     admin.from("knowledge_items").select("id", { count: "exact", head: true }).eq("verification_status", "rejected"),
     admin.from("knowledge_items").select("id", { count: "exact", head: true }).eq("verification_status", "duplicate"),
-    admin.from("ake_connectors").select("slug,name,health_status,backfill_month_key,backfill_completed_at,sync_cursor_at,items_published,is_active").eq("is_active", true),
+    admin.from("ake_connectors").select("slug,name,health_status,backfill_month_key,backfill_completed_at,sync_cursor_at,items_published,is_active,poll_interval_minutes,last_checked_at,consecutive_failures").eq("is_active", true),
+    admin.from("ake_cycle_metrics").select("*").order("created_at", { ascending: false }).limit(5),
+    admin.from("ake_scheduler_state").select("*").eq("id", "global").maybeSingle(),
+    admin.from("ake_alerts").select("id,alert_type,severity,message,created_at").eq("resolved", false).order("created_at", { ascending: false }).limit(5),
   ]);
 
   let monthImported = monthImportedRes.error ? null : (monthImportedRes.count || 0);
@@ -769,7 +844,18 @@ async function buildAkeStatsFallback(admin, days) {
       items_published: c.items_published,
       backfill_completed: Boolean(c.backfill_completed_at && c.backfill_month_key === monthKey),
       sync_cursor_at: c.sync_cursor_at,
+      poll_interval_minutes: c.poll_interval_minutes,
+      last_checked_at: c.last_checked_at,
+      consecutive_failures: c.consecutive_failures,
     })),
+    realtime: {
+      schedule: "*/15 * * * *",
+      last_cycle_at: schedulerErr ? null : scheduler?.last_cycle_at,
+      last_cycle_duration_ms: scheduler?.last_cycle_duration_ms,
+      queue_drain: "*/1 * * * *",
+      cycles_recent: cycleMetricsErr ? [] : (cycleMetrics || []),
+      open_alerts: alertsErr ? [] : (openAlerts || []),
+    },
     _fallback: true,
     _note: "ake_engine_stats RPC unavailable — run GRANT on function or re-apply auto_knowledge_engine_v13.sql",
   };

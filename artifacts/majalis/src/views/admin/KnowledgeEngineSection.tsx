@@ -98,8 +98,7 @@ export function KnowledgeEngineSection() {
             Auto Knowledge Engine
           </h2>
           <p style={{ margin: "0.25rem 0 0", fontSize: "0.8125rem", color: C.inkSoft }}>
-            Connectors → Verify → AI → Quality Gate → Auto-Publish → SEO → Index
-            · Cron كل 6 ساعات · Health كل ساعة
+            Near Real-Time · كل 15 دقيقة · Queue drain كل دقيقة · Self-Recovery · Incremental Crawl
           </p>
         </div>
         <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
@@ -134,6 +133,34 @@ export function KnowledgeEngineSection() {
             <StatCard label="AI" value={systemHealth?.ai?.status === "ready" ? "✓" : "fallback"} />
             <StatCard label="Queue" value={systemHealth?.queue?.pending ?? 0} sub={systemHealth?.queue?.status} />
           </div>
+
+          {stats?.realtime && (
+            <div style={{ padding: "1.25rem", marginBottom: "1.5rem", borderRadius: "0.5rem", border: `1px solid ${C.line}`, background: C.panel }}>
+              <h3 style={{ margin: "0 0 1rem", fontSize: "0.9375rem", fontWeight: 700, color: C.emeraldDeep }}>
+                Near Real-Time — {stats.realtime.schedule || "*/15 * * * *"}
+              </h3>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(130px, 1fr))", gap: "0.75rem", marginBottom: "0.75rem" }}>
+                <StatCard
+                  label="آخر دورة"
+                  value={stats.realtime.last_cycle_at ? new Date(stats.realtime.last_cycle_at).toLocaleTimeString("ar-KW") : "—"}
+                  sub={stats.realtime.last_cycle_duration_ms ? `${Math.round(stats.realtime.last_cycle_duration_ms / 1000)}ث` : undefined}
+                />
+                {(stats.realtime.cycles_recent || []).slice(0, 1).map((c) => (
+                  <StatCard key="last-cycle" label="منشور (آخر دورة)" value={String(c.published ?? 0)} sub={`مسترد: ${String(c.recovered ?? 0)}`} />
+                ))}
+                {(stats.realtime.cycles_recent || []).slice(0, 1).map((c) => (
+                  <StatCard key="queue" label="حجم Queue" value={String(c.queue_size ?? 0)} />
+                ))}
+                {(stats.realtime.cycles_recent || []).slice(0, 1).map((c) => (
+                  <StatCard key="dup" label="مكرر" value={String(c.duplicates ?? 0)} />
+                ))}
+                {(stats.realtime.cycles_recent || []).slice(0, 1).map((c) => (
+                  <StatCard key="retry" label="إعادة محاولة" value={String(c.retried ?? 0)} />
+                ))}
+                <StatCard label="تنبيهات مفتوحة" value={(stats.realtime.open_alerts || []).length} />
+              </div>
+            </div>
+          )}
 
           {stats?.backfill && (
             <div style={{ padding: "1.25rem", marginBottom: "1.5rem", borderRadius: "0.5rem", border: `1px solid ${C.line}`, background: C.panel }}>
@@ -229,7 +256,7 @@ export function KnowledgeEngineSection() {
             المصادر الرسمية (ثقة ≥ 4) تجتاز Quality Gate تُنشر تلقائياً في القسم المناسب.
             AI يستخرج metadata فقط — لا يُنشئ فتاوى ولا أحاديث.
             <br />
-            <strong style={{ color: C.emeraldDeep }}>Crons:</strong> knowledge-sync + auto-knowledge-sync كل 6h · connector-health كل 1h · maintenance أسبوعي.
+            <strong style={{ color: C.emeraldDeep }}>Crons:</strong> auto-knowledge-sync كل 15د · ake-queue-drain كل 1د · connector-health كل 15د.
           </div>
         </>
       )}

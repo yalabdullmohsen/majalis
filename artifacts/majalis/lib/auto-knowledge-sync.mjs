@@ -9,6 +9,8 @@ import {
   archiveStaleContent,
   getPublicRecommendations,
 } from "./auto-knowledge-engine/orchestrator.mjs";
+import { runContinuousAkeCycle } from "./auto-knowledge-engine/continuous-cycle.mjs";
+import { drainAkeQueue } from "./auto-knowledge-engine/queue-processor.mjs";
 import { runKnowledgePipeline } from "./knowledge-engine/pipeline.mjs";
 import { runAutoContentSync } from "./auto-content/auto-content-sync.mjs";
 import { getSupabaseAdmin } from "./supabase-admin.mjs";
@@ -16,7 +18,27 @@ import { getSupabaseAdmin } from "./supabase-admin.mjs";
 export async function runFullKnowledgeSync(options = {}) {
   const triggerType = options.triggerType || "cron";
   const isCron = triggerType === "cron";
+  const continuous = options.continuous ?? isCron;
   const engineOnly = options.engineOnly ?? isCron;
+
+  if (continuous && engineOnly) {
+    const cycle = await runContinuousAkeCycle({
+      triggerType,
+      maxItemsPerConnector: options.maxItemsPerConnector,
+      recoveryLimit: options.recoveryLimit,
+      budgetMs: options.budgetMs,
+    });
+    const stats = await getAutoKnowledgeEngineStats(7);
+    return {
+      ok: cycle.ok !== false,
+      at: new Date().toISOString(),
+      autoKnowledgeEngine: cycle,
+      engineOnly: true,
+      continuous: true,
+      stats: stats.stats,
+      usingLegacy: stats.usingLegacy,
+    };
+  }
 
   if (engineOnly) {
     const ake = await runAutoKnowledgeEngine({
@@ -86,6 +108,9 @@ export {
   archiveStaleContent,
   getPublicRecommendations,
 };
+
+export { runContinuousAkeCycle } from "./auto-knowledge-engine/continuous-cycle.mjs";
+export { drainAkeQueue } from "./auto-knowledge-engine/queue-processor.mjs";
 
 export async function runWeeklyMaintenance() {
   const admin = getSupabaseAdmin();

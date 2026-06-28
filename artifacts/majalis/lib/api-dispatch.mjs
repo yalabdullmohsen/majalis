@@ -59,6 +59,7 @@ export const API_ROUTES = [
   { prefix: "/api/cron/bootstrap-owner", module: "./api-handlers/cron/bootstrap-owner.js", allowGet: true, exact: true },
   { prefix: "/api/cron/platform-bootstrap", module: "./api-handlers/cron/platform-bootstrap.js", allowGet: true, exact: true },
   { prefix: "/api/cron/auto-knowledge-sync", module: "./api-handlers/cron/auto-knowledge-sync.js", allowGet: true, exact: true },
+  { prefix: "/api/cron/ake-queue-drain", module: "./api-handlers/cron/ake-queue-drain.js", allowGet: true, exact: true },
   { prefix: "/api/cron/connector-health", module: "./api-handlers/cron/connector-health.js", allowGet: true, exact: true },
   { prefix: "/api/auto-content", module: "./api-handlers/auto-content.js", allowGet: true },
   { prefix: "/api/knowledge-recommendations", module: "./api-handlers/knowledge-recommendations.js", allowGet: true },

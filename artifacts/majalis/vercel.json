@@ -29,7 +29,11 @@
     },
     {
       "path": "/api/cron/auto-knowledge-sync",
-      "schedule": "30 2 * * *"
+      "schedule": "*/15 * * * *"
+    },
+    {
+      "path": "/api/cron/ake-queue-drain",
+      "schedule": "* * * * *"
     },
     {
       "path": "/api/cron/auto-content-sync",
@@ -49,7 +53,7 @@
     },
     {
       "path": "/api/cron/connector-health",
-      "schedule": "0 4 * * *"
+      "schedule": "*/15 * * * *"
     },
     {
       "path": "/api/cron/platform-bootstrap",
