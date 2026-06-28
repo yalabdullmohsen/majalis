@@ -8,15 +8,24 @@ import { AdminShell } from "@/views/admin/AdminShell";
 type AkpStats = {
   platformVersion?: string;
   readinessPct?: number;
+  health?: { score?: number; database?: string };
+  avgDurationMs?: number;
+  retryQueue?: { total?: number; pending?: number };
+  sourceStatuses?: Array<{ slug: string; name: string; status: string; lastError?: string }>;
   counts?: {
     today?: { items?: number; mkeRuns?: number };
     sources?: number;
+    sourcesHealthy?: number;
+    sourcesDead?: number;
     queuePending?: number;
     queueFailed?: number;
+    retryQueue?: number;
     published?: number;
     rejected?: number;
+    duplicates?: number;
     dlq?: number;
     reviewPending?: number;
+    alerts?: number;
   };
   pipelines?: Record<string, { label?: string; quota?: number; publishedToday?: number }>;
   productionVelocity?: { itemsToday?: number; pctOfQuota?: number };
@@ -199,6 +208,30 @@ function MajlisKnowledgeEngineContent() {
                 <p style={{ fontSize: "0.75rem", color: "#991B1B", marginTop: "0.25rem" }}>
                   آخر خطأ: {akp.lastError.message}
                 </p>
+              )}
+              {akp.health?.score != null && (
+                <p style={{ fontSize: "0.75rem", color: C.inkSoft, marginTop: "0.35rem" }}>
+                  Health Score: {akp.health.score}% · متوسط التنفيذ: {akp.avgDurationMs ?? "—"}ms · Retry Queue: {akp.retryQueue?.total ?? akp.counts?.retryQueue ?? 0}
+                </p>
+              )}
+              {akp.sourceStatuses && akp.sourceStatuses.length > 0 && (
+                <div style={{ marginTop: "0.75rem", display: "flex", gap: "0.35rem", flexWrap: "wrap" }}>
+                  {akp.sourceStatuses.map((s) => (
+                    <span
+                      key={s.slug}
+                      style={{
+                        fontSize: "0.7rem",
+                        padding: "0.2rem 0.45rem",
+                        borderRadius: "0.25rem",
+                        background: s.status === "available" || s.status === "slow" ? "#ecfdf5" : "#fef2f2",
+                        color: s.status === "available" || s.status === "slow" ? C.emeraldDeep : "#991B1B",
+                      }}
+                      title={s.lastError || s.status}
+                    >
+                      {s.name}: {s.status}
+                    </span>
+                  ))}
+                </div>
               )}
             </section>
           )}

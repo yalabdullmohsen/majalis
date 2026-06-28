@@ -51,6 +51,7 @@ export function normalizeSource(row) {
     last_success_at: row.last_success_at,
     last_error: row.last_error,
     metadata: row.metadata || {},
+    fallback_urls: row.fallback_urls || row.metadata?.fallback_urls || [],
   };
 }
 
@@ -112,6 +113,10 @@ export async function upsertContentSource(source) {
     validator: source.validator || "scholarly_v1",
     publication_policy: source.publication_policy || { auto_publish: false, min_trust: 80 },
     active: source.active !== false,
+    metadata: {
+      ...(source.metadata || {}),
+      fallback_urls: source.fallback_urls || source.metadata?.fallback_urls || [],
+    },
     updated_at: new Date().toISOString(),
   };
 

@@ -13,7 +13,10 @@ import {
 } from "./pipelines/index.mjs";
 import { ensurePlatformBootstrap, probePlatformTables } from "./bootstrap.mjs";
 import { getPlatformDashboard, runHealthCheck, saveMetricsSnapshot, logStructured } from "./monitoring.mjs";
+import { runHealthMonitor } from "./health-monitor.mjs";
+import { processRetryQueue, recoverStuckRuns } from "./recovery.mjs";
 import { seedContentSourcesFromJson, syncSourcesToMkePlugins, listContentSources } from "./sources.mjs";
+import { batchSizeForPipeline } from "./production-scheduler.mjs";
 
 const MODE_HANDLERS = {
   bootstrap: (opts) => ensurePlatformBootstrap(opts),
@@ -24,6 +27,8 @@ const MODE_HANDLERS = {
   reindex: () => runReindexMode(),
   audit: () => runAuditMode(),
   cleanup: () => runCleanupMode(),
+  recovery: () => recoverStuckRuns().then((r) => processRetryQueue()).then((retry) => ({ ok: true, retry })),
+  monitor: () => runHealthMonitor(),
   full: (opts) => runFullCycle(opts),
   benefits: (opts) => runContentPipeline("benefits", opts),
   questions: (opts) => runContentPipeline("questions", opts),
@@ -94,15 +99,18 @@ export async function runAutonomousPlatform(opts = {}) {
 }
 
 async function runFullCycle(opts) {
+  await recoverStuckRuns();
+  const { processRetryQueue } = await import("../recovery.mjs");
+  const retry = await processRetryQueue({ batchSize: 10 });
   const fetch = await runFetchMode(opts);
   const validate = await runValidateMode({ batchSize: 10 });
   const pipelines = {};
 
-  for (const type of ["benefits", "questions", "hadith"]) {
-    pipelines[type] = await runContentPipeline(type, { ...opts, maxItems: 5 });
+  for (const type of Object.keys(CONTENT_PIPELINES)) {
+    pipelines[type] = await runContentPipeline(type, { ...opts, maxItems: batchSizeForPipeline(type, 0) });
   }
 
-  return { ok: true, fetch, validate, pipelines };
+  return { ok: true, fetch, validate, retry, pipelines };
 }
 
 export {

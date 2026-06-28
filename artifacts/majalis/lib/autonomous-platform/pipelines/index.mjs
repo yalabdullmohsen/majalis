@@ -11,6 +11,9 @@ import { verifyContent, enqueueReview } from "../verification.mjs";
 import { publishContentRecord } from "../publisher.mjs";
 import { logStructured, moveToDeadLetter } from "../monitoring.mjs";
 import { periodStart } from "../normalize.mjs";
+import { recoverStuckRuns, enqueueRetry } from "../recovery.mjs";
+import { batchSizeForPipeline, shouldRunPipelineNow } from "../production-scheduler.mjs";
+import { QUEUE_DEFAULTS } from "../config.mjs";
 
 async function startPipelineRun(pipeline, triggerType, mode) {
   const admin = getSupabaseAdmin();
@@ -105,6 +108,12 @@ export async function runContentPipeline(contentType, opts = {}) {
   const pipeline = CONTENT_PIPELINES[contentType];
   if (!pipeline) return { ok: false, error: "unknown_pipeline" };
 
+  await recoverStuckRuns();
+
+  if (!opts.force && !shouldRunPipelineNow(contentType)) {
+    return { ok: true, skipped: true, reason: "off_peak_schedule" };
+  }
+
   const triggerType = opts.triggerType || "cron";
   const mode = opts.mode || "produce";
   const { runId, startedAt } = await startPipelineRun(contentType, triggerType, mode);
@@ -129,7 +138,8 @@ export async function runContentPipeline(contentType, opts = {}) {
   }
 
   const sources = await listContentSources({ activeOnly: true, contentType });
-  const maxItems = opts.maxItems ?? Math.min(remainingQuota, 50);
+  const spreadBatch = batchSizeForPipeline(contentType, alreadyPublished);
+  const maxItems = opts.maxItems ?? Math.min(remainingQuota, spreadBatch || 25);
 
   await logStructured({
     level: "info",
@@ -203,22 +213,41 @@ export async function runContentPipeline(contentType, opts = {}) {
           await logMkeDecision({ source, record: item, decision: "approved", confidence: 0.95, runId });
         } else {
           summary.errors += 1;
-          await moveToDeadLetter({
-            queueName: "akp-pipeline",
+          const retry = await enqueueRetry({
             jobType: `publish_${contentType}`,
             payload: item,
             error: pub.error,
-            failureReason: "publish_failed",
+            retryCount: 0,
+            pipelineRunId: runId,
+            maxRetries: QUEUE_DEFAULTS.maxRetries,
           });
+          if (!retry.ok) {
+            await moveToDeadLetter({
+              queueName: "akp-pipeline",
+              jobType: `publish_${contentType}`,
+              payload: item,
+              error: pub.error,
+              failureReason: "publish_failed",
+            });
+          }
         }
       } catch (err) {
         summary.errors += 1;
-        await moveToDeadLetter({
-          queueName: "akp-pipeline",
+        const retry = await enqueueRetry({
           jobType: `process_${contentType}`,
           payload: item,
           error: String(err.message || err),
+          retryCount: 0,
+          pipelineRunId: runId,
         });
+        if (!retry.ok) {
+          await moveToDeadLetter({
+            queueName: "akp-pipeline",
+            jobType: `process_${contentType}`,
+            payload: item,
+            error: String(err.message || err),
+          });
+        }
       }
     }
   }

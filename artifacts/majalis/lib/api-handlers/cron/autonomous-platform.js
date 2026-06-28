@@ -14,6 +14,8 @@ const PATH_MODE_MAP = {
   "/api/cron/autonomous-platform-audit": "audit",
   "/api/cron/autonomous-platform-cleanup": "cleanup",
   "/api/cron/autonomous-platform-bootstrap": "bootstrap",
+  "/api/cron/autonomous-platform-monitor": "monitor",
+  "/api/cron/autonomous-platform-recovery": "recovery",
 };
 
 function resolveMode(req) {

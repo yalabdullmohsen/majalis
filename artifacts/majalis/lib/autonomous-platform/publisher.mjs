@@ -3,7 +3,7 @@
  */
 import { getSupabaseAdmin } from "../supabase-admin.mjs";
 import { bulkImportToSupabase } from "../content-import/bulk-importer.mjs";
-import { indexItem, generateEmbedding } from "../knowledge-engine/indexer.mjs";
+import { indexItem, embedChunks } from "../knowledge-engine/indexer.mjs";
 import { registerFingerprint } from "./dedup.mjs";
 import { CONTENT_PIPELINES } from "./config.mjs";
 import { contentHash } from "./normalize.mjs";
@@ -142,12 +142,23 @@ export async function publishContentRecord({ contentType, record, source, finger
     const searchText = payload.text || payload.body || payload.question || payload.title || payload.content;
     if (searchText) {
       try {
-        await indexItem(admin, targetId, searchText, { contentType, source: source?.slug });
-        if (process.env.OPENAI_API_KEY) {
-          await generateEmbedding(searchText.slice(0, 4000));
+        const { indexed, chunk_ids } = await indexItem(admin, targetId, searchText, { contentType, source: source?.slug });
+        if (chunk_ids?.length) {
+          const { data: chunks } = await admin
+            .from("knowledge_chunks")
+            .select("id, chunk_text")
+            .in("id", chunk_ids);
+          if (chunks?.length) {
+            await embedChunks(
+              admin,
+              targetId,
+              chunks.map((c) => c.id),
+              chunks.map((c) => c.chunk_text),
+            );
+          }
         }
       } catch {
-        /* search index optional */
+        /* search index optional — pipeline continues */
       }
     }
 

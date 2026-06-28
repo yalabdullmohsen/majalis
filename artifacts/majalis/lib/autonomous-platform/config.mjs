@@ -91,6 +91,8 @@ export const CRON_SCHEDULES = {
   reindex: { schedule: "0 2 * * *", mode: "reindex", label: "إعادة الفهرسة" },
   audit: { schedule: "0 4 * * 0", mode: "audit", label: "تدقيق الجودة" },
   cleanup: { schedule: "0 3 1 * *", mode: "cleanup", label: "تنظيف عميق" },
+  monitor: { schedule: "* * * * *", mode: "monitor", label: "مراقبة الصحة" },
+  recovery: { schedule: "*/5 * * * *", mode: "recovery", label: "التعافي الذاتي" },
 };
 
 export const DEDUP_DEFAULTS = {

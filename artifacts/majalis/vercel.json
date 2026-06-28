@@ -150,6 +150,14 @@
     {
       "path": "/api/cron/autonomous-platform-bootstrap",
       "schedule": "30 5 * * *"
+    },
+    {
+      "path": "/api/cron/autonomous-platform-monitor",
+      "schedule": "* * * * *"
+    },
+    {
+      "path": "/api/cron/autonomous-platform-recovery",
+      "schedule": "*/5 * * * *"
     }
   ],
   "rewrites": [
