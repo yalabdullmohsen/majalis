@@ -1,14 +1,44 @@
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 
-export function QuranSubnav() {
+const LINKS = [
+  { href: "/quran", label: "القراءة النصية", id: "text" as const },
+  { href: "/quran/mushaf", label: "المصحف الشريف (طبعة الكويت)", id: "mushaf" as const },
+  { href: "/quran/search", label: "البحث في القرآن", id: "search" as const },
+  { href: "/quran/tafsir", label: "التفسير", id: "tafsir" as const },
+  { href: "/quran-radio", label: "الاستماع", id: "listen" as const },
+];
+
+type ActiveId = (typeof LINKS)[number]["id"];
+
+function resolveActive(path: string, override?: ActiveId): ActiveId | null {
+  if (override) return override;
+  if (path.startsWith("/quran/mushaf")) return "mushaf";
+  if (path.startsWith("/quran/search")) return "search";
+  if (path.startsWith("/quran/tafsir")) return "tafsir";
+  if (path === "/quran-radio" || path === "/quran-live") return "listen";
+  if (path === "/quran" || path.startsWith("/quran?")) return "text";
+  return null;
+}
+
+type Props = {
+  active?: ActiveId;
+};
+
+export function QuranSubnav({ active: activeOverride }: Props = {}) {
+  const [path] = useLocation();
+  const active = resolveActive(path, activeOverride);
+
   return (
     <nav className="quran-v2-subnav" aria-label="أقسام القرآن">
-      <Link href="/quran" className="quran-v2-subnav__link is-active">المصحف</Link>
-      <Link href="/quran/tajweed" className="quran-v2-subnav__link">التجويد</Link>
-      <Link href="/quran/surah-stories" className="quran-v2-subnav__link">قصص القرآن</Link>
-      <Link href="/quran-live" className="quran-v2-subnav__link">البث المباشر</Link>
-      <Link href="/quran-radio" className="quran-v2-subnav__link">الإذاعات</Link>
-      <Link href="/daily-wird" className="quran-v2-subnav__link">الورد اليومي</Link>
+      {LINKS.map((link) => (
+        <Link
+          key={link.href}
+          href={link.href}
+          className={`quran-v2-subnav__link${active === link.id ? " is-active" : ""}`}
+        >
+          {link.label}
+        </Link>
+      ))}
     </nav>
   );
 }
