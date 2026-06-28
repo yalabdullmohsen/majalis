@@ -34,6 +34,7 @@ export const ACTIVATION_TABLES_MIGRATION_FILES = [
   "auto_knowledge_engine_v14_sync.sql",
   "cd_pipeline_v1.sql",
   "auto_knowledge_engine_v15_realtime.sql",
+  "auto_knowledge_engine_v17_monitoring.sql",
   "content_engines_v1.sql",
 ];
 
@@ -82,6 +83,7 @@ export const MIGRATION_FILES = [
   "auto_knowledge_engine_v14_sync.sql",
   "cd_pipeline_v1.sql",
   "auto_knowledge_engine_v15_realtime.sql",
+  "auto_knowledge_engine_v17_monitoring.sql",
   "content_engines_v1.sql",
 ];
 

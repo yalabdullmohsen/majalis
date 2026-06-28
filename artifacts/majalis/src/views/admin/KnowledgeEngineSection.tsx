@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { Link } from "wouter";
 import { C } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
 import { useAdminShell } from "@/views/admin/AdminShell";
@@ -102,6 +103,9 @@ export function KnowledgeEngineSection() {
           </p>
         </div>
         <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+          <Link href="/admin/platform/monitoring" style={{ ...btnStyle(false), textDecoration: "none", display: "inline-flex", alignItems: "center" }}>
+            المراقبة والتنبيهات
+          </Link>
           <button type="button" onClick={handleHealth} disabled={checkingHealth} style={btnStyle(checkingHealth)}>
             {checkingHealth ? "جارٍ الفحص..." : "♥ فحص المصادر"}
           </button>

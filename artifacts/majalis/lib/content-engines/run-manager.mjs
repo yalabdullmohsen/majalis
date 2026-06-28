@@ -83,6 +83,16 @@ export async function logEngineEvent({ runId, engineId, stage, level = "info", m
       metadata: metadata || {},
       duration_ms: durationMs || null,
     });
+    if (level === "error" && message) {
+      const { recordPipelineFailure } = await import("../auto-knowledge-engine/monitoring/pipeline-failures.mjs");
+      await recordPipelineFailure({
+        runId,
+        engineName: engineId || "content-engine",
+        stage: stage || "unknown",
+        errorMessage: message,
+        metadata: { sourceUrl, ...(metadata || {}) },
+      });
+    }
   } catch {
     /* table optional */
   }

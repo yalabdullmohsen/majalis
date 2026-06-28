@@ -157,6 +157,21 @@ export default async function handler(req, res) {
       return;
     }
 
+    if (scope === "ake-monitoring" || scope === "ake-v17") {
+      const result = await applyMigrations({
+        files: ["auto_knowledge_engine_v17_monitoring.sql"],
+        continueOnError: false,
+        trackApplied: true,
+      });
+      sendJson(res, result.ok ? 200 : 500, {
+        ok: result.ok,
+        scope: "ake-monitoring",
+        migrations: result,
+        resolved: resolvedMeta(),
+      });
+      return;
+    }
+
     if (scope === "ake-sync" || scope === "ake-v14") {
       const result = await applyMigrations({
         files: ["auto_knowledge_engine_v14_sync.sql"],

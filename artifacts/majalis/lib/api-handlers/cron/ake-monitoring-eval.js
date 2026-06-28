@@ -1,7 +1,8 @@
 import { sendJson } from "../../api/_http.mjs";
 import { validateCronAuth } from "../../../lib/env-config.mjs";
-import { drainAkeQueue } from "../../../lib/auto-knowledge-engine/queue-processor.mjs";
 import { withCronTracking } from "../../../lib/auto-knowledge-engine/monitoring/cron-tracker.mjs";
+import { evaluateMonitoringRules } from "../../../lib/auto-knowledge-engine/monitoring/rules.mjs";
+import { getSupabaseAdmin } from "../../../lib/supabase-admin.mjs";
 
 export default async function handler(req, res) {
   if (req.method !== "GET" && req.method !== "POST") {
@@ -15,15 +16,20 @@ export default async function handler(req, res) {
 
   try {
     const result = await withCronTracking(
-      "ake-queue-drain",
+      "ake-monitoring-eval",
       async () => {
-        const drain = await drainAkeQueue({
-          budgetMs: 50_000,
-          batchSize: Number(req.query?.limit || req.body?.limit) || 8,
+        const admin = getSupabaseAdmin();
+        let scheduler = null;
+        if (admin) {
+          const { data } = await admin.from("ake_scheduler_state").select("*").eq("id", "global").maybeSingle();
+          scheduler = data;
+        }
+        const alerts = await evaluateMonitoringRules({
+          lastPublishedAt: scheduler?.last_published_at,
         });
-        return { ok: true, ...drain };
+        return { ok: true, alertsTriggered: alerts.filter((a) => a?.created).length, alerts };
       },
-      { schedule: "* * * * *" },
+      { schedule: "5,20,35,50 * * * *" },
     );
     sendJson(res, 200, result);
   } catch (error) {

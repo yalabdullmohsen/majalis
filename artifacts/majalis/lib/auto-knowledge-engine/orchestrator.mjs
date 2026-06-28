@@ -33,6 +33,8 @@ import {
 } from "./sync-state.mjs";
 import { enqueueFailedStage } from "./recovery.mjs";
 import { isPermanentFetchError } from "./connector-scheduler.mjs";
+import { recordPipelineFailure } from "./monitoring/pipeline-failures.mjs";
+import { recordSourceHealthEvent } from "./monitoring/source-health-events.mjs";
 
 async function ensureRealtimeSchema(admin) {
   const { error } = await admin.from("ake_scheduler_state").select("id", { head: true, count: "exact" });
@@ -41,7 +43,7 @@ async function ensureRealtimeSchema(admin) {
   try {
     const { applyMigrations } = await import("../db-migrate.mjs");
     return await applyMigrations({
-      files: ["auto_knowledge_engine_v15_realtime.sql"],
+      files: ["auto_knowledge_engine_v15_realtime.sql", "auto_knowledge_engine_v17_monitoring.sql"],
       continueOnError: false,
       trackApplied: true,
     });
@@ -149,9 +151,10 @@ async function loadExistingItems(admin, sourceId = null) {
 
 async function updateConnectorHealth(admin, connector, result, health) {
   if (!admin || !connector.id) return;
+  const isHealthy = health?.healthy ?? result.ok;
   try {
     await admin.from("ake_connectors").update({
-      health_status: health?.healthy ? "healthy" : result.ok ? "degraded" : "down",
+      health_status: isHealthy ? "healthy" : result.ok ? "degraded" : "down",
       last_health_check: new Date().toISOString(),
       last_sync_at: new Date().toISOString(),
       last_success_at: result.ok ? new Date().toISOString() : connector.last_success_at,
@@ -159,6 +162,23 @@ async function updateConnectorHealth(admin, connector, result, health) {
       items_total: (connector.items_total || 0) + (result.items?.length || 0),
       updated_at: new Date().toISOString(),
     }).eq("id", connector.id);
+
+    if (!isHealthy && result.error) {
+      await recordSourceHealthEvent({
+        sourceId: connector.source_id || connector.id,
+        connectorSlug: connector.slug,
+        connectorType: connector.connector_type,
+        eventType: result.error.includes("parse") ? "parse_failed" : "fetch_failed",
+        healthScore: isHealthy ? 100 : 0,
+        failureReason: result.error,
+        errorMessage: result.error,
+        retryCount: connector.consecutive_failures || 0,
+        metadata: {
+          sourceUrl: connector.base_url || connector.url,
+          lastSuccessfulSync: connector.last_success_at,
+        },
+      });
+    }
   } catch {
     /* ignore */
   }
@@ -378,6 +398,15 @@ async function processConnector(admin, connectorConfig, runId, existingItems, op
 
       if (insErr) {
         stats.errors.push(insErr.message);
+        await recordPipelineFailure({
+          runId,
+          stage: "insert",
+          sourceId: connectorConfig.source_id || connectorConfig.id,
+          itemId: item._existingRow?.id,
+          errorCode: "db_insert_failed",
+          errorMessage: insErr.message,
+          metadata: { external_id: item.external_id, connectorSlug: connectorConfig.slug },
+        });
         await enqueueFailedStage(admin, {
           connectorId: connectorConfig.id,
           knowledgeItemId: item._existingRow?.id,
@@ -419,6 +448,15 @@ async function processConnector(admin, connectorConfig, runId, existingItems, op
         } else {
           stats.review++;
           noteRejection(pub.reason || "publish_failed");
+          await recordPipelineFailure({
+            runId,
+            stage: "publish",
+            sourceId: connectorConfig.source_id || connectorConfig.id,
+            itemId: inserted.id,
+            errorCode: pub.reason || "publish_failed",
+            errorMessage: pub.reason || "publish_failed",
+            metadata: { external_id: item.external_id, connectorSlug: connectorConfig.slug, table: pub.table },
+          });
           await enqueueFailedStage(admin, {
             connectorId: connectorConfig.id,
             knowledgeItemId: inserted.id,
@@ -718,6 +756,23 @@ export async function runConnectorHealthChecks() {
         last_health_check: health.checkedAt,
         updated_at: new Date().toISOString(),
       }).eq("id", config.id);
+
+      if (!health.healthy) {
+        await recordSourceHealthEvent({
+          sourceId: config.source_id || config.id,
+          connectorSlug: config.slug,
+          connectorType: config.connector_type,
+          eventType: "connector_failed",
+          healthScore: 0,
+          failureReason: health.error || "health_check_failed",
+          errorMessage: health.error || "Connector health check failed",
+          retryCount: config.consecutive_failures || 0,
+          metadata: {
+            sourceUrl: config.base_url || config.url,
+            lastSuccessfulSync: config.last_success_at,
+          },
+        });
+      }
     }
 
     results.push({ slug: config.slug, ...health, brokenLinks });

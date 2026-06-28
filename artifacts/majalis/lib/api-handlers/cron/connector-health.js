@@ -1,6 +1,7 @@
 import { sendJson } from "../../api/_http.mjs";
 import { validateCronAuth } from "../../../lib/env-config.mjs";
 import { runConnectorHealthChecks } from "../../../lib/auto-knowledge-sync.mjs";
+import { withCronTracking } from "../../../lib/auto-knowledge-engine/monitoring/cron-tracker.mjs";
 
 export default async function handler(req, res) {
   if (req.method !== "GET" && req.method !== "POST") {
@@ -12,7 +13,11 @@ export default async function handler(req, res) {
     return;
   }
   try {
-    const result = await runConnectorHealthChecks();
+    const result = await withCronTracking(
+      "connector-health",
+      () => runConnectorHealthChecks(),
+      { schedule: "*/15 * * * *" },
+    );
     sendJson(res, 200, result);
   } catch (error) {
     sendJson(res, 500, { ok: false, error: error.message });

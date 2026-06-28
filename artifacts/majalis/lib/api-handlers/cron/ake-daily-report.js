@@ -1,7 +1,7 @@
 import { sendJson } from "../../api/_http.mjs";
 import { validateCronAuth } from "../../../lib/env-config.mjs";
-import { drainAkeQueue } from "../../../lib/auto-knowledge-engine/queue-processor.mjs";
 import { withCronTracking } from "../../../lib/auto-knowledge-engine/monitoring/cron-tracker.mjs";
+import { generateDailyReport } from "../../../lib/auto-knowledge-engine/monitoring/daily-report.mjs";
 
 export default async function handler(req, res) {
   if (req.method !== "GET" && req.method !== "POST") {
@@ -15,17 +15,11 @@ export default async function handler(req, res) {
 
   try {
     const result = await withCronTracking(
-      "ake-queue-drain",
-      async () => {
-        const drain = await drainAkeQueue({
-          budgetMs: 50_000,
-          batchSize: Number(req.query?.limit || req.body?.limit) || 8,
-        });
-        return { ok: true, ...drain };
-      },
-      { schedule: "* * * * *" },
+      "ake-daily-report",
+      async () => generateDailyReport({ force: req.query?.force === "1" }),
+      { schedule: "0 4 * * *" },
     );
-    sendJson(res, 200, result);
+    sendJson(res, result.ok ? 200 : 500, result);
   } catch (error) {
     sendJson(res, 500, { ok: false, error: error.message });
   }

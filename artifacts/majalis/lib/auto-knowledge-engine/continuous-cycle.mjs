@@ -8,6 +8,7 @@ import { filterDueConnectors, shouldAutoDisable, isPermanentFetchError } from ".
 import { recoverInterruptedWork } from "./recovery.mjs";
 import { drainAkeQueue, getQueueSize } from "./queue-processor.mjs";
 import { evaluateAkeAlerts, getOpenAlerts } from "./alerts.mjs";
+import { recordSourceHealthEvent } from "./monitoring/source-health-events.mjs";
 import { cacheClear } from "./cache.mjs";
 import { akeLog } from "./monitoring.mjs";
 
@@ -38,15 +39,26 @@ export async function runContinuousAkeCycle(options = {}) {
 
   const recovery = await recoverInterruptedWork(admin, runId, { recoveryLimit: options.recoveryLimit || 6 });
 
+  const { data: connectorRows } = await admin.from("ake_connectors").select("*");
   const health = await runConnectorHealthChecks();
   for (const h of health.results || []) {
     if (!h.healthy && h.error && isPermanentFetchError(h.error)) {
       try {
+        const connector = (connectorRows || []).find((c) => c.slug === h.slug) || { slug: h.slug };
         await admin.from("ake_connectors").update({
           auto_disabled_at: new Date().toISOString(),
           is_active: false,
           last_error: h.error,
         }).eq("slug", h.slug);
+        await recordSourceHealthEvent({
+          sourceId: connector.id,
+          connectorSlug: h.slug,
+          connectorType: connector.connector_type,
+          eventType: "auto_disabled",
+          failureReason: h.error,
+          errorMessage: h.error,
+          metadata: { sourceUrl: connector.base_url || connector.url, lastSuccessfulSync: connector.last_success_at },
+        });
       } catch {
         /* ignore */
       }
@@ -54,7 +66,7 @@ export async function runContinuousAkeCycle(options = {}) {
   }
 
   cacheClear("ake:");
-  const { data: allConnectors } = await admin.from("ake_connectors").select("*").eq("is_active", true);
+  const allConnectors = (connectorRows || []).filter((c) => c.is_active);
   const dueSlugs = filterDueConnectors(allConnectors || []).map((c) => c.slug);
 
   akeLog("continuous", { action: "due_connectors", count: dueSlugs.length, slugs: dueSlugs });
@@ -143,8 +155,17 @@ export async function runContinuousAkeCycle(options = {}) {
   }
 
   const downConnectors = (health.results || []).filter((r) => !r.healthy);
+
+  let schedulerLastPublished = null;
+  try {
+    const { data: sched } = await admin.from("ake_scheduler_state").select("last_published_at").eq("id", "global").maybeSingle();
+    schedulerLastPublished = sched?.last_published_at;
+  } catch {
+    /* optional */
+  }
+
   await evaluateAkeAlerts({
-    lastPublishedAt: metrics.published > 0 ? new Date().toISOString() : null,
+    lastPublishedAt: metrics.published > 0 ? new Date().toISOString() : schedulerLastPublished,
     queueSize,
     downConnectors,
     publishFailures: engine.rejected || 0,
