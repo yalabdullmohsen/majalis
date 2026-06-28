@@ -175,8 +175,35 @@ function buildRecord(item, analysis) {
   }
 }
 
+async function resolvePublishTarget(admin, built, item) {
+  if (built.table !== "fiqh_council_items") return built;
+
+  const { error } = await admin.from("fiqh_council_items").select("id", { head: true, count: "exact" });
+  if (!error) return built;
+
+  const msg = String(error.message || "").toLowerCase();
+  const missing = isMissingTableError(error) || msg.includes("fiqh_council_items");
+  if (!missing) return built;
+
+  log("fiqh-table-missing-fallback", { id: item.external_id, fallback: "library_items", probeError: error.message });
+  return {
+    table: "library_items",
+    lookupField: "external_key",
+    record: {
+      external_key: item.external_id,
+      title: built.record.title,
+      description: built.record.summary || built.record.content,
+      type: "مقال",
+      category: built.record.category || "فقه",
+      external_url: built.record.source_url,
+      source_url: built.record.source_url,
+      status: "approved",
+    },
+  };
+}
+
 export async function publishItem(admin, item, analysis) {
-  const built = buildRecord(item, analysis);
+  let built = buildRecord(item, analysis);
   if (!built) {
     log("skip-kind", { kind: item.content_kind, id: item.external_id });
     return { published: false, reason: "unsupported_kind" };
@@ -187,6 +214,7 @@ export async function publishItem(admin, item, analysis) {
   }
 
   try {
+    built = await resolvePublishTarget(admin, built, item);
     const lookupField = built.lookupField || "external_key";
     const lookupValue = lookupField === "external_id"
       ? String(item.external_id).replace(/^[^:]+:\s*/, "")
