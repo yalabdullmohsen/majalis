@@ -32,6 +32,7 @@ function mapTelegramPost(post, connector, channel) {
       extracted_via: post.fromTelegramWeb ? "telegram_web_preview" : "telegram_bot_api",
       vision_on_image: connector.apiConfig.vision_on_image !== false,
     },
+    source_type: post.fromTelegramWeb ? "telegram_web_preview" : "telegram_bot_api",
     content_kind: normalizeContentKind(connector.classifyMessage(text)),
     published_at: post.timestamp || post.published_at || null,
   };
@@ -61,7 +62,6 @@ export class TelegramConnector extends BaseConnector {
         syncOptions._fetchStatus = result.error || "telegram_web_preview_empty";
       } catch (err) {
         syncOptions._fetchStatus = `telegram_web_preview_failed: ${err.message}`;
-        // Isolated failure — fall through to OG, do not throw
       }
     }
 

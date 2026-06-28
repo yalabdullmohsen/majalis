@@ -1,10 +1,11 @@
 /**
- * Instagram AKE Connector — plugin wrapper around Phase 7 Graph API + OG fallback.
+ * Instagram AKE Connector — professional engine with full metadata extraction.
  */
 import { BaseConnector } from "../connector-base.mjs";
 import { normalizeContentKind } from "../content-kind.mjs";
 import { discoverInstagramSource } from "../../cms/instagram-connector.mjs";
 import { filterCurrentMonthItems } from "../v2/extraction-service.mjs";
+import { enrichInstagramPost, toAkeItem } from "../../production/instagram-engine.mjs";
 
 function extractHashtags(text) {
   return [...new Set(String(text || "").match(/#[\u0600-\u06FF\w]+/g) || [])];
@@ -76,7 +77,33 @@ export class InstagramConnector extends BaseConnector {
       return [];
     }
 
-    let items = discovery.items.map((post) => mapPostToItem(post, this, handle, discovery));
+    const connectorMeta = { slug: this.slug, name: this.name };
+    let items = [];
+
+    for (const post of discovery.items.slice(0, fetchLimit)) {
+      try {
+        const enriched = await enrichInstagramPost(post, {
+          handle,
+          sourceId: this.id,
+          sourceName: this.name,
+        });
+        const akeItem = toAkeItem(enriched, connectorMeta);
+        akeItem.content_kind = normalizeContentKind(this.classifyPost(enriched));
+        if (enriched.extracted_fields) {
+          akeItem.extracted_fields = enriched.extracted_fields;
+          akeItem.raw_payload = {
+            ...akeItem.raw_payload,
+            extracted_fields: enriched.extracted_fields,
+            hashtags: enriched.hashtags,
+            carousel_count: enriched.media_urls?.length || 1,
+            media_type: enriched.media_type,
+          };
+        }
+        items.push(akeItem);
+      } catch {
+        items.push(mapPostToItem(post, this, handle, discovery));
+      }
+    }
 
     const skipMonthFilter = this.apiConfig.skip_month_filter === true;
     if (!skipMonthFilter) {
@@ -87,9 +114,6 @@ export class InstagramConnector extends BaseConnector {
     if (lastSeen) {
       const idx = items.findIndex((i) => i.raw_payload?.instagram_id === lastSeen);
       if (idx > 0) items = items.slice(0, idx);
-      else if (idx === -1 && items.length) {
-        /* all new since last seen */
-      }
     }
 
     return items.slice(0, fetchLimit);
@@ -97,11 +121,11 @@ export class InstagramConnector extends BaseConnector {
 
   classifyPost(post) {
     const text = `${post.title || ""} ${post.description || ""} ${post.caption || ""}`;
-    if (/دورة|course/i.test(text)) return "course";
+    if (/دورة|course/i.test(text) || post.is_course_ad) return "course";
     if (/إعلان|announcement/i.test(text)) return "announcement";
     if (/فائدة/i.test(text)) return "fawaid";
     if (/تنبيه|alert/i.test(text)) return "announcement";
-    if (/درس|lesson|محاضرة/i.test(text)) return "lesson";
+    if (/درس|lesson|محاضرة/i.test(text) || post.is_lesson_ad) return "lesson";
     return "lesson";
   }
 }

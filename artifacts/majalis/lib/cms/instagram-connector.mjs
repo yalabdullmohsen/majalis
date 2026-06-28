@@ -43,7 +43,7 @@ export async function discoverInstagramSource(source, { runId, limit = 15 } = {}
     detail: isInstagramGraphConfigured() ? "graph_api_configured" : "instagram_connector_not_configured",
   });
 
-  if (process.env.INSTAGRAM_GRAPH_MOCK === "1") {
+  if (process.env.INSTAGRAM_GRAPH_MOCK === "1" && process.env.NODE_ENV !== "production") {
     const items = getMockInstagramPosts(handle);
     return {
       items,

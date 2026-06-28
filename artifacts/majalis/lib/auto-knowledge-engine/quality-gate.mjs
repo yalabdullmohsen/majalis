@@ -5,6 +5,8 @@
 import { scoreQuality } from "../knowledge-engine/quality.mjs";
 import { normalizeContentKind } from "./content-kind.mjs";
 import { applyConfidenceToGate } from "./confidence-publish.mjs";
+import { computeConfidenceScore, THRESHOLDS } from "../production/confidence-engine.mjs";
+import { containsBlockedContentMarker } from "../production/content-sanitizer.mjs";
 
 export function runQualityGate(item, analysis, verification, connector) {
   const quality = scoreQuality(item, analysis, {
@@ -51,33 +53,73 @@ export function runQualityGate(item, analysis, verification, connector) {
       isTrustedOfficialLesson,
   };
 
+  const ef = item.extracted_fields || item.raw_payload?.extracted_fields || {};
+  const blockedText = `${item.raw_title || ""} ${item.raw_body || ""}`;
+  const quizLike = /^(?:س\s*\)|أ\s*\)|ب\s*\)|ج\s*\)|\d+\)|فائدة\s*:)/.test(item.raw_body?.trim() || "")
+    || containsBlockedContentMarker(blockedText);
+
+  const confidence = computeConfidenceScore({
+    baseScore: item.confidence?.score ?? analysis?.ai_confidence ?? quality.quality_score,
+    sourceType: item.source_type || connector?.connector_type || connector?.platform,
+    dateMatch: Boolean(ef.gregorian_date || ef.start_date),
+    sheikhMatch: Boolean(ef.speaker_name || ef.sheikh_name || analysis?.ai_scholar),
+    mosqueMatch: Boolean(ef.mosque || ef.mosque_name),
+    cityMatch: Boolean(ef.city),
+    urlMatch: Boolean(item.raw_url || item.source_url),
+    metadataComplete: Boolean(ef.title && (ef.speaker_name || ef.sheikh_name) && ef.mosque),
+    ocrConfidence: ef.ocr_confidence ?? item.raw_payload?.ocr_confidence,
+    visionConfidence: ef.confidence,
+    multiSourceAgreement: Boolean(item.fusion_key || item._unifiedFingerprint),
+    quizLike,
+    missingRequiredFields: [
+      !ef.title && !item.raw_title && "title",
+      !ef.speaker_name && !ef.sheikh_name && !analysis?.ai_scholar && "speaker",
+    ].filter(Boolean),
+  });
+
   const failed = Object.entries(checks).filter(([, v]) => !v).map(([k]) => k);
   const passed = failed.length === 0;
 
   const autoPublishEnabled = connector?.auto_publish !== false && connector?.autoPublish !== false;
+  const confidenceAllowsPublish = confidence.action === "publish" || confidence.action === "fast_review";
 
   const autoPublish =
     passed &&
     autoPublishEnabled &&
-    trustLevel >= 4;
+    trustLevel >= 4 &&
+    confidenceAllowsPublish &&
+    !quizLike;
 
   const base = {
     ...quality,
     checks,
     failedChecks: failed,
     passed,
-    canPublish: passed || (quality.can_publish && !verification.isDuplicate),
+    confidence,
+    confidenceAction: confidence.action,
+    confidenceThresholds: THRESHOLDS,
+    canPublish:
+      !verification.isDuplicate &&
+      !quizLike &&
+      (confidence.action === "publish" ||
+        confidence.action === "fast_review" ||
+        confidence.action === "manual_review") &&
+      (passed || quality.can_publish),
     autoPublish,
     publishStatus: verification.isDuplicate
       ? "rejected"
-      : autoPublish
-        ? "pending"
-        : "pending",
+      : confidence.action === "reject" || quizLike
+        ? "rejected"
+        : autoPublish
+          ? "pending"
+          : "pending",
     verificationStatus: verification.isDuplicate
       ? "duplicate"
-      : autoPublish
-        ? "verified"
-        : quality.verification_status,
+      : confidence.action === "reject" || quizLike
+        ? "rejected"
+        : autoPublish
+          ? "verified"
+          : quality.verification_status,
   };
 
   return applyConfidenceToGate(base, item, connector);

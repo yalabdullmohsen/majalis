@@ -1,7 +1,9 @@
 /**
  * Public Telegram channel fetch — t.me/s/{channel} web preview (no Bot API required).
+ * Also exposes fetchTelegramChannel fallback chain for connectors that need it.
  */
 import { fetchResource } from "../http/fetch-layer.mjs";
+import { importFromUrl } from "./url-importer.mjs";
 
 function decodeHtml(text) {
   return String(text || "")
@@ -111,4 +113,96 @@ export async function fetchTelegramChannelMessages(channel, { limit = 20, before
   if (limit > 0) items = items.slice(0, limit);
 
   return { items, channel: slug, ok: true };
+}
+
+/** Alias used by verification scripts — delegates to web preview fetch. */
+export const parseTelegramPreviewHtml = parseTelegramChannelHtml;
+
+/**
+ * Resilient fallback chain: Bot API → preview → RSS → OpenGraph.
+ */
+export async function fetchTelegramChannel(config = {}) {
+  const channel = String(config.channel || config.handle || "").replace(/^@/, "").replace(/.*t\.me\//, "");
+  const errors = [];
+
+  if (config.bot_token && config.channel_id) {
+    try {
+      const url = `https://api.telegram.org/bot${config.bot_token}/getUpdates?limit=${Math.min(config.limit || 20, 100)}`;
+      const res = await fetch(url, { headers: { Accept: "application/json" } });
+      const data = await res.json();
+      if (data.ok) {
+        const posts = (data.result || [])
+          .filter((u) => u.channel_post?.chat?.id === config.channel_id)
+          .map((u) => {
+            const post = u.channel_post;
+            const text = post.text || post.caption || "";
+            return {
+              external_id: `tg:${channel}:${post.message_id}`,
+              message_id: post.message_id,
+              text,
+              url: `https://t.me/${channel}/${post.message_id}`,
+              published_at: new Date(post.date * 1000).toISOString(),
+              extracted_via: "telegram_bot_api",
+            };
+          });
+        if (posts.length) return { ok: true, posts, method: "bot_api" };
+      }
+    } catch (err) {
+      errors.push(`bot_api: ${err.message}`);
+    }
+  }
+
+  try {
+    const result = await fetchTelegramChannelMessages(channel, { limit: config.limit || 20 });
+    if (result.items?.length) {
+      const posts = result.items.map((item) => ({
+        external_id: `${channel}:${item.message_id}`,
+        message_id: item.message_id,
+        text: item.text,
+        url: item.link,
+        published_at: item.published_at,
+        extracted_via: "telegram_preview",
+        media: item.mediaUrls?.map((url) => ({ type: "image", url })) || [],
+      }));
+      return { ok: true, posts, method: "preview", errors };
+    }
+    errors.push(`preview: ${result.error || "empty"}`);
+  } catch (err) {
+    errors.push(`preview: ${err.message}`);
+  }
+
+  if (config.rss_url) {
+    try {
+      const page = await importFromUrl(config.rss_url);
+      if (page?.description) {
+        return {
+          ok: true,
+          posts: [{ external_id: `rss:${config.rss_url}`, text: page.description, url: page.finalUrl, extracted_via: "telegram_rss" }],
+          method: "rss",
+          errors,
+        };
+      }
+    } catch (err) {
+      errors.push(`rss: ${err.message}`);
+    }
+  }
+
+  const ogUrl = config.official_url || (channel ? `https://t.me/${channel}` : null);
+  if (ogUrl) {
+    try {
+      const page = await importFromUrl(ogUrl);
+      if (page?.title || page?.description) {
+        return {
+          ok: true,
+          posts: [{ external_id: `og:${channel}`, text: page.description || page.title, title: page.title, url: page.finalUrl || ogUrl, extracted_via: "opengraph" }],
+          method: "opengraph",
+          errors,
+        };
+      }
+    } catch (err) {
+      errors.push(`opengraph: ${err.message}`);
+    }
+  }
+
+  return { ok: false, posts: [], method: "none", errors };
 }
