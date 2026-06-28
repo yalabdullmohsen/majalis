@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useLocation } from "wouter";
+import { Search, Sparkles } from "lucide-react";
 import { ADHKAR_CATEGORIES } from "@/lib/adhkar-seed";
 import { usePublishedAdhkarItems } from "@/lib/adhkar-service";
 import { getReadingProgress, restoreScrollForSection } from "@/lib/reading-progress";
-import { PageHeader, Empty } from "@/components/ui-common";
+import { Empty } from "@/components/ui-common";
 import { AdhkarCard } from "@/components/adhkar/AdhkarCard";
 
 const FEATURED_CATEGORY_SLUGS = new Set([
@@ -60,40 +61,61 @@ export default function AdhkarPage() {
   }, [debouncedSearch, category, publishedItems]);
 
   const activeCategory = ADHKAR_CATEGORIES.find((c) => c.id === category);
+  const completedCount = publishedItems.length;
 
   return (
-    <div className="page-shell narrow content-hub-page adhkar-page adhkar-page--v2">
-      <PageHeader
-        eyebrow="العبادة اليومية"
-        title="الأذكار"
-        subtitle="أذكار وأدعية من القرآن والسنة — قراءة هادئة، عداد تسبيح، ومشاركة سهلة."
-      />
+    <div className="page-shell narrow adhkar-page adhkar-page--v3">
+      <header className="adhkar-v3-header">
+        <div className="adhkar-v3-header__icon" aria-hidden="true">
+          <Sparkles size={22} strokeWidth={2} />
+        </div>
+        <div className="adhkar-v3-header__copy">
+          <p className="adhkar-v3-header__eyebrow">العبادة اليومية</p>
+          <h1 className="adhkar-v3-header__title">الأذكار</h1>
+          <p className="adhkar-v3-header__subtitle">
+            أذكار وأدعية من القرآن والسنة — قراءة هادئة وعداد تسبيح مدمج.
+          </p>
+        </div>
+      </header>
 
-      <div className="adhkar-hero ui-card">
-        <div className="adhkar-hero__stats">
-          <div><strong>{publishedItems.length}</strong><span>ذكر</span></div>
-          <div><strong>{FEATURED_CATEGORIES.length}</strong><span>قسم</span></div>
-          <Link href="/tasbih" className="adhkar-hero__tasbih-link">عداد التسبيح ←</Link>
+      <div className="adhkar-v3-toolbar ui-card">
+        <div className="adhkar-v3-stats">
+          <div className="adhkar-v3-stat">
+            <strong>{completedCount}</strong>
+            <span>ذكر</span>
+          </div>
+          <div className="adhkar-v3-stat">
+            <strong>{FEATURED_CATEGORIES.length}</strong>
+            <span>قسم</span>
+          </div>
+          <Link href="/tasbih" className="adhkar-v3-tasbih-link">
+            عداد التسبيح ←
+          </Link>
         </div>
         {lastRead && (
-          <a href={`#content-${lastRead.id}`} className="adhkar-hero__continue">
-            متابعة آخر ذكر: {lastRead.title || "ذكر سابق"}
+          <a href={`#content-${lastRead.id}`} className="adhkar-v3-continue">
+            متابعة: {lastRead.title || "آخر ذكر"}
           </a>
         )}
       </div>
 
-      <input
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        placeholder="ابحث في الأذكار..."
-        className="page-search-input full content-hub-search"
-        aria-label="بحث في الأذكار"
-      />
+      <div className="adhkar-v3-search-wrap">
+        <Search className="adhkar-v3-search-icon" size={18} aria-hidden="true" />
+        <input
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="ابحث في الأذكار..."
+          className="adhkar-v3-search"
+          aria-label="بحث في الأذكار"
+        />
+      </div>
 
-      <div className="content-hub-chips adhkar-chips">
+      <div className="adhkar-v3-chips" role="tablist" aria-label="تصنيفات الأذكار">
         <button
           type="button"
-          className={`content-hub-chip${category === "all" ? " content-hub-chip--active" : ""}`}
+          role="tab"
+          aria-selected={category === "all"}
+          className={`adhkar-v3-chip${category === "all" ? " adhkar-v3-chip--active" : ""}`}
           onClick={() => setCategory("all")}
         >
           الكل
@@ -102,7 +124,9 @@ export default function AdhkarPage() {
           <button
             key={cat.id}
             type="button"
-            className={`content-hub-chip${category === cat.id ? " content-hub-chip--active" : ""}`}
+            role="tab"
+            aria-selected={category === cat.id}
+            className={`adhkar-v3-chip${category === cat.id ? " adhkar-v3-chip--active" : ""}`}
             onClick={() => setCategory(cat.id)}
           >
             {cat.name}
@@ -111,17 +135,20 @@ export default function AdhkarPage() {
       </div>
 
       {activeCategory && category !== "all" && (
-        <p className="adhkar-category-desc">{activeCategory.description}</p>
+        <p className="adhkar-v3-category-desc">{activeCategory.description}</p>
       )}
 
       {isLoading ? (
-        <p className="adhkar-loading-hint">جاري تحميل الأذكار…</p>
+        <div className="adhkar-v3-loading">
+          <div className="adhkar-v3-loading__dots" aria-hidden="true" />
+          <p>جاري تحميل الأذكار…</p>
+        </div>
       ) : isError ? (
         <Empty text="تعذّر تحميل الأذكار من قاعدة البيانات." />
       ) : items.length === 0 ? (
         <Empty text="لا توجد أذكار مطابقة." />
       ) : (
-        <div className="adhkar-grid adhkar-grid--relaxed">
+        <div className="adhkar-v3-grid">
           {items.map((item) => (
             <AdhkarCard key={item.id} item={item} />
           ))}

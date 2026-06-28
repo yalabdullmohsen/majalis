@@ -3,10 +3,8 @@
 import { Link } from "wouter";
 import { LegalBackLink, LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
 import { useAuth } from "@/components/AuthProvider";
-import { useFontPreference } from "@/components/FontPreferenceProvider";
 import { useThemePreference } from "@/components/ThemePreferenceProvider";
 import { useUserPreferences } from "@/components/UserPreferencesProvider";
-import { FONT_OPTIONS, type FontPreference } from "@/lib/font-preference";
 import { THEME_OPTIONS, type ThemePreference } from "@/lib/theme-preference";
 import { clearQuranCache } from "@/lib/quran-content";
 import { DEFAULT_PREFERENCES, type UserPreferences } from "@/lib/user-preferences";
@@ -36,7 +34,6 @@ function ToggleRow({
 
 export default function SettingsPage() {
   const { user, isLoggedIn, logout } = useAuth();
-  const { preference: fontPreference, setPreference: setFontPreference } = useFontPreference();
   const { preference: themePreference, resolvedTheme, setPreference: setThemePreference } = useThemePreference();
   const { preferences, updatePreferences } = useUserPreferences();
   const { prefs: quranPrefs, setPref: setQuranPref, bumpFont } = useQuranPreferences();
@@ -115,19 +112,7 @@ export default function SettingsPage() {
       </LegalSection>
 
       <LegalSection title="القراءة">
-        <div className="settings-option-grid" role="group" aria-label="اختيار الخط">
-          {FONT_OPTIONS.map((option) => (
-            <button
-              key={option.id}
-              type="button"
-              className={`settings-choice${fontPreference === option.id ? " is-active" : ""}`}
-              onClick={() => setFontPreference(option.id as FontPreference)}
-            >
-              <strong>{option.label}</strong>
-              <span>{option.description}</span>
-            </button>
-          ))}
-        </div>
+        <p className="settings-note">خط المنصة الموحّد: <strong>Cairo</strong></p>
         <label className="settings-field">
           <span>حجم نص القراءة</span>
           <input
@@ -219,7 +204,7 @@ export default function SettingsPage() {
         <p>يمكنك إدارة بياناتك المحلية المحفوظة في هذا المتصفح، وتشمل تفضيلات الخط والوضع وموضع القراءة.</p>
         <div className="settings-actions">
           <button type="button" className="ui-card-btn" onClick={() => {
-            const blob = new Blob([JSON.stringify({ preferences, fontPreference, themePreference }, null, 2)], { type: "application/json" });
+            const blob = new Blob([JSON.stringify({ preferences, fontPreference: "default", themePreference }, null, 2)], { type: "application/json" });
             const url = URL.createObjectURL(blob);
             const a = document.createElement("a");
             a.href = url;

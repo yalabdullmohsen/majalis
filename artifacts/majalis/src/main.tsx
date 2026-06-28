@@ -13,6 +13,7 @@ import { registerProductionServiceWorker } from "./lib/service-worker";
 import "./index.css";
 import "./styles/design-system.css";
 import "./styles/highlighted-content.css";
+import "./styles/adhkar-v3.css";
 import "./styles/rulings-encyclopedia.css";
 
 const queryClient = createAppQueryClient();

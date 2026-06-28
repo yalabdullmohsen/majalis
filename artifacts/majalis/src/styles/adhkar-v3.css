@@ -1,0 +1,533 @@
+/* Adhkar Page v3 — modern minimal redesign */
+
+.adhkar-page--v3 {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-bottom: 2rem;
+}
+
+/* Header */
+.adhkar-v3-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  padding: 0.25rem 0 0.5rem;
+}
+
+.adhkar-v3-header__icon {
+  flex-shrink: 0;
+  width: 2.75rem;
+  height: 2.75rem;
+  display: grid;
+  place-items: center;
+  border-radius: 0.85rem;
+  background: color-mix(in srgb, var(--majalis-emerald) 12%, var(--majalis-panel));
+  color: var(--majalis-emerald-deep);
+}
+
+.adhkar-v3-header__eyebrow {
+  margin: 0 0 0.2rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--majalis-emerald-deep);
+  letter-spacing: 0.02em;
+}
+
+.adhkar-v3-header__title {
+  margin: 0 0 0.35rem;
+  font-size: clamp(1.5rem, 4vw, 1.85rem);
+  font-weight: 800;
+  color: var(--majalis-ink);
+  line-height: 1.25;
+}
+
+.adhkar-v3-header__subtitle {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--majalis-ink-soft);
+  line-height: 1.65;
+  max-width: 42ch;
+}
+
+/* Toolbar */
+.adhkar-v3-toolbar {
+  padding: 0.85rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  border-radius: 1rem;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--majalis-emerald) 5%, var(--majalis-panel)),
+    var(--majalis-panel)
+  );
+}
+
+.adhkar-v3-stats {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.adhkar-v3-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.adhkar-v3-stat strong {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--majalis-emerald-deep);
+  line-height: 1;
+}
+
+.adhkar-v3-stat span {
+  font-size: 0.75rem;
+  color: var(--majalis-ink-soft);
+  font-weight: 600;
+}
+
+.adhkar-v3-tasbih-link {
+  margin-inline-start: auto;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--majalis-emerald-deep);
+  text-decoration: none;
+  padding: 0.35rem 0.65rem;
+  border-radius: 0.55rem;
+  transition: background 0.15s ease;
+}
+
+.adhkar-v3-tasbih-link:hover {
+  background: color-mix(in srgb, var(--majalis-emerald) 8%, transparent);
+}
+
+.adhkar-v3-continue {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--majalis-emerald-deep);
+  text-decoration: none;
+  padding: 0.45rem 0.65rem;
+  border-radius: 0.55rem;
+  background: color-mix(in srgb, var(--majalis-emerald) 6%, var(--majalis-parchment));
+  transition: background 0.15s ease;
+}
+
+.adhkar-v3-continue:hover {
+  background: color-mix(in srgb, var(--majalis-emerald) 12%, var(--majalis-parchment));
+}
+
+/* Search */
+.adhkar-v3-search-wrap {
+  position: relative;
+}
+
+.adhkar-v3-search-icon {
+  position: absolute;
+  inset-inline-start: 0.85rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--majalis-ink-soft);
+  pointer-events: none;
+}
+
+.adhkar-v3-search {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.55rem 0.85rem 0.55rem 2.5rem;
+  border: 1px solid var(--majalis-line);
+  border-radius: 0.85rem;
+  background: var(--majalis-panel);
+  font-family: inherit;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--majalis-ink);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.adhkar-v3-search:focus {
+  outline: none;
+  border-color: var(--majalis-emerald);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--majalis-emerald) 15%, transparent);
+}
+
+/* Category chips */
+.adhkar-v3-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.adhkar-v3-chip {
+  min-height: 2.25rem;
+  padding: 0.3rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid var(--majalis-line);
+  background: var(--majalis-panel);
+  font-family: inherit;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--majalis-ink-soft);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease, transform 0.12s ease;
+}
+
+.adhkar-v3-chip:hover {
+  border-color: color-mix(in srgb, var(--majalis-emerald) 40%, var(--majalis-line));
+  color: var(--majalis-emerald-deep);
+}
+
+.adhkar-v3-chip--active {
+  border-color: var(--majalis-emerald);
+  background: color-mix(in srgb, var(--majalis-emerald) 10%, var(--majalis-panel));
+  color: var(--majalis-emerald-deep);
+}
+
+.adhkar-v3-category-desc {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--majalis-ink-soft);
+  line-height: 1.6;
+}
+
+/* Grid */
+.adhkar-v3-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+/* Loading */
+.adhkar-v3-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 2rem 1rem;
+  color: var(--majalis-ink-soft);
+  font-size: 0.875rem;
+}
+
+.adhkar-v3-loading__dots {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 2px solid var(--majalis-line);
+  border-top-color: var(--majalis-emerald);
+  animation: adhkar-spin 0.8s linear infinite;
+}
+
+@keyframes adhkar-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Card v3 ── */
+.adhkar-card-v3 {
+  padding: 1rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  border-radius: 1rem;
+  border: 1px solid var(--majalis-line);
+  background: var(--majalis-panel);
+  box-shadow: var(--card-shadow);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.adhkar-card-v3:hover {
+  border-color: color-mix(in srgb, var(--majalis-emerald) 22%, var(--majalis-line));
+}
+
+.adhkar-card-v3--reading {
+  border-color: color-mix(in srgb, var(--majalis-emerald) 35%, var(--majalis-line));
+  box-shadow: 0 12px 36px rgba(15, 61, 46, 0.08);
+}
+
+.adhkar-card-v3__head {
+  display: flex;
+  align-items: center;
+}
+
+.adhkar-card-v3__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  align-items: center;
+}
+
+.adhkar-card-v3__tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--majalis-emerald) 10%, var(--majalis-parchment));
+  color: var(--majalis-emerald-deep);
+}
+
+.adhkar-card-v3__repeat,
+.adhkar-card-v3__grade {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  color: var(--majalis-emerald-deep);
+  background: color-mix(in srgb, var(--majalis-emerald) 8%, transparent);
+}
+
+.adhkar-card-v3__body {
+  flex: 1;
+  min-height: 0;
+}
+
+.adhkar-card-v3__text {
+  line-height: 1.85;
+  font-size: 1rem;
+  color: var(--majalis-ink);
+  max-width: 68ch;
+  text-wrap: pretty;
+  transition: font-size 0.35s ease, line-height 0.35s ease, letter-spacing 0.35s ease;
+}
+
+.adhkar-card-v3--reading .adhkar-card-v3__text {
+  font-size: clamp(1.15rem, 3.5vw, 1.45rem);
+  line-height: 2.15;
+  letter-spacing: 0.01em;
+  padding: 0.5rem 0;
+}
+
+.adhkar-card-v3__meta {
+  display: grid;
+  gap: 0.3rem;
+  margin: 0.65rem 0 0;
+  padding-top: 0.65rem;
+  border-top: 1px solid color-mix(in srgb, var(--majalis-line) 70%, transparent);
+}
+
+.adhkar-card-v3__meta div {
+  display: flex;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+}
+
+.adhkar-card-v3__meta dt {
+  color: var(--majalis-ink-soft);
+  font-weight: 600;
+  min-width: 3.25rem;
+}
+
+.adhkar-card-v3__meta dd {
+  margin: 0;
+  font-weight: 600;
+  color: var(--majalis-ink);
+}
+
+.adhkar-card-v3__foot {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  max-height: 15%;
+  flex-shrink: 0;
+}
+
+.adhkar-card-v3__reading-toggle {
+  align-self: flex-start;
+  min-height: 2rem;
+  padding: 0.25rem 0.65rem;
+  border: 1px solid color-mix(in srgb, var(--majalis-emerald) 25%, var(--majalis-line));
+  border-radius: 0.55rem;
+  background: transparent;
+  color: var(--majalis-emerald-deep);
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.adhkar-card-v3__reading-toggle:hover {
+  background: color-mix(in srgb, var(--majalis-emerald) 8%, transparent);
+}
+
+.adhkar-card-v3--reading .adhkar-card-v3__reading-toggle {
+  align-self: center;
+  padding: 0.45rem 1rem;
+  font-size: 0.8125rem;
+}
+
+/* ── Minimal Counter ── */
+.adhkar-min-counter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  padding: 0.45rem 0.65rem;
+  border-radius: 0.75rem;
+  background: var(--majalis-parchment);
+  border: 1px solid var(--majalis-line);
+  max-height: 3.25rem;
+  position: relative;
+  transition: transform 0.18s ease, border-color 0.18s ease;
+}
+
+.adhkar-min-counter--pulse {
+  animation: adhkar-counter-pulse 0.2s ease;
+}
+
+.adhkar-min-counter--done {
+  border-color: color-mix(in srgb, var(--majalis-emerald) 45%, var(--majalis-line));
+  background: color-mix(in srgb, var(--majalis-emerald) 6%, var(--majalis-parchment));
+}
+
+@keyframes adhkar-counter-pulse {
+  0% { transform: scale(1); }
+  45% { transform: scale(1.025); }
+  100% { transform: scale(1); }
+}
+
+.adhkar-min-counter__btn {
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  display: grid;
+  place-items: center;
+  border-radius: 0.55rem;
+  border: 1px solid var(--majalis-line);
+  background: var(--majalis-panel);
+  font-family: inherit;
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--majalis-emerald-deep);
+  cursor: pointer;
+  transition: background 0.12s ease, transform 0.1s ease, border-color 0.12s ease;
+}
+
+.adhkar-min-counter__btn:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--majalis-emerald) 10%, var(--majalis-panel));
+  border-color: var(--majalis-emerald);
+}
+
+.adhkar-min-counter__btn:active:not(:disabled) {
+  transform: scale(0.94);
+}
+
+.adhkar-min-counter__btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.adhkar-min-counter__btn--plus {
+  background: var(--majalis-emerald-deep);
+  border-color: transparent;
+  color: #fff;
+}
+
+.adhkar-min-counter__btn--plus:hover:not(:disabled) {
+  background: var(--majalis-emerald);
+  border-color: transparent;
+}
+
+.adhkar-min-counter__ring-wrap {
+  position: relative;
+  width: 2.75rem;
+  height: 2.75rem;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+}
+
+.adhkar-min-counter__ring {
+  position: absolute;
+  inset: 0;
+}
+
+.adhkar-min-counter__ring-track {
+  stroke: color-mix(in srgb, var(--majalis-line) 80%, transparent);
+}
+
+.adhkar-min-counter__ring-progress {
+  stroke: var(--majalis-emerald);
+  transition: stroke-dashoffset 0.2s ease;
+}
+
+.adhkar-min-counter__value {
+  position: relative;
+  z-index: 1;
+  font-size: 0.8125rem;
+  font-weight: 800;
+  color: var(--majalis-emerald-deep);
+  line-height: 1;
+  display: flex;
+  align-items: baseline;
+  gap: 0.05rem;
+}
+
+.adhkar-min-counter__target {
+  font-size: 0.625rem;
+  font-weight: 600;
+  color: var(--majalis-ink-soft);
+}
+
+.adhkar-min-counter__badge {
+  position: absolute;
+  inset-inline-end: 0.35rem;
+  top: 0.35rem;
+  width: 1rem;
+  height: 1rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--majalis-emerald);
+  color: #fff;
+  font-size: 0.5625rem;
+  font-weight: 800;
+}
+
+.adhkar-card-v3 .content-action-bar {
+  padding-top: 0.35rem;
+  border-top: 1px solid color-mix(in srgb, var(--majalis-line) 65%, transparent);
+}
+
+.adhkar-card-v3 .content-action-bar__btn {
+  min-height: 2rem;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.75rem;
+  border-radius: 0.5rem;
+}
+
+@media (max-width: 640px) {
+  .adhkar-v3-header {
+    gap: 0.65rem;
+  }
+
+  .adhkar-v3-stats {
+    gap: 0.85rem;
+  }
+
+  .adhkar-v3-tasbih-link {
+    width: 100%;
+    margin-inline-start: 0;
+    text-align: center;
+  }
+
+  .adhkar-card-v3 {
+    padding: 0.9rem 0.95rem;
+  }
+
+  .adhkar-card-v3--reading .adhkar-card-v3__text {
+    font-size: clamp(1.1rem, 4.5vw, 1.35rem);
+  }
+}
+
+@media print {
+  .adhkar-v3-chips,
+  .adhkar-v3-toolbar,
+  .adhkar-v3-search-wrap,
+  .adhkar-min-counter,
+  .adhkar-card-v3 .content-action-bar,
+  .adhkar-card-v3__reading-toggle {
+    display: none !important;
+  }
+}

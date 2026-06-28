@@ -1,4 +1,5 @@
-export type FontPreference = "default" | "ruqaa" | "naskh";
+/** Site-wide font: Cairo only — no alternate font families permitted. */
+export type FontPreference = "default";
 
 export const FONT_STORAGE_KEY = "majalis-font-preference";
 
@@ -7,28 +8,24 @@ export const FONT_OPTIONS: {
   label: string;
   description: string;
 }[] = [
-  { id: "default", label: "Cairo", description: "الخط الرسمي — Cairo SemiBold" },
-  { id: "ruqaa", label: "رقعة", description: "خط رقعة بسيط للعرض" },
-  { id: "naskh", label: "نسخ", description: "خط نسخ للقراءة الطويلة" },
+  { id: "default", label: "Cairo", description: "الخط الرسمي للمنصة — Cairo" },
 ];
 
 export function isFontPreference(value: string | null | undefined): value is FontPreference {
-  return value === "default" || value === "ruqaa" || value === "naskh";
+  return value === "default";
 }
 
 export function readFontPreference(): FontPreference {
-  if (typeof window === "undefined") return "default";
-  const stored = window.localStorage.getItem(FONT_STORAGE_KEY);
-  return isFontPreference(stored) ? stored : "default";
+  return "default";
 }
 
-export function writeFontPreference(preference: FontPreference) {
+export function writeFontPreference(_preference: FontPreference) {
   if (typeof window === "undefined") return;
-  window.localStorage.setItem(FONT_STORAGE_KEY, preference);
-  document.documentElement.dataset.font = preference;
+  window.localStorage.setItem(FONT_STORAGE_KEY, "default");
+  document.documentElement.dataset.font = "default";
 }
 
-export function applyFontPreference(preference: FontPreference) {
+export function applyFontPreference(_preference: FontPreference = "default") {
   if (typeof document === "undefined") return;
-  document.documentElement.dataset.font = preference;
+  document.documentElement.dataset.font = "default";
 }
