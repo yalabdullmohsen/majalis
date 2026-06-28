@@ -48,7 +48,7 @@ async function main() {
   const issues = [];
 
   const lessons = await fetchAll(admin, "lessons", "id, title, source_url");
-  const fawaid = await fetchAll(admin, "fawaid", "id, external_id, title, status, text");
+  const fawaid = await fetchAll(admin, "fawaid", "id, text, author_name, status");
   const qa = await fetchAll(admin, "qa_questions", "id, question");
   const library = await fetchAll(admin, "library_items", "id, title, external_id");
   const knowledgeRes = await safeFetchAll(admin, "knowledge_items", "id, slug, source_type, source_id");

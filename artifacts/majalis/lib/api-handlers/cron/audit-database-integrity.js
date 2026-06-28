@@ -46,7 +46,7 @@ export default async function handler(req, res) {
   try {
     const issues = [];
     const lessons = await fetchAll(admin, "lessons", "id, title, source_url");
-    const fawaid = await fetchAll(admin, "fawaid", "id, title, external_id, status, text");
+    const fawaid = await fetchAll(admin, "fawaid", "id, text, author_name, status");
     const qa = await fetchAll(admin, "qa_questions", "id, question");
     const library = await fetchAll(admin, "library_items", "id, title, external_id");
 
@@ -56,11 +56,8 @@ export default async function handler(req, res) {
       ["library_items", library, (r) => r.title?.trim()],
     ]) {
       const d = dupesBy(rows, key);
-      if (d.length) issues.push({ type: "duplicate_slug", table, count: d.length });
+      if (d.length) issues.push({ type: "duplicate_key", table, count: d.length });
     }
-
-    const fawaidExt = dupesBy(fawaid.filter((r) => r.external_id), (r) => r.external_id);
-    if (fawaidExt.length) issues.push({ type: "duplicate_external_id", table: "fawaid", count: fawaidExt.length });
 
     const qaDupes = dupesBy(qa, (r) => r.question?.trim());
     if (qaDupes.length) issues.push({ type: "duplicate_question", table: "qa_questions", count: qaDupes.length });
