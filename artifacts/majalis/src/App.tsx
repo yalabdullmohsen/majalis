@@ -114,6 +114,7 @@ const PlatformHealthPage = lazyWithRetry(() => import("@/views/admin/PlatformHea
 const DeploymentDashboardPage = lazyWithRetry(() => import("@/views/admin/DeploymentDashboardPage"), "DeploymentDashboardPage");
 const PlatformChecklistPage = lazyWithRetry(() => import("@/views/admin/PlatformChecklistPage"), "PlatformChecklistPage");
 const PlatformMonitoringPage = lazyWithRetry(() => import("@/views/admin/PlatformMonitoringPage"), "PlatformMonitoringPage");
+const AutonomousPlatformDashboardPage = lazyWithRetry(() => import("@/views/admin/AutonomousPlatformDashboardPage"), "AutonomousPlatformDashboardPage");
 const FeatureStatusPage = lazyWithRetry(() => import("@/views/admin/FeatureStatusPage"), "FeatureStatusPage");
 const LearningPathsPage = lazy(() => import("@/views/learning/LearningPathsPage"));
 const LearningPathDetailPage = lazy(() => import("@/views/learning/LearningPathDetailPage"));
@@ -270,6 +271,7 @@ function Router() {
       <Route path="/admin/platform/deployments"><AdminLazyRoute component={DeploymentDashboardPage} /></Route>
       <Route path="/admin/platform/checklist"><AdminLazyRoute component={PlatformChecklistPage} /></Route>
       <Route path="/admin/platform/monitoring"><AdminLazyRoute component={PlatformMonitoringPage} /></Route>
+      <Route path="/admin/platform/autonomous"><AdminLazyRoute component={AutonomousPlatformDashboardPage} /></Route>
       <Route path="/admin/automation/sources"><AdminLazyRoute component={AutomationSourcesPage} /></Route>
       <Route path="/admin/automation/dashboard"><AdminLazyRoute component={AutomationDashboardPage} /></Route>
       <Route path="/admin/automation/platform"><AdminLazyRoute component={MajlisKnowledgeEnginePage} /></Route>

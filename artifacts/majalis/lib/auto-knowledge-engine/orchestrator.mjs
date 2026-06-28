@@ -35,6 +35,9 @@ import { enqueueFailedStage } from "./recovery.mjs";
 import { isPermanentFetchError } from "./connector-scheduler.mjs";
 import { recordPipelineFailure } from "./monitoring/pipeline-failures.mjs";
 import { recordSourceHealthEvent } from "./monitoring/source-health-events.mjs";
+import { runAuthenticityGate } from "./autonomous/authenticity-gate.mjs";
+import { logRejection } from "./autonomous/rejection-log.mjs";
+import { enrichItemClassification } from "./autonomous/content-router.mjs";
 
 async function ensureRealtimeSchema(admin) {
   const { error } = await admin.from("ake_scheduler_state").select("id", { head: true, count: "exact" });
@@ -43,7 +46,7 @@ async function ensureRealtimeSchema(admin) {
   try {
     const { applyMigrations } = await import("../db-migrate.mjs");
     return await applyMigrations({
-      files: ["auto_knowledge_engine_v15_realtime.sql", "auto_knowledge_engine_v17_monitoring.sql"],
+      files: ["auto_knowledge_engine_v15_realtime.sql", "auto_knowledge_engine_v17_monitoring.sql", "auto_knowledge_engine_v18_autonomous.sql"],
       continueOnError: false,
       trackApplied: true,
     });
@@ -355,6 +358,29 @@ async function processConnector(admin, connectorConfig, runId, existingItems, op
     const processed = [];
 
     for (const item of allItems) {
+      const classified = enrichItemClassification(item, connectorConfig);
+      item.content_kind = classified.content_kind;
+
+      const authenticity = runAuthenticityGate(item, item.analysis, item.verification, connectorConfig);
+      if (authenticity.shouldReject) {
+        stats.rejected++;
+        const reason = authenticity.primaryReason;
+        noteRejection(reason?.code || "authenticity_failed");
+        await logRejection({
+          runId,
+          sourceId: connectorConfig.source_id || connectorConfig.id,
+          connectorSlug: connectorConfig.slug,
+          externalId: item.external_id,
+          contentKind: item.content_kind,
+          pipelineStage: reason?.stage || "authenticity_verification",
+          rejectionReason: reason?.reason || "authenticity_failed",
+          confidenceScore: reason?.confidence,
+          errorCode: reason?.code,
+          sourceUrl: item.raw_url,
+        });
+        continue;
+      }
+
       const gate = runQualityGate(item, item.analysis, item.verification, connectorConfig);
       const seo = buildSeoPackage(item, item.analysis, routeForKind(item.content_kind, item.external_id));
 
@@ -375,6 +401,19 @@ async function processConnector(admin, connectorConfig, runId, existingItems, op
       if (!gate.passed && !gate.canPublish) {
         noteRejection("quality_gate");
         noteGateFailure(gate.failedChecks);
+        await logRejection({
+          runId,
+          sourceId: connectorConfig.source_id || connectorConfig.id,
+          connectorSlug: connectorConfig.slug,
+          externalId: item.external_id,
+          contentKind: item.content_kind,
+          pipelineStage: "quality_scoring",
+          rejectionReason: `Quality gate failed: ${gate.failedChecks.join(", ")}`,
+          confidenceScore: gate.quality_score,
+          errorCode: "quality_gate_failed",
+          sourceUrl: item.raw_url,
+          metadata: { failedChecks: gate.failedChecks },
+        });
       } else if (!gate.passed) {
         noteGateFailure(gate.failedChecks);
       }

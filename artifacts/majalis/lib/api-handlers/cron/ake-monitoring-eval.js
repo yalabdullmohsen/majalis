@@ -27,7 +27,9 @@ export default async function handler(req, res) {
         const alerts = await evaluateMonitoringRules({
           lastPublishedAt: scheduler?.last_published_at,
         });
-        return { ok: true, alertsTriggered: alerts.filter((a) => a?.created).length, alerts };
+        const { generatePeriodicReport } = await import("../../../lib/auto-knowledge-engine/autonomous/reporting.mjs");
+        const hourly = await generatePeriodicReport("hourly");
+        return { ok: true, alertsTriggered: alerts.filter((a) => a?.created).length, alerts, hourlyReport: hourly.skipped ? "skipped" : "generated" };
       },
       { schedule: "5,20,35,50 * * * *" },
     );

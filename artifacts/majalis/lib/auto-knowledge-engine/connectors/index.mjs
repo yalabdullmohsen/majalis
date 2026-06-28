@@ -1,17 +1,22 @@
 /**
- * RSS Connector
+ * AKE Connectors — RSS, Manifest, Seed, HTML, API, Sitemap, Podcast
  */
 
 import { readFile } from "node:fs/promises";
 import { resolveDataFilePath } from "../../data-paths.mjs";
 import { normalizeContentKind } from "../content-kind.mjs";
 import { BaseConnector } from "../connector-base.mjs";
-import { extractRssItems, cleanText } from "../../auto-content/auto-content-utils.mjs";
+import { enrichItemClassification } from "../autonomous/content-router.mjs";
+import { extractRssItems } from "../../auto-content/auto-content-utils.mjs";
 import {
   buildConditionalHeaders,
   filterNewFeedItems,
   buildConnectorCrawlPatch,
 } from "../incremental-crawl.mjs";
+import { HtmlConnector } from "./html-connector.mjs";
+import { ApiConnector } from "./api-connector.mjs";
+import { SitemapConnector } from "./sitemap-connector.mjs";
+import { PodcastConnector } from "./podcast-connector.mjs";
 
 export class RssConnector extends BaseConnector {
   async fetchItems(syncOptions = {}) {
@@ -34,7 +39,7 @@ export class RssConnector extends BaseConnector {
     const xml = await response.text();
     const rssItems = extractRssItems(xml);
 
-    let items = rssItems.map((item, idx) => ({
+    let items = rssItems.map((item, idx) => enrichItemClassification({
       external_id: `${this.slug}:${Buffer.from(item.link || item.title).toString("base64").slice(0, 40)}`,
       source_slug: this.slug,
       source_attribution: this.name,
@@ -45,7 +50,7 @@ export class RssConnector extends BaseConnector {
       raw_payload: { pubDate: item.pubDate, index: idx, canonical_url: item.link },
       content_kind: normalizeContentKind(this.detectKind(item.title, item.description)),
       published_at: item.pubDate ? new Date(item.pubDate).toISOString() : null,
-    }));
+    }, this));
 
     items = filterNewFeedItems(items, connectorConfig);
     syncOptions._crawlPatch = buildConnectorCrawlPatch(response, xml, items, connectorConfig);
@@ -81,7 +86,7 @@ export class ManifestConnector extends BaseConnector {
     const entries = manifest.items || manifest.decisions || manifest.entries || [];
     const maxEntries = _syncOptions?.manifestLimit || 200;
 
-    return entries.slice(0, maxEntries).map((entry, idx) => ({
+    return entries.slice(0, maxEntries).map((entry, idx) => enrichItemClassification({
       external_id: `${this.slug}:${entry.external_id || entry.id || entry.slug || idx}`,
       source_slug: this.slug,
       source_attribution: entry.source_name || manifest.organization || this.name,
@@ -92,7 +97,7 @@ export class ManifestConnector extends BaseConnector {
       raw_payload: { ...entry, _manifest_file: this.manifestFile },
       content_kind: normalizeContentKind(entry.kind || entry.type, "fiqh_decision"),
       published_at: entry.session_date || entry.date || entry.published_at || null,
-    }));
+    }, this));
   }
 }
 
@@ -108,11 +113,11 @@ export class SeedConnector extends BaseConnector {
       seed_only: true,
     };
     const { items } = await crawlSource(source, new Set());
-    return items.map((item) => ({
+    return items.map((item) => enrichItemClassification({
       ...item,
       source_slug: this.slug,
       source_attribution: this.name,
-    }));
+    }, this));
   }
 }
 
@@ -123,9 +128,19 @@ export function createConnector(config) {
       return new ManifestConnector(config);
     case "seed":
       return new SeedConnector(config);
+    case "html":
+      return new HtmlConnector(config);
+    case "api":
+      return new ApiConnector(config);
+    case "sitemap":
+      return new SitemapConnector(config);
+    case "podcast":
+      return new PodcastConnector(config);
     case "rss":
       return new RssConnector(config);
     default:
       return new BaseConnector(config);
   }
 }
+
+export { HtmlConnector, ApiConnector, SitemapConnector, PodcastConnector };

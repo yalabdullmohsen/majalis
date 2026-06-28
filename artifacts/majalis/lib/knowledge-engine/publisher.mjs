@@ -30,6 +30,7 @@ const TABLE_MAP = {
   sharia_ruling: "sharia_rulings",
   annual_course: "annual_courses",
   sheikh: "sheikhs",
+  event: "islamic_events",
 };
 
 function log(scope, data) {
@@ -120,17 +121,24 @@ function buildRecord(item, analysis) {
       const title = analysis.ai_title || item.raw_title;
       const summary = (analysis.ai_summary || item.raw_body || "").slice(0, 500);
       const sourceUrl = item.raw_url || item.source_url;
+      const slug = slugify(title);
       return {
-        table: "library_items",
-        lookupField: "external_url",
-        lookupValue: sourceUrl,
+        table: "fiqh_council_items",
+        lookupField: "external_id",
         record: {
+          external_id: item.external_id,
           title,
-          description: summary,
-          type: "مقال",
-          category: payload.category || analysis.ai_category || "فقه",
-          external_url: sourceUrl,
-          status: verified ? "approved" : "pending",
+          slug: `${slug}-${item.external_id.slice(-8)}`.slice(0, 120),
+          type: payload.type || "resolution",
+          category: payload.category || analysis.ai_category || "القضايا المعاصرة",
+          summary,
+          content: analysis.ai_summary || item.raw_body,
+          ruling_text: payload.ruling_text || analysis.ai_summary,
+          source_name: item.source_attribution,
+          source_url: sourceUrl,
+          tags: analysis.ai_keywords || [],
+          status: verified ? "published" : "review",
+          published_at: verified ? new Date().toISOString() : null,
         },
       };
     }
@@ -161,6 +169,66 @@ function buildRecord(item, analysis) {
           title: analysis.ai_title || item.raw_title,
           description: analysis.ai_summary || item.raw_body,
           activity_type: kind === "lecture" ? "محاضرة" : kind === "course" ? "دورة" : "درس",
+          status: verified ? "approved" : "pending",
+        },
+      };
+    case "event": {
+      const payload = item.raw_payload || {};
+      return {
+        table: "islamic_events",
+        lookupField: "external_key",
+        record: {
+          external_key: item.external_id,
+          title: analysis.ai_title || item.raw_title,
+          description: analysis.ai_summary || item.raw_body,
+          event_type: payload.event_type || "lecture",
+          location: payload.location || analysis.ai_country,
+          starts_at: payload.dtstart || payload.starts_at || item.published_at,
+          ends_at: payload.dtend || payload.ends_at,
+          source_url: item.raw_url,
+          source_name: item.source_attribution,
+          organizer: analysis.ai_scholar || item.source_attribution,
+          category: analysis.ai_category,
+          tags: analysis.ai_keywords || [],
+          status: verified ? "approved" : "pending",
+        },
+      };
+    }
+    case "sharia_ruling":
+      return {
+        table: "sharia_rulings",
+        lookupField: "external_key",
+        record: {
+          external_key: item.external_id,
+          title: analysis.ai_title || item.raw_title,
+          summary: (analysis.ai_summary || "").slice(0, 500),
+          body: analysis.ai_summary || item.raw_body || "",
+          category: analysis.ai_category || "فقه عام",
+          keywords: analysis.ai_keywords || [],
+          status: verified ? "approved" : "pending",
+        },
+      };
+    case "annual_course":
+      return {
+        table: "annual_courses",
+        lookupField: "external_key",
+        record: {
+          external_key: item.external_id,
+          title: analysis.ai_title || item.raw_title,
+          description: analysis.ai_summary || item.raw_body,
+          source_url: item.raw_url,
+          status: verified ? "approved" : "pending",
+        },
+      };
+    case "sheikh":
+      return {
+        table: "sheikhs",
+        lookupField: "external_key",
+        record: {
+          external_key: item.external_id,
+          name: analysis.ai_scholar || analysis.ai_title || item.raw_title,
+          bio: analysis.ai_summary || item.raw_body,
+          specialty: analysis.ai_category,
           status: verified ? "approved" : "pending",
         },
       };

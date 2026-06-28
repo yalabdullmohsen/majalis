@@ -103,6 +103,9 @@ export function KnowledgeEngineSection() {
           </p>
         </div>
         <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+          <Link href="/admin/platform/autonomous" style={{ ...btnStyle(false), textDecoration: "none", display: "inline-flex", alignItems: "center" }}>
+            المنصة الذاتية
+          </Link>
           <Link href="/admin/platform/monitoring" style={{ ...btnStyle(false), textDecoration: "none", display: "inline-flex", alignItems: "center" }}>
             المراقبة والتنبيهات
           </Link>

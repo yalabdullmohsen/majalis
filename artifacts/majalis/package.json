@@ -39,6 +39,7 @@
     "verify:ake-backfill": "node scripts/verify-ake-backfill.mjs",
     "verify:ake-realtime": "node scripts/verify-ake-realtime.mjs",
     "verify:ake-monitoring": "node scripts/verify-ake-monitoring.mjs",
+    "verify:autonomous-islamic-platform": "node scripts/verify-autonomous-islamic-platform.mjs",
     "verify:content-engines": "node scripts/verify-content-engines.mjs",
     "verify:content-engines:production": "node scripts/verify-content-engines-production.mjs",
     "cd:pipeline": "node scripts/cd/run-pipeline.mjs",

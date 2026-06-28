@@ -6,7 +6,7 @@ export const AKE_MONITORED_CRONS = [
   { name: "auto-knowledge-sync", path: "/api/cron/auto-knowledge-sync", schedule: "*/15 * * * *", label: "AKE full sync" },
   { name: "ake-queue-drain", path: "/api/cron/ake-queue-drain", schedule: "* * * * *", label: "AKE queue drain" },
   { name: "connector-health", path: "/api/cron/connector-health", schedule: "*/15 * * * *", label: "Source health" },
-  { name: "ake-daily-report", path: "/api/cron/ake-daily-report", schedule: "0 4 * * *", label: "Daily report" },
+  { name: "autonomous-platform-cycle", path: "/api/cron/autonomous-platform-cycle", schedule: "7,22,37,52 * * * *", label: "Autonomous platform cycle" },
   { name: "ake-monitoring-eval", path: "/api/cron/ake-monitoring-eval", schedule: "5,20,35,50 * * * *", label: "Monitoring eval" },
   { name: "governance-backup", path: "/api/cron/governance-backup", schedule: "0 2 * * *", label: "Backup" },
   { name: "knowledge-sync", path: "/api/cron/knowledge-sync", schedule: "0 2 * * *", label: "Knowledge sync" },

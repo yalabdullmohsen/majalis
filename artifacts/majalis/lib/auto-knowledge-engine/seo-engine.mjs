@@ -119,6 +119,9 @@ export function routeForKind(kind, recordId) {
     qa: `/qa`,
     news: `/updates`,
     announcement: `/updates`,
+    event: `/calendar`,
+    sharia_ruling: `/rulings`,
+    annual_course: `/annual-courses`,
   };
   return routes[kind] || `/search`;
 }
