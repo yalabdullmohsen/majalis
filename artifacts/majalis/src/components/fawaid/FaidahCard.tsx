@@ -1,7 +1,6 @@
 import { displayText } from "@/lib/display-text";
 import { isDemoId } from "@/lib/demo-content";
-import { ReadingToolbar } from "@/components/reading/ReadingToolbar";
-import { ReadingText } from "@/components/reading/ReadingText";
+import { HighlightedContentCard } from "@/components/reading/HighlightedContentCard";
 
 type FaidahLike = {
   id: string;
@@ -17,28 +16,25 @@ type Props = {
 
 export function FaidahCard({ item }: Props) {
   const cleaned = displayText(item.text);
+  const meta = [
+    item.source ? { label: "المصدر", value: item.source } : null,
+    item.author_name ? { label: "المؤلف", value: item.author_name } : null,
+  ].filter(Boolean) as { label: string; value: string }[];
 
   return (
-    <article className="ui-card faidah-card">
-      {item.category && <span className="page-tag">{item.category}</span>}
-
-      <ReadingText className="faidah-card__body">{cleaned}</ReadingText>
-
-      {(item.source || item.author_name) && (
-        <p className="faidah-card__meta">
-          {item.source && <span>{item.source}</span>}
-          {item.author_name && <span>{item.author_name}</span>}
-        </p>
-      )}
-
-      <ReadingToolbar
-        text={cleaned}
-        title={item.category || "فائدة"}
-        contentType="benefit"
-        contentId={item.id}
-        showSave={!isDemoId(item.id)}
-      />
-    </article>
+    <HighlightedContentCard
+      id={item.id}
+      section="fawaid"
+      primaryText={cleaned}
+      tags={item.category ? [item.category] : []}
+      meta={meta}
+      contentType="benefit"
+      contentId={item.id}
+      showSave={!isDemoId(item.id)}
+      shareTitle={item.category || "فائدة"}
+      shareText={cleaned}
+      className="faidah-card"
+    />
   );
 }
 

@@ -1,7 +1,7 @@
 import { ADHKAR_CATEGORIES, type AdhkarItem } from "@/lib/adhkar-seed";
-import { ReadingToolbar } from "@/components/reading/ReadingToolbar";
-import { ReadingText } from "@/components/reading/ReadingText";
+import { HighlightedContentCard } from "@/components/reading/HighlightedContentCard";
 import { TasbeehCounter } from "@/components/reading/TasbeehCounter";
+import { isDemoId } from "@/lib/demo-content";
 
 type Props = {
   item: AdhkarItem;
@@ -9,35 +9,29 @@ type Props = {
 
 export function AdhkarCard({ item }: Props) {
   const category = ADHKAR_CATEGORIES.find((c) => c.id === item.categoryId);
+  const meta = [
+    item.narrator ? { label: "الراوي", value: item.narrator } : null,
+    item.source ? { label: "المصدر", value: item.source } : null,
+    item.reference ? { label: "المرجع", value: item.reference } : null,
+  ].filter(Boolean) as { label: string; value: string }[];
 
   return (
-    <article className="ui-card adhkar-card">
-      <div className="adhkar-card__head">
-        {category && <span className="page-tag">{category.name}</span>}
-        <span className="adhkar-card__count">× {item.count}</span>
-      </div>
-
-      <ReadingText className="adhkar-card__text">{item.text}</ReadingText>
-
-      <dl className="adhkar-card__meta">
-        {item.narrator && (
-          <div><dt>الراوي</dt><dd>{item.narrator}</dd></div>
-        )}
-        {item.source && (
-          <div><dt>المصدر</dt><dd>{item.source}</dd></div>
-        )}
-        {item.grade && (
-          <div><dt>الدرجة</dt><dd>{item.grade}</dd></div>
-        )}
-        {item.reference && (
-          <div><dt>المرجع</dt><dd>{item.reference}</dd></div>
-        )}
-      </dl>
-
-      <TasbeehCounter target={item.count} />
-
-      <ReadingToolbar text={item.text} title={category?.name || "ذكر"} />
-    </article>
+    <HighlightedContentCard
+      id={item.id}
+      section="adhkar"
+      primaryText={item.text}
+      tags={category ? [category.name] : []}
+      repeatCount={item.count}
+      grade={item.grade}
+      meta={meta}
+      contentType="adhkar"
+      contentId={item.id}
+      showSave={!isDemoId(item.id)}
+      shareTitle={category?.name || "ذكر"}
+      shareText={item.text}
+      extra={<TasbeehCounter storageId={`adhkar-${item.id}`} target={item.count} compact label="عداد الذكر" />}
+      className="adhkar-card"
+    />
   );
 }
 
