@@ -1,68 +1,69 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { QuranRadio } from "@/lib/quran-content";
+import type { QuranRadioStation } from "@/lib/quran-radio-stations";
 
-export type RadioPlayerState = "idle" | "connecting" | "live" | "fallback" | "paused";
+export type RadioPlayerState = "idle" | "connecting" | "live" | "paused" | "error";
 
 type Options = {
   volume: number;
 };
 
-export function useQuranRadioPlayer(station: QuranRadio | undefined, options: Options) {
+const MAX_RETRIES = 2;
+
+export function useQuranRadioPlayer(station: QuranRadioStation | undefined, options: Options) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const urlIndexRef = useRef(0);
+  const retryRef = useRef(0);
   const playingRef = useRef(false);
   const [playing, setPlaying] = useState(false);
   const [playerState, setPlayerState] = useState<RadioPlayerState>("idle");
   const [statusMessage, setStatusMessage] = useState("");
-  const [activeQuality, setActiveQuality] = useState(station?.quality || "");
+  const [nowPlaying, setNowPlaying] = useState<string | null>(null);
 
-  const getUrls = useCallback(() => {
-    if (!station) return [] as string[];
-    return [station.streamUrl, ...(station.fallbackUrls || [])].filter(Boolean);
-  }, [station]);
-
-  const tryNextUrl = useCallback(() => {
+  const resetAudio = useCallback(() => {
     const audio = audioRef.current;
-    const urls = getUrls();
-    if (!audio || urls.length === 0) return false;
-
-    urlIndexRef.current += 1;
-    if (urlIndexRef.current >= urls.length) {
-      setPlayerState("idle");
-      playingRef.current = false;
-      setPlaying(false);
-      setStatusMessage("تعذّر الاتصال بالبث. جرّب إعادة الاتصال أو اختر إذاعة أخرى.");
-      return false;
-    }
-
-    const isFallback = urlIndexRef.current > 0;
-    setPlayerState(isFallback ? "fallback" : "connecting");
-    setStatusMessage(isFallback ? "جاري التبديل إلى رابط احتياطي…" : "جاري الاتصال بالبث…");
-    audio.src = urls[urlIndexRef.current];
+    if (!audio) return;
+    audio.pause();
+    audio.removeAttribute("src");
     audio.load();
-    audio.play().catch(() => tryNextUrl());
-    return true;
-  }, [getUrls]);
+  }, []);
+
+  const fail = useCallback((message: string) => {
+    playingRef.current = false;
+    setPlaying(false);
+    setPlayerState("error");
+    setStatusMessage(message);
+    setNowPlaying(null);
+    resetAudio();
+  }, [resetAudio]);
 
   const play = useCallback(() => {
     const audio = audioRef.current;
     if (!audio || !station) return;
 
-    urlIndexRef.current = 0;
+    retryRef.current = 0;
     setPlayerState("connecting");
     setStatusMessage("جاري الاتصال بالبث…");
-    audio.src = getUrls()[0];
+    setNowPlaying(null);
+    audio.src = station.streamUrl;
     audio.load();
-    audio.play().catch(() => tryNextUrl());
-  }, [getUrls, station, tryNextUrl]);
+    audio.play().catch(() => {
+      if (retryRef.current < MAX_RETRIES) {
+        retryRef.current += 1;
+        setStatusMessage(`إعادة المحاولة (${retryRef.current}/${MAX_RETRIES})…`);
+        window.setTimeout(() => audio.play().catch(() => fail("تعذّر تشغيل البث. تحقق من الاتصال أو جرّب إذاعة أخرى.")), 400);
+      } else {
+        fail("تعذّر تشغيل البث. تحقق من الاتصال أو جرّب إذاعة أخرى.");
+      }
+    });
+  }, [fail, station]);
 
   const pause = useCallback(() => {
     audioRef.current?.pause();
     playingRef.current = false;
     setPlaying(false);
     setPlayerState("paused");
+    setStatusMessage("متوقف");
   }, []);
 
   const toggle = useCallback(() => {
@@ -84,16 +85,21 @@ export function useQuranRadioPlayer(station: QuranRadio | undefined, options: Op
     const onPlaying = () => {
       playingRef.current = true;
       setPlaying(true);
-      setActiveQuality(station?.quality || "128 kbps");
-      setStatusMessage(urlIndexRef.current > 0 ? "متصل عبر رابط احتياطي" : "البث مباشر");
-      setPlayerState(urlIndexRef.current > 0 ? "fallback" : "live");
+      setPlayerState("live");
+      setStatusMessage("● البث مباشر");
     };
     const onPause = () => {
       playingRef.current = false;
       setPlaying(false);
     };
     const onError = () => {
-      tryNextUrl();
+      if (retryRef.current < MAX_RETRIES) {
+        retryRef.current += 1;
+        setStatusMessage(`إعادة المحاولة (${retryRef.current}/${MAX_RETRIES})…`);
+        window.setTimeout(() => audio.play().catch(() => fail("تعذّر تشغيل البث.")), 400);
+        return;
+      }
+      fail("تعذّر تشغيل البث. تحقق من الاتصال أو جرّب إذاعة أخرى.");
     };
     const onWaiting = () => {
       if (playingRef.current) setPlayerState("connecting");
@@ -112,7 +118,7 @@ export function useQuranRadioPlayer(station: QuranRadio | undefined, options: Op
       audio.removeEventListener("waiting", onWaiting);
       audioRef.current = null;
     };
-  }, [station?.quality, tryNextUrl]);
+  }, [fail]);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -121,23 +127,20 @@ export function useQuranRadioPlayer(station: QuranRadio | undefined, options: Op
   }, [options.volume]);
 
   useEffect(() => {
-    urlIndexRef.current = 0;
+    retryRef.current = 0;
     playingRef.current = false;
     setPlaying(false);
     setPlayerState("idle");
     setStatusMessage("");
-    setActiveQuality(station?.quality || "");
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.removeAttribute("src");
-    }
-  }, [station?.id, station?.quality]);
+    setNowPlaying(null);
+    resetAudio();
+  }, [station?.id, resetAudio]);
 
   return {
     playing,
     playerState,
     statusMessage,
-    activeQuality,
+    nowPlaying,
     play,
     pause,
     toggle,

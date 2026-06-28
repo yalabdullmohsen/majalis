@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { PageHeader } from "@/components/ui-common";
 import {
@@ -9,57 +9,41 @@ import {
   getLiveAutoplayPreference,
   saveLiveAutoplayPreference,
 } from "@/lib/quran-live-streams";
+import { useHlsPlayer } from "@/hooks/useHlsPlayer";
+import "@/styles/quran-media.css";
+
+const STATUS_LABELS = {
+  loading: "جاري الاتصال…",
+  live: "● بث مباشر",
+  paused: "○ متوقف",
+  idle: "○ جاهز",
+  error: "✗ تعذّر البث",
+} as const;
 
 export default function QuranLivePage() {
   const [activeId, setActiveId] = useState(LIVE_STREAM_CHANNELS[0]?.id || "");
   const [autoplay, setAutoplay] = useState(getLiveAutoplayPreference);
-  const [status, setStatus] = useState<"loading" | "live" | "error">("loading");
-  const [useFallback, setUseFallback] = useState(false);
-  const mediaRef = useRef<HTMLAudioElement>(null);
-
   const channel = getChannelById(activeId);
+  const { videoRef, state, errorMessage, toggle, reload, play } = useHlsPlayer({
+    streamUrl: channel?.streamUrl,
+    autoplay,
+  });
 
   useEffect(() => {
     saveLiveAutoplayPreference(autoplay);
   }, [autoplay]);
 
-  useEffect(() => {
-    setUseFallback(false);
-    setStatus("loading");
-    const media = mediaRef.current;
-    if (!media || !channel) return;
-
-    const url = useFallback && channel.fallbackUrl ? channel.fallbackUrl : channel.streamUrl;
-    media.src = url;
-    media.load();
-    if (autoplay) {
-      media.play().catch(() => setStatus("error"));
-    }
-
-    const onPlaying = () => setStatus("live");
-    const onError = () => {
-      if (!useFallback && channel.fallbackUrl) {
-        setUseFallback(true);
-      } else {
-        setStatus("error");
-      }
-    };
-    media.addEventListener("playing", onPlaying);
-    media.addEventListener("error", onError);
-    return () => {
-      media.removeEventListener("playing", onPlaying);
-      media.removeEventListener("error", onError);
-    };
-  }, [activeId, autoplay, channel, useFallback]);
-
-  const toggleFullscreen = () => {
-    const el = document.querySelector(".live-player-wrap");
-    if (el?.requestFullscreen) el.requestFullscreen().catch(() => undefined);
+  const selectChannel = (id: string) => {
+    setActiveId(id);
   };
 
   return (
-    <div className="page-shell live-page">
-      <PageHeader eyebrow="البث" title="البث المباشر" subtitle="قنوات قرآنية وحرمين شريفين — بث مباشر." />
+    <div className="page-shell quran-live-page">
+      <PageHeader
+        eyebrow="البث"
+        title="البث المباشر"
+        subtitle="بث الحرم المكي والمسجد النبوي وقناة إثراء — مصادر رسمية."
+      />
 
       <nav className="quran-subnav" aria-label="أقسام القرآن">
         <Link href="/quran" className="quran-subnav__link">المصحف</Link>
@@ -69,56 +53,89 @@ export default function QuranLivePage() {
         <Link href="/quran-radio" className="quran-subnav__link">الإذاعات</Link>
       </nav>
 
-      <div className="live-grid">
-        {LIVE_STREAM_CHANNELS.map((ch) => (
-          <button
-            key={ch.id}
-            type="button"
-            className={`live-card ui-card${activeId === ch.id ? " is-active" : ""}`}
-            onClick={() => setActiveId(ch.id)}
-          >
-            <span className={`live-status live-status--${ch.status}`}>
-              {activeId === ch.id && status === "live" ? "● مباشر" : ch.status === "live" ? "●" : "○"}
-            </span>
-            <strong>{ch.name}</strong>
-            <p>{ch.description}</p>
-            <span className="live-quality">{ch.quality}</span>
-          </button>
-        ))}
-      </div>
+      <ul className="quran-live-grid" aria-label="قنوات البث المباشر">
+        {LIVE_STREAM_CHANNELS.map((ch) => {
+          const isActive = activeId === ch.id;
+          return (
+            <li key={ch.id}>
+              <button
+                type="button"
+                className={`quran-live-card ui-card${isActive ? " is-active" : ""}`}
+                onClick={() => selectChannel(ch.id)}
+                aria-pressed={isActive}
+              >
+                <img src={ch.poster} alt="" className="quran-live-card__icon" width={56} height={56} />
+                <div className="quran-live-card__body">
+                  <strong className="quran-live-card__title">{ch.name}</strong>
+                  <p className="quran-live-card__desc">{ch.description}</p>
+                  <span className="quran-live-card__quality">{ch.quality}</span>
+                </div>
+                <span className={`quran-live-card__badge${isActive && state === "live" ? " is-live" : ""}`}>
+                  {isActive ? STATUS_LABELS[state] : "اختيار"}
+                </span>
+              </button>
+            </li>
+          );
+        })}
+      </ul>
 
       {channel && (
-        <div className="live-player-wrap ui-card">
-          <div className="live-player-head">
-            <div>
-              <h2>{channel.name}</h2>
-              <p>{channel.description}</p>
+        <section className="quran-live-player ui-card" aria-label={`مشغّل ${channel.name}`}>
+          <header className="quran-live-player__head">
+            <div className="quran-live-player__titles">
+              <img src={channel.poster} alt="" className="quran-live-player__icon" width={48} height={48} />
+              <div>
+                <h2 className="quran-live-player__title">{channel.name}</h2>
+                <p className="quran-live-player__desc">{channel.description}</p>
+              </div>
             </div>
-            <div className="live-player-controls">
-              <label className="settings-toggle-row">
-                <span>تشغيل تلقائي</span>
-                <input
-                  type="checkbox"
-                  checked={autoplay}
-                  onChange={(e) => setAutoplay(e.target.checked)}
-                />
-              </label>
-              <button type="button" className="ui-card-btn" onClick={toggleFullscreen}>
-                ملء الشاشة
+            <span className={`quran-live-player__status quran-live-player__status--${state}`}>
+              {STATUS_LABELS[state]}
+            </span>
+          </header>
+
+          <div className="quran-live-player__video-wrap">
+            <video
+              ref={videoRef}
+              className="quran-live-player__video"
+              controls
+              playsInline
+              poster={channel.poster}
+              aria-label={channel.name}
+            />
+          </div>
+
+          {state === "error" && (
+            <div className="quran-live-player__error" role="alert">
+              <p>{errorMessage}</p>
+              <button type="button" className="lesson-unified-card__btn lesson-unified-card__btn--primary" onClick={reload}>
+                إعادة المحاولة
               </button>
             </div>
+          )}
+
+          <div className="quran-live-player__controls">
+            <button type="button" className="lesson-unified-card__btn lesson-unified-card__btn--primary" onClick={toggle}>
+              {state === "live" ? "إيقاف" : "تشغيل"}
+            </button>
+            <button type="button" className="lesson-unified-card__btn lesson-unified-card__btn--secondary" onClick={reload}>
+              إعادة الاتصال
+            </button>
+            <label className="settings-toggle-row quran-live-player__autoplay">
+              <span>تشغيل تلقائي</span>
+              <input
+                type="checkbox"
+                checked={autoplay}
+                onChange={(e) => {
+                  setAutoplay(e.target.checked);
+                  if (e.target.checked) void play();
+                }}
+              />
+            </label>
           </div>
 
-          <div className="live-player-visual" aria-hidden="true">
-            {channel.poster && <img src={channel.poster} alt="" className="live-poster" />}
-            <span className={`live-badge live-badge--${status}`}>
-              {status === "live" ? "بث مباشر" : status === "loading" ? "جاري الاتصال..." : "تعذر الاتصال — جرّب البديل"}
-            </span>
-          </div>
-
-          <audio ref={mediaRef} controls className="live-audio" />
-          <p className="quran-source-note">المصدر: {channel.source}{useFallback ? " (بث بديل)" : ""}</p>
-        </div>
+          <p className="quran-source-note">المصدر: {channel.source}</p>
+        </section>
       )}
     </div>
   );
