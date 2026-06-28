@@ -1,0 +1,10 @@
+{
+  "type": "hadith",
+  "label": "حديث",
+  "table": "verified_hadith_items",
+  "fields": {
+    "text": { "required": true, "type": "string", "label": "متن الحديث" },
+    "source": { "required": true, "type": "string", "label": "المصدر" }
+  },
+  "optionalFields": ["narrator", "grade", "reference"]
+}

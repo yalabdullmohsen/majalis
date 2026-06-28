@@ -118,6 +118,25 @@ export function mapRowToPayload(type, row) {
         importance_score: row.importance_score != null ? Number(row.importance_score) : 50,
         published_at: pick(row, "published_at") || new Date().toISOString(),
       };
+    case "hadith":
+      return {
+        id: pick(row, "id") || `hadith-import-${hashKey([row.text, row.source || row.source_name])}`,
+        text: pick(row, "text"),
+        source: pick(row, "source", "source_name"),
+        source_name: pick(row, "source", "source_name"),
+        narrator: pick(row, "narrator") || null,
+        grade: pick(row, "grade") || null,
+        reference: pick(row, "reference") || null,
+      };
+    case "stories":
+      return {
+        id: pick(row, "id") || `story-import-${hashKey([row.title, row.summary || row.body])}`,
+        title: pick(row, "title"),
+        summary: pick(row, "summary", "description", "body"),
+        body: pick(row, "summary", "body", "content", "title"),
+        category: pick(row, "category") || "قصص",
+        source: pick(row, "source") || null,
+      };
     default:
       return { ...row };
   }

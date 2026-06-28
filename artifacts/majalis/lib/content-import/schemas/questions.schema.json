@@ -1,0 +1,12 @@
+{
+  "type": "questions",
+  "label": "سؤال",
+  "table": "qa_questions",
+  "fields": {
+    "question": { "required": true, "type": "string", "label": "السؤال" },
+    "answer": { "required": true, "type": "string", "label": "الجواب" },
+    "source": { "required": true, "type": "string", "label": "المصدر" }
+  },
+  "oneOf": [["category", "category_name", "category_id"]],
+  "optionalFields": ["ruling_type", "confidence", "status"]
+}

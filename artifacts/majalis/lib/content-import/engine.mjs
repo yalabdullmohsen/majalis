@@ -1,5 +1,5 @@
 import { resolveContentType, TYPE_REGISTRY } from "./registry.mjs";
-import { validateRow, MAX_VALIDATION_ERRORS } from "./validators.mjs";
+import { validateAllRowsWithSchema, MAX_VALIDATION_ERRORS } from "./schema-validator.mjs";
 import { parseContentFile, parseContentString } from "./parsers.mjs";
 import { dedupeRows } from "./dedupe.mjs";
 import { mapRowToPayload } from "./mappers.mjs";
@@ -27,20 +27,8 @@ const UPLOAD_BATCH_SIZE = 2000;
  * @param {Record<string, unknown>[]} rows
  */
 export function validateAllRows(type, rows) {
-  const validationErrors = [];
-  const validRows = [];
-
-  for (let index = 0; index < rows.length; index++) {
-    const result = validateRow(type, rows[index], index);
-    if (result.ok) validRows.push(result.row ?? rows[index]);
-    else {
-      for (const err of result.errors) {
-        if (validationErrors.length < MAX_VALIDATION_ERRORS) validationErrors.push(err);
-      }
-    }
-  }
-
-  return { validRows, validationErrors, allValid: validationErrors.length === 0 };
+  const { validRows, validationErrors, structuredErrors, allValid } = validateAllRowsWithSchema(type, rows);
+  return { validRows, validationErrors, structuredErrors, allValid };
 }
 
 /**
@@ -63,7 +51,7 @@ export async function runContentImportRows(opts) {
   onProgress({ phase: "validating", processed: 0, total: rows.length, pct: 45 });
 
   const validationStarted = Date.now();
-  const { validRows, validationErrors, allValid } = validateAllRows(def.type, rows);
+  const { validRows, validationErrors, structuredErrors, allValid } = validateAllRows(def.type, rows);
   const validation_ms = Date.now() - validationStarted;
 
   if (!allValid) {
@@ -85,6 +73,7 @@ export async function runContentImportRows(opts) {
         failed: 0,
       },
       validationErrors,
+      structuredErrors,
       importErrors: ["تم إلغاء الاستيراد — أصلح أخطاء التحقق ثم أعد المحاولة"],
       rolledBack: true,
     };
@@ -413,6 +402,7 @@ export async function processImportJob(jobId, opts = {}) {
       failed: report.stats?.failed ?? 0,
       progress_pct: 100,
       validation_errors: report.validationErrors || [],
+      structured_errors: report.structuredErrors || [],
       import_errors: report.importErrors || [],
       report,
       timings,
@@ -455,6 +445,36 @@ export async function processQueuedImportJobs(limit = 3) {
 }
 
 export { runImportJobWatchdog, TERMINAL_JOB_STATUSES };
+
+/**
+ * Reset a failed/cancelled job and re-queue for background processing.
+ * @param {string} jobId
+ */
+export async function retryImportJob(jobId) {
+  const job = await getImportJob(jobId);
+  if (!job) return { ok: false, error: "job_not_found", code: "job_not_found" };
+
+  if (!["failed", "cancelled"].includes(job.status)) {
+    return { ok: false, error: "job_not_retryable", code: "job_not_retryable", status: job.status };
+  }
+
+  await updateImportJob(jobId, {
+    status: "queued",
+    phase: "queued",
+    progress_pct: 42,
+    validation_errors: [],
+    import_errors: [],
+    report: null,
+    timings: null,
+    completed_at: null,
+    imported: 0,
+    skipped: 0,
+    failed: 0,
+  });
+  releaseProcessingLock(jobId);
+
+  return { ok: true, jobId, status: "queued" };
+}
 
 /**
  * @deprecated Use queueImportJob + processImportJob — kept for CLI compatibility.

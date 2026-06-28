@@ -1,0 +1,9 @@
+{
+  "type": "benefits",
+  "label": "فائدة",
+  "table": "fawaid",
+  "fields": {
+    "text": { "required": true, "type": "string", "label": "نص الفائدة" }
+  },
+  "optionalFields": ["author_name", "status"]
+}

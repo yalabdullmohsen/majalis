@@ -1,0 +1,12 @@
+{
+  "type": "adhkar",
+  "label": "ذكر",
+  "table": "verified_adhkar_items",
+  "fields": {
+    "text": { "required": true, "type": "string", "label": "نص الذكر" },
+    "category": { "required": true, "type": "string", "label": "التصنيف" },
+    "source": { "required": true, "type": "string", "label": "المصدر" }
+  },
+  "oneOf": [["count", "repeat_count"]],
+  "optionalFields": ["narrator", "grade", "reference"]
+}

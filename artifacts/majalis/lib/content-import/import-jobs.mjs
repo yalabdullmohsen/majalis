@@ -382,6 +382,21 @@ export async function listQueuedImportJobs(limit = 5) {
   return data || [];
 }
 
+export async function listRecentImportJobs(limit = 30) {
+  const admin = getSupabaseAdmin();
+  if (!admin) {
+    return [...localJobs.values()]
+      .sort((a, b) => String(b.started_at || "").localeCompare(String(a.started_at || "")))
+      .slice(0, limit);
+  }
+  const { data } = await admin
+    .from("content_import_jobs")
+    .select("*")
+    .order("started_at", { ascending: false })
+    .limit(limit);
+  return data || [];
+}
+
 /**
  * Mark jobs stuck in active states with no progress for IMPORT_WATCHDOG_MS as failed.
  * @returns {Promise<{ ok: boolean, failed: string[], count: number }>}

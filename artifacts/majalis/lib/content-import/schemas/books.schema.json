@@ -1,0 +1,10 @@
+{
+  "type": "books",
+  "label": "كتاب",
+  "table": "library_items",
+  "fields": {
+    "title": { "required": true, "type": "string", "label": "العنوان" },
+    "category": { "required": true, "type": "string", "label": "التصنيف" }
+  },
+  "optionalFields": ["description", "external_url", "file_url"]
+}

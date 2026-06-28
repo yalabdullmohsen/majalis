@@ -20,7 +20,7 @@ const FORBIDDEN = [
   /from "\.\/staged\.mjs"/,
 ];
 
-const ALLOW_FS_READ = new Set(["parsers.mjs", "ensure-schema.mjs", "phase2-trial.mjs", "import-jobs.mjs"]);
+const ALLOW_FS_READ = new Set(["parsers.mjs", "ensure-schema.mjs", "phase2-trial.mjs", "import-jobs.mjs", "schema-loader.mjs"]);
 
 function walk(dir) {
   const out = [];
@@ -55,6 +55,17 @@ for (const file of walk(importDir)) {
 const apiHandler = readFileSync(join(root, "lib/api-handlers/admin/content-import.js"), "utf8");
 if (/from "node:fs"/.test(apiHandler)) {
   console.error("✗ content-import API handler must not import node:fs");
+  violations++;
+}
+
+const importApiHandler = readFileSync(join(root, "lib/api-handlers/admin/import.js"), "utf8");
+if (/from "node:fs"/.test(importApiHandler)) {
+  console.error("✗ import API handler must not import node:fs");
+  violations++;
+}
+
+if (!/UniversalImportEngine/.test(importApiHandler)) {
+  console.error("✗ import API handler must use UniversalImportEngine");
   violations++;
 }
 

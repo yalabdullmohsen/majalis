@@ -6,8 +6,9 @@ import { getSupabaseAdmin } from "../supabase-admin.mjs";
 import { getPgClient } from "../database.mjs";
 import { dedupeKeyForRow } from "./dedupe.mjs";
 import { hashKey } from "./dedupe.mjs";
+import { resolveImportBatchSize } from "./batch-size.mjs";
 
-const BATCH_SIZE = 500;
+const DEFAULT_BATCH_SIZE = 500;
 const MAX_VALIDATION_ERRORS = 200;
 
 function normalizeName(name) {
@@ -27,6 +28,10 @@ function chunk(arr, size) {
   const out = [];
   for (let i = 0; i < arr.length; i += size) out.push(arr.slice(i, i + size));
   return out;
+}
+
+function resolveBatchSize(rowCount) {
+  return resolveImportBatchSize(rowCount || 0) || DEFAULT_BATCH_SIZE;
 }
 
 async function withTransaction(fn) {
@@ -97,6 +102,13 @@ export async function bulkImportToSupabase(type, payloads, opts = {}) {
     return { ok: true, imported: payloads.length, skipped: 0, failed: 0, errors: [] };
   }
 
+  const batchSize = resolveImportBatchSize(payloads.length);
+  const usePerBatchTx = payloads.length >= 1000;
+
+  if (usePerBatchTx) {
+    return importInBatches(type, payloads, { admin, importer, onProgress, batchSize, continueOnBatchFailure: true });
+  }
+
   try {
     const wrapped = await withTransaction(async (pgClient) => {
       return importer({ admin, pgClient, payloads, onProgress, dryRun });
@@ -125,7 +137,47 @@ const IMPORTERS = {
   benefits: importBenefits,
   adhkar: importAdhkar,
   rulings: importRulings,
+  hadith: importHadith,
+  stories: importStories,
 };
+
+async function importInBatches(type, payloads, opts) {
+  const { admin, importer, onProgress, batchSize, continueOnBatchFailure } = opts;
+  const report = { ok: true, imported: 0, skipped: 0, failed: 0, errors: [], batchFailures: 0 };
+  const batches = chunk(payloads, batchSize);
+  let processed = 0;
+
+  for (let i = 0; i < batches.length; i++) {
+    const batch = batches[i];
+    try {
+      const wrapped = await withTransaction(async (pgClient) => {
+        return importer({ admin, pgClient, payloads: batch, onProgress: () => {}, dryRun: false });
+      });
+      const partial = wrapped.result || wrapped;
+      report.imported += partial.imported ?? 0;
+      report.skipped += partial.skipped ?? 0;
+      report.failed += partial.failed ?? 0;
+      if (partial.errors?.length) report.errors.push(...partial.errors.slice(0, 3));
+      if (partial.ok === false) report.ok = false;
+    } catch (err) {
+      report.batchFailures += 1;
+      report.failed += batch.length;
+      report.errors.push(`دفعة ${i + 1}/${batches.length}: ${err.message || err}`);
+      report.ok = false;
+      if (!continueOnBatchFailure) break;
+    }
+    processed += batch.length;
+    onProgress({
+      processed,
+      total: payloads.length,
+      pct: Math.round((processed / payloads.length) * 100),
+      batch: i + 1,
+      totalBatches: batches.length,
+    });
+  }
+
+  return report;
+}
 
 async function importSheikhs({ admin, pgClient, payloads, onProgress }) {
   const report = { ok: true, imported: 0, skipped: 0, failed: 0, errors: [] };
@@ -144,7 +196,7 @@ async function importSheikhs({ admin, pgClient, payloads, onProgress }) {
     if ((i + 1) % 100 === 0) onProgress({ processed: i + 1, total: payloads.length });
   }
 
-  for (const batch of chunk(toInsert, BATCH_SIZE)) {
+  for (const batch of chunk(toInsert, resolveBatchSize(payloads.length))) {
     if (pgClient) {
       await pgUpsertBatch(pgClient, "sheikhs", batch, "id");
     } else {
@@ -205,7 +257,7 @@ async function importLessons({ admin, pgClient, payloads, onProgress }, isCourse
     if ((i + 1) % 100 === 0) onProgress({ processed: i + 1, total: payloads.length });
   }
 
-  for (const batch of chunk(toInsert, BATCH_SIZE)) {
+  for (const batch of chunk(toInsert, resolveBatchSize(payloads.length))) {
     if (pgClient) {
       await pgUpsertBatch(pgClient, "lessons", batch, "external_key");
     } else {
@@ -236,7 +288,7 @@ async function importLibrary({ admin, pgClient, payloads, onProgress }) {
     if ((i + 1) % 100 === 0) onProgress({ processed: i + 1, total: payloads.length });
   }
 
-  for (const batch of chunk(toInsert, BATCH_SIZE)) {
+  for (const batch of chunk(toInsert, resolveBatchSize(payloads.length))) {
     if (pgClient) {
       await pgUpsertBatch(pgClient, "library_items", batch, "id");
     } else {
@@ -297,7 +349,7 @@ async function importQuestions({ admin, pgClient, payloads, onProgress }) {
     if ((i + 1) % 100 === 0) onProgress({ processed: i + 1, total: payloads.length });
   }
 
-  for (const batch of chunk(toInsert, BATCH_SIZE)) {
+  for (const batch of chunk(toInsert, resolveBatchSize(payloads.length))) {
     if (pgClient) {
       await pgUpsertBatch(pgClient, "qa_questions", batch, "id");
     } else {
@@ -342,7 +394,7 @@ async function importBenefits({ admin, pgClient, payloads, onProgress }) {
     if ((i + 1) % 100 === 0) onProgress({ processed: i + 1, total: payloads.length });
   }
 
-  for (const batch of chunk(toInsert, BATCH_SIZE)) {
+  for (const batch of chunk(toInsert, resolveBatchSize(payloads.length))) {
     if (pgClient) {
       await pgUpsertBatch(pgClient, "fawaid", batch, "id");
     } else {
@@ -417,7 +469,7 @@ async function importAdhkar({ admin, pgClient, payloads, onProgress }) {
     if ((i + 1) % 500 === 0) onProgress({ processed: i + 1, total: payloads.length });
   }
 
-  for (const batch of chunk(items, BATCH_SIZE)) {
+  for (const batch of chunk(items, resolveBatchSize(payloads.length))) {
     if (pgClient) {
       await pgUpsertBatch(pgClient, "verified_adhkar_items", batch, "id");
     } else {
@@ -435,7 +487,7 @@ async function importAdhkar({ admin, pgClient, payloads, onProgress }) {
 async function importRulings({ admin, pgClient, payloads, onProgress }) {
   const report = { ok: true, imported: 0, skipped: 0, failed: 0, errors: [] };
 
-  for (const batch of chunk(payloads, BATCH_SIZE)) {
+  for (const batch of chunk(payloads, resolveBatchSize(payloads.length))) {
     const rows = batch.map((raw) => ({
       external_key: raw.external_key || hashKey([raw.title, raw.category]),
       title: raw.title,
@@ -466,4 +518,88 @@ async function importRulings({ admin, pgClient, payloads, onProgress }) {
   return report;
 }
 
-export { BATCH_SIZE, MAX_VALIDATION_ERRORS };
+async function importHadith({ admin, pgClient, payloads, onProgress }) {
+  const report = { ok: true, imported: 0, skipped: 0, failed: 0, errors: [] };
+  const existing = await fetchAllTableRows(admin, "verified_hadith_items", "id, text, source_name");
+  const seen = new Set(existing.map((r) => dedupeKeyForRow("hadith", r)));
+  const toInsert = [];
+
+  for (let i = 0; i < payloads.length; i++) {
+    const raw = payloads[i];
+    const row = {
+      id: raw.id || `hadith-import-${hashKey([raw.text, raw.source || raw.source_name])}`,
+      text: raw.text,
+      source_name: raw.source || raw.source_name,
+      narrator: raw.narrator || null,
+      grade: raw.grade || null,
+      reference: raw.reference || null,
+      verification_status: "verified",
+      trust_level: 90,
+      updated_at: new Date().toISOString(),
+    };
+    const key = dedupeKeyForRow("hadith", row);
+    if (seen.has(key)) report.skipped++;
+    else {
+      toInsert.push(row);
+      seen.add(key);
+    }
+    if ((i + 1) % 100 === 0) onProgress({ processed: i + 1, total: payloads.length });
+  }
+
+  for (const batch of chunk(toInsert, resolveBatchSize(payloads.length))) {
+    if (pgClient) {
+      await pgUpsertBatch(pgClient, "verified_hadith_items", batch, "id");
+    } else {
+      const { error } = await admin.from("verified_hadith_items").upsert(batch, { onConflict: "id" });
+      if (error) throw new Error(error.message);
+    }
+    report.imported += batch.length;
+  }
+
+  onProgress({ processed: payloads.length, total: payloads.length, pct: 100 });
+  return report;
+}
+
+async function importStories({ admin, pgClient, payloads, onProgress }) {
+  const report = { ok: true, imported: 0, skipped: 0, failed: 0, errors: [] };
+  const existing = await fetchAllTableRows(admin, "akp_stories", "id, title");
+  const seen = new Set(existing.map((r) => dedupeKeyForRow("stories", r)));
+  const toInsert = [];
+
+  for (let i = 0; i < payloads.length; i++) {
+    const raw = payloads[i];
+    const row = {
+      id: raw.id || `story-import-${hashKey([raw.title, raw.summary || raw.body])}`,
+      title: raw.title,
+      body: raw.summary || raw.body || raw.content || raw.title,
+      summary: raw.summary || null,
+      category: raw.category || "قصص",
+      source_name: raw.source || null,
+      verification_status: "verified",
+      trust_level: 90,
+      updated_at: new Date().toISOString(),
+    };
+    const key = dedupeKeyForRow("stories", row);
+    if (seen.has(key)) report.skipped++;
+    else {
+      toInsert.push(row);
+      seen.add(key);
+    }
+    if ((i + 1) % 100 === 0) onProgress({ processed: i + 1, total: payloads.length });
+  }
+
+  for (const batch of chunk(toInsert, resolveBatchSize(payloads.length))) {
+    if (pgClient) {
+      await pgUpsertBatch(pgClient, "akp_stories", batch, "id");
+    } else {
+      const { error } = await admin.from("akp_stories").upsert(batch, { onConflict: "id" });
+      if (error) throw new Error(error.message);
+    }
+    report.imported += batch.length;
+  }
+
+  onProgress({ processed: payloads.length, total: payloads.length, pct: 100 });
+  return report;
+}
+
+export { DEFAULT_BATCH_SIZE as BATCH_SIZE, MAX_VALIDATION_ERRORS };

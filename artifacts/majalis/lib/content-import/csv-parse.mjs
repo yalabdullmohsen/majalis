@@ -1,9 +1,7 @@
-/** Shared CSV parsing — detects comma vs semicolon delimiters (Excel AR locale). */
+/** Shared CSV parsing — detects comma, semicolon, tab, pipe delimiters. */
 
 export function detectCsvDelimiter(headerLine) {
-  let commas = 0;
-  let semis = 0;
-  let tabs = 0;
+  const counts = { ",": 0, ";": 0, "\t": 0, "|": 0 };
   let inQuotes = false;
   for (let i = 0; i < headerLine.length; i++) {
     const ch = headerLine[i];
@@ -16,13 +14,18 @@ export function detectCsvDelimiter(headerLine) {
       continue;
     }
     if (inQuotes) continue;
-    if (ch === ",") commas++;
-    else if (ch === ";") semis++;
-    else if (ch === "\t") tabs++;
+    if (ch in counts) counts[ch]++;
   }
-  if (tabs > commas && tabs > semis) return "\t";
-  if (semis > commas) return ";";
-  return ",";
+
+  let best = ",";
+  let max = counts[","];
+  for (const [d, c] of Object.entries(counts)) {
+    if (c > max) {
+      max = c;
+      best = d;
+    }
+  }
+  return best;
 }
 
 export function splitCsvLine(line, delimiter = ",") {

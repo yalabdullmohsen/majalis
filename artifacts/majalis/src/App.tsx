@@ -101,6 +101,7 @@ const ContentProductionDashboardPage = lazyWithRetry(
   () => import("@/views/admin/ContentProductionDashboardPage"),
   "ContentProductionDashboardPage",
 );
+const ImportCenterPage = lazyWithRetry(() => import("@/views/admin/ImportCenterPage"), "ImportCenterPage");
 const FeatureStatusPage = lazyWithRetry(() => import("@/views/admin/FeatureStatusPage"), "FeatureStatusPage");
 const LearningPathsPage = lazy(() => import("@/views/learning/LearningPathsPage"));
 const LearningPathDetailPage = lazy(() => import("@/views/learning/LearningPathDetailPage"));
@@ -258,7 +259,8 @@ function Router() {
       <Route path="/admin/automation/review"><AdminLazyRoute component={AutomationReviewPage} /></Route>
       <Route path="/admin/content-import/url"><AdminLazyRoute component={LessonImportUrlPage} /></Route>
       <Route path="/admin/content-import/image"><AdminLazyRoute component={LessonImportImagePage} /></Route>
-      <Route path="/admin/import"><Redirect to="/admin/content-import/url" /></Route>
+      <Route path="/admin/import/center"><AdminLazyRoute component={ImportCenterPage} /></Route>
+      <Route path="/admin/import"><AdminLazyRoute component={ImportCenterPage} /></Route>
       <Route path="/admin/content"><Redirect to="/admin/auto-content" /></Route>
       <Route path="/admin/auto-content"><AdminLazyRoute component={AutoContentPage} /></Route>
       <Route path="/admin/fiqh-review"><AdminLazyRoute component={FiqhReviewPage} /></Route>

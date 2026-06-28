@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 export { parseCsvString } from "./csv-parse.mjs";
-import { parseCsvString } from "./csv-parse.mjs";
+import { parseUniversalCsv, parseUniversalFile } from "./universal-csv-parser.mjs";
 
 /**
  * Parse JSON array or single object from string.
@@ -17,9 +17,7 @@ export function parseJsonString(content) {
  * @param {string} filename
  */
 export function parseContentString(content, filename = "upload.json") {
-  const lower = String(filename).toLowerCase();
-  if (lower.endsWith(".csv")) return parseCsvString(content);
-  return parseJsonString(content);
+  return parseUniversalFile(content, filename).rows;
 }
 
 /** CLI-only: reads from local filesystem. */
@@ -29,12 +27,16 @@ export function parseJsonFile(filePath) {
 
 /** CLI-only: reads from local filesystem. */
 export function parseCsvFile(filePath) {
-  return parseCsvString(readFileSync(filePath, "utf8").replace(/^\uFEFF/, ""));
+  return parseUniversalCsv(readFileSync(filePath)).rows;
 }
 
 /** CLI-only */
 export function parseContentFile(filePath) {
   const lower = filePath.toLowerCase();
-  if (lower.endsWith(".csv")) return parseCsvFile(filePath);
+  if (lower.endsWith(".csv") || lower.endsWith(".tsv") || lower.endsWith(".txt")) {
+    return parseCsvFile(filePath);
+  }
   return parseJsonFile(filePath);
 }
+
+export { parseUniversalCsv, parseUniversalFile };

@@ -1,0 +1,10 @@
+{
+  "type": "rulings",
+  "label": "فتوى",
+  "table": "sharia_rulings",
+  "fields": {
+    "title": { "required": true, "type": "string", "label": "العنوان" },
+    "category": { "required": true, "type": "string", "label": "التصنيف" }
+  },
+  "oneOf": [["body", "summary"]]
+}

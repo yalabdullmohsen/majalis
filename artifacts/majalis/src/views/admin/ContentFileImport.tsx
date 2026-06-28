@@ -3,6 +3,9 @@ import { useQueryClient } from "@tanstack/react-query";
 import { adminImportFetch } from "@/lib/admin-api";
 import { C } from "@/lib/theme";
 import { chunkRows, formatImportApiError, parseImportFile, UPLOAD_BATCH_SIZE } from "@/lib/import-parse";
+import { previewImport, type ImportPreview } from "@/lib/import-center-api";
+
+const IMPORT_API = "/api/admin/import";
 
 const IMPORT_TYPES = [
   { value: "lessons", label: "الدروس" },
@@ -172,7 +175,7 @@ async function pollJobUntilDone(
   for (;;) {
     const elapsed = Date.now() - started;
     const shouldKick = !kicked && elapsed >= KICK_AFTER_MS;
-    const url = `/api/admin/content-import?action=progress&jobId=${encodeURIComponent(jobId)}${shouldKick ? "&kick=1" : ""}`;
+    const url = `${IMPORT_API}?action=status&jobId=${encodeURIComponent(jobId)}${shouldKick ? "&kick=1" : ""}`;
 
     if (shouldKick) kicked = true;
 
@@ -224,6 +227,9 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
   const [report, setReport] = useState<ImportReport | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [canRetry, setCanRetry] = useState(false);
+  const [preview, setPreview] = useState<ImportPreview | null>(null);
+  const [pendingFile, setPendingFile] = useState<File | null>(null);
+  const [pendingRows, setPendingRows] = useState<Record<string, unknown>[]>([]);
 
   const close = () => {
     setOpen(false);
@@ -234,6 +240,9 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
     setError(null);
     setCanRetry(false);
     setFilename("");
+    setPreview(null);
+    setPendingFile(null);
+    setPendingRows([]);
     retryFileRef.current = null;
   };
 
@@ -287,7 +296,7 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
     setProgressPct(2);
     setCanRetry(false);
 
-    const startRes = await adminImportFetch("/api/admin/content-import", {
+    const startRes = await adminImportFetch(IMPORT_API, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ action: "start", type, filename: file.name, totalRows: rows.length }),
@@ -305,7 +314,7 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
       const pct = Math.round(((i + 1) / batches.length) * 38);
       setProgressPct(pct);
 
-      const stageRes = await adminImportFetch("/api/admin/content-import", {
+      const stageRes = await adminImportFetch(IMPORT_API, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -324,7 +333,7 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
     setPhase("بدء المعالجة في الخلفية");
     setProgressPct(40);
 
-    const commitRes = await adminImportFetch("/api/admin/content-import", {
+    const commitRes = await adminImportFetch(IMPORT_API, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ action: "commit", jobId }),
@@ -402,29 +411,57 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
     }
   };
 
-  const runImport = async (file: File) => {
+  const confirmImport = async () => {
+    const file = pendingFile;
+    const rows = pendingRows;
+    if (!file || !rows.length) return;
+    setPreview(null);
     setRunning(true);
-    setReport(null);
     setError(null);
-    setFilename(file.name);
-    setProgressPct(0);
-    retryFileRef.current = file;
-
     try {
-      const content = await file.text();
-      setPhase("تحليل الملف");
-      const rows = parseImportFile(content, file.name);
-
-      if (!rows.length) {
-        throw new Error("الملف فارغ أو لا يحتوي على صفوف صالحة");
-      }
-
       await runAsyncImport(file, rows);
     } catch (e) {
       setError(String((e as Error).message || e));
       setCanRetry(true);
     } finally {
       setRunning(false);
+      setPendingFile(null);
+      setPendingRows([]);
+    }
+  };
+
+  const runImport = async (file: File) => {
+    setReport(null);
+    setError(null);
+    setFilename(file.name);
+    setProgressPct(0);
+    setPreview(null);
+    retryFileRef.current = file;
+
+    try {
+      const content = await file.text();
+      setPhase("فحص الملف");
+      const rows = parseImportFile(content, file.name);
+
+      if (!rows.length) {
+        throw new Error("الملف فارغ أو لا يحتوي على صفوف صالحة");
+      }
+
+      const previewResult = await previewImport({ type, filename: file.name, content });
+      setPreview(previewResult);
+
+      if (!previewResult.canImport) {
+        const structured = previewResult.structuredErrors?.[0]?.message;
+        setError(structured || previewResult.validationErrors?.[0] || previewResult.error || "فشل فحص الملف");
+        setCanRetry(true);
+        return;
+      }
+
+      setPendingFile(file);
+      setPendingRows(rows);
+    } catch (e) {
+      setError(String((e as Error).message || e));
+      setCanRetry(true);
     }
   };
 
@@ -562,6 +599,43 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
                 <p style={{ margin: "0.35rem 0 0", fontSize: "0.8125rem", color: C.inkSoft }}>
                   {phase} ({progressPct}%)
                 </p>
+              </div>
+            )}
+
+            {preview && (
+              <div
+                style={{
+                  marginTop: "0.875rem",
+                  padding: "0.875rem",
+                  borderRadius: "0.375rem",
+                  background: preview.canImport ? "#EFF6FF" : "#FEF3C7",
+                  border: `1px solid ${C.line}`,
+                  fontSize: "0.8125rem",
+                }}
+              >
+                <p style={{ margin: 0, fontWeight: 600 }}>معاينة قبل الاستيراد</p>
+                <p style={{ margin: "0.35rem 0 0" }}>
+                  صفوف: {preview.stats?.totalRows ?? 0} · صالح: {preview.stats?.validRows ?? 0} · مرفوض:{" "}
+                  {preview.stats?.rejectedRows ?? 0} · مكرر: {preview.stats?.duplicateRows ?? 0}
+                </p>
+                <p style={{ margin: "0.25rem 0 0", color: C.inkSoft }}>
+                  ترميز: {preview.encoding} · فاصل: {preview.delimiter} · دفعة: {preview.batchSize}
+                </p>
+                {preview.missingRequiredFields?.length ? (
+                  <p style={{ margin: "0.35rem 0 0", color: "#92400E" }}>
+                    أعمدة ناقصة: {preview.missingRequiredFields.join("، ")}
+                  </p>
+                ) : null}
+                {pendingFile && preview.canImport ? (
+                  <button
+                    type="button"
+                    disabled={running}
+                    onClick={() => void confirmImport()}
+                    style={{ ...BTN, marginTop: "0.5rem", background: C.emerald, color: C.parchment, border: "none" }}
+                  >
+                    بدء الاستيراد ({preview.stats?.importableRows ?? 0} صف)
+                  </button>
+                ) : null}
               </div>
             )}
 

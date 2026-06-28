@@ -1,0 +1,9 @@
+{
+  "type": "sheikhs",
+  "label": "شيخ",
+  "table": "sheikhs",
+  "fields": {
+    "name": { "required": true, "type": "string", "label": "الاسم" }
+  },
+  "optionalFields": ["bio", "city", "photo_url"]
+}

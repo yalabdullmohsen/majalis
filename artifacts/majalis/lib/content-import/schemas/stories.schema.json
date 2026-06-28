@@ -1,0 +1,10 @@
+{
+  "type": "stories",
+  "label": "قصة",
+  "table": "akp_stories",
+  "fields": {
+    "title": { "required": true, "type": "string", "label": "العنوان" },
+    "summary": { "required": true, "type": "string", "label": "الملخص" }
+  },
+  "optionalFields": ["category", "source"]
+}

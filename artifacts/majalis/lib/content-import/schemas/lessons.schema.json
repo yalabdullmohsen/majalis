@@ -1,0 +1,16 @@
+{
+  "type": "lessons",
+  "label": "درس",
+  "table": "lessons",
+  "fields": {
+    "title": { "required": true, "type": "string", "label": "العنوان" },
+    "description": { "required": true, "type": "string", "label": "الوصف" },
+    "category": { "required": true, "type": "string", "label": "التصنيف" },
+    "source_url": { "required": true, "type": "string", "label": "رابط المصدر" }
+  },
+  "oneOf": [
+    ["sheikh_name", "speaker_name"],
+    ["date", "day_of_week", "schedule"],
+    ["location", "mosque", "city"]
+  ]
+}
