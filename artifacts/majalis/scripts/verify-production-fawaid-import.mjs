@@ -12,6 +12,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { parseContentFile } from "../lib/content-import/parsers.mjs";
 import { validateAllRows } from "../lib/content-import/engine.mjs";
+import { isQuizLikeFawaidText } from "../lib/content-import/fawaid-quality.mjs";
 import {
   startImportJob,
   stageImportBatch,
@@ -24,7 +25,7 @@ const root = join(__dirname, "..");
 const production = process.argv.includes("--production");
 const dryRun = process.argv.includes("--dry-run");
 const PRODUCTION = process.env.MAJALIS_PRODUCTION_URL || "https://www.majlisilm.com";
-const CSV_PATH = join(root, "data/imports/fawaid_500.csv");
+const CSV_PATH = join(root, "data/imports/fawaid_sample.csv");
 
 function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
@@ -35,12 +36,16 @@ async function runLocalImport(forceDryRun = dryRun) {
     throw new Error(`Missing ${CSV_PATH}`);
   }
   const rows = parseContentFile(CSV_PATH);
+  const quizLike = rows.filter((r) => isQuizLikeFawaidText(r.text));
+  if (quizLike.length) {
+    throw new Error(`fawaid_sample.csv contains ${quizLike.length} quiz-like rows — rejected`);
+  }
   const { allValid, validationErrors } = validateAllRows("benefits", rows);
-  if (!allValid) throw new Error(`fawaid_500.csv validation failed: ${validationErrors[0]}`);
+  if (!allValid) throw new Error(`fawaid_sample.csv validation failed: ${validationErrors[0]}`);
 
   const started = await startImportJob({
     type: "benefits",
-    filename: "fawaid_500 (1).csv",
+    filename: "fawaid_sample.csv",
     totalRows: rows.length,
     createdBy: "service",
   });
@@ -60,7 +65,7 @@ async function runLocalImport(forceDryRun = dryRun) {
   }
 
   console.log(
-    `✓ fawaid_500.csv import ${forceDryRun ? "(dry-run) " : ""}OK — ${rows.length} rows → table fawaid`,
+    `✓ fawaid_sample.csv import ${forceDryRun ? "(dry-run) " : ""}OK — ${rows.length} rows → table fawaid`,
   );
   return { ok: true, jobId: started.jobId, rows: rows.length, dryRun: forceDryRun };
 }
@@ -75,7 +80,7 @@ async function runProductionApiImport() {
     return { ok: true, skipped: true };
   }
 
-  const rows = parseContentFile(CSV_PATH).slice(0, 5).map((r, i) => ({
+  const rows = parseContentFile(CSV_PATH).slice(0, 3).map((r, i) => ({
     ...r,
     text: `${r.text} [verify-${Date.now()}-${i}]`,
   }));
@@ -89,7 +94,7 @@ async function runProductionApiImport() {
     body: JSON.stringify({
       action: "start",
       type: "benefits",
-      filename: "fawaid_500 (1).csv",
+      filename: "fawaid_sample.csv",
       totalRows: rows.length,
     }),
   });

@@ -26,6 +26,7 @@ import {
   searchLibraryCatalog,
   sortLibraryItems,
 } from "./library-service";
+import { filterQualityFawaid } from "./content-quality";
 import { safeSupabaseQuery, isMissingSchemaError } from "./safe-supabase";
 import { normalizeActivityType } from "./activity-label";
 import { isBootstrapOwnerEmail, isOwnerProfile, hasUnrestrictedAdminAccess, resolveUserEmail } from "./owner-config";
@@ -334,11 +335,13 @@ export async function getMyRegistrations(userId: string) {
 }
 
 export async function getApprovedFawaid() {
-  return safeSupabaseQuery(
+  const result = await safeSupabaseQuery(
     "getApprovedFawaid",
     () => supabase.from("fawaid").select("*").eq("status", "approved").order("created_at", { ascending: false }),
     DEMO_FAWAID,
   );
+  const rows = Array.isArray(result.data) ? result.data : [];
+  return { ...result, data: filterQualityFawaid(rows) };
 }
 
 export async function submitFawaid(userId: string, text: string, authorName: string) {

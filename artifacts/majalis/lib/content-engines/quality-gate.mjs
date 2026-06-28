@@ -3,6 +3,7 @@
  */
 
 import { mapCategory } from "./pipeline.mjs";
+import { isQuizLikeFawaidText } from "../content-import/fawaid-quality.mjs";
 
 const MIN_QUALITY = 60;
 const MIN_CONFIDENCE = 50;
@@ -42,6 +43,7 @@ export function runEngineQualityGate(item, enrichment = {}) {
 export function scoreBenefit(text) {
   const t = String(text || "").trim();
   if (t.length < 15) return 0;
+  if (isQuizLikeFawaidText(t)) return 0;
   if (t.length > 400) return 40;
   const vague = /^(من المهم|يجب|لا بد|ينبغي)$/i.test(t);
   if (vague) return 30;

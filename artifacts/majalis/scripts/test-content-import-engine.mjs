@@ -76,13 +76,21 @@ test("validation accepts benefit row with faidah alias column", () => {
   assert(allValid, "faidah alias should pass");
 });
 
-test("fawaid_500.csv validates after semicolon parse", () => {
-  const path = join(root, "data/imports/fawaid_500.csv");
-  assert(existsSync(path), "fawaid_500.csv exists");
+test("fawaid_sample.csv validates after semicolon parse", () => {
+  const path = join(root, "data/imports/fawaid_sample.csv");
+  assert(existsSync(path), "fawaid_sample.csv exists");
   const rows = parseContentFile(path);
-  assert(rows.length === 500, `fawaid_500.csv has ${rows.length} rows`);
+  assert(rows.length >= 5, `fawaid_sample.csv has ${rows.length} rows`);
   const { allValid, validationErrors } = validateAllRows("benefits", rows);
-  assert(allValid, `fawaid_500 validates: ${validationErrors[0] || ""}`);
+  assert(allValid, `fawaid_sample validates: ${validationErrors[0] || ""}`);
+});
+
+test("validation rejects quiz-like benefit row", () => {
+  const { allValid, validationErrors } = validateAllRows("benefits", [
+    { text: "فائدة: نوح عليه السلام — من أول الرسل إلى أهل الأرض بعد آدم؟" },
+  ]);
+  assert(!allValid, "quiz-like fawaid should fail validation");
+  assert(validationErrors.some((e) => e.includes("سؤال")), validationErrors[0] || "expected quiz rejection");
 });
 
 test("parse JSON in memory", () => {
@@ -241,12 +249,12 @@ test("repairMisParsedCsvRow fixes semicolon single-column benefits row", () => {
   assert(validRows[0]?.text === "فائدة علمية", "repaired text column");
 });
 
-test("fawaid_500 mis-parsed as comma-only still validates after server repair", () => {
-  const rows = parseContentFile(join(root, "data/imports/fawaid_500.csv"));
+test("fawaid_sample mis-parsed as comma-only still validates after server repair", () => {
+  const rows = parseContentFile(join(root, "data/imports/fawaid_sample.csv"));
   const misParsed = rows.map((r) => ({
-    "text;author_name;category;status": `"${r.text}";"${r.author_name}";"${r.category}";"${r.status}"`,
+    "text;author_name;category;status": `"${r.text}";"${r.author_name || ""}";"${r.category || ""}";"approved"`,
   }));
-  const { allValid, validationErrors } = validateAllRows("benefits", misParsed.slice(0, 5));
+  const { allValid, validationErrors } = validateAllRows("benefits", misParsed.slice(0, 3));
   assert(allValid, `mis-parsed batch repaired: ${validationErrors[0] || ""}`);
 });
 

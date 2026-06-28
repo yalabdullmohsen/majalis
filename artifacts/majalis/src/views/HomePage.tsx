@@ -1,33 +1,18 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { Link, useLocation } from "wouter";
+import { useLocation } from "wouter";
 import { SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { HomeUpcomingLessons } from "@/components/home/HomeUpcomingLessons";
-import { HomeUpcomingCourses } from "@/components/home/HomeUpcomingCourses";
 import { HomePrayerTimes } from "@/components/home/HomePrayerTimes";
 import { HomeDailyFaida } from "@/components/home/HomeDailyFaida";
 import { HomeDailyDhikr } from "@/components/home/HomeDailyDhikr";
 import { HomeDailyQuestion } from "@/components/home/HomeDailyQuestion";
-import { HomeFeaturedLibrary } from "@/components/home/HomeFeaturedLibrary";
-import { HomeLatestUpdates } from "@/components/home/HomeLatestUpdates";
+import { HomeQuranSection } from "@/components/home/HomeQuranSection";
+import { HomeRadioSection } from "@/components/home/HomeRadioSection";
+import { HomeLiveSection } from "@/components/home/HomeLiveSection";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
-
-const QUICK_LINKS = [
-  { href: "/quran", label: "القرآن", meta: "مصحف وتلاوة" },
-  { href: "/lessons", label: "الدروس", meta: "أحدث وقادمة" },
-  { href: "/qa", label: "الأسئلة", meta: "فتاوى وإجابات" },
-  { href: "/rulings", label: "الأحكام", meta: "موسوعة شرعية" },
-  { href: "/library", label: "المكتبة", meta: "كتب ومتون" },
-  { href: "/fawaid", label: "الفوائد", meta: "مختصرات" },
-  { href: "/miracles", label: "الإعجاز", meta: "علمي" },
-  { href: "/quran/surah-stories", label: "القصص", meta: "قرآنية" },
-  { href: "/search", label: "البحث", meta: "ذكي" },
-  { href: "/assistant", label: "المساعد", meta: "علمي" },
-  { href: "/calendar", label: "التقويم", meta: "دروس" },
-  { href: "/adhkar", label: "الأذكار", meta: "يومي" },
-];
 
 function SafeHomeSection({ name, children }: { name: string; children: React.ReactNode }) {
   return <SectionErrorBoundary name={name}>{children}</SectionErrorBoundary>;
@@ -71,66 +56,53 @@ export default function HomePage({
             <p className="home-hero-lead home-hero-lead--v3">
               دروس وفتاوى وقرآن ومحتوى موثّق في منصة واحدة.
             </p>
-            <form onSubmit={submitSearch} className="home-search home-search--v3" aria-label="البحث">
-              <input
-                value={term}
-                onChange={(e) => setTerm(e.target.value)}
-                placeholder="ابحث..."
-              />
-              <button type="submit">بحث</button>
-            </form>
           </div>
         </div>
       </section>
 
       <main className="home-container home-main home-main--v3">
-        <SafeHomeSection name="أحدث الدروس">
+        <section className="home-section home-search-section" aria-label="البحث">
+          <form onSubmit={submitSearch} className="home-search home-search--v3 home-search--standalone">
+            <input
+              value={term}
+              onChange={(e) => setTerm(e.target.value)}
+              placeholder="ابحث في الدروس والفتاوى والقرآن..."
+              aria-label="البحث في المنصة"
+            />
+            <button type="submit">بحث</button>
+          </form>
+        </section>
+
+        <SafeHomeSection name="الدروس">
           <HomeUpcomingLessons initialLessons={initialFeaturedLessons} />
         </SafeHomeSection>
 
-        <SafeHomeSection name="الدورات">
-          <HomeUpcomingCourses />
+        <SafeHomeSection name="الأسئلة">
+          <HomeDailyQuestion />
         </SafeHomeSection>
 
-        <section className="home-section ds-section">
-          <div className="ds-section__head">
-            <h2 className="ds-section__title">أقسام المنصة</h2>
-            <Link href="/settings" className="ds-section__link">
-              الإعدادات
-            </Link>
-          </div>
-          <div className="home-quick-grid">
-            {QUICK_LINKS.map((item) => (
-              <Link key={item.href} href={item.href} className="home-quick-link">
-                {item.label}
-                <span>{item.meta}</span>
-              </Link>
-            ))}
-          </div>
-        </section>
+        <SafeHomeSection name="الفوائد">
+          <HomeDailyFaida />
+        </SafeHomeSection>
 
-        <section className="home-daily-row">
-          <SafeHomeSection name="ذكر اليوم">
-            <HomeDailyDhikr />
-          </SafeHomeSection>
-          <SafeHomeSection name="سؤال اليوم">
-            <HomeDailyQuestion />
-          </SafeHomeSection>
-          <SafeHomeSection name="فائدة اليوم">
-            <HomeDailyFaida />
-          </SafeHomeSection>
-        </section>
+        <SafeHomeSection name="القرآن">
+          <HomeQuranSection />
+        </SafeHomeSection>
+
+        <SafeHomeSection name="الأذكار">
+          <HomeDailyDhikr />
+        </SafeHomeSection>
 
         <SafeHomeSection name="مواقيت الصلاة">
           <HomePrayerTimes />
         </SafeHomeSection>
 
-        <SafeHomeSection name="المكتبة">
-          <HomeFeaturedLibrary />
+        <SafeHomeSection name="الإذاعة">
+          <HomeRadioSection />
         </SafeHomeSection>
 
-        <SafeHomeSection name="آخر التحديثات">
-          <HomeLatestUpdates />
+        <SafeHomeSection name="البث المباشر">
+          <HomeLiveSection />
         </SafeHomeSection>
       </main>
     </div>

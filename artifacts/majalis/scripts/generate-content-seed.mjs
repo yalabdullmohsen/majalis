@@ -214,8 +214,44 @@ function extractSheikhBios(source) {
   return items;
 }
 
+const MANUAL_FAWAID_ROWS = {
+  "فوائد قرآنية": [
+    fw("تدبر آيات الرحمة يورث القلب توقير الله وخوفاً من معصيته.", "القرآن الكريم", null),
+    fw("من فوائد قراءة القرآن: هداية القلب وطمأنينة النفس ونور البصيرة.", "القرآن الكريم", null),
+    fw("المواظبة على ورد قرآني يثبت اللسان على ذكر الله ويحفظ العهد مع كتاب رب العالمين.", null, "فائدة تربوية"),
+  ],
+  "فوائد حديثية": [
+    fw("المواظبة على الأذكار المأثورة تحفظ العبد من الغفلة وتربط القلب بالله.", "السنة النبوية", null),
+    fw("من فوائد اتباع السنة: استقامة السلوك وبركة الوقت وقبول العمل.", "السنة", null),
+    fw("حفظ الأحاديث الصحيحة يقوي المعرفة بالدين ويصون المسلم من الضلال.", null, "فائدة علمية"),
+  ],
+  "فوائد عقدية": [
+    fw("معرفة توحيد الله أساس قبول الأعمال وصيانة القلب من الشرك الخفي.", null, "فائدة عقدية"),
+    fw("الإخلاص لله وحده يجعل العبادة خالصة مقبولة عند رب العالمين.", null, "فائدة عقدية"),
+  ],
+  "فوائد فقهية": [
+    fw("تعلم أحكام الطهارة والصلاة يحفظ العبادة من البطلان ويرفع الخشوع.", null, "فائدة فقهية"),
+    fw("معرفة الحلال والحرام تحمي المسلم من الوقوع في المحرمات وتيسر المعاملات.", null, "فائدة فقهية"),
+  ],
+  "فوائد تربوية": [
+    fw("الصحبة الصالحة تذكّر بالآخرة وتدفع إلى طاعة الله وترك المعاصي.", null, "فائدة تربوية"),
+    fw("حسن الخلق من أعظم ما يقرب العبد إلى الله ويرفع مكانته عند الناس.", null, "فائدة تربوية"),
+    fw("التواضع للعلماء والاستفادة من مجالس العلم يورث حلاوة الإيمان.", null, "فائدة تربوية"),
+  ],
+  "فوائد دعوية": [
+    fw("الدعوة بالحكمة والموعظة الحسنة أقرب إلى القبول وأبعد عن التنفير.", null, "فائدة دعوية"),
+    fw("قدوة المسلم في سلوكه أبلغ من كثير من الكلام في تأثير الدعوة.", null, "فائدة دعوية"),
+  ],
+  "آداب وأخلاق": [
+    fw("بر الوالدين من أعظم أبواب الخير وسبب لبركة العمر والرزق.", null, "آداب"),
+    fw("كظم الغيظ وصفح النفس من صفات المتقين وعلامات قوة الإيمان.", null, "آداب"),
+    fw("حفظ اللسان من الغيبة والنميمة يصون المجتمع ويرفع درجة العبد.", null, "آداب"),
+  ],
+};
+
 function ensureMinRows(rows, min, fillerPool, catName = null) {
   const out = dedupeRows([...rows]);
+  if (!fillerPool.length) return out.slice(0, min);
   let i = 0;
   while (out.length < min) {
     const item = fillerPool[i % fillerPool.length];
@@ -296,9 +332,16 @@ function buildQaByCategory() {
 
 function buildFawaidByCategory() {
   const demoSrc = fs.readFileSync(path.join(root, "src/lib/demo-content.ts"), "utf8");
-  const quizSrc = fs.readFileSync(path.join(__dirname, "generate-quiz-questions.mjs"), "utf8");
   const buckets = Object.fromEntries(FAWAID_CATEGORIES.map((c) => [c, []]));
   const globalPool = [];
+
+  for (const [catName, rows] of Object.entries(MANUAL_FAWAID_ROWS)) {
+    if (!buckets[catName]) buckets[catName] = [];
+    for (const row of rows) {
+      buckets[catName].push(row);
+      globalPool.push(row);
+    }
+  }
 
   for (const row of extractDemoFawaid(demoSrc)) {
     buckets[FAWAID_CATEGORIES[4]].push(row);
@@ -322,11 +365,6 @@ function buildFawaidByCategory() {
   for (const bio of extractSheikhBios(demoSrc)) {
     const row = fw(bio, null, "سيرة عالم");
     buckets[FAWAID_CATEGORIES[6]].push(row);
-    globalPool.push(row);
-  }
-  for (const [, , , question, answer] of extractQuizRows(quizSrc)) {
-    const row = fw("فائدة: " + answer + " — " + question, null, null);
-    buckets[FAWAID_CATEGORIES[1]].push(row);
     globalPool.push(row);
   }
 

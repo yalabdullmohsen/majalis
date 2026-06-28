@@ -6,6 +6,7 @@ import { getSupabaseAdmin } from "../supabase-admin.mjs";
 import { getPgClient } from "../database.mjs";
 import { dedupeKeyForRow } from "./dedupe.mjs";
 import { hashKey } from "./dedupe.mjs";
+import { isQuizLikeFawaidText } from "./fawaid-quality.mjs";
 
 const BATCH_SIZE = 500;
 const MAX_VALIDATION_ERRORS = 200;
@@ -333,6 +334,11 @@ async function importBenefits({ admin, pgClient, payloads, onProgress }) {
 
   for (let i = 0; i < payloads.length; i++) {
     const row = payloads[i];
+    if (isQuizLikeFawaidText(row.text)) {
+      report.skipped++;
+      report.errors.push({ row: i + 1, message: "quiz-like text rejected for fawaid" });
+      continue;
+    }
     const key = dedupeKeyForRow("benefits", row);
     if (seen.has(key)) report.skipped++;
     else {

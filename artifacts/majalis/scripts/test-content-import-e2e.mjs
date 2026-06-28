@@ -25,7 +25,7 @@ const root = join(__dirname, "..");
 const production = process.argv.includes("--production");
 const PRODUCTION = process.env.MAJALIS_PRODUCTION_URL || "https://www.majlisilm.com";
 const ADHKAR_CSV_PATH = join(root, "data/imports/adhkar.csv");
-const FAWAID_CSV_PATH = join(root, "data/imports/fawaid_500.csv");
+const FAWAID_CSV_PATH = join(root, "data/imports/fawaid_sample.csv");
 
 let passed = 0;
 let failed = 0;
@@ -99,7 +99,7 @@ async function testLocalImportPipeline() {
     table: "verified_adhkar_items",
   });
   await testImportCsvPipeline({
-    label: "fawaid_500.csv",
+    label: "fawaid_sample.csv",
     type: "benefits",
     csvPath: FAWAID_CSV_PATH,
     table: "fawaid",

@@ -4,7 +4,6 @@ import { PageHeader, ErrorState, Empty } from "@/components/ui-common";
 import { PageLoadingGuard } from "@/components/PageLoadingGuard";
 import { useAuth } from "@/components/AuthProvider";
 import { UnifiedLessonCard } from "@/components/lessons/UnifiedLessonCard";
-import { LessonsContactCard } from "@/components/lessons/LessonsContactCard";
 import {
   DEFAULT_KUWAIT_FILTERS,
   buildSearchSuggestions,
@@ -466,7 +465,6 @@ export default function LessonsPage({
         </div>
       )}
 
-      <LessonsContactCard />
     </div>
   );
 }

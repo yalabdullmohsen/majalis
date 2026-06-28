@@ -21,17 +21,8 @@ function useIsMobile() {
   return mobile;
 }
 
-function tabStyle(active: boolean): React.CSSProperties {
-  return {
-    fontSize: "0.875rem",
-    padding: "0.375rem 0.75rem",
-    borderRadius: "0.375rem",
-    whiteSpace: "nowrap",
-    textDecoration: "none",
-    color: active ? C.emeraldDeep : C.inkSoft,
-    background: active ? C.sage : "transparent",
-    fontWeight: active ? 700 : 400,
-  };
+function tabClass(active: boolean) {
+  return `navbar-v3__tab${active ? " navbar-v3__tab--active" : ""}`;
 }
 
 function SearchBox({ onSubmitDone }: { onSubmitDone?: () => void }) {
@@ -142,12 +133,12 @@ export default function NavBar() {
           {!isMobile && (
             <nav className="navbar-v3__tabs" aria-label="التنقل الرئيسي">
               {PRIMARY_NAV.map((t) => (
-                <Link key={t.href} href={t.href} style={tabStyle(isActive(t.href))}>
+                <Link key={t.href} href={t.href} className={tabClass(isActive(t.href))}>
                   {t.label}
                 </Link>
               ))}
               {isAdmin && (
-                <Link href="/admin" style={{ ...tabStyle(location.startsWith("/admin")), color: C.brassDeep }}>
+                <Link href="/admin" className={`${tabClass(location.startsWith("/admin"))} navbar-v3__tab--admin`}>
                   لوحة التحكم
                 </Link>
               )}
@@ -204,7 +195,7 @@ export default function NavBar() {
           isLoggedIn={isLoggedIn}
           onLogout={handleLogout}
           searchBox={<SearchBox onSubmitDone={closeMore} />}
-          tabStyle={tabStyle}
+          tabClass={tabClass}
           location={location}
         />
       )}

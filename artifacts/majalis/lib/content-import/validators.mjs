@@ -1,6 +1,7 @@
 /** Per-type validation schemas. Missing required fields → reject row. */
 
 import { repairMisParsedCsvRow, describeMissingColumns } from "./csv-repair.mjs";
+import { isQuizLikeFawaidText } from "./fawaid-quality.mjs";
 
 export const MAX_VALIDATION_ERRORS = 200;
 
@@ -162,6 +163,10 @@ export function validateRow(type, row, index) {
     if (prophetRe.test(text) && (cat.includes("aqeedah") || cat.includes("عقيدة"))) {
       errors.push(`السطر ${line}: سؤال عن الأنبياء لا ينتمي لتصنيف العقيدة — استخدم anbiya/الأنبياء`);
     }
+  }
+
+  if (type === "benefits" && req(normalized, "text") && isQuizLikeFawaidText(normalized.text)) {
+    errors.push(`السطر ${line}: النص يشبه سؤالاً/اختباراً وليس فائدة — استخدم questions أو qa`);
   }
 
   return { ok: errors.length === 0, errors, row: normalized };

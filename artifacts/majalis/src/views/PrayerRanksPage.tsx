@@ -1,42 +1,5 @@
 import { PageHeader } from "@/components/ui-common";
-
-const RANKS = [
-  {
-    title: "المرتبة الأولى",
-    label: "المفرّط في أصل الصلاة",
-    ruling: "معرّض للعقوبة",
-    text: "من نقص من وضوئها ومواقيتها وحدودها وأركانها، فلم يحفظ لها حقها الظاهر.",
-    benefit: "أول طريق إصلاح الصلاة: تعلم شروطها وأركانها والمواظبة على وقتها.",
-  },
-  {
-    title: "المرتبة الثانية",
-    label: "المحافظ ظاهراً مع الوساوس",
-    ruling: "محاسَب على غفلته",
-    text: "من حافظ على المواقيت والحدود والأركان الظاهرة، لكنه أضاع مجاهدة نفسه في الوسوسة والخواطر.",
-    benefit: "حضور القلب عبادة تحتاج مجاهدة، وليس مجرد أداء حركات.",
-  },
-  {
-    title: "المرتبة الثالثة",
-    label: "المجاهد في صلاته",
-    ruling: "تكفَّر عنه السيئات",
-    text: "من حافظ على حدود الصلاة وجاهد الشيطان والخواطر حتى لا يسرق من صلاته.",
-    benefit: "مدافعة الخواطر وطلب الخشوع من أعظم أسباب قبول الصلاة.",
-  },
-  {
-    title: "المرتبة الرابعة",
-    label: "المكمّل لحقوق الصلاة",
-    ruling: "مثاب مأجور",
-    text: "من قام إلى الصلاة فأكمل حقوقها وحدودها، واستغرق قلبه في حفظها وأدائها كما ينبغي.",
-    benefit: "إتقان الظاهر والباطن يرفع الصلاة من عادة يومية إلى عبادة حاضرة.",
-  },
-  {
-    title: "المرتبة الخامسة",
-    label: "المقرّب المناجي",
-    ruling: "مقرّب من ربه",
-    text: "من قام إلى الصلاة وقد أخذ قلبه ووضعه بين يدي ربه، ناظراً بقلبه إليه، ممتلئاً من محبته وتعظيمه.",
-    benefit: "هذه أعلى المراتب: صلاة القلوب المقبلة على الله حباً وتعظيماً وأنساً.",
-  },
-];
+import { PRAYER_RANKS } from "@/lib/prayer-ranks-data";
 
 export default function PrayerRanksPage() {
   const share = async () => {
@@ -70,7 +33,7 @@ export default function PrayerRanksPage() {
       </section>
 
       <div className="prayer-ranks-timeline">
-        {RANKS.map((rank, index) => (
+        {PRAYER_RANKS.map((rank, index) => (
           <article key={rank.title} className="ui-card prayer-rank-card">
             <span className="prayer-rank-card__num">{index + 1}</span>
             <div>

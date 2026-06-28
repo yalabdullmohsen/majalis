@@ -12,7 +12,7 @@ type Props = {
   isLoggedIn: boolean;
   onLogout: () => void;
   searchBox: React.ReactNode;
-  tabStyle: (active: boolean) => React.CSSProperties;
+  tabClass: (active: boolean) => string;
   location: string;
 };
 
@@ -24,7 +24,7 @@ export function MobileMoreMenu({
   isLoggedIn,
   onLogout,
   searchBox,
-  tabStyle,
+  tabClass,
   location,
 }: Props) {
   if (!open || typeof document === "undefined") return null;
@@ -40,7 +40,7 @@ export function MobileMoreMenu({
               key={item.href}
               href={item.href}
               onClick={onClose}
-              style={{ ...tabStyle(isActive(item.href)), display: "block", padding: "0.6rem 0.75rem" }}
+              className={`navbar-mobile-more-link ${tabClass(isActive(item.href))}`}
             >
               {item.label}
             </Link>
@@ -50,7 +50,7 @@ export function MobileMoreMenu({
               <Link
                 href="/admin"
                 onClick={onClose}
-                style={{ ...tabStyle(location.startsWith("/admin")), display: "block", padding: "0.6rem 0.75rem" }}
+                className={`navbar-mobile-more-link ${tabClass(location.startsWith("/admin"))} navbar-v3__tab--admin`}
               >
                 لوحة التحكم
               </Link>
@@ -63,7 +63,7 @@ export function MobileMoreMenu({
               <Link
                 href="/settings"
                 onClick={onClose}
-                style={{ ...tabStyle(isActive("/settings")), display: "block", padding: "0.6rem 0.75rem" }}
+                className={`navbar-mobile-more-link ${tabClass(isActive("/settings"))}`}
               >
                 الإعدادات
               </Link>
@@ -76,14 +76,14 @@ export function MobileMoreMenu({
               <Link
                 href="/login"
                 onClick={onClose}
-                style={{ ...tabStyle(isActive("/login")), display: "block", padding: "0.6rem 0.75rem" }}
+                className={`navbar-mobile-more-link ${tabClass(isActive("/login"))}`}
               >
                 تسجيل الدخول
               </Link>
               <Link
                 href="/register"
                 onClick={onClose}
-                style={{ ...tabStyle(isActive("/register")), display: "block", padding: "0.6rem 0.75rem" }}
+                className={`navbar-mobile-more-link ${tabClass(isActive("/register"))}`}
               >
                 إنشاء حساب
               </Link>
