@@ -35,7 +35,7 @@ const RUNNERS = {
 };
 
 /** Default cron order: fetch sources first, derive content, then link/notify */
-const CRON_ORDER = [
+export const CRON_ORDER = [
   "lesson-intelligence",
   "instagram",
   "youtube",

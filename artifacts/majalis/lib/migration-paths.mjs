@@ -37,6 +37,8 @@ export const ACTIVATION_TABLES_MIGRATION_FILES = [
   "content_engines_v1.sql",
   "auto_knowledge_engine_v16_v2.sql",
   "auto_knowledge_engine_v16_v2_production.sql",
+  "auto_knowledge_engine_v17_monitoring.sql",
+  "auto_knowledge_engine_v18_autonomous.sql",
 ];
 
 export const MIGRATION_FILES = [
@@ -87,6 +89,8 @@ export const MIGRATION_FILES = [
   "content_engines_v1.sql",
   "auto_knowledge_engine_v16_v2.sql",
   "auto_knowledge_engine_v16_v2_production.sql",
+  "auto_knowledge_engine_v17_monitoring.sql",
+  "auto_knowledge_engine_v18_autonomous.sql",
 ];
 
 export function resolveMigrationsDir() {

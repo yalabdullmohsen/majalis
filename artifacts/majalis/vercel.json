@@ -56,6 +56,14 @@
       "schedule": "*/15 * * * *"
     },
     {
+      "path": "/api/cron/ake-monitoring-eval",
+      "schedule": "5,20,35,50 * * * *"
+    },
+    {
+      "path": "/api/cron/ake-daily-report",
+      "schedule": "0 4 * * *"
+    },
+    {
       "path": "/api/cron/platform-bootstrap",
       "schedule": "30 4 * * *"
     },
