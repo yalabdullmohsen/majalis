@@ -276,7 +276,7 @@ function AuditCard({ record }: { record: AutomationAuditRecord }) {
 
 export default function AutomationReviewPage() {
   return (
-    <AdminShell section="lessons" onSectionChange={() => {}}>
+    <AdminShell section="lessons">
       <AutomationReviewContent />
     </AdminShell>
   );

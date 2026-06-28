@@ -65,7 +65,7 @@ export function DeploymentDashboardPage() {
   const health = data?.health;
 
   return (
-    <AdminShell section="dashboard" onSectionChange={() => {}}>
+    <AdminShell section="dashboard">
       <div style={{ maxWidth: 1200, margin: "0 auto" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "1.25rem", flexWrap: "wrap", gap: "0.75rem" }}>
           <div>

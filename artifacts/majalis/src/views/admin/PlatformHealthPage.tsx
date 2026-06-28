@@ -335,7 +335,7 @@ function PlatformHealthContent() {
 
 export function PlatformHealthPage() {
   return (
-    <AdminShell section="lessons" onSectionChange={() => {}}>
+    <AdminShell section="lessons">
       <PlatformHealthContent />
     </AdminShell>
   );

@@ -400,7 +400,7 @@ const btnLink = {
 
 export default function AutoContentPage() {
   return (
-    <AdminShell section="dashboard" onSectionChange={() => {}}>
+    <AdminShell section="dashboard">
       <Link href="/admin" style={{ display: "inline-block", marginBottom: "1rem", fontSize: "0.8125rem", color: C.brassDeep }}>
         ← العودة للوحة التحكم
       </Link>

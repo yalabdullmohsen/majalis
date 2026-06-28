@@ -102,7 +102,7 @@ function AutomationDashboardContent() {
 
 export default function AutomationDashboardPage() {
   return (
-    <AdminShell section="lessons" onSectionChange={() => {}}>
+    <AdminShell section="lessons">
       <AutomationDashboardContent />
     </AdminShell>
   );

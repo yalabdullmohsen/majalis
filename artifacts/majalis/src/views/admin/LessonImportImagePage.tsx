@@ -457,7 +457,7 @@ function LessonImportImageContent() {
 
 export default function LessonImportImagePage() {
   return (
-    <AdminShell section="lessons" onSectionChange={() => {}}>
+    <AdminShell section="lessons">
       <LessonImportImageContent />
     </AdminShell>
   );

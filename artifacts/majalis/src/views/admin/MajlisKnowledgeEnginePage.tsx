@@ -273,7 +273,7 @@ function MajlisKnowledgeEngineContent() {
 
 export default function MajlisKnowledgeEnginePage() {
   return (
-    <AdminShell section="knowledge-engine" onSectionChange={() => {}}>
+    <AdminShell section="knowledge-engine">
       <MajlisKnowledgeEngineContent />
     </AdminShell>
   );

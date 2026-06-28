@@ -119,7 +119,7 @@ function PlatformAnalyticsContent() {
 
 export function PlatformAnalyticsPage() {
   return (
-    <AdminShell section="lessons" onSectionChange={() => {}}>
+    <AdminShell section="lessons">
       <PlatformAnalyticsContent />
     </AdminShell>
   );

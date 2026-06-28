@@ -289,7 +289,7 @@ function Router() {
       <Route path="/admin/automation/content-engines"><AdminLazyRoute component={ContentEnginesDashboardPage} /></Route>
       <Route path="/admin/feature-status"><AdminLazyRoute component={FeatureStatusPage} /></Route>
       <Route path="/admin/dashboard"><AdminLazyRoute component={AdminDashboardPage} /></Route>
-      <Route path="/admin/users"><Redirect to="/admin?section=users" /></Route>
+      <Route path="/admin/:sectionSlug"><AdminLazyRoute component={AdminPage} /></Route>
       <Route path="/admin"><AdminLazyRoute component={AdminPage} /></Route>
       <Route component={NotFound} />
     </Switch>

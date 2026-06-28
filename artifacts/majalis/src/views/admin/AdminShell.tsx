@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useState, type ReactNode } from "react";
 import { Link, useLocation } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
+import { adminSectionPath, resolveAdminSectionFromPath } from "@/lib/admin-navigation";
 import { C } from "@/lib/theme";
 
 export type AdminSection =
@@ -119,15 +120,15 @@ function FlashBanner({ flash, onClose }: { flash: Flash; onClose: () => void }) 
 }
 
 type AdminShellProps = {
-  section: AdminSection;
-  onSectionChange: (section: AdminSection) => void;
+  section?: AdminSection;
   children: ReactNode;
 };
 
-export function AdminShell({ section, onSectionChange, children }: AdminShellProps) {
+export function AdminShell({ section: sectionProp, children }: AdminShellProps) {
   const [flash, setFlash] = useState<Flash>(null);
   const { logout, user } = useAuth();
-  const [, navigate] = useLocation();
+  const [location, navigate] = useLocation();
+  const activeSection = sectionProp ?? resolveAdminSectionFromPath(location) ?? "dashboard";
 
   const showSuccess = useCallback((message: string) => {
     setFlash({ type: "success", message });
@@ -141,15 +142,18 @@ export function AdminShell({ section, onSectionChange, children }: AdminShellPro
 
   const clearFlash = useCallback(() => setFlash(null), []);
 
-  const handleLogout = async () => {
+  const handleLogout = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     await logout();
     navigate("/login");
   };
 
   return (
     <AdminShellContext.Provider value={{ flash, showSuccess, showError, clearFlash }}>
-      <div style={{ display: "flex", minHeight: "calc(100vh - 60px)", background: C.parchment }}>
+      <div className="admin-shell-layout" style={{ display: "flex", minHeight: "calc(100vh - 60px)", background: C.parchment }}>
         <aside
+          className="admin-shell-sidebar"
           style={{
             width: "220px",
             flexShrink: 0,
@@ -177,6 +181,7 @@ export function AdminShell({ section, onSectionChange, children }: AdminShellPro
           )}
           <Link
             href="/admin/auto-content"
+            className="admin-shell-quick-link"
             style={{
               display: "block",
               padding: "0.5rem 1rem",
@@ -190,6 +195,7 @@ export function AdminShell({ section, onSectionChange, children }: AdminShellPro
           </Link>
           <Link
             href="/"
+            className="admin-shell-quick-link"
             style={{
               display: "block",
               padding: "0.5rem 1rem",
@@ -208,34 +214,42 @@ export function AdminShell({ section, onSectionChange, children }: AdminShellPro
           >
             تسجيل الخروج
           </button>
-          <nav style={{ marginTop: "0.75rem" }}>
-            {ADMIN_NAV.map((n) => (
-              <button
-                key={n.key}
-                type="button"
-                onClick={() => onSectionChange(n.key)}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  width: "100%",
-                  padding: "0.625rem 1rem",
-                  border: "none",
-                  borderRight: `3px solid ${section === n.key ? C.emerald : "transparent"}`,
-                  background: section === n.key ? C.sage : "transparent",
-                  color: section === n.key ? C.emeraldDeep : C.inkSoft,
-                  fontWeight: section === n.key ? 700 : 400,
-                  fontSize: "0.8125rem",
-                  cursor: "pointer",
-                  fontFamily: "inherit",
-                  textAlign: "right",
-                }}
-              >
-                {n.label}
-              </button>
-            ))}
+          <nav className="admin-shell-nav" style={{ marginTop: "0.75rem" }} aria-label="أقسام لوحة التحكم">
+            {ADMIN_NAV.map((n) => {
+              const href = adminSectionPath(n.key);
+              const isActive = activeSection === n.key;
+              return (
+                <Link
+                  key={n.key}
+                  href={href}
+                  className={`admin-shell-nav-item${isActive ? " admin-shell-nav-item--active" : ""}`}
+                  aria-current={isActive ? "page" : undefined}
+                  onClick={(e) => e.stopPropagation()}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    width: "100%",
+                    padding: "0.625rem 1rem",
+                    border: "none",
+                    borderRight: `3px solid ${isActive ? C.emerald : "transparent"}`,
+                    background: isActive ? C.sage : "transparent",
+                    color: isActive ? C.emeraldDeep : C.inkSoft,
+                    fontWeight: isActive ? 700 : 400,
+                    fontSize: "0.8125rem",
+                    cursor: "pointer",
+                    fontFamily: "inherit",
+                    textAlign: "right",
+                    textDecoration: "none",
+                    boxSizing: "border-box",
+                  }}
+                >
+                  {n.label}
+                </Link>
+              );
+            })}
           </nav>
         </aside>
-        <main style={{ flex: 1, padding: "1.75rem 2rem 3rem", overflow: "auto", minWidth: 0 }}>
+        <main className="admin-shell-main" style={{ flex: 1, padding: "1.75rem 2rem 3rem", overflow: "auto", minWidth: 0 }}>
           <FlashBanner flash={flash} onClose={clearFlash} />
           {children}
         </main>

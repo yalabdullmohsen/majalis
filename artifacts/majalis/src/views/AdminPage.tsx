@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useLocation } from "wouter";
+import { useEffect } from "react";
+import { Redirect, useLocation } from "wouter";
 import { AdminShell, type AdminSection } from "@/views/admin/AdminShell";
 import { DashboardSection } from "@/views/admin/DashboardSection";
 import { LessonsSection } from "@/views/admin/LessonsSection";
@@ -31,55 +31,117 @@ import { IslamicIntelligenceSection } from "@/views/admin/IslamicIntelligenceSec
 import { OpenPlatformSection } from "@/views/admin/OpenPlatformSection";
 import { GovernanceSection } from "@/views/admin/GovernanceSection";
 import { SmartCmsSection } from "@/views/admin/SmartCmsSection";
+import {
+  adminSectionPath,
+  resolveAdminSectionFromPath,
+  resolveLegacyAdminSection,
+} from "@/lib/admin-navigation";
+
+function useAdminSection(): AdminSection {
+  const [location] = useLocation();
+  const fromPath = resolveAdminSectionFromPath(location);
+  if (fromPath) return fromPath;
+
+  if (typeof window !== "undefined") {
+    const legacy = resolveLegacyAdminSection(window.location.search);
+    if (legacy) return legacy;
+  }
+
+  return "dashboard";
+}
 
 export default function AdminPage() {
-  const [location] = useLocation();
-  const initialSection = (() => {
-    if (typeof window === "undefined") return "dashboard" as AdminSection;
-    const params = new URLSearchParams(window.location.search);
-    const section = params.get("section");
-    return (section as AdminSection) || "dashboard";
-  })();
-  const [section, setSection] = useState<AdminSection>(initialSection);
+  const [location, navigate] = useLocation();
+  const section = useAdminSection();
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const next = params.get("section") as AdminSection | null;
-    if (next) setSection(next);
-  }, [location]);
+    if (typeof window === "undefined") return;
+    const legacy = resolveLegacyAdminSection(window.location.search);
+    if (!legacy) return;
+    if (location === "/admin" || location === "/admin/") {
+      navigate(adminSectionPath(legacy));
+    }
+  }, [location, navigate]);
+
+  const unknownSlug =
+    location.startsWith("/admin/") &&
+    location !== "/admin" &&
+    resolveAdminSectionFromPath(location) === null;
+
+  if (unknownSlug) {
+    return <Redirect to="/admin" />;
+  }
 
   return (
-    <AdminShell section={section} onSectionChange={setSection}>
-      {section === "dashboard" && <DashboardSection />}
-      {section === "aggregator" && <AggregatorSection />}
-      {section === "knowledge-engine" && <KnowledgeEngineSection />}
-      {section === "scholarly-verification" && <ScholarlyVerificationSection />}
-      {section === "verified-knowledge" && <VerifiedKnowledgeSection />}
-      {section === "knowledge-reasoning" && <KnowledgeReasoningSection />}
-      {section === "search-analytics" && <SearchAnalyticsSection />}
-      {section === "digital-learning" && <DigitalLearningSection />}
-      {section === "autonomous-ai" && <AutonomousAiSection />}
-      {section === "global-reference" && <GlobalReferenceSection />}
-      {section === "islamic-intelligence" && <IslamicIntelligenceSection />}
-      {section === "open-platform" && <OpenPlatformSection />}
-      {section === "smart-cms" && <SmartCmsSection />}
-      {section === "governance" && <GovernanceSection />}
-      {section === "lessons" && <LessonsSection />}
-      {section === "sheikhs" && <SheikhsSection />}
-      {section === "library" && <LibrarySection />}
-      {section === "miracles" && <MiraclesSection />}
-      {section === "adhkar" && <AdhkarSection />}
-      {section === "fawaid" && <FawaidSection />}
-      {section === "qa" && <QaSection />}
-      {section === "condolences" && <CondolencesSection />}
-      {section === "users" && <UsersSection />}
-      {section === "settings" && <SettingsSection />}
-      {section === "reports" && <ReportsSection />}
-      {section === "fiqh-council" && <FiqhCouncilSection />}
-      {section === "fatwa" && <FatwaAdminSection />}
-      {section === "rulings" && <RulingsSection />}
-      {section === "annual-courses" && <AnnualCoursesSection />}
-      {section === "updates" && <UpdatesSection />}
+    <AdminShell section={section}>
+      <SectionContent section={section} />
     </AdminShell>
   );
+}
+
+function SectionContent({ section }: { section: AdminSection }) {
+  switch (section) {
+    case "dashboard":
+      return <DashboardSection />;
+    case "aggregator":
+      return <AggregatorSection />;
+    case "knowledge-engine":
+      return <KnowledgeEngineSection />;
+    case "scholarly-verification":
+      return <ScholarlyVerificationSection />;
+    case "verified-knowledge":
+      return <VerifiedKnowledgeSection />;
+    case "knowledge-reasoning":
+      return <KnowledgeReasoningSection />;
+    case "search-analytics":
+      return <SearchAnalyticsSection />;
+    case "digital-learning":
+      return <DigitalLearningSection />;
+    case "autonomous-ai":
+      return <AutonomousAiSection />;
+    case "global-reference":
+      return <GlobalReferenceSection />;
+    case "islamic-intelligence":
+      return <IslamicIntelligenceSection />;
+    case "open-platform":
+      return <OpenPlatformSection />;
+    case "smart-cms":
+      return <SmartCmsSection />;
+    case "governance":
+      return <GovernanceSection />;
+    case "lessons":
+      return <LessonsSection />;
+    case "sheikhs":
+      return <SheikhsSection />;
+    case "library":
+      return <LibrarySection />;
+    case "miracles":
+      return <MiraclesSection />;
+    case "adhkar":
+      return <AdhkarSection />;
+    case "fawaid":
+      return <FawaidSection />;
+    case "qa":
+      return <QaSection />;
+    case "condolences":
+      return <CondolencesSection />;
+    case "users":
+      return <UsersSection />;
+    case "settings":
+      return <SettingsSection />;
+    case "reports":
+      return <ReportsSection />;
+    case "fiqh-council":
+      return <FiqhCouncilSection />;
+    case "fatwa":
+      return <FatwaAdminSection />;
+    case "rulings":
+      return <RulingsSection />;
+    case "annual-courses":
+      return <AnnualCoursesSection />;
+    case "updates":
+      return <UpdatesSection />;
+    default:
+      return <DashboardSection />;
+  }
 }
