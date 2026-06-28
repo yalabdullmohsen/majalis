@@ -34,6 +34,8 @@ const pages = [
   "/question-answer",
   "/about-platform",
 ];
+
+const apis = [
   "/api/healthz",
   "/api/knowledge-search?q=صلاة",
   "/api/daily-content",

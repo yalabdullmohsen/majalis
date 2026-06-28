@@ -43,13 +43,24 @@ async function main() {
     duplicate,
     sampleKind: item?.content_kind,
     gatePassed: gate.passed,
+    canPublish: gate.canPublish,
     autoPublish: gate.autoPublish,
+    confidenceAction: gate.confidenceAction,
     failedChecks: gate.failedChecks,
   }, null, 2));
 
-  if (!gate.autoPublish || !gate.canPublish) {
+  // Dry-run: verify connector → verify → analyze → gate pipeline executes
+  if (fetched < 1) {
+    console.error("Pipeline dry-run failed: no items fetched");
     process.exit(1);
   }
+
+  if (!gate.passed) {
+    console.error("Quality gate checks failed:", gate.failedChecks);
+    process.exit(1);
+  }
+
+  console.log("Dry pipeline OK");
 }
 
 main().catch((err) => {

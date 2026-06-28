@@ -18,7 +18,7 @@ const args = process.argv.slice(2);
 const jsonOut = args.includes("--json");
 const singleStage = args.find((a) => a.startsWith("--stage="))?.slice(8);
 
-const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
+const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "../../../..");
 
 const started = Date.now();
 const risk = analyzeChangeRisk();
