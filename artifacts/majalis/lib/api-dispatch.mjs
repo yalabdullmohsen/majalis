@@ -65,6 +65,7 @@ export const API_ROUTES = [
   { prefix: "/api/cron/connector-health", module: "./api-handlers/cron/connector-health.js", allowGet: true, exact: true },
   { prefix: "/api/cron/ake-monitoring-eval", module: "./api-handlers/cron/ake-monitoring-eval.js", allowGet: true, exact: true },
   { prefix: "/api/cron/ake-daily-report", module: "./api-handlers/cron/ake-daily-report.js", allowGet: true, exact: true },
+  { prefix: "/api/sin-jeem", module: "./api-handlers/sin-jeem.js", allowGet: true },
   { prefix: "/api/auto-content", module: "./api-handlers/auto-content.js", allowGet: true },
   { prefix: "/api/knowledge-recommendations", module: "./api-handlers/knowledge-recommendations.js", allowGet: true },
   { prefix: "/api/intelligent-search", module: "./api-handlers/intelligent-search.js", allowGet: true },

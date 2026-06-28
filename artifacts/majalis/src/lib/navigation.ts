@@ -26,6 +26,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { href: "/calendar", label: "التقويم" },
       { href: "/fawaid", label: "الفوائد" },
       { href: "/qa", label: "الأسئلة" },
+      { href: "/question-answer", label: "سؤال وجواب" },
     ],
   },
   {
@@ -81,6 +82,7 @@ export const PRIMARY_NAV = [
   { href: "/", label: "الرئيسية" },
   { href: "/lessons", label: "الدروس" },
   { href: "/quran", label: "القرآن" },
+  { href: "/question-answer", label: "سؤال وجواب" },
   { href: "/library", label: "المكتبة" },
   { href: "/adhkar", label: "الأذكار" },
   { href: "/prayer-times", label: "الصلاة" },
@@ -92,6 +94,7 @@ export const MOBILE_MORE_NAV = [
   { href: "/lessons", label: "المشايخ" },
   { href: "/library", label: "المكتبة" },
   { href: "/qa", label: "الأسئلة" },
+  { href: "/question-answer", label: "سؤال وجواب" },
   { href: "/quran", label: "القرآن" },
   { href: "/adhkar", label: "الأذكار" },
   { href: "/quran-radio", label: "إذاعة القرآن" },
@@ -148,6 +151,12 @@ export const HOME_FEATURE_CARDS = [
     icon: "scroll",
   },
   {
+    href: "/question-answer",
+    title: "سؤال وجواب",
+    description: "لعبة المعلومات الإسلامية التفاعلية",
+    icon: "gamepad",
+  },
+  {
     href: "/qibla",
     title: "القبلة",
     description: "اتجاه الكعبة",
@@ -168,4 +177,5 @@ export const HOME_MORE_SECTIONS = [
   { href: "/learning/paths", title: "المسارات العلمية", description: "تعلم منظم من المبتدئ للمتقدم" },
   { href: "/my-learning", title: "لوحتي التعليمية", description: "تقدمك وإنجازاتك" },
   { href: "/quiz", title: "المسابقات", description: "اختبر معلوماتك" },
+  { href: "/question-answer", title: "سؤال وجواب", description: "لعبة المعلومات الإسلامية" },
 ] as const;

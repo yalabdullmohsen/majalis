@@ -31,6 +31,7 @@ import { IslamicIntelligenceSection } from "@/views/admin/IslamicIntelligenceSec
 import { OpenPlatformSection } from "@/views/admin/OpenPlatformSection";
 import { GovernanceSection } from "@/views/admin/GovernanceSection";
 import { SmartCmsSection } from "@/views/admin/SmartCmsSection";
+import { SinJeemSection } from "@/views/admin/SinJeemSection";
 import {
   adminSectionPath,
   resolveAdminSectionFromPath,
@@ -123,6 +124,8 @@ function SectionContent({ section }: { section: AdminSection }) {
       return <FawaidSection />;
     case "qa":
       return <QaSection />;
+    case "question-answer":
+      return <SinJeemSection />;
     case "condolences":
       return <CondolencesSection />;
     case "users":

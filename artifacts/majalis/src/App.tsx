@@ -35,6 +35,7 @@ const FawaidPage = lazy(() => import("@/views/FawaidPage"));
 const AdhkarPage = lazy(() => import("@/views/AdhkarPage"));
 const QaPage = lazy(() => import("@/views/QaPage"));
 const QuizPage = lazy(() => import("@/views/QuizPage"));
+const SinJeemApp = lazyWithRetry(() => import("@/views/sin-jeem/SinJeemApp"), "SinJeemApp");
 const LoginPage = lazyWithRetry(() => import("@/views/LoginPage"), "LoginPage");
 const RegisterPage = lazyWithRetry(() => import("@/views/RegisterPage"), "RegisterPage");
 const TranscribePage = lazy(() => import("@/views/TranscribePage"));
@@ -159,6 +160,11 @@ function AdminLazyRoute({ component: Component }: { component: ComponentType }) 
   );
 }
 
+function SinJeemLegacySetupRedirect() {
+  const [, params] = useRoute("/sin-jeem/setup/:mode");
+  return <Redirect to={`/question-answer/setup/${params?.mode || "team_vs_team"}`} />;
+}
+
 function Router() {
   return (
     <Switch>
@@ -191,6 +197,18 @@ function Router() {
       <Route path="/adhkar"><SafeLazyRoute component={AdhkarPage} /></Route>
       <Route path="/qa"><SafeLazyRoute component={QaPage} /></Route>
       <Route path="/quiz"><SafeLazyRoute component={QuizPage} /></Route>
+      <Route path="/question-answer"><SafeLazyRoute component={SinJeemApp} /></Route>
+      <Route path="/question-answer/setup/:mode"><SafeLazyRoute component={SinJeemApp} /></Route>
+      <Route path="/question-answer/play"><SafeLazyRoute component={SinJeemApp} /></Route>
+      <Route path="/question-answer/results"><SafeLazyRoute component={SinJeemApp} /></Route>
+      <Route path="/question-answer/leaderboard"><SafeLazyRoute component={SinJeemApp} /></Route>
+      <Route path="/question-answer/tournament"><SafeLazyRoute component={SinJeemApp} /></Route>
+      <Route path="/sin-jeem"><Redirect to="/question-answer" /></Route>
+      <Route path="/sin-jeem/setup/:mode"><SinJeemLegacySetupRedirect /></Route>
+      <Route path="/sin-jeem/play"><Redirect to="/question-answer/play" /></Route>
+      <Route path="/sin-jeem/results"><Redirect to="/question-answer/results" /></Route>
+      <Route path="/sin-jeem/leaderboard"><Redirect to="/question-answer/leaderboard" /></Route>
+      <Route path="/sin-jeem/tournament"><Redirect to="/question-answer/tournament" /></Route>
       <Route path="/learning/paths/:slug"><SafeLazyRoute component={LearningPathDetailPage} /></Route>
       <Route path="/learning/paths"><SafeLazyRoute component={LearningPathsPage} /></Route>
       <Route path="/learning/quiz/:slug"><SafeLazyRoute component={LearningQuizPage} /></Route>
@@ -290,6 +308,7 @@ function Router() {
       <Route path="/admin/content-engines"><AdminLazyRoute component={ContentEnginesDashboardPage} /></Route>
       <Route path="/admin/automation/content-engines"><AdminLazyRoute component={ContentEnginesDashboardPage} /></Route>
       <Route path="/admin/feature-status"><AdminLazyRoute component={FeatureStatusPage} /></Route>
+      <Route path="/admin/sin-jeem"><Redirect to="/admin/question-answer" /></Route>
       <Route path="/admin/dashboard"><AdminLazyRoute component={AdminDashboardPage} /></Route>
       <Route path="/admin/:sectionSlug"><AdminLazyRoute component={AdminPage} /></Route>
       <Route path="/admin"><AdminLazyRoute component={AdminPage} /></Route>

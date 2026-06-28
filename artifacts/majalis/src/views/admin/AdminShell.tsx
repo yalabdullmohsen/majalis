@@ -34,7 +34,8 @@ export type AdminSection =
   | "islamic-intelligence"
   | "open-platform"
   | "governance"
-  | "smart-cms";
+  | "smart-cms"
+  | "question-answer";
 
 export const ADMIN_NAV: { key: AdminSection; label: string }[] = [
   { key: "dashboard", label: "لوحة التحكم" },
@@ -58,6 +59,7 @@ export const ADMIN_NAV: { key: AdminSection; label: string }[] = [
   { key: "fawaid", label: "الفوائد" },
   { key: "adhkar", label: "الأذكار" },
   { key: "qa", label: "الأسئلة" },
+  { key: "question-answer", label: "سؤال وجواب" },
   { key: "condolences", label: "قوالب التعزية" },
   { key: "users", label: "المستخدمون" },
   { key: "reports", label: "التقارير" },

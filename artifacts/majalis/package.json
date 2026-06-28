@@ -59,6 +59,7 @@
     "test:kuwait-sources": "node scripts/test-kuwait-instagram-sources.mjs",
     "smoke:nav": "node scripts/smoke-nav-menu.mjs",
     "smoke:admin-nav": "node scripts/smoke-admin-nav.mjs",
+    "smoke:question-answer-routes": "node scripts/smoke-question-answer-routes.mjs",
     "validate:css": "node scripts/validate-index-css.mjs",
     "smoke:mobile": "node scripts/smoke-mobile-routes.mjs",
     "verify:features": "node scripts/verify-features.mjs",
