@@ -92,6 +92,18 @@ export class BaseConnector {
         const rawItems = await this.fetchItems(syncOptions);
         const { filterItemsBySyncWindow, sortItemsByPublishedAtDesc } = await import("./sync-window.mjs");
 
+        if (syncOptions._notModified) {
+          return {
+            ok: true,
+            items: [],
+            connector: this.slug,
+            rawCount: 0,
+            skippedByDate: 0,
+            notModified: true,
+            crawlPatch: syncOptions._crawlPatch,
+          };
+        }
+
         const beforeFilter = rawItems?.length || 0;
         let items = filterItemsBySyncWindow(rawItems, syncOptions.window);
         items = sortItemsByPublishedAtDesc(items);
@@ -115,6 +127,7 @@ export class BaseConnector {
           connector: this.slug,
           rawCount: beforeFilter,
           skippedByDate: Math.max(0, beforeFilter - items.length),
+          crawlPatch: syncOptions._crawlPatch,
         };
       },
       { maxAttempts: this.maxRetries, label: `connector:${this.slug}` },

@@ -7,18 +7,34 @@ import { resolveDataFilePath } from "../../data-paths.mjs";
 import { normalizeContentKind } from "../content-kind.mjs";
 import { BaseConnector } from "../connector-base.mjs";
 import { extractRssItems, cleanText } from "../../auto-content/auto-content-utils.mjs";
+import {
+  buildConditionalHeaders,
+  filterNewFeedItems,
+  buildConnectorCrawlPatch,
+} from "../incremental-crawl.mjs";
 
 export class RssConnector extends BaseConnector {
-  async fetchItems(_syncOptions = {}) {
+  async fetchItems(syncOptions = {}) {
     if (!this.feedUrl) return [];
 
-    const response = await this.fetchWithTimeout(this.feedUrl);
+    const connectorConfig = syncOptions.connectorConfig || {};
+    const headers = buildConditionalHeaders(connectorConfig);
+    const response = await this.fetchWithTimeout(this.feedUrl, { headers });
+
+    if (response.status === 304) {
+      syncOptions._notModified = true;
+      return [];
+    }
+
+    if (response.status === 404 || response.status === 410) {
+      throw new Error(`RSS permanent: ${response.status}`);
+    }
     if (!response.ok) throw new Error(`RSS failed: ${response.status}`);
 
     const xml = await response.text();
     const rssItems = extractRssItems(xml);
 
-    return rssItems.map((item, idx) => ({
+    let items = rssItems.map((item, idx) => ({
       external_id: `${this.slug}:${Buffer.from(item.link || item.title).toString("base64").slice(0, 40)}`,
       source_slug: this.slug,
       source_attribution: this.name,
@@ -26,10 +42,14 @@ export class RssConnector extends BaseConnector {
       raw_url: item.link,
       raw_title: item.title,
       raw_body: item.description,
-      raw_payload: { pubDate: item.pubDate, index: idx },
+      raw_payload: { pubDate: item.pubDate, index: idx, canonical_url: item.link },
       content_kind: normalizeContentKind(this.detectKind(item.title, item.description)),
       published_at: item.pubDate ? new Date(item.pubDate).toISOString() : null,
     }));
+
+    items = filterNewFeedItems(items, connectorConfig);
+    syncOptions._crawlPatch = buildConnectorCrawlPatch(response, xml, items, connectorConfig);
+    return items;
   }
 
   detectKind(title, body) {
