@@ -26,6 +26,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { href: "/calendar", label: "التقويم" },
       { href: "/fawaid", label: "الفوائد" },
       { href: "/qa", label: "الأسئلة" },
+      { href: "/sin-jeem", label: "سين وجيم" },
     ],
   },
   {
@@ -168,4 +169,5 @@ export const HOME_MORE_SECTIONS = [
   { href: "/learning/paths", title: "المسارات العلمية", description: "تعلم منظم من المبتدئ للمتقدم" },
   { href: "/my-learning", title: "لوحتي التعليمية", description: "تقدمك وإنجازاتك" },
   { href: "/quiz", title: "المسابقات", description: "اختبر معلوماتك" },
+  { href: "/sin-jeem", title: "سين وجيم", description: "لعبة المعلومات الإسلامية" },
 ] as const;

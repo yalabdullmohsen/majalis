@@ -88,24 +88,16 @@ export async function fetchGameStats(): Promise<GameStats> {
 }
 
 export async function fetchLeaderboard(): Promise<LeaderboardEntry[]> {
-  const { loadLeaderboard } = await import("./storage");
-  const local = loadLeaderboard();
-  if (!supabase || local.length > 0) return local;
-
   try {
-    const { data } = await supabase.from("sin_jeem_leaderboard").select("*").limit(20);
-    if (!data?.length) return local;
-    return data.map((r, i) => ({
-      id: r.player_id,
-      name: r.display_name,
-      score: r.total_points,
-      games: r.games_played,
-      wins: r.games_won,
-      rank: r.rank || i + 1,
-    }));
+    const res = await fetch("/api/sin-jeem?action=leaderboard&period=all", { credentials: "same-origin" });
+    if (res.ok) {
+      const data = await res.json();
+      if (data.ok && data.players?.length) return data.players;
+    }
   } catch {
-    return local;
+    /* ignore */
   }
+  return [];
 }
 
 export async function adminGetQuestions(): Promise<SinJeemQuestion[]> {

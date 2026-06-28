@@ -273,3 +273,70 @@ CREATE POLICY "sin_jeem_tournaments_read" ON sin_jeem_tournaments FOR SELECT USI
 
 DROP POLICY IF EXISTS "sin_jeem_ai_admin" ON sin_jeem_ai_generations;
 CREATE POLICY "sin_jeem_ai_admin" ON sin_jeem_ai_generations FOR ALL USING (is_admin()) WITH CHECK (is_admin());
+
+-- ── Production extensions (v1.1) ─────────────────────────────────────
+
+ALTER TABLE sin_jeem_questions ADD COLUMN IF NOT EXISTS content_hash text;
+ALTER TABLE sin_jeem_questions ADD COLUMN IF NOT EXISTS source text;
+ALTER TABLE sin_jeem_questions ADD COLUMN IF NOT EXISTS subcategory_slug text;
+ALTER TABLE sin_jeem_questions ADD COLUMN IF NOT EXISTS created_by uuid REFERENCES auth.users(id) ON DELETE SET NULL;
+ALTER TABLE sin_jeem_questions ADD COLUMN IF NOT EXISTS updated_by uuid REFERENCES auth.users(id) ON DELETE SET NULL;
+ALTER TABLE sin_jeem_questions ADD COLUMN IF NOT EXISTS review_status text NOT NULL DEFAULT 'approved'
+  CHECK (review_status IN ('pending', 'approved', 'rejected'));
+
+CREATE UNIQUE INDEX IF NOT EXISTS sin_jeem_questions_content_hash_uidx
+  ON sin_jeem_questions(content_hash) WHERE content_hash IS NOT NULL;
+
+CREATE INDEX IF NOT EXISTS sin_jeem_questions_type_idx ON sin_jeem_questions(question_type);
+CREATE INDEX IF NOT EXISTS sin_jeem_questions_review_idx ON sin_jeem_questions(review_status);
+
+CREATE TABLE IF NOT EXISTS sin_jeem_leaderboard_entries (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  entity_type text NOT NULL CHECK (entity_type IN ('player', 'team')),
+  entity_id uuid,
+  display_name text NOT NULL,
+  team_name text,
+  score int NOT NULL DEFAULT 0,
+  games int NOT NULL DEFAULT 0,
+  wins int NOT NULL DEFAULT 0,
+  period text NOT NULL CHECK (period IN ('day', 'week', 'month', 'all')),
+  period_key text NOT NULL,
+  match_id uuid REFERENCES sin_jeem_matches(id) ON DELETE SET NULL,
+  verified boolean NOT NULL DEFAULT false,
+  submitted_at timestamptz NOT NULL DEFAULT now(),
+  UNIQUE(entity_type, display_name, period, period_key)
+);
+
+CREATE INDEX IF NOT EXISTS sin_jeem_lb_period_idx ON sin_jeem_leaderboard_entries(period, period_key);
+CREATE INDEX IF NOT EXISTS sin_jeem_lb_score_idx ON sin_jeem_leaderboard_entries(score DESC);
+
+CREATE TABLE IF NOT EXISTS sin_jeem_question_audit (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  question_id uuid REFERENCES sin_jeem_questions(id) ON DELETE CASCADE,
+  action text NOT NULL,
+  actor_id uuid REFERENCES auth.users(id) ON DELETE SET NULL,
+  payload jsonb,
+  created_at timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE INDEX IF NOT EXISTS sin_jeem_audit_question_idx ON sin_jeem_question_audit(question_id);
+
+ALTER TABLE sin_jeem_leaderboard_entries ENABLE ROW LEVEL SECURITY;
+ALTER TABLE sin_jeem_question_audit ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "sin_jeem_lb_read" ON sin_jeem_leaderboard_entries;
+CREATE POLICY "sin_jeem_lb_read" ON sin_jeem_leaderboard_entries FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "sin_jeem_lb_admin" ON sin_jeem_leaderboard_entries;
+CREATE POLICY "sin_jeem_lb_admin" ON sin_jeem_leaderboard_entries FOR ALL USING (is_admin()) WITH CHECK (is_admin());
+
+DROP POLICY IF EXISTS "sin_jeem_audit_admin" ON sin_jeem_question_audit;
+CREATE POLICY "sin_jeem_audit_admin" ON sin_jeem_question_audit FOR ALL USING (is_admin()) WITH CHECK (is_admin());
+
+-- Idempotent FK checks (informational — re-run safe)
+DO $$ BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_constraint WHERE conname = 'sin_jeem_rounds_match_id_fkey'
+  ) THEN NULL;
+  END IF;
+END $$;

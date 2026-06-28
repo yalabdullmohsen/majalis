@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "wouter";
 import { MODE_CARDS, GAME_TITLE } from "@/lib/sin-jeem/constants";
 import { fetchGameStats, fetchLeaderboard } from "@/lib/sin-jeem/supabase";
-import { loadHistory } from "@/lib/sin-jeem/storage";
 import type { GameStats, LeaderboardEntry } from "@/lib/sin-jeem/types";
 import { GameHero, GameLayout } from "./components/GameLayout";
 
@@ -10,7 +9,6 @@ export default function SinJeemHomePage() {
   const [, setLocation] = useLocation();
   const [stats, setStats] = useState<GameStats>({ questionCount: 0, categoryCount: 0, playerCount: 0, matchCount: 0 });
   const [leaders, setLeaders] = useState<LeaderboardEntry[]>([]);
-  const history = loadHistory().slice(0, 3);
 
   useEffect(() => {
     fetchGameStats().then(setStats);
@@ -84,18 +82,6 @@ export default function SinJeemHomePage() {
                 <div style={{ fontSize: "0.75rem", color: "var(--majalis-ink-soft)" }}>{l.wins} فوز · {l.games} لعبة</div>
               </div>
               <div style={{ fontWeight: 800, color: "var(--majalis-emerald-deep)" }}>{l.score}</div>
-            </div>
-          ))}
-        </section>
-      )}
-
-      {history.length > 0 && (
-        <section style={{ marginTop: "1.5rem" }}>
-          <h2 style={{ fontSize: "1rem", fontWeight: 800, marginBottom: "0.65rem", color: "var(--majalis-emerald-deep)" }}>📋 آخر النتائج</h2>
-          {history.map((h, i) => (
-            <div key={i} className="sj-leader-row">
-              <span>{h.winnerName}</span>
-              <span style={{ marginInlineStart: "auto", fontWeight: 700 }}>{h.teamA.score} — {h.teamB.score}</span>
             </div>
           ))}
         </section>

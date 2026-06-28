@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { useGame } from "@/lib/sin-jeem/context";
 import { getMatchResult } from "@/lib/sin-jeem/engine";
-import { saveMatchResult } from "@/lib/sin-jeem/storage";
+import { persistMatchResult } from "@/lib/sin-jeem/submit-result";
 import { playWinSound } from "@/lib/sin-jeem/sounds";
 import { GameLayout } from "./components/GameLayout";
 import { ScoreBoard } from "./components/ScoreBoard";
@@ -22,7 +22,7 @@ export default function SinJeemResultsPage() {
       return;
     }
     const result = getMatchResult(session);
-    saveMatchResult(result, session.config.mode);
+    void persistMatchResult(result, session.config.mode, session.id);
     playWinSound();
   }, [session, setLocation]);
 

@@ -571,3 +571,56 @@
 .sj-score-pop {
   animation: sj-score-pop 0.4s ease;
 }
+
+.sj-period-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.sj-period-tab {
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid var(--majalis-line, #d1d5db);
+  background: #fff;
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.sj-period-tab.active {
+  background: var(--majalis-emerald-deep, #1f6e54);
+  color: #fff;
+  border-color: transparent;
+}
+
+.sj-explanation {
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  color: var(--majalis-ink-soft);
+  line-height: 1.6;
+}
+
+.sj-badge--source {
+  font-size: 0.65rem;
+}
+
+.sj-match-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-bottom: 1px solid var(--majalis-line, #e5e7eb);
+}
+
+.sj-match-arrow {
+  opacity: 0.5;
+}
+
+.sj-question-image {
+  max-width: 100%;
+  border-radius: 0.5rem;
+  margin-bottom: 0.75rem;
+}

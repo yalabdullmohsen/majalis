@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from "react";
-import { AdminShell } from "@/views/admin/AdminShell";
 import { AdminModal } from "@/views/admin/AdminModal";
 import { Loading } from "@/components/ui-common";
 import { C } from "@/lib/theme";
@@ -95,7 +94,7 @@ export function SinJeemSection() {
   };
 
   return (
-    <AdminShell section="sin-jeem">
+    <div>
       <div style={{ display: "flex", flexWrap: "wrap", gap: "0.65rem", marginBottom: "1rem", alignItems: "center" }}>
         <h2 style={{ margin: 0, color: C.emeraldDeep, flex: 1 }}>سين وجيم — إدارة الأسئلة</h2>
         <button type="button" className="page-action-btn" onClick={() => { setForm(emptyForm()); setModal(true); }}>
@@ -179,7 +178,7 @@ export function SinJeemSection() {
           <button type="button" className="page-action-btn" onClick={save}>حفظ</button>
         </div>
       </AdminModal>
-    </AdminShell>
+    </div>
   );
 }
 

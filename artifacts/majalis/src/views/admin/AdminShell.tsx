@@ -22,6 +22,7 @@ export type AdminSection =
   | "fatwa"
   | "rulings"
   | "annual-courses"
+  | "sin-jeem"
   | "updates"
   | "knowledge-engine"
   | "scholarly-verification"
@@ -65,6 +66,7 @@ export const ADMIN_NAV: { key: AdminSection; label: string }[] = [
   { key: "fatwa", label: "الفتاوى" },
   { key: "rulings", label: "الأحكام الشرعية" },
   { key: "annual-courses", label: "الدورات العلمية" },
+  { key: "sin-jeem", label: "سين وجيم" },
   { key: "updates", label: "المستجدات" },
   { key: "settings", label: "الإعدادات" },
 ];

@@ -48,11 +48,15 @@ for (const table of [
 }
 
 try {
-  const qSrc = fs.readFileSync(path.join(ROOT, "src/lib/sin-jeem/questions-seed.ts"), "utf8");
+  const bankPath = path.join(ROOT, "data/sin-jeem/questions-bank.json");
+  if (fs.existsSync(bankPath)) {
+    const bank = JSON.parse(fs.readFileSync(bankPath, "utf8"));
+    ok(Array.isArray(bank) && bank.length >= 500, `JSON bank >= 500 (${bank.length})`);
+  } else {
+    ok(false, "questions-bank.json missing");
+  }
   const cSrc = fs.readFileSync(path.join(ROOT, "src/lib/sin-jeem/categories-seed.ts"), "utf8");
-  const qCount = (qSrc.match(/\bq\(/g) || []).length;
   const cCount = (cSrc.match(/id: "cat-/g) || []).length;
-  ok(qCount >= 50, `Questions >= 50 (${qCount})`);
   ok(cCount >= 40, `Categories >= 40 (${cCount})`);
 } catch (e) {
   ok(false, `Seed read: ${e.message}`);
