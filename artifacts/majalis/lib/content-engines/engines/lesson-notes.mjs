@@ -6,10 +6,11 @@ import { extractLessonNotes } from "../ai-extractors.mjs";
 import { enqueueReview } from "../review-queue.mjs";
 import { checkFingerprint, registerFingerprint } from "../dedup.mjs";
 import { startEngineRun, finishEngineRun, createRunLogger, auditPublish } from "../run-manager.mjs";
+import { CRON_BUDGET_MS, cronMaxItems, budgetExceeded } from "../budget.mjs";
 
 const ENGINE_ID = "lesson-notes";
 
-export async function run({ runType = "incremental", maxItems = 8, lessonId } = {}) {
+export async function run({ runType = "incremental", maxItems = 8, lessonId, budgetMs = CRON_BUDGET_MS } = {}) {
   const admin = getSupabaseAdmin();
   const { runId, startedAt } = await startEngineRun(ENGINE_ID, runType);
   const log = createRunLogger(runId, ENGINE_ID);
@@ -37,7 +38,7 @@ export async function run({ runType = "incremental", maxItems = 8, lessonId } = 
       .is("structured_notes", null)
       .not("description", "is", null)
       .order("updated_at", { ascending: false })
-      .limit(maxItems);
+      .limit(cronMaxItems(runType, maxItems, 2));
 
     if (lessonId) query = query.eq("id", lessonId);
 
@@ -45,6 +46,7 @@ export async function run({ runType = "incremental", maxItems = 8, lessonId } = 
     stats.items_fetched = lessons?.length || 0;
 
     for (const lesson of lessons || []) {
+      if (budgetExceeded(startedAt, budgetMs)) break;
       const body = lesson.description || "";
       if (body.length < 50) {
         stats.items_rejected++;

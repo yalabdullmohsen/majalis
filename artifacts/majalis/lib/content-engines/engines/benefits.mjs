@@ -9,10 +9,11 @@ import { enqueueReview } from "../review-queue.mjs";
 import { startEngineRun, finishEngineRun, createRunLogger, auditPublish } from "../run-manager.mjs";
 import { publishToTarget } from "../../content-production/publisher.mjs";
 import { isInCurrentMonth } from "../sync-window.mjs";
+import { CRON_BUDGET_MS, cronMaxItems, budgetExceeded } from "../budget.mjs";
 
 const ENGINE_ID = "benefits";
 
-export async function run({ runType = "incremental", maxItems = 10, lessonId } = {}) {
+export async function run({ runType = "incremental", maxItems = 10, lessonId, budgetMs = CRON_BUDGET_MS } = {}) {
   const admin = getSupabaseAdmin();
   const { runId, startedAt } = await startEngineRun(ENGINE_ID, runType);
   const log = createRunLogger(runId, ENGINE_ID);
@@ -38,7 +39,7 @@ export async function run({ runType = "incremental", maxItems = 10, lessonId } =
       .select("id, title, description, category, source_url, speaker_name, status, created_at, updated_at")
       .eq("status", "approved")
       .order("updated_at", { ascending: false })
-      .limit(maxItems);
+      .limit(cronMaxItems(runType, maxItems, 2));
 
     if (lessonId) query = query.eq("id", lessonId);
 
@@ -46,6 +47,7 @@ export async function run({ runType = "incremental", maxItems = 10, lessonId } =
     stats.items_fetched = lessons?.length || 0;
 
     for (const lesson of lessons || []) {
+      if (budgetExceeded(startedAt, budgetMs)) break;
       const body = lesson.description || lesson.title || "";
       if (!body || body.length < 30) {
         stats.items_rejected++;

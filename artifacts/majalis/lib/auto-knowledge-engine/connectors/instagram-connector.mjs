@@ -34,7 +34,8 @@ export class InstagramConnector extends BaseConnector {
         itemsReturned: discovery.items?.length || 0,
         hint,
       };
-      throw new Error(hint);
+      // Isolated failure — do not throw; let orchestrator continue other connectors.
+      return [];
     }
 
     let items = discovery.items.map((post, idx) => ({
