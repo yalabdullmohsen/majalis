@@ -262,7 +262,7 @@ function PlatformSourcesContent() {
 
 export function PlatformSourcesPage() {
   return (
-    <AdminShell section="lessons" onSectionChange={() => {}}>
+    <AdminShell section="lessons">
       <PlatformSourcesContent />
     </AdminShell>
   );

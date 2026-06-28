@@ -8404,7 +8404,48 @@ html[data-theme="dark"] .home-page {
   transform: translateZ(0);
 }
 
-.navbar-v3--menu-open {
+@media (max-width: 768px) {
+  .admin-shell-layout {
+    flex-direction: column;
+  }
+
+  .admin-shell-sidebar {
+    width: 100% !important;
+    max-height: none;
+    border-left: none !important;
+    border-bottom: 1px solid var(--majalis-line, #e5dfd3);
+    padding: 0.75rem 0 !important;
+  }
+
+  .admin-shell-nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 0.125rem;
+    padding: 0 0.5rem;
+  }
+
+  .admin-shell-nav-item {
+    border-right: none !important;
+    border-radius: 0.35rem;
+    padding: 0.5rem 0.65rem !important;
+    min-height: 2.75rem;
+    touch-action: manipulation;
+  }
+
+  .admin-logout-btn {
+    margin-top: 0.35rem;
+  }
+}
+
+.admin-shell-nav-item {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.admin-shell-nav-item:focus-visible {
+  outline: 2px solid var(--majalis-emerald, #1a6b4a);
+  outline-offset: 1px;
+}
+
   z-index: 10001;
   /* Header sits above the portaled drawer so the toggle stays clickable; non-button areas pass clicks through */
   pointer-events: none;

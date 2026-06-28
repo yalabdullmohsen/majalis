@@ -197,7 +197,7 @@ function AutomationSourcesContent() {
 
 export default function AutomationSourcesPage() {
   return (
-    <AdminShell section="lessons" onSectionChange={() => {}}>
+    <AdminShell section="lessons">
       <AutomationSourcesContent />
     </AdminShell>
   );

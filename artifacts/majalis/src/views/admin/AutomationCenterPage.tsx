@@ -165,7 +165,7 @@ function AutomationCenterContent() {
 
 export default function AutomationCenterPage() {
   return (
-    <AdminShell section="lessons" onSectionChange={() => {}}>
+    <AdminShell section="lessons">
       <AutomationCenterContent />
     </AdminShell>
   );

@@ -50,6 +50,7 @@
     "repair:ake-rpc": "node scripts/verify-ake-rpc.mjs --repair",
     "test:kuwait-sources": "node scripts/test-kuwait-instagram-sources.mjs",
     "smoke:nav": "node scripts/smoke-nav-menu.mjs",
+    "smoke:admin-nav": "node scripts/smoke-admin-nav.mjs",
     "smoke:mobile": "node scripts/smoke-mobile-routes.mjs",
     "verify:features": "node scripts/verify-features.mjs",
     "verify:content-production": "node scripts/verify-content-production.mjs",

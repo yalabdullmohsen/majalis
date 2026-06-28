@@ -102,7 +102,7 @@ function ChecklistContent() {
 
 export function PlatformChecklistPage() {
   return (
-    <AdminShell section="lessons" onSectionChange={() => {}}>
+    <AdminShell section="lessons">
       <ChecklistContent />
     </AdminShell>
   );

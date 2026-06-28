@@ -266,7 +266,7 @@ function LessonImportUrlContent() {
 
 export default function LessonImportUrlPage() {
   return (
-    <AdminShell section="lessons" onSectionChange={() => {}}>
+    <AdminShell section="lessons">
       <LessonImportUrlContent />
     </AdminShell>
   );

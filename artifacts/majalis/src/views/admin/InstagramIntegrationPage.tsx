@@ -131,7 +131,7 @@ function InstagramIntegrationContent() {
 
 export default function InstagramIntegrationPage() {
   return (
-    <AdminShell section="lessons" onSectionChange={() => {}}>
+    <AdminShell section="lessons">
       <InstagramIntegrationContent />
     </AdminShell>
   );

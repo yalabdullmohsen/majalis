@@ -195,7 +195,7 @@ function ContentEnginesDashboardContent() {
           <Link href="/admin/automation/review" style={{ color: C.emeraldDeep, fontSize: "0.8125rem" }}>
             مركز المراجعة
           </Link>
-          <Link href="/admin?section=knowledge-engine" style={{ color: C.emeraldDeep, fontSize: "0.8125rem" }}>
+          <Link href="/admin/ake" style={{ color: C.emeraldDeep, fontSize: "0.8125rem" }}>
             AKE
           </Link>
           <Link href="/admin/content-production" style={{ color: C.emeraldDeep, fontSize: "0.8125rem" }}>
@@ -285,7 +285,7 @@ function ContentEnginesDashboardContent() {
 
 export default function ContentEnginesDashboardPage() {
   return (
-    <AdminShell section="knowledge-engine" onSectionChange={() => {}}>
+    <AdminShell section="knowledge-engine">
       <ContentEnginesDashboardContent />
     </AdminShell>
   );

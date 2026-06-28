@@ -5,23 +5,32 @@ import { Loading } from "./ui-common";
 import { ADMIN_ACCESS_DENIED_MESSAGE } from "@/lib/auth-messages";
 import { C } from "@/lib/theme";
 
+function adminLoginNextPath(location: string): string {
+  const path = location.split("?")[0] || "/admin";
+  return path.startsWith("/admin") ? path : "/admin";
+}
+
 export function AdminRouteGuard({ children }: { children: React.ReactNode }) {
   const { isAdmin, isLoggedIn, loading } = useAuth();
-  const [, navigate] = useLocation();
+  const [location, navigate] = useLocation();
   const [denied, setDenied] = useState(false);
+  const loginNext = adminLoginNextPath(location);
 
   useEffect(() => {
     if (loading) return;
 
-    if (!isLoggedIn) {
-      navigate("/login?next=/admin");
+    if (isAdmin) {
+      setDenied(false);
       return;
     }
 
-    if (!isAdmin) {
-      setDenied(true);
+    if (!isLoggedIn) {
+      navigate(`/login?next=${encodeURIComponent(loginNext)}`);
+      return;
     }
-  }, [isAdmin, isLoggedIn, loading, navigate]);
+
+    setDenied(true);
+  }, [isAdmin, isLoggedIn, loading, navigate, loginNext]);
 
   if (loading) return <Loading />;
 
@@ -30,7 +39,9 @@ export function AdminRouteGuard({ children }: { children: React.ReactNode }) {
       <div className="login-page">
         <div className="login-card">
           <p className="ds-empty">جاري التحويل إلى صفحة الدخول…</p>
-          <Link href="/login?next=/admin" className="login-back-link">الذهاب لتسجيل الدخول</Link>
+          <Link href={`/login?next=${encodeURIComponent(loginNext)}`} className="login-back-link">
+            الذهاب لتسجيل الدخول
+          </Link>
         </div>
       </div>
     );

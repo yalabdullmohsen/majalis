@@ -201,7 +201,7 @@ function ContentProductionDashboardContent() {
 
 export default function ContentProductionDashboardPage() {
   return (
-    <AdminShell section="knowledge-engine" onSectionChange={() => {}}>
+    <AdminShell section="knowledge-engine">
       <ContentProductionDashboardContent />
     </AdminShell>
   );
