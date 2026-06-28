@@ -388,20 +388,54 @@ export async function getAutoKnowledgeEngineStats(days = 7) {
 
   const cacheKey = `ake:stats:${days}`;
   const cached = await dbCacheGet(admin, cacheKey);
-  if (cached) return { ok: true, stats: cached };
+  if (cached) return { ok: true, stats: cached, usingLegacy: false };
+
+  // Probe v13 table — migration applied even if RPC missing
+  const { error: tableProbe } = await admin.from("ake_connectors").select("id", { count: "exact", head: true });
+  const v13TablesPresent = !tableProbe || !isMissingTableError(tableProbe);
 
   const { data, error } = await admin.rpc("ake_engine_stats", { p_days: days });
   if (error) {
+    if (v13TablesPresent) {
+      const fallback = await buildAkeStatsFallback(admin, days);
+      return { ok: true, stats: fallback, usingLegacy: false, rpcError: error.message };
+    }
     if (isMissingTableError(error)) {
       const { getKnowledgePipelineStats } = await import("../knowledge-engine/pipeline.mjs");
       const legacy = await getKnowledgePipelineStats(days);
       return { ok: true, stats: legacy.stats, usingLegacy: true };
     }
-    return { ok: false, error: error.message };
+    return { ok: false, error: error.message, usingLegacy: !v13TablesPresent };
   }
 
   await dbCacheSet(admin, cacheKey, data, 60_000);
-  return { ok: true, stats: data };
+  return { ok: true, stats: data, usingLegacy: false };
+}
+
+async function buildAkeStatsFallback(admin, days) {
+  const [{ count: connectorsActive }, { count: connectorsTotal }, { data: runs }] = await Promise.all([
+    admin.from("ake_connectors").select("id", { count: "exact", head: true }).eq("is_active", true),
+    admin.from("ake_connectors").select("id", { count: "exact", head: true }),
+    admin.from("ake_engine_runs").select("id,status,trigger_type,published_count,fetched_count,duration_ms,started_at").order("started_at", { ascending: false }).limit(10),
+  ]);
+  const today = new Date().toISOString().slice(0, 10);
+  const { count: itemsNewToday } = await admin.from("knowledge_items").select("id", { count: "exact", head: true }).gte("created_at", today);
+  const { count: itemsPublishedToday } = await admin
+    .from("knowledge_items")
+    .select("id", { count: "exact", head: true })
+    .gte("published_at", today)
+    .eq("publish_status", "published");
+
+  return {
+    connectors_active: connectorsActive || 0,
+    connectors_total: connectorsTotal || 0,
+    connectors_healthy: 0,
+    items_new_today: itemsNewToday || 0,
+    items_published_today: itemsPublishedToday || 0,
+    runs_recent: runs || [],
+    _fallback: true,
+    _note: "ake_engine_stats RPC unavailable — run GRANT on function or re-apply auto_knowledge_engine_v13.sql",
+  };
 }
 
 export async function getPublicRecommendations(admin, { kind, recordId, limit = 8 }) {

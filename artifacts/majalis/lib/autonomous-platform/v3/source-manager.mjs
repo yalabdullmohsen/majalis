@@ -9,7 +9,16 @@ import { logAuditEvent } from "./security.mjs";
 
 export async function listManagedSources({ activeOnly = false, contentType = null } = {}) {
   const admin = getSupabaseAdmin();
-  if (!admin) return { ok: false, error: "no_admin", sources: [] };
+  if (!admin) {
+    return {
+      ok: false,
+      error: "missing_secret",
+      code: "Missing SUPABASE_SERVICE_ROLE_KEY",
+      message: "Missing SUPABASE_SERVICE_ROLE_KEY — cannot access akp_content_sources",
+      missing: ["SUPABASE_SERVICE_ROLE_KEY"],
+      sources: [],
+    };
+  }
 
   let q = admin.from("akp_content_sources").select("*").order("priority", { ascending: false });
   if (activeOnly) q = q.eq("active", true);

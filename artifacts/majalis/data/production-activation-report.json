@@ -1,0 +1,271 @@
+{
+  "timestamp": "2026-06-28T03:51:02.029Z",
+  "platformVersion": "3.0.0",
+  "phases": {
+    "aiMode": {
+      "mode": "keyword_fallback",
+      "reason": "OPENAI_API_KEY not set"
+    },
+    "secrets": {
+      "ok": false,
+      "missing": [
+        "SUPABASE_SERVICE_ROLE_KEY",
+        "DATABASE_URL"
+      ],
+      "env": {
+        "SUPABASE_URL": true,
+        "SUPABASE_SERVICE_ROLE_KEY": false,
+        "SUPABASE_ANON_KEY": true,
+        "CRON_SECRET": false,
+        "OPENAI_API_KEY": false,
+        "ANTHROPIC_API_KEY": false,
+        "DATABASE_URL": false,
+        "UPSTASH_REDIS_REST_URL": false,
+        "UPSTASH_REDIS_REST_TOKEN": false,
+        "POSTGRES_URL": false,
+        "POSTGRES_PASSWORD": false,
+        "SUPABASE_ACCESS_TOKEN": false,
+        "INSTAGRAM_GRAPH_ACCESS_TOKEN": false,
+        "INSTAGRAM_BUSINESS_ACCOUNT_ID": false,
+        "keysOnly": true
+      }
+    },
+    "tablesBefore": {
+      "ok": false,
+      "present": [
+        "akp_content_sources",
+        "akp_pipeline_runs"
+      ],
+      "missing": [
+        "akp_source_health_snapshots",
+        "akp_source_discoveries",
+        "akp_platform_analytics_daily",
+        "akp_daily_goal_progress",
+        "akp_self_healing_events",
+        "akp_audit_log",
+        "akp_backup_snapshots",
+        "akp_semantic_index",
+        "akp_scheduler_state"
+      ],
+      "detail": {
+        "akp_content_sources": true,
+        "akp_content_sources__detail": {
+          "ok": true,
+          "status": 200
+        },
+        "akp_pipeline_runs": true,
+        "akp_pipeline_runs__detail": {
+          "ok": true,
+          "status": 200
+        },
+        "akp_source_health_snapshots": false,
+        "akp_source_health_snapshots__detail": {
+          "ok": false,
+          "missing": true,
+          "status": 404
+        },
+        "akp_source_discoveries": false,
+        "akp_source_discoveries__detail": {
+          "ok": false,
+          "missing": true,
+          "status": 404
+        },
+        "akp_platform_analytics_daily": false,
+        "akp_platform_analytics_daily__detail": {
+          "ok": false,
+          "missing": true,
+          "status": 404
+        },
+        "akp_daily_goal_progress": false,
+        "akp_daily_goal_progress__detail": {
+          "ok": false,
+          "missing": true,
+          "status": 404
+        },
+        "akp_self_healing_events": false,
+        "akp_self_healing_events__detail": {
+          "ok": false,
+          "missing": true,
+          "status": 404
+        },
+        "akp_audit_log": false,
+        "akp_audit_log__detail": {
+          "ok": false,
+          "missing": true,
+          "status": 404
+        },
+        "akp_backup_snapshots": false,
+        "akp_backup_snapshots__detail": {
+          "ok": false,
+          "missing": true,
+          "status": 404
+        },
+        "akp_semantic_index": false,
+        "akp_semantic_index__detail": {
+          "ok": false,
+          "missing": true,
+          "status": 404
+        },
+        "akp_scheduler_state": false,
+        "akp_scheduler_state__detail": {
+          "ok": false,
+          "missing": true,
+          "status": 404
+        }
+      }
+    },
+    "migrations": {
+      "ok": false,
+      "skipped": true,
+      "reason": "pass --apply to run migrations"
+    },
+    "tablesAfter": {
+      "ok": false,
+      "present": [
+        "akp_content_sources",
+        "akp_pipeline_runs"
+      ],
+      "missing": [
+        "akp_source_health_snapshots",
+        "akp_source_discoveries",
+        "akp_platform_analytics_daily",
+        "akp_daily_goal_progress",
+        "akp_self_healing_events",
+        "akp_audit_log",
+        "akp_backup_snapshots",
+        "akp_semantic_index",
+        "akp_scheduler_state"
+      ],
+      "detail": {
+        "akp_content_sources": true,
+        "akp_content_sources__detail": {
+          "ok": true,
+          "status": 200
+        },
+        "akp_pipeline_runs": true,
+        "akp_pipeline_runs__detail": {
+          "ok": true,
+          "status": 200
+        },
+        "akp_source_health_snapshots": false,
+        "akp_source_health_snapshots__detail": {
+          "ok": false,
+          "missing": true,
+          "status": 404
+        },
+        "akp_source_discoveries": false,
+        "akp_source_discoveries__detail": {
+          "ok": false,
+          "missing": true,
+          "status": 404
+        },
+        "akp_platform_analytics_daily": false,
+        "akp_platform_analytics_daily__detail": {
+          "ok": false,
+          "missing": true,
+          "status": 404
+        },
+        "akp_daily_goal_progress": false,
+        "akp_daily_goal_progress__detail": {
+          "ok": false,
+          "missing": true,
+          "status": 404
+        },
+        "akp_self_healing_events": false,
+        "akp_self_healing_events__detail": {
+          "ok": false,
+          "missing": true,
+          "status": 404
+        },
+        "akp_audit_log": false,
+        "akp_audit_log__detail": {
+          "ok": false,
+          "missing": true,
+          "status": 404
+        },
+        "akp_backup_snapshots": false,
+        "akp_backup_snapshots__detail": {
+          "ok": false,
+          "missing": true,
+          "status": 404
+        },
+        "akp_semantic_index": false,
+        "akp_semantic_index__detail": {
+          "ok": false,
+          "missing": true,
+          "status": 404
+        },
+        "akp_scheduler_state": false,
+        "akp_scheduler_state__detail": {
+          "ok": false,
+          "missing": true,
+          "status": 404
+        }
+      }
+    },
+    "bootstrap": {
+      "ok": false,
+      "skipped": true,
+      "reason": "empty_db_pass_--apply_to_seed",
+      "jsonSeedCount": 6
+    },
+    "pipeline": {
+      "ok": false,
+      "skipped": true
+    },
+    "productionEndpoints": {
+      "ok": true,
+      "results": [
+        {
+          "path": "/api/cron/autonomous-platform-v3-health",
+          "status": 401,
+          "ok": true,
+          "note": "cron_auth_required",
+          "body": {
+            "ok": false,
+            "error": "Unauthorized"
+          }
+        },
+        {
+          "path": "/",
+          "status": 200,
+          "ok": true,
+          "note": "public"
+        }
+      ],
+      "base": "https://www.majlisilm.com"
+    },
+    "tests": {
+      "ok": true,
+      "tests": {
+        "v3Unit": {
+          "ok": true
+        },
+        "verifyPlatform": {
+          "ok": true
+        },
+        "cronAuth": {
+          "ok": true
+        },
+        "typecheck": {
+          "ok": true
+        }
+      },
+      "failed": []
+    }
+  },
+  "readinessPct": 55,
+  "blockers": [],
+  "ownerActions": [
+    {
+      "secret": "SUPABASE_SERVICE_ROLE_KEY",
+      "addTo": "Vercel + GitHub Actions secrets"
+    },
+    {
+      "secret": "DATABASE_URL",
+      "addTo": "Vercel + GitHub Actions secrets"
+    }
+  ],
+  "mergedPr": 110,
+  "latestCommit": "3d7f880b3e221051c84eb6364b7846ab08d368b4"
+}

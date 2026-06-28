@@ -27,6 +27,30 @@ async function countTableSince(table, since, filter = {}) {
 
 export async function buildProductionAnalytics() {
   const admin = getSupabaseAdmin();
+  if (!admin) {
+    return {
+      ok: false,
+      error: "missing_secret",
+      code: "Missing SUPABASE_SERVICE_ROLE_KEY",
+      message: "Missing SUPABASE_SERVICE_ROLE_KEY — analytics unavailable",
+      blocker: { state: "missing_secret", label: "Missing SUPABASE_SERVICE_ROLE_KEY", detail: "Add service role key in Vercel Production" },
+      analytics: null,
+    };
+  }
+
+  let sourceCount = 0;
+  try {
+    const { count } = await admin.from("akp_content_sources").select("id", { count: "exact", head: true });
+    sourceCount = count || 0;
+  } catch {
+    sourceCount = 0;
+  }
+
+  const pipelineBlocker =
+    sourceCount === 0
+      ? { state: "waiting_for_bootstrap", label: "Waiting for Bootstrap", detail: "No sources in DB — seed runs automatically when SUPABASE_SERVICE_ROLE_KEY is set" }
+      : null;
+
   const today = periodStart("daily");
   const weekStart = new Date();
   weekStart.setDate(weekStart.getDate() - 7);
@@ -40,18 +64,21 @@ export async function buildProductionAnalytics() {
   let totalDuplicateToday = 0;
 
   for (const [type, pipeline] of Object.entries(CONTENT_PIPELINES)) {
-    const publishedToday = await countTableSince(pipeline.targetTable, today);
-    const publishedWeek = await countTableSince(pipeline.targetTable, weekStart.toISOString());
-    const publishedMonth = await countTableSince(pipeline.targetTable, monthStart.toISOString());
+    const publishedToday = pipelineBlocker ? null : await countTableSince(pipeline.targetTable, today);
+    const publishedWeek = pipelineBlocker ? null : await countTableSince(pipeline.targetTable, weekStart.toISOString());
+    const publishedMonth = pipelineBlocker ? null : await countTableSince(pipeline.targetTable, monthStart.toISOString());
 
-    totalPublishedToday += publishedToday;
+    if (!pipelineBlocker) {
+      totalPublishedToday += publishedToday;
+    }
     pipelineMetrics[type] = {
       label: pipeline.label,
       quota: pipeline.quota,
-      publishedToday,
-      publishedWeek,
-      publishedMonth,
-      quotaMet: publishedToday >= pipeline.quota,
+      publishedToday: pipelineBlocker ? pipelineBlocker.label : publishedToday,
+      publishedWeek: pipelineBlocker ? "—" : publishedWeek,
+      publishedMonth: pipelineBlocker ? "—" : publishedMonth,
+      quotaMet: pipelineBlocker ? false : publishedToday >= pipeline.quota,
+      waitingReason: pipelineBlocker?.detail || null,
     };
   }
 
@@ -122,14 +149,15 @@ export async function buildProductionAnalytics() {
   const analytics = {
     date: kuwaitDateString(),
     counts: {
-      today: totalPublishedToday,
-      week: Object.values(pipelineMetrics).reduce((a, p) => a + p.publishedWeek, 0),
-      month: Object.values(pipelineMetrics).reduce((a, p) => a + p.publishedMonth, 0),
-      published: totalPublishedToday,
+      today: pipelineBlocker ? pipelineBlocker.label : totalPublishedToday,
+      week: pipelineBlocker ? pipelineBlocker.label : Object.values(pipelineMetrics).reduce((a, p) => a + (typeof p.publishedWeek === "number" ? p.publishedWeek : 0), 0),
+      month: pipelineBlocker ? pipelineBlocker.label : Object.values(pipelineMetrics).reduce((a, p) => a + (typeof p.publishedMonth === "number" ? p.publishedMonth : 0), 0),
+      published: pipelineBlocker ? pipelineBlocker.label : totalPublishedToday,
       rejected: totalRejectedToday,
       duplicates: totalDuplicateToday,
     },
     pipelines: pipelineMetrics,
+    pipelineBlocker,
     quotas: DAILY_QUOTAS,
     pipelineSuccessRate: pipelineSuccess,
     topSources,
@@ -156,7 +184,14 @@ export async function buildProductionAnalytics() {
     ).catch(() => {});
   }
 
-  return { ok: true, analytics };
+  return {
+    ok: true,
+    blocker: pipelineBlocker,
+    analytics: {
+      ...analytics,
+      pipelineBlocker,
+    },
+  };
 }
 
 export async function getAnalyticsHistory(days = 30) {
