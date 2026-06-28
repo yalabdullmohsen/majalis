@@ -3,6 +3,7 @@ import { fileURLToPath } from "node:url";
 import { sendJson } from "../../api/_http.mjs";
 import { validateCronAuth } from "../../../lib/env-config.mjs";
 import { runPhase2TrialImport } from "../../../lib/content-import/phase2-trial.mjs";
+import { isProductionContentMode } from "../../../lib/cms/production-mode.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const APP_ROOT = join(__dirname, "../../..");
@@ -14,6 +15,15 @@ export default async function handler(req, res) {
   }
 
   const dryRun = req.query?.dryRun === "1" || req.body?.dryRun === true;
+
+  if (isProductionContentMode() && !dryRun) {
+    sendJson(res, 403, {
+      ok: false,
+      error: "phase2_trial_blocked_in_production",
+      message: "Phase 2 trial import is disabled in production",
+    });
+    return;
+  }
 
   try {
     const result = await runPhase2TrialImport(APP_ROOT, { dryRun });

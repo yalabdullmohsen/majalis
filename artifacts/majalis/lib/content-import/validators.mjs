@@ -1,6 +1,7 @@
 /** Per-type validation schemas. Missing required fields → reject row. */
 
 import { repairMisParsedCsvRow, describeMissingColumns } from "./csv-repair.mjs";
+import { collectTestContentSignals, sanitizePublicText } from "../production-guard.mjs";
 
 export const MAX_VALIDATION_ERRORS = 200;
 
@@ -43,6 +44,7 @@ export function normalizeBenefitsRow(row) {
   if (!req(out, "author_name") && req(out, "author")) out.author_name = out.author;
   if (!req(out, "author_name") && req(out, "source")) out.author_name = out.source;
   if (!req(out, "author_name") && req(out, "المصدر")) out.author_name = out["المصدر"];
+  if (req(out, "text")) out.text = sanitizePublicText(String(out.text));
   return out;
 }
 
@@ -162,6 +164,11 @@ export function validateRow(type, row, index) {
     if (prophetRe.test(text) && (cat.includes("aqeedah") || cat.includes("عقيدة"))) {
       errors.push(`السطر ${line}: سؤال عن الأنبياء لا ينتمي لتصنيف العقيدة — استخدم anbiya/الأنبياء`);
     }
+  }
+
+  const testSignals = collectTestContentSignals(normalized);
+  if (testSignals.length) {
+    errors.push(`السطر ${line}: محتوى تجريبي/اختباري مرفوض (${testSignals.map((s) => s.flag).join(", ")})`);
   }
 
   return { ok: errors.length === 0, errors, row: normalized };

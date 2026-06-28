@@ -1,4 +1,5 @@
-import { displayText } from "@/lib/display-text";
+import { filterPublicRecords } from "@/lib/production-guard";
+import { sanitizePublicText } from "@/lib/public-content-sanitize";
 import { isDemoId } from "@/lib/demo-content";
 import { HighlightedContentCard } from "@/components/reading/HighlightedContentCard";
 
@@ -15,7 +16,7 @@ type Props = {
 };
 
 export function FaidahCard({ item }: Props) {
-  const cleaned = displayText(item.text);
+  const cleaned = sanitizePublicText(item.text);
   const meta = [
     item.source ? { label: "المصدر", value: item.source } : null,
     item.author_name ? { label: "المؤلف", value: item.author_name } : null,

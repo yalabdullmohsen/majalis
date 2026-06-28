@@ -16,6 +16,7 @@ import {
 } from "@/lib/kuwait-lessons";
 import { rankLessonsBySearch, buildLessonSearchMeta } from "@/lib/lesson-search";
 import { allowSeedFallback } from "@/lib/cms/production-config";
+import { filterPublicRecords } from "@/lib/production-guard";
 
 export type LessonsSource = "supabase" | "seed" | "merged";
 
@@ -51,7 +52,9 @@ export async function fetchLessons(options?: { bypassCache?: boolean }): Promise
   try {
     const { data } = await fetchApprovedLessonsFromDb();
     if (data.length > 0) {
-      const dbMapped = dedupeKuwaitLessons(data.map((row) => mapLessonRow({ ...row, source: "supabase" })));
+      const dbMapped = dedupeKuwaitLessons(
+        filterPublicRecords(data.map((row) => mapLessonRow({ ...row, source: "supabase" }))),
+      );
       const lessons = sortKuwaitLessons(mergeDbWithSeed(dbMapped));
       const source: LessonsSource =
         allowSeedFallback() && lessons.length > dbMapped.length ? "merged" : "supabase";

@@ -5,7 +5,6 @@ import { QA_DISCLAIMER } from "@/lib/theme";
 import { PageHeader, Empty, QaSkeleton } from "@/components/ui-common";
 import { PageLoadingGuard } from "@/components/PageLoadingGuard";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
-import { DEMO_QA, DEMO_QA_CATEGORIES } from "@/lib/demo-content";
 import { QaCard } from "@/components/qa/QaCard";
 import { QA_CANONICAL_CATEGORIES } from "@/lib/qa-categories";
 import {
@@ -59,9 +58,9 @@ export default function QaPage({
     setCategoriesLoading(true);
     try {
       const { data } = await RequestManager.run("qa:categories", () => getQaCategories());
-      setCategories(data?.length ? data : DEMO_QA_CATEGORIES.filter((c) => c.id !== "all"));
+      setCategories(data?.length ? data : []);
     } catch {
-      setCategories(DEMO_QA_CATEGORIES.filter((c) => c.id !== "all"));
+      setCategories([]);
     } finally {
       setCategoriesLoading(false);
     }
@@ -76,9 +75,9 @@ export default function QaPage({
           search: debouncedSearch,
         }),
       );
-      setRawItems(data.length > 0 ? data : DEMO_QA);
+      setRawItems(data);
     } catch {
-      setRawItems(DEMO_QA);
+      setRawItems([]);
     } finally {
       setLoading(false);
     }

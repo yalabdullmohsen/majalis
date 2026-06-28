@@ -1,6 +1,7 @@
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 import { runContentImport } from "./engine.mjs";
 import { ensureContentImportSchema } from "./ensure-schema.mjs";
+import { isProductionContentMode } from "../cms/production-mode.mjs";
 
 /** @typedef {{ type: string, file: string, label: string, verifyPath: string }} TrialSpec */
 
@@ -38,6 +39,17 @@ export const PHASE2_TRIAL_SPECS = [
  * @param {{ dryRun?: boolean }} opts
  */
 export async function runPhase2TrialImport(rootDir, opts = {}) {
+  if (isProductionContentMode() && !opts.dryRun && !opts.forceDev) {
+    return {
+      ok: false,
+      blocked: true,
+      error: "phase2_trial_blocked_in_production",
+      message: "Phase 2 trial import is disabled in production — use real content imports only",
+      totals: { read: 0, imported: 0, skipped: 0, failed: 0, invalid: 0 },
+      reports: [],
+      verifyLinks: [],
+    };
+  }
   if (!opts.dryRun) {
     const schema = await ensureContentImportSchema();
     if (!schema.ok) {

@@ -2,16 +2,9 @@ name: Phase 2 Trial Import
 
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - "artifacts/majalis/data/imports/trial/**"
-      - "artifacts/majalis/lib/content-import/**"
-      - "artifacts/majalis/supabase/kuwait_lessons_extend.sql"
-      - ".github/workflows/phase2-trial-import.yml"
 
 jobs:
-  import:
+  dry-run-only:
     runs-on: ubuntu-latest
     if: github.repository == 'yalabdullmohsen/majalis'
     steps:
@@ -26,44 +19,12 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
-      - name: Ensure schema and import Phase 2 trial data
-        env:
-          VITE_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      - name: Dry-run Phase 2 trial import (never writes to production)
         run: |
-          if [ -z "$SUPABASE_SERVICE_ROLE_KEY" ]; then
-            echo "Skip: SUPABASE_SERVICE_ROLE_KEY not configured in GitHub secrets"
-            exit 0
-          fi
           cd artifacts/majalis
-          node scripts/import-phase2-trial.mjs
+          node scripts/import-phase2-trial.mjs --dry-run
 
-      - name: Verify Phase 2 data on site and Supabase
-        env:
-          VITE_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          VITE_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+      - name: Production guard tests
         run: |
-          if [ -z "$VITE_SUPABASE_ANON_KEY" ]; then
-            echo "Skip verify: SUPABASE_ANON_KEY not configured"
-            exit 0
-          fi
           cd artifacts/majalis
-          node scripts/verify-phase2-import.mjs --base=https://www.majlisilm.com
-
-      - name: Trigger production bootstrap import (fallback)
-        env:
-          CRON_SECRET: ${{ secrets.CRON_SECRET }}
-        run: |
-          if [ -z "$CRON_SECRET" ]; then
-            echo "Skip production API trigger: CRON_SECRET not set"
-            exit 0
-          fi
-          curl -sf -X POST "https://www.majlisilm.com/api/cron/bootstrap-database?action=phase2-trial-import" \
-            -H "x-vercel-cron: 1" \
-            -H "Authorization: Bearer $CRON_SECRET" || \
-          curl -sf -X POST "https://www.majlisilm.com/api/cron/import-phase2-trial" \
-            -H "x-vercel-cron: 1" \
-            -H "Authorization: Bearer $CRON_SECRET" || \
-          echo "Production API import routes not yet deployed — local import above is authoritative"
+          node scripts/test-public-no-demo-content.mjs
