@@ -1,4 +1,5 @@
 import { supabase } from "@/lib/supabase";
+import { requestFetch } from "@/lib/request-manager";
 import { isMissingSchemaError } from "@/lib/safe-supabase";
 import { SIN_JEEM_CATEGORIES } from "./categories-seed";
 import { getAllSinJeemQuestions, getMergedQuestionCount } from "./questions-bank";
@@ -130,7 +131,7 @@ export async function fetchGameStats(): Promise<GameStats> {
 
 export async function fetchLeaderboard(): Promise<LeaderboardEntry[]> {
   try {
-    const res = await fetch("/api/sin-jeem?action=leaderboard&period=all", { credentials: "same-origin" });
+    const res = await requestFetch("/api/sin-jeem?action=leaderboard&period=all", { credentials: "same-origin" });
     if (res.ok) {
       const data = await res.json();
       if (data.ok && data.players?.length) return data.players;

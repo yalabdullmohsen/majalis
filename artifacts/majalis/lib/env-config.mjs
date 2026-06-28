@@ -133,35 +133,32 @@ export function extractCronSecretFromRequest(req) {
 }
 
 export function validateCronAuth(req) {
-  // Vercel Cron — always trusted when header present
-  if (req.headers?.["x-vercel-cron"] === "1") return true;
-
   const env = getEnvConfig();
+  const isProd = env.nodeEnv === "production" || env.vercelEnv === "production";
   const configured = env.cronSecret;
-
-  // Dev/local: allow unauthenticated when no secret configured
-  if (!configured) {
-    return env.nodeEnv !== "production";
-  }
-
   const provided = extractCronSecretFromRequest(req);
-  if (!provided) return false;
 
-  return safeEqual(provided, configured);
+  if (configured && provided && safeEqual(provided, configured)) return true;
+
+  // Production: never trust x-vercel-cron alone (spoofable). Vercel sends Bearer CRON_SECRET when configured.
+  if (isProd) return false;
+
+  if (req.headers?.["x-vercel-cron"] === "1") return true;
+  if (!configured) return true;
+  return false;
 }
 
 export function validateAdminAuth(req) {
-  if (req.headers?.["x-vercel-cron"] === "1") return true;
-
   const env = getEnvConfig();
+  const isProd = env.nodeEnv === "production" || env.vercelEnv === "production";
   const configured = env.adminSecret;
-
-  if (!configured) {
-    return env.nodeEnv !== "production";
-  }
-
   const provided = extractCronSecretFromRequest(req);
-  if (!provided) return false;
 
-  return safeEqual(provided, configured);
+  if (configured && provided && safeEqual(provided, configured)) return true;
+
+  if (isProd) return false;
+
+  if (req.headers?.["x-vercel-cron"] === "1") return true;
+  if (!configured) return true;
+  return false;
 }

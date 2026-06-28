@@ -1,3 +1,4 @@
+import { requestFetch } from "@/lib/request-manager";
 import type { LeaderboardEntry, MatchResult } from "./types";
 
 export type LeaderboardPeriod = "day" | "week" | "month" | "all";
@@ -21,7 +22,7 @@ export function periodLabel(period: LeaderboardPeriod): string {
 
 export async function fetchLeaderboardByPeriod(period: LeaderboardPeriod = "all"): Promise<LeaderboardSnapshot> {
   try {
-    const res = await fetch(`/api/sin-jeem?action=leaderboard&period=${period}`, { credentials: "same-origin" });
+    const res = await requestFetch(`/api/sin-jeem?action=leaderboard&period=${period}`, { credentials: "same-origin" });
     if (!res.ok) throw new Error("leaderboard_fetch_failed");
     const data = await res.json();
     if (data.ok) {
@@ -61,7 +62,7 @@ export async function submitVerifiedMatchResult(
   };
 
   try {
-    const res = await fetch("/api/sin-jeem", {
+    const res = await requestFetch("/api/sin-jeem", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
