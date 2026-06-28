@@ -229,7 +229,6 @@ function buildRecord(item, analysis) {
           poster_image_url: lessonFields.poster_image_url,
           live_url: lessonFields.live_url,
           maps_url: lessonFields.maps_url,
-          keywords: Array.isArray(lessonFields.keywords) ? lessonFields.keywords : null,
           activity_type: activityType,
           is_course: lessonFields.is_course,
           is_recurring: lessonFields.is_recurring,
