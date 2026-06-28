@@ -11,6 +11,12 @@ export function runQualityGate(item, analysis, verification, connector) {
     verification_status: verification.verificationStatus,
   });
 
+  const trustLevel = connector?.trust_level ?? connector?.trustLevel ?? 3;
+  const connectorType = connector?.connector_type || connector?.connectorType;
+  const isCuratedManifest =
+    connectorType === "manifest" ||
+    Boolean(item.raw_payload?._manifest_file || item.raw_payload?.source_name);
+
   const checks = {
     dedup: !verification.isDuplicate,
     source: verification.sourceVerified,
@@ -23,13 +29,14 @@ export function runQualityGate(item, analysis, verification, connector) {
     quality: quality.quality_score >= (connector?.minQualityScore || connector?.min_quality_score || 65),
     trust: verification.trustScore >= 60,
     ai_confidence: (analysis?.ai_confidence || 0) >= 50,
-    no_forbidden: !analysis?.needs_human_review,
+    no_forbidden:
+      !analysis?.needs_human_review ||
+      (trustLevel >= 4 && isCuratedManifest),
   };
 
   const failed = Object.entries(checks).filter(([, v]) => !v).map(([k]) => k);
   const passed = failed.length === 0;
 
-  const trustLevel = connector?.trust_level ?? connector?.trustLevel ?? 3;
   const autoPublishEnabled = connector?.auto_publish !== false && connector?.autoPublish !== false;
 
   const autoPublish =

@@ -15,6 +15,7 @@ import { buildSeoPackage, routeForKind, persistSeoCache } from "./seo-engine.mjs
 import { akeLog, auditLog } from "./monitoring.mjs";
 import { dbCacheGet, dbCacheSet } from "./cache.mjs";
 import { OFFICIAL_SOURCES } from "../knowledge-engine/sources-registry.mjs";
+import { buildKnowledgeItemRecord } from "./knowledge-item-record.mjs";
 import { ensureAkeRpcFunctions } from "./rpc-probe.mjs";
 
 async function ensureOfficialSources(admin) {
@@ -167,36 +168,13 @@ async function processConnector(admin, connectorConfig, runId, existingItems, op
       const gate = runQualityGate(item, item.analysis, item.verification, connectorConfig);
       const seo = buildSeoPackage(item, item.analysis, routeForKind(item.content_kind, item.external_id));
 
-      const record = {
-        source_id: connectorConfig.source_id || null,
-        pipeline_run_id: runId,
-        external_id: item.external_id,
-        content_kind: item.content_kind,
-        raw_url: item.raw_url,
-        raw_title: item.raw_title,
-        raw_body: item.raw_body,
-        raw_payload: item.raw_payload || {},
-        content_hash: item.verification.contentHash,
-        source_attribution: item.source_attribution,
-        source_url: item.raw_url,
-        ...item.analysis,
-        seo_title: seo.title,
-        seo_description: seo.description,
-        og_description: seo.og_description,
-        twitter_description: seo.twitter_description,
-        structured_data: seo.json_ld,
-        quality_score: gate.quality_score,
-        completeness_score: gate.completeness_score,
-        trust_score: item.verification.trustScore,
-        verification_status: gate.verificationStatus,
-        publish_status: gate.autoPublish && gate.canPublish ? "pending" : "pending",
-        pipeline_stage: gate.autoPublish ? "ready_to_publish" : "analyzed",
-        duplicate_of: item.verification.duplicateOf,
-        duplicate_score: item.verification.duplicateScore,
-        can_publish: gate.canPublish,
-        version: 1,
-        updated_at: new Date().toISOString(),
-      };
+      const record = buildKnowledgeItemRecord({
+        connectorConfig,
+        runId,
+        item,
+        gate,
+        seo,
+      });
 
       if (item.verification.isDuplicate) {
         stats.duplicate++;
