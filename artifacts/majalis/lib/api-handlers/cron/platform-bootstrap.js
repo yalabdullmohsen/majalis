@@ -4,6 +4,7 @@ import {
   runPlatformBootstrap,
   getPlatformBootstrapStatus,
 } from "../../../lib/platform-bootstrap.mjs";
+import { archiveVerificationContent } from "../../../lib/knowledge-engine/archive-verification-content.mjs";
 
 export default async function handler(req, res) {
   if (!validateCronAuth(req)) {
@@ -17,6 +18,14 @@ export default async function handler(req, res) {
     if (action === "status") {
       const status = await getPlatformBootstrapStatus();
       sendJson(res, status.ok ? 200 : 503, { ok: status.ok, ...status });
+      return;
+    }
+
+    if (action === "archive-verification") {
+      const result = await archiveVerificationContent({
+        force: req.query?.force === "1" || req.body?.force === true,
+      });
+      sendJson(res, result.ok ? 200 : result.skipped ? 200 : 500, result);
       return;
     }
 

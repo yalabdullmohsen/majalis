@@ -8,6 +8,7 @@ import { describeDatabaseUrlConfig, testDatabaseConnection } from "./database.mj
 import { getAutoContentHealth, getAutoContentPipelineStats } from "./auto-content/auto-content-sync.mjs";
 import { getAutoKnowledgeEngineStats } from "./auto-knowledge-engine/orchestrator.mjs";
 import { getAkeRpcHealth } from "./auto-knowledge-engine/rpc-probe.mjs";
+import { getInstagramGraphStatus, testInstagramConnection } from "./cms/instagram-graph-api.mjs";
 
 const CRON_ROUTES = [
   { path: "/api/cron/auto-knowledge-sync", schedule: "*/15 * * * *", label: "Auto Knowledge Engine (continuous 15m)" },
@@ -32,12 +33,26 @@ export async function getSystemHealth() {
   const envStatus = getEnvStatus();
   const envValidation = validateCronEnv();
 
-  const [autoContentHealth, akeStats, pipelineStats, dbConn, akeRpc] = await Promise.all([
+  const [autoContentHealth, akeStats, pipelineStats, dbConn, akeRpc, instagramProbe] = await Promise.all([
     getAutoContentHealth().catch((e) => ({ ok: false, error: e.message })),
     getAutoKnowledgeEngineStats(7).catch((e) => ({ ok: false, stats: {}, usingLegacy: true, error: e.message })),
     getAutoContentPipelineStats(5).catch((e) => ({ ok: false, error: e.message })),
     testDatabaseConnection().catch((e) => ({ ok: false, error: e.message })),
     getAkeRpcHealth().catch((e) => ({ ok: false, error: e.message, functions: [] })),
+    (async () => {
+      const status = getInstagramGraphStatus();
+      if (!status.configured) {
+        return { ok: false, optional: true, ...status, failureReason: "instagram_connector_not_configured" };
+      }
+      const test = await testInstagramConnection();
+      return {
+        ok: test.ok,
+        optional: true,
+        ...status,
+        connection: test.ok ? test.account : null,
+        failureReason: test.ok ? null : test.error || "graph_api_test_failed",
+      };
+    })().catch((e) => ({ ok: false, optional: true, failureReason: e.message })),
   ]);
 
   const databaseUrlConfig = describeDatabaseUrlConfig();
@@ -142,6 +157,7 @@ export async function getSystemHealth() {
       usingLegacy: akeStats.usingLegacy,
       rpc: akeRpc,
     },
+    instagram: instagramProbe,
     pipeline: {
       runs: pipelineStats.runs || [],
       recentLogs: (pipelineStats.logs || []).slice(0, 15),
