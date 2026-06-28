@@ -49,6 +49,7 @@
     "test:content-import-async": "node scripts/test-content-import-async.mjs",
     "test:content-import-e2e": "node scripts/test-content-import-e2e.mjs",
     "test:public-no-demo": "node scripts/test-public-no-demo-content.mjs",
+    "test:prayer-rank": "node scripts/test-prayer-rank-system.mjs",
     "cleanup:test-data": "node scripts/cleanup-production-test-data.mjs",
     "restore:real-lessons": "node scripts/restore-real-lessons.mjs",
     "verify:adhkar-import": "node scripts/verify-production-adhkar-import.mjs",

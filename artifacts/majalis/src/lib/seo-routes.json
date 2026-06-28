@@ -152,11 +152,29 @@
     {
       "path": "/prayer-times",
       "title": "مواقيت الصلاة | المجلس العلمي",
-      "description": "مواقيت الصلاة في الكويت مع العد التنازلي للصلاة القادمة.",
-      "keywords": ["مواقيت الصلاة", "الكويت"],
+      "description": "مواقيت الصلاة في الكويت مع متابعة المحافظة والمراتب والنقاط.",
+      "keywords": ["مواقيت الصلاة", "الكويت", "مرتبة الصلاة"],
       "sitemap": true,
       "changefreq": "daily",
       "priority": 0.88
+    },
+    {
+      "path": "/prayer-achievements",
+      "title": "إنجازات الصلاة | المجلس العلمي",
+      "description": "إنجازات المحافظة على الصلاة — أسبوع كامل، شهر، سلسلة متتالية.",
+      "keywords": ["إنجازات الصلاة", "محافظة"],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.72
+    },
+    {
+      "path": "/prayer-log",
+      "title": "سجل الصلوات | المجلس العلمي",
+      "description": "سجل آخر الصلوات المؤداة مع النقاط والتفاصيل.",
+      "keywords": ["سجل الصلوات"],
+      "sitemap": false,
+      "changefreq": "weekly",
+      "priority": 0.65
     },
     {
       "path": "/qibla",

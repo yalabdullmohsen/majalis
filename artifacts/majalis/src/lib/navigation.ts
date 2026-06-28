@@ -67,6 +67,8 @@ export const NAV_GROUPS: NavGroup[] = [
     title: "الأدوات",
     links: [
       { href: "/prayer-times", label: "مواقيت الصلاة" },
+      { href: "/prayer-achievements", label: "إنجازات الصلاة" },
+      { href: "/prayer-log", label: "سجل الصلوات" },
       { href: "/prayer-ranks", label: "مراتب الناس في الصلاة" },
       { href: "/qibla", label: "القبلة" },
       { href: "/occasions", label: "المناسبات الإسلامية" },

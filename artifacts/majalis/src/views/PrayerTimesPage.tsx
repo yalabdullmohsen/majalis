@@ -1,170 +1,114 @@
-import { useMemo, useState } from "react";
+import { Link } from "wouter";
 import { PageHeader, Loading } from "@/components/ui-common";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
-
-type PrayerKey = "fajr" | "dhuhr" | "asr" | "maghrib" | "isha";
-type PrayerTrack = {
-  status: "pending" | "done" | "missed";
-  congregation: boolean;
-  place: "mosque" | "home";
-  timing: "early" | "late";
-};
-
-const TRACK_STORAGE = "majalis-prayer-tracker-v1";
-const PRAYER_KEYS: PrayerKey[] = ["fajr", "dhuhr", "asr", "maghrib", "isha"];
-const PRAYER_LABELS: Record<PrayerKey, string> = {
-  fajr: "الفجر",
-  dhuhr: "الظهر",
-  asr: "العصر",
-  maghrib: "المغرب",
-  isha: "العشاء",
-};
-
-function todayKey() {
-  return new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Kuwait" }).format(new Date());
-}
-
-function emptyDay(): Record<PrayerKey, PrayerTrack> {
-  return Object.fromEntries(PRAYER_KEYS.map((key) => [key, {
-    status: "pending",
-    congregation: false,
-    place: "home",
-    timing: "early",
-  }])) as Record<PrayerKey, PrayerTrack>;
-}
-
-function readTracker(): Record<string, Record<PrayerKey, PrayerTrack>> {
-  try {
-    return JSON.parse(localStorage.getItem(TRACK_STORAGE) || "{}");
-  } catch {
-    return {};
-  }
-}
-
-function writeTracker(data: Record<string, Record<PrayerKey, PrayerTrack>>) {
-  localStorage.setItem(TRACK_STORAGE, JSON.stringify(data));
-}
+import { usePrayerTracker } from "@/hooks/usePrayerTracker";
+import { computePrayerWindowInfo, useSmartPrayerReminders } from "@/hooks/useSmartPrayerReminders";
+import { PrayerRankCard } from "@/components/prayer/PrayerRankCard";
+import { PrayerLevelBar } from "@/components/prayer/PrayerLevelBar";
+import { PrayerStatsGrid } from "@/components/prayer/PrayerStatsGrid";
+import { PrayerCommitmentRing } from "@/components/prayer/PrayerCommitmentRing";
+import { PrayerCalendar } from "@/components/prayer/PrayerCalendar";
+import { PrayerCard } from "@/components/prayer/PrayerCard";
+import { NextPrayerCard } from "@/components/prayer/NextPrayerCard";
+import { PrayerGeneralStats } from "@/components/prayer/PrayerGeneralStats";
+import { SmartReminderBanner } from "@/components/prayer/SmartReminderBanner";
+import {
+  PRAYER_KEYS,
+  PRAYER_SLOT_MAP,
+  emptyDay,
+  kuwaitDateKey,
+  type PrayerKey,
+} from "@/lib/prayer-tracker";
 
 export default function PrayerTimesPage() {
   const { data, countdown, loading } = usePrayerCountdown();
+  const tracker = usePrayerTracker();
+  const todayDay = tracker.today || emptyDay(kuwaitDateKey());
+
+  const todayStatus = Object.fromEntries(
+    PRAYER_KEYS.map((k) => [k, todayDay[k]?.status || "pending"]),
+  ) as Record<PrayerKey, "pending" | "done" | "missed">;
+
+  const { reminder, requestNotificationPermission } = useSmartPrayerReminders(data, countdown, todayStatus);
+  const windowInfo = computePrayerWindowInfo(data, countdown);
+
   const obligatory = data?.prayers.filter((p) => p.obligatory) || [];
-  const [store, setStore] = useState(() => readTracker());
-  const dateKey = todayKey();
-  const today = store[dateKey] || emptyDay();
-
-  const updatePrayer = (key: PrayerKey, patch: Partial<PrayerTrack>) => {
-    const nextDay = { ...today, [key]: { ...today[key], ...patch } };
-    const next = { ...store, [dateKey]: nextDay };
-    setStore(next);
-    writeTracker(next);
-  };
-
-  const stats = useMemo(() => {
-    const days = Object.entries(store).sort(([a], [b]) => b.localeCompare(a));
-    const last7 = days.slice(0, 7).flatMap(([, day]) => Object.values(day));
-    const last30 = days.slice(0, 30).flatMap(([, day]) => Object.values(day));
-    const calc = (rows: PrayerTrack[]) => ({
-      done: rows.filter((p) => p.status === "done").length,
-      missed: rows.filter((p) => p.status === "missed").length,
-      mosque: rows.filter((p) => p.place === "mosque").length,
-      congregation: rows.filter((p) => p.congregation).length,
-    });
-    let streak = 0;
-    for (const [, day] of days) {
-      if (Object.values(day).every((p) => p.status === "done")) streak += 1;
-      else break;
-    }
-    const totalToday = Object.values(today);
-    return {
-      todayDone: totalToday.filter((p) => p.status === "done").length,
-      todayMissed: totalToday.filter((p) => p.status === "missed").length,
-      week: calc(last7),
-      month: calc(last30),
-      streak,
-    };
-  }, [store, today]);
 
   return (
-    <div className="page-shell">
+    <div className="page-shell prayer-times-page">
       <PageHeader
         eyebrow="العبادة"
         title="مواقيت الصلاة"
-        subtitle="مواقيت الصلاة في الكويت مع عدّاد تنازلي يتحدّث كل ثانية."
+        subtitle="تابع صلواتك، ارتقِ بمرتبتك، واحفظ محتواك على محاسبة يومية."
       />
+
+      <nav className="prayer-subnav" aria-label="أقسام الصلاة">
+        <Link href="/prayer-times" className="is-active">المواقيت</Link>
+        <Link href="/prayer-achievements">الإنجازات</Link>
+        <Link href="/prayer-log">سجل الصلوات</Link>
+        <Link href="/prayer-ranks">مراتب الخشوع</Link>
+      </nav>
+
+      {tracker.syncNote && <p className="prayer-sync-note">{tracker.syncNote}</p>}
+
+      <SmartReminderBanner reminder={reminder} onEnableNotifications={requestNotificationPermission} />
+
+      <PrayerRankCard rank={tracker.rank} metrics={tracker.rankMetrics} />
+      <PrayerLevelBar stats={tracker.stats} />
 
       {loading ? (
         <Loading />
       ) : data && countdown ? (
         <>
-          <div className="prayer-status-card ui-card">
-            <p className="prayer-status-card__label">الصلاة القادمة</p>
-            <h2>{countdown.next?.name || "غير محدد"}</h2>
-            <p className="prayer-status-card__countdown prayer-countdown-hms" aria-live="polite">
-              {countdown.remainingHms}
-            </p>
-            {countdown.current && (
-              <p className="prayer-status-card__current">الوقت الحالي: {countdown.current.name}</p>
-            )}
-            <p className="prayer-status-card__date">{data.date.readable || data.date.gregorian}</p>
+          <NextPrayerCard data={data} countdown={countdown} windowInfo={windowInfo} />
+
+          <div className="prayer-dashboard-row">
+            <PrayerCommitmentRing pct={tracker.stats.monthlyCommitmentPct} />
+            <div className="prayer-times-grid prayer-times-grid--compact">
+              {obligatory.map((p) => (
+                <div
+                  key={p.key}
+                  className={`prayer-time-cell ui-card${countdown.next?.key === p.key ? " is-next" : ""}${countdown.current?.key === p.key ? " is-current" : ""}`}
+                >
+                  <span>{p.name}</span>
+                  <strong>{p.time}</strong>
+                </div>
+              ))}
+            </div>
           </div>
 
-          <div className="prayer-times-grid">
-            {obligatory.map((p) => (
-              <div
-                key={p.key}
-                className={`prayer-time-cell ui-card${countdown.next?.key === p.key ? " is-next" : ""}`}
-              >
-                <span>{p.name}</span>
-                <strong>{p.time}</strong>
-              </div>
-            ))}
-          </div>
-
-          <section className="ui-card prayer-tracker-card">
-            <div className="prayer-tracker-head">
+          <section className="prayer-tracker-section">
+            <header className="prayer-tracker-head">
               <div>
                 <p className="prayer-status-card__label">متابعة الصلوات</p>
-                <h2>عداد الصلوات اليومي</h2>
+                <h2>صلوات اليوم</h2>
               </div>
-              <strong>{stats.todayDone}/5</strong>
-            </div>
+              <strong>{tracker.stats.todayDone}/5</strong>
+            </header>
 
-            <div className="prayer-tracker-grid">
+            <div className="prayer-action-cards">
               {PRAYER_KEYS.map((key) => {
-                const row = today[key];
+                const slotKey = PRAYER_SLOT_MAP[key];
+                const slot = data.prayers.find((p) => p.key === slotKey);
+                const session = todayDay[key];
                 return (
-                  <article key={key} className={`prayer-track-cell is-${row.status}`}>
-                    <header>
-                      <strong>{PRAYER_LABELS[key]}</strong>
-                      <span>{row.status === "done" ? "تمت" : row.status === "missed" ? "فاتت" : "بانتظار"}</span>
-                    </header>
-                    <div className="prayer-track-actions">
-                      <button type="button" onClick={() => updatePrayer(key, { status: "done" })}>تمت</button>
-                      <button type="button" onClick={() => updatePrayer(key, { status: "missed" })}>فاتت</button>
-                    </div>
-                    <div className="prayer-track-options">
-                      <label><input type="checkbox" checked={row.congregation} onChange={(e) => updatePrayer(key, { congregation: e.target.checked })} /> جماعة</label>
-                      <select value={row.place} onChange={(e) => updatePrayer(key, { place: e.target.value as PrayerTrack["place"] })}>
-                        <option value="mosque">في المسجد</option>
-                        <option value="home">في البيت</option>
-                      </select>
-                      <select value={row.timing} onChange={(e) => updatePrayer(key, { timing: e.target.value as PrayerTrack["timing"] })}>
-                        <option value="early">أول الوقت</option>
-                        <option value="late">آخر الوقت</option>
-                      </select>
-                    </div>
-                  </article>
+                  <PrayerCard
+                    key={key}
+                    prayerKey={key}
+                    time={slot}
+                    session={session}
+                    isNext={countdown.next?.key === slotKey}
+                    isCurrent={countdown.current?.key === slotKey}
+                    onUpdate={(patch) => tracker.updatePrayer(key, patch)}
+                  />
                 );
               })}
             </div>
-
-            <div className="prayer-stat-strip">
-              <span>اليوم: {stats.todayDone} تمت / {stats.todayMissed} فاتت</span>
-              <span>الأسبوع: {stats.week.done} صلاة</span>
-              <span>الشهر: {stats.month.done} صلاة</span>
-              <span>Streak: {stats.streak} يوم</span>
-            </div>
           </section>
+
+          <PrayerStatsGrid stats={tracker.stats} />
+          <PrayerCalendar calendarMonth={tracker.calendarMonth} getDay={(d) => tracker.store[d]} />
+          <PrayerGeneralStats stats={tracker.stats} />
         </>
       ) : (
         <p className="lessons-empty-state">تعذر تحميل المواقيت حالياً.</p>
