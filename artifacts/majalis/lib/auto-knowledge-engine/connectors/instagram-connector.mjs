@@ -6,6 +6,43 @@ import { normalizeContentKind } from "../content-kind.mjs";
 import { discoverInstagramSource } from "../../cms/instagram-connector.mjs";
 import { filterCurrentMonthItems } from "../v2/extraction-service.mjs";
 
+function extractHashtags(text) {
+  return [...new Set(String(text || "").match(/#[\u0600-\u06FF\w]+/g) || [])];
+}
+
+function mapPostToItem(post, connector, handle, discovery) {
+  const caption = post.description || post.caption || "";
+  const externalId = post.externalId || post.id || post.link;
+  const mediaType = post.mediaType || post.media_type || "IMAGE";
+  const isReel = mediaType === "VIDEO" && /\/reel\//i.test(post.link || post.permalink || "");
+
+  return {
+    external_id: `${connector.slug}:ig:${externalId}`,
+    source_slug: connector.slug,
+    source_attribution: connector.name,
+    source_url: connector.officialUrl,
+    raw_url: post.link || post.permalink || connector.officialUrl,
+    raw_title: post.title || caption.slice(0, 120) || connector.name,
+    raw_body: caption,
+    raw_payload: {
+      handle,
+      imageUrl: post.imageUrl || post.media_url,
+      media_url: post.mediaUrl || post.media_url,
+      media_urls: post.mediaUrls || [],
+      timestamp: post.timestamp || post.published_at,
+      instagram_id: post.externalId || post.id,
+      media_type: isReel ? "REELS" : mediaType,
+      permalink: post.permalink || post.link,
+      hashtags: extractHashtags(caption),
+      carousel_count: post.mediaUrls?.length || 1,
+      extracted_via: discovery.graphApi ? "instagram_graph_api" : "og_tags",
+      vision_on_image: connector.apiConfig.vision_on_image !== false,
+    },
+    content_kind: normalizeContentKind(connector.classifyPost(post)),
+    published_at: post.timestamp || post.published_at || null,
+  };
+}
+
 export class InstagramConnector extends BaseConnector {
   async fetchItems(syncOptions = {}) {
     const handle = this.handle || this.apiConfig.handle;
@@ -21,7 +58,9 @@ export class InstagramConnector extends BaseConnector {
       trust_score: this.trustLevel * 20,
     };
 
-    const discovery = await discoverInstagramSource(source);
+    const fetchLimit = this.apiConfig.fetch_limit || syncOptions.limit || 15;
+
+    const discovery = await discoverInstagramSource(source, { limit: fetchLimit });
     if (discovery.connectorRequired || !discovery.items?.length) {
       const graphConfigured = discovery.graphApi === true || discovery.graphApiAttempted;
       const hint = discovery.hint
@@ -34,33 +73,26 @@ export class InstagramConnector extends BaseConnector {
         itemsReturned: discovery.items?.length || 0,
         hint,
       };
-      // Isolated failure — do not throw; let orchestrator continue other connectors.
       return [];
     }
 
-    let items = discovery.items.map((post, idx) => ({
-      external_id: `${this.slug}:ig:${post.id || post.link || idx}`,
-      source_slug: this.slug,
-      source_attribution: this.name,
-      source_url: this.officialUrl,
-      raw_url: post.link || post.permalink || this.officialUrl,
-      raw_title: post.title || post.caption?.slice(0, 120) || this.name,
-      raw_body: post.description || post.caption || "",
-      raw_payload: {
-        handle,
-        imageUrl: post.imageUrl || post.media_url,
-        media_url: post.media_url,
-        timestamp: post.timestamp || post.published_at,
-        instagram_id: post.id,
-        media_type: post.media_type,
-        extracted_via: discovery.graphApi ? "instagram_graph_api" : "og_tags",
-      },
-      content_kind: normalizeContentKind(this.classifyPost(post)),
-      published_at: post.timestamp || post.published_at || null,
-    }));
+    let items = discovery.items.map((post) => mapPostToItem(post, this, handle, discovery));
 
-    items = filterCurrentMonthItems(items);
-    return items.slice(0, syncOptions.limit || 10);
+    const skipMonthFilter = this.apiConfig.skip_month_filter === true;
+    if (!skipMonthFilter) {
+      items = filterCurrentMonthItems(items);
+    }
+
+    const lastSeen = this.apiConfig.last_seen_id || syncOptions.lastCursor;
+    if (lastSeen) {
+      const idx = items.findIndex((i) => i.raw_payload?.instagram_id === lastSeen);
+      if (idx > 0) items = items.slice(0, idx);
+      else if (idx === -1 && items.length) {
+        /* all new since last seen */
+      }
+    }
+
+    return items.slice(0, fetchLimit);
   }
 
   classifyPost(post) {

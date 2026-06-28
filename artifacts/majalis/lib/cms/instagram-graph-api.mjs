@@ -101,18 +101,25 @@ export function mapGraphMediaNode(node) {
   const mediaUrls = collectMediaUrls(node);
   const imageUrl = node.media_type === "VIDEO" ? node.thumbnail_url || mediaUrls[0] : node.media_url || mediaUrls[0];
   const caption = node.caption || "";
+  const hashtags = [...new Set(caption.match(/#[\u0600-\u06FF\w]+/g) || [])];
+  const permalink = node.permalink || "";
+  const isReel = node.media_type === "VIDEO" && /\/reel\//i.test(permalink);
   return {
     title: caption.slice(0, 80) || "منشور Instagram",
-    link: node.permalink,
+    link: permalink,
     description: caption,
+    caption,
     imageUrl: imageUrl || "",
     mediaUrls,
-    mediaType: node.media_type,
+    mediaType: isReel ? "REELS" : node.media_type,
+    media_type: isReel ? "REELS" : node.media_type,
     mediaUrl: node.media_url || imageUrl,
     timestamp: node.timestamp,
-    permalink: node.permalink,
+    permalink,
     externalId: node.id,
-    source_url: node.permalink,
+    id: node.id,
+    hashtags,
+    source_url: permalink,
     fromGraphApi: true,
     connectorPending: false,
   };

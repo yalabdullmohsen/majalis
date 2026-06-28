@@ -4,6 +4,7 @@
 
 import { scoreQuality } from "../knowledge-engine/quality.mjs";
 import { normalizeContentKind } from "./content-kind.mjs";
+import { applyConfidenceToGate } from "./confidence-publish.mjs";
 
 export function runQualityGate(item, analysis, verification, connector) {
   const quality = scoreQuality(item, analysis, {
@@ -60,7 +61,7 @@ export function runQualityGate(item, analysis, verification, connector) {
     autoPublishEnabled &&
     trustLevel >= 4;
 
-  return {
+  const base = {
     ...quality,
     checks,
     failedChecks: failed,
@@ -78,6 +79,8 @@ export function runQualityGate(item, analysis, verification, connector) {
         ? "verified"
         : quality.verification_status,
   };
+
+  return applyConfidenceToGate(base, item, connector);
 }
 
 export function formatLanguage(text) {

@@ -39,6 +39,7 @@ export const ACTIVATION_TABLES_MIGRATION_FILES = [
   "auto_knowledge_engine_v16_v2_production.sql",
   "auto_knowledge_engine_v17_monitoring.sql",
   "auto_knowledge_engine_v18_autonomous.sql",
+  "murtaqaa_drosq8_sources_v1.sql",
 ];
 
 export const MIGRATION_FILES = [
@@ -67,6 +68,7 @@ export const MIGRATION_FILES = [
   "trusted_lesson_sources_v1.sql",
   "kuwait_instagram_sources_v1.sql",
   "kuwait_instagram_sources_v2.sql",
+  "murtaqaa_drosq8_sources_v1.sql",
   "smart_source_monitoring_v1.sql",
   "automation_phase5_v1.sql",
   "lesson_intelligence_v6.sql",
@@ -91,6 +93,7 @@ export const MIGRATION_FILES = [
   "auto_knowledge_engine_v16_v2_production.sql",
   "auto_knowledge_engine_v17_monitoring.sql",
   "auto_knowledge_engine_v18_autonomous.sql",
+  "murtaqaa_drosq8_sources_v1.sql",
 ];
 
 export function resolveMigrationsDir() {

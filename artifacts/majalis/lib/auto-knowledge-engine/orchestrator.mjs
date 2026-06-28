@@ -380,6 +380,12 @@ async function processConnector(admin, connectorConfig, runId, existingItems, op
         continue;
       }
 
+      if (gate.confidenceDecision?.action === "reject") {
+        stats.rejected = (stats.rejected || 0) + 1;
+        noteRejection(gate.confidenceDecision.reason || "confidence_below_threshold");
+        continue;
+      }
+
       if (!gate.passed && !gate.canPublish) {
         noteRejection("quality_gate");
         noteGateFailure(gate.failedChecks);
@@ -476,7 +482,9 @@ async function processConnector(admin, connectorConfig, runId, existingItems, op
         }
       } else {
         stats.review++;
-        if (!gate.autoPublish) {
+        if (gate.confidenceDecision?.action === "review") {
+          noteRejection("confidence_review_band");
+        } else if (!gate.autoPublish) {
           noteRejection(gate.autoPublish === false ? "auto_publish_disabled" : "quality_gate_review");
         }
       }

@@ -29,7 +29,7 @@ export function isInstagramBlocked(imported, err) {
   return false;
 }
 
-export async function discoverInstagramSource(source, { runId } = {}) {
+export async function discoverInstagramSource(source, { runId, limit = 15 } = {}) {
   const config = source.config || {};
   const sourceUrl = String(source.url || source.source_url || config.source_url || "").trim();
   const handle = config.handle || sourceUrl.replace(/.*instagram\.com\//, "").replace(/\/$/, "");
@@ -55,7 +55,7 @@ export async function discoverInstagramSource(source, { runId } = {}) {
   }
 
   if (isInstagramGraphConfigured()) {
-    const graphResult = await fetchInstagramMediaForSource(source, { limit: 15, runId });
+    const graphResult = await fetchInstagramMediaForSource(source, { limit, runId });
     if (graphResult.items?.length) {
       return {
         items: graphResult.items,

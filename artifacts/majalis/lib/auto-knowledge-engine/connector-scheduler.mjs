@@ -22,6 +22,12 @@ export const DEFAULT_POLL_INTERVALS = {
 /** High-frequency news sources (15 min). */
 const NEWS_SLUGS = new Set(["islamweb-news", "alukah-articles"]);
 
+/** Priority lesson sources — custom poll intervals. */
+const SLUG_POLL_OVERRIDES = {
+  "instagram-murtaqaa": 10,
+  "telegram-drosq8": 5,
+};
+
 /** Large libraries / static (6h). */
 const LIBRARY_SLUGS = new Set(["kuwait-lessons", "kfas-sharia"]);
 
@@ -32,6 +38,7 @@ export function resolvePollIntervalMinutes(connector) {
   const cfg = connector.api_config?.poll_interval_minutes;
   if (cfg > 0) return cfg;
 
+  if (SLUG_POLL_OVERRIDES[connector.slug]) return SLUG_POLL_OVERRIDES[connector.slug];
   if (NEWS_SLUGS.has(connector.slug)) return 15;
   if (LIBRARY_SLUGS.has(connector.slug)) return 360;
 
