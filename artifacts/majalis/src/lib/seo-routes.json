@@ -105,6 +105,33 @@
       "priority": 0.9
     },
     {
+      "path": "/quran/mushaf",
+      "title": "المصحف الشريف (طبعة الكويت) | المجلس العلمي",
+      "description": "مصحف دولة الكويت — قراءة ورقية تفاعلية بـ 604 صفحة مع فهرس السور والأجزاء والبحث.",
+      "keywords": ["مصحف الكويت", "المصحف الشريف", "قراءة القرآن", "604 صفحة"],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.92
+    },
+    {
+      "path": "/quran/search",
+      "title": "البحث في القرآن | المجلس العلمي",
+      "description": "ابحث في القرآن الكريم وانتقل مباشرة إلى موضع الآية في المصحف.",
+      "keywords": ["بحث القرآن", "آيات", "مصحف"],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.85
+    },
+    {
+      "path": "/quran/tafsir",
+      "title": "تفسير القرآن | المجلس العلمي",
+      "description": "قراءة التفسير مع الآيات — تجربة قرآنية متكاملة.",
+      "keywords": ["تفسير", "القرآن", "آيات"],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.86
+    },
+    {
       "path": "/quran-radio",
       "title": "إذاعة القرآن | المجلس العلمي",
       "description": "بث مباشر لإذاعات قرآنية موثوقة.",
