@@ -97,6 +97,21 @@ export default async function handler(req, res) {
       return;
     }
 
+    if (scope === "fiqh-council" || scope === "ake-fiqh") {
+      const result = await applyMigrations({
+        files: ["fiqh_council_items_ake_prereq.sql"],
+        continueOnError: false,
+        trackApplied: true,
+      });
+      sendJson(res, result.ok ? 200 : 500, {
+        ok: result.ok,
+        scope: "fiqh-council",
+        migrations: result,
+        resolved: resolvedMeta(),
+      });
+      return;
+    }
+
     if (scope === "activation") {
       assertServiceSecrets("migrations");
       const seedRulings = req.query?.seed !== "0" && req.body?.seed !== false;

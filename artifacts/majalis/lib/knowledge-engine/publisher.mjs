@@ -36,7 +36,7 @@ function log(scope, data) {
 }
 
 function buildRecord(item, analysis) {
-  const kind = item.content_kind;
+  const kind = normalizeContentKind(item.content_kind);
   const verified = item.verification_status === "verified";
   const base = {
     status: verified ? "approved" : "pending",
