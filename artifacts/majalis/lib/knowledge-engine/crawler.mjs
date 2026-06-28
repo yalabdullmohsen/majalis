@@ -126,11 +126,67 @@ function parseTsSeedArray(raw, kind) {
   return items;
 }
 
+async function loadKuwaitLessonsImport() {
+  try {
+    const raw = await readFile(resolve(DATA_DIR, "import/02-kuwait-lessons.json"), "utf8");
+    const rows = JSON.parse(raw);
+    return Array.isArray(rows) ? rows : [];
+  } catch (err) {
+    log("kuwait-lessons-import-miss", { error: String(err.message || err) });
+    return [];
+  }
+}
+
+function kuwaitLessonExternalId(row) {
+  return hashContent([
+    "kuwait-lessons",
+    row.title,
+    row.mosque,
+    row.day_of_week,
+    row.lesson_time,
+    row.speaker_name || row.sheikh_name,
+  ]);
+}
+
 export async function crawlSource(source, existingHashes = new Set()) {
   const results = [];
   const errors = [];
 
   if (source.seed_only) {
+    if (source.slug === "kuwait-lessons") {
+      const rows = await loadKuwaitLessonsImport();
+      const now = new Date().toISOString();
+      for (const row of rows) {
+        if (!row?.title) continue;
+        const external_id = `kuwait-lessons:${kuwaitLessonExternalId(row)}`;
+        const h = hashContent([external_id, row.title]);
+        if (existingHashes.has(h)) continue;
+        results.push({
+          external_id,
+          content_kind: row.is_course ? "course" : "lesson",
+          raw_title: row.title,
+          raw_body: row.description || row.schedule || "",
+          raw_url: row.source_url || `https://www.majlisilm.com/lessons/${external_id}`,
+          source_attribution: row.speaker_name || row.sheikh_name || source.name,
+          source_url: source.official_url,
+          content_hash: h,
+          published_at: now,
+          raw_payload: {
+            ...row,
+            speaker_name: row.speaker_name || row.sheikh_name,
+            day_of_week: row.day_of_week,
+            lesson_time: row.lesson_time,
+            mosque: row.mosque,
+            city: row.city,
+            region: row.region,
+            category: row.category,
+            _source: "kuwait-lessons-import",
+          },
+        });
+      }
+      return { items: results, errors };
+    }
+
     const seeds = await loadInternalSeeds();
     for (const item of seeds) {
       const h = hashContent([item.external_id, item.title]);

@@ -23,7 +23,11 @@ export function runQualityGate(item, analysis, verification, connector) {
   const isTrustedOfficialLesson =
     trustLevel >= 4 &&
     lessonKind &&
-    (connectorType === "instagram" || connector?.platform === "instagram");
+    (connectorType === "instagram" ||
+      connector?.platform === "instagram" ||
+      connectorType === "seed" ||
+      item.source_slug === "kuwait-lessons" ||
+      connector?.slug === "kuwait-lessons");
 
   const checks = {
     dedup: !verification.isDuplicate,
