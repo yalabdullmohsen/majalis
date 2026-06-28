@@ -206,6 +206,22 @@ export default async function handler(req, res) {
       return;
     }
 
+    if (scope === "question-generation" || scope === "qgen-v1") {
+      const result = await applyMigrations({
+        files: ["question_generation_v1.sql"],
+        continueOnError: false,
+        trackApplied: true,
+        force: req.query?.force === "1",
+      });
+      sendJson(res, result.ok ? 200 : 500, {
+        ok: result.ok,
+        scope: "question-generation",
+        migrations: result,
+        resolved: resolvedMeta(),
+      });
+      return;
+    }
+
     if (scope === "sin-jeem" || scope === "question-answer") {
       const { applySinJeemMigration } = await import("../../../lib/sin-jeem-migration.mjs");
       const { runSinJeemSeed } = await import("../../../lib/sin-jeem-seed.mjs");

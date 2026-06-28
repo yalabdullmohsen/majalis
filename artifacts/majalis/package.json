@@ -73,6 +73,8 @@
     "verify:question-answer": "node scripts/verify-question-answer.mjs",
     "verify:sin-jeem:production": "node scripts/verify-question-answer-production.mjs",
     "verify:question-answer:production": "node scripts/verify-question-answer-production.mjs",
+    "test:question-generation": "node scripts/test-question-generation.mjs",
+    "cron:question-answer-daily": "node scripts/run-question-generation-cron.mjs",
     "validate:css": "node scripts/validate-index-css.mjs",
     "smoke:mobile": "node scripts/smoke-mobile-routes.mjs",
     "verify:features": "node scripts/verify-features.mjs",

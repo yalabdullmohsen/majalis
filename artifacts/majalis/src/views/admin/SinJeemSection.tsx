@@ -7,6 +7,7 @@ import { SIN_JEEM_QUESTIONS } from "@/lib/sin-jeem/questions-seed";
 import { adminDeleteQuestion, adminGetQuestions, adminUpsertQuestion } from "@/lib/sin-jeem/supabase";
 import type { Difficulty, QuestionType, SinJeemQuestion } from "@/lib/sin-jeem/types";
 import { DIFFICULTIES } from "@/lib/sin-jeem/constants";
+import { QuestionGenerationPanel } from "@/views/admin/QuestionGenerationPanel";
 
 type AuditRow = { id: string; action: string; created_at: string; question_id?: string; payload?: unknown };
 
@@ -234,6 +235,8 @@ export function SinJeemSection() {
 
   return (
     <div>
+      <QuestionGenerationPanel />
+
       <div style={{ display: "flex", flexWrap: "wrap", gap: "0.65rem", marginBottom: "1rem", alignItems: "center" }}>
         <h2 style={{ margin: 0, color: C.emeraldDeep, flex: 1 }}>سؤال وجواب — إدارة الأسئلة</h2>
         <button type="button" className="page-action-btn" onClick={() => { setForm(emptyForm()); setModal(true); }}>+ سؤال</button>

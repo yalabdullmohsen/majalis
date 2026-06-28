@@ -4,6 +4,7 @@ import { getSupabaseAdmin } from "../../lib/supabase-admin.mjs";
 import { requireAdminAccess } from "../../lib/admin-auth.mjs";
 import { parseCsvQuestions, parseJsonQuestions, questionsToCsv, contentHash as importHash } from "../../lib/sin-jeem-import.mjs";
 import { getProductionQuestionBank, getCategorySeedList } from "../../lib/question-answer-bank.mjs";
+import { getGenerationDashboard, runDailyGeneration } from "../../lib/question-generation/pipeline.mjs";
 
 const USED_HASHES = new Set();
 const RATE_LIMIT = new Map();
@@ -599,6 +600,9 @@ export default async function handler(req, res, opts = {}) {
     "admin_bulk_reject",
     "admin_bulk_delete",
     "admin_audit",
+    "generation_dashboard",
+    "generation_reports",
+    "generation_run",
   ];
   if (adminActions.includes(action)) {
     const auth = await requireAdminAccess(req, res, sendJson, { permission: "content.edit" });
@@ -708,6 +712,47 @@ export default async function handler(req, res, opts = {}) {
         return;
       }
       sendJson(res, 200, { ok: true, audit: data || [] });
+      return;
+    }
+
+    if (action === "generation_dashboard") {
+      try {
+        const dashboard = await getGenerationDashboard(admin);
+        sendJson(res, 200, dashboard);
+      } catch (err) {
+        sendJson(res, 500, { ok: false, error: err.message });
+      }
+      return;
+    }
+
+    if (action === "generation_reports") {
+      const limit = Math.min(Number(req.query?.limit) || 30, 90);
+      try {
+        const { data, error } = await admin
+          .from("daily_generation_reports")
+          .select("*")
+          .order("day_key", { ascending: false })
+          .limit(limit);
+        if (error) throw new Error(error.message);
+        sendJson(res, 200, { ok: true, reports: data || [] });
+      } catch (err) {
+        sendJson(res, 500, { ok: false, error: err.message });
+      }
+      return;
+    }
+
+    if (action === "generation_run") {
+      if (!rateLimit(`qgen-run:${ip}`, 3, 300_000)) {
+        sendJson(res, 429, { ok: false, error: "generation_rate_limited" });
+        return;
+      }
+      try {
+        const force = req.body?.force === true || req.query?.force === "1";
+        const result = await runDailyGeneration({ force });
+        sendJson(res, result.ok ? 200 : 500, result);
+      } catch (err) {
+        sendJson(res, 500, { ok: false, error: err.message });
+      }
       return;
     }
   }
