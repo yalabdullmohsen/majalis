@@ -133,6 +133,9 @@ function fallbackAnalysis(rawTitle, rawBody, context) {
   const isInstagramLesson =
     context.source_type === "instagram" &&
     ["lesson", "lecture", "course", "announcement"].includes(String(context.content_kind || ""));
+  const isStructuredLesson =
+    ["lesson", "lecture", "course"].includes(String(context.content_kind || "")) && hasStructuredBody;
+  const trustedStructured = isOfficialManifest || isInstagramLesson || isStructuredLesson;
 
   return {
     ai_title: String(rawTitle || "بدون عنوان").slice(0, 300),
@@ -147,9 +150,9 @@ function fallbackAnalysis(rawTitle, rawBody, context) {
     ai_hadith_refs: [],
     seo_title: String(rawTitle || "").slice(0, 70),
     seo_description: summary.slice(0, 160),
-    ai_confidence: hasStructuredBody && (isOfficialManifest || isInstagramLesson) ? 62 : 45,
-    needs_human_review: !(hasStructuredBody && (isOfficialManifest || isInstagramLesson)),
-    review_reason: hasStructuredBody && (isOfficialManifest || isInstagramLesson)
+    ai_confidence: trustedStructured ? 62 : 45,
+    needs_human_review: !trustedStructured,
+    review_reason: trustedStructured
       ? null
       : "تحليل بدون ذكاء اصطناعي — يحتاج مراجعة",
   };

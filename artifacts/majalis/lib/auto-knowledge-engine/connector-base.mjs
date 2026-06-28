@@ -107,7 +107,11 @@ export class BaseConnector {
         }
 
         const beforeFilter = rawItems?.length || 0;
-        let items = filterItemsBySyncWindow(rawItems, syncOptions.window);
+        // Static seed connectors ship curated catalog rows — not RSS timestamps.
+        let items =
+          this.connectorType === "seed"
+            ? rawItems || []
+            : filterItemsBySyncWindow(rawItems, syncOptions.window);
         items = sortItemsByPublishedAtDesc(items);
 
         const limit = syncOptions.limit || syncOptions.maxItems;
