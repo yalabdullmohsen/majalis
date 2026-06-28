@@ -104,6 +104,31 @@ function PlatformAiStatusContent() {
       </div>
 
       <section style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.625rem", padding: "1rem", marginBottom: "1rem" }}>
+        <h3 style={{ margin: "0 0 0.75rem", color: C.emeraldDeep, fontSize: "0.9375rem" }}>Smart Extraction — Cost & Usage</h3>
+        <div style={{ display: "grid", gap: "0.5rem", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", fontSize: "0.8125rem" }}>
+          <div><strong>{(data as AiStatus & { smartExtraction?: { totalImages?: number } })?.smartExtraction?.totalImages ?? 0}</strong><br />صور</div>
+          <div><strong>{(data as AiStatus & { smartExtraction?: { noAiCount?: number } })?.smartExtraction?.noAiCount ?? 0}</strong><br />بدون AI</div>
+          <div><strong>{(data as AiStatus & { smartExtraction?: { aiCount?: number } })?.smartExtraction?.aiCount ?? 0}</strong><br />مع AI</div>
+          <div><strong>{Math.round(((data as AiStatus & { smartExtraction?: { savingsPercent?: number } })?.smartExtraction?.savingsPercent ?? 0))}%</strong><br />توفير</div>
+          <div><strong>${((data as AiStatus & { smartExtraction?: { dailyCostUsd?: number } })?.smartExtraction?.dailyCostUsd ?? 0).toFixed(4)}</strong><br />تكلفة يومية</div>
+          <div><strong>${((data as AiStatus & { smartExtraction?: { monthlyCostUsd?: number } })?.smartExtraction?.monthlyCostUsd ?? 0).toFixed(3)}</strong><br />تكلفة شهرية</div>
+          <div><strong>{Math.round(((data as AiStatus & { smartExtraction?: { avgConfidence?: number } })?.smartExtraction?.avgConfidence ?? 0) * 100)}%</strong><br />متوسط الثقة</div>
+          <div><strong>{(data as AiStatus & { smartExtraction?: { avgProcessingMs?: number } })?.smartExtraction?.avgProcessingMs ?? 0}ms</strong><br />متوسط الزمن</div>
+        </div>
+      </section>
+
+      <section style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.625rem", padding: "1rem", marginBottom: "1rem" }}>
+        <h3 style={{ margin: "0 0 0.75rem", color: C.emeraldDeep, fontSize: "0.9375rem" }}>OCR & AI Requests</h3>
+        <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", fontSize: "0.8125rem" }}>
+          <span>OCR Success: {(data as AiStatus & { smartExtraction?: { ocrSuccess?: number } })?.smartExtraction?.ocrSuccess ?? 0}</span>
+          <span>OCR Failed: {(data as AiStatus & { smartExtraction?: { ocrFailed?: number } })?.smartExtraction?.ocrFailed ?? 0}</span>
+          <span>OpenAI: {(data as AiStatus & { smartExtraction?: { openaiRequests?: number } })?.smartExtraction?.openaiRequests ?? 0}</span>
+          <span>Claude: {(data as AiStatus & { smartExtraction?: { anthropicRequests?: number } })?.smartExtraction?.anthropicRequests ?? 0}</span>
+          <span>Success Rate: {(data as AiStatus & { smartExtraction?: { successRate?: number } })?.smartExtraction?.successRate ?? 0}%</span>
+        </div>
+      </section>
+
+      <section style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.625rem", padding: "1rem", marginBottom: "1rem" }}>
         <h3 style={{ margin: "0 0 0.75rem", color: C.emeraldDeep, fontSize: "0.9375rem" }}>المفاتيح والمزودين</h3>
         <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.875rem" }}>
           <tbody>

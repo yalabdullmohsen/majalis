@@ -1,6 +1,7 @@
 import { sendJson } from "../../api/_http.mjs";
 import { requireAdminAccess } from "../../../lib/admin-auth.mjs";
 import { getVisionAiStatus } from "../../../lib/ai/vision-provider-fallback.mjs";
+import { getSmartExtractionStats } from "../../../lib/ai/smart-extraction/monitoring.mjs";
 import { getEnvConfig } from "../../../lib/env-config.mjs";
 
 export default async function handler(req, res) {
@@ -14,9 +15,16 @@ export default async function handler(req, res) {
 
   const env = getEnvConfig();
   const status = getVisionAiStatus();
+  const smartExtraction = getSmartExtractionStats();
 
   sendJson(res, 200, {
     ...status,
+    smartExtraction,
+    pipeline: {
+      order: ["preprocess", "ocr", "rule_engine", "confidence", "decision", "ai_optional", "validation"],
+      aiOrder: ["openai", "anthropic", "manual_review"],
+      aiOnlyWhenNeeded: true,
+    },
     keys: {
       anthropic: Boolean(env.anthropicKey),
       openai: Boolean(env.openaiKey),

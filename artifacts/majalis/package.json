@@ -22,6 +22,8 @@
     "test:lesson-url-import": "node scripts/test-lesson-url-import.mjs",
     "verify:lesson-image-import": "node scripts/verify-lesson-image-import.mjs",
     "test:vision-fallback": "node scripts/test-vision-provider-fallback.mjs",
+    "test:smart-extraction": "node scripts/test-smart-extraction.mjs",
+    "audit:smart-extraction": "node scripts/smart-extraction-phase1-audit.mjs",
     "verify:lesson-automation": "node scripts/verify-lesson-automation.mjs",
     "verify:phase5-automation": "node scripts/verify-phase5-automation.mjs",
     "generate:mushaf-index": "node scripts/generate-mushaf-page-index.mjs",
