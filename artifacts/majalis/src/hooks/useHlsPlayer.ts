@@ -117,7 +117,11 @@ export function useHlsPlayer({ streamUrls, streamUrl, autoplay = false }: Option
 
       const onStreamReady = () => {
         clearLoadTimeout();
-        if (autoplay) void video.play().catch(() => setState("paused"));
+        if (autoplay) {
+          void video.play().catch(() => setState("paused"));
+        } else {
+          setState("paused");
+        }
       };
 
       const attachNative = () => {
