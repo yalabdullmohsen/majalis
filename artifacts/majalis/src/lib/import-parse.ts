@@ -3,6 +3,7 @@
  */
 
 import { detectCsvDelimiter, splitCsvLine } from "../../lib/content-import/csv-parse.mjs";
+import { repairSemicolonSingleColumnRow } from "../../lib/content-import/csv-repair.mjs";
 
 export function parseCsvString(content: string): Record<string, unknown>[] {
   const lines = content.replace(/^\uFEFF/, "").split(/\r?\n/).filter((l) => l.trim());
@@ -18,7 +19,7 @@ export function parseCsvString(content: string): Record<string, unknown>[] {
     headers.forEach((h, idx) => {
       row[h.trim()] = (cells[idx] ?? "").trim();
     });
-    rows.push(row);
+    rows.push(repairSemicolonSingleColumnRow(row) || row);
   }
   return rows;
 }

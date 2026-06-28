@@ -1,5 +1,7 @@
 /** Per-type validation schemas. Missing required fields → reject row. */
 
+import { repairMisParsedCsvRow, describeMissingColumns } from "./csv-repair.mjs";
+
 export const MAX_VALIDATION_ERRORS = 200;
 
 function req(row, field) {
@@ -114,8 +116,9 @@ export function validateRow(type, row, index) {
   const schema = SCHEMAS[type];
   if (!schema) return { ok: false, errors: [`نوع غير معروف: ${type}`] };
 
+  const repaired = type === "benefits" || type === "adhkar" ? repairMisParsedCsvRow(type, row) : row;
   const normalized =
-    type === "adhkar" ? normalizeAdhkarRow(row) : type === "benefits" ? normalizeBenefitsRow(row) : row;
+    type === "adhkar" ? normalizeAdhkarRow(repaired) : type === "benefits" ? normalizeBenefitsRow(repaired) : repaired;
   const errors = [];
   const line = index + 1;
 
@@ -123,6 +126,10 @@ export function validateRow(type, row, index) {
     if (!req(normalized, field)) {
       errors.push(`السطر ${line}: الحقل المطلوب «${field}» ناقص`);
     }
+  }
+
+  if (errors.length && (type === "benefits" || type === "adhkar") && index === 0) {
+    errors.push(describeMissingColumns(type, row));
   }
 
   if (schema.oneOf?.length) {
@@ -157,5 +164,5 @@ export function validateRow(type, row, index) {
     }
   }
 
-  return { ok: errors.length === 0, errors };
+  return { ok: errors.length === 0, errors, row: normalized };
 }

@@ -36,6 +36,14 @@ function isImportWorkerRequest(req) {
   return WORKER_SECRET && header === WORKER_SECRET;
 }
 
+function getSyncThreshold(contentType) {
+  const def = resolveContentType(contentType);
+  if (def?.type === "benefits") {
+    return Number(process.env.IMPORT_BENEFITS_SYNC_THRESHOLD) || 50;
+  }
+  return IMPORT_SYNC_ROW_THRESHOLD;
+}
+
 function isKickableStatus(status) {
   return ["queued", "processing", "parsing", "validating", "importing", "uploading"].includes(status);
 }
@@ -186,6 +194,16 @@ export default async function handler(req, res) {
       });
       return;
     }
+    if (rows.length && jobId) {
+      const job = await getImportJob(jobId);
+      const sampleKeys = Object.keys(rows[0] || {});
+      jobLog(jobId, "stage_sample", {
+        contentType: job?.type,
+        rowCount: rows.length,
+        startIndex,
+        columns: sampleKeys.slice(0, 8),
+      });
+    }
     sendJson(res, 200, staged);
     return;
   }
@@ -229,15 +247,18 @@ export default async function handler(req, res) {
     const authHeader = req.headers?.authorization || req.headers?.Authorization || "";
     const typeDef = resolveContentType(job?.type);
     const targetTable = typeDef?.table || null;
+    const syncThreshold = getSyncThreshold(job?.type);
 
     jobLog(jobId, "commit", {
       rowCount,
-      sync_threshold: IMPORT_SYNC_ROW_THRESHOLD,
-      execution: rowCount <= IMPORT_SYNC_ROW_THRESHOLD ? "sync" : "async",
+      sync_threshold: syncThreshold,
+      execution: rowCount <= syncThreshold ? "sync" : "async",
       targetTable,
+      contentType: job?.type,
+      normalizedType: typeDef?.type,
     });
 
-    if (rowCount <= IMPORT_SYNC_ROW_THRESHOLD) {
+    if (rowCount <= syncThreshold) {
       try {
         const result = await processImportJob(jobId, { dryRun });
         const status = result.status || (result.ok ? "completed" : "failed");
@@ -278,7 +299,7 @@ export default async function handler(req, res) {
 
         sendJson(res, 422, {
           ...buildImportApiError({
-            code: result.error || "import_failed",
+            code: "validation_failed",
             contentType: job?.type,
             targetTable,
             report: result.report,
