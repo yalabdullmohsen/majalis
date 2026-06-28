@@ -3,6 +3,7 @@
  */
 
 import { normalizeContentKind } from "../auto-knowledge-engine/content-kind.mjs";
+import { isMissingTableError } from "../supabase-admin.mjs";
 
 function slugify(text) {
   return String(text || "")
