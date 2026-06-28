@@ -2,6 +2,8 @@
  * Publisher — writes verified knowledge items to platform tables (review-first).
  */
 
+import { normalizeContentKind } from "../auto-knowledge-engine/content-kind.mjs";
+
 function slugify(text) {
   return String(text || "")
     .trim()
