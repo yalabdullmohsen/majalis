@@ -102,8 +102,25 @@ export async function getSystemHealth() {
     errors.push("AKE migration pending — run auto_knowledge_engine_v13.sql");
   }
 
+  const criticalErrors = [];
+  const warnings = [...errors];
+
+  if (!envValidation.ok) criticalErrors.push(`Missing env: ${envValidation.missing.join(", ")}`);
+  if (!admin) criticalErrors.push("Supabase service role not configured");
+  if (dbConn.ok === false) criticalErrors.push(`PostgreSQL pooler: ${dbConn.error}`);
+
+  // Instagram is optional — never affects core health status
+  if (!instagramProbe.ok && instagramProbe.configured) {
+    warnings.push(`Instagram: ${instagramProbe.failureReason || instagramProbe.error || "connection_failed"}`);
+  }
+
+  const coreOk = criticalErrors.length === 0;
+  const status = coreOk ? (warnings.length > 0 ? "degraded" : "healthy") : "critical";
+
   return {
-    ok: envValidation.ok && Boolean(admin) && autoContentHealth.ok !== false && akeRpc.ok !== false,
+    ok: coreOk,
+    status,
+    critical: criticalErrors.length > 0 ? criticalErrors : undefined,
     at: new Date().toISOString(),
     durationMs: Date.now() - started,
     lastRun: {

@@ -8446,6 +8446,7 @@ html[data-theme="dark"] .home-page {
   outline-offset: 1px;
 }
 
+.navbar-v3.navbar-v3--menu-open {
   z-index: 10001;
   /* Header sits above the portaled drawer so the toggle stays clickable; non-button areas pass clicks through */
   pointer-events: none;

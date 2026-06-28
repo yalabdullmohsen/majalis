@@ -15,7 +15,8 @@ export default async function handler(req, res) {
 
   try {
     const health = await getSystemHealth();
-    sendJson(res, health.ok ? 200 : 503, health);
+    const httpStatus = health.status === "critical" ? 503 : 200;
+    sendJson(res, httpStatus, health);
   } catch (error) {
     sendJson(res, 500, { ok: false, error: error.message });
   }

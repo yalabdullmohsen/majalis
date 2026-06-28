@@ -10,6 +10,16 @@ export type InstagramIntegrationStatus = {
   businessAccountId?: string | null;
   accessTokenSet: boolean;
   accessTokenPreview?: string | null;
+  failureReason?: string | null;
+  remediation?: { category: string; steps: string[]; external: boolean } | null;
+  token?: {
+    valid?: boolean;
+    expiresAt?: string | null;
+    expiresInDays?: number | null;
+    scopes?: string[];
+    warning?: string | null;
+  } | null;
+  pipelineImpact?: string;
   linkedSources?: Array<{
     id: string;
     name: string;
@@ -37,6 +47,10 @@ export async function testInstagramIntegration() {
 
 export async function refreshInstagramTokenInfo() {
   return postInstagram({ action: "refresh-token" });
+}
+
+export async function getInstagramDiagnostics() {
+  return postInstagram({ action: "diagnostics" });
 }
 
 export async function linkInstagramSource(sourceId: string, instagramBusinessAccountId?: string, handle?: string) {

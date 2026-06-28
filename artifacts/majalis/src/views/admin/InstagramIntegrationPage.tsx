@@ -4,6 +4,7 @@ import {
   getInstagramIntegrationStatus,
   testInstagramIntegration,
   refreshInstagramTokenInfo,
+  getInstagramDiagnostics,
   type InstagramIntegrationStatus,
 } from "@/lib/instagram-integration-api";
 import { C } from "@/lib/theme";
@@ -31,11 +32,22 @@ function InstagramIntegrationContent() {
   const [status, setStatus] = useState<InstagramIntegrationStatus | null>(null);
   const [testResult, setTestResult] = useState<string>("");
 
+  const [diagnostics, setDiagnostics] = useState<InstagramIntegrationStatus | null>(null);
+
   const load = useCallback(() => {
     setLoading(true);
-    getInstagramIntegrationStatus()
-      .then(setStatus)
-      .catch(() => setStatus(null))
+    Promise.all([
+      getInstagramIntegrationStatus(),
+      getInstagramDiagnostics().catch(() => null),
+    ])
+      .then(([s, d]) => {
+        setStatus(s);
+        setDiagnostics(d);
+      })
+      .catch(() => {
+        setStatus(null);
+        setDiagnostics(null);
+      })
       .finally(() => setLoading(false));
   }, []);
 
@@ -60,10 +72,15 @@ function InstagramIntegrationContent() {
     try {
       const r = await refreshInstagramTokenInfo();
       setTestResult(r.message || "");
+      setDiagnostics(r as InstagramIntegrationStatus);
+      load();
     } finally {
       setBusy(false);
     }
   };
+
+  const remediation = diagnostics?.remediation || status?.remediation;
+  const tokenInfo = diagnostics?.token;
 
   return (
     <div>
@@ -90,7 +107,28 @@ function InstagramIntegrationContent() {
               <div>App ID: {status?.appId || "—"}</div>
               <div>Business Account ID: {status?.businessAccountId || "—"}</div>
               <div>Access Token: {status?.accessTokenSet ? status.accessTokenPreview : "غير مُعدّ"}</div>
+              {tokenInfo && (
+                <>
+                  <div>Token صالح: <StatusBadge ok={tokenInfo.valid !== false} label={tokenInfo.valid !== false ? "نعم" : "لا"} /></div>
+                  {tokenInfo.expiresAt && <div>ينتهي: {tokenInfo.expiresAt}{tokenInfo.expiresInDays != null ? ` (${tokenInfo.expiresInDays} يوم)` : ""}</div>}
+                  {tokenInfo.warning && <div style={{ color: "#92400E" }}>⚠ {tokenInfo.warning}</div>}
+                  {(tokenInfo.scopes?.length ?? 0) > 0 && <div>Scopes: {tokenInfo.scopes!.join(", ")}</div>}
+                </>
+              )}
+              {diagnostics?.pipelineImpact && (
+                <div style={{ color: C.inkSoft, marginTop: "0.25rem" }}>{diagnostics.pipelineImpact}</div>
+              )}
             </div>
+            {remediation && remediation.steps.length > 0 && (
+              <div style={{ marginTop: "0.75rem", padding: "0.75rem", background: "#FEF3C7", borderRadius: "0.375rem", fontSize: "0.8125rem" }}>
+                <strong>خطوات الإصلاح ({remediation.category}):</strong>
+                <ol style={{ margin: "0.5rem 0 0", paddingRight: "1.25rem" }}>
+                  {remediation.steps.map((step, i) => (
+                    <li key={i} style={{ marginBottom: "0.35rem" }}>{step}</li>
+                  ))}
+                </ol>
+              </div>
+            )}
             <div style={{ marginTop: "0.75rem", display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
               <button type="button" disabled={busy} onClick={onTest} style={{ padding: "0.4rem 0.75rem", background: C.emeraldDeep, color: "#fff", border: "none", borderRadius: "0.375rem", cursor: "pointer", fontFamily: "inherit" }}>
                 Test Connection
@@ -109,7 +147,7 @@ function InstagramIntegrationContent() {
               <li>INSTAGRAM_APP_ID</li>
               <li>INSTAGRAM_APP_SECRET</li>
               <li>INSTAGRAM_BUSINESS_ACCOUNT_ID</li>
-              <li>INSTAGRAM_WEBHOOK_VERIFY_TOKEN</li>
+              <li>INSTAGRAM_WEBHOOK_VERIFY_TOKEN (لـ /api/webhooks/instagram)</li>
             </ul>
           </section>
 

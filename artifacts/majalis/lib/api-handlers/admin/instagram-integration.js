@@ -7,6 +7,8 @@ import {
   getInstagramGraphStatus,
   testInstagramConnection,
   getInstagramGraphConfig,
+  diagnoseInstagramToken,
+  getInstagramDiagnostics,
 } from "../../../lib/cms/instagram-graph-api.mjs";
 import { processInstagramManualAssist } from "../../../lib/cms/instagram-manual-assist.mjs";
 import { listTrustedSources, upsertTrustedSource, getTrustedSource } from "../../../lib/cms/trusted-sources.mjs";
@@ -51,11 +53,29 @@ export default async function handler(req, res) {
     }
 
     if (action === "refresh-token") {
-      sendJson(res, 200, {
-        ok: true,
-        message: "حدّث INSTAGRAM_GRAPH_ACCESS_TOKEN في متغيرات البيئة (Vercel Secrets). Long-lived tokens تُجدَّد عبر Meta Developer Console.",
-        configured: Boolean(getInstagramGraphConfig().accessToken),
+      const diagnostics = await getInstagramDiagnostics();
+      await logAutomationStep({
+        step: diagnostics.ok ? "auth_status" : "fetch_failed",
+        status: diagnostics.ok ? "ok" : "warn",
+        detail: diagnostics.failureReason || "token_diagnostics",
       });
+      sendJson(res, 200, {
+        ok: diagnostics.ok,
+        configured: diagnostics.configured,
+        token: diagnostics.token,
+        failureReason: diagnostics.failureReason,
+        remediation: diagnostics.remediation,
+        pipelineImpact: diagnostics.pipelineImpact,
+        message: diagnostics.ok
+          ? "Token صالح — لا حاجة للتجديد الآن."
+          : diagnostics.remediation?.steps?.[0] || "حدّث INSTAGRAM_GRAPH_ACCESS_TOKEN في Vercel Secrets.",
+      });
+      return;
+    }
+
+    if (action === "diagnostics") {
+      const diagnostics = await getInstagramDiagnostics();
+      sendJson(res, 200, { ok: true, ...diagnostics });
       return;
     }
 
@@ -95,7 +115,7 @@ export default async function handler(req, res) {
     sendJson(res, 400, {
       ok: false,
       error: "unknown_action",
-      actions: ["status", "test-connection", "refresh-token", "link-source", "manual-assist"],
+      actions: ["status", "test-connection", "refresh-token", "diagnostics", "link-source", "manual-assist"],
     });
   } catch (err) {
     console.error("[admin/instagram-integration]", err);

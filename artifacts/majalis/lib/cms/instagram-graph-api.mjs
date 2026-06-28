@@ -231,14 +231,23 @@ export async function fetchInstagramMediaForSource(source, { limit = 15, runId }
 export async function testInstagramConnection() {
   const status = getInstagramGraphStatus();
   if (!status.configured) {
-    return { ok: false, ...status, accounts: [] };
+    return {
+      ok: false,
+      ...status,
+      accounts: [],
+      failureReason: "instagram_connector_not_configured",
+      remediation: buildInstagramRemediation({ configured: false }),
+    };
   }
 
   const c = getInstagramGraphConfig();
   try {
-    const me = await graphApiGet(`/${c.businessAccountId}`, {
-      fields: "username,name,followers_count,media_count",
-    });
+    const [me, tokenInfo] = await Promise.all([
+      graphApiGet(`/${c.businessAccountId}`, {
+        fields: "username,name,followers_count,media_count",
+      }),
+      diagnoseInstagramToken().catch(() => null),
+    ]);
     return {
       ok: true,
       configured: true,
@@ -250,15 +259,159 @@ export async function testInstagramConnection() {
         mediaCount: me.media_count,
       },
       accounts: [{ id: c.businessAccountId, username: me.username, name: me.name }],
+      token: tokenInfo,
     };
   } catch (err) {
+    const errMsg = String(err.message || err);
+    const tokenExpired = errMsg.includes("token_expired");
     return {
       ok: false,
       configured: true,
-      error: String(err.message || err),
+      error: errMsg,
+      failureReason: tokenExpired ? "instagram_token_expired" : "graph_api_test_failed",
       accounts: [],
+      remediation: buildInstagramRemediation({
+        configured: true,
+        tokenExpired,
+        error: errMsg,
+      }),
     };
   }
+}
+
+/** Meta debug_token — inspect token validity, expiry, scopes. */
+export async function diagnoseInstagramToken() {
+  const c = getInstagramGraphConfig();
+  if (!c.accessToken) {
+    return {
+      valid: false,
+      failureReason: "instagram_token_missing",
+      remediation: buildInstagramRemediation({ configured: false }),
+    };
+  }
+
+  const appToken = c.appId && c.appSecret ? `${c.appId}|${c.appSecret}` : c.accessToken;
+  const url = new URL(`${GRAPH_BASE}/debug_token`);
+  url.searchParams.set("input_token", c.accessToken);
+  url.searchParams.set("access_token", appToken);
+
+  const res = await fetchResource(url.toString(), {
+    label: "instagram:debug_token",
+    timeoutMs: 15_000,
+    maxRetries: 1,
+    useCache: false,
+  });
+  const json = await res.json().catch(() => ({}));
+  const data = json.data || {};
+
+  if (!res.ok || json.error || data.is_valid === false) {
+    const msg = json.error?.message || data.error?.message || "invalid_token";
+    const expired = data.error?.code === 190 || /expired/i.test(msg);
+    return {
+      valid: false,
+      failureReason: expired ? "instagram_token_expired" : "instagram_token_invalid",
+      error: msg,
+      expiresAt: data.expires_at ? new Date(data.expires_at * 1000).toISOString() : null,
+      scopes: data.scopes || [],
+      remediation: buildInstagramRemediation({ configured: true, tokenExpired: expired, error: msg }),
+    };
+  }
+
+  const expiresAt = data.expires_at ? new Date(data.expires_at * 1000).toISOString() : null;
+  const expiresInDays = data.expires_at
+    ? Math.round((data.expires_at * 1000 - Date.now()) / (1000 * 60 * 60 * 24))
+    : null;
+
+  return {
+    valid: true,
+    appId: data.app_id || null,
+    userId: data.user_id || null,
+    type: data.type || null,
+    expiresAt,
+    expiresInDays,
+    scopes: data.scopes || [],
+    isValid: data.is_valid !== false,
+    warning: expiresInDays != null && expiresInDays < 14 ? "token_expiring_soon" : null,
+    remediation: expiresInDays != null && expiresInDays < 14
+      ? buildInstagramRemediation({ configured: true, tokenExpiringSoon: true, expiresInDays })
+      : null,
+  };
+}
+
+export function buildInstagramRemediation(ctx = {}) {
+  const steps = [];
+  if (!ctx.configured) {
+    steps.push(
+      "أضف INSTAGRAM_GRAPH_ACCESS_TOKEN و INSTAGRAM_BUSINESS_ACCOUNT_ID في Vercel → Project Settings → Environment Variables (Production).",
+      "أنشئ Long-lived User Access Token من Meta Developer Console → Instagram Basic Display / Graph API.",
+      "اربط Instagram Business Account بصفحة Facebook في Meta Business Suite.",
+      "انسخ Instagram Business Account ID (ليس Page ID) إلى INSTAGRAM_BUSINESS_ACCOUNT_ID.",
+    );
+    return { category: "configuration", steps, external: true };
+  }
+  if (ctx.tokenExpired) {
+    steps.push(
+      "الـ Token منتهي — أنشئ Long-lived Token جديد من Meta Developer Console.",
+      "Tools → Graph API Explorer → Generate Access Token → instagram_basic, pages_show_list, instagram_manage_insights.",
+      "حوّله إلى Long-lived Token عبر: GET /oauth/access_token?grant_type=fb_exchange_token&...",
+      "حدّث INSTAGRAM_GRAPH_ACCESS_TOKEN في Vercel ثم أعد النشر.",
+    );
+    return { category: "token_expired", steps, external: true };
+  }
+  if (ctx.tokenExpiringSoon) {
+    steps.push(
+      `الـ Token ينتهي خلال ${ctx.expiresInDays} يوم — جدّده قبل انتهاء الصلاحية.`,
+      "Meta Developer Console → Graph API Explorer → Extend Access Token.",
+    );
+    return { category: "token_expiring", steps, external: true };
+  }
+  if (ctx.error) {
+    steps.push(
+      `خطأ Graph API: ${ctx.error}`,
+      "تحقق من صلاحيات الـ Token: instagram_basic, pages_read_engagement, business_management.",
+      "تأكد أن INSTAGRAM_BUSINESS_ACCOUNT_ID يطابق حساب Instagram Business المرتبط.",
+    );
+    return { category: "api_error", steps, external: true };
+  }
+  return { category: "ok", steps: [], external: false };
+}
+
+export async function getInstagramDiagnostics() {
+  const status = getInstagramGraphStatus();
+  if (!status.configured) {
+    return {
+      ok: false,
+      optional: true,
+      ...status,
+      failureReason: "instagram_connector_not_configured",
+      token: null,
+      connection: null,
+      remediation: buildInstagramRemediation({ configured: false }),
+      pipelineImpact: "Instagram sources use Manual Assist Mode — other connectors continue normally.",
+    };
+  }
+
+  const [token, connection] = await Promise.all([
+    diagnoseInstagramToken().catch((e) => ({
+      valid: false,
+      failureReason: "debug_token_failed",
+      error: e.message,
+    })),
+    testInstagramConnection(),
+  ]);
+
+  return {
+    ok: connection.ok && token.valid !== false,
+    optional: true,
+    ...status,
+    token,
+    connection: connection.account || null,
+    failureReason: connection.failureReason || token.failureReason || null,
+    remediation: connection.remediation || token.remediation || null,
+    pipelineImpact: connection.ok
+      ? "Instagram Graph API active — automatic fetch enabled."
+      : "Instagram fetch disabled — Manual Assist Mode active; other sources unaffected.",
+  };
 }
 
 /** Mock fetch for tests — INSTAGRAM_GRAPH_MOCK=1 */
