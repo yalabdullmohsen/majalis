@@ -117,26 +117,21 @@ function buildRecord(item, analysis) {
       };
     case "fiqh_decision": {
       const payload = item.raw_payload || {};
-      const fiqhType = ["resolution", "fatwa", "research", "recommendation", "ruling"].includes(payload.type)
-        ? payload.type
-        : "resolution";
+      const title = analysis.ai_title || item.raw_title;
+      const summary = (analysis.ai_summary || item.raw_body || "").slice(0, 500);
+      const sourceUrl = item.raw_url || item.source_url;
       return {
-        table: "fiqh_council_items",
-        lookupField: "external_id",
+        table: "library_items",
+        lookupField: "external_key",
         record: {
-          title: analysis.ai_title || item.raw_title,
-          slug: slugify(payload.slug || item.external_id || item.raw_title),
-          type: fiqhType,
-          category: payload.category || analysis.ai_category || "القضايا المعاصرة",
-          summary: (analysis.ai_summary || item.raw_body || "").slice(0, 500),
-          content: item.raw_body || analysis.ai_summary || "",
-          source_name: payload.source_name || item.source_attribution,
-          source_url: item.raw_url || item.source_url,
-          session_date: payload.session_date || item.published_at || null,
-          tags: Array.isArray(payload.tags) ? payload.tags : (analysis.ai_keywords || []).slice(0, 8),
-          external_id: String(item.external_id).replace(/^[^:]+:\s*/, ""),
-          status: verified ? "published" : "review",
-          published_at: verified ? new Date().toISOString() : null,
+          ...base,
+          external_key: item.external_id,
+          title,
+          description: summary,
+          type: "مقال",
+          category: payload.category || analysis.ai_category || "فقه",
+          external_url: sourceUrl,
+          status: verified ? "approved" : "pending",
         },
       };
     }
@@ -252,8 +247,32 @@ export async function publishItem(admin, item, analysis) {
       target_record_id: recordId,
     };
   } catch (err) {
-    log("publish-error", { error: String(err.message || err), kind: item.content_kind });
-    return { published: false, reason: String(err.message || err) };
+    const errMsg = String(err.message || err);
+    if (built.table === "fiqh_council_items" && errMsg.toLowerCase().includes("fiqh_council_items")) {
+      const fallback = await resolvePublishTarget(admin, { table: "fiqh_council_items", record: buildRecord(item, analysis)?.record || {} }, item);
+      if (fallback.table === "library_items") {
+        try {
+          const lookupValue = item.external_id;
+          const { data: existing } = await admin.from("library_items").select("id").eq("external_key", lookupValue).maybeSingle();
+          let recordId;
+          if (existing?.id) {
+            const { data, error } = await admin.from("library_items").update({ ...fallback.record, updated_at: new Date().toISOString() }).eq("id", existing.id).select("id").single();
+            if (error) throw error;
+            recordId = data.id;
+          } else {
+            const { data, error } = await admin.from("library_items").insert(fallback.record).select("id").single();
+            if (error) throw error;
+            recordId = data.id;
+          }
+          return { published: true, target_table: "library_items", target_record_id: recordId, fallback: true };
+        } catch (fallbackErr) {
+          log("publish-error", { error: String(fallbackErr.message || fallbackErr), kind: item.content_kind, stage: "fallback" });
+          return { published: false, reason: String(fallbackErr.message || fallbackErr) };
+        }
+      }
+    }
+    log("publish-error", { error: errMsg, kind: item.content_kind });
+    return { published: false, reason: errMsg };
   }
 }
 
