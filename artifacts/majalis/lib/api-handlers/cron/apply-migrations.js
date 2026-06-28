@@ -78,6 +78,25 @@ export default async function handler(req, res) {
       return;
     }
 
+    if (scope === "ake-rpc") {
+      const { ensureAkeRpcFunctions, getAkeRpcHealth } = await import("../../../lib/auto-knowledge-engine/rpc-probe.mjs");
+      const repair = await ensureAkeRpcFunctions({ force: req.query?.force === "1" });
+      sendJson(res, repair.ok ? 200 : 500, {
+        ok: repair.ok,
+        scope: "ake-rpc",
+        repair,
+        resolved: resolvedMeta(),
+      });
+      return;
+    }
+
+    if (scope === "ake-rpc-verify") {
+      const { getAkeRpcHealth } = await import("../../../lib/auto-knowledge-engine/rpc-probe.mjs");
+      const health = await getAkeRpcHealth();
+      sendJson(res, health.ok ? 200 : 503, { ok: health.ok, scope: "ake-rpc-verify", health });
+      return;
+    }
+
     if (scope === "activation") {
       assertServiceSecrets("migrations");
       const seedRulings = req.query?.seed !== "0" && req.body?.seed !== false;

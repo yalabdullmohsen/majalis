@@ -33,6 +33,8 @@
     "activate:production": "node scripts/run-production-activation.mjs",
     "audit:infrastructure": "node scripts/audit-infrastructure.mjs",
     "audit:database": "node scripts/audit-database-connection.mjs",
+    "verify:ake-rpc": "node scripts/verify-ake-rpc.mjs",
+    "repair:ake-rpc": "node scripts/verify-ake-rpc.mjs --repair",
     "test:kuwait-sources": "node scripts/test-kuwait-instagram-sources.mjs",
     "smoke:nav": "node scripts/smoke-nav-menu.mjs",
     "smoke:mobile": "node scripts/smoke-mobile-routes.mjs",

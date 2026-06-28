@@ -15,6 +15,7 @@ import { buildSeoPackage, routeForKind, persistSeoCache } from "./seo-engine.mjs
 import { akeLog, auditLog } from "./monitoring.mjs";
 import { dbCacheGet, dbCacheSet } from "./cache.mjs";
 import { OFFICIAL_SOURCES } from "../knowledge-engine/sources-registry.mjs";
+import { ensureAkeRpcFunctions } from "./rpc-probe.mjs";
 
 async function ensureOfficialSources(admin) {
   for (const src of OFFICIAL_SOURCES) {
@@ -388,13 +389,19 @@ export async function getAutoKnowledgeEngineStats(days = 7) {
 
   const cacheKey = `ake:stats:${days}`;
   const cached = await dbCacheGet(admin, cacheKey);
-  if (cached) return { ok: true, stats: cached, usingLegacy: false };
+  if (cached && !cached._fallback) return { ok: true, stats: cached, usingLegacy: false };
 
-  // Probe v13 table — migration applied even if RPC missing
+  let { data, error } = await admin.rpc("ake_engine_stats", { p_days: days });
+  if (error) {
+    const repair = await ensureAkeRpcFunctions().catch(() => null);
+    if (repair?.ok) {
+      ({ data, error } = await admin.rpc("ake_engine_stats", { p_days: days }));
+    }
+  }
+
   const { error: tableProbe } = await admin.from("ake_connectors").select("id", { count: "exact", head: true });
   const v13TablesPresent = !tableProbe || !isMissingTableError(tableProbe);
 
-  const { data, error } = await admin.rpc("ake_engine_stats", { p_days: days });
   if (error) {
     if (v13TablesPresent) {
       const fallback = await buildAkeStatsFallback(admin, days);

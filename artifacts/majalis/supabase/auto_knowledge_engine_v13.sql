@@ -284,7 +284,7 @@ BEGIN
 END;
 $$;
 
-GRANT EXECUTE ON FUNCTION ake_engine_stats(int) TO authenticated, anon;
+GRANT EXECUTE ON FUNCTION ake_engine_stats(int) TO authenticated, anon, service_role;
 
 -- ── Semantic search helper (uses embeddings when available) ────────────────
 CREATE OR REPLACE FUNCTION ake_search_semantic(
@@ -315,4 +315,4 @@ LANGUAGE sql STABLE SECURITY DEFINER AS $$
   LIMIT result_limit;
 $$;
 
-GRANT EXECUTE ON FUNCTION ake_search_semantic(vector, int, float) TO authenticated, anon;
+GRANT EXECUTE ON FUNCTION ake_search_semantic(vector, int, float) TO authenticated, anon, service_role;
