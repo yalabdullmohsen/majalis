@@ -56,6 +56,7 @@ export const API_ROUTES = [
   { prefix: "/api/cron/system-health", module: "./api-handlers/cron/system-health.js", allowGet: true, exact: true },
   { prefix: "/api/cron/apply-migrations", module: "./api-handlers/cron/apply-migrations.js", allowGet: true, exact: true },
   { prefix: "/api/cron/bootstrap-database", module: "./api-handlers/cron/bootstrap-database.js", allowGet: true, exact: true },
+  { prefix: "/api/cron/purge-test-content", module: "./api-handlers/cron/purge-test-content.js", allowGet: true, exact: true },
   { prefix: "/api/cron/bootstrap-owner", module: "./api-handlers/cron/bootstrap-owner.js", allowGet: true, exact: true },
   { prefix: "/api/cron/platform-bootstrap", module: "./api-handlers/cron/platform-bootstrap.js", allowGet: true, exact: true },
   { prefix: "/api/cron/auto-knowledge-sync", module: "./api-handlers/cron/auto-knowledge-sync.js", allowGet: true, exact: true },

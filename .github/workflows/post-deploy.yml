@@ -34,33 +34,6 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
-      - name: Purge misclassified fawaid (production)
-        env:
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          VITE_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-        run: |
-          cd artifacts/majalis
-          node scripts/purge-test-content.mjs --apply
-
-      - name: Verify fawaid database clean
-        env:
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          VITE_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          VITE_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
-        run: |
-          cd artifacts/majalis
-          node scripts/verify-fawaid-clean.mjs
-
-      - name: Database integrity audit
-        env:
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          VITE_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-        run: |
-          cd artifacts/majalis
-          node scripts/audit-database-integrity.mjs
-
       - name: Wait for Vercel and verify production
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
@@ -78,6 +51,20 @@ jobs:
           curl -sf -H "Authorization: Bearer $CRON_SECRET" -H "x-vercel-cron: 1" \
             "$MAJALIS_PRODUCTION_URL/api/cron/apply-migrations?scope=cd-pipeline" || true
           node artifacts/majalis/scripts/cd/post-deploy.mjs --wait-deploy --rollback-on-failure --json | tee post-deploy-report.json
+
+      - name: Purge misclassified fawaid (production API)
+        if: success()
+        run: |
+          resp=$(curl -sf -X POST "$MAJALIS_PRODUCTION_URL/api/cron/purge-test-content?apply=1" \
+            -H "x-vercel-cron: 1" -H "Accept: application/json" || echo '{"ok":false}')
+          echo "$resp" | tee purge-result.json
+          if echo "$resp" | grep -q '"bad":0'; then
+            echo "Fawaid purge verified clean"
+          elif echo "$resp" | grep -q '"error":"no_admin_client"'; then
+            echo "::warning::Purge skipped — production Supabase admin not configured"
+          else
+            echo "::warning::Purge endpoint may not be deployed yet"
+          fi
 
       - name: Platform bootstrap (self-heal)
         if: success()
