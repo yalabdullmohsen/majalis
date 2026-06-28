@@ -8146,53 +8146,6 @@ html[data-theme="dark"] .home-page {
   background: var(--majalis-panel);
 }
 
-.lessons-contact-card {
-  margin-top: 2rem;
-  padding: 1.25rem 1.35rem;
-  border: 1px solid var(--majalis-line);
-  border-radius: 0.75rem;
-  background: var(--majalis-panel);
-  text-align: center;
-}
-
-.lessons-contact-card__title {
-  margin: 0 0 0.75rem;
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--majalis-emerald-deep);
-}
-
-.lessons-contact-card__links {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.65rem;
-}
-
-.lessons-contact-card__phone,
-.lessons-contact-card__whatsapp {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 42px;
-  padding: 0.55rem 1rem;
-  border-radius: 0.5rem;
-  font-size: 0.88rem;
-  font-weight: 700;
-  text-decoration: none;
-  border: 1px solid rgba(26, 60, 46, 0.14);
-}
-
-.lessons-contact-card__phone {
-  background: var(--majalis-emerald-deep);
-  color: var(--majalis-parchment);
-}
-
-.lessons-contact-card__whatsapp {
-  background: #fff;
-  color: var(--majalis-emerald-deep);
-}
-
 @media (max-width: 720px) {
   .lesson-unified-grid {
     grid-template-columns: 1fr;
