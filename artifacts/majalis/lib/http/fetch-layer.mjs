@@ -207,15 +207,25 @@ export async function fetchResource(url, options = {}) {
   throw lastError || new Error(`fetch_failed:${url}`);
 }
 
+function responseWithUrl(res, finalUrl) {
+  return new Proxy(res, {
+    get(target, prop, receiver) {
+      if (prop === "url") return finalUrl;
+      const value = Reflect.get(target, prop, receiver);
+      return typeof value === "function" ? value.bind(target) : value;
+    },
+  });
+}
+
 async function fetchWithRedirects(url, { method, headers, signal, followRedirects, maxRedirects }) {
   let current = url;
   for (let hop = 0; hop <= maxRedirects; hop++) {
     const res = await fetch(current, { method, headers, signal, redirect: "manual" });
     if (!followRedirects || res.status < 300 || res.status >= 400 || hop >= maxRedirects) {
-      return Object.assign(res, { url: current });
+      return responseWithUrl(res, current);
     }
     const location = res.headers.get("location");
-    if (!location) return Object.assign(res, { url: current });
+    if (!location) return responseWithUrl(res, current);
     current = new URL(location, current).toString();
   }
   throw new Error("too_many_redirects");
