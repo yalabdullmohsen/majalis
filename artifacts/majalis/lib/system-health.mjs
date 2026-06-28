@@ -70,7 +70,12 @@ export async function getSystemHealth() {
     errors.push("DATABASE_URL must be Supabase Transaction Pooler (port 6543) — update in Vercel env");
   }
   if (dbConn.ok === false) errors.push(`PostgreSQL pooler: ${dbConn.error}`);
-  if (akeStats.usingLegacy) errors.push("AKE migration pending — run auto_knowledge_engine_v13.sql");
+  if (akeStats.usingLegacy && !akeStats.stats?._fallback) {
+    errors.push("AKE migration pending — run auto_knowledge_engine_v13.sql");
+  }
+  if (akeStats.stats?._fallback && akeStats.stats?._note) {
+    errors.push(akeStats.stats._note);
+  }
 
   return {
     ok: envValidation.ok && Boolean(admin) && autoContentHealth.ok !== false,

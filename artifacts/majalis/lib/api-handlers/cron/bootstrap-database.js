@@ -8,6 +8,7 @@ import { getSupabaseAdmin } from "../../../lib/supabase-admin.mjs";
 import { logBootstrapError, serializeError } from "../../../lib/bootstrap-debug.mjs";
 import { runPhase2TrialImport } from "../../../lib/content-import/phase2-trial.mjs";
 import { promoteAllBootstrapOwners } from "../../../lib/owner-promotion.mjs";
+import { auditDatabaseConnection } from "../../../lib/audit-database-env.mjs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -70,6 +71,13 @@ export default async function handler(req, res) {
           normalizeReason: resolveDatabaseUrl().normalizeReason,
         },
       });
+      return;
+    }
+
+    if (action === "audit-env" || action === "audit") {
+      migrationStep = "audit_env";
+      const audit = await auditDatabaseConnection();
+      sendJson(res, audit.ok ? 200 : 503, audit);
       return;
     }
 

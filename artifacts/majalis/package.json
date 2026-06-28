@@ -32,6 +32,7 @@
     "test:autonomous-platform-v3": "node scripts/test-autonomous-platform-v3.mjs",
     "activate:production": "node scripts/run-production-activation.mjs",
     "audit:infrastructure": "node scripts/audit-infrastructure.mjs",
+    "audit:database": "node scripts/audit-database-connection.mjs",
     "test:kuwait-sources": "node scripts/test-kuwait-instagram-sources.mjs",
     "smoke:nav": "node scripts/smoke-nav-menu.mjs",
     "smoke:mobile": "node scripts/smoke-mobile-routes.mjs",
