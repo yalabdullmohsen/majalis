@@ -2,6 +2,9 @@
  * RSS Connector
  */
 
+import { readFile } from "node:fs/promises";
+import { resolveDataFilePath } from "../../data-paths.mjs";
+import { normalizeContentKind } from "../content-kind.mjs";
 import { BaseConnector } from "../connector-base.mjs";
 import { extractRssItems, cleanText } from "../../auto-content/auto-content-utils.mjs";
 
@@ -24,7 +27,7 @@ export class RssConnector extends BaseConnector {
       raw_title: item.title,
       raw_body: item.description,
       raw_payload: { pubDate: item.pubDate, index: idx },
-      content_kind: this.detectKind(item.title, item.description),
+      content_kind: normalizeContentKind(this.detectKind(item.title, item.description)),
       published_at: item.pubDate ? new Date(item.pubDate).toISOString() : null,
     }));
   }
@@ -52,27 +55,22 @@ export class ManifestConnector extends BaseConnector {
   async fetchItems() {
     if (!this.manifestFile) return [];
 
-    const { readFile } = await import("node:fs/promises");
-    const { fileURLToPath } = await import("node:url");
-    const path = await import("node:path");
-    const dir = path.dirname(fileURLToPath(import.meta.url));
-    const manifestPath = path.resolve(dir, "../../data", this.manifestFile);
-
+    const manifestPath = resolveDataFilePath(this.manifestFile);
     const raw = await readFile(manifestPath, "utf8");
     const manifest = JSON.parse(raw);
     const entries = manifest.items || manifest.decisions || manifest.entries || [];
 
     return entries.slice(0, 30).map((entry, idx) => ({
-      external_id: `${this.slug}:${entry.id || entry.slug || idx}`,
+      external_id: `${this.slug}:${entry.external_id || entry.id || entry.slug || idx}`,
       source_slug: this.slug,
-      source_attribution: this.name,
+      source_attribution: entry.source_name || manifest.organization || this.name,
       source_url: this.officialUrl,
       raw_url: entry.url || entry.link || entry.source_url,
       raw_title: entry.title || entry.name,
-      raw_body: entry.summary || entry.body || entry.description || "",
-      raw_payload: entry,
-      content_kind: entry.kind || entry.type || "fiqh_decision",
-      published_at: entry.date || entry.published_at || null,
+      raw_body: entry.summary || entry.body || entry.description || entry.content || "",
+      raw_payload: { ...entry, _manifest_file: this.manifestFile },
+      content_kind: normalizeContentKind(entry.kind || entry.type, "fiqh_decision"),
+      published_at: entry.session_date || entry.date || entry.published_at || null,
     }));
   }
 }

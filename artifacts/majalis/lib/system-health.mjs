@@ -7,6 +7,7 @@ import { getSupabaseAdmin } from "./supabase-admin.mjs";
 import { describeDatabaseUrlConfig, testDatabaseConnection } from "./database.mjs";
 import { getAutoContentHealth, getAutoContentPipelineStats } from "./auto-content/auto-content-sync.mjs";
 import { getAutoKnowledgeEngineStats } from "./auto-knowledge-engine/orchestrator.mjs";
+import { getAkeRpcHealth } from "./auto-knowledge-engine/rpc-probe.mjs";
 
 const CRON_ROUTES = [
   { path: "/api/cron/auto-knowledge-sync", schedule: "30 */6 * * *", label: "Auto Knowledge Engine (full)" },
@@ -30,11 +31,12 @@ export async function getSystemHealth() {
   const envStatus = getEnvStatus();
   const envValidation = validateCronEnv();
 
-  const [autoContentHealth, akeStats, pipelineStats, dbConn] = await Promise.all([
+  const [autoContentHealth, akeStats, pipelineStats, dbConn, akeRpc] = await Promise.all([
     getAutoContentHealth().catch((e) => ({ ok: false, error: e.message })),
     getAutoKnowledgeEngineStats(7).catch((e) => ({ ok: false, stats: {}, usingLegacy: true, error: e.message })),
     getAutoContentPipelineStats(5).catch((e) => ({ ok: false, error: e.message })),
     testDatabaseConnection().catch((e) => ({ ok: false, error: e.message })),
+    getAkeRpcHealth().catch((e) => ({ ok: false, error: e.message, functions: [] })),
   ]);
 
   const databaseUrlConfig = describeDatabaseUrlConfig();
@@ -70,15 +72,22 @@ export async function getSystemHealth() {
     errors.push("DATABASE_URL must be Supabase Transaction Pooler (port 6543) — update in Vercel env");
   }
   if (dbConn.ok === false) errors.push(`PostgreSQL pooler: ${dbConn.error}`);
-  if (akeStats.usingLegacy && !akeStats.stats?._fallback) {
-    errors.push("AKE migration pending — run auto_knowledge_engine_v13.sql");
+  if (akeRpc.missingRequired?.length) {
+    errors.push(`AKE RPC missing: ${akeRpc.missingRequired.join(", ")} — run apply-migrations?scope=ake-rpc`);
+  } else if (!akeRpc.engineStatsCallable && akeRpc.engineStatsExists) {
+    errors.push(`ake_engine_stats exists but not callable via API — re-apply auto_knowledge_engine_v13_rpc_fix.sql`);
+  } else if (!akeRpc.engineStatsExists && akeRpc.pgProbeOk) {
+    errors.push("ake_engine_stats(int) not found — run apply-migrations?scope=ake-rpc");
   }
-  if (akeStats.stats?._fallback && akeStats.stats?._note) {
-    errors.push(akeStats.stats._note);
+  if (akeRpc.missingGrants?.length) {
+    errors.push(`AKE RPC missing GRANTs: ${akeRpc.missingGrants.join(", ")}`);
+  }
+  if (akeStats.usingLegacy && !akeStats.stats?._fallback && akeRpc.missingRequired?.length) {
+    errors.push("AKE migration pending — run auto_knowledge_engine_v13.sql");
   }
 
   return {
-    ok: envValidation.ok && Boolean(admin) && autoContentHealth.ok !== false,
+    ok: envValidation.ok && Boolean(admin) && autoContentHealth.ok !== false && akeRpc.ok !== false,
     at: new Date().toISOString(),
     durationMs: Date.now() - started,
     lastRun: {
@@ -130,6 +139,7 @@ export async function getSystemHealth() {
     autoKnowledgeEngine: {
       stats: akeStats.stats,
       usingLegacy: akeStats.usingLegacy,
+      rpc: akeRpc,
     },
     pipeline: {
       runs: pipelineStats.runs || [],

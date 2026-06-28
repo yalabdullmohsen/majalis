@@ -15,6 +15,7 @@ import { buildSeoPackage, routeForKind, persistSeoCache } from "./seo-engine.mjs
 import { akeLog, auditLog } from "./monitoring.mjs";
 import { dbCacheGet, dbCacheSet } from "./cache.mjs";
 import { OFFICIAL_SOURCES } from "../knowledge-engine/sources-registry.mjs";
+import { ensureAkeRpcFunctions } from "./rpc-probe.mjs";
 
 async function ensureOfficialSources(admin) {
   for (const src of OFFICIAL_SOURCES) {
@@ -107,7 +108,29 @@ async function processConnector(admin, connectorConfig, runId, existingItems, op
   const connector = createConnector(connectorConfig);
   const sourceId = connectorConfig.source_id || await resolveSourceId(admin, connectorConfig.slug);
   connectorConfig = { ...connectorConfig, source_id: sourceId };
-  const stats = { fetched: 0, processed: 0, published: 0, rejected: 0, duplicate: 0, review: 0, errors: [] };
+  const stats = {
+    fetched: 0,
+    parsed: 0,
+    processed: 0,
+    published: 0,
+    rejected: 0,
+    duplicate: 0,
+    review: 0,
+    rejectionReasons: {},
+    gateFailures: {},
+    errors: [],
+  };
+
+  function noteRejection(reason) {
+    stats.rejected++;
+    stats.rejectionReasons[reason] = (stats.rejectionReasons[reason] || 0) + 1;
+  }
+
+  function noteGateFailure(failedChecks) {
+    for (const check of failedChecks || []) {
+      stats.gateFailures[check] = (stats.gateFailures[check] || 0) + 1;
+    }
+  }
 
   try {
     const health = await connector.healthCheck();
@@ -129,8 +152,13 @@ async function processConnector(admin, connectorConfig, runId, existingItems, op
       checkLinks: options.checkLinks || false,
     });
 
-    const toAnalyze = verified.filter((v) => !v.verification.isDuplicate);
-    stats.duplicate = verified.length - toAnalyze.length;
+    const maxItemsPerConnector = options.maxItemsPerConnector ?? (options.triggerType === "cron" ? 5 : 30);
+    const toAnalyze = verified.filter((v) => !v.verification.isDuplicate).slice(0, maxItemsPerConnector);
+    stats.duplicate = verified.filter((v) => v.verification.isDuplicate).length;
+    stats.parsed = toAnalyze.filter((v) => v.verification.sourceVerified).length;
+    if (stats.duplicate > 0) {
+      stats.rejectionReasons.duplicate = stats.duplicate;
+    }
 
     const analyzed = await analyzeBatch(toAnalyze, 2);
     const processed = [];
@@ -175,6 +203,13 @@ async function processConnector(admin, connectorConfig, runId, existingItems, op
         continue;
       }
 
+      if (!gate.passed && !gate.canPublish) {
+        noteRejection("quality_gate");
+        noteGateFailure(gate.failedChecks);
+      } else if (!gate.passed) {
+        noteGateFailure(gate.failedChecks);
+      }
+
       const { data: inserted, error: insErr } = await admin
         .from("knowledge_items")
         .upsert(record, { onConflict: "source_id,external_id" })
@@ -213,9 +248,22 @@ async function processConnector(admin, connectorConfig, runId, existingItems, op
           await persistSeoCache(admin, `${pub.target_table}:${pub.target_record_id}`, seo);
         } else {
           stats.review++;
+          noteRejection(pub.reason || "publish_failed");
+          await auditLog(admin, {
+            runId,
+            connectorId: connectorConfig.id,
+            action: "publish_skipped",
+            status: "warning",
+            message: pub.reason || "publish_failed",
+            entityId: item.external_id,
+            details: { failedChecks: gate.failedChecks, table: pub.table },
+          });
         }
       } else {
         stats.review++;
+        if (!gate.autoPublish) {
+          noteRejection(gate.autoPublish === false ? "auto_publish_disabled" : "quality_gate_review");
+        }
       }
     }
 
@@ -281,11 +329,14 @@ export async function runAutoKnowledgeEngine(options = {}) {
     connectorsOk: 0,
     connectorsFailed: 0,
     fetched: 0,
+    parsed: 0,
     processed: 0,
     published: 0,
     rejected: 0,
     duplicate: 0,
     review: 0,
+    rejectionReasons: {},
+    gateFailures: {},
     errors: [],
   };
 
@@ -293,15 +344,26 @@ export async function runAutoKnowledgeEngine(options = {}) {
     if (connectorConfig.connector_type === "inactive") continue;
 
     akeLog("orchestrator", { action: "start_connector", slug: connectorConfig.slug });
-    const result = await processConnector(admin, connectorConfig, runId, existingItems, { checkLinks });
+    const result = await processConnector(admin, connectorConfig, runId, existingItems, {
+      checkLinks,
+      maxItemsPerConnector: options.maxItemsPerConnector,
+      triggerType,
+    });
 
     totals.fetched += result.fetched;
+    totals.parsed += result.parsed || 0;
     totals.processed += result.processed;
     totals.published += result.published;
     totals.rejected += result.rejected;
     totals.duplicate += result.duplicate;
     totals.review += result.review;
     totals.errors.push(...result.errors);
+    for (const [k, v] of Object.entries(result.rejectionReasons || {})) {
+      totals.rejectionReasons[k] = (totals.rejectionReasons[k] || 0) + v;
+    }
+    for (const [k, v] of Object.entries(result.gateFailures || {})) {
+      totals.gateFailures[k] = (totals.gateFailures[k] || 0) + v;
+    }
 
     if (result.errors.length === 0 || result.processed > 0) totals.connectorsOk++;
     else totals.connectorsFailed++;
@@ -325,7 +387,11 @@ export async function runAutoKnowledgeEngine(options = {}) {
         error_count: totals.errors.length,
         duration_ms: durationMs,
         finished_at: new Date().toISOString(),
-        summary: { errors: totals.errors.slice(0, 10) },
+        summary: {
+          errors: totals.errors.slice(0, 10),
+          rejectionReasons: totals.rejectionReasons,
+          gateFailures: totals.gateFailures,
+        },
       }).eq("id", runId);
     } catch {
       /* ignore */
@@ -388,13 +454,19 @@ export async function getAutoKnowledgeEngineStats(days = 7) {
 
   const cacheKey = `ake:stats:${days}`;
   const cached = await dbCacheGet(admin, cacheKey);
-  if (cached) return { ok: true, stats: cached, usingLegacy: false };
+  if (cached && !cached._fallback) return { ok: true, stats: cached, usingLegacy: false };
 
-  // Probe v13 table — migration applied even if RPC missing
+  let { data, error } = await admin.rpc("ake_engine_stats", { p_days: days });
+  if (error) {
+    const repair = await ensureAkeRpcFunctions().catch(() => null);
+    if (repair?.ok) {
+      ({ data, error } = await admin.rpc("ake_engine_stats", { p_days: days }));
+    }
+  }
+
   const { error: tableProbe } = await admin.from("ake_connectors").select("id", { count: "exact", head: true });
   const v13TablesPresent = !tableProbe || !isMissingTableError(tableProbe);
 
-  const { data, error } = await admin.rpc("ake_engine_stats", { p_days: days });
   if (error) {
     if (v13TablesPresent) {
       const fallback = await buildAkeStatsFallback(admin, days);

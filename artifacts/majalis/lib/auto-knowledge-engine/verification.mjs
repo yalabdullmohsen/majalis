@@ -34,10 +34,16 @@ export function verifyItem(item, connector, existingItems = []) {
   if (!item.raw_title?.trim() || item.raw_title.trim().length < 4) errors.push("title_too_short");
   if (!item.raw_body?.trim() && !item.raw_title?.trim()) errors.push("empty_content");
 
-  const entityMatch = connector?.official_url && item.raw_url
-    ? domainsRelated(item.raw_url, connector.official_url)
-    : true;
-  if (!entityMatch) warnings.push("domain_mismatch");
+  const connectorType = connector?.connector_type || connector?.connectorType;
+  const isManifestItem =
+    connectorType === "manifest" ||
+    Boolean(item.raw_payload?._manifest_file || item.raw_payload?.source_name);
+
+  let entityMatch = true;
+  if (!isManifestItem && connector?.official_url && item.raw_url) {
+    entityMatch = domainsRelated(item.raw_url, connector.official_url);
+    if (!entityMatch) warnings.push("domain_mismatch");
+  }
 
   const pubDate = item.published_at || item.raw_payload?.pubDate;
   if (pubDate) {

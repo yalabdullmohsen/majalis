@@ -16,6 +16,25 @@ import { getSupabaseAdmin } from "./supabase-admin.mjs";
 export async function runFullKnowledgeSync(options = {}) {
   const triggerType = options.triggerType || "cron";
   const isCron = triggerType === "cron";
+  const engineOnly = options.engineOnly ?? isCron;
+
+  if (engineOnly) {
+    const ake = await runAutoKnowledgeEngine({
+      triggerType,
+      checkLinks: options.checkLinks,
+      maxConnectors: options.maxConnectors || (isCron ? 6 : 20),
+      connectorSlug: options.connectorSlug,
+    });
+    const stats = await getAutoKnowledgeEngineStats(7);
+    return {
+      ok: ake.ok !== false,
+      at: new Date().toISOString(),
+      autoKnowledgeEngine: ake,
+      engineOnly: true,
+      stats: stats.stats,
+      usingLegacy: stats.usingLegacy,
+    };
+  }
 
   const tasks = [
     runAutoKnowledgeEngine({
