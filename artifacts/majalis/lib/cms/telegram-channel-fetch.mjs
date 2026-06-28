@@ -88,31 +88,35 @@ export function parseTelegramChannelHtml(html, channel) {
 
 export async function fetchTelegramChannelMessages(channel, { limit = 20, before } = {}) {
   const slug = String(channel || "").replace(/^@/, "").replace(/.*t\.me\//, "");
-  if (!slug) return { items: [], channel: null, error: "channel_missing" };
+  if (!slug) return { items: [], channel: null, error: "channel_missing", ok: false };
 
   let url = `https://t.me/s/${slug}`;
   if (before) url += `?before=${before}`;
 
-  const res = await fetchResource(url, {
-    label: `telegram:web:${slug}`,
-    timeoutMs: 20_000,
-    maxRetries: 2,
-    useCache: false,
-    headers: {
-      "User-Agent": "MajlisIlmBot/2.0 (+https://www.majlisilm.com)",
-      Accept: "text/html",
-    },
-  });
+  try {
+    const res = await fetchResource(url, {
+      label: `telegram:web:${slug}`,
+      timeoutMs: 20_000,
+      maxRetries: 2,
+      useCache: false,
+      headers: {
+        "User-Agent": "MajlisIlmBot/2.0 (+https://www.majlisilm.com)",
+        Accept: "text/html",
+      },
+    });
 
-  const html = await res.text();
-  if (!res.ok) {
-    return { items: [], channel: slug, error: `http_${res.status}` };
+    const html = await res.text();
+    if (!res.ok) {
+      return { items: [], channel: slug, error: `http_${res.status}`, ok: false };
+    }
+
+    let items = parseTelegramChannelHtml(html, slug);
+    if (limit > 0) items = items.slice(0, limit);
+
+    return { items, channel: slug, ok: true };
+  } catch (err) {
+    return { items: [], channel: slug, error: err.message, ok: false };
   }
-
-  let items = parseTelegramChannelHtml(html, slug);
-  if (limit > 0) items = items.slice(0, limit);
-
-  return { items, channel: slug, ok: true };
 }
 
 /** Alias used by verification scripts — delegates to web preview fetch. */
@@ -120,33 +124,61 @@ export const parseTelegramPreviewHtml = parseTelegramChannelHtml;
 
 /**
  * Resilient fallback chain: Bot API → preview → RSS → OpenGraph.
+ * Never throws — returns { ok, posts, method, errors }.
  */
 export async function fetchTelegramChannel(config = {}) {
   const channel = String(config.channel || config.handle || "").replace(/^@/, "").replace(/.*t\.me\//, "");
   const errors = [];
+  const seenIds = new Set();
+
+  function dedupePosts(posts) {
+    return posts.filter((p) => {
+      const key = p.external_id || `${p.message_id}`;
+      if (seenIds.has(key)) return false;
+      seenIds.add(key);
+      return true;
+    });
+  }
+
+  function postConfidence(post) {
+    const text = String(post.text || post.caption || "").trim();
+    const hasMedia = Boolean(post.imageUrl || post.media?.length);
+    if (text.length >= 20) return 0.85;
+    if (hasMedia && text.length >= 5) return 0.7;
+    if (hasMedia) return 0.45;
+    if (text.length >= 5) return 0.55;
+    return 0.25;
+  }
 
   if (config.bot_token && config.channel_id) {
     try {
       const url = `https://api.telegram.org/bot${config.bot_token}/getUpdates?limit=${Math.min(config.limit || 20, 100)}`;
       const res = await fetch(url, { headers: { Accept: "application/json" } });
-      const data = await res.json();
+      const data = await res.json().catch(() => ({}));
       if (data.ok) {
-        const posts = (data.result || [])
-          .filter((u) => u.channel_post?.chat?.id === config.channel_id)
-          .map((u) => {
-            const post = u.channel_post;
-            const text = post.text || post.caption || "";
-            return {
-              external_id: `tg:${channel}:${post.message_id}`,
-              message_id: post.message_id,
-              text,
-              url: `https://t.me/${channel}/${post.message_id}`,
-              published_at: new Date(post.date * 1000).toISOString(),
-              extracted_via: "telegram_bot_api",
-            };
-          });
-        if (posts.length) return { ok: true, posts, method: "bot_api" };
+        const posts = dedupePosts(
+          (data.result || [])
+            .filter((u) => u.channel_post?.chat?.id === config.channel_id)
+            .map((u) => {
+              const post = u.channel_post;
+              const text = post.text || post.caption || "";
+              const photo = post.photo?.[post.photo.length - 1];
+              return {
+                external_id: `tg:${channel}:${post.message_id}`,
+                message_id: post.message_id,
+                text,
+                caption: post.caption || null,
+                url: `https://t.me/${channel}/${post.message_id}`,
+                published_at: new Date(post.date * 1000).toISOString(),
+                extracted_via: "telegram_bot_api",
+                confidence: postConfidence({ text, imageUrl: photo ? "bot" : null }),
+              };
+            })
+            .filter((p) => p.confidence >= (config.min_confidence ?? 0.4)),
+        );
+        if (posts.length) return { ok: true, posts, method: "bot_api", errors };
       }
+      errors.push(`bot_api: ${data.description || "empty"}`);
     } catch (err) {
       errors.push(`bot_api: ${err.message}`);
     }
@@ -155,16 +187,23 @@ export async function fetchTelegramChannel(config = {}) {
   try {
     const result = await fetchTelegramChannelMessages(channel, { limit: config.limit || 20 });
     if (result.items?.length) {
-      const posts = result.items.map((item) => ({
-        external_id: `${channel}:${item.message_id}`,
-        message_id: item.message_id,
-        text: item.text,
-        url: item.link,
-        published_at: item.published_at,
-        extracted_via: "telegram_preview",
-        media: item.mediaUrls?.map((url) => ({ type: "image", url })) || [],
-      }));
-      return { ok: true, posts, method: "preview", errors };
+      const posts = dedupePosts(
+        result.items
+          .map((item) => ({
+            external_id: `${channel}:${item.message_id}`,
+            message_id: item.message_id,
+            text: item.text,
+            caption: item.caption,
+            url: item.link,
+            published_at: item.published_at,
+            extracted_via: "telegram_preview",
+            imageUrl: item.imageUrl,
+            media: item.mediaUrls?.map((u) => ({ type: "image", url: u })) || [],
+            confidence: postConfidence(item),
+          }))
+          .filter((p) => p.confidence >= (config.min_confidence ?? 0.4)),
+      );
+      if (posts.length) return { ok: true, posts, method: "preview", errors };
     }
     errors.push(`preview: ${result.error || "empty"}`);
   } catch (err) {
@@ -175,12 +214,14 @@ export async function fetchTelegramChannel(config = {}) {
     try {
       const page = await importFromUrl(config.rss_url);
       if (page?.description) {
-        return {
-          ok: true,
-          posts: [{ external_id: `rss:${config.rss_url}`, text: page.description, url: page.finalUrl, extracted_via: "telegram_rss" }],
-          method: "rss",
-          errors,
+        const post = {
+          external_id: `rss:${config.rss_url}`,
+          text: page.description,
+          url: page.finalUrl,
+          extracted_via: "telegram_rss",
+          confidence: 0.5,
         };
+        return { ok: true, posts: [post], method: "rss", errors };
       }
     } catch (err) {
       errors.push(`rss: ${err.message}`);
@@ -192,12 +233,18 @@ export async function fetchTelegramChannel(config = {}) {
     try {
       const page = await importFromUrl(ogUrl);
       if (page?.title || page?.description) {
-        return {
-          ok: true,
-          posts: [{ external_id: `og:${channel}`, text: page.description || page.title, title: page.title, url: page.finalUrl || ogUrl, extracted_via: "opengraph" }],
-          method: "opengraph",
-          errors,
+        const post = {
+          external_id: `og:${channel}`,
+          text: page.description || page.title,
+          title: page.title,
+          url: page.finalUrl || ogUrl,
+          extracted_via: "opengraph",
+          confidence: 0.35,
         };
+        if (post.confidence >= (config.min_confidence ?? 0.4) || !config.min_confidence) {
+          return { ok: true, posts: [post], method: "opengraph", errors };
+        }
+        errors.push("opengraph: low_confidence");
       }
     } catch (err) {
       errors.push(`opengraph: ${err.message}`);

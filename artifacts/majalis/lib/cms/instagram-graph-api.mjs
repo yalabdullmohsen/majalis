@@ -42,8 +42,11 @@ export function getInstagramGraphStatus() {
   }
   return {
     configured,
-    status: configured ? "connected" : "instagram_connector_not_configured",
-    message: configured ? "Instagram Graph API configured" : "Instagram connector not configured",
+    status: configured ? "connected" : "setup_required",
+    setupRequired: !configured,
+    message: configured
+      ? "Instagram Graph API configured"
+      : "Instagram setup required — Meta secrets not configured (degraded, not failed)",
     manualAssistMode: !configured,
     appId: c.appId ? `${c.appId.slice(0, 6)}…` : null,
     businessAccountId: c.businessAccountId || null,
@@ -238,11 +241,25 @@ export async function fetchInstagramMediaForSource(source, { limit = 15, runId }
 export async function testInstagramConnection() {
   const status = getInstagramGraphStatus();
   if (!status.configured) {
+    const missingEnvs = status.envKeys.filter((k) => !String(process.env[k] || "").trim());
     return {
       ok: false,
+      setupRequired: true,
+      status: "setup_required",
+      optional: true,
       ...status,
       accounts: [],
-      failureReason: "instagram_connector_not_configured",
+      missingEnvs,
+      requiredScopes: [
+        "instagram_basic",
+        "pages_read_engagement",
+        "instagram_manage_insights",
+        "business_management",
+      ],
+      failureReason: "missing_credentials",
+      nextAction: missingEnvs.length
+        ? `Add missing env vars: ${missingEnvs.join(", ")}`
+        : "Add INSTAGRAM_GRAPH_ACCESS_TOKEN and INSTAGRAM_BUSINESS_ACCOUNT_ID",
       remediation: buildInstagramRemediation({ configured: false }),
     };
   }
@@ -389,12 +406,22 @@ export async function getInstagramDiagnostics() {
     return {
       ok: false,
       optional: true,
+      setupRequired: true,
+      status: "setup_required",
       ...status,
-      failureReason: "instagram_connector_not_configured",
+      failureReason: "missing_credentials",
       token: null,
       connection: null,
+      missingEnvs: status.envKeys.filter((k) => !process.env[k]),
+      requiredScopes: [
+        "instagram_basic",
+        "pages_read_engagement",
+        "instagram_manage_insights",
+        "business_management",
+      ],
       remediation: buildInstagramRemediation({ configured: false }),
       pipelineImpact: "Instagram sources use Manual Assist Mode — other connectors continue normally.",
+      nextAction: "Add INSTAGRAM_GRAPH_ACCESS_TOKEN and INSTAGRAM_BUSINESS_ACCOUNT_ID in Vercel Secrets.",
     };
   }
 

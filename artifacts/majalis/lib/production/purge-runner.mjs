@@ -2,7 +2,8 @@
  * Production content purge — shared by CLI, admin API, and cron.
  */
 import { containsBlockedContentMarker } from "./content-sanitizer.mjs";
-import { shouldPurgeFawaidRow, fawaidRowToQaCandidate } from "./fawaid-cleanup.mjs";
+import { shouldPurgeFawaidRow } from "./fawaid-cleanup.mjs";
+import { migrateFawaidRowToQa, emptyQaMigrationReport } from "./qa-migration.mjs";
 
 const BLOCKED = [
   /\b(?:e2e|mock|placeholder|dummy|fixture|debug|sample|verification)\b/i,
@@ -59,49 +60,19 @@ async function fetchAll(admin, table, fields) {
   return rows;
 }
 
-async function migrateFawaidToQa(admin, row) {
-  const qa = fawaidRowToQaCandidate(row);
-  if (!qa) return { migrated: false, skipped: true };
-  const externalKey = `migrated-fawaid:${row.id}`;
-
-  const { data: existingByKey, error: keyErr } = await admin
-    .from("qa_questions")
-    .select("id")
-    .eq("external_key", externalKey)
-    .maybeSingle();
-  if (keyErr && !/external_key|column|schema cache/i.test(keyErr.message || "")) {
-    return { migrated: false, error: keyErr.message };
-  }
-  if (existingByKey?.id) return { migrated: false, skipped: true, duplicate: true };
-
-  const { data: existingByQ } = await admin
-    .from("qa_questions")
-    .select("id")
-    .eq("question", qa.question)
-    .maybeSingle();
-  if (existingByQ?.id) return { migrated: false, skipped: true, duplicate: true };
-
-  const payload = { question: qa.question, answer: qa.answer, status: "draft" };
-  if (!keyErr) payload.external_key = externalKey;
-
-  const { error } = await admin.from("qa_questions").insert(payload);
-  if (error) return { migrated: false, error: error.message };
-  return { migrated: true };
-}
-
 /**
  * @param {import('@supabase/supabase-js').SupabaseClient} admin
  * @param {{ dryRun?: boolean; apply?: boolean }} options
  */
 export async function runProductionPurge(admin, options = {}) {
   const dryRun = options.apply === true ? false : options.dryRun !== false;
+  const qaMigration = emptyQaMigrationReport();
   const report = {
     dryRun,
     tables: {},
     totalFound: 0,
     totalDeleted: 0,
-    qaMigrated: 0,
-    qaSkipped: 0,
+    qaMigration,
     errors: [],
   };
 
@@ -123,10 +94,13 @@ export async function runProductionPurge(admin, options = {}) {
 
     if (table === "fawaid") {
       for (const row of blocked) {
-        const mig = await migrateFawaidToQa(admin, row);
-        if (mig.migrated) report.qaMigrated++;
-        else if (mig.skipped) report.qaSkipped++;
-        else if (mig.error) report.errors.push(`qa_migrate:${row.id}:${mig.error}`);
+        const mig = await migrateFawaidRowToQa(admin, row, {
+          report: qaMigration,
+          importBatchId: options.importBatchId || `purge-${new Date().toISOString().slice(0, 10)}`,
+        });
+        if (mig.report?.errors?.length) {
+          report.errors.push(...mig.report.errors.filter((e) => !report.errors.includes(e)));
+        }
       }
     }
 
@@ -142,6 +116,7 @@ export async function runProductionPurge(admin, options = {}) {
     }
   }
 
+  report.qaMigration = qaMigration;
   report.ok = report.errors.length === 0;
   return report;
 }

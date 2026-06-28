@@ -245,7 +245,11 @@ async function gatherSignals(admin, context) {
   ]);
 
   const active = (connectors || []).filter((c) => c.is_active);
-  const failing = (connectors || []).filter((c) => c.is_active && (c.health_status === "down" || c.consecutive_failures >= 2));
+  const { classifyConnector } = await import("./connector-classification.mjs");
+  const failing = active.filter((c) => {
+    const tier = classifyConnector(c, { healthy: c.health_status === "healthy" });
+    return tier.tier === "required" && tier.healthTier === "unhealthy";
+  });
 
   return {
     activeConnectorsCount: active.length,

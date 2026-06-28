@@ -60,7 +60,7 @@ function InstagramIntegrationContent() {
     setTestResult("");
     try {
       const r = await testInstagramIntegration();
-      setTestResult(r.ok ? `✓ متصل: @${r.account?.username || "—"}` : `✗ ${r.error || "فشل"}`);
+      setTestResult(r.ok ? `✓ متصل: @${r.account?.username || "—"}` : r.setupRequired ? `⚙ setup_required: ${r.nextAction || r.error || "Meta Secrets missing"}` : `✗ ${r.error || "فشل"}`);
       load();
     } finally {
       setBusy(false);
@@ -100,7 +100,11 @@ function InstagramIntegrationContent() {
           <section style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.5rem", padding: "1rem", marginBottom: "1rem" }}>
             <h3 style={{ margin: "0 0 0.75rem", color: C.emeraldDeep, fontSize: "0.9375rem" }}>حالة الربط</h3>
             <div style={{ display: "grid", gap: "0.5rem", fontSize: "0.8125rem" }}>
-              <div>الحالة: <StatusBadge ok={status?.configured ?? false} label={status?.configured ? "Graph API مُعدّ" : "Instagram connector not configured"} /></div>
+              <div>الحالة: <StatusBadge ok={status?.configured ?? false} label={
+                status?.status === "setup_required" || status?.setupRequired
+                  ? "setup_required — Meta Secrets مطلوبة"
+                  : status?.configured ? "Graph API مُعدّ" : "Instagram connector not configured"
+              } /></div>
               {status?.manualAssistMode && (
                 <div style={{ color: "#92400E" }}>Manual Assist Mode نشط — ارفع الإعلانات يدويًا من صفحة المصادر.</div>
               )}
@@ -139,6 +143,23 @@ function InstagramIntegrationContent() {
             </div>
             {testResult && <p style={{ margin: "0.75rem 0 0", fontSize: "0.8125rem" }}>{testResult}</p>}
           </section>
+
+          {!status?.configured && (
+            <section style={{ background: "#FFFBEB", border: "1px solid #FDE68A", borderRadius: "0.5rem", padding: "1rem", marginBottom: "1rem", fontSize: "0.8125rem" }}>
+              <strong>Checklist — تفعيل Instagram Production:</strong>
+              <ol style={{ margin: "0.5rem 0 0", paddingRight: "1.25rem" }}>
+                <li>INSTAGRAM_GRAPH_ACCESS_TOKEN — Long-lived token</li>
+                <li>INSTAGRAM_BUSINESS_ACCOUNT_ID — Instagram Business Account ID</li>
+                <li>INSTAGRAM_APP_ID + INSTAGRAM_APP_SECRET — Meta App</li>
+                <li>Scopes: instagram_basic, pages_read_engagement, business_management</li>
+                <li>ربط Instagram Business بصفحة Facebook في Meta Business Suite</li>
+                <li>INSTAGRAM_WEBHOOK_VERIFY_TOKEN — لـ /api/webhooks/instagram</li>
+              </ol>
+              <p style={{ margin: "0.5rem 0 0", color: "#92400E" }}>
+                الحالة: setup_required (degraded) — ليست failed. باقي المصادر تعمل طبيعياً.
+              </p>
+            </section>
+          )}
 
           <section style={{ background: "#EFF6FF", border: "1px solid #BFDBFE", borderRadius: "0.5rem", padding: "1rem", marginBottom: "1rem", fontSize: "0.8125rem" }}>
             <strong>متغيرات البيئة (Vercel Secrets):</strong>

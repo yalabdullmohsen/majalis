@@ -4,7 +4,19 @@ export type MonitoringDashboard = {
   ok: boolean;
   at: string;
   systemStatus: string;
-  connectors: { active: number; healthy: number; failing: number };
+  connectors: {
+    active: number;
+    healthy: number;
+    failing: number;
+    requiredHealthy?: number;
+    requiredUnhealthy?: number;
+    optionalDegraded?: number;
+    credentialsMissing?: number;
+    externalBlocked?: number;
+    disabledIntentionally?: number;
+    instagramConfigured?: boolean;
+    connectors?: Array<{ slug: string; tier: string; healthTier: string; reason: string | null; name?: string }>;
+  };
   publishing24h: Record<string, number>;
   openAlerts: Array<{ id?: string; title?: string; severity?: string; message?: string }>;
   criticalAlerts: unknown[];

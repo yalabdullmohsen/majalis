@@ -787,7 +787,13 @@ export async function runConnectorHealthChecks(options = {}) {
   const admin = getSupabaseAdmin();
   if (!admin) return { ok: false, error: "Supabase not configured" };
 
-  const maxChecks = options.maxChecks ?? 5;
+  const { createConnector } = await import("./connectors/index.mjs");
+  const {
+    classifyConnector,
+    summarizeConnectorHealth,
+  } = await import("./monitoring/connector-classification.mjs");
+
+  const maxChecks = options.maxChecks ?? 8;
   const budgetMs = options.budgetMs ?? 45_000;
   const started = Date.now();
 
@@ -799,31 +805,84 @@ export async function runConnectorHealthChecks(options = {}) {
   });
 
   const results = [];
+  const classified = [];
   let checked = 0;
 
   for (const config of sorted) {
-    if (checked >= maxChecks) break;
+    const pre = classifyConnector(config, {});
+    if (pre.healthTier === "disabled" || pre.healthTier === "setup_required") {
+      const healthStatus = pre.healthTier === "setup_required" ? "degraded" : "inactive";
+      classified.push({ ...pre, name: config.name, health_status: healthStatus });
+      results.push({
+        slug: config.slug,
+        healthy: false,
+        skipped: true,
+        tier: pre.tier,
+        reason: pre.reason,
+        checkedAt: new Date().toISOString(),
+      });
+      if (config.id) {
+        await admin.from("ake_connectors").update({
+          health_status: healthStatus,
+          last_health_check: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        }).eq("id", config.id);
+      }
+      continue;
+    }
+
+    if (checked >= maxChecks) {
+      const stale = classifyConnector(config, { healthy: config.health_status === "healthy" });
+      classified.push({ ...stale, name: config.name, health_status: config.health_status });
+      continue;
+    }
     if (Date.now() - started >= budgetMs - 2_000) break;
 
     const connector = createConnector(config);
-    const health = await connector.healthCheck();
+    let health;
+    try {
+      health = await connector.healthCheck();
+    } catch (err) {
+      health = { healthy: false, error: err.message, checkedAt: new Date().toISOString() };
+    }
     checked++;
+
+    const tier = classifyConnector(config, health);
+    classified.push({ ...tier, name: config.name, health_status: health.healthy ? "healthy" : "down" });
+
+    const dbStatus = tier.healthTier === "healthy"
+      ? "healthy"
+      : tier.tier === "optional"
+        ? "degraded"
+        : "down";
 
     if (config.id) {
       await admin.from("ake_connectors").update({
-        health_status: health.healthy ? "healthy" : "down",
-        last_health_check: health.checkedAt,
+        health_status: dbStatus,
+        last_health_check: health.checkedAt || new Date().toISOString(),
         updated_at: new Date().toISOString(),
       }).eq("id", config.id);
     }
 
-    results.push({ slug: config.slug, ...health, brokenLinks: 0 });
+    results.push({
+      slug: config.slug,
+      ...health,
+      tier: tier.tier,
+      reason: tier.reason,
+      healthTier: tier.healthTier,
+      brokenLinks: 0,
+    });
   }
+
+  const summary = summarizeConnectorHealth(classified);
 
   return {
     ok: true,
     results,
-    checked: results.length,
+    summary,
+    systemStatus: summary.systemStatus,
+    checked: results.filter((r) => !r.skipped).length,
+    skipped: results.filter((r) => r.skipped).length,
     totalConnectors: connectors.length,
     batched: connectors.length > maxChecks,
     durationMs: Date.now() - started,

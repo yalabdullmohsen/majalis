@@ -75,14 +75,31 @@ function PlatformMonitoringContent() {
         <>
           <div style={{ display: "flex", gap: "0.65rem", flexWrap: "wrap", marginBottom: "1.25rem" }}>
             <StatCard label="مصادر نشطة" value={data.connectors?.active ?? 0} />
-            <StatCard label="مصادر سليمة" value={data.connectors?.healthy ?? 0} />
-            <StatCard label="مصادر معطلة" value={data.connectors?.failing ?? 0} color="#991B1B" />
+            <StatCard label="مطلوبة سليمة" value={data.connectors?.requiredHealthy ?? 0} />
+            <StatCard label="اختيارية متدهورة" value={data.connectors?.optionalDegraded ?? 0} color="#92400E" />
+            <StatCard label="أسرار ناقصة" value={data.connectors?.credentialsMissing ?? 0} color="#92400E" />
+            <StatCard label="محجوبة خارجياً" value={data.connectors?.externalBlocked ?? 0} color="#92400E" />
+            <StatCard label="معطّلة بقصد" value={data.connectors?.disabledIntentionally ?? 0} />
             <StatCard label="دروس (24س)" value={data.publishing24h?.lessons ?? 0} />
             <StatCard label="فوائد (24س)" value={data.publishing24h?.benefits ?? 0} />
             <StatCard label="أسئلة (24س)" value={data.publishing24h?.questions ?? 0} />
             <StatCard label="منشور AKE" value={data.publishing24h?.knowledgePublished ?? 0} />
             <StatCard label="مرفوض" value={data.publishing24h?.rejected ?? 0} color="#92400E" />
           </div>
+
+          {(data.connectors?.connectors?.length ?? 0) > 0 && (
+            <section style={{ marginBottom: "1.25rem" }}>
+              <h3 style={{ fontSize: "0.95rem", color: C.emeraldDeep, marginBottom: "0.5rem" }}>حالة المصادر</h3>
+              <div style={{ display: "grid", gap: "0.35rem", maxHeight: "220px", overflowY: "auto" }}>
+                {(data.connectors.connectors || []).slice(0, 15).map((c) => (
+                  <div key={c.slug} style={{ display: "flex", justifyContent: "space-between", gap: "0.5rem", padding: "0.4rem 0.65rem", border: `1px solid ${C.line}`, borderRadius: "0.45rem", fontSize: "0.75rem" }}>
+                    <span><strong>{c.name || c.slug}</strong> · {c.tier}</span>
+                    <span style={{ color: C.inkSoft }}>{c.healthTier}{c.reason ? ` · ${c.reason}` : ""}</span>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
 
           <section style={{ marginBottom: "1.25rem" }}>
             <h3 style={{ fontSize: "0.95rem", color: C.emeraldDeep, marginBottom: "0.5rem" }}>Cron Jobs</h3>

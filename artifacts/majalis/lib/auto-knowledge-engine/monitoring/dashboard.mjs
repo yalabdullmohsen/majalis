@@ -9,6 +9,11 @@ import { getOpenPipelineFailures } from "./pipeline-failures.mjs";
 import { getRecentSourceHealthEvents } from "./source-health-events.mjs";
 import { getDailyReportHistory } from "./daily-report.mjs";
 import { AKE_MONITORED_CRONS } from "./cron-registry.mjs";
+import {
+  classifyConnector,
+  summarizeConnectorHealth,
+} from "./connector-classification.mjs";
+import { isInstagramGraphConfigured } from "../../cms/instagram-graph-api.mjs";
 
 export async function getMonitoringDashboard() {
   const admin = getSupabaseAdmin();
@@ -34,7 +39,19 @@ export async function getMonitoringDashboard() {
   };
   let systemStatus = "unknown";
   let scheduler = null;
-  let connectorsSummary = { active: 0, healthy: 0, failing: 0 };
+  let connectorsSummary = {
+    active: 0,
+    healthy: 0,
+    failing: 0,
+    requiredHealthy: 0,
+    requiredUnhealthy: 0,
+    optionalDegraded: 0,
+    credentialsMissing: 0,
+    externalBlocked: 0,
+    disabledIntentionally: 0,
+    instagramConfigured: false,
+    connectors: [],
+  };
 
   if (admin) {
     const [
@@ -50,7 +67,9 @@ export async function getMonitoringDashboard() {
       admin.from("qa_questions").select("id", { count: "exact", head: true }).gte("created_at", since24h),
       admin.from("ake_cycle_metrics").select("published,fetched,rejected").gte("created_at", since24h),
       admin.from("ake_scheduler_state").select("*").eq("id", "global").maybeSingle(),
-      admin.from("ake_connectors").select("is_active, health_status"),
+      admin.from("ake_connectors").select(
+        "slug, name, platform, connector_type, handle, is_active, health_status, consecutive_failures, last_error, last_success_at",
+      ),
     ]);
 
     publishing24h = {
@@ -63,17 +82,45 @@ export async function getMonitoringDashboard() {
     };
 
     scheduler = sched;
-    const active = (connectors || []).filter((c) => c.is_active);
+    const classified = (connectors || []).map((c) => {
+      const health = {
+        healthy: c.health_status === "healthy",
+        statusCode: c.last_error?.includes("403") ? 403 : undefined,
+        error: c.health_status === "down" ? c.last_error : null,
+      };
+      return {
+        ...classifyConnector(c, health),
+        name: c.name,
+        health_status: c.health_status,
+      };
+    });
+    const summary = summarizeConnectorHealth(classified);
     connectorsSummary = {
-      active: active.length,
-      healthy: active.filter((c) => c.health_status === "healthy").length,
-      failing: active.filter((c) => c.health_status === "down" || c.health_status === "degraded").length,
+      active: summary.active,
+      healthy: summary.healthy,
+      failing: summary.failing,
+      requiredHealthy: summary.requiredHealthy,
+      requiredUnhealthy: summary.requiredUnhealthy,
+      optionalDegraded: summary.optionalDegraded,
+      credentialsMissing: summary.credentialsMissing,
+      externalBlocked: summary.externalBlocked,
+      disabledIntentionally: summary.disabledIntentionally,
+      instagramConfigured: isInstagramGraphConfigured(),
+      connectors: classified.slice(0, 30),
     };
 
-    if (criticalAlerts.length > 0) systemStatus = "critical";
-    else if (openAlerts.length > 0) systemStatus = "warning";
-    else if (connectorsSummary.active > 0) systemStatus = "healthy";
-    else systemStatus = "idle";
+    const connectorStatus = summary.systemStatus;
+    if (criticalAlerts.filter((a) => !/instagram|missing_credentials/i.test(a.message || "")).length > 0) {
+      systemStatus = "critical";
+    } else if (connectorStatus === "critical") {
+      systemStatus = "critical";
+    } else if (openAlerts.length > 0 || connectorStatus === "degraded") {
+      systemStatus = "warning";
+    } else if (connectorStatus === "healthy") {
+      systemStatus = "healthy";
+    } else {
+      systemStatus = "idle";
+    }
   }
 
   const cronStatus = AKE_MONITORED_CRONS.map((def) => {

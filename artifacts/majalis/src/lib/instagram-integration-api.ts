@@ -4,6 +4,7 @@ export type InstagramIntegrationStatus = {
   ok?: boolean;
   configured: boolean;
   status: string;
+  setupRequired?: boolean;
   message: string;
   manualAssistMode: boolean;
   appId?: string | null;
