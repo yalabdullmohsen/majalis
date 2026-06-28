@@ -7,6 +7,7 @@ import { isMissingTableError } from "../supabase-admin.mjs";
 import { filterRecordForTable } from "./schema-capabilities.mjs";
 import { assertPublishable } from "../production/content-sanitizer.mjs";
 import { buildFusionKey } from "../production/source-fusion.mjs";
+import { isBlockedFawaidText } from "../production/fawaid-cleanup.mjs";
 
 function slugify(text) {
   return String(text || "")
@@ -289,6 +290,10 @@ export async function publishItem(admin, item, analysis) {
 
   try {
     built = await resolvePublishTarget(admin, built, item);
+    if (built.table === "fawaid" && isBlockedFawaidText(built.record.text)) {
+      log("fawaid-blocked", { id: item.external_id, reason: "quiz_or_test_content" });
+      return { published: false, reason: "blocked_fawaid_content", table: "fawaid" };
+    }
     assertPublishable(built.record);
     const lookupField = built.lookupField || "external_key";
     let lookupValue = lookupField === "external_id"

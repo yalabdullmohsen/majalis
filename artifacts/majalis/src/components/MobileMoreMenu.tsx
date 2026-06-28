@@ -1,7 +1,7 @@
 "use client";
 
 import { createPortal } from "react-dom";
-import { Link, useLocation } from "wouter";
+import { Link } from "wouter";
 import { MOBILE_MORE_NAV } from "@/lib/navigation";
 
 type Props = {

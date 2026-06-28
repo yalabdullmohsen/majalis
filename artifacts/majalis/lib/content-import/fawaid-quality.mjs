@@ -7,7 +7,8 @@ const QUIZ_FAWAID_PATTERNS = [
   /^فائدة:\s*.+\s—\s*(?:من|ما|في|إلى|كم|أين|متى|هل)\s/i,
   /^فائدة:\s*.+\s—\s*.+\?\s*$/,
   /\b(?:e2e|mock|placeholder|test data)\b/i,
-  /\bquiz\b/i,
+  /^فائدة:\s/i,
+  /\b(?:question|verification)\b/i,
 ];
 
 const QUIZ_KEYWORDS = /(?:^|\s)(?:question|سؤال|اختبار|quiz|e2e|mock|placeholder|import)(?:\s|$)/i;

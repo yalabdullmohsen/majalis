@@ -10,7 +10,9 @@ const WEAK_FAWAID_PATTERNS = [
   /\[import-\d+\]\s*$/i,
   /^فائدة:\s*.+\s—\s*(?:من|ما|في|إلى|كم|أين|متى|هل)\s/i,
   /^فائدة:\s*.+\s—\s*.+\?\s*$/,
-  /\b(?:e2e|mock|placeholder|test data|quiz)\b/i,
+  /^فائدة:\s/i,
+  /\b(?:e2e|mock|placeholder|test data|quiz|dummy|fixture)\b/i,
+  /\b(?:question|verification|import)\b/i,
 ];
 
 export function isQuizLikeFawaid(item: { text?: string }): boolean {
@@ -26,6 +28,8 @@ export function isQualityFawaid(item: {
   const text = (item.text || "").trim();
   if (text.length < 24) return false;
   if (isQuizLikeFawaid(item)) return false;
+  if (/^فائدة:\s/i.test(text)) return false;
+  if (/\?\s*$/.test(text) && text.length < 200) return false;
   if (item.author_name && WEAK_FAWAID_AUTHORS.has(item.author_name)) return false;
   return !WEAK_FAWAID_PATTERNS.slice(0, 4).some((pattern) => pattern.test(text));
 }
