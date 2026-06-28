@@ -127,6 +127,8 @@ export const API_ROUTES = [
   { prefix: "/api/cron/knowledge-reasoning", module: "./api-handlers/cron/knowledge-reasoning.js", allowGet: true, exact: true },
   { prefix: "/api/admin/auto-content", module: "./api-handlers/admin/auto-content.js", allowGet: true },
   { prefix: "/api/admin/auto-knowledge-engine", module: "./api-handlers/admin/auto-knowledge-engine.js", allowGet: true },
+  { prefix: "/api/admin/deployment-pipeline", module: "./api-handlers/admin/deployment-pipeline.js", allowGet: true },
+  { prefix: "/api/cron/cd-post-deploy", module: "./api-handlers/cron/cd-post-deploy.js", allowGet: true, exact: true },
   { prefix: "/api/fiqh-research-assistant", module: "./api-handlers/fiqh-research-assistant.js", rateLimit: fiqhResearchRateLimit, allowGet: true },
   { prefix: "/api/assistant", module: "./api-handlers/assistant.js", rateLimit: assistantRateLimit, allowGet: true },
   { prefix: "/api/client-error-log", module: "./api-handlers/client-error-log.js", allowGet: true },

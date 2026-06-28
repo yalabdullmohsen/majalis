@@ -1,0 +1,127 @@
+name: Autonomous CD
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [main]
+
+concurrency:
+  group: autonomous-cd-${{ github.head_ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+  pull-requests: write
+  statuses: write
+
+env:
+  MAJALIS_PRODUCTION_URL: https://www.majlisilm.com
+
+jobs:
+  safety-check:
+    name: Safety Rules
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      auto_merge: ${{ steps.risk.outputs.auto_merge }}
+      preview_required: ${{ steps.risk.outputs.preview_required }}
+      risk_level: ${{ steps.risk.outputs.risk_level }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Analyze change risk
+        id: risk
+        run: |
+          cd artifacts/majalis
+          node scripts/cd/safety-check.mjs > /tmp/risk.json
+          cat /tmp/risk.json
+          AUTO=$(python3 -c "import json; print('true' if json.load(open('/tmp/risk.json'))['autoMergeAllowed'] else 'false')")
+          PREVIEW=$(python3 -c "import json; print('true' if json.load(open('/tmp/risk.json'))['previewRequired'] else 'false')")
+          LEVEL=$(python3 -c "import json; print(json.load(open('/tmp/risk.json'))['riskLevel'])")
+          echo "auto_merge=$AUTO" >> "$GITHUB_OUTPUT"
+          echo "preview_required=$PREVIEW" >> "$GITHUB_OUTPUT"
+          echo "risk_level=$LEVEL" >> "$GITHUB_OUTPUT"
+
+      - name: Block high-risk auto-merge
+        if: steps.risk.outputs.preview_required == 'true'
+        run: |
+          echo "::warning::High-risk change detected (${{ steps.risk.outputs.risk_level }}) — human review required before merge"
+          gh pr comment ${{ github.event.pull_request.number }} --body "⚠️ **Autonomous CD blocked** — change classified as \`${{ steps.risk.outputs.risk_level }}\` risk. Human review required before auto-merge." || true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  pipeline:
+    name: CD Pipeline
+    needs: safety-check
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Run autonomous CD pipeline
+        env:
+          GITHUB_SHA: ${{ github.sha }}
+          GITHUB_HEAD_REF: ${{ github.head_ref }}
+          GITHUB_EVENT_PULL_REQUEST_NUMBER: ${{ github.event.pull_request.number }}
+        run: node artifacts/majalis/scripts/cd/run-pipeline.mjs
+
+      - name: Upload pipeline report
+        if: always()
+        run: node artifacts/majalis/scripts/cd/run-pipeline.mjs --json > pipeline-report.json || true
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cd-pipeline-report
+          path: pipeline-report.json
+          retention-days: 14
+
+  auto-merge:
+    name: Auto Merge
+    needs: [safety-check, pipeline]
+    if: |
+      github.event.pull_request.draft == false &&
+      needs.safety-check.outputs.auto_merge == 'true' &&
+      needs.safety-check.outputs.preview_required == 'false' &&
+      startsWith(github.head_ref, 'cursor/') &&
+      github.repository == 'yalabdullmohsen/majalis'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Merge to main
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr merge ${{ github.event.pull_request.number }} \
+            --merge \
+            --delete-branch
+
+      - name: Comment on PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr comment ${{ github.event.pull_request.number }} --body "✅ **Autonomous CD** — all checks passed. Auto-merged to \`main\`. Production deploy triggered via Vercel."
+
+  human-review:
+    name: Request Human Review
+    needs: [safety-check, pipeline]
+    if: needs.safety-check.outputs.preview_required == 'true' && github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr edit ${{ github.event.pull_request.number }} --add-label "needs-human-review" || true
