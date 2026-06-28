@@ -45,15 +45,15 @@ export default async function handler(req, res) {
 
   try {
     const issues = [];
-    const lessons = await fetchAll(admin, "lessons", "id, slug, external_id");
-    const fawaid = await fetchAll(admin, "fawaid", "id, slug, external_id, status");
-    const qa = await fetchAll(admin, "qa_questions", "id, slug, question");
-    const library = await fetchAll(admin, "library_items", "id, slug, external_id");
+    const lessons = await fetchAll(admin, "lessons", "id, title, source_url");
+    const fawaid = await fetchAll(admin, "fawaid", "id, title, external_id, status, text");
+    const qa = await fetchAll(admin, "qa_questions", "id, question");
+    const library = await fetchAll(admin, "library_items", "id, title, external_id");
 
     for (const [table, rows, key] of [
-      ["lessons", lessons, (r) => r.slug],
-      ["fawaid", fawaid, (r) => r.slug],
-      ["library_items", library, (r) => r.slug],
+      ["lessons", lessons, (r) => r.source_url || r.title?.trim()],
+      ["fawaid", fawaid, (r) => r.text?.trim()?.slice(0, 120)],
+      ["library_items", library, (r) => r.title?.trim()],
     ]) {
       const d = dupesBy(rows, key);
       if (d.length) issues.push({ type: "duplicate_slug", table, count: d.length });

@@ -47,10 +47,10 @@ async function main() {
 
   const issues = [];
 
-  const lessons = await fetchAll(admin, "lessons", "id, slug, external_id, title");
-  const fawaid = await fetchAll(admin, "fawaid", "id, slug, external_id, title, status, text");
-  const qa = await fetchAll(admin, "qa_questions", "id, slug, external_key, question");
-  const library = await fetchAll(admin, "library_items", "id, slug, external_id, title");
+  const lessons = await fetchAll(admin, "lessons", "id, title, source_url");
+  const fawaid = await fetchAll(admin, "fawaid", "id, external_id, title, status, text");
+  const qa = await fetchAll(admin, "qa_questions", "id, question");
+  const library = await fetchAll(admin, "library_items", "id, title, external_id");
   const knowledgeRes = await safeFetchAll(admin, "knowledge_items", "id, slug, source_type, source_id");
   const connectorsRes = await safeFetchAll(admin, "ake_connectors", "id, slug, name, health_status, is_active");
   const reviewRes = await safeFetchAll(admin, "content_engine_review_queue", "id, item_type, item_id, status");
@@ -63,12 +63,12 @@ async function main() {
   if (reviewRes.error) issues.push({ type: "table_missing", table: "content_engine_review_queue", message: reviewRes.error });
 
   for (const [table, rows, key] of [
-    ["lessons", lessons, (r) => r.slug],
-    ["fawaid", fawaid, (r) => r.slug],
-    ["library_items", library, (r) => r.slug],
+    ["lessons", lessons, (r) => r.source_url || r.title?.trim()],
+    ["fawaid", fawaid, (r) => r.text?.trim()?.slice(0, 120)],
+    ["library_items", library, (r) => r.title?.trim()],
   ]) {
     const d = dupesBy(rows, key);
-    if (d.length) issues.push({ type: "duplicate_slug", table, count: d.length, samples: d.slice(0, 3).map(([k]) => k) });
+    if (d.length) issues.push({ type: "duplicate_key", table, count: d.length, samples: d.slice(0, 3).map(([k]) => k) });
   }
 
   const fawaidExt = dupesBy(fawaid.filter((r) => r.external_id), (r) => r.external_id);
@@ -76,9 +76,9 @@ async function main() {
     issues.push({ type: "duplicate_external_id", table: "fawaid", count: fawaidExt.length });
   }
 
-  const qaKeys = dupesBy(qa.filter((r) => r.external_key), (r) => r.external_key);
-  if (qaKeys.length) {
-    issues.push({ type: "duplicate_external_key", table: "qa_questions", count: qaKeys.length });
+  const qaDupes = dupesBy(qa, (r) => r.question?.trim());
+  if (qaDupes.length) {
+    issues.push({ type: "duplicate_question", table: "qa_questions", count: qaDupes.length });
   }
 
   const lessonIds = new Set(lessons.map((l) => l.id));
