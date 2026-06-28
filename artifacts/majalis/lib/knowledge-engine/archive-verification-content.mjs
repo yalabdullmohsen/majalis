@@ -44,10 +44,7 @@ export async function archiveVerificationContent(options = {}) {
     .maybeSingle();
 
   if (lesson?.id) {
-    const { error } = await admin
-      .from("lessons")
-      .update({ status: "archived", updated_at: at })
-      .eq("id", lesson.id);
+    const { error } = await admin.from("lessons").update({ status: "archived" }).eq("id", lesson.id);
     if (error) throw error;
     report.lesson = { id: lesson.id, external_key: lesson.external_key, from: lesson.status, to: "archived" };
   }
