@@ -1,5 +1,6 @@
 import { hashKey, normalizeKey } from "./dedupe.mjs";
 import { normalizeBenefitsRow } from "./validators.mjs";
+import { normalizeLessonRow } from "./lesson-field-policy.mjs";
 
 function pick(row, ...keys) {
   for (const k of keys) {
@@ -124,35 +125,45 @@ export function mapRowToPayload(type, row) {
 }
 
 function mapLesson(row, isCourse) {
-  const sheikh = pick(row, "sheikh_name", "speaker_name");
-  const day = pick(row, "day_of_week", "day");
-  const time = pick(row, "lesson_time", "time");
-  const schedule = pick(row, "schedule") || [day, time].filter(Boolean).join(" — ");
+  const normalized = normalizeLessonRow(row);
+  const sheikh = pick(normalized, "sheikh_name", "speaker_name");
+  const day = pick(normalized, "day_of_week", "day");
+  const time = pick(normalized, "lesson_time", "time");
+  const schedule = pick(normalized, "schedule") || [day, time].filter(Boolean).join(" — ");
   const externalKey =
-    pick(row, "external_key") ||
-    `import-${hashKey([row.title, sheikh, row.mosque, day, time])}`;
+    pick(normalized, "external_key") ||
+    `import-${hashKey([normalized.title, sheikh, normalized.mosque, day, time])}`;
+  const keywords = Array.isArray(normalized.keywords)
+    ? normalized.keywords.filter(Boolean)
+    : normalized._data_incomplete
+      ? ["بيانات_ناقصة"]
+      : null;
 
   return {
-    title: pick(row, "title"),
+    title: pick(normalized, "title"),
     speaker_name: sheikh || null,
     sheikh_name: sheikh || null,
-    description: pick(row, "description"),
-    mosque: pick(row, "mosque", "location"),
-    city: pick(row, "city", "governorate") || "العاصمة",
-    region: pick(row, "region") || null,
-    category: pick(row, "category"),
+    description: pick(normalized, "description") || pick(normalized, "title"),
+    mosque: pick(normalized, "mosque", "location") || null,
+    city: pick(normalized, "city", "governorate") || "العاصمة",
+    region: pick(normalized, "region") || null,
+    category: pick(normalized, "category") || "أخرى",
     day_of_week: day || null,
     lesson_time: time || null,
     schedule: schedule || null,
-    audience: pick(row, "audience") || "الكل",
-    delivery: pick(row, "delivery") || "حضور فقط",
-    status: pick(row, "status") || "approved",
-    activity_type: isCourse ? "دورة" : pick(row, "activity_type") || "درس",
+    audience: pick(normalized, "audience") || "الكل",
+    delivery: pick(normalized, "delivery") || "حضور فقط",
+    status: pick(normalized, "status") || "approved",
+    activity_type: isCourse ? "دورة" : pick(normalized, "activity_type") || "درس",
     is_course: isCourse,
     external_key: externalKey,
-    website_url: pick(row, "source_url", "site_url") || null,
-    maps_url: pick(row, "maps_url") || null,
-    live_url: pick(row, "live_url", "stream_url") || null,
+    website_url: pick(normalized, "source_url", "site_url", "website_url") || null,
+    source_url: pick(normalized, "source_url", "site_url", "website_url") || null,
+    maps_url: pick(normalized, "maps_url") || null,
+    live_url: pick(normalized, "live_url", "stream_url") || null,
+    contact_phone: pick(normalized, "contact_phone", "phone") || null,
+    organizer: pick(normalized, "organizer") || null,
+    keywords: keywords?.length ? keywords : null,
   };
 }
 

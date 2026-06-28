@@ -70,14 +70,22 @@ export async function publishLessonDraft({
   draftId,
 }) {
   const validation = validateLessonDraft(extracted);
+  const normalized = validation.normalized || extracted;
+
   if (!validation.canPublish) {
-    return { ok: false, validation };
+    return {
+      ok: false,
+      validation,
+      userMessage: validation.errors.map((e) => e.message).join(" — ") || "بيانات أساسية ناقصة",
+    };
   }
 
   const admin = getSupabaseAdmin();
-  if (!admin) return { ok: false, error: "supabase_admin_missing" };
+  if (!admin) {
+    return { ok: false, error: "supabase_admin_missing", userMessage: "تعذّر الاتصال بقاعدة البيانات" };
+  }
 
-  const payload = mapDraftToLesson(extracted, {
+  const payload = mapDraftToLesson(normalized, {
     sheikhId,
     mosqueId,
     imageUrl,
@@ -87,6 +95,11 @@ export async function publishLessonDraft({
     importedBy,
     posterImageHash,
   });
+
+  if (validation.dataIncomplete) {
+    const kw = Array.isArray(payload.keywords) ? payload.keywords : [];
+    if (!kw.includes("بيانات_ناقصة")) payload.keywords = [...kw, "بيانات_ناقصة"];
+  }
 
   const { data: existing } = await admin
     .from("lessons")
@@ -146,5 +159,11 @@ export async function publishLessonDraft({
     { onConflict: "record_table,record_id" },
   );
 
-  return { ok: true, record, validation };
+  return {
+    ok: true,
+    record,
+    validation,
+    dataIncomplete: validation.dataIncomplete,
+    userMessage: validation.dataIncomplete ? "تم النشر مع شارة بيانات ناقصة" : "تم النشر بنجاح",
+  };
 }

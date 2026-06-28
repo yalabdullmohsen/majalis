@@ -1,7 +1,8 @@
-/** Per-type validation schemas. Missing required fields → reject row. */
+/** Per-type validation schemas. Lessons/courses use resilient per-row validation. */
 
 import { repairMisParsedCsvRow, describeMissingColumns } from "./csv-repair.mjs";
 import { isQuizLikeFawaidText } from "./fawaid-quality.mjs";
+import { assessLessonRow, validateLessonRowsResilient } from "./lesson-field-policy.mjs";
 
 export const MAX_VALIDATION_ERRORS = 200;
 
@@ -67,13 +68,13 @@ function adhkarCountValue(row) {
 export const SCHEMAS = {
   lessons: {
     label: "درس",
-    required: ["title", "description", "category", "source_url"],
-    oneOf: [["sheikh_name", "speaker_name"], ["date", "day_of_week", "schedule"], ["location", "mosque", "city"]],
+    required: [],
+    resilient: true,
   },
   courses: {
     label: "دورة",
-    required: ["title", "description", "category", "source_url"],
-    oneOf: [["sheikh_name", "speaker_name"], ["location", "mosque", "city"]],
+    required: [],
+    resilient: true,
   },
   sheikhs: {
     label: "شيخ",
@@ -113,9 +114,22 @@ export const SCHEMAS = {
  * @param {Record<string, unknown>} row
  * @param {number} index
  */
-export function validateRow(type, row, index) {
+export function validateRow(type, row, index, ctx = {}) {
   const schema = SCHEMAS[type];
   if (!schema) return { ok: false, errors: [`نوع غير معروف: ${type}`] };
+
+  if (schema.resilient && (type === "lessons" || type === "courses")) {
+    const assessment = assessLessonRow(row, index, ctx);
+    return {
+      ok: assessment.ok,
+      errors: assessment.errors,
+      row: assessment.row,
+      disposition: assessment.disposition,
+      missingRequired: assessment.missingRequired,
+      missingImportant: assessment.missingImportant,
+      missingOptional: assessment.missingOptional,
+    };
+  }
 
   const repaired = type === "benefits" || type === "adhkar" ? repairMisParsedCsvRow(type, row) : row;
   const normalized =
@@ -171,3 +185,5 @@ export function validateRow(type, row, index) {
 
   return { ok: errors.length === 0, errors, row: normalized };
 }
+
+export { validateLessonRowsResilient, assessLessonRow };
