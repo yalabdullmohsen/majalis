@@ -14,7 +14,17 @@ export default async function handler(req, res) {
   }
   try {
     const rpcRepair = await ensureAkeRpcFunctions();
-    const result = await runFullKnowledgeSync({ triggerType: "cron", checkLinks: false });
+    const connectorSlug = req.query?.connector || req.query?.slug || req.body?.connectorSlug;
+    const forceConnector = Boolean(connectorSlug) || req.query?.force === "1";
+    const result = await runFullKnowledgeSync({
+      triggerType: "cron",
+      checkLinks: false,
+      continuous: !forceConnector,
+      engineOnly: true,
+      connectorSlug: connectorSlug || undefined,
+      maxConnectors: connectorSlug ? 1 : undefined,
+      maxItemsPerConnector: forceConnector ? 5 : undefined,
+    });
     sendJson(res, result.ok ? 200 : 500, { ...result, rpcRepair: rpcRepair.skipped ? undefined : rpcRepair });
   } catch (error) {
     sendJson(res, 500, { ok: false, error: error.message });

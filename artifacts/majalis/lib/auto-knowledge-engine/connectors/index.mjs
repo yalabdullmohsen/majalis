@@ -82,7 +82,9 @@ export class ManifestConnector extends BaseConnector {
   async fetchItems(_syncOptions = {}) {
     if (!this.manifestFile) return [];
 
-    const manifestPath = resolveDataFilePath(this.manifestFile);
+    const manifestPath = resolveDataFilePath(
+      String(this.manifestFile || "").replace(/^data\//, ""),
+    );
     const raw = await readFile(manifestPath, "utf8");
     const manifest = JSON.parse(raw);
     const entries = manifest.items || manifest.decisions || manifest.entries || [];
