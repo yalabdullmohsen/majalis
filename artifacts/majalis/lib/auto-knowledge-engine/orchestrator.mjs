@@ -177,8 +177,8 @@ async function processConnector(admin, connectorConfig, runId, existingItems, op
       }
     }
 
-    const analyzed = await analyzeBatch(needsAnalysis, 2);
     const retryAnalyzed = [];
+    const retryMissed = [];
 
     for (const { item, existingId } of retryQueue) {
       const { data: full } = await admin
@@ -195,10 +195,11 @@ async function processConnector(admin, connectorConfig, runId, existingItems, op
           _existingRow: full,
         });
       } else {
-        needsAnalysis.push(item);
+        retryMissed.push(item);
       }
     }
 
+    const analyzed = await analyzeBatch([...needsAnalysis, ...retryMissed], 2);
     const allItems = [...analyzed, ...retryAnalyzed];
     const processed = [];
 
@@ -226,11 +227,13 @@ async function processConnector(admin, connectorConfig, runId, existingItems, op
         noteGateFailure(gate.failedChecks);
       }
 
-      const { data: inserted, error: insErr } = await admin
-        .from("knowledge_items")
-        .upsert(record, { onConflict: "source_id,external_id" })
-        .select("*")
-        .single();
+      const { data: inserted, error: insErr } = item._existingRow
+        ? { data: item._existingRow, error: null }
+        : await admin
+            .from("knowledge_items")
+            .upsert(record, { onConflict: "source_id,external_id" })
+            .select("*")
+            .single();
 
       if (insErr) {
         stats.errors.push(insErr.message);
