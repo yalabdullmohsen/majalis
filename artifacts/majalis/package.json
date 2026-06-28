@@ -38,6 +38,8 @@
     "verify:ake-pipeline": "node scripts/verify-ake-pipeline-dry.mjs",
     "verify:ake-backfill": "node scripts/verify-ake-backfill.mjs",
     "verify:ake-realtime": "node scripts/verify-ake-realtime.mjs",
+    "verify:content-engines": "node scripts/verify-content-engines.mjs",
+    "verify:content-engines:production": "node scripts/verify-content-engines-production.mjs",
     "cd:pipeline": "node scripts/cd/run-pipeline.mjs",
     "cd:safety": "node scripts/cd/safety-check.mjs",
     "cd:post-deploy": "node scripts/cd/post-deploy.mjs",

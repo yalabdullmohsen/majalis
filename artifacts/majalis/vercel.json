@@ -112,6 +112,10 @@
       "schedule": "*/15 * * * *"
     },
     {
+      "path": "/api/cron/content-engines",
+      "schedule": "10,40 * * * *"
+    },
+    {
       "path": "/api/cron/monitor-sources",
       "schedule": "0 6 * * *"
     },
