@@ -60,6 +60,7 @@ function AutomationDashboardContent() {
         </div>
         <div style={{ display: "flex", gap: "0.75rem", fontSize: "0.8125rem" }}>
           <Link href="/admin/content-production" style={{ color: C.emeraldDeep }}>إنتاج المحتوى</Link>
+          <Link href="/admin/content-engines" style={{ color: C.emeraldDeep }}>محركات المحتوى (Phase 7)</Link>
           <Link href="/admin/automation/platform" style={{ color: C.emeraldDeep }}>MKE Platform</Link>
           <Link href="/admin/sources" style={{ color: C.emeraldDeep }}>المصادر</Link>
           <Link href="/admin/review-center" style={{ color: C.emeraldDeep }}>مركز المراجعة</Link>

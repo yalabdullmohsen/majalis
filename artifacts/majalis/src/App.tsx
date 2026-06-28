@@ -104,6 +104,10 @@ const ContentProductionDashboardPage = lazyWithRetry(
   () => import("@/views/admin/ContentProductionDashboardPage"),
   "ContentProductionDashboardPage",
 );
+const ContentEnginesDashboardPage = lazyWithRetry(
+  () => import("@/views/admin/ContentEnginesDashboardPage"),
+  "ContentEnginesDashboardPage",
+);
 const PlatformSourcesPage = lazyWithRetry(() => import("@/views/admin/PlatformSourcesPage"), "PlatformSourcesPage");
 const PlatformAnalyticsPage = lazyWithRetry(() => import("@/views/admin/PlatformAnalyticsPage"), "PlatformAnalyticsPage");
 const PlatformHealthPage = lazyWithRetry(() => import("@/views/admin/PlatformHealthPage"), "PlatformHealthPage");
@@ -281,6 +285,8 @@ function Router() {
       <Route path="/admin/fiqh-quality"><AdminLazyRoute component={FiqhQualityPage} /></Route>
       <Route path="/admin/content-production"><AdminLazyRoute component={ContentProductionDashboardPage} /></Route>
       <Route path="/admin/automation/content-production"><AdminLazyRoute component={ContentProductionDashboardPage} /></Route>
+      <Route path="/admin/content-engines"><AdminLazyRoute component={ContentEnginesDashboardPage} /></Route>
+      <Route path="/admin/automation/content-engines"><AdminLazyRoute component={ContentEnginesDashboardPage} /></Route>
       <Route path="/admin/feature-status"><AdminLazyRoute component={FeatureStatusPage} /></Route>
       <Route path="/admin/dashboard"><AdminLazyRoute component={AdminDashboardPage} /></Route>
       <Route path="/admin/users"><Redirect to="/admin?section=users" /></Route>
