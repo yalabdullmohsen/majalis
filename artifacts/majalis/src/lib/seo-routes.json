@@ -143,17 +143,44 @@
     {
       "path": "/prayer-ranks",
       "title": "مراتب الناس في الصلاة | المجلس العلمي",
-      "description": "مراتب الناس في الصلاة الخمس — من الظالم لنفسه إلى المقرّب، مع أدلة ومصادر.",
-      "keywords": ["مراتب الصلاة", "خشوع", "محاسبة النفس", "ابن القيم"],
+      "description": "مراتب المصلين عند الإمام ابن القيم — تصنيف تربوي للمحاسبة والاجتهاد في تحسين الصلاة.",
+      "keywords": ["مراتب الصلاة", "ابن القيم", "خشوع", "محاسبة النفس"],
       "sitemap": true,
       "changefreq": "monthly",
-      "priority": 0.76
+      "priority": 0.82
+    },
+    {
+      "path": "/prayer-tracking",
+      "title": "متابعة الصلوات | المجلس العلمي",
+      "description": "سجّل صلواتك اليومية وراقب التزامك وسلسلتك.",
+      "keywords": ["متابعة الصلاة", "محافظة"],
+      "sitemap": true,
+      "changefreq": "daily",
+      "priority": 0.85
+    },
+    {
+      "path": "/prayer-virtues",
+      "title": "فضائل الصلاة | المجلس العلمي",
+      "description": "فضائل الصلاة في الكتاب والسنة.",
+      "keywords": ["فضائل الصلاة"],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.74
+    },
+    {
+      "path": "/prayer-rulings",
+      "title": "أحكام الصلاة | المجلس العلمي",
+      "description": "مدخل إلى أحكام الصلاة — شروط وأركان وواجبات.",
+      "keywords": ["أحكام الصلاة", "فقه الصلاة"],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.78
     },
     {
       "path": "/prayer-times",
       "title": "مواقيت الصلاة | المجلس العلمي",
-      "description": "مواقيت الصلاة في الكويت مع متابعة المحافظة والمراتب والنقاط.",
-      "keywords": ["مواقيت الصلاة", "الكويت", "مرتبة الصلاة"],
+      "description": "مواقيت الصلاة في الكويت مع العد التنازلي للصلاة القادمة.",
+      "keywords": ["مواقيت الصلاة", "الكويت"],
       "sitemap": true,
       "changefreq": "daily",
       "priority": 0.88

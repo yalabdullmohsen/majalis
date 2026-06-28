@@ -11955,25 +11955,42 @@ body.has-assistant-fab .app-main {
 }
 
 /* ── Prayer Rank System ─────────────────────────────────────────────────── */
+.prayer-section-nav,
 .prayer-subnav {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
+  gap: 0.45rem;
+  margin-bottom: 1.25rem;
 }
+.prayer-section-nav a,
 .prayer-subnav a {
-  padding: 0.45rem 0.85rem;
+  padding: 0.45rem 0.75rem;
   border-radius: 999px;
   border: 1px solid var(--majalis-border, #d4ddd6);
-  font-size: 0.88rem;
+  font-size: 0.82rem;
   text-decoration: none;
   color: var(--majalis-ink-soft);
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
+.prayer-section-nav a.is-active,
+.prayer-section-nav a[aria-current="page"],
 .prayer-subnav a.is-active,
 .prayer-subnav a[aria-current="page"] {
   background: var(--majalis-emerald-deep);
   color: #fff;
   border-color: transparent;
+}
+.prayer-tracking-links {
+  font-size: 0.85rem;
+  margin: -0.5rem 0 1rem;
+  color: var(--majalis-ink-soft);
+}
+.prayer-tracking-links a { color: var(--majalis-emerald-deep); }
+.prayer-times-sunrise {
+  margin-top: 0.75rem;
+  padding: 0.75rem 1rem;
+  text-align: center;
+  font-size: 0.9rem;
 }
 .prayer-sync-note {
   font-size: 0.85rem;
@@ -12269,4 +12286,233 @@ body.has-assistant-fab .app-main {
   .prayer-calendar__day.is-full { background: #166534; color: #dcfce7; }
   .prayer-calendar__day.is-partial { background: #854d0e; color: #fef9c3; }
   .prayer-calendar__day.is-missed { background: #991b1b; color: #fee2e2; }
+  .ibn-qayyim-rank-card { background: var(--majalis-card, #1a2420); }
+  .prayer-rank-assessment__badge { background: color-mix(in srgb, var(--rank-color) 15%, var(--majalis-card)); }
+}
+
+/* ── Ibn al-Qayyim Prayer Ranks (educational) ───────────────────────────── */
+.prayer-ranks-page--ibn-qayyim .prayer-ranks-intro {
+  padding: 1.1rem 1.25rem;
+  margin-bottom: 1.25rem;
+  line-height: 1.9;
+}
+.prayer-ranks-intro__note {
+  margin: 0.75rem 0 0;
+  font-size: 0.88rem;
+  color: var(--majalis-ink-soft);
+}
+.ibn-qayyim-ranks-list {
+  display: grid;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.ibn-qayyim-rank-card {
+  border-inline-start: 4px solid var(--rank-color, var(--majalis-emerald));
+  background: var(--rank-color-soft, var(--majalis-sage));
+  padding: 1.25rem;
+  animation: ibnRankFadeIn 0.4s ease both;
+}
+@keyframes ibnRankFadeIn {
+  from { opacity: 0; transform: translateY(0.35rem); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.ibn-qayyim-rank-card:nth-child(1) { animation-delay: 0.05s; }
+.ibn-qayyim-rank-card:nth-child(2) { animation-delay: 0.1s; }
+.ibn-qayyim-rank-card:nth-child(3) { animation-delay: 0.15s; }
+.ibn-qayyim-rank-card:nth-child(4) { animation-delay: 0.2s; }
+.ibn-qayyim-rank-card:nth-child(5) { animation-delay: 0.25s; }
+.ibn-qayyim-rank-card__head {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 0.85rem;
+  align-items: start;
+  margin-bottom: 0.85rem;
+}
+.ibn-qayyim-rank-card__num {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: var(--rank-color);
+  color: #fff;
+  font-weight: 800;
+}
+.ibn-qayyim-rank-card__title {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--majalis-ink-soft);
+}
+.ibn-qayyim-rank-card__head h2 {
+  margin: 0.15rem 0 0;
+  color: var(--rank-color);
+  font-size: 1.15rem;
+}
+.ibn-qayyim-rank-card__icon { font-size: 1.75rem; line-height: 1; }
+.ibn-qayyim-rank-card__summary {
+  margin: 0 0 0.85rem;
+  line-height: 1.85;
+}
+.ibn-qayyim-rank-card__source {
+  margin: 0 0 1rem;
+  padding: 0.85rem 1rem;
+  border-radius: 0.65rem;
+  background: color-mix(in srgb, var(--rank-color) 8%, #fff);
+  border-inline-start: 3px solid var(--rank-color);
+  font-style: normal;
+  line-height: 1.9;
+}
+.ibn-qayyim-rank-card__source-label {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--majalis-ink-soft);
+  margin-bottom: 0.35rem;
+}
+.ibn-qayyim-rank-card__block,
+.ibn-qayyim-rank-card__ascend {
+  margin-top: 0.85rem;
+}
+.ibn-qayyim-rank-card__block h3,
+.ibn-qayyim-rank-card__ascend h3 {
+  margin: 0 0 0.45rem;
+  font-size: 0.95rem;
+  color: var(--majalis-emerald-deep);
+}
+.ibn-qayyim-rank-card__block ul,
+.ibn-qayyim-rank-card__ascend ol {
+  margin: 0;
+  padding-inline-start: 1.25rem;
+  line-height: 1.85;
+}
+.ibn-qayyim-rank-card__ascend {
+  padding-top: 0.85rem;
+  border-top: 1px dashed var(--majalis-border);
+}
+.prayer-rank-assessment {
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+.prayer-rank-assessment h2 { margin: 0 0 0.5rem; }
+.prayer-rank-assessment__intro { margin: 0 0 1rem; line-height: 1.85; }
+.prayer-rank-assessment__badge {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  background: var(--rank-color-soft);
+  border: 1px solid color-mix(in srgb, var(--rank-color) 35%, transparent);
+  margin-bottom: 0.85rem;
+}
+.prayer-rank-assessment__badge span:first-child { font-size: 2rem; }
+.prayer-rank-assessment__badge strong { display: block; color: var(--rank-color); }
+.prayer-rank-assessment__badge small {
+  width: 100%;
+  font-size: 0.78rem;
+  color: var(--majalis-ink-soft);
+}
+.prayer-rank-assessment__reasons {
+  margin: 0 0 0.85rem;
+  padding-inline-start: 1.25rem;
+  line-height: 1.8;
+  font-size: 0.9rem;
+}
+.prayer-rank-assessment__disclaimer-inline {
+  font-size: 0.82rem;
+  color: var(--majalis-ink-soft);
+  margin: 0 0 0.85rem;
+  padding: 0.65rem;
+  background: var(--majalis-sage);
+  border-radius: 0.5rem;
+}
+.prayer-rank-assessment__toggle {
+  border: 1px solid var(--majalis-border);
+  background: #fff;
+  padding: 0.5rem 0.85rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-family: inherit;
+}
+.prayer-rank-assessment__questions {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.85rem;
+}
+.prayer-rank-assessment__question {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+.prayer-rank-assessment__question legend {
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+  font-size: 0.92rem;
+}
+.prayer-rank-assessment__question div {
+  display: flex;
+  gap: 1rem;
+}
+.prayer-rank-assessment__question label {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.88rem;
+}
+.prayer-rank-assessment__ladder {
+  margin-top: 1rem;
+  font-size: 0.88rem;
+}
+.prayer-ranks-disclaimer {
+  padding: 1.25rem;
+  border-color: var(--majalis-brass);
+  background: color-mix(in srgb, var(--majalis-brass) 8%, transparent);
+}
+.prayer-ranks-disclaimer h2 { margin: 0 0 0.65rem; font-size: 1.05rem; }
+.prayer-ranks-disclaimer p { margin: 0; line-height: 1.9; }
+.prayer-ranks-disclaimer__source {
+  margin-top: 0.65rem !important;
+  font-size: 0.85rem;
+  color: var(--majalis-ink-soft);
+}
+.prayer-virtues-grid,
+.prayer-rulings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+  gap: 0.85rem;
+  margin-bottom: 1rem;
+}
+.prayer-virtue-card,
+.prayer-ruling-card {
+  padding: 1rem;
+  line-height: 1.85;
+}
+.prayer-virtue-card__source {
+  font-size: 0.72rem;
+  color: var(--majalis-emerald-deep);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.prayer-virtue-card h2,
+.prayer-ruling-card h2 {
+  margin: 0.35rem 0;
+  font-size: 1.05rem;
+}
+.prayer-rulings-cta {
+  padding: 1.25rem;
+  text-align: center;
+}
+.prayer-rulings-cta .ui-card-btn {
+  display: inline-block;
+  margin-top: 0.75rem;
+  text-decoration: none;
+}
+@media (max-width: 640px) {
+  .prayer-section-nav a { font-size: 0.75rem; padding: 0.4rem 0.6rem; }
+  .ibn-qayyim-rank-card__head { grid-template-columns: auto 1fr; }
+  .ibn-qayyim-rank-card__icon { grid-column: 2; justify-self: end; }
+}
+@media print {
+  .prayer-section-nav, .prayer-ranks-actions, .prayer-rank-assessment__toggle { display: none; }
+  .ibn-qayyim-rank-card { break-inside: avoid; }
 }

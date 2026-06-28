@@ -1,5 +1,6 @@
 import { Link } from "wouter";
 import { PageHeader } from "@/components/ui-common";
+import { PrayerSectionNav } from "@/components/prayer/PrayerSectionNav";
 import { usePrayerTracker } from "@/hooks/usePrayerTracker";
 
 export default function PrayerLogPage() {
@@ -8,17 +9,16 @@ export default function PrayerLogPage() {
   return (
     <div className="page-shell prayer-log-page">
       <PageHeader
-        eyebrow="العبادة"
+        eyebrow="الصلاة"
         title="سجل الصلوات"
         subtitle="آخر 100 صلاة مسجّلة — التاريخ، المكان، والنقاط"
       />
 
-      <nav className="prayer-subnav" aria-label="أقسام الصلاة">
-        <Link href="/prayer-times">المواقيت</Link>
-        <Link href="/prayer-achievements">الإنجازات</Link>
-        <Link href="/prayer-log" className="is-active">سجل الصلوات</Link>
-        <Link href="/prayer-ranks">مراتب الخشوع</Link>
-      </nav>
+      <PrayerSectionNav />
+
+      <p className="prayer-tracking-links">
+        <Link href="/prayer-tracking">← العودة لمتابعة الصلوات</Link>
+      </p>
 
       {log.length === 0 ? (
         <p className="lessons-empty-state">لا توجد صلوات مسجّلة بعد. ابدأ من صفحة المواقيت.</p>

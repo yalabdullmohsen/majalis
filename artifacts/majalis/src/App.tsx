@@ -50,9 +50,12 @@ const SurahStoryDetailPage = lazy(() =>
 );
 const QuranRadioPage = lazy(() => import("@/views/QuranRadioPage"));
 const PrayerTimesPage = lazy(() => import("@/views/PrayerTimesPage"));
+const PrayerTrackingPage = lazy(() => import("@/views/PrayerTrackingPage"));
 const PrayerAchievementsPage = lazy(() => import("@/views/PrayerAchievementsPage"));
 const PrayerLogPage = lazy(() => import("@/views/PrayerLogPage"));
 const PrayerRanksPage = lazy(() => import("@/views/PrayerRanksPage"));
+const PrayerVirtuesPage = lazy(() => import("@/views/PrayerVirtuesPage"));
+const PrayerRulingsPage = lazy(() => import("@/views/PrayerRulingsPage"));
 const QiblaPage = lazy(() => import("@/views/QiblaPage"));
 const TasbihPage = lazy(() => import("@/views/TasbihPage"));
 const DailyWirdPage = lazy(() => import("@/views/DailyWirdPage"));
@@ -212,9 +215,12 @@ function Router() {
       <Route path="/quran/surah-stories"><SafeLazyRoute component={SurahStoriesPage} /></Route>
       <Route path="/quran"><SafeLazyRoute component={QuranPage} /></Route>
       <Route path="/prayer-times"><SafeLazyRoute component={PrayerTimesPage} /></Route>
+      <Route path="/prayer-tracking"><SafeLazyRoute component={PrayerTrackingPage} /></Route>
       <Route path="/prayer-achievements"><SafeLazyRoute component={PrayerAchievementsPage} /></Route>
       <Route path="/prayer-log"><SafeLazyRoute component={PrayerLogPage} /></Route>
       <Route path="/prayer-ranks"><SafeLazyRoute component={PrayerRanksPage} /></Route>
+      <Route path="/prayer-virtues"><SafeLazyRoute component={PrayerVirtuesPage} /></Route>
+      <Route path="/prayer-rulings"><SafeLazyRoute component={PrayerRulingsPage} /></Route>
       <Route path="/qibla"><SafeLazyRoute component={QiblaPage} /></Route>
       <Route path="/tasbih"><SafeLazyRoute component={TasbihPage} /></Route>
       <Route path="/daily-wird"><SafeLazyRoute component={DailyWirdPage} /></Route>

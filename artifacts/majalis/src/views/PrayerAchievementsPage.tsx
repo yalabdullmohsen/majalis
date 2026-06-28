@@ -1,5 +1,6 @@
 import { Link } from "wouter";
 import { PageHeader } from "@/components/ui-common";
+import { PrayerSectionNav } from "@/components/prayer/PrayerSectionNav";
 import { usePrayerTracker } from "@/hooks/usePrayerTracker";
 
 export default function PrayerAchievementsPage() {
@@ -9,17 +10,16 @@ export default function PrayerAchievementsPage() {
   return (
     <div className="page-shell prayer-achievements-page">
       <PageHeader
-        eyebrow="العبادة"
+        eyebrow="الصلاة"
         title="إنجازات الصلاة"
         subtitle={`${earnedCount} من ${achievements.length} إنجاز — استمر في المحافظة`}
       />
 
-      <nav className="prayer-subnav" aria-label="أقسام الصلاة">
-        <Link href="/prayer-times">المواقيت</Link>
-        <Link href="/prayer-achievements" className="is-active">الإنجازات</Link>
-        <Link href="/prayer-log">سجل الصلوات</Link>
-        <Link href="/prayer-ranks">مراتب الخشوع</Link>
-      </nav>
+      <PrayerSectionNav />
+
+      <p className="prayer-tracking-links">
+        <Link href="/prayer-tracking">← العودة لمتابعة الصلوات</Link>
+      </p>
 
       <div className="prayer-achievements-summary ui-card">
         <span>المستوى {stats.level}</span>
