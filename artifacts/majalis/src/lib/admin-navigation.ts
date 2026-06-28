@@ -11,6 +11,7 @@ export const ADMIN_SECTION_PATHS: Record<AdminSection, string> = {
   "knowledge-reasoning": "reasoning",
   "search-analytics": "search-analysis",
   "digital-learning": "digital-learning",
+  "sin-jeem": "sin-jeem",
   "autonomous-ai": "autonomous-system",
   "global-reference": "global-reference",
   "islamic-intelligence": "islamic-intelligence",

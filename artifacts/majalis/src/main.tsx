@@ -14,7 +14,7 @@ import "./index.css";
 import "./styles/design-system.css";
 import "./styles/highlighted-content.css";
 import "./styles/adhkar-v3.css";
-import "./styles/rulings-encyclopedia.css";
+import "./styles/sin-jeem.css";
 
 const queryClient = createAppQueryClient();
 

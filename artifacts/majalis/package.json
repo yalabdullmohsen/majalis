@@ -50,6 +50,7 @@
     "purge:test-content": "node scripts/purge-test-content.mjs",
     "purge:test-content:apply": "node scripts/purge-test-content.mjs --apply",
     "verify:fawaid-clean": "node scripts/verify-fawaid-clean.mjs",
+    "verify:sin-jeem": "node scripts/verify-sin-jeem.mjs",
     "audit:database-integrity": "node scripts/audit-database-integrity.mjs",
     "cd:pipeline": "node scripts/cd/run-pipeline.mjs",
     "cd:safety": "node scripts/cd/safety-check.mjs",

@@ -35,6 +35,7 @@ const FawaidPage = lazy(() => import("@/views/FawaidPage"));
 const AdhkarPage = lazy(() => import("@/views/AdhkarPage"));
 const QaPage = lazy(() => import("@/views/QaPage"));
 const QuizPage = lazy(() => import("@/views/QuizPage"));
+const SinJeemApp = lazy(() => import("@/views/sin-jeem/SinJeemApp"));
 const LoginPage = lazyWithRetry(() => import("@/views/LoginPage"), "LoginPage");
 const RegisterPage = lazyWithRetry(() => import("@/views/RegisterPage"), "RegisterPage");
 const TranscribePage = lazy(() => import("@/views/TranscribePage"));
@@ -191,6 +192,12 @@ function Router() {
       <Route path="/adhkar"><SafeLazyRoute component={AdhkarPage} /></Route>
       <Route path="/qa"><SafeLazyRoute component={QaPage} /></Route>
       <Route path="/quiz"><SafeLazyRoute component={QuizPage} /></Route>
+      <Route path="/sin-jeem"><SafeLazyRoute component={SinJeemApp} /></Route>
+      <Route path="/sin-jeem/setup/:mode"><SafeLazyRoute component={SinJeemApp} /></Route>
+      <Route path="/sin-jeem/play"><SafeLazyRoute component={SinJeemApp} /></Route>
+      <Route path="/sin-jeem/results"><SafeLazyRoute component={SinJeemApp} /></Route>
+      <Route path="/sin-jeem/leaderboard"><SafeLazyRoute component={SinJeemApp} /></Route>
+      <Route path="/sin-jeem/tournament"><SafeLazyRoute component={SinJeemApp} /></Route>
       <Route path="/learning/paths/:slug"><SafeLazyRoute component={LearningPathDetailPage} /></Route>
       <Route path="/learning/paths"><SafeLazyRoute component={LearningPathsPage} /></Route>
       <Route path="/learning/quiz/:slug"><SafeLazyRoute component={LearningQuizPage} /></Route>

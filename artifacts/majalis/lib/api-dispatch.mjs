@@ -51,6 +51,7 @@ export const API_ROUTES = [
   { prefix: "/api/admin/sync-fiqh-council", module: "./api-handlers/admin/sync-fiqh-council.js", allowGet: true },
   { prefix: "/api/admin/scholarly-verification", module: "./api-handlers/admin/scholarly-verification.js", allowGet: true },
   { prefix: "/api/knowledge-search", module: "./api-handlers/knowledge-search.js", allowGet: true },
+  { prefix: "/api/sin-jeem", module: "./api-handlers/sin-jeem.js", allowGet: true },
   { prefix: "/api/cron/auto-content-sync", module: "./api-handlers/cron/auto-content-sync.js", allowGet: true, exact: true },
   { prefix: "/api/cron/auto-content-health", module: "./api-handlers/cron/auto-content-health.js", allowGet: true, exact: true },
   { prefix: "/api/cron/system-health", module: "./api-handlers/cron/system-health.js", allowGet: true, exact: true },

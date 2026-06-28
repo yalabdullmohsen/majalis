@@ -168,4 +168,5 @@ export const HOME_MORE_SECTIONS = [
   { href: "/learning/paths", title: "المسارات العلمية", description: "تعلم منظم من المبتدئ للمتقدم" },
   { href: "/my-learning", title: "لوحتي التعليمية", description: "تقدمك وإنجازاتك" },
   { href: "/quiz", title: "المسابقات", description: "اختبر معلوماتك" },
+  { href: "/sin-jeem", title: "سين وجيم", description: "تحدي المجلس العلمي — لعبة تفاعلية" },
 ] as const;

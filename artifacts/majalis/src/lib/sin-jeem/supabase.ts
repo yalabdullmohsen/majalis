@@ -1,0 +1,150 @@
+import { supabase } from "@/lib/supabase";
+import { SIN_JEEM_CATEGORIES } from "./categories-seed";
+import { SIN_JEEM_QUESTIONS } from "./questions-seed";
+import type { GameStats, LeaderboardEntry, SinJeemQuestion } from "./types";
+import { getPlayerCount, loadLocalStats } from "./storage";
+
+export async function fetchGameQuestions(opts?: {
+  difficulty?: string;
+  categorySlugs?: string[];
+  limit?: number;
+}): Promise<SinJeemQuestion[]> {
+  if (!supabase) return filterLocalQuestions(opts);
+
+  try {
+    let query = supabase
+      .from("sin_jeem_questions")
+      .select("*")
+      .eq("status", "published")
+      .limit(opts?.limit || 200);
+
+    if (opts?.difficulty) query = query.eq("difficulty", opts.difficulty);
+
+    const { data, error } = await query;
+    if (error || !data?.length) return filterLocalQuestions(opts);
+
+    return data.map((row) => ({
+      id: row.id,
+      category_id: row.category_id,
+      question_type: row.question_type,
+      question: row.question,
+      options: Array.isArray(row.options) ? row.options : JSON.parse(row.options || "[]"),
+      correct_index: row.correct_index,
+      correct_answer: row.correct_answer,
+      explanation: row.explanation,
+      difficulty: row.difficulty,
+      keywords: row.keywords,
+      image_url: row.image_url,
+      points: row.points,
+    }));
+  } catch {
+    return filterLocalQuestions(opts);
+  }
+}
+
+function filterLocalQuestions(opts?: {
+  difficulty?: string;
+  categorySlugs?: string[];
+  limit?: number;
+}): SinJeemQuestion[] {
+  let q = [...SIN_JEEM_QUESTIONS];
+  if (opts?.difficulty) q = q.filter((x) => x.difficulty === opts.difficulty);
+  if (opts?.categorySlugs?.length) {
+    q = q.filter((x) => opts.categorySlugs!.includes(x.category_slug || ""));
+  }
+  return q.slice(0, opts?.limit || q.length);
+}
+
+export async function fetchGameStats(): Promise<GameStats> {
+  const local = loadLocalStats();
+  const questionCount = SIN_JEEM_QUESTIONS.length;
+  const categoryCount = SIN_JEEM_CATEGORIES.length;
+  const playerCount = getPlayerCount();
+
+  if (!supabase) {
+    return {
+      questionCount,
+      categoryCount,
+      playerCount,
+      matchCount: local.matchCount,
+    };
+  }
+
+  try {
+    const [{ count: qCount }, { count: cCount }] = await Promise.all([
+      supabase.from("sin_jeem_questions").select("*", { count: "exact", head: true }).eq("status", "published"),
+      supabase.from("sin_jeem_categories").select("*", { count: "exact", head: true }).eq("status", "published"),
+    ]);
+
+    return {
+      questionCount: qCount || questionCount,
+      categoryCount: cCount || categoryCount,
+      playerCount,
+      matchCount: local.matchCount,
+    };
+  } catch {
+    return { questionCount, categoryCount, playerCount, matchCount: local.matchCount };
+  }
+}
+
+export async function fetchLeaderboard(): Promise<LeaderboardEntry[]> {
+  const { loadLeaderboard } = await import("./storage");
+  const local = loadLeaderboard();
+  if (!supabase || local.length > 0) return local;
+
+  try {
+    const { data } = await supabase.from("sin_jeem_leaderboard").select("*").limit(20);
+    if (!data?.length) return local;
+    return data.map((r, i) => ({
+      id: r.player_id,
+      name: r.display_name,
+      score: r.total_points,
+      games: r.games_played,
+      wins: r.games_won,
+      rank: r.rank || i + 1,
+    }));
+  } catch {
+    return local;
+  }
+}
+
+export async function adminGetQuestions(): Promise<SinJeemQuestion[]> {
+  if (!supabase) return SIN_JEEM_QUESTIONS;
+  const { data, error } = await supabase.from("sin_jeem_questions").select("*").order("created_at", { ascending: false }).limit(500);
+  if (error || !data) return SIN_JEEM_QUESTIONS;
+  return data.map((row) => ({
+    id: row.id,
+    category_slug: row.category_id,
+    question_type: row.question_type,
+    question: row.question,
+    options: Array.isArray(row.options) ? row.options : [],
+    correct_index: row.correct_index,
+    explanation: row.explanation,
+    difficulty: row.difficulty,
+  }));
+}
+
+export async function adminUpsertQuestion(q: Partial<SinJeemQuestion> & { question: string }): Promise<boolean> {
+  if (!supabase) return false;
+  const payload = {
+    question: q.question,
+    question_type: q.question_type || "multiple_choice",
+    options: q.options || [],
+    correct_index: q.correct_index ?? 0,
+    explanation: q.explanation,
+    difficulty: q.difficulty || "متوسط",
+    status: "published",
+  };
+  if (q.id && !q.id.startsWith("sq-")) {
+    const { error } = await supabase.from("sin_jeem_questions").update(payload).eq("id", q.id);
+    return !error;
+  }
+  const { error } = await supabase.from("sin_jeem_questions").insert(payload);
+  return !error;
+}
+
+export async function adminDeleteQuestion(id: string): Promise<boolean> {
+  if (!supabase || id.startsWith("sq-")) return false;
+  const { error } = await supabase.from("sin_jeem_questions").delete().eq("id", id);
+  return !error;
+}

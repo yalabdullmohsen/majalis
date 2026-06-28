@@ -34,7 +34,8 @@ export type AdminSection =
   | "islamic-intelligence"
   | "open-platform"
   | "governance"
-  | "smart-cms";
+  | "smart-cms"
+  | "sin-jeem";
 
 export const ADMIN_NAV: { key: AdminSection; label: string }[] = [
   { key: "dashboard", label: "لوحة التحكم" },
@@ -46,6 +47,7 @@ export const ADMIN_NAV: { key: AdminSection; label: string }[] = [
   { key: "knowledge-reasoning", label: "محرك الاستدلال" },
   { key: "search-analytics", label: "تحليل البحث" },
   { key: "digital-learning", label: "التعليم الرقمي" },
+  { key: "sin-jeem", label: "سين وجيم" },
   { key: "autonomous-ai", label: "المنظومة الذاتية" },
   { key: "global-reference", label: "المرجع العالمي" },
   { key: "islamic-intelligence", label: "الاستخبارات العلمية" },

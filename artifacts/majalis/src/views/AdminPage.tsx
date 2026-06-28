@@ -31,6 +31,7 @@ import { IslamicIntelligenceSection } from "@/views/admin/IslamicIntelligenceSec
 import { OpenPlatformSection } from "@/views/admin/OpenPlatformSection";
 import { GovernanceSection } from "@/views/admin/GovernanceSection";
 import { SmartCmsSection } from "@/views/admin/SmartCmsSection";
+import { SinJeemSection } from "@/views/admin/SinJeemSection";
 import {
   adminSectionPath,
   resolveAdminSectionFromPath,
@@ -97,6 +98,8 @@ function SectionContent({ section }: { section: AdminSection }) {
       return <SearchAnalyticsSection />;
     case "digital-learning":
       return <DigitalLearningSection />;
+    case "sin-jeem":
+      return <SinJeemSection />;
     case "autonomous-ai":
       return <AutonomousAiSection />;
     case "global-reference":
