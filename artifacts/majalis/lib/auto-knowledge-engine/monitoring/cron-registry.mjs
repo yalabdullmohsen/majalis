@@ -12,6 +12,7 @@ export const AKE_MONITORED_CRONS = [
   { name: "knowledge-sync", path: "/api/cron/knowledge-sync", schedule: "0 2 * * *", label: "Knowledge sync" },
   { name: "autonomous-platform-reindex", path: "/api/cron/autonomous-platform-reindex", schedule: "30 1 * * *", label: "Search reindex" },
   { name: "content-engines", path: "/api/cron/content-engines", schedule: "10,40 * * * *", label: "Content engines" },
+  { name: "content-engines-drain", path: "/api/cron/content-engines-drain", schedule: "* * * * *", label: "Content engines drain" },
   { name: "majlis-knowledge-engine", path: "/api/cron/majlis-knowledge-engine", schedule: "5,35 * * * *", label: "MKE orchestrator" },
   { name: "content-scheduler", path: "/api/cron/content-scheduler", schedule: "0 * * * *", label: "Content scheduler" },
   { name: "system-health", path: "/api/cron/system-health", schedule: "45 3 * * *", label: "System health" },

@@ -124,6 +124,10 @@
       "schedule": "10,40 * * * *"
     },
     {
+      "path": "/api/cron/content-engines-drain",
+      "schedule": "* * * * *"
+    },
+    {
       "path": "/api/cron/monitor-sources",
       "schedule": "0 6 * * *"
     },
