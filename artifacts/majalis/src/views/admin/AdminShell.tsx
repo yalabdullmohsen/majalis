@@ -34,7 +34,8 @@ export type AdminSection =
   | "islamic-intelligence"
   | "open-platform"
   | "governance"
-  | "smart-cms";
+  | "smart-cms"
+  | "live-streams";
 
 export const ADMIN_NAV: { key: AdminSection; label: string }[] = [
   { key: "dashboard", label: "لوحة التحكم" },
@@ -66,6 +67,7 @@ export const ADMIN_NAV: { key: AdminSection; label: string }[] = [
   { key: "rulings", label: "الأحكام الشرعية" },
   { key: "annual-courses", label: "الدورات العلمية" },
   { key: "updates", label: "المستجدات" },
+  { key: "live-streams", label: "قنوات البث المباشر" },
   { key: "settings", label: "الإعدادات" },
 ];
 

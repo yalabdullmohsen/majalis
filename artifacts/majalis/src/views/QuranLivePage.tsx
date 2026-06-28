@@ -1,14 +1,21 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { PageHeader } from "@/components/ui-common";
 import {
   LIVE_STREAM_CHANNELS,
   getChannelById,
+  getChannelStreamUrls,
   getLiveAutoplayPreference,
   saveLiveAutoplayPreference,
 } from "@/lib/quran-live-streams";
+import {
+  checkAllLiveStreamHealth,
+  healthStatusLabel,
+  type ChannelHealthSummary,
+  type LiveStreamHealthStatus,
+} from "@/lib/live-stream-health";
 import { useHlsPlayer } from "@/hooks/useHlsPlayer";
 import "@/styles/quran-media.css";
 
@@ -20,18 +27,41 @@ const STATUS_LABELS = {
   error: "✗ تعذّر البث",
 } as const;
 
+const HEALTH_BADGE: Record<LiveStreamHealthStatus, string> = {
+  working: "● تعمل",
+  broken: "○ لا تعمل",
+  needs_update: "⚠ تحتاج تحديث",
+};
+
 export default function QuranLivePage() {
   const [activeId, setActiveId] = useState(LIVE_STREAM_CHANNELS[0]?.id || "");
   const [autoplay, setAutoplay] = useState(getLiveAutoplayPreference);
+  const [healthMap, setHealthMap] = useState<Record<string, ChannelHealthSummary>>({});
+
   const channel = getChannelById(activeId);
+  const streamUrls = useMemo(
+    () => (channel ? getChannelStreamUrls(channel) : []),
+    [channel],
+  );
+
   const { videoRef, state, errorMessage, toggle, reload, play } = useHlsPlayer({
-    streamUrl: channel?.streamUrl,
+    streamUrls,
     autoplay,
   });
 
   useEffect(() => {
     saveLiveAutoplayPreference(autoplay);
   }, [autoplay]);
+
+  useEffect(() => {
+    let cancelled = false;
+    void checkAllLiveStreamHealth().then((map) => {
+      if (!cancelled) setHealthMap(map);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const selectChannel = (id: string) => {
     setActiveId(id);
@@ -56,6 +86,7 @@ export default function QuranLivePage() {
       <ul className="quran-live-grid" aria-label="قنوات البث المباشر">
         {LIVE_STREAM_CHANNELS.map((ch) => {
           const isActive = activeId === ch.id;
+          const health = healthMap[ch.id];
           return (
             <li key={ch.id}>
               <button
@@ -69,6 +100,14 @@ export default function QuranLivePage() {
                   <strong className="quran-live-card__title">{ch.name}</strong>
                   <p className="quran-live-card__desc">{ch.description}</p>
                   <span className="quran-live-card__quality">{ch.quality}</span>
+                  {health && (
+                    <span
+                      className={`quran-live-card__health quran-live-card__health--${health.status}`}
+                      title={healthStatusLabel(health.status)}
+                    >
+                      {HEALTH_BADGE[health.status]}
+                    </span>
+                  )}
                 </div>
                 <span className={`quran-live-card__badge${isActive && state === "live" ? " is-live" : ""}`}>
                   {isActive ? STATUS_LABELS[state] : "اختيار"}

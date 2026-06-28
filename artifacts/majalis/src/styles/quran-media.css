@@ -217,6 +217,25 @@
   color: var(--majalis-brass-deep);
 }
 
+.quran-live-card__health {
+  display: inline-block;
+  margin-top: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.quran-live-card__health--working {
+  color: #065f46;
+}
+
+.quran-live-card__health--broken {
+  color: #991b1b;
+}
+
+.quran-live-card__health--needs_update {
+  color: #92400e;
+}
+
 .quran-live-card__badge {
   font-size: 0.78rem;
   font-weight: 700;

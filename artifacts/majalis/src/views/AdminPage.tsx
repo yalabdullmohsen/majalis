@@ -31,6 +31,7 @@ import { IslamicIntelligenceSection } from "@/views/admin/IslamicIntelligenceSec
 import { OpenPlatformSection } from "@/views/admin/OpenPlatformSection";
 import { GovernanceSection } from "@/views/admin/GovernanceSection";
 import { SmartCmsSection } from "@/views/admin/SmartCmsSection";
+import { LiveStreamsSection } from "@/views/admin/LiveStreamsSection";
 import {
   adminSectionPath,
   resolveAdminSectionFromPath,
@@ -141,6 +142,8 @@ function SectionContent({ section }: { section: AdminSection }) {
       return <AnnualCoursesSection />;
     case "updates":
       return <UpdatesSection />;
+    case "live-streams":
+      return <LiveStreamsSection />;
     default:
       return <DashboardSection />;
   }
