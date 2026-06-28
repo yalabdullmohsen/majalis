@@ -11779,6 +11779,19 @@ body.has-assistant-fab .app-main {
   .assistant-fab {
     bottom: calc(0.85rem + env(safe-area-inset-bottom, 0px));
     inset-inline-end: calc(0.85rem + env(safe-area-inset-right, 0px));
+    min-height: 3rem;
+    padding: 0.55rem;
+    border-radius: 50%;
+    justify-content: center;
+  }
+
+  .assistant-fab__label {
+    display: none;
+  }
+
+  /* RTL: FAB sits on inline-end (physical left); reserve gutter so cards stay clear */
+  body.has-assistant-fab .app-main {
+    padding-inline-end: calc(var(--assistant-fab-size, 3.35rem) + 0.5rem);
   }
 
   .page-card-grid {

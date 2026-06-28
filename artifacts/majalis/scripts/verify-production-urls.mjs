@@ -31,9 +31,9 @@ const pages = [
   "/manifest.webmanifest",
   "/site.webmanifest",
   "/assistant",
+  "/question-answer",
+  "/about-platform",
 ];
-
-const apis = [
   "/api/healthz",
   "/api/knowledge-search?q=صلاة",
   "/api/daily-content",

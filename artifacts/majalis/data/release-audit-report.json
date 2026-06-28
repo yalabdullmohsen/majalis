@@ -1,12 +1,12 @@
 {
-  "at": "2026-06-27T15:19:18.662Z",
-  "durationMs": 25677,
+  "at": "2026-06-28T23:07:02.572Z",
+  "durationMs": 37001,
   "releaseGateVersion": 1,
-  "branch": "cursor/production-recovery-release-gate-92e6",
-  "mainHead": "11d665a",
+  "branch": "cursor/final-production-activation-92e6",
+  "mainHead": "d9c72e2",
   "production": true,
   "productionUrl": "https://majlisilm.com",
-  "productionBundle": "/assets/index-C0Di0meB.js",
+  "productionBundle": "/assets/index-BdDXqTaM.js",
   "env": {
     "VITE_SUPABASE_URL": true,
     "VITE_SUPABASE_ANON_KEY": true,
@@ -31,6 +31,8 @@
     "typescript": true,
     "build": true,
     "migration": true,
+    "activationTables": true,
+    "rulingsSeeded": true,
     "merge": false,
     "productionDeploy": true,
     "route": true,
@@ -39,6 +41,7 @@
     "featureVerified": false,
     "secrets": {
       "supabase": false,
+      "clientSupabase": true,
       "cron": false,
       "anthropic": false,
       "openai": false,
@@ -62,18 +65,24 @@
     {
       "ok": true,
       "name": "typescript",
-      "ms": 8892,
-      "output": "\n> workspace@0.0.0 typecheck /workspace\n> pnpm run typecheck:libs && pnpm -r --filter \"./artifacts/**\" --filter \"./scripts\" --if-present run typecheck\n\n\n> workspace@0.0.0 typecheck:libs /workspace\n> tsc --build\n\nScope: 7 of 12 workspace projects\nartifacts/api-server typecheck$ tsc -p tsconfig.json --noEmit\nartifacts/majalis typecheck$ tsc -p tsconfig.json --noEmit\nartifacts/majalis-mobile typecheck$ tsc -p tsconfig.json --noEmit\nartifacts/majalis-pitch typecheck$ tsc -p tsconfig.json --noEmit\nartifacts/api-server typecheck: Done\nartifacts/majalis-promo typecheck$ tsc -p tsconfig.json --noEmit\nartifacts/majalis-pitch typecheck: Done\nartifacts/mockup-sandbox typecheck$ tsc -p tsconfig.json --noEmit\nartifacts/majalis-mobile typecheck: Done\nscripts typecheck$ tsc -p tsconfig.json --noEmit\nscripts typecheck: Done\nartifacts/majalis-promo typecheck: Done\nartifacts/mockup-sandbox typecheck: Done\nartifacts/majalis typecheck: Done\n"
+      "ms": 5141,
+      "output": "\n> workspace@0.0.0 typecheck /workspace\n> pnpm run typecheck:libs && pnpm -r --filter \"./artifacts/**\" --filter \"./scripts\" --if-present run typecheck\n\n\n> workspace@0.0.0 typecheck:libs /workspace\n> tsc --build\n\nScope: 7 of 12 workspace projects\nartifacts/api-server typecheck$ tsc -p tsconfig.json --noEmit\nartifacts/majalis typecheck$ tsc -p tsconfig.json --noEmit\nartifacts/majalis-mobile typecheck$ tsc -p tsconfig.json --noEmit\nartifacts/majalis-pitch typecheck$ tsc -p tsconfig.json --noEmit\nartifacts/api-server typecheck: Done\nartifacts/majalis-promo typecheck$ tsc -p tsconfig.json --noEmit\nartifacts/majalis-pitch typecheck: Done\nartifacts/mockup-sandbox typecheck$ tsc -p tsconfig.json --noEmit\nartifacts/majalis-mobile typecheck: Done\nscripts typecheck$ tsc -p tsconfig.json --noEmit\nartifacts/majalis-promo typecheck: Done\nscripts typecheck: Done\nartifacts/mockup-sandbox typecheck: Done\nartifacts/majalis typecheck: Done\n"
     },
     {
       "ok": true,
       "name": "lint",
-      "ms": 5153,
-      "output": "\n> @workspace/majalis@0.0.0 lint /workspace/artifacts/majalis\n> eslint src lib --ext .ts,.tsx --max-warnings 50\n\n\n/workspace/artifacts/majalis/src/components/MobileMoreMenu.tsx\n  4:16  warning  'useLocation' is defined but never used  @typescript-eslint/no-unused-vars\n\n✖ 1 problem (0 errors, 1 warning)\n\n"
+      "ms": 6457,
+      "output": "\n> @workspace/majalis@0.0.0 lint /workspace/artifacts/majalis\n> eslint src lib --ext .ts,.tsx --max-warnings 50\n\n\n/workspace/artifacts/majalis/src/components/quran/QuranAudioPlayer.tsx\n  15:9  warning  'progress' is assigned a value but never used  @typescript-eslint/no-unused-vars\n\n/workspace/artifacts/majalis/src/hooks/useQuranAudio.ts\n  10:8   warning  'QuranReciter' is defined but never used                                      @typescript-eslint/no-unused-vars\n  16:46  warning  'targetAyah' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars\n\n/workspace/artifacts/majalis/src/lib/cms/supabase-cms.ts\n  126:11  warning  'importJobsTotal' is assigned a value but never used  @typescript-eslint/no-unused-vars\n\n/workspace/artifacts/majalis/src/lib/library-catalog.ts\n  1:10  warning  'arabicMatchAny' is defined but never used  @typescript-eslint/no-unused-vars\n\n/workspace/artifacts/majalis/src/lib/rulings-encyclopedia-seed.generated.ts\n  2:1  warning  Unused eslint-disable directive (no problems were reported)\n\n/workspace/artifacts/majalis/src/lib/supabase.ts\n  46:10  warning  'normalizeSupabaseUrl' is defined but never used  @typescript-eslint/no-unused-vars\n\n/workspace/artifacts/majalis/src/views/LessonsPage.tsx\n  3:22  warning  'ErrorState' is defined but never used  @typescript-eslint/no-unused-vars\n  3:34  warning  'Empty' is defined but never used       @typescript-eslint/no-unused-vars\n\n/workspace/artifacts/majalis/src/views/MiraclesPage.tsx\n  3:22  warning  'Empty' is defined but never used  @typescript-eslint/no-unused-vars\n\n/workspace/artifacts/majalis/src/views/QaPage.tsx\n  5:22  warning  'Empty' is defined but never used  @typescript-eslint/no-unused-vars\n\n/workspace/artifacts/majalis/src/views/QuranPage.tsx\n  30:18  warning  'setPref' is assigned a value but never used  @typescript-eslint/no-unused-vars\n\n/workspace/artifacts/majalis/src/views/admin/PlatformChecklistPage.tsx\n  1:49  warning  'ReactNode' is defined but never used  @typescript-eslint/no-unused-vars\n\n✖ 13 problems (0 errors, 13 warnings)\n  0 errors and 1 warning potentially fixable with the `--fix` option.\n\n"
+    },
+    {
+      "ok": true,
+      "name": "build",
+      "ms": 6282,
+      "output": "\n> @workspace/majalis@0.0.0 build /workspace/artifacts/majalis\n> pnpm run generate:seo && pnpm run generate:rulings && vite build --config vite.config.ts\n\n\n> @workspace/majalis@0.0.0 generate:seo /workspace/artifacts/majalis\n> node scripts/generate-seo.mjs\n\nGenerated sitemap.xml, robots.txt, feed.xml, and 113 prerender pages for https://majlisilm.com\n\n> @workspace/majalis@0.0.0 generate:rulings /workspace/artifacts/majalis\n> node scripts/build-curriculum-topics.mjs && node scripts/generate-rulings-encyclopedia.mjs\n\nBuilt 36 curriculum topics → data/rulings-encyclopedia/curriculum-topics.json\nGenerated 268 rulings in 15 chunks\nManifest: public/data/rulings-encyclopedia/manifest.json\nvite v7.3.3 building client environment for production...\ntransforming...\n✓ 3059 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/index.html                                             5.53 kB │ gzip:   1.57 kB\ndist/assets/kuwait-mushaf-DWgBuzfN.css                      4.69 kB │ gzip:   1.36 kB\ndist/assets/quran-media-CyQeDrIp.css                        6.70 kB │ gzip:   1.45 kB\ndist/assets/quran-v2-CbzVgEaj.css                           9.80 kB │ gzip:   2.15 kB\ndist/assets/SinJeemApp-qd9X1VIE.css                        10.38 kB │ gzip:   2.77 kB\ndist/assets/index-CycqwNBO.css                            238.44 kB │ gzip:  39.54 kB\ndist/assets/AdminDashboardPage-Bf95jiSQ.js                  0.14 kB │ gzip:   0.15 kB\ndist/assets/usePageView-Ywk6GE70.js                         0.16 kB │ gzip:   0.16 kB\ndist/assets/instagram-integration-api-uYJh10DG.js           0.47 kB │ gzip:   0.26 kB\ndist/assets/admin-api-4kacHzg5.js                           0.51 kB │ gzip:   0.30 kB\ndist/assets/FiqhCouncilFatwasPage-yH8LNw9T.js               0.54 kB │ gzip:   0.39 kB\ndist/assets/FiqhCouncilResearchPage-Dsspb0t5.js             0.54 kB │ gzip:   0.39 kB\ndist/assets/content-analytics-BbKDYCCZ.js                   0.56 kB │ gzip:   0.35 kB\ndist/assets/FiqhCouncilResolutionsPage-Dh1ZfCzU.js          0.56 kB │ gzip:   0.39 kB\ndist/assets/FiqhCouncilRecommendationsPage-I2pfiP34.js      0.57 kB │ gzip:   0.40 kB\ndist/assets/useQuranPreferences-wMiMA0sc.js                 0.61 kB │ gzip:   0.41 kB\ndist/assets/platform-types-DUg_L0pb.js                      0.63 kB │ gzip:   0.30 kB\ndist/assets/FiqhAdminSubnav-Beox9Sf2.js                     0.66 kB │ gzip:   0.41 kB\ndist/assets/FilterBottomSheet-WeSYgyA1.js                   0.69 kB │ gzip:   0.39 kB\ndist/assets/daily-progress-V5XEvg8v.js                      0.74 kB │ gzip:   0.44 kB\ndist/assets/FiqhCompletionBar-CLQhUNNU.js                   0.79 kB │ gzip:   0.45 kB\ndist/assets/ArbaeenNawawiPage-pZXmzBvJ.js                   0.88 kB │ gzip:   0.57 kB\ndist/assets/QuranSubnav-BTRhCJs0.js                         0.93 kB │ gzip:   0.52 kB\ndist/assets/AssistantPage-Z0ju-2Da.js                       0.96 kB │ gzip:   0.52 kB\ndist/assets/fiqh-council-categories-gUDrKr3R.js             0.97 kB │ gzip:   0.42 kB\ndist/assets/kuwait-mushaf-m7rMKDoI.js                       1.06 kB │ gzip:   0.65 kB\ndist/assets/FiqhCouncilArchivePage-FkbcPZ5w.js              1.12 kB │ gzip:   0.72 kB\ndist/assets/FiqhTrustBox-DtvEDt9N.js                        1.36 kB │ gzip:   0.67 kB\ndist/assets/lesson-automation-api-CDsjIeoh.js               1.38 kB │ gzip:   0.63 kB\ndist/assets/TopicsIndexPage-n_B470Kb.js                     1.45 kB │ gzip:   0.92 kB\ndist/assets/CertificateVerifyPage-pfYv-FH5.js               1.50 kB │ gzip:   0.79 kB\ndist/assets/autonomous-platform-api-aiNpiG_k.js             1.50 kB │ gzip:   0.46 kB\ndist/assets/LearningCalendarPage-Da1iI5mX.js                1.79 kB │ gzip:   0.98 kB\ndist/assets/fiqh-sessions-seed-B3HKltp6.js                  1.83 kB │ gzip:   0.71 kB\ndist/assets/QuranTafsirPage-R45d5SNJ.js                     1.87 kB │ gzip:   1.03 kB\ndist/assets/DailyWirdPage-DMvJ-8k4.js                       1.88 kB │ gzip:   0.95 kB\ndist/assets/OccasionsPage-CfWjf8t7.js                       1.88 kB │ gzip:   0.92 kB\ndist/assets/AutoContentDetailPage-Cg-NtCzH.js               1.95 kB │ gzip:   1.10 kB\ndist/assets/QiblaPage-BnHmqq8R.js                           1.99 kB │ gzip:   1.02 kB\ndist/assets/QuranSearchPage-Cn7rDi2_.js                     2.01 kB │ gzip:   1.12 kB\ndist/assets/FatwaDetailPage-DRvW2yWS.js                     2.02 kB │ gzip:   1.16 kB\ndist/assets/AnnualCoursesPage-0tLYMfn5.js                   2.07 kB │ gzip:   1.09 kB\ndist/assets/digital-learning-service-BvgEQObO.js            2.08 kB │ gzip:   0.90 kB\ndist/assets/LibraryDetailPage-CQgHTwGw.js                   2.14 kB │ gzip:   1.13 kB\ndist/assets/reading-progress-Klw4NSKS.js                    2.16 kB │ gzip:   1.07 kB\ndist/assets/scholarly-intelligence-service-DskjvcM9.js      2.26 kB │ gzip:   1.08 kB\ndist/assets/FiqhCouncilNawazilPage-Csitv6j5.js              2.37 kB │ gzip:   1.11 kB\ndist/assets/DeveloperPage-DEdTO5Wq.js                       2.39 kB │ gzip:   1.09 kB\ndist/assets/adhkar-supabase-C0BxuhCD.js                     2.46 kB │ gzip:   1.07 kB\ndist/assets/FiqhCouncilIssuesPage-D3BTxjvx.js               2.51 kB │ gzip:   1.16 kB\ndist/assets/FiqhCouncilTopicIndexPage-BmLX5Stx.js           2.52 kB │ gzip:   1.11 kB\ndist/assets/PrayerRanksPage-DHI2KUuq.js                     2.57 kB │ gzip:   1.09 kB\ndist/assets/UpdatesPage-DwvF553O.js                         2.61 kB │ gzip:   1.33 kB\ndist/assets/fiqh-council-issues-service-ZedMC2De.js         2.67 kB │ gzip:   1.10 kB\ndist/assets/rulings-service-DgU-w5xl.js                     2.68 kB │ gzip:   1.14 kB\ndist/assets/FiqhCouncilCategoriesPage-Bm3qsLVY.js           2.69 kB │ gzip:   1.13 kB\ndist/assets/TopicPage-hQ3Po4A4.js                           2.72 kB │ gzip:   1.21 kB\ndist/assets/LearningPathsPage-WnNaZpoD.js                   2.78 kB │ gzip:   1.26 kB\ndist/assets/HighlightedContentCard-C3brgrIF.js              2.80 kB │ gzip:   1.24 kB\ndist/assets/FatwaPage-B197vMRg.js                           2.80 kB │ gzip:   1.30 kB\ndist/assets/lesson-import-api-BKxJZ1NP.js                   2.91 kB │ gzip:   1.17 kB\ndist/assets/fiqh-citation-DCDEPsIk.js                       2.92 kB │ gzip:   1.25 kB\ndist/assets/ContentDetailLayout-D87NTywf.js                 3.14 kB │ gzip:   1.19 kB\ndist/assets/PlatformChecklistPage-aEmbmMX9.js               3.16 kB │ gzip:   1.41 kB\ndist/assets/auto-content-service-ZMZxuI13.js                3.38 kB │ gzip:   1.36 kB\ndist/assets/FiqhCouncilStatsPage-BXRoY46u.js                3.40 kB │ gzip:   1.26 kB\ndist/assets/LibraryPage-C_tYevVX.js                         3.48 kB │ gzip:   1.55 kB\ndist/assets/AutomationDashboardPage-UhovcAT7.js             3.49 kB │ gzip:   1.45 kB\ndist/assets/FiqhQualityPage-BZtW--nl.js                     3.68 kB │ gzip:   1.55 kB\ndist/assets/FiqhCouncilComparePage-C7WwPN6B.js              3.85 kB │ gzip:   1.61 kB\ndist/assets/AnnualCourseDetailPage-DGJjzP_f.js              3.88 kB │ gzip:   1.65 kB\ndist/assets/LearningQuizPage-CG6ZzwTB.js                    3.91 kB │ gzip:   1.53 kB\ndist/assets/RegisterPage-CMlHYwGT.js                        3.98 kB │ gzip:   1.57 kB\ndist/assets/LearningPathDetailPage-P-hJrCiQ.js              4.01 kB │ gzip:   1.49 kB\ndist/assets/LoginPage-CfjrAYjr.js                           4.04 kB │ gzip:   1.77 kB\ndist/assets/FiqhCouncilAdvancedSearchPage-DwvT5CVD.js       4.07 kB │ gzip:   1.49 kB\ndist/assets/FiqhCouncilLivePage-CQRM3ok-.js                 4.17 kB │ gzip:   1.55 kB\ndist/assets/useTasbeehCounter-C62HDe69.js                   4.17 kB │ gzip:   1.67 kB\ndist/assets/MiraclesPage-CQqHgOOB.js                        4.36 kB │ gzip:   1.86 kB\ndist/assets/FiqhCouncilSessionDetailPage-CfbKzSq3.js        4.37 kB │ gzip:   1.80 kB\ndist/assets/PlatformAnalyticsPage-D6zWTxaX.js               4.53 kB │ gzip:   1.87 kB\ndist/assets/MyLearningPage-JrRIeGWk.js                      4.56 kB │ gzip:   1.60 kB\ndist/assets/PrayerTimesPage-E6TUa80W.js                     4.59 kB │ gzip:   1.85 kB\ndist/assets/islamic-occasions-seed-Du8o6KWf.js              4.59 kB │ gzip:   1.76 kB\ndist/assets/CardsPage-dYctItiZ.js                           4.68 kB │ gzip:   2.03 kB\ndist/assets/PlatformMonitoringPage-CAHKHabQ.js              4.72 kB │ gzip:   1.85 kB\ndist/assets/FiqhReviewPage-SXgNRwFr.js                      4.85 kB │ gzip:   2.07 kB\ndist/assets/AutomationCenterPage-CmOcWH-w.js                4.87 kB │ gzip:   1.94 kB\ndist/assets/CalendarPage-CBqF312O.js                        4.91 kB │ gzip:   1.85 kB\ndist/assets/rulings-categories-Ch1HCg-U.js                  5.08 kB │ gzip:   1.69 kB\ndist/assets/FiqhCouncilIssueDetailPage-C6uDKVWN.js          5.13 kB │ gzip:   2.01 kB\ndist/assets/QuizPage-B85MOXyY.js                            5.40 kB │ gzip:   2.36 kB\ndist/assets/InstagramIntegrationPage-Dzuyxdp0.js            5.56 kB │ gzip:   2.19 kB\ndist/assets/ContentProductionDashboardPage-D7uKcnWU.js      5.91 kB │ gzip:   2.19 kB\ndist/assets/FawaidPage-D3eODrqF.js                          6.09 kB │ gzip:   2.79 kB\ndist/assets/ScientificAnnouncementDetailPage-DQWvw4mO.js    6.17 kB │ gzip:   2.22 kB\ndist/assets/RulingDetailPage-BR3KVap8.js                    6.40 kB │ gzip:   2.35 kB\ndist/assets/QuranLivePage-DdDMu8cm.js                       6.55 kB │ gzip:   2.24 kB\ndist/assets/QuranRadioPage-C9HlHaVC.js                      6.60 kB │ gzip:   2.29 kB\ndist/assets/DeploymentDashboardPage-EzfdDmPU.js             6.70 kB │ gzip:   2.43 kB\ndist/assets/TasbihPage-CiA5jeuN.js                          6.72 kB │ gzip:   2.40 kB\ndist/assets/AdminShell-CUc_-qJ5.js                          6.85 kB │ gzip:   2.77 kB\ndist/assets/AdhkarPage-BHKEppEk.js                          7.43 kB │ gzip:   2.87 kB\ndist/assets/ContentEnginesDashboardPage-mB0xKYS_.js         7.46 kB │ gzip:   2.42 kB\ndist/assets/RulingsPage-D9xTNui5.js                         7.48 kB │ gzip:   2.76 kB\ndist/assets/SurahStoriesPage-C_5vdK9C.js                    7.72 kB │ gzip:   2.73 kB\ndist/assets/MajlisKnowledgeEnginePage-CS3n90dI.js           7.91 kB │ gzip:   2.69 kB\ndist/assets/FiqhCouncilResearchAssistantPage-DLFlr8SR.js    8.05 kB │ gzip:   3.10 kB\ndist/assets/AutomationReviewPage-DMiWMULG.js                8.64 kB │ gzip:   2.94 kB\ndist/assets/TranscribePage-OP2kw9MF.js                      9.12 kB │ gzip:   3.38 kB\ndist/assets/PlatformSourcesPage-NIVrUbll.js                 9.16 kB │ gzip:   3.02 kB\ndist/assets/LessonsPage-DClqkYFL.js                         9.40 kB │ gzip:   3.18 kB\ndist/assets/SettingsPage-BtJMqABe.js                        9.56 kB │ gzip:   2.86 kB\ndist/assets/CondolencesPage-ZufkiS6F.js                     9.84 kB │ gzip:   3.32 kB\ndist/assets/FiqhCouncilItemDetailPage-tc3ruPkh.js          10.18 kB │ gzip:   3.83 kB\ndist/assets/quran-content-DJA74h9C.js                      10.21 kB │ gzip:   4.16 kB\ndist/assets/AutoContentPage-61sLxVAc.js                    11.01 kB │ gzip:   3.66 kB\ndist/assets/AutomationSourcesPage-gD7_WCDg.js              11.12 kB │ gzip:   3.49 kB\ndist/assets/quran-v2-n842Lc5L.js                           11.25 kB │ gzip:   3.99 kB\ndist/assets/fiqh-council-supabase-XUuZQpCo.js              11.30 kB │ gzip:   2.92 kB\ndist/assets/QuranPage-C-NKzdYn.js                          11.83 kB │ gzip:   4.07 kB\ndist/assets/PlatformHealthPage-DRUwVP3z.js                 12.51 kB │ gzip:   3.49 kB\ndist/assets/SearchPage-BnIBqxdA.js                         13.32 kB │ gzip:   4.63 kB\ndist/assets/LessonDetailPage-wHI-I5uT.js                   13.66 kB │ gzip:   4.59 kB\ndist/assets/QuranTajweedPage-d_7AOJL5.js                   13.80 kB │ gzip:   4.02 kB\ndist/assets/QaPage-CnV5v1R_.js                             14.13 kB │ gzip:   5.52 kB\ndist/assets/LessonImportImagePage-BGInDxFj.js              14.23 kB │ gzip:   3.96 kB\ndist/assets/FeatureStatusPage-Cbt3t6Fq.js                  14.83 kB │ gzip:   4.48 kB\ndist/assets/LessonImportUrlPage-DKOL7qPZ.js                15.69 kB │ gzip:   4.41 kB\ndist/assets/FiqhCouncilPage-3VjwQyQf.js                    17.19 kB │ gzip:   4.38 kB\ndist/assets/arbaeen-nawawi-seed-C7yk0WGw.js                19.61 kB │ gzip:   5.54 kB\ndist/assets/SinJeemApp-CRQ6lFFd.js                         31.11 kB │ gzip:   9.53 kB\ndist/assets/date-fns-DTpCoHp3.js                           31.23 kB │ gzip:   8.59 kB\ndist/assets/KuwaitMushafPage-paCAunZa.js                   96.25 kB │ gzip:  15.69 kB\ndist/assets/supabase-DfaeGrM3.js                          198.40 kB │ gzip:  24.06 kB\ndist/assets/supabase-CWJnfID4.js                          209.56 kB │ gzip:  54.62 kB\ndist/assets/html2canvas-rUfCZJQk.js                       214.14 kB │ gzip:  52.57 kB\ndist/assets/AdminPage-CvwebBd0.js                         263.38 kB │ gzip:  58.06 kB\ndist/assets/vendor-BhdFqIaZ.js                            293.07 kB │ gzip:  90.98 kB\ndist/assets/xlsx-CNerDvZX.js                              429.19 kB │ gzip: 142.94 kB\ndist/assets/index-6Dbn-OjX.js                             456.09 kB │ gzip: 107.43 kB\ndist/assets/hls-D1fSjlvU.js                               523.08 kB │ gzip: 162.11 kB\n✓ built in 4.98s\n"
     }
   ],
   "openPrs": {
-    "count": 22,
+    "count": 23,
     "prs": [
       {
         "createdAt": "2026-06-24T22:44:55Z",
@@ -132,107 +141,114 @@
         "url": "https://github.com/yalabdullmohsen/majalis/pull/38"
       },
       {
-        "createdAt": "2026-06-27T00:10:28Z",
-        "headRefName": "cursor/fadat-lesson-92e6",
-        "number": 58,
-        "title": "إضافة درس «فاضت» — د. محمد ضاوي العصيمي",
-        "url": "https://github.com/yalabdullmohsen/majalis/pull/58"
+        "createdAt": "2026-06-28T12:17:33Z",
+        "headRefName": "cursor/admin-dashboard-nav-fix-92e6",
+        "number": 148,
+        "title": "fix: compact admin dashboard, navigation hang, remove lessons contact",
+        "url": "https://github.com/yalabdullmohsen/majalis/pull/148"
       },
       {
-        "createdAt": "2026-06-27T01:00:52Z",
-        "headRefName": "cursor/ux-reading-quran-92e6",
-        "number": 60,
-        "title": "feat(ux): reading settings, sin jeem game, and Quran hub rebuild",
-        "url": "https://github.com/yalabdullmohsen/majalis/pull/60"
+        "createdAt": "2026-06-28T18:12:08Z",
+        "headRefName": "cursor/sin-jeem-game-92e6",
+        "number": 156,
+        "title": "feat: سين وجيم — Islamic competitive game (Majlis Ilm Challenge)",
+        "url": "https://github.com/yalabdullmohsen/majalis/pull/156"
       },
       {
-        "createdAt": "2026-06-27T01:04:45Z",
-        "headRefName": "cursor/calm-design-sinjeem-92e6",
-        "number": 61,
-        "title": "feat(design): calm UI, surah stories redesign, sin jeem teams",
-        "url": "https://github.com/yalabdullmohsen/majalis/pull/61"
+        "createdAt": "2026-06-28T18:24:15Z",
+        "headRefName": "cursor/production-closure-92e6",
+        "number": 157,
+        "title": "fix: Production closure — QA migration, connector health, soak test",
+        "url": "https://github.com/yalabdullmohsen/majalis/pull/157"
       },
       {
-        "createdAt": "2026-06-27T01:14:00Z",
-        "headRefName": "cursor/professional-platform-92e6",
-        "number": 62,
-        "title": "feat(platform): 16 professional features for scholarly reference platform",
-        "url": "https://github.com/yalabdullmohsen/majalis/pull/62"
+        "createdAt": "2026-06-28T18:40:25Z",
+        "headRefName": "cursor/final-ux-completion-92e6",
+        "number": 158,
+        "title": "feat(majalis): Final UX completion — homepage v4, Quran circles, Mutoon, search",
+        "url": "https://github.com/yalabdullmohsen/majalis/pull/158"
       },
       {
-        "createdAt": "2026-06-27T01:21:57Z",
-        "headRefName": "cursor/library-tajweed-92e6",
-        "number": 63,
-        "title": "feat(library): professional book catalog + tajweed page redesign",
-        "url": "https://github.com/yalabdullmohsen/majalis/pull/63"
+        "createdAt": "2026-06-28T18:59:21Z",
+        "headRefName": "cursor/sin-jeem-production-92e6",
+        "number": 159,
+        "title": "feat(sin-jeem): Production game module — 519 questions, server leaderboard, SQL schema",
+        "url": "https://github.com/yalabdullmohsen/majalis/pull/159"
       },
       {
-        "createdAt": "2026-06-27T01:25:13Z",
-        "headRefName": "cursor/auth-fix-92e6",
-        "number": 64,
-        "title": "fix(auth): إصلاح جذري لتسجيل الدخول والتسجيل — Supabase env + إزالة التعطيل",
-        "url": "https://github.com/yalabdullmohsen/majalis/pull/64"
+        "createdAt": "2026-06-28T19:27:28Z",
+        "headRefName": "cursor/vision-fallback-92e6",
+        "number": 160,
+        "title": "fix(vision): graceful fallback when Anthropic credits exhausted",
+        "url": "https://github.com/yalabdullmohsen/majalis/pull/160"
       },
       {
-        "createdAt": "2026-06-27T01:29:19Z",
-        "headRefName": "cursor/assistant-fix-92e6",
-        "number": 65,
-        "title": "fix(assistant): إصلاح المساعد العلمي — import مكسور + تصنيف عربي + API flow",
-        "url": "https://github.com/yalabdullmohsen/majalis/pull/65"
+        "createdAt": "2026-06-28T19:38:26Z",
+        "headRefName": "cursor/production-finalization-92e6",
+        "number": 161,
+        "title": "Production Finalization — connector health, QA recovery, monitoring, vision fallback (87% ready)",
+        "url": "https://github.com/yalabdullmohsen/majalis/pull/161"
       },
       {
-        "createdAt": "2026-06-27T01:35:02Z",
-        "headRefName": "cursor/stability-refactor-92e6",
-        "number": 66,
-        "title": "refactor(stability): القضاء على انهيار الصفحات + إعادة هيكلة الرئيسية",
-        "url": "https://github.com/yalabdullmohsen/majalis/pull/66"
+        "createdAt": "2026-06-28T19:43:28Z",
+        "headRefName": "cursor/smart-ocr-ai-pipeline-92e6",
+        "number": 162,
+        "title": "Smart OCR + AI Pipeline — rules-first extraction, 91% AI cost reduction",
+        "url": "https://github.com/yalabdullmohsen/majalis/pull/162"
       },
       {
-        "createdAt": "2026-06-27T01:47:47Z",
-        "headRefName": "cursor/terminology-unify-92e6",
-        "number": 67,
-        "title": "توحيد المصطلحات وإعادة تنظيم الصفحة الرئيسية",
-        "url": "https://github.com/yalabdullmohsen/majalis/pull/67"
+        "createdAt": "2026-06-28T20:00:35Z",
+        "headRefName": "cursor/supabase-ake-integration-92e6",
+        "number": 163,
+        "title": "Phase 3: Supabase + AKE integration (Quran Circles, Mutoon, Contact)",
+        "url": "https://github.com/yalabdullmohsen/majalis/pull/163"
       },
       {
-        "createdAt": "2026-06-27T13:55:48Z",
-        "headRefName": "cursor/majlis-autonomous-platform-92e6",
-        "number": 71,
-        "title": "Majlis Knowledge Engine v1 — Autonomous Platform 1.0",
-        "url": "https://github.com/yalabdullmohsen/majalis/pull/71"
+        "createdAt": "2026-06-28T20:37:40Z",
+        "headRefName": "cursor/import-validation-ake-rpc-92e6",
+        "number": 164,
+        "title": "Fix resilient lesson CSV import + AKE RPC fallback",
+        "url": "https://github.com/yalabdullmohsen/majalis/pull/164"
       },
       {
-        "createdAt": "2026-06-27T14:11:51Z",
-        "headRefName": "cursor/ux-redesign-quran-qa-lessons-92e6",
-        "number": 72,
-        "title": "Rebuild Quran, QA, and Lessons UX with category taxonomy fix",
-        "url": "https://github.com/yalabdullmohsen/majalis/pull/72"
+        "createdAt": "2026-06-28T21:07:05Z",
+        "headRefName": "cursor/quran-live-ithraa-fix-92e6",
+        "number": 165,
+        "title": "Fix Ithraa live stream on /quran-live with HLS fallbacks and admin health checks",
+        "url": "https://github.com/yalabdullmohsen/majalis/pull/165"
       },
       {
-        "createdAt": "2026-06-27T14:22:13Z",
-        "headRefName": "cursor/autonomous-platform-v2-92e6",
-        "number": 73,
-        "title": "MKE v2.0: Autonomous Platform — intelligence layers on existing engine",
-        "url": "https://github.com/yalabdullmohsen/majalis/pull/73"
+        "createdAt": "2026-06-28T21:13:25Z",
+        "headRefName": "cursor/about-platform-page-92e6",
+        "number": 166,
+        "title": "Add professional About Platform page with nav integration and live stats",
+        "url": "https://github.com/yalabdullmohsen/majalis/pull/166"
       },
       {
-        "createdAt": "2026-06-27T14:33:39Z",
-        "headRefName": "cursor/sharia-rulings-encyclopedia-92e6",
-        "number": 74,
-        "title": "موسوعة الأحكام الشرعية — بنية قابلة للتوسع + 248 حكم موثق",
-        "url": "https://github.com/yalabdullmohsen/majalis/pull/74"
+        "createdAt": "2026-06-28T21:22:30Z",
+        "headRefName": "cursor/production-hardening-final-92e6",
+        "number": 167,
+        "title": "Production hardening: cron auth, security headers, Sin Jeem fetch fixes + audit report",
+        "url": "https://github.com/yalabdullmohsen/majalis/pull/167"
       },
       {
-        "createdAt": "2026-06-27T15:07:31Z",
-        "headRefName": "cursor/feature-delivery-audit-92e6",
-        "number": 75,
-        "title": "Feature delivery audit system — verify:features + /admin/feature-status",
-        "url": "https://github.com/yalabdullmohsen/majalis/pull/75"
+        "createdAt": "2026-06-28T22:52:20Z",
+        "headRefName": "cursor/csv-import-title-fix-92e6",
+        "number": 168,
+        "title": "fix: CSV lesson import never rejects missing title (resilient pipeline)",
+        "url": "https://github.com/yalabdullmohsen/majalis/pull/168"
+      },
+      {
+        "createdAt": "2026-06-28T23:00:37Z",
+        "headRefName": "cursor/question-answer-restore-92e6",
+        "number": 169,
+        "title": "fix: restore game as سؤال وجواب — /question-answer + legacy redirects",
+        "url": "https://github.com/yalabdullmohsen/majalis/pull/169"
       }
     ]
   },
   "branchesAheadOfMain": {
-    "count": 29,
+    "count": 55,
     "branches": [
       {
         "branch": "cursor/homepage-upgrade-5e4b",
@@ -243,7 +259,19 @@
         "commitsAhead": 7
       },
       {
+        "branch": "cursor/production-hardening-final-92e6",
+        "commitsAhead": 7
+      },
+      {
+        "branch": "cursor/import-validation-ake-rpc-92e6",
+        "commitsAhead": 6
+      },
+      {
         "branch": "cursor/priority2-user-content-5e4b",
+        "commitsAhead": 6
+      },
+      {
+        "branch": "cursor/sin-jeem-production-92e6",
         "commitsAhead": 6
       },
       {
@@ -251,11 +279,35 @@
         "commitsAhead": 5
       },
       {
+        "branch": "cursor/supabase-ake-integration-92e6",
+        "commitsAhead": 5
+      },
+      {
         "branch": "cursor/library-tajweed-92e6",
         "commitsAhead": 4
       },
       {
+        "branch": "cursor/vision-fallback-92e6",
+        "commitsAhead": 4
+      },
+      {
+        "branch": "cursor/ake-production-hardening-92e6",
+        "commitsAhead": 3
+      },
+      {
+        "branch": "cursor/prayer-rank-system-92e6",
+        "commitsAhead": 3
+      },
+      {
         "branch": "cursor/professional-platform-92e6",
+        "commitsAhead": 3
+      },
+      {
+        "branch": "cursor/quran-live-ithraa-fix-92e6",
+        "commitsAhead": 3
+      },
+      {
+        "branch": "cursor/smart-ocr-ai-pipeline-92e6",
         "commitsAhead": 3
       },
       {
@@ -263,7 +315,7 @@
         "commitsAhead": 3
       },
       {
-        "branch": "cursor/ux-redesign-quran-qa-lessons-92e6",
+        "branch": "cursor/ui-ux-reading-refinement-92e6",
         "commitsAhead": 3
       },
       {
@@ -271,7 +323,7 @@
         "commitsAhead": 2
       },
       {
-        "branch": "cursor/autonomous-platform-v2-92e6",
+        "branch": "cursor/autonomous-islamic-platform-92e6",
         "commitsAhead": 2
       },
       {
@@ -283,6 +335,10 @@
         "commitsAhead": 2
       },
       {
+        "branch": "cursor/production-hardening-autonomous-92e6",
+        "commitsAhead": 2
+      },
+      {
         "branch": "cursor/production-launch-92e6",
         "commitsAhead": 2
       },
@@ -291,68 +347,36 @@
         "commitsAhead": 2
       },
       {
+        "branch": "cursor/trusted-knowledge-network-92e6",
+        "commitsAhead": 2
+      },
+      {
+        "branch": "cursor/about-platform-page-92e6",
+        "commitsAhead": 1
+      },
+      {
         "branch": "cursor/add-majlis-seo-cc5e",
         "commitsAhead": 1
       },
       {
-        "branch": "cursor/auth-fix-92e6",
+        "branch": "cursor/admin-dashboard-nav-fix-92e6",
         "commitsAhead": 1
       },
       {
-        "branch": "cursor/auto-content-full-integration-92e6",
+        "branch": "cursor/ake-monitoring-phase8-92e6",
         "commitsAhead": 1
       },
       {
-        "branch": "cursor/condolence-card-pro-92e6",
-        "commitsAhead": 1
-      },
-      {
-        "branch": "cursor/content-architecture-92e6",
-        "commitsAhead": 1
-      },
-      {
-        "branch": "cursor/feature-delivery-audit-92e6",
-        "commitsAhead": 1
-      },
-      {
-        "branch": "cursor/improve-majalis-platform-9167",
-        "commitsAhead": 1
-      },
-      {
-        "branch": "cursor/knowledge-graph-audit-92e6",
-        "commitsAhead": 1
-      },
-      {
-        "branch": "cursor/kuwait-lessons-sync-92e6",
-        "commitsAhead": 1
-      },
-      {
-        "branch": "cursor/majlis-autonomous-platform-92e6",
-        "commitsAhead": 1
-      },
-      {
-        "branch": "cursor/platform-v2-92e6",
-        "commitsAhead": 1
-      },
-      {
-        "branch": "cursor/sharia-rulings-encyclopedia-92e6",
-        "commitsAhead": 1
-      },
-      {
-        "branch": "cursor/terminology-unify-92e6",
-        "commitsAhead": 1
-      },
-      {
-        "branch": "cursor/ux-reading-quran-92e6",
-        "commitsAhead": 1
-      },
-      {
-        "branch": "cursor/zaghloul-miracles-library-92e6",
+        "branch": "cursor/akp-v3-production-activation-92e6",
         "commitsAhead": 1
       }
     ]
   },
   "crons": [
+    {
+      "path": "/api/cron/process-import-jobs",
+      "schedule": "* * * * *"
+    },
     {
       "path": "/api/cron/sync-data",
       "schedule": "5 21 * * *"
@@ -367,7 +391,11 @@
     },
     {
       "path": "/api/cron/auto-knowledge-sync",
-      "schedule": "30 2 * * *"
+      "schedule": "*/15 * * * *"
+    },
+    {
+      "path": "/api/cron/ake-queue-drain",
+      "schedule": "* * * * *"
     },
     {
       "path": "/api/cron/auto-content-sync",
@@ -382,8 +410,24 @@
       "schedule": "45 3 * * *"
     },
     {
+      "path": "/api/cron/cd-post-deploy",
+      "schedule": "50 3 * * *"
+    },
+    {
       "path": "/api/cron/connector-health",
+      "schedule": "*/15 * * * *"
+    },
+    {
+      "path": "/api/cron/ake-monitoring-eval",
+      "schedule": "5,20,35,50 * * * *"
+    },
+    {
+      "path": "/api/cron/ake-daily-report",
       "schedule": "0 4 * * *"
+    },
+    {
+      "path": "/api/cron/platform-bootstrap",
+      "schedule": "30 4 * * *"
     },
     {
       "path": "/api/cron/bootstrap-database",
@@ -438,12 +482,80 @@
       "schedule": "*/15 * * * *"
     },
     {
+      "path": "/api/cron/content-engines",
+      "schedule": "10,40 * * * *"
+    },
+    {
+      "path": "/api/cron/content-engines-drain",
+      "schedule": "* * * * *"
+    },
+    {
       "path": "/api/cron/monitor-sources",
       "schedule": "0 6 * * *"
     },
     {
+      "path": "/api/cron/majlis-knowledge-engine",
+      "schedule": "5,35 * * * *"
+    },
+    {
+      "path": "/api/cron/content-scheduler",
+      "schedule": "0 * * * *"
+    },
+    {
       "path": "/api/cron/knowledge-reasoning",
       "schedule": "30 11 * * *"
+    },
+    {
+      "path": "/api/cron/autonomous-platform-fetch",
+      "schedule": "0 * * * *"
+    },
+    {
+      "path": "/api/cron/autonomous-platform-validate",
+      "schedule": "0 */2 * * *"
+    },
+    {
+      "path": "/api/cron/autonomous-platform-questions",
+      "schedule": "0 */3 * * *"
+    },
+    {
+      "path": "/api/cron/autonomous-platform-benefits",
+      "schedule": "0 */6 * * *"
+    },
+    {
+      "path": "/api/cron/autonomous-platform-reindex",
+      "schedule": "0 2 * * *"
+    },
+    {
+      "path": "/api/cron/autonomous-platform-audit",
+      "schedule": "0 4 * * 0"
+    },
+    {
+      "path": "/api/cron/autonomous-platform-cleanup",
+      "schedule": "0 3 1 * *"
+    },
+    {
+      "path": "/api/cron/autonomous-platform-bootstrap",
+      "schedule": "30 5 * * *"
+    },
+    {
+      "path": "/api/cron/autonomous-platform-v3",
+      "schedule": "*/30 * * * *"
+    },
+    {
+      "path": "/api/cron/autonomous-platform-v3-health",
+      "schedule": "0 * * * *"
+    },
+    {
+      "path": "/api/cron/autonomous-platform-v3-goals",
+      "schedule": "0 */4 * * *"
+    },
+    {
+      "path": "/api/cron/autonomous-platform-v3-analytics",
+      "schedule": "15 0 * * *"
+    },
+    {
+      "path": "/api/cron/autonomous-platform-v3-backup",
+      "schedule": "0 4 * * *"
     }
   ],
   "tables": {
@@ -456,11 +568,11 @@
     "automation_runs": true,
     "automation_step_logs": true,
     "learning_paths": true,
-    "mke_runs": false,
-    "mke_source_plugins": false,
-    "mke_decisions": false,
-    "mke_queue_jobs": false,
-    "sharia_rulings": false,
+    "mke_runs": true,
+    "mke_source_plugins": true,
+    "mke_decisions": true,
+    "mke_queue_jobs": true,
+    "sharia_rulings": true,
     "kg_nodes": true,
     "kg_edges": true,
     "auto_imported_content": true,
@@ -468,6 +580,43 @@
     "fiqh_council_items": false
   },
   "missingCoreTables": [],
+  "activationTables": {
+    "qa_categories": true,
+    "qa_questions": true,
+    "sharia_rulings": true,
+    "sharia_ruling_categories": true,
+    "mke_runs": true,
+    "mke_queue_jobs": true,
+    "mke_decisions": true,
+    "mke_quality_reports": true,
+    "mke_source_plugins": true,
+    "content_import_jobs": true,
+    "content_import_staging": true,
+    "verified_adhkar_items": true,
+    "akp_content_sources": true,
+    "akp_pipeline_runs": true,
+    "akp_content_fingerprints": true,
+    "akp_review_queue": true,
+    "akp_dead_letter_jobs": true,
+    "akp_source_health_snapshots": true,
+    "akp_platform_analytics_daily": true,
+    "akp_daily_goal_progress": true,
+    "akp_semantic_index": true,
+    "content_scheduler_jobs": true,
+    "content_scheduler_runs": true,
+    "content_pipeline_sources": true,
+    "content_production_staging": true,
+    "content_production_review_queue": true,
+    "content_production_retry_queue": true,
+    "content_production_dead_letter": true,
+    "content_production_logs": true,
+    "content_production_health": true,
+    "content_production_alerts": true,
+    "content_dedup_registry": true,
+    "content_production_published": true
+  },
+  "missingActivationTables": [],
+  "shariaRulingsCount": 268,
   "routeResults": {
     "/": {
       "status": 200,
@@ -558,17 +707,23 @@
       "authRequired": false,
       "snippet": "{\"ok\":true,\"available\":true,\"rateLimit\":{\"configured\":true,\"backend\":\"upstash\",\"allowed\":true,\"error\":null}}"
     },
+    "/api/assistant": {
+      "status": 200,
+      "ok": true,
+      "authRequired": false,
+      "snippet": "{\"ok\":true,\"answer\":\"هذه المسألة تحتاج سؤال أهل العلم أو الجهة الشرعية المختصة.\\n\\nهذه إجابة تعليمية مختصرة وليست فتوى ش"
+    },
     "/api/knowledge-search?q=صلاة": {
       "status": 200,
       "ok": true,
       "authRequired": false,
-      "snippet": "{\"ok\":true,\"query\":\"صلاة\",\"count\":5,\"results\":[{\"id\":\"e69c576d-27c2-4c52-9586-abd27f088c28\",\"title\":\"كم عدد أولي العزم م"
+      "snippet": "{\"ok\":true,\"query\":\"صلاة\",\"count\":8,\"results\":[{\"id\":\"d21d7821-ae3f-4dad-b95e-420971d3eea8\",\"content_kind\":\"lesson\",\"tit"
     },
     "/api/daily-content": {
       "status": 200,
       "ok": true,
       "authRequired": false,
-      "snippet": "{\"ok\":true,\"content\":[{\"id\":\"4c4ba434-e13e-4188-951f-7aab201786a1\",\"content_date\":\"2026-06-27\",\"content_type\":\"ayah\",\"co"
+      "snippet": "{\"ok\":true,\"content\":[{\"content_type\":\"hadith\",\"id\":\"h2\",\"body\":\"مَنْ كَانَ يُؤْمِنُ بِاللَّهِ وَالْيَوْمِ الآخِرِ فَلْي"
     },
     "/api/intelligent-search?q=صلاة": {
       "status": 200,
@@ -678,8 +833,8 @@
       "branch": "cursor/ux-redesign-quran-qa-lessons-92e6",
       "phase": 1,
       "deliveryState": "Ready",
-      "blockReason": "Merge",
-      "blockDetail": "Branch cursor/ux-redesign-quran-qa-lessons-92e6 not merged to main",
+      "blockReason": "Deploy",
+      "blockDetail": "Merged to main but not in Production bundle",
       "routes": [
         "/quran"
       ],
@@ -691,9 +846,9 @@
       "pr": 72,
       "branch": "cursor/ux-redesign-quran-qa-lessons-92e6",
       "phase": 1,
-      "deliveryState": "Ready",
-      "blockReason": "Merge",
-      "blockDetail": "Branch cursor/ux-redesign-quran-qa-lessons-92e6 not merged to main",
+      "deliveryState": "Production",
+      "blockReason": null,
+      "blockDetail": null,
       "routes": [
         "/quran/surah-stories"
       ],
@@ -706,8 +861,8 @@
       "branch": "cursor/ux-redesign-quran-qa-lessons-92e6",
       "phase": 2,
       "deliveryState": "Ready",
-      "blockReason": "Merge",
-      "blockDetail": "Branch cursor/ux-redesign-quran-qa-lessons-92e6 not merged to main",
+      "blockReason": "Deploy",
+      "blockDetail": "Merged to main but not in Production bundle",
       "routes": [
         "/qa"
       ],
@@ -720,8 +875,8 @@
       "branch": "cursor/ux-redesign-quran-qa-lessons-92e6",
       "phase": 1,
       "deliveryState": "Ready",
-      "blockReason": "Merge",
-      "blockDetail": "Branch cursor/ux-redesign-quran-qa-lessons-92e6 not merged to main",
+      "blockReason": "Deploy",
+      "blockDetail": "Merged to main but not in Production bundle",
       "routes": [
         "/lessons"
       ],
@@ -734,12 +889,12 @@
       "branch": "cursor/sharia-rulings-encyclopedia-92e6",
       "phase": 5,
       "deliveryState": "Ready",
-      "blockReason": "Merge",
-      "blockDetail": "Branch cursor/sharia-rulings-encyclopedia-92e6 not merged to main",
+      "blockReason": "Deploy",
+      "blockDetail": "Merged to main but not in Production bundle",
       "routes": [
         "/rulings"
       ],
-      "usesMock": true
+      "usesMock": false
     },
     {
       "id": "library",
@@ -888,9 +1043,9 @@
       "pr": 73,
       "branch": "cursor/autonomous-platform-v2-92e6",
       "phase": 4,
-      "deliveryState": "Ready",
-      "blockReason": "Merge",
-      "blockDetail": "Branch cursor/autonomous-platform-v2-92e6 not merged to main",
+      "deliveryState": "Blocked",
+      "blockReason": "Secret",
+      "blockDetail": "SUPABASE_SERVICE_ROLE_KEY, CRON_SECRET, OPENAI_API_KEY",
       "routes": [
         "/admin/automation/platform"
       ],
@@ -982,10 +1137,10 @@
     }
   ],
   "deliverySummary": {
-    "production": 9,
-    "ready": 9,
-    "blocked": 5,
-    "prOnly": 6
+    "production": 10,
+    "ready": 7,
+    "blocked": 6,
+    "prOnly": 0
   },
   "manualInterventionRequired": [
     "SUPABASE_SERVICE_ROLE_KEY in Vercel",
@@ -994,8 +1149,7 @@
     "ANTHROPIC_API_KEY for assistant",
     "OPENAI_API_KEY for vision/MKE (optional)",
     "INSTAGRAM_GRAPH_* for Instagram automation",
-    "Apply optional SQL migrations in Supabase SQL Editor",
-    "Merge or close 22 open PRs",
+    "Merge or close 23 open PRs",
     "Confirm Vercel Production Branch = main (Dashboard → Settings → Git)"
   ]
 }
