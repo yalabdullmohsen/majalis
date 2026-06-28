@@ -87,7 +87,7 @@ export async function extractBenefitsFromSource({ title, body, sourceUrl, source
 
 function fallbackBenefits(text, sourceName) {
   const sentences = text
-    .split(/[.۔!\?؟\n]+/)
+    .split(/[.۔!?؟\n]+/)
     .map((s) => s.trim())
     .filter((s) => s.length >= 25 && s.length <= 200);
   const benefits = sentences.slice(0, 3).map((s) => ({
@@ -183,7 +183,7 @@ export async function extractLessonNotes({ title, body, sourceUrl, sourceName, s
 }
 
 function fallbackNotes(text) {
-  const sentences = text.split(/[.۔!\?؟\n]+/).map((s) => s.trim()).filter((s) => s.length >= 20);
+  const sentences = text.split(/[.۔!?؟\n]+/).map((s) => s.trim()).filter((s) => s.length >= 20);
   return {
     notes: {
       main_points: sentences.slice(0, 5),

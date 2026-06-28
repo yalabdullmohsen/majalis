@@ -285,7 +285,7 @@ function ContentEnginesDashboardContent() {
 
 export default function ContentEnginesDashboardPage() {
   return (
-    <AdminShell title="محركات المحتوى">
+    <AdminShell section="knowledge-engine" onSectionChange={() => {}}>
       <ContentEnginesDashboardContent />
     </AdminShell>
   );
