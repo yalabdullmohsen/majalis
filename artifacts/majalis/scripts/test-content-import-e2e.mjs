@@ -117,6 +117,7 @@ async function testSupabaseRowCounts() {
   const jobs = await countTable(sb, "content_import_jobs");
   const staging = await countTable(sb, "content_import_staging");
   const adhkar = await countTable(sb, "verified_adhkar_items", (q) => q.is("deleted_at", null));
+  const fawaid = await countTable(sb, "fawaid", (q) => q.eq("status", "approved"));
   const cmsIndex = await countTable(sb, "cms_content_index");
 
   if (jobs !== null) assert(jobs >= 0, `content_import_jobs count = ${jobs}`);
@@ -134,12 +135,24 @@ async function testSupabaseRowCounts() {
     console.log("  ⊘ verified_adhkar_items table not found");
   }
 
+  if (fawaid !== null) {
+    assert(fawaid >= 0, `fawaid (approved) count = ${fawaid}`);
+    if (production && fawaid === 0) {
+      console.warn("  ⚠ production fawaid is 0 — benefits import may not have committed");
+    }
+  } else {
+    console.log("  ⊘ fawaid table not found");
+  }
+
   if (cmsIndex === null) {
     console.log("  ⊘ cms_content_index not deployed (expected on production — using fallback counters)");
   }
 
   if (jobs !== null && adhkar !== null && production) {
     assert(jobs > 0 || adhkar > 0, "production has import jobs or verified adhkar rows");
+  }
+  if (production && fawaid !== null) {
+    assert(fawaid > 0, "production fawaid (approved) > 0");
   }
 }
 
@@ -151,11 +164,12 @@ async function testDashboardCounterLogic() {
     return;
   }
 
-  const [cmsIndex, contentJobs, legacyJobs, adhkar] = await Promise.all([
+  const [cmsIndex, contentJobs, legacyJobs, adhkar, fawaid] = await Promise.all([
     countTable(sb, "cms_content_index"),
     countTable(sb, "content_import_jobs"),
     countTable(sb, "import_jobs"),
     countTable(sb, "verified_adhkar_items", (q) => q.is("deleted_at", null)),
+    countTable(sb, "fawaid", (q) => q.eq("status", "approved")),
   ]);
 
   const importJobsTotal =
@@ -175,6 +189,9 @@ async function testDashboardCounterLogic() {
   }
   if (production && adhkar !== null) {
     assert(adhkar > 0, "production verified_adhkar_items > 0");
+  }
+  if (production && fawaid !== null) {
+    assert(fawaid > 0, "production fawaid (approved) > 0");
   }
 }
 
@@ -211,6 +228,38 @@ async function testPublicAdhkarSmoke() {
   }
 }
 
+async function testPublicFawaidSmoke() {
+  console.log("\n5) Public /fawaid smoke");
+  const base = production ? PRODUCTION : `http://127.0.0.1:${process.env.PORT || 24216}`;
+  const url = `${base}/fawaid`;
+
+  try {
+    const res = await fetch(url, { redirect: "follow" });
+    assert(res.ok, `GET ${url} → ${res.status}`);
+    const html = await res.text();
+    assert(html.includes("الفوائد") || html.includes("fawaid"), "page contains fawaid content marker");
+  } catch (err) {
+    if (!production) {
+      console.log(`  ⊘ skipped local fetch (${err.message}) — start dev server to test`);
+      return;
+    }
+    throw err;
+  }
+
+  const sb = getSupabase();
+  if (sb && production) {
+    const { data, error } = await sb
+      .from("fawaid")
+      .select("id, text")
+      .eq("status", "approved")
+      .limit(1);
+    assert(!error, "can read fawaid for public page");
+    if (data?.length) {
+      assert(data[0].text?.length > 0, "fawaid row has text");
+    }
+  }
+}
+
 async function main() {
   console.log(`Content import e2e (${production ? "production" : "local"})`);
 
@@ -218,6 +267,7 @@ async function main() {
   await testSupabaseRowCounts();
   await testDashboardCounterLogic();
   await testPublicAdhkarSmoke();
+  await testPublicFawaidSmoke();
 
   console.log(`\n${passed} passed, ${failed} failed`);
   if (failed > 0) process.exit(1);

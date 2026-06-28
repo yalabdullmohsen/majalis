@@ -7,6 +7,7 @@ import { validateAllRows } from "../lib/content-import/engine.mjs";
 import { mapRowToPayload } from "../lib/content-import/mappers.mjs";
 import { dedupeRows } from "../lib/content-import/dedupe.mjs";
 import { resolveContentType, CONTENT_TYPES } from "../lib/content-import/registry.mjs";
+import { buildImportApiError } from "../lib/content-import/import-api-errors.mjs";
 import { readFileSync, existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -228,6 +229,57 @@ test("startImportJob returns error when createImportJob fails", async () => {
   const { startImportJob } = await import("../lib/content-import/engine.mjs");
   const bad = await startImportJob({ type: "not-a-real-type", filename: "x.csv", totalRows: 1 });
   assert(!bad.ok && bad.code === "unsupported_type", "unsupported type rejected");
+});
+
+test("repairMisParsedCsvRow fixes semicolon single-column benefits row", () => {
+  const bad = {
+    "text;author_name;category;status":
+      '"فائدة علمية";"ابن القيم";"فقه";"approved"',
+  };
+  const { allValid, validationErrors, validRows } = validateAllRows("benefits", [bad]);
+  assert(allValid, `repaired row should validate: ${validationErrors[0] || ""}`);
+  assert(validRows[0]?.text === "فائدة علمية", "repaired text column");
+});
+
+test("fawaid_500 mis-parsed as comma-only still validates after server repair", () => {
+  const rows = parseContentFile(join(root, "data/imports/fawaid_500.csv"));
+  const misParsed = rows.map((r) => ({
+    "text;author_name;category;status": `"${r.text}";"${r.author_name}";"${r.category}";"${r.status}"`,
+  }));
+  const { allValid, validationErrors } = validateAllRows("benefits", misParsed.slice(0, 5));
+  assert(allValid, `mis-parsed batch repaired: ${validationErrors[0] || ""}`);
+});
+
+test("benefits commit uses lower sync threshold for large files", () => {
+  const src = readFileSync(join(root, "lib/api-handlers/admin/content-import.js"), "utf8");
+  assert(src.includes("getSyncThreshold"), "benefits sync threshold helper");
+  assert(src.includes("IMPORT_BENEFITS_SYNC_THRESHOLD"), "benefits env threshold");
+});
+
+test("buildImportApiError surfaces validation message for benefits", () => {
+  const err = buildImportApiError({
+    code: "validation_failed",
+    contentType: "benefits",
+    report: { validationErrors: ["السطر 1: الحقل المطلوب «text» ناقص"] },
+    failedAt: "validateAllRows",
+  });
+  assert(err.error.includes("text"), "error mentions missing text column");
+  assert(err.targetTable === "fawaid", "benefits maps to fawaid table");
+  assert(err.normalizedType === "benefits", "normalized type is benefits");
+});
+
+test("comma-only split fails semicolon fawaid CSV (regression guard)", () => {
+  const line = "text;author_name;category;status";
+  const wrongCells = line.split(",");
+  assert(wrongCells.length === 1, "comma split treats semicolon CSV as single column");
+  const rows = parseCsvString(`${line}\n"فائدة";"المجلس";"فقه";"approved"`);
+  assert(rows.length === 1 && rows[0].text === "فائدة", "semicolon parser extracts text column");
+});
+
+test("content-import commit handler exposes structured errors", () => {
+  const src = readFileSync(join(root, "lib/api-handlers/admin/content-import.js"), "utf8");
+  assert(src.includes("buildImportApiError"), "commit handler uses structured errors");
+  assert(src.includes("commit_sync_result"), "commit handler logs sync result");
 });
 
 test("async job queue and dry-run process benefits", async () => {

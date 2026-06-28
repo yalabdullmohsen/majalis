@@ -311,10 +311,24 @@ async function importQuestions({ admin, pgClient, payloads, onProgress }) {
   return report;
 }
 
+async function fetchAllTableRows(admin, table, columns, pageSize = 1000) {
+  const rows = [];
+  let from = 0;
+  for (;;) {
+    const { data, error } = await admin.from(table).select(columns).range(from, from + pageSize - 1);
+    if (error) throw new Error(`${table}: ${error.message}`);
+    if (!data?.length) break;
+    rows.push(...data);
+    if (data.length < pageSize) break;
+    from += pageSize;
+  }
+  return rows;
+}
+
 async function importBenefits({ admin, pgClient, payloads, onProgress }) {
   const report = { ok: true, imported: 0, skipped: 0, failed: 0, errors: [] };
-  const { data: existing } = await admin.from("fawaid").select("id, text");
-  const seen = new Set((existing || []).map((r) => dedupeKeyForRow("benefits", r)));
+  const existing = await fetchAllTableRows(admin, "fawaid", "id, text");
+  const seen = new Set(existing.map((r) => dedupeKeyForRow("benefits", r)));
   const toInsert = [];
 
   for (let i = 0; i < payloads.length; i++) {
@@ -333,7 +347,7 @@ async function importBenefits({ admin, pgClient, payloads, onProgress }) {
       await pgUpsertBatch(pgClient, "fawaid", batch, "id");
     } else {
       const { error } = await admin.from("fawaid").insert(batch);
-      if (error) throw new Error(error.message);
+      if (error) throw new Error(`fawaid insert failed: ${error.message} (code: ${error.code || "unknown"})`);
     }
     report.imported += batch.length;
   }

@@ -1,0 +1,171 @@
+#!/usr/bin/env node
+/**
+ * End-to-end fawaid (benefits) import verification (local DB or production API).
+ *
+ * Usage:
+ *   node scripts/verify-production-fawaid-import.mjs
+ *   node scripts/verify-production-fawaid-import.mjs --production
+ *   node scripts/verify-production-fawaid-import.mjs --production --dry-run
+ */
+import { existsSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+import { parseContentFile } from "../lib/content-import/parsers.mjs";
+import { validateAllRows } from "../lib/content-import/engine.mjs";
+import {
+  startImportJob,
+  stageImportBatch,
+  queueImportJob,
+  processImportJob,
+} from "../lib/content-import/engine.mjs";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const root = join(__dirname, "..");
+const production = process.argv.includes("--production");
+const dryRun = process.argv.includes("--dry-run");
+const PRODUCTION = process.env.MAJALIS_PRODUCTION_URL || "https://www.majlisilm.com";
+const CSV_PATH = join(root, "data/imports/fawaid_500.csv");
+
+function sleep(ms) {
+  return new Promise((r) => setTimeout(r, ms));
+}
+
+async function runLocalImport(forceDryRun = dryRun) {
+  if (!existsSync(CSV_PATH)) {
+    throw new Error(`Missing ${CSV_PATH}`);
+  }
+  const rows = parseContentFile(CSV_PATH);
+  const { allValid, validationErrors } = validateAllRows("benefits", rows);
+  if (!allValid) throw new Error(`fawaid_500.csv validation failed: ${validationErrors[0]}`);
+
+  const started = await startImportJob({
+    type: "benefits",
+    filename: "fawaid_500 (1).csv",
+    totalRows: rows.length,
+    createdBy: "service",
+  });
+  if (!started.ok) throw new Error(`startImportJob failed: ${started.error} (${started.code})`);
+
+  const staged = await stageImportBatch(started.jobId, rows, 0);
+  if (!staged.ok) throw new Error(`stageImportBatch failed: ${staged.error} (${staged.code})`);
+
+  const queued = await queueImportJob(started.jobId);
+  if (!queued.ok) throw new Error(`queueImportJob failed: ${queued.error}`);
+
+  const result = await processImportJob(started.jobId, { dryRun: forceDryRun });
+  if (!result.ok) {
+    throw new Error(
+      `processImportJob failed: ${result.error || result.report?.importErrors?.join("; ") || result.report?.validationErrors?.join("; ")}`,
+    );
+  }
+
+  console.log(
+    `✓ fawaid_500.csv import ${forceDryRun ? "(dry-run) " : ""}OK — ${rows.length} rows → table fawaid`,
+  );
+  return { ok: true, jobId: started.jobId, rows: rows.length, dryRun: forceDryRun };
+}
+
+async function runProductionApiImport() {
+  const token = process.env.ADMIN_IMPORT_JWT || process.env.SUPABASE_ACCESS_TOKEN;
+  const cronHeader = process.env.CRON_SECRET ? { Authorization: `Bearer ${process.env.CRON_SECRET}` } : null;
+  const headers = cronHeader || (token ? { Authorization: `Bearer ${token}` } : null);
+
+  if (!headers) {
+    console.log("⊘ production API import skipped — set ADMIN_IMPORT_JWT or CRON_SECRET");
+    return { ok: true, skipped: true };
+  }
+
+  const rows = parseContentFile(CSV_PATH).slice(0, 5).map((r, i) => ({
+    ...r,
+    text: `${r.text} [verify-${Date.now()}-${i}]`,
+  }));
+
+  const reqHeaders = { "Content-Type": "application/json", ...headers };
+  const base = `${PRODUCTION}/api/admin/content-import`;
+
+  const startRes = await fetch(base, {
+    method: "POST",
+    headers: reqHeaders,
+    body: JSON.stringify({
+      action: "start",
+      type: "benefits",
+      filename: "fawaid_500 (1).csv",
+      totalRows: rows.length,
+    }),
+  });
+  const started = await startRes.json();
+  if (!startRes.ok || !started.ok) {
+    throw new Error(`production start failed: HTTP ${startRes.status} ${JSON.stringify(started)}`);
+  }
+
+  const stageRes = await fetch(base, {
+    method: "POST",
+    headers: reqHeaders,
+    body: JSON.stringify({ action: "stage", jobId: started.jobId, rows, startIndex: 0 }),
+  });
+  const staged = await stageRes.json();
+  if (!stageRes.ok || !staged.ok) {
+    throw new Error(`production stage failed: HTTP ${stageRes.status} ${JSON.stringify(staged)}`);
+  }
+
+  const commitRes = await fetch(base, {
+    method: "POST",
+    headers: reqHeaders,
+    body: JSON.stringify({ action: "commit", jobId: started.jobId, dryRun }),
+  });
+  const committed = await commitRes.json();
+  if (!commitRes.ok && commitRes.status !== 202) {
+    throw new Error(`production commit failed: HTTP ${commitRes.status} ${JSON.stringify(committed)}`);
+  }
+
+  if (committed.sync && committed.status === "completed") {
+    const imported = committed.report?.stats?.imported ?? 0;
+    const skipped = committed.report?.stats?.skipped ?? 0;
+    console.log(
+      `✓ production fawaid sync import OK — job ${started.jobId} (imported=${imported}, skipped=${skipped}, target=${committed.targetTable})`,
+    );
+    return { ok: true, jobId: started.jobId, rows: rows.length, sync: true, imported, skipped };
+  }
+
+  if (committed.sync && committed.status === "failed") {
+    throw new Error(`production sync import failed: HTTP ${commitRes.status} ${JSON.stringify(committed)}`);
+  }
+
+  for (let i = 0; i < 120; i++) {
+    const kick = i >= 3 ? "&kick=1" : "";
+    const progRes = await fetch(`${base}?action=progress&jobId=${started.jobId}${kick}`, { headers: reqHeaders });
+    const prog = await progRes.json();
+    if (prog.job?.status === "completed" || prog.job?.status === "failed") {
+      if (prog.job.status === "failed") {
+        throw new Error(`production import failed: ${JSON.stringify(prog.job.import_errors)}`);
+      }
+      console.log(
+        `✓ production fawaid import OK — job ${started.jobId} (${prog.job.imported} imported)`,
+      );
+      return { ok: true, jobId: started.jobId, rows: rows.length };
+    }
+    await sleep(1000);
+  }
+  throw new Error("production import timed out waiting for completion");
+}
+
+async function main() {
+  console.log(`Fawaid import verification (${production ? "production" : "local"})${dryRun ? " [dry-run]" : ""}\n`);
+
+  if (production) {
+    const result = await runProductionApiImport();
+    if (!result.skipped) {
+      process.exit(result.ok ? 0 : 1);
+    }
+    console.log("Falling back to local dry-run (no auth token)\n");
+    await runLocalImport(true);
+    process.exit(0);
+  }
+
+  await runLocalImport(dryRun);
+}
+
+main().catch((err) => {
+  console.error("✗", err.message);
+  process.exit(1);
+});

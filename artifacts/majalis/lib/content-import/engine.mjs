@@ -32,7 +32,7 @@ export function validateAllRows(type, rows) {
 
   for (let index = 0; index < rows.length; index++) {
     const result = validateRow(type, rows[index], index);
-    if (result.ok) validRows.push(rows[index]);
+    if (result.ok) validRows.push(result.row ?? rows[index]);
     else {
       for (const err of result.errors) {
         if (validationErrors.length < MAX_VALIDATION_ERRORS) validationErrors.push(err);
