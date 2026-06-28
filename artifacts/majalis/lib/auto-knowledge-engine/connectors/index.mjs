@@ -12,6 +12,13 @@ import {
   filterNewFeedItems,
   buildConnectorCrawlPatch,
 } from "../incremental-crawl.mjs";
+import { HtmlConnector } from "./html-connector.mjs";
+import { SitemapConnector } from "./sitemap-connector.mjs";
+import { WebsiteConnector } from "./website-connector.mjs";
+import { InstagramConnector } from "./instagram-connector.mjs";
+import { YoutubeConnector } from "./youtube-connector.mjs";
+import { TelegramConnector } from "./telegram-connector.mjs";
+import { SocialWebConnector } from "./social-web-connector.mjs";
 
 export class RssConnector extends BaseConnector {
   async fetchItems(syncOptions = {}) {
@@ -118,14 +125,36 @@ export class SeedConnector extends BaseConnector {
 
 export function createConnector(config) {
   const type = config.connector_type || config.connectorType || "rss";
+  const enriched = {
+    ...config,
+    handle: config.handle || config.api_config?.handle,
+  };
   switch (type) {
     case "manifest":
-      return new ManifestConnector(config);
+      return new ManifestConnector(enriched);
     case "seed":
-      return new SeedConnector(config);
+      return new SeedConnector(enriched);
+    case "html":
+      return new HtmlConnector(enriched);
+    case "sitemap":
+      return new SitemapConnector(enriched);
+    case "website":
+      return new WebsiteConnector(enriched);
+    case "instagram":
+      return new InstagramConnector(enriched);
+    case "youtube":
+      return new YoutubeConnector(enriched);
+    case "telegram":
+      return new TelegramConnector(enriched);
+    case "x":
+    case "facebook":
+    case "whatsapp":
+      return new SocialWebConnector(enriched);
     case "rss":
-      return new RssConnector(config);
+      return new RssConnector(enriched);
     default:
-      return new BaseConnector(config);
+      return new BaseConnector(enriched);
   }
 }
+
+export { HtmlConnector, SitemapConnector, WebsiteConnector, InstagramConnector, YoutubeConnector, TelegramConnector, SocialWebConnector };

@@ -24,6 +24,8 @@ export class BaseConnector {
     this.isActive = config.is_active !== false;
     this.id = config.id;
     this.apiConfig = config.api_config || config.apiConfig || {};
+    this.handle = config.handle || this.apiConfig.handle || null;
+    this.sourcePriority = config.source_priority || config.sourcePriority || 5;
   }
 
   async rateLimitWait() {

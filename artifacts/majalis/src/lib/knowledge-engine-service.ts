@@ -57,6 +57,15 @@ export type AkeEngineStats = {
     last_checked_at?: string;
     consecutive_failures?: number;
   }>;
+  v2?: {
+    connectors_active?: number;
+    connectors_total?: number;
+    instagram_accounts?: number;
+    unified_fingerprints?: number;
+    entity_links?: number;
+    pending_changes?: number;
+    settings?: { cron_interval_minutes?: number; max_parallel_workers?: number };
+  } | null;
 };
 
 export type KnowledgeSearchResult = {
