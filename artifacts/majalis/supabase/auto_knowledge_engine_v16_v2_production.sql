@@ -67,14 +67,20 @@ INSERT INTO ake_connectors (
   'verify-production-lesson', 'AKE Production Verification', 'KW', 'mosque', 'manifest', 'manifest',
   'https://www.majlisilm.com', 5, ARRAY['lesson'], 3,
   85, 85, true, 'verification_fixture', 'lesson',
-  1440, true, true, 'manifest',
-  '{"manifest_file":"data/ake-v2-verification-lesson.json","verification_only":true}'::jsonb
+  1, true, true, 'manifest',
+  '{"manifest_file":"ake-v2-verification-lesson.json","verification_only":true}'::jsonb
 ) ON CONFLICT (slug) DO UPDATE SET
   auto_publish = true,
   is_active = true,
   trust_level = 5,
+  poll_interval_minutes = 1,
   api_config = EXCLUDED.api_config,
   updated_at = now();
+
+UPDATE ake_connectors SET
+  poll_interval_minutes = 1,
+  api_config = jsonb_set(COALESCE(api_config, '{}'::jsonb), '{manifest_file}', '"ake-v2-verification-lesson.json"')
+WHERE slug = 'verify-production-lesson';
 
 -- Ensure handle slugs match production requirements
 UPDATE ake_connectors SET handle = 'ibnabitallib' WHERE slug = 'ig-ibnabitallib';
