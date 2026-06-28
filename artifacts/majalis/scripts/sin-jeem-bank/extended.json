@@ -1,0 +1,483 @@
+[
+  {
+    "slug": "prophets",
+    "sub": "adam",
+    "type": "multiple_choice",
+    "question": "من أول الأنبياء؟",
+    "answer": "آدم عليه السلام",
+    "source": "القرآن",
+    "keywords": [
+      "آدم"
+    ]
+  },
+  {
+    "slug": "nuh",
+    "type": "multiple_choice",
+    "question": "من أول الرسل إلى أهل الأرض؟",
+    "answer": "نوح عليه السلام",
+    "source": "القرآن",
+    "keywords": [
+      "نوح"
+    ]
+  },
+  {
+    "slug": "ibrahim",
+    "type": "multiple_choice",
+    "question": "من خليل الرحمن؟",
+    "answer": "إبراهيم عليه السلام",
+    "source": "القرآن",
+    "keywords": [
+      "إبراهيم"
+    ]
+  },
+  {
+    "slug": "musa",
+    "type": "multiple_choice",
+    "question": "من النبي الذي كلمه الله تكليماً؟",
+    "answer": "موسى عليه السلام",
+    "source": "القرآن",
+    "keywords": [
+      "موسى"
+    ]
+  },
+  {
+    "slug": "isa",
+    "type": "multiple_choice",
+    "question": "من النبي الذي رفعه الله إليه؟",
+    "answer": "عيسى عليه السلام",
+    "source": "القرآن",
+    "keywords": [
+      "عيسى"
+    ]
+  },
+  {
+    "slug": "muhammad",
+    "type": "multiple_choice",
+    "question": "من خاتم الأنبياء والرسل؟",
+    "answer": "محمد ﷺ",
+    "source": "القرآن",
+    "keywords": [
+      "محمد"
+    ]
+  },
+  {
+    "slug": "nuh",
+    "type": "multiple_choice",
+    "question": "من النبي الذي ابتلعه الحوت؟",
+    "answer": "يونس عليه السلام",
+    "source": "القرآن",
+    "keywords": [
+      "يونس"
+    ]
+  },
+  {
+    "slug": "ibrahim",
+    "type": "multiple_choice",
+    "question": "من النبي الذي سخر الله له الريح؟",
+    "answer": "سليمان عليه السلام",
+    "source": "القرآن",
+    "keywords": [
+      "سليمان"
+    ]
+  },
+  {
+    "slug": "prophets",
+    "type": "multiple_choice",
+    "question": "من النبي الذي أرسل إلى قوم عاد؟",
+    "answer": "هود عليه السلام",
+    "source": "القرآن",
+    "keywords": [
+      "هود"
+    ]
+  },
+  {
+    "slug": "prophets",
+    "type": "multiple_choice",
+    "question": "من النبي الذي أرسل إلى قوم ثمود؟",
+    "answer": "صالح عليه السلام",
+    "source": "القرآن",
+    "keywords": [
+      "صالح"
+    ]
+  },
+  {
+    "slug": "khulafa-rashidun",
+    "type": "companion_choice",
+    "question": "من أول الخلفاء الراشدين؟",
+    "answer": "أبو بكر الصديق",
+    "source": "التاريخ الإسلامي",
+    "keywords": [
+      "خلفاء"
+    ]
+  },
+  {
+    "slug": "sahaba",
+    "type": "companion_choice",
+    "question": "من الصحابي الملقب بالفاروق؟",
+    "answer": "عمر بن الخطاب",
+    "source": "السيرة",
+    "keywords": [
+      "عمر"
+    ]
+  },
+  {
+    "slug": "sahaba",
+    "type": "companion_choice",
+    "question": "من لقب بسيف الله المسلول؟",
+    "answer": "خالد بن الوليد",
+    "source": "السيرة",
+    "keywords": [
+      "خالح"
+    ]
+  },
+  {
+    "slug": "sahaba",
+    "type": "companion_choice",
+    "question": "من أكثر الصحابة رواية للحديث؟",
+    "answer": "أبو هريرة",
+    "source": "السيرة",
+    "keywords": [
+      "أبو هريرة"
+    ]
+  },
+  {
+    "slug": "sahaba",
+    "sub": "um-muminin",
+    "type": "multiple_choice",
+    "question": "من أم المؤمنين ابنة أبي بكر؟",
+    "answer": "عائشة رضي الله عنها",
+    "source": "السيرة",
+    "keywords": [
+      "عائشة"
+    ]
+  },
+  {
+    "slug": "sahaba",
+    "sub": "um-muminin",
+    "type": "multiple_choice",
+    "question": "من أول من آمن من النساء؟",
+    "answer": "خديجة بنت خويلد",
+    "source": "السيرة",
+    "keywords": [
+      "خديجة"
+    ]
+  },
+  {
+    "slug": "islamic-history",
+    "sub": "tabiun",
+    "type": "scholar_choice",
+    "question": "من إمام التابعين في المدينة؟",
+    "answer": "سعيد بن المسيب",
+    "source": "تراجم العلماء",
+    "keywords": [
+      "تابعون"
+    ]
+  },
+  {
+    "slug": "islamic-history",
+    "sub": "tabiun",
+    "type": "scholar_choice",
+    "question": "من عالم البصرة من التابعين؟",
+    "answer": "الحسن البصري",
+    "source": "تراجم العلماء",
+    "keywords": [
+      "تابعون"
+    ]
+  },
+  {
+    "slug": "fiqh",
+    "sub": "scholars",
+    "type": "scholar_choice",
+    "question": "من مؤسس المذهب الحنفي؟",
+    "answer": "أبو حنيفة النعمان",
+    "source": "تراجم العلماء",
+    "keywords": [
+      "حنفي"
+    ]
+  },
+  {
+    "slug": "fiqh",
+    "sub": "scholars",
+    "type": "scholar_choice",
+    "question": "من صاحب صحيح البخاري؟",
+    "answer": "محمد بن إسماعيل البخاري",
+    "source": "تراجم العلماء",
+    "keywords": [
+      "البخاري"
+    ]
+  },
+  {
+    "slug": "fiqh",
+    "sub": "scholars",
+    "type": "scholar_choice",
+    "question": "من صاحب صحيح مسلم؟",
+    "answer": "مسلم بن الحجاج",
+    "source": "تراجم العلماء",
+    "keywords": [
+      "مسلم"
+    ]
+  },
+  {
+    "slug": "fiqh",
+    "sub": "scholars",
+    "type": "scholar_choice",
+    "question": "من صاحب كتاب الموطأ؟",
+    "answer": "مالك بن أنس",
+    "source": "تراجم العلماء",
+    "keywords": [
+      "مالك"
+    ]
+  },
+  {
+    "slug": "hadith-sciences",
+    "type": "multiple_choice",
+    "question": "الحديث المرسل هو ما رواه:",
+    "answer": "التابعي عن النبي ﷺ مباشرة",
+    "source": "علوم الحديث",
+    "keywords": [
+      "مرسل"
+    ]
+  },
+  {
+    "slug": "hadith-sciences",
+    "type": "multiple_choice",
+    "question": "الحديث الموقوف هو ما أُضيف إلى:",
+    "answer": "الصحابي",
+    "source": "علوم الحديث",
+    "keywords": [
+      "موقوف"
+    ]
+  },
+  {
+    "slug": "hadith-sciences",
+    "type": "multiple_choice",
+    "question": "الحديث الضعيف هو:",
+    "answer": "ما لم يبلغ درجة الحسن",
+    "source": "علوم الحديث",
+    "keywords": [
+      "ضعيف"
+    ]
+  },
+  {
+    "slug": "ghazwat",
+    "type": "battle_choice",
+    "question": "ما أولى غزوة كبرى في الإسلام؟",
+    "answer": "غزوة بدر",
+    "source": "السيرة",
+    "keywords": [
+      "بدر"
+    ]
+  },
+  {
+    "slug": "ghazwat",
+    "type": "battle_choice",
+    "question": "في أي غزوة وقع حفر الخندق؟",
+    "answer": "غزوة الخندق",
+    "source": "السيرة",
+    "keywords": [
+      "خندق"
+    ]
+  },
+  {
+    "slug": "ghazwat",
+    "type": "battle_choice",
+    "question": "ما غزوة صلح الحديبية؟",
+    "answer": "صلح الحديبية",
+    "source": "السيرة",
+    "keywords": [
+      "حديبية"
+    ]
+  },
+  {
+    "slug": "seera",
+    "sub": "mosques",
+    "type": "mosque_choice",
+    "question": "ما المسجد الذي أُسري إليه النبي ﷺ؟",
+    "answer": "مسجد الأقصى",
+    "source": "السيرة",
+    "keywords": [
+      "أقصى"
+    ]
+  },
+  {
+    "slug": "seera",
+    "sub": "mosques",
+    "type": "mosque_choice",
+    "question": "ما أقدس مسجد في الإسلام؟",
+    "answer": "المسجد الحرام",
+    "source": "السيرة",
+    "keywords": [
+      "حرام"
+    ]
+  },
+  {
+    "slug": "salah",
+    "type": "multiple_choice",
+    "question": "كم عدد الصلوات المفروضة في اليوم؟",
+    "answer": "خمس صلوات",
+    "source": "الفقه",
+    "keywords": [
+      "صلاة"
+    ]
+  },
+  {
+    "slug": "tahara",
+    "type": "multiple_choice",
+    "question": "بماذا يتطهر المسلم عند عدم وجود الماء؟",
+    "answer": "التيمم",
+    "source": "الفقه",
+    "keywords": [
+      "تيمم"
+    ]
+  },
+  {
+    "slug": "siyam",
+    "type": "true_false",
+    "question": "صوم رمضان ركن من أركان الإسلام.",
+    "answer": "صح",
+    "source": "حديث جبريل",
+    "keywords": [
+      "صيام"
+    ]
+  },
+  {
+    "slug": "arabic",
+    "type": "true_false",
+    "question": "الفاعل مرفوع دائماً.",
+    "answer": "صحيح",
+    "source": "النحو",
+    "keywords": [
+      "فاعل"
+    ]
+  },
+  {
+    "slug": "dua",
+    "type": "multiple_choice",
+    "question": "ما دعاء الاستفتاح في الصلاة؟",
+    "answer": "يُقال في بداية الصلاة",
+    "source": "السنة",
+    "keywords": [
+      "دعاء"
+    ]
+  },
+  {
+    "slug": "morning-adhkar",
+    "type": "multiple_choice",
+    "question": "من أذكار الصباح المشهورة؟",
+    "answer": "آية الكرسي",
+    "source": "حصن المسلم",
+    "keywords": [
+      "أذكار"
+    ]
+  },
+  {
+    "slug": "islamic-history",
+    "type": "multiple_choice",
+    "question": "مدة الخلافة الراشدة تقريباً:",
+    "answer": "ثلاثين سنة",
+    "source": "التاريخ الإسلامي",
+    "keywords": [
+      "خلافة"
+    ]
+  },
+  {
+    "slug": "andalus",
+    "type": "multiple_choice",
+    "question": "سقطت غرناطة عام:",
+    "answer": "1492م",
+    "source": "التاريخ",
+    "keywords": [
+      "غرناطة"
+    ]
+  },
+  {
+    "slug": "nawawi-40",
+    "type": "multiple_choice",
+    "question": "جمع الأربعين النووية:",
+    "answer": "الإمام النووي",
+    "source": "تراجم العلماء",
+    "keywords": [
+      "نووية"
+    ]
+  },
+  {
+    "slug": "quran-puzzles",
+    "type": "complete_verse",
+    "question": "أكمل: إِنَّ اللَّهَ مَعَ …",
+    "answer": "الصَّابِرِينَ",
+    "source": "سورة البقرة",
+    "keywords": [
+      "لغز"
+    ]
+  },
+  {
+    "slug": "fiqh-puzzles",
+    "type": "pillar",
+    "question": "ما الركن الأول من أركان الإسلام؟",
+    "answer": "الشهادتان",
+    "source": "حديث جبريل",
+    "keywords": [
+      "أركان"
+    ]
+  },
+  {
+    "slug": "hadith",
+    "type": "complete_hadith",
+    "question": "أكمل: إنما الأعمال…",
+    "answer": "بالنيات",
+    "source": "صحيح البخاري",
+    "keywords": [
+      "نية"
+    ]
+  },
+  {
+    "slug": "hadith",
+    "type": "who_said",
+    "question": "من قال: الدين النصيحة؟",
+    "answer": "النبي ﷺ",
+    "source": "صحيح مسلم",
+    "keywords": [
+      "نصية"
+    ]
+  },
+  {
+    "slug": "hadith",
+    "type": "multiple_choice",
+    "question": "أصح كتب بعد القرآن عند أهل السنة:",
+    "answer": "صحيح البخاري",
+    "source": "تراجم العلماء",
+    "keywords": [
+      "البخاري"
+    ]
+  },
+  {
+    "slug": "bukhari",
+    "type": "true_false",
+    "question": "صحيح البخاري هو أصح كتب بعد القرآن عند أهل السنة.",
+    "answer": "صح",
+    "source": "تراجم العلماء",
+    "keywords": [
+      "البخاري"
+    ]
+  },
+  {
+    "slug": "riyadh-salihin",
+    "type": "scholar_choice",
+    "question": "من جمع كتاب رياض الصالحين؟",
+    "answer": "الإمام النووي",
+    "source": "تراجم العلماء",
+    "keywords": [
+      "رياض الصالحين"
+    ]
+  },
+  {
+    "slug": "hadith",
+    "type": "complete_hadith",
+    "question": "أكمل: لا ضرر…",
+    "answer": "ولا ضرار",
+    "source": "موطأ مالك",
+    "keywords": [
+      "ضرر"
+    ]
+  }
+]

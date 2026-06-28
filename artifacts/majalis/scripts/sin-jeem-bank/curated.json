@@ -1,0 +1,278 @@
+[
+  {
+    "category_slug": "quran",
+    "question_type": "multiple_choice",
+    "difficulty": "مبتدئ",
+    "question": "كم عدد سور القرآن الكريم؟",
+    "options": [
+      "114",
+      "113",
+      "115",
+      "112"
+    ],
+    "correct_index": 0,
+    "explanation": "القرآن يتكون من 114 سورة.",
+    "source": "القرآن",
+    "keywords": [
+      "سور"
+    ]
+  },
+  {
+    "category_slug": "quran",
+    "question_type": "multiple_choice",
+    "difficulty": "سهل",
+    "question": "ما أطول سورة في القرآن؟",
+    "options": [
+      "البقرة",
+      "آل عمران",
+      "النساء",
+      "المائدة"
+    ],
+    "correct_index": 0,
+    "source": "القرآن",
+    "keywords": [
+      "البقرة"
+    ]
+  },
+  {
+    "category_slug": "quran",
+    "question_type": "multiple_choice",
+    "difficulty": "سهل",
+    "question": "ما أقصر سورة في القرآن؟",
+    "options": [
+      "الكوثر",
+      "الإخلاص",
+      "الفلق",
+      "الناس"
+    ],
+    "correct_index": 0,
+    "source": "القرآن",
+    "keywords": [
+      "الكوثر"
+    ]
+  },
+  {
+    "category_slug": "quran",
+    "question_type": "true_false",
+    "difficulty": "سهل",
+    "question": "سورة الفاتحة تُسمى أم الكتاب.",
+    "options": [
+      "صح",
+      "خطأ"
+    ],
+    "correct_index": 0,
+    "source": "القرآن",
+    "keywords": [
+      "الفاتحة"
+    ]
+  },
+  {
+    "category_slug": "tafsir",
+    "question_type": "scholar_choice",
+    "difficulty": "متقدم",
+    "question": "من صاحب تفسير جامع البيان؟",
+    "options": [
+      "ابن جرير الطبري",
+      "ابن كثير",
+      "القرطبي",
+      "الرازي"
+    ],
+    "correct_index": 0,
+    "source": "تراجم العلماء",
+    "keywords": [
+      "الطبري"
+    ]
+  },
+  {
+    "category_slug": "quran-sciences",
+    "subcategory_slug": "ijaz",
+    "question_type": "multiple_choice",
+    "difficulty": "متقدم",
+    "question": "الإعجاز العلمي في القرآن يدل على:",
+    "options": [
+      "أنه من عند الله",
+      "تأثر بالعلوم القديمة",
+      "أساطير",
+      "اجتهاد بشري"
+    ],
+    "correct_index": 0,
+    "source": "كتب الإعجاز",
+    "keywords": [
+      "إعجاز"
+    ]
+  },
+  {
+    "category_slug": "tajweed",
+    "question_type": "multiple_choice",
+    "difficulty": "متوسط",
+    "question": "كم عدد حروف القلقلة؟",
+    "options": [
+      "5",
+      "4",
+      "6",
+      "7"
+    ],
+    "correct_index": 0,
+    "explanation": "قُطب جَد",
+    "source": "متن التجويد",
+    "keywords": [
+      "قلقلة"
+    ]
+  },
+  {
+    "category_slug": "tajweed",
+    "question_type": "multiple_choice",
+    "difficulty": "خبير",
+    "question": "الإدغام بغنة يكون مع حروف:",
+    "options": [
+      "يرملون",
+      "قطب جد",
+      "حلقية",
+      "شفوية"
+    ],
+    "correct_index": 0,
+    "source": "متن التجويد",
+    "keywords": [
+      "إدغام"
+    ]
+  },
+  {
+    "category_slug": "aqeeda",
+    "question_type": "count",
+    "difficulty": "متوسط",
+    "question": "كم عدد أركان الإيمان؟",
+    "options": [
+      "6",
+      "5",
+      "4",
+      "7"
+    ],
+    "correct_index": 0,
+    "source": "حديث جبريل",
+    "keywords": [
+      "إيمان"
+    ]
+  },
+  {
+    "category_slug": "hadith-sciences",
+    "question_type": "multiple_choice",
+    "difficulty": "متقدم",
+    "question": "الحديث المتواتر:",
+    "options": [
+      "يرويه جمع كثير لا يمكن تواطؤهم على الكذب",
+      "يرويه راويان",
+      "مرسل",
+      "ضعيف"
+    ],
+    "correct_index": 0,
+    "source": "علوم الحديث",
+    "keywords": [
+      "متواتر"
+    ]
+  },
+  {
+    "category_slug": "nawawi-40",
+    "question_type": "count",
+    "difficulty": "سهل",
+    "question": "كم عدد أحاديث الأربعين النووية؟",
+    "options": [
+      "42",
+      "40",
+      "50",
+      "30"
+    ],
+    "correct_index": 0,
+    "source": "الأربعون النووية",
+    "keywords": [
+      "نووية"
+    ]
+  },
+  {
+    "category_slug": "usool-fiqh",
+    "subcategory_slug": "fiqh-maxims",
+    "question_type": "multiple_choice",
+    "difficulty": "متوسط",
+    "question": "القاعدة: الأمور بمقاصدها",
+    "options": [
+      "الأعمال بالنيات",
+      "كل شيء حلال",
+      "لا عبرة بالظاهر",
+      "العادة حكم"
+    ],
+    "correct_index": 0,
+    "source": "القواعد الفقهية",
+    "keywords": [
+      "قواعد"
+    ]
+  },
+  {
+    "category_slug": "fiqh",
+    "subcategory_slug": "faraid",
+    "question_type": "multiple_choice",
+    "difficulty": "متقدم",
+    "question": "نصيب الزوج من تركة زوجته إن لم يكن له ولد:",
+    "options": [
+      "النصف",
+      "الربع",
+      "الثلث",
+      "السدس"
+    ],
+    "correct_index": 0,
+    "source": "القرآن",
+    "keywords": [
+      "مواريث"
+    ]
+  },
+  {
+    "category_slug": "kuwait-islamic",
+    "question_type": "multiple_choice",
+    "difficulty": "سهل",
+    "question": "مسجد الدسمة من أقدم مساجد:",
+    "options": [
+      "الكويت",
+      "السعودية",
+      "البحرين",
+      "عمان"
+    ],
+    "correct_index": 0,
+    "source": "تاريخ الكويت",
+    "keywords": [
+      "كويت"
+    ]
+  },
+  {
+    "category_slug": "islamic-puzzles",
+    "question_type": "multiple_choice",
+    "difficulty": "متوسط",
+    "question": "كم عدد أسماء الله الحسنى؟",
+    "options": [
+      "99",
+      "100",
+      "77",
+      "55"
+    ],
+    "correct_index": 0,
+    "source": "السنة",
+    "keywords": [
+      "أسماء"
+    ]
+  },
+  {
+    "category_slug": "seera",
+    "subcategory_slug": "mosques",
+    "question_type": "mosque_choice",
+    "difficulty": "سهل",
+    "question": "أول مسجد بُني في الإسلام:",
+    "options": [
+      "مسجد قباء",
+      "المسجد النبوي",
+      "المسجد الحرام",
+      "مسجد الأقصى"
+    ],
+    "correct_index": 0,
+    "source": "السيرة",
+    "keywords": [
+      "مساجد"
+    ]
+  }
+]
