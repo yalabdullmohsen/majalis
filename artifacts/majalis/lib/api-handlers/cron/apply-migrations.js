@@ -221,6 +221,25 @@ export default async function handler(req, res) {
       return;
     }
 
+    if (scope === "sin-jeem" || scope === "sin-jeem-v1") {
+      const { applySinJeemMigration } = await import("../../../lib/sin-jeem-migration.mjs");
+      const migration = await applySinJeemMigration({ force: req.query?.force === "1" });
+      let seed = null;
+      if (req.query?.seed !== "0" && req.body?.seed !== false && migration.ok) {
+        const { runSinJeemSeed } = await import("../../../lib/sin-jeem-seed.mjs");
+        seed = await runSinJeemSeed({ force: req.query?.force === "1" });
+      }
+      const ok = migration.ok && migration.verify?.ok && (!seed || seed.ok || seed.seed?.skipped);
+      sendJson(res, ok ? 200 : 500, {
+        ok,
+        scope: "sin-jeem",
+        migration,
+        seed,
+        resolved: resolvedMeta(),
+      });
+      return;
+    }
+
     if (scope === "activation") {
       assertServiceSecrets("migrations");
       const seedRulings = req.query?.seed !== "0" && req.body?.seed !== false;

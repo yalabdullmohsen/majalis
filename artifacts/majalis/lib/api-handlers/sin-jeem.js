@@ -1,6 +1,8 @@
 import { sendJson } from "../api/_http.mjs";
 import { getEnvConfig } from "../../env-config.mjs";
 import { getSupabaseAdmin } from "../../supabase-admin.mjs";
+import { requireAdminAccess } from "../../admin-auth.mjs";
+import { parseCsvQuestions, parseJsonQuestions, questionsToCsv, contentHash as importHash } from "../../sin-jeem-import.mjs";
 
 const USED_HASHES = new Set();
 const RATE_LIMIT = new Map();
@@ -74,11 +76,25 @@ function validateMatchPayload(body) {
     return { ok: false, error: "correct_count_invalid" };
   }
 
+  const mode = String(body.mode || "team_vs_team").slice(0, 32);
+  const minScoreFromCorrect = 0;
+  const maxScoreFromCorrect = totalQuestions * MAX_SCORE_PER_QUESTION;
+  if (teamAScore < minScoreFromCorrect || teamBScore < minScoreFromCorrect) {
+    return { ok: false, error: "score_below_min" };
+  }
+  if (teamACorrect + (Number(body.team_a_wrong) || 0) > totalQuestions) {
+    return { ok: false, error: "team_a_stats_invalid" };
+  }
+  if (teamBCorrect + (Number(body.team_b_wrong) || 0) > totalQuestions) {
+    return { ok: false, error: "team_b_stats_invalid" };
+  }
+  void maxScoreFromCorrect;
+
   return {
     ok: true,
     data: {
       sessionId: String(body.session_id || "").slice(0, 64),
-      mode: String(body.mode || "team_vs_team").slice(0, 32),
+      mode,
       teamAName,
       teamBName,
       teamAScore,
@@ -191,7 +207,93 @@ async function fetchSourceContent(source) {
     const { data } = await admin.from("mutoon_texts").select("name,summary").limit(20);
     return (data || []).map((r) => `${r.name}: ${r.summary || ""}`);
   }
+  if (source === "books") {
+    const { data } = await admin.from("books").select("title,description").limit(20);
+    return (data || []).map((r) => `${r.title}: ${r.description || ""}`.trim()).filter(Boolean);
+  }
+  if (source === "articles") {
+    const { data } = await admin.from("articles").select("title,summary,body").limit(20);
+    return (data || []).map((r) => `${r.title}: ${r.summary || r.body || ""}`.trim()).filter(Boolean);
+  }
   return [];
+}
+
+function leaderboardEntityType(mode, side) {
+  if (mode === "team_vs_team") return "team";
+  if (mode === "player_vs_player") return "player";
+  if (mode === "solo" || mode === "daily" || mode === "quick") return "player";
+  if (mode === "tournament") return side === "a" ? "team" : "player";
+  return "player";
+}
+
+async function writeAudit(admin, { questionId, action, actorId, payload }) {
+  try {
+    await admin.from("sin_jeem_question_audit").insert({
+      question_id: questionId,
+      action,
+      actor_id: actorId || null,
+      payload: payload || null,
+    });
+  } catch {
+    /* audit table may not exist yet */
+  }
+}
+
+async function adminListQuestions(admin, query = {}) {
+  let q = admin.from("sin_jeem_questions").select("*").order("updated_at", { ascending: false }).limit(500);
+  if (query.status) q = q.eq("review_status", query.status);
+  if (query.type) q = q.eq("question_type", query.type);
+  if (query.difficulty) q = q.eq("difficulty", query.difficulty);
+  if (query.search) q = q.ilike("question", `%${query.search.slice(0, 80)}%`);
+  const { data, error } = await q;
+  if (error) throw new Error(error.message);
+  return data || [];
+}
+
+async function adminBulkReview(admin, ids, status, actorId) {
+  const { error } = await admin
+    .from("sin_jeem_questions")
+    .update({ review_status: status, status: status === "approved" ? "published" : "draft", updated_by: actorId })
+    .in("id", ids);
+  if (error) throw new Error(error.message);
+  for (const id of ids) {
+    await writeAudit(admin, { questionId: id, action: status, actorId, payload: { bulk: true } });
+  }
+  return ids.length;
+}
+
+async function adminImportQuestions(admin, rows, actorId) {
+  const { data: existing } = await admin.from("sin_jeem_questions").select("content_hash, question");
+  const seen = new Set((existing || []).map((r) => r.content_hash || hashText(r.question)));
+  let inserted = 0;
+  let skipped = 0;
+
+  for (const row of rows) {
+    const h = importHash(row.question);
+    if (seen.has(h)) {
+      skipped++;
+      continue;
+    }
+    seen.add(h);
+    const { error } = await admin.from("sin_jeem_questions").insert({
+      question: row.question,
+      question_type: row.question_type || "multiple_choice",
+      options: row.options || [],
+      correct_index: row.correct_index ?? 0,
+      explanation: row.explanation,
+      difficulty: row.difficulty || "متوسط",
+      keywords: row.keywords || [],
+      subcategory_slug: row.subcategory_slug,
+      source: row.source,
+      status: "published",
+      review_status: "approved",
+      content_hash: h,
+      created_by: actorId,
+    });
+    if (error) throw new Error(error.message);
+    inserted++;
+  }
+  return { inserted, skipped };
 }
 
 async function generateFromOpenAI(content, difficulty) {
@@ -322,9 +424,11 @@ export default async function handler(req, res) {
     }
 
     const periods = ["day", "week", "month", "all"];
+    const entityA = leaderboardEntityType(d.mode, "a");
+    const entityB = leaderboardEntityType(d.mode, "b");
     for (const period of periods) {
       await upsertLeaderboardEntry(admin, {
-        entityType: "player",
+        entityType: entityA,
         displayName: d.teamAName,
         teamName: d.teamBName,
         score: d.teamAScore,
@@ -333,7 +437,7 @@ export default async function handler(req, res) {
       });
       if (d.teamBName) {
         await upsertLeaderboardEntry(admin, {
-          entityType: "team",
+          entityType: entityB,
           displayName: d.teamBName,
           teamName: d.teamBName,
           score: d.teamBScore,
@@ -348,6 +452,9 @@ export default async function handler(req, res) {
   }
 
   if (action === "generate") {
+    const auth = await requireAdminAccess(req, res, sendJson, { permission: "content.edit" });
+    if (!auth?.ok) return;
+
     if (!rateLimit(`sin-jeem-gen:${ip}`, 10, 60_000)) {
       sendJson(res, 429, { ok: false, error: "generate_rate_limited" });
       return;
@@ -400,6 +507,127 @@ export default async function handler(req, res) {
 
     sendJson(res, 200, { ok: true, question, review_status: reviewStatus });
     return;
+  }
+
+  const adminActions = [
+    "admin_questions",
+    "admin_export",
+    "admin_import",
+    "admin_bulk_approve",
+    "admin_bulk_reject",
+    "admin_bulk_delete",
+    "admin_audit",
+  ];
+  if (adminActions.includes(action)) {
+    const auth = await requireAdminAccess(req, res, sendJson, { permission: "content.edit" });
+    if (!auth?.ok) return;
+
+    const admin = getSupabaseAdmin();
+    if (!admin) {
+      sendJson(res, 503, { ok: false, error: "database_unavailable" });
+      return;
+    }
+
+    const actorId = auth.user?.id || null;
+
+    if (action === "admin_questions") {
+      try {
+        const rows = await adminListQuestions(admin, {
+          status: req.query?.status || req.body?.status,
+          type: req.query?.type || req.body?.type,
+          difficulty: req.query?.difficulty || req.body?.difficulty,
+          search: req.query?.search || req.body?.search,
+        });
+        sendJson(res, 200, { ok: true, questions: rows });
+      } catch (err) {
+        sendJson(res, 500, { ok: false, error: err.message });
+      }
+      return;
+    }
+
+    if (action === "admin_export") {
+      const format = req.query?.format || req.body?.format || "json";
+      try {
+        const rows = await adminListQuestions(admin, req.query || req.body || {});
+        if (format === "csv") {
+          sendJson(res, 200, { ok: true, format: "csv", content: questionsToCsv(rows) });
+        } else {
+          sendJson(res, 200, { ok: true, format: "json", questions: rows });
+        }
+      } catch (err) {
+        sendJson(res, 500, { ok: false, error: err.message });
+      }
+      return;
+    }
+
+    if (action === "admin_import") {
+      const body = req.body || {};
+      const format = body.format || "json";
+      try {
+        let rows = [];
+        if (format === "csv") rows = parseCsvQuestions(body.content || "");
+        else if (format === "json") rows = parseJsonQuestions(body.content || body.questions || []);
+        else if (Array.isArray(body.questions)) rows = body.questions;
+        const result = await adminImportQuestions(admin, rows, actorId);
+        sendJson(res, 200, { ok: true, ...result });
+      } catch (err) {
+        sendJson(res, 500, { ok: false, error: err.message });
+      }
+      return;
+    }
+
+    const ids = req.body?.ids || [];
+    if (!Array.isArray(ids) || !ids.length) {
+      sendJson(res, 400, { ok: false, error: "ids_required" });
+      return;
+    }
+
+    if (action === "admin_bulk_approve") {
+      try {
+        const n = await adminBulkReview(admin, ids, "approved", actorId);
+        sendJson(res, 200, { ok: true, updated: n });
+      } catch (err) {
+        sendJson(res, 500, { ok: false, error: err.message });
+      }
+      return;
+    }
+
+    if (action === "admin_bulk_reject") {
+      try {
+        const n = await adminBulkReview(admin, ids, "rejected", actorId);
+        sendJson(res, 200, { ok: true, updated: n });
+      } catch (err) {
+        sendJson(res, 500, { ok: false, error: err.message });
+      }
+      return;
+    }
+
+    if (action === "admin_bulk_delete") {
+      try {
+        for (const id of ids) {
+          await writeAudit(admin, { questionId: id, action: "delete", actorId, payload: { bulk: true } });
+        }
+        const { error } = await admin.from("sin_jeem_questions").delete().in("id", ids);
+        if (error) throw new Error(error.message);
+        sendJson(res, 200, { ok: true, deleted: ids.length });
+      } catch (err) {
+        sendJson(res, 500, { ok: false, error: err.message });
+      }
+      return;
+    }
+
+    if (action === "admin_audit") {
+      const questionId = req.query?.question_id || req.body?.question_id;
+      let q = admin.from("sin_jeem_question_audit").select("*").order("created_at", { ascending: false }).limit(100);
+      if (questionId) q = q.eq("question_id", questionId);
+      const { data, error } = await q;
+      if (error) {
+        sendJson(res, 500, { ok: false, error: error.message });
+        return;
+      }
+      sendJson(res, 200, { ok: true, audit: data || [] });
+      return;
+    }
   }
 
   sendJson(res, 400, { ok: false, error: "unknown_action" });

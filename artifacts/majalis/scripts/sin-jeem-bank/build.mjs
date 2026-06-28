@@ -167,6 +167,106 @@ function buildExtended() {
   });
 }
 
+function buildAdvancedTypes() {
+  const out = [];
+  const seiraEvents = ["مولد النبي ﷺ", "الوحي", "الهجرة", "غزوة بدر", "فتح مكة", "حجة الوداع"];
+  out.push({
+    category_slug: "seera",
+    subcategory_slug: "seira-timeline",
+    question_type: "seira_timeline",
+    difficulty: "متوسط",
+    question: "ما أول مرحلة في تسلسل السيرة النبوية؟",
+    options: seiraEvents,
+    correct_index: 0,
+    explanation: "يبدأ التسلسل بمولد النبي ﷺ ثم الوحي والهجرة...",
+    source: "السيرة النبوية",
+    keywords: ["سيرة", "ترتيب"],
+  });
+
+  out.push({
+    category_slug: "seera",
+    question_type: "order_events",
+    difficulty: "متقدم",
+    question: "ما الحدث الذي جاء بعد الهجرة مباشرة في ترتيب الغزوات؟",
+    options: ["غزوة بدر", "غزوة أحد", "غزوة الخندق", "صلح الحديبية"],
+    correct_index: 0,
+    source: "السيرة",
+    keywords: ["غزوات", "ترتيب"],
+  });
+
+  out.push({
+    category_slug: "fiqh",
+    question_type: "match",
+    difficulty: "متوسط",
+    question: "وصل بين الركن والوصف:",
+    options: ["الصلاة", "ركن", "الزكاة", "مال", "الصوم", "شهر رمضان", "الحج", "بيت الله"],
+    correct_index: 0,
+    explanation: "كل ركن يقترن بوصفه.",
+    source: "الفقه",
+    keywords: ["أركان", "وصل"],
+  });
+
+  out.push({
+    category_slug: "mosques",
+    question_type: "mosque_choice",
+    difficulty: "سهل",
+    question: "أي مسجد يُعرف بمسجد قباء؟",
+    options: ["أول مسجد بُني في الإسلام", "مسجد في مكة", "مسجد في القدس", "مسجد في الكوفة"],
+    correct_index: 0,
+    source: "السيرة",
+    keywords: ["قباء", "مسجد"],
+  });
+
+  out.push({
+    category_slug: "mutoon",
+    question_type: "complete_mutoon",
+    difficulty: "متقدم",
+    question: "أكمل المتن: «إِنَّمَا الْأَعْمَالُ...»",
+    options: ["بِالنِّيَّاتِ", "بِالأَقْوالِ", "بِالأَموَالِ", "بِالأَعْمَالِ"],
+    correct_index: 0,
+    explanation: "من حديث: إنما الأعمال بالنيات.",
+    source: "الأربعون النووية",
+    keywords: ["متن", "نية"],
+  });
+
+  out.push({
+    category_slug: "hadith",
+    question_type: "book_choice",
+    difficulty: "متوسط",
+    question: "في أي كتاب ورد حديث «إنما الأعمال بالنيات»؟",
+    options: ["صحيح البخاري", "موطأ مالك", "سنن ابن ماجه", "مسند أحمد"],
+    correct_index: 0,
+    source: "الحديث",
+    keywords: ["بخاري", "كتاب"],
+  });
+
+  out.push({
+    category_slug: "quran",
+    question_type: "audio_choice",
+    difficulty: "متوسط",
+    question: "استمع ثم حدّد السورة:",
+    options: ["الفاتحة", "الإخلاص", "الكوثر", "الناس"],
+    correct_index: 0,
+    audio_url: "https://cdn.islamic.network/quran/audio-surah/128/ar.alafasy/1.mp3",
+    source: "القرآن",
+    keywords: ["صوت", "سورة"],
+  });
+
+  out.push({
+    category_slug: "seera",
+    question_type: "video_choice",
+    difficulty: "سهل",
+    question: "ما المشهد المعروض؟",
+    options: ["الكعبة المشرفة", "المسجد النبوي", "جبل أحد", "غار حراء"],
+    correct_index: 0,
+    video_url: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
+    source: "معالم إسلامية",
+    keywords: ["مرئي", "كعبة"],
+  });
+
+  return out;
+}
+
 export function buildAll() {
   const surahs = loadJson("surahs.json");
   let curated = [];
@@ -181,6 +281,7 @@ export function buildAll() {
     ...buildFromCsv(),
     ...buildSurahQuestions(surahs),
     ...buildExtended(),
+    ...buildAdvancedTypes(),
   ];
 
   const seen = new Set();
@@ -206,6 +307,9 @@ export function buildAll() {
     };
     if (q.subcategory_slug) item.subcategory_slug = q.subcategory_slug;
     if (q.explanation) item.explanation = q.explanation;
+    if (q.audio_url) item.audio_url = q.audio_url;
+    if (q.video_url) item.video_url = q.video_url;
+    if (q.image_url) item.image_url = q.image_url;
     return item;
   });
 }

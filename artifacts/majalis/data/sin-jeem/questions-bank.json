@@ -298,9 +298,9 @@
     "question": "كم عدد آيات سورة الفاتحة؟",
     "options": [
       "7",
-      "120",
-      "75",
-      "19"
+      "19",
+      "11",
+      "53"
     ],
     "correct_index": 0,
     "difficulty": "سهل",
@@ -317,12 +317,12 @@
     "question_type": "count",
     "question": "ما رقم سورة الفاتحة في المصحف؟",
     "options": [
-      "32",
       "1",
-      "112",
-      "67"
+      "57",
+      "11",
+      "94"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -355,12 +355,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 1؟",
     "options": [
-      "الفاتحة",
-      "الزمر",
-      "البينة",
-      "البلد"
+      "الأعراف",
+      "قريش",
+      "الروم",
+      "الفاتحة"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -374,12 +374,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة البقرة؟",
     "options": [
-      "54",
       "286",
-      "22",
-      "73"
+      "123",
+      "45",
+      "11"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن الكريم",
     "keywords": [
@@ -394,12 +394,12 @@
     "question_type": "count",
     "question": "ما رقم سورة البقرة في المصحف؟",
     "options": [
-      "107",
-      "51",
-      "112",
-      "2"
+      "86",
+      "7",
+      "2",
+      "113"
     ],
-    "correct_index": 3,
+    "correct_index": 2,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -432,12 +432,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 2؟",
     "options": [
+      "النحل",
+      "ق",
       "البقرة",
-      "غافر",
-      "الطلاق",
-      "ص"
+      "النصر"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -451,12 +451,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة آل عمران؟",
     "options": [
-      "60",
+      "20",
+      "55",
       "200",
-      "112",
-      "8"
+      "7"
     ],
-    "correct_index": 1,
+    "correct_index": 2,
     "difficulty": "متوسط",
     "source": "القرآن الكريم",
     "keywords": [
@@ -471,12 +471,12 @@
     "question_type": "count",
     "question": "ما رقم سورة آل عمران في المصحف؟",
     "options": [
-      "41",
-      "94",
-      "73",
-      "3"
+      "1",
+      "3",
+      "81",
+      "58"
     ],
-    "correct_index": 3,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -509,12 +509,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 3؟",
     "options": [
-      "الرعد",
-      "الأعلى",
+      "المعارج",
       "آل عمران",
-      "القلم"
+      "إبراهيم",
+      "النجم"
     ],
-    "correct_index": 2,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -528,12 +528,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة النساء؟",
     "options": [
+      "11",
       "176",
-      "22",
-      "59",
-      "11"
+      "60",
+      "21"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "القرآن الكريم",
     "keywords": [
@@ -548,12 +548,12 @@
     "question_type": "count",
     "question": "ما رقم سورة النساء في المصحف؟",
     "options": [
-      "89",
-      "22",
-      "6",
-      "4"
+      "31",
+      "4",
+      "2",
+      "95"
     ],
-    "correct_index": 3,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -586,12 +586,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 4؟",
     "options": [
-      "يس",
-      "الليل",
-      "المؤمنون",
-      "النساء"
+      "النساء",
+      "آل عمران",
+      "الدخان",
+      "الهمزة"
     ],
-    "correct_index": 3,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -605,12 +605,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة المائدة؟",
     "options": [
-      "9",
-      "111",
+      "40",
       "120",
-      "4"
+      "18",
+      "123"
     ],
-    "correct_index": 2,
+    "correct_index": 1,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -625,10 +625,10 @@
     "question_type": "count",
     "question": "ما رقم سورة المائدة في المصحف؟",
     "options": [
-      "101",
-      "71",
+      "95",
+      "93",
       "5",
-      "37"
+      "62"
     ],
     "correct_index": 2,
     "difficulty": "متوسط",
@@ -665,7 +665,7 @@
     "options": [
       "المسد",
       "المائدة",
-      "ص",
+      "التين",
       "الشرح"
     ],
     "correct_index": 1,
@@ -682,12 +682,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الأنعام؟",
     "options": [
-      "165",
-      "5",
-      "52",
-      "11"
+      "4",
+      "9",
+      "43",
+      "165"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "القرآن الكريم",
     "keywords": [
@@ -702,12 +702,12 @@
     "question_type": "count",
     "question": "ما رقم سورة الأنعام في المصحف؟",
     "options": [
-      "105",
-      "67",
-      "71",
-      "6"
+      "87",
+      "6",
+      "114",
+      "81"
     ],
-    "correct_index": 3,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -740,12 +740,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 6؟",
     "options": [
-      "العنكبوت",
-      "الأنعام",
-      "الطور",
-      "هود"
+      "التحريم",
+      "التوبة",
+      "التغابن",
+      "الأنعام"
     ],
-    "correct_index": 1,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -759,12 +759,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الأعراف؟",
     "options": [
-      "20",
-      "34",
       "206",
-      "111"
+      "8",
+      "227",
+      "50"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن الكريم",
     "keywords": [
@@ -779,10 +779,10 @@
     "question_type": "count",
     "question": "ما رقم سورة الأعراف في المصحف؟",
     "options": [
-      "66",
-      "76",
+      "100",
+      "1",
       "7",
-      "20"
+      "30"
     ],
     "correct_index": 2,
     "difficulty": "متوسط",
@@ -817,12 +817,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 7؟",
     "options": [
-      "المجادلة",
-      "العلق",
-      "قريش",
-      "الأعراف"
+      "النحل",
+      "الأعراف",
+      "الروم",
+      "المسد"
     ],
-    "correct_index": 3,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -836,12 +836,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الأنفال؟",
     "options": [
-      "30",
-      "17",
-      "75",
-      "22"
+      "8",
+      "73",
+      "20",
+      "75"
     ],
-    "correct_index": 2,
+    "correct_index": 3,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -856,12 +856,12 @@
     "question_type": "count",
     "question": "ما رقم سورة الأنفال في المصحف؟",
     "options": [
-      "92",
+      "57",
+      "85",
       "8",
-      "27",
-      "83"
+      "90"
     ],
-    "correct_index": 1,
+    "correct_index": 2,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -894,12 +894,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 8؟",
     "options": [
-      "النحل",
-      "الملك",
-      "القيامة",
-      "الأنفال"
+      "الرعد",
+      "الحاقة",
+      "الأنفال",
+      "المؤمنون"
     ],
-    "correct_index": 3,
+    "correct_index": 2,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -913,12 +913,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة التوبة؟",
     "options": [
-      "43",
-      "129",
+      "21",
       "89",
-      "52"
+      "49",
+      "129"
     ],
-    "correct_index": 1,
+    "correct_index": 3,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -933,12 +933,12 @@
     "question_type": "count",
     "question": "ما رقم سورة التوبة في المصحف؟",
     "options": [
-      "14",
-      "13",
-      "35",
-      "9"
+      "9",
+      "27",
+      "90",
+      "3"
     ],
-    "correct_index": 3,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -971,12 +971,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 9؟",
     "options": [
-      "الفلق",
-      "الجمعة",
       "التوبة",
-      "الحديد"
+      "الصف",
+      "الجن",
+      "الجمعة"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -990,12 +990,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة يونس؟",
     "options": [
-      "3",
-      "135",
-      "8",
-      "109"
+      "35",
+      "19",
+      "109",
+      "7"
     ],
-    "correct_index": 3,
+    "correct_index": 2,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -1010,12 +1010,12 @@
     "question_type": "count",
     "question": "ما رقم سورة يونس في المصحف؟",
     "options": [
-      "95",
-      "1",
-      "85",
-      "10"
+      "94",
+      "65",
+      "10",
+      "107"
     ],
-    "correct_index": 3,
+    "correct_index": 2,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -1048,12 +1048,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 10؟",
     "options": [
-      "طه",
-      "النجم",
-      "الجن",
-      "يونس"
+      "الفلق",
+      "الشعراء",
+      "يونس",
+      "النبأ"
     ],
-    "correct_index": 3,
+    "correct_index": 2,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -1067,12 +1067,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة هود؟",
     "options": [
-      "11",
-      "20",
+      "29",
       "123",
-      "28"
+      "19",
+      "8"
     ],
-    "correct_index": 2,
+    "correct_index": 1,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -1087,12 +1087,12 @@
     "question_type": "count",
     "question": "ما رقم سورة هود في المصحف؟",
     "options": [
-      "33",
-      "110",
-      "99",
-      "11"
+      "39",
+      "45",
+      "11",
+      "46"
     ],
-    "correct_index": 3,
+    "correct_index": 2,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -1125,10 +1125,10 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 11؟",
     "options": [
-      "الكهف",
+      "الرحمن",
       "هود",
-      "القمر",
-      "الرحمن"
+      "التوبة",
+      "النحل"
     ],
     "correct_index": 1,
     "difficulty": "متوسط",
@@ -1144,12 +1144,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة يوسف؟",
     "options": [
-      "4",
-      "59",
-      "3",
-      "111"
+      "111",
+      "8",
+      "46",
+      "89"
     ],
-    "correct_index": 3,
+    "correct_index": 0,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -1164,12 +1164,12 @@
     "question_type": "count",
     "question": "ما رقم سورة يوسف في المصحف؟",
     "options": [
-      "38",
-      "31",
-      "44",
-      "12"
+      "12",
+      "97",
+      "21",
+      "54"
     ],
-    "correct_index": 3,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -1202,12 +1202,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 12؟",
     "options": [
-      "يوسف",
-      "الليل",
-      "العصر",
-      "الانفطار"
+      "الحجر",
+      "الأنعام",
+      "الفلق",
+      "يوسف"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -1222,9 +1222,9 @@
     "question": "كم عدد آيات سورة الرعد؟",
     "options": [
       "43",
-      "3",
-      "206",
-      "29"
+      "45",
+      "77",
+      "30"
     ],
     "correct_index": 0,
     "difficulty": "سهل",
@@ -1241,12 +1241,12 @@
     "question_type": "count",
     "question": "ما رقم سورة الرعد في المصحف؟",
     "options": [
+      "23",
       "13",
-      "110",
-      "94",
-      "22"
+      "38",
+      "24"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -1280,9 +1280,9 @@
     "question": "ما اسم السورة رقم 13؟",
     "options": [
       "الرعد",
-      "التغابن",
-      "الحجرات",
-      "غافر"
+      "القلم",
+      "فاطر",
+      "الطور"
     ],
     "correct_index": 0,
     "difficulty": "متوسط",
@@ -1298,12 +1298,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة إبراهيم؟",
     "options": [
-      "52",
-      "9",
-      "78",
-      "3"
+      "14",
+      "75",
+      "118",
+      "52"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -1318,12 +1318,12 @@
     "question_type": "count",
     "question": "ما رقم سورة إبراهيم في المصحف؟",
     "options": [
-      "96",
-      "105",
-      "36",
-      "14"
+      "35",
+      "86",
+      "14",
+      "7"
     ],
-    "correct_index": 3,
+    "correct_index": 2,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -1356,12 +1356,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 14؟",
     "options": [
-      "الطارق",
       "إبراهيم",
-      "طه",
-      "المزمل"
+      "الحجرات",
+      "الرعد",
+      "الممتحنة"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -1376,9 +1376,9 @@
     "question": "كم عدد آيات سورة الحجر؟",
     "options": [
       "99",
-      "5",
-      "62",
-      "8"
+      "43",
+      "286",
+      "227"
     ],
     "correct_index": 0,
     "difficulty": "سهل",
@@ -1395,12 +1395,12 @@
     "question_type": "count",
     "question": "ما رقم سورة الحجر في المصحف؟",
     "options": [
+      "3",
       "15",
-      "44",
-      "30",
-      "43"
+      "1",
+      "95"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -1433,10 +1433,10 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 15؟",
     "options": [
-      "النصر",
+      "مريم",
       "الحجر",
-      "الملك",
-      "الكوثر"
+      "الواقعة",
+      "الكهف"
     ],
     "correct_index": 1,
     "difficulty": "متوسط",
@@ -1452,12 +1452,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة النحل؟",
     "options": [
-      "69",
       "128",
-      "50",
-      "54"
+      "78",
+      "11",
+      "176"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -1472,9 +1472,9 @@
     "question_type": "count",
     "question": "ما رقم سورة النحل في المصحف؟",
     "options": [
-      "17",
-      "113",
-      "74",
+      "76",
+      "75",
+      "39",
       "16"
     ],
     "correct_index": 3,
@@ -1510,12 +1510,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 16؟",
     "options": [
+      "الأعراف",
       "النحل",
-      "الشورى",
-      "الجمعة",
-      "الروم"
+      "المرسلات",
+      "إبراهيم"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -1529,12 +1529,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الإسراء؟",
     "options": [
-      "60",
+      "78",
+      "22",
       "111",
-      "112",
-      "40"
+      "28"
     ],
-    "correct_index": 1,
+    "correct_index": 2,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -1549,12 +1549,12 @@
     "question_type": "count",
     "question": "ما رقم سورة الإسراء في المصحف؟",
     "options": [
-      "88",
-      "17",
-      "46",
-      "10"
+      "32",
+      "79",
+      "43",
+      "17"
     ],
-    "correct_index": 1,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -1587,12 +1587,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 17؟",
     "options": [
-      "الإسراء",
-      "الحجر",
-      "فصلت",
-      "الشعراء"
+      "المعارج",
+      "العصر",
+      "الفرقان",
+      "الإسراء"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -1606,10 +1606,10 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الكهف؟",
     "options": [
-      "11",
+      "73",
       "110",
-      "45",
-      "78"
+      "35",
+      "38"
     ],
     "correct_index": 1,
     "difficulty": "سهل",
@@ -1626,12 +1626,12 @@
     "question_type": "count",
     "question": "ما رقم سورة الكهف في المصحف؟",
     "options": [
-      "95",
-      "112",
       "18",
-      "2"
+      "72",
+      "64",
+      "94"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -1664,10 +1664,10 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 18؟",
     "options": [
-      "المجادلة",
+      "الزخرف",
       "الكهف",
-      "الزلزلة",
-      "النبأ"
+      "القدر",
+      "البينة"
     ],
     "correct_index": 1,
     "difficulty": "متوسط",
@@ -1683,12 +1683,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة مريم؟",
     "options": [
+      "12",
+      "78",
       "98",
-      "30",
-      "7",
-      "13"
+      "14"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -1703,12 +1703,12 @@
     "question_type": "count",
     "question": "ما رقم سورة مريم في المصحف؟",
     "options": [
-      "13",
-      "4",
-      "19",
-      "65"
+      "37",
+      "59",
+      "88",
+      "19"
     ],
-    "correct_index": 2,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -1741,12 +1741,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 19؟",
     "options": [
-      "الأنفال",
-      "طه",
+      "المدثر",
       "مريم",
-      "فاطر"
+      "الشمس",
+      "القلم"
     ],
-    "correct_index": 2,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -1760,12 +1760,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة طه؟",
     "options": [
-      "135",
-      "78",
-      "111",
-      "9"
+      "26",
+      "77",
+      "8",
+      "135"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -1780,12 +1780,12 @@
     "question_type": "count",
     "question": "ما رقم سورة طه في المصحف؟",
     "options": [
-      "112",
       "59",
       "20",
-      "5"
+      "50",
+      "2"
     ],
-    "correct_index": 2,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -1818,12 +1818,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 20؟",
     "options": [
-      "الشمس",
-      "التكاثر",
-      "النساء",
-      "طه"
+      "الطارق",
+      "الرعد",
+      "طه",
+      "يس"
     ],
-    "correct_index": 3,
+    "correct_index": 2,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -1837,12 +1837,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الأنبياء؟",
     "options": [
-      "109",
+      "38",
+      "89",
       "112",
-      "28",
-      "227"
+      "128"
     ],
-    "correct_index": 1,
+    "correct_index": 2,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -1857,12 +1857,12 @@
     "question_type": "count",
     "question": "ما رقم سورة الأنبياء في المصحف؟",
     "options": [
-      "64",
-      "80",
-      "95",
-      "21"
+      "56",
+      "21",
+      "50",
+      "31"
     ],
-    "correct_index": 3,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -1895,12 +1895,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 21؟",
     "options": [
-      "القيامة",
-      "البروج",
-      "الشورى",
-      "الأنبياء"
+      "الأنبياء",
+      "التحريم",
+      "التكاثر",
+      "المعارج"
     ],
-    "correct_index": 3,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -1914,12 +1914,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الحج؟",
     "options": [
-      "28",
-      "18",
+      "69",
       "78",
-      "4"
+      "93",
+      "8"
     ],
-    "correct_index": 2,
+    "correct_index": 1,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -1934,12 +1934,12 @@
     "question_type": "count",
     "question": "ما رقم سورة الحج في المصحف؟",
     "options": [
-      "13",
+      "3",
+      "30",
       "22",
-      "58",
-      "26"
+      "66"
     ],
-    "correct_index": 1,
+    "correct_index": 2,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -1972,10 +1972,10 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 22؟",
     "options": [
-      "الأحقاف",
-      "الأنبياء",
+      "الأعلى",
+      "طه",
       "الحج",
-      "الواقعة"
+      "المنافقون"
     ],
     "correct_index": 2,
     "difficulty": "متوسط",
@@ -1991,12 +1991,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة المؤمنون؟",
     "options": [
-      "53",
-      "99",
-      "111",
-      "118"
+      "118",
+      "77",
+      "6",
+      "8"
     ],
-    "correct_index": 3,
+    "correct_index": 0,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -2011,12 +2011,12 @@
     "question_type": "count",
     "question": "ما رقم سورة المؤمنون في المصحف؟",
     "options": [
-      "74",
-      "20",
-      "55",
-      "23"
+      "23",
+      "58",
+      "88",
+      "68"
     ],
-    "correct_index": 3,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -2049,12 +2049,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 23؟",
     "options": [
-      "الزمر",
-      "الشمس",
-      "البقرة",
-      "المؤمنون"
+      "الماعون",
+      "المسد",
+      "المؤمنون",
+      "الزلزلة"
     ],
-    "correct_index": 3,
+    "correct_index": 2,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -2068,12 +2068,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة النور؟",
     "options": [
-      "78",
-      "53",
       "64",
-      "13"
+      "111",
+      "88",
+      "29"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -2088,12 +2088,12 @@
     "question_type": "count",
     "question": "ما رقم سورة النور في المصحف؟",
     "options": [
-      "114",
-      "24",
-      "103",
-      "25"
+      "43",
+      "4",
+      "87",
+      "24"
     ],
-    "correct_index": 1,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -2126,12 +2126,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 24؟",
     "options": [
-      "الزمر",
-      "المدثر",
-      "قريش",
-      "النور"
+      "التكاثر",
+      "المنافقون",
+      "النور",
+      "القدر"
     ],
-    "correct_index": 3,
+    "correct_index": 2,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -2146,9 +2146,9 @@
     "question": "كم عدد آيات سورة الفرقان؟",
     "options": [
       "77",
-      "123",
-      "36",
-      "8"
+      "18",
+      "78",
+      "135"
     ],
     "correct_index": 0,
     "difficulty": "سهل",
@@ -2165,12 +2165,12 @@
     "question_type": "count",
     "question": "ما رقم سورة الفرقان في المصحف؟",
     "options": [
-      "105",
-      "25",
-      "42",
-      "59"
+      "72",
+      "33",
+      "21",
+      "25"
     ],
-    "correct_index": 1,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -2203,12 +2203,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 25؟",
     "options": [
-      "النصر",
-      "الفرقان",
-      "فصلت",
-      "الممتحنة"
+      "البقرة",
+      "غافر",
+      "هود",
+      "الفرقان"
     ],
-    "correct_index": 1,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -2222,10 +2222,10 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الشعراء؟",
     "options": [
-      "96",
+      "30",
       "227",
-      "34",
-      "3"
+      "60",
+      "118"
     ],
     "correct_index": 1,
     "difficulty": "متوسط",
@@ -2242,12 +2242,12 @@
     "question_type": "count",
     "question": "ما رقم سورة الشعراء في المصحف؟",
     "options": [
-      "81",
-      "5",
       "26",
-      "65"
+      "94",
+      "76",
+      "17"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -2280,12 +2280,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 26؟",
     "options": [
-      "الحاقة",
-      "الشعراء",
-      "الإسراء",
-      "إبراهيم"
+      "الجمعة",
+      "السجدة",
+      "ق",
+      "الشعراء"
     ],
-    "correct_index": 1,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -2299,9 +2299,9 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة النمل؟",
     "options": [
-      "21",
-      "37",
-      "29",
+      "11",
+      "99",
+      "5",
       "93"
     ],
     "correct_index": 3,
@@ -2319,12 +2319,12 @@
     "question_type": "count",
     "question": "ما رقم سورة النمل في المصحف؟",
     "options": [
-      "48",
+      "94",
+      "95",
       "27",
-      "50",
-      "32"
+      "79"
     ],
-    "correct_index": 1,
+    "correct_index": 2,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -2358,9 +2358,9 @@
     "question": "ما اسم السورة رقم 27؟",
     "options": [
       "النمل",
-      "التكوير",
-      "الفلق",
-      "المائدة"
+      "الدخان",
+      "المجادلة",
+      "التكاثر"
     ],
     "correct_index": 0,
     "difficulty": "متوسط",
@@ -2376,12 +2376,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة القصص؟",
     "options": [
-      "54",
-      "9",
-      "111",
-      "88"
+      "88",
+      "69",
+      "46",
+      "60"
     ],
-    "correct_index": 3,
+    "correct_index": 0,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -2396,12 +2396,12 @@
     "question_type": "count",
     "question": "ما رقم سورة القصص في المصحف؟",
     "options": [
-      "99",
+      "15",
+      "32",
       "28",
-      "89",
-      "60"
+      "84"
     ],
-    "correct_index": 1,
+    "correct_index": 2,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -2435,9 +2435,9 @@
     "question": "ما اسم السورة رقم 28؟",
     "options": [
       "القصص",
-      "الجمعة",
-      "الأعراف",
-      "ق"
+      "الشورى",
+      "الناس",
+      "فصلت"
     ],
     "correct_index": 0,
     "difficulty": "متوسط",
@@ -2453,9 +2453,9 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة العنكبوت؟",
     "options": [
-      "7",
-      "60",
-      "29",
+      "129",
+      "8",
+      "45",
       "69"
     ],
     "correct_index": 3,
@@ -2473,12 +2473,12 @@
     "question_type": "count",
     "question": "ما رقم سورة العنكبوت في المصحف؟",
     "options": [
+      "81",
       "29",
-      "47",
-      "20",
-      "38"
+      "37",
+      "74"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -2511,12 +2511,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 29؟",
     "options": [
-      "هود",
-      "الإسراء",
       "العنكبوت",
-      "الشعراء"
+      "النساء",
+      "هود",
+      "الأنعام"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -2530,9 +2530,9 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الروم؟",
     "options": [
-      "18",
-      "7",
-      "11",
+      "30",
+      "22",
+      "59",
       "60"
     ],
     "correct_index": 3,
@@ -2550,12 +2550,12 @@
     "question_type": "count",
     "question": "ما رقم سورة الروم في المصحف؟",
     "options": [
-      "87",
-      "84",
+      "53",
       "30",
-      "52"
+      "6",
+      "73"
     ],
-    "correct_index": 2,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -2588,12 +2588,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 30؟",
     "options": [
-      "التوبة",
-      "قريش",
-      "الروم",
-      "النحل"
+      "الحديد",
+      "الكافرون",
+      "الجمعة",
+      "الروم"
     ],
-    "correct_index": 2,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -2607,9 +2607,9 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة لقمان؟",
     "options": [
-      "120",
-      "19",
-      "11",
+      "28",
+      "6",
+      "60",
       "34"
     ],
     "correct_index": 3,
@@ -2627,12 +2627,12 @@
     "question_type": "count",
     "question": "ما رقم سورة لقمان في المصحف؟",
     "options": [
-      "31",
-      "17",
-      "32",
-      "114"
+      "106",
+      "55",
+      "85",
+      "31"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -2665,12 +2665,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 31؟",
     "options": [
-      "الكافرون",
-      "الإنسان",
+      "النور",
       "لقمان",
-      "الشرح"
+      "ص",
+      "سبأ"
     ],
-    "correct_index": 2,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -2684,12 +2684,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة السجدة؟",
     "options": [
-      "200",
-      "111",
+      "64",
       "30",
-      "26"
+      "112",
+      "38"
     ],
-    "correct_index": 2,
+    "correct_index": 1,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -2704,12 +2704,12 @@
     "question_type": "count",
     "question": "ما رقم سورة السجدة في المصحف؟",
     "options": [
+      "71",
       "32",
-      "111",
-      "90",
-      "55"
+      "38",
+      "85"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -2742,12 +2742,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 32؟",
     "options": [
-      "التين",
-      "الإسراء",
-      "السجدة",
-      "المزمل"
+      "النحل",
+      "النجم",
+      "القيامة",
+      "السجدة"
     ],
-    "correct_index": 2,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -2761,12 +2761,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الأحزاب؟",
     "options": [
-      "53",
+      "112",
+      "7",
       "73",
-      "110",
-      "25"
+      "11"
     ],
-    "correct_index": 1,
+    "correct_index": 2,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -2782,9 +2782,9 @@
     "question": "ما رقم سورة الأحزاب في المصحف؟",
     "options": [
       "33",
-      "10",
-      "29",
-      "97"
+      "103",
+      "110",
+      "66"
     ],
     "correct_index": 0,
     "difficulty": "متوسط",
@@ -2819,12 +2819,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 33؟",
     "options": [
-      "القصص",
-      "العلق",
-      "القارعة",
-      "الأحزاب"
+      "البقرة",
+      "الأحزاب",
+      "إبراهيم",
+      "الأنعام"
     ],
-    "correct_index": 3,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -2838,12 +2838,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة سبأ؟",
     "options": [
+      "286",
+      "55",
       "54",
-      "8",
-      "20",
-      "18"
+      "165"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -2858,10 +2858,10 @@
     "question_type": "count",
     "question": "ما رقم سورة سبأ في المصحف؟",
     "options": [
-      "109",
+      "53",
       "34",
-      "103",
-      "81"
+      "71",
+      "111"
     ],
     "correct_index": 1,
     "difficulty": "متوسط",
@@ -2897,9 +2897,9 @@
     "question": "ما اسم السورة رقم 34؟",
     "options": [
       "سبأ",
-      "الشورى",
-      "الأحزاب",
-      "إبراهيم"
+      "لقمان",
+      "الأعلى",
+      "الهمزة"
     ],
     "correct_index": 0,
     "difficulty": "متوسط",
@@ -2915,12 +2915,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة فاطر؟",
     "options": [
+      "60",
       "45",
-      "40",
-      "29",
-      "109"
+      "109",
+      "13"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -2935,10 +2935,10 @@
     "question_type": "count",
     "question": "ما رقم سورة فاطر في المصحف؟",
     "options": [
-      "16",
+      "75",
       "35",
-      "18",
-      "5"
+      "11",
+      "61"
     ],
     "correct_index": 1,
     "difficulty": "متوسط",
@@ -2973,9 +2973,9 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 35؟",
     "options": [
-      "الفتح",
-      "الأنبياء",
-      "الكوثر",
+      "الدخان",
+      "آل عمران",
+      "الشورى",
       "فاطر"
     ],
     "correct_index": 3,
@@ -2992,9 +2992,9 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة يس؟",
     "options": [
-      "25",
-      "30",
-      "120",
+      "54",
+      "11",
+      "4",
       "83"
     ],
     "correct_index": 3,
@@ -3012,10 +3012,10 @@
     "question_type": "count",
     "question": "ما رقم سورة يس في المصحف؟",
     "options": [
-      "102",
+      "99",
       "36",
-      "47",
-      "45"
+      "1",
+      "67"
     ],
     "correct_index": 1,
     "difficulty": "متوسط",
@@ -3050,12 +3050,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 36؟",
     "options": [
-      "طه",
       "يس",
-      "المدثر",
-      "الشعراء"
+      "نوح",
+      "يوسف",
+      "النمل"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -3069,12 +3069,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الصافات؟",
     "options": [
-      "14",
-      "29",
+      "111",
       "182",
-      "176"
+      "30",
+      "29"
     ],
-    "correct_index": 2,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "القرآن الكريم",
     "keywords": [
@@ -3090,9 +3090,9 @@
     "question": "ما رقم سورة الصافات في المصحف؟",
     "options": [
       "37",
-      "91",
-      "103",
-      "34"
+      "51",
+      "50",
+      "6"
     ],
     "correct_index": 0,
     "difficulty": "متوسط",
@@ -3127,10 +3127,10 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 37؟",
     "options": [
-      "الأعراف",
-      "الفرقان",
+      "سبأ",
+      "الهمزة",
       "الصافات",
-      "لقمان"
+      "المطففين"
     ],
     "correct_index": 2,
     "difficulty": "متوسط",
@@ -3146,12 +3146,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة ص؟",
     "options": [
-      "83",
-      "88",
-      "5",
-      "17"
+      "44",
+      "12",
+      "96",
+      "88"
     ],
-    "correct_index": 1,
+    "correct_index": 3,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -3166,12 +3166,12 @@
     "question_type": "count",
     "question": "ما رقم سورة ص في المصحف؟",
     "options": [
-      "89",
-      "44",
-      "69",
-      "38"
+      "38",
+      "47",
+      "114",
+      "63"
     ],
-    "correct_index": 3,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -3204,12 +3204,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 38؟",
     "options": [
+      "يونس",
       "ص",
-      "الملك",
-      "الرحمن",
-      "المنافقون"
+      "الكوثر",
+      "الشورى"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -3223,10 +3223,10 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الزمر؟",
     "options": [
-      "206",
-      "5",
+      "60",
+      "49",
       "75",
-      "17"
+      "34"
     ],
     "correct_index": 2,
     "difficulty": "سهل",
@@ -3243,12 +3243,12 @@
     "question_type": "count",
     "question": "ما رقم سورة الزمر في المصحف؟",
     "options": [
-      "39",
-      "84",
-      "59",
-      "61"
+      "89",
+      "19",
+      "15",
+      "39"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -3281,12 +3281,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 39؟",
     "options": [
-      "العنكبوت",
-      "الإنسان",
-      "القارعة",
-      "الزمر"
+      "نوح",
+      "الأنفال",
+      "الزمر",
+      "النبأ"
     ],
-    "correct_index": 3,
+    "correct_index": 2,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -3300,12 +3300,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة غافر؟",
     "options": [
-      "6",
-      "85",
-      "31",
-      "11"
+      "12",
+      "8",
+      "62",
+      "85"
     ],
-    "correct_index": 1,
+    "correct_index": 3,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -3320,10 +3320,10 @@
     "question_type": "count",
     "question": "ما رقم سورة غافر في المصحف؟",
     "options": [
-      "34",
-      "57",
+      "27",
+      "58",
       "40",
-      "18"
+      "43"
     ],
     "correct_index": 2,
     "difficulty": "متوسط",
@@ -3358,12 +3358,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 40؟",
     "options": [
+      "الغاشية",
+      "آل عمران",
       "غافر",
-      "الطلاق",
-      "النور",
-      "الرحمن"
+      "القارعة"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -3377,12 +3377,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة فصلت؟",
     "options": [
-      "29",
       "54",
-      "46",
-      "62"
+      "165",
+      "227",
+      "135"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -3397,12 +3397,12 @@
     "question_type": "count",
     "question": "ما رقم سورة فصلت في المصحف؟",
     "options": [
-      "81",
-      "59",
       "41",
-      "98"
+      "32",
+      "57",
+      "20"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -3435,12 +3435,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 41؟",
     "options": [
-      "الفيل",
-      "الأعلى",
-      "الصافات",
-      "فصلت"
+      "المعارج",
+      "التحريم",
+      "فصلت",
+      "المدثر"
     ],
-    "correct_index": 3,
+    "correct_index": 2,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -3454,12 +3454,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الشورى؟",
     "options": [
-      "21",
-      "53",
-      "13",
-      "206"
+      "56",
+      "110",
+      "52",
+      "53"
     ],
-    "correct_index": 1,
+    "correct_index": 3,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -3474,9 +3474,9 @@
     "question_type": "count",
     "question": "ما رقم سورة الشورى في المصحف؟",
     "options": [
-      "52",
-      "59",
-      "4",
+      "64",
+      "24",
+      "77",
       "42"
     ],
     "correct_index": 3,
@@ -3512,12 +3512,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 42؟",
     "options": [
-      "النمل",
       "الشورى",
-      "القدر",
-      "القصص"
+      "هود",
+      "محمد",
+      "العصر"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -3531,12 +3531,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الزخرف؟",
     "options": [
-      "45",
-      "52",
       "22",
-      "89"
+      "89",
+      "7",
+      "3"
     ],
-    "correct_index": 3,
+    "correct_index": 1,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -3551,10 +3551,10 @@
     "question_type": "count",
     "question": "ما رقم سورة الزخرف في المصحف؟",
     "options": [
-      "15",
+      "71",
       "43",
-      "34",
-      "105"
+      "82",
+      "54"
     ],
     "correct_index": 1,
     "difficulty": "متوسط",
@@ -3589,12 +3589,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 43؟",
     "options": [
+      "الحديد",
+      "غافر",
       "الزخرف",
-      "الأعراف",
-      "آل عمران",
-      "سبأ"
+      "الفلق"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -3608,12 +3608,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الدخان؟",
     "options": [
-      "59",
-      "62",
-      "123",
-      "11"
+      "29",
+      "78",
+      "20",
+      "59"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -3628,9 +3628,9 @@
     "question_type": "count",
     "question": "ما رقم سورة الدخان في المصحف؟",
     "options": [
-      "39",
-      "57",
-      "60",
+      "59",
+      "84",
+      "28",
       "44"
     ],
     "correct_index": 3,
@@ -3666,12 +3666,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 44؟",
     "options": [
-      "الفرقان",
-      "الفاتحة",
-      "الذاريات",
-      "الدخان"
+      "الدخان",
+      "الحج",
+      "القمر",
+      "المائدة"
     ],
-    "correct_index": 3,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -3685,12 +3685,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الجاثية؟",
     "options": [
+      "11",
+      "286",
       "37",
-      "88",
-      "96",
-      "17"
+      "12"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -3705,12 +3705,12 @@
     "question_type": "count",
     "question": "ما رقم سورة الجاثية في المصحف؟",
     "options": [
-      "37",
+      "25",
+      "111",
       "45",
-      "35",
-      "102"
+      "99"
     ],
-    "correct_index": 1,
+    "correct_index": 2,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -3743,12 +3743,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 45؟",
     "options": [
+      "المعارج",
       "الجاثية",
-      "مريم",
-      "سبأ",
-      "الإسراء"
+      "التين",
+      "القمر"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -3762,12 +3762,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الأحقاف؟",
     "options": [
-      "77",
-      "20",
-      "118",
-      "35"
+      "19",
+      "35",
+      "37",
+      "111"
     ],
-    "correct_index": 3,
+    "correct_index": 1,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -3783,9 +3783,9 @@
     "question": "ما رقم سورة الأحقاف في المصحف؟",
     "options": [
       "46",
-      "67",
-      "28",
-      "105"
+      "52",
+      "80",
+      "43"
     ],
     "correct_index": 0,
     "difficulty": "متوسط",
@@ -3821,8 +3821,8 @@
     "question": "ما اسم السورة رقم 46؟",
     "options": [
       "الإنسان",
-      "قريش",
-      "عبس",
+      "النحل",
+      "مريم",
       "الأحقاف"
     ],
     "correct_index": 3,
@@ -3839,12 +3839,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة محمد؟",
     "options": [
+      "85",
       "38",
-      "42",
-      "89",
-      "286"
+      "24",
+      "110"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -3859,12 +3859,12 @@
     "question_type": "count",
     "question": "ما رقم سورة محمد في المصحف؟",
     "options": [
-      "64",
-      "56",
-      "63",
-      "47"
+      "87",
+      "102",
+      "47",
+      "19"
     ],
-    "correct_index": 3,
+    "correct_index": 2,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -3897,9 +3897,9 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 47؟",
     "options": [
-      "القيامة",
-      "الصافات",
-      "المرسلات",
+      "الواقعة",
+      "القارعة",
+      "الأنبياء",
       "محمد"
     ],
     "correct_index": 3,
@@ -3916,12 +3916,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الفتح؟",
     "options": [
+      "46",
+      "4",
       "29",
-      "17",
-      "73",
-      "8"
+      "42"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -3936,12 +3936,12 @@
     "question_type": "count",
     "question": "ما رقم سورة الفتح في المصحف؟",
     "options": [
+      "60",
+      "27",
       "48",
-      "113",
-      "23",
-      "60"
+      "97"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -3974,9 +3974,9 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 48؟",
     "options": [
-      "الإخلاص",
-      "يس",
+      "القدر",
       "المدثر",
+      "الشرح",
       "الفتح"
     ],
     "correct_index": 3,
@@ -3993,12 +3993,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الحجرات؟",
     "options": [
-      "52",
-      "18",
       "78",
-      "96"
+      "22",
+      "18",
+      "135"
     ],
-    "correct_index": 1,
+    "correct_index": 2,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -4013,12 +4013,12 @@
     "question_type": "count",
     "question": "ما رقم سورة الحجرات في المصحف؟",
     "options": [
-      "13",
-      "60",
       "49",
-      "63"
+      "24",
+      "25",
+      "36"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -4051,12 +4051,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 49؟",
     "options": [
-      "الجن",
-      "الجاثية",
-      "الحجرات",
-      "فاطر"
+      "الهمزة",
+      "عبس",
+      "التحريم",
+      "الحجرات"
     ],
-    "correct_index": 2,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -4070,12 +4070,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة ق؟",
     "options": [
-      "20",
-      "45",
-      "52",
-      "59"
+      "54",
+      "22",
+      "9",
+      "45"
     ],
-    "correct_index": 1,
+    "correct_index": 3,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -4090,12 +4090,12 @@
     "question_type": "count",
     "question": "ما رقم سورة ق في المصحف؟",
     "options": [
+      "17",
+      "73",
       "50",
-      "40",
-      "43",
-      "15"
+      "11"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -4128,12 +4128,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 50؟",
     "options": [
-      "الممتحنة",
-      "ق",
-      "لقمان",
-      "الإنسان"
+      "المائدة",
+      "المرسلات",
+      "الواقعة",
+      "ق"
     ],
-    "correct_index": 1,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -4147,12 +4147,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الذاريات؟",
     "options": [
-      "11",
+      "54",
+      "62",
       "60",
-      "98",
-      "8"
+      "15"
     ],
-    "correct_index": 1,
+    "correct_index": 2,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -4167,12 +4167,12 @@
     "question_type": "count",
     "question": "ما رقم سورة الذاريات في المصحف؟",
     "options": [
-      "1",
-      "13",
       "51",
-      "65"
+      "7",
+      "97",
+      "16"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -4205,12 +4205,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 51؟",
     "options": [
-      "المجادلة",
-      "الغاشية",
+      "التغابن",
       "الذاريات",
-      "الفاتحة"
+      "الكافرون",
+      "القدر"
     ],
-    "correct_index": 2,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -4224,9 +4224,9 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الطور؟",
     "options": [
-      "35",
-      "59",
-      "11",
+      "9",
+      "176",
+      "36",
       "49"
     ],
     "correct_index": 3,
@@ -4244,12 +4244,12 @@
     "question_type": "count",
     "question": "ما رقم سورة الطور في المصحف؟",
     "options": [
-      "52",
-      "85",
-      "50",
-      "114"
+      "78",
+      "99",
+      "114",
+      "52"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -4282,12 +4282,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 52؟",
     "options": [
-      "التكوير",
-      "قريش",
       "الطور",
-      "الإخلاص"
+      "الواقعة",
+      "الفتح",
+      "الأعراف"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -4301,9 +4301,9 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة النجم؟",
     "options": [
-      "165",
-      "3",
-      "8",
+      "11",
+      "20",
+      "28",
       "62"
     ],
     "correct_index": 3,
@@ -4322,9 +4322,9 @@
     "question": "ما رقم سورة النجم في المصحف؟",
     "options": [
       "53",
-      "99",
-      "77",
-      "98"
+      "9",
+      "63",
+      "40"
     ],
     "correct_index": 0,
     "difficulty": "متوسط",
@@ -4359,10 +4359,10 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 53؟",
     "options": [
-      "الرحمن",
+      "التين",
       "النجم",
-      "الدخان",
-      "القمر"
+      "الأحقاف",
+      "الجن"
     ],
     "correct_index": 1,
     "difficulty": "متوسط",
@@ -4378,12 +4378,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة القمر؟",
     "options": [
+      "45",
+      "49",
       "55",
-      "24",
-      "4",
-      "45"
+      "34"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -4398,12 +4398,12 @@
     "question_type": "count",
     "question": "ما رقم سورة القمر في المصحف؟",
     "options": [
-      "22",
       "54",
-      "61",
-      "64"
+      "74",
+      "14",
+      "78"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -4436,12 +4436,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 54؟",
     "options": [
-      "الصافات",
-      "النساء",
       "القمر",
-      "الجمعة"
+      "النساء",
+      "المائدة",
+      "الأنفال"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -4456,9 +4456,9 @@
     "question": "كم عدد آيات سورة الرحمن؟",
     "options": [
       "78",
-      "24",
       "69",
-      "59"
+      "62",
+      "6"
     ],
     "correct_index": 0,
     "difficulty": "سهل",
@@ -4475,12 +4475,12 @@
     "question_type": "count",
     "question": "ما رقم سورة الرحمن في المصحف؟",
     "options": [
-      "19",
-      "20",
-      "53",
-      "55"
+      "109",
+      "65",
+      "55",
+      "34"
     ],
-    "correct_index": 3,
+    "correct_index": 2,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -4513,12 +4513,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 55؟",
     "options": [
-      "العصر",
       "الرحمن",
-      "الكوثر",
-      "الزخرف"
+      "الكافرون",
+      "النبأ",
+      "النحل"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -4532,12 +4532,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الواقعة؟",
     "options": [
-      "96",
       "182",
-      "18",
-      "75"
+      "28",
+      "7",
+      "96"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -4552,10 +4552,10 @@
     "question_type": "count",
     "question": "ما رقم سورة الواقعة في المصحف؟",
     "options": [
-      "4",
+      "39",
       "40",
       "56",
-      "67"
+      "32"
     ],
     "correct_index": 2,
     "difficulty": "متوسط",
@@ -4590,12 +4590,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 56؟",
     "options": [
-      "الواقعة",
-      "هود",
-      "التوبة",
-      "الحشر"
+      "الطارق",
+      "الزلزلة",
+      "الشمس",
+      "الواقعة"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -4609,12 +4609,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الحديد؟",
     "options": [
-      "29",
-      "49",
-      "44",
-      "111"
+      "15",
+      "89",
+      "54",
+      "29"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -4629,12 +4629,12 @@
     "question_type": "count",
     "question": "ما رقم سورة الحديد في المصحف؟",
     "options": [
+      "111",
       "57",
-      "91",
-      "61",
-      "34"
+      "84",
+      "75"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -4667,12 +4667,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 57؟",
     "options": [
+      "الإنسان",
       "الحديد",
-      "المسد",
-      "الأعراف",
-      "الأنفال"
+      "الطارق",
+      "القيامة"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -4686,12 +4686,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة المجادلة؟",
     "options": [
-      "85",
-      "69",
+      "60",
       "22",
-      "29"
+      "21",
+      "75"
     ],
-    "correct_index": 2,
+    "correct_index": 1,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -4706,12 +4706,12 @@
     "question_type": "count",
     "question": "ما رقم سورة المجادلة في المصحف؟",
     "options": [
-      "60",
       "58",
-      "112",
-      "86"
+      "43",
+      "50",
+      "21"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -4745,9 +4745,9 @@
     "question": "ما اسم السورة رقم 58؟",
     "options": [
       "المجادلة",
-      "السجدة",
-      "المرسلات",
-      "النحل"
+      "الأعلى",
+      "النحل",
+      "الفاتحة"
     ],
     "correct_index": 0,
     "difficulty": "متوسط",
@@ -4763,10 +4763,10 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الحشر؟",
     "options": [
-      "11",
-      "7",
+      "118",
+      "6",
       "24",
-      "54"
+      "111"
     ],
     "correct_index": 2,
     "difficulty": "سهل",
@@ -4783,9 +4783,9 @@
     "question_type": "count",
     "question": "ما رقم سورة الحشر في المصحف؟",
     "options": [
-      "5",
-      "35",
-      "38",
+      "107",
+      "69",
+      "80",
       "59"
     ],
     "correct_index": 3,
@@ -4822,9 +4822,9 @@
     "question": "ما اسم السورة رقم 59؟",
     "options": [
       "الحشر",
-      "الصافات",
-      "الذاريات",
-      "القمر"
+      "الليل",
+      "النمل",
+      "الماعون"
     ],
     "correct_index": 0,
     "difficulty": "متوسط",
@@ -4840,10 +4840,10 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الممتحنة؟",
     "options": [
-      "69",
+      "49",
       "88",
       "13",
-      "49"
+      "4"
     ],
     "correct_index": 2,
     "difficulty": "سهل",
@@ -4860,12 +4860,12 @@
     "question_type": "count",
     "question": "ما رقم سورة الممتحنة في المصحف؟",
     "options": [
-      "83",
-      "44",
-      "106",
-      "60"
+      "60",
+      "46",
+      "66",
+      "77"
     ],
-    "correct_index": 3,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -4898,10 +4898,10 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 60؟",
     "options": [
-      "يوسف",
+      "القارعة",
       "الممتحنة",
-      "الشورى",
-      "آل عمران"
+      "الطور",
+      "لقمان"
     ],
     "correct_index": 1,
     "difficulty": "متوسط",
@@ -4917,12 +4917,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الصف؟",
     "options": [
+      "165",
       "14",
-      "3",
-      "77",
-      "53"
+      "6",
+      "13"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -4937,12 +4937,12 @@
     "question_type": "count",
     "question": "ما رقم سورة الصف في المصحف؟",
     "options": [
-      "52",
-      "94",
-      "61",
-      "31"
+      "64",
+      "97",
+      "86",
+      "61"
     ],
-    "correct_index": 2,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -4975,12 +4975,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 61؟",
     "options": [
+      "الزخرف",
+      "القلم",
       "الصف",
-      "النحل",
-      "الحجر",
-      "الانشقاق"
+      "ص"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -4994,12 +4994,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الجمعة؟",
     "options": [
-      "88",
       "11",
-      "46",
-      "49"
+      "7",
+      "62",
+      "3"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -5014,12 +5014,12 @@
     "question_type": "count",
     "question": "ما رقم سورة الجمعة في المصحف؟",
     "options": [
-      "70",
-      "62",
-      "74",
-      "66"
+      "107",
+      "13",
+      "73",
+      "62"
     ],
-    "correct_index": 1,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -5052,12 +5052,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 62؟",
     "options": [
-      "الفجر",
-      "النحل",
-      "طه",
-      "الجمعة"
+      "الجمعة",
+      "الشرح",
+      "الكهف",
+      "الإنسان"
     ],
-    "correct_index": 3,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -5071,12 +5071,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة المنافقون؟",
     "options": [
-      "54",
       "11",
-      "43",
-      "19"
+      "129",
+      "73",
+      "60"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -5091,12 +5091,12 @@
     "question_type": "count",
     "question": "ما رقم سورة المنافقون في المصحف؟",
     "options": [
-      "24",
-      "41",
-      "64",
-      "63"
+      "20",
+      "26",
+      "63",
+      "105"
     ],
-    "correct_index": 3,
+    "correct_index": 2,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -5129,10 +5129,10 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 63؟",
     "options": [
-      "الطور",
+      "القدر",
       "المنافقون",
-      "الانشقاق",
-      "المائدة"
+      "قريش",
+      "النصر"
     ],
     "correct_index": 1,
     "difficulty": "متوسط",
@@ -5148,9 +5148,9 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة التغابن؟",
     "options": [
-      "93",
-      "99",
-      "26",
+      "29",
+      "83",
+      "31",
       "18"
     ],
     "correct_index": 3,
@@ -5168,12 +5168,12 @@
     "question_type": "count",
     "question": "ما رقم سورة التغابن في المصحف؟",
     "options": [
+      "79",
       "64",
-      "33",
-      "20",
-      "9"
+      "56",
+      "94"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -5207,9 +5207,9 @@
     "question": "ما اسم السورة رقم 64؟",
     "options": [
       "التغابن",
-      "السجدة",
-      "التكاثر",
-      "الأعلى"
+      "الرعد",
+      "فاطر",
+      "النبأ"
     ],
     "correct_index": 0,
     "difficulty": "متوسط",
@@ -5225,12 +5225,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الطلاق؟",
     "options": [
+      "43",
+      "75",
       "12",
-      "14",
-      "45",
-      "129"
+      "5"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -5245,12 +5245,12 @@
     "question_type": "count",
     "question": "ما رقم سورة الطلاق في المصحف؟",
     "options": [
-      "85",
-      "18",
-      "65",
-      "73"
+      "32",
+      "26",
+      "53",
+      "65"
     ],
-    "correct_index": 2,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -5283,12 +5283,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 65؟",
     "options": [
-      "الحشر",
-      "نوح",
       "الطلاق",
-      "الغاشية"
+      "الشرح",
+      "الزخرف",
+      "لقمان"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -5302,12 +5302,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة التحريم؟",
     "options": [
-      "7",
       "12",
-      "8",
-      "14"
+      "20",
+      "6",
+      "118"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -5322,12 +5322,12 @@
     "question_type": "count",
     "question": "ما رقم سورة التحريم في المصحف؟",
     "options": [
-      "108",
-      "1",
+      "84",
       "66",
-      "99"
+      "78",
+      "4"
     ],
-    "correct_index": 2,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -5360,12 +5360,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 66؟",
     "options": [
-      "الفاتحة",
-      "الحجر",
-      "الهمزة",
-      "التحريم"
+      "المؤمنون",
+      "التين",
+      "التحريم",
+      "الليل"
     ],
-    "correct_index": 3,
+    "correct_index": 2,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -5379,12 +5379,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الملك؟",
     "options": [
-      "11",
-      "4",
-      "40",
-      "30"
+      "129",
+      "30",
+      "45",
+      "22"
     ],
-    "correct_index": 3,
+    "correct_index": 1,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -5399,12 +5399,12 @@
     "question_type": "count",
     "question": "ما رقم سورة الملك في المصحف؟",
     "options": [
-      "61",
-      "37",
-      "103",
-      "67"
+      "67",
+      "2",
+      "34",
+      "9"
     ],
-    "correct_index": 3,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -5437,10 +5437,10 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 67؟",
     "options": [
-      "ق",
-      "لقمان",
+      "الانشقاق",
+      "الدخان",
       "الملك",
-      "العلق"
+      "القارعة"
     ],
     "correct_index": 2,
     "difficulty": "متوسط",
@@ -5456,10 +5456,10 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة القلم؟",
     "options": [
-      "18",
+      "19",
       "52",
-      "38",
-      "20"
+      "29",
+      "24"
     ],
     "correct_index": 1,
     "difficulty": "سهل",
@@ -5476,12 +5476,12 @@
     "question_type": "count",
     "question": "ما رقم سورة القلم في المصحف؟",
     "options": [
-      "75",
-      "68",
-      "59",
-      "66"
+      "47",
+      "100",
+      "76",
+      "68"
     ],
-    "correct_index": 1,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -5514,12 +5514,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 68؟",
     "options": [
-      "المزمل",
-      "البروج",
       "القلم",
-      "الشرح"
+      "المؤمنون",
+      "البلد",
+      "الجمعة"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -5533,10 +5533,10 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الحاقة؟",
     "options": [
-      "49",
+      "31",
       "52",
-      "78",
-      "42"
+      "8",
+      "96"
     ],
     "correct_index": 1,
     "difficulty": "سهل",
@@ -5553,12 +5553,12 @@
     "question_type": "count",
     "question": "ما رقم سورة الحاقة في المصحف؟",
     "options": [
-      "69",
-      "33",
-      "106",
-      "39"
+      "114",
+      "1",
+      "91",
+      "69"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -5591,12 +5591,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 69؟",
     "options": [
+      "التكوير",
       "الحاقة",
-      "الفلق",
-      "الأحزاب",
-      "الحشر"
+      "لقمان",
+      "غافر"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -5610,10 +5610,10 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة المعارج؟",
     "options": [
-      "60",
+      "11",
       "44",
-      "35",
-      "176"
+      "8",
+      "52"
     ],
     "correct_index": 1,
     "difficulty": "سهل",
@@ -5630,12 +5630,12 @@
     "question_type": "count",
     "question": "ما رقم سورة المعارج في المصحف؟",
     "options": [
-      "47",
-      "9",
+      "107",
       "70",
-      "100"
+      "85",
+      "68"
     ],
-    "correct_index": 2,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -5669,9 +5669,9 @@
     "question": "ما اسم السورة رقم 70؟",
     "options": [
       "المعارج",
-      "المزمل",
-      "الهمزة",
-      "الملك"
+      "عبس",
+      "الماعون",
+      "التكاثر"
     ],
     "correct_index": 0,
     "difficulty": "متوسط",
@@ -5687,12 +5687,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة نوح؟",
     "options": [
-      "19",
-      "20",
       "28",
-      "3"
+      "14",
+      "78",
+      "4"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -5707,12 +5707,12 @@
     "question_type": "count",
     "question": "ما رقم سورة نوح في المصحف؟",
     "options": [
-      "110",
+      "58",
+      "74",
       "71",
-      "5",
-      "9"
+      "78"
     ],
-    "correct_index": 1,
+    "correct_index": 2,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -5745,9 +5745,9 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 71؟",
     "options": [
-      "القمر",
-      "البينة",
-      "الواقعة",
+      "قريش",
+      "الجمعة",
+      "البلد",
       "نوح"
     ],
     "correct_index": 3,
@@ -5764,12 +5764,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الجن؟",
     "options": [
-      "200",
-      "110",
       "28",
-      "18"
+      "62",
+      "9",
+      "111"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -5784,12 +5784,12 @@
     "question_type": "count",
     "question": "ما رقم سورة الجن في المصحف؟",
     "options": [
-      "63",
-      "2",
-      "75",
-      "72"
+      "72",
+      "73",
+      "40",
+      "6"
     ],
-    "correct_index": 3,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -5822,12 +5822,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 72؟",
     "options": [
-      "الذاريات",
       "الجن",
-      "البقرة",
-      "الحج"
+      "السجدة",
+      "الشمس",
+      "القيامة"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -5841,12 +5841,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة المزمل؟",
     "options": [
-      "93",
+      "129",
+      "11",
       "20",
-      "34",
-      "30"
+      "8"
     ],
-    "correct_index": 1,
+    "correct_index": 2,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -5861,12 +5861,12 @@
     "question_type": "count",
     "question": "ما رقم سورة المزمل في المصحف؟",
     "options": [
-      "8",
+      "3",
+      "84",
       "73",
-      "33",
-      "32"
+      "48"
     ],
-    "correct_index": 1,
+    "correct_index": 2,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -5899,9 +5899,9 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 73؟",
     "options": [
-      "يونس",
-      "الأحقاف",
-      "يس",
+      "آل عمران",
+      "الحج",
+      "الحشر",
       "المزمل"
     ],
     "correct_index": 3,
@@ -5918,12 +5918,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة المدثر؟",
     "options": [
+      "38",
       "56",
-      "3",
       "40",
-      "96"
+      "53"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -5939,9 +5939,9 @@
     "question": "ما رقم سورة المدثر في المصحف؟",
     "options": [
       "74",
-      "45",
-      "80",
-      "40"
+      "113",
+      "6",
+      "86"
     ],
     "correct_index": 0,
     "difficulty": "متوسط",
@@ -5976,12 +5976,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 74؟",
     "options": [
-      "عبس",
-      "الانفطار",
-      "المدثر",
-      "الفجر"
+      "فصلت",
+      "الناس",
+      "التوبة",
+      "المدثر"
     ],
-    "correct_index": 2,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -5995,12 +5995,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة القيامة؟",
     "options": [
-      "8",
+      "18",
+      "22",
       "40",
-      "99",
-      "29"
+      "3"
     ],
-    "correct_index": 1,
+    "correct_index": 2,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -6015,12 +6015,12 @@
     "question_type": "count",
     "question": "ما رقم سورة القيامة في المصحف؟",
     "options": [
-      "45",
-      "85",
+      "36",
       "75",
-      "86"
+      "16",
+      "34"
     ],
-    "correct_index": 2,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -6053,12 +6053,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 75؟",
     "options": [
-      "القيامة",
-      "الرحمن",
-      "الإخلاص",
-      "الأحقاف"
+      "الملك",
+      "العصر",
+      "الحجرات",
+      "القيامة"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -6072,10 +6072,10 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الإنسان؟",
     "options": [
-      "88",
-      "11",
+      "3",
+      "19",
       "31",
-      "78"
+      "96"
     ],
     "correct_index": 2,
     "difficulty": "سهل",
@@ -6092,10 +6092,10 @@
     "question_type": "count",
     "question": "ما رقم سورة الإنسان في المصحف؟",
     "options": [
-      "56",
-      "46",
+      "86",
+      "10",
       "76",
-      "38"
+      "66"
     ],
     "correct_index": 2,
     "difficulty": "متوسط",
@@ -6130,10 +6130,10 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 76؟",
     "options": [
-      "النصر",
-      "محمد",
+      "المؤمنون",
+      "الطور",
       "الإنسان",
-      "مريم"
+      "التغابن"
     ],
     "correct_index": 2,
     "difficulty": "متوسط",
@@ -6149,12 +6149,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة المرسلات؟",
     "options": [
-      "227",
-      "11",
-      "6",
-      "50"
+      "50",
+      "60",
+      "123",
+      "52"
     ],
-    "correct_index": 3,
+    "correct_index": 0,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -6169,10 +6169,10 @@
     "question_type": "count",
     "question": "ما رقم سورة المرسلات في المصحف؟",
     "options": [
-      "102",
+      "52",
       "77",
-      "68",
-      "52"
+      "91",
+      "60"
     ],
     "correct_index": 1,
     "difficulty": "متوسط",
@@ -6207,9 +6207,9 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 77؟",
     "options": [
-      "الأحقاف",
-      "البقرة",
-      "الزلزلة",
+      "الحشر",
+      "يس",
+      "فصلت",
       "المرسلات"
     ],
     "correct_index": 3,
@@ -6226,12 +6226,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة النبأ؟",
     "options": [
+      "111",
+      "75",
       "40",
-      "4",
-      "109",
-      "64"
+      "45"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -6246,12 +6246,12 @@
     "question_type": "count",
     "question": "ما رقم سورة النبأ في المصحف؟",
     "options": [
+      "25",
+      "93",
       "78",
-      "12",
-      "46",
-      "113"
+      "47"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -6284,10 +6284,10 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 78؟",
     "options": [
-      "الأحزاب",
+      "الدخان",
       "النبأ",
-      "القدر",
-      "فصلت"
+      "الجاثية",
+      "محمد"
     ],
     "correct_index": 1,
     "difficulty": "متوسط",
@@ -6303,12 +6303,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة النازعات؟",
     "options": [
+      "77",
       "46",
-      "12",
-      "89",
-      "8"
+      "8",
+      "7"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -6323,12 +6323,12 @@
     "question_type": "count",
     "question": "ما رقم سورة النازعات في المصحف؟",
     "options": [
-      "52",
-      "93",
       "79",
-      "6"
+      "8",
+      "63",
+      "72"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -6361,12 +6361,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 79؟",
     "options": [
-      "الحديد",
-      "فاطر",
-      "السجدة",
-      "النازعات"
+      "البلد",
+      "النازعات",
+      "محمد",
+      "الفيل"
     ],
-    "correct_index": 3,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -6380,10 +6380,10 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة عبس؟",
     "options": [
-      "135",
-      "89",
+      "36",
+      "62",
       "42",
-      "28"
+      "110"
     ],
     "correct_index": 2,
     "difficulty": "سهل",
@@ -6400,12 +6400,12 @@
     "question_type": "count",
     "question": "ما رقم سورة عبس في المصحف؟",
     "options": [
-      "16",
-      "89",
-      "80",
-      "26"
+      "35",
+      "81",
+      "105",
+      "80"
     ],
-    "correct_index": 2,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -6438,12 +6438,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 80؟",
     "options": [
-      "النحل",
-      "المائدة",
+      "القمر",
       "عبس",
-      "الزخرف"
+      "الروم",
+      "الحشر"
     ],
-    "correct_index": 2,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -6457,12 +6457,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة التكوير؟",
     "options": [
-      "53",
-      "54",
-      "18",
-      "29"
+      "29",
+      "56",
+      "73",
+      "11"
     ],
-    "correct_index": 3,
+    "correct_index": 0,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -6477,12 +6477,12 @@
     "question_type": "count",
     "question": "ما رقم سورة التكوير في المصحف؟",
     "options": [
-      "58",
-      "44",
-      "24",
-      "81"
+      "81",
+      "22",
+      "55",
+      "63"
     ],
-    "correct_index": 3,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -6515,12 +6515,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 81؟",
     "options": [
-      "الطلاق",
-      "الممتحنة",
-      "الصافات",
-      "التكوير"
+      "التكوير",
+      "المزمل",
+      "الشعراء",
+      "العاديات"
     ],
-    "correct_index": 3,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -6534,12 +6534,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الانفطار؟",
     "options": [
-      "11",
-      "109",
+      "73",
       "19",
-      "50"
+      "50",
+      "13"
     ],
-    "correct_index": 2,
+    "correct_index": 1,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -6554,12 +6554,12 @@
     "question_type": "count",
     "question": "ما رقم سورة الانفطار في المصحف؟",
     "options": [
-      "82",
-      "3",
-      "76",
-      "59"
+      "79",
+      "35",
+      "108",
+      "82"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -6592,12 +6592,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 82؟",
     "options": [
+      "الحجرات",
+      "البينة",
       "الانفطار",
-      "الإنسان",
-      "الزمر",
-      "الأنبياء"
+      "الأحقاف"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -6611,12 +6611,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة المطففين؟",
     "options": [
-      "8",
-      "40",
-      "38",
-      "36"
+      "36",
+      "123",
+      "118",
+      "6"
     ],
-    "correct_index": 3,
+    "correct_index": 0,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -6631,12 +6631,12 @@
     "question_type": "count",
     "question": "ما رقم سورة المطففين في المصحف؟",
     "options": [
-      "93",
       "83",
-      "33",
-      "32"
+      "29",
+      "89",
+      "107"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -6669,12 +6669,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 83؟",
     "options": [
-      "القصص",
-      "المطففين",
-      "النازعات",
-      "البينة"
+      "العصر",
+      "التحريم",
+      "الأنبياء",
+      "المطففين"
     ],
-    "correct_index": 1,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -6688,10 +6688,10 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الانشقاق؟",
     "options": [
-      "286",
       "7",
+      "40",
       "25",
-      "8"
+      "24"
     ],
     "correct_index": 2,
     "difficulty": "سهل",
@@ -6708,12 +6708,12 @@
     "question_type": "count",
     "question": "ما رقم سورة الانشقاق في المصحف؟",
     "options": [
-      "3",
-      "84",
-      "35",
-      "37"
+      "72",
+      "24",
+      "77",
+      "84"
     ],
-    "correct_index": 1,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -6746,12 +6746,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 84؟",
     "options": [
-      "الكافرون",
       "الانشقاق",
-      "الأنبياء",
-      "المزمل"
+      "الملك",
+      "الإخلاص",
+      "فاطر"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -6765,12 +6765,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة البروج؟",
     "options": [
-      "11",
-      "88",
-      "22",
-      "19"
+      "28",
+      "78",
+      "49",
+      "22"
     ],
-    "correct_index": 2,
+    "correct_index": 3,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -6785,12 +6785,12 @@
     "question_type": "count",
     "question": "ما رقم سورة البروج في المصحف؟",
     "options": [
-      "99",
-      "54",
       "85",
-      "30"
+      "65",
+      "6",
+      "84"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -6823,12 +6823,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 85؟",
     "options": [
+      "الأعلى",
+      "لقمان",
       "البروج",
-      "القصص",
-      "المائدة",
-      "لقمان"
+      "الحديد"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -6842,10 +6842,10 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الطارق؟",
     "options": [
-      "98",
+      "22",
       "17",
-      "28",
-      "89"
+      "43",
+      "52"
     ],
     "correct_index": 1,
     "difficulty": "سهل",
@@ -6862,12 +6862,12 @@
     "question_type": "count",
     "question": "ما رقم سورة الطارق في المصحف؟",
     "options": [
-      "3",
       "86",
-      "33",
-      "47"
+      "38",
+      "96",
+      "97"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -6901,9 +6901,9 @@
     "question": "ما اسم السورة رقم 86؟",
     "options": [
       "الطارق",
-      "المعارج",
-      "الجمعة",
-      "الحديد"
+      "الأعراف",
+      "مريم",
+      "الأنبياء"
     ],
     "correct_index": 0,
     "difficulty": "متوسط",
@@ -6919,12 +6919,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الأعلى؟",
     "options": [
-      "13",
-      "60",
-      "78",
-      "19"
+      "19",
+      "35",
+      "30",
+      "11"
     ],
-    "correct_index": 3,
+    "correct_index": 0,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -6939,12 +6939,12 @@
     "question_type": "count",
     "question": "ما رقم سورة الأعلى في المصحف؟",
     "options": [
-      "92",
+      "61",
+      "98",
       "87",
-      "93",
-      "58"
+      "50"
     ],
-    "correct_index": 1,
+    "correct_index": 2,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -6977,12 +6977,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 87؟",
     "options": [
-      "محمد",
-      "هود",
-      "التحريم",
-      "الأعلى"
+      "الأعلى",
+      "طه",
+      "الأعراف",
+      "الفرقان"
     ],
-    "correct_index": 3,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -6996,12 +6996,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الغاشية؟",
     "options": [
+      "4",
       "8",
       "26",
-      "46",
-      "11"
+      "56"
     ],
-    "correct_index": 1,
+    "correct_index": 2,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -7016,12 +7016,12 @@
     "question_type": "count",
     "question": "ما رقم سورة الغاشية في المصحف؟",
     "options": [
-      "85",
-      "112",
       "88",
-      "52"
+      "79",
+      "37",
+      "26"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -7054,12 +7054,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 88؟",
     "options": [
-      "الحجرات",
       "الغاشية",
-      "النور",
-      "الفرقان"
+      "العنكبوت",
+      "النازعات",
+      "يوسف"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -7073,9 +7073,9 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الفجر؟",
     "options": [
-      "3",
-      "77",
-      "135",
+      "5",
+      "52",
+      "59",
       "30"
     ],
     "correct_index": 3,
@@ -7093,10 +7093,10 @@
     "question_type": "count",
     "question": "ما رقم سورة الفجر في المصحف؟",
     "options": [
-      "60",
+      "16",
       "89",
-      "112",
-      "71"
+      "6",
+      "34"
     ],
     "correct_index": 1,
     "difficulty": "متوسط",
@@ -7131,12 +7131,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 89؟",
     "options": [
-      "الكهف",
-      "الحشر",
-      "الماعون",
-      "الفجر"
+      "الجمعة",
+      "الفجر",
+      "الرحمن",
+      "الحجرات"
     ],
-    "correct_index": 3,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -7150,12 +7150,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة البلد؟",
     "options": [
-      "30",
-      "69",
-      "6",
-      "20"
+      "17",
+      "3",
+      "20",
+      "9"
     ],
-    "correct_index": 3,
+    "correct_index": 2,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -7170,12 +7170,12 @@
     "question_type": "count",
     "question": "ما رقم سورة البلد في المصحف؟",
     "options": [
-      "43",
+      "66",
+      "58",
       "90",
-      "74",
-      "36"
+      "29"
     ],
-    "correct_index": 1,
+    "correct_index": 2,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -7208,12 +7208,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 90؟",
     "options": [
-      "الفجر",
       "البلد",
-      "الطور",
-      "العلق"
+      "المدثر",
+      "التين",
+      "النساء"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -7227,12 +7227,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الشمس؟",
     "options": [
-      "8",
-      "3",
-      "15",
-      "182"
+      "99",
+      "111",
+      "4",
+      "15"
     ],
-    "correct_index": 2,
+    "correct_index": 3,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -7247,10 +7247,10 @@
     "question_type": "count",
     "question": "ما رقم سورة الشمس في المصحف؟",
     "options": [
-      "38",
-      "50",
+      "33",
+      "7",
       "91",
-      "22"
+      "71"
     ],
     "correct_index": 2,
     "difficulty": "متوسط",
@@ -7285,12 +7285,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 91؟",
     "options": [
-      "الشمس",
-      "الحجرات",
-      "التوبة",
-      "العاديات"
+      "مريم",
+      "الأحزاب",
+      "الإنسان",
+      "الشمس"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -7304,12 +7304,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الليل؟",
     "options": [
-      "43",
       "21",
-      "18",
-      "29"
+      "135",
+      "53",
+      "88"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -7324,12 +7324,12 @@
     "question_type": "count",
     "question": "ما رقم سورة الليل في المصحف؟",
     "options": [
-      "61",
-      "86",
+      "79",
       "92",
-      "20"
+      "71",
+      "37"
     ],
-    "correct_index": 2,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -7362,12 +7362,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 92؟",
     "options": [
-      "البقرة",
-      "القصص",
-      "الليل",
-      "الزلزلة"
+      "يونس",
+      "التغابن",
+      "يوسف",
+      "الليل"
     ],
-    "correct_index": 2,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -7381,10 +7381,10 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الضحى؟",
     "options": [
-      "98",
+      "286",
       "11",
-      "25",
-      "64"
+      "26",
+      "21"
     ],
     "correct_index": 1,
     "difficulty": "سهل",
@@ -7401,10 +7401,10 @@
     "question_type": "count",
     "question": "ما رقم سورة الضحى في المصحف؟",
     "options": [
-      "24",
+      "3",
       "93",
-      "21",
-      "7"
+      "57",
+      "55"
     ],
     "correct_index": 1,
     "difficulty": "متوسط",
@@ -7439,12 +7439,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 93؟",
     "options": [
+      "الأحزاب",
+      "الهمزة",
       "الضحى",
-      "الأنبياء",
-      "الناس",
-      "النصر"
+      "مريم"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -7458,12 +7458,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الشرح؟",
     "options": [
-      "52",
-      "8",
-      "21",
-      "46"
+      "59",
+      "286",
+      "4",
+      "8"
     ],
-    "correct_index": 1,
+    "correct_index": 3,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -7478,12 +7478,12 @@
     "question_type": "count",
     "question": "ما رقم سورة الشرح في المصحف؟",
     "options": [
-      "94",
-      "92",
-      "62",
-      "54"
+      "45",
+      "41",
+      "106",
+      "94"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -7516,12 +7516,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 94؟",
     "options": [
+      "المجادلة",
       "الشرح",
-      "الجمعة",
-      "فصلت",
-      "الطارق"
+      "مريم",
+      "يوسف"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -7536,9 +7536,9 @@
     "question": "كم عدد آيات سورة التين؟",
     "options": [
       "8",
-      "78",
-      "13",
-      "52"
+      "64",
+      "120",
+      "29"
     ],
     "correct_index": 0,
     "difficulty": "سهل",
@@ -7555,12 +7555,12 @@
     "question_type": "count",
     "question": "ما رقم سورة التين في المصحف؟",
     "options": [
-      "48",
-      "38",
-      "93",
-      "95"
+      "98",
+      "67",
+      "95",
+      "111"
     ],
-    "correct_index": 3,
+    "correct_index": 2,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -7593,12 +7593,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 95؟",
     "options": [
-      "المطففين",
-      "التين",
-      "الروم",
-      "الفيل"
+      "التغابن",
+      "الفجر",
+      "الفاتحة",
+      "التين"
     ],
-    "correct_index": 1,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -7612,12 +7612,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة العلق؟",
     "options": [
+      "35",
       "19",
-      "78",
-      "43",
-      "36"
+      "135",
+      "9"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -7632,12 +7632,12 @@
     "question_type": "count",
     "question": "ما رقم سورة العلق في المصحف؟",
     "options": [
+      "82",
+      "57",
       "96",
-      "20",
-      "33",
-      "24"
+      "91"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -7670,12 +7670,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 96؟",
     "options": [
-      "الجاثية",
-      "الإنسان",
       "العلق",
-      "الروم"
+      "المزمل",
+      "التغابن",
+      "النصر"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -7689,12 +7689,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة القدر؟",
     "options": [
-      "7",
-      "5",
-      "206",
-      "45"
+      "30",
+      "8",
+      "12",
+      "5"
     ],
-    "correct_index": 1,
+    "correct_index": 3,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -7709,12 +7709,12 @@
     "question_type": "count",
     "question": "ما رقم سورة القدر في المصحف؟",
     "options": [
+      "24",
       "97",
-      "76",
-      "45",
-      "86"
+      "12",
+      "71"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -7747,9 +7747,9 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 97؟",
     "options": [
-      "الليل",
-      "الزخرف",
-      "الحج",
+      "القصص",
+      "الأحقاف",
+      "قريش",
       "القدر"
     ],
     "correct_index": 3,
@@ -7766,9 +7766,9 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة البينة؟",
     "options": [
-      "44",
-      "111",
-      "4",
+      "93",
+      "5",
+      "20",
       "8"
     ],
     "correct_index": 3,
@@ -7786,10 +7786,10 @@
     "question_type": "count",
     "question": "ما رقم سورة البينة في المصحف؟",
     "options": [
-      "14",
-      "94",
+      "100",
+      "81",
       "98",
-      "29"
+      "46"
     ],
     "correct_index": 2,
     "difficulty": "متوسط",
@@ -7824,12 +7824,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 98؟",
     "options": [
-      "الأنعام",
-      "الناس",
-      "المسد",
-      "البينة"
+      "الكهف",
+      "البينة",
+      "الحاقة",
+      "الملك"
     ],
-    "correct_index": 3,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -7843,12 +7843,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الزلزلة؟",
     "options": [
-      "8",
-      "73",
-      "54",
-      "21"
+      "52",
+      "77",
+      "165",
+      "8"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -7863,12 +7863,12 @@
     "question_type": "count",
     "question": "ما رقم سورة الزلزلة في المصحف؟",
     "options": [
-      "15",
-      "40",
       "99",
-      "84"
+      "62",
+      "89",
+      "92"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -7901,12 +7901,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 99؟",
     "options": [
-      "الممتحنة",
       "الزلزلة",
-      "فاطر",
-      "الأنفال"
+      "الفجر",
+      "الواقعة",
+      "القيامة"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -7920,12 +7920,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة العاديات؟",
     "options": [
+      "36",
+      "11",
       "8",
-      "75",
-      "25",
-      "11"
+      "75"
     ],
-    "correct_index": 3,
+    "correct_index": 1,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -7940,12 +7940,12 @@
     "question_type": "count",
     "question": "ما رقم سورة العاديات في المصحف؟",
     "options": [
-      "19",
-      "83",
-      "100",
-      "59"
+      "49",
+      "24",
+      "21",
+      "100"
     ],
-    "correct_index": 2,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -7979,9 +7979,9 @@
     "question": "ما اسم السورة رقم 100؟",
     "options": [
       "العاديات",
-      "الشمس",
-      "النصر",
-      "الشرح"
+      "العنكبوت",
+      "البلد",
+      "البينة"
     ],
     "correct_index": 0,
     "difficulty": "متوسط",
@@ -7998,9 +7998,9 @@
     "question": "كم عدد آيات سورة القارعة؟",
     "options": [
       "11",
+      "227",
       "5",
-      "4",
-      "19"
+      "75"
     ],
     "correct_index": 0,
     "difficulty": "سهل",
@@ -8017,12 +8017,12 @@
     "question_type": "count",
     "question": "ما رقم سورة القارعة في المصحف؟",
     "options": [
-      "88",
-      "12",
       "101",
-      "103"
+      "106",
+      "38",
+      "67"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -8055,12 +8055,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 101؟",
     "options": [
-      "الشمس",
       "القارعة",
-      "النازعات",
-      "الجاثية"
+      "الشورى",
+      "الفلق",
+      "العاديات"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -8074,10 +8074,10 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة التكاثر؟",
     "options": [
-      "56",
+      "9",
       "8",
-      "18",
-      "29"
+      "56",
+      "30"
     ],
     "correct_index": 1,
     "difficulty": "سهل",
@@ -8094,12 +8094,12 @@
     "question_type": "count",
     "question": "ما رقم سورة التكاثر في المصحف؟",
     "options": [
-      "67",
-      "40",
+      "34",
       "102",
-      "28"
+      "81",
+      "107"
     ],
-    "correct_index": 2,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -8132,10 +8132,10 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 102؟",
     "options": [
-      "المدثر",
-      "الكوثر",
+      "النور",
+      "المزمل",
       "التكاثر",
-      "المطففين"
+      "الأعراف"
     ],
     "correct_index": 2,
     "difficulty": "متوسط",
@@ -8151,12 +8151,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة العصر؟",
     "options": [
-      "3",
-      "40",
-      "53",
-      "182"
+      "19",
+      "11",
+      "9",
+      "3"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -8171,12 +8171,12 @@
     "question_type": "count",
     "question": "ما رقم سورة العصر في المصحف؟",
     "options": [
-      "103",
-      "90",
-      "73",
-      "111"
+      "19",
+      "78",
+      "75",
+      "103"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -8209,12 +8209,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 103؟",
     "options": [
-      "سبأ",
+      "القيامة",
+      "الفيل",
       "العصر",
-      "البلد",
-      "الإخلاص"
+      "النصر"
     ],
-    "correct_index": 1,
+    "correct_index": 2,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -8228,12 +8228,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الهمزة؟",
     "options": [
+      "75",
+      "7",
       "9",
-      "85",
-      "182",
-      "17"
+      "4"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -8248,12 +8248,12 @@
     "question_type": "count",
     "question": "ما رقم سورة الهمزة في المصحف؟",
     "options": [
-      "11",
-      "8",
       "104",
-      "49"
+      "49",
+      "93",
+      "74"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -8286,12 +8286,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 104؟",
     "options": [
-      "المؤمنون",
-      "المدثر",
       "الهمزة",
-      "فاطر"
+      "الفرقان",
+      "الممتحنة",
+      "البقرة"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -8305,9 +8305,9 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الفيل؟",
     "options": [
-      "11",
-      "30",
-      "8",
+      "9",
+      "15",
+      "21",
       "5"
     ],
     "correct_index": 3,
@@ -8325,12 +8325,12 @@
     "question_type": "count",
     "question": "ما رقم سورة الفيل في المصحف؟",
     "options": [
-      "46",
-      "99",
-      "65",
-      "105"
+      "12",
+      "105",
+      "87",
+      "55"
     ],
-    "correct_index": 3,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -8363,10 +8363,10 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 105؟",
     "options": [
-      "الروم",
-      "الحجر",
+      "الطلاق",
+      "البلد",
       "الفيل",
-      "هود"
+      "الحشر"
     ],
     "correct_index": 2,
     "difficulty": "متوسط",
@@ -8382,12 +8382,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة قريش؟",
     "options": [
-      "4",
-      "6",
+      "3",
       "45",
-      "26"
+      "25",
+      "4"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -8402,12 +8402,12 @@
     "question_type": "count",
     "question": "ما رقم سورة قريش في المصحف؟",
     "options": [
-      "40",
-      "106",
-      "15",
-      "91"
+      "16",
+      "3",
+      "7",
+      "106"
     ],
-    "correct_index": 1,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -8440,12 +8440,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 106؟",
     "options": [
-      "النجم",
-      "الأنفال",
-      "قريش",
-      "الحديد"
+      "الفيل",
+      "ق",
+      "المجادلة",
+      "قريش"
     ],
-    "correct_index": 2,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -8459,12 +8459,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الماعون؟",
     "options": [
-      "7",
-      "29",
-      "9",
-      "52"
+      "55",
+      "182",
+      "77",
+      "7"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -8479,12 +8479,12 @@
     "question_type": "count",
     "question": "ما رقم سورة الماعون في المصحف؟",
     "options": [
-      "48",
+      "5",
+      "60",
       "107",
-      "100",
-      "86"
+      "75"
     ],
-    "correct_index": 1,
+    "correct_index": 2,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -8517,12 +8517,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 107؟",
     "options": [
-      "الماعون",
-      "يس",
-      "الفرقان",
-      "هود"
+      "الروم",
+      "الشرح",
+      "المدثر",
+      "الماعون"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -8536,12 +8536,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الكوثر؟",
     "options": [
-      "45",
       "3",
-      "25",
-      "6"
+      "52",
+      "30",
+      "4"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -8556,12 +8556,12 @@
     "question_type": "count",
     "question": "ما رقم سورة الكوثر في المصحف؟",
     "options": [
+      "93",
+      "85",
       "108",
-      "77",
-      "106",
-      "61"
+      "67"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -8595,9 +8595,9 @@
     "question": "ما اسم السورة رقم 108؟",
     "options": [
       "الكوثر",
-      "فاطر",
-      "الحاقة",
-      "الطور"
+      "ص",
+      "الأنفال",
+      "النصر"
     ],
     "correct_index": 0,
     "difficulty": "متوسط",
@@ -8613,12 +8613,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الكافرون؟",
     "options": [
-      "120",
       "6",
-      "69",
-      "88"
+      "36",
+      "56",
+      "83"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -8633,12 +8633,12 @@
     "question_type": "count",
     "question": "ما رقم سورة الكافرون في المصحف؟",
     "options": [
-      "73",
-      "85",
-      "84",
-      "109"
+      "12",
+      "103",
+      "109",
+      "2"
     ],
-    "correct_index": 3,
+    "correct_index": 2,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -8672,9 +8672,9 @@
     "question": "ما اسم السورة رقم 109؟",
     "options": [
       "الكافرون",
-      "الكهف",
-      "الملك",
-      "الشمس"
+      "المجادلة",
+      "النمل",
+      "الفرقان"
     ],
     "correct_index": 0,
     "difficulty": "متوسط",
@@ -8690,9 +8690,9 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة النصر؟",
     "options": [
-      "29",
-      "11",
-      "12",
+      "206",
+      "123",
+      "28",
       "3"
     ],
     "correct_index": 3,
@@ -8710,12 +8710,12 @@
     "question_type": "count",
     "question": "ما رقم سورة النصر في المصحف؟",
     "options": [
+      "83",
+      "86",
       "110",
-      "11",
-      "98",
-      "68"
+      "31"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -8748,9 +8748,9 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 110؟",
     "options": [
-      "المؤمنون",
-      "الناس",
-      "الدخان",
+      "الأنفال",
+      "الزمر",
+      "القيامة",
       "النصر"
     ],
     "correct_index": 3,
@@ -8767,12 +8767,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة المسد؟",
     "options": [
-      "78",
-      "89",
       "21",
-      "5"
+      "5",
+      "62",
+      "19"
     ],
-    "correct_index": 3,
+    "correct_index": 1,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -8787,9 +8787,9 @@
     "question_type": "count",
     "question": "ما رقم سورة المسد في المصحف؟",
     "options": [
-      "109",
-      "15",
-      "12",
+      "72",
+      "24",
+      "5",
       "111"
     ],
     "correct_index": 3,
@@ -8825,12 +8825,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 111؟",
     "options": [
-      "المسد",
-      "القارعة",
-      "النصر",
-      "الأحزاب"
+      "الفلق",
+      "الحجرات",
+      "الإخلاص",
+      "المسد"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -8844,12 +8844,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الإخلاص؟",
     "options": [
-      "110",
       "12",
+      "4",
       "26",
-      "4"
+      "11"
     ],
-    "correct_index": 3,
+    "correct_index": 1,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -8864,12 +8864,12 @@
     "question_type": "count",
     "question": "ما رقم سورة الإخلاص في المصحف؟",
     "options": [
-      "32",
-      "37",
       "112",
-      "36"
+      "6",
+      "94",
+      "101"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -8902,9 +8902,9 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 112؟",
     "options": [
-      "محمد",
-      "العصر",
-      "العنكبوت",
+      "النور",
+      "السجدة",
+      "فاطر",
       "الإخلاص"
     ],
     "correct_index": 3,
@@ -8921,12 +8921,12 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الفلق؟",
     "options": [
+      "78",
+      "5",
       "11",
-      "8",
-      "75",
-      "5"
+      "13"
     ],
-    "correct_index": 3,
+    "correct_index": 1,
     "difficulty": "سهل",
     "source": "القرآن الكريم",
     "keywords": [
@@ -8941,12 +8941,12 @@
     "question_type": "count",
     "question": "ما رقم سورة الفلق في المصحف؟",
     "options": [
-      "68",
       "113",
-      "77",
-      "88"
+      "93",
+      "23",
+      "114"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -8979,12 +8979,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 113؟",
     "options": [
-      "الدخان",
-      "الفلق",
-      "الحاقة",
-      "الحديد"
+      "الحديد",
+      "الأنبياء",
+      "محمد",
+      "الفلق"
     ],
-    "correct_index": 1,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -8998,9 +8998,9 @@
     "question_type": "multiple_choice",
     "question": "كم عدد آيات سورة الناس؟",
     "options": [
-      "60",
-      "52",
-      "11",
+      "44",
+      "34",
+      "135",
       "6"
     ],
     "correct_index": 3,
@@ -9018,10 +9018,10 @@
     "question_type": "count",
     "question": "ما رقم سورة الناس في المصحف؟",
     "options": [
-      "102",
-      "75",
+      "97",
+      "48",
       "114",
-      "44"
+      "25"
     ],
     "correct_index": 2,
     "difficulty": "متوسط",
@@ -9056,12 +9056,12 @@
     "question_type": "multiple_choice",
     "question": "ما اسم السورة رقم 114؟",
     "options": [
-      "الأنفال",
-      "الطور",
-      "الناس",
-      "المزمل"
+      "الانشقاق",
+      "التكاثر",
+      "ص",
+      "الناس"
     ],
-    "correct_index": 2,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -9075,12 +9075,12 @@
     "question_type": "multiple_choice",
     "question": "من أول الأنبياء؟",
     "options": [
-      "التابعي عن النبي ﷺ مباشرة",
-      "التيمم",
       "آدم عليه السلام",
-      "إبراهيم عليه السلام"
+      "صح",
+      "مسلم بن الحجاج",
+      "بالنيات"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -9094,12 +9094,12 @@
     "question_type": "multiple_choice",
     "question": "من أول الرسل إلى أهل الأرض؟",
     "options": [
-      "يُقال في بداية الصلاة",
-      "سعيد بن المسيب",
-      "نوح عليه السلام",
-      "عيسى عليه السلام"
+      "1492م",
+      "أبو حنيفة النعمان",
+      "صالح عليه السلام",
+      "نوح عليه السلام"
     ],
-    "correct_index": 2,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -9112,12 +9112,12 @@
     "question_type": "multiple_choice",
     "question": "من خليل الرحمن؟",
     "options": [
-      "محمد بن إسماعيل البخاري",
-      "سعيد بن المسيب",
-      "إبراهيم عليه السلام",
-      "مسلم بن الحجاج"
+      "صح",
+      "التابعي عن النبي ﷺ مباشرة",
+      "الشهادتان",
+      "إبراهيم عليه السلام"
     ],
-    "correct_index": 2,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -9130,12 +9130,12 @@
     "question_type": "multiple_choice",
     "question": "من النبي الذي كلمه الله تكليماً؟",
     "options": [
-      "هود عليه السلام",
-      "موسى عليه السلام",
-      "الحسن البصري",
-      "عائشة رضي الله عنها"
+      "صحيح",
+      "صح",
+      "محمد ﷺ",
+      "موسى عليه السلام"
     ],
-    "correct_index": 1,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -9148,12 +9148,12 @@
     "question_type": "multiple_choice",
     "question": "من النبي الذي رفعه الله إليه؟",
     "options": [
-      "صحيح",
-      "عيسى عليه السلام",
-      "سعيد بن المسيب",
-      "يُقال في بداية الصلاة"
+      "ثلاثين سنة",
+      "أبو بكر الصديق",
+      "خالد بن الوليد",
+      "عيسى عليه السلام"
     ],
-    "correct_index": 1,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -9166,12 +9166,12 @@
     "question_type": "multiple_choice",
     "question": "من خاتم الأنبياء والرسل؟",
     "options": [
-      "صالح عليه السلام",
+      "سليمان عليه السلام",
+      "عيسى عليه السلام",
       "محمد ﷺ",
-      "غزوة بدر",
-      "محمد بن إسماعيل البخاري"
+      "موسى عليه السلام"
     ],
-    "correct_index": 1,
+    "correct_index": 2,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -9185,9 +9185,9 @@
     "question": "من النبي الذي ابتلعه الحوت؟",
     "options": [
       "يونس عليه السلام",
-      "محمد ﷺ",
-      "ولا ضرار",
-      "صحيح"
+      "خالد بن الوليد",
+      "الإمام النووي",
+      "ما لم يبلغ درجة الحسن"
     ],
     "correct_index": 0,
     "difficulty": "متوسط",
@@ -9203,9 +9203,9 @@
     "question": "من النبي الذي سخر الله له الريح؟",
     "options": [
       "سليمان عليه السلام",
-      "أبو هريرة",
-      "الحسن البصري",
-      "التيمم"
+      "خديجة بنت خويلد",
+      "صح",
+      "ما لم يبلغ درجة الحسن"
     ],
     "correct_index": 0,
     "difficulty": "متوسط",
@@ -9220,12 +9220,12 @@
     "question_type": "multiple_choice",
     "question": "من النبي الذي أرسل إلى قوم عاد؟",
     "options": [
-      "صالح عليه السلام",
-      "ما لم يبلغ درجة الحسن",
+      "صلح الحديبية",
       "هود عليه السلام",
-      "مسجد الأقصى"
+      "عمر بن الخطاب",
+      "التيمم"
     ],
-    "correct_index": 2,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -9238,12 +9238,12 @@
     "question_type": "multiple_choice",
     "question": "من النبي الذي أرسل إلى قوم ثمود؟",
     "options": [
-      "النبي ﷺ",
-      "موسى عليه السلام",
-      "صالح عليه السلام",
-      "عيسى عليه السلام"
+      "سعيد بن المسيب",
+      "آدم عليه السلام",
+      "الإمام النووي",
+      "صالح عليه السلام"
     ],
-    "correct_index": 2,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "القرآن",
     "keywords": [
@@ -9257,9 +9257,9 @@
     "question": "من أول الخلفاء الراشدين؟",
     "options": [
       "أبو بكر الصديق",
-      "الصحابي",
-      "مسجد الأقصى",
-      "صالح عليه السلام"
+      "عيسى عليه السلام",
+      "هود عليه السلام",
+      "صح"
     ],
     "correct_index": 0,
     "difficulty": "متوسط",
@@ -9274,12 +9274,12 @@
     "question_type": "companion_choice",
     "question": "من الصحابي الملقب بالفاروق؟",
     "options": [
-      "التيمم",
-      "عمر بن الخطاب",
-      "1492م",
-      "أبو هريرة"
+      "عائشة رضي الله عنها",
+      "الإمام النووي",
+      "إبراهيم عليه السلام",
+      "عمر بن الخطاب"
     ],
-    "correct_index": 1,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "السيرة",
     "keywords": [
@@ -9292,12 +9292,12 @@
     "question_type": "companion_choice",
     "question": "من لقب بسيف الله المسلول؟",
     "options": [
-      "بالنيات",
-      "يونس عليه السلام",
+      "محمد ﷺ",
       "خالد بن الوليد",
-      "الحسن البصري"
+      "أبو حنيفة النعمان",
+      "عائشة رضي الله عنها"
     ],
-    "correct_index": 2,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "السيرة",
     "keywords": [
@@ -9310,12 +9310,12 @@
     "question_type": "companion_choice",
     "question": "من أكثر الصحابة رواية للحديث؟",
     "options": [
-      "هود عليه السلام",
-      "أبو بكر الصديق",
-      "محمد ﷺ",
-      "أبو هريرة"
+      "عمر بن الخطاب",
+      "أبو هريرة",
+      "موسى عليه السلام",
+      "غزوة الخندق"
     ],
-    "correct_index": 3,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "السيرة",
     "keywords": [
@@ -9328,12 +9328,12 @@
     "question_type": "multiple_choice",
     "question": "من أم المؤمنين ابنة أبي بكر؟",
     "options": [
-      "الإمام النووي",
-      "خديجة بنت خويلد",
-      "يونس عليه السلام",
-      "عائشة رضي الله عنها"
+      "ولا ضرار",
+      "عائشة رضي الله عنها",
+      "آية الكرسي",
+      "ثلاثين سنة"
     ],
-    "correct_index": 3,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "السيرة",
     "keywords": [
@@ -9347,12 +9347,12 @@
     "question_type": "multiple_choice",
     "question": "من أول من آمن من النساء؟",
     "options": [
+      "صالح عليه السلام",
       "خديجة بنت خويلد",
-      "التيمم",
-      "صلح الحديبية",
-      "مسلم بن الحجاج"
+      "الصحابي",
+      "يونس عليه السلام"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "السيرة",
     "keywords": [
@@ -9366,12 +9366,12 @@
     "question_type": "scholar_choice",
     "question": "من إمام التابعين في المدينة؟",
     "options": [
-      "يونس عليه السلام",
-      "عائشة رضي الله عنها",
       "سعيد بن المسيب",
-      "عمر بن الخطاب"
+      "ولا ضرار",
+      "الصَّابِرِينَ",
+      "يُقال في بداية الصلاة"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "تراجم العلماء",
     "keywords": [
@@ -9385,10 +9385,10 @@
     "question_type": "scholar_choice",
     "question": "من عالم البصرة من التابعين؟",
     "options": [
-      "سليمان عليه السلام",
+      "خالد بن الوليد",
       "الحسن البصري",
-      "عائشة رضي الله عنها",
-      "محمد ﷺ"
+      "المسجد الحرام",
+      "عيسى عليه السلام"
     ],
     "correct_index": 1,
     "difficulty": "متوسط",
@@ -9404,12 +9404,12 @@
     "question_type": "scholar_choice",
     "question": "من مؤسس المذهب الحنفي؟",
     "options": [
+      "ثلاثين سنة",
       "أبو حنيفة النعمان",
-      "التابعي عن النبي ﷺ مباشرة",
-      "سليمان عليه السلام",
-      "محمد ﷺ"
+      "سعيد بن المسيب",
+      "مالك بن أنس"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "تراجم العلماء",
     "keywords": [
@@ -9423,12 +9423,12 @@
     "question_type": "scholar_choice",
     "question": "من صاحب صحيح البخاري؟",
     "options": [
-      "خديجة بنت خويلد",
-      "يونس عليه السلام",
-      "آية الكرسي",
-      "محمد بن إسماعيل البخاري"
+      "مسجد الأقصى",
+      "محمد بن إسماعيل البخاري",
+      "مالك بن أنس",
+      "يونس عليه السلام"
     ],
-    "correct_index": 3,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "تراجم العلماء",
     "keywords": [
@@ -9442,12 +9442,12 @@
     "question_type": "scholar_choice",
     "question": "من صاحب صحيح مسلم؟",
     "options": [
-      "الإمام النووي",
-      "ما لم يبلغ درجة الحسن",
+      "عائشة رضي الله عنها",
       "مسلم بن الحجاج",
-      "إبراهيم عليه السلام"
+      "مالك بن أنس",
+      "صلح الحديبية"
     ],
-    "correct_index": 2,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "تراجم العلماء",
     "keywords": [
@@ -9461,12 +9461,12 @@
     "question_type": "scholar_choice",
     "question": "من صاحب كتاب الموطأ؟",
     "options": [
-      "مالك بن أنس",
-      "ما لم يبلغ درجة الحسن",
-      "موسى عليه السلام",
-      "1492م"
+      "إبراهيم عليه السلام",
+      "محمد ﷺ",
+      "خالد بن الوليد",
+      "مالك بن أنس"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "تراجم العلماء",
     "keywords": [
@@ -9480,12 +9480,12 @@
     "question_type": "multiple_choice",
     "question": "الحديث المرسل هو ما رواه:",
     "options": [
-      "ثلاثين سنة",
-      "المسجد الحرام",
-      "الصَّابِرِينَ",
-      "التابعي عن النبي ﷺ مباشرة"
+      "التابعي عن النبي ﷺ مباشرة",
+      "غزوة بدر",
+      "غزوة الخندق",
+      "مالك بن أنس"
     ],
-    "correct_index": 3,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "علوم الحديث",
     "keywords": [
@@ -9498,12 +9498,12 @@
     "question_type": "multiple_choice",
     "question": "الحديث الموقوف هو ما أُضيف إلى:",
     "options": [
-      "هود عليه السلام",
+      "الصَّابِرِينَ",
+      "أبو بكر الصديق",
       "الصحابي",
-      "أبو حنيفة النعمان",
-      "عائشة رضي الله عنها"
+      "ثلاثين سنة"
     ],
-    "correct_index": 1,
+    "correct_index": 2,
     "difficulty": "متوسط",
     "source": "علوم الحديث",
     "keywords": [
@@ -9516,12 +9516,12 @@
     "question_type": "multiple_choice",
     "question": "الحديث الضعيف هو:",
     "options": [
-      "محمد بن إسماعيل البخاري",
       "ما لم يبلغ درجة الحسن",
-      "عمر بن الخطاب",
-      "هود عليه السلام"
+      "يُقال في بداية الصلاة",
+      "الصَّابِرِينَ",
+      "مسجد الأقصى"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "علوم الحديث",
     "keywords": [
@@ -9534,12 +9534,12 @@
     "question_type": "battle_choice",
     "question": "ما أولى غزوة كبرى في الإسلام؟",
     "options": [
-      "خمس صلوات",
       "غزوة بدر",
-      "محمد بن إسماعيل البخاري",
-      "الصحابي"
+      "آية الكرسي",
+      "آدم عليه السلام",
+      "المسجد الحرام"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "السيرة",
     "keywords": [
@@ -9552,10 +9552,10 @@
     "question_type": "battle_choice",
     "question": "في أي غزوة وقع حفر الخندق؟",
     "options": [
-      "عائشة رضي الله عنها",
-      "الحسن البصري",
+      "خديجة بنت خويلد",
+      "غزوة بدر",
       "غزوة الخندق",
-      "نوح عليه السلام"
+      "يونس عليه السلام"
     ],
     "correct_index": 2,
     "difficulty": "متوسط",
@@ -9571,9 +9571,9 @@
     "question": "ما غزوة صلح الحديبية؟",
     "options": [
       "صلح الحديبية",
-      "غزوة الخندق",
-      "سعيد بن المسيب",
-      "نوح عليه السلام"
+      "بالنيات",
+      "الحسن البصري",
+      "صح"
     ],
     "correct_index": 0,
     "difficulty": "متوسط",
@@ -9588,12 +9588,12 @@
     "question_type": "mosque_choice",
     "question": "ما المسجد الذي أُسري إليه النبي ﷺ؟",
     "options": [
-      "ولا ضرار",
-      "صح",
+      "خديجة بنت خويلد",
       "مسلم بن الحجاج",
-      "مسجد الأقصى"
+      "مسجد الأقصى",
+      "سليمان عليه السلام"
     ],
-    "correct_index": 3,
+    "correct_index": 2,
     "difficulty": "متوسط",
     "source": "السيرة",
     "keywords": [
@@ -9608,9 +9608,9 @@
     "question": "ما أقدس مسجد في الإسلام؟",
     "options": [
       "المسجد الحرام",
-      "صح",
-      "غزوة الخندق",
-      "أبو هريرة"
+      "إبراهيم عليه السلام",
+      "صحيح البخاري",
+      "سعيد بن المسيب"
     ],
     "correct_index": 0,
     "difficulty": "متوسط",
@@ -9626,9 +9626,9 @@
     "question_type": "multiple_choice",
     "question": "كم عدد الصلوات المفروضة في اليوم؟",
     "options": [
-      "الإمام النووي",
-      "صح",
-      "التابعي عن النبي ﷺ مباشرة",
+      "مسلم بن الحجاج",
+      "الشهادتان",
+      "1492م",
       "خمس صلوات"
     ],
     "correct_index": 3,
@@ -9644,12 +9644,12 @@
     "question_type": "multiple_choice",
     "question": "بماذا يتطهر المسلم عند عدم وجود الماء؟",
     "options": [
-      "التيمم",
-      "غزوة الخندق",
-      "صح",
-      "1492م"
+      "آية الكرسي",
+      "خالد بن الوليد",
+      "عمر بن الخطاب",
+      "التيمم"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "الفقه",
     "keywords": [
@@ -9662,12 +9662,12 @@
     "question_type": "true_false",
     "question": "صوم رمضان ركن من أركان الإسلام.",
     "options": [
-      "خالد بن الوليد",
-      "هود عليه السلام",
+      "الإمام النووي",
       "صح",
-      "أبو حنيفة النعمان"
+      "سعيد بن المسيب",
+      "الصَّابِرِينَ"
     ],
-    "correct_index": 2,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "حديث جبريل",
     "keywords": [
@@ -9680,12 +9680,12 @@
     "question_type": "true_false",
     "question": "الفاعل مرفوع دائماً.",
     "options": [
-      "ثلاثين سنة",
-      "صحيح",
-      "يونس عليه السلام",
-      "صح"
+      "خديجة بنت خويلد",
+      "التابعي عن النبي ﷺ مباشرة",
+      "صح",
+      "صحيح"
     ],
-    "correct_index": 1,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "النحو",
     "keywords": [
@@ -9698,12 +9698,12 @@
     "question_type": "multiple_choice",
     "question": "ما دعاء الاستفتاح في الصلاة؟",
     "options": [
-      "يُقال في بداية الصلاة",
-      "محمد بن إسماعيل البخاري",
-      "سليمان عليه السلام",
-      "أبو حنيفة النعمان"
+      "التيمم",
+      "أبو حنيفة النعمان",
+      "أبو بكر الصديق",
+      "يُقال في بداية الصلاة"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "السنة",
     "keywords": [
@@ -9716,12 +9716,12 @@
     "question_type": "multiple_choice",
     "question": "من أذكار الصباح المشهورة؟",
     "options": [
-      "بالنيات",
-      "مسجد الأقصى",
-      "سليمان عليه السلام",
-      "آية الكرسي"
+      "آية الكرسي",
+      "الصَّابِرِينَ",
+      "الحسن البصري",
+      "صح"
     ],
-    "correct_index": 3,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "حصن المسلم",
     "keywords": [
@@ -9735,9 +9735,9 @@
     "question": "مدة الخلافة الراشدة تقريباً:",
     "options": [
       "ثلاثين سنة",
-      "الشهادتان",
-      "هود عليه السلام",
-      "النبي ﷺ"
+      "صحيح",
+      "المسجد الحرام",
+      "محمد ﷺ"
     ],
     "correct_index": 0,
     "difficulty": "متوسط",
@@ -9752,12 +9752,12 @@
     "question_type": "multiple_choice",
     "question": "سقطت غرناطة عام:",
     "options": [
-      "آدم عليه السلام",
-      "ثلاثين سنة",
       "1492م",
-      "المسجد الحرام"
+      "مسجد الأقصى",
+      "بالنيات",
+      "سعيد بن المسيب"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "التاريخ",
     "keywords": [
@@ -9770,12 +9770,12 @@
     "question_type": "multiple_choice",
     "question": "جمع الأربعين النووية:",
     "options": [
-      "صالح عليه السلام",
-      "يونس عليه السلام",
-      "الإمام النووي",
-      "أبو هريرة"
+      "سعيد بن المسيب",
+      "صلح الحديبية",
+      "مسجد الأقصى",
+      "الإمام النووي"
     ],
-    "correct_index": 2,
+    "correct_index": 3,
     "difficulty": "متوسط",
     "source": "تراجم العلماء",
     "keywords": [
@@ -9788,10 +9788,10 @@
     "question_type": "complete_verse",
     "question": "أكمل: إِنَّ اللَّهَ مَعَ …",
     "options": [
-      "غزوة بدر",
-      "ثلاثين سنة",
+      "الإمام النووي",
+      "سعيد بن المسيب",
       "الصَّابِرِينَ",
-      "إبراهيم عليه السلام"
+      "خالد بن الوليد"
     ],
     "correct_index": 2,
     "difficulty": "متوسط",
@@ -9806,12 +9806,12 @@
     "question_type": "pillar",
     "question": "ما الركن الأول من أركان الإسلام؟",
     "options": [
-      "صحيح البخاري",
-      "مسلم بن الحجاج",
-      "عمر بن الخطاب",
-      "الشهادتان"
+      "مسجد الأقصى",
+      "الشهادتان",
+      "أبو هريرة",
+      "الصَّابِرِينَ"
     ],
-    "correct_index": 3,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "حديث جبريل",
     "keywords": [
@@ -9825,9 +9825,9 @@
     "question": "أكمل: إنما الأعمال…",
     "options": [
       "بالنيات",
-      "الصَّابِرِينَ",
-      "عمر بن الخطاب",
-      "صالح عليه السلام"
+      "صحيح البخاري",
+      "عيسى عليه السلام",
+      "الصَّابِرِينَ"
     ],
     "correct_index": 0,
     "difficulty": "متوسط",
@@ -9842,12 +9842,12 @@
     "question_type": "who_said",
     "question": "من قال: الدين النصيحة؟",
     "options": [
-      "محمد ﷺ",
-      "محمد بن إسماعيل البخاري",
+      "صالح عليه السلام",
       "النبي ﷺ",
-      "عمر بن الخطاب"
+      "صح",
+      "عائشة رضي الله عنها"
     ],
-    "correct_index": 2,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "صحيح مسلم",
     "keywords": [
@@ -9861,9 +9861,9 @@
     "question": "أصح كتب بعد القرآن عند أهل السنة:",
     "options": [
       "صحيح البخاري",
-      "عيسى عليه السلام",
-      "سليمان عليه السلام",
-      "آدم عليه السلام"
+      "أبو هريرة",
+      "يونس عليه السلام",
+      "خالد بن الوليد"
     ],
     "correct_index": 0,
     "difficulty": "متوسط",
@@ -9878,12 +9878,12 @@
     "question_type": "true_false",
     "question": "صحيح البخاري هو أصح كتب بعد القرآن عند أهل السنة.",
     "options": [
-      "خديجة بنت خويلد",
-      "سليمان عليه السلام",
+      "ما لم يبلغ درجة الحسن",
       "صح",
-      "محمد ﷺ"
+      "نوح عليه السلام",
+      "1492م"
     ],
-    "correct_index": 2,
+    "correct_index": 1,
     "difficulty": "متوسط",
     "source": "تراجم العلماء",
     "keywords": [
@@ -9896,12 +9896,12 @@
     "question_type": "scholar_choice",
     "question": "من جمع كتاب رياض الصالحين؟",
     "options": [
-      "صحيح البخاري",
-      "الإمام النووي",
+      "أبو بكر الصديق",
       "صح",
-      "أبو بكر الصديق"
+      "الإمام النووي",
+      "الشهادتان"
     ],
-    "correct_index": 1,
+    "correct_index": 2,
     "difficulty": "متوسط",
     "source": "تراجم العلماء",
     "keywords": [
@@ -9914,16 +9914,180 @@
     "question_type": "complete_hadith",
     "question": "أكمل: لا ضرر…",
     "options": [
-      "ما لم يبلغ درجة الحسن",
-      "هود عليه السلام",
       "ولا ضرار",
-      "بالنيات"
+      "الإمام النووي",
+      "النبي ﷺ",
+      "هود عليه السلام"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "difficulty": "متوسط",
     "source": "موطأ مالك",
     "keywords": [
       "ضرر"
     ]
+  },
+  {
+    "id": "sq-520",
+    "category_slug": "seera",
+    "question_type": "seira_timeline",
+    "question": "ما أول مرحلة في تسلسل السيرة النبوية؟",
+    "options": [
+      "مولد النبي ﷺ",
+      "الوحي",
+      "الهجرة",
+      "غزوة بدر",
+      "فتح مكة",
+      "حجة الوداع"
+    ],
+    "correct_index": 0,
+    "difficulty": "متوسط",
+    "source": "السيرة النبوية",
+    "keywords": [
+      "سيرة",
+      "ترتيب"
+    ],
+    "subcategory_slug": "seira-timeline",
+    "explanation": "يبدأ التسلسل بمولد النبي ﷺ ثم الوحي والهجرة..."
+  },
+  {
+    "id": "sq-521",
+    "category_slug": "seera",
+    "question_type": "order_events",
+    "question": "ما الحدث الذي جاء بعد الهجرة مباشرة في ترتيب الغزوات؟",
+    "options": [
+      "غزوة بدر",
+      "غزوة أحد",
+      "غزوة الخندق",
+      "صلح الحديبية"
+    ],
+    "correct_index": 0,
+    "difficulty": "متقدم",
+    "source": "السيرة",
+    "keywords": [
+      "غزوات",
+      "ترتيب"
+    ]
+  },
+  {
+    "id": "sq-522",
+    "category_slug": "fiqh",
+    "question_type": "match",
+    "question": "وصل بين الركن والوصف:",
+    "options": [
+      "الصلاة",
+      "ركن",
+      "الزكاة",
+      "مال",
+      "الصوم",
+      "شهر رمضان",
+      "الحج",
+      "بيت الله"
+    ],
+    "correct_index": 0,
+    "difficulty": "متوسط",
+    "source": "الفقه",
+    "keywords": [
+      "أركان",
+      "وصل"
+    ],
+    "explanation": "كل ركن يقترن بوصفه."
+  },
+  {
+    "id": "sq-523",
+    "category_slug": "mosques",
+    "question_type": "mosque_choice",
+    "question": "أي مسجد يُعرف بمسجد قباء؟",
+    "options": [
+      "أول مسجد بُني في الإسلام",
+      "مسجد في مكة",
+      "مسجد في القدس",
+      "مسجد في الكوفة"
+    ],
+    "correct_index": 0,
+    "difficulty": "سهل",
+    "source": "السيرة",
+    "keywords": [
+      "قباء",
+      "مسجد"
+    ]
+  },
+  {
+    "id": "sq-524",
+    "category_slug": "mutoon",
+    "question_type": "complete_mutoon",
+    "question": "أكمل المتن: «إِنَّمَا الْأَعْمَالُ...»",
+    "options": [
+      "بِالنِّيَّاتِ",
+      "بِالأَقْوالِ",
+      "بِالأَموَالِ",
+      "بِالأَعْمَالِ"
+    ],
+    "correct_index": 0,
+    "difficulty": "متقدم",
+    "source": "الأربعون النووية",
+    "keywords": [
+      "متن",
+      "نية"
+    ],
+    "explanation": "من حديث: إنما الأعمال بالنيات."
+  },
+  {
+    "id": "sq-525",
+    "category_slug": "hadith",
+    "question_type": "book_choice",
+    "question": "في أي كتاب ورد حديث «إنما الأعمال بالنيات»؟",
+    "options": [
+      "صحيح البخاري",
+      "موطأ مالك",
+      "سنن ابن ماجه",
+      "مسند أحمد"
+    ],
+    "correct_index": 0,
+    "difficulty": "متوسط",
+    "source": "الحديث",
+    "keywords": [
+      "بخاري",
+      "كتاب"
+    ]
+  },
+  {
+    "id": "sq-526",
+    "category_slug": "quran",
+    "question_type": "audio_choice",
+    "question": "استمع ثم حدّد السورة:",
+    "options": [
+      "الفاتحة",
+      "الإخلاص",
+      "الكوثر",
+      "الناس"
+    ],
+    "correct_index": 0,
+    "difficulty": "متوسط",
+    "source": "القرآن",
+    "keywords": [
+      "صوت",
+      "سورة"
+    ],
+    "audio_url": "https://cdn.islamic.network/quran/audio-surah/128/ar.alafasy/1.mp3"
+  },
+  {
+    "id": "sq-527",
+    "category_slug": "seera",
+    "question_type": "video_choice",
+    "question": "ما المشهد المعروض؟",
+    "options": [
+      "الكعبة المشرفة",
+      "المسجد النبوي",
+      "جبل أحد",
+      "غار حراء"
+    ],
+    "correct_index": 0,
+    "difficulty": "سهل",
+    "source": "معالم إسلامية",
+    "keywords": [
+      "مرئي",
+      "كعبة"
+    ],
+    "video_url": "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
   }
 ]

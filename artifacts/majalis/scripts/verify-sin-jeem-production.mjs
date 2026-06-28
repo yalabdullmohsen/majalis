@@ -37,6 +37,10 @@ const api = fs.readFileSync(path.join(ROOT, "lib/api-handlers/sin-jeem.js"), "ut
 ok(api.includes("submit_match"), "API submit_match handler");
 ok(api.includes("leaderboard"), "API leaderboard handler");
 ok(api.includes("rate_limited"), "API rate limiting");
+ok(api.includes("admin_import"), "API admin CSV/JSON import");
+ok(api.includes("admin_bulk_approve"), "API bulk approve");
+ok(api.includes("admin_audit"), "API audit log");
+ok(api.includes("books"), "AI books source");
 
 const sql = fs.readFileSync(path.join(ROOT, "supabase/sin_jeem_v1.sql"), "utf8");
 for (const table of [
@@ -47,6 +51,9 @@ for (const table of [
   ok(sql.includes(table), `SQL table: ${table}`);
 }
 ok(sql.includes("CREATE UNIQUE INDEX IF NOT EXISTS sin_jeem_questions_content_hash"), "SQL dedup index");
+ok(fs.existsSync(path.join(ROOT, "supabase/sin_jeem_v1_2_types.sql")), "SQL v1.2 types patch");
+ok(fs.existsSync(path.join(ROOT, "lib/sin-jeem-migration.mjs")), "Migration helper module");
+ok(fs.existsSync(path.join(ROOT, "scripts/apply-sin-jeem-migration.mjs")), "Apply migration script");
 
 try {
   const bank = JSON.parse(fs.readFileSync(path.join(ROOT, "data/sin-jeem/questions-bank.json"), "utf8"));

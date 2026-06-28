@@ -89,6 +89,39 @@ function ImageChoiceCard(props: QuestionCardProps) {
   );
 }
 
+function MediaChoiceCard({ question, kind }: { question: SinJeemQuestion; kind: "audio" | "video" }) {
+  const url = kind === "audio" ? question.audio_url : question.video_url;
+  return (
+    <div className={`sj-media-choice sj-media-choice--${kind}`}>
+      {url && kind === "audio" && (
+        <audio controls preload="none" className="sj-audio-player" src={url}>
+          <track kind="captions" />
+        </audio>
+      )}
+      {url && kind === "video" && (
+        <video controls preload="metadata" className="sj-video-player" playsInline src={url}>
+          <track kind="captions" />
+        </video>
+      )}
+      {!url && <p className="sj-hint">استمع/شاهد ثم اختر الإجابة من الخيارات أدناه</p>}
+    </div>
+  );
+}
+
+function SeiraTimelineCard({ question, revealed }: QuestionCardProps) {
+  const options = question.options || [];
+  return (
+    <div className="sj-seira-timeline">
+      <p className="sj-hint">رتّب مراحل السيرة بالترتيب الصحيح (اختر البداية):</p>
+      <ol className="sj-timeline-list">
+        {options.map((opt, i) => (
+          <li key={i} className={revealed && i === (question.correct_index ?? 0) ? "correct" : ""}>{opt}</li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+
 export function QuestionCard(props: QuestionCardProps) {
   const { question, selectedIndex, hiddenOptions, revealed, onSelect, disabled } = props;
   const options = question.options || [];
@@ -112,10 +145,14 @@ export function QuestionCard(props: QuestionCardProps) {
       </p>
 
       {type === "order_events" && <OrderEventsCard {...props} />}
+      {type === "seira_timeline" && <SeiraTimelineCard {...props} />}
       {type === "match" && <MatchPairsCard {...props} />}
-      {(type === "image_choice" || type === "mosque_choice") && <ImageChoiceCard {...props} />}
+      {(type === "image_choice" || type === "mosque_choice" || type === "book_choice") && <ImageChoiceCard {...props} />}
+      {type === "audio_choice" && <MediaChoiceCard question={question} kind="audio" />}
+      {type === "video_choice" && <MediaChoiceCard question={question} kind="video" />}
 
-      {type !== "order_events" && type !== "match" && type !== "image_choice" && type !== "mosque_choice" && (
+      {type !== "order_events" && type !== "seira_timeline" && type !== "match"
+        && type !== "image_choice" && type !== "mosque_choice" && type !== "book_choice" && (
         <div className="sj-options">
           {options.map((opt, i) => {
             if (hiddenOptions.includes(i)) return null;

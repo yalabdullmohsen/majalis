@@ -13,6 +13,7 @@ export type QuestionType =
   | "true_false"
   | "complete_verse"
   | "complete_hadith"
+  | "complete_mutoon"
   | "who_said"
   | "order_events"
   | "match"
@@ -20,7 +21,11 @@ export type QuestionType =
   | "mosque_choice"
   | "companion_choice"
   | "scholar_choice"
+  | "book_choice"
   | "battle_choice"
+  | "seira_timeline"
+  | "audio_choice"
+  | "video_choice"
   | "first_last"
   | "count"
   | "ruling"
@@ -59,7 +64,14 @@ export interface SinJeemQuestion {
   source?: string;
   keywords?: string[];
   image_url?: string | null;
+  audio_url?: string | null;
+  video_url?: string | null;
   points?: number;
+  review_status?: "pending" | "approved" | "rejected";
+  created_at?: string;
+  updated_at?: string;
+  created_by?: string | null;
+  updated_by?: string | null;
 }
 
 export interface MatchConfig {

@@ -47,8 +47,9 @@ export const SIN_JEEM_CATEGORIES: SinJeemCategory[] = [
   { id: "cat-muhammad", slug: "muhammad", name_ar: "محمد ﷺ", icon: "🕋", parent_slug: "prophets", sort_order: 56 },
   // الصحابة
   { id: "cat-sahaba", slug: "sahaba", name_ar: "الصحابة", icon: "⭐", sort_order: 60 },
-  { id: "cat-khulafa", slug: "khulafa-rashidun", name_ar: "الخلفاء الراشدون", icon: "👑", parent_slug: "sahaba", sort_order: 61 },
-  { id: "cat-ashara", slug: "ashara-mubashshara", name_ar: "العشرة المبشرون", icon: "🔟", parent_slug: "sahaba", sort_order: 62 },
+  { id: "cat-um-muminin", slug: "um-muminin", name_ar: "أمهات المؤمنين", icon: "👩", parent_slug: "sahaba", sort_order: 61 },
+  { id: "cat-tabiin", slug: "tabiin", name_ar: "التابعون", icon: "📜", sort_order: 62 },
+  { id: "cat-scholars", slug: "scholars", name_ar: "العلماء", icon: "🎓", sort_order: 63 },
   // الفقه
   { id: "cat-fiqh", slug: "fiqh", name_ar: "الفقه", icon: "⚖️", sort_order: 70 },
   { id: "cat-tahara", slug: "tahara", name_ar: "الطهارة", icon: "💧", parent_slug: "fiqh", sort_order: 71 },
@@ -56,6 +57,10 @@ export const SIN_JEEM_CATEGORIES: SinJeemCategory[] = [
   { id: "cat-zakat", slug: "zakat", name_ar: "الزكاة", icon: "💰", parent_slug: "fiqh", sort_order: 73 },
   { id: "cat-siyam", slug: "siyam", name_ar: "الصيام", icon: "🌙", parent_slug: "fiqh", sort_order: 74 },
   { id: "cat-hajj", slug: "hajj", name_ar: "الحج", icon: "🕋", parent_slug: "fiqh", sort_order: 75 },
+  { id: "cat-fiqh-rules", slug: "fiqh-rules", name_ar: "القواعد الفقهية", icon: "📋", parent_slug: "fiqh", sort_order: 76 },
+  { id: "cat-faraid", slug: "faraid", name_ar: "الفرائض", icon: "🧮", parent_slug: "fiqh", sort_order: 77 },
+  { id: "cat-khulafa", slug: "khulafa-rashidun", name_ar: "الخلفاء الراشدون", icon: "👑", parent_slug: "sahaba", sort_order: 64 },
+  { id: "cat-ashara", slug: "ashara-mubashshara", name_ar: "العشرة المبشرون", icon: "🔟", parent_slug: "sahaba", sort_order: 65 },
   // أصول الفقه
   { id: "cat-usool", slug: "usool-fiqh", name_ar: "أصول الفقه", icon: "📐", sort_order: 80 },
   // اللغة
@@ -73,6 +78,9 @@ export const SIN_JEEM_CATEGORIES: SinJeemCategory[] = [
   { id: "cat-andalus", slug: "andalus", name_ar: "الأندلس", icon: "🏰", parent_slug: "islamic-history", sort_order: 122 },
   // الكويت
   { id: "cat-kuwait", slug: "kuwait-islamic", name_ar: "الكويت الإسلامية", icon: "🇰🇼", sort_order: 130 },
+  { id: "cat-mosques", slug: "mosques", name_ar: "المساجد", icon: "🕌", sort_order: 131 },
+  { id: "cat-mutoon", slug: "mutoon", name_ar: "المتون العلمية", icon: "📚", sort_order: 132 },
+  { id: "cat-scientific", slug: "scientific-miracles", name_ar: "الإعجاز العلمي", icon: "🔬", sort_order: 133 },
   // الألغاز
   { id: "cat-puzzles", slug: "islamic-puzzles", name_ar: "الألغاز الإسلامية", icon: "🧩", sort_order: 140 },
   { id: "cat-fiqh-puzzle", slug: "fiqh-puzzles", name_ar: "ألغاز فقهية", icon: "⚖️", parent_slug: "islamic-puzzles", sort_order: 141 },

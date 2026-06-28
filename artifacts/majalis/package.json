@@ -52,8 +52,11 @@
     "verify:fawaid-clean": "node scripts/verify-fawaid-clean.mjs",
     "verify:sin-jeem": "node scripts/verify-sin-jeem.mjs",
     "verify:sin-jeem:production": "node scripts/verify-sin-jeem-production.mjs",
+    "verify:sin-jeem:db": "node scripts/verify-sin-jeem-db.mjs",
     "test:sin-jeem-engine": "node scripts/test-sin-jeem-engine.mjs",
     "generate:sin-jeem-bank": "node scripts/generate-sin-jeem-bank.mjs",
+    "apply:sin-jeem-migration": "node scripts/apply-sin-jeem-migration.mjs",
+    "seed:sin-jeem": "node scripts/seed-sin-jeem-questions.mjs",
     "audit:database-integrity": "node scripts/audit-database-integrity.mjs",
     "cd:pipeline": "node scripts/cd/run-pipeline.mjs",
     "cd:safety": "node scripts/cd/safety-check.mjs",
@@ -183,6 +186,7 @@
     "pg": "^8.16.0",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "wouter": "^3.3.5"
+    "wouter": "^3.3.5",
+    "xlsx": "^0.18.5"
   }
 }

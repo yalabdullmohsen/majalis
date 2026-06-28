@@ -35,6 +35,8 @@ export async function fetchGameQuestions(opts?: {
       difficulty: row.difficulty,
       keywords: row.keywords,
       image_url: row.image_url,
+      audio_url: row.audio_url,
+      video_url: row.video_url,
       points: row.points,
     }));
   } catch {
