@@ -34,6 +34,9 @@ import {
 import { enqueueFailedStage } from "./recovery.mjs";
 import { isPermanentFetchError } from "./connector-scheduler.mjs";
 import { ensureV2Schema, preprocessItemV2, postPublishV2 } from "./v2/pipeline-hooks.mjs";
+import { logAkeRejection } from "./rejection-log.mjs";
+import { runContentPipeline } from "../content-pipeline/runner.mjs";
+import { DEFAULT_LESSON_STAGES } from "../content-pipeline/stages.mjs";
 
 async function ensureRealtimeSchema(admin) {
   const { error } = await admin.from("ake_scheduler_state").select("id", { head: true, count: "exact" });
@@ -220,9 +223,21 @@ async function processConnector(admin, connectorConfig, runId, existingItems, op
     errors: [],
   };
 
-  function noteRejection(reason) {
+  function noteRejection(reason, itemCtx = null) {
     stats.rejected++;
     stats.rejectionReasons[reason] = (stats.rejectionReasons[reason] || 0) + 1;
+    void logAkeRejection({
+      runId,
+      sourceId: connectorConfig?.source_id || connectorConfig?.id,
+      connectorSlug: connectorConfig?.slug,
+      externalId: itemCtx?.external_id,
+      contentKind: itemCtx?.content_kind,
+      pipelineStage: itemCtx?.stage || "publish",
+      reason,
+      confidenceScore: itemCtx?.gate?.quality_score ?? itemCtx?.analysis?.confidence,
+      sourceUrl: itemCtx?.source_url || itemCtx?.raw_url,
+      metadata: { importMode: connectorImportMode },
+    });
   }
 
   function noteGateFailure(failedChecks) {
@@ -363,6 +378,27 @@ async function processConnector(admin, connectorConfig, runId, existingItems, op
     const processed = [];
 
     for (const item of allItems) {
+      const pipelineResult = await runContentPipeline(item, DEFAULT_LESSON_STAGES, {
+        runId,
+        meta: {
+          connectorType: connectorConfig.connector_type || connectorConfig.platform,
+          connectorConfig,
+        },
+      });
+      if (pipelineResult.item) {
+        Object.assign(item, pipelineResult.item);
+        if (pipelineResult.item.extracted_fields) {
+          item.extracted_fields = {
+            ...(item.extracted_fields || {}),
+            ...pipelineResult.item.extracted_fields,
+          };
+        }
+      }
+      if (!pipelineResult.ok && pipelineResult.abortedAt === "sanitize") {
+        noteRejection("content_blocked", { ...item, stage: "sanitize" });
+        continue;
+      }
+
       const gate = runQualityGate(item, item.analysis, item.verification, connectorConfig);
       const seo = buildSeoPackage(item, item.analysis, routeForKind(item.content_kind, item.external_id));
 
@@ -380,8 +416,13 @@ async function processConnector(admin, connectorConfig, runId, existingItems, op
         continue;
       }
 
+      if (gate.confidenceAction === "reject") {
+        noteRejection("confidence_reject", { ...item, stage: "confidence", gate });
+        continue;
+      }
+
       if (!gate.passed && !gate.canPublish) {
-        noteRejection("quality_gate");
+        noteRejection("quality_gate", { ...item, stage: "quality_gate", gate });
         noteGateFailure(gate.failedChecks);
       } else if (!gate.passed) {
         noteGateFailure(gate.failedChecks);
@@ -457,7 +498,7 @@ async function processConnector(admin, connectorConfig, runId, existingItems, op
           await postPublishV2({ inserted, item, connectorConfig, published: true, pub });
         } else {
           stats.review++;
-          noteRejection(pub.reason || "publish_failed");
+          noteRejection(pub.reason || "publish_failed", { ...inserted, stage: "publish", gate: item.gate });
           await enqueueFailedStage(admin, {
             connectorId: connectorConfig.id,
             knowledgeItemId: inserted.id,

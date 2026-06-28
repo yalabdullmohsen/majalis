@@ -4,6 +4,8 @@
 
 import { normalizeContentKind } from "../auto-knowledge-engine/content-kind.mjs";
 import { isMissingTableError } from "../supabase-admin.mjs";
+import { assertPublishable } from "../production/content-sanitizer.mjs";
+import { buildFusionKey } from "../production/source-fusion.mjs";
 
 function slugify(text) {
   return String(text || "")
@@ -281,10 +283,31 @@ export async function publishItem(admin, item, analysis) {
 
   try {
     built = await resolvePublishTarget(admin, built, item);
+    assertPublishable(built.record);
     const lookupField = built.lookupField || "external_key";
-    const lookupValue = lookupField === "external_id"
+    let lookupValue = lookupField === "external_id"
       ? String(item.external_id).replace(/^[^:]+:\s*/, "")
       : item.external_id;
+
+    if (built.table === "lessons") {
+      const fusionKey = item.fusion_key || buildFusionKey({
+        speaker_name: built.record.speaker_name,
+        title: built.record.title,
+        mosque: built.record.mosque,
+        start_date: built.record.start_date,
+        lesson_time: built.record.lesson_time,
+        city: built.record.city,
+      });
+      if (fusionKey) {
+        built.record.fusion_key = fusionKey;
+        const { data: fusedRow } = await admin
+          .from("lessons")
+          .select("id, external_key")
+          .eq("fusion_key", fusionKey)
+          .maybeSingle();
+        if (fusedRow?.external_key) lookupValue = fusedRow.external_key;
+      }
+    }
 
     const { data: existing } = await admin
       .from(built.table)
