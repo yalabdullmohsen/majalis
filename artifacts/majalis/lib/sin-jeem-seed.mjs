@@ -1,15 +1,14 @@
 /**
  * Seed Sin Jeem categories + questions into Supabase (service role or pg).
  */
-import { readFileSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { fileURLToPath } from "node:url";
-import { dirname, join } from "node:path";
+import { dirname } from "node:path";
 import { getSupabaseAdmin } from "./supabase-admin.mjs";
 import { getPgClient } from "./database.mjs";
+import { getProductionQuestionBank } from "./question-answer-bank.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const ROOT = join(__dirname, "..");
 
 export const CATEGORY_SEED = [
   { slug: "quran", name_ar: "القرآن الكريم", icon: "📖", sort_order: 1 },
@@ -63,8 +62,7 @@ function contentHash(text) {
 }
 
 function loadBank() {
-  const path = join(ROOT, "data/sin-jeem/questions-bank.json");
-  return JSON.parse(readFileSync(path, "utf8"));
+  return getProductionQuestionBank();
 }
 
 export async function seedSinJeemCategories(admin) {
@@ -106,25 +104,47 @@ export async function seedSinJeemQuestions(admin, options = {}) {
   const dryRun = options.dryRun === true;
   const batchSize = options.batchSize || 50;
 
-  const { count: existingCount } = await admin
+  const { count: existingCountBefore } = await admin
     .from("sin_jeem_questions")
     .select("*", { count: "exact", head: true });
 
-  if (existingCount && existingCount >= bank.length && !options.force) {
-    return { ok: true, skipped: true, reason: "already_seeded", count: existingCount };
+  if (existingCountBefore && existingCountBefore >= bank.length && !options.force) {
+    const { count: totalInDb } = await admin
+      .from("sin_jeem_questions")
+      .select("*", { count: "exact", head: true })
+      .eq("status", "published");
+    return {
+      ok: true,
+      skipped: true,
+      reason: "already_seeded",
+      inserted: 0,
+      updated: 0,
+      skippedDuplicates: 0,
+      failed: 0,
+      totalInDb: totalInDb || existingCountBefore,
+      count: existingCountBefore,
+    };
   }
 
-  const { data: existingRows } = await admin.from("sin_jeem_questions").select("content_hash, question");
+  const { data: existingRows } = await admin.from("sin_jeem_questions").select("id, content_hash, question");
   const existingHashes = new Set((existingRows || []).map((r) => r.content_hash || contentHash(r.question)));
 
   let inserted = 0;
-  let skipped = 0;
+  let skippedDuplicates = 0;
+  let failed = 0;
   const batch = [];
+  const failures = [];
 
   for (const q of bank) {
+    if (!q.question?.trim()) {
+      failed++;
+      failures.push({ reason: "empty_question", id: q.id });
+      continue;
+    }
+
     const hash = contentHash(q.question);
     if (existingHashes.has(hash)) {
-      skipped++;
+      skippedDuplicates++;
       continue;
     }
     existingHashes.add(hash);
@@ -153,7 +173,12 @@ export async function seedSinJeemQuestions(admin, options = {}) {
     if (batch.length >= batchSize) {
       if (!dryRun) {
         const { error } = await admin.from("sin_jeem_questions").insert(batch);
-        if (error) throw new Error(`batch insert: ${error.message}`);
+        if (error) {
+          failed += batch.length;
+          failures.push({ reason: error.message, batchSize: batch.length });
+          batch.length = 0;
+          continue;
+        }
       }
       inserted += batch.length;
       batch.length = 0;
@@ -163,12 +188,33 @@ export async function seedSinJeemQuestions(admin, options = {}) {
   if (batch.length) {
     if (!dryRun) {
       const { error } = await admin.from("sin_jeem_questions").insert(batch);
-      if (error) throw new Error(`final batch: ${error.message}`);
+      if (error) {
+        failed += batch.length;
+        failures.push({ reason: error.message, batchSize: batch.length });
+      } else {
+        inserted += batch.length;
+      }
+    } else {
+      inserted += batch.length;
     }
-    inserted += batch.length;
   }
 
-  return { ok: true, inserted, skipped, dryRun, total: bank.length };
+  const { count: totalInDb } = await admin
+    .from("sin_jeem_questions")
+    .select("*", { count: "exact", head: true })
+    .eq("status", "published");
+
+  return {
+    ok: failed === 0,
+    inserted,
+    updated: 0,
+    skippedDuplicates,
+    failed,
+    failures: failures.slice(0, 5),
+    dryRun,
+    total: bank.length,
+    totalInDb: totalInDb || 0,
+  };
 }
 
 export async function runSinJeemSeed(options = {}) {

@@ -3,6 +3,7 @@ import { getEnvConfig } from "../../lib/env-config.mjs";
 import { getSupabaseAdmin } from "../../lib/supabase-admin.mjs";
 import { requireAdminAccess } from "../../lib/admin-auth.mjs";
 import { parseCsvQuestions, parseJsonQuestions, questionsToCsv, contentHash as importHash } from "../../lib/sin-jeem-import.mjs";
+import { getProductionQuestionBank, getCategorySeedList } from "../../lib/question-answer-bank.mjs";
 
 const USED_HASHES = new Set();
 const RATE_LIMIT = new Map();
@@ -353,7 +354,8 @@ async function generateOffline(content, difficulty) {
   };
 }
 
-export default async function handler(req, res) {
+export default async function handler(req, res, opts = {}) {
+  const serviceName = opts.serviceName || "question-answer";
   const action = req.query?.action || req.body?.action || "health";
   const ip = clientKey(req);
 
@@ -363,7 +365,87 @@ export default async function handler(req, res) {
   }
 
   if (action === "health") {
-    sendJson(res, 200, { ok: true, service: "sin-jeem" });
+    sendJson(res, 200, { ok: true, service: serviceName, legacy: "sin-jeem" });
+    return;
+  }
+
+  if (action === "categories") {
+    const admin = getSupabaseAdmin();
+    if (admin) {
+      try {
+        const { data, error } = await admin
+          .from("sin_jeem_categories")
+          .select("id, slug, name_ar, icon, parent_slug, sort_order")
+          .eq("status", "published")
+          .order("sort_order", { ascending: true });
+        if (!error && data?.length) {
+          sendJson(res, 200, { ok: true, categories: data, source: "supabase" });
+          return;
+        }
+      } catch {
+        /* fall through */
+      }
+    }
+    sendJson(res, 200, {
+      ok: true,
+      categories: getCategorySeedList().map((c) => ({
+        slug: c.slug,
+        name_ar: c.name_ar,
+        icon: c.icon,
+        parent_slug: c.parent_slug || null,
+        sort_order: c.sort_order,
+      })),
+      source: "seed_file",
+    });
+    return;
+  }
+
+  if (action === "questions") {
+    const limit = Math.min(Number(req.query?.limit) || 200, 500);
+    const difficulty = req.query?.difficulty;
+    const admin = getSupabaseAdmin();
+    if (admin) {
+      try {
+        let q = admin
+          .from("sin_jeem_questions")
+          .select("id, question, question_type, options, correct_index, difficulty, category_id, subcategory_slug, explanation, points, image_url")
+          .eq("status", "published")
+          .limit(limit);
+        if (difficulty) q = q.eq("difficulty", difficulty);
+        const { data, error, count } = await q;
+        if (!error && data?.length) {
+          sendJson(res, 200, { ok: true, questions: data, count: data.length, source: "supabase" });
+          return;
+        }
+        if (error?.code !== "PGRST205" && error?.code !== "42P01") {
+          /* empty table — use fallback */
+        }
+      } catch {
+        /* fall through */
+      }
+    }
+    let bank = getProductionQuestionBank();
+    if (difficulty) bank = bank.filter((q) => q.difficulty === difficulty);
+    sendJson(res, 200, {
+      ok: true,
+      questions: bank.slice(0, limit),
+      count: Math.min(bank.length, limit),
+      source: "bank_file",
+      totalAvailable: bank.length,
+    });
+    return;
+  }
+
+  if (action === "daily_challenge") {
+    const bank = getProductionQuestionBank();
+    const dayIndex = Math.floor(Date.now() / 86_400_000) % bank.length;
+    const question = bank[dayIndex];
+    sendJson(res, 200, {
+      ok: true,
+      question,
+      dayKey: new Date().toISOString().slice(0, 10),
+      source: bank.length >= 500 ? "bank_file" : "fallback",
+    });
     return;
   }
 

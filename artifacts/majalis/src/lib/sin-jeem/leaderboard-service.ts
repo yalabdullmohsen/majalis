@@ -22,7 +22,7 @@ export function periodLabel(period: LeaderboardPeriod): string {
 
 export async function fetchLeaderboardByPeriod(period: LeaderboardPeriod = "all"): Promise<LeaderboardSnapshot> {
   try {
-    const res = await requestFetch(`/api/sin-jeem?action=leaderboard&period=${period}`, { credentials: "same-origin" });
+    const res = await requestFetch(`/api/question-answer?action=leaderboard&period=${period}`, { credentials: "same-origin" });
     if (!res.ok) throw new Error("leaderboard_fetch_failed");
     const data = await res.json();
     if (data.ok) {
@@ -62,7 +62,7 @@ export async function submitVerifiedMatchResult(
   };
 
   try {
-    const res = await requestFetch("/api/sin-jeem", {
+    const res = await requestFetch("/api/question-answer", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),

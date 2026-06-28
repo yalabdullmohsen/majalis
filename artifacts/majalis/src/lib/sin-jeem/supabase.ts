@@ -131,7 +131,7 @@ export async function fetchGameStats(): Promise<GameStats> {
 
 export async function fetchLeaderboard(): Promise<LeaderboardEntry[]> {
   try {
-    const res = await requestFetch("/api/sin-jeem?action=leaderboard&period=all", { credentials: "same-origin" });
+    const res = await requestFetch("/api/question-answer?action=leaderboard&period=all", { credentials: "same-origin" });
     if (res.ok) {
       const data = await res.json();
       if (data.ok && data.players?.length) return data.players;

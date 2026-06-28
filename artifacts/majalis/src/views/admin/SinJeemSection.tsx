@@ -28,7 +28,7 @@ const emptyForm = (): Partial<SinJeemQuestion> => ({
 });
 
 async function adminApi(action: string, body?: Record<string, unknown>) {
-  const res = await fetch(`/api/sin-jeem?action=${action}`, {
+  const res = await fetch(`/api/question-answer?action=${action}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "same-origin",
@@ -191,7 +191,7 @@ export function SinJeemSection() {
       const blob = new Blob([JSON.stringify(questions, null, 2)], { type: "application/json" });
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
-      a.download = `sin-jeem-export.${format}`;
+      a.download = `question-answer-export.${format}`;
       a.click();
       return;
     }
@@ -199,7 +199,7 @@ export function SinJeemSection() {
     const blob = new Blob([content], { type: format === "csv" ? "text/csv" : "application/json" });
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = `sin-jeem-export.${format}`;
+    a.download = `question-answer-export.${format}`;
     a.click();
     setMsg(`تم التصدير (${format})`);
   };
@@ -213,7 +213,7 @@ export function SinJeemSection() {
   const generateAi = async () => {
     setMsg("جاري التوليد...");
     try {
-      const res = await fetch("/api/sin-jeem?action=generate", {
+      const res = await fetch("/api/question-answer?action=generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ source: "fawaid", count: 1 }),

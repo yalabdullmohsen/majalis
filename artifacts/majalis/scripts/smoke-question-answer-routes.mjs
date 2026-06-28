@@ -29,6 +29,8 @@ const adminShellSrc = readFileSync(resolve(ROOT, "src/views/admin/AdminShell.tsx
 const adminPageSrc = readFileSync(resolve(ROOT, "src/views/AdminPage.tsx"), "utf8");
 const gameAppSrc = readFileSync(resolve(ROOT, "src/views/sin-jeem/SinJeemApp.tsx"), "utf8");
 const constantsSrc = readFileSync(resolve(ROOT, "src/lib/sin-jeem/constants.ts"), "utf8");
+const dispatchSrc = readFileSync(resolve(ROOT, "lib/api-dispatch.mjs"), "utf8");
+const bankJson = JSON.parse(readFileSync(resolve(ROOT, "data/sin-jeem/questions-bank.json"), "utf8"));
 const homeFeatureSrc = readFileSync(resolve(ROOT, "src/components/home/HomeFeatureCards.tsx"), "utf8");
 
 const REQUIRED_ROUTES = [
@@ -148,6 +150,32 @@ if (readFileSync(resolve(ROOT, "src/views/sin-jeem/SinJeemHomePage.tsx"), "utf8"
   ok("DB activation banner on home page");
 } else {
   bad("DB activation banner missing");
+}
+
+if (bankJson.length >= 500) {
+  ok(`question bank file >= 500 (${bankJson.length})`);
+} else {
+  bad(`question bank too small (${bankJson.length})`);
+}
+
+const emptyQuestions = bankJson.filter((q) => !q.question?.trim()).length;
+if (emptyQuestions === 0) ok("no empty questions in bank");
+else bad(`empty questions in bank (${emptyQuestions})`);
+
+if (dispatchSrc.includes('"/api/question-answer"')) ok("API route /api/question-answer registered");
+else bad("API route /api/question-answer missing");
+
+if (dispatchSrc.includes('"/api/sin-jeem"')) ok("legacy API /api/sin-jeem still available");
+else bad("legacy API /api/sin-jeem missing");
+
+const supabaseSrc = readFileSync(resolve(ROOT, "src/lib/sin-jeem/supabase.ts"), "utf8");
+if (supabaseSrc.includes("sin_jeem_questions")) ok("game reads sin_jeem_questions table");
+else bad("game table source unclear");
+
+if (supabaseSrc.includes("getAllSinJeemQuestions") || supabaseSrc.includes("filterLocalQuestions")) {
+  ok("local bank fallback when DB empty");
+} else {
+  bad("missing local bank fallback");
 }
 
 console.log(`\n=== Summary: ${passed} PASS, ${failed} FAIL ===\n`);
