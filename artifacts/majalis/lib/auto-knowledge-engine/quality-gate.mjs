@@ -29,10 +29,13 @@ export function runQualityGate(item, analysis, verification, connector) {
   const failed = Object.entries(checks).filter(([, v]) => !v).map(([k]) => k);
   const passed = failed.length === 0;
 
+  const trustLevel = connector?.trust_level ?? connector?.trustLevel ?? 3;
+  const autoPublishEnabled = connector?.auto_publish !== false && connector?.autoPublish !== false;
+
   const autoPublish =
     passed &&
-    connector?.autoPublish !== false &&
-    (connector?.trust_level || 3) >= 4;
+    autoPublishEnabled &&
+    trustLevel >= 4;
 
   return {
     ...quality,

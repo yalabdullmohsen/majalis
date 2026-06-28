@@ -127,6 +127,10 @@ function sanitizeAnalysis(parsed, rawTitle, rawBody) {
 
 function fallbackAnalysis(rawTitle, rawBody, context) {
   const summary = String(rawBody || rawTitle || "").slice(0, 400);
+  const hasStructuredBody = String(rawBody || "").trim().length >= 20;
+  const trustScore = Number(context.trust_score || 0);
+  const isOfficialManifest = context.source_type === "manifest" || trustScore >= 80;
+
   return {
     ai_title: String(rawTitle || "بدون عنوان").slice(0, 300),
     ai_summary: summary,
@@ -140,9 +144,11 @@ function fallbackAnalysis(rawTitle, rawBody, context) {
     ai_hadith_refs: [],
     seo_title: String(rawTitle || "").slice(0, 70),
     seo_description: summary.slice(0, 160),
-    ai_confidence: 45,
-    needs_human_review: true,
-    review_reason: "تحليل بدون ذكاء اصطناعي — يحتاج مراجعة",
+    ai_confidence: hasStructuredBody && isOfficialManifest ? 62 : 45,
+    needs_human_review: !(hasStructuredBody && isOfficialManifest),
+    review_reason: hasStructuredBody && isOfficialManifest
+      ? null
+      : "تحليل بدون ذكاء اصطناعي — يحتاج مراجعة",
   };
 }
 
@@ -186,6 +192,8 @@ export async function analyzeBatch(items, concurrency = 3) {
           source_url: item.raw_url,
           content_kind: item.content_kind,
           country: item.ai_country,
+          source_type: item.raw_payload?._manifest_file ? "manifest" : undefined,
+          trust_score: item.verification?.trustScore,
         }),
       })),
     );
