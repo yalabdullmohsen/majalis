@@ -162,7 +162,21 @@ curl -X POST "$HOST/api/cron/apply-migrations?scope=qcm-v1" -H "Authorization: B
 
 ---
 
-## Remaining Issues
+## Lighthouse Results (dev server — not production)
+
+| Page | Performance | Accessibility | Best Practices | SEO |
+|------|-------------|---------------|----------------|-----|
+| Home | — (dev timeout) | — | — | — |
+| Lessons | 30 | 100 | 89 | 100 |
+| Quran Circles | 54 | 100 | 89 | 69 |
+| Mutoon | — (dev timeout) | — | — | — |
+| Search | — (dev timeout) | — | — | — |
+| Annual Courses | 49 | 100 | 89 | 100 |
+| Admin | Skipped (auth redirect) |
+
+**Target (≥95 perf, ≥98 a11y, 100 BP/SEO) not met on dev server.** Production build + CDN + Supabase data required for accurate scores. Accessibility and SEO are strong where measured.
+
+---
 
 1. **Live migration not applied** — requires `DATABASE_URL` / Supabase SQL Editor on production project.
 2. **Lighthouse targets (≥95 perf)** — not run; requires production build + real Supabase data.
