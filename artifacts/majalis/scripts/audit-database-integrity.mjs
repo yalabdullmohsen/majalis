@@ -50,7 +50,7 @@ async function main() {
   const lessons = await fetchAll(admin, "lessons", "id, title, source_url");
   const fawaid = await fetchAll(admin, "fawaid", "id, text, author_name, status");
   const qa = await fetchAll(admin, "qa_questions", "id, question");
-  const library = await fetchAll(admin, "library_items", "id, title, external_id");
+  const library = await fetchAll(admin, "library_items", "id, title");
   const knowledgeRes = await safeFetchAll(admin, "knowledge_items", "id, slug, source_type, source_id");
   const connectorsRes = await safeFetchAll(admin, "ake_connectors", "id, slug, name, health_status, is_active");
   const reviewRes = await safeFetchAll(admin, "content_engine_review_queue", "id, item_type, item_id, status");
@@ -69,11 +69,6 @@ async function main() {
   ]) {
     const d = dupesBy(rows, key);
     if (d.length) issues.push({ type: "duplicate_key", table, count: d.length, samples: d.slice(0, 3).map(([k]) => k) });
-  }
-
-  const fawaidExt = dupesBy(fawaid.filter((r) => r.external_id), (r) => r.external_id);
-  if (fawaidExt.length) {
-    issues.push({ type: "duplicate_external_id", table: "fawaid", count: fawaidExt.length });
   }
 
   const qaDupes = dupesBy(qa, (r) => r.question?.trim());

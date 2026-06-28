@@ -48,7 +48,7 @@ export default async function handler(req, res) {
     const lessons = await fetchAll(admin, "lessons", "id, title, source_url");
     const fawaid = await fetchAll(admin, "fawaid", "id, text, author_name, status");
     const qa = await fetchAll(admin, "qa_questions", "id, question");
-    const library = await fetchAll(admin, "library_items", "id, title, external_id");
+    const library = await fetchAll(admin, "library_items", "id, title");
 
     for (const [table, rows, key] of [
       ["lessons", lessons, (r) => r.source_url || r.title?.trim()],
