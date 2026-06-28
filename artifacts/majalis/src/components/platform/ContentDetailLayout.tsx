@@ -89,8 +89,9 @@ export function ContentDetailLayout({
       </header>
 
       {body && (
-        <article className="content-detail-body ui-card">
-          {body.split("\n").map((line, i) => {
+        <article className="content-detail-body">
+          <div className="highlighted-card__highlight">
+            {body.split("\n").map((line, i) => {
             const trimmed = line.trim();
             if (!trimmed) return <br key={i} />;
             if (trimmed.startsWith("**") && trimmed.endsWith("**")) {
@@ -98,6 +99,7 @@ export function ContentDetailLayout({
             }
             return <p key={i}>{trimmed}</p>;
           })}
+          </div>
         </article>
       )}
 

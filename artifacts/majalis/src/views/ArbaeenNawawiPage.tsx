@@ -1,5 +1,6 @@
 import { PageHeader } from "@/components/ui-common";
 import { ARBAEEN_NAWAWI } from "@/lib/arbaeen-nawawi-seed";
+import { HighlightedContentCard } from "@/components/reading/HighlightedContentCard";
 
 export default function ArbaeenNawawiPage() {
   return (
@@ -12,16 +13,22 @@ export default function ArbaeenNawawiPage() {
 
       <div className="nawawi-grid">
         {ARBAEEN_NAWAWI.map((hadith) => (
-          <article key={hadith.id} className="nawawi-card ui-card">
-            <span className="nawawi-num">{hadith.id}</span>
-            <h2>{hadith.title}</h2>
-            <p className="nawawi-text home-ayah-text">{hadith.text}</p>
-            <h3>الشرح</h3>
-            <p>{hadith.explanation}</p>
-            <h3>الفوائد</h3>
-            <p>{hadith.benefits}</p>
-            <p className="nawawi-source">{hadith.source}</p>
-          </article>
+          <HighlightedContentCard
+            key={hadith.id}
+            id={String(hadith.id)}
+            section="hadith"
+            title={hadith.title}
+            primaryText={hadith.text}
+            secondaryText={hadith.explanation}
+            tags={[`${hadith.id}`]}
+            meta={[
+              { label: "المصدر", value: hadith.source },
+              { label: "الفوائد", value: hadith.benefits },
+            ]}
+            shareTitle={hadith.title}
+            shareText={`${hadith.text}\n\n${hadith.explanation}\n\n${hadith.source}`}
+            className="nawawi-card"
+          />
         ))}
       </div>
     </div>

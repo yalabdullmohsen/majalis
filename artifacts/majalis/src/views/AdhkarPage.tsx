@@ -1,30 +1,15 @@
 import { useEffect, useMemo, useState } from "react";
-import { useLocation } from "wouter";
+import { Link, useLocation } from "wouter";
 import { ADHKAR_CATEGORIES } from "@/lib/adhkar-seed";
 import { usePublishedAdhkarItems } from "@/lib/adhkar-service";
+import { getReadingProgress, restoreScrollForSection } from "@/lib/reading-progress";
 import { PageHeader, Empty } from "@/components/ui-common";
 import { AdhkarCard } from "@/components/adhkar/AdhkarCard";
 
-/** Categories required for phase 3 — mapped to seed slugs */
 const FEATURED_CATEGORY_SLUGS = new Set([
-  "morning",
-  "evening",
-  "sleep",
-  "wakeup",
-  "home-in",
-  "home-out",
-  "mosque",
-  "wudu",
-  "salah",
-  "after-salah",
-  "travel",
-  "food",
-  "rain",
-  "wind",
-  "distress",
-  "istikharah",
-  "istighfar",
-  "misc",
+  "morning", "evening", "sleep", "wakeup", "home-in", "home-out",
+  "mosque", "wudu", "salah", "after-salah", "travel", "food",
+  "rain", "wind", "distress", "istikharah", "istighfar", "misc",
 ]);
 
 const FEATURED_CATEGORIES = ADHKAR_CATEGORIES.filter((c) =>
@@ -46,6 +31,7 @@ export default function AdhkarPage() {
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebouncedValue(search);
   const { data: publishedItems = [], isLoading, isError } = usePublishedAdhkarItems();
+  const lastRead = getReadingProgress("adhkar");
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -54,6 +40,7 @@ export default function AdhkarPage() {
       const match = ADHKAR_CATEGORIES.find((c) => c.slug === cat || c.id === cat);
       if (match) setCategory(match.id);
     }
+    restoreScrollForSection("adhkar");
   }, [location]);
 
   const items = useMemo(() => {
@@ -75,16 +62,24 @@ export default function AdhkarPage() {
   const activeCategory = ADHKAR_CATEGORIES.find((c) => c.id === category);
 
   return (
-    <div className="page-shell narrow content-hub-page adhkar-page">
+    <div className="page-shell narrow content-hub-page adhkar-page adhkar-page--v2">
       <PageHeader
         eyebrow="العبادة اليومية"
         title="الأذكار"
-        subtitle="أذكار وأدعية من القرآن والسنة الصحيحة — مع المصدر والتخريج وعداد التسبيح."
+        subtitle="أذكار وأدعية من القرآن والسنة — قراءة هادئة، عداد تسبيح، ومشاركة سهلة."
       />
 
-      <div className="adhkar-stats-row page-stats-row">
-        <span>{publishedItems.length} ذكر</span>
-        <span>{FEATURED_CATEGORIES.length} قسم</span>
+      <div className="adhkar-hero ui-card">
+        <div className="adhkar-hero__stats">
+          <div><strong>{publishedItems.length}</strong><span>ذكر</span></div>
+          <div><strong>{FEATURED_CATEGORIES.length}</strong><span>قسم</span></div>
+          <Link href="/tasbih" className="adhkar-hero__tasbih-link">عداد التسبيح ←</Link>
+        </div>
+        {lastRead && (
+          <a href={`#content-${lastRead.id}`} className="adhkar-hero__continue">
+            متابعة آخر ذكر: {lastRead.title || "ذكر سابق"}
+          </a>
+        )}
       </div>
 
       <input
@@ -126,7 +121,7 @@ export default function AdhkarPage() {
       ) : items.length === 0 ? (
         <Empty text="لا توجد أذكار مطابقة." />
       ) : (
-        <div className="adhkar-grid">
+        <div className="adhkar-grid adhkar-grid--relaxed">
           {items.map((item) => (
             <AdhkarCard key={item.id} item={item} />
           ))}

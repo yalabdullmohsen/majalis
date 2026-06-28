@@ -1,9 +1,7 @@
-import { useState } from "react";
 import { displayText } from "@/lib/display-text";
 import { isDemoId } from "@/lib/demo-content";
 import { C, QA_RULING_COLORS } from "@/lib/theme";
-import { ReadingToolbar } from "@/components/reading/ReadingToolbar";
-import { ReadingText } from "@/components/reading/ReadingText";
+import { HighlightedContentCard } from "@/components/reading/HighlightedContentCard";
 import { getQaViewCount } from "@/lib/qa-utils";
 
 function RulingBadge({ ruling }: { ruling: string }) {
@@ -16,56 +14,52 @@ function RulingBadge({ ruling }: { ruling: string }) {
 }
 
 type Props = {
-  item: any;
+  item: {
+    id: string;
+    question: string;
+    answer?: string | null;
+    ruling_type?: string;
+    evidence?: string;
+    reference?: string;
+    qa_categories?: { name?: string };
+  };
   defaultOpen?: boolean;
 };
 
 export function QaCard({ item, defaultOpen = false }: Props) {
-  const [open, setOpen] = useState(defaultOpen);
   const catName = item.qa_categories?.name;
   const question = displayText(item.question);
-  const answer = displayText(item.answer);
-  const shareText = `${question}\n\n${answer}`;
+  const answer = displayText(item.answer || "");
 
   return (
-    <article className={`ui-card qa-card${open ? " qa-card--open" : ""}`}>
-      <button
-        type="button"
-        className="qa-card__head"
-        onClick={() => setOpen((v) => !v)}
-        aria-expanded={open}
-      >
-        <ReadingText className="qa-card__question">{question}</ReadingText>
-        <div className="qa-card__meta-row">
-          {catName && <span className="page-tag">{catName}</span>}
-          {item.ruling_type && <RulingBadge ruling={item.ruling_type} />}
-          <span className="qa-card__views">{getQaViewCount(item)} مشاهدة</span>
-        </div>
-      </button>
-
-      {open && (
-        <div className="qa-card__body">
-          <ReadingText className="qa-card__answer">{answer}</ReadingText>
-          {item.evidence && (
-            <div className="qa-card__evidence">
-              <strong>الدليل:</strong> {displayText(item.evidence)}
-            </div>
-          )}
-          {item.reference && (
-            <p className="qa-card__ref">
-              <strong>المرجع:</strong> {displayText(item.reference)}
-            </p>
-          )}
-          <ReadingToolbar
-            text={shareText}
-            title={question}
-            contentType="qa"
-            contentId={item.id}
-            showSave={!isDemoId(item.id)}
-          />
-        </div>
-      )}
-    </article>
+    <HighlightedContentCard
+      id={item.id}
+      section="qa"
+      primaryText={question}
+      secondaryText={answer}
+      tags={catName ? [catName] : []}
+      badges={item.ruling_type ? <RulingBadge ruling={item.ruling_type} /> : undefined}
+      meta={[
+        { label: "المشاهدات", value: `${getQaViewCount(item)}` },
+        ...(item.reference ? [{ label: "المرجع", value: displayText(item.reference) }] : []),
+      ]}
+      footnote={
+        item.evidence ? (
+          <div className="qa-card__evidence">
+            <strong>الدليل:</strong> {displayText(item.evidence)}
+          </div>
+        ) : undefined
+      }
+      contentType="qa"
+      contentId={item.id}
+      showSave={!isDemoId(item.id)}
+      shareTitle={question}
+      shareText={`${question}\n\n${answer}`}
+      collapsible
+      defaultOpen={defaultOpen}
+      headerAsButton
+      className="qa-card"
+    />
   );
 }
 
