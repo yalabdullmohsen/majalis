@@ -20,3 +20,4 @@ export { checkDuplicate, registerFingerprint } from "./dedup.mjs";
 export { verifyContent, enqueueReview } from "./verification.mjs";
 export { publishContentRecord } from "./publisher.mjs";
 export { logStructured, getPlatformDashboard as getAkpDashboard, moveToDeadLetter, createAlert } from "./monitoring.mjs";
+export { PLATFORM_V3_VERSION, runAutonomousPlatformV3 } from "./v3/index.mjs";

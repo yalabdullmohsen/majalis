@@ -8,6 +8,8 @@ import { registerFingerprint } from "./dedup.mjs";
 import { CONTENT_PIPELINES } from "./config.mjs";
 import { contentHash } from "./normalize.mjs";
 import { logStructured } from "./monitoring.mjs";
+import { indexContentRecord } from "./v3/semantic-index.mjs";
+import { linkPublishedContent } from "./v3/knowledge-graph.mjs";
 
 function slugify(text) {
   return String(text || "")
@@ -143,12 +145,28 @@ export async function publishContentRecord({ contentType, record, source, finger
     if (searchText) {
       try {
         await indexItem(admin, targetId, searchText, { contentType, source: source?.slug });
+        await indexContentRecord({
+          contentType,
+          contentId: targetId,
+          title: payload.title || payload.question || searchText.slice(0, 80),
+          body: searchText,
+          trustScore: source?.trust_score ?? 80,
+        });
         if (process.env.OPENAI_API_KEY) {
           await generateEmbedding(searchText.slice(0, 4000));
         }
       } catch {
         /* search index optional */
       }
+    }
+
+    try {
+      await linkPublishedContent({
+        contentType,
+        record: { ...payload, id: targetId },
+      });
+    } catch {
+      /* knowledge graph optional */
     }
 
     await logStructured({

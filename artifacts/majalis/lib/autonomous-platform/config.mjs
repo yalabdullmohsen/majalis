@@ -2,7 +2,7 @@
  * Autonomous Knowledge Platform — Phase 2 configuration.
  */
 
-export const PLATFORM_VERSION = "2.0.0";
+export const PLATFORM_VERSION = "3.0.0";
 
 /** Daily production quotas per content type. */
 export const DAILY_QUOTAS = {
