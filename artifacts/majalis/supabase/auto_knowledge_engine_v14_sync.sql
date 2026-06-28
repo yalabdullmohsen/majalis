@@ -54,7 +54,7 @@ ALTER TABLE ake_sync_state ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS ake_sync_state_admin ON ake_sync_state;
 CREATE POLICY ake_sync_state_admin ON ake_sync_state FOR ALL USING (
-  auth.role() = 'service_role' OR EXISTS (SELECT 1 FROM governance_user_roles WHERE user_id = auth.uid() AND role IN ('owner', 'admin'))
+  EXISTS (SELECT 1 FROM profiles p WHERE p.id = auth.uid() AND p.role = 'admin')
 );
 
 GRANT SELECT ON ake_sync_state TO authenticated;
