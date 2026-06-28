@@ -7,26 +7,31 @@ export type LiveStreamChannel = {
   poster: string;
   quality: string;
   source: string;
+  /** When false, show unavailable message instead of player */
+  available: boolean;
+  unavailableReason?: string;
 };
 
 export const LIVE_STREAM_CHANNELS: LiveStreamChannel[] = [
   {
     id: "makkah-haram",
-    name: "بث الحرم المكي",
+    name: "قناة القرآن الكريم — الحرم المكي",
     description: "بث مباشر من المسجد الحرام — صلاة وقرآن على مدار الساعة.",
     streamUrl: "https://cdn-globecast.akamaized.net/live/eds/saudi_quran/hls_roku/index.m3u8",
     poster: "/images/live/makkah.svg",
     quality: "HD",
     source: "هيئة الإذاعة والتلفزيون — قناة القرآن الكريم",
+    available: true,
   },
   {
     id: "madinah-nabawi",
-    name: "بث المسجد النبوي",
+    name: "قناة السنة النبوية — المسجد النبوي",
     description: "بث مباشر من المسجد النبوي الشريف — صلوات وأذكار.",
     streamUrl: "https://cdn-globecast.akamaized.net/live/eds/saudi_sunnah/hls_roku/index.m3u8",
     poster: "/images/live/madinah.svg",
     quality: "HD",
     source: "هيئة الإذاعة والتلفزيون — قناة السنة النبوية",
+    available: true,
   },
   {
     id: "ithraa",
@@ -36,6 +41,7 @@ export const LIVE_STREAM_CHANNELS: LiveStreamChannel[] = [
     poster: "/images/live/ithraa.svg",
     quality: "HD",
     source: "تلفزيون الكويت — قناة إثراء",
+    available: true,
   },
 ];
 
@@ -60,3 +66,19 @@ export function saveLiveAutoplayPreference(enabled: boolean) {
 export function getChannelById(id: string): LiveStreamChannel | undefined {
   return LIVE_STREAM_CHANNELS.find((c) => c.id === id);
 }
+
+export const LIVE_CONNECTION_LABELS = {
+  live: { emoji: "🟢", text: "متصل" },
+  loading: { emoji: "🟡", text: "جاري الاتصال" },
+  paused: { emoji: "🟡", text: "متوقف" },
+  idle: { emoji: "🟡", text: "جاهز" },
+  error: { emoji: "🔴", text: "غير متصل" },
+} as const;
+
+export const RADIO_CONNECTION_LABELS = {
+  live: { emoji: "🟢", text: "متصل" },
+  connecting: { emoji: "🟡", text: "جاري الاتصال" },
+  paused: { emoji: "🟡", text: "متوقف" },
+  idle: { emoji: "🟡", text: "جاهز" },
+  error: { emoji: "🔴", text: "غير متصل" },
+} as const;

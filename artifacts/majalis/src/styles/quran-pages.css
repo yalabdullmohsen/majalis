@@ -1,0 +1,812 @@
+/* ── Quran pages — unified typography, cards, spacing (Surah Stories, Tajweed, Radio, Live) ── */
+
+.quran-pages {
+  --qp-read-max: 42rem;
+  --qp-card-pad: clamp(1.25rem, 3vw, 2rem);
+  --qp-section-gap: clamp(2rem, 4vw, 3rem);
+  --qp-line: 2;
+  --qp-font: inherit;
+  font-family: var(--qp-font);
+}
+
+/* Subnav */
+.quran-pages-subnav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: clamp(1.25rem, 3vw, 2rem);
+  padding: 0.35rem;
+  border-radius: 0.75rem;
+  background: var(--majalis-parchment-deep, #f5f0e8);
+  border: 1px solid var(--majalis-line, #e5e0d8);
+}
+
+.quran-pages-subnav__link {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--majalis-ink-soft);
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+
+.quran-pages-subnav__link:hover {
+  color: var(--majalis-emerald-deep);
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.quran-pages-subnav__link.is-active {
+  background: var(--majalis-emerald);
+  color: #fff;
+}
+
+/* ── Surah Stories ── */
+.surah-stories-page .quran-search {
+  width: 100%;
+  max-width: 24rem;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+.surah-story-detail.quran-pages {
+  max-width: 48rem;
+  margin-inline: auto;
+}
+
+.surah-story-hero {
+  text-align: center;
+  padding: var(--qp-card-pad);
+  margin-bottom: var(--qp-section-gap);
+  border-radius: 1rem;
+  background: linear-gradient(135deg, #e8f5ef 0%, #f5f0e8 100%);
+  border: 1px solid rgba(26, 107, 82, 0.15);
+  box-shadow: 0 4px 24px rgba(26, 107, 82, 0.08);
+}
+
+.surah-story-hero__num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 999px;
+  background: var(--majalis-emerald);
+  color: #fff;
+  font-weight: 800;
+  font-size: 1.125rem;
+  margin-bottom: 0.75rem;
+}
+
+.surah-story-hero__name {
+  margin: 0 0 0.5rem;
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 800;
+  color: var(--majalis-emerald-deep);
+  line-height: 1.35;
+}
+
+.surah-story-hero__meta {
+  margin: 0;
+  font-size: 0.9375rem;
+  color: var(--majalis-ink-soft);
+  line-height: 1.6;
+}
+
+.surah-story-sections {
+  display: flex;
+  flex-direction: column;
+  gap: var(--qp-section-gap);
+  margin-bottom: 2rem;
+}
+
+.surah-story-card {
+  padding: var(--qp-card-pad);
+  border-radius: 1rem;
+  border: 1px solid var(--majalis-line);
+  background: var(--majalis-panel, #fff);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  max-width: var(--qp-read-max);
+}
+
+.surah-story-card--intro {
+  background: #f8faf9;
+  border-color: rgba(26, 107, 82, 0.12);
+}
+
+.surah-story-card--naming {
+  background: #faf8f3;
+  border-color: rgba(201, 162, 39, 0.2);
+}
+
+.surah-story-card--revelation {
+  background: #f5f8fa;
+  border-color: rgba(59, 130, 246, 0.12);
+}
+
+.surah-story-card--themes {
+  background: #f9f8f5;
+}
+
+.surah-story-card--stories {
+  background: #f8f6fa;
+}
+
+.surah-story-card--rulings {
+  background: #faf5f5;
+}
+
+.surah-story-card--lessons {
+  background: #f5faf8;
+}
+
+.surah-story-card--virtues {
+  background: #faf9f5;
+}
+
+.surah-story-card__title {
+  margin: 0 0 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid rgba(26, 107, 82, 0.15);
+  font-size: 1.125rem;
+  font-weight: 800;
+  color: var(--majalis-emerald-deep);
+  line-height: 1.4;
+}
+
+.surah-story-card__body {
+  margin: 0;
+  font-size: 1rem;
+  line-height: var(--qp-line);
+  color: var(--majalis-ink);
+  max-width: var(--qp-read-max);
+}
+
+.surah-story-card__body + .surah-story-card__body {
+  margin-top: 1rem;
+}
+
+.surah-story-card__list {
+  margin: 0;
+  padding-inline-start: 1.5rem;
+  line-height: var(--qp-line);
+  font-size: 1rem;
+}
+
+.surah-story-card__list li {
+  margin-bottom: 0.65rem;
+}
+
+.surah-story-card__list li:last-child {
+  margin-bottom: 0;
+}
+
+.surah-story-footer {
+  padding: var(--qp-card-pad);
+  border-radius: 1rem;
+  background: var(--majalis-parchment-deep);
+  margin-bottom: 1.5rem;
+}
+
+.surah-story-footer__note {
+  margin: 0 0 1rem;
+  font-size: 0.8125rem;
+  line-height: 1.65;
+  color: var(--majalis-ink-soft);
+}
+
+.surah-story-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.875rem;
+  color: var(--majalis-brass-deep);
+  text-decoration: none;
+}
+
+/* ── Tajweed ── */
+.tajweed-page.quran-pages {
+  max-width: 56rem;
+  margin-inline: auto;
+}
+
+.tajweed-progress {
+  padding: var(--qp-card-pad);
+  margin-bottom: var(--qp-section-gap);
+  border-radius: 1rem;
+  background: var(--majalis-panel);
+  border: 1px solid var(--majalis-line);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+}
+
+.tajweed-progress__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.tajweed-progress__title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--majalis-emerald-deep);
+}
+
+.tajweed-progress__pct {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--majalis-ink-soft);
+}
+
+.tajweed-progress__bar {
+  height: 10px;
+  border-radius: 999px;
+  background: var(--majalis-parchment-deep);
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.tajweed-progress__fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--majalis-emerald), #2d9a72);
+  border-radius: 999px;
+  transition: width 0.35s ease;
+}
+
+.tajweed-progress__milestones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tajweed-progress__milestones li {
+  font-size: 0.8125rem;
+  color: var(--majalis-ink-soft);
+}
+
+.tajweed-progress__milestones li.is-reached {
+  color: var(--majalis-emerald-deep);
+  font-weight: 700;
+}
+
+.tajweed-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-bottom: var(--qp-section-gap);
+}
+
+.tajweed-chip {
+  padding: 0.55rem 1.1rem;
+  border-radius: 999px;
+  border: 1px solid var(--majalis-line);
+  background: var(--majalis-panel);
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: var(--majalis-ink-soft);
+  cursor: pointer;
+  transition: all 0.15s;
+  line-height: 1.4;
+}
+
+.tajweed-chip:hover {
+  border-color: var(--majalis-emerald);
+  color: var(--majalis-emerald-deep);
+}
+
+.tajweed-chip.is-active {
+  background: var(--majalis-emerald);
+  border-color: var(--majalis-emerald);
+  color: #fff;
+}
+
+.tajweed-layout {
+  display: grid;
+  gap: var(--qp-section-gap);
+}
+
+@media (min-width: 900px) {
+  .tajweed-layout {
+    grid-template-columns: minmax(240px, 280px) 1fr;
+    align-items: start;
+  }
+}
+
+.tajweed-lesson-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.tajweed-lesson-list__item {
+  width: 100%;
+  text-align: right;
+  padding: 0.85rem 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--majalis-line);
+  background: var(--majalis-panel);
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.tajweed-lesson-list__item:hover {
+  border-color: rgba(26, 107, 82, 0.35);
+}
+
+.tajweed-lesson-list__item.is-active {
+  border-color: var(--majalis-emerald);
+  box-shadow: 0 0 0 1px var(--majalis-emerald);
+  background: var(--majalis-sage);
+}
+
+.tajweed-lesson-list__item.is-done::after {
+  content: " ✓";
+  color: var(--majalis-emerald-deep);
+}
+
+.tajweed-lesson-list__title {
+  display: block;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--majalis-emerald-deep);
+  line-height: 1.45;
+  margin-bottom: 0.25rem;
+}
+
+.tajweed-lesson-list__meta {
+  font-size: 0.75rem;
+  color: var(--majalis-ink-soft);
+}
+
+.tajweed-content-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.tajweed-panel-card {
+  padding: var(--qp-card-pad);
+  border-radius: 1rem;
+  border: 1px solid var(--majalis-line);
+  background: var(--majalis-panel);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+}
+
+.tajweed-panel-card__title {
+  margin: 0 0 1rem;
+  font-size: 1.125rem;
+  font-weight: 800;
+  color: var(--majalis-emerald-deep);
+  line-height: 1.4;
+}
+
+.tajweed-panel-card__text {
+  margin: 0;
+  font-size: 1rem;
+  line-height: var(--qp-line);
+  color: var(--majalis-ink);
+  max-width: var(--qp-read-max);
+}
+
+.tajweed-example-box {
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+  border-radius: 0.65rem;
+  background: var(--majalis-parchment-deep);
+  border-inline-start: 4px solid var(--majalis-brass);
+  font-size: 0.9375rem;
+  line-height: 1.75;
+}
+
+.tajweed-example-box:last-child {
+  margin-bottom: 0;
+}
+
+.tajweed-ayah-box {
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+  border-radius: 0.65rem;
+  background: #eef6f2;
+  border: 1px solid rgba(26, 107, 82, 0.15);
+  font-size: 0.9375rem;
+  line-height: 1.75;
+}
+
+.tajweed-quiz-card {
+  padding: var(--qp-card-pad);
+  border-radius: 1rem;
+  border: 1px solid var(--majalis-line);
+  background: #faf9f6;
+}
+
+.tajweed-quiz__question {
+  margin: 0 0 1rem;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.6;
+  color: var(--majalis-emerald-deep);
+}
+
+.tajweed-quiz__choices {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem;
+}
+
+.tajweed-quiz__choice {
+  width: 100%;
+  text-align: right;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--majalis-line);
+  background: #fff;
+  font-family: inherit;
+  font-size: 0.9375rem;
+  cursor: pointer;
+  line-height: 1.5;
+}
+
+.tajweed-quiz__choice.is-correct {
+  border-color: #065f46;
+  background: #d1fae5;
+}
+
+.tajweed-quiz__choice.is-wrong {
+  border-color: #991b1b;
+  background: #fee2e2;
+}
+
+/* ── Radio ── */
+.quran-radio-page.quran-pages {
+  max-width: 52rem;
+  margin-inline: auto;
+}
+
+.quran-radio-grid {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--qp-section-gap);
+  display: grid;
+  gap: 1rem;
+}
+
+.quran-radio-station-card {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 1rem;
+  align-items: center;
+  padding: var(--qp-card-pad);
+  border-radius: 1rem;
+  border: 1px solid var(--majalis-line);
+  background: var(--majalis-panel);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+}
+
+.quran-radio-station-card.is-active {
+  border-color: var(--majalis-emerald);
+  box-shadow: 0 0 0 1px var(--majalis-emerald);
+}
+
+.quran-radio-station-card.has-error {
+  border-color: #991b1b;
+}
+
+.quran-radio-station-card__logo {
+  width: 56px;
+  height: 56px;
+  border-radius: 0.75rem;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.quran-radio-station-card__body {
+  min-width: 0;
+}
+
+.quran-radio-station-card__name {
+  margin: 0 0 0.35rem;
+  font-size: 1.0625rem;
+  font-weight: 800;
+  color: var(--majalis-emerald-deep);
+  line-height: 1.45;
+}
+
+.quran-radio-station-card__reciter {
+  margin: 0 0 0.5rem;
+  font-size: 0.875rem;
+  color: var(--majalis-ink-soft);
+  line-height: 1.5;
+}
+
+.quran-radio-station-card__details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.8125rem;
+  color: var(--majalis-ink-soft);
+  line-height: 1.5;
+}
+
+.quran-radio-station-card__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+.quran-radio-station-card__status {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.quran-radio-station-card__btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  justify-content: flex-end;
+}
+
+.quran-media-btn {
+  padding: 0.45rem 0.9rem;
+  border-radius: 0.5rem;
+  border: none;
+  font-family: inherit;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.quran-media-btn--primary {
+  background: var(--majalis-emerald);
+  color: #fff;
+}
+
+.quran-media-btn--secondary {
+  background: var(--majalis-parchment-deep);
+  color: var(--majalis-emerald-deep);
+  border: 1px solid var(--majalis-line);
+}
+
+.quran-radio-skeleton {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  background: var(--majalis-parchment-deep);
+  margin-bottom: 1rem;
+  animation: qp-pulse 1.2s ease-in-out infinite;
+}
+
+.quran-radio-skeleton__bar {
+  height: 12px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.08);
+  flex: 1;
+}
+
+.quran-radio-skeleton__circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 0.65rem;
+  background: rgba(0, 0, 0, 0.08);
+  flex-shrink: 0;
+}
+
+@keyframes qp-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+
+.quran-radio-player-panel {
+  padding: var(--qp-card-pad);
+  border-radius: 1rem;
+  border: 1px solid var(--majalis-line);
+  background: var(--majalis-panel);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
+}
+
+/* ── Live ── */
+.quran-live-page.quran-pages {
+  max-width: 56rem;
+  margin-inline: auto;
+}
+
+.quran-live-grid {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--qp-section-gap);
+  display: grid;
+  gap: 0.85rem;
+}
+
+.quran-live-channel-card {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  border-radius: 1rem;
+  border: 1px solid var(--majalis-line);
+  background: var(--majalis-panel);
+  text-align: right;
+  cursor: pointer;
+  font-family: inherit;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.quran-live-channel-card.is-active {
+  border-color: var(--majalis-emerald);
+  background: var(--majalis-sage);
+}
+
+.quran-live-channel-card__poster {
+  width: 56px;
+  height: 56px;
+  border-radius: 0.65rem;
+  object-fit: cover;
+}
+
+.quran-live-channel-card__title {
+  display: block;
+  margin: 0 0 0.25rem;
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--majalis-emerald-deep);
+  line-height: 1.4;
+}
+
+.quran-live-channel-card__desc {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--majalis-ink-soft);
+  line-height: 1.55;
+}
+
+.quran-live-player-panel {
+  padding: var(--qp-card-pad);
+  border-radius: 1rem;
+  border: 1px solid var(--majalis-line);
+  background: var(--majalis-panel);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
+}
+
+.quran-live-player-panel__head {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.quran-live-player-panel__info {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  min-width: 0;
+}
+
+.quran-live-player-panel__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  margin: 0.75rem 0 1rem;
+  font-size: 0.8125rem;
+  color: var(--majalis-ink-soft);
+  line-height: 1.5;
+}
+
+.quran-live-video-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #111;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.quran-live-video-wrap__video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
+}
+
+.quran-live-unavailable {
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  border-radius: 0.75rem;
+  background: var(--majalis-parchment-deep);
+  border: 1px dashed var(--majalis-line);
+}
+
+.quran-live-unavailable__title {
+  margin: 0 0 0.5rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--majalis-emerald-deep);
+}
+
+.quran-live-unavailable__text {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--majalis-ink-soft);
+}
+
+.quran-live-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.quran-live-controls__autoplay {
+  margin-inline-start: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.quran-source-note {
+  margin: 1rem 0 0;
+  font-size: 0.75rem;
+  line-height: 1.6;
+  color: var(--majalis-ink-soft);
+}
+
+@media (max-width: 639px) {
+  .quran-radio-station-card {
+    grid-template-columns: auto 1fr;
+  }
+
+  .quran-radio-station-card__actions {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .quran-live-channel-card {
+    grid-template-columns: auto 1fr;
+  }
+
+  .quran-live-channel-card__badge {
+    grid-column: 1 / -1;
+  }
+
+  .quran-live-controls__autoplay {
+    margin-inline-start: 0;
+    width: 100%;
+  }
+
+  .tajweed-layout {
+    grid-template-columns: 1fr;
+  }
+}

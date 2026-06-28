@@ -16,6 +16,12 @@ export type TajweedSection = {
   order: number;
 };
 
+export type TajweedQuizItem = {
+  question: string;
+  choices: string[];
+  correctIndex: number;
+};
+
 export type TajweedLesson = {
   id: string;
   title: string;
@@ -26,6 +32,7 @@ export type TajweedLesson = {
   explanation: string;
   examples: string[];
   practiceAyahs: { surah: number; ayahs: number[]; note: string }[];
+  quiz: TajweedQuizItem[];
   source: string;
   lastReviewed: string;
 };
@@ -75,7 +82,7 @@ export const TAJWEED_SECTIONS: TajweedSection[] = [
   },
 ];
 
-const RAW_LESSONS: TajweedLesson[] = [
+const RAW_LESSONS: Omit<TajweedLesson, "quiz">[] = [
   {
     id: "intro-tajweed",
     title: "تعريف التجويد وأهميته",
@@ -231,6 +238,37 @@ const RAW_LESSONS: TajweedLesson[] = [
   },
 ];
 
+function defaultQuiz(lesson: Omit<TajweedLesson, "quiz">): TajweedQuizItem[] {
+  if (lesson.id === "intro-tajweed") {
+    return [
+      {
+        question: "ما معنى التجويد لغةً؟",
+        choices: ["الإتقان", "السرعة", "الرفع", "الوقف"],
+        correctIndex: 0,
+      },
+      {
+        question: "ما هدف التجويد الأساسي؟",
+        choices: ["إخراج الحروف من مخارجها", "زيادة سرعة القراءة", "حفظ السور", "كتابة المصحف"],
+        correctIndex: 0,
+      },
+    ];
+  }
+  return [
+    {
+      question: `أي مما يلي يرتبط بدرس «${lesson.title}»؟`,
+      choices: [lesson.material, "التفسير الموضوعي", "أحكام الحج", "النحو"],
+      correctIndex: 0,
+    },
+  ];
+}
+
+function enrichLesson(lesson: Omit<TajweedLesson, "quiz"> & { quiz?: TajweedQuizItem[] }): TajweedLesson {
+  return {
+    ...lesson,
+    quiz: lesson.quiz?.length ? lesson.quiz : defaultQuiz(lesson),
+  };
+}
+
 function isCompleteLesson(lesson: TajweedLesson): boolean {
   return Boolean(
     lesson.id &&
@@ -244,7 +282,7 @@ function isCompleteLesson(lesson: TajweedLesson): boolean {
   );
 }
 
-export const TAJWEED_LESSONS = RAW_LESSONS.filter(isCompleteLesson);
+export const TAJWEED_LESSONS = RAW_LESSONS.map(enrichLesson).filter(isCompleteLesson);
 
 export function getTajweedLesson(id: string): TajweedLesson | undefined {
   return TAJWEED_LESSONS.find((l) => l.id === id);

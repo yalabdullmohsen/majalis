@@ -7,13 +7,18 @@ export type HlsPlayerState = "idle" | "loading" | "live" | "paused" | "error";
 type Options = {
   streamUrl: string | undefined;
   autoplay?: boolean;
+  maxRetries?: number;
 };
 
-export function useHlsPlayer({ streamUrl, autoplay = false }: Options) {
+const DEFAULT_MAX_RETRIES = 3;
+
+export function useHlsPlayer({ streamUrl, autoplay = false, maxRetries = DEFAULT_MAX_RETRIES }: Options) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const hlsRef = useRef<{ destroy: () => void } | null>(null);
+  const retryRef = useRef(0);
   const [state, setState] = useState<HlsPlayerState>("idle");
   const [errorMessage, setErrorMessage] = useState("");
+  const [lastUpdated, setLastUpdated] = useState<string | null>(null);
 
   const destroyHls = useCallback(() => {
     hlsRef.current?.destroy();
@@ -26,6 +31,7 @@ export function useHlsPlayer({ streamUrl, autoplay = false }: Options) {
     try {
       await video.play();
       setState("live");
+      setLastUpdated(new Date().toISOString());
     } catch {
       setState("paused");
     }
@@ -43,48 +49,82 @@ export function useHlsPlayer({ streamUrl, autoplay = false }: Options) {
     else pause();
   }, [pause, play]);
 
+  const attachStream = useCallback(
+    (video: HTMLVideoElement, url: string, shouldAutoplay: boolean) => {
+      destroyHls();
+      setErrorMessage("");
+      setState("loading");
+
+      const startPlayback = () => {
+        setLastUpdated(new Date().toISOString());
+        if (shouldAutoplay) void play();
+      };
+
+      if (video.canPlayType("application/vnd.apple.mpegurl")) {
+        video.src = url;
+        video.load();
+        startPlayback();
+        return;
+      }
+
+      void import("hls.js").then(({ default: Hls }) => {
+        if (!Hls.isSupported()) {
+          setState("error");
+          setErrorMessage("المتصفح لا يدعم بث HLS. جرّب Safari أو حدّث المتصفح.");
+          return;
+        }
+        const hls = new Hls({
+          enableWorker: true,
+          lowLatencyMode: true,
+          maxMaxBufferLength: 30,
+        });
+        hlsRef.current = hls;
+        hls.loadSource(url);
+        hls.attachMedia(video);
+        hls.on(Hls.Events.MANIFEST_PARSED, () => {
+          retryRef.current = 0;
+          startPlayback();
+        });
+        hls.on(Hls.Events.ERROR, (_event, data) => {
+          if (!data.fatal) return;
+          if (retryRef.current < maxRetries) {
+            retryRef.current += 1;
+            setState("loading");
+            setErrorMessage(`إعادة الاتصال (${retryRef.current}/${maxRetries})…`);
+            window.setTimeout(() => {
+              hls.destroy();
+              hlsRef.current = null;
+              attachStream(video, url, shouldAutoplay);
+            }, 800 * retryRef.current);
+            return;
+          }
+          setState("error");
+          setErrorMessage("البث غير متاح مؤقتًا — تحقق من الاتصال ثم أعد المحاولة.");
+          destroyHls();
+        });
+      });
+    },
+    [destroyHls, maxRetries, play],
+  );
+
   const reload = useCallback(() => {
     const video = videoRef.current;
     if (!video || !streamUrl) return;
-
-    destroyHls();
-    setErrorMessage("");
-    setState("loading");
+    retryRef.current = 0;
     video.pause();
     video.removeAttribute("src");
     video.load();
+    attachStream(video, streamUrl, autoplay);
+  }, [attachStream, autoplay, streamUrl]);
 
-    const startPlayback = () => {
-      if (autoplay) void play();
-    };
-
-    if (video.canPlayType("application/vnd.apple.mpegurl")) {
-      video.src = streamUrl;
-      video.load();
-      startPlayback();
-      return;
+  const enterFullscreen = useCallback(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (video.requestFullscreen) void video.requestFullscreen();
+    else if ("webkitEnterFullscreen" in video) {
+      (video as HTMLVideoElement & { webkitEnterFullscreen: () => void }).webkitEnterFullscreen();
     }
-
-    void import("hls.js").then(({ default: Hls }) => {
-      if (!Hls.isSupported()) {
-        setState("error");
-        setErrorMessage("المتصفح لا يدعم بث HLS. جرّب Safari أو حدّث المتصفح.");
-        return;
-      }
-      const hls = new Hls({ enableWorker: true, lowLatencyMode: true });
-      hlsRef.current = hls;
-      hls.loadSource(streamUrl);
-      hls.attachMedia(video);
-      hls.on(Hls.Events.MANIFEST_PARSED, startPlayback);
-      hls.on(Hls.Events.ERROR, (_event, data) => {
-        if (data.fatal) {
-          setState("error");
-          setErrorMessage("تعذّر تشغيل البث. تحقق من الاتصال ثم أعد المحاولة.");
-          destroyHls();
-        }
-      });
-    });
-  }, [autoplay, destroyHls, play, streamUrl]);
+  }, []);
 
   useEffect(() => {
     if (!streamUrl) {
@@ -94,45 +134,13 @@ export function useHlsPlayer({ streamUrl, autoplay = false }: Options) {
     }
 
     const video = videoRef.current;
-    destroyHls();
-    setErrorMessage("");
-    setState("loading");
-
     if (!video) return undefined;
 
+    retryRef.current = 0;
     video.pause();
     video.removeAttribute("src");
     video.load();
-
-    const startPlayback = () => {
-      if (autoplay) void video.play().catch(() => setState("paused"));
-    };
-
-    if (video.canPlayType("application/vnd.apple.mpegurl")) {
-      video.src = streamUrl;
-      video.load();
-      startPlayback();
-    } else {
-      void import("hls.js").then(({ default: Hls }) => {
-        if (!Hls.isSupported()) {
-          setState("error");
-          setErrorMessage("المتصفح لا يدعم بث HLS. جرّب Safari أو حدّث المتصفح.");
-          return;
-        }
-        const hls = new Hls({ enableWorker: true, lowLatencyMode: true });
-        hlsRef.current = hls;
-        hls.loadSource(streamUrl);
-        hls.attachMedia(video);
-        hls.on(Hls.Events.MANIFEST_PARSED, startPlayback);
-        hls.on(Hls.Events.ERROR, (_event, data) => {
-          if (data.fatal) {
-            setState("error");
-            setErrorMessage("تعذّر تشغيل البث. تحقق من الاتصال ثم أعد المحاولة.");
-            destroyHls();
-          }
-        });
-      });
-    }
+    attachStream(video, streamUrl, autoplay);
 
     return () => {
       destroyHls();
@@ -140,18 +148,23 @@ export function useHlsPlayer({ streamUrl, autoplay = false }: Options) {
       video.removeAttribute("src");
       video.load();
     };
-  }, [streamUrl, autoplay, destroyHls]);
+  }, [streamUrl, autoplay, attachStream, destroyHls]);
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    const onPlaying = () => setState("live");
+    const onPlaying = () => {
+      setState("live");
+      setLastUpdated(new Date().toISOString());
+    };
     const onPause = () => setState((s) => (s === "error" ? s : "paused"));
     const onWaiting = () => setState("loading");
     const onError = () => {
-      setState("error");
-      setErrorMessage("تعذّر تشغيل البث. تحقق من الاتصال ثم أعد المحاولة.");
+      if (retryRef.current >= maxRetries) {
+        setState("error");
+        setErrorMessage("البث غير متاح مؤقتًا — تحقق من الاتصال ثم أعد المحاولة.");
+      }
     };
 
     video.addEventListener("playing", onPlaying);
@@ -164,15 +177,17 @@ export function useHlsPlayer({ streamUrl, autoplay = false }: Options) {
       video.removeEventListener("waiting", onWaiting);
       video.removeEventListener("error", onError);
     };
-  }, [streamUrl]);
+  }, [streamUrl, maxRetries]);
 
   return {
     videoRef,
     state,
     errorMessage,
+    lastUpdated,
     play,
     pause,
     toggle,
     reload,
+    enterFullscreen,
   };
 }

@@ -7,18 +7,20 @@ export type RadioPlayerState = "idle" | "connecting" | "live" | "paused" | "erro
 
 type Options = {
   volume: number;
+  maxRetries?: number;
 };
 
-const MAX_RETRIES = 2;
+const DEFAULT_MAX_RETRIES = 3;
 
 export function useQuranRadioPlayer(station: QuranRadioStation | undefined, options: Options) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const retryRef = useRef(0);
   const playingRef = useRef(false);
+  const maxRetries = options.maxRetries ?? DEFAULT_MAX_RETRIES;
   const [playing, setPlaying] = useState(false);
   const [playerState, setPlayerState] = useState<RadioPlayerState>("idle");
   const [statusMessage, setStatusMessage] = useState("");
-  const [nowPlaying, setNowPlaying] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const resetAudio = useCallback(() => {
     const audio = audioRef.current;
@@ -33,30 +35,38 @@ export function useQuranRadioPlayer(station: QuranRadioStation | undefined, opti
     setPlaying(false);
     setPlayerState("error");
     setStatusMessage(message);
-    setNowPlaying(null);
+    setIsLoading(false);
     resetAudio();
   }, [resetAudio]);
+
+  const attemptPlay = useCallback(
+    (audio: HTMLAudioElement) => {
+      audio.play().catch(() => {
+        if (retryRef.current < maxRetries) {
+          retryRef.current += 1;
+          setStatusMessage(`إعادة الاتصال (${retryRef.current}/${maxRetries})…`);
+          setPlayerState("connecting");
+          window.setTimeout(() => attemptPlay(audio), 600 * retryRef.current);
+        } else {
+          fail("تعذّر تشغيل البث. تحقق من الاتصال أو جرّب إذاعة أخرى.");
+        }
+      });
+    },
+    [fail, maxRetries],
+  );
 
   const play = useCallback(() => {
     const audio = audioRef.current;
     if (!audio || !station) return;
 
     retryRef.current = 0;
+    setIsLoading(true);
     setPlayerState("connecting");
     setStatusMessage("جاري الاتصال بالبث…");
-    setNowPlaying(null);
     audio.src = station.streamUrl;
     audio.load();
-    audio.play().catch(() => {
-      if (retryRef.current < MAX_RETRIES) {
-        retryRef.current += 1;
-        setStatusMessage(`إعادة المحاولة (${retryRef.current}/${MAX_RETRIES})…`);
-        window.setTimeout(() => audio.play().catch(() => fail("تعذّر تشغيل البث. تحقق من الاتصال أو جرّب إذاعة أخرى.")), 400);
-      } else {
-        fail("تعذّر تشغيل البث. تحقق من الاتصال أو جرّب إذاعة أخرى.");
-      }
-    });
-  }, [fail, station]);
+    attemptPlay(audio);
+  }, [attemptPlay, station]);
 
   const pause = useCallback(() => {
     audioRef.current?.pause();
@@ -64,6 +74,7 @@ export function useQuranRadioPlayer(station: QuranRadioStation | undefined, opti
     setPlaying(false);
     setPlayerState("paused");
     setStatusMessage("متوقف");
+    setIsLoading(false);
   }, []);
 
   const toggle = useCallback(() => {
@@ -73,7 +84,7 @@ export function useQuranRadioPlayer(station: QuranRadioStation | undefined, opti
 
   const reconnect = useCallback(() => {
     pause();
-    window.setTimeout(play, 120);
+    window.setTimeout(play, 150);
   }, [pause, play]);
 
   useEffect(() => {
@@ -87,28 +98,46 @@ export function useQuranRadioPlayer(station: QuranRadioStation | undefined, opti
       setPlaying(true);
       setPlayerState("live");
       setStatusMessage("● البث مباشر");
+      setIsLoading(false);
+      retryRef.current = 0;
     };
     const onPause = () => {
       playingRef.current = false;
       setPlaying(false);
     };
     const onError = () => {
-      if (retryRef.current < MAX_RETRIES) {
+      if (retryRef.current < maxRetries) {
         retryRef.current += 1;
-        setStatusMessage(`إعادة المحاولة (${retryRef.current}/${MAX_RETRIES})…`);
-        window.setTimeout(() => audio.play().catch(() => fail("تعذّر تشغيل البث.")), 400);
+        setStatusMessage(`إعادة الاتصال (${retryRef.current}/${maxRetries})…`);
+        setPlayerState("connecting");
+        window.setTimeout(() => {
+          if (station?.streamUrl) {
+            audio.src = station.streamUrl;
+            audio.load();
+            attemptPlay(audio);
+          }
+        }, 600 * retryRef.current);
         return;
       }
       fail("تعذّر تشغيل البث. تحقق من الاتصال أو جرّب إذاعة أخرى.");
     };
     const onWaiting = () => {
-      if (playingRef.current) setPlayerState("connecting");
+      if (playingRef.current) {
+        setPlayerState("connecting");
+        setIsLoading(true);
+      }
+    };
+    const onStalled = () => {
+      if (playingRef.current && retryRef.current < maxRetries) {
+        reconnect();
+      }
     };
 
     audio.addEventListener("playing", onPlaying);
     audio.addEventListener("pause", onPause);
     audio.addEventListener("error", onError);
     audio.addEventListener("waiting", onWaiting);
+    audio.addEventListener("stalled", onStalled);
 
     return () => {
       audio.pause();
@@ -116,9 +145,10 @@ export function useQuranRadioPlayer(station: QuranRadioStation | undefined, opti
       audio.removeEventListener("pause", onPause);
       audio.removeEventListener("error", onError);
       audio.removeEventListener("waiting", onWaiting);
+      audio.removeEventListener("stalled", onStalled);
       audioRef.current = null;
     };
-  }, [fail]);
+  }, [attemptPlay, fail, maxRetries, reconnect, station?.streamUrl]);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -132,7 +162,7 @@ export function useQuranRadioPlayer(station: QuranRadioStation | undefined, opti
     setPlaying(false);
     setPlayerState("idle");
     setStatusMessage("");
-    setNowPlaying(null);
+    setIsLoading(false);
     resetAudio();
   }, [station?.id, resetAudio]);
 
@@ -140,7 +170,7 @@ export function useQuranRadioPlayer(station: QuranRadioStation | undefined, opti
     playing,
     playerState,
     statusMessage,
-    nowPlaying,
+    isLoading,
     play,
     pause,
     toggle,
