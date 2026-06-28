@@ -24,6 +24,7 @@ import {
 } from "../../../lib/content-import/import-jobs.mjs";
 import { runPhase2TrialImport } from "../../../lib/content-import/phase2-trial.mjs";
 import { CONTENT_TYPES, resolveContentType } from "../../../lib/content-import/registry.mjs";
+import { buildImportApiError } from "../../../lib/content-import/import-api-errors.mjs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -120,16 +121,43 @@ export default async function handler(req, res) {
       });
       return;
     }
+    const typeDef = resolveContentType(type);
+    if (!typeDef) {
+      sendJson(res, 400, {
+        ...buildImportApiError({
+          code: "unsupported_type",
+          contentType: type,
+          detail: `الأنواع المدعومة: ${CONTENT_TYPES.join(", ")}`,
+          failedAt: "startImportJob",
+        }),
+        types: CONTENT_TYPES,
+      });
+      return;
+    }
+
     const started = await startImportJob({
       type,
       filename,
       totalRows,
       createdBy: auth.userId || null,
     });
-    const typeDef = resolveContentType(type);
-    sendJson(res, started.ok ? 200 : 400, {
+    if (!started.ok) {
+      sendJson(res, 400, {
+        ...buildImportApiError({
+          code: started.code || "job_create_failed",
+          contentType: type,
+          normalizedType: typeDef.type,
+          targetTable: typeDef.table,
+          detail: started.error,
+          failedAt: "createImportJob",
+        }),
+      });
+      return;
+    }
+    sendJson(res, 200, {
       ...started,
-      targetTable: typeDef?.table || null,
+      targetTable: typeDef.table,
+      normalizedType: typeDef.type,
     });
     return;
   }
@@ -143,7 +171,22 @@ export default async function handler(req, res) {
       return;
     }
     const staged = await stageImportBatch(jobId, rows, startIndex);
-    sendJson(res, staged.ok ? 200 : 422, staged);
+    if (!staged.ok) {
+      const job = await getImportJob(jobId);
+      const typeDef = resolveContentType(job?.type);
+      sendJson(res, 422, {
+        ...buildImportApiError({
+          code: staged.code || "stage_failed",
+          contentType: job?.type,
+          targetTable: typeDef?.table,
+          detail: staged.error,
+          failedAt: "stageImportBatch",
+        }),
+        jobId,
+      });
+      return;
+    }
+    sendJson(res, 200, staged);
     return;
   }
 
@@ -156,7 +199,23 @@ export default async function handler(req, res) {
 
     const queued = await queueImportJob(jobId, { executionMode: "background" });
     if (!queued.ok) {
-      sendJson(res, 422, queued);
+      const job = await getImportJob(jobId);
+      const typeDef = resolveContentType(job?.type);
+      jobLog(jobId, "commit_queue_failed", {
+        code: queued.error,
+        contentType: job?.type,
+        targetTable: typeDef?.table,
+      });
+      sendJson(res, 422, {
+        ...buildImportApiError({
+          code: queued.error || "empty_job",
+          contentType: job?.type,
+          targetTable: typeDef?.table,
+          detail: queued.error,
+          failedAt: "queueImportJob",
+        }),
+        jobId,
+      });
       return;
     }
 
@@ -182,19 +241,74 @@ export default async function handler(req, res) {
       try {
         const result = await processImportJob(jobId, { dryRun });
         const status = result.status || (result.ok ? "completed" : "failed");
-        sendJson(res, result.ok ? 200 : 422, {
+        const imported = result.report?.stats?.imported ?? 0;
+        const skipped = result.report?.stats?.skipped ?? 0;
+        const httpStatus = result.ok ? 200 : 422;
+
+        jobLog(jobId, "commit_sync_result", {
+          httpStatus,
           ok: result.ok,
+          status,
+          contentType: job?.type,
+          normalizedType: typeDef?.type,
+          targetTable,
+          imported,
+          skipped,
+          failed: result.report?.stats?.failed ?? 0,
+          error: result.error || null,
+          validationSample: result.report?.validationErrors?.[0] || null,
+          importSample: result.report?.importErrors?.[0] || null,
+        });
+
+        if (result.ok) {
+          sendJson(res, 200, {
+            ok: true,
+            jobId,
+            status,
+            sync: true,
+            targetTable,
+            normalizedType: typeDef?.type,
+            contentType: job?.type,
+            report: result.report || null,
+            timings: result.timings || null,
+            error: null,
+          });
+          return;
+        }
+
+        sendJson(res, 422, {
+          ...buildImportApiError({
+            code: result.error || "import_failed",
+            contentType: job?.type,
+            targetTable,
+            report: result.report,
+            detail: result.error,
+            failedAt: "processImportJob",
+          }),
           jobId,
           status,
           sync: true,
-          targetTable,
           report: result.report || null,
           timings: result.timings || null,
-          error: result.error || null,
         });
       } catch (err) {
         console.error("[admin/content-import:commit:sync]", err);
-        sendJson(res, 500, { ok: false, jobId, error: String(err.message || err), status: "failed" });
+        jobLog(jobId, "commit_sync_exception", {
+          error: String(err.message || err),
+          contentType: job?.type,
+          targetTable,
+        });
+        sendJson(res, 500, {
+          ...buildImportApiError({
+            code: "import_failed",
+            contentType: job?.type,
+            targetTable,
+            detail: String(err.message || err),
+            failedAt: "processImportJob",
+          }),
+          jobId,
+          status: "failed",
+        });
       }
       return;
     }

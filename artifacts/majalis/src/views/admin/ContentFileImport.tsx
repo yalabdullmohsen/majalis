@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { adminImportFetch } from "@/lib/admin-api";
 import { C } from "@/lib/theme";
-import { chunkRows, parseImportFile, UPLOAD_BATCH_SIZE } from "@/lib/import-parse";
+import { chunkRows, formatImportApiError, parseImportFile, UPLOAD_BATCH_SIZE } from "@/lib/import-parse";
 
 const IMPORT_TYPES = [
   { value: "lessons", label: "الدروس" },
@@ -115,9 +115,10 @@ function jobToReport(job: JobProgress, importType: string, jobId?: string): Impo
   const targetTable = IMPORT_TARGET_TABLES[importType] || "—";
 
   if (job.report) {
+    const skipped = job.skipped ?? job.report.stats?.skipped ?? 0;
     const ok =
       job.status === "completed" &&
-      imported > 0 &&
+      (imported > 0 || skipped > 0) &&
       (job.failed ?? job.report.stats?.failed ?? 0) === 0;
     return {
       ...job.report,
@@ -136,7 +137,8 @@ function jobToReport(job: JobProgress, importType: string, jobId?: string): Impo
     };
   }
   const failed = job.failed ?? 0;
-  const ok = job.status === "completed" && imported > 0 && failed === 0;
+  const skippedCount = job.skipped ?? 0;
+  const ok = job.status === "completed" && (imported > 0 || skippedCount > 0) && failed === 0;
   return {
     ok,
     jobId,
@@ -250,6 +252,14 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
     }
 
     if (job.status === "completed" && imported === 0) {
+      const skipped = importReport.stats?.skipped ?? job.skipped ?? 0;
+      if (skipped > 0) {
+        setError(null);
+        setCanRetry(false);
+        void queryClient.invalidateQueries({ queryKey: ["fawaid"] });
+        onDone?.();
+        return;
+      }
       const detail =
         msgs[0] ||
         (rejected > 0
@@ -264,6 +274,7 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
       setError(null);
       setCanRetry(false);
       void queryClient.invalidateQueries({ queryKey: ["adhkar"] });
+      void queryClient.invalidateQueries({ queryKey: ["fawaid"] });
       onDone?.();
     } else if (job.status === "completed") {
       setError(msgs[0] || `اكتمل مع ${importReport.stats?.failed ?? 0} فشل`);
@@ -283,7 +294,7 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
     });
     const startJson = await startRes.json();
     if (!startRes.ok || !startJson.jobId) {
-      throw new Error(startJson.error || startJson.message || "تعذر بدء مهمة الاستيراد");
+      throw new Error(formatImportApiError(startRes, startJson, "تعذّر بدء مهمة الاستيراد"));
     }
 
     const jobId = startJson.jobId as string;
@@ -305,7 +316,9 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
         }),
       });
       const stageJson = await stageRes.json();
-      if (!stageRes.ok) throw new Error(stageJson.error || stageJson.code || `فشل رفع الدفعة ${i + 1}`);
+      if (!stageRes.ok) {
+        throw new Error(formatImportApiError(stageRes, stageJson, `فشل رفع الدفعة ${i + 1}`));
+      }
     }
 
     setPhase("بدء المعالجة في الخلفية");
@@ -318,13 +331,7 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
     });
     const commitJson = await commitRes.json();
     if (!commitRes.ok && commitRes.status !== 202) {
-      const detail =
-        commitJson.error ||
-        commitJson.report?.validationErrors?.[0] ||
-        commitJson.report?.importErrors?.[0] ||
-        commitJson.message ||
-        "تعذر إرسال مهمة الاستيراد";
-      throw new Error(detail);
+      throw new Error(formatImportApiError(commitRes, commitJson, "تعذّر إرسال مهمة الاستيراد"));
     }
 
     if (commitJson.sync && TERMINAL_STATUSES.has(commitJson.status)) {
@@ -350,11 +357,22 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
       setPhase(phaseLabel(syncJob.phase));
       applyJobResult(syncJob, jobId);
       const imported = syncJob.imported ?? 0;
-      if (commitJson.status === "failed" || !commitJson.ok || imported === 0) {
+      const skipped = syncJob.skipped ?? 0;
+      if (commitJson.status === "failed" || !commitJson.ok) {
+        throw new Error(
+          formatImportApiError(
+            { ok: false, status: commitRes.status } as Response,
+            commitJson,
+            syncJob.import_errors?.[0] || "فشل الاستيراد",
+          ),
+        );
+      }
+      if (imported === 0 && skipped === 0) {
         throw new Error(
           commitJson.error ||
             syncJob.import_errors?.[0] ||
-            (imported === 0 ? "اكتملت المهمة دون استيراد أي صف" : "فشل الاستيراد"),
+            syncJob.validation_errors?.[0] ||
+            "اكتملت المهمة دون استيراد أي صف — تحقق من أعمدة CSV (مطلوب: text)",
         );
       }
       return;
@@ -374,10 +392,12 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
       throw new Error(finalJob.import_errors?.[0] || "فشل الاستيراد");
     }
     if (finalJob.status === "completed" && (finalJob.imported ?? 0) === 0) {
+      const skipped = finalJob.skipped ?? 0;
+      if (skipped > 0) return;
       throw new Error(
         finalJob.import_errors?.[0] ||
           finalJob.validation_errors?.[0] ||
-          "اكتملت المهمة دون استيراد أي صف",
+          "اكتملت المهمة دون استيراد أي صف — تحقق من أعمدة CSV (مطلوب: text)",
       );
     }
   };
