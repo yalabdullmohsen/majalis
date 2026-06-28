@@ -122,10 +122,9 @@ function buildRecord(item, analysis) {
       const sourceUrl = item.raw_url || item.source_url;
       return {
         table: "library_items",
-        lookupField: "external_key",
+        lookupField: "external_url",
+        lookupValue: sourceUrl,
         record: {
-          ...base,
-          external_key: item.external_id,
           title,
           description: summary,
           type: "مقال",
