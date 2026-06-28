@@ -1,0 +1,66 @@
+name: Production DB Cleanup
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "artifacts/majalis/lib/production/purge-runner.mjs"
+      - "artifacts/majalis/scripts/purge-test-content.mjs"
+      - "artifacts/majalis/scripts/verify-fawaid-clean.mjs"
+      - ".github/workflows/production-db-cleanup.yml"
+
+concurrency:
+  group: production-db-cleanup
+  cancel-in-progress: false
+
+jobs:
+  purge-and-verify:
+    name: Purge misclassified fawaid
+    if: github.repository == 'yalabdullmohsen/majalis'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      - name: Dry-run preview
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          VITE_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          cd artifacts/majalis
+          node scripts/purge-test-content.mjs
+
+      - name: Apply purge (production)
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          VITE_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          cd artifacts/majalis
+          node scripts/purge-test-content.mjs --apply
+
+      - name: Verify fawaid clean
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          VITE_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: |
+          cd artifacts/majalis
+          node scripts/verify-fawaid-clean.mjs
+
+      - name: Database integrity audit
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          VITE_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          cd artifacts/majalis
+          node scripts/audit-database-integrity.mjs
