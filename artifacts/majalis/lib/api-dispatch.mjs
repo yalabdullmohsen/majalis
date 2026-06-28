@@ -132,6 +132,7 @@ export const API_ROUTES = [
   { prefix: "/api/admin/auto-knowledge-engine", module: "./api-handlers/admin/auto-knowledge-engine.js", allowGet: true },
   { prefix: "/api/admin/ake-monitoring", module: "./api-handlers/admin/ake-monitoring.js", allowGet: true },
   { prefix: "/api/admin/ake-autonomous", module: "./api-handlers/admin/ake-autonomous.js", allowGet: true },
+  { prefix: "/api/admin/ake-hardening", module: "./api-handlers/admin/ake-hardening.js", allowGet: true },
   { prefix: "/api/cron/autonomous-platform-cycle", module: "./api-handlers/cron/autonomous-platform-cycle.js", allowGet: true, exact: true },
   { prefix: "/api/cron/ake-daily-report", module: "./api-handlers/cron/ake-daily-report.js", allowGet: true, exact: true },
   { prefix: "/api/cron/ake-monitoring-eval", module: "./api-handlers/cron/ake-monitoring-eval.js", allowGet: true, exact: true },

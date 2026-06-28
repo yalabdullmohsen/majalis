@@ -38,6 +38,13 @@ import { recordSourceHealthEvent } from "./monitoring/source-health-events.mjs";
 import { runAuthenticityGate } from "./autonomous/authenticity-gate.mjs";
 import { logRejection } from "./autonomous/rejection-log.mjs";
 import { enrichItemClassification } from "./autonomous/content-router.mjs";
+import { runIncidentRecoveryCycle, heartbeatWorker } from "./hardening/incident-recovery.mjs";
+import { updateConnectorIntelligence } from "./hardening/connector-health.mjs";
+import { migrateFiqhFromLibraryItems } from "./hardening/fiqh-migration.mjs";
+import { snapshotPublishingAnalytics } from "./hardening/analytics.mjs";
+import { evaluateHardeningAlerts } from "./hardening/notifications.mjs";
+import { runSourceDiscoveryCycle } from "./hardening/source-discovery.mjs";
+import { enrichAnalysisMetadata, mergeRelatedContent } from "./hardening/ai-enrichment.mjs";
 
 async function ensureRealtimeSchema(admin) {
   const { error } = await admin.from("ake_scheduler_state").select("id", { head: true, count: "exact" });
@@ -46,7 +53,7 @@ async function ensureRealtimeSchema(admin) {
   try {
     const { applyMigrations } = await import("../db-migrate.mjs");
     return await applyMigrations({
-      files: ["auto_knowledge_engine_v15_realtime.sql", "auto_knowledge_engine_v17_monitoring.sql", "auto_knowledge_engine_v18_autonomous.sql"],
+      files: ["auto_knowledge_engine_v15_realtime.sql", "auto_knowledge_engine_v17_monitoring.sql", "auto_knowledge_engine_v18_autonomous.sql", "auto_knowledge_engine_v19_hardening.sql"],
       continueOnError: false,
       trackApplied: true,
     });
@@ -222,6 +229,7 @@ async function processConnector(admin, connectorConfig, runId, existingItems, op
     maxItems: maxItemsPerConnector,
     manifestLimit: connectorImportMode === "backfill" ? 200 : 50,
     connectorConfig,
+    admin,
   };
 
   const stats = {
@@ -354,6 +362,11 @@ async function processConnector(admin, connectorConfig, runId, existingItems, op
     }
 
     const analyzed = await analyzeBatch([...needsAnalysis, ...retryMissed], 2);
+    for (const item of analyzed) {
+      if (item.analysis) {
+        item.analysis = enrichAnalysisMetadata(item.analysis, item, mergeRelatedContent({}));
+      }
+    }
     const allItems = [...analyzed, ...retryAnalyzed];
     const processed = [];
 
@@ -527,6 +540,13 @@ async function processConnector(admin, connectorConfig, runId, existingItems, op
       health,
     );
 
+    await updateConnectorIntelligence(
+      admin,
+      connectorConfig,
+      stats,
+      syncOptions._feedMeta || {},
+    );
+
     if (connectorConfig.id) {
       await admin.from("ake_connectors").update({
         items_published: (connectorConfig.items_published || 0) + stats.published,
@@ -588,6 +608,13 @@ export async function runAutoKnowledgeEngine(options = {}) {
     await ensureFiqhCouncilTable(admin);
     await ensureSyncSchema(admin);
     await ensureRealtimeSchema(admin);
+    await ensureAkeRpcFunctions({ force: false });
+
+    await heartbeatWorker(admin, "orchestrator", "orchestrator", "running");
+    const recovery = await runIncidentRecoveryCycle(admin, { runId: null });
+    if (!recovery.ok && recovery.partial) {
+      return { ok: false, error: "database_unavailable", recovery };
+    }
 
     globalState = await loadGlobalSyncState(admin);
     let connectorsPreview = await loadConnectors(admin);
@@ -767,6 +794,27 @@ export async function runAutoKnowledgeEngine(options = {}) {
     }, { onConflict: "snapshot_date" });
   } catch {
     /* ignore */
+  }
+
+  try {
+    await snapshotPublishingAnalytics(admin, "daily");
+    if (triggerType === "cron") {
+      await migrateFiqhFromLibraryItems(admin, { limit: 20 });
+      await runSourceDiscoveryCycle(admin, [], { limit: 3 });
+    }
+    const rejectionRate = totals.fetched > 0
+      ? Math.round((totals.rejected / totals.fetched) * 100)
+      : 0;
+    await evaluateHardeningAlerts(admin, {
+      rejectionRate,
+      fetched: totals.fetched,
+      rejected: totals.rejected,
+      rpcUnhealthy: false,
+      degradedFeeds: [],
+    });
+    await heartbeatWorker(admin, "orchestrator", "orchestrator", "idle", { durationMs, published: totals.published });
+  } catch {
+    /* hardening post-cycle is best-effort */
   }
 
   return {

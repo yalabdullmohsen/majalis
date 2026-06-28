@@ -3,6 +3,7 @@
  */
 
 import { withRetry } from "./queue.mjs";
+import { withAdaptiveRetry } from "./hardening/adaptive-retry.mjs";
 import { akeLog } from "./monitoring.mjs";
 
 const rateLimitBuckets = new Map();
@@ -82,7 +83,7 @@ export class BaseConnector {
       return { ok: true, skipped: true, reason: "inactive", items: [] };
     }
 
-    return withRetry(
+    return withAdaptiveRetry(
       async () => {
         akeLog("connector", {
           slug: this.slug,

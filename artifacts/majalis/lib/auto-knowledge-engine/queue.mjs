@@ -3,11 +3,17 @@
  */
 
 import { akeLog, auditLog } from "./monitoring.mjs";
+import { adaptiveRetryDelay, classifyRetryError, RETRY_CLASS, shouldRequeueJob } from "./hardening/adaptive-retry.mjs";
 
-/** Intelligent retry schedule: immediate → 1m → 5m → 15m */
+/** Legacy schedule kept for backward compatibility */
 export const RETRY_SCHEDULE_MS = [0, 60_000, 300_000, 900_000];
 
-export function nextRetryDelay(attempt) {
+export function nextRetryDelay(attempt, error = null) {
+  if (error) {
+    const { class: errorClass } = classifyRetryError(error);
+    const delay = adaptiveRetryDelay(attempt, errorClass);
+    return delay ?? RETRY_SCHEDULE_MS[Math.min(attempt - 1, RETRY_SCHEDULE_MS.length - 1)];
+  }
   return RETRY_SCHEDULE_MS[Math.min(attempt - 1, RETRY_SCHEDULE_MS.length - 1)];
 }
 
@@ -64,17 +70,28 @@ export async function processNextJobs(admin, handler, limit = 5) {
       results.push({ id: job.id, ok: true, result });
     } catch (err) {
       const attempts = job.attempts + 1;
-      const failed = attempts >= job.max_attempts;
-      const retryDelay = nextRetryDelay(attempts);
-      await admin.from("ake_job_queue").update({
-        status: failed ? "failed" : "pending",
-        attempts,
-        last_error: err.message,
-        finished_at: failed ? new Date().toISOString() : null,
-        scheduled_at: failed
-          ? job.scheduled_at
-          : new Date(Date.now() + retryDelay).toISOString(),
-      }).eq("id", job.id);
+      const canRetry = shouldRequeueJob(err, attempts, job.max_attempts);
+      const failed = !canRetry;
+      const retryDelay = nextRetryDelay(attempts, err);
+      const { class: errorClass } = classifyRetryError(err);
+      if (errorClass === RETRY_CLASS.NEVER) {
+        await admin.from("ake_job_queue").update({
+          status: "failed",
+          attempts,
+          last_error: err.message,
+          finished_at: new Date().toISOString(),
+        }).eq("id", job.id);
+      } else {
+        await admin.from("ake_job_queue").update({
+          status: failed ? "failed" : "pending",
+          attempts,
+          last_error: err.message,
+          finished_at: failed ? new Date().toISOString() : null,
+          scheduled_at: failed
+            ? job.scheduled_at
+            : new Date(Date.now() + (retryDelay ?? 60_000)).toISOString(),
+        }).eq("id", job.id);
+      }
 
       await auditLog(admin, {
         action: "job_retry",

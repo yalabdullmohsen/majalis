@@ -106,6 +106,9 @@ export function KnowledgeEngineSection() {
           <Link href="/admin/platform/autonomous" style={{ ...btnStyle(false), textDecoration: "none", display: "inline-flex", alignItems: "center" }}>
             المنصة الذاتية
           </Link>
+          <Link href="/admin/platform/hardening" style={{ ...btnStyle(false), textDecoration: "none", display: "inline-flex", alignItems: "center" }}>
+            التحصين الإنتاجي
+          </Link>
           <Link href="/admin/platform/monitoring" style={{ ...btnStyle(false), textDecoration: "none", display: "inline-flex", alignItems: "center" }}>
             المراقبة والتنبيهات
           </Link>

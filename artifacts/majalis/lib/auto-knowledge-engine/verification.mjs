@@ -3,7 +3,7 @@
  */
 
 import { trustScoreFromLevel } from "./connector-base.mjs";
-import { detectDuplicate } from "./duplicate-detection.mjs";
+import { detectSmartDuplicate } from "./hardening/semantic-dedup.mjs";
 import { contentHash, jaccardSimilarity } from "../knowledge-engine/quality.mjs";
 
 export async function verifyUrlAlive(url, timeoutMs = 8000) {
@@ -57,7 +57,7 @@ export function verifyItem(item, connector, existingItems = []) {
   if (!author && connector?.entity_type === "publisher") warnings.push("missing_author");
 
   const h = contentHash(item.raw_title, item.raw_body, item.raw_url);
-  const dupResult = detectDuplicate(item, existingItems, connector);
+  const dupResult = detectSmartDuplicate(item, existingItems, connector);
   let isDuplicate = dupResult.isDuplicate;
   let duplicateOf = dupResult.duplicateOf;
   let duplicateScore = dupResult.duplicateScore || 0;

@@ -18,7 +18,6 @@ export async function evaluateMonitoringRules(context = {}) {
   // Gather live signals
   const signals = await gatherSignals(admin, context);
 
-  // Rule 1: Critical — active source failed 3 times consecutively
   for (const c of signals.failingConnectors) {
     if ((c.consecutive_failures || 0) >= ALERT_THRESHOLDS.consecutiveFailures) {
       alerts.push(await createAkeAlert({
@@ -163,6 +162,26 @@ export async function evaluateMonitoringRules(context = {}) {
 
   // Rule 10: Info — daily report (handled in daily-report.mjs)
 
+  // Rule 11: Warning — RSS degraded > 24h
+  for (const c of signals.degradedFeeds || []) {
+    const degradedMs = now - new Date(c.feed_degraded_at).getTime();
+    if (degradedMs >= 24 * 3_600_000) {
+      alerts.push(await createAkeAlert({
+        type: "broken_rss_24h",
+        severity: "warning",
+        title: `RSS معطّل +24h: ${c.name || c.slug}`,
+        message: `المصدر ${c.slug} بدون feed ناجح`,
+        dedupeKey: `broken_rss:${c.slug}`,
+        connectorSlug: c.slug,
+        metadata: {
+          feedUrl: c.feed_url,
+          lastError: c.last_error,
+          recommendedAction: "أضف mirror URL في ake_feed_mirrors.",
+        },
+      }));
+    }
+  }
+
   // Legacy context passthrough
   for (const c of context.downConnectors || []) {
     alerts.push(await createAkeAlert({
@@ -220,10 +239,12 @@ async function gatherSignals(admin, context) {
 
   const active = (connectors || []).filter((c) => c.is_active);
   const failing = (connectors || []).filter((c) => c.is_active && (c.health_status === "down" || c.consecutive_failures >= 2));
+  const degradedFeeds = (connectors || []).filter((c) => c.feed_degraded_at && c.is_active);
 
   return {
     activeConnectorsCount: active.length,
     failingConnectors: failing,
+    degradedFeeds,
     scheduler: scheduler || {},
     reviewQueueSize: reviewCount || 0,
     rejectedToday: rejectedCount || 0,

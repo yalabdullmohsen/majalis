@@ -7,7 +7,6 @@ import { resolveDataFilePath } from "../../data-paths.mjs";
 import { normalizeContentKind } from "../content-kind.mjs";
 import { BaseConnector } from "../connector-base.mjs";
 import { enrichItemClassification } from "../autonomous/content-router.mjs";
-import { extractRssItems } from "../../auto-content/auto-content-utils.mjs";
 import {
   buildConditionalHeaders,
   filterNewFeedItems,
@@ -17,27 +16,44 @@ import { HtmlConnector } from "./html-connector.mjs";
 import { ApiConnector } from "./api-connector.mjs";
 import { SitemapConnector } from "./sitemap-connector.mjs";
 import { PodcastConnector } from "./podcast-connector.mjs";
+import {
+  fetchFeedWithReliability,
+  cacheSuccessfulFeedUrl,
+  markFeedDegraded,
+} from "../hardening/rss-reliability.mjs";
 
 export class RssConnector extends BaseConnector {
   async fetchItems(syncOptions = {}) {
-    if (!this.feedUrl) return [];
+    if (!this.feedUrl && !this.apiConfig?.mirror_urls?.length) return [];
 
     const connectorConfig = syncOptions.connectorConfig || {};
     const headers = buildConditionalHeaders(connectorConfig);
-    const response = await this.fetchWithTimeout(this.feedUrl, { headers });
 
-    if (response.status === 304) {
+    let feedResult;
+    try {
+      feedResult = await fetchFeedWithReliability(
+        { ...connectorConfig, slug: this.slug, feed_url: this.feedUrl, api_config: this.apiConfig },
+        (url, hdrs) => this.fetchWithTimeout(url, { headers: { ...headers, ...hdrs } }),
+        { headers },
+      );
+    } catch (err) {
+      const admin = syncOptions.admin;
+      if (admin) await markFeedDegraded(admin, connectorConfig, err);
+      throw err;
+    }
+
+    if (feedResult.notModified) {
       syncOptions._notModified = true;
       return [];
     }
 
-    if (response.status === 404 || response.status === 410) {
-      throw new Error(`RSS permanent: ${response.status}`);
-    }
-    if (!response.ok) throw new Error(`RSS failed: ${response.status}`);
+    const response = feedResult.response;
+    const rssItems = feedResult.items || [];
+    syncOptions._feedMeta = { responseMs: feedResult.responseMs, url: feedResult.url };
 
-    const xml = await response.text();
-    const rssItems = extractRssItems(xml);
+    if (syncOptions.admin && feedResult.ok) {
+      await cacheSuccessfulFeedUrl(syncOptions.admin, connectorConfig, feedResult);
+    }
 
     let items = rssItems.map((item, idx) => enrichItemClassification({
       external_id: `${this.slug}:${Buffer.from(item.link || item.title).toString("base64").slice(0, 40)}`,
@@ -53,7 +69,7 @@ export class RssConnector extends BaseConnector {
     }, this));
 
     items = filterNewFeedItems(items, connectorConfig);
-    syncOptions._crawlPatch = buildConnectorCrawlPatch(response, xml, items, connectorConfig);
+    syncOptions._crawlPatch = buildConnectorCrawlPatch(response, feedResult.body || "", items, connectorConfig);
     return items;
   }
 

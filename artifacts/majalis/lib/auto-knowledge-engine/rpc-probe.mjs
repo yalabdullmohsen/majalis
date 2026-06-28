@@ -31,6 +31,14 @@ export const AKE_RPC_FUNCTIONS = [
     usedBy: "knowledge-engine/pipeline.mjs (legacy fallback)",
   },
   {
+    name: "ake_publishing_analytics_snapshot",
+    args: "text",
+    pgIdentity: "ake_publishing_analytics_snapshot(text)",
+    testParams: { p_period_type: "daily" },
+    required: false,
+    usedBy: "auto-knowledge-engine/hardening/analytics.mjs",
+  },
+  {
     name: "search_knowledge_hybrid",
     args: "text, integer",
     pgIdentity: "search_knowledge_hybrid(text,integer)",

@@ -172,6 +172,24 @@ export default async function handler(req, res) {
       return;
     }
 
+    if (scope === "ake-hardening" || scope === "ake-v19") {
+      const { ensureAkeRpcFunctions } = await import("../../../lib/auto-knowledge-engine/rpc-probe.mjs");
+      const migration = await applyMigrations({
+        files: ["auto_knowledge_engine_v19_hardening.sql", "auto_knowledge_engine_v13_rpc_fix.sql"],
+        continueOnError: false,
+        trackApplied: true,
+      });
+      const rpc = await ensureAkeRpcFunctions({ force: req.query?.force === "1" });
+      sendJson(res, migration.ok && rpc.ok ? 200 : 500, {
+        ok: migration.ok && rpc.ok,
+        scope: "ake-hardening",
+        migrations: migration,
+        rpc,
+        resolved: resolvedMeta(),
+      });
+      return;
+    }
+
     if (scope === "ake-monitoring" || scope === "ake-v17") {
       const result = await applyMigrations({
         files: ["auto_knowledge_engine_v17_monitoring.sql"],

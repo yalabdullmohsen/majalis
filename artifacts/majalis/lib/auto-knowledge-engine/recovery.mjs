@@ -9,6 +9,7 @@ import { analysisFromKnowledgeRow } from "./knowledge-item-record.mjs";
 import { runQualityGate } from "./quality-gate.mjs";
 import { auditLog } from "./monitoring.mjs";
 import { isPermanentFetchError } from "./connector-scheduler.mjs";
+import { nextJobSchedule, classifyRetryError, RETRY_CLASS } from "./hardening/adaptive-retry.mjs";
 
 const STUCK_RUNNING_MS = 10 * 60_000;
 const STUCK_RUN_MS = 30 * 60_000;
@@ -130,9 +131,11 @@ async function requeueFailedJobs(admin) {
 }
 
 export async function enqueueFailedStage(admin, { connectorId, knowledgeItemId, stage, error, payload = {} }) {
-  if (!admin || isPermanentFetchError(error)) return null;
+  const { class: errorClass } = classifyRetryError(error);
+  if (!admin || isPermanentFetchError(error) || errorClass === RETRY_CLASS.NEVER) return null;
   try {
-    const delay = [0, 60_000, 300_000, 900_000][Math.min(payload.attempt || 0, 3)];
+    const scheduledAt = nextJobSchedule(error, (payload.attempt || 0) + 1)
+      || new Date(Date.now() + 60_000).toISOString();
     const { data } = await admin.from("ake_job_queue").insert({
       connector_id: connectorId || null,
       knowledge_item_id: knowledgeItemId || null,
@@ -140,7 +143,7 @@ export async function enqueueFailedStage(admin, { connectorId, knowledgeItemId, 
       payload: { ...payload, stage, knowledgeItemId },
       status: "pending",
       max_attempts: 4,
-      scheduled_at: new Date(Date.now() + delay).toISOString(),
+      scheduled_at: scheduledAt,
       last_error: error || null,
       checkpoint: { stage, at: new Date().toISOString() },
     }).select("id").single();
