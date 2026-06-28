@@ -21,15 +21,29 @@ export function buildImportApiResponse({ result, sheikhMatch, draft, imageUrl, v
   const parsed = result?.parsed_fields || result?.extracted || {};
   const validation = result?.validation || validateLessonDraft(parsed);
   const missing = result?.missing_fields || buildMissingFields(parsed);
+  const providerUsed = result?.providerUsed || extras.provider_used;
+  const manualReview = result?.manualReview || providerUsed === "manual_review" || providerUsed === "ocr";
+
+  const providerLabels = {
+    anthropic: "Claude",
+    openai: "OpenAI",
+    ocr: "OCR",
+    manual_review: "مراجعة يدوية",
+  };
 
   return {
-    ok: true,
-    vision_enabled: visionEnabled ?? isVisionEnabled(),
-    message: result?.message || (visionEnabled === false ? MANUAL_MESSAGE : undefined),
+    ok: result?.ok !== false,
+    vision_enabled: visionEnabled ?? (result?.visionEnabled !== false && !manualReview),
+    provider_used: providerUsed,
+    provider_label: providerLabels[providerUsed] || providerUsed || "—",
+    manual_review: manualReview,
+    error_code: result?.errorCode || null,
+    message: result?.userMessage || result?.message || (manualReview ? MANUAL_MESSAGE : undefined),
+    user_message: result?.userMessage || result?.message || undefined,
     extracted_text: result?.extracted_text || parsed.raw_ocr_text || "",
     parsed_fields: parsed,
     confidence_score: result?.confidence_score != null ? result.confidence_score : Number(parsed.confidence) || 0,
-    warnings: validation.warnings || [],
+    warnings: [...(result?.warnings || []), ...(validation.warnings || [])],
     missing_fields: missing,
     suggested_sheikh_match: sheikhMatch
       ? {
@@ -43,6 +57,7 @@ export function buildImportApiResponse({ result, sheikhMatch, draft, imageUrl, v
     draft,
     image_url: imageUrl || draft?.image_url,
     ai_suggestions: result?.aiSuggestions || [],
+    fields: result?.fields || null,
     ...extras,
   };
 }

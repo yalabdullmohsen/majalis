@@ -1,0 +1,243 @@
+{
+  "at": "2026-06-28T19:32:58.052Z",
+  "phase": 1,
+  "areas": {
+    "database": {
+      "status": "PASS",
+      "sqlFiles": 53,
+      "migrationRunner": true
+    },
+    "routes": {
+      "status": "PASS",
+      "count": 119,
+      "sample": [
+        "/",
+        "/about",
+        "/privacy",
+        "/terms",
+        "/contact",
+        "/settings",
+        "/search/:q",
+        "/search",
+        "/topics/:slug",
+        "/topics",
+        "/scientific-announcements/:id",
+        "/lessons/current",
+        "/lessons/:id",
+        "/lessons",
+        "/calendar",
+        "/kuwait-lessons",
+        "/announcements",
+        "/courses",
+        "/sheikhs/:id",
+        "/sheikhs"
+      ]
+    },
+    "apis": {
+      "status": "PASS",
+      "count": 115,
+      "crons": [
+        "/api/cron/sync-data",
+        "/api/cron/knowledge-sync",
+        "/api/cron/sync-fiqh-council",
+        "/api/cron/check-fiqh-links",
+        "/api/cron/scholarly-verification",
+        "/api/cron/auto-content-sync",
+        "/api/cron/auto-content-health",
+        "/api/cron/system-health",
+        "/api/cron/apply-migrations",
+        "/api/cron/bootstrap-database",
+        "/api/cron/purge-test-content",
+        "/api/cron/audit-database-integrity",
+        "/api/cron/bootstrap-owner",
+        "/api/cron/platform-bootstrap",
+        "/api/cron/auto-knowledge-sync",
+        "/api/cron/ake-queue-drain",
+        "/api/cron/connector-health",
+        "/api/cron/ake-monitoring-eval",
+        "/api/cron/ake-daily-report",
+        "/api/cron/autonomous-orchestrator",
+        "/api/cron/global-reference-review",
+        "/api/cron/islamic-intelligence",
+        "/api/cron/governance-backup",
+        "/api/cron/monitor-sources",
+        "/api/cron/lesson-source-monitor",
+        "/api/cron/lesson-intelligence",
+        "/api/cron/majlis-knowledge-engine",
+        "/api/cron/autonomous-platform",
+        "/api/cron/autonomous-platform-fetch",
+        "/api/cron/autonomous-platform-validate",
+        "/api/cron/autonomous-platform-questions",
+        "/api/cron/autonomous-platform-benefits",
+        "/api/cron/autonomous-platform-reindex",
+        "/api/cron/autonomous-platform-audit",
+        "/api/cron/autonomous-platform-cleanup",
+        "/api/cron/autonomous-platform-bootstrap",
+        "/api/cron/autonomous-platform-v3",
+        "/api/cron/autonomous-platform-v3-health",
+        "/api/cron/autonomous-platform-v3-goals",
+        "/api/cron/autonomous-platform-v3-analytics",
+        "/api/cron/autonomous-platform-v3-backup",
+        "/api/cron/autonomous-platform-v3-heal",
+        "/api/cron/source-monitor",
+        "/api/cron/process-import-jobs",
+        "/api/cron/import-phase2-trial",
+        "/api/cron/ai-agents",
+        "/api/cron/verified-knowledge",
+        "/api/cron/content-scheduler",
+        "/api/cron/content-engines",
+        "/api/cron/content-engines-drain",
+        "/api/cron/knowledge-reasoning",
+        "/api/cron/cd-post-deploy"
+      ],
+      "admin": [
+        "/api/admin/knowledge-pipeline",
+        "/api/admin/feature-health",
+        "/api/admin/production-activate",
+        "/api/admin/bootstrap-owner",
+        "/api/admin/platform-bootstrap",
+        "/api/admin/auth-context",
+        "/api/admin/check-fiqh-links",
+        "/api/admin/sync-fiqh-council",
+        "/api/admin/scholarly-verification",
+        "/api/admin/search-analytics",
+        "/api/admin/digital-learning",
+        "/api/admin/autonomous-ai",
+        "/api/admin/global-reference",
+        "/api/admin/islamic-intelligence",
+        "/api/admin/open-platform",
+        "/api/admin/governance",
+        "/api/admin/ai-agents",
+        "/api/admin/smart-cms",
+        "/api/admin/lesson-from-image",
+        "/api/admin/ai-status",
+        "/api/admin/lesson-from-url",
+        "/api/admin/lesson-automation",
+        "/api/admin/instagram-integration",
+        "/api/admin/majlis-knowledge-engine",
+        "/api/admin/source-monitor",
+        "/api/admin/autonomous-platform",
+        "/api/admin/content-import",
+        "/api/admin/verified-knowledge",
+        "/api/admin/knowledge-reasoning",
+        "/api/admin/content-production",
+        "/api/admin/content-engines",
+        "/api/admin/platform-monitoring",
+        "/api/admin/auto-content",
+        "/api/admin/auto-knowledge-engine",
+        "/api/admin/ake-monitoring",
+        "/api/admin/purge-test-content",
+        "/api/admin/deployment-pipeline"
+      ]
+    },
+    "crons": {
+      "status": "PASS",
+      "vercelCrons": 46,
+      "apiCrons": 52
+    },
+    "connectors": {
+      "status": "PASS",
+      "modules": 8
+    },
+    "background_jobs": {
+      "status": "PASS",
+      "queueModule": true
+    },
+    "vercel": {
+      "status": "PASS",
+      "ok": true,
+      "crons": 46,
+      "headers": true
+    },
+    "supabase": {
+      "status": "WARN",
+      "url": true,
+      "anonKey": true,
+      "serviceRole": false,
+      "databaseUrl": false
+    },
+    "github_actions": {
+      "status": "PASS",
+      "count": 8,
+      "files": [
+        "autonomous-cd.yml",
+        "ci.yml",
+        "owner-bootstrap.yml",
+        "phase2-trial-import.yml",
+        "platform-bootstrap.yml",
+        "post-deploy.yml",
+        "production-bootstrap.yml",
+        "production-db-cleanup.yml"
+      ]
+    },
+    "monitoring": {
+      "status": "PASS",
+      "platformMonitoring": true,
+      "systemHealth": true,
+      "dashboardPage": true
+    },
+    "ake": {
+      "status": "PASS",
+      "orchestrator": true
+    },
+    "cms": {
+      "status": "PASS",
+      "lessonExtractor": true
+    },
+    "admin": {
+      "status": "PASS",
+      "shell": true
+    },
+    "search": {
+      "status": "PASS",
+      "module": true
+    },
+    "publisher": {
+      "status": "PASS",
+      "module": true
+    },
+    "ocr": {
+      "status": "PASS",
+      "localOcr": true
+    },
+    "vision": {
+      "status": "PASS",
+      "fallback": true
+    },
+    "telegram": {
+      "status": "PASS",
+      "fetch": true
+    },
+    "instagram": {
+      "status": "PASS",
+      "graphApi": true,
+      "platformPage": true
+    },
+    "sitemap": {
+      "status": 200,
+      "ok": true
+    },
+    "seo": {
+      "status": "PASS",
+      "robots": {
+        "status": 200,
+        "ok": true
+      }
+    },
+    "queue": {
+      "status": "PASS",
+      "akeQueue": true
+    },
+    "notifications": {
+      "status": "PASS",
+      "notify": true
+    }
+  },
+  "summary": {
+    "pass": 22,
+    "warn": 1,
+    "fail": 0
+  },
+  "readinessPct": 98,
+  "ok": true
+}

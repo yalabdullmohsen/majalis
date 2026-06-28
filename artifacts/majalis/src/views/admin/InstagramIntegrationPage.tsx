@@ -86,10 +86,9 @@ function InstagramIntegrationContent() {
     <div>
       <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "0.75rem", marginBottom: "1rem" }}>
         <div>
-          <h2 style={{ margin: "0 0 0.35rem", color: C.emeraldDeep }}>Instagram Graph API — Phase 7</h2>
+          <h2 style={{ margin: "0 0 0.35rem", color: C.emeraldDeep }}>Instagram — Platform Diagnostics</h2>
           <p style={{ margin: 0, color: C.inkSoft, fontSize: "0.875rem" }}>
-            ربط Meta Business لجلب المنشورات تلقائيًا. بدون ربط: Manual Assist Mode من{" "}
-            <Link href="/admin/sources" style={{ color: C.emeraldDeep }}>/admin/sources</Link>.
+            Token · Scopes · Webhooks · Publishing · Import · آخر Sync · خطوات الإصلاح
           </p>
         </div>
         <Link href="/admin/sources" style={{ color: C.emeraldDeep, fontSize: "0.8125rem" }}>← المصادر</Link>

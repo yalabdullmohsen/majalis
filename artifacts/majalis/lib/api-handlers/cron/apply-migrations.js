@@ -191,6 +191,36 @@ export default async function handler(req, res) {
       return;
     }
 
+    if (scope === "qa-external-key") {
+      const result = await applyMigrations({
+        files: ["qa_questions_external_key_v1.sql"],
+        continueOnError: false,
+        trackApplied: true,
+      });
+      sendJson(res, result.ok ? 200 : 500, {
+        ok: result.ok,
+        scope: "qa-external-key",
+        migrations: result,
+        resolved: resolvedMeta(),
+      });
+      return;
+    }
+
+    if (scope === "qa-recovery") {
+      const { runQaRecovery, verifyQaNoDuplicates } = await import("../../../lib/production/qa-recovery.mjs");
+      const dryRun = req.query?.dryRun === "1" || req.body?.dryRun === true;
+      const recovery = await runQaRecovery({ dryRun });
+      const verify = await verifyQaNoDuplicates();
+      sendJson(res, recovery.ok ? 200 : 500, {
+        ok: recovery.ok,
+        scope: "qa-recovery",
+        recovery,
+        verify,
+        resolved: resolvedMeta(),
+      });
+      return;
+    }
+
     if (scope === "ake-v18" || scope === "ake-autonomous") {
       const result = await applyMigrations({
         files: ["auto_knowledge_engine_v18_autonomous.sql"],

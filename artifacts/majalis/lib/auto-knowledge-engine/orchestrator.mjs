@@ -787,6 +787,7 @@ export async function runConnectorHealthChecks(options = {}) {
   const admin = getSupabaseAdmin();
   if (!admin) return { ok: false, error: "Supabase not configured" };
 
+  const { summarizeConnectorHealth, classifyConnectorHealth } = await import("./connector-health-classifier.mjs");
   const maxChecks = options.maxChecks ?? 5;
   const budgetMs = options.budgetMs ?? 45_000;
   const started = Date.now();
@@ -809,16 +810,27 @@ export async function runConnectorHealthChecks(options = {}) {
     const health = await connector.healthCheck();
     checked++;
 
+    const classification = classifyConnectorHealth(config, health);
+    const dbStatus = classification.state === "Healthy" ? "healthy" : classification.state === "Disabled" ? "disabled" : "down";
+
     if (config.id) {
       await admin.from("ake_connectors").update({
-        health_status: health.healthy ? "healthy" : "down",
+        health_status: dbStatus,
         last_health_check: health.checkedAt,
         updated_at: new Date().toISOString(),
       }).eq("id", config.id);
     }
 
-    results.push({ slug: config.slug, ...health, brokenLinks: 0 });
+    results.push({
+      slug: config.slug,
+      name: config.name,
+      ...health,
+      ...classification,
+      brokenLinks: 0,
+    });
   }
+
+  const summary = summarizeConnectorHealth(connectors, results);
 
   return {
     ok: true,
@@ -827,6 +839,10 @@ export async function runConnectorHealthChecks(options = {}) {
     totalConnectors: connectors.length,
     batched: connectors.length > maxChecks,
     durationMs: Date.now() - started,
+    health: summary,
+    healthPercent: summary.healthPercent,
+    overallStatus: summary.overallStatus,
+    breakdown: summary.breakdown,
   };
 }
 

@@ -1,0 +1,153 @@
+{
+  "mode": "simulation",
+  "claimedDuration": "30 minutes (compressed)",
+  "actualDurationMs": 91732,
+  "cycles": 4,
+  "intervalSec": 30,
+  "startedAt": "2026-06-28T18:19:36.141Z",
+  "finishedAt": "2026-06-28T18:21:07.873Z",
+  "checks": [
+    {
+      "at": "2026-06-28T18:19:36.143Z",
+      "name": "startup_classify",
+      "ok": true,
+      "note": "connector classification loaded"
+    },
+    {
+      "at": "2026-06-28T18:19:36.143Z",
+      "name": "cycle_1_memory",
+      "ok": true,
+      "heapMb": 9
+    },
+    {
+      "at": "2026-06-28T18:19:36.143Z",
+      "name": "cycle_1_queue",
+      "ok": true,
+      "skipped": "no_admin"
+    },
+    {
+      "at": "2026-06-28T18:19:36.143Z",
+      "name": "cycle_1_connectors",
+      "ok": false
+    },
+    {
+      "at": "2026-06-28T18:19:36.144Z",
+      "name": "cycle_1_dashboard",
+      "ok": true,
+      "systemStatus": "unknown"
+    },
+    {
+      "at": "2026-06-28T18:19:36.629Z",
+      "name": "cycle_1_telegram_dedup",
+      "ok": true,
+      "items": 5,
+      "dupes": 0
+    },
+    {
+      "at": "2026-06-28T18:20:06.640Z",
+      "name": "cycle_2_memory",
+      "ok": true,
+      "heapMb": 11
+    },
+    {
+      "at": "2026-06-28T18:20:06.640Z",
+      "name": "cycle_2_queue",
+      "ok": true,
+      "skipped": "no_admin"
+    },
+    {
+      "at": "2026-06-28T18:20:06.640Z",
+      "name": "cycle_2_connectors",
+      "ok": false
+    },
+    {
+      "at": "2026-06-28T18:20:06.640Z",
+      "name": "cycle_2_dashboard",
+      "ok": true,
+      "systemStatus": "unknown"
+    },
+    {
+      "at": "2026-06-28T18:20:07.053Z",
+      "name": "cycle_2_telegram_dedup",
+      "ok": true,
+      "items": 5,
+      "dupes": 0
+    },
+    {
+      "at": "2026-06-28T18:20:37.063Z",
+      "name": "cycle_3_memory",
+      "ok": true,
+      "heapMb": 12
+    },
+    {
+      "at": "2026-06-28T18:20:37.063Z",
+      "name": "cycle_3_queue",
+      "ok": true,
+      "skipped": "no_admin"
+    },
+    {
+      "at": "2026-06-28T18:20:37.063Z",
+      "name": "cycle_3_connectors",
+      "ok": false
+    },
+    {
+      "at": "2026-06-28T18:20:37.063Z",
+      "name": "cycle_3_dashboard",
+      "ok": true,
+      "systemStatus": "unknown"
+    },
+    {
+      "at": "2026-06-28T18:20:37.443Z",
+      "name": "cycle_3_telegram_dedup",
+      "ok": true,
+      "items": 5,
+      "dupes": 0
+    },
+    {
+      "at": "2026-06-28T18:21:07.451Z",
+      "name": "cycle_4_memory",
+      "ok": true,
+      "heapMb": 12
+    },
+    {
+      "at": "2026-06-28T18:21:07.451Z",
+      "name": "cycle_4_queue",
+      "ok": true,
+      "skipped": "no_admin"
+    },
+    {
+      "at": "2026-06-28T18:21:07.451Z",
+      "name": "cycle_4_connectors",
+      "ok": false
+    },
+    {
+      "at": "2026-06-28T18:21:07.452Z",
+      "name": "cycle_4_dashboard",
+      "ok": true,
+      "systemStatus": "unknown"
+    },
+    {
+      "at": "2026-06-28T18:21:07.873Z",
+      "name": "cycle_4_telegram_dedup",
+      "ok": true,
+      "items": 5,
+      "dupes": 0
+    }
+  ],
+  "summary": {
+    "passed": 17,
+    "failed": 4,
+    "warnings": 0,
+    "duplicates": 0,
+    "errors504": 0,
+    "errors500": 0,
+    "stuckJobs": 0,
+    "alertSpam": 0
+  },
+  "projection24h": {
+    "note": "24h projection based on compressed simulation — NOT a real 24h run",
+    "estimatedCycles24h": 2880,
+    "failureRate": 0.19047619047619047,
+    "projectedFailures24h": 549
+  }
+}

@@ -5,13 +5,15 @@
 import { getSystemHealth, CRON_ROUTES } from "./system-health.mjs";
 import { getMonitoringDashboard } from "./auto-knowledge-engine/monitoring/dashboard.mjs";
 import { getCircuitBreakerStats } from "./http/fetch-layer.mjs";
-import { getInstagramGraphStatus, testInstagramConnection } from "./cms/instagram-graph-api.mjs";
+import { getInstagramGraphStatus, testInstagramConnection, getInstagramDiagnostics } from "./cms/instagram-graph-api.mjs";
 import { getSupabaseAdmin } from "./supabase-admin.mjs";
 import { getContentEngineStats } from "./content-engines/stats.mjs";
+import { runConnectorHealthChecks } from "./auto-knowledge-engine/orchestrator.mjs";
+import os from "node:os";
 
 export async function getPlatformMonitoring() {
   const started = Date.now();
-  const [systemHealth, akeMonitoring, engineStats, instagramStatus] = await Promise.all([
+  const [systemHealth, akeMonitoring, engineStats, instagramStatus, connectorHealth, instagramDiagnostics] = await Promise.all([
     getSystemHealth().catch((e) => ({ ok: false, error: e.message })),
     getMonitoringDashboard().catch((e) => ({ ok: false, error: e.message })),
     getContentEngineStats(7).catch((e) => ({ ok: false, error: e.message })),
@@ -35,6 +37,8 @@ export async function getPlatformMonitoring() {
         tokenExpired: String(test.error || "").includes("token_expired"),
       };
     })(),
+    runConnectorHealthChecks({ maxChecks: 50, budgetMs: 30_000 }).catch((e) => ({ ok: false, error: e.message })),
+    getInstagramDiagnostics().catch((e) => ({ ok: false, error: e.message })),
   ]);
 
   const admin = getSupabaseAdmin();
@@ -115,17 +119,35 @@ export async function getPlatformMonitoring() {
     ok: systemHealth.ok !== false,
     at: new Date().toISOString(),
     durationMs: Date.now() - started,
-    systemStatus: akeMonitoring.systemStatus || (systemHealth.ok ? "healthy" : "degraded"),
+    systemStatus: connectorHealth?.overallStatus || akeMonitoring.systemStatus || (systemHealth.ok ? "healthy" : "degraded"),
     realtime,
     instagram: instagramStatus,
+    instagramDiagnostics,
+    connectorHealth: connectorHealth?.health || null,
+    healthPercent: connectorHealth?.healthPercent ?? null,
     systemHealth,
     akeMonitoring,
     contentEngines: engineStats,
     crons,
     circuitBreakers: getCircuitBreakerStats(),
+    infrastructure: {
+      cpuCount: os.cpus()?.length || 0,
+      loadAvg: os.loadavg(),
+      memory: {
+        totalMb: Math.round(os.totalmem() / 1024 / 1024),
+        freeMb: Math.round(os.freemem() / 1024 / 1024),
+        usedPercent: Math.round((1 - os.freemem() / os.totalmem()) * 100),
+      },
+      nodeVersion: process.version,
+      uptimeSec: Math.round(process.uptime()),
+    },
+    lastError: systemHealth.errors?.[0] || akeMonitoring.criticalAlerts?.[0]?.message || null,
+    lastWarning: systemHealth.warnings?.[0] || akeMonitoring.openAlerts?.[0]?.message || null,
     vercel: {
       nodeEnv: process.env.NODE_ENV || "development",
       region: process.env.VERCEL_REGION || null,
+      gitCommit: process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) || null,
+      deploymentUrl: process.env.VERCEL_URL || null,
     },
   };
 }

@@ -3,8 +3,7 @@
  */
 import { BaseConnector } from "../connector-base.mjs";
 import { normalizeContentKind } from "../content-kind.mjs";
-import { importFromUrl } from "../../cms/url-importer.mjs";
-import { fetchTelegramChannelMessages } from "../../cms/telegram-channel-fetch.mjs";
+import { fetchTelegramChannel } from "../../cms/telegram-channel-fetch.mjs";
 import { filterCurrentMonthItems } from "../v2/extraction-service.mjs";
 
 function mapTelegramPost(post, connector, channel) {
@@ -44,46 +43,65 @@ export class TelegramConnector extends BaseConnector {
     const channelUrl = this.officialUrl.includes("t.me") ? this.officialUrl : `https://t.me/${channel}`;
     const fetchLimit = this.apiConfig.fetch_limit || syncOptions.limit || 15;
 
-    if (this.apiConfig.bot_token && this.apiConfig.channel_id) {
-      return this.fetchViaBotApi(syncOptions);
+    const chainResult = await fetchTelegramChannel({
+      channel,
+      bot_token: this.apiConfig.bot_token,
+      channel_id: this.apiConfig.channel_id,
+      rss_url: this.apiConfig.rss_url || this.feedUrl,
+      official_url: channelUrl,
+      limit: fetchLimit,
+    }).catch((err) => ({
+      ok: false,
+      posts: [],
+      method: "error",
+      errors: [err.message],
+    }));
+
+    syncOptions._telegramStatus = {
+      method: chainResult.method,
+      ok: chainResult.ok,
+      errors: chainResult.errors || [],
+    };
+
+    if (chainResult.posts?.length) {
+      let items = chainResult.posts.map((post) => {
+        const mapped = mapTelegramPost({
+          message_id: post.message_id || post.external_id,
+          id: post.message_id,
+          text: post.text,
+          title: post.title,
+          link: post.url,
+          permalink: post.url,
+          imageUrl: post.media?.[0]?.url || null,
+          mediaUrls: (post.media || []).map((m) => m.url).filter(Boolean),
+          media_type: post.media?.[0]?.type === "image" ? "IMAGE" : "TEXT",
+          timestamp: post.published_at,
+          fromTelegramWeb: post.extracted_via === "telegram_preview",
+        }, this, channel);
+        mapped.raw_payload = {
+          ...mapped.raw_payload,
+          extracted_via: post.extracted_via || chainResult.method,
+        };
+        return mapped;
+      });
+
+      if (!this.apiConfig.skip_month_filter) {
+        items = filterCurrentMonthItems(items);
+      }
+      return items;
     }
 
-    if (this.apiConfig.public_web_preview !== false) {
+    if (this.apiConfig.bot_token && this.apiConfig.channel_id) {
       try {
-        const result = await fetchTelegramChannelMessages(channel, { limit: fetchLimit });
-        if (result.items?.length) {
-          let items = result.items.map((post) => mapTelegramPost(post, this, channel));
-          if (!this.apiConfig.skip_month_filter) {
-            items = filterCurrentMonthItems(items);
-          }
-          syncOptions._telegramStatus = { mode: "web_preview", count: items.length };
-          return items;
-        }
-        syncOptions._fetchStatus = result.error || "telegram_web_preview_empty";
+        const botItems = await this.fetchViaBotApi(syncOptions);
+        if (botItems.length) return botItems;
       } catch (err) {
-        syncOptions._fetchStatus = `telegram_web_preview_failed: ${err.message}`;
+        syncOptions._fetchStatus = `telegram_bot_api_failed: ${err.message}`;
       }
     }
 
-    try {
-      const page = await importFromUrl(channelUrl);
-      if (!page?.title && !page?.description) return [];
-
-      return [mapTelegramPost({
-        id: channel,
-        message_id: channel,
-        text: page.description || page.title,
-        title: page.title,
-        link: page.finalUrl || channelUrl,
-        imageUrl: page.imageUrl,
-        mediaUrls: page.imageUrl ? [page.imageUrl] : [],
-        media_type: page.imageUrl ? "IMAGE" : "TEXT",
-        timestamp: null,
-      }, this, channel)];
-    } catch (err) {
-      syncOptions._fetchStatus = `telegram_og_fallback_failed: ${err.message}`;
-      return [];
-    }
+    syncOptions._fetchStatus = (chainResult.errors || []).join("; ") || "telegram_all_methods_empty";
+    return [];
   }
 
   classifyMessage(text) {
@@ -98,7 +116,7 @@ export class TelegramConnector extends BaseConnector {
     const channelId = this.apiConfig.channel_id;
     const url = `https://api.telegram.org/bot${token}/getUpdates?limit=${syncOptions.limit || 10}`;
     const res = await this.fetchWithTimeout(url);
-    if (!res.ok) throw new Error(`Telegram API: ${res.status}`);
+    if (!res.ok) return [];
     const data = await res.json();
     const updates = (data.result || []).filter((u) => u.channel_post?.chat?.id === channelId);
     const channel = this.apiConfig.channel || this.handle || "channel";

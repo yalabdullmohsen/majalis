@@ -105,6 +105,8 @@ function PlatformHealthContent() {
           <Link href="/admin/platform/checklist" style={{ color: C.emeraldDeep }}>Checklist</Link>
           <Link href="/admin/sources" style={{ color: C.emeraldDeep }}>المصادر</Link>
           <Link href="/admin/platform/analytics" style={{ color: C.emeraldDeep }}>الإحصائيات</Link>
+          {" · "}
+          <Link href="/admin/platform/ai-status" style={{ color: C.emeraldDeep }}>حالة AI</Link>
           <button type="button" onClick={() => void load()} style={{ padding: "0.4rem 0.8rem", border: `1px solid ${C.line}`, borderRadius: "0.375rem", background: C.panel }}>
             تحديث
           </button>
