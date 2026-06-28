@@ -75,6 +75,11 @@ export const NAV_GROUPS: NavGroup[] = [
       { href: "/settings", label: "الإعدادات" },
     ],
   },
+  {
+    id: "about",
+    title: "المنصة",
+    links: [{ href: "/about-platform", label: "عن المنصة" }],
+  },
 ];
 
 export const PRIMARY_NAV = [
@@ -86,8 +91,12 @@ export const PRIMARY_NAV = [
   { href: "/prayer-times", label: "الصلاة" },
 ];
 
+/** Desktop navbar — beside search box */
+export const NAVBAR_ABOUT_LINK = { href: "/about-platform", label: "عن المنصة" } as const;
+
 /** Mobile "المزيد" dropdown — full site navigation */
 export const MOBILE_MORE_NAV = [
+  { href: "/about-platform", label: "عن المنصة" },
   { href: "/lessons", label: "الدروس" },
   { href: "/lessons", label: "المشايخ" },
   { href: "/library", label: "المكتبة" },

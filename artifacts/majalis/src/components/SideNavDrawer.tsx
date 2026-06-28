@@ -55,6 +55,7 @@ const ICONS: Record<string, React.ComponentType<{ size?: number; className?: str
   "/prayer-ranks": Heart,
   "/qibla": Compass,
   "/settings": Settings,
+  "/about-platform": Sparkles,
 };
 
 type Props = {

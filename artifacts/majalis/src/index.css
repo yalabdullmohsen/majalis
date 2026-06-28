@@ -6728,6 +6728,12 @@ html[data-theme="dark"] .home-page {
   position: relative;
 }
 
+.navbar-v3__about-link {
+  margin-inline-start: 0.35rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
 .navbar-search-submit {
   border: none;
   background: var(--majalis-emerald);

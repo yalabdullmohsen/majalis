@@ -37,7 +37,7 @@ export function MobileMoreMenu({
         <nav aria-label="روابط المزيد">
           {MOBILE_MORE_NAV.map((item) => (
             <Link
-              key={item.href}
+              key={`${item.href}-${item.label}`}
               href={item.href}
               onClick={onClose}
               className={`navbar-mobile-more-link ${tabClass(isActive(item.href))}`}
