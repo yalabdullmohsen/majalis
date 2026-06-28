@@ -943,6 +943,8 @@ export type SearchResults = {
   rulings?: any[];
   courses?: any[];
   updates?: any[];
+  quran_circles?: any[];
+  mutoon?: any[];
   error?: string | null;
   usingDemo?: boolean;
 };
@@ -960,6 +962,8 @@ const EMPTY_SEARCH: SearchResults = {
   rulings: [],
   courses: [],
   updates: [],
+  quran_circles: [],
+  mutoon: [],
 };
 
 function mergeUniqueById<T extends { id: string }>(rows: T[]): T[] {
@@ -1191,6 +1195,8 @@ export async function searchEverything(term: string): Promise<SearchResults> {
         rulings: data.rulings?.length ? data.rulings : platformFallback.rulings,
         courses: data.courses?.length ? data.courses : platformFallback.courses,
         updates: data.updates?.length ? data.updates : platformFallback.updates,
+        quran_circles: data.quran_circles?.length ? data.quran_circles : platformFallback.quran_circles,
+        mutoon: data.mutoon?.length ? data.mutoon : platformFallback.mutoon,
         usingDemo: false,
         error: null,
       };
@@ -1218,7 +1224,9 @@ export async function searchEverything(term: string): Promise<SearchResults> {
     (merged.fatwas?.length || 0) +
     (merged.rulings?.length || 0) +
     (merged.courses?.length || 0) +
-    (merged.updates?.length || 0);
+    (merged.updates?.length || 0) +
+    (merged.quran_circles?.length || 0) +
+    (merged.mutoon?.length || 0);
 
   if (total === 0) {
     const demo = searchDemoContent(query);
@@ -1234,7 +1242,9 @@ export async function searchEverything(term: string): Promise<SearchResults> {
       demoPlatform.fatwas.length +
       demoPlatform.rulings.length +
       demoPlatform.courses.length +
-      demoPlatform.updates.length;
+      demoPlatform.updates.length +
+      demoPlatform.quran_circles.length +
+      demoPlatform.mutoon.length;
     if (demoTotal > 0) {
       return { ...demo, ...demoPlatform, usingDemo: true, error: fallback.error ?? null };
     }

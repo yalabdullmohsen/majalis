@@ -33,6 +33,8 @@ const TABLE_MAP = {
   fatwa: "fatwas",
   sharia_ruling: "sharia_rulings",
   annual_course: "annual_courses",
+  quran_circle: "quran_circles",
+  mutoon: "mutoon_texts",
   sheikh: "sheikhs",
 };
 
@@ -205,6 +207,82 @@ function buildRecord(item, analysis) {
           status: verified ? "approved" : "pending",
         },
       };
+    case "sharia_ruling":
+      return {
+        table: "sharia_rulings",
+        lookupField: "external_key",
+        record: {
+          ...base,
+          external_key: item.external_id,
+          title: analysis.ai_title || item.raw_title,
+          summary: (analysis.ai_summary || "").slice(0, 500),
+          body: analysis.ai_summary || item.raw_body || item.raw_title,
+          category: analysis.ai_category || "فقه عام",
+          status: verified ? "approved" : "pending",
+        },
+      };
+    case "annual_course": {
+      const payload = item.raw_payload || {};
+      return {
+        table: "annual_courses",
+        lookupField: "external_key",
+        record: {
+          ...base,
+          external_key: item.external_id,
+          title: analysis.ai_title || item.raw_title,
+          summary: analysis.ai_summary || (item.raw_body || "").slice(0, 500),
+          body: item.raw_body,
+          course_type: payload.course_type || "سنوية",
+          sheikh_names: payload.sheikh_names || (analysis.ai_scholar ? [analysis.ai_scholar] : []),
+          mutoon: payload.mutoon || [],
+          venue_city: payload.city || payload.venue_city || "العاصمة",
+          registration_url: item.raw_url || payload.registration_url,
+          status: verified ? "approved" : "pending",
+        },
+      };
+    }
+    case "quran_circle": {
+      const payload = item.raw_payload || {};
+      return {
+        table: "quran_circles",
+        lookupField: "external_key",
+        record: {
+          ...base,
+          external_key: item.external_id,
+          title: analysis.ai_title || item.raw_title,
+          summary: analysis.ai_summary || (item.raw_body || "").slice(0, 500),
+          body: item.raw_body,
+          circle_type: payload.circle_type || "حلقة",
+          sheikh_name: analysis.ai_scholar || payload.sheikh_name,
+          mosque: payload.mosque,
+          city: payload.city || "العاصمة",
+          day_of_week: payload.day_of_week,
+          circle_time: payload.circle_time || payload.time,
+          registration_url: item.raw_url || payload.registration_url,
+          source_url: item.raw_url || item.source_url,
+          status: verified ? "approved" : "pending",
+        },
+      };
+    }
+    case "mutoon": {
+      const payload = item.raw_payload || {};
+      return {
+        table: "mutoon_texts",
+        lookupField: "external_key",
+        record: {
+          ...base,
+          external_key: item.external_id,
+          title: analysis.ai_title || item.raw_title,
+          author: analysis.ai_scholar || payload.author,
+          summary: analysis.ai_summary || (item.raw_body || "").slice(0, 500),
+          body: item.raw_body,
+          category: payload.category || "متن",
+          level: payload.level || "متوسط",
+          source_url: item.raw_url || item.source_url,
+          status: verified ? "approved" : "pending",
+        },
+      };
+    }
     case "lesson":
     case "lecture":
     case "course": {
@@ -286,6 +364,17 @@ export async function publishItem(admin, item, analysis) {
 
   if (item.verification_status !== "verified" || !item.can_publish) {
     return { published: false, reason: "needs_review", table: built.table };
+  }
+
+  const { runQualityPipeline } = await import("../platform-quality-pipeline.mjs");
+  const quality = runQualityPipeline({ ...item, ...analysis, content_kind: item.content_kind });
+  if (!quality.passed) {
+    log("quality-blocked", { kind: item.content_kind, id: item.external_id, stage: quality.stage, reason: quality.blocked_reason });
+    return { published: false, reason: quality.blocked_reason || "quality_pipeline_failed", table: built.table, quality };
+  }
+  if (built.record) {
+    built.record.quality_score = quality.confidence;
+    built.record.quality_stages = quality.stages_log;
   }
 
   try {
@@ -402,4 +491,4 @@ export async function publishBatch(admin, items) {
   return results;
 }
 
-export { TABLE_MAP };
+export { TABLE_MAP, buildRecord };

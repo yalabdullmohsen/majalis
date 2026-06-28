@@ -18,6 +18,9 @@ import { FiqhCouncilSection } from "@/views/admin/FiqhCouncilSection";
 import { FatwaAdminSection } from "@/views/admin/FatwaAdminSection";
 import { RulingsSection } from "@/views/admin/RulingsSection";
 import { AnnualCoursesSection } from "@/views/admin/AnnualCoursesSection";
+import { QuranCirclesSection } from "@/views/admin/QuranCirclesSection";
+import { MutoonSection } from "@/views/admin/MutoonSection";
+import { ContactMessagesSection } from "@/views/admin/ContactMessagesSection";
 import { UpdatesSection } from "@/views/admin/UpdatesSection";
 import { KnowledgeEngineSection } from "@/views/admin/KnowledgeEngineSection";
 import { ScholarlyVerificationSection } from "@/views/admin/ScholarlyVerificationSection";
@@ -139,6 +142,12 @@ function SectionContent({ section }: { section: AdminSection }) {
       return <RulingsSection />;
     case "annual-courses":
       return <AnnualCoursesSection />;
+    case "quran-circles":
+      return <QuranCirclesSection />;
+    case "mutoon":
+      return <MutoonSection />;
+    case "contact-messages":
+      return <ContactMessagesSection />;
     case "updates":
       return <UpdatesSection />;
     default:

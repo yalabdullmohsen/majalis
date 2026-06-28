@@ -31,6 +31,9 @@ export const ADMIN_SECTION_PATHS: Record<AdminSection, string> = {
   fatwa: "fatwa",
   rulings: "rulings",
   "annual-courses": "annual-courses",
+  "quran-circles": "quran-circles",
+  mutoon: "mutoon",
+  "contact-messages": "contact-messages",
   updates: "updates",
 };
 

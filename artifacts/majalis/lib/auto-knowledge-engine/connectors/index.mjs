@@ -61,6 +61,10 @@ export class RssConnector extends BaseConnector {
 
   detectKind(title, body) {
     const text = `${title} ${body}`;
+    if (text.includes("حلقة") || text.includes("حلقات") || text.includes("ختمة") || text.includes("حفظ قرآن")) return "quran_circle";
+    if (text.includes("متن") || text.includes("ألفية") || text.includes("منظومة")) return "mutoon";
+    if (text.includes("دورة") || text.includes("برنامج علمي") || text.includes("دورات")) return "annual_course";
+    if (text.includes("فعالية") || text.includes("مؤتمر") || text.includes("ندوة")) return "announcement";
     if (text.includes("فتوى") || text.includes("سؤال")) return "fatwa";
     if (text.includes("قرار") || text.includes("توصية")) return "fiqh_decision";
     if (text.includes("درس") || text.includes("محاضرة")) return "lesson";

@@ -94,6 +94,9 @@ export const MIGRATION_FILES = [
   "auto_knowledge_engine_v17_monitoring.sql",
   "auto_knowledge_engine_v18_autonomous.sql",
   "murtaqaa_drosq8_sources_v1.sql",
+  "platform_expansion_v3.sql",
+  "cms_platform_v4.sql",
+  "quran_circles_mutoon_v1.sql",
 ];
 
 export function resolveMigrationsDir() {

@@ -206,6 +206,21 @@ export default async function handler(req, res) {
       return;
     }
 
+    if (scope === "qcm-v1" || scope === "quran-circles-mutoon") {
+      const result = await applyMigrations({
+        files: ["quran_circles_mutoon_v1.sql"],
+        continueOnError: false,
+        trackApplied: true,
+      });
+      sendJson(res, result.ok ? 200 : 500, {
+        ok: result.ok,
+        scope: "qcm-v1",
+        migrations: result,
+        resolved: resolvedMeta(),
+      });
+      return;
+    }
+
     if (scope === "qa-recovery") {
       const { runQaRecovery, verifyQaNoDuplicates } = await import("../../../lib/production/qa-recovery.mjs");
       const dryRun = req.query?.dryRun === "1" || req.body?.dryRun === true;
