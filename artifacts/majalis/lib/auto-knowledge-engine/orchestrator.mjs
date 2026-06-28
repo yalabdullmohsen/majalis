@@ -18,6 +18,21 @@ import { OFFICIAL_SOURCES } from "../knowledge-engine/sources-registry.mjs";
 import { buildKnowledgeItemRecord, analysisFromKnowledgeRow } from "./knowledge-item-record.mjs";
 import { ensureAkeRpcFunctions } from "./rpc-probe.mjs";
 
+async function ensureFiqhCouncilTable(admin) {
+  const { error } = await admin.from("fiqh_council_items").select("id", { head: true, count: "exact" });
+  if (!error || !isMissingTableError(error)) return { ok: true, skipped: true };
+  try {
+    const { applyMigrations } = await import("../db-migrate.mjs");
+    return await applyMigrations({
+      files: ["fiqh_council_items_ake_prereq.sql"],
+      continueOnError: false,
+      trackApplied: true,
+    });
+  } catch (err) {
+    return { ok: false, error: String(err.message || err) };
+  }
+}
+
 async function ensureOfficialSources(admin) {
   for (const src of OFFICIAL_SOURCES) {
     await admin.from("knowledge_official_sources").upsert(
@@ -326,6 +341,7 @@ export async function runAutoKnowledgeEngine(options = {}) {
   let runId = null;
   try {
     await ensureOfficialSources(admin);
+    await ensureFiqhCouncilTable(admin);
 
     const { data: runRow } = await admin
       .from("ake_engine_runs")
