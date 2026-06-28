@@ -137,8 +137,13 @@ export async function getAkeRpcHealth() {
 
 export async function ensureAkeRpcFunctions(options = {}) {
   const health = await getAkeRpcHealth();
-  if (health.ok && !options.force) {
-    return { ok: true, skipped: true, reason: "rpc_healthy", health };
+  const functionsPresent =
+    health.engineStatsExists &&
+    health.searchSemanticExists &&
+    (health.missingRequired?.length ?? 0) === 0;
+
+  if ((health.ok || functionsPresent) && !options.force) {
+    return { ok: true, skipped: true, reason: functionsPresent ? "functions_present" : "rpc_healthy", health };
   }
 
   const migration = await applyMigrations({

@@ -25,6 +25,25 @@ export function pickAnalysisFields(analysis = {}) {
   return picked;
 }
 
+export function analysisFromKnowledgeRow(row = {}) {
+  return {
+    ai_title: row.ai_title,
+    ai_summary: row.ai_summary,
+    ai_keywords: row.ai_keywords,
+    ai_category: row.ai_category,
+    ai_country: row.ai_country,
+    ai_scholar: row.ai_scholar,
+    ai_language: row.ai_language || "ar",
+    ai_topic: row.ai_topic,
+    ai_verse_refs: row.ai_verse_refs,
+    ai_hadith_refs: row.ai_hadith_refs,
+    seo_title: row.seo_title,
+    seo_description: row.seo_description,
+    ai_confidence: 62,
+    needs_human_review: false,
+  };
+}
+
 export function buildKnowledgeItemRecord({
   connectorConfig,
   runId,

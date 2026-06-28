@@ -15,7 +15,7 @@ import { buildSeoPackage, routeForKind, persistSeoCache } from "./seo-engine.mjs
 import { akeLog, auditLog } from "./monitoring.mjs";
 import { dbCacheGet, dbCacheSet } from "./cache.mjs";
 import { OFFICIAL_SOURCES } from "../knowledge-engine/sources-registry.mjs";
-import { buildKnowledgeItemRecord } from "./knowledge-item-record.mjs";
+import { buildKnowledgeItemRecord, analysisFromKnowledgeRow } from "./knowledge-item-record.mjs";
 import { ensureAkeRpcFunctions } from "./rpc-probe.mjs";
 
 async function ensureOfficialSources(admin) {
@@ -155,17 +155,54 @@ async function processConnector(admin, connectorConfig, runId, existingItems, op
     });
 
     const maxItemsPerConnector = options.maxItemsPerConnector ?? (options.triggerType === "cron" ? 5 : 30);
-    const toAnalyze = verified.filter((v) => !v.verification.isDuplicate).slice(0, maxItemsPerConnector);
+    const toProcess = verified.filter((v) => !v.verification.isDuplicate).slice(0, maxItemsPerConnector);
     stats.duplicate = verified.filter((v) => v.verification.isDuplicate).length;
-    stats.parsed = toAnalyze.filter((v) => v.verification.sourceVerified).length;
+    stats.parsed = toProcess.filter((v) => v.verification.sourceVerified).length;
     if (stats.duplicate > 0) {
       stats.rejectionReasons.duplicate = stats.duplicate;
     }
 
-    const analyzed = await analyzeBatch(toAnalyze, 2);
+    const existingByExternal = new Map(
+      existingItems.filter((e) => e.external_id).map((e) => [e.external_id, e]),
+    );
+    const needsAnalysis = [];
+    const retryQueue = [];
+
+    for (const item of toProcess) {
+      const existing = existingByExternal.get(item.external_id);
+      if (existing?.id && existing.publish_status !== "published") {
+        retryQueue.push({ item, existingId: existing.id });
+      } else {
+        needsAnalysis.push(item);
+      }
+    }
+
+    const analyzed = await analyzeBatch(needsAnalysis, 2);
+    const retryAnalyzed = [];
+
+    for (const { item, existingId } of retryQueue) {
+      const { data: full } = await admin
+        .from("knowledge_items")
+        .select("*")
+        .eq("id", existingId)
+        .maybeSingle();
+      if (full) {
+        retryAnalyzed.push({
+          ...item,
+          raw_payload: full.raw_payload || item.raw_payload,
+          content_kind: full.content_kind || item.content_kind,
+          analysis: analysisFromKnowledgeRow(full),
+          _existingRow: full,
+        });
+      } else {
+        needsAnalysis.push(item);
+      }
+    }
+
+    const allItems = [...analyzed, ...retryAnalyzed];
     const processed = [];
 
-    for (const item of analyzed) {
+    for (const item of allItems) {
       const gate = runQualityGate(item, item.analysis, item.verification, connectorConfig);
       const seo = buildSeoPackage(item, item.analysis, routeForKind(item.content_kind, item.external_id));
 
