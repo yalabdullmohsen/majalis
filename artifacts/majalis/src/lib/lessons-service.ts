@@ -4,7 +4,7 @@
  * 2. دمج صفوف catalog/seed غير الموجودة في Supabase (بدون تكرار)
  * 3. Fallback كامل للـ seed عند فراغ الجدول
  */
-import { fetchApprovedLessonsFromDb } from "@/lib/supabase";
+import { ensureSupabaseReady, fetchApprovedLessonsFromDb } from "@/lib/supabase";
 import { LESSONS_SEED, findSeedLessonById, type LessonSeedRow } from "@/lib/lessons-seed";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 import { sheikhNameKey } from "@/lib/sheikh-name";
@@ -49,6 +49,7 @@ export async function fetchLessons(options?: { bypassCache?: boolean }): Promise
   }
 
   try {
+    await ensureSupabaseReady();
     const { data } = await fetchApprovedLessonsFromDb();
     if (data.length > 0) {
       const dbMapped = dedupeKuwaitLessons(data.map((row) => mapLessonRow({ ...row, source: "supabase" })));

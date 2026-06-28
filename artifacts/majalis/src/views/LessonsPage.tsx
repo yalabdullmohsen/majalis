@@ -211,11 +211,10 @@ export default function LessonsPage({
   const [tab, setTab] = useTabFromUrl();
   const { user, isLoggedIn } = useAuth() as any;
 
-  useEffect(() => {
-    if (initialActive) return;
+  const loadLessons = useCallback(() => {
     setLoading(true);
     setLoadError(null);
-    RequestManager.run("lessons:unified-split", () => getUnifiedLessonsSplit())
+    return RequestManager.run("lessons:unified-split", () => getUnifiedLessonsSplit())
       .then(({ active, archived }) => {
         setActiveLessons(active);
         setArchivedLessons(archived);
@@ -226,7 +225,21 @@ export default function LessonsPage({
         setArchivedLessons([]);
       })
       .finally(() => setLoading(false));
-  }, [initialActive]);
+  }, []);
+
+  useEffect(() => {
+    if (initialActive) return;
+    void loadLessons();
+  }, [initialActive, loadLessons]);
+
+  useEffect(() => {
+    if (initialActive) return;
+    const onReady = () => {
+      void loadLessons();
+    };
+    window.addEventListener("majalis:supabase-ready", onReady);
+    return () => window.removeEventListener("majalis:supabase-ready", onReady);
+  }, [initialActive, loadLessons]);
 
   useEffect(() => {
     if (isLoggedIn && user?.id) {

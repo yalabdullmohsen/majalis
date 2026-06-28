@@ -1,5 +1,9 @@
 import { requestFetch } from "@/lib/request-manager";
-import { getSupabaseClient, bootstrapSupabaseFromServer } from "./supabase-bootstrap";
+import {
+  getSupabaseClient,
+  bootstrapSupabaseFromServer,
+  isEffectiveSupabaseConfigured,
+} from "./supabase-bootstrap";
 import { arabicMatchAny, arabicSearchPatterns, ilikePattern } from "./arabic-search";
 import {
   DEMO_FAWAID,
@@ -48,6 +52,17 @@ function normalizeSupabaseUrl(raw: string): string {
 }
 
 const isConfigured = isSupabaseConfigured();
+
+/** Live DB access — includes runtime bootstrap from /api/public-config. */
+function isDbConfigured(): boolean {
+  return isEffectiveSupabaseConfigured();
+}
+
+export async function ensureSupabaseReady(): Promise<boolean> {
+  if (isDbConfigured()) return true;
+  const ok = await bootstrapSupabaseFromServer();
+  return ok && isDbConfigured();
+}
 
 export { isSupabaseConfigured, formatSupabaseError };
 
@@ -222,7 +237,8 @@ function filterLessonsList(
 }
 
 export async function fetchApprovedLessonsFromDb() {
-  if (!isConfigured) return { data: [] as any[], error: null, usingSeed: true };
+  await ensureSupabaseReady();
+  if (!isDbConfigured()) return { data: [] as any[], error: null, usingSeed: true };
 
   try {
     const { data, error } = await supabase

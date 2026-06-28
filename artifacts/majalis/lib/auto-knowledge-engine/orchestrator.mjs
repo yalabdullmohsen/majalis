@@ -429,7 +429,17 @@ async function processConnector(admin, connectorConfig, runId, existingItems, op
       processed.push({ ...inserted, analysis: item.analysis, gate, seo });
 
       if (gate.autoPublish && gate.canPublish) {
-        const pub = await publishItem(admin, { ...inserted, can_publish: true, verification_status: "verified" }, item.analysis);
+        const pub = await publishItem(
+          admin,
+          {
+            ...inserted,
+            can_publish: true,
+            verification_status: "verified",
+            extracted_fields: item.extracted_fields || inserted.extracted_fields,
+            raw_payload: item.raw_payload || inserted.raw_payload,
+          },
+          item.analysis,
+        );
         if (pub.published) {
           stats.published++;
           const cmsPublishedAt = inserted.source_published_at || new Date().toISOString();

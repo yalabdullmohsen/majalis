@@ -36,6 +36,58 @@ function log(scope, data) {
   console.info(`[knowledge-publisher:${scope}]`, JSON.stringify({ at: new Date().toISOString(), ...data }));
 }
 
+function dayFromIsoDate(iso) {
+  const value = String(iso || "").slice(0, 10);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return null;
+  try {
+    return new Intl.DateTimeFormat("ar-KW", { weekday: "long", timeZone: "Asia/Kuwait" }).format(
+      new Date(`${value}T12:00:00+03:00`),
+    );
+  } catch {
+    return null;
+  }
+}
+
+function collectLessonSourceFields(item, analysis) {
+  const payload = item.raw_payload || {};
+  const extracted = item.extracted_fields || payload.extracted_fields || {};
+  const date =
+    extracted.gregorian_date ||
+    extracted.start_date ||
+    payload.date ||
+    payload.start_date ||
+    item.source_published_at?.slice?.(0, 10) ||
+    item.published_at?.slice?.(0, 10) ||
+    null;
+
+  return {
+    title: analysis?.ai_title || extracted.title || item.raw_title || payload.title,
+    description: analysis?.ai_summary || extracted.description || item.raw_body || payload.summary || payload.body,
+    speaker_name:
+      extracted.speaker_name ||
+      extracted.sheikh_name ||
+      analysis?.ai_scholar ||
+      payload.speaker ||
+      payload.sheikh_name ||
+      null,
+    mosque: extracted.mosque || extracted.mosque_name || payload.mosque || payload.location || null,
+    city: extracted.city || payload.city || "العاصمة",
+    region: extracted.region || payload.region || null,
+    country: extracted.country || payload.country || "الكويت",
+    category: analysis?.ai_category || extracted.category || payload.category || "أخرى",
+    day_of_week: extracted.day_of_week || extracted.day || payload.day_of_week || payload.day || dayFromIsoDate(date),
+    lesson_time: extracted.lesson_time || extracted.time || payload.lesson_time || payload.time || "8:00 م",
+    start_date: date,
+    end_date: extracted.end_date || payload.end_date || null,
+    poster_image_url: extracted.poster_image_url || payload.image_url || payload.poster_image_url || null,
+    live_url: extracted.live_url || payload.live_url || null,
+    maps_url: extracted.maps_url || payload.maps_url || null,
+    keywords: extracted.keywords || analysis?.ai_keywords || payload.tags || null,
+    is_course: Boolean(extracted.is_course || payload.is_course || item.content_kind === "course"),
+    is_recurring: payload.is_recurring !== false && !payload.end_date && !extracted.end_date,
+  };
+}
+
 function buildRecord(item, analysis) {
   const kind = normalizeContentKind(item.content_kind);
   const verified = item.verification_status === "verified";
@@ -151,19 +203,40 @@ function buildRecord(item, analysis) {
       };
     case "lesson":
     case "lecture":
-    case "course":
+    case "course": {
+      const lessonFields = collectLessonSourceFields(item, analysis);
+      const activityType =
+        kind === "lecture" ? "محاضرة" : kind === "course" || lessonFields.is_course ? "دورة" : "درس";
       return {
         table: "lessons",
         lookupField: "external_key",
         record: {
           ...base,
           external_key: item.external_id,
-          title: analysis.ai_title || item.raw_title,
-          description: analysis.ai_summary || item.raw_body,
-          activity_type: kind === "lecture" ? "محاضرة" : kind === "course" ? "دورة" : "درس",
+          title: lessonFields.title,
+          description: lessonFields.description,
+          speaker_name: lessonFields.speaker_name,
+          mosque: lessonFields.mosque,
+          city: lessonFields.city,
+          region: lessonFields.region,
+          country: lessonFields.country,
+          category: lessonFields.category,
+          day_of_week: lessonFields.day_of_week,
+          lesson_time: lessonFields.lesson_time,
+          schedule: lessonFields.day_of_week,
+          start_date: lessonFields.start_date,
+          end_date: lessonFields.end_date,
+          poster_image_url: lessonFields.poster_image_url,
+          live_url: lessonFields.live_url,
+          maps_url: lessonFields.maps_url,
+          keywords: Array.isArray(lessonFields.keywords) ? lessonFields.keywords : null,
+          activity_type: activityType,
+          is_course: lessonFields.is_course,
+          is_recurring: lessonFields.is_recurring,
           status: verified ? "approved" : "pending",
         },
       };
+    }
     default:
       return null;
   }

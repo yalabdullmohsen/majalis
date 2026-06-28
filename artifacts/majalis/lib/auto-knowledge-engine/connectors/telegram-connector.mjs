@@ -31,7 +31,7 @@ export class TelegramConnector extends BaseConnector {
         published_at: null,
       }];
     } catch (err) {
-      throw new Error(`Telegram fetch failed: ${err.message}`);
+      throw new Error(`Telegram fetch failed: ${err.message}`, { cause: err });
     }
   }
 

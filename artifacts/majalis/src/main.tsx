@@ -6,6 +6,7 @@ import { applyFontPreference, readFontPreference } from "./lib/font-preference";
 import { initClientErrorReporting } from "./lib/error-report";
 import { resetMobileNavBodyLock } from "./lib/mobile-nav-body-lock";
 import { bootstrapSupabaseFromServer, resetSupabaseClient } from "./lib/supabase-bootstrap";
+import { invalidateLessonsCache } from "./lib/lessons-service";
 import { createAppQueryClient } from "./lib/query-client";
 import { PERF_SLOW_MS } from "./lib/performance-monitor";
 import { registerProductionServiceWorker } from "./lib/service-worker";
@@ -33,7 +34,13 @@ async function mount() {
   );
 
   void bootstrapSupabaseFromServer()
-    .then(() => resetSupabaseClient())
+    .then((ok) => {
+      resetSupabaseClient();
+      if (ok) {
+        invalidateLessonsCache();
+        window.dispatchEvent(new CustomEvent("majalis:supabase-ready"));
+      }
+    })
     .catch(() => {});
 
   const renderMs = Math.round(performance.now() - started);

@@ -90,8 +90,13 @@ export class ManifestConnector extends BaseConnector {
     const entries = manifest.items || manifest.decisions || manifest.entries || [];
     const maxEntries = _syncOptions?.manifestLimit || 200;
 
-    return entries.slice(0, maxEntries).map((entry, idx) => ({
-      external_id: `${this.slug}:${entry.external_id || entry.id || entry.slug || idx}`,
+    return entries.slice(0, maxEntries).map((entry, idx) => {
+      const rawExternalId = entry.external_id || entry.id || entry.slug || String(idx);
+      const externalId = String(rawExternalId).startsWith(`${this.slug}:`)
+        ? String(rawExternalId)
+        : `${this.slug}:${rawExternalId}`;
+      return {
+      external_id: externalId,
       source_slug: this.slug,
       source_attribution: entry.source_name || manifest.organization || this.name,
       source_url: this.officialUrl,
@@ -101,7 +106,8 @@ export class ManifestConnector extends BaseConnector {
       raw_payload: { ...entry, _manifest_file: this.manifestFile },
       content_kind: normalizeContentKind(entry.kind || entry.type, "fiqh_decision"),
       published_at: entry.session_date || entry.date || entry.published_at || null,
-    }));
+    };
+    });
   }
 }
 

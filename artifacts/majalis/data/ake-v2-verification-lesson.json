@@ -2,7 +2,7 @@
   "organization": "مجالس العلم — Production Verification",
   "items": [
     {
-      "external_id": "verify-production-lesson:2026-06",
+      "external_id": "2026-06",
       "title": "درس تحقق إنتاجي — AKE v2 Pipeline",
       "summary": "درس اختبار للتحقق من مسار النشر الإنتاجي. يُنشر تلقائياً ثم يُزال بعد التحقق.",
       "body": "هذا محتوى تحقق إنتاجي لاختبار مسار AKE v2 من المصدر إلى صفحة الدروس العامة. يتضمن عنوان الدرس والوصف والموقع والتاريخ.",
@@ -14,7 +14,11 @@
       "location": "مسجد التحقق — الكويت",
       "mosque": "مسجد التحقق",
       "speaker": "الشيخ التحقق",
+      "day_of_week": "السبت",
+      "lesson_time": "8:00 م",
       "date": "2026-06-28",
+      "start_date": "2026-06-28",
+      "is_recurring": true,
       "published_at": "2026-06-28T10:00:00.000Z",
       "verification_only": true,
       "tags": ["verification", "ake-v2"]
