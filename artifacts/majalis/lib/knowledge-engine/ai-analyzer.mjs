@@ -130,6 +130,9 @@ function fallbackAnalysis(rawTitle, rawBody, context) {
   const hasStructuredBody = String(rawBody || "").trim().length >= 20;
   const trustScore = Number(context.trust_score || 0);
   const isOfficialManifest = context.source_type === "manifest" || trustScore >= 80;
+  const isInstagramLesson =
+    context.source_type === "instagram" &&
+    ["lesson", "lecture", "course", "announcement"].includes(String(context.content_kind || ""));
 
   return {
     ai_title: String(rawTitle || "بدون عنوان").slice(0, 300),
@@ -144,9 +147,9 @@ function fallbackAnalysis(rawTitle, rawBody, context) {
     ai_hadith_refs: [],
     seo_title: String(rawTitle || "").slice(0, 70),
     seo_description: summary.slice(0, 160),
-    ai_confidence: hasStructuredBody && isOfficialManifest ? 62 : 45,
-    needs_human_review: !(hasStructuredBody && isOfficialManifest),
-    review_reason: hasStructuredBody && isOfficialManifest
+    ai_confidence: hasStructuredBody && (isOfficialManifest || isInstagramLesson) ? 62 : 45,
+    needs_human_review: !(hasStructuredBody && (isOfficialManifest || isInstagramLesson)),
+    review_reason: hasStructuredBody && (isOfficialManifest || isInstagramLesson)
       ? null
       : "تحليل بدون ذكاء اصطناعي — يحتاج مراجعة",
   };
@@ -192,7 +195,13 @@ export async function analyzeBatch(items, concurrency = 3) {
           source_url: item.raw_url,
           content_kind: item.content_kind,
           country: item.ai_country,
-          source_type: item.raw_payload?._manifest_file ? "manifest" : undefined,
+          source_type: item.raw_payload?._manifest_file
+            ? "manifest"
+            : item.raw_payload?.extracted_via?.includes("instagram")
+              ? "instagram"
+              : item.raw_payload?.handle
+                ? "instagram"
+                : undefined,
           trust_score: item.verification?.trustScore,
         }),
       })),

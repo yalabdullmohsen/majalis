@@ -3,6 +3,7 @@
  */
 
 import { scoreQuality } from "../knowledge-engine/quality.mjs";
+import { normalizeContentKind } from "./content-kind.mjs";
 
 export function runQualityGate(item, analysis, verification, connector) {
   const quality = scoreQuality(item, analysis, {
@@ -16,6 +17,13 @@ export function runQualityGate(item, analysis, verification, connector) {
   const isCuratedManifest =
     connectorType === "manifest" ||
     Boolean(item.raw_payload?._manifest_file || item.raw_payload?.source_name);
+  const lessonKind = ["lesson", "lecture", "course", "announcement"].includes(
+    normalizeContentKind(item.content_kind),
+  );
+  const isTrustedOfficialLesson =
+    trustLevel >= 4 &&
+    lessonKind &&
+    (connectorType === "instagram" || connector?.platform === "instagram");
 
   const checks = {
     dedup: !verification.isDuplicate,
@@ -30,10 +38,12 @@ export function runQualityGate(item, analysis, verification, connector) {
     trust: verification.trustScore >= 60,
     ai_confidence:
       (analysis?.ai_confidence || 0) >= 50 ||
-      (trustLevel >= 4 && isCuratedManifest && (analysis?.ai_confidence || 0) >= 40),
+      (((trustLevel >= 4 && isCuratedManifest) || isTrustedOfficialLesson) &&
+        (analysis?.ai_confidence || 0) >= 40),
     no_forbidden:
       !analysis?.needs_human_review ||
-      (trustLevel >= 4 && isCuratedManifest),
+      (trustLevel >= 4 && isCuratedManifest) ||
+      isTrustedOfficialLesson,
   };
 
   const failed = Object.entries(checks).filter(([, v]) => !v).map(([k]) => k);

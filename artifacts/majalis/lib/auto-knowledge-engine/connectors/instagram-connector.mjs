@@ -11,6 +11,8 @@ export class InstagramConnector extends BaseConnector {
     const handle = this.handle || this.apiConfig.handle;
     const source = {
       id: this.id,
+      name: this.name,
+      url: this.officialUrl,
       source_name: this.name,
       source_url: this.officialUrl,
       source_type: "instagram",

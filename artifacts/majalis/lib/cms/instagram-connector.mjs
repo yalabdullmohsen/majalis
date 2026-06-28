@@ -31,8 +31,9 @@ export function isInstagramBlocked(imported, err) {
 
 export async function discoverInstagramSource(source, { runId } = {}) {
   const config = source.config || {};
-  const handle = config.handle || source.url.replace(/.*instagram\.com\//, "").replace(/\/$/, "");
-  const profileUrl = source.url.includes("instagram.com") ? source.url : `https://instagram.com/${handle}`;
+  const sourceUrl = String(source.url || source.source_url || config.source_url || "").trim();
+  const handle = config.handle || sourceUrl.replace(/.*instagram\.com\//, "").replace(/\/$/, "");
+  const profileUrl = sourceUrl.includes("instagram.com") ? sourceUrl : `https://instagram.com/${handle}`;
 
   await logAutomationStep({
     runId,

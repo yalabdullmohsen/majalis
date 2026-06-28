@@ -159,7 +159,11 @@ export default async function handler(req, res) {
 
     if (scope === "ake-v2" || scope === "ake-v16") {
       const result = await applyMigrations({
-        files: ["auto_knowledge_engine_v16_v2.sql", "auto_knowledge_engine_v16_v2_production.sql"],
+        files: [
+          "auto_knowledge_engine_v16_v2.sql",
+          "auto_knowledge_engine_v16_v2_production.sql",
+          "auto_knowledge_engine_v16_v2_production_patch2.sql",
+        ],
         continueOnError: false,
         trackApplied: true,
       });
