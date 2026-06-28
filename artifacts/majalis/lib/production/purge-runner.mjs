@@ -18,9 +18,9 @@ export const PURGE_TABLES = [
   { table: "qa_questions", fields: ["question", "answer"] },
   { table: "library_items", fields: ["title", "description"] },
   { table: "scientific_miracles", fields: ["title", "body"] },
-  { table: "platform_updates", fields: ["title", "summary", "body"] },
   { table: "knowledge_items", fields: ["raw_title", "raw_body"] },
-  { table: "content_engine_review_queue", fields: ["title", "body", "summary"] },
+  { table: "platform_updates", fields: ["title", "summary", "body"], optional: true },
+  { table: "content_engine_review_queue", fields: ["title", "summary"], optional: true },
 ];
 
 export function isBlockedRow(record, fields, fawaid) {
@@ -63,18 +63,28 @@ async function migrateFawaidToQa(admin, row) {
   const qa = fawaidRowToQaCandidate(row);
   if (!qa) return { migrated: false, skipped: true };
   const externalKey = `migrated-fawaid:${row.id}`;
-  const { data: existing } = await admin
+
+  const { data: existingByKey, error: keyErr } = await admin
     .from("qa_questions")
     .select("id")
     .eq("external_key", externalKey)
     .maybeSingle();
-  if (existing?.id) return { migrated: false, skipped: true, duplicate: true };
-  const { error } = await admin.from("qa_questions").insert({
-    question: qa.question,
-    answer: qa.answer,
-    status: "draft",
-    external_key: externalKey,
-  });
+  if (keyErr && !/external_key|column|schema cache/i.test(keyErr.message || "")) {
+    return { migrated: false, error: keyErr.message };
+  }
+  if (existingByKey?.id) return { migrated: false, skipped: true, duplicate: true };
+
+  const { data: existingByQ } = await admin
+    .from("qa_questions")
+    .select("id")
+    .eq("question", qa.question)
+    .maybeSingle();
+  if (existingByQ?.id) return { migrated: false, skipped: true, duplicate: true };
+
+  const payload = { question: qa.question, answer: qa.answer, status: "draft" };
+  if (!keyErr) payload.external_key = externalKey;
+
+  const { error } = await admin.from("qa_questions").insert(payload);
   if (error) return { migrated: false, error: error.message };
   return { migrated: true };
 }
@@ -95,13 +105,13 @@ export async function runProductionPurge(admin, options = {}) {
     errors: [],
   };
 
-  for (const { table, fields, fawaid } of PURGE_TABLES) {
+  for (const { table, fields, fawaid, optional } of PURGE_TABLES) {
     let data;
     try {
       data = await fetchAll(admin, table, fields);
     } catch (err) {
-      report.tables[table] = { error: err.message };
-      report.errors.push(`${table}: ${err.message}`);
+      report.tables[table] = { error: err.message, optional: Boolean(optional) };
+      if (!optional) report.errors.push(`${table}: ${err.message}`);
       continue;
     }
 

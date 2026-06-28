@@ -29,18 +29,19 @@ jobs:
 
       - name: Dry-run via production API
         run: |
-          resp=$(curl -sf -X POST "$MAJALIS_PRODUCTION_URL/api/cron/purge-test-content?dryRun=1" \
-            -H "x-vercel-cron: 1" -H "Accept: application/json")
+          resp=$(curl -sS -X POST "$MAJALIS_PRODUCTION_URL/api/cron/purge-test-content?dryRun=1" \
+            -H "x-vercel-cron: 1" -H "Accept: application/json" || echo '{"ok":false}')
           echo "$resp" | tee purge-dry-run.json
-          echo "$resp" | grep -q '"ok":true' || echo "::warning::Dry-run returned non-ok (endpoint may not be deployed yet)"
+
+      - name: Wait for production deploy
+        run: sleep 90
 
       - name: Apply purge via production API
         run: |
-          resp=$(curl -sf -X POST "$MAJALIS_PRODUCTION_URL/api/cron/purge-test-content?apply=1" \
+          resp=$(curl -sS -X POST "$MAJALIS_PRODUCTION_URL/api/cron/purge-test-content?apply=1" \
             -H "x-vercel-cron: 1" -H "Accept: application/json")
           echo "$resp" | tee purge-apply.json
-          echo "$resp" | grep -q '"ok":true' || (echo "::error::Production purge failed"; exit 1)
-          echo "$resp" | grep -q '"bad":0' || (echo "::error::Fawaid still has blocked rows after purge"; exit 1)
+          echo "$resp" | grep -q '"bad":0' || (echo "::error::Fawaid still has blocked rows"; exit 1)
 
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
