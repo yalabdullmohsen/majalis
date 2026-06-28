@@ -84,10 +84,26 @@ export async function run({ runType = "incremental", maxItems = 20, budgetMs = C
       await saveEngineCursor(admin, ENGINE_ID, (cursor + 1) % RSS_SLUGS.length, "connectorCursor");
     }
 
+    if (stats.items_fetched === 0 && stats.items_published === 0) {
+      await log("outcome", "info", "no_content", { metadata: { outcome: "no_content", connector: slug } });
+    }
+
     await finishEngineRun(runId, ENGINE_ID, stats, startedAt, {
-      report: { connector: slug, ake: { connectors: connectorResults.length, published: stats.items_published } },
+      report: {
+        connector: slug,
+        outcome: stats.items_published ? "published" : stats.items_fetched ? "processed" : "no_content",
+        ake: { connectors: connectorResults.length, published: stats.items_published },
+      },
     });
-    return { ok: true, engineId: ENGINE_ID, runId, stats, connector: slug, resumed: isCronRun(runType) };
+    return {
+      ok: true,
+      engineId: ENGINE_ID,
+      runId,
+      stats,
+      connector: slug,
+      outcome: stats.items_published ? "published" : stats.items_fetched ? "processed" : "no_content",
+      resumed: isCronRun(runType),
+    };
   } catch (err) {
     stats.errors = 1;
     await finishEngineRun(runId, ENGINE_ID, stats, startedAt, { errorMessage: err.message });

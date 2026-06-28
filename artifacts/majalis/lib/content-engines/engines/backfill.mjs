@@ -12,6 +12,7 @@ import { run as runArticles } from "./articles.mjs";
 import { run as runBenefits } from "./benefits.mjs";
 import { run as runQuiz } from "./quiz.mjs";
 import { run as runNotes } from "./lesson-notes.mjs";
+import { buildBackfillStatus, isBackfillPaused } from "../backfill-progress.mjs";
 
 const ENGINE_ID = "backfill";
 
@@ -61,6 +62,21 @@ export async function run({ runType = "backfill", skipDerivation = false, budget
     let state = await loadBackfillState(admin, monthKey);
     const report = state?.report && typeof state.report === "object" ? state.report : {};
     let cursor = Number(report.cursor || 0);
+
+    if (isBackfillPaused(report)) {
+      await finishEngineRun(runId, ENGINE_ID, stats, startedAt, {
+        report: { paused: true, monthKey, cursor, status: buildBackfillStatus({ monthKey, cursor, steps, state, report }) },
+      });
+      return {
+        ok: true,
+        engineId: ENGINE_ID,
+        runId,
+        stats,
+        paused: true,
+        monthKey,
+        status: buildBackfillStatus({ monthKey, cursor, steps, state, report }),
+      };
+    }
 
     if (state?.status === "completed" && isCronRun(runType) && !drain) {
       await finishEngineRun(runId, ENGINE_ID, stats, startedAt, { report: { skipped: "backfill_complete", monthKey } });
@@ -119,26 +135,46 @@ export async function run({ runType = "backfill", skipDerivation = false, budget
     const nextCursor = cursor + 1;
     const complete = nextCursor >= steps.length;
 
+    const statusPayload = buildBackfillStatus({
+      monthKey,
+      cursor: nextCursor,
+      steps,
+      state: {
+        ...state,
+        status: complete ? "completed" : "running",
+        items_processed: (state?.items_processed || 0) + (result.stats?.items_parsed || 0),
+        items_published: (state?.items_published || 0) + (result.stats?.items_published || 0),
+      },
+      report: {
+        cursor: nextCursor,
+        lastStep: step.id,
+        lastResult: { ok: result.ok, stats: result.stats, outcome: result.outcome },
+        engines: steps.map((s) => s.id),
+      },
+    });
+
     await admin.from("content_engine_backfill_status").upsert(
       {
         engine_id: ENGINE_ID,
         month_key: monthKey,
         status: complete ? "completed" : "running",
-        items_processed: (state?.items_processed || 0) + (result.stats?.items_parsed || 0),
-        items_published: (state?.items_published || 0) + (result.stats?.items_published || 0),
+        items_processed: statusPayload.itemsProcessed,
+        items_published: statusPayload.itemsPublished,
         finished_at: complete ? new Date().toISOString() : null,
         report: {
           cursor: nextCursor,
           lastStep: step.id,
           lastResult: { ok: result.ok, stats: result.stats },
           engines: steps.map((s) => s.id),
+          progress: statusPayload.progress,
+          eta: statusPayload.eta,
         },
       },
       { onConflict: "engine_id,month_key" },
     );
 
     await finishEngineRun(runId, ENGINE_ID, stats, startedAt, {
-      report: { monthKey, step: step.id, cursor: nextCursor, complete },
+      report: { monthKey, step: step.id, cursor: nextCursor, complete, status: statusPayload },
     });
 
     return {
@@ -151,6 +187,7 @@ export async function run({ runType = "backfill", skipDerivation = false, budget
       cursor: nextCursor,
       complete,
       resumed: cursor > 0,
+      status: statusPayload,
     };
   } catch (err) {
     stats.errors = 1;

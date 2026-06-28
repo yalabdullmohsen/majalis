@@ -4,6 +4,8 @@
  *      INSTAGRAM_BUSINESS_ACCOUNT_ID, INSTAGRAM_WEBHOOK_VERIFY_TOKEN
  */
 import { logAutomationStep } from "./automation-step-logs.mjs";
+import { fetchResource } from "../http/fetch-layer.mjs";
+import { recordSourceHealthEvent } from "../auto-knowledge-engine/monitoring/source-health-events.mjs";
 
 const GRAPH_VERSION = "v21.0";
 const GRAPH_BASE = `https://graph.facebook.com/${GRAPH_VERSION}`;
@@ -68,11 +70,18 @@ export async function graphApiGet(path, params = {}) {
     if (v != null) url.searchParams.set(k, String(v));
   }
 
-  const res = await fetch(url.toString(), { signal: AbortSignal.timeout(20000) });
+  const res = await fetchResource(url.toString(), {
+    label: "instagram:graph",
+    timeoutMs: 20_000,
+    maxRetries: 2,
+    useCache: false,
+  });
   const json = await res.json().catch(() => ({}));
   if (!res.ok || json.error) {
     const msg = json.error?.message || res.statusText;
-    throw new Error(`graph_api_error: ${msg}`);
+    const code = json.error?.code;
+    const tokenExpired = code === 190 || /expired|invalid.*token/i.test(msg);
+    throw new Error(tokenExpired ? `instagram_token_expired: ${msg}` : `graph_api_error: ${msg}`);
   }
   return json;
 }
@@ -189,14 +198,33 @@ export async function fetchInstagramMediaForSource(source, { limit = 15, runId }
 
     return { items, configured: true, manualAssistMode: false, graphApi: true };
   } catch (err) {
+    const errMsg = String(err.message || err);
     await logAutomationStep({
       runId,
       sourceId: source.id,
       step: "fetch_failed",
       status: "error",
-      detail: String(err.message || err).slice(0, 500),
+      detail: errMsg.slice(0, 500),
     });
-    return { items: [], configured: true, manualAssistMode: true, error: String(err.message || err) };
+    try {
+      await recordSourceHealthEvent({
+        connectorSlug: source.slug || source.name || "instagram",
+        connectorType: "instagram",
+        eventType: "fetch_failed",
+        failureReason: errMsg.includes("token_expired") ? "instagram_token_expired" : "graph_api_fetch_failed",
+        errorMessage: errMsg.slice(0, 500),
+        metadata: { handle: source.config?.handle, sourceId: source.id },
+      });
+    } catch {
+      /* non-blocking */
+    }
+    return {
+      items: [],
+      configured: true,
+      manualAssistMode: true,
+      error: errMsg,
+      failureReason: errMsg.includes("token_expired") ? "instagram_token_expired" : "graph_api_fetch_failed",
+    };
   }
 }
 

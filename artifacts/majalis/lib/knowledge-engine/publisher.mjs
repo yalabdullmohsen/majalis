@@ -4,6 +4,7 @@
 
 import { normalizeContentKind } from "../auto-knowledge-engine/content-kind.mjs";
 import { isMissingTableError } from "../supabase-admin.mjs";
+import { filterRecordForTable } from "./schema-capabilities.mjs";
 
 function slugify(text) {
   return String(text || "")
@@ -232,6 +233,11 @@ function buildRecord(item, analysis) {
           activity_type: activityType,
           is_course: lessonFields.is_course,
           is_recurring: lessonFields.is_recurring,
+          keywords: Array.isArray(lessonFields.keywords)
+            ? lessonFields.keywords
+            : lessonFields.keywords
+              ? [String(lessonFields.keywords)]
+              : null,
           status: verified ? "approved" : "pending",
         },
       };
@@ -286,6 +292,11 @@ export async function publishItem(admin, item, analysis) {
       ? String(item.external_id).replace(/^[^:]+:\s*/, "")
       : item.external_id;
 
+    const { record: safeRecord, dropped } = await filterRecordForTable(built.table, built.record);
+    if (dropped.length) {
+      log("schema-filter", { table: built.table, dropped, id: item.external_id });
+    }
+
     const { data: existing } = await admin
       .from(built.table)
       .select("id")
@@ -293,10 +304,14 @@ export async function publishItem(admin, item, analysis) {
       .maybeSingle();
 
     let recordId;
+    const writePayload = { ...safeRecord };
     if (existing?.id) {
+      if (Object.keys(writePayload).includes("updated_at")) {
+        writePayload.updated_at = new Date().toISOString();
+      }
       const { data, error } = await admin
         .from(built.table)
-        .update({ ...built.record, updated_at: new Date().toISOString() })
+        .update(writePayload)
         .eq("id", existing.id)
         .select("id")
         .single();
@@ -305,7 +320,7 @@ export async function publishItem(admin, item, analysis) {
     } else {
       const { data, error } = await admin
         .from(built.table)
-        .insert(built.record)
+        .insert(writePayload)
         .select("id")
         .single();
       if (error) throw error;

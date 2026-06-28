@@ -71,8 +71,26 @@ export default async function handler(req, res) {
     if (action === "backfill") {
       const result = await runBackfillCurrentMonth({
         skipDerivation: req.body?.skipDerivation === true,
+        drain: req.body?.drain === true,
       });
       sendJson(res, result.ok ? 200 : 500, result);
+      return;
+    }
+
+    if (action === "backfill-status") {
+      const admin = getSupabaseAdmin();
+      const monthKey = req.query?.monthKey || new Date().toISOString().slice(0, 7);
+      if (!admin) {
+        sendJson(res, 503, { ok: false, error: "no_admin" });
+        return;
+      }
+      const { data } = await admin
+        .from("content_engine_backfill_status")
+        .select("*")
+        .eq("engine_id", "backfill")
+        .eq("month_key", monthKey)
+        .maybeSingle();
+      sendJson(res, 200, { ok: true, monthKey, status: data });
       return;
     }
 

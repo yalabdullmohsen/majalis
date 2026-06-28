@@ -121,7 +121,7 @@ async function collectDailyMetrics(admin, since, until) {
   const reviewCount = await admin
     .from("knowledge_items")
     .select("id", { count: "exact", head: true })
-    .eq("publish_status", "review");
+    .eq("verification_status", "pending");
 
   const rejectionReasons = {};
   for (const f of pipelineFails || []) {

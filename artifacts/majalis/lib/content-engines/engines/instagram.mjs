@@ -7,6 +7,7 @@ import { runLessonIntelligenceEngine } from "../../cms/lesson-intelligence/index
 import { startEngineRun, finishEngineRun, createRunLogger } from "../run-manager.mjs";
 import { CRON_BUDGET_MS, cronMaxItems, isCronRun, budgetExceeded } from "../budget.mjs";
 import { getEngineCursor, saveEngineCursor } from "../work-queue.mjs";
+import { getInstagramGraphStatus } from "../../cms/instagram-graph-api.mjs";
 
 const ENGINE_ID = "instagram";
 
@@ -34,10 +35,22 @@ export async function run({ runType = "incremental", budgetMs = CRON_BUDGET_MS, 
     await log("fetch", "info", `Instagram sources: ${sources.length}`);
 
     if (!sources.length) {
+      const igStatus = getInstagramGraphStatus();
       await finishEngineRun(runId, ENGINE_ID, stats, startedAt, {
-        report: { message: "no_active_instagram_sources" },
+        report: {
+          outcome: igStatus.configured ? "no_sources" : "not_configured",
+          instagram: igStatus,
+        },
       });
-      return { ok: true, engineId: ENGINE_ID, runId, stats, message: "no_active_instagram_sources" };
+      return {
+        ok: true,
+        engineId: ENGINE_ID,
+        runId,
+        stats,
+        outcome: igStatus.configured ? "no_sources" : "not_configured",
+        message: igStatus.configured ? "no_active_instagram_sources" : igStatus.status,
+        instagram: igStatus,
+      };
     }
 
     const perTick = maxSources ?? cronMaxItems(runType, 10, 1);

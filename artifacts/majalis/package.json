@@ -43,6 +43,8 @@
     "verify:ake-v2": "node scripts/verify-ake-v2.mjs",
     "verify:ake-v2:production": "node scripts/verify-ake-v2-production.mjs",
     "verify:ake-monitoring": "node scripts/verify-ake-monitoring.mjs",
+    "verify:hardening": "node scripts/verify-production-hardening.mjs",
+    "verify:production-hardening": "node scripts/verify-production-hardening.mjs",
     "cd:pipeline": "node scripts/cd/run-pipeline.mjs",
     "cd:safety": "node scripts/cd/safety-check.mjs",
     "cd:post-deploy": "node scripts/cd/post-deploy.mjs",

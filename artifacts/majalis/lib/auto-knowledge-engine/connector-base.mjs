@@ -4,6 +4,7 @@
 
 import { withRetry } from "./queue.mjs";
 import { akeLog } from "./monitoring.mjs";
+import { fetchResource, DEFAULT_TIMEOUT_MS } from "../http/fetch-layer.mjs";
 
 const rateLimitBuckets = new Map();
 
@@ -16,7 +17,7 @@ export class BaseConnector {
     this.feedUrl = config.feed_url || config.feedUrl;
     this.trustLevel = config.trust_level || config.trustLevel || 3;
     this.allowedKinds = config.allowed_kinds || config.allowedKinds || ["article"];
-    this.timeoutMs = config.timeout_ms || config.timeoutMs || 15000;
+    this.timeoutMs = config.timeout_ms || config.timeoutMs || DEFAULT_TIMEOUT_MS;
     this.maxRetries = config.max_retries || config.maxRetries || 3;
     this.rateLimitPerMin = config.rate_limit_per_min || config.rateLimitPerMin || 10;
     this.autoPublish = config.auto_publish !== false;
@@ -43,14 +44,14 @@ export class BaseConnector {
 
   async fetchWithTimeout(url, options = {}) {
     await this.rateLimitWait();
-    const response = await fetch(url, {
-      ...options,
-      headers: {
-        "User-Agent": "MajlisIlmBot/2.0 (+https://majlisilm.com)",
-        Accept: "application/json, application/xml, text/xml, */*",
-        ...(options.headers || {}),
-      },
-      signal: AbortSignal.timeout(this.timeoutMs),
+    const response = await fetchResource(url, {
+      method: options.method || "GET",
+      headers: options.headers || {},
+      timeoutMs: this.timeoutMs,
+      maxRetries: this.maxRetries,
+      label: `connector:${this.slug}`,
+      useCache: (options.method || "GET") === "GET" && !options.noCache,
+      followRedirects: options.followRedirects !== false,
     });
     return response;
   }

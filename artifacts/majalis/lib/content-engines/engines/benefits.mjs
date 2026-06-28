@@ -46,7 +46,14 @@ export async function run({ runType = "incremental", maxItems = 10, lessonId, bu
     const { data: lessons } = await query;
     stats.items_fetched = lessons?.length || 0;
 
-    for (const lesson of lessons || []) {
+    if (!lessons?.length) {
+      await finishEngineRun(runId, ENGINE_ID, stats, startedAt, {
+        report: { outcome: "no_content", message: "no_approved_lessons" },
+      });
+      return { ok: true, engineId: ENGINE_ID, runId, stats, outcome: "no_content", message: "no_approved_lessons" };
+    }
+
+    for (const lesson of lessons) {
       if (budgetExceeded(startedAt, budgetMs)) break;
       const body = lesson.description || lesson.title || "";
       if (!body || body.length < 30) {
@@ -74,15 +81,9 @@ export async function run({ runType = "incremental", maxItems = 10, lessonId, bu
       stats.items_enriched++;
 
       if (!extracted.benefits?.length) {
-        await enqueueReview({
-          engineId: ENGINE_ID,
-          runId,
-          item: { title: lesson.title, source_url: sourceUrl, lesson_id: lesson.id },
-          reason: "weak_extraction",
-          reasonDetail: "No benefits extracted",
-          sourceType: "lesson",
+        await log("outcome", "info", "no_content", {
+          metadata: { outcome: "no_content", lessonId: lesson.id, reason: "no_benefits_extracted" },
         });
-        stats.items_review++;
         continue;
       }
 

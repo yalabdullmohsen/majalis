@@ -128,6 +128,7 @@ export const API_ROUTES = [
   { prefix: "/api/cron/content-scheduler", module: "./api-handlers/cron/content-scheduler.js", allowGet: true, exact: true },
   { prefix: "/api/admin/content-production", module: "./api-handlers/admin/content-production.js", allowGet: true },
   { prefix: "/api/admin/content-engines", module: "./api-handlers/admin/content-engines.js", allowGet: true },
+  { prefix: "/api/admin/platform-monitoring", module: "./api-handlers/admin/platform-monitoring.js", allowGet: true },
   { prefix: "/api/cron/content-engines", module: "./api-handlers/cron/content-engines.js", allowGet: true, exact: true },
   { prefix: "/api/cron/content-engines-drain", module: "./api-handlers/cron/content-engines-drain.js", allowGet: true, exact: true },
   { prefix: "/api/cron/knowledge-reasoning", module: "./api-handlers/cron/knowledge-reasoning.js", allowGet: true, exact: true },

@@ -236,7 +236,7 @@ async function gatherSignals(admin, context) {
   ] = await Promise.all([
     admin.from("ake_connectors").select("*"),
     admin.from("ake_scheduler_state").select("*").eq("id", "global").maybeSingle(),
-    admin.from("knowledge_items").select("id", { count: "exact", head: true }).eq("publish_status", "review"),
+    admin.from("knowledge_items").select("id", { count: "exact", head: true }).eq("verification_status", "pending"),
     admin.from("ake_cycle_metrics").select("published,rejected,fetched").gte("created_at", since24h).order("created_at", { ascending: false }).limit(20),
     admin.from("knowledge_items").select("id", { count: "exact", head: true }).eq("publish_status", "rejected").gte("updated_at", since24h),
     admin.from("ake_cron_runs").select("*").eq("cron_name", "auto-knowledge-sync").eq("status", "success").order("started_at", { ascending: false }).limit(1).maybeSingle(),

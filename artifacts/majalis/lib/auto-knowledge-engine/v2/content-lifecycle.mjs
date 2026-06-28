@@ -1,7 +1,4 @@
-/**
- * AKE v2 — Content lifecycle: update, cancel, archive detection.
- */
-import { getSupabaseAdmin } from "../../supabase-admin.mjs";
+import { toKnowledgeItemState, toLessonStatus, lifecycleFromChangeType } from "../../content-lifecycle/states.mjs";
 import { createHash } from "node:crypto";
 
 const CANCEL_PATTERNS = [
@@ -67,25 +64,23 @@ export async function applyLifecycleChange(admin, {
   });
 
   if (knowledgeItemId && change.lifecycleStatus) {
+    const lifecycle = lifecycleFromChangeType(change.changeType);
+    const kiState = toKnowledgeItemState(lifecycle);
     await admin
       .from("knowledge_items")
       .update({
         lifecycle_status: change.lifecycleStatus,
+        publish_status: kiState.publish_status,
+        pipeline_stage: kiState.pipeline_stage,
         updated_at: new Date().toISOString(),
       })
       .eq("id", knowledgeItemId);
-
-    if (change.changeType === "cancelled") {
-      await admin
-        .from("knowledge_items")
-        .update({ publish_status: "archived", pipeline_stage: "cancelled" })
-        .eq("id", knowledgeItemId);
-    }
   }
 
   if (lessonId && change.changeType === "cancelled") {
+    const lessonStatus = toLessonStatus(lifecycleFromChangeType("cancelled"));
     try {
-      await admin.from("lessons").update({ status: "cancelled" }).eq("id", lessonId);
+      await admin.from("lessons").update({ status: lessonStatus }).eq("id", lessonId);
     } catch {
       /* optional */
     }
