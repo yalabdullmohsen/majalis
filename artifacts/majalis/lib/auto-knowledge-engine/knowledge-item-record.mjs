@@ -2,6 +2,8 @@
  * Build knowledge_items upsert payload — only columns that exist in production schema.
  */
 
+import { extractSourcePublishedAt } from "./sync-window.mjs";
+
 const ANALYSIS_COLUMNS = [
   "ai_title",
   "ai_summary",
@@ -50,10 +52,15 @@ export function buildKnowledgeItemRecord({
   item,
   gate,
   seo,
+  importMode,
 }) {
+  const sourcePublished = extractSourcePublishedAt(item);
+  const now = new Date().toISOString();
+
   return {
     source_id: connectorConfig.source_id || null,
     pipeline_run_id: null,
+    sync_run_id: runId || null,
     external_id: item.external_id,
     content_kind: item.content_kind,
     raw_url: item.raw_url,
@@ -63,6 +70,10 @@ export function buildKnowledgeItemRecord({
     content_hash: item.verification.contentHash,
     source_attribution: item.source_attribution,
     source_url: item.raw_url,
+    original_url: item.raw_url || item.source_url || null,
+    source_published_at: sourcePublished ? sourcePublished.toISOString() : null,
+    imported_at: now,
+    import_mode: importMode || null,
     ...pickAnalysisFields(item.analysis),
     seo_title: seo.title,
     seo_description: seo.description,

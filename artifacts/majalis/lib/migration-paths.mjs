@@ -31,6 +31,7 @@ export const ACTIVATION_TABLES_MIGRATION_FILES = [
   "content_production_v1.sql",
   "auto_knowledge_engine_v13_rpc_fix.sql",
   "fiqh_council_items_ake_prereq.sql",
+  "auto_knowledge_engine_v14_sync.sql",
 ];
 
 export const MIGRATION_FILES = [
@@ -75,6 +76,7 @@ export const MIGRATION_FILES = [
   "content_production_v1.sql",
   "auto_knowledge_engine_v13_rpc_fix.sql",
   "fiqh_council_items_ake_prereq.sql",
+  "auto_knowledge_engine_v14_sync.sql",
 ];
 
 export function resolveMigrationsDir() {

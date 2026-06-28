@@ -73,21 +73,49 @@ export class BaseConnector {
     }
   }
 
-  async fetchItems() {
+  async fetchItems(_syncOptions = {}) {
     throw new Error(`fetchItems not implemented for ${this.slug}`);
   }
 
-  async run() {
+  async run(syncOptions = {}) {
     if (!this.isActive) {
       return { ok: true, skipped: true, reason: "inactive", items: [] };
     }
 
     return withRetry(
       async () => {
-        akeLog("connector", { slug: this.slug, action: "fetch_start" });
-        const items = await this.fetchItems();
-        akeLog("connector", { slug: this.slug, action: "fetch_done", count: items.length });
-        return { ok: true, items, connector: this.slug };
+        akeLog("connector", {
+          slug: this.slug,
+          action: "fetch_start",
+          importMode: syncOptions.importMode,
+        });
+        const rawItems = await this.fetchItems(syncOptions);
+        const { filterItemsBySyncWindow, sortItemsByPublishedAtDesc } = await import("./sync-window.mjs");
+
+        const beforeFilter = rawItems?.length || 0;
+        let items = filterItemsBySyncWindow(rawItems, syncOptions.window);
+        items = sortItemsByPublishedAtDesc(items);
+
+        const limit = syncOptions.limit || syncOptions.maxItems;
+        if (limit && items.length > limit) {
+          items = items.slice(0, limit);
+        }
+
+        akeLog("connector", {
+          slug: this.slug,
+          action: "fetch_done",
+          count: items.length,
+          raw: beforeFilter,
+          skippedByDate: beforeFilter - items.length,
+        });
+
+        return {
+          ok: true,
+          items,
+          connector: this.slug,
+          rawCount: beforeFilter,
+          skippedByDate: Math.max(0, beforeFilter - items.length),
+        };
       },
       { maxAttempts: this.maxRetries, label: `connector:${this.slug}` },
     );

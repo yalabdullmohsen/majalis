@@ -19,6 +19,22 @@ export type AkeEngineStats = {
   avg_quality?: number;
   avg_trust?: number;
   runs_recent?: Array<Record<string, unknown>>;
+  sync_state?: {
+    global_backfill_completed?: boolean;
+    global_import_mode?: string;
+    last_successful_sync_at?: string;
+    current_month_key?: string;
+  } | null;
+  backfill?: {
+    month_key?: string;
+    connectors_completed?: number;
+    connectors_total?: number;
+    global_completed?: boolean;
+    import_mode?: string;
+    month_imported?: number;
+    month_published?: number;
+    remaining_estimate?: number;
+  };
   connectors_health?: Array<{
     slug: string;
     name: string;
@@ -27,6 +43,8 @@ export type AkeEngineStats = {
     items_published?: number;
     broken_links?: number;
     is_active?: boolean;
+    backfill_completed?: boolean;
+    sync_cursor_at?: string;
   }>;
 };
 
@@ -85,10 +103,12 @@ export async function fetchAkeStats(days = 7): Promise<{
 
 export async function runAkeEngineManual(opts?: {
   maxItems?: number;
+  maxItemsPerConnector?: number;
   checkLinks?: boolean;
   connectorSlug?: string;
+  importMode?: "backfill" | "incremental" | "auto";
 }) {
-  return akeAdminFetch("run", opts || {});
+  return akeAdminFetch("run-engine", opts || {});
 }
 
 export async function runAkeHealthCheck() {

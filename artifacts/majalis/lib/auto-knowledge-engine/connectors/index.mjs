@@ -9,7 +9,7 @@ import { BaseConnector } from "../connector-base.mjs";
 import { extractRssItems, cleanText } from "../../auto-content/auto-content-utils.mjs";
 
 export class RssConnector extends BaseConnector {
-  async fetchItems() {
+  async fetchItems(_syncOptions = {}) {
     if (!this.feedUrl) return [];
 
     const response = await this.fetchWithTimeout(this.feedUrl);
@@ -52,15 +52,16 @@ export class ManifestConnector extends BaseConnector {
     this.manifestFile = config.api_config?.manifest_file || config.manifestFile;
   }
 
-  async fetchItems() {
+  async fetchItems(_syncOptions = {}) {
     if (!this.manifestFile) return [];
 
     const manifestPath = resolveDataFilePath(this.manifestFile);
     const raw = await readFile(manifestPath, "utf8");
     const manifest = JSON.parse(raw);
     const entries = manifest.items || manifest.decisions || manifest.entries || [];
+    const maxEntries = _syncOptions?.manifestLimit || 200;
 
-    return entries.slice(0, 30).map((entry, idx) => ({
+    return entries.slice(0, maxEntries).map((entry, idx) => ({
       external_id: `${this.slug}:${entry.external_id || entry.id || entry.slug || idx}`,
       source_slug: this.slug,
       source_attribution: entry.source_name || manifest.organization || this.name,
@@ -76,7 +77,7 @@ export class ManifestConnector extends BaseConnector {
 }
 
 export class SeedConnector extends BaseConnector {
-  async fetchItems() {
+  async fetchItems(_syncOptions = {}) {
     const { crawlSource } = await import("../../knowledge-engine/crawler.mjs");
     const source = {
       slug: this.slug,

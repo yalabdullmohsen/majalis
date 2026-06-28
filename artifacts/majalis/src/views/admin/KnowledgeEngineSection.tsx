@@ -135,6 +135,37 @@ export function KnowledgeEngineSection() {
             <StatCard label="Queue" value={systemHealth?.queue?.pending ?? 0} sub={systemHealth?.queue?.status} />
           </div>
 
+          {stats?.backfill && (
+            <div style={{ padding: "1.25rem", marginBottom: "1.5rem", borderRadius: "0.5rem", border: `1px solid ${C.line}`, background: C.panel }}>
+              <h3 style={{ margin: "0 0 1rem", fontSize: "0.9375rem", fontWeight: 700, color: C.emeraldDeep }}>
+                مزامنة الشهر الحالي — {stats.backfill.month_key}
+              </h3>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(130px, 1fr))", gap: "0.75rem", marginBottom: "1rem" }}>
+                <StatCard
+                  label="تقدم Backfill"
+                  value={`${stats.backfill.connectors_completed ?? 0}/${stats.backfill.connectors_total ?? 0}`}
+                  sub={stats.backfill.global_completed ? "اكتمل" : "جارٍ"}
+                />
+                <StatCard
+                  label="وضع المزامنة"
+                  value={stats.backfill.import_mode === "incremental" ? "تزايدي" : "Backfill"}
+                  sub={stats.sync_state?.global_backfill_completed ? "تزايدي نشط" : "Backfill أولي"}
+                />
+                <StatCard label="مستورد هذا الشهر" value={stats.backfill.month_imported ?? 0} />
+                <StatCard label="منشور هذا الشهر" value={stats.backfill.month_published ?? 0} />
+                <StatCard label="متبقي تقديري" value={stats.backfill.remaining_estimate ?? 0} />
+                <StatCard label="منشور اليوم" value={stats?.items_published_today ?? 0} />
+                <StatCard label="مرفوض" value={stats?.items_rejected ?? 0} />
+                <StatCard label="مكرر" value={stats?.items_duplicate ?? 0} />
+              </div>
+              {stats.sync_state?.last_successful_sync_at && (
+                <p style={{ margin: 0, fontSize: "0.75rem", color: C.inkSoft }}>
+                  آخر مزامنة ناجحة: {new Date(stats.sync_state.last_successful_sync_at).toLocaleString("ar-KW")}
+                </p>
+              )}
+            </div>
+          )}
+
           {systemHealth?.errors && systemHealth.errors.length > 0 && (
             <div style={{ padding: "0.75rem 1rem", marginBottom: "1rem", borderRadius: "0.375rem", background: "#FEE2E2", border: "1px solid #FCA5A5", fontSize: "0.8125rem", color: "#991B1B" }}>
               {systemHealth.errors.map((e) => <div key={e}>{e}</div>)}
@@ -167,6 +198,7 @@ export function KnowledgeEngineSection() {
                     <span>{c.name}</span>
                     <span style={{ color: HEALTH_COLORS[c.health_status] || C.inkSoft }}>
                       {c.health_status} · {c.items_published ?? 0} منشور
+                      {c.backfill_completed ? " · ✓ backfill" : ""}
                     </span>
                   </div>
                 ))
@@ -182,7 +214,9 @@ export function KnowledgeEngineSection() {
               ) : (
                 (stats?.runs_recent as Array<Record<string, unknown>>).slice(0, 8).map((r) => (
                   <div key={String(r.id)} style={{ fontSize: "0.75rem", color: C.inkSoft, padding: "0.25rem 0" }}>
-                    {String(r.status)} — {String(r.fetched_count ?? 0)} مجلبة، {String(r.published_count ?? 0)} منشورة
+                    {String(r.status)} — {String(r.import_mode || "auto")} — {String(r.fetched_count ?? 0)} مجلبة، {String(r.published_count ?? 0)} منشورة
+                    {r.enriched_count != null ? ` · ${String(r.enriched_count)} مُثرى` : ""}
+                    {r.indexed_count != null ? ` · ${String(r.indexed_count)} مفهرس` : ""}
                     {r.duration_ms ? ` · ${Math.round(Number(r.duration_ms) / 1000)}ث` : ""}
                   </div>
                 ))

@@ -45,10 +45,13 @@ export default async function handler(req, res) {
     }
 
     if (action === "run-engine") {
+      const maxItemsRaw = req.body?.maxItemsPerConnector ?? req.body?.maxItems;
       const result = await runAutoKnowledgeEngine({
         triggerType: "manual",
         connectorSlug: req.query?.slug || req.body?.connectorSlug,
         checkLinks: Boolean(req.body?.checkLinks),
+        importMode: req.body?.importMode || req.query?.importMode || undefined,
+        maxItemsPerConnector: maxItemsRaw ? Number(maxItemsRaw) : undefined,
       });
       sendJson(res, 200, result);
       return;

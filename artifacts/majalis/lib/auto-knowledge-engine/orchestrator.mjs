@@ -13,10 +13,40 @@ import { verifyBatch, verifyUrlAlive } from "./verification.mjs";
 import { runQualityGate } from "./quality-gate.mjs";
 import { buildSeoPackage, routeForKind, persistSeoCache } from "./seo-engine.mjs";
 import { akeLog, auditLog } from "./monitoring.mjs";
-import { dbCacheGet, dbCacheSet } from "./cache.mjs";
+import { dbCacheGet, dbCacheSet, cacheClear } from "./cache.mjs";
 import { OFFICIAL_SOURCES } from "../knowledge-engine/sources-registry.mjs";
 import { buildKnowledgeItemRecord, analysisFromKnowledgeRow } from "./knowledge-item-record.mjs";
 import { ensureAkeRpcFunctions } from "./rpc-probe.mjs";
+import {
+  currentMonthKey,
+  buildConnectorSyncWindow,
+  resolveConnectorImportMode,
+  startOfCurrentMonthUtc,
+} from "./sync-window.mjs";
+import {
+  loadGlobalSyncState,
+  resolveRunImportMode,
+  markConnectorBackfillComplete,
+  updateConnectorSyncCursor,
+  finalizeRunSyncState,
+  shouldCompleteConnectorBackfill,
+} from "./sync-state.mjs";
+
+async function ensureSyncSchema(admin) {
+  const { error } = await admin.from("ake_sync_state").select("id", { head: true, count: "exact" });
+  if (!error) return { ok: true, skipped: true };
+  if (!isMissingTableError(error)) return { ok: true, skipped: true };
+  try {
+    const { applyMigrations } = await import("../db-migrate.mjs");
+    return await applyMigrations({
+      files: ["auto_knowledge_engine_v14_sync.sql"],
+      continueOnError: false,
+      trackApplied: true,
+    });
+  } catch (err) {
+    return { ok: false, error: String(err.message || err) };
+  }
+}
 
 async function ensureFiqhCouncilTable(admin) {
   const { error } = await admin.from("fiqh_council_items").select("id", { head: true, count: "exact" });
@@ -85,12 +115,17 @@ async function loadConnectors(admin) {
   return connectors;
 }
 
-async function loadExistingItems(admin) {
-  const { data } = await admin
+async function loadExistingItems(admin, sourceId = null) {
+  let query = admin
     .from("knowledge_items")
-    .select("id, content_hash, raw_title, ai_title, external_id, publish_status")
-    .is("deleted_at", null)
-    .limit(5000);
+    .select("id, content_hash, raw_title, ai_title, external_id, publish_status, raw_url, source_published_at")
+    .is("deleted_at", null);
+
+  if (sourceId) {
+    query = query.eq("source_id", sourceId);
+  }
+
+  const { data } = await query.limit(sourceId ? 10000 : 5000);
   return data || [];
 }
 
@@ -124,14 +159,42 @@ async function processConnector(admin, connectorConfig, runId, existingItems, op
   const connector = createConnector(connectorConfig);
   const sourceId = connectorConfig.source_id || await resolveSourceId(admin, connectorConfig.slug);
   connectorConfig = { ...connectorConfig, source_id: sourceId };
+
+  const connectorImportMode = resolveConnectorImportMode(
+    connectorConfig,
+    options.importMode,
+    options.monthKey || currentMonthKey(),
+  );
+  const syncWindow = buildConnectorSyncWindow(connectorConfig, connectorImportMode);
+  const maxItemsPerConnector =
+    options.maxItemsPerConnector ??
+    (options.triggerType === "cron"
+      ? connectorImportMode === "backfill"
+        ? 10
+        : 6
+      : 40);
+
+  const syncOptions = {
+    importMode: connectorImportMode,
+    window: syncWindow,
+    limit: maxItemsPerConnector,
+    maxItems: maxItemsPerConnector,
+    manifestLimit: connectorImportMode === "backfill" ? 200 : 50,
+  };
+
   const stats = {
     fetched: 0,
+    rawFetched: 0,
+    skippedByDate: 0,
     parsed: 0,
+    enriched: 0,
     processed: 0,
     published: 0,
+    indexed: 0,
     rejected: 0,
     duplicate: 0,
     review: 0,
+    importMode: connectorImportMode,
     rejectionReasons: {},
     gateFailures: {},
     errors: [],
@@ -150,8 +213,10 @@ async function processConnector(admin, connectorConfig, runId, existingItems, op
 
   try {
     const health = await connector.healthCheck();
-    const fetchResult = await connector.run();
+    const fetchResult = await connector.run(syncOptions);
     stats.fetched = fetchResult.items?.length || 0;
+    stats.rawFetched = fetchResult.rawCount || stats.fetched;
+    stats.skippedByDate = fetchResult.skippedByDate || 0;
 
     if (fetchResult.skipped) {
       await updateConnectorHealth(admin, connectorConfig, fetchResult, health);
@@ -169,8 +234,7 @@ async function processConnector(admin, connectorConfig, runId, existingItems, op
       checkLinks: options.checkLinks || false,
     });
 
-    const maxItemsPerConnector = options.maxItemsPerConnector ?? (options.triggerType === "cron" ? 5 : 30);
-    const toProcess = verified.filter((v) => !v.verification.isDuplicate).slice(0, maxItemsPerConnector);
+    const toProcess = verified.filter((v) => !v.verification.isDuplicate).slice(0, syncOptions.limit);
     stats.duplicate = verified.filter((v) => v.verification.isDuplicate).length;
     stats.parsed = toProcess.filter((v) => v.verification.sourceVerified).length;
     if (stats.duplicate > 0) {
@@ -228,6 +292,7 @@ async function processConnector(admin, connectorConfig, runId, existingItems, op
         item,
         gate,
         seo,
+        importMode: connectorImportMode,
       });
 
       if (item.verification.isDuplicate) {
@@ -242,13 +307,22 @@ async function processConnector(admin, connectorConfig, runId, existingItems, op
         noteGateFailure(gate.failedChecks);
       }
 
-      const { data: inserted, error: insErr } = item._existingRow
-        ? { data: item._existingRow, error: null }
-        : await admin
-            .from("knowledge_items")
-            .upsert(record, { onConflict: "source_id,external_id" })
-            .select("*")
-            .single();
+      let inserted;
+      let insErr;
+      if (item._existingRow) {
+        ({ data: inserted, error: insErr } = await admin
+          .from("knowledge_items")
+          .update(record)
+          .eq("id", item._existingRow.id)
+          .select("*")
+          .single());
+      } else {
+        ({ data: inserted, error: insErr } = await admin
+          .from("knowledge_items")
+          .upsert(record, { onConflict: "source_id,external_id" })
+          .select("*")
+          .single());
+      }
 
       if (insErr) {
         stats.errors.push(insErr.message);
@@ -264,21 +338,24 @@ async function processConnector(admin, connectorConfig, runId, existingItems, op
       }
 
       stats.processed++;
+      stats.enriched++;
       processed.push({ ...inserted, analysis: item.analysis, gate, seo });
 
       if (gate.autoPublish && gate.canPublish) {
         const pub = await publishItem(admin, { ...inserted, can_publish: true, verification_status: "verified" }, item.analysis);
         if (pub.published) {
           stats.published++;
+          const cmsPublishedAt = inserted.source_published_at || new Date().toISOString();
           await admin.from("knowledge_items").update({
             publish_status: "published",
             pipeline_stage: "published",
             target_table: pub.target_table,
             target_record_id: pub.target_record_id,
-            published_at: new Date().toISOString(),
+            published_at: cmsPublishedAt,
           }).eq("id", inserted.id);
 
           await indexAndEmbed(admin, inserted);
+          stats.indexed++;
           await persistSeoCache(admin, `${pub.target_table}:${pub.target_record_id}`, seo);
         } else {
           stats.review++;
@@ -302,6 +379,22 @@ async function processConnector(admin, connectorConfig, runId, existingItems, op
     }
 
     await updateConnectorHealth(admin, connectorConfig, { ok: true, items: fetchResult.items }, health);
+
+    if (connectorConfig.id) {
+      await admin.from("ake_connectors").update({
+        items_published: (connectorConfig.items_published || 0) + stats.published,
+      }).eq("id", connectorConfig.id);
+    }
+
+    await updateConnectorSyncCursor(admin, connectorConfig, processed.map((p) => ({
+      source_published_at: p.source_published_at,
+      published_at: p.source_published_at,
+    })));
+
+    const monthKey = options.monthKey || currentMonthKey();
+    if (shouldCompleteConnectorBackfill(stats, connectorImportMode)) {
+      await markConnectorBackfillComplete(admin, connectorConfig, monthKey, stats);
+    }
 
     await auditLog(admin, {
       runId,
@@ -337,15 +430,37 @@ export async function runAutoKnowledgeEngine(options = {}) {
   const maxConnectors = options.maxConnectors || 20;
   const checkLinks = options.checkLinks || false;
   const connectorSlug = options.connectorSlug || null;
+  const monthKey = currentMonthKey();
 
   let runId = null;
+  let importMode = options.importMode || "auto";
+  let globalState = null;
+
   try {
     await ensureOfficialSources(admin);
     await ensureFiqhCouncilTable(admin);
+    await ensureSyncSchema(admin);
+
+    globalState = await loadGlobalSyncState(admin);
+    let connectorsPreview = await loadConnectors(admin);
+    if (connectorSlug) connectorsPreview = connectorsPreview.filter((c) => c.slug === connectorSlug);
+
+    importMode = resolveRunImportMode(globalState, connectorsPreview, options);
+
+    const syncWindowFrom =
+      importMode === "backfill"
+        ? startOfCurrentMonthUtc().toISOString()
+        : null;
 
     const { data: runRow } = await admin
       .from("ake_engine_runs")
-      .insert({ trigger_type: triggerType, status: "running" })
+      .insert({
+        trigger_type: triggerType,
+        status: "running",
+        import_mode: importMode,
+        sync_window_from: syncWindowFrom,
+        sync_window_to: new Date().toISOString(),
+      })
       .select("id")
       .single();
     runId = runRow?.id || null;
@@ -357,42 +472,74 @@ export async function runAutoKnowledgeEngine(options = {}) {
   if (connectorSlug) connectors = connectors.filter((c) => c.slug === connectorSlug);
   connectors = connectors.slice(0, maxConnectors);
 
-  const existingItems = await loadExistingItems(admin);
-
   const totals = {
+    importMode,
+    monthKey,
+    globalBackfillCompleted: globalState?.global_backfill_completed ?? false,
     connectorsTotal: connectors.length,
     connectorsOk: 0,
     connectorsFailed: 0,
     fetched: 0,
+    rawFetched: 0,
+    skippedByDate: 0,
     parsed: 0,
+    enriched: 0,
     processed: 0,
     published: 0,
+    indexed: 0,
     rejected: 0,
     duplicate: 0,
     review: 0,
     rejectionReasons: {},
     gateFailures: {},
+    connectorResults: [],
     errors: [],
   };
 
   for (const connectorConfig of connectors) {
     if (connectorConfig.connector_type === "inactive") continue;
 
-    akeLog("orchestrator", { action: "start_connector", slug: connectorConfig.slug });
-    const result = await processConnector(admin, connectorConfig, runId, existingItems, {
-      checkLinks,
-      maxItemsPerConnector: options.maxItemsPerConnector,
-      triggerType,
+    const sourceId = connectorConfig.source_id || await resolveSourceId(admin, connectorConfig.slug);
+    const existingItems = await loadExistingItems(admin, sourceId);
+
+    akeLog("orchestrator", {
+      action: "start_connector",
+      slug: connectorConfig.slug,
+      importMode,
     });
 
+    const result = await processConnector(
+      admin,
+      { ...connectorConfig, source_id: sourceId },
+      runId,
+      existingItems,
+      {
+        checkLinks,
+        maxItemsPerConnector: options.maxItemsPerConnector,
+        triggerType,
+        importMode,
+        monthKey,
+      },
+    );
+
     totals.fetched += result.fetched;
+    totals.rawFetched += result.rawFetched || 0;
+    totals.skippedByDate += result.skippedByDate || 0;
     totals.parsed += result.parsed || 0;
+    totals.enriched += result.enriched || 0;
     totals.processed += result.processed;
     totals.published += result.published;
+    totals.indexed += result.indexed || 0;
     totals.rejected += result.rejected;
     totals.duplicate += result.duplicate;
     totals.review += result.review;
     totals.errors.push(...result.errors);
+    totals.connectorResults.push({
+      slug: connectorConfig.slug,
+      importMode: result.importMode,
+      ...result,
+    });
+
     for (const [k, v] of Object.entries(result.rejectionReasons || {})) {
       totals.rejectionReasons[k] = (totals.rejectionReasons[k] || 0) + v;
     }
@@ -410,6 +557,7 @@ export async function runAutoKnowledgeEngine(options = {}) {
     try {
       await admin.from("ake_engine_runs").update({
         status: totals.connectorsFailed > 0 && totals.connectorsOk === 0 ? "failed" : "completed",
+        import_mode: importMode,
         connectors_total: totals.connectorsTotal,
         connectors_ok: totals.connectorsOk,
         connectors_failed: totals.connectorsFailed,
@@ -419,18 +567,38 @@ export async function runAutoKnowledgeEngine(options = {}) {
         rejected_count: totals.rejected,
         duplicate_count: totals.duplicate,
         review_count: totals.review,
+        enriched_count: totals.enriched,
+        indexed_count: totals.indexed,
+        skipped_date_count: totals.skippedByDate,
         error_count: totals.errors.length,
         duration_ms: durationMs,
         finished_at: new Date().toISOString(),
         summary: {
+          importMode,
+          monthKey,
           errors: totals.errors.slice(0, 10),
           rejectionReasons: totals.rejectionReasons,
           gateFailures: totals.gateFailures,
+          connectorResults: totals.connectorResults.map((c) => ({
+            slug: c.slug,
+            fetched: c.fetched,
+            published: c.published,
+            importMode: c.importMode,
+          })),
         },
       }).eq("id", runId);
     } catch {
       /* ignore */
     }
+  }
+
+  await finalizeRunSyncState(admin, globalState, await loadConnectors(admin), { ...totals, runId }, importMode);
+
+  cacheClear("ake:");
+  try {
+    await admin.from("ake_cache").delete().like("cache_key", "ake:%");
+  } catch {
+    /* ignore */
   }
 
   try {
@@ -520,18 +688,52 @@ export async function getAutoKnowledgeEngineStats(days = 7) {
 }
 
 async function buildAkeStatsFallback(admin, days) {
-  const [{ count: connectorsActive }, { count: connectorsTotal }, { data: runs }] = await Promise.all([
+  const monthStart = startOfCurrentMonthUtc().toISOString();
+  const today = new Date().toISOString().slice(0, 10);
+
+  const [
+    { count: connectorsActive },
+    { count: connectorsTotal },
+    { data: runs },
+    { data: syncState, error: syncStateErr },
+    { count: itemsNewToday },
+    { count: itemsPublishedToday },
+    monthImportedRes,
+    monthPublishedRes,
+    { count: reviewQueue },
+    { count: rejectedCount },
+    { count: duplicateCount },
+    { data: connectors },
+  ] = await Promise.all([
     admin.from("ake_connectors").select("id", { count: "exact", head: true }).eq("is_active", true),
     admin.from("ake_connectors").select("id", { count: "exact", head: true }),
-    admin.from("ake_engine_runs").select("id,status,trigger_type,published_count,fetched_count,duration_ms,started_at").order("started_at", { ascending: false }).limit(10),
+    admin.from("ake_engine_runs").select("id,status,trigger_type,import_mode,published_count,fetched_count,enriched_count,indexed_count,duration_ms,started_at").order("started_at", { ascending: false }).limit(10),
+    admin.from("ake_sync_state").select("*").eq("id", "global").maybeSingle(),
+    admin.from("knowledge_items").select("id", { count: "exact", head: true }).gte("created_at", today),
+    admin.from("knowledge_items").select("id", { count: "exact", head: true }).gte("published_at", today).eq("publish_status", "published"),
+    admin.from("knowledge_items").select("id", { count: "exact", head: true }).gte("source_published_at", monthStart),
+    admin.from("knowledge_items").select("id", { count: "exact", head: true }).gte("source_published_at", monthStart).eq("publish_status", "published"),
+    admin.from("knowledge_items").select("id", { count: "exact", head: true }).eq("verification_status", "needs_review"),
+    admin.from("knowledge_items").select("id", { count: "exact", head: true }).eq("verification_status", "rejected"),
+    admin.from("knowledge_items").select("id", { count: "exact", head: true }).eq("verification_status", "duplicate"),
+    admin.from("ake_connectors").select("slug,name,health_status,backfill_month_key,backfill_completed_at,sync_cursor_at,items_published,is_active").eq("is_active", true),
   ]);
-  const today = new Date().toISOString().slice(0, 10);
-  const { count: itemsNewToday } = await admin.from("knowledge_items").select("id", { count: "exact", head: true }).gte("created_at", today);
-  const { count: itemsPublishedToday } = await admin
-    .from("knowledge_items")
-    .select("id", { count: "exact", head: true })
-    .gte("published_at", today)
-    .eq("publish_status", "published");
+
+  let monthImported = monthImportedRes.error ? null : (monthImportedRes.count || 0);
+  let monthPublished = monthPublishedRes.error ? null : (monthPublishedRes.count || 0);
+  if (monthImportedRes.error) {
+    const fallback = await admin.from("knowledge_items").select("id", { count: "exact", head: true }).gte("created_at", monthStart);
+    monthImported = fallback.count || 0;
+  }
+  if (monthPublishedRes.error) {
+    const fallback = await admin.from("knowledge_items").select("id", { count: "exact", head: true }).gte("created_at", monthStart).eq("publish_status", "published");
+    monthPublished = fallback.count || 0;
+  }
+
+  const monthKey = currentMonthKey();
+  const backfillDone = (connectors || []).filter(
+    (c) => c.backfill_month_key === monthKey && c.backfill_completed_at,
+  ).length;
 
   return {
     connectors_active: connectorsActive || 0,
@@ -539,7 +741,29 @@ async function buildAkeStatsFallback(admin, days) {
     connectors_healthy: 0,
     items_new_today: itemsNewToday || 0,
     items_published_today: itemsPublishedToday || 0,
+    items_review: reviewQueue || 0,
+    items_rejected: rejectedCount || 0,
+    items_duplicate: duplicateCount || 0,
     runs_recent: runs || [],
+    sync_state: syncStateErr ? null : (syncState || null),
+    backfill: {
+      month_key: monthKey,
+      connectors_completed: backfillDone,
+      connectors_total: connectorsActive || 0,
+      global_completed: syncState?.global_backfill_completed ?? false,
+      import_mode: syncState?.global_import_mode ?? "backfill",
+      month_imported: monthImported || 0,
+      month_published: monthPublished || 0,
+      remaining_estimate: Math.max(0, (monthImported || 0) - (monthPublished || 0)),
+    },
+    connectors_health: (connectors || []).map((c) => ({
+      slug: c.slug,
+      name: c.name,
+      health_status: c.health_status,
+      items_published: c.items_published,
+      backfill_completed: Boolean(c.backfill_completed_at && c.backfill_month_key === monthKey),
+      sync_cursor_at: c.sync_cursor_at,
+    })),
     _fallback: true,
     _note: "ake_engine_stats RPC unavailable — run GRANT on function or re-apply auto_knowledge_engine_v13.sql",
   };
