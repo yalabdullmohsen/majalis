@@ -21,6 +21,9 @@ export type HomePlatformStats = {
 
 export async function fetchHomePlatformStats(): Promise<HomePlatformStats> {
   if (!isSupabaseConfiguredServer()) {
+    if (!allowSeedFallback()) {
+      return { lessonsCount: 0, sheikhsCount: 0, libraryCount: 0, qaCount: 0, fawaidCount: 0, miraclesCount: 0 };
+    }
     return {
       lessonsCount: LESSONS_SEED.length,
       sheikhsCount: DEMO_SHEIKHS.length,
@@ -41,13 +44,14 @@ export async function fetchHomePlatformStats(): Promise<HomePlatformStats> {
     supabase.from("scientific_miracles").select("*", { count: "exact", head: true }).eq("status", "approved"),
   ]);
 
+  const seed = allowSeedFallback();
   return {
-    lessonsCount: lessons.count ?? LESSONS_SEED.length,
-    sheikhsCount: sheikhs.count ?? DEMO_SHEIKHS.length,
-    libraryCount: library.count ?? getLibraryCatalog().length,
-    qaCount: qa.count ?? DEMO_QA.length,
-    fawaidCount: fawaid.count ?? DEMO_FAWAID.length,
-    miraclesCount: miracles.count ?? filterMiraclesSeed({}).length,
+    lessonsCount: lessons.count ?? (seed ? LESSONS_SEED.length : 0),
+    sheikhsCount: sheikhs.count ?? (seed ? DEMO_SHEIKHS.length : 0),
+    libraryCount: library.count ?? (seed ? getLibraryCatalog().length : 0),
+    qaCount: qa.count ?? (seed ? DEMO_QA.length : 0),
+    fawaidCount: fawaid.count ?? (seed ? DEMO_FAWAID.length : 0),
+    miraclesCount: miracles.count ?? (seed ? filterMiraclesSeed({}).length : 0),
   };
 }
 
@@ -233,7 +237,7 @@ export async function fetchAllLibraryIds(): Promise<string[]> {
 
 export async function fetchFawaidForServer() {
   if (!isSupabaseConfiguredServer()) {
-    return DEMO_FAWAID;
+    return allowSeedFallback() ? DEMO_FAWAID : [];
   }
 
   const supabase = await createClient();
@@ -243,12 +247,13 @@ export async function fetchFawaidForServer() {
     .eq("status", "approved")
     .order("created_at", { ascending: false });
 
-  if (error || !data?.length) return DEMO_FAWAID;
-  return data;
+  if (error || !data?.length) return allowSeedFallback() ? DEMO_FAWAID : [];
+  return filterPublicRecords(data);
 }
 
 export async function fetchQaForServer() {
   if (!isSupabaseConfiguredServer()) {
+    if (!allowSeedFallback()) return { categories: [], questions: [] };
     return {
       categories: DEMO_QA_CATEGORIES.filter((c) => c.id !== "all"),
       questions: DEMO_QA,
@@ -265,15 +270,16 @@ export async function fetchQaForServer() {
       .order("created_at", { ascending: false }),
   ]);
 
+  const seed = allowSeedFallback();
   return {
-    categories: categories?.length ? categories : DEMO_QA_CATEGORIES.filter((c) => c.id !== "all"),
-    questions: questions?.length ? questions : DEMO_QA,
+    categories: categories?.length ? categories : (seed ? DEMO_QA_CATEGORIES.filter((c) => c.id !== "all") : []),
+    questions: questions?.length ? filterPublicRecords(questions) : (seed ? DEMO_QA : []),
   };
 }
 
 export async function fetchMiraclesForServer() {
   if (!isSupabaseConfiguredServer()) {
-    return filterMiraclesSeed({});
+    return allowSeedFallback() ? filterMiraclesSeed({}) : [];
   }
 
   const supabase = await createClient();
@@ -283,8 +289,8 @@ export async function fetchMiraclesForServer() {
     .eq("status", "approved")
     .order("created_at", { ascending: false });
 
-  if (error || !data?.length) return filterMiraclesSeed({});
-  return data;
+  if (error || !data?.length) return allowSeedFallback() ? filterMiraclesSeed({}) : [];
+  return filterPublicRecords(data);
 }
 
 export async function fetchSitemapEntries(): Promise<{

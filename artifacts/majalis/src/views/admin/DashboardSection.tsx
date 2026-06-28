@@ -80,11 +80,25 @@ export function DashboardSection() {
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1rem", marginBottom: "1.5rem" }}>
         <section style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.625rem", padding: "1.25rem" }}>
+          <h3 style={{ margin: "0 0 0.75rem", color: C.emeraldDeep, fontSize: "1rem" }}>منصة الإنتاج والأتمتة</h3>
+          <ul style={{ margin: 0, paddingInlineStart: "1.1rem", color: C.inkSoft, fontSize: "0.875rem", lineHeight: 2 }}>
+            <li><Link href="/admin/automation">Automation Center</Link></li>
+            <li><Link href="/admin/content-import">Import Center</Link></li>
+            <li><Link href="/admin/sources">Sources</Link></li>
+            <li><Link href="/admin/platform/analytics">Analytics</Link></li>
+            <li><Link href="/admin/feature-status">Health &amp; Features</Link></li>
+            <li><Link href="/admin/auto-content">Auto Content</Link></li>
+            <li><Link href="/admin/majlis-knowledge-engine">MKE / AKP</Link></li>
+          </ul>
+        </section>
+
+        <section style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.625rem", padding: "1.25rem" }}>
           <h3 style={{ margin: "0 0 0.75rem", color: C.emeraldDeep, fontSize: "1rem" }}>حالة النظام</h3>
           <ul style={{ margin: 0, paddingInlineStart: "1.1rem", color: C.inkSoft, fontSize: "0.875rem", lineHeight: 1.9 }}>
-            <li>Supabase: {isSupabaseConfigured() ? (stats.dbConnected !== false ? "متصل" : "غير متاح") : "وضع seed (بدون DB)"}</li>
+            <li>Supabase: {isSupabaseConfigured() ? (stats.dbConnected !== false ? "متصل" : "غير متاح") : "بدون DB"}</li>
             <li>الخادم: {stats.serverOk ? "يعمل" : "تحقق يدويًا"}</li>
-            <li>التحديث التلقائي: <code>/api/cron/sync-data</code></li>
+            <li>Crons: 34+ مجدولة عبر Vercel</li>
+            <li>Production Guard: مفعّل في وضع الإنتاج</li>
           </ul>
         </section>
 

@@ -1,0 +1,27 @@
+{
+  "timestamp": "2026-06-28T02:02:40.370Z",
+  "score": 98,
+  "findings": {
+    "critical": [],
+    "warning": [
+      "Trial import files in repo (4) — import blocked in production"
+    ],
+    "ok": [
+      "Vercel crons registered: 34",
+      "Phase2 trial cron removed from schedule",
+      "Production Guard module present",
+      "src/views/FawaidPage.tsx — no DEMO_* page fallbacks",
+      "src/views/QaPage.tsx — no DEMO_* page fallbacks",
+      "src/views/QuizPage.tsx — no DEMO_* page fallbacks",
+      "src/views/SearchPage.tsx — no DEMO_* page fallbacks",
+      "process-import-jobs cron requires auth",
+      "content-production admin requires auth",
+      "fawaid_500.csv markers stripped",
+      "TypeScript typecheck passes",
+      "test-public-no-demo-content passes",
+      "DeveloperPage uses absolute API links",
+      "server-data.ts uses production gating"
+    ]
+  },
+  "crons": 34
+}
