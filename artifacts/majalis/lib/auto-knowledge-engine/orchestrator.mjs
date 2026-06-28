@@ -145,8 +145,9 @@ async function processConnector(admin, connectorConfig, runId, existingItems, op
 
     const knownHashes = new Set(existingItems.map((i) => i.content_hash).filter(Boolean));
     const newItems = (fetchResult.items || []).filter((item) => {
-      const key = `${item.external_id}`;
-      return !existingItems.some((e) => e.external_id === key);
+      const existing = existingItems.find((e) => e.external_id === item.external_id);
+      if (!existing) return true;
+      return existing.publish_status !== "published";
     });
 
     const verified = await verifyBatch(newItems, connectorConfig, existingItems, {

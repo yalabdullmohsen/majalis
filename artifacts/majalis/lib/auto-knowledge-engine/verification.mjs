@@ -61,6 +61,9 @@ export function verifyItem(item, connector, existingItems = []) {
   let duplicateScore = 0;
 
   for (const existing of existingItems) {
+    if (existing.external_id && item.external_id && existing.external_id === item.external_id) {
+      continue;
+    }
     if (existing.content_hash === h) {
       isDuplicate = true;
       duplicateOf = existing.id;
