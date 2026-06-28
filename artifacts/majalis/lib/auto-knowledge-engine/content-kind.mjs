@@ -9,6 +9,12 @@ const KIND_ALIASES = {
   sharia_ruling: "sharia_ruling",
   hadith: "article",
   update: "news",
+  halaqa: "quran_circle",
+  halaqat: "quran_circle",
+  quran_circle: "quran_circle",
+  mutoon: "mutoon",
+  matn: "mutoon",
+  course: "course",
 };
 
 export function normalizeContentKind(kind, fallback = "article") {

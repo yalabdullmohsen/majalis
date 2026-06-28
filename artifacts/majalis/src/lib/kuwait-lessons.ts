@@ -24,6 +24,7 @@ export type KuwaitLessonRecord = {
   lessonImage?: string;
   governorate: string;
   region: string;
+  city?: string;
   mosque: string;
   day: string;
   time: string;
@@ -51,6 +52,8 @@ export type KuwaitLessonRecord = {
   isCourse?: boolean;
   source?: "supabase" | "seed";
   archivedAt?: string | null;
+  updatedAt?: string | null;
+  viewCount?: number;
 };
 
 export type KuwaitLessonFilters = {
@@ -166,6 +169,7 @@ export function mapLessonRow(row: any): KuwaitLessonRecord {
     lessonImage: resolveLessonPosterUrl(row.poster_image_url),
     governorate,
     region,
+    city: row.city ? String(row.city) : undefined,
     mosque: row.mosque || "",
     day,
     time: row.lesson_time || row.schedule || "",
@@ -187,6 +191,8 @@ export function mapLessonRow(row: any): KuwaitLessonRecord {
     courseId: row.course_id,
     recurring: row.is_recurring !== false && !row.end_date,
     archivedAt: row.archived_at || null,
+    updatedAt: row.updated_at || null,
+    viewCount: typeof row.view_count === "number" ? row.view_count : undefined,
   });
 }
 

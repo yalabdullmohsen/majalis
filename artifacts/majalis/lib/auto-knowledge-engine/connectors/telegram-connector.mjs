@@ -87,6 +87,8 @@ export class TelegramConnector extends BaseConnector {
   }
 
   classifyMessage(text) {
+    if (/حلقة|حفظ|تجويد|مراجعة|إجازة/i.test(text)) return "quran_circle";
+    if (/متن|ألفية|آجرومية|نخبة/i.test(text)) return "mutoon";
     if (/دورة|course/i.test(text)) return "course";
     if (/إعلان|announcement/i.test(text)) return "announcement";
     if (/درس|lesson|محاضرة/i.test(text)) return "lesson";

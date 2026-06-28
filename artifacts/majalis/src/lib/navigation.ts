@@ -88,6 +88,9 @@ export const PRIMARY_NAV = [
 
 /** Mobile "المزيد" dropdown — full site navigation */
 export const MOBILE_MORE_NAV = [
+  { href: "/about", label: "عن المجلس العلمي" },
+  { href: "/quran-circles", label: "حلقات القرآن" },
+  { href: "/mutoon", label: "المتون العلمية" },
   { href: "/lessons", label: "الدروس" },
   { href: "/lessons", label: "المشايخ" },
   { href: "/library", label: "المكتبة" },

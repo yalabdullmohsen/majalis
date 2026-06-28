@@ -140,7 +140,22 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
           </div>
         )}
 
+        {!compact && lesson.keywords && lesson.keywords.length > 0 && (
+          <div className="lesson-unified-card__tags">
+            {lesson.keywords.slice(0, 4).map((tag) => (
+              <span key={tag} className="page-tag">{tag}</span>
+            ))}
+          </div>
+        )}
+
         <div className="lesson-unified-card__meta">
+          {!compact && <MetaCell label="المدينة" value={lesson.city} />}
+          {!compact && <MetaCell label="المستوى" value={lesson.level} />}
+          {!compact && <MetaCell label="المدة" value={lesson.durationLabel} />}
+          {!compact && lesson.viewCount != null && lesson.viewCount > 0 && (
+            <MetaCell label="المشاهدات" value={lesson.viewCount.toLocaleString("ar-KW")} />
+          )}
+          {!compact && <MetaCell label="آخر تحديث" value={lesson.updatedLabel} />}
           {!compact && <MetaCell label="نوع النشاط" value={lesson.activityType} />}
           <MetaCell label="اليوم" value={lesson.day} />
           {!compact && <MetaCell label="التاريخ" value={lesson.gregorianDate} />}
@@ -153,6 +168,22 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
             <MetaCell label="الجلسات" value={lesson.linkedLessons.join(" · ")} />
           )}
         </div>
+
+        {!compact && lesson.sources && lesson.sources.length > 0 && (
+          <p className="lesson-unified-card__sources">
+            <span>المصادر: </span>
+            {lesson.sources.map((source, index) => (
+              <span key={`${source}-${index}`}>
+                {index > 0 ? " · " : ""}
+                {source.startsWith("http") ? (
+                  <a href={source} target="_blank" rel="noopener noreferrer">{source.replace(/^https?:\/\//, "").slice(0, 40)}</a>
+                ) : (
+                  source
+                )}
+              </span>
+            ))}
+          </p>
+        )}
 
         {!compact && lesson.qrCodeUrl && (
           <div className="lesson-unified-card__qr">

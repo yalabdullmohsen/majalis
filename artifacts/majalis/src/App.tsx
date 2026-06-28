@@ -62,6 +62,10 @@ const ArbaeenNawawiPage = lazy(() => import("@/views/ArbaeenNawawiPage"));
 const SettingsPage = lazy(() => import("@/views/SettingsPage"));
 const AnnualCoursesPage = lazy(() => import("@/views/AnnualCoursesPage"));
 const AnnualCourseDetailPage = lazy(() => import("@/views/AnnualCourseDetailPage"));
+const QuranCirclesPage = lazy(() => import("@/views/QuranCirclesPage"));
+const QuranCircleDetailPage = lazy(() => import("@/views/QuranCircleDetailPage"));
+const MutoonPage = lazy(() => import("@/views/MutoonPage"));
+const MutoonDetailPage = lazy(() => import("@/views/MutoonDetailPage"));
 const FiqhCouncilResolutionsPage = lazy(() => import("@/views/FiqhCouncilResolutionsPage"));
 const FiqhCouncilFatwasPage = lazy(() => import("@/views/FiqhCouncilFatwasPage"));
 const FiqhCouncilRecommendationsPage = lazy(() => import("@/views/FiqhCouncilRecommendationsPage"));
@@ -233,6 +237,10 @@ function Router() {
       <Route path="/occasions"><SafeLazyRoute component={OccasionsPage} /></Route>
       <Route path="/arbaeen-nawawi"><SafeLazyRoute component={ArbaeenNawawiPage} /></Route>
       <Route path="/cards"><SafeLazyRoute component={CardsPage} /></Route>
+      <Route path="/quran-circles/:id"><SafeLazyRoute component={QuranCircleDetailPage} /></Route>
+      <Route path="/quran-circles"><SafeLazyRoute component={QuranCirclesPage} /></Route>
+      <Route path="/mutoon/:id"><SafeLazyRoute component={MutoonDetailPage} /></Route>
+      <Route path="/mutoon"><SafeLazyRoute component={MutoonPage} /></Route>
       <Route path="/annual-courses/:id"><SafeLazyRoute component={AnnualCourseDetailPage} /></Route>
       <Route path="/annual-courses"><SafeLazyRoute component={AnnualCoursesPage} /></Route>
       <Route path="/fiqh-council/sessions/:slug"><SafeLazyRoute component={FiqhCouncilSessionDetailPage} /></Route>

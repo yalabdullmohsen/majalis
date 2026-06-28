@@ -35,6 +35,8 @@ const EMPTY: SearchResults = {
   rulings: [],
   courses: [],
   updates: [],
+  quran_circles: [],
+  mutoon: [],
 };
 
 const KIND_GROUP_LABELS: Record<string, string> = {
@@ -52,6 +54,8 @@ const KIND_GROUP_LABELS: Record<string, string> = {
   miracles: "الإعجاز العلمي",
   course: "الدورات العلمية",
   courses: "الدورات العلمية",
+  quran_circles: "حلقات القرآن",
+  mutoon: "المتون العلمية",
   update: "آخر المستجدات",
   updates: "آخر المستجدات",
   fiqh_decision: "المجمع الفقهي",
@@ -263,6 +267,8 @@ export default function SearchPage() {
     (results.fatwas?.length || 0) +
     (results.rulings?.length || 0) +
     (results.courses?.length || 0) +
+    (results.quran_circles?.length || 0) +
+    (results.mutoon?.length || 0) +
     (results.updates?.length || 0) +
     localExtra.occasions.length +
     localExtra.nawawi.length +
@@ -432,6 +438,12 @@ export default function SearchPage() {
                   )} />
                   <Group title="الأحكام الشرعية" items={results.rulings || []} render={(r) => (
                     <ResultRow key={r.id} href={`/rulings/${r.id}`} title={displayText(r.title)} meta={r.searchMeta || r.category} />
+                  )} />
+                  <Group title="حلقات القرآن" items={results.quran_circles || []} render={(c) => (
+                    <ResultRow key={c.id} href={`/quran-circles/${c.id}`} title={displayText(c.name)} meta={c.searchMeta} />
+                  )} />
+                  <Group title="المتون العلمية" items={results.mutoon || []} render={(m) => (
+                    <ResultRow key={m.id} href={`/mutoon/${m.id}`} title={displayText(m.name)} meta={m.searchMeta} />
                   )} />
                   <Group title="الدورات العلمية" items={results.courses || []} render={(c) => (
                     <ResultRow key={c.id} href={`/annual-courses/${c.id}`} title={displayText(c.title)} meta={c.searchMeta || c.course_type} />

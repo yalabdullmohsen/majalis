@@ -12,6 +12,40 @@ import {
 import type { ActivityType, KuwaitLessonRecord } from "./kuwait-lessons";
 import { getRelativeStatusLabel } from "./kuwait-lessons";
 
+const LESSON_LEVEL_BY_CATEGORY: Record<string, string> = {
+  تفسير: "متوسط",
+  فقه: "متوسط",
+  عقيدة: "مبتدئ",
+  حديث: "متوسط",
+  سيرة: "عام",
+  تجويد: "مبتدئ",
+  تأصيل: "متقدم",
+};
+
+function inferLessonLevel(category: string): string {
+  return LESSON_LEVEL_BY_CATEGORY[category] || "عام";
+}
+
+function buildDurationLabel(lesson: KuwaitLessonRecord): string | undefined {
+  if (lesson.sessionCount && lesson.sessionCount > 1) {
+    return `${lesson.sessionCount} لقاءات`;
+  }
+  if (lesson.activityType === "دورة") return "دورة متعددة اللقاءات";
+  return "لقاء واحد";
+}
+
+function formatUpdatedLabel(value?: string | null): string | undefined {
+  if (!value) return undefined;
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return undefined;
+  return date.toLocaleDateString("ar-KW", { year: "numeric", month: "short", day: "numeric" });
+}
+
+function buildSources(lesson: KuwaitLessonRecord): string[] | undefined {
+  const sources = [lesson.siteUrl, lesson.mapsUrl ? "خرائط الموقع" : ""].filter(Boolean) as string[];
+  return sources.length ? sources : undefined;
+}
+
 export type UnifiedLesson = {
   id: string;
   title: string;
@@ -43,6 +77,12 @@ export type UnifiedLesson = {
   siteUrl?: string;
   qrCodeUrl?: string;
   keywords?: string[];
+  city?: string;
+  level?: string;
+  durationLabel?: string;
+  viewCount?: number;
+  updatedLabel?: string;
+  sources?: string[];
 };
 
 export function fromKuwaitLesson(lesson: KuwaitLessonRecord, archived = false): UnifiedLesson {
@@ -77,6 +117,12 @@ export function fromKuwaitLesson(lesson: KuwaitLessonRecord, archived = false): 
     siteUrl: lesson.siteUrl,
     qrCodeUrl: lesson.qrCodeUrl,
     keywords: lesson.keywords,
+    city: lesson.city || lesson.governorate,
+    level: inferLessonLevel(lesson.category),
+    durationLabel: buildDurationLabel(lesson),
+    viewCount: lesson.viewCount,
+    updatedLabel: formatUpdatedLabel(lesson.updatedAt || lesson.startDate),
+    sources: buildSources(lesson),
   };
 }
 

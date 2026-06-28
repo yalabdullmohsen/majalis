@@ -12,7 +12,11 @@ export function AssistantFloatingWidget() {
   const chat = useAssistantChat();
   const closeRef = useRef<HTMLButtonElement>(null);
 
-  const hiddenOnPage = location === "/assistant" || location.startsWith("/admin");
+  const hiddenOnPage =
+    location === "/assistant" ||
+    location.startsWith("/admin") ||
+    location === "/lessons" ||
+    location.startsWith("/lessons?");
 
   useEffect(() => {
     setOpen(false);

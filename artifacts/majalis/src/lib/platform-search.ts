@@ -6,6 +6,8 @@ import {
   UPDATES_SEED,
 } from "./platform-content-service";
 import { arabicMatchAny } from "./arabic-search";
+import { getQuranCircles } from "./quran-circles";
+import { getAllMutoon } from "./mutoon";
 
 export type PlatformSearchResults = {
   fiqh_decisions: Array<{ id: string; slug?: string; title: string; category?: string; decision_type?: string; searchMeta?: string }>;
@@ -13,6 +15,8 @@ export type PlatformSearchResults = {
   rulings: Array<{ id: string; title: string; category?: string; searchMeta?: string }>;
   courses: Array<{ id: string; title: string; course_type?: string; venue_city?: string; searchMeta?: string }>;
   updates: Array<{ id: string; title: string; update_type?: string; searchMeta?: string }>;
+  quran_circles: Array<{ id: string; name: string; sheikh_name?: string; city?: string; searchMeta?: string }>;
+  mutoon: Array<{ id: string; name: string; author?: string; category?: string; searchMeta?: string }>;
 };
 
 const EMPTY: PlatformSearchResults = {
@@ -21,6 +25,8 @@ const EMPTY: PlatformSearchResults = {
   rulings: [],
   courses: [],
   updates: [],
+  quran_circles: [],
+  mutoon: [],
 };
 
 export function searchPlatformSeed(query: string): PlatformSearchResults {
@@ -74,5 +80,25 @@ export function searchPlatformSeed(query: string): PlatformSearchResults {
     searchMeta: u.update_type,
   }));
 
-  return { fiqh_decisions, fatwas, rulings, courses, updates };
+  const quran_circles = getQuranCircles().filter((c) =>
+    arabicMatchAny([c.name, c.sheikh_name, c.city, c.description, ...c.categories], q),
+  ).map((c) => ({
+    id: c.id,
+    name: c.name,
+    sheikh_name: c.sheikh_name,
+    city: c.city,
+    searchMeta: [c.sheikh_name, c.city, c.categories[0]].filter(Boolean).join(" · "),
+  }));
+
+  const mutoon = getAllMutoon().filter((m) =>
+    arabicMatchAny([m.name, m.author, m.category, m.summary, m.text_excerpt], q),
+  ).map((m) => ({
+    id: m.id,
+    name: m.name,
+    author: m.author,
+    category: m.category,
+    searchMeta: [m.author, m.category].filter(Boolean).join(" · "),
+  }));
+
+  return { fiqh_decisions, fatwas, rulings, courses, updates, quran_circles, mutoon };
 }
