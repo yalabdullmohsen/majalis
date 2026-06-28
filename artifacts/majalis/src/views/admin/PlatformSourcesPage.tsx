@@ -51,11 +51,24 @@ function PlatformSourcesContent() {
   const [discoveries, setDiscoveries] = useState<Array<{ discovered_url: string; feed_type: string; confidence: number }>>([]);
   const [testResult, setTestResult] = useState<string | null>(null);
 
+  const [loadError, setLoadError] = useState<string | null>(null);
+
   const load = useCallback(() => {
     setLoading(true);
+    setLoadError(null);
     listPlatformSources()
-      .then((r) => setSources(r.sources || []))
-      .catch(() => setSources([]))
+      .then((r) => {
+        if (!r.ok && r.message) {
+          setLoadError(r.message);
+          setSources([]);
+        } else {
+          setSources(r.sources || []);
+        }
+      })
+      .catch((err) => {
+        setLoadError(err instanceof Error ? err.message : "تعذر تحميل المصادر");
+        setSources([]);
+      })
       .finally(() => setLoading(false));
   }, []);
 
@@ -164,9 +177,9 @@ function PlatformSourcesContent() {
         {sources.length === 0 ? (
           <div style={{ padding: "2rem 1.5rem", textAlign: "center" }}>
             <p style={{ margin: 0, fontSize: "1rem", fontWeight: 600, color: C.emeraldDeep }}>لا توجد مصادر في قاعدة البيانات</p>
-            <p style={{ margin: "0.75rem 0 0", fontSize: "0.875rem", color: C.inkSoft, maxWidth: "520px", marginInline: "auto" }}>
-              السبب المحتمل: لم يُنفَّذ Bootstrap/Seed بعد — يتطلب{" "}
-              <code>SUPABASE_SERVICE_ROLE_KEY</code> و <code>DATABASE_URL</code> على Vercel.
+            <p style={{ margin: "0.75rem 0 0", fontSize: "0.875rem", color: C.inkSoft, maxWidth: "560px", marginInline: "auto" }}>
+              {loadError ||
+                "السبب: Bootstrap/Seed لم يُنفَّذ — يتطلب SUPABASE_SERVICE_ROLE_KEY. بعد إضافته، يُفعِّل النظام Seed تلقائياً."}
             </p>
             <p style={{ margin: "0.75rem 0 0", fontSize: "0.8125rem" }}>
               <Link href="/admin/platform/health" style={{ color: C.emeraldDeep }}>→ عرض Production Health للتفاصيل</Link>

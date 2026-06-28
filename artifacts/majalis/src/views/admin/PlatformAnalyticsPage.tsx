@@ -16,6 +16,7 @@ function Metric({ label, value }: { label: string; value: string | number }) {
 
 function PlatformAnalyticsContent() {
   const [analytics, setAnalytics] = useState<any>(null);
+  const [analyticsBlocker, setAnalyticsBlocker] = useState<string | null>(null);
   const [goals, setGoals] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
@@ -24,6 +25,7 @@ function PlatformAnalyticsContent() {
     setLoading(true);
     try {
       const [a, g] = await Promise.all([fetchPlatformAnalytics(), fetchDailyGoals()]);
+      setAnalyticsBlocker(a.blocker?.label || a.message || a.analytics?.pipelineBlocker?.label || null);
       setAnalytics(a.analytics || a);
       setGoals(g);
     } finally {
@@ -68,10 +70,12 @@ function PlatformAnalyticsContent() {
 
       {!hasData && (
         <div style={{ background: "#FFFBEB", border: `1px solid ${C.line}`, borderRadius: "0.5rem", padding: "1rem", marginBottom: "1.25rem" }}>
-          <strong>لا توجد بيانات تحليلات بعد</strong>
+          <strong>{analyticsBlocker || "لا توجد بيانات تحليلات بعد"}</strong>
           <p style={{ margin: "0.5rem 0 0", fontSize: "0.875rem", color: C.inkSoft }}>
-            السبب: جداول v3 غير مُطبَّقة أو Cron لم يُشغَّل — راجع{" "}
-            <Link href="/admin/platform/health" style={{ color: C.emeraldDeep }}>Production Health</Link>.
+            {analyticsBlocker
+              ? "راجع Production Health للتفاصيل والإصلاح."
+              : "السبب: جداول v3 غير مُطبَّقة أو Cron لم يُشغَّل — راجع Production Health."}{" "}
+            <Link href="/admin/platform/health" style={{ color: C.emeraldDeep }}>Production Health</Link>
           </p>
         </div>
       )}

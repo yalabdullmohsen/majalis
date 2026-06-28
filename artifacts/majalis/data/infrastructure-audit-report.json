@@ -1,42 +1,217 @@
 {
   "ok": false,
   "platformVersion": "3.0.0",
-  "readinessPct": 12,
-  "at": "2026-06-28T03:50:54.806Z",
-  "durationMs": 16105,
+  "readinessPct": 24,
+  "readinessBreakdown": {
+    "infrastructure": {
+      "weight": 15,
+      "score": 55
+    },
+    "database": {
+      "weight": 15,
+      "score": 18
+    },
+    "cron": {
+      "weight": 10,
+      "score": 10
+    },
+    "sources": {
+      "weight": 10,
+      "score": 25
+    },
+    "pipelines": {
+      "weight": 10,
+      "score": 0
+    },
+    "analytics": {
+      "weight": 10,
+      "score": 18
+    },
+    "search": {
+      "weight": 5,
+      "score": 70
+    },
+    "knowledgeGraph": {
+      "weight": 5,
+      "score": 0
+    },
+    "security": {
+      "weight": 10,
+      "score": 40
+    },
+    "backups": {
+      "weight": 10,
+      "score": 0
+    }
+  },
+  "checklist": [
+    {
+      "id": "database",
+      "label": "Database",
+      "status": "FAIL",
+      "reason": "Missing tables: akp_source_health_snapshots, akp_source_discoveries, akp_platform_analytics_daily, akp_daily_goal_progress, akp_self_healing_events, akp_audit_log, akp_backup_snapshots, akp_semantic_index, akp_scheduler_state"
+    },
+    {
+      "id": "secrets",
+      "label": "Secrets",
+      "status": "FAIL",
+      "reason": "Missing DATABASE_URL; Missing SUPABASE_SERVICE_ROLE_KEY; Missing CRON_SECRET"
+    },
+    {
+      "id": "cron",
+      "label": "Cron",
+      "status": "WARNING",
+      "reason": "Missing SUPABASE_SERVICE_ROLE_KEY — cron cannot write pipeline results"
+    },
+    {
+      "id": "bootstrap",
+      "label": "Bootstrap",
+      "status": "WARNING",
+      "reason": "Phase: precheck_secrets — Missing: SUPABASE_SERVICE_ROLE_KEY, DATABASE_URL — Fix: add secrets in Vercel Production"
+    },
+    {
+      "id": "sources",
+      "label": "Sources",
+      "status": "FAIL",
+      "reason": "No active sources"
+    },
+    {
+      "id": "pipelines",
+      "label": "Pipelines",
+      "status": "WARNING",
+      "reason": "Waiting for Bootstrap"
+    },
+    {
+      "id": "analytics",
+      "label": "Analytics",
+      "status": "FAIL",
+      "reason": "Waiting for analytics cron after migration"
+    },
+    {
+      "id": "search",
+      "label": "Search",
+      "status": "WARNING",
+      "reason": "Keyword fallback — OPENAI_API_KEY optional"
+    },
+    {
+      "id": "knowledge_graph",
+      "label": "Knowledge Graph",
+      "status": "FAIL",
+      "reason": "Awaiting first full pipeline cycle"
+    },
+    {
+      "id": "ai",
+      "label": "AI",
+      "status": "WARNING",
+      "reason": "Missing OPENAI_API_KEY — keyword fallback only (WARNING)"
+    },
+    {
+      "id": "backup",
+      "label": "Backup",
+      "status": "FAIL",
+      "reason": "Waiting for backup cron"
+    },
+    {
+      "id": "security",
+      "label": "Security",
+      "status": "FAIL",
+      "reason": "Missing CRON_SECRET"
+    }
+  ],
+  "at": "2026-06-28T04:01:17.862Z",
+  "durationMs": 14469,
   "infrastructure": [
     {
       "key": "DATABASE_URL",
       "priority": "critical",
-      "impact": "تطبيق autonomous_platform_v3.sql وجميع migrations",
+      "impact": "تطبيق autonomous_platform_v3.sql",
       "locations": [
         "Vercel Production",
         "GitHub Actions Secrets"
       ],
       "present": false,
-      "status": "missing"
+      "status": "missing",
+      "whyRequired": "اتصال PostgreSQL المباشر لتطبيق ملفات SQL (autonomous_platform_v3.sql) عبر migration runner.",
+      "stoppedFunctions": [
+        "apply-migrations cron",
+        "إنشاء جداول v3 (health snapshots, analytics, semantic index, scheduler)",
+        "platform-bootstrap → apply_migrations",
+        "التحقق من الفهارس والسياسات عبر pg_catalog"
+      ],
+      "howToFix": [
+        "Supabase Dashboard → Project Settings → Database → Connection string",
+        "اختر Transaction Pooler (port 6543, *.pooler.supabase.com)",
+        "Vercel → Project → Settings → Environment Variables → Production",
+        "أضف DATABASE_URL=postgresql://postgres.[ref]:[password]@aws-0-....pooler.supabase.com:6543/postgres",
+        "GitHub → Repository → Settings → Secrets → Actions → DATABASE_URL (لـ CI bootstrap)",
+        "Redeploy Production"
+      ],
+      "howToVerify": [
+        "pnpm --filter @workspace/majalis run audit:infrastructure — Migration 100%",
+        "/admin/platform/health → Migration section all tables present",
+        "curl -H \"Authorization: Bearer $CRON_SECRET\" \"https://www.majlisilm.com/api/cron/apply-migrations?scope=activation-tables\" → ok:true"
+      ],
+      "optional": false
     },
     {
       "key": "SUPABASE_SERVICE_ROLE_KEY",
       "priority": "critical",
-      "impact": "Bootstrap، Seed، Cron server-side، Admin APIs",
+      "impact": "Bootstrap، Seed، Cron server-side",
       "locations": [
         "Vercel Production",
         "GitHub Actions Secrets"
       ],
       "present": false,
-      "status": "missing"
+      "status": "missing",
+      "whyRequired": "مفتاح الخادم (bypass RLS) لـ Bootstrap، Seed، Cron server-side، وكل Admin APIs التي تكتب في Supabase.",
+      "stoppedFunctions": [
+        "Bootstrap و Seed للمصادر",
+        "listManagedSources / createManagedSource",
+        "Pipeline runs (fetch → publish)",
+        "Health monitoring و Self-healing",
+        "Analytics snapshots و Backup"
+      ],
+      "howToFix": [
+        "Supabase Dashboard → Project Settings → API → service_role (secret)",
+        "Vercel → Environment Variables → SUPABASE_SERVICE_ROLE_KEY (Production only — never expose to client)",
+        "GitHub Actions Secrets → SUPABASE_SERVICE_ROLE_KEY",
+        "Redeploy"
+      ],
+      "howToVerify": [
+        "/admin/platform/health → SUPABASE_SERVICE_ROLE_KEY = موجود",
+        "/admin/sources → يعرض مصادر من DB (بعد seed)",
+        "Bootstrap precheck passes in Production Health"
+      ],
+      "optional": false
     },
     {
       "key": "CRON_SECRET",
       "priority": "critical",
-      "impact": "مصادقة Cron Jobs على الإنتاج",
+      "impact": "مصادقة Cron Jobs",
       "locations": [
         "Vercel Production",
         "GitHub Actions Secrets"
       ],
       "present": false,
-      "status": "missing"
+      "status": "missing",
+      "whyRequired": "مصادقة طلبات /api/cron/* خارج Vercel Cron — يمنع تشغيل غير مصرّح للـ pipelines.",
+      "stoppedFunctions": [
+        "تشغيل Cron يدوياً عبر curl/GitHub Actions",
+        "Self-bootstrap من CI",
+        "Manual pipeline trigger بدون x-vercel-cron header"
+      ],
+      "howToFix": [
+        "Generate: openssl rand -hex 32",
+        "Vercel → CRON_SECRET (Production)",
+        "GitHub Actions Secrets → CRON_SECRET",
+        "Redeploy"
+      ],
+      "howToVerify": [
+        "curl بدون header → 401 Unauthorized",
+        "curl -H \"Authorization: Bearer $CRON_SECRET\" /api/cron/autonomous-platform-v3-health → 200",
+        "/admin/platform/health → Cron Auth = configured"
+      ],
+      "optional": false
     },
     {
       "key": "VITE_SUPABASE_URL",
@@ -45,8 +220,8 @@
       "locations": [
         "Vercel Production"
       ],
-      "present": false,
-      "status": "missing"
+      "present": true,
+      "status": "configured"
     },
     {
       "key": "VITE_SUPABASE_ANON_KEY",
@@ -55,18 +230,33 @@
       "locations": [
         "Vercel Production"
       ],
-      "present": false,
-      "status": "missing"
+      "present": true,
+      "status": "configured"
     },
     {
       "key": "OPENAI_API_KEY",
       "priority": "optional",
-      "impact": "Semantic Embeddings — بدونه Keyword Fallback",
+      "impact": "Semantic Embeddings",
       "locations": [
         "Vercel Production"
       ],
       "present": false,
-      "status": "missing"
+      "status": "missing",
+      "whyRequired": "Semantic embeddings لـ akp_semantic_index — بدونه يعمل البحث عبر Keyword Fallback فقط.",
+      "stoppedFunctions": [
+        "Vector embeddings في Semantic Index",
+        "بحث دلالي متقدم (semantic search)"
+      ],
+      "howToFix": [
+        "platform.openai.com → API Keys → Create",
+        "Vercel → OPENAI_API_KEY (Production)",
+        "Redeploy — اختياري"
+      ],
+      "howToVerify": [
+        "/admin/platform/health → AI mode = semantic_embeddings",
+        "Checklist → Search = PASS (semantic) أو WARNING (keyword fallback)"
+      ],
+      "optional": true
     }
   ],
   "migration": {
@@ -87,7 +277,227 @@
       "akp_semantic_index",
       "akp_scheduler_state"
     ],
-    "appliedPct": 18
+    "appliedPct": 18,
+    "expectedVsActual": {
+      "ok": false,
+      "migrationFile": "autonomous_platform_v3.sql",
+      "sqlFileExists": true,
+      "expected": {
+        "migrationFile": "autonomous_platform_v3.sql",
+        "prerequisite": "autonomous_platform_v1.sql",
+        "tables": [
+          "akp_content_sources",
+          "akp_pipeline_runs",
+          "akp_source_health_snapshots",
+          "akp_source_discoveries",
+          "akp_platform_analytics_daily",
+          "akp_daily_goal_progress",
+          "akp_self_healing_events",
+          "akp_audit_log",
+          "akp_backup_snapshots",
+          "akp_semantic_index",
+          "akp_scheduler_state"
+        ],
+        "indexes": [
+          "akp_sources_health_idx",
+          "akp_health_snapshots_source_idx",
+          "akp_discoveries_status_idx",
+          "akp_self_healing_created_idx",
+          "akp_audit_log_created_idx",
+          "akp_semantic_index_type_idx"
+        ],
+        "policies": [
+          "akp_v3_admin_health",
+          "akp_v3_admin_discoveries",
+          "akp_v3_admin_analytics",
+          "akp_v3_admin_goals",
+          "akp_v3_admin_healing",
+          "akp_v3_admin_audit",
+          "akp_v3_admin_backup",
+          "akp_v3_admin_semantic",
+          "akp_v3_admin_scheduler"
+        ],
+        "columnExtensions": [
+          "akp_content_sources.health_score",
+          "akp_content_sources.items_extracted_total",
+          "akp_content_sources.avg_fetch_ms",
+          "akp_content_sources.fallback_source_id"
+        ]
+      },
+      "actual": {
+        "tables": {
+          "present": [
+            "akp_content_sources",
+            "akp_pipeline_runs"
+          ],
+          "missing": [
+            "akp_source_health_snapshots",
+            "akp_source_discoveries",
+            "akp_platform_analytics_daily",
+            "akp_daily_goal_progress",
+            "akp_self_healing_events",
+            "akp_audit_log",
+            "akp_backup_snapshots",
+            "akp_semantic_index",
+            "akp_scheduler_state"
+          ]
+        },
+        "indexes": {
+          "ok": false,
+          "skipped": true,
+          "reason": "Missing DATABASE_URL — cannot verify indexes/policies via pg_catalog",
+          "present": [],
+          "missing": [
+            "akp_sources_health_idx",
+            "akp_health_snapshots_source_idx",
+            "akp_discoveries_status_idx",
+            "akp_self_healing_created_idx",
+            "akp_audit_log_created_idx",
+            "akp_semantic_index_type_idx"
+          ]
+        },
+        "policies": {
+          "ok": false,
+          "skipped": true,
+          "reason": "Missing DATABASE_URL — cannot verify indexes/policies via pg_catalog",
+          "present": [],
+          "missing": [
+            "akp_v3_admin_health",
+            "akp_v3_admin_discoveries",
+            "akp_v3_admin_analytics",
+            "akp_v3_admin_goals",
+            "akp_v3_admin_healing",
+            "akp_v3_admin_audit",
+            "akp_v3_admin_backup",
+            "akp_v3_admin_semantic",
+            "akp_v3_admin_scheduler"
+          ]
+        }
+      },
+      "appliedPct": 18,
+      "blockers": [
+        {
+          "type": "table",
+          "name": "akp_source_health_snapshots",
+          "fix": "Run apply-migrations cron"
+        },
+        {
+          "type": "table",
+          "name": "akp_source_discoveries",
+          "fix": "Run apply-migrations cron"
+        },
+        {
+          "type": "table",
+          "name": "akp_platform_analytics_daily",
+          "fix": "Run apply-migrations cron"
+        },
+        {
+          "type": "table",
+          "name": "akp_daily_goal_progress",
+          "fix": "Run apply-migrations cron"
+        },
+        {
+          "type": "table",
+          "name": "akp_self_healing_events",
+          "fix": "Run apply-migrations cron"
+        },
+        {
+          "type": "table",
+          "name": "akp_audit_log",
+          "fix": "Run apply-migrations cron"
+        },
+        {
+          "type": "table",
+          "name": "akp_backup_snapshots",
+          "fix": "Run apply-migrations cron"
+        },
+        {
+          "type": "table",
+          "name": "akp_semantic_index",
+          "fix": "Run apply-migrations cron"
+        },
+        {
+          "type": "table",
+          "name": "akp_scheduler_state",
+          "fix": "Run apply-migrations cron"
+        },
+        {
+          "type": "index",
+          "name": "akp_sources_health_idx",
+          "fix": "Re-apply autonomous_platform_v3.sql"
+        },
+        {
+          "type": "index",
+          "name": "akp_health_snapshots_source_idx",
+          "fix": "Re-apply autonomous_platform_v3.sql"
+        },
+        {
+          "type": "index",
+          "name": "akp_discoveries_status_idx",
+          "fix": "Re-apply autonomous_platform_v3.sql"
+        },
+        {
+          "type": "index",
+          "name": "akp_self_healing_created_idx",
+          "fix": "Re-apply autonomous_platform_v3.sql"
+        },
+        {
+          "type": "index",
+          "name": "akp_audit_log_created_idx",
+          "fix": "Re-apply autonomous_platform_v3.sql"
+        },
+        {
+          "type": "index",
+          "name": "akp_semantic_index_type_idx",
+          "fix": "Re-apply autonomous_platform_v3.sql"
+        },
+        {
+          "type": "policy",
+          "name": "akp_v3_admin_health",
+          "fix": "Re-apply autonomous_platform_v3.sql"
+        },
+        {
+          "type": "policy",
+          "name": "akp_v3_admin_discoveries",
+          "fix": "Re-apply autonomous_platform_v3.sql"
+        },
+        {
+          "type": "policy",
+          "name": "akp_v3_admin_analytics",
+          "fix": "Re-apply autonomous_platform_v3.sql"
+        },
+        {
+          "type": "policy",
+          "name": "akp_v3_admin_goals",
+          "fix": "Re-apply autonomous_platform_v3.sql"
+        },
+        {
+          "type": "policy",
+          "name": "akp_v3_admin_healing",
+          "fix": "Re-apply autonomous_platform_v3.sql"
+        },
+        {
+          "type": "policy",
+          "name": "akp_v3_admin_audit",
+          "fix": "Re-apply autonomous_platform_v3.sql"
+        },
+        {
+          "type": "policy",
+          "name": "akp_v3_admin_backup",
+          "fix": "Re-apply autonomous_platform_v3.sql"
+        },
+        {
+          "type": "policy",
+          "name": "akp_v3_admin_semantic",
+          "fix": "Re-apply autonomous_platform_v3.sql"
+        },
+        {
+          "type": "policy",
+          "name": "akp_v3_admin_scheduler",
+          "fix": "Re-apply autonomous_platform_v3.sql"
+        }
+      ]
+    }
   },
   "bootstrap": {
     "ok": false,
@@ -205,7 +615,8 @@
         "hint": "Supabase Transaction Pooler URL (port 6543, *.pooler.supabase.com)"
       }
     ],
-    "blockedReason": "أسرار ناقصة: SUPABASE_SERVICE_ROLE_KEY, DATABASE_URL"
+    "blockedReason": "Phase: precheck_secrets — Missing: SUPABASE_SERVICE_ROLE_KEY, DATABASE_URL — Fix: add secrets in Vercel Production",
+    "failureDetail": null
   },
   "database": {
     "counts": {
@@ -222,17 +633,61 @@
       "akp_scheduler_state": null
     },
     "emptyReasons": {
-      "akp_content_sources": "missing_service_role",
-      "akp_pipeline_runs": "missing_service_role",
-      "akp_source_health_snapshots": "missing_service_role",
-      "akp_source_discoveries": "missing_service_role",
-      "akp_platform_analytics_daily": "missing_service_role",
-      "akp_daily_goal_progress": "missing_service_role",
-      "akp_self_healing_events": "missing_service_role",
-      "akp_audit_log": "missing_service_role",
-      "akp_backup_snapshots": "missing_service_role",
-      "akp_semantic_index": "missing_service_role",
-      "akp_scheduler_state": "missing_service_role"
+      "akp_content_sources": {
+        "code": "missing_secret",
+        "message": "Missing SUPABASE_SERVICE_ROLE_KEY — cannot read DB",
+        "fix": "Supabase Dashboard → Project Settings → API → service_role (secret)"
+      },
+      "akp_pipeline_runs": {
+        "code": "missing_secret",
+        "message": "Missing SUPABASE_SERVICE_ROLE_KEY — cannot read DB",
+        "fix": "Supabase Dashboard → Project Settings → API → service_role (secret)"
+      },
+      "akp_source_health_snapshots": {
+        "code": "missing_secret",
+        "message": "Missing SUPABASE_SERVICE_ROLE_KEY — cannot read DB",
+        "fix": "Supabase Dashboard → Project Settings → API → service_role (secret)"
+      },
+      "akp_source_discoveries": {
+        "code": "missing_secret",
+        "message": "Missing SUPABASE_SERVICE_ROLE_KEY — cannot read DB",
+        "fix": "Supabase Dashboard → Project Settings → API → service_role (secret)"
+      },
+      "akp_platform_analytics_daily": {
+        "code": "missing_secret",
+        "message": "Missing SUPABASE_SERVICE_ROLE_KEY — cannot read DB",
+        "fix": "Supabase Dashboard → Project Settings → API → service_role (secret)"
+      },
+      "akp_daily_goal_progress": {
+        "code": "missing_secret",
+        "message": "Missing SUPABASE_SERVICE_ROLE_KEY — cannot read DB",
+        "fix": "Supabase Dashboard → Project Settings → API → service_role (secret)"
+      },
+      "akp_self_healing_events": {
+        "code": "missing_secret",
+        "message": "Missing SUPABASE_SERVICE_ROLE_KEY — cannot read DB",
+        "fix": "Supabase Dashboard → Project Settings → API → service_role (secret)"
+      },
+      "akp_audit_log": {
+        "code": "missing_secret",
+        "message": "Missing SUPABASE_SERVICE_ROLE_KEY — cannot read DB",
+        "fix": "Supabase Dashboard → Project Settings → API → service_role (secret)"
+      },
+      "akp_backup_snapshots": {
+        "code": "missing_secret",
+        "message": "Missing SUPABASE_SERVICE_ROLE_KEY — cannot read DB",
+        "fix": "Supabase Dashboard → Project Settings → API → service_role (secret)"
+      },
+      "akp_semantic_index": {
+        "code": "missing_secret",
+        "message": "Missing SUPABASE_SERVICE_ROLE_KEY — cannot read DB",
+        "fix": "Supabase Dashboard → Project Settings → API → service_role (secret)"
+      },
+      "akp_scheduler_state": {
+        "code": "missing_secret",
+        "message": "Missing SUPABASE_SERVICE_ROLE_KEY — cannot read DB",
+        "fix": "Supabase Dashboard → Project Settings → API → service_role (secret)"
+      }
     },
     "sources": {
       "db": 0,
@@ -240,8 +695,12 @@
       "active": 0
     },
     "pipelineRuns": [],
-    "selfHealing": [],
-    "lastError": null
+    "pipelineStatus": {
+      "state": "waiting_for_bootstrap",
+      "label": "Waiting for Bootstrap",
+      "detail": "No akp_content_sources rows — seed blocked until SUPABASE_SERVICE_ROLE_KEY"
+    },
+    "selfHealing": []
   },
   "crons": {
     "crons": [
@@ -249,57 +708,129 @@
         "path": "/api/cron/autonomous-platform-v3",
         "schedule": "*/30 * * * *",
         "label": "دورة v3 كاملة",
-        "authRequired": true,
-        "note": "يتطلب CRON_SECRET أو x-vercel-cron على Vercel"
+        "mode": "full",
+        "enabled": true,
+        "registered": true,
+        "lastRun": null,
+        "lastSuccess": null,
+        "lastFailure": null,
+        "nextRun": null,
+        "averageRuntimeMs": null,
+        "itemsProcessed": 0,
+        "neverRunReason": "Missing SUPABASE_SERVICE_ROLE_KEY — cron cannot write pipeline results",
+        "lastRetry": null
       },
       {
         "path": "/api/cron/autonomous-platform-v3-health",
         "schedule": "0 * * * *",
         "label": "مراقبة صحة المصادر",
-        "authRequired": true,
-        "note": "يتطلب CRON_SECRET أو x-vercel-cron على Vercel"
+        "mode": "health",
+        "enabled": true,
+        "registered": true,
+        "lastRun": null,
+        "lastSuccess": null,
+        "lastFailure": null,
+        "nextRun": null,
+        "averageRuntimeMs": null,
+        "itemsProcessed": 0,
+        "neverRunReason": "Missing SUPABASE_SERVICE_ROLE_KEY — cron cannot write pipeline results",
+        "lastRetry": null
       },
       {
         "path": "/api/cron/autonomous-platform-v3-goals",
         "schedule": "0 */4 * * *",
         "label": "أهداف المحتوى اليومية",
-        "authRequired": true,
-        "note": "يتطلب CRON_SECRET أو x-vercel-cron على Vercel"
+        "mode": "goals",
+        "enabled": true,
+        "registered": true,
+        "lastRun": null,
+        "lastSuccess": null,
+        "lastFailure": null,
+        "nextRun": null,
+        "averageRuntimeMs": null,
+        "itemsProcessed": 0,
+        "neverRunReason": "Missing SUPABASE_SERVICE_ROLE_KEY — cron cannot write pipeline results",
+        "lastRetry": null
       },
       {
         "path": "/api/cron/autonomous-platform-v3-analytics",
         "schedule": "15 0 * * *",
         "label": "تحليلات يومية",
-        "authRequired": true,
-        "note": "يتطلب CRON_SECRET أو x-vercel-cron على Vercel"
+        "mode": "analytics",
+        "enabled": true,
+        "registered": true,
+        "lastRun": null,
+        "lastSuccess": null,
+        "lastFailure": null,
+        "nextRun": null,
+        "averageRuntimeMs": null,
+        "itemsProcessed": 0,
+        "neverRunReason": "Missing SUPABASE_SERVICE_ROLE_KEY — cron cannot write pipeline results",
+        "lastRetry": null
       },
       {
         "path": "/api/cron/autonomous-platform-v3-backup",
         "schedule": "0 4 * * *",
         "label": "نسخ احتياطي",
-        "authRequired": true,
-        "note": "يتطلب CRON_SECRET أو x-vercel-cron على Vercel"
+        "mode": "backup",
+        "enabled": true,
+        "registered": true,
+        "lastRun": null,
+        "lastSuccess": null,
+        "lastFailure": null,
+        "nextRun": null,
+        "averageRuntimeMs": null,
+        "itemsProcessed": 0,
+        "neverRunReason": "Missing SUPABASE_SERVICE_ROLE_KEY — cron cannot write pipeline results",
+        "lastRetry": null
       },
       {
         "path": "/api/cron/autonomous-platform-v3-heal",
         "schedule": "manual",
         "label": "إصلاح ذاتي",
-        "authRequired": true,
-        "note": "يتطلب CRON_SECRET أو x-vercel-cron على Vercel"
+        "mode": "heal",
+        "enabled": false,
+        "registered": false,
+        "lastRun": null,
+        "lastSuccess": null,
+        "lastFailure": null,
+        "nextRun": null,
+        "averageRuntimeMs": null,
+        "itemsProcessed": 0,
+        "neverRunReason": "Missing SUPABASE_SERVICE_ROLE_KEY — cron cannot write pipeline results",
+        "lastRetry": null
       },
       {
         "path": "/api/cron/autonomous-platform-bootstrap",
         "schedule": "30 5 * * *",
         "label": "Bootstrap المصادر",
-        "authRequired": true,
-        "note": "يتطلب CRON_SECRET أو x-vercel-cron على Vercel"
+        "mode": "bootstrap",
+        "enabled": true,
+        "registered": true,
+        "lastRun": null,
+        "lastSuccess": null,
+        "lastFailure": null,
+        "nextRun": null,
+        "averageRuntimeMs": null,
+        "itemsProcessed": 0,
+        "neverRunReason": "Missing SUPABASE_SERVICE_ROLE_KEY — cron cannot write pipeline results",
+        "lastRetry": null
       },
       {
         "path": "/api/cron/apply-migrations",
         "schedule": "0 4 * * 0",
         "label": "تطبيق Migrations",
-        "authRequired": true,
-        "note": "يتطلب CRON_SECRET أو x-vercel-cron على Vercel"
+        "mode": "migrations",
+        "enabled": true,
+        "registered": true,
+        "lastRun": null,
+        "lastSuccess": null,
+        "lastFailure": null,
+        "nextRun": null,
+        "averageRuntimeMs": null,
+        "itemsProcessed": 0,
+        "neverRunReason": "Missing SUPABASE_SERVICE_ROLE_KEY — cron cannot write pipeline results",
+        "lastRetry": null
       }
     ],
     "scheduler": {
@@ -309,7 +840,50 @@
       "errorBudget": 1,
       "nextRuns": {}
     },
-    "recentLogs": []
+    "blockReason": "Missing SUPABASE_SERVICE_ROLE_KEY — cron cannot write pipeline results",
+    "recentCronLogs": []
+  },
+  "logs": {
+    "infrastructure": {
+      "ok": false,
+      "reason": "Missing SUPABASE_SERVICE_ROLE_KEY",
+      "entries": []
+    },
+    "database": {
+      "ok": false,
+      "reason": "Missing SUPABASE_SERVICE_ROLE_KEY",
+      "entries": []
+    },
+    "cron": {
+      "ok": false,
+      "reason": "Missing SUPABASE_SERVICE_ROLE_KEY",
+      "entries": []
+    },
+    "pipelines": {
+      "ok": false,
+      "reason": "Missing SUPABASE_SERVICE_ROLE_KEY",
+      "entries": []
+    },
+    "security": {
+      "ok": false,
+      "reason": "Missing SUPABASE_SERVICE_ROLE_KEY",
+      "entries": []
+    },
+    "ai": {
+      "ok": false,
+      "reason": "Missing SUPABASE_SERVICE_ROLE_KEY",
+      "entries": []
+    },
+    "import": {
+      "ok": false,
+      "reason": "Missing SUPABASE_SERVICE_ROLE_KEY",
+      "entries": []
+    },
+    "sources": {
+      "ok": false,
+      "reason": "Missing SUPABASE_SERVICE_ROLE_KEY",
+      "entries": []
+    }
   },
   "security": {
     "cronAuthConfigured": false,
@@ -322,27 +896,76 @@
     {
       "type": "secret",
       "key": "DATABASE_URL",
-      "impact": "تطبيق autonomous_platform_v3.sql وجميع migrations"
+      "impact": "تطبيق autonomous_platform_v3.sql",
+      "whyRequired": "اتصال PostgreSQL المباشر لتطبيق ملفات SQL (autonomous_platform_v3.sql) عبر migration runner.",
+      "stoppedFunctions": [
+        "apply-migrations cron",
+        "إنشاء جداول v3 (health snapshots, analytics, semantic index, scheduler)",
+        "platform-bootstrap → apply_migrations",
+        "التحقق من الفهارس والسياسات عبر pg_catalog"
+      ],
+      "howToFix": [
+        "Supabase Dashboard → Project Settings → Database → Connection string",
+        "اختر Transaction Pooler (port 6543, *.pooler.supabase.com)",
+        "Vercel → Project → Settings → Environment Variables → Production",
+        "أضف DATABASE_URL=postgresql://postgres.[ref]:[password]@aws-0-....pooler.supabase.com:6543/postgres",
+        "GitHub → Repository → Settings → Secrets → Actions → DATABASE_URL (لـ CI bootstrap)",
+        "Redeploy Production"
+      ],
+      "howToVerify": [
+        "pnpm --filter @workspace/majalis run audit:infrastructure — Migration 100%",
+        "/admin/platform/health → Migration section all tables present",
+        "curl -H \"Authorization: Bearer $CRON_SECRET\" \"https://www.majlisilm.com/api/cron/apply-migrations?scope=activation-tables\" → ok:true"
+      ],
+      "programmaticFix": false
     },
     {
       "type": "secret",
       "key": "SUPABASE_SERVICE_ROLE_KEY",
-      "impact": "Bootstrap، Seed، Cron server-side، Admin APIs"
+      "impact": "Bootstrap، Seed، Cron server-side",
+      "whyRequired": "مفتاح الخادم (bypass RLS) لـ Bootstrap، Seed، Cron server-side، وكل Admin APIs التي تكتب في Supabase.",
+      "stoppedFunctions": [
+        "Bootstrap و Seed للمصادر",
+        "listManagedSources / createManagedSource",
+        "Pipeline runs (fetch → publish)",
+        "Health monitoring و Self-healing",
+        "Analytics snapshots و Backup"
+      ],
+      "howToFix": [
+        "Supabase Dashboard → Project Settings → API → service_role (secret)",
+        "Vercel → Environment Variables → SUPABASE_SERVICE_ROLE_KEY (Production only — never expose to client)",
+        "GitHub Actions Secrets → SUPABASE_SERVICE_ROLE_KEY",
+        "Redeploy"
+      ],
+      "howToVerify": [
+        "/admin/platform/health → SUPABASE_SERVICE_ROLE_KEY = موجود",
+        "/admin/sources → يعرض مصادر من DB (بعد seed)",
+        "Bootstrap precheck passes in Production Health"
+      ],
+      "programmaticFix": false
     },
     {
       "type": "secret",
       "key": "CRON_SECRET",
-      "impact": "مصادقة Cron Jobs على الإنتاج"
-    },
-    {
-      "type": "secret",
-      "key": "VITE_SUPABASE_URL",
-      "impact": "اتصال العميل و REST probes"
-    },
-    {
-      "type": "secret",
-      "key": "VITE_SUPABASE_ANON_KEY",
-      "impact": "Auth وقراءة عامة"
+      "impact": "مصادقة Cron Jobs",
+      "whyRequired": "مصادقة طلبات /api/cron/* خارج Vercel Cron — يمنع تشغيل غير مصرّح للـ pipelines.",
+      "stoppedFunctions": [
+        "تشغيل Cron يدوياً عبر curl/GitHub Actions",
+        "Self-bootstrap من CI",
+        "Manual pipeline trigger بدون x-vercel-cron header"
+      ],
+      "howToFix": [
+        "Generate: openssl rand -hex 32",
+        "Vercel → CRON_SECRET (Production)",
+        "GitHub Actions Secrets → CRON_SECRET",
+        "Redeploy"
+      ],
+      "howToVerify": [
+        "curl بدون header → 401 Unauthorized",
+        "curl -H \"Authorization: Bearer $CRON_SECRET\" /api/cron/autonomous-platform-v3-health → 200",
+        "/admin/platform/health → Cron Auth = configured"
+      ],
+      "programmaticFix": false
     },
     {
       "type": "migration",
@@ -357,43 +980,83 @@
         "akp_semantic_index",
         "akp_scheduler_state"
       ],
-      "impact": "جداول v3 غير موجودة — نفّذ apply-migrations"
+      "impact": "autonomous_platform_v3.sql not fully applied",
+      "howToFix": [
+        "Set DATABASE_URL",
+        "Trigger apply-migrations cron",
+        "Or wait for auto-activation"
+      ],
+      "programmaticFix": false
     },
     {
       "type": "bootstrap",
-      "impact": "لا مصادر في DB — شغّل autonomous-platform-v3?mode=seed"
+      "impact": "No sources in DB",
+      "howToFix": [
+        "Set SUPABASE_SERVICE_ROLE_KEY",
+        "Auto-activation seeds on next health/cron check"
+      ],
+      "programmaticFix": false
     },
     {
       "type": "ai",
-      "impact": "OPENAI_API_KEY غير مُعد — Semantic Embeddings معطّلة (Keyword Fallback)",
-      "severity": "warning"
+      "severity": "warning",
+      "impact": "Semantic embeddings disabled",
+      "programmaticFix": false
     }
   ],
+  "blockersCount": 5,
+  "autoActivation": null,
   "ownerActions": [
     {
       "secret": "DATABASE_URL",
       "addTo": "Vercel Production + GitHub Actions Secrets",
-      "impact": "تطبيق autonomous_platform_v3.sql وجميع migrations"
+      "impact": "تطبيق autonomous_platform_v3.sql",
+      "howToFix": [
+        "Supabase Dashboard → Project Settings → Database → Connection string",
+        "اختر Transaction Pooler (port 6543, *.pooler.supabase.com)",
+        "Vercel → Project → Settings → Environment Variables → Production",
+        "أضف DATABASE_URL=postgresql://postgres.[ref]:[password]@aws-0-....pooler.supabase.com:6543/postgres",
+        "GitHub → Repository → Settings → Secrets → Actions → DATABASE_URL (لـ CI bootstrap)",
+        "Redeploy Production"
+      ],
+      "howToVerify": [
+        "pnpm --filter @workspace/majalis run audit:infrastructure — Migration 100%",
+        "/admin/platform/health → Migration section all tables present",
+        "curl -H \"Authorization: Bearer $CRON_SECRET\" \"https://www.majlisilm.com/api/cron/apply-migrations?scope=activation-tables\" → ok:true"
+      ]
     },
     {
       "secret": "SUPABASE_SERVICE_ROLE_KEY",
       "addTo": "Vercel Production + GitHub Actions Secrets",
-      "impact": "Bootstrap، Seed، Cron server-side، Admin APIs"
+      "impact": "Bootstrap، Seed، Cron server-side",
+      "howToFix": [
+        "Supabase Dashboard → Project Settings → API → service_role (secret)",
+        "Vercel → Environment Variables → SUPABASE_SERVICE_ROLE_KEY (Production only — never expose to client)",
+        "GitHub Actions Secrets → SUPABASE_SERVICE_ROLE_KEY",
+        "Redeploy"
+      ],
+      "howToVerify": [
+        "/admin/platform/health → SUPABASE_SERVICE_ROLE_KEY = موجود",
+        "/admin/sources → يعرض مصادر من DB (بعد seed)",
+        "Bootstrap precheck passes in Production Health"
+      ]
     },
     {
       "secret": "CRON_SECRET",
       "addTo": "Vercel Production + GitHub Actions Secrets",
-      "impact": "مصادقة Cron Jobs على الإنتاج"
-    },
-    {
-      "secret": "VITE_SUPABASE_URL",
-      "addTo": "Vercel Production",
-      "impact": "اتصال العميل و REST probes"
-    },
-    {
-      "secret": "VITE_SUPABASE_ANON_KEY",
-      "addTo": "Vercel Production",
-      "impact": "Auth وقراءة عامة"
+      "impact": "مصادقة Cron Jobs",
+      "howToFix": [
+        "Generate: openssl rand -hex 32",
+        "Vercel → CRON_SECRET (Production)",
+        "GitHub Actions Secrets → CRON_SECRET",
+        "Redeploy"
+      ],
+      "howToVerify": [
+        "curl بدون header → 401 Unauthorized",
+        "curl -H \"Authorization: Bearer $CRON_SECRET\" /api/cron/autonomous-platform-v3-health → 200",
+        "/admin/platform/health → Cron Auth = configured"
+      ]
     }
-  ]
+  ],
+  "autoActivationNote": "When DATABASE_URL + SUPABASE_SERVICE_ROLE_KEY are set, the next cron/health check triggers auto-activation: Migration → Seed → Pipeline → Analytics — no manual steps."
 }

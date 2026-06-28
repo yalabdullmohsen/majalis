@@ -102,6 +102,7 @@ function PlatformHealthContent() {
           </p>
         </div>
         <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", fontSize: "0.8125rem", alignItems: "center" }}>
+          <Link href="/admin/platform/checklist" style={{ color: C.emeraldDeep }}>Checklist</Link>
           <Link href="/admin/sources" style={{ color: C.emeraldDeep }}>المصادر</Link>
           <Link href="/admin/platform/analytics" style={{ color: C.emeraldDeep }}>الإحصائيات</Link>
           <button type="button" onClick={() => void load()} style={{ padding: "0.4rem 0.8rem", border: `1px solid ${C.line}`, borderRadius: "0.375rem", background: C.panel }}>
@@ -150,33 +151,59 @@ function PlatformHealthContent() {
         </div>
       )}
 
-      <Section title="البنية التحتية (Secrets)">
-        <div style={{ overflowX: "auto", border: `1px solid ${C.line}`, borderRadius: "0.5rem" }}>
-          <table style={{ width: "100%", borderCollapse: "collapse", minWidth: "640px", fontSize: "0.8125rem" }}>
-            <thead>
-              <tr style={{ background: C.parchmentDeep, textAlign: "right" }}>
-                {["المفتاح", "الأولوية", "الحالة", "التأثير"].map((h) => (
-                  <th key={h} style={{ padding: "0.5rem", color: C.inkSoft }}>{h}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {health.infrastructure.map((item) => (
-                <tr key={item.key}>
-                  <td style={{ padding: "0.5rem" }}><code>{item.key}</code></td>
-                  <td style={{ padding: "0.5rem" }}>{item.priority}</td>
-                  <td style={{ padding: "0.5rem", color: item.present ? C.emeraldDeep : "#991B1B", fontWeight: 600 }}>
-                    {item.present ? "موجود" : "مفقود"}
-                  </td>
-                  <td style={{ padding: "0.5rem", color: C.inkSoft }}>{item.impact}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+      <Section title="البنية التحتية — Secrets (تفصيلي)">
+        {health.infrastructure.map((item) => (
+          <div key={item.key} style={{ marginBottom: "1rem", padding: "1rem", background: item.present ? "#F0FDF4" : "#FEF2F2", border: `1px solid ${C.line}`, borderRadius: "0.5rem" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "0.5rem", marginBottom: "0.5rem" }}>
+              <strong><code>{item.key}</code></strong>
+              <StatusBadge ok={item.present} label={item.present ? "موجود" : "مفقود"} />
+            </div>
+            {item.whyRequired && <p style={{ margin: "0.35rem 0", fontSize: "0.8125rem" }}><strong>لماذا:</strong> {item.whyRequired}</p>}
+            {item.stoppedFunctions && item.stoppedFunctions.length > 0 && !item.present && (
+              <div style={{ fontSize: "0.8125rem", marginTop: "0.35rem" }}>
+                <strong>متوقف:</strong>
+                <ul style={{ margin: "0.25rem 0 0", paddingRight: "1.25rem" }}>{item.stoppedFunctions.map((f) => <li key={f}>{f}</li>)}</ul>
+              </div>
+            )}
+            {item.howToFix && !item.present && (
+              <div style={{ fontSize: "0.8125rem", marginTop: "0.35rem" }}>
+                <strong>الإصلاح:</strong>
+                <ol style={{ margin: "0.25rem 0 0", paddingRight: "1.25rem" }}>{item.howToFix.map((f) => <li key={f}>{f}</li>)}</ol>
+              </div>
+            )}
+            {item.howToVerify && (
+              <div style={{ fontSize: "0.8125rem", marginTop: "0.35rem" }}>
+                <strong>التحقق:</strong>
+                <ul style={{ margin: "0.25rem 0 0", paddingRight: "1.25rem" }}>{item.howToVerify.map((f) => <li key={f}>{f}</li>)}</ul>
+              </div>
+            )}
+          </div>
+        ))}
       </Section>
 
-      <Section title="Migration — autonomous_platform_v3.sql">
+      <Section title="Migration — Expected vs Actual">
+        {health.migration.expectedVsActual && (
+          <div style={{ fontSize: "0.8125rem", display: "grid", gap: "0.75rem" }}>
+            <div>
+              <strong>Tables:</strong> {health.migration.expectedVsActual.actual.tables.present.length}/{health.migration.expectedVsActual.expected.tables.length} present
+              {health.migration.expectedVsActual.actual.tables.missing.length > 0 && (
+                <span style={{ color: "#991B1B" }}> — missing: {health.migration.expectedVsActual.actual.tables.missing.join(", ")}</span>
+              )}
+            </div>
+            <div>
+              <strong>Indexes:</strong>{" "}
+              {health.migration.expectedVsActual.actual.indexes.skipped
+                ? `(skipped — ${health.migration.expectedVsActual.actual.indexes.reason})`
+                : `${health.migration.expectedVsActual.actual.indexes.present.length}/${health.migration.expectedVsActual.expected.indexes.length}`}
+            </div>
+            <div>
+              <strong>Policies:</strong>{" "}
+              {health.migration.expectedVsActual.actual.policies.skipped
+                ? `(skipped — ${health.migration.expectedVsActual.actual.policies.reason})`
+                : `${health.migration.expectedVsActual.actual.policies.present.length}/${health.migration.expectedVsActual.expected.policies.length}`}
+            </div>
+          </div>
+        )}
         {health.migration.missing.length > 0 ? (
           <div>
             <p style={{ color: "#991B1B", fontSize: "0.875rem" }}>
@@ -208,40 +235,60 @@ function PlatformHealthContent() {
                 <div style={{ fontSize: "1.1rem", fontWeight: 700, color: count && count > 0 ? C.emeraldDeep : C.inkSoft }}>
                   {count === null ? "N/A" : count}
                 </div>
-                {reason && <div style={{ color: "#92400E", marginTop: "0.25rem" }}>{reason}</div>}
+                {reason && <div style={{ color: "#92400E", marginTop: "0.25rem" }}>{typeof reason === "string" ? reason : reason.message}</div>}
               </div>
             );
           })}
         </div>
       </Section>
 
-      <Section title="Cron Jobs (AKP v3)">
+      <Section title="Cron Jobs — تفصيلي">
+        {health.crons.blockReason && (
+          <p style={{ color: "#991B1B", fontSize: "0.8125rem", marginBottom: "0.75rem" }}>{health.crons.blockReason}</p>
+        )}
         <div style={{ overflowX: "auto", border: `1px solid ${C.line}`, borderRadius: "0.5rem" }}>
-          <table style={{ width: "100%", borderCollapse: "collapse", minWidth: "700px", fontSize: "0.8125rem" }}>
+          <table style={{ width: "100%", borderCollapse: "collapse", minWidth: "900px", fontSize: "0.75rem" }}>
             <thead>
               <tr style={{ background: C.parchmentDeep, textAlign: "right" }}>
-                {["المسار", "الجدولة", "الوصف"].map((h) => (
-                  <th key={h} style={{ padding: "0.5rem", color: C.inkSoft }}>{h}</th>
+                {["Path", "Enabled", "Registered", "Last Run", "Last OK", "Last Fail", "Next", "Avg ms", "Items", "Reason"].map((h) => (
+                  <th key={h} style={{ padding: "0.4rem" }}>{h}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
               {health.crons.crons.map((c) => (
                 <tr key={c.path}>
-                  <td style={{ padding: "0.5rem" }}><code style={{ fontSize: "0.7rem" }}>{c.path}</code></td>
-                  <td style={{ padding: "0.5rem" }}>{c.schedule}</td>
-                  <td style={{ padding: "0.5rem" }}>{c.label}</td>
+                  <td style={{ padding: "0.4rem" }}><code>{c.path.split("/").pop()}</code></td>
+                  <td style={{ padding: "0.4rem" }}>{c.enabled ? "✓" : "—"}</td>
+                  <td style={{ padding: "0.4rem" }}>{c.registered ? "✓" : "✗"}</td>
+                  <td style={{ padding: "0.4rem" }}>{c.lastRun?.slice(0, 16) ?? "—"}</td>
+                  <td style={{ padding: "0.4rem" }}>{c.lastSuccess?.slice(0, 16) ?? "—"}</td>
+                  <td style={{ padding: "0.4rem" }}>{c.lastFailure?.slice(0, 16) ?? "—"}</td>
+                  <td style={{ padding: "0.4rem" }}>{c.nextRun ? String(c.nextRun).slice(0, 16) : "—"}</td>
+                  <td style={{ padding: "0.4rem" }}>{c.averageRuntimeMs ?? "—"}</td>
+                  <td style={{ padding: "0.4rem" }}>{c.itemsProcessed ?? 0}</td>
+                  <td style={{ padding: "0.4rem", color: "#92400E" }}>{c.neverRunReason || "—"}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        {!health.security.cronAuthConfigured && (
-          <p style={{ fontSize: "0.8125rem", color: "#991B1B", marginTop: "0.5rem" }}>
-            CRON_SECRET غير مُعد — لا يمكن تشغيل Cron يدوياً من خارج Vercel.
-          </p>
-        )}
       </Section>
+
+      {health.logs && (
+        <Section title="Logs (مصنّفة)">
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "0.75rem" }}>
+            {Object.entries(health.logs).map(([cat, data]) => (
+              <div key={cat} style={{ border: `1px solid ${C.line}`, borderRadius: "0.375rem", padding: "0.65rem", fontSize: "0.75rem" }}>
+                <strong>{cat}</strong> ({data.count ?? data.entries.length})
+                {data.entries.slice(0, 3).map((e, i) => (
+                  <div key={i} style={{ color: C.inkSoft, marginTop: "0.25rem" }}>{e.component}/{e.event}</div>
+                ))}
+              </div>
+            ))}
+          </div>
+        </Section>
+      )}
 
       {health.database.pipelineRuns.length > 0 && (
         <Section title="آخر Pipeline Runs">

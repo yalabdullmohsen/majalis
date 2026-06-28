@@ -25,3 +25,6 @@ export { SUPPORTED_LANGUAGES, normalizeLanguageCode, buildI18nPayload } from "./
 export { runDailyBackupSnapshot, listBackupSnapshots } from "./backup-recovery.mjs";
 export { logAuditEvent, listAuditLog, sanitizeAdminPayload } from "./security.mjs";
 export { buildAkpProductionHealth, AKP_V3_TABLES, AKP_V3_CRONS, INFRASTRUCTURE_REQUIREMENTS } from "./production-health.mjs";
+export { SECRET_GUIDES } from "./infra-guides.mjs";
+export { auditV3Migration } from "./migration-audit.mjs";
+export { maybeRunAutoActivation } from "./auto-activation.mjs";

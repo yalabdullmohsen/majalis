@@ -30,6 +30,7 @@ import {
   buildAkpProductionHealth,
 } from "../../../lib/autonomous-platform/v3/index.mjs";
 import { logAuditEvent, sanitizeAdminPayload } from "../../../lib/autonomous-platform/v3/security.mjs";
+import { requireServiceRole, requireSecrets } from "../../../lib/secret-errors.mjs";
 
 export default async function handler(req, res) {
   const body = req.method === "POST" ? sanitizeAdminPayload(req.body || {}) : {};
@@ -41,8 +42,13 @@ export default async function handler(req, res) {
 
   if (req.method === "GET") {
     if (action === "sources" || action === "list-sources") {
+      const guard = requireServiceRole("list sources");
+      if (guard) {
+        sendJson(res, 503, guard);
+        return;
+      }
       const listed = await listManagedSources({ activeOnly: query.activeOnly === "1" });
-      sendJson(res, 200, listed);
+      sendJson(res, listed.ok === false ? 503 : 200, listed);
       return;
     }
     if (action === "source") {
@@ -52,11 +58,16 @@ export default async function handler(req, res) {
       return;
     }
     if (action === "analytics") {
+      const guard = requireServiceRole("production analytics");
+      if (guard) {
+        sendJson(res, 503, guard);
+        return;
+      }
       sendJson(res, 200, await buildProductionAnalytics());
       return;
     }
-    if (action === "health") {
-      sendJson(res, 200, await buildAkpProductionHealth());
+    if (action === "health" || action === "checklist") {
+      sendJson(res, 200, await buildAkpProductionHealth({ runAutoActivation: query.autoActivate === "1" }));
       return;
     }
     if (action === "analytics-history") {

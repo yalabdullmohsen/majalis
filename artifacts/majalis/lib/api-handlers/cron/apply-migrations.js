@@ -7,6 +7,7 @@ import { runActivationMigrations, runActivationTableMigrations } from "../../../
 import { ACTIVATION_TABLES, countTableRows } from "../../../lib/table-probe.mjs";
 import { seedRulingsFromFilesystem } from "../../../lib/rulings-db-seed.mjs";
 import { assertServiceSecrets } from "../../../lib/service-guard.mjs";
+import { requireDatabaseUrl } from "../../../lib/secret-errors.mjs";
 
 function resolvedMeta() {
   const r = resolveDatabaseUrl();
@@ -26,6 +27,12 @@ export default async function handler(req, res) {
   }
 
   const action = req.query?.action || req.body?.action || "apply";
+
+  const dbGuard = requireDatabaseUrl("apply-migrations cron");
+  if (dbGuard && action !== "verify") {
+    sendJson(res, 503, dbGuard);
+    return;
+  }
 
   try {
     if (action === "verify") {
@@ -111,9 +118,14 @@ export default async function handler(req, res) {
       resolved: resolvedMeta(),
     });
   } catch (error) {
+    const msg = String(error.message || error);
+    if (msg.includes("DATABASE") || msg.includes("missing:")) {
+      sendJson(res, 503, { ok: false, code: "Missing DATABASE_URL", error: msg, hint: "Set DATABASE_URL to Supabase Transaction Pooler URL on Vercel (port 6543)" });
+      return;
+    }
     sendJson(res, 500, {
       ok: false,
-      error: error.message,
+      error: msg,
       resolved: resolvedMeta(),
       hint: "Set DATABASE_URL to Supabase Transaction Pooler URL on Vercel (port 6543)",
     });
