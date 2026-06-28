@@ -33,6 +33,7 @@ import {
 } from "./sync-state.mjs";
 import { enqueueFailedStage } from "./recovery.mjs";
 import { isPermanentFetchError } from "./connector-scheduler.mjs";
+import { ensureV2Schema, preprocessItemV2, postPublishV2 } from "./v2/pipeline-hooks.mjs";
 
 async function ensureRealtimeSchema(admin) {
   const { error } = await admin.from("ake_scheduler_state").select("id", { head: true, count: "exact" });
@@ -282,7 +283,18 @@ async function processConnector(admin, connectorConfig, runId, existingItems, op
       return existing.publish_status !== "published";
     });
 
-    const verified = await verifyBatch(newItems, connectorConfig, existingItems, {
+    const preprocessed = [];
+    for (const rawItem of newItems) {
+      const { item, skip, reason } = await preprocessItemV2(rawItem, connectorConfig, existingItems);
+      if (skip) {
+        stats.duplicate++;
+        stats.rejectionReasons[reason || "unified_dedup"] = (stats.rejectionReasons[reason || "unified_dedup"] || 0) + 1;
+        continue;
+      }
+      preprocessed.push(item);
+    }
+
+    const verified = await verifyBatch(preprocessed, connectorConfig, existingItems, {
       checkLinks: options.checkLinks || false,
     });
 
@@ -416,6 +428,7 @@ async function processConnector(admin, connectorConfig, runId, existingItems, op
           await indexAndEmbed(admin, inserted);
           stats.indexed++;
           await persistSeoCache(admin, `${pub.target_table}:${pub.target_record_id}`, seo);
+          await postPublishV2({ inserted, item, connectorConfig, published: true, pub });
         } else {
           stats.review++;
           noteRejection(pub.reason || "publish_failed");
@@ -511,6 +524,7 @@ export async function runAutoKnowledgeEngine(options = {}) {
     await ensureFiqhCouncilTable(admin);
     await ensureSyncSchema(admin);
     await ensureRealtimeSchema(admin);
+    await ensureV2Schema(admin);
 
     globalState = await loadGlobalSyncState(admin);
     let connectorsPreview = await loadConnectors(admin);
@@ -816,6 +830,14 @@ async function buildAkeStatsFallback(admin, days) {
     (c) => c.backfill_month_key === monthKey && c.backfill_completed_at,
   ).length;
 
+  let v2 = null;
+  try {
+    const { getAkeV2DashboardStats } = await import("./v2/pipeline-hooks.mjs");
+    v2 = await getAkeV2DashboardStats();
+  } catch {
+    v2 = null;
+  }
+
   return {
     connectors_active: connectorsActive || 0,
     connectors_total: connectorsTotal || 0,
@@ -856,6 +878,7 @@ async function buildAkeStatsFallback(admin, days) {
       cycles_recent: cycleMetricsErr ? [] : (cycleMetrics || []),
       open_alerts: alertsErr ? [] : (openAlerts || []),
     },
+    v2: v2?.ok ? v2 : null,
     _fallback: true,
     _note: "ake_engine_stats RPC unavailable — run GRANT on function or re-apply auto_knowledge_engine_v13.sql",
   };

@@ -162,6 +162,26 @@ export function KnowledgeEngineSection() {
             </div>
           )}
 
+          {stats?.v2 && (
+            <div style={{ padding: "1.25rem", marginBottom: "1.5rem", borderRadius: "0.5rem", border: `1px solid ${C.line}`, background: C.panel }}>
+              <h3 style={{ margin: "0 0 1rem", fontSize: "0.9375rem", fontWeight: 700, color: C.emeraldDeep }}>
+                AKE v2 — Multi-Source Engine
+              </h3>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(130px, 1fr))", gap: "0.75rem" }}>
+                <StatCard label="Connectors نشطة" value={stats.v2.connectors_active ?? 0} sub={`/${stats.v2.connectors_total ?? 0}`} />
+                <StatCard label="حسابات Instagram" value={stats.v2.instagram_accounts ?? 0} />
+                <StatCard label="بصمات موحّدة" value={stats.v2.unified_fingerprints ?? 0} />
+                <StatCard label="روابط كيانات" value={stats.v2.entity_links ?? 0} />
+                <StatCard label="تغييرات معلقة" value={stats.v2.pending_changes ?? 0} />
+                <StatCard
+                  label="دورة Cron"
+                  value={`${stats.v2.settings?.cron_interval_minutes ?? 15} د`}
+                  sub="قابل للتعديل"
+                />
+              </div>
+            </div>
+          )}
+
           {stats?.backfill && (
             <div style={{ padding: "1.25rem", marginBottom: "1.5rem", borderRadius: "0.5rem", border: `1px solid ${C.line}`, background: C.panel }}>
               <h3 style={{ margin: "0 0 1rem", fontSize: "0.9375rem", fontWeight: 700, color: C.emeraldDeep }}>

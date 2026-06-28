@@ -6,8 +6,17 @@ export const DEFAULT_POLL_INTERVALS = {
   rss: 15,
   manifest: 30,
   seed: 360,
+  instagram: 15,
+  youtube: 15,
+  telegram: 15,
+  website: 30,
+  html: 30,
+  sitemap: 30,
+  x: 15,
+  facebook: 15,
+  whatsapp: 15,
   inactive: 1440,
-  default: 30,
+  default: 15,
 };
 
 /** High-frequency news sources (15 min). */

@@ -69,6 +69,43 @@ export default async function handler(req, res) {
       return;
     }
 
+    if (action === "v2-stats") {
+      const { getAkeV2DashboardStats } = await import("../../../lib/auto-knowledge-engine/v2/pipeline-hooks.mjs");
+      const v2 = await getAkeV2DashboardStats();
+      sendJson(res, 200, { ok: true, v2 });
+      return;
+    }
+
+    if (action === "v2-settings") {
+      const cronMinutes = Number(req.body?.cron_interval_minutes);
+      const maxWorkers = Number(req.body?.max_parallel_workers);
+      if (!admin) {
+        sendJson(res, 503, { ok: false, error: "no_admin" });
+        return;
+      }
+      const patch = { updated_at: new Date().toISOString() };
+      if (cronMinutes >= 5 && cronMinutes <= 120) patch.cron_interval_minutes = cronMinutes;
+      if (maxWorkers >= 1 && maxWorkers <= 12) patch.max_parallel_workers = maxWorkers;
+      await admin.from("ake_v2_settings").update(patch).eq("id", "global");
+      sendJson(res, 200, { ok: true, patch });
+      return;
+    }
+
+    if (action === "run-connector") {
+      const slug = req.body?.slug || req.query?.slug;
+      if (!slug) {
+        sendJson(res, 400, { ok: false, error: "slug required" });
+        return;
+      }
+      const result = await runAutoKnowledgeEngine({
+        triggerType: "manual",
+        connectorSlug: slug,
+        maxItemsPerConnector: Number(req.body?.maxItems || 10),
+      });
+      sendJson(res, 200, result);
+      return;
+    }
+
     if (action === "search") {
       const query = String(req.query?.q || req.body?.q || "").trim();
       if (!query) {
