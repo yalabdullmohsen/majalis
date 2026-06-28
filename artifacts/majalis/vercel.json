@@ -16,6 +16,10 @@
       "schedule": "* * * * *"
     },
     {
+      "path": "/api/cron/process-auto-content-jobs",
+      "schedule": "* * * * *"
+    },
+    {
       "path": "/api/cron/sync-data",
       "schedule": "5 21 * * *"
     },

@@ -1,4 +1,3 @@
-import { requestFetch } from "@/lib/request-manager";
 import { adminFetch as apiFetch } from "@/lib/admin-api";
 import { supabase } from "@/lib/supabase";
 import { isSupabaseConfigured } from "@/lib/supabase-config";
@@ -10,6 +9,42 @@ import type {
   TrustedSource,
 } from "@/lib/auto-content/auto-content-utils";
 import { mapContentTypeToUpdateType } from "@/lib/auto-content/auto-content-utils";
+import { requestFetch } from "@/lib/request-manager";
+
+export type AutoContentJobStatus = {
+  ok: boolean;
+  jobId: string;
+  status: "queued" | "running" | "completed" | "failed" | "cancelled";
+  phase: string;
+  progress: number;
+  result: {
+    fetched?: number;
+    deduped?: number;
+    published?: number;
+    review?: number;
+    failed?: number;
+    imported?: number;
+    skipped?: number;
+    durationMs?: number;
+  } | null;
+  error: string | null;
+  logs?: Array<{ at: string; phase: string; message: string }>;
+  startedAt?: string;
+  finishedAt?: string;
+  createdAt?: string;
+};
+
+export type AutoContentJobSummary = {
+  id: string;
+  type: string;
+  status: string;
+  phase: string;
+  progress: number;
+  result?: AutoContentJobStatus["result"];
+  error_message?: string | null;
+  created_at?: string;
+  finished_at?: string;
+};
 
 export async function adminGetAutoImportedContent(status?: string) {
   let q = supabase
@@ -49,6 +84,15 @@ export async function adminGetAutoImportRuns(limit = 10) {
     .order("started_at", { ascending: false })
     .limit(limit);
   return { data: (data || []) as AutoImportRun[], error };
+}
+
+export async function adminGetAutoContentJobs(limit = 10) {
+  const { data, error } = await supabase
+    .from("auto_content_jobs")
+    .select("id, type, status, phase, progress, result, error_message, created_at, finished_at, started_at")
+    .order("created_at", { ascending: false })
+    .limit(limit);
+  return { data: (data || []) as AutoContentJobSummary[], error };
 }
 
 export async function adminApproveAutoContent(id: string) {
@@ -165,13 +209,44 @@ export async function getMergedPlatformUpdates(limit = 100): Promise<{ data: Mer
   return { data: merged.slice(0, limit), usingSeed: platformRes.usingSeed && autoItems.length === 0 };
 }
 
-export async function triggerAutoContentSync() {
-  const res = await apiFetch("/api/admin/auto-content?action=run", { method: "POST" });
+/** Start async auto-content sync job — returns immediately with jobId (< 1s). */
+export async function startAutoContentJob(): Promise<{ ok: boolean; jobId: string; status: string }> {
+  const res = await apiFetch("/api/admin/auto-content?action=start", { method: "POST" });
+  const json = await res.json().catch(() => ({}));
   if (!res.ok) {
-    const json = await res.json().catch(() => ({}));
-    throw new Error(json.error || "فشل المزامنة");
+    throw new Error(json.error || "فشل بدء المزامنة");
   }
-  return res.json();
+  return json;
+}
+
+/** Poll job status — short timeout safe for 2s polling interval. */
+export async function getAutoContentJobStatus(jobId: string): Promise<AutoContentJobStatus> {
+  const res = await apiFetch(
+    `/api/admin/auto-content?action=status&jobId=${encodeURIComponent(jobId)}`,
+    { method: "GET" },
+  );
+  const json = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    throw new Error(json.error || "تعذر قراءة حالة المهمة");
+  }
+  return json as AutoContentJobStatus;
+}
+
+export async function cancelAutoContentJob(jobId: string) {
+  const res = await apiFetch(
+    `/api/admin/auto-content?action=cancel&jobId=${encodeURIComponent(jobId)}`,
+    { method: "POST" },
+  );
+  const json = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    throw new Error(json.error || "فشل إلغاء المهمة");
+  }
+  return json;
+}
+
+/** @deprecated Use startAutoContentJob + polling instead */
+export async function triggerAutoContentSync() {
+  return startAutoContentJob();
 }
 
 export async function fetchAutoContentPipelineStats() {
@@ -179,3 +254,18 @@ export async function fetchAutoContentPipelineStats() {
   if (!res.ok) return null;
   return res.json();
 }
+
+export const AUTO_CONTENT_PHASE_LABELS: Record<string, string> = {
+  queued: "في الانتظار",
+  fetch_sources: "جلب المصادر",
+  normalize: "تطبيع البيانات",
+  validate: "التحقق",
+  dedup: "إزالة التكرار",
+  classify: "التصنيف",
+  ai_enrich: "تحليل AI",
+  publish: "النشر",
+  reindex: "إعادة الفهرسة",
+  done: "اكتمل",
+  failed: "فشل",
+  cancelled: "أُلغي",
+};

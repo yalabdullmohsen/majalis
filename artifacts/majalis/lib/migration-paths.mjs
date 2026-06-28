@@ -51,6 +51,7 @@ export const MIGRATION_FILES = [
   "qa_phase4_seed.sql",
   "kuwait_lessons_extend.sql",
   "content_import_jobs_v1.sql",
+  "auto_content_jobs_v1.sql",
   "smart_cms_v5.sql",
   "lesson_import_drafts_v1.sql",
   "trusted_lesson_sources_v1.sql",

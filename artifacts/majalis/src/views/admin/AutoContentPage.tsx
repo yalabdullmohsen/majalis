@@ -8,9 +8,17 @@ import {
   adminGetAutoImportedContent,
   adminGetAutoImportLogs,
   adminGetAutoImportRuns,
+  adminGetAutoContentJobs,
   adminGetTrustedSources,
   adminRejectAutoContent,
-  triggerAutoContentSync,
+  startAutoContentJob,
+  getAutoContentJobStatus,
+  cancelAutoContentJob,
+  AUTO_CONTENT_PHASE_LABELS,
+} from "@/lib/auto-content-service";
+import type {
+  AutoContentJobSummary,
+  AutoContentJobStatus,
 } from "@/lib/auto-content-service";
 import type {
   AutoImportedContent,
@@ -44,14 +52,20 @@ function formatDate(iso?: string) {
   }
 }
 
+function phaseLabel(phase: string) {
+  return AUTO_CONTENT_PHASE_LABELS[phase] || phase;
+}
+
 function AutoContentAdmin() {
   const { showSuccess, showError } = useAdminShell();
   const [items, setItems] = useState<AutoImportedContent[]>([]);
   const [sources, setSources] = useState<TrustedSource[]>([]);
   const [logs, setLogs] = useState<AutoImportLog[]>([]);
   const [runs, setRuns] = useState<AutoImportRun[]>([]);
+  const [jobs, setJobs] = useState<AutoContentJobSummary[]>([]);
   const [loading, setLoading] = useState(true);
   const [syncing, setSyncing] = useState(false);
+  const [activeJob, setActiveJob] = useState<AutoContentJobStatus | null>(null);
   const [filter, setFilter] = useState<string>("all");
   const [search, setSearch] = useState("");
   const [expandedId, setExpandedId] = useState<string | null>(null);
@@ -60,16 +74,18 @@ function AutoContentAdmin() {
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      const [contentRes, sourcesRes, logsRes, runsRes] = await Promise.all([
+      const [contentRes, sourcesRes, logsRes, runsRes, jobsRes] = await Promise.all([
         adminGetAutoImportedContent(filter === "all" ? undefined : filter),
         adminGetTrustedSources(),
         adminGetAutoImportLogs(50),
         adminGetAutoImportRuns(10),
+        adminGetAutoContentJobs(10),
       ]);
       setItems(contentRes.data || []);
       setSources(sourcesRes.data || []);
       setLogs(logsRes.data || []);
       setRuns(runsRes.data || []);
+      setJobs(jobsRes.data || []);
     } catch {
       showError("تعذر تحميل المحتوى المستورد.");
     } finally {
@@ -101,19 +117,76 @@ function AutoContentAdmin() {
 
   const displayedLogs = showErrorsOnly ? errorLogs : logs;
 
+  useEffect(() => {
+    if (!activeJob?.jobId) return;
+    if (["completed", "failed", "cancelled"].includes(activeJob.status)) return;
+
+    const poll = async () => {
+      try {
+        const status = await getAutoContentJobStatus(activeJob.jobId);
+        setActiveJob(status);
+        if (status.status === "completed") {
+          setSyncing(false);
+          const r = status.result;
+          showSuccess(
+            `اكتملت المزامنة: ${r?.published ?? 0} منشور، ${r?.review ?? 0} للمراجعة، ${r?.deduped ?? 0} متخطى، ${r?.failed ?? 0} فشل`,
+          );
+          load();
+        } else if (status.status === "failed") {
+          setSyncing(false);
+          showError(status.error || "فشلت المزامنة");
+          load();
+        } else if (status.status === "cancelled") {
+          setSyncing(false);
+          showError("تم إلغاء المزامنة");
+          load();
+        }
+      } catch {
+        /* polling errors should not break the page */
+      }
+    };
+
+    const interval = setInterval(poll, 2000);
+    return () => clearInterval(interval);
+  }, [activeJob?.jobId, activeJob?.status, load, showError, showSuccess]);
+
   const handleSync = async () => {
     setSyncing(true);
+    setActiveJob(null);
     try {
-      const result = await triggerAutoContentSync();
-      showSuccess(
-        `تمت المزامنة: ${result.imported ?? 0} جديد، ${result.skipped ?? 0} متخطى، ${result.failed ?? 0} فشل (${Math.round((result.durationMs || 0) / 1000)}ث)`,
-      );
-      await load();
+      const started = await startAutoContentJob();
+      setActiveJob({
+        ok: true,
+        jobId: started.jobId,
+        status: "queued",
+        phase: "queued",
+        progress: 0,
+        result: null,
+        error: null,
+        logs: [],
+      });
+      showSuccess(`بدأت المزامنة — Job: ${started.jobId.slice(0, 8)}…`);
     } catch (err) {
-      showError(err instanceof Error ? err.message : "فشل تشغيل المزامنة.");
-    } finally {
       setSyncing(false);
+      showError(err instanceof Error ? err.message : "فشل تشغيل المزامنة.");
     }
+  };
+
+  const handleCancelJob = async () => {
+    if (!activeJob?.jobId) return;
+    try {
+      await cancelAutoContentJob(activeJob.jobId);
+      setActiveJob((prev) => (prev ? { ...prev, status: "cancelled", phase: "cancelled" } : null));
+      setSyncing(false);
+      showError("تم إلغاء المزامنة");
+    } catch (err) {
+      showError(err instanceof Error ? err.message : "فشل الإلغاء");
+    }
+  };
+
+  const handleRetry = () => {
+    setActiveJob(null);
+    handleSync();
   };
 
   const handleApprove = async (id: string) => {
@@ -146,23 +219,146 @@ function AutoContentAdmin() {
             · Cron كل 6 ساعات
           </p>
         </div>
-        <button
-          type="button"
-          onClick={handleSync}
-          disabled={syncing}
+        <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+          <button
+            type="button"
+            onClick={handleSync}
+            disabled={syncing}
+            style={{
+              padding: "0.5rem 1.25rem",
+              borderRadius: "0.375rem",
+              background: C.emerald,
+              color: "white",
+              border: "none",
+              cursor: syncing ? "wait" : "pointer",
+              opacity: syncing ? 0.7 : 1,
+            }}
+          >
+            {syncing ? "جارٍ المزامنة..." : "▶ تشغيل المزامنة الآن"}
+          </button>
+          {syncing && activeJob && (
+            <button
+              type="button"
+              onClick={handleCancelJob}
+              style={{
+                padding: "0.5rem 1rem",
+                borderRadius: "0.375rem",
+                background: "#dc2626",
+                color: "white",
+                border: "none",
+                cursor: "pointer",
+              }}
+            >
+              إلغاء
+            </button>
+          )}
+        </div>
+      </div>
+
+      {activeJob && (
+        <div
           style={{
-            padding: "0.5rem 1.25rem",
-            borderRadius: "0.375rem",
-            background: C.emerald,
-            color: "white",
-            border: "none",
-            cursor: syncing ? "wait" : "pointer",
-            opacity: syncing ? 0.7 : 1,
+            padding: "1rem",
+            marginBottom: "1rem",
+            borderRadius: "0.5rem",
+            border: `1px solid ${C.line}`,
+            background: C.panel,
           }}
         >
-          {syncing ? "جارٍ المزامنة..." : "▶ تشغيل المزامنة الآن"}
-        </button>
-      </div>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem", flexWrap: "wrap", gap: "0.5rem" }}>
+            <strong style={{ color: C.emeraldDeep, fontSize: "0.875rem" }}>
+              مهمة المزامنة: {activeJob.jobId.slice(0, 8)}…
+            </strong>
+            <span
+              style={{
+                fontSize: "0.75rem",
+                color: STATUS_COLORS[activeJob.status]?.text || C.inkSoft,
+              }}
+            >
+              {activeJob.status} · {phaseLabel(activeJob.phase)}
+            </span>
+          </div>
+          <div
+            style={{
+              height: "8px",
+              borderRadius: "4px",
+              background: C.parchmentDeep,
+              overflow: "hidden",
+              marginBottom: "0.5rem",
+            }}
+          >
+            <div
+              style={{
+                height: "100%",
+                width: `${Math.min(100, activeJob.progress || 0)}%`,
+                background: activeJob.status === "failed" ? "#dc2626" : C.emerald,
+                transition: "width 0.3s ease",
+              }}
+            />
+          </div>
+          <p style={{ margin: 0, fontSize: "0.75rem", color: C.inkSoft }}>
+            {activeJob.progress ?? 0}% — {phaseLabel(activeJob.phase)}
+          </p>
+          {activeJob.error && (
+            <p style={{ margin: "0.5rem 0 0", fontSize: "0.8125rem", color: "#991B1B" }}>
+              {activeJob.error}
+            </p>
+          )}
+          {activeJob.result && activeJob.status === "completed" && (
+            <p style={{ margin: "0.5rem 0 0", fontSize: "0.8125rem", color: C.emeraldDeep }}>
+              منشور: {activeJob.result.published ?? 0} · مراجعة: {activeJob.result.review ?? 0} ·
+              متخطى: {activeJob.result.deduped ?? 0} · فشل: {activeJob.result.failed ?? 0}
+            </p>
+          )}
+          {activeJob.status === "failed" && (
+            <button type="button" onClick={handleRetry} style={{ ...btnPrimary, marginTop: "0.5rem" }}>
+              إعادة المحاولة
+            </button>
+          )}
+          {activeJob.logs && activeJob.logs.length > 0 && (
+            <div style={{ marginTop: "0.75rem", maxHeight: "120px", overflowY: "auto" }}>
+              {activeJob.logs.slice(-5).map((log, i) => (
+                <div key={i} style={{ fontSize: "0.6875rem", color: C.inkSoft, padding: "0.125rem 0" }}>
+                  [{phaseLabel(log.phase)}] {log.message}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      {jobs.length > 0 && (
+        <div style={{ marginBottom: "1.25rem" }}>
+          <h3 style={{ fontSize: "0.875rem", fontWeight: 700, color: C.emeraldDeep, marginBottom: "0.5rem" }}>
+            آخر مهام المزامنة
+          </h3>
+          {jobs.slice(0, 5).map((job) => (
+            <div
+              key={job.id}
+              style={{
+                fontSize: "0.75rem",
+                color: C.inkSoft,
+                padding: "0.35rem 0",
+                borderBottom: `1px solid ${C.line}`,
+              }}
+            >
+              {formatDate(job.created_at)} — {job.id.slice(0, 8)}… —{" "}
+              <span style={{ color: STATUS_COLORS[job.status]?.text }}>{job.status}</span>
+              {" · "}
+              {phaseLabel(job.phase)} ({job.progress ?? 0}%)
+              {job.result && job.status === "completed" && (
+                <>
+                  {" · "}
+                  {job.result.published ?? 0} منشور، {job.result.review ?? 0} مراجعة
+                </>
+              )}
+              {job.error_message && (
+                <span style={{ color: "#991B1B" }}> — {job.error_message.slice(0, 80)}</span>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))", gap: "0.75rem", marginBottom: "1.25rem" }}>
         <Stat label="قيد المراجعة" value={reviewCount} />

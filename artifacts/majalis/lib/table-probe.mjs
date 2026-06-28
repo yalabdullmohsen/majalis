@@ -16,6 +16,7 @@ export const ACTIVATION_TABLES = [
   "mke_source_plugins",
   "content_import_jobs",
   "content_import_staging",
+  "auto_content_jobs",
   "verified_adhkar_items",
   "akp_content_sources",
   "akp_pipeline_runs",

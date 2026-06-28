@@ -64,6 +64,7 @@ export const PRODUCTION_APIS = [
 export const CRON_SMOKE_PATHS = [
   "/api/cron/system-health",
   "/api/cron/auto-content-health",
+  "/api/cron/process-auto-content-jobs",
   "/api/cron/connector-health",
 ];
 

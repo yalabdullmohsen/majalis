@@ -198,9 +198,10 @@ async function ensureTrustedSources(supabase, logger) {
   return updated > 0;
 }
 
-async function processRssItem(supabase, source, rssItem, runId, logger) {
+async function processRssItem(supabase, source, rssItem, runId, logger, hooks = {}) {
   const externalKey = createExternalKey(source.name, rssItem.link, rssItem.title);
 
+  if (hooks.onProgress) await hooks.onProgress({ phase: "dedup", progress: 45, message: "فحص التكرار" });
   logger.log("dedup", `Checking duplicate: ${rssItem.title.slice(0, 50)}...`);
   const { data: exists } = await supabase
     .from("auto_imported_content")
@@ -214,6 +215,7 @@ async function processRssItem(supabase, source, rssItem, runId, logger) {
     return { action: "skipped", reason: SKIP_REASONS.DUPLICATE, externalKey };
   }
 
+  if (hooks.onProgress) await hooks.onProgress({ phase: "validate", progress: 38, message: "التحقق من المصدر" });
   logger.log("validate", "Validating source URL...");
   const officialSite = source.official_site || source.url;
   const verification = verifySourceUrl(rssItem.link, officialSite, source.trust_level || 80);
@@ -241,9 +243,11 @@ async function processRssItem(supabase, source, rssItem, runId, logger) {
     errors: [],
   });
 
+  if (hooks.onProgress) await hooks.onProgress({ phase: "classify", progress: 55, message: "تصنيف المحتوى" });
   logger.log("classify", "Detecting content category...");
   const contentType = detectContentType(rssItem.title, rssItem.description);
 
+  if (hooks.onProgress) await hooks.onProgress({ phase: "ai_enrich", progress: 70, message: "تحليل AI" });
   logger.log("ai", "AI Started...");
   const analysis = await aiAnalyzeContent({
     title: rssItem.title,
@@ -290,6 +294,7 @@ async function processRssItem(supabase, source, rssItem, runId, logger) {
 
   const scholarly = await applyScholarlyGateToAutoContentRecord(record, source, { checkLinks: false });
   let autoPublish = scholarly.autoPublish && shouldAutoPublish(record, source);
+  if (hooks.onProgress) await hooks.onProgress({ phase: "publish", progress: 85, message: "النشر" });
   if (autoPublish) {
     record.status = "published";
     record.verification_status = "verified";
@@ -351,9 +356,27 @@ async function processRssItem(supabase, source, rssItem, runId, logger) {
   };
 }
 
-export async function runAutoContentSync({ triggerType = "cron", skipSchemaCheck = false } = {}) {
+export async function runAutoContentSync({
+  triggerType = "cron",
+  skipSchemaCheck = false,
+  onProgress,
+  shouldCancel,
+} = {}) {
   const logger = createPipelineLogger();
   logger.log("start", "Cron Started");
+
+  const emitProgress = async (update) => {
+    if (onProgress) await onProgress(update);
+  };
+
+  const cancelled = async () => {
+    if (!shouldCancel) return false;
+    try {
+      return await shouldCancel();
+    } catch {
+      return false;
+    }
+  };
 
   syncDatabaseUrlEnv();
   const envStatus = getEnvStatus();
@@ -447,6 +470,7 @@ export async function runAutoContentSync({ triggerType = "cron", skipSchemaCheck
   }
 
   logger.log("sources", `Loaded ${sources.length} active trusted sources`);
+  await emitProgress({ phase: "fetch_sources", progress: 12, message: `تحميل ${sources.length} مصدر` });
 
   let totalImported = 0;
   let totalPublished = 0;
@@ -460,9 +484,31 @@ export async function runAutoContentSync({ triggerType = "cron", skipSchemaCheck
   const sourceResults = [];
 
   for (let i = 0; i < sources.length; i++) {
+    if (await cancelled()) {
+      logger.warn("finish", "Sync cancelled by job watchdog");
+      return {
+        ok: false,
+        error: "cancelled",
+        cancelled: true,
+        ...logger.summary(),
+        imported: totalImported,
+        published: totalPublished,
+        skipped: totalSkipped,
+        failed: totalFailed,
+        runId,
+      };
+    }
+
     const source = sources[i];
     const officialSite = OFFICIAL_TRUSTED_SOURCES.find((s) => s.url === source.url)?.official_site;
     source.official_site = officialSite || source.url;
+
+    const sourceProgress = 12 + Math.round((i / Math.max(sources.length, 1)) * 28);
+    await emitProgress({
+      phase: "fetch_sources",
+      progress: sourceProgress,
+      message: `جلب المصدر ${i + 1}/${sources.length}: ${source.name}`,
+    });
 
     let imported = 0;
     let published = 0;
@@ -497,10 +543,18 @@ export async function runAutoContentSync({ triggerType = "cron", skipSchemaCheck
       }
 
       logger.log("parse", `Parsed ${rssItems.length} items from feed`);
+      await emitProgress({
+        phase: "normalize",
+        progress: 40 + Math.round((i / Math.max(sources.length, 1)) * 10),
+        message: `تطبيع ${rssItems.length} عنصر من ${source.name}`,
+      });
 
       for (const rssItem of rssItems) {
+        if (await cancelled()) break;
         try {
-          const result = await processRssItem(supabase, source, rssItem, runId, logger);
+          const result = await processRssItem(supabase, source, rssItem, runId, logger, {
+            onProgress: emitProgress,
+          });
           if (result.action === "published") {
             published++;
             imported++;

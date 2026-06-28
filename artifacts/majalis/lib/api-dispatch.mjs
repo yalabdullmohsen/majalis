@@ -109,6 +109,7 @@ export const API_ROUTES = [
   { prefix: "/api/cron/source-monitor", module: "./api-handlers/cron/source-monitor.js", allowGet: true, exact: true },
   { prefix: "/api/admin/content-import", module: "./api-handlers/admin/content-import.js", timeoutMs: 58_000 },
   { prefix: "/api/cron/process-import-jobs", module: "./api-handlers/cron/process-import-jobs.js", allowGet: true, exact: true },
+  { prefix: "/api/cron/process-auto-content-jobs", module: "./api-handlers/cron/process-auto-content-jobs.js", allowGet: true, exact: true },
   { prefix: "/api/cron/import-phase2-trial", module: "./api-handlers/cron/import-phase2-trial.js", allowGet: true, exact: true },
   { prefix: "/api/cron/ai-agents", module: "./api-handlers/cron/ai-agents.js", allowGet: true, exact: true },
   { prefix: "/api/cron/verified-knowledge", module: "./api-handlers/cron/verified-knowledge.js", allowGet: true, exact: true },
