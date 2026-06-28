@@ -28,7 +28,9 @@ export function runQualityGate(item, analysis, verification, connector) {
     seo: Boolean(analysis?.seo_title && analysis?.seo_description),
     quality: quality.quality_score >= (connector?.minQualityScore || connector?.min_quality_score || 65),
     trust: verification.trustScore >= 60,
-    ai_confidence: (analysis?.ai_confidence || 0) >= 50,
+    ai_confidence:
+      (analysis?.ai_confidence || 0) >= 50 ||
+      (trustLevel >= 4 && isCuratedManifest && (analysis?.ai_confidence || 0) >= 40),
     no_forbidden:
       !analysis?.needs_human_review ||
       (trustLevel >= 4 && isCuratedManifest),
