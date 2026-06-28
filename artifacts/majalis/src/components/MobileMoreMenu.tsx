@@ -2,7 +2,62 @@
 
 import { createPortal } from "react-dom";
 import { Link, useLocation } from "wouter";
-import { MOBILE_MORE_NAV } from "@/lib/navigation";
+import {
+  BookOpen,
+  Clock,
+  Compass,
+  GraduationCap,
+  Heart,
+  Home,
+  Library,
+  MessageCircleQuestion,
+  Mic2,
+  Radio,
+  ScrollText,
+  Search,
+  Settings,
+  Sparkles,
+  Sun,
+  Tv,
+  Mail,
+} from "lucide-react";
+import { getMobileMoreNav, type NavLink } from "@/lib/navigation";
+
+const ICONS: Record<string, React.ComponentType<{ size?: number }>> = {
+  home: Home,
+  search: Search,
+  lessons: GraduationCap,
+  courses: ScrollText,
+  library: Library,
+  fiqh: ScrollText,
+  fatwa: ScrollText,
+  rulings: ScrollText,
+  updates: Sparkles,
+  calendar: Clock,
+  fawaid: Heart,
+  qa: MessageCircleQuestion,
+  mushaf: BookOpen,
+  quran: BookOpen,
+  tajweed: Mic2,
+  stories: Library,
+  live: Tv,
+  radio: Radio,
+  wird: Sun,
+  adhkar: Sparkles,
+  tasbih: Compass,
+  arbaeen: ScrollText,
+  occasions: Sparkles,
+  prayer: Clock,
+  ranks: Heart,
+  qibla: Compass,
+  settings: Settings,
+  contact: Mail,
+};
+
+function NavIcon({ link }: { link: NavLink }) {
+  const Icon = (link.icon && ICONS[link.icon]) || BookOpen;
+  return <Icon size={16} aria-hidden="true" />;
+}
 
 type Props = {
   open: boolean;
@@ -27,6 +82,8 @@ export function MobileMoreMenu({
   tabStyle,
   location,
 }: Props) {
+  const moreLinks = getMobileMoreNav(isAdmin);
+
   if (!open || typeof document === "undefined") return null;
 
   const menu = (
@@ -35,13 +92,15 @@ export function MobileMoreMenu({
       <div id="navbar-mobile-more-panel" className="navbar-mobile-panel navbar-mobile-panel--portaled" role="dialog" aria-label="قائمة المزيد">
         {searchBox}
         <nav aria-label="روابط المزيد">
-          {MOBILE_MORE_NAV.map((item) => (
+          {moreLinks.map((item) => (
             <Link
               key={item.href}
               href={item.href}
               onClick={onClose}
-              style={{ ...tabStyle(isActive(item.href)), display: "block", padding: "0.6rem 0.75rem" }}
+              className={`mobile-more-link${isActive(item.href) ? " is-active" : ""}`}
+              style={{ ...tabStyle(isActive(item.href)), display: "flex", alignItems: "center", gap: "0.5rem", padding: "0.6rem 0.75rem" }}
             >
+              <NavIcon link={item} />
               {item.label}
             </Link>
           ))}

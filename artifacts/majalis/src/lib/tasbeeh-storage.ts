@@ -1,6 +1,13 @@
 import { supabase } from "@/lib/supabase";
 
-export type TasbeehPreset = 33 | 100 | 500 | 1000 | "custom";
+export type TasbeehPreset = 33 | 100 | 500 | 1000 | "custom" | "open";
+
+export type TasbeehHistoryEntry = {
+  phrase: string;
+  count: number;
+  target: number;
+  completedAt: string;
+};
 
 export type TasbeehWird = {
   id: string;
@@ -24,8 +31,11 @@ export type TasbeehStats = {
 
 const STORAGE_KEY = "majalis-tasbih-v3";
 const META_KEY = "tasbeeh_state";
+const HISTORY_KEY = "majalis-tasbih-history-v1";
+const MAX_HISTORY = 50;
 
 export const TASBEEH_PRESETS: Array<{ value: TasbeehPreset; label: string }> = [
+  { value: "open", label: "مفتوح" },
   { value: 33, label: "33" },
   { value: 100, label: "100" },
   { value: 500, label: "500" },
@@ -135,4 +145,26 @@ export function mergeTasbeehAwrad(local: TasbeehWird[], remote: TasbeehWird[] | 
     }
   }
   return [...byId.values()];
+}
+
+export function readTasbeehHistory(): TasbeehHistoryEntry[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = localStorage.getItem(HISTORY_KEY);
+    return raw ? (JSON.parse(raw) as TasbeehHistoryEntry[]) : [];
+  } catch {
+    return [];
+  }
+}
+
+export function appendTasbeehHistory(entry: TasbeehHistoryEntry) {
+  if (typeof window === "undefined") return;
+  const existing = readTasbeehHistory();
+  existing.unshift(entry);
+  localStorage.setItem(HISTORY_KEY, JSON.stringify(existing.slice(0, MAX_HISTORY)));
+}
+
+export function clearTasbeehHistory() {
+  if (typeof window === "undefined") return;
+  localStorage.removeItem(HISTORY_KEY);
 }

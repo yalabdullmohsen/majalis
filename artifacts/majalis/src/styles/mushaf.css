@@ -1,0 +1,307 @@
+/* Mushaf — paper-style Quran reader */
+
+.mushaf-page {
+  max-width: 52rem;
+}
+
+.mushaf-page--fullscreen {
+  max-width: none;
+  padding: 0.5rem;
+}
+
+.mushaf-page--fullscreen .mushaf-page-view {
+  min-height: calc(100vh - 4rem);
+}
+
+.mushaf-page--night .mushaf-page-view {
+  background: var(--surface-raised);
+  border-color: var(--border-subtle);
+}
+
+.mushaf-toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin-bottom: 1rem;
+  position: sticky;
+  top: calc(var(--mobile-header-h, 4rem) + 0.25rem);
+  z-index: 20;
+}
+
+.mushaf-toolbar__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.mushaf-toolbar__actions {
+  justify-content: center;
+}
+
+.mushaf-toolbar__btn {
+  min-height: 40px;
+  padding: 0.35rem 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--majalis-line);
+  background: var(--majalis-panel);
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.8125rem;
+  cursor: pointer;
+  color: var(--majalis-ink-soft);
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+
+.mushaf-toolbar__btn:hover:not(:disabled) {
+  border-color: var(--majalis-emerald);
+  color: var(--majalis-emerald-deep);
+}
+
+.mushaf-toolbar__btn.is-active,
+.mushaf-toolbar__btn--accent {
+  border-color: var(--majalis-emerald);
+  color: var(--majalis-emerald-deep);
+  background: color-mix(in srgb, var(--majalis-emerald) 10%, var(--majalis-panel));
+}
+
+.mushaf-toolbar__btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.mushaf-toolbar__page-jump {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.mushaf-toolbar__page-jump input {
+  width: 4rem;
+  min-height: 40px;
+  text-align: center;
+  border-radius: 0.5rem;
+  border: 1px solid var(--majalis-line);
+  font-family: inherit;
+  font-weight: 700;
+}
+
+.mushaf-toolbar__zoom-label {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--majalis-ink-soft);
+  min-width: 2.5rem;
+  text-align: center;
+}
+
+.mushaf-index {
+  margin-bottom: 1rem;
+  max-height: min(60vh, 480px);
+  display: flex;
+  flex-direction: column;
+}
+
+.mushaf-index__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.65rem;
+}
+
+.mushaf-index__close {
+  border: none;
+  background: transparent;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--majalis-ink-soft);
+  line-height: 1;
+}
+
+.mushaf-index__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 0.65rem;
+}
+
+.mushaf-index__tab {
+  min-height: 36px;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid var(--majalis-line);
+  background: var(--majalis-panel);
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.mushaf-index__tab.is-active {
+  border-color: var(--majalis-emerald);
+  color: var(--majalis-emerald-deep);
+  background: color-mix(in srgb, var(--majalis-emerald) 10%, var(--majalis-panel));
+}
+
+.mushaf-index__search {
+  width: 100%;
+  min-height: 40px;
+  border-radius: 0.5rem;
+  border: 1px solid var(--majalis-line);
+  padding: 0.5rem 0.75rem;
+  font-family: inherit;
+  margin-bottom: 0.65rem;
+}
+
+.mushaf-index__list {
+  overflow-y: auto;
+  display: grid;
+  gap: 0.35rem;
+  flex: 1;
+}
+
+.mushaf-index__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.55rem 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid transparent;
+  background: transparent;
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: inherit;
+  color: var(--majalis-ink);
+}
+
+.mushaf-index__item:hover,
+.mushaf-index__item.is-current {
+  background: color-mix(in srgb, var(--majalis-emerald) 8%, var(--majalis-panel));
+  border-color: color-mix(in srgb, var(--majalis-emerald) 25%, var(--majalis-line));
+}
+
+.mushaf-index__item small {
+  color: var(--majalis-ink-soft);
+  font-size: 0.75rem;
+}
+
+.mushaf-index__empty {
+  padding: 1rem;
+  text-align: center;
+  color: var(--majalis-ink-soft);
+  font-size: 0.875rem;
+}
+
+.mushaf-page-view {
+  padding: clamp(1rem, 4vw, 2rem);
+  background: linear-gradient(180deg, #fffef9 0%, #faf6ee 100%);
+  border: 1px solid color-mix(in srgb, var(--majalis-line) 80%, #d4c9b0);
+  box-shadow: var(--shadow-card);
+  min-height: 60vh;
+}
+
+.mushaf-page--night .mushaf-page-view {
+  background: linear-gradient(180deg, #1e2a24 0%, #1a2420 100%);
+}
+
+.mushaf-page-view__head,
+.mushaf-page-view__foot {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--majalis-ink-soft);
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--majalis-line) 60%, transparent);
+}
+
+.mushaf-page-view__foot {
+  padding-top: 0.75rem;
+  padding-bottom: 0;
+  border-bottom: none;
+  border-top: 1px solid color-mix(in srgb, var(--majalis-line) 60%, transparent);
+  justify-content: center;
+}
+
+.mushaf-page-view__body {
+  padding: 1.25rem 0;
+}
+
+.mushaf-page-view__surah-name {
+  text-align: center;
+  font-family: "Amiri Quran", "Scheherazade New", "Noto Naskh Arabic", serif;
+  font-size: 1.35em;
+  color: var(--majalis-emerald-deep);
+  margin: 0.75rem 0 1rem;
+}
+
+.mushaf-page-view__bismillah {
+  text-align: center;
+  font-family: "Amiri Quran", "Scheherazade New", "Noto Naskh Arabic", serif;
+  font-size: 1.15em;
+  color: var(--majalis-emerald);
+  margin: 0.5rem 0;
+}
+
+.mushaf-page-view__ayahs {
+  font-family: "Amiri Quran", "Scheherazade New", "Noto Naskh Arabic", serif;
+  font-size: 1.65em;
+  line-height: 2.1;
+  text-align: justify;
+  color: var(--majalis-ink);
+  margin: 0;
+}
+
+.mushaf-page-view__ayah-num {
+  display: inline;
+  font-size: 0.65em;
+  color: var(--majalis-emerald-deep);
+  margin-inline: 0.15em;
+  vertical-align: middle;
+}
+
+.mushaf-error {
+  padding: 1rem;
+  color: #b42318;
+  text-align: center;
+}
+
+html[data-theme="dark"] .mushaf-page-view__ayahs {
+  color: var(--majalis-ink);
+}
+
+html[data-theme="dark"] .mushaf-page-view__surah-name,
+html[data-theme="dark"] .mushaf-page-view__bismillah {
+  color: var(--majalis-emerald-deep);
+}
+
+@media (max-width: 640px) {
+  .mushaf-toolbar {
+    position: static;
+  }
+
+  .mushaf-page-view {
+    padding: 0.85rem;
+  }
+
+  .mushaf-page-view__ayahs {
+    font-size: 1.45em;
+    line-height: 2;
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
+  appendTasbeehHistory,
   readEmbeddedCounter,
   todayKey,
   writeEmbeddedCounter,
@@ -9,9 +10,10 @@ import {
 type Options = {
   storageId: string;
   initialTarget: number;
-  /** When true, persist daily/lifetime stats on a full Wird object */
+  phrase?: string;
   wird?: TasbeehWird;
   onWirdChange?: (next: TasbeehWird) => void;
+  onHistory?: () => void;
 };
 
 function hapticTick() {
@@ -20,20 +22,22 @@ function hapticTick() {
   }
 }
 
-export function useTasbeehCounter({ storageId, initialTarget, wird, onWirdChange }: Options) {
+export function useTasbeehCounter({ storageId, initialTarget, phrase, wird, onWirdChange, onHistory }: Options) {
   const [count, setCount] = useState(0);
   const [target, setTargetState] = useState(initialTarget);
   const [pulse, setPulse] = useState(false);
   const [canUndo, setCanUndo] = useState(false);
   const undoStack = useRef<number[]>([]);
+  const goalLogged = useRef(false);
 
   useEffect(() => {
     const saved = readEmbeddedCounter(storageId);
     setCount(saved.count);
-    if (saved.target > 0) setTargetState(saved.target);
+    if (saved.target >= 0) setTargetState(saved.target);
     else setTargetState(initialTarget);
     undoStack.current = [];
     setCanUndo(false);
+    goalLogged.current = false;
   }, [storageId, initialTarget]);
 
   const persist = useCallback(
@@ -43,37 +47,55 @@ export function useTasbeehCounter({ storageId, initialTarget, wird, onWirdChange
     [storageId],
   );
 
-  const increment = useCallback(
-    (delta = 1) => {
+  const applyDelta = useCallback(
+    (delta: number) => {
+      if (delta === 0) return;
       setCount((prev) => {
-        const next = prev + delta;
+        const next = Math.max(0, prev + delta);
         undoStack.current.push(prev);
         if (undoStack.current.length > 50) undoStack.current.shift();
         setCanUndo(true);
         persist(next, target);
 
-        if (wird && onWirdChange) {
+        if (wird && onWirdChange && delta > 0) {
           const key = todayKey();
           const daily = { ...(wird.dailyHistory || {}) };
           daily[key] = (daily[key] || 0) + delta;
-          onWirdChange({
+          const nextWird = {
             ...wird,
             count: next,
             target,
             lifetimeTotal: (wird.lifetimeTotal || 0) + delta,
             dailyHistory: daily,
             updatedAt: new Date().toISOString(),
-          });
+          };
+          queueMicrotask(() => onWirdChange(nextWird));
         }
 
-        setPulse(true);
-        window.setTimeout(() => setPulse(false), 180);
-        hapticTick();
+        if (target > 0 && next >= target && !goalLogged.current) {
+          goalLogged.current = true;
+          appendTasbeehHistory({
+            phrase: phrase || wird?.phrase || "ذكر",
+            count: next,
+            target,
+            completedAt: new Date().toISOString(),
+          });
+          onHistory?.();
+        }
+
+        if (delta > 0) {
+          setPulse(true);
+          window.setTimeout(() => setPulse(false), 180);
+          hapticTick();
+        }
         return next;
       });
     },
-    [persist, target, wird, onWirdChange],
+    [persist, target, wird, onWirdChange, phrase, onHistory],
   );
+
+  const increment = useCallback((delta = 1) => applyDelta(delta), [applyDelta]);
+  const decrement = useCallback(() => applyDelta(-1), [applyDelta]);
 
   const undo = useCallback(() => {
     const prev = undoStack.current.pop();
@@ -87,19 +109,21 @@ export function useTasbeehCounter({ storageId, initialTarget, wird, onWirdChange
     undoStack.current = [];
     setCanUndo(false);
     setCount(0);
+    goalLogged.current = false;
     persist(0, target);
     if (wird && onWirdChange) {
-      onWirdChange({ ...wird, count: 0, updatedAt: new Date().toISOString() });
+      queueMicrotask(() => onWirdChange({ ...wird, count: 0, updatedAt: new Date().toISOString() }));
     }
   }, [persist, target, wird, onWirdChange]);
 
   const setTarget = useCallback(
-    (value: number) => {
-      const safe = Math.max(1, Math.round(value || 1));
+    (value: number | "open") => {
+      const safe = value === "open" || value === 0 ? 0 : Math.max(1, Math.round(value || 1));
       setTargetState(safe);
+      goalLogged.current = false;
       persist(count, safe);
       if (wird && onWirdChange) {
-        onWirdChange({ ...wird, target: safe, updatedAt: new Date().toISOString() });
+        queueMicrotask(() => onWirdChange({ ...wird, target: safe, updatedAt: new Date().toISOString() }));
       }
     },
     [count, persist, wird, onWirdChange],
@@ -111,17 +135,22 @@ export function useTasbeehCounter({ storageId, initialTarget, wird, onWirdChange
   }, [count, target]);
 
   const goalReached = count >= target && target > 0;
+  const isOpenMode = target <= 0;
 
   return {
     count,
     target,
     progress,
     goalReached,
+    isOpenMode,
     pulse,
     increment,
+    decrement,
     undo,
     reset,
     setTarget,
     canUndo,
   };
 }
+
+export default useTasbeehCounter;

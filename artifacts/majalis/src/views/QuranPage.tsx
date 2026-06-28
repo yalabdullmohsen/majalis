@@ -74,10 +74,10 @@ export default function QuranPage() {
       {/* 1. Header */}
       <PageHeader
         eyebrow="القرآن الكريم"
-        title="المصحف الشريف"
-        subtitle="قراءة · تلاوة · تفسير — تجربة قرآنية احترافية"
+        title="التلاوات الصوتية"
+        subtitle="قراءة · تلاوة · تفسير — منفصلة عن المصحف الورقي"
       />
-      <QuranSubnav />
+      <QuranSubnav active="recitation" />
 
       {/* Surah quick pick when searching */}
       {filteredSurahs && surahSearch.trim() && (

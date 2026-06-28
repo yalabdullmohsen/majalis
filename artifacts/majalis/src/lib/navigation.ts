@@ -1,7 +1,15 @@
+/**
+ * Single source of truth for site navigation.
+ * Top bar, side drawer, and mobile "المزيد" all derive from UNIFIED_NAV_GROUPS.
+ */
+
 export type NavLink = {
   href: string;
   label: string;
   description?: string;
+  /** Lucide icon key — resolved in SideNavDrawer / MobileMoreMenu */
+  icon?: string;
+  adminOnly?: boolean;
 };
 
 export type NavGroup = {
@@ -10,147 +18,133 @@ export type NavGroup = {
   links: NavLink[];
 };
 
-export const NAV_GROUPS: NavGroup[] = [
+/** Full site navigation — grouped */
+export const UNIFIED_NAV_GROUPS: NavGroup[] = [
+  {
+    id: "main",
+    title: "الرئيسية",
+    links: [
+      { href: "/", label: "الرئيسية", icon: "home" },
+      { href: "/search", label: "البحث", icon: "search" },
+    ],
+  },
   {
     id: "content",
     title: "المحتوى",
     links: [
-      { href: "/", label: "الرئيسية" },
-      { href: "/search", label: "البحث" },
-      { href: "/lessons", label: "الدروس" },
-      { href: "/annual-courses", label: "الدورات العلمية" },
-      { href: "/fiqh-council", label: "المجمع الفقهي الإسلامي" },
-      { href: "/fatwa", label: "الفتاوى" },
-      { href: "/rulings", label: "الأحكام الشرعية" },
-      { href: "/updates", label: "آخر المستجدات" },
-      { href: "/calendar", label: "التقويم" },
-      { href: "/fawaid", label: "الفوائد" },
-      { href: "/qa", label: "الأسئلة" },
+      { href: "/lessons", label: "الدروس", icon: "lessons" },
+      { href: "/library", label: "المكتبة", icon: "library" },
+      { href: "/annual-courses", label: "الدورات العلمية", icon: "courses" },
+      { href: "/fiqh-council", label: "المجمع الفقهي", icon: "fiqh" },
+      { href: "/fatwa", label: "الفتاوى", icon: "fatwa" },
+      { href: "/rulings", label: "الأحكام الشرعية", icon: "rulings" },
+      { href: "/fawaid", label: "الفوائد", icon: "fawaid" },
+      { href: "/qa", label: "الأسئلة", icon: "qa" },
+      { href: "/updates", label: "آخر المستجدات", icon: "updates" },
+      { href: "/calendar", label: "التقويم", icon: "calendar" },
     ],
   },
   {
     id: "quran",
     title: "القرآن",
     links: [
-      { href: "/quran", label: "المصحف الشريف" },
-      { href: "/quran/tajweed", label: "علم التجويد" },
-      { href: "/quran/surah-stories", label: "قصص القرآن" },
-      { href: "/quran-live", label: "البث المباشر" },
-      { href: "/quran-radio", label: "إذاعات القرآن" },
-      { href: "/daily-wird", label: "الورد اليومي" },
+      { href: "/quran/mushaf", label: "المصحف الشريف", icon: "mushaf" },
+      { href: "/quran", label: "التلاوات الصوتية", icon: "quran" },
+      { href: "/quran/tajweed", label: "علم التجويد", icon: "tajweed" },
+      { href: "/quran/surah-stories", label: "قصص القرآن", icon: "stories" },
+      { href: "/quran-live", label: "البث المباشر", icon: "live" },
+      { href: "/quran-radio", label: "إذاعات القرآن", icon: "radio" },
+      { href: "/daily-wird", label: "الورد اليومي", icon: "wird" },
     ],
   },
   {
     id: "adhkar",
     title: "الأذكار",
     links: [
-      { href: "/adhkar?cat=morning", label: "أذكار الصباح" },
-      { href: "/adhkar?cat=evening", label: "أذكار المساء" },
-      { href: "/adhkar?cat=distress", label: "الدعاء" },
-      { href: "/tasbih", label: "التسابيح" },
+      { href: "/adhkar", label: "الأذكار", icon: "adhkar" },
+      { href: "/adhkar?cat=morning", label: "أذكار الصباح", icon: "adhkar" },
+      { href: "/adhkar?cat=evening", label: "أذكار المساء", icon: "adhkar" },
+      { href: "/adhkar?cat=distress", label: "الدعاء", icon: "adhkar" },
+      { href: "/tasbih", label: "عداد التسبيح", icon: "tasbih" },
     ],
   },
   {
     id: "sunnah",
     title: "السنة",
     links: [
-      { href: "/arbaeen-nawawi", label: "الأربعون النووية" },
-      { href: "/adhkar", label: "سنن مؤقتة" },
-      { href: "/adhkar?cat=misc", label: "سنن غير مؤقتة" },
-      { href: "/quran", label: "فضائل القرآن" },
-      { href: "/occasions", label: "اليوم النبوي" },
-      { href: "/daily-wird", label: "متابعة النوافل" },
+      { href: "/arbaeen-nawawi", label: "الأربعون النووية", icon: "arbaeen" },
+      { href: "/occasions", label: "المناسبات الإسلامية", icon: "occasions" },
     ],
   },
   {
     id: "tools",
     title: "الأدوات",
     links: [
-      { href: "/prayer-times", label: "مواقيت الصلاة" },
-      { href: "/prayer-ranks", label: "مراتب الناس في الصلاة" },
-      { href: "/qibla", label: "القبلة" },
-      { href: "/occasions", label: "المناسبات الإسلامية" },
-      { href: "/settings", label: "الإعدادات" },
+      { href: "/prayer-times", label: "مواقيت الصلاة", icon: "prayer" },
+      { href: "/prayer-ranks", label: "مراتب الصلاة", icon: "ranks" },
+      { href: "/qibla", label: "القبلة", icon: "qibla" },
+      { href: "/settings", label: "الإعدادات", icon: "settings" },
+      { href: "/contact", label: "تواصل معنا", icon: "contact" },
     ],
   },
 ];
 
-export const PRIMARY_NAV = [
-  { href: "/", label: "الرئيسية" },
-  { href: "/lessons", label: "الدروس" },
-  { href: "/quran", label: "القرآن" },
-  { href: "/library", label: "المكتبة" },
-  { href: "/adhkar", label: "الأذكار" },
-  { href: "/prayer-times", label: "الصلاة" },
+/** Desktop top tabs — every item MUST exist in UNIFIED_NAV_GROUPS */
+export const PRIMARY_NAV: NavLink[] = [
+  { href: "/", label: "الرئيسية", icon: "home" },
+  { href: "/lessons", label: "الدروس", icon: "lessons" },
+  { href: "/quran/mushaf", label: "القرآن", icon: "mushaf" },
+  { href: "/library", label: "المكتبة", icon: "library" },
+  { href: "/adhkar", label: "الأذكار", icon: "adhkar" },
+  { href: "/prayer-times", label: "الصلاة", icon: "prayer" },
 ];
 
-/** Mobile "المزيد" dropdown — full site navigation */
-export const MOBILE_MORE_NAV = [
-  { href: "/lessons", label: "الدروس" },
-  { href: "/lessons", label: "المشايخ" },
-  { href: "/library", label: "المكتبة" },
-  { href: "/qa", label: "الأسئلة" },
-  { href: "/quran", label: "القرآن" },
-  { href: "/adhkar", label: "الأذكار" },
-  { href: "/quran-radio", label: "إذاعة القرآن" },
-  { href: "/quran-live", label: "البث المباشر" },
-  { href: "/quran/tajweed", label: "التجويد" },
-  { href: "/quran/surah-stories", label: "قصص القرآن" },
-  { href: "/tasbih", label: "عداد التسبيح" },
-  { href: "/prayer-ranks", label: "مراتب الصلاة" },
-  { href: "/settings", label: "الإعدادات" },
-  { href: "/contact", label: "تواصل معنا" },
-];
+/** @deprecated Use UNIFIED_NAV_GROUPS */
+export const NAV_GROUPS = UNIFIED_NAV_GROUPS;
+
+export function getFlatNavLinks(): NavLink[] {
+  const seen = new Set<string>();
+  const out: NavLink[] = [];
+  for (const group of UNIFIED_NAV_GROUPS) {
+    for (const link of group.links) {
+      const key = link.href.split("?")[0];
+      if (seen.has(key)) continue;
+      seen.add(key);
+      out.push(link);
+    }
+  }
+  return out;
+}
+
+/** Mobile "المزيد" — all links not in PRIMARY_NAV, from same source */
+export function getMobileMoreNav(isAdmin: boolean): NavLink[] {
+  const primaryPaths = new Set(PRIMARY_NAV.map((l) => l.href.split("?")[0]));
+  return getFlatNavLinks().filter((link) => {
+    const path = link.href.split("?")[0];
+    if (primaryPaths.has(path)) return false;
+    if (link.adminOnly && !isAdmin) return false;
+    return true;
+  });
+}
+
+/** Side drawer uses the same groups as the unified source */
+export function getSideNavGroups(isAdmin: boolean): NavGroup[] {
+  return UNIFIED_NAV_GROUPS.map((group) => ({
+    ...group,
+    links: group.links.filter((l) => !l.adminOnly || isAdmin),
+  }));
+}
 
 export const HOME_FEATURE_CARDS = [
-  {
-    href: "/quran",
-    title: "القرآن الكريم",
-    description: "قراءة وتلاوة وبحث",
-    icon: "book-open",
-  },
-  {
-    href: "/adhkar",
-    title: "الأذكار",
-    description: "أذكار يومية موثقة",
-    icon: "sparkles",
-  },
-  {
-    href: "/adhkar?cat=distress",
-    title: "الدعاء",
-    description: "أدعية من السنة",
-    icon: "hands",
-  },
-  {
-    href: "/prayer-times",
-    title: "مواقيت الصلاة",
-    description: "مواقيت دقيقة للكويت",
-    icon: "clock",
-  },
-  {
-    href: "/tasbih",
-    title: "التسابيح",
-    description: "مسبحة إلكترونية",
-    icon: "circle-dot",
-  },
-  {
-    href: "/quran-radio",
-    title: "إذاعة القرآن",
-    description: "بث مباشر للقرآن",
-    icon: "radio",
-  },
-  {
-    href: "/arbaeen-nawawi",
-    title: "الأربعون النووية",
-    description: "أحاديث مختصرة",
-    icon: "scroll",
-  },
-  {
-    href: "/qibla",
-    title: "القبلة",
-    description: "اتجاه الكعبة",
-    icon: "compass",
-  },
+  { href: "/quran/mushaf", title: "المصحف الشريف", description: "مصحف ورقي — طبعة الكويت", icon: "book-open" },
+  { href: "/quran", title: "التلاوات الصوتية", description: "قراءة وتلاوة وبحث", icon: "book-open" },
+  { href: "/adhkar", title: "الأذكار", description: "أذكار يومية موثقة", icon: "sparkles" },
+  { href: "/adhkar?cat=distress", title: "الدعاء", description: "أدعية من السنة", icon: "hands" },
+  { href: "/prayer-times", title: "مواقيت الصلاة", description: "مواقيت دقيقة للكويت", icon: "clock" },
+  { href: "/tasbih", title: "التسابيح", description: "مسبحة إلكترونية", icon: "circle-dot" },
+  { href: "/quran-radio", title: "إذاعة القرآن", description: "بث مباشر للقرآن", icon: "radio" },
+  { href: "/arbaeen-nawawi", title: "الأربعون النووية", description: "أحاديث مختصرة", icon: "scroll" },
+  { href: "/qibla", title: "القبلة", description: "اتجاه الكعبة", icon: "compass" },
 ] as const;
 
 export const HOME_MORE_SECTIONS = [

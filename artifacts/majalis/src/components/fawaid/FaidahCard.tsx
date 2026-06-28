@@ -18,9 +18,9 @@ type Props = {
 export function FaidahCard({ item }: Props) {
   const cleaned = sanitizePublicText(item.text);
   const meta = [
-    item.source ? { label: "المصدر", value: item.source } : null,
-    item.author_name ? { label: "المؤلف", value: item.author_name } : null,
-  ].filter(Boolean) as { label: string; value: string }[];
+    item.source ? { label: "المصدر", value: item.source, role: "source" as const } : null,
+    item.author_name ? { label: "المؤلف", value: item.author_name, role: "sheikh" as const } : null,
+  ].filter(Boolean) as { label: string; value: string; role: "source" | "sheikh" }[];
 
   return (
     <HighlightedContentCard

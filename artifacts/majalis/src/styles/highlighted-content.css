@@ -1,11 +1,13 @@
 /* Highlighted Content Card — unified reading experience (Phase UX) */
 
 .highlighted-content-card {
-  padding: 1.15rem 1.2rem;
+  padding: var(--reading-padding, 1.15rem 1.25rem);
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
+  gap: var(--reading-gap, 1rem);
   border-radius: 1rem;
+  border: 1px solid color-mix(in srgb, var(--majalis-line) 85%, transparent);
+  box-shadow: var(--shadow-card, 0 4px 18px rgba(28, 25, 20, 0.06));
   transition: box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
@@ -61,11 +63,23 @@
 }
 
 .highlighted-card__highlight {
-  padding: 1rem 1.05rem;
+  padding: 1.1rem 1.15rem;
   border-radius: 0.85rem;
-  background: color-mix(in srgb, var(--majalis-parchment) 88%, white);
+  background: var(--reading-dhikr-bg);
   border: 1px solid color-mix(in srgb, var(--majalis-line) 85%, transparent);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.qa-card .highlighted-card__highlight {
+  background: var(--reading-answer-bg);
+}
+
+.adhkar-card .highlighted-card__highlight {
+  background: var(--reading-dhikr-bg);
+}
+
+.faidah-card .highlighted-card__highlight {
+  background: var(--reading-answer-bg);
 }
 
 .highlighted-card__highlight--quiet,
@@ -78,17 +92,32 @@ html[data-reading-mode="quiet"] .highlighted-card__highlight {
 .highlighted-card__answer,
 .highlighted-card__question,
 .highlighted-card__secondary {
-  line-height: var(--reading-line-height, 1.9);
-  font-size: var(--reading-font-size, 1.05rem);
-  color: var(--majalis-ink);
+  line-height: var(--reading-line-height, 1.95);
+  font-size: var(--reading-font-size, 1.0625rem);
   max-width: 68ch;
   text-wrap: pretty;
   user-select: text;
 }
 
 .highlighted-card__question {
-  font-weight: 700;
+  font-weight: 800;
   text-align: inherit;
+  color: var(--reading-question);
+}
+
+.highlighted-card__answer {
+  color: var(--reading-answer);
+}
+
+.highlighted-card__text {
+  color: var(--reading-dhikr);
+}
+
+.highlighted-card__secondary {
+  color: var(--reading-answer);
+  margin-top: 0.65rem;
+  padding-top: 0.65rem;
+  border-top: 1px dashed color-mix(in srgb, var(--majalis-line) 70%, transparent);
 }
 
 .highlighted-card__meta {
@@ -97,10 +126,12 @@ html[data-reading-mode="quiet"] .highlighted-card__highlight {
   margin: 0;
 }
 
-.highlighted-card__meta div {
+.highlighted-card__meta-row {
   display: flex;
   gap: 0.35rem;
   font-size: 0.8125rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.4rem;
 }
 
 .highlighted-card__meta dt {
@@ -112,7 +143,57 @@ html[data-reading-mode="quiet"] .highlighted-card__highlight {
 .highlighted-card__meta dd {
   margin: 0;
   font-weight: 600;
+}
+
+.highlighted-card__meta-row--source {
+  background: var(--reading-source-bg);
+}
+.highlighted-card__meta-row--source dd {
+  color: var(--reading-source);
+}
+
+.highlighted-card__meta-row--reference {
+  background: var(--reading-reference-bg);
+}
+.highlighted-card__meta-row--reference dd {
+  color: var(--reading-reference);
+}
+
+.highlighted-card__meta-row--sheikh dd {
+  color: var(--reading-sheikh);
+}
+
+.highlighted-card__meta-row--date dd {
+  color: var(--reading-date);
+}
+
+.highlighted-card__meta-row--default dd {
   color: var(--majalis-ink);
+}
+
+.page-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: var(--reading-badge-bg);
+  color: var(--reading-badge-text);
+  border: 1px solid color-mix(in srgb, var(--majalis-emerald) 20%, transparent);
+}
+
+.qa-card__evidence {
+  padding: 0.75rem 0.85rem;
+  border-radius: 0.65rem;
+  background: var(--reading-source-bg);
+  color: var(--reading-source);
+  font-size: 0.875rem;
+  line-height: var(--reading-line-height, 1.95);
+}
+
+.qa-card__evidence strong {
+  color: var(--reading-reference);
 }
 
 .highlighted-card__local-reading {
@@ -279,8 +360,106 @@ html[data-reading-mode="quiet"] .highlighted-card__highlight {
   text-align: center;
 }
 
+.tasbeeh-counter__display {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.65rem;
+}
+
+.tasbeeh-counter__btn--round {
+  width: 48px;
+  height: 48px;
+  min-height: 48px;
+  border-radius: 50%;
+  padding: 0;
+  font-size: 1.35rem;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.tasbeeh-counter__btn--minus {
+  border-color: color-mix(in srgb, var(--majalis-line) 80%, transparent);
+}
+
+.tasbeeh-counter__btn--plus {
+  border-color: var(--majalis-emerald);
+  color: var(--majalis-emerald-deep);
+}
+
+.tasbeeh-counter__progress-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 0.65rem;
+}
+
+.tasbeeh-counter__progress-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--majalis-emerald-deep);
+  text-align: center;
+}
+
+.tasbeeh-counter__bar {
+  height: 6px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--majalis-line) 60%, transparent);
+  overflow: hidden;
+}
+
+.tasbeeh-counter__bar span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--majalis-emerald-deep), var(--majalis-emerald));
+  border-radius: 999px;
+  transition: width 0.2s ease;
+}
+
+.tasbeeh-counter__history {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid color-mix(in srgb, var(--majalis-line) 75%, transparent);
+}
+
+.tasbeeh-counter__history-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-size: 0.8125rem;
+}
+
+.tasbeeh-counter__history-clear {
+  border: none;
+  background: transparent;
+  color: var(--majalis-ink-soft);
+  font-family: inherit;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.tasbeeh-counter__history ul {
+  list-style: none;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.tasbeeh-counter__history li {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8125rem;
+  padding: 0.35rem 0.5rem;
+  border-radius: 0.4rem;
+  background: color-mix(in srgb, var(--majalis-emerald) 6%, var(--majalis-panel));
+}
+
+.tasbeeh-counter__history li small {
+  color: var(--majalis-ink-soft);
+}
+
 .tasbeeh-counter__tap {
-  width: 100%;
+  flex: 1;
   min-height: 120px;
   border: none;
   border-radius: 1rem;

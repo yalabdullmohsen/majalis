@@ -25,6 +25,7 @@ const AssistantPage = lazy(() => import("@/views/AssistantPage"));
 const CondolencesPage = lazy(() => import("@/views/CondolencesPage"));
 const CardsPage = lazy(() => import("@/views/CardsPage"));
 const QuranPage = lazy(() => import("@/views/QuranPage"));
+const MushafPage = lazy(() => import("@/views/MushafPage"));
 const QuranTajweedPage = lazy(() => import("@/views/QuranTajweedPage"));
 const QuranLivePage = lazy(() => import("@/views/QuranLivePage"));
 const SurahStoriesPage = lazy(() => import("@/views/SurahStoriesPage"));
@@ -153,6 +154,7 @@ export default function AppRoutes() {
           </ErrorBoundary>
         </Route>
         <Route path="/quran-live"><SafeLazyRoute component={QuranLivePage} /></Route>
+        <Route path="/quran/mushaf"><SafeLazyRoute component={MushafPage} /></Route>
         <Route path="/quran/tajweed"><SafeLazyRoute component={QuranTajweedPage} /></Route>
         <Route path="/quran/surah-stories/:number"><SurahStoryDetailRoute /></Route>
         <Route path="/quran/surah-stories"><SafeLazyRoute component={SurahStoriesPage} /></Route>

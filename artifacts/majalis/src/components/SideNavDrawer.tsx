@@ -24,38 +24,47 @@ import {
   Tv,
   UserPlus,
   X,
+  Mail,
 } from "lucide-react";
 import { useAuth } from "./AuthProvider";
-import { NAV_GROUPS } from "@/lib/navigation";
+import { getSideNavGroups, type NavLink } from "@/lib/navigation";
 
 const ICONS: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
-  "/": Home,
-  "/search": Search,
-  "/lessons": GraduationCap,
-  "/annual-courses": BookMarked,
-  "/library": Library,
-  "/fiqh-council": Scale,
-  "/fatwa": ScrollText,
-  "/rulings": ScrollText,
-  "/updates": Sparkles,
-  "/calendar": Clock,
-  "/fawaid": Heart,
-  "/qa": MessageCircleQuestion,
-  "/quran": BookOpen,
-  "/quran-radio": Radio,
-  "/quran-live": Tv,
-  "/quran/tajweed": Mic2,
-  "/quran/surah-stories": Library,
-  "/daily-wird": Sun,
-  "/adhkar": Sparkles,
-  "/tasbih": Compass,
-  "/arbaeen-nawawi": ScrollText,
-  "/occasions": Moon,
-  "/prayer-times": Clock,
-  "/prayer-ranks": Heart,
-  "/qibla": Compass,
-  "/settings": Settings,
+  home: Home,
+  search: Search,
+  lessons: GraduationCap,
+  courses: BookMarked,
+  library: Library,
+  fiqh: Scale,
+  fatwa: ScrollText,
+  rulings: ScrollText,
+  updates: Sparkles,
+  calendar: Clock,
+  fawaid: Heart,
+  qa: MessageCircleQuestion,
+  mushaf: BookOpen,
+  quran: BookOpen,
+  tajweed: Mic2,
+  stories: Library,
+  live: Tv,
+  radio: Radio,
+  wird: Sun,
+  adhkar: Sparkles,
+  tasbih: Compass,
+  arbaeen: ScrollText,
+  occasions: Moon,
+  prayer: Clock,
+  ranks: Heart,
+  qibla: Compass,
+  settings: Settings,
+  contact: Mail,
 };
+
+function resolveIcon(link: NavLink) {
+  if (link.icon && ICONS[link.icon]) return ICONS[link.icon];
+  const path = link.href.split("?")[0];
+  return ICONS[path] || BookOpen;
+}
 
 type Props = {
   open: boolean;
@@ -65,10 +74,16 @@ type Props = {
 export function SideNavDrawer({ open, onClose }: Props) {
   const [pathname] = useLocation();
   const { isAdmin, isLoggedIn } = useAuth();
+  const groups = getSideNavGroups(isAdmin);
 
   if (!open || typeof document === "undefined") return null;
 
   const close = () => onClose();
+
+  const isLinkActive = (href: string) => {
+    const path = href.split("?")[0];
+    return pathname === href || pathname === path || (path !== "/" && pathname.startsWith(path));
+  };
 
   const drawer = (
     <div className="mobile-nav-layer mobile-nav-layer--drawer" role="presentation">
@@ -97,16 +112,13 @@ export function SideNavDrawer({ open, onClose }: Props) {
         </div>
 
         <div className="side-nav-drawer__body">
-          {NAV_GROUPS.map((group) => (
+          {groups.map((group) => (
             <div key={group.id} className="side-nav-group side-nav-group--v2">
               <p className="side-nav-group__title">{group.title}</p>
               <nav>
                 {group.links.map((link) => {
-                  const active =
-                    pathname === link.href ||
-                    pathname.startsWith(`${link.href}/`) ||
-                    pathname.startsWith(`${link.href}?`);
-                  const Icon = ICONS[link.href.split("?")[0]] || BookOpen;
+                  const active = isLinkActive(link.href);
+                  const Icon = resolveIcon(link);
                   return (
                     <Link
                       key={link.href}

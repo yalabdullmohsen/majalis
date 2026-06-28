@@ -10,6 +10,7 @@ import { createAppQueryClient } from "./lib/query-client";
 import { PERF_SLOW_MS } from "./lib/performance-monitor";
 import { registerProductionServiceWorker } from "./lib/service-worker";
 import "./index.css";
+import "./styles/reading-tokens.css";
 import "./styles/design-system.css";
 import "./styles/highlighted-content.css";
 import "./styles/rulings-encyclopedia.css";

@@ -31,6 +31,11 @@ export function QaCard({ item, defaultOpen = false }: Props) {
   const question = displayText(item.question);
   const answer = displayText(item.answer || "");
 
+  const meta = [
+    { label: "المشاهدات", value: `${getQaViewCount(item)}`, role: "date" as const },
+    ...(item.reference ? [{ label: "المرجع", value: displayText(item.reference), role: "reference" as const }] : []),
+  ];
+
   return (
     <HighlightedContentCard
       id={item.id}
@@ -39,10 +44,7 @@ export function QaCard({ item, defaultOpen = false }: Props) {
       secondaryText={answer}
       tags={catName ? [catName] : []}
       badges={item.ruling_type ? <RulingBadge ruling={item.ruling_type} /> : undefined}
-      meta={[
-        { label: "المشاهدات", value: `${getQaViewCount(item)}` },
-        ...(item.reference ? [{ label: "المرجع", value: displayText(item.reference) }] : []),
-      ]}
+      meta={meta}
       footnote={
         item.evidence ? (
           <div className="qa-card__evidence">

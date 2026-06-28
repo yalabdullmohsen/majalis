@@ -4,9 +4,12 @@ import { ContentActionBar } from "@/components/reading/ContentActionBar";
 import { markReadingProgress, type ReadingSection } from "@/lib/reading-progress";
 import { readPreferences } from "@/lib/user-preferences";
 
+export type ContentMetaRole = "source" | "reference" | "sheikh" | "date" | "default";
+
 export type ContentMetaItem = {
   label: string;
   value: string;
+  role?: ContentMetaRole;
 };
 
 export type HighlightedContentCardProps = {
@@ -141,7 +144,7 @@ export function HighlightedContentCard({
           {meta.length > 0 && (
             <dl className="highlighted-card__meta">
               {meta.map((m) => (
-                <div key={`${m.label}-${m.value}`}>
+                <div key={`${m.label}-${m.value}`} className={`highlighted-card__meta-row highlighted-card__meta-row--${m.role || "default"}`}>
                   <dt>{m.label}</dt>
                   <dd>{m.value}</dd>
                 </div>

@@ -65,6 +65,10 @@
   <body>
     <script>
       try {
+        var storedTheme = localStorage.getItem("majalis-theme-preference") || "system";
+        var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+        var theme = storedTheme === "dark" || (storedTheme === "system" && prefersDark) ? "dark" : "light";
+        document.documentElement.dataset.theme = theme;
         var storedFont = localStorage.getItem("majalis-font-preference");
         document.documentElement.dataset.font =
           storedFont === "ruqaa" || storedFont === "naskh" || storedFont === "default"
