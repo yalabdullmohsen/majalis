@@ -67,12 +67,19 @@ export async function archiveVerificationContent(options = {}) {
       .from("knowledge_items")
       .update({
         publish_status: "archived",
-        pipeline_stage: "archived",
+        pipeline_stage: "rejected",
+        rejection_reason: "verification_fixture_archived",
         updated_at: at,
       })
       .eq("id", ki.id);
     if (error) throw error;
-    report.knowledgeItem = { id: ki.id, external_id: ki.external_id, from: ki.publish_status, to: "archived" };
+    report.knowledgeItem = {
+      id: ki.id,
+      external_id: ki.external_id,
+      from: ki.publish_status,
+      to: "archived",
+      pipeline_stage: "rejected",
+    };
   }
 
   const { data: connector } = await admin
