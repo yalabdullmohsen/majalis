@@ -740,17 +740,31 @@ export async function runAutoKnowledgeEngine(options = {}) {
   };
 }
 
-export async function runConnectorHealthChecks() {
+export async function runConnectorHealthChecks(options = {}) {
   const admin = getSupabaseAdmin();
   if (!admin) return { ok: false, error: "Supabase not configured" };
 
-  const connectors = await loadConnectors(admin);
-  const results = [];
+  const maxChecks = options.maxChecks ?? 5;
+  const budgetMs = options.budgetMs ?? 45_000;
+  const started = Date.now();
 
-  for (const config of connectors) {
+  const connectors = await loadConnectors(admin);
+  const sorted = [...connectors].sort((a, b) => {
+    const ta = new Date(a.last_health_check || 0).getTime();
+    const tb = new Date(b.last_health_check || 0).getTime();
+    return ta - tb;
+  });
+
+  const results = [];
+  let checked = 0;
+
+  for (const config of sorted) {
+    if (checked >= maxChecks) break;
+    if (Date.now() - started >= budgetMs - 2_000) break;
+
     const connector = createConnector(config);
     const health = await connector.healthCheck();
-    let brokenLinks = 0;
+    checked++;
 
     if (config.id) {
       await admin.from("ake_connectors").update({
@@ -760,10 +774,17 @@ export async function runConnectorHealthChecks() {
       }).eq("id", config.id);
     }
 
-    results.push({ slug: config.slug, ...health, brokenLinks });
+    results.push({ slug: config.slug, ...health, brokenLinks: 0 });
   }
 
-  return { ok: true, results, checked: results.length };
+  return {
+    ok: true,
+    results,
+    checked: results.length,
+    totalConnectors: connectors.length,
+    batched: connectors.length > maxChecks,
+    durationMs: Date.now() - started,
+  };
 }
 
 export async function getAutoKnowledgeEngineStats(days = 7) {
