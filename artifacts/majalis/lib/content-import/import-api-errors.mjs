@@ -18,7 +18,7 @@ const ERROR_MESSAGES_AR = {
   unauthorized: "انتهت الجلسة — سجّل الدخول مجدداً",
   stage_failed: "فشل رفع دفعة البيانات إلى staging",
   job_create_failed: "تعذّر إنشاء مهمة الاستيراد في قاعدة البيانات",
-  validation_failed: "فشل التحقق من صفوف CSV — راجع الأعمدة المطلوبة",
+  validation_failed: "بعض الصفوف تحتاج مراجعة — تم استيراد الصفوف الصالحة",
   import_failed: "فشل إدراج البيانات في الجدول الهدف",
 };
 

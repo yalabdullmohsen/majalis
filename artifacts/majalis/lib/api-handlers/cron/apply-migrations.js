@@ -206,6 +206,41 @@ export default async function handler(req, res) {
       return;
     }
 
+    if (scope === "question-generation" || scope === "qgen-v1") {
+      const result = await applyMigrations({
+        files: ["question_generation_v1.sql"],
+        continueOnError: false,
+        trackApplied: true,
+        force: req.query?.force === "1",
+      });
+      sendJson(res, result.ok ? 200 : 500, {
+        ok: result.ok,
+        scope: "question-generation",
+        migrations: result,
+        resolved: resolvedMeta(),
+      });
+      return;
+    }
+
+    if (scope === "sin-jeem" || scope === "question-answer") {
+      const { applySinJeemMigration } = await import("../../../lib/sin-jeem-migration.mjs");
+      const { runSinJeemSeed } = await import("../../../lib/sin-jeem-seed.mjs");
+      const migration = await applySinJeemMigration({ force: req.query?.force === "1" });
+      let seed = { ok: true, skipped: true, reason: "seed_not_requested" };
+      const doSeed = req.query?.seed === "1" || req.body?.seed === true;
+      if (doSeed && migration.ok) {
+        seed = await runSinJeemSeed({ force: req.query?.force === "1" });
+      }
+      sendJson(res, migration.ok && seed.ok !== false ? 200 : 500, {
+        ok: migration.ok && seed.ok !== false,
+        scope: "question-answer",
+        migration,
+        seed,
+        resolved: resolvedMeta(),
+      });
+      return;
+    }
+
     if (scope === "ake-sync" || scope === "ake-v14") {
       const result = await applyMigrations({
         files: ["auto_knowledge_engine_v14_sync.sql"],

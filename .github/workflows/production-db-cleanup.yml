@@ -28,18 +28,30 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Dry-run via production API
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
         run: |
+          if [ -z "$CRON_SECRET" ]; then
+            echo "::warning::CRON_SECRET not set — cron API calls will fail after auth hardening"
+            exit 0
+          fi
           resp=$(curl -sS -X POST "$MAJALIS_PRODUCTION_URL/api/cron/purge-test-content?dryRun=1" \
-            -H "x-vercel-cron: 1" -H "Accept: application/json" || echo '{"ok":false}')
+            -H "Authorization: Bearer $CRON_SECRET" -H "Accept: application/json" || echo '{"ok":false}')
           echo "$resp" | tee purge-dry-run.json
 
       - name: Wait for production deploy
         run: sleep 90
 
       - name: Apply purge via production API
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
         run: |
+          if [ -z "$CRON_SECRET" ]; then
+            echo "Skip apply — CRON_SECRET not set"
+            exit 0
+          fi
           resp=$(curl -sS -X POST "$MAJALIS_PRODUCTION_URL/api/cron/purge-test-content?apply=1" \
-            -H "x-vercel-cron: 1" -H "Accept: application/json")
+            -H "Authorization: Bearer $CRON_SECRET" -H "Accept: application/json")
           echo "$resp" | tee purge-apply.json
           echo "$resp" | grep -q '"bad":0' || (echo "::error::Fawaid still has blocked rows"; exit 1)
 

@@ -264,7 +264,8 @@ export default async function handler(req, res) {
         const status = result.status || (result.ok ? "completed" : "failed");
         const imported = result.report?.stats?.imported ?? 0;
         const skipped = result.report?.stats?.skipped ?? 0;
-        const httpStatus = result.ok ? 200 : 422;
+        const partialSuccess = Boolean(result.report?.partial) || (imported > 0 && !result.ok);
+        const httpStatus = result.ok || partialSuccess ? 200 : 422;
 
         jobLog(jobId, "commit_sync_result", {
           httpStatus,
@@ -281,12 +282,13 @@ export default async function handler(req, res) {
           importSample: result.report?.importErrors?.[0] || null,
         });
 
-        if (result.ok) {
+        if (result.ok || partialSuccess) {
           sendJson(res, 200, {
             ok: true,
             jobId,
             status,
             sync: true,
+            partial: Boolean(result.report?.partial),
             targetTable,
             normalizedType: typeDef?.type,
             contentType: job?.type,
@@ -367,7 +369,9 @@ export default async function handler(req, res) {
     }
     try {
       const result = await processImportJob(jobId, { dryRun });
-      sendJson(res, result.ok ? 200 : 422, result);
+      const imported = result.report?.stats?.imported ?? 0;
+      const partialSuccess = Boolean(result.report?.partial) || (imported > 0 && !result.ok);
+      sendJson(res, result.ok || partialSuccess ? 200 : 422, result);
     } catch (err) {
       console.error("[admin/content-import:process]", err);
       sendJson(res, 500, { ok: false, error: String(err.message || err) });

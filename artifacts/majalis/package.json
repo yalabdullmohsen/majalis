@@ -47,6 +47,7 @@
     "verify:production-hardening": "node scripts/verify-production-hardening.mjs",
     "audit:dependency-graph": "node scripts/audit-dependency-graph.mjs",
     "verify:production-pipeline": "node scripts/verify-production-pipeline.mjs",
+    "verify:import-resilience": "node scripts/verify-import-resilience.mjs",
     "purge:test-content": "node scripts/purge-test-content.mjs",
     "purge:test-content:apply": "node scripts/purge-test-content.mjs --apply",
     "verify:fawaid-clean": "node scripts/verify-fawaid-clean.mjs",
@@ -59,6 +60,21 @@
     "test:kuwait-sources": "node scripts/test-kuwait-instagram-sources.mjs",
     "smoke:nav": "node scripts/smoke-nav-menu.mjs",
     "smoke:admin-nav": "node scripts/smoke-admin-nav.mjs",
+    "smoke:question-answer-routes": "node scripts/smoke-question-answer-routes.mjs",
+    "apply:sin-jeem-migration": "node scripts/apply-sin-jeem-migration.mjs",
+    "apply:question-answer-migration": "node scripts/apply-sin-jeem-migration.mjs",
+    "seed:sin-jeem": "node scripts/seed-question-answer.mjs",
+    "seed:question-answer": "node scripts/seed-question-answer.mjs",
+    "activate:sin-jeem": "node scripts/activate-question-answer-production.mjs",
+    "activate:question-answer": "node scripts/activate-question-answer-production.mjs",
+    "verify:sin-jeem-db": "node scripts/verify-question-answer-db.mjs",
+    "verify:question-answer:db": "node scripts/verify-question-answer-db.mjs",
+    "verify:sin-jeem": "node scripts/verify-question-answer.mjs",
+    "verify:question-answer": "node scripts/verify-question-answer.mjs",
+    "verify:sin-jeem:production": "node scripts/verify-question-answer-production.mjs",
+    "verify:question-answer:production": "node scripts/verify-question-answer-production.mjs",
+    "test:question-generation": "node scripts/test-question-generation.mjs",
+    "cron:question-answer-daily": "node scripts/run-question-generation-cron.mjs",
     "validate:css": "node scripts/validate-index-css.mjs",
     "smoke:mobile": "node scripts/smoke-mobile-routes.mjs",
     "verify:features": "node scripts/verify-features.mjs",
@@ -179,6 +195,7 @@
     "pg": "^8.16.0",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "wouter": "^3.3.5"
+    "wouter": "^3.3.5",
+    "xlsx": "^0.18.5"
   }
 }

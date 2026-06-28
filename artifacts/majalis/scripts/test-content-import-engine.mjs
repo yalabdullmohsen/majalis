@@ -103,10 +103,43 @@ test("parseContentString detects csv by filename", () => {
   assert(rows.length === 1, "csv via filename");
 });
 
-test("validation rejects invalid lesson row", () => {
-  const { validationErrors, allValid } = validateAllRows("lessons", [{ title: "only title" }]);
-  assert(!allValid, "should fail validation");
-  assert(validationErrors.length > 0, "should have errors");
+test("validation rejects invalid lesson row with no importable data", () => {
+  const { validationErrors, allValid, validRows } = validateAllRows("lessons", [{ title: "", day: "", time: "", source_url: "" }]);
+  assert(!allValid || validRows.length === 0, "empty row should not import");
+  assert(validationErrors.length > 0, "should have errors for empty row");
+});
+
+test("validation accepts lesson row without title (auto-generates)", () => {
+  const { allValid, validRows } = validateAllRows("lessons", [
+    { sheikh_name: "فهد الكندري", mosque: "مسجد الصباح", day: "الجمعة", time: "8:00 م", source_url: "https://t.me/x" },
+  ]);
+  assert(allValid, "lesson without title should pass");
+  assert(validRows[0]?.title?.length > 0, "title auto-generated");
+  assert(String(validRows[0]?.title).includes("فهد"), "title uses sheikh name");
+});
+
+test("validation accepts lesson row without mosque", () => {
+  const { allValid, validRows } = validateAllRows("lessons", [
+    { title: "درس تجريبي", day: "السبت", time: "9:00 م", source_url: "https://example.com/x" },
+  ]);
+  assert(allValid && validRows.length === 1, "missing mosque should not block");
+});
+
+test("validation accepts lesson row with only sheikh + date", () => {
+  const { allValid, validRows } = validateAllRows("lessons", [
+    { sheikh_name: "سالم العتيبي", day: "الأحد", time: "7:30 م", source_url: "https://example.com/a" },
+  ]);
+  assert(allValid && validRows.length === 1, "sheikh + date + time + source imports");
+  assert(validRows[0]?.title?.includes("سالم"), "title generated from sheikh");
+});
+
+test("mixed lesson CSV continues after one bad row", () => {
+  const { allValid, validRows } = validateAllRows("lessons", [
+    { sheikh_name: "أحمد", mosque: "مسجد X", day: "الاثنين", time: "8:00 م", source_url: "https://x/1" },
+    { title: "", day: "", time: "", source_url: "" },
+    { title: "درس 2", day: "الثلاثاء", time: "9:00 م", source_url: "https://x/2", mosque: "مسجد Y" },
+  ]);
+  assert(allValid && validRows.length >= 2, "good rows not blocked by empty row");
 });
 
 test("validation accepts valid benefit row", () => {

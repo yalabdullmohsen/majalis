@@ -16,7 +16,6 @@ function pick(data, ...keys) {
 
 export function validateAutomationRequiredFields(parsed, { sourceUrl, imageUrl } = {}) {
   const missing = [];
-  if (!pick(parsed, "title")) missing.push("title");
   if (!pick(parsed, "speaker_name", "sheikh_name")) missing.push("speaker_name");
   const dateStr = pick(parsed, "start_date", "gregorian_date");
   const dayOfWeek = pick(parsed, "day_of_week", "day");

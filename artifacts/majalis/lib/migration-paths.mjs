@@ -40,6 +40,9 @@ export const ACTIVATION_TABLES_MIGRATION_FILES = [
   "auto_knowledge_engine_v17_monitoring.sql",
   "auto_knowledge_engine_v18_autonomous.sql",
   "murtaqaa_drosq8_sources_v1.sql",
+  "sin_jeem_v1.sql",
+  "sin_jeem_v1_2_types.sql",
+  "question_generation_v1.sql",
 ];
 
 export const MIGRATION_FILES = [
@@ -94,6 +97,9 @@ export const MIGRATION_FILES = [
   "auto_knowledge_engine_v17_monitoring.sql",
   "auto_knowledge_engine_v18_autonomous.sql",
   "murtaqaa_drosq8_sources_v1.sql",
+  "sin_jeem_v1.sql",
+  "sin_jeem_v1_2_types.sql",
+  "question_generation_v1.sql",
 ];
 
 export function resolveMigrationsDir() {

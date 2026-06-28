@@ -1,4 +1,4 @@
-import { BookOpen, CircleDot, Clock, Compass, Hand, Radio, ScrollText, Sparkles } from "lucide-react";
+import { BookOpen, CircleDot, Clock, Compass, Gamepad2, Hand, Radio, ScrollText, Sparkles } from "lucide-react";
 import { Link } from "wouter";
 import { HOME_FEATURE_CARDS } from "@/lib/navigation";
 
@@ -11,6 +11,7 @@ const ICONS = {
   radio: Radio,
   scroll: ScrollText,
   compass: Compass,
+  gamepad: Gamepad2,
 } as const;
 
 export function HomeFeatureCards() {

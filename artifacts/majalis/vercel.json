@@ -80,6 +80,14 @@
       "schedule": "0 4 * * 0"
     },
     {
+      "path": "/api/cron/question-answer-daily",
+      "schedule": "30 6 * * *"
+    },
+    {
+      "path": "/api/cron/question-answer-generation-drain",
+      "schedule": "*/15 * * * *"
+    },
+    {
       "path": "/api/cron/check-fiqh-links",
       "schedule": "0 7 * * *"
     },
@@ -219,6 +227,16 @@
     }
   ],
   "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=(self)" },
+        { "key": "X-DNS-Prefetch-Control", "value": "on" }
+      ]
+    },
     {
       "source": "/",
       "headers": [

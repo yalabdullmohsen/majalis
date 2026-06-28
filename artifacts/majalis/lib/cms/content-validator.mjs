@@ -1,15 +1,14 @@
 /**
- * Validates lesson/course drafts before publish.
+ * Validates lesson/course drafts — required vs important vs optional.
  */
-
-const REQUIRED_LESSON_FIELDS = [
-  { key: "title", label: "عنوان الدرس" },
-  { key: "speaker_name", label: "اسم الشيخ", alt: "sheikh_name" },
-  { key: "day_of_week", label: "اليوم", alt: "day" },
-  { key: "lesson_time", label: "الوقت", alt: "time" },
-  { key: "mosque", label: "المسجد", alt: "location" },
-  { key: "city", label: "المدينة", alt: "governorate" },
-];
+import {
+  generateLessonTitle,
+  hasResolvableDate,
+  hasResolvableSource,
+  hasResolvableTime,
+  hasResolvableTitle,
+  normalizeLessonRow,
+} from "../content-import/lesson-field-policy.mjs";
 
 function pick(data, ...keys) {
   for (const k of keys) {
@@ -46,35 +45,75 @@ function hasConflict(data) {
 }
 
 export function validateLessonDraft(data = {}) {
+  const normalized = normalizeLessonRow(data);
   const errors = [];
   const warnings = [];
+  const missingImportant = [];
+  const missingOptional = [];
 
-  for (const field of REQUIRED_LESSON_FIELDS) {
-    const value = pick(data, field.key, ...(field.alt ? [field.alt] : []));
-    if (!value) {
-      errors.push({ field: field.key, message: `${field.label} مطلوب للنشر` });
-    }
+  if (!hasResolvableTitle(normalized)) {
+    normalized.title = generateLessonTitle(normalized);
+    warnings.push({ field: "title", message: "تم توليد العنوان تلقائياً" });
   }
 
-  const time = normalizeTime(pick(data, "lesson_time", "time"));
-  if (time && !/\d/.test(time)) {
-    warnings.push({ field: "lesson_time", message: "صيغة الوقت غير واضحة — راجع قبل النشر" });
+  if (!hasResolvableDate(normalized)) {
+    errors.push({ field: "date", message: "التاريخ أو اليوم مطلوب للنشر" });
   }
 
-  const title = pick(data, "title");
-  if (title && title.length < 4) {
+  if (!hasResolvableTime(normalized)) {
+    errors.push({ field: "time", message: "الوقت مطلوب للنشر" });
+  }
+
+  if (!hasResolvableSource(normalized)) {
+    errors.push({ field: "source", message: "مصدر الدرس مطلوب" });
+  }
+
+  if (!pick(normalized, "speaker_name", "sheikh_name")) {
+    missingImportant.push("sheikh");
+    warnings.push({ field: "speaker_name", message: "اسم الشيخ غير متوفر — سيُعرض الدرس مع شارة بيانات ناقصة" });
+  }
+
+  if (!pick(normalized, "mosque", "location")) {
+    missingImportant.push("mosque");
+    warnings.push({ field: "mosque", message: "المسجد غير متوفر" });
+  }
+
+  if (!pick(normalized, "region")) missingImportant.push("region");
+  if (!pick(normalized, "city", "governorate")) missingImportant.push("city");
+  if (!pick(normalized, "category") || normalized.category === "أخرى") {
+    missingImportant.push("category");
+  }
+
+  for (const field of ["live_url", "maps_url", "contact_phone", "organizer"]) {
+    if (!pick(normalized, field)) missingOptional.push(field);
+  }
+
+  const time = normalizeTime(pick(normalized, "lesson_time", "time"));
+  if (time && time !== "—" && !/\d/.test(time)) {
+    warnings.push({ field: "lesson_time", message: "صيغة الوقت غير واضحة — راجع عند الحاجة" });
+  }
+
+  const title = pick(normalized, "title");
+  if (title && title.length < 4 && !normalized._title_generated) {
     errors.push({ field: "title", message: "العنوان قصير جداً" });
   }
 
-  for (const msg of hasConflict(data)) {
-    errors.push({ field: "conflict", message: msg });
+  for (const msg of hasConflict(normalized)) {
+    warnings.push({ field: "conflict", message: msg });
   }
 
+  const canPublish = errors.length === 0;
+  const dataIncomplete = missingImportant.length > 0 || missingOptional.length > 0;
+
   return {
-    valid: errors.length === 0,
+    valid: canPublish,
     errors,
     warnings,
-    canPublish: errors.length === 0,
+    canPublish,
+    dataIncomplete,
+    missingImportant,
+    missingOptional,
+    normalized,
   };
 }
 

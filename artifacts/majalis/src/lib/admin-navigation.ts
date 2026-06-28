@@ -4,6 +4,7 @@ import type { AdminSection } from "@/views/admin/AdminShell";
 export const ADMIN_SECTION_PATHS: Record<AdminSection, string> = {
   dashboard: "",
   "smart-cms": "cms",
+  "question-answer": "question-answer",
   aggregator: "collector",
   "knowledge-engine": "ake",
   "scholarly-verification": "scientific-verification",
@@ -43,6 +44,8 @@ const LEGACY_QUERY_ALIASES: Record<string, AdminSection> = {
   ...PATH_TO_SECTION,
   dashboard: "dashboard",
   "smart-cms": "smart-cms",
+  "question-answer": "question-answer",
+  "sin-jeem": "question-answer",
   aggregator: "aggregator",
   "knowledge-engine": "knowledge-engine",
   "scholarly-verification": "scholarly-verification",
@@ -69,6 +72,7 @@ export function resolveAdminSectionFromPath(pathname: string): AdminSection | nu
   if (!match) return null;
 
   const slug = decodeURIComponent(match[1]);
+  if (slug === "sin-jeem") return "question-answer";
   return PATH_TO_SECTION[slug] ?? null;
 }
 

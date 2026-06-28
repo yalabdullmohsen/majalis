@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-28T03:51:02.029Z",
+  "timestamp": "2026-06-28T23:09:46.875Z",
   "platformVersion": "3.0.0",
   "phases": {
     "aiMode": {
@@ -31,12 +31,10 @@
       }
     },
     "tablesBefore": {
-      "ok": false,
+      "ok": true,
       "present": [
         "akp_content_sources",
-        "akp_pipeline_runs"
-      ],
-      "missing": [
+        "akp_pipeline_runs",
         "akp_source_health_snapshots",
         "akp_source_discoveries",
         "akp_platform_analytics_daily",
@@ -47,6 +45,7 @@
         "akp_semantic_index",
         "akp_scheduler_state"
       ],
+      "missing": [],
       "detail": {
         "akp_content_sources": true,
         "akp_content_sources__detail": {
@@ -58,59 +57,50 @@
           "ok": true,
           "status": 200
         },
-        "akp_source_health_snapshots": false,
+        "akp_source_health_snapshots": true,
         "akp_source_health_snapshots__detail": {
-          "ok": false,
-          "missing": true,
-          "status": 404
+          "ok": true,
+          "status": 200
         },
-        "akp_source_discoveries": false,
+        "akp_source_discoveries": true,
         "akp_source_discoveries__detail": {
-          "ok": false,
-          "missing": true,
-          "status": 404
+          "ok": true,
+          "status": 200
         },
-        "akp_platform_analytics_daily": false,
+        "akp_platform_analytics_daily": true,
         "akp_platform_analytics_daily__detail": {
-          "ok": false,
-          "missing": true,
-          "status": 404
+          "ok": true,
+          "status": 200
         },
-        "akp_daily_goal_progress": false,
+        "akp_daily_goal_progress": true,
         "akp_daily_goal_progress__detail": {
-          "ok": false,
-          "missing": true,
-          "status": 404
+          "ok": true,
+          "status": 200
         },
-        "akp_self_healing_events": false,
+        "akp_self_healing_events": true,
         "akp_self_healing_events__detail": {
-          "ok": false,
-          "missing": true,
-          "status": 404
+          "ok": true,
+          "status": 200
         },
-        "akp_audit_log": false,
+        "akp_audit_log": true,
         "akp_audit_log__detail": {
-          "ok": false,
-          "missing": true,
-          "status": 404
+          "ok": true,
+          "status": 200
         },
-        "akp_backup_snapshots": false,
+        "akp_backup_snapshots": true,
         "akp_backup_snapshots__detail": {
-          "ok": false,
-          "missing": true,
-          "status": 404
+          "ok": true,
+          "status": 200
         },
-        "akp_semantic_index": false,
+        "akp_semantic_index": true,
         "akp_semantic_index__detail": {
-          "ok": false,
-          "missing": true,
-          "status": 404
+          "ok": true,
+          "status": 200
         },
-        "akp_scheduler_state": false,
+        "akp_scheduler_state": true,
         "akp_scheduler_state__detail": {
-          "ok": false,
-          "missing": true,
-          "status": 404
+          "ok": true,
+          "status": 200
         }
       }
     },
@@ -120,12 +110,10 @@
       "reason": "pass --apply to run migrations"
     },
     "tablesAfter": {
-      "ok": false,
+      "ok": true,
       "present": [
         "akp_content_sources",
-        "akp_pipeline_runs"
-      ],
-      "missing": [
+        "akp_pipeline_runs",
         "akp_source_health_snapshots",
         "akp_source_discoveries",
         "akp_platform_analytics_daily",
@@ -136,6 +124,7 @@
         "akp_semantic_index",
         "akp_scheduler_state"
       ],
+      "missing": [],
       "detail": {
         "akp_content_sources": true,
         "akp_content_sources__detail": {
@@ -147,59 +136,50 @@
           "ok": true,
           "status": 200
         },
-        "akp_source_health_snapshots": false,
+        "akp_source_health_snapshots": true,
         "akp_source_health_snapshots__detail": {
-          "ok": false,
-          "missing": true,
-          "status": 404
+          "ok": true,
+          "status": 200
         },
-        "akp_source_discoveries": false,
+        "akp_source_discoveries": true,
         "akp_source_discoveries__detail": {
-          "ok": false,
-          "missing": true,
-          "status": 404
+          "ok": true,
+          "status": 200
         },
-        "akp_platform_analytics_daily": false,
+        "akp_platform_analytics_daily": true,
         "akp_platform_analytics_daily__detail": {
-          "ok": false,
-          "missing": true,
-          "status": 404
+          "ok": true,
+          "status": 200
         },
-        "akp_daily_goal_progress": false,
+        "akp_daily_goal_progress": true,
         "akp_daily_goal_progress__detail": {
-          "ok": false,
-          "missing": true,
-          "status": 404
+          "ok": true,
+          "status": 200
         },
-        "akp_self_healing_events": false,
+        "akp_self_healing_events": true,
         "akp_self_healing_events__detail": {
-          "ok": false,
-          "missing": true,
-          "status": 404
+          "ok": true,
+          "status": 200
         },
-        "akp_audit_log": false,
+        "akp_audit_log": true,
         "akp_audit_log__detail": {
-          "ok": false,
-          "missing": true,
-          "status": 404
+          "ok": true,
+          "status": 200
         },
-        "akp_backup_snapshots": false,
+        "akp_backup_snapshots": true,
         "akp_backup_snapshots__detail": {
-          "ok": false,
-          "missing": true,
-          "status": 404
+          "ok": true,
+          "status": 200
         },
-        "akp_semantic_index": false,
+        "akp_semantic_index": true,
         "akp_semantic_index__detail": {
-          "ok": false,
-          "missing": true,
-          "status": 404
+          "ok": true,
+          "status": 200
         },
-        "akp_scheduler_state": false,
+        "akp_scheduler_state": true,
         "akp_scheduler_state__detail": {
-          "ok": false,
-          "missing": true,
-          "status": 404
+          "ok": true,
+          "status": 200
         }
       }
     },
@@ -223,7 +203,8 @@
           "note": "cron_auth_required",
           "body": {
             "ok": false,
-            "error": "Unauthorized"
+            "error": "Unauthorized",
+            "code": "Missing or invalid CRON_SECRET"
           }
         },
         {
@@ -254,7 +235,7 @@
       "failed": []
     }
   },
-  "readinessPct": 55,
+  "readinessPct": 73,
   "blockers": [],
   "ownerActions": [
     {
@@ -267,5 +248,5 @@
     }
   ],
   "mergedPr": 110,
-  "latestCommit": "3d7f880b3e221051c84eb6364b7846ab08d368b4"
+  "latestCommit": "800c1183c01a559d453a13590e81526110815012"
 }
