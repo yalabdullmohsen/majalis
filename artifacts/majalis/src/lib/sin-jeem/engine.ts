@@ -71,7 +71,13 @@ export function pickQuestions(config: MatchConfig, pool?: SinJeemQuestion[]): Si
 }
 
 export function createSession(config: MatchConfig, pool?: SinJeemQuestion[]): GameSession {
-  const questions = pickQuestions(config, pool);
+  let questions = pickQuestions(config, pool);
+  if (questions.length === 0) {
+    questions = pickQuestions(
+      { ...config, categorySlugs: [], difficulty: "متوسط" },
+      pool ?? getAllSinJeemQuestions(),
+    );
+  }
   const teamAName = config.mode === "solo" ? "أنت" : config.teamAName;
   const teamBName = config.mode === "solo" ? "" : config.teamBName;
 

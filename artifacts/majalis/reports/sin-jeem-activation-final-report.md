@@ -2,7 +2,7 @@
 
 **Branch:** `cursor/sin-jeem-production-92e6`  
 **Date:** 2026-06-28  
-**Honest readiness:** **~72%** — NOT 100% until Supabase Production has all 18 tables + 527+ seeded questions
+**Honest readiness:** **~75%** — NOT 100% until Supabase Production has all 18 tables + 527+ seeded questions
 
 ---
 
@@ -16,8 +16,9 @@ Verified against live Supabase using `VITE_SUPABASE_URL` + anon key:
 | Questions in DB | **0** |
 | Categories in DB | **0** |
 | Leaderboard entries | **0** |
+| Production cron `scope=sin-jeem` | **401 Unauthorized** (needs `CRON_SECRET`) |
 
-**Root cause:** Migration never applied on production. Agent environment has **only** `VITE_SUPABASE_URL` + `VITE_SUPABASE_ANON_KEY` — no `DATABASE_URL`, no `SUPABASE_SERVICE_ROLE_KEY`.
+**Root cause:** Migration never applied on production. Agent environment has **only** `VITE_SUPABASE_URL` + `VITE_SUPABASE_ANON_KEY` — no `DATABASE_URL`, no `SUPABASE_SERVICE_ROLE_KEY`, no `CRON_SECRET`.
 
 ---
 
@@ -29,13 +30,13 @@ Verified against live Supabase using `VITE_SUPABASE_URL` + anon key:
 | 2 — Seed | 527+ questions | ❌ **0% live** | Bank file: 527 ✅; DB: 0 |
 | 3 — Integrity | FK, dupes, refs | ✅ **offline** | `verify:sin-jeem:seed` 12/12 |
 | 4 — Leaderboard | Supabase, no localStorage | ✅ code / ❌ live | No localStorage writes verified |
-| 5 — Game Engine | 6 modes | ✅ | E2E sim 44/44 |
-| 6 — Question Engine | 18 types | ✅ | Bank has 18 types |
+| 5 — Game Engine | 6 modes | ✅ | E2E sim 44/44; browser quick play ✅ |
+| 6 — Question Engine | 18 types | ✅ | Bank has 18 types; quick play displays options |
 | 7 — Admin | CRUD, import, audit | ✅ code | API handlers present |
 | 8 — AI | Fallback without keys | ✅ | API has offline fallback |
-| 9 — Performance | Lighthouse ≥95 | ❌ | Dev server; not measured reliably |
+| 9 — Performance | Lighthouse ≥95 | ❌ | Not measured on production build |
 | 10 — Security | Rate limits, validation | ✅ | API validation + rate limit |
-| 11 — E2E | Real system tests | ⚠️ **partial** | Offline sim 44/44; live blocked |
+| 11 — E2E | Real system tests | ⚠️ **partial** | Offline sim 44/44; browser quick play ✅; live DB blocked |
 | 12 — Final report | This document | ✅ | |
 
 ---
@@ -45,7 +46,7 @@ Verified against live Supabase using `VITE_SUPABASE_URL` + anon key:
 | Test | Result |
 |------|--------|
 | `pnpm run typecheck` | ✅ PASS |
-| `pnpm run build` | ✅ PASS (4.84s) |
+| `pnpm run build` | ✅ PASS (4.97s) |
 | `pnpm run lint` | ✅ 0 errors, 14 warnings |
 | `verify:sin-jeem` | ✅ 30/30 |
 | `verify:sin-jeem:production` | ✅ 31/31 |
@@ -53,9 +54,24 @@ Verified against live Supabase using `VITE_SUPABASE_URL` + anon key:
 | `test:sin-jeem-engine` | ✅ 7/7 |
 | `test:sin-jeem-e2e` | ✅ 44/44 |
 | `verify:sin-jeem:db` | ❌ 0/18 tables (expected without migration) |
+| `activate:sin-jeem` | ❌ Blocked at migration (no DATABASE_URL) |
 | Live REST table probe | ❌ 18/18 missing |
-| Lighthouse mobile | ❌ Not completed (dev env) |
-| Browser manual test | Pending |
+| Production cron probe | ❌ 401 Unauthorized |
+| Lighthouse mobile/desktop | ❌ Not completed |
+| Browser manual test | ⚠️ Partial (see below) |
+
+---
+
+## Browser E2E (Local Dev, JSON Fallback)
+
+| Step | Result |
+|------|--------|
+| `/sin-jeem` homepage RTL | ✅ |
+| Quick play (`?mode=quick`) — question + options | ✅ |
+| Answer reveal + scoring (+10 pts) | ✅ |
+| Leaderboard page (empty without DB) | ✅ |
+| Team setup → play flow | ⚠️ Fixed in this iteration (race condition + sessionStorage restore) |
+| Supabase 404/PGRST205 in console | Expected — falls back to local JSON |
 
 ---
 
@@ -96,15 +112,20 @@ Verified against live Supabase using `VITE_SUPABASE_URL` + anon key:
 
 ## Activation Command (Production)
 
-Requires `DATABASE_URL` (Transaction Pooler :6543) + `SUPABASE_SERVICE_ROLE_KEY`:
+Requires `DATABASE_URL` (Transaction Pooler :6543) + `SUPABASE_SERVICE_ROLE_KEY` + `CRON_SECRET`:
 
 ```bash
-# One-shot (recommended)
+# One-shot (recommended, from CI or local with secrets)
 pnpm --filter @workspace/majalis run activate:sin-jeem
 
-# Or via Vercel cron
+# Or via Vercel cron (after deploy)
 curl -H "Authorization: Bearer $CRON_SECRET" \
-  "https://<domain>/api/cron/apply-migrations?scope=sin-jeem&seed=1"
+  "https://www.majlisilm.com/api/cron/apply-migrations?scope=sin-jeem&seed=1"
+
+# Or manually in Supabase SQL Editor (in order):
+# 1. supabase/sin_jeem_v1.sql
+# 2. supabase/sin_jeem_v1_2_types.sql
+# Then: pnpm --filter @workspace/majalis run seed:sin-jeem
 ```
 
 After activation, verify:
@@ -121,6 +142,9 @@ pnpm --filter @workspace/majalis run verify:sin-jeem:db
 - Added `verify-sin-jeem-seed-integrity.mjs` (12 checks)
 - Added `test-sin-jeem-e2e.mjs` (44 checks — all game modes + API validation)
 - Added `activate-sin-jeem-production.mjs` (one-shot migrate + seed + verify)
+- Fixed `lib/api-handlers/sin-jeem.js` import paths (dev server crash)
+- Fixed team setup → play race condition (`flushSync` + sessionStorage restore)
+- Added empty-questions fallback in `createSession`
 - Live REST verification proving **0/18 tables** on production
 
 ---
@@ -132,8 +156,8 @@ pnpm --filter @workspace/majalis run verify:sin-jeem:db
 | Database not activated | No `DATABASE_URL` in agent env; migration not applied on live Supabase |
 | Seed not in production | Requires service role after migration |
 | Leaderboard live test | No tables → submit_match fails on production |
-| Lighthouse ≥95 | Requires production build + optimized assets |
-| Full browser E2E | Blocked until DB live; game uses JSON fallback offline |
+| Lighthouse ≥95 | Requires production build audit; not run this iteration |
+| Full live E2E | Blocked until DB + CRON_SECRET available |
 
 **The game code is production-ready. Supabase Production is not activated.**
 

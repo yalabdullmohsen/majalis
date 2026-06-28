@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { flushSync } from "react-dom";
 import { useLocation, useRoute } from "wouter";
 import {
   DEFAULT_CONFIG,
@@ -44,7 +45,7 @@ export default function SinJeemSetupPage() {
     trackPlayer(config.teamAName);
     if (config.teamBName) trackPlayer(config.teamBName);
     const finalConfig = { ...config, categorySlugs: selectedCats };
-    startGame(finalConfig);
+    flushSync(() => startGame(finalConfig));
     setLocation("/sin-jeem/play");
   };
 

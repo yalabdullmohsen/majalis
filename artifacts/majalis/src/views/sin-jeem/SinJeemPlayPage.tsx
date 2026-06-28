@@ -12,10 +12,10 @@ import {
   quickConfig,
   dailyConfig,
 } from "@/lib/sin-jeem/engine";
+import { loadSession } from "@/lib/sin-jeem/storage";
 import type { LifelineType } from "@/lib/sin-jeem/types";
 import {
   playCorrectSound,
-  playLoseSound,
   playScorePop,
   playWrongSound,
 } from "@/lib/sin-jeem/sounds";
@@ -33,44 +33,50 @@ export default function SinJeemPlayPage() {
   const [, tick] = useState(0);
   const initialized = useRef(false);
 
+  const activeSession = session ?? loadSession();
+
   useEffect(() => {
     if (initialized.current) return;
     const params = new URLSearchParams(search);
     const mode = params.get("mode");
-    if (!session && mode === "quick") {
+    const stored = session ?? loadSession();
+    if (!stored && mode === "quick") {
       startGame(quickConfig());
       initialized.current = true;
-    } else if (!session && mode === "daily") {
+    } else if (!stored && mode === "daily") {
       startGame(dailyConfig());
       initialized.current = true;
-    } else if (!session) {
+    } else if (!stored) {
       setLocation("/sin-jeem");
+    } else if (!session && stored) {
+      updateSession(stored);
+      initialized.current = true;
     } else {
       initialized.current = true;
     }
-  }, [session, search, startGame, setLocation]);
+  }, [session, search, startGame, updateSession, setLocation]);
 
   useEffect(() => {
-    if (!session || session.phase !== "playing" || session.timerFrozen) return;
+    if (!activeSession || activeSession.phase !== "playing" || activeSession.timerFrozen) return;
     const id = window.setInterval(() => tick((t) => t + 1), 500);
     return () => clearInterval(id);
-  }, [session?.phase, session?.timerFrozen, session?.currentIndex, session?.timerStartedAt]);
+  }, [activeSession?.phase, activeSession?.timerFrozen, activeSession?.currentIndex, activeSession?.timerStartedAt]);
 
   useEffect(() => {
-    if (!session || session.phase !== "playing" || session.timerFrozen) return;
-    if (isTimerExpired(session)) {
-      updateSession(timeoutQuestion(session));
+    if (!activeSession || activeSession.phase !== "playing" || activeSession.timerFrozen) return;
+    if (isTimerExpired(activeSession)) {
+      updateSession(timeoutQuestion(activeSession));
       playWrongSound();
     }
-  }, [session, updateSession, tick]);
+  }, [activeSession, updateSession, tick]);
 
   const handleSelect = useCallback(
     (index: number) => {
-      if (!session || session.phase !== "playing") return;
+      if (!activeSession || activeSession.phase !== "playing") return;
       setSelected(index);
-      const next = submitAnswer(session, index);
+      const next = submitAnswer(activeSession, index);
       updateSession(next);
-      const correct = index === (getCurrentQuestion(session)?.correct_index ?? 0);
+      const correct = index === (getCurrentQuestion(activeSession)?.correct_index ?? 0);
       if (correct) {
         playCorrectSound();
         playScorePop();
@@ -78,22 +84,22 @@ export default function SinJeemPlayPage() {
         playWrongSound();
       }
     },
-    [session, updateSession],
+    [activeSession, updateSession],
   );
 
   const handleLifeline = (type: LifelineType) => {
-    if (!session) return;
-    const next = useLifeline(session, type);
+    if (!activeSession) return;
+    const next = useLifeline(activeSession, type);
     updateSession(next);
   };
 
   const handleContinue = () => {
-    if (!session) return;
-    if (session.phase === "finished") {
+    if (!activeSession) return;
+    if (activeSession.phase === "finished") {
       setLocation("/sin-jeem/results");
       return;
     }
-    const next = nextQuestion(session);
+    const next = nextQuestion(activeSession);
     updateSession(next);
     setSelected(null);
     if (next.phase === "finished") {
@@ -101,40 +107,44 @@ export default function SinJeemPlayPage() {
     }
   };
 
-  if (!session) return null;
+  if (!activeSession) return null;
 
-  const question = getCurrentQuestion(session);
-  const remaining = getRemainingSeconds(session);
-  const lifelines = session.activeSide === "a" ? session.lifelinesA : session.lifelinesB;
-  const revealed = session.phase === "reveal";
+  const question = getCurrentQuestion(activeSession);
+  const remaining = getRemainingSeconds(activeSession);
+  const lifelines = activeSession.activeSide === "a" ? activeSession.lifelinesA : activeSession.lifelinesB;
+  const revealed = activeSession.phase === "reveal";
 
   return (
     <GameLayout>
       <div style={{ textAlign: "center", fontSize: "0.8125rem", color: "var(--majalis-ink-soft)", marginBottom: "0.5rem" }}>
-        سؤال {session.currentIndex + 1} / {session.questions.length}
-        {session.config.mode !== "solo" && (
-          <> · دور {session.activeSide === "a" ? session.teamA.name : session.teamB.name}</>
+        سؤال {activeSession.currentIndex + 1} / {activeSession.questions.length}
+        {activeSession.config.mode !== "solo" && (
+          <> · دور {activeSession.activeSide === "a" ? activeSession.teamA.name : activeSession.teamB.name}</>
         )}
       </div>
 
-      <ScoreBoard session={session} />
+      <ScoreBoard session={activeSession} />
 
-      {session.phase === "playing" && (
-        <TimerRing total={session.config.timerSeconds} remaining={remaining} frozen={session.timerFrozen} />
+      {activeSession.phase === "playing" && (
+        <TimerRing total={activeSession.config.timerSeconds} remaining={remaining} frozen={activeSession.timerFrozen} />
       )}
 
-      {question && (
+      {question ? (
         <QuestionCard
           question={question}
           selectedIndex={selected}
-          hiddenOptions={session.hiddenOptions}
+          hiddenOptions={activeSession.hiddenOptions}
           revealed={revealed}
           onSelect={handleSelect}
           disabled={revealed}
         />
+      ) : (
+        <p style={{ textAlign: "center", color: "var(--majalis-ink-soft)", marginTop: "1rem" }}>
+          لا توجد أسئلة متاحة — ارجع للصفحة الرئيسية وابدأ من جديد.
+        </p>
       )}
 
-      {session.phase === "playing" && (
+      {activeSession.phase === "playing" && (
         <LifelineBar
           available={lifelines}
           onUse={handleLifeline}
@@ -144,7 +154,7 @@ export default function SinJeemPlayPage() {
 
       {revealed && (
         <button type="button" className="sj-cta-primary" style={{ marginTop: "1.25rem" }} onClick={handleContinue}>
-          {session.currentIndex + 1 >= session.questions.length ? "عرض النتائج 🏆" : "السؤال التالي →"}
+          {activeSession.currentIndex + 1 >= activeSession.questions.length ? "عرض النتائج 🏆" : "السؤال التالي →"}
         </button>
       )}
     </GameLayout>

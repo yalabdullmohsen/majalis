@@ -1,8 +1,8 @@
 import { sendJson } from "../api/_http.mjs";
-import { getEnvConfig } from "../../env-config.mjs";
-import { getSupabaseAdmin } from "../../supabase-admin.mjs";
-import { requireAdminAccess } from "../../admin-auth.mjs";
-import { parseCsvQuestions, parseJsonQuestions, questionsToCsv, contentHash as importHash } from "../../sin-jeem-import.mjs";
+import { getEnvConfig } from "../../lib/env-config.mjs";
+import { getSupabaseAdmin } from "../../lib/supabase-admin.mjs";
+import { requireAdminAccess } from "../../lib/admin-auth.mjs";
+import { parseCsvQuestions, parseJsonQuestions, questionsToCsv, contentHash as importHash } from "../../lib/sin-jeem-import.mjs";
 
 const USED_HASHES = new Set();
 const RATE_LIMIT = new Map();
