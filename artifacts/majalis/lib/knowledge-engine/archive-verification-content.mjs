@@ -44,9 +44,16 @@ export async function archiveVerificationContent(options = {}) {
     .maybeSingle();
 
   if (lesson?.id) {
-    const { error } = await admin.from("lessons").update({ status: "archived" }).eq("id", lesson.id);
+    // Production schema: content_status enum = pending|approved|rejected (no archived)
+    const { error } = await admin.from("lessons").update({ status: "rejected" }).eq("id", lesson.id);
     if (error) throw error;
-    report.lesson = { id: lesson.id, external_key: lesson.external_key, from: lesson.status, to: "archived" };
+    report.lesson = {
+      id: lesson.id,
+      external_key: lesson.external_key,
+      from: lesson.status,
+      to: "rejected",
+      note: "soft_archived_verification_fixture",
+    };
   }
 
   const { data: ki } = await admin
