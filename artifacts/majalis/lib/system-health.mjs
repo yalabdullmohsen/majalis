@@ -89,17 +89,21 @@ export async function getSystemHealth() {
   }
   if (dbConn.ok === false) errors.push(`PostgreSQL pooler: ${dbConn.error}`);
   if (akeRpc.missingRequired?.length) {
-    errors.push(`AKE RPC missing: ${akeRpc.missingRequired.join(", ")} — run apply-migrations?scope=ake-rpc`);
+    warnings.push(`إحصائيات AKE: بعض دوال RPC غير متوفرة — يعمل الوضع الاحتياطي`);
   } else if (!akeRpc.engineStatsCallable && akeRpc.engineStatsExists) {
-    errors.push(`ake_engine_stats exists but not callable via API — re-apply auto_knowledge_engine_v13_rpc_fix.sql`);
+    if (akeStats.ok && akeStats.stats) {
+      warnings.push("إحصائيات AKE: RPC غير متاح — يُستخدم الاستعلام المباشر");
+    } else {
+      warnings.push("إحصائيات AKE: RPC غير متاح — طبّق migration ake-rpc أو انتظر إعادة المزامنة");
+    }
   } else if (!akeRpc.engineStatsExists && akeRpc.pgProbeOk) {
-    errors.push("ake_engine_stats(int) not found — run apply-migrations?scope=ake-rpc");
+    warnings.push("إحصائيات AKE: الدالة غير موجودة — شغّل apply-migrations?scope=ake-rpc");
   }
   if (akeRpc.missingGrants?.length) {
-    errors.push(`AKE RPC missing GRANTs: ${akeRpc.missingGrants.join(", ")}`);
+    warnings.push(`صلاحيات RPC ناقصة — ${akeRpc.missingGrants.join(", ")}`);
   }
   if (akeStats.usingLegacy && !akeStats.stats?._fallback && akeRpc.missingRequired?.length) {
-    errors.push("AKE migration pending — run auto_knowledge_engine_v13.sql");
+    warnings.push("AKE migration pending — run auto_knowledge_engine_v13.sql");
   }
 
   const criticalErrors = [];
@@ -120,7 +124,9 @@ export async function getSystemHealth() {
   return {
     ok: coreOk,
     status,
+    degraded: warnings.length > 0,
     critical: criticalErrors.length > 0 ? criticalErrors : undefined,
+    warnings: warnings.length > 0 ? warnings : undefined,
     at: new Date().toISOString(),
     durationMs: Date.now() - started,
     lastRun: {
@@ -138,7 +144,7 @@ export async function getSystemHealth() {
       itemsPending: autoContentHealth.content?.pending ?? pipelineStats.pendingCount ?? 0,
       lastDurationMs: lastAutoRun?.duration_ms ?? null,
     },
-    errors: errors.length > 0 ? errors : (pipelineStats.logs || [])
+    errors: warnings.length > 0 ? warnings : (pipelineStats.logs || [])
       .filter((l) => l.status === "failed")
       .slice(0, 10)
       .map((l) => l.message),

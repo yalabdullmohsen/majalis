@@ -1,5 +1,5 @@
 import { resolveContentType, TYPE_REGISTRY } from "./registry.mjs";
-import { validateRow, MAX_VALIDATION_ERRORS } from "./validators.mjs";
+import { validateRow, validateLessonRowsResilient, MAX_VALIDATION_ERRORS } from "./validators.mjs";
 import { parseContentFile, parseContentString } from "./parsers.mjs";
 import { dedupeRows } from "./dedupe.mjs";
 import { mapRowToPayload } from "./mappers.mjs";
@@ -22,16 +22,36 @@ import {
 const UPLOAD_BATCH_SIZE = 2000;
 
 /**
- * Validate rows in memory. Fails entire import if any row is invalid.
+ * Validate rows in memory.
+ * Lessons/courses: resilient per-row — never fail the entire file for one bad row.
  * @param {string} type
  * @param {Record<string, unknown>[]} rows
+ * @param {object} [ctx]
  */
-export function validateAllRows(type, rows) {
+export function validateAllRows(type, rows, ctx = {}) {
+  if (type === "lessons" || type === "courses") {
+    const resilient = validateLessonRowsResilient(rows, ctx);
+    return {
+      validRows: resilient.validRows,
+      validationErrors: resilient.validationErrors,
+      allValid: resilient.allValid,
+      partial: resilient.partial,
+      importStats: {
+        published: resilient.stats.published + resilient.stats.published_incomplete,
+        review_queued: resilient.stats.review_queued,
+        failed: resilient.stats.failed,
+        missing_optional_fields: resilient.stats.missing_optional_fields,
+        missing_required_fields: resilient.stats.missing_required_fields,
+        published_incomplete: resilient.stats.published_incomplete,
+      },
+    };
+  }
+
   const validationErrors = [];
   const validRows = [];
 
   for (let index = 0; index < rows.length; index++) {
-    const result = validateRow(type, rows[index], index);
+    const result = validateRow(type, rows[index], index, ctx);
     if (result.ok) validRows.push(result.row ?? rows[index]);
     else {
       for (const err of result.errors) {
@@ -40,7 +60,13 @@ export function validateAllRows(type, rows) {
     }
   }
 
-  return { validRows, validationErrors, allValid: validationErrors.length === 0 };
+  return {
+    validRows,
+    validationErrors,
+    allValid: validationErrors.length === 0,
+    partial: false,
+    importStats: null,
+  };
 }
 
 /**
@@ -63,10 +89,12 @@ export async function runContentImportRows(opts) {
   onProgress({ phase: "validating", processed: 0, total: rows.length, pct: 45 });
 
   const validationStarted = Date.now();
-  const { validRows, validationErrors, allValid } = validateAllRows(def.type, rows);
+  const { validRows, validationErrors, allValid, partial, importStats } = validateAllRows(def.type, rows, {
+    defaultSourceUrl: opts.source ? `csv://${opts.source}` : "csv://majalis-import",
+  });
   const validation_ms = Date.now() - validationStarted;
 
-  if (!allValid) {
+  if (!allValid && !partial) {
     return {
       ok: false,
       type: def.type,
@@ -81,11 +109,15 @@ export async function runContentImportRows(opts) {
         invalid: rows.length - validRows.length,
         duplicates_in_file: 0,
         imported: 0,
+        published: 0,
+        review_queued: 0,
         skipped: 0,
-        failed: 0,
+        failed: rows.length,
+        missing_optional_fields: 0,
+        missing_required_fields: 0,
       },
       validationErrors,
-      importErrors: ["تم إلغاء الاستيراد — أصلح أخطاء التحقق ثم أعد المحاولة"],
+      importErrors: ["لا توجد صفوف صالحة للاستيراد"],
       rolledBack: true,
     };
   }
@@ -110,9 +142,13 @@ export async function runContentImportRows(opts) {
   const ok =
     (importReport.failed ?? 0) === 0 &&
     (importReport.errors?.length ?? 0) === 0 &&
-    importReport.ok !== false;
+    importReport.ok !== false &&
+    validRows.length > 0;
 
   const total_ms = Date.now() - started;
+  const reviewQueued =
+    importStats?.review_queued ??
+    validRows.filter((r) => r._import_disposition === "review_queued" || r.status === "pending_review").length;
 
   return {
     ok,
@@ -125,15 +161,23 @@ export async function runContentImportRows(opts) {
     stats: {
       read: rows.length,
       valid: validRows.length,
-      invalid: 0,
+      invalid: rows.length - validRows.length,
       duplicates_in_file: duplicates.length,
       imported: importReport.imported ?? 0,
+      published:
+        importStats?.published ??
+        validRows.filter((r) => r.status === "approved" && r._import_disposition !== "review_queued").length,
+      review_queued: reviewQueued,
       skipped: importReport.skipped ?? 0,
       failed: importReport.failed ?? 0,
+      missing_optional_fields: importStats?.missing_optional_fields ?? 0,
+      missing_required_fields: importStats?.missing_required_fields ?? 0,
+      published_incomplete: importStats?.published_incomplete ?? 0,
     },
-    validationErrors: [],
+    validationErrors,
     importErrors: importReport.errors || [],
     rolledBack: Boolean(importReport.rolledBack),
+    partial: Boolean(partial && validationErrors.length > 0),
   };
 }
 

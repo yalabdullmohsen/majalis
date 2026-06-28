@@ -970,7 +970,8 @@ async function buildAkeStatsFallback(admin, days) {
     },
     v2: v2?.ok ? v2 : null,
     _fallback: true,
-    _note: "ake_engine_stats RPC unavailable — run GRANT on function or re-apply auto_knowledge_engine_v13.sql",
+    _fallback_mode: "direct_query",
+    _user_message: "تعمل لوحة المراقبة في الوضع الاحتياطي — البيانات محدّثة من الجداول مباشرة",
   };
 }
 

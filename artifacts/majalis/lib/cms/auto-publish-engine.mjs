@@ -1,5 +1,6 @@
 /**
  * Auto-publish decision engine — trusted sources only, strict rules.
+ * Optional fields must not block publishing.
  */
 import { validateLessonDraft } from "./content-validator.mjs";
 
@@ -14,25 +15,25 @@ function pick(data, ...keys) {
   return "";
 }
 
+/** Critical fields only — used for auto-publish gate, not manual publish. */
 export function validateAutomationRequiredFields(parsed, { sourceUrl, imageUrl } = {}) {
   const missing = [];
-  if (!pick(parsed, "title")) missing.push("title");
-  if (!pick(parsed, "speaker_name", "sheikh_name")) missing.push("speaker_name");
-  const dateStr = pick(parsed, "start_date", "gregorian_date");
-  const dayOfWeek = pick(parsed, "day_of_week", "day");
-  if (!dateStr && !dayOfWeek) missing.push("date");
-  if (!pick(parsed, "lesson_time", "time")) missing.push("lesson_time");
-  const hasPlace = pick(parsed, "mosque", "location") || pick(parsed, "region") || pick(parsed, "live_url");
-  if (!hasPlace) missing.push("place_or_live");
-  if (!sourceUrl) missing.push("source_url");
-  if (!imageUrl) missing.push("poster_image");
+  const validation = validateLessonDraft(parsed);
+  const normalized = validation.normalized || parsed;
+
+  if (!pick(normalized, "title")) missing.push("title");
+  if (!pick(normalized, "start_date", "gregorian_date") && !pick(normalized, "day_of_week", "day")) {
+    missing.push("date");
+  }
+  if (!pick(normalized, "lesson_time", "time")) missing.push("lesson_time");
+  if (!sourceUrl && !pick(normalized, "source_url", "website_url")) missing.push("source_url");
   return missing;
 }
 
 function isFutureDate(dateStr) {
   if (!dateStr) return false;
   const d = new Date(dateStr);
-  if (Number.isNaN(d.getTime())) return true; // recurring lessons without fixed date — allow if day_of_week set
+  if (Number.isNaN(d.getTime())) return true;
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   return d >= today;
@@ -48,11 +49,12 @@ export function evaluateAutoPublish({
   imageUrl,
 }) {
   const reasons = [];
-  const missing = validateAutomationRequiredFields(parsed, { sourceUrl, imageUrl });
   const validation = validateLessonDraft(parsed);
+  const normalized = validation.normalized || parsed;
+  const missing = validateAutomationRequiredFields(normalized, { sourceUrl, imageUrl });
 
   if (missing.length) {
-    reasons.push(`حقول ناقصة: ${missing.join(", ")}`);
+    reasons.push(`حقول أساسية ناقصة: ${missing.join(", ")}`);
   }
   for (const e of validation.errors || []) {
     reasons.push(e.message);
@@ -62,18 +64,9 @@ export function evaluateAutoPublish({
     return { decision: "pending_review", autoPublish: false, reasons: ["مصدر غير معروف"], missing };
   }
 
-  if (!source.active) {
-    reasons.push("المصدر معطّل");
-  }
-
-  if (!TRUSTED_LEVELS.has(source.trust_level)) {
-    reasons.push(`مستوى ثقة غير كافٍ: ${source.trust_level}`);
-  }
-
-  if (!source.auto_publish_allowed) {
-    reasons.push("Auto-Publish غير مفعّل لهذا المصدر");
-  }
-
+  if (!source.active) reasons.push("المصدر معطّل");
+  if (!TRUSTED_LEVELS.has(source.trust_level)) reasons.push(`مستوى ثقة غير كافٍ: ${source.trust_level}`);
+  if (!source.auto_publish_allowed) reasons.push("Auto-Publish غير مفعّل لهذا المصدر");
   if ((confidenceScore ?? 0) < AUTO_PUBLISH_MIN_CONFIDENCE) {
     reasons.push(`ثقة منخفضة (${Math.round((confidenceScore ?? 0) * 100)}% < 95%)`);
   }
@@ -88,40 +81,26 @@ export function evaluateAutoPublish({
     };
   }
 
-  const title = pick(parsed, "title");
-  if (title.length < 4) {
-    reasons.push("العنوان غير واضح");
-  }
+  const title = pick(normalized, "title");
+  if (title.length < 4) reasons.push("العنوان غير واضح");
 
-  const dateStr = pick(parsed, "start_date", "gregorian_date");
-  const dayOfWeek = pick(parsed, "day_of_week", "day");
-  if (dateStr && !isFutureDate(dateStr)) {
-    reasons.push("التاريخ ليس في المستقبل");
-  }
-  if (!dateStr && !dayOfWeek) {
-    reasons.push("لا يوجد تاريخ أو يوم");
-  }
+  const dateStr = pick(normalized, "start_date", "gregorian_date");
+  const dayOfWeek = pick(normalized, "day_of_week", "day");
+  if (dateStr && !isFutureDate(dateStr)) reasons.push("التاريخ ليس في المستقبل");
+  if (!dateStr && !dayOfWeek) reasons.push("لا يوجد تاريخ أو يوم");
 
-  const mosque = pick(parsed, "mosque", "location");
-  const region = pick(parsed, "region");
-  const liveUrl = pick(parsed, "live_url");
-  const hasPlace = Boolean(mosque || region || liveUrl);
-  if (!hasPlace) {
-    reasons.push("المكان أو رابط البث غير واضح");
-  }
-
-  if (!imageUrl) {
-    reasons.push("صورة الإعلان مطلوبة للنشر التلقائي");
-  }
-
-  const hasSheikh = Boolean(sheikhMatch?.matched?.id || pick(parsed, "speaker_name"));
-  if (!hasSheikh) {
-    reasons.push("اسم الشيخ غير معروف");
-  }
-
-  if (!sourceUrl) {
+  if (!sourceUrl && !pick(normalized, "source_url", "website_url")) {
     reasons.push("لا يوجد مصدر أصلي");
   }
+
+  // Important but non-blocking for manual publish — only warn for auto-publish
+  if (!pick(normalized, "speaker_name", "sheikh_name") && !sheikhMatch?.matched?.id) {
+    reasons.push("اسم الشيخ غير متوفر (لا يمنع النشر اليدوي)");
+  }
+  if (!pick(normalized, "mosque", "location", "region", "live_url")) {
+    reasons.push("المكان غير متوفر (لا يمنع النشر اليدوي)");
+  }
+  if (!imageUrl) reasons.push("صورة الإعلان مفقودة — مراجعة موصى بها");
 
   const canAuto =
     source.active &&
@@ -131,26 +110,19 @@ export function evaluateAutoPublish({
     missing.length === 0 &&
     validation.canPublish &&
     title.length >= 4 &&
-    hasPlace &&
-    hasSheikh &&
-    sourceUrl &&
-    imageUrl &&
-    (dateStr ? isFutureDate(dateStr) : Boolean(dayOfWeek));
+    (dateStr ? isFutureDate(dateStr) : Boolean(dayOfWeek)) &&
+    Boolean(sourceUrl || pick(normalized, "source_url", "website_url"));
 
   if (canAuto) {
-    return {
-      decision: "approved",
-      autoPublish: true,
-      reasons: [],
-      missing: [],
-    };
+    return { decision: "approved", autoPublish: true, reasons: [], missing: [] };
   }
 
   return {
-    decision: "pending_review",
+    decision: validation.canPublish ? "approved_manual" : "pending_review",
     autoPublish: false,
     reasons,
     missing,
+    dataIncomplete: validation.dataIncomplete,
   };
 }
 
