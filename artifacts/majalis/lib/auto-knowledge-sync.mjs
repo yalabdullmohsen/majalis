@@ -24,6 +24,8 @@ export async function runFullKnowledgeSync(options = {}) {
       checkLinks: options.checkLinks,
       maxConnectors: options.maxConnectors || (isCron ? 6 : 20),
       connectorSlug: options.connectorSlug,
+      importMode: options.importMode,
+      maxItemsPerConnector: options.maxItemsPerConnector,
     });
     const stats = await getAutoKnowledgeEngineStats(7);
     return {
