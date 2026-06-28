@@ -20,6 +20,12 @@ const STEP_TABLE_CHECKS = {
   "majlis_knowledge_engine_v1.sql": ["mke_source_plugins", "mke_runs", "mke_decisions", "mke_queue_jobs"],
   "majlis_knowledge_engine_v2.sql": ["mke_quality_reports"],
   "autonomous_platform_v1.sql": ["akp_content_sources", "akp_pipeline_runs"],
+  "autonomous_platform_v3.sql": [
+    "akp_source_health_snapshots",
+    "akp_platform_analytics_daily",
+    "akp_semantic_index",
+    "akp_scheduler_state",
+  ],
   "content_production_v1.sql": ["content_scheduler_jobs", "content_scheduler_runs", "content_production_staging"],
 };
 

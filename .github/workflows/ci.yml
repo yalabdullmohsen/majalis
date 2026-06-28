@@ -53,6 +53,7 @@ jobs:
       - name: Autonomous platform tests
         run: |
           cd artifacts/majalis
+          node scripts/test-autonomous-platform-v3.mjs
           pnpm run verify:autonomous-platform
           pnpm run verify:majlis-knowledge-engine
           pnpm run verify:import-jobs-integrity
