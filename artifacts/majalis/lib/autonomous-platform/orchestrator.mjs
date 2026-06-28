@@ -52,7 +52,7 @@ export async function runAutonomousPlatform(opts = {}) {
   }
 
   try {
-    if (mode === "full" || mode === "fetch") {
+    if (mode === "bootstrap") {
       await seedContentSourcesFromJson();
       await syncSourcesToMkePlugins();
     }

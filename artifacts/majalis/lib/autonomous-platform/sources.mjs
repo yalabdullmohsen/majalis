@@ -63,7 +63,7 @@ function slugFromUrl(url) {
   }
 }
 
-export async function listContentSources({ activeOnly = true, contentType = null } = {}) {
+export async function listContentSources({ activeOnly = true, contentType = null, dbOnly = true } = {}) {
   const admin = getSupabaseAdmin();
   const out = [];
 
@@ -80,7 +80,7 @@ export async function listContentSources({ activeOnly = true, contentType = null
     }
   }
 
-  if (!out.length) {
+  if (!out.length && !dbOnly) {
     for (const row of loadSourcesFromJson()) {
       out.push(normalizeSource(row));
     }

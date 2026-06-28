@@ -27,6 +27,7 @@ export const ACTIVATION_TABLES_MIGRATION_FILES = [
   "majlis_knowledge_engine_v1.sql",
   "majlis_knowledge_engine_v2.sql",
   "autonomous_platform_v1.sql",
+  "autonomous_platform_v3.sql",
   "content_production_v1.sql",
 ];
 
@@ -68,6 +69,7 @@ export const MIGRATION_FILES = [
   "majlis_knowledge_engine_v1.sql",
   "majlis_knowledge_engine_v2.sql",
   "autonomous_platform_v1.sql",
+  "autonomous_platform_v3.sql",
   "content_production_v1.sql",
 ];
 

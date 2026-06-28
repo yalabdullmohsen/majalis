@@ -9,6 +9,7 @@ import { listContentSources } from "../sources.mjs";
 import { checkDuplicate } from "../dedup.mjs";
 import { verifyContent, enqueueReview } from "../verification.mjs";
 import { publishContentRecord } from "../publisher.mjs";
+import { scoreContentQuality } from "../v3/quality-engine.mjs";
 import { logStructured, moveToDeadLetter } from "../monitoring.mjs";
 import { periodStart } from "../normalize.mjs";
 
@@ -67,7 +68,7 @@ async function countPublishedInPeriod(contentType) {
   }
 }
 
-async function logMkeDecision({ source, record, decision, confidence, runId }) {
+async function logMkeDecision({ source, record, decision, confidence, runId, metadata = {} }) {
   const admin = getSupabaseAdmin();
   if (!admin) return;
   try {
@@ -77,14 +78,14 @@ async function logMkeDecision({ source, record, decision, confidence, runId }) {
       decision,
       confidence_score: confidence ?? 0.8,
       reasons: [],
-      metadata: { pipeline_run_id: runId, content_type: record._contentType },
+      metadata: { pipeline_run_id: runId, content_type: record._contentType, ...metadata },
     });
   } catch {
     /* optional */
   }
 }
 
-async function logQualityReport({ source, record, verification, runId }) {
+async function logQualityReport({ source, record, verification, quality, runId }) {
   const admin = getSupabaseAdmin();
   if (!admin) return;
   try {
@@ -93,8 +94,8 @@ async function logQualityReport({ source, record, verification, runId }) {
       source_url: record.source_url || source?.source_url,
       verdict: verification.verdict,
       blockers: verification.blockers,
-      warnings: verification.warnings,
-      checks: verification.checks,
+      warnings: [...(verification.warnings || []), ...(quality?.warnings || [])],
+      checks: { ...verification.checks, quality_score: quality?.score },
     });
   } catch {
     /* optional */
@@ -163,12 +164,20 @@ export async function runContentPipeline(contentType, opts = {}) {
           continue;
         }
 
+        const quality = scoreContentQuality(item, contentType);
         const verification = await verifyContent({ contentType, record: item, source });
-        await logQualityReport({ source, record: item, verification, runId });
+        await logQualityReport({ source, record: item, verification, quality, runId });
 
         const autoPublish = source.publication_policy?.auto_publish
           && source.trust_score >= (source.publication_policy?.min_trust ?? 80)
-          && verification.ok;
+          && verification.ok
+          && quality.score >= 50;
+
+        if (quality.score < 50) {
+          summary.rejected += 1;
+          await logMkeDecision({ source, record: item, decision: "rejected", confidence: 0.2, runId, metadata: { qualityScore: quality.score } });
+          continue;
+        }
 
         if (!verification.ok) {
           if (source.publication_policy?.review_on_fail !== false) {
