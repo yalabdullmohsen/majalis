@@ -112,6 +112,21 @@ export default async function handler(req, res) {
       return;
     }
 
+    if (scope === "cd-pipeline" || scope === "cd-v1") {
+      const result = await applyMigrations({
+        files: ["cd_pipeline_v1.sql"],
+        continueOnError: false,
+        trackApplied: true,
+      });
+      sendJson(res, result.ok ? 200 : 500, {
+        ok: result.ok,
+        scope: "cd-pipeline",
+        migrations: result,
+        resolved: resolvedMeta(),
+      });
+      return;
+    }
+
     if (scope === "ake-sync" || scope === "ake-v14") {
       const result = await applyMigrations({
         files: ["auto_knowledge_engine_v14_sync.sql"],

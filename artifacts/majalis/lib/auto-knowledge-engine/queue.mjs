@@ -4,7 +4,14 @@
 
 import { akeLog, auditLog } from "./monitoring.mjs";
 
-export async function enqueueJob(admin, { connectorId, jobType, payload, priority = 5, maxAttempts = 3 }) {
+/** Intelligent retry schedule: immediate → 1m → 5m → 15m */
+export const RETRY_SCHEDULE_MS = [0, 60_000, 300_000, 900_000];
+
+export function nextRetryDelay(attempt) {
+  return RETRY_SCHEDULE_MS[Math.min(attempt - 1, RETRY_SCHEDULE_MS.length - 1)];
+}
+
+export async function enqueueJob(admin, { connectorId, jobType, payload, priority = 5, maxAttempts = 4, attempt = 1 }) {
   if (!admin) return null;
   try {
     const { data, error } = await admin
@@ -58,13 +65,15 @@ export async function processNextJobs(admin, handler, limit = 5) {
     } catch (err) {
       const attempts = job.attempts + 1;
       const failed = attempts >= job.max_attempts;
+      const retryDelay = nextRetryDelay(attempts);
       await admin.from("ake_job_queue").update({
         status: failed ? "failed" : "pending",
+        attempts,
         last_error: err.message,
         finished_at: failed ? new Date().toISOString() : null,
         scheduled_at: failed
           ? job.scheduled_at
-          : new Date(Date.now() + attempts * 60_000).toISOString(),
+          : new Date(Date.now() + retryDelay).toISOString(),
       }).eq("id", job.id);
 
       await auditLog(admin, {

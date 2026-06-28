@@ -44,6 +44,10 @@
       "schedule": "45 3 * * *"
     },
     {
+      "path": "/api/cron/cd-post-deploy",
+      "schedule": "50 3 * * *"
+    },
+    {
       "path": "/api/cron/connector-health",
       "schedule": "0 4 * * *"
     },

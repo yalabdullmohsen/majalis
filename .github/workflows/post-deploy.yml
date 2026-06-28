@@ -1,0 +1,84 @@
+name: Post-Deploy Verification
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  deployment_status:
+    types: [success]
+
+concurrency:
+  group: post-deploy-${{ github.sha }}
+  cancel-in-progress: false
+
+env:
+  MAJALIS_PRODUCTION_URL: https://www.majlisilm.com
+
+jobs:
+  wait-and-verify:
+    name: Post-Deploy Gate
+    if: |
+      github.repository == 'yalabdullmohsen/majalis' &&
+      (github.event_name != 'deployment_status' || github.event.deployment_status.state == 'success')
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Wait for Vercel and verify production
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+          VITE_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          GITHUB_SHA: ${{ github.sha }}
+          CD_WEBHOOK_URL: ${{ secrets.CD_WEBHOOK_URL }}
+        run: |
+          curl -sf -H "Authorization: Bearer $CRON_SECRET" -H "x-vercel-cron: 1" \
+            "$MAJALIS_PRODUCTION_URL/api/cron/apply-migrations?scope=cd-pipeline" || true
+          node artifacts/majalis/scripts/cd/post-deploy.mjs --wait-deploy --rollback-on-failure --json | tee post-deploy-report.json
+
+      - name: Platform bootstrap (self-heal)
+        if: success()
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+        run: |
+          cd artifacts/majalis
+          if [ -n "$SUPABASE_SERVICE_ROLE_KEY" ] && { [ -n "$DATABASE_URL" ] || [ -n "$SUPABASE_ACCESS_TOKEN" ]; }; then
+            pnpm run bootstrap:platform || true
+          fi
+          if [ -n "$CRON_SECRET" ]; then
+            curl -sf -H "Authorization: Bearer $CRON_SECRET" -H "x-vercel-cron: 1" \
+              "$MAJALIS_PRODUCTION_URL/api/cron/platform-bootstrap?action=run" || true
+          fi
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: post-deploy-report
+          path: post-deploy-report.json
+          retention-days: 30
+
+      - name: Fail on unhealthy deploy
+        run: |
+          if grep -q '"ok": false' post-deploy-report.json 2>/dev/null; then
+            echo "::error::Post-deploy verification failed"
+            exit 1
+          fi
