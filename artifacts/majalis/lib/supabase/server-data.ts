@@ -1,5 +1,6 @@
 import { LESSONS_SEED } from "@/lib/lessons-seed";
-import { DEMO_FAWAID, DEMO_LIBRARY, DEMO_QA, DEMO_QA_CATEGORIES, DEMO_SHEIKHS } from "@/lib/demo-content";
+import { DEMO_FAWAID, DEMO_QA, DEMO_QA_CATEGORIES, DEMO_SHEIKHS } from "@/lib/demo-content";
+import { getLibraryCatalog, mergeLibraryWithCatalog, normalizeLibraryRow } from "@/lib/library-service";
 import { filterMiraclesSeed } from "@/lib/miracles-seed";
 import { mapLessonRow, sortKuwaitLessons, dedupeKuwaitLessons, splitKuwaitLessons } from "@/lib/kuwait-lessons";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
@@ -21,7 +22,7 @@ export async function fetchHomePlatformStats(): Promise<HomePlatformStats> {
     return {
       lessonsCount: LESSONS_SEED.length,
       sheikhsCount: DEMO_SHEIKHS.length,
-      libraryCount: DEMO_LIBRARY.length,
+      libraryCount: getLibraryCatalog().length,
       qaCount: DEMO_QA.length,
       fawaidCount: DEMO_FAWAID.length,
       miraclesCount: filterMiraclesSeed({}).length,
@@ -41,7 +42,7 @@ export async function fetchHomePlatformStats(): Promise<HomePlatformStats> {
   return {
     lessonsCount: lessons.count ?? LESSONS_SEED.length,
     sheikhsCount: sheikhs.count ?? DEMO_SHEIKHS.length,
-    libraryCount: library.count ?? DEMO_LIBRARY.length,
+    libraryCount: library.count ?? getLibraryCatalog().length,
     qaCount: qa.count ?? DEMO_QA.length,
     fawaidCount: fawaid.count ?? DEMO_FAWAID.length,
     miraclesCount: miracles.count ?? filterMiraclesSeed({}).length,
@@ -173,7 +174,7 @@ export async function fetchAllSheikhIds(): Promise<string[]> {
 
 export async function fetchLibraryForServer() {
   if (!isSupabaseConfiguredServer()) {
-    return DEMO_LIBRARY;
+    return getLibraryCatalog();
   }
 
   const supabase = await createClient();
@@ -183,13 +184,29 @@ export async function fetchLibraryForServer() {
     .eq("status", "approved")
     .order("created_at", { ascending: false });
 
-  if (error || !data?.length) return DEMO_LIBRARY;
-  return data;
+  if (error || !data?.length) return getLibraryCatalog();
+  return mergeLibraryWithCatalog(data.map((row) => normalizeLibraryRow(row)));
+}
+
+export async function fetchLibraryBookByIdForServer(id: string) {
+  const catalog = getLibraryCatalog().find((row) => row.id === id);
+  if (!isSupabaseConfiguredServer()) return catalog ?? null;
+
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("library_items")
+    .select("*")
+    .eq("id", id)
+    .eq("status", "approved")
+    .maybeSingle();
+
+  if (data) return normalizeLibraryRow(data);
+  return catalog ?? null;
 }
 
 export async function fetchAllLibraryIds(): Promise<string[]> {
   const ids = new Set<string>();
-  DEMO_LIBRARY.forEach((row) => ids.add(String(row.id)));
+  getLibraryCatalog().forEach((row) => ids.add(String(row.id)));
 
   if (!isSupabaseConfiguredServer()) {
     return [...ids];

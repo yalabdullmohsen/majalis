@@ -2136,6 +2136,58 @@ html[data-theme="dark"] .home-page {
   border-right: 3px solid var(--majalis-brass);
 }
 
+.library-card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.library-card-link:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--majalis-shadow);
+}
+
+.library-card-cta {
+  display: inline-block;
+  margin-top: 0.5rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--majalis-emerald);
+}
+
+.library-category-chips {
+  flex-wrap: wrap;
+}
+
+.library-grid {
+  gap: 1rem;
+}
+
+.library-parts {
+  font-size: 0.75rem;
+}
+
+.library-detail-read {
+  margin-top: 1.25rem;
+}
+
+.library-read-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.5rem;
+  background: var(--majalis-emerald);
+  color: var(--majalis-parchment);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.library-detail-note {
+  margin-top: 1rem;
+  font-size: 0.875rem;
+}
+
+
 .page-card-header {
   display: flex;
   justify-content: space-between;

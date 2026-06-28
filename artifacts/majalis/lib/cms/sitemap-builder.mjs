@@ -49,8 +49,19 @@ export async function fetchDynamicUrls() {
     urls.push({ loc: `/sheikhs/${row.id}`, lastmod: row.updated_at, priority: 0.75 });
   }
   for (const row of library.data || []) {
-    urls.push({ loc: `/library`, lastmod: row.updated_at, priority: 0.7 });
-    break;
+    urls.push({ loc: `/library/${row.id}`, lastmod: row.updated_at, priority: 0.72 });
+  }
+  if (!(library.data || []).length) {
+    try {
+      const catalog = JSON.parse(
+        readFileSync(join(APP_ROOT, "src/data/library-catalog.json"), "utf8"),
+      );
+      for (const book of catalog) {
+        urls.push({ loc: `/library/${book.id}`, priority: 0.72 });
+      }
+    } catch {
+      /* catalog snapshot optional */
+    }
   }
   for (const row of qa.data || []) {
     urls.push({ loc: `/qa/${row.id}`, lastmod: row.updated_at, priority: 0.72 });

@@ -6,7 +6,7 @@ import { filterQualityFawaid } from "./content-quality";
 import { ADHKAR_CATEGORIES, filterAdhkar } from "./adhkar-seed";
 import { LESSONS_SEED } from "./lessons-seed";
 import { filterMiraclesSeed, searchMiraclesSeed } from "./miracles-seed";
-import { LIBRARY_SEED } from "./library-seed";
+import { getLibraryCatalog } from "./library-service";
 import { SHEIKHS_SEED } from "./sheikhs-seed";
 
 export { FAWAID_CURATED_CATEGORIES as FAWAID_CATEGORIES, filterSeedFawaid };
@@ -16,7 +16,7 @@ export const DEMO_LESSONS = LESSONS_SEED;
 
 export const DEMO_SHEIKHS = SHEIKHS_SEED;
 
-export const DEMO_LIBRARY = LIBRARY_SEED;
+export const DEMO_LIBRARY = getLibraryCatalog();
 
 export const DEMO_MIRACLES = filterMiraclesSeed();
 
@@ -76,7 +76,7 @@ export function searchDemoContent(term: string): DemoSearchResults {
   );
 
   const library = DEMO_LIBRARY.filter((it) =>
-    arabicMatchAny([it.title, it.description, it.category, it.type], q),
+    arabicMatchAny([it.title, it.author, it.description, it.category, it.type, ...(it.keywords || [])], q),
   );
 
   const qa = DEMO_QA.filter((x) =>

@@ -10,6 +10,9 @@ const LESSONS_SEED = JSON.parse(
 const PLATFORM_SEED = JSON.parse(
   await readFile(resolve(__dirname, "platform-seed.snapshot.json"), "utf8"),
 );
+const LIBRARY_CATALOG = JSON.parse(
+  await readFile(resolve(appRoot, "src/data/library-catalog.json"), "utf8"),
+);
 const publicDir = resolve(appRoot, "public");
 const seoPrerenderDir = resolve(appRoot, "seo-prerender");
 const seoConfigPath = resolve(appRoot, "src/lib/seo-routes.json");
@@ -205,6 +208,12 @@ const platformEntries = [
     priority: 0.69,
     robots: "index, follow",
   })),
+  ...LIBRARY_CATALOG.map((row) => ({
+    path: `/library/${row.id}`,
+    title: `${row.title} | المكتبة العلمية — ${seoConfig.siteName}`,
+    description: row.description || row.title,
+    priority: 0.7,
+  })),
 ].map((row) => {
   const loc = escapeXml(absoluteUrl(row.path));
   return `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${buildDate}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>${row.priority}</priority>\n  </url>`;
@@ -354,6 +363,15 @@ const platformPrerender = [
       title: `${row.title} | ${seoConfig.siteName}`,
       description: row.title,
       ogType: "website",
+    },
+  })),
+  ...LIBRARY_CATALOG.map((row) => ({
+    dir: resolve(seoPrerenderDir, "library", row.id),
+    route: {
+      path: `/library/${row.id}`,
+      title: `${row.title} | المكتبة العلمية — ${seoConfig.siteName}`,
+      description: row.description || row.title,
+      ogType: "article",
     },
   })),
 ];
