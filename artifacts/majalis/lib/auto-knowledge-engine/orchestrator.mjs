@@ -598,14 +598,14 @@ export async function runAutoKnowledgeEngine(options = {}) {
     }
   }
 
-  await finalizeRunSyncState(admin, globalState, await loadConnectors(admin), { ...totals, runId }, importMode);
-
   cacheClear("ake:");
   try {
     await admin.from("ake_cache").delete().like("cache_key", "ake:%");
   } catch {
     /* ignore */
   }
+
+  await finalizeRunSyncState(admin, globalState, await loadConnectors(admin), { ...totals, runId }, importMode);
 
   try {
     await admin.from("ake_statistics").upsert({
