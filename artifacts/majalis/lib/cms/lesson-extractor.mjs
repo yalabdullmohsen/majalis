@@ -4,6 +4,7 @@
  */
 import Anthropic from "@anthropic-ai/sdk";
 import { validateLessonDraft, buildExternalKey, buildLessonSlug } from "./content-validator.mjs";
+import { generateLessonTitle, normalizeLessonRow } from "../content-import/lesson-field-policy.mjs";
 
 const MODEL = "claude-sonnet-4-6";
 
@@ -154,7 +155,7 @@ async function callText(prompt, data) {
 
 function normalizePayload(extracted, enriched = {}) {
   const corrected = enriched.corrected || {};
-  const merged = {
+  const merged = normalizeLessonRow({
     ...emptyLessonPayload(),
     ...extracted,
     ...corrected,
@@ -164,17 +165,20 @@ function normalizePayload(extracted, enriched = {}) {
     has_women_section: Boolean(
       extracted.has_women_section || (extracted.women_section && String(extracted.women_section).trim()),
     ),
-    seo_title: enriched.seo_title || extracted.title || "",
-    seo_description: enriched.seo_description || extracted.description || "",
-    slug: enriched.slug || extracted.slug || buildLessonSlug(extracted.title),
-    external_key: buildExternalKey({ ...extracted, ...corrected }),
-  };
+  });
+  if (!merged.title?.trim()) {
+    merged.title = generateLessonTitle(merged);
+    merged._title_generated = true;
+  }
+  merged.seo_title = enriched.seo_title || merged.title || "";
+  merged.seo_description = enriched.seo_description || merged.description || "";
+  merged.slug = enriched.slug || merged.slug || buildLessonSlug(merged.title);
+  merged.external_key = buildExternalKey(merged);
   return merged;
 }
 
 function buildMissingFields(data) {
   const checks = [
-    { key: "title", label: "عنوان الدرس" },
     { key: "speaker_name", label: "اسم الشيخ" },
     { key: "day_of_week", label: "اليوم" },
     { key: "lesson_time", label: "الوقت" },

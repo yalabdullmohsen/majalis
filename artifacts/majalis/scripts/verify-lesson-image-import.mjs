@@ -41,7 +41,15 @@ const empty = emptyLessonPayload();
 assert("empty payload has title field", "title" in empty);
 
 const missing = buildMissingFields({});
-assert("missing fields for empty payload", missing.includes("title") && missing.includes("speaker_name"));
+assert("missing fields for empty payload exclude title", !missing.includes("title") && missing.includes("speaker_name"));
+
+const autoTitle = validateLessonDraft({
+  speaker_name: "محمد",
+  day_of_week: "السبت",
+  lesson_time: "8:00 م",
+  source_url: "https://example.com/lesson",
+});
+assert("draft without title auto-generates and can publish", autoTitle.canPublish === true && autoTitle.normalized?.title?.includes("محمد"));
 
 // Validation
 const valid = validateLessonDraft({

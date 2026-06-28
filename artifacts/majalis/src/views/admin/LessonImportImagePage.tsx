@@ -247,10 +247,6 @@ function LessonImportImageContent() {
   };
 
   const onSaveDraft = async () => {
-    if (!draftId && !parsed.title?.trim()) {
-      showError("أدخل عنوانًا على الأقل");
-      return;
-    }
     setBusy(true);
     try {
       const res = await saveLessonImportDraft(parsed, {
