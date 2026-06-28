@@ -24,3 +24,4 @@ export { getDailyGoalProgress, enforceDailyGoals } from "./daily-goals.mjs";
 export { SUPPORTED_LANGUAGES, normalizeLanguageCode, buildI18nPayload } from "./i18n-foundation.mjs";
 export { runDailyBackupSnapshot, listBackupSnapshots } from "./backup-recovery.mjs";
 export { logAuditEvent, listAuditLog, sanitizeAdminPayload } from "./security.mjs";
+export { buildAkpProductionHealth, AKP_V3_TABLES, AKP_V3_CRONS, INFRASTRUCTURE_REQUIREMENTS } from "./production-health.mjs";

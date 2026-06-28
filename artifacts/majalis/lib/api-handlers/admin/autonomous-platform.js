@@ -27,6 +27,7 @@ import {
   getPageRecommendations,
   SUPPORTED_LANGUAGES,
   PLATFORM_V3_VERSION,
+  buildAkpProductionHealth,
 } from "../../../lib/autonomous-platform/v3/index.mjs";
 import { logAuditEvent, sanitizeAdminPayload } from "../../../lib/autonomous-platform/v3/security.mjs";
 
@@ -52,6 +53,10 @@ export default async function handler(req, res) {
     }
     if (action === "analytics") {
       sendJson(res, 200, await buildProductionAnalytics());
+      return;
+    }
+    if (action === "health") {
+      sendJson(res, 200, await buildAkpProductionHealth());
       return;
     }
     if (action === "analytics-history") {
@@ -95,7 +100,7 @@ export default async function handler(req, res) {
     sendJson(res, 200, {
       ok: true,
       platformVersion: PLATFORM_V3_VERSION,
-      actions: ["sources", "analytics", "goals", "discoveries", "audit", "backups", "search"],
+      actions: ["sources", "analytics", "health", "goals", "discoveries", "audit", "backups", "search"],
     });
     return;
   }

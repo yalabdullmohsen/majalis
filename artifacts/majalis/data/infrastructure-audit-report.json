@@ -1,0 +1,399 @@
+{
+  "ok": false,
+  "platformVersion": "3.0.0",
+  "readinessPct": 12,
+  "at": "2026-06-28T03:50:54.806Z",
+  "durationMs": 16105,
+  "infrastructure": [
+    {
+      "key": "DATABASE_URL",
+      "priority": "critical",
+      "impact": "تطبيق autonomous_platform_v3.sql وجميع migrations",
+      "locations": [
+        "Vercel Production",
+        "GitHub Actions Secrets"
+      ],
+      "present": false,
+      "status": "missing"
+    },
+    {
+      "key": "SUPABASE_SERVICE_ROLE_KEY",
+      "priority": "critical",
+      "impact": "Bootstrap، Seed، Cron server-side، Admin APIs",
+      "locations": [
+        "Vercel Production",
+        "GitHub Actions Secrets"
+      ],
+      "present": false,
+      "status": "missing"
+    },
+    {
+      "key": "CRON_SECRET",
+      "priority": "critical",
+      "impact": "مصادقة Cron Jobs على الإنتاج",
+      "locations": [
+        "Vercel Production",
+        "GitHub Actions Secrets"
+      ],
+      "present": false,
+      "status": "missing"
+    },
+    {
+      "key": "VITE_SUPABASE_URL",
+      "priority": "critical",
+      "impact": "اتصال العميل و REST probes",
+      "locations": [
+        "Vercel Production"
+      ],
+      "present": false,
+      "status": "missing"
+    },
+    {
+      "key": "VITE_SUPABASE_ANON_KEY",
+      "priority": "critical",
+      "impact": "Auth وقراءة عامة",
+      "locations": [
+        "Vercel Production"
+      ],
+      "present": false,
+      "status": "missing"
+    },
+    {
+      "key": "OPENAI_API_KEY",
+      "priority": "optional",
+      "impact": "Semantic Embeddings — بدونه Keyword Fallback",
+      "locations": [
+        "Vercel Production"
+      ],
+      "present": false,
+      "status": "missing"
+    }
+  ],
+  "migration": {
+    "ok": false,
+    "migrationFile": "autonomous_platform_v3.sql",
+    "present": [
+      "akp_content_sources",
+      "akp_pipeline_runs"
+    ],
+    "missing": [
+      "akp_source_health_snapshots",
+      "akp_source_discoveries",
+      "akp_platform_analytics_daily",
+      "akp_daily_goal_progress",
+      "akp_self_healing_events",
+      "akp_audit_log",
+      "akp_backup_snapshots",
+      "akp_semantic_index",
+      "akp_scheduler_state"
+    ],
+    "appliedPct": 18
+  },
+  "bootstrap": {
+    "ok": false,
+    "bootstrap": {
+      "databaseReady": false,
+      "migrationsApplied": false,
+      "seedCompleted": true,
+      "productionReady": false,
+      "lastRun": null,
+      "lastStatus": null,
+      "lastError": null,
+      "ownerActions": [
+        {
+          "secret": "SUPABASE_SERVICE_ROLE_KEY",
+          "addTo": "Vercel → Project → Settings → Environment Variables (Production)",
+          "hint": "Supabase service role key (server only)"
+        },
+        {
+          "secret": "DATABASE_URL",
+          "addTo": "Vercel → Project → Settings → Environment Variables (Production)",
+          "hint": "Supabase Transaction Pooler URL (port 6543, *.pooler.supabase.com)"
+        }
+      ]
+    },
+    "precheck": {
+      "ok": false,
+      "env": {
+        "SUPABASE_URL": true,
+        "SUPABASE_SERVICE_ROLE_KEY": false,
+        "SUPABASE_ANON_KEY": true,
+        "CRON_SECRET": false,
+        "OPENAI_API_KEY": false,
+        "ANTHROPIC_API_KEY": false,
+        "DATABASE_URL": false,
+        "UPSTASH_REDIS_REST_URL": false,
+        "UPSTASH_REDIS_REST_TOKEN": false,
+        "POSTGRES_URL": false,
+        "POSTGRES_PASSWORD": false,
+        "SUPABASE_ACCESS_TOKEN": false,
+        "INSTAGRAM_GRAPH_ACCESS_TOKEN": false,
+        "INSTAGRAM_BUSINESS_ACCOUNT_ID": false
+      },
+      "missing": [
+        "SUPABASE_SERVICE_ROLE_KEY",
+        "DATABASE_URL"
+      ],
+      "ownerActions": [
+        {
+          "secret": "SUPABASE_SERVICE_ROLE_KEY",
+          "addTo": "Vercel → Project → Settings → Environment Variables (Production)",
+          "hint": "Supabase service role key (server only)"
+        },
+        {
+          "secret": "DATABASE_URL",
+          "addTo": "Vercel → Project → Settings → Environment Variables (Production)",
+          "hint": "Supabase Transaction Pooler URL (port 6543, *.pooler.supabase.com)"
+        }
+      ],
+      "migrationPath": "none"
+    },
+    "probe": {
+      "ok": false,
+      "missing": [
+        "akp_source_health_snapshots",
+        "akp_platform_analytics_daily",
+        "akp_daily_goal_progress",
+        "akp_semantic_index"
+      ],
+      "presentCount": 36
+    },
+    "migrationStatus": {
+      "available": true,
+      "appliedCount": 0,
+      "pendingCount": 39,
+      "applied": [],
+      "pending": [
+        "auto_content_pipeline.sql",
+        "auto_content_pipeline_v2.sql",
+        "auto_engine_production_complete.sql",
+        "platform_bootstrap_compat_v1.sql",
+        "knowledge_engine_v12.sql",
+        "auto_knowledge_engine_v13.sql",
+        "scholarly_verification_v1.sql",
+        "scholarly_intelligence_v1.sql",
+        "digital_learning_v1.sql",
+        "autonomous_ai_v1.sql",
+        "global_reference_v1.sql",
+        "islamic_intelligence_v1.sql",
+        "open_platform_v1.sql",
+        "governance_v1.sql",
+        "verified_knowledge_platform_v1.sql",
+        "reasoning_engine_v1.sql",
+        "knowledge_graph_phase4_v1.sql",
+        "qa_phase4_seed.sql",
+        "kuwait_lessons_extend.sql",
+        "content_import_jobs_v1.sql"
+      ],
+      "migrationsDir": "/workspace/artifacts/majalis/supabase",
+      "filesMissing": []
+    },
+    "counts": {
+      "qa_categories": 37,
+      "sharia_rulings": 268
+    },
+    "canRunBootstrap": false,
+    "ownerActions": [
+      {
+        "secret": "SUPABASE_SERVICE_ROLE_KEY",
+        "addTo": "Vercel → Project → Settings → Environment Variables (Production)",
+        "hint": "Supabase service role key (server only)"
+      },
+      {
+        "secret": "DATABASE_URL",
+        "addTo": "Vercel → Project → Settings → Environment Variables (Production)",
+        "hint": "Supabase Transaction Pooler URL (port 6543, *.pooler.supabase.com)"
+      }
+    ],
+    "blockedReason": "أسرار ناقصة: SUPABASE_SERVICE_ROLE_KEY, DATABASE_URL"
+  },
+  "database": {
+    "counts": {
+      "akp_content_sources": 0,
+      "akp_pipeline_runs": 0,
+      "akp_source_health_snapshots": null,
+      "akp_source_discoveries": null,
+      "akp_platform_analytics_daily": null,
+      "akp_daily_goal_progress": null,
+      "akp_self_healing_events": null,
+      "akp_audit_log": null,
+      "akp_backup_snapshots": null,
+      "akp_semantic_index": null,
+      "akp_scheduler_state": null
+    },
+    "emptyReasons": {
+      "akp_content_sources": "missing_service_role",
+      "akp_pipeline_runs": "missing_service_role",
+      "akp_source_health_snapshots": "missing_service_role",
+      "akp_source_discoveries": "missing_service_role",
+      "akp_platform_analytics_daily": "missing_service_role",
+      "akp_daily_goal_progress": "missing_service_role",
+      "akp_self_healing_events": "missing_service_role",
+      "akp_audit_log": "missing_service_role",
+      "akp_backup_snapshots": "missing_service_role",
+      "akp_semantic_index": "missing_service_role",
+      "akp_scheduler_state": "missing_service_role"
+    },
+    "sources": {
+      "db": 0,
+      "jsonSeed": 6,
+      "active": 0
+    },
+    "pipelineRuns": [],
+    "selfHealing": [],
+    "lastError": null
+  },
+  "crons": {
+    "crons": [
+      {
+        "path": "/api/cron/autonomous-platform-v3",
+        "schedule": "*/30 * * * *",
+        "label": "دورة v3 كاملة",
+        "authRequired": true,
+        "note": "يتطلب CRON_SECRET أو x-vercel-cron على Vercel"
+      },
+      {
+        "path": "/api/cron/autonomous-platform-v3-health",
+        "schedule": "0 * * * *",
+        "label": "مراقبة صحة المصادر",
+        "authRequired": true,
+        "note": "يتطلب CRON_SECRET أو x-vercel-cron على Vercel"
+      },
+      {
+        "path": "/api/cron/autonomous-platform-v3-goals",
+        "schedule": "0 */4 * * *",
+        "label": "أهداف المحتوى اليومية",
+        "authRequired": true,
+        "note": "يتطلب CRON_SECRET أو x-vercel-cron على Vercel"
+      },
+      {
+        "path": "/api/cron/autonomous-platform-v3-analytics",
+        "schedule": "15 0 * * *",
+        "label": "تحليلات يومية",
+        "authRequired": true,
+        "note": "يتطلب CRON_SECRET أو x-vercel-cron على Vercel"
+      },
+      {
+        "path": "/api/cron/autonomous-platform-v3-backup",
+        "schedule": "0 4 * * *",
+        "label": "نسخ احتياطي",
+        "authRequired": true,
+        "note": "يتطلب CRON_SECRET أو x-vercel-cron على Vercel"
+      },
+      {
+        "path": "/api/cron/autonomous-platform-v3-heal",
+        "schedule": "manual",
+        "label": "إصلاح ذاتي",
+        "authRequired": true,
+        "note": "يتطلب CRON_SECRET أو x-vercel-cron على Vercel"
+      },
+      {
+        "path": "/api/cron/autonomous-platform-bootstrap",
+        "schedule": "30 5 * * *",
+        "label": "Bootstrap المصادر",
+        "authRequired": true,
+        "note": "يتطلب CRON_SECRET أو x-vercel-cron على Vercel"
+      },
+      {
+        "path": "/api/cron/apply-migrations",
+        "schedule": "0 4 * * 0",
+        "label": "تطبيق Migrations",
+        "authRequired": true,
+        "note": "يتطلب CRON_SECRET أو x-vercel-cron على Vercel"
+      }
+    ],
+    "scheduler": {
+      "ok": true,
+      "local": true,
+      "loadFactor": 1,
+      "errorBudget": 1,
+      "nextRuns": {}
+    },
+    "recentLogs": []
+  },
+  "security": {
+    "cronAuthConfigured": false,
+    "serviceRoleConfigured": false,
+    "aiMode": "keyword_fallback"
+  },
+  "audit": [],
+  "backups": [],
+  "blockers": [
+    {
+      "type": "secret",
+      "key": "DATABASE_URL",
+      "impact": "تطبيق autonomous_platform_v3.sql وجميع migrations"
+    },
+    {
+      "type": "secret",
+      "key": "SUPABASE_SERVICE_ROLE_KEY",
+      "impact": "Bootstrap، Seed، Cron server-side، Admin APIs"
+    },
+    {
+      "type": "secret",
+      "key": "CRON_SECRET",
+      "impact": "مصادقة Cron Jobs على الإنتاج"
+    },
+    {
+      "type": "secret",
+      "key": "VITE_SUPABASE_URL",
+      "impact": "اتصال العميل و REST probes"
+    },
+    {
+      "type": "secret",
+      "key": "VITE_SUPABASE_ANON_KEY",
+      "impact": "Auth وقراءة عامة"
+    },
+    {
+      "type": "migration",
+      "missing": [
+        "akp_source_health_snapshots",
+        "akp_source_discoveries",
+        "akp_platform_analytics_daily",
+        "akp_daily_goal_progress",
+        "akp_self_healing_events",
+        "akp_audit_log",
+        "akp_backup_snapshots",
+        "akp_semantic_index",
+        "akp_scheduler_state"
+      ],
+      "impact": "جداول v3 غير موجودة — نفّذ apply-migrations"
+    },
+    {
+      "type": "bootstrap",
+      "impact": "لا مصادر في DB — شغّل autonomous-platform-v3?mode=seed"
+    },
+    {
+      "type": "ai",
+      "impact": "OPENAI_API_KEY غير مُعد — Semantic Embeddings معطّلة (Keyword Fallback)",
+      "severity": "warning"
+    }
+  ],
+  "ownerActions": [
+    {
+      "secret": "DATABASE_URL",
+      "addTo": "Vercel Production + GitHub Actions Secrets",
+      "impact": "تطبيق autonomous_platform_v3.sql وجميع migrations"
+    },
+    {
+      "secret": "SUPABASE_SERVICE_ROLE_KEY",
+      "addTo": "Vercel Production + GitHub Actions Secrets",
+      "impact": "Bootstrap، Seed، Cron server-side، Admin APIs"
+    },
+    {
+      "secret": "CRON_SECRET",
+      "addTo": "Vercel Production + GitHub Actions Secrets",
+      "impact": "مصادقة Cron Jobs على الإنتاج"
+    },
+    {
+      "secret": "VITE_SUPABASE_URL",
+      "addTo": "Vercel Production",
+      "impact": "اتصال العميل و REST probes"
+    },
+    {
+      "secret": "VITE_SUPABASE_ANON_KEY",
+      "addTo": "Vercel Production",
+      "impact": "Auth وقراءة عامة"
+    }
+  ]
+}

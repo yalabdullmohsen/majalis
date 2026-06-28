@@ -48,6 +48,7 @@ function PlatformAnalyticsContent() {
 
   const counts = analytics?.counts || {};
   const pipelines = analytics?.pipelines || {};
+  const hasData = Object.values(counts).some((v) => typeof v === "number" && v > 0);
 
   return (
     <div style={{ padding: "1.5rem", maxWidth: "1100px" }}>
@@ -58,11 +59,22 @@ function PlatformAnalyticsContent() {
         </div>
         <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
           <Link href="/admin/sources" style={{ color: C.emeraldDeep }}>المصادر</Link>
+          <Link href="/admin/platform/health" style={{ color: C.emeraldDeep }}>Production Health</Link>
           <button type="button" disabled={busy} onClick={() => { setBusy(true); runPlatformCycle("analytics").finally(() => { setBusy(false); load(); }); }} style={{ padding: "0.4rem 0.8rem", border: `1px solid ${C.line}`, borderRadius: "0.375rem", background: C.panel }}>
             تشغيل دورة
           </button>
         </div>
       </div>
+
+      {!hasData && (
+        <div style={{ background: "#FFFBEB", border: `1px solid ${C.line}`, borderRadius: "0.5rem", padding: "1rem", marginBottom: "1.25rem" }}>
+          <strong>لا توجد بيانات تحليلات بعد</strong>
+          <p style={{ margin: "0.5rem 0 0", fontSize: "0.875rem", color: C.inkSoft }}>
+            السبب: جداول v3 غير مُطبَّقة أو Cron لم يُشغَّل — راجع{" "}
+            <Link href="/admin/platform/health" style={{ color: C.emeraldDeep }}>Production Health</Link>.
+          </p>
+        </div>
+      )}
 
       <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", marginBottom: "1.25rem" }}>
         <Metric label="اليوم" value={counts.today ?? 0} />

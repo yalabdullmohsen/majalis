@@ -101,6 +101,40 @@ export async function runPlatformCycle(mode = "full") {
   return res.json();
 }
 
+export type ProductionHealthPayload = {
+  ok: boolean;
+  platformVersion: string;
+  readinessPct: number;
+  at: string;
+  infrastructure: Array<{ key: string; priority: string; present: boolean; impact: string; status: string }>;
+  migration: { ok: boolean; appliedPct: number; present: string[]; missing: string[] };
+  bootstrap: { blockedReason?: string | null };
+  database: {
+    counts: Record<string, number | null>;
+    emptyReasons: Record<string, string | null>;
+    sources: { db: number; jsonSeed: number; active: number };
+    pipelineRuns: Array<{
+      id: string;
+      pipeline: string;
+      status: string;
+      produced?: number;
+      published?: number;
+      duration_ms?: number;
+      started_at?: string;
+    }>;
+    selfHealing: Array<{ event_type: string; component: string; action_taken: string; success: boolean }>;
+  };
+  crons: { crons: Array<{ path: string; schedule: string; label: string }> };
+  security: { cronAuthConfigured: boolean; serviceRoleConfigured: boolean; aiMode: string };
+  blockers: Array<{ type: string; impact: string; severity?: string }>;
+  ownerActions: Array<{ secret: string; addTo: string; impact: string }>;
+};
+
+export async function fetchProductionHealth() {
+  const res = await adminFetch(`${API}?action=health`);
+  return res.json() as Promise<ProductionHealthPayload>;
+}
+
 export const CONTENT_TYPE_OPTIONS = [
   "benefits",
   "questions",
