@@ -118,7 +118,17 @@ export class BaseConnector {
         };
       },
       { maxAttempts: this.maxRetries, label: `connector:${this.slug}` },
-    );
+    ).catch((err) => {
+      akeLog("connector", { slug: this.slug, action: "fetch_failed", error: err.message }, "error");
+      return {
+        ok: false,
+        error: err.message,
+        items: [],
+        connector: this.slug,
+        rawCount: 0,
+        skippedByDate: 0,
+      };
+    });
   }
 }
 

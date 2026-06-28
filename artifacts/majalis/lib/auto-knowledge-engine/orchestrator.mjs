@@ -217,6 +217,7 @@ async function processConnector(admin, connectorConfig, runId, existingItems, op
     stats.fetched = fetchResult.items?.length || 0;
     stats.rawFetched = fetchResult.rawCount || stats.fetched;
     stats.skippedByDate = fetchResult.skippedByDate || 0;
+    if (fetchResult.error) stats.errors.push(fetchResult.error);
 
     if (fetchResult.skipped) {
       await updateConnectorHealth(admin, connectorConfig, fetchResult, health);
@@ -378,7 +379,12 @@ async function processConnector(admin, connectorConfig, runId, existingItems, op
       }
     }
 
-    await updateConnectorHealth(admin, connectorConfig, { ok: true, items: fetchResult.items }, health);
+    await updateConnectorHealth(
+      admin,
+      connectorConfig,
+      { ok: fetchResult.ok !== false, error: fetchResult.error, items: fetchResult.items },
+      health,
+    );
 
     if (connectorConfig.id) {
       await admin.from("ake_connectors").update({
