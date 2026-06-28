@@ -6,7 +6,7 @@ import { hasUnrestrictedAdminAccess, isOwnerAuthUser, resolveUserEmail } from "@
 import { isSupabaseConfigured } from "@/lib/supabase-config";
 import { bootstrapSupabaseFromServer } from "@/lib/supabase-bootstrap";
 import { preloadRoute } from "@/lib/lazy-with-retry";
-import { Loading } from "@/components/ui-common";
+import { TimedLoading } from "@/components/ui-common";
 
 function canAccessAdminUser(current: Awaited<ReturnType<typeof import("@/lib/supabase").getCurrentUser>>) {
   if (!current) return false;
@@ -108,7 +108,10 @@ export default function LoginPage() {
   if (authLoading || !authReady) {
     return (
       <div className="login-page">
-        <Loading />
+        <TimedLoading
+          timeoutText="تعذر تحميل نظام الدخول. حاول مجدداً."
+          onRetry={() => window.location.reload()}
+        />
       </div>
     );
   }

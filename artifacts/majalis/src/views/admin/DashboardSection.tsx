@@ -5,8 +5,9 @@ import { getCmsDashboardStats } from "@/lib/cms/supabase-cms";
 import { CMS_KIND_LABELS, type CmsContentKind } from "@/lib/cms/content-types";
 import { getTopSearchQueries } from "@/lib/search-history";
 import { isSupabaseConfigured } from "@/lib/supabase-config";
+import { runWithTimeout } from "@/lib/request-manager";
 import { C } from "@/lib/theme";
-import { Loading } from "@/components/ui-common";
+import { TimedLoading, ErrorState } from "@/components/ui-common";
 import { AdminSectionToolbar } from "./AdminSectionToolbar";
 import { useAdminShell } from "./AdminShell";
 
@@ -16,18 +17,27 @@ export function DashboardSection() {
   const { showSuccess, showError } = useAdminShell();
   const [data, setData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [localSearches, setLocalSearches] = useState<{ query: string; count: number }[]>([]);
 
   const [cmsStats, setCmsStats] = useState<Awaited<ReturnType<typeof getCmsDashboardStats>> | null>(null);
 
   const load = () => {
     setLoading(true);
-    Promise.all([adminGetDashboardStats(), getCmsDashboardStats()])
-      .then(([result, cms]) => {
-        setData(result);
-        setCmsStats(cms);
-      })
-      .finally(() => setLoading(false));
+    setLoadError(null);
+    void runWithTimeout("admin:dashboard", async () => {
+      const [result, cms] = await Promise.all([adminGetDashboardStats(), getCmsDashboardStats()]);
+      return { result, cms };
+    }).then(({ data: payload, error }) => {
+      if (error) {
+        setLoadError(error);
+        return;
+      }
+      if (payload) {
+        setData(payload.result);
+        setCmsStats(payload.cms);
+      }
+    }).finally(() => setLoading(false));
     setLocalSearches(getTopSearchQueries(6));
   };
 
@@ -45,7 +55,18 @@ export function DashboardSection() {
     load();
   };
 
-  if (loading || !data) return <Loading />;
+  if (loadError) {
+    return <ErrorState text={loadError} onRetry={load} />;
+  }
+
+  if (loading || !data) {
+    return (
+      <TimedLoading
+        timeoutText="تعذر تحميل لوحة التحكم. حاول مجدداً."
+        onRetry={load}
+      />
+    );
+  }
 
   const { stats, recentReports, recentLessons, topViewedLessons, topSearches } = data;
   const searches = topSearches.length > 0 ? topSearches : localSearches;
@@ -66,32 +87,32 @@ export function DashboardSection() {
   ];
 
   return (
-    <div>
+    <div className="admin-dashboard">
       <AdminSectionToolbar title="لوحة التحكم" />
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))", gap: "0.75rem", marginBottom: "1.5rem" }}>
+      <div className="admin-stat-grid">
         {cards.map((card) => (
-          <div key={card.label} style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.625rem", padding: "1rem", textAlign: "center" }}>
-            <p style={{ margin: 0, fontSize: "1.75rem", fontWeight: 700, color: card.tone }}>{card.value.toLocaleString("ar")}</p>
-            <p style={{ margin: "0.35rem 0 0", fontSize: "0.8125rem", color: C.inkSoft }}>{card.label}</p>
+          <div key={card.label} className="admin-stat-card">
+            <p className="admin-stat-card__value" style={{ color: card.tone }}>{card.value.toLocaleString("ar")}</p>
+            <p className="admin-stat-card__label">{card.label}</p>
           </div>
         ))}
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1rem", marginBottom: "1.5rem" }}>
-        <section style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.625rem", padding: "1.25rem" }}>
-          <h3 style={{ margin: "0 0 0.75rem", color: C.emeraldDeep, fontSize: "1rem" }}>حالة النظام</h3>
-          <ul style={{ margin: 0, paddingInlineStart: "1.1rem", color: C.inkSoft, fontSize: "0.875rem", lineHeight: 1.9 }}>
+      <div className="admin-panel-grid">
+        <section className="admin-panel-card">
+          <h3 className="admin-panel-card__title">حالة النظام</h3>
+          <ul className="admin-panel-card__list">
             <li>Supabase: {isSupabaseConfigured() ? (stats.dbConnected !== false ? "متصل" : "غير متاح") : "وضع seed (بدون DB)"}</li>
             <li>الخادم: {stats.serverOk ? "يعمل" : "تحقق يدويًا"}</li>
             <li>التحديث التلقائي: <code>/api/cron/sync-data</code></li>
           </ul>
         </section>
 
-        <section style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.625rem", padding: "1.25rem" }}>
-          <h3 style={{ margin: "0 0 0.75rem", color: C.emeraldDeep, fontSize: "1rem" }}>فهرس CMS</h3>
+        <section className="admin-panel-card">
+          <h3 className="admin-panel-card__title">فهرس CMS</h3>
           {cmsStats ? (
-            <ul style={{ margin: 0, paddingInlineStart: "1.1rem", color: C.inkSoft, fontSize: "0.875rem", lineHeight: 1.9 }}>
+            <ul className="admin-panel-card__list">
               <li>إجمالي المفهرس: {cmsStats.indexTotal.toLocaleString("ar")}</li>
               <li>عمليات استيراد: {cmsStats.importJobsTotal.toLocaleString("ar")}</li>
               <li>أذكار موثقة: {cmsStats.verifiedAdhkarTotal.toLocaleString("ar")}</li>
@@ -110,20 +131,20 @@ export function DashboardSection() {
               )}
             </ul>
           ) : (
-            <p style={{ margin: 0, color: C.inkSoft, fontSize: "0.875rem" }}>جاري تحميل إحصائيات CMS…</p>
+            <p className="admin-panel-card__empty">جاري تحميل إحصائيات CMS…</p>
           )}
         </section>
 
-        <section style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.625rem", padding: "1.25rem" }}>
-          <h3 style={{ margin: "0 0 0.75rem", color: C.emeraldDeep, fontSize: "1rem" }}>آخر تحديثات الدروس</h3>
+        <section className="admin-panel-card">
+          <h3 className="admin-panel-card__title">آخر تحديثات الدروس</h3>
           {recentLessons.length === 0 ? (
-            <p style={{ margin: 0, color: C.inkSoft, fontSize: "0.875rem" }}>لا توجد تحديثات حديثة.</p>
+            <p className="admin-panel-card__empty">لا توجد تحديثات حديثة.</p>
           ) : (
-            <ul style={{ margin: 0, padding: 0, listStyle: "none" }}>
+            <ul className="admin-panel-card__items">
               {recentLessons.map((lesson: any) => (
-                <li key={lesson.id} style={{ padding: "0.35rem 0", borderBottom: `1px solid ${C.line}`, fontSize: "0.8125rem" }}>
-                  <strong style={{ color: C.ink }}>{lesson.title}</strong>
-                  <span style={{ color: C.inkSoft, marginInlineStart: "0.5rem" }}>
+                <li key={lesson.id} className="admin-panel-card__item">
+                  <strong>{lesson.title}</strong>
+                  <span className="admin-panel-card__meta">
                     {lesson.updated_at ? new Date(lesson.updated_at).toLocaleDateString("ar-KW") : ""}
                   </span>
                 </li>
@@ -133,33 +154,33 @@ export function DashboardSection() {
         </section>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1rem", marginBottom: "1.5rem" }}>
-        <section style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.625rem", padding: "1.25rem" }}>
-          <h3 style={{ margin: "0 0 0.75rem", color: C.emeraldDeep, fontSize: "1rem" }}>أكثر الدروس مشاهدة</h3>
+      <div className="admin-panel-grid">
+        <section className="admin-panel-card">
+          <h3 className="admin-panel-card__title">أكثر الدروس مشاهدة</h3>
           {topViewedLessons.length === 0 ? (
-            <p style={{ margin: 0, color: C.inkSoft, fontSize: "0.875rem" }}>لا توجد مشاهدات مسجّلة بعد.</p>
+            <p className="admin-panel-card__empty">لا توجد مشاهدات مسجّلة بعد.</p>
           ) : (
-            <ol style={{ margin: 0, paddingInlineStart: "1.25rem", fontSize: "0.875rem", lineHeight: 1.8 }}>
+            <ol className="admin-panel-card__list admin-panel-card__list--ordered">
               {topViewedLessons.map((item) => (
                 <li key={item.id}>
-                  <Link href={`/lessons/${item.id}`} style={{ color: C.brassDeep, textDecoration: "none" }}>{item.title}</Link>
-                  <span style={{ color: C.inkSoft }}> ({item.views})</span>
+                  <Link href={`/lessons/${item.id}`} className="admin-panel-card__link">{item.title}</Link>
+                  <span className="admin-panel-card__meta"> ({item.views})</span>
                 </li>
               ))}
             </ol>
           )}
         </section>
 
-        <section style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.625rem", padding: "1.25rem" }}>
-          <h3 style={{ margin: "0 0 0.75rem", color: C.emeraldDeep, fontSize: "1rem" }}>أكثر عمليات البحث</h3>
+        <section className="admin-panel-card">
+          <h3 className="admin-panel-card__title">أكثر عمليات البحث</h3>
           {searches.length === 0 ? (
-            <p style={{ margin: 0, color: C.inkSoft, fontSize: "0.875rem" }}>لا توجد عمليات بحث مسجّلة بعد.</p>
+            <p className="admin-panel-card__empty">لا توجد عمليات بحث مسجّلة بعد.</p>
           ) : (
-            <ol style={{ margin: 0, paddingInlineStart: "1.25rem", fontSize: "0.875rem", lineHeight: 1.8 }}>
+            <ol className="admin-panel-card__list admin-panel-card__list--ordered">
               {searches.map((item) => (
                 <li key={item.query}>
-                  <Link href={`/search/${encodeURIComponent(item.query)}`} style={{ color: C.brassDeep, textDecoration: "none" }}>{item.query}</Link>
-                  <span style={{ color: C.inkSoft }}> ({item.count})</span>
+                  <Link href={`/search/${encodeURIComponent(item.query)}`} className="admin-panel-card__link">{item.query}</Link>
+                  <span className="admin-panel-card__meta"> ({item.count})</span>
                 </li>
               ))}
             </ol>
@@ -168,18 +189,14 @@ export function DashboardSection() {
       </div>
 
       {recentReports.length > 0 && (
-        <section style={{ background: "#FEF2F2", border: "1px solid #fecaca", borderRadius: "0.625rem", padding: "1.25rem" }}>
-          <h3 style={{ margin: "0 0 0.75rem", color: "#b91c1c", fontSize: "1rem" }}>بلاغات تحتاج مراجعة</h3>
-          <div style={{ display: "grid", gap: "0.5rem" }}>
+        <section className="admin-reports-panel">
+          <h3 className="admin-reports-panel__title">بلاغات تحتاج مراجعة</h3>
+          <div className="admin-reports-panel__list">
             {recentReports.map((rep: any) => (
-              <div key={rep.id} style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem", alignItems: "center", background: C.panel, borderRadius: "0.5rem", padding: "0.75rem" }}>
-                <span style={{ fontSize: "0.75rem", color: "#b91c1c", fontWeight: 700 }}>{rep.report_type}</span>
-                <p style={{ flex: 1, margin: 0, fontSize: "0.8125rem", color: C.ink }}>{rep.description}</p>
-                <button
-                  type="button"
-                  onClick={() => resolveReport(rep.id)}
-                  style={{ padding: "0.35rem 0.75rem", borderRadius: "0.375rem", border: "none", background: C.emerald, color: C.parchment, cursor: "pointer", fontFamily: "inherit", fontSize: "0.75rem" }}
-                >
+              <div key={rep.id} className="admin-reports-panel__item">
+                <span className="admin-reports-panel__type">{rep.report_type}</span>
+                <p className="admin-reports-panel__desc">{rep.description}</p>
+                <button type="button" onClick={() => resolveReport(rep.id)} className="admin-reports-panel__btn">
                   تمت المراجعة
                 </button>
               </div>

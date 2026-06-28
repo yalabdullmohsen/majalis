@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { ADMIN_GOVERNANCE_ROLES, LEGACY_ROLE_MAP } from "@/lib/governance-roles";
 import { hasUnrestrictedAdminAccess, isOwnerProfile, isOwnerAuthUser, resolveUserEmail } from "@/lib/owner-config";
 import { RequestManager, PAGE_LOAD_TIMEOUT_MS } from "@/lib/request-manager";
@@ -31,6 +31,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<AuthUser>(null);
   const [loading, setLoading] = useState(true);
   const [authApi, setAuthApi] = useState<SupabaseAuthModule | null>(null);
+  const listenerAttached = useRef(false);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -41,23 +42,54 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     let active = true;
     let unsubscribe: (() => void) | undefined;
+
     const authTimeout = window.setTimeout(() => {
       if (active) setLoading(false);
     }, PAGE_LOAD_TIMEOUT_MS);
 
-    import("@/lib/supabase-bootstrap")
-      .then(({ bootstrapSupabaseFromServer, resetSupabaseClient }) =>
-        RequestManager.run("auth:bootstrap", () => bootstrapSupabaseFromServer().then(() => resetSupabaseClient())),
-      )
-      .then(() => import("@/lib/supabase"))
-      .then((mod) => {
-        if (!active) return;
-        setAuthApi(mod);
+    async function loadUser(mod: SupabaseAuthModule) {
+      const next = await RequestManager.run("auth:getCurrentUser", () => mod.getCurrentUser());
+      if (active) setUser(next);
+      return next;
+    }
 
-        return RequestManager.run("auth:getCurrentUser", () => mod.getCurrentUser()).then((next) => {
-          if (active) setUser(next);
-        });
-      })
+    async function attachListener(mod: SupabaseAuthModule) {
+      if (listenerAttached.current || !active) return;
+      listenerAttached.current = true;
+
+      const { data: sub } = mod.supabase.auth.onAuthStateChange(async (event) => {
+        if (event === "TOKEN_REFRESHED") return;
+
+        if (event === "SIGNED_OUT") {
+          if (active) setUser(null);
+          return;
+        }
+
+        try {
+          const next = await RequestManager.run("auth:onAuthStateChange", () => mod.getCurrentUser());
+          if (active && next) setUser(next);
+        } catch {
+          /* Keep existing user on transient profile fetch errors */
+        }
+      });
+      unsubscribe = () => sub.subscription.unsubscribe();
+    }
+
+    async function initAuth() {
+      const bootstrapMod = await import("@/lib/supabase-bootstrap");
+      await RequestManager.run("auth:bootstrap", async () => {
+        await bootstrapMod.bootstrapSupabaseFromServer();
+        bootstrapMod.resetSupabaseClient();
+      });
+
+      const mod = await import("@/lib/supabase");
+      if (!active) return;
+      setAuthApi(mod);
+      await loadUser(mod);
+      await attachListener(mod);
+    }
+
+    void initAuth()
       .catch(() => {
         if (active) setUser(null);
       })
@@ -66,29 +98,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         window.clearTimeout(authTimeout);
       });
 
-    import("@/lib/supabase-bootstrap")
-      .then(({ bootstrapSupabaseFromServer, resetSupabaseClient }) =>
-        RequestManager.run("auth:bootstrap:listener", () =>
-          bootstrapSupabaseFromServer().then(() => resetSupabaseClient()),
-        ),
-      )
-      .then(() => import("@/lib/supabase"))
-      .then((mod) => {
-      const { data: sub } = mod.supabase.auth.onAuthStateChange(async () => {
-        try {
-          const next = await RequestManager.run("auth:onAuthStateChange", () => mod.getCurrentUser());
-          if (active) setUser(next);
-        } catch {
-          if (active) setUser(null);
-        }
+    const onSupabaseReady = () => {
+      void import("@/lib/supabase").then((mod) => {
+        if (!active) return;
+        setAuthApi(mod);
+        void loadUser(mod);
       });
-      unsubscribe = () => sub.subscription.unsubscribe();
-    });
+    };
+    window.addEventListener("majalis:supabase-ready", onSupabaseReady);
 
     return () => {
       active = false;
       window.clearTimeout(authTimeout);
       unsubscribe?.();
+      listenerAttached.current = false;
+      window.removeEventListener("majalis:supabase-ready", onSupabaseReady);
     };
   }, []);
 

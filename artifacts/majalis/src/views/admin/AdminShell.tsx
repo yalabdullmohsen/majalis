@@ -91,27 +91,15 @@ function FlashBanner({ flash, onClose }: { flash: Flash; onClose: () => void }) 
   return (
     <div
       role="alert"
+      className="admin-flash-banner"
       style={{
-        marginBottom: "1rem",
-        padding: "0.75rem 1rem",
-        borderRadius: "0.5rem",
-        border: `1px solid ${isError ? "#dc2626" : C.emerald}`,
+        borderColor: isError ? "#dc2626" : C.emerald,
         background: isError ? "#FEE2E2" : "#E8F5E9",
         color: isError ? "#991B1B" : C.emeraldDeep,
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        gap: "1rem",
-        fontSize: "0.875rem",
       }}
     >
       <span>{flash.message}</span>
-      <button
-        type="button"
-        onClick={onClose}
-        aria-label="إغلاق"
-        style={{ background: "none", border: "none", cursor: "pointer", fontSize: "1.1rem", lineHeight: 1, color: "inherit" }}
-      >
+      <button type="button" onClick={onClose} aria-label="إغلاق" className="admin-flash-banner__close">
         ×
       </button>
     </div>
@@ -148,94 +136,35 @@ export function AdminShell({ section, onSectionChange, children }: AdminShellPro
 
   return (
     <AdminShellContext.Provider value={{ flash, showSuccess, showError, clearFlash }}>
-      <div style={{ display: "flex", minHeight: "calc(100vh - 60px)", background: C.parchment }}>
-        <aside
-          style={{
-            width: "220px",
-            flexShrink: 0,
-            borderLeft: `1px solid ${C.line}`,
-            background: C.parchmentDeep,
-            padding: "1.5rem 0",
-          }}
-        >
-          <p
-            style={{
-              fontSize: "0.6875rem",
-              fontWeight: 700,
-              color: C.inkSoft,
-              padding: "0 1rem",
-              marginBottom: "0.75rem",
-              letterSpacing: "0.06em",
-            }}
-          >
-            لوحة تحكم المجلس العلمي
-          </p>
+      <div className="admin-shell">
+        <aside className="admin-shell__sidebar">
+          <p className="admin-shell__brand">لوحة تحكم المجلس العلمي</p>
           {user?.profile?.full_name && (
-            <p style={{ fontSize: "0.75rem", color: C.inkSoft, padding: "0 1rem", marginBottom: "0.5rem" }}>
-              {user.profile.full_name}
-            </p>
+            <p className="admin-shell__user">{user.profile.full_name}</p>
           )}
-          <Link
-            href="/admin/auto-content"
-            style={{
-              display: "block",
-              padding: "0.5rem 1rem",
-              marginBottom: "0.35rem",
-              textDecoration: "none",
-              fontSize: "0.75rem",
-              color: C.brassDeep,
-            }}
-          >
+          <Link href="/admin/auto-content" className="admin-shell__quick-link">
             الاستيراد التلقائي
           </Link>
-          <Link
-            href="/"
-            style={{
-              display: "block",
-              padding: "0.5rem 1rem",
-              marginBottom: "0.35rem",
-              textDecoration: "none",
-              fontSize: "0.75rem",
-              color: C.brassDeep,
-            }}
-          >
+          <Link href="/" className="admin-shell__quick-link">
             ← العودة للموقع
           </Link>
-          <button
-            type="button"
-            onClick={handleLogout}
-            className="admin-logout-btn"
-          >
+          <button type="button" onClick={handleLogout} className="admin-logout-btn">
             تسجيل الخروج
           </button>
-          <nav style={{ marginTop: "0.75rem" }}>
+          <nav className="admin-shell__nav">
             {ADMIN_NAV.map((n) => (
               <button
                 key={n.key}
                 type="button"
                 onClick={() => onSectionChange(n.key)}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  width: "100%",
-                  padding: "0.625rem 1rem",
-                  border: "none",
-                  borderRight: `3px solid ${section === n.key ? C.emerald : "transparent"}`,
-                  background: section === n.key ? C.sage : "transparent",
-                  color: section === n.key ? C.emeraldDeep : C.inkSoft,
-                  fontWeight: section === n.key ? 700 : 400,
-                  fontSize: "0.8125rem",
-                  cursor: "pointer",
-                  fontFamily: "inherit",
-                  textAlign: "right",
-                }}
+                className={`admin-nav-item${section === n.key ? " admin-nav-item--active" : ""}`}
               >
                 {n.label}
               </button>
             ))}
           </nav>
         </aside>
-        <main style={{ flex: 1, padding: "1.75rem 2rem 3rem", overflow: "auto", minWidth: 0 }}>
+        <main className="admin-shell__main">
           <FlashBanner flash={flash} onClose={clearFlash} />
           {children}
         </main>

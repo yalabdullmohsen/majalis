@@ -1,4 +1,6 @@
+import { useEffect, useState } from "react";
 import { C } from "@/lib/theme";
+import { PAGE_LOAD_TIMEOUT_MS } from "@/lib/request-manager";
 
 export function PageHeader({ eyebrow, title, subtitle }: { eyebrow?: string; title: string; subtitle?: string }) {
   return (
@@ -21,6 +23,35 @@ export function Loading() {
       <p>جارٍ التحميل...</p>
     </div>
   );
+}
+
+/** Loading with hard timeout — never hangs indefinitely. */
+export function TimedLoading({
+  timeoutMs = PAGE_LOAD_TIMEOUT_MS,
+  timeoutText = "تعذر التحميل في الوقت المحدد. حاول مجدداً.",
+  onRetry,
+}: {
+  timeoutMs?: number;
+  timeoutText?: string;
+  onRetry?: () => void;
+}) {
+  const [timedOut, setTimedOut] = useState(false);
+
+  useEffect(() => {
+    const id = window.setTimeout(() => setTimedOut(true), timeoutMs);
+    return () => window.clearTimeout(id);
+  }, [timeoutMs]);
+
+  if (timedOut) {
+    return (
+      <ErrorState
+        text={timeoutText}
+        onRetry={onRetry ?? (() => window.location.reload())}
+      />
+    );
+  }
+
+  return <Loading />;
 }
 
 export function ErrorState({ text, onRetry }: { text: string; onRetry?: () => void }) {

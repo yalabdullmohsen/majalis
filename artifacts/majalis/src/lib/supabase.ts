@@ -51,7 +51,10 @@ function normalizeSupabaseUrl(raw: string): string {
   }
 }
 
-const isConfigured = isSupabaseConfigured();
+/** Runtime check — must not be frozen at import (supports /api/public-config bootstrap). */
+function isConfigured(): boolean {
+  return isSupabaseConfigured();
+}
 
 /** Live DB access — includes runtime bootstrap from /api/public-config. */
 function isDbConfigured(): boolean {
@@ -93,7 +96,7 @@ export async function signOut() {
 }
 
 export async function getCurrentUser() {
-  if (!isConfigured) return null;
+  if (!isConfigured()) return null;
 
   try {
     const { data: { user } } = await supabase.auth.getUser();
@@ -176,7 +179,7 @@ export async function getSheikhs() {
 }
 
 export async function getSheikhById(id: string) {
-  if (!isConfigured) {
+  if (!isConfigured()) {
     const sheikh = DEMO_SHEIKHS.find((s) => s.id === id) || null;
     const lessons = DEMO_LESSONS.filter((l) => l.sheikhs?.name === sheikh?.name);
     return { sheikh, lessons };
@@ -258,7 +261,7 @@ export async function fetchApprovedLessonsFromDb() {
 export async function getLessons({ category, city, search }: { category?: string; city?: string; search?: string } = {}) {
   const fallback = allowSeedFallback() ? filterLessonsList(LESSONS_SEED, { category, city, search }) : [];
 
-  if (!isConfigured) {
+  if (!isConfigured()) {
     return { data: fallback, error: null, usingSeed: allowSeedFallback() };
   }
 
@@ -280,7 +283,7 @@ export async function getLessonById(id: string) {
     ? findSeedLessonById(id) || DEMO_LESSONS.find((l) => l.id === id) || null
     : null;
 
-  if (!isConfigured) {
+  if (!isConfigured()) {
     return { lesson: fallback, error: null, usingSeed: allowSeedFallback() };
   }
 
@@ -365,7 +368,7 @@ export async function getLibrary({ type, category }: { type?: string; category?:
     type: type && type !== "الكل" ? type : undefined,
   });
 
-  if (!isConfigured) {
+  if (!isConfigured()) {
     return { data: catalogFiltered, error: null, usingSeed: true };
   }
 
@@ -393,7 +396,7 @@ export async function getLibrary({ type, category }: { type?: string; category?:
 export async function getLibraryItemById(id: string) {
   if (!id) return { data: null, error: null };
 
-  if (isConfigured) {
+  if (isConfigured()) {
     try {
       const { data, error } = await supabase
         .from("library_items")
@@ -416,7 +419,7 @@ export async function getLibraryItemById(id: string) {
 export async function getMiracles({ category, sourceType }: { category?: string; sourceType?: string } = {}) {
   const filterSeed = () => filterMiraclesSeed({ category, sourceType });
 
-  if (!isConfigured) {
+  if (!isConfigured()) {
     return { data: filterSeed(), error: null, usingSeed: true };
   }
 
@@ -765,7 +768,7 @@ export async function adminUpdateUserRole(userId: string, role: string) {
 // ─── الأسئلة والأجوبة الدينية ───────────────────────────────────────────────────
 
 export async function getQaCategories() {
-  if (!isConfigured) {
+  if (!isConfigured()) {
     return { data: DEMO_QA_CATEGORIES.filter((c) => c.id !== "all"), error: null, usingDemo: true };
   }
 
@@ -783,7 +786,7 @@ export async function getQaCategories() {
 }
 
 export async function getQaQuestions({ categoryId, search }: { categoryId?: string; search?: string } = {}) {
-  if (!isConfigured) {
+  if (!isConfigured()) {
     return {
       data: allowSeedFallback() ? filterDemoQa({ categoryId, search }) : [],
       error: null,
@@ -874,7 +877,7 @@ export async function getQuizQuestions({ section, level }: { section?: string; l
     return rows;
   };
 
-  if (!isConfigured) {
+  if (!isConfigured()) {
     return { data: filterSeed(), error: null, usingSeed: true };
   }
 
@@ -1070,7 +1073,7 @@ async function searchQaFallback(term: string) {
 }
 
 async function searchMiraclesFallback(term: string) {
-  if (!isConfigured) {
+  if (!isConfigured()) {
     return {
       data: searchMiraclesSeed(term).map((m) => ({ id: m.id, title: m.title, category: m.category, body: m.body })),
       errors: [] as any[],
@@ -1158,7 +1161,7 @@ export async function searchEverything(term: string): Promise<SearchResults> {
   const query = term.trim();
   if (!query) return { ...EMPTY_SEARCH };
 
-  if (!isConfigured) {
+  if (!isConfigured()) {
     const demo = searchDemoContent(query);
     const platform = searchPlatformSeed(query);
     return { ...demo, ...platform, usingDemo: true, error: null };
@@ -1259,7 +1262,7 @@ export type IslamicOccasionCacheRow = {
 };
 
 export async function getPrayerTimesFromDb(dateKey: string) {
-  if (!isConfigured) return null;
+  if (!isConfigured()) return null;
 
   try {
     const { data, error } = await supabase

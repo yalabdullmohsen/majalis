@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "wouter";
 import { useAuth } from "./AuthProvider";
-import { Loading } from "./ui-common";
+import { TimedLoading } from "./ui-common";
 import { ADMIN_ACCESS_DENIED_MESSAGE } from "@/lib/auth-messages";
 import { C } from "@/lib/theme";
 
@@ -9,23 +9,37 @@ export function AdminRouteGuard({ children }: { children: React.ReactNode }) {
   const { isAdmin, isLoggedIn, loading } = useAuth();
   const [, navigate] = useLocation();
   const [denied, setDenied] = useState(false);
+  const [redirecting, setRedirecting] = useState(false);
 
   useEffect(() => {
     if (loading) return;
 
+    if (isAdmin) {
+      setDenied(false);
+      setRedirecting(false);
+      return;
+    }
+
     if (!isLoggedIn) {
+      setRedirecting(true);
       navigate("/login?next=/admin");
       return;
     }
 
-    if (!isAdmin) {
-      setDenied(true);
-    }
+    setRedirecting(false);
+    setDenied(true);
   }, [isAdmin, isLoggedIn, loading, navigate]);
 
-  if (loading) return <Loading />;
+  if (loading) {
+    return (
+      <TimedLoading
+        timeoutText="تعذر التحقق من صلاحيات الدخول. حاول مجدداً."
+        onRetry={() => window.location.assign("/login?next=/admin")}
+      />
+    );
+  }
 
-  if (!isLoggedIn) {
+  if (!isLoggedIn || redirecting) {
     return (
       <div className="login-page">
         <div className="login-card">

@@ -23,26 +23,26 @@ export function AdminSectionToolbar({
   filters,
 }: Props) {
   return (
-    <div style={{ marginBottom: "1.25rem" }}>
+    <div style={{ marginBottom: "0.75rem" }}>
       <div
         style={{
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          marginBottom: filters || onSearchChange ? "0.875rem" : 0,
+          marginBottom: filters || onSearchChange ? "0.5rem" : 0,
           flexWrap: "wrap",
-          gap: "0.75rem",
+          gap: "0.5rem",
         }}
       >
         <h2
           style={{
             margin: 0,
-            fontSize: "1.125rem",
+            fontSize: "0.9375rem",
             fontWeight: 700,
             color: C.emeraldDeep,
             display: "flex",
             alignItems: "center",
-            gap: "0.5rem",
+            gap: "0.375rem",
             flexWrap: "wrap",
           }}
         >
