@@ -34,6 +34,33 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
+      - name: Purge misclassified fawaid (production)
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          VITE_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          cd artifacts/majalis
+          node scripts/purge-test-content.mjs --apply
+
+      - name: Verify fawaid database clean
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          VITE_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: |
+          cd artifacts/majalis
+          node scripts/verify-fawaid-clean.mjs
+
+      - name: Database integrity audit
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          VITE_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          cd artifacts/majalis
+          node scripts/audit-database-integrity.mjs
+
       - name: Wait for Vercel and verify production
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
