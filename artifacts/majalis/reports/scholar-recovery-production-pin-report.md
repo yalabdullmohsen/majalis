@@ -11,7 +11,23 @@
 
 ## Production deploy note
 
-Vercel briefly served commit `68339e7` (PR #186 branch) over `2b3e362`. A follow-up push to `main` forces production rebuild from scholar recovery code.
+Initial deploy briefly served PR #186 branch (`68339e7`) over scholar recovery. Fixed by:
+- `0840396` — majalis artifact change to force Vercel rebuild
+- `d3722cb` — SafeLazyRoute params fix for `/lessons/:id`
+
+**Production SHA:** `d3722cb` — Vercel status **success**
+
+## Production verification (2026-06-29)
+
+```
+node scripts/verify-sheikh-recovery-production.mjs --base=https://www.majlisilm.com
+→ 16/16 PASS
+```
+
+- `/sheikhs` — 14+ scholars visible, Salem present, no redirect to `/lessons`
+- `/sheikhs/salem-bin-saad-altaweel` — profile loads
+- `/lessons/sci-tawheed-saltaweel` — lesson loads
+- Search autocomplete: سالم، الطويل، سالم الطويل — PASS
 
 ## Verification URLs
 
