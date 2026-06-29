@@ -436,7 +436,7 @@ export default function LessonDetailPage({
       <RelatedKnowledge
         kind="lesson"
         recordId={unified.id}
-        query={[unified.title, unified.speaker_name, unified.category].filter(Boolean).join(" ")}
+        query={[unified.title, unified.sheikhName, unified.category].filter(Boolean).join(" ")}
         title="محتوى ذو صلة"
         limit={8}
       />

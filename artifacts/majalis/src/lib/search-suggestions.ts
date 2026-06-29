@@ -2,6 +2,7 @@ import { arabicMatchAny } from "@/lib/arabic-search";
 import { ADHKAR_CATEGORIES, getAllAdhkarItems } from "@/lib/adhkar-seed";
 import { LESSONS_SEED } from "@/lib/lessons-seed";
 import { SEED_FAWAID } from "@/lib/fawaid-seed";
+import { SEED_QA } from "@/lib/qa-seed";
 import { RESEARCH_SEED_PAPERS } from "@/lib/scientific-research/seed";
 import { RESEARCH_BASE_PATH } from "@/lib/scientific-research/constants";
 

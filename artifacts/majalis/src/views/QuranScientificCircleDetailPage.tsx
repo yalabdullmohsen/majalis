@@ -94,7 +94,7 @@ export default function QuranScientificCircleDetailPage() {
       keywords: [...(item.keywords || []), item.circle_type || "", "حلقات قرآنية", item.country || ""],
       ogType: "website",
       canonicalPath: path,
-      ogImage: item.poster_image_url,
+      image: item.poster_image_url,
       jsonLd: [
         {
           "@context": "https://schema.org",
