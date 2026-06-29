@@ -50,6 +50,12 @@ jobs:
           pnpm run test:content-import
           pnpm run test:content-import-e2e
 
+      - name: Scientific research regression guard
+        run: |
+          cd artifacts/majalis
+          pnpm run smoke:scientific-research-routes
+          pnpm run test:scientific-research
+
       - name: Autonomous platform tests
         run: |
           cd artifacts/majalis
