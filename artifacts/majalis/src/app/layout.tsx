@@ -76,7 +76,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ar" dir="rtl" className={`${amiri.variable} ${almarai.variable}`} suppressHydrationWarning>
+    <html lang="ar" dir="rtl" className={`ui-2026 ${amiri.variable} ${almarai.variable}`} suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{

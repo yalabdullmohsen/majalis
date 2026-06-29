@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import type { ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 import { AuthProvider } from "@/components/AuthProvider";
 import { FontPreferenceProvider } from "@/components/FontPreferenceProvider";
 import { SiteFooter } from "@/components/SiteFooter";
@@ -19,12 +19,17 @@ const AssistantFloatingWidget = dynamic(
 );
 
 export function AppShell({ children }: { children: ReactNode }) {
+  useEffect(() => {
+    document.documentElement.classList.add("ui-2026");
+    return () => document.documentElement.classList.remove("ui-2026");
+  }, []);
+
   return (
     <ThemePreferenceProvider>
       <FontPreferenceProvider>
         <UserPreferencesProvider>
           <AuthProvider>
-          <div className="app-shell" style={{ minHeight: "100vh", direction: "rtl" }}>
+          <div className="app-shell ui-2026-app" style={{ minHeight: "100vh", direction: "rtl" }}>
             <a href="#main-content" className="skip-link">
               تخطّي إلى المحتوى
             </a>

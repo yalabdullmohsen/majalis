@@ -86,30 +86,30 @@ export default function RegisterPage() {
 
   if (authLoading || !authReady) {
     return (
-      <div className="login-page">
+      <div className="auth-page--v2026">
         <Loading />
       </div>
     );
   }
 
   return (
-    <div className="login-page">
-      <div className="login-card">
-        <div className="login-card__header">
-          <img src="/logo.png" alt="المجلس العلمي" className="login-logo" />
-          <p className="login-card__brand">المجلس العلمي</p>
-          <h1 className="login-card__title">إنشاء حساب</h1>
-          <p className="login-card__subtitle">انضم للمنصة للمتابعة والوصول إلى المحتوى</p>
+    <div className="auth-page--v2026">
+      <div className="auth-card--v2026">
+        <div className="auth-card--v2026__header">
+          <img src="/logo.png" alt="المجلس العلمي" className="auth-card--v2026__logo" />
+          <p className="auth-card--v2026__brand">المجلس العلمي</p>
+          <h1 className="auth-card--v2026__title">إنشاء حساب</h1>
+          <p className="auth-card--v2026__subtitle">انضم للمنصة للمتابعة والوصول إلى المحتوى</p>
         </div>
 
         {!authEnabled && (
-          <p className="login-alert login-alert--error" role="alert">
+          <p className="auth-alert--v2026 auth-alert--v2026--error" role="alert">
             {mapAuthError(null)}
           </p>
         )}
 
-        <form onSubmit={handleSubmit} className="login-form" noValidate>
-          <div className="login-field">
+        <form onSubmit={handleSubmit} className="auth-form--v2026" noValidate>
+          <div className="auth-field--v2026">
             <label htmlFor="register-name">الاسم</label>
             <input
               id="register-name"
@@ -123,7 +123,7 @@ export default function RegisterPage() {
             />
           </div>
 
-          <div className="login-field">
+          <div className="auth-field--v2026">
             <label htmlFor="register-email">البريد الإلكتروني</label>
             <input
               id="register-email"
@@ -136,7 +136,7 @@ export default function RegisterPage() {
             />
           </div>
 
-          <div className="login-field">
+          <div className="auth-field--v2026">
             <label htmlFor="register-password">كلمة المرور</label>
             <input
               id="register-password"
@@ -150,7 +150,7 @@ export default function RegisterPage() {
             />
           </div>
 
-          <div className="login-field">
+          <div className="auth-field--v2026">
             <label htmlFor="register-confirm">تأكيد كلمة المرور</label>
             <input
               id="register-confirm"
@@ -165,28 +165,24 @@ export default function RegisterPage() {
           </div>
 
           {error && (
-            <p className="login-alert login-alert--error" role="alert">
+            <p className="auth-alert--v2026 auth-alert--v2026--error" role="alert">
               {error}
             </p>
           )}
           {success && (
-            <p className="login-alert login-alert--success" role="status">
+            <p className="auth-alert--v2026 auth-alert--v2026--warn" role="status">
               {success}
             </p>
           )}
 
-          <button type="submit" className="login-submit" disabled={loading || !authEnabled}>
+          <button type="submit" className="auth-submit--v2026" disabled={loading || !authEnabled}>
             {loading ? "جاري الإنشاء…" : "إنشاء حساب"}
           </button>
         </form>
 
-        <div className="login-actions">
-          <Link href="/login" className="login-back-link">
-            لديك حساب؟ تسجيل الدخول
-          </Link>
-          <Link href="/" className="login-back-link">
-            العودة للصفحة الرئيسية
-          </Link>
+        <div className="auth-links--v2026">
+          <Link href="/login">لديك حساب؟ تسجيل الدخول</Link>
+          <Link href="/">العودة للصفحة الرئيسية</Link>
         </div>
       </div>
     </div>

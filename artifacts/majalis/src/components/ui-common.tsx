@@ -10,15 +10,19 @@ export function PageHeader({ eyebrow, title, subtitle }: { eyebrow?: string; tit
   );
 }
 
-export function Card({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return <div className={`ui-card ds-card ${className}`.trim()}>{children}</div>;
+export function Card({ children, className = "", hover = true }: { children: React.ReactNode; className?: string; hover?: boolean }) {
+  return (
+    <div className={`ui-card ds-card ui26-card${hover ? "" : " ui26-card--static"} ${className}`.trim()}>
+      {children}
+    </div>
+  );
 }
 
-export function Loading() {
+export function Loading({ label = "جارٍ التحميل..." }: { label?: string }) {
   return (
-    <div className="ds-empty" role="status" aria-live="polite">
-      <div className="ds-skeleton" style={{ width: "2rem", height: "2rem", borderRadius: "50%", margin: "0 auto 0.75rem" }} />
-      <p>جارٍ التحميل...</p>
+    <div className="ds-empty ui26-loading" role="status" aria-live="polite">
+      <div className="ui26-loading__spinner" aria-hidden="true" />
+      <p>{label}</p>
     </div>
   );
 }

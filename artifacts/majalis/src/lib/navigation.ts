@@ -85,13 +85,11 @@ export const NAV_GROUPS: NavGroup[] = [
 export const PRIMARY_NAV = [
   { href: "/", label: "الرئيسية" },
   { href: "/lessons", label: "الدروس" },
+  { href: "/sheikhs", label: "المشايخ" },
   { href: "/quran", label: "القرآن" },
-  { href: "/quran-scientific-circles", label: "الحلقات" },
-  { href: "/question-answer", label: "سؤال وجواب" },
   { href: "/library", label: "المكتبة" },
-  { href: "/research", label: "الأبحاث العلمية" },
-  { href: "/annual-courses", label: "الدورات" },
-  { href: "/about", label: "عن المنصة" },
+  { href: "/question-answer", label: "سؤال وجواب" },
+  { href: "/research", label: "الأبحاث" },
 ];
 
 /** Mobile "المزيد" dropdown — full site navigation */

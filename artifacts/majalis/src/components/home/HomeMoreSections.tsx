@@ -3,18 +3,19 @@ import { HOME_MORE_SECTIONS } from "@/lib/navigation";
 
 export function HomeMoreSections() {
   return (
-    <section className="home-section" aria-labelledby="more-sections-heading">
+    <section className="home-section home-section--v2026" aria-labelledby="home-more-heading">
       <div className="home-section-head">
         <div>
-          <p className="home-eyebrow">استكشف المزيد</p>
-          <h2 id="more-sections-heading">المزيد من الأقسام</h2>
+          <p className="home-eyebrow">المزيد</p>
+          <h2 id="home-more-heading">أقسام إضافية</h2>
+          <p>فتاوى، مسارات تعليمية، مسابقات، ومحتوى علمي متنوع.</p>
         </div>
       </div>
-      <div className="home-more-grid">
-        {HOME_MORE_SECTIONS.map((item) => (
-          <Link key={item.href} href={item.href} className="home-more-card ui-card">
-            <strong>{item.title}</strong>
-            <span>{item.description}</span>
+      <div className="home-more-grid--v2026">
+        {HOME_MORE_SECTIONS.slice(0, 12).map((section) => (
+          <Link key={section.href} href={section.href} className="home-more-card--v2026">
+            <strong>{section.title}</strong>
+            <span>{section.description}</span>
           </Link>
         ))}
       </div>

@@ -8,7 +8,6 @@ import { SearchSuggestions } from "./SearchSuggestions";
 import { SideNavDrawer } from "./SideNavDrawer";
 import { MobileMoreMenu } from "./MobileMoreMenu";
 import { PRIMARY_NAV } from "@/lib/navigation";
-import { C } from "@/lib/theme";
 import { useMobileNavState } from "@/hooks/useMobileNavState";
 
 function useIsMobile() {
@@ -102,7 +101,6 @@ export default function NavBar() {
     <>
       <header
         className={`navbar-v3 sticky top-0 border-b${isMenuOpen || moreOpen ? " navbar-v3--menu-open" : ""}`}
-        style={{ background: C.parchment, borderColor: C.line }}
       >
         <div className="navbar-v3__inner">
           <div className="navbar-v3__start">

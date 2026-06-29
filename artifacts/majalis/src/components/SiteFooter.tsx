@@ -39,7 +39,7 @@ const FOOTER_GROUPS = [
 
 export function SiteFooter() {
   return (
-    <footer className="site-footer site-footer--v3" dir="rtl">
+    <footer className="site-footer site-footer--v2026" dir="rtl">
       <div className="site-footer-inner site-footer-inner--v3">
         <div className="site-footer-brand">
           <img src="/logo.png" alt="" width={40} height={40} className="site-footer-logo" aria-hidden="true" />

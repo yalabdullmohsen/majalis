@@ -344,7 +344,7 @@ function App() {
         <UserPreferencesProvider>
           <AuthProvider>
           <WouterRouter base={(import.meta.env.BASE_URL || "/").replace(/\/$/, "")}>
-            <div className="app-shell" style={{ minHeight: "100vh", direction: "rtl" }}>
+            <div className="app-shell ui-2026-app" style={{ minHeight: "100vh", direction: "rtl" }}>
               <a href="#main-content" className="skip-link">تخطّي إلى المحتوى</a>
               <SeoManager />
               <NavBar />

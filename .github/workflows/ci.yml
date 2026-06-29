@@ -56,6 +56,11 @@ jobs:
           pnpm run smoke:scientific-research-routes
           pnpm run test:scientific-research
 
+      - name: UI 2026 redesign guard
+        run: |
+          cd artifacts/majalis
+          pnpm run verify:ui-2026
+
       - name: Scholar recovery regression guard
         run: |
           cd artifacts/majalis

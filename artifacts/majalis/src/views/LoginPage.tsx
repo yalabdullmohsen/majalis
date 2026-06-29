@@ -107,44 +107,44 @@ export default function LoginPage() {
 
   if (authLoading || !authReady) {
     return (
-      <div className="login-page">
+      <div className="auth-page--v2026">
         <Loading />
       </div>
     );
   }
 
   return (
-    <div className="login-page">
-      <div className="login-card">
-        <div className="login-card__header">
-          <img src="/logo.png" alt="المجلس العلمي" className="login-logo" />
-          <p className="login-card__brand">المجلس العلمي</p>
-          <h1 className="login-card__title">{adminLogin ? "دخول المسؤول" : "تسجيل الدخول"}</h1>
-          <p className="login-card__subtitle">
+    <div className="auth-page--v2026">
+      <div className="auth-card--v2026">
+        <div className="auth-card--v2026__header">
+          <img src="/logo.png" alt="المجلس العلمي" className="auth-card--v2026__logo" />
+          <p className="auth-card--v2026__brand">المجلس العلمي</p>
+          <h1 className="auth-card--v2026__title">{adminLogin ? "دخول المسؤول" : "تسجيل الدخول"}</h1>
+          <p className="auth-card--v2026__subtitle">
             {adminLogin ? "سجّل الدخول للوصول إلى لوحة التحكم" : "سجّل الدخول للوصول إلى حسابك"}
           </p>
         </div>
 
         {!authEnabled && (
-          <p className="login-alert login-alert--error" role="alert">
+          <p className="auth-alert--v2026 auth-alert--v2026--error" role="alert">
             {mapAuthError(null)}
           </p>
         )}
 
         {error && (
-          <p className="login-alert login-alert--error" role="alert">
+          <p className="auth-alert--v2026 auth-alert--v2026--error" role="alert">
             {error}
           </p>
         )}
 
         {denied && (
-          <p className="login-alert login-alert--warn" role="status">
+          <p className="auth-alert--v2026 auth-alert--v2026--warn" role="status">
             {ADMIN_ACCESS_DENIED_MESSAGE}
           </p>
         )}
 
-        <form onSubmit={handleSubmit} className="login-form">
-          <div className="login-field">
+        <form onSubmit={handleSubmit} className="auth-form--v2026">
+          <div className="auth-field--v2026">
             <label htmlFor="login-email">البريد الإلكتروني</label>
             <input
               id="login-email"
@@ -157,7 +157,7 @@ export default function LoginPage() {
             />
           </div>
 
-          <div className="login-field">
+          <div className="auth-field--v2026">
             <label htmlFor="login-password">كلمة المرور</label>
             <input
               id="login-password"
@@ -170,20 +170,16 @@ export default function LoginPage() {
             />
           </div>
 
-          <button type="submit" className="login-submit" disabled={loading || !authEnabled}>
+          <button type="submit" className="auth-submit--v2026" disabled={loading || !authEnabled}>
             {loading ? "جارٍ التحقق..." : "تسجيل الدخول"}
           </button>
         </form>
 
-        <div className="login-actions">
+        <div className="auth-links--v2026">
           {!adminLogin && (
-            <Link href="/register" className="login-back-link login-back-link--primary">
-              إنشاء حساب جديد
-            </Link>
+            <Link href="/register">إنشاء حساب جديد</Link>
           )}
-          <Link href="/" className="login-back-link">
-            العودة للصفحة الرئيسية
-          </Link>
+          <Link href="/">العودة للصفحة الرئيسية</Link>
         </div>
       </div>
     </div>

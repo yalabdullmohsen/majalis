@@ -1,26 +1,26 @@
 import { Link } from "wouter";
-import { C } from "@/lib/theme";
 
 export default function NotFound() {
   return (
-    <div style={{ minHeight: "calc(100vh - 5rem)", display: "flex", alignItems: "center", justifyContent: "center", padding: "3rem 1rem" }}>
-      <section style={{ width: "min(100%, 44rem)", textAlign: "center", border: `1px solid ${C.line}`, borderRadius: "1.5rem", background: C.panel, padding: "clamp(2rem, 6vw, 3.25rem)", boxShadow: "0 18px 54px rgba(36, 31, 24, 0.08)" }}>
-        <p style={{ color: C.brassDeep, fontWeight: 800, letterSpacing: "0.08em", marginBottom: "0.75rem" }}>404</p>
-        <h1 style={{ color: C.emeraldDeep, fontSize: "clamp(2rem, 7vw, 3.5rem)", lineHeight: 1.15, marginBottom: "0.85rem" }}>
-          الصفحة غير موجودة
-        </h1>
-        <p style={{ color: C.inkSoft, fontSize: "1rem", lineHeight: 1.9, maxWidth: "34rem", margin: "0 auto 1.5rem" }}>
-          يبدو أن الرابط غير صحيح أو أن الصفحة نُقلت داخل المجلس العلمي. يمكنك الرجوع إلى الصفحة الرئيسية أو استخدام البحث للوصول إلى الدروس والفوائد والكتب.
+    <div className="not-found-page--v2026">
+      <section className="not-found-card--v2026">
+        <p className="not-found-card--v2026__code" aria-hidden="true">
+          404
         </p>
-        <div style={{ display: "flex", gap: "0.75rem", justifyContent: "center", flexWrap: "wrap" }}>
-          <Link href="/" style={{ borderRadius: "999px", background: C.emerald, color: C.parchment, padding: "0.75rem 1.25rem", fontWeight: 800 }}>
+        <h1>الصفحة غير موجودة</h1>
+        <p>
+          يبدو أن الرابط غير صحيح أو أن الصفحة نُقلت. يمكنك العودة إلى الرئيسية أو استخدام البحث
+          للوصول إلى الدروس والفوائد والكتب.
+        </p>
+        <div className="not-found-actions--v2026">
+          <Link href="/" className="home-hero__cta home-hero__cta--primary">
             العودة للرئيسية
           </Link>
-          <Link href="/fiqh-council" style={{ borderRadius: "999px", border: `1px solid ${C.line}`, color: C.emeraldDeep, padding: "0.75rem 1.25rem", fontWeight: 800, background: C.parchment }}>
-            المجمع الفقهي
+          <Link href="/scholar-search" className="home-hero__cta home-hero__cta--ghost">
+            الباحث العلمي
           </Link>
-          <Link href="/fatwa" style={{ borderRadius: "999px", border: `1px solid ${C.line}`, color: C.emeraldDeep, padding: "0.75rem 1.25rem", fontWeight: 800, background: C.parchment }}>
-            الفتاوى
+          <Link href="/lessons" className="home-hero__cta home-hero__cta--ghost">
+            الدروس
           </Link>
         </div>
       </section>

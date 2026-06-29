@@ -35,11 +35,11 @@ function HomeStatsBar({ stats }: { stats: HomePlatformStats }) {
   ];
 
   return (
-    <section className="home-stats-bar" aria-label="إحصائيات المنصة">
+    <section className="home-stats--v2026" aria-label="إحصائيات المنصة">
       {items.map((item) => (
-        <article key={item.label} className="home-stats-bar__item">
-          <strong className="home-stats-bar__value">{item.value.toLocaleString("ar-EG")}</strong>
-          <span className="home-stats-bar__label">{item.label}</span>
+        <article key={item.label} className="home-stats--v2026__item">
+          <strong className="home-stats--v2026__value">{item.value.toLocaleString("ar-EG")}</strong>
+          <span className="home-stats--v2026__label">{item.label}</span>
         </article>
       ))}
     </section>
