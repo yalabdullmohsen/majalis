@@ -1,4 +1,5 @@
 import type { SinJeemQuestion } from "@/lib/sin-jeem/types";
+import { SjIcon } from "@/components/sin-jeem/SjIcon";
 
 const LETTERS = ["أ", "ب", "ج", "د"];
 
@@ -57,7 +58,7 @@ function MatchPairsCard({ question, revealed }: QuestionCardProps) {
           <span>{b}</span>
         </div>
       ))}
-      {revealed && question.explanation && <p className="sj-explanation">💡 {question.explanation}</p>}
+      {revealed && question.explanation && <p className="sj-explanation"><SjIcon name="lightbulb" size={16} /> {question.explanation}</p>}
     </div>
   );
 }
@@ -179,7 +180,7 @@ export function QuestionCard(props: QuestionCardProps) {
       )}
 
       {revealed && question.explanation && type !== "match" && (
-        <p className="sj-explanation">💡 {question.explanation}</p>
+        <p className="sj-explanation"><SjIcon name="lightbulb" size={16} /> {question.explanation}</p>
       )}
     </div>
   );

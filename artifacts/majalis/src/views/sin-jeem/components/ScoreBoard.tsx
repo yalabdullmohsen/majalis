@@ -1,5 +1,6 @@
 import { TEAM_COLORS } from "@/lib/sin-jeem/constants";
 import type { GameSession } from "@/lib/sin-jeem/types";
+import { SjIcon } from "@/components/sin-jeem/SjIcon";
 
 interface ScoreBoardProps {
   session: GameSession;
@@ -18,8 +19,9 @@ export function ScoreBoard({ session, highlightWinner }: ScoreBoardProps) {
       >
         <div className="sj-team-name">{teamA.name}</div>
         <div className={`sj-team-points ${session.phase === "reveal" ? "sj-score-pop" : ""}`}>{teamA.score}</div>
-        <div style={{ fontSize: "0.6875rem", color: "var(--majalis-ink-soft)" }}>
-          ✓{teamA.correct} ✗{teamA.wrong}
+        <div className="sj-team-mini-stats">
+          <span><SjIcon name="circle-check" size={12} />{teamA.correct}</span>
+          <span><SjIcon name="circle-x" size={12} />{teamA.wrong}</span>
         </div>
       </div>
 
@@ -32,8 +34,9 @@ export function ScoreBoard({ session, highlightWinner }: ScoreBoardProps) {
           >
             <div className="sj-team-name">{teamB.name}</div>
             <div className="sj-team-points">{teamB.score}</div>
-            <div style={{ fontSize: "0.6875rem", color: "var(--majalis-ink-soft)" }}>
-              ✓{teamB.correct} ✗{teamB.wrong}
+            <div className="sj-team-mini-stats">
+              <span><SjIcon name="circle-check" size={12} />{teamB.correct}</span>
+              <span><SjIcon name="circle-x" size={12} />{teamB.wrong}</span>
             </div>
           </div>
         </>

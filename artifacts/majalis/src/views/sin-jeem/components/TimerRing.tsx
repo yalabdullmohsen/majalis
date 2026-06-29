@@ -1,4 +1,5 @@
 import { C } from "@/lib/theme";
+import { SjIcon } from "@/components/sin-jeem/SjIcon";
 
 interface TimerRingProps {
   total: number;
@@ -28,7 +29,7 @@ export function TimerRing({ total, remaining, frozen }: TimerRingProps) {
           />
         </svg>
         <div className="sj-timer-text" style={{ color: urgent ? "#dc2626" : C.emeraldDeep }}>
-          {frozen ? "⏸" : remaining}
+          {frozen ? <SjIcon name="pause" size={18} /> : remaining}
         </div>
       </div>
     </div>

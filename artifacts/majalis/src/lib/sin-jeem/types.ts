@@ -128,6 +128,37 @@ export interface GameSession {
   hiddenOptions: number[];
   startedAt: number;
   finishedAt?: number;
+  sessionMeta?: {
+    adaptiveDifficulty?: string;
+    cycleNumber?: number;
+    allSeen?: boolean;
+    source?: "api" | "local";
+  };
+}
+
+export interface PlayerProfile {
+  xp: number;
+  level: number;
+  title: string;
+  completion_pct: number;
+  mastery_score: number;
+  accuracy_pct: number;
+  avg_response_ms: number;
+  knowledge_rating: number;
+  adaptive_difficulty: string;
+  daily_streak: number;
+  weekly_streak: number;
+  monthly_streak: number;
+  win_streak: number;
+  questions_seen_total: number;
+  cycle_number: number;
+}
+
+export interface AchievementEntry {
+  slug: string;
+  name_ar: string;
+  icon: string;
+  earned_at: string;
 }
 
 export interface LeaderboardEntry {

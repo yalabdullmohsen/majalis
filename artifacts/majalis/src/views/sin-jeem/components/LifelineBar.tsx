@@ -1,5 +1,6 @@
 import { LIFELINES } from "@/lib/sin-jeem/constants";
 import type { LifelineType } from "@/lib/sin-jeem/types";
+import { SjIcon, type SjIconName } from "@/components/sin-jeem/SjIcon";
 
 interface LifelineBarProps {
   available: Record<LifelineType, boolean>;
@@ -19,7 +20,8 @@ export function LifelineBar({ available, onUse, disabled }: LifelineBarProps) {
           onClick={() => onUse(l.type)}
           title={l.label}
         >
-          {l.icon} {l.label}
+          <SjIcon name={l.icon as SjIconName} size={16} />
+          {l.label}
         </button>
       ))}
     </div>

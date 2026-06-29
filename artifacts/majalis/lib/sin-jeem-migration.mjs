@@ -25,6 +25,9 @@ export const SIN_JEEM_TABLES = [
   "sin_jeem_ai_generations",
   "sin_jeem_leaderboard_entries",
   "sin_jeem_question_audit",
+  "sin_jeem_player_profiles",
+  "sin_jeem_player_question_stats",
+  "sin_jeem_category_mastery",
 ];
 
 export const SIN_JEEM_FKS = [
@@ -37,7 +40,7 @@ export const SIN_JEEM_FKS = [
 
 export async function applySinJeemMigration(options = {}) {
   const result = await applyMigrations({
-    files: ["sin_jeem_v1.sql", "sin_jeem_v1_2_types.sql"],
+    files: ["sin_jeem_v1.sql", "sin_jeem_v1_2_types.sql", "sin_jeem_v2_progress.sql"],
     continueOnError: false,
     trackApplied: true,
     force: options.force === true,

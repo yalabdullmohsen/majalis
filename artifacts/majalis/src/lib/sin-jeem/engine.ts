@@ -70,21 +70,18 @@ export function pickQuestions(config: MatchConfig, pool?: SinJeemQuestion[]): Si
   return picked.slice(0, config.questionCount);
 }
 
-export function createSession(config: MatchConfig, pool?: SinJeemQuestion[]): GameSession {
-  let questions = pickQuestions(config, pool);
-  if (questions.length === 0) {
-    questions = pickQuestions(
-      { ...config, categorySlugs: [], difficulty: "متوسط" },
-      pool ?? getAllSinJeemQuestions(),
-    );
-  }
+export function createSessionFromQuestions(
+  config: MatchConfig,
+  questions: SinJeemQuestion[],
+  sessionMeta?: GameSession["sessionMeta"],
+): GameSession {
   const teamAName = config.mode === "solo" ? "أنت" : config.teamAName;
   const teamBName = config.mode === "solo" ? "" : config.teamBName;
 
   return {
     id: uid(),
     config,
-    questions,
+    questions: questions.length > 0 ? questions : pickQuestions(config),
     currentIndex: 0,
     activeSide: "a",
     phase: "playing",
@@ -97,7 +94,19 @@ export function createSession(config: MatchConfig, pool?: SinJeemQuestion[]): Ga
     lifelinesB: emptyLifelines(),
     hiddenOptions: [],
     startedAt: Date.now(),
+    sessionMeta,
   };
+}
+
+export function createSession(config: MatchConfig, pool?: SinJeemQuestion[]): GameSession {
+  let questions = pickQuestions(config, pool);
+  if (questions.length === 0) {
+    questions = pickQuestions(
+      { ...config, categorySlugs: [], difficulty: "متوسط" },
+      pool ?? getAllSinJeemQuestions(),
+    );
+  }
+  return createSessionFromQuestions(config, questions);
 }
 
 export function getCurrentQuestion(session: GameSession): SinJeemQuestion | null {

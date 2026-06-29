@@ -4,8 +4,10 @@ import { MODE_CARDS, GAME_TITLE } from "@/lib/sin-jeem/constants";
 import { healthLabel } from "@/lib/sin-jeem/activation-state";
 import { useActivationState } from "@/lib/sin-jeem/activation-provider";
 import { QA_ROUTES } from "@/lib/question-answer/routes";
+import { SjIcon, type SjIconName } from "@/components/sin-jeem/SjIcon";
 import { GameHero, GameLayout } from "./components/GameLayout";
 import { ActivationStatusBanner } from "./components/ActivationStatusBanner";
+import { PlayerProgressPanel } from "./components/PlayerProgressPanel";
 
 export default function SinJeemHomePage() {
   const [, setLocation] = useLocation();
@@ -46,10 +48,11 @@ export default function SinJeemHomePage() {
       )}
 
       <ActivationStatusBanner />
+      <PlayerProgressPanel />
 
       <button
         type="button"
-        className="sj-cta-primary"
+        className="sj-cta-primary sj-btn-animate"
         disabled={startDisabled}
         title={startDisabled ? startDisabledReason || undefined : undefined}
         aria-disabled={startDisabled}
@@ -57,7 +60,16 @@ export default function SinJeemHomePage() {
           if (!startDisabled) setLocation(QA_ROUTES.setup("team_vs_team"));
         }}
       >
-        {loading ? "جاري التحميل…" : startDisabled ? startDisabledReason || "غير جاهز" : "⚡ ابدأ اللعبة"}
+        {loading ? (
+          "جاري التحميل…"
+        ) : startDisabled ? (
+          startDisabledReason || "غير جاهز"
+        ) : (
+          <>
+            <SjIcon name="zap" size={18} />
+            ابدأ اللعبة
+          </>
+        )}
       </button>
 
       <div className="sj-stats" aria-live="polite">
@@ -87,7 +99,7 @@ export default function SinJeemHomePage() {
           <button
             key={m.mode}
             type="button"
-            className="sj-mode-card"
+            className="sj-mode-card sj-card-hover"
             style={{ background: m.gradient, border: "none", textAlign: "start" }}
             disabled={startDisabled}
             onClick={() => {
@@ -98,7 +110,9 @@ export default function SinJeemHomePage() {
               else setLocation(QA_ROUTES.setup(m.mode));
             }}
           >
-            <span className="sj-mode-icon">{m.icon}</span>
+            <span className="sj-mode-icon">
+              <SjIcon name={m.icon as SjIconName} size={22} strokeWidth={1.5} />
+            </span>
             <span className="sj-mode-title">{m.title}</span>
             <span className="sj-mode-desc">{m.desc}</span>
           </button>
@@ -108,7 +122,10 @@ export default function SinJeemHomePage() {
       {leaders.length > 0 && (
         <section style={{ marginTop: "2rem" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.65rem" }}>
-            <h2 style={{ fontSize: "1rem", fontWeight: 800, color: "var(--majalis-emerald-deep)" }}>🏆 أفضل اللاعبين</h2>
+            <h2 style={{ fontSize: "1rem", fontWeight: 800, color: "var(--majalis-emerald-deep)", display: "flex", alignItems: "center", gap: "0.4rem" }}>
+              <SjIcon name="trophy" size={18} />
+              أفضل اللاعبين
+            </h2>
             <Link href={QA_ROUTES.leaderboard} style={{ fontSize: "0.8125rem", color: "var(--majalis-brass-deep)" }}>
               عرض الكل
             </Link>

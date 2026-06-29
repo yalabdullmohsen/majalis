@@ -3,6 +3,7 @@ import { useLocation } from "wouter";
 import { useGame } from "@/lib/sin-jeem/context";
 import { DEFAULT_CONFIG } from "@/lib/sin-jeem/constants";
 import { QA_ROUTES } from "@/lib/question-answer/routes";
+import { SjIcon } from "@/components/sin-jeem/SjIcon";
 import { GameHero, GameLayout } from "./components/GameLayout";
 
 type Round = "quarter" | "semi" | "final";
@@ -24,11 +25,11 @@ const BRACKET: { round: Round; label: string; pairs: [string, string][] }[] = [
 
 export default function SinJeemTournamentPage() {
   const [, setLocation] = useLocation();
-  const { startGame } = useGame();
+  const { startGame, starting } = useGame();
   const [activeRound, setActiveRound] = useState<Round>("quarter");
 
-  const startMatch = (teamA: string, teamB: string) => {
-    startGame({
+  const startMatch = async (teamA: string, teamB: string) => {
+    await startGame({
       ...DEFAULT_CONFIG,
       mode: "tournament",
       teamAName: teamA,
@@ -44,7 +45,10 @@ export default function SinJeemTournamentPage() {
   return (
     <GameLayout>
       <GameHero />
-      <h2 style={{ textAlign: "center", fontWeight: 800, marginBottom: "1rem" }}>🏆 البطولة</h2>
+      <h2 className="sj-board-title" style={{ justifyContent: "center", marginBottom: "1rem" }}>
+        <SjIcon name="trophy" size={20} />
+        البطولة
+      </h2>
 
       <div style={{ display: "flex", gap: "0.5rem", justifyContent: "center", marginBottom: "1.25rem", flexWrap: "wrap" }}>
         {BRACKET.map((b) => (
@@ -69,7 +73,7 @@ export default function SinJeemTournamentPage() {
         {bracket.pairs.map(([a, b], i) => (
           <div
             key={i}
-            className="sj-question-card"
+            className="sj-question-card sj-card-hover"
             style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "0.75rem" }}
           >
             <div>
@@ -78,7 +82,13 @@ export default function SinJeemTournamentPage() {
               <strong>{b}</strong>
             </div>
             {a !== "؟" && (
-              <button type="button" className="sj-cta-primary" style={{ width: "auto", padding: "0.5rem 1rem", fontSize: "0.875rem" }} onClick={() => startMatch(a, b)}>
+              <button
+                type="button"
+                className="sj-cta-primary sj-btn-animate"
+                style={{ width: "auto", padding: "0.5rem 1rem", fontSize: "0.875rem" }}
+                disabled={starting}
+                onClick={() => void startMatch(a, b)}
+              >
                 العب
               </button>
             )}

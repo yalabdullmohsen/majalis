@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useLocation, useSearch } from "wouter";
+import { useAuth } from "@/components/AuthProvider";
 import { useGame } from "@/lib/sin-jeem/context";
 import {
   getCurrentQuestion,
@@ -13,6 +14,7 @@ import {
   dailyConfig,
 } from "@/lib/sin-jeem/engine";
 import { loadSession } from "@/lib/sin-jeem/storage";
+import { recordAnswerProgress } from "@/lib/sin-jeem/session-builder";
 import type { LifelineType } from "@/lib/sin-jeem/types";
 import {
   playCorrectSound,
@@ -20,6 +22,7 @@ import {
   playWrongSound,
 } from "@/lib/sin-jeem/sounds";
 import { QA_ROUTES } from "@/lib/question-answer/routes";
+import { SjIcon } from "@/components/sin-jeem/SjIcon";
 import { GameLayout } from "./components/GameLayout";
 import { ScoreBoard } from "./components/ScoreBoard";
 import { TimerRing } from "./components/TimerRing";
@@ -29,24 +32,28 @@ import { LifelineBar } from "./components/LifelineBar";
 export default function SinJeemPlayPage() {
   const search = useSearch();
   const [, setLocation] = useLocation();
-  const { session, updateSession, startGame } = useGame();
+  const { user } = useAuth();
+  const { session, updateSession, startGame, starting } = useGame();
   const [selected, setSelected] = useState<number | null>(null);
   const [, tick] = useState(0);
   const initialized = useRef(false);
+  const recordedRounds = useRef(new Set<number>());
 
   const activeSession = session ?? loadSession();
 
   useEffect(() => {
-    if (initialized.current) return;
+    if (initialized.current || starting) return;
     const params = new URLSearchParams(search);
     const mode = params.get("mode");
     const stored = session ?? loadSession();
     if (!stored && mode === "quick") {
-      startGame(quickConfig());
-      initialized.current = true;
+      void startGame(quickConfig()).then(() => {
+        initialized.current = true;
+      });
     } else if (!stored && mode === "daily") {
-      startGame(dailyConfig());
-      initialized.current = true;
+      void startGame(dailyConfig()).then(() => {
+        initialized.current = true;
+      });
     } else if (!stored) {
       setLocation(QA_ROUTES.home);
     } else if (!session && stored) {
@@ -55,7 +62,7 @@ export default function SinJeemPlayPage() {
     } else {
       initialized.current = true;
     }
-  }, [session, search, startGame, updateSession, setLocation]);
+  }, [session, search, startGame, updateSession, setLocation, starting]);
 
   useEffect(() => {
     if (!activeSession || activeSession.phase !== "playing" || activeSession.timerFrozen) return;
@@ -71,22 +78,66 @@ export default function SinJeemPlayPage() {
     }
   }, [activeSession, updateSession, tick]);
 
+  const syncAnswerProgress = useCallback(
+    (roundIndex: number, isCorrect: boolean | null, responseMs: number, questionId: string, categorySlug?: string, difficulty?: string) => {
+      if (!user?.id || recordedRounds.current.has(roundIndex)) return;
+      recordedRounds.current.add(roundIndex);
+      void recordAnswerProgress({
+        userId: user.id,
+        questionId,
+        isCorrect,
+        responseMs,
+        categorySlug,
+        difficulty,
+      });
+    },
+    [user?.id],
+  );
+
   const handleSelect = useCallback(
     (index: number) => {
       if (!activeSession || activeSession.phase !== "playing") return;
       setSelected(index);
+      const question = getCurrentQuestion(activeSession);
       const next = submitAnswer(activeSession, index);
       updateSession(next);
-      const correct = index === (getCurrentQuestion(activeSession)?.correct_index ?? 0);
+      const correct = index === (question?.correct_index ?? 0);
       if (correct) {
         playCorrectSound();
         playScorePop();
       } else {
         playWrongSound();
       }
+      const lastRound = next.rounds[next.rounds.length - 1];
+      if (question && lastRound) {
+        syncAnswerProgress(
+          next.rounds.length - 1,
+          lastRound.isCorrect,
+          lastRound.responseMs,
+          question.id,
+          question.category_slug,
+          question.difficulty,
+        );
+      }
     },
-    [activeSession, updateSession],
+    [activeSession, updateSession, syncAnswerProgress],
   );
+
+  useEffect(() => {
+    if (!activeSession || activeSession.phase !== "reveal") return;
+    const lastRound = activeSession.rounds[activeSession.rounds.length - 1];
+    const question = getCurrentQuestion(activeSession);
+    if (!lastRound || !question || lastRound.selectedIndex !== null) return;
+    if (recordedRounds.current.has(activeSession.rounds.length - 1)) return;
+    syncAnswerProgress(
+      activeSession.rounds.length - 1,
+      null,
+      lastRound.responseMs,
+      question.id,
+      question.category_slug,
+      question.difficulty,
+    );
+  }, [activeSession, syncAnswerProgress]);
 
   const handleLifeline = (type: LifelineType) => {
     if (!activeSession) return;
@@ -108,7 +159,16 @@ export default function SinJeemPlayPage() {
     }
   };
 
-  if (!activeSession) return null;
+  if (!activeSession || starting) {
+    return (
+      <GameLayout>
+        <p className="sj-loading-state">
+          <span className="sj-pulse-dot" />
+          جاري بناء جلستك الذكية…
+        </p>
+      </GameLayout>
+    );
+  }
 
   const question = getCurrentQuestion(activeSession);
   const remaining = getRemainingSeconds(activeSession);
@@ -117,7 +177,7 @@ export default function SinJeemPlayPage() {
 
   return (
     <GameLayout>
-      <div style={{ textAlign: "center", fontSize: "0.8125rem", color: "var(--majalis-ink-soft)", marginBottom: "0.5rem" }}>
+      <div className="sj-question-meta">
         سؤال {activeSession.currentIndex + 1} / {activeSession.questions.length}
         {activeSession.config.mode !== "solo" && (
           <> · دور {activeSession.activeSide === "a" ? activeSession.teamA.name : activeSession.teamB.name}</>
@@ -154,8 +214,18 @@ export default function SinJeemPlayPage() {
       )}
 
       {revealed && (
-        <button type="button" className="sj-cta-primary" style={{ marginTop: "1.25rem" }} onClick={handleContinue}>
-          {activeSession.currentIndex + 1 >= activeSession.questions.length ? "عرض النتائج 🏆" : "السؤال التالي →"}
+        <button type="button" className="sj-cta-primary sj-btn-animate" style={{ marginTop: "1.25rem" }} onClick={handleContinue}>
+          {activeSession.currentIndex + 1 >= activeSession.questions.length ? (
+            <>
+              عرض النتائج
+              <SjIcon name="trophy" size={18} />
+            </>
+          ) : (
+            <>
+              السؤال التالي
+              <SjIcon name="arrow-left" size={18} />
+            </>
+          )}
         </button>
       )}
     </GameLayout>

@@ -6,6 +6,13 @@ import { parseCsvQuestions, parseJsonQuestions, questionsToCsv, contentHash as i
 import { getProductionQuestionBank, getCategorySeedList } from "../../lib/question-answer-bank.mjs";
 import { resolveActivationStatus } from "../../lib/sin-jeem-activation.mjs";
 import { getGenerationDashboard, runDailyGeneration } from "../../lib/question-generation/pipeline.mjs";
+import {
+  buildSessionForUser,
+  fetchQuestionPool,
+  getPlayerProgress,
+  recordAnswerProgress,
+} from "../../lib/sin-jeem-progress.mjs";
+import { buildSmartSession } from "../../lib/sin-jeem-session-builder.mjs";
 
 const USED_HASHES = new Set();
 const RATE_LIMIT = new Map();
@@ -154,15 +161,22 @@ async function upsertLeaderboardEntry(admin, { entityType, displayName, teamName
   }
 }
 
-async function fetchLeaderboard(admin, period) {
+async function fetchLeaderboard(admin, period, scope = "global", scopeKey = "all") {
   const pKey = periodKey(period);
-  const { data } = await admin
+  let query = admin
     .from("sin_jeem_leaderboard_entries")
     .select("*")
     .eq("period", period)
-    .eq("period_key", pKey)
-    .order("score", { ascending: false })
-    .limit(50);
+    .eq("period_key", pKey);
+
+  if (scope && scope !== "global") {
+    query = query.eq("scope", scope);
+    if (scopeKey && scopeKey !== "all") query = query.eq("scope_key", scopeKey);
+  } else {
+    query = query.or("scope.is.null,scope.eq.global");
+  }
+
+  const { data } = await query.order("score", { ascending: false }).limit(50);
 
   const rows = data || [];
   const players = rows
@@ -174,6 +188,8 @@ async function fetchLeaderboard(admin, period) {
       games: r.games,
       wins: r.wins,
       rank: i + 1,
+      accuracy_pct: r.accuracy_pct,
+      avg_speed_ms: r.avg_speed_ms,
     }));
 
   const teams = rows
@@ -185,9 +201,37 @@ async function fetchLeaderboard(admin, period) {
       games: r.games,
       wins: r.wins,
       rank: i + 1,
+      accuracy_pct: r.accuracy_pct,
+      avg_speed_ms: r.avg_speed_ms,
     }));
 
-  return { players, teams };
+  const accuracy = [...rows]
+    .filter((r) => r.accuracy_pct != null)
+    .sort((a, b) => Number(b.accuracy_pct) - Number(a.accuracy_pct))
+    .slice(0, 20)
+    .map((r, i) => ({
+      id: r.id,
+      name: r.display_name,
+      score: Number(r.accuracy_pct),
+      games: r.games,
+      wins: r.wins,
+      rank: i + 1,
+    }));
+
+  const speed = [...rows]
+    .filter((r) => r.avg_speed_ms != null && r.avg_speed_ms > 0)
+    .sort((a, b) => Number(a.avg_speed_ms) - Number(b.avg_speed_ms))
+    .slice(0, 20)
+    .map((r, i) => ({
+      id: r.id,
+      name: r.display_name,
+      score: r.avg_speed_ms,
+      games: r.games,
+      wins: r.wins,
+      rank: i + 1,
+    }));
+
+  return { players, teams, accuracy, speed, scope, scopeKey };
 }
 
 async function fetchSourceContent(source) {
@@ -495,17 +539,98 @@ export default async function handler(req, res, opts = {}) {
   }
 
   if (action === "leaderboard") {
-    const period = req.query?.period || "all";
+    const period = req.query?.period || req.body?.period || "all";
+    const scope = req.query?.scope || req.body?.scope || "global";
+    const scopeKey = req.query?.scope_key || req.body?.scope_key || "all";
     const admin = getSupabaseAdmin();
     if (!admin) {
-      sendJson(res, 200, { ok: true, players: [], teams: [] });
+      sendJson(res, 200, { ok: true, players: [], teams: [], accuracy: [], speed: [] });
       return;
     }
     try {
-      const board = await fetchLeaderboard(admin, period);
+      const board = await fetchLeaderboard(admin, period, scope, scopeKey);
       sendJson(res, 200, { ok: true, ...board });
     } catch {
-      sendJson(res, 200, { ok: true, players: [], teams: [] });
+      sendJson(res, 200, { ok: true, players: [], teams: [], accuracy: [], speed: [] });
+    }
+    return;
+  }
+
+  if (action === "get_progress") {
+    const userId = req.query?.user_id || req.body?.user_id;
+    if (!userId) {
+      sendJson(res, 400, { ok: false, error: "user_id_required" });
+      return;
+    }
+    const admin = getSupabaseAdmin();
+    if (!admin) {
+      sendJson(res, 503, { ok: false, error: "database_unavailable" });
+      return;
+    }
+    try {
+      const progress = await getPlayerProgress(admin, userId);
+      sendJson(res, progress.ok ? 200 : 503, progress);
+    } catch (err) {
+      sendJson(res, 500, { ok: false, error: String(err.message || err) });
+    }
+    return;
+  }
+
+  if (action === "build_session") {
+    const config = req.body?.config || {};
+    const userId = req.body?.user_id || null;
+    const admin = getSupabaseAdmin();
+
+    if (userId && admin) {
+      try {
+        const result = await buildSessionForUser(admin, userId, config);
+        sendJson(res, 200, result);
+        return;
+      } catch {
+        /* fall through to guest builder */
+      }
+    }
+
+    const { pool, source } = await fetchQuestionPool(admin);
+    const result = buildSmartSession({
+      pool,
+      history: [],
+      config,
+      adaptiveDifficulty: config.difficulty || "متوسط",
+    });
+    sendJson(res, 200, {
+      ok: true,
+      questions: result.questions,
+      meta: { ...result.meta, source: "local" },
+      poolSource: source,
+    });
+    return;
+  }
+
+  if (action === "record_answer") {
+    const userId = req.body?.userId || req.body?.user_id;
+    const questionId = req.body?.questionId || req.body?.question_id;
+    if (!userId || !questionId) {
+      sendJson(res, 400, { ok: false, error: "invalid_payload" });
+      return;
+    }
+    const admin = getSupabaseAdmin();
+    if (!admin) {
+      sendJson(res, 200, { ok: true, offline: true });
+      return;
+    }
+    try {
+      const result = await recordAnswerProgress(admin, {
+        userId,
+        questionId,
+        isCorrect: req.body?.isCorrect ?? req.body?.is_correct ?? null,
+        responseMs: Number(req.body?.responseMs ?? req.body?.response_ms) || 0,
+        difficulty: req.body?.difficulty,
+        categorySlug: req.body?.categorySlug || req.body?.category_slug,
+      });
+      sendJson(res, 200, result);
+    } catch (err) {
+      sendJson(res, 500, { ok: false, error: String(err.message || err) });
     }
     return;
   }

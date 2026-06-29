@@ -5,6 +5,7 @@ import { getMatchResult } from "@/lib/sin-jeem/engine";
 import { persistMatchResult } from "@/lib/sin-jeem/submit-result";
 import { playWinSound } from "@/lib/sin-jeem/sounds";
 import { QA_ROUTES } from "@/lib/question-answer/routes";
+import { SjIcon } from "@/components/sin-jeem/SjIcon";
 import { GameLayout } from "./components/GameLayout";
 import { ScoreBoard } from "./components/ScoreBoard";
 import { ConfettiOverlay } from "./components/ConfettiOverlay";
@@ -32,12 +33,15 @@ export default function SinJeemResultsPage() {
   const result = getMatchResult(session);
   const mins = Math.floor(result.durationMs / 60000);
   const secs = Math.floor((result.durationMs % 60000) / 1000);
+  const perfect = result.teamA.wrong === 0 && result.teamB.wrong === 0 && result.teamA.skipped === 0;
 
   return (
     <GameLayout>
       <ConfettiOverlay active={result.winner !== "draw"} />
-      <div className="sj-results">
-        <div className="sj-trophy">🏆</div>
+      <div className={`sj-results ${perfect ? "sj-results--perfect" : ""}`}>
+        <div className="sj-trophy sj-animate-in">
+          <SjIcon name={perfect ? "sparkles" : "trophy"} size={48} strokeWidth={1.5} />
+        </div>
         <p style={{ fontSize: "0.875rem", color: "var(--majalis-ink-soft)" }}>الفائز</p>
         <h2 className="sj-winner-name">{result.winnerName}</h2>
         <p style={{ color: "var(--majalis-brass-deep)", fontWeight: 700 }}>
@@ -69,13 +73,14 @@ export default function SinJeemResultsPage() {
       <div style={{ display: "grid", gap: "0.65rem", marginTop: "1.5rem" }}>
         <button
           type="button"
-          className="sj-cta-primary"
+          className="sj-cta-primary sj-btn-animate"
           onClick={() => {
             endGame();
             setLocation(QA_ROUTES.setup("team_vs_team"));
           }}
         >
-          🔄 لعب مرة أخرى
+          <SjIcon name="refresh" size={18} />
+          لعب مرة أخرى
         </button>
         <Link href={QA_ROUTES.home} style={{ textAlign: "center", padding: "0.75rem", color: "var(--majalis-emerald-deep)", fontWeight: 700 }}>
           العودة للرئيسية

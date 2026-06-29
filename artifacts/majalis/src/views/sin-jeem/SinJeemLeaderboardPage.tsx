@@ -1,25 +1,34 @@
 import { useEffect, useState } from "react";
-import { fetchLeaderboardByPeriod, periodLabel, type LeaderboardPeriod } from "@/lib/sin-jeem/leaderboard-service";
+import { requestFetch } from "@/lib/request-manager";
+import { periodLabel, type LeaderboardPeriod } from "@/lib/sin-jeem/leaderboard-service";
 import type { LeaderboardEntry } from "@/lib/sin-jeem/types";
+import { SjIcon } from "@/components/sin-jeem/SjIcon";
 import { GameHero, GameLayout } from "./components/GameLayout";
 
 const PERIODS: LeaderboardPeriod[] = ["day", "week", "month", "all"];
 
-function LeaderList({ title, items }: { title: string; items: LeaderboardEntry[] }) {
+type BoardTab = "players" | "teams" | "accuracy" | "speed";
+
+function LeaderList({ title, icon, items, unit }: { title: string; icon: string; items: LeaderboardEntry[]; unit?: string }) {
   return (
     <>
-      <h2 style={{ fontWeight: 800, margin: "1.5rem 0 1rem", color: "var(--majalis-emerald-deep)" }}>{title}</h2>
+      <h2 className="sj-board-title">
+        <SjIcon name={icon} size={18} />
+        {title}
+      </h2>
       {items.length === 0 ? (
         <p style={{ textAlign: "center", color: "var(--majalis-ink-soft)" }}>لا توجد نتائج بعد — العب مباراة!</p>
       ) : (
         items.map((l, i) => (
-          <div key={`${l.id}-${i}`} className="sj-leader-row">
+          <div key={`${l.id}-${i}`} className="sj-leader-row sj-animate-in">
             <span className={`sj-rank ${i === 0 ? "gold" : i === 1 ? "silver" : i === 2 ? "bronze" : ""}`}>{l.rank}</span>
             <div style={{ flex: 1 }}>
               <div style={{ fontWeight: 700 }}>{l.name}</div>
               <div style={{ fontSize: "0.75rem", color: "var(--majalis-ink-soft)" }}>{l.wins} فوز من {l.games}</div>
             </div>
-            <div style={{ fontWeight: 800, fontSize: "1.125rem", color: "var(--majalis-emerald-deep)" }}>{l.score}</div>
+            <div style={{ fontWeight: 800, fontSize: "1.125rem", color: "var(--majalis-emerald-deep)" }}>
+              {l.score}{unit || ""}
+            </div>
           </div>
         ))
       )}
@@ -29,18 +38,33 @@ function LeaderList({ title, items }: { title: string; items: LeaderboardEntry[]
 
 export default function SinJeemLeaderboardPage() {
   const [period, setPeriod] = useState<LeaderboardPeriod>("all");
+  const [tab, setTab] = useState<BoardTab>("players");
   const [players, setPlayers] = useState<LeaderboardEntry[]>([]);
   const [teams, setTeams] = useState<LeaderboardEntry[]>([]);
+  const [accuracy, setAccuracy] = useState<LeaderboardEntry[]>([]);
+  const [speed, setSpeed] = useState<LeaderboardEntry[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);
-    fetchLeaderboardByPeriod(period).then((snap) => {
-      setPlayers(snap.players);
-      setTeams(snap.teams);
-      setLoading(false);
-    });
+    requestFetch(`/api/question-answer?action=leaderboard&period=${period}&scope=global`, { credentials: "same-origin" })
+      .then((r) => r.json())
+      .then((data) => {
+        setPlayers(data.players || []);
+        setTeams(data.teams || []);
+        setAccuracy(data.accuracy || []);
+        setSpeed(data.speed || []);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
   }, [period]);
+
+  const tabs: { key: BoardTab; label: string; icon: string }[] = [
+    { key: "players", label: "اللاعبون", icon: "trophy" },
+    { key: "teams", label: "الفرق", icon: "users" },
+    { key: "accuracy", label: "الدقة", icon: "target" },
+    { key: "speed", label: "السرعة", icon: "zap" },
+  ];
 
   return (
     <GameLayout>
@@ -59,12 +83,29 @@ export default function SinJeemLeaderboardPage() {
           </button>
         ))}
       </div>
+
+      <div className="sj-period-tabs" style={{ marginTop: "0.5rem" }}>
+        {tabs.map((t) => (
+          <button
+            key={t.key}
+            type="button"
+            className={`sj-period-tab${tab === t.key ? " active" : ""}`}
+            onClick={() => setTab(t.key)}
+          >
+            <SjIcon name={t.icon} size={14} />
+            {t.label}
+          </button>
+        ))}
+      </div>
+
       {loading ? (
-        <p style={{ textAlign: "center", color: "var(--majalis-ink-soft)" }}>جاري التحميل...</p>
+        <p className="sj-loading-state"><span className="sj-pulse-dot" /> جاري التحميل...</p>
       ) : (
         <>
-          <LeaderList title="🏆 أفضل اللاعبين" items={players} />
-          <LeaderList title="👥 أفضل الفرق" items={teams} />
+          {tab === "players" && <LeaderList title="أفضل اللاعبين" icon="trophy" items={players} />}
+          {tab === "teams" && <LeaderList title="أفضل الفرق" icon="users" items={teams} />}
+          {tab === "accuracy" && <LeaderList title="لوحة الدقة" icon="target" items={accuracy} unit="%" />}
+          {tab === "speed" && <LeaderList title="أسرع المفكرين" icon="zap" items={speed} unit="ms" />}
         </>
       )}
     </GameLayout>

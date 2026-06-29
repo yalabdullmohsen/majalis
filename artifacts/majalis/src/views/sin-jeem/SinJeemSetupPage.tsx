@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { flushSync } from "react-dom";
 import { useLocation, useRoute } from "wouter";
 import {
   DEFAULT_CONFIG,
@@ -11,6 +10,7 @@ import type { GameMode, MatchConfig } from "@/lib/sin-jeem/types";
 import { trackPlayer } from "@/lib/sin-jeem/storage";
 import { useGame } from "@/lib/sin-jeem/context";
 import { QA_BASE, QA_ROUTES } from "@/lib/question-answer/routes";
+import { SjIcon, categoryIconName } from "@/components/sin-jeem/SjIcon";
 import { GameHero, GameLayout } from "./components/GameLayout";
 
 const MODE_LABELS: Record<string, string> = {
@@ -22,7 +22,7 @@ const MODE_LABELS: Record<string, string> = {
 export default function SinJeemSetupPage() {
   const [, params] = useRoute(`${QA_BASE}/setup/:mode`);
   const [, setLocation] = useLocation();
-  const { startGame } = useGame();
+  const { startGame, starting } = useGame();
   const mode = (params?.mode || "team_vs_team") as GameMode;
   const categories = getTopLevelCategories();
 
@@ -42,11 +42,11 @@ export default function SinJeemSetupPage() {
     );
   };
 
-  const handleStart = () => {
+  const handleStart = async () => {
     trackPlayer(config.teamAName);
     if (config.teamBName) trackPlayer(config.teamBName);
     const finalConfig = { ...config, categorySlugs: selectedCats };
-    flushSync(() => startGame(finalConfig));
+    await startGame(finalConfig);
     setLocation(QA_ROUTES.play);
   };
 
@@ -176,14 +176,14 @@ export default function SinJeemSetupPage() {
                 }}
                 onClick={() => toggleCat(c.slug)}
               >
-                {c.icon} {c.name_ar}
+                <SjIcon name={categoryIconName(c.slug)} size={14} /> {c.name_ar}
               </button>
             ))}
           </div>
         </div>
 
-        <button type="button" className="sj-cta-primary" onClick={handleStart}>
-          🚀 ابدأ المباراة
+        <button type="button" className="sj-cta-primary sj-btn-animate" onClick={() => void handleStart()} disabled={starting}>
+          {starting ? "جاري التحضير…" : (<><SjIcon name="rocket" size={18} /> ابدأ المباراة</>)}
         </button>
       </div>
     </GameLayout>

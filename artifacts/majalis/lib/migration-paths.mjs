@@ -42,6 +42,7 @@ export const ACTIVATION_TABLES_MIGRATION_FILES = [
   "murtaqaa_drosq8_sources_v1.sql",
   "sin_jeem_v1.sql",
   "sin_jeem_v1_2_types.sql",
+  "sin_jeem_v2_progress.sql",
   "question_generation_v1.sql",
 ];
 
@@ -99,6 +100,7 @@ export const MIGRATION_FILES = [
   "murtaqaa_drosq8_sources_v1.sql",
   "sin_jeem_v1.sql",
   "sin_jeem_v1_2_types.sql",
+  "sin_jeem_v2_progress.sql",
   "question_generation_v1.sql",
 ];
 
