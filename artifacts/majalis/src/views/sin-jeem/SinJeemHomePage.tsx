@@ -1,61 +1,80 @@
-import { useCallback, useEffect, useState } from "react";
-import { Link, useLocation } from "wouter";
+import { useLocation } from "wouter";
+import { Link } from "wouter";
 import { MODE_CARDS, GAME_TITLE } from "@/lib/sin-jeem/constants";
-import { fetchGameStats, fetchLeaderboard, probeQuestionAnswerDb } from "@/lib/sin-jeem/supabase";
-import type { GameStats, LeaderboardEntry } from "@/lib/sin-jeem/types";
+import { healthLabel } from "@/lib/sin-jeem/activation-state";
+import { useActivationState } from "@/lib/sin-jeem/activation-provider";
 import { QA_ROUTES } from "@/lib/question-answer/routes";
 import { GameHero, GameLayout } from "./components/GameLayout";
-import { DbActivationBanner } from "./components/DbActivationBanner";
+import { ActivationStatusBanner } from "./components/ActivationStatusBanner";
 
 export default function SinJeemHomePage() {
   const [, setLocation] = useLocation();
-  const [stats, setStats] = useState<GameStats>({ questionCount: 0, categoryCount: 0, playerCount: 0, matchCount: 0 });
-  const [leaders, setLeaders] = useState<LeaderboardEntry[]>([]);
-  const [dbAvailable, setDbAvailable] = useState(true);
-  const [dbLoading, setDbLoading] = useState(true);
+  const {
+    loading,
+    health,
+    gameReady,
+    questionCount,
+    categoryCount,
+    playerCount,
+    matchCount,
+    leaders,
+    startDisabledReason,
+    dataSource,
+  } = useActivationState();
 
-  const refresh = useCallback(async () => {
-    setDbLoading(true);
-    const [health, nextStats, nextLeaders] = await Promise.all([
-      probeQuestionAnswerDb(),
-      fetchGameStats(),
-      fetchLeaderboard(),
-    ]);
-    setDbAvailable(health.available);
-    setStats(nextStats);
-    setLeaders(nextLeaders);
-    setDbLoading(false);
-  }, []);
-
-  useEffect(() => {
-    void refresh();
-  }, [refresh]);
+  const startDisabled = loading || !gameReady;
+  const statsSource =
+    dataSource === "supabase" ? "قاعدة البيانات" : dataSource === "local" ? "محلي" : "بنك مدمج";
 
   return (
     <GameLayout>
       <GameHero />
 
-      <DbActivationBanner dbAvailable={dbAvailable} loading={dbLoading} onRetry={() => void refresh()} />
+      {!loading && health !== "READY" && (
+        <p
+          style={{
+            textAlign: "center",
+            fontSize: "0.75rem",
+            fontWeight: 700,
+            color: "var(--majalis-ink-soft)",
+            marginBottom: "0.75rem",
+          }}
+          aria-label="حالة اللعبة"
+        >
+          الحالة: {healthLabel(health)} · المصدر: {statsSource}
+        </p>
+      )}
 
-      <button type="button" className="sj-cta-primary" onClick={() => setLocation(QA_ROUTES.setup("team_vs_team"))}>
-        ⚡ ابدأ اللعبة
+      <ActivationStatusBanner />
+
+      <button
+        type="button"
+        className="sj-cta-primary"
+        disabled={startDisabled}
+        title={startDisabled ? startDisabledReason || undefined : undefined}
+        aria-disabled={startDisabled}
+        onClick={() => {
+          if (!startDisabled) setLocation(QA_ROUTES.setup("team_vs_team"));
+        }}
+      >
+        {loading ? "جاري التحميل…" : startDisabled ? startDisabledReason || "غير جاهز" : "⚡ ابدأ اللعبة"}
       </button>
 
-      <div className="sj-stats">
+      <div className="sj-stats" aria-live="polite">
         <div className="sj-stat">
-          <div className="sj-stat-value">{stats.questionCount}</div>
+          <div className="sj-stat-value">{loading ? "…" : questionCount.toLocaleString("ar")}</div>
           <div className="sj-stat-label">عدد الأسئلة</div>
         </div>
         <div className="sj-stat">
-          <div className="sj-stat-value">{stats.categoryCount}</div>
+          <div className="sj-stat-value">{loading ? "…" : categoryCount.toLocaleString("ar")}</div>
           <div className="sj-stat-label">عدد الفئات</div>
         </div>
         <div className="sj-stat">
-          <div className="sj-stat-value">{stats.playerCount || "—"}</div>
+          <div className="sj-stat-value">{loading ? "…" : playerCount > 0 ? playerCount.toLocaleString("ar") : "—"}</div>
           <div className="sj-stat-label">عدد اللاعبين</div>
         </div>
         <div className="sj-stat">
-          <div className="sj-stat-value">{stats.matchCount}</div>
+          <div className="sj-stat-value">{loading ? "…" : matchCount.toLocaleString("ar")}</div>
           <div className="sj-stat-label">مباريات</div>
         </div>
       </div>
@@ -63,14 +82,16 @@ export default function SinJeemHomePage() {
       <h2 style={{ fontSize: "1rem", fontWeight: 800, margin: "1.5rem 0 0.75rem", color: "var(--majalis-emerald-deep)" }}>
         أوضاع اللعب
       </h2>
-      <div className="sj-modes">
+      <div className={`sj-modes${startDisabled ? " sj-modes--disabled" : ""}`}>
         {MODE_CARDS.map((m) => (
           <button
             key={m.mode}
             type="button"
             className="sj-mode-card"
             style={{ background: m.gradient, border: "none", textAlign: "start" }}
+            disabled={startDisabled}
             onClick={() => {
+              if (startDisabled) return;
               if (m.mode === "quick") setLocation(`${QA_ROUTES.play}?mode=quick`);
               else if (m.mode === "daily") setLocation(`${QA_ROUTES.play}?mode=daily`);
               else if (m.mode === "tournament") setLocation(QA_ROUTES.tournament);

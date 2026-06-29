@@ -146,10 +146,10 @@ if (/سين\s*ج/i.test(visibleUi) || /سين\s*وج/i.test(visibleUi)) {
 }
 if (!brandingFail) ok("no old Sin Jeem branding in visible UI copy");
 
-if (readFileSync(resolve(ROOT, "src/views/sin-jeem/SinJeemHomePage.tsx"), "utf8").includes("DbActivationBanner")) {
-  ok("DB activation banner on home page");
+if (readFileSync(resolve(ROOT, "src/views/sin-jeem/SinJeemHomePage.tsx"), "utf8").includes("ActivationStatusBanner")) {
+  ok("Activation status banner on home page");
 } else {
-  bad("DB activation banner missing");
+  bad("Activation status banner missing");
 }
 
 if (bankJson.length >= 500) {

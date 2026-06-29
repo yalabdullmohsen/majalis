@@ -132,6 +132,24 @@
   transform: scale(0.98);
 }
 
+.sj-cta-primary:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  animation: none;
+  transform: none;
+  box-shadow: none;
+}
+
+.sj-cta-primary:disabled:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.sj-modes--disabled .sj-mode-card {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
 .sj-cta-secondary {
   display: inline-flex;
   align-items: center;

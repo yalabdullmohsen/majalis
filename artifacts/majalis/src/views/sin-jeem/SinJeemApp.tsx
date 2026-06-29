@@ -1,5 +1,6 @@
 import { Route, Switch } from "wouter";
 import { GameProvider } from "@/lib/sin-jeem/context";
+import { ActivationProvider } from "@/lib/sin-jeem/activation-provider";
 import { QA_BASE } from "@/lib/question-answer/routes";
 import SinJeemHomePage from "./SinJeemHomePage";
 import SinJeemSetupPage from "./SinJeemSetupPage";
@@ -11,8 +12,9 @@ import "@/styles/sin-jeem.css";
 
 export default function SinJeemApp() {
   return (
-    <GameProvider>
-      <Switch>
+    <ActivationProvider>
+      <GameProvider>
+        <Switch>
         <Route path={QA_BASE} component={SinJeemHomePage} />
         <Route path={`${QA_BASE}/setup/:mode`} component={SinJeemSetupPage} />
         <Route path={`${QA_BASE}/play`} component={SinJeemPlayPage} />
@@ -20,6 +22,7 @@ export default function SinJeemApp() {
         <Route path={`${QA_BASE}/leaderboard`} component={SinJeemLeaderboardPage} />
         <Route path={`${QA_BASE}/tournament`} component={SinJeemTournamentPage} />
       </Switch>
-    </GameProvider>
+      </GameProvider>
+    </ActivationProvider>
   );
 }

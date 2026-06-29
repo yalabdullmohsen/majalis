@@ -4,6 +4,7 @@ import { getSupabaseAdmin } from "../../lib/supabase-admin.mjs";
 import { requireAdminAccess } from "../../lib/admin-auth.mjs";
 import { parseCsvQuestions, parseJsonQuestions, questionsToCsv, contentHash as importHash } from "../../lib/sin-jeem-import.mjs";
 import { getProductionQuestionBank, getCategorySeedList } from "../../lib/question-answer-bank.mjs";
+import { resolveActivationStatus } from "../../lib/sin-jeem-activation.mjs";
 import { getGenerationDashboard, runDailyGeneration } from "../../lib/question-generation/pipeline.mjs";
 
 const USED_HASHES = new Set();
@@ -367,6 +368,49 @@ export default async function handler(req, res, opts = {}) {
 
   if (action === "health") {
     sendJson(res, 200, { ok: true, service: serviceName, legacy: "sin-jeem" });
+    return;
+  }
+
+  if (action === "activation_status") {
+    try {
+      const status = await resolveActivationStatus();
+      let players = [];
+      const admin = getSupabaseAdmin();
+      if (admin && status.leaderboardReady) {
+        try {
+          const lb = await fetchLeaderboard(admin, "all");
+          players = lb.players || [];
+        } catch {
+          /* empty leaderboard ok */
+        }
+      }
+      sendJson(res, 200, {
+        ok: true,
+        ...status,
+        players,
+        apiReachable: true,
+      });
+    } catch (err) {
+      const bank = getProductionQuestionBank();
+      const cats = getCategorySeedList();
+      sendJson(res, 200, {
+        ok: true,
+        health: bank.length > 0 ? "FALLBACK" : "OFFLINE",
+        dataSource: "bank_file",
+        apiReachable: true,
+        databaseReady: false,
+        questionsReady: bank.length > 0,
+        categoriesReady: cats.length > 0,
+        gameReady: bank.length > 0 && cats.length > 0,
+        leaderboardReady: false,
+        questionCount: bank.length,
+        categoryCount: cats.length,
+        playerCount: 0,
+        matchCount: 0,
+        players: [],
+        error: String(err.message || err),
+      });
+    }
     return;
   }
 
