@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { createPortal } from "react-dom";
 import { Link, useLocation } from "wouter";
 import {
@@ -22,11 +23,11 @@ import {
   Sparkles,
   Sun,
   Tv,
-  UserPlus,
+  Users,
   X,
 } from "lucide-react";
-import { useAuth } from "./AuthProvider";
-import { NAV_GROUPS } from "@/lib/navigation";
+import { SearchSuggestions } from "./SearchSuggestions";
+import { MOBILE_DRAWER_GROUPS, NAV_GROUPS } from "@/lib/navigation";
 
 const ICONS: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
   "/": Home,
@@ -43,7 +44,10 @@ const ICONS: Record<string, React.ComponentType<{ size?: number; className?: str
   "/calendar": Clock,
   "/fawaid": Heart,
   "/qa": MessageCircleQuestion,
+  "/question-answer": MessageCircleQuestion,
   "/quran": BookOpen,
+  "/quran/mushaf": BookOpen,
+  "/quran/tafsir": ScrollText,
   "/quran-radio": Radio,
   "/quran-live": Tv,
   "/quran/tajweed": Mic2,
@@ -57,16 +61,63 @@ const ICONS: Record<string, React.ComponentType<{ size?: number; className?: str
   "/prayer-ranks": Heart,
   "/qibla": Compass,
   "/settings": Settings,
+  "/sheikhs": Users,
+  "/scholar-search": Search,
+  "/learning/paths": GraduationCap,
+  "/learning/quiz": GraduationCap,
+  "/quiz": GraduationCap,
+  "/about": Sparkles,
+  "/privacy": ScrollText,
+  "/terms": ScrollText,
+  "/contact": MessageCircleQuestion,
+  "/contribute": Heart,
+  "/my-updates": Sparkles,
 };
 
 type Props = {
   open: boolean;
   onClose: () => void;
+  /** When true, show the streamlined mobile drawer groups */
+  mobileLayout?: boolean;
 };
 
-export function SideNavDrawer({ open, onClose }: Props) {
+function DrawerSearch({ onSubmitDone }: { onSubmitDone: () => void }) {
+  const [term, setTerm] = useState("");
+  const [, navigate] = useLocation();
+
+  const submit = (value: string) => {
+    const q = value.trim();
+    if (!q) return;
+    navigate(`/search/${encodeURIComponent(q)}`);
+    setTerm("");
+    onSubmitDone();
+  };
+
+  return (
+    <form
+      className="side-nav-drawer__search"
+      onSubmit={(event) => {
+        event.preventDefault();
+        submit(term);
+      }}
+    >
+      <SearchSuggestions
+        value={term}
+        onChange={setTerm}
+        onSubmit={submit}
+        placeholder="بحث في المنصة..."
+        compact
+      />
+      <button type="button" onClick={() => submit(term)} aria-label="بحث" className="side-nav-drawer__search-btn">
+        <Search size={18} aria-hidden="true" />
+      </button>
+    </form>
+  );
+}
+
+export function SideNavDrawer({ open, onClose, mobileLayout = false }: Props) {
   const [pathname] = useLocation();
-  const { isAdmin, isLoggedIn } = useAuth();
+  const groups = mobileLayout ? MOBILE_DRAWER_GROUPS : NAV_GROUPS;
 
   if (!open || typeof document === "undefined") return null;
 
@@ -89,29 +140,35 @@ export function SideNavDrawer({ open, onClose }: Props) {
         onClick={(event) => event.stopPropagation()}
       >
         <div className="side-nav-drawer__head side-nav-drawer__head--v2">
-          <div className="side-nav-drawer__brand">
+          <Link href="/" onClick={close} className="side-nav-drawer__brand">
             <img src="/logo.png" alt="" width={36} height={36} />
             <strong>المجلس العلمي</strong>
-          </div>
+          </Link>
           <button type="button" onClick={close} aria-label="إغلاق" className="side-nav-close">
             <X size={22} aria-hidden="true" />
           </button>
         </div>
 
+        <div className="side-nav-drawer__search-wrap">
+          <DrawerSearch onSubmitDone={close} />
+        </div>
+
         <div className="side-nav-drawer__body">
-          {NAV_GROUPS.map((group) => (
+          {groups.map((group) => (
             <div key={group.id} className="side-nav-group side-nav-group--v2">
               <p className="side-nav-group__title">{group.title}</p>
-              <nav>
+              <nav aria-label={group.title}>
                 {group.links.map((link) => {
+                  const path = link.href.split("?")[0];
                   const active =
                     pathname === link.href ||
-                    pathname.startsWith(`${link.href}/`) ||
-                    pathname.startsWith(`${link.href}?`);
-                  const Icon = ICONS[link.href.split("?")[0]] || BookOpen;
+                    pathname === path ||
+                    pathname.startsWith(`${path}/`) ||
+                    pathname.startsWith(`${path}?`);
+                  const Icon = ICONS[path] || BookOpen;
                   return (
                     <Link
-                      key={link.href}
+                      key={`${group.id}-${link.label}-${link.href}`}
                       href={link.href}
                       onClick={close}
                       className={`side-nav-link side-nav-link--v2${active ? " is-active" : ""}`}
@@ -124,54 +181,6 @@ export function SideNavDrawer({ open, onClose }: Props) {
               </nav>
             </div>
           ))}
-
-          <div className="side-nav-group side-nav-group--v2">
-            <p className="side-nav-group__title">الحساب</p>
-            <nav>
-              {!isLoggedIn ? (
-                <>
-                  <Link href="/login" onClick={close} className="side-nav-link side-nav-link--v2">
-                    <Settings size={18} />
-                    <span>دخول</span>
-                  </Link>
-                  <Link href="/register" onClick={close} className="side-nav-link side-nav-link--v2">
-                    <UserPlus size={18} />
-                    <span>إنشاء حساب</span>
-                  </Link>
-                </>
-              ) : (
-                <Link
-                  href="/settings"
-                  onClick={close}
-                  className={`side-nav-link side-nav-link--v2${pathname.startsWith("/settings") ? " is-active" : ""}`}
-                >
-                  <Settings size={18} />
-                  <span>الإعدادات</span>
-                </Link>
-              )}
-            </nav>
-          </div>
-
-          <div className="side-nav-group side-nav-group--v2 side-nav-group--admin">
-            <p className="side-nav-group__title">الإدارة</p>
-            <nav>
-              {isAdmin ? (
-                <Link
-                  href="/admin"
-                  onClick={close}
-                  className={`side-nav-link side-nav-link--v2${pathname.startsWith("/admin") ? " is-active" : ""}`}
-                >
-                  <Settings size={18} />
-                  <span>لوحة التحكم</span>
-                </Link>
-              ) : (
-                <Link href="/login?next=/admin" onClick={close} className="side-nav-link side-nav-link--v2">
-                  <Settings size={18} />
-                  <span>دخول المسؤول</span>
-                </Link>
-              )}
-            </nav>
-          </div>
         </div>
       </aside>
     </div>

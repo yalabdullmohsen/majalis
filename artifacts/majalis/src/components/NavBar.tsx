@@ -2,11 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "wouter";
+import { Menu } from "lucide-react";
 import { useAuth } from "./AuthProvider";
 import NotificationBell from "./NotificationBell";
 import { SearchSuggestions } from "./SearchSuggestions";
 import { SideNavDrawer } from "./SideNavDrawer";
-import { MobileMoreMenu } from "./MobileMoreMenu";
+import { MobileAuthMenu } from "./MobileAuthMenu";
 import { PRIMARY_NAV } from "@/lib/navigation";
 import { C } from "@/lib/theme";
 import { useMobileNavState } from "@/hooks/useMobileNavState";
@@ -61,7 +62,8 @@ export default function NavBar() {
   const { isAdmin, isLoggedIn, user, logout } = useAuth();
   const [location, navigate] = useLocation();
   const isMobile = useIsMobile();
-  const { isMenuOpen, moreOpen, toggleMenu, closeMenu, closeMore, toggleMore, closeAll } = useMobileNavState();
+  const { isMenuOpen, accountOpen, toggleMenu, closeMenu, toggleAccount, closeAccount, closeAll } =
+    useMobileNavState();
 
   const isActive = (href: string) => {
     const path = href.split("?")[0];
@@ -77,7 +79,7 @@ export default function NavBar() {
   const authLinks = isLoggedIn ? (
     <div className="navbar-auth">
       {isAdmin && <NotificationBell />}
-      <span>{user?.profile?.full_name || user?.email || "حسابي"}</span>
+      <span>{user?.profile?.full_name || user?.profile?.name || user?.email || "حسابي"}</span>
       {isAdmin && (
         <Link href="/admin" className="navbar-admin-link">
           لوحة التحكم
@@ -98,107 +100,105 @@ export default function NavBar() {
     </div>
   );
 
+  const overlayOpen = isMenuOpen || accountOpen;
+
   return (
     <>
       <header
-        className={`navbar-v3 sticky top-0 border-b${isMenuOpen || moreOpen ? " navbar-v3--menu-open" : ""}`}
+        className={`navbar-v3 sticky top-0 border-b${overlayOpen ? " navbar-v3--menu-open" : ""}${isMobile ? " navbar-v3--mobile" : ""}`}
         style={{ background: C.parchment, borderColor: C.line }}
       >
-        <div className="navbar-v3__inner">
-          <div className="navbar-v3__start">
-            <button
-              type="button"
-              className="navbar-menu-btn navbar-menu-btn--drawer"
-              onClick={toggleMenu}
-              aria-expanded={isMenuOpen}
-              aria-controls="main-navigation-drawer"
-              aria-label={isMenuOpen ? "إغلاق القائمة" : "فتح القائمة"}
-            >
-              {isMenuOpen ? "إغلاق" : "القائمة"}
-            </button>
-            <Link href="/" className="navbar-brand">
-              <img
-                src="/logo.png"
-                alt=""
-                className="navbar-logo"
-                width={40}
-                height={40}
-                loading="eager"
-                decoding="async"
-              />
-              <span className="site-brand-name">المجلس العلمي</span>
-            </Link>
-          </div>
-
-          {!isMobile && (
-            <nav className="navbar-v3__tabs" aria-label="التنقل الرئيسي">
-              {PRIMARY_NAV.map((t) => (
-                <Link key={t.href} href={t.href} className={tabClass(isActive(t.href))}>
-                  {t.label}
-                </Link>
-              ))}
-              {isAdmin && (
-                <Link href="/admin" className={`${tabClass(location.startsWith("/admin"))} navbar-v3__tab--admin`}>
-                  لوحة التحكم
-                </Link>
-              )}
-            </nav>
-          )}
-
-          <div className="navbar-v3__end">
-            {!isMobile && <SearchBox />}
-            {!isMobile && authLinks}
-            {isMobile && (
-              <>
-                {!isLoggedIn && (
-                  <Link href="/register" className="navbar-register navbar-register--mobile" aria-label="إنشاء حساب">
-                    حساب
-                  </Link>
-                )}
-                {!isLoggedIn ? (
-                  <Link href="/login" className="navbar-login navbar-login--mobile" aria-label="تسجيل الدخول">
-                    دخول
-                  </Link>
-                ) : isAdmin ? (
-                  <Link href="/admin" className="navbar-login navbar-login--mobile" aria-label="لوحة التحكم">
-                    لوحة
-                  </Link>
-                ) : (
-                  <Link href="/settings" className="navbar-login navbar-login--mobile" aria-label="حسابي">
-                    حسابي
-                  </Link>
-                )}
+        <div className={`navbar-v3__inner${isMobile ? " navbar-v3__inner--mobile" : ""}`}>
+          {isMobile ? (
+            <>
+              <div className="navbar-v3__start">
                 <button
                   type="button"
-                  className="navbar-menu-btn navbar-menu-btn--more"
-                  onClick={toggleMore}
-                  aria-expanded={moreOpen}
-                  aria-controls="navbar-mobile-more-panel"
-                  aria-haspopup="true"
+                  className="navbar-menu-btn navbar-menu-btn--drawer"
+                  onClick={toggleMenu}
+                  aria-expanded={isMenuOpen}
+                  aria-controls="main-navigation-drawer"
+                  aria-label={isMenuOpen ? "إغلاق القائمة" : "فتح القائمة"}
                 >
-                  {moreOpen ? "إغلاق" : "المزيد"}
+                  <Menu size={20} aria-hidden="true" />
+                  <span>{isMenuOpen ? "إغلاق" : "القائمة"}</span>
                 </button>
-              </>
-            )}
-          </div>
+              </div>
+
+              <div className="navbar-v3__center">
+                <Link href="/" className="navbar-brand navbar-brand--center" aria-label="العودة للرئيسية">
+                  <img
+                    src="/logo.png"
+                    alt=""
+                    className="navbar-logo"
+                    width={40}
+                    height={40}
+                    loading="eager"
+                    decoding="async"
+                  />
+                </Link>
+              </div>
+
+              <div className="navbar-v3__end">
+                <MobileAuthMenu
+                  open={accountOpen}
+                  onClose={closeAccount}
+                  onToggle={toggleAccount}
+                  onLogout={handleLogout}
+                  isActive={isActive}
+                />
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="navbar-v3__start">
+                <button
+                  type="button"
+                  className="navbar-menu-btn navbar-menu-btn--drawer"
+                  onClick={toggleMenu}
+                  aria-expanded={isMenuOpen}
+                  aria-controls="main-navigation-drawer"
+                  aria-label={isMenuOpen ? "إغلاق القائمة" : "فتح القائمة"}
+                >
+                  {isMenuOpen ? "إغلاق" : "القائمة"}
+                </button>
+                <Link href="/" className="navbar-brand">
+                  <img
+                    src="/logo.png"
+                    alt=""
+                    className="navbar-logo"
+                    width={40}
+                    height={40}
+                    loading="eager"
+                    decoding="async"
+                  />
+                  <span className="site-brand-name">المجلس العلمي</span>
+                </Link>
+              </div>
+
+              <nav className="navbar-v3__tabs" aria-label="التنقل الرئيسي">
+                {PRIMARY_NAV.map((t) => (
+                  <Link key={t.href} href={t.href} className={tabClass(isActive(t.href))}>
+                    {t.label}
+                  </Link>
+                ))}
+                {isAdmin && (
+                  <Link href="/admin" className={`${tabClass(location.startsWith("/admin"))} navbar-v3__tab--admin`}>
+                    لوحة التحكم
+                  </Link>
+                )}
+              </nav>
+
+              <div className="navbar-v3__end">
+                <SearchBox />
+                {authLinks}
+              </div>
+            </>
+          )}
         </div>
       </header>
 
-      <SideNavDrawer open={isMenuOpen} onClose={closeMenu} />
-
-      {isMobile && (
-        <MobileMoreMenu
-          open={moreOpen}
-          onClose={closeMore}
-          isActive={isActive}
-          isAdmin={isAdmin}
-          isLoggedIn={isLoggedIn}
-          onLogout={handleLogout}
-          searchBox={<SearchBox onSubmitDone={closeMore} />}
-          tabClass={tabClass}
-          location={location}
-        />
-      )}
+      <SideNavDrawer open={isMenuOpen} onClose={closeMenu} mobileLayout={isMobile} />
     </>
   );
 }

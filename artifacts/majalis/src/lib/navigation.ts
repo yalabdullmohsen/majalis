@@ -94,32 +94,97 @@ export const PRIMARY_NAV = [
   { href: "/about", label: "عن المنصة" },
 ];
 
-/** Mobile "المزيد" dropdown — full site navigation */
-export const MOBILE_MORE_NAV = [
-  { href: "/about", label: "عن المنصة" },
-  { href: "/lessons", label: "الدروس" },
-  { href: "/sheikhs", label: "المشايخ" },
-  { href: "/annual-courses", label: "الدورات العلمية" },
-  { href: "/library", label: "المكتبة" },
-  { href: "/research", label: "الأبحاث العلمية" },
-  { href: "/qa", label: "الأسئلة" },
-  { href: "/question-answer", label: "سؤال وجواب" },
-  { href: "/quran", label: "القرآن" },
-  { href: "/adhkar", label: "الأذكار" },
-  { href: "/prayer-times", label: "الصلاة" },
-  { href: "/calendar", label: "التقويم العلمي" },
-  { href: "/quran-radio", label: "إذاعة القرآن" },
-  { href: "/quran-live", label: "البث المباشر" },
-  { href: "/quran/tajweed", label: "التجويد" },
-  { href: "/quran-scientific-circles", label: "الحلقات القرآنية والعلمية" },
-  { href: "/quran/surah-stories", label: "قصص القرآن" },
-  { href: "/scholar-search", label: "الباحث العلمي" },
-  { href: "/learning/paths", label: "شجرة طلب العلم" },
-  { href: "/tasbih", label: "عداد التسبيح" },
-  { href: "/prayer-ranks", label: "مراتب الصلاة" },
-  { href: "/settings", label: "الإعدادات" },
-  { href: "/contact", label: "تواصل معنا" },
+/** Mobile drawer — primary site navigation (replaces legacy MOBILE_MORE_NAV) */
+export const MOBILE_DRAWER_GROUPS: NavGroup[] = [
+  {
+    id: "home",
+    title: "التصفح",
+    links: [{ href: "/", label: "الرئيسية" }],
+  },
+  {
+    id: "content",
+    title: "المحتوى",
+    links: [
+      { href: "/quran", label: "القرآن" },
+      { href: "/quran/mushaf", label: "المصحف" },
+      { href: "/quran/tafsir", label: "التفسير" },
+      { href: "/lessons", label: "الدروس" },
+      { href: "/sheikhs", label: "المشايخ" },
+      { href: "/library", label: "المكتبة" },
+      { href: "/library", label: "الكتب" },
+      { href: "/updates", label: "المقالات" },
+      { href: "/research", label: "الأبحاث" },
+      { href: "/fatwa", label: "الفتاوى" },
+      { href: "/question-answer", label: "سؤال وجواب" },
+      { href: "/qa", label: "الأسئلة الشرعية" },
+      { href: "/scholar-search", label: "الباحث العلمي" },
+      { href: "/quran/tajweed", label: "علم التجويد" },
+      { href: "/quran/surah-stories", label: "قصص القرآن" },
+      { href: "/fiqh-council", label: "المجمع الفقهي" },
+      { href: "/rulings", label: "الأحكام الشرعية" },
+      { href: "/fawaid", label: "الفوائد" },
+      { href: "/quran/search", label: "البحث في القرآن" },
+    ],
+  },
+  {
+    id: "learning",
+    title: "التعلم",
+    links: [
+      { href: "/quran-scientific-circles", label: "الحلقات" },
+      { href: "/annual-courses", label: "الدورات" },
+      { href: "/learning/paths", label: "المسارات" },
+      { href: "/quiz", label: "الاختبارات" },
+      { href: "/learning/quiz", label: "اختبارات المسارات" },
+    ],
+  },
+  {
+    id: "services",
+    title: "الخدمات",
+    links: [
+      { href: "/calendar", label: "التقويم" },
+      { href: "/quran-radio", label: "إذاعة المجلس العلمي" },
+      { href: "/quran-live", label: "البث المباشر" },
+      { href: "/my-updates", label: "الإشعارات" },
+      { href: "/contact", label: "التواصل" },
+      { href: "/contribute", label: "الاقتراحات" },
+      { href: "/adhkar", label: "الأذكار" },
+      { href: "/prayer-times", label: "مواقيت الصلاة" },
+      { href: "/prayer-ranks", label: "مراتب الصلاة" },
+      { href: "/qibla", label: "القبلة" },
+      { href: "/occasions", label: "المناسبات" },
+      { href: "/daily-wird", label: "الورد اليومي" },
+      { href: "/tasbih", label: "عداد التسبيح" },
+      { href: "/arbaeen-nawawi", label: "الأربعون النووية" },
+    ],
+  },
+  {
+    id: "platform",
+    title: "المنصة",
+    links: [
+      { href: "/about", label: "عن المنصة" },
+      { href: "/privacy", label: "سياسة الخصوصية" },
+      { href: "/terms", label: "الشروط" },
+      { href: "/contact", label: "تواصل معنا" },
+    ],
+  },
 ];
+
+export type AccountMenuLink = NavLink & { adminOnly?: boolean };
+
+/** Mobile account menu — personal actions (logged-in users) */
+export const ACCOUNT_MENU_LINKS: AccountMenuLink[] = [
+  { href: "/my-profile", label: "الملف الشخصي" },
+  { href: "/my-library", label: "مكتبتي" },
+  { href: "/sheikhs", label: "متابعة المشايخ" },
+  { href: "/my-library", label: "المفضلة" },
+  { href: "/my-updates", label: "الإشعارات" },
+  { href: "/my-learning", label: "تقدمي" },
+  { href: "/settings", label: "إعداداتي" },
+  { href: "/admin", label: "لوحة التحكم", adminOnly: true },
+];
+
+/** @deprecated Replaced by MOBILE_DRAWER_GROUPS + ACCOUNT_MENU_LINKS */
+export const MOBILE_MORE_NAV = MOBILE_DRAWER_GROUPS.flatMap((g) => g.links);
 
 export const HOME_FEATURE_CARDS = [
   {

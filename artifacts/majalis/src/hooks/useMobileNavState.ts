@@ -10,31 +10,31 @@ import {
 export function useMobileNavState() {
   const [location] = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [moreOpen, setMoreOpen] = useState(false);
+  const [accountOpen, setAccountOpen] = useState(false);
   const prevLocation = useRef(location);
 
   const closeMenu = useCallback(() => setIsMenuOpen(false), []);
-  const closeMore = useCallback(() => setMoreOpen(false), []);
+  const closeAccount = useCallback(() => setAccountOpen(false), []);
 
   const closeAll = useCallback(() => {
     setIsMenuOpen(false);
-    setMoreOpen(false);
+    setAccountOpen(false);
     releaseMobileNavBodyLock();
   }, []);
 
   const toggleMenu = useCallback(() => {
-    setMoreOpen(false);
+    setAccountOpen(false);
     setIsMenuOpen((open) => !open);
   }, []);
 
   const openMenu = useCallback(() => {
-    setMoreOpen(false);
+    setAccountOpen(false);
     setIsMenuOpen(true);
   }, []);
 
-  const toggleMore = useCallback(() => {
+  const toggleAccount = useCallback(() => {
     setIsMenuOpen(false);
-    setMoreOpen((open) => !open);
+    setAccountOpen((open) => !open);
   }, []);
 
   useEffect(() => {
@@ -43,10 +43,10 @@ export function useMobileNavState() {
   }, []);
 
   useEffect(() => {
-    if (!isMenuOpen && !moreOpen) {
+    if (!isMenuOpen && !accountOpen) {
       purgeStaleMobileNavLayers();
     }
-  }, [isMenuOpen, moreOpen]);
+  }, [isMenuOpen, accountOpen]);
 
   useEffect(() => {
     if (prevLocation.current === location) return;
@@ -78,27 +78,27 @@ export function useMobileNavState() {
   }, [closeAll]);
 
   useEffect(() => {
-    if (!isMenuOpen && !moreOpen) {
+    if (!isMenuOpen && !accountOpen) {
       releaseMobileNavBodyLock();
       return;
     }
     applyMobileNavBodyLock();
     return () => releaseMobileNavBodyLock();
-  }, [isMenuOpen, moreOpen]);
+  }, [isMenuOpen, accountOpen]);
 
   return {
     isMenuOpen,
     setIsMenuOpen,
     drawerOpen: isMenuOpen,
-    moreOpen,
+    accountOpen,
     toggleMenu,
     openMenu,
     closeMenu,
     openDrawer: openMenu,
     closeDrawer: closeMenu,
-    closeMore,
-    toggleMore,
+    toggleAccount,
+    closeAccount,
     closeAll,
-    setMoreOpen,
+    setAccountOpen,
   };
 }

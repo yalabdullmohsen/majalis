@@ -133,7 +133,7 @@
       "id": "mobile-nav",
       "name": "القائمة على الجوال",
       "routes": ["/"],
-      "codeMarkers": ["SideNavDrawer", "MobileMoreMenu"],
+      "codeMarkers": ["SideNavDrawer", "MobileAuthMenu"],
       "productionMarkers": ["navbar-menu-btn--drawer", "main-navigation-drawer"],
       "requiredSecrets": [],
       "requiredTables": [],

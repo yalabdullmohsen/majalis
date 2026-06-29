@@ -39,7 +39,7 @@ ok(appRoutes.includes('path="/research"'), "AppRoutes route /research");
 ok(app.includes("ScientificResearchPage"), "ScientificResearchPage import");
 ok(nav.includes("الأبحاث العلمية"), "nav label");
 ok(nav.includes('href: "/research"'), "nav PRIMARY_NAV /research");
-ok(nav.includes('MOBILE_MORE_NAV') && nav.includes('href: "/research"'), "mobile nav /research");
+ok(nav.includes('MOBILE_DRAWER_GROUPS') && nav.includes('href: "/research"'), "mobile drawer /research");
 ok(footer.includes('href: "/research"'), "footer /research link");
 ok(adminShell.includes("scientific-research"), "admin scientific-research section");
 ok(searchSuggestions.includes("RESEARCH_SEED_PAPERS") || searchSuggestions.includes('"research"'), "search suggestions research group");
