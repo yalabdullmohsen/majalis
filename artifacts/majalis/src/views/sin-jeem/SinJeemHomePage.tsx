@@ -6,6 +6,7 @@ import type { GameStats, LeaderboardEntry } from "@/lib/sin-jeem/types";
 import { QA_ROUTES } from "@/lib/question-answer/routes";
 import { GameHero, GameLayout } from "./components/GameLayout";
 import { DbActivationBanner } from "./components/DbActivationBanner";
+import { ContactChatReportButton } from "@/components/ContactChatReportButton";
 
 export default function SinJeemHomePage() {
   const [, setLocation] = useLocation();
@@ -107,6 +108,8 @@ export default function SinJeemHomePage() {
 
       <p style={{ textAlign: "center", marginTop: "2rem", fontSize: "0.75rem", color: "var(--majalis-ink-soft)" }}>
         {GAME_TITLE} — جزء من منصة مجالس العلم
+        {" · "}
+        <ContactChatReportButton label="ملاحظة على سؤال وجواب" messageType="بلاغ خطأ" className="contact-chat-report-btn contact-chat-report-btn--inline" />
       </p>
     </GameLayout>
   );

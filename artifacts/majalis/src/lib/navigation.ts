@@ -70,6 +70,16 @@ export const NAV_GROUPS: NavGroup[] = [
     ],
   },
   {
+    id: "platform",
+    title: "المنصة",
+    links: [
+      { href: "/about", label: "عن المنصة" },
+      { href: "/contact-chat", label: "تواصل" },
+      { href: "/contact", label: "تواصل (نموذج)" },
+      { href: "/settings", label: "الإعدادات" },
+    ],
+  },
+  {
     id: "tools",
     title: "الأدوات",
     links: [
@@ -77,7 +87,6 @@ export const NAV_GROUPS: NavGroup[] = [
       { href: "/prayer-ranks", label: "مراتب الناس في الصلاة" },
       { href: "/qibla", label: "القبلة" },
       { href: "/occasions", label: "المناسبات الإسلامية" },
-      { href: "/settings", label: "الإعدادات" },
     ],
   },
 ];
@@ -92,6 +101,7 @@ export const PRIMARY_NAV = [
   { href: "/research", label: "الأبحاث العلمية" },
   { href: "/annual-courses", label: "الدورات" },
   { href: "/about", label: "عن المنصة" },
+  { href: "/contact-chat", label: "تواصل" },
 ];
 
 /** Mobile "المزيد" dropdown — full site navigation */
@@ -118,7 +128,8 @@ export const MOBILE_MORE_NAV = [
   { href: "/tasbih", label: "عداد التسبيح" },
   { href: "/prayer-ranks", label: "مراتب الصلاة" },
   { href: "/settings", label: "الإعدادات" },
-  { href: "/contact", label: "تواصل معنا" },
+  { href: "/contact-chat", label: "تواصل" },
+  { href: "/contact", label: "تواصل (نموذج)" },
 ];
 
 export const HOME_FEATURE_CARDS = [

@@ -7,6 +7,7 @@ import AboutPage from "@/views/AboutPage";
 import PrivacyPage from "@/views/PrivacyPage";
 import TermsPage from "@/views/TermsPage";
 import ContactPage from "@/views/ContactPage";
+import ContactChatPage from "@/views/ContactChatPage";
 import NotFound from "@/views/not-found";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { usePageSeo } from "@/lib/seo";
@@ -123,6 +124,7 @@ export default function AppRoutes() {
         <Route path="/privacy" component={PrivacyPage} />
         <Route path="/terms" component={TermsPage} />
         <Route path="/contact" component={ContactPage} />
+        <Route path="/contact-chat" component={ContactChatPage} />
         <Route path="/settings"><SafeLazyRoute component={SettingsPage} /></Route>
         <Route path="/search/:q"><SafeLazyRoute component={SearchPage} /></Route>
         <Route path="/search"><SafeLazyRoute component={SearchPage} /></Route>

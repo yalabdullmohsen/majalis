@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { getLessonById, getSheikhs } from "@/lib/supabase";
 import { Loading, Empty } from "@/components/ui-common";
 import ContentActions from "@/components/ContentActions";
+import { ContactChatReportButton } from "@/components/ContactChatReportButton";
 import { isDemoId } from "@/lib/demo-content";
 import { extractLessonSchedule, hasValue } from "@/lib/lesson-display";
 import { resolveLessonSheikhImage } from "@/lib/sheikh-image";
@@ -395,6 +396,7 @@ export default function LessonDetailPage({
           {!isDemoId(unified.id) && !unified.id.startsWith("kw-") && (
             <ContentActions contentType="lesson" contentId={unified.id} />
           )}
+          <ContactChatReportButton contentId={unified.id} contentTitle={unified.title} label="ملاحظة على الدرس" messageType="تصحيح معلومة" />
         </div>
 
         {unified.qrCodeUrl && (

@@ -15,7 +15,7 @@ import {
   DEGREE_LABELS,
   COPYRIGHT_LABELS,
 } from "@/lib/scientific-research/constants";
-import "@/styles/scientific-research.css";
+import { ContactChatReportButton } from "@/components/ContactChatReportButton";
 
 export default function ScientificResearchDetailPage() {
   const [, params] = useRoute(`${RESEARCH_BASE_PATH}/:slug`);
@@ -124,6 +124,7 @@ export default function ScientificResearchDetailPage() {
             <button type="button" className="page-action-btn" onClick={copyLink}>
               {copied ? "✓ تم النسخ" : "نسخ الرابط"}
             </button>
+            <ContactChatReportButton contentId={paper.id} contentTitle={paper.title} label="ملاحظة على البحث" messageType="تصحيح معلومة" className="page-action-btn" />
             <button
               type="button"
               className="page-action-btn"

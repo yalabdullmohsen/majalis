@@ -174,6 +174,7 @@ export default function QuranScientificCircleDetailPage() {
       tags={item.keywords}
       body={item.description}
       copyText={copyText}
+      reportContentId={item.id}
     >
       <RegistrationBanner circle={item} />
 

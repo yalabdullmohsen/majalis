@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "wouter";
 import { useAuth } from "./AuthProvider";
 import NotificationBell from "./NotificationBell";
+import { ContactChatUnreadBadge } from "./ContactChatUnreadBadge";
 import { SearchSuggestions } from "./SearchSuggestions";
 import { SideNavDrawer } from "./SideNavDrawer";
 import { MobileMoreMenu } from "./MobileMoreMenu";
@@ -77,6 +78,7 @@ export default function NavBar() {
   const authLinks = isLoggedIn ? (
     <div className="navbar-auth">
       {isAdmin && <NotificationBell />}
+      <ContactChatUnreadBadge />
       <span>{user?.profile?.full_name || user?.email || "حسابي"}</span>
       {isAdmin && (
         <Link href="/admin" className="navbar-admin-link">

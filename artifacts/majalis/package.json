@@ -74,6 +74,7 @@
     "verify:question-answer:db": "node scripts/verify-question-answer-db.mjs",
     "verify:sin-jeem": "node scripts/verify-question-answer.mjs",
     "verify:question-answer": "node scripts/verify-question-answer.mjs",
+    "verify:contact-chat": "node scripts/verify-contact-chat.mjs",
     "verify:sin-jeem:production": "node scripts/verify-question-answer-production.mjs",
     "verify:question-answer:production": "node scripts/verify-question-answer-production.mjs",
     "test:question-generation": "node scripts/test-question-generation.mjs",

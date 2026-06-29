@@ -254,6 +254,38 @@ export default async function handler(req, res) {
       return;
     }
 
+    if (scope === "contact-messages" || scope === "contact-v1") {
+      const result = await applyMigrations({
+        files: ["contact_messages_v1.sql"],
+        continueOnError: false,
+        trackApplied: true,
+        force: req.query?.force === "1",
+      });
+      sendJson(res, result.ok ? 200 : 500, {
+        ok: result.ok,
+        scope: "contact-messages",
+        migrations: result,
+        resolved: resolvedMeta(),
+      });
+      return;
+    }
+
+    if (scope === "contact-chat" || scope === "contact-chat-v1") {
+      const result = await applyMigrations({
+        files: ["contact_chat_v1.sql"],
+        continueOnError: false,
+        trackApplied: true,
+        force: req.query?.force === "1",
+      });
+      sendJson(res, result.ok ? 200 : 500, {
+        ok: result.ok,
+        scope: "contact-chat",
+        migrations: result,
+        resolved: resolvedMeta(),
+      });
+      return;
+    }
+
     if (scope === "sin-jeem" || scope === "question-answer") {
       const { applySinJeemMigration } = await import("../../../lib/sin-jeem-migration.mjs");
       const { runSinJeemSeed } = await import("../../../lib/sin-jeem-seed.mjs");

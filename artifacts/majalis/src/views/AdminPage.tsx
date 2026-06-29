@@ -35,6 +35,7 @@ import { SmartCmsSection } from "@/views/admin/SmartCmsSection";
 import { SinJeemSection } from "@/views/admin/SinJeemSection";
 import { ScientificResearchSection } from "@/views/admin/ScientificResearchSection";
 import { ContactMessagesSection } from "@/views/admin/ContactMessagesSection";
+import { ContactChatSection } from "@/views/admin/ContactChatSection";
 import {
   adminSectionPath,
   resolveAdminSectionFromPath,
@@ -153,6 +154,8 @@ function SectionContent({ section }: { section: AdminSection }) {
       return <UpdatesSection />;
     case "contact-messages":
       return <ContactMessagesSection />;
+    case "contact-chat":
+      return <ContactChatSection />;
     default:
       return <DashboardSection />;
   }

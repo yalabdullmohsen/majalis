@@ -70,6 +70,7 @@ export const API_ROUTES = [
   { prefix: "/api/sin-jeem", module: "./api-handlers/sin-jeem.js", allowGet: true },
   { prefix: "/api/question-answer", module: "./api-handlers/question-answer.js", allowGet: true },
   { prefix: "/api/contact", module: "./api-handlers/contact.js", allowGet: true },
+  { prefix: "/api/contact-chat", module: "./api-handlers/contact-chat.js", allowGet: true },
   { prefix: "/api/scientific-research", module: "./api-handlers/scientific-research.js", allowGet: true },
   { prefix: "/api/auto-content", module: "./api-handlers/auto-content.js", allowGet: true },
   { prefix: "/api/knowledge-recommendations", module: "./api-handlers/knowledge-recommendations.js", allowGet: true },

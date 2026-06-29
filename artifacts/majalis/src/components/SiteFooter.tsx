@@ -28,7 +28,8 @@ const FOOTER_GROUPS = [
     title: "المنصة",
     links: [
       { href: "/about", label: "من نحن" },
-      { href: "/contact", label: "تواصل معنا" },
+      { href: "/contact-chat", label: "تواصل" },
+      { href: "/contact", label: "نموذج التواصل" },
       { href: "/topics", label: "الموضوعات العلمية" },
       { href: "/scholar-search", label: "الباحث العلمي" },
       { href: "/privacy", label: "الخصوصية" },

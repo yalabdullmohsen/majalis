@@ -105,7 +105,8 @@ export default function AboutPage() {
           <Link href="/quran-scientific-circles">الحلقات القرآنية</Link>
           <Link href="/question-answer">سؤال وجواب</Link>
           <Link href="/scholar-search">الباحث العلمي</Link>
-          <Link href="/contact">تواصل معنا</Link>
+          <Link href="/contact-chat">تواصل</Link>
+          <Link href="/contact">نموذج التواصل</Link>
         </nav>
       </Card>
 

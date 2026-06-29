@@ -1,7 +1,17 @@
 import { Link } from "wouter";
 import { C } from "@/lib/theme";
+import { buildContactChatUrl, savePageContext } from "@/lib/contact-chat";
 
 export default function NotFound() {
+  const reportMissing = () => {
+    savePageContext({
+      pageUrl: typeof window !== "undefined" ? window.location.href : "",
+      pageType: "404",
+      contentTitle: "صفحة غير موجودة",
+    });
+    window.location.href = buildContactChatUrl({ type: "مشكلة تقنية" });
+  };
+
   return (
     <div style={{ minHeight: "calc(100vh - 5rem)", display: "flex", alignItems: "center", justifyContent: "center", padding: "3rem 1rem" }}>
       <section style={{ width: "min(100%, 44rem)", textAlign: "center", border: `1px solid ${C.line}`, borderRadius: "1.5rem", background: C.panel, padding: "clamp(2rem, 6vw, 3.25rem)", boxShadow: "0 18px 54px rgba(36, 31, 24, 0.08)" }}>
@@ -19,9 +29,12 @@ export default function NotFound() {
           <Link href="/fiqh-council" style={{ borderRadius: "999px", border: `1px solid ${C.line}`, color: C.emeraldDeep, padding: "0.75rem 1.25rem", fontWeight: 800, background: C.parchment }}>
             المجمع الفقهي
           </Link>
-          <Link href="/fatwa" style={{ borderRadius: "999px", border: `1px solid ${C.line}`, color: C.emeraldDeep, padding: "0.75rem 1.25rem", fontWeight: 800, background: C.parchment }}>
-            الفتاوى
+          <Link href="/contact-chat" style={{ borderRadius: "999px", border: `1px solid ${C.line}`, color: C.emeraldDeep, padding: "0.75rem 1.25rem", fontWeight: 800, background: C.parchment }}>
+            تواصل
           </Link>
+          <button type="button" onClick={reportMissing} style={{ borderRadius: "999px", border: `1px solid ${C.line}`, color: C.emeraldDeep, padding: "0.75rem 1.25rem", fontWeight: 800, background: C.parchment, cursor: "pointer" }}>
+            إبلاغ عن المشكلة
+          </button>
         </div>
       </section>
     </div>

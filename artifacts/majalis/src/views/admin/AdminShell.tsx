@@ -38,7 +38,8 @@ export type AdminSection =
   | "smart-cms"
   | "question-answer"
   | "scientific-research"
-  | "contact-messages";
+  | "contact-messages"
+  | "contact-chat";
 
 export const ADMIN_NAV: { key: AdminSection; label: string }[] = [
   { key: "dashboard", label: "لوحة التحكم" },
@@ -74,6 +75,7 @@ export const ADMIN_NAV: { key: AdminSection; label: string }[] = [
   { key: "quran-scientific-circles", label: "الحلقات القرآنية والعلمية" },
   { key: "updates", label: "المستجدات" },
   { key: "contact-messages", label: "رسائل التواصل" },
+  { key: "contact-chat", label: "تواصل — الدردشة" },
   { key: "settings", label: "الإعدادات" },
 ];
 

@@ -1,5 +1,7 @@
 import { Component, type ErrorInfo, type ReactNode } from "react";
+import { Link } from "wouter";
 import { C } from "@/lib/theme";
+import { buildContactChatUrl, savePageContext } from "@/lib/contact-chat";
 import { buildErrorReport, copyErrorId, createErrorId, logClientError } from "@/lib/error-report";
 
 type Props = { children: ReactNode };
@@ -48,11 +50,16 @@ export class ErrorBoundary extends Component<Props, State> {
   };
 
   report = () => {
-    const detail = encodeURIComponent(
-      `Error ID: ${this.state.errorId}\nURL: ${typeof window !== "undefined" ? window.location.href : ""}\nMessage: ${this.state.error?.message || "unknown"}`,
-    );
-    window.open(`mailto:support@majlisilm.com?subject=MJL%20Error%20${this.state.errorId}&body=${detail}`, "_blank", "noopener,noreferrer");
-    this.setState({ copied: true });
+    savePageContext({
+      pageUrl: typeof window !== "undefined" ? window.location.href : "",
+      pageType: "error",
+      errorId: this.state.errorId,
+      contentTitle: this.state.error?.message || "خطأ",
+    });
+    window.location.href = buildContactChatUrl({
+      type: "بلاغ خطأ",
+      context: { errorId: this.state.errorId },
+    });
   };
 
   render() {
@@ -96,7 +103,7 @@ export class ErrorBoundary extends Component<Props, State> {
               {this.state.copied ? "تم النسخ" : "نسخ رقم الخطأ"}
             </button>
             <button type="button" onClick={this.report} className="error-boundary-btn error-boundary-btn--ghost">
-              الإبلاغ عن الخطأ
+              إبلاغ عن المشكلة
             </button>
           </div>
 

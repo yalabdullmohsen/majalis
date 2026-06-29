@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { Link } from "wouter";
 import { Breadcrumbs } from "./Breadcrumbs";
+import { ContactChatReportButton } from "@/components/ContactChatReportButton";
 
 type Props = {
   breadcrumbs: { label: string; href?: string }[];
@@ -14,6 +15,8 @@ type Props = {
   sourceUrls?: string[];
   copyText?: string;
   shareUrl?: string;
+  reportContentId?: string;
+  showReport?: boolean;
 };
 
 function ShareCopyBar({ copyText, shareUrl, title }: { copyText?: string; shareUrl?: string; title: string }) {
@@ -39,10 +42,8 @@ function ShareCopyBar({ copyText, shareUrl, title }: { copyText?: string; shareU
     if (url) await navigator.clipboard.writeText(url);
   };
 
-  if (!copyText && !shareUrl) return null;
-
   return (
-    <div className="content-detail-actions">
+    <>
       {copyText && (
         <button type="button" onClick={handleCopy} className="content-detail-action-btn">
           نسخ
@@ -51,7 +52,7 @@ function ShareCopyBar({ copyText, shareUrl, title }: { copyText?: string; shareU
       <button type="button" onClick={handleShare} className="content-detail-action-btn">
         مشاركة
       </button>
-    </div>
+    </>
   );
 }
 
@@ -67,6 +68,8 @@ export function ContentDetailLayout({
   sourceUrls,
   copyText,
   shareUrl,
+  reportContentId,
+  showReport = true,
 }: Props) {
   return (
     <div className="page-shell narrow content-detail-page">
@@ -83,8 +86,15 @@ export function ContentDetailLayout({
             ))}
           </div>
         )}
-        {copyText && (
-          <ShareCopyBar copyText={copyText} shareUrl={shareUrl} title={title} />
+        {(copyText || shareUrl || showReport) && (
+          <div className="content-detail-actions">
+            {(copyText || shareUrl) && (
+              <ShareCopyBar copyText={copyText} shareUrl={shareUrl} title={title} />
+            )}
+            {showReport && (
+              <ContactChatReportButton contentId={reportContentId} contentTitle={title} />
+            )}
+          </div>
         )}
       </header>
 

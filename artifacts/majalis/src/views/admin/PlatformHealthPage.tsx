@@ -135,6 +135,11 @@ function PlatformHealthContent() {
             </div>
           )}
           {health.ok && <p style={{ margin: 0, color: C.emeraldDeep, fontWeight: 600 }}>✓ Production Readiness = 100%</p>}
+          <p style={{ margin: "0.75rem 0 0", fontSize: "0.875rem" }}>
+            <Link href="/admin/contact-chat" style={{ color: C.emeraldDeep, fontWeight: 600 }}>تواصل — إدارة الدردشة الداخلية</Link>
+            {" · "}
+            <Link href="/contact-chat" style={{ color: C.emeraldDeep }}>واجهة المستخدم</Link>
+          </p>
         </div>
       </div>
 
