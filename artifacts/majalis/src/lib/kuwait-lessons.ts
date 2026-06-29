@@ -11,7 +11,10 @@ import {
   formatGregorianDate,
   formatHijriDate,
   formatRelativeTime,
+  formatLessonTimeDisplay,
   isOccurrencePast,
+  parseTimeToMinutes,
+  resolvePrayerRank,
 } from "@/lib/lesson-time";
 
 export type ActivityType = "درس" | "دورة";
@@ -51,6 +54,8 @@ export type KuwaitLessonRecord = {
   isCourse?: boolean;
   source?: "supabase" | "seed";
   archivedAt?: string | null;
+  prayerRank?: string;
+  timeDisplay?: string;
 };
 
 export type KuwaitLessonFilters = {
@@ -132,6 +137,8 @@ function enrichScheduleFields(
   return {
     ...lesson,
     time: cleanTimeText(lesson.time),
+    timeDisplay: formatLessonTimeDisplay(lesson.time),
+    prayerRank: lesson.prayerRank,
     sheikhName: formatSheikhName(lesson.sheikhName.replace(/^الشيخ:\s*/u, "")) || lesson.sheikhName,
     sortKey: lesson.sortKey ?? nextMs,
     nextOccurrenceMs: nextMs,
@@ -157,6 +164,8 @@ export function mapLessonRow(row: any): KuwaitLessonRecord {
     /بث|مباشر|live/i.test(delivery);
 
   const id = String(row.external_key || row.id || "");
+  const rawTime = row.lesson_time || row.schedule || "";
+  const prayerRank = resolvePrayerRank(row);
 
   return enrichScheduleFields({
     id,
@@ -168,7 +177,8 @@ export function mapLessonRow(row: any): KuwaitLessonRecord {
     region,
     mosque: row.mosque || "",
     day,
-    time: row.lesson_time || row.schedule || "",
+    time: rawTime,
+    prayerRank,
     category: row.category || "أخرى",
     note: row.description || undefined,
     description: row.description || undefined,
@@ -247,23 +257,13 @@ export function sortKuwaitLessons(lessons: KuwaitLessonRecord[]): KuwaitLessonRe
 
 function matchesTimeSlot(time: string, slot: string): boolean {
   if (slot === "الكل") return true;
-  const minutes = parseTimeToMinutesSafe(time);
+  const minutes = parseTimeToMinutes(time);
   if (minutes == null) return true;
   if (slot === "صباحاً") return minutes < 12 * 60;
   if (slot === "ظهراً") return minutes >= 12 * 60 && minutes < 15 * 60;
   if (slot === "عصراً") return minutes >= 15 * 60 && minutes < 18 * 60;
   if (slot === "مساءً") return minutes >= 18 * 60;
   return true;
-}
-
-function parseTimeToMinutesSafe(time: string): number | null {
-  const match = time.match(/(\d{1,2})/);
-  if (/صباح|فجر|الصباح|ص\b/u.test(time)) return 8 * 60;
-  if (/ظهر/u.test(time)) return 12 * 60;
-  if (/عصر/u.test(time)) return 16 * 60;
-  if (/مغرب|مساء|العشاء|م\b/u.test(time)) return 19 * 60;
-  if (match) return Number(match[1]) * 60;
-  return null;
 }
 
 export function filterKuwaitLessons(

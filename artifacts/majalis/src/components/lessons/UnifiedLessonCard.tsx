@@ -145,7 +145,8 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
           <MetaCell label="اليوم" value={lesson.day} />
           {!compact && <MetaCell label="التاريخ" value={lesson.gregorianDate} />}
           {!compact && <MetaCell label="التاريخ الهجري" value={lesson.hijriDate} />}
-          <MetaCell label="الوقت" value={lesson.time} />
+          <MetaCell label="الوقت" value={lesson.timeDisplay || lesson.time} />
+          {lesson.prayerRank && <MetaCell label="مرتبة الصلاة" value={lesson.prayerRank} />}
           <MetaCell label="المكان" value={lesson.mosque} />
           <MetaCell label="المنطقة" value={lesson.region} />
           {!compact && <MetaCell label="المحافظة" value={lesson.governorate} />}

@@ -8,6 +8,8 @@ import {
   formatGregorianDate,
   formatHijriDate,
   formatRelativeTime,
+  formatLessonTimeDisplay,
+  resolvePrayerRank,
 } from "./lesson-time";
 import type { ActivityType, KuwaitLessonRecord } from "./kuwait-lessons";
 import { getRelativeStatusLabel } from "./kuwait-lessons";
@@ -43,6 +45,8 @@ export type UnifiedLesson = {
   siteUrl?: string;
   qrCodeUrl?: string;
   keywords?: string[];
+  prayerRank?: string;
+  timeDisplay?: string;
 };
 
 export function fromKuwaitLesson(lesson: KuwaitLessonRecord, archived = false): UnifiedLesson {
@@ -55,6 +59,8 @@ export function fromKuwaitLesson(lesson: KuwaitLessonRecord, archived = false): 
     category: cleanDisplayText(lesson.category) || "أخرى",
     day: cleanDisplayText(lesson.day),
     time: cleanTimeText(cleanDisplayText(lesson.time)),
+    timeDisplay: lesson.timeDisplay || formatLessonTimeDisplay(lesson.time),
+    prayerRank: lesson.prayerRank,
     mosque: cleanDisplayText(lesson.mosque),
     region: cleanDisplayText(lesson.region),
     governorate: cleanDisplayText(lesson.governorate),
@@ -109,11 +115,14 @@ export function fromDbLesson(lesson: {
   session_count?: number;
   linked_titles?: string[];
   external_key?: string;
+  prayer_rank?: string;
+  prayer_rank_override?: string;
 }): UnifiedLesson {
   const sheikhName = lesson.sheikhs?.name || lesson.speaker_name || "";
   const { day, time } = extractLessonSchedule(lesson);
   const nextMs = computeNextOccurrenceMs(day, time);
   const nextDate = new Date(nextMs);
+  const prayerRank = resolvePrayerRank(lesson);
 
   return {
     id: lesson.id,
@@ -122,6 +131,8 @@ export function fromDbLesson(lesson: {
     category: cleanDisplayText(lesson.category) || "أخرى",
     day: cleanDisplayText(day),
     time: cleanTimeText(cleanDisplayText(time)),
+    timeDisplay: formatLessonTimeDisplay(time),
+    prayerRank,
     mosque: cleanDisplayText(lesson.mosque),
     region: cleanDisplayText(lesson.region),
     governorate: cleanDisplayText(lesson.city),
@@ -151,7 +162,8 @@ export function buildLessonCopyText(lesson: UnifiedLesson): string {
     lesson.day ? `اليوم: ${lesson.day}` : "",
     lesson.gregorianDate ? `التاريخ: ${lesson.gregorianDate}` : "",
     lesson.hijriDate ? `التاريخ الهجري: ${lesson.hijriDate}` : "",
-    lesson.time ? `الوقت: ${lesson.time}` : "",
+    lesson.timeDisplay || lesson.time ? `الوقت: ${lesson.timeDisplay || lesson.time}` : "",
+    lesson.prayerRank ? `مرتبة الصلاة: ${lesson.prayerRank}` : "",
     lesson.mosque ? `المكان: ${lesson.mosque}` : "",
     lesson.region ? `المنطقة: ${lesson.region}` : "",
     lesson.governorate ? `المحافظة: ${lesson.governorate}` : "",
