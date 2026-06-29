@@ -28,3 +28,10 @@ export { buildAkpProductionHealth, AKP_V3_TABLES, AKP_V3_CRONS, INFRASTRUCTURE_R
 export { SECRET_GUIDES } from "./infra-guides.mjs";
 export { auditV3Migration } from "./migration-audit.mjs";
 export { maybeRunAutoActivation } from "./auto-activation.mjs";
+export {
+  buildUnifiedAutonomousPlatform,
+  runUnifiedPlatformCycle,
+  retryUnifiedFailures,
+  pauseGkeSource,
+  runUnifiedZeroTouchActivation,
+} from "./unified-platform.mjs";

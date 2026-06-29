@@ -29,6 +29,13 @@ import {
   PLATFORM_V3_VERSION,
   buildAkpProductionHealth,
 } from "../../../lib/autonomous-platform/v3/index.mjs";
+import {
+  buildUnifiedAutonomousPlatform,
+  runUnifiedPlatformCycle,
+  retryUnifiedFailures,
+  pauseGkeSource,
+  runUnifiedZeroTouchActivation,
+} from "../../../lib/autonomous-platform/v3/unified-platform.mjs";
 import { logAuditEvent, sanitizeAdminPayload } from "../../../lib/autonomous-platform/v3/security.mjs";
 import { requireServiceRole, requireSecrets } from "../../../lib/secret-errors.mjs";
 
@@ -68,6 +75,10 @@ export default async function handler(req, res) {
     }
     if (action === "health" || action === "checklist") {
       sendJson(res, 200, await buildAkpProductionHealth({ runAutoActivation: query.autoActivate === "1" }));
+      return;
+    }
+    if (action === "unified" || action === "dashboard-unified") {
+      sendJson(res, 200, await buildUnifiedAutonomousPlatform({ runAutoActivation: query.autoActivate === "1" }));
       return;
     }
     if (action === "analytics-history") {
@@ -182,9 +193,27 @@ export default async function handler(req, res) {
   }
 
   if (action === "run") {
-    const result = await runAutonomousPlatformV3({ mode: body.mode || "full", triggerType: "admin" });
-    await logAuditEvent({ actor: auth, action: "platform.run", metadata: { mode: body.mode || "full" } });
+    const result = body.unified
+      ? await runUnifiedPlatformCycle({ mode: body.mode || "full", triggerType: "admin" })
+      : await runAutonomousPlatformV3({ mode: body.mode || "full", triggerType: "admin" });
+    await logAuditEvent({ actor: auth, action: "platform.run", metadata: { mode: body.mode || "full", unified: Boolean(body.unified) } });
     sendJson(res, 200, result);
+    return;
+  }
+
+  if (action === "retry.failed") {
+    sendJson(res, 200, await retryUnifiedFailures());
+    return;
+  }
+
+  if (action === "source.pause") {
+    const slug = String(body.slug || body.sourceSlug || "").trim();
+    sendJson(res, 200, await pauseGkeSource(slug, body.paused !== false));
+    return;
+  }
+
+  if (action === "zero-touch.activate") {
+    sendJson(res, 200, await runUnifiedZeroTouchActivation({ force: body.force === true }));
     return;
   }
 

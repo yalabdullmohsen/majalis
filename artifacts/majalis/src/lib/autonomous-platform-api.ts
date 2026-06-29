@@ -182,6 +182,90 @@ export async function fetchProductionHealth() {
   return res.json() as Promise<ProductionHealthPayload>;
 }
 
+export type UnifiedPlatformPayload = {
+  ok: boolean;
+  healthScore: number;
+  healthScoreTarget: number;
+  operational: boolean;
+  platformVersion: string;
+  gkeVersion?: string;
+  at: string;
+  shadow_mode: boolean;
+  auto_publish_enabled: boolean;
+  note: string;
+  criticalSecretsMissing: string[];
+  missingSecrets: string[];
+  secrets: Array<{ key: string; critical: boolean; present: boolean; status: string }>;
+  alerts: Array<{ severity: string; code: string; message: string; component: string }>;
+  akp: ProductionHealthPayload;
+  gke: {
+    version?: string;
+    phase?: number;
+    shadow_mode?: boolean;
+    pipeline_ok?: boolean;
+    tables: { expected: number; present: number; missing: string[] };
+    trusted_sources_count?: number;
+    acquisition?: { best_sources?: Array<{ slug: string; name: string; reputation_score: number }> };
+  };
+  queue: { status: string; dlq_count?: number };
+  import_jobs: {
+    gke_trusted_sources: number;
+    imported_today: number;
+    review_queue: number;
+    auto_published_today: number;
+    failed_today: number;
+    duplicate_rate: number;
+    quality_average: number;
+  };
+  crons?: ProductionHealthPayload["crons"];
+  lastSuccessfulRun?: string | null;
+  lastError?: string | null;
+};
+
+export async function fetchUnifiedPlatform() {
+  const res = await adminFetch(`${API}?action=unified`, {
+    signal: AbortSignal.timeout(45_000),
+  });
+  return res.json() as Promise<UnifiedPlatformPayload>;
+}
+
+export async function runUnifiedPlatformCycle(mode = "full") {
+  const res = await adminFetch(API, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ action: "run", mode, unified: true }),
+  });
+  return res.json();
+}
+
+export async function retryUnifiedFailures() {
+  const res = await adminFetch(API, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ action: "retry.failed" }),
+  });
+  return res.json();
+}
+
+export async function pauseGkeSource(slug: string, paused = true) {
+  const res = await adminFetch(API, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ action: "source.pause", slug, paused }),
+  });
+  return res.json();
+}
+
+export async function runZeroTouchActivation(force = false) {
+  const res = await adminFetch(API, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ action: "zero-touch.activate", force }),
+    signal: AbortSignal.timeout(120_000),
+  });
+  return res.json();
+}
+
 export const CONTENT_TYPE_OPTIONS = [
   "benefits",
   "questions",

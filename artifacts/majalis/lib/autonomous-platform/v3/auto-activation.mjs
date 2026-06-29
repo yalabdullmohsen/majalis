@@ -120,6 +120,17 @@ export async function maybeRunAutoActivation(options = {}) {
   const analytics = await buildProductionAnalytics();
   phases.analytics = { ok: true, generatedAt: analytics.generatedAt || new Date().toISOString() };
 
+  // 5. GKE zero-touch init (shadow mode)
+  try {
+    const { initializeAcquisition } = await import("../../global-knowledge-engine/acquisition-orchestrator.mjs");
+    const { validateArchitecture } = await import("../../global-knowledge-engine/orchestrator.mjs");
+    phases.gkeInit = await initializeAcquisition();
+    phases.gkeValidation = await validateArchitecture();
+  } catch (err) {
+    phases.gkeInit = { ok: false, error: String(err.message || err) };
+    blockers.push({ phase: "gke", error: String(err.message || err) });
+  }
+
   const completedAt = new Date().toISOString();
   const state = { completedAt, phases, blockers, lastAttempt: completedAt };
   await saveActivationState(state);

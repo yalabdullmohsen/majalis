@@ -30,6 +30,8 @@
     "verify:instagram-production": "node scripts/verify-instagram-production.mjs",
     "verify:majlis-knowledge-engine": "node scripts/verify-majlis-knowledge-engine.mjs",
     "verify:autonomous-platform": "node scripts/verify-autonomous-platform.mjs",
+    "verify:data-acquisition": "node scripts/verify-data-acquisition.mjs",
+    "audit:autonomous-production": "node scripts/audit-autonomous-production.mjs",
     "test:autonomous-platform-v3": "node scripts/test-autonomous-platform-v3.mjs",
     "activate:production": "node scripts/run-production-activation.mjs",
     "audit:infrastructure": "node scripts/audit-infrastructure.mjs",

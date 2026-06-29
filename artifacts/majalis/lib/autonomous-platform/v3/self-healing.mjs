@@ -132,7 +132,7 @@ export async function failoverSource(failedSourceId) {
   return { ok: true, failedSourceId, fallbackSourceId: fallbackId };
 }
 
-export async function healDeadLetterJobs({ limit = 10 } = {}) {
+export async function healDeadLetterJobs({ limit = 10, requeue = true } = {}) {
   const admin = getSupabaseAdmin();
   if (!admin) return { ok: false, retried: 0 };
 
@@ -145,18 +145,47 @@ export async function healDeadLetterJobs({ limit = 10 } = {}) {
   let retried = 0;
   for (const job of jobs || []) {
     if ((job.retry_count || 0) >= QUEUE_DEFAULTS.maxRetries) continue;
+
+    const nextRetry = (job.retry_count || 0) + 1;
+
+    if (requeue && job.original_queue && job.payload) {
+      try {
+        await admin.from(job.original_queue).insert({
+          ...job.payload,
+          status: "pending",
+          retry_count: nextRetry,
+          source_dlq_id: job.id,
+          created_at: new Date().toISOString(),
+        });
+        await admin
+          .from("akp_dead_letter_jobs")
+          .update({ retry_count: nextRetry, requeued_at: new Date().toISOString(), status: "requeued" })
+          .eq("id", job.id);
+      } catch (err) {
+        await logSelfHealingEvent({
+          eventType: "dlq_requeue_failed",
+          component: job.queue_name || "akp",
+          actionTaken: "requeue_failed",
+          success: false,
+          error: String(err.message || err),
+          metadata: { jobType: job.job_type, dlqId: job.id },
+        });
+        continue;
+      }
+    }
+
     await logSelfHealingEvent({
       eventType: "dlq_retry",
       component: job.queue_name || "akp",
-      actionTaken: "requeue",
+      actionTaken: requeue ? "requeue" : "logged",
       success: true,
-      attempt: (job.retry_count || 0) + 1,
+      attempt: nextRetry,
       metadata: { jobType: job.job_type, dlqId: job.id },
     });
     retried += 1;
   }
 
-  return { ok: true, retried };
+  return { ok: true, retried, total: jobs?.length ?? 0 };
 }
 
 function sleep(ms) {

@@ -65,6 +65,19 @@ export const MIGRATION_SCOPES = [
   { scope: "smart-cms", files: "SMART_CMS_MIGRATION_FILES", tables: SMART_CMS_TABLES },
   { scope: "activation-tables", files: "ACTIVATION_TABLES_MIGRATION_FILES", tables: ACTIVATION_TABLES.slice(0, 12) },
   { scope: "cd-pipeline", files: ["cd_pipeline_v1.sql"], tables: ["cd_deployments", "cd_pipeline_runs", "cd_self_heal_events"] },
+  {
+    scope: "gke",
+    files: ["gke_v1.sql", "gke_phase2_v1.sql"],
+    tables: [
+      "gke_pipeline_runs",
+      "gke_events",
+      "gke_trusted_sources",
+      "gke_source_reputation_log",
+      "gke_shadow_items",
+      "gke_acquisition_metrics",
+      "gke_integration_phases",
+    ],
+  },
 ];
 
 export { MIGRATION_FILES };

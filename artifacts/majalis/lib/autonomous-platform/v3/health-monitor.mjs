@@ -4,7 +4,7 @@
 import { getSupabaseAdmin } from "../../supabase-admin.mjs";
 import { extractRssItems } from "../../auto-content/auto-content-utils.mjs";
 import { createAlert } from "../monitoring.mjs";
-import { logSelfHealingEvent } from "./self-healing.mjs";
+import { logSelfHealingEvent, failoverSource } from "./self-healing.mjs";
 
 export const HEALTH_DISABLE_THRESHOLD = 60;
 
@@ -161,6 +161,8 @@ export async function evaluateSourceHealth(source) {
         success: true,
         metadata: { healthScore },
       });
+
+      await failoverSource(source.id);
     }
 
     await admin.from("akp_content_sources").update(patch).eq("id", source.id);

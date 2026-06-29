@@ -98,6 +98,25 @@ export async function runAutonomousPlatformV3(opts = {}) {
     results.analytics = await buildProductionAnalytics();
   }
 
+  if (mode === "full" || mode === "gke") {
+    try {
+      const { initializeAcquisition, runShadowAcquisitionForSource } = await import(
+        "../../global-knowledge-engine/acquisition-orchestrator.mjs"
+      );
+      const { listSources } = await import("../../global-knowledge-engine/layers/source-registry.mjs");
+      results.gke = { init: await initializeAcquisition(), sources: [] };
+      const { data: sources } = await listSources({ activeOnly: true });
+      for (const source of (sources || []).slice(0, opts.gkeSourceLimit ?? 3)) {
+        results.gke.sources.push({
+          slug: source.slug,
+          ...(await runShadowAcquisitionForSource(source.slug)),
+        });
+      }
+    } catch (err) {
+      results.gke = { ok: false, error: String(err.message || err) };
+    }
+  }
+
   await logStructured({
     level: "info",
     component: "akp-v3",

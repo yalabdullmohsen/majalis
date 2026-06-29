@@ -49,7 +49,10 @@ export const INFRASTRUCTURE_REQUIREMENTS = [
   { key: "CRON_SECRET", priority: "critical", impact: "مصادقة Cron Jobs", locations: ["Vercel Production", "GitHub Actions Secrets"] },
   { key: "VITE_SUPABASE_URL", priority: "critical", impact: "اتصال العميل و REST probes", locations: ["Vercel Production"] },
   { key: "VITE_SUPABASE_ANON_KEY", priority: "critical", impact: "Auth وقراءة عامة", locations: ["Vercel Production"] },
-  { key: "OPENAI_API_KEY", priority: "optional", impact: "Semantic Embeddings", locations: ["Vercel Production"] },
+  { key: "OPENAI_API_KEY", priority: "optional", impact: "Semantic Embeddings + AI Classification", locations: ["Vercel Production"] },
+  { key: "ANTHROPIC_API_KEY", priority: "optional", impact: "استخراج البيانات والتصنيف الشرعي", locations: ["Vercel Production"] },
+  { key: "UPSTASH_REDIS_REST_URL", priority: "optional", impact: "Rate limiting + Queue coordination", locations: ["Vercel Production"] },
+  { key: "UPSTASH_REDIS_REST_TOKEN", priority: "optional", impact: "Rate limiting + Queue coordination", locations: ["Vercel Production"] },
 ];
 
 const LOG_CATEGORIES = {
@@ -68,6 +71,8 @@ function auditInfrastructure() {
   const presentFor = (key) => {
     if (key === "VITE_SUPABASE_URL") return Boolean(env.SUPABASE_URL);
     if (key === "VITE_SUPABASE_ANON_KEY") return Boolean(env.SUPABASE_ANON_KEY);
+    if (key === "UPSTASH_REDIS_REST_URL") return Boolean(env.UPSTASH_REDIS_REST_URL);
+    if (key === "UPSTASH_REDIS_REST_TOKEN") return Boolean(env.UPSTASH_REDIS_REST_TOKEN);
     return Boolean(env[key]);
   };
   return INFRASTRUCTURE_REQUIREMENTS.map((req) =>
