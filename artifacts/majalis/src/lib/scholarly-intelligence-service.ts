@@ -84,6 +84,25 @@ function sessionId(): string {
   return id;
 }
 
+export async function fetchSearchAutocomplete(query: string, limit = 12): Promise<Array<{
+  id: string;
+  label: string;
+  meta?: string;
+  kind: string;
+  href: string;
+}>> {
+  if (!query.trim()) return [];
+  try {
+    const params = new URLSearchParams({ q: query, limit: String(limit) });
+    const res = await requestFetch(`/api/search-autocomplete?${params}`);
+    if (!res.ok) return [];
+    const json = await res.json();
+    return json.suggestions || [];
+  } catch {
+    return [];
+  }
+}
+
 export async function intelligentSearch(
   query: string,
   opts?: {
