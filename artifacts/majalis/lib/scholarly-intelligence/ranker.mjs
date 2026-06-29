@@ -11,6 +11,8 @@ const KIND_BOOST = {
   research: 7,
   fatwa: 6,
   fatwas: 6,
+  permanent_committee_fatwa: 8,
+  permanent_committee: 8,
   fiqh_decision: 6,
   fiqh_council: 6,
   circle: 6,

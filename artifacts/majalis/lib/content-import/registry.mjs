@@ -12,6 +12,7 @@ export const CONTENT_TYPES = [
   "rulings",
   "hadith",
   "stories",
+  "permanent_committee_fatwas",
 ];
 
 /** @typedef {{ type: string, label: string, table?: string, aliases?: string[] }} ContentTypeDef */
@@ -83,6 +84,12 @@ export const TYPE_REGISTRY = {
     label: "القصص",
     table: "akp_stories",
     aliases: ["story", "qisas"],
+  },
+  permanent_committee_fatwas: {
+    type: "permanent_committee_fatwas",
+    label: "فتاوى اللجنة الدائمة",
+    table: "permanent_committee_fatwas",
+    aliases: ["permanent_committee_fatwa", "pc_fatwa", "lajna-daima"],
   },
 };
 

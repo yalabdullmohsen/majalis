@@ -7,6 +7,7 @@ import { processQuery, normalizeArabic } from "./query-processor.mjs";
 import { enrichResult } from "./url-resolver.mjs";
 import { ARBAEEN_INDEX } from "./corpus-arbaeen.mjs";
 import { RESEARCH_SEED_PAPERS } from "../scientific-research/seed-data.mjs";
+import { PC_FATWA_SEED } from "../permanent-committee/seed-data.mjs";
 import { searchRegistryScholars } from "../scholar-automation-registry.mjs";
 
 const SURAH_NAMES = [
@@ -255,6 +256,46 @@ async function searchLearningPaths(admin, queryInfo, limit) {
     );
 }
 
+async function searchPermanentCommittee(admin, queryInfo, limit) {
+  let rows = [];
+  if (admin) {
+    try {
+      const { data } = await admin
+        .from("permanent_committee_fatwas")
+        .select("id, title, question, answer, summary, category, fatwa_number, keywords, status")
+        .eq("status", "approved")
+        .is("archived_at", null)
+        .limit(limit * 3);
+      rows = data || [];
+    } catch {
+      rows = [];
+    }
+  }
+  if (!rows.length) {
+    rows = PC_FATWA_SEED.filter((f) => f.status === "approved");
+  }
+  return rows
+    .filter((r) =>
+      fuzzyMatch(
+        [r.title, r.question, r.answer, r.summary, r.category, r.fatwa_number, ...(r.keywords || [])].join(" "),
+        queryInfo,
+      ),
+    )
+    .slice(0, limit)
+    .map((r) =>
+      enrichResult({
+        id: r.id,
+        kind: "permanent_committee_fatwa",
+        title: r.title || r.question,
+        summary: [r.category, r.fatwa_number && `#${r.fatwa_number}`].filter(Boolean).join(" · "),
+        href: `/permanent-committee/${r.id}`,
+        source_name: "اللجنة الدائمة للبحوث العلمية والإفتاء",
+        keywords: r.keywords || [],
+        rank: 8,
+      }),
+    );
+}
+
 async function searchSinJeem(admin, queryInfo, limit) {
   if (!admin) return [];
   try {
@@ -289,7 +330,7 @@ export async function searchExtendedCorpus(admin, query, limit = 12) {
 
   const perKind = Math.ceil(limit / 4);
 
-  const [surahs, tafsir, hadith, mutoon, sheikhs, mosques, circles, research, paths, sinJeem] =
+  const [surahs, tafsir, hadith, mutoon, sheikhs, mosques, circles, research, paths, sinJeem, pcFatwas] =
     await Promise.all([
       Promise.resolve(searchSurahs(queryInfo, perKind)),
       Promise.resolve(searchTafsir(queryInfo, perKind)),
@@ -301,9 +342,10 @@ export async function searchExtendedCorpus(admin, query, limit = 12) {
       searchResearch(admin, queryInfo, perKind),
       searchLearningPaths(admin, queryInfo, perKind),
       searchSinJeem(admin, queryInfo, perKind),
+      searchPermanentCommittee(admin, queryInfo, perKind),
     ]);
 
-  return [...surahs, ...tafsir, ...hadith, ...mutoon, ...sheikhs, ...mosques, ...circles, ...research, ...paths, ...sinJeem].slice(
+  return [...surahs, ...tafsir, ...hadith, ...mutoon, ...sheikhs, ...mosques, ...circles, ...research, ...paths, ...sinJeem, ...pcFatwas].slice(
     0,
     limit * 2,
   );

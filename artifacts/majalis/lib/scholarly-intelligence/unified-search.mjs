@@ -44,6 +44,8 @@ const CONTENT_TYPE_MAP = {
   tafsir: "tafsir",
   mutoon: "mutoon",
   learning_path: "learning_path",
+  permanent_committee_fatwa: "permanent_committee_fatwa",
+  permanent_committee: "permanent_committee_fatwa",
 };
 
 function flattenPlatformResults(data, perKindLimit = 15) {

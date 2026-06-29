@@ -16,6 +16,7 @@ import { AggregatorSection } from "@/views/admin/AggregatorSection";
 import { ReportsSection } from "@/views/admin/ReportsSection";
 import { FiqhCouncilSection } from "@/views/admin/FiqhCouncilSection";
 import { FatwaAdminSection } from "@/views/admin/FatwaAdminSection";
+import { PermanentCommitteeAdminSection } from "@/views/admin/PermanentCommitteeAdminSection";
 import { RulingsSection } from "@/views/admin/RulingsSection";
 import { AnnualCoursesSection } from "@/views/admin/AnnualCoursesSection";
 import { QuranScientificCirclesSection } from "@/views/admin/QuranScientificCirclesSection";
@@ -144,6 +145,8 @@ function SectionContent({ section }: { section: AdminSection }) {
       return <FiqhCouncilSection />;
     case "fatwa":
       return <FatwaAdminSection />;
+    case "permanent-committee":
+      return <PermanentCommitteeAdminSection />;
     case "rulings":
       return <RulingsSection />;
     case "annual-courses":

@@ -14,7 +14,8 @@ export type CmsContentKind =
   | "miracle"
   | "fiqh_decision"
   | "sharia_ruling"
-  | "annual_course";
+  | "annual_course"
+  | "permanent_committee_fatwa";
 
 export type CmsWorkflowStatus =
   | "draft"
@@ -102,7 +103,7 @@ export type AggregatorPipelineResult = {
 export const CMS_CONTENT_KINDS: CmsContentKind[] = [
   "lesson", "lecture", "course", "sheikh", "book", "fatwa", "article",
   "news", "announcement", "fawaid", "qa", "miracle",
-  "fiqh_decision", "sharia_ruling", "annual_course",
+  "fiqh_decision", "sharia_ruling", "annual_course", "permanent_committee_fatwa",
 ];
 
 export const CMS_KIND_LABELS: Record<CmsContentKind, string> = {
@@ -121,4 +122,5 @@ export const CMS_KIND_LABELS: Record<CmsContentKind, string> = {
   fiqh_decision: "قرار فقهي",
   sharia_ruling: "حكم شرعي",
   annual_course: "دورة علمية",
+  permanent_committee_fatwa: "فتوى اللجنة الدائمة",
 };

@@ -34,6 +34,8 @@ const KIND_LABELS = {
   mosque: "مسجد",
   mosques: "مسجد",
   research: "بحث علمي",
+  permanent_committee_fatwa: "فتوى اللجنة الدائمة",
+  permanent_committee: "اللجنة الدائمة",
   learning_path: "مسار تعليمي",
   sin_jeem: "سؤال وجواب",
   article: "مقال",
@@ -62,6 +64,9 @@ export function resolveContentUrl(item) {
     case "fatwa":
     case "fatwas":
       return id ? `/fatwa/${id}` : "/fatwa";
+    case "permanent_committee_fatwa":
+    case "permanent_committee":
+      return id ? `/permanent-committee/${id}` : "/permanent-committee";
     case "ruling":
     case "rulings":
       return id ? `/rulings/${id}` : "/rulings";

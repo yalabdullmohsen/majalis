@@ -72,6 +72,8 @@ const KIND_GROUP_LABELS: Record<string, string> = {
   sin_jeem: "سؤال وجواب",
   sheikh: "المشايخ",
   topic: "الموضوعات",
+  permanent_committee_fatwa: "اللجنة الدائمة",
+  permanent_committee: "اللجنة الدائمة",
 };
 
 function Group({ title, items, render, id }: { title: string; items: any[]; render: (i: any) => React.ReactNode; id?: string }) {
@@ -300,7 +302,9 @@ export default function SearchPage() {
     if (t) navigate(`/search/${encodeURIComponent(t)}`);
   };
 
-  const localExtra = q.trim() ? searchLocalExtensions(q) : { occasions: [], nawawi: [], quran: [] };
+  const localExtra = q.trim()
+    ? searchLocalExtensions(q)
+    : { occasions: [], nawawi: [], quran: [], permanentCommittee: [] };
   const researchResults = q.trim() ? searchScientificResearchSync(q, 12) : [];
 
   const intelligentTotal = intelligentResults.length;
@@ -318,7 +322,8 @@ export default function SearchPage() {
     (results.updates?.length || 0) +
     localExtra.occasions.length +
     localExtra.nawawi.length +
-    localExtra.quran.length;
+    localExtra.quran.length +
+    localExtra.permanentCommittee.length;
 
   const total = intelligentTotal > 0 ? intelligentTotal : legacyOnlyTotal + circlesResults.length + researchResults.length;
 
@@ -365,6 +370,7 @@ export default function SearchPage() {
             <option value="lesson">دروس</option>
             <option value="circle">حلقات</option>
             <option value="fatwa">فتاوى</option>
+            <option value="permanent_committee_fatwa">اللجنة الدائمة</option>
             <option value="research">أبحاث</option>
             <option value="library">كتب</option>
             <option value="sheikh">علماء</option>
@@ -486,6 +492,9 @@ export default function SearchPage() {
                   )} />
                   <Group title="القرآن" items={localExtra.quran} render={(s) => (
                     <ResultRow key={s.id} href={s.href} title={s.title} meta={s.meta} />
+                  )} />
+                  <Group title="اللجنة الدائمة" id="permanent-committee" items={localExtra.permanentCommittee} render={(f) => (
+                    <ResultRow key={f.id} href={f.href} title={f.title} meta={f.meta} />
                   )} />
                   {fiqhResults.length === 0 && (
                     <Group title="المجمع الفقهي" items={results.fiqh_decisions || []} render={(d) => (

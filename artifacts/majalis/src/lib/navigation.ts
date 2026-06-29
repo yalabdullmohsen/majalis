@@ -23,6 +23,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { href: "/quran-scientific-circles", label: "الحلقات القرآنية والعلمية" },
       { href: "/fiqh-council", label: "المجمع الفقهي الإسلامي" },
       { href: "/fatwa", label: "الفتاوى" },
+      { href: "/permanent-committee", label: "اللجنة الدائمة" },
       { href: "/rulings", label: "الأحكام الشرعية" },
       { href: "/updates", label: "آخر المستجدات" },
       { href: "/calendar", label: "التقويم" },
@@ -90,6 +91,7 @@ export const PRIMARY_NAV = [
   { href: "/question-answer", label: "سؤال وجواب" },
   { href: "/library", label: "المكتبة" },
   { href: "/research", label: "الأبحاث العلمية" },
+  { href: "/permanent-committee", label: "اللجنة الدائمة" },
   { href: "/annual-courses", label: "الدورات" },
   { href: "/about", label: "عن المنصة" },
 ];
@@ -112,6 +114,7 @@ export const MOBILE_MORE_NAV = [
   { href: "/quran-live", label: "البث المباشر" },
   { href: "/quran/tajweed", label: "التجويد" },
   { href: "/quran-scientific-circles", label: "الحلقات القرآنية والعلمية" },
+  { href: "/permanent-committee", label: "اللجنة الدائمة" },
   { href: "/quran/surah-stories", label: "قصص القرآن" },
   { href: "/scholar-search", label: "الباحث العلمي" },
   { href: "/learning/paths", label: "شجرة طلب العلم" },
@@ -193,6 +196,7 @@ export const HOME_FEATURE_CARDS = [
 export const HOME_MORE_SECTIONS = [
   { href: "/lessons", title: "الدروس", description: "دروس ودورات علمية" },
   { href: "/fatwa", title: "الفتاوى", description: "مركز الفتاوى الشرعية" },
+  { href: "/permanent-committee", title: "اللجنة الدائمة", description: "فتاوى وبحوث اللجنة الدائمة للإفتاء — مرجع رسمي" },
   { href: "/prayer-ranks", title: "مراتب الناس في الصلاة", description: "مراتب الخشوع وحضور القلب" },
   { href: "/rulings", title: "الأحكام الشرعية", description: "مكتبة الأحكام والأدلة" },
   { href: "/annual-courses", title: "الدورات العلمية", description: "برامج ودورات سنوية" },

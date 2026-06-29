@@ -38,6 +38,7 @@ export type AdminSection =
   | "smart-cms"
   | "question-answer"
   | "scientific-research"
+  | "permanent-committee"
   | "contact-messages"
   | "personal-learning";
 
@@ -71,6 +72,7 @@ export const ADMIN_NAV: { key: AdminSection; label: string }[] = [
   { key: "reports", label: "التقارير" },
   { key: "fiqh-council", label: "المجمع الفقهي" },
   { key: "fatwa", label: "الفتاوى" },
+  { key: "permanent-committee", label: "اللجنة الدائمة" },
   { key: "rulings", label: "الأحكام الشرعية" },
   { key: "annual-courses", label: "الدورات العلمية" },
   { key: "quran-scientific-circles", label: "الحلقات القرآنية والعلمية" },

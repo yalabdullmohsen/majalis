@@ -120,6 +120,27 @@ export function mapRowToPayload(type, row) {
         importance_score: row.importance_score != null ? Number(row.importance_score) : 50,
         published_at: pick(row, "published_at") || new Date().toISOString(),
       };
+    case "permanent_committee_fatwas": {
+      const question = pick(row, "question", "title");
+      const answer = pick(row, "answer", "body");
+      return {
+        external_key:
+          pick(row, "external_key", "slug", "id") ||
+          `pc-${hashKey([question, row.fatwa_number])}`,
+        fatwa_number: pick(row, "fatwa_number", "number") || null,
+        title: pick(row, "title") || question,
+        question,
+        answer,
+        summary: pick(row, "summary") || answer.slice(0, 200),
+        category: pick(row, "category") || "فقه عام",
+        subcategory: pick(row, "subcategory") || null,
+        keywords: Array.isArray(row.keywords) ? row.keywords : [],
+        reference: pick(row, "reference", "source") || "اللجنة الدائمة للبحوث العلمية والإفتاء",
+        source_url: pick(row, "source_url", "url") || "https://www.alifta.gov.sa",
+        source_name: pick(row, "source_name") || "اللجنة الدائمة للبحوث العلمية والإفتاء",
+        status: pick(row, "status") || "pending",
+      };
+    }
     default:
       return { ...row };
   }

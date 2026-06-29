@@ -62,6 +62,11 @@ const FiqhCouncilPage = lazy(() => import("@/views/FiqhCouncilPage"));
 const FiqhCouncilItemDetailPage = lazy(() => import("@/views/FiqhCouncilItemDetailPage"));
 const FatwaPage = lazy(() => import("@/views/FatwaPage"));
 const FatwaDetailPage = lazy(() => import("@/views/FatwaDetailPage"));
+const PermanentCommitteeHubPage = lazy(() => import("@/views/PermanentCommitteeHubPage"));
+const PermanentCommitteeDetailPage = lazy(() => import("@/views/PermanentCommitteeDetailPage"));
+const PermanentCommitteeListPage = lazy(() => import("@/views/PermanentCommitteeListPage"));
+const PermanentCommitteeSearchPage = lazy(() => import("@/views/PermanentCommitteeSearchPage"));
+const PermanentCommitteeCategoryPage = lazy(() => import("@/views/PermanentCommitteeCategoryPage"));
 const RulingsPage = lazy(() => import("@/views/RulingsPage"));
 const RulingDetailPage = lazy(() => import("@/views/RulingDetailPage"));
 const UpdatesPage = lazy(() => import("@/views/UpdatesPage"));
@@ -205,6 +210,11 @@ export default function AppRoutes() {
         <Route path="/fiqh-council/archive"><SafeLazyRoute component={FiqhCouncilArchivePage} /></Route>
         <Route path="/fiqh-council/:slug"><SafeLazyRoute component={FiqhCouncilItemDetailPage} /></Route>
         <Route path="/fiqh-council"><SafeLazyRoute component={FiqhCouncilPage} /></Route>
+        <Route path="/permanent-committee/search"><SafeLazyRoute component={PermanentCommitteeSearchPage} /></Route>
+        <Route path="/permanent-committee/fatwas"><SafeLazyRoute component={PermanentCommitteeListPage} /></Route>
+        <Route path="/permanent-committee/category/:name"><SafeLazyRoute component={PermanentCommitteeCategoryPage} /></Route>
+        <Route path="/permanent-committee/:id"><SafeLazyRoute component={PermanentCommitteeDetailPage} /></Route>
+        <Route path="/permanent-committee"><SafeLazyRoute component={PermanentCommitteeHubPage} /></Route>
         <Route path="/fatwa/:id"><SafeLazyRoute component={FatwaDetailPage} /></Route>
         <Route path="/fatwa"><SafeLazyRoute component={FatwaPage} /></Route>
         <Route path="/rulings/:id"><SafeLazyRoute component={RulingDetailPage} /></Route>

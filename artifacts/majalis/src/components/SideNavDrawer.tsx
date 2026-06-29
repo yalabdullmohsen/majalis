@@ -37,6 +37,7 @@ const ICONS: Record<string, React.ComponentType<{ size?: number; className?: str
   "/library": Library,
   "/research": GraduationCap,
   "/fiqh-council": Scale,
+  "/permanent-committee": Scale,
   "/fatwa": ScrollText,
   "/rulings": ScrollText,
   "/updates": Sparkles,

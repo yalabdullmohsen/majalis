@@ -31,6 +31,8 @@ import { cleanTimeText, formatLessonTimeDisplay } from "@/lib/lesson-time";
 import { useLessonSeo } from "@/lib/seo";
 import { usePageView } from "@/hooks/usePageView";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
+import { RelatedPermanentCommittee } from "@/components/permanent-committee/RelatedPermanentCommittee";
+import { buildPcSearchQueryFromLesson, inferPcCategoryFromLesson } from "@/lib/permanent-committee";
 import { fetchLessonEngagementStats, type LessonEngagementStats } from "@/lib/lesson-stats";
 import { normalizeActivityLabel } from "@/lib/activity-label";
 import { resolveLessonPosterUrl } from "@/lib/lesson-image";
@@ -454,6 +456,21 @@ export default function LessonDetailPage({
           </div>
         </section>
       )}
+
+      <RelatedPermanentCommittee
+        category={inferPcCategoryFromLesson({
+          category: unified.category,
+          title: unified.title,
+          description: unified.description,
+        })}
+        query={buildPcSearchQueryFromLesson({
+          category: unified.category,
+          title: unified.title,
+          description: unified.description,
+        })}
+        title="فتاوى ذات صلة — اللجنة الدائمة"
+        limit={4}
+      />
 
       <RelatedKnowledge
         kind="lesson"

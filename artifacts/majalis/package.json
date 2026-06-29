@@ -72,6 +72,8 @@
     "smoke:admin-nav": "node scripts/smoke-admin-nav.mjs",
     "smoke:question-answer-routes": "node scripts/smoke-question-answer-routes.mjs",
     "smoke:scientific-research-routes": "node scripts/smoke-scientific-research-routes.mjs",
+    "smoke:permanent-committee-routes": "node scripts/smoke-permanent-committee-routes.mjs",
+    "verify:pc-import-pipeline": "node scripts/verify-pc-import-pipeline.mjs",
     "test:scientific-research": "node scripts/test-scientific-research.mjs",
     "test:vision-2-integration": "node scripts/test-vision-2-integration.mjs",
     "apply:sin-jeem-migration": "node scripts/apply-sin-jeem-migration.mjs",
