@@ -115,6 +115,10 @@ const ContentProductionDashboardPage = lazyWithRetry(
   () => import("@/views/admin/ContentProductionDashboardPage"),
   "ContentProductionDashboardPage",
 );
+const DataAcquisitionPage = lazyWithRetry(
+  () => import("@/views/admin/DataAcquisitionPage"),
+  "DataAcquisitionPage",
+);
 const ContentEnginesDashboardPage = lazyWithRetry(
   () => import("@/views/admin/ContentEnginesDashboardPage"),
   "ContentEnginesDashboardPage",
@@ -341,6 +345,7 @@ function Router() {
       <Route path="/admin/fiqh-review"><AdminLazyRoute component={FiqhReviewPage} /></Route>
       <Route path="/admin/fiqh-quality"><AdminLazyRoute component={FiqhQualityPage} /></Route>
       <Route path="/admin/content-production"><AdminLazyRoute component={ContentProductionDashboardPage} /></Route>
+      <Route path="/admin/data-acquisition"><AdminLazyRoute component={DataAcquisitionPage} /></Route>
       <Route path="/admin/automation/content-production"><AdminLazyRoute component={ContentProductionDashboardPage} /></Route>
       <Route path="/admin/content-engines"><AdminLazyRoute component={ContentEnginesDashboardPage} /></Route>
       <Route path="/admin/automation/content-engines"><AdminLazyRoute component={ContentEnginesDashboardPage} /></Route>

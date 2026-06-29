@@ -1,0 +1,30 @@
+{
+  "generatedAt": "2026-06-29T07:47:14.292Z",
+  "sourcesAdded": 25,
+  "itemsExtracted": 5,
+  "itemsPublished": 0,
+  "itemsDuplicate": 0,
+  "needsReview": 5,
+  "classificationAccuracyPct": 100,
+  "extractionErrors": 0,
+  "performanceMs": 3,
+  "pipelineStages": [
+    "fetch",
+    "parse",
+    "extract",
+    "normalize",
+    "classify",
+    "deduplicate",
+    "validate",
+    "score",
+    "review_queue",
+    "publish"
+  ],
+  "manualIntervention": [
+    "Apply supabase/data_acquisition_v1.sql in Supabase SQL Editor",
+    "Replace example.com fixture URLs with real trusted RSS/API endpoints",
+    "Human review required for fatwas, research, scholars, books, articles",
+    "Configure CRON_SECRET and schedule /api/cron/data-acquisition-hourly|daily|weekly"
+  ],
+  "notes": "AI is used only for classification/summarization when configured; extraction never invents missing fields. Items with incomplete metadata enter review queue."
+}

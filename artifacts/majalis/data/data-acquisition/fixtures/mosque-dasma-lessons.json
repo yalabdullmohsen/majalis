@@ -1,0 +1,22 @@
+[
+  {
+    "title": "درس: التوحيد — أصول الإيمان",
+    "description": "درس أسبوعي بعد صلاة المغرب في مسجد الدسمة",
+    "url": "https://example-mosque-kw.local/lessons/tawheed-1",
+    "scholar": "الشيخ فلان الفلاني",
+    "date": "2026-07-01",
+    "time": "19:30",
+    "mosque": "مسجد الدسمة",
+    "region": "الدسمة",
+    "country": "KW"
+  },
+  {
+    "title": "درس: شرح كتاب التوحيد",
+    "description": "حلقة علمية مسائية",
+    "url": "https://example-mosque-kw.local/lessons/kitab-tawheed",
+    "scholar": "الشيخ فلان",
+    "date": "2026-07-08",
+    "time": "20:00",
+    "mosque": "مسجد الدسمة"
+  }
+]

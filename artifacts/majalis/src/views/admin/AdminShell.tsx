@@ -190,6 +190,20 @@ export function AdminShell({ section: sectionProp, children }: AdminShellProps) 
             </p>
           )}
           <Link
+            href="/admin/data-acquisition"
+            className="admin-shell-quick-link"
+            style={{
+              display: "block",
+              padding: "0.5rem 1rem",
+              marginBottom: "0.35rem",
+              textDecoration: "none",
+              fontSize: "0.75rem",
+              color: C.brassDeep,
+            }}
+          >
+            جمع البيانات الآلي
+          </Link>
+          <Link
             href="/admin/auto-content"
             className="admin-shell-quick-link"
             style={{
