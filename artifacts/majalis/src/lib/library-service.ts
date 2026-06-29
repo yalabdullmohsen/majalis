@@ -109,7 +109,7 @@ export function filterLibraryByContentType(
   contentType: ContentType,
   filters: LibraryFilters = {},
 ): LibraryItem[] {
-  const scoped = assertNoCrossContamination(items, contentType);
+  const scoped = assertNoCrossContamination(items, contentType) as LibraryItem[];
   return scoped.filter((item) => matchesFilters(item, filters));
 }
 
@@ -139,7 +139,7 @@ export function getRelatedLibraryItems(item: LibraryItem, contentType: ContentTy
 }
 
 export function mergeLibraryWithCatalog(dbRows: LibraryItem[], contentType: ContentType): LibraryItem[] {
-  const scopedDb = assertNoCrossContamination(dbRows, contentType);
+  const scopedDb = assertNoCrossContamination(dbRows, contentType) as LibraryItem[];
 
   if (contentType !== "book") {
     return sortLibraryItems(scopedDb);

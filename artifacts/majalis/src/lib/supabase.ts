@@ -26,7 +26,7 @@ import {
   searchLibraryCatalog,
   sortLibraryItems,
 } from "./library-service";
-import { filterQualityFawaid } from "./content-quality";
+import { splitLibrarySearchRows } from "../../lib/library/content-types.mjs";
 import { safeSupabaseQuery, isMissingSchemaError } from "./safe-supabase";
 import { normalizeActivityType } from "./activity-label";
 import { isBootstrapOwnerEmail, isOwnerProfile, hasUnrestrictedAdminAccess, resolveUserEmail } from "./owner-config";
@@ -1108,14 +1108,7 @@ async function searchLibraryFallback(term: string) {
 }
 
 function splitLibraryRows(rows: any[]) {
-  const books: any[] = [];
-  const articles: any[] = [];
-  for (const row of rows) {
-    const ct = row.content_type === "article" || row.type === "مقال" ? "article" : "book";
-    if (ct === "article") articles.push(row);
-    else books.push(row);
-  }
-  return { books, articles, library: books };
+  return splitLibrarySearchRows(rows);
 }
 
 async function searchQaFallback(term: string) {

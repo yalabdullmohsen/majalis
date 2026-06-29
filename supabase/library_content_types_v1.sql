@@ -2,7 +2,7 @@
 -- Apply in Supabase SQL Editor or via migration runner.
 
 DO $$ BEGIN
-  CREATE TYPE library_content_type AS ENUM ('book', 'article', 'research');
+  CREATE TYPE library_content_type AS ENUM ('book', 'article');
 EXCEPTION WHEN duplicate_object THEN NULL;
 END $$;
 
@@ -51,5 +51,10 @@ CREATE TRIGGER trg_library_items_content_type
 CREATE INDEX IF NOT EXISTS idx_library_items_content_type ON library_items (content_type);
 CREATE INDEX IF NOT EXISTS idx_library_items_content_type_status ON library_items (content_type, status);
 
-COMMENT ON COLUMN library_items.content_type IS 'Mandatory: book | article | research';
+-- Reject unknown / null types on approved rows (belt-and-suspenders with trigger)
+ALTER TABLE library_items DROP CONSTRAINT IF EXISTS library_items_content_type_allowed;
+ALTER TABLE library_items ADD CONSTRAINT library_items_content_type_allowed
+  CHECK (content_type IS NULL OR content_type IN ('book', 'article'));
+
+COMMENT ON COLUMN library_items.content_type IS 'Mandatory: book | article (research uses research_papers)';
 COMMENT ON COLUMN library_items.metadata IS 'Extended fields: university, supervisor, faculty, department, citations, etc.';
