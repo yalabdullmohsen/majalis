@@ -8,6 +8,7 @@ import { SearchSuggestions } from "@/components/SearchSuggestions";
 import { SheikhAvatar } from "@/components/lessons/SheikhAvatar";
 import { resolveLessonSheikhImage } from "@/lib/sheikh-image";
 import { searchLocalExtensions } from "@/lib/local-search-ext";
+import { searchScientificResearchSync } from "@/lib/scientific-research/service";
 import { lessonRecordToSearchRow, searchUnifiedLessons } from "@/lib/lessons-service";
 import { addSearchHistory } from "@/lib/search-history";
 import { trackSearchQuery } from "@/lib/content-analytics";
@@ -250,6 +251,7 @@ export default function SearchPage() {
   };
 
   const localExtra = q.trim() ? searchLocalExtensions(q) : { occasions: [], nawawi: [], quran: [] };
+  const researchResults = q.trim() ? searchScientificResearchSync(q, 12) : [];
 
   const intelligentTotal = intelligentResults.length;
   const legacyTotal =
@@ -266,7 +268,8 @@ export default function SearchPage() {
     (results.updates?.length || 0) +
     localExtra.occasions.length +
     localExtra.nawawi.length +
-    localExtra.quran.length;
+    localExtra.quran.length +
+    researchResults.length;
 
   const total = intelligentTotal > 0 ? intelligentTotal : legacyTotal;
 
@@ -438,6 +441,9 @@ export default function SearchPage() {
                   )} />
                   <Group title="آخر المستجدات" items={results.updates || []} render={(u) => (
                     <ResultRow key={u.id} href="/updates" title={displayText(u.title)} meta={u.searchMeta || u.update_type} />
+                  )} />
+                  <Group title="الأبحاث العلمية" items={researchResults} render={(r) => (
+                    <ResultRow key={r.id} href={r.href} title={displayText(r.title)} meta={r.meta} />
                   )} />
                   <Group title="الإعجاز العلمي" items={results.miracles} render={(m) => (
                     <ResultRow key={m.id} href="/miracles" title={displayText(m.title)} meta={m.category} />

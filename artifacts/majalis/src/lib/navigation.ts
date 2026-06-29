@@ -27,7 +27,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { href: "/fawaid", label: "الفوائد" },
       { href: "/qa", label: "الأسئلة" },
       { href: "/question-answer", label: "سؤال وجواب" },
-      { href: "/scientific-research", label: "الأبحاث العلمية" },
+      { href: "/research", label: "الأبحاث العلمية" },
     ],
   },
   {
@@ -85,7 +85,7 @@ export const PRIMARY_NAV = [
   { href: "/quran", label: "القرآن" },
   { href: "/question-answer", label: "سؤال وجواب" },
   { href: "/library", label: "المكتبة" },
-  { href: "/scientific-research", label: "الأبحاث العلمية" },
+  { href: "/research", label: "الأبحاث العلمية" },
   { href: "/adhkar", label: "الأذكار" },
   { href: "/prayer-times", label: "الصلاة" },
 ];
@@ -95,7 +95,7 @@ export const MOBILE_MORE_NAV = [
   { href: "/lessons", label: "الدروس" },
   { href: "/lessons", label: "المشايخ" },
   { href: "/library", label: "المكتبة" },
-  { href: "/scientific-research", label: "الأبحاث العلمية" },
+  { href: "/research", label: "الأبحاث العلمية" },
   { href: "/qa", label: "الأسئلة" },
   { href: "/question-answer", label: "سؤال وجواب" },
   { href: "/quran", label: "القرآن" },
@@ -160,7 +160,7 @@ export const HOME_FEATURE_CARDS = [
     icon: "gamepad",
   },
   {
-    href: "/scientific-research",
+    href: "/research",
     title: "الأبحاث العلمية",
     description: "رسائل جامعية وأبحاث محكمة",
     icon: "graduation-cap",
@@ -183,6 +183,7 @@ export const HOME_MORE_SECTIONS = [
   { href: "/assistant", title: "المساعد العلمي", description: "إرشاد داخل المنصة" },
   { href: "/condolences", title: "قوالب العزاء", description: "تعزية وإعلان وفاة" },
   { href: "/library", title: "المكتبة", description: "كتب ومتون" },
+  { href: "/research", title: "الأبحاث العلمية", description: "رسائل جامعية وأبحاث محكمة" },
   { href: "/learning/paths", title: "المسارات العلمية", description: "تعلم منظم من المبتدئ للمتقدم" },
   { href: "/my-learning", title: "لوحتي التعليمية", description: "تقدمك وإنجازاتك" },
   { href: "/quiz", title: "المسابقات", description: "اختبر معلوماتك" },
