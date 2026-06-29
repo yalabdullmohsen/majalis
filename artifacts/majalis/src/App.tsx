@@ -97,6 +97,7 @@ const RulingDetailPage = lazy(() => import("@/views/RulingDetailPage"));
 const UpdatesPage = lazy(() => import("@/views/UpdatesPage"));
 const AutoContentDetailPage = lazy(() => import("@/views/AutoContentDetailPage"));
 const DeveloperPage = lazy(() => import("@/views/DeveloperPage"));
+const ContributePage = lazy(() => import("@/views/ContributePage"));
 const AdminPage = lazyWithRetry(() => import("@/views/AdminPage"), "AdminPage");
 const LessonImportImagePage = lazyWithRetry(() => import("@/views/admin/LessonImportImagePage"), "LessonImportImagePage");
 const LessonImportUrlPage = lazyWithRetry(() => import("@/views/admin/LessonImportUrlPage"), "LessonImportUrlPage");
@@ -121,6 +122,7 @@ const ContentEnginesDashboardPage = lazyWithRetry(
 const PlatformSourcesPage = lazyWithRetry(() => import("@/views/admin/PlatformSourcesPage"), "PlatformSourcesPage");
 const PlatformAnalyticsPage = lazyWithRetry(() => import("@/views/admin/PlatformAnalyticsPage"), "PlatformAnalyticsPage");
 const PlatformHealthPage = lazyWithRetry(() => import("@/views/admin/PlatformHealthPage"), "PlatformHealthPage");
+const ProductionLockdownPage = lazyWithRetry(() => import("@/views/admin/ProductionLockdownPage"), "ProductionLockdownPage");
 const PlatformMonitoringPage = lazyWithRetry(() => import("@/views/admin/PlatformMonitoringPage"), "PlatformMonitoringPage");
 const DeploymentDashboardPage = lazyWithRetry(() => import("@/views/admin/DeploymentDashboardPage"), "DeploymentDashboardPage");
 const PlatformChecklistPage = lazyWithRetry(() => import("@/views/admin/PlatformChecklistPage"), "PlatformChecklistPage");
@@ -190,6 +192,7 @@ function Router() {
       <Route path="/privacy" component={PrivacyPage} />
       <Route path="/terms" component={TermsPage} />
       <Route path="/contact" component={ContactPage} />
+      <Route path="/contribute"><SafeLazyRoute component={ContributePage} /></Route>
       <Route path="/settings"><SafeLazyRoute component={SettingsPage} /></Route>
       <Route path="/search/:q"><SafeLazyRoute component={SearchPage} /></Route>
       <Route path="/search"><SafeLazyRoute component={SearchPage} /></Route>
@@ -318,6 +321,7 @@ function Router() {
       <Route path="/admin/automation/lesson-sources"><AdminLazyRoute component={AutomationSourcesPage} /></Route>
       <Route path="/admin/platform/analytics"><AdminLazyRoute component={PlatformAnalyticsPage} /></Route>
       <Route path="/admin/platform/health"><AdminLazyRoute component={PlatformHealthPage} /></Route>
+      <Route path="/admin/production-lockdown"><AdminLazyRoute component={ProductionLockdownPage} /></Route>
       <Route path="/admin/platform/monitoring"><AdminLazyRoute component={PlatformMonitoringPage} /></Route>
       <Route path="/admin/platform/deployments"><AdminLazyRoute component={DeploymentDashboardPage} /></Route>
       <Route path="/admin/platform/checklist"><AdminLazyRoute component={PlatformChecklistPage} /></Route>

@@ -1,7 +1,7 @@
 {
   "ok": false,
   "platformVersion": "3.0.0",
-  "readinessPct": 24,
+  "readinessPct": 49,
   "readinessBreakdown": {
     "infrastructure": {
       "weight": 15,
@@ -9,7 +9,7 @@
     },
     "database": {
       "weight": 15,
-      "score": 18
+      "score": 100
     },
     "cron": {
       "weight": 10,
@@ -25,7 +25,7 @@
     },
     "analytics": {
       "weight": 10,
-      "score": 18
+      "score": 100
     },
     "search": {
       "weight": 5,
@@ -41,15 +41,15 @@
     },
     "backups": {
       "weight": 10,
-      "score": 0
+      "score": 50
     }
   },
   "checklist": [
     {
       "id": "database",
       "label": "Database",
-      "status": "FAIL",
-      "reason": "Missing tables: akp_source_health_snapshots, akp_source_discoveries, akp_platform_analytics_daily, akp_daily_goal_progress, akp_self_healing_events, akp_audit_log, akp_backup_snapshots, akp_semantic_index, akp_scheduler_state"
+      "status": "PASS",
+      "reason": "All v3 tables present"
     },
     {
       "id": "secrets",
@@ -84,7 +84,7 @@
     {
       "id": "analytics",
       "label": "Analytics",
-      "status": "FAIL",
+      "status": "WARNING",
       "reason": "Waiting for analytics cron after migration"
     },
     {
@@ -108,7 +108,7 @@
     {
       "id": "backup",
       "label": "Backup",
-      "status": "FAIL",
+      "status": "WARNING",
       "reason": "Waiting for backup cron"
     },
     {
@@ -118,8 +118,8 @@
       "reason": "Missing CRON_SECRET"
     }
   ],
-  "at": "2026-06-28T04:01:17.862Z",
-  "durationMs": 14469,
+  "at": "2026-06-29T04:31:23.375Z",
+  "durationMs": 15505,
   "infrastructure": [
     {
       "key": "DATABASE_URL",
@@ -260,13 +260,11 @@
     }
   ],
   "migration": {
-    "ok": false,
+    "ok": true,
     "migrationFile": "autonomous_platform_v3.sql",
     "present": [
       "akp_content_sources",
-      "akp_pipeline_runs"
-    ],
-    "missing": [
+      "akp_pipeline_runs",
       "akp_source_health_snapshots",
       "akp_source_discoveries",
       "akp_platform_analytics_daily",
@@ -277,9 +275,10 @@
       "akp_semantic_index",
       "akp_scheduler_state"
     ],
-    "appliedPct": 18,
+    "missing": [],
+    "appliedPct": 100,
     "expectedVsActual": {
-      "ok": false,
+      "ok": true,
       "migrationFile": "autonomous_platform_v3.sql",
       "sqlFileExists": true,
       "expected": {
@@ -328,9 +327,7 @@
         "tables": {
           "present": [
             "akp_content_sources",
-            "akp_pipeline_runs"
-          ],
-          "missing": [
+            "akp_pipeline_runs",
             "akp_source_health_snapshots",
             "akp_source_discoveries",
             "akp_platform_analytics_daily",
@@ -340,7 +337,8 @@
             "akp_backup_snapshots",
             "akp_semantic_index",
             "akp_scheduler_state"
-          ]
+          ],
+          "missing": []
         },
         "indexes": {
           "ok": false,
@@ -374,53 +372,8 @@
           ]
         }
       },
-      "appliedPct": 18,
+      "appliedPct": 100,
       "blockers": [
-        {
-          "type": "table",
-          "name": "akp_source_health_snapshots",
-          "fix": "Run apply-migrations cron"
-        },
-        {
-          "type": "table",
-          "name": "akp_source_discoveries",
-          "fix": "Run apply-migrations cron"
-        },
-        {
-          "type": "table",
-          "name": "akp_platform_analytics_daily",
-          "fix": "Run apply-migrations cron"
-        },
-        {
-          "type": "table",
-          "name": "akp_daily_goal_progress",
-          "fix": "Run apply-migrations cron"
-        },
-        {
-          "type": "table",
-          "name": "akp_self_healing_events",
-          "fix": "Run apply-migrations cron"
-        },
-        {
-          "type": "table",
-          "name": "akp_audit_log",
-          "fix": "Run apply-migrations cron"
-        },
-        {
-          "type": "table",
-          "name": "akp_backup_snapshots",
-          "fix": "Run apply-migrations cron"
-        },
-        {
-          "type": "table",
-          "name": "akp_semantic_index",
-          "fix": "Run apply-migrations cron"
-        },
-        {
-          "type": "table",
-          "name": "akp_scheduler_state",
-          "fix": "Run apply-migrations cron"
-        },
         {
           "type": "index",
           "name": "akp_sources_health_idx",
@@ -559,19 +512,14 @@
       "migrationPath": "none"
     },
     "probe": {
-      "ok": false,
-      "missing": [
-        "akp_source_health_snapshots",
-        "akp_platform_analytics_daily",
-        "akp_daily_goal_progress",
-        "akp_semantic_index"
-      ],
-      "presentCount": 36
+      "ok": true,
+      "missing": [],
+      "presentCount": 40
     },
     "migrationStatus": {
       "available": true,
       "appliedCount": 0,
-      "pendingCount": 39,
+      "pendingCount": 56,
       "applied": [],
       "pending": [
         "auto_content_pipeline.sql",
@@ -622,15 +570,15 @@
     "counts": {
       "akp_content_sources": 0,
       "akp_pipeline_runs": 0,
-      "akp_source_health_snapshots": null,
-      "akp_source_discoveries": null,
-      "akp_platform_analytics_daily": null,
-      "akp_daily_goal_progress": null,
-      "akp_self_healing_events": null,
-      "akp_audit_log": null,
-      "akp_backup_snapshots": null,
-      "akp_semantic_index": null,
-      "akp_scheduler_state": null
+      "akp_source_health_snapshots": 0,
+      "akp_source_discoveries": 0,
+      "akp_platform_analytics_daily": 0,
+      "akp_daily_goal_progress": 0,
+      "akp_self_healing_events": 0,
+      "akp_audit_log": 0,
+      "akp_backup_snapshots": 0,
+      "akp_semantic_index": 0,
+      "akp_scheduler_state": 0
     },
     "emptyReasons": {
       "akp_content_sources": {
@@ -968,27 +916,6 @@
       "programmaticFix": false
     },
     {
-      "type": "migration",
-      "missing": [
-        "akp_source_health_snapshots",
-        "akp_source_discoveries",
-        "akp_platform_analytics_daily",
-        "akp_daily_goal_progress",
-        "akp_self_healing_events",
-        "akp_audit_log",
-        "akp_backup_snapshots",
-        "akp_semantic_index",
-        "akp_scheduler_state"
-      ],
-      "impact": "autonomous_platform_v3.sql not fully applied",
-      "howToFix": [
-        "Set DATABASE_URL",
-        "Trigger apply-migrations cron",
-        "Or wait for auto-activation"
-      ],
-      "programmaticFix": false
-    },
-    {
       "type": "bootstrap",
       "impact": "No sources in DB",
       "howToFix": [
@@ -1004,7 +931,7 @@
       "programmaticFix": false
     }
   ],
-  "blockersCount": 5,
+  "blockersCount": 4,
   "autoActivation": null,
   "ownerActions": [
     {

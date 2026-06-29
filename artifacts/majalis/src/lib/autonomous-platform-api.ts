@@ -176,7 +176,9 @@ export type ProductionHealthPayload = {
 };
 
 export async function fetchProductionHealth() {
-  const res = await adminFetch(`${API}?action=health`);
+  const res = await adminFetch(`${API}?action=health`, {
+    signal: AbortSignal.timeout(35_000),
+  });
   return res.json() as Promise<ProductionHealthPayload>;
 }
 

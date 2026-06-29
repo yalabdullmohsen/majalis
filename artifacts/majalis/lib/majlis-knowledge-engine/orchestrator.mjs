@@ -27,21 +27,9 @@ import { archiveExpiredLessons } from "./expiry-engine.mjs";
 import { processQueue } from "./queue.mjs";
 import { getEngineMetrics, computeAutomationCompletion } from "./metrics.mjs";
 
-const AUTO_PUBLISH_KILL = process.env.MAJALIS_AUTO_PUBLISH === "0";
+import { startMkeRun } from "./run-recorder.mjs";
 
-async function startRun(admin, triggerType, mode) {
-  if (!admin) return { runId: null };
-  try {
-    const { data } = await admin
-      .from("mke_runs")
-      .insert({ trigger_type: triggerType, mode, status: "running" })
-      .select("id")
-      .single();
-    return { runId: data?.id || null, startedAt: Date.now() };
-  } catch {
-    return { runId: null, startedAt: Date.now() };
-  }
-}
+const AUTO_PUBLISH_KILL = process.env.MAJALIS_AUTO_PUBLISH === "0";
 
 async function finishRun(admin, runId, summary, startedAt) {
   if (!admin || !runId) return;
@@ -167,7 +155,11 @@ export async function runMajlisKnowledgeEngine(opts = {}) {
   const admin = getSupabaseAdmin();
   const mode = opts.mode || "full";
   const triggerType = opts.triggerType || "cron";
-  const { runId, startedAt } = await startRun(admin, triggerType, mode);
+  const { runId, startedAt, error: runInsertError } = await startMkeRun(admin, triggerType, mode);
+  if (runInsertError) {
+    summary.errors += 1;
+    summary.metadata.runInsertError = runInsertError;
+  }
 
   const summary = {
     engineVersion: ENGINE_VERSION,

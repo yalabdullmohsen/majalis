@@ -10,6 +10,7 @@ import {
 import { C } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
 import { useAdminShell } from "./AdminShell";
+import { UnifiedCmsHubSection } from "./UnifiedCmsHubSection";
 
 type Draft = {
   id: string;
@@ -112,10 +113,11 @@ export function SmartCmsSection() {
 
   return (
     <div>
-      <h2 style={{ margin: "0 0 0.5rem", color: C.emeraldDeep }}>إدارة المحتوى الذكية</h2>
-      <p style={{ color: C.inkSoft, marginBottom: "1.25rem", fontSize: "0.875rem" }}>
-        استخراج تلقائي من صورة أو رابط — مراجعة — اعتماد — نشر في المنصة وSEO دون تعديل الكود.
-      </p>
+      <UnifiedCmsHubSection />
+
+      <hr style={{ margin: "2rem 0", border: "none", borderTop: `1px solid ${C.line}` }} />
+
+      <h2 style={{ margin: "0 0 0.5rem", color: C.emeraldDeep }}>استخراج ذكي — صورة / رابط</h2>
 
       <div style={{ display: "grid", gap: "1rem", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", marginBottom: "1.5rem" }}>
         <section style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.625rem", padding: "1rem" }}>

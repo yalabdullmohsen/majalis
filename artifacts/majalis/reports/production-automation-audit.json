@@ -1,0 +1,329 @@
+{
+  "at": "2026-06-29T04:38:37.539Z",
+  "base": "https://www.majlisilm.com",
+  "envPresent": {
+    "SUPABASE_URL": true,
+    "SUPABASE_SERVICE_ROLE_KEY": false,
+    "SUPABASE_ANON_KEY": true,
+    "CRON_SECRET": false,
+    "OPENAI_API_KEY": false,
+    "ANTHROPIC_API_KEY": false,
+    "DATABASE_URL": false,
+    "UPSTASH_REDIS_REST_URL": false,
+    "UPSTASH_REDIS_REST_TOKEN": false,
+    "POSTGRES_URL": false,
+    "POSTGRES_PASSWORD": false,
+    "SUPABASE_ACCESS_TOKEN": false,
+    "INSTAGRAM_GRAPH_ACCESS_TOKEN": false,
+    "INSTAGRAM_BUSINESS_ACCOUNT_ID": false
+  },
+  "cronAuthEnforced": true,
+  "registeredCrons": 48,
+  "publicApis": [
+    {
+      "path": "/api/healthz",
+      "ok": true,
+      "status": 200,
+      "ms": 215,
+      "json": {
+        "ok": true
+      }
+    },
+    {
+      "path": "/api/public-config",
+      "ok": true,
+      "status": 200,
+      "ms": 163,
+      "json": {
+        "ok": true
+      }
+    },
+    {
+      "path": "/api/assistant/health",
+      "ok": true,
+      "status": 200,
+      "ms": 231,
+      "json": {
+        "ok": true
+      }
+    },
+    {
+      "path": "/api/knowledge-search?q=صلاة",
+      "ok": true,
+      "status": 200,
+      "ms": 1034,
+      "json": {
+        "ok": true
+      }
+    },
+    {
+      "path": "/sitemap.xml",
+      "ok": true,
+      "status": 200,
+      "ms": 40,
+      "json": null
+    }
+  ],
+  "cronAuthProbe": [
+    {
+      "path": "/api/cron/system-health",
+      "ok": false,
+      "status": 401,
+      "ms": 35,
+      "json": {
+        "ok": false
+      }
+    },
+    {
+      "path": "/api/cron/process-import-jobs",
+      "ok": false,
+      "status": 401,
+      "ms": 85,
+      "json": {
+        "ok": false
+      }
+    },
+    {
+      "path": "/api/cron/auto-knowledge-sync",
+      "ok": false,
+      "status": 401,
+      "ms": 39,
+      "json": {
+        "ok": false
+      }
+    }
+  ],
+  "tableStats": {
+    "lessons": {
+      "exists": true,
+      "missing": false,
+      "count": 8
+    },
+    "sheikhs": {
+      "exists": true,
+      "missing": false,
+      "count": 2
+    },
+    "fawaid": {
+      "exists": true,
+      "missing": false,
+      "count": 7
+    },
+    "qa_questions": {
+      "exists": true,
+      "missing": false,
+      "count": 39
+    },
+    "content_import_jobs": {
+      "exists": true,
+      "missing": false,
+      "count": 43
+    },
+    "ake_job_queue": {
+      "exists": true,
+      "missing": false,
+      "count": 0
+    },
+    "ake_connectors": {
+      "exists": true,
+      "missing": false,
+      "count": 25
+    },
+    "ake_engine_runs": {
+      "exists": true,
+      "missing": false,
+      "count": 0
+    },
+    "knowledge_items": {
+      "exists": true,
+      "missing": false,
+      "count": 11
+    },
+    "content_engine_runs": {
+      "exists": true,
+      "missing": false,
+      "count": 2454
+    },
+    "question_generation_jobs": {
+      "missing": true,
+      "count": null
+    },
+    "sin_jeem_questions": {
+      "exists": true,
+      "missing": false,
+      "count": 0
+    },
+    "auto_imported_content": {
+      "exists": true,
+      "missing": false,
+      "count": 10
+    },
+    "akp_content_sources": {
+      "exists": true,
+      "missing": false,
+      "count": 0
+    },
+    "akp_pipeline_runs": {
+      "exists": true,
+      "missing": false,
+      "count": 0
+    },
+    "mke_runs": {
+      "exists": true,
+      "missing": false,
+      "count": 0
+    }
+  },
+  "latest": {
+    "engineRuns": {
+      "ok": true,
+      "rows": [
+        {
+          "engine_id": "sheikh-enrichment",
+          "status": "running",
+          "started_at": "2026-06-29T04:38:36.475764+00:00",
+          "duration_ms": null,
+          "items_published": 0,
+          "error_message": null
+        },
+        {
+          "engine_id": "lesson-notes",
+          "status": "completed",
+          "started_at": "2026-06-29T04:38:34.897289+00:00",
+          "duration_ms": 456,
+          "items_published": 0,
+          "error_message": null
+        },
+        {
+          "engine_id": "recommendations",
+          "status": "completed",
+          "started_at": "2026-06-29T04:37:40.335456+00:00",
+          "duration_ms": 31279,
+          "items_published": 66,
+          "error_message": null
+        },
+        {
+          "engine_id": "sheikh-enrichment",
+          "status": "completed",
+          "started_at": "2026-06-29T04:37:38.682371+00:00",
+          "duration_ms": 483,
+          "items_published": 0,
+          "error_message": null
+        },
+        {
+          "engine_id": "lesson-notes",
+          "status": "completed",
+          "started_at": "2026-06-29T04:37:37.06005+00:00",
+          "duration_ms": 457,
+          "items_published": 0,
+          "error_message": null
+        }
+      ]
+    },
+    "importJobs": {
+      "ok": false,
+      "status": 400,
+      "error": "{\"code\":\"42703\",\"details\":null,\"hint\":null,\"message\":\"column content_import_jobs.error_message does not exist\"}"
+    },
+    "akeConnectors": {
+      "ok": true,
+      "rows": [
+        {
+          "slug": "iifa-oic",
+          "is_active": true,
+          "last_sync_at": "2026-06-29T04:35:52.655+00:00",
+          "health_status": "degraded"
+        },
+        {
+          "slug": "web-awqaf-kw",
+          "is_active": true,
+          "last_sync_at": "2026-06-29T04:23:45.225+00:00",
+          "health_status": "degraded"
+        },
+        {
+          "slug": "web-othmanalkamees",
+          "is_active": true,
+          "last_sync_at": "2026-06-29T04:14:10.843+00:00",
+          "health_status": "degraded"
+        },
+        {
+          "slug": "web-drhayaalsabah",
+          "is_active": true,
+          "last_sync_at": "2026-06-29T04:12:34.831+00:00",
+          "health_status": "degraded"
+        },
+        {
+          "slug": "kfas-sharia",
+          "is_active": true,
+          "last_sync_at": "2026-06-29T04:02:28.158+00:00",
+          "health_status": "down"
+        }
+      ]
+    }
+  },
+  "systems": [
+    {
+      "name": "Content Engines",
+      "code": "complete",
+      "production": "verified_running",
+      "evidence": "last: sheikh-enrichment @ 2026-06-29T04:38:36.475764+00:00",
+      "cron": "/api/cron/content-engines"
+    },
+    {
+      "name": "Auto Knowledge Engine (AKE)",
+      "code": "complete",
+      "production": "verified_running",
+      "evidence": "last sync: iifa-oic @ 2026-06-29T04:35:52.655+00:00",
+      "cron": "/api/cron/auto-knowledge-sync"
+    },
+    {
+      "name": "Content Import Pipeline",
+      "code": "complete",
+      "production": "unverified",
+      "evidence": null,
+      "cron": "/api/cron/process-import-jobs"
+    },
+    {
+      "name": "AKP v3 Autonomous Platform",
+      "code": "complete",
+      "production": "not_producing",
+      "evidence": "akp_content_sources=0, pipeline_runs=0",
+      "cron": "/api/cron/autonomous-platform-v3"
+    },
+    {
+      "name": "Question Generation (Sin Jeem)",
+      "code": "complete",
+      "production": "migration_missing",
+      "evidence": "sin_jeem_questions=0",
+      "cron": "/api/cron/question-answer-daily"
+    },
+    {
+      "name": "Majlis Knowledge Engine (MKE)",
+      "code": "complete",
+      "production": "idle_empty",
+      "evidence": "mke_runs=0",
+      "cron": "/api/cron/majlis-knowledge-engine"
+    },
+    {
+      "name": "Knowledge Search API",
+      "code": "complete",
+      "production": "verified_running",
+      "evidence": null,
+      "cron": null
+    },
+    {
+      "name": "SEO / Sitemap",
+      "code": "complete",
+      "production": "verified_running",
+      "evidence": "40ms",
+      "cron": "request-driven"
+    }
+  ],
+  "scores": {
+    "codeSystemsAudited": 8,
+    "productionVerifiedRunning": 4,
+    "productionVerifiedPct": 50,
+    "cronsRegistered": 48,
+    "note": "Cron execution inferred from DB activity + HTTP auth probes; individual cron last-run not verified without CRON_SECRET or Vercel logs."
+  }
+}

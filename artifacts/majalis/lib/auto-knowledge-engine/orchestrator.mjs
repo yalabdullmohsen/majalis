@@ -35,6 +35,7 @@ import { enqueueFailedStage } from "./recovery.mjs";
 import { isPermanentFetchError } from "./connector-scheduler.mjs";
 import { ensureV2Schema, preprocessItemV2, postPublishV2 } from "./v2/pipeline-hooks.mjs";
 import { logAkeRejection } from "./rejection-log.mjs";
+import { createAkeEngineRun } from "./run-recorder.mjs";
 import { runContentPipeline } from "../content-pipeline/runner.mjs";
 import { DEFAULT_LESSON_STAGES } from "../content-pipeline/stages.mjs";
 
@@ -587,13 +588,17 @@ export async function runAutoKnowledgeEngine(options = {}) {
   let runId = null;
   let importMode = options.importMode || "auto";
   let globalState = null;
+  const runBootstrapErrors = [];
 
   try {
     await ensureOfficialSources(admin);
     await ensureFiqhCouncilTable(admin);
-    await ensureSyncSchema(admin);
-    await ensureRealtimeSchema(admin);
-    await ensureV2Schema(admin);
+    const syncSchema = await ensureSyncSchema(admin);
+    if (!syncSchema.ok) runBootstrapErrors.push({ step: "sync_schema", error: syncSchema.error });
+    const realtimeSchema = await ensureRealtimeSchema(admin);
+    if (!realtimeSchema.ok) runBootstrapErrors.push({ step: "realtime_schema", error: realtimeSchema.error });
+    const v2Schema = await ensureV2Schema(admin);
+    if (v2Schema?.ok === false) runBootstrapErrors.push({ step: "v2_schema", error: v2Schema.error });
 
     globalState = await loadGlobalSyncState(admin);
     let connectorsPreview = await loadConnectors(admin);
@@ -606,20 +611,19 @@ export async function runAutoKnowledgeEngine(options = {}) {
         ? startOfCurrentMonthUtc().toISOString()
         : null;
 
-    const { data: runRow } = await admin
-      .from("ake_engine_runs")
-      .insert({
-        trigger_type: triggerType,
-        status: "running",
-        import_mode: importMode,
-        sync_window_from: syncWindowFrom,
-        sync_window_to: new Date().toISOString(),
-      })
-      .select("id")
-      .single();
-    runId = runRow?.id || null;
-  } catch {
-    /* table may not exist */
+    const runRecord = await createAkeEngineRun(admin, {
+      trigger_type: triggerType,
+      status: "running",
+      import_mode: importMode,
+      sync_window_from: syncWindowFrom,
+      sync_window_to: new Date().toISOString(),
+    });
+    runId = runRecord.runId;
+    if (runRecord.error) {
+      runBootstrapErrors.push({ step: "ake_engine_runs_insert", error: runRecord.error });
+    }
+  } catch (err) {
+    runBootstrapErrors.push({ step: "run_bootstrap", error: String(err.message || err) });
   }
 
   let connectors = await loadConnectors(admin);
@@ -651,7 +655,8 @@ export async function runAutoKnowledgeEngine(options = {}) {
     rejectionReasons: {},
     gateFailures: {},
     connectorResults: [],
-    errors: [],
+    errors: runBootstrapErrors.map((e) => `${e.step}: ${e.error}`),
+    runBootstrapErrors,
   };
 
   for (const connectorConfig of connectors) {

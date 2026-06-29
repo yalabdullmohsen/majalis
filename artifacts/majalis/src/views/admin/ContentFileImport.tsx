@@ -2,18 +2,21 @@ import { useRef, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { adminImportFetch } from "@/lib/admin-api";
 import { C } from "@/lib/theme";
-import { chunkRows, formatImportApiError, parseImportFile, UPLOAD_BATCH_SIZE } from "@/lib/import-parse";
+import { chunkRows, formatImportApiError, parseImportFileAsync, UPLOAD_BATCH_SIZE } from "@/lib/import-parse";
+import { applyColumnMappings, mappingSummary, suggestColumnMappings } from "@/lib/cms/column-mapper";
 
 const IMPORT_TYPES = [
   { value: "lessons", label: "الدروس" },
   { value: "sheikhs", label: "المشايخ" },
   { value: "questions", label: "الأسئلة (QA)" },
-  { value: "books", label: "المكتب" },
-  { value: "articles", label: "المقالات" },
-  { value: "courses", label: "الدورات" },
+  { value: "books", label: "الكتب" },
+  { value: "articles", label: "المقالات / الأبحاث" },
+  { value: "courses", label: "الدورات / الحلقات" },
   { value: "benefits", label: "الفوائد" },
   { value: "adhkar", label: "الأذكار" },
   { value: "rulings", label: "الفتاوى" },
+  { value: "stories", label: "القصص" },
+  { value: "hadith", label: "الأحاديث" },
 ];
 
 const BTN: React.CSSProperties = {
@@ -224,6 +227,11 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
   const [report, setReport] = useState<ImportReport | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [canRetry, setCanRetry] = useState(false);
+  const [previewRows, setPreviewRows] = useState<Record<string, unknown>[]>([]);
+  const [columnMappingText, setColumnMappingText] = useState("");
+  const [zipFiles, setZipFiles] = useState<string[]>([]);
+  const [confirmImport, setConfirmImport] = useState(false);
+  const [pendingFile, setPendingFile] = useState<File | null>(null);
 
   const close = () => {
     setOpen(false);
@@ -235,6 +243,11 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
     setCanRetry(false);
     setFilename("");
     retryFileRef.current = null;
+    setPreviewRows([]);
+    setColumnMappingText("");
+    setZipFiles([]);
+    setConfirmImport(false);
+    setPendingFile(null);
   };
 
   const applyJobResult = (job: JobProgress, jobId: string) => {
@@ -402,7 +415,7 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
     }
   };
 
-  const runImport = async (file: File) => {
+  const runImport = async (file: File, rowsOverride?: Record<string, unknown>[]) => {
     setRunning(true);
     setReport(null);
     setError(null);
@@ -411,15 +424,25 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
     retryFileRef.current = file;
 
     try {
-      const content = await file.text();
-      setPhase("تحليل الملف");
-      const rows = parseImportFile(content, file.name);
+      let rows = rowsOverride;
+      if (!rows) {
+        const parsed = await parseImportFileAsync(file);
+        rows = parsed.rows;
+        setZipFiles(parsed.zipFiles || []);
+        const headers = rows.length ? Object.keys(rows[0]) : [];
+        const mappings = suggestColumnMappings(headers);
+        setColumnMappingText(mappingSummary(mappings));
+        rows = applyColumnMappings(rows, mappings);
+        setPreviewRows(rows.slice(0, 5));
+      }
 
       if (!rows.length) {
         throw new Error("الملف فارغ أو لا يحتوي على صفوف صالحة");
       }
 
       await runAsyncImport(file, rows);
+      setConfirmImport(false);
+      setPendingFile(null);
     } catch (e) {
       setError(String((e as Error).message || e));
       setCanRetry(true);
@@ -428,9 +451,34 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
     }
   };
 
+  const prepareImport = async (file: File) => {
+    setFilename(file.name);
+    setError(null);
+    setReport(null);
+    retryFileRef.current = file;
+    setPendingFile(file);
+
+    try {
+      const parsed = await parseImportFileAsync(file);
+      const headers = parsed.rows.length ? Object.keys(parsed.rows[0]) : [];
+      const mappings = suggestColumnMappings(headers);
+      const mapped = applyColumnMappings(parsed.rows, mappings);
+      setPreviewRows(mapped.slice(0, 5));
+      setColumnMappingText(mappingSummary(mappings));
+      setZipFiles(parsed.zipFiles || []);
+      setConfirmImport(true);
+    } catch (e) {
+      setError(String((e as Error).message || e));
+    }
+  };
+
+  const confirmAndImport = () => {
+    if (pendingFile) void runImport(pendingFile);
+  };
+
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) void runImport(file);
+    if (file) void prepareImport(file);
     e.target.value = "";
   };
 
@@ -447,7 +495,7 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
       <input
         ref={inputRef}
         type="file"
-        accept=".json,.csv,application/json,text/csv"
+        accept=".json,.csv,.xlsx,.xls,.zip,application/json,text/csv,application/zip"
         style={{ display: "none" }}
         onChange={onFileChange}
       />
@@ -479,11 +527,11 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
             onClick={(e) => e.stopPropagation()}
           >
             <h2 style={{ margin: "0 0 0.75rem", fontSize: "1.0625rem", color: C.emeraldDeep }}>
-              استيراد من ملف (JSON / CSV)
+              استيراد من ملف (CSV / JSON / Excel / ZIP)
             </h2>
             <p style={{ margin: "0 0 1rem", fontSize: "0.85rem", color: C.inkSoft, lineHeight: 1.8 }}>
-              يُحلَّل الملف محليًا ثم تُرفع الدفعات إلى مهمة استيراد — الملفات الصغيرة تُعالَج فورًا،
-              والكبيرة في الخلفية مع تتبع التقدّم كل ثانية.
+              يُحلَّل الملف محليًا مع مطابقة الأعمدة تلقائيًا — معاينة قبل الاستيراد — ZIP يدعم ملفات متعددة.
+              الصفوف التالفة تُتخطى دون إيقاف العملية.
             </p>
 
             <label style={{ display: "block", marginBottom: "0.75rem", fontSize: "0.875rem" }}>
@@ -533,6 +581,34 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
                 إغلاق
               </button>
             </div>
+
+            {columnMappingText && (
+              <p style={{ margin: "0.5rem 0 0", fontSize: "0.8125rem", color: C.inkSoft }}>
+                مطابقة الأعمدة: {columnMappingText}
+              </p>
+            )}
+
+            {zipFiles.length > 0 && (
+              <p style={{ margin: "0.35rem 0 0", fontSize: "0.8125rem", color: C.inkSoft }}>
+                ملفات ZIP: {zipFiles.join(" · ")}
+              </p>
+            )}
+
+            {confirmImport && previewRows.length > 0 && !running && (
+              <div style={{ marginTop: "0.875rem", padding: "0.75rem", background: C.parchmentDeep, borderRadius: "0.375rem", fontSize: "0.8125rem" }}>
+                <strong>معاينة ({previewRows.length} صفوف من أصل الملف)</strong>
+                <pre style={{ margin: "0.5rem 0 0", overflow: "auto", maxHeight: "120px", fontSize: "0.7rem" }}>
+                  {JSON.stringify(previewRows, null, 2)}
+                </pre>
+                <button
+                  type="button"
+                  onClick={confirmAndImport}
+                  style={{ ...BTN, marginTop: "0.5rem", background: C.emerald, color: C.parchment, border: "none" }}
+                >
+                  تأكيد الاستيراد
+                </button>
+              </div>
+            )}
 
             {filename && (
               <p style={{ margin: "0.75rem 0 0", fontSize: "0.8125rem", color: C.inkSoft }}>

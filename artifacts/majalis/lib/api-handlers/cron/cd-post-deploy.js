@@ -3,6 +3,7 @@
  */
 import { sendJson } from "../../api/_http.mjs";
 import { runPostDeployVerification } from "../../../lib/cd/post-deploy-verify.mjs";
+import { runZeroTouchActivation } from "../../../lib/zero-touch/index.mjs";
 import { recordDeployment } from "../../../lib/cd/deploy-state.mjs";
 import { sendDeploymentNotification } from "../../../lib/cd/notifications.mjs";
 import { rollbackToPreviousHealthy } from "../../../lib/cd/vercel-client.mjs";
@@ -23,7 +24,21 @@ export default async function handler(req, res) {
 
   try {
     const rollback = req.query?.rollback === "1" || req.body?.rollback === true;
-    const verify = await runPostDeployVerification({ selfHeal: true });
+    const zeroTouch = req.query?.legacy !== "1";
+
+    let verify;
+    let activation = null;
+
+    if (zeroTouch) {
+      activation = await runZeroTouchActivation({
+        selfHeal: true,
+        skipLocal: true,
+        verifyCrons: false,
+      });
+      verify = activation.phases.automationVerify;
+    } else {
+      verify = await runPostDeployVerification({ selfHeal: true });
+    }
 
     let rollbackResult = null;
     if (!verify.ok && rollback) {
@@ -38,13 +53,24 @@ export default async function handler(req, res) {
       verifyDurationMs: verify.durationMs,
       failureChecks: verify.failedChecks,
       productionUrl: verify.productionUrl,
+      selfHealActions: activation?.phases?.selfHealing?.actions?.slice(0, 10) || [],
+      metadata: activation
+        ? {
+            healthScore: activation.healthScore,
+            readinessPct: activation.readinessPct,
+            manualIntervention: activation.manualIntervention?.length ?? 0,
+          }
+        : {},
     });
 
     if (!verify.ok) {
       await sendDeploymentNotification({
         status: rollbackResult?.ok ? "rollback" : "failure",
         title: rollbackResult?.ok ? "Auto Rollback After Failed Verification" : "Post-Deploy Verification Failed",
-        reason: verify.failedChecks.join(", "),
+        reason: [
+          ...verify.failedChecks,
+          ...(activation?.manualIntervention?.slice(0, 3).map((m) => m.reason) || []),
+        ].join(", "),
         commit: process.env.VERCEL_GIT_COMMIT_SHA,
         durationMs: verify.durationMs,
       });
@@ -53,6 +79,15 @@ export default async function handler(req, res) {
     sendJson(res, verify.ok || rollbackResult?.ok ? 200 : 503, {
       ok: verify.ok || rollbackResult?.ok,
       verify,
+      activation: activation
+        ? {
+            healthScore: activation.healthScore,
+            readinessPct: activation.readinessPct,
+            audit: activation.audit,
+            alerts: activation.alerts,
+            manualIntervention: activation.manualIntervention,
+          }
+        : null,
       rollback: rollbackResult,
     });
   } catch (err) {
