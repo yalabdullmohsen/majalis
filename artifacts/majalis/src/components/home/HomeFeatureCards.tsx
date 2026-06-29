@@ -1,4 +1,4 @@
-import { BookOpen, CircleDot, Clock, Compass, Gamepad2, Hand, Radio, ScrollText, Sparkles } from "lucide-react";
+import { BookOpen, CircleDot, Clock, Compass, Gamepad2, GraduationCap, Hand, Radio, ScrollText, Sparkles } from "lucide-react";
 import { Link } from "wouter";
 import { HOME_FEATURE_CARDS } from "@/lib/navigation";
 
@@ -12,6 +12,7 @@ const ICONS = {
   scroll: ScrollText,
   compass: Compass,
   gamepad: Gamepad2,
+  "graduation-cap": GraduationCap,
 } as const;
 
 export function HomeFeatureCards() {
