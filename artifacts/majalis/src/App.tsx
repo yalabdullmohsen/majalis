@@ -1,5 +1,5 @@
 import { Suspense, type ComponentType } from "react";
-import { Redirect, Route, Switch, Router as WouterRouter, useLocation, useRoute } from "wouter";
+import { Redirect, Route, Switch, Router as WouterRouter, useLocation, useParams, useRoute } from "wouter";
 import { AuthProvider } from "@/components/AuthProvider";
 import { FontPreferenceProvider } from "@/components/FontPreferenceProvider";
 import { ThemePreferenceProvider } from "@/components/ThemePreferenceProvider";
@@ -137,11 +137,12 @@ function SeoManager() {
   return null;
 }
 
-function SafeLazyRoute({ component: Component }: { component: ComponentType }) {
+function SafeLazyRoute({ component: Component }: { component: ComponentType<any> }) {
+  const params = useParams();
   return (
     <ErrorBoundary>
       <Suspense fallback={<LazyRouteFallback />}>
-        <Component />
+        <Component params={params} />
       </Suspense>
     </ErrorBoundary>
   );

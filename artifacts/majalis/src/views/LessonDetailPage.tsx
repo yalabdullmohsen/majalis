@@ -66,9 +66,10 @@ export default function LessonDetailPage({
   params,
   initialLesson,
 }: {
-  params: { id: string };
+  params?: { id?: string };
   initialLesson?: KuwaitLessonRecord | null;
 }) {
+  const lessonId = params?.id ?? "";
   const [lesson, setLesson] = useState<any>(null);
   const [kuwaitLesson, setKuwaitLesson] = useState<KuwaitLessonRecord | null>(initialLesson ?? null);
   const [similar, setSimilar] = useState<KuwaitLessonRecord[]>([]);
@@ -98,10 +99,10 @@ export default function LessonDetailPage({
       return;
     }
 
-    if (!params.id) return;
+    if (!lessonId) return;
 
     setLoading(true);
-    getUnifiedLessonById(params.id)
+    getUnifiedLessonById(lessonId)
       .then(({ lesson: staticLesson }) => {
         if (staticLesson) {
           setKuwaitLesson(staticLesson);
@@ -119,7 +120,7 @@ export default function LessonDetailPage({
           });
         }
 
-        return getLessonById(params.id).then(({ lesson: dbLesson }) => {
+        return getLessonById(lessonId).then(({ lesson: dbLesson }) => {
           setLesson(dbLesson);
           setKuwaitLesson(null);
           if (!dbLesson) return undefined;
@@ -138,7 +139,7 @@ export default function LessonDetailPage({
         });
       })
       .finally(() => setLoading(false));
-  }, [params.id, initialLesson]);
+  }, [lessonId, initialLesson]);
 
   useEffect(() => {
     const name = kuwaitLesson?.sheikhName || lesson?.speaker_name || lesson?.sheikhs?.name;
@@ -188,8 +189,8 @@ export default function LessonDetailPage({
     };
   }, [kuwaitLesson, lesson, unified]);
 
-  useLessonSeo(seoLesson, `/lessons/${params.id}`);
-  usePageView("lesson", params.id);
+  useLessonSeo(seoLesson, `/lessons/${lessonId}`);
+  usePageView("lesson", lessonId);
 
   if (loading) return <Loading />;
   if (!unified) return <Empty text="لم يُعثر على الدرس." />;
