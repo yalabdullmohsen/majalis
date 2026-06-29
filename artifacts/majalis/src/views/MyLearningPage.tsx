@@ -44,6 +44,13 @@ export default function MyLearningPage() {
       <h1 style={{ fontSize: "1.75rem", fontWeight: 700, marginBottom: "0.5rem" }}>لوحتي التعليمية</h1>
       <p style={{ color: "var(--ink-soft)", marginBottom: "2rem" }}>تقدمك في طلب العلم — إحصاءات، إنجازات، ومكتبتك الشخصية</p>
 
+      <div className="personal-hub-links" style={{ marginBottom: "1.5rem" }}>
+        <Link href="/my-dashboard" className="ds-btn ds-btn--ghost ds-btn--sm">لوحة المستخدم</Link>
+        <Link href="/my-profile" className="ds-btn ds-btn--ghost ds-btn--sm">ملفي العلمي</Link>
+        <Link href="/my-library" className="ds-btn ds-btn--ghost ds-btn--sm">مكتبتي</Link>
+        <Link href="/my-learning-plan" className="ds-btn ds-btn--ghost ds-btn--sm">خطة طلب العلم</Link>
+      </div>
+
       {stats && (
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: "1rem", marginBottom: "2rem" }}>
           <StatCard label="دروس مكتملة" value={stats.completed_lessons} />

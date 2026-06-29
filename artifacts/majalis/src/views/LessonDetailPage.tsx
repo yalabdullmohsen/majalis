@@ -8,6 +8,8 @@ import { extractLessonSchedule, hasValue } from "@/lib/lesson-display";
 import { resolveLessonSheikhImage } from "@/lib/sheikh-image";
 import { OptimizedSheikhImage } from "@/components/sheikh/OptimizedSheikhImage";
 import { FavoriteButton } from "@/components/FavoriteButton";
+import { PersonalNotesPanel } from "@/components/personal/PersonalNotesPanel";
+import { logContentView } from "@/lib/personal-learning/recommendations";
 import { UnifiedLessonCard } from "@/components/lessons/UnifiedLessonCard";
 import {
   buildLessonCopyText,
@@ -192,6 +194,15 @@ export default function LessonDetailPage({
   useLessonSeo(seoLesson, `/lessons/${lessonId}`);
   usePageView("lesson", lessonId);
 
+  useEffect(() => {
+    if (!unified?.id) return;
+    void logContentView("lesson", unified.id, {
+      title: unified.title,
+      subject: unified.category,
+      sheikh: unified.sheikhName,
+    });
+  }, [unified?.id, unified?.title, unified?.category, unified?.sheikhName]);
+
   if (loading) return <Loading />;
   if (!unified) return <Empty text="لم يُعثر على الدرس." />;
 
@@ -369,7 +380,14 @@ export default function LessonDetailPage({
           <button type="button" className="lesson-unified-card__btn lesson-unified-card__btn--primary" onClick={handleShare}>
             مشاركة
           </button>
-          <FavoriteButton contentType="lesson" contentId={unified.id} />
+          <FavoriteButton
+            contentType="lesson"
+            contentId={unified.id}
+            title={unified.title}
+            contentUrl={`/lessons/${unified.id}`}
+            metadata={{ sheikh: unified.sheikhName, subject: unified.category }}
+          />
+          <PersonalNotesPanel contentType="lesson" contentId={unified.id} contentTitle={unified.title} compact />
           <button
             type="button"
             className="lesson-unified-card__btn lesson-unified-card__btn--secondary"

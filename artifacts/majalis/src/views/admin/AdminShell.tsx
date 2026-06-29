@@ -38,7 +38,8 @@ export type AdminSection =
   | "smart-cms"
   | "question-answer"
   | "scientific-research"
-  | "contact-messages";
+  | "contact-messages"
+  | "personal-learning";
 
 export const ADMIN_NAV: { key: AdminSection; label: string }[] = [
   { key: "dashboard", label: "لوحة التحكم" },
@@ -50,6 +51,7 @@ export const ADMIN_NAV: { key: AdminSection; label: string }[] = [
   { key: "knowledge-reasoning", label: "محرك الاستدلال" },
   { key: "search-analytics", label: "تحليل البحث" },
   { key: "digital-learning", label: "التعليم الرقمي" },
+  { key: "personal-learning", label: "التجربة الشخصية" },
   { key: "autonomous-ai", label: "المنظومة الذاتية" },
   { key: "global-reference", label: "المرجع العالمي" },
   { key: "islamic-intelligence", label: "الاستخبارات العلمية" },

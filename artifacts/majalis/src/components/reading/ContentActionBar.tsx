@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
 import { Link } from "wouter";
 import { FavoriteButton } from "@/components/FavoriteButton";
+import { PersonalNotesPanel } from "@/components/personal/PersonalNotesPanel";
 import { readPreferences, writePreferences } from "@/lib/user-preferences";
 
 type Props = {
@@ -75,7 +76,10 @@ export function ContentActionBar({
         مشاركة
       </button>
       {showSave && contentType && contentId && (
-        <FavoriteButton contentType={contentType} contentId={contentId} compact />
+        <>
+          <FavoriteButton contentType={contentType} contentId={contentId} compact />
+          <PersonalNotesPanel contentType={contentType} contentId={contentId} contentTitle={title} compact />
+        </>
       )}
       {showReadingMode && (
         <button
