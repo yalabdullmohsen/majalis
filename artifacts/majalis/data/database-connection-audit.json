@@ -1,0 +1,152 @@
+{
+  "ok": false,
+  "at": "2026-06-28T23:50:08.024Z",
+  "projectRef": "ngmvmlulzacrlicuagyp",
+  "expectedPoolerHost": "aws-1-ap-northeast-1.pooler.supabase.com",
+  "expectedPoolerPort": 6543,
+  "expectedUser": "postgres.ngmvmlulzacrlicuagyp",
+  "activeEnvVar": null,
+  "resolved": {
+    "source": "none",
+    "urlRedacted": "",
+    "normalized": false
+  },
+  "urlVariables": [
+    {
+      "key": "DATABASE_URL",
+      "set": false
+    },
+    {
+      "key": "SUPABASE_DB_URL",
+      "set": false
+    },
+    {
+      "key": "POSTGRES_URL",
+      "set": false
+    },
+    {
+      "key": "POSTGRES_PRISMA_URL",
+      "set": false
+    },
+    {
+      "key": "POSTGRES_URL_NON_POOLING",
+      "set": false
+    }
+  ],
+  "passwordVariables": [
+    {
+      "key": "SUPABASE_DB_PASSWORD",
+      "set": false
+    },
+    {
+      "key": "POSTGRES_PASSWORD",
+      "set": false
+    },
+    {
+      "key": "PGPASSWORD",
+      "set": false
+    },
+    {
+      "key": "DB_PASSWORD",
+      "set": false
+    }
+  ],
+  "componentVariables": [
+    {
+      "key": "POSTGRES_HOST",
+      "set": false
+    },
+    {
+      "key": "POSTGRES_USER",
+      "set": false
+    },
+    {
+      "key": "POSTGRES_PORT",
+      "set": false
+    },
+    {
+      "key": "POSTGRES_DATABASE",
+      "set": false
+    },
+    {
+      "key": "PGHOST",
+      "set": false
+    },
+    {
+      "key": "PGUSER",
+      "set": false
+    },
+    {
+      "key": "PGPORT",
+      "set": false
+    },
+    {
+      "key": "PGDATABASE",
+      "set": false
+    }
+  ],
+  "urlConfig": {
+    "configured": false,
+    "rawIsTransactionPooler": false,
+    "rawHost": null,
+    "rawPort": null,
+    "rawUser": null,
+    "expectedPoolerHost": "aws-1-ap-northeast-1.pooler.supabase.com",
+    "expectedPoolerPort": 6543,
+    "matchesExpectedPooler": false,
+    "needsVercelUpdate": false,
+    "hasPlaceholderPassword": true,
+    "normalized": false,
+    "normalizeReason": "empty",
+    "connectionSource": "none"
+  },
+  "conflicts": [],
+  "expectedCanonical": "",
+  "autoKnowledgeEngine": {
+    "module": "auto-knowledge-engine/orchestrator.mjs",
+    "path": "Supabase REST (service role) for data; PostgreSQL via resolveDatabaseUrl() for migrations/RPC",
+    "activeEnvVar": null,
+    "connectionSource": "none",
+    "note": "AKE cron does NOT use a separate DB URL — same DATABASE_URL as all server-side pg clients"
+  },
+  "connection": {
+    "ok": false,
+    "error": "DATABASE_URL not configured — set Supabase Transaction Pooler URL on Vercel (postgresql://postgres.[ref]:[password]@aws-1-ap-northeast-1.pooler.supabase.com:6543/postgres)",
+    "stack": "Error: DATABASE_URL not configured — set Supabase Transaction Pooler URL on Vercel (postgresql://postgres.[ref]:[password]@aws-1-ap-northeast-1.pooler.supabase.com:6543/postgres)\n    at getPgClient (file:///workspace/artifacts/majalis/lib/database.mjs:250:11)\n    at testDatabaseConnection (file:///workspace/artifacts/majalis/lib/database.mjs:292:24)\n    at auditDatabaseConnection (file:///workspace/artifacts/majalis/lib/audit-database-env.mjs:120:24)\n    at file:///workspace/artifacts/majalis/scripts/audit-database-connection.mjs:14:22\n    at ModuleJob.run (node:internal/modules/esm/module_job:271:25)\n    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:578:26)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:116:5)",
+    "durationMs": 0,
+    "databaseUrlExists": false,
+    "databaseUrlSource": "none",
+    "urlConfig": {
+      "configured": false,
+      "rawIsTransactionPooler": false,
+      "rawHost": null,
+      "rawPort": null,
+      "rawUser": null,
+      "expectedPoolerHost": "aws-1-ap-northeast-1.pooler.supabase.com",
+      "expectedPoolerPort": 6543,
+      "matchesExpectedPooler": false,
+      "needsVercelUpdate": false,
+      "hasPlaceholderPassword": true,
+      "normalized": false,
+      "normalizeReason": "empty",
+      "connectionSource": "none"
+    }
+  },
+  "recommendations": [
+    {
+      "priority": "critical",
+      "action": "Set DATABASE_URL on Vercel Production",
+      "detail": "postgresql://postgres.ngmvmlulzacrlicuagyp:[password]@aws-1-ap-northeast-1.pooler.supabase.com:6543/postgres"
+    },
+    {
+      "priority": "critical",
+      "action": "Replace placeholder password in DATABASE_URL",
+      "detail": "Supabase Dashboard → Project Settings → Database → Database password"
+    },
+    {
+      "priority": "critical",
+      "action": "Update database password in DATABASE_URL",
+      "detail": "DATABASE_URL not configured — set Supabase Transaction Pooler URL on Vercel (postgresql://postgres.[ref]:[password]@aws-1-ap-northeast-1.pooler.supabase.com:6543/postgres)"
+    }
+  ]
+}
