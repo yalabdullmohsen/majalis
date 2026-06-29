@@ -147,6 +147,7 @@ export const API_ROUTES = [
   { prefix: "/api/cron/knowledge-reasoning", module: "./api-handlers/cron/knowledge-reasoning.js", allowGet: true, exact: true },
   { prefix: "/api/admin/auto-content", module: "./api-handlers/admin/auto-content.js", allowGet: true },
   { prefix: "/api/admin/auto-knowledge-engine", module: "./api-handlers/admin/auto-knowledge-engine.js", allowGet: true },
+  { prefix: "/api/admin/global-knowledge-engine", module: "./api-handlers/admin/global-knowledge-engine.js", allowGet: true },
   { prefix: "/api/admin/ake-monitoring", module: "./api-handlers/admin/ake-monitoring.js", allowGet: true },
   { prefix: "/api/admin/purge-test-content", module: "./api-handlers/admin/purge-test-content.js", allowGet: true },
   { prefix: "/api/admin/deployment-pipeline", module: "./api-handlers/admin/deployment-pipeline.js", allowGet: true },

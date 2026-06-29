@@ -22,6 +22,7 @@ import autoContentAdminHandler from "../lib/api-handlers/admin/auto-content.js";
 import autoKnowledgeSyncHandler from "../lib/api-handlers/cron/auto-knowledge-sync.js";
 import connectorHealthHandler from "../lib/api-handlers/cron/connector-health.js";
 import autoKnowledgeAdminHandler from "../lib/api-handlers/admin/auto-knowledge-engine.js";
+import globalKnowledgeEngineAdminHandler from "../lib/api-handlers/admin/global-knowledge-engine.js";
 import knowledgeRecommendationsHandler from "../lib/api-handlers/knowledge-recommendations.js";
 import intelligentSearchHandler from "../lib/api-handlers/intelligent-search.js";
 import searchAutocompleteHandler from "../lib/api-handlers/search-autocomplete.js";

@@ -25,6 +25,7 @@ export type AdminSection =
   | "quran-scientific-circles"
   | "updates"
   | "knowledge-engine"
+  | "global-knowledge-engine"
   | "scholarly-verification"
   | "verified-knowledge"
   | "knowledge-reasoning"
@@ -45,6 +46,7 @@ export const ADMIN_NAV: { key: AdminSection; label: string }[] = [
   { key: "dashboard", label: "لوحة التحكم" },
   { key: "smart-cms", label: "CMS الذكي" },
   { key: "aggregator", label: "محرك التجميع" },
+  { key: "global-knowledge-engine", label: "GKE — محرك المعرفة" },
   { key: "knowledge-engine", label: "Auto Knowledge Engine" },
   { key: "scholarly-verification", label: "التوثيق العلمي" },
   { key: "verified-knowledge", label: "المعرفة الموثقة" },

@@ -21,6 +21,7 @@ import { AnnualCoursesSection } from "@/views/admin/AnnualCoursesSection";
 import { QuranScientificCirclesSection } from "@/views/admin/QuranScientificCirclesSection";
 import { UpdatesSection } from "@/views/admin/UpdatesSection";
 import { KnowledgeEngineSection } from "@/views/admin/KnowledgeEngineSection";
+import { GlobalKnowledgeEngineSection } from "@/views/admin/GlobalKnowledgeEngineSection";
 import { ScholarlyVerificationSection } from "@/views/admin/ScholarlyVerificationSection";
 import { VerifiedKnowledgeSection } from "@/views/admin/VerifiedKnowledgeSection";
 import { KnowledgeReasoningSection } from "@/views/admin/KnowledgeReasoningSection";
@@ -92,6 +93,8 @@ function SectionContent({ section }: { section: AdminSection }) {
       return <AggregatorSection />;
     case "knowledge-engine":
       return <KnowledgeEngineSection />;
+    case "global-knowledge-engine":
+      return <GlobalKnowledgeEngineSection />;
     case "scholarly-verification":
       return <ScholarlyVerificationSection />;
     case "verified-knowledge":

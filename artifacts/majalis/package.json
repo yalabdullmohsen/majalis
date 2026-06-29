@@ -72,6 +72,8 @@
     "smoke:admin-nav": "node scripts/smoke-admin-nav.mjs",
     "smoke:question-answer-routes": "node scripts/smoke-question-answer-routes.mjs",
     "smoke:scientific-research-routes": "node scripts/smoke-scientific-research-routes.mjs",
+    "smoke:gke-architecture": "node scripts/smoke-gke-architecture.mjs",
+    "test:gke-pipeline": "node scripts/test-gke-pipeline.mjs",
     "test:scientific-research": "node scripts/test-scientific-research.mjs",
     "test:vision-2-integration": "node scripts/test-vision-2-integration.mjs",
     "apply:sin-jeem-migration": "node scripts/apply-sin-jeem-migration.mjs",
