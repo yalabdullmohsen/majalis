@@ -112,6 +112,7 @@ export const MIGRATION_FILES = [
   "kuwait_lessons_extend.sql",
   "content_import_jobs_v1.sql",
   "smart_cms_v5.sql",
+  "cms_platform_v6.sql",
   "lesson_import_drafts_v1.sql",
   "trusted_lesson_sources_v1.sql",
   "kuwait_instagram_sources_v1.sql",

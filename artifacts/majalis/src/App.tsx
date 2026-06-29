@@ -96,6 +96,7 @@ const RulingDetailPage = lazy(() => import("@/views/RulingDetailPage"));
 const UpdatesPage = lazy(() => import("@/views/UpdatesPage"));
 const AutoContentDetailPage = lazy(() => import("@/views/AutoContentDetailPage"));
 const DeveloperPage = lazy(() => import("@/views/DeveloperPage"));
+const ContributePage = lazy(() => import("@/views/ContributePage"));
 const AdminPage = lazyWithRetry(() => import("@/views/AdminPage"), "AdminPage");
 const LessonImportImagePage = lazyWithRetry(() => import("@/views/admin/LessonImportImagePage"), "LessonImportImagePage");
 const LessonImportUrlPage = lazyWithRetry(() => import("@/views/admin/LessonImportUrlPage"), "LessonImportUrlPage");
@@ -184,6 +185,7 @@ function Router() {
       <Route path="/privacy" component={PrivacyPage} />
       <Route path="/terms" component={TermsPage} />
       <Route path="/contact" component={ContactPage} />
+      <Route path="/contribute"><SafeLazyRoute component={ContributePage} /></Route>
       <Route path="/settings"><SafeLazyRoute component={SettingsPage} /></Route>
       <Route path="/search/:q"><SafeLazyRoute component={SearchPage} /></Route>
       <Route path="/search"><SafeLazyRoute component={SearchPage} /></Route>
