@@ -8,6 +8,7 @@ import {
   type IntelligentSearchResult,
   type TopicSection,
 } from "@/lib/scholarly-intelligence-service";
+import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 
 function SectionGroup({
   title,
@@ -127,6 +128,8 @@ export default function TopicPage() {
           </div>
         </aside>
       )}
+
+      <RelatedKnowledge topicSlug={slug} query={topic?.title} title="محتوى مرتبط بالموضوع" limit={8} />
     </div>
   );
 }

@@ -1419,3 +1419,47 @@ hr.decorative,
   margin: 0.5rem 0 0;
   padding-inline-start: 1.25rem;
 }
+
+/* Vision 2.0 — unified cross-content cards */
+.unified-content-card-link {
+  display: block;
+  height: 100%;
+}
+
+.unified-content-card {
+  padding: var(--ds-space-3, 0.75rem) var(--ds-space-4, 1rem);
+  border: 1px solid var(--line, #e5e7eb);
+  border-radius: var(--ds-radius, 0.5rem);
+  background: var(--majalis-panel, #fff);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  height: 100%;
+}
+
+.unified-content-card-link:hover .unified-content-card {
+  border-color: var(--ds-emerald-muted, #6ee7b7);
+  box-shadow: 0 2px 8px rgba(22, 78, 60, 0.08);
+}
+
+.unified-content-card__title {
+  margin: 0;
+  font-size: var(--ds-text-sm, 0.875rem);
+  font-weight: 700;
+  color: var(--emerald-deep, #065f46);
+  line-height: 1.4;
+}
+
+.unified-content-card__meta,
+.unified-content-card__keywords {
+  margin: 0.25rem 0 0;
+  font-size: var(--ds-text-xs, 0.75rem);
+  color: var(--ink-soft, #6b7280);
+  line-height: 1.5;
+}
+
+.related-knowledge__grid {
+  margin-top: var(--ds-space-3, 0.75rem);
+}
+
+.related-knowledge__hint {
+  margin-top: var(--ds-space-2, 0.5rem);
+}

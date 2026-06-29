@@ -25,6 +25,8 @@ const FOOTER_GROUPS = [
     links: [
       { href: "/about", label: "من نحن" },
       { href: "/contact", label: "تواصل معنا" },
+      { href: "/topics", label: "الموضوعات العلمية" },
+      { href: "/scholar-search", label: "الباحث العلمي" },
       { href: "/privacy", label: "الخصوصية" },
       { href: "/terms", label: "الشروط" },
     ],

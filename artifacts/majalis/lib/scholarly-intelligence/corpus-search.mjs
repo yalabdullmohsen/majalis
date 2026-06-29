@@ -6,6 +6,7 @@
 import { processQuery, normalizeArabic } from "./query-processor.mjs";
 import { enrichResult } from "./url-resolver.mjs";
 import { ARBAEEN_INDEX } from "./corpus-arbaeen.mjs";
+import { RESEARCH_SEED_PAPERS } from "../scientific-research/seed-data.mjs";
 
 const SURAH_NAMES = [
   "الفاتحة", "البقرة", "آل عمران", "النساء", "المائدة", "الأنعام", "الأعراف", "الأنفال", "التوبة", "يونس",
@@ -127,7 +128,7 @@ async function searchSheikhs(admin, queryInfo, limit) {
         kind: "sheikh",
         title: s.name,
         summary: s.bio?.slice(0, 120),
-        href: `/lessons?sheikh=${encodeURIComponent(s.name)}`,
+        href: s.external_key ? `/sheikhs/${s.external_key}` : `/sheikhs/${s.id}`,
         verification_status: s.is_verified ? "verified" : undefined,
         rank: 6,
       }),
@@ -178,23 +179,35 @@ async function searchCircles(admin, queryInfo, limit) {
 }
 
 async function searchResearch(admin, queryInfo, limit) {
-  if (!admin) return [];
-  const { data } = await admin
-    .from("fiqh_council_items")
-    .select("id, title, summary, slug, category, status")
-    .eq("status", "published")
-    .limit(limit * 3);
-  return (data || [])
-    .filter((r) => fuzzyMatch([r.title, r.summary, r.category].join(" "), queryInfo))
+  let rows = [];
+  if (admin) {
+    try {
+      const { data } = await admin
+        .from("research_papers")
+        .select("id, slug, title, abstract_short, author_name, university, specialization, keywords, status")
+        .eq("status", "published")
+        .limit(limit * 3);
+      rows = data || [];
+    } catch {
+      rows = [];
+    }
+  }
+  if (!rows.length) {
+    rows = RESEARCH_SEED_PAPERS.filter((p) => p.status === "published");
+  }
+  return rows
+    .filter((r) =>
+      fuzzyMatch([r.title, r.author_name, r.university, r.specialization, ...(r.keywords || [])].join(" "), queryInfo),
+    )
     .slice(0, limit)
     .map((r) =>
       enrichResult({
         id: r.id,
         kind: "research",
         title: r.title,
-        summary: r.summary?.slice(0, 160) || r.category,
-        href: `/fiqh-council/${r.slug || r.id}`,
-        verification_status: "verified",
+        summary: [r.author_name, r.university].filter(Boolean).join(" · "),
+        href: `/research/${r.slug}`,
+        keywords: r.keywords || [],
         rank: 7,
       }),
     );

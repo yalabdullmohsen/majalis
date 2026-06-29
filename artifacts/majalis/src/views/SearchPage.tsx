@@ -304,7 +304,7 @@ export default function SearchPage() {
   const researchResults = q.trim() ? searchScientificResearchSync(q, 12) : [];
 
   const intelligentTotal = intelligentResults.length;
-  const legacyTotal =
+  const legacyOnlyTotal =
     fiqhResults.length +
     results.lessons.length +
     results.library.length +
@@ -315,17 +315,12 @@ export default function SearchPage() {
     (results.fatwas?.length || 0) +
     (results.rulings?.length || 0) +
     (results.courses?.length || 0) +
-    circlesResults.length +
     (results.updates?.length || 0) +
     localExtra.occasions.length +
     localExtra.nawawi.length +
-    localExtra.quran.length +
-    researchResults.length;
+    localExtra.quran.length;
 
-  const total =
-    intelligentTotal > 0
-      ? intelligentTotal
-      : legacyTotal;
+  const total = intelligentTotal > 0 ? intelligentTotal : legacyOnlyTotal + circlesResults.length + researchResults.length;
 
   return (
     <div className="page-shell narrow search-page ds-page">

@@ -63,6 +63,7 @@
     "smoke:question-answer-routes": "node scripts/smoke-question-answer-routes.mjs",
     "smoke:scientific-research-routes": "node scripts/smoke-scientific-research-routes.mjs",
     "test:scientific-research": "node scripts/test-scientific-research.mjs",
+    "test:vision-2-integration": "node scripts/test-vision-2-integration.mjs",
     "apply:sin-jeem-migration": "node scripts/apply-sin-jeem-migration.mjs",
     "apply:question-answer-migration": "node scripts/apply-sin-jeem-migration.mjs",
     "seed:sin-jeem": "node scripts/seed-question-answer.mjs",

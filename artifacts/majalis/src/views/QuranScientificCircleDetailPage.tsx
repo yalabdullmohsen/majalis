@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { Loading, Empty } from "@/components/ui-common";
 import { ContentDetailLayout } from "@/components/platform/ContentDetailLayout";
+import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { getQuranScientificCircleById } from "@/lib/quran-scientific-circles-service";
 import {
   REGISTRATION_LABELS,
@@ -270,6 +271,8 @@ export default function QuranScientificCircleDetailPage() {
       <p className="qsc-detail-back">
         <Link href="/quran-scientific-circles">← العودة إلى الحلقات</Link>
       </p>
+
+      <RelatedKnowledge kind="circle" recordId={item.id} query={item.title} title="محتوى ذو صلة" limit={8} />
     </ContentDetailLayout>
   );
 }

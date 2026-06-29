@@ -28,6 +28,7 @@ import { mapLessonRow } from "@/lib/kuwait-lessons";
 import { cleanTimeText } from "@/lib/lesson-time";
 import { useLessonSeo } from "@/lib/seo";
 import { usePageView } from "@/hooks/usePageView";
+import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { fetchLessonEngagementStats, type LessonEngagementStats } from "@/lib/lesson-stats";
 import { normalizeActivityLabel } from "@/lib/activity-label";
 import { resolveLessonPosterUrl } from "@/lib/lesson-image";
@@ -431,6 +432,14 @@ export default function LessonDetailPage({
           </div>
         </section>
       )}
+
+      <RelatedKnowledge
+        kind="lesson"
+        recordId={unified.id}
+        query={[unified.title, unified.speaker_name, unified.category].filter(Boolean).join(" ")}
+        title="محتوى ذو صلة"
+        limit={8}
+      />
     </div>
   );
 }

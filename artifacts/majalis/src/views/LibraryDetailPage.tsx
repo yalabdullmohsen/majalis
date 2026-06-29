@@ -7,6 +7,7 @@ import { getRelatedLibraryBooks, isCatalogBookId, type LibraryItem } from "@/lib
 import { applyPageSeo } from "@/lib/seo";
 import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
 import { usePageView } from "@/hooks/usePageView";
+import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 
 export default function LibraryDetailPage({ params }: { params: { id: string } }) {
   const [item, setItem] = useState<LibraryItem | null>(null);
@@ -60,6 +61,7 @@ export default function LibraryDetailPage({ params }: { params: { id: string } }
   const metaParts = [item.category, item.type, item.parts_label].filter(Boolean);
 
   return (
+    <>
     <ContentDetailLayout
       breadcrumbs={[
         { label: "الرئيسية", href: "/" },
@@ -98,5 +100,9 @@ export default function LibraryDetailPage({ params }: { params: { id: string } }
         </p>
       )}
     </ContentDetailLayout>
+    <div className="page-shell narrow">
+      <RelatedKnowledge kind="library" recordId={item.id} query={item.title} title="محتوى ذو صلة" limit={8} />
+    </div>
+    </>
   );
 }

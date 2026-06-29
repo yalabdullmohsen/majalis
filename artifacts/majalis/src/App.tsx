@@ -196,7 +196,6 @@ function Router() {
       <Route path="/kuwait-lessons"><Redirect to="/lessons" /></Route>
       <Route path="/announcements"><Redirect to="/lessons" /></Route>
       <Route path="/courses"><Redirect to="/lessons?tab=courses" /></Route>
-      <Route path="/sheikhs/:id"><Redirect to="/lessons" /></Route>
       <Route path="/sheikhs"><Redirect to="/lessons" /></Route>
       <Route path="/library/:id"><SafeLazyRoute component={LibraryDetailPage} /></Route>
       <Route path="/library"><SafeLazyRoute component={LibraryPage} /></Route>

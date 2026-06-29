@@ -82,6 +82,8 @@ const ScientificResearchPage = lazy(() => import("@/views/scientific-research/Sc
 const ScientificResearchDetailPage = lazy(() => import("@/views/scientific-research/ScientificResearchDetailPage"));
 const ScientificResearchAuthorPage = lazy(() => import("@/views/scientific-research/ScientificResearchAuthorPage"));
 const ScientificResearchUploadPage = lazy(() => import("@/views/scientific-research/ScientificResearchUploadPage"));
+const QuranScientificCirclesPage = lazy(() => import("@/views/QuranScientificCirclesPage"));
+const QuranScientificCircleDetailPage = lazy(() => import("@/views/QuranScientificCircleDetailPage"));
 
 function SeoManager() {
   const [location] = useLocation();
@@ -123,6 +125,8 @@ export default function AppRoutes() {
         <Route path="/settings"><SafeLazyRoute component={SettingsPage} /></Route>
         <Route path="/search/:q"><SafeLazyRoute component={SearchPage} /></Route>
         <Route path="/search"><SafeLazyRoute component={SearchPage} /></Route>
+        <Route path="/scholar-search/:q"><SafeLazyRoute component={SearchPage} /></Route>
+        <Route path="/scholar-search"><SafeLazyRoute component={SearchPage} /></Route>
         <Route path="/topics/:slug"><SafeLazyRoute component={TopicPage} /></Route>
         <Route path="/topics"><SafeLazyRoute component={TopicsIndexPage} /></Route>
         <Route path="/scientific-announcements/:id"><SafeLazyRoute component={ScientificAnnouncementDetailPage} /></Route>
@@ -178,6 +182,8 @@ export default function AppRoutes() {
         <Route path="/scientific-research/author/:slug"><Redirect to="/research/author/:slug" /></Route>
         <Route path="/scientific-research/:slug"><Redirect to="/research/:slug" /></Route>
         <Route path="/scientific-research"><Redirect to="/research" /></Route>
+        <Route path="/quran-scientific-circles/:id"><SafeLazyRoute component={QuranScientificCircleDetailPage} /></Route>
+        <Route path="/quran-scientific-circles"><SafeLazyRoute component={QuranScientificCirclesPage} /></Route>
         <Route path="/annual-courses/:id"><SafeLazyRoute component={AnnualCourseDetailPage} /></Route>
         <Route path="/annual-courses"><SafeLazyRoute component={AnnualCoursesPage} /></Route>
         <Route path="/fiqh-council/sessions/:slug"><SafeLazyRoute component={FiqhCouncilSessionDetailPage} /></Route>

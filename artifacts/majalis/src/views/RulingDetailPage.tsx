@@ -8,6 +8,7 @@ import type { ShariaRulingExtended } from "@/lib/rulings-types";
 import { applyPageSeo } from "@/lib/seo";
 import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
 import { usePageView } from "@/hooks/usePageView";
+import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 
 export default function RulingDetailPage({ params }: { params: { id: string } }) {
   const [item, setItem] = useState<ShariaRulingExtended | null>(null);
@@ -63,6 +64,7 @@ export default function RulingDetailPage({ params }: { params: { id: string } })
   const relations = buildRulingRelations(item);
 
   return (
+    <>
     <ContentDetailLayout
       breadcrumbs={[
         { label: "الرئيسية", href: "/" },
@@ -88,5 +90,9 @@ export default function RulingDetailPage({ params }: { params: { id: string } })
     >
       <RulingDetailSections ruling={item} relations={relations} />
     </ContentDetailLayout>
+    <div className="page-shell narrow">
+      <RelatedKnowledge kind="ruling" recordId={item.id} query={item.title} title="محتوى ذو صلة" limit={8} />
+    </div>
+    </>
   );
 }

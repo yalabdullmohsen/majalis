@@ -199,5 +199,7 @@ export const HOME_MORE_SECTIONS = [
   { href: "/learning/paths", title: "المسارات العلمية", description: "تعلم منظم من المبتدئ للمتقدم" },
   { href: "/my-learning", title: "لوحتي التعليمية", description: "تقدمك وإنجازاتك" },
   { href: "/quiz", title: "المسابقات", description: "اختبر معلوماتك" },
+  { href: "/topics", title: "الموضوعات العلمية", description: "فهرس الموضوعات الشرعية" },
+  { href: "/scholar-search", title: "الباحث العلمي", description: "بحث موحّد في كل المحتوى" },
   { href: "/question-answer", title: "سؤال وجواب", description: "لعبة المعلومات الإسلامية" },
 ] as const;

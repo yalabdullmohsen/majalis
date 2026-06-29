@@ -86,7 +86,13 @@ export function resolveContentUrl(item) {
       return id ? `/fiqh-council/${item.slug || id}` : "/fiqh-council";
     case "sheikh":
     case "sheikhs":
-      return "/lessons";
+      return item.external_key
+        ? `/sheikhs/${item.external_key}`
+        : id
+          ? `/sheikhs/${id}`
+          : item.name
+            ? `/search/${encodeURIComponent(item.name)}`
+            : "/lessons";
     case "quran":
       return item.id?.startsWith("surah-")
         ? `/quran?surah=${String(item.id).replace("surah-", "")}`
@@ -104,7 +110,7 @@ export function resolveContentUrl(item) {
     case "mosques":
       return item.href || "/lessons";
     case "research":
-      return id ? `/fiqh-council/${item.slug || id}` : "/fiqh-council/research";
+      return item.slug ? `/research/${item.slug}` : id ? `/research/${id}` : "/research";
     case "learning_path":
       return item.href || (item.slug ? `/learning/paths/${item.slug}` : "/learning/paths");
     case "sin_jeem":
