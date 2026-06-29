@@ -1,0 +1,703 @@
+{
+  "at": "2026-06-29T12:17:27.465Z",
+  "trustedSources": 10,
+  "importedToday": 0,
+  "reviewQueue": 0,
+  "gke": {
+    "ok": true,
+    "version": "1.1.0",
+    "phase": 2,
+    "shadow_mode": true,
+    "pipeline_layers": [
+      {
+        "id": "source_registry",
+        "label": "Source Registry",
+        "phase": 2,
+        "status": "active",
+        "implementation": "delegated",
+        "delegate": [
+          "majlis-knowledge-engine/source-registry",
+          "ake_connectors"
+        ]
+      },
+      {
+        "id": "fetch_engine",
+        "label": "Fetch Engine",
+        "phase": 3,
+        "status": "active",
+        "implementation": "delegated",
+        "delegate": [
+          "auto-knowledge-engine/connectors",
+          "cms/connectors",
+          "autonomous-platform/fetch"
+        ]
+      },
+      {
+        "id": "parser_engine",
+        "label": "Parser Engine",
+        "phase": 3,
+        "status": "active",
+        "implementation": "delegated",
+        "delegate": [
+          "content-pipeline/runner"
+        ]
+      },
+      {
+        "id": "normalization_engine",
+        "label": "Normalization Engine",
+        "phase": 3,
+        "status": "active",
+        "implementation": "delegated",
+        "delegate": [
+          "content-pipeline/runner"
+        ]
+      },
+      {
+        "id": "ai_classification_engine",
+        "label": "AI Classification Engine",
+        "phase": 4,
+        "status": "active",
+        "implementation": "delegated",
+        "delegate": [
+          "knowledge-engine/ai-analyzer"
+        ]
+      },
+      {
+        "id": "deduplication_engine",
+        "label": "Deduplication Engine",
+        "phase": 5,
+        "status": "active",
+        "implementation": "delegated",
+        "delegate": [
+          "auto-knowledge-engine/v2/unified-dedup"
+        ]
+      },
+      {
+        "id": "quality_engine",
+        "label": "Quality Engine",
+        "phase": 4,
+        "status": "active",
+        "implementation": "delegated",
+        "delegate": [
+          "auto-knowledge-engine/quality-gate",
+          "knowledge-engine/quality"
+        ]
+      },
+      {
+        "id": "review_queue",
+        "label": "Review Queue",
+        "phase": 4,
+        "status": "active",
+        "implementation": "delegated",
+        "delegate": [
+          "knowledge_items",
+          "ake_job_queue"
+        ]
+      },
+      {
+        "id": "cms_dispatcher",
+        "label": "Smart CMS",
+        "phase": 6,
+        "status": "active",
+        "implementation": "delegated",
+        "delegate": [
+          "knowledge-engine/publisher",
+          "cms/content-registry"
+        ]
+      },
+      {
+        "id": "search_index",
+        "label": "Search Index",
+        "phase": 7,
+        "status": "active",
+        "implementation": "delegated",
+        "delegate": [
+          "knowledge-engine/indexer",
+          "scholarly-intelligence/unified-search"
+        ]
+      }
+    ],
+    "pipeline_ok": true,
+    "tables": {
+      "expected": 7,
+      "present": 0,
+      "missing": [
+        "gke_pipeline_runs",
+        "gke_events",
+        "gke_trusted_sources",
+        "gke_source_reputation_log",
+        "gke_shadow_items",
+        "gke_acquisition_metrics",
+        "gke_integration_phases"
+      ]
+    },
+    "trusted_sources_count": 10,
+    "acquisition": {
+      "ok": true,
+      "shadow_mode": {
+        "enabled": true,
+        "auto_publish": false,
+        "review_queue": true,
+        "description": "جلب وتحليل وتصنيف دون نشر تلقائي"
+      },
+      "integration_phases": [
+        {
+          "phase_order": 1,
+          "content_kind": "lesson",
+          "label_ar": "الدروس",
+          "enabled": true,
+          "shadow_only": true
+        },
+        {
+          "phase_order": 2,
+          "content_kind": "circle",
+          "label_ar": "الحلقات",
+          "enabled": false,
+          "shadow_only": true
+        },
+        {
+          "phase_order": 3,
+          "content_kind": "course",
+          "label_ar": "الفرص العلمية",
+          "enabled": false,
+          "shadow_only": true
+        },
+        {
+          "phase_order": 4,
+          "content_kind": "calendar",
+          "label_ar": "التقويم",
+          "enabled": false,
+          "shadow_only": true
+        },
+        {
+          "phase_order": 5,
+          "content_kind": "library",
+          "label_ar": "الكتب",
+          "enabled": false,
+          "shadow_only": true
+        },
+        {
+          "phase_order": 6,
+          "content_kind": "article",
+          "label_ar": "المقالات",
+          "enabled": false,
+          "shadow_only": true
+        },
+        {
+          "phase_order": 7,
+          "content_kind": "research",
+          "label_ar": "الأبحاث",
+          "enabled": false,
+          "shadow_only": true
+        }
+      ],
+      "metrics": {
+        "total_sources": 23,
+        "active_sources": 10,
+        "total_imported": 0,
+        "total_accepted": 0,
+        "total_rejected": 0,
+        "total_duplicate": 0,
+        "success_rate": 0,
+        "duplicate_rate": 0,
+        "validation_rate": 0,
+        "avg_processing_ms": 0,
+        "queue_size": 0,
+        "shadow_mode": true
+      },
+      "best_sources": [
+        {
+          "slug": "majlis-seed",
+          "name": "بذور المجلس العلمي",
+          "category_type": "rss",
+          "source_type": "website",
+          "source_url": "https://majlisilm.com",
+          "official_site": "https://majlisilm.com",
+          "country": "KW",
+          "language": "ar",
+          "trust_score": 100,
+          "reputation_score": 100,
+          "content_types": [
+            "lesson",
+            "fawaid",
+            "book",
+            "miracle",
+            "qa",
+            "article"
+          ],
+          "refresh_interval_hours": 24,
+          "publish_policy": "shadow",
+          "is_active": false,
+          "is_official": true,
+          "items_imported": 0,
+          "items_accepted": 0,
+          "items_rejected": 0,
+          "items_duplicate": 0,
+          "last_sync_at": null,
+          "last_error": null,
+          "metadata": {},
+          "registry_origin": "official_sources"
+        },
+        {
+          "slug": "alifta-gov",
+          "name": "اللجنة الدائمة للبحوث العلمية والإفتاء",
+          "category_type": "awqaf_ministry",
+          "source_type": "rss",
+          "source_url": "https://www.alifta.gov.sa",
+          "feed_url": "https://www.alifta.gov.sa/ar/rss",
+          "official_site": "https://www.alifta.gov.sa",
+          "country": "SA",
+          "language": "ar",
+          "trust_score": 98,
+          "reputation_score": 98,
+          "content_types": [
+            "fatwa",
+            "permanent_committee_fatwa",
+            "article"
+          ],
+          "refresh_interval_hours": 24,
+          "publish_policy": "shadow",
+          "is_active": true,
+          "is_official": true,
+          "items_imported": 0,
+          "items_accepted": 0,
+          "items_rejected": 0,
+          "items_duplicate": 0,
+          "last_sync_at": null,
+          "last_error": null,
+          "metadata": {},
+          "registry_origin": "gke_trusted"
+        },
+        {
+          "slug": "iifa-oic",
+          "name": "المجمع الفقهي الإسلامي الدولي",
+          "category_type": "government",
+          "source_type": "rss",
+          "source_url": "https://www.iifa-aifi.org",
+          "feed_url": "https://www.iifa-aifi.org/ar/feed",
+          "official_site": "https://www.iifa-aifi.org",
+          "country": "SA",
+          "language": "ar",
+          "trust_score": 95,
+          "reputation_score": 95,
+          "content_types": [
+            "fiqh_decision",
+            "article"
+          ],
+          "refresh_interval_hours": 12,
+          "publish_policy": "shadow",
+          "is_active": true,
+          "is_official": true,
+          "items_imported": 0,
+          "items_accepted": 0,
+          "items_rejected": 0,
+          "items_duplicate": 0,
+          "last_sync_at": null,
+          "last_error": null,
+          "metadata": {},
+          "registry_origin": "gke_trusted"
+        },
+        {
+          "slug": "iifa",
+          "name": "المجمع الفقهي الإسلامي الدولي",
+          "category_type": "rss",
+          "source_type": "rss",
+          "source_url": "https://www.iifa-aifi.org/ar/feed",
+          "feed_url": "https://www.iifa-aifi.org/ar/feed",
+          "official_site": "https://www.iifa-aifi.org",
+          "country": "KW",
+          "language": "ar",
+          "trust_score": 95,
+          "reputation_score": 95,
+          "content_types": [
+            "lesson"
+          ],
+          "refresh_interval_hours": 24,
+          "publish_policy": "shadow",
+          "is_active": true,
+          "is_official": true,
+          "items_imported": 0,
+          "items_accepted": 0,
+          "items_rejected": 0,
+          "items_duplicate": 0,
+          "last_sync_at": null,
+          "last_error": null,
+          "metadata": {},
+          "registry_origin": "trusted_sources"
+        },
+        {
+          "slug": "alifta",
+          "name": "هيئة كبار العلماء",
+          "category_type": "rss",
+          "source_type": "rss",
+          "source_url": "https://www.alifta.com/rss.aspx",
+          "feed_url": "https://www.alifta.com/rss.aspx",
+          "official_site": "https://www.alifta.com",
+          "country": "KW",
+          "language": "ar",
+          "trust_score": 95,
+          "reputation_score": 95,
+          "content_types": [
+            "lesson"
+          ],
+          "refresh_interval_hours": 24,
+          "publish_policy": "shadow",
+          "is_active": false,
+          "is_official": true,
+          "items_imported": 0,
+          "items_accepted": 0,
+          "items_rejected": 0,
+          "items_duplicate": 0,
+          "last_sync_at": null,
+          "last_error": null,
+          "metadata": {},
+          "registry_origin": "trusted_sources"
+        }
+      ],
+      "worst_sources": [
+        {
+          "slug": "kuwait-lessons",
+          "name": "دروس الكويت — مصادر محلية",
+          "category_type": "government",
+          "source_type": "website",
+          "source_url": "https://majlisilm.com",
+          "official_site": "https://majlisilm.com",
+          "country": "KW",
+          "language": "ar",
+          "trust_score": 80,
+          "reputation_score": 80,
+          "content_types": [
+            "lesson",
+            "lecture",
+            "course"
+          ],
+          "refresh_interval_hours": 6,
+          "publish_policy": "shadow",
+          "is_active": false,
+          "is_official": true,
+          "items_imported": 0,
+          "items_accepted": 0,
+          "items_rejected": 0,
+          "items_duplicate": 0,
+          "last_sync_at": null,
+          "last_error": null,
+          "metadata": {},
+          "registry_origin": "official_sources"
+        },
+        {
+          "slug": "kfas-sharia",
+          "name": "KFAS — اللجنة الشرعية",
+          "category_type": "rss",
+          "source_type": "website",
+          "source_url": "https://www.kfas.org.kw",
+          "official_site": "https://www.kfas.org.kw",
+          "country": "KW",
+          "language": "ar",
+          "trust_score": 80,
+          "reputation_score": 80,
+          "content_types": [
+            "fiqh_decision",
+            "article"
+          ],
+          "refresh_interval_hours": 24,
+          "publish_policy": "shadow",
+          "is_active": true,
+          "is_official": true,
+          "items_imported": 0,
+          "items_accepted": 0,
+          "items_rejected": 0,
+          "items_duplicate": 0,
+          "last_sync_at": null,
+          "last_error": null,
+          "metadata": {},
+          "registry_origin": "official_sources"
+        },
+        {
+          "slug": "alukah-articles",
+          "name": "الموقع الإسلامي — مقالات علمية",
+          "category_type": "scientific_journal",
+          "source_type": "rss",
+          "source_url": "https://www.alukah.net",
+          "feed_url": "https://www.alukah.net/rss",
+          "official_site": "https://www.alukah.net",
+          "country": "SA",
+          "language": "ar",
+          "trust_score": 85,
+          "reputation_score": 85,
+          "content_types": [
+            "article",
+            "fawaid"
+          ],
+          "refresh_interval_hours": 12,
+          "publish_policy": "shadow",
+          "is_active": true,
+          "is_official": true,
+          "items_imported": 0,
+          "items_accepted": 0,
+          "items_rejected": 0,
+          "items_duplicate": 0,
+          "last_sync_at": null,
+          "last_error": null,
+          "metadata": {},
+          "registry_origin": "gke_trusted"
+        },
+        {
+          "slug": "othman-alkhamees-reach",
+          "name": "د. عثمان الخميس — Reach",
+          "category_type": "sheikh_official",
+          "source_type": "website",
+          "source_url": "https://reach.link/othmanalkhamees",
+          "official_site": "https://reach.link/othmanalkhamees",
+          "country": "KW",
+          "language": "ar",
+          "trust_score": 86,
+          "reputation_score": 86,
+          "content_types": [
+            "lesson"
+          ],
+          "refresh_interval_hours": 12,
+          "publish_policy": "shadow",
+          "is_active": true,
+          "is_official": true,
+          "items_imported": 0,
+          "items_accepted": 0,
+          "items_rejected": 0,
+          "items_duplicate": 0,
+          "last_sync_at": null,
+          "last_error": null,
+          "metadata": {},
+          "registry_origin": "gke_trusted"
+        },
+        {
+          "slug": "quran-kw-circles",
+          "name": "الحلقات القرآنية — الكويت",
+          "category_type": "islamic_center",
+          "source_type": "website",
+          "source_url": "https://majlisilm.com/quran-scientific-circles",
+          "official_site": "https://majlisilm.com/quran-scientific-circles",
+          "country": "KW",
+          "language": "ar",
+          "trust_score": 88,
+          "reputation_score": 88,
+          "content_types": [
+            "circle"
+          ],
+          "refresh_interval_hours": 12,
+          "publish_policy": "shadow",
+          "is_active": false,
+          "is_official": true,
+          "items_imported": 0,
+          "items_accepted": 0,
+          "items_rejected": 0,
+          "items_duplicate": 0,
+          "last_sync_at": null,
+          "last_error": null,
+          "metadata": {},
+          "registry_origin": "gke_trusted"
+        }
+      ],
+      "most_active": [
+        {
+          "slug": "iifa-oic",
+          "name": "المجمع الفقهي الإسلامي الدولي",
+          "category_type": "government",
+          "source_type": "rss",
+          "source_url": "https://www.iifa-aifi.org",
+          "feed_url": "https://www.iifa-aifi.org/ar/feed",
+          "official_site": "https://www.iifa-aifi.org",
+          "country": "SA",
+          "language": "ar",
+          "trust_score": 95,
+          "reputation_score": 95,
+          "content_types": [
+            "fiqh_decision",
+            "article"
+          ],
+          "refresh_interval_hours": 12,
+          "publish_policy": "shadow",
+          "is_active": true,
+          "is_official": true,
+          "items_imported": 0,
+          "items_accepted": 0,
+          "items_rejected": 0,
+          "items_duplicate": 0,
+          "last_sync_at": null,
+          "last_error": null,
+          "metadata": {},
+          "registry_origin": "gke_trusted"
+        },
+        {
+          "slug": "alifta-gov",
+          "name": "اللجنة الدائمة للبحوث العلمية والإفتاء",
+          "category_type": "awqaf_ministry",
+          "source_type": "rss",
+          "source_url": "https://www.alifta.gov.sa",
+          "feed_url": "https://www.alifta.gov.sa/ar/rss",
+          "official_site": "https://www.alifta.gov.sa",
+          "country": "SA",
+          "language": "ar",
+          "trust_score": 98,
+          "reputation_score": 98,
+          "content_types": [
+            "fatwa",
+            "permanent_committee_fatwa",
+            "article"
+          ],
+          "refresh_interval_hours": 24,
+          "publish_policy": "shadow",
+          "is_active": true,
+          "is_official": true,
+          "items_imported": 0,
+          "items_accepted": 0,
+          "items_rejected": 0,
+          "items_duplicate": 0,
+          "last_sync_at": null,
+          "last_error": null,
+          "metadata": {},
+          "registry_origin": "gke_trusted"
+        },
+        {
+          "slug": "kfas-kw",
+          "name": "مؤسسة الكويت للتقدم العلمي — اللجنة الشرعية",
+          "category_type": "government",
+          "source_type": "website",
+          "source_url": "https://www.kfas.org.kw",
+          "official_site": "https://www.kfas.org.kw",
+          "country": "KW",
+          "language": "ar",
+          "trust_score": 92,
+          "reputation_score": 92,
+          "content_types": [
+            "fiqh_decision",
+            "research"
+          ],
+          "refresh_interval_hours": 24,
+          "publish_policy": "shadow",
+          "is_active": true,
+          "is_official": true,
+          "items_imported": 0,
+          "items_accepted": 0,
+          "items_rejected": 0,
+          "items_duplicate": 0,
+          "last_sync_at": null,
+          "last_error": null,
+          "metadata": {},
+          "registry_origin": "gke_trusted"
+        },
+        {
+          "slug": "islamweb-news",
+          "name": "IslamWeb — الأخبار والمقالات",
+          "category_type": "rss",
+          "source_type": "rss",
+          "source_url": "https://www.islamweb.net",
+          "feed_url": "https://www.islamweb.net/ar/rss/news",
+          "official_site": "https://www.islamweb.net",
+          "country": "SA",
+          "language": "ar",
+          "trust_score": 88,
+          "reputation_score": 88,
+          "content_types": [
+            "article",
+            "fawaid"
+          ],
+          "refresh_interval_hours": 6,
+          "publish_policy": "shadow",
+          "is_active": true,
+          "is_official": true,
+          "items_imported": 0,
+          "items_accepted": 0,
+          "items_rejected": 0,
+          "items_duplicate": 0,
+          "last_sync_at": null,
+          "last_error": null,
+          "metadata": {},
+          "registry_origin": "gke_trusted"
+        },
+        {
+          "slug": "alukah-articles",
+          "name": "الموقع الإسلامي — مقالات علمية",
+          "category_type": "scientific_journal",
+          "source_type": "rss",
+          "source_url": "https://www.alukah.net",
+          "feed_url": "https://www.alukah.net/rss",
+          "official_site": "https://www.alukah.net",
+          "country": "SA",
+          "language": "ar",
+          "trust_score": 85,
+          "reputation_score": 85,
+          "content_types": [
+            "article",
+            "fawaid"
+          ],
+          "refresh_interval_hours": 12,
+          "publish_policy": "shadow",
+          "is_active": true,
+          "is_official": true,
+          "items_imported": 0,
+          "items_accepted": 0,
+          "items_rejected": 0,
+          "items_duplicate": 0,
+          "last_sync_at": null,
+          "last_error": null,
+          "metadata": {},
+          "registry_origin": "gke_trusted"
+        }
+      ],
+      "recent_shadow_items": [],
+      "recent_errors": [],
+      "production_ready": {
+        "ready": false,
+        "shadow_mode_required": true,
+        "criteria": {
+          "no_fixtures": true,
+          "all_trusted": true,
+          "high_success_rate": false,
+          "low_duplicate_rate": true,
+          "low_error_rate": true,
+          "shadow_testing_complete": false,
+          "note": "يتطلب أسبوعين Shadow Mode على مصادر حقيقية قبل الربط الإنتاجي"
+        }
+      }
+    },
+    "metrics": {
+      "total_sources": 23,
+      "active_sources": 10,
+      "total_imported": 0,
+      "total_accepted": 0,
+      "total_rejected": 0,
+      "total_duplicate": 0,
+      "success_rate": 0,
+      "duplicate_rate": 0,
+      "validation_rate": 0,
+      "avg_processing_ms": 0,
+      "queue_size": 0,
+      "shadow_mode": true
+    },
+    "production_ready": {
+      "ready": false,
+      "shadow_mode_required": true,
+      "criteria": {
+        "no_fixtures": true,
+        "all_trusted": true,
+        "high_success_rate": false,
+        "low_duplicate_rate": true,
+        "low_error_rate": true,
+        "shadow_testing_complete": false,
+        "note": "يتطلب أسبوعين Shadow Mode على مصادر حقيقية قبل الربط الإنتاجي"
+      }
+    }
+  },
+  "productionReady": {
+    "ready": false,
+    "shadow_mode_required": true,
+    "criteria": {
+      "no_fixtures": true,
+      "all_trusted": true,
+      "high_success_rate": false,
+      "low_duplicate_rate": true,
+      "low_error_rate": true,
+      "shadow_testing_complete": false,
+      "note": "يتطلب أسبوعين Shadow Mode على مصادر حقيقية قبل الربط الإنتاجي"
+    }
+  }
+}

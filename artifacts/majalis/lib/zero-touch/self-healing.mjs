@@ -14,6 +14,8 @@ const HEAL_SCOPES = [
   "activation-tables",
   "ake-rpc",
   "question-generation",
+  "akp-v3",
+  "gke",
 ];
 
 const RETRY_DELAYS_MS = [0, 3_000, 10_000];

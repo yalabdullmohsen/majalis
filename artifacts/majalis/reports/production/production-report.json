@@ -1,0 +1,68 @@
+{
+  "at": "2026-06-29T12:17:27.465Z",
+  "base": "https://www.majlisilm.com",
+  "healthScore": 72,
+  "readinessPct": 47,
+  "systemsOperational": "2/8",
+  "routesOk": "15/15",
+  "apisOk": "6/7",
+  "systems": [
+    {
+      "id": "akp_v3",
+      "name": "AKP v3",
+      "status": "degraded",
+      "readinessPct": 49,
+      "evidence": "تطبيق autonomous_platform_v3.sql",
+      "cron": "/api/cron/autonomous-platform-v3"
+    },
+    {
+      "id": "question_generation",
+      "name": "Question Generation",
+      "status": "migration_missing",
+      "evidence": "jobs=N/A",
+      "cron": "/api/cron/question-answer-daily"
+    },
+    {
+      "id": "sin_jeem",
+      "name": "Sin Jeem / سؤال وجواب",
+      "status": "empty",
+      "evidence": "questions=0",
+      "cron": "/api/cron/question-answer-daily"
+    },
+    {
+      "id": "mke",
+      "name": "MKE",
+      "status": "operational",
+      "evidence": "runs=0",
+      "cron": "/api/cron/majlis-knowledge-engine"
+    },
+    {
+      "id": "content_import",
+      "name": "Content Import",
+      "status": "operational",
+      "evidence": "jobs=43",
+      "cron": "/api/cron/process-import-jobs"
+    },
+    {
+      "id": "fiqh_council",
+      "name": "Fiqh Council",
+      "status": "empty",
+      "evidence": "items=0",
+      "cron": "/api/cron/sync-fiqh-council"
+    },
+    {
+      "id": "ake_orchestrator",
+      "name": "AKE Orchestrator",
+      "status": "empty",
+      "evidence": "runs=0",
+      "cron": "/api/cron/auto-knowledge-sync"
+    },
+    {
+      "id": "smart_cms",
+      "name": "Smart CMS",
+      "status": "partial",
+      "evidence": "missing: cms_content_index, content_sources, content_drafts",
+      "cron": null
+    }
+  ]
+}

@@ -48,12 +48,12 @@ function shaShort(text) {
 }
 
 export async function getAppliedMigrations(client) {
-  if (!client?.query) return [];
+  if (!client?.query) return { applied: [], error: "no_client" };
   try {
     await ensureTrackingTable(client);
-    return getAppliedMigrationNames(client);
-  } catch {
-    return [];
+    return { applied: await getAppliedMigrationNames(client), error: null };
+  } catch (err) {
+    return { applied: [], error: String(err.message || err) };
   }
 }
 

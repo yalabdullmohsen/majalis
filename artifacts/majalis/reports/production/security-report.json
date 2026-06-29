@@ -1,0 +1,82 @@
+{
+  "at": "2026-06-29T12:17:27.465Z",
+  "secrets": [
+    {
+      "key": "DATABASE_URL",
+      "present": false
+    },
+    {
+      "key": "SUPABASE_SERVICE_ROLE_KEY",
+      "present": false
+    },
+    {
+      "key": "SUPABASE_URL",
+      "present": true
+    },
+    {
+      "key": "SUPABASE_ANON_KEY",
+      "present": true
+    },
+    {
+      "key": "CRON_SECRET",
+      "present": false
+    },
+    {
+      "key": "OPENAI_API_KEY",
+      "present": false
+    },
+    {
+      "key": "ANTHROPIC_API_KEY",
+      "present": false
+    },
+    {
+      "key": "UPSTASH_REDIS_REST_URL",
+      "present": false
+    },
+    {
+      "key": "UPSTASH_REDIS_REST_TOKEN",
+      "present": false
+    },
+    {
+      "key": "BLOB_TOKEN",
+      "present": false
+    },
+    {
+      "key": "RESEND_API_KEY",
+      "present": false
+    },
+    {
+      "key": "YOUTUBE_API_KEY",
+      "present": false
+    },
+    {
+      "key": "INSTAGRAM_TOKEN",
+      "present": false
+    },
+    {
+      "key": "TELEGRAM_TOKEN",
+      "present": false
+    },
+    {
+      "key": "GOOGLE_DRIVE_TOKEN",
+      "present": false
+    }
+  ],
+  "criticalMissing": [
+    {
+      "key": "DATABASE_URL",
+      "present": false
+    },
+    {
+      "key": "SUPABASE_SERVICE_ROLE_KEY",
+      "present": false
+    },
+    {
+      "key": "CRON_SECRET",
+      "present": false
+    }
+  ],
+  "cronAuthConfigured": false,
+  "serviceRoleConfigured": false,
+  "aiMode": "keyword_fallback"
+}

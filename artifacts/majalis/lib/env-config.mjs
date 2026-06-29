@@ -87,6 +87,14 @@ export function getEnvConfig() {
   };
 }
 
+function pickEnv(...keys) {
+  for (const k of keys) {
+    const v = String(process.env[k] || "").trim();
+    if (v) return v;
+  }
+  return "";
+}
+
 export function getEnvStatus() {
   const env = getEnvConfig();
   return {
@@ -97,13 +105,19 @@ export function getEnvStatus() {
     OPENAI_API_KEY: Boolean(env.openaiKey),
     ANTHROPIC_API_KEY: Boolean(env.anthropicKey),
     DATABASE_URL: Boolean(env.databaseUrl),
-    UPSTASH_REDIS_REST_URL: Boolean(pick("UPSTASH_REDIS_REST_URL", "KV_REST_API_URL")),
-    UPSTASH_REDIS_REST_TOKEN: Boolean(pick("UPSTASH_REDIS_REST_TOKEN", "KV_REST_API_TOKEN")),
-    POSTGRES_URL: Boolean(pick("POSTGRES_URL")),
-    POSTGRES_PASSWORD: Boolean(pick("POSTGRES_PASSWORD", "SUPABASE_DB_PASSWORD")),
-    SUPABASE_ACCESS_TOKEN: Boolean(pick("SUPABASE_ACCESS_TOKEN", "SUPABASE_MANAGEMENT_TOKEN")),
-    INSTAGRAM_GRAPH_ACCESS_TOKEN: Boolean(pick("INSTAGRAM_GRAPH_ACCESS_TOKEN")),
-    INSTAGRAM_BUSINESS_ACCOUNT_ID: Boolean(pick("INSTAGRAM_BUSINESS_ACCOUNT_ID")),
+    UPSTASH_REDIS_REST_URL: Boolean(pickEnv("UPSTASH_REDIS_REST_URL", "KV_REST_API_URL")),
+    UPSTASH_REDIS_REST_TOKEN: Boolean(pickEnv("UPSTASH_REDIS_REST_TOKEN", "KV_REST_API_TOKEN")),
+    BLOB_TOKEN: Boolean(pickEnv("BLOB_READ_WRITE_TOKEN", "BLOB_TOKEN")),
+    RESEND_API_KEY: Boolean(pickEnv("RESEND_API_KEY")),
+    YOUTUBE_API_KEY: Boolean(pickEnv("YOUTUBE_API_KEY", "GOOGLE_API_KEY")),
+    INSTAGRAM_TOKEN: Boolean(pickEnv("INSTAGRAM_GRAPH_ACCESS_TOKEN", "INSTAGRAM_TOKEN")),
+    TELEGRAM_TOKEN: Boolean(pickEnv("TELEGRAM_BOT_TOKEN", "TELEGRAM_TOKEN")),
+    GOOGLE_DRIVE_TOKEN: Boolean(pickEnv("GOOGLE_DRIVE_TOKEN", "GOOGLE_SERVICE_ACCOUNT_JSON")),
+    POSTGRES_URL: Boolean(pickEnv("POSTGRES_URL")),
+    POSTGRES_PASSWORD: Boolean(pickEnv("POSTGRES_PASSWORD", "SUPABASE_DB_PASSWORD")),
+    SUPABASE_ACCESS_TOKEN: Boolean(pickEnv("SUPABASE_ACCESS_TOKEN", "SUPABASE_MANAGEMENT_TOKEN")),
+    INSTAGRAM_GRAPH_ACCESS_TOKEN: Boolean(pickEnv("INSTAGRAM_GRAPH_ACCESS_TOKEN")),
+    INSTAGRAM_BUSINESS_ACCOUNT_ID: Boolean(pickEnv("INSTAGRAM_BUSINESS_ACCOUNT_ID")),
   };
 }
 

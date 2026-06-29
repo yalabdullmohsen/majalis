@@ -90,6 +90,18 @@ export const SMART_CMS_TABLES = [
   "admin_audit_logs",
 ];
 
+export const GKE_MIGRATION_FILES = ["gke_v1.sql", "gke_phase2_v1.sql"];
+
+export const GKE_TABLES = [
+  "gke_pipeline_runs",
+  "gke_events",
+  "gke_trusted_sources",
+  "gke_source_reputation_log",
+  "gke_shadow_items",
+  "gke_acquisition_metrics",
+  "gke_integration_phases",
+];
+
 export const ACTIVATION_TABLES_MIGRATION_FILES = [
   "platform_bootstrap_compat_v1.sql",
   "sharia_rulings_prereq.sql",
@@ -179,6 +191,8 @@ export const MIGRATION_FILES = [
   "quran_scientific_circles_v1.sql",
   "user_experience_v1.sql",
   "user_experience_v2.sql",
+  "gke_v1.sql",
+  "gke_phase2_v1.sql",
 ];
 
 export function resolveMigrationsDir() {

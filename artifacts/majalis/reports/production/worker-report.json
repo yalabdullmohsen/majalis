@@ -1,0 +1,15 @@
+{
+  "at": "2026-06-29T12:17:27.465Z",
+  "akp": {
+    "status": "waiting_for_bootstrap",
+    "label": "Waiting for Bootstrap"
+  },
+  "gke": {
+    "status": "shadow",
+    "label": "Shadow Mode"
+  },
+  "queue": {
+    "status": "unknown"
+  },
+  "selfHealing": []
+}

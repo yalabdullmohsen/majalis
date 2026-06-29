@@ -1,0 +1,8 @@
+{
+  "at": "2026-06-29T12:17:27.465Z",
+  "openai": false,
+  "anthropic": false,
+  "mode": "keyword_fallback",
+  "gkePipelineOk": true,
+  "shadowMode": true
+}

@@ -1,0 +1,28 @@
+{
+  "at": "2026-06-29T12:17:27.465Z",
+  "akpVersion": "3.0.0",
+  "gkeVersion": "1.1.0",
+  "shadowMode": true,
+  "autoPublishEnabled": false,
+  "importJobs": {
+    "akp_sources": 0,
+    "gke_trusted_sources": 10,
+    "imported_today": 0,
+    "review_queue": 0,
+    "auto_published_today": 0,
+    "failed_today": 0
+  },
+  "workers": {
+    "akp_v3": {
+      "status": "waiting_for_bootstrap",
+      "label": "Waiting for Bootstrap"
+    },
+    "gke_acquisition": {
+      "status": "shadow",
+      "label": "Shadow Mode"
+    },
+    "queue": {
+      "status": "unknown"
+    }
+  }
+}

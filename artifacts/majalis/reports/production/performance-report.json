@@ -1,0 +1,67 @@
+{
+  "at": "2026-06-29T12:17:27.465Z",
+  "routeProbes": [
+    {
+      "ms": 12,
+      "ok": true
+    },
+    {
+      "ms": 21,
+      "ok": true
+    },
+    {
+      "ms": 24,
+      "ok": true
+    },
+    {
+      "ms": 12,
+      "ok": true
+    },
+    {
+      "ms": 11,
+      "ok": true
+    },
+    {
+      "ms": 8,
+      "ok": true
+    },
+    {
+      "ms": 8,
+      "ok": true
+    },
+    {
+      "ms": 8,
+      "ok": true
+    },
+    {
+      "ms": 31,
+      "ok": true
+    },
+    {
+      "ms": 8,
+      "ok": true
+    },
+    {
+      "ms": 11,
+      "ok": true
+    },
+    {
+      "ms": 10,
+      "ok": true
+    },
+    {
+      "ms": 40,
+      "ok": true
+    },
+    {
+      "ms": 8,
+      "ok": true
+    },
+    {
+      "ms": 7,
+      "ok": true
+    }
+  ],
+  "avgRouteMs": 15,
+  "note": "Full Lighthouse audit requires separate run: pnpm run lighthouse:reading-ux"
+}

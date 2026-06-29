@@ -2,11 +2,16 @@
 /**
  * verify:data-acquisition — GKE + unified platform smoke tests.
  */
+import { existsSync } from "node:fs";
+import { join, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
 import { buildUnifiedAutonomousPlatform } from "../lib/autonomous-platform/v3/unified-platform.mjs";
 import { validatePipelineWiring } from "../lib/global-knowledge-engine/pipeline.mjs";
 import { getTrustedSourcesSeed } from "../lib/global-knowledge-engine/trusted-sources/registry.mjs";
 import { checkProductionReadiness } from "../lib/global-knowledge-engine/acquisition-orchestrator.mjs";
 import { listSources } from "../lib/global-knowledge-engine/layers/source-registry.mjs";
+
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
 const checks = [];
 let passed = 0;
@@ -40,6 +45,7 @@ check("Health score computed", dashboard.healthScore >= 0 && dashboard.healthSco
 check("GKE section present", Boolean(dashboard.gke?.version));
 check("Secrets audit", dashboard.secrets.length >= 7, `${dashboard.secrets.length} secrets checked`);
 check("Alerts array", Array.isArray(dashboard.alerts));
+check("GKE SQL in deploy bundle", existsSync(join(ROOT, "supabase/gke_v1.sql")) && existsSync(join(ROOT, "supabase/gke_phase2_v1.sql")));
 check("Import jobs metrics", Boolean(dashboard.import_jobs));
 
 console.log(`\n${passed}/${checks.length} passed`);

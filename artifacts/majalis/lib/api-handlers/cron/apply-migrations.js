@@ -246,6 +246,22 @@ export default async function handler(req, res) {
       return;
     }
 
+    if (scope === "gke" || scope === "gke-v1" || scope === "global-knowledge-engine") {
+      const result = await applyMigrations({
+        files: ["gke_v1.sql", "gke_phase2_v1.sql"],
+        continueOnError: false,
+        trackApplied: true,
+        force: req.query?.force === "1",
+      });
+      sendJson(res, result.ok ? 200 : 500, {
+        ok: result.ok,
+        scope: "gke",
+        migrations: result,
+        resolved: resolvedMeta(),
+      });
+      return;
+    }
+
     if (scope === "question-generation" || scope === "qgen-v1") {
       const result = await applyMigrations({
         files: ["question_generation_v1.sql"],

@@ -23,20 +23,26 @@ const GKE_TABLES = [
 const REQUIRED_SECRETS = [
   { key: "DATABASE_URL", critical: true },
   { key: "SUPABASE_SERVICE_ROLE_KEY", critical: true },
+  { key: "SUPABASE_URL", critical: true, envKey: "SUPABASE_URL" },
+  { key: "SUPABASE_ANON_KEY", critical: true, envKey: "SUPABASE_ANON_KEY" },
   { key: "CRON_SECRET", critical: true },
   { key: "OPENAI_API_KEY", critical: false },
   { key: "ANTHROPIC_API_KEY", critical: false },
   { key: "UPSTASH_REDIS_REST_URL", critical: false },
   { key: "UPSTASH_REDIS_REST_TOKEN", critical: false },
+  { key: "BLOB_TOKEN", critical: false },
+  { key: "RESEND_API_KEY", critical: false },
+  { key: "YOUTUBE_API_KEY", critical: false },
+  { key: "INSTAGRAM_TOKEN", critical: false, envKey: "INSTAGRAM_GRAPH_ACCESS_TOKEN" },
+  { key: "TELEGRAM_TOKEN", critical: false },
+  { key: "GOOGLE_DRIVE_TOKEN", critical: false },
 ];
 
 function auditSecrets() {
   const env = getEnvStatus();
-  return REQUIRED_SECRETS.map(({ key, critical }) => {
-    let present = false;
-    if (key === "UPSTASH_REDIS_REST_URL") present = Boolean(env.UPSTASH_REDIS_REST_URL);
-    else if (key === "UPSTASH_REDIS_REST_TOKEN") present = Boolean(env.UPSTASH_REDIS_REST_TOKEN);
-    else present = Boolean(env[key]);
+  return REQUIRED_SECRETS.map(({ key, critical, envKey }) => {
+    const lookup = envKey || key;
+    const present = Boolean(env[lookup] ?? env[key]);
     return { key, critical, present, status: present ? "configured" : "missing" };
   });
 }

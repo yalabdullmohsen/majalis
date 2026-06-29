@@ -1,0 +1,117 @@
+{
+  "at": "2026-06-29T12:17:27.465Z",
+  "base": "https://www.majlisilm.com",
+  "durationMs": 30891,
+  "healthScore": 30,
+  "readinessPct": 47,
+  "autonomyPct": 22,
+  "fullyAutonomous": false,
+  "closureCriteria": {
+    "healthScoreGte95": false,
+    "readiness100": false,
+    "allTablesPresent": false,
+    "allMigrationsApplied": false,
+    "cronsWorking": true,
+    "workersOperational": true,
+    "pipelinesActive": false,
+    "noCriticalSecretsMissing": false,
+    "noShadowModeForFullAutonomy": false
+  },
+  "passedCriteria": 2,
+  "totalCriteria": 9,
+  "missingSecrets": [
+    "DATABASE_URL",
+    "SUPABASE_SERVICE_ROLE_KEY",
+    "CRON_SECRET",
+    "OPENAI_API_KEY",
+    "ANTHROPIC_API_KEY",
+    "UPSTASH_REDIS_REST_URL",
+    "UPSTASH_REDIS_REST_TOKEN",
+    "BLOB_TOKEN",
+    "RESEND_API_KEY",
+    "YOUTUBE_API_KEY",
+    "INSTAGRAM_TOKEN",
+    "TELEGRAM_TOKEN",
+    "GOOGLE_DRIVE_TOKEN"
+  ],
+  "criticalBlockers": [
+    {
+      "type": "secret",
+      "name": "DATABASE_URL"
+    },
+    {
+      "type": "secret",
+      "name": "SUPABASE_SERVICE_ROLE_KEY"
+    },
+    {
+      "type": "secret",
+      "name": "CRON_SECRET"
+    },
+    {
+      "type": "table",
+      "name": "gke_pipeline_runs",
+      "scope": "gke"
+    },
+    {
+      "type": "table",
+      "name": "gke_events",
+      "scope": "gke"
+    },
+    {
+      "type": "table",
+      "name": "gke_trusted_sources",
+      "scope": "gke"
+    },
+    {
+      "type": "table",
+      "name": "gke_source_reputation_log",
+      "scope": "gke"
+    },
+    {
+      "type": "table",
+      "name": "gke_shadow_items",
+      "scope": "gke"
+    },
+    {
+      "type": "table",
+      "name": "gke_acquisition_metrics",
+      "scope": "gke"
+    },
+    {
+      "type": "table",
+      "name": "gke_integration_phases",
+      "scope": "gke"
+    },
+    {
+      "type": "table",
+      "name": "cms_content_index",
+      "scope": "smart-cms"
+    },
+    {
+      "type": "table",
+      "name": "content_sources",
+      "scope": "smart-cms"
+    },
+    {
+      "type": "table",
+      "name": "content_drafts",
+      "scope": "smart-cms"
+    },
+    {
+      "type": "table",
+      "name": "content_dedup_keys",
+      "scope": "smart-cms"
+    },
+    {
+      "type": "table",
+      "name": "import_jobs",
+      "scope": "smart-cms"
+    },
+    {
+      "type": "table",
+      "name": "cms_admin_notifications",
+      "scope": "smart-cms"
+    }
+  ],
+  "note": "NOT 100% — 7 closure criteria unmet. Owner must configure secrets and apply migrations on Production."
+}

@@ -8,6 +8,8 @@ import {
   AUTOMATION_RECOVERY_MIGRATION_FILES,
   SMART_CMS_MIGRATION_FILES,
   ACTIVATION_TABLES_MIGRATION_FILES,
+  GKE_MIGRATION_FILES,
+  GKE_TABLES,
   migrationFilePath,
 } from "../migration-paths.mjs";
 import { getAppliedMigrationNames, migrationChecksum } from "../migration-tracker.mjs";
@@ -34,6 +36,11 @@ const SCOPE_DEFINITIONS = [
     scope: "cd-pipeline",
     files: ["cd_pipeline_v1.sql"],
     tables: ["cd_deployments", "cd_pipeline_runs", "cd_self_heal_events"],
+  },
+  {
+    scope: "gke",
+    files: GKE_MIGRATION_FILES,
+    tables: GKE_TABLES,
   },
 ];
 

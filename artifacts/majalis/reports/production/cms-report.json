@@ -1,0 +1,23 @@
+{
+  "at": "2026-06-29T12:17:27.465Z",
+  "tables": {
+    "expected": 10,
+    "present": 4,
+    "missing": [
+      "cms_content_index",
+      "content_sources",
+      "content_drafts",
+      "content_dedup_keys",
+      "import_jobs",
+      "cms_admin_notifications"
+    ]
+  },
+  "importJobs": {
+    "akp_sources": 0,
+    "gke_trusted_sources": 10,
+    "imported_today": 0,
+    "review_queue": 0,
+    "auto_published_today": 0,
+    "failed_today": 0
+  }
+}

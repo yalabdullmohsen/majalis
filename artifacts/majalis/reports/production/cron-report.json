@@ -1,0 +1,971 @@
+{
+  "at": "2026-06-29T12:17:27.465Z",
+  "registered": 48,
+  "verified": false,
+  "crons": [
+    {
+      "path": "/api/cron/process-import-jobs",
+      "schedule": "* * * * *",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 59,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    },
+    {
+      "path": "/api/cron/sync-data",
+      "schedule": "5 21 * * *",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 47,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    },
+    {
+      "path": "/api/cron/sync-fiqh-council",
+      "schedule": "0 6 * * *",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 27,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    },
+    {
+      "path": "/api/cron/knowledge-sync",
+      "schedule": "0 2 * * *",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 34,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    },
+    {
+      "path": "/api/cron/auto-knowledge-sync",
+      "schedule": "*/15 * * * *",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 16,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    },
+    {
+      "path": "/api/cron/ake-queue-drain",
+      "schedule": "* * * * *",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 25,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    },
+    {
+      "path": "/api/cron/auto-content-sync",
+      "schedule": "0 3 * * *",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 23,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    },
+    {
+      "path": "/api/cron/auto-content-health",
+      "schedule": "15 3 * * *",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 17,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    },
+    {
+      "path": "/api/cron/system-health",
+      "schedule": "45 3 * * *",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 22,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    },
+    {
+      "path": "/api/cron/cd-post-deploy",
+      "schedule": "50 3 * * *",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 125,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    },
+    {
+      "path": "/api/cron/connector-health",
+      "schedule": "*/15 * * * *",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 92,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    },
+    {
+      "path": "/api/cron/ake-monitoring-eval",
+      "schedule": "5,20,35,50 * * * *",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 17,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    },
+    {
+      "path": "/api/cron/ake-daily-report",
+      "schedule": "0 4 * * *",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 25,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    },
+    {
+      "path": "/api/cron/platform-bootstrap",
+      "schedule": "30 4 * * *",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 33,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    },
+    {
+      "path": "/api/cron/bootstrap-database",
+      "schedule": "0 5 * * *",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 25,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    },
+    {
+      "path": "/api/cron/import-phase2-trial",
+      "schedule": "30 5 * * *",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 16,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    },
+    {
+      "path": "/api/cron/apply-migrations",
+      "schedule": "0 4 * * 0",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 20,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    },
+    {
+      "path": "/api/cron/question-answer-daily",
+      "schedule": "30 6 * * *",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 25,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    },
+    {
+      "path": "/api/cron/question-answer-generation-drain",
+      "schedule": "*/15 * * * *",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 49,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    },
+    {
+      "path": "/api/cron/check-fiqh-links",
+      "schedule": "0 7 * * *",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 103,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    },
+    {
+      "path": "/api/cron/scholarly-verification",
+      "schedule": "0 8 * * *",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 20,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    },
+    {
+      "path": "/api/cron/autonomous-orchestrator",
+      "schedule": "15 8 * * *",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 17,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    },
+    {
+      "path": "/api/cron/global-reference-review",
+      "schedule": "0 9 * * 0",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 32,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    },
+    {
+      "path": "/api/cron/islamic-intelligence",
+      "schedule": "0 10 * * *",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 50,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    },
+    {
+      "path": "/api/cron/governance-backup",
+      "schedule": "0 4 * * 0",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 25,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    },
+    {
+      "path": "/api/cron/ai-agents",
+      "schedule": "30 10 * * *",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 27,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    },
+    {
+      "path": "/api/cron/verified-knowledge",
+      "schedule": "0 11 * * *",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 24,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    },
+    {
+      "path": "/api/cron/source-monitor",
+      "schedule": "*/15 * * * *",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 95,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    },
+    {
+      "path": "/api/cron/lesson-intelligence",
+      "schedule": "*/15 * * * *",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 25,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    },
+    {
+      "path": "/api/cron/content-engines",
+      "schedule": "10,40 * * * *",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 26,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    },
+    {
+      "path": "/api/cron/content-engines-drain",
+      "schedule": "* * * * *",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 21,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    },
+    {
+      "path": "/api/cron/monitor-sources",
+      "schedule": "0 6 * * *",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 19,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    },
+    {
+      "path": "/api/cron/majlis-knowledge-engine",
+      "schedule": "5,35 * * * *",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 94,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    },
+    {
+      "path": "/api/cron/content-scheduler",
+      "schedule": "0 * * * *",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 28,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    },
+    {
+      "path": "/api/cron/knowledge-reasoning",
+      "schedule": "30 11 * * *",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 18,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    },
+    {
+      "path": "/api/cron/autonomous-platform-fetch",
+      "schedule": "0 * * * *",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 25,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    },
+    {
+      "path": "/api/cron/autonomous-platform-validate",
+      "schedule": "0 */2 * * *",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 19,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    },
+    {
+      "path": "/api/cron/autonomous-platform-questions",
+      "schedule": "0 */3 * * *",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 23,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    },
+    {
+      "path": "/api/cron/autonomous-platform-benefits",
+      "schedule": "0 */6 * * *",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 29,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    },
+    {
+      "path": "/api/cron/autonomous-platform-reindex",
+      "schedule": "0 2 * * *",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 27,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    },
+    {
+      "path": "/api/cron/autonomous-platform-audit",
+      "schedule": "0 4 * * 0",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 28,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    },
+    {
+      "path": "/api/cron/autonomous-platform-cleanup",
+      "schedule": "0 3 1 * *",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 35,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    },
+    {
+      "path": "/api/cron/autonomous-platform-bootstrap",
+      "schedule": "30 5 * * *",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 22,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    },
+    {
+      "path": "/api/cron/autonomous-platform-v3",
+      "schedule": "*/30 * * * *",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 24,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    },
+    {
+      "path": "/api/cron/autonomous-platform-v3-health",
+      "schedule": "0 * * * *",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 15,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    },
+    {
+      "path": "/api/cron/autonomous-platform-v3-goals",
+      "schedule": "0 */4 * * *",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 11,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    },
+    {
+      "path": "/api/cron/autonomous-platform-v3-analytics",
+      "schedule": "15 0 * * *",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 14,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    },
+    {
+      "path": "/api/cron/autonomous-platform-v3-backup",
+      "schedule": "0 4 * * *",
+      "endpointRegistered": true,
+      "endpointReachable": true,
+      "httpStatus": 401,
+      "probeMs": 12,
+      "lastRun": null,
+      "durationMs": null,
+      "lastResult": "unknown",
+      "lastError": null,
+      "successCount": 0,
+      "failureCount": 0
+    }
+  ],
+  "probes": [
+    {
+      "path": "/api/cron/process-import-jobs",
+      "schedule": "* * * * *",
+      "verified": false,
+      "reason": "no_cron_secret"
+    },
+    {
+      "path": "/api/cron/sync-data",
+      "schedule": "5 21 * * *",
+      "verified": false,
+      "reason": "no_cron_secret"
+    },
+    {
+      "path": "/api/cron/sync-fiqh-council",
+      "schedule": "0 6 * * *",
+      "verified": false,
+      "reason": "no_cron_secret"
+    },
+    {
+      "path": "/api/cron/knowledge-sync",
+      "schedule": "0 2 * * *",
+      "verified": false,
+      "reason": "no_cron_secret"
+    },
+    {
+      "path": "/api/cron/auto-knowledge-sync",
+      "schedule": "*/15 * * * *",
+      "verified": false,
+      "reason": "no_cron_secret"
+    },
+    {
+      "path": "/api/cron/ake-queue-drain",
+      "schedule": "* * * * *",
+      "verified": false,
+      "reason": "no_cron_secret"
+    },
+    {
+      "path": "/api/cron/auto-content-sync",
+      "schedule": "0 3 * * *",
+      "verified": false,
+      "reason": "no_cron_secret"
+    },
+    {
+      "path": "/api/cron/auto-content-health",
+      "schedule": "15 3 * * *",
+      "verified": false,
+      "reason": "no_cron_secret"
+    },
+    {
+      "path": "/api/cron/system-health",
+      "schedule": "45 3 * * *",
+      "verified": false,
+      "reason": "no_cron_secret"
+    },
+    {
+      "path": "/api/cron/cd-post-deploy",
+      "schedule": "50 3 * * *",
+      "verified": false,
+      "reason": "no_cron_secret"
+    },
+    {
+      "path": "/api/cron/connector-health",
+      "schedule": "*/15 * * * *",
+      "verified": false,
+      "reason": "no_cron_secret"
+    },
+    {
+      "path": "/api/cron/ake-monitoring-eval",
+      "schedule": "5,20,35,50 * * * *",
+      "verified": false,
+      "reason": "no_cron_secret"
+    },
+    {
+      "path": "/api/cron/ake-daily-report",
+      "schedule": "0 4 * * *",
+      "verified": false,
+      "reason": "no_cron_secret"
+    },
+    {
+      "path": "/api/cron/platform-bootstrap",
+      "schedule": "30 4 * * *",
+      "verified": false,
+      "reason": "no_cron_secret"
+    },
+    {
+      "path": "/api/cron/bootstrap-database",
+      "schedule": "0 5 * * *",
+      "verified": false,
+      "reason": "no_cron_secret"
+    },
+    {
+      "path": "/api/cron/import-phase2-trial",
+      "schedule": "30 5 * * *",
+      "verified": false,
+      "reason": "no_cron_secret"
+    },
+    {
+      "path": "/api/cron/apply-migrations",
+      "schedule": "0 4 * * 0",
+      "verified": false,
+      "reason": "no_cron_secret"
+    },
+    {
+      "path": "/api/cron/question-answer-daily",
+      "schedule": "30 6 * * *",
+      "verified": false,
+      "reason": "no_cron_secret"
+    },
+    {
+      "path": "/api/cron/question-answer-generation-drain",
+      "schedule": "*/15 * * * *",
+      "verified": false,
+      "reason": "no_cron_secret"
+    },
+    {
+      "path": "/api/cron/check-fiqh-links",
+      "schedule": "0 7 * * *",
+      "verified": false,
+      "reason": "no_cron_secret"
+    },
+    {
+      "path": "/api/cron/scholarly-verification",
+      "schedule": "0 8 * * *",
+      "verified": false,
+      "reason": "no_cron_secret"
+    },
+    {
+      "path": "/api/cron/autonomous-orchestrator",
+      "schedule": "15 8 * * *",
+      "verified": false,
+      "reason": "no_cron_secret"
+    },
+    {
+      "path": "/api/cron/global-reference-review",
+      "schedule": "0 9 * * 0",
+      "verified": false,
+      "reason": "no_cron_secret"
+    },
+    {
+      "path": "/api/cron/islamic-intelligence",
+      "schedule": "0 10 * * *",
+      "verified": false,
+      "reason": "no_cron_secret"
+    },
+    {
+      "path": "/api/cron/governance-backup",
+      "schedule": "0 4 * * 0",
+      "verified": false,
+      "reason": "no_cron_secret"
+    },
+    {
+      "path": "/api/cron/ai-agents",
+      "schedule": "30 10 * * *",
+      "verified": false,
+      "reason": "no_cron_secret"
+    },
+    {
+      "path": "/api/cron/verified-knowledge",
+      "schedule": "0 11 * * *",
+      "verified": false,
+      "reason": "no_cron_secret"
+    },
+    {
+      "path": "/api/cron/source-monitor",
+      "schedule": "*/15 * * * *",
+      "verified": false,
+      "reason": "no_cron_secret"
+    },
+    {
+      "path": "/api/cron/lesson-intelligence",
+      "schedule": "*/15 * * * *",
+      "verified": false,
+      "reason": "no_cron_secret"
+    },
+    {
+      "path": "/api/cron/content-engines",
+      "schedule": "10,40 * * * *",
+      "verified": false,
+      "reason": "no_cron_secret"
+    },
+    {
+      "path": "/api/cron/content-engines-drain",
+      "schedule": "* * * * *",
+      "verified": false,
+      "reason": "no_cron_secret"
+    },
+    {
+      "path": "/api/cron/monitor-sources",
+      "schedule": "0 6 * * *",
+      "verified": false,
+      "reason": "no_cron_secret"
+    },
+    {
+      "path": "/api/cron/majlis-knowledge-engine",
+      "schedule": "5,35 * * * *",
+      "verified": false,
+      "reason": "no_cron_secret"
+    },
+    {
+      "path": "/api/cron/content-scheduler",
+      "schedule": "0 * * * *",
+      "verified": false,
+      "reason": "no_cron_secret"
+    },
+    {
+      "path": "/api/cron/knowledge-reasoning",
+      "schedule": "30 11 * * *",
+      "verified": false,
+      "reason": "no_cron_secret"
+    },
+    {
+      "path": "/api/cron/autonomous-platform-fetch",
+      "schedule": "0 * * * *",
+      "verified": false,
+      "reason": "no_cron_secret"
+    },
+    {
+      "path": "/api/cron/autonomous-platform-validate",
+      "schedule": "0 */2 * * *",
+      "verified": false,
+      "reason": "no_cron_secret"
+    },
+    {
+      "path": "/api/cron/autonomous-platform-questions",
+      "schedule": "0 */3 * * *",
+      "verified": false,
+      "reason": "no_cron_secret"
+    },
+    {
+      "path": "/api/cron/autonomous-platform-benefits",
+      "schedule": "0 */6 * * *",
+      "verified": false,
+      "reason": "no_cron_secret"
+    },
+    {
+      "path": "/api/cron/autonomous-platform-reindex",
+      "schedule": "0 2 * * *",
+      "verified": false,
+      "reason": "no_cron_secret"
+    },
+    {
+      "path": "/api/cron/autonomous-platform-audit",
+      "schedule": "0 4 * * 0",
+      "verified": false,
+      "reason": "no_cron_secret"
+    },
+    {
+      "path": "/api/cron/autonomous-platform-cleanup",
+      "schedule": "0 3 1 * *",
+      "verified": false,
+      "reason": "no_cron_secret"
+    },
+    {
+      "path": "/api/cron/autonomous-platform-bootstrap",
+      "schedule": "30 5 * * *",
+      "verified": false,
+      "reason": "no_cron_secret"
+    },
+    {
+      "path": "/api/cron/autonomous-platform-v3",
+      "schedule": "*/30 * * * *",
+      "verified": false,
+      "reason": "no_cron_secret"
+    },
+    {
+      "path": "/api/cron/autonomous-platform-v3-health",
+      "schedule": "0 * * * *",
+      "verified": false,
+      "reason": "no_cron_secret"
+    },
+    {
+      "path": "/api/cron/autonomous-platform-v3-goals",
+      "schedule": "0 */4 * * *",
+      "verified": false,
+      "reason": "no_cron_secret"
+    },
+    {
+      "path": "/api/cron/autonomous-platform-v3-analytics",
+      "schedule": "15 0 * * *",
+      "verified": false,
+      "reason": "no_cron_secret"
+    },
+    {
+      "path": "/api/cron/autonomous-platform-v3-backup",
+      "schedule": "0 4 * * *",
+      "verified": false,
+      "reason": "no_cron_secret"
+    }
+  ],
+  "working": 48,
+  "reachable": 48
+}
