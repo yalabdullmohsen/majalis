@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useParams, useLocation } from "wouter";
+import { Link, useParams, useLocation, useRoute } from "wouter";
 import { searchEverything, type SearchResults } from "@/lib/supabase";
 import { searchDemoContent } from "@/lib/demo-content";
 import { displayText } from "@/lib/display-text";
@@ -58,8 +58,18 @@ const KIND_GROUP_LABELS: Record<string, string> = {
   fiqh_council: "المجمع الفقهي",
   knowledge: "محرك المعرفة",
   quran: "القرآن",
+  tafsir: "التفسير",
   hadith: "الحديث",
+  mutoon: "المتون",
+  circle: "الحلقات القرآنية",
+  circles: "الحلقات القرآنية",
+  mosque: "المساجد",
+  mosques: "المساجد",
+  research: "الأبحاث العلمية",
+  learning_path: "المسارات التعليمية",
+  sin_jeem: "سؤال وجواب",
   sheikh: "المشايخ",
+  topic: "الموضوعات",
 };
 
 function Group({ title, items, render, id }: { title: string; items: any[]; render: (i: any) => React.ReactNode; id?: string }) {
@@ -147,8 +157,11 @@ function FiqhResultRow({ row }: { row: FiqhGlobalSearchRow }) {
 
 export default function SearchPage() {
   const params = useParams();
+  const [, searchMatch] = useRoute("/search/:q");
+  const [, scholarMatch] = useRoute("/scholar-search/:q");
   const [, navigate] = useLocation();
-  const q = params.q ? decodeURIComponent(params.q) : "";
+  const rawQ = searchMatch?.q || scholarMatch?.q || params.q || "";
+  const q = rawQ ? decodeURIComponent(rawQ) : "";
   const [term, setTerm] = useState(q);
   const [results, setResults] = useState<SearchResults>(EMPTY);
   const [intelligentResults, setIntelligentResults] = useState<IntelligentSearchResult[]>([]);
@@ -186,13 +199,6 @@ export default function SearchPage() {
       setMatchedTopics(intel.topics || []);
       setResponseMs(intel.response_ms ?? null);
 
-      if ((intel.results?.length || 0) > 0) {
-        setResults(EMPTY);
-        setFiqhResults([]);
-        setLoading(false);
-        return;
-      }
-
       const [r, unifiedMatches, fiqhBoost] = await Promise.all([
         searchEverything(query),
         searchUnifiedLessons(query),
@@ -202,8 +208,6 @@ export default function SearchPage() {
       const mergedFiqh = mergeFiqhSearchResults(r.fiqh_decisions || [], fiqhBoost.rows);
       setFiqhResults(mergedFiqh);
       setFiqhQuery(fiqhBoost.isFiqhQuery);
-      setIntelligentResults([]);
-      setIntelligentGroups({});
 
       const unifiedRows = unifiedMatches.map(lessonRecordToSearchRow);
       const seen = new Set((r.lessons || []).map((l: { id: string }) => l.id));
@@ -218,6 +222,14 @@ export default function SearchPage() {
       ];
 
       setResults({ ...r, lessons: mergedLessons });
+<<<<<<< HEAD
+=======
+
+      if ((intel.results?.length || 0) === 0) {
+        setIntelligentResults([]);
+        setIntelligentGroups({});
+      }
+>>>>>>> 826ee81 (Vision 2.0 Phase 1: Unified Islamic scholar search engine)
     } catch {
       setFiqhResults([]);
       setFiqhQuery(false);
@@ -268,11 +280,17 @@ export default function SearchPage() {
     localExtra.nawawi.length +
     localExtra.quran.length;
 
-  const total = intelligentTotal > 0 ? intelligentTotal : legacyTotal;
+  const total =
+    intelligentTotal > 0
+      ? intelligentTotal
+      : legacyTotal;
 
   return (
     <div className="page-shell narrow search-page ds-page">
-      <h1 className="search-page-title">البحث العلمي</h1>
+      <h1 className="search-page-title">الباحث العلمي الإسلامي</h1>
+      <p className="search-page-subtitle" style={{ margin: "0 0 1rem", color: "var(--ink-soft)", fontSize: "0.9375rem" }}>
+        بحث موحّد في القرآن والتفسير والحديث والفقه والدروس والحلقات والأبحاث والعلماء
+      </p>
 
       <form
         onSubmit={(e) => {
@@ -285,7 +303,7 @@ export default function SearchPage() {
           value={term}
           onChange={setTerm}
           onSubmit={submitSearch}
-          placeholder="ابحث في القرآن والحديث والفتاوى والدروس والكتب..."
+          placeholder="ابحث في القرآن والحديث والفتاوى والدروس والحلقات والأبحاث..."
         />
         <button type="submit" className="ds-btn ds-btn--primary">بحث</button>
       </form>
@@ -304,11 +322,19 @@ export default function SearchPage() {
         <div className="search-filters-grid">
           <select value={filters.type} onChange={(e) => setFilters({ ...filters, type: e.target.value })}>
             <option value="">كل الأنواع</option>
+            <option value="quran">القرآن</option>
+            <option value="tafsir">التفسير</option>
+            <option value="hadith">الحديث</option>
             <option value="lesson">دروس</option>
+            <option value="circle">حلقات</option>
             <option value="fatwa">فتاوى</option>
+            <option value="research">أبحاث</option>
+            <option value="library">كتب</option>
+            <option value="sheikh">علماء</option>
+            <option value="mosque">مساجد</option>
+            <option value="mutoon">متون</option>
             <option value="qa">أسئلة</option>
             <option value="fawaid">فوائد</option>
-            <option value="library">كتب</option>
             <option value="knowledge">محرك المعرفة</option>
           </select>
           <input
@@ -360,7 +386,9 @@ export default function SearchPage() {
               )}
 
               {intelligentTotal > 0 ? (
-                Object.entries(intelligentGroups).map(([kind, items]) => (
+                Object.entries(intelligentGroups)
+                  .sort(([a], [b]) => (KIND_GROUP_LABELS[a] ? 0 : 1) - (KIND_GROUP_LABELS[b] ? 0 : 1))
+                  .map(([kind, items]) => (
                   <Group
                     key={kind}
                     title={KIND_GROUP_LABELS[kind] || kind}

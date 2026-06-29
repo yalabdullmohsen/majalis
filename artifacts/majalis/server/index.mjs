@@ -24,6 +24,7 @@ import connectorHealthHandler from "../lib/api-handlers/cron/connector-health.js
 import autoKnowledgeAdminHandler from "../lib/api-handlers/admin/auto-knowledge-engine.js";
 import knowledgeRecommendationsHandler from "../lib/api-handlers/knowledge-recommendations.js";
 import intelligentSearchHandler from "../lib/api-handlers/intelligent-search.js";
+import searchAutocompleteHandler from "../lib/api-handlers/search-autocomplete.js";
 import topicContentHandler from "../lib/api-handlers/topic-content.js";
 import contentRelationsHandler from "../lib/api-handlers/content-relations.js";
 import searchAnalyticsHandler from "../lib/api-handlers/admin/search-analytics.js";
@@ -152,6 +153,7 @@ app.get("/api/auto-content", runHandler(autoContentHandler, "auto-content"));
 app.get("/api/knowledge-recommendations", runHandler(knowledgeRecommendationsHandler, "knowledge-recommendations"));
 app.get("/api/intelligent-search", runHandler(intelligentSearchHandler, "intelligent-search"));
 app.post("/api/intelligent-search", express.json({ limit: "16kb" }), runHandler(intelligentSearchHandler, "intelligent-search"));
+app.get("/api/search-autocomplete", runHandler(searchAutocompleteHandler, "search-autocomplete"));
 app.get("/api/topic-content", runHandler(topicContentHandler, "topic-content"));
 app.get("/api/content-relations", runHandler(contentRelationsHandler, "content-relations"));
 app.post("/api/content-relations", express.json({ limit: "8kb" }), runHandler(contentRelationsHandler, "content-relations"));

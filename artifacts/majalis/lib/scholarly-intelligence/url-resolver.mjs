@@ -26,7 +26,16 @@ const KIND_LABELS = {
   sheikh: "شيخ",
   sheikhs: "شيخ",
   quran: "قرآن",
+  tafsir: "تفسير",
   hadith: "حديث",
+  mutoon: "متون",
+  circle: "حلقة",
+  circles: "حلقة",
+  mosque: "مسجد",
+  mosques: "مسجد",
+  research: "بحث علمي",
+  learning_path: "مسار تعليمي",
+  sin_jeem: "سؤال وجواب",
   article: "مقال",
   knowledge: "محرك المعرفة",
 };
@@ -79,9 +88,27 @@ export function resolveContentUrl(item) {
     case "sheikhs":
       return "/lessons";
     case "quran":
-      return "/quran";
+      return item.id?.startsWith("surah-")
+        ? `/quran?surah=${String(item.id).replace("surah-", "")}`
+        : "/quran";
+    case "tafsir":
+      return "/quran/tafsir";
     case "hadith":
       return "/arbaeen-nawawi";
+    case "mutoon":
+      return item.href || "/learning/paths";
+    case "circle":
+    case "circles":
+      return id ? `/quran-scientific-circles/${id}` : "/quran-scientific-circles";
+    case "mosque":
+    case "mosques":
+      return item.href || "/lessons";
+    case "research":
+      return id ? `/fiqh-council/${item.slug || id}` : "/fiqh-council/research";
+    case "learning_path":
+      return item.href || (item.slug ? `/learning/paths/${item.slug}` : "/learning/paths");
+    case "sin_jeem":
+      return "/question-answer";
     case "article":
       return item.slug ? `/updates/auto/${item.slug}` : "/updates";
     case "knowledge":

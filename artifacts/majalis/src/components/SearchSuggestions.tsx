@@ -5,6 +5,7 @@ import {
   SUGGESTION_GROUP_LABELS,
   type SearchSuggestion,
 } from "@/lib/search-suggestions";
+import { fetchSearchAutocomplete } from "@/lib/scholarly-intelligence-service";
 import { getSearchHistory, clearSearchHistory } from "@/lib/search-history";
 
 type Props = {
@@ -14,6 +15,22 @@ type Props = {
   placeholder?: string;
   inputClassName?: string;
   compact?: boolean;
+};
+
+type ApiSuggestion = {
+  id: string;
+  label: string;
+  meta?: string;
+  kind: string;
+  href: string;
+};
+
+const API_KIND_LABELS: Record<string, string> = {
+  quran: "قرآن",
+  hadith: "حديث",
+  lesson: "درس",
+  topic: "موضوع",
+  tafsir: "تفسير",
 };
 
 export function SearchSuggestions({
@@ -26,12 +43,42 @@ export function SearchSuggestions({
 }: Props) {
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
+  const [apiSuggestions, setApiSuggestions] = useState<ApiSuggestion[]>([]);
   const rootRef = useRef<HTMLDivElement>(null);
 
-  const suggestions = useMemo(
+  const localSuggestions = useMemo(
     () => buildSearchSuggestions(value),
     [value],
   );
+
+  useEffect(() => {
+    const q = value.trim();
+    if (q.length < 2) {
+      setApiSuggestions([]);
+      return;
+    }
+    const id = window.setTimeout(() => {
+      void fetchSearchAutocomplete(q, 10).then(setApiSuggestions);
+    }, 200);
+    return () => window.clearTimeout(id);
+  }, [value]);
+
+  const suggestions: SearchSuggestion[] = useMemo(() => {
+    const fromApi: SearchSuggestion[] = apiSuggestions.map((s) => ({
+      id: s.id,
+      label: s.label,
+      meta: s.meta || API_KIND_LABELS[s.kind],
+      href: s.href,
+      group: s.kind === "topic" ? "lessons" : (s.kind as SearchSuggestion["group"]) || "lessons",
+    }));
+    const seen = new Set(fromApi.map((s) => `${s.group}:${s.label}`));
+    const merged = [...fromApi];
+    for (const loc of localSuggestions) {
+      const key = `${loc.group}:${loc.label}`;
+      if (!seen.has(key)) merged.push(loc);
+    }
+    return merged.slice(0, 14);
+  }, [apiSuggestions, localSuggestions]);
 
   const history = useMemo(() => getSearchHistory(), [open, value]);
 
@@ -50,11 +97,12 @@ export function SearchSuggestions({
   }, []);
 
   const grouped = useMemo(() => {
-    const map = new Map<SearchSuggestion["group"], SearchSuggestion[]>();
+    const map = new Map<string, SearchSuggestion[]>();
     for (const item of suggestions) {
-      const list = map.get(item.group) || [];
+      const label = item.meta || SUGGESTION_GROUP_LABELS[item.group] || item.group;
+      const list = map.get(label) || [];
       list.push(item);
-      map.set(item.group, list);
+      map.set(label, list);
     }
     return map;
   }, [suggestions]);
@@ -133,15 +181,22 @@ export function SearchSuggestions({
         <div className="search-suggestions-panel" role="listbox">
           {Array.from(grouped.entries()).map(([group, items]) => (
             <div key={group} className="search-suggestions-group">
-              <p className="search-suggestions-group-label">{SUGGESTION_GROUP_LABELS[group]}</p>
+              <p className="search-suggestions-group-label">{group}</p>
               {items.map((item) => {
                 const index = flat.indexOf(item);
                 return (
                   <Link
                     key={`${group}-${item.id}`}
-                    href={item.href}
+                    href={item.href.startsWith("/search") ? item.href : item.href}
                     className={`search-suggestion-item${index === activeIndex ? " search-suggestion-item--active" : ""}`}
-                    onClick={() => setOpen(false)}
+                    onClick={() => {
+                      if (!item.href.startsWith("/search")) {
+                        setOpen(false);
+                      } else {
+                        onSubmit(item.label);
+                        setOpen(false);
+                      }
+                    }}
                     role="option"
                     aria-selected={index === activeIndex}
                   >

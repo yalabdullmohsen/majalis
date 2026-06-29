@@ -178,6 +178,8 @@ function Router() {
       <Route path="/settings"><SafeLazyRoute component={SettingsPage} /></Route>
       <Route path="/search/:q"><SafeLazyRoute component={SearchPage} /></Route>
       <Route path="/search"><SafeLazyRoute component={SearchPage} /></Route>
+      <Route path="/scholar-search/:q"><SafeLazyRoute component={SearchPage} /></Route>
+      <Route path="/scholar-search"><SafeLazyRoute component={SearchPage} /></Route>
       <Route path="/topics/:slug"><SafeLazyRoute component={TopicPage} /></Route>
       <Route path="/topics"><SafeLazyRoute component={TopicsIndexPage} /></Route>
       <Route path="/scientific-announcements/:id"><SafeLazyRoute component={ScientificAnnouncementDetailPage} /></Route>

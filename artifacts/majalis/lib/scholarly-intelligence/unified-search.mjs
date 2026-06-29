@@ -6,6 +6,7 @@ import { getSupabaseAdmin } from "../supabase-admin.mjs";
 import { searchEverything } from "../knowledge-search-bridge.mjs";
 import { searchScholarlyContent } from "../scholarly-verification/orchestrator.mjs";
 import { processQuery } from "./query-processor.mjs";
+import { searchExtendedCorpus } from "./corpus-search.mjs";
 import { searchKnowledgeAll } from "./semantic-search.mjs";
 import { enrichResult } from "./url-resolver.mjs";
 import { rankResults, dedupeResults, groupByKind } from "./ranker.mjs";
@@ -34,7 +35,15 @@ const CONTENT_TYPE_MAP = {
   fiqh_decisions: "fiqh_decision",
   sheikhs: "sheikh",
   quran: "quran",
-  hadith: "hadith",
+  sin_jeem: "sin_jeem",
+  circle: "circle",
+  circles: "circle",
+  mosque: "mosque",
+  mosques: "mosque",
+  research: "research",
+  tafsir: "tafsir",
+  mutoon: "mutoon",
+  learning_path: "learning_path",
 };
 
 function flattenPlatformResults(data, perKindLimit = 15) {
@@ -153,11 +162,12 @@ export async function unifiedSearch(opts = {}) {
     searchEverything(queryInfo.searchString || query, limit).then((items) =>
       items.map((item) => enrichResult({ ...item, rank: item.rank || 4 })),
     ),
+    searchExtendedCorpus(admin, queryInfo.searchString || query, Math.ceil(limit / 2)),
   ];
 
-  const [platformRpc, knowledge, scholarly, platformBridge] = await Promise.all(searchPromises);
+  const [platformRpc, knowledge, scholarly, platformBridge, corpus] = await Promise.all(searchPromises);
 
-  let allResults = dedupeResults([...platformRpc, ...knowledge, ...scholarly, ...platformBridge]);
+  let allResults = dedupeResults([...platformRpc, ...knowledge, ...scholarly, ...platformBridge, ...corpus]);
   allResults = applyFilters(allResults, filters);
   allResults = rankResults(allResults, queryInfo, prefs);
   allResults = allResults.slice(0, limit);
