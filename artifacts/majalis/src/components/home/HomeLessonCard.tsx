@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { formatShortLessonTime } from "@/lib/lesson-time";
+import { formatShortLessonTime, formatLessonTimeDisplay } from "@/lib/lesson-time";
 import { resolveKuwaitSheikhProfile, sheikhProfileHref } from "@/lib/kuwait-sheikh-profiles";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 

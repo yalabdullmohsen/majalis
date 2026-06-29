@@ -1,0 +1,365 @@
+{
+  "stats": {
+    "total": 16,
+    "with_issues": 6,
+    "am_pm_reversed": 6,
+    "unparseable": 0,
+    "end_before_start": 0,
+    "prayer_rank_assigned": 16,
+    "repaired": 0,
+    "manual_review": 0
+  },
+  "coverage_pct": 100,
+  "report": [
+    {
+      "source": "kuwait-json",
+      "title": "قراءة كتاب صحيح مسلم",
+      "lesson_time": "10:00 صباحًا",
+      "issues": [],
+      "repairs": [
+        {
+          "field": "lesson_time",
+          "from": "10:00 صباحًا",
+          "to": "١٠:٠٠ صباحاً",
+          "reason": "normalized_display"
+        }
+      ],
+      "effective_prayer_rank": "قبل الظهر",
+      "normalized": {
+        "lesson_time": "١٠:٠٠ صباحاً",
+        "start_time": "10:00",
+        "end_time": null,
+        "time_period": "صباحاً",
+        "prayer_rank": "قبل الظهر",
+        "issues": [],
+        "repairs": [
+          {
+            "field": "lesson_time",
+            "from": "10:00 صباحًا",
+            "to": "١٠:٠٠ صباحاً",
+            "reason": "normalized_display"
+          }
+        ]
+      },
+      "needs_manual_review": false
+    },
+    {
+      "source": "kuwait-json",
+      "title": "الدورة العلمية التأصيلية — بلوغ المرام من أدلة الأحكام",
+      "lesson_time": "6:00 م",
+      "issues": [
+        "shorthand_am_pm"
+      ],
+      "repairs": [
+        {
+          "field": "lesson_time",
+          "from": "6:00 م",
+          "to": "٦:٠٠ مساءً",
+          "reason": "normalized_display"
+        }
+      ],
+      "effective_prayer_rank": "قبل المغرب",
+      "normalized": {
+        "lesson_time": "٦:٠٠ مساءً",
+        "start_time": "18:00",
+        "end_time": null,
+        "time_period": "مساءً",
+        "prayer_rank": "قبل المغرب",
+        "issues": [
+          "shorthand_am_pm"
+        ],
+        "repairs": [
+          {
+            "field": "lesson_time",
+            "from": "6:00 م",
+            "to": "٦:٠٠ مساءً",
+            "reason": "normalized_display"
+          }
+        ]
+      },
+      "needs_manual_review": false
+    },
+    {
+      "source": "kuwait-json",
+      "title": "الدورة العلمية التأصيلية — القواعد المثلى في صفات الله وأسمائه الحسنى",
+      "lesson_time": "7:20 م",
+      "issues": [
+        "shorthand_am_pm"
+      ],
+      "repairs": [
+        {
+          "field": "lesson_time",
+          "from": "7:20 م",
+          "to": "٧:٢٠ مساءً",
+          "reason": "normalized_display"
+        }
+      ],
+      "effective_prayer_rank": "بعد المغرب",
+      "normalized": {
+        "lesson_time": "٧:٢٠ مساءً",
+        "start_time": "19:20",
+        "end_time": null,
+        "time_period": "مساءً",
+        "prayer_rank": "بعد المغرب",
+        "issues": [
+          "shorthand_am_pm"
+        ],
+        "repairs": [
+          {
+            "field": "lesson_time",
+            "from": "7:20 م",
+            "to": "٧:٢٠ مساءً",
+            "reason": "normalized_display"
+          }
+        ]
+      },
+      "needs_manual_review": false
+    },
+    {
+      "source": "kuwait-json",
+      "title": "الدورة العلمية التأصيلية — قراءة في كتاب دعوى تعارض السنة النبوية مع العلم التجريبي",
+      "lesson_time": "8:50 م",
+      "issues": [
+        "shorthand_am_pm"
+      ],
+      "repairs": [
+        {
+          "field": "lesson_time",
+          "from": "8:50 م",
+          "to": "٨:٥٠ مساءً",
+          "reason": "normalized_display"
+        }
+      ],
+      "effective_prayer_rank": "بعد العشاء",
+      "normalized": {
+        "lesson_time": "٨:٥٠ مساءً",
+        "start_time": "20:50",
+        "end_time": null,
+        "time_period": "مساءً",
+        "prayer_rank": "بعد العشاء",
+        "issues": [
+          "shorthand_am_pm"
+        ],
+        "repairs": [
+          {
+            "field": "lesson_time",
+            "from": "8:50 م",
+            "to": "٨:٥٠ مساءً",
+            "reason": "normalized_display"
+          }
+        ]
+      },
+      "needs_manual_review": false
+    },
+    {
+      "source": "kuwait-json",
+      "title": "شرح كتاب الصلاة من إعانة الطالب",
+      "lesson_time": "6:00 مساءً إلى صلاة العشاء",
+      "issues": [],
+      "repairs": [
+        {
+          "field": "lesson_time",
+          "from": "6:00 مساءً إلى صلاة العشاء",
+          "to": "٦:٠٠ مساءً",
+          "reason": "normalized_display"
+        }
+      ],
+      "effective_prayer_rank": "بعد العشاء",
+      "normalized": {
+        "lesson_time": "٦:٠٠ مساءً",
+        "start_time": "18:00",
+        "end_time": null,
+        "time_period": "مساءً",
+        "prayer_rank": "بعد العشاء",
+        "issues": [],
+        "repairs": [
+          {
+            "field": "lesson_time",
+            "from": "6:00 مساءً إلى صلاة العشاء",
+            "to": "٦:٠٠ مساءً",
+            "reason": "normalized_display"
+          }
+        ]
+      },
+      "needs_manual_review": false
+    },
+    {
+      "source": "kuwait-csv",
+      "id": "kw-othman-sahih-muslim-0",
+      "title": "قراءة كتاب صحيح مسلم",
+      "lesson_time": "10:00 صباحًا",
+      "issues": [],
+      "repairs": [
+        {
+          "field": "lesson_time",
+          "from": "10:00 صباحًا",
+          "to": "١٠:٠٠ صباحاً",
+          "reason": "normalized_display"
+        }
+      ],
+      "effective_prayer_rank": "قبل الظهر",
+      "normalized": {
+        "lesson_time": "١٠:٠٠ صباحاً",
+        "start_time": "10:00",
+        "end_time": null,
+        "time_period": "صباحاً",
+        "prayer_rank": "قبل الظهر",
+        "issues": [],
+        "repairs": [
+          {
+            "field": "lesson_time",
+            "from": "10:00 صباحًا",
+            "to": "١٠:٠٠ صباحاً",
+            "reason": "normalized_display"
+          }
+        ]
+      },
+      "needs_manual_review": false
+    },
+    {
+      "source": "kuwait-csv",
+      "id": "kw-rashed-fundamental-course-0",
+      "title": "الدورة العلمية التأصيلية — بلوغ المرام من أدلة الأحكام",
+      "lesson_time": "6:00 م",
+      "issues": [
+        "shorthand_am_pm"
+      ],
+      "repairs": [
+        {
+          "field": "lesson_time",
+          "from": "6:00 م",
+          "to": "٦:٠٠ مساءً",
+          "reason": "normalized_display"
+        }
+      ],
+      "effective_prayer_rank": "قبل المغرب",
+      "normalized": {
+        "lesson_time": "٦:٠٠ مساءً",
+        "start_time": "18:00",
+        "end_time": null,
+        "time_period": "مساءً",
+        "prayer_rank": "قبل المغرب",
+        "issues": [
+          "shorthand_am_pm"
+        ],
+        "repairs": [
+          {
+            "field": "lesson_time",
+            "from": "6:00 م",
+            "to": "٦:٠٠ مساءً",
+            "reason": "normalized_display"
+          }
+        ]
+      },
+      "needs_manual_review": false
+    },
+    {
+      "source": "kuwait-csv",
+      "id": "kw-rashed-fundamental-course-1",
+      "title": "الدورة العلمية التأصيلية — القواعد المثلى في صفات الله وأسمائه الحسنى",
+      "lesson_time": "7:20 م",
+      "issues": [
+        "shorthand_am_pm"
+      ],
+      "repairs": [
+        {
+          "field": "lesson_time",
+          "from": "7:20 م",
+          "to": "٧:٢٠ مساءً",
+          "reason": "normalized_display"
+        }
+      ],
+      "effective_prayer_rank": "بعد المغرب",
+      "normalized": {
+        "lesson_time": "٧:٢٠ مساءً",
+        "start_time": "19:20",
+        "end_time": null,
+        "time_period": "مساءً",
+        "prayer_rank": "بعد المغرب",
+        "issues": [
+          "shorthand_am_pm"
+        ],
+        "repairs": [
+          {
+            "field": "lesson_time",
+            "from": "7:20 م",
+            "to": "٧:٢٠ مساءً",
+            "reason": "normalized_display"
+          }
+        ]
+      },
+      "needs_manual_review": false
+    },
+    {
+      "source": "kuwait-csv",
+      "id": "kw-rashed-fundamental-course-2",
+      "title": "الدورة العلمية التأصيلية — قراءة في كتاب دعوى تعارض السنة النبوية مع العلم التجريبي",
+      "lesson_time": "8:50 م",
+      "issues": [
+        "shorthand_am_pm"
+      ],
+      "repairs": [
+        {
+          "field": "lesson_time",
+          "from": "8:50 م",
+          "to": "٨:٥٠ مساءً",
+          "reason": "normalized_display"
+        }
+      ],
+      "effective_prayer_rank": "بعد العشاء",
+      "normalized": {
+        "lesson_time": "٨:٥٠ مساءً",
+        "start_time": "20:50",
+        "end_time": null,
+        "time_period": "مساءً",
+        "prayer_rank": "بعد العشاء",
+        "issues": [
+          "shorthand_am_pm"
+        ],
+        "repairs": [
+          {
+            "field": "lesson_time",
+            "from": "8:50 م",
+            "to": "٨:٥٠ مساءً",
+            "reason": "normalized_display"
+          }
+        ]
+      },
+      "needs_manual_review": false
+    },
+    {
+      "source": "kuwait-csv",
+      "id": "kw-osama-shatti-prayer-book-0",
+      "title": "شرح كتاب الصلاة من إعانة الطالب",
+      "lesson_time": "6:00 مساءً إلى صلاة العشاء",
+      "issues": [],
+      "repairs": [
+        {
+          "field": "lesson_time",
+          "from": "6:00 مساءً إلى صلاة العشاء",
+          "to": "٦:٠٠ مساءً",
+          "reason": "normalized_display"
+        }
+      ],
+      "effective_prayer_rank": "بعد العشاء",
+      "normalized": {
+        "lesson_time": "٦:٠٠ مساءً",
+        "start_time": "18:00",
+        "end_time": null,
+        "time_period": "مساءً",
+        "prayer_rank": "بعد العشاء",
+        "issues": [],
+        "repairs": [
+          {
+            "field": "lesson_time",
+            "from": "6:00 مساءً إلى صلاة العشاء",
+            "to": "٦:٠٠ مساءً",
+            "reason": "normalized_display"
+          }
+        ]
+      },
+      "needs_manual_review": false
+    }
+  ],
+  "generated_at": "2026-06-29T00:46:05.700Z"
+}

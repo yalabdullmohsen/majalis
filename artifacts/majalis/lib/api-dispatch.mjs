@@ -100,6 +100,7 @@ export const API_ROUTES = [
   { prefix: "/api/admin/lesson-from-image", module: "./api-handlers/admin/lesson-from-image.js", rateLimit: lessonFromImageRateLimit },
   { prefix: "/api/admin/lesson-from-url", module: "./api-handlers/admin/lesson-from-url.js", rateLimit: lessonFromUrlRateLimit },
   { prefix: "/api/admin/lesson-automation", module: "./api-handlers/admin/lesson-automation.js" },
+  { prefix: "/api/admin/lesson-time-audit", module: "./api-handlers/admin/lesson-time-audit.js" },
   { prefix: "/api/admin/instagram-integration", module: "./api-handlers/admin/instagram-integration.js" },
   { prefix: "/api/webhooks/instagram", module: "./api-handlers/webhooks/instagram.js", allowGet: true },
   { prefix: "/api/admin/majlis-knowledge-engine", module: "./api-handlers/admin/majlis-knowledge-engine.js" },

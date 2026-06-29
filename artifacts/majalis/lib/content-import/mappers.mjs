@@ -1,6 +1,7 @@
 import { hashKey, normalizeKey } from "./dedupe.mjs";
 import { normalizeBenefitsRow } from "./validators.mjs";
 import { normalizeLessonRow } from "./lesson-field-policy.mjs";
+import { applyLessonTimeRepair } from "../lesson-time-core.mjs";
 
 function pick(row, ...keys) {
   for (const k of keys) {
@@ -139,7 +140,17 @@ function mapLesson(row, isCourse) {
       ? ["بيانات_ناقصة"]
       : null;
 
-  return {
+  const { row: timeNormalized, audit } = applyLessonTimeRepair({
+    lesson_time: time || null,
+    schedule,
+    day_of_week: day || null,
+    start_date: pick(normalized, "start_date", "date") || null,
+    end_date: pick(normalized, "end_date") || null,
+    is_recurring: normalized.is_recurring !== false && normalized.is_recurring !== "false",
+    prayer_rank_override: pick(normalized, "prayer_rank_override") || null,
+  });
+
+  const payload = {
     title: pick(normalized, "title"),
     speaker_name: sheikh || null,
     sheikh_name: sheikh || null,
@@ -149,8 +160,16 @@ function mapLesson(row, isCourse) {
     region: pick(normalized, "region") || null,
     category: pick(normalized, "category") || "أخرى",
     day_of_week: day || null,
-    lesson_time: time || null,
+    lesson_time: timeNormalized.lesson_time || time || null,
     schedule: schedule || null,
+    start_time: timeNormalized.start_time || null,
+    end_time: timeNormalized.end_time || null,
+    time_period: timeNormalized.time_period || null,
+    prayer_rank: timeNormalized.prayer_rank || null,
+    prayer_rank_override: timeNormalized.prayer_rank_override || null,
+    start_date: pick(normalized, "start_date", "date") || null,
+    end_date: pick(normalized, "end_date") || null,
+    is_recurring: normalized.is_recurring !== false && normalized.is_recurring !== "false",
     audience: pick(normalized, "audience") || "الكل",
     delivery: pick(normalized, "delivery") || "حضور فقط",
     status: pick(normalized, "status") || "approved",
@@ -165,6 +184,18 @@ function mapLesson(row, isCourse) {
     organizer: pick(normalized, "organizer") || null,
     keywords: keywords?.length ? keywords : null,
   };
+
+  if (audit.repairs?.length) {
+    payload._time_repairs = audit.repairs;
+  }
+  if (audit.issues?.length) {
+    payload._time_issues = audit.issues;
+  }
+  if (timeNormalized.time_repair_log?.length) {
+    payload.time_repair_log = timeNormalized.time_repair_log;
+  }
+
+  return payload;
 }
 
 const ADHKAR_CATEGORY_MAP = {
