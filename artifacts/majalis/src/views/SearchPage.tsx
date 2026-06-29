@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useParams, useLocation } from "wouter";
+import { Link, useParams, useLocation, useRoute } from "wouter";
 import { searchEverything, type SearchResults } from "@/lib/supabase";
 import { searchDemoContent } from "@/lib/demo-content";
 import { displayText } from "@/lib/display-text";
@@ -22,6 +22,7 @@ import {
   trackSearchClick,
   type IntelligentSearchResult,
 } from "@/lib/scholarly-intelligence-service";
+import { searchQuranScientificCircles } from "@/lib/quran-scientific-circles-service";
 
 const EMPTY: SearchResults = {
   lessons: [],
@@ -59,8 +60,18 @@ const KIND_GROUP_LABELS: Record<string, string> = {
   fiqh_council: "المجمع الفقهي",
   knowledge: "محرك المعرفة",
   quran: "القرآن",
+  tafsir: "التفسير",
   hadith: "الحديث",
+  mutoon: "المتون",
+  circle: "الحلقات القرآنية",
+  circles: "الحلقات القرآنية",
+  mosque: "المساجد",
+  mosques: "المساجد",
+  research: "الأبحاث العلمية",
+  learning_path: "المسارات التعليمية",
+  sin_jeem: "سؤال وجواب",
   sheikh: "المشايخ",
+  topic: "الموضوعات",
 };
 
 function Group({ title, items, render, id }: { title: string; items: any[]; render: (i: any) => React.ReactNode; id?: string }) {
@@ -148,8 +159,11 @@ function FiqhResultRow({ row }: { row: FiqhGlobalSearchRow }) {
 
 export default function SearchPage() {
   const params = useParams();
+  const [, searchMatch] = useRoute("/search/:q");
+  const [, scholarMatch] = useRoute("/scholar-search/:q");
   const [, navigate] = useLocation();
-  const q = params.q ? decodeURIComponent(params.q) : "";
+  const rawQ = searchMatch?.q || scholarMatch?.q || params.q || "";
+  const q = rawQ ? decodeURIComponent(rawQ) : "";
   const [term, setTerm] = useState(q);
   const [results, setResults] = useState<SearchResults>(EMPTY);
   const [intelligentResults, setIntelligentResults] = useState<IntelligentSearchResult[]>([]);
@@ -157,6 +171,7 @@ export default function SearchPage() {
   const [matchedTopics, setMatchedTopics] = useState<Array<{ slug: string; title: string }>>([]);
   const [fiqhResults, setFiqhResults] = useState<FiqhGlobalSearchRow[]>([]);
   const [fiqhQuery, setFiqhQuery] = useState(false);
+  const [circlesResults, setCirclesResults] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [responseMs, setResponseMs] = useState<number | null>(null);
   const [showFilters, setShowFilters] = useState(false);
@@ -166,6 +181,7 @@ export default function SearchPage() {
     if (!query.trim()) {
       setResults(EMPTY);
       setIntelligentResults([]);
+      setCirclesResults([]);
       return;
     }
 
@@ -187,24 +203,17 @@ export default function SearchPage() {
       setMatchedTopics(intel.topics || []);
       setResponseMs(intel.response_ms ?? null);
 
-      if ((intel.results?.length || 0) > 0) {
-        setResults(EMPTY);
-        setFiqhResults([]);
-        setLoading(false);
-        return;
-      }
-
-      const [r, unifiedMatches, fiqhBoost] = await Promise.all([
+      const [r, unifiedMatches, fiqhBoost, circles] = await Promise.all([
         searchEverything(query),
         searchUnifiedLessons(query),
         searchFiqhCouncilForGlobal(query, 12),
+        searchQuranScientificCircles(query),
       ]);
 
       const mergedFiqh = mergeFiqhSearchResults(r.fiqh_decisions || [], fiqhBoost.rows);
       setFiqhResults(mergedFiqh);
       setFiqhQuery(fiqhBoost.isFiqhQuery);
-      setIntelligentResults([]);
-      setIntelligentGroups({});
+      setCirclesResults(circles);
 
       const unifiedRows = unifiedMatches.map(lessonRecordToSearchRow);
       const seen = new Set((r.lessons || []).map((l: { id: string }) => l.id));
@@ -219,6 +228,47 @@ export default function SearchPage() {
       ];
 
       setResults({ ...r, lessons: mergedLessons });
+
+      const researchHits = searchScientificResearchSync(query, 12).map((item) => ({
+        id: item.id,
+        kind: "research",
+        kind_label: "بحث علمي",
+        title: item.title,
+        href: item.href,
+        source_name: item.meta,
+        keywords: [],
+      }));
+
+      const circleHits = circles.map((c: { id: string; title: string; searchMeta?: string }) => ({
+        id: c.id,
+        kind: "circle",
+        kind_label: "حلقة",
+        title: c.title,
+        href: `/quran-scientific-circles/${c.id}`,
+        source_name: c.searchMeta,
+        keywords: [],
+      }));
+
+      const mergedIntel = [...(intel.results || [])];
+      const intelIds = new Set(mergedIntel.map((x) => `${x.kind}:${x.id}`));
+      for (const item of [...researchHits, ...circleHits]) {
+        const key = `${item.kind}:${item.id}`;
+        if (!intelIds.has(key)) {
+          mergedIntel.push(item as IntelligentSearchResult);
+          intelIds.add(key);
+        }
+      }
+
+      const groups = { ...(intel.groups || {}) };
+      if (researchHits.length) {
+        groups.research = [...(groups.research || []), ...researchHits.filter((x) => !(intel.groups?.research || []).some((r: IntelligentSearchResult) => r.id === x.id))];
+      }
+      if (circleHits.length) {
+        groups.circle = [...(groups.circle || []), ...circleHits.filter((x) => !(intel.groups?.circle || []).some((r: IntelligentSearchResult) => r.id === x.id))];
+      }
+
+      setIntelligentResults(mergedIntel);
+      setIntelligentGroups(groups);
     } catch {
       setFiqhResults([]);
       setFiqhQuery(false);
@@ -254,7 +304,7 @@ export default function SearchPage() {
   const researchResults = q.trim() ? searchScientificResearchSync(q, 12) : [];
 
   const intelligentTotal = intelligentResults.length;
-  const legacyTotal =
+  const legacyOnlyTotal =
     fiqhResults.length +
     results.lessons.length +
     results.library.length +
@@ -268,14 +318,16 @@ export default function SearchPage() {
     (results.updates?.length || 0) +
     localExtra.occasions.length +
     localExtra.nawawi.length +
-    localExtra.quran.length +
-    researchResults.length;
+    localExtra.quran.length;
 
-  const total = intelligentTotal > 0 ? intelligentTotal : legacyTotal;
+  const total = intelligentTotal > 0 ? intelligentTotal : legacyOnlyTotal + circlesResults.length + researchResults.length;
 
   return (
     <div className="page-shell narrow search-page ds-page">
-      <h1 className="search-page-title">البحث العلمي</h1>
+      <h1 className="search-page-title">الباحث العلمي الإسلامي</h1>
+      <p className="search-page-subtitle" style={{ margin: "0 0 1rem", color: "var(--ink-soft)", fontSize: "0.9375rem" }}>
+        بحث موحّد في القرآن والتفسير والحديث والفقه والدروس والحلقات والأبحاث والعلماء
+      </p>
 
       <form
         onSubmit={(e) => {
@@ -288,7 +340,7 @@ export default function SearchPage() {
           value={term}
           onChange={setTerm}
           onSubmit={submitSearch}
-          placeholder="ابحث في القرآن والحديث والفتاوى والدروس والكتب..."
+          placeholder="ابحث في القرآن والحديث والفتاوى والدروس والحلقات والأبحاث..."
         />
         <button type="submit" className="ds-btn ds-btn--primary">بحث</button>
       </form>
@@ -307,11 +359,19 @@ export default function SearchPage() {
         <div className="search-filters-grid">
           <select value={filters.type} onChange={(e) => setFilters({ ...filters, type: e.target.value })}>
             <option value="">كل الأنواع</option>
+            <option value="quran">القرآن</option>
+            <option value="tafsir">التفسير</option>
+            <option value="hadith">الحديث</option>
             <option value="lesson">دروس</option>
+            <option value="circle">حلقات</option>
             <option value="fatwa">فتاوى</option>
+            <option value="research">أبحاث</option>
+            <option value="library">كتب</option>
+            <option value="sheikh">علماء</option>
+            <option value="mosque">مساجد</option>
+            <option value="mutoon">متون</option>
             <option value="qa">أسئلة</option>
             <option value="fawaid">فوائد</option>
-            <option value="library">كتب</option>
             <option value="knowledge">محرك المعرفة</option>
           </select>
           <input
@@ -363,7 +423,9 @@ export default function SearchPage() {
               )}
 
               {intelligentTotal > 0 ? (
-                Object.entries(intelligentGroups).map(([kind, items]) => (
+                Object.entries(intelligentGroups)
+                  .sort(([a], [b]) => (KIND_GROUP_LABELS[a] ? 0 : 1) - (KIND_GROUP_LABELS[b] ? 0 : 1))
+                  .map(([kind, items]) => (
                   <Group
                     key={kind}
                     title={KIND_GROUP_LABELS[kind] || kind}
@@ -438,6 +500,9 @@ export default function SearchPage() {
                   )} />
                   <Group title="الدورات العلمية" items={results.courses || []} render={(c) => (
                     <ResultRow key={c.id} href={`/annual-courses/${c.id}`} title={displayText(c.title)} meta={c.searchMeta || c.course_type} />
+                  )} />
+                  <Group title="الحلقات القرآنية والعلمية" items={circlesResults} render={(c) => (
+                    <ResultRow key={c.id} href={`/quran-scientific-circles/${c.id}`} title={displayText(c.title)} meta={c.searchMeta} />
                   )} />
                   <Group title="آخر المستجدات" items={results.updates || []} render={(u) => (
                     <ResultRow key={u.id} href="/updates" title={displayText(u.title)} meta={u.searchMeta || u.update_type} />

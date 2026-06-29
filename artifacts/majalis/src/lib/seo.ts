@@ -129,6 +129,14 @@ function routeForPath(path: string) {
     };
   }
 
+  if (normalized.startsWith("/quran-scientific-circles/")) {
+    return {
+      ...requiredRoute("/quran-scientific-circles"),
+      title: "حلقة قرآنية / علمية | المجلس العلمي",
+      description: "تفاصيل حلقة حفظ أو دراسة شرعية — الموعد والمكان والتسجيل.",
+    };
+  }
+
   return requiredRoute("/404");
 }
 

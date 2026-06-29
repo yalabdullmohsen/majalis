@@ -6,6 +6,7 @@ const FOOTER_GROUPS = [
     links: [
       { href: "/lessons", label: "الدروس" },
       { href: "/research", label: "الأبحاث العلمية" },
+      { href: "/quran-scientific-circles", label: "الحلقات القرآنية" },
       { href: "/fawaid", label: "الفوائد" },
       { href: "/qa", label: "الأسئلة" },
     ],
@@ -24,6 +25,8 @@ const FOOTER_GROUPS = [
     links: [
       { href: "/about", label: "من نحن" },
       { href: "/contact", label: "تواصل معنا" },
+      { href: "/topics", label: "الموضوعات العلمية" },
+      { href: "/scholar-search", label: "الباحث العلمي" },
       { href: "/privacy", label: "الخصوصية" },
       { href: "/terms", label: "الشروط" },
     ],

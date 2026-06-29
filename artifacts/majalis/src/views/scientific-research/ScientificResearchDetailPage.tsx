@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { PageShell } from "@/components/layout/PageShell";
 import { PageHeader, Loading } from "@/components/ui-common";
 import { ResearchCard } from "@/components/scientific-research/ResearchCard";
+import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import {
   buildResearchJsonLd,
   buildThesisJsonLd,
@@ -188,6 +189,8 @@ export default function ScientificResearchDetailPage() {
           </div>
         </section>
       )}
+
+      <RelatedKnowledge kind="research" recordId={paper.id} query={paper.title} title="محتوى ذو صلة" limit={8} />
     </PageShell>
   );
 }

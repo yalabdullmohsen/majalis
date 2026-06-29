@@ -5,6 +5,7 @@ import { getFatwaById, getRelatedFatwas } from "@/lib/platform-content-service";
 import { applyPageSeo } from "@/lib/seo";
 import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
 import { usePageView } from "@/hooks/usePageView";
+import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 
 export default function FatwaDetailPage({ params }: { params: { id: string } }) {
   const [item, setItem] = useState<any>(null);
@@ -59,6 +60,7 @@ export default function FatwaDetailPage({ params }: { params: { id: string } }) 
   const copyText = `السؤال: ${item.question}\n\nالجواب: ${item.answer}`;
 
   return (
+    <>
     <ContentDetailLayout
       breadcrumbs={[
         { label: "الرئيسية", href: "/" },
@@ -91,5 +93,9 @@ export default function FatwaDetailPage({ params }: { params: { id: string } }) 
         </section>
       )}
     </ContentDetailLayout>
+    <div className="page-shell narrow">
+      <RelatedKnowledge kind="fatwa" recordId={item.id} query={item.question} title="محتوى ذو صلة" limit={8} />
+    </div>
+    </>
   );
 }

@@ -2,6 +2,7 @@
 
 import { Link } from "wouter";
 import { PageHeader, Empty } from "@/components/ui-common";
+import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 
 export default function SheikhDetailClient({
@@ -55,6 +56,8 @@ export default function SheikhDetailClient({
           ))}
         </div>
       )}
+
+      <RelatedKnowledge query={sheikh.name} title="محتوى ذو صلة بالشيخ" limit={8} />
     </div>
   );
 }

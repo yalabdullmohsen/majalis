@@ -190,7 +190,13 @@
     <loc>https://majlisilm.com/search</loc>
     <lastmod>2026-06-29</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/scholar-search</loc>
+    <lastmod>2026-06-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://majlisilm.com/about</loc>
@@ -317,6 +323,12 @@
     <lastmod>2026-06-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.86</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran-scientific-circles</loc>
+    <lastmod>2026-06-29</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.87</priority>
   </url>
   <url>
     <loc>https://majlisilm.com/updates</loc>
