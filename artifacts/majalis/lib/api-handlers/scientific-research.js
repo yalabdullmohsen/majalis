@@ -187,7 +187,7 @@ async function submitPaper(req, res) {
     ai_category: enrich.ai_category,
     ai_topics: enrich.ai_topics,
     status: "pending_review",
-    canonical_url: `https://www.majlisilm.com/scientific-research/${slug}`,
+    canonical_url: `https://www.majlisilm.com/research/${slug}`,
   };
 
   const { data, error } = await admin.from("research_papers").insert(row).select("id, slug").single();

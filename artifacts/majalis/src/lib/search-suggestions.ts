@@ -3,13 +3,15 @@ import { ADHKAR_CATEGORIES, getAllAdhkarItems } from "@/lib/adhkar-seed";
 import { LESSONS_SEED } from "@/lib/lessons-seed";
 import { SEED_FAWAID } from "@/lib/fawaid-seed";
 import { SEED_QA } from "@/lib/qa-seed";
+import { RESEARCH_SEED_PAPERS } from "@/lib/scientific-research/seed";
+import { RESEARCH_BASE_PATH } from "@/lib/scientific-research/constants";
 
 export type SearchSuggestion = {
   id: string;
   label: string;
   meta?: string;
   href: string;
-  group: "lessons" | "fawaid" | "qa" | "adhkar";
+  group: "lessons" | "fawaid" | "qa" | "adhkar" | "research";
 };
 
 const MAX_PER_GROUP = 4;
@@ -85,6 +87,19 @@ export function buildSearchSuggestions(query: string, limit = 12): SearchSuggest
     if (results.filter((r) => r.group === "adhkar").length >= MAX_PER_GROUP) break;
   }
 
+  for (const paper of RESEARCH_SEED_PAPERS.filter((p) => p.status === "published")) {
+    if (results.length >= limit) break;
+    if (!arabicMatchAny([paper.title, paper.author_name, paper.university, paper.specialization, ...(paper.keywords || [])], q)) continue;
+    pushUnique(results, seen, {
+      id: paper.id,
+      label: paper.title,
+      meta: paper.author_name ?? undefined,
+      href: `${RESEARCH_BASE_PATH}/${paper.slug}`,
+      group: "research",
+    });
+    if (results.filter((r) => r.group === "research").length >= MAX_PER_GROUP) break;
+  }
+
   return results.slice(0, limit);
 }
 
@@ -93,4 +108,5 @@ export const SUGGESTION_GROUP_LABELS: Record<SearchSuggestion["group"], string> 
   fawaid: "فوائد",
   qa: "أسئلة",
   adhkar: "أذكار",
+  research: "الأبحاث العلمية",
 };

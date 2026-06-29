@@ -196,10 +196,14 @@ function Router() {
       <Route path="/sheikhs"><Redirect to="/lessons" /></Route>
       <Route path="/library/:id"><SafeLazyRoute component={LibraryDetailPage} /></Route>
       <Route path="/library"><SafeLazyRoute component={LibraryPage} /></Route>
-      <Route path="/scientific-research/upload"><SafeLazyRoute component={ScientificResearchUploadPage} /></Route>
-      <Route path="/scientific-research/author/:slug"><SafeLazyRoute component={ScientificResearchAuthorPage} /></Route>
-      <Route path="/scientific-research/:slug"><SafeLazyRoute component={ScientificResearchDetailPage} /></Route>
-      <Route path="/scientific-research"><SafeLazyRoute component={ScientificResearchPage} /></Route>
+      <Route path="/research/upload"><SafeLazyRoute component={ScientificResearchUploadPage} /></Route>
+      <Route path="/research/author/:slug"><SafeLazyRoute component={ScientificResearchAuthorPage} /></Route>
+      <Route path="/research/:slug"><SafeLazyRoute component={ScientificResearchDetailPage} /></Route>
+      <Route path="/research"><SafeLazyRoute component={ScientificResearchPage} /></Route>
+      <Route path="/scientific-research/upload"><Redirect to="/research/upload" /></Route>
+      <Route path="/scientific-research/author/:slug"><Redirect to="/research/author/:slug" /></Route>
+      <Route path="/scientific-research/:slug"><Redirect to="/research/:slug" /></Route>
+      <Route path="/scientific-research"><Redirect to="/research" /></Route>
       <Route path="/miracles"><SafeLazyRoute component={MiraclesPage} /></Route>
       <Route path="/fawaid"><SafeLazyRoute component={FawaidPage} /></Route>
       <Route path="/adhkar"><SafeLazyRoute component={AdhkarPage} /></Route>

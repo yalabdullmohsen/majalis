@@ -1,6 +1,7 @@
 import type { CopyrightType, ResearchDegreeType } from "./types";
 
-export const RESEARCH_BASE_PATH = "/scientific-research";
+/** Canonical public path — /scientific-research redirects here for backward compatibility */
+export const RESEARCH_BASE_PATH = "/research";
 
 export const DEGREE_LABELS: Record<ResearchDegreeType, string> = {
   phd: "دكتوراه",

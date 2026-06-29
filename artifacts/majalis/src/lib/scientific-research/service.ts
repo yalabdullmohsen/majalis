@@ -2,7 +2,7 @@ import { arabicMatchAny } from "@/lib/arabic-search";
 import { isSupabaseConfigured } from "@/lib/supabase";
 import type { ResearchAuthor, ResearchListOptions, ResearchPaper } from "./types";
 import { RESEARCH_SEED_AUTHORS, RESEARCH_SEED_PAPERS } from "./seed";
-import { CATEGORY_CARDS } from "./constants";
+import { CATEGORY_CARDS, RESEARCH_BASE_PATH } from "./constants";
 
 const TABLE = "research_papers";
 const AUTHORS_TABLE = "research_authors";
@@ -189,6 +189,18 @@ export async function getAuthorPapers(authorSlug: string) {
 
 export function getCategoryCards() {
   return CATEGORY_CARDS;
+}
+
+export function searchScientificResearchSync(query: string, limit = 12) {
+  const q = query.trim();
+  if (!q) return [];
+  const papers = filterSeedPapers({ search: q, limit, category: "all" });
+  return papers.map((p) => ({
+    id: p.id,
+    title: p.title,
+    meta: [p.author_name, p.university, p.specialization].filter(Boolean).join(" · "),
+    href: `${RESEARCH_BASE_PATH}/${p.slug}`,
+  }));
 }
 
 export function buildResearchJsonLd(paper: ResearchPaper) {
