@@ -534,6 +534,21 @@
   background: #f1f5f9;
 }
 
+.quran-v2-ayah-menu-link {
+  display: block;
+  width: 100%;
+  padding: 0.55rem 0.75rem;
+  text-align: right;
+  font-size: 0.85rem;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 0.35rem;
+}
+
+.quran-v2-ayah-menu-link:hover {
+  background: #f1f5f9;
+}
+
 /* Audio player */
 .quran-v2-player {
   position: sticky;

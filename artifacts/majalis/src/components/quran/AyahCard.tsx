@@ -1,7 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { Link } from "wouter";
+import { getSurahStartPage, mushafPageUrl } from "@/lib/mushaf/kuwait-mushaf-data";
 
 type Props = {
   ayah: { numberInSurah: number; text: string };
+  surah: number;
   active: boolean;
   showNumber: boolean;
   fontSize: number;
@@ -15,6 +18,7 @@ type Props = {
 
 export function AyahCard({
   ayah,
+  surah,
   active,
   showNumber,
   fontSize,
@@ -95,8 +99,13 @@ export function AyahCard({
             <button type="button" onClick={(e) => { e.stopPropagation(); shareAyah(); }}>مشاركة</button>
             <button type="button" onClick={(e) => { e.stopPropagation(); setMenuOpen(false); }}>إضافة للمفضلة</button>
             <button type="button" onClick={(e) => { e.stopPropagation(); onPlay?.(); setMenuOpen(false); }}>تشغيل من هنا</button>
-            <button type="button" onClick={(e) => { e.stopPropagation(); setMenuOpen(false); }}>التفسير</button>
-            <button type="button" onClick={(e) => { e.stopPropagation(); setMenuOpen(false); }}>التدبر</button>
+            <Link
+              href={mushafPageUrl(getSurahStartPage(surah), surah, ayah.numberInSurah)}
+              className="quran-v2-ayah-menu-link"
+              onClick={(e) => { e.stopPropagation(); setMenuOpen(false); }}
+            >
+              افتح في المصحف
+            </Link>
           </menu>
         )}
       </div>

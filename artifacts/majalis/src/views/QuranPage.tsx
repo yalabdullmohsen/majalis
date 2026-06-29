@@ -152,6 +152,7 @@ export default function QuranPage() {
             }}
             tafsirByAyah={tafsirMap}
             onPlayFromAyah={audio.playFromAyah}
+            surah={surah}
             surahName={meta.name}
           />
         </>

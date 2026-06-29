@@ -328,6 +328,195 @@
   opacity: 0.75;
 }
 
+.km-reader--reading {
+  min-height: 85vh;
+}
+
+.km-reader--spread .km-reader__stage {
+  padding: 0.5rem;
+}
+
+.km-spread {
+  display: flex;
+  flex-direction: row;
+  gap: 0.75rem;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+  max-width: 1440px;
+}
+
+.km-spread .km-page-view {
+  flex: 1;
+  min-width: 0;
+  max-width: 50%;
+}
+
+.km-page-info {
+  background: var(--km-paper);
+  border-top: 1px solid var(--km-border);
+  padding: 0.75rem 1rem;
+  color: var(--km-text);
+}
+
+.km-page-info__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(5rem, 1fr));
+  gap: 0.5rem 1rem;
+}
+
+.km-page-info__grid span {
+  display: block;
+  font-size: 0.75rem;
+  opacity: 0.65;
+}
+
+.km-page-info__grid strong {
+  font-size: 1rem;
+}
+
+.km-page-info__surahs {
+  margin-top: 0.65rem;
+  font-size: 0.85rem;
+}
+
+.km-page-info__surahs ul {
+  margin: 0.35rem 0 0;
+  padding-inline-start: 1.25rem;
+}
+
+.km-page-info__surahs small {
+  opacity: 0.7;
+}
+
+.km-bottom-nav {
+  background: var(--km-paper);
+  border-top: 1px solid var(--km-border);
+  color: var(--km-text);
+}
+
+.km-bottom-nav__progress {
+  height: 3px;
+  background: rgba(27, 94, 74, 0.15);
+}
+
+.km-bottom-nav__bar {
+  height: 100%;
+  background: var(--km-accent);
+  transition: width 0.2s ease;
+}
+
+.km-bottom-nav__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+}
+
+.km-bottom-nav__btn {
+  border: none;
+  background: transparent;
+  color: var(--km-text);
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0.35rem 0.75rem;
+}
+
+.km-bottom-nav__btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.km-bottom-nav__label {
+  text-align: center;
+  font-weight: 600;
+}
+
+.km-bottom-nav__label small {
+  display: block;
+  font-size: 0.75rem;
+  opacity: 0.65;
+  font-weight: 400;
+}
+
+.km-notes-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 10000;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.km-notes-drawer {
+  background: var(--km-paper, #fff);
+  color: var(--km-text, #222);
+  width: min(480px, 96vw);
+  border-radius: 16px 16px 0 0;
+  padding: 1rem;
+}
+
+.km-notes-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.km-notes-body {
+  width: 100%;
+  resize: vertical;
+  min-height: 6rem;
+}
+
+.km-notes-actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  margin-top: 0.75rem;
+}
+
+.km-notes-saved {
+  font-size: 0.85rem;
+  color: var(--km-accent);
+  margin: 0.5rem 0 0;
+}
+
+.km-search-local,
+.km-search-history {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+}
+
+.km-search-hit__text {
+  margin: 0.35rem 0 0;
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.km-search-hit__mark {
+  background: rgba(27, 94, 74, 0.2);
+  color: inherit;
+  padding: 0 0.1em;
+  border-radius: 2px;
+}
+
+.km-mushaf-page--reading .km-reader {
+  border-radius: 0;
+  min-height: 92vh;
+}
+
+.km-actions__btn.is-active {
+  background: var(--km-accent);
+  color: #fff;
+  border-color: transparent;
+}
+
 @media (max-width: 768px) {
   .km-toolbar__row--secondary {
     flex-direction: column;
@@ -345,5 +534,13 @@
 
   .km-page-view {
     width: 100%;
+  }
+
+  .km-spread {
+    flex-direction: column;
+  }
+
+  .km-spread .km-page-view {
+    max-width: 100%;
   }
 }

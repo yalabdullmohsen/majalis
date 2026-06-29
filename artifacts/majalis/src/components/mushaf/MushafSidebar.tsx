@@ -4,7 +4,7 @@ import { filterIndex } from "@/lib/mushaf/mushaf-search";
 import type { MushafBookmark } from "@/lib/mushaf/mushaf-storage";
 import type { KuwaitMushafState } from "@/hooks/useKuwaitMushaf";
 
-type Tab = "surahs" | "juzs" | "hizbs" | "quarters" | "pages" | "bookmarks";
+type Tab = "surahs" | "juzs" | "hizbs" | "quarters" | "pages" | "bookmarks" | "history";
 
 type Props = {
   mushaf: KuwaitMushafState;
@@ -46,6 +46,7 @@ export function MushafSidebar({ mushaf, onNavigate }: Props) {
     { id: "quarters", label: "الأرباع" },
     { id: "pages", label: "الصفحات" },
     { id: "bookmarks", label: "العلامات" },
+    { id: "history", label: "السجل" },
   ];
 
   const go = (fn: () => void) => {
@@ -127,7 +128,7 @@ export function MushafSidebar({ mushaf, onNavigate }: Props) {
             </button>
           ))}
         {tab === "pages" &&
-          pages.slice(0, 120).map((p) => (
+          pages.map((p) => (
             <button
               key={p.page}
               type="button"
@@ -157,6 +158,23 @@ export function MushafSidebar({ mushaf, onNavigate }: Props) {
                   ×
                 </button>
               </div>
+            ))
+          )
+        )}
+        {tab === "history" && (
+          mushaf.readHistory.length === 0 ? (
+            <p className="km-sidebar__empty">لا يوجد سجل قراءة بعد</p>
+          ) : (
+            mushaf.readHistory.map((h) => (
+              <button
+                key={`${h.page}-${h.at}`}
+                type="button"
+                className={`km-sidebar__item${h.page === mushaf.page ? " is-current" : ""}`}
+                onClick={() => go(() => mushaf.setPage(h.page))}
+              >
+                <span>صفحة {h.page}</span>
+                <small>{new Date(h.at).toLocaleString("ar-KW")}</small>
+              </button>
             ))
           )
         )}

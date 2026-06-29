@@ -106,6 +106,7 @@ export default function QuranTafsirPage() {
               saveQuranPosition(surah, n);
             }}
             tafsirByAyah={tafsirMap}
+            surah={surah}
             surahName={meta.name}
           />
         </>

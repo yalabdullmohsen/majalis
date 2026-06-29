@@ -61,3 +61,10 @@ export function getSurahStartPage(surah: number): number {
 export function clampPage(page: number): number {
   return Math.min(MUSHAF_TOTAL_PAGES, Math.max(1, Math.round(page)));
 }
+
+export function mushafPageUrl(page: number, surah?: number, ayah?: number): string {
+  const params = new URLSearchParams({ page: String(page) });
+  if (surah) params.set("surah", String(surah));
+  if (ayah) params.set("ayah", String(ayah));
+  return `/quran/mushaf?${params.toString()}`;
+}

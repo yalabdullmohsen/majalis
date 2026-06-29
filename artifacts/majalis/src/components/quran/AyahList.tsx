@@ -11,6 +11,7 @@ type Props = {
   onSelectAyah: (n: number) => void;
   tafsirByAyah?: Map<number, string>;
   onPlayFromAyah?: (n: number) => void;
+  surah: number;
   surahName: string;
 };
 
@@ -24,6 +25,7 @@ export function AyahList({
   onSelectAyah,
   tafsirByAyah,
   onPlayFromAyah,
+  surah,
   surahName,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -82,6 +84,7 @@ export function AyahList({
               <AyahCard
                 key={a.numberInSurah}
                 ayah={a}
+                surah={surah}
                 active={a.numberInSurah === targetAyah}
                 showNumber={prefs.showAyahNumbers}
                 fontSize={prefs.fontScale}

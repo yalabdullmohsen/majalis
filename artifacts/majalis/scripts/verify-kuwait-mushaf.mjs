@@ -42,6 +42,15 @@ async function fetchOk(url, label) {
 async function main() {
   console.log("=== Kuwait Mushaf Verification ===\n");
 
+  // Phase 1+11 integrity audit (must pass)
+  const { execSync } = await import("node:child_process");
+  try {
+    execSync("node scripts/audit-mushaf-integrity.mjs", { cwd: ROOT, stdio: "inherit" });
+    pass("Integrity audit", "all checks passed");
+  } catch {
+    fail("Integrity audit", "see audit output above");
+  }
+
   const index = JSON.parse(readFileSync(INDEX_PATH, "utf8"));
   const indexSize = statSync(INDEX_PATH).size;
 

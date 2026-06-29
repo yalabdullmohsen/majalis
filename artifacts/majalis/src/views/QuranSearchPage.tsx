@@ -1,26 +1,59 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { PageHeader } from "@/components/ui-common";
 import { QuranSubnav } from "@/components/quran/QuranSubnav";
-import { searchMushafQuran, type MushafSearchHit } from "@/lib/mushaf/mushaf-search";
+import {
+  searchMushafQuran,
+  localMushafNavigate,
+  type MushafSearchHit,
+} from "@/lib/mushaf/mushaf-search";
+import {
+  pushSearchHistory,
+  getSearchHistory,
+  clearSearchHistory,
+} from "@/lib/mushaf/mushaf-storage";
+import { mushafPageUrl } from "@/lib/mushaf/kuwait-mushaf-data";
 import "@/styles/kuwait-mushaf.css";
+
+function renderHighlighted(text: string) {
+  const parts = text.split(/(【[^】]+】)/g);
+  return parts.map((part, i) => {
+    if (part.startsWith("【") && part.endsWith("】")) {
+      return (
+        <mark key={i} className="km-search-hit__mark">
+          {part.slice(1, -1)}
+        </mark>
+      );
+    }
+    return part;
+  });
+}
 
 export default function QuranSearchPage() {
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [hits, setHits] = useState<MushafSearchHit[]>([]);
+  const [history, setHistory] = useState<string[]>([]);
 
-  const runSearch = async () => {
-    const q = query.trim();
-    if (q.length < 2) return;
+  useEffect(() => {
+    setHistory(getSearchHistory());
+  }, []);
+
+  const localHit = useMemo(() => localMushafNavigate(query), [query]);
+
+  const runSearch = async (q?: string) => {
+    const term = (q ?? query).trim();
+    if (term.length < 1) return;
+    setQuery(term);
     setLoading(true);
     setError(null);
     try {
-      const results = await searchMushafQuran(q);
+      const results = await searchMushafQuran(term);
       setHits(results);
+      setHistory(pushSearchHistory(term));
     } catch {
       setError("تعذّر البحث. تحقق من الاتصال وحاول مجدداً.");
       setHits([]);
@@ -44,7 +77,7 @@ export default function QuranSearchPage() {
             type="search"
             className="ds-input"
             style={{ flex: 1, minWidth: "200px" }}
-            placeholder="مثال: الرحمن"
+            placeholder="مثال: الرحمن · ص 293 · جزء 15 · 18:1"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && void runSearch()}
@@ -54,6 +87,33 @@ export default function QuranSearchPage() {
             {loading ? "جاري البحث…" : "بحث"}
           </button>
         </div>
+
+        {localHit && (
+          <div className="km-search-local">
+            <span>انتقال سريع:</span>
+            <Link href={mushafPageUrl(localHit.page)} className="km-btn km-btn--sm km-btn--primary">
+              {localHit.label} — ص {localHit.page}
+            </Link>
+          </div>
+        )}
+
+        {history.length > 0 && (
+          <div className="km-search-history">
+            <span>عمليات بحث سابقة:</span>
+            {history.map((h) => (
+              <button key={h} type="button" className="km-btn km-btn--sm" onClick={() => void runSearch(h)}>
+                {h}
+              </button>
+            ))}
+            <button
+              type="button"
+              className="km-btn km-btn--sm"
+              onClick={() => { clearSearchHistory(); setHistory([]); }}
+            >
+              مسح
+            </button>
+          </div>
+        )}
       </div>
 
       {error && <p className="quran-v2-error" role="alert">{error}</p>}
@@ -65,9 +125,12 @@ export default function QuranSearchPage() {
               <div>
                 <strong>{h.surahName}</strong>
                 <span className="km-search-hit__meta"> · آية {h.ayah} · صفحة {h.page}</span>
-                <p style={{ margin: "0.35rem 0 0", fontSize: "0.95rem", lineHeight: 1.7 }}>{h.text}</p>
+                <p className="km-search-hit__text">{renderHighlighted(h.text)}</p>
               </div>
-              <Link href={`/quran/mushaf?page=${h.page}`} className="km-btn km-btn--primary">
+              <Link
+                href={mushafPageUrl(h.page, h.surah, h.ayah)}
+                className="km-btn km-btn--primary"
+              >
                 اذهب للمصحف
               </Link>
             </div>

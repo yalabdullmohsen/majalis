@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { MushafPageNotes } from "./MushafPageNotes";
 import type { KuwaitMushafState } from "@/hooks/useKuwaitMushaf";
 
 type Props = {
@@ -9,6 +10,8 @@ export function MushafToolbar({ mushaf }: Props) {
   const [pageInput, setPageInput] = useState(String(mushaf.page));
   const [ayahSurah, setAyahSurah] = useState(String(mushaf.pageMeta.surah));
   const [ayahNum, setAyahNum] = useState("1");
+
+  const hideChrome = mushaf.prefs.hideChrome || mushaf.prefs.readingMode;
 
   useEffect(() => {
     setPageInput(String(mushaf.page));
@@ -29,7 +32,7 @@ export function MushafToolbar({ mushaf }: Props) {
   const zoomOut = () => mushaf.setPref({ zoom: Math.max(0.6, mushaf.prefs.zoom - 0.15) });
 
   return (
-    <div className={`km-toolbar${mushaf.prefs.hideChrome ? " km-toolbar--hidden" : ""}`}>
+    <div className={`km-toolbar${hideChrome ? " km-toolbar--hidden" : ""}`}>
       <div className="km-toolbar__row km-toolbar__row--primary">
         <button type="button" className="km-btn" onClick={() => mushaf.setSidebarOpen(true)} aria-label="فهرس المصحف">
           ☰
@@ -38,7 +41,7 @@ export function MushafToolbar({ mushaf }: Props) {
           type="button"
           className="km-btn"
           disabled={!mushaf.prevPage}
-          onClick={() => mushaf.prevPage && mushaf.setPage(mushaf.prevPage)}
+          onClick={mushaf.goPrev}
         >
           السابق
         </button>
@@ -50,7 +53,7 @@ export function MushafToolbar({ mushaf }: Props) {
           type="button"
           className="km-btn km-btn--primary"
           disabled={!mushaf.nextPage}
-          onClick={() => mushaf.nextPage && mushaf.setPage(mushaf.nextPage)}
+          onClick={mushaf.goNext}
         >
           التالي
         </button>
@@ -69,6 +72,7 @@ export function MushafToolbar({ mushaf }: Props) {
             className="ds-input"
           />
           <button type="button" className="km-btn km-btn--sm" onClick={submitPage}>انتقل</button>
+          <button type="button" className="km-btn km-btn--sm" onClick={() => void mushaf.copyPageNumber()} aria-label="نسخ رقم الصفحة">#</button>
         </label>
         <label className="km-toolbar__field">
           <span>آية</span>
@@ -89,6 +93,20 @@ export function MushafToolbar({ mushaf }: Props) {
           </button>
           <button
             type="button"
+            className={`km-btn km-btn--sm${mushaf.prefs.readingMode ? " is-active" : ""}`}
+            onClick={() => mushaf.setPref({ readingMode: !mushaf.prefs.readingMode })}
+          >
+            قراءة
+          </button>
+          <button
+            type="button"
+            className={`km-btn km-btn--sm${mushaf.prefs.dualPage ? " is-active" : ""}`}
+            onClick={() => mushaf.setPref({ dualPage: !mushaf.prefs.dualPage })}
+          >
+            صفحتان
+          </button>
+          <button
+            type="button"
             className="km-btn km-btn--sm"
             onClick={() => mushaf.setPref({ hideChrome: !mushaf.prefs.hideChrome })}
           >
@@ -98,7 +116,14 @@ export function MushafToolbar({ mushaf }: Props) {
             {mushaf.fullscreen ? "خروج" : "ملء"}
           </button>
           <button type="button" className="km-btn km-btn--sm" onClick={mushaf.resumeLast}>آخر موضع</button>
-          <button type="button" className="km-btn km-btn--sm" onClick={() => mushaf.bookmarkCurrent()}>علامة</button>
+          <button
+            type="button"
+            className={`km-btn km-btn--sm${mushaf.bookmarked ? " is-active" : ""}`}
+            onClick={() => mushaf.bookmarkCurrent()}
+          >
+            {mushaf.bookmarked ? "★" : "علامة"}
+          </button>
+          <MushafPageNotes page={mushaf.page} />
         </div>
       </div>
     </div>
