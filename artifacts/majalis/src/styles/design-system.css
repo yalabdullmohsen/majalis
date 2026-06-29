@@ -1682,3 +1682,129 @@ hr.decorative,
   max-width: 6.5rem;
   margin-inline: auto;
 }
+
+.sheikhs-search-bar {
+  margin-block: var(--ds-space-3, 0.75rem) var(--ds-space-4, 1rem);
+}
+
+.sheikhs-search-input {
+  width: 100%;
+  max-width: 36rem;
+}
+
+.scholar-bio-teaser,
+.scholar-bio-expanded {
+  padding: var(--ds-space-4, 1rem);
+  border: 1px solid var(--line, #e5e7eb);
+  border-radius: var(--ds-radius-lg, 0.75rem);
+  background: var(--panel, #fff);
+}
+
+.scholar-bio-teaser-title,
+.scholar-bio-expanded-header h2 {
+  margin: 0 0 var(--ds-space-2, 0.5rem);
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--emerald-deep, #145a42);
+}
+
+.scholar-bio-teaser-intro,
+.scholar-bio-intro {
+  margin: 0 0 var(--ds-space-3, 0.75rem);
+  color: var(--ink-soft, #4b5563);
+  line-height: 1.7;
+}
+
+.scholar-bio-teaser-btn {
+  margin-top: var(--ds-space-2, 0.5rem);
+}
+
+.scholar-bio-expanded-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ds-space-2, 0.5rem);
+  margin-bottom: var(--ds-space-3, 0.75rem);
+}
+
+.scholar-bio-text {
+  margin: 0;
+  color: var(--ink, #1f2937);
+  line-height: 1.75;
+  white-space: pre-wrap;
+}
+
+.scholar-bio-list {
+  margin: 0;
+  padding-inline-start: 1.25rem;
+  color: var(--ink, #1f2937);
+  line-height: 1.75;
+}
+
+.scholar-bio-list li + li {
+  margin-top: 0.35rem;
+}
+
+.scholar-collapse-card {
+  border: 1px solid var(--line, #e5e7eb);
+  border-radius: var(--ds-radius-md, 0.5rem);
+  background: var(--panel, #fff);
+  overflow: hidden;
+}
+
+.scholar-collapse-card + .scholar-collapse-card,
+.scholar-bio-expanded .scholar-collapse-card {
+  margin-top: var(--ds-space-2, 0.5rem);
+}
+
+.scholar-collapse-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: var(--ds-space-3, 0.75rem) var(--ds-space-4, 1rem);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: right;
+}
+
+.scholar-collapse-title {
+  font-weight: 600;
+  color: var(--emerald-deep, #145a42);
+}
+
+.scholar-collapse-count {
+  margin-inline-start: 0.35rem;
+  font-weight: 400;
+  color: var(--ink-soft, #6b7280);
+  font-size: 0.875rem;
+}
+
+.scholar-collapse-chevron {
+  color: var(--ink-soft, #6b7280);
+  font-size: 0.75rem;
+}
+
+.scholar-collapse-body {
+  padding: 0 var(--ds-space-4, 1rem) var(--ds-space-4, 1rem);
+}
+
+.scholar-similar-grid {
+  grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+}
+
+.sheikh-card--compact {
+  padding: var(--ds-space-3, 0.75rem);
+  text-align: center;
+}
+
+@media (prefers-color-scheme: dark) {
+  .scholar-bio-teaser,
+  .scholar-bio-expanded,
+  .scholar-collapse-card {
+    background: var(--panel, #1a1f1c);
+    border-color: var(--line, #2d3748);
+  }
+}

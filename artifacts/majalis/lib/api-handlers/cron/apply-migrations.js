@@ -254,6 +254,22 @@ export default async function handler(req, res) {
       return;
     }
 
+    if (scope === "sheikh-biography" || scope === "scholar-biography") {
+      const result = await applyMigrations({
+        files: ["sheikh_biography_v1.sql"],
+        continueOnError: false,
+        trackApplied: true,
+        force: req.query?.force === "1",
+      });
+      sendJson(res, result.ok ? 200 : 500, {
+        ok: result.ok,
+        scope: "sheikh-biography",
+        migrations: result,
+        resolved: resolvedMeta(),
+      });
+      return;
+    }
+
     if (scope === "sin-jeem" || scope === "question-answer") {
       const { applySinJeemMigration } = await import("../../../lib/sin-jeem-migration.mjs");
       const { runSinJeemSeed } = await import("../../../lib/sin-jeem-seed.mjs");

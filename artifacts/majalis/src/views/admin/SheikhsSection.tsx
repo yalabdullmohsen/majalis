@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { adminGetSheikhs, adminUpsertSheikh, adminDeleteSheikh, uploadSheikhImage, deleteSheikhImage } from "@/lib/supabase";
+import { adminGetSheikhs, adminUpsertSheikh, adminDeleteSheikh, uploadSheikhImage, deleteSheikhImage, adminLogBiographyRevision } from "@/lib/supabase";
+import { biographyCompleteness, buildBiographyDataFromAdmin } from "@/lib/scholar-biography";
 import { C, GOVERNORATES } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
 import { AdminModal, Field, FieldRow, inputSt, selectSt, textareaSt } from "./AdminModal";
@@ -12,8 +13,11 @@ import { validateSheikhImage } from "@/lib/file-validation";
 const toArr = (v: any) => Array.isArray(v) ? v : (v ? String(v).split(/[،,]/).map((s: string) => s.trim()).filter(Boolean) : []);
 
 const EMPTY: any = {
-  name: "", bio: "", biography: "", city: "", photo_url: "", image_url: "",
+  name: "", kunya: "", title: "", bio: "", biography: "", city: "", country: "", nationality: "",
+  life_status: "", biography_status: "draft", photo_url: "", image_url: "",
   years_experience: "", is_verified: false, specialties: "", qualifications: "", ijazah: "",
+  official_website: "", twitter_url: "", instagram_url: "", youtube_url: "",
+  biography_data: {},
 };
 
 const BTN_EDIT: React.CSSProperties = { padding: "0.25rem 0.625rem", borderRadius: "0.25rem", border: `1px solid ${C.line}`, background: C.panel, color: C.emeraldDeep, cursor: "pointer", fontSize: "0.75rem", fontFamily: "inherit" };
@@ -42,7 +46,10 @@ export function SheikhsSection() {
   };
   const handleDelete = async (id: string, name: string) => {
     if (!confirm(`هل تريد حذف الشيخ "${name}"؟`)) return;
-    await adminDeleteSheikh(id); load();
+    const item = items.find((i) => i.id === id);
+    await adminLogBiographyRevision(id, "delete", item || { id, name });
+    await adminDeleteSheikh(id);
+    load();
   };
   const handleSave = async () => {
     if (!form.name.trim()) return alert("الاسم مطلوب");
@@ -52,20 +59,44 @@ export function SheikhsSection() {
       if (imageFile) {
         imageUrl = await uploadSheikhImage(imageFile, form.id);
       }
+      const biographyData = buildBiographyDataFromAdmin(form);
       const payload = {
         ...form,
         name: sanitizeText(form.name, 200),
+        kunya: sanitizeText(form.kunya, 120),
+        title: sanitizeText(form.title, 200),
         bio: sanitizeText(form.bio, 2000),
         biography: sanitizeText(form.biography, 10000),
         city: sanitizeText(form.city, 80),
+        country: sanitizeText(form.country, 80),
+        nationality: sanitizeText(form.nationality, 80),
         ijazah: sanitizeText(form.ijazah, 500),
+        life_status: form.life_status || null,
+        biography_status: form.biography_status || "draft",
+        biography_data: biographyData,
+        biography_updated_at: new Date().toISOString(),
+        official_website: sanitizeOptionalUrl(form.official_website) || null,
+        twitter_url: sanitizeOptionalUrl(form.twitter_url) || null,
+        instagram_url: sanitizeOptionalUrl(form.instagram_url) || null,
+        youtube_url: sanitizeOptionalUrl(form.youtube_url) || null,
         image_url: imageUrl || null,
         photo_url: imageUrl || sanitizeOptionalUrl(form.photo_url) || null,
         years_experience: form.years_experience ? parseInt(form.years_experience) : null,
         specialties: form.specialties ? form.specialties.split(/[،,]/).map((s: string) => sanitizeText(s, 80)).filter(Boolean) : [],
         qualifications: form.qualifications ? form.qualifications.split(/[،,]/).map((s: string) => sanitizeText(s, 120)).filter(Boolean) : [],
+        biography_published_at:
+          form.biography_status === "published" ? form.biography_published_at || new Date().toISOString() : null,
       };
       await adminUpsertSheikh(payload);
+      if (form.id) {
+        const action =
+          form.biography_status === "published"
+            ? "publish"
+            : form.biography_status === "archived"
+              ? "archive"
+              : "update";
+        await adminLogBiographyRevision(form.id, action, payload);
+      }
       setOpen(false);
       setImageFile(null);
       setImagePreview("");
@@ -104,7 +135,7 @@ export function SheikhsSection() {
   const filtered = items.filter((item) => {
     const q = search.trim();
     if (!q) return true;
-    const hay = `${item.name} ${item.city ?? ""} ${(item.specialties || []).join(" ")}`;
+    const hay = `${item.name} ${item.kunya ?? ""} ${item.title ?? ""} ${item.city ?? ""} ${item.country ?? ""} ${(item.specialties || []).join(" ")}`;
     return hay.includes(q);
   });
 
@@ -135,7 +166,7 @@ export function SheikhsSection() {
           <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.875rem" }}>
             <thead>
               <tr style={{ background: C.parchmentDeep }}>
-                {["الاسم", "المحافظة", "الحالة", "التخصصات", "سنوات الخبرة", "إجراءات"].map(h => (
+                {["الاسم", "الكنية", "المحافظة", "حالة السيرة", "التخصصات", "اكتمال", "إجراءات"].map(h => (
                   <th key={h} style={{ padding: "0.625rem 0.75rem", textAlign: "right", color: C.emeraldDeep, fontWeight: 700, borderBottom: `1px solid ${C.line}`, whiteSpace: "nowrap" }}>{h}</th>
                 ))}
               </tr>
@@ -143,17 +174,26 @@ export function SheikhsSection() {
             <tbody>
               {filtered.map(item => (
                 <tr key={item.id} style={{ borderBottom: `1px solid ${C.line}` }}>
-                  <td style={{ padding: "0.625rem 0.75rem", color: C.ink, fontWeight: 600 }}>{item.name}</td>
+                  <td style={{ padding: "0.625rem 0.75rem", color: C.ink, fontWeight: 600 }}>
+                    {item.name}
+                    {item.kunya && <span style={{ color: C.inkSoft, fontWeight: 400 }}> ({item.kunya})</span>}
+                  </td>
+                  <td style={{ padding: "0.625rem 0.75rem", color: C.inkSoft }}>{item.kunya || "—"}</td>
                   <td style={{ padding: "0.625rem 0.75rem", color: C.inkSoft }}>{item.city || "—"}</td>
                   <td style={{ padding: "0.625rem 0.75rem" }}>
-                    <span style={{ padding: "0.125rem 0.5rem", borderRadius: "0.25rem", background: item.is_verified ? C.sage : C.parchmentDeep, color: item.is_verified ? C.emeraldDeep : C.inkSoft, fontSize: "0.75rem" }}>
-                      {item.is_verified ? "معتمد" : "غير معتمد"}
+                    <span style={{ padding: "0.125rem 0.5rem", borderRadius: "0.25rem", background: item.biography_status === "published" ? C.sage : C.parchmentDeep, color: C.emeraldDeep, fontSize: "0.75rem" }}>
+                      {item.biography_status === "published" ? "منشورة" : item.biography_status === "archived" ? "مؤرشفة" : item.biography_status === "review" ? "مراجعة" : "مسودة"}
                     </span>
                   </td>
                   <td style={{ padding: "0.625rem 0.75rem", color: C.inkSoft, maxWidth: "180px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                     {(item.specialties || []).join("، ") || "—"}
                   </td>
-                  <td style={{ padding: "0.625rem 0.75rem", color: C.inkSoft, textAlign: "center" }}>{item.years_experience ?? "—"}</td>
+                  <td style={{ padding: "0.625rem 0.75rem", color: C.inkSoft, textAlign: "center", fontSize: "0.75rem" }}>
+                    {(() => {
+                      const c = biographyCompleteness(item);
+                      return `${c.verified}/${c.max}`;
+                    })()}
+                  </td>
                   <td style={{ padding: "0.625rem 0.75rem" }}>
                     <div style={{ display: "flex", gap: "0.375rem" }}>
                       <button onClick={() => openEdit(item)} style={BTN_EDIT}>تعديل</button>
@@ -172,12 +212,46 @@ export function SheikhsSection() {
         <Field label="الاسم الكامل *">
           <input style={inputSt} value={form.name} onChange={e => set("name", e.target.value)} placeholder="اسم الشيخ" />
         </Field>
+        <FieldRow>
+          <Field label="الكنية">
+            <input style={inputSt} value={form.kunya || ""} onChange={e => set("kunya", e.target.value)} placeholder="أبو …" />
+          </Field>
+          <Field label="اللقب العلمي">
+            <input style={inputSt} value={form.title || ""} onChange={e => set("title", e.target.value)} placeholder="الشيخ الدكتور…" />
+          </Field>
+        </FieldRow>
+        <FieldRow>
+          <Field label="الدولة">
+            <input style={inputSt} value={form.country || ""} onChange={e => set("country", e.target.value)} placeholder="الكويت" />
+          </Field>
+          <Field label="الجنسية">
+            <input style={inputSt} value={form.nationality || ""} onChange={e => set("nationality", e.target.value)} placeholder="كويتي" />
+          </Field>
+        </FieldRow>
         <Field label="المحافظة">
           <select style={selectSt} value={form.city || ""} onChange={e => set("city", e.target.value)}>
             <option value="">اختر المحافظة</option>
             {GOVERNORATES.map(g => <option key={g} value={g}>{g}</option>)}
           </select>
         </Field>
+        <FieldRow>
+          <Field label="حالة الحياة">
+            <select style={selectSt} value={form.life_status || ""} onChange={e => set("life_status", e.target.value)}>
+              <option value="">غير محدد</option>
+              <option value="alive">حي</option>
+              <option value="deceased">متوفى</option>
+              <option value="unknown">غير معروف</option>
+            </select>
+          </Field>
+          <Field label="حالة السيرة">
+            <select style={selectSt} value={form.biography_status || "draft"} onChange={e => set("biography_status", e.target.value)}>
+              <option value="draft">مسودة</option>
+              <option value="review">مراجعة</option>
+              <option value="published">منشورة</option>
+              <option value="archived">مؤرشفة</option>
+            </select>
+          </Field>
+        </FieldRow>
         <Field label="نبذة تعريفية مختصرة">
           <textarea style={textareaSt} value={form.bio || ""} onChange={e => set("bio", e.target.value)} placeholder="وصف مختصر يظهر في بطاقة الشيخ..." />
         </Field>
@@ -214,6 +288,22 @@ export function SheikhsSection() {
             </div>
           </div>
         </Field>
+        <FieldRow>
+          <Field label="الموقع الرسمي">
+            <input style={inputSt} value={form.official_website || ""} onChange={e => set("official_website", e.target.value)} placeholder="https://..." />
+          </Field>
+          <Field label="YouTube">
+            <input style={inputSt} value={form.youtube_url || ""} onChange={e => set("youtube_url", e.target.value)} placeholder="https://..." />
+          </Field>
+        </FieldRow>
+        <FieldRow>
+          <Field label="X / Twitter">
+            <input style={inputSt} value={form.twitter_url || ""} onChange={e => set("twitter_url", e.target.value)} placeholder="https://..." />
+          </Field>
+          <Field label="Instagram">
+            <input style={inputSt} value={form.instagram_url || ""} onChange={e => set("instagram_url", e.target.value)} placeholder="https://..." />
+          </Field>
+        </FieldRow>
         <Field label="الاعتماد">
           <label style={{ display: "flex", alignItems: "center", gap: "0.5rem", cursor: "pointer" }}>
             <input type="checkbox" checked={!!form.is_verified} onChange={e => set("is_verified", e.target.checked)} />

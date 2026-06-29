@@ -39,6 +39,7 @@ import { validateSheikhImage, safeUploadFileName } from "./file-validation";
 import { sanitizeFormRecord } from "./sanitize";
 import { isSupabaseConfigured, formatSupabaseError, logSupabaseError } from "./supabase-config";
 import { allowSeedFallback } from "@/lib/cms/production-config";
+import { extractBiographySearchTerms } from "./scholar-biography/utils";
 
 export { bootstrapSupabaseFromServer };
 
@@ -603,6 +604,31 @@ export async function adminDeleteSheikh(id: string) {
   return await supabase.from("sheikhs").delete().eq("id", id);
 }
 
+export async function adminLogBiographyRevision(
+  sheikhId: string,
+  action: "create" | "update" | "publish" | "archive" | "delete",
+  snapshot: Record<string, unknown>,
+  note?: string,
+) {
+  const { data: session } = await supabase.auth.getSession();
+  return await supabase.from("sheikh_biography_revisions").insert({
+    sheikh_id: sheikhId,
+    action,
+    snapshot,
+    changed_by: session?.session?.user?.id ?? null,
+    note: note ?? null,
+  });
+}
+
+export async function adminGetBiographyRevisions(sheikhId: string, limit = 50) {
+  return await supabase
+    .from("sheikh_biography_revisions")
+    .select("*")
+    .eq("sheikh_id", sheikhId)
+    .order("created_at", { ascending: false })
+    .limit(limit);
+}
+
 function sheikhStoragePathFromUrl(imageUrl: string): string | null {
   try {
     const marker = "/storage/v1/object/public/sheikhs/";
@@ -1010,13 +1036,36 @@ async function searchLessonsFallback(term: string) {
 
 async function searchSheikhsFallback(term: string) {
   const patterns = arabicSearchPatterns(term);
+  const select =
+    "id, name, kunya, title, bio, biography, city, country, specialties, photo_url, biography_data, qualifications";
   const responses = await Promise.all(
-    patterns.map((p) =>
-      supabase.from("sheikhs").select("id, name, bio, specialties, photo_url").ilike("name", ilikePattern(p)).limit(20)
-    )
+    patterns.flatMap((p) => {
+      const like = ilikePattern(p);
+      return [
+        supabase.from("sheikhs").select(select).ilike("name", like).limit(20),
+        supabase.from("sheikhs").select(select).ilike("kunya", like).limit(10),
+        supabase.from("sheikhs").select(select).ilike("title", like).limit(10),
+        supabase.from("sheikhs").select(select).ilike("city", like).limit(10),
+        supabase.from("sheikhs").select(select).ilike("country", like).limit(10),
+      ];
+    }),
   );
   const rows = mergeUniqueById(responses.flatMap((r) => r.data || [])).filter((s: any) =>
-    arabicMatchAny([s.name, s.bio, ...(s.specialties || [])], term)
+    arabicMatchAny(
+      [
+        s.name,
+        s.kunya,
+        s.title,
+        s.bio,
+        s.biography,
+        s.city,
+        s.country,
+        ...(s.specialties || []),
+        ...(s.qualifications || []),
+        ...extractBiographySearchTerms(s.biography_data || {}),
+      ],
+      term,
+    ),
   );
   return { data: rows, errors: responses.map((r) => r.error).filter(Boolean) };
 }

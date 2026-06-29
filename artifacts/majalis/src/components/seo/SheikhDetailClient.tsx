@@ -4,34 +4,33 @@ import { Link } from "wouter";
 import { PageHeader, Empty, Card } from "@/components/ui-common";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { OptimizedSheikhImage } from "@/components/sheikh/OptimizedSheikhImage";
+import { ScholarBiographySection } from "@/components/sheikh/ScholarBiographySection";
+import { ScholarCollapsibleCard } from "@/components/sheikh/ScholarCollapsibleCard";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
-import { resolveScholarProfile } from "@/lib/kuwait-sheikhs-registry";
+import type { ScholarProfile } from "@/lib/scholar-biography";
+import { lifeStatusLabel } from "@/lib/scholar-biography";
 
-type SheikhRecord = {
-  id: string;
-  name: string;
-  fullName?: string;
-  bio?: string;
-  city?: string;
-  country?: string;
-  ijazah?: string;
-  role?: string;
-  specialties?: string[];
-  photo_url?: string;
-  website_url?: string;
-  links?: { label: string; url: string }[];
-  subjects?: string[];
-  mutoon?: string[];
-  keywords?: string[];
+type Props = {
+  sheikh: ScholarProfile | null;
+  lessons: KuwaitLessonRecord[];
+  similarSheikhs?: ScholarProfile[];
 };
 
-export default function SheikhDetailClient({
-  sheikh,
-  lessons,
-}: {
-  sheikh: SheikhRecord | null;
-  lessons: KuwaitLessonRecord[];
-}) {
+function officialLinks(profile: ScholarProfile) {
+  const links: { label: string; url: string }[] = [...(profile.links || [])];
+  const add = (label: string, url?: string) => {
+    if (url?.trim() && !links.some((l) => l.url === url)) links.push({ label, url: url.trim() });
+  };
+  add("الموقع الرسمي", profile.official_website);
+  add("X", profile.twitter_url);
+  add("Instagram", profile.instagram_url);
+  add("YouTube", profile.youtube_url);
+  add("Facebook", profile.facebook_url);
+  add("Telegram", profile.telegram_url);
+  return links;
+}
+
+export default function SheikhDetailClient({ sheikh, lessons, similarSheikhs = [] }: Props) {
   if (!sheikh) {
     return (
       <div className="page-shell">
@@ -40,16 +39,23 @@ export default function SheikhDetailClient({
     );
   }
 
-  const profile = resolveScholarProfile(sheikh.id || sheikh.name);
   const displayName = sheikh.fullName || sheikh.name;
-  const photo = sheikh.photo_url || profile?.photo_url || "/logo.png";
-  const links = sheikh.links?.length ? sheikh.links : profile?.links || [];
-  const specialties = sheikh.specialties?.length ? sheikh.specialties : profile?.specialties || [];
-  const mutoon = sheikh.mutoon?.length ? sheikh.mutoon : profile?.mutoon || [];
-  const subjects = sheikh.subjects?.length ? sheikh.subjects : profile?.subjects || [];
-
+  const photo = sheikh.photo_url || sheikh.image_url || "/logo.png";
+  const specialties = sheikh.specialties || [];
+  const mutoon = sheikh.mutoon || [];
+  const subjects = sheikh.subjects || [];
+  const links = officialLinks(sheikh);
+  const lifeLabel = lifeStatusLabel(sheikh.life_status);
   const courses = lessons.filter((l) => l.isCourse);
   const regularLessons = lessons.filter((l) => !l.isCourse);
+
+  const subtitleParts = [
+    sheikh.kunya,
+    sheikh.title || sheikh.ijazah || sheikh.role,
+    sheikh.country,
+    sheikh.city,
+    lifeLabel,
+  ].filter(Boolean);
 
   return (
     <div className="page-shell narrow sheikh-detail-page" dir="rtl">
@@ -67,11 +73,10 @@ export default function SheikhDetailClient({
           <PageHeader
             eyebrow="الملف العلمي"
             title={displayName}
-            subtitle={[sheikh.country || profile?.country, sheikh.city || profile?.city, sheikh.ijazah || sheikh.role || profile?.role]
-              .filter(Boolean)
-              .join(" · ")}
+            subtitle={subtitleParts.join(" · ")}
           />
           {sheikh.bio && <p className="seo-listing-intro">{sheikh.bio}</p>}
+          {sheikh.is_verified && <span className="ui-tag ui-tag--verified">معتمد</span>}
         </div>
       </div>
 
@@ -83,9 +88,10 @@ export default function SheikhDetailClient({
         </div>
       )}
 
+      <ScholarBiographySection profile={sheikh} />
+
       {links.length > 0 && (
-        <Card className="sheikh-detail-links">
-          <h2>روابط الشيخ</h2>
+        <ScholarCollapsibleCard title="روابط الشيخ" count={links.length}>
           <div className="sheikh-links-row">
             {links.map((link) => (
               <a key={link.url} href={link.url} target="_blank" rel="noopener noreferrer" className="ds-btn ds-btn--ghost ds-btn--sm">
@@ -93,25 +99,22 @@ export default function SheikhDetailClient({
               </a>
             ))}
           </div>
-        </Card>
+        </ScholarCollapsibleCard>
       )}
 
       {subjects.length > 0 && (
-        <Card className="sheikh-detail-section">
-          <h2>المواد التي يشرحها</h2>
-          <ul>{subjects.map((s) => <li key={s}>{s}</li>)}</ul>
-        </Card>
+        <ScholarCollapsibleCard title="المواد التي يشرحها" count={subjects.length}>
+          <ul className="scholar-bio-list">{subjects.map((s) => <li key={s}>{s}</li>)}</ul>
+        </ScholarCollapsibleCard>
       )}
 
       {mutoon.length > 0 && (
-        <Card className="sheikh-detail-section">
-          <h2>المتون والكتب</h2>
-          <ul>{mutoon.map((m) => <li key={m}>{m}</li>)}</ul>
-        </Card>
+        <ScholarCollapsibleCard title="المتون والكتب" count={mutoon.length}>
+          <ul className="scholar-bio-list">{mutoon.map((m) => <li key={m}>{m}</li>)}</ul>
+        </ScholarCollapsibleCard>
       )}
 
-      <Card className="sheikh-detail-section">
-        <h2>الدروس ({regularLessons.length})</h2>
+      <ScholarCollapsibleCard title="الدروس" count={regularLessons.length} id="sheikh-lessons">
         {regularLessons.length === 0 ? (
           <Empty text="لا توجد دروس معتمدة مرتبطة بهذا الشيخ حالياً." />
         ) : (
@@ -124,11 +127,10 @@ export default function SheikhDetailClient({
             ))}
           </div>
         )}
-      </Card>
+      </ScholarCollapsibleCard>
 
       {courses.length > 0 && (
-        <Card className="sheikh-detail-section">
-          <h2>الدورات والسلاسل ({courses.length})</h2>
+        <ScholarCollapsibleCard title="الدورات والسلاسل" count={courses.length}>
           <div className="seo-listing-links">
             {courses.map((lesson) => (
               <Link key={lesson.id} href={`/lessons/${lesson.id}`}>
@@ -136,7 +138,21 @@ export default function SheikhDetailClient({
               </Link>
             ))}
           </div>
-        </Card>
+        </ScholarCollapsibleCard>
+      )}
+
+      {similarSheikhs.length > 0 && (
+        <ScholarCollapsibleCard title="مشايخ مشابهون" count={similarSheikhs.length}>
+          <div className="page-card-grid scholar-similar-grid">
+            {similarSheikhs.map((s) => (
+              <Link key={s.id} href={`/sheikhs/${s.id}`} className="page-card sheikh-card sheikh-card--compact">
+                <OptimizedSheikhImage src={s.photo_url || "/logo.png"} name={s.name} className="sheikh-card-photo" />
+                <p>{s.fullName || s.name}</p>
+                {s.specialties?.[0] && <span className="page-meta">{s.specialties[0]}</span>}
+              </Link>
+            ))}
+          </div>
+        </ScholarCollapsibleCard>
       )}
 
       <RelatedKnowledge query={displayName} title="محتوى ذو صلة بالشيخ" limit={8} />

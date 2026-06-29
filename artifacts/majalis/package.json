@@ -104,6 +104,7 @@
     "verify:production-stabilization": "node scripts/verify-production-stabilization.mjs",
     "verify:sheikh-recovery": "node scripts/verify-sheikh-recovery.mjs",
     "verify:sheikh-recovery:production": "node scripts/verify-sheikh-recovery-production.mjs",
+    "verify:scholar-biography": "node scripts/verify-scholar-biography.mjs",
     "verify:all-smoke": "pnpm run smoke:admin-nav && pnpm run smoke:nav && pnpm run smoke:mobile",
     "bootstrap:platform": "node scripts/run-platform-bootstrap.mjs",
     "bootstrap:platform:status": "node scripts/run-platform-bootstrap.mjs status",
