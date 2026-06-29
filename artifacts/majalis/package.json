@@ -34,6 +34,8 @@
     "activate:production": "node scripts/run-production-activation.mjs",
     "audit:infrastructure": "node scripts/audit-infrastructure.mjs",
     "audit:production-automation": "node scripts/audit-production-automation.mjs",
+    "audit:production-lockdown": "node scripts/production-lockdown-audit.mjs --production --skip-local",
+    "audit:production-lockdown:full": "node scripts/production-lockdown-audit.mjs --production",
     "recover:production-automation": "node scripts/run-production-automation-recovery.mjs",
     "audit:database": "node scripts/audit-database-connection.mjs",
     "verify:ake-rpc": "node scripts/verify-ake-rpc.mjs",
