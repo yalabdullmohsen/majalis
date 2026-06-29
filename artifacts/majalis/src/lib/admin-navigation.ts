@@ -35,6 +35,7 @@ export const ADMIN_SECTION_PATHS: Record<AdminSection, string> = {
   "annual-courses": "annual-courses",
   "quran-scientific-circles": "quran-scientific-circles",
   updates: "updates",
+  "contact-messages": "contact-messages",
 };
 
 const PATH_TO_SECTION = Object.fromEntries(

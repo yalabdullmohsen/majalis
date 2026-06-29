@@ -37,7 +37,8 @@ export type AdminSection =
   | "governance"
   | "smart-cms"
   | "question-answer"
-  | "scientific-research";
+  | "scientific-research"
+  | "contact-messages";
 
 export const ADMIN_NAV: { key: AdminSection; label: string }[] = [
   { key: "dashboard", label: "لوحة التحكم" },
@@ -72,6 +73,7 @@ export const ADMIN_NAV: { key: AdminSection; label: string }[] = [
   { key: "annual-courses", label: "الدورات العلمية" },
   { key: "quran-scientific-circles", label: "الحلقات القرآنية والعلمية" },
   { key: "updates", label: "المستجدات" },
+  { key: "contact-messages", label: "رسائل التواصل" },
   { key: "settings", label: "الإعدادات" },
 ];
 
