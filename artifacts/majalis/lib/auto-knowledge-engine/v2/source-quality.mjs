@@ -33,7 +33,6 @@ function mapPublisherType(type) {
     course_account: 80,
     mosque_women_committee: 75,
     lesson_aggregator: 60,
-    verification_fixture: 85,
   };
   return map[type] ?? null;
 }

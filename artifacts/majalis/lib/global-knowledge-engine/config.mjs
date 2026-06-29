@@ -1,7 +1,24 @@
 /** Global Knowledge Engine (GKE) — central configuration */
 
-export const GKE_VERSION = "1.0.0";
-export const GKE_PHASE = 1;
+export const GKE_VERSION = "1.1.0";
+export const GKE_PHASE = 2;
+
+/** Shadow Mode — no auto-publish until production criteria met */
+export const GKE_SHADOW_MODE = true;
+
+/** Minimum reputation for auto-publish (disabled while shadow mode on) */
+export const GKE_AUTO_PUBLISH_MIN_REPUTATION = 85;
+
+/** Phased integration — only enabled kinds are acquired */
+export const GKE_INTEGRATION_PHASES = [
+  { phase_order: 1, content_kind: "lesson", label_ar: "الدروس", enabled: true, shadow_only: true },
+  { phase_order: 2, content_kind: "circle", label_ar: "الحلقات", enabled: false, shadow_only: true },
+  { phase_order: 3, content_kind: "course", label_ar: "الفرص العلمية", enabled: false, shadow_only: true },
+  { phase_order: 4, content_kind: "calendar", label_ar: "التقويم", enabled: false, shadow_only: true },
+  { phase_order: 5, content_kind: "library", label_ar: "الكتب", enabled: false, shadow_only: true },
+  { phase_order: 6, content_kind: "article", label_ar: "المقالات", enabled: false, shadow_only: true },
+  { phase_order: 7, content_kind: "research", label_ar: "الأبحاث", enabled: false, shadow_only: true },
+];
 
 /** Pipeline layer identifiers — order matters */
 export const GKE_LAYERS = [

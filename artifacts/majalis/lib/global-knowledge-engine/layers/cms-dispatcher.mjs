@@ -14,6 +14,15 @@ export function getStatus() {
 
 /** @param {import('../types.mjs').GkePipelineItem} item */
 export async function dispatch(item) {
+  const { isShadowMode } = await import("../shadow-mode.mjs");
+  if (isShadowMode()) {
+    return {
+      ok: true,
+      layer: LAYER_ID,
+      phase: LAYER_PHASE,
+      data: { kind: item.content_kind, routed: false, published: false, shadow_mode: true },
+    };
+  }
   const kind = String(item.content_kind || "").toLowerCase();
   if (!GKE_CMS_KINDS.includes(kind)) {
     return { ok: false, layer: LAYER_ID, phase: LAYER_PHASE, message: `Invalid CMS kind: ${kind}` };

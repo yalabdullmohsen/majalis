@@ -55,7 +55,6 @@ export const FATWA_SEED: Fatwa[] = [
     summary: "الأناشيد الإسلامية الخالية من الآلات جائزة بشروط.",
     category: "فقه عام",
     format: "audio",
-    audio_url: "https://example.com/fatwa-audio/sample.mp3",
     mufti_name: "ابن عثيمين رحمه الله",
     keywords: ["أناشيد", "موسيقى", "استماع"],
     status: "approved",

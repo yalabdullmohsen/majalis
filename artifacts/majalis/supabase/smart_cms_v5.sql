@@ -94,7 +94,7 @@ BEGIN
       ('Instagram — دروس الكويت', 'api', 'instagram', 'https://www.instagram.com', '{"platform":"instagram"}'::jsonb, false),
       ('YouTube — قنوات علمية', 'rss', 'youtube', 'https://www.youtube.com', '{"platform":"youtube"}'::jsonb, false),
       ('Telegram — قنوات علمية', 'api', 'telegram', 'https://t.me', '{"platform":"telegram"}'::jsonb, false),
-      ('مواقع المساجد الرسمية', 'rss', 'website', 'https://example.com/mosques', '{"platform":"website"}'::jsonb, false)
+      ('مواقع المساجد الرسمية', 'rss', 'website', 'https://majlisilm.com/lessons', '{"platform":"website"}'::jsonb, false)
     ON CONFLICT DO NOTHING;
   END IF;
 EXCEPTION WHEN undefined_column OR undefined_table OR unique_violation THEN NULL;

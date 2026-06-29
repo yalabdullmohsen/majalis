@@ -154,7 +154,7 @@ function PlatformSourcesContent() {
       </div>
 
       <div style={{ marginBottom: "1rem", display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
-        <input value={discoverUrl} onChange={(e) => setDiscoverUrl(e.target.value)} placeholder="https://example.com — اكتشاف RSS/Atom/Sitemap" style={{ flex: 1, minWidth: "220px", padding: "0.5rem", borderRadius: "0.375rem", border: `1px solid ${C.line}` }} />
+        <input value={discoverUrl} onChange={(e) => setDiscoverUrl(e.target.value)} placeholder="https://www.alifta.gov.sa — اكتشاف RSS/Atom/Sitemap" style={{ flex: 1, minWidth: "220px", padding: "0.5rem", borderRadius: "0.375rem", border: `1px solid ${C.line}` }} />
         <button type="button" disabled={busy} onClick={() => void onDiscover()} style={{ padding: "0.5rem 1rem", border: `1px solid ${C.line}`, borderRadius: "0.375rem", background: C.panel, cursor: "pointer" }}>
           اكتشاف تلقائي
         </button>

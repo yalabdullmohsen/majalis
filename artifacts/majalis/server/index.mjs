@@ -217,6 +217,8 @@ app.get("/api/admin/auto-content", runHandler(autoContentAdminHandler, "auto-con
 app.post("/api/admin/auto-content", express.json({ limit: "16kb" }), runHandler(autoContentAdminHandler, "auto-content-admin"));
 app.get("/api/admin/auto-knowledge-engine", runHandler(autoKnowledgeAdminHandler, "auto-knowledge-admin"));
 app.post("/api/admin/auto-knowledge-engine", express.json({ limit: "32kb" }), runHandler(autoKnowledgeAdminHandler, "auto-knowledge-admin"));
+app.get("/api/admin/global-knowledge-engine", runHandler(globalKnowledgeEngineAdminHandler, "gke-admin"));
+app.post("/api/admin/global-knowledge-engine", express.json({ limit: "32kb" }), runHandler(globalKnowledgeEngineAdminHandler, "gke-admin"));
 
 app.get("/api/healthz", (_req, res) => {
   res.json({ ok: true, service: "majalis-web" });

@@ -154,6 +154,9 @@ export function GlobalKnowledgeEngineSection() {
         >
           Dry-run Pipeline
         </button>
+        <Link href="/admin/data-acquisition" style={{ padding: "0.5rem 1rem", color: C.emeraldDeep, fontWeight: 700 }}>
+          Data Acquisition
+        </Link>
         <Link href="/admin/ake" style={{ padding: "0.5rem 1rem", color: C.emeraldDeep, fontWeight: 700 }}>
           AKE (legacy)
         </Link>

@@ -24,8 +24,8 @@ function ok(c, m) {
   }
 }
 
-ok(GKE_VERSION === "1.0.0", "GKE_VERSION");
-ok(GKE_PHASE === 1, "GKE_PHASE is 1");
+ok(GKE_VERSION === "1.1.0", "GKE_VERSION");
+ok(GKE_PHASE === 2, "GKE_PHASE is 2");
 ok(PIPELINE_FLOW.length === 10, "10 pipeline layers");
 ok(GKE_LAYERS.length === 10, "10 layer definitions");
 

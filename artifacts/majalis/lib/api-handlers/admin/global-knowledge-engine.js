@@ -1,5 +1,5 @@
 /**
- * Admin API — Global Knowledge Engine (GKE)
+ * Admin API — Global Knowledge Engine (GKE) + Data Acquisition (Phase 2)
  */
 import { sendJson } from "../../api/_http.mjs";
 import { requireAdminAccess } from "../../../lib/admin-auth.mjs";
@@ -9,11 +9,19 @@ import {
   runPipelineDryRun,
   recordGkeRun,
   getHealthDashboard,
+  getAcquisitionDashboard,
+  runShadowAcquisitionForSource,
+  initializeAcquisition,
   GKE_VERSION,
   GKE_PHASE,
   PIPELINE_FLOW,
   GKE_LAYERS,
+  GKE_SHADOW_MODE,
 } from "../../../lib/global-knowledge-engine/index.mjs";
+import {
+  listSources as listRegistrySources,
+  syncSourcesToDatabase,
+} from "../../../lib/global-knowledge-engine/layers/source-registry.mjs";
 
 export default async function handler(req, res) {
   const auth = await requireAdminAccess(req, res, sendJson, { permission: "content.edit" });
@@ -26,6 +34,44 @@ export default async function handler(req, res) {
     if (action === "dashboard" || action === "health") {
       const dashboard = await getDashboard();
       sendJson(res, 200, dashboard);
+      return;
+    }
+
+    if (action === "acquisition" || action === "data-acquisition") {
+      const dash = await getAcquisitionDashboard();
+      sendJson(res, 200, dash);
+      return;
+    }
+
+    if (action === "sources") {
+      const result = await listRegistrySources({
+        activeOnly: body.activeOnly !== false,
+        categoryType: body.categoryType || null,
+      });
+      sendJson(res, 200, result);
+      return;
+    }
+
+    if (action === "sync-sources") {
+      const result = await syncSourcesToDatabase();
+      sendJson(res, 200, result);
+      return;
+    }
+
+    if (action === "init-acquisition") {
+      const result = await initializeAcquisition();
+      sendJson(res, 200, result);
+      return;
+    }
+
+    if (action === "shadow-sync") {
+      const slug = body.slug || req.query?.slug;
+      if (!slug) {
+        sendJson(res, 400, { ok: false, error: "slug_required" });
+        return;
+      }
+      const result = await runShadowAcquisitionForSource(slug);
+      sendJson(res, result.ok ? 200 : 422, result);
       return;
     }
 
@@ -53,6 +99,7 @@ export default async function handler(req, res) {
         ok: true,
         version: GKE_VERSION,
         phase: GKE_PHASE,
+        shadow_mode: GKE_SHADOW_MODE,
         pipeline: PIPELINE_FLOW,
         layers: GKE_LAYERS,
         health: await getHealthDashboard(),
