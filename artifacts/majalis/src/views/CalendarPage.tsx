@@ -15,6 +15,7 @@ import {
 import { arSA } from "date-fns/locale";
 import { getUnifiedActiveLessons } from "@/lib/lessons-service";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
+import { buildLessonUrl } from "@/lib/content-url";
 import { PageHeader, Loading } from "@/components/ui-common";
 
 type ViewMode = "month" | "week" | "day";
@@ -52,7 +53,7 @@ function eventsFromLessons(lessons: KuwaitLessonRecord[]): CalendarEvent[] {
     day: l.day,
     date: l.startDate || undefined,
     description: l.note,
-    href: `/lessons/${l.id}`,
+    href: buildLessonUrl(l),
     recurring: l.recurring !== false && !l.startDate,
   }));
 }

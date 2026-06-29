@@ -2,6 +2,8 @@ import { Link } from "wouter";
 import { formatShortLessonTime, formatLessonTimeDisplay } from "@/lib/lesson-time";
 import { resolveKuwaitSheikhProfile, sheikhProfileHref } from "@/lib/kuwait-sheikh-profiles";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
+import { buildLessonUrl } from "@/lib/content-url";
+import { stripSheikhPrefix } from "@/lib/sheikh-name";
 
 type Props = {
   lesson: KuwaitLessonRecord;
@@ -9,7 +11,7 @@ type Props = {
 
 export function HomeLessonCard({ lesson }: Props) {
   const sheikhProfile = resolveKuwaitSheikhProfile(lesson.sheikhName);
-  const sheikhDisplay = lesson.sheikhName.replace(/^الشيخ:\s*/u, "").trim();
+  const sheikhDisplay = stripSheikhPrefix(lesson.sheikhName);
 
   return (
     <article className="ui-card home-kuwait-card">
@@ -49,7 +51,7 @@ export function HomeLessonCard({ lesson }: Props) {
         )}
       </dl>
 
-      <Link href={`/lessons/${lesson.id}`} className="btn btn-primary btn-sm home-kuwait-card__cta">
+      <Link href={buildLessonUrl(lesson)} className="btn btn-primary btn-sm home-kuwait-card__cta">
         التفاصيل
       </Link>
     </article>

@@ -91,6 +91,12 @@ export function buildLessonsSeed(): LessonSeedRow[] {
 
 export const LESSONS_SEED: LessonSeedRow[] = buildLessonsSeed();
 
+import { expandContentIdentifiers, matchesContentIdentifier } from "@/lib/content-id";
+
 export function findSeedLessonById(id: string): LessonSeedRow | undefined {
-  return LESSONS_SEED.find((row) => row.id === id || row.external_key === id);
+  const candidates = expandContentIdentifiers(id);
+  return LESSONS_SEED.find((row) => {
+    const rowIds = [row.id, row.external_key].filter(Boolean).map(String);
+    return rowIds.some((rowId) => candidates.includes(rowId) || matchesContentIdentifier(rowId, id));
+  });
 }

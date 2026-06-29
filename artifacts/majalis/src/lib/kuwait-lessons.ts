@@ -3,8 +3,9 @@ import { resolveLessonPosterUrl } from "@/lib/lesson-image";
 import { normalizeActivityType } from "@/lib/activity-label";
 import { arabicIncludes } from "@/lib/arabic-search";
 import { resolveLessonSheikhImage } from "@/lib/sheikh-image";
+import { cleanDisplayText } from "@/lib/display-text";
 import { resolveGovernorateForUi, resolveRegion, displayGovernorate } from "@/lib/kuwait-regions";
-import { formatSheikhName, sheikhNameKey } from "@/lib/sheikh-name";
+import { formatSheikhName, sheikhNameKey, stripSheikhPrefix } from "@/lib/sheikh-name";
 import {
   cleanTimeText,
   computeNextOccurrenceMs,
@@ -139,7 +140,10 @@ function enrichScheduleFields(
     time: cleanTimeText(lesson.time),
     timeDisplay: formatLessonTimeDisplay(lesson.time),
     prayerRank: lesson.prayerRank,
-    sheikhName: formatSheikhName(lesson.sheikhName.replace(/^الشيخ:\s*/u, "")) || lesson.sheikhName,
+    sheikhName:
+      formatSheikhName(stripSheikhPrefix(lesson.sheikhName)) ||
+      cleanDisplayText(String(lesson.sheikhName || "")) ||
+      "غير محدد",
     sortKey: lesson.sortKey ?? nextMs,
     nextOccurrenceMs: nextMs,
     gregorianDate: lesson.gregorianDate || (lesson.day ? formatGregorianDate(nextDate) : undefined),

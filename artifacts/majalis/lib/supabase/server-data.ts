@@ -4,7 +4,8 @@ import { getLibraryCatalog, mergeLibraryWithCatalog, normalizeLibraryRow } from 
 import { filterMiraclesSeed } from "@/lib/miracles-seed";
 import { mapLessonRow, sortKuwaitLessons, dedupeKuwaitLessons, splitKuwaitLessons } from "@/lib/kuwait-lessons";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
-import { sheikhNameKey } from "@/lib/sheikh-name";
+import { findLessonInList, resolveLessonFromSeed } from "@/lib/content-resolver";
+import { expandContentIdentifiers, normalizeRouteParam } from "@/lib/content-id";
 import {
   KUWAIT_SCHOLAR_REGISTRY,
   mergeRegistrySheikhs,
@@ -96,21 +97,38 @@ export async function fetchLessonsForServer(): Promise<{
 }
 
 export async function fetchLessonByIdForServer(id: string): Promise<KuwaitLessonRecord | null> {
+  const normalizedId = normalizeRouteParam(id);
   const { active, archived } = await fetchLessonsForServer();
-  const found = [...active, ...archived].find((lesson) => lesson.id === id);
+  const all = [...active, ...archived];
+  const found = findLessonInList(all, normalizedId);
   if (found) return found;
+
+  const seed = resolveLessonFromSeed(normalizedId);
+  if (seed) return seed;
 
   if (!isSupabaseConfiguredServer()) return null;
 
   const supabase = await createClient();
-  const { data } = await supabase
-    .from("lessons")
-    .select(`*, ${SHEIKH_EMBED}`)
-    .eq("id", id)
-    .eq("status", "approved")
-    .maybeSingle();
+  const candidates = expandContentIdentifiers(normalizedId);
+  for (const candidate of candidates) {
+    const { data } = await supabase
+      .from("lessons")
+      .select(`*, ${SHEIKH_EMBED}`)
+      .eq("id", candidate)
+      .eq("status", "approved")
+      .maybeSingle();
+    if (data) return mapLessonRow({ ...data, source: "supabase" });
 
-  return data ? mapLessonRow({ ...data, source: "supabase" }) : null;
+    const { data: byKey } = await supabase
+      .from("lessons")
+      .select(`*, ${SHEIKH_EMBED}`)
+      .eq("external_key", candidate)
+      .eq("status", "approved")
+      .maybeSingle();
+    if (byKey) return mapLessonRow({ ...byKey, source: "supabase" });
+  }
+
+  return null;
 }
 
 function lessonRouteId(row: { id?: string | number; external_key?: string | null }): string {

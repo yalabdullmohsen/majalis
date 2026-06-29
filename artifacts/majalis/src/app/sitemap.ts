@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import seoRoutes from "@/lib/seo-routes.json";
 import { fetchSitemapEntries } from "../../lib/supabase/server-data";
+import { buildLessonUrl } from "@/lib/content-url";
 
 const SITE_URL = "https://majlisilm.com";
 
@@ -32,7 +33,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const { lessonIds, sheikhIds, libraryIds } = await fetchSitemapEntries();
 
     const lessonRoutes = lessonIds.map((id) => ({
-      url: `${SITE_URL}/lessons/${id}`,
+      url: `${SITE_URL}${buildLessonUrl({ id })}`,
       lastModified: buildDate,
       changeFrequency: "weekly" as const,
       priority: 0.72,

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { breadcrumbJsonLd, lessonJsonLd } from "@/lib/seo-structured-data";
+import { buildLessonUrl } from "@/lib/content-url";
 import {
   fetchLessonByIdForServer,
 } from "../../../../lib/supabase/server-data";
@@ -41,7 +42,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description,
       locale: "ar_AR",
       type: "article",
-      url: `https://majlisilm.com/lessons/${lesson.id}`,
+      url: `https://majlisilm.com${buildLessonUrl(lesson)}`,
       images: lesson.sheikhImage
         ? [{ url: lesson.sheikhImage, alt: lesson.title }]
         : [{ url: "/logo.png", alt: lesson.title }],
@@ -66,7 +67,7 @@ export default async function LessonDetailPage({ params }: PageProps) {
             breadcrumbJsonLd([
               { name: "الرئيسية", path: "/" },
               { name: "الدروس", path: "/lessons" },
-              { name: lesson.title, path: `/lessons/${lesson.id}` },
+              { name: lesson.title, path: buildLessonUrl(lesson) },
             ]),
           ),
         }}

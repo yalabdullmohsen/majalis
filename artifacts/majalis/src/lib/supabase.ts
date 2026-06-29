@@ -39,6 +39,7 @@ import { validateSheikhImage, safeUploadFileName } from "./file-validation";
 import { sanitizeFormRecord } from "./sanitize";
 import { isSupabaseConfigured, formatSupabaseError, logSupabaseError } from "./supabase-config";
 import { allowSeedFallback } from "@/lib/cms/production-config";
+import { expandContentIdentifiers, normalizeRouteParam } from "@/lib/content-id";
 
 export { bootstrapSupabaseFromServer };
 
@@ -277,8 +278,12 @@ export async function getLessons({ category, city, search }: { category?: string
 }
 
 export async function getLessonById(id: string) {
+  const normalizedId = normalizeRouteParam(id);
+  const candidates = expandContentIdentifiers(normalizedId);
   const fallback = allowSeedFallback()
-    ? findSeedLessonById(id) || DEMO_LESSONS.find((l) => l.id === id) || null
+    ? findSeedLessonById(normalizedId) ||
+      DEMO_LESSONS.find((l) => candidates.some((c) => l.id === c || l.external_key === c)) ||
+      null
     : null;
 
   if (!isConfigured) {
@@ -286,31 +291,37 @@ export async function getLessonById(id: string) {
   }
 
   try {
-    const byId = await supabase
-      .from("lessons")
-      .select(`*, ${SHEIKH_EMBED}`)
-      .eq("id", id)
-      .eq("status", "approved")
-      .maybeSingle();
+    for (const candidate of candidates) {
+      const byId = await supabase
+        .from("lessons")
+        .select(`*, ${SHEIKH_EMBED}`)
+        .eq("id", candidate)
+        .eq("status", "approved")
+        .maybeSingle();
 
-    if (byId.error) throw byId.error;
-    if (byId.data) return { lesson: byId.data, error: null, usingSeed: false };
+      if (byId.error) throw byId.error;
+      if (byId.data) return { lesson: byId.data, error: null, usingSeed: false };
+    }
 
-    const byExternalKey = await supabase
-      .from("lessons")
-      .select(`*, ${SHEIKH_EMBED}`)
-      .eq("external_key", id)
-      .eq("status", "approved")
-      .maybeSingle();
+    for (const candidate of candidates) {
+      const byExternalKey = await supabase
+        .from("lessons")
+        .select(`*, ${SHEIKH_EMBED}`)
+        .eq("external_key", candidate)
+        .eq("status", "approved")
+        .maybeSingle();
 
-    if (byExternalKey.error) throw byExternalKey.error;
+      if (byExternalKey.error) throw byExternalKey.error;
+      if (byExternalKey.data) return { lesson: byExternalKey.data, error: null, usingSeed: false };
+    }
+
     return {
-      lesson: byExternalKey.data || fallback,
+      lesson: fallback,
       error: null,
-      usingSeed: !byExternalKey.data && !!fallback,
+      usingSeed: !!fallback,
     };
   } catch (err) {
-    logSupabaseError("getLessonById", err, { id });
+    logSupabaseError("getLessonById", err, { id: normalizedId });
     return { lesson: fallback, error: null, usingSeed: true };
   }
 }

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { fetchLessonsForServer } from "../../../lib/supabase/server-data";
 import LessonsPageClient from "@/components/seo/LessonsPageClient";
+import { buildLessonUrl } from "@/lib/content-url";
 
 export const dynamic = "force-dynamic";
 
@@ -32,7 +33,7 @@ export default async function LessonsPage() {
         </p>
         <div className="seo-listing-links">
           {active.slice(0, 12).map((lesson) => (
-            <a key={lesson.id} href={`/lessons/${lesson.id}`}>
+            <a key={lesson.id} href={buildLessonUrl(lesson)}>
               {lesson.title}
               {lesson.sheikhName ? ` — ${lesson.sheikhName}` : ""}
             </a>

@@ -8,6 +8,7 @@ import { isSupabaseConfigured } from "@/lib/supabase-config";
 import { C } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
 import { AdminSectionToolbar } from "./AdminSectionToolbar";
+import { buildLessonUrl } from "@/lib/content-url";
 import { useAdminShell } from "./AdminShell";
 
 type DashboardData = Awaited<ReturnType<typeof adminGetDashboardStats>>;
@@ -142,7 +143,7 @@ export function DashboardSection() {
             <ol style={{ margin: 0, paddingInlineStart: "1.25rem", fontSize: "0.875rem", lineHeight: 1.8 }}>
               {topViewedLessons.map((item) => (
                 <li key={item.id}>
-                  <Link href={`/lessons/${item.id}`} style={{ color: C.brassDeep, textDecoration: "none" }}>{item.title}</Link>
+                  <Link href={buildLessonUrl({ id: item.id })} style={{ color: C.brassDeep, textDecoration: "none" }}>{item.title}</Link>
                   <span style={{ color: C.inkSoft }}> ({item.views})</span>
                 </li>
               ))}

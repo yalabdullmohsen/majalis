@@ -1,5 +1,7 @@
 import seoData from "./seo-routes.json";
 import type { KuwaitLessonRecord } from "./kuwait-lessons";
+import { buildLessonUrl } from "./content-url";
+import { stripSheikhPrefix } from "./sheikh-name";
 
 const SITE_URL = seoData.siteUrl;
 const SITE_NAME = seoData.siteName;
@@ -66,17 +68,18 @@ function lessonEventType(lesson: KuwaitLessonRecord) {
 }
 
 export function lessonJsonLd(lesson: KuwaitLessonRecord) {
-  const path = `/lessons/${lesson.id}`;
+  const path = buildLessonUrl(lesson);
   const image = lesson.sheikhImage || lesson.lessonImage || seoData.defaultImage;
   const type = lessonEventType(lesson);
+  const sheikhLabel = stripSheikhPrefix(lesson.sheikhName) || "غير محدد";
 
   const base: Record<string, unknown> = {
     "@context": "https://schema.org",
     "@type": type,
-    name: lesson.title,
-    description: lesson.description || lesson.note || `${lesson.title} — ${lesson.sheikhName}`,
+    name: lesson.title || "درس",
+    description: lesson.description || lesson.note || `${lesson.title || "درس"} — ${sheikhLabel}`,
     url: absoluteUrl(path),
-    image: absoluteUrl(image.startsWith("http") ? image : image),
+    image: absoluteUrl(typeof image === "string" && image.startsWith("http") ? image : image),
     inLanguage: "ar",
     organizer: {
       "@type": "Organization",
@@ -85,7 +88,7 @@ export function lessonJsonLd(lesson: KuwaitLessonRecord) {
     },
     performer: {
       "@type": "Person",
-      name: lesson.sheikhName.replace(/^الشيخ:\s*/u, ""),
+      name: sheikhLabel,
     },
     location: lesson.mosque
       ? {
@@ -112,7 +115,7 @@ export function lessonJsonLd(lesson: KuwaitLessonRecord) {
 }
 
 export function lessonSeoMeta(lesson: KuwaitLessonRecord) {
-  const sheikh = lesson.sheikhName.replace(/^الشيخ:\s*/u, "").trim();
+  const sheikh = stripSheikhPrefix(lesson.sheikhName) || "غير محدد";
   const place = lesson.mosque || lesson.region || "";
   const schedule = [lesson.day, lesson.time, lesson.gregorianDate].filter(Boolean).join(" · ");
   const title = `${lesson.title} | ${SITE_NAME}`;
@@ -146,8 +149,8 @@ export function lessonSeoMeta(lesson: KuwaitLessonRecord) {
     title,
     description: description || `${lesson.title} — درس شرعي على ${SITE_NAME}`,
     keywords: [...new Set(keywords)],
-    canonicalPath: `/lessons/${lesson.id}`,
-    image: image.startsWith("http") ? image : absoluteUrl(image),
+    canonicalPath: buildLessonUrl(lesson),
+    image: typeof image === "string" && image.startsWith("http") ? image : absoluteUrl(image || seoData.defaultImage),
     ogType: lesson.isCourse ? "website" : "article",
   };
 }

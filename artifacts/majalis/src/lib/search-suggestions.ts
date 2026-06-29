@@ -6,6 +6,7 @@ import { SEED_QA } from "@/lib/qa-seed";
 import { RESEARCH_SEED_PAPERS } from "@/lib/scientific-research/seed";
 import { RESEARCH_BASE_PATH } from "@/lib/scientific-research/constants";
 import { KUWAIT_SCHOLAR_REGISTRY } from "@/lib/kuwait-sheikhs-registry";
+import { buildLessonUrl } from "@/lib/content-url";
 
 export type SearchSuggestion = {
   id: string;
@@ -42,7 +43,7 @@ export function buildSearchSuggestions(query: string, limit = 12): SearchSuggest
       id: lesson.id,
       label: lesson.title,
       meta: lesson.speaker_name,
-      href: `/lessons/${lesson.id}`,
+      href: buildLessonUrl({ id: lesson.external_key || lesson.id }),
       group: "lessons",
     });
     if (results.filter((r) => r.group === "lessons").length >= MAX_PER_GROUP) break;

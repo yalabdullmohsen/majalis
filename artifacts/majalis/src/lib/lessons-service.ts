@@ -16,6 +16,9 @@ import {
 } from "@/lib/kuwait-lessons";
 import { rankLessonsBySearch, buildLessonSearchMeta } from "@/lib/lesson-search";
 import { allowSeedFallback } from "@/lib/cms/production-config";
+import { normalizeRouteParam } from "@/lib/content-id";
+import { resolveLessonFromSeed, resolveLessonRecord } from "@/lib/content-resolver";
+import { stripSheikhPrefix } from "@/lib/sheikh-name";
 
 export type LessonsSource = "supabase" | "seed" | "merged";
 
@@ -92,11 +95,15 @@ export async function fetchLessonById(id: string): Promise<{
   lesson: KuwaitLessonRecord | null;
   source: LessonsSource;
 }> {
+  const normalizedId = normalizeRouteParam(id);
   const { lessons, source } = await fetchLessons();
-  const found = lessons.find((l) => l.id === id);
-  if (found) return { lesson: found, source };
+  const resolved = resolveLessonRecord(lessons, normalizedId, source);
+  if (resolved.lesson) return { lesson: resolved.lesson, source: resolved.source as LessonsSource };
 
-  const seedRow = findSeedLessonById(id);
+  const seedLesson = resolveLessonFromSeed(normalizedId);
+  if (seedLesson) return { lesson: seedLesson, source: "seed" };
+
+  const seedRow = findSeedLessonById(normalizedId);
   if (seedRow) return { lesson: mapLessonRow(seedRow), source: "seed" };
 
   return { lesson: null, source };
@@ -184,15 +191,16 @@ export async function fetchSeriesLessons(
 
 /** تحويل سجل درس موحّد إلى شكل نتائج البحث. */
 export function lessonRecordToSearchRow(lesson: KuwaitLessonRecord) {
+  const sheikh = stripSheikhPrefix(lesson.sheikhName) || "غير محدد";
   return {
     id: lesson.id,
-    title: lesson.title,
-    speaker_name: lesson.sheikhName.replace(/^الشيخ:\s*/u, ""),
+    title: lesson.title || "درس بدون عنوان",
+    speaker_name: sheikh,
     category: lesson.category,
     mosque: lesson.mosque,
     region: lesson.region,
     city: lesson.governorate,
-    sheikhs: { name: lesson.sheikhName.replace(/^الشيخ:\s*/u, ""), photo_url: lesson.sheikhImage },
+    sheikhs: { name: sheikh, photo_url: lesson.sheikhImage },
     keywords: lesson.keywords,
     searchMeta: buildLessonSearchMeta(lesson),
   };

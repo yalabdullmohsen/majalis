@@ -1,4 +1,4 @@
-import type { CmsContentKind, CmsWorkflowStatus } from "./content-types";
+import { buildContentUrl } from "@/lib/content-url";
 
 export type ContentTableConfig = {
   table: string;
@@ -34,7 +34,7 @@ export const CONTENT_REGISTRY: Record<CmsContentKind, ContentTableConfig> = {
     publishedField: "published_at",
     scheduledField: "scheduled_at",
     statusMap: { approved: "approved", pending: "pending", rejected: "rejected", archived: "rejected" },
-    publicRoute: (id) => `/lessons/${id}`,
+    publicRoute: (id) => buildContentUrl({ kind: "lesson", id }),
   },
   lecture: {
     table: "lessons",
@@ -50,7 +50,7 @@ export const CONTENT_REGISTRY: Record<CmsContentKind, ContentTableConfig> = {
     publishedField: "published_at",
     scheduledField: "scheduled_at",
     statusMap: { approved: "approved", pending: "pending", rejected: "rejected" },
-    publicRoute: (id) => `/lessons/${id}`,
+    publicRoute: (id) => buildContentUrl({ kind: "lesson", id }),
   },
   course: {
     table: "lessons",
@@ -66,7 +66,7 @@ export const CONTENT_REGISTRY: Record<CmsContentKind, ContentTableConfig> = {
     publishedField: "published_at",
     scheduledField: "scheduled_at",
     statusMap: { approved: "approved", pending: "pending", rejected: "rejected" },
-    publicRoute: (id) => `/lessons/${id}`,
+    publicRoute: (id) => buildContentUrl({ kind: "lesson", id }),
   },
   sheikh: {
     table: "sheikhs",

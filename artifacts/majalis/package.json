@@ -80,6 +80,8 @@
     "cron:question-answer-daily": "node scripts/run-question-generation-cron.mjs",
     "validate:css": "node scripts/validate-index-css.mjs",
     "smoke:mobile": "node scripts/smoke-mobile-routes.mjs",
+    "smoke:detail-routes": "node scripts/smoke-detail-routes.mjs",
+    "test:content-resolver": "node scripts/test-content-resolver.mjs",
     "verify:features": "node scripts/verify-features.mjs",
     "verify:content-production": "node scripts/verify-content-production.mjs",
     "verify:reading-ux": "node scripts/verify-reading-ux.mjs",

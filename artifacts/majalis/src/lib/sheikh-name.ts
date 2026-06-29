@@ -28,3 +28,8 @@ export function formatSheikhName(name: string): string {
 export function sheikhNameKey(name: string): string {
   return stripSheikhHonorifics(name).toLowerCase();
 }
+
+/** Safe strip of «الشيخ:» prefix — never throws on null/undefined. */
+export function stripSheikhPrefix(name?: string | null): string {
+  return stripSheikhHonorifics(String(name || "").replace(/^الشيخ:\s*/u, ""));
+}

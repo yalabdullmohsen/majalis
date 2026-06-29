@@ -1,6 +1,7 @@
 import { arabicIncludes } from "@/lib/arabic-search";
 import { expandSearchTerms } from "@/lib/search-synonyms";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
+import { stripSheikhPrefix } from "@/lib/sheikh-name";
 
 function searchFields(lesson: KuwaitLessonRecord): string[] {
   return [
@@ -75,7 +76,7 @@ export function rankLessonsBySearch(
 
 export function buildLessonSearchMeta(lesson: KuwaitLessonRecord): string {
   return [
-    lesson.sheikhName.replace(/^الشيخ:\s*/u, ""),
+    stripSheikhPrefix(lesson.sheikhName),
     lesson.mosque,
     lesson.region,
     lesson.governorate,

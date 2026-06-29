@@ -5,6 +5,7 @@ import { PageHeader, Empty, Card } from "@/components/ui-common";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { OptimizedSheikhImage } from "@/components/sheikh/OptimizedSheikhImage";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
+import { buildLessonUrl } from "@/lib/content-url";
 import { resolveScholarProfile } from "@/lib/kuwait-sheikhs-registry";
 
 type SheikhRecord = {
@@ -117,7 +118,7 @@ export default function SheikhDetailClient({
         ) : (
           <div className="seo-listing-links">
             {regularLessons.map((lesson) => (
-              <Link key={lesson.id} href={`/lessons/${lesson.id}`}>
+              <Link key={lesson.id} href={buildLessonUrl(lesson)}>
                 {lesson.title}
                 {lesson.day && lesson.time ? ` — ${lesson.day} ${lesson.time}` : ""}
               </Link>
@@ -131,7 +132,7 @@ export default function SheikhDetailClient({
           <h2>الدورات والسلاسل ({courses.length})</h2>
           <div className="seo-listing-links">
             {courses.map((lesson) => (
-              <Link key={lesson.id} href={`/lessons/${lesson.id}`}>
+              <Link key={lesson.id} href={buildLessonUrl(lesson)}>
                 {lesson.title}
               </Link>
             ))}

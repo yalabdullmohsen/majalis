@@ -6,6 +6,7 @@ import {
 import type { HomePlatformStats } from "../../lib/supabase/server-data";
 import HomePage from "@/views/HomePage";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
+import { buildLessonUrl } from "@/lib/content-url";
 
 export const dynamic = "force-dynamic";
 
@@ -54,7 +55,7 @@ function FeaturedLessonsSeo({ lessons }: { lessons: KuwaitLessonRecord[] }) {
       <h2 className="home-section-title">أحدث الدروس الشرعية</h2>
       <div className="seo-listing-links">
         {lessons.map((lesson) => (
-          <a key={lesson.id} href={`/lessons/${lesson.id}`}>
+          <a key={lesson.id} href={buildLessonUrl(lesson)}>
             {lesson.title}
             {lesson.sheikhName ? ` — ${lesson.sheikhName}` : ""}
           </a>

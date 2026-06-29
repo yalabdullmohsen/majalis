@@ -22,7 +22,7 @@ import {
   trackSearchClick,
   type IntelligentSearchResult,
 } from "@/lib/scholarly-intelligence-service";
-import { searchQuranScientificCircles } from "@/lib/quran-scientific-circles-service";
+import { buildContentUrl, buildLessonUrl } from "@/lib/content-url";
 
 const EMPTY: SearchResults = {
   lessons: [],
@@ -244,7 +244,7 @@ export default function SearchPage() {
         kind: "circle",
         kind_label: "حلقة",
         title: c.title,
-        href: `/quran-scientific-circles/${c.id}`,
+        href: buildContentUrl({ kind: "circle", id: c.id }),
         source_name: c.searchMeta,
         keywords: [],
       }));
@@ -453,7 +453,7 @@ export default function SearchPage() {
                     render={(l) => (
                       <ResultRow
                         key={l.id}
-                        href={`/lessons/${l.id}`}
+                        href={buildLessonUrl(l)}
                         title={displayText(l.title)}
                         meta={l.searchMeta || l.speaker_name || l.sheikhs?.name || l.category}
                         avatarSrc={resolveLessonSheikhImage(l)}

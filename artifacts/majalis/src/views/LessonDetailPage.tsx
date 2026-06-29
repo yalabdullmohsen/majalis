@@ -32,7 +32,8 @@ import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { fetchLessonEngagementStats, type LessonEngagementStats } from "@/lib/lesson-stats";
 import { normalizeActivityLabel } from "@/lib/activity-label";
 import { resolveLessonPosterUrl } from "@/lib/lesson-image";
-import { sheikhNameKey } from "@/lib/sheikh-name";
+import { buildLessonUrl } from "@/lib/content-url";
+import { normalizeRouteParam } from "@/lib/content-id";
 
 function buildMapsEmbed(url?: string, mosque?: string, region?: string) {
   if (url?.includes("google.com/maps") || url?.includes("goo.gl/maps") || url?.includes("maps.app")) {
@@ -69,7 +70,7 @@ export default function LessonDetailPage({
   params?: { id?: string };
   initialLesson?: KuwaitLessonRecord | null;
 }) {
-  const lessonId = params?.id ?? "";
+  const lessonId = normalizeRouteParam(params?.id);
   const [lesson, setLesson] = useState<any>(null);
   const [kuwaitLesson, setKuwaitLesson] = useState<KuwaitLessonRecord | null>(initialLesson ?? null);
   const [similar, setSimilar] = useState<KuwaitLessonRecord[]>([]);
@@ -189,7 +190,7 @@ export default function LessonDetailPage({
     };
   }, [kuwaitLesson, lesson, unified]);
 
-  useLessonSeo(seoLesson, `/lessons/${lessonId}`);
+  useLessonSeo(seoLesson, buildLessonUrl({ id: lessonId }));
   usePageView("lesson", lessonId);
 
   if (loading) return <Loading />;

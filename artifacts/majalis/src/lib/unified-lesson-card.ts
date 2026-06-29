@@ -1,7 +1,8 @@
 import { resolveLessonPosterUrl } from "@/lib/lesson-image";
 import { cleanDisplayText } from "./display-text";
 import { extractLessonSchedule } from "./lesson-display";
-import { formatSheikhName } from "./sheikh-name";
+import { formatSheikhName, stripSheikhPrefix } from "./sheikh-name";
+import { buildLessonUrl } from "./content-url";
 import {
   cleanTimeText,
   computeNextOccurrenceMs,
@@ -50,10 +51,11 @@ export type UnifiedLesson = {
 };
 
 export function fromKuwaitLesson(lesson: KuwaitLessonRecord, archived = false): UnifiedLesson {
+  const sheikhCore = stripSheikhPrefix(lesson.sheikhName) || "غير محدد";
   return {
     id: lesson.id,
-    title: cleanDisplayText(lesson.title),
-    sheikhName: formatSheikhName(lesson.sheikhName.replace(/^الشيخ:\s*/u, "")) || cleanDisplayText(lesson.sheikhName),
+    title: cleanDisplayText(lesson.title) || "درس بدون عنوان",
+    sheikhName: formatSheikhName(sheikhCore) || sheikhCore,
     sheikhImage: lesson.sheikhImage,
     lessonImage: resolveLessonPosterUrl(lesson.lessonImage),
     category: cleanDisplayText(lesson.category) || "أخرى",
@@ -67,7 +69,7 @@ export function fromKuwaitLesson(lesson: KuwaitLessonRecord, archived = false): 
     sortKey: lesson.nextOccurrenceMs,
     nextOccurrenceMs: lesson.nextOccurrenceMs,
     statusLabel: getRelativeStatusLabel(lesson, archived),
-    detailsHref: `/lessons/${lesson.id}`,
+    detailsHref: buildLessonUrl(lesson),
     note: lesson.note ? cleanDisplayText(lesson.note) : undefined,
     description: lesson.description ? cleanDisplayText(lesson.description) : undefined,
     archived,
@@ -139,7 +141,7 @@ export function fromDbLesson(lesson: {
     sortKey: lesson.sortKey ?? nextMs,
     nextOccurrenceMs: nextMs,
     statusLabel: formatRelativeTime(nextMs),
-    detailsHref: `/lessons/${lesson.id}`,
+    detailsHref: buildLessonUrl(lesson),
     note: lesson.description ? cleanDisplayText(lesson.description) : undefined,
     description: lesson.description ? cleanDisplayText(lesson.description) : undefined,
     gregorianDate: day ? formatGregorianDate(nextDate) : undefined,
