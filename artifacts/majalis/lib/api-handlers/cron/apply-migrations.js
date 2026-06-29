@@ -206,6 +206,34 @@ export default async function handler(req, res) {
       return;
     }
 
+    if (scope === "automation-recovery" || scope === "recovery") {
+      const { runAutomationRecoveryMigrations } = await import("../../../lib/automation-recovery.mjs");
+      const result = await runAutomationRecoveryMigrations({
+        force: req.query?.force === "1",
+        includeSinJeem: req.query?.sinJeem !== "0",
+        includeAkeRpc: req.query?.akeRpc !== "0",
+      });
+      sendJson(res, result.ok ? 200 : 500, {
+        ok: result.ok,
+        scope: "automation-recovery",
+        recovery: result,
+        resolved: resolvedMeta(),
+      });
+      return;
+    }
+
+    if (scope === "akp-v3" || scope === "autonomous-platform-v3-migrate") {
+      const { runAkpV3Migrations } = await import("../../../lib/automation-recovery.mjs");
+      const result = await runAkpV3Migrations({ force: req.query?.force === "1" });
+      sendJson(res, result.ok ? 200 : 500, {
+        ok: result.ok,
+        scope: "akp-v3",
+        akp: result,
+        resolved: resolvedMeta(),
+      });
+      return;
+    }
+
     if (scope === "question-generation" || scope === "qgen-v1") {
       const result = await applyMigrations({
         files: ["question_generation_v1.sql"],

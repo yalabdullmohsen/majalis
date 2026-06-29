@@ -120,5 +120,20 @@ export async function countPublishedQuestions(admin) {
 
 export async function ensureGenerationSchema(admin) {
   const { error } = await admin.from("question_generation_jobs").select("id").limit(1);
-  return !error || !/does not exist|PGRST205|42P01/i.test(error.message || "");
+  if (!error) return true;
+  if (!/does not exist|PGRST205|42P01/i.test(error.message || "")) return false;
+
+  try {
+    const { applyMigrations } = await import("../db-migrate.mjs");
+    const result = await applyMigrations({
+      files: ["question_generation_v1.sql"],
+      continueOnError: false,
+      trackApplied: true,
+    });
+    if (!result.ok) return false;
+    const { error: after } = await admin.from("question_generation_jobs").select("id").limit(1);
+    return !after;
+  } catch {
+    return false;
+  }
 }

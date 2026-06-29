@@ -458,6 +458,7 @@ export async function processImportJob(jobId, opts = {}) {
       progress_pct: 100,
       validation_errors: report.validationErrors || [],
       import_errors: report.importErrors || [],
+      error_message: report.ok ? null : (report.errors?.[0] || report.importErrors?.[0] || "import_failed"),
       report,
       timings,
       completed_at: new Date().toISOString(),
@@ -476,6 +477,9 @@ export async function processImportJob(jobId, opts = {}) {
       status: "failed",
       phase: "failed",
       import_errors: [String(err.message || err)],
+      error_message: String(err.message || err),
+      stack_trace: err?.stack?.split("\n").slice(0, 8).join("\n"),
+      worker: "process-import-jobs",
       timings: { total_ms: Date.now() - totalStarted },
       completed_at: new Date().toISOString(),
     }).catch(() => {});

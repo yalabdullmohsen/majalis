@@ -39,6 +39,12 @@ CREATE INDEX IF NOT EXISTS idx_content_import_jobs_started ON content_import_job
 ALTER TABLE content_import_jobs ADD COLUMN IF NOT EXISTS phase TEXT NOT NULL DEFAULT 'pending';
 ALTER TABLE content_import_jobs ADD COLUMN IF NOT EXISTS timings JSONB;
 ALTER TABLE content_import_jobs ADD COLUMN IF NOT EXISTS execution_mode TEXT;
+ALTER TABLE content_import_jobs ADD COLUMN IF NOT EXISTS error_message TEXT;
+ALTER TABLE content_import_jobs ADD COLUMN IF NOT EXISTS stack_trace TEXT;
+ALTER TABLE content_import_jobs ADD COLUMN IF NOT EXISTS payload JSONB;
+ALTER TABLE content_import_jobs ADD COLUMN IF NOT EXISTS source TEXT;
+ALTER TABLE content_import_jobs ADD COLUMN IF NOT EXISTS worker TEXT;
+ALTER TABLE content_import_jobs ADD COLUMN IF NOT EXISTS retry_count INT NOT NULL DEFAULT 0;
 
 -- Remove orphan staging rows (partial failures / crashed jobs)
 DELETE FROM content_import_staging s

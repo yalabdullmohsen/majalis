@@ -4,6 +4,7 @@
 
 import { getSupabaseAdmin } from "../supabase-admin.mjs";
 import { runAutoKnowledgeEngine, runConnectorHealthChecks } from "./orchestrator.mjs";
+import { createAkeEngineRun } from "./run-recorder.mjs";
 import { filterDueConnectors, shouldAutoDisable, isPermanentFetchError } from "./connector-scheduler.mjs";
 import { recoverInterruptedWork } from "./recovery.mjs";
 import { drainAkeQueue, getQueueSize } from "./queue-processor.mjs";
@@ -24,17 +25,15 @@ export async function runContinuousAkeCycle(options = {}) {
   }
 
   let runId = null;
-  try {
-    const { data: runRow } = await admin.from("ake_engine_runs").insert({
-      trigger_type: options.triggerType || "cron",
-      status: "running",
-      cycle_type: "continuous",
-      import_mode: "incremental",
-    }).select("id").single();
-    runId = runRow?.id;
-  } catch {
-    /* optional */
-  }
+  let runInsertError = null;
+  const runRecord = await createAkeEngineRun(admin, {
+    trigger_type: options.triggerType || "cron",
+    status: "running",
+    cycle_type: "continuous",
+    import_mode: "incremental",
+  });
+  runId = runRecord.runId;
+  runInsertError = runRecord.error || null;
 
   const recovery = await recoverInterruptedWork(admin, runId, { recoveryLimit: options.recoveryLimit || 6 });
 

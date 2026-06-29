@@ -329,6 +329,12 @@ export async function updateImportJob(jobId, patch) {
     report: merged.report,
     timings: merged.timings,
     execution_mode: merged.execution_mode,
+    error_message: merged.error_message,
+    stack_trace: merged.stack_trace,
+    payload: merged.payload,
+    source: merged.source,
+    worker: merged.worker,
+    retry_count: merged.retry_count,
     completed_at: merged.completed_at,
     updated_at: merged.updated_at,
   };
@@ -404,6 +410,8 @@ export async function runImportJobWatchdog(admin = getSupabaseAdmin()) {
          SET status = 'failed',
              phase = 'failed',
              import_errors = jsonb_build_array($2),
+             error_message = $2,
+             worker = 'watchdog',
              completed_at = now(),
              updated_at = now()
          WHERE completed_at IS NULL

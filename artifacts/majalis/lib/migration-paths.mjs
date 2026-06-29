@@ -20,6 +20,50 @@ export const ACTIVATION_MIGRATION_FILES = [
 ];
 
 /** Production activation — sharia + MKE tables only (no owner/qa bootstrap). */
+/** Critical automation tables — apply via scope=automation-recovery on production. */
+export const AUTOMATION_RECOVERY_MIGRATION_FILES = [
+  "auto_knowledge_engine_v13.sql",
+  "auto_knowledge_engine_v13_rpc_fix.sql",
+  "majlis_knowledge_engine_v1.sql",
+  "majlis_knowledge_engine_v2.sql",
+  "autonomous_platform_v1.sql",
+  "autonomous_platform_v3.sql",
+  "content_production_v1.sql",
+  "fiqh_council_items_ake_prereq.sql",
+  "auto_knowledge_engine_v14_sync.sql",
+  "auto_knowledge_engine_v15_realtime.sql",
+  "auto_knowledge_engine_v16_v2.sql",
+  "auto_knowledge_engine_v16_v2_production.sql",
+  "auto_knowledge_engine_v17_monitoring.sql",
+  "auto_knowledge_engine_v18_autonomous.sql",
+  "sin_jeem_v1.sql",
+  "sin_jeem_v1_2_types.sql",
+  "question_generation_v1.sql",
+  "content_import_jobs_v1.sql",
+  "kuwait_lessons_extend.sql",
+];
+
+export const AUTOMATION_RECOVERY_TABLES = [
+  "question_generation_jobs",
+  "question_generation_logs",
+  "question_generation_metrics",
+  "question_generation_failures",
+  "daily_generation_reports",
+  "ake_engine_runs",
+  "mke_runs",
+  "akp_content_sources",
+  "akp_pipeline_runs",
+  "fiqh_council_items",
+  "sin_jeem_questions",
+  "content_import_jobs",
+];
+
+export const AKP_V3_MIGRATION_FILES = [
+  "autonomous_platform_v1.sql",
+  "autonomous_platform_v3.sql",
+  "content_production_v1.sql",
+];
+
 export const ACTIVATION_TABLES_MIGRATION_FILES = [
   "platform_bootstrap_compat_v1.sql",
   "sharia_rulings_prereq.sql",
