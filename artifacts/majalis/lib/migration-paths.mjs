@@ -64,6 +64,32 @@ export const AKP_V3_MIGRATION_FILES = [
   "content_production_v1.sql",
 ];
 
+/** Smart CMS production activation — apply in order via scope=smart-cms. */
+export const SMART_CMS_MIGRATION_FILES = [
+  "cms_platform_v4.sql",
+  "smart_cms_v5.sql",
+  "cms_platform_v6.sql",
+  "content_import_jobs_v1.sql",
+  "kuwait_lessons_extend.sql",
+  "lesson_import_drafts_v1.sql",
+  "trusted_lesson_sources_v1.sql",
+  "smart_source_monitoring_v1.sql",
+  "automation_phase5_v1.sql",
+];
+
+export const SMART_CMS_TABLES = [
+  "cms_content_index",
+  "content_sources",
+  "content_drafts",
+  "content_revision_log",
+  "content_dedup_keys",
+  "import_jobs",
+  "content_import_jobs",
+  "content_import_staging",
+  "cms_admin_notifications",
+  "admin_audit_logs",
+];
+
 export const ACTIVATION_TABLES_MIGRATION_FILES = [
   "platform_bootstrap_compat_v1.sql",
   "sharia_rulings_prereq.sql",
@@ -111,6 +137,7 @@ export const MIGRATION_FILES = [
   "qa_phase4_seed.sql",
   "kuwait_lessons_extend.sql",
   "content_import_jobs_v1.sql",
+  "cms_platform_v4.sql",
   "smart_cms_v5.sql",
   "cms_platform_v6.sql",
   "lesson_import_drafts_v1.sql",

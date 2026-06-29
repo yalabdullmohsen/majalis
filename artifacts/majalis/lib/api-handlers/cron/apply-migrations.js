@@ -206,6 +206,18 @@ export default async function handler(req, res) {
       return;
     }
 
+    if (scope === "smart-cms" || scope === "cms-platform") {
+      const { runSmartCmsMigrations } = await import("../../../lib/smart-cms-production.mjs");
+      const result = await runSmartCmsMigrations({ force: req.query?.force === "1" });
+      sendJson(res, result.ok ? 200 : 500, {
+        ok: result.ok,
+        scope: "smart-cms",
+        smartCms: result,
+        resolved: resolvedMeta(),
+      });
+      return;
+    }
+
     if (scope === "automation-recovery" || scope === "recovery") {
       const { runAutomationRecoveryMigrations } = await import("../../../lib/automation-recovery.mjs");
       const result = await runAutomationRecoveryMigrations({

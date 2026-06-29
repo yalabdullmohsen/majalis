@@ -99,6 +99,7 @@ export const API_ROUTES = [
   { prefix: "/api/sitemap", module: "./api-handlers/sitemap.js", allowGet: true, exact: true },
   { prefix: "/api/feed", module: "./api-handlers/feed.js", allowGet: true, exact: true },
   { prefix: "/api/admin/smart-cms", module: "./api-handlers/admin/smart-cms.js" },
+  { prefix: "/api/admin/cms-ops", module: "./api-handlers/admin/cms-ops.js" },
   { prefix: "/api/admin/lesson-from-image", module: "./api-handlers/admin/lesson-from-image.js", rateLimit: lessonFromImageRateLimit },
   { prefix: "/api/admin/lesson-from-url", module: "./api-handlers/admin/lesson-from-url.js", rateLimit: lessonFromUrlRateLimit },
   { prefix: "/api/admin/lesson-automation", module: "./api-handlers/admin/lesson-automation.js" },

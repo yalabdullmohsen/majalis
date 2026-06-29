@@ -6,7 +6,6 @@ import {
   adminUrlForSection,
   automationCronCount,
   contributionTypesSupported,
-  importTypesSupported,
   type PlatformSectionId,
 } from "@/lib/cms/platform-registry";
 import { getCmsDashboardStats, getRecentContentImportJobs, type CmsDashboardStats } from "@/lib/cms/supabase-cms";
@@ -18,6 +17,7 @@ import {
 } from "@/lib/cms/cms-notifications";
 import { listPendingContributions } from "@/lib/cms/contribution-service";
 import { WORKFLOW_STAGE_LABELS } from "@/lib/cms/content-workflow";
+import { fetchCmsOpsStats, runCmsIntegrityCheck, runImportQueue, type CmsOpsStats } from "@/lib/cms-ops-api";
 import { C } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
 import { useAdminShell } from "./AdminShell";
@@ -53,27 +53,32 @@ function StatBox({ label, value, color }: { label: string; value: string | numbe
 }
 
 export function UnifiedCmsHubSection() {
-  const { showSuccess } = useAdminShell();
+  const { showSuccess, showError } = useAdminShell();
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState<CmsDashboardStats | null>(null);
+  const [ops, setOps] = useState<CmsOpsStats | null>(null);
   const [notifications, setNotifications] = useState<CmsNotification[]>([]);
   const [pendingContributions, setPendingContributions] = useState(0);
   const [recentJobs, setRecentJobs] = useState<Awaited<ReturnType<typeof getRecentContentImportJobs>>>([]);
   const [filter, setFilter] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [integrityIssues, setIntegrityIssues] = useState<number>(0);
 
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      const [s, n, c, j] = await Promise.all([
+      const [s, n, c, j, opsRes] = await Promise.all([
         getCmsDashboardStats(),
         refreshActivityNotifications(),
         listPendingContributions(20),
         getRecentContentImportJobs(8),
+        fetchCmsOpsStats().catch(() => ({ ok: false as const, error: "fetch_failed" })),
       ]);
       setStats(s);
       setNotifications(n);
       setPendingContributions(c.length);
       setRecentJobs(j);
+      if (opsRes.ok && "ops" in opsRes && opsRes.ops) setOps(opsRes.ops);
     } finally {
       setLoading(false);
     }
@@ -95,6 +100,38 @@ export function UnifiedCmsHubSection() {
     await markNotificationRead(id);
     setNotifications((prev) => prev.map((n) => (n.id === id ? { ...n, read: true } : n)));
     showSuccess("تم تعليم التنبيه كمقروء");
+  };
+
+  const onRunImportQueue = async () => {
+    setBusy(true);
+    try {
+      const res = await runImportQueue(5);
+      if (!res.ok) {
+        showError(res.error || "فشل تشغيل قائمة الاستيراد");
+        return;
+      }
+      showSuccess(`تمت معالجة ${res.processed ?? 0} مهمة استيراد`);
+      await load();
+    } catch {
+      showError("تعذر تشغيل قائمة الاستيراد");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const onIntegrityCheck = async () => {
+    setBusy(true);
+    try {
+      const res = await runCmsIntegrityCheck();
+      const count = res.integrity?.issues?.length ?? 0;
+      setIntegrityIssues(count);
+      if (res.ok && count === 0) showSuccess("فحص السلامة: لا مشاكل");
+      else showError(`فحص السلامة: ${count} ملاحظة`);
+    } catch {
+      showError("تعذر فحص سلامة البيانات");
+    } finally {
+      setBusy(false);
+    }
   };
 
   if (loading) return <Loading />;
@@ -125,13 +162,40 @@ export function UnifiedCmsHubSection() {
       {/* Ops dashboard */}
       <section style={{ display: "flex", gap: "0.65rem", flexWrap: "wrap", marginBottom: "1.25rem" }}>
         <StatBox label="عناصر CMS" value={stats?.indexTotal ?? "—"} />
+        <StatBox label="منشور اليوم" value={ops?.publishedToday ?? "—"} color={C.emeraldDeep} />
+        <StatBox label="بانتظار المراجعة" value={ops?.pendingReview ?? pendingContributions} color="#92400E" />
+        <StatBox label="مرفوض اليوم" value={ops?.rejectedToday ?? "—"} color="#991B1B" />
+        <StatBox label="استيراد ناجح اليوم" value={ops?.importCompletedToday ?? "—"} />
+        <StatBox label="استيراد فاشل اليوم" value={ops?.importFailedToday ?? "—"} color="#991B1B" />
+        <StatBox label="معدل نجاح الاستيراد" value={ops?.importSuccessRatePct != null ? `${ops.importSuccessRatePct}%` : "—"} />
+        <StatBox label="Queue" value={ops?.queueStatus ?? "—"} />
+        <StatBox label="Worker" value={ops?.workerStatus ?? "—"} />
+        <StatBox label="أتمتة اليوم" value={ops?.automationRunsToday ?? "—"} />
+        <StatBox label="DB Health" value={ops?.databaseHealth?.startsWith("healthy") ? "✓" : "⚠"} color={ops?.databaseHealth?.startsWith("healthy") ? C.emeraldDeep : "#991B1B"} />
         <StatBox label="مهام استيراد" value={stats?.contentImportJobsTotal ?? 0} />
-        <StatBox label="بانتظار المراجعة" value={pendingContributions} color="#92400E" />
         <StatBox label="مفاتيح dedup" value={stats?.duplicateKeys ?? 0} />
-        <StatBox label="سجلات اليوم" value={stats?.auditLogsToday ?? 0} />
         <StatBox label="تنبيهات" value={unreadCount} color={unreadCount ? "#991B1B" : C.emeraldDeep} />
         <StatBox label="Cron Jobs" value={automationCronCount()} />
-        <StatBox label="مصادر استيراد" value={importTypesSupported().length} />
+      </section>
+
+      <section style={{ ...CARD, marginBottom: "1.25rem", display: "flex", flexWrap: "wrap", gap: "0.5rem", alignItems: "center" }}>
+        <strong style={{ color: C.emeraldDeep, fontSize: "0.875rem" }}>عمليات يدوية:</strong>
+        <button type="button" disabled={busy} onClick={() => void onRunImportQueue()} style={BTN}>
+          تشغيل Queue الاستيراد
+        </button>
+        <button type="button" disabled={busy} onClick={() => void onIntegrityCheck()} style={BTN}>
+          فحص سلامة البيانات {integrityIssues > 0 ? `(${integrityIssues})` : ""}
+        </button>
+        {ops?.lastImport && (
+          <span style={{ fontSize: "0.75rem", color: C.inkSoft }}>
+            آخر استيراد: {ops.lastImport.type} · {ops.lastImport.status} · {new Date(ops.lastImport.updated_at).toLocaleString("ar")}
+          </span>
+        )}
+        {ops?.lastAutomation && (
+          <span style={{ fontSize: "0.75rem", color: C.inkSoft }}>
+            آخر أتمتة: {ops.lastAutomation.engine_id} · {ops.lastAutomation.status}
+          </span>
+        )}
       </section>
 
       {/* Workflow pipeline legend */}
