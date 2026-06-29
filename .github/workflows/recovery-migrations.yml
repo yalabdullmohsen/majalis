@@ -1,0 +1,85 @@
+name: Recovery Migrations
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "artifacts/majalis/supabase/contact_messages_v1.sql"
+      - "artifacts/majalis/supabase/sin_jeem_v1.sql"
+      - ".github/workflows/recovery-migrations.yml"
+
+concurrency:
+  group: recovery-migrations
+  cancel-in-progress: false
+
+env:
+  MAJALIS_PRODUCTION_URL: https://www.majlisilm.com
+
+jobs:
+  apply-recovery-scopes:
+    name: Apply contact + Q&A migrations
+    if: github.repository == 'yalabdullmohsen/majalis'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Apply contact-messages migration
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          if [ -z "$CRON_SECRET" ]; then
+            echo "Skip: CRON_SECRET not configured"
+            exit 0
+          fi
+          curl -sf -H "Authorization: Bearer $CRON_SECRET" -H "x-vercel-cron: 1" \
+            "$MAJALIS_PRODUCTION_URL/api/cron/apply-migrations?scope=contact-messages" | tee contact-migration.json
+
+      - name: Apply question-answer migration + seed
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          if [ -z "$CRON_SECRET" ]; then
+            echo "Skip: CRON_SECRET not configured"
+            exit 0
+          fi
+          curl -sf -H "Authorization: Bearer $CRON_SECRET" -H "x-vercel-cron: 1" \
+            "$MAJALIS_PRODUCTION_URL/api/cron/apply-migrations?scope=question-answer&seed=1" | tee qa-migration.json
+
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      - name: Verify contact submit
+        run: |
+          resp=$(curl -sS -X POST "$MAJALIS_PRODUCTION_URL/api/contact?action=submit" \
+            -H "Content-Type: application/json" \
+            -d '{"name":"Recovery CI","email":"recovery-ci@example.com","message":"Automated recovery migration verification message."}')
+          echo "$resp" | tee contact-submit.json
+          echo "$resp" | grep -q '"ok":true' || echo "::warning::Contact submit did not return ok:true"
+
+      - name: Verify sin_jeem_questions count
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: |
+          if [ -z "$VITE_SUPABASE_URL" ] || [ -z "$VITE_SUPABASE_ANON_KEY" ]; then
+            echo "Skip local table verify"
+            exit 0
+          fi
+          cd artifacts/majalis
+          node --input-type=module -e "
+          const url = process.env.VITE_SUPABASE_URL;
+          const key = process.env.VITE_SUPABASE_ANON_KEY;
+          const res = await fetch(url + '/rest/v1/sin_jeem_questions?select=id', {
+            headers: { apikey: key, Authorization: 'Bearer ' + key, Prefer: 'count=exact' },
+          });
+          const range = res.headers.get('content-range') || '';
+          const count = Number(range.split('/')[1] || 0);
+          console.log('sin_jeem_questions count:', count);
+          if (count < 527) process.exit(1);
+          "

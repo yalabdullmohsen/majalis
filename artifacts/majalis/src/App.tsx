@@ -1,5 +1,5 @@
 import { Suspense, type ComponentType } from "react";
-import { Redirect, Route, Switch, Router as WouterRouter, useLocation, useRoute } from "wouter";
+import { Redirect, Route, Switch, Router as WouterRouter, useLocation, useParams, useRoute } from "wouter";
 import { AuthProvider } from "@/components/AuthProvider";
 import { FontPreferenceProvider } from "@/components/FontPreferenceProvider";
 import { ThemePreferenceProvider } from "@/components/ThemePreferenceProvider";
@@ -128,6 +128,11 @@ const MyLearningPage = lazy(() => import("@/views/MyLearningPage"));
 const LearningQuizPage = lazy(() => import("@/views/learning/LearningQuizPage"));
 const LearningCalendarPage = lazy(() => import("@/views/learning/LearningCalendarPage"));
 const CertificateVerifyPage = lazy(() => import("@/views/learning/CertificateVerifyPage"));
+const SheikhDetailPage = lazy(() => import("@/views/SheikhDetailPage"));
+const SheikhsPage = lazy(() => import("@/views/SheikhsPage"));
+const FawaidDetailPage = lazy(() => import("@/views/FawaidDetailPage"));
+const QaDetailPage = lazy(() => import("@/views/QaDetailPage"));
+const MosquesPage = lazy(() => import("@/views/MosquesPage"));
 
 function SeoManager() {
   const [location] = useLocation();
@@ -135,11 +140,12 @@ function SeoManager() {
   return null;
 }
 
-function SafeLazyRoute({ component: Component }: { component: ComponentType }) {
+function SafeLazyRoute({ component: Component }: { component: ComponentType<any> }) {
+  const params = useParams();
   return (
     <ErrorBoundary>
       <Suspense fallback={<LazyRouteFallback />}>
-        <Component />
+        <Component params={params} />
       </Suspense>
     </ErrorBoundary>
   );
@@ -196,7 +202,8 @@ function Router() {
       <Route path="/kuwait-lessons"><Redirect to="/lessons" /></Route>
       <Route path="/announcements"><Redirect to="/lessons" /></Route>
       <Route path="/courses"><Redirect to="/lessons?tab=courses" /></Route>
-      <Route path="/sheikhs"><Redirect to="/lessons" /></Route>
+      <Route path="/sheikhs/:id"><SafeLazyRoute component={SheikhDetailPage} /></Route>
+      <Route path="/sheikhs"><SafeLazyRoute component={SheikhsPage} /></Route>
       <Route path="/library/:id"><SafeLazyRoute component={LibraryDetailPage} /></Route>
       <Route path="/library"><SafeLazyRoute component={LibraryPage} /></Route>
       <Route path="/research/upload"><SafeLazyRoute component={ScientificResearchUploadPage} /></Route>
@@ -208,9 +215,12 @@ function Router() {
       <Route path="/scientific-research/:slug"><Redirect to="/research/:slug" /></Route>
       <Route path="/scientific-research"><Redirect to="/research" /></Route>
       <Route path="/miracles"><SafeLazyRoute component={MiraclesPage} /></Route>
+      <Route path="/fawaid/:id"><SafeLazyRoute component={FawaidDetailPage} /></Route>
       <Route path="/fawaid"><SafeLazyRoute component={FawaidPage} /></Route>
       <Route path="/adhkar"><SafeLazyRoute component={AdhkarPage} /></Route>
+      <Route path="/qa/:id"><SafeLazyRoute component={QaDetailPage} /></Route>
       <Route path="/qa"><SafeLazyRoute component={QaPage} /></Route>
+      <Route path="/mosques"><SafeLazyRoute component={MosquesPage} /></Route>
       <Route path="/quiz"><SafeLazyRoute component={QuizPage} /></Route>
       <Route path="/question-answer"><SafeLazyRoute component={SinJeemApp} /></Route>
       <Route path="/question-answer/setup/:mode"><SafeLazyRoute component={SinJeemApp} /></Route>

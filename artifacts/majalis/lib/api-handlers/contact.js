@@ -1,10 +1,10 @@
 import { sendJson } from "../api/_http.mjs";
-import { getSupabaseAdmin } from "../../lib/supabase-admin.mjs";
-import { createRateLimiter } from "../../lib/rate-limit.mjs";
+import { getSupabaseAdmin, isMissingTableError } from "../../lib/supabase-admin.mjs";
+import { checkRateLimit } from "../../lib/rate-limit.mjs";
 import { requireAdminAccess } from "../../lib/admin-auth.mjs";
 
 const CONTACT_EMAIL = "yalabdullmohsen1@gmail.com";
-const submitRateLimit = createRateLimiter({ windowMs: 3600_000, max: 8, keyPrefix: "contact-submit" });
+const SUBMIT_RATE = { windowMs: 3600_000, max: 8, keyPrefix: "contact-submit" };
 
 /** In-memory fallback when DB unavailable */
 const memoryStore = [];
@@ -42,9 +42,16 @@ function validateSubmission(body) {
   return { name, email, subject, message };
 }
 
+function clientIp(req) {
+  return req.headers["x-forwarded-for"]?.split(",")[0]?.trim() || req.socket?.remoteAddress || "unknown";
+}
+
 async function submitMessage(req, res) {
-  const limited = submitRateLimit.check(req);
-  if (!limited.ok) {
+  const limited = await checkRateLimit(`${SUBMIT_RATE.keyPrefix}:${clientIp(req)}`, {
+    windowMs: SUBMIT_RATE.windowMs,
+    max: SUBMIT_RATE.max,
+  });
+  if (!limited.allowed) {
     sendJson(res, 429, { ok: false, error: "rate_limited", message: "تجاوزت الحد المسموح. حاول لاحقاً." });
     return;
   }
@@ -74,16 +81,23 @@ async function submitMessage(req, res) {
 
   const admin = getSupabaseAdmin();
   if (admin) {
-    const { data, error } = await admin.from("contact_messages").insert(record).select("id, created_at").single();
-    if (!error && data) {
-      sendJson(res, 201, {
-        ok: true,
-        id: data.id,
-        message: "شكراً لتواصلك! استلمنا رسالتك وسنرد عليك في أقرب وقت.",
-        contactEmail: CONTACT_EMAIL,
-        source: "database",
-      });
-      return;
+    try {
+      const { data, error } = await admin.from("contact_messages").insert(record).select("id, created_at").single();
+      if (!error && data) {
+        sendJson(res, 201, {
+          ok: true,
+          id: data.id,
+          message: "شكراً لتواصلك! استلمنا رسالتك وسنرد عليك في أقرب وقت.",
+          contactEmail: CONTACT_EMAIL,
+          source: "database",
+        });
+        return;
+      }
+      if (error && !isMissingTableError(error)) {
+        console.error("[contact] insert failed", error);
+      }
+    } catch (err) {
+      console.error("[contact] insert threw", err);
     }
   }
 

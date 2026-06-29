@@ -50,6 +50,10 @@ jobs:
         run: |
           curl -sf -H "Authorization: Bearer $CRON_SECRET" -H "x-vercel-cron: 1" \
             "$MAJALIS_PRODUCTION_URL/api/cron/apply-migrations?scope=cd-pipeline" || true
+          curl -sf -H "Authorization: Bearer $CRON_SECRET" -H "x-vercel-cron: 1" \
+            "$MAJALIS_PRODUCTION_URL/api/cron/apply-migrations?scope=contact-messages" || true
+          curl -sf -H "Authorization: Bearer $CRON_SECRET" -H "x-vercel-cron: 1" \
+            "$MAJALIS_PRODUCTION_URL/api/cron/apply-migrations?scope=question-answer&seed=1" || true
           node artifacts/majalis/scripts/cd/post-deploy.mjs --wait-deploy --rollback-on-failure --json | tee post-deploy-report.json
 
       - name: Purge misclassified fawaid (production API)

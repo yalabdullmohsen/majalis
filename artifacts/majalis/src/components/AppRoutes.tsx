@@ -1,7 +1,7 @@
 "use client";
 
 import { Suspense, lazy, type ComponentType } from "react";
-import { Redirect, Route, Switch, useLocation, useRoute } from "wouter";
+import { Redirect, Route, Switch, useLocation, useParams, useRoute } from "wouter";
 import { AdminRouteGuard } from "@/components/AdminRouteGuard";
 import AboutPage from "@/views/AboutPage";
 import PrivacyPage from "@/views/PrivacyPage";
@@ -91,11 +91,12 @@ function SeoManager() {
   return null;
 }
 
-function SafeLazyRoute({ component: Component }: { component: ComponentType }) {
+function SafeLazyRoute({ component: Component }: { component: ComponentType<any> }) {
+  const params = useParams();
   return (
     <ErrorBoundary>
       <Suspense fallback={<LazyRouteFallback />}>
-        <Component />
+        <Component params={params} />
       </Suspense>
     </ErrorBoundary>
   );

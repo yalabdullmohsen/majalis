@@ -284,12 +284,6 @@ export default function LessonDetailPage({
           {hasValue(unified.hijriDate) && (
             <div><dt>التاريخ الهجري</dt><dd>{unified.hijriDate}</dd></div>
           )}
-          {hasValue(time || unified.time) && (
-            <div><dt>الوقت</dt><dd>{unified.timeDisplay || formatLessonTimeDisplay(cleanTimeText(time || unified.time))}</dd></div>
-          )}
-          {hasValue(unified.prayerRank) && (
-            <div><dt>مرتبة الصلاة</dt><dd>{unified.prayerRank}</dd></div>
-          )}
           {hasValue(unified.mosque) && (
             <div><dt>المكان</dt><dd>{unified.mosque}</dd></div>
           )}
@@ -303,6 +297,20 @@ export default function LessonDetailPage({
             <div><dt>تاريخ الإضافة</dt><dd>{String(addedDate).slice(0, 10)}</dd></div>
           )}
         </dl>
+
+        {(hasValue(time || unified.time) || hasValue(unified.prayerRank)) && (
+          <div className="lesson-detail-body lesson-detail-prayer-section">
+            <h2 className="prayer-section-title">التوقيت ومرتبة الصلاة</h2>
+            <dl className="lesson-card-pro__meta lesson-detail-meta">
+              {hasValue(time || unified.time) && (
+                <div><dt>الوقت</dt><dd>{unified.timeDisplay || formatLessonTimeDisplay(cleanTimeText(time || unified.time))}</dd></div>
+              )}
+              {hasValue(unified.prayerRank) && (
+                <div><dt>مرتبة الصلاة</dt><dd>{unified.prayerRank}</dd></div>
+              )}
+            </dl>
+          </div>
+        )}
 
         {hasValue(unified.description) && (
           <div className="lesson-detail-body">
