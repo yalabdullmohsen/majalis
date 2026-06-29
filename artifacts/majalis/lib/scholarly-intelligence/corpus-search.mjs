@@ -7,6 +7,7 @@ import { processQuery, normalizeArabic } from "./query-processor.mjs";
 import { enrichResult } from "./url-resolver.mjs";
 import { ARBAEEN_INDEX } from "./corpus-arbaeen.mjs";
 import { RESEARCH_SEED_PAPERS } from "../scientific-research/seed-data.mjs";
+import { searchRegistryScholars } from "../scholar-automation-registry.mjs";
 
 const SURAH_NAMES = [
   "الفاتحة", "البقرة", "آل عمران", "النساء", "المائدة", "الأنعام", "الأعراف", "الأنفال", "التوبة", "يونس",
@@ -113,26 +114,45 @@ function searchMutoon(queryInfo, limit) {
 }
 
 async function searchSheikhs(admin, queryInfo, limit) {
-  if (!admin) return [];
-  const { data } = await admin
-    .from("sheikhs")
-    .select("id, name, bio, specialties, external_key, photo_url, is_verified")
-    .eq("is_verified", true)
-    .limit(limit * 3);
-  return (data || [])
-    .filter((s) => fuzzyMatch([s.name, s.bio, ...(s.specialties || [])].join(" "), queryInfo))
-    .slice(0, limit)
+  const dbResults = [];
+  if (admin) {
+    const { data } = await admin
+      .from("sheikhs")
+      .select("id, name, bio, specialties, external_key, photo_url, is_verified")
+      .eq("is_verified", true)
+      .limit(limit * 3);
+    for (const s of data || []) {
+      if (!fuzzyMatch([s.name, s.bio, ...(s.specialties || [])].join(" "), queryInfo)) continue;
+      dbResults.push(
+        enrichResult({
+          id: s.id,
+          kind: "sheikh",
+          title: s.name,
+          summary: s.bio?.slice(0, 120),
+          href: s.external_key ? `/sheikhs/${s.external_key}` : `/sheikhs/${s.id}`,
+          verification_status: s.is_verified ? "verified" : undefined,
+          rank: 6,
+        }),
+      );
+    }
+  }
+
+  const seen = new Set(dbResults.map((r) => r.title));
+  const registryHits = searchRegistryScholars(queryInfo, limit, fuzzyMatch)
+    .filter((s) => !seen.has(s.name))
     .map((s) =>
       enrichResult({
         id: s.id,
         kind: "sheikh",
         title: s.name,
         summary: s.bio?.slice(0, 120),
-        href: s.external_key ? `/sheikhs/${s.external_key}` : `/sheikhs/${s.id}`,
+        href: `/sheikhs/${s.external_key || s.id}`,
         verification_status: s.is_verified ? "verified" : undefined,
         rank: 6,
       }),
     );
+
+  return [...dbResults, ...registryHits].slice(0, limit);
 }
 
 async function searchMosques(admin, queryInfo, limit) {
@@ -339,6 +359,21 @@ export async function buildAutocompleteSuggestions(admin, query, limit = 10) {
         meta: "درس",
         kind: "lesson",
         href: `/lessons/${l.external_key || l.id}`,
+      });
+      if (suggestions.length >= limit) break;
+    }
+  }
+
+  if (suggestions.length < limit) {
+    const queryInfo = processQuery(trimmed);
+    for (const s of searchRegistryScholars(queryInfo, limit, fuzzyMatch)) {
+      if (suggestions.some((x) => x.id === s.id)) continue;
+      suggestions.push({
+        id: s.id,
+        label: s.name,
+        meta: "شيخ",
+        kind: "sheikh",
+        href: `/sheikhs/${s.external_key || s.id}`,
       });
       if (suggestions.length >= limit) break;
     }

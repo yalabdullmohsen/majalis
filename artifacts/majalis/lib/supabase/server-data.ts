@@ -4,6 +4,13 @@ import { getLibraryCatalog, mergeLibraryWithCatalog, normalizeLibraryRow } from 
 import { filterMiraclesSeed } from "@/lib/miracles-seed";
 import { mapLessonRow, sortKuwaitLessons, dedupeKuwaitLessons, splitKuwaitLessons } from "@/lib/kuwait-lessons";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
+import { sheikhNameKey } from "@/lib/sheikh-name";
+import {
+  KUWAIT_SCHOLAR_REGISTRY,
+  mergeRegistrySheikhs,
+  resolveScholarProfile,
+  lessonsForScholar,
+} from "@/lib/kuwait-sheikhs-registry";
 import { createClient, createStaticClient, isSupabaseConfiguredServer } from "./server";
 
 const SHEIKH_EMBED = "sheikhs(id, name, city, photo_url)";
@@ -21,7 +28,7 @@ export async function fetchHomePlatformStats(): Promise<HomePlatformStats> {
   if (!isSupabaseConfiguredServer()) {
     return {
       lessonsCount: LESSONS_SEED.length,
-      sheikhsCount: DEMO_SHEIKHS.length,
+      sheikhsCount: KUWAIT_SCHOLAR_REGISTRY.length,
       libraryCount: getLibraryCatalog().length,
       qaCount: DEMO_QA.length,
       fawaidCount: DEMO_FAWAID.length,
@@ -41,7 +48,7 @@ export async function fetchHomePlatformStats(): Promise<HomePlatformStats> {
 
   return {
     lessonsCount: lessons.count ?? LESSONS_SEED.length,
-    sheikhsCount: sheikhs.count ?? DEMO_SHEIKHS.length,
+    sheikhsCount: Math.max(sheikhs.count ?? 0, KUWAIT_SCHOLAR_REGISTRY.length),
     libraryCount: library.count ?? getLibraryCatalog().length,
     qaCount: qa.count ?? DEMO_QA.length,
     fawaidCount: fawaid.count ?? DEMO_FAWAID.length,
@@ -76,10 +83,15 @@ export async function fetchLessonsForServer(): Promise<{
     return splitKuwaitLessons(sorted);
   }
 
-  const mapped = dedupeKuwaitLessons(
+  const dbMapped = dedupeKuwaitLessons(
     data.map((row) => mapLessonRow({ ...row, source: "supabase" })),
   );
-  const sorted = sortKuwaitLessons(mapped);
+  const dbIds = new Set(dbMapped.map((l) => l.id));
+  const supplemental = LESSONS_SEED.filter(
+    (row) => !dbIds.has(String(row.external_key || row.id)),
+  ).map((row) => mapLessonRow({ ...row, source: "seed" }));
+  const merged = dedupeKuwaitLessons([...dbMapped, ...supplemental]);
+  const sorted = sortKuwaitLessons(merged);
   return splitKuwaitLessons(sorted);
 }
 
@@ -131,31 +143,42 @@ export async function fetchAllLessonIds(): Promise<string[]> {
 
 export async function fetchSheikhsForServer() {
   if (!isSupabaseConfiguredServer()) {
-    return DEMO_SHEIKHS;
+    return mergeRegistrySheikhs(DEMO_SHEIKHS);
   }
 
   const supabase = await createClient();
   const { data, error } = await supabase.from("sheikhs").select("*").order("name");
-  if (error || !data?.length) return DEMO_SHEIKHS;
-  return data;
+  if (error || !data?.length) return mergeRegistrySheikhs(DEMO_SHEIKHS);
+  return mergeRegistrySheikhs(data);
 }
 
 export async function fetchSheikhByIdForServer(id: string) {
   const sheikhs = await fetchSheikhsForServer();
-  const sheikh = sheikhs.find((row) => row.id === id) ?? null;
+  let sheikh =
+    sheikhs.find((row) => row.id === id || (row as { external_key?: string }).external_key === id) ?? null;
+
+  if (!sheikh) {
+    const profile = resolveScholarProfile(id);
+    if (profile) sheikh = { ...profile, ijazah: profile.role };
+  }
 
   if (!sheikh) return { sheikh: null, lessons: [] as KuwaitLessonRecord[] };
 
   const { active, archived } = await fetchLessonsForServer();
-  const lessons = [...active, ...archived].filter(
-    (lesson) => lesson.sheikhName === sheikh.name,
-  );
+  const allLessons = [...active, ...archived];
+  const profile = resolveScholarProfile(sheikh.name || id);
+  const lessons = profile
+    ? lessonsForScholar(profile, allLessons)
+    : allLessons.filter(
+        (lesson) => sheikhNameKey(lesson.sheikhName) === sheikhNameKey(sheikh!.name || ""),
+      );
 
   return { sheikh, lessons };
 }
 
 export async function fetchAllSheikhIds(): Promise<string[]> {
   const ids = new Set<string>();
+  KUWAIT_SCHOLAR_REGISTRY.forEach((row) => ids.add(String(row.id)));
   DEMO_SHEIKHS.forEach((row) => ids.add(String(row.id)));
 
   if (!isSupabaseConfiguredServer()) {
@@ -163,12 +186,15 @@ export async function fetchAllSheikhIds(): Promise<string[]> {
   }
 
   const supabase = createStaticClient();
-  const { data, error } = await supabase.from("sheikhs").select("id").order("name");
+  const { data, error } = await supabase.from("sheikhs").select("id, external_key").order("name");
   if (error || !data?.length) {
     return [...ids];
   }
 
-  data.forEach((row) => ids.add(String(row.id)));
+  data.forEach((row) => {
+    ids.add(String(row.id));
+    if (row.external_key) ids.add(String(row.external_key));
+  });
   return [...ids];
 }
 

@@ -2,6 +2,7 @@
  * Match extracted sheikh name to existing DB records.
  */
 import { getSupabaseAdmin } from "../supabase-admin.mjs";
+import { matchScholarByName } from "../scholar-automation-registry.mjs";
 
 function normalizeName(name) {
   return String(name || "")
@@ -24,6 +25,22 @@ function scoreMatch(a, b) {
 }
 
 export async function matchSheikhByName(name) {
+  const registryMatch = matchScholarByName(name);
+  if (registryMatch.matched) {
+    return {
+      matched: {
+        id: registryMatch.matched.id,
+        name: registryMatch.matched.name,
+        city: registryMatch.matched.city,
+        is_verified: registryMatch.matched.is_verified,
+        external_key: registryMatch.matched.external_key,
+        source: "registry",
+      },
+      score: registryMatch.score,
+      proposedDraft: null,
+    };
+  }
+
   const admin = getSupabaseAdmin();
   if (!admin || !name?.trim()) {
     return { matched: null, proposedDraft: name ? { name: name.trim(), status: "draft" } : null };

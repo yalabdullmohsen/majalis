@@ -1633,3 +1633,52 @@ hr.decorative,
   color: var(--emerald, #1f6e54);
   font-weight: 500;
 }
+
+/* Scholar profile pages */
+.sheikh-detail-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-4, 1rem);
+}
+
+.sheikh-detail-hero {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-space-4, 1rem);
+  align-items: flex-start;
+}
+
+.sheikh-detail-photo {
+  flex-shrink: 0;
+  width: 7.75rem;
+  max-width: 100%;
+}
+
+.sheikh-detail-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.sheikh-detail-links,
+.sheikh-detail-section {
+  margin-top: var(--ds-space-2, 0.5rem);
+}
+
+.sheikh-links-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.sheikh-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.sheikh-card-photo {
+  width: 100%;
+  max-width: 6.5rem;
+  margin-inline: auto;
+}

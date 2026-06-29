@@ -3,11 +3,7 @@
     "name": "د. عثمان بن محمد الخميس",
     "city": "العاصمة",
     "bio": "عالم أصولي ومفسر، له مجالس علمية أسبوعية ثابتة في مساجد منطقة الصديق.",
-    "specialties": [
-      "تفسير",
-      "فقه",
-      "حديث"
-    ],
+    "specialties": ["تفسير", "فقه", "حديث"],
     "is_verified": true,
     "photo_url": "https://www.majlisilm.com/sheikhs/othman-alkhamees.jpg"
   },
@@ -15,11 +11,7 @@
     "name": "د. راشد صليهم فهد الصليهم",
     "city": "العاصمة",
     "bio": "أستاذ مشارك في جامعة الكويت، يقدّم دورة علمية تأصيلية أسبوعية في القيروان.",
-    "specialties": [
-      "عقيدة",
-      "حديث",
-      "أصول"
-    ],
+    "specialties": ["عقيدة", "حديث", "أصول"],
     "is_verified": true,
     "photo_url": "https://www.majlisilm.com/images/teachers/rashed-alsulayyim.svg"
   },
@@ -27,22 +19,96 @@
     "name": "د. منصور بن ناصر الخالدي",
     "city": "العاصمة",
     "bio": "داعية ومحاضر، مجلس أسبوعي في التفسير والقراءة بعد صلاة الفجر.",
-    "specialties": [
-      "تفسير",
-      "قراءة"
-    ],
+    "specialties": ["تفسير", "قراءة"],
     "is_verified": true,
     "photo_url": "https://www.majlisilm.com/sheikhs/mansour-alkhalidi.jpg"
   },
   {
     "name": "الشيخ أسامة الشطي",
     "city": "العاصمة",
-    "bio": "إمام وخطيب، يقدّم برنامجًا علميًا في الفقه عبر منصة الأندلس.",
-    "specialties": [
-      "فقه",
-      "تربية"
-    ],
+    "bio": "إمام وخطيب، يقدّم برنامجاً علمياً في الفقه عبر منصة الأندلس.",
+    "specialties": ["فقه", "تربية"],
     "is_verified": true,
     "photo_url": "https://www.majlisilm.com/images/teachers/osama-alshatti.svg"
+  },
+  {
+    "name": "سالم بن سعد الطويل",
+    "city": "الكويت",
+    "bio": "عالم وداعية كويتي، يقدّم دروساً أسبوعية في العقيدة والحديث، منها شرح كتاب التوحيد من صحيح البخاري.",
+    "specialties": ["عقيدة", "حديث", "توحيد"],
+    "is_verified": true,
+    "photo_url": "https://www.majlisilm.com/sheikhs/salem-altaweel.jpg"
+  },
+  {
+    "name": "الشيخ حسين بن مبارك المويزري",
+    "city": "الفروانية",
+    "bio": "يقدّم درساً أسبوعياً في الفقه — روضة الأفهام في شرح زوائد المحرر على بلوغ المرام.",
+    "specialties": ["فقه"],
+    "is_verified": true,
+    "photo_url": "https://www.majlisilm.com/sheikhs/hussein-muwaiziri.svg"
+  },
+  {
+    "name": "د. دهام أبو خشبة",
+    "city": "الأحمدي",
+    "bio": "يقدّم دروساً فقهية أسبوعية في شرح عمدة الأحكام.",
+    "specialties": ["فقه", "حديث"],
+    "is_verified": true,
+    "photo_url": "https://www.majlisilm.com/sheikhs/daham-abukhashba.svg"
+  },
+  {
+    "name": "د. محمد ضاوي العصيمي",
+    "city": "الكويت",
+    "bio": "أستاذ مشارك في كلية الشريعة بجامعة الكويت، داعية ومحاضر.",
+    "specialties": ["فقه", "وعظ", "تزكية"],
+    "is_verified": true,
+    "photo_url": "https://www.majlisilm.com/images/posters/fadat-dawwi-al-usaimi.svg"
+  },
+  {
+    "name": "د. مطلق جاسر مطلق الجاسر",
+    "city": "الكويت",
+    "bio": "يقدّم دورات علمية إلكترونية لطلاب العلم المبتدئين.",
+    "specialties": ["تأصيل", "متون"],
+    "is_verified": true,
+    "photo_url": "https://www.majlisilm.com/sheikhs/mutlaq-aljasser.svg"
+  },
+  {
+    "name": "نصار خالد نصار العجمي",
+    "city": "الفروانية",
+    "bio": "محاضر في ملتقى إجازتي طاعة وبرامج علمية موسمية.",
+    "specialties": ["تأصيل", "وعظ"],
+    "is_verified": true,
+    "photo_url": "https://www.majlisilm.com/sheikhs/nasar-alajmi.svg"
+  },
+  {
+    "name": "حامد علي المسعد",
+    "city": "الفروانية",
+    "bio": "محاضر في ملتقى إجازتي طاعة.",
+    "specialties": ["قرآن", "تأصيل"],
+    "is_verified": true,
+    "photo_url": "https://www.majlisilm.com/sheikhs/hamed-almesaad.svg"
+  },
+  {
+    "name": "فيصل زويد",
+    "city": "الفروانية",
+    "bio": "محاضر في ملتقى إجازتي طاعة.",
+    "specialties": ["تأصيل"],
+    "is_verified": true,
+    "photo_url": "https://www.majlisilm.com/sheikhs/faisal-zowaid.svg"
+  },
+  {
+    "name": "سعد هزاع العتيبي",
+    "city": "الفروانية",
+    "bio": "محاضر في ملتقى إجازتي طاعة.",
+    "specialties": ["تأصيل"],
+    "is_verified": true,
+    "photo_url": "https://www.majlisilm.com/sheikhs/saad-otaibi.svg"
+  },
+  {
+    "name": "بندر محمد الميموني",
+    "city": "الفروانية",
+    "bio": "محاضر في ملتقى إجازتي طاعة.",
+    "specialties": ["تأصيل"],
+    "is_verified": true,
+    "photo_url": "https://www.majlisilm.com/sheikhs/bandar-almaimouni.svg"
   }
 ]

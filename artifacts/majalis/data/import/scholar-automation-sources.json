@@ -1,0 +1,90 @@
+[
+  {
+    "slug": "salem-bin-saad-altaweel",
+    "name": "سالم بن سعد الطويل",
+    "aliases": ["سالم الطويل"],
+    "sources": [
+      "https://www.saltaweel.com",
+      "https://instagram.com/salemaltaweel",
+      "https://wa.me/96555199147"
+    ]
+  },
+  {
+    "slug": "othman-alkhamees",
+    "name": "د. عثمان بن محمد الخميس",
+    "aliases": ["عثمان الخميس"],
+    "sources": ["https://reach.link/othmanalkhamees"]
+  },
+  {
+    "slug": "rashed-alsulayyim",
+    "name": "د. راشد صليهم فهد الصليهم",
+    "aliases": ["راشد الصليهم"],
+    "sources": []
+  },
+  {
+    "slug": "mansour-alkhalidi",
+    "name": "د. منصور بن ناصر الخالدي",
+    "aliases": ["منصور الخالدي"],
+    "sources": []
+  },
+  {
+    "slug": "osama-alshatti",
+    "name": "الشيخ أسامة الشطي",
+    "aliases": ["أسامة الشطي"],
+    "sources": []
+  },
+  {
+    "slug": "hussein-muwaiziri",
+    "name": "الشيخ حسين بن مبارك المويزري",
+    "aliases": ["حسين المويزري"],
+    "sources": []
+  },
+  {
+    "slug": "daham-abukhashba",
+    "name": "د. دهام أبو خشبة",
+    "aliases": ["دهام أبو خشبة"],
+    "sources": []
+  },
+  {
+    "slug": "mohammad-dawwi-al-usaimi",
+    "name": "د. محمد ضاوي العصيمي",
+    "aliases": ["محمد ضاوي"],
+    "sources": []
+  },
+  {
+    "slug": "mutlaq-aljasser",
+    "name": "د. مطلق جاسر مطلق الجاسر",
+    "aliases": ["مطلق الجاسر"],
+    "sources": []
+  },
+  {
+    "slug": "nasar-alajmi",
+    "name": "نصار خالد نصار العجمي",
+    "aliases": ["نصار العجمي"],
+    "sources": []
+  },
+  {
+    "slug": "hamed-almesaad",
+    "name": "حامد علي المسعد",
+    "aliases": [],
+    "sources": []
+  },
+  {
+    "slug": "faisal-zowaid",
+    "name": "فيصل زويد",
+    "aliases": [],
+    "sources": []
+  },
+  {
+    "slug": "saad-otaibi",
+    "name": "سعد هزاع العتيبي",
+    "aliases": [],
+    "sources": []
+  },
+  {
+    "slug": "bandar-almaimouni",
+    "name": "بندر محمد الميموني",
+    "aliases": [],
+    "sources": []
+  }
+]

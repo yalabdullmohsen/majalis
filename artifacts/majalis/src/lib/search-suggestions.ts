@@ -5,13 +5,14 @@ import { SEED_FAWAID } from "@/lib/fawaid-seed";
 import { SEED_QA } from "@/lib/qa-seed";
 import { RESEARCH_SEED_PAPERS } from "@/lib/scientific-research/seed";
 import { RESEARCH_BASE_PATH } from "@/lib/scientific-research/constants";
+import { KUWAIT_SCHOLAR_REGISTRY } from "@/lib/kuwait-sheikhs-registry";
 
 export type SearchSuggestion = {
   id: string;
   label: string;
   meta?: string;
   href: string;
-  group: "lessons" | "fawaid" | "qa" | "adhkar" | "research";
+  group: "lessons" | "fawaid" | "qa" | "adhkar" | "research" | "sheikhs";
 };
 
 const MAX_PER_GROUP = 4;
@@ -100,6 +101,19 @@ export function buildSearchSuggestions(query: string, limit = 12): SearchSuggest
     if (results.filter((r) => r.group === "research").length >= MAX_PER_GROUP) break;
   }
 
+  for (const scholar of KUWAIT_SCHOLAR_REGISTRY) {
+    if (results.length >= limit) break;
+    if (!arabicMatchAny([scholar.name, scholar.fullName, ...scholar.specialties, ...scholar.keywords], q)) continue;
+    pushUnique(results, seen, {
+      id: scholar.id,
+      label: scholar.name,
+      meta: scholar.specialties.join("، "),
+      href: `/sheikhs/${scholar.id}`,
+      group: "sheikhs",
+    });
+    if (results.filter((r) => r.group === "sheikhs").length >= MAX_PER_GROUP) break;
+  }
+
   return results.slice(0, limit);
 }
 
@@ -109,4 +123,5 @@ export const SUGGESTION_GROUP_LABELS: Record<SearchSuggestion["group"], string> 
   qa: "أسئلة",
   adhkar: "أذكار",
   research: "الأبحاث العلمية",
+  sheikhs: "المشايخ",
 };

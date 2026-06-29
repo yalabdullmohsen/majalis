@@ -98,7 +98,7 @@ export const PRIMARY_NAV = [
 export const MOBILE_MORE_NAV = [
   { href: "/about", label: "عن المنصة" },
   { href: "/lessons", label: "الدروس" },
-  { href: "/lessons", label: "المشايخ" },
+  { href: "/sheikhs", label: "المشايخ" },
   { href: "/annual-courses", label: "الدورات العلمية" },
   { href: "/library", label: "المكتبة" },
   { href: "/research", label: "الأبحاث العلمية" },

@@ -2,6 +2,7 @@
 
 import { Link } from "wouter";
 import { PageHeader, Empty } from "@/components/ui-common";
+import { OptimizedSheikhImage } from "@/components/sheikh/OptimizedSheikhImage";
 
 export default function SheikhsPageClient({
   sheikhs,
@@ -21,11 +22,16 @@ export default function SheikhsPageClient({
       ) : (
         <>
           <p className="seo-listing-intro">
-            {sheikhs.length.toLocaleString("ar-EG")} شيخ وعالم معتمد — اختر اسماً لعرض السيرة والدروس المرتبطة.
+            {sheikhs.length.toLocaleString("ar-EG")} شيخ وعالم معتمد — اختر اسماً لعرض الملف العلمي والدروس المرتبطة.
           </p>
           <div className="page-card-grid">
             {sheikhs.map((sheikh) => (
-              <Link key={sheikh.id} href={`/sheikhs/${sheikh.id}`} className="page-card">
+              <Link key={sheikh.id} href={`/sheikhs/${sheikh.id}`} className="page-card sheikh-card">
+                <OptimizedSheikhImage
+                  src={sheikh.photo_url || "/logo.png"}
+                  name={sheikh.name}
+                  className="sheikh-card-photo"
+                />
                 <div className="page-card-header">
                   <p>{sheikh.name}</p>
                   {sheikh.is_verified && <span className="page-tag">معتمد</span>}

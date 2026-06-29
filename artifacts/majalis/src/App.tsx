@@ -27,6 +27,8 @@ const TopicPage = lazy(() => import("@/views/TopicPage"));
 const TopicsIndexPage = lazy(() => import("@/views/TopicsIndexPage"));
 const LessonsPage = lazy(() => import("@/views/LessonsPage"));
 const LessonDetailPage = lazy(() => import("@/views/LessonDetailPage"));
+const SheikhsPage = lazy(() => import("@/views/SheikhsPage"));
+const SheikhDetailPage = lazy(() => import("@/views/SheikhDetailPage"));
 const ScientificAnnouncementDetailPage = lazy(() => import("@/views/ScientificAnnouncementDetailPage"));
 const LibraryPage = lazy(() => import("@/views/LibraryPage"));
 const LibraryDetailPage = lazy(() => import("@/views/LibraryDetailPage"));
@@ -196,7 +198,8 @@ function Router() {
       <Route path="/kuwait-lessons"><Redirect to="/lessons" /></Route>
       <Route path="/announcements"><Redirect to="/lessons" /></Route>
       <Route path="/courses"><Redirect to="/lessons?tab=courses" /></Route>
-      <Route path="/sheikhs"><Redirect to="/lessons" /></Route>
+      <Route path="/sheikhs/:id"><SafeLazyRoute component={SheikhDetailPage} /></Route>
+      <Route path="/sheikhs"><SafeLazyRoute component={SheikhsPage} /></Route>
       <Route path="/library/:id"><SafeLazyRoute component={LibraryDetailPage} /></Route>
       <Route path="/library"><SafeLazyRoute component={LibraryPage} /></Route>
       <Route path="/research/upload"><SafeLazyRoute component={ScientificResearchUploadPage} /></Route>
