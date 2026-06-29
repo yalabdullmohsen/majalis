@@ -7,6 +7,7 @@ const FOOTER_GROUPS = [
       { href: "/lessons", label: "الدروس" },
       { href: "/fawaid", label: "الفوائد" },
       { href: "/qa", label: "الأسئلة" },
+      { href: "/question-answer", label: "سؤال وجواب" },
     ],
   },
   {
@@ -21,6 +22,7 @@ const FOOTER_GROUPS = [
   {
     title: "المنصة",
     links: [
+      { href: "/about-platform", label: "عن المنصة" },
       { href: "/about", label: "من نحن" },
       { href: "/contact", label: "تواصل معنا" },
       { href: "/privacy", label: "الخصوصية" },

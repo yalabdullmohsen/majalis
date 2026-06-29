@@ -10,6 +10,7 @@ import SiteFooter from "@/components/SiteFooter";
 import { AssistantFloatingWidget } from "@/components/assistant/AssistantFloatingWidget";
 import HomePage from "@/views/HomePage";
 import AboutPage from "@/views/AboutPage";
+import AboutPlatformPage from "@/views/AboutPlatformPage";
 import PrivacyPage from "@/views/PrivacyPage";
 import TermsPage from "@/views/TermsPage";
 import ContactPage from "@/views/ContactPage";
@@ -172,6 +173,7 @@ function Router() {
         <HomePage />
       </Route>
       <Route path="/about" component={AboutPage} />
+      <Route path="/about-platform" component={AboutPlatformPage} />
       <Route path="/privacy" component={PrivacyPage} />
       <Route path="/terms" component={TermsPage} />
       <Route path="/contact" component={ContactPage} />

@@ -8,6 +8,8 @@ import { HomePrayerTimes } from "@/components/home/HomePrayerTimes";
 import { HomeDailyFaida } from "@/components/home/HomeDailyFaida";
 import { HomeDailyDhikr } from "@/components/home/HomeDailyDhikr";
 import { HomeDailyQuestion } from "@/components/home/HomeDailyQuestion";
+import { HomeFeatureCards } from "@/components/home/HomeFeatureCards";
+import { HomeMoreSections } from "@/components/home/HomeMoreSections";
 import { HomeQuranSection } from "@/components/home/HomeQuranSection";
 import { HomeRadioSection } from "@/components/home/HomeRadioSection";
 import { HomeLiveSection } from "@/components/home/HomeLiveSection";
@@ -73,6 +75,10 @@ export default function HomePage({
           </form>
         </section>
 
+        <SafeHomeSection name="الوصول السريع">
+          <HomeFeatureCards />
+        </SafeHomeSection>
+
         <SafeHomeSection name="الدروس">
           <HomeUpcomingLessons initialLessons={initialFeaturedLessons} />
         </SafeHomeSection>
@@ -103,6 +109,10 @@ export default function HomePage({
 
         <SafeHomeSection name="البث المباشر">
           <HomeLiveSection />
+        </SafeHomeSection>
+
+        <SafeHomeSection name="المزيد">
+          <HomeMoreSections />
         </SafeHomeSection>
       </main>
     </div>

@@ -7,7 +7,7 @@ import NotificationBell from "./NotificationBell";
 import { SearchSuggestions } from "./SearchSuggestions";
 import { SideNavDrawer } from "./SideNavDrawer";
 import { MobileMoreMenu } from "./MobileMoreMenu";
-import { PRIMARY_NAV } from "@/lib/navigation";
+import { NAVBAR_ABOUT_LINK, PRIMARY_NAV } from "@/lib/navigation";
 import { C } from "@/lib/theme";
 import { useMobileNavState } from "@/hooks/useMobileNavState";
 
@@ -146,10 +146,26 @@ export default function NavBar() {
           )}
 
           <div className="navbar-v3__end">
-            {!isMobile && <SearchBox />}
-            {!isMobile && authLinks}
+            {!isMobile && (
+              <>
+                <SearchBox />
+                <Link
+                  href={NAVBAR_ABOUT_LINK.href}
+                  className={`navbar-v3__tab navbar-v3__about-link ${tabClass(isActive(NAVBAR_ABOUT_LINK.href))}`}
+                >
+                  {NAVBAR_ABOUT_LINK.label}
+                </Link>
+                {authLinks}
+              </>
+            )}
             {isMobile && (
               <>
+                <Link
+                  href={NAVBAR_ABOUT_LINK.href}
+                  className={`navbar-v3__tab navbar-v3__about-link navbar-v3__about-link--mobile ${tabClass(isActive(NAVBAR_ABOUT_LINK.href))}`}
+                >
+                  {NAVBAR_ABOUT_LINK.label}
+                </Link>
                 {!isLoggedIn && (
                   <Link href="/register" className="navbar-register navbar-register--mobile" aria-label="إنشاء حساب">
                     حساب

@@ -8599,6 +8599,25 @@ body:not(.mobile-nav-body-lock) .mobile-nav-layer {
   color: var(--majalis-brass-deep);
 }
 
+.navbar-v3__about-link {
+  flex-shrink: 0;
+  font-size: 0.8125rem;
+}
+
+.navbar-v3__about-link--mobile {
+  padding: 0.35rem 0.55rem;
+  font-size: 0.75rem;
+  max-width: 5.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 879px) {
+  .navbar-v3__about-link--mobile {
+    display: inline-flex;
+  }
+}
+
 .navbar-menu-btn--drawer {
   background: var(--majalis-emerald-deep);
   color: #fff;

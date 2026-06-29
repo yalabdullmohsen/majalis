@@ -27,6 +27,8 @@ const PAGES = [
   "/register",
   "/settings",
   "/admin",
+  "/about-platform",
+  "/question-answer",
   "/contact",
   "/about",
   "/sitemap.xml",

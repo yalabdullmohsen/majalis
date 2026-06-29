@@ -24,6 +24,9 @@ import {
   Tv,
   UserPlus,
   X,
+  Info,
+  Gamepad2,
+  Mail,
 } from "lucide-react";
 import { useAuth } from "./AuthProvider";
 import { NAV_GROUPS } from "@/lib/navigation";
@@ -41,6 +44,10 @@ const ICONS: Record<string, React.ComponentType<{ size?: number; className?: str
   "/calendar": Clock,
   "/fawaid": Heart,
   "/qa": MessageCircleQuestion,
+  "/question-answer": Gamepad2,
+  "/about-platform": Info,
+  "/contact": Mail,
+  "/about": Info,
   "/quran": BookOpen,
   "/quran-radio": Radio,
   "/quran-live": Tv,

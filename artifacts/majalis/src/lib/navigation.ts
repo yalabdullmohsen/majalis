@@ -27,6 +27,16 @@ export const NAV_GROUPS: NavGroup[] = [
       { href: "/fawaid", label: "الفوائد" },
       { href: "/qa", label: "الأسئلة" },
       { href: "/question-answer", label: "سؤال وجواب" },
+      { href: "/about-platform", label: "عن المنصة" },
+    ],
+  },
+  {
+    id: "platform",
+    title: "المنصة",
+    links: [
+      { href: "/about-platform", label: "عن المنصة" },
+      { href: "/contact", label: "تواصل معنا" },
+      { href: "/about", label: "من نحن" },
     ],
   },
   {
@@ -88,10 +98,14 @@ export const PRIMARY_NAV = [
   { href: "/prayer-times", label: "الصلاة" },
 ];
 
+/** Desktop navbar — permanent link beside search */
+export const NAVBAR_ABOUT_LINK = { href: "/about-platform", label: "عن المنصة" } as const;
+
 /** Mobile "المزيد" dropdown — full site navigation */
 export const MOBILE_MORE_NAV = [
+  { href: "/about-platform", label: "عن المنصة" },
   { href: "/lessons", label: "الدروس" },
-  { href: "/lessons", label: "المشايخ" },
+  { href: "/lessons?tab=courses", label: "الدورات" },
   { href: "/library", label: "المكتبة" },
   { href: "/qa", label: "الأسئلة" },
   { href: "/question-answer", label: "سؤال وجواب" },

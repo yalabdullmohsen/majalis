@@ -4,6 +4,7 @@ import { Suspense, lazy, type ComponentType } from "react";
 import { Redirect, Route, Switch, useLocation, useRoute } from "wouter";
 import { AdminRouteGuard } from "@/components/AdminRouteGuard";
 import AboutPage from "@/views/AboutPage";
+import AboutPlatformPage from "@/views/AboutPlatformPage";
 import PrivacyPage from "@/views/PrivacyPage";
 import TermsPage from "@/views/TermsPage";
 import ContactPage from "@/views/ContactPage";
@@ -113,6 +114,7 @@ export default function AppRoutes() {
       <SeoManager />
       <Switch>
         <Route path="/about" component={AboutPage} />
+        <Route path="/about-platform" component={AboutPlatformPage} />
         <Route path="/privacy" component={PrivacyPage} />
         <Route path="/terms" component={TermsPage} />
         <Route path="/contact" component={ContactPage} />
