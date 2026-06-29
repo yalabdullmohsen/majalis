@@ -22,6 +22,7 @@ import {
   trackSearchClick,
   type IntelligentSearchResult,
 } from "@/lib/scholarly-intelligence-service";
+import { searchQuranScientificCircles } from "@/lib/quran-scientific-circles-service";
 
 const EMPTY: SearchResults = {
   lessons: [],
@@ -157,6 +158,7 @@ export default function SearchPage() {
   const [matchedTopics, setMatchedTopics] = useState<Array<{ slug: string; title: string }>>([]);
   const [fiqhResults, setFiqhResults] = useState<FiqhGlobalSearchRow[]>([]);
   const [fiqhQuery, setFiqhQuery] = useState(false);
+  const [circlesResults, setCirclesResults] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [responseMs, setResponseMs] = useState<number | null>(null);
   const [showFilters, setShowFilters] = useState(false);
@@ -166,6 +168,7 @@ export default function SearchPage() {
     if (!query.trim()) {
       setResults(EMPTY);
       setIntelligentResults([]);
+      setCirclesResults([]);
       return;
     }
 
@@ -194,10 +197,11 @@ export default function SearchPage() {
         return;
       }
 
-      const [r, unifiedMatches, fiqhBoost] = await Promise.all([
+      const [r, unifiedMatches, fiqhBoost, circles] = await Promise.all([
         searchEverything(query),
         searchUnifiedLessons(query),
         searchFiqhCouncilForGlobal(query, 12),
+        searchQuranScientificCircles(query),
       ]);
 
       const mergedFiqh = mergeFiqhSearchResults(r.fiqh_decisions || [], fiqhBoost.rows);
@@ -219,6 +223,7 @@ export default function SearchPage() {
       ];
 
       setResults({ ...r, lessons: mergedLessons });
+      setCirclesResults(circles);
     } catch {
       setFiqhResults([]);
       setFiqhQuery(false);
@@ -265,6 +270,7 @@ export default function SearchPage() {
     (results.fatwas?.length || 0) +
     (results.rulings?.length || 0) +
     (results.courses?.length || 0) +
+    circlesResults.length +
     (results.updates?.length || 0) +
     localExtra.occasions.length +
     localExtra.nawawi.length +
@@ -438,6 +444,9 @@ export default function SearchPage() {
                   )} />
                   <Group title="الدورات العلمية" items={results.courses || []} render={(c) => (
                     <ResultRow key={c.id} href={`/annual-courses/${c.id}`} title={displayText(c.title)} meta={c.searchMeta || c.course_type} />
+                  )} />
+                  <Group title="الحلقات القرآنية والعلمية" items={circlesResults} render={(c) => (
+                    <ResultRow key={c.id} href={`/quran-scientific-circles/${c.id}`} title={displayText(c.title)} meta={c.searchMeta} />
                   )} />
                   <Group title="آخر المستجدات" items={results.updates || []} render={(u) => (
                     <ResultRow key={u.id} href="/updates" title={displayText(u.title)} meta={u.searchMeta || u.update_type} />
