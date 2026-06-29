@@ -15,6 +15,7 @@ import "./styles/design-system.css";
 import "./styles/highlighted-content.css";
 import "./styles/adhkar-v3.css";
 import "./styles/rulings-encyclopedia.css";
+import "./styles/quran-scientific-circles.css";
 
 const queryClient = createAppQueryClient();
 

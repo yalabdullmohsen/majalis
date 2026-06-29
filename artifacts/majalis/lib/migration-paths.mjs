@@ -100,6 +100,7 @@ export const MIGRATION_FILES = [
   "sin_jeem_v1.sql",
   "sin_jeem_v1_2_types.sql",
   "question_generation_v1.sql",
+  "quran_scientific_circles_v1.sql",
 ];
 
 export function resolveMigrationsDir() {

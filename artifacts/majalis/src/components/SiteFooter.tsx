@@ -5,6 +5,7 @@ const FOOTER_GROUPS = [
     title: "المحتوى",
     links: [
       { href: "/lessons", label: "الدروس" },
+      { href: "/quran-scientific-circles", label: "الحلقات القرآنية" },
       { href: "/fawaid", label: "الفوائد" },
       { href: "/qa", label: "الأسئلة" },
     ],
