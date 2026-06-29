@@ -30,6 +30,10 @@ const LessonDetailPage = lazy(() => import("@/views/LessonDetailPage"));
 const ScientificAnnouncementDetailPage = lazy(() => import("@/views/ScientificAnnouncementDetailPage"));
 const LibraryPage = lazy(() => import("@/views/LibraryPage"));
 const LibraryDetailPage = lazy(() => import("@/views/LibraryDetailPage"));
+const ScientificResearchPage = lazy(() => import("@/views/scientific-research/ScientificResearchPage"));
+const ScientificResearchDetailPage = lazy(() => import("@/views/scientific-research/ScientificResearchDetailPage"));
+const ScientificResearchAuthorPage = lazy(() => import("@/views/scientific-research/ScientificResearchAuthorPage"));
+const ScientificResearchUploadPage = lazy(() => import("@/views/scientific-research/ScientificResearchUploadPage"));
 const MiraclesPage = lazy(() => import("@/views/MiraclesPage"));
 const FawaidPage = lazy(() => import("@/views/FawaidPage"));
 const AdhkarPage = lazy(() => import("@/views/AdhkarPage"));
@@ -192,6 +196,10 @@ function Router() {
       <Route path="/sheikhs"><Redirect to="/lessons" /></Route>
       <Route path="/library/:id"><SafeLazyRoute component={LibraryDetailPage} /></Route>
       <Route path="/library"><SafeLazyRoute component={LibraryPage} /></Route>
+      <Route path="/scientific-research/upload"><SafeLazyRoute component={ScientificResearchUploadPage} /></Route>
+      <Route path="/scientific-research/author/:slug"><SafeLazyRoute component={ScientificResearchAuthorPage} /></Route>
+      <Route path="/scientific-research/:slug"><SafeLazyRoute component={ScientificResearchDetailPage} /></Route>
+      <Route path="/scientific-research"><SafeLazyRoute component={ScientificResearchPage} /></Route>
       <Route path="/miracles"><SafeLazyRoute component={MiraclesPage} /></Route>
       <Route path="/fawaid"><SafeLazyRoute component={FawaidPage} /></Route>
       <Route path="/adhkar"><SafeLazyRoute component={AdhkarPage} /></Route>
