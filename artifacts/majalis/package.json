@@ -36,6 +36,8 @@
     "audit:production-automation": "node scripts/audit-production-automation.mjs",
     "audit:production-lockdown": "node scripts/production-lockdown-audit.mjs --production --skip-local",
     "audit:production-lockdown:full": "node scripts/production-lockdown-audit.mjs --production",
+    "activate:zero-touch": "node scripts/zero-touch-activation.mjs --production --skip-local",
+    "activate:zero-touch:full": "node scripts/zero-touch-activation.mjs --production --self-heal --skip-local",
     "recover:production-automation": "node scripts/run-production-automation-recovery.mjs",
     "audit:database": "node scripts/audit-database-connection.mjs",
     "verify:ake-rpc": "node scripts/verify-ake-rpc.mjs",
