@@ -11,6 +11,7 @@ import { HomeDailyQuestion } from "@/components/home/HomeDailyQuestion";
 import { HomeQuranSection } from "@/components/home/HomeQuranSection";
 import { HomeRadioSection } from "@/components/home/HomeRadioSection";
 import { HomeLiveSection } from "@/components/home/HomeLiveSection";
+import { HomeLibraryHub } from "@/components/home/HomeLibraryHub";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 
@@ -95,6 +96,10 @@ export default function HomePage({
 
         <SafeHomeSection name="مواقيت الصلاة">
           <HomePrayerTimes />
+        </SafeHomeSection>
+
+        <SafeHomeSection name="المكتبة">
+          <HomeLibraryHub />
         </SafeHomeSection>
 
         <SafeHomeSection name="الإذاعة">

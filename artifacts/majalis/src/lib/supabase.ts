@@ -362,11 +362,24 @@ export async function moderateFawaid(id: string, status: string) {
   return await supabase.from("fawaid").update({ status }).eq("id", id);
 }
 
-export async function getLibrary({ type, category }: { type?: string; category?: string } = {}) {
+export async function getLibrary({
+  type,
+  category,
+  contentType = "book",
+}: {
+  type?: string;
+  category?: string;
+  contentType?: "book" | "article" | "research";
+} = {}) {
   const catalogFiltered = filterLibraryCatalog({
+    contentType: contentType === "research" ? "book" : contentType,
     category: category && category !== "الكل" ? category : undefined,
     type: type && type !== "الكل" ? type : undefined,
   });
+
+  if (contentType === "research") {
+    return { data: [], error: null, usingSeed: true };
+  }
 
   if (!isConfigured) {
     return { data: catalogFiltered, error: null, usingSeed: true };
@@ -374,22 +387,41 @@ export async function getLibrary({ type, category }: { type?: string; category?:
 
   try {
     let q = supabase.from("library_items").select("*").eq("status", "approved");
+    q = q.eq("content_type", contentType);
     if (type) q = q.eq("type", type);
     if (category) q = q.eq("category", category);
     const { data, error } = await q.order("created_at", { ascending: false });
     if (error) throw error;
     const rows = (data || []).map((row) => normalizeLibraryRow(row));
-    if (allowSeedFallback() && rows.length === 0) {
+    if (allowSeedFallback() && rows.length === 0 && contentType === "book") {
       return { data: catalogFiltered, error: null, usingSeed: true };
     }
-    const merged = sortLibraryItems(mergeLibraryWithCatalog(rows));
-    let result = merged;
+    const merged = sortLibraryItems(mergeLibraryWithCatalog(rows, contentType));
+    let result = merged.filter((row) => row.content_type === contentType);
     if (category && category !== "الكل") result = result.filter((row) => row.category === category);
     if (type && type !== "الكل") result = result.filter((row) => row.type === type);
     return { data: result, error: null, usingSeed: false };
   } catch (err) {
     logSupabaseError("getLibrary", err);
-    return { data: allowSeedFallback() ? catalogFiltered : [], error: null, usingSeed: allowSeedFallback() };
+    try {
+      let q = supabase.from("library_items").select("*").eq("status", "approved");
+      if (type) q = q.eq("type", type);
+      if (category) q = q.eq("category", category);
+      const { data } = await q.order("created_at", { ascending: false });
+      const rows = (data || []).map((row) => normalizeLibraryRow(row));
+      const merged = sortLibraryItems(mergeLibraryWithCatalog(rows, contentType));
+      let result = merged.filter((row) => row.content_type === contentType);
+      if (category && category !== "الكل") result = result.filter((row) => row.category === category);
+      if (type && type !== "الكل") result = result.filter((row) => row.type === type);
+      if (result.length > 0) return { data: result, error: null, usingSeed: false };
+    } catch {
+      /* fall through */
+    }
+    return {
+      data: allowSeedFallback() && contentType === "book" ? catalogFiltered : [],
+      error: null,
+      usingSeed: allowSeedFallback(),
+    };
   }
 }
 
@@ -711,6 +743,10 @@ export async function adminGetLibrary() {
 export async function adminUpsertLibraryItem(data: any) {
   const { id, ...rest } = data;
   delete rest.sheikhs;
+  if (!rest.content_type && rest.item_type) {
+    rest.content_type = rest.item_type === "مقال" ? "article" : "book";
+  }
+  if (rest.item_type && !rest.type) rest.type = rest.item_type;
   if (id) return await supabase.from("library_items").update(rest).eq("id", id);
   return await supabase.from("library_items").insert(rest);
 }
@@ -933,6 +969,9 @@ export async function adminSetQuizQuestionStatus(id: string, status: string) {
 export type SearchResults = {
   lessons: any[];
   library: any[];
+  books: any[];
+  articles: any[];
+  research: any[];
   miracles: any[];
   sheikhs: any[];
   qa: any[];
@@ -950,6 +989,9 @@ export type SearchResults = {
 const EMPTY_SEARCH: SearchResults = {
   lessons: [],
   library: [],
+  books: [],
+  articles: [],
+  research: [],
   miracles: [],
   sheikhs: [],
   qa: [],
@@ -1028,10 +1070,10 @@ async function searchLibraryFallback(term: string) {
       const like = ilikePattern(p);
       return supabase
         .from("library_items")
-        .select("id, title, type, description, category")
+        .select("id, title, type, content_type, description, category, author")
         .eq("status", "approved")
         .or(`title.ilike.${like},description.ilike.${like},category.ilike.${like}`)
-        .limit(20);
+        .limit(30);
     })
   );
   const rows = mergeUniqueById(responses.flatMap((r) => r.data || [])).filter((it: any) =>
@@ -1041,16 +1083,39 @@ async function searchLibraryFallback(term: string) {
     return { data: rows, errors: responses.map((r) => r.error).filter(Boolean) };
   }
   return {
-    data: searchLibraryCatalog(term).map((book) => ({
-      id: book.id,
-      title: book.title,
-      type: book.type,
-      description: book.description,
-      category: book.category,
-      author: book.author,
-    })),
+    data: [
+      ...searchLibraryCatalog(term, "book").map((book) => ({
+        id: book.id,
+        title: book.title,
+        type: book.type,
+        content_type: "book",
+        description: book.description,
+        category: book.category,
+        author: book.author,
+      })),
+      ...searchLibraryCatalog(term, "article").map((article) => ({
+        id: article.id,
+        title: article.title,
+        type: article.type,
+        content_type: "article",
+        description: article.description,
+        category: article.category,
+        author: article.author,
+      })),
+    ],
     errors: responses.map((r) => r.error).filter(Boolean),
   };
+}
+
+function splitLibraryRows(rows: any[]) {
+  const books: any[] = [];
+  const articles: any[] = [];
+  for (const row of rows) {
+    const ct = row.content_type === "article" || row.type === "مقال" ? "article" : "book";
+    if (ct === "article") articles.push(row);
+    else books.push(row);
+  }
+  return { books, articles, library: books };
 }
 
 async function searchQaFallback(term: string) {
@@ -1146,11 +1211,12 @@ async function searchEverythingFallback(term: string): Promise<SearchResults> {
   return {
     lessons: lessons.data,
     sheikhs: sheikhs.data,
-    library: library.data,
+    ...splitLibraryRows(library.data),
     qa: qa.data,
     miracles: miracles.data,
     fawaid: fawaid.data,
     adhkar: adhkar.data,
+    research: [],
     ...searchPlatformSeed(term),
     error: null,
     usingDemo: false,
@@ -1178,14 +1244,16 @@ export async function searchEverything(term: string): Promise<SearchResults> {
         source: item.source,
       }));
       const platformFallback = searchPlatformSeed(query);
+      const libSplit = splitLibraryRows(data.library || []);
       return {
         lessons: data.lessons || [],
-        library: data.library || [],
+        ...libSplit,
         miracles: data.miracles || [],
         sheikhs: data.sheikhs || [],
         qa: data.qa || [],
         fawaid: data.fawaid || [],
         adhkar,
+        research: data.research || [],
         fiqh_decisions: data.fiqh_decisions?.length ? data.fiqh_decisions : platformFallback.fiqh_decisions,
         fatwas: data.fatwas?.length ? data.fatwas : platformFallback.fatwas,
         rulings: data.rulings?.length ? data.rulings : platformFallback.rulings,

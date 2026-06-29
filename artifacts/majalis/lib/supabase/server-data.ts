@@ -211,7 +211,7 @@ export async function fetchLibraryForServer() {
     .order("created_at", { ascending: false });
 
   if (error || !data?.length) return getLibraryCatalog();
-  return mergeLibraryWithCatalog(data.map((row) => normalizeLibraryRow(row)));
+  return mergeLibraryWithCatalog(data.map((row) => normalizeLibraryRow(row)), "book");
 }
 
 export async function fetchLibraryBookByIdForServer(id: string) {

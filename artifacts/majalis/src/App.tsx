@@ -30,8 +30,12 @@ const LessonDetailPage = lazy(() => import("@/views/LessonDetailPage"));
 const SheikhsPage = lazy(() => import("@/views/SheikhsPage"));
 const SheikhDetailPage = lazy(() => import("@/views/SheikhDetailPage"));
 const ScientificAnnouncementDetailPage = lazy(() => import("@/views/ScientificAnnouncementDetailPage"));
-const LibraryPage = lazy(() => import("@/views/LibraryPage"));
-const LibraryDetailPage = lazy(() => import("@/views/LibraryDetailPage"));
+const LibraryBookDetailPage = lazy(() => import("@/views/LibraryBookDetailPage"));
+const LibraryArticleDetailPage = lazy(() => import("@/views/LibraryArticleDetailPage"));
+const LibraryHubPage = lazy(() => import("@/views/LibraryHubPage"));
+const LibraryBooksPage = lazy(() => import("@/views/LibraryBooksPage"));
+const LibraryArticlesPage = lazy(() => import("@/views/LibraryArticlesPage"));
+const LibraryLegacyRedirect = lazy(() => import("@/views/LibraryLegacyRedirect"));
 const ScientificResearchPage = lazy(() => import("@/views/scientific-research/ScientificResearchPage"));
 const ScientificResearchDetailPage = lazy(() => import("@/views/scientific-research/ScientificResearchDetailPage"));
 const ScientificResearchAuthorPage = lazy(() => import("@/views/scientific-research/ScientificResearchAuthorPage"));
@@ -201,8 +205,16 @@ function Router() {
       <Route path="/courses"><Redirect to="/lessons?tab=courses" /></Route>
       <Route path="/sheikhs/:id"><SafeLazyRoute component={SheikhDetailPage} /></Route>
       <Route path="/sheikhs"><SafeLazyRoute component={SheikhsPage} /></Route>
-      <Route path="/library/:id"><SafeLazyRoute component={LibraryDetailPage} /></Route>
-      <Route path="/library"><SafeLazyRoute component={LibraryPage} /></Route>
+      <Route path="/library/books/:id"><SafeLazyRoute component={LibraryBookDetailPage} /></Route>
+      <Route path="/library/articles/:id"><SafeLazyRoute component={LibraryArticleDetailPage} /></Route>
+      <Route path="/library/books"><SafeLazyRoute component={LibraryBooksPage} /></Route>
+      <Route path="/library/articles"><SafeLazyRoute component={LibraryArticlesPage} /></Route>
+      <Route path="/books/:id"><SafeLazyRoute component={LibraryBookDetailPage} /></Route>
+      <Route path="/books"><Redirect to="/library/books" /></Route>
+      <Route path="/articles/:id"><SafeLazyRoute component={LibraryArticleDetailPage} /></Route>
+      <Route path="/articles"><Redirect to="/library/articles" /></Route>
+      <Route path="/library/:id"><SafeLazyRoute component={LibraryLegacyRedirect} /></Route>
+      <Route path="/library"><SafeLazyRoute component={LibraryHubPage} /></Route>
       <Route path="/research/upload"><SafeLazyRoute component={ScientificResearchUploadPage} /></Route>
       <Route path="/research/author/:slug"><SafeLazyRoute component={ScientificResearchAuthorPage} /></Route>
       <Route path="/research/:slug"><SafeLazyRoute component={ScientificResearchDetailPage} /></Route>

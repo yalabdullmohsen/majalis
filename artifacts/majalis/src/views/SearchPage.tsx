@@ -27,6 +27,9 @@ import { searchQuranScientificCircles } from "@/lib/quran-scientific-circles-ser
 const EMPTY: SearchResults = {
   lessons: [],
   library: [],
+  books: [],
+  articles: [],
+  research: [],
   miracles: [],
   sheikhs: [],
   qa: [],
@@ -49,7 +52,9 @@ const KIND_GROUP_LABELS: Record<string, string> = {
   qa: "الأسئلة والأجوبة",
   fawaid: "الفوائد",
   adhkar: "الأذكار",
-  library: "المكتبة",
+  library: "الكتب",
+  books: "الكتب",
+  articles: "المقالات",
   miracle: "الإعجاز العلمي",
   miracles: "الإعجاز العلمي",
   course: "الدورات العلمية",
@@ -308,6 +313,8 @@ export default function SearchPage() {
     fiqhResults.length +
     results.lessons.length +
     results.library.length +
+    (results.books?.length || 0) +
+    (results.articles?.length || 0) +
     results.miracles.length +
     results.qa.length +
     results.fawaid.length +
@@ -367,6 +374,8 @@ export default function SearchPage() {
             <option value="fatwa">فتاوى</option>
             <option value="research">أبحاث</option>
             <option value="library">كتب</option>
+            <option value="books">كتب فقط</option>
+            <option value="articles">مقالات فقط</option>
             <option value="sheikh">علماء</option>
             <option value="mosque">مساجد</option>
             <option value="mutoon">متون</option>
@@ -464,12 +473,20 @@ export default function SearchPage() {
                   <Group title="الفوائد" items={results.fawaid} render={(f) => (
                     <ResultRow key={f.id} href="/fawaid" title={displayText(f.text)} meta={f.author_name} />
                   )} />
-                  <Group title="المكتبة" items={results.library} render={(book) => (
+                  <Group title="الكتب" items={results.books?.length ? results.books : results.library} render={(book) => (
                     <ResultRow
                       key={book.id}
-                      href={`/library/${book.id}`}
+                      href={`/library/books/${book.id}`}
                       title={displayText(book.title)}
                       meta={[book.author || book.author_name, book.category].filter(Boolean).join(" · ")}
+                    />
+                  )} />
+                  <Group title="المقالات" items={results.articles || []} render={(article) => (
+                    <ResultRow
+                      key={article.id}
+                      href={`/library/articles/${article.id}`}
+                      title={displayText(article.title)}
+                      meta={[article.author || article.author_name, article.category].filter(Boolean).join(" · ")}
                     />
                   )} />
                   <Group title="الأسئلة والأجوبة" items={results.qa} render={(x) => (

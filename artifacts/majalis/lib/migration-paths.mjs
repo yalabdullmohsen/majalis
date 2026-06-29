@@ -102,6 +102,7 @@ export const MIGRATION_FILES = [
   "sin_jeem_v1_2_types.sql",
   "question_generation_v1.sql",
   "scientific_research_v1.sql",
+  "library_content_types_v1.sql",
   "quran_scientific_circles_v1.sql",
 ];
 

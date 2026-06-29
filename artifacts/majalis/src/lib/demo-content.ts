@@ -51,6 +51,9 @@ export function isDemoId(id: string) {
 export type DemoSearchResults = {
   lessons: typeof DEMO_LESSONS;
   library: typeof DEMO_LIBRARY;
+  books: typeof DEMO_LIBRARY;
+  articles: typeof DEMO_LIBRARY;
+  research: never[];
   miracles: { id: string; title: string; category: string; body?: string }[];
   sheikhs: typeof DEMO_SHEIKHS;
   qa: typeof DEMO_QA;
@@ -61,7 +64,7 @@ export type DemoSearchResults = {
 export function searchDemoContent(term: string): DemoSearchResults {
   const q = term.trim();
   if (!q) {
-    return { lessons: [], library: [], miracles: [], sheikhs: [], qa: [], fawaid: [], adhkar: [] };
+    return { lessons: [], library: [], books: [], articles: [], research: [], miracles: [], sheikhs: [], qa: [], fawaid: [], adhkar: [] };
   }
 
   const lessons = DEMO_LESSONS.filter((l) =>
@@ -78,6 +81,9 @@ export function searchDemoContent(term: string): DemoSearchResults {
   const library = DEMO_LIBRARY.filter((it) =>
     arabicMatchAny([it.title, it.author, it.description, it.category, it.type, ...(it.keywords || [])], q),
   );
+
+  const books = library.filter((it) => it.content_type === "book");
+  const articles = library.filter((it) => it.content_type === "article");
 
   const qa = DEMO_QA.filter((x) =>
     arabicMatchAny([x.question, x.answer, x.qa_categories?.name, x.reference], q),
@@ -101,7 +107,7 @@ export function searchDemoContent(term: string): DemoSearchResults {
     body: m.body,
   }));
 
-  return { lessons, library, miracles, sheikhs, qa, fawaid, adhkar };
+  return { lessons, library: books, books, articles, research: [], miracles, sheikhs, qa, fawaid, adhkar };
 }
 
 export function filterDemoQa({

@@ -46,7 +46,9 @@ export function mapRowToPayload(type, row) {
       return {
         title: pick(row, "title"),
         type: pick(row, "type") || "كتاب",
+        content_type: "book",
         category: pick(row, "category"),
+        author: pick(row, "author") || null,
         description: pick(row, "description") || null,
         external_url: pick(row, "external_url", "url", "source_url") || null,
         file_url: pick(row, "file_url") || null,
@@ -56,7 +58,9 @@ export function mapRowToPayload(type, row) {
       return {
         title: pick(row, "title"),
         type: "مقال",
+        content_type: "article",
         category: pick(row, "category"),
+        author: pick(row, "author") || null,
         description: pick(row, "description", "summary"),
         external_url: pick(row, "source_url", "external_url", "url") || null,
         status: pick(row, "status") || "approved",

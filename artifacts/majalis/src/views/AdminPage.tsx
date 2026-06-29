@@ -5,6 +5,7 @@ import { DashboardSection } from "@/views/admin/DashboardSection";
 import { LessonsSection } from "@/views/admin/LessonsSection";
 import { SheikhsSection } from "@/views/admin/SheikhsSection";
 import { LibrarySection } from "@/views/admin/LibrarySection";
+import { LibraryBooksAdminSection, LibraryArticlesAdminSection } from "@/views/admin/LibraryTypeAdminSection";
 import { MiraclesSection } from "@/views/admin/MiraclesSection";
 import { AdhkarSection } from "@/views/admin/AdhkarSection";
 import { FawaidSection } from "@/views/admin/FawaidSection";
@@ -119,6 +120,10 @@ function SectionContent({ section }: { section: AdminSection }) {
       return <SheikhsSection />;
     case "library":
       return <LibrarySection />;
+    case "library-books":
+      return <LibraryBooksAdminSection />;
+    case "library-articles":
+      return <LibraryArticlesAdminSection />;
     case "scientific-research":
       return <ScientificResearchSection />;
     case "miracles":

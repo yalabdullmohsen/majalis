@@ -1,0 +1,99 @@
+.library-hub-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.library-hub-cards--compact .library-hub-card {
+  padding: 1rem;
+}
+
+.library-hub-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.25rem;
+  border-radius: 16px;
+  border: 1px solid var(--line, rgba(0, 0, 0, 0.08));
+  background: var(--surface, #fff);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.library-hub-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.library-hub-card--books {
+  border-color: rgba(27, 94, 74, 0.25);
+  background: linear-gradient(145deg, rgba(27, 94, 74, 0.06), transparent);
+}
+
+.library-hub-card--articles {
+  border-color: rgba(41, 98, 255, 0.2);
+  background: linear-gradient(145deg, rgba(41, 98, 255, 0.05), transparent);
+}
+
+.library-hub-card--research {
+  border-color: rgba(142, 68, 173, 0.2);
+  background: linear-gradient(145deg, rgba(142, 68, 173, 0.05), transparent);
+}
+
+.library-hub-card__icon {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.library-hub-card__title {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.library-hub-card__desc {
+  margin: 0;
+  font-size: 0.875rem;
+  opacity: 0.75;
+  flex: 1;
+}
+
+.library-hub-card__cta {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--emerald, #1b5e4a);
+}
+
+.library-hub-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.library-type-hub--book .content-hub__title {
+  color: var(--emerald-deep, #1b5e4a);
+}
+
+.library-type-hub--article .content-hub__title {
+  color: #2962ff;
+}
+
+.library-type-footer {
+  margin-top: 1.5rem;
+  font-size: 0.875rem;
+  opacity: 0.75;
+}
+
+.library-type-footer a {
+  color: inherit;
+}
+
+.library-card--book {
+  border-inline-start: 3px solid var(--emerald, #1b5e4a);
+}
+
+.library-card--article {
+  border-inline-start: 3px solid #2962ff;
+}

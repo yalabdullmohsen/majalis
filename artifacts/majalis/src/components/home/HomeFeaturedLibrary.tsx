@@ -13,13 +13,13 @@ export function HomeFeaturedLibrary() {
             المكتبة العلمية
           </h2>
         </div>
-        <Link href="/library" className="ds-section__link">
+        <Link href="/library/books" className="ds-section__link">
           عرض الكل
         </Link>
       </div>
       <div className="home-library-grid">
         {books.map((book) => (
-          <Link key={book.id} href={`/library/${book.id}`} className="ui-card home-library-card">
+          <Link key={book.id} href={`/library/books/${book.id}`} className="ui-card home-library-card">
             <span className="home-library-icon" aria-hidden>
               📖
             </span>

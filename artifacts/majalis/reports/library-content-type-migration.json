@@ -1,0 +1,142 @@
+{
+  "generatedAt": "2026-06-29T07:12:22.207Z",
+  "catalog": {
+    "total": 20,
+    "book": 20,
+    "article": 0,
+    "research": 0,
+    "unclassified": 0
+  },
+  "database": {
+    "note": "Run against Supabase in production; this script classifies local catalog + sample rows."
+  },
+  "samples": [
+    {
+      "id": "book-bukhari",
+      "title": "صحيح البخاري",
+      "content_type": "book"
+    },
+    {
+      "id": "book-muslim",
+      "title": "صحيح مسلم",
+      "content_type": "book"
+    },
+    {
+      "id": "book-muwatta",
+      "title": "موطأ الإمام مالك",
+      "content_type": "book"
+    },
+    {
+      "id": "book-abudawud",
+      "title": "سنن أبي داود",
+      "content_type": "book"
+    },
+    {
+      "id": "book-tirmidhi",
+      "title": "سنن الترمذي",
+      "content_type": "book"
+    },
+    {
+      "id": "book-nasai",
+      "title": "سنن النسائي",
+      "content_type": "book"
+    },
+    {
+      "id": "book-ibnmajah",
+      "title": "سنن ابن ماجه",
+      "content_type": "book"
+    },
+    {
+      "id": "book-ahmad",
+      "title": "مسند الإمام أحمد",
+      "content_type": "book"
+    },
+    {
+      "id": "book-riyadh",
+      "title": "رياض الصالحين",
+      "content_type": "book"
+    },
+    {
+      "id": "book-nawawi40",
+      "title": "الأربعون النووية",
+      "content_type": "book"
+    },
+    {
+      "id": "book-bulugh",
+      "title": "بلوغ المرام",
+      "content_type": "book"
+    },
+    {
+      "id": "book-umdat",
+      "title": "عمدة الأحكام",
+      "content_type": "book"
+    },
+    {
+      "id": "book-zad",
+      "title": "زاد المعاد",
+      "content_type": "book"
+    },
+    {
+      "id": "book-madarij",
+      "title": "مدارج السالكين",
+      "content_type": "book"
+    },
+    {
+      "id": "book-tafsir-ibnkathir",
+      "title": "تفسير ابن كثير",
+      "content_type": "book"
+    },
+    {
+      "id": "book-tafsir-saadi",
+      "title": "تفسير السعدي",
+      "content_type": "book"
+    },
+    {
+      "id": "book-tafsir-tabari",
+      "title": "تفسير الطبري",
+      "content_type": "book"
+    },
+    {
+      "id": "book-wasitiyyah",
+      "title": "العقيدة الواسطية",
+      "content_type": "book"
+    },
+    {
+      "id": "book-tawhid",
+      "title": "كتاب التوحيد",
+      "content_type": "book"
+    },
+    {
+      "id": "book-thalathah",
+      "title": "ثلاثة الأصول",
+      "content_type": "book"
+    }
+  ],
+  "unclassified": [
+    {
+      "title": "",
+      "type": "",
+      "content_type": null
+    }
+  ],
+  "needsManualReview": [
+    {
+      "title": "رسالة ماجستير",
+      "type": "كتاب",
+      "description": "رسالة ماجستير في الفقه",
+      "content_type": "book",
+      "reason": "possible research misclassified as book"
+    },
+    {
+      "title": "",
+      "type": "",
+      "content_type": null
+    }
+  ],
+  "summary": {
+    "books": 40,
+    "articles": 0,
+    "research": 0,
+    "unclassified": 1
+  }
+}

@@ -10,6 +10,8 @@ export type AdminSection =
   | "lessons"
   | "sheikhs"
   | "library"
+  | "library-books"
+  | "library-articles"
   | "miracles"
   | "adhkar"
   | "fawaid"
@@ -57,7 +59,8 @@ export const ADMIN_NAV: { key: AdminSection; label: string }[] = [
   { key: "governance", label: "الحوكمة المؤسسية" },
   { key: "lessons", label: "الدروس" },
   { key: "sheikhs", label: "المشايخ" },
-  { key: "library", label: "المكتبة" },
+  { key: "library-books", label: "إدارة الكتب" },
+  { key: "library-articles", label: "إدارة المقالات" },
   { key: "scientific-research", label: "الأبحاث العلمية" },
   { key: "miracles", label: "الإعجاز العلمي" },
   { key: "fawaid", label: "الفوائد" },

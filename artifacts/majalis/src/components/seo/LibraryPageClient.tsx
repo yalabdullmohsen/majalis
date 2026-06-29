@@ -1,11 +1,11 @@
 "use client";
 
-import LibraryPage from "@/views/LibraryPage";
+import LibraryBooksPage from "@/views/LibraryBooksPage";
 
 export default function LibraryPageClient({
   initialItems,
 }: {
   initialItems: any[];
 }) {
-  return <LibraryPage initialItems={initialItems} />;
+  return <LibraryBooksPage initialItems={initialItems} />;
 }

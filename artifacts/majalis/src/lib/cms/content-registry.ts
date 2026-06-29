@@ -95,7 +95,7 @@ export const CONTENT_REGISTRY: Record<CmsContentKind, ContentTableConfig> = {
     publishedField: "published_at",
     scheduledField: "scheduled_at",
     statusMap: { approved: "approved", pending: "pending", rejected: "rejected" },
-    publicRoute: () => `/library`,
+    publicRoute: (id) => `/library/books/${id}`,
   },
   article: {
     table: "library_items",
@@ -109,7 +109,7 @@ export const CONTENT_REGISTRY: Record<CmsContentKind, ContentTableConfig> = {
     archivedField: "archived_at",
     publishedField: "published_at",
     statusMap: { approved: "approved", pending: "pending" },
-    publicRoute: () => `/library`,
+    publicRoute: (id) => `/library/articles/${id}`,
   },
   fatwa: {
     table: "fatwas",

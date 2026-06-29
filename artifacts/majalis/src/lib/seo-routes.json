@@ -303,17 +303,50 @@
     {
       "path": "/library",
       "title": "المكتبة العلمية | المجلس العلمي",
-      "description": "مكتبة علمية تضم كتبًا ومتونًا وتفريغات وملخصات وموادًا صوتية ومرئية لطالب العلم.",
+      "description": "مكتبة علمية — كتب ومقالات وأبحاث في أقسام منفصلة.",
       "keywords": [
         "مكتبة علمية",
         "كتب إسلامية",
-        "متون",
-        "تفريغات",
-        "ملخصات شرعية"
+        "مقالات",
+        "أبحاث"
       ],
       "sitemap": true,
       "changefreq": "weekly",
       "priority": 0.85
+    },
+    {
+      "path": "/library/books",
+      "title": "الكتب | المكتبة العلمية",
+      "description": "كتب شرعية ومتون وشروح وموسوعات — بدون مقالات أو أبحاث.",
+      "keywords": ["كتب إسلامية", "متون", "شروح", "موسوعات"],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.84
+    },
+    {
+      "path": "/library/articles",
+      "title": "المقالات | المكتبة العلمية",
+      "description": "مقالات علمية ودعوية وفكرية — بدون كتب أو رسائل جامعية.",
+      "keywords": ["مقالات علمية", "مقالات دعوية", "مقالات فكرية"],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.83
+    },
+    {
+      "path": "/books",
+      "title": "الكتب | المجلس العلمي",
+      "description": "مكتبة الكتب الشرعية.",
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.82
+    },
+    {
+      "path": "/articles",
+      "title": "المقالات | المجلس العلمي",
+      "description": "مقالات علمية منفصلة عن الكتب والأبحاث.",
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.82
     },
     {
       "path": "/miracles",
