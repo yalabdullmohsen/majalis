@@ -1,5 +1,6 @@
 import { SCORING } from "./constants";
 import { getAllSinJeemQuestions } from "./questions-bank";
+import { filterUnseenQuestions, setCategoryTotals } from "./player-history";
 import type {
   Difficulty,
   GameSession,
@@ -44,7 +45,14 @@ export function pickQuestions(config: MatchConfig, pool?: SinJeemQuestion[]): Si
 
   if (config.categorySlugs.length > 0) {
     questions = questions.filter((q) => config.categorySlugs.includes(q.category_slug || ""));
+    const totals: Record<string, number> = {};
+    for (const slug of config.categorySlugs) {
+      totals[slug] = questions.filter((q) => q.category_slug === slug).length;
+    }
+    setCategoryTotals(totals);
   }
+
+  questions = filterUnseenQuestions(questions, config.categorySlugs);
 
   if (config.difficulty !== "متوسط") {
     const filtered = questions.filter((q) => q.difficulty === config.difficulty);

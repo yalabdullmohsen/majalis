@@ -13,6 +13,7 @@ import {
   dailyConfig,
 } from "@/lib/sin-jeem/engine";
 import { loadSession } from "@/lib/sin-jeem/storage";
+import { recordAnswer } from "@/lib/sin-jeem/player-history";
 import type { LifelineType } from "@/lib/sin-jeem/types";
 import {
   playCorrectSound,
@@ -75,9 +76,11 @@ export default function SinJeemPlayPage() {
     (index: number) => {
       if (!activeSession || activeSession.phase !== "playing") return;
       setSelected(index);
+      const q = getCurrentQuestion(activeSession);
       const next = submitAnswer(activeSession, index);
       updateSession(next);
-      const correct = index === (getCurrentQuestion(activeSession)?.correct_index ?? 0);
+      const correct = index === (q?.correct_index ?? 0);
+      if (q) recordAnswer(q.id, q.category_slug || "", correct);
       if (correct) {
         playCorrectSound();
         playScorePop();

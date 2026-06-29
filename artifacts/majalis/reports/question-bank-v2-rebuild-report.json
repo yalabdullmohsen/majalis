@@ -1,0 +1,16 @@
+{
+  "rebuiltAt": "2026-06-29T03:47:19.102Z",
+  "version": 2,
+  "deletedLegacy": 527,
+  "newCount": 527,
+  "categories": 43,
+  "references": 20,
+  "duplicateRate": 0.3984819734345351,
+  "qualityRate": 1,
+  "validationPassed": 527,
+  "validationFailed": 0,
+  "duplicatePairs": 210,
+  "archiveRejected": 2,
+  "dupRejected": 87,
+  "newFactsUsed": 89
+}

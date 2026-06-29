@@ -72,13 +72,18 @@ export function SinJeemSection() {
   const [audit, setAudit] = useState<AuditRow[]>([]);
   const [showAudit, setShowAudit] = useState(false);
   const [msg, setMsg] = useState("");
+  const [bankStats, setBankStats] = useState<{ total?: number; categoryCount?: number; version?: number } | null>(null);
 
   const load = useCallback(() => {
     setLoading(true);
     adminGetQuestions().then((q) => {
-      setQuestions(q.length ? q : SIN_JEEM_QUESTIONS);
+      setQuestions(q.length ? q : []);
       setLoading(false);
     });
+    fetch("/api/question-answer?action=bank_stats")
+      .then((r) => r.json())
+      .then((d) => { if (d.ok) setBankStats(d); })
+      .catch(() => {});
   }, []);
 
   useEffect(() => { load(); }, [load]);
@@ -254,6 +259,29 @@ export function SinJeemSection() {
         <button type="button" className="page-action-btn" onClick={() => exportData("csv")}>تصدير CSV</button>
         <button type="button" className="page-action-btn" onClick={loadAudit}>سجل التعديلات</button>
       </div>
+
+      <QuestionGenerationPanel />
+
+      {bankStats && (
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(140px,1fr))", gap: "0.75rem", marginBottom: "1rem" }}>
+          <div style={{ padding: "0.75rem", border: `1px solid ${C.line}`, borderRadius: "0.5rem", background: C.panel }}>
+            <div style={{ fontSize: "0.75rem", color: C.inkSoft }}>إجمالي الأسئلة</div>
+            <div style={{ fontSize: "1.25rem", fontWeight: 800 }}>{bankStats.total ?? questions.length}</div>
+          </div>
+          <div style={{ padding: "0.75rem", border: `1px solid ${C.line}`, borderRadius: "0.5rem", background: C.panel }}>
+            <div style={{ fontSize: "0.75rem", color: C.inkSoft }}>الفئات</div>
+            <div style={{ fontSize: "1.25rem", fontWeight: 800 }}>{bankStats.categoryCount ?? "—"}</div>
+          </div>
+          <div style={{ padding: "0.75rem", border: `1px solid ${C.line}`, borderRadius: "0.5rem", background: C.panel }}>
+            <div style={{ fontSize: "0.75rem", color: C.inkSoft }}>الإصدار</div>
+            <div style={{ fontSize: "1.25rem", fontWeight: 800 }}>v{bankStats.version ?? 2}</div>
+          </div>
+          <div style={{ padding: "0.75rem", border: `1px solid ${C.line}`, borderRadius: "0.5rem", background: C.panel }}>
+            <div style={{ fontSize: "0.75rem", color: C.inkSoft }}>نسبة الجودة</div>
+            <div style={{ fontSize: "1.25rem", fontWeight: 800 }}>{questions.filter((q) => q.review_status !== "rejected").length}/{questions.length || bankStats.total}</div>
+          </div>
+        </div>
+      )}
 
       <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginBottom: "0.75rem" }}>
         <button type="button" onClick={selectAll}>تحديد الكل</button>

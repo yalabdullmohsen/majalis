@@ -49,6 +49,7 @@ export interface SinJeemCategory {
 
 export interface SinJeemQuestion {
   id: string;
+  title?: string;
   category_id?: string | null;
   subcategory_id?: string | null;
   category_slug?: string;
@@ -60,6 +61,10 @@ export interface SinJeemQuestion {
   correct_index?: number | null;
   correct_answer?: string | null;
   explanation?: string | null;
+  evidence?: string | null;
+  reference?: string | null;
+  book_name?: string | null;
+  hadith_or_ayah_ref?: string | null;
   difficulty: Difficulty;
   source?: string;
   keywords?: string[];
@@ -67,6 +72,10 @@ export interface SinJeemQuestion {
   audio_url?: string | null;
   video_url?: string | null;
   points?: number;
+  time_seconds?: number;
+  version?: number;
+  content_hash?: string;
+  last_reviewed_at?: string;
   review_status?: "pending" | "approved" | "rejected";
   created_at?: string;
   updated_at?: string;

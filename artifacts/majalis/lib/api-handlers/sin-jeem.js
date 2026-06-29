@@ -401,6 +401,51 @@ export default async function handler(req, res, opts = {}) {
     return;
   }
 
+  if (action === "record_answer") {
+    const admin = getSupabaseAdmin();
+    const body = req.body || {};
+    const playerKey = String(body.player_key || "").slice(0, 64);
+    const questionId = String(body.question_id || "").slice(0, 64);
+    const categorySlug = String(body.category_slug || "").slice(0, 64);
+    const cycle = Number(body.cycle) || 1;
+    if (!playerKey || !questionId) {
+      sendJson(res, 400, { ok: false, error: "missing_fields" });
+      return;
+    }
+    if (admin) {
+      try {
+        await admin.from("sin_jeem_player_question_log").upsert({
+          player_key: playerKey,
+          question_id: questionId,
+          category_slug: categorySlug,
+          was_correct: body.was_correct ?? null,
+          cycle,
+        }, { onConflict: "player_key,question_id,cycle" });
+      } catch {
+        /* table may not exist */
+      }
+    }
+    sendJson(res, 200, { ok: true });
+    return;
+  }
+
+  if (action === "bank_stats") {
+    const bank = getProductionQuestionBank();
+    const cats = {};
+    for (const q of bank) {
+      const s = q.category_slug || "unknown";
+      cats[s] = (cats[s] || 0) + 1;
+    }
+    sendJson(res, 200, {
+      ok: true,
+      total: bank.length,
+      version: 2,
+      categories: cats,
+      categoryCount: Object.keys(cats).length,
+    });
+    return;
+  }
+
   if (action === "questions") {
     const limit = Math.min(Number(req.query?.limit) || 200, 500);
     const difficulty = req.query?.difficulty;
