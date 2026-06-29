@@ -1,0 +1,46 @@
+{
+  "generatedAt": "2026-06-29T07:21:12.169Z",
+  "before": {
+    "total": 671,
+    "sources": {
+      "bank": 527,
+      "seed": 72,
+      "v2Seed": 72,
+      "total": 671
+    }
+  },
+  "removed": {
+    "total": 691,
+    "byReason": {
+      "weak_quality": 115,
+      "too_short": 8,
+      "ambiguous": 9,
+      "missing_explanation": 364,
+      "requires_four_options": 123,
+      "missing_source": 72
+    }
+  },
+  "kept": {
+    "total": 65,
+    "published": 62,
+    "review": 3
+  },
+  "qualityScore": 95,
+  "coverageByCategory": {
+    "quran": 13,
+    "tafsir": 2,
+    "tawheed": 1,
+    "aqeeda": 5,
+    "hadith": 5,
+    "hadith-sciences": 1,
+    "seera": 10,
+    "islamic-history": 4,
+    "scholars": 3,
+    "fiqh": 13,
+    "arabic": 2,
+    "adhkar": 2,
+    "akhlaq": 2,
+    "andalus": 1,
+    "usool-fiqh": 1
+  }
+}

@@ -1,8 +1,8 @@
 import { supabase } from "@/lib/supabase";
 import { requestFetch } from "@/lib/request-manager";
 import { isMissingSchemaError } from "@/lib/safe-supabase";
-import { SIN_JEEM_CATEGORIES } from "./categories-seed";
-import { getAllSinJeemQuestions, getMergedQuestionCount } from "./questions-bank";
+import { MAIN_CATEGORIES } from "@/lib/question-bank-v2/categories";
+import { getPlayableQuestions, getMergedQuestionCount } from "./questions-bank";
 import type { GameStats, LeaderboardEntry, SinJeemQuestion } from "./types";
 import { getPlayerCount, loadLocalStats } from "./storage";
 
@@ -85,7 +85,7 @@ function filterLocalQuestions(opts?: {
   categorySlugs?: string[];
   limit?: number;
 }): SinJeemQuestion[] {
-  let q = getAllSinJeemQuestions();
+  let q = getPlayableQuestions();
   if (opts?.difficulty) q = q.filter((x) => x.difficulty === opts.difficulty);
   if (opts?.categorySlugs?.length) {
     q = q.filter((x) => opts.categorySlugs!.includes(x.category_slug || ""));
@@ -96,7 +96,7 @@ function filterLocalQuestions(opts?: {
 export async function fetchGameStats(): Promise<GameStats> {
   const local = loadLocalStats();
   const questionCount = getMergedQuestionCount();
-  const categoryCount = SIN_JEEM_CATEGORIES.length;
+  const categoryCount = MAIN_CATEGORIES.length;
   const playerCount = getPlayerCount();
 
   if (!supabase) {
@@ -143,9 +143,9 @@ export async function fetchLeaderboard(): Promise<LeaderboardEntry[]> {
 }
 
 export async function adminGetQuestions(): Promise<SinJeemQuestion[]> {
-  if (!supabase) return getAllSinJeemQuestions();
+  if (!supabase) return getPlayableQuestions();
   const { data, error } = await supabase.from("sin_jeem_questions").select("*").order("created_at", { ascending: false }).limit(500);
-  if (error || !data) return getAllSinJeemQuestions();
+  if (error || !data) return getPlayableQuestions();
   return data.map((row) => ({
     id: row.id,
     category_slug: row.category_id,

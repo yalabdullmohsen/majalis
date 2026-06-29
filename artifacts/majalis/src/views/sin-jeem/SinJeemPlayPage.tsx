@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useSearch } from "wouter";
 import { useGame } from "@/lib/sin-jeem/context";
 import {
@@ -20,6 +20,9 @@ import {
   playWrongSound,
 } from "@/lib/sin-jeem/sounds";
 import { QA_ROUTES } from "@/lib/question-answer/routes";
+import { recordAnswer } from "@/lib/question-bank-v2/user-progress";
+import { recordGameXp } from "@/lib/question-bank-v2/gamification";
+import { resolveMainCategory } from "@/lib/question-bank-v2/categories";
 import { GameLayout } from "./components/GameLayout";
 import { ScoreBoard } from "./components/ScoreBoard";
 import { TimerRing } from "./components/TimerRing";
@@ -31,10 +34,17 @@ export default function SinJeemPlayPage() {
   const [, setLocation] = useLocation();
   const { session, updateSession, startGame } = useGame();
   const [selected, setSelected] = useState<number | null>(null);
+  const [reviewMode, setReviewMode] = useState(false);
   const [, tick] = useState(0);
   const initialized = useRef(false);
+  const streakRef = useRef(0);
 
   const activeSession = session ?? loadSession();
+
+  const progressPct = useMemo(() => {
+    if (!activeSession) return 0;
+    return Math.round(((activeSession.currentIndex + (activeSession.phase === "reveal" ? 1 : 0)) / activeSession.questions.length) * 100);
+  }, [activeSession]);
 
   useEffect(() => {
     if (initialized.current) return;
@@ -77,7 +87,13 @@ export default function SinJeemPlayPage() {
       setSelected(index);
       const next = submitAnswer(activeSession, index);
       updateSession(next);
-      const correct = index === (getCurrentQuestion(activeSession)?.correct_index ?? 0);
+      const q = getCurrentQuestion(activeSession);
+      const correct = index === (q?.correct_index ?? 0);
+      if (q) {
+        recordAnswer(q.id, resolveMainCategory(q.category_slug), correct);
+        recordGameXp(correct, streakRef.current);
+        streakRef.current = correct ? streakRef.current + 1 : 0;
+      }
       if (correct) {
         playCorrectSound();
         playScorePop();
@@ -96,7 +112,12 @@ export default function SinJeemPlayPage() {
 
   const handleContinue = () => {
     if (!activeSession) return;
-    if (activeSession.phase === "finished") {
+    const isLast = activeSession.currentIndex + 1 >= activeSession.questions.length;
+    if (isLast && activeSession.phase === "reveal" && !reviewMode) {
+      setReviewMode(true);
+      return;
+    }
+    if (activeSession.phase === "finished" || (isLast && reviewMode)) {
       setLocation(QA_ROUTES.results);
       return;
     }
@@ -115,14 +136,50 @@ export default function SinJeemPlayPage() {
   const lifelines = activeSession.activeSide === "a" ? activeSession.lifelinesA : activeSession.lifelinesB;
   const revealed = activeSession.phase === "reveal";
 
+  if (reviewMode) {
+    return (
+      <GameLayout>
+        <h2 style={{ textAlign: "center", marginBottom: "1rem" }}>مراجعة الإجابات قبل الإرسال</h2>
+        {activeSession.questions.map((q, i) => {
+          const round = activeSession.rounds[i];
+          const ok = round?.isCorrect === true;
+          return (
+            <div key={q.id} className={`sj-review-card ${ok ? "correct" : "wrong"}`}>
+              <strong>{i + 1}. {q.question}</strong>
+              <p style={{ margin: "0.5rem 0", fontSize: "0.875rem" }}>
+                {ok ? "✓ صحيح" : "✗ خطأ"}
+                {!ok && q.options && (
+                  <> — الإجابة الصحيحة: {q.options[q.correct_index ?? 0]}</>
+                )}
+              </p>
+              {q.explanation && <p className="sj-explanation">{q.explanation}</p>}
+            </div>
+          );
+        })}
+        <button type="button" className="sj-cta-primary" onClick={() => setLocation(QA_ROUTES.results)}>
+          تأكيد وعرض النتائج 🏆
+        </button>
+      </GameLayout>
+    );
+  }
+
   return (
     <GameLayout>
-      <div style={{ textAlign: "center", fontSize: "0.8125rem", color: "var(--majalis-ink-soft)", marginBottom: "0.5rem" }}>
-        سؤال {activeSession.currentIndex + 1} / {activeSession.questions.length}
-        {activeSession.config.mode !== "solo" && (
-          <> · دور {activeSession.activeSide === "a" ? activeSession.teamA.name : activeSession.teamB.name}</>
-        )}
+      <div className="sj-progress-wrap">
+        <div className="sj-progress-label">
+          <span>التقدم</span>
+          <span>{activeSession.currentIndex + 1} / {activeSession.questions.length}</span>
+        </div>
+        <div className="sj-progress-bar" role="progressbar" aria-valuenow={progressPct} aria-valuemin={0} aria-valuemax={100}>
+          <div className="sj-progress-fill" style={{ width: `${progressPct}%` }} />
+        </div>
       </div>
+
+      {activeSession.config.mode !== "solo" && (
+        <div style={{ textAlign: "center", fontSize: "0.8125rem", color: "var(--majalis-ink-soft)", marginBottom: "0.5rem" }}>
+          دور {activeSession.activeSide === "a" ? activeSession.teamA.name : activeSession.teamB.name}
+        </div>
+      )}
 
       <ScoreBoard session={activeSession} />
 
@@ -145,6 +202,10 @@ export default function SinJeemPlayPage() {
         </p>
       )}
 
+      {revealed && question?.explanation && (
+        <p className="sj-explanation">{question.explanation}</p>
+      )}
+
       {activeSession.phase === "playing" && (
         <LifelineBar
           available={lifelines}
@@ -155,7 +216,7 @@ export default function SinJeemPlayPage() {
 
       {revealed && (
         <button type="button" className="sj-cta-primary" style={{ marginTop: "1.25rem" }} onClick={handleContinue}>
-          {activeSession.currentIndex + 1 >= activeSession.questions.length ? "عرض النتائج 🏆" : "السؤال التالي →"}
+          {activeSession.currentIndex + 1 >= activeSession.questions.length ? "مراجعة الإجابات 📋" : "السؤال التالي →"}
         </button>
       )}
     </GameLayout>

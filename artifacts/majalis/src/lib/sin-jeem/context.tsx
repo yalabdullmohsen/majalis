@@ -1,7 +1,7 @@
 import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from "react";
 import type { GameSession, MatchConfig } from "./types";
 import { createSession } from "./engine";
-import { getAllSinJeemQuestions } from "./questions-bank";
+import { getPlayableQuestions } from "./questions-bank";
 import { clearSession, loadSession, saveSession } from "./storage";
 
 interface GameContextValue {
@@ -17,7 +17,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<GameSession | null>(() => loadSession());
 
   const startGame = useCallback((config: MatchConfig) => {
-    const s = createSession(config, getAllSinJeemQuestions());
+    const s = createSession(config, getPlayableQuestions());
     setSession(s);
     saveSession(s);
   }, []);

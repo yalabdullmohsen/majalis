@@ -1,5 +1,6 @@
 import { SCORING } from "./constants";
-import { getAllSinJeemQuestions } from "./questions-bank";
+import { getPlayableQuestions } from "./questions-bank";
+import { pickQuestionsV2 } from "@/lib/question-bank-v2/selector";
 import type {
   Difficulty,
   GameSession,
@@ -40,34 +41,23 @@ function shuffle<T>(arr: T[]): T[] {
 }
 
 export function pickQuestions(config: MatchConfig, pool?: SinJeemQuestion[]): SinJeemQuestion[] {
-  let questions = pool ? [...pool] : getAllSinJeemQuestions();
+  const questions = pool ?? getPlayableQuestions();
+  const picked = pickQuestionsV2(questions, {
+    count: config.questionCount,
+    categorySlugs: config.categorySlugs,
+    difficulty: config.difficulty,
+  });
 
-  if (config.categorySlugs.length > 0) {
-    questions = questions.filter((q) => config.categorySlugs.includes(q.category_slug || ""));
-  }
+  if (picked.length >= config.questionCount) return picked;
 
-  if (config.difficulty !== "متوسط") {
-    const filtered = questions.filter((q) => q.difficulty === config.difficulty);
-    if (filtered.length >= config.questionCount) questions = filtered;
-  }
+  const fallback = pickQuestionsV2(questions, {
+    count: config.questionCount,
+    categorySlugs: [],
+    difficulty: config.difficulty,
+    excludeIds: new Set(picked.map((q) => q.id)),
+  });
 
-  const used = new Set<string>();
-  const picked: SinJeemQuestion[] = [];
-  const shuffled = shuffle(questions);
-
-  for (const q of shuffled) {
-    if (picked.length >= config.questionCount) break;
-    if (used.has(q.question)) continue;
-    used.add(q.question);
-    picked.push(q);
-  }
-
-  while (picked.length < config.questionCount && shuffled.length > 0) {
-    picked.push(shuffled[picked.length % shuffled.length]);
-    if (picked.length >= config.questionCount) break;
-  }
-
-  return picked.slice(0, config.questionCount);
+  return [...picked, ...fallback].slice(0, config.questionCount);
 }
 
 export function createSession(config: MatchConfig, pool?: SinJeemQuestion[]): GameSession {
@@ -75,7 +65,7 @@ export function createSession(config: MatchConfig, pool?: SinJeemQuestion[]): Ga
   if (questions.length === 0) {
     questions = pickQuestions(
       { ...config, categorySlugs: [], difficulty: "متوسط" },
-      pool ?? getAllSinJeemQuestions(),
+      pool ?? getPlayableQuestions(),
     );
   }
   const teamAName = config.mode === "solo" ? "أنت" : config.teamAName;
@@ -225,7 +215,7 @@ export function useLifeline(session: GameSession, type: LifelineType): GameSessi
     const current = getCurrentQuestion(next);
     const replacement = pickQuestions(
       { ...next.config, questionCount: 1 },
-      getAllSinJeemQuestions().filter((x) => x.id !== current?.id),
+      getPlayableQuestions().filter((x) => x.id !== current?.id),
     )[0];
     if (replacement && current) {
       const questions = [...next.questions];
