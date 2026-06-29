@@ -1682,3 +1682,68 @@ hr.decorative,
   max-width: 6.5rem;
   margin-inline: auto;
 }
+
+/* Personal learning UX */
+.personal-page { display: flex; flex-direction: column; gap: var(--ds-space-4, 1rem); }
+.personal-hub-links { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.personal-auth-gate { text-align: center; padding: 3rem 1rem; }
+.personal-library-layout { display: grid; grid-template-columns: minmax(11rem, 14rem) 1fr; gap: 1rem; }
+@media (max-width: 768px) { .personal-library-layout { grid-template-columns: 1fr; } }
+.personal-library-sidebar { display: flex; flex-direction: column; gap: 0.35rem; }
+.personal-folder-btn { display: flex; align-items: center; gap: 0.35rem; padding: 0.5rem 0.75rem; border: 1px solid var(--line); border-radius: 0.375rem; background: var(--panel); cursor: pointer; text-align: right; font-family: inherit; }
+.personal-folder-btn.active { border-color: var(--emerald); background: var(--sage, #ecfdf5); font-weight: 600; }
+.personal-new-folder { display: flex; gap: 0.35rem; margin-top: 0.5rem; }
+.personal-library-toolbar { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+.personal-library-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); gap: 0.75rem; }
+.personal-library-card { padding: 0.875rem; border: 1px solid var(--line); border-radius: 0.5rem; background: var(--panel); }
+.personal-library-type { font-size: 0.75rem; color: var(--ink-soft); }
+.personal-library-title { display: block; font-weight: 600; margin: 0.25rem 0; color: var(--emerald-deep); text-decoration: none; }
+.personal-library-note { font-size: 0.8125rem; color: var(--ink-soft); margin: 0.25rem 0; }
+.personal-library-card-actions { display: flex; gap: 0.35rem; margin-top: 0.5rem; align-items: center; }
+.personal-stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr)); gap: 0.75rem; }
+.personal-stat-card { padding: 1rem; border: 1px solid var(--line); border-radius: 0.5rem; text-align: center; background: var(--panel); }
+.personal-stat-card--highlight { border-color: var(--emerald); background: var(--sage, #ecfdf5); }
+.personal-stat-value { display: block; font-size: 1.75rem; font-weight: 700; color: var(--emerald-deep); }
+.personal-stat-label { font-size: 0.8125rem; color: var(--ink-soft); }
+.personal-stat-sub { display: block; font-size: 0.75rem; color: var(--ink-soft); margin-top: 0.25rem; }
+.personal-chart-section, .personal-panel { padding: 1rem; border: 1px solid var(--line); border-radius: 0.5rem; background: var(--panel); margin-bottom: 1rem; }
+.personal-stat-bar { margin-bottom: 0.75rem; }
+.personal-stat-bar-head { display: flex; justify-content: space-between; font-size: 0.875rem; margin-bottom: 0.25rem; }
+.personal-stat-bar-track { height: 0.5rem; background: var(--parchment-deep); border-radius: 999px; overflow: hidden; }
+.personal-stat-bar-fill { height: 100%; background: var(--emerald); border-radius: 999px; transition: width 0.3s ease; }
+.personal-profile-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+@media (max-width: 640px) { .personal-profile-columns { grid-template-columns: 1fr; } }
+.personal-rank-list { list-style: none; margin: 0; padding: 0; }
+.personal-rank-list li { display: flex; justify-content: space-between; padding: 0.35rem 0; border-bottom: 1px solid var(--line); font-size: 0.875rem; }
+.personal-badges { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.personal-empty-hint { font-size: 0.875rem; color: var(--ink-soft); }
+.personal-last-activity { font-size: 0.8125rem; color: var(--ink-soft); margin-top: 1rem; }
+.personal-onboarding .personal-panel { max-width: 36rem; }
+.personal-chip-group { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+.personal-chip { padding: 0.375rem 0.875rem; border: 1px solid var(--line); border-radius: 999px; background: var(--panel); cursor: pointer; font-family: inherit; }
+.personal-chip.active { background: var(--emerald); color: var(--parchment); border-color: var(--emerald); }
+.personal-onboarding-nav { display: flex; gap: 0.5rem; justify-content: flex-end; }
+.personal-plan-summary { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; margin-bottom: 1rem; font-size: 0.875rem; }
+.personal-plan-items { display: flex; flex-direction: column; gap: 0.35rem; }
+.personal-plan-item { padding: 0.5rem 0.75rem; border: 1px solid var(--line); border-radius: 0.375rem; text-decoration: none; color: inherit; }
+.personal-plan-type { font-size: 0.75rem; color: var(--ink-soft); margin-left: 0.5rem; }
+.personal-goal-row { display: flex; align-items: center; gap: 0.5rem; padding: 0.35rem 0; font-size: 0.875rem; }
+.personal-reminder-hint { font-size: 0.875rem; color: var(--ink-soft); padding: 0.75rem; border-radius: 0.375rem; background: var(--parchment-deep); }
+.personal-content-actions { display: flex; flex-wrap: wrap; gap: 0.35rem; align-items: center; }
+.personal-notes-trigger--has { font-weight: 600; color: var(--emerald-deep); }
+.personal-notes-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 9000; display: flex; align-items: flex-end; justify-content: center; }
+@media (min-width: 640px) { .personal-notes-overlay { align-items: center; } }
+.personal-notes-drawer { width: 100%; max-width: 32rem; max-height: 90vh; overflow-y: auto; background: var(--panel); border-radius: 0.75rem 0.75rem 0 0; padding: 1rem; }
+@media (min-width: 640px) { .personal-notes-drawer { border-radius: 0.75rem; } }
+.personal-notes-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; }
+.personal-notes-body { width: 100%; min-height: 8rem; margin-bottom: 0.5rem; }
+.personal-notes-row { display: flex; gap: 0.35rem; margin-bottom: 0.5rem; }
+.personal-notes-highlights { margin: 0 0 0.5rem; padding-inline-start: 1.25rem; font-size: 0.875rem; }
+.personal-notes-pin { display: flex; align-items: center; gap: 0.35rem; font-size: 0.875rem; margin-bottom: 0.75rem; }
+.personal-notes-actions { display: flex; justify-content: flex-end; gap: 0.5rem; }
+.content-report-fab { position: fixed; bottom: 5.5rem; left: 1rem; z-index: 8000; width: 2.75rem; height: 2.75rem; border-radius: 999px; border: none; background: var(--emerald-deep, #145a42); color: #fff; font-weight: 700; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+.content-report-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 9100; display: flex; align-items: center; justify-content: center; padding: 1rem; }
+.content-report-modal { width: 100%; max-width: 28rem; background: var(--panel); border-radius: 0.75rem; padding: 1.25rem; max-height: 90vh; overflow-y: auto; }
+.content-report-path { font-size: 0.75rem; color: var(--ink-soft); word-break: break-all; margin-bottom: 0.75rem; }
+.content-report-types { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 0.75rem; }
+.content-report-actions { display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 0.75rem; }

@@ -8,6 +8,7 @@ import { AdminRouteGuard } from "@/components/AdminRouteGuard";
 import NavBar from "@/components/NavBar";
 import SiteFooter from "@/components/SiteFooter";
 import { AssistantFloatingWidget } from "@/components/assistant/AssistantFloatingWidget";
+import { ContentReportFab } from "@/components/personal/ContentReportFab";
 import HomePage from "@/views/HomePage";
 import AboutPage from "@/views/AboutPage";
 import PrivacyPage from "@/views/PrivacyPage";
@@ -127,6 +128,9 @@ const FeatureStatusPage = lazyWithRetry(() => import("@/views/admin/FeatureStatu
 const LearningPathsPage = lazy(() => import("@/views/learning/LearningPathsPage"));
 const LearningPathDetailPage = lazy(() => import("@/views/learning/LearningPathDetailPage"));
 const MyLearningPage = lazy(() => import("@/views/MyLearningPage"));
+const MyLibraryPage = lazy(() => import("@/views/MyLibraryPage"));
+const MyAcademicProfilePage = lazy(() => import("@/views/MyAcademicProfilePage"));
+const MyLearningPlanPage = lazy(() => import("@/views/MyLearningPlanPage"));
 const LearningQuizPage = lazy(() => import("@/views/learning/LearningQuizPage"));
 const LearningCalendarPage = lazy(() => import("@/views/learning/LearningCalendarPage"));
 const CertificateVerifyPage = lazy(() => import("@/views/learning/CertificateVerifyPage"));
@@ -235,6 +239,9 @@ function Router() {
       <Route path="/learning/calendar"><SafeLazyRoute component={LearningCalendarPage} /></Route>
       <Route path="/learning/certificates/:code"><SafeLazyRoute component={CertificateVerifyPage} /></Route>
       <Route path="/my-learning"><SafeLazyRoute component={MyLearningPage} /></Route>
+      <Route path="/my-library"><SafeLazyRoute component={MyLibraryPage} /></Route>
+      <Route path="/my-academic-profile"><SafeLazyRoute component={MyAcademicProfilePage} /></Route>
+      <Route path="/my-learning-plan"><SafeLazyRoute component={MyLearningPlanPage} /></Route>
       <Route path="/learning"><Redirect to="/learning/paths" /></Route>
       <Route path="/assistant">
         <ErrorBoundary>
@@ -354,6 +361,7 @@ function App() {
               </main>
               <SiteFooter />
               <AssistantFloatingWidget />
+              <ContentReportFab />
             </div>
           </WouterRouter>
           </AuthProvider>
