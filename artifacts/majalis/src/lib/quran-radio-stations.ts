@@ -42,20 +42,12 @@ export const QURAN_RADIO_STATIONS: QuranRadioStation[] = [
     sortOrder: 4,
   },
   {
-    id: "minshawi",
-    reciterName: "محمد صديق المنشاوي",
-    readingType: "مرتل",
-    streamUrl: "https://qurango.net/radio/mohammed_siddiq_alminshawi",
-    quality: "128 kbps",
-    sortOrder: 5,
-  },
-  {
     id: "huthayfi",
     reciterName: "علي بن عبد الرحمن الحذيفي",
     readingType: "مرتل",
     streamUrl: "https://qurango.net/radio/ali_alhuthaifi",
     quality: "128 kbps",
-    sortOrder: 6,
+    sortOrder: 5,
   },
   {
     id: "dosari",
@@ -63,7 +55,7 @@ export const QURAN_RADIO_STATIONS: QuranRadioStation[] = [
     readingType: "مرتل",
     streamUrl: "https://qurango.net/radio/yasser_aldosari",
     quality: "128 kbps",
-    sortOrder: 7,
+    sortOrder: 6,
   },
   {
     id: "ghamdi",
@@ -71,7 +63,7 @@ export const QURAN_RADIO_STATIONS: QuranRadioStation[] = [
     readingType: "مرتل",
     streamUrl: "https://qurango.net/radio/saad_alghamdi",
     quality: "128 kbps",
-    sortOrder: 8,
+    sortOrder: 7,
   },
   {
     id: "muaiqly",
@@ -79,7 +71,7 @@ export const QURAN_RADIO_STATIONS: QuranRadioStation[] = [
     readingType: "مرتل",
     streamUrl: "https://qurango.net/radio/maher_almuaiqly",
     quality: "128 kbps",
-    sortOrder: 9,
+    sortOrder: 8,
   },
   {
     id: "qatami",
@@ -87,7 +79,7 @@ export const QURAN_RADIO_STATIONS: QuranRadioStation[] = [
     readingType: "مرتل",
     streamUrl: "https://qurango.net/radio/nasser_alqatami",
     quality: "128 kbps",
-    sortOrder: 10,
+    sortOrder: 9,
   },
 ].sort((a, b) => a.sortOrder - b.sortOrder) as QuranRadioStation[];
 

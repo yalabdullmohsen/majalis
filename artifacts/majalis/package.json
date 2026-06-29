@@ -25,6 +25,7 @@
     "verify:phase5-automation": "node scripts/verify-phase5-automation.mjs",
     "generate:mushaf-index": "node scripts/generate-mushaf-page-index.mjs",
     "verify:kuwait-mushaf": "node scripts/verify-kuwait-mushaf.mjs",
+    "verify:platform-redesign": "node scripts/verify-platform-redesign-phase1.mjs",
     "verify:lesson-intelligence": "node scripts/verify-lesson-intelligence.mjs",
     "verify:instagram-phase7": "node scripts/verify-instagram-phase7.mjs",
     "verify:instagram-production": "node scripts/verify-instagram-production.mjs",

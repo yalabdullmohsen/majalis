@@ -1,0 +1,104 @@
+/**
+ * Majlis Ilm — Design Tokens 2026
+ * Single source of truth for semantic colors, surfaces, and states.
+ * Loaded after index.css; overrides --majalis-* and --ds-* aliases.
+ */
+
+:root {
+  /* Brand — Islamic identity */
+  --mi-primary: #1a6b52;
+  --mi-primary-hover: #134a3a;
+  --mi-primary-soft: #e8f3ed;
+  --mi-secondary: #b08d2e;
+  --mi-secondary-hover: #8a6d1e;
+  --mi-secondary-soft: #faf3e0;
+
+  /* Surfaces */
+  --mi-background: #faf7f0;
+  --mi-background-deep: #f0ebe0;
+  --mi-surface: #ffffff;
+  --mi-surface-raised: #ffffff;
+  --mi-surface-overlay: rgba(31, 28, 23, 0.45);
+
+  /* Text */
+  --mi-text: #1f1c17;
+  --mi-text-muted: #5c564c;
+  --mi-text-inverse: #ffffff;
+
+  /* Borders & elevation */
+  --mi-border: #e4ddd0;
+  --mi-border-strong: #cfc4b0;
+  --mi-shadow-sm: 0 1px 3px rgba(26, 107, 82, 0.06);
+  --mi-shadow: 0 4px 16px rgba(26, 107, 82, 0.08);
+  --mi-shadow-lg: 0 12px 32px rgba(26, 107, 82, 0.12);
+
+  /* Semantic states */
+  --mi-success: #15803d;
+  --mi-success-soft: #dcfce7;
+  --mi-warning: #b45309;
+  --mi-warning-soft: #fef3c7;
+  --mi-error: #b91c1c;
+  --mi-error-soft: #fee2e2;
+  --mi-info: #1d4ed8;
+  --mi-info-soft: #dbeafe;
+
+  /* Radius & spacing (align with ds) */
+  --mi-radius-sm: 0.375rem;
+  --mi-radius: 0.5rem;
+  --mi-radius-lg: 0.75rem;
+  --mi-radius-xl: 1rem;
+  --mi-radius-full: 999px;
+
+  /* Bridge legacy tokens */
+  --majalis-emerald: var(--mi-primary);
+  --majalis-emerald-deep: var(--mi-primary-hover);
+  --majalis-brass: var(--mi-secondary);
+  --majalis-brass-deep: var(--mi-secondary-hover);
+  --majalis-parchment: var(--mi-background);
+  --majalis-parchment-deep: var(--mi-background-deep);
+  --majalis-panel: var(--mi-surface);
+  --majalis-ink: var(--mi-text);
+  --majalis-ink-soft: var(--mi-text-muted);
+  --majalis-line: var(--mi-border);
+  --majalis-sage: var(--mi-primary-soft);
+  --majalis-shadow: var(--mi-shadow-lg);
+
+  --ds-emerald: var(--mi-primary);
+  --ds-emerald-deep: var(--mi-primary-hover);
+  --ds-emerald-soft: var(--mi-primary-soft);
+  --ds-parchment: var(--mi-background);
+  --ds-parchment-deep: var(--mi-background-deep);
+  --ds-ink: var(--mi-text);
+  --ds-ink-soft: var(--mi-text-muted);
+  --ds-line-color: var(--mi-border);
+}
+
+html[data-theme="dark"] {
+  --mi-primary: #3d9a7a;
+  --mi-primary-hover: #52b892;
+  --mi-primary-soft: #1a3329;
+  --mi-secondary: #d4af5a;
+  --mi-secondary-hover: #e8c872;
+  --mi-secondary-soft: #3d3520;
+
+  --mi-background: #121110;
+  --mi-background-deep: #1a1816;
+  --mi-surface: #1f1c19;
+  --mi-surface-raised: #282420;
+  --mi-surface-overlay: rgba(0, 0, 0, 0.65);
+
+  --mi-text: #f5f0e8;
+  --mi-text-muted: #a89f92;
+  --mi-text-inverse: #121110;
+
+  --mi-border: #3a3530;
+  --mi-border-strong: #4a443c;
+
+  --mi-success-soft: #14532d;
+  --mi-warning-soft: #451a03;
+  --mi-error-soft: #450a0a;
+  --mi-info-soft: #1e3a5f;
+
+  --majalis-charcoal: #0d0c0b;
+  --majalis-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+}

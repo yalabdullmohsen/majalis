@@ -1,5 +1,6 @@
 import { Link } from "wouter";
 import { getFeaturedLibraryBooks } from "@/lib/library-service";
+import { Icon } from "@/lib/icons";
 
 export function HomeFeaturedLibrary() {
   const books = getFeaturedLibraryBooks(6);
@@ -21,7 +22,7 @@ export function HomeFeaturedLibrary() {
         {books.map((book) => (
           <Link key={book.id} href={`/library/${book.id}`} className="ui-card home-library-card">
             <span className="home-library-icon" aria-hidden>
-              📖
+              <Icon name="book" size={22} />
             </span>
             <div>
               <span className="page-tag">{book.category}</span>

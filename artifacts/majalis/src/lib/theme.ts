@@ -11,6 +11,14 @@ export const C = {
   brassDeep: "var(--majalis-brass-deep)",
   sage: "var(--majalis-sage)",
   line: "var(--majalis-line)",
+  primary: "var(--mi-primary)",
+  secondary: "var(--mi-secondary)",
+  surface: "var(--mi-surface)",
+  background: "var(--mi-background)",
+  success: "var(--mi-success)",
+  warning: "var(--mi-warning)",
+  error: "var(--mi-error)",
+  info: "var(--mi-info)",
 };
 
 export const GOVERNORATES = [

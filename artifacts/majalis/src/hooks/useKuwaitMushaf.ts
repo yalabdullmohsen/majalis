@@ -44,6 +44,13 @@ export function useKuwaitMushaf(initialPage?: number) {
   }, [page, theme]);
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+    const url = new URL(window.location.href);
+    url.searchParams.set("page", String(page));
+    window.history.replaceState({}, "", `${url.pathname}?${url.searchParams.toString()}`);
+  }, [page]);
+
+  useEffect(() => {
     clearMushafPageCache();
   }, [theme]);
 

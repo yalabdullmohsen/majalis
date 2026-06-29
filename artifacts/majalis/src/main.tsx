@@ -12,6 +12,7 @@ import { PERF_SLOW_MS } from "./lib/performance-monitor";
 import { registerProductionServiceWorker } from "./lib/service-worker";
 import "./index.css";
 import "./styles/design-system.css";
+import "./styles/tokens-2026.css";
 import "./styles/highlighted-content.css";
 import "./styles/adhkar-v3.css";
 import "./styles/rulings-encyclopedia.css";

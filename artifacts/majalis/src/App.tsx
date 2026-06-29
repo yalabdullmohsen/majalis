@@ -8,6 +8,7 @@ import { AdminRouteGuard } from "@/components/AdminRouteGuard";
 import NavBar from "@/components/NavBar";
 import SiteFooter from "@/components/SiteFooter";
 import { AssistantFloatingWidget } from "@/components/assistant/AssistantFloatingWidget";
+import { RadioMiniPlayer, RadioPlayerProvider } from "@/components/radio/RadioPlayerProvider";
 import HomePage from "@/views/HomePage";
 import AboutPage from "@/views/AboutPage";
 import PrivacyPage from "@/views/PrivacyPage";
@@ -255,6 +256,7 @@ function Router() {
       <Route path="/quran-live"><SafeLazyRoute component={QuranLivePage} /></Route>
       <Route path="/tajweed"><Redirect to="/quran/tajweed" /></Route>
       <Route path="/surah-stories"><Redirect to="/quran/surah-stories" /></Route>
+      <Route path="/kuwait-mushaf"><Redirect to="/quran/mushaf" /></Route>
       <Route path="/quran/mushaf"><SafeLazyRoute component={KuwaitMushafPage} /></Route>
       <Route path="/quran/search"><SafeLazyRoute component={QuranSearchPage} /></Route>
       <Route path="/quran/tafsir"><SafeLazyRoute component={QuranTafsirPage} /></Route>
@@ -343,6 +345,7 @@ function App() {
     <ThemePreferenceProvider>
       <FontPreferenceProvider>
         <UserPreferencesProvider>
+          <RadioPlayerProvider>
           <AuthProvider>
           <WouterRouter base={(import.meta.env.BASE_URL || "/").replace(/\/$/, "")}>
             <div className="app-shell" style={{ minHeight: "100vh", direction: "rtl" }}>
@@ -353,10 +356,12 @@ function App() {
                 <Router />
               </main>
               <SiteFooter />
+              <RadioMiniPlayer />
               <AssistantFloatingWidget />
             </div>
           </WouterRouter>
           </AuthProvider>
+          </RadioPlayerProvider>
         </UserPreferencesProvider>
       </FontPreferenceProvider>
     </ThemePreferenceProvider>

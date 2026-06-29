@@ -127,7 +127,7 @@ export function MushafSidebar({ mushaf, onNavigate }: Props) {
             </button>
           ))}
         {tab === "pages" &&
-          pages.slice(0, 120).map((p) => (
+          pages.map((p) => (
             <button
               key={p.page}
               type="button"

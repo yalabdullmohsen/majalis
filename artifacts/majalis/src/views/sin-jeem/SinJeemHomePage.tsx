@@ -87,7 +87,7 @@ export default function SinJeemHomePage() {
       {leaders.length > 0 && (
         <section style={{ marginTop: "2rem" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.65rem" }}>
-            <h2 style={{ fontSize: "1rem", fontWeight: 800, color: "var(--majalis-emerald-deep)" }}>🏆 أفضل اللاعبين</h2>
+            <h2 style={{ fontSize: "1rem", fontWeight: 800, color: "var(--majalis-emerald-deep)" }}>أفضل اللاعبين</h2>
             <Link href={QA_ROUTES.leaderboard} style={{ fontSize: "0.8125rem", color: "var(--majalis-brass-deep)" }}>
               عرض الكل
             </Link>
