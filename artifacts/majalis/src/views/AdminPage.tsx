@@ -32,6 +32,7 @@ import { OpenPlatformSection } from "@/views/admin/OpenPlatformSection";
 import { GovernanceSection } from "@/views/admin/GovernanceSection";
 import { SmartCmsSection } from "@/views/admin/SmartCmsSection";
 import { SinJeemSection } from "@/views/admin/SinJeemSection";
+import { ScientificResearchSection } from "@/views/admin/ScientificResearchSection";
 import {
   adminSectionPath,
   resolveAdminSectionFromPath,
@@ -116,6 +117,8 @@ function SectionContent({ section }: { section: AdminSection }) {
       return <SheikhsSection />;
     case "library":
       return <LibrarySection />;
+    case "scientific-research":
+      return <ScientificResearchSection />;
     case "miracles":
       return <MiraclesSection />;
     case "adhkar":

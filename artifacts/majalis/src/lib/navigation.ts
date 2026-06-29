@@ -27,6 +27,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { href: "/fawaid", label: "الفوائد" },
       { href: "/qa", label: "الأسئلة" },
       { href: "/question-answer", label: "سؤال وجواب" },
+      { href: "/scientific-research", label: "الأبحاث العلمية" },
     ],
   },
   {
@@ -84,6 +85,7 @@ export const PRIMARY_NAV = [
   { href: "/quran", label: "القرآن" },
   { href: "/question-answer", label: "سؤال وجواب" },
   { href: "/library", label: "المكتبة" },
+  { href: "/scientific-research", label: "الأبحاث العلمية" },
   { href: "/adhkar", label: "الأذكار" },
   { href: "/prayer-times", label: "الصلاة" },
 ];
@@ -93,6 +95,7 @@ export const MOBILE_MORE_NAV = [
   { href: "/lessons", label: "الدروس" },
   { href: "/lessons", label: "المشايخ" },
   { href: "/library", label: "المكتبة" },
+  { href: "/scientific-research", label: "الأبحاث العلمية" },
   { href: "/qa", label: "الأسئلة" },
   { href: "/question-answer", label: "سؤال وجواب" },
   { href: "/quran", label: "القرآن" },
@@ -155,6 +158,12 @@ export const HOME_FEATURE_CARDS = [
     title: "سؤال وجواب",
     description: "لعبة المعلومات الإسلامية التفاعلية",
     icon: "gamepad",
+  },
+  {
+    href: "/scientific-research",
+    title: "الأبحاث العلمية",
+    description: "رسائل جامعية وأبحاث محكمة",
+    icon: "graduation-cap",
   },
   {
     href: "/qibla",

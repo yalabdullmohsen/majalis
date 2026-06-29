@@ -20,6 +20,7 @@ export const ADMIN_SECTION_PATHS: Record<AdminSection, string> = {
   lessons: "lessons",
   sheikhs: "sheikhs",
   library: "library",
+  "scientific-research": "scientific-research",
   miracles: "miracles",
   adhkar: "adhkar",
   fawaid: "fawaid",
