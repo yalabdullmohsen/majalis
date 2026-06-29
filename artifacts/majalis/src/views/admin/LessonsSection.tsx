@@ -8,6 +8,7 @@ import { Loading } from "@/components/ui-common";
 import { adminListLoad } from "@/lib/admin-list-load";
 import { AdminModal, Field, FieldRow, inputSt, selectSt, textareaSt } from "./AdminModal";
 import { BulkImport } from "./BulkImport";
+import { LessonTimeValidationPanel } from "./LessonTimeValidationPanel";
 
 const CATEGORIES = ["تفسير", "فقه", "عقيدة", "حديث", "سيرة", "تجويد", "أخرى"];
 const AUDIENCE = ["الكل", "رجال", "نساء", "أطفال"];
@@ -31,6 +32,8 @@ const EMPTY: any = {
   schedule: "",
   day_of_week: "",
   lesson_time: "",
+  prayer_rank: "",
+  prayer_rank_override: "",
   description: "",
   end_date: "",
   status: "approved",
@@ -158,6 +161,7 @@ export function LessonsSection() {
           <button onClick={openAdd} style={{ padding: "0.5rem 1.25rem", borderRadius: "0.375rem", background: C.emerald, color: C.parchment, border: "none", cursor: "pointer", fontFamily: "inherit", fontSize: "0.875rem", fontWeight: 600 }}>+ إضافة درس</button>
         </div>
       </div>
+      <LessonTimeValidationPanel />
       <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1rem" }}>
         <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="بحث في الدروس..." style={{ ...inputSt, maxWidth: "20rem", flex: "1 1 12rem" }} />
         <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} style={{ ...selectSt, width: "auto" }}>
@@ -272,6 +276,14 @@ export function LessonsSection() {
           </Field>
           <Field label="وقت الدرس">
             <input style={inputSt} value={form.lesson_time || ""} onChange={e => set("lesson_time", e.target.value)} placeholder="8:30 م" />
+          </Field>
+        </FieldRow>
+        <FieldRow>
+          <Field label="مرتبة الصلاة (تلقائي)">
+            <input style={inputSt} value={form.prayer_rank || ""} onChange={e => set("prayer_rank", e.target.value)} placeholder="يُولَّد تلقائياً" readOnly />
+          </Field>
+          <Field label="تعديل يدوي لمرتبة الصلاة">
+            <input style={inputSt} value={form.prayer_rank_override || ""} onChange={e => set("prayer_rank_override", e.target.value)} placeholder="بعد المغرب" />
           </Field>
         </FieldRow>
         <Field label="الوصف">

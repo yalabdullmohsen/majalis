@@ -1,10 +1,15 @@
 const KUWAIT_TZ = "Asia/Kuwait";
 
+const AR_DIGITS = "٠١٢٣٤٥٦٧٨٩";
+
 const DAY_INDEX: Record<string, number> = {
   الأحد: 0,
+  الاحد: 0,
   الاثنين: 1,
+  الإثنين: 1,
   الثلاثاء: 2,
   الأربعاء: 3,
+  الاربعاء: 3,
   الخميس: 4,
   الجمعة: 5,
   السبت: 6,
@@ -29,6 +34,22 @@ const PRAYER_TIME_MINUTES: Record<string, number> = {
   العشاء: 20 * 60,
 };
 
+export const PRAYER_RANKS = [
+  "بعد الفجر",
+  "بعد الشروق",
+  "قبل الظهر",
+  "بعد الظهر",
+  "بعد العصر",
+  "قبل المغرب",
+  "بعد المغرب",
+  "بعد العشاء",
+  "بين العشاءين",
+  "بعد قيام الليل",
+  "غير مرتبط بصلاة",
+] as const;
+
+export type PrayerRank = (typeof PRAYER_RANKS)[number];
+
 export type KuwaitClock = {
   year: number;
   month: number;
@@ -38,11 +59,101 @@ export type KuwaitClock = {
   minute: number;
 };
 
+/** Detect PM — JS `\b` word boundaries fail with Arabic letters. */
+export function isPmMarker(text: string): boolean {
+  const t = String(text || "");
+  if (/مساء|مساءً|pm\b|PM\b/i.test(t)) return true;
+  if (/\d\s*:\s*\d{2}\s*م(?:[\s،.]|$|[^\u0600-\u06FF])/u.test(t)) return true;
+  if (/\d{1,2}\s*م(?:[\s،.]|$|[^\u0600-\u06FF])/u.test(t)) return true;
+  if (/مغرب|العشاء|مساء/u.test(t) && !/قبل/u.test(t)) return true;
+  return false;
+}
+
+export function isAmMarker(text: string): boolean {
+  const t = String(text || "");
+  if (/صباح|صباحًا|صباحاً|am\b|AM\b|فجر|الشروق/u.test(t)) return true;
+  if (/\d\s*:\s*\d{2}\s*ص(?:[\s،.]|$|[^\u0600-\u06FF])/u.test(t)) return true;
+  if (/\d{1,2}\s*ص(?:[\s،.]|$|[^\u0600-\u06FF])/u.test(t)) return true;
+  return false;
+}
+
 export function cleanTimeText(time: string): string {
   return String(time || "")
     .replace(/\s*بتوقيت\s+الكويت\s*/giu, " ")
     .replace(/\s+/g, " ")
     .trim();
+}
+
+export function toArabicNumerals(value: string | number): string {
+  return String(value).replace(/\d/g, (d) => AR_DIGITS[Number(d)] ?? d);
+}
+
+export function formatTimePeriod(minutes: number | null): string {
+  if (minutes == null) return "";
+  return minutes < 12 * 60 ? "صباحاً" : "مساءً";
+}
+
+export function minutesTo24hString(minutes: number | null): string | null {
+  if (minutes == null || !Number.isFinite(minutes)) return null;
+  const h = Math.floor(minutes / 60) % 24;
+  const m = minutes % 60;
+  return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
+}
+
+export function formatLessonTimeDisplay(timeRaw: string, { arabicNumerals = true } = {}): string {
+  const minutes = parseTimeToMinutes(timeRaw);
+  if (minutes == null) return cleanTimeText(timeRaw);
+
+  const h24 = Math.floor(minutes / 60) % 24;
+  const m = minutes % 60;
+  let h12 = h24 % 12;
+  if (h12 === 0) h12 = 12;
+  const period = h24 < 12 ? "صباحاً" : "مساءً";
+  let display = `${h12}:${String(m).padStart(2, "0")} ${period}`;
+  if (arabicNumerals) display = toArabicNumerals(display);
+  return display;
+}
+
+export function classifyPrayerRank(timeRaw: string, minutes: number | null = null): PrayerRank {
+  const time = cleanTimeText(timeRaw);
+  if (!time) return "غير مرتبط بصلاة";
+
+  if (/بعد\s*الفجر|بعد\s*صلاة\s*الفجر/u.test(time)) return "بعد الفجر";
+  if (/بعد\s*الشروق/u.test(time)) return "بعد الشروق";
+  if (/قبل\s*الظهر|قبل\s*صلاة\s*الظهر/u.test(time)) return "قبل الظهر";
+  if (/بعد\s*الظهر|بعد\s*صلاة\s*الظهر/u.test(time)) return "بعد الظهر";
+  if (/بعد\s*العصر|بعد\s*صلاة\s*العصر/u.test(time)) return "بعد العصر";
+  if (/قبل\s*المغرب|قبل\s*صلاة\s*المغرب/u.test(time)) return "قبل المغرب";
+  if (/بعد\s*المغرب|بعد\s*صلاة\s*المغرب/u.test(time)) return "بعد المغرب";
+  if (/بعد\s*العشاء|بعد\s*صلاة\s*العشاء|إلى\s*صلاة\s*العشاء/u.test(time)) return "بعد العشاء";
+  if (/بين\s*العشاء/u.test(time)) return "بين العشاءين";
+  if (/قيام\s*الليل|التهجد/u.test(time)) return "بعد قيام الليل";
+
+  const mins = minutes ?? parseTimeToMinutes(time);
+  if (mins == null) return "غير مرتبط بصلاة";
+
+  if (mins >= 5 * 60 && mins < 8 * 60) return "بعد الفجر";
+  if (mins >= 8 * 60 && mins < 10 * 60) return "بعد الشروق";
+  if (mins >= 10 * 60 && mins < 12 * 60 + 15) return "قبل الظهر";
+  if (mins >= 12 * 60 + 15 && mins < 14 * 60 + 30) return "بعد الظهر";
+  if (mins >= 15 * 60 && mins < 17 * 60 + 30) return "بعد العصر";
+  if (mins >= 17 * 60 + 30 && mins < 18 * 60 + 30) return "قبل المغرب";
+  if (mins >= 18 * 60 + 30 && mins < 20 * 60) return "بعد المغرب";
+  if (mins >= 20 * 60 && mins < 23 * 60) return "بعد العشاء";
+  if (mins >= 23 * 60 || mins < 5 * 60) return "بعد قيام الليل";
+
+  return "غير مرتبط بصلاة";
+}
+
+export function resolvePrayerRank(row: {
+  prayer_rank?: string | null;
+  prayer_rank_override?: string | null;
+  lesson_time?: string | null;
+  schedule?: string | null;
+}): PrayerRank {
+  if (row.prayer_rank_override?.trim()) return row.prayer_rank_override.trim() as PrayerRank;
+  if (row.prayer_rank?.trim()) return row.prayer_rank.trim() as PrayerRank;
+  return classifyPrayerRank(row.lesson_time || row.schedule || "");
 }
 
 /** وقت مختصر للبطاقات — مثل «بعد المغرب». */
@@ -54,8 +165,8 @@ export function formatShortLessonTime(time: string): string {
   if (/عصر/u.test(t)) return "بعد العصر";
   if (/ظهر/u.test(t)) return "بعد الظهر";
   if (/عشاء/u.test(t)) return "بعد العشاء";
-  if (/الصباح|صباح/u.test(t)) return "صباحاً";
-  if (/مساء/u.test(t)) return "مساءً";
+  const parsed = parseTimeToMinutes(t);
+  if (parsed != null) return formatLessonTimeDisplay(t);
   return t.length > 24 ? `${t.slice(0, 22).trim()}…` : t;
 }
 
@@ -94,17 +205,16 @@ export function parseTimeToMinutes(timeRaw: string): number | null {
   if (explicit) {
     let hour = Number(explicit[1]);
     const minute = Number(explicit[2]);
-    if (/مساء|م\b|pm/i.test(time) && hour < 12) hour += 12;
-    if (/صباح|ص\b|am/i.test(time) && hour === 12) hour = 0;
-    if (/م\b/u.test(time) && hour < 12) hour += 12;
+    if (isPmMarker(time) && hour < 12) hour += 12;
+    if (isAmMarker(time) && hour === 12) hour = 0;
     return hour * 60 + minute;
   }
 
-  const hourOnly = time.match(/(\d{1,2})\s*(?:مساء|صباح|م\b|ص\b)/u);
-  if (hourOnly) {
+  const hourOnly = time.match(/(\d{1,2})\s*(?:$|[^\d])/u);
+  if (hourOnly && (isPmMarker(time) || isAmMarker(time))) {
     let hour = Number(hourOnly[1]);
-    if (/مساء|م\b/u.test(time) && hour < 12) hour += 12;
-    if (/صباح|ص\b/u.test(time) && hour === 12) hour = 0;
+    if (isPmMarker(time) && hour < 12) hour += 12;
+    if (isAmMarker(time) && hour === 12) hour = 0;
     return hour * 60;
   }
 
@@ -130,7 +240,7 @@ function kuwaitDateAt(dayOffset: number, minutes: number, base = new Date()): Da
 }
 
 export function computeNextOccurrenceMs(day: string, time: string, now = new Date()): number {
-  const targetDay = DAY_INDEX[day];
+  const targetDay = DAY_INDEX[day.trim()] ?? DAY_INDEX[day];
   if (targetDay == null) return now.getTime() + 365 * 24 * 60 * 60 * 1000;
 
   const clock = getKuwaitClock(now);
@@ -201,7 +311,7 @@ export function isOccurrencePast(day: string, time: string, recurring = true, no
   if (!day) return false;
   const nextMs = computeNextOccurrenceMs(day, time, now);
   const clock = getKuwaitClock(now);
-  const targetDay = DAY_INDEX[day];
+  const targetDay = DAY_INDEX[day.trim()] ?? DAY_INDEX[day];
   if (targetDay == null) return false;
 
   const daysUntil = (targetDay - clock.weekday + 7) % 7;
@@ -215,3 +325,5 @@ export function isOccurrencePast(day: string, time: string, recurring = true, no
   if (!recurring && nextMs < now.getTime()) return true;
   return false;
 }
+
+export { KUWAIT_TZ };

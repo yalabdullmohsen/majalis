@@ -25,7 +25,7 @@ import {
 } from "@/lib/lessons-service";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 import { mapLessonRow } from "@/lib/kuwait-lessons";
-import { cleanTimeText } from "@/lib/lesson-time";
+import { cleanTimeText, formatLessonTimeDisplay } from "@/lib/lesson-time";
 import { useLessonSeo } from "@/lib/seo";
 import { usePageView } from "@/hooks/usePageView";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
@@ -285,7 +285,10 @@ export default function LessonDetailPage({
             <div><dt>التاريخ الهجري</dt><dd>{unified.hijriDate}</dd></div>
           )}
           {hasValue(time || unified.time) && (
-            <div><dt>الوقت</dt><dd>{cleanTimeText(time || unified.time)}</dd></div>
+            <div><dt>الوقت</dt><dd>{unified.timeDisplay || formatLessonTimeDisplay(cleanTimeText(time || unified.time))}</dd></div>
+          )}
+          {hasValue(unified.prayerRank) && (
+            <div><dt>مرتبة الصلاة</dt><dd>{unified.prayerRank}</dd></div>
           )}
           {hasValue(unified.mosque) && (
             <div><dt>المكان</dt><dd>{unified.mosque}</dd></div>
