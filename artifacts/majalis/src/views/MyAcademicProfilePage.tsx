@@ -37,9 +37,10 @@ export default function MyAcademicProfilePage() {
         />
 
         <div className="personal-hub-links">
+          <Link href="/my-dashboard" className="ds-btn ds-btn--ghost ds-btn--sm">لوحة المستخدم</Link>
           <Link href="/my-library" className="ds-btn ds-btn--ghost ds-btn--sm">مكتبتي</Link>
           <Link href="/my-learning-plan" className="ds-btn ds-btn--ghost ds-btn--sm">خطة طلب العلم</Link>
-          <Link href="/my-learning" className="ds-btn ds-btn--ghost ds-btn--sm">لوحتي التعليمية</Link>
+          <Link href="/my-learning" className="ds-btn ds-btn--ghost ds-btn--sm">المسارات</Link>
         </div>
 
         {loading ? (
@@ -61,6 +62,11 @@ export default function MyAcademicProfilePage() {
               <div className="personal-stat-card">
                 <span className="personal-stat-value">{stats.study_hours}</span>
                 <span className="personal-stat-label">ساعات طلب العلم</span>
+                <span className="personal-stat-sub">{stats.total_platform_minutes} دقيقة</span>
+              </div>
+              <div className="personal-stat-card">
+                <span className="personal-stat-value">{stats.saved_lessons}</span>
+                <span className="personal-stat-label">دروس محفوظة</span>
               </div>
               <div className="personal-stat-card">
                 <span className="personal-stat-value">{stats.completed_lessons}</span>

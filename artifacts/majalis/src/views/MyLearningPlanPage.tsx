@@ -95,7 +95,8 @@ export default function MyLearningPlanPage() {
 
         <div className="personal-hub-links">
           <Link href="/my-library" className="ds-btn ds-btn--ghost ds-btn--sm">مكتبتي</Link>
-          <Link href="/my-academic-profile" className="ds-btn ds-btn--ghost ds-btn--sm">ملفي العلمي</Link>
+          <Link href="/my-dashboard" className="ds-btn ds-btn--ghost ds-btn--sm">لوحة المستخدم</Link>
+          <Link href="/my-profile" className="ds-btn ds-btn--ghost ds-btn--sm">ملفي العلمي</Link>
         </div>
 
         {showOnboarding ? (

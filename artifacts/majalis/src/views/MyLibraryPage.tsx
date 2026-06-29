@@ -85,7 +85,7 @@ export default function MyLibraryPage() {
         />
 
         <div className="personal-hub-links">
-          <Link href="/my-academic-profile" className="ds-btn ds-btn--ghost ds-btn--sm">ملفي العلمي</Link>
+          <Link href="/my-profile" className="ds-btn ds-btn--ghost ds-btn--sm">ملفي العلمي</Link>
           <Link href="/my-learning-plan" className="ds-btn ds-btn--ghost ds-btn--sm">خطة طلب العلم</Link>
           <Link href="/my-learning" className="ds-btn ds-btn--ghost ds-btn--sm">لوحتي التعليمية</Link>
         </div>

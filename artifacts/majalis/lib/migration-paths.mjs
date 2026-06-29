@@ -104,6 +104,7 @@ export const MIGRATION_FILES = [
   "scientific_research_v1.sql",
   "quran_scientific_circles_v1.sql",
   "user_experience_v1.sql",
+  "user_experience_v2.sql",
 ];
 
 export function resolveMigrationsDir() {

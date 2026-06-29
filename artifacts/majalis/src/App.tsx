@@ -129,7 +129,9 @@ const LearningPathsPage = lazy(() => import("@/views/learning/LearningPathsPage"
 const LearningPathDetailPage = lazy(() => import("@/views/learning/LearningPathDetailPage"));
 const MyLearningPage = lazy(() => import("@/views/MyLearningPage"));
 const MyLibraryPage = lazy(() => import("@/views/MyLibraryPage"));
-const MyAcademicProfilePage = lazy(() => import("@/views/MyAcademicProfilePage"));
+const MyProfilePage = lazy(() => import("@/views/MyProfilePage"));
+const MyDashboardPage = lazy(() => import("@/views/MyDashboardPage"));
+const MyUpdatesPage = lazy(() => import("@/views/MyUpdatesPage"));
 const MyLearningPlanPage = lazy(() => import("@/views/MyLearningPlanPage"));
 const LearningQuizPage = lazy(() => import("@/views/learning/LearningQuizPage"));
 const LearningCalendarPage = lazy(() => import("@/views/learning/LearningCalendarPage"));
@@ -238,9 +240,12 @@ function Router() {
       <Route path="/learning/quiz"><SafeLazyRoute component={LearningQuizPage} /></Route>
       <Route path="/learning/calendar"><SafeLazyRoute component={LearningCalendarPage} /></Route>
       <Route path="/learning/certificates/:code"><SafeLazyRoute component={CertificateVerifyPage} /></Route>
+      <Route path="/my-dashboard"><SafeLazyRoute component={MyDashboardPage} /></Route>
+      <Route path="/my-profile"><SafeLazyRoute component={MyProfilePage} /></Route>
+      <Route path="/my-updates"><SafeLazyRoute component={MyUpdatesPage} /></Route>
       <Route path="/my-learning"><SafeLazyRoute component={MyLearningPage} /></Route>
       <Route path="/my-library"><SafeLazyRoute component={MyLibraryPage} /></Route>
-      <Route path="/my-academic-profile"><SafeLazyRoute component={MyAcademicProfilePage} /></Route>
+      <Route path="/my-academic-profile"><Redirect to="/my-profile" /></Route>
       <Route path="/my-learning-plan"><SafeLazyRoute component={MyLearningPlanPage} /></Route>
       <Route path="/learning"><Redirect to="/learning/paths" /></Route>
       <Route path="/assistant">

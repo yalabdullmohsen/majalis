@@ -4,6 +4,7 @@ import { Link } from "wouter";
 import { PageHeader, Empty, Card } from "@/components/ui-common";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { OptimizedSheikhImage } from "@/components/sheikh/OptimizedSheikhImage";
+import { FollowSheikhButton } from "@/components/personal/FollowSheikhButton";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 import { resolveScholarProfile } from "@/lib/kuwait-sheikhs-registry";
 
@@ -71,6 +72,9 @@ export default function SheikhDetailClient({
               .filter(Boolean)
               .join(" · ")}
           />
+          <div style={{ marginTop: "0.75rem" }}>
+            <FollowSheikhButton sheikhId={sheikh.id} sheikhName={displayName} />
+          </div>
           {sheikh.bio && <p className="seo-listing-intro">{sheikh.bio}</p>}
         </div>
       </div>

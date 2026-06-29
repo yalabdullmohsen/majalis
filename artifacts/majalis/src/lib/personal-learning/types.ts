@@ -67,7 +67,9 @@ export type LearningPlan = {
 
 export type AcademicProfileStats = {
   completed_lessons: number;
+  saved_lessons: number;
   study_hours: number;
+  total_platform_minutes: number;
   books_read: number;
   mutoon_studied: number;
   research_read: number;
@@ -83,6 +85,7 @@ export type AcademicProfileStats = {
   scientific_level: number;
   library_total: number;
   notes_total: number;
+  followed_scholars: number;
 };
 
 export const DEFAULT_FOLDERS: Array<{ name: string; slug: string; icon: string }> = [

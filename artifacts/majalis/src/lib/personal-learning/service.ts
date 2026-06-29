@@ -1,5 +1,7 @@
 import { supabase } from "@/lib/supabase";
 import { fetchUserLearningStats, fetchUserCertificates } from "@/lib/digital-learning-service";
+import { checkAndAwardAchievements, fetchUserAchievements } from "./achievements";
+import { fetchFollowedSheikhs } from "./sheikh-follow";
 import type {
   AcademicProfileStats,
   ContentNote,
@@ -400,17 +402,22 @@ export async function fetchAcademicProfile(): Promise<AcademicProfileStats | nul
   const userId = await requireUserId();
   if (!userId) return null;
 
-  const [library, notes, streakRow, profileRow, dlStats, certs] = await Promise.all([
+  const [library, notes, streakRow, profileRow, dlStats, certs, activityCount, follows] = await Promise.all([
     fetchLibraryItems(),
     fetchAllNotes(),
     supabase.from("user_streaks").select("*").eq("user_id", userId).maybeSingle(),
     supabase.from("profiles").select("points, level, full_name").eq("id", userId).maybeSingle(),
     fetchUserLearningStats().catch(() => null),
     fetchUserCertificates().catch(() => []),
+    supabase.from("user_activity_log").select("id", { count: "exact", head: true }).eq("user_id", userId),
+    fetchFollowedSheikhs().catch(() => []),
   ]);
 
   const byType = (t: string) => library.filter((i) => i.content_type === t).length;
+  const savedLessons = byType("lesson");
   const lastActivity = library[0]?.updated_at || library[0]?.created_at;
+  const activityEvents = activityCount.count ?? 0;
+  const totalMinutes = Math.round(activityEvents * 8 + savedLessons * 45 + notes.length * 5);
 
   const subjectCounts: Record<string, number> = {};
   for (const item of library) {
@@ -432,9 +439,11 @@ export async function fetchAcademicProfile(): Promise<AcademicProfileStats | nul
     .slice(0, 5)
     .map(([name, count]) => ({ name, count }));
 
-  return {
-    completed_lessons: dlStats?.completed_lessons ?? byType("lesson"),
-    study_hours: Math.round(((dlStats?.completed_lessons ?? byType("lesson")) * 0.75 + library.length * 0.25) * 10) / 10,
+  const stats: AcademicProfileStats = {
+    completed_lessons: dlStats?.completed_lessons ?? savedLessons,
+    saved_lessons: savedLessons,
+    study_hours: Math.round((totalMinutes / 60) * 10) / 10,
+    total_platform_minutes: totalMinutes,
     books_read: dlStats?.books_read ?? byType("book"),
     mutoon_studied: byType("mutoon"),
     research_read: byType("research"),
@@ -443,14 +452,21 @@ export async function fetchAcademicProfile(): Promise<AcademicProfileStats | nul
     last_activity: lastActivity,
     top_subjects,
     top_scholars,
-    achievements: dlStats?.achievements ?? [],
+    achievements: [],
     certificates: certs.map((c) => ({ code: c.certificate_code, title: c.title, issued_at: c.issued_at })),
     current_streak: streakRow.data?.current_streak ?? 0,
     longest_streak: streakRow.data?.longest_streak ?? 0,
     scientific_level: profileRow.data?.level ?? 1,
     library_total: library.length,
     notes_total: notes.length,
+    followed_scholars: follows.length,
   };
+
+  await checkAndAwardAchievements(stats).catch(() => undefined);
+  const earned = await fetchUserAchievements().catch(() => []);
+  stats.achievements = earned.map((a) => ({ key: a.key, title: a.title, earned_at: a.earned_at }));
+
+  return stats;
 }
 
 /** Admin aggregate stats */

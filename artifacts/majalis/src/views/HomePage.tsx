@@ -11,6 +11,8 @@ import { HomeDailyQuestion } from "@/components/home/HomeDailyQuestion";
 import { HomeQuranSection } from "@/components/home/HomeQuranSection";
 import { HomeRadioSection } from "@/components/home/HomeRadioSection";
 import { HomeLiveSection } from "@/components/home/HomeLiveSection";
+import { SmartRecommendations } from "@/components/personal/SmartRecommendations";
+import { HomeFollowedUpdates } from "@/components/home/HomeFollowedUpdates";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 
@@ -75,6 +77,14 @@ export default function HomePage({
 
         <SafeHomeSection name="الدروس">
           <HomeUpcomingLessons initialLessons={initialFeaturedLessons} />
+        </SafeHomeSection>
+
+        <SafeHomeSection name="توصيات">
+          <SmartRecommendations limit={4} />
+        </SafeHomeSection>
+
+        <SafeHomeSection name="متابعات">
+          <HomeFollowedUpdates />
         </SafeHomeSection>
 
         <SafeHomeSection name="الأسئلة">

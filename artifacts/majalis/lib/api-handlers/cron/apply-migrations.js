@@ -256,7 +256,7 @@ export default async function handler(req, res) {
 
     if (scope === "user-experience" || scope === "personal-learning") {
       const result = await applyMigrations({
-        files: ["user_experience_v1.sql"],
+        files: ["user_experience_v1.sql", "user_experience_v2.sql"],
         continueOnError: false,
         trackApplied: true,
         force: req.query?.force === "1",

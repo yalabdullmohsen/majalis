@@ -45,8 +45,9 @@ export default function MyLearningPage() {
       <p style={{ color: "var(--ink-soft)", marginBottom: "2rem" }}>تقدمك في طلب العلم — إحصاءات، إنجازات، ومكتبتك الشخصية</p>
 
       <div className="personal-hub-links" style={{ marginBottom: "1.5rem" }}>
+        <Link href="/my-dashboard" className="ds-btn ds-btn--ghost ds-btn--sm">لوحة المستخدم</Link>
+        <Link href="/my-profile" className="ds-btn ds-btn--ghost ds-btn--sm">ملفي العلمي</Link>
         <Link href="/my-library" className="ds-btn ds-btn--ghost ds-btn--sm">مكتبتي</Link>
-        <Link href="/my-academic-profile" className="ds-btn ds-btn--ghost ds-btn--sm">ملفي العلمي</Link>
         <Link href="/my-learning-plan" className="ds-btn ds-btn--ghost ds-btn--sm">خطة طلب العلم</Link>
       </div>
 
