@@ -167,10 +167,10 @@ async function getCronHealthDetailed(env) {
 
 async function getDatabaseHealth(env) {
   const admin = getSupabaseAdmin();
-  const counts = {};
-  for (const table of AKP_V3_TABLES) {
-    counts[table] = await countTableRows(table);
-  }
+  const countEntries = await Promise.all(
+    AKP_V3_TABLES.map(async (table) => [table, await countTableRows(table)]),
+  );
+  const counts = Object.fromEntries(countEntries);
 
   const sources = admin ? await listManagedSources() : { ok: false, sources: [], error: "missing_secret", missing: ["SUPABASE_SERVICE_ROLE_KEY"] };
   const jsonSeed = loadSourcesFromJson();
@@ -442,7 +442,17 @@ export async function buildAkpProductionHealth(options = {}) {
   const started = Date.now();
   const env = getEnvStatus();
   const infrastructure = auditInfrastructure();
-  const migrationAudit = await auditV3Migration();
+
+  const [migrationAudit, bootstrapRaw, database, crons, logs, audit, backups] = await Promise.all([
+    auditV3Migration(),
+    getPlatformBootstrapStatus(),
+    getDatabaseHealth(env),
+    getCronHealthDetailed(env),
+    getCategorizedLogs(),
+    listAuditLog({ limit: 10 }).catch(() => ({ entries: [] })),
+    listBackupSnapshots(5).catch(() => ({ snapshots: [] })),
+  ]);
+
   const migration = {
     ok: migrationAudit.ok,
     migrationFile: migrationAudit.migrationFile,
@@ -451,13 +461,6 @@ export async function buildAkpProductionHealth(options = {}) {
     appliedPct: migrationAudit.appliedPct,
     expectedVsActual: migrationAudit,
   };
-  const bootstrapRaw = await getPlatformBootstrapStatus();
-  const database = await getDatabaseHealth(env);
-  const crons = await getCronHealthDetailed(env);
-  const logs = await getCategorizedLogs();
-  const audit = await listAuditLog({ limit: 10 }).catch(() => ({ entries: [] }));
-  const backups = await listBackupSnapshots(5).catch(() => ({ snapshots: [] }));
-
   const bootstrap = {
     ...bootstrapRaw,
     blockedReason: bootstrapRaw.precheck?.ok === false

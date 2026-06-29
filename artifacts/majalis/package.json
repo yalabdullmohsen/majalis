@@ -33,6 +33,7 @@
     "test:autonomous-platform-v3": "node scripts/test-autonomous-platform-v3.mjs",
     "activate:production": "node scripts/run-production-activation.mjs",
     "audit:infrastructure": "node scripts/audit-infrastructure.mjs",
+    "audit:production-automation": "node scripts/audit-production-automation.mjs",
     "audit:database": "node scripts/audit-database-connection.mjs",
     "verify:ake-rpc": "node scripts/verify-ake-rpc.mjs",
     "verify:ake-pipeline": "node scripts/verify-ake-pipeline-dry.mjs",
