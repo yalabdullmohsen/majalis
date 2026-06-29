@@ -48,6 +48,7 @@
     "audit:dependency-graph": "node scripts/audit-dependency-graph.mjs",
     "verify:production-pipeline": "node scripts/verify-production-pipeline.mjs",
     "verify:import-resilience": "node scripts/verify-import-resilience.mjs",
+    "verify:ia-premium-ui": "node scripts/verify-ia-premium-ui.mjs",
     "purge:test-content": "node scripts/purge-test-content.mjs",
     "purge:test-content:apply": "node scripts/purge-test-content.mjs --apply",
     "verify:fawaid-clean": "node scripts/verify-fawaid-clean.mjs",

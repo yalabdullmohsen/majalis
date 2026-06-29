@@ -3,10 +3,13 @@
 import { createPortal } from "react-dom";
 import { Link, useLocation } from "wouter";
 import {
-  BookOpen,
   BookMarked,
+  BookOpen,
+  Bot,
   Clock,
   Compass,
+  FileText,
+  Gamepad2,
   GraduationCap,
   Heart,
   Home,
@@ -23,6 +26,7 @@ import {
   Sun,
   Tv,
   UserPlus,
+  Users,
   X,
 } from "lucide-react";
 import { useAuth } from "./AuthProvider";
@@ -31,11 +35,12 @@ import { NAV_GROUPS } from "@/lib/navigation";
 const ICONS: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
   "/": Home,
   "/search": Search,
+  "/scholar-search": Search,
   "/lessons": GraduationCap,
   "/annual-courses": BookMarked,
-  "/quran-scientific-circles": GraduationCap,
+  "/quran-scientific-circles": Users,
   "/library": Library,
-  "/research": GraduationCap,
+  "/research": FileText,
   "/fiqh-council": Scale,
   "/fatwa": ScrollText,
   "/rulings": ScrollText,
@@ -43,11 +48,24 @@ const ICONS: Record<string, React.ComponentType<{ size?: number; className?: str
   "/calendar": Clock,
   "/fawaid": Heart,
   "/qa": MessageCircleQuestion,
+  "/question-answer": Gamepad2,
+  "/miracles": Sparkles,
+  "/learning/paths": GraduationCap,
+  "/my-learning": GraduationCap,
+  "/quiz": Gamepad2,
+  "/topics": BookOpen,
+  "/contribute": Heart,
+  "/assistant": Bot,
+  "/about": BookOpen,
+  "/contact": MessageCircleQuestion,
   "/quran": BookOpen,
   "/quran-radio": Radio,
   "/quran-live": Tv,
   "/quran/tajweed": Mic2,
   "/quran/surah-stories": Library,
+  "/quran/mushaf": BookOpen,
+  "/quran/tafsir": BookOpen,
+  "/quran/search": Search,
   "/daily-wird": Sun,
   "/adhkar": Sparkles,
   "/tasbih": Compass,
@@ -57,6 +75,7 @@ const ICONS: Record<string, React.ComponentType<{ size?: number; className?: str
   "/prayer-ranks": Heart,
   "/qibla": Compass,
   "/settings": Settings,
+  "/sheikhs": Users,
 };
 
 type Props = {

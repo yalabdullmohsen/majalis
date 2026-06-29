@@ -9,17 +9,17 @@ html {
 
 :root {
   --majalis-ink: #241F18;
-  --majalis-ink-soft: #5B5446;
+  --majalis-ink-soft: #4F483C;
   --majalis-charcoal: #1A1A1A;
-  --majalis-parchment: #FAF5EA;
-  --majalis-parchment-deep: #F0E8D6;
-  --majalis-panel: #FFFFFF;
+  --majalis-parchment: #F0E9DC;
+  --majalis-parchment-deep: #E4DAC8;
+  --majalis-panel: #F7F2E8;
   --majalis-emerald: #1F6E54;
   --majalis-emerald-deep: #164E3C;
   --majalis-brass: #B08D2E;
   --majalis-brass-deep: #8A6D1E;
   --majalis-sage: #CFE0D3;
-  --majalis-line: #E0D7C4;
+  --majalis-line: #D4C9B6;
   --majalis-shadow: 0 22px 70px rgba(36, 31, 24, 0.12);
   --font-primary: "Cairo", "Tajawal", "Segoe UI", Tahoma, system-ui, sans-serif;
   --font-ui: var(--font-primary);
