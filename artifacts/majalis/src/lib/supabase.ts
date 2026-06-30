@@ -325,6 +325,23 @@ export async function getApprovedFawaid() {
   );
 }
 
+export async function getVerifiedHadith(options: { limit?: number; collection?: string } = {}) {
+  return safeSupabaseQuery(
+    "getVerifiedHadith",
+    () => {
+      let q = supabase
+        .from("verified_hadith_items")
+        .select("id, title, text, narrator, source_name, grade, collection, explanation, keywords, created_at")
+        .eq("verification_status", "verified")
+        .order("created_at", { ascending: false })
+        .limit(options.limit ?? 200);
+      if (options.collection) q = q.eq("collection", options.collection);
+      return q;
+    },
+    [],
+  );
+}
+
 export async function submitFawaid(userId: string, text: string, authorName: string) {
   return await supabase.from("fawaid").insert({
     text, author_name: authorName, submitted_by: userId, status: "pending",
