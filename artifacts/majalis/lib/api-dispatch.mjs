@@ -128,6 +128,8 @@ export const API_ROUTES = [
   { prefix: "/api/client-error-log", module: "./api-handlers/client-error-log.js", allowGet: true },
   { prefix: "/api/test-anthropic", module: "./api-handlers/test-anthropic.js", allowGet: true },
   { prefix: "/api/transcribe", module: "./api-handlers/transcribe.js", rateLimit: transcribeRateLimit },
+  { prefix: "/api/submissions", module: "./api-handlers/submissions.js", exact: true },
+  { prefix: "/api/admin/submissions", module: "./api-handlers/admin/submissions.js", allowGet: true },
 ];
 
 const handlerCache = new Map();

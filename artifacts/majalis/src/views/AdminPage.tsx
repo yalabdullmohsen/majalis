@@ -31,6 +31,7 @@ import { IslamicIntelligenceSection } from "@/views/admin/IslamicIntelligenceSec
 import { OpenPlatformSection } from "@/views/admin/OpenPlatformSection";
 import { GovernanceSection } from "@/views/admin/GovernanceSection";
 import { SmartCmsSection } from "@/views/admin/SmartCmsSection";
+import { SubmissionsSection } from "@/views/admin/SubmissionsSection";
 
 export default function AdminPage() {
   const [location] = useLocation();
@@ -50,6 +51,7 @@ export default function AdminPage() {
 
   return (
     <AdminShell section={section} onSectionChange={setSection}>
+      {section === "submissions" && <SubmissionsSection />}
       {section === "dashboard" && <DashboardSection />}
       {section === "aggregator" && <AggregatorSection />}
       {section === "knowledge-engine" && <KnowledgeEngineSection />}

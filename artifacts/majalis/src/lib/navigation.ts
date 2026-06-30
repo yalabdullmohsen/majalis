@@ -101,6 +101,7 @@ export const MOBILE_MORE_NAV = [
   { href: "/prayer-ranks", label: "مراتب الصلاة" },
   { href: "/quiz", label: "لعبة سؤال وجواب" },
   { href: "/settings", label: "الإعدادات" },
+  { href: "/submit", label: "أضف محتوى" },
   { href: "/contact", label: "تواصل معنا" },
 ];
 
