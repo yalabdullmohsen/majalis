@@ -100,7 +100,7 @@ export async function runAutonomousPlatform(opts = {}) {
 
 async function runFullCycle(opts) {
   await recoverStuckRuns();
-  const { processRetryQueue } = await import("../recovery.mjs");
+  const { processRetryQueue } = await import("./recovery.mjs");
   const retry = await processRetryQueue({ batchSize: 10 });
   const fetch = await runFetchMode(opts);
   const validate = await runValidateMode({ batchSize: 10 });
