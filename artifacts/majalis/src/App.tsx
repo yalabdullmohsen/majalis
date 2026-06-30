@@ -45,13 +45,11 @@ const AssistantPage = lazy(() => import("@/views/AssistantPage"));
 const CondolencesPage = lazy(() => import("@/views/CondolencesPage"));
 const CardsPage = lazy(() => import("@/views/CardsPage"));
 const QuranPage = lazy(() => import("@/views/QuranPage"));
-const QuranTajweedPage = lazy(() => import("@/views/QuranTajweedPage"));
-const QuranLivePage = lazy(() => import("@/views/QuranLivePage"));
+const QuranRadioPage = lazy(() => import("@/views/QuranRadioPage"));
 const SurahStoriesPage = lazy(() => import("@/views/SurahStoriesPage"));
 const SurahStoryDetailPage = lazy(() =>
   import("@/views/SurahStoriesPage").then((m) => ({ default: m.SurahStoryDetailPage })),
 );
-const QuranRadioPage = lazy(() => import("@/views/QuranRadioPage"));
 const PrayerTimesPage = lazy(() => import("@/views/PrayerTimesPage"));
 const PrayerRanksPage = lazy(() => import("@/views/PrayerRanksPage"));
 const QiblaPage = lazy(() => import("@/views/QiblaPage"));
@@ -209,10 +207,10 @@ function Router() {
         </ErrorBoundary>
       </Route>
       <Route path="/quran-radio"><SafeLazyRoute component={QuranRadioPage} /></Route>
-      <Route path="/quran-live"><SafeLazyRoute component={QuranLivePage} /></Route>
-      <Route path="/tajweed"><Redirect to="/quran/tajweed" /></Route>
+      <Route path="/quran-live"><Redirect to="/quran-radio" /></Route>
+      <Route path="/tajweed"><Redirect to="/quran" /></Route>
       <Route path="/surah-stories"><Redirect to="/quran/surah-stories" /></Route>
-      <Route path="/quran/tajweed"><SafeLazyRoute component={QuranTajweedPage} /></Route>
+      <Route path="/quran/tajweed"><Redirect to="/quran" /></Route>
       <Route path="/quran/surah-stories/:number"><SurahStoryDetailRoute /></Route>
       <Route path="/quran/surah-stories"><SafeLazyRoute component={SurahStoriesPage} /></Route>
       <Route path="/quran"><SafeLazyRoute component={QuranPage} /></Route>

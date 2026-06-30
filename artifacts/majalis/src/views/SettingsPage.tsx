@@ -8,7 +8,7 @@ import { useThemePreference } from "@/components/ThemePreferenceProvider";
 import { useUserPreferences } from "@/components/UserPreferencesProvider";
 import { FONT_OPTIONS, type FontPreference } from "@/lib/font-preference";
 import { THEME_OPTIONS, type ThemePreference } from "@/lib/theme-preference";
-import { clearQuranCache } from "@/lib/quran-content";
+import { clearQuranCache } from "@/lib/quran-api";
 import { DEFAULT_PREFERENCES, type UserPreferences } from "@/lib/user-preferences";
 import { useQuranPreferences, type QuranFontId } from "@/hooks/useQuranPreferences";
 
