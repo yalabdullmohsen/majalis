@@ -9,6 +9,7 @@ import { HomePrayerTimes } from "@/components/home/HomePrayerTimes";
 import { HomeDailyFaida } from "@/components/home/HomeDailyFaida";
 import { HomeDailyDhikr } from "@/components/home/HomeDailyDhikr";
 import { HomeDailyQuestion } from "@/components/home/HomeDailyQuestion";
+import { HomeDailyHadith } from "@/components/home/HomeDailyHadith";
 import { HomeFeaturedLibrary } from "@/components/home/HomeFeaturedLibrary";
 import { HomeLatestUpdates } from "@/components/home/HomeLatestUpdates";
 import { HomeMoreSections } from "@/components/home/HomeMoreSections";
@@ -22,8 +23,8 @@ const QUICK_LINKS = [
   { href: "/rulings", label: "الأحكام", meta: "موسوعة شرعية" },
   { href: "/library", label: "المكتبة", meta: "كتب ومتون" },
   { href: "/fawaid", label: "الفوائد", meta: "مختصرات" },
-  { href: "/miracles", label: "الإعجاز", meta: "علمي" },
-  { href: "/quran/surah-stories", label: "القصص", meta: "قرآنية" },
+  { href: "/hadith", label: "الأحاديث", meta: "موثقة" },
+  { href: "/stories", label: "القصص", meta: "إسلامية" },
   { href: "/search", label: "البحث", meta: "ذكي" },
   { href: "/assistant", label: "المساعد", meta: "علمي" },
   { href: "/calendar", label: "التقويم", meta: "دروس" },
@@ -114,6 +115,9 @@ export default function HomePage({
         <section className="home-daily-row">
           <SafeHomeSection name="ذكر اليوم">
             <HomeDailyDhikr />
+          </SafeHomeSection>
+          <SafeHomeSection name="حديث اليوم">
+            <HomeDailyHadith />
           </SafeHomeSection>
           <SafeHomeSection name="سؤال اليوم">
             <HomeDailyQuestion />
