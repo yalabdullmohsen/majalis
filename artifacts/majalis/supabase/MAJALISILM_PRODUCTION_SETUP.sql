@@ -2651,6 +2651,81 @@ DROP POLICY IF EXISTS content_drafts_admin ON content_drafts;
 CREATE POLICY content_drafts_admin ON content_drafts FOR ALL USING (auth.role() = 'service_role' OR is_admin());
 
 -- ════════════════════════════════════════════════════════════════════
+--  22b. جداول المحتوى الإضافية (activation probe + knowledge graph)
+-- ════════════════════════════════════════════════════════════════════
+
+-- content_dedup_registry — required by ACTIVATION_TABLES probe
+CREATE TABLE IF NOT EXISTS content_dedup_registry (
+  id              BIGSERIAL PRIMARY KEY,
+  content_hash    TEXT NOT NULL UNIQUE,
+  source_table    TEXT,
+  source_id       TEXT,
+  title           TEXT,
+  created_at      TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+ALTER TABLE content_dedup_registry ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS content_dedup_registry_service ON content_dedup_registry;
+CREATE POLICY content_dedup_registry_service ON content_dedup_registry FOR ALL USING (auth.role() = 'service_role');
+
+-- content_production_published — required by ACTIVATION_TABLES probe
+CREATE TABLE IF NOT EXISTS content_production_published (
+  id              BIGSERIAL PRIMARY KEY,
+  staging_id      BIGINT,
+  title           TEXT,
+  content_type    TEXT,
+  publish_target  TEXT,
+  published_at    TIMESTAMPTZ NOT NULL DEFAULT now(),
+  metadata        JSONB DEFAULT '{}'
+);
+ALTER TABLE content_production_published ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS cpp_anon ON content_production_published;
+CREATE POLICY cpp_anon ON content_production_published FOR SELECT USING (true);
+
+-- kg_nodes — knowledge graph nodes (OPTIONAL_DB_TABLES)
+CREATE TABLE IF NOT EXISTS kg_nodes (
+  id          BIGSERIAL PRIMARY KEY,
+  node_type   TEXT NOT NULL,
+  label       TEXT NOT NULL,
+  slug        TEXT UNIQUE,
+  metadata    JSONB DEFAULT '{}',
+  created_at  TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+ALTER TABLE kg_nodes ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS kg_nodes_anon ON kg_nodes;
+CREATE POLICY kg_nodes_anon ON kg_nodes FOR SELECT USING (true);
+
+-- kg_edges — knowledge graph edges (OPTIONAL_DB_TABLES)
+CREATE TABLE IF NOT EXISTS kg_edges (
+  id            BIGSERIAL PRIMARY KEY,
+  from_node_id  BIGINT NOT NULL REFERENCES kg_nodes (id) ON DELETE CASCADE,
+  to_node_id    BIGINT NOT NULL REFERENCES kg_nodes (id) ON DELETE CASCADE,
+  relation_type TEXT NOT NULL,
+  weight        NUMERIC DEFAULT 1.0,
+  metadata      JSONB DEFAULT '{}',
+  created_at    TIMESTAMPTZ NOT NULL DEFAULT now(),
+  UNIQUE (from_node_id, to_node_id, relation_type)
+);
+ALTER TABLE kg_edges ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS kg_edges_anon ON kg_edges;
+CREATE POLICY kg_edges_anon ON kg_edges FOR SELECT USING (true);
+
+-- notifications — user notifications
+CREATE TABLE IF NOT EXISTS notifications (
+  id          BIGSERIAL PRIMARY KEY,
+  user_id     UUID REFERENCES auth.users (id) ON DELETE CASCADE,
+  title       TEXT NOT NULL,
+  body        TEXT,
+  type        TEXT DEFAULT 'info',
+  is_read     BOOLEAN NOT NULL DEFAULT false,
+  action_url  TEXT,
+  created_at  TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS idx_notifications_user ON notifications (user_id, is_read, created_at DESC);
+ALTER TABLE notifications ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS notifications_own ON notifications;
+CREATE POLICY notifications_own ON notifications USING (auth.uid() = user_id);
+
+-- ════════════════════════════════════════════════════════════════════
 --  22. ترقية مالك المنصة إلى super_admin
 --      (سيُرجع خطأ "user_not_found" إذا لم يسجّل المستخدم بعد — طبيعي)
 -- ════════════════════════════════════════════════════════════════════
