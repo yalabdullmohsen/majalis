@@ -26,6 +26,9 @@ function mapToImportPayload(contentType, record, source) {
         author_name: record.author_name || source?.name || null,
         category: record.category || source?.category || "فوائد",
         source: record.source_name || source?.name || null,
+        status: "approved",
+        verification_status: "verified",
+        trust_level: source?.trust_score ?? 80,
       };
     case "questions":
       return {
@@ -84,7 +87,7 @@ function mapToImportPayload(contentType, record, source) {
         external_url: record.source_url || record.link || source?.source_url,
         category: record.category || "مقالات",
         author: record.author || source?.name,
-        status: "published",
+        status: "approved",
       };
     default:
       return record;
