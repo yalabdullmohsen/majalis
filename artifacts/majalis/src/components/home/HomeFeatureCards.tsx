@@ -10,6 +10,7 @@ const ICONS = {
   "circle-dot": CircleDot,
   radio: Radio,
   scroll: ScrollText,
+  "scroll-text": ScrollText,
   compass: Compass,
 } as const;
 

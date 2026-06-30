@@ -50,7 +50,7 @@ function ButtonGroupText({
   )
 
   if (asChild) {
-    return <Slot className={mergedClassName} {...props} />
+    return <Slot className={mergedClassName} {...(props as React.ComponentProps<typeof Slot>)} />
   }
 
   return (
