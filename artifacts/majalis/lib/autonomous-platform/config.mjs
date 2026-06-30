@@ -84,15 +84,16 @@ export const CONTENT_PIPELINES = {
 
 /** Cron schedule definitions (mirrors vercel.json). */
 export const CRON_SCHEDULES = {
-  fetch: { schedule: "0 * * * *", mode: "fetch", label: "جلب المصادر" },
-  validate: { schedule: "0 */2 * * *", mode: "validate", label: "التحقق" },
-  questions: { schedule: "0 */3 * * *", mode: "questions", label: "الأسئلة" },
-  benefits: { schedule: "0 */6 * * *", mode: "benefits", label: "الفوائد" },
-  reindex: { schedule: "0 2 * * *", mode: "reindex", label: "إعادة الفهرسة" },
-  audit: { schedule: "0 4 * * 0", mode: "audit", label: "تدقيق الجودة" },
-  cleanup: { schedule: "0 3 1 * *", mode: "cleanup", label: "تنظيف عميق" },
-  monitor: { schedule: "* * * * *", mode: "monitor", label: "مراقبة الصحة" },
-  recovery: { schedule: "*/5 * * * *", mode: "recovery", label: "التعافي الذاتي" },
+  fetch:     { schedule: "20 * * * *",   mode: "fetch",     label: "جلب المصادر" },
+  validate:  { schedule: "0 */2 * * *",  mode: "validate",  label: "التحقق" },
+  questions: { schedule: "0 */3 * * *",  mode: "questions", label: "الأسئلة" },
+  benefits:  { schedule: "30 */6 * * *", mode: "benefits",  label: "الفوائد" },
+  reindex:   { schedule: "10 2 * * *",   mode: "reindex",   label: "إعادة الفهرسة" },
+  audit:     { schedule: "20 4 * * 0",   mode: "audit",     label: "تدقيق الجودة" },
+  cleanup:   { schedule: "0 3 1 * *",    mode: "cleanup",   label: "تنظيف عميق" },
+  monitor:   { schedule: "10,40 * * * *", mode: "monitor",  label: "مراقبة الصحة" },
+  recovery:  { schedule: "*/15 * * * *", mode: "recovery",  label: "التعافي الذاتي" },
+  bootstrap: { schedule: "30 5 * * *",   mode: "bootstrap", label: "التمهيد اليومي" },
 };
 
 export const DEDUP_DEFAULTS = {
