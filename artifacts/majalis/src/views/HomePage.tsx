@@ -35,7 +35,7 @@ const QUICK_LINKS = [
   { href: "/assistant", label: "المساعد", meta: "علمي" },
   { href: "/calendar", label: "التقويم", meta: "دروس" },
   { href: "/adhkar", label: "الأذكار", meta: "يومي" },
-  { href: "/submit", label: "أضف محتوى", meta: "شارك" },
+  { href: "/submit?type=lesson", label: "أضف درس", meta: "شارك علمك" },
 ];
 
 function SafeHomeSection({ name, children }: { name: string; children: React.ReactNode }) {
