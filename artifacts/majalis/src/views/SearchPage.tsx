@@ -35,6 +35,8 @@ const EMPTY: SearchResults = {
   rulings: [],
   courses: [],
   updates: [],
+  hadith: [],
+  stories: [],
 };
 
 const KIND_GROUP_LABELS: Record<string, string> = {
@@ -58,7 +60,9 @@ const KIND_GROUP_LABELS: Record<string, string> = {
   fiqh_council: "المجمع الفقهي",
   knowledge: "محرك المعرفة",
   quran: "القرآن",
-  hadith: "الحديث",
+  hadith: "الأحاديث الموثقة",
+  story: "القصص الإسلامية",
+  stories: "القصص الإسلامية",
   sheikh: "المشايخ",
 };
 
@@ -264,6 +268,8 @@ export default function SearchPage() {
     (results.rulings?.length || 0) +
     (results.courses?.length || 0) +
     (results.updates?.length || 0) +
+    (results.hadith?.length || 0) +
+    (results.stories?.length || 0) +
     localExtra.occasions.length +
     localExtra.nawawi.length +
     localExtra.quran.length;
@@ -438,6 +444,12 @@ export default function SearchPage() {
                   )} />
                   <Group title="آخر المستجدات" items={results.updates || []} render={(u) => (
                     <ResultRow key={u.id} href="/updates" title={displayText(u.title)} meta={u.searchMeta || u.update_type} />
+                  )} />
+                  <Group title="الأحاديث الموثقة" items={results.hadith || []} render={(h) => (
+                    <ResultRow key={h.id} href="/hadith" title={displayText(h.title || h.text)} meta={h.narrator || h.collection} />
+                  )} />
+                  <Group title="القصص الإسلامية" items={results.stories || []} render={(s) => (
+                    <ResultRow key={s.id} href="/stories" title={displayText(s.title)} meta={s.category || s.topic} />
                   )} />
                   <Group title="الإعجاز العلمي" items={results.miracles} render={(m) => (
                     <ResultRow key={m.id} href="/miracles" title={displayText(m.title)} meta={m.category} />

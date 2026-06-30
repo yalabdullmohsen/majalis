@@ -958,6 +958,8 @@ export type SearchResults = {
   rulings?: any[];
   courses?: any[];
   updates?: any[];
+  hadith?: any[];
+  stories?: any[];
   error?: string | null;
   usingDemo?: boolean;
 };
@@ -975,6 +977,8 @@ const EMPTY_SEARCH: SearchResults = {
   rulings: [],
   courses: [],
   updates: [],
+  hadith: [],
+  stories: [],
 };
 
 function mergeUniqueById<T extends { id: string }>(rows: T[]): T[] {
@@ -1137,8 +1141,40 @@ async function searchAdhkarFallback(term: string) {
   return { data: items, errors: [] as any[] };
 }
 
+async function searchHadithFallback(term: string) {
+  if (!isConfigured) return { data: [] as any[], errors: [] as any[] };
+  const like = ilikePattern(term);
+  const { data, error } = await supabase
+    .from("verified_hadith_items")
+    .select("id, title, text, narrator, collection, grade")
+    .eq("status", "published")
+    .or(`title.ilike.${like},text.ilike.${like},narrator.ilike.${like}`)
+    .limit(10);
+  if (error) logSupabaseError("searchHadithFallback", error, { term });
+  return {
+    data: (data || []).filter((h: any) => arabicMatchAny([h.title, h.text, h.narrator, h.collection], term)),
+    errors: error ? [error] : [],
+  };
+}
+
+async function searchStoriesFallback(term: string) {
+  if (!isConfigured) return { data: [] as any[], errors: [] as any[] };
+  const like = ilikePattern(term);
+  const { data, error } = await supabase
+    .from("akp_stories")
+    .select("id, title, topic, summary, category, source_name")
+    .eq("status", "published")
+    .or(`title.ilike.${like},topic.ilike.${like},summary.ilike.${like}`)
+    .limit(10);
+  if (error) logSupabaseError("searchStoriesFallback", error, { term });
+  return {
+    data: (data || []).filter((s: any) => arabicMatchAny([s.title, s.topic, s.summary, s.category], term)),
+    errors: error ? [error] : [],
+  };
+}
+
 async function searchEverythingFallback(term: string): Promise<SearchResults> {
-  const [lessons, sheikhs, library, qa, miracles, fawaid, adhkar] = await Promise.all([
+  const [lessons, sheikhs, library, qa, miracles, fawaid, adhkar, hadith, stories] = await Promise.all([
     searchLessonsFallback(term),
     searchSheikhsFallback(term),
     searchLibraryFallback(term),
@@ -1146,17 +1182,9 @@ async function searchEverythingFallback(term: string): Promise<SearchResults> {
     searchMiraclesFallback(term),
     searchFawaidFallback(term),
     searchAdhkarFallback(term),
+    searchHadithFallback(term),
+    searchStoriesFallback(term),
   ]);
-
-  void [
-    ...lessons.errors,
-    ...sheikhs.errors,
-    ...library.errors,
-    ...qa.errors,
-    ...miracles.errors,
-    ...fawaid.errors,
-    ...adhkar.errors,
-  ];
 
   return {
     lessons: lessons.data,
@@ -1166,6 +1194,8 @@ async function searchEverythingFallback(term: string): Promise<SearchResults> {
     miracles: miracles.data,
     fawaid: fawaid.data,
     adhkar: adhkar.data,
+    hadith: hadith.data,
+    stories: stories.data,
     ...searchPlatformSeed(term),
     error: null,
     usingDemo: false,
@@ -1206,6 +1236,8 @@ export async function searchEverything(term: string): Promise<SearchResults> {
         rulings: data.rulings?.length ? data.rulings : platformFallback.rulings,
         courses: data.courses?.length ? data.courses : platformFallback.courses,
         updates: data.updates?.length ? data.updates : platformFallback.updates,
+        hadith: data.hadith || [],
+        stories: data.stories || [],
         usingDemo: false,
         error: null,
       };
