@@ -40,6 +40,9 @@ export function SiteFooter() {
           <div>
             <strong>المجلس العلمي</strong>
             <p>منصة علمية شرعية للدروس والعبادة والمحتوى اليومي.</p>
+            <p className="site-footer-email">
+              <a href="mailto:yalabdullmohsen1@gmail.com">yalabdullmohsen1@gmail.com</a>
+            </p>
           </div>
         </div>
 

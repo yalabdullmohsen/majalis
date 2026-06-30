@@ -14,6 +14,9 @@ export default function ContactPage() {
         <p>
           <a href="mailto:info@majlisilm.com">info@majlisilm.com</a>
         </p>
+        <p>
+          <a href="mailto:yalabdullmohsen1@gmail.com">yalabdullmohsen1@gmail.com</a>
+        </p>
       </LegalSection>
 
       <LegalSection title="ما الذي يمكننا مساعدتك فيه؟">
