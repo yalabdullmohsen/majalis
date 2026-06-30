@@ -25,6 +25,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { href: "/updates", label: "آخر المستجدات" },
       { href: "/calendar", label: "التقويم" },
       { href: "/fawaid", label: "الفوائد" },
+      { href: "/hadith", label: "الأحاديث الموثقة" },
       { href: "/qa", label: "الأسئلة" },
     ],
   },
@@ -54,6 +55,7 @@ export const NAV_GROUPS: NavGroup[] = [
     id: "sunnah",
     title: "السنة",
     links: [
+      { href: "/hadith", label: "الأحاديث الموثقة" },
       { href: "/arbaeen-nawawi", label: "الأربعون النووية" },
       { href: "/adhkar", label: "سنن مؤقتة" },
       { href: "/adhkar?cat=misc", label: "سنن غير مؤقتة" },
@@ -91,6 +93,7 @@ export const MOBILE_MORE_NAV = [
   { href: "/lessons", label: "المشايخ" },
   { href: "/library", label: "المكتبة" },
   { href: "/qa", label: "الأسئلة" },
+  { href: "/hadith", label: "الأحاديث" },
   { href: "/quran", label: "القرآن" },
   { href: "/adhkar", label: "الأذكار" },
   { href: "/quran-radio", label: "إذاعة القرآن" },
@@ -143,6 +146,12 @@ export const HOME_FEATURE_CARDS = [
     icon: "radio",
   },
   {
+    href: "/hadith",
+    title: "الأحاديث الموثقة",
+    description: "أحاديث نبوية محققة",
+    icon: "scroll-text",
+  },
+  {
     href: "/arbaeen-nawawi",
     title: "الأربعون النووية",
     description: "أحاديث مختصرة",
@@ -158,6 +167,7 @@ export const HOME_FEATURE_CARDS = [
 
 export const HOME_MORE_SECTIONS = [
   { href: "/lessons", title: "الدروس", description: "دروس ودورات علمية" },
+  { href: "/hadith", title: "الأحاديث الموثقة", description: "أحاديث نبوية محققة من مصادر موثوقة" },
   { href: "/fatwa", title: "الفتاوى", description: "مركز الفتاوى الشرعية" },
   { href: "/prayer-ranks", title: "مراتب الناس في الصلاة", description: "مراتب الخشوع وحضور القلب" },
   { href: "/rulings", title: "الأحكام الشرعية", description: "مكتبة الأحكام والأدلة" },

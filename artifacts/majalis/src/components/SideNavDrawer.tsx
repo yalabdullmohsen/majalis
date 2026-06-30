@@ -40,6 +40,7 @@ const ICONS: Record<string, React.ComponentType<{ size?: number; className?: str
   "/updates": Sparkles,
   "/calendar": Clock,
   "/fawaid": Heart,
+  "/hadith": ScrollText,
   "/qa": MessageCircleQuestion,
   "/quran": BookOpen,
   "/quran-radio": Radio,
