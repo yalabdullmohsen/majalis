@@ -253,6 +253,31 @@
       "priority": 0.82
     },
     {
+      "path": "/learning/paths",
+      "title": "المسارات العلمية | المجلس العلمي",
+      "description": "مسارات تعليمية منظمة من المبتدئ للمتقدم في العلوم الشرعية.",
+      "keywords": [
+        "مسارات علمية",
+        "تعلم الإسلام",
+        "تعليم ديني"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.78
+    },
+    {
+      "path": "/my-learning",
+      "title": "لوحتي التعليمية | المجلس العلمي",
+      "description": "تتبع تقدمك وإنجازاتك في المسارات العلمية.",
+      "keywords": [
+        "تعلم",
+        "تقدم دراسي"
+      ],
+      "sitemap": false,
+      "changefreq": "weekly",
+      "priority": 0.65
+    },
+    {
       "path": "/announcements",
       "title": "إعلانات الدروس | المجلس العلمي",
       "description": "الدروس والدورات الشرعية — جداول أسبوعية ومواقع وروابط.",

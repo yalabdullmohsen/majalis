@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-06-27",
+  "updatedAt": "2026-06-30",
   "productionUrl": "https://majlisilm.com",
   "releaseGate": {
     "allowedStates": ["Production", "Ready", "Blocked"],
@@ -266,6 +266,42 @@
       "productionMarkers": ["urlset"],
       "requiredSecrets": [],
       "requiredTables": [],
+      "usesMock": false,
+      "phase": 1
+    },
+    {
+      "id": "hadith-page",
+      "name": "الأحاديث الموثقة",
+      "routes": ["/hadith"],
+      "codeMarkers": ["HadithPage", "getVerifiedHadith"],
+      "productionMarkers": ["HadithPage", "hadith-grid"],
+      "requiredSecrets": ["VITE_SUPABASE_URL"],
+      "requiredTables": ["verified_hadith_items"],
+      "migrations": ["MAJALISILM_PRODUCTION_SETUP.sql"],
+      "usesMock": false,
+      "phase": 1
+    },
+    {
+      "id": "stories-page",
+      "name": "القصص الإسلامية",
+      "routes": ["/stories"],
+      "codeMarkers": ["StoriesPage", "getAkpStories"],
+      "productionMarkers": ["StoriesPage", "stories-grid"],
+      "requiredSecrets": ["VITE_SUPABASE_URL"],
+      "requiredTables": ["akp_stories"],
+      "migrations": ["MAJALISILM_PRODUCTION_SETUP.sql"],
+      "usesMock": false,
+      "phase": 1
+    },
+    {
+      "id": "community-submit",
+      "name": "مقترحات المجتمع",
+      "routes": ["/submit"],
+      "codeMarkers": ["SubmitContentPage", "SubmissionsSection"],
+      "productionMarkers": ["SubmitContentPage"],
+      "requiredSecrets": ["VITE_SUPABASE_URL", "SUPABASE_SERVICE_ROLE_KEY"],
+      "requiredTables": ["submissions"],
+      "migrations": ["MAJALISILM_PRODUCTION_SETUP.sql"],
       "usesMock": false,
       "phase": 1
     },
