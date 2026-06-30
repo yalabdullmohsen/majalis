@@ -197,84 +197,99 @@
   color: var(--majalis-emerald, #164E3C);
 }
 
-/* ── Ayah display ── */
+/* ── Ayah display — Mushaf flowing layout ── */
 .qs-ayah-display {
   direction: rtl;
 }
-.qs-ayahs-wrap {
-  display: flex;
-  flex-direction: column;
-  gap: .125rem;
-}
-.qs-ayah {
-  display: flex;
-  align-items: flex-start;
-  gap: .75rem;
-  padding: .75rem;
-  border-radius: .5rem;
-  transition: background .15s;
-  border-bottom: 1px solid var(--border, #e5e3dd);
-}
-.qs-ayah:hover {
-  background: var(--bg-hover, #f3f0eb);
-}
-.qs-ayah--playing {
-  background: #f0f7f4 !important;
-  border-right: 4px solid var(--majalis-gold, #B08D2E);
-}
-.qs-ayah--target {
-  background: #fff8ee;
-}
-.qs-ayah__text-row {
-  flex: 1;
-  cursor: pointer;
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: .4rem;
-  direction: rtl;
-}
-.qs-ayah__text {
+
+/* Continuous paragraph — all ayahs inline like a real Mushaf page */
+.qs-mushaf-body {
   font-family: "Amiri Quran", "Scheherazade New", serif;
   font-size: var(--qs-font-size, 26px);
-  line-height: 2.2;
+  line-height: 2.6;
+  text-align: justify;
   direction: rtl;
   color: var(--text-body, #1a1a1a);
+  padding: 1.25rem .5rem 2rem;
+  word-spacing: .05em;
+  letter-spacing: .01em;
 }
-.qs-ayah--playing .qs-ayah__text {
-  color: #0d3828;
+
+/* Each ayah: pure inline, no block breaking */
+.qs-ayah-inline {
+  display: inline;
 }
-.qs-ayah__num {
-  font-family: "Amiri Quran", "Scheherazade New", serif;
-  font-size: .9em;
-  color: var(--majalis-gold, #B08D2E);
-  white-space: nowrap;
-  flex-shrink: 0;
+
+/* Playing ayah: subtle green highlight without breaking flow */
+.qs-ayah-inline--playing .qs-ayah-inline__text {
+  background: rgba(22, 78, 60, .13);
+  border-radius: 3px;
+  padding: 0 2px;
+  color: #0a2e20;
 }
-.qs-ayah__play-btn {
-  flex-shrink: 0;
-  width: 2rem;
-  height: 2rem;
-  border-radius: 50%;
-  border: 1.5px solid var(--border, #e5e3dd);
-  background: var(--bg-card, #fff);
+
+/* Target ayah (jump destination): subtle gold highlight */
+.qs-ayah-inline--target .qs-ayah-inline__text {
+  background: rgba(176, 141, 46, .13);
+  border-radius: 3px;
+  padding: 0 2px;
+}
+
+/* Ayah text span — inline, cursor pointer for tap-to-select */
+.qs-ayah-inline__text {
+  display: inline;
   cursor: pointer;
-  display: flex;
+  transition: background .15s;
+}
+.qs-ayah-inline__text:hover {
+  background: rgba(176, 141, 46, .1);
+  border-radius: 2px;
+}
+
+/* Ornamental ayah number ﴿٣﴾ — gold, small, inline */
+.qs-ayah-inline__num {
+  display: inline;
+  font-family: "Amiri Quran", "Scheherazade New", serif;
+  font-size: .72em;
+  color: var(--majalis-gold, #B08D2E);
+  margin: 0 .15em;
+  line-height: inherit;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+
+/* Inline play button — tiny circle, doesn't break text flow */
+.qs-ayah-inline__play {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: .75rem;
-  transition: background .15s, border-color .15s;
-  margin-top: .25rem;
+  width: 1.35em;
+  height: 1.35em;
+  border-radius: 50%;
+  border: 1px solid var(--border, #d6d2ca);
+  background: var(--bg-card, #fff);
+  cursor: pointer;
+  font-size: .42em;
+  line-height: 1;
+  vertical-align: middle;
+  margin: 0 .2em;
+  transition: background .15s, border-color .15s, color .15s;
+  flex-shrink: 0;
+  color: var(--text-muted, #6b7280);
 }
-.qs-ayah__play-btn:hover {
+.qs-ayah-inline__play:hover:not(:disabled) {
   background: var(--majalis-emerald, #164E3C);
   border-color: var(--majalis-emerald, #164E3C);
   color: #fff;
 }
-.qs-ayah__play-btn.is-playing {
+.qs-ayah-inline__play.is-playing {
   background: var(--majalis-gold, #B08D2E);
   border-color: var(--majalis-gold, #B08D2E);
   color: #fff;
+}
+.qs-ayah-inline__play:disabled {
+  opacity: .5;
+  cursor: default;
 }
 
 /* ── Player bar (sticky bottom) ── */
@@ -721,9 +736,16 @@
 }
 
 /* ── Dark mode overrides ── */
-html[data-theme="dark"] .qs-ayah__text { color: #f0ede6; }
-html[data-theme="dark"] .qs-ayah--playing { background: #0f3329 !important; }
-html[data-theme="dark"] .qs-ayah--playing .qs-ayah__text { color: #d4f7e5; }
+html[data-theme="dark"] .qs-mushaf-body { color: #e8e4da; }
+html[data-theme="dark"] .qs-ayah-inline--playing .qs-ayah-inline__text {
+  background: rgba(110, 231, 183, .15);
+  color: #d4f7e5;
+}
+html[data-theme="dark"] .qs-ayah-inline--target .qs-ayah-inline__text {
+  background: rgba(176, 141, 46, .2);
+}
+html[data-theme="dark"] .qs-ayah-inline__text:hover { background: rgba(176, 141, 46, .15); }
+html[data-theme="dark"] .qs-ayah-inline__play { background: #1e1e1e; border-color: #3a3a3a; }
 html[data-theme="dark"] .qs-surah-item.is-active { background: #0f3329; color: #6ee7b7; }
 html[data-theme="dark"] .qs-reciter-picker__dropdown { background: #1a1a1a; }
 html[data-theme="dark"] .qs-search__result:hover { background: #0f3329; }

@@ -15,13 +15,10 @@ type Props = {
   onAyahClick: (ayah: number) => void;
 };
 
-const PLAY_ICONS: Record<PlayerState, string> = {
-  idle: "▶",
-  loading: "…",
-  playing: "❚❚",
-  paused: "▶",
-  error: "✕",
-};
+const ARABIC_DIGITS = "٠١٢٣٤٥٦٧٨٩";
+function toArabic(n: number): string {
+  return String(n).replace(/[0-9]/g, (d) => ARABIC_DIGITS[+d]);
+}
 
 export function AyahDisplay({
   ayahs,
@@ -35,7 +32,7 @@ export function AyahDisplay({
   onPlayAyah,
   onAyahClick,
 }: Props) {
-  const targetRef = useRef<HTMLDivElement>(null);
+  const targetRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     targetRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -46,8 +43,12 @@ export function AyahDisplay({
   const isSurahWithoutBismillah = surahNum === 1 || surahNum === 9;
 
   return (
-    <div className="qs-ayah-display" dir="rtl" style={{ "--qs-font-size": `${fontScale}px` } as React.CSSProperties}>
-      {/* Surah header */}
+    <div
+      className="qs-ayah-display"
+      dir="rtl"
+      style={{ "--qs-font-size": `${fontScale}px` } as React.CSSProperties}
+    >
+      {/* ── Surah header ── */}
       <header className="qs-surah-header">
         <div className="qs-surah-header__ornament" aria-hidden="true">﷽</div>
         {!isSurahWithoutBismillah && (
@@ -58,41 +59,71 @@ export function AyahDisplay({
         <h2 className="qs-surah-header__title" lang="ar">{surahName}</h2>
       </header>
 
-      {/* Ayahs */}
-      <div className="qs-ayahs-wrap">
+      {/* ── Mushaf flowing text ── */}
+      <div
+        className="qs-mushaf-body"
+        lang="ar"
+        dir="rtl"
+        aria-label={`نص سورة ${surahName}`}
+      >
         {ayahs.map((ayah) => {
           const isTarget = ayah.numberInSurah === targetAyah;
           const isPlaying = ayah.numberInSurah === currentPlayingAyah;
-          const isThisLoading = isPlaying && playerState === "loading";
+          const isLoading = isPlaying && playerState === "loading";
 
           return (
-            <div
+            <span
               key={ayah.numberInSurah}
-              ref={isTarget ? targetRef : undefined}
-              className={`qs-ayah${isPlaying ? " qs-ayah--playing" : ""}${isTarget && !isPlaying ? " qs-ayah--target" : ""}`}
               id={`ayah-${ayah.numberInSurah}`}
+              ref={isTarget ? targetRef : undefined}
+              className={[
+                "qs-ayah-inline",
+                isPlaying ? "qs-ayah-inline--playing" : "",
+                isTarget && !isPlaying ? "qs-ayah-inline--target" : "",
+              ].filter(Boolean).join(" ")}
             >
-              <div className="qs-ayah__text-row" onClick={() => onAyahClick(ayah.numberInSurah)}>
-                <span className="qs-ayah__text" lang="ar" dir="rtl">
-                  {ayah.text}
-                </span>
-                {showAyahNumbers && (
-                  <span className="qs-ayah__num" aria-label={`آية ${ayah.numberInSurah}`}>
-                    ﴿{ayah.numberInSurah}﴾
-                  </span>
-                )}
-              </div>
+              {/* Clickable ayah text */}
+              <span
+                className="qs-ayah-inline__text"
+                onClick={() => onAyahClick(ayah.numberInSurah)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => e.key === "Enter" && onAyahClick(ayah.numberInSurah)}
+                aria-label={`الآية ${ayah.numberInSurah}`}
+              >
+                {ayah.text}
+              </span>
 
+              {/* Ornamental ayah number ﴿٣﴾ */}
+              {showAyahNumbers && (
+                <span
+                  className="qs-ayah-inline__num"
+                  aria-hidden="true"
+                >
+                  ﴿{toArabic(ayah.numberInSurah)}﴾
+                </span>
+              )}
+
+              {/* Inline play button */}
               <button
                 type="button"
-                className={`qs-ayah__play-btn${isPlaying ? " is-playing" : ""}`}
+                className={`qs-ayah-inline__play${isPlaying ? " is-playing" : ""}`}
                 onClick={() => onPlayAyah(ayah.numberInSurah)}
-                aria-label={isPlaying && playerState === "playing" ? `إيقاف آية ${ayah.numberInSurah}` : `تشغيل آية ${ayah.numberInSurah}`}
-                disabled={isThisLoading}
+                aria-label={
+                  isPlaying && playerState === "playing"
+                    ? `إيقاف آية ${ayah.numberInSurah}`
+                    : `تشغيل آية ${ayah.numberInSurah}`
+                }
+                disabled={isLoading}
+                title={`تشغيل آية ${ayah.numberInSurah}`}
               >
-                {isThisLoading ? "…" : PLAY_ICONS[isPlaying ? playerState : "idle"]}
+                {isLoading
+                  ? "…"
+                  : isPlaying && playerState === "playing"
+                  ? "❚❚"
+                  : "▶"}
               </button>
-            </div>
+            </span>
           );
         })}
       </div>
