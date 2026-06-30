@@ -36,7 +36,7 @@ function collectRpcResults(data, limit) {
 }
 
 async function searchPlatformFallback(admin, query, limit) {
-  const [{ data: lessons }, { data: qa }, { data: library }, { data: autoContent }] = await Promise.all([
+  const [{ data: lessons }, { data: qa }, { data: library }, { data: autoContent }, { data: hadith }, { data: stories }] = await Promise.all([
     admin.from("lessons").select("id, title, description, category, external_key").eq("status", "approved").limit(limit * 3),
     admin.from("qa_questions").select("id, question, answer, status").eq("status", "published").limit(limit * 3),
     admin.from("library_items").select("id, title, description, category, type").eq("status", "approved").limit(limit * 3),
@@ -46,6 +46,8 @@ async function searchPlatformFallback(admin, query, limit) {
       .eq("status", "published")
       .eq("verification_status", "verified")
       .limit(limit * 2),
+    admin.from("verified_hadith_items").select("id, title, text, narrator, collection").eq("status", "published").limit(limit),
+    admin.from("akp_stories").select("id, title, topic, summary, category").eq("status", "published").limit(limit),
   ]);
 
   const lessonResults = (lessons || [])
@@ -91,7 +93,29 @@ async function searchPlatformFallback(admin, query, limit) {
       rank: 6,
     }));
 
-  return [...autoResults, ...lessonResults, ...qaResults, ...libraryResults]
+  const hadithResults = (hadith || [])
+    .filter((h) => matchAny([h.title, h.text, h.narrator, h.collection], query))
+    .map((h) => ({
+      id: h.id,
+      title: h.title || h.text?.slice(0, 100),
+      summary: h.narrator ? `الراوي: ${h.narrator}` : undefined,
+      kind: "hadith",
+      href: "/hadith",
+      rank: 5,
+    }));
+
+  const storiesResults = (stories || [])
+    .filter((s) => matchAny([s.title, s.topic, s.summary, s.category], query))
+    .map((s) => ({
+      id: s.id,
+      title: s.title,
+      summary: s.summary?.slice(0, 160),
+      kind: "story",
+      href: "/stories",
+      rank: 4,
+    }));
+
+  return [...autoResults, ...lessonResults, ...qaResults, ...hadithResults, ...storiesResults, ...libraryResults]
     .sort((a, b) => (b.rank || 0) - (a.rank || 0))
     .slice(0, limit);
 }
