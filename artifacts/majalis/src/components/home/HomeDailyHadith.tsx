@@ -11,7 +11,7 @@ export function HomeDailyHadith() {
           <p className="home-eyebrow">ورد يومي</p>
           <h2 id="daily-hadith-heading">حديث اليوم</h2>
         </div>
-        <Link href="/adhkar" className="home-section-link">المزيد</Link>
+        <Link href="/hadith" className="home-section-link">المزيد</Link>
       </div>
       <article className="ui-card home-daily-card home-daily-card--hadith">
         <blockquote className="home-daily-quote">{hadith.text}</blockquote>
