@@ -762,7 +762,106 @@ CREATE POLICY "admins can update status" ON submissions FOR UPDATE
   USING (auth.role() = 'service_role' OR is_admin());
 
 -- ════════════════════════════════════════════════════════════════════
---  11. ترقية مالك المنصة إلى super_admin
+--  11. جداول الأسئلة والأجوبة (صفحة /qa)
+-- ════════════════════════════════════════════════════════════════════
+
+CREATE TABLE IF NOT EXISTS qa_categories (
+  id          UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
+  name        TEXT        NOT NULL,
+  slug        TEXT        UNIQUE NOT NULL,
+  description TEXT,
+  sort_order  INT         DEFAULT 0,
+  created_at  TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS qa_questions (
+  id            UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
+  question      TEXT        NOT NULL,
+  answer        TEXT        NOT NULL,
+  category_id   UUID        REFERENCES qa_categories(id) ON DELETE SET NULL,
+  ruling_type   TEXT,
+  evidence      TEXT,
+  reference     TEXT,
+  status        TEXT        NOT NULL DEFAULT 'published',
+  review_status TEXT        NOT NULL DEFAULT 'approved',
+  created_at    TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at    TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS qa_questions_category_idx ON qa_questions (category_id);
+CREATE INDEX IF NOT EXISTS qa_questions_status_idx   ON qa_questions (status);
+
+-- RLS: QA is publicly readable
+ALTER TABLE qa_categories ENABLE ROW LEVEL SECURITY;
+ALTER TABLE qa_questions  ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS qa_categories_public ON qa_categories;
+CREATE POLICY qa_categories_public ON qa_categories FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS qa_categories_admin ON qa_categories;
+CREATE POLICY qa_categories_admin ON qa_categories FOR ALL
+  USING (auth.role() = 'service_role' OR is_admin())
+  WITH CHECK (auth.role() = 'service_role' OR is_admin());
+
+DROP POLICY IF EXISTS qa_questions_public ON qa_questions;
+CREATE POLICY qa_questions_public ON qa_questions FOR SELECT USING (status = 'published');
+
+DROP POLICY IF EXISTS qa_questions_admin ON qa_questions;
+CREATE POLICY qa_questions_admin ON qa_questions FOR ALL
+  USING (auth.role() = 'service_role' OR is_admin())
+  WITH CHECK (auth.role() = 'service_role' OR is_admin());
+
+-- ════════════════════════════════════════════════════════════════════
+--  12. جداول الأحكام الشرعية (صفحة /rulings)
+-- ════════════════════════════════════════════════════════════════════
+
+-- Enum for content status (safe to re-run)
+DO $$ BEGIN
+  CREATE TYPE platform_content_status AS ENUM ('draft', 'pending', 'approved', 'archived', 'rejected');
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
+
+CREATE TABLE IF NOT EXISTS sharia_rulings (
+  id           UUID                   PRIMARY KEY DEFAULT gen_random_uuid(),
+  external_key TEXT                   UNIQUE,
+  title        TEXT                   NOT NULL,
+  summary      TEXT,
+  body         TEXT                   NOT NULL,
+  category     TEXT                   NOT NULL DEFAULT 'فقه عام',
+  evidence     JSONB                  DEFAULT '[]',
+  "references" JSONB                  DEFAULT '[]',
+  keywords     TEXT[]                 DEFAULT '{}',
+  status       platform_content_status NOT NULL DEFAULT 'approved',
+  view_count   INT                    NOT NULL DEFAULT 0,
+  search_vector TSVECTOR,
+  published_at TIMESTAMPTZ,
+  archived_at  TIMESTAMPTZ,
+  created_at   TIMESTAMPTZ            NOT NULL DEFAULT NOW(),
+  updated_at   TIMESTAMPTZ            NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS sharia_rulings_category_idx ON sharia_rulings (category);
+CREATE INDEX IF NOT EXISTS sharia_rulings_status_idx   ON sharia_rulings (status);
+
+-- normalize_ar helper (no-op if exists)
+CREATE OR REPLACE FUNCTION normalize_ar(input TEXT)
+RETURNS TEXT LANGUAGE sql IMMUTABLE AS $$
+  SELECT trim(regexp_replace(coalesce(input, ''), '\s+', ' ', 'g'));
+$$;
+
+ALTER TABLE sharia_rulings ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS sharia_rulings_public ON sharia_rulings;
+CREATE POLICY sharia_rulings_public ON sharia_rulings FOR SELECT
+  USING (status = 'approved');
+
+DROP POLICY IF EXISTS sharia_rulings_admin ON sharia_rulings;
+CREATE POLICY sharia_rulings_admin ON sharia_rulings FOR ALL
+  USING (auth.role() = 'service_role' OR is_admin())
+  WITH CHECK (auth.role() = 'service_role' OR is_admin());
+
+-- ════════════════════════════════════════════════════════════════════
+--  13. ترقية مالك المنصة إلى super_admin
 --      (سيُرجع خطأ "user_not_found" إذا لم يسجّل المستخدم بعد — طبيعي)
 -- ════════════════════════════════════════════════════════════════════
 
@@ -771,6 +870,9 @@ SELECT promote_bootstrap_owner('yalabdullmohsen1@gmail.com');
 -- ════════════════════════════════════════════════════════════════════
 --  اكتمل الإعداد ✓
 --  الجداول المُنشأة:
+--    • qa_categories        → صفحة /qa
+--    • qa_questions         → صفحة /qa
+--    • sharia_rulings       → صفحة /rulings
 --    • akp_stories          → صفحة /stories
 --    • verified_hadith_items → صفحة /hadith
 --    • submissions          → صفحة /submit
