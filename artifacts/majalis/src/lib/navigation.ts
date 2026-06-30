@@ -91,24 +91,29 @@ export const PRIMARY_NAV = [
 
 /** Mobile "المزيد" dropdown — full site navigation */
 export const MOBILE_MORE_NAV = [
-  { href: "/lessons", label: "الدروس" },
-  { href: "/quiz", label: "لعبة سؤال وجواب" },
-  { href: "/lessons", label: "المشايخ" },
-  { href: "/library", label: "المكتبة" },
-  { href: "/qa", label: "الأسئلة التعليمية" },
-  { href: "/hadith", label: "الأحاديث" },
-  { href: "/stories", label: "القصص" },
-  { href: "/quran", label: "القرآن" },
-  { href: "/adhkar", label: "الأذكار" },
-  { href: "/quran-radio", label: "إذاعة القرآن" },
-  { href: "/quran-live", label: "البث المباشر" },
-  { href: "/quran/tajweed", label: "التجويد" },
+  // المحتوى
+  { href: "/lessons",          label: "الدروس" },
+  { href: "/annual-courses",   label: "الدورات العلمية" },
+  { href: "/library",          label: "المكتبة" },
+  { href: "/qa",               label: "الأسئلة" },
+  { href: "/hadith",           label: "الأحاديث" },
+  { href: "/fawaid",           label: "الفوائد" },
+  { href: "/stories",          label: "القصص" },
+  // القرآن
+  { href: "/quran",            label: "القرآن" },
+  { href: "/quran-radio",      label: "إذاعة القرآن" },
+  { href: "/quran-live",       label: "البث المباشر" },
+  { href: "/quran/tajweed",    label: "التجويد" },
   { href: "/quran/surah-stories", label: "قصص القرآن" },
-  { href: "/tasbih", label: "عداد التسبيح" },
-  { href: "/quiz", label: "لعبة سؤال وجواب" },
-  { href: "/settings", label: "الإعدادات" },
-  { href: "/submit", label: "أضف محتوى" },
-  { href: "/contact", label: "تواصل معنا" },
+  // الأذكار والأدوات
+  { href: "/adhkar",           label: "الأذكار" },
+  { href: "/tasbih",           label: "عداد التسبيح" },
+  { href: "/prayer-ranks",     label: "مراتب الصلاة" },
+  { href: "/quiz",             label: "لعبة سؤال وجواب" },
+  // عام
+  { href: "/settings",         label: "الإعدادات" },
+  { href: "/submit",           label: "أضف محتوى" },
+  { href: "/contact",          label: "تواصل معنا" },
 ];
 
 export const HOME_FEATURE_CARDS = [
