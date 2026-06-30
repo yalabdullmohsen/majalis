@@ -12,6 +12,8 @@ import { HomeDailyQuestion } from "@/components/home/HomeDailyQuestion";
 import { HomeFeaturedLibrary } from "@/components/home/HomeFeaturedLibrary";
 import { HomeLatestUpdates } from "@/components/home/HomeLatestUpdates";
 import { HomeMoreSections } from "@/components/home/HomeMoreSections";
+import { IslamicDivider } from "@/components/design/IslamicDivider";
+import { IslamicOrnament } from "@/components/design/IslamicOrnament";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 
@@ -64,8 +66,8 @@ export default function HomePage({
               src="/logo.png"
               alt="المجلس العلمي"
               className="home-hero-logo"
-              width={64}
-              height={64}
+              width={72}
+              height={72}
               loading="eager"
               decoding="async"
             />
@@ -77,12 +79,16 @@ export default function HomePage({
               <input
                 value={term}
                 onChange={(e) => setTerm(e.target.value)}
-                placeholder="ابحث..."
+                placeholder="ابحث في المنصة..."
               />
               <button type="submit">بحث</button>
             </form>
           </div>
         </div>
+        <IslamicOrnament
+          className="islamic-ornament-strip"
+          style={{ color: "rgba(176, 141, 46, 0.55)", position: "relative", zIndex: 2 }}
+        />
       </section>
 
       <main className="home-container home-main home-main--v3">
@@ -90,9 +96,13 @@ export default function HomePage({
           <HomeUpcomingLessons initialLessons={initialFeaturedLessons} />
         </SafeHomeSection>
 
+        <IslamicDivider />
+
         <SafeHomeSection name="الدورات">
           <HomeUpcomingCourses />
         </SafeHomeSection>
+
+        <IslamicDivider />
 
         <section className="home-section ds-section">
           <div className="ds-section__head">
@@ -111,6 +121,8 @@ export default function HomePage({
           </div>
         </section>
 
+        <IslamicDivider />
+
         <section className="home-daily-row">
           <SafeHomeSection name="ذكر اليوم">
             <HomeDailyDhikr />
@@ -123,17 +135,25 @@ export default function HomePage({
           </SafeHomeSection>
         </section>
 
+        <IslamicDivider />
+
         <SafeHomeSection name="مواقيت الصلاة">
           <HomePrayerTimes />
         </SafeHomeSection>
+
+        <IslamicDivider />
 
         <SafeHomeSection name="المكتبة">
           <HomeFeaturedLibrary />
         </SafeHomeSection>
 
+        <IslamicDivider />
+
         <SafeHomeSection name="آخر التحديثات">
           <HomeLatestUpdates />
         </SafeHomeSection>
+
+        <IslamicDivider />
 
         <SafeHomeSection name="المزيد من الأقسام">
           <HomeMoreSections />
