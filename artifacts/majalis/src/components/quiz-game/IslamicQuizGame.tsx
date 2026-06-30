@@ -1,11 +1,15 @@
-import { useCallback, useReducer, useState } from "react";
+import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import {
+  ALL_QUESTIONS,
   GAME_CATEGORIES,
+  mergeSupabaseQuestions,
   pickQuestion,
+  type CategoryQuestions,
   type GameCategory,
   type PointValue,
   type QuizQuestion,
 } from "@/data/islamicQuizData";
+import { getQuizQuestions } from "@/lib/supabase";
 
 // ─── Types ─────────────────────────────────────────────────────────────────
 
@@ -42,7 +46,7 @@ interface GameState {
 
 type Action =
   | { type: "START_GAME"; categories: string[]; names: [string, string] }
-  | { type: "SELECT_CELL"; cell: Cell }
+  | { type: "SELECT_CELL"; cell: Cell; pool: Record<string, CategoryQuestions> }
   | { type: "REVEAL_HINT" }
   | { type: "MARK_CORRECT" }
   | { type: "MARK_WRONG" }
@@ -111,7 +115,7 @@ function reducer(state: GameState, action: Action): GameState {
 
     case "SELECT_CELL": {
       const usedSet = new Set(state.usedIds);
-      const q = pickQuestion(action.cell.categoryId, action.cell.points, usedSet);
+      const q = pickQuestion(action.cell.categoryId, action.cell.points, usedSet, action.pool);
       return { ...state, phase: "question", activeCell: action.cell, activeQuestion: q, passedToOpponent: false, showHint: false };
     }
 
@@ -400,7 +404,15 @@ function SetupPhase({ onStart }: { onStart: (cats: string[], names: [string, str
 
 // ─── Board Phase ───────────────────────────────────────────────────────────
 
-function BoardPhase({ state, dispatch }: { state: GameState; dispatch: React.Dispatch<Action> }) {
+function BoardPhase({
+  state,
+  dispatch,
+  poolRef,
+}: {
+  state: GameState;
+  dispatch: React.Dispatch<Action>;
+  poolRef: React.RefObject<Record<string, CategoryQuestions>>;
+}) {
   const activeCats = GAME_CATEGORIES.filter((c) => state.selectedCategories.includes(c.id));
   const colCount = activeCats.length;
 
@@ -451,7 +463,7 @@ function BoardPhase({ state, dispatch }: { state: GameState; dispatch: React.Dis
                   key={`${cat.id}-${pts}`}
                   type="button"
                   disabled={cell.used}
-                  onClick={() => dispatch({ type: "SELECT_CELL", cell })}
+                  onClick={() => dispatch({ type: "SELECT_CELL", cell, pool: poolRef.current ?? ALL_QUESTIONS })}
                   style={{
                     padding: "1rem 0.375rem",
                     borderRadius: "0.5rem",
@@ -635,6 +647,15 @@ function WinnerPhase({ teams, onReset }: { teams: [Team, Team]; onReset: () => v
 
 export function IslamicQuizGame() {
   const [state, dispatch] = useReducer(reducer, initial);
+  const poolRef = useRef<Record<string, CategoryQuestions>>(ALL_QUESTIONS);
+
+  useEffect(() => {
+    getQuizQuestions().then(({ data }) => {
+      if (data && data.length > 0) {
+        poolRef.current = mergeSupabaseQuestions(data);
+      }
+    });
+  }, []);
 
   const handleStart = useCallback(
     (cats: string[], names: [string, string]) => dispatch({ type: "START_GAME", categories: cats, names }),
@@ -660,7 +681,7 @@ export function IslamicQuizGame() {
         )}
 
         {state.phase === "setup" && <SetupPhase onStart={handleStart} />}
-        {state.phase === "board" && <BoardPhase state={state} dispatch={dispatch} />}
+        {state.phase === "board" && <BoardPhase state={state} dispatch={dispatch} poolRef={poolRef} />}
         {state.phase === "question" && <QuestionPhase state={state} dispatch={dispatch} />}
         {state.phase === "winner" && <WinnerPhase teams={state.teams} onReset={() => dispatch({ type: "RESET" })} />}
       </div>

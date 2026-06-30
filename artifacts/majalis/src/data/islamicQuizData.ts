@@ -335,9 +335,57 @@ export function pickQuestion(
   categoryId: string,
   points: PointValue,
   usedIds: Set<string>,
+  pool: Record<string, CategoryQuestions> = ALL_QUESTIONS,
 ): QuizQuestion | null {
-  const pool = ALL_QUESTIONS[categoryId]?.[points] ?? [];
-  const available = pool.filter((q) => !usedIds.has(q.id));
+  const available = (pool[categoryId]?.[points] ?? []).filter((q) => !usedIds.has(q.id));
   if (available.length === 0) return null;
   return available[Math.floor(Math.random() * available.length)];
+}
+
+// Maps Supabase quiz_questions columns to game categoryId
+const SECTION_TO_CATEGORY: Record<string, string> = {
+  "القرآن": "quran",
+  "علوم القرآن": "quran",
+  "السيرة": "seerah",
+  "سيرة النبي": "seerah",
+  "الفقه": "fiqh",
+  "الأحكام": "fiqh",
+  "الأنبياء": "prophets",
+  "الصحابة": "companions",
+  "خلفاء راشدون": "companions",
+  "العقيدة": "aqeedah",
+  "الحديث": "hadith",
+  "السنة": "hadith",
+};
+
+const LEVEL_TO_POINTS: Record<string, PointValue> = {
+  beginner: 200,
+  intermediate: 400,
+  advanced: 600,
+};
+
+/** Merges Supabase rows into a copy of ALL_QUESTIONS. Falls back silently to local data on empty input. */
+export function mergeSupabaseQuestions(
+  rows: Array<{ id?: string | null; section: string; level: string; question: string; answer: string }>,
+): Record<string, CategoryQuestions> {
+  const merged: Record<string, CategoryQuestions> = {};
+  for (const [cat, levels] of Object.entries(ALL_QUESTIONS)) {
+    merged[cat] = { 200: [...levels[200]], 400: [...levels[400]], 600: [...levels[600]] };
+  }
+
+  const existingIds = new Set(
+    Object.values(merged).flatMap((levels) => Object.values(levels).flat().map((q) => q.id)),
+  );
+
+  for (const row of rows) {
+    const catId = SECTION_TO_CATEGORY[row.section];
+    if (!catId || !merged[catId]) continue;
+    const points = LEVEL_TO_POINTS[row.level] ?? 400;
+    const id = String(row.id ?? `sb_${row.section}_${row.question.slice(0, 20)}`);
+    if (existingIds.has(id)) continue;
+    existingIds.add(id);
+    merged[catId][points].push({ id, q: row.question, a: row.answer, hint: "" });
+  }
+
+  return merged;
 }
