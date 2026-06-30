@@ -5,7 +5,7 @@ import {
   getDailyWirdState,
   getSurahList,
   saveDailyWirdState,
-} from "@/lib/quran-content";
+} from "@/lib/quran-api";
 import { incrementTaskProgress } from "@/lib/daily-progress";
 
 export default function DailyWirdPage() {

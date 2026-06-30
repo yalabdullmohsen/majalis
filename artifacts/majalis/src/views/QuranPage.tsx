@@ -1,168 +1,260 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { PageHeader, Loading } from "@/components/ui-common";
-import { useThemePreference } from "@/components/ThemePreferenceProvider";
-import { QuranSubnav } from "@/components/quran/QuranSubnav";
-import { SurahInfoCard } from "@/components/quran/SurahInfoCard";
-import { QuranToolbar } from "@/components/quran/QuranToolbar";
-import { ReciterPicker } from "@/components/quran/ReciterPicker";
-import { QuranAudioPlayer } from "@/components/quran/QuranAudioPlayer";
-import { TafsirSection } from "@/components/quran/TafsirSection";
-import { AyahList } from "@/components/quran/AyahList";
-import { QuranNav } from "@/components/quran/QuranNav";
-import { useQuranSurah } from "@/hooks/useQuranSurah";
-import { useQuranPreferences } from "@/hooks/useQuranPreferences";
-import { useQuranAudio } from "@/hooks/useQuranAudio";
-import {
-  fetchTafsirAyahs,
-  getSavedTafsirId,
-  saveTafsirId,
-  TAFSIR_SOURCES,
-} from "@/lib/quran-tafsir";
-import { getSurahList, saveQuranPosition } from "@/lib/quran-content";
-import "@/styles/quran-v2.css";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { Link } from "wouter";
+import { useQuranReader } from "@/hooks/useQuranReader";
+import { useAyahPlayer } from "@/hooks/useAyahPlayer";
+import { fetchTafsirAyahs, type TafsirAyah } from "@/lib/quran-api";
+import { SurahList } from "@/components/quran/SurahList";
+import { AyahDisplay } from "@/components/quran/AyahDisplay";
+import { QuranPlayerBar } from "@/components/quran/QuranPlayerBar";
+import { QuranSearch } from "@/components/quran/QuranSearch";
+import "@/styles/quran.css";
+
+const TAFSIR_SOURCES = [
+  { id: "ar.muyassar", label: "الميسّر" },
+  { id: "ar.jalalayn", label: "الجلالين" },
+  { id: "ar.waseet", label: "الوسيط" },
+] as const;
+type TafsirId = (typeof TAFSIR_SOURCES)[number]["id"];
+
+const TAFSIR_KEY = "mj-quran-tafsir-v3";
+function loadTafsirId(): TafsirId {
+  try {
+    const v = localStorage.getItem(TAFSIR_KEY) as TafsirId;
+    return TAFSIR_SOURCES.some((t) => t.id === v) ? v : "ar.muyassar";
+  } catch { return "ar.muyassar"; }
+}
 
 export default function QuranPage() {
-  const {
-    surah, setSurah, meta, targetAyah, setAyah, ayahs, loading, error, stats, lastPos, prevSurah, nextSurah,
-  } = useQuranSurah();
-  const { prefs, setPref } = useQuranPreferences();
-  const audio = useQuranAudio(surah, targetAyah);
-  const { resolvedTheme } = useThemePreference();
+  const reader = useQuranReader();
+  const { detail, loading, error, surahNum, targetAyah, summary } = reader;
+  const totalAyahs = detail?.numberOfAyahs ?? 0;
+  const player = useAyahPlayer(surahNum, totalAyahs);
 
-  const [tafsirId, setTafsirId] = useState(getSavedTafsirId);
-  const [tafsirAyahs, setTafsirAyahs] = useState<{ ayah: number; text: string }[]>([]);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
+  const [fontScale, setFontScale] = useState(26);
+  const [showAyahNumbers, setShowAyahNumbers] = useState(true);
+  const [tafsirId, setTafsirId] = useState<TafsirId>(loadTafsirId);
+  const [tafsirAyahs, setTafsirAyahs] = useState<TafsirAyah[]>([]);
   const [tafsirLoading, setTafsirLoading] = useState(false);
-  const [surahSearch, setSurahSearch] = useState("");
+  const [showTafsir, setShowTafsir] = useState(false);
 
-  const tafsirSource = TAFSIR_SOURCES.find((t) => t.id === tafsirId) || TAFSIR_SOURCES[0];
-  const isNight = prefs.nightMode || resolvedTheme === "dark";
-
-  useEffect(() => {
-    saveTafsirId(tafsirId);
-  }, [tafsirId]);
+  const changeTafsirId = useCallback((id: TafsirId) => {
+    setTafsirId(id);
+    try { localStorage.setItem(TAFSIR_KEY, id); } catch { /* ignore */ }
+  }, []);
 
   useEffect(() => {
-    if (!tafsirSource.apiEdition) {
-      setTafsirAyahs([]);
-      return;
-    }
+    if (!showTafsir) return;
     setTafsirLoading(true);
-    fetchTafsirAyahs(surah, tafsirSource.apiEdition)
+    fetchTafsirAyahs(surahNum, tafsirId)
       .then(setTafsirAyahs)
       .catch(() => setTafsirAyahs([]))
       .finally(() => setTafsirLoading(false));
-  }, [surah, tafsirId, tafsirSource.apiEdition]);
+  }, [surahNum, tafsirId, showTafsir]);
 
   const tafsirMap = useMemo(() => {
     const m = new Map<number, string>();
-    for (const t of tafsirAyahs) m.set(t.ayah, t.text);
+    for (const t of tafsirAyahs) m.set(t.numberInSurah, t.text);
     return m;
   }, [tafsirAyahs]);
 
-  const filteredSurahs = useMemo(() => {
-    const q = surahSearch.trim();
-    if (!q) return null;
-    return getSurahList().filter(
-      (s) => s.name.includes(q) || s.englishName.toLowerCase().includes(q.toLowerCase()) || String(s.number).includes(q),
-    );
-  }, [surahSearch]);
+  const handleFontScale = useCallback((delta: number) => {
+    setFontScale((v) => Math.min(42, Math.max(18, v + delta)));
+  }, []);
+
+  const handleGoToResult = useCallback((surah: number, ayah: number) => {
+    reader.goToSurah(surah, ayah);
+    setShowSearch(false);
+  }, [reader]);
 
   return (
-    <div className={`page-shell quran-v2${isNight ? " quran-v2--night" : ""}`}>
-      {/* 1. Header */}
-      <PageHeader
-        eyebrow="القرآن الكريم"
-        title="المصحف الشريف"
-        subtitle="قراءة · تلاوة · تفسير — تجربة قرآنية احترافية"
-      />
-      <QuranSubnav />
+    <div className="quran-shell">
+      {/* Sub-navigation */}
+      <nav className="qs-subnav" aria-label="أقسام القرآن">
+        <Link href="/quran" className="qs-subnav__link is-active">المصحف</Link>
+        <Link href="/quran-radio" className="qs-subnav__link">الإذاعة والبث</Link>
+      </nav>
 
-      {/* Surah quick pick when searching */}
-      {filteredSurahs && surahSearch.trim() && (
-        <div className="quran-v2-surah-pick ui-card">
-          {filteredSurahs.slice(0, 8).map((s) => (
-            <button key={s.number} type="button" onClick={() => { setSurah(s.number); setSurahSearch(""); }}>
-              {s.number}. {s.name}
+      <div className="qs-layout">
+        {/* ── Sidebar overlay (mobile) ── */}
+        <div
+          className={`qs-sidebar-backdrop${sidebarOpen ? " is-open" : ""}`}
+          onClick={() => setSidebarOpen(false)}
+          aria-hidden="true"
+        />
+
+        {/* ── Sidebar ── */}
+        <aside className={`qs-sidebar${sidebarOpen ? " is-open" : ""}`}>
+          <SurahList
+            surahs={reader.surahList}
+            currentSurah={surahNum}
+            onSelect={(n) => reader.goToSurah(n)}
+            onClose={() => setSidebarOpen(false)}
+          />
+        </aside>
+
+        {/* ── Main content ── */}
+        <main className="qs-main">
+          {/* Mobile sidebar toggle + search */}
+          <div style={{ display: "flex", gap: ".5rem", marginBottom: "1rem", flexWrap: "wrap" }}>
+            <button type="button" className="qs-sidebar-toggle" onClick={() => setSidebarOpen(true)}>
+              ☰ السور
             </button>
-          ))}
-        </div>
-      )}
+            <button
+              type="button"
+              className="qs-pb-btn"
+              onClick={() => setShowSearch((v) => !v)}
+            >
+              {showSearch ? "✕ أغلق البحث" : "🔍 بحث في القرآن"}
+            </button>
+            <button
+              type="button"
+              className="qs-pb-btn"
+              onClick={() => setShowTafsir((v) => !v)}
+            >
+              {showTafsir ? "✕ أخفِ التفسير" : "📖 عرض التفسير"}
+            </button>
+          </div>
 
-      {/* 2. Surah name + 3. Info card */}
-      <header className="quran-v2-surah-title-block">
-        <h2 className="quran-v2-surah-title">{meta.name}</h2>
-        <p className="quran-v2-surah-subtitle">{meta.englishName} · {meta.ayahs} آية</p>
-      </header>
+          {/* Last position resume */}
+          {reader.lastPos && reader.lastPos.surah !== surahNum && (
+            <div style={{
+              padding: ".6rem 1rem",
+              background: "#f0f7f4",
+              borderRadius: ".5rem",
+              marginBottom: "1rem",
+              direction: "rtl",
+              fontSize: ".88rem",
+            }}>
+              <strong>استئناف القراءة:</strong>{" "}
+              توقفت عند سورة {reader.surahList.find((s) => s.number === reader.lastPos!.surah)?.name ?? reader.lastPos.surah}
+              {" "}آية {reader.lastPos.ayah}
+              {" "}&mdash;{" "}
+              <button
+                type="button"
+                className="qs-pb-btn qs-pb-btn--primary"
+                style={{ padding: ".2rem .5rem", fontSize: ".82rem" }}
+                onClick={() => reader.goToSurah(reader.lastPos!.surah, reader.lastPos!.ayah)}
+              >
+                اذهب إليها
+              </button>
+            </div>
+          )}
 
-      <SurahInfoCard
-        meta={meta}
-        stats={stats}
-        lastPos={lastPos}
-        onResume={lastPos ? () => setSurah(lastPos.surah) : undefined}
-      />
+          {/* Search panel */}
+          {showSearch && <QuranSearch onGoToResult={handleGoToResult} />}
 
-      {/* 4. Reading toolbar */}
-      <QuranToolbar
-        surahSearch={surahSearch}
-        onSurahSearch={setSurahSearch}
-        onJumpAyah={setAyah}
-        maxAyah={meta.ayahs}
-        targetAyah={targetAyah}
-      />
+          {/* Tafsir source picker */}
+          {showTafsir && (
+            <div className="qs-tafsir" aria-label="التفسير">
+              <div className="qs-tafsir__head">
+                <span className="qs-tafsir__title">التفسير</span>
+                <div style={{ display: "flex", gap: ".3rem", flexWrap: "wrap" }}>
+                  {TAFSIR_SOURCES.map((t) => (
+                    <button
+                      key={t.id}
+                      type="button"
+                      className={`qs-tafsir__source-btn${tafsirId === t.id ? " is-active" : ""}`}
+                      onClick={() => changeTafsirId(t.id)}
+                    >
+                      {t.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
 
-      {/* 5. Reciter + 7. Audio player */}
-      <QuranAudioPlayer
-        audio={audio}
-        onPrevSurah={prevSurah ? () => setSurah(prevSurah) : undefined}
-        onNextSurah={nextSurah ? () => setSurah(nextSurah) : undefined}
-      />
-      <ReciterPicker
-        reciters={audio.reciters}
-        selectedId={audio.reciterId}
-        onSelect={audio.setReciterId}
-        open={audio.pickerOpen}
-        onClose={() => audio.setPickerOpen(false)}
-      />
+              {tafsirLoading && <p className="qs-loading">جاري تحميل التفسير…</p>}
+              {!tafsirLoading && tafsirAyahs.length > 0 && (
+                <div>
+                  {tafsirAyahs.slice(0, 10).map((t) => (
+                    <div key={t.numberInSurah} className="qs-tafsir__ayah">
+                      <p className="qs-tafsir__ayah-ref">آية {t.numberInSurah}</p>
+                      <p className="qs-tafsir__ayah-text">{t.text}</p>
+                    </div>
+                  ))}
+                  {tafsirAyahs.length > 10 && (
+                    <p style={{ fontSize: ".8rem", color: "var(--text-muted)" }}>
+                      يُعرض أول 10 آيات. استخدم كتب التفسير المعتمدة للرجوع الكامل.
+                    </p>
+                  )}
+                </div>
+              )}
+              <p className="qs-source-note">
+                المصدر: AlQuran Cloud API — alquran.cloud · {TAFSIR_SOURCES.find((t) => t.id === tafsirId)?.label}
+              </p>
+            </div>
+          )}
 
-      {/* 8. Navigation */}
-      <QuranNav
-        surah={surah}
-        onPrev={() => prevSurah && setSurah(prevSurah)}
-        onNext={() => nextSurah && setSurah(nextSurah)}
-        onSelectSurah={setSurah}
-      />
+          {/* Loading / error / content */}
+          {loading && (
+            <div className="qs-loading" aria-live="polite">
+              جاري تحميل السورة من AlQuran Cloud…
+            </div>
+          )}
 
-      {loading ? (
-        <Loading />
-      ) : error ? (
-        <div className="quran-v2-error" role="alert">{error}</div>
-      ) : (
-        <>
-          {/* 6. Tafsir */}
-          <TafsirSection
-            selectedId={tafsirId}
-            onSelect={setTafsirId}
-            tafsirAyahs={tafsirAyahs}
-            loading={tafsirLoading}
-            surahName={meta.name}
-          />
+          {!loading && error && (
+            <div className="qs-error" role="alert">
+              <p>{error}</p>
+              <button
+                type="button"
+                className="qs-pb-btn qs-pb-btn--primary"
+                style={{ marginTop: ".5rem" }}
+                onClick={() => reader.goToSurah(surahNum)}
+              >
+                إعادة المحاولة
+              </button>
+            </div>
+          )}
 
-          {/* 9. Ayahs */}
-          <AyahList
-            ayahs={ayahs}
-            prefs={prefs}
-            targetAyah={targetAyah}
-            onSelectAyah={(n) => {
-              setAyah(n);
-              saveQuranPosition(surah, n);
-            }}
-            tafsirByAyah={tafsirMap}
-            onPlayFromAyah={audio.playFromAyah}
-            surahName={meta.name}
-          />
-        </>
+          {!loading && !error && detail && (
+            <>
+              <AyahDisplay
+                ayahs={detail.ayahs}
+                surahNum={surahNum}
+                surahName={detail.name}
+                targetAyah={targetAyah}
+                currentPlayingAyah={player.currentAyah}
+                playerState={player.playerState}
+                fontScale={fontScale}
+                showAyahNumbers={showAyahNumbers}
+                onPlayAyah={player.togglePlayAyah}
+                onAyahClick={reader.goToAyah}
+              />
+              <p className="qs-source-note">
+                المصدر: AlQuran Cloud API · طبعة عثمان طه (رواية حفص عن عاصم) ·
+                التلاوة: everyayah.com
+              </p>
+            </>
+          )}
+        </main>
+      </div>
+
+      {/* ── Sticky player bar ── */}
+      {summary && (
+        <QuranPlayerBar
+          surahName={summary.name}
+          surahNum={surahNum}
+          totalAyahs={totalAyahs}
+          currentAyah={player.currentAyah}
+          playerState={player.playerState}
+          reciterId={player.reciterId}
+          fontScale={fontScale}
+          showAyahNumbers={showAyahNumbers}
+          prevSurah={reader.prevSurah}
+          nextSurah={reader.nextSurah}
+          onReciterChange={player.setReciterId}
+          onFontScale={handleFontScale}
+          onToggleAyahNumbers={() => setShowAyahNumbers((v) => !v)}
+          onPrevSurah={() => reader.prevSurah && reader.goToSurah(reader.prevSurah)}
+          onNextSurah={() => reader.nextSurah && reader.goToSurah(reader.nextSurah)}
+          onStop={player.stop}
+          onPlayFromAyah={player.playFromAyah}
+          onPause={player.pause}
+          onResume={player.resume}
+        />
       )}
     </div>
   );

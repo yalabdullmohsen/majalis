@@ -1,4 +1,4 @@
-import { getSurahMeta, type SurahMeta } from "./quran-content";
+import { getSurahMeta, type StaticSurahMeta as SurahMeta } from "./quran-api";
 
 export type SurahStory = {
   number: number;

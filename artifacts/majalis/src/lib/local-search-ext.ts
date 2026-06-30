@@ -1,7 +1,7 @@
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { searchNawawi } from "@/lib/arbaeen-nawawi-seed";
 import { filterOccasions } from "@/lib/islamic-occasions-seed";
-import { getSurahList } from "@/lib/quran-content";
+import { getSurahList } from "@/lib/quran-api";
 
 export function searchLocalExtensions(query: string) {
   const q = query.trim();
