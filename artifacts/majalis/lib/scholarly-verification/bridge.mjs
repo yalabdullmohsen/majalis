@@ -50,11 +50,6 @@ export async function applyScholarlyGateToAutoContentRecord(record, source, cont
   );
 
   record.quality_score = Math.max(record.quality_score ?? 0, gate.quality_score);
-  record.scholarly_gate = {
-    passed: gate.can_publish,
-    verification_status: gate.verification_status,
-    errors: gate.errors.map((e) => e.message ?? e.code),
-  };
 
   if (!gate.can_publish) {
     record.verification_status = 'needs_review';
