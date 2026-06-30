@@ -6816,7 +6816,8 @@ html[data-theme="dark"] .home-page {
 .adhkar-grid,
 .faidah-grid,
 .qa-grid,
-.hadith-grid {
+.hadith-grid,
+.stories-grid {
   display: grid;
   gap: 1rem;
 }
@@ -7055,6 +7056,58 @@ html[data-theme="dark"] .home-page {
   margin: 0;
   padding-top: 0.25rem;
   border-top: 1px solid var(--majalis-border, #e2e8f0);
+}
+
+/* --- Stories page --- */
+.story-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.25rem;
+}
+
+.story-card__title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--majalis-ink);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.story-card__topic {
+  font-size: 0.8rem;
+  color: var(--majalis-gold, #C9A84C);
+  font-weight: 600;
+  margin: 0;
+}
+
+.story-card__summary,
+.story-card__body {
+  font-size: 0.9rem;
+  line-height: 1.75;
+  color: var(--majalis-ink-soft);
+  margin: 0;
+}
+
+.story-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--majalis-ink-soft);
+  margin-top: auto;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--majalis-border, #e2e8f0);
+}
+
+.story-card__category {
+  background: var(--majalis-gold-faint, #fffbeb);
+  color: var(--majalis-gold, #C9A84C);
+  border: 1px solid var(--majalis-gold-light, #fde68a);
+  border-radius: 0.3rem;
+  padding: 0.15rem 0.5rem;
+  font-weight: 600;
+  font-size: 0.75rem;
 }
 
 .qa-card__head {

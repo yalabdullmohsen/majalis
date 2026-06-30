@@ -342,6 +342,23 @@ export async function getVerifiedHadith(options: { limit?: number; collection?: 
   );
 }
 
+export async function getAkpStories(options: { limit?: number; category?: string } = {}) {
+  return safeSupabaseQuery(
+    "getAkpStories",
+    () => {
+      let q = supabase
+        .from("akp_stories")
+        .select("id, title, body, source_name, category, topic, summary, created_at")
+        .eq("verification_status", "verified")
+        .order("created_at", { ascending: false })
+        .limit(options.limit ?? 100);
+      if (options.category) q = q.eq("category", options.category);
+      return q;
+    },
+    [],
+  );
+}
+
 export async function submitFawaid(userId: string, text: string, authorName: string) {
   return await supabase.from("fawaid").insert({
     text, author_name: authorName, submitted_by: userId, status: "pending",

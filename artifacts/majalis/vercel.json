@@ -108,6 +108,10 @@
       "schedule": "10 6 * * *"
     },
     {
+      "path": "/api/cron/lesson-source-monitor",
+      "schedule": "30 6 * * *"
+    },
+    {
       "path": "/api/cron/majlis-knowledge-engine",
       "schedule": "5 * * * *"
     },
@@ -186,19 +190,28 @@
     {
       "source": "/",
       "headers": [
-        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
       ]
     },
     {
       "source": "/index.html",
       "headers": [
-        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
       ]
     },
     {
       "source": "/assets/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
       ]
     }
   ]

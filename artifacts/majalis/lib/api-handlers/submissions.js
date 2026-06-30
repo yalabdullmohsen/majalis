@@ -1,5 +1,5 @@
 import { sendJson } from "../api/_http.mjs";
-import { getSupabaseAdmin } from "../../lib/supabase-admin.mjs";
+import { getSupabaseAdmin } from "../supabase-admin.mjs";
 
 const MAX_TITLE = 500;
 const MAX_CONTENT = 8000;
