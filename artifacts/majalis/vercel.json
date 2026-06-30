@@ -13,7 +13,7 @@
   "crons": [
     {
       "path": "/api/cron/process-import-jobs",
-      "schedule": "* * * * *"
+      "schedule": "*/10 * * * *"
     },
     {
       "path": "/api/cron/sync-data",
@@ -57,7 +57,7 @@
     },
     {
       "path": "/api/cron/import-phase2-trial",
-      "schedule": "30 5 * * *"
+      "schedule": "0 */6 * * *"
     },
     {
       "path": "/api/cron/apply-migrations",
@@ -85,7 +85,7 @@
     },
     {
       "path": "/api/cron/governance-backup",
-      "schedule": "0 4 * * 0"
+      "schedule": "10 4 * * 0"
     },
     {
       "path": "/api/cron/ai-agents",
@@ -97,19 +97,19 @@
     },
     {
       "path": "/api/cron/source-monitor",
-      "schedule": "*/15 * * * *"
+      "schedule": "*/30 * * * *"
     },
     {
       "path": "/api/cron/lesson-intelligence",
-      "schedule": "*/15 * * * *"
+      "schedule": "*/30 * * * *"
     },
     {
       "path": "/api/cron/monitor-sources",
-      "schedule": "0 6 * * *"
+      "schedule": "10 6 * * *"
     },
     {
       "path": "/api/cron/majlis-knowledge-engine",
-      "schedule": "5,35 * * * *"
+      "schedule": "5 * * * *"
     },
     {
       "path": "/api/cron/content-scheduler",
@@ -137,11 +137,11 @@
     },
     {
       "path": "/api/cron/autonomous-platform-reindex",
-      "schedule": "0 2 * * *"
+      "schedule": "10 2 * * *"
     },
     {
       "path": "/api/cron/autonomous-platform-audit",
-      "schedule": "0 4 * * 0"
+      "schedule": "20 4 * * 0"
     },
     {
       "path": "/api/cron/autonomous-platform-cleanup",
@@ -151,14 +151,6 @@
       "path": "/api/cron/autonomous-platform-bootstrap",
       "schedule": "30 5 * * *"
     },
-    {
-      "path": "/api/cron/autonomous-platform-monitor",
-      "schedule": "* * * * *"
-    },
-    {
-      "path": "/api/cron/autonomous-platform-recovery",
-      "schedule": "*/5 * * * *"
-    }
   ],
   "rewrites": [
     {
