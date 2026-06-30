@@ -72,6 +72,7 @@ const AdminDashboardPage = lazy(() => import("@/views/admin/AdminDashboardPage")
 const AutoContentPage = lazy(() => import("@/views/admin/AutoContentPage"));
 const FiqhReviewPage = lazy(() => import("@/views/admin/FiqhReviewPage"));
 const FiqhQualityPage = lazy(() => import("@/views/admin/FiqhQualityPage"));
+const AutonomousPlatformPage = lazy(() => import("@/views/admin/AutonomousPlatformPage"));
 const LearningPathsPage = lazy(() => import("@/views/learning/LearningPathsPage"));
 const LearningPathDetailPage = lazy(() => import("@/views/learning/LearningPathDetailPage"));
 const MyLearningPage = lazy(() => import("@/views/MyLearningPage"));
@@ -226,6 +227,15 @@ export default function AppRoutes() {
             <ErrorBoundary>
               <Suspense fallback={<LazyRouteFallback />}>
                 <AdminDashboardPage />
+              </Suspense>
+            </ErrorBoundary>
+          </AdminRouteGuard>
+        </Route>
+        <Route path="/admin/autonomous-platform">
+          <AdminRouteGuard>
+            <ErrorBoundary>
+              <Suspense fallback={<LazyRouteFallback />}>
+                <AutonomousPlatformPage />
               </Suspense>
             </ErrorBoundary>
           </AdminRouteGuard>
