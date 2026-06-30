@@ -107,6 +107,8 @@ export const API_ROUTES = [
   { prefix: "/api/cron/autonomous-platform-audit", module: "./api-handlers/cron/autonomous-platform.js", allowGet: true, exact: true },
   { prefix: "/api/cron/autonomous-platform-cleanup", module: "./api-handlers/cron/autonomous-platform.js", allowGet: true, exact: true },
   { prefix: "/api/cron/autonomous-platform-bootstrap", module: "./api-handlers/cron/autonomous-platform.js", allowGet: true, exact: true },
+  { prefix: "/api/cron/autonomous-platform-monitor", module: "./api-handlers/cron/autonomous-platform.js", allowGet: true, exact: true },
+  { prefix: "/api/cron/autonomous-platform-recovery", module: "./api-handlers/cron/autonomous-platform.js", allowGet: true, exact: true },
   { prefix: "/api/cron/source-monitor", module: "./api-handlers/cron/source-monitor.js", allowGet: true, exact: true },
   { prefix: "/api/admin/content-import", module: "./api-handlers/admin/content-import.js", timeoutMs: 58_000 },
   { prefix: "/api/cron/process-import-jobs", module: "./api-handlers/cron/process-import-jobs.js", allowGet: true, exact: true },
