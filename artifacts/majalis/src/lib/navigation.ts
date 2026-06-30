@@ -25,7 +25,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { href: "/updates", label: "آخر المستجدات" },
       { href: "/calendar", label: "التقويم" },
       { href: "/fawaid", label: "الفوائد" },
-      { href: "/hadith", label: "الأحاديث الموثقة" },
+      { href: "/hadith", label: "الأحاديث الصحيحة" },
       { href: "/stories", label: "القصص الإسلامية" },
       { href: "/qa", label: "الأسئلة" },
     ],
@@ -56,7 +56,7 @@ export const NAV_GROUPS: NavGroup[] = [
     id: "sunnah",
     title: "السنة",
     links: [
-      { href: "/hadith", label: "الأحاديث الموثقة" },
+      { href: "/hadith", label: "الأحاديث الصحيحة" },
       { href: "/arbaeen-nawawi", label: "الأربعون النووية" },
       { href: "/adhkar", label: "سنن مؤقتة" },
       { href: "/adhkar?cat=misc", label: "سنن غير مؤقتة" },
@@ -149,7 +149,7 @@ export const HOME_FEATURE_CARDS = [
   },
   {
     href: "/hadith",
-    title: "الأحاديث الموثقة",
+    title: "الأحاديث الصحيحة",
     description: "أحاديث نبوية محققة",
     icon: "scroll-text",
   },
@@ -169,7 +169,7 @@ export const HOME_FEATURE_CARDS = [
 
 export const HOME_MORE_SECTIONS = [
   { href: "/lessons", title: "الدروس", description: "دروس ودورات علمية" },
-  { href: "/hadith", title: "الأحاديث الموثقة", description: "أحاديث نبوية محققة من مصادر موثوقة" },
+  { href: "/hadith", title: "الأحاديث الصحيحة", description: "أحاديث نبوية محققة من مصادر موثوقة" },
   { href: "/stories", title: "القصص الإسلامية", description: "قصص من السيرة النبوية والأنبياء والصحابة" },
   { href: "/fatwa", title: "الفتاوى", description: "مركز الفتاوى الشرعية" },
   { href: "/prayer-ranks", title: "مراتب الناس في الصلاة", description: "مراتب الخشوع وحضور القلب" },
