@@ -189,6 +189,20 @@ export function AdminShell({ section, onSectionChange, children }: AdminShellPro
             الاستيراد التلقائي
           </Link>
           <Link
+            href="/admin/autonomous-platform"
+            style={{
+              display: "block",
+              padding: "0.5rem 1rem",
+              marginBottom: "0.35rem",
+              textDecoration: "none",
+              fontSize: "0.75rem",
+              color: C.emeraldDeep,
+              fontWeight: 600,
+            }}
+          >
+            ⚙ المنصة الذاتية AKP
+          </Link>
+          <Link
             href="/"
             style={{
               display: "block",
