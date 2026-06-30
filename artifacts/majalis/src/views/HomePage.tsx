@@ -5,7 +5,9 @@ import { Link, useLocation } from "wouter";
 import { SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { HomeUpcomingLessons } from "@/components/home/HomeUpcomingLessons";
 import { HomeUpcomingCourses } from "@/components/home/HomeUpcomingCourses";
-import { HomePrayerTimes } from "@/components/home/HomePrayerTimes";
+import { HomeCompactPrayer } from "@/components/home/HomeCompactPrayer";
+import { HomeQuizCard } from "@/components/home/HomeQuizCard";
+import { HomeAboutSection } from "@/components/home/HomeAboutSection";
 import { HomeDailyFaida } from "@/components/home/HomeDailyFaida";
 import { HomeDailyDhikr } from "@/components/home/HomeDailyDhikr";
 import { HomeDailyQuestion } from "@/components/home/HomeDailyQuestion";
@@ -93,6 +95,18 @@ export default function HomePage({
       </section>
 
       <main className="home-container home-main home-main--v3">
+        <SafeHomeSection name="لعبة الأسئلة">
+          <HomeQuizCard />
+        </SafeHomeSection>
+
+        <IslamicDivider />
+
+        <SafeHomeSection name="مواقيت الصلاة المدمجة">
+          <HomeCompactPrayer />
+        </SafeHomeSection>
+
+        <IslamicDivider />
+
         <SafeHomeSection name="أحدث الدروس">
           <HomeUpcomingLessons initialLessons={initialFeaturedLessons} />
         </SafeHomeSection>
@@ -141,12 +155,6 @@ export default function HomePage({
 
         <IslamicDivider />
 
-        <SafeHomeSection name="مواقيت الصلاة">
-          <HomePrayerTimes />
-        </SafeHomeSection>
-
-        <IslamicDivider />
-
         <SafeHomeSection name="المكتبة">
           <HomeFeaturedLibrary />
         </SafeHomeSection>
@@ -155,6 +163,12 @@ export default function HomePage({
 
         <SafeHomeSection name="آخر التحديثات">
           <HomeLatestUpdates />
+        </SafeHomeSection>
+
+        <IslamicDivider />
+
+        <SafeHomeSection name="عن المجلس العلمي">
+          <HomeAboutSection />
         </SafeHomeSection>
 
         <IslamicDivider />
