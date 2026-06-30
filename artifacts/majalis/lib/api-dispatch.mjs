@@ -71,6 +71,7 @@ export const API_ROUTES = [
   { prefix: "/api/admin/digital-learning", module: "./api-handlers/admin/digital-learning.js", allowGet: true },
   { prefix: "/api/cron/autonomous-orchestrator", module: "./api-handlers/cron/autonomous-orchestrator.js", allowGet: true, exact: true },
   { prefix: "/api/admin/autonomous-ai", module: "./api-handlers/admin/autonomous-ai.js", allowGet: true },
+  { prefix: "/api/admin/autonomous-platform", module: "./api-handlers/admin/autonomous-platform.js", allowGet: true },
   { prefix: "/api/daily-content", module: "./api-handlers/daily-content.js", allowGet: true },
   { prefix: "/api/global-reference", module: "./api-handlers/global-reference.js", allowGet: true },
   { prefix: "/api/admin/global-reference", module: "./api-handlers/admin/global-reference.js", allowGet: true },
