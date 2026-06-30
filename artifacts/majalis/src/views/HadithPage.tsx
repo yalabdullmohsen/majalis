@@ -74,7 +74,7 @@ export default function HadithPage() {
     <div className="page-shell narrow content-hub-page ds-page">
       <PageHeader
         eyebrow="السنة النبوية"
-        title="الأحاديث الموثقة"
+        title="الأحاديث الصحيحة"
         subtitle="أحاديث نبوية مختارة من مصادر موثوقة ومحققة."
       />
 

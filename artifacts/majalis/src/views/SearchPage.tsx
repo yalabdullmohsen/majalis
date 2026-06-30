@@ -60,7 +60,7 @@ const KIND_GROUP_LABELS: Record<string, string> = {
   fiqh_council: "المجمع الفقهي",
   knowledge: "محرك المعرفة",
   quran: "القرآن",
-  hadith: "الأحاديث الموثقة",
+  hadith: "الأحاديث الصحيحة",
   story: "القصص الإسلامية",
   stories: "القصص الإسلامية",
   sheikh: "المشايخ",
@@ -445,7 +445,7 @@ export default function SearchPage() {
                   <Group title="آخر المستجدات" items={results.updates || []} render={(u) => (
                     <ResultRow key={u.id} href="/updates" title={displayText(u.title)} meta={u.searchMeta || u.update_type} />
                   )} />
-                  <Group title="الأحاديث الموثقة" items={results.hadith || []} render={(h) => (
+                  <Group title="الأحاديث الصحيحة" items={results.hadith || []} render={(h) => (
                     <ResultRow key={h.id} href="/hadith" title={displayText(h.title || h.text)} meta={h.narrator || h.collection} />
                   )} />
                   <Group title="القصص الإسلامية" items={results.stories || []} render={(s) => (
