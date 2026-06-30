@@ -59,14 +59,12 @@ export default async function handler(req, res) {
     let publishError = null;
 
     if (submission.type === "question") {
-      const section = submission.meta?.section || "العقيدة";
-      const level = submission.meta?.level || "intermediate";
-      const { error } = await admin.from("quiz_questions").insert({
-        section,
-        level,
+      const { error } = await admin.from("qa_questions").insert({
         question: submission.title,
         answer: submission.content,
+        reference: submission.author ? `مُرسَل من: ${submission.author}` : null,
         status: "published",
+        review_status: "approved",
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
       });
