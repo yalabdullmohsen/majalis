@@ -101,7 +101,7 @@
     },
     {
       "path": "/api/cron/lesson-intelligence",
-      "schedule": "*/30 * * * *"
+      "schedule": "15,45 * * * *"
     },
     {
       "path": "/api/cron/monitor-sources",
@@ -121,7 +121,7 @@
     },
     {
       "path": "/api/cron/autonomous-platform-fetch",
-      "schedule": "0 * * * *"
+      "schedule": "20 * * * *"
     },
     {
       "path": "/api/cron/autonomous-platform-validate",
@@ -133,7 +133,7 @@
     },
     {
       "path": "/api/cron/autonomous-platform-benefits",
-      "schedule": "0 */6 * * *"
+      "schedule": "30 */6 * * *"
     },
     {
       "path": "/api/cron/autonomous-platform-reindex",
@@ -151,6 +151,14 @@
       "path": "/api/cron/autonomous-platform-bootstrap",
       "schedule": "30 5 * * *"
     },
+    {
+      "path": "/api/cron/autonomous-platform-monitor",
+      "schedule": "10,40 * * * *"
+    },
+    {
+      "path": "/api/cron/autonomous-platform-recovery",
+      "schedule": "*/15 * * * *"
+    }
   ],
   "rewrites": [
     {
