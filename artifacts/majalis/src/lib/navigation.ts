@@ -99,6 +99,7 @@ export const MOBILE_MORE_NAV = [
   { href: "/quran/surah-stories", label: "قصص القرآن" },
   { href: "/tasbih", label: "عداد التسبيح" },
   { href: "/prayer-ranks", label: "مراتب الصلاة" },
+  { href: "/quiz", label: "لعبة سؤال وجواب" },
   { href: "/settings", label: "الإعدادات" },
   { href: "/contact", label: "تواصل معنا" },
 ];

@@ -11,6 +11,7 @@ import { HomeDailyDhikr } from "@/components/home/HomeDailyDhikr";
 import { HomeDailyQuestion } from "@/components/home/HomeDailyQuestion";
 import { HomeFeaturedLibrary } from "@/components/home/HomeFeaturedLibrary";
 import { HomeLatestUpdates } from "@/components/home/HomeLatestUpdates";
+import { HomeMoreSections } from "@/components/home/HomeMoreSections";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 
@@ -131,6 +132,10 @@ export default function HomePage({
 
         <SafeHomeSection name="آخر التحديثات">
           <HomeLatestUpdates />
+        </SafeHomeSection>
+
+        <SafeHomeSection name="المزيد من الأقسام">
+          <HomeMoreSections />
         </SafeHomeSection>
       </main>
     </div>
