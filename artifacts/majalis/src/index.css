@@ -12000,3 +12000,503 @@ body.has-assistant-fab .app-main {
   border-color: #fca5a5;
   background: #fef2f2;
 }
+
+/* ══════════════════════════════════════════════════════════════
+   DESIGN SYSTEM v2 — مجالس المنصة العلمية
+   Full redesign: phases 1-4
+   ══════════════════════════════════════════════════════════════ */
+
+/* ─── Phase 1: Enhanced Design Tokens ─────────────────────── */
+:root {
+  --ds-1: 0.25rem; --ds-2: 0.5rem; --ds-3: 0.75rem; --ds-4: 1rem;
+  --ds-5: 1.25rem; --ds-6: 1.5rem; --ds-8: 2rem;
+  --ds-10: 2.5rem; --ds-12: 3rem; --ds-16: 4rem;
+
+  --ds-r-xs: 0.375rem;
+  --ds-r-sm: 0.625rem;
+  --ds-r-md: 0.875rem;
+  --ds-r-lg: 1.25rem;
+  --ds-r-xl: 1.75rem;
+  --ds-r-2xl: 2.5rem;
+  --ds-r-full: 999px;
+
+  --ds-shadow-xs: 0 1px 4px rgba(36, 31, 24, 0.05);
+  --ds-shadow-sm: 0 4px 14px rgba(36, 31, 24, 0.07);
+  --ds-shadow-md: 0 10px 30px rgba(36, 31, 24, 0.10);
+  --ds-shadow-lg: 0 20px 52px rgba(36, 31, 24, 0.13);
+  --ds-shadow-xl: 0 32px 72px rgba(36, 31, 24, 0.16);
+
+  --ds-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ds-t-fast: 0.14s var(--ds-ease);
+  --ds-t-mid: 0.22s var(--ds-ease);
+
+  --ds-gold-grad: linear-gradient(135deg, #d6b84e 0%, #b08d2e 55%, #c9a43e 100%);
+  --ds-emerald-grad: linear-gradient(135deg, #268a68 0%, #1f6e54 55%, #164e3c 100%);
+  --ds-hero-grad: linear-gradient(155deg, #0a2b22 0%, #164e3c 42%, #1f6e54 72%, #0d3526 100%);
+}
+
+html[data-theme="dark"] {
+  --ds-shadow-xs: 0 1px 4px rgba(0,0,0,.20);
+  --ds-shadow-sm: 0 4px 14px rgba(0,0,0,.28);
+  --ds-shadow-md: 0 10px 30px rgba(0,0,0,.34);
+  --ds-shadow-lg: 0 20px 52px rgba(0,0,0,.40);
+  --ds-shadow-xl: 0 32px 72px rgba(0,0,0,.46);
+  --ds-hero-grad: linear-gradient(155deg, #060f0c 0%, #0e2018 42%, #132c22 72%, #080f0c 100%);
+}
+
+/* ─── Phase 1: Unified Button Component ───────────────────── */
+.ds-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: 44px;
+  padding: 0.6rem 1.35rem;
+  border: none;
+  border-radius: var(--ds-r-md);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform var(--ds-t-fast), box-shadow var(--ds-t-fast), background var(--ds-t-fast), opacity var(--ds-t-fast);
+  white-space: nowrap;
+  line-height: 1.3;
+}
+.ds-btn:hover { transform: translateY(-1px); }
+.ds-btn:active { transform: translateY(0); }
+.ds-btn:disabled { opacity: 0.48; cursor: not-allowed; transform: none !important; }
+.ds-btn-pill { border-radius: var(--ds-r-full); }
+.ds-btn-sm  { min-height: 36px; padding: 0.38rem 0.875rem; font-size: 0.8rem; }
+.ds-btn-lg  { min-height: 52px; padding: 0.75rem 1.75rem; font-size: 1rem; }
+
+.ds-btn-primary {
+  background: var(--ds-emerald-grad);
+  color: #fff;
+  box-shadow: 0 4px 18px rgba(31, 110, 84, 0.28);
+}
+.ds-btn-primary:hover { box-shadow: 0 8px 28px rgba(31, 110, 84, 0.40); }
+
+.ds-btn-gold {
+  background: var(--ds-gold-grad);
+  color: #241F18;
+  box-shadow: 0 4px 18px rgba(176, 141, 46, 0.26);
+}
+.ds-btn-gold:hover { box-shadow: 0 8px 28px rgba(176, 141, 46, 0.38); }
+
+.ds-btn-ghost {
+  background: transparent;
+  color: var(--majalis-emerald);
+  border: 1.5px solid var(--majalis-line);
+}
+.ds-btn-ghost:hover { background: var(--majalis-sage); border-color: var(--majalis-emerald); }
+
+/* ─── Phase 1: Unified Card Component ────────────────────── */
+.ds-card {
+  border: 1px solid var(--majalis-line);
+  background: var(--majalis-panel);
+  border-radius: var(--ds-r-lg);
+  box-shadow: var(--ds-shadow-sm);
+  transition: transform var(--ds-t-fast), box-shadow var(--ds-t-fast);
+}
+.ds-card:hover { transform: translateY(-2px); box-shadow: var(--ds-shadow-md); }
+
+/* ─── Phase 1: Unified Input Component ───────────────────── */
+.ds-input {
+  width: 100%;
+  min-height: 44px;
+  padding: 0.625rem 0.875rem;
+  border: 1.5px solid var(--majalis-line);
+  border-radius: var(--ds-r-sm);
+  background: var(--majalis-panel);
+  color: var(--majalis-ink);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  outline: none;
+  direction: rtl;
+  transition: border-color var(--ds-t-fast), box-shadow var(--ds-t-fast);
+}
+.ds-input:focus {
+  border-color: var(--majalis-emerald);
+  box-shadow: 0 0 0 3px rgba(31, 110, 84, 0.12);
+}
+
+/* ─── Phase 1: Section Heading System ────────────────────── */
+.ds-section { margin-bottom: clamp(2rem, 5vw, 3.5rem); }
+
+.ds-section__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.875rem;
+  border-bottom: 1.5px solid var(--majalis-line);
+  position: relative;
+}
+/* Gold accent rule on the right */
+.ds-section__head::after {
+  content: "";
+  position: absolute;
+  bottom: -1.5px;
+  right: 0;
+  width: 2.75rem;
+  height: 1.5px;
+  background: var(--ds-gold-grad);
+  border-radius: var(--ds-r-full);
+}
+.ds-section__title {
+  color: var(--majalis-emerald-deep);
+  font-size: clamp(1.05rem, 2.4vw, 1.35rem);
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.35;
+}
+.ds-section__link {
+  flex-shrink: 0;
+  color: var(--majalis-brass-deep);
+  font-size: 0.84rem;
+  font-weight: 700;
+  text-decoration: none;
+  border: 1px solid var(--majalis-line);
+  border-radius: var(--ds-r-full);
+  padding: 0.35rem 0.875rem;
+  background: rgba(255,255,255,.6);
+  transition: border-color var(--ds-t-fast), background var(--ds-t-fast);
+}
+.ds-section__link:hover {
+  border-color: var(--majalis-brass);
+  background: var(--majalis-parchment-deep);
+}
+
+/* ─── Phase 2: Homepage Hero v3 — Visual Upgrade ─────────── */
+.home-page--v3 {
+  background: var(--majalis-parchment);
+}
+
+/* Rich green hero (overrides the minimal v3 default) */
+.home-hero--v3 {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(2.75rem, 9vw, 5rem) clamp(3.5rem, 10vw, 6rem);
+  background:
+    radial-gradient(ellipse 60% 50% at 15% 30%, rgba(176, 141, 46, 0.30) 0%, transparent 100%),
+    radial-gradient(ellipse 50% 60% at 85% 70%, rgba(31, 110, 84, 0.22) 0%, transparent 100%),
+    var(--ds-hero-grad);
+  color: var(--majalis-parchment);
+}
+
+/* Geometric dot-grid pattern overlay */
+.home-hero--v3::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    radial-gradient(circle, rgba(250, 245, 234, 0.085) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+/* Diagonal stripe accent */
+.home-hero--v3::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 100px;
+  background: linear-gradient(180deg, transparent 0%, var(--majalis-parchment) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Ensure hero content sits above overlays */
+.home-hero-grid--v3,
+.home-hero-copy--v3 {
+  position: relative;
+  z-index: 2;
+}
+
+/* Logo with gold ring */
+.home-hero-logo {
+  border-radius: 1.25rem;
+  padding: 0.45rem;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow:
+    0 0 0 4px rgba(176, 141, 46, 0.30),
+    0 0 0 8px rgba(176, 141, 46, 0.10),
+    0 20px 48px rgba(0, 0, 0, 0.24);
+}
+
+/* Title size boost for v3 */
+.home-hero-title--v3 {
+  font-size: clamp(2.2rem, 7vw, 4rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+}
+
+/* Search bar with gold glow */
+.home-search--v3 {
+  background: rgba(255, 255, 255, 0.98);
+  border: 1.5px solid rgba(250, 245, 234, 0.30);
+  box-shadow:
+    0 0 0 4px rgba(176, 141, 46, 0.12),
+    0 24px 56px rgba(0, 0, 0, 0.22);
+}
+
+/* ─── Phase 2: Quick Links Grid (currently missing CSS!) ──── */
+.home-quick-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 8rem), 1fr));
+  gap: 0.75rem;
+}
+
+.home-quick-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  min-height: 5.5rem;
+  padding: 0.875rem 0.75rem;
+  text-align: center;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: var(--majalis-emerald-deep);
+  border: 1.5px solid var(--majalis-line);
+  border-radius: var(--ds-r-lg);
+  background: var(--majalis-panel);
+  box-shadow: var(--ds-shadow-xs);
+  transition: transform var(--ds-t-fast), box-shadow var(--ds-t-fast), border-color var(--ds-t-fast), background var(--ds-t-fast);
+}
+.home-quick-link:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--ds-shadow-md);
+  border-color: rgba(31, 110, 84, 0.45);
+  background: linear-gradient(160deg, #fff 0%, var(--majalis-parchment-deep) 100%);
+}
+.home-quick-link span {
+  font-size: 0.73rem;
+  font-weight: 600;
+  color: var(--majalis-brass-deep);
+  line-height: 1.3;
+}
+
+/* ─── Phase 2: Unify all card border radii ────────────────── */
+.home-stat-card,
+.home-feature-card,
+.home-feature-card--v3,
+.home-lesson-card,
+.home-sheikh-card,
+.home-library-card,
+.home-miracle-card,
+.home-fawaid-card,
+.home-qa-card,
+.home-more-card,
+.home-occasion-card,
+.home-progress-card,
+.home-empty-card,
+.home-banner,
+.home-sunnah-card,
+.ui-card,
+.page-card {
+  border-radius: var(--ds-r-lg);
+}
+
+/* ─── Phase 2: Daily Row (dhikr / question / faida) ──────── */
+.home-daily-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  gap: 1rem;
+  margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+/* ─── Phase 2: Section head consistent across homepage ──────*/
+.home-section {
+  margin-bottom: clamp(2rem, 5vw, 3.5rem);
+}
+
+/* ─── Phase 2: Footer visual upgrade ─────────────────────── */
+.site-footer--v3 {
+  position: relative;
+  background: linear-gradient(180deg, var(--majalis-parchment-deep) 0%, var(--majalis-parchment) 100%);
+  border-top: 1px solid var(--majalis-line);
+}
+
+/* Gold-to-emerald top accent line */
+.site-footer--v3::before {
+  content: "";
+  display: block;
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    var(--majalis-brass) 20%,
+    var(--majalis-emerald) 50%,
+    var(--majalis-brass) 80%,
+    transparent 100%
+  );
+}
+
+.site-footer-inner--v3 {
+  padding-block: 2.5rem 1.25rem;
+}
+
+.site-footer-brand {
+  align-items: center;
+  padding-bottom: 1.25rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(224, 215, 196, 0.5);
+}
+
+.site-footer-brand strong {
+  font-size: 1.1rem;
+  letter-spacing: 0.01em;
+}
+
+.site-footer-groups {
+  gap: 1.25rem;
+}
+
+.site-footer-group p {
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(224, 215, 196, 0.4);
+  margin-bottom: 0.5rem !important;
+}
+
+.site-footer-link {
+  color: var(--majalis-ink-soft) !important;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  min-height: unset !important;
+  padding: 0.2rem 0 !important;
+  transition: color var(--ds-t-fast);
+}
+.site-footer-link:hover { color: var(--majalis-emerald) !important; }
+
+.site-footer-copy {
+  padding-top: 1.25rem;
+  margin-top: 1.25rem !important;
+  border-top: 1px solid var(--majalis-line);
+  font-size: 0.8rem !important;
+  text-align: center;
+}
+
+/* ─── Phase 2: Navbar polish ──────────────────────────────── */
+.navbar-v3 {
+  background: rgba(250, 245, 234, 0.96) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  border-bottom: 1px solid rgba(224, 215, 196, 0.7) !important;
+  box-shadow: 0 2px 18px rgba(36, 31, 24, 0.06) !important;
+}
+
+html[data-theme="dark"] .navbar-v3 {
+  background: rgba(12, 20, 16, 0.97) !important;
+  border-color: rgba(53, 82, 68, 0.55) !important;
+  box-shadow: 0 2px 18px rgba(0,0,0,.35) !important;
+}
+
+/* ─── Phase 3: Islamic Decorative Elements ─────────────────── */
+
+/* Section divider wrapper */
+.islamic-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin: clamp(1rem, 3vw, 1.75rem) 0;
+  padding: 0;
+  opacity: 0.6;
+  pointer-events: none;
+}
+.islamic-divider__line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--majalis-line), transparent);
+}
+.islamic-divider__ornament {
+  color: var(--majalis-brass);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Header ornament strip (hero bottom border) */
+.islamic-ornament-strip {
+  height: 6px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--majalis-brass)         0px,
+    var(--majalis-brass)         4px,
+    transparent                  4px,
+    transparent                  8px,
+    var(--majalis-emerald)       8px,
+    var(--majalis-emerald)       12px,
+    transparent                  12px,
+    transparent                  16px
+  );
+  opacity: 0.45;
+}
+
+/* Page-level section divider with Islamic star center */
+.islamic-section-rule {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  margin: clamp(1.25rem, 3.5vw, 2.25rem) 0;
+  color: var(--majalis-brass);
+}
+.islamic-section-rule::before,
+.islamic-section-rule::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--majalis-line);
+}
+
+/* ─── Phase 4: Responsiveness ─────────────────────────────── */
+@media (max-width: 680px) {
+  .home-hero--v3 {
+    padding-block: 2.25rem 3.5rem;
+  }
+  .home-hero-title--v3 {
+    font-size: clamp(1.85rem, 8vw, 2.6rem);
+  }
+  .home-quick-grid {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 7rem), 1fr));
+    gap: 0.6rem;
+  }
+  .home-quick-link {
+    min-height: 4.75rem;
+    font-size: 0.84rem;
+  }
+  .home-daily-row {
+    grid-template-columns: 1fr;
+  }
+  .ds-section__head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  .ds-section__link { align-self: flex-start; }
+  .site-footer-inner--v3 { padding-block: 2rem 1rem; }
+}
+
+@media (min-width: 681px) and (max-width: 879px) {
+  .home-quick-grid {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 8.5rem), 1fr));
+  }
+  .home-hero-title--v3 {
+    font-size: clamp(2.2rem, 5vw, 3rem);
+  }
+}
+
+@media (min-width: 880px) {
+  .home-daily-row {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
