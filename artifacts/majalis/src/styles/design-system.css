@@ -1883,3 +1883,19 @@ html[data-theme="dark"] .user-stat-card__value { color: var(--majalis-emerald-de
 
 .home-about__body p { margin: 0 0 0.8rem; }
 .home-about__body p:last-child { margin-bottom: 0; }
+
+/* ── Footer email link ───────────────────────────────────── */
+.site-footer-email {
+  margin: 0.25rem 0 0;
+  font-size: 0.75rem;
+}
+
+.site-footer-email a {
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.site-footer-email a:hover {
+  color: var(--ds-gold, #C9A84C);
+}
