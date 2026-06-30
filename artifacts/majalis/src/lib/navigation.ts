@@ -71,6 +71,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { href: "/qibla", label: "القبلة" },
       { href: "/occasions", label: "المناسبات الإسلامية" },
       { href: "/settings", label: "الإعدادات" },
+      { href: "/quiz", label: "لعبة سؤال وجواب" },
     ],
   },
 ];
