@@ -59,11 +59,7 @@ export async function fetchLessons(options?: { bypassCache?: boolean }): Promise
       cacheTs = now;
       return cachedResult;
     }
-    if (!allowSeedFallback()) {
-      cachedResult = { lessons: [], source: "supabase" };
-      cacheTs = now;
-      return cachedResult;
-    }
+    // Supabase is empty — always fall through to seed data
   } catch {
     /* fallback below */
   }
