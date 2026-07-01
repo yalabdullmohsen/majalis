@@ -36,7 +36,9 @@ export function HomeCompactPrayer() {
   const { data, nextKey, countdown } = useCompactPrayer();
   if (!data?.prayers?.length) return null;
 
-  const obligatory = data.prayers.filter((p: PrayerSlot) => p.obligatory);
+  const obligatory = data.prayers.filter(
+    (p: PrayerSlot) => p.obligatory || p.key === "Sunrise"
+  );
   const nextPrayer = obligatory.find((p) => p.key === nextKey);
 
   return (
