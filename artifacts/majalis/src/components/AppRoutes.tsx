@@ -161,7 +161,7 @@ export default function AppRoutes() {
         <Route path="/quran-radio"><SafeLazyRoute component={QuranRadioPage} /></Route>
         <Route path="/quran"><SafeLazyRoute component={QuranPage} /></Route>
         <Route path="/prayer-times"><SafeLazyRoute component={PrayerTimesPage} /></Route>
-        <Route path="/prayer-ranks"><SafeLazyRoute component={PrayerRanksPage} /></Route>
+        <Route path="/prayer-ranks"><Redirect to="/prayer-times?tab=ranks" /></Route>
         <Route path="/qibla"><SafeLazyRoute component={QiblaPage} /></Route>
         <Route path="/tasbih"><SafeLazyRoute component={TasbihPage} /></Route>
         <Route path="/daily-wird"><SafeLazyRoute component={DailyWirdPage} /></Route>

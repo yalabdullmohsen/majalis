@@ -1,6 +1,6 @@
 import { PageHeader } from "@/components/ui-common";
 
-const RANKS = [
+export const RANKS = [
   {
     title: "المرتبة الأولى",
     label: "المفرّط في أصل الصلاة",
@@ -38,7 +38,7 @@ const RANKS = [
   },
 ];
 
-export default function PrayerRanksPage() {
+export function PrayerRanksContent() {
   const share = async () => {
     const url = window.location.href;
     if (navigator.share) {
@@ -49,15 +49,9 @@ export default function PrayerRanksPage() {
   };
 
   return (
-    <div className="page-shell prayer-ranks-page">
-      <PageHeader
-        eyebrow="الصلاة"
-        title="مراتب الناس في الصلاة"
-        subtitle="عرض تربوي منسق للمراتب الخمس في حضور القلب وإقامة الصلاة."
-      />
-
+    <div className="prayer-ranks-page">
       <div className="prayer-ranks-actions">
-        <button type="button" className="ui-card-btn" onClick={share}>مشاركة الصفحة</button>
+        <button type="button" className="ui-card-btn" onClick={share}>مشاركة</button>
         <button type="button" className="ui-card-btn" onClick={() => window.print()}>طباعة / PDF</button>
       </div>
 
@@ -94,6 +88,19 @@ export default function PrayerRanksPage() {
           <li>من وجد نقصاً فليستعن بالله وليكثر من الدعاء: اللهم أعني على ذكرك وشكرك وحسن عبادتك.</li>
         </ul>
       </section>
+    </div>
+  );
+}
+
+export default function PrayerRanksPage() {
+  return (
+    <div className="page-shell prayer-ranks-page">
+      <PageHeader
+        eyebrow="الصلاة"
+        title="مراتب الناس في الصلاة"
+        subtitle="عرض تربوي منسق للمراتب الخمس في حضور القلب وإقامة الصلاة."
+      />
+      <PrayerRanksContent />
     </div>
   );
 }

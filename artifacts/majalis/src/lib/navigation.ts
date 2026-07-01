@@ -73,7 +73,6 @@ export const NAV_GROUPS: NavGroup[] = [
     title: "الأدوات",
     links: [
       { href: "/prayer-times", label: "مواقيت الصلاة" },
-      { href: "/prayer-ranks", label: "مراتب الناس في الصلاة" },
       { href: "/qibla", label: "القبلة" },
       { href: "/occasions", label: "المناسبات الإسلامية" },
       { href: "/settings", label: "الإعدادات" },
@@ -106,7 +105,6 @@ export const MOBILE_MORE_NAV = [
   { href: "/quran/tajweed", label: "التجويد" },
   { href: "/quran/surah-stories", label: "قصص القرآن" },
   { href: "/tasbih", label: "عداد التسبيح" },
-  { href: "/prayer-ranks", label: "مراتب الصلاة" },
   { href: "/quiz", label: "لعبة سؤال وجواب" },
   { href: "/settings", label: "الإعدادات" },
   { href: "/submit", label: "أضف محتوى" },
@@ -175,7 +173,7 @@ export const HOME_MORE_SECTIONS = [
   { href: "/hadith", title: "الأحاديث الموثقة", description: "أحاديث نبوية محققة من مصادر موثوقة" },
   { href: "/stories", title: "القصص الإسلامية", description: "قصص من السيرة النبوية والأنبياء والصحابة" },
   { href: "/fatwa", title: "الفتاوى", description: "مركز الفتاوى الشرعية" },
-  { href: "/prayer-ranks", title: "مراتب الناس في الصلاة", description: "مراتب الخشوع وحضور القلب" },
+
   { href: "/rulings", title: "الأحكام الشرعية", description: "مكتبة الأحكام والأدلة" },
   { href: "/annual-courses", title: "الدورات العلمية", description: "برامج ودورات سنوية" },
   { href: "/updates", title: "آخر المستجدات", description: "قرارات وفتاوى ودروس جديدة" },

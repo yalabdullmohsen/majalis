@@ -54,7 +54,6 @@ const ICONS: Record<string, React.ComponentType<{ size?: number; className?: str
   "/arbaeen-nawawi": ScrollText,
   "/occasions": Moon,
   "/prayer-times": Clock,
-  "/prayer-ranks": Heart,
   "/qibla": Compass,
   "/settings": Settings,
   "/quiz": Sparkles,

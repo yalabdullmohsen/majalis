@@ -6001,6 +6001,40 @@ html[data-theme="dark"] .home-page {
   text-align: center;
 }
 
+/* ── Prayer page tabs ────────────────────────────────────────────────────── */
+.prayer-page-tabs {
+  display: flex;
+  gap: 0.375rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid var(--ds-line-color, #e4ddd0);
+  padding-bottom: 0;
+}
+
+.prayer-page-tab {
+  padding: 0.5rem 1rem;
+  font-size: var(--ds-text-sm, 0.8125rem);
+  font-weight: 600;
+  font-family: inherit;
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  color: var(--ds-ink-soft, #5c564c);
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+  margin-bottom: -1px;
+  white-space: nowrap;
+}
+
+.prayer-page-tab--active {
+  color: var(--ds-emerald-deep, #134a3a);
+  border-bottom-color: var(--ds-emerald, #1a6b52);
+  font-weight: 700;
+}
+
+.prayer-page-tab:not(.prayer-page-tab--active):hover {
+  color: var(--ds-ink, #1f1c17);
+}
+
 /* ── Prayer ranks page ───────────────────────────────────────────────────── */
 .prayer-ranks-actions {
   display: flex;

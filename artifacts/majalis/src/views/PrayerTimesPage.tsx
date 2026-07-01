@@ -1,6 +1,8 @@
 import { useMemo, useState } from "react";
+import { useSearch } from "wouter";
 import { PageHeader, Loading } from "@/components/ui-common";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
+import { PrayerRanksContent } from "@/views/PrayerRanksPage";
 
 type PrayerKey = "fajr" | "dhuhr" | "asr" | "maghrib" | "isha";
 type PrayerTrack = {
@@ -45,7 +47,17 @@ function writeTracker(data: Record<string, Record<PrayerKey, PrayerTrack>>) {
   localStorage.setItem(TRACK_STORAGE, JSON.stringify(data));
 }
 
+const TABS = [
+  { id: "times", label: "مواقيت الصلاة" },
+  { id: "ranks", label: "مراتب الناس في الصلاة" },
+] as const;
+type TabId = (typeof TABS)[number]["id"];
+
 export default function PrayerTimesPage() {
+  const search = useSearch();
+  const initialTab: TabId = new URLSearchParams(search).get("tab") === "ranks" ? "ranks" : "times";
+  const [activeTab, setActiveTab] = useState<TabId>(initialTab);
+
   const { data, countdown, loading } = usePrayerCountdown();
   const obligatory = data?.prayers.filter((p) => p.obligatory) || [];
   const [store, setStore] = useState(() => readTracker());
@@ -92,7 +104,25 @@ export default function PrayerTimesPage() {
         subtitle="مواقيت الصلاة في الكويت مع عدّاد تنازلي يتحدّث كل ثانية."
       />
 
-      {loading ? (
+      {/* Tab bar */}
+      <div className="prayer-page-tabs" role="tablist" aria-label="أقسام الصلاة">
+        {TABS.map((tab) => (
+          <button
+            key={tab.id}
+            type="button"
+            role="tab"
+            aria-selected={activeTab === tab.id}
+            onClick={() => setActiveTab(tab.id)}
+            className={`prayer-page-tab${activeTab === tab.id ? " prayer-page-tab--active" : ""}`}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+
+      {activeTab === "ranks" && <PrayerRanksContent />}
+
+      {activeTab === "times" && (loading ? (
         <Loading />
       ) : data && countdown ? (
         <>
@@ -168,7 +198,7 @@ export default function PrayerTimesPage() {
         </>
       ) : (
         <p className="lessons-empty-state">تعذر تحميل المواقيت حالياً.</p>
-      )}
+      ))}
     </div>
   );
 }
