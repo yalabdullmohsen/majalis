@@ -44,6 +44,7 @@ function useTabFromUrl(): [TabId, (tab: TabId) => void] {
       setLocation(next === "all" ? "/lessons" : `/lessons?tab=${next}`);
       setTabState(next);
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [setLocation],
   );
 
