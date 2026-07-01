@@ -1405,3 +1405,63 @@ hr.decorative,
   margin: 0.5rem 0 0;
   padding-inline-start: 1.25rem;
 }
+
+/* ═══════════════════════════════════════════════════════
+   Auth — Google OAuth button
+   ═══════════════════════════════════════════════════════ */
+
+.login-oauth {
+  margin: 0.75rem 0;
+}
+
+.login-oauth__divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+  color: #9ca3af;
+  font-size: 0.8rem;
+}
+
+.login-oauth__divider::before,
+.login-oauth__divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #e5e7eb;
+}
+
+.login-oauth__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  width: 100%;
+  min-height: 2.5rem;
+  padding: 0.5rem 1rem;
+  border: 1.5px solid #e5e7eb;
+  border-radius: var(--ds-radius);
+  background: #fff;
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.login-oauth__btn:hover:not(:disabled) {
+  border-color: #d1d5db;
+  box-shadow: 0 1px 4px rgba(0,0,0,.08);
+}
+
+.login-oauth__btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+html[data-theme="dark"] .login-oauth__btn {
+  background: #1e1e1e;
+  border-color: #333;
+  color: #d1d5db;
+}

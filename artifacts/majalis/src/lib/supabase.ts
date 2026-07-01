@@ -77,6 +77,17 @@ export async function signOut() {
   return await supabase.auth.signOut();
 }
 
+export async function signInWithGoogle(redirectTo?: string) {
+  const redirect = redirectTo || `${window.location.origin}/auth/callback`;
+  return await supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: redirect,
+      queryParams: { access_type: "offline", prompt: "consent" },
+    },
+  });
+}
+
 export async function getCurrentUser() {
   if (!isConfigured) return null;
 

@@ -20,6 +20,7 @@ const ScientificAnnouncementDetailPage = lazy(() => import("@/views/ScientificAn
 const AdhkarPage = lazy(() => import("@/views/AdhkarPage"));
 const QuizPage = lazy(() => import("@/views/QuizPage"));
 const LoginPage = lazy(() => import("@/views/LoginPage"));
+const AuthCallbackPage = lazy(() => import("@/views/AuthCallbackPage"));
 const TranscribePage = lazy(() => import("@/views/TranscribePage"));
 const AssistantPage = lazy(() => import("@/views/AssistantPage"));
 const CondolencesPage = lazy(() => import("@/views/CondolencesPage"));
@@ -195,6 +196,7 @@ export default function AppRoutes() {
         <Route path="/updates"><SafeLazyRoute component={UpdatesPage} /></Route>
         <Route path="/developers"><SafeLazyRoute component={DeveloperPage} /></Route>
         <Route path="/login"><SafeLazyRoute component={LoginPage} /></Route>
+        <Route path="/auth/callback"><SafeLazyRoute component={AuthCallbackPage} /></Route>
         <Route path="/admin/auto-content">
           <AdminRouteGuard>
             <ErrorBoundary>
