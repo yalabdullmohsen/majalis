@@ -1,5 +1,9 @@
 import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import {
+  BookOpen, ScrollText, Moon, Star, Scale, Building2, Landmark, Gem,
+  type LucideIcon,
+} from "lucide-react";
+import {
   ALL_QUESTIONS,
   GAME_CATEGORIES,
   mergeSupabaseQuestions,
@@ -9,6 +13,24 @@ import {
   type QuizQuestion,
 } from "@/data/islamicQuizData";
 import { getQuizQuestions, getLocalUsedQuizIds, markQuizQuestionUsed } from "@/lib/supabase";
+
+// ─── Icon renderer ─────────────────────────────────────────────────────────
+
+const CATEGORY_ICONS: Record<string, LucideIcon> = {
+  "book-open": BookOpen,
+  "scroll-text": ScrollText,
+  moon: Moon,
+  star: Star,
+  scale: Scale,
+  "building-2": Building2,
+  landmark: Landmark,
+  gem: Gem,
+};
+
+function CategoryIcon({ name, size = 18 }: { name: string; size?: number }) {
+  const Icon = CATEGORY_ICONS[name];
+  return Icon ? <Icon size={size} aria-hidden="true" /> : null;
+}
 
 // ─── Types ─────────────────────────────────────────────────────────────────
 
@@ -418,7 +440,9 @@ function SetupPhase({ onStart }: { onStart: (cats: string[], names: [string, str
                   opacity: maxed ? 0.5 : 1,
                 }}
               >
-                <div style={{ fontSize: "1.2rem", marginBottom: "0.25rem" }}>{cat.icon}</div>
+                <div style={{ display: "flex", justifyContent: "center", marginBottom: "0.35rem", opacity: maxed ? 0.4 : 1 }}>
+                  <CategoryIcon name={cat.icon} size={20} />
+                </div>
                 {cat.name}
               </button>
             );
@@ -503,7 +527,7 @@ function BoardPhase({
                 lineHeight: 1.4,
               }}
             >
-              <div style={{ fontSize: "1rem" }}>{cat.icon}</div>
+              <div style={{ display: "flex", justifyContent: "center" }}><CategoryIcon name={cat.icon} size={16} /></div>
               <div style={{ marginTop: "0.2rem" }}>{cat.name}</div>
             </div>
           ))}

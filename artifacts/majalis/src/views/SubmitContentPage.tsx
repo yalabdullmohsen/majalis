@@ -55,9 +55,36 @@ export default function SubmitContentPage() {
       <h1 style={{ fontSize: "1.5rem", fontWeight: 700, marginBottom: "0.5rem", color: "#0D1B2A" }}>
         أضف محتوى
       </h1>
-      <p style={{ color: "#6b7280", fontSize: "0.9rem", marginBottom: "1.5rem" }}>
+      <p style={{ color: "#6b7280", fontSize: "0.9rem", marginBottom: "1rem" }}>
         يصل مقترحك للأدمن لمراجعته قبل النشر.
       </p>
+
+      {/* Banner بارز للدروس */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "0.75rem",
+          padding: "0.875rem 1rem",
+          background: "linear-gradient(135deg, #f0f7f3, #fefdf5)",
+          border: "1.5px solid rgba(176,141,46,0.4)",
+          borderRadius: "0.625rem",
+          marginBottom: "1.5rem",
+          cursor: "pointer",
+        }}
+        onClick={() => setFormType("lesson")}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => e.key === "Enter" && setFormType("lesson")}
+      >
+        <div style={{ fontSize: "1.5rem" }}>📚</div>
+        <div>
+          <p style={{ margin: 0, fontWeight: 700, fontSize: "0.9rem", color: "#134a3a" }}>أضف درساً علمياً</p>
+          <p style={{ margin: "0.15rem 0 0", fontSize: "0.78rem", color: "#6b7280" }}>
+            شارك درساً، محاضرة، أو موضوعاً علمياً مفيداً
+          </p>
+        </div>
+      </div>
 
       {status === "success" && (
         <div role="status" style={{ padding: "1rem", background: "#f0fdf4", border: "1px solid #86efac", borderRadius: "0.5rem", color: "#166534", marginBottom: "1.25rem", fontWeight: 600 }}>
