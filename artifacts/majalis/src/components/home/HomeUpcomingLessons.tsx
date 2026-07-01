@@ -48,7 +48,7 @@ export function HomeUpcomingLessons({
         </div>
         <div className="home-section-head-links">
           <Link href="/calendar" className="home-section-link">التقويم</Link>
-          <Link href="/lessons?tab=lessons" className="home-section-link">كل الدروس</Link>
+          <Link href="/lessons" className="home-section-link">كل الدروس</Link>
         </div>
       </div>
 
