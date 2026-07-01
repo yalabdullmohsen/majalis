@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "wouter";
 import { useAuth } from "./AuthProvider";
+import { useLanguage } from "./LanguageProvider";
 import NotificationBell from "./NotificationBell";
 import { SearchSuggestions } from "./SearchSuggestions";
 import { SideNavDrawer } from "./SideNavDrawer";
@@ -66,8 +67,18 @@ function SearchBox({ onSubmitDone }: { onSubmitDone?: () => void }) {
   );
 }
 
+const PRIMARY_NAV_KEYS = [
+  { href: "/", key: "nav_home" },
+  { href: "/lessons", key: "nav_lessons" },
+  { href: "/quran", key: "nav_quran" },
+  { href: "/library", key: "nav_library" },
+  { href: "/adhkar", key: "nav_adhkar" },
+  { href: "/prayer-times", key: "nav_prayer" },
+] as const;
+
 export default function NavBar() {
   const { isAdmin, isLoggedIn, user, logout } = useAuth();
+  const { lang, setLang, t } = useLanguage();
   const [location, navigate] = useLocation();
   const isMobile = useIsMobile();
   const { isMenuOpen, moreOpen, toggleMenu, closeMenu, closeMore, toggleMore, closeAll } = useMobileNavState();
@@ -86,23 +97,23 @@ export default function NavBar() {
   const authLinks = isLoggedIn ? (
     <div className="navbar-auth">
       {isAdmin && <NotificationBell />}
-      <Link href="/stats" className="navbar-user-link">{user?.profile?.full_name || user?.email || "حسابي"}</Link>
+      <Link href="/stats" className="navbar-user-link">{user?.profile?.full_name || user?.email || t("nav_my_account")}</Link>
       {isAdmin && (
         <Link href="/admin" className="navbar-admin-link">
-          لوحة التحكم
+          {t("nav_admin_panel")}
         </Link>
       )}
       <button type="button" onClick={handleLogout} className="navbar-logout">
-        خروج
+        {t("nav_logout")}
       </button>
     </div>
   ) : (
     <div className="navbar-auth navbar-auth--guest">
       <Link href="/login" className="navbar-login">
-        دخول
+        {t("nav_login")}
       </Link>
       <Link href="/register" className="navbar-register">
-        إنشاء حساب
+        {t("nav_register")}
       </Link>
     </div>
   );
@@ -121,9 +132,9 @@ export default function NavBar() {
               onClick={toggleMenu}
               aria-expanded={isMenuOpen}
               aria-controls="main-navigation-drawer"
-              aria-label={isMenuOpen ? "إغلاق القائمة" : "فتح القائمة"}
+              aria-label={isMenuOpen ? t("nav_close") : t("nav_menu")}
             >
-              {isMenuOpen ? "إغلاق" : "القائمة"}
+              {isMenuOpen ? t("nav_close") : t("nav_menu")}
             </button>
             <Link href="/" className="navbar-brand">
               <img
@@ -140,15 +151,15 @@ export default function NavBar() {
           </div>
 
           {!isMobile && (
-            <nav className="navbar-v3__tabs" aria-label="التنقل الرئيسي">
-              {PRIMARY_NAV.map((t) => (
-                <Link key={t.href} href={t.href} style={tabStyle(isActive(t.href))}>
-                  {t.label}
+            <nav className="navbar-v3__tabs" aria-label={lang === "en" ? "Main navigation" : "التنقل الرئيسي"}>
+              {PRIMARY_NAV_KEYS.map((item) => (
+                <Link key={item.href} href={item.href} style={tabStyle(isActive(item.href))}>
+                  {t(item.key)}
                 </Link>
               ))}
               {isAdmin && (
                 <Link href="/admin" style={{ ...tabStyle(location.startsWith("/admin")), color: C.brassDeep }}>
-                  لوحة التحكم
+                  {t("nav_admin_panel")}
                 </Link>
               )}
             </nav>
@@ -157,24 +168,33 @@ export default function NavBar() {
           <div className="navbar-v3__end">
             {!isMobile && <SearchBox />}
             {!isMobile && authLinks}
+            <button
+              type="button"
+              className="navbar-lang-btn"
+              onClick={() => setLang(lang === "ar" ? "en" : "ar")}
+              aria-label={lang === "ar" ? "Switch to English" : "التبديل إلى العربية"}
+              title={lang === "ar" ? "EN" : "عر"}
+            >
+              {lang === "ar" ? "EN" : "عر"}
+            </button>
             {isMobile && (
               <>
                 {!isLoggedIn && (
-                  <Link href="/register" className="navbar-register navbar-register--mobile" aria-label="إنشاء حساب">
-                    حساب
+                  <Link href="/register" className="navbar-register navbar-register--mobile" aria-label={t("nav_register")}>
+                    {t("nav_register_short")}
                   </Link>
                 )}
                 {!isLoggedIn ? (
-                  <Link href="/login" className="navbar-login navbar-login--mobile" aria-label="تسجيل الدخول">
-                    دخول
+                  <Link href="/login" className="navbar-login navbar-login--mobile" aria-label={t("nav_login")}>
+                    {t("nav_login")}
                   </Link>
                 ) : isAdmin ? (
-                  <Link href="/admin" className="navbar-login navbar-login--mobile" aria-label="لوحة التحكم">
-                    لوحة
+                  <Link href="/admin" className="navbar-login navbar-login--mobile" aria-label={t("nav_admin_panel")}>
+                    {t("nav_admin_short")}
                   </Link>
                 ) : (
-                  <Link href="/stats" className="navbar-login navbar-login--mobile" aria-label="حسابي">
-                    حسابي
+                  <Link href="/stats" className="navbar-login navbar-login--mobile" aria-label={t("nav_my_account")}>
+                    {t("nav_my_account")}
                   </Link>
                 )}
                 <button
@@ -185,7 +205,7 @@ export default function NavBar() {
                   aria-controls="navbar-mobile-more-panel"
                   aria-haspopup="true"
                 >
-                  {moreOpen ? "إغلاق" : "المزيد"}
+                  {moreOpen ? t("nav_close") : t("nav_more")}
                 </button>
               </>
             )}

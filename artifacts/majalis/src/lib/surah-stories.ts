@@ -13,10 +13,10 @@ export type SurahStory = {
   lessons: string[];
   keyTopics: string[];
   virtues: string;
-  connectionToPrevious: string;
+  connectionToPrevious?: string;
   keywords: string[];
   sources: string[];
-  lastReviewed: string;
+  lastReviewed?: string;
   trustNote: string;
 };
 
@@ -71,28 +71,25 @@ export function getSurahStory(surahNumber: number): SurahStory {
     number: meta.number,
     name: meta.name,
     namingReason: buildNamingReason(meta),
-    revelationTime: meta.revelationOrder
-      ? `ترتيب النزول: ${meta.revelationOrder}`
-      : meta.revelation === "مكية"
-        ? "نزلت في مكة — قبل الهجرة"
-        : "نزلت في المدينة — بعد الهجرة",
+    revelationTime: meta.revelation === "مكية"
+      ? "نزلت في مكة — قبل الهجرة"
+      : "نزلت في المدينة — بعد الهجرة",
     revelationPlace: meta.revelation === "مكية" ? "مكة المكرمة" : "المدينة المنورة",
     ayahCount: meta.ayahs,
-    mainThemes: meta.themes,
+    mainThemes: [],
     mainStories: buildStories(meta),
-    keyRulings: meta.keyRulings,
-    lessons: meta.keyBenefits,
-    keyTopics: meta.mainTopics,
-    virtues: meta.virtues || "الفضل العام لتلاوة القرآن — لا تُثبت فضيلة خاصة إلا بدليل.",
-    connectionToPrevious: meta.openingClosingConnection,
-    keywords: [...meta.themes, ...meta.mainTopics.slice(0, 3), meta.name],
+    keyRulings: [],
+    lessons: [],
+    keyTopics: [],
+    virtues: "الفضل العام لتلاوة القرآن — لا تُثبت فضيلة خاصة إلا بدليل.",
+    connectionToPrevious: undefined,
+    keywords: [meta.name],
     sources: [
-      meta.source,
       "تفسير ابن كثير",
       "تفسير السعدي",
       "أسباب النزول — الواحدي (عند الحاجة)",
     ],
-    lastReviewed: meta.lastReviewed,
+    lastReviewed: undefined,
     trustNote:
       "لا تُذكر روايات ضعيفة أو إسرائيليات. القصص من القرآن والسنة الصحيحة فقط.",
   };
