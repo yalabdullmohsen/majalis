@@ -1,7 +1,8 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Ayah } from "@/lib/quran-api";
 import type { PlayerState } from "@/hooks/useAyahPlayer";
 import { useAyahChunks } from "@/hooks/useAyahChunks";
+import { copyAyahText, shareAyahAsImage } from "@/lib/share-ayah";
 
 type Props = {
   ayahs: Ayah[];
@@ -35,6 +36,25 @@ export function AyahDisplay({
 }: Props) {
   const targetRef = useRef<HTMLSpanElement>(null);
   const { visibleAyahs, hasMore, sentinelRef } = useAyahChunks(ayahs, targetAyah);
+  const [copiedAyah, setCopiedAyah] = useState<number | null>(null);
+  const [sharingAyah, setSharingAyah] = useState<number | null>(null);
+
+  const handleCopy = async (ayah: Ayah) => {
+    const ok = await copyAyahText(ayah.text, surahName, ayah.numberInSurah);
+    if (ok) {
+      setCopiedAyah(ayah.numberInSurah);
+      setTimeout(() => setCopiedAyah(null), 1800);
+    }
+  };
+
+  const handleShareImage = async (ayah: Ayah) => {
+    setSharingAyah(ayah.numberInSurah);
+    try {
+      await shareAyahAsImage({ text: ayah.text, surahName, ayahNum: ayah.numberInSurah, surahNum });
+    } finally {
+      setSharingAyah(null);
+    }
+  };
 
   useEffect(() => {
     targetRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -117,6 +137,29 @@ export function AyahDisplay({
                 title={`تشغيل آية ${ayah.numberInSurah}`}
               >
                 {isLoading ? "…" : isPlaying && playerState === "playing" ? "❚❚" : "▶"}
+              </button>
+
+              {/* Copy button */}
+              <button
+                type="button"
+                className="qs-ayah-inline__share"
+                onClick={() => handleCopy(ayah)}
+                aria-label={`نسخ آية ${ayah.numberInSurah}`}
+                title="نسخ الآية"
+              >
+                {copiedAyah === ayah.numberInSurah ? "✓" : "⎘"}
+              </button>
+
+              {/* Share as image button */}
+              <button
+                type="button"
+                className="qs-ayah-inline__share qs-ayah-inline__share--img"
+                onClick={() => handleShareImage(ayah)}
+                aria-label={`مشاركة آية ${ayah.numberInSurah} كصورة`}
+                title="مشاركة كصورة"
+                disabled={sharingAyah === ayah.numberInSurah}
+              >
+                {sharingAyah === ayah.numberInSurah ? "…" : "⬡"}
               </button>
             </span>
           );

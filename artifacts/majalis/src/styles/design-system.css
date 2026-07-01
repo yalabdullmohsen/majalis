@@ -1511,3 +1511,99 @@ html[data-theme="dark"] .login-oauth__btn {
 .push-prompt__btn:disabled { opacity: 0.6; cursor: not-allowed; }
 .push-prompt__btn--off { background: #dc2626; }
 .push-prompt__btn--off:hover:not(:disabled) { background: #b91c1c; }
+
+/* ═══════════════════════════════════════════════════════
+   البند 7 — Dark Mode: تغطية شاملة للعناصر المضافة
+   ═══════════════════════════════════════════════════════ */
+
+html[data-theme="dark"] {
+  /* خلفية العناصر التي تستخدم #fff صريحاً */
+  --majalis-panel: #1C2A23;
+  color-scheme: dark;
+}
+
+/* شريط الصلاة المدمج */
+html[data-theme="dark"] .hcp-strip {
+  background: var(--majalis-panel);
+  border-color: var(--majalis-line);
+}
+
+html[data-theme="dark"] .hcp-prayer-cell {
+  background: var(--majalis-parchment-deep);
+  border-color: var(--majalis-line);
+  color: var(--majalis-ink);
+}
+
+html[data-theme="dark"] .hcp-prayer-cell--next {
+  background: color-mix(in srgb, var(--majalis-emerald) 15%, var(--majalis-panel));
+  border-color: var(--majalis-emerald);
+}
+
+html[data-theme="dark"] .hcp-strip__label { color: var(--majalis-ink-soft); }
+html[data-theme="dark"] .hcp-strip__link  { color: var(--majalis-emerald); }
+html[data-theme="dark"] .hcp-strip__countdown { color: var(--majalis-ink-soft); }
+html[data-theme="dark"] .hcp-strip__countdown-time { color: var(--majalis-emerald-deep); }
+
+/* بطاقات عامة */
+html[data-theme="dark"] .ui-card,
+html[data-theme="dark"] .ds-card {
+  background: var(--majalis-panel);
+  border-color: var(--majalis-line);
+}
+
+/* نماذج إدخال */
+html[data-theme="dark"] .ds-input,
+html[data-theme="dark"] .login-field input,
+html[data-theme="dark"] .tasbih-add-row input {
+  background: var(--majalis-parchment-deep);
+  border-color: var(--majalis-line);
+  color: var(--majalis-ink);
+}
+
+/* أزرار ثانوية */
+html[data-theme="dark"] .tasbeeh-counter__btn,
+html[data-theme="dark"] .tasbeeh-counter__preset {
+  background: var(--majalis-parchment-deep);
+  border-color: var(--majalis-line);
+  color: var(--majalis-ink);
+}
+
+html[data-theme="dark"] .tasbeeh-counter__preset.is-active {
+  background: color-mix(in srgb, var(--majalis-emerald) 20%, var(--majalis-panel));
+  border-color: var(--majalis-emerald);
+  color: var(--majalis-emerald-deep);
+}
+
+/* الحلقة */
+html[data-theme="dark"] .tasbeeh-counter--pro {
+  background: var(--majalis-parchment-deep);
+  border-color: var(--majalis-line);
+}
+
+/* إشعارات Push */
+html[data-theme="dark"] .push-prompt {
+  background: var(--majalis-panel);
+  border-color: var(--majalis-line);
+}
+
+/* صفحة تسجيل الدخول */
+html[data-theme="dark"] .login-card {
+  background: var(--majalis-panel);
+  border-color: var(--majalis-line);
+}
+
+html[data-theme="dark"] .login-page {
+  background: var(--majalis-parchment);
+}
+
+/* إحصاء التسبيح */
+html[data-theme="dark"] .tasbih-stat {
+  background: var(--majalis-panel);
+  border-color: var(--majalis-line);
+}
+
+/* الإضافات الأخيرة للصفحة الرئيسية */
+html[data-theme="dark"] .home-about-section {
+  background: var(--majalis-panel);
+  border-color: var(--majalis-line);
+}
