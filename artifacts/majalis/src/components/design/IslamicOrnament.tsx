@@ -1,3 +1,5 @@
+import { useId } from "react";
+
 type Props = {
   className?: string;
   width?: number | string;
@@ -9,6 +11,8 @@ type Props = {
  * Renders a repeating geometric border motif in SVG.
  */
 export function IslamicOrnament({ className = "", width = "100%", style }: Props) {
+  const uid = useId();
+  const patternId = `islamic-border-${uid.replace(/:/g, "")}`;
   return (
     <svg
       className={className}
@@ -21,7 +25,7 @@ export function IslamicOrnament({ className = "", width = "100%", style }: Props
       aria-hidden="true"
     >
       <defs>
-        <pattern id="islamic-border" x="0" y="0" width="40" height="18" patternUnits="userSpaceOnUse">
+        <pattern id={patternId} x="0" y="0" width="40" height="18" patternUnits="userSpaceOnUse">
           {/* Diamond */}
           <polygon
             points="20,3 25,9 20,15 15,9"
@@ -47,7 +51,7 @@ export function IslamicOrnament({ className = "", width = "100%", style }: Props
           <line x1="25" y1="9" x2="40" y2="9" stroke="currentColor" strokeWidth="0.6" opacity="0.35" />
         </pattern>
       </defs>
-      <rect width="400" height="18" fill="url(#islamic-border)" />
+      <rect width="400" height="18" fill={`url(#${patternId})`} />
     </svg>
   );
 }

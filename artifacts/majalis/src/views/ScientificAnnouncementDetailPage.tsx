@@ -8,6 +8,14 @@ import {
   getScientificAnnouncementById,
 } from "@/lib/scientific-announcements";
 
+function safeHref(url?: string): string | undefined {
+  if (!url) return undefined;
+  try {
+    const { protocol } = new URL(url);
+    return protocol === "https:" || protocol === "http:" ? url : undefined;
+  } catch { return undefined; }
+}
+
 function DetailRow({ label, value }: { label: string; value?: string }) {
   if (!value || value === "غير محدد") return null;
   return (
@@ -132,7 +140,7 @@ export default function ScientificAnnouncementDetailPage({
           <section className="sci-ann-detail__block">
             <h2>الموقع على الخريطة</h2>
             {item.mapUrl && (
-              <a href={item.mapUrl} target="_blank" rel="noopener noreferrer" className="sci-ann-btn sci-ann-btn--secondary">
+              <a href={safeHref(item.mapUrl)} target="_blank" rel="noopener noreferrer" className="sci-ann-btn sci-ann-btn--secondary">
                 فتح في Google Maps
               </a>
             )}
@@ -157,25 +165,25 @@ export default function ScientificAnnouncementDetailPage({
           <section className="sci-ann-detail__block">
             <h2>روابط البث والتسجيل</h2>
             <div className="sci-ann-detail__links">
-              {item.registrationUrl && (
-                <a href={item.registrationUrl} target="_blank" rel="noopener noreferrer" className="sci-ann-btn sci-ann-btn--primary">
+              {safeHref(item.registrationUrl) && (
+                <a href={safeHref(item.registrationUrl)} target="_blank" rel="noopener noreferrer" className="sci-ann-btn sci-ann-btn--primary">
                   التسجيل
                 </a>
               )}
-              {item.liveUrl && (
-                <a href={item.liveUrl} target="_blank" rel="noopener noreferrer" className="sci-ann-btn sci-ann-btn--secondary">
+              {safeHref(item.liveUrl) && (
+                <a href={safeHref(item.liveUrl)} target="_blank" rel="noopener noreferrer" className="sci-ann-btn sci-ann-btn--secondary">
                   البث المباشر
                 </a>
               )}
-              {item.websiteUrl && (
-                <a href={item.websiteUrl} target="_blank" rel="noopener noreferrer" className="sci-ann-btn sci-ann-btn--secondary">
+              {safeHref(item.websiteUrl) && (
+                <a href={safeHref(item.websiteUrl)} target="_blank" rel="noopener noreferrer" className="sci-ann-btn sci-ann-btn--secondary">
                   الموقع
                 </a>
               )}
-              {item.broadcastLinks?.map((link) => (
+              {item.broadcastLinks?.filter((link) => safeHref(link.url)).map((link) => (
                 <a
                   key={link.url}
-                  href={link.url}
+                  href={safeHref(link.url)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="sci-ann-btn sci-ann-btn--secondary"

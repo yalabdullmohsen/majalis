@@ -15,7 +15,7 @@ export default function SurahStoriesPage() {
       <PageHeader
         eyebrow="القرآن"
         title="قصص القرآن"
-        subtitle="114 سورة — سبب التسمية، زمان ومكان النزول، المحاور، والقصص القرآنية الموثقة."
+        subtitle="سبب التسمية، زمان ومكان النزول، المحاور، والقصص القرآنية الموثقة — ١١٤ سورة."
       />
 
       <nav className="quran-subnav" aria-label="أقسام القرآن">
