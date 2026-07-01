@@ -37,15 +37,6 @@ import { allowSeedFallback } from "@/lib/cms/production-config";
 
 export { bootstrapSupabaseFromServer };
 
-// Normalize to the bare project origin (https://xxx.supabase.co).
-function normalizeSupabaseUrl(raw: string): string {
-  const v = (raw || "").trim();
-  try {
-    return new URL(v).origin;
-  } catch {
-    return v.replace(/\/+$/, "");
-  }
-}
 
 const isConfigured = isSupabaseConfigured();
 
@@ -962,7 +953,7 @@ function markLocalQuizIdUsed(id: string): void {
     const current = getLocalUsedQuizIds();
     current.add(id);
     localStorage.setItem(USED_QUIZ_IDS_KEY, JSON.stringify([...current]));
-  } catch {}
+  } catch { /* localStorage write failed silently */ }
 }
 
 export async function markQuizQuestionUsed(id: string): Promise<void> {
