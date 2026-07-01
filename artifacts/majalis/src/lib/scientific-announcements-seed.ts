@@ -83,7 +83,7 @@ export const SCIENTIFIC_ANNOUNCEMENTS: ScientificAnnouncement[] = [
     time: "بعد صلاة العصر",
     mosque: "مسجد سعد بن دبيس بين ق6 وق7",
     region: "الفردوس",
-    governorate: "غير محدد",
+    governorate: "الفروانية",
     notes: ["خاص بالرجال."],
     tags: ["فقه", "أسبوعي", "حضوري"],
     kind: "weekly",
