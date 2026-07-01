@@ -8597,6 +8597,8 @@ html[data-theme="dark"] .navbar-login {
 }
 .navbar-auth { display: flex; align-items: center; gap: 0.45rem; font-size: 0.78rem; color: var(--majalis-ink-soft); }
 .navbar-auth--guest { flex-wrap: nowrap; }
+.navbar-user-link { color: var(--majalis-ink-soft); text-decoration: none; font-size: 0.78rem; }
+.navbar-user-link:hover { color: var(--majalis-emerald-deep); text-decoration: underline; }
 .navbar-register {
   display: inline-flex;
   align-items: center;

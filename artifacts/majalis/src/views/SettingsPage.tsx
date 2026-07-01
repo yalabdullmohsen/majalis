@@ -11,6 +11,7 @@ import { THEME_OPTIONS, type ThemePreference } from "@/lib/theme-preference";
 import { clearQuranCache } from "@/lib/quran-api";
 import { DEFAULT_PREFERENCES, type UserPreferences } from "@/lib/user-preferences";
 import { useQuranPreferences, type QuranFontId } from "@/hooks/useQuranPreferences";
+import { PushPrompt } from "@/components/PushPrompt";
 
 function ToggleRow({
   label,
@@ -203,6 +204,7 @@ export default function SettingsPage() {
       </LegalSection>
 
       <LegalSection title="الإشعارات">
+        <PushPrompt />
         <ToggleRow label="إشعارات الدروس" checked={preferences.lessonNotifications} onChange={(value) => update("lessonNotifications", value)} />
         <ToggleRow label="إشعارات الدورات" checked={preferences.lectureNotifications} onChange={(value) => update("lectureNotifications", value)} />
         <ToggleRow label="إشعارات المحتوى الجديد" checked={preferences.contentNotifications} onChange={(value) => update("contentNotifications", value)} />

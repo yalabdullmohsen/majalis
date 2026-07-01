@@ -292,6 +292,53 @@
   cursor: default;
 }
 
+/* ── Share / copy buttons (same shape as play) ── */
+.qs-ayah-inline__share {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.35em;
+  height: 1.35em;
+  border-radius: 50%;
+  border: 1px solid var(--border, #d6d2ca);
+  background: var(--bg-card, #fff);
+  cursor: pointer;
+  font-size: .42em;
+  line-height: 1;
+  vertical-align: middle;
+  margin: 0 .15em;
+  transition: background .15s, border-color .15s, color .15s;
+  flex-shrink: 0;
+  color: var(--text-muted, #6b7280);
+  opacity: 0;
+}
+/* Show share buttons only on hover of parent span */
+.qs-ayah-inline:hover .qs-ayah-inline__share,
+.qs-ayah-inline:focus-within .qs-ayah-inline__share {
+  opacity: 1;
+}
+.qs-ayah-inline__share:hover:not(:disabled) {
+  background: #f3f4f6;
+  border-color: #9ca3af;
+}
+.qs-ayah-inline__share--img:hover:not(:disabled) {
+  background: var(--majalis-gold, #B08D2E);
+  border-color: var(--majalis-gold, #B08D2E);
+  color: #fff;
+}
+.qs-ayah-inline__share:disabled { opacity: .4; cursor: default; }
+
+@media (hover: none) {
+  /* Always show on touch devices */
+  .qs-ayah-inline__share { opacity: 1; }
+}
+
+html[data-theme="dark"] .qs-ayah-inline__share {
+  background: #1e1e1e;
+  border-color: #3a3a3a;
+  color: #9ca3af;
+}
+
 /* ── Player bar (sticky bottom) ── */
 .qs-player-bar {
   position: fixed;

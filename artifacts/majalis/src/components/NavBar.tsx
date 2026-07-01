@@ -86,7 +86,7 @@ export default function NavBar() {
   const authLinks = isLoggedIn ? (
     <div className="navbar-auth">
       {isAdmin && <NotificationBell />}
-      <span>{user?.profile?.full_name || user?.email || "حسابي"}</span>
+      <Link href="/stats" className="navbar-user-link">{user?.profile?.full_name || user?.email || "حسابي"}</Link>
       {isAdmin && (
         <Link href="/admin" className="navbar-admin-link">
           لوحة التحكم
@@ -173,7 +173,7 @@ export default function NavBar() {
                     لوحة
                   </Link>
                 ) : (
-                  <Link href="/settings" className="navbar-login navbar-login--mobile" aria-label="حسابي">
+                  <Link href="/stats" className="navbar-login navbar-login--mobile" aria-label="حسابي">
                     حسابي
                   </Link>
                 )}

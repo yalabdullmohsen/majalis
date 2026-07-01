@@ -1,6 +1,8 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Ayah } from "@/lib/quran-api";
 import type { PlayerState } from "@/hooks/useAyahPlayer";
+import { useAyahChunks } from "@/hooks/useAyahChunks";
+import { copyAyahText, shareAyahAsImage } from "@/lib/share-ayah";
 
 type Props = {
   ayahs: Ayah[];
@@ -33,6 +35,26 @@ export function AyahDisplay({
   onAyahClick,
 }: Props) {
   const targetRef = useRef<HTMLSpanElement>(null);
+  const { visibleAyahs, hasMore, sentinelRef } = useAyahChunks(ayahs, targetAyah);
+  const [copiedAyah, setCopiedAyah] = useState<number | null>(null);
+  const [sharingAyah, setSharingAyah] = useState<number | null>(null);
+
+  const handleCopy = async (ayah: Ayah) => {
+    const ok = await copyAyahText(ayah.text, surahName, ayah.numberInSurah);
+    if (ok) {
+      setCopiedAyah(ayah.numberInSurah);
+      setTimeout(() => setCopiedAyah(null), 1800);
+    }
+  };
+
+  const handleShareImage = async (ayah: Ayah) => {
+    setSharingAyah(ayah.numberInSurah);
+    try {
+      await shareAyahAsImage({ text: ayah.text, surahName, ayahNum: ayah.numberInSurah, surahNum });
+    } finally {
+      setSharingAyah(null);
+    }
+  };
 
   useEffect(() => {
     targetRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -59,14 +81,14 @@ export function AyahDisplay({
         <h2 className="qs-surah-header__title" lang="ar">{surahName}</h2>
       </header>
 
-      {/* ── Mushaf flowing text ── */}
+      {/* ── Mushaf flowing text (chunked for performance) ── */}
       <div
         className="qs-mushaf-body"
         lang="ar"
         dir="rtl"
         aria-label={`نص سورة ${surahName}`}
       >
-        {ayahs.map((ayah) => {
+        {visibleAyahs.map((ayah) => {
           const isTarget = ayah.numberInSurah === targetAyah;
           const isPlaying = ayah.numberInSurah === currentPlayingAyah;
           const isLoading = isPlaying && playerState === "loading";
@@ -96,10 +118,7 @@ export function AyahDisplay({
 
               {/* Ornamental ayah number ﴿٣﴾ */}
               {showAyahNumbers && (
-                <span
-                  className="qs-ayah-inline__num"
-                  aria-hidden="true"
-                >
+                <span className="qs-ayah-inline__num" aria-hidden="true">
                   ﴿{toArabic(ayah.numberInSurah)}﴾
                 </span>
               )}
@@ -117,16 +136,45 @@ export function AyahDisplay({
                 disabled={isLoading}
                 title={`تشغيل آية ${ayah.numberInSurah}`}
               >
-                {isLoading
-                  ? "…"
-                  : isPlaying && playerState === "playing"
-                  ? "❚❚"
-                  : "▶"}
+                {isLoading ? "…" : isPlaying && playerState === "playing" ? "❚❚" : "▶"}
+              </button>
+
+              {/* Copy button */}
+              <button
+                type="button"
+                className="qs-ayah-inline__share"
+                onClick={() => handleCopy(ayah)}
+                aria-label={`نسخ آية ${ayah.numberInSurah}`}
+                title="نسخ الآية"
+              >
+                {copiedAyah === ayah.numberInSurah ? "✓" : "⎘"}
+              </button>
+
+              {/* Share as image button */}
+              <button
+                type="button"
+                className="qs-ayah-inline__share qs-ayah-inline__share--img"
+                onClick={() => handleShareImage(ayah)}
+                aria-label={`مشاركة آية ${ayah.numberInSurah} كصورة`}
+                title="مشاركة كصورة"
+                disabled={sharingAyah === ayah.numberInSurah}
+              >
+                {sharingAyah === ayah.numberInSurah ? "…" : "⬡"}
               </button>
             </span>
           );
         })}
       </div>
+
+      {/* ── Infinite scroll sentinel ── */}
+      {hasMore && (
+        <div
+          ref={sentinelRef}
+          className="qs-load-sentinel"
+          aria-hidden="true"
+          style={{ height: 1, marginTop: "1rem" }}
+        />
+      )}
     </div>
   );
 }
