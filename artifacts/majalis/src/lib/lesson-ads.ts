@@ -1,4 +1,4 @@
-/** DEV/INSTALL ONLY — Production content must come from Supabase (see production-config.ts). */
+/** كتالوج الدروس والدورات — يُدمج دائماً مع بيانات Supabase ومتاح كاحتياط في جميع البيئات. */
 export type LessonSession = {
   label: string;
   day: string;

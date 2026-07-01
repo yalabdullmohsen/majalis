@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
-import { adminGetLessons, adminUpsertLesson, adminDeleteLesson, adminGetSheikhs } from "@/lib/supabase";
+import { adminGetLessons, adminUpsertLesson, adminDeleteLesson, adminGetSheikhs, upsertSeedLessonsToDb } from "@/lib/supabase";
 import { invalidateLessonsCache } from "@/lib/lessons-service";
 import { sanitizeText } from "@/lib/sanitize";
 import { C, GOVERNORATES } from "@/lib/theme";
@@ -48,6 +48,8 @@ export function LessonsSection() {
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState<any>(EMPTY);
   const [saving, setSaving] = useState(false);
+  const [syncing, setSyncing] = useState(false);
+  const [syncMsg, setSyncMsg] = useState<string | null>(null);
 
   const load = () => {
     adminListLoad({
@@ -99,6 +101,21 @@ export function LessonsSection() {
     load();
   };
   const set = (k: string, v: any) => setForm((f: any) => ({ ...f, [k]: v }));
+
+  const handleSyncSeed = async () => {
+    if (!confirm("سيتم رفع جميع الدروس من الكتالوج الداخلي إلى قاعدة البيانات (upsert). متابعة؟")) return;
+    setSyncing(true);
+    setSyncMsg(null);
+    const { ok, synced, error } = await upsertSeedLessonsToDb();
+    setSyncing(false);
+    if (ok) {
+      setSyncMsg(`✓ تمت المزامنة — ${synced} درس`);
+      invalidateLessonsCache();
+      load();
+    } else {
+      setSyncMsg(`✗ فشل: ${error || "خطأ غير معروف"}`);
+    }
+  };
 
   const filtered = items.filter((item) => {
     if (statusFilter !== "all" && item.status !== statusFilter) return false;
@@ -155,9 +172,21 @@ export function LessonsSection() {
           >
             إضافة درس من رابط
           </Link>
+          <button
+            onClick={handleSyncSeed}
+            disabled={syncing}
+            style={{ padding: "0.5rem 1rem", borderRadius: "0.375rem", background: "#F0FDF4", color: C.emeraldDeep, border: `1px solid ${C.emerald}`, cursor: syncing ? "not-allowed" : "pointer", fontFamily: "inherit", fontSize: "0.875rem", fontWeight: 600, opacity: syncing ? 0.6 : 1 }}
+          >
+            {syncing ? "جاري المزامنة…" : "⬆ مزامنة الكتالوج مع DB"}
+          </button>
           <button onClick={openAdd} style={{ padding: "0.5rem 1.25rem", borderRadius: "0.375rem", background: C.emerald, color: C.parchment, border: "none", cursor: "pointer", fontFamily: "inherit", fontSize: "0.875rem", fontWeight: 600 }}>+ إضافة درس</button>
         </div>
       </div>
+      {syncMsg && (
+        <div style={{ marginBottom: "0.75rem", padding: "0.5rem 0.875rem", borderRadius: "0.375rem", background: syncMsg.startsWith("✓") ? "#D1FAE5" : "#FEE2E2", color: syncMsg.startsWith("✓") ? C.emeraldDeep : "#991B1B", fontSize: "0.875rem", fontWeight: 600 }}>
+          {syncMsg}
+        </div>
+      )}
       <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1rem" }}>
         <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="بحث في الدروس..." style={{ ...inputSt, maxWidth: "20rem", flex: "1 1 12rem" }} />
         <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} style={{ ...selectSt, width: "auto" }}>
