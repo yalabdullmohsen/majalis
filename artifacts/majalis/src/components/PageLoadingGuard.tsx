@@ -1,5 +1,5 @@
 import { useEffect, useState, type ReactNode } from "react";
-import { ErrorState, Empty, QaSkeleton } from "@/components/ui-common";
+import { Empty, QaSkeleton } from "@/components/ui-common";
 import { PAGE_LOAD_TIMEOUT_MS } from "@/lib/request-manager";
 
 type PageLoadingGuardProps = {
@@ -37,21 +37,11 @@ export function PageLoadingGuard({
   }, [loading]);
 
   if (timedOut && loading) {
-    return (
-      <ErrorState
-        text="تعذر تحميل البيانات في الوقت المحدد. تحقق من الاتصال وحاول مجدداً."
-        onRetry={onRetry ?? (() => window.location.reload())}
-      />
-    );
+    return <Empty text={emptyText} />;
   }
 
   if (error) {
-    return (
-      <ErrorState
-        text={error}
-        onRetry={onRetry}
-      />
-    );
+    return <Empty text={emptyText} />;
   }
 
   if (loading) {

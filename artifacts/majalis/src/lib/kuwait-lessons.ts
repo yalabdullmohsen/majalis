@@ -157,7 +157,8 @@ export function mapLessonRow(row: any): KuwaitLessonRecord {
     tags.some((t: string) => /بث|مباشر|live/i.test(t)) ||
     /بث|مباشر|live/i.test(delivery);
 
-  const id = String(row.external_key || row.id || "");
+  // Colons in URL path segments break Vercel routing; replace with dashes
+  const id = String(row.external_key || row.id || "").replace(/:/g, "-");
 
   return enrichScheduleFields({
     id,

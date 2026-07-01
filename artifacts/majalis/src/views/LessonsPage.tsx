@@ -19,13 +19,13 @@ import { regionsForGovernorate } from "@/lib/kuwait-regions";
 import { fromKuwaitLesson } from "@/lib/unified-lesson-card";
 import { registerForLesson, unregisterFromLesson, getMyRegistrations } from "@/lib/supabase";
 
-type TabId = "all" | "lessons" | "courses" | "women";
+type TabId = "all" | "men" | "women" | "courses";
 
 const TAB_LABELS: Record<TabId, string> = {
   all: "الكل",
-  lessons: "دروس",
+  men: "الدروس الرجالية",
+  women: "الدروس النسائية",
   courses: "دورات",
-  women: "النساء",
 };
 
 function useTabFromUrl(): [TabId, (tab: TabId) => void] {
@@ -54,13 +54,13 @@ function readTabFromUrl(): TabId {
   if (typeof window === "undefined") return "all";
   const params = new URLSearchParams(window.location.search);
   const value = params.get("tab");
-  if (value === "courses" || value === "lessons" || value === "women") return value;
+  if (value === "courses" || value === "men" || value === "women") return value;
   return "all";
 }
 
 function filterByTab(lessons: KuwaitLessonRecord[], tab: TabId): KuwaitLessonRecord[] {
   if (tab === "courses") return lessons.filter((l) => l.isCourse || l.activityType === "دورة");
-  if (tab === "lessons") return lessons.filter((l) => !l.isCourse && l.activityType !== "دورة");
+  if (tab === "men") return lessons.filter((l) => !l.hasWomenSection);
   if (tab === "women") return lessons.filter((l) => l.hasWomenSection);
   return lessons;
 }
@@ -240,9 +240,9 @@ export default function LessonsPage({
   const tabCounts = useMemo(
     () => ({
       all: activeLessons.length,
-      lessons: filterByTab(activeLessons, "lessons").length,
-      courses: filterByTab(activeLessons, "courses").length,
+      men: filterByTab(activeLessons, "men").length,
       women: filterByTab(activeLessons, "women").length,
+      courses: filterByTab(activeLessons, "courses").length,
     }),
     [activeLessons],
   );
@@ -268,7 +268,7 @@ export default function LessonsPage({
     const sheikhs = new Set(activeLessons.map((l) => l.sheikhName).filter(Boolean));
     const mosques = new Set(activeLessons.map((l) => l.mosque).filter(Boolean));
     const courses = filterByTab(activeLessons, "courses").length;
-    const lessons = filterByTab(activeLessons, "lessons").length;
+    const lessons = filterByTab(activeLessons, "men").length + filterByTab(activeLessons, "women").length;
     const latest = sortKuwaitLessons(activeLessons)[0];
     return {
       lessons,
@@ -406,7 +406,7 @@ export default function LessonsPage({
 
               <section className="lessons-v2-section">
                 <h2 className="lessons-v2-section__title">
-                  {filtered.length} {tab === "courses" ? "دورة" : tab === "women" ? "نشاط للنساء" : "درس"}
+                  {filtered.length} {tab === "courses" ? "دورة" : tab === "women" ? "نشاط للنساء" : tab === "men" ? "درس رجالي" : "درس"}
                 </h2>
                 {filtered.length === 0 ? (
                   <p className="lessons-empty-state">لا توجد {TAB_LABELS[tab]} مطابقة حاليًا.</p>

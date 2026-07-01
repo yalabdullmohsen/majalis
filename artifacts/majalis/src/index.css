@@ -12785,3 +12785,93 @@ html[data-theme="dark"] .navbar-v3 {
   font-weight: 600;
   color: var(--majalis-emerald-deep);
 }
+
+/* ── Home lessons gender tabs ── */
+.home-lessons-tabs {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+.home-lessons-tab {
+  padding: 0.35rem 0.9rem;
+  border: 1px solid var(--ds-line-color, #e5e7eb);
+  border-radius: 2rem;
+  background: #fff;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--majalis-ink-soft, #6b7280);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.home-lessons-tab:hover {
+  border-color: var(--majalis-emerald, #2d6a4f);
+  color: var(--majalis-emerald, #2d6a4f);
+}
+.home-lessons-tab.is-active {
+  background: var(--majalis-emerald, #2d6a4f);
+  border-color: var(--majalis-emerald, #2d6a4f);
+  color: #fff;
+}
+
+/* ── Sunrise prayer cell ── */
+.prayer-time-cell--sunrise {
+  border-color: #f59e0b;
+  background: #fffbeb;
+}
+.prayer-time-cell--sunrise span {
+  color: #92400e;
+}
+
+/* ── Home prayer + ranks side-by-side layout ── */
+.home-prayer-row {
+  display: grid;
+  gap: 2rem;
+}
+@media (min-width: 900px) {
+  .home-prayer-row {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}
+
+/* ── Home prayer ranks compact list ── */
+.home-prayer-ranks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.home-prayer-rank-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+}
+.home-prayer-rank-num {
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--majalis-emerald, #2d6a4f);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.home-prayer-rank-body {
+  flex: 1;
+  min-width: 0;
+}
+.home-prayer-rank-label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--majalis-ink, #0d1b2a);
+  margin: 0 0 0.15rem;
+}
+.home-prayer-rank-ruling {
+  font-size: 0.78rem;
+  color: var(--majalis-ink-soft, #6b7280);
+  margin: 0;
+}

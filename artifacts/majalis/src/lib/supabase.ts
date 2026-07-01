@@ -288,10 +288,12 @@ export async function getLessonById(id: string) {
     if (byId.error) throw byId.error;
     if (byId.data) return { lesson: byId.data, error: null, usingSeed: false };
 
+    // external_key may have been stored with ":" but ID in URLs uses "-" (sanitized)
+    const colonId = id.replace(/-/g, ":");
     const byExternalKey = await supabase
       .from("lessons")
       .select(`*, ${SHEIKH_EMBED}`)
-      .eq("external_key", id)
+      .or(`external_key.eq.${id},external_key.eq.${colonId}`)
       .eq("status", "approved")
       .maybeSingle();
 

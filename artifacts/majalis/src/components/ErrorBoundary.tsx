@@ -38,9 +38,19 @@ export class ErrorBoundary extends Component<Props, State> {
         component: "ErrorBoundary",
       }),
     );
+
+    if (isChunkLoadError(error)) {
+      window.location.reload();
+    }
   }
 
   reset = () => this.setState({ error: null, copied: false, errorId: "", componentStack: null });
+
+  goHome = () => {
+    this.reset();
+    window.history.pushState(null, "", "/");
+    window.dispatchEvent(new PopStateEvent("popstate"));
+  };
 
   copyId = async () => {
     const ok = await copyErrorId(this.state.errorId);
@@ -89,9 +99,9 @@ export class ErrorBoundary extends Component<Props, State> {
             <button type="button" onClick={this.reset} className="error-boundary-btn error-boundary-btn--primary">
               إعادة المحاولة
             </button>
-            <a href="/" className="error-boundary-btn error-boundary-btn--secondary">
+            <button type="button" onClick={this.goHome} className="error-boundary-btn error-boundary-btn--secondary">
               العودة للرئيسية
-            </a>
+            </button>
             <button type="button" onClick={this.copyId} className="error-boundary-btn error-boundary-btn--ghost">
               {this.state.copied ? "تم النسخ" : "نسخ رقم الخطأ"}
             </button>
@@ -154,14 +164,6 @@ export class SectionErrorBoundary extends Component<SectionBoundaryProps, Sectio
 
   render() {
     if (!this.state.error) return this.props.children;
-
-    return (
-      <section className="home-section-error" role="alert">
-        <strong>تعذر عرض قسم {this.props.name}</strong>
-        <p>بقيت الصفحة تعمل، ويمكنك إعادة محاولة تحميل هذا القسم فقط.</p>
-        <small>رقم التتبع: {this.state.errorId}</small>
-        <button type="button" onClick={this.reset}>إعادة المحاولة</button>
-      </section>
-    );
+    return null;
   }
 }

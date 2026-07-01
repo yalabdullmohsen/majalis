@@ -10,6 +10,7 @@ import { HomeDailyFaida } from "@/components/home/HomeDailyFaida";
 import { HomeDailyDhikr } from "@/components/home/HomeDailyDhikr";
 import { HomeDailyQuestion } from "@/components/home/HomeDailyQuestion";
 import { HomeDailyHadith } from "@/components/home/HomeDailyHadith";
+import { HomePrayerRanks } from "@/components/home/HomePrayerRanks";
 import { HomeFeaturedLibrary } from "@/components/home/HomeFeaturedLibrary";
 import { HomeLatestUpdates } from "@/components/home/HomeLatestUpdates";
 import { HomeMoreSections } from "@/components/home/HomeMoreSections";
@@ -192,9 +193,14 @@ export default function HomePage({
 
         <IslamicDivider />
 
-        <SafeHomeSection name="مواقيت الصلاة">
-          <HomePrayerTimes />
-        </SafeHomeSection>
+        <div className="home-prayer-row">
+          <SafeHomeSection name="مواقيت الصلاة">
+            <HomePrayerTimes />
+          </SafeHomeSection>
+          <SafeHomeSection name="مراتب الصلاة">
+            <HomePrayerRanks />
+          </SafeHomeSection>
+        </div>
 
         <IslamicDivider />
 
