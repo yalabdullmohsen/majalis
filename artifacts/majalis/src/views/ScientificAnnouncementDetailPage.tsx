@@ -187,20 +187,20 @@ export default function ScientificAnnouncementDetailPage({
           </section>
         )}
 
-        {item.notes.length > 0 && (
+        {(item.notes?.length ?? 0) > 0 && (
           <section className="sci-ann-detail__block">
             <h2>ملاحظات الحضور</h2>
             <ul className="sci-ann-detail__notes">
-              {item.notes.map((note) => (
+              {(item.notes ?? []).map((note: string) => (
                 <li key={note}>{note}</li>
               ))}
             </ul>
           </section>
         )}
 
-        {item.tags.length > 0 && (
+        {(item.tags?.length ?? 0) > 0 && (
           <div className="sci-ann-detail__tags">
-            {item.tags.map((tag) => (
+            {(item.tags ?? []).map((tag: string) => (
               <span key={tag} className="sci-ann-card__tag">
                 {tag}
               </span>
