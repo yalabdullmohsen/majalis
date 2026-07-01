@@ -10,6 +10,7 @@ export type PlayerState = "idle" | "loading" | "playing" | "paused" | "error";
 
 export function useAyahPlayer(surahNum: number, totalAyahs: number) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const pauseCleanupRef = useRef<(() => void) | null>(null);
   const [reciterId, setReciterIdState] = useState<string>(loadReciterId);
   const [currentAyah, setCurrentAyah] = useState<number | null>(null);
   const [playerState, setPlayerState] = useState<PlayerState>("idle");
@@ -25,6 +26,8 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
     audio.preload = "none";
     audioRef.current = audio;
     return () => {
+      pauseCleanupRef.current?.();
+      pauseCleanupRef.current = null;
       audio.pause();
       audioRef.current = null;
     };
@@ -33,6 +36,10 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
   const loadAndPlay = useCallback((surah: number, ayah: number, reciter: string) => {
     const audio = audioRef.current;
     if (!audio) return;
+
+    // Remove previous pause listener before adding a new one
+    pauseCleanupRef.current?.();
+    pauseCleanupRef.current = null;
 
     audio.pause();
     audio.src = getAyahAudioUrl(surah, ayah, reciter);
@@ -44,10 +51,12 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
     };
     const onPlaying = () => setPlayerState("playing");
     const onPause = () => {
-      if (audio.ended) return; // handled by ended event
+      if (audio.ended) return;
       setPlayerState("paused");
     };
     const onEnded = () => {
+      pauseCleanupRef.current?.();
+      pauseCleanupRef.current = null;
       if (ayah < totalAyahs) {
         loadAndPlay(surah, ayah + 1, reciter);
       } else {
@@ -63,11 +72,9 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
     audio.addEventListener("ended", onEnded, { once: true });
     audio.addEventListener("error", onError, { once: true });
 
-    audio.load();
+    pauseCleanupRef.current = () => audio.removeEventListener("pause", onPause);
 
-    return () => {
-      audio.removeEventListener("pause", onPause);
-    };
+    audio.load();
   }, [totalAyahs]);
 
   const playFromAyah = useCallback((ayah: number) => {

@@ -71,9 +71,10 @@ export function getSurahStory(surahNumber: number): SurahStory {
     number: meta.number,
     name: meta.name,
     namingReason: buildNamingReason(meta),
-    revelationTime: meta.revelation === "مكية"
-      ? "نزلت في مكة — قبل الهجرة"
-      : "نزلت في المدينة — بعد الهجرة",
+    revelationTime:
+      meta.revelation === "مكية"
+        ? "نزلت في مكة — قبل الهجرة"
+        : "نزلت في المدينة — بعد الهجرة",
     revelationPlace: meta.revelation === "مكية" ? "مكة المكرمة" : "المدينة المنورة",
     ayahCount: meta.ayahs,
     mainThemes: [],
@@ -82,14 +83,10 @@ export function getSurahStory(surahNumber: number): SurahStory {
     lessons: [],
     keyTopics: [],
     virtues: "الفضل العام لتلاوة القرآن — لا تُثبت فضيلة خاصة إلا بدليل.",
-    connectionToPrevious: undefined,
+    connectionToPrevious: "",
     keywords: [meta.name],
-    sources: [
-      "تفسير ابن كثير",
-      "تفسير السعدي",
-      "أسباب النزول — الواحدي (عند الحاجة)",
-    ],
-    lastReviewed: undefined,
+    sources: ["تفسير ابن كثير", "تفسير السعدي", "أسباب النزول — الواحدي (عند الحاجة)"],
+    lastReviewed: "",
     trustNote:
       "لا تُذكر روايات ضعيفة أو إسرائيليات. القصص من القرآن والسنة الصحيحة فقط.",
   };
@@ -105,8 +102,7 @@ export function searchSurahStories(query: string): SurahStory[] {
   return getAllSurahStories().filter(
     (s) =>
       s.name.includes(q) ||
-      String(s.number).includes(q) ||
-      s.keywords.some((k) => k.includes(q)) ||
-      s.mainStories.some((story) => story.includes(q)),
+      s.namingReason.includes(q) ||
+      s.keywords.some((k) => k.includes(q)),
   );
 }

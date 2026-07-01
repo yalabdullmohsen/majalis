@@ -121,7 +121,11 @@ export function getSurahAudioUrl(surah: number, reciterId: string): string {
 const RECITER_KEY = "mj-quran-reciter-v3";
 
 export function loadReciterId(): string {
-  try { return localStorage.getItem(RECITER_KEY) || "alafasy"; } catch { return "alafasy"; }
+  try {
+    const stored = localStorage.getItem(RECITER_KEY);
+    if (stored && RECITERS.some((r) => r.id === stored)) return stored;
+    return "alafasy";
+  } catch { return "alafasy"; }
 }
 
 export function saveReciterId(id: string) {

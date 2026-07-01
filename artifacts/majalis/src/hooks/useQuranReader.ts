@@ -45,23 +45,21 @@ export function useQuranReader() {
     setLocation(`/quran?${p.toString()}`, { replace: true });
   }, [setLocation]);
 
-  const loadSurah = useCallback(async (n: number) => {
+  useEffect(() => {
+    let cancelled = false;
     setLoading(true);
     setError("");
-    try {
-      const d = await fetchSurahDetail(n);
-      setDetail(d);
-    } catch {
-      setError("تعذّر تحميل نص السورة. تحقق من الاتصال وأعد المحاولة.");
-      setDetail(null);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    loadSurah(surahNum);
-  }, [surahNum, loadSurah]);
+    fetchSurahDetail(surahNum)
+      .then((d) => { if (!cancelled) { setDetail(d); setLoading(false); } })
+      .catch(() => {
+        if (!cancelled) {
+          setError("تعذّر تحميل نص السورة. تحقق من الاتصال وأعد المحاولة.");
+          setDetail(null);
+          setLoading(false);
+        }
+      });
+    return () => { cancelled = true; };
+  }, [surahNum]);
 
   const goToSurah = useCallback((n: number, ayah = 1) => {
     const clamped = Math.min(114, Math.max(1, n));

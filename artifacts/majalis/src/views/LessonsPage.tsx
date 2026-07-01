@@ -19,12 +19,13 @@ import { regionsForGovernorate } from "@/lib/kuwait-regions";
 import { fromKuwaitLesson } from "@/lib/unified-lesson-card";
 import { registerForLesson, unregisterFromLesson, getMyRegistrations } from "@/lib/supabase";
 
-type TabId = "all" | "lessons" | "courses";
+type TabId = "all" | "lessons" | "courses" | "women";
 
 const TAB_LABELS: Record<TabId, string> = {
   all: "الكل",
   lessons: "دروس",
   courses: "دورات",
+  women: "النساء",
 };
 
 function useTabFromUrl(): [TabId, (tab: TabId) => void] {
@@ -53,13 +54,14 @@ function readTabFromUrl(): TabId {
   if (typeof window === "undefined") return "all";
   const params = new URLSearchParams(window.location.search);
   const value = params.get("tab");
-  if (value === "courses" || value === "lessons") return value;
+  if (value === "courses" || value === "lessons" || value === "women") return value;
   return "all";
 }
 
 function filterByTab(lessons: KuwaitLessonRecord[], tab: TabId): KuwaitLessonRecord[] {
   if (tab === "courses") return lessons.filter((l) => l.isCourse || l.activityType === "دورة");
   if (tab === "lessons") return lessons.filter((l) => !l.isCourse && l.activityType !== "دورة");
+  if (tab === "women") return lessons.filter((l) => l.hasWomenSection);
   return lessons;
 }
 
@@ -240,6 +242,7 @@ export default function LessonsPage({
       all: activeLessons.length,
       lessons: filterByTab(activeLessons, "lessons").length,
       courses: filterByTab(activeLessons, "courses").length,
+      women: filterByTab(activeLessons, "women").length,
     }),
     [activeLessons],
   );
@@ -403,7 +406,7 @@ export default function LessonsPage({
 
               <section className="lessons-v2-section">
                 <h2 className="lessons-v2-section__title">
-                  {filtered.length} {tab === "courses" ? "دورة" : "درس"}
+                  {filtered.length} {tab === "courses" ? "دورة" : tab === "women" ? "نشاط للنساء" : "درس"}
                 </h2>
                 {filtered.length === 0 ? (
                   <p className="lessons-empty-state">لا توجد {TAB_LABELS[tab]} مطابقة حاليًا.</p>

@@ -49,6 +49,7 @@ export type KuwaitLessonRecord = {
   recurring?: boolean;
   courseId?: string;
   isCourse?: boolean;
+  hasWomenSection?: boolean;
   source?: "supabase" | "seed";
   archivedAt?: string | null;
 };
@@ -184,6 +185,7 @@ export function mapLessonRow(row: any): KuwaitLessonRecord {
     streamUrl: row.live_url,
     siteUrl: row.book_url,
     isCourse: Boolean(row.is_course),
+    hasWomenSection: row.audience === "الكل" || row.audience === "نساء" || Boolean(row.has_women_section),
     courseId: row.course_id,
     recurring: row.is_recurring !== false && !row.end_date,
     archivedAt: row.archived_at || null,

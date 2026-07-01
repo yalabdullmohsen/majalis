@@ -32,6 +32,7 @@ import { fetchLessonEngagementStats, type LessonEngagementStats } from "@/lib/le
 import { normalizeActivityLabel } from "@/lib/activity-label";
 import { resolveLessonPosterUrl } from "@/lib/lesson-image";
 import { sheikhNameKey } from "@/lib/sheikh-name";
+import { SectionErrorBoundary } from "@/components/ErrorBoundary";
 
 function buildMapsEmbed(url?: string, mosque?: string, region?: string) {
   if (url?.includes("google.com/maps") || url?.includes("goo.gl/maps") || url?.includes("maps.app")) {
@@ -236,6 +237,7 @@ export default function LessonDetailPage({
         ← العودة إلى الدروس
       </Link>
 
+      <SectionErrorBoundary name="تفاصيل الدرس">
       <article className="ui-card lesson-detail-card">
         <div className={`lesson-detail-hero${hasSheikhPhoto ? "" : " lesson-detail-hero--text-only"}`}>
           {hasSheikhPhoto && (
@@ -401,38 +403,45 @@ export default function LessonDetailPage({
           </div>
         )}
       </article>
+      </SectionErrorBoundary>
 
       {seriesLessons.length > 0 && (
-        <section className="lessons-similar-section" aria-labelledby="series-lessons-heading">
-          <h2 id="series-lessons-heading">السلسلة المرتبطة</h2>
-          <div className="page-card-grid lesson-unified-grid">
-            {seriesLessons.map((item) => (
-              <UnifiedLessonCard key={item.id} lesson={fromKuwaitLesson(item)} compact />
-            ))}
-          </div>
-        </section>
+        <SectionErrorBoundary name="السلسلة المرتبطة">
+          <section className="lessons-similar-section" aria-labelledby="series-lessons-heading">
+            <h2 id="series-lessons-heading">السلسلة المرتبطة</h2>
+            <div className="page-card-grid lesson-unified-grid">
+              {seriesLessons.map((item) => (
+                <UnifiedLessonCard key={item.id} lesson={fromKuwaitLesson(item)} compact />
+              ))}
+            </div>
+          </section>
+        </SectionErrorBoundary>
       )}
 
       {sameSheikh.length > 0 && (
-        <section className="lessons-similar-section" aria-labelledby="same-sheikh-heading">
-          <h2 id="same-sheikh-heading">دروس الشيخ نفسه</h2>
-          <div className="page-card-grid lesson-unified-grid">
-            {sameSheikh.map((item) => (
-              <UnifiedLessonCard key={item.id} lesson={fromKuwaitLesson(item)} compact />
-            ))}
-          </div>
-        </section>
+        <SectionErrorBoundary name="دروس الشيخ">
+          <section className="lessons-similar-section" aria-labelledby="same-sheikh-heading">
+            <h2 id="same-sheikh-heading">دروس الشيخ نفسه</h2>
+            <div className="page-card-grid lesson-unified-grid">
+              {sameSheikh.map((item) => (
+                <UnifiedLessonCard key={item.id} lesson={fromKuwaitLesson(item)} compact />
+              ))}
+            </div>
+          </section>
+        </SectionErrorBoundary>
       )}
 
       {similar.length > 0 && (
-        <section className="lessons-similar-section" aria-labelledby="similar-lessons-heading">
-          <h2 id="similar-lessons-heading">دروس مشابهة</h2>
-          <div className="page-card-grid lesson-unified-grid">
-            {similar.map((item) => (
-              <UnifiedLessonCard key={item.id} lesson={fromKuwaitLesson(item)} compact />
-            ))}
-          </div>
-        </section>
+        <SectionErrorBoundary name="دروس مشابهة">
+          <section className="lessons-similar-section" aria-labelledby="similar-lessons-heading">
+            <h2 id="similar-lessons-heading">دروس مشابهة</h2>
+            <div className="page-card-grid lesson-unified-grid">
+              {similar.map((item) => (
+                <UnifiedLessonCard key={item.id} lesson={fromKuwaitLesson(item)} compact />
+              ))}
+            </div>
+          </section>
+        </SectionErrorBoundary>
       )}
     </div>
   );
