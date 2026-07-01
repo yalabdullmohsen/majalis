@@ -23,7 +23,10 @@ export function useRadioPlayer() {
     const onError = () => {
       if (retryRef.current < MAX_RETRIES) {
         retryRef.current += 1;
-        setTimeout(() => audio.play().catch(() => setRadioState("error")), 500);
+        setTimeout(() => {
+          audio.load();
+          audio.play().catch(() => setRadioState("error"));
+        }, 500);
       } else {
         setRadioState("error");
       }

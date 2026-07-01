@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Link } from "wouter";
 import { PageHeader } from "@/components/ui-common";
 import { getAllSurahStories, getSurahStory, searchSurahStories } from "@/lib/surah-stories";
+import { SectionErrorBoundary } from "@/components/ErrorBoundary";
 
 export default function SurahStoriesPage() {
   const [search, setSearch] = useState("");
@@ -14,7 +15,7 @@ export default function SurahStoriesPage() {
       <PageHeader
         eyebrow="القرآن"
         title="قصص القرآن"
-        subtitle="114 سورة — سبب التسمية، زمان ومكان النزول، المحاور، والقصص القرآنية الموثقة."
+        subtitle="سبب التسمية، زمان ومكان النزول، المحاور، والقصص القرآنية الموثقة — ١١٤ سورة."
       />
 
       <nav className="quran-subnav" aria-label="أقسام القرآن">
@@ -55,19 +56,55 @@ export function SurahStoryDetailPage({ surahNumber }: { surahNumber: number }) {
       <PageHeader eyebrow={`سورة ${story.number}`} title={story.name} subtitle={story.revelationPlace} />
 
       <article className="ui-card surah-story-article">
-        <section><h2>سبب التسمية</h2><p>{story.namingReason}</p></section>
-        <section><h2>زمان ومكان النزول</h2><p>{story.revelationTime} — {story.revelationPlace}</p></section>
+        <SectionErrorBoundary name="سبب التسمية">
+          <section><h2>سبب التسمية</h2><p>{story.namingReason}</p></section>
+        </SectionErrorBoundary>
+        <SectionErrorBoundary name="زمان النزول">
+          <section><h2>زمان ومكان النزول</h2><p>{story.revelationTime} — {story.revelationPlace}</p></section>
+        </SectionErrorBoundary>
         <section><h2>عدد الآيات</h2><p>{story.ayahCount} آية</p></section>
-        <section><h2>المحاور الرئيسية</h2><ul>{story.mainThemes.map((t) => <li key={t}>{t}</li>)}</ul></section>
-        <section><h2>أبرز القصص</h2><ul>{story.mainStories.map((t) => <li key={t}>{t}</li>)}</ul></section>
-        <section><h2>أبرز الأحكام</h2><ul>{story.keyRulings.map((t) => <li key={t}>{t}</li>)}</ul></section>
-        <section><h2>الدروس المستفادة</h2><ul>{story.lessons.map((t) => <li key={t}>{t}</li>)}</ul></section>
-        <section><h2>أهم الموضوعات</h2><ul>{story.keyTopics.map((t) => <li key={t}>{t}</li>)}</ul></section>
-        <section><h2>فضل السورة</h2><p>{story.virtues}</p></section>
-        <section><h2>المناسبة مع السورة السابقة</h2><p>{story.connectionToPrevious}</p></section>
-        <section><h2>الكلمات المفتاحية</h2><p>{story.keywords.join("، ")}</p></section>
-        <section><h2>المصادر العلمية</h2><ul>{story.sources.map((t) => <li key={t}>{t}</li>)}</ul></section>
-        <p className="quran-source-note">{story.trustNote} · آخر مراجعة: {story.lastReviewed}</p>
+        {story.mainThemes.length > 0 && (
+          <SectionErrorBoundary name="المحاور الرئيسية">
+            <section><h2>المحاور الرئيسية</h2><ul>{story.mainThemes.map((t) => <li key={t}>{t}</li>)}</ul></section>
+          </SectionErrorBoundary>
+        )}
+        {story.mainStories.length > 0 && (
+          <SectionErrorBoundary name="القصص">
+            <section><h2>أبرز القصص</h2><ul>{story.mainStories.map((t) => <li key={t}>{t}</li>)}</ul></section>
+          </SectionErrorBoundary>
+        )}
+        {story.keyRulings.length > 0 && (
+          <SectionErrorBoundary name="الأحكام">
+            <section><h2>أبرز الأحكام</h2><ul>{story.keyRulings.map((t) => <li key={t}>{t}</li>)}</ul></section>
+          </SectionErrorBoundary>
+        )}
+        {story.lessons.length > 0 && (
+          <SectionErrorBoundary name="الدروس">
+            <section><h2>الدروس المستفادة</h2><ul>{story.lessons.map((t) => <li key={t}>{t}</li>)}</ul></section>
+          </SectionErrorBoundary>
+        )}
+        {story.keyTopics.length > 0 && (
+          <SectionErrorBoundary name="الموضوعات">
+            <section><h2>أهم الموضوعات</h2><ul>{story.keyTopics.map((t) => <li key={t}>{t}</li>)}</ul></section>
+          </SectionErrorBoundary>
+        )}
+        {story.virtues && (
+          <SectionErrorBoundary name="فضل السورة">
+            <section><h2>فضل السورة</h2><p>{story.virtues}</p></section>
+          </SectionErrorBoundary>
+        )}
+        {story.connectionToPrevious && (
+          <section><h2>المناسبة مع السورة السابقة</h2><p>{story.connectionToPrevious}</p></section>
+        )}
+        {story.keywords.length > 0 && (
+          <section><h2>الكلمات المفتاحية</h2><p>{story.keywords.join("، ")}</p></section>
+        )}
+        {story.sources.length > 0 && (
+          <SectionErrorBoundary name="المصادر">
+            <section><h2>المصادر العلمية</h2><ul>{story.sources.map((t) => <li key={t}>{t}</li>)}</ul></section>
+          </SectionErrorBoundary>
+        )}
+        <p className="quran-source-note">{story.trustNote}{story.lastReviewed ? ` · آخر مراجعة: ${story.lastReviewed}` : ""}</p>
         <Link href={`/quran?surah=${story.number}`} className="page-action-btn">قراءة السورة</Link>
       </article>
     </div>

@@ -30,7 +30,7 @@ export default function SubmitContentPage() {
       const json = await res.json();
       if (json.ok) {
         setStatus("success");
-        setMessage(json.message || "شكراً! ينتظر موافقة الأدمن.");
+        setMessage(json.message || "شكراً! ينتظر موافقة المشرف.");
         setTitle("");
         setDetails("");
         setAuthor("");
