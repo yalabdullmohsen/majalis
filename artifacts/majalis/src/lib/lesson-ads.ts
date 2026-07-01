@@ -381,6 +381,28 @@ export const lessonAds: LessonAd[] = [
       },
     ],
   },
+  // ── د. محمد ضاوي العصيمي ──────────────────────────────────────────────
+  {
+    id: "dawwi-alusaimi-weekly",
+    provider: "الموقع الرسمي لد. محمد ضاوي العصيمي",
+    teacher: "د. محمد ضاوي العصيمي",
+    teacherImage: "/images/posters/fadat-dawwi-al-usaimi.svg",
+    posterImage: "/images/posters/fadat-dawwi-al-usaimi.svg",
+    title: "درس الفقه والتزكية الأسبوعي",
+    shortDescription: "درس أسبوعي في الفقه وأصوله والوعظ والتزكية لأستاذ مشارك في كلية الشريعة بجامعة الكويت.",
+    category: "weekly",
+    tags: ["فقه", "أصول الفقه", "وعظ", "تزكية", "أسبوعي", "حضوري"],
+    sessions: [
+      {
+        label: "المجلس الأسبوعي",
+        day: "الجمعة",
+        time: "بعد صلاة الفجر",
+        venue: "مسجد بالكويت",
+        district: "الكويت",
+        referenceUrl: "https://dr-alossimi.com",
+      },
+    ],
+  },
   // ── د. مطلق جاسر الجاسر ───────────────────────────────────────────────
   {
     id: "mutlaq-aljasr-talaeea-elm",
