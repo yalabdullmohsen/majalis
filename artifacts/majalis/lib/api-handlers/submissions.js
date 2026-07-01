@@ -3,9 +3,7 @@ import { getSupabaseAdmin } from "../supabase-admin.mjs";
 
 const MAX_TITLE = 500;
 const MAX_CONTENT = 8000;
-const VALID_TYPES = new Set(["lesson", "question"]);
-const VALID_SECTIONS = new Set(["القرآن", "السيرة", "الفقه", "الأنبياء", "الصحابة", "العقيدة", "الحديث"]);
-const VALID_LEVELS = new Set(["beginner", "intermediate", "advanced"]);
+const VALID_TYPES = new Set(["درس", "فائدة", "معلومة", "سؤال لعبة", "فكرة"]);
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -13,10 +11,10 @@ export default async function handler(req, res) {
     return;
   }
 
-  const { type, title, content, author = "", meta = {} } = req.body || {};
+  const { type, title, content, author = "" } = req.body || {};
 
   if (!VALID_TYPES.has(type)) {
-    sendJson(res, 400, { ok: false, error: "invalid_type", message: "النوع يجب أن يكون 'lesson' أو 'question'." });
+    sendJson(res, 400, { ok: false, error: "invalid_type", message: "نوع المحتوى غير صالح." });
     return;
   }
   if (!title || typeof title !== "string" || title.trim().length < 3) {
@@ -24,23 +22,12 @@ export default async function handler(req, res) {
     return;
   }
   if (!content || typeof content !== "string" || content.trim().length < 3) {
-    sendJson(res, 400, { ok: false, error: "invalid_content", message: "المحتوى مطلوب (3 أحرف على الأقل)." });
+    sendJson(res, 400, { ok: false, error: "invalid_content", message: "التفاصيل مطلوبة (3 أحرف على الأقل)." });
     return;
   }
   if (title.length > MAX_TITLE || content.length > MAX_CONTENT) {
-    sendJson(res, 400, { ok: false, error: "too_long", message: "العنوان أو المحتوى أطول مما هو مسموح." });
+    sendJson(res, 400, { ok: false, error: "too_long", message: "العنوان أو التفاصيل أطول مما هو مسموح." });
     return;
-  }
-
-  if (type === "question") {
-    if (!VALID_SECTIONS.has(meta?.section)) {
-      sendJson(res, 400, { ok: false, error: "invalid_section", message: "اختر قسماً صحيحاً للسؤال." });
-      return;
-    }
-    if (!VALID_LEVELS.has(meta?.level)) {
-      sendJson(res, 400, { ok: false, error: "invalid_level", message: "اختر مستوى صحيحاً للسؤال." });
-      return;
-    }
   }
 
   const admin = getSupabaseAdmin();
@@ -55,7 +42,7 @@ export default async function handler(req, res) {
     content: content.trim().slice(0, MAX_CONTENT),
     author: String(author || "").trim().slice(0, 200),
     status: "pending",
-    meta: type === "question" ? { section: meta.section, level: meta.level } : null,
+    meta: null,
   };
 
   const { error } = await admin.from("submissions").insert(row);

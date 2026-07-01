@@ -28,6 +28,8 @@ export const NAV_GROUPS: NavGroup[] = [
       { href: "/hadith", label: "الأحاديث الموثقة" },
       { href: "/stories", label: "القصص الإسلامية" },
       { href: "/qa", label: "الأسئلة" },
+      { href: "/kuwait-lessons", label: "دروس المشايخ" },
+      { href: "/janaza", label: "آخر الجنائز" },
     ],
   },
   {

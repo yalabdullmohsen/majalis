@@ -29,6 +29,12 @@ export const RADIO_STATIONS: RadioStation[] = [
   { id: "ghamdi", reciterName: "سعد الغامدي", readingType: "مرتل", streamUrl: "https://qurango.net/radio/saad_alghamdi" },
   { id: "muaiqly", reciterName: "ماهر المعيقلي", readingType: "مرتل", streamUrl: "https://qurango.net/radio/maher_almuaiqly" },
   { id: "qatami", reciterName: "ناصر القطامي", readingType: "مرتل", streamUrl: "https://qurango.net/radio/nasser_alqatami" },
+  { id: "shuraim", reciterName: "سعود الشريم", readingType: "مرتل", streamUrl: "https://qurango.net/radio/saud_alshuraim" },
+  { id: "hussary-murattal", reciterName: "محمود خليل الحصري", readingType: "مرتل", streamUrl: "https://qurango.net/radio/mahmoud_khalil_alhussary_murattal" },
+  { id: "hussary-mujawwad", reciterName: "محمود خليل الحصري", readingType: "مجوّد", streamUrl: "https://qurango.net/radio/mahmoud_khalil_alhussary_mujawwad" },
+  { id: "mustafa-ismail", reciterName: "مصطفى إسماعيل", readingType: "مجوّد", streamUrl: "https://qurango.net/radio/mustafa_ismail" },
+  { id: "shashae", reciterName: "عبد الفتاح الشعشاعي", readingType: "مجوّد", streamUrl: "https://qurango.net/radio/abdelfattah_elshaeshae" },
+  { id: "bahtimi", reciterName: "كامل يوسف البهتيمي", readingType: "مجوّد", streamUrl: "https://qurango.net/radio/kamil_yusuf_albahtimi" },
 ];
 
 export const LIVE_CHANNELS: LiveChannel[] = [

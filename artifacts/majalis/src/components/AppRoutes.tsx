@@ -20,13 +20,14 @@ const ScientificAnnouncementDetailPage = lazy(() => import("@/views/ScientificAn
 const AdhkarPage = lazy(() => import("@/views/AdhkarPage"));
 const QuizPage = lazy(() => import("@/views/QuizPage"));
 const LoginPage = lazy(() => import("@/views/LoginPage"));
+const RegisterPage = lazy(() => import("@/views/RegisterPage"));
+const AuthCallbackPage = lazy(() => import("@/views/AuthCallbackPage"));
+const UserStatsPage = lazy(() => import("@/views/UserStatsPage"));
 const TranscribePage = lazy(() => import("@/views/TranscribePage"));
 const AssistantPage = lazy(() => import("@/views/AssistantPage"));
 const CondolencesPage = lazy(() => import("@/views/CondolencesPage"));
 const CardsPage = lazy(() => import("@/views/CardsPage"));
 const QuranPage = lazy(() => import("@/views/QuranPage"));
-const QuranTajweedPage = lazy(() => import("@/views/QuranTajweedPage"));
-const QuranLivePage = lazy(() => import("@/views/QuranLivePage"));
 const SurahStoriesPage = lazy(() => import("@/views/SurahStoriesPage"));
 const SurahStoryDetailPage = lazy(() =>
   import("@/views/SurahStoriesPage").then((m) => ({ default: m.SurahStoryDetailPage })),
@@ -153,8 +154,8 @@ export default function AppRoutes() {
             </Suspense>
           </ErrorBoundary>
         </Route>
-        <Route path="/quran-live"><SafeLazyRoute component={QuranLivePage} /></Route>
-        <Route path="/quran/tajweed"><SafeLazyRoute component={QuranTajweedPage} /></Route>
+        <Route path="/quran-live"><Redirect to="/quran-radio" /></Route>
+        <Route path="/quran/tajweed"><Redirect to="/quran" /></Route>
         <Route path="/quran/surah-stories/:number"><SurahStoryDetailRoute /></Route>
         <Route path="/quran/surah-stories"><SafeLazyRoute component={SurahStoriesPage} /></Route>
         <Route path="/quran-radio"><SafeLazyRoute component={QuranRadioPage} /></Route>
@@ -195,6 +196,10 @@ export default function AppRoutes() {
         <Route path="/updates"><SafeLazyRoute component={UpdatesPage} /></Route>
         <Route path="/developers"><SafeLazyRoute component={DeveloperPage} /></Route>
         <Route path="/login"><SafeLazyRoute component={LoginPage} /></Route>
+        <Route path="/register"><SafeLazyRoute component={RegisterPage} /></Route>
+        <Route path="/auth/callback"><SafeLazyRoute component={AuthCallbackPage} /></Route>
+        <Route path="/stats"><SafeLazyRoute component={UserStatsPage} /></Route>
+        <Route path="/profile"><SafeLazyRoute component={UserStatsPage} /></Route>
         <Route path="/admin/auto-content">
           <AdminRouteGuard>
             <ErrorBoundary>

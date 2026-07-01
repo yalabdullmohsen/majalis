@@ -58,18 +58,7 @@ export default async function handler(req, res) {
     // approve — publish to the relevant table
     let publishError = null;
 
-    if (submission.type === "question") {
-      const { error } = await admin.from("qa_questions").insert({
-        question: submission.title,
-        answer: submission.content,
-        reference: submission.author ? `مُرسَل من: ${submission.author}` : null,
-        status: "published",
-        review_status: "approved",
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-      });
-      publishError = error;
-    } else if (submission.type === "lesson") {
+    if (submission.type === "درس") {
       const { error } = await admin.from("lessons").insert({
         title: submission.title,
         description: submission.content,
@@ -80,7 +69,26 @@ export default async function handler(req, res) {
         updated_at: new Date().toISOString(),
       });
       publishError = error;
+    } else if (submission.type === "فائدة") {
+      const { error } = await admin.from("fawaid").insert({
+        text: `${submission.title}\n${submission.content}`.trim(),
+        author_name: submission.author || null,
+        status: "approved",
+      });
+      publishError = error;
+    } else if (submission.type === "سؤال لعبة") {
+      const { error } = await admin.from("qa_questions").insert({
+        question: submission.title,
+        answer: submission.content,
+        reference: submission.author ? `مُرسَل من: ${submission.author}` : null,
+        status: "published",
+        review_status: "approved",
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      });
+      publishError = error;
     }
+    // معلومة وفكرة: تبقى في submissions فقط بحالة approved
 
     if (publishError) {
       sendJson(res, 500, { ok: false, error: publishError.message, message: "فشل نشر المحتوى." });

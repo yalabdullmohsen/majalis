@@ -1,6 +1,7 @@
 "use client";
 
 import LessonDetailPage from "@/views/LessonDetailPage";
+import { Empty } from "@/components/ui-common";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 
 export default function LessonDetailClient({
@@ -9,7 +10,7 @@ export default function LessonDetailClient({
   lesson: KuwaitLessonRecord | null;
 }) {
   if (!lesson) {
-    return <LessonDetailPage params={{ id: "" }} />;
+    return <Empty text="لم يُعثر على الدرس." />;
   }
 
   return <LessonDetailPage params={{ id: lesson.id }} initialLesson={lesson} />;

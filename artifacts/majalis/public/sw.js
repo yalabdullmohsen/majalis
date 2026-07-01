@@ -1,11 +1,26 @@
-/** PWA shell — network-first; never serve stale JS/CSS after deploy. */
-const CACHE_NAME = "majalis-shell-v6";
-const FETCH_TIMEOUT_MS = 8000;
+/** PWA service worker v7 — network-first for app shell, cache-first for static Quran/lesson data. */
+
+const SHELL_CACHE   = "majalis-shell-v7";
+const DATA_CACHE    = "majalis-data-v7";
+const FETCH_TIMEOUT = 8000;
+
+// External API routes served cache-first (Quran API data, prayer times)
+const DATA_FIRST_ORIGINS = [
+  "api.alquran.cloud",
+  "api.aladhan.com",
+];
+
+// Internal API routes to cache for offline use
+const CACHEABLE_API_PATHS = [
+  "/api/lessons",
+  "/api/fawaid",
+  "/api/prayer",
+];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then((cache) => cache.addAll(["/"]))
+    caches.open(SHELL_CACHE)
+      .then((cache) => cache.addAll(["/", "/offline.html"]).catch(() => cache.addAll(["/"])))
       .catch(() => undefined),
   );
   self.skipWaiting();
@@ -14,41 +29,124 @@ self.addEventListener("install", (event) => {
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches.keys().then((keys) =>
-      Promise.all(keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))),
+      Promise.all(
+        keys
+          .filter((k) => k !== SHELL_CACHE && k !== DATA_CACHE)
+          .map((k) => caches.delete(k)),
+      ),
     ).then(() => self.clients.claim()),
   );
 });
 
-function fetchWithTimeout(request, ms = FETCH_TIMEOUT_MS) {
+function fetchWithTimeout(req, ms = FETCH_TIMEOUT) {
   return Promise.race([
-    fetch(request, { cache: "no-store" }),
-    new Promise((_, reject) => setTimeout(() => reject(new Error("sw_fetch_timeout")), ms)),
+    fetch(req),
+    new Promise((_, reject) =>
+      setTimeout(() => reject(new Error("sw_timeout")), ms),
+    ),
   ]);
+}
+
+/** Cache-first: try cache, fall back to network and update cache. */
+async function cacheFirst(req, cacheName) {
+  const cached = await caches.match(req);
+  if (cached) return cached;
+  try {
+    const res = await fetch(req);
+    if (res.ok) {
+      const cache = await caches.open(cacheName);
+      cache.put(req, res.clone()).catch(() => undefined);
+    }
+    return res;
+  } catch {
+    return new Response(JSON.stringify({ ok: false, error: "offline" }), {
+      status: 503,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+}
+
+/** Network-first: try network, fall back to cache. */
+async function networkFirst(req, cacheName) {
+  try {
+    const res = await fetchWithTimeout(req);
+    if (res.ok) {
+      const cache = await caches.open(cacheName);
+      cache.put(req, res.clone()).catch(() => undefined);
+    }
+    return res;
+  } catch {
+    const cached = await caches.match(req);
+    return cached || caches.match("/");
+  }
 }
 
 self.addEventListener("fetch", (event) => {
   const req = event.request;
   if (req.method !== "GET") return;
+
   const url = new URL(req.url);
+
+  // External Quran/prayer APIs → cache-first (data rarely changes mid-day)
+  if (DATA_FIRST_ORIGINS.some((h) => url.hostname.includes(h))) {
+    event.respondWith(cacheFirst(req, DATA_CACHE));
+    return;
+  }
+
+  // Only handle same-origin from here
   if (url.origin !== self.location.origin) return;
 
-  // Never cache-first hashed bundles — stale chunks break lazy routes after deploy.
-  if (url.pathname.startsWith("/assets/") || url.pathname.endsWith(".js") || url.pathname.endsWith(".css")) {
+  // Hashed JS/CSS bundles: always network (stale chunks break lazy routes)
+  if (url.pathname.startsWith("/assets/")) {
     event.respondWith(
-      fetchWithTimeout(req).catch(() => caches.match(req)),
+      fetchWithTimeout(req).catch(() => caches.match(req) || Promise.reject()),
     );
     return;
   }
 
-  if (req.mode === "navigate") {
-    event.respondWith(
-      fetchWithTimeout(req)
-        .then((res) => {
-          const copy = res.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put("/", copy)).catch(() => undefined);
-          return res;
-        })
-        .catch(() => caches.match("/")),
-    );
+  // Internal API data (lessons, fawaid, prayer) → cache-first for offline
+  if (CACHEABLE_API_PATHS.some((p) => url.pathname.startsWith(p))) {
+    event.respondWith(cacheFirst(req, DATA_CACHE));
+    return;
   }
+
+  // App shell navigation → network-first with shell fallback
+  if (req.mode === "navigate") {
+    event.respondWith(networkFirst(req, SHELL_CACHE));
+    return;
+  }
+});
+
+// ── Push Notifications ────────────────────────────────────────────────────
+
+self.addEventListener("push", (event) => {
+  if (!event.data) return;
+  let payload;
+  try { payload = event.data.json(); } catch { payload = { title: "المجلس العلمي", body: event.data.text() }; }
+
+  const title = payload.title || "المجلس العلمي";
+  const options = {
+    body: payload.body || "",
+    icon: "/logo.png",
+    badge: "/favicon.png",
+    dir: "rtl",
+    lang: "ar",
+    data: { url: payload.url || "/" },
+    tag: payload.tag || "majalis-notification",
+    renotify: !!payload.tag,
+  };
+
+  event.waitUntil(self.registration.showNotification(title, options));
+});
+
+self.addEventListener("notificationclick", (event) => {
+  event.notification.close();
+  const target = event.notification.data?.url || "/";
+  event.waitUntil(
+    clients.matchAll({ type: "window", includeUncontrolled: true }).then((all) => {
+      const match = all.find((c) => c.url === target && "focus" in c);
+      if (match) return match.focus();
+      return clients.openWindow(target);
+    }),
+  );
 });

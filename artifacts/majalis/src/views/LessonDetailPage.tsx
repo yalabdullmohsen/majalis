@@ -97,7 +97,10 @@ export default function LessonDetailPage({
       return;
     }
 
-    if (!params.id) return;
+    if (!params.id) {
+      setLoading(false);
+      return;
+    }
 
     setLoading(true);
     getUnifiedLessonById(params.id)

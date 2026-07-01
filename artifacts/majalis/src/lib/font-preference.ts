@@ -1,4 +1,4 @@
-export type FontPreference = "default" | "ruqaa" | "naskh";
+export type FontPreference = "default" | "naskh";
 
 export const FONT_STORAGE_KEY = "majalis-font-preference";
 
@@ -8,12 +8,11 @@ export const FONT_OPTIONS: {
   description: string;
 }[] = [
   { id: "default", label: "Cairo", description: "الخط الرسمي — Cairo SemiBold" },
-  { id: "ruqaa", label: "رقعة", description: "خط رقعة بسيط للعرض" },
   { id: "naskh", label: "نسخ", description: "خط نسخ للقراءة الطويلة" },
 ];
 
 export function isFontPreference(value: string | null | undefined): value is FontPreference {
-  return value === "default" || value === "ruqaa" || value === "naskh";
+  return value === "default" || value === "naskh";
 }
 
 export function readFontPreference(): FontPreference {

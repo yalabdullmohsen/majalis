@@ -3,21 +3,25 @@
 import { useCallback, useEffect, useState } from "react";
 import { useAdminShell } from "@/views/admin/AdminShell";
 
+type ContentType = "درس" | "فائدة" | "معلومة" | "سؤال لعبة" | "فكرة";
+
 type Submission = {
   id: string;
-  type: "lesson" | "question";
+  type: ContentType;
   title: string;
   content: string;
   author: string;
   status: "pending" | "approved" | "rejected";
-  meta?: { section?: string; level?: string } | null;
+  meta?: Record<string, string> | null;
   created_at: string;
 };
 
-const LEVEL_LABELS: Record<string, string> = {
-  beginner: "مبتدئ",
-  intermediate: "متوسط",
-  advanced: "متقدم",
+const TYPE_COLORS: Record<ContentType, { bg: string; color: string }> = {
+  "درس":       { bg: "#dbeafe", color: "#1d4ed8" },
+  "فائدة":     { bg: "#d1fae5", color: "#065f46" },
+  "معلومة":    { bg: "#fef9c3", color: "#854d0e" },
+  "سؤال لعبة": { bg: "#f3e8ff", color: "#7c3aed" },
+  "فكرة":      { bg: "#ffe4e6", color: "#9f1239" },
 };
 
 export function SubmissionsSection() {
@@ -122,17 +126,13 @@ export function SubmissionsSection() {
                       fontWeight: 700,
                       padding: "0.15rem 0.5rem",
                       borderRadius: "0.25rem",
-                      background: item.type === "lesson" ? "#dbeafe" : "#f3e8ff",
-                      color: item.type === "lesson" ? "#1d4ed8" : "#7c3aed",
+                      ...(TYPE_COLORS[item.type as ContentType] ?? { bg: "#f3f4f6", color: "#374151" }),
+                      background: (TYPE_COLORS[item.type as ContentType] ?? { bg: "#f3f4f6" }).bg,
+                      color: (TYPE_COLORS[item.type as ContentType] ?? { color: "#374151" }).color,
                     }}
                   >
-                    {item.type === "lesson" ? "درس" : "سؤال"}
+                    {item.type}
                   </span>
-                  {item.type === "question" && item.meta?.section && (
-                    <span style={{ fontSize: "0.75rem", color: "#6b7280" }}>
-                      {item.meta.section} · {LEVEL_LABELS[item.meta.level || ""] || item.meta.level}
-                    </span>
-                  )}
                 </div>
                 <p style={{ fontWeight: 600, margin: "0 0 0.25rem", color: "#0D1B2A", wordBreak: "break-word" }}>
                   {item.title}
