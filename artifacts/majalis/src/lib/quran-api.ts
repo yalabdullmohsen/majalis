@@ -199,6 +199,137 @@ export function getSurahMeta(number: number): StaticSurahMeta {
   };
 }
 
+// ─── Qiraat (القراءات العشر) ──────────────────────────────────────────────
+
+export type Qiraat = {
+  id: string;
+  name: string;
+  apiEdition: string | null; // null = uses Hafs fallback
+};
+
+export const QIRAAT_LIST: Qiraat[] = [
+  { id: "hafs",     name: "حفص عن عاصم",           apiEdition: "quran-uthmani" },
+  { id: "warsh",    name: "ورش عن نافع",             apiEdition: "quran-warsh-tanzil" },
+  { id: "qaloon",   name: "قالون عن نافع",           apiEdition: null },
+  { id: "sousi",    name: "السوسي عن أبي عمرو",      apiEdition: null },
+  { id: "duri-k",   name: "الدوري عن الكسائي",       apiEdition: null },
+  { id: "kasai",    name: "الكسائي",                  apiEdition: null },
+  { id: "hamza",    name: "حمزة الزيات",              apiEdition: null },
+  { id: "khuzai",   name: "الخزاعي عن خلف",          apiEdition: null },
+  { id: "ibn-zakwan","name": "ابن ذكوان عن ابن عامر", apiEdition: null },
+  { id: "hisham",   name: "هشام عن ابن عامر",        apiEdition: null },
+];
+
+const QIRAAT_PREF_KEY = "mj-quran-qiraat-v1";
+export function getQiraatPref(): string {
+  try { return localStorage.getItem(QIRAAT_PREF_KEY) || "hafs"; } catch { return "hafs"; }
+}
+export function setQiraatPref(id: string) {
+  try { localStorage.setItem(QIRAAT_PREF_KEY, id); } catch { /* ignore */ }
+}
+
+export async function fetchSurahDetailQiraat(surahNumber: number, qiraatId: string): Promise<SurahDetail> {
+  const q = QIRAAT_LIST.find((r) => r.id === qiraatId);
+  const edition = q?.apiEdition ?? "quran-uthmani";
+  const key = `surah-${surahNumber}-${edition}`;
+  const cached = readCache<SurahDetail>(key);
+  if (cached) return cached;
+
+  const res = await fetch(`${BASE}/surah/${surahNumber}/${edition}`, {
+    signal: AbortSignal.timeout(15_000),
+  });
+  if (!res.ok) return fetchSurahDetail(surahNumber); // fallback to Hafs
+  const json = await res.json();
+  if (json.code !== 200 || !json.data) return fetchSurahDetail(surahNumber);
+  const detail: SurahDetail = json.data;
+  writeCache(key, detail);
+  return detail;
+}
+
+// ─── Juz (الأجزاء) ────────────────────────────────────────────────────────
+
+export type JuzData = {
+  juzNumber: number;
+  ayahs: Ayah[];
+  surahs: Array<{ number: number; name: string; start: number; end: number }>;
+};
+
+export async function fetchJuz(juzNumber: number, edition = "quran-uthmani"): Promise<JuzData> {
+  const key = `juz-${juzNumber}-${edition}`;
+  const cached = readCache<JuzData>(key);
+  if (cached) return cached;
+
+  const res = await fetch(`${BASE}/juz/${juzNumber}/${edition}`, {
+    signal: AbortSignal.timeout(20_000),
+  });
+  if (!res.ok) throw new Error(`AlQuran Cloud juz: HTTP ${res.status}`);
+  const json = await res.json();
+  if (json.code !== 200 || !json.data) throw new Error("AlQuran Cloud: unexpected juz response");
+
+  const rawAyahs: Array<{
+    number: number;
+    numberInSurah: number;
+    text: string;
+    juz: number;
+    page: number;
+    sajda: Ayah["sajda"];
+    surah: { number: number; name: string };
+  }> = json.data.ayahs;
+
+  const ayahs: Ayah[] = rawAyahs.map((a) => ({
+    number: a.number,
+    numberInSurah: a.numberInSurah,
+    text: a.text,
+    juz: a.juz,
+    page: a.page,
+    sajda: a.sajda,
+  }));
+
+  // Build surah groups
+  const surahMap = new Map<number, { number: number; name: string; start: number; end: number }>();
+  rawAyahs.forEach((a) => {
+    const existing = surahMap.get(a.surah.number);
+    if (!existing) {
+      surahMap.set(a.surah.number, { number: a.surah.number, name: a.surah.name, start: a.numberInSurah, end: a.numberInSurah });
+    } else {
+      existing.end = a.numberInSurah;
+    }
+  });
+  const surahs = Array.from(surahMap.values());
+
+  const result: JuzData = { juzNumber, ayahs, surahs };
+  writeCache(key, result);
+  return result;
+}
+
+// ─── Mushaf Page Images ────────────────────────────────────────────────────
+// Images from the Islamic Network CDN (open, free, public domain)
+
+const MUSHAF_PAGE_CDN = "https://cdn.islamic.network/quran/images/high-resolution";
+
+export function getMushafPageUrl(page: number): string {
+  const p = Math.max(1, Math.min(604, page));
+  return `${MUSHAF_PAGE_CDN}/page${String(p).padStart(3, "0")}.png`;
+}
+
+export async function fetchAyahsOnPage(page: number, edition = "quran-uthmani"): Promise<{ surahNumber: number; ayahNumber: number }[]> {
+  const key = `page-${page}-${edition}`;
+  const cached = readCache<{ surahNumber: number; ayahNumber: number }[]>(key);
+  if (cached) return cached;
+
+  const res = await fetch(`${BASE}/page/${page}/${edition}`, { signal: AbortSignal.timeout(15_000) });
+  if (!res.ok) return [];
+  const json = await res.json();
+  if (json.code !== 200 || !json.data?.ayahs) return [];
+
+  const result = (json.data.ayahs as Array<{ surah: { number: number }; numberInSurah: number }>).map((a) => ({
+    surahNumber: a.surah.number,
+    ayahNumber: a.numberInSurah,
+  }));
+  writeCache(key, result);
+  return result;
+}
+
 // ─── Daily Wird state (persisted in localStorage) ─────────────────────────
 
 export type DailyWirdState = {

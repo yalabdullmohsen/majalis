@@ -1,4 +1,6 @@
-import { useMemo, useState } from "react";
+"use client";
+
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSearch } from "wouter";
 import { PageHeader, Loading } from "@/components/ui-common";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
@@ -21,6 +23,13 @@ const PRAYER_LABELS: Record<PrayerKey, string> = {
   maghrib: "المغرب",
   isha: "العشاء",
 };
+const PRAYER_ICONS: Record<PrayerKey, string> = {
+  fajr: "🌙",
+  dhuhr: "☀️",
+  asr: "🌤️",
+  maghrib: "🌅",
+  isha: "🌃",
+};
 
 function todayKey() {
   return new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Kuwait" }).format(new Date());
@@ -36,11 +45,8 @@ function emptyDay(): Record<PrayerKey, PrayerTrack> {
 }
 
 function readTracker(): Record<string, Record<PrayerKey, PrayerTrack>> {
-  try {
-    return JSON.parse(localStorage.getItem(TRACK_STORAGE) || "{}");
-  } catch {
-    return {};
-  }
+  try { return JSON.parse(localStorage.getItem(TRACK_STORAGE) || "{}"); }
+  catch { return {}; }
 }
 
 function writeTracker(data: Record<string, Record<PrayerKey, PrayerTrack>>) {
@@ -53,6 +59,274 @@ const TABS = [
 ] as const;
 type TabId = (typeof TABS)[number]["id"];
 
+// ─── Floating Prayer Tracker ───────────────────────────────────────────────
+
+function PrayerTrackerSheet({
+  today,
+  stats,
+  onUpdate,
+}: {
+  today: Record<PrayerKey, PrayerTrack>;
+  stats: { todayDone: number; todayMissed: number };
+  onUpdate: (key: PrayerKey, patch: Partial<PrayerTrack>) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const sheetRef = useRef<HTMLDivElement>(null);
+  const donePct = (stats.todayDone / 5) * 100;
+
+  // Close on outside click
+  useEffect(() => {
+    if (!open) return;
+    const handler = (e: MouseEvent) => {
+      if (sheetRef.current && !sheetRef.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [open]);
+
+  return (
+    <>
+      {/* FAB button */}
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-label="متابعة الصلوات"
+        style={{
+          position: "fixed",
+          bottom: "5rem",
+          left: "1rem",
+          width: 54,
+          height: 54,
+          borderRadius: "50%",
+          background: "linear-gradient(135deg, var(--ds-emerald, #1a6b4a), var(--ds-emerald-deep, #0f4730))",
+          color: "#fff",
+          border: "none",
+          boxShadow: "0 4px 16px rgba(22,78,60,0.35)",
+          cursor: "pointer",
+          fontSize: "1.4rem",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          zIndex: 900,
+          transition: "transform 0.2s",
+          transform: open ? "rotate(45deg) scale(0.9)" : "none",
+        }}
+      >
+        {open ? "✕" : "📋"}
+      </button>
+
+      {/* Badge showing progress */}
+      {!open && (
+        <div
+          style={{
+            position: "fixed",
+            bottom: "8.2rem",
+            left: "0.85rem",
+            background: stats.todayDone === 5 ? "#22c55e" : stats.todayDone === 0 ? "#ef4444" : "var(--majalis-brass, #b8860b)",
+            color: "#fff",
+            fontSize: "0.6rem",
+            fontWeight: 700,
+            borderRadius: "50%",
+            width: 20,
+            height: 20,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 901,
+            border: "2px solid #fff",
+          }}
+        >
+          {stats.todayDone}/5
+        </div>
+      )}
+
+      {/* Backdrop */}
+      {open && (
+        <div
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(0,0,0,0.35)",
+            zIndex: 950,
+          }}
+          onClick={() => setOpen(false)}
+        />
+      )}
+
+      {/* Bottom sheet */}
+      <div
+        ref={sheetRef}
+        style={{
+          position: "fixed",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          zIndex: 960,
+          background: "#fff",
+          borderRadius: "1.25rem 1.25rem 0 0",
+          boxShadow: "0 -4px 32px rgba(0,0,0,0.15)",
+          transform: open ? "translateY(0)" : "translateY(110%)",
+          transition: "transform 0.32s cubic-bezier(0.34,1.56,0.64,1)",
+          maxHeight: "72vh",
+          overflowY: "auto",
+          direction: "rtl",
+        }}
+      >
+        {/* Handle */}
+        <div style={{ display: "flex", justifyContent: "center", paddingTop: "0.75rem" }}>
+          <div style={{ width: 40, height: 4, borderRadius: 999, background: "#e5e7eb" }} />
+        </div>
+
+        {/* Header */}
+        <div style={{ padding: "0.875rem 1.25rem 0.5rem", borderBottom: "1px solid #f0f0f0" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <div>
+              <p style={{ margin: 0, fontSize: "0.75rem", color: "var(--ds-ink-soft, #888)" }}>اليوم</p>
+              <h3 style={{ margin: "0.1rem 0 0", fontSize: "1.1rem", fontWeight: 700, color: "var(--ds-ink, #1a1a1a)" }}>
+                متابعة الصلوات
+              </h3>
+            </div>
+            <button
+              type="button"
+              onClick={() => setOpen(false)}
+              style={{ background: "none", border: "none", fontSize: "1.3rem", cursor: "pointer", color: "#888" }}
+            >
+              ✕
+            </button>
+          </div>
+
+          {/* Progress bar */}
+          <div style={{ marginTop: "0.75rem" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.75rem", color: "#888", marginBottom: "0.3rem" }}>
+              <span>{stats.todayDone} من 5 مكتملة</span>
+              <span style={{ color: donePct === 100 ? "#22c55e" : "inherit" }}>{Math.round(donePct)}%</span>
+            </div>
+            <div style={{ height: 8, borderRadius: 999, background: "#f0f0f0" }}>
+              <div
+                style={{
+                  height: "100%",
+                  borderRadius: 999,
+                  background: donePct === 100 ? "#22c55e" : "var(--ds-emerald, #1a6b4a)",
+                  width: `${donePct}%`,
+                  transition: "width 0.4s ease",
+                }}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Prayer rows */}
+        <div style={{ padding: "0.5rem 1.25rem 1.5rem" }}>
+          {PRAYER_KEYS.map((key) => {
+            const row = today[key];
+            const isDone = row.status === "done";
+            const isMissed = row.status === "missed";
+            return (
+              <div
+                key={key}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.75rem",
+                  padding: "0.75rem 0",
+                  borderBottom: "1px solid #f5f5f5",
+                }}
+              >
+                <span style={{ fontSize: "1.4rem", flexShrink: 0 }}>{PRAYER_ICONS[key]}</span>
+                <div style={{ flex: 1 }}>
+                  <p style={{
+                    margin: 0,
+                    fontWeight: 700,
+                    fontSize: "0.95rem",
+                    color: isDone ? "#22c55e" : isMissed ? "#ef4444" : "var(--ds-ink, #1a1a1a)",
+                  }}>
+                    {PRAYER_LABELS[key]}
+                  </p>
+                  <p style={{ margin: "0.1rem 0 0", fontSize: "0.72rem", color: "#888" }}>
+                    {isDone ? "✓ تمت" : isMissed ? "✗ فاتت" : "بانتظار"}
+                    {row.congregation ? " · جماعة" : ""}
+                    {row.place === "mosque" ? " · مسجد" : ""}
+                  </p>
+                </div>
+                <div style={{ display: "flex", gap: "0.4rem", flexShrink: 0 }}>
+                  <button
+                    type="button"
+                    onClick={() => onUpdate(key, { status: isDone ? "pending" : "done" })}
+                    style={{
+                      padding: "0.4rem 0.75rem",
+                      borderRadius: "var(--ds-radius, 0.5rem)",
+                      border: "none",
+                      background: isDone ? "#22c55e" : "#f0fdf4",
+                      color: isDone ? "#fff" : "#22c55e",
+                      fontWeight: 700,
+                      fontSize: "0.78rem",
+                      cursor: "pointer",
+                      fontFamily: "inherit",
+                      minWidth: 48,
+                    }}
+                  >
+                    {isDone ? "✓" : "تمت"}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => onUpdate(key, { status: isMissed ? "pending" : "missed" })}
+                    style={{
+                      padding: "0.4rem 0.75rem",
+                      borderRadius: "var(--ds-radius, 0.5rem)",
+                      border: "none",
+                      background: isMissed ? "#ef4444" : "#fef2f2",
+                      color: isMissed ? "#fff" : "#ef4444",
+                      fontWeight: 700,
+                      fontSize: "0.78rem",
+                      cursor: "pointer",
+                      fontFamily: "inherit",
+                      minWidth: 48,
+                    }}
+                  >
+                    {isMissed ? "✗" : "فاتت"}
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+
+          {/* Quick options for congregation/place */}
+          <div style={{ marginTop: "0.75rem", padding: "0.75rem", background: "#f9fafb", borderRadius: "0.75rem" }}>
+            <p style={{ margin: "0 0 0.5rem", fontSize: "0.75rem", fontWeight: 700, color: "#888" }}>تفاصيل الصلاة</p>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.5rem" }}>
+              {PRAYER_KEYS.map((key) => {
+                const row = today[key];
+                if (row.status !== "done") return null;
+                return (
+                  <div key={key} style={{ background: "#fff", borderRadius: "0.5rem", padding: "0.5rem 0.625rem", border: "1px solid #e5e7eb" }}>
+                    <p style={{ margin: "0 0 0.3rem", fontSize: "0.7rem", fontWeight: 600, color: "var(--ds-ink, #1a1a1a)" }}>{PRAYER_LABELS[key]}</p>
+                    <select
+                      value={row.place}
+                      onChange={(e) => onUpdate(key, { place: e.target.value as PrayerTrack["place"] })}
+                      style={{ width: "100%", border: "1px solid #e5e7eb", borderRadius: 4, fontSize: "0.7rem", padding: "0.2rem", background: "#fff", fontFamily: "inherit", color: "var(--ds-ink, #1a1a1a)" }}
+                    >
+                      <option value="mosque">مسجد</option>
+                      <option value="home">بيت</option>
+                    </select>
+                    <label style={{ display: "flex", gap: "0.3rem", alignItems: "center", marginTop: "0.25rem", fontSize: "0.7rem", cursor: "pointer" }}>
+                      <input type="checkbox" checked={row.congregation} onChange={(e) => onUpdate(key, { congregation: e.target.checked })} />
+                      جماعة
+                    </label>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+// ─── Main Page ─────────────────────────────────────────────────────────────
+
 export default function PrayerTimesPage() {
   const search = useSearch();
   const initialTab: TabId = new URLSearchParams(search).get("tab") === "ranks" ? "ranks" : "times";
@@ -60,41 +334,28 @@ export default function PrayerTimesPage() {
 
   const { data, countdown, loading } = usePrayerCountdown();
   const obligatory = data?.prayers.filter((p) => p.obligatory) || [];
+  const sunrise = data?.prayers.find((p) => p.key === "Sunrise") || null;
+
   const [store, setStore] = useState(() => readTracker());
   const dateKey = todayKey();
   const today = store[dateKey] || emptyDay();
 
-  const updatePrayer = (key: PrayerKey, patch: Partial<PrayerTrack>) => {
-    const nextDay = { ...today, [key]: { ...today[key], ...patch } };
-    const next = { ...store, [dateKey]: nextDay };
-    setStore(next);
-    writeTracker(next);
-  };
+  const updatePrayer = useCallback((key: PrayerKey, patch: Partial<PrayerTrack>) => {
+    setStore((prev) => {
+      const nextDay = { ...(prev[dateKey] || emptyDay()), [key]: { ...(prev[dateKey]?.[key] || emptyDay()[key]), ...patch } };
+      const next = { ...prev, [dateKey]: nextDay };
+      writeTracker(next);
+      return next;
+    });
+  }, [dateKey]);
 
   const stats = useMemo(() => {
-    const days = Object.entries(store).sort(([a], [b]) => b.localeCompare(a));
-    const last7 = days.slice(0, 7).flatMap(([, day]) => Object.values(day));
-    const last30 = days.slice(0, 30).flatMap(([, day]) => Object.values(day));
-    const calc = (rows: PrayerTrack[]) => ({
-      done: rows.filter((p) => p.status === "done").length,
-      missed: rows.filter((p) => p.status === "missed").length,
-      mosque: rows.filter((p) => p.place === "mosque").length,
-      congregation: rows.filter((p) => p.congregation).length,
-    });
-    let streak = 0;
-    for (const [, day] of days) {
-      if (Object.values(day).every((p) => p.status === "done")) streak += 1;
-      else break;
-    }
     const totalToday = Object.values(today);
     return {
       todayDone: totalToday.filter((p) => p.status === "done").length,
       todayMissed: totalToday.filter((p) => p.status === "missed").length,
-      week: calc(last7),
-      month: calc(last30),
-      streak,
     };
-  }, [store, today]);
+  }, [today]);
 
   return (
     <div className="page-shell">
@@ -138,6 +399,7 @@ export default function PrayerTimesPage() {
             <p className="prayer-status-card__date">{data.date.readable || data.date.gregorian}</p>
           </div>
 
+          {/* Prayer times grid */}
           <div className="prayer-times-grid">
             {obligatory.map((p) => (
               <div
@@ -148,53 +410,34 @@ export default function PrayerTimesPage() {
                 <strong>{p.time}</strong>
               </div>
             ))}
+
+            {/* Sunrise row — distinctive orange style */}
+            {sunrise && (
+              <div
+                className="prayer-time-cell ui-card"
+                style={{
+                  gridColumn: "1 / -1",
+                  background: "linear-gradient(135deg, #fff8f0, #fff3e0)",
+                  border: "1.5px solid #FB8C00",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  padding: "0.75rem 1.25rem",
+                }}
+              >
+                <span style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontWeight: 600, color: "#E65100" }}>
+                  ☀️ الشروق
+                  <span style={{ fontSize: "0.7rem", fontWeight: 400, color: "#BF360C", padding: "0.1rem 0.4rem", background: "#FFE0B2", borderRadius: 999 }}>
+                    وقت الكراهة
+                  </span>
+                </span>
+                <strong style={{ fontSize: "1.1rem", color: "#E65100" }}>{sunrise.time}</strong>
+              </div>
+            )}
           </div>
 
-          <section className="ui-card prayer-tracker-card">
-            <div className="prayer-tracker-head">
-              <div>
-                <p className="prayer-status-card__label">متابعة الصلوات</p>
-                <h2>عداد الصلوات اليومي</h2>
-              </div>
-              <strong>{stats.todayDone}/5</strong>
-            </div>
-
-            <div className="prayer-tracker-grid">
-              {PRAYER_KEYS.map((key) => {
-                const row = today[key];
-                return (
-                  <article key={key} className={`prayer-track-cell is-${row.status}`}>
-                    <header>
-                      <strong>{PRAYER_LABELS[key]}</strong>
-                      <span>{row.status === "done" ? "تمت" : row.status === "missed" ? "فاتت" : "بانتظار"}</span>
-                    </header>
-                    <div className="prayer-track-actions">
-                      <button type="button" onClick={() => updatePrayer(key, { status: "done" })}>تمت</button>
-                      <button type="button" onClick={() => updatePrayer(key, { status: "missed" })}>فاتت</button>
-                    </div>
-                    <div className="prayer-track-options">
-                      <label><input type="checkbox" checked={row.congregation} onChange={(e) => updatePrayer(key, { congregation: e.target.checked })} /> جماعة</label>
-                      <select value={row.place} onChange={(e) => updatePrayer(key, { place: e.target.value as PrayerTrack["place"] })}>
-                        <option value="mosque">في المسجد</option>
-                        <option value="home">في البيت</option>
-                      </select>
-                      <select value={row.timing} onChange={(e) => updatePrayer(key, { timing: e.target.value as PrayerTrack["timing"] })}>
-                        <option value="early">أول الوقت</option>
-                        <option value="late">آخر الوقت</option>
-                      </select>
-                    </div>
-                  </article>
-                );
-              })}
-            </div>
-
-            <div className="prayer-stat-strip">
-              <span>اليوم: {stats.todayDone} تمت / {stats.todayMissed} فاتت</span>
-              <span>الأسبوع: {stats.week.done} صلاة</span>
-              <span>الشهر: {stats.month.done} صلاة</span>
-              <span>Streak: {stats.streak} يوم</span>
-            </div>
-          </section>
+          {/* Floating prayer tracker */}
+          <PrayerTrackerSheet today={today} stats={stats} onUpdate={updatePrayer} />
         </>
       ) : (
         <p className="lessons-empty-state">تعذر تحميل المواقيت حالياً.</p>
