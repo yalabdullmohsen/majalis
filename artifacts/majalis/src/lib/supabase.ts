@@ -1037,6 +1037,46 @@ export async function adminSetQuizQuestionStatus(id: string, status: string) {
     .eq("id", id);
 }
 
+/** رفع أسئلة الـ Seed إلى Supabase (upsert حسب question+section). */
+export async function upsertQuizSeedToDb(): Promise<{ ok: boolean; synced: number; error?: string }> {
+  if (!isConfigured) return { ok: false, synced: 0, error: "supabase_not_configured" };
+  const rows = DEMO_QUIZ_QUESTIONS.filter((q) => q.status !== "draft").map((q) => ({
+    section: q.section,
+    category: q.category || q.section,
+    level: q.level === "سهل" ? "beginner" : q.level === "متوسط" ? "intermediate" : q.level === "صعب" ? "advanced" : q.level,
+    question: q.question,
+    answer: q.answer,
+    status: "published",
+    is_used: false,
+    updated_at: new Date().toISOString(),
+  }));
+  try {
+    const { error } = await supabase.from("quiz_questions").upsert(rows, { onConflict: "question,section" });
+    if (error) throw error;
+    return { ok: true, synced: rows.length };
+  } catch (err) {
+    logSupabaseError("upsertQuizSeedToDb", err);
+    return { ok: false, synced: 0, error: formatSupabaseError(err) };
+  }
+}
+
+/** إعادة تعيين is_used=false لجميع الأسئلة في Supabase. */
+export async function adminResetAllQuizIsUsed(): Promise<{ ok: boolean; error?: string }> {
+  if (!isConfigured) return { ok: false, error: "supabase_not_configured" };
+  try {
+    const { error } = await supabase
+      .from("quiz_questions")
+      .update({ is_used: false, updated_at: new Date().toISOString() })
+      .neq("id", "00000000-0000-0000-0000-000000000000"); // update all rows
+    if (error) throw error;
+    resetAllUsedQuizIds(); // also clear localStorage
+    return { ok: true };
+  } catch (err) {
+    logSupabaseError("adminResetAllQuizIsUsed", err);
+    return { ok: false, error: formatSupabaseError(err) };
+  }
+}
+
 // ─── Search ────────────────────────────────────────────────────────────────────
 
 export type SearchResults = {
