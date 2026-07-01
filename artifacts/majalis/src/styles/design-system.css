@@ -1465,3 +1465,49 @@ html[data-theme="dark"] .login-oauth__btn {
   border-color: #333;
   color: #d1d5db;
 }
+
+/* ═══════════════════════════════════════════════════════
+   Push Notification Prompt
+   ═══════════════════════════════════════════════════════ */
+
+.push-prompt {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: var(--ds-radius);
+  border: 1px solid var(--ds-line-color);
+  background: var(--majalis-panel, #fff);
+  margin-bottom: 0.75rem;
+}
+
+.push-prompt--warn { border-color: #fcd34d; background: #fffbeb; }
+.push-prompt--info { border-color: #93c5fd; background: #eff6ff; font-size: 0.82rem; color: #1e40af; }
+
+.push-prompt__text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.push-prompt__text strong { font-size: 0.875rem; color: var(--ds-ink); }
+.push-prompt__text span   { font-size: 0.78rem;  color: var(--ds-ink-soft); }
+
+.push-prompt__btn {
+  flex-shrink: 0;
+  padding: 0.375rem 0.875rem;
+  border-radius: var(--ds-radius-sm);
+  border: none;
+  background: var(--ds-emerald);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.8125rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.push-prompt__btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.push-prompt__btn--off { background: #dc2626; }
+.push-prompt__btn--off:hover:not(:disabled) { background: #b91c1c; }
