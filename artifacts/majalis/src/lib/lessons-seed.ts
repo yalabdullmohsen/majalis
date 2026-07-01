@@ -1,7 +1,4 @@
-/**
- * مصدر Seed للدروس — للتطوير والتثبيت الأول فقط.
- * في Production (MAJALIS_PRODUCTION_CONTENT=1) لا يُستخدم كمصدر للمحتوى الحي.
- */
+/** كتالوج Seed للدروس — يُدمج دائماً مع بيانات Supabase في جميع البيئات. */
 import { lessonAds, type LessonAd } from "@/lib/lesson-ads";
 import { buildCatalogLessonRows } from "@/lib/lessons-catalog";
 import { resolveGovernorateForUi, resolveRegion } from "@/lib/kuwait-regions";

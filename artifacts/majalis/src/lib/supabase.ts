@@ -251,32 +251,30 @@ export async function fetchApprovedLessonsFromDb() {
 }
 
 export async function getLessons({ category, city, search }: { category?: string; city?: string; search?: string } = {}) {
-  const fallback = allowSeedFallback() ? filterLessonsList(LESSONS_SEED, { category, city, search }) : [];
+  const fallback = filterLessonsList(LESSONS_SEED, { category, city, search });
 
   if (!isConfigured) {
-    return { data: fallback, error: null, usingSeed: allowSeedFallback() };
+    return { data: fallback, error: null, usingSeed: true };
   }
 
   try {
     const { data } = await fetchApprovedLessonsFromDb();
     const result = filterLessonsList(data, { category, city, search });
-    if (allowSeedFallback() && result.length === 0 && fallback.length > 0) {
+    if (result.length === 0 && fallback.length > 0) {
       return { data: fallback, error: null, usingSeed: true };
     }
     return { data: result, error: null, usingSeed: false };
   } catch (err) {
     logSupabaseError("getLessons", err);
-    return { data: fallback, error: null, usingSeed: allowSeedFallback() };
+    return { data: fallback, error: null, usingSeed: true };
   }
 }
 
 export async function getLessonById(id: string) {
-  const fallback = allowSeedFallback()
-    ? findSeedLessonById(id) || DEMO_LESSONS.find((l) => l.id === id) || null
-    : null;
+  const fallback = findSeedLessonById(id) || DEMO_LESSONS.find((l) => l.id === id) || null;
 
   if (!isConfigured) {
-    return { lesson: fallback, error: null, usingSeed: allowSeedFallback() };
+    return { lesson: fallback, error: null, usingSeed: true };
   }
 
   try {
@@ -306,6 +304,55 @@ export async function getLessonById(id: string) {
   } catch (err) {
     logSupabaseError("getLessonById", err, { id });
     return { lesson: fallback, error: null, usingSeed: true };
+  }
+}
+
+/** أدخل/حدّث جميع صفوف LESSONS_SEED في جدول lessons — يتطلب صلاحيات المدير. */
+export async function upsertSeedLessonsToDb(): Promise<{ ok: boolean; synced: number; error?: string }> {
+  if (!isConfigured) return { ok: false, synced: 0, error: "supabase_not_configured" };
+  const rows = LESSONS_SEED.map((row) => ({
+    external_key: row.external_key,
+    title: row.title,
+    speaker_name: row.speaker_name,
+    poster_image_url: row.poster_image_url || null,
+    category: row.category,
+    city: row.city,
+    region: row.region,
+    mosque: row.mosque,
+    day_of_week: row.day_of_week,
+    lesson_time: row.lesson_time,
+    schedule: row.schedule,
+    description: row.description || null,
+    audience: row.audience,
+    delivery: row.delivery,
+    status: "approved" as const,
+    keywords: row.keywords || [],
+    live_url: row.live_url || null,
+    book_url: row.book_url || null,
+    maps_url: row.maps_url || null,
+    start_date: row.start_date || null,
+    end_date: row.end_date || null,
+    is_recurring: row.is_recurring,
+    activity_type: row.activity_type,
+    is_course: row.is_course,
+    course_id: row.course_id || null,
+    session_count: row.session_count || null,
+    linked_titles: row.linked_titles || [],
+  }));
+
+  try {
+    const { data, error } = await supabase
+      .from("lessons")
+      .upsert(rows, { onConflict: "external_key", ignoreDuplicates: false })
+      .select("id");
+    if (error) {
+      logSupabaseError("upsertSeedLessonsToDb", error);
+      return { ok: false, synced: 0, error: error.message };
+    }
+    return { ok: true, synced: data?.length ?? 0 };
+  } catch (err: any) {
+    logSupabaseError("upsertSeedLessonsToDb", err);
+    return { ok: false, synced: 0, error: err?.message };
   }
 }
 
