@@ -1607,3 +1607,61 @@ html[data-theme="dark"] .home-about-section {
   background: var(--majalis-panel);
   border-color: var(--majalis-line);
 }
+
+/* ═══════════════════════════════════════════════════════
+   User Stats Page — البند 9
+   ═══════════════════════════════════════════════════════ */
+
+.user-stats-section {
+  margin-bottom: 1.5rem;
+}
+
+.user-stats-section__title {
+  font-size: var(--ds-text-md);
+  font-weight: 800;
+  color: var(--ds-emerald-deep);
+  margin: 0 0 0.75rem;
+}
+
+.user-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+  gap: 0.65rem;
+  margin-bottom: 0.5rem;
+}
+
+.user-stat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.2rem;
+  padding: 0.9rem 0.5rem;
+}
+
+.user-stat-card__label {
+  font-size: 0.78rem;
+  color: var(--ds-ink-soft);
+  font-weight: 600;
+}
+
+.user-stat-card__value {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--ds-emerald-deep);
+  font-variant-numeric: tabular-nums;
+}
+
+.user-stat-card__sub {
+  font-size: 0.7rem;
+  color: var(--ds-ink-soft);
+}
+
+.user-stats-link {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--ds-emerald);
+  text-decoration: none;
+}
+
+html[data-theme="dark"] .user-stat-card__value { color: var(--majalis-emerald-deep); }
