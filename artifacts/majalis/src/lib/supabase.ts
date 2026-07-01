@@ -942,9 +942,51 @@ export async function adminSetQuestionStatus(id: string, status: string) {
 
 // ─── المسابقات الشرعية ───────────────────────────────────────────────────────────
 
+const USED_QUIZ_IDS_KEY = "majalis_used_quiz_v1";
+
+export function getLocalUsedQuizIds(): Set<string> {
+  if (typeof localStorage === "undefined") return new Set();
+  try {
+    const raw = localStorage.getItem(USED_QUIZ_IDS_KEY);
+    return new Set<string>(raw ? JSON.parse(raw) : []);
+  } catch {
+    return new Set();
+  }
+}
+
+function markLocalQuizIdUsed(id: string): void {
+  if (typeof localStorage === "undefined") return;
+  try {
+    const current = getLocalUsedQuizIds();
+    current.add(id);
+    localStorage.setItem(USED_QUIZ_IDS_KEY, JSON.stringify([...current]));
+  } catch {}
+}
+
+export async function markQuizQuestionUsed(id: string): Promise<void> {
+  if (!id) return;
+  markLocalQuizIdUsed(id);
+  // Only update Supabase for UUID-format IDs (not local seed IDs)
+  if (!isConfigured || !/^[0-9a-f-]{36}$/i.test(id)) return;
+  try {
+    await supabase
+      .from("quiz_questions")
+      .update({ is_used: true, updated_at: new Date().toISOString() })
+      .eq("id", id);
+  } catch { /* silent */ }
+}
+
+export function resetAllUsedQuizIds(): void {
+  if (typeof localStorage !== "undefined") {
+    localStorage.removeItem(USED_QUIZ_IDS_KEY);
+  }
+}
+
 export async function getQuizQuestions({ section, level }: { section?: string; level?: string } = {}) {
+  const usedIds = getLocalUsedQuizIds();
+
   const filterSeed = () => {
-    let rows = DEMO_QUIZ_QUESTIONS.filter((q) => q.status !== "draft");
+    let rows = DEMO_QUIZ_QUESTIONS.filter((q) => q.status !== "draft" && !usedIds.has(q.id ?? ""));
     if (section && section !== "الكل") rows = rows.filter((q) => q.section === section);
     if (level && level !== "الكل") rows = rows.filter((q) => q.level === level);
     return rows;
@@ -959,6 +1001,7 @@ export async function getQuizQuestions({ section, level }: { section?: string; l
       .from("quiz_questions")
       .select("*")
       .eq("status", "published")
+      .or("is_used.is.null,is_used.eq.false")
       .order("created_at", { ascending: false });
     if (section && section !== "الكل") q = q.eq("section", section);
     if (level && level !== "الكل") q = q.eq("level", level);

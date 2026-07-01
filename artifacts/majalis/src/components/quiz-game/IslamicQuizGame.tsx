@@ -9,7 +9,7 @@ import {
   type PointValue,
   type QuizQuestion,
 } from "@/data/islamicQuizData";
-import { getQuizQuestions } from "@/lib/supabase";
+import { getQuizQuestions, getLocalUsedQuizIds, markQuizQuestionUsed } from "@/lib/supabase";
 
 // ─── Types ─────────────────────────────────────────────────────────────────
 
@@ -46,13 +46,14 @@ interface GameState {
 
 type Action =
   | { type: "START_GAME"; categories: string[]; names: [string, string] }
-  | { type: "SELECT_CELL"; cell: Cell; pool: Record<string, CategoryQuestions> }
+  | { type: "SELECT_CELL"; cell: Cell; pool: Record<string, CategoryQuestions>; persistedUsedIds?: Set<string> }
   | { type: "REVEAL_HINT" }
   | { type: "MARK_CORRECT" }
   | { type: "MARK_WRONG" }
   | { type: "USE_LIFELINE_PENALIZE" }
   | { type: "USE_LIFELINE_ELIMINATE" }
   | { type: "PASS_QUESTION" }
+  | { type: "TRANSFER_QUESTION" }
   | { type: "RESET" };
 
 // ─── Palette — منسجمة مع design system المنصة ─────────────────────────────
@@ -117,7 +118,7 @@ function reducer(state: GameState, action: Action): GameState {
 
     case "SELECT_CELL": {
       const usedSet = new Set(state.usedIds);
-      const q = pickQuestion(action.cell.categoryId, action.cell.points, usedSet, action.pool);
+      const q = pickQuestion(action.cell.categoryId, action.cell.points, usedSet, action.pool, action.persistedUsedIds);
       return { ...state, phase: "question", activeCell: action.cell, activeQuestion: q, passedToOpponent: false, showHint: false };
     }
 
@@ -189,6 +190,10 @@ function reducer(state: GameState, action: Action): GameState {
       ) as [Team, Team];
       return { ...state, teams, passedToOpponent: true };
     }
+
+    case "TRANSFER_QUESTION":
+      if (state.passedToOpponent) return state;
+      return { ...state, passedToOpponent: true };
 
     case "RESET":
       return initial;
@@ -276,6 +281,33 @@ const lifelineStyle = (color: string, bg: string): React.CSSProperties => ({
   fontWeight: 600,
   fontFamily: "inherit",
 });
+
+// ─── Timer Bar ─────────────────────────────────────────────────────────────
+
+function TimerBar({ seconds, maxSeconds }: { seconds: number; maxSeconds: number }) {
+  const pct = maxSeconds > 0 ? seconds / maxSeconds : 0;
+  const color = pct > 0.4 ? "#22c55e" : pct > 0.2 ? "#f59e0b" : "#ef4444";
+  const label = seconds <= 0 ? "انتهى الوقت" : `${seconds}ث`;
+  return (
+    <div style={{ margin: "0 0 0.875rem" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.3rem" }}>
+        <span style={{ fontSize: "0.75rem", color: S.inkSoft, fontWeight: 600 }}>⏱ الوقت</span>
+        <span style={{ fontSize: "0.82rem", fontWeight: 700, color }}>{label}</span>
+      </div>
+      <div style={{ height: "0.45rem", borderRadius: 999, background: "var(--ds-line-color, #e5e7eb)", overflow: "hidden" }}>
+        <div
+          style={{
+            height: "100%",
+            borderRadius: 999,
+            background: color,
+            width: `${Math.max(0, pct * 100)}%`,
+            transition: "width 1s linear, background 0.3s ease",
+          }}
+        />
+      </div>
+    </div>
+  );
+}
 
 // ─── Score Bar ─────────────────────────────────────────────────────────────
 
@@ -429,10 +461,12 @@ function BoardPhase({
   state,
   dispatch,
   poolRef,
+  persistedUsedIds,
 }: {
   state: GameState;
   dispatch: React.Dispatch<Action>;
   poolRef: React.RefObject<Record<string, CategoryQuestions>>;
+  persistedUsedIds: Set<string>;
 }) {
   const activeCats = GAME_CATEGORIES.filter((c) => state.selectedCategories.includes(c.id));
   const colCount = activeCats.length;
@@ -484,7 +518,7 @@ function BoardPhase({
                   key={`${cat.id}-${pts}`}
                   type="button"
                   disabled={cell.used}
-                  onClick={() => dispatch({ type: "SELECT_CELL", cell, pool: poolRef.current ?? ALL_QUESTIONS })}
+                  onClick={() => dispatch({ type: "SELECT_CELL", cell, pool: poolRef.current ?? ALL_QUESTIONS, persistedUsedIds })}
                   style={{
                     padding: "1rem 0.375rem",
                     borderRadius: "var(--ds-radius, 0.5rem)",
@@ -518,7 +552,21 @@ function BoardPhase({
 
 // ─── Question Phase ────────────────────────────────────────────────────────
 
-function QuestionPhase({ state, dispatch }: { state: GameState; dispatch: React.Dispatch<Action> }) {
+function QuestionPhase({
+  state,
+  dispatch,
+  timerSec,
+  maxTimerSec,
+  onMarkCorrect,
+  onMarkWrong,
+}: {
+  state: GameState;
+  dispatch: React.Dispatch<Action>;
+  timerSec: number;
+  maxTimerSec: number;
+  onMarkCorrect: () => void;
+  onMarkWrong: () => void;
+}) {
   const [revealed, setRevealed] = useState(false);
   const { activeCell, activeQuestion, teams, activeTeam, passedToOpponent, showHint } = state;
 
@@ -532,6 +580,8 @@ function QuestionPhase({ state, dispatch }: { state: GameState; dispatch: React.
     <div style={{ maxWidth: 640, margin: "0 auto" }}>
       <ScoreBar teams={teams} activeTeam={activeTeam} />
 
+      <TimerBar seconds={timerSec} maxSeconds={maxTimerSec} />
+
       <div style={{ ...sectionCard, border: `2px solid var(--majalis-brass)`, marginBottom: "1rem" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem", flexWrap: "wrap", gap: "0.5rem" }}>
           <span style={{ fontSize: "0.82rem", color: S.inkSoft }}>{cat?.icon} {cat?.name}</span>
@@ -542,7 +592,7 @@ function QuestionPhase({ state, dispatch }: { state: GameState; dispatch: React.
 
         {passedToOpponent && (
           <div style={{ padding: "0.5rem 0.75rem", background: "#EFF6FF", borderRadius: "var(--ds-radius, 0.5rem)", marginBottom: "0.875rem", fontSize: "0.82rem", color: "#1D4ED8", border: "1px solid #BFDBFE" }}>
-            📨 تم تمرير السؤال — يجيب الآن: <strong>{scoringTeam?.name}</strong>
+            📨 تم إرسال السؤال — يجيب الآن: <strong>{scoringTeam?.name}</strong>
           </div>
         )}
 
@@ -554,6 +604,28 @@ function QuestionPhase({ state, dispatch }: { state: GameState; dispatch: React.
           <p style={{ margin: 0, color: S.inkSoft, textAlign: "center", fontSize: "0.9rem" }}>
             لا يوجد سؤال متاح — حدد النتيجة يدوياً
           </p>
+        )}
+
+        {!passedToOpponent && (
+          <div style={{ marginTop: "0.75rem", paddingTop: "0.75rem", borderTop: `1px solid var(--ds-line-color)`, textAlign: "center" }}>
+            <button
+              type="button"
+              onClick={() => dispatch({ type: "TRANSFER_QUESTION" })}
+              style={{
+                padding: "0.45rem 1.1rem",
+                borderRadius: "var(--ds-radius, 0.5rem)",
+                background: "#EFF6FF",
+                color: "#1D4ED8",
+                border: "1px solid #BFDBFE",
+                cursor: "pointer",
+                fontSize: "0.82rem",
+                fontWeight: 600,
+                fontFamily: "inherit",
+              }}
+            >
+              📤 أرسل للفريق الآخر
+            </button>
+          </div>
         )}
       </div>
 
@@ -585,10 +657,10 @@ function QuestionPhase({ state, dispatch }: { state: GameState; dispatch: React.
           </div>
 
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.625rem", marginBottom: "0.875rem" }}>
-            <button type="button" onClick={() => dispatch({ type: "MARK_CORRECT" })} style={{ padding: "0.875rem 1rem", borderRadius: "var(--ds-radius, 0.5rem)", background: S.correct, color: "#fff", border: "none", fontWeight: 700, fontSize: "0.95rem", cursor: "pointer", fontFamily: "inherit", textAlign: "center" }}>
+            <button type="button" onClick={onMarkCorrect} style={{ padding: "0.875rem 1rem", borderRadius: "var(--ds-radius, 0.5rem)", background: S.correct, color: "#fff", border: "none", fontWeight: 700, fontSize: "0.95rem", cursor: "pointer", fontFamily: "inherit", textAlign: "center" }}>
               ✅ صحيح +{activeCell.points}
             </button>
-            <button type="button" onClick={() => dispatch({ type: "MARK_WRONG" })} style={{ padding: "0.875rem 1rem", borderRadius: "var(--ds-radius, 0.5rem)", background: S.wrong, color: "#fff", border: "none", fontWeight: 700, fontSize: "0.95rem", cursor: "pointer", fontFamily: "inherit", textAlign: "center" }}>
+            <button type="button" onClick={onMarkWrong} style={{ padding: "0.875rem 1rem", borderRadius: "var(--ds-radius, 0.5rem)", background: S.wrong, color: "#fff", border: "none", fontWeight: 700, fontSize: "0.95rem", cursor: "pointer", fontFamily: "inherit", textAlign: "center" }}>
               ❌ خطأ
             </button>
           </div>
@@ -612,7 +684,7 @@ function QuestionPhase({ state, dispatch }: { state: GameState; dispatch: React.
           )}
           {activeTeamObj.lifelines.pass && !passedToOpponent && (
             <button type="button" onClick={() => dispatch({ type: "PASS_QUESTION" })} style={lifelineStyle("#2E86C1", "#EBF5FB")}>
-              تمرير للخصم
+              تمرير للخصم (وسيلة)
             </button>
           )}
           {!activeTeamObj.lifelines.penalize && !activeTeamObj.lifelines.eliminate && !activeTeamObj.lifelines.pass && (
@@ -665,6 +737,46 @@ function WinnerPhase({ teams, onReset }: { teams: [Team, Team]; onReset: () => v
 export function IslamicQuizGame() {
   const [state, dispatch] = useReducer(reducer, initial);
   const poolRef = useRef<Record<string, CategoryQuestions>>(ALL_QUESTIONS);
+  const persistedUsedIdsRef = useRef<Set<string>>(new Set());
+
+  // Timer state
+  const [timerSec, setTimerSec] = useState(60);
+  const [maxTimerSec, setMaxTimerSec] = useState(60);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const passedRef = useRef(state.passedToOpponent);
+  useEffect(() => { passedRef.current = state.passedToOpponent; }, [state.passedToOpponent]);
+
+  const clearTimer = useCallback(() => {
+    if (timerRef.current) { clearInterval(timerRef.current); timerRef.current = null; }
+  }, []);
+
+  // Start/reset timer on question phase or when question is transferred
+  useEffect(() => {
+    if (state.phase !== "question") { clearTimer(); return; }
+    const duration = state.passedToOpponent ? 30 : 60;
+    setTimerSec(duration);
+    setMaxTimerSec(duration);
+    clearTimer();
+    timerRef.current = setInterval(() => {
+      setTimerSec((prev) => {
+        if (prev <= 1) {
+          clearTimer();
+          if (!passedRef.current) {
+            dispatch({ type: "TRANSFER_QUESTION" });
+          } else {
+            // auto mark wrong — need to also mark the question used
+            const qId = (state as GameState).activeQuestion?.id;
+            if (qId) markQuizQuestionUsed(qId);
+            dispatch({ type: "MARK_WRONG" });
+          }
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return clearTimer;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.phase, state.passedToOpponent]);
 
   useEffect(() => {
     getQuizQuestions().then(({ data }) => {
@@ -672,12 +784,25 @@ export function IslamicQuizGame() {
         poolRef.current = mergeSupabaseQuestions(data);
       }
     });
+    persistedUsedIdsRef.current = getLocalUsedQuizIds();
   }, []);
 
   const handleStart = useCallback(
     (cats: string[], names: [string, string]) => dispatch({ type: "START_GAME", categories: cats, names }),
     [],
   );
+
+  const handleMarkCorrect = useCallback(() => {
+    clearTimer();
+    if (state.activeQuestion?.id) markQuizQuestionUsed(state.activeQuestion.id);
+    dispatch({ type: "MARK_CORRECT" });
+  }, [state.activeQuestion, clearTimer]);
+
+  const handleMarkWrong = useCallback(() => {
+    clearTimer();
+    if (state.activeQuestion?.id) markQuizQuestionUsed(state.activeQuestion.id);
+    dispatch({ type: "MARK_WRONG" });
+  }, [state.activeQuestion, clearTimer]);
 
   return (
     <div
@@ -698,8 +823,24 @@ export function IslamicQuizGame() {
         )}
 
         {state.phase === "setup" && <SetupPhase onStart={handleStart} />}
-        {state.phase === "board" && <BoardPhase state={state} dispatch={dispatch} poolRef={poolRef} />}
-        {state.phase === "question" && <QuestionPhase state={state} dispatch={dispatch} />}
+        {state.phase === "board" && (
+          <BoardPhase
+            state={state}
+            dispatch={dispatch}
+            poolRef={poolRef}
+            persistedUsedIds={persistedUsedIdsRef.current}
+          />
+        )}
+        {state.phase === "question" && (
+          <QuestionPhase
+            state={state}
+            dispatch={dispatch}
+            timerSec={timerSec}
+            maxTimerSec={maxTimerSec}
+            onMarkCorrect={handleMarkCorrect}
+            onMarkWrong={handleMarkWrong}
+          />
+        )}
         {state.phase === "winner" && <WinnerPhase teams={state.teams} onReset={() => dispatch({ type: "RESET" })} />}
       </div>
     </div>
