@@ -48,10 +48,6 @@ html[data-font="default"] {
   --font-body: var(--font-primary);
 }
 
-html[data-font="ruqaa"] {
-  --font-body: "Aref Ruqaa", "Cairo", "Tajawal", serif;
-}
-
 html[data-font="naskh"] {
   --font-body: "Noto Naskh Arabic", "Cairo", "Tajawal", serif;
 }
