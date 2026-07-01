@@ -5,6 +5,7 @@ import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 export function HomePrayerTimes() {
   const { data, countdown, loading } = usePrayerCountdown();
   const obligatory = data?.prayers.filter((p) => p.obligatory) || [];
+  const sunrise = data?.prayers.find((p) => p.key === "Sunrise") || null;
 
   return (
     <section className="home-section" aria-labelledby="home-prayer-heading">
@@ -42,6 +43,12 @@ export function HomePrayerTimes() {
                 <strong>{p.time}</strong>
               </div>
             ))}
+            {sunrise && (
+              <div className="prayer-time-cell ui-card prayer-time-cell--sunrise">
+                <span>{sunrise.name}</span>
+                <strong>{sunrise.time}</strong>
+              </div>
+            )}
           </div>
         </div>
       ) : (
