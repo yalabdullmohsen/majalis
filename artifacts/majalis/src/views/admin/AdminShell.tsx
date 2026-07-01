@@ -35,7 +35,8 @@ export type AdminSection =
   | "governance"
   | "smart-cms"
   | "submissions"
-  | "quiz";
+  | "quiz"
+  | "knowledge-graph";
 
 export const ADMIN_NAV: { key: AdminSection; label: string }[] = [
   { key: "dashboard", label: "لوحة التحكم" },
@@ -53,6 +54,7 @@ export const ADMIN_NAV: { key: AdminSection; label: string }[] = [
   { key: "islamic-intelligence", label: "الاستخبارات العلمية" },
   { key: "open-platform", label: "Open Platform" },
   { key: "governance", label: "الحوكمة المؤسسية" },
+  { key: "knowledge-graph", label: "الرسم البياني المعرفي" },
   { key: "quiz", label: "أسئلة المسابقة" },
   { key: "lessons", label: "الدروس" },
   { key: "sheikhs", label: "المشايخ" },

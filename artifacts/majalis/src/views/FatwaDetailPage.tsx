@@ -5,6 +5,7 @@ import { getFatwaById, getRelatedFatwas } from "@/lib/platform-content-service";
 import { applyPageSeo } from "@/lib/seo";
 import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
 import { usePageView } from "@/hooks/usePageView";
+import { KnowledgeRelatedItems } from "@/components/knowledge/KnowledgeRelatedItems";
 
 export default function FatwaDetailPage({ params }: { params: { id: string } }) {
   const [item, setItem] = useState<any>(null);
@@ -90,6 +91,7 @@ export default function FatwaDetailPage({ params }: { params: { id: string } }) 
           </audio>
         </section>
       )}
+      <KnowledgeRelatedItems sourceType="fatwa" sourceId={String(item.id)} />
     </ContentDetailLayout>
   );
 }

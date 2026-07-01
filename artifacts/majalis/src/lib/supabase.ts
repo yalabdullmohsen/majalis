@@ -1494,3 +1494,156 @@ export async function getIslamicOccasionsCacheFromDb() {
   );
   return result.data;
 }
+
+// ─── Knowledge Relationships ───────────────────────────────────────────────
+
+export type KnowledgeRelType =
+  | "شيخ_تلميذ"
+  | "مؤلف_كتاب"
+  | "شرح_لكتاب"
+  | "فتوى_في_باب"
+  | "درس_عن_كتاب"
+  | "مرتبط";
+
+export type KnowledgeSourceType = "scholar" | "lesson" | "book" | "fatwa" | "fawaid" | "question";
+
+export type KnowledgeRelationship = {
+  id: string;
+  source_type: KnowledgeSourceType;
+  source_id: string;
+  target_type: KnowledgeSourceType;
+  target_id: string;
+  relationship_type: KnowledgeRelType;
+  label: string | null;
+  is_verified: boolean;
+  source_reference: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export async function getKnowledgeRelationships(opts?: {
+  sourceType?: KnowledgeSourceType;
+  sourceId?: string;
+  targetType?: KnowledgeSourceType;
+  targetId?: string;
+  verifiedOnly?: boolean;
+  limit?: number;
+}): Promise<KnowledgeRelationship[]> {
+  if (!isConfigured) return [];
+  try {
+    let q = supabase
+      .from("knowledge_relationships")
+      .select("id,source_type,source_id,target_type,target_id,relationship_type,label,is_verified,source_reference,created_at,updated_at")
+      .order("created_at", { ascending: false });
+
+    if (opts?.sourceType) q = q.eq("source_type", opts.sourceType);
+    if (opts?.sourceId)   q = q.eq("source_id",   opts.sourceId);
+    if (opts?.targetType) q = q.eq("target_type", opts.targetType);
+    if (opts?.targetId)   q = q.eq("target_id",   opts.targetId);
+    if (opts?.verifiedOnly) q = q.eq("is_verified", true);
+    if (opts?.limit) q = q.limit(opts.limit);
+
+    const { data, error } = await q;
+    if (error) {
+      if (isMissingSchemaError(error)) return [];
+      logSupabaseError("getKnowledgeRelationships", error, opts ?? {});
+      return [];
+    }
+    return (data as KnowledgeRelationship[]) ?? [];
+  } catch (err) {
+    logSupabaseError("getKnowledgeRelationships", err, opts ?? {});
+    return [];
+  }
+}
+
+export async function getRelatedItems(
+  sourceType: KnowledgeSourceType,
+  sourceId: string,
+): Promise<KnowledgeRelationship[]> {
+  if (!isConfigured) return [];
+  try {
+    const { data, error } = await supabase
+      .from("knowledge_relationships")
+      .select("id,source_type,source_id,target_type,target_id,relationship_type,label,is_verified,source_reference,created_at,updated_at")
+      .or(
+        `and(source_type.eq.${sourceType},source_id.eq.${sourceId}),and(target_type.eq.${sourceType},target_id.eq.${sourceId})`,
+      )
+      .eq("is_verified", true)
+      .limit(20);
+
+    if (error) {
+      if (isMissingSchemaError(error)) return [];
+      logSupabaseError("getRelatedItems", error, { sourceType, sourceId });
+      return [];
+    }
+    return (data as KnowledgeRelationship[]) ?? [];
+  } catch (err) {
+    logSupabaseError("getRelatedItems", err, { sourceType, sourceId });
+    return [];
+  }
+}
+
+export async function upsertKnowledgeRelationship(
+  rel: Omit<KnowledgeRelationship, "id" | "created_at" | "updated_at">,
+): Promise<{ ok: boolean; id?: string; error?: string }> {
+  if (!isConfigured) return { ok: false, error: "Supabase not configured" };
+  try {
+    const { data, error } = await supabase
+      .from("knowledge_relationships")
+      .upsert(rel, { onConflict: "source_type,source_id,target_type,target_id,relationship_type" })
+      .select("id")
+      .single();
+
+    if (error) return { ok: false, error: error.message };
+    return { ok: true, id: (data as { id: string }).id };
+  } catch (err: unknown) {
+    return { ok: false, error: String(err) };
+  }
+}
+
+export async function setKnowledgeRelVerified(id: string, verified: boolean): Promise<boolean> {
+  if (!isConfigured) return false;
+  try {
+    const { error } = await supabase
+      .from("knowledge_relationships")
+      .update({ is_verified: verified })
+      .eq("id", id);
+    return !error;
+  } catch {
+    return false;
+  }
+}
+
+export async function deleteKnowledgeRelationship(id: string): Promise<boolean> {
+  if (!isConfigured) return false;
+  try {
+    const { error } = await supabase
+      .from("knowledge_relationships")
+      .delete()
+      .eq("id", id);
+    return !error;
+  } catch {
+    return false;
+  }
+}
+
+export async function getAllKnowledgeRelationshipsAdmin(limit = 200): Promise<KnowledgeRelationship[]> {
+  if (!isConfigured) return [];
+  try {
+    const { data, error } = await supabase
+      .from("knowledge_relationships")
+      .select("id,source_type,source_id,target_type,target_id,relationship_type,label,is_verified,source_reference,created_at,updated_at")
+      .order("created_at", { ascending: false })
+      .limit(limit);
+
+    if (error) {
+      if (isMissingSchemaError(error)) return [];
+      logSupabaseError("getAllKnowledgeRelationshipsAdmin", error, {});
+      return [];
+    }
+    return (data as KnowledgeRelationship[]) ?? [];
+  } catch (err) {
+    logSupabaseError("getAllKnowledgeRelationshipsAdmin", err, {});
+    return [];
+  }
+}

@@ -33,6 +33,7 @@ import { normalizeActivityLabel } from "@/lib/activity-label";
 import { resolveLessonPosterUrl } from "@/lib/lesson-image";
 import { sheikhNameKey } from "@/lib/sheikh-name";
 import { SectionErrorBoundary } from "@/components/ErrorBoundary";
+import { KnowledgeRelatedItems } from "@/components/knowledge/KnowledgeRelatedItems";
 
 function buildMapsEmbed(url?: string, mosque?: string, region?: string) {
   if (url?.includes("google.com/maps") || url?.includes("goo.gl/maps") || url?.includes("maps.app")) {
@@ -441,6 +442,11 @@ export default function LessonDetailPage({
               ))}
             </div>
           </section>
+        </SectionErrorBoundary>
+      )}
+      {lesson?.id && (
+        <SectionErrorBoundary name="الرسم البياني المعرفي">
+          <KnowledgeRelatedItems sourceType="lesson" sourceId={String(lesson.id)} />
         </SectionErrorBoundary>
       )}
     </div>
