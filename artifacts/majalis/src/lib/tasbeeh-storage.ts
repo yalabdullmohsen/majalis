@@ -67,7 +67,7 @@ export function computeStreakDays(items: TasbeehWird[]): number {
     }
   }
   let streak = 0;
-  let cursor = new Date();
+  const cursor = new Date();
   const fmt = (d: Date) => new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Kuwait" }).format(d);
   if (!allDates.has(today)) {
     cursor.setDate(cursor.getDate() - 1);
