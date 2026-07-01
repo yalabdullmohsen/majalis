@@ -44,6 +44,7 @@ const RegisterPage = lazyWithRetry(() => import("@/views/RegisterPage"), "Regist
 const TranscribePage = lazy(() => import("@/views/TranscribePage"));
 const AssistantPage = lazy(() => import("@/views/AssistantPage"));
 const CondolencesPage = lazy(() => import("@/views/CondolencesPage"));
+const JanazaPage = lazy(() => import("@/views/JanazaPage"));
 const CardsPage = lazy(() => import("@/views/CardsPage"));
 const QuranPage = lazy(() => import("@/views/QuranPage"));
 const QuranRadioPage = lazy(() => import("@/views/QuranRadioPage"));
@@ -200,6 +201,7 @@ function Router() {
         </ErrorBoundary>
       </Route>
       <Route path="/condolences"><SafeLazyRoute component={CondolencesPage} /></Route>
+      <Route path="/janaza"><SafeLazyRoute component={JanazaPage} /></Route>
       <Route path="/transcribe">
         <ErrorBoundary>
           <Suspense fallback={<LazyRouteFallback />}>
