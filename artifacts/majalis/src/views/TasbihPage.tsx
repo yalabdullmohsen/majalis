@@ -4,6 +4,7 @@ import { useAuth } from "@/components/AuthProvider";
 import { TasbeehCounter } from "@/components/reading/TasbeehCounter";
 import { setTaskProgress } from "@/lib/daily-progress";
 import {
+  computeStreakDays,
   computeTasbeehStats,
   DEFAULT_TASBEEH_AWRAD,
   loadTasbeehFromAccount,
@@ -27,7 +28,7 @@ export default function TasbihPage() {
   const [items, setItems] = useState<TasbeehWird[]>(() => readTasbeehAwrad());
   const [activeId, setActiveId] = useState(() => readTasbeehAwrad()[0]?.id || DEFAULT_TASBEEH_AWRAD[0].id);
   const [newPhrase, setNewPhrase] = useState("");
-  const [newTarget, setNewTarget] = useState(100);
+  const [newTarget, setNewTarget] = useState(33);
   const [syncNote, setSyncNote] = useState<string | null>(null);
 
   const active = items.find((item) => item.id === activeId) || items[0];
@@ -55,7 +56,8 @@ export default function TasbihPage() {
       month += s.month;
       total += s.total;
     }
-    return { today, week, month, total };
+    const streak = computeStreakDays(items);
+    return { today, week, month, total, streak };
   }, [items]);
 
   const updateItems = useCallback((next: TasbeehWird[]) => {
@@ -88,7 +90,7 @@ export default function TasbihPage() {
     updateItems([...items, item]);
     setActiveId(item.id);
     setNewPhrase("");
-    setNewTarget(100);
+    setNewTarget(33);
   };
 
   const deleteActive = () => {
@@ -101,67 +103,110 @@ export default function TasbihPage() {
   const activeStats = active ? computeTasbeehStats(active) : null;
 
   return (
-    <div className="page-shell narrow tasbih-pro-page tasbih-pro-page--v2">
+    <div className="page-shell narrow tasbih-pro-page tasbih-pro-page--v2" dir="rtl">
       <PageHeader
         eyebrow="الأذكار"
         title="عداد التسبيح"
         subtitle="عدّ بدون حد أقصى، اختر هدفك، واستمر حتى بعد تجاوزه — مع حفظ تلقائي."
       />
 
+      {/* Stats grid */}
       <div className="tasbih-stats-grid tasbih-stats-grid--v2">
-        <div className="ui-card tasbih-stat"><span>اليوم</span><strong>{aggregateStats.today}</strong></div>
-        <div className="ui-card tasbih-stat"><span>الأسبوع</span><strong>{aggregateStats.week}</strong></div>
-        <div className="ui-card tasbih-stat"><span>الشهر</span><strong>{aggregateStats.month}</strong></div>
-        <div className="ui-card tasbih-stat"><span>الإجمالي</span><strong>{aggregateStats.total}</strong></div>
+        <div className="ui-card tasbih-stat">
+          <span>اليوم</span>
+          <strong>{aggregateStats.today}</strong>
+        </div>
+        <div className="ui-card tasbih-stat">
+          <span>الأسبوع</span>
+          <strong>{aggregateStats.week}</strong>
+        </div>
+        <div className="ui-card tasbih-stat">
+          <span>الشهر</span>
+          <strong>{aggregateStats.month}</strong>
+        </div>
+        <div className="ui-card tasbih-stat">
+          <span>الإجمالي</span>
+          <strong>{aggregateStats.total}</strong>
+        </div>
+        {aggregateStats.streak > 0 && (
+          <div className="ui-card tasbih-stat tasbih-stat--streak">
+            <span>التتابع</span>
+            <strong>{aggregateStats.streak} 🔥</strong>
+          </div>
+        )}
       </div>
 
       {syncNote && <p className="tasbih-sync-note">{syncNote}</p>}
 
-      <div className="tasbih-layout">
-        <aside className="ui-card tasbih-wird-list" aria-label="الأوراد">
-          {items.map((item) => {
-            const s = computeTasbeehStats(item);
-            return (
-              <button
-                key={item.id}
-                type="button"
-                className={`tasbih-wird-tab${item.id === active?.id ? " is-active" : ""}`}
-                onClick={() => setActiveId(item.id)}
-              >
-                <span>{item.phrase}</span>
-                <small>اليوم: {s.today} · الإجمالي: {s.total}</small>
-              </button>
-            );
-          })}
-        </aside>
-
-        {active && (
-          <section className="ui-card tasbih-page-card tasbih-pro-card tasbih-pro-card--v2">
-            <p className="tasbih-phrase">{active.phrase}</p>
-            <TasbeehCounter
-              storageId={`wird-${active.id}`}
-              target={active.target}
-              label={active.phrase}
-              wird={active}
-              onWirdChange={onWirdChange}
-            />
-            {activeStats && (
-              <p className="tasbih-progress-label">
-                هذا الورد — اليوم: {activeStats.today} · الأسبوع: {activeStats.week} · الشهر: {activeStats.month}
-              </p>
-            )}
-            <div className="tasbih-actions-grid">
-              <button type="button" className="ui-card-btn" onClick={deleteActive} disabled={items.length <= 1}>حذف الورد</button>
-            </div>
-          </section>
-        )}
+      {/* Horizontal pill selector */}
+      <div className="tasbih-wird-pills" role="tablist" aria-label="اختر الورد">
+        {items.map((item) => {
+          const s = computeTasbeehStats(item);
+          return (
+            <button
+              key={item.id}
+              type="button"
+              role="tab"
+              aria-selected={item.id === active?.id}
+              className={`tasbih-wird-pill${item.id === active?.id ? " is-active" : ""}`}
+              onClick={() => setActiveId(item.id)}
+            >
+              <span className="tasbih-pill-phrase">{item.phrase}</span>
+              {s.today > 0 && (
+                <span className="tasbih-pill-badge">{s.today}</span>
+              )}
+            </button>
+          );
+        })}
       </div>
 
+      {/* Active wird counter */}
+      {active && (
+        <section className="ui-card tasbih-page-card tasbih-pro-card tasbih-pro-card--v2">
+          <p className="tasbih-phrase">{active.phrase}</p>
+          <TasbeehCounter
+            storageId={`wird-${active.id}`}
+            target={active.target}
+            label={active.phrase}
+            wird={active}
+            onWirdChange={onWirdChange}
+          />
+          {activeStats && (
+            <p className="tasbih-progress-label">
+              هذا الورد — اليوم: {activeStats.today} · الأسبوع: {activeStats.week} · الشهر: {activeStats.month}
+            </p>
+          )}
+          <div className="tasbih-actions-grid">
+            <button
+              type="button"
+              className="ui-card-btn ui-card-btn--danger"
+              onClick={deleteActive}
+              disabled={items.length <= 1}
+            >
+              حذف الورد
+            </button>
+          </div>
+        </section>
+      )}
+
+      {/* Add wird form */}
       <section className="ui-card tasbih-add-card">
         <h2>إضافة ورد جديد</h2>
         <div className="tasbih-add-row">
-          <input value={newPhrase} onChange={(e) => setNewPhrase(e.target.value)} placeholder="مثال: لا حول ولا قوة إلا بالله" />
-          <input type="number" min={1} max={MAX_CUSTOM_TARGET} value={newTarget} onChange={(e) => setNewTarget(Number(e.target.value))} />
+          <input
+            value={newPhrase}
+            onChange={(e) => setNewPhrase(e.target.value)}
+            placeholder="مثال: لا حول ولا قوة إلا بالله"
+            onKeyDown={(e) => e.key === "Enter" && addWird()}
+          />
+          <input
+            type="number"
+            min={1}
+            max={MAX_CUSTOM_TARGET}
+            value={newTarget}
+            onChange={(e) => setNewTarget(Number(e.target.value))}
+            aria-label="الهدف اليومي"
+          />
           <button type="button" className="ui-card-btn" onClick={addWird}>إضافة</button>
         </div>
       </section>
