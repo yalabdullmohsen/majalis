@@ -44,15 +44,11 @@ const SENSITIVE_FATWA_PATTERNS = [
   /محكمة/,
 ];
 
+// These patterns → blocked (requires_scholar): only truly personal/sensitive fatwas
 const DEFINITIVE_FATWA_PATTERNS = [
-  /فتوى/,
   /أفتني/,
-  /ما حكم/,
-  /هل يجوز/,
-  /يجوز لي/,
-  /حلال\s*(ام|أم|ولا|or)?\s*حرام/,
-  /حرام\s*(ام|أم|ولا|or)?\s*حلال/,
-  /واجب\s*علي/,
+  /يجوز لي\s+أنا/,
+  /واجب\s*علي\s+أنا/,
   /تبطل\s*(صلات|صوم|وضو)/,
 ];
 
@@ -93,22 +89,73 @@ export function classifyIslamicQuery(text) {
 }
 
 export function buildScholarRedirectAnswer(classification) {
-  if (classification === "blocked_sensitive_fatwa" || classification === "requires_scholar") {
-    return `${REQUIRES_SCHOLAR_MESSAGE}\n\n${ISLAMIC_DISCLAIMER}`;
+  if (classification === "blocked_sensitive_fatwa") {
+    return (
+      "هذه المسألة من المسائل الشخصية الدقيقة (كالطلاق أو النذور أو الميراث) التي تحتاج إلى:\n\n" +
+      "• سؤال عالم شرعي متخصص يعلم تفاصيل حالتك\n" +
+      "• أو مراجعة جهة الإفتاء الرسمية في بلدك\n\n" +
+      "📌 في الكويت: وزارة الأوقاف والشؤون الإسلامية — هاتف: 22442200\n" +
+      "📌 السعودية: هيئة كبار العلماء — islamfeature.com\n\n" +
+      ISLAMIC_DISCLAIMER
+    );
+  }
+  if (classification === "requires_scholar") {
+    return (
+      `${REQUIRES_SCHOLAR_MESSAGE}\n\n` +
+      "يمكنك الاستفسار من المصادر الموثوقة:\n" +
+      "• الإسلام سؤال وجواب: islamqa.info\n" +
+      "• إسلام ويب: islamweb.net/ar/fatwa\n" +
+      "• موقع ابن باز: binbaz.org.sa\n\n" +
+      ISLAMIC_DISCLAIMER
+    );
   }
   return null;
 }
 
-export function buildInsufficientSourcesPayload() {
+export function buildInsufficientSourcesPayload(userQuery = "") {
+  const suggestions = pickRelatedSuggestions(userQuery);
+  const suggestionsText = suggestions.length > 0
+    ? `\n\nأسئلة مشابهة قد تفيدك:\n${suggestions.map((s) => `• ${s}`).join("\n")}`
+    : "";
+
   return {
-    answer: `${INSUFFICIENT_SOURCES_MESSAGE}\n\n${ISLAMIC_DISCLAIMER}`,
-    citations: [],
+    answer:
+      "لم أجد فتوى موثقة مباشرة لهذا الموضوع في قاعدة المعرفة الحالية.\n\n" +
+      "للحصول على إجابة موثوقة راجع:\n" +
+      "📚 إسلام سؤال وجواب: islamqa.info\n" +
+      "📚 إسلام ويب: islamweb.net/ar/fatwa\n" +
+      "📚 موقع ابن باز: binbaz.org.sa\n" +
+      "📚 الدرر السنية: dorar.net" +
+      suggestionsText +
+      `\n\n${ISLAMIC_DISCLAIMER}`,
+    citations: [
+      { title: "إسلام سؤال وجواب", href: "https://islamqa.info/ar", source_name: "الشيخ محمد الدعيع", trust_score: 95 },
+      { title: "إسلام ويب — الفتاوى", href: "https://www.islamweb.net/ar/fatwa", source_name: "إسلام ويب", trust_score: 92 },
+      { title: "موقع الشيخ ابن باز", href: "https://binbaz.org.sa", source_name: "الشيخ ابن باز رحمه الله", trust_score: 98 },
+    ],
     confidence: 0,
     safety_classification: "insufficient_sources",
     disclaimer: ISLAMIC_DISCLAIMER,
-    grounded: true,
+    grounded: false,
     no_evidence: true,
   };
+}
+
+const TOPIC_SUGGESTIONS = {
+  صلاة: ["ما هي شروط الصلاة؟", "كيفية قضاء الصلوات الفائتة؟", "ما حكم الصلاة بدون وضوء؟"],
+  زكاة: ["من تجب عليه الزكاة؟", "كيفية حساب زكاة المال؟", "ما نصاب الزكاة في الذهب؟"],
+  صيام: ["ما يفطر الصائم؟", "أحكام قضاء رمضان", "ما هي مبطلات الصيام؟"],
+  حج: ["ما أركان الحج؟", "ما شروط وجوب الحج؟", "كيفية أداء العمرة؟"],
+  طهارة: ["كيفية الوضوء الصحيح؟", "ما ينقض الوضوء؟", "أحكام التيمم"],
+  قرآن: ["ما فضل قراءة القرآن؟", "كيف أحفظ القرآن؟", "أحكام التجويد الأساسية"],
+};
+
+function pickRelatedSuggestions(query) {
+  const q = String(query || "");
+  for (const [topic, suggestions] of Object.entries(TOPIC_SUGGESTIONS)) {
+    if (q.includes(topic)) return suggestions.slice(0, 2);
+  }
+  return [];
 }
 
 export function buildGroundedPayload(summary, citations = [], confidence = 0, classification = "fiqh_answer") {

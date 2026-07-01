@@ -253,7 +253,7 @@ async function handleAssistantRequest(req, res) {
       console.error("[assistant] Reasoning engine error:", groundedErr?.message || groundedErr);
     }
 
-    const payload = buildInsufficientSourcesPayload();
+    const payload = buildInsufficientSourcesPayload(userMessage);
     sendJson(res, 200, successPayload(payload.answer, payload));
     return;
   }
