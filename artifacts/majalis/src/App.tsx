@@ -5,6 +5,7 @@ import { FontPreferenceProvider } from "@/components/FontPreferenceProvider";
 import { ThemePreferenceProvider } from "@/components/ThemePreferenceProvider";
 import { UserPreferencesProvider } from "@/components/UserPreferencesProvider";
 import { AdminRouteGuard } from "@/components/AdminRouteGuard";
+import { LanguageProvider, useLanguage } from "@/components/LanguageProvider";
 import NavBar from "@/components/NavBar";
 import SiteFooter from "@/components/SiteFooter";
 import { AssistantFloatingWidget } from "@/components/assistant/AssistantFloatingWidget";
@@ -280,26 +281,35 @@ function Router() {
   );
 }
 
+function AppShell() {
+  const { dir, t } = useLanguage();
+  return (
+    <WouterRouter base={(import.meta.env.BASE_URL || "/").replace(/\/$/, "")}>
+      <div className="app-shell" style={{ minHeight: "100vh", direction: dir }}>
+        <a href="#main-content" className="skip-link">{t("skip_to_content")}</a>
+        <SeoManager />
+        <NavBar />
+        <main id="main-content" className="app-main" tabIndex={-1}>
+          <Router />
+        </main>
+        <SiteFooter />
+        <AssistantFloatingWidget />
+      </div>
+    </WouterRouter>
+  );
+}
+
 function App() {
   return (
     <ThemePreferenceProvider>
       <FontPreferenceProvider>
-        <UserPreferencesProvider>
-          <AuthProvider>
-          <WouterRouter base={(import.meta.env.BASE_URL || "/").replace(/\/$/, "")}>
-            <div className="app-shell" style={{ minHeight: "100vh", direction: "rtl" }}>
-              <a href="#main-content" className="skip-link">تخطّي إلى المحتوى</a>
-              <SeoManager />
-              <NavBar />
-              <main id="main-content" className="app-main" tabIndex={-1}>
-                <Router />
-              </main>
-              <SiteFooter />
-              <AssistantFloatingWidget />
-            </div>
-          </WouterRouter>
-          </AuthProvider>
-        </UserPreferencesProvider>
+        <LanguageProvider>
+          <UserPreferencesProvider>
+            <AuthProvider>
+              <AppShell />
+            </AuthProvider>
+          </UserPreferencesProvider>
+        </LanguageProvider>
       </FontPreferenceProvider>
     </ThemePreferenceProvider>
   );
