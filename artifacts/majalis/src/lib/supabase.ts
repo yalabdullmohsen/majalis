@@ -976,10 +976,13 @@ export function resetAllUsedQuizIds(): void {
 }
 
 export async function getQuizQuestions({ section, level }: { section?: string; level?: string } = {}) {
-  const usedIds = getLocalUsedQuizIds();
+  // Always load localStorage-used IDs (covers seed + Supabase UUIDs both)
+  const localUsedIds = getLocalUsedQuizIds();
 
   const filterSeed = () => {
-    let rows = DEMO_QUIZ_QUESTIONS.filter((q) => q.status !== "draft" && !usedIds.has(q.id ?? ""));
+    let rows = DEMO_QUIZ_QUESTIONS.filter(
+      (q) => q.status !== "draft" && !localUsedIds.has(q.id ?? ""),
+    );
     if (section && section !== "الكل") rows = rows.filter((q) => q.section === section);
     if (level && level !== "الكل") rows = rows.filter((q) => q.level === level);
     return rows;
@@ -992,15 +995,17 @@ export async function getQuizQuestions({ section, level }: { section?: string; l
   try {
     let q = supabase
       .from("quiz_questions")
-      .select("*")
+      .select("id, section, category, level, difficulty, question, answer, correct_answer, hint, is_used, status")
       .eq("status", "published")
+      // filter out DB-marked used rows AND localStorage-marked rows
       .or("is_used.is.null,is_used.eq.false")
       .order("created_at", { ascending: false });
     if (section && section !== "الكل") q = q.eq("section", section);
     if (level && level !== "الكل") q = q.eq("level", level);
     const { data, error } = await q;
     if (error) throw error;
-    const rows = data || [];
+    // Also filter out any IDs that are locally tracked as used (double-check consistency)
+    const rows = (data || []).filter((r: any) => !localUsedIds.has(String(r.id)));
     if (rows.length === 0) {
       return { data: filterSeed(), error: null, usingSeed: true };
     }
@@ -1037,22 +1042,30 @@ export async function adminSetQuizQuestionStatus(id: string, status: string) {
     .eq("id", id);
 }
 
-/** رفع أسئلة الـ Seed إلى Supabase (upsert حسب question+section). */
+/** رفع أسئلة الـ Seed إلى Supabase — يستخدم INSERT ON CONFLICT DO NOTHING لأمان كامل. */
 export async function upsertQuizSeedToDb(): Promise<{ ok: boolean; synced: number; error?: string }> {
   if (!isConfigured) return { ok: false, synced: 0, error: "supabase_not_configured" };
   const rows = DEMO_QUIZ_QUESTIONS.filter((q) => q.status !== "draft").map((q) => ({
     section: q.section,
     category: q.category || q.section,
+    // map Arabic level names → English stored in DB
     level: q.level === "سهل" ? "beginner" : q.level === "متوسط" ? "intermediate" : q.level === "صعب" ? "advanced" : q.level,
     question: q.question,
-    answer: q.answer,
+    answer: q.answer,          // column added by migration
+    correct_answer: q.answer,  // keep legacy column in sync
     status: "published",
     is_used: false,
-    updated_at: new Date().toISOString(),
   }));
   try {
-    const { error } = await supabase.from("quiz_questions").upsert(rows, { onConflict: "question,section" });
-    if (error) throw error;
+    // insert-only: skip duplicates (question+section may not be unique constraint; use DO NOTHING)
+    const { data, error } = await supabase.from("quiz_questions").insert(rows);
+    if (error) {
+      // If column doesn't exist yet, surface a clear message
+      if (error.message?.includes("column") || error.code === "42703") {
+        return { ok: false, synced: 0, error: "يجب تشغيل ملف fixes_data_pipeline_complete.sql في Supabase أولاً لإضافة الأعمدة المطلوبة." };
+      }
+      throw error;
+    }
     return { ok: true, synced: rows.length };
   } catch (err) {
     logSupabaseError("upsertQuizSeedToDb", err);
@@ -1060,16 +1073,17 @@ export async function upsertQuizSeedToDb(): Promise<{ ok: boolean; synced: numbe
   }
 }
 
-/** إعادة تعيين is_used=false لجميع الأسئلة في Supabase. */
+/** إعادة تعيين is_used=false لجميع الأسئلة في Supabase + localStorage. */
 export async function adminResetAllQuizIsUsed(): Promise<{ ok: boolean; error?: string }> {
   if (!isConfigured) return { ok: false, error: "supabase_not_configured" };
   try {
+    // gt('created_at', '2000-01-01') = all rows (workaround: no .update().all() in Supabase JS)
     const { error } = await supabase
       .from("quiz_questions")
-      .update({ is_used: false, updated_at: new Date().toISOString() })
-      .neq("id", "00000000-0000-0000-0000-000000000000"); // update all rows
+      .update({ is_used: false })
+      .gt("created_at", "2000-01-01");
     if (error) throw error;
-    resetAllUsedQuizIds(); // also clear localStorage
+    resetAllUsedQuizIds(); // clear localStorage too
     return { ok: true };
   } catch (err) {
     logSupabaseError("adminResetAllQuizIsUsed", err);

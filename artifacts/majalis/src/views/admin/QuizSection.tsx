@@ -136,12 +136,15 @@ export function QuizSection() {
     if (!form.question.trim()) return alert("نص السؤال مطلوب");
     if (!form.answer.trim()) return alert("الجواب مطلوب");
     setSaving(true);
+    const answerClean = sanitizeText(form.answer, 1000);
     const payload = {
       ...form,
       question: sanitizeText(form.question, 1000),
-      answer: sanitizeText(form.answer, 1000),
+      answer: answerClean,
+      correct_answer: answerClean, // keep legacy column in sync
       hint: sanitizeText(form.hint || "", 500),
       category: sanitizeText(form.category || form.section, 200),
+      is_used: false,
     };
     const { error } = await adminUpsertQuizQuestion(payload);
     setSaving(false);
@@ -173,7 +176,9 @@ export function QuizSection() {
     if (statusFilter !== "الكل" && item.status !== statusFilter) return false;
     const q = search.trim();
     if (!q) return true;
-    return `${item.question} ${item.answer} ${item.section}`.includes(q);
+    // support both new (answer) and legacy (correct_answer) column names
+    const answerText = item.answer || item.correct_answer || "";
+    return `${item.question} ${answerText} ${item.section || item.category || ""}`.includes(q);
   });
 
   const usedCount = items.filter((i) => i.is_used).length;
@@ -271,7 +276,7 @@ export function QuizSection() {
                   </div>
                   <div style={{ fontWeight: 600, fontSize: "0.9375rem", marginBottom: "0.25rem", color: C.ink }}>{item.question}</div>
                   <div style={{ fontSize: "0.8125rem", color: C.inkSoft }}>
-                    <strong style={{ color: C.emeraldDeep }}>الجواب:</strong> {item.answer}
+                    <strong style={{ color: C.emeraldDeep }}>الجواب:</strong> {item.answer || item.correct_answer}
                   </div>
                   {item.hint && (
                     <div style={{ fontSize: "0.75rem", color: C.inkSoft, marginTop: "0.25rem" }}>💡 {item.hint}</div>
