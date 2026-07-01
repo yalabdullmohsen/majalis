@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import type { Ayah } from "@/lib/quran-api";
 import type { PlayerState } from "@/hooks/useAyahPlayer";
+import { useAyahChunks } from "@/hooks/useAyahChunks";
 
 type Props = {
   ayahs: Ayah[];
@@ -33,6 +34,7 @@ export function AyahDisplay({
   onAyahClick,
 }: Props) {
   const targetRef = useRef<HTMLSpanElement>(null);
+  const { visibleAyahs, hasMore, sentinelRef } = useAyahChunks(ayahs, targetAyah);
 
   useEffect(() => {
     targetRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -59,14 +61,14 @@ export function AyahDisplay({
         <h2 className="qs-surah-header__title" lang="ar">{surahName}</h2>
       </header>
 
-      {/* ── Mushaf flowing text ── */}
+      {/* ── Mushaf flowing text (chunked for performance) ── */}
       <div
         className="qs-mushaf-body"
         lang="ar"
         dir="rtl"
         aria-label={`نص سورة ${surahName}`}
       >
-        {ayahs.map((ayah) => {
+        {visibleAyahs.map((ayah) => {
           const isTarget = ayah.numberInSurah === targetAyah;
           const isPlaying = ayah.numberInSurah === currentPlayingAyah;
           const isLoading = isPlaying && playerState === "loading";
@@ -96,10 +98,7 @@ export function AyahDisplay({
 
               {/* Ornamental ayah number ﴿٣﴾ */}
               {showAyahNumbers && (
-                <span
-                  className="qs-ayah-inline__num"
-                  aria-hidden="true"
-                >
+                <span className="qs-ayah-inline__num" aria-hidden="true">
                   ﴿{toArabic(ayah.numberInSurah)}﴾
                 </span>
               )}
@@ -117,16 +116,22 @@ export function AyahDisplay({
                 disabled={isLoading}
                 title={`تشغيل آية ${ayah.numberInSurah}`}
               >
-                {isLoading
-                  ? "…"
-                  : isPlaying && playerState === "playing"
-                  ? "❚❚"
-                  : "▶"}
+                {isLoading ? "…" : isPlaying && playerState === "playing" ? "❚❚" : "▶"}
               </button>
             </span>
           );
         })}
       </div>
+
+      {/* ── Infinite scroll sentinel ── */}
+      {hasMore && (
+        <div
+          ref={sentinelRef}
+          className="qs-load-sentinel"
+          aria-hidden="true"
+          style={{ height: 1, marginTop: "1rem" }}
+        />
+      )}
     </div>
   );
 }
