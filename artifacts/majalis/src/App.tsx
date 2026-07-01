@@ -45,6 +45,7 @@ const TranscribePage = lazy(() => import("@/views/TranscribePage"));
 const AssistantPage = lazy(() => import("@/views/AssistantPage"));
 const CondolencesPage = lazy(() => import("@/views/CondolencesPage"));
 const JanazaPage = lazy(() => import("@/views/JanazaPage"));
+const KuwaitLessonsPage = lazy(() => import("@/views/KuwaitLessonsPage"));
 const CardsPage = lazy(() => import("@/views/CardsPage"));
 const QuranPage = lazy(() => import("@/views/QuranPage"));
 const QuranRadioPage = lazy(() => import("@/views/QuranRadioPage"));
@@ -170,7 +171,7 @@ function Router() {
       <Route path="/lessons/:id"><SafeLazyRoute component={LessonDetailPage} /></Route>
       <Route path="/lessons"><SafeLazyRoute component={LessonsPage} /></Route>
       <Route path="/calendar"><SafeLazyRoute component={CalendarPage} /></Route>
-      <Route path="/kuwait-lessons"><Redirect to="/lessons" /></Route>
+      <Route path="/kuwait-lessons"><SafeLazyRoute component={KuwaitLessonsPage} /></Route>
       <Route path="/announcements"><Redirect to="/lessons" /></Route>
       <Route path="/courses"><Redirect to="/lessons?tab=courses" /></Route>
       <Route path="/sheikhs/:id"><Redirect to="/lessons" /></Route>

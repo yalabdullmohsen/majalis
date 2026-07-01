@@ -12606,3 +12606,152 @@ html[data-theme="dark"] .navbar-v3 {
   font-weight: 600;
 }
 .janaza-source-link:hover { text-decoration: underline; }
+
+/* ── Kuwait Lessons Page ── */
+.kuwait-lessons-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--majalis-line);
+}
+.kuwait-lessons-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--majalis-emerald-deep);
+  margin-bottom: 0.25rem;
+}
+.kuwait-lessons-title {
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  font-weight: 800;
+  color: var(--majalis-ink);
+  margin: 0 0 0.4rem;
+}
+.kuwait-lessons-subtitle {
+  font-size: 0.88rem;
+  color: var(--majalis-ink-soft);
+  max-width: 42rem;
+}
+.kuwait-lessons-source-link {
+  color: var(--majalis-emerald-deep);
+  font-weight: 600;
+  text-decoration: none;
+}
+.kuwait-lessons-source-link:hover { text-decoration: underline; }
+.kuwait-lessons-live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #16a34a;
+  background: #dcfce7;
+  padding: 0.3rem 0.7rem;
+  border-radius: 100px;
+  white-space: nowrap;
+  margin-top: 0.25rem;
+}
+.kuwait-lessons-section-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--majalis-ink);
+  margin: 0 0 0.35rem;
+}
+.kuwait-lessons-feed-note {
+  font-size: 0.8rem;
+  color: var(--majalis-ink-soft);
+  margin-bottom: 1rem;
+}
+.kuwait-lessons-feed-note a { color: var(--majalis-emerald-deep); }
+.kuwait-lessons-feed-section { margin-bottom: 2.5rem; }
+.kuwait-lessons-feed-wrap {
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 1px solid var(--majalis-line);
+  min-height: 400px;
+}
+.kuwait-lessons-feed-wrap iframe { width: 100% !important; border: none !important; }
+.kuwait-lessons-attribution {
+  font-size: 0.75rem;
+  color: var(--majalis-ink-soft);
+  margin-top: 0.6rem;
+}
+.kuwait-lessons-attribution a { color: var(--majalis-emerald-deep); }
+.kuwait-lessons-sheikhs-section { margin-bottom: 2rem; }
+.kuwait-lessons-footer-note {
+  font-size: 0.78rem;
+  color: var(--majalis-ink-soft);
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--majalis-line);
+  border-radius: 0.5rem;
+  background: var(--majalis-panel);
+  margin-top: 1rem;
+}
+.kuwait-lessons-footer-note a { color: var(--majalis-emerald-deep); }
+
+/* Sheikh grid */
+.sheikh-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.sheikh-card {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.9rem 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--majalis-line);
+  background: var(--majalis-panel);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.12s;
+}
+.sheikh-card:hover {
+  border-color: var(--majalis-emerald-deep);
+  box-shadow: 0 2px 12px rgba(27,94,59,0.1);
+  transform: translateY(-1px);
+}
+.sheikh-card__avatar-wrap { flex-shrink: 0; }
+.sheikh-avatar {
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+.sheikh-avatar--initials {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+}
+.sheikh-card__body { flex: 1; min-width: 0; }
+.sheikh-card__name {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--majalis-ink);
+  margin: 0 0 0.2rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sheikh-card__specialty {
+  font-size: 0.75rem;
+  color: var(--majalis-ink-soft);
+  margin: 0 0 0.35rem;
+  line-height: 1.4;
+}
+.sheikh-card__link {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--majalis-emerald-deep);
+}
