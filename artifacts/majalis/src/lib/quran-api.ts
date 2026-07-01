@@ -26,6 +26,7 @@ export type Ayah = {
   text: string;
   juz: number;
   page: number;
+  surahNumber?: number;
   sajda: boolean | { id: number; recommended: boolean; obligatory: boolean };
 };
 
@@ -283,6 +284,7 @@ export async function fetchJuz(juzNumber: number, edition = "quran-uthmani"): Pr
     juz: a.juz,
     page: a.page,
     sajda: a.sajda,
+    surahNumber: a.surah.number,
   }));
 
   // Build surah groups

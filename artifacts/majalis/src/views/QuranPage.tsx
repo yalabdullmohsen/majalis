@@ -147,7 +147,6 @@ function PageView() {
 
 function VerseView({
   ayahs,
-  surahNum,
   surahName,
   tafsirMap,
   tafsirId,
@@ -155,7 +154,6 @@ function VerseView({
   onChangeTafsir,
 }: {
   ayahs: Ayah[];
-  surahNum: number;
   surahName: string;
   tafsirMap: Map<number, string>;
   tafsirId: TafsirId;
@@ -283,11 +281,17 @@ function JuzView({ fontScale }: { fontScale: number }) {
     setScrollPct(Math.round(pct * 100));
   }, []);
 
-  const changeJuz = (n: number) => {
+  const changeJuz = useCallback((n: number) => {
     const v = Math.max(1, Math.min(30, n));
     setJuzNum(v);
     lsSet(JUZ_KEY, v);
-  };
+  }, []);
+
+  const surahNameMap = useMemo<Map<number, string>>(() => {
+    const m = new Map<number, string>();
+    juzData?.surahs.forEach((s) => m.set(s.number, s.name));
+    return m;
+  }, [juzData]);
 
   return (
     <div style={{ direction: "rtl" }}>
@@ -335,84 +339,46 @@ function JuzView({ fontScale }: { fontScale: number }) {
 
       {juzData && !loading && (
         <div ref={scrollRef} onScroll={handleScroll} style={{ maxHeight: "65vh", overflowY: "auto", paddingRight: "0.5rem" }}>
-          {/* Surah groups */}
-          {juzData.surahs.map((s) => {
-            const ayahs = juzData.ayahs.filter((a) => {
-              // ayah.number is global; we need to match by surah
-              return true; // ayahs are already in order
-            });
-            // Get ayahs for this surah from juzData
-            const surahAyahs = juzData.ayahs.filter((a, idx) => {
-              // Since we don't have surah number in Ayah type,
-              // we use the range based on juzData.surahs
-              return false; // placeholder — use global index
-            });
-            void surahAyahs; void ayahs;
-            return null;
-          })}
-
-          {/* Render all ayahs with surah headers */}
           {(() => {
             const elements: React.ReactNode[] = [];
-            let lastSurahNum = -1;
-
+            let lastSurahNumber = -1;
             juzData.ayahs.forEach((ayah, idx) => {
-              // Determine which surah this ayah belongs to by checking surah ranges
-              let surahName = "";
-              for (const s of juzData.surahs) {
-                if (ayah.numberInSurah >= s.start && ayah.numberInSurah <= s.end) {
-                  surahName = s.name;
-                  // Check if we need to show a surah header
-                  if (s.number !== lastSurahNum) {
-                    lastSurahNum = s.number;
-                    elements.push(
-                      <div key={`header-${s.number}`} style={{
-                        background: "linear-gradient(135deg, var(--ds-emerald-soft), #f8f4e8)",
-                        border: "1px solid var(--ds-emerald)",
-                        borderRadius: "0.625rem",
-                        padding: "0.75rem 1rem",
-                        marginBottom: "0.625rem",
-                        marginTop: idx > 0 ? "1.5rem" : 0,
-                        textAlign: "center",
-                      }}>
-                        <span style={{ fontSize: "1.1rem", fontWeight: 700, color: "var(--ds-emerald-deep)" }}>سورة {s.name}</span>
-                        <span style={{ fontSize: "0.75rem", color: "var(--ds-ink-soft)", marginRight: "0.5rem" }}>
-                          (آية {s.start} – {s.end})
-                        </span>
-                      </div>
-                    );
-                  }
-                  break;
-                }
+              const curSurah = ayah.surahNumber ?? -1;
+              if (curSurah !== -1 && curSurah !== lastSurahNumber) {
+                lastSurahNumber = curSurah;
+                const sName = surahNameMap.get(curSurah) ?? `سورة ${curSurah}`;
+                elements.push(
+                  <div key={`hdr-${curSurah}-${idx}`} style={{
+                    background: "linear-gradient(135deg, var(--ds-emerald-soft), #f8f4e8)",
+                    border: "1px solid var(--ds-emerald)",
+                    borderRadius: "0.625rem",
+                    padding: "0.625rem 1rem",
+                    marginBottom: "0.625rem",
+                    marginTop: idx > 0 ? "1.25rem" : 0,
+                    textAlign: "center",
+                  }}>
+                    <span style={{ fontSize: "1.05rem", fontWeight: 700, color: "var(--ds-emerald-deep)" }}>
+                      سورة {sName}
+                    </span>
+                  </div>
+                );
               }
-              void surahName;
-
               elements.push(
                 <div key={ayah.number} style={{ display: "flex", gap: "0.75rem", marginBottom: "0.5rem", alignItems: "flex-start" }}>
                   <span style={{
-                    flexShrink: 0,
-                    width: 32,
-                    height: 32,
-                    borderRadius: "50%",
-                    background: "var(--ds-emerald-soft)",
-                    color: "var(--ds-emerald-deep)",
-                    fontSize: "0.65rem",
-                    fontWeight: 700,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
+                    flexShrink: 0, width: 30, height: 30, borderRadius: "50%",
+                    background: "var(--ds-emerald-soft)", color: "var(--ds-emerald-deep)",
+                    fontSize: "0.65rem", fontWeight: 700, display: "flex",
+                    alignItems: "center", justifyContent: "center",
                   }}>
                     {ayah.numberInSurah}
                   </span>
                   <p style={{
-                    margin: 0,
-                    fontSize: fontScale,
-                    lineHeight: 2.1,
+                    margin: 0, fontSize: fontScale, lineHeight: 2.1,
                     fontFamily: "var(--font-quran, 'Amiri Quran', 'Scheherazade New', serif)",
-                    color: "var(--ds-ink, #1a1a1a)",
-                    direction: "rtl",
+                    color: "var(--ds-ink, #1a1a1a)", direction: "rtl",
                   }}>
-                    {ayah.text} ﴿{ayah.numberInSurah}﴾
+                    {ayah.text}
                   </p>
                 </div>
               );
@@ -516,7 +482,7 @@ export default function QuranPage() {
         .catch(() => setTafsirAyahs([]))
         .finally(() => setTafsirLoading(false));
     }
-  }, [viewMode]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [viewMode]);
 
   const tafsirMap = useMemo(() => {
     const m = new Map<number, string>();
@@ -758,7 +724,6 @@ export default function QuranPage() {
               {!loading && !error && activeAyahs.length > 0 && viewMode === "verse" && (
                 <VerseView
                   ayahs={activeAyahs}
-                  surahNum={surahNum}
                   surahName={activeDetail?.name ?? ""}
                   tafsirMap={tafsirMap}
                   tafsirId={tafsirId}

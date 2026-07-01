@@ -5,7 +5,6 @@ import {
   mergeSupabaseQuestions,
   pickQuestion,
   type CategoryQuestions,
-  type GameCategory,
   type PointValue,
   type QuizQuestion,
 } from "@/data/islamicQuizData";
@@ -775,7 +774,6 @@ export function IslamicQuizGame() {
       });
     }, 1000);
     return clearTimer;
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.phase, state.passedToOpponent]);
 
   useEffect(() => {
