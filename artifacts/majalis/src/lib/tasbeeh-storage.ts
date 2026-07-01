@@ -34,11 +34,13 @@ export const TASBEEH_PRESETS: Array<{ value: TasbeehPreset; label: string }> = [
 ];
 
 export const DEFAULT_TASBEEH_AWRAD: TasbeehWird[] = [
-  { id: "subhanallah", phrase: "سبحان الله", target: 100, count: 0, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(), dailyHistory: {}, lifetimeTotal: 0 },
-  { id: "alhamdulillah", phrase: "الحمد لله", target: 100, count: 0, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(), dailyHistory: {}, lifetimeTotal: 0 },
+  { id: "subhanallah", phrase: "سبحان الله", target: 33, count: 0, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(), dailyHistory: {}, lifetimeTotal: 0 },
+  { id: "alhamdulillah", phrase: "الحمد لله", target: 33, count: 0, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(), dailyHistory: {}, lifetimeTotal: 0 },
+  { id: "takbir", phrase: "الله أكبر", target: 33, count: 0, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(), dailyHistory: {}, lifetimeTotal: 0 },
   { id: "tahleel", phrase: "لا إله إلا الله", target: 100, count: 0, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(), dailyHistory: {}, lifetimeTotal: 0 },
-  { id: "takbir", phrase: "الله أكبر", target: 100, count: 0, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(), dailyHistory: {}, lifetimeTotal: 0 },
   { id: "salawat", phrase: "الصلاة على النبي ﷺ", target: 100, count: 0, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(), dailyHistory: {}, lifetimeTotal: 0 },
+  { id: "istighfar", phrase: "أستغفر الله", target: 100, count: 0, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(), dailyHistory: {}, lifetimeTotal: 0 },
+  { id: "hawqala", phrase: "لا حول ولا قوة إلا بالله", target: 100, count: 0, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(), dailyHistory: {}, lifetimeTotal: 0 },
 ];
 
 export function todayKey() {
@@ -135,4 +137,32 @@ export function mergeTasbeehAwrad(local: TasbeehWird[], remote: TasbeehWird[] | 
     }
   }
   return [...byId.values()];
+}
+
+function dateKey(d: Date): string {
+  return new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Kuwait" }).format(d);
+}
+
+/** Count consecutive days (including today if active) where any wird was used. */
+export function computeStreakDays(items: TasbeehWird[]): number {
+  if (!items.length) return 0;
+  const today = todayKey();
+  let streak = 0;
+  const d = new Date();
+  // Allow today to be empty without breaking streak
+  let allowEmpty = true;
+  for (let i = 0; i < 365; i++) {
+    const key = dateKey(d);
+    const totalForDay = items.reduce((sum, w) => sum + (w.dailyHistory?.[key] ?? 0), 0);
+    if (totalForDay > 0) {
+      streak++;
+      allowEmpty = false;
+    } else if (key === today && allowEmpty) {
+      // today not yet counted — skip without breaking
+    } else {
+      break;
+    }
+    d.setDate(d.getDate() - 1);
+  }
+  return streak;
 }
