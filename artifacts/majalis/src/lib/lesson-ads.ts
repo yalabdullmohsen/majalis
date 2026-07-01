@@ -219,6 +219,188 @@ export const lessonAds: LessonAd[] = [
       },
     ],
   },
+  // ── سالم بن سعد الطويل ───────────────────────────────────────────────────
+  {
+    id: "salem-altaweel-tawheed-bukhari",
+    provider: "saltaweel.com",
+    teacher: "سالم بن سعد الطويل",
+    teacherImage: "/sheikhs/salem-altaweel.jpg",
+    title: "شرح كتاب التوحيد من صحيح البخاري",
+    shortDescription: "درس أسبوعي ثابت في شرح كتاب التوحيد من صحيح البخاري، يُعقد كل أحد بعد العشاء.",
+    category: "weekly",
+    tags: ["حديث", "عقيدة", "أسبوعي", "حضوري", "بث مباشر"],
+    sessions: [
+      {
+        label: "المجلس الأسبوعي",
+        day: "الأحد",
+        time: "بعد صلاة العشاء",
+        venue: "ديوان أبو عبدالعزيز",
+        district: "جنوب عبدالله المبارك",
+        liveUrl: "https://www.saltaweel.com",
+        referenceUrl: "https://www.saltaweel.com",
+      },
+    ],
+  },
+  // ── حسين بن مبارك المويزري ─────────────────────────────────────────────
+  {
+    id: "hussain-almuwaiziri-rawdat-alafham",
+    provider: "دروس الكويت",
+    teacher: "الشيخ حسين بن مبارك المويزري",
+    teacherImage: "/sheikhs/hussain-almuwaiziri.jpg",
+    title: "شرح روضة الأفهام في زوائد المحرر على بلوغ المرام",
+    shortDescription: "درس أسبوعي في شرح كتاب روضة الأفهام — شرح موسّع لزوائد المحرر على بلوغ المرام.",
+    category: "weekly",
+    tags: ["حديث", "فقه", "أسبوعي", "حضوري"],
+    sessions: [
+      {
+        label: "المجلس الأسبوعي",
+        day: "الجمعة",
+        time: "بعد صلاة العشاء",
+        venue: "مسجد بالكويت",
+        district: "الكويت",
+      },
+    ],
+  },
+  // ── حامد علي المسعد ────────────────────────────────────────────────────
+  {
+    id: "hamed-almasad-tazkiyah",
+    provider: "دروس الكويت",
+    teacher: "حامد علي المسعد",
+    teacherImage: "/sheikhs/hamed-almasad.jpg",
+    title: "القرآن ربيع القلوب — دروس التزكية والوعظ",
+    shortDescription: "محاضرات تربوية دورية في تزكية النفس وصلاح القلب من خلال القرآن الكريم.",
+    category: "weekly",
+    tags: ["تزكية", "وعظ", "قرآن", "حضوري"],
+    sessions: [
+      {
+        label: "المجلس الأسبوعي",
+        day: "الثلاثاء",
+        time: "بعد صلاة المغرب",
+        venue: "مسجد بالكويت",
+        district: "الكويت",
+      },
+    ],
+  },
+  // ── نصار خالد العجمي ───────────────────────────────────────────────────
+  {
+    id: "nassar-alajmi-tarbiyah",
+    provider: "دروس الكويت",
+    teacher: "نصار خالد نصار العجمي",
+    teacherImage: "/sheikhs/nassar-alajmi.jpg",
+    title: "ليس في العمر إجازة — دروس التربية والدعوة",
+    shortDescription: "محاضرات تربوية تُركز على الجانب التزكوي وبناء الشخصية المسلمة.",
+    category: "weekly",
+    tags: ["وعظ", "تربية", "دعوة", "حضوري"],
+    sessions: [
+      {
+        label: "المجلس الأسبوعي",
+        day: "الاثنين",
+        time: "بعد صلاة العشاء",
+        venue: "مسجد بالكويت",
+        district: "الكويت",
+      },
+    ],
+  },
+  // ── بندر محمد الميموني ─────────────────────────────────────────────────
+  {
+    id: "bandar-almaymuni-raqaiq",
+    provider: "دروس الكويت",
+    teacher: "بندر محمد الميموني",
+    teacherImage: "/sheikhs/bandar-almaymuni.jpg",
+    title: "حياة القلوب — دروس الرقائق",
+    shortDescription: "محاضرات متخصصة في الرقائق وأحوال القلوب وتجديد الإيمان.",
+    category: "weekly",
+    tags: ["تزكية", "رقائق", "قلوب", "حضوري"],
+    sessions: [
+      {
+        label: "المجلس الأسبوعي",
+        day: "الأربعاء",
+        time: "بعد صلاة المغرب",
+        venue: "مسجد بالكويت",
+        district: "الكويت",
+      },
+    ],
+  },
+  // ── سعد هزاع العتيبي ───────────────────────────────────────────────────
+  {
+    id: "saad-alutaibi-thabaat",
+    provider: "دروس الكويت",
+    teacher: "سعد هزاع العتيبي",
+    teacherImage: "/sheikhs/saad-alutaibi.jpg",
+    title: "الثبات حتى الممات",
+    shortDescription: "محاضرات في الثبات على الدين والتثبيت في وجه الفتن.",
+    category: "weekly",
+    tags: ["وعظ", "ثبات", "دعوة", "حضوري"],
+    sessions: [
+      {
+        label: "المجلس الأسبوعي",
+        day: "الخميس",
+        time: "بعد صلاة العشاء",
+        venue: "مسجد بالكويت",
+        district: "الكويت",
+      },
+    ],
+  },
+  // ── فيصل زويد ─────────────────────────────────────────────────────────
+  {
+    id: "faisal-zuwaid-tazkiyah",
+    provider: "دروس الكويت",
+    teacher: "فيصل زويد",
+    teacherImage: "/sheikhs/faisal-zuwaid.jpg",
+    title: "إلا من أتى بقلب سليم — دروس تزكية النفس",
+    shortDescription: "دروس في تزكية النفس وصلاح القلب والتقرب إلى الله.",
+    category: "weekly",
+    tags: ["تزكية", "وعظ", "قلوب", "حضوري"],
+    sessions: [
+      {
+        label: "المجلس الأسبوعي",
+        day: "الأحد",
+        time: "بعد صلاة المغرب",
+        venue: "مسجد بالكويت",
+        district: "الكويت",
+      },
+    ],
+  },
+  // ── د. دهام أبو خشبة ──────────────────────────────────────────────────
+  {
+    id: "daham-abu-khashabah-umdah",
+    provider: "دروس الكويت",
+    teacher: "د. دهام أبو خشبة",
+    teacherImage: "/sheikhs/daham-abu-khashabah.jpg",
+    title: "شرح عمدة الأحكام",
+    shortDescription: "درس أسبوعي في شرح عمدة الأحكام من كلام خير الأنام لابن قدامة.",
+    category: "weekly",
+    tags: ["فقه", "حديث", "أسبوعي", "حضوري"],
+    sessions: [
+      {
+        label: "المجلس الأسبوعي",
+        day: "الجمعة",
+        time: "بعد صلاة الفجر",
+        venue: "مسجد بالكويت",
+        district: "الكويت",
+      },
+    ],
+  },
+  // ── د. مطلق جاسر الجاسر ───────────────────────────────────────────────
+  {
+    id: "mutlaq-aljasr-talaeea-elm",
+    provider: "دورة طلائع العلم",
+    teacher: "د. مطلق جاسر مطلق الجاسر",
+    teacherImage: "/sheikhs/mutlaq-aljasr.jpg",
+    title: "دورة طلائع العلم لطلاب العلم المبتدئين",
+    shortDescription: "دورة إلكترونية متكاملة لتأهيل طلاب العلم المبتدئين على منهج علمي أصيل.",
+    category: "course",
+    tags: ["طلب العلم", "تأصيل", "دورة علمية", "بث مباشر"],
+    sessions: [
+      {
+        label: "الدورة الإلكترونية",
+        day: "الإثنين",
+        time: "بعد صلاة العشاء",
+        venue: "إلكتروني",
+        district: "الكويت",
+      },
+    ],
+  },
 ];
 
 export type LessonAdFilters = {
