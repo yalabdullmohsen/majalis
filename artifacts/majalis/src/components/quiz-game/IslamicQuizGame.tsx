@@ -55,20 +55,22 @@ type Action =
   | { type: "PASS_QUESTION" }
   | { type: "RESET" };
 
-// ─── Palette ───────────────────────────────────────────────────────────────
+// ─── Palette — منسجمة مع design system المنصة ─────────────────────────────
 
 const S = {
-  navy: "#0D1B2A",
-  navyMid: "#152233",
-  navyLight: "#1A2B40",
-  gold: "#C9A84C",
-  goldLight: "#E8C96E",
-  goldDark: "#9B7B2A",
-  ivory: "#F0EAD6",
-  ivorySoft: "#A8A090",
-  correct: "#1A6B4A",
-  wrong: "#8B1A1A",
-  cellGold: "#2A2210",
+  bg:          "var(--ds-parchment)",
+  card:        "#ffffff",
+  cardAlt:     "var(--ds-parchment-deep)",
+  border:      "var(--ds-line-color)",
+  ink:         "var(--ds-ink)",
+  inkSoft:     "var(--ds-ink-soft)",
+  gold:        "var(--majalis-brass)",
+  goldDeep:    "var(--majalis-brass-deep)",
+  emerald:     "var(--ds-emerald)",
+  emeraldDeep: "var(--ds-emerald-deep)",
+  emeraldSoft: "var(--ds-emerald-soft)",
+  correct:     "#1A6B4A",
+  wrong:       "#8B1A1A",
 } as const;
 
 // ─── Reducer helpers ───────────────────────────────────────────────────────
@@ -208,21 +210,34 @@ function markCellUsed(board: Cell[][], cell: Cell | null): Cell[][] {
 const inputStyle: React.CSSProperties = {
   width: "100%",
   padding: "0.625rem 0.75rem",
-  borderRadius: "0.5rem",
-  border: "1px solid #2A3A4A",
-  background: S.navy,
-  color: S.ivory,
+  borderRadius: "var(--ds-radius, 0.5rem)",
+  border: `1px solid var(--ds-line-color)`,
+  background: "#fff",
+  color: S.ink,
   fontSize: "0.9rem",
   outline: "none",
   boxSizing: "border-box",
   fontFamily: "inherit",
 };
 
-const solidBtn = (bg: string, fg: string): React.CSSProperties => ({
+const primaryBtn = (disabled = false): React.CSSProperties => ({
   padding: "0.875rem 1.5rem",
-  borderRadius: "0.75rem",
-  background: bg,
-  color: fg,
+  borderRadius: "var(--ds-radius-lg, 0.625rem)",
+  background: disabled ? S.cardAlt : S.emerald,
+  color: disabled ? S.inkSoft : "#fff",
+  border: "none",
+  fontSize: "1rem",
+  fontWeight: 700,
+  cursor: disabled ? "not-allowed" : "pointer",
+  fontFamily: "inherit",
+  transition: "background 0.15s",
+});
+
+const goldBtn = (): React.CSSProperties => ({
+  padding: "0.875rem 1.5rem",
+  borderRadius: "var(--ds-radius-lg, 0.625rem)",
+  background: `linear-gradient(135deg, var(--majalis-brass), var(--majalis-brass-deep))`,
+  color: "#fff",
   border: "none",
   fontSize: "1rem",
   fontWeight: 700,
@@ -232,18 +247,27 @@ const solidBtn = (bg: string, fg: string): React.CSSProperties => ({
 
 const ghostBtn: React.CSSProperties = {
   background: "transparent",
-  border: `1px solid ${S.navyLight}`,
-  color: S.ivorySoft,
+  border: `1px solid var(--ds-line-color)`,
+  color: S.inkSoft,
   padding: "0.5rem 1rem",
-  borderRadius: "0.5rem",
+  borderRadius: "var(--ds-radius, 0.5rem)",
   cursor: "pointer",
   fontSize: "0.875rem",
   fontFamily: "inherit",
 };
 
+const sectionCard: React.CSSProperties = {
+  background: S.card,
+  borderRadius: "var(--ds-radius-lg, 0.625rem)",
+  padding: "1.5rem",
+  marginBottom: "1rem",
+  border: `1px solid var(--ds-line-color)`,
+  boxShadow: "var(--ds-shadow-sm, 0 1px 2px rgba(22,78,60,0.05))",
+};
+
 const lifelineStyle = (color: string, bg: string): React.CSSProperties => ({
   padding: "0.4rem 0.75rem",
-  borderRadius: "0.5rem",
+  borderRadius: "var(--ds-radius, 0.5rem)",
   background: bg,
   color,
   border: `1px solid ${color}`,
@@ -260,32 +284,33 @@ function ScoreBar({ teams, activeTeam }: { teams: [Team, Team]; activeTeam: Team
     <div style={{ display: "flex", gap: "0.75rem", marginBottom: "1.25rem" }}>
       {teams.map((t) => {
         const active = t.id === activeTeam;
-        const accent = t.id === "team1" ? "#1A7A55" : "#8B4515";
+        const activeBg = t.id === "team1" ? S.emerald : "#8B4515";
         return (
           <div
             key={t.id}
             style={{
               flex: 1,
               padding: "0.875rem 1rem",
-              borderRadius: "0.75rem",
-              background: active ? accent : S.navyLight,
-              border: `2px solid ${active ? S.gold : "transparent"}`,
+              borderRadius: "var(--ds-radius-lg, 0.625rem)",
+              background: active ? activeBg : S.cardAlt,
+              border: `2px solid ${active ? "var(--majalis-brass)" : "var(--ds-line-color)"}`,
               textAlign: "center",
               transition: "all 0.3s ease",
+              boxShadow: active ? "var(--ds-shadow, 0 2px 8px rgba(22,78,60,0.07))" : "none",
             }}
           >
             {active && (
-              <p style={{ margin: "0 0 0.2rem", fontSize: "0.7rem", color: S.goldLight, fontWeight: 700 }}>▶ دوره ◀</p>
+              <p style={{ margin: "0 0 0.2rem", fontSize: "0.7rem", color: "var(--majalis-brass)", fontWeight: 700 }}>▶ دوره ◀</p>
             )}
-            <p style={{ margin: 0, fontSize: "0.9rem", fontWeight: 700, color: S.ivory }}>{t.name}</p>
-            <p style={{ margin: "0.25rem 0 0", fontSize: "1.6rem", fontWeight: 800, color: active ? S.goldLight : S.gold }}>
+            <p style={{ margin: 0, fontSize: "0.9rem", fontWeight: 700, color: active ? "#fff" : S.ink }}>{t.name}</p>
+            <p style={{ margin: "0.25rem 0 0", fontSize: "1.6rem", fontWeight: 800, color: active ? "var(--majalis-brass)" : S.emeraldDeep }}>
               {t.score.toLocaleString("ar-EG")}
             </p>
-            <p style={{ margin: 0, fontSize: "0.7rem", color: S.ivorySoft }}>نقطة</p>
+            <p style={{ margin: 0, fontSize: "0.7rem", color: active ? "rgba(255,255,255,0.7)" : S.inkSoft }}>نقطة</p>
             <div style={{ display: "flex", justifyContent: "center", gap: "0.3rem", marginTop: "0.4rem", flexWrap: "wrap" }}>
-              {t.lifelines.penalize && <span style={{ fontSize: "0.6rem", padding: "0.1rem 0.35rem", borderRadius: 999, border: "1px solid #FFB347", color: "#FFB347" }}>خصم</span>}
-              {t.lifelines.eliminate && <span style={{ fontSize: "0.6rem", padding: "0.1rem 0.35rem", borderRadius: 999, border: "1px solid #C080FF", color: "#C080FF" }}>استبعاد</span>}
-              {t.lifelines.pass && <span style={{ fontSize: "0.6rem", padding: "0.1rem 0.35rem", borderRadius: 999, border: "1px solid #80C0FF", color: "#80C0FF" }}>تمرير</span>}
+              {t.lifelines.penalize && <span style={{ fontSize: "0.6rem", padding: "0.1rem 0.35rem", borderRadius: 999, border: "1px solid #FFB347", color: active ? "#FFB347" : "#9A6B10" }}>خصم</span>}
+              {t.lifelines.eliminate && <span style={{ fontSize: "0.6rem", padding: "0.1rem 0.35rem", borderRadius: 999, border: "1px solid #9B59B6", color: active ? "#C080FF" : "#7D3C98" }}>استبعاد</span>}
+              {t.lifelines.pass && <span style={{ fontSize: "0.6rem", padding: "0.1rem 0.35rem", borderRadius: 999, border: "1px solid #2E86C1", color: active ? "#80C0FF" : "#1A5276" }}>تمرير</span>}
             </div>
           </div>
         );
@@ -312,30 +337,30 @@ function SetupPhase({ onStart }: { onStart: (cats: string[], names: [string, str
     <div style={{ maxWidth: 640, margin: "0 auto" }}>
       <div style={{ textAlign: "center", marginBottom: "2rem" }}>
         <div style={{ fontSize: "3rem", marginBottom: "0.5rem" }}>🕌</div>
-        <h1 style={{ margin: 0, fontSize: "2rem", color: S.goldLight, fontWeight: 800 }}>لعبة سؤال وجواب</h1>
-        <p style={{ margin: "0.5rem 0 0", color: S.ivorySoft, fontSize: "0.9rem" }}>
+        <h1 style={{ margin: 0, fontSize: "2rem", color: S.emeraldDeep, fontWeight: 800 }}>لعبة سؤال وجواب</h1>
+        <p style={{ margin: "0.5rem 0 0", color: S.inkSoft, fontSize: "0.9rem" }}>
           لعبة جماعية تنافسية بطابع إسلامي — فريقان يتنافسان على النقاط
         </p>
       </div>
 
-      <section style={{ background: S.navyMid, borderRadius: "1rem", padding: "1.5rem", marginBottom: "1rem", border: `1px solid ${S.navyLight}` }}>
+      <section style={sectionCard}>
         <h2 style={{ margin: "0 0 1rem", color: S.gold, fontSize: "0.95rem", fontWeight: 700 }}>🏆 أسماء الفريقين</h2>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem" }}>
           <div>
-            <label style={{ display: "block", fontSize: "0.78rem", color: S.ivorySoft, marginBottom: "0.35rem" }}>الفريق الأول</label>
+            <label style={{ display: "block", fontSize: "0.78rem", color: S.inkSoft, marginBottom: "0.35rem" }}>الفريق الأول</label>
             <input value={name1} onChange={(e) => setName1(e.target.value)} maxLength={20} style={inputStyle} />
           </div>
           <div>
-            <label style={{ display: "block", fontSize: "0.78rem", color: S.ivorySoft, marginBottom: "0.35rem" }}>الفريق الثاني</label>
+            <label style={{ display: "block", fontSize: "0.78rem", color: S.inkSoft, marginBottom: "0.35rem" }}>الفريق الثاني</label>
             <input value={name2} onChange={(e) => setName2(e.target.value)} maxLength={20} style={inputStyle} />
           </div>
         </div>
       </section>
 
-      <section style={{ background: S.navyMid, borderRadius: "1rem", padding: "1.5rem", marginBottom: "1rem", border: `1px solid ${S.navyLight}` }}>
+      <section style={sectionCard}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
           <h2 style={{ margin: 0, color: S.gold, fontSize: "0.95rem", fontWeight: 700 }}>📚 اختر الفئات</h2>
-          <span style={{ fontSize: "0.78rem", color: S.ivorySoft }}>{selected.length}/6 (2 كحد أدنى)</span>
+          <span style={{ fontSize: "0.78rem", color: S.inkSoft }}>{selected.length}/6 (2 كحد أدنى)</span>
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))", gap: "0.6rem" }}>
           {GAME_CATEGORIES.map((cat) => {
@@ -349,16 +374,17 @@ function SetupPhase({ onStart }: { onStart: (cats: string[], names: [string, str
                 disabled={maxed}
                 style={{
                   padding: "0.75rem 0.5rem",
-                  borderRadius: "0.625rem",
-                  border: `2px solid ${on ? S.gold : S.navyLight}`,
-                  background: on ? S.cellGold : S.navyLight,
-                  color: on ? S.goldLight : maxed ? "#555" : S.ivory,
+                  borderRadius: "var(--ds-radius-lg, 0.625rem)",
+                  border: `2px solid ${on ? "var(--ds-emerald)" : "var(--ds-line-color)"}`,
+                  background: on ? S.emeraldSoft : S.cardAlt,
+                  color: on ? S.emeraldDeep : maxed ? S.inkSoft : S.ink,
                   cursor: maxed ? "not-allowed" : "pointer",
                   textAlign: "center",
                   fontSize: "0.82rem",
                   fontWeight: on ? 700 : 400,
                   transition: "border-color 0.2s, background 0.2s",
                   fontFamily: "inherit",
+                  opacity: maxed ? 0.5 : 1,
                 }}
               >
                 <div style={{ fontSize: "1.2rem", marginBottom: "0.25rem" }}>{cat.icon}</div>
@@ -369,17 +395,17 @@ function SetupPhase({ onStart }: { onStart: (cats: string[], names: [string, str
         </div>
       </section>
 
-      <section style={{ background: S.navyMid, borderRadius: "1rem", padding: "1.25rem", marginBottom: "1.5rem", border: `1px solid ${S.navyLight}` }}>
+      <section style={{ ...sectionCard, marginBottom: "1.5rem" }}>
         <h3 style={{ margin: "0 0 0.75rem", color: S.gold, fontSize: "0.88rem", fontWeight: 700 }}>⚡ وسائل المساعدة (لكل فريق 3 وسائل)</h3>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "0.5rem", fontSize: "0.78rem" }}>
           {([
             ["#FFB347", "خصم نقاط", "تُخصم نقاط الخلية من رصيد الخصم"],
-            ["#C080FF", "استبعاد لاعب", "يُستبعد لاعب من الفريق المنافس"],
-            ["#80C0FF", "تمرير السؤال", "يُحوَّل السؤال للفريق المنافس"],
+            ["#9B59B6", "استبعاد لاعب", "يُستبعد لاعب من الفريق المنافس"],
+            ["#2E86C1", "تمرير السؤال", "يُحوَّل السؤال للفريق المنافس"],
           ] as [string, string, string][]).map(([color, title, desc]) => (
-            <div key={title} style={{ padding: "0.6rem", borderRadius: "0.5rem", background: S.navyLight, textAlign: "center" }}>
+            <div key={title} style={{ padding: "0.6rem", borderRadius: "var(--ds-radius, 0.5rem)", background: S.cardAlt, textAlign: "center", border: `1px solid var(--ds-line-color)` }}>
               <div style={{ color, fontWeight: 700, marginBottom: "0.25rem", fontSize: "0.82rem" }}>{title}</div>
-              <div style={{ color: S.ivorySoft, lineHeight: 1.5 }}>{desc}</div>
+              <div style={{ color: S.inkSoft, lineHeight: 1.5 }}>{desc}</div>
             </div>
           ))}
         </div>
@@ -389,12 +415,7 @@ function SetupPhase({ onStart }: { onStart: (cats: string[], names: [string, str
         type="button"
         onClick={() => canStart && onStart(selected, [name1.trim() || "الفريق الأول", name2.trim() || "الفريق الثاني"])}
         disabled={!canStart}
-        style={{
-          ...solidBtn(canStart ? `linear-gradient(135deg, ${S.gold}, ${S.goldDark})` : S.navyLight, canStart ? S.navy : "#555"),
-          width: "100%",
-          fontSize: "1.1rem",
-          cursor: canStart ? "pointer" : "not-allowed",
-        }}
+        style={{ ...primaryBtn(!canStart), width: "100%", fontSize: "1.1rem" }}
       >
         {canStart ? "ابدأ اللعبة 🎮" : selected.length < 2 ? "اختر فئتين على الأقل" : "أدخل أسماء الفريقين"}
       </button>
@@ -439,13 +460,13 @@ function BoardPhase({
               key={cat.id}
               style={{
                 padding: "0.6rem 0.35rem",
-                background: S.navyMid,
-                borderRadius: "0.5rem",
+                background: S.emeraldSoft,
+                borderRadius: "var(--ds-radius, 0.5rem)",
                 textAlign: "center",
                 fontSize: "0.72rem",
                 fontWeight: 700,
-                color: S.goldLight,
-                border: `1px solid ${S.navyLight}`,
+                color: S.emeraldDeep,
+                border: `1px solid var(--ds-line-color)`,
                 lineHeight: 1.4,
               }}
             >
@@ -466,10 +487,10 @@ function BoardPhase({
                   onClick={() => dispatch({ type: "SELECT_CELL", cell, pool: poolRef.current ?? ALL_QUESTIONS })}
                   style={{
                     padding: "1rem 0.375rem",
-                    borderRadius: "0.5rem",
-                    border: `1px solid ${cell.used ? "#1A2535" : S.gold}`,
-                    background: cell.used ? "#0A1220" : S.navyMid,
-                    color: cell.used ? "#2A3545" : S.goldLight,
+                    borderRadius: "var(--ds-radius, 0.5rem)",
+                    border: `1px solid ${cell.used ? "var(--ds-line-color)" : "var(--ds-emerald)"}`,
+                    background: cell.used ? S.cardAlt : S.card,
+                    color: cell.used ? S.inkSoft : S.emeraldDeep,
                     fontSize: "1.2rem",
                     fontWeight: 800,
                     cursor: cell.used ? "default" : "pointer",
@@ -511,26 +532,26 @@ function QuestionPhase({ state, dispatch }: { state: GameState; dispatch: React.
     <div style={{ maxWidth: 640, margin: "0 auto" }}>
       <ScoreBar teams={teams} activeTeam={activeTeam} />
 
-      <div style={{ background: S.navyMid, borderRadius: "1rem", padding: "1.5rem", border: `2px solid ${S.gold}`, marginBottom: "1rem" }}>
+      <div style={{ ...sectionCard, border: `2px solid var(--majalis-brass)`, marginBottom: "1rem" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem", flexWrap: "wrap", gap: "0.5rem" }}>
-          <span style={{ fontSize: "0.82rem", color: S.ivorySoft }}>{cat?.icon} {cat?.name}</span>
-          <span style={{ padding: "0.3rem 0.875rem", borderRadius: 999, background: S.cellGold, color: S.goldLight, fontWeight: 800, fontSize: "1rem", border: `1px solid ${S.gold}` }}>
+          <span style={{ fontSize: "0.82rem", color: S.inkSoft }}>{cat?.icon} {cat?.name}</span>
+          <span style={{ padding: "0.3rem 0.875rem", borderRadius: 999, background: S.emeraldSoft, color: S.emeraldDeep, fontWeight: 800, fontSize: "1rem", border: `1px solid var(--ds-emerald)` }}>
             {activeCell.points} نقطة
           </span>
         </div>
 
         {passedToOpponent && (
-          <div style={{ padding: "0.5rem 0.75rem", background: "#081830", borderRadius: "0.5rem", marginBottom: "0.875rem", fontSize: "0.82rem", color: "#80C0FF", border: "1px solid #204080" }}>
+          <div style={{ padding: "0.5rem 0.75rem", background: "#EFF6FF", borderRadius: "var(--ds-radius, 0.5rem)", marginBottom: "0.875rem", fontSize: "0.82rem", color: "#1D4ED8", border: "1px solid #BFDBFE" }}>
             📨 تم تمرير السؤال — يجيب الآن: <strong>{scoringTeam?.name}</strong>
           </div>
         )}
 
         {activeQuestion ? (
-          <p style={{ margin: 0, fontSize: "1.2rem", fontWeight: 700, color: S.ivory, lineHeight: 1.9, textAlign: "center", padding: "0.75rem 0" }}>
+          <p style={{ margin: 0, fontSize: "1.2rem", fontWeight: 700, color: S.ink, lineHeight: 1.9, textAlign: "center", padding: "0.75rem 0" }}>
             {activeQuestion.q}
           </p>
         ) : (
-          <p style={{ margin: 0, color: S.ivorySoft, textAlign: "center", fontSize: "0.9rem" }}>
+          <p style={{ margin: 0, color: S.inkSoft, textAlign: "center", fontSize: "0.9rem" }}>
             لا يوجد سؤال متاح — حدد النتيجة يدوياً
           </p>
         )}
@@ -540,7 +561,7 @@ function QuestionPhase({ state, dispatch }: { state: GameState; dispatch: React.
         <button
           type="button"
           onClick={() => setRevealed(true)}
-          style={{ ...solidBtn(`linear-gradient(135deg, ${S.gold}, ${S.goldDark})`, S.navy), width: "100%", marginBottom: "0.75rem" }}
+          style={{ ...goldBtn(), width: "100%", marginBottom: "0.75rem" }}
         >
           🔍 كشف الإجابة
         </button>
@@ -548,11 +569,11 @@ function QuestionPhase({ state, dispatch }: { state: GameState; dispatch: React.
 
       {revealed && (
         <>
-          <div style={{ background: S.navyMid, borderRadius: "1rem", padding: "1.25rem", marginBottom: "0.75rem", border: `1px solid ${S.navyLight}` }}>
-            <p style={{ margin: "0 0 0.5rem", fontSize: "0.78rem", color: S.goldLight, fontWeight: 700 }}>الإجابة الصحيحة:</p>
-            <p style={{ margin: 0, fontSize: "1.1rem", color: S.ivory, fontWeight: 600, lineHeight: 1.8 }}>{activeQuestion?.a ?? "—"}</p>
+          <div style={{ ...sectionCard, marginBottom: "0.75rem" }}>
+            <p style={{ margin: "0 0 0.5rem", fontSize: "0.78rem", color: S.gold, fontWeight: 700 }}>الإجابة الصحيحة:</p>
+            <p style={{ margin: 0, fontSize: "1.1rem", color: S.ink, fontWeight: 600, lineHeight: 1.8 }}>{activeQuestion?.a ?? "—"}</p>
             {showHint && (
-              <p style={{ margin: "0.625rem 0 0", fontSize: "0.85rem", color: S.ivorySoft, lineHeight: 1.6, paddingTop: "0.625rem", borderTop: `1px solid ${S.navyLight}` }}>
+              <p style={{ margin: "0.625rem 0 0", fontSize: "0.85rem", color: S.inkSoft, lineHeight: 1.6, paddingTop: "0.625rem", borderTop: `1px solid var(--ds-line-color)` }}>
                 💡 {activeQuestion?.hint}
               </p>
             )}
@@ -564,38 +585,38 @@ function QuestionPhase({ state, dispatch }: { state: GameState; dispatch: React.
           </div>
 
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.625rem", marginBottom: "0.875rem" }}>
-            <button type="button" onClick={() => dispatch({ type: "MARK_CORRECT" })} style={{ ...solidBtn(S.correct, "#fff"), textAlign: "center" }}>
+            <button type="button" onClick={() => dispatch({ type: "MARK_CORRECT" })} style={{ padding: "0.875rem 1rem", borderRadius: "var(--ds-radius, 0.5rem)", background: S.correct, color: "#fff", border: "none", fontWeight: 700, fontSize: "0.95rem", cursor: "pointer", fontFamily: "inherit", textAlign: "center" }}>
               ✅ صحيح +{activeCell.points}
             </button>
-            <button type="button" onClick={() => dispatch({ type: "MARK_WRONG" })} style={{ ...solidBtn(S.wrong, "#fff"), textAlign: "center" }}>
+            <button type="button" onClick={() => dispatch({ type: "MARK_WRONG" })} style={{ padding: "0.875rem 1rem", borderRadius: "var(--ds-radius, 0.5rem)", background: S.wrong, color: "#fff", border: "none", fontWeight: 700, fontSize: "0.95rem", cursor: "pointer", fontFamily: "inherit", textAlign: "center" }}>
               ❌ خطأ
             </button>
           </div>
         </>
       )}
 
-      <div style={{ background: S.navyMid, borderRadius: "0.75rem", padding: "1rem", border: `1px solid ${S.navyLight}` }}>
+      <div style={{ ...sectionCard }}>
         <p style={{ margin: "0 0 0.625rem", fontSize: "0.82rem", color: S.gold, fontWeight: 700 }}>
           ⚡ وسائل المساعدة — {activeTeamObj.name}
         </p>
         <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
           {activeTeamObj.lifelines.penalize && (
-            <button type="button" onClick={() => dispatch({ type: "USE_LIFELINE_PENALIZE" })} style={lifelineStyle("#FFB347", "#2A1800")}>
+            <button type="button" onClick={() => dispatch({ type: "USE_LIFELINE_PENALIZE" })} style={lifelineStyle("#FFB347", "#FFF8EE")}>
               خصم {activeCell.points} من الخصم
             </button>
           )}
           {activeTeamObj.lifelines.eliminate && (
-            <button type="button" onClick={() => dispatch({ type: "USE_LIFELINE_ELIMINATE" })} style={lifelineStyle("#C080FF", "#1A0830")}>
+            <button type="button" onClick={() => dispatch({ type: "USE_LIFELINE_ELIMINATE" })} style={lifelineStyle("#9B59B6", "#F5EEF8")}>
               استبعاد لاعب
             </button>
           )}
           {activeTeamObj.lifelines.pass && !passedToOpponent && (
-            <button type="button" onClick={() => dispatch({ type: "PASS_QUESTION" })} style={lifelineStyle("#80C0FF", "#081830")}>
+            <button type="button" onClick={() => dispatch({ type: "PASS_QUESTION" })} style={lifelineStyle("#2E86C1", "#EBF5FB")}>
               تمرير للخصم
             </button>
           )}
           {!activeTeamObj.lifelines.penalize && !activeTeamObj.lifelines.eliminate && !activeTeamObj.lifelines.pass && (
-            <span style={{ fontSize: "0.8rem", color: "#555", padding: "0.4rem 0" }}>لا وسائل متبقية</span>
+            <span style={{ fontSize: "0.8rem", color: S.inkSoft, padding: "0.4rem 0" }}>لا وسائل متبقية</span>
           )}
         </div>
       </div>
@@ -612,31 +633,27 @@ function WinnerPhase({ teams, onReset }: { teams: [Team, Team]; onReset: () => v
   return (
     <div style={{ textAlign: "center", maxWidth: 480, margin: "0 auto", paddingTop: "1rem" }}>
       <div style={{ fontSize: "4rem", marginBottom: "1rem" }}>{isDraw ? "🤝" : "🏆"}</div>
-      <h1 style={{ margin: "0 0 0.5rem", fontSize: "2rem", color: S.goldLight, fontWeight: 800 }}>
+      <h1 style={{ margin: "0 0 0.5rem", fontSize: "2rem", color: S.emeraldDeep, fontWeight: 800 }}>
         {isDraw ? "تعادل!" : `فاز ${a.name}`}
       </h1>
-      <p style={{ color: S.ivorySoft, marginBottom: "2rem", fontSize: "0.95rem" }}>
+      <p style={{ color: S.inkSoft, marginBottom: "2rem", fontSize: "0.95rem" }}>
         {isDraw ? "تعادل الفريقان — أنتما متكافئان!" : "أحسنتم جميعاً وبارك الله في سعيكم"}
       </p>
 
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "2rem" }}>
         {[a, b].map((team, i) => (
-          <div key={team.id} style={{ padding: "1.5rem 1rem", borderRadius: "1rem", background: S.navyMid, border: `2px solid ${i === 0 ? S.gold : S.navyLight}` }}>
+          <div key={team.id} style={{ ...sectionCard, border: `2px solid ${i === 0 ? "var(--majalis-brass)" : "var(--ds-line-color)"}`, marginBottom: 0 }}>
             <div style={{ fontSize: "1.75rem", marginBottom: "0.5rem" }}>{i === 0 ? (isDraw ? "🤝" : "🥇") : "🥈"}</div>
-            <p style={{ margin: "0 0 0.5rem", fontWeight: 700, color: S.ivory, fontSize: "0.95rem" }}>{team.name}</p>
-            <p style={{ margin: 0, fontSize: "2.25rem", fontWeight: 800, color: i === 0 ? S.goldLight : S.ivorySoft }}>
+            <p style={{ margin: "0 0 0.5rem", fontWeight: 700, color: S.ink, fontSize: "0.95rem" }}>{team.name}</p>
+            <p style={{ margin: 0, fontSize: "2.25rem", fontWeight: 800, color: i === 0 ? S.gold : S.inkSoft }}>
               {team.score.toLocaleString("ar-EG")}
             </p>
-            <p style={{ margin: "0.25rem 0 0", fontSize: "0.78rem", color: S.ivorySoft }}>نقطة</p>
+            <p style={{ margin: "0.25rem 0 0", fontSize: "0.78rem", color: S.inkSoft }}>نقطة</p>
           </div>
         ))}
       </div>
 
-      <button
-        type="button"
-        onClick={onReset}
-        style={{ ...solidBtn(`linear-gradient(135deg, ${S.gold}, ${S.goldDark})`, S.navy), paddingInline: "2.5rem" }}
-      >
+      <button type="button" onClick={onReset} style={{ ...goldBtn(), paddingInline: "2.5rem" }}>
         🔄 لعبة جديدة
       </button>
     </div>
@@ -666,16 +683,16 @@ export function IslamicQuizGame() {
     <div
       style={{
         minHeight: "calc(100vh - 64px)",
-        background: S.navy,
+        background: S.bg,
         padding: "1.25rem 1rem",
         direction: "rtl",
-        fontFamily: "'Cairo', 'Noto Kufi Arabic', 'IBM Plex Sans Arabic', system-ui, sans-serif",
-        color: S.ivory,
+        fontFamily: "inherit",
+        color: S.ink,
       }}
     >
       <div style={{ maxWidth: 860, margin: "0 auto", paddingBottom: "3rem" }}>
         {(state.phase === "board" || state.phase === "question") && (
-          <div style={{ textAlign: "center", marginBottom: "1rem", paddingBottom: "0.75rem", borderBottom: `1px solid ${S.navyLight}` }}>
+          <div style={{ textAlign: "center", marginBottom: "1rem", paddingBottom: "0.75rem", borderBottom: `1px solid var(--ds-line-color)` }}>
             <span style={{ color: S.gold, fontWeight: 700 }}>🕌 لعبة سؤال وجواب الإسلامية</span>
           </div>
         )}

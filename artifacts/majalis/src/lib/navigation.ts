@@ -18,6 +18,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { href: "/", label: "الرئيسية" },
       { href: "/search", label: "البحث" },
       { href: "/lessons", label: "الدروس" },
+      { href: "/quiz", label: "لعبة سؤال وجواب" },
       { href: "/annual-courses", label: "الدورات العلمية" },
       { href: "/fiqh-council", label: "المجمع الفقهي الإسلامي" },
       { href: "/fatwa", label: "الفتاوى" },
@@ -27,7 +28,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { href: "/fawaid", label: "الفوائد" },
       { href: "/hadith", label: "الأحاديث الموثقة" },
       { href: "/stories", label: "القصص الإسلامية" },
-      { href: "/qa", label: "الأسئلة" },
+      { href: "/qa", label: "الأسئلة التعليمية" },
       { href: "/kuwait-lessons", label: "دروس المشايخ" },
       { href: "/janaza", label: "آخر الجنائز" },
     ],
@@ -76,7 +77,6 @@ export const NAV_GROUPS: NavGroup[] = [
       { href: "/qibla", label: "القبلة" },
       { href: "/occasions", label: "المناسبات الإسلامية" },
       { href: "/settings", label: "الإعدادات" },
-      { href: "/quiz", label: "لعبة سؤال وجواب" },
     ],
   },
 ];
@@ -93,9 +93,10 @@ export const PRIMARY_NAV = [
 /** Mobile "المزيد" dropdown — full site navigation */
 export const MOBILE_MORE_NAV = [
   { href: "/lessons", label: "الدروس" },
+  { href: "/quiz", label: "لعبة سؤال وجواب" },
   { href: "/lessons", label: "المشايخ" },
   { href: "/library", label: "المكتبة" },
-  { href: "/qa", label: "الأسئلة" },
+  { href: "/qa", label: "الأسئلة التعليمية" },
   { href: "/hadith", label: "الأحاديث" },
   { href: "/stories", label: "القصص" },
   { href: "/quran", label: "القرآن" },

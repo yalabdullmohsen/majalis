@@ -21,7 +21,7 @@ import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 const QUICK_LINKS = [
   { href: "/quran", label: "القرآن", meta: "مصحف وتلاوة" },
   { href: "/lessons", label: "الدروس", meta: "أحدث وقادمة" },
-  { href: "/qa", label: "الأسئلة", meta: "فتاوى وإجابات" },
+  { href: "/qa", label: "الأسئلة التعليمية", meta: "فتاوى وإجابات" },
   { href: "/rulings", label: "الأحكام", meta: "موسوعة شرعية" },
   { href: "/library", label: "المكتبة", meta: "كتب ومتون" },
   { href: "/fawaid", label: "الفوائد", meta: "مختصرات" },
@@ -96,6 +96,57 @@ export default function HomePage({
         <SafeHomeSection name="أحدث الدروس">
           <HomeUpcomingLessons initialLessons={initialFeaturedLessons} />
         </SafeHomeSection>
+
+        <IslamicDivider />
+
+        {/* بطاقة لعبة سؤال وجواب */}
+        <section className="home-section ds-section">
+          <Link href="/quiz" style={{ textDecoration: "none", display: "block" }}>
+            <div style={{
+              background: "#fff",
+              border: "1px solid var(--ds-line-color)",
+              borderRadius: "var(--ds-radius-lg, 0.625rem)",
+              padding: "1.25rem 1.5rem",
+              boxShadow: "var(--ds-shadow-sm)",
+              display: "flex",
+              alignItems: "center",
+              gap: "1.25rem",
+              transition: "box-shadow 0.15s, border-color 0.15s",
+              borderRight: "4px solid var(--majalis-brass)",
+            }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLDivElement).style.boxShadow = "var(--ds-shadow)";
+              (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(176,141,46,0.4)";
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLDivElement).style.boxShadow = "var(--ds-shadow-sm)";
+              (e.currentTarget as HTMLDivElement).style.borderColor = "var(--ds-line-color)";
+            }}
+            >
+              <div style={{ fontSize: "2.5rem", flexShrink: 0 }}>🕌</div>
+              <div style={{ flex: 1 }}>
+                <p style={{ margin: "0 0 0.25rem", fontSize: "1rem", fontWeight: 800, color: "var(--ds-emerald-deep)" }}>
+                  لعبة سؤال وجواب الإسلامية
+                </p>
+                <p style={{ margin: 0, fontSize: "0.82rem", color: "var(--majalis-ink-soft, #5c564c)", lineHeight: 1.5 }}>
+                  تنافس مع فريقك في أسئلة القرآن والحديث والفقه والتاريخ الإسلامي
+                </p>
+              </div>
+              <span style={{
+                flexShrink: 0,
+                padding: "0.45rem 1.1rem",
+                background: "var(--ds-emerald)",
+                color: "#fff",
+                borderRadius: "var(--ds-radius, 0.5rem)",
+                fontSize: "0.82rem",
+                fontWeight: 700,
+                whiteSpace: "nowrap",
+              }}>
+                ابدأ اللعب ←
+              </span>
+            </div>
+          </Link>
+        </section>
 
         <IslamicDivider />
 
