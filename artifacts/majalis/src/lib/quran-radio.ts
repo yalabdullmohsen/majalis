@@ -29,6 +29,7 @@ export const RADIO_STATIONS: RadioStation[] = [
   { id: "ghamdi", reciterName: "سعد الغامدي", readingType: "مرتل", streamUrl: "https://qurango.net/radio/saad_alghamdi" },
   { id: "muaiqly", reciterName: "ماهر المعيقلي", readingType: "مرتل", streamUrl: "https://qurango.net/radio/maher_almuaiqly" },
   { id: "qatami", reciterName: "ناصر القطامي", readingType: "مرتل", streamUrl: "https://qurango.net/radio/nasser_alqatami" },
+  { id: "shuraim", reciterName: "سعود الشريم", readingType: "مرتل", streamUrl: "https://qurango.net/radio/saud_alshuraim" },
 ];
 
 export const LIVE_CHANNELS: LiveChannel[] = [
