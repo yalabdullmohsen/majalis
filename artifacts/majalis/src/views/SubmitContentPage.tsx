@@ -3,23 +3,16 @@
 import { useState, type FormEvent } from "react";
 import { Link } from "wouter";
 
-const SECTIONS = ["القرآن", "السيرة", "الفقه", "الأنبياء", "الصحابة", "العقيدة", "الحديث"] as const;
-const LEVELS = [
-  { value: "beginner", label: "مبتدئ (200 نقطة)" },
-  { value: "intermediate", label: "متوسط (400 نقطة)" },
-  { value: "advanced", label: "متقدم (600 نقطة)" },
-] as const;
+const CONTENT_TYPES = ["درس", "فائدة", "معلومة", "سؤال لعبة", "فكرة"] as const;
+type ContentType = (typeof CONTENT_TYPES)[number];
 
-type FormType = "lesson" | "question";
 type Status = "idle" | "loading" | "success" | "error";
 
 export default function SubmitContentPage() {
-  const [formType, setFormType] = useState<FormType>("lesson");
+  const [contentType, setContentType] = useState<ContentType>("درس");
   const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+  const [details, setDetails] = useState("");
   const [author, setAuthor] = useState("");
-  const [section, setSection] = useState<string>(SECTIONS[0]);
-  const [level, setLevel] = useState<string>("intermediate");
   const [status, setStatus] = useState<Status>("idle");
   const [message, setMessage] = useState("");
 
@@ -28,21 +21,18 @@ export default function SubmitContentPage() {
     setStatus("loading");
     setMessage("");
 
-    const body: Record<string, unknown> = { type: formType, title, content, author };
-    if (formType === "question") body.meta = { section, level };
-
     try {
       const res = await fetch("/api/submissions", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
+        body: JSON.stringify({ type: contentType, title, content: details, author }),
       });
       const json = await res.json();
       if (json.ok) {
         setStatus("success");
         setMessage(json.message || "شكراً! ينتظر موافقة الأدمن.");
         setTitle("");
-        setContent("");
+        setDetails("");
         setAuthor("");
       } else {
         setStatus("error");
@@ -55,17 +45,7 @@ export default function SubmitContentPage() {
   };
 
   return (
-    <div
-      style={{
-        maxWidth: 600,
-        margin: "2rem auto",
-        padding: "1.5rem",
-        background: "#fff",
-        borderRadius: "0.75rem",
-        boxShadow: "0 2px 12px rgba(0,0,0,.08)",
-        direction: "rtl",
-      }}
-    >
+    <div style={{ maxWidth: 600, margin: "2rem auto", padding: "1.5rem", background: "#fff", borderRadius: "0.75rem", boxShadow: "0 2px 12px rgba(0,0,0,.08)", direction: "rtl" }}>
       <div style={{ marginBottom: "1.25rem" }}>
         <Link href="/" style={{ color: "#6b7280", fontSize: "0.85rem", textDecoration: "none" }}>
           ← الرئيسية
@@ -80,111 +60,35 @@ export default function SubmitContentPage() {
       </p>
 
       {status === "success" && (
-        <div
-          role="status"
-          style={{
-            padding: "1rem",
-            background: "#f0fdf4",
-            border: "1px solid #86efac",
-            borderRadius: "0.5rem",
-            color: "#166534",
-            marginBottom: "1.25rem",
-            fontWeight: 600,
-          }}
-        >
+        <div role="status" style={{ padding: "1rem", background: "#f0fdf4", border: "1px solid #86efac", borderRadius: "0.5rem", color: "#166534", marginBottom: "1.25rem", fontWeight: 600 }}>
           {message}
         </div>
       )}
 
       {status === "error" && (
-        <div
-          role="alert"
-          style={{
-            padding: "1rem",
-            background: "#fef2f2",
-            border: "1px solid #fca5a5",
-            borderRadius: "0.5rem",
-            color: "#991b1b",
-            marginBottom: "1.25rem",
-          }}
-        >
+        <div role="alert" style={{ padding: "1rem", background: "#fef2f2", border: "1px solid #fca5a5", borderRadius: "0.5rem", color: "#991b1b", marginBottom: "1.25rem" }}>
           {message}
         </div>
       )}
 
       <form onSubmit={handleSubmit}>
-        {/* Type toggle */}
-        <fieldset style={{ border: "none", padding: 0, marginBottom: "1.25rem" }}>
-          <legend style={{ fontWeight: 600, marginBottom: "0.5rem", fontSize: "0.9rem", color: "#374151" }}>
-            نوع المحتوى
-          </legend>
-          <div style={{ display: "flex", gap: "0.75rem" }}>
-            {(["lesson", "question"] as FormType[]).map((t) => (
-              <label
-                key={t}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.4rem",
-                  cursor: "pointer",
-                  padding: "0.5rem 1rem",
-                  borderRadius: "0.4rem",
-                  border: `2px solid ${formType === t ? "#C9A84C" : "#e5e7eb"}`,
-                  background: formType === t ? "#fffbeb" : "#fff",
-                  fontWeight: formType === t ? 600 : 400,
-                  fontSize: "0.9rem",
-                  color: "#0D1B2A",
-                  transition: "border-color .15s",
-                }}
-              >
-                <input
-                  type="radio"
-                  name="type"
-                  value={t}
-                  checked={formType === t}
-                  onChange={() => setFormType(t)}
-                  style={{ accentColor: "#C9A84C" }}
-                />
-                {t === "lesson" ? "درس" : "سؤال للعبة"}
-              </label>
+        <label style={labelStyle}>
+          نوع المحتوى
+          <select
+            name="content-type"
+            value={contentType}
+            onChange={(e) => setContentType(e.target.value as ContentType)}
+            required
+            style={inputStyle}
+          >
+            {CONTENT_TYPES.map((t) => (
+              <option key={t} value={t}>{t}</option>
             ))}
-          </div>
-        </fieldset>
+          </select>
+        </label>
 
-        {/* Question-specific fields */}
-        {formType === "question" && (
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1rem" }}>
-            <label style={labelStyle}>
-              القسم
-              <select
-                value={section}
-                onChange={(e) => setSection(e.target.value)}
-                required
-                style={inputStyle}
-              >
-                {SECTIONS.map((s) => (
-                  <option key={s} value={s}>{s}</option>
-                ))}
-              </select>
-            </label>
-            <label style={labelStyle}>
-              المستوى
-              <select
-                value={level}
-                onChange={(e) => setLevel(e.target.value)}
-                required
-                style={inputStyle}
-              >
-                {LEVELS.map((l) => (
-                  <option key={l.value} value={l.value}>{l.label}</option>
-                ))}
-              </select>
-            </label>
-          </div>
-        )}
-
-        <label style={{ ...labelStyle, display: "flex", flexDirection: "column", marginBottom: "1rem" }}>
-          {formType === "lesson" ? "عنوان الدرس" : "نص السؤال"}
+        <label style={{ ...labelStyle, marginTop: "1rem" }}>
+          عنوان الموضوع
           <input
             type="text"
             value={title}
@@ -192,26 +96,26 @@ export default function SubmitContentPage() {
             required
             minLength={3}
             maxLength={500}
-            placeholder={formType === "lesson" ? "عنوان الدرس أو الموضوع" : "اكتب السؤال كاملاً"}
+            placeholder="اكتب عنواناً مختصراً للموضوع"
             style={inputStyle}
           />
         </label>
 
-        <label style={{ ...labelStyle, display: "flex", flexDirection: "column", marginBottom: "1rem" }}>
-          {formType === "lesson" ? "محتوى الدرس" : "الإجابة الصحيحة"}
+        <label style={{ ...labelStyle, marginTop: "1rem" }}>
+          التفاصيل
           <textarea
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
+            value={details}
+            onChange={(e) => setDetails(e.target.value)}
             required
             minLength={3}
             maxLength={8000}
-            rows={formType === "lesson" ? 6 : 3}
-            placeholder={formType === "lesson" ? "اكتب محتوى الدرس هنا..." : "اكتب الإجابة الصحيحة"}
+            rows={6}
+            placeholder="اكتب التفاصيل هنا..."
             style={{ ...inputStyle, resize: "vertical" }}
           />
         </label>
 
-        <label style={{ ...labelStyle, display: "flex", flexDirection: "column", marginBottom: "1.5rem" }}>
+        <label style={{ ...labelStyle, marginTop: "1rem", marginBottom: "1.5rem" }}>
           اسمك (اختياري)
           <input
             type="text"
@@ -226,18 +130,7 @@ export default function SubmitContentPage() {
         <button
           type="submit"
           disabled={status === "loading"}
-          style={{
-            width: "100%",
-            padding: "0.75rem",
-            background: status === "loading" ? "#9ca3af" : "#C9A84C",
-            color: "#fff",
-            border: "none",
-            borderRadius: "0.5rem",
-            fontSize: "1rem",
-            fontWeight: 700,
-            cursor: status === "loading" ? "not-allowed" : "pointer",
-            fontFamily: "inherit",
-          }}
+          style={{ width: "100%", padding: "0.75rem", background: status === "loading" ? "#9ca3af" : "#C9A84C", color: "#fff", border: "none", borderRadius: "0.5rem", fontSize: "1rem", fontWeight: 700, cursor: status === "loading" ? "not-allowed" : "pointer", fontFamily: "inherit" }}
         >
           {status === "loading" ? "جارٍ الإرسال..." : "إرسال المقترح"}
         </button>
@@ -247,10 +140,13 @@ export default function SubmitContentPage() {
 }
 
 const labelStyle: React.CSSProperties = {
+  display: "flex",
+  flexDirection: "column",
   fontWeight: 600,
   fontSize: "0.875rem",
   color: "#374151",
   gap: "0.4rem",
+  marginBottom: "0",
 };
 
 const inputStyle: React.CSSProperties = {
