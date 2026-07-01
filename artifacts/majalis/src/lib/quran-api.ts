@@ -305,13 +305,15 @@ export async function fetchJuz(juzNumber: number, edition = "quran-uthmani"): Pr
 }
 
 // ─── Mushaf Page Images ────────────────────────────────────────────────────
-// Images from the Islamic Network CDN (open, free, public domain)
+// Source: King Fahad Quran Printing Complex (KFGQPC) — Hafs 'an 'Asim
+// Served via jsDelivr CDN (no rate limits, global edge cache)
+// Repository: github.com/QuranHub/quran-pages-images (kfgqpc/hafs-wasat)
 
-const MUSHAF_PAGE_CDN = "https://cdn.islamic.network/quran/images/high-resolution";
+const MUSHAF_PAGE_CDN = "https://cdn.jsdelivr.net/gh/QuranHub/quran-pages-images@main/kfgqpc/hafs-wasat";
 
 export function getMushafPageUrl(page: number): string {
   const p = Math.max(1, Math.min(604, page));
-  return `${MUSHAF_PAGE_CDN}/page${String(p).padStart(3, "0")}.png`;
+  return `${MUSHAF_PAGE_CDN}/${p}.jpg`;
 }
 
 export async function fetchAyahsOnPage(page: number, edition = "quran-uthmani"): Promise<{ surahNumber: number; ayahNumber: number }[]> {

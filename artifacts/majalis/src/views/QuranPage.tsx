@@ -60,6 +60,7 @@ function PageView() {
   const [page, setPage] = useState(() => ls<number>(PAGE_KEY, 1));
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
+  const [retryCount, setRetryCount] = useState(0);
 
   const url = getMushafPageUrl(page);
 
@@ -121,13 +122,13 @@ function PageView() {
         {error && (
           <div style={{ padding: "3rem 2rem", color: "#8B1A1A" }}>
             <p>تعذر تحميل الصورة.</p>
-            <button type="button" onClick={() => setError(false)} style={{ ...primaryBtnS, marginTop: "0.5rem" }}>
+            <button type="button" onClick={() => { setError(false); setLoaded(false); setRetryCount(c => c + 1); }} style={{ ...primaryBtnS, marginTop: "0.5rem" }}>
               إعادة المحاولة
             </button>
           </div>
         )}
         <img
-          key={url}
+          key={`${url}-${retryCount}`}
           src={url}
           alt={`صفحة ${page} من المصحف الشريف`}
           onLoad={() => setLoaded(true)}
