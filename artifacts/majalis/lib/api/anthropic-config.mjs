@@ -1,6 +1,6 @@
 export const ANTHROPIC_VERSION = "2023-06-01";
-export const ASSISTANT_MODEL = "claude-haiku-4-5";
-export const TEST_MODEL = "claude-haiku-4-5";
+export const ASSISTANT_MODEL = "claude-haiku-4-5-20251001";
+export const TEST_MODEL = "claude-haiku-4-5-20251001";
 
 export function readAnthropicApiKey() {
   return (process.env.ANTHROPIC_API_KEY || "").trim();

@@ -20,7 +20,7 @@ export const maxDuration = 30;
 
 const ANTHROPIC_MESSAGES_URL = "https://api.anthropic.com/v1/messages";
 const ANTHROPIC_VERSION = "2023-06-01";
-const ASSISTANT_MODEL = "claude-haiku-4-5";
+const ASSISTANT_MODEL = "claude-haiku-4-5-20251001";
 
 const UNAVAILABLE_MESSAGE = "المساعد العلمي غير متاح حالياً. نعمل على تفعيله قريبًا.";
 const FAILURE_MESSAGE = "تعذر تشغيل المساعد الآن، حاول لاحقًا.";
@@ -160,12 +160,6 @@ async function handleAssistantRequest(req, res) {
     return;
   }
 
-  if (!hasKey) {
-    console.error("[assistant] Service unavailable: ANTHROPIC_API_KEY not configured");
-    sendJson(res, 200, fallbackPayload(UNAVAILABLE_MESSAGE));
-    return;
-  }
-
   const body = await parseBody(req);
   if (body === null) {
     sendJson(res, 400, { ok: false, message: "اكتب سؤالك أولًا." });
@@ -178,6 +172,7 @@ async function handleAssistantRequest(req, res) {
     return;
   }
 
+  // Scholar redirect — no Anthropic needed
   const safetyClassification = classifyIslamicQuery(userMessage);
   const scholarRedirect = buildScholarRedirectAnswer(safetyClassification);
   if (scholarRedirect) {
@@ -191,6 +186,7 @@ async function handleAssistantRequest(req, res) {
     return;
   }
 
+  // Founder questions — no Anthropic needed
   const founderAnswer = resolveFounderQuestion(userMessage);
   if (founderAnswer) {
     sendJson(res, 200, successPayload(founderAnswer, {
@@ -204,11 +200,12 @@ async function handleAssistantRequest(req, res) {
     looksLikeIslamicKnowledgeQuery(userMessage) ||
     shouldBlockUnsourcedIslamicFallback(userMessage);
 
+  // Islamic queries use the reasoning engine — no Anthropic key required
   if (isIslamicQuery) {
     try {
       const grounded = await runReasoningQuery({
         query: userMessage,
-        synthesize: true,
+        synthesize: hasKey, // only synthesize with LLM if key is present
         expandGraph: true,
         limit: 20,
       });
@@ -247,6 +244,13 @@ async function handleAssistantRequest(req, res) {
     return;
   }
 
+  // Non-Islamic general queries require Anthropic
+  if (!hasKey) {
+    console.error("[assistant] ANTHROPIC_API_KEY not configured for general query");
+    sendJson(res, 200, fallbackPayload(UNAVAILABLE_MESSAGE));
+    return;
+  }
+
   try {
     const answer = await callAnthropic(userMessage);
 
@@ -264,7 +268,7 @@ async function handleAssistantRequest(req, res) {
       grounded: false,
     }));
   } catch (error) {
-    console.error("[assistant] Anthropic API failed:", error);
+    console.error("[assistant] Anthropic API failed:", error?.message || error);
     sendJson(res, 200, fallbackPayload(FAILURE_MESSAGE));
   }
 }
