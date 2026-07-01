@@ -174,9 +174,6 @@ export default function SettingsPage() {
           </select>
         </label>
         <ToggleRow label={t("settings_ayah_numbers")} checked={quranPrefs.showAyahNumbers} onChange={(v) => setQuranPref("showAyahNumbers", v)} />
-        <ToggleRow label={t("settings_waqf_marks")} checked={quranPrefs.showWaqf} onChange={(v) => setQuranPref("showWaqf", v)} />
-        <ToggleRow label={t("settings_reading_mode")} checked={quranPrefs.readingMode} onChange={(v) => setQuranPref("readingMode", v)} />
-        <ToggleRow label={t("settings_hide_tashkeel")} checked={quranPrefs.hideTashkeel} onChange={(v) => setQuranPref("hideTashkeel", v)} />
         <ToggleRow label={t("settings_night_mode")} checked={quranPrefs.nightMode} onChange={(v) => setQuranPref("nightMode", v)} />
         <div className="settings-actions">
           <button type="button" className="ds-btn ds-btn--ghost" onClick={() => bumpFont(2)}>{t("settings_quran_font_up")}</button>
