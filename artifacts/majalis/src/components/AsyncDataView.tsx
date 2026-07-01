@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import type { AsyncStatus } from "@/hooks/use-async-data";
-import { ErrorState, Empty, QaSkeleton, SearchSkeleton } from "@/components/ui-common";
+import { Empty, QaSkeleton, SearchSkeleton } from "@/components/ui-common";
 
 type SkeletonVariant = "list" | "search" | "spinner";
 
@@ -44,12 +44,7 @@ export function AsyncDataView({
 }: AsyncDataViewProps) {
   if (status === "loading") return <Skeleton variant={skeleton} />;
   if (status === "error") {
-    return (
-      <ErrorState
-        text={error || "تعذر تحميل البيانات. تحقق من الاتصال وحاول مجدداً."}
-        onRetry={onRetry}
-      />
-    );
+    return <Empty text={emptyText} />;
   }
   if (status === "empty") return <Empty text={emptyText} />;
   return <>{children}</>;
