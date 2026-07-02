@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 /**
+import "dotenv/config";
  * Run full platform self-bootstrap locally or in CI.
  * Requires DATABASE_URL + SUPABASE_SERVICE_ROLE_KEY + VITE_SUPABASE_*.
  */

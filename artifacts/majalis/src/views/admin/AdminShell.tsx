@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import { Link, useLocation } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { C } from "@/lib/theme";
@@ -34,10 +34,14 @@ export type AdminSection =
   | "open-platform"
   | "governance"
   | "smart-cms"
-  | "submissions";
+  | "submissions"
+  | "quiz"
+  | "knowledge-graph"
+  | "universities";
 
 export const ADMIN_NAV: { key: AdminSection; label: string }[] = [
-  { key: "dashboard", label: "لوحة التحكم" },
+  { key: "dashboard",    label: "لوحة التحكم" },
+  { key: "universities", label: "دليل الجامعات" },
   { key: "submissions", label: "مقترحات المحتوى" },
   { key: "smart-cms", label: "CMS الذكي" },
   { key: "aggregator", label: "محرك التجميع" },
@@ -52,6 +56,8 @@ export const ADMIN_NAV: { key: AdminSection; label: string }[] = [
   { key: "islamic-intelligence", label: "الاستخبارات العلمية" },
   { key: "open-platform", label: "Open Platform" },
   { key: "governance", label: "الحوكمة المؤسسية" },
+  { key: "knowledge-graph", label: "الرسم البياني المعرفي" },
+  { key: "quiz", label: "أسئلة المسابقة" },
   { key: "lessons", label: "الدروس" },
   { key: "sheikhs", label: "المشايخ" },
   { key: "library", label: "المكتبة" },
@@ -130,15 +136,20 @@ export function AdminShell({ section, onSectionChange, children }: AdminShellPro
   const [flash, setFlash] = useState<Flash>(null);
   const { logout, user } = useAuth();
   const [, navigate] = useLocation();
+  const flashTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => () => { if (flashTimerRef.current) clearTimeout(flashTimerRef.current); }, []);
 
   const showSuccess = useCallback((message: string) => {
+    if (flashTimerRef.current) clearTimeout(flashTimerRef.current);
     setFlash({ type: "success", message });
-    window.setTimeout(() => setFlash(null), 5000);
+    flashTimerRef.current = setTimeout(() => setFlash(null), 5000);
   }, []);
 
   const showError = useCallback((message: string) => {
+    if (flashTimerRef.current) clearTimeout(flashTimerRef.current);
     setFlash({ type: "error", message });
-    window.setTimeout(() => setFlash(null), 7000);
+    flashTimerRef.current = setTimeout(() => setFlash(null), 7000);
   }, []);
 
   const clearFlash = useCallback(() => setFlash(null), []);

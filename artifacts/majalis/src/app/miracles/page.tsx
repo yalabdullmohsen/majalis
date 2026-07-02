@@ -27,7 +27,7 @@ export default async function MiraclesPage() {
       <section className="page-shell" aria-label="فهرس الإعجاز العلمي">
         <h1 className="home-section-title">الإعجاز العلمي</h1>
         <p className="seo-listing-intro">
-          {items.length.toLocaleString("ar-EG")} مقالة موثقة.
+          مقالات موثقة تربط الاكتشافات العلمية بالقرآن والسنة.
         </p>
         <div className="seo-listing-links">
           {items.slice(0, 10).map((item) => (

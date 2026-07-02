@@ -10,6 +10,14 @@ import { AdminModal, Field, FieldRow, inputSt, selectSt, textareaSt } from "./Ad
 import { BulkImport } from "./BulkImport";
 
 const CATEGORIES = ["تفسير", "فقه", "عقيدة", "حديث", "سيرة", "تجويد", "أخرى"];
+
+// كلمات تدل على موضوع/عنوان وليس اسم شيخ
+const TOPIC_HINT_RE = /^(فضل|حكم|أحكام|شرح|تفسير|أصول|أحاديث|السيرة|الفقه|العقيدة|كتاب|موضوع|بحث|أهمية|منهج|آداب|مسائل|فوائد|دروس|حقوق|واجبات|أساسيات)/u;
+
+function looksLikeTopic(name: string): boolean {
+  if (!name.trim()) return false;
+  return TOPIC_HINT_RE.test(name.trim());
+}
 const AUDIENCE = ["الكل", "رجال", "نساء", "أطفال"];
 const DELIVERY = ["حضور فقط", "بث مباشر", "كلاهما"];
 const STATUSES: Record<string, string> = { approved: "معتمد", pending: "معلّق", rejected: "مرفوض" };
@@ -211,7 +219,16 @@ export function LessonsSection() {
                 return (
                   <tr key={item.id} style={{ borderBottom: `1px solid ${C.line}` }}>
                     <td style={{ padding: "0.625rem 0.75rem", color: C.ink, fontWeight: 600, maxWidth: "220px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{item.title}</td>
-                    <td style={{ padding: "0.625rem 0.75rem", color: C.inkSoft, whiteSpace: "nowrap" }}>{item.sheikhs?.name || "—"}</td>
+                    <td style={{ padding: "0.625rem 0.75rem", color: C.inkSoft, whiteSpace: "nowrap" }}>
+                      {item.sheikhs?.name || (item.speaker_name ? (
+                        <span>
+                          {item.speaker_name}
+                          {looksLikeTopic(item.speaker_name) && (
+                            <span title="يبدو أن هذا موضوع وليس اسم شيخ" style={{ marginRight: "0.3rem", cursor: "help" }}>⚠️</span>
+                          )}
+                        </span>
+                      ) : "—")}
+                    </td>
                     <td style={{ padding: "0.625rem 0.75rem", color: C.inkSoft }}>{item.category || "—"}</td>
                     <td style={{ padding: "0.625rem 0.75rem", color: C.inkSoft }}>{item.city || "—"}</td>
                     <td style={{ padding: "0.625rem 0.75rem", color: C.inkSoft, whiteSpace: "nowrap" }}>{item.delivery || "—"}</td>
@@ -267,7 +284,12 @@ export function LessonsSection() {
             <input style={inputSt} value={form.region || ""} onChange={e => set("region", e.target.value)} placeholder="مثال: الصديق" />
           </Field>
           <Field label="اسم الشيخ (إن لم يُربط بحساب)">
-            <input style={inputSt} value={form.speaker_name || ""} onChange={e => set("speaker_name", e.target.value)} placeholder="اسم الشيخ" />
+            <input style={inputSt} value={form.speaker_name || ""} onChange={e => set("speaker_name", e.target.value)} placeholder="مثال: عبدالله الأنصاري" />
+            {looksLikeTopic(form.speaker_name) && (
+              <div style={{ marginTop: "0.3rem", padding: "0.35rem 0.6rem", borderRadius: "0.35rem", background: "#FEF3C7", color: "#92400E", fontSize: "0.75rem", fontWeight: 600 }}>
+                ⚠️ يبدو أن هذا موضوع وليس اسم شيخ. يُرجى التأكد من إدخال الاسم الصحيح.
+              </div>
+            )}
           </Field>
         </FieldRow>
         <FieldRow>

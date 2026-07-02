@@ -27,7 +27,7 @@ export default async function LibraryPage() {
       <section className="page-shell" aria-label="فهرس المكتبة">
         <h1 className="home-section-title">المكتبة العلمية</h1>
         <p className="seo-listing-intro">
-          {items.length.toLocaleString("ar-EG")} كتابًا علميًا — حديث، تفسير، عقيدة، فقه، وسيرة.
+          كتب أساسية في الحديث والتفسير والعقيدة والفقه والسيرة — مرتبة وموثقة.
         </p>
         <div className="seo-listing-links">
           {items.map((item) => (

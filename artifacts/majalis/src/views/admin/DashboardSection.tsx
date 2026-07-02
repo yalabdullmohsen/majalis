@@ -61,6 +61,11 @@ export function DashboardSection() {
     { label: "الكتب", value: stats.totalBooks, tone: C.brassDeep },
     { label: "الفوائد", value: stats.totalBenefits, tone: C.emeraldDeep },
     { label: "الأسئلة", value: stats.totalQA, tone: C.emeraldDeep },
+    { label: "الأحاديث", value: stats.totalHadith, tone: C.brassDeep },
+    { label: "القصص", value: stats.totalStories, tone: C.emeraldDeep },
+    { label: "الإعجاز العلمي", value: stats.totalMiracles, tone: "#0369a1" },
+    { label: "الأحكام", value: stats.totalRulings, tone: "#7c3aed" },
+    { label: "قرارات مجلس الفقه", value: stats.totalFiqhItems, tone: "#c2410c" },
     { label: "بلاغات معلّقة", value: stats.pendingReports, tone: stats.pendingReports ? "#dc2626" : C.inkSoft },
     { label: "التفريغات", value: stats.totalTranscriptions, tone: "#0f766e" },
   ];

@@ -59,29 +59,6 @@ function monthStartKey() {
   return new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Kuwait" }).format(d);
 }
 
-export function computeStreakDays(items: TasbeehWird[]): number {
-  if (!items.length) return 0;
-  const today = todayKey();
-  const allDates = new Set<string>();
-  for (const wird of items) {
-    for (const [date, n] of Object.entries(wird.dailyHistory || {})) {
-      if (n > 0) allDates.add(date);
-    }
-  }
-  let streak = 0;
-  const cursor = new Date();
-  const fmt = (d: Date) => new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Kuwait" }).format(d);
-  if (!allDates.has(today)) {
-    cursor.setDate(cursor.getDate() - 1);
-    if (!allDates.has(fmt(cursor))) return 0;
-  }
-  while (allDates.has(fmt(cursor))) {
-    streak++;
-    cursor.setDate(cursor.getDate() - 1);
-  }
-  return streak;
-}
-
 export function computeTasbeehStats(wird: TasbeehWird): TasbeehStats {
   const today = todayKey();
   const weekStart = weekStartKey();

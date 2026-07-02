@@ -1,6 +1,7 @@
 "use client";
 
 import { Link } from "wouter";
+import { useAuth } from "@/components/AuthProvider";
 import { PageHeader, Empty } from "@/components/ui-common";
 
 const OFFICIAL_CHANNELS: {
@@ -37,6 +38,7 @@ export default function SheikhsPageClient({
 }: {
   sheikhs: any[];
 }) {
+  const { isAdmin } = useAuth();
   return (
     <div className="page-shell ds-page">
       <PageHeader
@@ -114,7 +116,7 @@ export default function SheikhsPageClient({
             مشايخ المنصة
           </h2>
           <p className="seo-listing-intro">
-            {sheikhs.length.toLocaleString("ar-EG")} شيخ وعالم معتمد — اختر اسماً لعرض السيرة والدروس المرتبطة.
+            {isAdmin ? `${sheikhs.length.toLocaleString("ar-EG")} شيخ وعالم معتمد — ` : ""}اختر اسماً لعرض السيرة والدروس المرتبطة.
           </p>
           <div className="page-card-grid">
             {sheikhs.map((sheikh) => (

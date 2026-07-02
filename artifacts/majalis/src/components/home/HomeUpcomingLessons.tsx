@@ -19,15 +19,6 @@ function isCourse(lesson: KuwaitLessonRecord) {
   return lesson.isCourse || lesson.activityType === "دورة";
 }
 
-function pickUpcomingLessons(items: KuwaitLessonRecord[], tab: HomeTab) {
-  const filtered = items.filter((lesson) => {
-    if (isCourse(lesson)) return false;
-    if (tab === "men") return !lesson.hasWomenSection;
-    if (tab === "women") return lesson.hasWomenSection;
-    return true;
-  });
-  return sortKuwaitLessons(filtered).slice(0, 4);
-}
 
 export function HomeUpcomingLessons({
   initialLessons,

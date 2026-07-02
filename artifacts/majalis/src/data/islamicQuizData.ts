@@ -356,8 +356,10 @@ export function pickQuestion(
   points: PointValue,
   usedIds: Set<string>,
   pool: Record<string, CategoryQuestions> = ALL_QUESTIONS,
+  persistedUsedIds: Set<string> = new Set(),
 ): QuizQuestion | null {
-  const available = (pool[categoryId]?.[points] ?? []).filter((q) => !usedIds.has(q.id) && !q.pending);
+  const allUsed = persistedUsedIds.size > 0 ? new Set([...usedIds, ...persistedUsedIds]) : usedIds;
+  const available = (pool[categoryId]?.[points] ?? []).filter((q) => !allUsed.has(q.id));
   if (available.length === 0) return null;
   return available[Math.floor(Math.random() * available.length)];
 }
@@ -385,8 +387,22 @@ const LEVEL_TO_POINTS: Record<string, PointValue> = {
 };
 
 /** Merges Supabase rows into a copy of ALL_QUESTIONS. Falls back silently to local data on empty input. */
+/** Supabase row — supports both new columns (answer/level) and legacy (correct_answer/difficulty). */
+type SupabaseQuizRow = {
+  id?: string | null;
+  section?: string | null;
+  category?: string | null;
+  level?: string | null;
+  difficulty?: string | null;   // legacy column
+  question: string;
+  answer?: string | null;
+  correct_answer?: string | null; // legacy column
+  hint?: string | null;
+  is_used?: boolean | null;
+};
+
 export function mergeSupabaseQuestions(
-  rows: Array<{ id?: string | null; section: string; level: string; question: string; answer: string }>,
+  rows: SupabaseQuizRow[],
 ): Record<string, CategoryQuestions> {
   const merged: Record<string, CategoryQuestions> = {};
   for (const [cat, levels] of Object.entries(ALL_QUESTIONS)) {
@@ -398,13 +414,21 @@ export function mergeSupabaseQuestions(
   );
 
   for (const row of rows) {
-    const catId = SECTION_TO_CATEGORY[row.section];
+    if (row.is_used) continue; // skip already-used questions from Supabase
+    // Resolve section: may come from section or category column
+    const sectionKey = (row.section || row.category || "").trim();
+    const catId = SECTION_TO_CATEGORY[sectionKey];
     if (!catId || !merged[catId]) continue;
-    const points = LEVEL_TO_POINTS[row.level] ?? 400;
-    const id = String(row.id ?? `sb_${row.section}_${row.question.slice(0, 20)}`);
+    // Resolve level: new column first, fall back to difficulty
+    const levelKey = (row.level || row.difficulty || "").trim();
+    const points = LEVEL_TO_POINTS[levelKey] ?? 400;
+    // Resolve answer: new column first, fall back to correct_answer
+    const answerText = (row.answer || row.correct_answer || "").trim();
+    if (!answerText) continue;
+    const id = String(row.id ?? `sb_${sectionKey}_${row.question.slice(0, 20)}`);
     if (existingIds.has(id)) continue;
     existingIds.add(id);
-    merged[catId][points].push({ id, q: row.question, a: row.answer, hint: "" });
+    merged[catId][points].push({ id, q: row.question, a: answerText, hint: row.hint || "" });
   }
 
   return merged;

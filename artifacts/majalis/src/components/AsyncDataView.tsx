@@ -36,8 +36,8 @@ function Skeleton({ variant }: { variant: SkeletonVariant }) {
 
 export function AsyncDataView({
   status,
-  error,
-  onRetry,
+  error: _error,
+  onRetry: _onRetry,
   emptyText = "لا توجد بيانات حالياً",
   skeleton = "list",
   children,

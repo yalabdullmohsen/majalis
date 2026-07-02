@@ -162,6 +162,14 @@
     {
       "path": "/api/cron/autonomous-platform-recovery",
       "schedule": "*/15 * * * *"
+    },
+    {
+      "path": "/api/cron/content-scoring",
+      "schedule": "0 1 * * *"
+    },
+    {
+      "path": "/api/cron/universities-review",
+      "schedule": "0 2 * * 1"
     }
   ],
   "rewrites": [

@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 /**
+import "dotenv/config";
  * Print the canonical Supabase Transaction Pooler DATABASE_URL for Vercel.
  * Usage: DATABASE_URL='postgresql://...' node scripts/print-pooler-database-url.mjs
  */

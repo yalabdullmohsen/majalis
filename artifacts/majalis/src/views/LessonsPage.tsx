@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState, useCallback } from "react";
 import { useLocation } from "wouter";
-import { PageHeader, ErrorState, Empty } from "@/components/ui-common";
+import { PageHeader } from "@/components/ui-common";
 import { PageLoadingGuard } from "@/components/PageLoadingGuard";
 import { useAuth } from "@/components/AuthProvider";
 import { UnifiedLessonCard } from "@/components/lessons/UnifiedLessonCard";
@@ -210,7 +210,7 @@ export default function LessonsPage({
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [myReg, setMyReg] = useState<string[]>([]);
   const [tab, setTab] = useTabFromUrl();
-  const { user, isLoggedIn } = useAuth() as any;
+  const { user, isLoggedIn, isAdmin } = useAuth() as any;
 
   useEffect(() => {
     if (initialActive) return;
@@ -406,7 +406,7 @@ export default function LessonsPage({
 
               <section className="lessons-v2-section">
                 <h2 className="lessons-v2-section__title">
-                  {filtered.length} {tab === "courses" ? "دورة" : tab === "women" ? "نشاط للنساء" : tab === "men" ? "درس رجالي" : "درس"}
+                  {isAdmin ? `${filtered.length} ` : ""}{tab === "courses" ? "دورة" : tab === "women" ? "نشاط للنساء" : tab === "men" ? "درس رجالي" : "درس"}
                 </h2>
                 {filtered.length === 0 ? (
                   <p className="lessons-empty-state">لا توجد {TAB_LABELS[tab]} مطابقة حاليًا.</p>

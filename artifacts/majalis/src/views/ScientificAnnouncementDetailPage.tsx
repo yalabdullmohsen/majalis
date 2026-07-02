@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
 import { Empty } from "@/components/ui-common";
 import {
@@ -34,6 +34,8 @@ export default function ScientificAnnouncementDetailPage({
   const item = getScientificAnnouncementById(params.id);
   const [copied, setCopied] = useState(false);
   const [shared, setShared] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(() => () => { if (timerRef.current) clearTimeout(timerRef.current); }, []);
 
   const shareText = item ? buildShareText(item) : "";
   const pageUrl =
@@ -46,7 +48,8 @@ export default function ScientificAnnouncementDetailPage({
     try {
       await navigator.clipboard.writeText(shareText);
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      if (timerRef.current) clearTimeout(timerRef.current);
+      timerRef.current = setTimeout(() => setCopied(false), 2000);
     } catch {
       alert("تعذّر النسخ — انسخ النص يدوياً.");
     }
@@ -62,7 +65,8 @@ export default function ScientificAnnouncementDetailPage({
           url: pageUrl,
         });
         setShared(true);
-        setTimeout(() => setShared(false), 2000);
+        if (timerRef.current) clearTimeout(timerRef.current);
+        timerRef.current = setTimeout(() => setShared(false), 2000);
         return;
       } catch {
         /* user cancelled or unsupported */

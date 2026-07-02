@@ -12,14 +12,19 @@ import { HomeDailyFaida } from "@/components/home/HomeDailyFaida";
 import { HomeDailyDhikr } from "@/components/home/HomeDailyDhikr";
 import { HomeDailyQuestion } from "@/components/home/HomeDailyQuestion";
 import { HomeDailyHadith } from "@/components/home/HomeDailyHadith";
-import { HomePrayerTimes } from "@/components/home/HomePrayerTimes";
 import { HomePrayerRanks } from "@/components/home/HomePrayerRanks";
+import { HomePrayerTimes } from "@/components/home/HomePrayerTimes";
 import { HomeFeaturedLibrary } from "@/components/home/HomeFeaturedLibrary";
 import { HomeLatestUpdates } from "@/components/home/HomeLatestUpdates";
 import { HomeMoreSections } from "@/components/home/HomeMoreSections";
+import { HomeTawheed } from "@/components/home/HomeTawheed";
+import { HomeLearningSeasonsWidget } from "@/components/home/HomeLearningSeasonsWidget";
+import { HomeRecommendations } from "@/components/home/HomeRecommendations";
 import { IslamicDivider } from "@/components/design/IslamicDivider";
 import { IslamicOrnament } from "@/components/design/IslamicOrnament";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
+import { HomeAdhanWidget } from "@/components/home/HomeAdhanWidget";
+import { HomeContinueReading } from "@/components/home/HomeContinueReading";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 
 const QUICK_LINKS = [
@@ -35,7 +40,18 @@ const QUICK_LINKS = [
   { href: "/assistant", label: "المساعد", meta: "علمي" },
   { href: "/calendar", label: "التقويم", meta: "دروس" },
   { href: "/adhkar", label: "الأذكار", meta: "يومي" },
+  { href: "/muezzins", label: "مكتبة المؤذنين", meta: "أذانات العالم" },
+  { href: "/upload", label: "ارفع أذانك", meta: "ساهم معنا" },
   { href: "/submit?type=lesson", label: "أضف درس", meta: "شارك علمك" },
+  { href: "/learning-plan", label: "خطة التعلّم", meta: "مسار شخصي" },
+  { href: "/flashcards", label: "البطاقات", meta: "مراجعة ذكية" },
+  { href: "/car-mode", label: "وضع السيارة", meta: "صوتيات أثناء القيادة" },
+  { href: "/mosque-mode", label: "وضع المسجد", meta: "وصول سريع" },
+  { href: "/study-room", label: "غرفة الدراسة", meta: "مؤقت Pomodoro" },
+  { href: "/family", label: "الوضع العائلي", meta: "تابع أبناءك" },
+  { href: "/vault", label: "المحفظة العلمية", meta: "محفوظاتك وملاحظاتك" },
+  { href: "/researcher", label: "ملف الباحث", meta: "سيرتك البحثية" },
+  { href: "/institutions", label: "دليل المؤسسات", meta: "مساجد وجامعات" },
 ];
 
 function SafeHomeSection({ name, children }: { name: string; children: React.ReactNode }) {
@@ -109,8 +125,28 @@ export default function HomePage({
 
         <IslamicDivider />
 
+        <SafeHomeSection name="ويدجت الأذان">
+          <HomeAdhanWidget />
+        </SafeHomeSection>
+
+        <IslamicDivider />
+
+        <SafeHomeSection name="تابع من حيث توقفت">
+          <HomeContinueReading />
+        </SafeHomeSection>
+
+        <SafeHomeSection name="توصيات مخصصة">
+          <HomeRecommendations />
+        </SafeHomeSection>
+
         <SafeHomeSection name="أحدث الدروس">
           <HomeUpcomingLessons initialLessons={initialFeaturedLessons} />
+        </SafeHomeSection>
+
+        <IslamicDivider />
+
+        <SafeHomeSection name="مواسم التعلّم">
+          <HomeLearningSeasonsWidget />
         </SafeHomeSection>
 
         <IslamicDivider />
@@ -219,6 +255,7 @@ export default function HomePage({
 
         <IslamicDivider />
 
+
         <SafeHomeSection name="المكتبة">
           <HomeFeaturedLibrary />
         </SafeHomeSection>
@@ -233,6 +270,12 @@ export default function HomePage({
 
         <SafeHomeSection name="عن المجلس العلمي">
           <HomeAboutSection />
+        </SafeHomeSection>
+
+        <IslamicDivider />
+
+        <SafeHomeSection name="التوحيد">
+          <HomeTawheed />
         </SafeHomeSection>
 
         <IslamicDivider />

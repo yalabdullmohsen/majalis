@@ -47,6 +47,13 @@ import aiAgentsAdminHandler from "../lib/api-handlers/admin/ai-agents.js";
 import aiAgentsCronHandler from "../lib/api-handlers/cron/ai-agents.js";
 import scholarlySearchHandler from "../lib/api-handlers/scholarly-search.js";
 import fiqhResearchAssistantHandler from "../lib/api-handlers/fiqh-research-assistant.js";
+import knowledgeGraphHandler from "../lib/api-handlers/knowledge-graph.js";
+import citationsHandler from "../lib/api-handlers/citations.js";
+import recommendationsHandler from "../lib/api-handlers/recommendations.js";
+import contentScoringHandler from "../lib/api-handlers/cron/content-scoring.js";
+import ragResearchHandler from "../lib/api-handlers/rag-research.js";
+import universitiesHandler from "../lib/api-handlers/universities.js";
+import universitiesReviewCron from "../lib/api-handlers/cron/universities-review.js";
 import { createRateLimiter } from "./rate-limit.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -108,6 +115,33 @@ app.options("/api/assistant", (_req, res) => {
 app.options("/api/transcribe", (_req, res) => {
   res.status(204).end();
 });
+
+// ── الباحث الشرعي (RAG) ────────────────────────────────────────────────────
+const ragRateLimit = createRateLimiter({ windowMs: 60_000, max: 15 });
+app.post("/api/rag/search",         express.json({ limit: "8kb" }),  ragRateLimit, runHandler(ragResearchHandler, "rag-search"));
+app.get("/api/rag/history",         runHandler(ragResearchHandler, "rag-history"));
+app.post("/api/rag/library/save",   express.json({ limit: "16kb" }), runHandler(ragResearchHandler, "rag-library-save"));
+app.get("/api/rag/library",         runHandler(ragResearchHandler, "rag-library"));
+app.delete("/api/rag/library/:id",  runHandler(ragResearchHandler, "rag-library-delete"));
+app.get("/api/rag/index/status",    runHandler(ragResearchHandler, "rag-index-status"));
+
+// ── دليل الجامعات الشرعية ──────────────────────────────────────────────────
+app.get("/api/universities/compare",         (req, res) => universitiesHandler(req, res, "compare"));
+app.get("/api/universities/:slug",           (req, res) => universitiesHandler(req, res, "detail"));
+app.get("/api/universities",                 (req, res) => universitiesHandler(req, res, "list"));
+app.post("/api/universities/compare",        express.json({ limit: "4kb" }),  (req, res) => universitiesHandler(req, res, "compare"));
+app.get("/api/admin/universities",           (req, res) => universitiesHandler(req, res, "admin-list"));
+app.post("/api/admin/universities",          express.json({ limit: "16kb" }), (req, res) => universitiesHandler(req, res, "admin-create"));
+app.put("/api/admin/universities/:id",       express.json({ limit: "16kb" }), (req, res) => universitiesHandler(req, res, "admin-update"));
+app.post("/api/admin/universities/:universityId/programs", express.json({ limit: "8kb" }), (req, res) => universitiesHandler(req, res, "admin-program-add"));
+app.put("/api/admin/programs/:id",           express.json({ limit: "8kb" }), (req, res) => universitiesHandler(req, res, "admin-program-update"));
+app.delete("/api/admin/programs/:id",        (req, res) => universitiesHandler(req, res, "admin-program-delete"));
+app.post("/api/admin/requirements/:programId", express.json({ limit: "16kb" }), (req, res) => universitiesHandler(req, res, "admin-requirements"));
+app.post("/api/admin/faqs/:universityId",    express.json({ limit: "4kb" }),  (req, res) => universitiesHandler(req, res, "admin-faq-add"));
+app.delete("/api/admin/faqs/:id",            (req, res) => universitiesHandler(req, res, "admin-faq-delete"));
+app.get("/api/admin/reminders",              (req, res) => universitiesHandler(req, res, "admin-reminders"));
+app.put("/api/admin/reminders/:id",          express.json({ limit: "4kb" }),  (req, res) => universitiesHandler(req, res, "admin-reminder-update"));
+app.get("/api/cron/universities-review",     (req, res) => universitiesReviewCron(req, res));
 
 app.get("/api/assistant/health", runHandler(assistantHealthHandler, "assistant-health"));
 app.get("/api/assistant", runHandler(assistantHandler, "assistant"));
@@ -214,6 +248,34 @@ app.get("/api/admin/auto-content", runHandler(autoContentAdminHandler, "auto-con
 app.post("/api/admin/auto-content", express.json({ limit: "16kb" }), runHandler(autoContentAdminHandler, "auto-content-admin"));
 app.get("/api/admin/auto-knowledge-engine", runHandler(autoKnowledgeAdminHandler, "auto-knowledge-admin"));
 app.post("/api/admin/auto-knowledge-engine", express.json({ limit: "32kb" }), runHandler(autoKnowledgeAdminHandler, "auto-knowledge-admin"));
+
+// ── Islamic Knowledge Graph ────────────────────────────────────────────────
+app.get("/api/knowledge-graph/node/:id/expand", runHandler(knowledgeGraphHandler, "knowledge-graph-expand"));
+app.get("/api/knowledge-graph/node/:id",        runHandler(knowledgeGraphHandler, "knowledge-graph-node"));
+app.get("/api/knowledge-graph/search",          runHandler(knowledgeGraphHandler, "knowledge-graph-search"));
+app.get("/api/knowledge-graph/nodes",           runHandler(knowledgeGraphHandler, "knowledge-graph-nodes"));
+app.get("/api/knowledge-graph",                 runHandler(knowledgeGraphHandler, "knowledge-graph"));
+app.post("/api/knowledge-graph/relationship",   express.json({ limit: "16kb" }), runHandler(knowledgeGraphHandler, "knowledge-graph-rel"));
+
+// ── Recommendations System ────────────────────────────────────────────────
+app.get("/api/recommendations/related",  runHandler(recommendationsHandler, "rec-related"));
+app.get("/api/recommendations/profile",  runHandler(recommendationsHandler, "rec-profile"));
+app.delete("/api/recommendations/profile", runHandler(recommendationsHandler, "rec-profile-delete"));
+app.post("/api/recommendations/track",   express.json({ limit: "4kb" }), runHandler(recommendationsHandler, "rec-track"));
+app.get("/api/recommendations",          runHandler(recommendationsHandler, "rec-home"));
+app.get("/api/cron/content-scoring",     runHandler(contentScoringHandler,   "content-scoring"));
+app.post("/api/cron/content-scoring",    runHandler(contentScoringHandler,   "content-scoring"));
+
+// ── Citations System ──────────────────────────────────────────────────────
+app.post("/api/citations/create",           express.json({ limit: "8kb" }), runHandler(citationsHandler, "citations-create"));
+app.get("/api/citations/format",            runHandler(citationsHandler, "citations-format"));
+app.get("/api/citations/:slug/qrcode",      runHandler(citationsHandler, "citations-qrcode"));
+app.get("/api/citations/:slug/image",       runHandler(citationsHandler, "citations-image"));
+app.post("/api/citations/:id/save",         express.json({ limit: "4kb" }), runHandler(citationsHandler, "citations-save"));
+app.get("/api/citations/:slug",             runHandler(citationsHandler, "citations-get"));
+app.get("/api/user/citations",              runHandler(citationsHandler, "citations-user-list"));
+app.post("/api/user/citations/folders",     express.json({ limit: "4kb" }), runHandler(citationsHandler, "citations-folders"));
+app.post("/api/user/citations/export",      express.json({ limit: "8kb" }), runHandler(citationsHandler, "citations-export"));
 
 app.get("/api/healthz", (_req, res) => {
   res.json({ ok: true, service: "majalis-web" });

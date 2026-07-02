@@ -26,6 +26,9 @@ export function useTasbeehCounter({ storageId, initialTarget, wird, onWirdChange
   const [pulse, setPulse] = useState(false);
   const [canUndo, setCanUndo] = useState(false);
   const undoStack = useRef<number[]>([]);
+  const pulseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => () => { if (pulseTimerRef.current) clearTimeout(pulseTimerRef.current); }, []);
 
   useEffect(() => {
     const saved = readEmbeddedCounter(storageId);
@@ -66,11 +69,12 @@ export function useTasbeehCounter({ storageId, initialTarget, wird, onWirdChange
           });
         }
 
-        setPulse(true);
-        window.setTimeout(() => setPulse(false), 180);
         hapticTick();
         return next;
       });
+      if (pulseTimerRef.current) clearTimeout(pulseTimerRef.current);
+      setPulse(true);
+      pulseTimerRef.current = setTimeout(() => setPulse(false), 180);
     },
     [persist, target, wird, onWirdChange],
   );

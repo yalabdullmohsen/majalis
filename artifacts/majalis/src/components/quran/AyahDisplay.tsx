@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { Ayah } from "@/lib/quran-api";
 import type { PlayerState } from "@/hooks/useAyahPlayer";
-import { useAyahChunks } from "@/hooks/useAyahChunks";
-import { copyAyahText, shareAyahAsImage } from "@/lib/share-ayah";
+import { copyAyahText } from "@/lib/share-ayah";
 
 type Props = {
   ayahs: Ayah[];
@@ -16,6 +15,8 @@ type Props = {
   onPlayAyah: (ayah: number) => void;
   onAyahClick: (ayah: number) => void;
 };
+
+const AYAHS_PER_PAGE = 15;
 
 const ARABIC_DIGITS = "٠١٢٣٤٥٦٧٨٩";
 function toArabic(n: number): string {
@@ -32,37 +33,68 @@ export function AyahDisplay({
   fontScale,
   showAyahNumbers,
   onPlayAyah,
-  onAyahClick,
 }: Props) {
-  const targetRef = useRef<HTMLSpanElement>(null);
-  const { visibleAyahs, hasMore, sentinelRef } = useAyahChunks(ayahs, targetAyah);
-  const [copiedAyah, setCopiedAyah] = useState<number | null>(null);
-  const [sharingAyah, setSharingAyah] = useState<number | null>(null);
+  const [page, setPage] = useState(0);
+  const [contextAyah, setContextAyah] = useState<Ayah | null>(null);
+  const [copied, setCopied] = useState(false);
+  const longPressTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const pressStartPos = useRef<{ x: number; y: number } | null>(null);
 
-  const handleCopy = async (ayah: Ayah) => {
-    const ok = await copyAyahText(ayah.text, surahName, ayah.numberInSurah);
-    if (ok) {
-      setCopiedAyah(ayah.numberInSurah);
-      setTimeout(() => setCopiedAyah(null), 1800);
-    }
-  };
+  // Reset page when surah changes
+  useEffect(() => { setPage(0); }, [surahNum]);
 
-  const handleShareImage = async (ayah: Ayah) => {
-    setSharingAyah(ayah.numberInSurah);
-    try {
-      await shareAyahAsImage({ text: ayah.text, surahName, ayahNum: ayah.numberInSurah, surahNum });
-    } finally {
-      setSharingAyah(null);
-    }
-  };
-
+  // Jump to the correct page when targetAyah changes
   useEffect(() => {
-    targetRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    if (targetAyah > 0) {
+      setPage(Math.floor((targetAyah - 1) / AYAHS_PER_PAGE));
+    }
   }, [targetAyah]);
 
-  if (ayahs.length === 0) return null;
-
+  const totalPages = Math.max(1, Math.ceil(ayahs.length / AYAHS_PER_PAGE));
+  const visibleAyahs = ayahs.slice(page * AYAHS_PER_PAGE, (page + 1) * AYAHS_PER_PAGE);
   const isSurahWithoutBismillah = surahNum === 1 || surahNum === 9;
+
+  function startPress(ayah: Ayah, e: React.PointerEvent) {
+    pressStartPos.current = { x: e.clientX, y: e.clientY };
+    longPressTimer.current = setTimeout(() => {
+      setContextAyah(ayah);
+    }, 520);
+  }
+
+  function endPress(e: React.PointerEvent) {
+    clearTimeout(longPressTimer.current);
+    // If finger moved significantly it was a scroll, not a press
+    if (pressStartPos.current) {
+      const dx = Math.abs(e.clientX - pressStartPos.current.x);
+      const dy = Math.abs(e.clientY - pressStartPos.current.y);
+      if (dx > 10 || dy > 10) {
+        pressStartPos.current = null;
+        return;
+      }
+    }
+    pressStartPos.current = null;
+  }
+
+  function cancelPress() {
+    clearTimeout(longPressTimer.current);
+    pressStartPos.current = null;
+  }
+
+  async function handleContextCopy() {
+    if (!contextAyah) return;
+    await copyAyahText(contextAyah.text, surahName, contextAyah.numberInSurah);
+    setCopied(true);
+    setTimeout(() => {
+      setCopied(false);
+      setContextAyah(null);
+    }, 1500);
+  }
+
+  function handleContextPlay() {
+    if (!contextAyah) return;
+    onPlayAyah(contextAyah.numberInSurah);
+    setContextAyah(null);
+  }
 
   return (
     <div
@@ -79,101 +111,119 @@ export function AyahDisplay({
           </p>
         )}
         <h2 className="qs-surah-header__title" lang="ar">{surahName}</h2>
+        <p className="qs-surah-header__hint">اضغط مطوّلاً على أي آية للاستماع أو النسخ</p>
       </header>
 
-      {/* ── Mushaf flowing text (chunked for performance) ── */}
+      {/* ── Clean Mushaf flowing text ── */}
       <div
-        className="qs-mushaf-body"
+        className="qs-mushaf-body qs-mushaf-clean"
         lang="ar"
         dir="rtl"
         aria-label={`نص سورة ${surahName}`}
       >
         {visibleAyahs.map((ayah) => {
-          const isTarget = ayah.numberInSurah === targetAyah;
           const isPlaying = ayah.numberInSurah === currentPlayingAyah;
-          const isLoading = isPlaying && playerState === "loading";
-
           return (
             <span
               key={ayah.numberInSurah}
               id={`ayah-${ayah.numberInSurah}`}
-              ref={isTarget ? targetRef : undefined}
               className={[
                 "qs-ayah-inline",
                 isPlaying ? "qs-ayah-inline--playing" : "",
-                isTarget && !isPlaying ? "qs-ayah-inline--target" : "",
               ].filter(Boolean).join(" ")}
+              onPointerDown={(e) => startPress(ayah, e)}
+              onPointerUp={endPress}
+              onPointerLeave={cancelPress}
+              onPointerCancel={cancelPress}
+              onContextMenu={(e) => e.preventDefault()}
             >
-              {/* Clickable ayah text */}
-              <span
-                className="qs-ayah-inline__text"
-                onClick={() => onAyahClick(ayah.numberInSurah)}
-                role="button"
-                tabIndex={0}
-                onKeyDown={(e) => e.key === "Enter" && onAyahClick(ayah.numberInSurah)}
-                aria-label={`الآية ${ayah.numberInSurah}`}
-              >
-                {ayah.text}
-              </span>
-
-              {/* Ornamental ayah number ﴿٣﴾ */}
+              <span className="qs-ayah-inline__text">{ayah.text}</span>
               {showAyahNumbers && (
-                <span className="qs-ayah-inline__num" aria-hidden="true">
+                <span className="qs-ayah-num" aria-hidden="true">
                   ﴿{toArabic(ayah.numberInSurah)}﴾
                 </span>
               )}
-
-              {/* Inline play button */}
-              <button
-                type="button"
-                className={`qs-ayah-inline__play${isPlaying ? " is-playing" : ""}`}
-                onClick={() => onPlayAyah(ayah.numberInSurah)}
-                aria-label={
-                  isPlaying && playerState === "playing"
-                    ? `إيقاف آية ${ayah.numberInSurah}`
-                    : `تشغيل آية ${ayah.numberInSurah}`
-                }
-                disabled={isLoading}
-                title={`تشغيل آية ${ayah.numberInSurah}`}
-              >
-                {isLoading ? "…" : isPlaying && playerState === "playing" ? "❚❚" : "▶"}
-              </button>
-
-              {/* Copy button */}
-              <button
-                type="button"
-                className="qs-ayah-inline__share"
-                onClick={() => handleCopy(ayah)}
-                aria-label={`نسخ آية ${ayah.numberInSurah}`}
-                title="نسخ الآية"
-              >
-                {copiedAyah === ayah.numberInSurah ? "✓" : "⎘"}
-              </button>
-
-              {/* Share as image button */}
-              <button
-                type="button"
-                className="qs-ayah-inline__share qs-ayah-inline__share--img"
-                onClick={() => handleShareImage(ayah)}
-                aria-label={`مشاركة آية ${ayah.numberInSurah} كصورة`}
-                title="مشاركة كصورة"
-                disabled={sharingAyah === ayah.numberInSurah}
-              >
-                {sharingAyah === ayah.numberInSurah ? "…" : "⬡"}
-              </button>
             </span>
           );
         })}
       </div>
 
-      {/* ── Infinite scroll sentinel ── */}
-      {hasMore && (
-        <div
-          ref={sentinelRef}
-          className="qs-load-sentinel"
-          aria-hidden="true"
-          style={{ height: 1, marginTop: "1rem" }}
-        />
+      {/* ── Page navigation ── */}
+      {totalPages > 1 && (
+        <nav className="qs-page-nav" aria-label="تنقل بين صفحات السورة">
+          <button
+            type="button"
+            className="qs-page-nav__btn"
+            onClick={() => setPage((p) => Math.max(0, p - 1))}
+            disabled={page === 0}
+            aria-label="الصفحة السابقة"
+          >
+            ‹ السابق
+          </button>
+          <span className="qs-page-nav__badge">
+            {page + 1} / {totalPages}
+          </span>
+          <button
+            type="button"
+            className="qs-page-nav__btn"
+            onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
+            disabled={page === totalPages - 1}
+            aria-label="الصفحة التالية"
+          >
+            التالي ›
+          </button>
+        </nav>
+      )}
+
+      {/* ── Now playing indicator ── */}
+      {currentPlayingAyah !== null && playerState !== "idle" && (
+        <div className="qs-now-playing" aria-live="polite" aria-atomic="true">
+          <span className={`qs-now-playing__dot${playerState === "playing" ? " qs-now-playing__dot--active" : ""}`} />
+          <span className="qs-now-playing__label">
+            {playerState === "loading" && "جاري تحميل الصوت…"}
+            {playerState === "playing" && `يُشغَّل الآية ${currentPlayingAyah}`}
+            {playerState === "paused" && `متوقف مؤقتاً — الآية ${currentPlayingAyah}`}
+            {playerState === "error" && "خطأ في تحميل الصوت"}
+          </span>
+        </div>
+      )}
+
+      {/* ── Long press context sheet ── */}
+      {contextAyah && (
+        <>
+          <div
+            className="qs-context-overlay"
+            onClick={() => setContextAyah(null)}
+            aria-hidden="true"
+          />
+          <div className="qs-context-sheet" role="dialog" aria-modal="true" aria-label="خيارات الآية">
+            <div className="qs-context-sheet__handle" aria-hidden="true" />
+            <p className="qs-context-sheet__ref">
+              سورة {surahName} — آية {contextAyah.numberInSurah}
+            </p>
+            <button
+              type="button"
+              className="qs-context-sheet__btn qs-context-sheet__btn--primary"
+              onClick={handleContextPlay}
+            >
+              <span aria-hidden="true">▶</span> استماع
+            </button>
+            <button
+              type="button"
+              className="qs-context-sheet__btn"
+              onClick={handleContextCopy}
+            >
+              <span aria-hidden="true">⎘</span> {copied ? "تم النسخ ✓" : "نسخ الآية"}
+            </button>
+            <button
+              type="button"
+              className="qs-context-sheet__btn qs-context-sheet__btn--close"
+              onClick={() => setContextAyah(null)}
+            >
+              إغلاق
+            </button>
+          </div>
+        </>
       )}
     </div>
   );

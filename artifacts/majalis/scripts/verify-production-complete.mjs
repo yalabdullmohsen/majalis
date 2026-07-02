@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 /**
+import "dotenv/config";
  * Unified Production Recovery verification — Release Gate.
  *
  * Usage:

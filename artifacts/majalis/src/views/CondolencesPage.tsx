@@ -9,12 +9,15 @@ import {
   defaultDeathAnnouncementForm,
   type DeathAnnouncementForm,
 } from "@/components/condolences/DeathAnnouncementCard";
+import { CondolenceBuilder } from "@/components/condolences/CondolenceBuilder";
 import {
   CONDOLENCE_TEMPLATES,
   EXPORT_SIZES,
   type CondolenceTemplateId,
 } from "@/lib/condolence-shared";
 import { getCondolenceDefaults, isCondolencesEnabled } from "@/lib/site-settings";
+
+type PageTab = "official" | "builder";
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
@@ -53,6 +56,7 @@ function GenderOption({
 export default function CondolencesPage() {
   const previewPanelRef = useRef<HTMLElement>(null);
   const exportRef = useRef<HTMLDivElement>(null);
+  const [pageTab, setPageTab] = useState<PageTab>("official");
   const [templateId, setTemplateId] = useState<CondolenceTemplateId>("official");
   const [officialForm, setOfficialForm] = useState<CondolenceForm>(() => getCondolenceDefaults());
   const [deathForm, setDeathForm] = useState<DeathAnnouncementForm>(defaultDeathAnnouncementForm);
@@ -123,6 +127,37 @@ export default function CondolencesPage() {
 
   return (
     <main dir="rtl" className="cond-page">
+      {/* ─── Page-level tab bar ─── */}
+      <div className="cond-page-tabs" style={{ display: "flex", gap: 8, padding: "0 1rem 1rem", maxWidth: 1200, margin: "0 auto" }}>
+        <button
+          type="button"
+          className={`cond-template-picker__btn${pageTab === "official" ? " cond-template-picker__btn--active" : ""}`}
+          onClick={() => setPageTab("official")}
+          style={{ flex: 1 }}
+        >
+          <strong>القوالب الجاهزة</strong>
+          <span>بطاقة تعزية رسمية وإعلان وفاة</span>
+        </button>
+        <button
+          type="button"
+          className={`cond-template-picker__btn${pageTab === "builder" ? " cond-template-picker__btn--active" : ""}`}
+          onClick={() => setPageTab("builder")}
+          style={{ flex: 1 }}
+        >
+          <strong>باني البطاقة المتقدم</strong>
+          <span>8 قوالب · 8 خطوط · صور وألوان</span>
+        </button>
+      </div>
+
+      {/* ─── Builder tab ─── */}
+      {pageTab === "builder" && (
+        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 1rem" }}>
+          <CondolenceBuilder />
+        </div>
+      )}
+
+      {/* ─── Official templates tab ─── */}
+      {pageTab === "official" && (
       <div className="cond-page-inner">
         <section className="ui-card cond-form-panel">
           <h1 className="cond-page-title">قوالب العزاء</h1>
@@ -304,14 +339,17 @@ export default function CondolencesPage() {
           )}
         </section>
       </div>
+      )} {/* end official tab */}
 
-      <div className="cond-bw-export-host" aria-hidden="true">
-        {isDeath ? (
-          <DeathAnnouncementCard ref={exportRef} form={deathForm} width={dims.width} height={dims.height} />
-        ) : (
-          <CondolenceCard ref={exportRef} form={{ ...officialForm, size: "story" }} width={dims.width} height={dims.height} />
-        )}
-      </div>
+      {pageTab === "official" && (
+        <div className="cond-bw-export-host" aria-hidden="true">
+          {isDeath ? (
+            <DeathAnnouncementCard ref={exportRef} form={deathForm} width={dims.width} height={dims.height} />
+          ) : (
+            <CondolenceCard ref={exportRef} form={{ ...officialForm, size: "story" }} width={dims.width} height={dims.height} />
+          )}
+        </div>
+      )}
     </main>
   );
 }

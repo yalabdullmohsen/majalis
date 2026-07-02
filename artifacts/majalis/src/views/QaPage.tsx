@@ -2,11 +2,12 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { getQaCategories, getQaQuestions } from "@/lib/supabase";
 import { RequestManager } from "@/lib/request-manager";
 import { QA_DISCLAIMER } from "@/lib/theme";
-import { PageHeader, Empty, QaSkeleton } from "@/components/ui-common";
+import { PageHeader, QaSkeleton } from "@/components/ui-common";
 import { PageLoadingGuard } from "@/components/PageLoadingGuard";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
 import { DEMO_QA, DEMO_QA_CATEGORIES } from "@/lib/demo-content";
 import { QaCard } from "@/components/qa/QaCard";
+import { useAuth } from "@/components/AuthProvider";
 import { QA_CANONICAL_CATEGORIES } from "@/lib/qa-categories";
 import {
   countByCategorySlug,
@@ -42,6 +43,7 @@ export default function QaPage({
   initialCategories?: any[];
   initialQuestions?: any[];
 } = {}) {
+  const { isAdmin } = useAuth();
   const [rawItems, setRawItems] = useState<any[]>(initialQuestions ?? []);
   const [categories, setCategories] = useState<any[]>(initialCategories ?? []);
   const [loading, setLoading] = useState(!initialQuestions);
@@ -187,7 +189,7 @@ export default function QaPage({
               onClick={() => setCategorySlug("all")}
             >
               <span className="qa-v2-category-card__name">الكل</span>
-              <span className="qa-v2-category-card__count">{items.length}</span>
+              {isAdmin && <span className="qa-v2-category-card__count">{items.length}</span>}
             </button>
             {categoryGrid.map((cat) => (
               <button
@@ -197,7 +199,7 @@ export default function QaPage({
                 onClick={() => setCategorySlug(cat.slug)}
               >
                 <span className="qa-v2-category-card__name">{cat.name}</span>
-                <span className="qa-v2-category-card__count">{cat.count}</span>
+                {isAdmin && <span className="qa-v2-category-card__count">{cat.count}</span>}
               </button>
             ))}
           </div>
@@ -217,13 +219,15 @@ export default function QaPage({
       <Disclaimer />
 
       <div className="ds-section__head">
-        <div className="page-stats-row" style={{ marginBottom: 0 }}>
-          <span>{sortedItems.length} سؤال</span>
-          <span>{categoryGrid.length} تصنيف</span>
-          {correctionsCount > 0 && (
-            <span className="qa-corrections-badge">تم تصحيح {correctionsCount} تصنيف</span>
-          )}
-        </div>
+        {isAdmin && (
+          <div className="page-stats-row" style={{ marginBottom: 0 }}>
+            <span>{sortedItems.length} سؤال</span>
+            <span>{categoryGrid.length} تصنيف</span>
+            {correctionsCount > 0 && (
+              <span className="qa-corrections-badge">تم تصحيح {correctionsCount} تصنيف</span>
+            )}
+          </div>
+        )}
         <FilterToggle onClick={() => setFiltersOpen(true)} label="بحث وتصفية" />
       </div>
 

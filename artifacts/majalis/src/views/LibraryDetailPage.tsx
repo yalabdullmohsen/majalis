@@ -7,6 +7,8 @@ import { getRelatedLibraryBooks, isCatalogBookId, type LibraryItem } from "@/lib
 import { applyPageSeo } from "@/lib/seo";
 import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
 import { usePageView } from "@/hooks/usePageView";
+import { KnowledgeRelatedItems } from "@/components/knowledge/KnowledgeRelatedItems";
+import { RecommendationWidget } from "@/components/recommendations/RecommendationWidget";
 
 export default function LibraryDetailPage({ params }: { params: { id: string } }) {
   const [item, setItem] = useState<LibraryItem | null>(null);
@@ -97,6 +99,16 @@ export default function LibraryDetailPage({ params }: { params: { id: string } }
           <Link href="/library">← العودة إلى المكتبة</Link>
         </p>
       )}
+      <KnowledgeRelatedItems sourceType="book" sourceId={String(item.id)} />
+      <RecommendationWidget
+        useRelated
+        contentId={String(item.id)}
+        contentType="book"
+        context="home"
+        limit={4}
+        layout="row"
+        className="mt-6"
+      />
     </ContentDetailLayout>
   );
 }

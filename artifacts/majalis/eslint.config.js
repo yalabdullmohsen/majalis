@@ -8,7 +8,7 @@ export default tseslint.config(
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {
-    ignores: ["dist/**", "seo-prerender/**", "node_modules/**", ".next/**"],
+    ignores: ["dist/**", "seo-prerender/**", "node_modules/**", ".next/**", "src/lib/*.generated.ts"],
   },
   {
     files: nodeFiles,

@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 /**
+import "dotenv/config";
  * Apply Production Activation migrations (tracked runner + seed hook).
  *
  * Usage:

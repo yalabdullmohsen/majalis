@@ -5,6 +5,7 @@ import { usePublishedAdhkarItems } from "@/lib/adhkar-service";
 import { getReadingProgress, restoreScrollForSection } from "@/lib/reading-progress";
 import { PageHeader, Empty } from "@/components/ui-common";
 import { AdhkarCard } from "@/components/adhkar/AdhkarCard";
+import { useAuth } from "@/components/AuthProvider";
 
 const FEATURED_CATEGORY_SLUGS = new Set([
   "morning", "evening", "sleep", "wakeup", "home-in", "home-out",
@@ -26,6 +27,7 @@ function useDebouncedValue<T>(value: T, delayMs = 300): T {
 }
 
 export default function AdhkarPage() {
+  const { isAdmin } = useAuth();
   const [location] = useLocation();
   const [category, setCategory] = useState("all");
   const [search, setSearch] = useState("");
@@ -71,8 +73,12 @@ export default function AdhkarPage() {
 
       <div className="adhkar-hero ui-card">
         <div className="adhkar-hero__stats">
-          <div><strong>{publishedItems.length}</strong><span>ذكر</span></div>
-          <div><strong>{FEATURED_CATEGORIES.length}</strong><span>قسم</span></div>
+          {isAdmin && (
+            <>
+              <div><strong>{publishedItems.length}</strong><span>ذكر</span></div>
+              <div><strong>{FEATURED_CATEGORIES.length}</strong><span>قسم</span></div>
+            </>
+          )}
           <Link href="/tasbih" className="adhkar-hero__tasbih-link">عداد التسبيح ←</Link>
         </div>
         {lastRead && (

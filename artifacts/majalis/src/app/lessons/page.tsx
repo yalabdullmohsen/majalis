@@ -28,7 +28,7 @@ export default async function LessonsPage() {
       <section className="page-shell" aria-label="فهرس الدروس">
         <h1 className="home-section-title">الدروس الشرعية</h1>
         <p className="seo-listing-intro">
-          {active.length.toLocaleString("ar-EG")} درس ودورة نشطة — {archived.length.toLocaleString("ar-EG")} درس في الأرشيف.
+          دروس ودورات شرعية معتمدة — مع بحث وفلاتر للمكان والتصنيف.
         </p>
         <div className="seo-listing-links">
           {active.slice(0, 12).map((lesson) => (

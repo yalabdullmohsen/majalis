@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useAuth } from "@/components/AuthProvider";
 import { getAkpStories } from "@/lib/supabase";
 import { RequestManager } from "@/lib/request-manager";
 import { arabicMatchAny } from "@/lib/arabic-search";
@@ -15,6 +16,7 @@ function useDebouncedValue<T>(value: T, delayMs = 350): T {
 }
 
 export default function StoriesPage() {
+  const { isAdmin } = useAuth();
   const [items, setItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -79,10 +81,12 @@ export default function StoriesPage() {
       />
 
       <div className="ds-section__head">
-        <div className="page-stats-row" style={{ marginBottom: 0 }}>
-          <span>{displayItems.length} قصة</span>
-          {categories.length > 1 && <span>{categories.length - 1} تصنيف</span>}
-        </div>
+        {isAdmin && (
+          <div className="page-stats-row" style={{ marginBottom: 0 }}>
+            <span>{displayItems.length} قصة</span>
+            {categories.length > 1 && <span>{categories.length - 1} تصنيف</span>}
+          </div>
+        )}
         <FilterToggle onClick={() => setFiltersOpen(true)} label="بحث وتصفية" />
       </div>
 

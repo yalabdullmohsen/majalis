@@ -99,13 +99,13 @@ function normalizeText(value: string) {
 }
 
 function lessonDedupeKey(lesson: KuwaitLessonRecord) {
+  // Intentionally excludes sheikhName and time — both are prone to data-entry
+  // inconsistencies between the DB and seed rows, causing false duplicates.
+  // Title + mosque + day uniquely identifies a Kuwait lesson in practice.
   return [
     normalizeText(lesson.title),
-    sheikhNameKey(lesson.sheikhName),
     normalizeText(lesson.mosque),
     normalizeText(lesson.day),
-    normalizeText(lesson.time),
-    normalizeText(lesson.governorate),
   ].join("|");
 }
 

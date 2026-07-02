@@ -26,6 +26,7 @@ export default function AssistantPage() {
           onInputChange={chat.setInput}
           onSubmit={chat.submit}
           bottomRef={chat.bottomRef}
+          onQuickPrompt={chat.sendQuestion}
         />
       </section>
     </div>

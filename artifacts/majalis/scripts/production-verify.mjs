@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 /**
+import "dotenv/config";
  * Production readiness verification — run after Vercel env vars are configured.
  * Usage: node scripts/production-verify.mjs [--base=https://majlisilm.com]
  *

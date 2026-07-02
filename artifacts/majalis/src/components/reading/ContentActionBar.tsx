@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { readPreferences, writePreferences } from "@/lib/user-preferences";
@@ -33,12 +33,16 @@ export function ContentActionBar({
 }: Props) {
   const [copied, setCopied] = useState(false);
   const [readingMode, setReadingMode] = useState(() => readPreferences().readingMode);
+  const copyTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => () => { if (copyTimerRef.current) clearTimeout(copyTimerRef.current); }, []);
 
   const handleCopy = useCallback(async () => {
     const ok = await copyText(text);
     if (ok) {
+      if (copyTimerRef.current) clearTimeout(copyTimerRef.current);
       setCopied(true);
-      window.setTimeout(() => setCopied(false), 1800);
+      copyTimerRef.current = setTimeout(() => setCopied(false), 1800);
     }
   }, [text]);
 

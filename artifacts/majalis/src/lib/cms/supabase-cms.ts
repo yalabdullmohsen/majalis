@@ -123,7 +123,6 @@ export async function getCmsDashboardStats(): Promise<CmsDashboardStats> {
           ? verifiedAdhkar
           : cmsIndexTotal ?? verifiedAdhkar ?? 0;
 
-    const importJobsTotal = (legacyImportJobs ?? 0) + (contentImportJobs ?? 0);
     if (contentImportJobs !== null && legacyImportJobs === null) {
       // Production uses content import engine only
     }

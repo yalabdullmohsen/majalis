@@ -8,9 +8,11 @@ import NotificationBell from "./NotificationBell";
 import { SearchSuggestions } from "./SearchSuggestions";
 import { SideNavDrawer } from "./SideNavDrawer";
 import { MobileMoreMenu } from "./MobileMoreMenu";
-import { PRIMARY_NAV } from "@/lib/navigation";
+
+
 import { C } from "@/lib/theme";
 import { useMobileNavState } from "@/hooks/useMobileNavState";
+import { PRIMARY_NAV_ITEMS } from "@/lib/navigation";
 
 function useIsMobile() {
   const [mobile, setMobile] = useState(typeof window !== "undefined" ? window.innerWidth <= 879 : false);
@@ -66,15 +68,6 @@ function SearchBox({ onSubmitDone }: { onSubmitDone?: () => void }) {
     </form>
   );
 }
-
-const PRIMARY_NAV_KEYS = [
-  { href: "/", key: "nav_home" },
-  { href: "/lessons", key: "nav_lessons" },
-  { href: "/quran", key: "nav_quran" },
-  { href: "/library", key: "nav_library" },
-  { href: "/adhkar", key: "nav_adhkar" },
-  { href: "/prayer-times", key: "nav_prayer" },
-] as const;
 
 export default function NavBar() {
   const { isAdmin, isLoggedIn, user, logout } = useAuth();
@@ -152,9 +145,9 @@ export default function NavBar() {
 
           {!isMobile && (
             <nav className="navbar-v3__tabs" aria-label={lang === "en" ? "Main navigation" : "التنقل الرئيسي"}>
-              {PRIMARY_NAV_KEYS.map((item) => (
+              {PRIMARY_NAV_ITEMS.map((item) => (
                 <Link key={item.href} href={item.href} style={tabStyle(isActive(item.href))}>
-                  {t(item.key)}
+                  {item.label}
                 </Link>
               ))}
               {isAdmin && (

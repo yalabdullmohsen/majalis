@@ -6,14 +6,15 @@ import {
   type PrayerTimesPayload,
 } from "@/lib/prayer-times";
 
-export function usePrayerCountdown() {
+export function usePrayerCountdown(governorateId?: string) {
   const [data, setData] = useState<PrayerTimesPayload | null>(null);
   const [countdown, setCountdown] = useState<PrayerCountdown | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let cancelled = false;
-    fetchPrayerTimes()
+    setLoading(true);
+    fetchPrayerTimes(governorateId)
       .then((payload) => {
         if (!cancelled) setData(payload);
       })
@@ -26,7 +27,7 @@ export function usePrayerCountdown() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [governorateId]);
 
   useEffect(() => {
     if (!data?.prayers?.length) {

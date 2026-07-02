@@ -46,7 +46,7 @@ export default function FawaidPage({
   const [submitted, setSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState("");
   const [filtersOpen, setFiltersOpen] = useState(false);
-  const { user, isLoggedIn } = useAuth() as any;
+  const { user, isLoggedIn, isAdmin } = useAuth() as any;
   const debouncedSearch = useDebouncedValue(search);
 
   useEffect(() => {
@@ -133,10 +133,12 @@ export default function FawaidPage({
       />
 
       <div className="ds-section__head">
-        <div className="page-stats-row" style={{ marginBottom: 0 }}>
-          <span>{displayItems.length} فائدة</span>
-          <span>{FAWAID_CATEGORIES.length} تصنيف</span>
-        </div>
+        {isAdmin && (
+          <div className="page-stats-row" style={{ marginBottom: 0 }}>
+            <span>{displayItems.length} فائدة</span>
+            <span>{FAWAID_CATEGORIES.length} تصنيف</span>
+          </div>
+        )}
         <FilterToggle onClick={() => setFiltersOpen(true)} label="بحث وتصفية" />
       </div>
 

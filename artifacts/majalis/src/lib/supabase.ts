@@ -37,15 +37,6 @@ import { allowSeedFallback } from "@/lib/cms/production-config";
 
 export { bootstrapSupabaseFromServer };
 
-// Normalize to the bare project origin (https://xxx.supabase.co).
-function normalizeSupabaseUrl(raw: string): string {
-  const v = (raw || "").trim();
-  try {
-    return new URL(v).origin;
-  } catch {
-    return v.replace(/\/+$/, "");
-  }
-}
 
 const isConfigured = isSupabaseConfigured();
 
@@ -385,17 +376,19 @@ export async function getApprovedFawaid() {
   );
 }
 
-export async function getVerifiedHadith(options: { limit?: number; collection?: string } = {}) {
+export async function getVerifiedHadith(options: { limit?: number; collection?: string; chapter?: string } = {}) {
   return safeSupabaseQuery(
     "getVerifiedHadith",
     () => {
       let q = supabase
         .from("verified_hadith_items")
-        .select("id, title, text, narrator, source_name, grade, collection, explanation, keywords, created_at")
+        .select("id, title, text, narrator, source_name, grade, collection, chapter, explanation, keywords, hadith_number, metadata, created_at")
         .eq("verification_status", "verified")
-        .order("created_at", { ascending: false })
-        .limit(options.limit ?? 200);
+        .order("collection", { ascending: true })
+        .order("hadith_number", { ascending: true })
+        .limit(options.limit ?? 500);
       if (options.collection) q = q.eq("collection", options.collection);
+      if (options.chapter) q = q.eq("chapter", options.chapter);
       return q;
     },
     [],
@@ -567,6 +560,11 @@ export async function adminGetDashboardStats() {
     { count: trans },
     { count: todayViews },
     { count: sheikhs },
+    { count: hadith },
+    { count: stories },
+    { count: miracles },
+    { count: rulings },
+    { count: fiqhItems },
     { data: recentReports },
     { data: lessonRows },
     { data: recentLessons },
@@ -582,6 +580,11 @@ export async function adminGetDashboardStats() {
     supabase.from("transcriptions").select("*", { count: "exact", head: true }),
     supabase.from("content_views").select("*", { count: "exact", head: true }).gte("viewed_at", startOfDay.toISOString()),
     supabase.from("sheikhs").select("*", { count: "exact", head: true }),
+    supabase.from("verified_hadith_items").select("*", { count: "exact", head: true }).eq("verification_status", "verified"),
+    supabase.from("akp_stories").select("*", { count: "exact", head: true }),
+    supabase.from("scientific_miracles").select("*", { count: "exact", head: true }).eq("status", "approved"),
+    supabase.from("sharia_rulings").select("*", { count: "exact", head: true }),
+    supabase.from("fiqh_council_items").select("*", { count: "exact", head: true }),
     supabase.from("error_reports").select("*").eq("status", "pending").order("created_at", { ascending: false }).limit(8),
     supabase.from("lessons").select("activity_type, is_course, status"),
     supabase.from("lessons").select("id, title, updated_at, activity_type").order("updated_at", { ascending: false }).limit(6),
@@ -646,6 +649,11 @@ export async function adminGetDashboardStats() {
       todayViews: todayViews || 0,
       totalTranscriptions: trans || 0,
       totalSheikhs: sheikhs || 0,
+      totalHadith: hadith || 0,
+      totalStories: stories || 0,
+      totalMiracles: miracles || 0,
+      totalRulings: rulings || 0,
+      totalFiqhItems: fiqhItems || 0,
       coursesCount,
       lecturesCount,
       regularLessonsCount: lessonsCount,
@@ -962,7 +970,7 @@ function markLocalQuizIdUsed(id: string): void {
     const current = getLocalUsedQuizIds();
     current.add(id);
     localStorage.setItem(USED_QUIZ_IDS_KEY, JSON.stringify([...current]));
-  } catch {}
+  } catch { /* localStorage write failed silently */ }
 }
 
 export async function markQuizQuestionUsed(id: string): Promise<void> {
@@ -985,10 +993,13 @@ export function resetAllUsedQuizIds(): void {
 }
 
 export async function getQuizQuestions({ section, level }: { section?: string; level?: string } = {}) {
-  const usedIds = getLocalUsedQuizIds();
+  // Always load localStorage-used IDs (covers seed + Supabase UUIDs both)
+  const localUsedIds = getLocalUsedQuizIds();
 
   const filterSeed = () => {
-    let rows = DEMO_QUIZ_QUESTIONS.filter((q) => q.status !== "draft" && !usedIds.has(q.id ?? ""));
+    let rows = DEMO_QUIZ_QUESTIONS.filter(
+      (q) => q.status !== "draft" && !localUsedIds.has(q.id ?? ""),
+    );
     if (section && section !== "الكل") rows = rows.filter((q) => q.section === section);
     if (level && level !== "الكل") rows = rows.filter((q) => q.level === level);
     return rows;
@@ -1001,15 +1012,17 @@ export async function getQuizQuestions({ section, level }: { section?: string; l
   try {
     let q = supabase
       .from("quiz_questions")
-      .select("*")
+      .select("id, section, category, level, difficulty, question, answer, correct_answer, hint, is_used, status")
       .eq("status", "published")
+      // filter out DB-marked used rows AND localStorage-marked rows
       .or("is_used.is.null,is_used.eq.false")
       .order("created_at", { ascending: false });
     if (section && section !== "الكل") q = q.eq("section", section);
     if (level && level !== "الكل") q = q.eq("level", level);
     const { data, error } = await q;
     if (error) throw error;
-    const rows = data || [];
+    // Also filter out any IDs that are locally tracked as used (double-check consistency)
+    const rows = (data || []).filter((r: any) => !localUsedIds.has(String(r.id)));
     if (rows.length === 0) {
       return { data: filterSeed(), error: null, usingSeed: true };
     }
@@ -1044,6 +1057,55 @@ export async function adminSetQuizQuestionStatus(id: string, status: string) {
     .from("quiz_questions")
     .update({ status, updated_at: new Date().toISOString() })
     .eq("id", id);
+}
+
+/** رفع أسئلة الـ Seed إلى Supabase — يستخدم INSERT ON CONFLICT DO NOTHING لأمان كامل. */
+export async function upsertQuizSeedToDb(): Promise<{ ok: boolean; synced: number; error?: string }> {
+  if (!isConfigured) return { ok: false, synced: 0, error: "supabase_not_configured" };
+  const rows = DEMO_QUIZ_QUESTIONS.filter((q) => q.status !== "draft").map((q) => ({
+    section: q.section,
+    category: q.category || q.section,
+    // map Arabic level names → English stored in DB
+    level: q.level === "سهل" ? "beginner" : q.level === "متوسط" ? "intermediate" : q.level === "صعب" ? "advanced" : q.level,
+    question: q.question,
+    answer: q.answer,          // column added by migration
+    correct_answer: q.answer,  // keep legacy column in sync
+    status: "published",
+    is_used: false,
+  }));
+  try {
+    // insert-only: skip duplicates (question+section may not be unique constraint; use DO NOTHING)
+    const { error } = await supabase.from("quiz_questions").insert(rows);
+    if (error) {
+      // If column doesn't exist yet, surface a clear message
+      if (error.message?.includes("column") || error.code === "42703") {
+        return { ok: false, synced: 0, error: "يجب تشغيل ملف fixes_data_pipeline_complete.sql في Supabase أولاً لإضافة الأعمدة المطلوبة." };
+      }
+      throw error;
+    }
+    return { ok: true, synced: rows.length };
+  } catch (err) {
+    logSupabaseError("upsertQuizSeedToDb", err);
+    return { ok: false, synced: 0, error: formatSupabaseError(err) };
+  }
+}
+
+/** إعادة تعيين is_used=false لجميع الأسئلة في Supabase + localStorage. */
+export async function adminResetAllQuizIsUsed(): Promise<{ ok: boolean; error?: string }> {
+  if (!isConfigured) return { ok: false, error: "supabase_not_configured" };
+  try {
+    // gt('created_at', '2000-01-01') = all rows (workaround: no .update().all() in Supabase JS)
+    const { error } = await supabase
+      .from("quiz_questions")
+      .update({ is_used: false })
+      .gt("created_at", "2000-01-01");
+    if (error) throw error;
+    resetAllUsedQuizIds(); // clear localStorage too
+    return { ok: true };
+  } catch (err) {
+    logSupabaseError("adminResetAllQuizIsUsed", err);
+    return { ok: false, error: formatSupabaseError(err) };
+  }
 }
 
 // ─── Search ────────────────────────────────────────────────────────────────────
@@ -1448,4 +1510,157 @@ export async function getIslamicOccasionsCacheFromDb() {
     fallback,
   );
   return result.data;
+}
+
+// ─── Knowledge Relationships ───────────────────────────────────────────────
+
+export type KnowledgeRelType =
+  | "شيخ_تلميذ"
+  | "مؤلف_كتاب"
+  | "شرح_لكتاب"
+  | "فتوى_في_باب"
+  | "درس_عن_كتاب"
+  | "مرتبط";
+
+export type KnowledgeSourceType = "scholar" | "lesson" | "book" | "fatwa" | "fawaid" | "question";
+
+export type KnowledgeRelationship = {
+  id: string;
+  source_type: KnowledgeSourceType;
+  source_id: string;
+  target_type: KnowledgeSourceType;
+  target_id: string;
+  relationship_type: KnowledgeRelType;
+  label: string | null;
+  is_verified: boolean;
+  source_reference: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export async function getKnowledgeRelationships(opts?: {
+  sourceType?: KnowledgeSourceType;
+  sourceId?: string;
+  targetType?: KnowledgeSourceType;
+  targetId?: string;
+  verifiedOnly?: boolean;
+  limit?: number;
+}): Promise<KnowledgeRelationship[]> {
+  if (!isConfigured) return [];
+  try {
+    let q = supabase
+      .from("knowledge_relationships")
+      .select("id,source_type,source_id,target_type,target_id,relationship_type,label,is_verified,source_reference,created_at,updated_at")
+      .order("created_at", { ascending: false });
+
+    if (opts?.sourceType) q = q.eq("source_type", opts.sourceType);
+    if (opts?.sourceId)   q = q.eq("source_id",   opts.sourceId);
+    if (opts?.targetType) q = q.eq("target_type", opts.targetType);
+    if (opts?.targetId)   q = q.eq("target_id",   opts.targetId);
+    if (opts?.verifiedOnly) q = q.eq("is_verified", true);
+    if (opts?.limit) q = q.limit(opts.limit);
+
+    const { data, error } = await q;
+    if (error) {
+      if (isMissingSchemaError(error)) return [];
+      logSupabaseError("getKnowledgeRelationships", error, opts ?? {});
+      return [];
+    }
+    return (data as KnowledgeRelationship[]) ?? [];
+  } catch (err) {
+    logSupabaseError("getKnowledgeRelationships", err, opts ?? {});
+    return [];
+  }
+}
+
+export async function getRelatedItems(
+  sourceType: KnowledgeSourceType,
+  sourceId: string,
+): Promise<KnowledgeRelationship[]> {
+  if (!isConfigured) return [];
+  try {
+    const { data, error } = await supabase
+      .from("knowledge_relationships")
+      .select("id,source_type,source_id,target_type,target_id,relationship_type,label,is_verified,source_reference,created_at,updated_at")
+      .or(
+        `and(source_type.eq.${sourceType},source_id.eq.${sourceId}),and(target_type.eq.${sourceType},target_id.eq.${sourceId})`,
+      )
+      .eq("is_verified", true)
+      .limit(20);
+
+    if (error) {
+      if (isMissingSchemaError(error)) return [];
+      logSupabaseError("getRelatedItems", error, { sourceType, sourceId });
+      return [];
+    }
+    return (data as KnowledgeRelationship[]) ?? [];
+  } catch (err) {
+    logSupabaseError("getRelatedItems", err, { sourceType, sourceId });
+    return [];
+  }
+}
+
+export async function upsertKnowledgeRelationship(
+  rel: Omit<KnowledgeRelationship, "id" | "created_at" | "updated_at">,
+): Promise<{ ok: boolean; id?: string; error?: string }> {
+  if (!isConfigured) return { ok: false, error: "Supabase not configured" };
+  try {
+    const { data, error } = await supabase
+      .from("knowledge_relationships")
+      .upsert(rel, { onConflict: "source_type,source_id,target_type,target_id,relationship_type" })
+      .select("id")
+      .single();
+
+    if (error) return { ok: false, error: error.message };
+    return { ok: true, id: (data as { id: string }).id };
+  } catch (err: unknown) {
+    return { ok: false, error: String(err) };
+  }
+}
+
+export async function setKnowledgeRelVerified(id: string, verified: boolean): Promise<boolean> {
+  if (!isConfigured) return false;
+  try {
+    const { error } = await supabase
+      .from("knowledge_relationships")
+      .update({ is_verified: verified })
+      .eq("id", id);
+    return !error;
+  } catch {
+    return false;
+  }
+}
+
+export async function deleteKnowledgeRelationship(id: string): Promise<boolean> {
+  if (!isConfigured) return false;
+  try {
+    const { error } = await supabase
+      .from("knowledge_relationships")
+      .delete()
+      .eq("id", id);
+    return !error;
+  } catch {
+    return false;
+  }
+}
+
+export async function getAllKnowledgeRelationshipsAdmin(limit = 200): Promise<KnowledgeRelationship[]> {
+  if (!isConfigured) return [];
+  try {
+    const { data, error } = await supabase
+      .from("knowledge_relationships")
+      .select("id,source_type,source_id,target_type,target_id,relationship_type,label,is_verified,source_reference,created_at,updated_at")
+      .order("created_at", { ascending: false })
+      .limit(limit);
+
+    if (error) {
+      if (isMissingSchemaError(error)) return [];
+      logSupabaseError("getAllKnowledgeRelationshipsAdmin", error, {});
+      return [];
+    }
+    return (data as KnowledgeRelationship[]) ?? [];
+  } catch (err) {
+    logSupabaseError("getAllKnowledgeRelationshipsAdmin", err, {});
+    return [];
+  }
 }

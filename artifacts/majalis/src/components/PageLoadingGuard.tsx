@@ -21,7 +21,7 @@ export function PageLoadingGuard({
   error,
   empty,
   emptyText = "لا توجد بيانات حالياً",
-  onRetry,
+  onRetry: _onRetry,
   children,
   skeleton = "list",
 }: PageLoadingGuardProps) {

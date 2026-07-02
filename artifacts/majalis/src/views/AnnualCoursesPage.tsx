@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
+import { useAuth } from "@/components/AuthProvider";
 import { PageHeader, Loading, Empty } from "@/components/ui-common";
 import { PlatformContentCard } from "@/components/platform/ContentDetailLayout";
 import { getAnnualCourses } from "@/lib/platform-content-service";
@@ -16,6 +17,7 @@ function useDebouncedValue<T>(value: T, delayMs = 350): T {
 }
 
 export default function AnnualCoursesPage() {
+  const { isAdmin } = useAuth();
   const [items, setItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [courseType, setCourseType] = useState("الكل");
@@ -40,7 +42,7 @@ export default function AnnualCoursesPage() {
       />
 
       <div className="page-stats-row">
-        <span>{items.length} دورة</span>
+        {isAdmin && <span>{items.length} دورة</span>}
         <Link href="/calendar" className="page-link-inline">التقويم</Link>
       </div>
 

@@ -72,10 +72,10 @@ export default function SubmitContentPage() {
           marginBottom: "1.5rem",
           cursor: "pointer",
         }}
-        onClick={() => setFormType("lesson")}
+        onClick={() => setContentType("درس")}
         role="button"
         tabIndex={0}
-        onKeyDown={(e) => e.key === "Enter" && setFormType("lesson")}
+        onKeyDown={(e) => e.key === "Enter" && setContentType("درس")}
       >
         <div style={{ fontSize: "1.5rem" }}>📚</div>
         <div>

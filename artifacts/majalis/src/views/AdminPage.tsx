@@ -32,6 +32,8 @@ import { OpenPlatformSection } from "@/views/admin/OpenPlatformSection";
 import { GovernanceSection } from "@/views/admin/GovernanceSection";
 import { SmartCmsSection } from "@/views/admin/SmartCmsSection";
 import { SubmissionsSection } from "@/views/admin/SubmissionsSection";
+import { QuizSection } from "@/views/admin/QuizSection";
+import { RelationshipsSection } from "@/views/admin/RelationshipsSection";
 
 export default function AdminPage() {
   const [location] = useLocation();
@@ -66,6 +68,8 @@ export default function AdminPage() {
       {section === "open-platform" && <OpenPlatformSection />}
       {section === "smart-cms" && <SmartCmsSection />}
       {section === "governance" && <GovernanceSection />}
+      {section === "knowledge-graph" && <RelationshipsSection />}
+      {section === "quiz" && <QuizSection />}
       {section === "lessons" && <LessonsSection />}
       {section === "sheikhs" && <SheikhsSection />}
       {section === "library" && <LibrarySection />}

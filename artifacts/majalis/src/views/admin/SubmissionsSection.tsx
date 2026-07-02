@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useAdminShell } from "@/views/admin/AdminShell";
+import { SubmissionsReviewPanel } from "@/components/admin/SubmissionsReviewPanel";
 
 type ContentType = "درس" | "فائدة" | "معلومة" | "سؤال لعبة" | "فكرة";
 
@@ -191,6 +192,11 @@ export function SubmissionsSection() {
             </div>
           </div>
         ))}
+      </div>
+
+      {/* ── رفع الأذان والدروس ─────────────────────────────── */}
+      <div style={{ borderTop: "2px solid #f3f4f6", marginTop: "2rem", paddingTop: "0.5rem" }}>
+        <SubmissionsReviewPanel />
       </div>
     </div>
   );
