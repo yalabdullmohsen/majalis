@@ -8,6 +8,8 @@ const MAX_RETRIES = 3;
 export function useRadioPlayer() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const retryRef = useRef(0);
+  const retryTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const reconnectTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [station, setStation] = useState<RadioStation | null>(null);
   const [radioState, setRadioState] = useState<RadioState>("idle");
   const [volume, setVolumeState] = useState(80);
@@ -23,7 +25,7 @@ export function useRadioPlayer() {
     const onError = () => {
       if (retryRef.current < MAX_RETRIES) {
         retryRef.current += 1;
-        setTimeout(() => {
+        retryTimerRef.current = setTimeout(() => {
           audio.load();
           audio.play().catch(() => setRadioState("error"));
         }, 500);
@@ -43,6 +45,7 @@ export function useRadioPlayer() {
       audio.removeEventListener("pause", onPause);
       audio.removeEventListener("waiting", onWaiting);
       audio.removeEventListener("error", onError);
+      if (retryTimerRef.current) clearTimeout(retryTimerRef.current);
       audioRef.current = null;
     };
   }, []);
@@ -87,7 +90,8 @@ export function useRadioPlayer() {
     retryRef.current = 0;
     const s = station;
     stop();
-    setTimeout(() => play(s), 100);
+    if (reconnectTimerRef.current) clearTimeout(reconnectTimerRef.current);
+    reconnectTimerRef.current = setTimeout(() => play(s), 100);
   }, [station, stop, play]);
 
   const setVolume = useCallback((v: number) => setVolumeState(Math.min(100, Math.max(0, v))), []);

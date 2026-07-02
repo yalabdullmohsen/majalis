@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import { Link, useLocation } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { C } from "@/lib/theme";
@@ -134,15 +134,20 @@ export function AdminShell({ section, onSectionChange, children }: AdminShellPro
   const [flash, setFlash] = useState<Flash>(null);
   const { logout, user } = useAuth();
   const [, navigate] = useLocation();
+  const flashTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => () => { if (flashTimerRef.current) clearTimeout(flashTimerRef.current); }, []);
 
   const showSuccess = useCallback((message: string) => {
+    if (flashTimerRef.current) clearTimeout(flashTimerRef.current);
     setFlash({ type: "success", message });
-    window.setTimeout(() => setFlash(null), 5000);
+    flashTimerRef.current = setTimeout(() => setFlash(null), 5000);
   }, []);
 
   const showError = useCallback((message: string) => {
+    if (flashTimerRef.current) clearTimeout(flashTimerRef.current);
     setFlash({ type: "error", message });
-    window.setTimeout(() => setFlash(null), 7000);
+    flashTimerRef.current = setTimeout(() => setFlash(null), 7000);
   }, []);
 
   const clearFlash = useCallback(() => setFlash(null), []);

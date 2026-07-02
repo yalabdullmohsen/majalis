@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { PageHeader } from "@/components/ui-common";
@@ -62,12 +62,16 @@ function PublicationInput({
 
 function ShareBanner({ userId }: { userId: string }) {
   const [copied, setCopied] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const url = `${window.location.origin}/researcher/${userId}`;
+
+  useEffect(() => () => { if (timerRef.current) clearTimeout(timerRef.current); }, []);
 
   const copy = () => {
     navigator.clipboard.writeText(url).catch(() => {});
+    if (timerRef.current) clearTimeout(timerRef.current);
     setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    timerRef.current = setTimeout(() => setCopied(false), 2000);
   };
 
   return (
@@ -98,6 +102,9 @@ export default function ResearcherProfilePage() {
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [pubInput, setPubInput] = useState<string[]>([""]);
+  const savedTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => () => { if (savedTimerRef.current) clearTimeout(savedTimerRef.current); }, []);
 
   useEffect(() => {
     if (!user?.id) return;
@@ -132,7 +139,8 @@ export default function ResearcherProfilePage() {
     });
     setSaving(false);
     setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
+    if (savedTimerRef.current) clearTimeout(savedTimerRef.current);
+    savedTimerRef.current = setTimeout(() => setSaved(false), 3000);
   };
 
   if (authLoading) {

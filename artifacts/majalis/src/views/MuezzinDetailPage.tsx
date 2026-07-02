@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useRoute } from "wouter";
 import {
   getMuezzin,
@@ -62,11 +62,17 @@ export default function MuezzinDetailPage() {
   const [userRating, setUserRating] = useState(() => getUserRating(muezzin.id));
   const [hoverStar, setHoverStar] = useState(0);
   const [ratedFlash, setRatedFlash] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const prefs = loadAdhanPrefs();
   const isDefault = prefs.defaultMuezzinId === muezzin.id;
 
   const sc = STYLE_COLOR[muezzin.style] ?? { bg: "#f9fafb", text: "#374151", border: "#e5e7eb" };
+
+  useEffect(() => () => {
+    stopAdhan();
+    if (timerRef.current) clearTimeout(timerRef.current);
+  }, []);
 
   function handlePlay(type: "fajr" | "general") {
     if (playState.key === type) {
@@ -77,13 +83,14 @@ export default function MuezzinDetailPage() {
     stopAdhan();
     const audio = playAdhan(muezzin, type === "fajr");
     setPlayState({ key: type });
-    audio.addEventListener("ended", () => setPlayState({ key: null }));
+    audio.addEventListener("ended", () => setPlayState({ key: null }), { once: true });
   }
 
   function handleSetDefault() {
     patchAdhanPrefs({ defaultMuezzinId: muezzin.id });
+    if (timerRef.current) clearTimeout(timerRef.current);
     setSaved(true);
-    setTimeout(() => setSaved(false), 2500);
+    timerRef.current = setTimeout(() => setSaved(false), 2500);
   }
 
   function handleToggleFav() {
@@ -94,8 +101,9 @@ export default function MuezzinDetailPage() {
   function handleRate(stars: number) {
     saveRating(muezzin.id, stars);
     setUserRating(stars);
+    if (timerRef.current) clearTimeout(timerRef.current);
     setRatedFlash(true);
-    setTimeout(() => setRatedFlash(false), 2000);
+    timerRef.current = setTimeout(() => setRatedFlash(false), 2000);
   }
 
   // Other muezzins for "قد يعجبك"

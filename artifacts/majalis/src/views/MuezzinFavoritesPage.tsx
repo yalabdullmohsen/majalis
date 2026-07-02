@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
 import { MUEZZINS, previewAdhan, stopAdhan } from "@/lib/adhan-audio";
 import { loadFavorites, toggleFavorite } from "@/lib/muezzin-favorites";
@@ -21,6 +21,14 @@ export default function MuezzinFavoritesPage() {
   const [favorites, setFavorites] = useState<Set<string>>(() => loadFavorites());
   const [previewing, setPreviewing] = useState<string | null>(null);
   const [savedDefault, setSavedDefault] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const previewTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => () => {
+    stopAdhan();
+    if (timerRef.current) clearTimeout(timerRef.current);
+    if (previewTimerRef.current) clearTimeout(previewTimerRef.current);
+  }, []);
 
   const defaultMuezzinId = loadAdhanPrefs().defaultMuezzinId;
 
@@ -42,14 +50,16 @@ export default function MuezzinFavoritesPage() {
     if (!m) return;
     const audio = previewAdhan(m);
     setPreviewing(id);
-    audio.addEventListener("ended", () => setPreviewing(null));
-    setTimeout(() => setPreviewing((p) => (p === id ? null : p)), 16_000);
+    audio.addEventListener("ended", () => setPreviewing(null), { once: true });
+    if (previewTimerRef.current) clearTimeout(previewTimerRef.current);
+    previewTimerRef.current = setTimeout(() => setPreviewing((p) => (p === id ? null : p)), 16_000);
   }
 
   function handleSetDefault(id: string) {
     patchAdhanPrefs({ defaultMuezzinId: id });
+    if (timerRef.current) clearTimeout(timerRef.current);
     setSavedDefault(true);
-    setTimeout(() => setSavedDefault(false), 2500);
+    timerRef.current = setTimeout(() => setSavedDefault(false), 2500);
   }
 
   return (

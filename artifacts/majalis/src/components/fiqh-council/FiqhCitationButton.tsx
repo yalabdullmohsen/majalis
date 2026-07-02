@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   FIQH_CITATION_FORMAT_LABELS,
   formatFiqhCitationByFormat,
@@ -15,12 +15,16 @@ type Props = {
 export function FiqhCitationMenu({ item, className = "" }: Props) {
   const [format, setFormat] = useState<FiqhCitationFormat>("research");
   const [copied, setCopied] = useState(false);
+  const copyTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => () => { if (copyTimerRef.current) clearTimeout(copyTimerRef.current); }, []);
 
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(formatFiqhCitationByFormat(item, format));
+      if (copyTimerRef.current) clearTimeout(copyTimerRef.current);
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      copyTimerRef.current = setTimeout(() => setCopied(false), 2000);
     } catch {
       /* ignore */
     }

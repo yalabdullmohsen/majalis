@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { supabase } from "@/lib/supabase";
 import { formatFileSize, type UserSubmission, type SubmissionStatus } from "@/lib/user-submissions-service";
 import { Link } from "wouter";
@@ -15,7 +15,9 @@ const TYPE_LABEL: Record<string, string> = { adhan: "أذان",   lesson: "در�
 function SubmissionRow({ sub }: { sub: UserSubmission }) {
   const sm = STATUS_META[sub.status];
   const [audioPlaying, setAudioPlaying] = useState(false);
-  const audioRef = { current: null as HTMLAudioElement | null };
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => () => { audioRef.current?.pause(); }, []);
 
   function toggleAudio() {
     if (!sub.file_url || !sub.file_mime?.startsWith("audio")) return;
@@ -23,9 +25,10 @@ function SubmissionRow({ sub }: { sub: UserSubmission }) {
       audioRef.current?.pause();
       setAudioPlaying(false);
     } else {
-      audioRef.current = new Audio(sub.file_url);
-      audioRef.current.addEventListener("ended", () => setAudioPlaying(false));
-      audioRef.current.play().catch(() => {});
+      const audio = new Audio(sub.file_url);
+      audio.addEventListener("ended", () => setAudioPlaying(false), { once: true });
+      audio.play().catch(() => {});
+      audioRef.current = audio;
       setAudioPlaying(true);
     }
   }

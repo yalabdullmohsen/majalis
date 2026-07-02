@@ -7,6 +7,9 @@ type ActiveEvent = AdhanEvent & { id: number };
 export function AdhanNotificationBar() {
   const [events, setEvents] = useState<ActiveEvent[]>([]);
   const counter = useRef(0);
+  const timersRef = useRef<Map<number, ReturnType<typeof setTimeout>>>(new Map());
+
+  useEffect(() => () => { timersRef.current.forEach(clearTimeout); timersRef.current.clear(); }, []);
 
   useEffect(() => {
     const handler = (e: Event) => {
@@ -14,13 +17,18 @@ export function AdhanNotificationBar() {
       const id = ++counter.current;
       setEvents((prev) => [...prev, { ...detail, id }]);
       // Auto-dismiss after 60s
-      setTimeout(() => dismiss(id), 60_000);
+      const t = setTimeout(() => { dismiss(id); timersRef.current.delete(id); }, 60_000);
+      timersRef.current.set(id, t);
     };
     window.addEventListener(ADHAN_EVENT_NAME, handler);
     return () => window.removeEventListener(ADHAN_EVENT_NAME, handler);
   }, []);
 
   function dismiss(id: number) {
+    if (timersRef.current.has(id)) {
+      clearTimeout(timersRef.current.get(id)!);
+      timersRef.current.delete(id);
+    }
     setEvents((prev) => prev.filter((e) => e.id !== id));
   }
 

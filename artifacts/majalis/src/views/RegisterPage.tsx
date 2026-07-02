@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { mapAuthError } from "@/lib/auth-messages";
@@ -18,6 +18,9 @@ export default function RegisterPage() {
   const [success, setSuccess] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [authReady, setAuthReady] = useState(isSupabaseConfigured());
+  const navTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => () => { if (navTimerRef.current) clearTimeout(navTimerRef.current); }, []);
   const authEnabled = authReady;
 
   useEffect(() => {
@@ -72,7 +75,7 @@ export default function RegisterPage() {
 
       if (data?.session) {
         setSuccess("تم إنشاء حسابك بنجاح. جاري تحويلك…");
-        setTimeout(() => navigate("/"), 1200);
+        navTimerRef.current = setTimeout(() => navigate("/"), 1200);
         return;
       }
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { PageHeader } from "@/components/ui-common";
@@ -39,6 +39,8 @@ function ParentView({ userId }: { userId: string }) {
   const [loading, setLoading] = useState(true);
   const [creating, setCreating] = useState(false);
   const [copied, setCopied] = useState<string | null>(null);
+  const copyTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(() => () => { if (copyTimerRef.current) clearTimeout(copyTimerRef.current); }, []);
 
   const loadLinks = async () => {
     const { data } = await supabase
@@ -107,8 +109,9 @@ function ParentView({ userId }: { userId: string }) {
 
   const copyCode = (code: string) => {
     navigator.clipboard.writeText(code).catch(() => {});
+    if (copyTimerRef.current) clearTimeout(copyTimerRef.current);
     setCopied(code);
-    setTimeout(() => setCopied(null), 2000);
+    copyTimerRef.current = setTimeout(() => setCopied(null), 2000);
   };
 
   if (loading) {

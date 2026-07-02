@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
 import {
   loadAdhanPrefs,
@@ -21,8 +21,17 @@ export default function AdhanSettingsPage() {
   const [prefs, setPrefs] = useState<AdhanPreferences>(() => loadAdhanPrefs());
   const [pickerFor, setPickerFor] = useState<PrayerKey | "default" | null>(null);
   const [saved, setSaved] = useState(false);
+  const savedTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => () => { if (savedTimerRef.current) clearTimeout(savedTimerRef.current); }, []);
 
   const refresh = useCallback(() => setPrefs(loadAdhanPrefs()), []);
+
+  function flashSaved() {
+    if (savedTimerRef.current) clearTimeout(savedTimerRef.current);
+    setSaved(true);
+    savedTimerRef.current = setTimeout(() => setSaved(false), 2000);
+  }
 
   function toggleGlobal(enabled: boolean) {
     const next = patchAdhanPrefs({ ...prefs, globalEnabled: enabled });
@@ -32,15 +41,13 @@ export default function AdhanSettingsPage() {
   function setDefaultMuezzin(id: string) {
     const next = patchAdhanPrefs({ ...prefs, defaultMuezzinId: id });
     setPrefs(next);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2000);
+    flashSaved();
   }
 
   function setPrayerMuezzin(key: PrayerKey, id: string) {
     const next = patchPrayerPrefs(key, { muezzinId: id });
     setPrefs(next);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2000);
+    flashSaved();
   }
 
   function togglePrayer(key: PrayerKey, enabled: boolean) {

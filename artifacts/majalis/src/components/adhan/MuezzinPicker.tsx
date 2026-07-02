@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { MUEZZINS, previewAdhan, stopAdhan, type Muezzin } from "@/lib/adhan-audio";
 
 const STYLE_COLOR: Record<string, string> = {
@@ -16,6 +16,12 @@ type Props = {
 
 export function MuezzinPicker({ selected, onSelect, onClose }: Props) {
   const [previewing, setPreviewing] = useState<string | null>(null);
+  const previewTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => () => {
+    stopAdhan();
+    if (previewTimerRef.current) clearTimeout(previewTimerRef.current);
+  }, []);
 
   function handlePreview(m: Muezzin) {
     if (previewing === m.id) {
@@ -25,9 +31,9 @@ export function MuezzinPicker({ selected, onSelect, onClose }: Props) {
     }
     const audio = previewAdhan(m);
     setPreviewing(m.id);
-    audio.addEventListener("ended", () => setPreviewing(null));
-    // Timeout safety
-    setTimeout(() => setPreviewing((p) => p === m.id ? null : p), 16_000);
+    audio.addEventListener("ended", () => setPreviewing(null), { once: true });
+    if (previewTimerRef.current) clearTimeout(previewTimerRef.current);
+    previewTimerRef.current = setTimeout(() => setPreviewing((p) => p === m.id ? null : p), 16_000);
   }
 
   function handleSelect(id: string) {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import { loadAdhanPrefs, patchAdhanPrefs, PRAYER_ARABIC } from "@/lib/adhan-preferences";
@@ -8,16 +8,20 @@ export function HomeAdhanWidget() {
   const { data, countdown } = usePrayerCountdown();
   const [prefs, setPrefs] = useState(() => loadAdhanPrefs());
   const [toggling, setToggling] = useState(false);
+  const togglingTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     setPrefs(loadAdhanPrefs());
   }, []);
 
+  useEffect(() => () => { if (togglingTimerRef.current) clearTimeout(togglingTimerRef.current); }, []);
+
   function toggleNotifications() {
     setToggling(true);
     const next = patchAdhanPrefs({ globalEnabled: !prefs.globalEnabled });
     setPrefs(next);
-    setTimeout(() => setToggling(false), 600);
+    if (togglingTimerRef.current) clearTimeout(togglingTimerRef.current);
+    togglingTimerRef.current = setTimeout(() => setToggling(false), 600);
   }
 
   const muezzin = getMuezzin(prefs.defaultMuezzinId);

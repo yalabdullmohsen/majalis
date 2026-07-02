@@ -93,13 +93,16 @@ function gradeClass(grade: string | null): string {
 function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) => void }) {
   const [copied, setCopied] = useState(false);
   const [saved, setSaved] = useState(false);
+  const copyTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(() => () => { if (copyTimerRef.current) clearTimeout(copyTimerRef.current); }, []);
 
   function handleCopy(e: React.MouseEvent) {
     e.stopPropagation();
     const content = `${h.text}\n\n— ${h.narrator ?? ""} | ${h.source_name ?? ""}`;
     navigator.clipboard.writeText(content).then(() => {
+      if (copyTimerRef.current) clearTimeout(copyTimerRef.current);
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      copyTimerRef.current = setTimeout(() => setCopied(false), 2000);
     });
   }
 
@@ -211,6 +214,7 @@ function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) 
 function HadithDetailModal({ h, onClose }: { h: HadithItem; onClose: () => void }) {
   const [copied, setCopied] = useState(false);
   const overlayRef = useRef<HTMLDivElement>(null);
+  const copyTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
@@ -218,11 +222,14 @@ function HadithDetailModal({ h, onClose }: { h: HadithItem; onClose: () => void 
     return () => window.removeEventListener("keydown", handler);
   }, [onClose]);
 
+  useEffect(() => () => { if (copyTimerRef.current) clearTimeout(copyTimerRef.current); }, []);
+
   function handleCopy() {
     const content = `${h.title ? h.title + "\n" : ""}${h.text}\n\n— ${h.narrator ?? ""} | ${h.source_name ?? ""}`;
     navigator.clipboard.writeText(content).then(() => {
+      if (copyTimerRef.current) clearTimeout(copyTimerRef.current);
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      copyTimerRef.current = setTimeout(() => setCopied(false), 2000);
     });
   }
 

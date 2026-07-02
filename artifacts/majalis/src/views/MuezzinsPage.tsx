@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { MUEZZINS, previewAdhan, stopAdhan, type Muezzin, type MuezzinStyle } from "@/lib/adhan-audio";
@@ -164,11 +164,19 @@ export default function MuezzinsPage() {
   const [defaultSet, setDefaultSet] = useState<string | null>(null);
   const [favorites, setFavorites] = useState<Set<string>>(() => loadFavorites());
   const [community, setCommunity] = useState<CommunityMuezzin[]>([]);
+  const previewTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const defaultTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const defaultMuezzinId = loadAdhanPrefs().defaultMuezzinId;
 
   useEffect(() => {
     loadCommunityMuezzins().then(setCommunity).catch(() => {});
+  }, []);
+
+  useEffect(() => () => {
+    stopAdhan();
+    if (previewTimerRef.current) clearTimeout(previewTimerRef.current);
+    if (defaultTimerRef.current) clearTimeout(defaultTimerRef.current);
   }, []);
 
   function handleToggleFav(id: string) {
@@ -208,14 +216,16 @@ export default function MuezzinsPage() {
     }
     const audio = previewAdhan(m);
     setPreviewing(m.id);
-    audio.addEventListener("ended", () => setPreviewing(null));
-    setTimeout(() => setPreviewing((p) => (p === m.id ? null : p)), 16_000);
+    audio.addEventListener("ended", () => setPreviewing(null), { once: true });
+    if (previewTimerRef.current) clearTimeout(previewTimerRef.current);
+    previewTimerRef.current = setTimeout(() => setPreviewing((p) => (p === m.id ? null : p)), 16_000);
   }
 
   function handleSetDefault(id: string) {
     patchAdhanPrefs({ defaultMuezzinId: id });
     setDefaultSet(id);
-    setTimeout(() => setDefaultSet(null), 2500);
+    if (defaultTimerRef.current) clearTimeout(defaultTimerRef.current);
+    defaultTimerRef.current = setTimeout(() => setDefaultSet(null), 2500);
   }
 
   return (
@@ -416,8 +426,9 @@ export default function MuezzinsPage() {
                   audio.volume = 0.8;
                   audio.play().catch(() => {});
                   setPreviewing(id);
-                  audio.addEventListener("ended", () => setPreviewing((p) => p === id ? null : p));
-                  setTimeout(() => setPreviewing((p) => p === id ? null : p), 16_000);
+                  audio.addEventListener("ended", () => setPreviewing((p) => p === id ? null : p), { once: true });
+                  if (previewTimerRef.current) clearTimeout(previewTimerRef.current);
+                  previewTimerRef.current = setTimeout(() => setPreviewing((p) => p === id ? null : p), 16_000);
                 }}
               />
             ))}
