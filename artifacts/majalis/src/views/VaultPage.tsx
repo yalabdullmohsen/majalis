@@ -245,6 +245,7 @@ export default function VaultPage() {
           type="text"
           className="vault-search"
           placeholder="ابحث في المحفظة…"
+          aria-label="البحث في المحفظة"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           dir="rtl"

@@ -49,6 +49,7 @@ function PublicationInput({
         type="text"
         className="rp-input"
         placeholder="عنوان البحث أو الكتاب أو المقالة…"
+        aria-label="عنوان المنشور"
         value={value}
         onChange={(e) => onChange(e.target.value)}
       />
