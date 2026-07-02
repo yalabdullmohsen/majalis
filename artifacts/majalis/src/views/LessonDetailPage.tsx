@@ -34,6 +34,7 @@ import { resolveLessonPosterUrl } from "@/lib/lesson-image";
 import { sheikhNameKey } from "@/lib/sheikh-name";
 import { SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { KnowledgeRelatedItems } from "@/components/knowledge/KnowledgeRelatedItems";
+import { ScholarFollowButton } from "@/components/ScholarFollowButton";
 
 function buildMapsEmbed(url?: string, mosque?: string, region?: string) {
   if (url?.includes("google.com/maps") || url?.includes("goo.gl/maps") || url?.includes("maps.app")) {
@@ -252,7 +253,12 @@ export default function LessonDetailPage({
           )}
           <div className="lesson-detail-hero__copy">
             {hasValue(sheikhName) && (
-              <p className="lesson-card-pro__sheikh">{sheikhName}</p>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", flexWrap: "wrap" }}>
+                <p className="lesson-card-pro__sheikh" style={{ margin: 0 }}>{sheikhName}</p>
+                {lesson?.sheikhs?.id && (
+                  <ScholarFollowButton sheikhId={lesson.sheikhs.id} compact />
+                )}
+              </div>
             )}
             <h1 className="lesson-detail-title">{unified.title}</h1>
             <div className="lesson-detail-tags">

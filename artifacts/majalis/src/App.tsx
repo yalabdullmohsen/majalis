@@ -129,6 +129,8 @@ const FlashCardsPage = lazy(() => import("@/views/FlashCardsPage"));
 const CarModePage = lazy(() => import("@/views/CarModePage"));
 const MosqueModePage = lazy(() => import("@/views/MosqueModePage"));
 const NotificationSettingsPage = lazy(() => import("@/views/NotificationSettingsPage"));
+const StudyRoomPage = lazy(() => import("@/views/StudyRoomPage"));
+const FamilyModePage = lazy(() => import("@/views/FamilyModePage"));
 const AuthCallbackPage = lazy(() => import("@/views/AuthCallbackPage"));
 const ProphetStoriesPage = lazy(() => import("@/views/ProphetStoriesPage"));
 
@@ -227,6 +229,8 @@ function Router() {
       <Route path="/car-mode"><SafeLazyRoute component={CarModePage} /></Route>
       <Route path="/mosque-mode"><SafeLazyRoute component={MosqueModePage} /></Route>
       <Route path="/notification-settings"><SafeLazyRoute component={NotificationSettingsPage} /></Route>
+      <Route path="/study-room"><SafeLazyRoute component={StudyRoomPage} /></Route>
+      <Route path="/family"><SafeLazyRoute component={FamilyModePage} /></Route>
       <Route path="/auth/callback"><SafeLazyRoute component={AuthCallbackPage} /></Route>
       <Route path="/learning/paths/:slug"><SafeLazyRoute component={LearningPathDetailPage} /></Route>
       <Route path="/learning/paths"><SafeLazyRoute component={LearningPathsPage} /></Route>
