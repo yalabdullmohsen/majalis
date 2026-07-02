@@ -48,6 +48,7 @@ import aiAgentsCronHandler from "../lib/api-handlers/cron/ai-agents.js";
 import scholarlySearchHandler from "../lib/api-handlers/scholarly-search.js";
 import fiqhResearchAssistantHandler from "../lib/api-handlers/fiqh-research-assistant.js";
 import knowledgeGraphHandler from "../lib/api-handlers/knowledge-graph.js";
+import citationsHandler from "../lib/api-handlers/citations.js";
 import { createRateLimiter } from "./rate-limit.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -223,6 +224,17 @@ app.get("/api/knowledge-graph/search",          runHandler(knowledgeGraphHandler
 app.get("/api/knowledge-graph/nodes",           runHandler(knowledgeGraphHandler, "knowledge-graph-nodes"));
 app.get("/api/knowledge-graph",                 runHandler(knowledgeGraphHandler, "knowledge-graph"));
 app.post("/api/knowledge-graph/relationship",   express.json({ limit: "16kb" }), runHandler(knowledgeGraphHandler, "knowledge-graph-rel"));
+
+// ── Citations System ──────────────────────────────────────────────────────
+app.post("/api/citations/create",           express.json({ limit: "8kb" }), runHandler(citationsHandler, "citations-create"));
+app.get("/api/citations/format",            runHandler(citationsHandler, "citations-format"));
+app.get("/api/citations/:slug/qrcode",      runHandler(citationsHandler, "citations-qrcode"));
+app.get("/api/citations/:slug/image",       runHandler(citationsHandler, "citations-image"));
+app.post("/api/citations/:id/save",         express.json({ limit: "4kb" }), runHandler(citationsHandler, "citations-save"));
+app.get("/api/citations/:slug",             runHandler(citationsHandler, "citations-get"));
+app.get("/api/user/citations",              runHandler(citationsHandler, "citations-user-list"));
+app.post("/api/user/citations/folders",     express.json({ limit: "4kb" }), runHandler(citationsHandler, "citations-folders"));
+app.post("/api/user/citations/export",      express.json({ limit: "8kb" }), runHandler(citationsHandler, "citations-export"));
 
 app.get("/api/healthz", (_req, res) => {
   res.json({ ok: true, service: "majalis-web" });

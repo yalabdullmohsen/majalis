@@ -136,6 +136,8 @@ const ResearcherProfilePage = lazy(() => import("@/views/ResearcherProfilePage")
 const InstitutionsPage = lazy(() => import("@/views/InstitutionsPage"));
 const AuthCallbackPage = lazy(() => import("@/views/AuthCallbackPage"));
 const ProphetStoriesPage = lazy(() => import("@/views/ProphetStoriesPage"));
+const CitationPublicPage = lazy(() => import("@/views/CitationPublicPage"));
+const MyCitationsPage = lazy(() => import("@/views/MyCitationsPage"));
 
 function SeoManager() {
   const [location] = useLocation();
@@ -245,6 +247,8 @@ function Router() {
       <Route path="/learning/calendar"><SafeLazyRoute component={LearningCalendarPage} /></Route>
       <Route path="/learning/certificates/:code"><SafeLazyRoute component={CertificateVerifyPage} /></Route>
       <Route path="/my-learning"><SafeLazyRoute component={MyLearningPage} /></Route>
+      <Route path="/my-citations"><SafeLazyRoute component={MyCitationsPage} /></Route>
+      <Route path="/c/:slug"><SafeLazyRoute component={CitationPublicPage} /></Route>
       <Route path="/learning"><Redirect to="/learning/paths" /></Route>
       <Route path="/assistant">
         <ErrorBoundary>

@@ -151,6 +151,7 @@
     "html2canvas": "^1.4.1",
     "next": "^15.1.0",
     "pg": "^8.16.0",
+    "qrcode": "^1.5.4",
     "react": "catalog:",
     "react-dom": "catalog:",
     "wouter": "^3.3.5"
