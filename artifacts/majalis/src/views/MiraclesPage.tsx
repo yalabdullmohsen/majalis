@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useAuth } from "@/components/AuthProvider";
 import { getMiracles } from "@/lib/supabase";
 import { PageHeader, Empty, Chip } from "@/components/ui-common";
 import { AsyncDataView } from "@/components/AsyncDataView";
@@ -16,6 +17,7 @@ export default function MiraclesPage({
 }: {
   initialItems?: any[];
 } = {}) {
+  const { isAdmin } = useAuth();
   const [items, setItems] = useState<any[]>(initialItems ?? []);
   const [loading, setLoading] = useState(!initialItems);
   const [error, setError] = useState<string | null>(null);
@@ -73,7 +75,7 @@ export default function MiraclesPage({
       <p className="miracles-disclaimer">{DISCLAIMER}</p>
 
       <div className="ds-section__head">
-        <p className="ds-section__title" style={{ margin: 0 }}>{items.length} مقالة</p>
+        {isAdmin && <p className="ds-section__title" style={{ margin: 0 }}>{items.length} مقالة</p>}
         <FilterToggle onClick={() => setFiltersOpen(true)} label="تصفية" />
       </div>
 

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { useAuth } from "@/components/AuthProvider";
 import { PageHeader, Loading, Empty } from "@/components/ui-common";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
 import { RulingCard } from "@/components/rulings/RulingCard";
@@ -26,6 +27,7 @@ function useDebouncedValue<T>(value: T, delayMs = 350): T {
 const PAGE_SIZE = 24;
 
 export default function RulingsPage() {
+  const { isAdmin } = useAuth();
   const [items, setItems] = useState<ShariaRulingExtended[]>([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
@@ -46,11 +48,11 @@ export default function RulingsPage() {
   const loadStats = useCallback(async () => {
     const [catStats, totalCount] = await Promise.all([
       getRulingCategoryStats(),
-      getRulingsEncyclopediaTotal(),
+      isAdmin ? getRulingsEncyclopediaTotal() : Promise.resolve(0),
     ]);
     setStats(catStats);
     setEncyclopediaTotal(totalCount);
-  }, []);
+  }, [isAdmin]);
 
   const loadRulings = useCallback(async () => {
     setLoading(true);
@@ -126,7 +128,7 @@ export default function RulingsPage() {
             className={category === "الكل" ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
             onClick={() => handleCategorySelect("الكل")}
           >
-            الكل ({encyclopediaTotal || total})
+            {isAdmin ? `الكل (${encyclopediaTotal || total})` : "الكل"}
           </button>
           {RULINGS_CATEGORY_TREE.slice(0, 8).map((cat) => {
             const count = stats.filter((s) => s.category === cat.name).reduce((n, s) => n + s.count, 0);
@@ -140,7 +142,7 @@ export default function RulingsPage() {
                 }
                 onClick={() => handleCategorySelect(cat.name)}
               >
-                {cat.icon} {cat.name} ({count})
+                {cat.icon} {cat.name}{isAdmin ? ` (${count})` : ""}
               </button>
             );
           })}
@@ -161,11 +163,13 @@ export default function RulingsPage() {
       />
 
       <div className="ds-section__head">
-        <div className="page-stats-row ruling-stats-bar" style={{ marginBottom: 0 }}>
-          <span>{encyclopediaTotal || total} حكم</span>
-          <span>{mainCategories} قسم</span>
-          <span>{stats.length} تصنيف</span>
-        </div>
+        {isAdmin && (
+          <div className="page-stats-row ruling-stats-bar" style={{ marginBottom: 0 }}>
+            <span>{encyclopediaTotal || total} حكم</span>
+            <span>{mainCategories} قسم</span>
+            <span>{stats.length} تصنيف</span>
+          </div>
+        )}
         <FilterToggle onClick={() => setFiltersOpen(true)} label="بحث وتصفية" />
       </div>
 
@@ -201,7 +205,7 @@ export default function RulingsPage() {
                 السابق
               </button>
               <span>
-                صفحة {page} من {totalPages} ({total} حكم)
+                صفحة {page} من {totalPages}{isAdmin ? ` (${total} حكم)` : ""}
               </span>
               <button
                 type="button"

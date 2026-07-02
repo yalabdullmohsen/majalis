@@ -753,6 +753,15 @@ p, li {
   .ds-filter-toggle {
     display: none;
   }
+  /* Hide section head border when only the (invisible) filter toggle remains */
+  .ds-section__head:not(:has(> :not(.ds-filter-toggle))) {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+  .ds-section__head:not(:has(> :not(.ds-filter-toggle)))::after {
+    display: none;
+  }
 }
 
 .ds-sheet__head {
@@ -2232,3 +2241,20 @@ html[data-theme="dark"] .tasbih-wird-pill.is-active {
     grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
   }
 }
+
+/* ── Adhan Notification Bar ─────────────────────────────────────────── */
+@keyframes adhan-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-1.25rem) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+

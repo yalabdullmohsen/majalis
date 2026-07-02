@@ -376,17 +376,19 @@ export async function getApprovedFawaid() {
   );
 }
 
-export async function getVerifiedHadith(options: { limit?: number; collection?: string } = {}) {
+export async function getVerifiedHadith(options: { limit?: number; collection?: string; chapter?: string } = {}) {
   return safeSupabaseQuery(
     "getVerifiedHadith",
     () => {
       let q = supabase
         .from("verified_hadith_items")
-        .select("id, title, text, narrator, source_name, grade, collection, explanation, keywords, created_at")
+        .select("id, title, text, narrator, source_name, grade, collection, chapter, explanation, keywords, hadith_number, metadata, created_at")
         .eq("verification_status", "verified")
-        .order("created_at", { ascending: false })
-        .limit(options.limit ?? 200);
+        .order("collection", { ascending: true })
+        .order("hadith_number", { ascending: true })
+        .limit(options.limit ?? 500);
       if (options.collection) q = q.eq("collection", options.collection);
+      if (options.chapter) q = q.eq("chapter", options.chapter);
       return q;
     },
     [],
@@ -558,6 +560,11 @@ export async function adminGetDashboardStats() {
     { count: trans },
     { count: todayViews },
     { count: sheikhs },
+    { count: hadith },
+    { count: stories },
+    { count: miracles },
+    { count: rulings },
+    { count: fiqhItems },
     { data: recentReports },
     { data: lessonRows },
     { data: recentLessons },
@@ -573,6 +580,11 @@ export async function adminGetDashboardStats() {
     supabase.from("transcriptions").select("*", { count: "exact", head: true }),
     supabase.from("content_views").select("*", { count: "exact", head: true }).gte("viewed_at", startOfDay.toISOString()),
     supabase.from("sheikhs").select("*", { count: "exact", head: true }),
+    supabase.from("verified_hadith_items").select("*", { count: "exact", head: true }).eq("verification_status", "verified"),
+    supabase.from("akp_stories").select("*", { count: "exact", head: true }),
+    supabase.from("scientific_miracles").select("*", { count: "exact", head: true }).eq("status", "approved"),
+    supabase.from("sharia_rulings").select("*", { count: "exact", head: true }),
+    supabase.from("fiqh_council_items").select("*", { count: "exact", head: true }),
     supabase.from("error_reports").select("*").eq("status", "pending").order("created_at", { ascending: false }).limit(8),
     supabase.from("lessons").select("activity_type, is_course, status"),
     supabase.from("lessons").select("id, title, updated_at, activity_type").order("updated_at", { ascending: false }).limit(6),
@@ -637,6 +649,11 @@ export async function adminGetDashboardStats() {
       todayViews: todayViews || 0,
       totalTranscriptions: trans || 0,
       totalSheikhs: sheikhs || 0,
+      totalHadith: hadith || 0,
+      totalStories: stories || 0,
+      totalMiracles: miracles || 0,
+      totalRulings: rulings || 0,
+      totalFiqhItems: fiqhItems || 0,
       coursesCount,
       lecturesCount,
       regularLessonsCount: lessonsCount,

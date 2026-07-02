@@ -27,7 +27,7 @@ export default async function FawaidPage() {
       <section className="page-shell" aria-label="فهرس الفوائد">
         <h1 className="home-section-title">الفوائد الدينية</h1>
         <p className="seo-listing-intro">
-          {fawaid.length.toLocaleString("ar-EG")} فائدة مختصرة وموثقة.
+          فوائد دينية مختصرة وموثقة بالمصادر والمراجع.
         </p>
         <div className="seo-listing-links">
           {fawaid.slice(0, 10).map((item) => (

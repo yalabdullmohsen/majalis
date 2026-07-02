@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
+import { useAuth } from "@/components/AuthProvider";
 import { PageHeader, Loading, Empty } from "@/components/ui-common";
 import { PlatformContentCard } from "@/components/platform/ContentDetailLayout";
 import { FiqhCouncilSubnav } from "./FiqhCouncilPage";
@@ -25,6 +26,7 @@ function useDebouncedValue<T>(value: T, delayMs = 350): T {
 }
 
 export default function FiqhCouncilAdvancedSearchPage() {
+  const { isAdmin } = useAuth();
   const [query, setQuery] = useState("");
   const [type, setType] = useState("الكل");
   const [category, setCategory] = useState("الكل");
@@ -123,7 +125,7 @@ export default function FiqhCouncilAdvancedSearchPage() {
       </div>
 
       <div className="page-stats-row">
-        <span>{loading ? "..." : `${results.length} نتيجة`}</span>
+        {isAdmin && <span>{loading ? "..." : `${results.length} نتيجة`}</span>}
         <Link href="/fiqh-council/compare" className="fiqh-council-section-link">مقارنة القرارات</Link>
       </div>
 

@@ -1,4 +1,5 @@
 import { Link } from "wouter";
+import { useAuth } from "@/components/AuthProvider";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { useEffect, useMemo, useState } from "react";
 import { getLibrary } from "@/lib/supabase";
@@ -13,6 +14,7 @@ export default function LibraryPage({
 }: {
   initialItems?: any[];
 } = {}) {
+  const { isAdmin } = useAuth();
   const [items, setItems] = useState<any[]>(initialItems ?? []);
   const [loading, setLoading] = useState(!initialItems);
   const [category, setCategory] = useState("الكل");
@@ -74,7 +76,7 @@ export default function LibraryPage({
       eyebrow="الأرشيف العلمي"
       title="المكتبة العلمية"
       subtitle="كتب أساسية في الحديث والتفسير والعقيدة والفقه — مرتبة وموثقة."
-      stats={[{ label: "كتاب", value: filtered.length }]}
+      stats={isAdmin ? [{ label: "كتاب", value: filtered.length }] : []}
       filters={filtersPanel}
       filtersOpen={filtersOpen}
       onFiltersOpenChange={setFiltersOpen}
