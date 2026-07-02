@@ -23,6 +23,8 @@ export function usePublishedAdhkarItems() {
       const local = getPublishedAdhkarItems();
       return mergeAdhkarSources(local, remote);
     },
+    // Seed local data so UI renders immediately without a loading flash (eliminates CLS)
+    initialData: () => getPublishedAdhkarItems(),
     staleTime: 30_000,
   });
 }
