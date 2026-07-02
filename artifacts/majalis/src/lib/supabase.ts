@@ -1075,7 +1075,7 @@ export async function upsertQuizSeedToDb(): Promise<{ ok: boolean; synced: numbe
   }));
   try {
     // insert-only: skip duplicates (question+section may not be unique constraint; use DO NOTHING)
-    const { data, error } = await supabase.from("quiz_questions").insert(rows);
+    const { error } = await supabase.from("quiz_questions").insert(rows);
     if (error) {
       // If column doesn't exist yet, surface a clear message
       if (error.message?.includes("column") || error.code === "42703") {

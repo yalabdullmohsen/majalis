@@ -14,8 +14,6 @@ const LESSON_TOPICS = ["فقه", "عقيدة", "تفسير", "حديث", "سير
 
 const MAX_AUDIO_MB = 30;
 const MAX_VIDEO_MB = 200;
-const AUDIO_MIME   = ["audio/mpeg", "audio/mp4", "audio/ogg", "audio/wav", "audio/aac"];
-const VIDEO_MIME   = ["video/mp4", "video/webm", "video/ogg", "audio/mpeg", "audio/mp4"];
 
 // ─── File Drop Zone ────────────────────────────────────────────────────────────
 function FileDropZone({ accept, maxMb, onFile, file, hint }: {

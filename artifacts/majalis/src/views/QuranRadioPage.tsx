@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Link } from "wouter";
-import { RADIO_STATIONS, LIVE_CHANNELS, loadLastRadioId, saveLastRadioId } from "@/lib/quran-radio";
+import { RADIO_STATIONS, LIVE_CHANNELS, saveLastRadioId } from "@/lib/quran-radio";
 import { useRadioPlayer } from "@/hooks/useRadioPlayer";
 import "@/styles/quran.css";
 
@@ -16,12 +16,9 @@ const RADIO_STATE_LABELS = {
 
 export default function QuranRadioPage() {
   const radio = useRadioPlayer();
-  const [lastId, setLastId] = useState(loadLastRadioId);
-
   useEffect(() => {
     if (radio.station) {
       saveLastRadioId(radio.station.id);
-      setLastId(radio.station.id);
     }
   }, [radio.station]);
 

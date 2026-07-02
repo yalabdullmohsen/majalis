@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { getQaCategories, getQaQuestions } from "@/lib/supabase";
 import { RequestManager } from "@/lib/request-manager";
 import { QA_DISCLAIMER } from "@/lib/theme";
-import { PageHeader, Empty, QaSkeleton } from "@/components/ui-common";
+import { PageHeader, QaSkeleton } from "@/components/ui-common";
 import { PageLoadingGuard } from "@/components/PageLoadingGuard";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
 import { DEMO_QA, DEMO_QA_CATEGORIES } from "@/lib/demo-content";

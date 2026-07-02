@@ -33,38 +33,6 @@ function useTwitterEmbed(ref: React.RefObject<HTMLDivElement | null>) {
   }, [ref]);
 }
 
-function SheikhAvatar({ name, handle }: { name: string; handle?: string }) {
-  const initials = name.trim().split(/\s+/).slice(0, 2).map((w) => w[0]).join("");
-  const colors = ["#1b5e3b", "#7c5e1b", "#1b3a5e", "#5e1b1b", "#3b1b5e", "#1b5e56"];
-  const colorIdx = name.split("").reduce((a, c) => a + c.charCodeAt(0), 0) % colors.length;
-  const bg = colors[colorIdx];
-
-  if (handle) {
-    return (
-      <img
-        src={`https://unavatar.io/twitter/${handle}?fallback=false`}
-        alt={name}
-        className="sheikh-avatar sheikh-avatar--photo"
-        onError={(e) => {
-          const el = e.currentTarget as HTMLImageElement;
-          el.style.display = "none";
-          const sib = el.nextElementSibling as HTMLElement | null;
-          if (sib) sib.style.display = "flex";
-        }}
-        loading="lazy"
-      />
-    );
-  }
-  return (
-    <span
-      className="sheikh-avatar sheikh-avatar--initials"
-      style={{ background: bg }}
-      aria-hidden="true"
-    >
-      {initials}
-    </span>
-  );
-}
 
 function SheikhCard({ sheikh }: { sheikh: (typeof KUWAIT_SHEIKHS)[number] }) {
   return (

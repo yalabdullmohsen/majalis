@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { ADHAN_EVENT_NAME, type AdhanEvent } from "@/lib/adhan-scheduler";
-import { stopAdhan, isAdhanPlaying } from "@/lib/adhan-audio";
+import { stopAdhan } from "@/lib/adhan-audio";
 
 type ActiveEvent = AdhanEvent & { id: number };
 

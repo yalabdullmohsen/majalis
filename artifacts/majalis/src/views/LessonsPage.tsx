@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState, useCallback } from "react";
 import { useLocation } from "wouter";
-import { PageHeader, ErrorState, Empty } from "@/components/ui-common";
+import { PageHeader } from "@/components/ui-common";
 import { PageLoadingGuard } from "@/components/PageLoadingGuard";
 import { useAuth } from "@/components/AuthProvider";
 import { UnifiedLessonCard } from "@/components/lessons/UnifiedLessonCard";

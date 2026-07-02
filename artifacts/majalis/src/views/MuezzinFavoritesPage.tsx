@@ -31,7 +31,7 @@ export default function MuezzinFavoritesPage() {
     setFavorites(loadFavorites());
   }
 
-  function handlePreview(id: string, audioUrl: string) {
+  function handlePreview(id: string, _audioUrl: string) {
     if (previewing === id) {
       stopAdhan();
       setPreviewing(null);

@@ -34,7 +34,7 @@ const SurahStoryDetailPage = lazy(() =>
 );
 const QuranRadioPage = lazy(() => import("@/views/QuranRadioPage"));
 const PrayerTimesPage = lazy(() => import("@/views/PrayerTimesPage"));
-const PrayerRanksPage = lazy(() => import("@/views/PrayerRanksPage"));
+
 const QiblaPage = lazy(() => import("@/views/QiblaPage"));
 const TasbihPage = lazy(() => import("@/views/TasbihPage"));
 const DailyWirdPage = lazy(() => import("@/views/DailyWirdPage"));

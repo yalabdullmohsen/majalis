@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "@/components/AuthProvider";
 import { getMiracles } from "@/lib/supabase";
-import { PageHeader, Empty, Chip } from "@/components/ui-common";
+import { PageHeader, Chip } from "@/components/ui-common";
 import { AsyncDataView } from "@/components/AsyncDataView";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
 import { MIRACLE_CATEGORIES } from "@/lib/miracles-seed";

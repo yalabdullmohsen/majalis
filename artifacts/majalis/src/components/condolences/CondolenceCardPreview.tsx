@@ -133,7 +133,7 @@ function ClassicElegant({ form, palette, font }: { form: BuilderForm; palette: C
   );
 }
 
-function DarkLuxury({ form, palette, font }: { form: BuilderForm; palette: ColorPalette; font: Font }) {
+function DarkLuxury({ form, palette: _palette, font }: { form: BuilderForm; palette: ColorPalette; font: Font }) {
   const gold = "#d4af37";
   const goldLight = "#f0d060";
   return (
@@ -185,7 +185,7 @@ function DarkLuxury({ form, palette, font }: { form: BuilderForm; palette: Color
   );
 }
 
-function IslamicGreen({ form, palette, font }: { form: BuilderForm; palette: ColorPalette; font: Font }) {
+function IslamicGreen({ form, palette: _palette, font }: { form: BuilderForm; palette: ColorPalette; font: Font }) {
   const green = "#1b5e20";
   const lightGreen = "#4caf50";
   return (
@@ -240,7 +240,7 @@ function IslamicGreen({ form, palette, font }: { form: BuilderForm; palette: Col
   );
 }
 
-function ModernMinimal({ form, palette, font }: { form: BuilderForm; palette: ColorPalette; font: Font }) {
+function ModernMinimal({ form, palette: _palette, font }: { form: BuilderForm; palette: ColorPalette; font: Font }) {
   const hasPhoto = Boolean(form.imageDataUrl);
   return (
     <div style={{
@@ -296,7 +296,7 @@ function ModernMinimal({ form, palette, font }: { form: BuilderForm; palette: Co
   );
 }
 
-function WarmCream({ form, palette, font }: { form: BuilderForm; palette: ColorPalette; font: Font }) {
+function WarmCream({ form, palette: _palette, font }: { form: BuilderForm; palette: ColorPalette; font: Font }) {
   const brown = "#3e2210";
   const accent = "#c8874a";
   return (
@@ -353,7 +353,7 @@ function WarmCream({ form, palette, font }: { form: BuilderForm; palette: ColorP
   );
 }
 
-function BlueCalm({ form, palette, font }: { form: BuilderForm; palette: ColorPalette; font: Font }) {
+function BlueCalm({ form, palette: _palette, font }: { form: BuilderForm; palette: ColorPalette; font: Font }) {
   return (
     <div style={{ width: "100%", height: "100%", background: "linear-gradient(160deg, #0d2b5e 0%, #1565c0 70%, #1976d2 100%)", fontFamily: font.css, direction: "rtl", textAlign: "center" }}>
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "60px 60px 50px", gap: 28, height: "100%", boxSizing: "border-box" }}>
@@ -396,7 +396,7 @@ function BlueCalm({ form, palette, font }: { form: BuilderForm; palette: ColorPa
   );
 }
 
-function SoftRose({ form, palette, font }: { form: BuilderForm; palette: ColorPalette; font: Font }) {
+function SoftRose({ form, palette: _palette, font }: { form: BuilderForm; palette: ColorPalette; font: Font }) {
   const deepRose = "#880e4f";
   const rose = "#c2185b";
   return (
@@ -443,7 +443,7 @@ function SoftRose({ form, palette, font }: { form: BuilderForm; palette: ColorPa
   );
 }
 
-function BalancedGray({ form, palette, font }: { form: BuilderForm; palette: ColorPalette; font: Font }) {
+function BalancedGray({ form, palette: _palette, font }: { form: BuilderForm; palette: ColorPalette; font: Font }) {
   return (
     <div style={{ width: "100%", height: "100%", background: "#555555", fontFamily: font.css, direction: "rtl", textAlign: "center" }}>
       {/* Top bar */}

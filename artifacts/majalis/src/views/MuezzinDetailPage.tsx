@@ -5,7 +5,6 @@ import {
   playAdhan,
   stopAdhan,
   MUEZZINS,
-  type Muezzin,
 } from "@/lib/adhan-audio";
 import {
   loadAdhanPrefs,

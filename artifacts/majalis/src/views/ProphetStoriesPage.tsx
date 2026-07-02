@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Link, useLocation } from "wouter";
+import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { PageHeader } from "@/components/ui-common";
 import {
@@ -162,7 +162,6 @@ function ProphetCard({ prophet, onClick }: { prophet: ProphetRecord; onClick: ()
 
 export default function ProphetStoriesPage() {
   const { isAdmin } = useAuth();
-  const [, navigate] = useLocation();
   const [search, setSearch] = useState("");
   const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
 

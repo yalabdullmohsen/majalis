@@ -8,7 +8,8 @@ import NotificationBell from "./NotificationBell";
 import { SearchSuggestions } from "./SearchSuggestions";
 import { SideNavDrawer } from "./SideNavDrawer";
 import { MobileMoreMenu } from "./MobileMoreMenu";
-import { PRIMARY_NAV } from "@/lib/navigation";
+
+
 import { C } from "@/lib/theme";
 import { useMobileNavState } from "@/hooks/useMobileNavState";
 
