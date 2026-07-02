@@ -131,6 +131,9 @@ const MosqueModePage = lazy(() => import("@/views/MosqueModePage"));
 const NotificationSettingsPage = lazy(() => import("@/views/NotificationSettingsPage"));
 const StudyRoomPage = lazy(() => import("@/views/StudyRoomPage"));
 const FamilyModePage = lazy(() => import("@/views/FamilyModePage"));
+const VaultPage = lazy(() => import("@/views/VaultPage"));
+const ResearcherProfilePage = lazy(() => import("@/views/ResearcherProfilePage"));
+const InstitutionsPage = lazy(() => import("@/views/InstitutionsPage"));
 const AuthCallbackPage = lazy(() => import("@/views/AuthCallbackPage"));
 const ProphetStoriesPage = lazy(() => import("@/views/ProphetStoriesPage"));
 
@@ -231,6 +234,9 @@ function Router() {
       <Route path="/notification-settings"><SafeLazyRoute component={NotificationSettingsPage} /></Route>
       <Route path="/study-room"><SafeLazyRoute component={StudyRoomPage} /></Route>
       <Route path="/family"><SafeLazyRoute component={FamilyModePage} /></Route>
+      <Route path="/vault"><SafeLazyRoute component={VaultPage} /></Route>
+      <Route path="/researcher"><SafeLazyRoute component={ResearcherProfilePage} /></Route>
+      <Route path="/institutions"><SafeLazyRoute component={InstitutionsPage} /></Route>
       <Route path="/auth/callback"><SafeLazyRoute component={AuthCallbackPage} /></Route>
       <Route path="/learning/paths/:slug"><SafeLazyRoute component={LearningPathDetailPage} /></Route>
       <Route path="/learning/paths"><SafeLazyRoute component={LearningPathsPage} /></Route>

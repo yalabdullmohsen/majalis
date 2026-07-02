@@ -17,6 +17,7 @@ import { HomePrayerTimes } from "@/components/home/HomePrayerTimes";
 import { HomeFeaturedLibrary } from "@/components/home/HomeFeaturedLibrary";
 import { HomeLatestUpdates } from "@/components/home/HomeLatestUpdates";
 import { HomeMoreSections } from "@/components/home/HomeMoreSections";
+import { HomeLearningSeasonsWidget } from "@/components/home/HomeLearningSeasonsWidget";
 import { IslamicDivider } from "@/components/design/IslamicDivider";
 import { IslamicOrnament } from "@/components/design/IslamicOrnament";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
@@ -46,6 +47,9 @@ const QUICK_LINKS = [
   { href: "/mosque-mode", label: "وضع المسجد", meta: "وصول سريع" },
   { href: "/study-room", label: "غرفة الدراسة", meta: "مؤقت Pomodoro" },
   { href: "/family", label: "الوضع العائلي", meta: "تابع أبناءك" },
+  { href: "/vault", label: "المحفظة العلمية", meta: "محفوظاتك وملاحظاتك" },
+  { href: "/researcher", label: "ملف الباحث", meta: "سيرتك البحثية" },
+  { href: "/institutions", label: "دليل المؤسسات", meta: "مساجد وجامعات" },
 ];
 
 function SafeHomeSection({ name, children }: { name: string; children: React.ReactNode }) {
@@ -131,6 +135,12 @@ export default function HomePage({
 
         <SafeHomeSection name="أحدث الدروس">
           <HomeUpcomingLessons initialLessons={initialFeaturedLessons} />
+        </SafeHomeSection>
+
+        <IslamicDivider />
+
+        <SafeHomeSection name="مواسم التعلّم">
+          <HomeLearningSeasonsWidget />
         </SafeHomeSection>
 
         <IslamicDivider />
