@@ -2978,3 +2978,360 @@ html[data-theme="dark"] .tasbih-wird-pill.is-active {
 
 .fc-empty { text-align: center; padding: 3rem 1rem; color: var(--majalis-ink-soft); }
 .fc-session { display: flex; flex-direction: column; }
+
+/* ══════════════════════════════════════════════════════════════════════
+   المرحلة 3 — وضع السيارة + وضع المسجد + الإشعارات
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── وضع السيارة ──────────────────────────────────────────────────── */
+.car-mode {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: #0d1117;
+  color: #f0f0f0;
+  padding: 0;
+  direction: rtl;
+  user-select: none;
+}
+.car-mode--loading { align-items: center; justify-content: center; }
+
+.car-mode__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.car-mode__exit {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.55);
+  text-decoration: none;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 0.5rem;
+}
+.car-mode__label { font-size: 1rem; font-weight: 700; color: #fff; }
+
+.car-mode__now-playing {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  gap: 0.5rem;
+}
+.car-mode__disk {
+  font-size: 4rem;
+  margin-bottom: 0.75rem;
+  animation: carDiskSpin 4s linear infinite paused;
+}
+.car-mode--playing .car-mode__disk { animation-play-state: running; }
+@keyframes carDiskSpin { to { transform: rotate(360deg); } }
+.car-mode__category { font-size: 0.85rem; color: rgba(255,255,255,0.45); letter-spacing: 0.08em; }
+.car-mode__title {
+  font-size: clamp(1.25rem, 5vw, 2rem);
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.4;
+  max-width: 600px;
+}
+.car-mode__speaker { font-size: 1rem; color: rgba(255,255,255,0.6); }
+.car-mode__counter { font-size: 0.8rem; color: rgba(255,255,255,0.3); }
+
+.car-mode__controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 1.5rem;
+}
+.car-mode__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background 0.15s, transform 0.1s;
+  font-size: 1.75rem;
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+}
+.car-mode__btn:active { transform: scale(0.93); }
+.car-mode__btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.car-mode__btn--sm { width: 64px; height: 64px; }
+.car-mode__btn--play {
+  width: 88px;
+  height: 88px;
+  font-size: 2.25rem;
+  background: var(--ds-emerald, #2a7a4f);
+  box-shadow: 0 4px 20px rgba(42,122,79,0.45);
+}
+.car-mode__btn--play:hover { background: var(--ds-emerald-deep, #1d5c3a); }
+
+.car-mode__playlist {
+  max-height: 240px;
+  overflow-y: auto;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding: 0.5rem 0;
+}
+.car-mode__playlist-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.25rem;
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,0.65);
+  cursor: pointer;
+  text-align: right;
+  direction: rtl;
+  transition: background 0.1s;
+  font-size: 0.88rem;
+}
+.car-mode__playlist-item:hover { background: rgba(255,255,255,0.06); }
+.car-mode__playlist-item--active { background: rgba(42,122,79,0.2); color: #fff; }
+.car-mode__playlist-num { flex-shrink: 0; width: 24px; font-size: 0.75rem; color: rgba(255,255,255,0.3); }
+.car-mode__playlist-title { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.car-mode__playlist-speaker { flex-shrink: 0; font-size: 0.72rem; color: rgba(255,255,255,0.35); }
+
+.car-mode__empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  color: rgba(255,255,255,0.5);
+}
+.car-mode__back-btn {
+  padding: 0.65rem 1.5rem;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 0.5rem;
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+/* ── وضع المسجد ─────────────────────────────────────────────────── */
+.mosque-mode {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: #f9f7f1;
+  direction: rtl;
+}
+.mosque-mode__silence-alert {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1.25rem;
+  background: #1d5c3a;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.mosque-mode__silence-alert span:first-child { font-size: 1.25rem; }
+.mosque-mode__silence-dismiss {
+  margin-right: auto;
+  background: rgba(255,255,255,0.2);
+  border: none;
+  color: #fff;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mosque-mode__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+.mosque-mode__exit {
+  font-size: 1rem;
+  color: #5c564c;
+  text-decoration: none;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+}
+.mosque-mode__label { font-size: 1rem; font-weight: 700; color: #1d5c3a; }
+
+.mosque-mode__prayer-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  background: linear-gradient(135deg, #1d5c3a 0%, #2a7a4f 100%);
+  color: #fff;
+  gap: 0.4rem;
+}
+.mosque-mode__prayer-label { font-size: 0.85rem; opacity: 0.75; }
+.mosque-mode__prayer-name { font-size: 2.25rem; font-weight: 900; margin: 0; }
+.mosque-mode__countdown {
+  font-size: clamp(2.5rem, 10vw, 4rem);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.05em;
+}
+.mosque-mode__prayer-time { font-size: 1rem; opacity: 0.7; }
+
+.mosque-mode__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  padding: 1.5rem;
+  flex: 1;
+}
+@media (min-width: 480px) {
+  .mosque-mode__grid { grid-template-columns: repeat(3, 1fr); }
+}
+.mosque-mode__link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1.25rem 0.75rem;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 1rem;
+  text-decoration: none;
+  color: #1a1a1a;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  transition: transform 0.12s, box-shadow 0.12s;
+}
+.mosque-mode__link:active { transform: scale(0.97); }
+.mosque-mode__link-icon { font-size: 2rem; }
+.mosque-mode__link-label { font-size: 0.88rem; font-weight: 700; color: #1d5c3a; text-align: center; }
+.mosque-mode__pwa-hint {
+  text-align: center;
+  font-size: 0.78rem;
+  color: #9e9186;
+  padding: 1rem;
+}
+
+/* ── إعدادات الإشعارات ──────────────────────────────────────────── */
+.notif-banner {
+  padding: 0.8rem 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+.notif-banner--warn { background: #fef9c3; color: #854d0e; border: 1px solid #fde68a; }
+.notif-banner--err  { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
+
+.notif-card {
+  background: var(--majalis-panel, #fff);
+  border: 1px solid var(--ds-line-color);
+  border-radius: var(--ds-radius-lg, 0.625rem);
+  padding: 1.1rem 1.25rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+.notif-card__title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--majalis-ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0 0 0.25rem;
+}
+
+.notif-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  cursor: pointer;
+}
+.notif-row--disabled { opacity: 0.45; pointer-events: none; }
+.notif-row__text { display: flex; flex-direction: column; gap: 0.15rem; }
+.notif-row__label { font-size: 0.95rem; font-weight: 600; color: var(--majalis-ink); }
+.notif-row__sub { font-size: 0.78rem; color: var(--majalis-ink-soft); }
+
+.notif-toggle {
+  flex-shrink: 0;
+  width: 48px; height: 27px;
+  border-radius: 999px;
+  background: var(--ds-line-color, #ddd);
+  position: relative;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.notif-toggle--on { background: var(--ds-emerald, #2a7a4f); }
+.notif-toggle__thumb {
+  position: absolute;
+  top: 3px; right: 3px;
+  width: 21px; height: 21px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  transition: right 0.2s;
+}
+.notif-toggle--on .notif-toggle__thumb { right: calc(100% - 24px); }
+
+.notif-time {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.notif-time__label { font-size: 0.88rem; color: var(--majalis-ink-soft); margin-left: 0.5rem; }
+.notif-time__input {
+  width: 60px;
+  padding: 0.4rem 0.6rem;
+  border: 1.5px solid var(--ds-line-color);
+  border-radius: 0.4rem;
+  font-size: 1rem;
+  text-align: center;
+  color: var(--majalis-ink);
+  background: var(--majalis-panel, #fff);
+}
+.notif-time__input:disabled { opacity: 0.45; }
+.notif-time__sep { font-size: 1.2rem; font-weight: 700; color: var(--majalis-ink-soft); }
+.notif-time__hint { font-size: 0.75rem; color: var(--majalis-ink-soft); margin-top: 0.25rem; }
+
+.notif-test-btn {
+  width: 100%;
+  padding: 0.7rem;
+  background: transparent;
+  border: 1.5px solid var(--ds-emerald);
+  border-radius: var(--ds-radius, 0.5rem);
+  color: var(--ds-emerald-deep);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.notif-test-btn:hover { background: color-mix(in srgb, var(--ds-emerald) 8%, transparent); }
+
+.notif-saved {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--ds-emerald-deep);
+  color: #fff;
+  padding: 0.55rem 1.25rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  animation: slideInUp 0.25s ease;
+  z-index: 200;
+}

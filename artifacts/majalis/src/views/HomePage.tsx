@@ -42,6 +42,8 @@ const QUICK_LINKS = [
   { href: "/submit?type=lesson", label: "أضف درس", meta: "شارك علمك" },
   { href: "/learning-plan", label: "خطة التعلّم", meta: "مسار شخصي" },
   { href: "/flashcards", label: "البطاقات", meta: "مراجعة ذكية" },
+  { href: "/car-mode", label: "وضع السيارة", meta: "صوتيات أثناء القيادة" },
+  { href: "/mosque-mode", label: "وضع المسجد", meta: "وصول سريع" },
 ];
 
 function SafeHomeSection({ name, children }: { name: string; children: React.ReactNode }) {
