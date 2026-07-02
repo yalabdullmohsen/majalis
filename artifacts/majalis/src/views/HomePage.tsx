@@ -202,6 +202,45 @@ export default function HomePage({
 
         <IslamicDivider />
 
+        {/* بطاقة خارطة طالب العلم */}
+        <section className="home-section ds-section">
+          <Link href="/learning-path" style={{ textDecoration: "none", display: "block" }}>
+            <div style={{
+              background: "linear-gradient(135deg, #064e3b, #065f46)",
+              borderRadius: "var(--ds-radius-lg, 0.625rem)",
+              padding: "1.5rem",
+              display: "flex",
+              alignItems: "center",
+              gap: "1.25rem",
+              boxShadow: "var(--ds-shadow-sm)",
+              transition: "box-shadow 0.15s",
+              overflow: "hidden",
+              position: "relative",
+            }}
+            onMouseEnter={(e) => { (e.currentTarget as HTMLDivElement).style.boxShadow = "var(--ds-shadow)"; }}
+            onMouseLeave={(e) => { (e.currentTarget as HTMLDivElement).style.boxShadow = "var(--ds-shadow-sm)"; }}
+            >
+              <div style={{ fontSize: "2.8rem", flexShrink: 0 }}>🗺️</div>
+              <div style={{ flex: 1 }}>
+                <p style={{ margin: "0 0 0.3rem", fontSize: "1.05rem", fontWeight: 800, color: "#fff" }}>
+                  ابدأ طلب العلم — خارطة طالب العلم
+                </p>
+                <p style={{ margin: 0, fontSize: "0.82rem", color: "#a7f3d0", lineHeight: 1.6 }}>
+                  مسار علمي منظم في العقيدة والحديث والفقه والتفسير وغيرها،
+                  كتاباً كتاباً من المبتدئ إلى المتقدم.
+                </p>
+              </div>
+              <span style={{
+                flexShrink: 0,
+                color: "#a7f3d0",
+                fontSize: "1.2rem",
+              }}>←</span>
+            </div>
+          </Link>
+        </section>
+
+        <IslamicDivider />
+
         <SafeHomeSection name="الدورات">
           <HomeUpcomingCourses />
         </SafeHomeSection>

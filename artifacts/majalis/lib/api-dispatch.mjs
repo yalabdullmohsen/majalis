@@ -145,6 +145,8 @@ export const API_ROUTES = [
   { prefix: "/api/knowledge-graph", module: "./api-handlers/knowledge-graph.js", allowGet: true },
   // ── التوصيات الذكية ───────────────────────────────────────────────────────
   { prefix: "/api/recommendations", module: "./api-handlers/recommendations.js", allowGet: true },
+  // ── خارطة طالب العلم ──────────────────────────────────────────────────────
+  { prefix: "/api/learning-path", module: "./api-handlers/learning-path.js", allowGet: true },
   // ── دليل الجامعات ─────────────────────────────────────────────────────────
   { prefix: "/api/cron/universities-review", module: "./api-handlers/cron/universities-review.js", allowGet: true, exact: true },
   { prefix: "/api/admin/reminders",    module: "./api-handlers/universities-vercel.js", allowGet: true },
