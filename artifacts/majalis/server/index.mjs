@@ -52,6 +52,8 @@ import citationsHandler from "../lib/api-handlers/citations.js";
 import recommendationsHandler from "../lib/api-handlers/recommendations.js";
 import contentScoringHandler from "../lib/api-handlers/cron/content-scoring.js";
 import ragResearchHandler from "../lib/api-handlers/rag-research.js";
+import universitiesHandler from "../lib/api-handlers/universities.js";
+import universitiesReviewCron from "../lib/api-handlers/cron/universities-review.js";
 import { createRateLimiter } from "./rate-limit.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -122,6 +124,23 @@ app.post("/api/rag/library/save",   express.json({ limit: "16kb" }), runHandler(
 app.get("/api/rag/library",         runHandler(ragResearchHandler, "rag-library"));
 app.delete("/api/rag/library/:id",  runHandler(ragResearchHandler, "rag-library-delete"));
 app.get("/api/rag/index/status",    runHandler(ragResearchHandler, "rag-index-status"));
+
+// ── دليل الجامعات الشرعية ──────────────────────────────────────────────────
+app.get("/api/universities",                 runHandler(universitiesHandler, "list"));
+app.get("/api/universities/:slug",           runHandler(universitiesHandler, "detail"));
+app.post("/api/universities/compare",        express.json({ limit: "4kb" }), runHandler(universitiesHandler, "compare"));
+app.get("/api/admin/universities",           runHandler(universitiesHandler, "admin-list"));
+app.post("/api/admin/universities",          express.json({ limit: "16kb" }), runHandler(universitiesHandler, "admin-create"));
+app.put("/api/admin/universities/:id",       express.json({ limit: "16kb" }), (req, res) => universitiesHandler(req, res, "admin-update"));
+app.post("/api/admin/universities/:universityId/programs", express.json({ limit: "8kb" }), (req, res) => universitiesHandler(req, res, "admin-program-add"));
+app.put("/api/admin/programs/:id",           express.json({ limit: "8kb" }), (req, res) => universitiesHandler(req, res, "admin-program-update"));
+app.delete("/api/admin/programs/:id",        (req, res) => universitiesHandler(req, res, "admin-program-delete"));
+app.post("/api/admin/requirements/:programId", express.json({ limit: "16kb" }), (req, res) => universitiesHandler(req, res, "admin-requirements"));
+app.post("/api/admin/faqs/:universityId",    express.json({ limit: "4kb" }), (req, res) => universitiesHandler(req, res, "admin-faq-add"));
+app.delete("/api/admin/faqs/:id",            (req, res) => universitiesHandler(req, res, "admin-faq-delete"));
+app.get("/api/admin/reminders",              runHandler(universitiesHandler, "admin-reminders"));
+app.put("/api/admin/reminders/:id",          express.json({ limit: "4kb" }), (req, res) => universitiesHandler(req, res, "admin-reminder-update"));
+app.get("/api/cron/universities-review",     runHandler(universitiesReviewCron, "universities-review"));
 
 app.get("/api/assistant/health", runHandler(assistantHealthHandler, "assistant-health"));
 app.get("/api/assistant", runHandler(assistantHandler, "assistant"));

@@ -36,10 +36,12 @@ export type AdminSection =
   | "smart-cms"
   | "submissions"
   | "quiz"
-  | "knowledge-graph";
+  | "knowledge-graph"
+  | "universities";
 
 export const ADMIN_NAV: { key: AdminSection; label: string }[] = [
-  { key: "dashboard", label: "لوحة التحكم" },
+  { key: "dashboard",    label: "لوحة التحكم" },
+  { key: "universities", label: "دليل الجامعات" },
   { key: "submissions", label: "مقترحات المحتوى" },
   { key: "smart-cms", label: "CMS الذكي" },
   { key: "aggregator", label: "محرك التجميع" },

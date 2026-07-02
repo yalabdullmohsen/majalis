@@ -139,6 +139,10 @@ const ProphetStoriesPage = lazy(() => import("@/views/ProphetStoriesPage"));
 const CitationPublicPage = lazy(() => import("@/views/CitationPublicPage"));
 const MyCitationsPage = lazy(() => import("@/views/MyCitationsPage"));
 const ScholarlyResearchPage = lazy(() => import("@/views/ScholarlyResearchPage"));
+const UniversitiesPage = lazy(() => import("@/views/UniversitiesPage"));
+const UniversityDetailPage = lazy(() => import("@/views/UniversityDetailPage"));
+const UniversitiesComparePage = lazy(() => import("@/views/UniversitiesComparePage"));
+const UniversitiesAdminPage = lazyWithRetry(() => import("@/views/admin/UniversitiesAdminPage"), "UniversitiesAdminPage");
 
 function SeoManager() {
   const [location] = useLocation();
@@ -259,6 +263,9 @@ function Router() {
         </ErrorBoundary>
       </Route>
       <Route path="/scholarly-research"><SafeLazyRoute component={ScholarlyResearchPage} /></Route>
+      <Route path="/universities/compare"><SafeLazyRoute component={UniversitiesComparePage} /></Route>
+      <Route path="/universities/:slug"><SafeLazyRoute component={UniversityDetailPage} /></Route>
+      <Route path="/universities"><SafeLazyRoute component={UniversitiesPage} /></Route>
       <Route path="/condolences"><SafeLazyRoute component={CondolencesPage} /></Route>
       <Route path="/janaza"><SafeLazyRoute component={JanazaPage} /></Route>
       <Route path="/transcribe">
@@ -343,6 +350,7 @@ function Router() {
       <Route path="/admin/feature-status"><AdminLazyRoute component={FeatureStatusPage} /></Route>
       <Route path="/admin/dashboard"><AdminLazyRoute component={AdminDashboardPage} /></Route>
       <Route path="/admin/users"><Redirect to="/admin?section=users" /></Route>
+      <Route path="/admin/universities"><AdminLazyRoute component={UniversitiesAdminPage} /></Route>
       <Route path="/admin"><AdminLazyRoute component={AdminPage} /></Route>
       <Route component={NotFound} />
     </Switch>
