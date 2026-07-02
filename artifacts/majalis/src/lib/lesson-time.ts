@@ -86,6 +86,16 @@ export function getKuwaitClock(date = new Date()): KuwaitClock {
   };
 }
 
+// Prayer roots (without definite article) for robust matching
+const PRAYER_ROOTS: Array<[RegExp, number]> = [
+  [/فجر/u,  5 * 60],
+  [/شروق/u, 6 * 60 + 30],
+  [/ظهر/u,  12 * 60 + 15],
+  [/عصر/u,  15 * 60 + 45],
+  [/مغرب/u, 18 * 60 + 30],
+  [/عشاء/u, 20 * 60],
+];
+
 export function parseTimeToMinutes(timeRaw: string): number | null {
   const time = cleanTimeText(timeRaw);
   if (!time) return null;
@@ -108,8 +118,9 @@ export function parseTimeToMinutes(timeRaw: string): number | null {
     return hour * 60;
   }
 
-  for (const [prayer, minutes] of Object.entries(PRAYER_TIME_MINUTES)) {
-    if (time.includes(prayer)) {
+  // Match prayer names with or without definite article "ال"
+  for (const [root, minutes] of PRAYER_ROOTS) {
+    if (root.test(time)) {
       if (/بعد/u.test(time)) return minutes + 20;
       if (/قبل/u.test(time)) return Math.max(0, minutes - 60);
       return minutes;

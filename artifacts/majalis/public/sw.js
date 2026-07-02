@@ -117,6 +117,45 @@ self.addEventListener("fetch", (event) => {
   }
 });
 
+// ── Adhan Background Scheduling ──────────────────────────────────────────
+// Main thread posts { type: 'SCHEDULE_ADHAN', prayerName, prayerArabic, delayMs }
+// SW holds a setTimeout so the notification fires even when the tab is in background.
+
+const _adhanTimers = new Map(); // prayerKey → timeoutId (keeps SW alive via waitUntil)
+
+self.addEventListener("message", (event) => {
+  const msg = event.data;
+  if (!msg || msg.type !== "SCHEDULE_ADHAN") return;
+
+  const { prayerKey, prayerArabic, delayMs } = msg;
+  if (typeof delayMs !== "number" || delayMs < 0) return;
+
+  // Cancel any existing timer for this prayer
+  if (_adhanTimers.has(prayerKey)) {
+    clearTimeout(_adhanTimers.get(prayerKey));
+  }
+
+  const promise = new Promise((resolve) => {
+    const tid = setTimeout(() => {
+      _adhanTimers.delete(prayerKey);
+      self.registration.showNotification(`🕌 حان وقت ${prayerArabic}`, {
+        body: "حيَّ على الصلاة، حيَّ على الفلاح",
+        icon: "/logo.png",
+        badge: "/favicon.png",
+        dir: "rtl",
+        lang: "ar",
+        tag: `adhan-${prayerKey}`,
+        renotify: true,
+        data: { url: "/prayer-times" },
+      }).then(resolve).catch(resolve);
+    }, Math.min(delayMs, 86_400_000)); // cap at 24 h
+
+    _adhanTimers.set(prayerKey, tid);
+  });
+
+  event.waitUntil(promise);
+});
+
 // ── Push Notifications ────────────────────────────────────────────────────
 
 self.addEventListener("push", (event) => {

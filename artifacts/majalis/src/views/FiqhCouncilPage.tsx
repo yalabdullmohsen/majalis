@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { Link, useLocation } from "wouter";
+import { useAuth } from "@/components/AuthProvider";
 import { PageHeader, Loading, Empty } from "@/components/ui-common";
 import { PlatformContentCard } from "@/components/platform/ContentDetailLayout";
 import { FiqhCouncilSearchBox } from "@/components/fiqh-council/FiqhCouncilSearchBox";
@@ -191,6 +192,7 @@ export function FiqhCouncilListPage({
   showTypeFilter = true,
   extra,
 }: ListProps) {
+  const { isAdmin } = useAuth();
   const [items, setItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [category, setCategory] = useState("الكل");
@@ -222,10 +224,12 @@ export function FiqhCouncilListPage({
 
       {extra}
 
-      <div className="page-stats-row">
-        <span>{items.length} عنصر</span>
-        <span>{FIQH_COUNCIL_CATEGORIES.length} تصنيف</span>
-      </div>
+      {isAdmin && (
+        <div className="page-stats-row">
+          <span>{items.length} عنصر</span>
+          <span>{FIQH_COUNCIL_CATEGORIES.length} تصنيف</span>
+        </div>
+      )}
 
       <FiqhCouncilFilters
         search={search}

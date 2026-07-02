@@ -1,4 +1,4 @@
-import { Suspense, type ComponentType } from "react";
+import { Suspense, useEffect, useRef, type ComponentType } from "react";
 import { Redirect, Route, Switch, Router as WouterRouter, useLocation, useRoute } from "wouter";
 import { AuthProvider } from "@/components/AuthProvider";
 import { FontPreferenceProvider } from "@/components/FontPreferenceProvider";
@@ -9,6 +9,7 @@ import { LanguageProvider, useLanguage } from "@/components/LanguageProvider";
 import NavBar from "@/components/NavBar";
 import SiteFooter from "@/components/SiteFooter";
 import { AssistantFloatingWidget } from "@/components/assistant/AssistantFloatingWidget";
+import { AdhanNotificationBar } from "@/components/adhan/AdhanNotificationBar";
 import HomePage from "@/views/HomePage";
 import AboutPage from "@/views/AboutPage";
 import PrivacyPage from "@/views/PrivacyPage";
@@ -19,6 +20,8 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { usePageSeo } from "@/lib/seo";
 import { lazyWithRetry } from "@/lib/lazy-with-retry";
 import { LazyRouteFallback } from "@/components/LazyRouteFallback";
+import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
+import { startAdhanScheduler } from "@/lib/adhan-scheduler";
 
 const lazy = lazyWithRetry;
 
@@ -114,10 +117,30 @@ const MyLearningPage = lazy(() => import("@/views/MyLearningPage"));
 const LearningQuizPage = lazy(() => import("@/views/learning/LearningQuizPage"));
 const LearningCalendarPage = lazy(() => import("@/views/learning/LearningCalendarPage"));
 const CertificateVerifyPage = lazy(() => import("@/views/learning/CertificateVerifyPage"));
+const AdhanSettingsPage = lazy(() => import("@/views/AdhanSettingsPage"));
+const MuezzinsPage = lazy(() => import("@/views/MuezzinsPage"));
+const MuezzinDetailPage = lazy(() => import("@/views/MuezzinDetailPage"));
+const MuezzinFavoritesPage = lazy(() => import("@/views/MuezzinFavoritesPage"));
+const UploadPage = lazy(() => import("@/views/UploadPage"));
+const MySubmissionsPage = lazy(() => import("@/views/MySubmissionsPage"));
+const UserStatsPage = lazy(() => import("@/views/UserStatsPage"));
+const AuthCallbackPage = lazy(() => import("@/views/AuthCallbackPage"));
+const ProphetStoriesPage = lazy(() => import("@/views/ProphetStoriesPage"));
 
 function SeoManager() {
   const [location] = useLocation();
   usePageSeo(location);
+  return null;
+}
+
+function AdhanSchedulerBootstrap() {
+  const { data } = usePrayerCountdown();
+  const started = useRef(false);
+  useEffect(() => {
+    if (!data || started.current) return;
+    started.current = true;
+    startAdhanScheduler(data).catch(() => {});
+  }, [data]);
   return null;
 }
 
@@ -183,11 +206,18 @@ function Router() {
       <Route path="/fawaid"><SafeLazyRoute component={FawaidPage} /></Route>
       <Route path="/hadith"><SafeLazyRoute component={HadithPage} /></Route>
       <Route path="/stories"><SafeLazyRoute component={StoriesPage} /></Route>
+      <Route path="/prophets/:slug"><SafeLazyRoute component={ProphetStoriesPage} /></Route>
+      <Route path="/prophets"><SafeLazyRoute component={ProphetStoriesPage} /></Route>
       <Route path="/adhkar"><SafeLazyRoute component={AdhkarPage} /></Route>
       <Route path="/qa"><SafeLazyRoute component={QaPage} /></Route>
       <Route path="/quiz"><SafeLazyRoute component={QuizPage} /></Route>
       <Route path="/knowledge-graph"><SafeLazyRoute component={KnowledgeGraphPage} /></Route>
       <Route path="/submit"><SafeLazyRoute component={SubmitContentPage} /></Route>
+      <Route path="/upload"><SafeLazyRoute component={UploadPage} /></Route>
+      <Route path="/my-submissions"><SafeLazyRoute component={MySubmissionsPage} /></Route>
+      <Route path="/stats"><SafeLazyRoute component={UserStatsPage} /></Route>
+      <Route path="/profile"><SafeLazyRoute component={UserStatsPage} /></Route>
+      <Route path="/auth/callback"><SafeLazyRoute component={AuthCallbackPage} /></Route>
       <Route path="/learning/paths/:slug"><SafeLazyRoute component={LearningPathDetailPage} /></Route>
       <Route path="/learning/paths"><SafeLazyRoute component={LearningPathsPage} /></Route>
       <Route path="/learning/quiz/:slug"><SafeLazyRoute component={LearningQuizPage} /></Route>
@@ -222,6 +252,10 @@ function Router() {
       <Route path="/quran"><SafeLazyRoute component={QuranPage} /></Route>
       <Route path="/prayer-times"><SafeLazyRoute component={PrayerTimesPage} /></Route>
       <Route path="/prayer-ranks"><SafeLazyRoute component={PrayerRanksPage} /></Route>
+      <Route path="/adhan-settings"><SafeLazyRoute component={AdhanSettingsPage} /></Route>
+      <Route path="/muezzins/favorites"><SafeLazyRoute component={MuezzinFavoritesPage} /></Route>
+      <Route path="/muezzins/:id"><SafeLazyRoute component={MuezzinDetailPage} /></Route>
+      <Route path="/muezzins"><SafeLazyRoute component={MuezzinsPage} /></Route>
       <Route path="/qibla"><SafeLazyRoute component={QiblaPage} /></Route>
       <Route path="/tasbih"><SafeLazyRoute component={TasbihPage} /></Route>
       <Route path="/daily-wird"><SafeLazyRoute component={DailyWirdPage} /></Route>
@@ -293,6 +327,8 @@ function AppShell() {
       <div className="app-shell" style={{ minHeight: "100vh", direction: dir }}>
         <a href="#main-content" className="skip-link">{t("skip_to_content")}</a>
         <SeoManager />
+        <AdhanSchedulerBootstrap />
+        <AdhanNotificationBar />
         <NavBar />
         <main id="main-content" className="app-main" tabIndex={-1}>
           <Router />

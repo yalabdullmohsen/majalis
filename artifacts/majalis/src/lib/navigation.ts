@@ -28,6 +28,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { href: "/fawaid", label: "الفوائد" },
       { href: "/hadith", label: "الأحاديث الصحيحة" },
       { href: "/stories", label: "القصص الإسلامية" },
+      { href: "/prophets", label: "قصص الأنبياء" },
       { href: "/qa", label: "الأسئلة التعليمية" },
       { href: "/kuwait-lessons", label: "دروس المشايخ" },
       { href: "/janaza", label: "آخر الجنائز" },
@@ -99,6 +100,7 @@ export const MOBILE_MORE_NAV = [
   { href: "/hadith",           label: "الأحاديث" },
   { href: "/fawaid",           label: "الفوائد" },
   { href: "/stories",          label: "القصص" },
+  { href: "/prophets",         label: "قصص الأنبياء" },
   // القرآن
   { href: "/quran",            label: "القرآن" },
   { href: "/quran-radio",      label: "إذاعة القرآن" },
@@ -109,9 +111,13 @@ export const MOBILE_MORE_NAV = [
   { href: "/adhkar",           label: "الأذكار" },
   { href: "/tasbih",           label: "عداد التسبيح" },
   { href: "/prayer-ranks",     label: "مراتب الصلاة" },
+  { href: "/muezzins",         label: "مكتبة المؤذنين" },
+  { href: "/adhan-settings",   label: "إعدادات الأذان" },
   { href: "/quiz",             label: "لعبة سؤال وجواب" },
   // عام
   { href: "/settings",         label: "الإعدادات" },
+  { href: "/upload",           label: "رفع أذان أو درس" },
+  { href: "/my-submissions",   label: "مساهماتي" },
   { href: "/submit",           label: "أضف محتوى" },
   { href: "/contact",          label: "تواصل معنا" },
 ];
@@ -177,6 +183,7 @@ export const HOME_MORE_SECTIONS = [
   { href: "/lessons", title: "الدروس", description: "دروس ودورات علمية" },
   { href: "/hadith", title: "الأحاديث الصحيحة", description: "أحاديث نبوية محققة من مصادر موثوقة" },
   { href: "/stories", title: "القصص الإسلامية", description: "قصص من السيرة النبوية والأنبياء والصحابة" },
+  { href: "/prophets", title: "قصص الأنبياء", description: "الأنبياء الخمسة والعشرون في القرآن — نبذات وعبر" },
   { href: "/fatwa", title: "الفتاوى", description: "مركز الفتاوى الشرعية" },
 
   { href: "/rulings", title: "الأحكام الشرعية", description: "مكتبة الأحكام والأدلة" },

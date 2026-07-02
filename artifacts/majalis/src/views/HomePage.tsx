@@ -13,12 +13,14 @@ import { HomeDailyDhikr } from "@/components/home/HomeDailyDhikr";
 import { HomeDailyQuestion } from "@/components/home/HomeDailyQuestion";
 import { HomeDailyHadith } from "@/components/home/HomeDailyHadith";
 import { HomePrayerRanks } from "@/components/home/HomePrayerRanks";
+import { HomePrayerTimes } from "@/components/home/HomePrayerTimes";
 import { HomeFeaturedLibrary } from "@/components/home/HomeFeaturedLibrary";
 import { HomeLatestUpdates } from "@/components/home/HomeLatestUpdates";
 import { HomeMoreSections } from "@/components/home/HomeMoreSections";
 import { IslamicDivider } from "@/components/design/IslamicDivider";
 import { IslamicOrnament } from "@/components/design/IslamicOrnament";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
+import { HomeAdhanWidget } from "@/components/home/HomeAdhanWidget";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 
 const QUICK_LINKS = [
@@ -34,6 +36,8 @@ const QUICK_LINKS = [
   { href: "/assistant", label: "المساعد", meta: "علمي" },
   { href: "/calendar", label: "التقويم", meta: "دروس" },
   { href: "/adhkar", label: "الأذكار", meta: "يومي" },
+  { href: "/muezzins", label: "مكتبة المؤذنين", meta: "أذانات العالم" },
+  { href: "/upload", label: "ارفع أذانك", meta: "ساهم معنا" },
   { href: "/submit?type=lesson", label: "أضف درس", meta: "شارك علمك" },
 ];
 
@@ -104,6 +108,12 @@ export default function HomePage({
 
         <SafeHomeSection name="مواقيت الصلاة المدمجة">
           <HomeCompactPrayer />
+        </SafeHomeSection>
+
+        <IslamicDivider />
+
+        <SafeHomeSection name="ويدجت الأذان">
+          <HomeAdhanWidget />
         </SafeHomeSection>
 
         <IslamicDivider />

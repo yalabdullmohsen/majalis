@@ -5,6 +5,11 @@ import { useSearch } from "wouter";
 import { PageHeader, Loading } from "@/components/ui-common";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import { PrayerRanksContent } from "@/views/PrayerRanksPage";
+import {
+  KUWAIT_GOVERNORATES,
+  getSelectedGovernorate,
+  setSelectedGovernorate,
+} from "@/lib/prayer-times";
 
 type PrayerKey = "fajr" | "dhuhr" | "asr" | "maghrib" | "isha";
 type PrayerTrack = {
@@ -332,7 +337,14 @@ export default function PrayerTimesPage() {
   const initialTab: TabId = new URLSearchParams(search).get("tab") === "ranks" ? "ranks" : "times";
   const [activeTab, setActiveTab] = useState<TabId>(initialTab);
 
-  const { data, countdown, loading } = usePrayerCountdown();
+  const [selectedGovId, setSelectedGovId] = useState(() => getSelectedGovernorate().id);
+
+  function handleGovChange(id: string) {
+    setSelectedGovernorate(id);
+    setSelectedGovId(id);
+  }
+
+  const { data, countdown, loading } = usePrayerCountdown(selectedGovId);
   const obligatory = data?.prayers.filter((p) => p.obligatory) || [];
   const sunrise = data?.prayers.find((p) => p.key === "Sunrise") || null;
 
@@ -380,6 +392,55 @@ export default function PrayerTimesPage() {
           </button>
         ))}
       </div>
+
+      {/* Governorate selector */}
+      {activeTab === "times" && (
+        <div style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "0.6rem",
+          margin: "0.75rem 0",
+          padding: "0.65rem 1rem",
+          background: "#f0fdf4",
+          border: "1.5px solid #bbf7d0",
+          borderRadius: "0.875rem",
+          direction: "rtl",
+        }}>
+          <span style={{ fontSize: "1rem", flexShrink: 0 }}>📍</span>
+          <label
+            htmlFor="gov-select"
+            style={{ fontSize: "0.82rem", fontWeight: 700, color: "#134a3a", flexShrink: 0 }}
+          >
+            المحافظة:
+          </label>
+          <select
+            id="gov-select"
+            value={selectedGovId}
+            onChange={(e) => handleGovChange(e.target.value)}
+            style={{
+              flex: 1,
+              border: "1px solid #bbf7d0",
+              borderRadius: "0.5rem",
+              padding: "0.35rem 0.6rem",
+              fontSize: "0.875rem",
+              fontWeight: 600,
+              color: "#134a3a",
+              background: "#fff",
+              fontFamily: "inherit",
+              cursor: "pointer",
+            }}
+          >
+            {KUWAIT_GOVERNORATES.map((g) => (
+              <option key={g.id} value={g.id}>{g.name}</option>
+            ))}
+          </select>
+          {data?.city && (
+            <span style={{ fontSize: "0.7rem", color: "#6b7280", flexShrink: 0 }}>
+              {data.source}
+            </span>
+          )}
+        </div>
+      )}
 
       {activeTab === "ranks" && <PrayerRanksContent />}
 
@@ -435,6 +496,29 @@ export default function PrayerTimesPage() {
               </div>
             )}
           </div>
+
+          {/* Adhan settings shortcut */}
+          <a
+            href="/adhan-settings"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "0.5rem",
+              padding: "0.75rem 1rem",
+              marginTop: "0.75rem",
+              background: "#f0fdf4",
+              border: "1.5px solid #bbf7d0",
+              borderRadius: "0.875rem",
+              textDecoration: "none",
+              color: "#134a3a",
+              fontSize: "0.875rem",
+              fontWeight: 600,
+            }}
+          >
+            <span style={{ fontSize: "1.1rem" }}>🔔</span>
+            <span>إعدادات الأذان والإشعارات</span>
+            <span style={{ marginRight: "auto", fontSize: "0.8rem", color: "#6b7280" }}>←</span>
+          </a>
 
           {/* Floating prayer tracker */}
           <PrayerTrackerSheet today={today} stats={stats} onUpdate={updatePrayer} />

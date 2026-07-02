@@ -1,4 +1,40 @@
 import { requestFetch } from "@/lib/request-manager";
+
+// ─── Kuwait Governorates ────────────────────────────────────────────────────
+
+export type KuwaitGovernorate = {
+  id: string;
+  name: string;
+  lat: number;
+  lon: number;
+};
+
+export const KUWAIT_GOVERNORATES: KuwaitGovernorate[] = [
+  { id: "capital",   name: "العاصمة",        lat: 29.3759, lon: 47.9774 },
+  { id: "hawalli",   name: "حولي",            lat: 29.3241, lon: 48.0318 },
+  { id: "farwaniya", name: "الفروانية",       lat: 29.2786, lon: 47.9598 },
+  { id: "mubarak",   name: "مبارك الكبير",   lat: 29.2183, lon: 48.0796 },
+  { id: "jahra",     name: "الجهراء",         lat: 29.3375, lon: 47.6581 },
+  { id: "ahmadi",    name: "الأحمدي",         lat: 29.0769, lon: 48.0838 },
+];
+
+const GOV_STORAGE_KEY = "majalis-governorate-v1";
+
+export function getSelectedGovernorate(): KuwaitGovernorate {
+  try {
+    const id = localStorage.getItem(GOV_STORAGE_KEY);
+    return KUWAIT_GOVERNORATES.find((g) => g.id === id) ?? KUWAIT_GOVERNORATES[0];
+  } catch {
+    return KUWAIT_GOVERNORATES[0];
+  }
+}
+
+export function setSelectedGovernorate(id: string): void {
+  try { localStorage.setItem(GOV_STORAGE_KEY, id); } catch { /* ignore */ }
+}
+
+// ───────────────────────────────────────────────────────────────────────────
+
 export type PrayerSlot = {
   key: string;
   name: string;
@@ -34,8 +70,6 @@ export type PrayerStatus = {
 
 const OBLIGATORY_KEYS = new Set(["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"]);
 
-const KUWAIT_LAT = 29.3759;
-const KUWAIT_LON = 47.9774;
 const KUWAIT_METHOD = 9;
 
 const PRAYER_META = [
@@ -77,7 +111,12 @@ function formatTime12(value: string) {
   return `${hours12}:${String(mins).padStart(2, "0")} ${period}`;
 }
 
-function buildPayload(timings: Record<string, string>, meta: { timezone?: string } | null, date: any): PrayerTimesPayload {
+function buildPayload(
+  timings: Record<string, string>,
+  meta: { timezone?: string } | null,
+  date: any,
+  cityName = "الكويت – محافظة العاصمة",
+): PrayerTimesPayload {
   const prayers: PrayerSlot[] = PRAYER_META.map(({ key, name, obligatory }) => ({
     key,
     name,
@@ -89,7 +128,7 @@ function buildPayload(timings: Record<string, string>, meta: { timezone?: string
 
   return {
     ok: true,
-    city: "الكويت – محافظة العاصمة",
+    city: cityName,
     timezone: meta?.timezone || "Asia/Kuwait",
     method: "Kuwait",
     source: "AlAdhan (طريقة الكويت)",
@@ -104,7 +143,7 @@ function buildPayload(timings: Record<string, string>, meta: { timezone?: string
 }
 
 /** Approximate Kuwait prayer times when all network sources fail. */
-function staticPrayerFallback(): PrayerTimesPayload {
+function staticPrayerFallback(cityName = "الكويت – محافظة العاصمة"): PrayerTimesPayload {
   const timings: Record<string, string> = {
     Fajr: "04:30",
     Sunrise: "05:50",
@@ -123,17 +162,21 @@ function staticPrayerFallback(): PrayerTimesPayload {
   }).format(new Date());
 
   return {
-    ...buildPayload(timings, { timezone: "Asia/Kuwait" }, { readable }),
-    source: "AlAdhan (طريقة الكويت)",
+    ...buildPayload(timings, { timezone: "Asia/Kuwait" }, { readable }, cityName),
+    source: "تقديري (بدون اتصال)",
     stale: true,
   };
 }
 
-async function fetchAlAdhanDirect(): Promise<PrayerTimesPayload> {
+async function fetchAlAdhanDirect(
+  lat: number,
+  lon: number,
+  cityName: string,
+): Promise<PrayerTimesPayload> {
   const dateParam = kuwaitDateParam();
   const url =
     `https://api.aladhan.com/v1/timings/${dateParam}` +
-    `?latitude=${KUWAIT_LAT}&longitude=${KUWAIT_LON}&method=${KUWAIT_METHOD}`;
+    `?latitude=${lat}&longitude=${lon}&method=${KUWAIT_METHOD}`;
 
   const response = await requestFetch(url, {
     headers: { Accept: "application/json" },
@@ -149,7 +192,7 @@ async function fetchAlAdhanDirect(): Promise<PrayerTimesPayload> {
     throw new Error("Invalid AlAdhan payload");
   }
 
-  return buildPayload(json.data.timings, json.data.meta, json.data.date);
+  return buildPayload(json.data.timings, json.data.meta, json.data.date, cityName);
 }
 
 function kuwaitNowMinutes(): number {
@@ -274,48 +317,63 @@ export function computePrayerStatus(prayers: PrayerSlot[]): PrayerStatus {
   };
 }
 
-/** Never throws — always returns usable prayer times. */
-export async function fetchPrayerTimes(): Promise<PrayerTimesPayload> {
-  try {
-    const { getPrayerTimesFromDb } = await import("./supabase");
-    const row = await getPrayerTimesFromDb(kuwaitDateKey());
-    if (row) {
-      const timings: Record<string, string> = {
-        Fajr: row.fajr,
-        Sunrise: row.sunrise,
-        Dhuhr: row.dhuhr,
-        Asr: row.asr,
-        Maghrib: row.maghrib,
-        Isha: row.isha,
-      };
-      return {
-        ...buildPayload(timings, { timezone: "Asia/Kuwait" }, {
-          gregorian: { date: kuwaitDateParam() },
-        }),
-        source: "Supabase (مواقيت محدّثة)",
-      };
+/**
+ * Never throws — always returns usable prayer times.
+ * Pass a governorateId to get times for a specific governorate;
+ * omit to use the governorate stored in localStorage.
+ */
+export async function fetchPrayerTimes(governorateId?: string): Promise<PrayerTimesPayload> {
+  const gov = governorateId
+    ? (KUWAIT_GOVERNORATES.find((g) => g.id === governorateId) ?? KUWAIT_GOVERNORATES[0])
+    : getSelectedGovernorate();
+
+  const cityName = `الكويت – محافظة ${gov.name}`;
+  const isCapital = gov.id === "capital";
+
+  // Supabase / API cache only has Capital times — skip for other governorates
+  if (isCapital) {
+    try {
+      const { getPrayerTimesFromDb } = await import("./supabase");
+      const row = await getPrayerTimesFromDb(kuwaitDateKey());
+      if (row) {
+        const timings: Record<string, string> = {
+          Fajr: row.fajr,
+          Sunrise: row.sunrise,
+          Dhuhr: row.dhuhr,
+          Asr: row.asr,
+          Maghrib: row.maghrib,
+          Isha: row.isha,
+        };
+        return {
+          ...buildPayload(timings, { timezone: "Asia/Kuwait" }, {
+            gregorian: { date: kuwaitDateParam() },
+          }, cityName),
+          source: "Supabase (مواقيت محدّثة)",
+        };
+      }
+    } catch {
+      // fall through
     }
-  } catch {
-    // fall through
+
+    try {
+      const response = await requestFetch("/api/prayer-times", {
+        headers: { Accept: "application/json" },
+      });
+
+      const data = (await response.json()) as PrayerTimesPayload & { message?: string };
+
+      if (response.ok && data.ok) {
+        // Tag the city correctly even when using the cached API response
+        return { ...data, city: cityName };
+      }
+    } catch {
+      // fall through to AlAdhan direct
+    }
   }
 
   try {
-    const response = await requestFetch("/api/prayer-times", {
-      headers: { Accept: "application/json" },
-    });
-
-    const data = (await response.json()) as PrayerTimesPayload & { message?: string };
-
-    if (response.ok && data.ok) {
-      return data;
-    }
+    return await fetchAlAdhanDirect(gov.lat, gov.lon, cityName);
   } catch {
-    // fall through to direct fetch
-  }
-
-  try {
-    return await fetchAlAdhanDirect();
-  } catch {
-    return staticPrayerFallback();
+    return staticPrayerFallback(cityName);
   }
 }
