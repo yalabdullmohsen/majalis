@@ -267,6 +267,9 @@ function Router() {
       <Route path="/tajweed"><Redirect to="/quran" /></Route>
       <Route path="/surah-stories"><Redirect to="/quran/surah-stories" /></Route>
       <Route path="/quran/tajweed"><Redirect to="/quran" /></Route>
+      {/* مسارات الاختصار — public redirects */}
+      <Route path="/mushaf"><Redirect to="/quran" /></Route>
+      <Route path="/research"><Redirect to="/fiqh-council/research" /></Route>
       <Route path="/quran/surah-stories/:number"><SurahStoryDetailRoute /></Route>
       <Route path="/quran/surah-stories"><SafeLazyRoute component={SurahStoriesPage} /></Route>
       <Route path="/quran"><SafeLazyRoute component={QuranPage} /></Route>
