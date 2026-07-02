@@ -17,6 +17,7 @@ import { HomePrayerTimes } from "@/components/home/HomePrayerTimes";
 import { HomeFeaturedLibrary } from "@/components/home/HomeFeaturedLibrary";
 import { HomeLatestUpdates } from "@/components/home/HomeLatestUpdates";
 import { HomeMoreSections } from "@/components/home/HomeMoreSections";
+import { HomeTawheed } from "@/components/home/HomeTawheed";
 import { HomeLearningSeasonsWidget } from "@/components/home/HomeLearningSeasonsWidget";
 import { HomeRecommendations } from "@/components/home/HomeRecommendations";
 import { IslamicDivider } from "@/components/design/IslamicDivider";
@@ -269,6 +270,12 @@ export default function HomePage({
 
         <SafeHomeSection name="عن المجلس العلمي">
           <HomeAboutSection />
+        </SafeHomeSection>
+
+        <IslamicDivider />
+
+        <SafeHomeSection name="التوحيد">
+          <HomeTawheed />
         </SafeHomeSection>
 
         <IslamicDivider />
