@@ -729,7 +729,7 @@ export const SEED_QA = [
   {
     "id": "seed-qa-42",
     "question": "ما حكم من نسي مسح رأسه في الوضوء؟",
-    "answer": "الجواب: يجوز؛ فإن مسح بعض الرأس يكفي عن الكل.",
+    "answer": "الجواب: لا يصح وضوؤه؛ فمسح الرأس ركنٌ من أركان الوضوء باتفاق المذاهب الأربعة، ومن نسيه وجب عليه إعادة الوضوء.",
     "category_id": "seed-cat-tahara",
     "ruling_type": "واجب",
     "evidence": "السنة",
@@ -1337,9 +1337,9 @@ export const SEED_QA = [
   {
     "id": "seed-qa-80",
     "question": "ما الوجبة التي تكون قبل الفجر للصائم؟",
-    "answer": "الجواب: السحور.",
+    "answer": "الجواب: السحور، وهو سنة مؤكدة لقوله ﷺ: (تسحّروا فإن في السحور بركة) — متفق عليه.",
     "category_id": "seed-cat-sawm",
-    "ruling_type": "واجب",
+    "ruling_type": "مستحب",
     "evidence": null,
     "reference": null,
     "status": "published",
@@ -1529,9 +1529,9 @@ export const SEED_QA = [
   {
     "id": "seed-qa-92",
     "question": "ما الركن الأعظم في الحج؟",
-    "answer": "الجواب: الوقوف بعرفة.",
+    "answer": "الجواب: الوقوف بعرفة، لقوله ﷺ: (الحج عرفة) — وهو ركن لا يصح الحج بدونه.",
     "category_id": "seed-cat-hajj",
-    "ruling_type": "واجب",
+    "ruling_type": "ركن",
     "evidence": null,
     "reference": null,
     "status": "published",
@@ -2393,7 +2393,7 @@ export const SEED_QA = [
   {
     "id": "seed-qa-146",
     "question": "هل يجوز الجهر بالأذكار بعد الصلاة؟",
-    "answer": "الجواب: جائز؛ والسر أفضل إلا ما دلّ دليل على الجهر.",
+    "answer": "الجواب: جائز، والجهر ثابت بالسنة كما في حديث ابن عباس: (كان رفع الصوت بالذكر حين ينصرف الناس من المكتوبة على عهد النبي ﷺ) — متفق عليه، والسر جائز أيضاً.",
     "category_id": "seed-cat-adhkar",
     "ruling_type": "جائز",
     "evidence": "السنة",
@@ -2772,6 +2772,1622 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الآداب",
       "slug": "adab"
+    }
+  },
+  {
+    "id": "seed-qa-170",
+    "question": "ما معنى التوحيد؟",
+    "answer": "الجواب: إفراد الله بالخلق والأمر والعبادة، وهو ثلاثة أنواع: توحيد الربوبية وتوحيد الألوهية وتوحيد الأسماء والصفات.",
+    "category_id": "seed-cat-aqeedah",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "العقيدة",
+      "slug": "aqeedah"
+    }
+  },
+  {
+    "id": "seed-qa-171",
+    "question": "ما الدليل على أن الله موجود؟",
+    "answer": "الجواب: الأدلة الفطرية والعقلية؛ كوجود المخلوقات التي تستلزم خالقاً، وقال تعالى: ﴿أَمْ خُلِقُوا مِنْ غَيْرِ شَيْءٍ أَمْ هُمُ الْخَالِقُونَ﴾.",
+    "category_id": "seed-cat-aqeedah",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "العقيدة",
+      "slug": "aqeedah"
+    }
+  },
+  {
+    "id": "seed-qa-172",
+    "question": "ما أنواع التوحيد الثلاثة؟",
+    "answer": "الجواب: توحيد الربوبية (الإقرار بأن الله الخالق الرازق المدبر)، وتوحيد الألوهية (إفراد الله بالعبادة)، وتوحيد الأسماء والصفات (الإيمان بما أثبته الله لنفسه).",
+    "category_id": "seed-cat-aqeedah",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "العقيدة",
+      "slug": "aqeedah"
+    }
+  },
+  {
+    "id": "seed-qa-173",
+    "question": "ما أركان الإيمان الستة؟",
+    "answer": "الجواب: الإيمان بالله وملائكته وكتبه ورسله واليوم الآخر والقدر خيره وشره، كما في حديث جبريل في صحيح مسلم.",
+    "category_id": "seed-cat-aqeedah",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "العقيدة",
+      "slug": "aqeedah"
+    }
+  },
+  {
+    "id": "seed-qa-174",
+    "question": "ما الكبيرة التي لا يغفرها الله إلا بالتوبة؟",
+    "answer": "الجواب: الشرك بالله؛ قال تعالى: ﴿إِنَّ اللَّهَ لَا يَغْفِرُ أَن يُشْرَكَ بِهِ وَيَغْفِرُ مَا دُونَ ذَٰلِكَ لِمَن يَشَاءُ﴾.",
+    "category_id": "seed-cat-aqeedah",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "العقيدة",
+      "slug": "aqeedah"
+    }
+  },
+  {
+    "id": "seed-qa-175",
+    "question": "ما معنى الإحسان في حديث جبريل؟",
+    "answer": "الجواب: أن تعبد الله كأنك تراه، فإن لم تكن تراه فإنه يراك.",
+    "category_id": "seed-cat-aqeedah",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "العقيدة",
+      "slug": "aqeedah"
+    }
+  },
+  {
+    "id": "seed-qa-176",
+    "question": "هل الإيمان يزيد وينقص؟",
+    "answer": "الجواب: نعم، الإيمان يزيد بالطاعة وينقص بالمعصية، وهذا قول أهل السنة والجماعة.",
+    "category_id": "seed-cat-aqeedah",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "العقيدة",
+      "slug": "aqeedah"
+    }
+  },
+  {
+    "id": "seed-qa-177",
+    "question": "ما الفرق بين الخوف والرجاء في العبادة؟",
+    "answer": "الجواب: الخوف هو الباعث على ترك المعاصي، والرجاء هو الباعث على الطاعة. وينبغي أن يتوازنا في قلب المؤمن.",
+    "category_id": "seed-cat-aqeedah",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "العقيدة",
+      "slug": "aqeedah"
+    }
+  },
+  {
+    "id": "seed-qa-178",
+    "question": "ما المقصود بالقدر الخير والشر؟",
+    "answer": "الجواب: الإيمان بأن الله قدّر كل شيء سلفاً وكتبه، والخير والشر كلاهما بعلم الله وإرادته، لكن الشر لا يُنسب إليه إلا خلقاً لا أمراً ولا رضاً.",
+    "category_id": "seed-cat-aqeedah",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "العقيدة",
+      "slug": "aqeedah"
+    }
+  },
+  {
+    "id": "seed-qa-179",
+    "question": "ما معنى التوكل على الله؟",
+    "answer": "الجواب: صرف القلب إلى الله اعتماداً عليه مع الأخذ بالأسباب الشرعية، قال ﷺ: «اعقلها وتوكّل».",
+    "category_id": "seed-cat-aqeedah",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "العقيدة",
+      "slug": "aqeedah"
+    }
+  },
+  {
+    "id": "seed-qa-180",
+    "question": "ما دليل اليوم الآخر؟",
+    "answer": "الجواب: قوله تعالى: ﴿يَوْمَ تَجِدُ كُلُّ نَفْسٍ مَّا عَمِلَتْ مِنْ خَيْرٍ مُّحْضَرًا﴾، والأحاديث المتواترة عن أهوال يوم القيامة.",
+    "category_id": "seed-cat-aqeedah",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "العقيدة",
+      "slug": "aqeedah"
+    }
+  },
+  {
+    "id": "seed-qa-181",
+    "question": "ما معنى الولاء والبراء؟",
+    "answer": "الجواب: محبة المؤمنين ونصرتهم (الولاء)، وبغض الشرك وأهله وترك موالاتهم على حساب الدين (البراء). وهو أصل من أصول العقيدة.",
+    "category_id": "seed-cat-aqeedah",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "العقيدة",
+      "slug": "aqeedah"
+    }
+  },
+  {
+    "id": "seed-qa-182",
+    "question": "من الملائكة وما صفاتهم؟",
+    "answer": "الجواب: عباد الله المكرمون خُلقوا من نور، ﴿لَّا يَعْصُونَ اللَّهَ مَا أَمَرَهُمْ وَيَفْعَلُونَ مَا يُؤْمَرُونَ﴾.",
+    "category_id": "seed-cat-aqeedah",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "العقيدة",
+      "slug": "aqeedah"
+    }
+  },
+  {
+    "id": "seed-qa-183",
+    "question": "ما الكتب السماوية المذكورة في القرآن؟",
+    "answer": "الجواب: التوراة (موسى)، والإنجيل (عيسى)، والزبور (داود)، والقرآن الكريم (محمد ﷺ)، وصحف إبراهيم وموسى.",
+    "category_id": "seed-cat-aqeedah",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "العقيدة",
+      "slug": "aqeedah"
+    }
+  },
+  {
+    "id": "seed-qa-184",
+    "question": "ما الفرق بين النبي والرسول؟",
+    "answer": "الجواب: الرسول مَن أُرسل بشريعة جديدة إلى قوم، والنبي مَن أُوحي إليه ليدعو بشريعة من قبله. وكل رسول نبي وليس كل نبي رسولاً.",
+    "category_id": "seed-cat-aqeedah",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "العقيدة",
+      "slug": "aqeedah"
+    }
+  },
+  {
+    "id": "seed-qa-185",
+    "question": "هل إبليس من الجن أم من الملائكة؟",
+    "answer": "الجواب: من الجن؛ قال تعالى: ﴿كَانَ مِنَ الْجِنِّ فَفَسَقَ عَنْ أَمْرِ رَبِّهِ﴾.",
+    "category_id": "seed-cat-aqeedah",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "العقيدة",
+      "slug": "aqeedah"
+    }
+  },
+  {
+    "id": "seed-qa-186",
+    "question": "من هو أبو البشر؟",
+    "answer": "الجواب: آدم عليه السلام، خلقه الله من تراب وعلّمه الأسماء كلها.",
+    "category_id": "seed-cat-anbiya",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الأنبياء",
+      "slug": "anbiya"
+    }
+  },
+  {
+    "id": "seed-qa-187",
+    "question": "من النبي الذي بُشّر بلقب «كليم الله»؟",
+    "answer": "الجواب: موسى عليه السلام، كلّمه الله تكليماً بلا واسطة.",
+    "category_id": "seed-cat-anbiya",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الأنبياء",
+      "slug": "anbiya"
+    }
+  },
+  {
+    "id": "seed-qa-188",
+    "question": "كم عدد الأنبياء والمرسلين المذكورين في القرآن؟",
+    "answer": "الجواب: ذُكر في القرآن الكريم خمسة وعشرون نبياً ورسولاً.",
+    "category_id": "seed-cat-anbiya",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الأنبياء",
+      "slug": "anbiya"
+    }
+  },
+  {
+    "id": "seed-qa-189",
+    "question": "من النبي الذي ابتُلي بالدود وصبر؟",
+    "answer": "الجواب: أيوب عليه السلام، ابتلاه الله في ماله وولده وجسده فصبر فكشف الله ضره.",
+    "category_id": "seed-cat-anbiya",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الأنبياء",
+      "slug": "anbiya"
+    }
+  },
+  {
+    "id": "seed-qa-190",
+    "question": "من النبي الذي رُفع إلى السماء قبل الموت؟",
+    "answer": "الجواب: عيسى عليه السلام؛ ﴿بَل رَّفَعَهُ اللَّهُ إِلَيْهِ﴾، وسينزل آخر الزمان.",
+    "category_id": "seed-cat-anbiya",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الأنبياء",
+      "slug": "anbiya"
+    }
+  },
+  {
+    "id": "seed-qa-191",
+    "question": "ما معجزة نبي الله إبراهيم الكبرى؟",
+    "answer": "الجواب: إلقاؤه في النار فجعلها الله عليه برداً وسلاماً.",
+    "category_id": "seed-cat-anbiya",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الأنبياء",
+      "slug": "anbiya"
+    }
+  },
+  {
+    "id": "seed-qa-192",
+    "question": "من النبي الذي أُعطي ملكاً لا ينبغي لأحد من بعده؟",
+    "answer": "الجواب: سليمان عليه السلام؛ أُعطي تسخير الريح والجن والطير.",
+    "category_id": "seed-cat-anbiya",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الأنبياء",
+      "slug": "anbiya"
+    }
+  },
+  {
+    "id": "seed-qa-193",
+    "question": "في أي بلد وُلد النبي ﷺ؟",
+    "answer": "الجواب: في مكة المكرمة، في عام الفيل (570م تقريباً).",
+    "category_id": "seed-cat-anbiya",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الأنبياء",
+      "slug": "anbiya"
+    }
+  },
+  {
+    "id": "seed-qa-194",
+    "question": "من هو جد النبي ﷺ الذي كفله بعد وفاة والدته؟",
+    "answer": "الجواب: عبد المطلب بن هاشم، ثم توفي عبد المطلب فكفله عمه أبو طالب.",
+    "category_id": "seed-cat-anbiya",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الأنبياء",
+      "slug": "anbiya"
+    }
+  },
+  {
+    "id": "seed-qa-195",
+    "question": "ما المعجزة الخالدة للنبي ﷺ؟",
+    "answer": "الجواب: القرآن الكريم؛ وهو المعجزة الباقية على مر الزمان.",
+    "category_id": "seed-cat-anbiya",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الأنبياء",
+      "slug": "anbiya"
+    }
+  },
+  {
+    "id": "seed-qa-196",
+    "question": "من هو صاحب النبي ﷺ في الغار؟",
+    "answer": "الجواب: أبو بكر الصديق رضي الله عنه؛ قال تعالى: ﴿إِذْ يَقُولُ لِصَاحِبِهِ لَا تَحْزَنْ إِنَّ اللَّهَ مَعَنَا﴾.",
+    "category_id": "seed-cat-sahabah",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الصحابة",
+      "slug": "sahabah"
+    }
+  },
+  {
+    "id": "seed-qa-197",
+    "question": "من لقب بـ«حواري النبي»؟",
+    "answer": "الجواب: الزبير بن العوام رضي الله عنه.",
+    "category_id": "seed-cat-sahabah",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الصحابة",
+      "slug": "sahabah"
+    }
+  },
+  {
+    "id": "seed-qa-198",
+    "question": "من أول شهيدة في الإسلام؟",
+    "answer": "الجواب: سمية بنت خياط، والدة عمار بن ياسر رضي الله عنهما.",
+    "category_id": "seed-cat-sahabah",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الصحابة",
+      "slug": "sahabah"
+    }
+  },
+  {
+    "id": "seed-qa-199",
+    "question": "من الصحابي الذي قال عنه النبي ﷺ «مَن أراد أن ينظر إلى شهيد يمشي على وجه الأرض فلينظر إلى طلحة»؟",
+    "answer": "الجواب: طلحة بن عبيدالله رضي الله عنه.",
+    "category_id": "seed-cat-sahabah",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الصحابة",
+      "slug": "sahabah"
+    }
+  },
+  {
+    "id": "seed-qa-200",
+    "question": "من أول من أسلم من الرجال البالغين؟",
+    "answer": "الجواب: أبو بكر الصديق رضي الله عنه في قول الجمهور.",
+    "category_id": "seed-cat-sahabah",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الصحابة",
+      "slug": "sahabah"
+    }
+  },
+  {
+    "id": "seed-qa-201",
+    "question": "من أول من أسلم من الغلمان؟",
+    "answer": "الجواب: علي بن أبي طالب رضي الله عنه.",
+    "category_id": "seed-cat-sahabah",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الصحابة",
+      "slug": "sahabah"
+    }
+  },
+  {
+    "id": "seed-qa-202",
+    "question": "من أول من أسلم من النساء؟",
+    "answer": "الجواب: خديجة بنت خويلد رضي الله عنها.",
+    "category_id": "seed-cat-sahabah",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الصحابة",
+      "slug": "sahabah"
+    }
+  },
+  {
+    "id": "seed-qa-203",
+    "question": "من صحابي الرسول الملقب بـ«سيف الله المسلول»؟",
+    "answer": "الجواب: خالد بن الوليد رضي الله عنه.",
+    "category_id": "seed-cat-sahabah",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الصحابة",
+      "slug": "sahabah"
+    }
+  },
+  {
+    "id": "seed-qa-204",
+    "question": "من الصحابي الذي جمع القرآن في عهد النبي ﷺ؟",
+    "answer": "الجواب: أربعة من الأنصار: معاذ بن جبل وأُبيّ بن كعب وزيد بن ثابت وأبو زيد.",
+    "category_id": "seed-cat-sahabah",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الصحابة",
+      "slug": "sahabah"
+    }
+  },
+  {
+    "id": "seed-qa-205",
+    "question": "لمن قال النبي ﷺ «أنت مني وأنا منك»؟",
+    "answer": "الجواب: قالها للصحابي الجليل علي بن أبي طالب رضي الله عنه في أكثر من موضع.",
+    "category_id": "seed-cat-sahabah",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الصحابة",
+      "slug": "sahabah"
+    }
+  },
+  {
+    "id": "seed-qa-206",
+    "question": "ما فرائض الوضوء الأربعة؟",
+    "answer": "الجواب: غسل الوجه، وغسل اليدين إلى المرفقين، ومسح الرأس، وغسل الرجلين إلى الكعبين.",
+    "category_id": "seed-cat-tahara",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الطهارة",
+      "slug": "tahara"
+    }
+  },
+  {
+    "id": "seed-qa-207",
+    "question": "ما الذي ينقض الوضوء؟",
+    "answer": "الجواب: الخارج من السبيلين، والنوم المستغرق، وأكل لحم الإبل، وزوال العقل، ومس الذكر في المذهب الراجح.",
+    "category_id": "seed-cat-tahara",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الطهارة",
+      "slug": "tahara"
+    }
+  },
+  {
+    "id": "seed-qa-208",
+    "question": "هل الغسل واجب على المرأة بعد الحيض؟",
+    "answer": "الجواب: نعم، غسل الجنابة واجب بعد انقطاع الحيض أو النفاس.",
+    "category_id": "seed-cat-tahara",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الطهارة",
+      "slug": "tahara"
+    }
+  },
+  {
+    "id": "seed-qa-209",
+    "question": "ما الطهارة في الإسلام؟",
+    "answer": "الجواب: رفع الحدث والخبث بالماء أو ما يقوم مقامه؛ وهي شرط لصحة الصلاة والطواف ومس المصحف.",
+    "category_id": "seed-cat-tahara",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الطهارة",
+      "slug": "tahara"
+    }
+  },
+  {
+    "id": "seed-qa-210",
+    "question": "هل يجوز التيمم عند وجود الماء؟",
+    "answer": "الجواب: لا يجوز إلا عند العجز عن استعمال الماء لمرض أو خوف أو فقد الماء.",
+    "category_id": "seed-cat-tahara",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الطهارة",
+      "slug": "tahara"
+    }
+  },
+  {
+    "id": "seed-qa-211",
+    "question": "كم ركناً للصلاة؟",
+    "answer": "الجواب: أركان الصلاة أربعة عشر: النية، وتكبيرة الإحرام، والقيام مع القدرة، وقراءة الفاتحة، والركوع، والرفع منه، والسجود، والرفع منه، والجلسة بين السجدتين، والجلسة الأخيرة، والتشهد، والصلاة على النبي، والتسليمتان، والترتيب.",
+    "category_id": "seed-cat-salah",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الصلاة",
+      "slug": "salah"
+    }
+  },
+  {
+    "id": "seed-qa-212",
+    "question": "ما وقت صلاة الفجر؟",
+    "answer": "الجواب: من طلوع الفجر الصادق إلى طلوع الشمس.",
+    "category_id": "seed-cat-salah",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الصلاة",
+      "slug": "salah"
+    }
+  },
+  {
+    "id": "seed-qa-213",
+    "question": "هل تصح صلاة الجماعة بشخصين؟",
+    "answer": "الجواب: نعم، تصح صلاة الجماعة بإمام ومأموم واحد.",
+    "category_id": "seed-cat-salah",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الصلاة",
+      "slug": "salah"
+    }
+  },
+  {
+    "id": "seed-qa-214",
+    "question": "ما حكم صلاة الجمعة؟",
+    "answer": "الجواب: فرض عين على كل مسلم ذكر مقيم مكلف لا عذر له.",
+    "category_id": "seed-cat-salah",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الصلاة",
+      "slug": "salah"
+    }
+  },
+  {
+    "id": "seed-qa-215",
+    "question": "هل يجوز الجمع بين الصلاتين في السفر؟",
+    "answer": "الجواب: نعم، يجوز جمع الظهر والعصر والمغرب والعشاء في السفر.",
+    "category_id": "seed-cat-salah",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الصلاة",
+      "slug": "salah"
+    }
+  },
+  {
+    "id": "seed-qa-216",
+    "question": "ما فضل صلاة الجماعة؟",
+    "answer": "الجواب: تفضل صلاة المنفرد بسبع وعشرين درجة؛ رواه البخاري.",
+    "category_id": "seed-cat-salah",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الصلاة",
+      "slug": "salah"
+    }
+  },
+  {
+    "id": "seed-qa-217",
+    "question": "ما حكم السترة في الصلاة؟",
+    "answer": "الجواب: سنة مؤكدة للمصلي، ويحرم المرور بين المصلي وسترته.",
+    "category_id": "seed-cat-salah",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الصلاة",
+      "slug": "salah"
+    }
+  },
+  {
+    "id": "seed-qa-218",
+    "question": "ما حكم رفع اليدين في الصلاة؟",
+    "answer": "الجواب: سنة عند تكبيرة الإحرام والركوع والرفع منه وعند القيام من التشهد الأول.",
+    "category_id": "seed-cat-salah",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الصلاة",
+      "slug": "salah"
+    }
+  },
+  {
+    "id": "seed-qa-219",
+    "question": "ما القدر الواجب من الفاتحة في الصلاة؟",
+    "answer": "الجواب: الفاتحة كاملة ركن في كل ركعة لحديث «لا صلاة لمن لم يقرأ بفاتحة الكتاب».",
+    "category_id": "seed-cat-salah",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الصلاة",
+      "slug": "salah"
+    }
+  },
+  {
+    "id": "seed-qa-220",
+    "question": "هل للمرأة صلاة في المنزل أفضل من المسجد؟",
+    "answer": "الجواب: الأفضل للمرأة الصلاة في بيتها، لحديث «وبيوتهن خير لهن».",
+    "category_id": "seed-cat-salah",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الصلاة",
+      "slug": "salah"
+    }
+  },
+  {
+    "id": "seed-qa-221",
+    "question": "ما الأيام المنهي عن صيامها؟",
+    "answer": "الجواب: يوم العيدين، وأيام التشريق الثلاثة (11-13 ذو الحجة) إلا في الحج للمتمتع العاجز.",
+    "category_id": "seed-cat-sawm",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الصيام",
+      "slug": "sawm"
+    }
+  },
+  {
+    "id": "seed-qa-222",
+    "question": "ما مفسدات الصيام؟",
+    "answer": "الجواب: الأكل والشرب والجماع والاستمناء والحيض والنفاس والحقنة بالأوردة.",
+    "category_id": "seed-cat-sawm",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الصيام",
+      "slug": "sawm"
+    }
+  },
+  {
+    "id": "seed-qa-223",
+    "question": "هل الحقنة الطبية تُفطّر؟",
+    "answer": "الجواب: الحقنة في الوريد تُفطّر في الراجح، أما الحقنة في العضل فلا.",
+    "category_id": "seed-cat-sawm",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الصيام",
+      "slug": "sawm"
+    }
+  },
+  {
+    "id": "seed-qa-224",
+    "question": "متى يجب قضاء الصيام؟",
+    "answer": "الجواب: يجب القضاء على من أفطر بعذر شرعي (مرض أو سفر أو حيض)، ويكون قبل رمضان التالي.",
+    "category_id": "seed-cat-sawm",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الصيام",
+      "slug": "sawm"
+    }
+  },
+  {
+    "id": "seed-qa-225",
+    "question": "ما فضل صيام الاثنين والخميس؟",
+    "answer": "الجواب: تُعرض الأعمال فيهما على الله، وقال ﷺ: «أحب أن يُعرض عملي وأنا صائم».",
+    "category_id": "seed-cat-sawm",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الصيام",
+      "slug": "sawm"
+    }
+  },
+  {
+    "id": "seed-qa-226",
+    "question": "ما حكم الإمساك في رمضان لمن نسي وأكل؟",
+    "answer": "الجواب: من أكل أو شرب ناسياً فليتم صومه فإن الله أطعمه وسقاه.",
+    "category_id": "seed-cat-sawm",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الصيام",
+      "slug": "sawm"
+    }
+  },
+  {
+    "id": "seed-qa-227",
+    "question": "ما حكم صيام يوم عاشوراء؟",
+    "answer": "الجواب: سنة مؤكدة؛ يُكفّر السنة الماضية، ويستحب أن يُصام معه يوم قبله أو بعده مخالفة لليهود.",
+    "category_id": "seed-cat-sawm",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الصيام",
+      "slug": "sawm"
+    }
+  },
+  {
+    "id": "seed-qa-228",
+    "question": "هل السواك يُفطّر؟",
+    "answer": "الجواب: لا يُفطّر السواك في رمضان سواء قبل الزوال أو بعده في أصح الأقوال.",
+    "category_id": "seed-cat-sawm",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الصيام",
+      "slug": "sawm"
+    }
+  },
+  {
+    "id": "seed-qa-229",
+    "question": "من تجب عليهم الزكاة؟",
+    "answer": "الجواب: تجب على كل مسلم حر مالك لنصاب مضى عليه حول هجري.",
+    "category_id": "seed-cat-zakat",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الزكاة",
+      "slug": "zakat"
+    }
+  },
+  {
+    "id": "seed-qa-230",
+    "question": "ما نصاب الذهب؟",
+    "answer": "الجواب: عشرون مثقالاً وهي تعادل 85 غراماً من الذهب الخالص تقريباً.",
+    "category_id": "seed-cat-zakat",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الزكاة",
+      "slug": "zakat"
+    }
+  },
+  {
+    "id": "seed-qa-231",
+    "question": "من أصناف المستحقين للزكاة؟",
+    "answer": "الجواب: ثمانية أصناف؛ الفقراء والمساكين والعاملون عليها والمؤلفة قلوبهم وفي الرقاب والغارمون وفي سبيل الله وابن السبيل.",
+    "category_id": "seed-cat-zakat",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الزكاة",
+      "slug": "zakat"
+    }
+  },
+  {
+    "id": "seed-qa-232",
+    "question": "ما أركان الحج؟",
+    "answer": "الجواب: الإحرام، والوقوف بعرفة، وطواف الإفاضة، والسعي بين الصفا والمروة.",
+    "category_id": "seed-cat-hajj",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الحج",
+      "slug": "hajj"
+    }
+  },
+  {
+    "id": "seed-qa-233",
+    "question": "ما الإحصار في الحج؟",
+    "answer": "الجواب: منع المحرم من إتمام الحج أو العمرة بعدو أو مرض؛ وله التحلل بذبح هدي.",
+    "category_id": "seed-cat-hajj",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الحج",
+      "slug": "hajj"
+    }
+  },
+  {
+    "id": "seed-qa-234",
+    "question": "هل يجب الحج في العمر مرة واحدة؟",
+    "answer": "الجواب: نعم، الحج فرض مرة واحدة لمن استطاع، وما زاد فهو تطوع.",
+    "category_id": "seed-cat-hajj",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الحج",
+      "slug": "hajj"
+    }
+  },
+  {
+    "id": "seed-qa-235",
+    "question": "ما فضل الحج المبرور؟",
+    "answer": "الجواب: قال ﷺ: «الحج المبرور ليس له جزاء إلا الجنة».",
+    "category_id": "seed-cat-hajj",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الحج",
+      "slug": "hajj"
+    }
+  },
+  {
+    "id": "seed-qa-236",
+    "question": "ما زكاة الفطر؟",
+    "answer": "الجواب: صاع من طعام البلد (قمح أو تمر أو شعير) يُخرجه المسلم عن نفسه وعمن يعول قبيل صلاة العيد.",
+    "category_id": "seed-cat-zakat",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الزكاة",
+      "slug": "zakat"
+    }
+  },
+  {
+    "id": "seed-qa-237",
+    "question": "ما المحرمات في الإحرام؟",
+    "answer": "الجواب: الجماع ومقدماته، وإزالة الشعر والظفر، والصيد، وتغطية الرأس للرجل، ولبس المخيط للرجل.",
+    "category_id": "seed-cat-hajj",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الحج",
+      "slug": "hajj"
+    }
+  },
+  {
+    "id": "seed-qa-238",
+    "question": "هل تجب زكاة العروض التجارية؟",
+    "answer": "الجواب: نعم، تجب زكاة عروض التجارة بلوغ النصاب ومرور الحول.",
+    "category_id": "seed-cat-zakat",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الزكاة",
+      "slug": "zakat"
+    }
+  },
+  {
+    "id": "seed-qa-239",
+    "question": "ما ميقات أهل الكويت للحج؟",
+    "answer": "الجواب: قرن المنازل (السيل الكبير) لمن مر به من طريق الطائف، أو يُحرم في الطائرة عند محاذاته.",
+    "category_id": "seed-cat-hajj",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الحج",
+      "slug": "hajj"
+    }
+  },
+  {
+    "id": "seed-qa-240",
+    "question": "ما الفرق بين الحج والعمرة؟",
+    "answer": "الجواب: العمرة إحرام وطواف وسعي وتقصير، والحج يزيد عليها الوقوف بعرفة ورمي الجمرات والمبيت بمنى.",
+    "category_id": "seed-cat-hajj",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الحج",
+      "slug": "hajj"
+    }
+  },
+  {
+    "id": "seed-qa-241",
+    "question": "كم عدد سور القرآن الكريم؟",
+    "answer": "الجواب: مئة وأربع عشرة سورة.",
+    "category_id": "seed-cat-quran",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "القرآن",
+      "slug": "quran"
+    }
+  },
+  {
+    "id": "seed-qa-242",
+    "question": "ما السورة التي تعدل ثلث القرآن؟",
+    "answer": "الجواب: سورة الإخلاص (قل هو الله أحد)؛ رواه البخاري.",
+    "category_id": "seed-cat-quran",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "القرآن",
+      "slug": "quran"
+    }
+  },
+  {
+    "id": "seed-qa-243",
+    "question": "ما أطول سورة في القرآن؟",
+    "answer": "الجواب: سورة البقرة بمئتين وست وثمانين آية.",
+    "category_id": "seed-cat-quran",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "القرآن",
+      "slug": "quran"
+    }
+  },
+  {
+    "id": "seed-qa-244",
+    "question": "ما أقصر سورة في القرآن؟",
+    "answer": "الجواب: سورة الكوثر بثلاث آيات.",
+    "category_id": "seed-cat-quran",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "القرآن",
+      "slug": "quran"
+    }
+  },
+  {
+    "id": "seed-qa-245",
+    "question": "ما الفرق بين المكي والمدني من السور؟",
+    "answer": "الجواب: المكي ما نزل قبل الهجرة ويتضمن العقيدة والتوحيد، والمدني ما نزل بعدها ويتضمن التشريع والأحكام.",
+    "category_id": "seed-cat-quran",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "القرآن",
+      "slug": "quran"
+    }
+  },
+  {
+    "id": "seed-qa-246",
+    "question": "من جمع القرآن في مصحف واحد في عهد أبي بكر؟",
+    "answer": "الجواب: زيد بن ثابت رضي الله عنه بأمر من أبي بكر الصديق.",
+    "category_id": "seed-cat-quran",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "القرآن",
+      "slug": "quran"
+    }
+  },
+  {
+    "id": "seed-qa-247",
+    "question": "ما الحديث القدسي؟",
+    "answer": "الجواب: ما رواه النبي ﷺ عن الله بألفاظه هو، بخلاف القرآن الذي هو لفظ الله المنزّل.",
+    "category_id": "seed-cat-hadith",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الحديث",
+      "slug": "hadith"
+    }
+  },
+  {
+    "id": "seed-qa-248",
+    "question": "ما صحيح البخاري؟",
+    "answer": "الجواب: أصح كتاب بعد القرآن الكريم؛ ألّفه الإمام محمد بن إسماعيل البخاري وانتقى فيه 7563 حديثاً.",
+    "category_id": "seed-cat-hadith",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الحديث",
+      "slug": "hadith"
+    }
+  },
+  {
+    "id": "seed-qa-249",
+    "question": "من مؤلف كتاب رياض الصالحين؟",
+    "answer": "الجواب: الإمام يحيى بن شرف النووي (676هـ).",
+    "category_id": "seed-cat-hadith",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الحديث",
+      "slug": "hadith"
+    }
+  },
+  {
+    "id": "seed-qa-250",
+    "question": "ما المتواتر من الأحاديث؟",
+    "answer": "الجواب: ما رواه عدد كبير من الصحابة لا يُتصور تواطؤهم على الكذب وينتهي إلى أمر محسوس.",
+    "category_id": "seed-cat-hadith",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الحديث",
+      "slug": "hadith"
+    }
+  },
+  {
+    "id": "seed-qa-251",
+    "question": "ما الحديث الضعيف؟",
+    "answer": "الجواب: ما لم تجتمع فيه شروط الصحة ولا شروط الحسن؛ ولا يُحتج به في العقائد والأحكام.",
+    "category_id": "seed-cat-hadith",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الحديث",
+      "slug": "hadith"
+    }
+  },
+  {
+    "id": "seed-qa-252",
+    "question": "من ألّف الأربعين النووية؟",
+    "answer": "الجواب: الإمام يحيى بن شرف النووي الدمشقي رحمه الله.",
+    "category_id": "seed-cat-hadith",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الحديث",
+      "slug": "hadith"
+    }
+  },
+  {
+    "id": "seed-qa-253",
+    "question": "ما الحديث المرسل؟",
+    "answer": "الجواب: ما أسقط منه الصحابي ورواه التابعي مباشرة عن النبي ﷺ.",
+    "category_id": "seed-cat-hadith",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الحديث",
+      "slug": "hadith"
+    }
+  },
+  {
+    "id": "seed-qa-254",
+    "question": "ما المسند من كتب الحديث؟",
+    "answer": "الجواب: الكتاب الذي يُرتّب فيه الأحاديث حسب مسانيد الصحابة؛ كمسند أحمد.",
+    "category_id": "seed-cat-hadith",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الحديث",
+      "slug": "hadith"
+    }
+  },
+  {
+    "id": "seed-qa-255",
+    "question": "ما أوضح دليل على تحريف التوراة والإنجيل؟",
+    "answer": "الجواب: قوله تعالى: ﴿يُحَرِّفُونَ الْكَلِمَ عَن مَّوَاضِعِهِ﴾، وخلو الكتب الحالية من نبوءات النبي ﷺ.",
+    "category_id": "seed-cat-quran",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "القرآن",
+      "slug": "quran"
+    }
+  },
+  {
+    "id": "seed-qa-256",
+    "question": "ما أفضل الذكر؟",
+    "answer": "الجواب: «لا إله إلا الله» وحدها أفضل الذكر؛ رواه الترمذي.",
+    "category_id": "seed-cat-adhkar",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الأذكار",
+      "slug": "adhkar"
+    }
+  },
+  {
+    "id": "seed-qa-257",
+    "question": "ما فضل قول «سبحان الله وبحمده سبحان الله العظيم»؟",
+    "answer": "الجواب: «كلمتان خفيفتان على اللسان ثقيلتان في الميزان»؛ متفق عليه.",
+    "category_id": "seed-cat-adhkar",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الأذكار",
+      "slug": "adhkar"
+    }
+  },
+  {
+    "id": "seed-qa-258",
+    "question": "ما دعاء الاستخارة؟",
+    "answer": "الجواب: «اللهم إني أستخيرك بعلمك وأستقدرك بقدرتك...» يقوله المسلم إذا تردّد في أمر من أمور الدنيا.",
+    "category_id": "seed-cat-adhkar",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الأذكار",
+      "slug": "adhkar"
+    }
+  },
+  {
+    "id": "seed-qa-259",
+    "question": "ما الذكر بعد الصلاة المفروضة؟",
+    "answer": "الجواب: يقول ثلاثاً: «أستغفر الله»، ثم: «اللهم أنت السلام ومنك السلام تباركت يا ذا الجلال والإكرام»، ثم يسبح ويحمد ويكبر ثلاثاً وثلاثين.",
+    "category_id": "seed-cat-adhkar",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الأذكار",
+      "slug": "adhkar"
+    }
+  },
+  {
+    "id": "seed-qa-260",
+    "question": "ما دعاء الكرب؟",
+    "answer": "الجواب: «لا إله إلا الله العظيم الحليم، لا إله إلا الله رب العرش العظيم»؛ متفق عليه.",
+    "category_id": "seed-cat-adhkar",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الأذكار",
+      "slug": "adhkar"
+    }
+  },
+  {
+    "id": "seed-qa-261",
+    "question": "ما حكم الغيبة؟",
+    "answer": "الجواب: حرام؛ وهي ذكرك أخاك بما يكره وإن كان فيه.",
+    "category_id": "seed-cat-adab",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الآداب",
+      "slug": "adab"
+    }
+  },
+  {
+    "id": "seed-qa-262",
+    "question": "ما حكم النميمة؟",
+    "answer": "الجواب: حرام؛ وهي نقل الكلام بين الناس بقصد الإفساد.",
+    "category_id": "seed-cat-adab",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الآداب",
+      "slug": "adab"
+    }
+  },
+  {
+    "id": "seed-qa-263",
+    "question": "ما حكم الكذب؟",
+    "answer": "الجواب: حرام؛ إلا في ثلاثة مواضع: الإصلاح بين الناس والحرب وإرضاء الزوج.",
+    "category_id": "seed-cat-adab",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الآداب",
+      "slug": "adab"
+    }
+  },
+  {
+    "id": "seed-qa-264",
+    "question": "ما آداب العطاس؟",
+    "answer": "الجواب: العاطس يقول: «الحمد لله»، ومن يسمعه يقول: «يرحمك الله»، فيرد: «يهديكم الله ويصلح بالكم».",
+    "category_id": "seed-cat-adab",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الآداب",
+      "slug": "adab"
+    }
+  },
+  {
+    "id": "seed-qa-265",
+    "question": "ما حكم قول «إن شاء الله» عند الوعد؟",
+    "answer": "الجواب: مستحب ومأمور به؛ ﴿وَلَا تَقُولَنَّ لِشَيْءٍ إِنِّي فَاعِلٌ ذَٰلِكَ غَدًا * إِلَّا أَن يَشَاءَ اللَّهُ﴾.",
+    "category_id": "seed-cat-adab",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الآداب",
+      "slug": "adab"
+    }
+  },
+  {
+    "id": "seed-qa-266",
+    "question": "ما أفضل دعاء يوم عرفة؟",
+    "answer": "الجواب: «لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير».",
+    "category_id": "seed-cat-adhkar",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الأذكار",
+      "slug": "adhkar"
+    }
+  },
+  {
+    "id": "seed-qa-267",
+    "question": "ما سيد الاستغفار؟",
+    "answer": "الجواب: «اللهم أنت ربي لا إله إلا أنت، خلقتني وأنا عبدك، وأنا على عهدك ووعدك ما استطعت...»؛ رواه البخاري.",
+    "category_id": "seed-cat-adhkar",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الأذكار",
+      "slug": "adhkar"
+    }
+  },
+  {
+    "id": "seed-qa-268",
+    "question": "ما أدعية النوم؟",
+    "answer": "الجواب: «بسمك اللهم أموت وأحيا» وقراءة آية الكرسي والمعوذتين والإخلاص.",
+    "category_id": "seed-cat-adhkar",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الأذكار",
+      "slug": "adhkar"
+    }
+  },
+  {
+    "id": "seed-qa-269",
+    "question": "ما دعاء دخول الخلاء؟",
+    "answer": "الجواب: «بسم الله، اللهم إني أعوذ بك من الخبث والخبائث».",
+    "category_id": "seed-cat-adhkar",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الأذكار",
+      "slug": "adhkar"
+    }
+  },
+  {
+    "id": "seed-qa-270",
+    "question": "ما ذكر الصباح الأعظم أجراً؟",
+    "answer": "الجواب: سيد الاستغفار وآية الكرسي وقل هو الله أحد والمعوذتين والصلاة على النبي.",
+    "category_id": "seed-cat-adhkar",
+    "ruling_type": null,
+    "evidence": null,
+    "reference": null,
+    "status": "published",
+    "review_status": "approved",
+    "created_at": "2024-01-09T09:00:00.000Z",
+    "qa_categories": {
+      "name": "الأذكار",
+      "slug": "adhkar"
     }
   }
 ];
