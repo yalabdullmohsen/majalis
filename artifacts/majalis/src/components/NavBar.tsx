@@ -9,7 +9,6 @@ import { SearchSuggestions } from "./SearchSuggestions";
 import { SideNavDrawer } from "./SideNavDrawer";
 import { MobileMoreMenu } from "./MobileMoreMenu";
 
-
 import { C } from "@/lib/theme";
 import { useMobileNavState } from "@/hooks/useMobileNavState";
 import { PRIMARY_NAV_ITEMS } from "@/lib/navigation";
@@ -74,12 +73,19 @@ export default function NavBar() {
   const { lang, setLang, t } = useLanguage();
   const [location, navigate] = useLocation();
   const isMobile = useIsMobile();
-  const { isMenuOpen, moreOpen, toggleMenu, closeMenu, closeMore, toggleMore, closeAll } = useMobileNavState();
+  const { isMenuOpen, moreOpen, toggleMenu, openMenu, closeMenu, closeMore, toggleMore, closeAll } = useMobileNavState();
 
   const isActive = (href: string) => {
     const path = href.split("?")[0];
     return location === href || location === path || (path !== "/" && location.startsWith(path));
   };
+
+  // Bottom nav dispatches "sidenav-open" to open the drawer from outside
+  useEffect(() => {
+    const handler = () => openMenu();
+    window.addEventListener("sidenav-open", handler);
+    return () => window.removeEventListener("sidenav-open", handler);
+  }, [openMenu]);
 
   const handleLogout = async () => {
     closeAll();
@@ -87,7 +93,8 @@ export default function NavBar() {
     navigate("/login");
   };
 
-  const authLinks = isLoggedIn ? (
+  // Desktop only: full auth bar
+  const desktopAuthLinks = isLoggedIn ? (
     <div className="navbar-auth">
       {isAdmin && <NotificationBell />}
       <Link href="/stats" className="navbar-user-link">{user?.profile?.full_name || user?.email || t("nav_my_account")}</Link>
@@ -119,6 +126,7 @@ export default function NavBar() {
       >
         <div className="navbar-v3__inner">
           <div className="navbar-v3__start">
+            {/* Hamburger — always visible, opens SideNavDrawer */}
             <button
               type="button"
               className="navbar-menu-btn navbar-menu-btn--drawer"
@@ -143,6 +151,7 @@ export default function NavBar() {
             </Link>
           </div>
 
+          {/* Desktop tabs */}
           {!isMobile && (
             <nav className="navbar-v3__tabs" aria-label={lang === "en" ? "Main navigation" : "التنقل الرئيسي"}>
               {PRIMARY_NAV_ITEMS.map((item) => (
@@ -159,56 +168,37 @@ export default function NavBar() {
           )}
 
           <div className="navbar-v3__end">
+            {/* Desktop: search + auth + lang */}
             {!isMobile && <SearchBox />}
-            {!isMobile && authLinks}
-            <button
-              type="button"
-              className="navbar-lang-btn"
-              onClick={() => setLang(lang === "ar" ? "en" : "ar")}
-              aria-label={lang === "ar" ? "Switch to English" : "التبديل إلى العربية"}
-              title={lang === "ar" ? "EN" : "عر"}
-            >
-              {lang === "ar" ? "EN" : "عر"}
-            </button>
-            {isMobile && (
-              <>
-                {!isLoggedIn && (
-                  <Link href="/register" className="navbar-register navbar-register--mobile" aria-label={t("nav_register")}>
-                    {t("nav_register_short")}
-                  </Link>
-                )}
-                {!isLoggedIn ? (
-                  <Link href="/login" className="navbar-login navbar-login--mobile" aria-label={t("nav_login")}>
-                    {t("nav_login")}
-                  </Link>
-                ) : isAdmin ? (
-                  <Link href="/admin" className="navbar-login navbar-login--mobile" aria-label={t("nav_admin_panel")}>
-                    {t("nav_admin_short")}
-                  </Link>
-                ) : (
-                  <Link href="/stats" className="navbar-login navbar-login--mobile" aria-label={t("nav_my_account")}>
-                    {t("nav_my_account")}
-                  </Link>
-                )}
-                <button
-                  type="button"
-                  className="navbar-menu-btn navbar-menu-btn--more"
-                  onClick={toggleMore}
-                  aria-expanded={moreOpen}
-                  aria-controls="navbar-mobile-more-panel"
-                  aria-haspopup="true"
-                >
-                  {moreOpen ? t("nav_close") : t("nav_more")}
-                </button>
-              </>
+            {!isMobile && desktopAuthLinks}
+            {!isMobile && (
+              <button
+                type="button"
+                className="navbar-lang-btn"
+                onClick={() => setLang(lang === "ar" ? "en" : "ar")}
+                aria-label={lang === "ar" ? "Switch to English" : "التبديل إلى العربية"}
+                title={lang === "ar" ? "EN" : "عر"}
+              >
+                {lang === "ar" ? "EN" : "عر"}
+              </button>
             )}
+
+            {/* Mobile: single auth icon only (no more / lang — those are in bottom nav + side nav) */}
+            {isMobile && isAdmin && <NotificationBell />}
           </div>
         </div>
       </header>
 
-      <SideNavDrawer open={isMenuOpen} onClose={closeMenu} />
+      <SideNavDrawer
+        open={isMenuOpen}
+        onClose={closeMenu}
+        lang={lang}
+        onLangToggle={() => setLang(lang === "ar" ? "en" : "ar")}
+        onLogout={handleLogout}
+      />
 
-      {isMobile && (
+      {/* Mobile "more" menu — still used if ever triggered, but hidden on mobile now */}
+      {!isMobile && (
         <MobileMoreMenu
           open={moreOpen}
           onClose={closeMore}

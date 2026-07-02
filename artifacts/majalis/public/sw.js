@@ -1,7 +1,7 @@
 /** PWA service worker v7 — network-first for app shell, cache-first for static Quran/lesson data. */
 
-const SHELL_CACHE   = "majalis-shell-v7";
-const DATA_CACHE    = "majalis-data-v7";
+const SHELL_CACHE   = "majalis-shell-v8";
+const DATA_CACHE    = "majalis-data-v8";
 const FETCH_TIMEOUT = 8000;
 
 // External API routes served cache-first (Quran API data, prayer times)
