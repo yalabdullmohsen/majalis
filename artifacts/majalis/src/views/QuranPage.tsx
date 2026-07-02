@@ -9,9 +9,13 @@ import {
   fetchJuz,
   fetchSurahDetailQiraat,
   getMushafPageUrl,
+  getMushafPageFallbackUrl,
   QIRAAT_LIST,
   getQiraatPref,
   setQiraatPref,
+  getSurahForPage,
+  getSurahList,
+  SURAH_START_PAGES,
   type TafsirAyah,
   type Ayah,
   type JuzData,
@@ -27,11 +31,11 @@ import "@/styles/quran.css";
 
 type ViewMode = "surah" | "page" | "verse" | "juz";
 
-const VIEWS: { id: ViewMode; label: string; icon: string }[] = [
-  { id: "surah", label: "سورة",  icon: "📜" },
-  { id: "page",  label: "صفحة", icon: "📖" },
-  { id: "verse", label: "آية",   icon: "✨" },
-  { id: "juz",   label: "جزء",   icon: "📦" },
+const VIEWS: { id: ViewMode; label: string }[] = [
+  { id: "surah", label: "سورة" },
+  { id: "page",  label: "مصحف" },
+  { id: "verse", label: "آية" },
+  { id: "juz",   label: "جزء" },
 ];
 
 const TAFSIR_SOURCES = [
@@ -45,6 +49,7 @@ const VIEW_KEY   = "mj-quran-view-v1";
 const TAFSIR_KEY = "mj-quran-tafsir-v3";
 const PAGE_KEY   = "mj-quran-page-v1";
 const JUZ_KEY    = "mj-quran-juz-v1";
+const FS_KEY     = "mj-quran-fontsize-v1";
 
 function ls<T>(key: string, fallback: T): T {
   try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; }
@@ -54,40 +59,193 @@ function lsSet(key: string, value: unknown) {
   try { localStorage.setItem(key, JSON.stringify(value)); } catch { /* ignore */ }
 }
 
-// ─── Page View ─────────────────────────────────────────────────────────────
+// ─── Mushaf Immersive Reader ───────────────────────────────────────────────
 
-function PageView() {
+function PageView({ onExit }: { onExit: () => void }) {
   const [page, setPage] = useState(() => ls<number>(PAGE_KEY, 1));
   const [loaded, setLoaded] = useState(false);
-  const [error, setError] = useState(false);
+  const [triedFallback, setTriedFallback] = useState(false);
+  const [hardError, setHardError] = useState(false);
   const [retryCount, setRetryCount] = useState(0);
+  const [activeSrc, setActiveSrc] = useState(() => getMushafPageUrl(ls<number>(PAGE_KEY, 1)));
+  const [showChrome, setShowChrome] = useState(true);
+  const [showIndex, setShowIndex] = useState(false);
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
+  const chromTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const url = getMushafPageUrl(page);
+  const surahOnPage = useMemo(() => getSurahForPage(page), [page]);
+  const allSurahs = useMemo(() => getSurahList(), []);
 
-  const go = useCallback((delta: number) => {
-    setPage((prev) => {
-      const next = Math.max(1, Math.min(604, prev + delta));
-      lsSet(PAGE_KEY, next);
-      return next;
-    });
-    setLoaded(false);
-    setError(false);
+  const resetChromeTimer = useCallback(() => {
+    if (chromTimerRef.current) clearTimeout(chromTimerRef.current);
+    setShowChrome(true);
+    chromTimerRef.current = setTimeout(() => setShowChrome(false), 3500);
   }, []);
 
+  useEffect(() => {
+    resetChromeTimer();
+    return () => { if (chromTimerRef.current) clearTimeout(chromTimerRef.current); };
+  }, [page, resetChromeTimer]);
+
+  // Prefetch adjacent pages
+  useEffect(() => {
+    [page - 1, page + 1].forEach((p) => {
+      if (p >= 1 && p <= 604) {
+        const img = new Image();
+        img.src = getMushafPageUrl(p);
+      }
+    });
+  }, [page]);
+
+  const go = useCallback(
+    (delta: number) => {
+      setPage((prev) => {
+        const next = Math.max(1, Math.min(604, prev + delta));
+        lsSet(PAGE_KEY, next);
+        return next;
+      });
+      setLoaded(false);
+      setTriedFallback(false);
+      setHardError(false);
+      resetChromeTimer();
+    },
+    [resetChromeTimer],
+  );
+
+  useEffect(() => {
+    setActiveSrc(getMushafPageUrl(page));
+    setLoaded(false);
+    setTriedFallback(false);
+    setHardError(false);
+  }, [page]);
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.target instanceof HTMLInputElement) return;
+      if (e.key === "ArrowLeft") go(1);
+      else if (e.key === "ArrowRight") go(-1);
+      else if (e.key === "Escape") onExit();
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [go, onExit]);
+
+  function handleImgError() {
+    if (!triedFallback) {
+      setTriedFallback(true);
+      setActiveSrc(getMushafPageFallbackUrl(page));
+    } else {
+      setHardError(true);
+      setLoaded(true);
+    }
+  }
+
+  function handleRetry() {
+    setHardError(false);
+    setLoaded(false);
+    setTriedFallback(false);
+    setRetryCount((c) => c + 1);
+    setActiveSrc(getMushafPageUrl(page));
+  }
+
+  function handleTouchStart(e: React.TouchEvent) {
+    touchStartRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+  }
+
+  function handleTouchEnd(e: React.TouchEvent) {
+    if (!touchStartRef.current) return;
+    const dx = e.changedTouches[0].clientX - touchStartRef.current.x;
+    const dy = Math.abs(e.changedTouches[0].clientY - touchStartRef.current.y);
+    touchStartRef.current = null;
+    if (dy > 80 || Math.abs(dx) < 45) {
+      setShowChrome((v) => !v);
+      return;
+    }
+    // Swipe left → next page (higher number); swipe right → previous page
+    go(dx < 0 ? 1 : -1);
+  }
+
+  function jumpToSurah(idx: number) {
+    const p = SURAH_START_PAGES[idx];
+    setPage(p);
+    lsSet(PAGE_KEY, p);
+    setLoaded(false);
+    setTriedFallback(false);
+    setHardError(false);
+    setShowIndex(false);
+    resetChromeTimer();
+  }
+
   return (
-    <div style={{ direction: "rtl", textAlign: "center" }}>
-      {/* Navigation */}
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "1rem", marginBottom: "0.875rem" }}>
+    <div className="mf-shell" dir="rtl">
+      {/* Minimal top header */}
+      <div className={`mf-header${showChrome ? " is-visible" : ""}`}>
+        <button type="button" className="mf-chrome-btn" onClick={onExit} aria-label="الرجوع">
+          ← رجوع
+        </button>
+        <div className="mf-header__info">
+          <span className="mf-header__surah">{surahOnPage.name}</span>
+          <span className="mf-header__page">صفحة {page} من ٦٠٤</span>
+        </div>
         <button
           type="button"
+          className="mf-chrome-btn"
+          onClick={() => setShowIndex(true)}
+          aria-label="فهرس السور"
+        >
+          ☰
+        </button>
+      </div>
+
+      {/* Full-viewport mushaf image */}
+      <div
+        className="mf-page-frame"
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        onClick={() => setShowChrome((v) => !v)}
+      >
+        {!loaded && !hardError && (
+          <div className="mf-skeleton">
+            <div className="mf-skeleton__spinner" />
+            <span>جاري التحميل…</span>
+          </div>
+        )}
+        {hardError && (
+          <div className="mf-error">
+            <p>تعذّر تحميل الصفحة {page}</p>
+            <button
+              type="button"
+              className="mf-error__retry"
+              onClick={(e) => { e.stopPropagation(); handleRetry(); }}
+            >
+              إعادة المحاولة
+            </button>
+          </div>
+        )}
+        <img
+          key={`${activeSrc}-${retryCount}`}
+          src={activeSrc}
+          alt={`صفحة ${page} من المصحف الشريف`}
+          className={`mf-page-img${loaded && !hardError ? " is-loaded" : ""}`}
+          onLoad={() => setLoaded(true)}
+          onError={handleImgError}
+          draggable={false}
+        />
+      </div>
+
+      {/* Bottom navigation bar */}
+      <div className={`mf-footer${showChrome ? " is-visible" : ""}`}>
+        <button
+          type="button"
+          className="mf-nav-btn"
           onClick={() => go(-1)}
           disabled={page <= 1}
-          style={navBtn(page <= 1)}
           aria-label="الصفحة السابقة"
         >
-          ← السابقة
+          ‹ السابقة
         </button>
-        <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+        <div className="mf-page-input-wrap">
           <input
             type="number"
             min={1}
@@ -95,56 +253,72 @@ function PageView() {
             value={page}
             onChange={(e) => {
               const v = parseInt(e.target.value, 10);
-              if (v >= 1 && v <= 604) { setPage(v); lsSet(PAGE_KEY, v); setLoaded(false); setError(false); }
+              if (!isNaN(v) && v >= 1 && v <= 604) {
+                setPage(v);
+                lsSet(PAGE_KEY, v);
+                setLoaded(false);
+                setTriedFallback(false);
+                setHardError(false);
+              }
             }}
-            style={{ width: 60, textAlign: "center", border: "1px solid var(--ds-line-color)", borderRadius: "0.375rem", padding: "0.3rem 0.4rem", fontSize: "0.9rem", fontFamily: "inherit" }}
+            onClick={(e) => e.stopPropagation()}
+            className="mf-page-input"
+            aria-label="رقم الصفحة"
           />
-          <span style={{ fontSize: "0.82rem", color: "var(--ds-ink-soft)" }}>/ 604</span>
+          <span className="mf-page-total">/ ٦٠٤</span>
         </div>
         <button
           type="button"
+          className="mf-nav-btn"
           onClick={() => go(1)}
           disabled={page >= 604}
-          style={navBtn(page >= 604)}
           aria-label="الصفحة التالية"
         >
-          التالية →
+          التالية ›
         </button>
       </div>
 
-      {/* Page image */}
-      <div style={{ position: "relative", maxWidth: 600, margin: "0 auto", borderRadius: "0.75rem", overflow: "hidden", boxShadow: "0 4px 24px rgba(0,0,0,0.12)", background: "#f8f4e8" }}>
-        {!loaded && !error && (
-          <div style={{ padding: "5rem 2rem", color: "var(--ds-ink-soft)", fontSize: "0.9rem" }}>
-            جاري تحميل صفحة المصحف…
+      {/* Surah index bottom sheet */}
+      {showIndex && (
+        <>
+          <div className="mf-overlay" onClick={() => setShowIndex(false)} aria-hidden="true" />
+          <div className="mf-index-sheet" role="dialog" aria-modal="true" aria-label="فهرس السور">
+            <div className="mf-index-sheet__handle" />
+            <div className="mf-index-sheet__head">
+              <h2 className="mf-index-sheet__title">فهرس السور</h2>
+              <button
+                type="button"
+                className="mf-index-sheet__close"
+                onClick={() => setShowIndex(false)}
+                aria-label="إغلاق"
+              >
+                ✕
+              </button>
+            </div>
+            <div className="mf-index-sheet__list">
+              {allSurahs.map((s, i) => (
+                <button
+                  key={s.number}
+                  type="button"
+                  className={`mf-index-item${surahOnPage.number === s.number ? " is-active" : ""}`}
+                  onClick={() => jumpToSurah(i)}
+                >
+                  <span className="mf-index-item__num">{s.number}</span>
+                  <span className="mf-index-item__name">{s.name}</span>
+                  <span className="mf-index-item__meta">
+                    {s.revelation} · {s.ayahs} آية · ص {SURAH_START_PAGES[i]}
+                  </span>
+                </button>
+              ))}
+            </div>
           </div>
-        )}
-        {error && (
-          <div style={{ padding: "3rem 2rem", color: "#8B1A1A" }}>
-            <p>تعذر تحميل الصورة.</p>
-            <button type="button" onClick={() => { setError(false); setLoaded(false); setRetryCount(c => c + 1); }} style={{ ...primaryBtnS, marginTop: "0.5rem" }}>
-              إعادة المحاولة
-            </button>
-          </div>
-        )}
-        <img
-          key={`${url}-${retryCount}`}
-          src={url}
-          alt={`صفحة ${page} من المصحف الشريف`}
-          onLoad={() => setLoaded(true)}
-          onError={() => { setError(true); setLoaded(true); }}
-          style={{ display: loaded && !error ? "block" : "none", width: "100%", height: "auto" }}
-        />
-      </div>
-
-      <p style={{ marginTop: "0.75rem", fontSize: "0.72rem", color: "var(--ds-ink-soft)" }}>
-        المصدر: Islamic Network CDN · طبعة حفص عن عاصم
-      </p>
+        </>
+      )}
     </div>
   );
 }
 
-// ─── Verse View ────────────────────────────────────────────────────────────
+// ─── Verse (آية) View ─────────────────────────────────────────────────────
 
 function VerseView({
   ayahs,
@@ -166,81 +340,72 @@ function VerseView({
   const ayah = ayahs[ayahIdx] ?? null;
 
   return (
-    <div style={{ direction: "rtl", maxWidth: 640, margin: "0 auto" }}>
-      {/* Navigation */}
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1rem" }}>
-        <button type="button" onClick={() => setAyahIdx((v) => Math.max(0, v - 1))} disabled={ayahIdx <= 0} style={navBtn(ayahIdx <= 0)}>
-          ← السابقة
+    <div className="qs-verse-view" dir="rtl">
+      {/* Verse navigation */}
+      <div className="qs-verse-view__nav">
+        <button
+          type="button"
+          className="qs-page-view__nav-btn"
+          onClick={() => setAyahIdx((v) => Math.max(0, v - 1))}
+          disabled={ayahIdx <= 0}
+        >
+          ‹ السابقة
         </button>
-        <span style={{ fontSize: "0.85rem", color: "var(--ds-ink-soft)" }}>
-          {surahName} — آية {ayahIdx + 1} / {total}
+        <span className="qs-verse-view__counter">
+          {ayahIdx + 1} / {total}
         </span>
-        <button type="button" onClick={() => setAyahIdx((v) => Math.min(total - 1, v + 1))} disabled={ayahIdx >= total - 1} style={navBtn(ayahIdx >= total - 1)}>
-          التالية →
+        <button
+          type="button"
+          className="qs-page-view__nav-btn"
+          onClick={() => setAyahIdx((v) => Math.min(total - 1, v + 1))}
+          disabled={ayahIdx >= total - 1}
+        >
+          التالية ›
         </button>
       </div>
 
       {/* Ayah card */}
-      <div style={{ background: "linear-gradient(135deg, #f8f4e8, #fff)", border: "2px solid var(--majalis-brass, #b8860b)", borderRadius: "1rem", padding: "2rem 1.5rem", textAlign: "center", boxShadow: "0 4px 20px rgba(184,134,11,0.1)" }}>
-        {ayah && (
-          <>
-            <div style={{ fontSize: "0.75rem", color: "var(--majalis-brass)", fontWeight: 700, marginBottom: "1rem", letterSpacing: "0.05em" }}>
-              ﴿ {surahName} : {ayah.numberInSurah} ﴾
-            </div>
-            <p
-              style={{
-                fontSize: "2rem",
-                lineHeight: 2.2,
-                fontFamily: "var(--font-quran, 'Amiri Quran', 'Scheherazade New', serif)",
-                color: "var(--ds-ink, #1a1a1a)",
-                margin: 0,
-                direction: "rtl",
-              }}
-            >
-              {ayah.text}
-            </p>
-          </>
-        )}
-      </div>
+      {ayah && (
+        <div className="qs-verse-card">
+          <div className="qs-verse-card__ref">
+            ﴿ {surahName} : {ayah.numberInSurah} ﴾
+          </div>
+          <p className="qs-verse-card__text" lang="ar" dir="rtl">
+            {ayah.text}
+          </p>
+        </div>
+      )}
 
       {/* Tafsir */}
-      <div style={{ marginTop: "1rem", background: "#fff", borderRadius: "0.75rem", border: "1px solid var(--ds-line-color)", padding: "1rem 1.25rem" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.625rem" }}>
-          <span style={{ fontWeight: 700, fontSize: "0.85rem", color: "var(--ds-emerald-deep)" }}>📖 التفسير</span>
-          <div style={{ display: "flex", gap: "0.3rem" }}>
+      <div className="qs-verse-tafsir">
+        <div className="qs-verse-tafsir__head">
+          <span className="qs-verse-tafsir__title">التفسير</span>
+          <div className="qs-verse-tafsir__sources">
             {TAFSIR_SOURCES.map((t) => (
               <button
                 key={t.id}
                 type="button"
+                className={`qs-tafsir__source-btn${tafsirId === t.id ? " is-active" : ""}`}
                 onClick={() => onChangeTafsir(t.id)}
-                style={{
-                  padding: "0.2rem 0.5rem",
-                  borderRadius: 999,
-                  border: `1px solid ${tafsirId === t.id ? "var(--ds-emerald)" : "var(--ds-line-color)"}`,
-                  background: tafsirId === t.id ? "var(--ds-emerald-soft)" : "transparent",
-                  fontSize: "0.7rem",
-                  cursor: "pointer",
-                  fontFamily: "inherit",
-                  color: tafsirId === t.id ? "var(--ds-emerald-deep)" : "var(--ds-ink-soft)",
-                }}
               >
                 {t.label}
               </button>
             ))}
           </div>
         </div>
-        {tafsirLoading && <p style={{ color: "var(--ds-ink-soft)", fontSize: "0.85rem" }}>جاري تحميل التفسير…</p>}
+        {tafsirLoading && <p className="qs-loading">جاري تحميل التفسير…</p>}
         {!tafsirLoading && ayah && (
-          <p style={{ margin: 0, fontSize: "0.95rem", lineHeight: 1.9, color: "var(--ds-ink, #1a1a1a)" }}>
+          <p className="qs-verse-tafsir__body">
             {tafsirMap.get(ayah.numberInSurah) || "لا يوجد تفسير متاح لهذه الآية في المصدر المختار."}
           </p>
         )}
       </div>
 
       {/* Jump to ayah */}
-      <div style={{ marginTop: "0.75rem", display: "flex", alignItems: "center", gap: "0.5rem", justifyContent: "center" }}>
-        <span style={{ fontSize: "0.78rem", color: "var(--ds-ink-soft)" }}>انتقل إلى الآية:</span>
+      <div className="qs-verse-view__jump">
+        <label className="qs-verse-view__jump-label" htmlFor="ayah-jump">الآية:</label>
         <input
+          id="ayah-jump"
           type="number"
           min={1}
           max={total}
@@ -249,14 +414,14 @@ function VerseView({
             const v = parseInt(e.target.value, 10);
             if (v >= 1 && v <= total) setAyahIdx(v - 1);
           }}
-          style={{ width: 60, textAlign: "center", border: "1px solid var(--ds-line-color)", borderRadius: "0.375rem", padding: "0.25rem 0.4rem", fontSize: "0.85rem", fontFamily: "inherit" }}
+          className="qs-verse-view__jump-input"
         />
       </div>
     </div>
   );
 }
 
-// ─── Juz View ──────────────────────────────────────────────────────────────
+// ─── Juz View ─────────────────────────────────────────────────────────────
 
 function JuzView({ fontScale }: { fontScale: number }) {
   const [juzNum, setJuzNum] = useState(() => ls<number>(JUZ_KEY, 1));
@@ -295,28 +460,17 @@ function JuzView({ fontScale }: { fontScale: number }) {
   }, [juzData]);
 
   return (
-    <div style={{ direction: "rtl" }}>
-      {/* Juz selector */}
-      <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1rem", flexWrap: "wrap" }}>
-        <span style={{ fontSize: "0.85rem", color: "var(--ds-ink-soft)" }}>اختر الجزء:</span>
-        <div style={{ display: "flex", gap: "0.3rem", flexWrap: "wrap" }}>
+    <div dir="rtl">
+      {/* Juz selector grid */}
+      <div className="qs-juz-selector">
+        <span className="qs-juz-selector__label">اختر الجزء:</span>
+        <div className="qs-juz-selector__grid">
           {Array.from({ length: 30 }, (_, i) => i + 1).map((n) => (
             <button
               key={n}
               type="button"
+              className={`qs-juz-btn${n === juzNum ? " is-active" : ""}`}
               onClick={() => changeJuz(n)}
-              style={{
-                width: 34,
-                height: 34,
-                borderRadius: "0.375rem",
-                border: `1px solid ${n === juzNum ? "var(--ds-emerald)" : "var(--ds-line-color)"}`,
-                background: n === juzNum ? "var(--ds-emerald-soft)" : "#fff",
-                color: n === juzNum ? "var(--ds-emerald-deep)" : "var(--ds-ink)",
-                fontSize: "0.75rem",
-                fontWeight: n === juzNum ? 700 : 400,
-                cursor: "pointer",
-                fontFamily: "inherit",
-              }}
             >
               {n}
             </button>
@@ -324,61 +478,44 @@ function JuzView({ fontScale }: { fontScale: number }) {
         </div>
       </div>
 
-      {/* Progress bar */}
-      <div style={{ marginBottom: "0.875rem" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.72rem", color: "var(--ds-ink-soft)", marginBottom: "0.25rem" }}>
-          <span>الجزء {juzNum} من 30</span>
+      {/* Progress */}
+      <div className="qs-juz-progress">
+        <div className="qs-juz-progress__labels">
+          <span>الجزء {juzNum} / 30</span>
           <span>موقعك: {scrollPct}%</span>
         </div>
-        <div style={{ height: 6, background: "var(--ds-line-color)", borderRadius: 999, overflow: "hidden" }}>
-          <div style={{ height: "100%", background: "var(--ds-emerald)", width: `${scrollPct}%`, borderRadius: 999, transition: "width 0.2s" }} />
+        <div className="qs-juz-progress__bar">
+          <div className="qs-juz-progress__fill" style={{ width: `${scrollPct}%` }} />
         </div>
       </div>
 
-      {loading && <p style={{ textAlign: "center", color: "var(--ds-ink-soft)", padding: "2rem" }}>جاري تحميل الجزء {juzNum}…</p>}
-      {error && <p style={{ textAlign: "center", color: "#8B1A1A", padding: "1rem" }}>{error}</p>}
+      {loading && <p className="qs-loading" style={{ textAlign: "center", padding: "2rem" }}>جاري تحميل الجزء {juzNum}…</p>}
+      {error && <p className="qs-error" style={{ textAlign: "center", padding: "1rem" }}>{error}</p>}
 
       {juzData && !loading && (
-        <div ref={scrollRef} onScroll={handleScroll} style={{ maxHeight: "65vh", overflowY: "auto", paddingRight: "0.5rem" }}>
+        <div ref={scrollRef} onScroll={handleScroll} style={{ maxHeight: "65vh", overflowY: "auto" }}>
           {(() => {
             const elements: React.ReactNode[] = [];
-            let lastSurahNumber = -1;
+            let lastSurah = -1;
             juzData.ayahs.forEach((ayah, idx) => {
-              const curSurah = ayah.surahNumber ?? -1;
-              if (curSurah !== -1 && curSurah !== lastSurahNumber) {
-                lastSurahNumber = curSurah;
-                const sName = surahNameMap.get(curSurah) ?? `سورة ${curSurah}`;
+              const cur = ayah.surahNumber ?? -1;
+              if (cur !== -1 && cur !== lastSurah) {
+                lastSurah = cur;
                 elements.push(
-                  <div key={`hdr-${curSurah}-${idx}`} style={{
-                    background: "linear-gradient(135deg, var(--ds-emerald-soft), #f8f4e8)",
-                    border: "1px solid var(--ds-emerald)",
-                    borderRadius: "0.625rem",
-                    padding: "0.625rem 1rem",
-                    marginBottom: "0.625rem",
-                    marginTop: idx > 0 ? "1.25rem" : 0,
-                    textAlign: "center",
-                  }}>
-                    <span style={{ fontSize: "1.05rem", fontWeight: 700, color: "var(--ds-emerald-deep)" }}>
-                      سورة {sName}
-                    </span>
+                  <div key={`hdr-${cur}-${idx}`} className="qs-juz-surah-header">
+                    سورة {surahNameMap.get(cur) ?? cur}
                   </div>
                 );
               }
               elements.push(
-                <div key={ayah.number} style={{ display: "flex", gap: "0.75rem", marginBottom: "0.5rem", alignItems: "flex-start" }}>
-                  <span style={{
-                    flexShrink: 0, width: 30, height: 30, borderRadius: "50%",
-                    background: "var(--ds-emerald-soft)", color: "var(--ds-emerald-deep)",
-                    fontSize: "0.65rem", fontWeight: 700, display: "flex",
-                    alignItems: "center", justifyContent: "center",
-                  }}>
-                    {ayah.numberInSurah}
-                  </span>
-                  <p style={{
-                    margin: 0, fontSize: fontScale, lineHeight: 2.1,
-                    fontFamily: "var(--font-quran, 'Amiri Quran', 'Scheherazade New', serif)",
-                    color: "var(--ds-ink, #1a1a1a)", direction: "rtl",
-                  }}>
+                <div key={ayah.number} className="qs-juz-ayah">
+                  <span className="qs-juz-ayah__num">{ayah.numberInSurah}</span>
+                  <p
+                    className="qs-juz-ayah__text"
+                    lang="ar"
+                    dir="rtl"
+                    style={{ fontSize: fontScale }}
+                  >
                     {ayah.text}
                   </p>
                 </div>
@@ -392,34 +529,6 @@ function JuzView({ fontScale }: { fontScale: number }) {
   );
 }
 
-// ─── Style helpers ─────────────────────────────────────────────────────────
-
-const primaryBtnS: React.CSSProperties = {
-  padding: "0.5rem 1rem",
-  borderRadius: "var(--ds-radius, 0.5rem)",
-  background: "var(--ds-emerald, #1a6b4a)",
-  color: "#fff",
-  border: "none",
-  fontSize: "0.85rem",
-  fontWeight: 700,
-  cursor: "pointer",
-  fontFamily: "inherit",
-};
-
-function navBtn(disabled: boolean): React.CSSProperties {
-  return {
-    padding: "0.45rem 0.875rem",
-    borderRadius: "var(--ds-radius, 0.5rem)",
-    border: "1px solid var(--ds-line-color)",
-    background: disabled ? "var(--ds-parchment-deep, #f5f0e8)" : "#fff",
-    color: disabled ? "var(--ds-ink-soft)" : "var(--ds-ink)",
-    cursor: disabled ? "not-allowed" : "pointer",
-    fontSize: "0.82rem",
-    fontFamily: "inherit",
-    opacity: disabled ? 0.5 : 1,
-  };
-}
-
 // ─── Main Page ─────────────────────────────────────────────────────────────
 
 export default function QuranPage() {
@@ -431,22 +540,20 @@ export default function QuranPage() {
   const [viewMode, setViewMode] = useState<ViewMode>(() => ls<ViewMode>(VIEW_KEY, "surah"));
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
-  const [fontScale, setFontScale] = useState(26);
+  const [fontScale, setFontScale] = useState(() => ls<number>(FS_KEY, 26));
   const [showAyahNumbers, setShowAyahNumbers] = useState(true);
+
   const [tafsirId, setTafsirId] = useState<TafsirId>(() => {
     try { return (localStorage.getItem(TAFSIR_KEY) as TafsirId) || "ar.muyassar"; }
     catch { return "ar.muyassar"; }
   });
   const [tafsirAyahs, setTafsirAyahs] = useState<TafsirAyah[]>([]);
   const [tafsirLoading, setTafsirLoading] = useState(false);
-  const [showTafsir, setShowTafsir] = useState(false);
 
-  // Qiraat state
   const [qiraatId, setQiraatId] = useState<string>(() => getQiraatPref());
   const [qiraatDetail, setQiraatDetail] = useState<SurahDetail | null>(null);
   const [qiraatLoading, setQiraatLoading] = useState(false);
 
-  // When qiraat != hafs, fetch different edition
   useEffect(() => {
     if (qiraatId === "hafs") { setQiraatDetail(null); return; }
     setQiraatLoading(true);
@@ -464,26 +571,15 @@ export default function QuranPage() {
     try { localStorage.setItem(TAFSIR_KEY, id); } catch { /* ignore */ }
   }, []);
 
-  // Load tafsir for verse/surah views
+  // Load tafsir for verse view automatically
   useEffect(() => {
-    if (!showTafsir && viewMode !== "verse") return;
+    if (viewMode !== "verse") return;
     setTafsirLoading(true);
     fetchTafsirAyahs(surahNum, tafsirId)
       .then(setTafsirAyahs)
       .catch(() => setTafsirAyahs([]))
       .finally(() => setTafsirLoading(false));
-  }, [surahNum, tafsirId, showTafsir, viewMode]);
-
-  // Auto-load tafsir for verse view
-  useEffect(() => {
-    if (viewMode === "verse" && tafsirAyahs.length === 0 && !tafsirLoading) {
-      setTafsirLoading(true);
-      fetchTafsirAyahs(surahNum, tafsirId)
-        .then(setTafsirAyahs)
-        .catch(() => setTafsirAyahs([]))
-        .finally(() => setTafsirLoading(false));
-    }
-  }, [viewMode]);
+  }, [surahNum, tafsirId, viewMode]);
 
   const tafsirMap = useMemo(() => {
     const m = new Map<number, string>();
@@ -492,7 +588,11 @@ export default function QuranPage() {
   }, [tafsirAyahs]);
 
   const handleFontScale = useCallback((delta: number) => {
-    setFontScale((v) => Math.min(42, Math.max(18, v + delta)));
+    setFontScale((v) => {
+      const next = Math.min(42, Math.max(18, v + delta));
+      lsSet(FS_KEY, next);
+      return next;
+    });
   }, []);
 
   const handleGoToResult = useCallback((surah: number, ayah: number) => {
@@ -504,6 +604,11 @@ export default function QuranPage() {
     setViewMode(mode);
     lsSet(VIEW_KEY, mode);
   };
+
+  // ── Immersive mushaf mode — full-viewport reader ──
+  if (viewMode === "page") {
+    return <PageView onExit={() => handleViewChange("surah")} />;
+  }
 
   const handleQiraatChange = (id: string) => {
     setQiraatId(id);
@@ -521,182 +626,120 @@ export default function QuranPage() {
         <Link href="/quran-radio" className="qs-subnav__link">الإذاعة والبث</Link>
       </nav>
 
-      {/* View mode tabs */}
-      <div style={{ display: "flex", gap: "0.35rem", margin: "0.75rem 0", padding: "0.3rem", background: "var(--ds-parchment-deep, #f5f0e8)", borderRadius: "0.75rem", direction: "rtl" }}>
+      {/* ── View mode tabs — clean pill design ── */}
+      <div className="qs-view-tabs" role="tablist" aria-label="طريقة العرض">
         {VIEWS.map((v) => (
           <button
             key={v.id}
             type="button"
+            role="tab"
+            aria-selected={viewMode === v.id}
+            className={`qs-view-tab${viewMode === v.id ? " is-active" : ""}`}
             onClick={() => handleViewChange(v.id)}
-            style={{
-              flex: 1,
-              padding: "0.5rem 0.4rem",
-              borderRadius: "0.55rem",
-              border: "none",
-              background: viewMode === v.id ? "#fff" : "transparent",
-              color: viewMode === v.id ? "var(--ds-emerald-deep)" : "var(--ds-ink-soft)",
-              fontWeight: viewMode === v.id ? 700 : 400,
-              fontSize: "0.8rem",
-              cursor: "pointer",
-              fontFamily: "inherit",
-              boxShadow: viewMode === v.id ? "0 1px 4px rgba(0,0,0,0.08)" : "none",
-              transition: "all 0.2s",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "0.25rem",
-            }}
           >
-            <span>{v.icon}</span>
-            <span>{v.label}</span>
+            {v.label}
           </button>
         ))}
       </div>
 
-      {/* Qiraat selector */}
-      <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.75rem", direction: "rtl", flexWrap: "wrap" }}>
-        <span style={{ fontSize: "0.75rem", color: "var(--ds-ink-soft)", flexShrink: 0 }}>القراءة:</span>
-        <select
-          value={qiraatId}
-          onChange={(e) => handleQiraatChange(e.target.value)}
-          style={{
-            border: "1px solid var(--ds-line-color)",
-            borderRadius: "0.375rem",
-            padding: "0.3rem 0.5rem",
-            fontSize: "0.8rem",
-            fontFamily: "inherit",
-            background: "#fff",
-            color: "var(--ds-ink)",
-            cursor: "pointer",
-          }}
-        >
-          {QIRAAT_LIST.map((q) => (
-            <option key={q.id} value={q.id}>
-              {q.name}{q.apiEdition ? "" : " (قريباً)"}
-            </option>
-          ))}
-        </select>
-        {currentQiraat && !currentQiraat.apiEdition && (
-          <span style={{ fontSize: "0.7rem", color: "#8B1A1A", background: "#FEE2E2", padding: "0.15rem 0.4rem", borderRadius: 999 }}>
-            يُعرض نص الحفص مؤقتاً
-          </span>
-        )}
-        {qiraatLoading && <span style={{ fontSize: "0.72rem", color: "var(--ds-ink-soft)" }}>جاري التحميل…</span>}
-      </div>
-
       <div className="qs-layout">
-        {/* Sidebar overlay (mobile) */}
+        {/* Sidebar overlay */}
         <div
           className={`qs-sidebar-backdrop${sidebarOpen ? " is-open" : ""}`}
           onClick={() => setSidebarOpen(false)}
           aria-hidden="true"
         />
 
-        {/* Sidebar */}
+        {/* Sidebar — surah list */}
         <aside className={`qs-sidebar${sidebarOpen ? " is-open" : ""}`}>
           <SurahList
             surahs={reader.surahList}
             currentSurah={surahNum}
-            onSelect={(n) => reader.goToSurah(n)}
+            onSelect={(n) => { reader.goToSurah(n); setSidebarOpen(false); }}
             onClose={() => setSidebarOpen(false)}
           />
         </aside>
 
         {/* Main content */}
         <main className="qs-main">
-          {/* Controls row */}
-          <div style={{ display: "flex", gap: ".5rem", marginBottom: "1rem", flexWrap: "wrap" }}>
+          {/* Controls row — minimal */}
+          <div className="qs-controls-row">
             {(viewMode === "surah" || viewMode === "verse") && (
-              <button type="button" className="qs-sidebar-toggle" onClick={() => setSidebarOpen(true)}>
+              <button
+                type="button"
+                className="qs-ctrl-btn"
+                onClick={() => setSidebarOpen(true)}
+                aria-label="قائمة السور"
+              >
                 ☰ السور
               </button>
             )}
             <button
               type="button"
-              className="qs-pb-btn"
+              className="qs-ctrl-btn"
               onClick={() => setShowSearch((v) => !v)}
+              aria-label={showSearch ? "إغلاق البحث" : "بحث في القرآن"}
             >
-              {showSearch ? "✕ أغلق البحث" : "🔍 بحث"}
+              {showSearch ? "✕" : "🔍"} بحث
             </button>
-            {(viewMode === "surah") && (
-              <button
-                type="button"
-                className="qs-pb-btn"
-                onClick={() => setShowTafsir((v) => !v)}
-              >
-                {showTafsir ? "✕ أخفِ التفسير" : "📖 التفسير"}
-              </button>
+
+            {/* Qiraat selector — compact */}
+            {(viewMode === "surah" || viewMode === "verse") && (
+              <div className="qs-qiraat-row">
+                <select
+                  value={qiraatId}
+                  onChange={(e) => handleQiraatChange(e.target.value)}
+                  className="qs-qiraat-select"
+                  aria-label="اختر القراءة"
+                >
+                  {QIRAAT_LIST.map((q) => (
+                    <option key={q.id} value={q.id}>
+                      {q.name}{!q.apiEdition ? " (قريباً)" : ""}
+                    </option>
+                  ))}
+                </select>
+                {qiraatLoading && <span className="qs-qiraat-loading">…</span>}
+              </div>
             )}
           </div>
 
           {/* Resume banner */}
           {reader.lastPos && reader.lastPos.surah !== surahNum && (viewMode === "surah" || viewMode === "verse") && (
-            <div style={{ padding: ".6rem 1rem", background: "#f0f7f4", borderRadius: ".5rem", marginBottom: "1rem", direction: "rtl", fontSize: ".88rem" }}>
-              <strong>استئناف:</strong>{" "}
-              {reader.surahList.find((s) => s.number === reader.lastPos!.surah)?.name ?? reader.lastPos.surah} آية {reader.lastPos.ayah}
-              {" "}&mdash;{" "}
+            <div className="qs-resume-banner">
+              <span>
+                <strong>استئناف:</strong>{" "}
+                {reader.surahList.find((s) => s.number === reader.lastPos!.surah)?.name ?? reader.lastPos.surah} آية {reader.lastPos.ayah}
+              </span>
               <button
                 type="button"
-                className="qs-pb-btn qs-pb-btn--primary"
-                style={{ padding: ".2rem .5rem", fontSize: ".82rem" }}
+                className="qs-ctrl-btn qs-ctrl-btn--accent"
                 onClick={() => reader.goToSurah(reader.lastPos!.surah, reader.lastPos!.ayah)}
               >
-                اذهب إليها
+                اذهب
               </button>
             </div>
           )}
 
+          {/* Search panel */}
           {showSearch && <QuranSearch onGoToResult={handleGoToResult} />}
 
-          {/* Tafsir panel (surah view only) */}
-          {showTafsir && viewMode === "surah" && (
-            <div className="qs-tafsir" aria-label="التفسير">
-              <div className="qs-tafsir__head">
-                <span className="qs-tafsir__title">التفسير</span>
-                <div style={{ display: "flex", gap: ".3rem", flexWrap: "wrap" }}>
-                  {TAFSIR_SOURCES.map((t) => (
-                    <button
-                      key={t.id}
-                      type="button"
-                      className={`qs-tafsir__source-btn${tafsirId === t.id ? " is-active" : ""}`}
-                      onClick={() => changeTafsirId(t.id)}
-                    >
-                      {t.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-              {tafsirLoading && <p className="qs-loading">جاري تحميل التفسير…</p>}
-              {!tafsirLoading && tafsirAyahs.length > 0 && (
-                <div>
-                  {tafsirAyahs.slice(0, 10).map((t) => (
-                    <div key={t.numberInSurah} className="qs-tafsir__ayah">
-                      <p className="qs-tafsir__ayah-ref">آية {t.numberInSurah}</p>
-                      <p className="qs-tafsir__ayah-text">{t.text}</p>
-                    </div>
-                  ))}
-                </div>
-              )}
-              <p className="qs-source-note">
-                المصدر: AlQuran Cloud API · {TAFSIR_SOURCES.find((t) => t.id === tafsirId)?.label}
-              </p>
-            </div>
-          )}
-
           {/* ── View Modes ── */}
-
-          {viewMode === "page" && <PageView />}
 
           {viewMode === "juz" && <JuzView fontScale={fontScale} />}
 
           {(viewMode === "surah" || viewMode === "verse") && (
             <>
-              {loading && <div className="qs-loading">جاري تحميل السورة…</div>}
+              {loading && <div className="qs-loading" style={{ padding: "3rem", textAlign: "center" }}>جاري تحميل السورة…</div>}
 
               {!loading && error && (
-                <div className="qs-error" role="alert">
+                <div className="qs-error" role="alert" style={{ padding: "1.5rem", textAlign: "center" }}>
                   <p>{error}</p>
-                  <button type="button" className="qs-pb-btn qs-pb-btn--primary" style={{ marginTop: ".5rem" }} onClick={() => reader.goToSurah(surahNum)}>
+                  <button
+                    type="button"
+                    className="qs-ctrl-btn qs-ctrl-btn--accent"
+                    style={{ marginTop: ".75rem" }}
+                    onClick={() => reader.goToSurah(surahNum)}
+                  >
                     إعادة المحاولة
                   </button>
                 </div>
@@ -717,7 +760,7 @@ export default function QuranPage() {
                     onAyahClick={reader.goToAyah}
                   />
                   <p className="qs-source-note">
-                    القراءة: {currentQiraat?.name} · المصدر: AlQuran Cloud API
+                    القراءة: {currentQiraat?.name} · AlQuran Cloud API
                   </p>
                 </>
               )}
@@ -737,7 +780,7 @@ export default function QuranPage() {
         </main>
       </div>
 
-      {/* Sticky player bar (surah view only) */}
+      {/* Sticky player bar — surah view only */}
       {summary && viewMode === "surah" && (
         <QuranPlayerBar
           surahName={summary.name}

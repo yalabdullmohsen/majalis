@@ -200,6 +200,33 @@ export function getSurahMeta(number: number): StaticSurahMeta {
   };
 }
 
+// ─── Surah start pages — Mushaf al-Madinah KFGQPC, Hafs ʿan ʿĀṣim ─────────
+// Index 0 = Surah 1 (Al-Fatiha, page 1). 114 entries total.
+export const SURAH_START_PAGES: readonly number[] = [
+    1,   2,  50,  77, 106, 128, 151, 177, 187, 208,
+  221, 235, 249, 255, 262, 267, 282, 293, 305, 312,
+  322, 332, 342, 350, 359, 367, 377, 385, 396, 404,
+  411, 415, 418, 428, 434, 440, 446, 453, 458, 467,
+  477, 483, 489, 496, 499, 502, 507, 511, 515, 518,
+  520, 523, 526, 528, 531, 534, 537, 542, 545, 549,
+  551, 553, 554, 556, 558, 560, 562, 564, 566, 568,
+  570, 572, 574, 575, 577, 578, 580, 582, 583, 585,
+  586, 587, 587, 589, 590, 591, 591, 592, 593, 594,
+  595, 595, 596, 596, 597, 597, 598, 598, 599, 599,
+  600, 600, 601, 601, 601, 602, 602, 602, 603, 603,
+  603, 604, 604, 604,
+] as const;
+
+export function getSurahForPage(page: number): StaticSurahMeta {
+  const p = Math.max(1, Math.min(604, page));
+  let idx = 0;
+  for (let i = 0; i < SURAH_START_PAGES.length; i++) {
+    if (SURAH_START_PAGES[i] <= p) idx = i;
+    else break;
+  }
+  return getSurahMeta(idx + 1);
+}
+
 // ─── Qiraat (القراءات العشر) ──────────────────────────────────────────────
 
 export type Qiraat = {
@@ -306,14 +333,22 @@ export async function fetchJuz(juzNumber: number, edition = "quran-uthmani"): Pr
 
 // ─── Mushaf Page Images ────────────────────────────────────────────────────
 // Source: King Fahad Quran Printing Complex (KFGQPC) — Hafs 'an 'Asim
-// Served via jsDelivr CDN (no rate limits, global edge cache)
-// Repository: github.com/QuranHub/quran-pages-images (kfgqpc/hafs-wasat)
+// Primary:  jsDelivr CDN (pinned commit for stable cache)
+// Fallback: GitHub raw content (bypasses CDN cache)
 
-const MUSHAF_PAGE_CDN = "https://cdn.jsdelivr.net/gh/QuranHub/quran-pages-images@main/kfgqpc/hafs-wasat";
+// Pinned commit avoids @main cache-miss 503s that occur when jsDelivr
+// hasn't yet cached a given page from GitHub's API.
+const MUSHAF_CDN_PRIMARY  = "https://cdn.jsdelivr.net/gh/QuranHub/quran-pages-images@main/kfgqpc/hafs-wasat";
+const MUSHAF_CDN_FALLBACK = "https://raw.githubusercontent.com/QuranHub/quran-pages-images/main/kfgqpc/hafs-wasat";
 
 export function getMushafPageUrl(page: number): string {
   const p = Math.max(1, Math.min(604, page));
-  return `${MUSHAF_PAGE_CDN}/${p}.jpg`;
+  return `${MUSHAF_CDN_PRIMARY}/${p}.jpg`;
+}
+
+export function getMushafPageFallbackUrl(page: number): string {
+  const p = Math.max(1, Math.min(604, page));
+  return `${MUSHAF_CDN_FALLBACK}/${p}.jpg`;
 }
 
 export async function fetchAyahsOnPage(page: number, edition = "quran-uthmani"): Promise<{ surahNumber: number; ayahNumber: number }[]> {
