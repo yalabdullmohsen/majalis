@@ -18,6 +18,7 @@ import { HomeFeaturedLibrary } from "@/components/home/HomeFeaturedLibrary";
 import { HomeLatestUpdates } from "@/components/home/HomeLatestUpdates";
 import { HomeMoreSections } from "@/components/home/HomeMoreSections";
 import { HomeLearningSeasonsWidget } from "@/components/home/HomeLearningSeasonsWidget";
+import { HomeRecommendations } from "@/components/home/HomeRecommendations";
 import { IslamicDivider } from "@/components/design/IslamicDivider";
 import { IslamicOrnament } from "@/components/design/IslamicOrnament";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
@@ -131,6 +132,10 @@ export default function HomePage({
 
         <SafeHomeSection name="تابع من حيث توقفت">
           <HomeContinueReading />
+        </SafeHomeSection>
+
+        <SafeHomeSection name="توصيات مخصصة">
+          <HomeRecommendations />
         </SafeHomeSection>
 
         <SafeHomeSection name="أحدث الدروس">

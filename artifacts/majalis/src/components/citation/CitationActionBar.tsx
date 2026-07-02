@@ -93,11 +93,11 @@ export function CitationActionBar({
   source,
   sourceId,
   contentType,
-  contentRef,
+  contentRef: _contentRef,
   compact = false,
   className = "",
 }: Props) {
-  const [src, setSrc] = useState<CitationSource | null>(source || null);
+  const src = source ?? null;
   const [showModal, setShowModal] = useState(false);
   const [selectedText, setSelectedText] = useState("");
   const [startOffset, setStartOffset] = useState<number | undefined>();
@@ -105,13 +105,6 @@ export function CitationActionBar({
   const [copied, setCopied] = useState(false);
   const printRef = useRef(false);
 
-  // جلب بيانات المصدر تلقائيًا إن لم تكن مُمرَّرة
-  useEffect(() => {
-    if (src || !sourceId) return;
-    fetch(`/api/citations/format?id=${sourceId}&style=default`)
-      .then((r) => r.json())
-      .catch(() => null);
-  }, [sourceId, src]);
 
   const typeColor = src
     ? CONTENT_TYPE_COLOR[src.content_type] || "#065f46"

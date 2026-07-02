@@ -2,16 +2,12 @@ import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import {
   type CitationFolder,
-  type CitationStyle,
   type SavedCitation,
   CONTENT_TYPE_COLOR,
   CONTENT_TYPE_LABEL,
   createCitationFolder,
   exportCitations,
   fetchUserCitations,
-  getShareUrl,
-  saveCitationToLibrary,
-  STYLE_LABEL,
 } from "@/lib/citation-service";
 import { useAuth } from "@/components/AuthProvider";
 
@@ -24,7 +20,7 @@ const FOLDER_COLORS = [
 ];
 
 export default function MyCitationsPage() {
-  const { user, isLoggedIn, loading: authLoading } = useAuth();
+  const { isLoggedIn, loading: authLoading } = useAuth();
   const [tab, setTab] = useState<Tab>("الكل");
   const [saved, setSaved] = useState<SavedCitation[]>([]);
   const [folders, setFolders] = useState<CitationFolder[]>([]);

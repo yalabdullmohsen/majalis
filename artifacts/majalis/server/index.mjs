@@ -49,6 +49,8 @@ import scholarlySearchHandler from "../lib/api-handlers/scholarly-search.js";
 import fiqhResearchAssistantHandler from "../lib/api-handlers/fiqh-research-assistant.js";
 import knowledgeGraphHandler from "../lib/api-handlers/knowledge-graph.js";
 import citationsHandler from "../lib/api-handlers/citations.js";
+import recommendationsHandler from "../lib/api-handlers/recommendations.js";
+import contentScoringHandler from "../lib/api-handlers/cron/content-scoring.js";
 import { createRateLimiter } from "./rate-limit.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -224,6 +226,15 @@ app.get("/api/knowledge-graph/search",          runHandler(knowledgeGraphHandler
 app.get("/api/knowledge-graph/nodes",           runHandler(knowledgeGraphHandler, "knowledge-graph-nodes"));
 app.get("/api/knowledge-graph",                 runHandler(knowledgeGraphHandler, "knowledge-graph"));
 app.post("/api/knowledge-graph/relationship",   express.json({ limit: "16kb" }), runHandler(knowledgeGraphHandler, "knowledge-graph-rel"));
+
+// ── Recommendations System ────────────────────────────────────────────────
+app.get("/api/recommendations/related",  runHandler(recommendationsHandler, "rec-related"));
+app.get("/api/recommendations/profile",  runHandler(recommendationsHandler, "rec-profile"));
+app.delete("/api/recommendations/profile", runHandler(recommendationsHandler, "rec-profile-delete"));
+app.post("/api/recommendations/track",   express.json({ limit: "4kb" }), runHandler(recommendationsHandler, "rec-track"));
+app.get("/api/recommendations",          runHandler(recommendationsHandler, "rec-home"));
+app.get("/api/cron/content-scoring",     runHandler(contentScoringHandler,   "content-scoring"));
+app.post("/api/cron/content-scoring",    runHandler(contentScoringHandler,   "content-scoring"));
 
 // ── Citations System ──────────────────────────────────────────────────────
 app.post("/api/citations/create",           express.json({ limit: "8kb" }), runHandler(citationsHandler, "citations-create"));
