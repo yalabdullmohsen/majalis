@@ -2,10 +2,10 @@
 /**
  * تعبئة search_index من جميع محتويات قاعدة البيانات.
  *
- * Usage:
- *   DATABASE_URL="postgresql://postgres.[ref]:[pass]@pooler:6543/postgres" \
- *   node scripts/seed-search-index.mjs
+ * Usage: node scripts/seed-search-index.mjs
+ * DATABASE_URL تُقرأ من ملف .env تلقائياً عبر dotenv
  */
+import "dotenv/config";
 import pkg from "../node_modules/pg/lib/index.js";
 const { Client } = pkg;
 

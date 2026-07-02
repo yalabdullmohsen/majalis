@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 /**
+import "dotenv/config";
  * scripts/run-migrations.mjs
  *
  * يطبّق ملفات SQL على Supabase تلقائياً.

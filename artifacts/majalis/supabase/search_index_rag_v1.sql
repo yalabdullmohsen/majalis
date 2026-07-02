@@ -197,20 +197,20 @@ RETURNS TABLE (
 LANGUAGE sql
 STABLE
 AS $$
-  -- البحث في kn_nodes حسب external_id أو slug أو الوصف
+  -- البحث في kn_nodes حسب reference_id أو node_type
   WITH RECURSIVE graph(node_id, node_type, node_label, node_desc, rel, strength, depth) AS (
     -- نقطة البداية: ابحث عن nodes ترتبط بـ content_id
     SELECT
       n.id,
       n.node_type,
-      n.label,
-      n.description,
+      n.title,
+      n.summary,
       'direct'::text,
       1.0::numeric,
       0
     FROM kn_nodes n
     WHERE
-      n.external_id = p_content_id
+      n.reference_id = p_content_id
       OR n.node_type = p_content_type
 
     UNION ALL
@@ -221,10 +221,10 @@ AS $$
            ELSE e.source_node_id END,
       CASE WHEN e.source_node_id = g.node_id THEN nt.node_type
            ELSE ns.node_type END,
-      CASE WHEN e.source_node_id = g.node_id THEN nt.label
-           ELSE ns.label END,
-      CASE WHEN e.source_node_id = g.node_id THEN nt.description
-           ELSE ns.description END,
+      CASE WHEN e.source_node_id = g.node_id THEN nt.title
+           ELSE ns.title END,
+      CASE WHEN e.source_node_id = g.node_id THEN nt.summary
+           ELSE ns.summary END,
       e.relationship_type,
       e.strength,
       g.depth + 1
@@ -257,6 +257,7 @@ RETURNS TABLE (content_type text, inserted integer, updated integer)
 LANGUAGE plpgsql
 SECURITY DEFINER
 AS $$
+#variable_conflict use_column
 DECLARE
   _ins integer := 0;
   _upd integer := 0;
@@ -311,11 +312,11 @@ BEGIN
       'lesson',
       l.title AS title,
       coalesce(l.description, l.title) AS body_text,
-      coalesce(l.sheikh, l.speaker, 'درس علمي') AS source_reference,
+      coalesce(l.speaker_name, 'درس علمي') AS source_reference,
       '' AS source_url,
       72.0 AS authority_score,
       jsonb_build_object(
-        'sheikh', l.sheikh,
+        'speaker_name', l.speaker_name,
         'category', l.category,
         'mosque', l.mosque,
         'region', l.region
@@ -340,18 +341,19 @@ BEGIN
     SELECT
       f.id::text,
       'benefit',
-      coalesce(f.title, LEFT(f.text, 80)) AS title,
-      coalesce(f.text, '') AS body_text,
-      coalesce(f.author, f.source, 'فائدة') AS source_reference,
-      '' AS source_url,
-      68.0 AS authority_score,
+      LEFT(f.text, 80) AS title,
+      f.text AS body_text,
+      coalesce(f.author_name, f.source_name, 'فائدة') AS source_reference,
+      coalesce(f.source_url, '') AS source_url,
+      CASE WHEN f.trust_level IS NOT NULL THEN f.trust_level::numeric ELSE 68.0 END AS authority_score,
       jsonb_build_object(
-        'author', f.author,
-        'source', f.source,
-        'category', f.category
+        'author', f.author_name,
+        'source', f.source_name,
+        'verification_status', f.verification_status
       ) AS metadata
     FROM fawaid f
-    WHERE coalesce(f.text, f.title) IS NOT NULL
+    WHERE f.text IS NOT NULL AND f.text != ''
+      AND f.status = 'approved'
     ON CONFLICT (content_id, content_type) DO UPDATE
       SET body_text  = EXCLUDED.body_text,
           updated_at = now()
@@ -373,19 +375,14 @@ BEGIN
       coalesce(fc.ruling_text, fc.content, fc.summary, '') AS body_text,
       coalesce(fc.source_name, fc.council_name, 'مجمع فقهي') AS source_reference,
       coalesce(fc.source_url, '') AS source_url,
-      CASE
-        WHEN fc.confidence_level = 'source_verified' THEN 90.0
-        WHEN fc.confidence_level = 'high'            THEN 80.0
-        WHEN fc.confidence_level = 'medium'          THEN 65.0
-        ELSE 55.0
-      END AS authority_score,
+      85.0 AS authority_score,
       jsonb_build_object(
-        'category',        fc.category,
-        'type',            fc.type,
-        'decision_number', fc.decision_number,
-        'session_date',    fc.session_date,
-        'council_name',    fc.council_name,
-        'slug',            fc.slug
+        'category',      fc.category,
+        'type',          fc.type,
+        'session_number', fc.session_number,
+        'session_date',  fc.session_date,
+        'council_name',  fc.council_name,
+        'slug',          fc.slug
       ) AS metadata
     FROM fiqh_council_items fc
     WHERE fc.status = 'published'
@@ -411,16 +408,17 @@ BEGIN
       'book',
       li.title AS title,
       coalesce(li.description, li.title) AS body_text,
-      coalesce(li.author, 'مؤلف') AS source_reference,
+      'مكتبة مجالس العلم' AS source_reference,
       coalesce(li.external_url, li.file_url, '') AS source_url,
-      75.0 AS authority_score,
+      CASE WHEN li.trust_level IS NOT NULL THEN li.trust_level::numeric ELSE 75.0 END AS authority_score,
       jsonb_build_object(
-        'author', li.author,
         'category', li.category,
-        'type', li.type
+        'type', li.type,
+        'verification_status', li.verification_status
       ) AS metadata
     FROM library_items li
     WHERE li.title IS NOT NULL AND li.title != ''
+      AND li.status = 'approved'
     ON CONFLICT (content_id, content_type) DO UPDATE
       SET body_text  = EXCLUDED.body_text,
           updated_at = now()
@@ -438,22 +436,24 @@ BEGIN
     SELECT
       n.id::text,
       CASE n.node_type
-        WHEN 'scholar'    THEN 'article'
-        WHEN 'concept'    THEN 'article'
-        WHEN 'ruling'     THEN 'ruling'
-        WHEN 'verse'      THEN 'quran_verse'
-        WHEN 'hadith'     THEN 'hadith'
-        WHEN 'book'       THEN 'book'
+        WHEN 'quran_ayah'     THEN 'quran_verse'
+        WHEN 'hadith'         THEN 'hadith'
+        WHEN 'fatwa'          THEN 'fatwa'
+        WHEN 'scholar'        THEN 'article'
+        WHEN 'book'           THEN 'book'
+        WHEN 'lesson'         THEN 'lesson'
+        WHEN 'benefit'        THEN 'benefit'
+        WHEN 'prophet_story'  THEN 'story'
         ELSE 'article'
       END AS content_type,
-      n.label AS title,
-      coalesce(n.description, n.label) AS body_text,
+      n.title AS title,
+      coalesce(n.summary, n.title) AS body_text,
       'المجلس العلمي — المعرفة الإسلامية' AS source_reference,
       '' AS source_url,
       70.0 AS authority_score,
-      jsonb_build_object('node_type', n.node_type, 'slug', n.slug) AS metadata
+      jsonb_build_object('node_type', n.node_type, 'ref', n.reference_id) AS metadata
     FROM kn_nodes n
-    WHERE n.label IS NOT NULL AND n.label != ''
+    WHERE n.title IS NOT NULL AND n.title != ''
     ON CONFLICT (content_id, content_type) DO UPDATE
       SET body_text  = EXCLUDED.body_text,
           updated_at = now()
@@ -472,25 +472,27 @@ ALTER TABLE research_queries        ENABLE ROW LEVEL SECURITY;
 ALTER TABLE user_research_library   ENABLE ROW LEVEL SECURITY;
 
 -- search_index: قراءة عامة
+DROP POLICY IF EXISTS "public read search_index"    ON search_index;
+DROP POLICY IF EXISTS "service write search_index"  ON search_index;
 CREATE POLICY "public read search_index"
   ON search_index FOR SELECT USING (true);
-
--- search_index: كتابة للخدمة فقط (service_role)
 CREATE POLICY "service write search_index"
   ON search_index FOR ALL
   USING (auth.role() = 'service_role')
   WITH CHECK (auth.role() = 'service_role');
 
--- research_queries: المستخدم يقرأ سجلاته فقط
+-- research_queries
+DROP POLICY IF EXISTS "user read own research_queries" ON research_queries;
+DROP POLICY IF EXISTS "service insert research_queries" ON research_queries;
 CREATE POLICY "user read own research_queries"
   ON research_queries FOR SELECT
   USING (user_id = auth.uid() OR auth.role() = 'service_role');
-
 CREATE POLICY "service insert research_queries"
   ON research_queries FOR INSERT
   WITH CHECK (true);
 
 -- user_research_library: المستخدم يدير مكتبته
+DROP POLICY IF EXISTS "user manages own library" ON user_research_library;
 CREATE POLICY "user manages own library"
   ON user_research_library FOR ALL
   USING (user_id = auth.uid())

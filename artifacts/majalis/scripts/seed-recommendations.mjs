@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 /**
+import "dotenv/config";
  * scripts/seed-recommendations.mjs
  *
  * يُنشئ الوسوم الأولية ويربطها بالمحتوى الموجود تلقائياً.

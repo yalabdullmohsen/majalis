@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 /**
+import "dotenv/config";
  * Verify content_import_jobs / content_import_staging schema, FK, and integrity recovery.
  *
  * Usage:

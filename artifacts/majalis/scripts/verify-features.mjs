@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 /**
+import "dotenv/config";
  * Feature delivery verification — no feature is "done" unless this script passes.
  *
  * Usage:

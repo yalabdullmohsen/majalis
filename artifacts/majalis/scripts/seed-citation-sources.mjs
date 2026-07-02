@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 /**
+import "dotenv/config";
  * scripts/seed-citation-sources.mjs
  *
  * يملأ جدول citation_sources من المحتوى المعتمد الموجود في قاعدة البيانات.

@@ -1,8 +1,10 @@
 #!/usr/bin/env node
 /**
  * تطبيق migration دليل الجامعات الشرعية
- * Usage: DATABASE_URL="..." node scripts/apply-universities-migrations.mjs
+ * Usage: node scripts/apply-universities-migrations.mjs
+ * DATABASE_URL تُقرأ من ملف .env تلقائياً عبر dotenv
  */
+import "dotenv/config";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
