@@ -1,6 +1,7 @@
 import { Suspense, lazy, useEffect, useState } from "react";
 import { Link, useParams } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
+import { supabase } from "@/lib/supabase";
 import type { LPScience, LPLevel, LPProgress } from "@/lib/learning-path-service";
 import { fetchScienceDetail, fetchProgress } from "@/lib/learning-path-service";
 
@@ -10,7 +11,7 @@ const LevelTimeline = lazy(() =>
 
 export default function LearningPathSciencePage() {
   const { scienceSlug } = useParams<{ scienceSlug: string }>();
-  const { session } = useAuth();
+  const { isLoggedIn } = useAuth();
   const [science, setScience]   = useState<LPScience | null>(null);
   const [levels, setLevels]     = useState<LPLevel[]>([]);
   const [progress, setProgress] = useState<LPProgress[]>([]);
@@ -23,15 +24,18 @@ export default function LearningPathSciencePage() {
     setNotFound(false);
 
     const detailP = fetchScienceDetail(scienceSlug);
-    const progressP = session?.access_token
-      ? fetchProgress(session.access_token).catch(() => [] as LPProgress[])
+    const progressP = isLoggedIn
+      ? supabase.auth.getSession().then(({ data }) =>
+          data.session?.access_token
+            ? fetchProgress(data.session.access_token).catch(() => [] as LPProgress[])
+            : [] as LPProgress[])
       : Promise.resolve([] as LPProgress[]);
 
     Promise.all([detailP, progressP])
       .then(([d, p]) => { setScience(d.science); setLevels(d.levels); setProgress(p); })
       .catch(() => setNotFound(true))
       .finally(() => setLoading(false));
-  }, [scienceSlug, session?.access_token]);
+  }, [scienceSlug, isLoggedIn]);
 
   if (loading) {
     return (

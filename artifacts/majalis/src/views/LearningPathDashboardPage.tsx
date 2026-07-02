@@ -1,6 +1,7 @@
 import { Suspense, lazy, useEffect, useState } from "react";
 import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
+import { supabase } from "@/lib/supabase";
 import type { LPProgress, LPAchievement, LPStreak } from "@/lib/learning-path-service";
 import { fetchProgress, fetchAchievements, fetchStreak } from "@/lib/learning-path-service";
 
@@ -12,26 +13,30 @@ const StreakCounter = lazy(() =>
 );
 
 export default function LearningPathDashboardPage() {
-  const { session, isLoggedIn } = useAuth();
+  const { isLoggedIn } = useAuth();
   const [progress, setProgress]         = useState<LPProgress[]>([]);
   const [achievements, setAchievements] = useState<LPAchievement[]>([]);
   const [streak, setStreak]             = useState<LPStreak>({ current_streak: 0, longest_streak: 0, last_activity_date: null });
   const [loading, setLoading]           = useState(true);
 
   useEffect(() => {
-    if (!session?.access_token) { setLoading(false); return; }
-    const token = session.access_token;
+    if (!isLoggedIn) { setLoading(false); return; }
 
-    Promise.all([
-      fetchProgress(token).catch(() => [] as LPProgress[]),
-      fetchAchievements(token).catch(() => [] as LPAchievement[]),
-      fetchStreak(token).catch(() => ({ current_streak: 0, longest_streak: 0, last_activity_date: null })),
-    ]).then(([p, a, s]) => {
-      setProgress(p);
-      setAchievements(a);
-      setStreak(s);
-    }).finally(() => setLoading(false));
-  }, [session?.access_token]);
+    supabase.auth.getSession().then(({ data }) => {
+      const token = data.session?.access_token;
+      if (!token) { setLoading(false); return; }
+
+      return Promise.all([
+        fetchProgress(token).catch(() => [] as LPProgress[]),
+        fetchAchievements(token).catch(() => [] as LPAchievement[]),
+        fetchStreak(token).catch(() => ({ current_streak: 0, longest_streak: 0, last_activity_date: null })),
+      ]).then(([p, a, s]) => {
+        setProgress(p);
+        setAchievements(a);
+        setStreak(s);
+      }).finally(() => setLoading(false));
+    });
+  }, [isLoggedIn]);
 
   if (!isLoggedIn) {
     return (

@@ -1,6 +1,7 @@
 import { Suspense, lazy, useEffect, useState } from "react";
 import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
+import { supabase } from "@/lib/supabase";
 import type { LPScience, LPProgress } from "@/lib/learning-path-service";
 import { fetchSciences, fetchProgress } from "@/lib/learning-path-service";
 
@@ -19,7 +20,7 @@ function LoadingSkeleton() {
 }
 
 export default function LearningPathPage() {
-  const { session } = useAuth();
+  const { isLoggedIn } = useAuth();
   const [sciences, setSciences]   = useState<LPScience[]>([]);
   const [progress, setProgress]   = useState<LPProgress[]>([]);
   const [loading, setLoading]     = useState(true);
@@ -28,15 +29,17 @@ export default function LearningPathPage() {
   useEffect(() => {
     setLoading(true);
     const sciencesP = fetchSciences().catch(() => [] as LPScience[]);
-    const progressP = session?.access_token
-      ? fetchProgress(session.access_token).catch(() => [] as LPProgress[])
+    const progressP = isLoggedIn
+      ? supabase.auth.getSession().then(({ data }) => data.session?.access_token
+          ? fetchProgress(data.session.access_token).catch(() => [] as LPProgress[])
+          : [] as LPProgress[])
       : Promise.resolve([] as LPProgress[]);
 
     Promise.all([sciencesP, progressP])
       .then(([s, p]) => { setSciences(s); setProgress(p); })
       .catch(() => setError("حدث خطأ في تحميل البيانات"))
       .finally(() => setLoading(false));
-  }, [session?.access_token]);
+  }, [isLoggedIn]);
 
   // حساب الكتب المكتملة لكل علم
   const completedByScience = new Map<string, number>();
@@ -76,7 +79,7 @@ export default function LearningPathPage() {
           </p>
 
           {/* إحصائيات المستخدم */}
-          {session && totalProgress > 0 && (
+          {isLoggedIn && totalProgress > 0 && (
             <div className="inline-flex items-center gap-4 bg-white/10 backdrop-blur-sm rounded-2xl px-6 py-3 mb-4">
               <div className="text-center">
                 <div className="text-2xl font-bold">{totalCompleted}</div>
@@ -91,7 +94,7 @@ export default function LearningPathPage() {
           )}
 
           <div className="flex flex-wrap justify-center gap-3">
-            {session ? (
+            {isLoggedIn ? (
               <Link href="/learning-path/dashboard">
                 <span className="inline-block px-6 py-2.5 bg-white text-emerald-800 font-bold rounded-xl hover:bg-emerald-50 transition-colors cursor-pointer">
                   📊 لوحتي التعليمية

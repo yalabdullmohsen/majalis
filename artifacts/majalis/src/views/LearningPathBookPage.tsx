@@ -1,6 +1,7 @@
-import { Suspense, lazy, useCallback, useEffect, useState } from "react";
+import { Suspense, lazy, useCallback, useEffect, useRef, useState } from "react";
 import { Link, useParams } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
+import { supabase } from "@/lib/supabase";
 import type { LPBookDetail, LPExplanation, LPBenefit, LPQuiz, LPProgress } from "@/lib/learning-path-service";
 import { fetchBook, fetchProgress, updateProgress, DIFFICULTY_LABELS } from "@/lib/learning-path-service";
 
@@ -12,7 +13,8 @@ const EXPLANATION_ICONS = { audio: "🎙️", video: "📹", text: "📝" };
 
 export default function LearningPathBookPage() {
   const { bookId } = useParams<{ bookId: string }>();
-  const { session } = useAuth();
+  const { isLoggedIn } = useAuth();
+  const tokenRef = useRef<string | null>(null);
   const [book, setBook]             = useState<LPBookDetail | null>(null);
   const [explanations, setExp]      = useState<LPExplanation[]>([]);
   const [benefits, setBenefits]     = useState<LPBenefit[]>([]);
@@ -29,8 +31,13 @@ export default function LearningPathBookPage() {
     setLoading(true);
 
     const bookP = fetchBook(bookId);
-    const progP = session?.access_token
-      ? fetchProgress(session.access_token).catch(() => [] as LPProgress[])
+    const progP = isLoggedIn
+      ? supabase.auth.getSession().then(({ data }) => {
+          tokenRef.current = data.session?.access_token ?? null;
+          return tokenRef.current
+            ? fetchProgress(tokenRef.current).catch(() => [] as LPProgress[])
+            : [] as LPProgress[];
+        })
       : Promise.resolve([] as LPProgress[]);
 
     Promise.all([bookP, progP])
@@ -44,13 +51,15 @@ export default function LearningPathBookPage() {
       })
       .catch(() => setNotFound(true))
       .finally(() => setLoading(false));
-  }, [bookId, session?.access_token]);
+  }, [bookId, isLoggedIn]);
 
   const handleStatus = useCallback(async (status: LPProgress["status"]) => {
-    if (!session?.access_token || !bookId || saving) return;
+    if (!isLoggedIn || !bookId || saving) return;
+    const token = tokenRef.current ?? (await supabase.auth.getSession()).data.session?.access_token ?? null;
+    if (!token) return;
     setSaving(true);
     try {
-      await updateProgress(session.access_token, bookId, status);
+      await updateProgress(token, bookId, status);
       setProgress((prev) => ({ ...(prev ?? { book_id: bookId, progress_percent: 0, started_at: null, completed_at: null }), status }));
       setSaveMsg(status === "completed" ? "✅ تم تسجيل إتمام الكتاب!" : "✅ تم تسجيل البدء!");
       setTimeout(() => setSaveMsg(null), 3000);
@@ -60,7 +69,7 @@ export default function LearningPathBookPage() {
     } finally {
       setSaving(false);
     }
-  }, [session?.access_token, bookId, saving]);
+  }, [isLoggedIn, bookId, saving]);
 
   if (loading) {
     return (
@@ -176,7 +185,7 @@ export default function LearningPathBookPage() {
             </div>
 
             {/* أزرار التقدم */}
-            {session ? (
+            {isLoggedIn ? (
               <div className="flex flex-wrap gap-2">
                 {status !== "in_progress" && status !== "completed" && (
                   <button
@@ -263,7 +272,7 @@ export default function LearningPathBookPage() {
         <Suspense fallback={null}>
           <QuizModal
             quizzes={quizzes}
-            token={session?.access_token ?? null}
+            token={tokenRef.current}
             onClose={() => setQuizOpen(false)}
           />
         </Suspense>
