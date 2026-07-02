@@ -51,6 +51,7 @@ import knowledgeGraphHandler from "../lib/api-handlers/knowledge-graph.js";
 import citationsHandler from "../lib/api-handlers/citations.js";
 import recommendationsHandler from "../lib/api-handlers/recommendations.js";
 import contentScoringHandler from "../lib/api-handlers/cron/content-scoring.js";
+import ragResearchHandler from "../lib/api-handlers/rag-research.js";
 import { createRateLimiter } from "./rate-limit.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -112,6 +113,15 @@ app.options("/api/assistant", (_req, res) => {
 app.options("/api/transcribe", (_req, res) => {
   res.status(204).end();
 });
+
+// ── الباحث الشرعي (RAG) ────────────────────────────────────────────────────
+const ragRateLimit = createRateLimiter({ windowMs: 60_000, max: 15 });
+app.post("/api/rag/search",         express.json({ limit: "8kb" }),  ragRateLimit, runHandler(ragResearchHandler, "rag-search"));
+app.get("/api/rag/history",         runHandler(ragResearchHandler, "rag-history"));
+app.post("/api/rag/library/save",   express.json({ limit: "16kb" }), runHandler(ragResearchHandler, "rag-library-save"));
+app.get("/api/rag/library",         runHandler(ragResearchHandler, "rag-library"));
+app.delete("/api/rag/library/:id",  runHandler(ragResearchHandler, "rag-library-delete"));
+app.get("/api/rag/index/status",    runHandler(ragResearchHandler, "rag-index-status"));
 
 app.get("/api/assistant/health", runHandler(assistantHealthHandler, "assistant-health"));
 app.get("/api/assistant", runHandler(assistantHandler, "assistant"));

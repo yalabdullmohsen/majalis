@@ -138,6 +138,7 @@ const AuthCallbackPage = lazy(() => import("@/views/AuthCallbackPage"));
 const ProphetStoriesPage = lazy(() => import("@/views/ProphetStoriesPage"));
 const CitationPublicPage = lazy(() => import("@/views/CitationPublicPage"));
 const MyCitationsPage = lazy(() => import("@/views/MyCitationsPage"));
+const ScholarlyResearchPage = lazy(() => import("@/views/ScholarlyResearchPage"));
 
 function SeoManager() {
   const [location] = useLocation();
@@ -257,6 +258,7 @@ function Router() {
           </Suspense>
         </ErrorBoundary>
       </Route>
+      <Route path="/scholarly-research"><SafeLazyRoute component={ScholarlyResearchPage} /></Route>
       <Route path="/condolences"><SafeLazyRoute component={CondolencesPage} /></Route>
       <Route path="/janaza"><SafeLazyRoute component={JanazaPage} /></Route>
       <Route path="/transcribe">
