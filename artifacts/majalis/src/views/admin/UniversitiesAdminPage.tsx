@@ -377,7 +377,7 @@ function AdminContent() {
           {reminders.map((r) => (
             <div key={r.id} className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4">
               <div className="flex items-start gap-3">
-                <span className={`text-lg flex-shrink-0 ${r.reminder_type === "annual_check" ? "🔄" : r.reminder_type === "deadline_approaching" ? "⏰" : "⚠️"}`}>
+                <span className="text-lg flex-shrink-0">
                   {r.reminder_type === "annual_check" ? "🔄" : r.reminder_type === "deadline_approaching" ? "⏰" : "⚠️"}
                 </span>
                 <div className="flex-1 min-w-0">

@@ -280,7 +280,7 @@ export default function KnowledgeGraphPage() {
     }
     animRef.current = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(animRef.current);
-  }, [gEdges]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [gEdges]); // intentional: nodesRef is a ref (stable), only re-run on gEdges change
 
   // ── البحث بالوسم ─────────────────────────────────────────────────────
 
