@@ -124,6 +124,8 @@ const MuezzinFavoritesPage = lazy(() => import("@/views/MuezzinFavoritesPage"));
 const UploadPage = lazy(() => import("@/views/UploadPage"));
 const MySubmissionsPage = lazy(() => import("@/views/MySubmissionsPage"));
 const UserStatsPage = lazy(() => import("@/views/UserStatsPage"));
+const LearningPlanPage = lazy(() => import("@/views/LearningPlanPage"));
+const FlashCardsPage = lazy(() => import("@/views/FlashCardsPage"));
 const AuthCallbackPage = lazy(() => import("@/views/AuthCallbackPage"));
 const ProphetStoriesPage = lazy(() => import("@/views/ProphetStoriesPage"));
 
@@ -217,6 +219,8 @@ function Router() {
       <Route path="/my-submissions"><SafeLazyRoute component={MySubmissionsPage} /></Route>
       <Route path="/stats"><SafeLazyRoute component={UserStatsPage} /></Route>
       <Route path="/profile"><SafeLazyRoute component={UserStatsPage} /></Route>
+      <Route path="/learning-plan"><SafeLazyRoute component={LearningPlanPage} /></Route>
+      <Route path="/flashcards"><SafeLazyRoute component={FlashCardsPage} /></Route>
       <Route path="/auth/callback"><SafeLazyRoute component={AuthCallbackPage} /></Route>
       <Route path="/learning/paths/:slug"><SafeLazyRoute component={LearningPathDetailPage} /></Route>
       <Route path="/learning/paths"><SafeLazyRoute component={LearningPathsPage} /></Route>
