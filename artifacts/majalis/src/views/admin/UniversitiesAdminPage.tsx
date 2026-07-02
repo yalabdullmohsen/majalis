@@ -58,8 +58,13 @@ function UniversityForm({
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
-    await onSave(form);
-    setLoading(false);
+    try {
+      await onSave(form);
+    } catch (err) {
+      console.error("فشل حفظ الجامعة:", err);
+    } finally {
+      setLoading(false);
+    }
   }
 
   const inputCls = "w-full px-3 py-2 text-sm rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500";

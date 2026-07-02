@@ -40,6 +40,8 @@ async function searchInIndex(admin, query, types, limit) {
     p_limit: limit,
   });
 
+  if (ftsErr) console.warn("[RAG retrieval] FTS error:", ftsErr.message);
+
   if (!ftsErr && ftsResults?.length > 0) {
     return ftsResults.map((r) => ({
       id:              r.id,

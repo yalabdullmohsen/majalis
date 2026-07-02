@@ -299,6 +299,7 @@ export default function UniversityDetailPage() {
     setLoading(true);
     fetchUniversity(slug)
       .then((u) => { setUniversity(u); if (!u) setNotFound(true); })
+      .catch(() => setNotFound(true))
       .finally(() => setLoading(false));
   }, [slug]);
 

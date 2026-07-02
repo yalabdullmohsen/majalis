@@ -138,6 +138,13 @@ export const API_ROUTES = [
   { prefix: "/api/admin/submissions", module: "./api-handlers/admin/submissions.js", allowGet: true },
   // ── الباحث الشرعي (RAG) ────────────────────────────────────────────────────
   { prefix: "/api/rag", module: "./api-handlers/rag-research.js", allowGet: true, rateLimit: ragRateLimit },
+  // ── نظام الاقتباسات ────────────────────────────────────────────────────────
+  { prefix: "/api/user/citations", module: "./api-handlers/citations.js", allowGet: true },
+  { prefix: "/api/citations",      module: "./api-handlers/citations.js", allowGet: true },
+  // ── الرسم البياني المعرفي ──────────────────────────────────────────────────
+  { prefix: "/api/knowledge-graph", module: "./api-handlers/knowledge-graph.js", allowGet: true },
+  // ── التوصيات الذكية ───────────────────────────────────────────────────────
+  { prefix: "/api/recommendations", module: "./api-handlers/recommendations.js", allowGet: true },
   // ── دليل الجامعات ─────────────────────────────────────────────────────────
   { prefix: "/api/cron/universities-review", module: "./api-handlers/cron/universities-review.js", allowGet: true, exact: true },
   { prefix: "/api/admin/reminders",    module: "./api-handlers/universities-vercel.js", allowGet: true },

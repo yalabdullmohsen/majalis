@@ -53,11 +53,16 @@ function UniversitiesContent() {
 
   const load = useCallback(async () => {
     setLoading(true);
-    const res = await fetchUniversities({ ...filters, search: search || undefined });
-    setUniversities(res.items);
-    setTotal(res.total);
-    setSeedNeeded(!!res.seed_needed);
-    setLoading(false);
+    try {
+      const res = await fetchUniversities({ ...filters, search: search || undefined });
+      setUniversities(res.items);
+      setTotal(res.total);
+      setSeedNeeded(!!res.seed_needed);
+    } catch (err) {
+      console.error("فشل تحميل الجامعات:", err);
+    } finally {
+      setLoading(false);
+    }
   }, [filters, search]);
 
   useEffect(() => { load(); }, [load]);

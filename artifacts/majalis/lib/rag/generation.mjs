@@ -80,7 +80,7 @@ export async function generateAnswer(query, docs) {
         system:     RAG_SYSTEM_PROMPT,
         messages:   [{ role: "user", content: userMessage }],
       }),
-      signal: AbortSignal.timeout(20000), // 20 ثانية حد أقصى
+      signal: AbortSignal.timeout(10000), // 10 ثوانٍ حد أقصى
     });
 
     if (!res.ok) {

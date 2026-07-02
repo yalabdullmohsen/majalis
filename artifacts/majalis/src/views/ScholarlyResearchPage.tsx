@@ -57,7 +57,7 @@ export default function ScholarlyResearchPage() {
     try {
       const res = await searchRAG(trimmed);
       setResult(res);
-      setTimeout(() => answerRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 100);
+      requestAnimationFrame(() => answerRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }));
     } catch (e: unknown) {
       setError(e instanceof Error ? e.message : "حدث خطأ غير متوقع");
     } finally {
@@ -94,6 +94,8 @@ export default function ScholarlyResearchPage() {
       setSaveMsg(saved.ok ? "✅ تم الحفظ في مكتبتك" : "❌ فشل الحفظ");
     } catch {
       setSaveMsg("❌ فشل الحفظ");
+    } finally {
+      setTimeout(() => setSaveMsg(null), 4000);
     }
   }, [result, isLoggedIn, query]);
 
