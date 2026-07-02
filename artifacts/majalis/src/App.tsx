@@ -8,6 +8,7 @@ import { AdminRouteGuard } from "@/components/AdminRouteGuard";
 import { LanguageProvider, useLanguage } from "@/components/LanguageProvider";
 import NavBar from "@/components/NavBar";
 import SiteFooter from "@/components/SiteFooter";
+import { BottomNavBar } from "@/components/BottomNavBar";
 import { AssistantFloatingWidget } from "@/components/assistant/AssistantFloatingWidget";
 import { AdhanNotificationBar } from "@/components/adhan/AdhanNotificationBar";
 import HomePage from "@/views/HomePage";
@@ -372,6 +373,7 @@ function AppShell() {
         </main>
         <SiteFooter />
         <AssistantFloatingWidget />
+        <BottomNavBar />
       </div>
     </WouterRouter>
   );

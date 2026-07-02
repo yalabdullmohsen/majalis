@@ -14090,3 +14090,244 @@ html[data-theme="dark"] .navbar-v3 {
     font-size: 1.5rem;
   }
 }
+
+/* ================================================================
+   Bottom Navigation Bar — mobile native-like tab bar
+   Follows iOS HIG + Material Design 3 principles
+   ================================================================ */
+
+:root {
+  --bottom-nav-h: 56px;
+}
+
+.bottom-nav {
+  display: none; /* hidden on desktop */
+}
+
+@media (max-width: 879px) {
+  /* ── Bottom Nav Shell ── */
+  .bottom-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    inset-inline: 0;
+    z-index: 200;
+    height: calc(var(--bottom-nav-h) + env(safe-area-inset-bottom, 0px));
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    background: var(--majalis-panel, #fff);
+    border-top: 1px solid var(--majalis-line, #e5ddd0);
+    box-shadow: 0 -2px 12px rgba(36, 31, 24, 0.08);
+  }
+
+  /* ── Tab item ── */
+  .bottom-nav__tab {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    padding: 6px 4px 4px;
+    text-decoration: none;
+    color: var(--majalis-ink-soft, #5c564c);
+    font-size: 10px;
+    font-weight: 600;
+    font-family: inherit;
+    border: none;
+    background: none;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: color 0.12s;
+  }
+
+  .bottom-nav__tab-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 28px;
+    border-radius: 14px;
+    transition: background 0.15s;
+  }
+
+  .bottom-nav__tab-label {
+    line-height: 1;
+  }
+
+  /* ── Active state — pill indicator (iOS/MD3 style) ── */
+  .bottom-nav__tab.is-active {
+    color: var(--majalis-emerald-deep, #164e3c);
+  }
+
+  .bottom-nav__tab.is-active .bottom-nav__tab-icon {
+    background: rgba(22, 78, 60, 0.1);
+  }
+
+  /* ── Push main content above the bar ── */
+  .app-main {
+    padding-bottom: calc(var(--bottom-nav-h) + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  body.has-assistant-fab .app-main {
+    padding-bottom: calc(var(--bottom-nav-h) + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  /* ── Hide floating assistant button (it's in bottom nav now) ── */
+  .assistant-fab {
+    display: none !important;
+  }
+}
+
+/* ================================================================
+   Compact Search Strip — replaces the large Hero section
+   ================================================================ */
+
+.home-search-strip {
+  background: var(--majalis-parchment, #faf5ed);
+  border-bottom: 1px solid var(--majalis-line, #e5ddd0);
+  padding: 0.6rem 1rem;
+  position: sticky;
+  top: var(--mobile-header-h, 4rem);
+  z-index: 49;
+}
+
+@media (min-width: 880px) {
+  .home-search-strip {
+    top: 3.5rem;
+    padding: 0.7rem clamp(1rem, 4vw, 2rem);
+  }
+}
+
+.home-search-compact {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  max-width: 680px;
+  margin: 0 auto;
+  background: var(--majalis-panel, #fff);
+  border: 1px solid var(--majalis-line, #e5ddd0);
+  border-radius: 999px;
+  padding: 0 0.35rem 0 0.85rem;
+  height: 44px;
+  box-shadow: 0 1px 4px rgba(36, 31, 24, 0.06);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.home-search-compact:focus-within {
+  border-color: var(--majalis-emerald, #16a34a);
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.12);
+}
+
+.home-search-compact__icon {
+  flex-shrink: 0;
+  color: var(--majalis-ink-soft, #5c564c);
+}
+
+.home-search-compact input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 0.9rem;
+  color: var(--majalis-ink, #1c1914);
+  font-family: inherit;
+  min-width: 0;
+  height: 100%;
+  padding: 0;
+}
+
+.home-search-compact input::placeholder {
+  color: var(--majalis-ink-soft, #5c564c);
+  opacity: 0.7;
+}
+
+.home-search-compact button {
+  height: 36px;
+  padding: 0 1.1rem;
+  background: var(--majalis-emerald-deep, #164e3c);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  font-family: inherit;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+
+.home-search-compact button:hover {
+  background: #0f3329;
+}
+
+/* ================================================================
+   SideNavDrawer — extra styles for new groups
+   ================================================================ */
+
+.side-nav-user-info {
+  padding: 0.5rem 0.85rem 0.25rem;
+  border-bottom: 1px solid var(--majalis-line, #e5ddd0);
+  margin-bottom: 0.25rem;
+}
+
+.side-nav-user-name {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--majalis-emerald-deep, #164e3c);
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.side-nav-link--danger {
+  color: #991b1b;
+  width: 100%;
+  text-align: inherit;
+  font-family: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.side-nav-link--danger:hover {
+  color: #7f1d1d;
+  background: rgba(153, 27, 27, 0.06);
+}
+
+/* ================================================================
+   Compact mobile navbar — tighter vertical padding
+   ================================================================ */
+
+@media (max-width: 879px) {
+  .navbar-v3 {
+    min-height: 52px;
+  }
+
+  .navbar-v3__inner {
+    min-height: 52px;
+    max-height: 52px;
+    padding-block: 0.25rem;
+  }
+}
+
+/* ================================================================
+   Dark mode — bottom nav
+   ================================================================ */
+
+html[data-theme="dark"] .bottom-nav {
+  background: var(--majalis-panel, #111a15);
+  border-top-color: var(--majalis-line, #2a3d33);
+  box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.25);
+}
+
+html[data-theme="dark"] .home-search-strip {
+  background: var(--majalis-parchment, #111a15);
+  border-bottom-color: var(--majalis-line, #2a3d33);
+}
+
+html[data-theme="dark"] .home-search-compact {
+  background: var(--majalis-panel, #1a2821);
+  border-color: var(--majalis-line, #2a3d33);
+}
+
