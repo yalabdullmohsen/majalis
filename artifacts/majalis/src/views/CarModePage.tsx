@@ -14,7 +14,7 @@ type AudioLesson = {
 const CAR_LAST_KEY = "majalis_car_last_v1";
 
 function saveLastLesson(id: string) {
-  try { localStorage.setItem(CAR_LAST_KEY, id); } catch {}
+  try { localStorage.setItem(CAR_LAST_KEY, id); } catch { /* localStorage unavailable */ }
 }
 function loadLastLessonId(): string | null {
   try { return localStorage.getItem(CAR_LAST_KEY); } catch { return null; }
@@ -28,14 +28,19 @@ export default function CarModePage() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    supabase
-      .from("lessons")
-      .select("id, title, speaker_name, live_url, audio_url, category, external_key")
-      .eq("status", "approved")
-      .not("live_url", "is", null)
-      .order("created_at", { ascending: false })
-      .limit(50)
-      .then(({ data }) => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const { data } = await supabase
+          .from("lessons")
+          .select("id, title, speaker_name, live_url, audio_url, category, external_key")
+          .eq("status", "approved")
+          .not("live_url", "is", null)
+          .order("created_at", { ascending: false })
+          .limit(50);
+
+        if (cancelled) return;
+
         const rows: AudioLesson[] = (data ?? [])
           .filter((l: any) => l.live_url || l.audio_url)
           .map((l: any) => ({
@@ -48,15 +53,16 @@ export default function CarModePage() {
           }));
         setLessons(rows);
 
-        // Restore last position
         const lastId = loadLastLessonId();
         if (lastId) {
           const idx = rows.findIndex((r) => r.id === lastId);
           if (idx >= 0) setCurrentIdx(idx);
         }
-      })
-      .catch(() => {})
-      .finally(() => setLoading(false));
+      } catch { /* network error */ } finally {
+        if (!cancelled) setLoading(false);
+      }
+    })();
+    return () => { cancelled = true; };
   }, []);
 
   const current = lessons[currentIdx];

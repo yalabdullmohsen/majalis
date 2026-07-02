@@ -27,7 +27,7 @@ export async function isFollowingSheikh(userId: string, sheikhId: string): Promi
 export type FollowedSheikh = {
   sheikh_id: string;
   followed_at: string;
-  sheikhs?: { id: string; name: string; photo_url?: string; city?: string };
+  sheikhs?: { id: string; name: string; photo_url?: string; city?: string }[];
 };
 
 export async function getFollowedSheikhs(userId: string): Promise<FollowedSheikh[]> {

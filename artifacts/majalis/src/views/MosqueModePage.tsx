@@ -37,7 +37,7 @@ export default function MosqueModePage() {
   }, []);
 
   const next = countdown?.next;
-  const secondsLeft = countdown?.secondsUntilNext ?? 0;
+  const secondsLeft = Math.floor((countdown?.remainingMs ?? 0) / 1000);
 
   return (
     <div className="mosque-mode" dir="rtl">
@@ -71,7 +71,7 @@ export default function MosqueModePage() {
             <div className="mosque-mode__countdown">
               {secondsLeft > 0 ? formatCountdown(secondsLeft) : "حان الآن"}
             </div>
-            <p className="mosque-mode__prayer-time">{next.timeStr}</p>
+            <p className="mosque-mode__prayer-time">{next.time}</p>
           </>
         ) : (
           <p className="mosque-mode__prayer-label">جارٍ تحميل مواقيت الصلاة…</p>

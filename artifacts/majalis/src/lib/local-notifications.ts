@@ -87,7 +87,7 @@ function markSentToday(tag: string): void {
     const sent: Record<string, string> = raw ? JSON.parse(raw) : {};
     sent[tag] = todayKey();
     localStorage.setItem(SCHED_KEY, JSON.stringify(sent));
-  } catch {}
+  } catch { /* localStorage unavailable */ }
 }
 
 export function scheduleFlashcardsReminder(dueCount: number): void {
