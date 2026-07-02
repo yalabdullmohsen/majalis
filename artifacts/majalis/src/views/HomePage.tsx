@@ -21,6 +21,7 @@ import { IslamicDivider } from "@/components/design/IslamicDivider";
 import { IslamicOrnament } from "@/components/design/IslamicOrnament";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
 import { HomeAdhanWidget } from "@/components/home/HomeAdhanWidget";
+import { HomeContinueReading } from "@/components/home/HomeContinueReading";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 
 const QUICK_LINKS = [
@@ -117,6 +118,10 @@ export default function HomePage({
         </SafeHomeSection>
 
         <IslamicDivider />
+
+        <SafeHomeSection name="تابع من حيث توقفت">
+          <HomeContinueReading />
+        </SafeHomeSection>
 
         <SafeHomeSection name="أحدث الدروس">
           <HomeUpcomingLessons initialLessons={initialFeaturedLessons} />

@@ -2258,3 +2258,339 @@ html[data-theme="dark"] .tasbih-wird-pill.is-active {
   to { transform: rotate(360deg); }
 }
 
+/* ══════════════════════════════════════════════════════════════════
+   المرحلة 1 — هوية المستخدم والتقدم
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ── صفحة الملف الشخصي ─────────────────────────────────────────── */
+.profile-page { padding-bottom: 3rem; }
+
+.profile-identity {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.profile-identity__left { display: flex; align-items: center; gap: 0.875rem; }
+.profile-identity__avatar {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 1.4rem;
+  font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.profile-identity__name { font-weight: 700; font-size: 1rem; color: var(--majalis-ink); }
+.profile-identity__level-badge {
+  display: inline-block;
+  margin-top: 0.2rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.1rem 0.55rem;
+  border-radius: 999px;
+  border: 1.5px solid;
+}
+.profile-identity__streak { text-align: center; }
+.profile-identity__streak-num {
+  display: block;
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--ds-emerald-deep);
+  line-height: 1;
+}
+.profile-identity__streak-label { font-size: 0.72rem; color: var(--majalis-ink-soft); }
+
+/* ── شريط المستوى ───────────────────────────────────────────────── */
+.profile-level-bar {
+  background: var(--majalis-panel, #fff);
+  border: 1px solid var(--ds-line-color);
+  border-radius: var(--ds-radius-lg, 0.625rem);
+  padding: 0.875rem 1.25rem;
+  margin-bottom: 1rem;
+}
+.profile-level-bar__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.4rem;
+}
+.profile-level-bar__title { font-weight: 700; font-size: 0.9rem; }
+.profile-level-bar__xp { font-size: 0.72rem; color: var(--majalis-ink-soft); }
+.profile-level-bar__track {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--ds-line-color);
+  overflow: hidden;
+  margin-bottom: 0.35rem;
+}
+.profile-level-bar__fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.6s ease;
+}
+.profile-level-bar__meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.68rem;
+  color: var(--majalis-ink-soft);
+}
+
+/* ── شبكة الإحصاءات ─────────────────────────────────────────────── */
+.profile-section-title {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--ds-emerald-deep);
+  margin: 0 0 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.profile-stats-section { margin-bottom: 1.25rem; }
+.profile-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+@media (max-width: 480px) {
+  .profile-stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+.profile-stat-card {
+  background: var(--majalis-panel, #fff);
+  border: 1px solid var(--ds-line-color);
+  border-radius: var(--ds-radius-lg, 0.625rem);
+  padding: 0.875rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  text-align: center;
+}
+.profile-stat-card__icon { font-size: 1.4rem; }
+.profile-stat-card__value { font-size: 1.35rem; font-weight: 800; color: var(--ds-emerald-deep); line-height: 1.1; }
+.profile-stat-card__label { font-size: 0.72rem; color: var(--majalis-ink-soft); font-weight: 600; }
+.profile-stat-card__sub { font-size: 0.65rem; color: var(--majalis-ink-soft); }
+
+/* ── لوحة الشارات ───────────────────────────────────────────────── */
+.profile-badges-section { margin-bottom: 1.25rem; }
+.profile-badges-hint { font-size: 0.8rem; color: var(--majalis-ink-soft); margin: 0 0 0.75rem; }
+.profile-badges { display: flex; flex-direction: column; gap: 1rem; }
+.profile-badges__group-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--majalis-ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 0.5rem;
+}
+.profile-badges__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.profile-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  width: 78px;
+  padding: 0.6rem 0.4rem;
+  border-radius: 0.75rem;
+  border: 1.5px solid var(--ds-line-color);
+  background: color-mix(in srgb, var(--majalis-panel) 90%, #f3f4f6);
+  opacity: 0.5;
+  text-align: center;
+  position: relative;
+}
+.profile-badge--earned {
+  opacity: 1;
+  border-color: var(--ds-emerald);
+  background: color-mix(in srgb, var(--ds-emerald) 8%, var(--majalis-panel));
+  box-shadow: 0 2px 8px rgba(26, 107, 82, 0.12);
+}
+.profile-badge__icon { font-size: 1.5rem; line-height: 1; }
+.profile-badge__title { font-size: 0.62rem; font-weight: 700; color: var(--majalis-ink); line-height: 1.2; }
+.profile-badge__locked {
+  font-size: 0.55rem;
+  color: var(--majalis-ink-soft);
+  line-height: 1.2;
+  display: none;
+}
+.profile-badge:hover .profile-badge__locked { display: block; }
+
+/* ── قائمة الاستئناف ────────────────────────────────────────────── */
+.profile-resume { margin-bottom: 1.25rem; }
+.profile-resume__list { display: flex; flex-direction: column; gap: 0.5rem; }
+.profile-resume__item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: var(--majalis-panel, #fff);
+  border: 1px solid var(--ds-line-color);
+  border-radius: var(--ds-radius-lg, 0.625rem);
+  transition: border-color 0.15s;
+}
+.profile-resume__item:hover { border-color: var(--ds-emerald); }
+.profile-resume__icon { font-size: 1.5rem; flex-shrink: 0; }
+.profile-resume__body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 0.15rem; }
+.profile-resume__title {
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: var(--ds-emerald-deep);
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.profile-resume__meta { display: flex; gap: 0.4rem; align-items: center; }
+.profile-resume__type {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--majalis-ink-soft);
+  background: var(--ds-line-color);
+  padding: 0.1rem 0.4rem;
+  border-radius: 999px;
+}
+.profile-resume__section { font-size: 0.68rem; color: var(--majalis-ink-soft); }
+.profile-resume__track {
+  height: 4px;
+  border-radius: 999px;
+  background: var(--ds-line-color);
+  overflow: hidden;
+  margin-top: 0.25rem;
+}
+.profile-resume__fill { height: 100%; background: var(--ds-emerald); border-radius: 999px; }
+.profile-resume__pct { font-size: 0.72rem; font-weight: 700; color: var(--ds-emerald-deep); flex-shrink: 0; }
+.profile-resume__del {
+  background: none;
+  border: none;
+  color: var(--majalis-ink-soft);
+  font-size: 0.75rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  flex-shrink: 0;
+  opacity: 0.5;
+}
+.profile-resume__del:hover { opacity: 1; color: #ef4444; }
+
+/* ── روابط سريعة ────────────────────────────────────────────────── */
+.profile-quick-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+.profile-quick-link {
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--ds-line-color);
+  background: var(--majalis-panel, #fff);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--majalis-ink);
+  text-decoration: none;
+  transition: border-color 0.15s, color 0.15s;
+}
+.profile-quick-link:hover { border-color: var(--ds-emerald); color: var(--ds-emerald-deep); }
+
+/* ── تنبيه شارة جديدة ───────────────────────────────────────────── */
+.profile-new-badges {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  z-index: 300;
+  animation: slideInUp 0.35s ease;
+}
+@keyframes slideInUp {
+  from { transform: translateY(1rem); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+.profile-new-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.65rem 1rem;
+  background: var(--ds-emerald-deep);
+  color: #fff;
+  border-radius: 0.75rem;
+  font-size: 0.82rem;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}
+
+/* ── مؤشر تحميل ─────────────────────────────────────────────────── */
+.profile-loading {
+  display: flex;
+  gap: 0.4rem;
+  justify-content: center;
+  padding: 3rem;
+}
+.profile-loading__dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--ds-emerald);
+  animation: dotPulse 1.2s ease-in-out infinite;
+}
+.profile-loading__dot:nth-child(2) { animation-delay: 0.2s; }
+.profile-loading__dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes dotPulse {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+  40%            { transform: scale(1);   opacity: 1;   }
+}
+
+/* ── مكوّن الاستئناف في الرئيسية ──────────────────────────────── */
+.home-resume { margin-bottom: 0; }
+.home-resume__cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.home-resume__card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: var(--majalis-panel, #fff);
+  border: 1px solid var(--ds-line-color);
+  border-radius: var(--ds-radius-lg, 0.625rem);
+  text-decoration: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.home-resume__card:hover {
+  border-color: var(--ds-emerald);
+  box-shadow: 0 2px 8px rgba(26,107,82,0.08);
+}
+.home-resume__card-icon { font-size: 1.5rem; flex-shrink: 0; }
+.home-resume__card-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 0.15rem; }
+.home-resume__card-type {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--majalis-ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.home-resume__card-title {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--ds-emerald-deep);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.home-resume__card-section { font-size: 0.68rem; color: var(--majalis-ink-soft); }
+.home-resume__card-progress { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
+.home-resume__card-track {
+  width: 48px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--ds-line-color);
+  overflow: hidden;
+}
+.home-resume__card-fill { height: 100%; background: var(--ds-emerald); border-radius: 999px; }
+.home-resume__card-pct { font-size: 0.68rem; font-weight: 700; color: var(--ds-emerald-deep); }
+
