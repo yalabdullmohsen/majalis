@@ -46,8 +46,6 @@ const LoginPage = lazyWithRetry(() => import("@/views/LoginPage"), "LoginPage");
 const RegisterPage = lazyWithRetry(() => import("@/views/RegisterPage"), "RegisterPage");
 const TranscribePage = lazy(() => import("@/views/TranscribePage"));
 const AssistantPage = lazy(() => import("@/views/AssistantPage"));
-const CondolencesPage = lazy(() => import("@/views/CondolencesPage"));
-const JanazaPage = lazy(() => import("@/views/JanazaPage"));
 const KuwaitLessonsPage = lazy(() => import("@/views/KuwaitLessonsPage"));
 const CardsPage = lazy(() => import("@/views/CardsPage"));
 const QuranPage = lazy(() => import("@/views/QuranPage"));
@@ -84,6 +82,8 @@ const FiqhCouncilTopicIndexPage = lazy(() => import("@/views/FiqhCouncilTopicInd
 const FiqhCouncilStatsPage = lazy(() => import("@/views/FiqhCouncilStatsPage"));
 const FiqhCouncilPage = lazy(() => import("@/views/FiqhCouncilPage"));
 const FiqhCouncilItemDetailPage = lazy(() => import("@/views/FiqhCouncilItemDetailPage"));
+const FiqhPage = lazy(() => import("@/views/FiqhPage"));
+const SeerahPage = lazy(() => import("@/views/SeerahPage"));
 const FatwaPage = lazy(() => import("@/views/FatwaPage"));
 const FatwaDetailPage = lazy(() => import("@/views/FatwaDetailPage"));
 const RulingsPage = lazy(() => import("@/views/RulingsPage"));
@@ -274,8 +274,8 @@ function Router() {
       <Route path="/universities/compare"><SafeLazyRoute component={UniversitiesComparePage} /></Route>
       <Route path="/universities/:slug"><SafeLazyRoute component={UniversityDetailPage} /></Route>
       <Route path="/universities"><SafeLazyRoute component={UniversitiesPage} /></Route>
-      <Route path="/condolences"><SafeLazyRoute component={CondolencesPage} /></Route>
-      <Route path="/janaza"><SafeLazyRoute component={JanazaPage} /></Route>
+      <Route path="/condolences"><Redirect to="/" /></Route>
+      <Route path="/janaza"><Redirect to="/" /></Route>
       <Route path="/transcribe">
         <ErrorBoundary>
           <Suspense fallback={<LazyRouteFallback />}>
@@ -291,6 +291,9 @@ function Router() {
       {/* مسارات الاختصار — public redirects */}
       <Route path="/mushaf"><Redirect to="/quran" /></Route>
       <Route path="/research"><Redirect to="/fiqh-council/research" /></Route>
+      {/* الفقه الإسلامي الموحّد + السيرة النبوية */}
+      <Route path="/fiqh"><SafeLazyRoute component={FiqhPage} /></Route>
+      <Route path="/seerah"><SafeLazyRoute component={SeerahPage} /></Route>
       <Route path="/quran/surah-stories/:number"><SurahStoryDetailRoute /></Route>
       <Route path="/quran/surah-stories"><SafeLazyRoute component={SurahStoriesPage} /></Route>
       <Route path="/quran"><SafeLazyRoute component={QuranPage} /></Route>

@@ -13,7 +13,6 @@ export type AdminSection =
   | "adhkar"
   | "fawaid"
   | "qa"
-  | "condolences"
   | "users"
   | "settings"
   | "reports"
@@ -65,7 +64,6 @@ export const ADMIN_NAV: { key: AdminSection; label: string }[] = [
   { key: "fawaid", label: "الفوائد" },
   { key: "adhkar", label: "الأذكار" },
   { key: "qa", label: "الأسئلة" },
-  { key: "condolences", label: "قوالب التعزية" },
   { key: "users", label: "المستخدمون" },
   { key: "reports", label: "التقارير" },
   { key: "fiqh-council", label: "المجمع الفقهي" },
