@@ -1,7 +1,7 @@
-/** PWA service worker v7 — network-first for app shell, cache-first for static Quran/lesson data. */
+/** PWA service worker v8 — network-first for app shell, cache-first for static Quran/lesson data. */
 
-const SHELL_CACHE   = "majalis-shell-v7";
-const DATA_CACHE    = "majalis-data-v7";
+const SHELL_CACHE   = "majalis-shell-v8";
+const DATA_CACHE    = "majalis-data-v8";
 const FETCH_TIMEOUT = 8000;
 
 // External API routes served cache-first (Quran API data, prayer times)
@@ -140,8 +140,8 @@ self.addEventListener("message", (event) => {
       _adhanTimers.delete(prayerKey);
       self.registration.showNotification(`🕌 حان وقت ${prayerArabic}`, {
         body: "حيَّ على الصلاة، حيَّ على الفلاح",
-        icon: "/logo.png",
-        badge: "/favicon.png",
+        icon: "/logo.png?v=8",
+        badge: "/favicon.png?v=8",
         dir: "rtl",
         lang: "ar",
         tag: `adhan-${prayerKey}`,
@@ -166,8 +166,8 @@ self.addEventListener("push", (event) => {
   const title = payload.title || "المجلس العلمي";
   const options = {
     body: payload.body || "",
-    icon: "/logo.png",
-    badge: "/favicon.png",
+    icon: "/logo.png?v=8",
+    badge: "/favicon.png?v=8",
     dir: "rtl",
     lang: "ar",
     data: { url: payload.url || "/" },
