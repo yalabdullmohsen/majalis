@@ -25,7 +25,6 @@ const AuthCallbackPage = lazy(() => import("@/views/AuthCallbackPage"));
 const UserStatsPage = lazy(() => import("@/views/UserStatsPage"));
 const TranscribePage = lazy(() => import("@/views/TranscribePage"));
 const AssistantPage = lazy(() => import("@/views/AssistantPage"));
-const CondolencesPage = lazy(() => import("@/views/CondolencesPage"));
 const CardsPage = lazy(() => import("@/views/CardsPage"));
 const QuranPage = lazy(() => import("@/views/QuranPage"));
 const SurahStoriesPage = lazy(() => import("@/views/SurahStoriesPage"));
@@ -146,7 +145,7 @@ export default function AppRoutes() {
             </Suspense>
           </ErrorBoundary>
         </Route>
-        <Route path="/condolences"><SafeLazyRoute component={CondolencesPage} /></Route>
+        <Route path="/condolences"><Redirect to="/" /></Route>
         <Route path="/transcribe">
           <ErrorBoundary>
             <Suspense fallback={<LazyRouteFallback />}>

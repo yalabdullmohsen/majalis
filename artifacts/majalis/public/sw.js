@@ -1,7 +1,8 @@
-/** PWA service worker v7 — network-first for app shell, cache-first for static Quran/lesson data. */
+/** PWA service worker v10 — network-first for app shell, cache-first for static Quran/lesson data. */
 
-const SHELL_CACHE   = "majalis-shell-v8";
-const DATA_CACHE    = "majalis-data-v8";
+const SHELL_CACHE   = "majalis-shell-v10";
+const DATA_CACHE    = "majalis-data-v10";
+const VERSION_CACHE = "majalis-version";
 const FETCH_TIMEOUT = 8000;
 
 // External API routes served cache-first (Quran API data, prayer times)
@@ -28,13 +29,35 @@ self.addEventListener("install", (event) => {
 
 self.addEventListener("activate", (event) => {
   event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(
+    (async () => {
+      // كشف هل هذا تحديث أم تثبيت أول
+      const verCache = await caches.open(VERSION_CACHE);
+      const prev = await verCache.match("/sw-version");
+      const prevVersion = prev ? await prev.text() : null;
+      const isUpdate = prevVersion !== null && prevVersion !== SHELL_CACHE;
+
+      // حذف الكاشات القديمة
+      const keys = await caches.keys();
+      await Promise.all(
         keys
-          .filter((k) => k !== SHELL_CACHE && k !== DATA_CACHE)
+          .filter((k) => k !== SHELL_CACHE && k !== DATA_CACHE && k !== VERSION_CACHE)
           .map((k) => caches.delete(k)),
-      ),
-    ).then(() => self.clients.claim()),
+      );
+
+      // تخزين النسخة الحالية
+      await verCache.put("/sw-version", new Response(SHELL_CACHE));
+
+      // السيطرة على كل النوافذ
+      await self.clients.claim();
+
+      // عند التحديث: إعادة تحميل كل النوافذ المفتوحة
+      if (isUpdate) {
+        const allClients = await self.clients.matchAll({ type: "window", includeUncontrolled: true });
+        allClients.forEach((client) => {
+          client.navigate(client.url).catch(() => undefined);
+        });
+      }
+    })(),
   );
 });
 
@@ -140,8 +163,8 @@ self.addEventListener("message", (event) => {
       _adhanTimers.delete(prayerKey);
       self.registration.showNotification(`🕌 حان وقت ${prayerArabic}`, {
         body: "حيَّ على الصلاة، حيَّ على الفلاح",
-        icon: "/logo.png",
-        badge: "/favicon.png",
+        icon: "/logo.png?v=9",
+        badge: "/favicon.png?v=9",
         dir: "rtl",
         lang: "ar",
         tag: `adhan-${prayerKey}`,
@@ -166,8 +189,8 @@ self.addEventListener("push", (event) => {
   const title = payload.title || "المجلس العلمي";
   const options = {
     body: payload.body || "",
-    icon: "/logo.png",
-    badge: "/favicon.png",
+    icon: "/logo.png?v=9",
+    badge: "/favicon.png?v=9",
     dir: "rtl",
     lang: "ar",
     data: { url: payload.url || "/" },

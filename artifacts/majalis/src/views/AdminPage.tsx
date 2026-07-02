@@ -9,7 +9,6 @@ import { MiraclesSection } from "@/views/admin/MiraclesSection";
 import { AdhkarSection } from "@/views/admin/AdhkarSection";
 import { FawaidSection } from "@/views/admin/FawaidSection";
 import { QaSection } from "@/views/admin/QaSection";
-import { CondolencesSection } from "@/views/admin/CondolencesSection";
 import { UsersSection } from "@/views/admin/UsersSection";
 import { SettingsSection } from "@/views/admin/SettingsSection";
 import { AggregatorSection } from "@/views/admin/AggregatorSection";
@@ -77,7 +76,6 @@ export default function AdminPage() {
       {section === "adhkar" && <AdhkarSection />}
       {section === "fawaid" && <FawaidSection />}
       {section === "qa" && <QaSection />}
-      {section === "condolences" && <CondolencesSection />}
       {section === "users" && <UsersSection />}
       {section === "settings" && <SettingsSection />}
       {section === "reports" && <ReportsSection />}
