@@ -47,6 +47,7 @@ import aiAgentsAdminHandler from "../lib/api-handlers/admin/ai-agents.js";
 import aiAgentsCronHandler from "../lib/api-handlers/cron/ai-agents.js";
 import scholarlySearchHandler from "../lib/api-handlers/scholarly-search.js";
 import fiqhResearchAssistantHandler from "../lib/api-handlers/fiqh-research-assistant.js";
+import knowledgeGraphHandler from "../lib/api-handlers/knowledge-graph.js";
 import { createRateLimiter } from "./rate-limit.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -214,6 +215,14 @@ app.get("/api/admin/auto-content", runHandler(autoContentAdminHandler, "auto-con
 app.post("/api/admin/auto-content", express.json({ limit: "16kb" }), runHandler(autoContentAdminHandler, "auto-content-admin"));
 app.get("/api/admin/auto-knowledge-engine", runHandler(autoKnowledgeAdminHandler, "auto-knowledge-admin"));
 app.post("/api/admin/auto-knowledge-engine", express.json({ limit: "32kb" }), runHandler(autoKnowledgeAdminHandler, "auto-knowledge-admin"));
+
+// ── Islamic Knowledge Graph ────────────────────────────────────────────────
+app.get("/api/knowledge-graph/node/:id/expand", runHandler(knowledgeGraphHandler, "knowledge-graph-expand"));
+app.get("/api/knowledge-graph/node/:id",        runHandler(knowledgeGraphHandler, "knowledge-graph-node"));
+app.get("/api/knowledge-graph/search",          runHandler(knowledgeGraphHandler, "knowledge-graph-search"));
+app.get("/api/knowledge-graph/nodes",           runHandler(knowledgeGraphHandler, "knowledge-graph-nodes"));
+app.get("/api/knowledge-graph",                 runHandler(knowledgeGraphHandler, "knowledge-graph"));
+app.post("/api/knowledge-graph/relationship",   express.json({ limit: "16kb" }), runHandler(knowledgeGraphHandler, "knowledge-graph-rel"));
 
 app.get("/api/healthz", (_req, res) => {
   res.json({ ok: true, service: "majalis-web" });
