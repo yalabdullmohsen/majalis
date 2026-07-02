@@ -35,6 +35,7 @@ import { sheikhNameKey } from "@/lib/sheikh-name";
 import { SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { KnowledgeRelatedItems } from "@/components/knowledge/KnowledgeRelatedItems";
 import { ScholarFollowButton } from "@/components/ScholarFollowButton";
+import { RecommendationWidget } from "@/components/recommendations/RecommendationWidget";
 
 function buildMapsEmbed(url?: string, mosque?: string, region?: string) {
   if (url?.includes("google.com/maps") || url?.includes("goo.gl/maps") || url?.includes("maps.app")) {
@@ -453,6 +454,19 @@ export default function LessonDetailPage({
       {lesson?.id && (
         <SectionErrorBoundary name="الرسم البياني المعرفي">
           <KnowledgeRelatedItems sourceType="lesson" sourceId={String(lesson.id)} />
+        </SectionErrorBoundary>
+      )}
+      {lesson?.id && (
+        <SectionErrorBoundary name="محتوى ذو صلة">
+          <RecommendationWidget
+            useRelated
+            contentId={String(lesson.id)}
+            contentType="lesson"
+            context="lesson"
+            limit={6}
+            layout="row"
+            className="mt-8"
+          />
         </SectionErrorBoundary>
       )}
     </div>

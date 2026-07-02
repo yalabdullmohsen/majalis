@@ -5,6 +5,7 @@ import { arabicMatchAny } from "@/lib/arabic-search";
 import { PageHeader, Loading, Empty } from "@/components/ui-common";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
 import { useAuth } from "@/components/AuthProvider";
+import { RecommendationWidget } from "@/components/recommendations/RecommendationWidget";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -559,6 +560,16 @@ export default function HadithPage() {
         <HadithDetailModal
           h={expandedHadith}
           onClose={() => setExpandedHadith(null)}
+        />
+      )}
+
+      {!loading && displayItems.length > 0 && (
+        <RecommendationWidget
+          context="hadith"
+          contentType="hadith"
+          limit={4}
+          layout="row"
+          className="mt-8"
         />
       )}
     </div>
