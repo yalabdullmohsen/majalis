@@ -30,6 +30,12 @@ const fiqhResearchRateLimit = createRateLimiter({
   keyPrefix: "fiqh-research",
 });
 
+const ragRateLimit = createRateLimiter({
+  windowMs: 60_000,
+  max: 20,
+  keyPrefix: "rag",
+});
+
 /** Route table uses dynamic imports so Vercel bundles one lightweight function entrypoint. */
 export const API_ROUTES = [
   { prefix: "/api/healthz", module: "./api-handlers/healthz.js", allowGet: true, exact: true },
@@ -130,6 +136,16 @@ export const API_ROUTES = [
   { prefix: "/api/transcribe", module: "./api-handlers/transcribe.js", rateLimit: transcribeRateLimit },
   { prefix: "/api/submissions", module: "./api-handlers/submissions.js", exact: true },
   { prefix: "/api/admin/submissions", module: "./api-handlers/admin/submissions.js", allowGet: true },
+  // ── الباحث الشرعي (RAG) ────────────────────────────────────────────────────
+  { prefix: "/api/rag", module: "./api-handlers/rag-research.js", allowGet: true, rateLimit: ragRateLimit },
+  // ── دليل الجامعات ─────────────────────────────────────────────────────────
+  { prefix: "/api/cron/universities-review", module: "./api-handlers/cron/universities-review.js", allowGet: true, exact: true },
+  { prefix: "/api/admin/reminders",    module: "./api-handlers/universities-vercel.js", allowGet: true },
+  { prefix: "/api/admin/programs",     module: "./api-handlers/universities-vercel.js", allowGet: true },
+  { prefix: "/api/admin/requirements", module: "./api-handlers/universities-vercel.js", allowGet: true },
+  { prefix: "/api/admin/faqs",         module: "./api-handlers/universities-vercel.js", allowGet: true },
+  { prefix: "/api/admin/universities", module: "./api-handlers/universities-vercel.js", allowGet: true },
+  { prefix: "/api/universities",       module: "./api-handlers/universities-vercel.js", allowGet: true },
 ];
 
 const handlerCache = new Map();
@@ -249,23 +265,28 @@ export async function dispatchApiRequest(req, res) {
     return;
   }
 
-  if (req.method !== "POST") {
+  const MUTATION_METHODS = ["POST", "PUT", "DELETE", "PATCH"];
+  if (!MUTATION_METHODS.includes(req.method)) {
     sendJson(res, 405, { ok: false, message: "الطريقة غير مدعومة." });
     return;
   }
 
-  const runPost = async () => {
-    const body = await readJsonBody(req);
-    if (body === null && route.prefix !== "/api/test-anthropic") {
-      sendJson(res, 400, { ok: false, message: "اكتب سؤالك أولًا." });
-      return;
+  const runMutation = async () => {
+    // DELETE usually has no body; read body for POST/PUT/PATCH only
+    if (req.method !== "DELETE") {
+      const body = await readJsonBody(req);
+      if (body === null && route.prefix !== "/api/test-anthropic") {
+        sendJson(res, 400, { ok: false, message: "اكتب سؤالك أولًا." });
+        return;
+      }
+      req.body = body ?? {};
+    } else {
+      req.body = {};
     }
-
-    req.body = body ?? {};
     try {
       await invokeHandler(handler, req, res, route.prefix, route);
     } catch (error) {
-      console.error(`${route.prefix} POST handler failed`, error);
+      console.error(`${route.prefix} ${req.method} handler failed`, error);
       if (!res.headersSent) {
         sendJson(res, 500, { ok: false, message: "تعذر تنفيذ الطلب.", fallback: true });
       }
@@ -273,9 +294,9 @@ export async function dispatchApiRequest(req, res) {
   };
 
   if (route.rateLimit) {
-    await route.rateLimit(req, res, runPost);
+    await route.rateLimit(req, res, runMutation);
   } else {
-    await runPost();
+    await runMutation();
   }
 }
 
