@@ -1,7 +1,7 @@
 "use client";
 
 import { Suspense, lazy, type ComponentType } from "react";
-import { Redirect, Route, Switch, useLocation, useRoute } from "wouter";
+import { Redirect, Route, Switch, useLocation } from "wouter";
 import { AdminRouteGuard } from "@/components/AdminRouteGuard";
 import AboutPage from "@/views/AboutPage";
 import PrivacyPage from "@/views/PrivacyPage";
@@ -26,12 +26,6 @@ const UserStatsPage = lazy(() => import("@/views/UserStatsPage"));
 const TranscribePage = lazy(() => import("@/views/TranscribePage"));
 const AssistantPage = lazy(() => import("@/views/AssistantPage"));
 const CardsPage = lazy(() => import("@/views/CardsPage"));
-const QuranPage = lazy(() => import("@/views/QuranPage"));
-const SurahStoriesPage = lazy(() => import("@/views/SurahStoriesPage"));
-const SurahStoryDetailPage = lazy(() =>
-  import("@/views/SurahStoriesPage").then((m) => ({ default: m.SurahStoryDetailPage })),
-);
-const QuranRadioPage = lazy(() => import("@/views/QuranRadioPage"));
 const PrayerTimesPage = lazy(() => import("@/views/PrayerTimesPage"));
 
 const QiblaPage = lazy(() => import("@/views/QiblaPage"));
@@ -96,14 +90,19 @@ function SafeLazyRoute({ component: Component }: { component: ComponentType }) {
   );
 }
 
-function SurahStoryDetailRoute() {
-  const [, params] = useRoute("/quran/surah-stories/:number");
+function QuranComingSoon() {
   return (
-    <ErrorBoundary>
-      <Suspense fallback={<LazyRouteFallback />}>
-        <SurahStoryDetailPage surahNumber={Number(params?.number) || 1} />
-      </Suspense>
-    </ErrorBoundary>
+    <div style={{
+      display: "flex", flexDirection: "column", alignItems: "center",
+      justifyContent: "center", minHeight: "60vh", gap: "1rem",
+      fontFamily: "inherit", direction: "rtl", textAlign: "center", padding: "2rem",
+    }}>
+      <span style={{ fontSize: "3rem", opacity: 0.4 }}>📖</span>
+      <h2 style={{ margin: 0, fontSize: "1.5rem", fontWeight: 700, color: "var(--text-base, #1a1a1a)" }}>قريباً</h2>
+      <p style={{ margin: 0, color: "var(--text-muted, #6b7280)", fontSize: "1rem" }}>
+        قسم القرآن الكريم قيد التطوير
+      </p>
+    </div>
   );
 }
 
@@ -153,12 +152,12 @@ export default function AppRoutes() {
             </Suspense>
           </ErrorBoundary>
         </Route>
-        <Route path="/quran-live"><Redirect to="/quran-radio" /></Route>
-        <Route path="/quran/tajweed"><Redirect to="/quran" /></Route>
-        <Route path="/quran/surah-stories/:number"><SurahStoryDetailRoute /></Route>
-        <Route path="/quran/surah-stories"><SafeLazyRoute component={SurahStoriesPage} /></Route>
-        <Route path="/quran-radio"><SafeLazyRoute component={QuranRadioPage} /></Route>
-        <Route path="/quran"><SafeLazyRoute component={QuranPage} /></Route>
+        <Route path="/quran-live" component={QuranComingSoon} />
+        <Route path="/quran/tajweed" component={QuranComingSoon} />
+        <Route path="/quran/surah-stories/:number" component={QuranComingSoon} />
+        <Route path="/quran/surah-stories" component={QuranComingSoon} />
+        <Route path="/quran-radio" component={QuranComingSoon} />
+        <Route path="/quran" component={QuranComingSoon} />
         <Route path="/prayer-times"><SafeLazyRoute component={PrayerTimesPage} /></Route>
         <Route path="/prayer-ranks"><Redirect to="/prayer-times?tab=ranks" /></Route>
         <Route path="/qibla"><SafeLazyRoute component={QiblaPage} /></Route>
