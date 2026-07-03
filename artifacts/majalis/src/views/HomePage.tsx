@@ -139,6 +139,13 @@ export default function HomePage({
 
         <IslamicDivider />
 
+        {/* التوحيد — العقيدة أساس الدين */}
+        <SafeHomeSection name="التوحيد">
+          <HomeTawheed />
+        </SafeHomeSection>
+
+        <IslamicDivider />
+
         {/* معاينة حلقات التحفيظ */}
         <SafeHomeSection name="حلقات التحفيظ">
           <HomeQuranCirclesPreview />
@@ -317,12 +324,6 @@ export default function HomePage({
 
         <SafeHomeSection name="عن المجلس العلمي">
           <HomeAboutSection />
-        </SafeHomeSection>
-
-        <IslamicDivider />
-
-        <SafeHomeSection name="التوحيد">
-          <HomeTawheed />
         </SafeHomeSection>
 
         <IslamicDivider />
