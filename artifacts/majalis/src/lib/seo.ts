@@ -129,6 +129,31 @@ function routeForPath(path: string) {
     };
   }
 
+  if (normalized === "/prophets") {
+    return requiredRoute("/prophets");
+  }
+
+  if (normalized.startsWith("/prophets/")) {
+    const prophetSlug = decodeURIComponent(normalized.slice("/prophets/".length));
+    const PROPHET_NAMES: Record<string, string> = {
+      adam: "آدم", idris: "إدريس", nuh: "نوح", hud: "هود",
+      salih: "صالح", ibrahim: "إبراهيم", lut: "لوط", ismail: "إسماعيل",
+      "is-haq": "إسحاق", yaqub: "يعقوب", yusuf: "يوسف", ayyub: "أيوب",
+      shuayb: "شعيب", musa: "موسى", harun: "هارون", "dhul-kifl": "ذو الكفل",
+      dawud: "داود", sulayman: "سليمان", ilyas: "إلياس", "al-yasa": "اليسع",
+      yunus: "يونس", zakariyya: "زكريا", yahya: "يحيى", isa: "عيسى",
+      muhammad: "محمد صلى الله عليه وسلم",
+    };
+    const arabicName = PROPHET_NAMES[prophetSlug] || prophetSlug;
+    return {
+      ...requiredRoute("/prophets"),
+      path: normalized,
+      title: `قصة ${arabicName} عليه السلام | المجلس العلمي`,
+      description: `قصة نبي الله ${arabicName} عليه السلام — نبذة تعريفية وأبرز صفاته ومعجزاته والدروس المستخلصة من المصادر الموثوقة.`,
+      ogType: "article",
+    };
+  }
+
   return requiredRoute("/404");
 }
 

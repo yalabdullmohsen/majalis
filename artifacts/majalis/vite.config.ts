@@ -64,7 +64,11 @@ export default defineConfig({
             if (id.includes("@supabase")) return "supabase";
             if (id.includes("html2canvas") || id.includes("html-to-image")) return "html2canvas";
             if (id.includes("date-fns")) return "date-fns";
-            if (id.includes("react") || id.includes("wouter")) return "vendor";
+            if (id.includes("lucide-react")) return "icons";
+            if (id.includes("@radix-ui")) return "radix";
+            if (id.includes("recharts") || id.includes("d3-") || id.includes("victory")) return "charts";
+            if (id.includes("adhan")) return "adhan";
+            if (id.includes("react") || id.includes("wouter") || id.includes("scheduler")) return "vendor";
           }
         },
       },
