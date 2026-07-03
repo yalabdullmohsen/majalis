@@ -56,6 +56,47 @@ function inferLessonLevel(category?: string): string {
   return "عام";
 }
 
+function buildAutoDescription(u: {
+  sheikhName?: string | null;
+  category?: string | null;
+  activityType?: string | null;
+  day?: string | null;
+  time?: string | null;
+  mosque?: string | null;
+  region?: string | null;
+  governorate?: string | null;
+  hasLiveStream?: boolean;
+  hasRecording?: boolean;
+  sessionCount?: number | null;
+}): string {
+  const activity = normalizeActivityLabel(u.activityType) || "درس";
+  const categoryPart = u.category ? ` في ${u.category}` : "";
+  const sheikhPart = u.sheikhName ? ` يُلقيه ${u.sheikhName}` : "";
+
+  const locationParts: string[] = [];
+  if (u.mosque) locationParts.push(u.mosque);
+  if (u.region) locationParts.push(u.region);
+  if (u.governorate) locationParts.push(u.governorate);
+
+  let schedule = "";
+  if (u.day && locationParts.length > 0) {
+    schedule = ` كل ${u.day} في ${locationParts.join("، ")}`;
+  } else if (u.day) {
+    schedule = ` كل ${u.day}`;
+  } else if (locationParts.length > 0) {
+    schedule = ` في ${locationParts.join("، ")}`;
+  }
+
+  const extras: string[] = [];
+  if (u.hasLiveStream) extras.push("متاح بث مباشر");
+  if (u.hasRecording) extras.push("يوجد تسجيل");
+  if (u.sessionCount && u.sessionCount > 1) extras.push(`${u.sessionCount} لقاء`);
+
+  const extraPart = extras.length > 0 ? ` (${extras.join(" | ")})` : "";
+
+  return `${activity}${categoryPart}${sheikhPart}${schedule}${extraPart}.`;
+}
+
 function StatPill({ label, value }: { label: string; value: number | string }) {
   return (
     <div className="lesson-detail-stat">
@@ -313,12 +354,10 @@ export default function LessonDetailPage({
           )}
         </dl>
 
-        {hasValue(unified.description) && (
-          <div className="lesson-detail-body">
-            <h2>عن الدرس</h2>
-            <p>{cleanDisplayText(unified.description)}</p>
-          </div>
-        )}
+        <div className="lesson-detail-body">
+          <h2>عن الدرس</h2>
+          <p>{cleanDisplayText(unified.description || buildAutoDescription(unified))}</p>
+        </div>
 
         {sheikhBio && (
           <div className="lesson-detail-body">

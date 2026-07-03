@@ -364,14 +364,6 @@ export default function LessonsPage({
         subtitle="جميع الدروس والدورات العلمية — مرتّبة حسب أقرب موعد."
       />
 
-      <div className="lessons-v2-stats">
-        <div className="lessons-v2-stat"><strong>{pageStats.lessons}</strong><span>درس</span></div>
-        <div className="lessons-v2-stat"><strong>{pageStats.courses}</strong><span>دورة</span></div>
-        <div className="lessons-v2-stat"><strong>{pageStats.sheikhs}</strong><span>شيخ</span></div>
-        <div className="lessons-v2-stat"><strong>{pageStats.mosques}</strong><span>مسجد</span></div>
-        <div className="lessons-v2-stat"><strong>{pageStats.lastUpdate}</strong><span>آخر تحديث</span></div>
-      </div>
-
       <div className="lessons-v2-toolbar">
         <div className="kuwait-tabs" role="tablist" aria-label="تبويبات الدروس">
           {(Object.keys(TAB_LABELS) as TabId[]).map((tabId) => (
@@ -459,6 +451,14 @@ export default function LessonsPage({
             setShowSuggestions={setShowSuggestions}
           />
         </aside>
+      </div>
+
+      <div className="lessons-v2-stats">
+        <div className="lessons-v2-stat"><strong>{pageStats.lessons}</strong><span>درس</span></div>
+        <div className="lessons-v2-stat"><strong>{pageStats.courses}</strong><span>دورة</span></div>
+        <div className="lessons-v2-stat"><strong>{pageStats.sheikhs}</strong><span>شيخ</span></div>
+        <div className="lessons-v2-stat"><strong>{pageStats.mosques}</strong><span>مسجد</span></div>
+        <div className="lessons-v2-stat"><strong>{pageStats.lastUpdate}</strong><span>آخر تحديث</span></div>
       </div>
 
       {filtersOpen && (
