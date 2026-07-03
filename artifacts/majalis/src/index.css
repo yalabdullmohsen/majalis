@@ -23,9 +23,22 @@ html {
   --majalis-shadow: 0 22px 70px rgba(36, 31, 24, 0.12);
   --font-primary: "Cairo", "Tajawal", "Segoe UI", Tahoma, system-ui, sans-serif;
   --font-ui: var(--font-primary);
-  --font-display: var(--font-primary);
+  /* خط العرض: Amiri يستحضر طابع الخط العربي الكلاسيكي للعناوين الكبيرة */
+  --font-display: "Amiri", "Cairo", Georgia, serif;
   --font-reading: var(--font-primary);
   --font-body: var(--font-primary);
+  /* خط قرآني عثماني — حصري للنص القرآني فقط، لا يُستخدم لغرض آخر */
+  --font-quran: "Amiri Quran", "Scheherazade New", "KFGQPC Hafs Uthmanic", serif;
+  /* رموز الحركة الهادفة (تحترم prefers-reduced-motion) */
+  --motion-fast:    150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --motion-normal:  250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --motion-spring:  320ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  --motion-slow:    400ms cubic-bezier(0.4, 0, 0.2, 1);
+  --motion-sheet:   350ms cubic-bezier(0.32, 0.72, 0, 1);
+  /* ألوان إضافية للهوية */
+  --majalis-ivory:  #FDF8EF;
+  --majalis-gold-light: #F5E6A3;
+  --majalis-emerald-muted: rgba(31, 110, 84, 0.08);
 }
 
 html[data-theme="dark"] {
@@ -14334,3 +14347,179 @@ html[data-theme="dark"] .home-search-compact {
   border-color: var(--majalis-line, #2a3d33);
 }
 
+
+/* ═══════════════════════════════════════════════════════════
+   نظام الزخرفة الهندسية الإسلامية — GeometricPattern system
+   ═══════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.geo-pattern {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: inherit;
+  opacity: 0.07;
+}
+.geo-pattern svg { width: 100%; height: 100%; }
+
+/* Bottom sheet animation */
+@keyframes sheet-in  { from { transform: translateY(100%); opacity: 0.6; } to { transform: translateY(0); opacity: 1; } }
+@keyframes sheet-out { from { transform: translateY(0);    opacity: 1;   } to { transform: translateY(100%); opacity: 0; } }
+
+.bottom-sheet-overlay {
+  position: fixed; inset: 0; z-index: 400;
+  background: rgba(0,0,0,0.45);
+  display: flex; align-items: flex-end;
+}
+.bottom-sheet {
+  width: 100%; max-height: 92dvh;
+  background: var(--majalis-panel);
+  border-radius: 1.25rem 1.25rem 0 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  animation: sheet-in var(--motion-sheet, 350ms) forwards;
+}
+.bottom-sheet__handle {
+  width: 2.5rem; height: 4px;
+  background: var(--majalis-line);
+  border-radius: 9px;
+  margin: 0.75rem auto 0;
+}
+.bottom-sheet__head {
+  padding: 1rem 1.25rem 0.5rem;
+  font-weight: 700;
+  color: var(--majalis-ink);
+  font-size: 1.05rem;
+  border-bottom: 1px solid var(--majalis-line);
+}
+.bottom-sheet__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr));
+  gap: 0.75rem;
+  padding: 1rem 1rem 2rem;
+}
+.more-sheet-item {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 0.4rem; padding: 0.85rem 0.5rem;
+  border-radius: 0.75rem;
+  background: var(--majalis-parchment);
+  border: 1px solid var(--majalis-line);
+  text-decoration: none;
+  color: var(--majalis-ink);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-align: center;
+  transition: background var(--motion-fast), transform var(--motion-fast);
+  min-height: 44px;
+}
+.more-sheet-item:hover  { background: var(--majalis-sage); transform: translateY(-2px); }
+.more-sheet-item:active { transform: translateY(0); }
+.more-sheet-item__icon {
+  width: 2rem; height: 2rem;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 0.5rem;
+  background: var(--majalis-emerald-muted, rgba(31,110,84,0.1));
+  color: var(--majalis-emerald);
+}
+html[data-theme="dark"] .more-sheet-item  { background: var(--majalis-parchment-deep); }
+html[data-theme="dark"] .more-sheet-item:hover { background: var(--majalis-panel); }
+
+/* Prayer Countdown Page */
+.prayer-countdown-page {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-height: calc(100dvh - var(--mobile-header-h, 4rem) - 4rem);
+  padding: 2rem 1.5rem;
+  position: relative; overflow: hidden;
+}
+.prayer-countdown-page__bg {
+  position: absolute; inset: 0; opacity: 0.04; pointer-events: none;
+}
+.prayer-countdown__next-label {
+  font-size: 0.95rem; color: var(--majalis-ink-soft);
+  letter-spacing: 0.05em; text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.prayer-countdown__next-name {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 8vw, 3.5rem);
+  font-weight: 700; color: var(--majalis-emerald-deep);
+  margin-bottom: 0.25rem; text-align: center;
+}
+.prayer-countdown__timer {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 14vw, 6rem);
+  font-weight: 700; color: var(--majalis-ink);
+  letter-spacing: 0.02em; line-height: 1;
+  margin: 0.5rem 0 1.5rem;
+  font-variant-numeric: tabular-nums;
+}
+.prayer-countdown__prev {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.5rem 1.25rem;
+  border-radius: 2rem;
+  background: var(--majalis-sage);
+  color: var(--majalis-ink-soft);
+  font-size: 0.82rem;
+}
+.prayer-countdown__prev-timer { font-variant-numeric: tabular-nums; }
+.prayer-countdown__slots {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem; width: 100%; max-width: 22rem;
+  margin-top: 2rem;
+}
+.prayer-slot-chip {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 0.6rem 0.5rem; border-radius: 0.75rem;
+  background: var(--majalis-parchment);
+  border: 1px solid var(--majalis-line);
+  font-size: 0.7rem; gap: 0.2rem;
+}
+.prayer-slot-chip--next {
+  background: var(--majalis-emerald); color: #fff;
+  border-color: transparent;
+}
+.prayer-slot-chip__name { font-weight: 600; }
+.prayer-slot-chip__time { opacity: 0.75; font-variant-numeric: tabular-nums; }
+html[data-theme="dark"] .prayer-slot-chip { background: var(--majalis-parchment-deep); }
+
+/* Quran Circles Cards */
+.qc-card {
+  background: var(--majalis-panel); border: 1px solid var(--majalis-line);
+  border-radius: 1rem; overflow: hidden;
+  display: flex; flex-direction: column;
+  transition: box-shadow var(--motion-fast), transform var(--motion-fast);
+}
+.qc-card:hover { box-shadow: var(--majalis-shadow); transform: translateY(-2px); }
+.qc-card__head {
+  background: linear-gradient(135deg, var(--majalis-emerald-deep), var(--majalis-emerald));
+  padding: 1rem 1rem 0.75rem;
+  position: relative; overflow: hidden;
+}
+.qc-card__title { color: #fff; font-weight: 700; font-size: 1rem; margin-bottom: 0.25rem; }
+.qc-card__sheikh { color: rgba(255,255,255,0.8); font-size: 0.8rem; }
+.qc-card__body { padding: 0.9rem 1rem; flex: 1; display: flex; flex-direction: column; gap: 0.5rem; }
+.qc-card__badges { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.qc-badge {
+  padding: 0.2rem 0.6rem; border-radius: 1rem;
+  font-size: 0.68rem; font-weight: 600;
+}
+.qc-badge--level  { background: var(--majalis-sage); color: var(--majalis-emerald-deep); }
+.qc-badge--mode   { background: #eff6ff; color: #1d4ed8; }
+.qc-badge--track  { background: #fef9c3; color: #854d0e; }
+.qc-card__capacity {
+  height: 4px; border-radius: 2px;
+  background: var(--majalis-line); overflow: hidden; margin-top: auto;
+}
+.qc-card__capacity-bar { height: 100%; background: var(--majalis-emerald); border-radius: 2px; }
+.qc-card__footer { padding: 0.75rem 1rem; border-top: 1px solid var(--majalis-line); display: flex; gap: 0.5rem; }
+html[data-theme="dark"] .qc-card { background: var(--majalis-panel); }
+
+/* Display font for major headings */
+.font-display { font-family: var(--font-display) !important; }
