@@ -11,6 +11,8 @@ import SiteFooter from "@/components/SiteFooter";
 import { BottomNavBar } from "@/components/BottomNavBar";
 import { AssistantFloatingWidget } from "@/components/assistant/AssistantFloatingWidget";
 import { AdhanNotificationBar } from "@/components/adhan/AdhanNotificationBar";
+import { AchievementToast } from "@/components/AchievementToast";
+import { useAchievementCheck } from "@/hooks/useAchievementCheck";
 import HomePage from "@/views/HomePage";
 import AboutPage from "@/views/AboutPage";
 import PrivacyPage from "@/views/PrivacyPage";
@@ -371,6 +373,7 @@ function Router() {
 
 function AppShell() {
   const { dir, t } = useLanguage();
+  const { newBadges, dismissBadges } = useAchievementCheck();
   return (
     <WouterRouter base={(import.meta.env.BASE_URL || "/").replace(/\/$/, "")}>
       <div className="app-shell" style={{ minHeight: "100vh", direction: dir }}>
@@ -385,6 +388,9 @@ function AppShell() {
         <SiteFooter />
         <AssistantFloatingWidget />
         <BottomNavBar />
+        {newBadges.length > 0 && (
+          <AchievementToast badges={newBadges} onDismiss={dismissBadges} />
+        )}
       </div>
     </WouterRouter>
   );
