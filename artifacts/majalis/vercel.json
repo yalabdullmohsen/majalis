@@ -112,6 +112,10 @@
       "schedule": "30 6 * * *"
     },
     {
+      "path": "/api/cron/telegram-processor",
+      "schedule": "*/5 * * * *"
+    },
+    {
       "path": "/api/cron/majlis-knowledge-engine",
       "schedule": "5 * * * *"
     },
