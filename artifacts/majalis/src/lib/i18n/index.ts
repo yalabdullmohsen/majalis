@@ -36,7 +36,7 @@ const ar: Messages = {
   "nav.courses": "الدورات العلمية",
   "nav.updates": "آخر المستجدات",
   "nav.search": "البحث",
-  "search.placeholder": "ابحث في المنصة...",
+  "search.placeholder": "ابحث في التطبيق...",
   "common.loading": "جارٍ التحميل...",
   "common.empty": "لا توجد نتائج.",
 };

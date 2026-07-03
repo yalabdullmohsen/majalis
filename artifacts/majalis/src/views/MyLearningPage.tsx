@@ -94,7 +94,7 @@ export default function MyLearningPage() {
               <div key={i} style={{ fontSize: "0.8125rem", padding: "0.25rem 0" }}>{item.title}</div>
             ))
           ) : (
-            <p style={{ fontSize: "0.875rem", color: "var(--ink-soft)" }}>احفظ كتبًا ودروسًا من المنصة</p>
+            <p style={{ fontSize: "0.875rem", color: "var(--ink-soft)" }}>احفظ كتبًا ودروسًا من التطبيق</p>
           )}
         </section>
 

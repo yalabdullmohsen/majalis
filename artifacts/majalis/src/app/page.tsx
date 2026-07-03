@@ -35,7 +35,7 @@ function HomeStatsBar({ stats }: { stats: HomePlatformStats }) {
   ];
 
   return (
-    <section className="home-stats-bar" aria-label="إحصائيات المنصة">
+    <section className="home-stats-bar" aria-label="إحصائيات التطبيق">
       {items.map((item) => (
         <article key={item.label} className="home-stats-bar__item">
           <strong className="home-stats-bar__value">{item.value.toLocaleString("ar-EG")}</strong>

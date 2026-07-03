@@ -106,7 +106,7 @@ export default function CitationPublicPage() {
         <Link href="/" className="flex items-center gap-2 text-emerald-700 dark:text-emerald-400 font-bold text-lg">
           مجالس
         </Link>
-        <span className="text-xs text-gray-400">منصة العلم الشرعي</span>
+        <span className="text-xs text-gray-400">تطبيق العلم الشرعي</span>
       </nav>
 
       {/* بطاقة الاقتباس الرئيسية */}

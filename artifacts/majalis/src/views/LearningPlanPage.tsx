@@ -268,7 +268,7 @@ export default function LearningPlanPage() {
       <PageHeader
         eyebrow="التعلّم الذكي"
         title="خطة تعلّمك الشخصية"
-        subtitle="نبني لك خطة علمية من محتوى المنصة بناءً على مستواك واهتماماتك."
+        subtitle="نبني لك خطة علمية من محتوى التطبيق بناءً على مستواك واهتماماتك."
       />
 
       {step !== "plan" && step !== "loading" && (
