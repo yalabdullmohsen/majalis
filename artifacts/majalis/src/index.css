@@ -9055,6 +9055,9 @@ html[data-theme="dark"] .navbar-login {
   transition: border-color 0.15s, color 0.15s;
 }
 .navbar-lang-btn:hover { border-color: var(--majalis-emerald-deep); color: var(--majalis-emerald-deep); }
+/* نص "بحث" مخفي على الشاشات الصغيرة لتوفير المساحة */
+.navbar-search-hint { display: inline; }
+@media (max-width: 640px) { .navbar-search-hint { display: none; } }
 .navbar-register {
   display: inline-flex;
   align-items: center;
