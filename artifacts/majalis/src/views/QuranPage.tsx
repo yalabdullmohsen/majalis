@@ -65,6 +65,24 @@ function lsSet(key: string, value: unknown) {
   try { localStorage.setItem(key, JSON.stringify(value)); } catch { /* ignore */ }
 }
 
+// ─── نجمة هندسية إسلامية ثمانية الرؤوس — للزوايا الزخرفية ──────────────
+function EightStar({ className }: { className: string }) {
+  return (
+    <svg className={className} viewBox="0 0 28 28" aria-hidden="true" focusable="false">
+      {/* نجمة ثمانية رؤوس — خط رفيع ذهبي */}
+      <path
+        d="M14 1.5 L16 8.5 L22.5 5.5 L19.5 11.8 L26.5 14 L19.5 16.2 L22.5 22.5 L16 19.5 L14 26.5 L12 19.5 L5.5 22.5 L8.5 16.2 L1.5 14 L8.5 11.8 L5.5 5.5 L12 8.5 Z"
+        fill="none"
+        stroke="#B8874A"
+        strokeWidth="1.1"
+        strokeLinejoin="round"
+      />
+      {/* دائرة وسطى صغيرة */}
+      <circle cx="14" cy="14" r="2.5" fill="none" stroke="#B8874A" strokeWidth="0.8" opacity="0.6" />
+    </svg>
+  );
+}
+
 // ─── Mushaf Immersive Reader ───────────────────────────────────────────────
 
 function PageView({ onExit }: { onExit: () => void }) {
@@ -76,6 +94,7 @@ function PageView({ onExit }: { onExit: () => void }) {
   const [activeSrc, setActiveSrc] = useState(() => getMushafPageUrl(ls<number>(PAGE_KEY, 1)));
   const [showChrome, setShowChrome] = useState(true);
   const [showIndex, setShowIndex] = useState(false);
+  const [slideDir, setSlideDir] = useState<"next" | "prev" | "">("");
   const touchStartRef = useRef<{ x: number; y: number } | null>(null);
   const chromTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -105,6 +124,7 @@ function PageView({ onExit }: { onExit: () => void }) {
 
   const go = useCallback(
     (delta: number) => {
+      setSlideDir(delta > 0 ? "next" : "prev");
       setPage((prev) => {
         const next = Math.max(1, Math.min(604, prev + delta));
         lsSet(PAGE_KEY, next);
@@ -229,15 +249,27 @@ function PageView({ onExit }: { onExit: () => void }) {
             </button>
           </div>
         )}
-        <img
-          key={`${activeSrc}-${retryCount}`}
-          src={activeSrc}
-          alt={`صفحة ${page} من المصحف الشريف`}
-          className={`mf-page-img${loaded && !hardError ? " is-loaded" : ""}`}
-          onLoad={() => setLoaded(true)}
-          onError={handleImgError}
-          draggable={false}
-        />
+        {/* غلاف الصورة مع الإطار الذهبي وزوايا النجمة */}
+        <div className="mf-page-wrapper">
+          <EightStar className="mf-corner mf-corner--tl" />
+          <EightStar className="mf-corner mf-corner--tr" />
+          <EightStar className="mf-corner mf-corner--bl" />
+          <EightStar className="mf-corner mf-corner--br" />
+          <img
+            key={`${activeSrc}-${retryCount}`}
+            src={activeSrc}
+            alt={`صفحة ${page} من المصحف الشريف`}
+            className={[
+              "mf-page-img",
+              loaded && !hardError ? "is-loaded" : "",
+              loaded && !hardError && slideDir ? `mf-slide-${slideDir}` : "",
+            ].filter(Boolean).join(" ")}
+            onLoad={() => setLoaded(true)}
+            onError={handleImgError}
+            onAnimationEnd={() => setSlideDir("")}
+            draggable={false}
+          />
+        </div>
       </div>
 
       {/* Bottom navigation bar */}

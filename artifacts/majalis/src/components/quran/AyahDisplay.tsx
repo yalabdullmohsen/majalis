@@ -206,7 +206,8 @@ export function AyahDisplay({
         <p className="qs-surah-header__hint">اضغط مطوّلاً على أي آية للخيارات</p>
       </header>
 
-      {/* ── Clean Mushaf flowing text ── */}
+      {/* ── Clean Mushaf flowing text — wrapped in decorative frame ── */}
+      <div className="qs-mushaf-frame">
       <div
         className="qs-mushaf-body qs-mushaf-clean"
         lang="ar"
@@ -248,6 +249,7 @@ export function AyahDisplay({
           );
         })}
       </div>
+      </div>{/* /qs-mushaf-frame */}
 
       {/* ── Page navigation ── */}
       {totalPages > 1 && (

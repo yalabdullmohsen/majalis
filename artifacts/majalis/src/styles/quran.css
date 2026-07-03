@@ -1678,3 +1678,279 @@ html[data-theme="dark"] .qs-radio-card.is-active { background: #1a1308; }
 .quran-shell--warm .qs-view-tab   { color: #6b4c2a; }
 .quran-shell--warm .qs-view-tab.is-active { background: #c9a070; color: #fff; }
 .quran-shell--warm .ayah-text     { color: #2c1a0e !important; }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   VISUAL REDESIGN — قسم المصحف الشريف (بصري خالص — النص لا يُمس)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ─── لوحة الألوان الجديدة ─────────────────────────────────────────────── */
+:root {
+  --mf-gold:       #B8874A;
+  --mf-gold-soft:  rgba(184,135,74,0.45);
+  --mf-gold-faint: rgba(184,135,74,0.18);
+  --mf-bg-warm:    #1c1408;
+  --mf-ink:        #1A1610;
+  --qs-parchment:  #F8F2E4;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   وضع المصحف الصوري (.mf-*)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* خلفية دافئة داكنة بدل الأسود البارد */
+.mf-shell {
+  background: radial-gradient(ellipse 120% 80% at 50% 30%,
+    #231a0c 0%, #15100a 55%, #0d0b07 100%) !important;
+}
+
+/* ── غلاف الصفحة مع إطار ذهبي مزدوج رفيع ── */
+.mf-page-wrapper {
+  position: relative;
+  display: inline-flex;
+  border: 1px solid var(--mf-gold-soft);
+  box-shadow:
+    inset 0 0 0 3px var(--mf-bg-warm),
+    inset 0 0 0 4px var(--mf-gold-faint),
+    0 16px 80px rgba(0,0,0,0.85),
+    0 4px 20px rgba(0,0,0,0.6);
+  border-radius: 2px;
+}
+
+/* خط داخلي ثانٍ رفيع */
+.mf-page-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border: 1px solid var(--mf-gold-faint);
+  border-radius: 1px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── زوايا هندسية (نجمة ثمانية) ── */
+.mf-corner {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0.8;
+  filter: drop-shadow(0 0 3px rgba(184,135,74,0.4));
+}
+.mf-corner--tl { top: -14px; left:  -14px; }
+.mf-corner--tr { top: -14px; right: -14px; }
+.mf-corner--bl { bottom: -14px; left:  -14px; }
+.mf-corner--br { bottom: -14px; right: -14px; }
+
+/* ── انتقال تقليب الصفحة ── */
+@keyframes mf-slide-next {
+  from { opacity: 0; transform: translateX(-2.5%) scale(0.99); }
+  to   { opacity: 1; transform: translateX(0)     scale(1);    }
+}
+@keyframes mf-slide-prev {
+  from { opacity: 0; transform: translateX(2.5%)  scale(0.99); }
+  to   { opacity: 1; transform: translateX(0)     scale(1);    }
+}
+.mf-page-img.is-loaded.mf-slide-next {
+  animation: mf-slide-next 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.mf-page-img.is-loaded.mf-slide-prev {
+  animation: mf-slide-prev 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .mf-page-img.is-loaded.mf-slide-next,
+  .mf-page-img.is-loaded.mf-slide-prev { animation: none; opacity: 1; }
+}
+
+/* ── تحسين مظهر الهيدر — دفء أكثر ── */
+.mf-header__surah {
+  letter-spacing: 0.03em;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.6);
+}
+.mf-header__page {
+  color: rgba(255,210,140,0.6);
+}
+
+/* ── أزرار التنقل — ذهبي دافئ عند التفاعل ── */
+.mf-nav-btn:hover:not(:disabled) {
+  background: rgba(184,135,74,0.22) !important;
+  border-color: rgba(184,135,74,0.35);
+}
+.mf-chrome-btn:hover {
+  background: rgba(184,135,74,0.18) !important;
+}
+
+/* ── ورقة الفهرس — ألوان دافئة ── */
+.mf-index-sheet       { background: #1c1509; }
+.mf-index-item.is-active { background: rgba(184,135,74,0.14); color: var(--mf-gold); }
+.mf-index-item.is-active .mf-index-item__num { color: rgba(184,135,74,0.7); }
+.mf-index-item.is-active .mf-index-item__meta { color: rgba(184,135,74,0.5); }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   وضع السورة النصي — الإطار والرأس (.qs-*)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── رأس السورة: إزالة الحد البسيط + إضافة خطوط تذهيب ── */
+.qs-surah-header {
+  border-bottom: none;
+  padding-bottom: 1.25rem;
+}
+.qs-surah-header::after {
+  content: '';
+  display: block;
+  margin: 0.75rem auto 0;
+  height: 1px;
+  width: 75%;
+  background: linear-gradient(
+    90deg,
+    transparent   0%,
+    var(--mf-gold-faint) 15%,
+    var(--mf-gold-soft)  50%,
+    var(--mf-gold-faint) 85%,
+    transparent   100%
+  );
+}
+
+/* ── البسملة: فاصلة علوية ── */
+.qs-surah-header__ornament {
+  font-size: 1.75rem;
+  letter-spacing: 0.05em;
+  text-shadow: 0 1px 3px rgba(176,141,46,0.2);
+}
+
+/* ── عنوان السورة: لون حبر دافئ ── */
+.qs-surah-header__title {
+  color: #133d2e;
+  letter-spacing: 0.04em;
+  text-shadow: 0 1px 2px rgba(19,61,46,0.08);
+}
+
+/* ── إطار منطقة النص القرآني (يُحيط بـ qs-mushaf-body فقط) ── */
+.qs-mushaf-frame {
+  position: relative;
+  background: var(--qs-parchment);
+  border-top:    2px solid var(--mf-gold-soft);
+  border-bottom: 2px solid var(--mf-gold-soft);
+  border-left:   1px solid var(--mf-gold-faint);
+  border-right:  1px solid var(--mf-gold-faint);
+  border-radius: 3px;
+  margin: 0 -0.25rem;
+  box-shadow:
+    0 3px 24px rgba(184,135,74,0.07),
+    0 1px 6px  rgba(0,0,0,0.04);
+}
+/* خطان داخليان رفيعان أعلى وأسفل */
+.qs-mushaf-frame::before,
+.qs-mushaf-frame::after {
+  content: '';
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--mf-gold-faint), transparent);
+  pointer-events: none;
+}
+.qs-mushaf-frame::before { top: 4px; }
+.qs-mushaf-frame::after  { bottom: 4px; }
+
+/* لون حبر النص داخل الإطار */
+.qs-mushaf-frame .qs-mushaf-body {
+  color: var(--mf-ink);
+  padding-top:    1.5rem;
+  padding-bottom: 2.25rem;
+}
+
+/* ── أرقام الآيات: دائرة أرق وأخف ── */
+.qs-ayah-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.55em;
+  height: 1.55em;
+  border-radius: 50%;
+  border: 0.8px solid var(--mf-gold-soft);
+  font-size: 0.6em;
+  font-weight: 700;
+  color: var(--mf-gold);
+  background: rgba(184,135,74,0.07);
+  vertical-align: middle;
+  margin: 0 0.2em;
+  user-select: none;
+  -webkit-user-select: none;
+  font-family: "Tajawal", "IBM Plex Sans Arabic", system-ui, sans-serif;
+  line-height: 1;
+}
+
+/* ── شريط التحكم — تحسين بصري ── */
+.qs-controls-row {
+  gap: 0.4rem;
+  padding: 0.5rem 0;
+}
+.qs-ctrl-btn {
+  transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
+}
+.qs-ctrl-btn:hover {
+  border-color: var(--mf-gold-soft);
+  box-shadow: 0 0 0 1px var(--mf-gold-faint);
+}
+
+/* ── لافتة الاستئناف — ألوان منسجمة ── */
+.qs-resume-banner {
+  border: 1px solid rgba(184,135,74,0.25);
+  background: linear-gradient(135deg, #f8f5ec, #f2ead8);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   تكيّف الأوضاع (ليلي / دافئ) مع التصميم الجديد
+   ═══════════════════════════════════════════════════════════════════════════ */
+.quran-shell--night .qs-mushaf-frame {
+  background: #111009;
+  border-color: rgba(184,135,74,0.28);
+}
+.quran-shell--night .qs-mushaf-frame::before,
+.quran-shell--night .qs-mushaf-frame::after {
+  background: linear-gradient(90deg, transparent, rgba(184,135,74,0.12), transparent);
+}
+.quran-shell--night .qs-mushaf-frame .qs-mushaf-body {
+  color: #e8d5b0;
+}
+.quran-shell--night .qs-surah-header::after {
+  background: linear-gradient(90deg, transparent, rgba(184,135,74,0.28), transparent);
+}
+.quran-shell--night .qs-surah-header__title { color: #6ee7b7; text-shadow: none; }
+.quran-shell--night .qs-ayah-num {
+  background: rgba(184,135,74,0.1);
+  border-color: rgba(184,135,74,0.3);
+}
+
+.quran-shell--warm .qs-mushaf-frame {
+  background: #fdf0d8;
+  border-top-color:    rgba(184,135,74,0.55);
+  border-bottom-color: rgba(184,135,74,0.55);
+}
+.quran-shell--warm .qs-mushaf-frame .qs-mushaf-body {
+  color: #2c1a0e;
+}
+.quran-shell--warm .qs-surah-header__title { color: #5a2d00; }
+.quran-shell--warm .qs-ayah-num {
+  color: #8B6914;
+  border-color: rgba(139,105,20,0.4);
+  background: rgba(139,105,20,0.08);
+}
+
+/* ── الاستجابة — الإطار يتقلص بهدوء على الشاشات الصغيرة ── */
+@media (max-width: 480px) {
+  .mf-corner { width: 20px; height: 20px; }
+  .mf-corner--tl { top: -10px; left:  -10px; }
+  .mf-corner--tr { top: -10px; right: -10px; }
+  .mf-corner--bl { bottom: -10px; left:  -10px; }
+  .mf-corner--br { bottom: -10px; right: -10px; }
+  .qs-mushaf-frame { margin: 0; }
+}
+@media (min-width: 900px) {
+  .mf-corner { width: 34px; height: 34px; }
+  .mf-corner--tl { top: -17px; left:  -17px; }
+  .mf-corner--tr { top: -17px; right: -17px; }
+  .mf-corner--bl { bottom: -17px; left:  -17px; }
+  .mf-corner--br { bottom: -17px; right: -17px; }
+}
