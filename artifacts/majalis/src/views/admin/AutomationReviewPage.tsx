@@ -190,7 +190,7 @@ function AutomationReviewContent() {
               <article key={d.id} style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.5rem", padding: "0.875rem" }}>
                 <div style={{ display: "grid", gridTemplateColumns: "minmax(120px, 160px) 1fr", gap: "0.875rem" }}>
                   {d.image_url ? (
-                    <img src={d.image_url} alt="إعلان" style={{ width: "100%", borderRadius: "0.375rem", objectFit: "cover", maxHeight: "180px" }} />
+                    <img src={d.image_url} alt="إعلان" loading="lazy" decoding="async" style={{ width: "100%", borderRadius: "0.375rem", objectFit: "cover", maxHeight: "180px" }} />
                   ) : (
                     <div style={{ background: C.parchmentDeep, borderRadius: "0.375rem", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.75rem", color: C.inkSoft, minHeight: "100px" }}>
                       بدون صورة

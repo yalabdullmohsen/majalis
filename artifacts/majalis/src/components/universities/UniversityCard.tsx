@@ -25,7 +25,7 @@ export function UniversityCard({ university: u, compact = false }: Props) {
       {/* رأس البطاقة */}
       <div className="bg-gradient-to-l from-emerald-700 to-emerald-500 px-4 py-3 flex items-center gap-3">
         {u.logo_url ? (
-          <img src={u.logo_url} alt={u.name_ar} className="w-10 h-10 rounded-full bg-white object-contain" />
+          <img src={u.logo_url} alt={u.name_ar} loading="lazy" decoding="async" className="w-10 h-10 rounded-full bg-white object-contain" />
         ) : (
           <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-white text-lg font-bold">
             {u.name_ar[0]}

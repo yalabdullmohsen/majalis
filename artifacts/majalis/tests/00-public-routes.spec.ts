@@ -42,6 +42,7 @@ const PUBLIC_ROUTES: Array<{ href: string; label: string }> = [
   { href: "/occasions",      label: "المناسبات" },
   { href: "/calendar",       label: "التقويم" },
   { href: "/quiz",           label: "المسابقات" },
+  { href: "/prophets",       label: "قصص الأنبياء" },
   { href: "/search",         label: "البحث" },
   { href: "/settings",       label: "الإعدادات" },
   { href: "/about",          label: "عن المنصة" },
