@@ -50,6 +50,7 @@ const TAFSIR_KEY = "mj-quran-tafsir-v3";
 const PAGE_KEY   = "mj-quran-page-v1";
 const JUZ_KEY    = "mj-quran-juz-v1";
 const FS_KEY     = "mj-quran-fontsize-v1";
+const NIGHT_KEY  = "mj-quran-night-v1";
 
 function ls<T>(key: string, fallback: T): T {
   try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; }
@@ -541,6 +542,7 @@ export default function QuranPage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const [fontScale, setFontScale] = useState(() => ls<number>(FS_KEY, 26));
+  const [nightMode, setNightMode] = useState(() => ls<boolean>(NIGHT_KEY, false));
   const [showAyahNumbers, setShowAyahNumbers] = useState(true);
 
   const [tafsirId, setTafsirId] = useState<TafsirId>(() => {
@@ -618,8 +620,14 @@ export default function QuranPage() {
 
   const currentQiraat = QIRAAT_LIST.find((q) => q.id === qiraatId);
 
+  const toggleNight = useCallback(() => {
+    setNightMode((v) => { lsSet(NIGHT_KEY, !v); return !v; });
+  }, []);
+
   return (
-    <div className="quran-shell">
+    <div className={`quran-shell${nightMode ? " quran-shell--night" : ""}`}
+      style={nightMode ? { background: "#0d1117", color: "#e8d5b0", minHeight: "100vh" } : undefined}
+    >
       {/* Sub-navigation */}
       <nav className="qs-subnav" aria-label="أقسام القرآن">
         <Link href="/quran" className="qs-subnav__link is-active">المصحف</Link>
@@ -681,6 +689,15 @@ export default function QuranPage() {
               aria-label={showSearch ? "إغلاق البحث" : "بحث في القرآن"}
             >
               {showSearch ? "✕" : "🔍"} بحث
+            </button>
+            <button
+              type="button"
+              className="qs-ctrl-btn"
+              onClick={toggleNight}
+              aria-label={nightMode ? "الوضع النهاري" : "الوضع الليلي"}
+              title={nightMode ? "الوضع النهاري" : "الوضع الليلي"}
+            >
+              {nightMode ? "☀️" : "🌙"}
             </button>
 
             {/* Qiraat selector — compact */}

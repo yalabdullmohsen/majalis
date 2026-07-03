@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useRef, type ComponentType } from "react";
+import { Suspense, useEffect, useRef, useState, type ComponentType } from "react";
 import { Redirect, Route, Switch, Router as WouterRouter, useLocation, useRoute } from "wouter";
 import { AuthProvider } from "@/components/AuthProvider";
 import { FontPreferenceProvider } from "@/components/FontPreferenceProvider";
@@ -13,6 +13,7 @@ import { AssistantFloatingWidget } from "@/components/assistant/AssistantFloatin
 import { AdhanNotificationBar } from "@/components/adhan/AdhanNotificationBar";
 import { AchievementToast } from "@/components/AchievementToast";
 import { useAchievementCheck } from "@/hooks/useAchievementCheck";
+import { GlobalSearchModal } from "@/components/GlobalSearchModal";
 import HomePage from "@/views/HomePage";
 import AboutPage from "@/views/AboutPage";
 import PrivacyPage from "@/views/PrivacyPage";
@@ -374,6 +375,24 @@ function Router() {
 function AppShell() {
   const { dir, t } = useLanguage();
   const { newBadges, dismissBadges } = useAchievementCheck();
+  const [searchOpen, setSearchOpen] = useState(false);
+
+  useEffect(() => {
+    const keyHandler = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        setSearchOpen((v) => !v);
+      }
+    };
+    const evtHandler = () => setSearchOpen(true);
+    window.addEventListener("keydown", keyHandler);
+    window.addEventListener("global-search-open", evtHandler);
+    return () => {
+      window.removeEventListener("keydown", keyHandler);
+      window.removeEventListener("global-search-open", evtHandler);
+    };
+  }, []);
+
   return (
     <WouterRouter base={(import.meta.env.BASE_URL || "/").replace(/\/$/, "")}>
       <div className="app-shell" style={{ minHeight: "100vh", direction: dir }}>
@@ -391,6 +410,7 @@ function AppShell() {
         {newBadges.length > 0 && (
           <AchievementToast badges={newBadges} onDismiss={dismissBadges} />
         )}
+        {searchOpen && <GlobalSearchModal onClose={() => setSearchOpen(false)} />}
       </div>
     </WouterRouter>
   );

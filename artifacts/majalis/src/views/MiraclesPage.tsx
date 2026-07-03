@@ -9,6 +9,25 @@ import { safeLoadEffect } from "@/lib/safe-load";
 
 const CATEGORIES = MIRACLE_CATEGORIES;
 const SOURCE_TYPES = ["الكل", "قرآن", "سنة"];
+
+const CATEGORY_ICONS: Record<string, string> = {
+  "علم الأحياء": "🧬",
+  "علم الفلك": "🌌",
+  "علم الأرض": "🌍",
+  "الطب": "⚕️",
+  "الفيزياء": "⚛️",
+  "علم البحار": "🌊",
+  "علم الأجنة": "🔬",
+  "الرياضيات": "📐",
+  "التاريخ": "📜",
+  "الإعجاز اللغوي": "📖",
+};
+
+const SOURCE_COLORS: Record<string, string> = {
+  "قرآن": "#1a5c35",
+  "سنة":  "#78350f",
+};
+
 const DISCLAIMER =
   "تنبيه: الملاحظات العلمية قد تتطور مع البحث، والقرآن لا يُبنى على نظريات غير مستقرة؛ نعرض ما يُستدل به للتفكر لا كحكم علمي نهائي.";
 
@@ -86,37 +105,61 @@ export default function MiraclesPage({
         emptyText="لا توجد بيانات حالياً"
       >
         <div className="ds-grid">
-          {items.map((item: any) => (
-            <article key={item.id} className="miracle-item">
-              <div className="miracle-item__head">
-                <p className="miracle-item__title">{item.title}</p>
-                <div className="miracle-item__tags">
-                  {item.category && <span className="ds-badge">{item.category}</span>}
-                  {item.source_type && <span className="ds-badge">{item.source_type}</span>}
+          {items.map((item: any) => {
+            const icon = CATEGORY_ICONS[item.category] ?? "✨";
+            const borderColor = SOURCE_COLORS[item.source_type] ?? "#c9a84c";
+            const isExpanded = expanded === item.id;
+            const bodyText: string = item.body ?? "";
+            const preview = bodyText.slice(0, 220);
+            return (
+              <article
+                key={item.id}
+                className="miracle-item"
+                style={{ borderRight: `4px solid ${borderColor}`, position: "relative" }}
+              >
+                <div className="miracle-item__head" style={{ display: "flex", gap: "0.75rem", alignItems: "flex-start" }}>
+                  <span style={{ fontSize: "1.8rem", lineHeight: 1, flexShrink: 0 }}>{icon}</span>
+                  <div style={{ flex: 1 }}>
+                    <p className="miracle-item__title">{item.title}</p>
+                    <div className="miracle-item__tags">
+                      {item.category && (
+                        <span className="ds-badge" style={{ background: `${borderColor}18`, color: borderColor, border: `1px solid ${borderColor}40` }}>
+                          {item.category}
+                        </span>
+                      )}
+                      {item.source_type && <span className="ds-badge">{item.source_type}</span>}
+                    </div>
+                  </div>
                 </div>
-              </div>
-              {item.reference && <p className="miracle-item__ref">{item.reference}</p>}
-              {item.body && (
-                <>
-                  <p className="miracle-item__body">
-                    {expanded === item.id ? item.body : `${item.body.slice(0, 200)}${item.body.length > 200 ? "..." : ""}`}
+                {item.reference && (
+                  <p className="miracle-item__ref" style={{ fontFamily: "serif", fontSize: "1rem", color: "#1a5c35", marginTop: "0.5rem" }}>
+                    ﴾ {item.reference} ﴿
                   </p>
-                  {item.body.length > 200 && (
-                    <button
-                      type="button"
-                      className="miracle-item__toggle"
-                      onClick={() => setExpanded(expanded === item.id ? null : item.id)}
-                    >
-                      {expanded === item.id ? "عرض أقل" : "اقرأ المزيد"}
-                    </button>
-                  )}
-                </>
-              )}
-              {item.scholarly_source && (
-                <p className="miracle-item__source">المرجع: {item.scholarly_source}</p>
-              )}
-            </article>
-          ))}
+                )}
+                {bodyText && (
+                  <>
+                    <p className="miracle-item__body">
+                      {isExpanded ? bodyText : `${preview}${bodyText.length > 220 ? "..." : ""}`}
+                    </p>
+                    {bodyText.length > 220 && (
+                      <button
+                        type="button"
+                        className="miracle-item__toggle"
+                        onClick={() => setExpanded(isExpanded ? null : item.id)}
+                      >
+                        {isExpanded ? "▲ عرض أقل" : "▼ اقرأ المزيد"}
+                      </button>
+                    )}
+                  </>
+                )}
+                {item.scholarly_source && (
+                  <p className="miracle-item__source" style={{ marginTop: "0.5rem", fontSize: "0.78rem", color: "#78716c" }}>
+                    📚 {item.scholarly_source}
+                  </p>
+                )}
+              </article>
+            );
+          })}
         </div>
       </AsyncDataView>
 
