@@ -1669,3 +1669,12 @@ html[data-theme="dark"] .qs-radio-card.is-active { background: #1a1308; }
 .quran-shell--night .ayah-text { color: #e8d5b0; font-family: "Amiri Quran", "Scheherazade New", serif; }
 .quran-shell--night .ayah-item:hover { background: rgba(255,255,255,0.04); }
 .quran-shell--night .qs-source-note { color: #4a5568; }
+
+/* وضع الورقة الدافئة (Warm Paper mode) */
+.quran-shell--warm { background: #fdf3e3 !important; color: #3d2b1f !important; }
+.quran-shell--warm .qs-sidebar    { background: #f5e8d0; border-color: #d4b896; }
+.quran-shell--warm .qs-subnav     { background: #f0dcc0; border-color: #d4b896; }
+.quran-shell--warm .qs-ctrl-btn   { background: #f0dcc0; border-color: #d4b896; color: #4a3020; }
+.quran-shell--warm .qs-view-tab   { color: #6b4c2a; }
+.quran-shell--warm .qs-view-tab.is-active { background: #c9a070; color: #fff; }
+.quran-shell--warm .ayah-text     { color: #2c1a0e !important; }

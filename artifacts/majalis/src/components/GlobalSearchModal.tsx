@@ -102,7 +102,7 @@ export function GlobalSearchModal({ onClose }: Props) {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleKey}
-            placeholder="ابحث في المنصة — أحاديث، دروس، كتب، فتاوى..."
+            placeholder="ابحث في التطبيق — أحاديث، دروس، كتب، فتاوى..."
             style={{
               flex: 1, border: "none", outline: "none",
               fontSize: "1rem", background: "transparent",

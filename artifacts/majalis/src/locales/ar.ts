@@ -91,7 +91,7 @@ export const ar = {
   // ── User stats ──
   stats_eyebrow: "حسابك",
   stats_greeting: "أهلاً،",
-  stats_subtitle: "ملخص نشاطك وإحصاءاتك على المنصة.",
+  stats_subtitle: "ملخص نشاطك وإحصاءاتك على التطبيق.",
   stats_tasbih: "الأذكار والتسبيح",
   stats_quran: "القرآن الكريم",
   stats_lessons: "الدروس العلمية",
