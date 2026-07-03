@@ -20,6 +20,7 @@ export function CompareBar() {
                 text-emerald-800 dark:text-emerald-300 text-xs px-2 py-1 rounded-full">
               {u.name_ar.slice(0, 25)}{u.name_ar.length > 25 ? "…" : ""}
               <button type="button" onClick={() => removeFromCompare(u.slug)}
+                aria-label={`إزالة ${u.name_ar} من المقارنة`}
                 className="text-emerald-600 hover:text-red-500 font-bold ml-0.5">×</button>
             </span>
           ))}
