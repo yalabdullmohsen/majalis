@@ -16,6 +16,8 @@ import { arSA } from "date-fns/locale";
 import { getUnifiedActiveLessons } from "@/lib/lessons-service";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 import { PageHeader, Loading } from "@/components/ui-common";
+import { HijriSacredMonthBanner } from "@/components/HijriSacredMonthBanner";
+import { getHijriDateString } from "@/lib/hijri-utils";
 
 type ViewMode = "month" | "week" | "day";
 
@@ -123,8 +125,9 @@ export default function CalendarPage() {
 
   return (
     <div className="page-shell calendar-page">
+      <HijriSacredMonthBanner />
       <PageHeader
-        eyebrow="التقويم العلمي"
+        eyebrow={getHijriDateString() || "التقويم العلمي"}
         title="تقويم الدروس"
         subtitle="عرض شهري وأسبوعي ويومي للدروس والدورات."
       />

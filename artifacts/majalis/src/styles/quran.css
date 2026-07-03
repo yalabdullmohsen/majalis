@@ -1652,3 +1652,29 @@ html[data-theme="dark"] .qs-radio-card.is-active { background: #1a1308; }
 }
 
 /* ── Dark-mode already correct (shell is always dark) ───────────────────── */
+
+/* ── Night Mode ─────────────────────────────────────────────────────────── */
+.quran-shell--night .qs-controls-row { background: #161b22; border-color: #30363d; }
+.quran-shell--night .qs-ctrl-btn { background: #21262d; color: #c9d1d9; border-color: #30363d; }
+.quran-shell--night .qs-ctrl-btn:hover { background: #30363d; }
+.quran-shell--night .qs-view-tabs { background: #161b22; border-color: #30363d; }
+.quran-shell--night .qs-view-tab { color: #8b949e; }
+.quran-shell--night .qs-view-tab.is-active { background: #1a5c35; color: #fff; }
+.quran-shell--night .qs-sidebar { background: #161b22; border-color: #30363d; }
+.quran-shell--night .qs-subnav { background: #0d1117; border-color: #21262d; }
+.quran-shell--night .qs-subnav__link { color: #8b949e; }
+.quran-shell--night .qs-subnav__link.is-active { color: #e8d5b0; }
+.quran-shell--night .qs-resume-banner { background: #1a2332; border-color: #30363d; color: #c9d1d9; }
+.quran-shell--night .ayah-display { background: transparent; }
+.quran-shell--night .ayah-text { color: #e8d5b0; font-family: "Amiri Quran", "Scheherazade New", serif; }
+.quran-shell--night .ayah-item:hover { background: rgba(255,255,255,0.04); }
+.quran-shell--night .qs-source-note { color: #4a5568; }
+
+/* وضع الورقة الدافئة (Warm Paper mode) */
+.quran-shell--warm { background: #fdf3e3 !important; color: #3d2b1f !important; }
+.quran-shell--warm .qs-sidebar    { background: #f5e8d0; border-color: #d4b896; }
+.quran-shell--warm .qs-subnav     { background: #f0dcc0; border-color: #d4b896; }
+.quran-shell--warm .qs-ctrl-btn   { background: #f0dcc0; border-color: #d4b896; color: #4a3020; }
+.quran-shell--warm .qs-view-tab   { color: #6b4c2a; }
+.quran-shell--warm .qs-view-tab.is-active { background: #c9a070; color: #fff; }
+.quran-shell--warm .ayah-text     { color: #2c1a0e !important; }

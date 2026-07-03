@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useParams, useLocation } from "wouter";
 import { searchEverything, type SearchResults } from "@/lib/supabase";
 import { searchDemoContent } from "@/lib/demo-content";
@@ -21,6 +21,7 @@ import {
   trackSearchClick,
   type IntelligentSearchResult,
 } from "@/lib/scholarly-intelligence-service";
+import { normalizeArabic } from "@/lib/arabic-search";
 
 const EMPTY: SearchResults = {
   lessons: [],
@@ -164,17 +165,21 @@ export default function SearchPage() {
   const [responseMs, setResponseMs] = useState<number | null>(null);
   const [showFilters, setShowFilters] = useState(false);
   const [filters, setFilters] = useState({ type: "", author: "", status: "", language: "" });
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const runSearch = async (query: string) => {
-    if (!query.trim()) {
+  const runSearch = async (rawQuery: string) => {
+    if (!rawQuery.trim()) {
       setResults(EMPTY);
       setIntelligentResults([]);
       return;
     }
 
+    // توحيد النص العربي: الهمزات والتاء المربوطة والتشكيل
+    const query = normalizeArabic(rawQuery) || rawQuery.trim();
+
     setLoading(true);
-    addSearchHistory(query);
-    void trackSearchQuery(query);
+    addSearchHistory(rawQuery);
+    void trackSearchQuery(rawQuery);
 
     try {
       const intel = await intelligentSearch(query, {
@@ -253,6 +258,17 @@ export default function SearchPage() {
     if (t) navigate(`/search/${encodeURIComponent(t)}`);
   };
 
+  const handleTermChange = (value: string) => {
+    setTerm(value);
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    if (value.trim().length >= 2) {
+      debounceRef.current = setTimeout(() => runSearch(value), 280);
+    } else if (!value.trim()) {
+      setResults(EMPTY);
+      setIntelligentResults([]);
+    }
+  };
+
   const localExtra = q.trim() ? searchLocalExtensions(q) : { occasions: [], nawawi: [], quran: [] };
 
   const intelligentTotal = intelligentResults.length;
@@ -289,7 +305,7 @@ export default function SearchPage() {
       >
         <SearchSuggestions
           value={term}
-          onChange={setTerm}
+          onChange={handleTermChange}
           onSubmit={submitSearch}
           placeholder="ابحث في القرآن والحديث والفتاوى والدروس والكتب..."
         />

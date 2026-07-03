@@ -21,7 +21,7 @@ const FOOTER_GROUPS = [
     ],
   },
   {
-    title: "المنصة",
+    title: "التطبيق",
     links: [
       { href: "/about", label: "من نحن" },
       { href: "/contact", label: "تواصل معنا" },
@@ -39,7 +39,7 @@ export function SiteFooter() {
           <img src="/logo.png" alt="" width={40} height={40} className="site-footer-logo" aria-hidden="true" />
           <div>
             <strong>المجلس العلمي</strong>
-            <p>منصة علمية شرعية للدروس والعبادة والمحتوى اليومي.</p>
+            <p>تطبيق علمي شرعي للدروس والعبادة والمحتوى اليومي.</p>
             <p className="site-footer-email">
               <a href="mailto:yalabdullmohsen1@gmail.com">yalabdullmohsen1@gmail.com</a>
             </p>

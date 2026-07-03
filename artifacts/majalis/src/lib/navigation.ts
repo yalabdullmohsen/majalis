@@ -61,7 +61,7 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
   // عام
   { href: "/search",        label: "البحث" },
   { href: "/settings",      label: "الإعدادات" },
-  { href: "/about",         label: "عن المنصة" },
+  { href: "/about",         label: "عن التطبيق" },
 ];
 
 /** مجموعة فرعية للقائمة العلوية (top navbar) — مشتقة من PUBLIC_NAV_ITEMS */
@@ -95,9 +95,13 @@ export const NAV_GROUPS: NavGroup[] = [
       { href: "/hadith", label: "الأحاديث الصحيحة" },
       { href: "/stories", label: "القصص الإسلامية" },
       { href: "/prophets", label: "قصص الأنبياء" },
+      { href: "/miracles", label: "المعجزات" },
       { href: "/qa", label: "الأسئلة التعليمية" },
-      { href: "/seerah", label: "السيرة النبوية" },
-      { href: "/kuwait-lessons", label: "دروس المشايخ" },
+      { href: "/assistant", label: "المساعد العلمي" },
+      { href: "/knowledge-graph", label: "خارطة المعرفة الإسلامية" },
+      { href: "/scholarly-research", label: "الباحث الشرعي" },
+      { href: "/universities", label: "دليل الجامعات" },
+      { href: "/institutions", label: "دليل المؤسسات" },
     ],
   },
   {
@@ -171,6 +175,12 @@ export const MOBILE_MORE_NAV = [
   { href: "/muezzins",         label: "مكتبة المؤذنين" },
   { href: "/adhan-settings",   label: "إعدادات الأذان" },
   { href: "/quiz",             label: "لعبة سؤال وجواب" },
+  { href: "/miracles",         label: "المعجزات" },
+  { href: "/assistant",        label: "المساعد العلمي" },
+  { href: "/knowledge-graph",  label: "خارطة المعرفة" },
+  { href: "/universities",     label: "دليل الجامعات" },
+  { href: "/flashcards",       label: "بطاقات المراجعة" },
+  { href: "/learning-plan",    label: "خطة التعلّم" },
   // عام
   { href: "/settings",         label: "الإعدادات" },
   { href: "/upload",           label: "رفع أذان أو درس" },
@@ -247,7 +257,7 @@ export const HOME_MORE_SECTIONS = [
   { href: "/seerah", title: "السيرة النبوية", description: "حياة النبي محمد ﷺ من المولد إلى الوفاة" },
   { href: "/annual-courses", title: "الدورات العلمية", description: "برامج ودورات سنوية" },
   { href: "/updates", title: "آخر المستجدات", description: "قرارات وفتاوى ودروس جديدة" },
-  { href: "/assistant", title: "المساعد العلمي", description: "إرشاد داخل المنصة" },
+  { href: "/assistant", title: "المساعد العلمي", description: "إرشاد داخل التطبيق" },
   { href: "/library", title: "المكتبة", description: "كتب ومتون" },
   { href: "/learning/paths", title: "المسارات العلمية", description: "تعلم منظم من المبتدئ للمتقدم" },
   { href: "/my-learning", title: "لوحتي التعليمية", description: "تقدمك وإنجازاتك" },

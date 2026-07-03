@@ -1,13 +1,13 @@
 "use client";
 
 import { Link, useLocation } from "wouter";
-import { BookOpen, GraduationCap, Home, Menu, Sparkles } from "lucide-react";
+import { BookOpen, GraduationCap, Home, Menu, Moon } from "lucide-react";
 
 const TABS = [
-  { href: "/",          label: "الرئيسية", Icon: Home },
-  { href: "/lessons",   label: "الدروس",   Icon: GraduationCap },
-  { href: "/quran",     label: "القرآن",   Icon: BookOpen },
-  { href: "/assistant", label: "المساعد",  Icon: Sparkles },
+  { href: "/",                 label: "الرئيسية", Icon: Home },
+  { href: "/lessons",          label: "الدروس",   Icon: GraduationCap },
+  { href: "/quran",            label: "القرآن",   Icon: BookOpen },
+  { href: "/prayer-countdown", label: "الصلاة",   Icon: Moon },
 ] as const;
 
 export function BottomNavBar() {
@@ -43,6 +43,7 @@ export function BottomNavBar() {
         onClick={openSideNav}
         aria-label="القائمة الرئيسية"
         aria-haspopup="dialog"
+        style={{ marginInlineStart: "auto" }}
       >
         <span className="bottom-nav__tab-icon">
           <Menu size={22} strokeWidth={1.8} aria-hidden="true" />

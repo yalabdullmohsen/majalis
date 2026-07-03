@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useRef, type ComponentType } from "react";
+import { Suspense, useEffect, useRef, useState, type ComponentType } from "react";
 import { Redirect, Route, Switch, Router as WouterRouter, useLocation, useRoute } from "wouter";
 import { AuthProvider } from "@/components/AuthProvider";
 import { FontPreferenceProvider } from "@/components/FontPreferenceProvider";
@@ -11,6 +11,9 @@ import SiteFooter from "@/components/SiteFooter";
 import { BottomNavBar } from "@/components/BottomNavBar";
 import { AssistantFloatingWidget } from "@/components/assistant/AssistantFloatingWidget";
 import { AdhanNotificationBar } from "@/components/adhan/AdhanNotificationBar";
+import { AchievementToast } from "@/components/AchievementToast";
+import { useAchievementCheck } from "@/hooks/useAchievementCheck";
+import { GlobalSearchModal } from "@/components/GlobalSearchModal";
 import HomePage from "@/views/HomePage";
 import AboutPage from "@/views/AboutPage";
 import PrivacyPage from "@/views/PrivacyPage";
@@ -36,6 +39,7 @@ const ScientificAnnouncementDetailPage = lazy(() => import("@/views/ScientificAn
 const LibraryPage = lazy(() => import("@/views/LibraryPage"));
 const LibraryDetailPage = lazy(() => import("@/views/LibraryDetailPage"));
 const MiraclesPage = lazy(() => import("@/views/MiraclesPage"));
+const QuranCirclesPage = lazy(() => import("@/views/QuranCirclesPage"));
 const FawaidPage = lazy(() => import("@/views/FawaidPage"));
 const HadithPage = lazy(() => import("@/views/HadithPage"));
 const StoriesPage = lazy(() => import("@/views/StoriesPage"));
@@ -56,6 +60,7 @@ const SurahStoryDetailPage = lazy(() =>
   import("@/views/SurahStoriesPage").then((m) => ({ default: m.SurahStoryDetailPage })),
 );
 const PrayerTimesPage = lazy(() => import("@/views/PrayerTimesPage"));
+const PrayerCountdownPage = lazy(() => import("@/views/PrayerCountdownPage"));
 const PrayerRanksPage = lazy(() => import("@/views/PrayerRanksPage"));
 const QiblaPage = lazy(() => import("@/views/QiblaPage"));
 const TasbihPage = lazy(() => import("@/views/TasbihPage"));
@@ -225,6 +230,7 @@ function Router() {
       <Route path="/library/:id"><SafeLazyRoute component={LibraryDetailPage} /></Route>
       <Route path="/library"><SafeLazyRoute component={LibraryPage} /></Route>
       <Route path="/miracles"><SafeLazyRoute component={MiraclesPage} /></Route>
+      <Route path="/quran-circles"><SafeLazyRoute component={QuranCirclesPage} /></Route>
       <Route path="/fawaid"><SafeLazyRoute component={FawaidPage} /></Route>
       <Route path="/hadith"><SafeLazyRoute component={HadithPage} /></Route>
       <Route path="/stories"><SafeLazyRoute component={StoriesPage} /></Route>
@@ -299,6 +305,7 @@ function Router() {
       <Route path="/quran/surah-stories"><SafeLazyRoute component={SurahStoriesPage} /></Route>
       <Route path="/quran"><SafeLazyRoute component={QuranPage} /></Route>
       <Route path="/prayer-times"><SafeLazyRoute component={PrayerTimesPage} /></Route>
+      <Route path="/prayer-countdown"><SafeLazyRoute component={PrayerCountdownPage} /></Route>
       <Route path="/prayer-ranks"><SafeLazyRoute component={PrayerRanksPage} /></Route>
       <Route path="/adhan-settings"><SafeLazyRoute component={AdhanSettingsPage} /></Route>
       <Route path="/muezzins/favorites"><SafeLazyRoute component={MuezzinFavoritesPage} /></Route>
@@ -371,6 +378,25 @@ function Router() {
 
 function AppShell() {
   const { dir, t } = useLanguage();
+  const { newBadges, dismissBadges } = useAchievementCheck();
+  const [searchOpen, setSearchOpen] = useState(false);
+
+  useEffect(() => {
+    const keyHandler = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        setSearchOpen((v) => !v);
+      }
+    };
+    const evtHandler = () => setSearchOpen(true);
+    window.addEventListener("keydown", keyHandler);
+    window.addEventListener("global-search-open", evtHandler);
+    return () => {
+      window.removeEventListener("keydown", keyHandler);
+      window.removeEventListener("global-search-open", evtHandler);
+    };
+  }, []);
+
   return (
     <WouterRouter base={(import.meta.env.BASE_URL || "/").replace(/\/$/, "")}>
       <div className="app-shell" style={{ minHeight: "100vh", direction: dir }}>
@@ -385,6 +411,10 @@ function AppShell() {
         <SiteFooter />
         <AssistantFloatingWidget />
         <BottomNavBar />
+        {newBadges.length > 0 && (
+          <AchievementToast badges={newBadges} onDismiss={dismissBadges} />
+        )}
+        {searchOpen && <GlobalSearchModal onClose={() => setSearchOpen(false)} />}
       </div>
     </WouterRouter>
   );
