@@ -39,7 +39,9 @@ function ProgressRing({
         goalReached ? "tc-ring-btn--done" : "",
       ].filter(Boolean).join(" ")}
       onClick={onClick}
+      onPointerDown={(e) => e.currentTarget.setPointerCapture(e.pointerId)}
       aria-label={`${count} — اضغط للتسبيح`}
+      style={{ touchAction: "manipulation", userSelect: "none" }}
     >
       <svg viewBox="0 0 160 160" className="tc-ring-svg" aria-hidden="true">
         <circle cx="80" cy="80" r={RING_R} className="tc-ring-track" />
