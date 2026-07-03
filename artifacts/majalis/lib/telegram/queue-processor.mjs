@@ -93,12 +93,27 @@ export async function processExtractionQueue({ batchSize = 5 } = {}) {
         imageUrl = await getTelegramFileUrl(bestPhotoId);
       }
 
+      // Auto-link sheikh by exact name match (DB lookup only — no AI guessing)
+      let speakerId = null;
+      if (extracted.sheikh_name) {
+        const normalizedName = extracted.sheikh_name.replace(/^(الشيخ|الدكتور|د\.|أ\.د\.)\s+/u, "").trim();
+        const { data: sheikhMatch } = await admin
+          .from("sheikhs")
+          .select("id")
+          .or(`name.ilike.${normalizedName},name.ilike.${extracted.sheikh_name}`)
+          .limit(1)
+          .maybeSingle()
+          .catch(() => ({ data: null }));
+        if (sheikhMatch?.id) speakerId = sheikhMatch.id;
+      }
+
       // Save extracted lesson
       const lessonData = {
         raw_message_id: msg.id,
         channel_id: msg.channel_id,
         title: extracted.title || null,
         sheikh_name: extracted.sheikh_name || null,
+        speaker_id: speakerId,
         category: extracted.category || null,
         event_date: extracted.event_date || null,
         event_day: extracted.event_day || null,

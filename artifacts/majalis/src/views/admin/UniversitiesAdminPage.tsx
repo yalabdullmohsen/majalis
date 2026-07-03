@@ -419,6 +419,8 @@ function AdminContent() {
   );
 }
 
+export { AdminContent as UniversitiesSection };
+
 export default function UniversitiesAdminPage() {
   return (
     <AdminShell section="universities" onSectionChange={() => {}}>
