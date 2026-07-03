@@ -1652,3 +1652,20 @@ html[data-theme="dark"] .qs-radio-card.is-active { background: #1a1308; }
 }
 
 /* ── Dark-mode already correct (shell is always dark) ───────────────────── */
+
+/* ── Night Mode ─────────────────────────────────────────────────────────── */
+.quran-shell--night .qs-controls-row { background: #161b22; border-color: #30363d; }
+.quran-shell--night .qs-ctrl-btn { background: #21262d; color: #c9d1d9; border-color: #30363d; }
+.quran-shell--night .qs-ctrl-btn:hover { background: #30363d; }
+.quran-shell--night .qs-view-tabs { background: #161b22; border-color: #30363d; }
+.quran-shell--night .qs-view-tab { color: #8b949e; }
+.quran-shell--night .qs-view-tab.is-active { background: #1a5c35; color: #fff; }
+.quran-shell--night .qs-sidebar { background: #161b22; border-color: #30363d; }
+.quran-shell--night .qs-subnav { background: #0d1117; border-color: #21262d; }
+.quran-shell--night .qs-subnav__link { color: #8b949e; }
+.quran-shell--night .qs-subnav__link.is-active { color: #e8d5b0; }
+.quran-shell--night .qs-resume-banner { background: #1a2332; border-color: #30363d; color: #c9d1d9; }
+.quran-shell--night .ayah-display { background: transparent; }
+.quran-shell--night .ayah-text { color: #e8d5b0; font-family: "Amiri Quran", "Scheherazade New", serif; }
+.quran-shell--night .ayah-item:hover { background: rgba(255,255,255,0.04); }
+.quran-shell--night .qs-source-note { color: #4a5568; }

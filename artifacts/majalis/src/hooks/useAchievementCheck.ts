@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { useAuth } from "@/components/AuthProvider";
 import {
   getUserProfileStats,
@@ -67,6 +67,13 @@ export function useAchievementCheck() {
   const dismissBadges = useCallback(() => {
     setNewBadges([]);
   }, []);
+
+  // فحص تلقائي عند تسجيل الدخول بعد 5 ثوانٍ
+  useEffect(() => {
+    if (!isLoggedIn || !user?.id) return;
+    const t = setTimeout(runCheck, 5000);
+    return () => clearTimeout(t);
+  }, [isLoggedIn, user?.id, runCheck]);
 
   return { newBadges, scheduleCheck, dismissBadges };
 }
