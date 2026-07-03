@@ -25,6 +25,7 @@ import { IslamicOrnament } from "@/components/design/IslamicOrnament";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
 import { HomeAdhanWidget } from "@/components/home/HomeAdhanWidget";
 import { HomeContinueReading } from "@/components/home/HomeContinueReading";
+import { HijriSacredMonthBanner } from "@/components/HijriSacredMonthBanner";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 
 const QUICK_LINKS = [
@@ -74,6 +75,7 @@ export default function HomePage({
 
   return (
     <div className="home-page home-page--v3">
+      <HijriSacredMonthBanner />
       {isMaintenanceMode() && (
         <div role="status" className="home-maintenance-banner">
           {getSiteSettings().maintenanceMessage}
