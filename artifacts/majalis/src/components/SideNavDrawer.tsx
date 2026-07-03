@@ -63,6 +63,7 @@ const DRAWER_GROUPS: NavGroup[] = [
       { href: "/fawaid",         label: "الفوائد",           Icon: Heart },
       { href: "/hadith",         label: "الأحاديث الصحيحة", Icon: ScrollText },
       { href: "/stories",        label: "القصص الإسلامية",  Icon: Library },
+      { href: "/prophets",       label: "قصص الأنبياء",     Icon: Sparkles },
       { href: "/qa",             label: "الأسئلة التعليمية", Icon: MessageCircleQuestion },
       { href: "/updates",        label: "آخر المستجدات",    Icon: Sparkles },
     ],
