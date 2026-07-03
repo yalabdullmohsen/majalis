@@ -3,6 +3,8 @@
  */
 import { getSupabaseAdmin } from "../supabase-admin.mjs";
 import { notifyAdminsNewDrafts } from "../cms/automation-notifications.mjs";
+import { sendBroadcast, formatLessonMessage } from "../telegram/bot.mjs";
+import { getActiveSubscribers, logMessage as logTelegramMessage } from "../telegram/subscriber-service.mjs";
 
 const CHANNELS = ["push", "email", "telegram", "whatsapp", "rss", "web", "mobile"];
 
@@ -58,6 +60,33 @@ export async function notifyLessonPublished({ lesson, source, userIds = [] }) {
     results.push({ channel, ...r });
   }
 
+  // Telegram — direct delivery (no queue needed; broadcast is fast)
+  if (process.env.TELEGRAM_BOT_TOKEN) {
+    try {
+      const subscribers = await getActiveSubscribers();
+      if (subscribers.length > 0) {
+        const text = formatLessonMessage({
+          title: lesson?.title,
+          sheikh: lesson?.speaker_name,
+          mosque: lesson?.mosque,
+          url: lesson?.id ? `${process.env.VITE_APP_URL || "https://majalisilm.com"}/lessons/${lesson.id}` : null,
+        });
+        const chatIds = subscribers.map((s) => s.chat_id);
+        const broadcastResults = await sendBroadcast(chatIds, text);
+        let tgSent = 0;
+        for (const br of broadcastResults) {
+          await logTelegramMessage(br.chatId, text, br.ok ? "sent" : "error", br.messageId || null, br.error || null);
+          if (br.ok) tgSent++;
+        }
+        results.push({ channel: "telegram", ok: true, sent: tgSent, total: subscribers.length });
+      } else {
+        results.push({ channel: "telegram", ok: true, sent: 0, message: "no_subscribers" });
+      }
+    } catch (err) {
+      results.push({ channel: "telegram", ok: false, error: err.message });
+    }
+  }
+
   if (process.env.NOTIFICATION_API_URL && process.env.NOTIFICATION_SECRET) {
     try {
       const res = await fetch(`${process.env.NOTIFICATION_API_URL}/notifications/send`, {
@@ -102,11 +131,36 @@ export async function processNotificationQueue({ batchSize = 10 } = {}) {
 
   let processed = 0;
   for (const job of jobs) {
-    const sent = job.channel === "web" || job.channel === "rss";
+    let sent = job.channel === "web" || job.channel === "rss";
+    let jobError = sent ? null : "channel_requires_external_integration";
+
+    if (job.channel === "telegram" && process.env.TELEGRAM_BOT_TOKEN) {
+      try {
+        const subscribers = await getActiveSubscribers();
+        if (subscribers.length > 0) {
+          const text = formatLessonMessage({
+            title: job.payload?.title,
+            sheikh: job.payload?.sheikh,
+            mosque: job.payload?.mosque,
+            url: job.payload?.url || null,
+          });
+          const chatIds = subscribers.map((s) => s.chat_id);
+          const results = await sendBroadcast(chatIds, text);
+          for (const br of results) {
+            await logTelegramMessage(br.chatId, text, br.ok ? "sent" : "error", br.messageId || null, br.error || null);
+          }
+        }
+        sent = true;
+        jobError = null;
+      } catch (err) {
+        jobError = err.message;
+      }
+    }
+
     await admin.from("mke_notification_jobs").update({
       status: sent ? "sent" : "skipped",
       sent_at: sent ? new Date().toISOString() : null,
-      error: sent ? null : "channel_requires_external_integration",
+      error: jobError,
     }).eq("id", job.id);
     if (sent) processed += 1;
   }

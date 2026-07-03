@@ -101,6 +101,8 @@ export function getEnvConfig() {
     "POSTGRES_URL_NON_POOLING",
   ) || buildDatabaseUrlFromParts();
   const cronAllowedIps = pick("CRON_ALLOWED_IPS").split(",").map((s) => s.trim()).filter(Boolean);
+  const telegramBotToken = pick("TELEGRAM_BOT_TOKEN");
+  const telegramWebhookSecret = pick("TELEGRAM_WEBHOOK_SECRET");
 
   return {
     supabaseUrl,
@@ -113,6 +115,8 @@ export function getEnvConfig() {
     anthropicKey,
     databaseUrl,
     cronAllowedIps,
+    telegramBotToken,
+    telegramWebhookSecret,
     nodeEnv: process.env.NODE_ENV || "development",
     vercelEnv: process.env.VERCEL_ENV || "",
   };
@@ -136,6 +140,8 @@ export function getEnvStatus() {
     SUPABASE_ACCESS_TOKEN: Boolean(pick("SUPABASE_ACCESS_TOKEN", "SUPABASE_MANAGEMENT_TOKEN")),
     INSTAGRAM_GRAPH_ACCESS_TOKEN: Boolean(pick("INSTAGRAM_GRAPH_ACCESS_TOKEN")),
     INSTAGRAM_BUSINESS_ACCOUNT_ID: Boolean(pick("INSTAGRAM_BUSINESS_ACCOUNT_ID")),
+    TELEGRAM_BOT_TOKEN: Boolean(pick("TELEGRAM_BOT_TOKEN")),
+    TELEGRAM_WEBHOOK_SECRET: Boolean(pick("TELEGRAM_WEBHOOK_SECRET")),
   };
 }
 
