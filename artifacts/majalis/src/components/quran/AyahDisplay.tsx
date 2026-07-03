@@ -1,7 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import type { Ayah } from "@/lib/quran-api";
 import type { PlayerState } from "@/hooks/useAyahPlayer";
-import { copyAyahText } from "@/lib/share-ayah";
+import { copyAyahText, shareAyahAsImage } from "@/lib/share-ayah";
+import { addBookmark, removeBookmark, isBookmarked, saveNote, getNote } from "@/lib/quran-personal";
+import { ExploreAyahPanel } from "@/components/quran/ExploreAyahPanel";
+import { C } from "@/lib/theme";
 
 type Props = {
   ayahs: Ayah[];
@@ -23,6 +26,55 @@ function toArabic(n: number): string {
   return String(n).replace(/[0-9]/g, (d) => ARABIC_DIGITS[+d]);
 }
 
+// ── Inline note form ──────────────────────────────────────────────────────
+function NoteForm({
+  surahNum,
+  ayahNum,
+  onClose,
+}: {
+  surahNum: number;
+  ayahNum: number;
+  onClose: () => void;
+}) {
+  const [text, setText] = useState(() => getNote(surahNum, ayahNum));
+  return (
+    <div style={{ padding: "0.75rem 1rem" }}>
+      <textarea
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        placeholder="أضف ملاحظتك الشخصية هنا..."
+        dir="rtl"
+        rows={3}
+        autoFocus
+        style={{
+          width: "100%",
+          border: `1px solid ${C.line}`,
+          borderRadius: "0.5rem",
+          padding: "0.5rem",
+          fontFamily: "inherit",
+          fontSize: "0.9rem",
+          resize: "vertical",
+          background: "var(--majalis-parchment)",
+          color: "var(--majalis-ink)",
+          boxSizing: "border-box",
+        }}
+      />
+      <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.5rem", justifyContent: "flex-end" }}>
+        <button type="button" onClick={onClose}
+          style={{ padding: "0.3rem 0.75rem", border: `1px solid ${C.line}`, borderRadius: "0.4rem", background: "none", cursor: "pointer", fontSize: "0.82rem", fontFamily: "inherit" }}>
+          إلغاء
+        </button>
+        <button
+          type="button"
+          onClick={() => { saveNote(surahNum, ayahNum, text); onClose(); }}
+          style={{ padding: "0.3rem 0.75rem", border: "none", borderRadius: "0.4rem", background: C.emerald, color: "#fff", cursor: "pointer", fontSize: "0.82rem", fontFamily: "inherit", fontWeight: 600 }}>
+          حفظ
+        </button>
+      </div>
+    </div>
+  );
+}
+
 export function AyahDisplay({
   ayahs,
   surahNum,
@@ -37,18 +89,27 @@ export function AyahDisplay({
   const [page, setPage] = useState(0);
   const [contextAyah, setContextAyah] = useState<Ayah | null>(null);
   const [copied, setCopied] = useState(false);
+  const [sharing, setSharing] = useState(false);
+  const [bookmarked, setBookmarked] = useState(false);
+  const [showNote, setShowNote] = useState(false);
+  const [showExplore, setShowExplore] = useState(false);
+  const [exploreAyah, setExploreAyah] = useState<Ayah | null>(null);
   const longPressTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const pressStartPos = useRef<{ x: number; y: number } | null>(null);
 
-  // Reset page when surah changes
   useEffect(() => { setPage(0); }, [surahNum]);
 
-  // Jump to the correct page when targetAyah changes
   useEffect(() => {
     if (targetAyah > 0) {
       setPage(Math.floor((targetAyah - 1) / AYAHS_PER_PAGE));
     }
   }, [targetAyah]);
+
+  // Update bookmarked status when context ayah changes
+  useEffect(() => {
+    if (!contextAyah) return;
+    setBookmarked(isBookmarked(surahNum, contextAyah.numberInSurah));
+  }, [contextAyah, surahNum]);
 
   const totalPages = Math.max(1, Math.ceil(ayahs.length / AYAHS_PER_PAGE));
   const visibleAyahs = ayahs.slice(page * AYAHS_PER_PAGE, (page + 1) * AYAHS_PER_PAGE);
@@ -58,19 +119,16 @@ export function AyahDisplay({
     pressStartPos.current = { x: e.clientX, y: e.clientY };
     longPressTimer.current = setTimeout(() => {
       setContextAyah(ayah);
+      setShowNote(false);
     }, 520);
   }
 
   function endPress(e: React.PointerEvent) {
     clearTimeout(longPressTimer.current);
-    // If finger moved significantly it was a scroll, not a press
     if (pressStartPos.current) {
       const dx = Math.abs(e.clientX - pressStartPos.current.x);
       const dy = Math.abs(e.clientY - pressStartPos.current.y);
-      if (dx > 10 || dy > 10) {
-        pressStartPos.current = null;
-        return;
-      }
+      if (dx > 10 || dy > 10) { pressStartPos.current = null; return; }
     }
     pressStartPos.current = null;
   }
@@ -80,20 +138,54 @@ export function AyahDisplay({
     pressStartPos.current = null;
   }
 
+  const closeContext = () => {
+    setContextAyah(null);
+    setShowNote(false);
+  };
+
   async function handleContextCopy() {
     if (!contextAyah) return;
     await copyAyahText(contextAyah.text, surahName, contextAyah.numberInSurah);
     setCopied(true);
-    setTimeout(() => {
-      setCopied(false);
-      setContextAyah(null);
-    }, 1500);
+    setTimeout(() => { setCopied(false); closeContext(); }, 1500);
+  }
+
+  async function handleContextShare() {
+    if (!contextAyah || sharing) return;
+    setSharing(true);
+    try {
+      await shareAyahAsImage({
+        text: contextAyah.text,
+        surahName,
+        ayahNum: contextAyah.numberInSurah,
+        surahNum,
+      });
+    } finally {
+      setSharing(false);
+      closeContext();
+    }
   }
 
   function handleContextPlay() {
     if (!contextAyah) return;
     onPlayAyah(contextAyah.numberInSurah);
-    setContextAyah(null);
+    closeContext();
+  }
+
+  function handleToggleBookmark() {
+    if (!contextAyah) return;
+    if (bookmarked) {
+      removeBookmark(surahNum, contextAyah.numberInSurah);
+      setBookmarked(false);
+    } else {
+      addBookmark({
+        surahNum,
+        ayahNum: contextAyah.numberInSurah,
+        surahName,
+        text: contextAyah.text,
+      });
+      setBookmarked(true);
+    }
   }
 
   return (
@@ -111,7 +203,7 @@ export function AyahDisplay({
           </p>
         )}
         <h2 className="qs-surah-header__title" lang="ar">{surahName}</h2>
-        <p className="qs-surah-header__hint">اضغط مطوّلاً على أي آية للاستماع أو النسخ</p>
+        <p className="qs-surah-header__hint">اضغط مطوّلاً على أي آية للخيارات</p>
       </header>
 
       {/* ── Clean Mushaf flowing text ── */}
@@ -123,6 +215,7 @@ export function AyahDisplay({
       >
         {visibleAyahs.map((ayah) => {
           const isPlaying = ayah.numberInSurah === currentPlayingAyah;
+          const hasNote = !!getNote(surahNum, ayah.numberInSurah);
           return (
             <span
               key={ayah.numberInSurah}
@@ -142,6 +235,14 @@ export function AyahDisplay({
                 <span className="qs-ayah-num" aria-hidden="true">
                   ﴿{toArabic(ayah.numberInSurah)}﴾
                 </span>
+              )}
+              {/* مؤشر الإشارة المرجعية */}
+              {isBookmarked(surahNum, ayah.numberInSurah) && (
+                <span aria-hidden="true" title="مؤشر مرجعي" style={{ fontSize: "0.6rem", color: C.emerald, marginInlineStart: "2px" }}>🔖</span>
+              )}
+              {/* مؤشر الملاحظة */}
+              {hasNote && (
+                <span aria-hidden="true" title="يوجد ملاحظة" style={{ fontSize: "0.6rem", color: "#92400E", marginInlineStart: "2px" }}>📝</span>
               )}
             </span>
           );
@@ -193,37 +294,105 @@ export function AyahDisplay({
         <>
           <div
             className="qs-context-overlay"
-            onClick={() => setContextAyah(null)}
+            onClick={closeContext}
             aria-hidden="true"
           />
-          <div className="qs-context-sheet" role="dialog" aria-modal="true" aria-label="خيارات الآية">
+          <div
+            className="qs-context-sheet"
+            role="dialog"
+            aria-modal="true"
+            aria-label="خيارات الآية"
+            style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
+          >
             <div className="qs-context-sheet__handle" aria-hidden="true" />
             <p className="qs-context-sheet__ref">
               سورة {surahName} — آية {contextAyah.numberInSurah}
             </p>
-            <button
-              type="button"
-              className="qs-context-sheet__btn qs-context-sheet__btn--primary"
-              onClick={handleContextPlay}
-            >
-              <span aria-hidden="true">▶</span> استماع
-            </button>
-            <button
-              type="button"
-              className="qs-context-sheet__btn"
-              onClick={handleContextCopy}
-            >
-              <span aria-hidden="true">⎘</span> {copied ? "تم النسخ ✓" : "نسخ الآية"}
-            </button>
-            <button
-              type="button"
-              className="qs-context-sheet__btn qs-context-sheet__btn--close"
-              onClick={() => setContextAyah(null)}
-            >
-              إغلاق
-            </button>
+
+            {/* Note form inline */}
+            {showNote ? (
+              <NoteForm
+                surahNum={surahNum}
+                ayahNum={contextAyah.numberInSurah}
+                onClose={() => setShowNote(false)}
+              />
+            ) : (
+              <>
+                {/* Primary: Explore */}
+                <button
+                  type="button"
+                  className="qs-context-sheet__btn qs-context-sheet__btn--primary"
+                  onClick={() => { setExploreAyah(contextAyah); setShowExplore(true); setContextAyah(null); }}
+                  style={{ background: C.emeraldDeep, color: "#fff" }}
+                >
+                  <span aria-hidden="true">🔗</span> استكشف الآية
+                </button>
+
+                <button
+                  type="button"
+                  className="qs-context-sheet__btn qs-context-sheet__btn--primary"
+                  onClick={handleContextPlay}
+                >
+                  <span aria-hidden="true">▶</span> استماع
+                </button>
+
+                <button
+                  type="button"
+                  className="qs-context-sheet__btn"
+                  onClick={handleContextCopy}
+                >
+                  <span aria-hidden="true">⎘</span> {copied ? "تم النسخ ✓" : "نسخ الآية"}
+                </button>
+
+                <button
+                  type="button"
+                  className="qs-context-sheet__btn"
+                  onClick={handleContextShare}
+                  disabled={sharing}
+                >
+                  <span aria-hidden="true">🖼</span> {sharing ? "جارٍ التصدير…" : "مشاركة كصورة"}
+                </button>
+
+                <button
+                  type="button"
+                  className="qs-context-sheet__btn"
+                  onClick={handleToggleBookmark}
+                  style={bookmarked ? { color: C.emeraldDeep, fontWeight: 700 } : {}}
+                >
+                  <span aria-hidden="true">{bookmarked ? "🔖✓" : "🔖"}</span>{" "}
+                  {bookmarked ? "في المفضلة" : "أضف للمفضلة"}
+                </button>
+
+                <button
+                  type="button"
+                  className="qs-context-sheet__btn"
+                  onClick={() => setShowNote(true)}
+                >
+                  <span aria-hidden="true">📝</span> ملاحظة شخصية
+                </button>
+
+                <button
+                  type="button"
+                  className="qs-context-sheet__btn qs-context-sheet__btn--close"
+                  onClick={closeContext}
+                >
+                  إغلاق
+                </button>
+              </>
+            )}
           </div>
         </>
+      )}
+
+      {/* ── Explore Ayah Panel ── */}
+      {showExplore && exploreAyah && (
+        <ExploreAyahPanel
+          surahNum={surahNum}
+          ayahNum={exploreAyah.numberInSurah}
+          surahName={surahName}
+          ayahText={exploreAyah.text}
+          onClose={() => { setShowExplore(false); setExploreAyah(null); }}
+        />
       )}
     </div>
   );

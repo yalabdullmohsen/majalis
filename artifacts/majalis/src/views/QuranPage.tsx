@@ -25,6 +25,9 @@ import { SurahList } from "@/components/quran/SurahList";
 import { AyahDisplay } from "@/components/quran/AyahDisplay";
 import { QuranPlayerBar } from "@/components/quran/QuranPlayerBar";
 import { QuranSearch } from "@/components/quran/QuranSearch";
+import { QuranBookmarksPanel } from "@/components/quran/QuranBookmarksPanel";
+import { KhatmahPanel } from "@/components/quran/KhatmahPanel";
+import { updateStreak } from "@/lib/quran-personal";
 import "@/styles/quran.css";
 
 // ─── Types ─────────────────────────────────────────────────────────────────
@@ -558,6 +561,11 @@ export default function QuranPage() {
     });
   }, []);
   const [showAyahNumbers, setShowAyahNumbers] = useState(true);
+  const [showBookmarks, setShowBookmarks] = useState(false);
+  const [showKhatmah, setShowKhatmah] = useState(false);
+
+  // سجّل القراءة اليومي وحدّث السلسلة عند الدخول
+  useEffect(() => { updateStreak(); }, []);
 
   const [tafsirId, setTafsirId] = useState<TafsirId>(() => {
     try { return (localStorage.getItem(TAFSIR_KEY) as TafsirId) || "ar.muyassar"; }
@@ -708,6 +716,22 @@ export default function QuranPage() {
             <button
               type="button"
               className="qs-ctrl-btn"
+              onClick={() => setShowBookmarks(true)}
+              aria-label="مكتبتي — إشارات وملاحظات وحفظ"
+            >
+              🔖 مكتبتي
+            </button>
+            <button
+              type="button"
+              className="qs-ctrl-btn"
+              onClick={() => setShowKhatmah(true)}
+              aria-label="خطة الختمة"
+            >
+              📅 ختمة
+            </button>
+            <button
+              type="button"
+              className="qs-ctrl-btn"
               onClick={cycleDisplay}
               aria-label={displayMode === "night" ? "وضع النهار" : displayMode === "warm" ? "وضع الليل" : "وضع الورقة الدافئة"}
               title={displayMode === "night" ? "نهاري ☀️" : displayMode === "warm" ? "ليلي 🌙" : "ورقة دافئة 📜"}
@@ -811,6 +835,22 @@ export default function QuranPage() {
           )}
         </main>
       </div>
+
+      {/* مكتبتي — إشارات مرجعية وملاحظات وحفظ */}
+      {showBookmarks && (
+        <QuranBookmarksPanel
+          onGoTo={(surah, ayah) => { reader.goToSurah(surah, ayah); }}
+          onClose={() => setShowBookmarks(false)}
+        />
+      )}
+
+      {/* خطة الختمة والإحصائيات */}
+      {showKhatmah && (
+        <KhatmahPanel
+          currentPage={ls<number>(PAGE_KEY, 1)}
+          onClose={() => setShowKhatmah(false)}
+        />
+      )}
 
       {/* Sticky player bar — surah view only */}
       {summary && viewMode === "surah" && (
