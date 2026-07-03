@@ -281,13 +281,35 @@ export default function LessonsPage({
 
   const featuredSections = useMemo(() => {
     const sorted = sortKuwaitLessons(tabLessons);
+
+    // كل قسم يستبعد ما ظهر في الأقسام السابقة
     const upcoming = sorted.slice(0, 4);
+    const upcomingIds = new Set(upcoming.map((l) => l.id));
+
     const popular = [...tabLessons]
       .sort((a, b) => (b.keywords?.length || 0) - (a.keywords?.length || 0))
+      .filter((l) => !upcomingIds.has(l.id))
       .slice(0, 4);
-    const featured = tabLessons.filter((l) => l.hasLiveStream).slice(0, 4);
-    return { upcoming, popular, featured: featured.length ? featured : upcoming.slice(0, 3) };
+    const popularIds = new Set(popular.map((l) => l.id));
+
+    const shownIds = new Set([...upcomingIds, ...popularIds]);
+    const featured = tabLessons
+      .filter((l) => l.hasLiveStream && !shownIds.has(l.id))
+      .slice(0, 4);
+
+    return { upcoming, popular, featured };
   }, [tabLessons]);
+
+  // الدروس المعروضة في الأقسام المميزة — لاستبعادها من القائمة الرئيسية
+  const featuredIds = useMemo(() => {
+    const showFeatured = !filters.search && filters.governorate === "كل المحافظات";
+    if (!showFeatured) return new Set<string>();
+    return new Set([
+      ...featuredSections.upcoming.map((l) => l.id),
+      ...featuredSections.popular.map((l) => l.id),
+      ...featuredSections.featured.map((l) => l.id),
+    ]);
+  }, [featuredSections, filters.search, filters.governorate]);
 
   useEffect(() => {
     if (!filters.search.trim()) {
@@ -406,12 +428,13 @@ export default function LessonsPage({
 
               <section className="lessons-v2-section">
                 <h2 className="lessons-v2-section__title">
-                  {isAdmin ? `${filtered.length} ` : ""}{tab === "courses" ? "دورة" : tab === "women" ? "نشاط للنساء" : tab === "men" ? "درس رجالي" : "درس"}
+                  {tab === "courses" ? "دورات" : tab === "women" ? "نشاطات للنساء" : tab === "men" ? "دروس رجالية" : "جميع الدروس"}
+                  {isAdmin && ` (${filtered.filter((l) => !featuredIds.has(l.id)).length})`}
                 </h2>
-                {filtered.length === 0 ? (
+                {filtered.filter((l) => !featuredIds.has(l.id)).length === 0 ? (
                   <p className="lessons-empty-state">لا توجد {TAB_LABELS[tab]} مطابقة حاليًا.</p>
                 ) : (
-                  renderGrid(filtered)
+                  renderGrid(filtered.filter((l) => !featuredIds.has(l.id)))
                 )}
               </section>
 
