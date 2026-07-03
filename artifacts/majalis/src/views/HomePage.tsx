@@ -13,7 +13,6 @@ import { HomeDailyDhikr } from "@/components/home/HomeDailyDhikr";
 import { HomeDailyQuestion } from "@/components/home/HomeDailyQuestion";
 import { HomeDailyHadith } from "@/components/home/HomeDailyHadith";
 import { HomePrayerRanks } from "@/components/home/HomePrayerRanks";
-import { HomePrayerTimes } from "@/components/home/HomePrayerTimes";
 import { HomeFeaturedLibrary } from "@/components/home/HomeFeaturedLibrary";
 import { HomeLatestUpdates } from "@/components/home/HomeLatestUpdates";
 import { HomeMoreSections } from "@/components/home/HomeMoreSections";
@@ -27,6 +26,24 @@ import { HomeAdhanWidget } from "@/components/home/HomeAdhanWidget";
 import { HomeContinueReading } from "@/components/home/HomeContinueReading";
 import { HijriSacredMonthBanner } from "@/components/HijriSacredMonthBanner";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
+
+function HomeQuranCirclesPreview() {
+  return (
+    <section className="home-section" aria-labelledby="circles-home-heading">
+      <div className="home-section-head">
+        <div>
+          <p className="home-eyebrow">حفظ القرآن</p>
+          <h2 id="circles-home-heading">حلقات التحفيظ</h2>
+          <p>انضم لحلقة علمية متخصصة في حفظ القرآن ومراجعته.</p>
+        </div>
+        <Link href="/quran-circles" className="home-section-link">عرض الكل</Link>
+      </div>
+      <p style={{ color: "var(--majalis-ink-soft)", fontSize: "0.9rem", textAlign: "center", padding: "2rem 0" }}>
+        🕌 سيتوفر هنا عرض للحلقات القادمة — تواصل مع الإدارة لإضافة حلقتك.
+      </p>
+    </section>
+  );
+}
 
 const QUICK_LINKS = [
   { href: "/quran",        label: "القرآن",              meta: "مصحف وتلاوة" },
@@ -96,14 +113,14 @@ export default function HomePage({
             />
             <h1 className="home-hero-title home-hero-title--v3">المجلس العلمي</h1>
             <p className="home-hero-lead home-hero-lead--v3">
-              دروس وفتاوى وقرآن ومحتوى موثّق في منصة واحدة.
+              دروس وفتاوى وقرآن ومحتوى موثّق في تطبيق واحد.
             </p>
             <form onSubmit={submitSearch} className="home-search home-search--v3" aria-label="البحث">
               <input
                 value={term}
                 onChange={(e) => setTerm(e.target.value)}
-                placeholder="ابحث في المنصة..."
-                aria-label="البحث في المنصة"
+                placeholder="ابحث في التطبيق..."
+                aria-label="البحث في التطبيق"
               />
               <button type="submit">بحث</button>
             </form>
@@ -117,20 +134,23 @@ export default function HomePage({
 
       <main className="home-container home-main home-main--v3">
 
-        <SafeHomeSection name="لعبة الأسئلة">
-          <HomeQuizCard />
+        {/* الدروس أولاً — أهم محتوى في التطبيق */}
+        <SafeHomeSection name="أحدث الدروس">
+          <HomeUpcomingLessons initialLessons={initialFeaturedLessons} />
         </SafeHomeSection>
 
         <IslamicDivider />
 
+        {/* معاينة حلقات التحفيظ */}
+        <SafeHomeSection name="حلقات التحفيظ">
+          <HomeQuranCirclesPreview />
+        </SafeHomeSection>
+
+        <IslamicDivider />
+
+        {/* مواقيت الصلاة — مصدر حقيقة واحد */}
         <SafeHomeSection name="مواقيت الصلاة المدمجة">
           <HomeCompactPrayer />
-        </SafeHomeSection>
-
-        <IslamicDivider />
-
-        <SafeHomeSection name="ويدجت الأذان">
-          <HomeAdhanWidget />
         </SafeHomeSection>
 
         <IslamicDivider />
@@ -141,10 +161,6 @@ export default function HomePage({
 
         <SafeHomeSection name="توصيات مخصصة">
           <HomeRecommendations />
-        </SafeHomeSection>
-
-        <SafeHomeSection name="أحدث الدروس">
-          <HomeUpcomingLessons initialLessons={initialFeaturedLessons} />
         </SafeHomeSection>
 
         <IslamicDivider />
@@ -249,7 +265,7 @@ export default function HomePage({
 
         <section className="home-section ds-section">
           <div className="ds-section__head">
-            <h2 className="ds-section__title">أقسام المنصة</h2>
+            <h2 className="ds-section__title">أقسام التطبيق</h2>
             <Link href="/settings" className="ds-section__link">
               الإعدادات
             </Link>
@@ -283,14 +299,9 @@ export default function HomePage({
 
         <IslamicDivider />
 
-        <div className="home-prayer-row">
-          <SafeHomeSection name="مواقيت الصلاة">
-            <HomePrayerTimes />
-          </SafeHomeSection>
-          <SafeHomeSection name="مراتب الصلاة">
-            <HomePrayerRanks />
-          </SafeHomeSection>
-        </div>
+        <SafeHomeSection name="مراتب الصلاة">
+          <HomePrayerRanks />
+        </SafeHomeSection>
 
         <IslamicDivider />
 

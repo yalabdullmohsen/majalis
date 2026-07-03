@@ -39,6 +39,7 @@ const ScientificAnnouncementDetailPage = lazy(() => import("@/views/ScientificAn
 const LibraryPage = lazy(() => import("@/views/LibraryPage"));
 const LibraryDetailPage = lazy(() => import("@/views/LibraryDetailPage"));
 const MiraclesPage = lazy(() => import("@/views/MiraclesPage"));
+const QuranCirclesPage = lazy(() => import("@/views/QuranCirclesPage"));
 const FawaidPage = lazy(() => import("@/views/FawaidPage"));
 const HadithPage = lazy(() => import("@/views/HadithPage"));
 const StoriesPage = lazy(() => import("@/views/StoriesPage"));
@@ -59,6 +60,7 @@ const SurahStoryDetailPage = lazy(() =>
   import("@/views/SurahStoriesPage").then((m) => ({ default: m.SurahStoryDetailPage })),
 );
 const PrayerTimesPage = lazy(() => import("@/views/PrayerTimesPage"));
+const PrayerCountdownPage = lazy(() => import("@/views/PrayerCountdownPage"));
 const PrayerRanksPage = lazy(() => import("@/views/PrayerRanksPage"));
 const QiblaPage = lazy(() => import("@/views/QiblaPage"));
 const TasbihPage = lazy(() => import("@/views/TasbihPage"));
@@ -228,6 +230,7 @@ function Router() {
       <Route path="/library/:id"><SafeLazyRoute component={LibraryDetailPage} /></Route>
       <Route path="/library"><SafeLazyRoute component={LibraryPage} /></Route>
       <Route path="/miracles"><SafeLazyRoute component={MiraclesPage} /></Route>
+      <Route path="/quran-circles"><SafeLazyRoute component={QuranCirclesPage} /></Route>
       <Route path="/fawaid"><SafeLazyRoute component={FawaidPage} /></Route>
       <Route path="/hadith"><SafeLazyRoute component={HadithPage} /></Route>
       <Route path="/stories"><SafeLazyRoute component={StoriesPage} /></Route>
@@ -302,6 +305,7 @@ function Router() {
       <Route path="/quran/surah-stories"><SafeLazyRoute component={SurahStoriesPage} /></Route>
       <Route path="/quran"><SafeLazyRoute component={QuranPage} /></Route>
       <Route path="/prayer-times"><SafeLazyRoute component={PrayerTimesPage} /></Route>
+      <Route path="/prayer-countdown"><SafeLazyRoute component={PrayerCountdownPage} /></Route>
       <Route path="/prayer-ranks"><SafeLazyRoute component={PrayerRanksPage} /></Route>
       <Route path="/adhan-settings"><SafeLazyRoute component={AdhanSettingsPage} /></Route>
       <Route path="/muezzins/favorites"><SafeLazyRoute component={MuezzinFavoritesPage} /></Route>

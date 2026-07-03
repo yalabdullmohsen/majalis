@@ -72,6 +72,7 @@ const DRAWER_GROUPS: NavGroup[] = [
     title: "القرآن والأذكار",
     items: [
       { href: "/quran",            label: "القرآن الكريم",     Icon: BookOpen },
+      { href: "/quran-circles",    label: "حلقات التحفيظ",     Icon: BookMarked },
       { href: "/quran-radio",      label: "إذاعة القرآن",      Icon: Radio },
       { href: "/quran-live",       label: "البث المباشر",       Icon: Tv },
       { href: "/quran/tajweed",    label: "علم التجويد",       Icon: Mic2 },
