@@ -6,6 +6,7 @@ import { PageHeader, Loading, Empty } from "@/components/ui-common";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
 import { useAuth } from "@/components/AuthProvider";
 import { RecommendationWidget } from "@/components/recommendations/RecommendationWidget";
+import { CitationActionBar } from "@/components/citation/CitationActionBar";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -357,6 +358,20 @@ function HadithDetailModal({ h, onClose }: { h: HadithItem; onClose: () => void 
             </button>
           )}
         </div>
+
+        <CitationActionBar
+          source={{
+            id: h.id,
+            content_type: "hadith",
+            reference_id: h.hadith_number ? String(h.hadith_number) : null,
+            title_ar: h.title ?? h.text.slice(0, 60),
+            author_name: h.narrator ?? null,
+            book_name: h.source_name ?? null,
+            is_approved: true,
+          }}
+          compact
+          className="hadith-modal__citation"
+        />
 
         <footer className="hadith-modal__footer">
           <p>⚠️ تحقق من صحة الحديث ومصدره قبل النشر أو الاستشهاد به.</p>

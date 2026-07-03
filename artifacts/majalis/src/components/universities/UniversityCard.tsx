@@ -98,12 +98,25 @@ export function UniversityCard({ university: u, compact = false }: Props) {
       </div>
 
       {/* أزرار */}
-      <div className="px-4 pb-4 flex gap-2">
+      <div className="px-4 pb-4 flex gap-2 flex-wrap">
         <Link href={`/universities/${u.slug}`}
           className="flex-1 text-center py-2 text-sm bg-emerald-600 hover:bg-emerald-700
             text-white rounded-xl font-medium transition-colors">
           عرض التفاصيل
         </Link>
+
+        {u.website_url && (
+          <a
+            href={u.website_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-3 py-2 text-sm rounded-xl bg-blue-50 dark:bg-blue-900/20
+              text-blue-700 dark:text-blue-400 hover:bg-blue-100 transition-colors font-medium"
+            title="الموقع الرسمي"
+          >
+            🌐 الموقع
+          </a>
+        )}
 
         <button
           type="button"
