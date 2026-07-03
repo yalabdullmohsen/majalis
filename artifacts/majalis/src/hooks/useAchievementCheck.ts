@@ -23,7 +23,7 @@ function markNotified(keys: string[]) {
     const existing = getNotifiedKeys();
     keys.forEach((k) => existing.add(k));
     localStorage.setItem(STORAGE_KEY, JSON.stringify([...existing]));
-  } catch {}
+  } catch { /* localStorage unavailable */ }
 }
 
 export function useAchievementCheck() {
@@ -56,7 +56,7 @@ export function useAchievementCheck() {
 
       markNotified(unnotified);
       setNewBadges(badges);
-    } catch {}
+    } catch { /* silent — badge check is non-critical */ }
   }, [isLoggedIn, user?.id]);
 
   const scheduleCheck = useCallback(() => {

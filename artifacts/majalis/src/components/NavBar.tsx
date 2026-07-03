@@ -73,7 +73,7 @@ export default function NavBar() {
   const { lang, setLang, t } = useLanguage();
   const [location, navigate] = useLocation();
   const isMobile = useIsMobile();
-  const { isMenuOpen, moreOpen, toggleMenu, openMenu, closeMenu, closeMore, toggleMore, closeAll } = useMobileNavState();
+  const { isMenuOpen, moreOpen, toggleMenu, openMenu, closeMenu, closeMore, closeAll } = useMobileNavState();
 
   const isActive = (href: string) => {
     const path = href.split("?")[0];

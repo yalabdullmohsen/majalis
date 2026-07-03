@@ -544,7 +544,6 @@ export default function QuranPage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const [fontScale, setFontScale] = useState(() => ls<number>(FS_KEY, 26));
-  const [nightMode, setNightMode] = useState(() => ls<boolean>(NIGHT_KEY, false));
   const [displayMode, setDisplayMode] = useState<DisplayMode>(() => {
     try {
       return (localStorage.getItem(WARM_KEY) as DisplayMode) ?? (ls<boolean>(NIGHT_KEY, false) ? "night" : "light");
@@ -554,8 +553,6 @@ export default function QuranPage() {
     setDisplayMode((m) => {
       const next: DisplayMode = m === "light" ? "warm" : m === "warm" ? "night" : "light";
       try { localStorage.setItem(WARM_KEY, next); } catch { /* ignore */ }
-      // backward-compat with nightMode flag
-      setNightMode(next === "night");
       lsSet(NIGHT_KEY, next === "night");
       return next;
     });
@@ -636,10 +633,6 @@ export default function QuranPage() {
   };
 
   const currentQiraat = QIRAAT_LIST.find((q) => q.id === qiraatId);
-
-  const toggleNight = useCallback(() => {
-    setNightMode((v) => { lsSet(NIGHT_KEY, !v); return !v; });
-  }, []);
 
   const displayStyles: React.CSSProperties =
     displayMode === "night" ? { background: "#0d1117", color: "#e8d5b0", minHeight: "100vh" } :

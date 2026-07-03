@@ -71,7 +71,7 @@ export default function PrayerCountdownPage() {
             <div key={p.key} className={`prayer-slot-chip${isNext ? " prayer-slot-chip--next" : ""}`}
               style={isPrev && !isNext ? { opacity: 0.55 } : {}}>
               <span className="prayer-slot-chip__name">{PRAYER_AR[p.key] ?? p.key}</span>
-              <span className="prayer-slot-chip__time">{p.time12 ?? p.time}</span>
+              <span className="prayer-slot-chip__time">{p.time24}</span>
             </div>
           );
         })}
