@@ -246,7 +246,7 @@
   border-radius: 2px;
 }
 
-/* Ornamental ayah number ﴿٣﴾ — gold, small, inline */
+/* Ornamental ayah number (legacy class — kept for backward compat) */
 .qs-ayah-inline__num {
   display: inline;
   font-family: "Amiri Quran", "Scheherazade New", serif;
@@ -1164,12 +1164,18 @@ html[data-theme="dark"] .qs-ayah-inline__share {
   color: var(--text-muted, #6b7280);
 }
 .qs-verse-card {
-  background: linear-gradient(135deg, #f8f4e8, #fff);
-  border: 1.5px solid #b8860b;
-  border-radius: 1rem;
-  padding: 2rem 1.5rem;
+  background: var(--qs-parchment, #F8F2E4);
+  border: 1px solid var(--mf-gold-soft, rgba(184,135,74,0.45));
+  box-shadow:
+    inset 0 0 0 5px var(--qs-parchment, #F8F2E4),
+    inset 0 0 0 6px var(--mf-gold-faint, rgba(184,135,74,0.18)),
+    0 6px 40px rgba(184,135,74,0.14),
+    0 2px 10px rgba(0,0,0,0.06);
+  border-radius: 3px;
+  padding: 2.5rem 2rem;
   text-align: center;
-  box-shadow: 0 4px 20px rgba(184, 134, 11, .1);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 .qs-verse-card__ref {
   font-size: .75rem;
@@ -1790,17 +1796,19 @@ html[data-theme="dark"] .qs-radio-card.is-active { background: #1a1308; }
    وضع السورة النصي — الإطار والرأس (.qs-*)
    ═══════════════════════════════════════════════════════════════════════════ */
 
-/* ── رأس السورة: إزالة الحد البسيط + إضافة خطوط تذهيب ── */
+/* ── رأس السورة: إزالة الحد البسيط + خطوط تذهيب متناسقة أعلى وأسفل ── */
 .qs-surah-header {
   border-bottom: none;
   padding-bottom: 1.25rem;
+  padding-top: 1.75rem;
 }
+.qs-surah-header::before,
 .qs-surah-header::after {
   content: '';
   display: block;
-  margin: 0.75rem auto 0;
   height: 1px;
-  width: 75%;
+  width: 65%;
+  margin: 0 auto;
   background: linear-gradient(
     90deg,
     transparent   0%,
@@ -1810,6 +1818,8 @@ html[data-theme="dark"] .qs-radio-card.is-active { background: #1a1308; }
     transparent   100%
   );
 }
+.qs-surah-header::before { margin-bottom: 1rem; }
+.qs-surah-header::after  { margin-top:    0.75rem; }
 
 /* ── البسملة: فاصلة علوية ── */
 .qs-surah-header__ornament {
@@ -1853,32 +1863,49 @@ html[data-theme="dark"] .qs-radio-card.is-active { background: #1a1308; }
 .qs-mushaf-frame::before { top: 4px; }
 .qs-mushaf-frame::after  { bottom: 4px; }
 
-/* لون حبر النص داخل الإطار */
+/* لون حبر النص داخل الإطار + تحسين دقة عرض الخط */
 .qs-mushaf-frame .qs-mushaf-body {
   color: var(--mf-ink);
   padding-top:    1.5rem;
   padding-bottom: 2.25rem;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* ── أرقام الآيات: دائرة أرق وأخف ── */
+/* ── رقم الآية: نجمة إسلامية ثمانية الأضلاع (مربّعان متقاطعان) ── */
 .qs-ayah-num {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 1.55em;
-  height: 1.55em;
-  border-radius: 50%;
-  border: 0.8px solid var(--mf-gold-soft);
-  font-size: 0.6em;
+  width: 1.85em;
+  height: 1.85em;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  font-size: 0.56em;
   font-weight: 700;
   color: var(--mf-gold);
-  background: rgba(184,135,74,0.07);
   vertical-align: middle;
-  margin: 0 0.2em;
+  margin: 0 0.22em;
   user-select: none;
   -webkit-user-select: none;
   font-family: "Tajawal", "IBM Plex Sans Arabic", system-ui, sans-serif;
   line-height: 1;
+}
+/* مربّعان متقاطعان زاوية ٤٥° — يُشكّلان نجمة إسلامية ثمانية */
+.qs-ayah-num::before,
+.qs-ayah-num::after {
+  content: '';
+  position: absolute;
+  inset: 12%;
+  border: 0.08em solid var(--mf-gold-soft);
+  background: rgba(184,135,74,0.07);
+  pointer-events: none;
+}
+.qs-ayah-num::after {
+  transform: rotate(45deg);
 }
 
 /* ── شريط التحكم — تحسين بصري ── */
@@ -1918,7 +1945,8 @@ html[data-theme="dark"] .qs-radio-card.is-active { background: #1a1308; }
   background: linear-gradient(90deg, transparent, rgba(184,135,74,0.28), transparent);
 }
 .quran-shell--night .qs-surah-header__title { color: #6ee7b7; text-shadow: none; }
-.quran-shell--night .qs-ayah-num {
+.quran-shell--night .qs-ayah-num::before,
+.quran-shell--night .qs-ayah-num::after {
   background: rgba(184,135,74,0.1);
   border-color: rgba(184,135,74,0.3);
 }
@@ -1932,8 +1960,9 @@ html[data-theme="dark"] .qs-radio-card.is-active { background: #1a1308; }
   color: #2c1a0e;
 }
 .quran-shell--warm .qs-surah-header__title { color: #5a2d00; }
-.quran-shell--warm .qs-ayah-num {
-  color: #8B6914;
+.quran-shell--warm .qs-ayah-num { color: #8B6914; }
+.quran-shell--warm .qs-ayah-num::before,
+.quran-shell--warm .qs-ayah-num::after {
   border-color: rgba(139,105,20,0.4);
   background: rgba(139,105,20,0.08);
 }
@@ -1946,6 +1975,7 @@ html[data-theme="dark"] .qs-radio-card.is-active { background: #1a1308; }
   .mf-corner--bl { bottom: -10px; left:  -10px; }
   .mf-corner--br { bottom: -10px; right: -10px; }
   .qs-mushaf-frame { margin: 0; }
+  .qs-ayah-num { width: 1.65em; height: 1.65em; }
 }
 @media (min-width: 900px) {
   .mf-corner { width: 34px; height: 34px; }
@@ -1953,4 +1983,6 @@ html[data-theme="dark"] .qs-radio-card.is-active { background: #1a1308; }
   .mf-corner--tr { top: -17px; right: -17px; }
   .mf-corner--bl { bottom: -17px; left:  -17px; }
   .mf-corner--br { bottom: -17px; right: -17px; }
+  /* هامش إضافي حول الصفحة على شاشات المكتب */
+  .mf-page-frame { padding: 1.5rem 2.5rem; }
 }

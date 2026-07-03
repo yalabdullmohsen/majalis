@@ -234,7 +234,7 @@ export function AyahDisplay({
               <span className="qs-ayah-inline__text">{ayah.text}</span>
               {showAyahNumbers && (
                 <span className="qs-ayah-num" aria-hidden="true">
-                  ﴿{toArabic(ayah.numberInSurah)}﴾
+                  {toArabic(ayah.numberInSurah)}
                 </span>
               )}
               {/* مؤشر الإشارة المرجعية */}
