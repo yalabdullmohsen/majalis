@@ -98,6 +98,8 @@ export const API_ROUTES = [
   { prefix: "/api/admin/lesson-from-url", module: "./api-handlers/admin/lesson-from-url.js", rateLimit: lessonFromUrlRateLimit },
   { prefix: "/api/admin/lesson-automation", module: "./api-handlers/admin/lesson-automation.js" },
   { prefix: "/api/admin/instagram-integration", module: "./api-handlers/admin/instagram-integration.js" },
+  { prefix: "/api/admin/telegram", module: "./api-handlers/admin/telegram.js", allowGet: true },
+  { prefix: "/api/cron/extract-telegram", module: "./api-handlers/cron/extract-telegram.js", allowGet: true, exact: true },
   { prefix: "/api/admin/majlis-knowledge-engine", module: "./api-handlers/admin/majlis-knowledge-engine.js" },
   { prefix: "/api/admin/source-monitor", module: "./api-handlers/admin/source-monitor.js" },
   { prefix: "/api/cron/monitor-sources", module: "./api-handlers/cron/monitor-sources.js", allowGet: true, exact: true },
