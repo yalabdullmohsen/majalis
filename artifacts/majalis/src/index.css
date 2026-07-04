@@ -5774,21 +5774,29 @@ html[data-theme="dark"] .home-page {
 }
 
 .content-hub-chip {
-  border: 1px solid var(--majalis-line);
+  border: 1.5px solid var(--majalis-line);
   background: var(--majalis-panel);
   color: var(--majalis-ink-soft);
   border-radius: 999px;
-  padding: 0.4rem 0.85rem;
+  padding: 0.4rem 0.95rem;
   font-size: 0.82rem;
   font-weight: 600;
   cursor: pointer;
   font-family: inherit;
+  transition: background var(--motion-fast), color var(--motion-fast), border-color var(--motion-fast), transform var(--motion-spring);
+}
+.content-hub-chip:hover {
+  background: var(--majalis-emerald-soft);
+  border-color: var(--majalis-emerald);
+  color: var(--majalis-emerald-deep);
+  transform: translateY(-1px);
 }
 
 .content-hub-chip--active {
   background: var(--majalis-emerald);
   border-color: var(--majalis-emerald);
-  color: var(--majalis-parchment);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(31,111,82,.25);
 }
 
 .content-card-grid {
@@ -13054,9 +13062,9 @@ body.has-assistant-fab .app-main {
   --ds-t-fast: 0.14s var(--ds-ease);
   --ds-t-mid: 0.22s var(--ds-ease);
 
-  --ds-gold-grad: linear-gradient(135deg, #d6b84e 0%, #b08d2e 55%, #c9a43e 100%);
-  --ds-emerald-grad: linear-gradient(135deg, #268a68 0%, #1f6e54 55%, #164e3c 100%);
-  --ds-hero-grad: linear-gradient(155deg, #0a2b22 0%, #164e3c 42%, #1f6e54 72%, #0d3526 100%);
+  --ds-gold-grad: linear-gradient(135deg, #D6B862 0%, #C6A059 55%, #A07840 100%);
+  --ds-emerald-grad: linear-gradient(135deg, #5FA98A 0%, #1F6F52 55%, #154F3B 100%);
+  --ds-hero-grad: linear-gradient(155deg, #0a2b22 0%, #154F3B 42%, #1F6F52 72%, #0d3526 100%);
 }
 
 html[data-theme="dark"] {
