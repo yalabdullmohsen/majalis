@@ -96,25 +96,34 @@ const PRAYER_ROOTS: Array<[RegExp, number]> = [
   [/عشاء/u, 20 * 60],
 ];
 
+/** تحويل الأرقام العربية الهندية (٠-٩) إلى لاتينية للتحليل. */
+function normalizeArabicDigits(s: string): string {
+  return s.replace(/[٠-٩]/g, (d) => String("٠١٢٣٤٥٦٧٨٩".indexOf(d)));
+}
+
 export function parseTimeToMinutes(timeRaw: string): number | null {
-  const time = cleanTimeText(timeRaw);
+  const time = normalizeArabicDigits(cleanTimeText(timeRaw));
   if (!time) return null;
+
+  // كشف مساءً/صباحاً بشكل موثوق: الاختصار «م»/«ص» لا يعمل مع \b في العربية،
+  // فنطابقه كرمز مستقل (محاط بمسافة أو بداية/نهاية النص).
+  const isPM = /مساء|pm/iu.test(time) || /(?:^|\s)م(?:\s|$)/u.test(time);
+  const isAM = /صباح|am/iu.test(time) || /(?:^|\s)ص(?:\s|$)/u.test(time);
 
   const explicit = time.match(/(\d{1,2})\s*[:٫]\s*(\d{2})/u);
   if (explicit) {
     let hour = Number(explicit[1]);
     const minute = Number(explicit[2]);
-    if (/مساء|م\b|pm/i.test(time) && hour < 12) hour += 12;
-    if (/صباح|ص\b|am/i.test(time) && hour === 12) hour = 0;
-    if (/م\b/u.test(time) && hour < 12) hour += 12;
+    if (isPM && hour < 12) hour += 12;
+    if (isAM && hour === 12) hour = 0;
     return hour * 60 + minute;
   }
 
-  const hourOnly = time.match(/(\d{1,2})\s*(?:مساء|صباح|م\b|ص\b)/u);
-  if (hourOnly) {
+  const hourOnly = time.match(/(\d{1,2})/u);
+  if (hourOnly && (isPM || isAM)) {
     let hour = Number(hourOnly[1]);
-    if (/مساء|م\b/u.test(time) && hour < 12) hour += 12;
-    if (/صباح|ص\b/u.test(time) && hour === 12) hour = 0;
+    if (isPM && hour < 12) hour += 12;
+    if (isAM && hour === 12) hour = 0;
     return hour * 60;
   }
 
