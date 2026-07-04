@@ -24,8 +24,11 @@ export function SkeletonCard() {
 /** شبكة بطاقات هيكلية */
 export function SkeletonCardGrid({ count = 6 }: { count?: number }) {
   return (
-    <div className="sk-card-grid" aria-hidden="true" role="status" aria-label="جارٍ التحميل">
-      {Array.from({ length: count }).map((_, i) => <SkeletonCard key={i} />)}
+    <div role="status" aria-label="جارٍ التحميل" aria-live="polite">
+      <span className="sr-only">جارٍ التحميل…</span>
+      <div className="sk-card-grid" aria-hidden="true">
+        {Array.from({ length: count }).map((_, i) => <SkeletonCard key={i} />)}
+      </div>
     </div>
   );
 }
@@ -33,19 +36,22 @@ export function SkeletonCardGrid({ count = 6 }: { count?: number }) {
 /** جدول هيكلي: رأس + صفوف */
 export function SkeletonTable({ rows = 5, cols = 4 }: { rows?: number; cols?: number }) {
   return (
-    <div className="sk-table" aria-hidden="true" role="status">
-      <div className="sk-table__head">
-        {Array.from({ length: cols }).map((_, i) => (
-          <div key={i} className="ds-skeleton sk-table__cell sk-table__cell--head" />
-        ))}
-      </div>
-      {Array.from({ length: rows }).map((_, r) => (
-        <div key={r} className="sk-table__row">
-          {Array.from({ length: cols }).map((_, c) => (
-            <div key={c} className="ds-skeleton sk-table__cell" style={{ width: c === 0 ? "45%" : "15%" }} />
+    <div role="status" aria-label="جارٍ التحميل" aria-live="polite">
+      <span className="sr-only">جارٍ التحميل…</span>
+      <div className="sk-table" aria-hidden="true">
+        <div className="sk-table__head">
+          {Array.from({ length: cols }).map((_, i) => (
+            <div key={i} className="ds-skeleton sk-table__cell sk-table__cell--head" />
           ))}
         </div>
-      ))}
+        {Array.from({ length: rows }).map((_, r) => (
+          <div key={r} className="sk-table__row">
+            {Array.from({ length: cols }).map((_, c) => (
+              <div key={c} className="ds-skeleton sk-table__cell" style={{ width: c === 0 ? "45%" : "15%" }} />
+            ))}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
@@ -53,10 +59,15 @@ export function SkeletonTable({ rows = 5, cols = 4 }: { rows?: number; cols?: nu
 /** حالة تحميل صفحة كاملة — عمود من الأسطر الهيكلية */
 export function SkeletonPage() {
   return (
-    <div className="sk-page" role="status" aria-label="جارٍ التحميل" aria-live="polite">
-      <div className="ds-skeleton sk-page__title" />
-      <div className="ds-skeleton sk-page__subtitle" />
-      <SkeletonCardGrid count={6} />
+    <div role="status" aria-live="polite">
+      <span className="sr-only">جارٍ التحميل…</span>
+      <div className="sk-page" aria-hidden="true">
+        <div className="ds-skeleton sk-page__title" />
+        <div className="ds-skeleton sk-page__subtitle" />
+        <div className="sk-card-grid">
+          {Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)}
+        </div>
+      </div>
     </div>
   );
 }
