@@ -15,7 +15,7 @@ export type SeedBundle = {
   DEMO_SHEIKHS: any[];
   filterDemoQa: (opts: { categoryId?: string; search?: string }) => any[];
   searchDemoContent: (term: string) => any;
-  filterMiraclesSeed: () => any[];
+  filterMiraclesSeed: (opts?: { category?: string; sourceType?: string }) => any[];
   searchMiraclesSeed: (q: string) => any[];
   LESSONS_SEED: any[];
   findSeedLessonById: (id: string) => any;
