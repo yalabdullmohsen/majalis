@@ -1,5 +1,20 @@
 import { Link } from "wouter";
 
+function IslamicStarFooter() {
+  const cx = 16, r1 = 13, r2 = 7;
+  const pts = Array.from({ length: 16 }, (_, i) => {
+    const r = i % 2 === 0 ? r1 : r2;
+    const a = (Math.PI / 8) * i - Math.PI / 2;
+    return `${(cx + r * Math.cos(a)).toFixed(2)},${(cx + r * Math.sin(a)).toFixed(2)}`;
+  }).join(" ");
+  return (
+    <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true" style={{ opacity: 0.4 }}>
+      <polygon points={pts} fill="none" stroke="var(--majalis-brass,#C6A059)" strokeWidth="1.2" strokeLinejoin="round" />
+      <circle cx={cx} cy={cx} r="2.5" fill="var(--majalis-brass,#C6A059)" />
+    </svg>
+  );
+}
+
 const FOOTER_GROUPS = [
   {
     title: "المحتوى",
@@ -37,6 +52,7 @@ export function SiteFooter() {
     <footer className="site-footer site-footer--v3" dir="rtl" aria-label="تذييل موقع المجلس العلمي">
       <div className="site-footer-inner site-footer-inner--v3">
         <div className="site-footer-brand">
+          <IslamicStarFooter />
           <img src="/logo.png" alt="" width={40} height={40} className="site-footer-logo" aria-hidden="true" />
           <div>
             <strong>المجلس العلمي</strong>
