@@ -376,19 +376,23 @@ export async function getApprovedFawaid() {
   );
 }
 
-export async function getVerifiedHadith(options: { limit?: number; collection?: string; chapter?: string } = {}) {
+export async function getVerifiedHadith(
+  options: { limit?: number; collection?: string; chapter?: string; authenticityClass?: "sahih" | "daif" | "mawdu" } = {},
+) {
   return safeSupabaseQuery(
     "getVerifiedHadith",
     () => {
       let q = supabase
         .from("verified_hadith_items")
-        .select("id, title, text, narrator, source_name, grade, collection, chapter, explanation, keywords, hadith_number, metadata, created_at")
+        .select("id, title, text, narrator, source_name, grade, collection, chapter, explanation, keywords, hadith_number, metadata, created_at, authenticity_class")
         .eq("verification_status", "verified")
         .order("collection", { ascending: true })
         .order("hadith_number", { ascending: true })
         .limit(options.limit ?? 500);
       if (options.collection) q = q.eq("collection", options.collection);
       if (options.chapter) q = q.eq("chapter", options.chapter);
+      // ضمان عدم الاختلاط: التصفية على مستوى الخادم بحقل التصنيف الصريح
+      if (options.authenticityClass) q = q.eq("authenticity_class", options.authenticityClass);
       return q;
     },
     [],

@@ -4,7 +4,6 @@ import { RequestManager } from "@/lib/request-manager";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { PageHeader, Loading, Empty } from "@/components/ui-common";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
-import { useAuth } from "@/components/AuthProvider";
 import { RecommendationWidget } from "@/components/recommendations/RecommendationWidget";
 import { CitationActionBar } from "@/components/citation/CitationActionBar";
 
@@ -394,8 +393,36 @@ const CATEGORIES = [
   { id: "الأخوة والاجتماع", label: "الأخوة", keys: ["أخوة","مسلم","اجتماع","هجران","وحدة"] },
 ];
 
-export default function HadithPage() {
-  const { isAdmin } = useAuth();
+export type HadithClass = "sahih" | "daif" | "mawdu";
+
+export const HADITH_CLASS_META: Record<HadithClass, {
+  eyebrow: string; title: string; subtitle: string; empty: string; countUnit: string;
+}> = {
+  sahih: {
+    eyebrow: "السنة النبوية الشريفة",
+    title: "الأحاديث الصحيحة",
+    subtitle: "أحاديث نبوية صحيحة وحسنة من مصادر موثوقة ومحققة — الأربعون النووية وغيرها.",
+    empty: "لا توجد أحاديث في هذا التصنيف.",
+    countUnit: "حديث صحيح",
+  },
+  daif: {
+    eyebrow: "التمييز والتحذير",
+    title: "الأحاديث الضعيفة",
+    subtitle: "أحاديث ضعيفة الإسناد، تُذكر لبيان درجتها والتحذير من الاحتجاج بها.",
+    empty: "قيد الإضافة — تُضاف الأحاديث الضعيفة من مصادر تخريج موثّقة قريباً بإذن الله.",
+    countUnit: "حديث ضعيف",
+  },
+  mawdu: {
+    eyebrow: "التحذير والبيان",
+    title: "الأحاديث الموضوعة والمكذوبة",
+    subtitle: "أحاديث موضوعة ومكذوبة على النبي ﷺ، يُحذَّر منها ولا تجوز نسبتها إليه.",
+    empty: "قيد الإضافة — تُضاف الأحاديث الموضوعة من مصادر تخريج موثّقة قريباً بإذن الله.",
+    countUnit: "حديث موضوع",
+  },
+};
+
+export function HadithSection({ authenticityClass = "sahih" }: { authenticityClass?: HadithClass }) {
+  const meta = HADITH_CLASS_META[authenticityClass];
   const [items, setItems] = useState<HadithItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -407,11 +434,11 @@ export default function HadithPage() {
 
   useEffect(() => {
     setLoading(true);
-    RequestManager.run("hadith:list", () => getVerifiedHadith({ limit: 500 }))
+    RequestManager.run(`hadith:list:${authenticityClass}`, () => getVerifiedHadith({ limit: 500, authenticityClass }))
       .then(({ data }) => setItems((data as HadithItem[]) ?? []))
       .catch(() => setItems([]))
       .finally(() => setLoading(false));
-  }, []);
+  }, [authenticityClass]);
 
   const collections = useMemo(() => {
     const set = new Set<string>();
@@ -495,22 +522,20 @@ export default function HadithPage() {
   return (
     <div className="page-shell content-hub-page ds-page hadith-page">
       <PageHeader
-        eyebrow="السنة النبوية الشريفة"
-        title="الأحاديث الصحيحة"
-        subtitle="أحاديث نبوية مختارة من مصادر موثوقة ومحققة — الأربعون النووية وغيرها."
+        eyebrow={meta.eyebrow}
+        title={meta.title}
+        subtitle={meta.subtitle}
       />
 
       <div className="ds-section__head">
         <div className="hadith-stats-row">
-          {isAdmin && (
-            <>
-              <span className="hadith-stat">
-                <strong>{displayItems.length}</strong> حديث
-              </span>
-              <span className="hadith-stat">
-                <strong>{collections.length - 1}</strong> مجموعة
-              </span>
-            </>
+          <span className="hadith-stat">
+            <strong>{displayItems.length.toLocaleString("ar-EG")}</strong> {meta.countUnit}
+          </span>
+          {collections.length > 1 && (
+            <span className="hadith-stat">
+              <strong>{collections.length - 1}</strong> مجموعة
+            </span>
           )}
           {debouncedSearch && (
             <button
@@ -546,7 +571,7 @@ export default function HadithPage() {
           text={
             debouncedSearch.trim()
               ? `لا توجد أحاديث مطابقة لـ «${debouncedSearch.trim()}».`
-              : "لا توجد أحاديث في هذا التصنيف."
+              : meta.empty
           }
         />
       ) : (
@@ -589,4 +614,9 @@ export default function HadithPage() {
       )}
     </div>
   );
+}
+
+// المسار /hadith/sahih — الأحاديث الصحيحة (والقسم الافتراضي)
+export default function HadithPage() {
+  return <HadithSection authenticityClass="sahih" />;
 }

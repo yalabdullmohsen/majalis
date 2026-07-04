@@ -14772,3 +14772,56 @@ html[data-theme="dark"] .qc-card { background: var(--majalis-panel); }
 .fip-status--planned { background: var(--majalis-parchment-deep, #f0e8d6); color: var(--majalis-ink-soft, #5c564c); }
 html[data-theme="dark"] .fip-status--in-progress { background: rgba(251,191,36,0.16); color: #FCD34D; }
 html[data-theme="dark"] .fip-status--beta { background: rgba(59,130,246,0.16); color: #93C5FD; }
+
+/* ── فهرس الأحاديث (3 أقسام) — HadithIndex ── */
+.hadith-index-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.hadith-index-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1.4rem 1.25rem;
+  border: 1px solid var(--majalis-line, #e5ddd0);
+  border-top: 3px solid var(--majalis-emerald, #1f6e54);
+  border-radius: 0.9rem;
+  background: var(--majalis-panel, #fff);
+  box-shadow: var(--ds-shadow, 0 2px 8px rgba(22, 78, 60, 0.07));
+  text-decoration: none;
+  transition: transform 0.16s ease, box-shadow 0.16s ease;
+}
+.hadith-index-card:hover { transform: translateY(-3px); box-shadow: var(--ds-shadow-lg, 0 8px 24px rgba(22, 78, 60, 0.12)); }
+.hadith-index-card__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+}
+.hadith-index-card__title { margin: 0; font-size: 1.1rem; font-weight: 800; }
+.hadith-index-card__desc { margin: 0; font-size: 0.85rem; line-height: 1.75; color: var(--majalis-ink-soft, #5c564c); flex: 1; }
+.hadith-index-card__count {
+  align-self: flex-start;
+  padding: 0.2rem 0.7rem;
+  border-radius: 999px;
+  background: var(--majalis-parchment-deep, #f0e8d6);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--majalis-ink, #241f18);
+}
+.hadith-index-card__go {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--majalis-emerald, #1f6e54);
+}
+
+/* لون الأحاديث الموضوعة (لم يكن موجوداً) — للبادج في القوائم */
+.hadith-grade--mawdu, .grade--mawdu { color: #B91C1C; background: rgba(185, 28, 28, 0.1); }
+html[data-theme="dark"] .hadith-grade--mawdu, html[data-theme="dark"] .grade--mawdu { color: #FCA5A5; background: rgba(185, 28, 28, 0.18); }
