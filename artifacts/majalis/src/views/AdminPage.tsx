@@ -35,6 +35,7 @@ import { QuizSection } from "@/views/admin/QuizSection";
 import { RelationshipsSection } from "@/views/admin/RelationshipsSection";
 import { TelegramSection } from "@/views/admin/TelegramSection";
 import { UniversitiesSection } from "@/views/admin/UniversitiesAdminPage";
+import { ProphetStoriesSection } from "@/views/admin/ProphetStoriesSection";
 
 export default function AdminPage() {
   const [location] = useLocation();
@@ -56,6 +57,7 @@ export default function AdminPage() {
     <AdminShell section={section} onSectionChange={setSection}>
       {section === "telegram" && <TelegramSection />}
       {section === "universities" && <UniversitiesSection />}
+      {section === "prophet-stories" && <ProphetStoriesSection />}
       {section === "submissions" && <SubmissionsSection />}
       {section === "dashboard" && <DashboardSection />}
       {section === "aggregator" && <AggregatorSection />}

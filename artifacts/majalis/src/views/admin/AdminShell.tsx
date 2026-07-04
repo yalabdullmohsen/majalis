@@ -37,11 +37,13 @@ export type AdminSection =
   | "quiz"
   | "knowledge-graph"
   | "universities"
-  | "telegram";
+  | "telegram"
+  | "prophet-stories";
 
 export const ADMIN_NAV: { key: AdminSection; label: string }[] = [
-  { key: "dashboard",    label: "لوحة التحكم" },
-  { key: "telegram",     label: "📢 Telegram" },
+  { key: "dashboard",       label: "لوحة التحكم" },
+  { key: "prophet-stories", label: "📖 قصص الأنبياء — مراجعة" },
+  { key: "telegram",        label: "📢 Telegram" },
   { key: "universities", label: "دليل الجامعات" },
   { key: "submissions", label: "مقترحات المحتوى" },
   { key: "smart-cms", label: "CMS الذكي" },
