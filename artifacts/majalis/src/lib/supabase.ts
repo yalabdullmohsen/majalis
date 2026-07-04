@@ -11,7 +11,12 @@ import {
 } from "./demo-content";
 import { filterMiraclesSeed, searchMiraclesSeed } from "./miracles-seed";
 import { LESSONS_SEED, findSeedLessonById } from "./lessons-seed";
-import { DEMO_QUIZ_QUESTIONS } from "./quiz-seed";
+// بذور المسابقة (~128KB) تُحمَّل كسولاً عند الحاجة فقط حتى لا تثقل الحزمة الأساسية
+let _quizSeedPromise: Promise<typeof import("./quiz-seed")["DEMO_QUIZ_QUESTIONS"]> | null = null;
+function loadQuizSeed() {
+  if (!_quizSeedPromise) _quizSeedPromise = import("./quiz-seed").then((m) => m.DEMO_QUIZ_QUESTIONS);
+  return _quizSeedPromise;
+}
 import { ADHKAR_CATEGORIES, filterAdhkar } from "./adhkar-seed";
 import { searchPlatformSeed } from "./platform-search";
 import {
@@ -1000,7 +1005,8 @@ export async function getQuizQuestions({ section, level }: { section?: string; l
   // Always load localStorage-used IDs (covers seed + Supabase UUIDs both)
   const localUsedIds = getLocalUsedQuizIds();
 
-  const filterSeed = () => {
+  const filterSeed = async () => {
+    const DEMO_QUIZ_QUESTIONS = await loadQuizSeed();
     let rows = DEMO_QUIZ_QUESTIONS.filter(
       (q) => q.status !== "draft" && !localUsedIds.has(q.id ?? ""),
     );
@@ -1010,7 +1016,7 @@ export async function getQuizQuestions({ section, level }: { section?: string; l
   };
 
   if (!isConfigured) {
-    return { data: filterSeed(), error: null, usingSeed: true };
+    return { data: await filterSeed(), error: null, usingSeed: true };
   }
 
   try {
@@ -1028,12 +1034,12 @@ export async function getQuizQuestions({ section, level }: { section?: string; l
     // Also filter out any IDs that are locally tracked as used (double-check consistency)
     const rows = (data || []).filter((r: any) => !localUsedIds.has(String(r.id)));
     if (rows.length === 0) {
-      return { data: filterSeed(), error: null, usingSeed: true };
+      return { data: await filterSeed(), error: null, usingSeed: true };
     }
     return { data: rows, error: null, usingSeed: false };
   } catch (err) {
     logSupabaseError("getQuizQuestions", err);
-    return { data: filterSeed(), error: null, usingSeed: true };
+    return { data: await filterSeed(), error: null, usingSeed: true };
   }
 }
 
@@ -1066,7 +1072,7 @@ export async function adminSetQuizQuestionStatus(id: string, status: string) {
 /** رفع أسئلة الـ Seed إلى Supabase — يستخدم INSERT ON CONFLICT DO NOTHING لأمان كامل. */
 export async function upsertQuizSeedToDb(): Promise<{ ok: boolean; synced: number; error?: string }> {
   if (!isConfigured) return { ok: false, synced: 0, error: "supabase_not_configured" };
-  const rows = DEMO_QUIZ_QUESTIONS.filter((q) => q.status !== "draft").map((q) => ({
+  const rows = (await loadQuizSeed()).filter((q) => q.status !== "draft").map((q) => ({
     section: q.section,
     category: q.category || q.section,
     // map Arabic level names → English stored in DB
