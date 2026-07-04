@@ -158,7 +158,7 @@ self.addEventListener("message", (event) => {
     clearTimeout(_adhanTimers.get(prayerKey));
   }
 
-  const STALE_TOLERANCE_MS = 5 * 60000; // لا تُظهر إشعاراً لأذانٍ فات وقته (نوم/خلفية)
+  const STALE_TOLERANCE_MS = 2 * 60000; // لا تُظهر إشعاراً لأذانٍ فات وقته (نوم/خلفية)
 
   const promise = new Promise((resolve) => {
     const tid = setTimeout(() => {

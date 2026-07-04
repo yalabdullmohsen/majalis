@@ -35,7 +35,7 @@ export const ADHAN_EVENT_NAME = "majalis:adhan";
  * الجهاز/الخلفية ثم تُطلَق متأخّرة عند الاستيقاظ — فنمنع تشغيل أذانٍ فات وقته
  * (مثلاً بساعة). القيمة بالملّي ثانية.
  */
-const STALE_TOLERANCE_MS = 5 * 60_000; // 5 دقائق
+const STALE_TOLERANCE_MS = 2 * 60_000; // دقيقتان
 
 const _timers: ReturnType<typeof setTimeout>[] = [];
 
