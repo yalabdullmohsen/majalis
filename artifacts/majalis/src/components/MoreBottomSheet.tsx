@@ -68,6 +68,7 @@ const SHEET_SECTIONS = [
     { href: "/search",           label: "البحث",          Icon: IconSearch },
     { href: "/calendar",         label: "التقويم",        Icon: IconCalendar },
     { href: "/universities",     label: "الجامعات",       Icon: IconUniversities },
+    { href: "/features-in-progress", label: "مميزات قيد التطوير", Icon: IconSettings },
     { href: "/settings",         label: "الإعدادات",      Icon: IconSettings },
   ]},
 ];
