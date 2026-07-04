@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRoute, Link } from "wouter";
+import { Spinner } from "@/components/ui/spinner";
 import {
   fetchUniversity,
   groupProgramsByDegree,
@@ -307,7 +308,7 @@ export default function UniversityDetailPage() {
     return (
       <div dir="rtl" className="flex items-center justify-center min-h-screen">
         <div className="text-center space-y-3">
-          <div className="w-10 h-10 border-4 border-emerald-200 border-t-emerald-600 rounded-full animate-spin mx-auto" />
+          <Spinner className="size-10 text-[var(--majalis-emerald)]" aria-label="جارٍ التحميل" />
           <p className="text-sm text-gray-400">جارٍ التحميل…</p>
         </div>
       </div>

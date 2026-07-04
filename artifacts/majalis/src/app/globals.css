@@ -34,14 +34,8 @@ html {
 
 .quran-subnav__link.is-active,
 .quran-subnav__link:hover {
-  background: #E8F3ED;
-  color: #1F6E54;
-}
-
-html[data-theme="dark"] .quran-subnav__link.is-active,
-html[data-theme="dark"] .quran-subnav__link:hover {
-  background: #1a3d30;
-  color: #9fd4bc;
+  background: var(--mn-surface-active, #E8F3ED);
+  color: var(--mn-text-active, #1F6E54);
 }
 
 .quran-field-inline {
@@ -99,9 +93,9 @@ html[data-theme="dark"] .quran-subnav__link:hover {
   margin-right: 0.75rem;
   padding: 0.25rem 0.75rem;
   border-radius: 999px;
-  border: 1px solid #1F6E54;
+  border: 1px solid var(--mn-border-active);
   background: transparent;
-  color: #1F6E54;
+  color: var(--mn-text-active);
   cursor: pointer;
 }
 
@@ -133,8 +127,9 @@ html[data-theme="dark"] .quran-subnav__link:hover {
 }
 
 .tajweed-lesson-btn.is-active {
-  border-color: #1F6E54;
-  background: #E8F3ED;
+  border-color: var(--mn-border-active, #1F6E54);
+  background: var(--mn-surface-active, #E8F3ED);
+  color: var(--mn-text-active, #164E3C);
 }
 
 .tajweed-quiz-options {
@@ -152,8 +147,8 @@ html[data-theme="dark"] .quran-subnav__link:hover {
   cursor: pointer;
 }
 
-.tajweed-quiz-opt.is-correct { border-color: #1F6E54; background: #E8F3ED; }
-.tajweed-quiz-opt.is-wrong { border-color: #c0392b; background: #fdecea; }
+.tajweed-quiz-opt.is-correct { border-color: var(--mn-border-active); background: var(--mn-surface-active); color: var(--mn-text-active); }
+.tajweed-quiz-opt.is-wrong { border-color: var(--majalis-danger, #c0392b); background: var(--majalis-danger-muted, #fdecea); }
 
 .live-grid {
   display: grid;
@@ -163,10 +158,10 @@ html[data-theme="dark"] .quran-subnav__link:hover {
 }
 
 .live-card.is-active {
-  outline: 2px solid #1F6E54;
+  outline: 2px solid var(--mn-border-active);
 }
 
-.live-status--live { color: #1F6E54; font-weight: 700; }
+.live-status--live { color: var(--mn-border-active); font-weight: 700; }
 
 .live-player-wrap {
   padding: 1.25rem;
@@ -295,17 +290,12 @@ html[data-theme="dark"] .quran-subnav__link:hover {
 }
 
 .side-nav-link--v2.is-active {
-  background: #E8F3ED;
-  color: #164E3C;
+  background: var(--mn-surface-active);
+  color: var(--mn-text-active);
 }
 
 html[data-theme="dark"] .side-nav-drawer--v2 {
-  background: #1a1814;
-}
-
-html[data-theme="dark"] .side-nav-link--v2.is-active {
-  background: #1a3d30;
-  color: #9fd4bc;
+  background: var(--majalis-parchment, #111A16);
 }
 
 body.side-nav-open {

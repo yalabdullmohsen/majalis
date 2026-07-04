@@ -1,4 +1,5 @@
 import { sendJson } from "../../api/_http.mjs";
+import { requireAdminAccess } from "../../../lib/admin-auth.mjs";
 import { getSupabaseAdmin } from "../../../lib/supabase-admin.mjs";
 import { getSchedulerDashboard, runSchedulerJob, JOB_HANDLERS } from "../../../lib/content-production/scheduler.mjs";
 import { getObservability, processRetryQueue } from "../../../lib/content-production/monitoring.mjs";
@@ -6,6 +7,9 @@ import { validateContentItem } from "../../../lib/content-production/validator.m
 import { PRODUCTION_FLOW, PIPELINES } from "../../../lib/content-production/config.mjs";
 
 export default async function handler(req, res) {
+  const auth = await requireAdminAccess(req, res, sendJson);
+  if (!auth) return;
+
   const action = req.query?.action || req.body?.action || "dashboard";
   const admin = getSupabaseAdmin();
 

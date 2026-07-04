@@ -9,7 +9,8 @@ export function readAnthropicApiKey() {
 export function createAnthropicClient(Anthropic, apiKey = readAnthropicApiKey()) {
   return new Anthropic({
     apiKey,
-    maxRetries: 0,
+    maxRetries: 1,
+    timeout: 25_000,
     defaultHeaders: {
       "anthropic-version": ANTHROPIC_VERSION,
     },

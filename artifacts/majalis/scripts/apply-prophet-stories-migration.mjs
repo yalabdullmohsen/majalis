@@ -7,14 +7,9 @@
 import pg from "pg";
 const { Client } = pg;
 
-const client = new Client({
-  host: "aws-1-ap-northeast-1.pooler.supabase.com",
-  port: 6543,
-  database: "postgres",
-  user: "postgres.ngmvmlulzacrlicuagyp",
-  password: decodeURIComponent("%2F%2FHdx%3FY6m%2CDG3QH"),
-  ssl: { rejectUnauthorized: false },
-});
+const connectionString = process.env.DATABASE_URL;
+if (!connectionString) throw new Error("DATABASE_URL env var is required (see .env.local)");
+const client = new Client({ connectionString, ssl: { rejectUnauthorized: false } });
 
 // ── إنشاء الجدول ───────────────────────────────────────────────────────────
 const CREATE_TABLE = `

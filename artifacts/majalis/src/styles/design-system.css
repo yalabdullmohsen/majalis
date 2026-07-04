@@ -298,13 +298,27 @@ html {
 .ds-skeleton {
   background: linear-gradient(90deg, var(--ds-parchment-deep) 25%, #fff 50%, var(--ds-parchment-deep) 75%);
   background-size: 200% 100%;
-  animation: ds-shimmer 1.2s infinite;
+  animation: ds-shimmer 1.2s infinite linear;
   border-radius: var(--ds-radius-sm);
+  /* يحترم تفضيل تقليل الحركة */
 }
 
 @keyframes ds-shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  from { background-position: 200% 0; }
+  to   { background-position: -200% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-skeleton {
+    animation: none;
+    background: var(--ds-parchment-deep);
+  }
+}
+
+/* توحيد transitions — transform+opacity فقط لتجنب Layout Reflow */
+:root {
+  --ds-transition: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --ds-transition-slow: 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ── Home compact ── */

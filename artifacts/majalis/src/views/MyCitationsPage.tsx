@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
+import { Spinner } from "@/components/ui/spinner";
 import {
   type CitationFolder,
   type SavedCitation,
@@ -142,7 +143,7 @@ export default function MyCitationsPage() {
   if (authLoading) {
     return (
       <div dir="rtl" className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin w-10 h-10 border-4 border-emerald-600 border-t-transparent rounded-full" />
+        <Spinner className="size-10 text-[var(--majalis-emerald)]" aria-label="جارٍ التحميل" />
       </div>
     );
   }
@@ -322,7 +323,7 @@ export default function MyCitationsPage() {
         <main className="flex-1 min-w-0">
           {loading ? (
             <div className="flex items-center justify-center py-16">
-              <div className="animate-spin w-8 h-8 border-4 border-emerald-600 border-t-transparent rounded-full" />
+              <Spinner className="size-8 text-[var(--majalis-emerald)]" aria-label="جارٍ التحميل" />
             </div>
           ) : displayed.length === 0 ? (
             <div className="text-center py-16 space-y-3">

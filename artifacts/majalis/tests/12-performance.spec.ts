@@ -17,10 +17,11 @@ const THRESHOLDS = { fcp: 3000, lcp: 5000, cls: 0.25 };
 // Values are generous baselines measured locally — production (cached fonts) would be < 0.1.
 // Keep these high enough to catch real regressions, not to enforce production targets.
 const PAGE_CLS_LIMIT: Record<string, number> = {
-  "/quran":   0.65, // Amiri Quran font swap + async surah list (measured: 0.45-0.48)
-  "/lessons": 0.70, // async lesson data + font swap (measured: 0.34-0.58)
-  "/hadith":  0.30, // async card grid + font swap (measured: 0.18-0.25)
-  "/adhkar":  1.0,  // many Arabic text cards + font swap (measured: 0.64-0.91)
+  "/quran":            0.65, // Amiri Quran font swap + async surah list (measured: 0.45-0.48)
+  "/lessons":          0.70, // async lesson data + font swap (measured: 0.34-0.58)
+  "/hadith":           0.30, // async card grid + font swap (measured: 0.18-0.25)
+  "/adhkar":           1.0,  // many Arabic text cards + font swap (measured: 0.64-0.91)
+  "/islamic-stories":  0.40, // dark-theme card grid + font swap (measured: 0.23-0.30)
 };
 
 interface PerfResult {
@@ -32,7 +33,7 @@ interface PerfResult {
 
 const results: PerfResult[] = [];
 
-const PERF_PAGES = ["/", "/quran", "/hadith", "/lessons", "/adhkar"];
+const PERF_PAGES = ["/", "/quran", "/hadith", "/lessons", "/adhkar", "/islamic-stories"];
 
 test.describe.configure({ mode: "serial" });
 

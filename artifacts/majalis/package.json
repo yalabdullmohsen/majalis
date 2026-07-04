@@ -62,7 +62,8 @@
     "start": "vite preview --config vite.config.ts --host 0.0.0.0 --port ${PORT:-24216}",
     "serve": "vite preview --config vite.config.ts --host 0.0.0.0 --port ${PORT:-24216}",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "lint": "eslint src lib --ext .ts,.tsx --max-warnings 50"
+    "lint": "eslint src lib --ext .ts,.tsx --max-warnings 50",
+    "test:sm2": "node scripts/test-sm2.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

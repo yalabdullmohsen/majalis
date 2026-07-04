@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "wouter";
 import { AdminShell, type AdminSection } from "@/views/admin/AdminShell";
-import { AdminSectionBoundary } from "@/views/admin/AdminUI";
 import { DashboardSection } from "@/views/admin/DashboardSection";
 import { LessonsSection } from "@/views/admin/LessonsSection";
 import { SheikhsSection } from "@/views/admin/SheikhsSection";
@@ -37,6 +36,7 @@ import { RelationshipsSection } from "@/views/admin/RelationshipsSection";
 import { TelegramSection } from "@/views/admin/TelegramSection";
 import { UniversitiesSection } from "@/views/admin/UniversitiesAdminPage";
 import { ProphetStoriesSection } from "@/views/admin/ProphetStoriesSection";
+import { IslamicStoriesSection } from "@/views/admin/IslamicStoriesSection";
 
 export default function AdminPage() {
   const [location] = useLocation();
@@ -56,10 +56,10 @@ export default function AdminPage() {
 
   return (
     <AdminShell section={section} onSectionChange={setSection}>
-      <AdminSectionBoundary name={section} resetKey={section}>
       {section === "telegram" && <TelegramSection />}
       {section === "universities" && <UniversitiesSection />}
       {section === "prophet-stories" && <ProphetStoriesSection />}
+      {section === "islamic-stories" && <IslamicStoriesSection />}
       {section === "submissions" && <SubmissionsSection />}
       {section === "dashboard" && <DashboardSection />}
       {section === "aggregator" && <AggregatorSection />}
@@ -92,7 +92,6 @@ export default function AdminPage() {
       {section === "rulings" && <RulingsSection />}
       {section === "annual-courses" && <AnnualCoursesSection />}
       {section === "updates" && <UpdatesSection />}
-      </AdminSectionBoundary>
     </AdminShell>
   );
 }
