@@ -16033,3 +16033,160 @@ html[data-theme="dark"] .home-quiz-card {
   border-color: var(--majalis-line, #263D33);
   border-right-color: var(--majalis-brass, #D4AD50);
 }
+
+/* ══════════════════════════════════════════════════════════════
+   Design System v5 — Lesson Cards & Tabs Refinement
+   ══════════════════════════════════════════════════════════════ */
+
+/* بطاقة الدرس: استخدام tokens الجديدة */
+.lesson-unified-card {
+  background: var(--majalis-panel, #fff);
+  border-color: var(--majalis-line, #E8E2D8);
+  border-radius: 0.875rem;
+  box-shadow: var(--majalis-shadow-sm, 0 1px 3px rgba(26,23,20,0.08));
+  transition: box-shadow 220ms cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 220ms ease,
+              transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.lesson-unified-card:hover {
+  box-shadow: var(--majalis-shadow, 0 4px 16px rgba(26,23,20,0.06));
+  border-color: color-mix(in srgb, var(--majalis-emerald) 22%, var(--majalis-line));
+  transform: translateY(-1px);
+}
+
+.lesson-unified-card__header {
+  background: var(--majalis-emerald-deep, #0F4433);
+}
+
+.lesson-unified-card__title {
+  color: var(--majalis-ink, #1A1714);
+}
+
+/* Tabs / Chips: spring transitions */
+.content-hub-chip {
+  transition: background 180ms cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 180ms ease,
+              color 180ms ease,
+              transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.content-hub-chip:hover:not(.content-hub-chip--active) {
+  border-color: color-mix(in srgb, var(--majalis-emerald) 35%, var(--majalis-line));
+  color: var(--majalis-emerald-deep);
+  transform: scale(1.02);
+}
+
+.content-hub-chip:active {
+  transform: scale(0.97);
+  transition-duration: 80ms;
+}
+
+.content-hub-chip--active {
+  background: var(--majalis-emerald, #166048);
+  border-color: var(--majalis-emerald, #166048);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(22, 96, 72, 0.25);
+}
+
+/* صفحات المحتوى: PageHeader تحسين */
+.ds-page-header {
+  padding: 1.25rem 0 0.75rem;
+  border-bottom: 1px solid var(--majalis-line, #E8E2D8);
+  margin-bottom: 1.5rem;
+}
+
+.ds-page-header__eyebrow {
+  color: var(--majalis-brass, #9A6D1A);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-size: 0.72rem;
+}
+
+/* بطاقات المحتوى العام */
+.content-mini-card {
+  border-radius: 0.875rem;
+  border-color: var(--majalis-line, #E8E2D8);
+  transition: box-shadow 220ms cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 220ms ease,
+              transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.content-mini-card:hover {
+  box-shadow: 0 6px 20px rgba(22, 96, 72, 0.09);
+  border-color: color-mix(in srgb, var(--majalis-emerald) 22%, var(--majalis-line));
+  transform: translateY(-1px);
+}
+
+/* شريط الـ Tabs الرئيسي في Lessons/Library */
+.tabs-bar,
+.page-tab-row {
+  display: flex;
+  gap: 0.35rem;
+  padding: 0.35rem;
+  border-radius: 0.75rem;
+  background: var(--majalis-parchment-deep, #F0EBE0);
+  border: 1px solid var(--majalis-line, #E8E2D8);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.tabs-bar::-webkit-scrollbar,
+.page-tab-row::-webkit-scrollbar { display: none; }
+
+.tab-btn,
+.page-tab-btn {
+  flex-shrink: 0;
+  padding: 0.45rem 1rem;
+  border-radius: 0.55rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--majalis-ink-soft);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 180ms cubic-bezier(0.16, 1, 0.3, 1), color 180ms ease;
+  min-height: 36px;
+}
+
+.tab-btn--active,
+.page-tab-btn--active {
+  background: var(--majalis-panel, #fff);
+  color: var(--majalis-emerald-deep);
+  font-weight: 700;
+  box-shadow: 0 1px 4px rgba(26, 23, 20, 0.08);
+}
+
+/* ── Dark mode ── */
+html[data-theme="dark"] .lesson-unified-card {
+  background: var(--majalis-panel, #1A2820);
+  border-color: var(--majalis-line, #263D33);
+}
+
+html[data-theme="dark"] .content-mini-card {
+  background: var(--majalis-panel, #1A2820);
+  border-color: var(--majalis-line, #263D33);
+}
+
+html[data-theme="dark"] .tabs-bar,
+html[data-theme="dark"] .page-tab-row {
+  background: var(--majalis-parchment-deep, #151E1A);
+  border-color: var(--majalis-line, #263D33);
+}
+
+html[data-theme="dark"] .tab-btn--active,
+html[data-theme="dark"] .page-tab-btn--active {
+  background: var(--majalis-panel, #1A2820);
+  color: var(--majalis-emerald, #4DB88E);
+}
+
+html[data-theme="dark"] .content-hub-chip--active {
+  background: var(--majalis-emerald, #4DB88E);
+  color: var(--majalis-parchment, #0D1410);
+  border-color: var(--majalis-emerald, #4DB88E);
+}
+
+html[data-theme="dark"] .ds-page-header {
+  border-bottom-color: var(--majalis-line, #263D33);
+}
