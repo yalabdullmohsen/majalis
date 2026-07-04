@@ -2,67 +2,56 @@ import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { adminGetDashboardStats, adminResolveReport } from "@/lib/supabase";
 import { getCmsDashboardStats } from "@/lib/cms/supabase-cms";
-import { CMS_KIND_LABELS, type CmsContentKind } from "@/lib/cms/content-types";
 import { getTopSearchQueries } from "@/lib/search-history";
 import { isSupabaseConfigured } from "@/lib/supabase-config";
-import { C } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
-import { AdminSectionToolbar } from "./AdminSectionToolbar";
+import { useAuth } from "@/components/AuthProvider";
 import { useAdminShell, type AdminSection } from "./AdminShell";
 
 type DashboardData = Awaited<ReturnType<typeof adminGetDashboardStats>>;
 
-const EMPTY_DASHBOARD: DashboardData = {
-  stats: {
-    totalLessons: 0,
-    coursesCount: 0,
-    lecturesCount: 0,
-    regularLessonsCount: 0,
-    totalSheikhs: 0,
-    totalUsers: 0,
-    todayViews: 0,
-    totalBooks: 0,
-    totalBenefits: 0,
-    totalQA: 0,
-    totalHadith: 0,
-    totalStories: 0,
-    totalMiracles: 0,
-    totalRulings: 0,
-    totalFiqhItems: 0,
-    pendingReports: 0,
-    totalTranscriptions: 0,
-    dbConnected: false,
-    serverOk: false,
-  },
-  recentReports: [],
-  recentLessons: [],
-  topViewedLessons: [],
-  topSearches: [],
-} as unknown as DashboardData;
+function getGreeting(): string {
+  const h = new Date().getHours();
+  if (h < 5)  return "طاب سهركم";
+  if (h < 12) return "صباح الخير";
+  if (h < 18) return "مساء الخير";
+  return "مساء النور";
+}
 
-type QuickLink =
-  | { icon: string; label: string; section: AdminSection; href?: never; color: string }
-  | { icon: string; label: string; href: string; section?: never; color: string };
+function getArabicDate(): string {
+  return new Date().toLocaleDateString("ar-KW", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
 
-const QUICK_ADMIN_LINKS: QuickLink[] = [
-  { icon: "📚", label: "إدارة الدروس",   section: "lessons",  color: C.emeraldDeep },
-  { icon: "👤", label: "إدارة المشايخ",  section: "sheikhs",  color: C.brassDeep },
-  { icon: "📖", label: "إدارة المكتبة",  section: "library",  color: C.emeraldDeep },
-  { icon: "❓", label: "إدارة الأسئلة",  section: "qa",       color: C.emeraldDeep },
-  { icon: "💡", label: "إدارة الفوائد",  section: "fawaid",   color: C.brassDeep },
-  { icon: "🔍", label: "مراجعة المحتوى", href: "/admin/automation/review", color: "#c2410c" },
-  { icon: "⬆️", label: "الاستيراد",      href: "/admin/auto-content",      color: "#0369a1" },
-  { icon: "⚙️", label: "الأتمتة",        href: "/admin/automation/center", color: "#7c3aed" },
-  { icon: "🛠️", label: "الإعدادات",     section: "settings", color: "#475569" },
-];
+type StatCard = {
+  label: string;
+  value: number;
+  icon: string;
+  accent: string;
+  section?: AdminSection;
+};
+
+type StatGroup = {
+  title: string;
+  cards: StatCard[];
+};
+
+type QuickAction =
+  | { icon: string; label: string; action: () => void; href?: never; primary?: boolean }
+  | { icon: string; label: string; href: string; action?: never; primary?: boolean };
 
 export function DashboardSection() {
-  const { showSuccess, showError, onSectionChange } = useAdminShell();
-  const [data, setData] = useState<DashboardData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [localSearches, setLocalSearches] = useState<{ query: string; count: number }[]>([]);
+  const { showError, showSuccess, onSectionChange } = useAdminShell();
+  const { user } = useAuth();
 
-  const [cmsStats, setCmsStats] = useState<Awaited<ReturnType<typeof getCmsDashboardStats>> | null>(null);
+  const [data, setData]           = useState<DashboardData | null>(null);
+  const [loading, setLoading]     = useState(true);
+  const [cmsStats, setCmsStats]   = useState<Awaited<ReturnType<typeof getCmsDashboardStats>> | null>(null);
+  const [localSearches, setLocalSearches] = useState<{ query: string; count: number }[]>([]);
 
   const load = () => {
     setLoading(true);
@@ -72,23 +61,17 @@ export function DashboardSection() {
         setCmsStats(cms);
       })
       .catch(() => {
-        setData(EMPTY_DASHBOARD);
         showError("تعذّر تحميل بيانات لوحة التحكم.");
       })
       .finally(() => setLoading(false));
     setLocalSearches(getTopSearchQueries(6));
   };
 
-  useEffect(() => {
-    load();
-  }, []);
+  useEffect(() => { load(); }, []);
 
   const resolveReport = async (id: string) => {
     const { error } = await adminResolveReport(id);
-    if (error) {
-      showError("تعذّر إغلاق البلاغ.");
-      return;
-    }
+    if (error) { showError("تعذّر إغلاق البلاغ."); return; }
     showSuccess("تم إغلاق البلاغ.");
     load();
   };
@@ -97,215 +80,259 @@ export function DashboardSection() {
 
   const { stats, recentReports, recentLessons, topViewedLessons, topSearches } = data;
   const searches = topSearches.length > 0 ? topSearches : localSearches;
+  const fullName = user?.profile?.full_name ?? "المشرف";
 
-  const cards = [
-    { label: "الدروس", value: stats.totalLessons, tone: C.emeraldDeep },
-    { label: "دورات", value: stats.coursesCount, tone: C.emeraldDeep },
-    { label: "دروس", value: stats.lecturesCount, tone: C.emeraldDeep },
-    { label: "دروس عادية", value: stats.regularLessonsCount, tone: C.emeraldDeep },
-    { label: "المشايخ", value: stats.totalSheikhs, tone: C.brassDeep },
-    { label: "المستخدمون", value: stats.totalUsers, tone: "#1d4ed8" },
-    { label: "مشاهدات اليوم", value: stats.todayViews, tone: "#475569" },
-    { label: "الكتب", value: stats.totalBooks, tone: C.brassDeep },
-    { label: "الفوائد", value: stats.totalBenefits, tone: C.emeraldDeep },
-    { label: "الأسئلة", value: stats.totalQA, tone: C.emeraldDeep },
-    { label: "الأحاديث", value: stats.totalHadith, tone: C.brassDeep },
-    { label: "القصص", value: stats.totalStories, tone: C.emeraldDeep },
-    { label: "الإعجاز العلمي", value: stats.totalMiracles, tone: "#0369a1" },
-    { label: "الأحكام", value: stats.totalRulings, tone: "#7c3aed" },
-    { label: "قرارات مجلس الفقه", value: stats.totalFiqhItems, tone: "#c2410c" },
-    { label: "بلاغات معلّقة", value: stats.pendingReports, tone: stats.pendingReports ? "#dc2626" : C.inkSoft },
-    { label: "التفريغات", value: stats.totalTranscriptions, tone: "#0f766e" },
+  const STAT_GROUPS: StatGroup[] = [
+    {
+      title: "المحتوى",
+      cards: [
+        { label: "الدروس",          value: stats.totalLessons,         icon: "🎬", accent: "#1a6b52", section: "lessons" },
+        { label: "دورات",            value: stats.coursesCount,         icon: "🎓", accent: "#1a6b52" },
+        { label: "المشايخ",          value: stats.totalSheikhs,         icon: "👤", accent: "#8a6d1e", section: "sheikhs" },
+        { label: "الكتب",            value: stats.totalBooks,           icon: "📚", accent: "#8a6d1e" },
+        { label: "الفوائد",          value: stats.totalBenefits,        icon: "💡", accent: "#1a6b52", section: "fawaid" },
+        { label: "الأسئلة",          value: stats.totalQA,              icon: "❓", accent: "#1a6b52", section: "qa" },
+        { label: "الإعجاز العلمي",  value: stats.totalMiracles,        icon: "✨", accent: "#0369a1", section: "miracles" },
+        { label: "القصص",            value: stats.totalStories,         icon: "🕌", accent: "#1a6b52" },
+      ],
+    },
+    {
+      title: "الشريعة",
+      cards: [
+        { label: "الأحاديث",         value: stats.totalHadith,          icon: "📜", accent: "#8a6d1e" },
+        { label: "الأحكام",          value: stats.totalRulings,         icon: "⚖️", accent: "#7c3aed", section: "rulings" },
+        { label: "قرارات الفقه",     value: stats.totalFiqhItems,       icon: "🏛️", accent: "#c2410c", section: "fiqh-council" },
+        { label: "التفريغات",        value: stats.totalTranscriptions,  icon: "📝", accent: "#0f766e" },
+      ],
+    },
+    {
+      title: "المستخدمون والنظام",
+      cards: [
+        { label: "المستخدمون",       value: stats.totalUsers,           icon: "👥", accent: "#1d4ed8", section: "users" },
+        { label: "مشاهدات اليوم",    value: stats.todayViews,           icon: "👁️", accent: "#475569" },
+        { label: "بلاغات معلّقة",    value: stats.pendingReports,       icon: "🚩", accent: stats.pendingReports > 0 ? "#dc2626" : "#475569" },
+      ],
+    },
   ];
+
+  const QUICK_ACTIONS: QuickAction[] = [
+    { icon: "🎬", label: "الدروس",          action: () => onSectionChange("lessons"), primary: true },
+    { icon: "👤", label: "المشايخ",         action: () => onSectionChange("sheikhs") },
+    { icon: "📚", label: "المكتبة",         action: () => onSectionChange("library") },
+    { icon: "❓", label: "الأسئلة",         action: () => onSectionChange("qa") },
+    { icon: "💡", label: "الفوائد",         action: () => onSectionChange("fawaid") },
+    { icon: "🔍", label: "مراجعة المحتوى",  href: "/admin/automation/review" },
+    { icon: "⬆️", label: "استيراد",         href: "/admin/auto-content" },
+    { icon: "⚙️", label: "الأتمتة",         href: "/admin/automation/center" },
+  ];
+
+  const dbOk = isSupabaseConfigured() && stats.dbConnected !== false;
 
   return (
     <div>
-      <AdminSectionToolbar title="لوحة التحكم" />
-
-      {/* قسم إدارة المحتوى — واضح على الجوال ومناسب للمس */}
-      <section style={{ marginBottom: "1.75rem" }}>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "0.5rem", marginBottom: "0.75rem" }}>
-          <h2 style={{ margin: 0, fontSize: "1rem", fontWeight: 700, color: C.ink }}>إدارة المحتوى</h2>
-          <Link
-            href="/admin/autonomous-platform"
-            style={{
-              display: "inline-flex", alignItems: "center", gap: "0.35rem",
-              padding: "0.45rem 1rem", borderRadius: "0.5rem", textDecoration: "none",
-              fontSize: "0.8125rem", fontWeight: 600,
-              background: C.emerald, color: "#fff",
-            }}
-          >
-            مركز الإدارة الكامل ←
-          </Link>
+      {/* ── بانر الترحيب ── */}
+      <div className="admin-welcome">
+        <div className="admin-welcome__text">
+          <p className="admin-welcome__greeting">{getGreeting()}</p>
+          <p className="admin-welcome__name">{fullName}</p>
+          <p className="admin-welcome__date">{getArabicDate()}</p>
         </div>
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(100px, 1fr))",
-          gap: "0.625rem",
-        }}>
-          {QUICK_ADMIN_LINKS.map((item) =>
-            item.href ? (
-              <Link
-                key={item.label}
-                href={item.href}
-                style={{
-                  display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
-                  gap: "0.35rem", padding: "0.875rem 0.5rem",
-                  background: C.panel, border: `2px solid ${C.line}`,
-                  borderRadius: "0.75rem", textDecoration: "none",
-                  fontSize: "0.8rem", fontWeight: 600, color: item.color,
-                  minHeight: "5.5rem", cursor: "pointer",
-                  transition: "border-color 0.15s, box-shadow 0.15s",
-                }}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.borderColor = item.color; (e.currentTarget as HTMLAnchorElement).style.boxShadow = `0 0 0 3px ${item.color}22`; }}
-                onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.borderColor = C.line; (e.currentTarget as HTMLAnchorElement).style.boxShadow = "none"; }}
-              >
-                <span style={{ fontSize: "1.75rem", lineHeight: 1 }}>{item.icon}</span>
-                <span style={{ textAlign: "center", lineHeight: 1.25 }}>{item.label}</span>
-              </Link>
-            ) : (
-              <button
-                key={item.label}
-                type="button"
-                onClick={() => item.section && onSectionChange(item.section)}
-                style={{
-                  display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
-                  gap: "0.35rem", padding: "0.875rem 0.5rem",
-                  background: C.panel, border: `2px solid ${C.line}`,
-                  borderRadius: "0.75rem",
-                  fontSize: "0.8rem", fontWeight: 600, color: item.color,
-                  minHeight: "5.5rem", cursor: "pointer", fontFamily: "inherit",
-                  transition: "border-color 0.15s, box-shadow 0.15s",
-                }}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.borderColor = item.color; (e.currentTarget as HTMLButtonElement).style.boxShadow = `0 0 0 3px ${item.color}22`; }}
-                onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.borderColor = C.line; (e.currentTarget as HTMLButtonElement).style.boxShadow = "none"; }}
-              >
-                <span style={{ fontSize: "1.75rem", lineHeight: 1 }}>{item.icon}</span>
-                <span style={{ textAlign: "center", lineHeight: 1.25 }}>{item.label}</span>
-              </button>
-            )
-          )}
-        </div>
-      </section>
-
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))", gap: "0.75rem", marginBottom: "1.5rem" }}>
-        {cards.map((card) => (
-          <div key={card.label} style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.625rem", padding: "1rem", textAlign: "center" }}>
-            <p style={{ margin: 0, fontSize: "1.75rem", fontWeight: 700, color: card.tone }}>{card.value.toLocaleString("ar")}</p>
-            <p style={{ margin: "0.35rem 0 0", fontSize: "0.8125rem", color: C.inkSoft }}>{card.label}</p>
-          </div>
-        ))}
+        <div className="admin-welcome__icon" aria-hidden="true">🕌</div>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1rem", marginBottom: "1.5rem" }}>
-        <section style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.625rem", padding: "1.25rem" }}>
-          <h3 style={{ margin: "0 0 0.75rem", color: C.emeraldDeep, fontSize: "1rem" }}>حالة النظام</h3>
-          <ul style={{ margin: 0, paddingInlineStart: "1.1rem", color: C.inkSoft, fontSize: "0.875rem", lineHeight: 1.9 }}>
-            <li>Supabase: {isSupabaseConfigured() ? (stats.dbConnected !== false ? "متصل" : "غير متاح") : "وضع seed (بدون DB)"}</li>
-            <li>الخادم: {stats.serverOk ? "يعمل" : "تحقق يدويًا"}</li>
-            <li>التحديث التلقائي: <code>/api/cron/sync-data</code></li>
-          </ul>
-        </section>
+      {/* ── حالة النظام ── */}
+      <div className="admin-status-row">
+        <span className={`admin-status-dot admin-status-dot--${dbOk ? "ok" : "warn"}`}>
+          قاعدة البيانات: {dbOk ? "متصلة" : "غير متاحة"}
+        </span>
+        <span className={`admin-status-dot admin-status-dot--${stats.serverOk ? "ok" : "warn"}`}>
+          الخادم: {stats.serverOk ? "يعمل" : "تحقق يدوياً"}
+        </span>
+        {stats.pendingReports > 0 && (
+          <span className="admin-status-dot admin-status-dot--error">
+            {stats.pendingReports} بلاغ معلّق
+          </span>
+        )}
+        {cmsStats && (
+          <span className="admin-status-dot admin-status-dot--ok">
+            CMS: {cmsStats.indexTotal.toLocaleString("ar")} مفهرس
+          </span>
+        )}
+      </div>
 
-        <section style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.625rem", padding: "1.25rem" }}>
-          <h3 style={{ margin: "0 0 0.75rem", color: C.emeraldDeep, fontSize: "1rem" }}>فهرس CMS</h3>
-          {cmsStats ? (
-            <ul style={{ margin: 0, paddingInlineStart: "1.1rem", color: C.inkSoft, fontSize: "0.875rem", lineHeight: 1.9 }}>
-              <li>إجمالي المفهرس: {cmsStats.indexTotal.toLocaleString("ar")}</li>
-              <li>عمليات استيراد: {cmsStats.importJobsTotal.toLocaleString("ar")}</li>
-              <li>أذكار موثقة: {cmsStats.verifiedAdhkarTotal.toLocaleString("ar")}</li>
-              <li>سجل تدقيق اليوم: {cmsStats.auditLogsToday.toLocaleString("ar")}</li>
-              <li>مجدولة للنشر: {cmsStats.scheduledCount.toLocaleString("ar")}</li>
-              {cmsStats.lastImportAt && (
-                <li>
-                  آخر استيراد: {cmsStats.lastImportType} ({cmsStats.lastImportImported ?? 0} صف) — {cmsStats.lastImportStatus}
-                </li>
-              )}
-              {Object.entries(cmsStats.indexByKind).slice(0, 5).map(([k, v]) => (
-                <li key={k}>{CMS_KIND_LABELS[k as CmsContentKind] || k}: {v}</li>
-              ))}
-              {cmsStats.sources.length > 0 && (
-                <li style={{ fontSize: "0.75rem" }}>مصادر: {cmsStats.sources.join("، ")}</li>
-              )}
-            </ul>
+      {/* ── الأفعال السريعة ── */}
+      <div className="admin-quick-actions">
+        {QUICK_ACTIONS.map((qa) =>
+          qa.href ? (
+            <Link
+              key={qa.label}
+              href={qa.href}
+              className={`admin-quick-action${qa.primary ? " admin-quick-action--primary" : ""}`}
+            >
+              <span>{qa.icon}</span>
+              <span>{qa.label}</span>
+            </Link>
           ) : (
-            <p style={{ margin: 0, color: C.inkSoft, fontSize: "0.875rem" }}>جاري تحميل إحصائيات CMS…</p>
-          )}
-        </section>
+            <button
+              key={qa.label}
+              type="button"
+              onClick={qa.action}
+              className={`admin-quick-action${qa.primary ? " admin-quick-action--primary" : ""}`}
+            >
+              <span>{qa.icon}</span>
+              <span>{qa.label}</span>
+            </button>
+          )
+        )}
+      </div>
 
-        <section style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.625rem", padding: "1.25rem" }}>
-          <h3 style={{ margin: "0 0 0.75rem", color: C.emeraldDeep, fontSize: "1rem" }}>آخر تحديثات الدروس</h3>
+      {/* ── الإحصائيات ── */}
+      {STAT_GROUPS.map((group) => (
+        <div key={group.title} className="admin-stat-section">
+          <p className="admin-stat-section__title">{group.title}</p>
+          <div className="admin-stat-grid">
+            {group.cards.map((card) => (
+              <div
+                key={card.label}
+                className={`admin-stat-card${card.section ? " admin-stat-card--clickable" : ""}`}
+                style={{ "--card-accent": card.accent } as React.CSSProperties}
+                onClick={() => card.section && onSectionChange(card.section)}
+                role={card.section ? "button" : undefined}
+                tabIndex={card.section ? 0 : undefined}
+                onKeyDown={(e) => {
+                  if (card.section && (e.key === "Enter" || e.key === " ")) {
+                    e.preventDefault();
+                    onSectionChange(card.section);
+                  }
+                }}
+              >
+                <span className="admin-stat-card__icon">{card.icon}</span>
+                <p className="admin-stat-card__value">
+                  {card.value.toLocaleString("ar")}
+                </p>
+                <p className="admin-stat-card__label">{card.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+
+      {/* ── بلاغات معلّقة ── */}
+      {recentReports.length > 0 && (
+        <div className="admin-reports-panel">
+          <p className="admin-reports-panel__title">🚩 بلاغات تحتاج مراجعة</p>
+          {recentReports.map((rep: any) => (
+            <div key={rep.id} className="admin-report-item">
+              <span className="admin-report-item__type">{rep.report_type}</span>
+              <p className="admin-report-item__desc">{rep.description}</p>
+              <button
+                type="button"
+                onClick={() => resolveReport(rep.id)}
+                className="admin-report-item__btn"
+              >
+                تمت المراجعة
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* ── لوحات المعلومات ── */}
+      <div className="admin-info-grid">
+        {/* آخر الدروس */}
+        <div className="admin-info-panel">
+          <p className="admin-info-panel__title">🕒 آخر تحديثات الدروس</p>
           {recentLessons.length === 0 ? (
-            <p style={{ margin: 0, color: C.inkSoft, fontSize: "0.875rem" }}>لا توجد تحديثات حديثة.</p>
+            <p className="admin-info-panel__empty">لا توجد تحديثات حديثة.</p>
           ) : (
-            <ul style={{ margin: 0, padding: 0, listStyle: "none" }}>
+            <ul className="admin-info-panel__list">
               {recentLessons.map((lesson: any) => (
-                <li key={lesson.id} style={{ padding: "0.35rem 0", borderBottom: `1px solid ${C.line}`, fontSize: "0.8125rem" }}>
-                  <strong style={{ color: C.ink }}>{lesson.title}</strong>
-                  <span style={{ color: C.inkSoft, marginInlineStart: "0.5rem" }}>
-                    {lesson.updated_at ? new Date(lesson.updated_at).toLocaleDateString("ar-KW") : ""}
+                <li key={lesson.id} className="admin-info-panel__item">
+                  <span className="admin-info-panel__item-title">{lesson.title}</span>
+                  <span className="admin-info-panel__item-meta">
+                    {lesson.updated_at
+                      ? new Date(lesson.updated_at).toLocaleDateString("ar-KW")
+                      : ""}
                   </span>
                 </li>
               ))}
             </ul>
           )}
-        </section>
-      </div>
+        </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1rem", marginBottom: "1.5rem" }}>
-        <section style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.625rem", padding: "1.25rem" }}>
-          <h3 style={{ margin: "0 0 0.75rem", color: C.emeraldDeep, fontSize: "1rem" }}>أكثر الدروس مشاهدة</h3>
+        {/* أكثر الدروس مشاهدة */}
+        <div className="admin-info-panel">
+          <p className="admin-info-panel__title">🔥 أكثر الدروس مشاهدة</p>
           {topViewedLessons.length === 0 ? (
-            <p style={{ margin: 0, color: C.inkSoft, fontSize: "0.875rem" }}>لا توجد مشاهدات مسجّلة بعد.</p>
+            <p className="admin-info-panel__empty">لا توجد مشاهدات مسجّلة بعد.</p>
           ) : (
-            <ol style={{ margin: 0, paddingInlineStart: "1.25rem", fontSize: "0.875rem", lineHeight: 1.8 }}>
+            <ol className="admin-info-panel__list" style={{ paddingInlineStart: "1.25rem", listStyle: "decimal" }}>
               {topViewedLessons.map((item) => (
-                <li key={item.id}>
-                  <Link href={`/lessons/${item.id}`} style={{ color: C.brassDeep, textDecoration: "none" }}>{item.title}</Link>
-                  <span style={{ color: C.inkSoft }}> ({item.views})</span>
+                <li key={item.id} className="admin-info-panel__item">
+                  <Link
+                    href={`/lessons/${item.id}`}
+                    className="admin-info-panel__item-title"
+                  >
+                    {item.title}
+                  </Link>
+                  <span className="admin-info-panel__item-meta">{item.views} مشاهدة</span>
                 </li>
               ))}
             </ol>
           )}
-        </section>
+        </div>
 
-        <section style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.625rem", padding: "1.25rem" }}>
-          <h3 style={{ margin: "0 0 0.75rem", color: C.emeraldDeep, fontSize: "1rem" }}>أكثر عمليات البحث</h3>
+        {/* عمليات البحث */}
+        <div className="admin-info-panel">
+          <p className="admin-info-panel__title">🔍 أكثر عمليات البحث</p>
           {searches.length === 0 ? (
-            <p style={{ margin: 0, color: C.inkSoft, fontSize: "0.875rem" }}>لا توجد عمليات بحث مسجّلة بعد.</p>
+            <p className="admin-info-panel__empty">لا توجد عمليات بحث مسجّلة بعد.</p>
           ) : (
-            <ol style={{ margin: 0, paddingInlineStart: "1.25rem", fontSize: "0.875rem", lineHeight: 1.8 }}>
+            <ol className="admin-info-panel__list" style={{ paddingInlineStart: "1.25rem", listStyle: "decimal" }}>
               {searches.map((item) => (
-                <li key={item.query}>
-                  <Link href={`/search/${encodeURIComponent(item.query)}`} style={{ color: C.brassDeep, textDecoration: "none" }}>{item.query}</Link>
-                  <span style={{ color: C.inkSoft }}> ({item.count})</span>
+                <li key={item.query} className="admin-info-panel__item">
+                  <Link
+                    href={`/search/${encodeURIComponent(item.query)}`}
+                    className="admin-info-panel__item-title"
+                  >
+                    {item.query}
+                  </Link>
+                  <span className="admin-info-panel__item-meta">{item.count} مرة</span>
                 </li>
               ))}
             </ol>
           )}
-        </section>
-      </div>
+        </div>
 
-      {recentReports.length > 0 && (
-        <section style={{ background: "#FEF2F2", border: "1px solid #fecaca", borderRadius: "0.625rem", padding: "1.25rem" }}>
-          <h3 style={{ margin: "0 0 0.75rem", color: "#b91c1c", fontSize: "1rem" }}>بلاغات تحتاج مراجعة</h3>
-          <div style={{ display: "grid", gap: "0.5rem" }}>
-            {recentReports.map((rep: any) => (
-              <div key={rep.id} style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem", alignItems: "center", background: C.panel, borderRadius: "0.5rem", padding: "0.75rem" }}>
-                <span style={{ fontSize: "0.75rem", color: "#b91c1c", fontWeight: 700 }}>{rep.report_type}</span>
-                <p style={{ flex: 1, margin: 0, fontSize: "0.8125rem", color: C.ink }}>{rep.description}</p>
-                <button
-                  type="button"
-                  onClick={() => resolveReport(rep.id)}
-                  style={{ padding: "0.35rem 0.75rem", borderRadius: "0.375rem", border: "none", background: C.emerald, color: C.parchment, cursor: "pointer", fontFamily: "inherit", fontSize: "0.75rem" }}
-                >
-                  تمت المراجعة
-                </button>
-              </div>
-            ))}
+        {/* حالة CMS */}
+        {cmsStats && (
+          <div className="admin-info-panel">
+            <p className="admin-info-panel__title">📊 فهرس CMS</p>
+            <ul className="admin-info-panel__list">
+              {[
+                { label: "إجمالي المفهرس",     value: cmsStats.indexTotal.toLocaleString("ar") },
+                { label: "عمليات استيراد",      value: cmsStats.importJobsTotal.toLocaleString("ar") },
+                { label: "أذكار موثقة",         value: cmsStats.verifiedAdhkarTotal.toLocaleString("ar") },
+                { label: "سجل تدقيق اليوم",    value: cmsStats.auditLogsToday.toLocaleString("ar") },
+                { label: "مجدولة للنشر",        value: cmsStats.scheduledCount.toLocaleString("ar") },
+              ].map((row) => (
+                <li key={row.label} className="admin-info-panel__item">
+                  <span className="admin-info-panel__item-title">{row.label}</span>
+                  <span className="admin-info-panel__item-meta">{row.value}</span>
+                </li>
+              ))}
+              {cmsStats.lastImportAt && (
+                <li className="admin-info-panel__item">
+                  <span className="admin-info-panel__item-title">آخر استيراد</span>
+                  <span className="admin-info-panel__item-meta">
+                    {cmsStats.lastImportType} · {cmsStats.lastImportStatus}
+                  </span>
+                </li>
+              )}
+            </ul>
           </div>
-        </section>
-      )}
+        )}
+      </div>
     </div>
   );
 }
