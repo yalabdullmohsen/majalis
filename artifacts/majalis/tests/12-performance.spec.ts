@@ -32,7 +32,7 @@ interface PerfResult {
 
 const results: PerfResult[] = [];
 
-const PERF_PAGES = ["/", "/quran", "/hadith", "/lessons", "/adhkar"];
+const PERF_PAGES = ["/", "/quran", "/hadith", "/lessons", "/adhkar", "/islamic-stories"];
 
 test.describe.configure({ mode: "serial" });
 
