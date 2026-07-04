@@ -73,6 +73,12 @@ CREATE TABLE IF NOT EXISTS lesson_ratings (
   UNIQUE (lesson_id, user_id)
 );
 
+-- توافق مع مخطط سابق قد يحمل جدول lesson_ratings بشكل قديم (بلا updated_at):
+-- CREATE TABLE IF NOT EXISTS يتخطّى الإنشاء، فنُضيف الأعمدة الناقصة يدوياً حتى
+-- لا يفشل تريجر update_lesson_rating_updated_at عند تحديث أي تقييم.
+ALTER TABLE lesson_ratings ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT now();
+ALTER TABLE lesson_ratings ADD COLUMN IF NOT EXISTS comment    TEXT;
+
 CREATE INDEX IF NOT EXISTS idx_les_ratings_lesson ON lesson_ratings (lesson_id);
 CREATE INDEX IF NOT EXISTS idx_les_ratings_user   ON lesson_ratings (user_id);
 
