@@ -1,7 +1,7 @@
-/** PWA service worker v12 — network-first for app shell, cache-first for static Quran/lesson data. */
+/** PWA service worker v13 — network-first for app shell, cache-first for static Quran/lesson data. */
 
-const SHELL_CACHE   = "majalis-shell-v12";
-const DATA_CACHE    = "majalis-data-v12";
+const SHELL_CACHE   = "majalis-shell-v13";
+const DATA_CACHE    = "majalis-data-v13";
 const VERSION_CACHE = "majalis-version";
 const FETCH_TIMEOUT = 8000;
 
