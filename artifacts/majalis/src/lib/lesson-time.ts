@@ -45,14 +45,27 @@ export function cleanTimeText(time: string): string {
     .trim();
 }
 
-/** وقت مختصر للبطاقات — مثل «بعد المغرب». */
+/** وقت مختصر للبطاقات — مثل «بعد المغرب» أو «4:00 م». */
 export function formatShortLessonTime(time: string): string {
   const t = cleanTimeText(time);
   if (!t) return "";
+
+  // صيغة 24 ساعة HH:MM → تحويل لعرض عربي «H:MM م/ص»
+  const hhmm = t.match(/^(\d{1,2}):(\d{2})$/);
+  if (hhmm) {
+    const hour = Number(hhmm[1]);
+    const minute = Number(hhmm[2]);
+    const period = hour >= 12 ? "م" : "ص";
+    const h = hour > 12 ? hour - 12 : hour === 0 ? 12 : hour;
+    const m = minute === 0 ? "" : `:${String(minute).padStart(2, "0")}`;
+    return `${h}${m} ${period}`;
+  }
+
+  // نصوص أوقات الصلاة
   if (/مغرب/u.test(t)) return "بعد المغرب";
-  if (/فجر/u.test(t)) return "بعد الفجر";
-  if (/عصر/u.test(t)) return "بعد العصر";
-  if (/ظهر/u.test(t)) return "بعد الظهر";
+  if (/فجر/u.test(t))  return "بعد الفجر";
+  if (/عصر/u.test(t))  return "بعد العصر";
+  if (/ظهر/u.test(t))  return "بعد الظهر";
   if (/عشاء/u.test(t)) return "بعد العشاء";
   if (/الصباح|صباح/u.test(t)) return "صباحاً";
   if (/مساء/u.test(t)) return "مساءً";

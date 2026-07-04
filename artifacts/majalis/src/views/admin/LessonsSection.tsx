@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { adminGetAllLessons, adminUpsertLesson, adminDeleteLesson, adminGetSheikhs, upsertSeedLessonsToDb } from "@/lib/supabase";
+import { parseTimeToMinutes } from "@/lib/lesson-time";
 import { invalidateLessonsCache } from "@/lib/lessons-service";
 import { sanitizeText } from "@/lib/sanitize";
 import { C, GOVERNORATES } from "@/lib/theme";
@@ -47,6 +48,21 @@ const EMPTY: any = {
 const BTN_EDIT: React.CSSProperties = { padding: "0.25rem 0.625rem", borderRadius: "0.25rem", border: `1px solid ${C.line}`, background: C.panel, color: C.emeraldDeep, cursor: "pointer", fontSize: "0.75rem", fontFamily: "inherit" };
 const BTN_DEL: React.CSSProperties = { ...BTN_EDIT, color: "#dc2626" };
 
+/** تحويل نص الوقت العربي إلى صيغة HH:MM لمنتقي الوقت */
+function toHHMM(raw: string): string {
+  if (!raw?.trim()) return "";
+  // إذا كانت الصيغة HH:MM أو H:MM مسبقاً
+  if (/^\d{1,2}:\d{2}$/.test(raw.trim())) {
+    const [h, m] = raw.trim().split(":").map(Number);
+    return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
+  }
+  const mins = parseTimeToMinutes(raw);
+  if (mins == null) return "";
+  const h = Math.floor(mins / 60);
+  const m = mins % 60;
+  return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
+}
+
 export function LessonsSection() {
   const [items, setItems] = useState<any[]>([]);
   const [sheikhs, setSheikhs] = useState<any[]>([]);
@@ -55,9 +71,10 @@ export function LessonsSection() {
   const [statusFilter, setStatusFilter] = useState("all");
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState<any>(EMPTY);
-  const [saving, setSaving] = useState(false);
-  const [syncing, setSyncing] = useState(false);
-  const [syncMsg, setSyncMsg] = useState<string | null>(null);
+  const [saving, setSaving]       = useState(false);
+  const [syncing, setSyncing]     = useState(false);
+  const [syncMsg, setSyncMsg]     = useState<string | null>(null);
+  const [origTime, setOrigTime]   = useState<string | null>(null);
 
   const load = () => {
     adminListLoad({
@@ -76,11 +93,21 @@ export function LessonsSection() {
   };
   useEffect(() => { load(); }, []);
 
-  const openAdd = () => { setForm({ ...EMPTY }); setOpen(true); };
+  const openAdd = () => {
+    setOrigTime(null);
+    setForm({ ...EMPTY });
+    setOpen(true);
+  };
+
   const openEdit = (item: any) => {
     const rest = { ...item };
     delete rest.sheikhs;
-    setForm({ ...EMPTY, ...rest, sheikh_id: item.sheikh_id || "" });
+    const rawTime = item.lesson_time || "";
+    const hhmm = toHHMM(rawTime);
+    // نحفظ القيمة الأصلية فقط إذا كانت نصاً وليست HH:MM
+    const needsConversion = rawTime && !/^\d{1,2}:\d{2}$/.test(rawTime.trim());
+    setOrigTime(needsConversion ? rawTime : null);
+    setForm({ ...EMPTY, ...rest, sheikh_id: item.sheikh_id || "", lesson_time: hhmm });
     setOpen(true);
   };
   const handleDelete = async (id: string, title: string) => {
@@ -332,7 +359,19 @@ export function LessonsSection() {
             <input style={inputSt} value={form.schedule || ""} onChange={e => set("schedule", e.target.value)} placeholder="كل اثنين بعد العشاء" />
           </Field>
           <Field label="وقت الدرس">
-            <input style={inputSt} value={form.lesson_time || ""} onChange={e => set("lesson_time", e.target.value)} placeholder="8:30 م" />
+            <input
+              type="time"
+              style={inputSt}
+              value={form.lesson_time || ""}
+              onChange={e => { set("lesson_time", e.target.value); setOrigTime(null); }}
+            />
+            {origTime && (
+              <span style={{ display: "block", marginTop: "0.3rem", fontSize: "0.72rem", color: "#6b6460" }}>
+                {form.lesson_time
+                  ? `القيمة السابقة «${origTime}» حُوِّلت تلقائياً — عدّلها إن احتجت`
+                  : `القيمة السابقة «${origTime}» — تعذّر تحويلها، حدّد الوقت من المنتقي`}
+              </span>
+            )}
           </Field>
         </FieldRow>
         <Field label="الوصف">

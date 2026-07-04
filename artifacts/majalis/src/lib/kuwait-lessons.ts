@@ -260,12 +260,21 @@ function matchesTimeSlot(time: string, slot: string): boolean {
 }
 
 function parseTimeToMinutesSafe(time: string): number | null {
+  // ملاحظة: \b لا يعمل مع الحروف العربية (ASCII word boundary) — نستخدم نمط المسافة بدلاً منه
   const match = time.match(/(\d{1,2})/);
-  if (/صباح|فجر|الصباح|ص\b/u.test(time)) return 8 * 60;
+  if (/صباح|فجر|الصباح/u.test(time) || /(?:^|\s)ص(?:\s|$)/u.test(time)) return 8 * 60;
   if (/ظهر/u.test(time)) return 12 * 60;
   if (/عصر/u.test(time)) return 16 * 60;
-  if (/مغرب|مساء|العشاء|م\b/u.test(time)) return 19 * 60;
-  if (match) return Number(match[1]) * 60;
+  if (/مغرب|مساء|العشاء/u.test(time) || /(?:^|\s)م(?:\s|$)/u.test(time)) return 19 * 60;
+  if (match) {
+    const hour = Number(match[1]);
+    // صيغة 24 ساعة: إذا الساعة >= 12 فهي بعد الظهر
+    if (hour >= 12) return hour * 60;
+    // صيغة HH:MM مع دقائق — نتحقق إن كان الرقم الأول مفصولاً بـ :
+    const hhmm = time.match(/^(\d{1,2}):(\d{2})$/);
+    if (hhmm) return Number(hhmm[1]) * 60 + Number(hhmm[2]);
+    return hour * 60;
+  }
   return null;
 }
 
