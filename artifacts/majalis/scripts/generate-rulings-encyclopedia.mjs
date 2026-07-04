@@ -86,7 +86,6 @@ function parseSeedArray(filePath, exportName) {
   const re = new RegExp(`export const ${exportName}[^=]*=\\s*(\\[[\\s\\S]*?\\n\\]);`, "m");
   const m = src.match(re);
   if (!m) return [];
-  // eslint-disable-next-line no-eval
   return eval(`(${m[1]})`);
 }
 

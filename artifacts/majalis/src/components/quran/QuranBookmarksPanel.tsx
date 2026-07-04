@@ -7,8 +7,6 @@ import {
   getBookmarks,
   getBookmarkLists,
   removeBookmark,
-  getNote,
-  saveNote,
   getHifzProgress,
   type QuranBookmark,
   type HifzSurahProgress,

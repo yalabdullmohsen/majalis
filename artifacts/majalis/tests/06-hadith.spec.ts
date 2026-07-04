@@ -61,9 +61,6 @@ test.describe("Hadith — الحديث", () => {
       await copyBtn.click();
       await page.waitForTimeout(300);
       // Button should show "تم النسخ" or similar
-      const btnText = await copyBtn.innerText().catch(() => "");
-      const body = await page.locator("body").innerText();
-      const success = btnText.includes("✓") || body.includes("تم") || btnText.includes("تم");
       // At minimum it shouldn't crash
       expect(await page.locator("body").innerText()).toBeTruthy();
     }

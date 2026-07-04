@@ -1,4 +1,5 @@
 {
+  "id": "/?source=pwa",
   "name": "المجلس العلمي",
   "short_name": "المجلس العلمي",
   "description": "منصة علمية شرعية موثقة للدروس والدورات والقرآن والأذكار والأسئلة والمساعد الشرعي.",
@@ -7,11 +8,18 @@
   "start_url": "/?source=pwa",
   "scope": "/",
   "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
   "background_color": "#FAF5EA",
-  "theme_color": "#1F6E54",
+  "theme_color": "#164E3C",
   "orientation": "portrait-primary",
   "categories": ["education", "books", "lifestyle"],
   "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
     {
       "src": "/logo-icon.png",
       "sizes": "256x256",
@@ -19,16 +27,42 @@
       "purpose": "any"
     },
     {
-      "src": "/favicon.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
       "src": "/logo.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "الدروس",
+      "short_name": "الدروس",
+      "url": "/lessons?source=pwa",
+      "icons": [{ "src": "/logo-icon.png", "sizes": "256x256" }]
+    },
+    {
+      "name": "أوقات الصلاة",
+      "short_name": "الصلاة",
+      "url": "/prayer-times?source=pwa",
+      "icons": [{ "src": "/logo-icon.png", "sizes": "256x256" }]
+    },
+    {
+      "name": "الأذكار",
+      "short_name": "الأذكار",
+      "url": "/adhkar?source=pwa",
+      "icons": [{ "src": "/logo-icon.png", "sizes": "256x256" }]
+    },
+    {
+      "name": "الأسئلة",
+      "short_name": "الأسئلة",
+      "url": "/qa?source=pwa",
+      "icons": [{ "src": "/logo-icon.png", "sizes": "256x256" }]
     }
   ]
 }

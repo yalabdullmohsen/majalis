@@ -22,7 +22,6 @@ test.describe("Prayer Times — مواقيت الصلاة", () => {
   test("prayer times shows qibla link or direction", async ({ page }) => {
     await page.goto("/prayer-times");
     await waitForContent(page);
-    const qiblaLink = page.locator("a[href*='qibla'], button").filter({ hasText: /قبلة|اتجاه/ });
     // Either qibla link exists or page has useful content
     const body = await page.locator("body").innerText();
     expect(body.length).toBeGreaterThan(20);

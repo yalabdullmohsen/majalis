@@ -79,7 +79,7 @@ function Skeleton() {
   );
 }
 
-export function ExploreAyahPanel({ surahNum, ayahNum, surahName, ayahText, onClose }: Props) {
+export function ExploreAyahPanel({ ayahNum, surahName, ayahText, onClose }: Props) {
   const [results, setResults] = useState<IntelligentSearchResult[]>([]);
   const [loading, setLoading] = useState(true);
   const [, navigate] = useLocation();

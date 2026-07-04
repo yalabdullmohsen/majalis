@@ -8,7 +8,22 @@ export default tseslint.config(
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {
-    ignores: ["dist/**", "seo-prerender/**", "node_modules/**", ".next/**", "src/lib/*.generated.ts"],
+    ignores: ["dist/**", "seo-prerender/**", "node_modules/**", ".next/**", "src/lib/*.generated.ts", "next-env.d.ts"],
+  },
+  {
+    // Service worker — has its own global scope (self, caches, clients, …)
+    files: ["public/sw.js", "**/sw.js", "**/service-worker.js"],
+    languageOptions: {
+      ecmaVersion: 2022,
+      sourceType: "script",
+      globals: {
+        ...globals.serviceworker,
+        ...globals.browser,
+      },
+    },
+    rules: {
+      "no-unused-vars": "off",
+    },
   },
   {
     files: nodeFiles,
@@ -17,6 +32,8 @@ export default tseslint.config(
       sourceType: "module",
       globals: {
         ...globals.node,
+        // بعض السكربتات تشغّل كود المتصفح عبر Playwright (page.evaluate)
+        ...globals.browser,
       },
     },
     rules: {
