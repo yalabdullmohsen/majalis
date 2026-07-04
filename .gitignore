@@ -58,3 +58,8 @@ d29e1c8-build/
 
 # Generated import scale-test CSVs (100k+ rows)
 artifacts/majalis/data/imports/test-fixtures/
+
+# Playwright test artifacts
+test-results/
+artifacts/majalis/test-results/
+playwright-report/
