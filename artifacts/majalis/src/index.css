@@ -16370,3 +16370,101 @@ html[data-theme="dark"] .login-oauth__btn {
   border-color: var(--majalis-line, #263D33);
   color: var(--majalis-ink, #E8F4EE);
 }
+
+/* ══════════════════════════════════════════════════════════════
+   Design System v5 — SideNavDrawer Premium
+   ══════════════════════════════════════════════════════════════ */
+
+/* الخلفية الزجاجية للـ overlay */
+.mobile-nav-layer--drawer {
+  background: rgba(15, 20, 18, 0.55);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+/* الدرج الجانبي */
+.side-nav-drawer--v2 {
+  background: var(--majalis-parchment, #F9F6EF);
+  box-shadow:
+    -12px 0 40px rgba(11, 40, 32, 0.16),
+    -2px 0 8px rgba(11, 40, 32, 0.08);
+  border-left: 1px solid var(--majalis-line, #E8E2D8);
+}
+
+/* رأس الدرج */
+.side-nav-drawer__head--v2 {
+  background: linear-gradient(135deg, #0b2820 0%, #0f3529 100%);
+  border-bottom: none;
+}
+
+.side-nav-drawer__brand {
+  color: rgba(250, 245, 234, 0.95);
+}
+
+/* زر الإغلاق داخل الرأس الداكن */
+.side-nav-close {
+  color: rgba(250, 245, 234, 0.7);
+  border-radius: 0.5rem;
+  transition: background 150ms ease, color 150ms ease;
+}
+
+.side-nav-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(250, 245, 234, 1);
+}
+
+/* روابط التنقل */
+.side-nav-link--v2 {
+  border-radius: 0.625rem;
+  font-size: 0.875rem;
+  transition: background 180ms cubic-bezier(0.16, 1, 0.3, 1),
+              color 180ms ease,
+              transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.side-nav-link--v2:hover:not(.is-active) {
+  background: color-mix(in srgb, var(--majalis-emerald) 8%, var(--majalis-parchment));
+  color: var(--majalis-emerald-deep);
+  transform: translateX(-2px);
+}
+
+.side-nav-link--v2.is-active {
+  background: var(--majalis-emerald-soft, #EAF5EE);
+  color: var(--majalis-emerald-deep, #0F4433);
+  font-weight: 700;
+}
+
+/* عنوان المجموعة */
+.side-nav-group__title {
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: var(--majalis-brass, #9A6D1A);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 0.25rem 0 0.5rem;
+  padding: 0 0.25rem;
+}
+
+.side-nav-group--v2 {
+  margin-bottom: 1.25rem;
+}
+
+/* ── Dark mode ── */
+html[data-theme="dark"] .mobile-nav-layer--drawer {
+  background: rgba(5, 10, 8, 0.65);
+}
+
+html[data-theme="dark"] .side-nav-drawer--v2 {
+  background: var(--majalis-parchment, #0D1410);
+  border-left-color: var(--majalis-line, #263D33);
+  box-shadow: -12px 0 40px rgba(0, 0, 0, 0.4);
+}
+
+html[data-theme="dark"] .side-nav-link--v2:hover:not(.is-active) {
+  background: color-mix(in srgb, var(--majalis-emerald) 12%, var(--majalis-parchment));
+}
+
+html[data-theme="dark"] .side-nav-link--v2.is-active {
+  background: rgba(77, 184, 142, 0.12);
+  color: var(--majalis-emerald, #4DB88E);
+}
