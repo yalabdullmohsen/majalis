@@ -8,7 +8,7 @@ import { isSupabaseConfigured } from "@/lib/supabase-config";
 import { C } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
 import { AdminSectionToolbar } from "./AdminSectionToolbar";
-import { useAdminShell } from "./AdminShell";
+import { useAdminShell, type AdminSection } from "./AdminShell";
 
 type DashboardData = Awaited<ReturnType<typeof adminGetDashboardStats>>;
 
@@ -40,8 +40,24 @@ const EMPTY_DASHBOARD: DashboardData = {
   topSearches: [],
 } as unknown as DashboardData;
 
+type QuickLink =
+  | { icon: string; label: string; section: AdminSection; href?: never; color: string }
+  | { icon: string; label: string; href: string; section?: never; color: string };
+
+const QUICK_ADMIN_LINKS: QuickLink[] = [
+  { icon: "📚", label: "إدارة الدروس",   section: "lessons",  color: C.emeraldDeep },
+  { icon: "👤", label: "إدارة المشايخ",  section: "sheikhs",  color: C.brassDeep },
+  { icon: "📖", label: "إدارة المكتبة",  section: "library",  color: C.emeraldDeep },
+  { icon: "❓", label: "إدارة الأسئلة",  section: "qa",       color: C.emeraldDeep },
+  { icon: "💡", label: "إدارة الفوائد",  section: "fawaid",   color: C.brassDeep },
+  { icon: "🔍", label: "مراجعة المحتوى", href: "/admin/automation/review", color: "#c2410c" },
+  { icon: "⬆️", label: "الاستيراد",      href: "/admin/auto-content",      color: "#0369a1" },
+  { icon: "⚙️", label: "الأتمتة",        href: "/admin/automation/center", color: "#7c3aed" },
+  { icon: "🛠️", label: "الإعدادات",     section: "settings", color: "#475569" },
+];
+
 export function DashboardSection() {
-  const { showSuccess, showError } = useAdminShell();
+  const { showSuccess, showError, onSectionChange } = useAdminShell();
   const [data, setData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
   const [localSearches, setLocalSearches] = useState<{ query: string; count: number }[]>([]);
@@ -105,6 +121,72 @@ export function DashboardSection() {
   return (
     <div>
       <AdminSectionToolbar title="لوحة التحكم" />
+
+      {/* قسم إدارة المحتوى — واضح على الجوال ومناسب للمس */}
+      <section style={{ marginBottom: "1.75rem" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "0.5rem", marginBottom: "0.75rem" }}>
+          <h2 style={{ margin: 0, fontSize: "1rem", fontWeight: 700, color: C.ink }}>إدارة المحتوى</h2>
+          <Link
+            href="/admin/autonomous-platform"
+            style={{
+              display: "inline-flex", alignItems: "center", gap: "0.35rem",
+              padding: "0.45rem 1rem", borderRadius: "0.5rem", textDecoration: "none",
+              fontSize: "0.8125rem", fontWeight: 600,
+              background: C.emerald, color: "#fff",
+            }}
+          >
+            مركز الإدارة الكامل ←
+          </Link>
+        </div>
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fill, minmax(100px, 1fr))",
+          gap: "0.625rem",
+        }}>
+          {QUICK_ADMIN_LINKS.map((item) =>
+            item.href ? (
+              <Link
+                key={item.label}
+                href={item.href}
+                style={{
+                  display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+                  gap: "0.35rem", padding: "0.875rem 0.5rem",
+                  background: C.panel, border: `2px solid ${C.line}`,
+                  borderRadius: "0.75rem", textDecoration: "none",
+                  fontSize: "0.8rem", fontWeight: 600, color: item.color,
+                  minHeight: "5.5rem", cursor: "pointer",
+                  transition: "border-color 0.15s, box-shadow 0.15s",
+                }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.borderColor = item.color; (e.currentTarget as HTMLAnchorElement).style.boxShadow = `0 0 0 3px ${item.color}22`; }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.borderColor = C.line; (e.currentTarget as HTMLAnchorElement).style.boxShadow = "none"; }}
+              >
+                <span style={{ fontSize: "1.75rem", lineHeight: 1 }}>{item.icon}</span>
+                <span style={{ textAlign: "center", lineHeight: 1.25 }}>{item.label}</span>
+              </Link>
+            ) : (
+              <button
+                key={item.label}
+                type="button"
+                onClick={() => onSectionChange(item.section)}
+                style={{
+                  display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+                  gap: "0.35rem", padding: "0.875rem 0.5rem",
+                  background: C.panel, border: `2px solid ${C.line}`,
+                  borderRadius: "0.75rem",
+                  fontSize: "0.8rem", fontWeight: 600, color: item.color,
+                  minHeight: "5.5rem", cursor: "pointer", fontFamily: "inherit",
+                  transition: "border-color 0.15s, box-shadow 0.15s",
+                }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.borderColor = item.color; (e.currentTarget as HTMLButtonElement).style.boxShadow = `0 0 0 3px ${item.color}22`; }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.borderColor = C.line; (e.currentTarget as HTMLButtonElement).style.boxShadow = "none"; }}
+              >
+                <span style={{ fontSize: "1.75rem", lineHeight: 1 }}>{item.icon}</span>
+                <span style={{ textAlign: "center", lineHeight: 1.25 }}>{item.label}</span>
+              </button>
+            )
+          )}
+        </div>
+      </section>
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))", gap: "0.75rem", marginBottom: "1.5rem" }}>
         {cards.map((card) => (

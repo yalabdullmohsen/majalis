@@ -86,6 +86,7 @@ type AdminShellContextValue = {
   showSuccess: (message: string) => void;
   showError: (message: string) => void;
   clearFlash: () => void;
+  onSectionChange: (section: AdminSection) => void;
 };
 
 const AdminShellContext = createContext<AdminShellContextValue | null>(null);
@@ -142,7 +143,7 @@ export function AdminShell({ section, onSectionChange, children }: AdminShellPro
   };
 
   return (
-    <AdminShellContext.Provider value={{ flash, showSuccess, showError, clearFlash }}>
+    <AdminShellContext.Provider value={{ flash, showSuccess, showError, clearFlash, onSectionChange }}>
       <div className="admin-shell">
         <aside className="admin-sidebar" aria-label="قائمة الإدارة">
           <p className="admin-sidebar__title">لوحة تحكم المجلس العلمي</p>
