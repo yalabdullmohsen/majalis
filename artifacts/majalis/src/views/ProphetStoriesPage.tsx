@@ -17,7 +17,7 @@ const PROPHET_HUE: Record<string, string> = {
 
 const GOLD = "#D4AF37";
 const GOLD_LIGHT = "#F0D060";
-const DARK_BG = "#0A1628";
+const DARK_BG = "#1E2A4A";
 
 function prophetColor(slug: string) { return PROPHET_HUE[slug] || GOLD; }
 
@@ -495,17 +495,17 @@ export default function ProphetStoriesPage() {
         {/* ─── Hero Banner ─── */}
         <div className="prophets-lux-hero">
           <div className="prophets-lux-hero__stars" aria-hidden="true">
-            {[...Array(20)].map((_, i) => (
+            {[...Array(10)].map((_, i) => (
               <div
                 key={i}
                 className="prophets-lux-hero__star-wrap"
                 style={{
                   top: `${Math.sin(i * 1.37) * 40 + 50}%`,
-                  left: `${(i / 20) * 100}%`,
-                  animationDelay: `${i * 0.3}s`,
+                  left: `${(i / 10) * 100}%`,
+                  animationDelay: `${i * 0.5}s`,
                 }}
               >
-                <IslamicStar size={14 + (i % 4) * 8} color={GOLD} opacity={0.08 + (i % 5) * 0.04} />
+                <IslamicStar size={16 + (i % 3) * 10} color={GOLD} opacity={0.07 + (i % 4) * 0.03} />
               </div>
             ))}
           </div>
@@ -520,78 +520,83 @@ export default function ProphetStoriesPage() {
           </div>
         </div>
 
-        {/* ─── تبويبات العرض ─── */}
-        <div className="prophets-lux-tabs">
-          {(["grid", "timeline", "bookmarks", "quiz"] as const).map(v => (
-            <button
-              key={v}
-              className={`prophets-lux-tab ${view === v ? "prophets-lux-tab--active" : ""}`}
-              onClick={() => setView(v)}
-            >
-              {v === "grid" && "📋 القائمة"}
-              {v === "timeline" && "📅 الخط الزمني"}
-              {v === "bookmarks" && `❤️ المفضلة${bookmarkCount > 0 ? ` (${bookmarkCount})` : ""}`}
-              {v === "quiz" && "❓ اختبر نفسك"}
-            </button>
-          ))}
-        </div>
+        {/* ─── قسم فاتح: تبويبات + محتوى ─── */}
+        <div className="prophets-light-section">
 
-        {/* ─── Timeline View ─── */}
-        {view === "timeline" && (
-          <div className="prophets-lux-container">
-            <TimelineView onSelect={setSelectedSlug} />
+          {/* تبويبات العرض */}
+          <div className="prophets-lux-tabs">
+            {(["grid", "timeline", "bookmarks", "quiz"] as const).map(v => (
+              <button
+                key={v}
+                className={`prophets-lux-tab ${view === v ? "prophets-lux-tab--active" : ""}`}
+                onClick={() => setView(v)}
+              >
+                {v === "grid" && "📋 القائمة"}
+                {v === "timeline" && "📅 الخط الزمني"}
+                {v === "bookmarks" && `❤️ المفضلة${bookmarkCount > 0 ? ` (${bookmarkCount})` : ""}`}
+                {v === "quiz" && "❓ اختبر نفسك"}
+              </button>
+            ))}
           </div>
-        )}
 
-        {/* ─── Grid + Bookmarks View ─── */}
-        {(view === "grid" || view === "bookmarks") && (
-          <div className="prophets-lux-container">
-            {/* تنبيه */}
-            <div className="prophets-lux-disclaimer">
-              ⚠️ هذا المحتوى موسوعي تعريفي مختصر. للاستزادة راجع كتب التفسير المعتمدة كتفسير ابن كثير وقصص الأنبياء للأئمة الموثوقين.
+          {/* Timeline View */}
+          {view === "timeline" && (
+            <div className="prophets-lux-container">
+              <TimelineView onSelect={setSelectedSlug} />
             </div>
+          )}
 
-            {/* بحث */}
-            <div className="prophets-lux-search-wrap">
-              <input
-                ref={searchRef}
-                className="prophets-lux-search"
-                value={search}
-                onChange={e => setSearch(e.target.value)}
-                placeholder="ابحث في الأنبياء بالاسم أو القوم أو الخاصية..."
-                aria-label="بحث في قصص الأنبياء"
-              />
+          {/* Grid + Bookmarks View */}
+          {(view === "grid" || view === "bookmarks") && (
+            <div className="prophets-lux-container">
+              {/* تنبيه */}
+              <div className="prophets-lux-disclaimer">
+                ⚠️ هذا المحتوى موسوعي تعريفي مختصر. للاستزادة راجع كتب التفسير المعتمدة كتفسير ابن كثير وقصص الأنبياء للأئمة الموثوقين.
+              </div>
+
+              {/* بحث */}
+              <div className="prophets-lux-search-wrap">
+                <input
+                  ref={searchRef}
+                  className="prophets-lux-search"
+                  value={search}
+                  onChange={e => setSearch(e.target.value)}
+                  placeholder="ابحث في الأنبياء بالاسم أو القوم أو الخاصية..."
+                  aria-label="بحث في قصص الأنبياء"
+                />
+                {search && (
+                  <button className="prophets-lux-search-clear" onClick={() => setSearch("")}>✕</button>
+                )}
+              </div>
+
+              {/* إحصاء */}
               {search && (
-                <button className="prophets-lux-search-clear" onClick={() => setSearch("")}>✕</button>
+                <p className="prophets-lux-count">{results.length} نتيجة</p>
+              )}
+
+              {/* شبكة البطاقات */}
+              {results.length === 0 ? (
+                <div className="prophets-lux-empty">
+                  <IslamicStar size={48} color={GOLD} opacity={0.3} />
+                  <p>لا توجد نتائج لـ «{search}»</p>
+                </div>
+              ) : (
+                <div className="prophets-lux-grid">
+                  {results.map(p => (
+                    <ProphetCard
+                      key={p.slug}
+                      prophet={p}
+                      onSelect={() => setSelectedSlug(p.slug)}
+                      isBookmarked={isBookmarked(p.slug)}
+                      onBookmark={e => { e.stopPropagation(); toggleBookmark(p.slug); }}
+                    />
+                  ))}
+                </div>
               )}
             </div>
+          )}
 
-            {/* إحصاء */}
-            {search && (
-              <p className="prophets-lux-count">{results.length} نتيجة</p>
-            )}
-
-            {/* شبكة البطاقات */}
-            {results.length === 0 ? (
-              <div className="prophets-lux-empty">
-                <IslamicStar size={48} color={GOLD} opacity={0.3} />
-                <p>لا توجد نتائج لـ «{search}»</p>
-              </div>
-            ) : (
-              <div className="prophets-lux-grid">
-                {results.map(p => (
-                  <ProphetCard
-                    key={p.slug}
-                    prophet={p}
-                    onSelect={() => setSelectedSlug(p.slug)}
-                    isBookmarked={isBookmarked(p.slug)}
-                    onBookmark={e => { e.stopPropagation(); toggleBookmark(p.slug); }}
-                  />
-                ))}
-              </div>
-            )}
-          </div>
-        )}
+        </div>
       </div>
     </>
   );
@@ -603,10 +608,15 @@ const PROPHETS_CSS = `
 /* ── Page Shell ── */
 .prophets-lux-page {
   min-height: 100vh;
-  background: linear-gradient(180deg, #0A1628 0%, #0D1F3C 40%, #0a1628 100%);
-  color: #F5F5F0;
+  background: #f8f5ee;
+  color: #1a1a1a;
   font-family: 'Cairo', 'Tajawal', sans-serif;
   direction: rtl;
+}
+
+/* ── Light Content Section ── */
+.prophets-light-section {
+  background: #f8f5ee;
 }
 
 /* ── Hero ── */
@@ -615,6 +625,7 @@ const PROPHETS_CSS = `
   padding: 4rem 1.5rem 3rem;
   text-align: center;
   overflow: hidden;
+  background: linear-gradient(180deg, #1E2A4A 0%, #2D3B5C 60%, #1E2A4A 100%);
   border-bottom: 1px solid ${GOLD}25;
 }
 .prophets-lux-hero__stars {
@@ -667,34 +678,35 @@ const PROPHETS_CSS = `
 .prophets-lux-tabs {
   display: flex;
   gap: 0.5rem;
-  padding: 1rem 1.5rem;
+  padding: 0.85rem 1.25rem;
   overflow-x: auto;
   scrollbar-width: none;
-  border-bottom: 1px solid ${GOLD}20;
-  background: #0A1628;
+  border-bottom: 1px solid #e5e0d5;
+  background: #fff;
   position: sticky;
   top: 0;
   z-index: 10;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
 }
 .prophets-lux-tabs::-webkit-scrollbar { display: none; }
 .prophets-lux-tab {
-  padding: 0.5rem 1.25rem;
+  padding: 0.45rem 1.1rem;
   border-radius: 8px;
-  border: 1px solid ${GOLD}30;
+  border: 1px solid #d4c9b5;
   background: transparent;
-  color: #c8c8b8;
+  color: #4b5563;
   font-family: 'Cairo', sans-serif;
-  font-size: 0.9rem;
+  font-size: 0.875rem;
   cursor: pointer;
   white-space: nowrap;
   transition: all 0.2s;
 }
-.prophets-lux-tab:hover { border-color: ${GOLD}60; color: ${GOLD}; }
+.prophets-lux-tab:hover { border-color: ${GOLD}; color: #92400e; background: #fffbeb; }
 .prophets-lux-tab--active {
-  background: ${GOLD}20;
+  background: ${GOLD}18;
   border-color: ${GOLD};
-  color: ${GOLD_LIGHT};
-  font-weight: 600;
+  color: #92400e;
+  font-weight: 700;
 }
 
 /* ── Container ── */
@@ -706,14 +718,14 @@ const PROPHETS_CSS = `
 
 /* ── Disclaimer ── */
 .prophets-lux-disclaimer {
-  background: rgba(255,255,255,0.04);
-  border: 1px solid ${GOLD}25;
+  background: #fffbeb;
+  border: 1px solid #fde68a;
   border-radius: 10px;
-  padding: 0.9rem 1.2rem;
-  font-size: 0.875rem;
-  color: #b8b8a8;
-  margin-bottom: 1.5rem;
-  line-height: 1.6;
+  padding: 0.85rem 1.2rem;
+  font-size: 0.84rem;
+  color: #78350f;
+  margin-bottom: 1.25rem;
+  line-height: 1.65;
 }
 
 /* ── Search ── */
@@ -723,28 +735,28 @@ const PROPHETS_CSS = `
 }
 .prophets-lux-search {
   width: 100%;
-  padding: 0.85rem 1.25rem;
+  padding: 0.8rem 1.25rem;
   border-radius: 12px;
-  border: 1px solid ${GOLD}30;
-  background: rgba(255,255,255,0.05);
-  color: #F5F5F0;
+  border: 1px solid #d4c9b5;
+  background: #fff;
+  color: #1a1a1a;
   font-size: 1rem;
   font-family: 'Cairo', sans-serif;
   outline: none;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
   box-sizing: border-box;
 }
-.prophets-lux-search:focus { border-color: ${GOLD}; }
-.prophets-lux-search::placeholder { color: #888; }
+.prophets-lux-search:focus { border-color: ${GOLD}; box-shadow: 0 0 0 3px ${GOLD}18; }
+.prophets-lux-search::placeholder { color: #9ca3af; }
 .prophets-lux-search-clear {
   position: absolute;
   top: 50%; right: 1rem;
   transform: translateY(-50%);
   background: none; border: none;
-  color: #888; font-size: 1rem;
+  color: #9ca3af; font-size: 1rem;
   cursor: pointer; padding: 0.25rem;
 }
-.prophets-lux-count { color: #aaa; font-size: 0.875rem; margin: 0 0 1rem; }
+.prophets-lux-count { color: #6b7280; font-size: 0.875rem; margin: 0 0 1rem; }
 
 /* ── Grid ── */
 .prophets-lux-grid {
@@ -758,20 +770,21 @@ const PROPHETS_CSS = `
 /* ── Prophet Card ── */
 .prophet-lux-card {
   position: relative;
-  background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%);
-  border: 1px solid var(--prophet-color, ${GOLD})20;
+  background: #fff;
+  border: 1px solid #e5e0d5;
   border-radius: 16px;
   padding: 1.25rem 1rem 1rem;
   cursor: pointer;
   transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
   overflow: hidden;
   text-align: right;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
 }
 .prophet-lux-card:hover,
 .prophet-lux-card:focus-visible {
   transform: translateY(-3px);
-  border-color: var(--prophet-color, ${GOLD})70;
-  box-shadow: 0 8px 24px var(--prophet-color, ${GOLD})15;
+  border-color: var(--prophet-color, ${GOLD})80;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
   outline: none;
 }
 .prophet-lux-card__num {
@@ -779,7 +792,7 @@ const PROPHETS_CSS = `
   top: 0.75rem;
   left: 0.75rem;
   width: 24px; height: 24px;
-  background: var(--prophet-color, ${GOLD})25;
+  background: var(--prophet-color, ${GOLD})18;
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   font-size: 0.7rem;
@@ -795,28 +808,28 @@ const PROPHETS_CSS = `
 .prophet-lux-card__name {
   font-family: 'Amiri', serif;
   font-size: 1.2rem;
-  color: #F5F5F0;
+  color: #111827;
   margin: 0 0 0.25rem;
   line-height: 1.3;
 }
-.prophet-lux-card__pbuh { font-size: 0.75rem; color: #aaa; }
+.prophet-lux-card__pbuh { font-size: 0.75rem; color: #6b7280; }
 .prophet-lux-card__quran {
   font-family: 'Amiri Quran', 'Amiri', serif;
   font-size: 0.8rem;
-  color: ${GOLD_LIGHT};
+  color: #92400e;
   margin-bottom: 0.25rem;
   opacity: 0.85;
 }
 .prophet-lux-card__title { color: var(--prophet-color, ${GOLD}); font-size: 0.85rem; margin: 0 0 0.2rem; font-weight: 600; }
-.prophet-lux-card__place { color: #aaa; font-size: 0.78rem; margin: 0 0 0.4rem; }
-.prophet-lux-card__bio { color: #c0c0b0; font-size: 0.8rem; line-height: 1.6; margin: 0 0 0.75rem; }
+.prophet-lux-card__place { color: #6b7280; font-size: 0.78rem; margin: 0 0 0.4rem; }
+.prophet-lux-card__bio { color: #4b5563; font-size: 0.8rem; line-height: 1.6; margin: 0 0 0.75rem; }
 .prophet-lux-card__footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 0.75rem;
 }
-.prophet-lux-card__surahs { color: #888; }
+.prophet-lux-card__surahs { color: #9ca3af; }
 .prophet-lux-card__read { color: var(--prophet-color, ${GOLD}); font-weight: 600; }
 .prophet-lux-card__bookmark {
   position: absolute;
@@ -837,7 +850,7 @@ const PROPHETS_CSS = `
 .prophets-lux-empty {
   text-align: center;
   padding: 3rem;
-  color: #888;
+  color: #6b7280;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1149,7 +1162,7 @@ const PROPHETS_CSS = `
   top: 0; bottom: 0;
   left: 50%;
   width: 2px;
-  background: linear-gradient(180deg, transparent, ${GOLD}40, transparent);
+  background: linear-gradient(180deg, transparent, ${GOLD}60, transparent);
   transform: translateX(-50%);
 }
 .prophet-timeline__item {
@@ -1176,22 +1189,24 @@ const PROPHETS_CSS = `
 }
 .prophet-timeline__dot:hover { transform: translateX(-50%) scale(1.2); }
 .prophet-timeline__card {
-  background: rgba(255,255,255,0.05);
-  border: 1px solid ${GOLD}20;
+  background: #fff;
+  border: 1px solid #e5e0d5;
   border-radius: 10px;
   padding: 0.75rem 1rem;
   cursor: pointer;
   transition: all 0.2s;
   max-width: 180px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
 }
-.prophet-timeline__card:hover { border-color: ${GOLD}50; background: rgba(255,255,255,0.08); }
+.prophet-timeline__card:hover { border-color: ${GOLD}; box-shadow: 0 3px 10px rgba(0,0,0,0.1); }
 .prophet-timeline__name {
   font-family: 'Amiri', serif;
   font-size: 1rem;
   margin: 0 0 0.2rem;
+  color: #111827;
 }
-.prophet-timeline__title { font-size: 0.75rem; color: #aaa; margin: 0 0 0.15rem; }
-.prophet-timeline__era { font-size: 0.7rem; color: #777; margin: 0; }
+.prophet-timeline__title { font-size: 0.75rem; color: #6b7280; margin: 0 0 0.15rem; }
+.prophet-timeline__era { font-size: 0.7rem; color: #9ca3af; margin: 0; }
 
 @media (max-width: 640px) {
   .prophet-timeline__line { left: 20px; }
@@ -1222,13 +1237,13 @@ const PROPHETS_CSS = `
   align-items: center;
   margin-bottom: 1.5rem;
   gap: 1rem;
-  color: #aaa;
+  color: #6b7280;
   font-size: 0.875rem;
 }
 .prophet-quiz__progress {
   flex: 1;
   height: 4px;
-  background: rgba(255,255,255,0.1);
+  background: #e5e7eb;
   border-radius: 2px;
   overflow: hidden;
 }
@@ -1240,7 +1255,7 @@ const PROPHETS_CSS = `
 }
 .prophet-quiz__close {
   background: none; border: none;
-  color: #aaa; font-size: 1.1rem;
+  color: #9ca3af; font-size: 1.1rem;
   cursor: pointer; padding: 0.25rem;
 }
 .prophet-quiz__body {
@@ -1254,7 +1269,7 @@ const PROPHETS_CSS = `
 .prophet-quiz__question {
   font-family: 'Amiri', serif;
   font-size: 1.3rem;
-  color: #F5F5F0;
+  color: #111827;
   line-height: 1.7;
   margin: 0;
 }
@@ -1267,17 +1282,18 @@ const PROPHETS_CSS = `
 .prophet-quiz__opt {
   padding: 0.85rem 1rem;
   border-radius: 10px;
-  border: 1px solid ${GOLD}30;
-  background: rgba(255,255,255,0.04);
-  color: #d0d0c8;
+  border: 1px solid #d4c9b5;
+  background: #fff;
+  color: #374151;
   cursor: pointer;
   font-family: 'Cairo', sans-serif;
   font-size: 0.95rem;
   transition: all 0.2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
 }
-.prophet-quiz__opt:hover:not([disabled]) { border-color: ${GOLD}; background: ${GOLD}15; color: ${GOLD_LIGHT}; }
-.prophet-quiz__opt--correct { background: rgba(0,200,100,0.2) !important; border-color: #00c864 !important; color: #7fefb5 !important; }
-.prophet-quiz__opt--wrong { background: rgba(200,0,0,0.2) !important; border-color: #c80000 !important; color: #ef7f7f !important; }
+.prophet-quiz__opt:hover:not([disabled]) { border-color: ${GOLD}; background: #fffbeb; color: #92400e; }
+.prophet-quiz__opt--correct { background: #dcfce7 !important; border-color: #16a34a !important; color: #14532d !important; }
+.prophet-quiz__opt--wrong { background: #fee2e2 !important; border-color: #dc2626 !important; color: #7f1d1d !important; }
 .prophet-quiz__done {
   text-align: center;
   display: flex;
@@ -1286,20 +1302,20 @@ const PROPHETS_CSS = `
   gap: 1rem;
   padding: 2rem;
 }
-.prophet-quiz__done h2 { font-family: 'Amiri', serif; font-size: 2rem; color: ${GOLD}; margin: 0; }
-.prophet-quiz__score { font-size: 1.5rem; color: ${GOLD_LIGHT}; font-weight: 700; margin: 0; }
-.prophet-quiz__remark { color: #ccc; font-size: 1rem; margin: 0; }
+.prophet-quiz__done h2 { font-family: 'Amiri', serif; font-size: 2rem; color: #92400e; margin: 0; }
+.prophet-quiz__score { font-size: 1.5rem; color: #b45309; font-weight: 700; margin: 0; }
+.prophet-quiz__remark { color: #6b7280; font-size: 1rem; margin: 0; }
 .prophet-quiz__btn {
   margin-top: 0.5rem;
   padding: 0.75rem 2rem;
-  background: ${GOLD}25;
+  background: ${GOLD}20;
   border: 1px solid ${GOLD};
-  color: ${GOLD_LIGHT};
+  color: #92400e;
   border-radius: 10px;
   cursor: pointer;
   font-family: 'Cairo', sans-serif;
   font-size: 1rem;
   transition: all 0.2s;
 }
-.prophet-quiz__btn:hover { background: ${GOLD}40; }
+.prophet-quiz__btn:hover { background: ${GOLD}35; }
 `;
