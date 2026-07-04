@@ -1,19 +1,7 @@
 import { requestFetch } from "@/lib/request-manager";
 import { getSupabaseClient, bootstrapSupabaseFromServer } from "./supabase-bootstrap";
 import { arabicMatchAny, arabicSearchPatterns, ilikePattern } from "./arabic-search";
-import {
-  DEMO_FAWAID,
-  DEMO_LESSONS,
-  DEMO_QA_CATEGORIES,
-  DEMO_SHEIKHS,
-  filterDemoQa,
-  searchDemoContent,
-} from "./demo-content";
-import { filterMiraclesSeed, searchMiraclesSeed } from "./miracles-seed";
-import { LESSONS_SEED, findSeedLessonById } from "./lessons-seed";
-import { DEMO_QUIZ_QUESTIONS } from "./quiz-seed";
-import { ADHKAR_CATEGORIES, filterAdhkar } from "./adhkar-seed";
-import { searchPlatformSeed } from "./platform-search";
+import { loadSeedData } from "./seed-loader";
 import {
   filterLibraryCatalog,
   getLibraryBookById,
@@ -155,6 +143,7 @@ export async function getCurrentUser() {
 }
 
 export async function getSheikhs() {
+  const { DEMO_SHEIKHS } = await loadSeedData();
   return safeSupabaseQuery(
     "getSheikhs",
     () => supabase.from("sheikhs").select("*").order("name"),
@@ -164,8 +153,9 @@ export async function getSheikhs() {
 
 export async function getSheikhById(id: string) {
   if (!isConfigured) {
-    const sheikh = DEMO_SHEIKHS.find((s) => s.id === id) || null;
-    const lessons = DEMO_LESSONS.filter((l) => l.sheikhs?.name === sheikh?.name);
+    const { DEMO_SHEIKHS, DEMO_LESSONS } = await loadSeedData();
+    const sheikh = DEMO_SHEIKHS.find((s: any) => s.id === id) || null;
+    const lessons = DEMO_LESSONS.filter((l: any) => l.sheikhs?.name === sheikh?.name);
     return { sheikh, lessons };
   }
 
@@ -185,8 +175,9 @@ export async function getSheikhById(id: string) {
     return { sheikh, lessons: lessons || [] };
   } catch (err) {
     logSupabaseError("getSheikhById", err, { id });
-    const sheikh = DEMO_SHEIKHS.find((s) => s.id === id) || DEMO_SHEIKHS[0] || null;
-    const lessons = DEMO_LESSONS.filter((l) => l.sheikhs?.name === sheikh?.name);
+    const { DEMO_SHEIKHS, DEMO_LESSONS } = await loadSeedData();
+    const sheikh = DEMO_SHEIKHS.find((s: any) => s.id === id) || DEMO_SHEIKHS[0] || null;
+    const lessons = DEMO_LESSONS.filter((l: any) => l.sheikhs?.name === sheikh?.name);
     return { sheikh, lessons };
   }
 }
@@ -242,6 +233,7 @@ export async function fetchApprovedLessonsFromDb() {
 }
 
 export async function getLessons({ category, city, search }: { category?: string; city?: string; search?: string } = {}) {
+  const { LESSONS_SEED } = await loadSeedData();
   const fallback = filterLessonsList(LESSONS_SEED, { category, city, search });
 
   if (!isConfigured) {
@@ -262,7 +254,8 @@ export async function getLessons({ category, city, search }: { category?: string
 }
 
 export async function getLessonById(id: string) {
-  const fallback = findSeedLessonById(id) || DEMO_LESSONS.find((l) => l.id === id) || null;
+  const { findSeedLessonById, DEMO_LESSONS } = await loadSeedData();
+  const fallback = findSeedLessonById(id) || DEMO_LESSONS.find((l: any) => l.id === id) || null;
 
   if (!isConfigured) {
     return { lesson: fallback, error: null, usingSeed: true };
@@ -303,7 +296,8 @@ export async function getLessonById(id: string) {
 /** أدخل/حدّث جميع صفوف LESSONS_SEED في جدول lessons — يتطلب صلاحيات المدير. */
 export async function upsertSeedLessonsToDb(): Promise<{ ok: boolean; synced: number; error?: string }> {
   if (!isConfigured) return { ok: false, synced: 0, error: "supabase_not_configured" };
-  const rows = LESSONS_SEED.map((row) => ({
+  const { LESSONS_SEED } = await loadSeedData();
+  const rows = LESSONS_SEED.map((row: any) => ({
     external_key: row.external_key,
     title: row.title,
     speaker_name: row.speaker_name,
@@ -369,6 +363,7 @@ export async function getMyRegistrations(userId: string) {
 }
 
 export async function getApprovedFawaid() {
+  const { DEMO_FAWAID } = await loadSeedData();
   return safeSupabaseQuery(
     "getApprovedFawaid",
     () => supabase.from("fawaid").select("*").eq("status", "approved").order("created_at", { ascending: false }),
@@ -485,10 +480,13 @@ export async function getLibraryItemById(id: string) {
 }
 
 export async function getMiracles({ category, sourceType }: { category?: string; sourceType?: string } = {}) {
-  const filterSeed = () => filterMiraclesSeed({ category, sourceType });
+  const filterSeed = async () => {
+    const { filterMiraclesSeed } = await loadSeedData();
+    return filterMiraclesSeed({ category, sourceType } as any);
+  };
 
   if (!isConfigured) {
-    return { data: filterSeed(), error: null, usingSeed: true };
+    return { data: await filterSeed(), error: null, usingSeed: true };
   }
 
   try {
@@ -499,12 +497,12 @@ export async function getMiracles({ category, sourceType }: { category?: string;
     if (error) throw error;
     const rows = data || [];
     if (rows.length === 0) {
-      return { data: filterSeed(), error: null, usingSeed: true };
+      return { data: await filterSeed(), error: null, usingSeed: true };
     }
     return { data: rows, error: null, usingSeed: false };
   } catch (err) {
     logSupabaseError("getMiracles", err);
-    return { data: filterSeed(), error: null, usingSeed: true };
+    return { data: await filterSeed(), error: null, usingSeed: true };
   }
 }
 
@@ -852,7 +850,8 @@ export async function adminUpdateUserRole(userId: string, role: string) {
 
 export async function getQaCategories() {
   if (!isConfigured) {
-    return { data: DEMO_QA_CATEGORIES.filter((c) => c.id !== "all"), error: null, usingDemo: true };
+    const { DEMO_QA_CATEGORIES } = await loadSeedData();
+    return { data: DEMO_QA_CATEGORIES.filter((c: any) => c.id !== "all"), error: null, usingDemo: true };
   }
 
   const { data, error } = await supabase
@@ -862,7 +861,8 @@ export async function getQaCategories() {
 
   if (error) {
     logSupabaseError("getQaCategories", error);
-    return { data: DEMO_QA_CATEGORIES.filter((c) => c.id !== "all"), error: null, usingDemo: true };
+    const { DEMO_QA_CATEGORIES } = await loadSeedData();
+    return { data: DEMO_QA_CATEGORIES.filter((c: any) => c.id !== "all"), error: null, usingDemo: true };
   }
 
   return { data: data || [], error: null, usingDemo: false };
@@ -870,6 +870,7 @@ export async function getQaCategories() {
 
 export async function getQaQuestions({ categoryId, search }: { categoryId?: string; search?: string } = {}) {
   if (!isConfigured) {
+    const { filterDemoQa } = await loadSeedData();
     return {
       data: allowSeedFallback() ? filterDemoQa({ categoryId, search }) : [],
       error: null,
@@ -900,6 +901,7 @@ export async function getQaQuestions({ categoryId, search }: { categoryId?: stri
 
   if (error) {
     logSupabaseError("getQaQuestions", error, { categoryId, search });
+    const { filterDemoQa } = await loadSeedData();
     return {
       data: allowSeedFallback() ? filterDemoQa({ categoryId, search }) : [],
       error: null,
@@ -993,20 +995,20 @@ export function resetAllUsedQuizIds(): void {
 }
 
 export async function getQuizQuestions({ section, level }: { section?: string; level?: string } = {}) {
-  // Always load localStorage-used IDs (covers seed + Supabase UUIDs both)
   const localUsedIds = getLocalUsedQuizIds();
 
-  const filterSeed = () => {
+  const filterSeed = async () => {
+    const { DEMO_QUIZ_QUESTIONS } = await loadSeedData();
     let rows = DEMO_QUIZ_QUESTIONS.filter(
-      (q) => q.status !== "draft" && !localUsedIds.has(q.id ?? ""),
+      (q: any) => q.status !== "draft" && !localUsedIds.has(q.id ?? ""),
     );
-    if (section && section !== "الكل") rows = rows.filter((q) => q.section === section);
-    if (level && level !== "الكل") rows = rows.filter((q) => q.level === level);
+    if (section && section !== "الكل") rows = rows.filter((q: any) => q.section === section);
+    if (level && level !== "الكل") rows = rows.filter((q: any) => q.level === level);
     return rows;
   };
 
   if (!isConfigured) {
-    return { data: filterSeed(), error: null, usingSeed: true };
+    return { data: await filterSeed(), error: null, usingSeed: true };
   }
 
   try {
@@ -1014,22 +1016,20 @@ export async function getQuizQuestions({ section, level }: { section?: string; l
       .from("quiz_questions")
       .select("id, section, category, level, difficulty, question, answer, correct_answer, hint, is_used, status")
       .eq("status", "published")
-      // filter out DB-marked used rows AND localStorage-marked rows
       .or("is_used.is.null,is_used.eq.false")
       .order("created_at", { ascending: false });
     if (section && section !== "الكل") q = q.eq("section", section);
     if (level && level !== "الكل") q = q.eq("level", level);
     const { data, error } = await q;
     if (error) throw error;
-    // Also filter out any IDs that are locally tracked as used (double-check consistency)
     const rows = (data || []).filter((r: any) => !localUsedIds.has(String(r.id)));
     if (rows.length === 0) {
-      return { data: filterSeed(), error: null, usingSeed: true };
+      return { data: await filterSeed(), error: null, usingSeed: true };
     }
     return { data: rows, error: null, usingSeed: false };
   } catch (err) {
     logSupabaseError("getQuizQuestions", err);
-    return { data: filterSeed(), error: null, usingSeed: true };
+    return { data: await filterSeed(), error: null, usingSeed: true };
   }
 }
 
@@ -1062,7 +1062,8 @@ export async function adminSetQuizQuestionStatus(id: string, status: string) {
 /** رفع أسئلة الـ Seed إلى Supabase — يستخدم INSERT ON CONFLICT DO NOTHING لأمان كامل. */
 export async function upsertQuizSeedToDb(): Promise<{ ok: boolean; synced: number; error?: string }> {
   if (!isConfigured) return { ok: false, synced: 0, error: "supabase_not_configured" };
-  const rows = DEMO_QUIZ_QUESTIONS.filter((q) => q.status !== "draft").map((q) => ({
+  const { DEMO_QUIZ_QUESTIONS } = await loadSeedData();
+  const rows = DEMO_QUIZ_QUESTIONS.filter((q: any) => q.status !== "draft").map((q: any) => ({
     section: q.section,
     category: q.category || q.section,
     // map Arabic level names → English stored in DB
@@ -1258,8 +1259,9 @@ async function searchQaFallback(term: string) {
 
 async function searchMiraclesFallback(term: string) {
   if (!isConfigured) {
+    const { searchMiraclesSeed } = await loadSeedData();
     return {
-      data: searchMiraclesSeed(term).map((m) => ({ id: m.id, title: m.title, category: m.category, body: m.body })),
+      data: searchMiraclesSeed(term).map((m: any) => ({ id: m.id, title: m.title, category: m.category, body: m.body })),
       errors: [] as any[],
     };
   }
@@ -1275,8 +1277,9 @@ async function searchMiraclesFallback(term: string) {
   if (dbRows.length > 0) {
     return { data: dbRows, errors: error ? [error] : [] };
   }
+  const { searchMiraclesSeed } = await loadSeedData();
   return {
-    data: searchMiraclesSeed(term).map((m) => ({ id: m.id, title: m.title, category: m.category, body: m.body })),
+    data: searchMiraclesSeed(term).map((m: any) => ({ id: m.id, title: m.title, category: m.category, body: m.body })),
     errors: error ? [error] : [],
   };
 }
@@ -1297,10 +1300,11 @@ async function searchFawaidFallback(term: string) {
 }
 
 async function searchAdhkarFallback(term: string) {
-  const items = filterAdhkar(term).slice(0, 15).map((item) => ({
+  const { filterAdhkar, ADHKAR_CATEGORIES } = await loadSeedData();
+  const items = filterAdhkar(term).slice(0, 15).map((item: any) => ({
     id: item.id,
     text: item.text,
-    category: ADHKAR_CATEGORIES.find((c) => c.id === item.categoryId)?.name,
+    category: ADHKAR_CATEGORIES.find((c: any) => c.id === item.categoryId)?.name,
     source: item.source,
   }));
   return { data: items, errors: [] as any[] };
@@ -1361,7 +1365,7 @@ async function searchEverythingFallback(term: string): Promise<SearchResults> {
     adhkar: adhkar.data,
     hadith: hadith.data,
     stories: stories.data,
-    ...searchPlatformSeed(term),
+    ...(await loadSeedData()).searchPlatformSeed(term),
     error: null,
     usingDemo: false,
   };
@@ -1372,8 +1376,9 @@ export async function searchEverything(term: string): Promise<SearchResults> {
   if (!query) return { ...EMPTY_SEARCH };
 
   if (!isConfigured) {
-    const demo = searchDemoContent(query);
-    const platform = searchPlatformSeed(query);
+    const seeds = await loadSeedData();
+    const demo = seeds.searchDemoContent(query);
+    const platform = seeds.searchPlatformSeed(query);
     return { ...demo, ...platform, usingDemo: true, error: null };
   }
 
@@ -1381,13 +1386,14 @@ export async function searchEverything(term: string): Promise<SearchResults> {
     const { data, error } = await supabase.rpc("search_platform", { query });
 
     if (!error && data) {
-      const adhkar = filterAdhkar(query).slice(0, 15).map((item) => ({
+      const seeds = await loadSeedData();
+      const adhkar = seeds.filterAdhkar(query).slice(0, 15).map((item: any) => ({
         id: item.id,
         text: item.text,
-        category: ADHKAR_CATEGORIES.find((c) => c.id === item.categoryId)?.name,
+        category: seeds.ADHKAR_CATEGORIES.find((c: any) => c.id === item.categoryId)?.name,
         source: item.source,
       }));
-      const platformFallback = searchPlatformSeed(query);
+      const platformFallback = seeds.searchPlatformSeed(query);
       return {
         lessons: data.lessons || [],
         library: data.library || [],
@@ -1415,8 +1421,9 @@ export async function searchEverything(term: string): Promise<SearchResults> {
     logSupabaseError("searchEverything.rpc", err, { query });
   }
 
+  const seeds = await loadSeedData();
   const fallback = await searchEverythingFallback(query);
-  const platform = searchPlatformSeed(query);
+  const platform = seeds.searchPlatformSeed(query);
   const merged = { ...fallback, ...platform };
   const total =
     merged.lessons.length +
@@ -1433,8 +1440,8 @@ export async function searchEverything(term: string): Promise<SearchResults> {
     (merged.updates?.length || 0);
 
   if (total === 0) {
-    const demo = searchDemoContent(query);
-    const demoPlatform = searchPlatformSeed(query);
+    const demo = seeds.searchDemoContent(query);
+    const demoPlatform = seeds.searchPlatformSeed(query);
     const demoTotal =
       demo.lessons.length +
       demo.library.length +
