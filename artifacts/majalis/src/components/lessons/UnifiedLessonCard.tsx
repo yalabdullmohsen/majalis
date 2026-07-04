@@ -9,7 +9,7 @@ import {
   type UnifiedLesson,
 } from "@/lib/unified-lesson-card";
 import { cleanDisplayText } from "@/lib/display-text";
-import { formatRelativeTime } from "@/lib/lesson-time";
+import { computeNextOccurrenceMs, formatRelativeTimeDetailed } from "@/lib/lesson-time";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { SheikhAvatar } from "@/components/lessons/SheikhAvatar";
 
@@ -60,10 +60,12 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
   useEffect(() => {
     setStatusLabel(lesson.statusLabel);
     const timer = window.setInterval(() => {
-      setStatusLabel(formatRelativeTime(lesson.nextOccurrenceMs));
+      // نُعيد الحساب بشكل حديث كل دقيقة — لا نعتمد على nextOccurrenceMs القديم
+      const freshMs = computeNextOccurrenceMs(lesson.day, lesson.time);
+      setStatusLabel(formatRelativeTimeDetailed(freshMs, lesson.time));
     }, 60_000);
     return () => window.clearInterval(timer);
-  }, [lesson.nextOccurrenceMs, lesson.statusLabel]);
+  }, [lesson.day, lesson.time, lesson.statusLabel]);
 
   const handleCopy = useCallback(async () => {
     try {

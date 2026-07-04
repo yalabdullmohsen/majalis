@@ -1,5 +1,92 @@
 import { adminFetch } from "@/lib/admin-api";
 
+/* ──────────────────────────────────────────────────────────────
+   تصنيف أخطاء Anthropic وتحويلها لرسائل عربية مناسبة
+   لا يُعرض أي نص خام من API على المستخدم
+   ────────────────────────────────────────────────────────────── */
+
+type AnthropicErrorBody = {
+  error?: string | { type?: string; message?: string };
+  message?: string;
+  type?: string;
+};
+
+function parseAnthropicErrorText(body: AnthropicErrorBody): string {
+  const raw =
+    (typeof body.error === "string" ? body.error : (body.error as { message?: string })?.message) ||
+    body.message ||
+    "";
+  return raw.toLowerCase();
+}
+
+/**
+ * يُعيد رسالة خطأ عربية واضحة بناءً على حالة HTTP ونص الخطأ الخام.
+ * لا يُمرَّر نص الخطأ الخام للمستخدم.
+ */
+function classifyAnthropicError(status: number, body: AnthropicErrorBody = {}): string {
+  const raw = parseAnthropicErrorText(body);
+
+  if (status === 400) {
+    if (raw.includes("credit") || raw.includes("balance")) {
+      return "رصيد API مستنفَد — يُرجى شحن حساب Anthropic للمتابعة.";
+    }
+    if (raw.includes("invalid api key") || raw.includes("api_key")) {
+      return "مفتاح API غير صالح — يُرجى مراجعة إعدادات المشروع.";
+    }
+    if (raw.includes("model") && raw.includes("not found")) {
+      return "نموذج الذكاء الاصطناعي غير متاح — يُرجى التحقق من اسم النموذج.";
+    }
+    return "طلب غير صالح — يُرجى التحقق من البيانات والمحاولة مجدداً.";
+  }
+  if (status === 401) return "مفتاح API غير صالح أو منتهي الصلاحية.";
+  if (status === 403) return "لا تملك صلاحية الوصول لهذه الخدمة.";
+  if (status === 404) return "الخدمة غير موجودة — يُرجى التحقق من الإعدادات.";
+  if (status === 408 || status === 504) return "انتهت مهلة الاتصال — يُرجى المحاولة مرة أخرى.";
+  if (status === 429) return "تجاوزت حد الطلبات المسموح — انتظر لحظة ثم حاول مجدداً.";
+  if (status === 500) return "خطأ داخلي في الخادم — يُرجى المحاولة لاحقاً.";
+  if (status === 502 || status === 503) return "الخدمة غير متاحة مؤقتاً — يُرجى المحاولة بعد قليل.";
+  if (status >= 500) return "تعذر الاتصال بالخادم — يُرجى المحاولة لاحقاً.";
+  return "تعذرت معالجة الطلب — يُرجى المحاولة مرة أخرى.";
+}
+
+async function safeApiCall(
+  fetchFn: () => Promise<Response>,
+  label: string,
+): Promise<LessonImportResponse> {
+  let res: Response;
+  try {
+    res = await fetchFn();
+  } catch (networkErr) {
+    const isAbort = networkErr instanceof DOMException && networkErr.name === "AbortError";
+    console.error(`[${label}] network error:`, isAbort ? "Aborted" : networkErr);
+    return {
+      ok: false,
+      error: isAbort
+        ? "تم إلغاء الطلب."
+        : "تعذر الاتصال بالخادم — تحقق من اتصال الإنترنت وحاول مجدداً.",
+    };
+  }
+
+  let body: AnthropicErrorBody & LessonImportResponse = { ok: false };
+  try {
+    body = await res.json();
+  } catch {
+    console.error(`[${label}] JSON parse error, status=${res.status}`);
+    if (!res.ok) {
+      return { ok: false, error: classifyAnthropicError(res.status) };
+    }
+    return { ok: false, error: "تعذر قراءة الرد من الخادم — يُرجى المحاولة مرة أخرى." };
+  }
+
+  if (!res.ok) {
+    const friendlyMsg = classifyAnthropicError(res.status, body);
+    console.error(`[${label}] error ${res.status}:`, friendlyMsg);
+    return { ok: false, error: friendlyMsg };
+  }
+
+  return body;
+}
+
 export type ParsedLessonFields = {
   title?: string;
   speaker_name?: string;
@@ -70,19 +157,17 @@ export type LessonImportResponse = {
 };
 
 async function postLessonFromImage(body: Record<string, unknown>): Promise<LessonImportResponse> {
-  const res = await adminFetch("/api/admin/lesson-from-image", {
-    method: "POST",
-    body: JSON.stringify(body),
-  });
-  return res.json();
+  return safeApiCall(
+    () => adminFetch("/api/admin/lesson-from-image", { method: "POST", body: JSON.stringify(body) }),
+    "lesson-from-image",
+  );
 }
 
 async function postLessonFromUrl(body: Record<string, unknown>): Promise<LessonImportResponse> {
-  const res = await adminFetch("/api/admin/lesson-from-url", {
-    method: "POST",
-    body: JSON.stringify(body),
-  });
-  return res.json();
+  return safeApiCall(
+    () => adminFetch("/api/admin/lesson-from-url", { method: "POST", body: JSON.stringify(body) }),
+    "lesson-from-url",
+  );
 }
 
 async function fileToBase64(file: File): Promise<string> {

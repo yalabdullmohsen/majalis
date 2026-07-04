@@ -11,6 +11,7 @@ import {
   formatGregorianDate,
   formatHijriDate,
   formatRelativeTime,
+  formatRelativeTimeDetailed,
   isOccurrencePast,
 } from "@/lib/lesson-time";
 
@@ -396,5 +397,5 @@ export const DEFAULT_KUWAIT_FILTERS: KuwaitLessonFilters = {
 
 export function getRelativeStatusLabel(lesson: KuwaitLessonRecord, archived = false): string {
   if (archived) return "منتهٍ";
-  return formatRelativeTime(lesson.nextOccurrenceMs);
+  return formatRelativeTimeDetailed(lesson.nextOccurrenceMs, lesson.time);
 }

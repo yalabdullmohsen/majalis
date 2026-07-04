@@ -6,7 +6,7 @@ import { UnifiedLessonCard } from "@/components/lessons/UnifiedLessonCard";
 import { getUnifiedActiveLessons } from "@/lib/lessons-service";
 import { sortKuwaitLessons, type KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 import { fromKuwaitLesson } from "@/lib/unified-lesson-card";
-import { getKuwaitClock } from "@/lib/lesson-time";
+import { computeNextOccurrenceMs, getKuwaitClock, isLessonToday } from "@/lib/lesson-time";
 
 type HomeTab = "all" | "men" | "women";
 
@@ -55,8 +55,13 @@ export function HomeUpcomingLessons({
   const clock = getKuwaitClock();
   const todayArabic = ARABIC_WEEKDAY[clock.weekday] ?? "";
 
+  // نعيد حساب nextOccurrenceMs بشكل حديث لكل درس — لا نعتمد على القيم المُخزّنة
+  // لأن القيم المخزّنة تصبح قديمة إذا مرّ وقت الدرس دون إعادة تحميل
   const todayLessons = sortKuwaitLessons(
-    allLessons.filter((l) => l.day === todayArabic),
+    allLessons.filter((l) => {
+      const freshMs = computeNextOccurrenceMs(l.day, l.time);
+      return isLessonToday(freshMs);
+    }),
   ).slice(0, 6);
 
   const upcomingLessons = sortKuwaitLessons(
@@ -76,7 +81,7 @@ export function HomeUpcomingLessons({
             <div>
               <p className="home-eyebrow">اليوم · {todayArabic}</p>
               <h2 id="today-lessons-heading">دروس اليوم</h2>
-              <p>الدروس المجدولة لهذا اليوم بتوقيت الكويت.</p>
+              <p>الدروس المجدولة لهذا اليوم ولم يمرّ وقتها بعد.</p>
             </div>
             <div className="home-section-head-links">
               <Link href="/lessons" className="home-section-link">كل الدروس</Link>

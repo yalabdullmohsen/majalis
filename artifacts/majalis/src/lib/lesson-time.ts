@@ -1,41 +1,52 @@
-const KUWAIT_TZ = "Asia/Kuwait";
+/**
+ * حساب الوقت المتبقي للدروس — توقيت الكويت Asia/Kuwait (UTC+3)
+ * ---------------------------------------------------------------
+ * الإصلاح الجذري: الحساب يعتمد دائماً على يوم الدرس + وقته + التاريخ الحالي الفعلي
+ * لا يُعتمد على الوقت وحده، ولا على القيم المُخزّنة مسبقاً
+ */
 
-const DAY_INDEX: Record<string, number> = {
-  الأحد: 0,
-  الاثنين: 1,
+export const KUWAIT_TZ = "Asia/Kuwait";
+
+/** Kuwait offset in minutes: +3h = +180 min */
+const KUWAIT_OFFSET_MIN = 3 * 60;
+
+export const DAY_INDEX: Record<string, number> = {
+  الأحد:    0,
+  الاثنين:  1,
   الثلاثاء: 2,
   الأربعاء: 3,
-  الخميس: 4,
-  الجمعة: 5,
-  السبت: 6,
+  الخميس:   4,
+  الجمعة:   5,
+  السبت:    6,
 };
 
 const EN_WEEKDAY_TO_INDEX: Record<string, number> = {
-  Sunday: 0,
-  Monday: 1,
-  Tuesday: 2,
-  Wednesday: 3,
-  Thursday: 4,
-  Friday: 5,
-  Saturday: 6,
+  Sunday: 0, Monday: 1, Tuesday: 2, Wednesday: 3,
+  Thursday: 4, Friday: 5, Saturday: 6,
 };
 
+/**
+ * أوقات الصلاة الثابتة — قيم متوسطة للكويت (تُستخدم فقط عند غياب الوقت المحدد)
+ * المستخدم يُدخل وقت الصلاة الفعلي أو النص ("بعد الفجر") فيُحوّل بدقة
+ */
 const PRAYER_TIME_MINUTES: Record<string, number> = {
-  الفجر: 5 * 60,
-  الشروق: 6 * 60 + 30,
-  الظهر: 12 * 60 + 15,
-  العصر: 15 * 60 + 45,
-  المغرب: 18 * 60 + 30,
-  العشاء: 20 * 60,
+  الفجر:   4 * 60 + 15,   // 4:15 ص متوسط سنوي في الكويت
+  الشروق:  5 * 60 + 45,   // 5:45 ص
+  الظهر:  12 * 60 +  5,   // 12:05 م
+  العصر:  15 * 60 + 30,   // 3:30 م
+  المغرب: 18 * 60 + 30,   // 6:30 م (يتغير موسمياً)
+  العشاء: 20 * 60,         // 8:00 م
 };
 
 export type KuwaitClock = {
-  year: number;
-  month: number;
-  day: number;
-  weekday: number;
-  hour: number;
-  minute: number;
+  year:    number;
+  month:   number;  // 1-12
+  day:     number;  // 1-31
+  weekday: number;  // 0=أحد … 6=سبت
+  hour:    number;
+  minute:  number;
+  /** Timestamp of midnight Kuwait local time (start of day) */
+  dayStartMs: number;
 };
 
 export function cleanTimeText(time: string): string {
@@ -53,7 +64,7 @@ export function formatShortLessonTime(time: string): string {
   // صيغة 24 ساعة HH:MM → تحويل لعرض عربي «H:MM م/ص»
   const hhmm = t.match(/^(\d{1,2}):(\d{2})$/);
   if (hhmm) {
-    const hour = Number(hhmm[1]);
+    const hour   = Number(hhmm[1]);
     const minute = Number(hhmm[2]);
     const period = hour >= 12 ? "م" : "ص";
     const h = hour > 12 ? hour - 12 : hour === 0 ? 12 : hour;
@@ -68,123 +79,182 @@ export function formatShortLessonTime(time: string): string {
   if (/ظهر/u.test(t))  return "بعد الظهر";
   if (/عشاء/u.test(t)) return "بعد العشاء";
   if (/الصباح|صباح/u.test(t)) return "صباحاً";
-  if (/مساء/u.test(t)) return "مساءً";
+  if (/مساء/u.test(t))         return "مساءً";
   return t.length > 24 ? `${t.slice(0, 22).trim()}…` : t;
 }
 
+/**
+ * استخرج مكوّنات التاريخ والوقت في توقيت الكويت.
+ * يُحسب `dayStartMs` بدقة: منتصف ليل الكويت (00:00 KWT) بالـ UTC.
+ */
 export function getKuwaitClock(date = new Date()): KuwaitClock {
   const parts = new Intl.DateTimeFormat("en-US", {
     timeZone: KUWAIT_TZ,
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    weekday: "long",
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
+    year:     "numeric",
+    month:    "2-digit",
+    day:      "2-digit",
+    weekday:  "long",
+    hour:     "2-digit",
+    minute:   "2-digit",
+    hour12:   false,
   }).formatToParts(date);
 
   const read = (type: Intl.DateTimeFormatPartTypes) =>
-    Number(parts.find((p) => p.type === type)?.value || 0);
+    Number(parts.find((p) => p.type === type)?.value ?? 0);
 
-  const weekdayName = parts.find((p) => p.type === "weekday")?.value || "Sunday";
+  const weekdayName = parts.find((p) => p.type === "weekday")?.value ?? "Sunday";
+
+  // معالجة ساعة الـ24 (بعض المتصفحات تُعيد 24 عند منتصف الليل)
+  const rawHour = read("hour");
+  const hour    = rawHour === 24 ? 0 : rawHour;
+  const year    = read("year");
+  const month   = read("month");
+  const day     = read("day");
+
+  // منتصف ليل الكويت بالـ UTC = منتصف الليل الكويتي − 3 ساعات
+  const dayStartMs = Date.UTC(year, month - 1, day, 0, 0, 0) - KUWAIT_OFFSET_MIN * 60_000;
 
   return {
-    year: read("year"),
-    month: read("month"),
-    day: read("day"),
+    year, month, day,
     weekday: EN_WEEKDAY_TO_INDEX[weekdayName] ?? 0,
-    hour: read("hour"),
-    minute: read("minute"),
+    hour, minute: read("minute"),
+    dayStartMs,
   };
 }
 
-// Prayer roots (without definite article) for robust matching
+// جذور أسماء الصلوات للمطابقة مع/بدون "ال"
 const PRAYER_ROOTS: Array<[RegExp, number]> = [
-  [/فجر/u,  5 * 60],
-  [/شروق/u, 6 * 60 + 30],
-  [/ظهر/u,  12 * 60 + 15],
-  [/عصر/u,  15 * 60 + 45],
-  [/مغرب/u, 18 * 60 + 30],
-  [/عشاء/u, 20 * 60],
+  [/فجر/u,   PRAYER_TIME_MINUTES.الفجر],
+  [/شروق/u,  PRAYER_TIME_MINUTES.الشروق],
+  [/ظهر/u,   PRAYER_TIME_MINUTES.الظهر],
+  [/عصر/u,   PRAYER_TIME_MINUTES.العصر],
+  [/مغرب/u,  PRAYER_TIME_MINUTES.المغرب],
+  [/عشاء/u,  PRAYER_TIME_MINUTES.العشاء],
 ];
 
-/** تحويل الأرقام العربية الهندية (٠-٩) إلى لاتينية للتحليل. */
+/** تحويل الأرقام العربية-الهندية (٠-٩) إلى لاتينية. */
 function normalizeArabicDigits(s: string): string {
   return s.replace(/[٠-٩]/g, (d) => String("٠١٢٣٤٥٦٧٨٩".indexOf(d)));
 }
 
+/**
+ * تحليل نص الوقت وإعادة عدد الدقائق من منتصف الليل (0-1439).
+ * يدعم: "4:30 م", "16:30", "بعد المغرب", "قبل الفجر", ...
+ */
 export function parseTimeToMinutes(timeRaw: string): number | null {
   const time = normalizeArabicDigits(cleanTimeText(timeRaw));
   if (!time) return null;
 
-  // كشف مساءً/صباحاً بشكل موثوق: الاختصار «م»/«ص» لا يعمل مع \b في العربية،
-  // فنطابقه كرمز مستقل (محاط بمسافة أو بداية/نهاية النص).
   const isPM = /مساء|pm/iu.test(time) || /(?:^|\s)م(?:\s|$)/u.test(time);
   const isAM = /صباح|am/iu.test(time) || /(?:^|\s)ص(?:\s|$)/u.test(time);
 
+  // HH:MM or H:MM
   const explicit = time.match(/(\d{1,2})\s*[:٫]\s*(\d{2})/u);
   if (explicit) {
-    let hour = Number(explicit[1]);
-    const minute = Number(explicit[2]);
+    let hour   = Number(explicit[1]);
+    const min  = Number(explicit[2]);
     if (isPM && hour < 12) hour += 12;
     if (isAM && hour === 12) hour = 0;
-    return hour * 60 + minute;
+    // ساعات 0-23 فقط
+    hour = Math.max(0, Math.min(23, hour));
+    return hour * 60 + Math.min(59, min);
   }
 
+  // رقم ساعة فقط مع م/ص
   const hourOnly = time.match(/(\d{1,2})/u);
   if (hourOnly && (isPM || isAM)) {
     let hour = Number(hourOnly[1]);
     if (isPM && hour < 12) hour += 12;
     if (isAM && hour === 12) hour = 0;
-    return hour * 60;
+    return Math.max(0, Math.min(23, hour)) * 60;
   }
 
-  // Match prayer names with or without definite article "ال"
-  for (const [root, minutes] of PRAYER_ROOTS) {
+  // أسماء الصلوات
+  for (const [root, baseMinutes] of PRAYER_ROOTS) {
     if (root.test(time)) {
-      if (/بعد/u.test(time)) return minutes + 20;
-      if (/قبل/u.test(time)) return Math.max(0, minutes - 60);
-      return minutes;
+      if (/بعد/u.test(time)) return baseMinutes + 20;
+      if (/قبل/u.test(time)) return Math.max(0, baseMinutes - 60);
+      return baseMinutes;
     }
   }
 
   return null;
 }
 
+/**
+ * بناء طابع زمني UTC لـ (today + dayOffset) عند الدقيقة (minutes) بتوقيت الكويت.
+ * الحساب الصحيح: ابدأ من منتصف الليل الكويتي (dayStartMs) ثم أضف الدقائق.
+ */
 function kuwaitDateAt(dayOffset: number, minutes: number, base = new Date()): Date {
   const clock = getKuwaitClock(base);
-  const utc = Date.UTC(clock.year, clock.month - 1, clock.day + dayOffset, 0, 0, 0);
-  const hour = Math.floor(minutes / 60);
-  const minute = minutes % 60;
-  const local = new Date(utc);
-  local.setUTCHours(hour - 3, minute, 0, 0);
-  return local;
+  // dayStartMs = midnight Kuwait on base's Kuwait date
+  // dayOffset أيام بعدها = dayStartMs + dayOffset * 86400000
+  const targetDayStartMs = clock.dayStartMs + dayOffset * 24 * 60 * 60_000;
+  return new Date(targetDayStartMs + minutes * 60_000);
 }
 
+/**
+ * حساب الطابع الزمني للمرة القادمة لدرس يُقام يوم (day) في وقت (time) بتوقيت الكويت.
+ *
+ * القواعد:
+ * 1. إذا كان الدرس اليوم ووقته لم يمرّ بعد → يُعرض اليوم.
+ * 2. إذا كان الدرس اليوم ووقته مرّ (ولو بدقيقة) → الأسبوع القادم (درس أسبوعي متكرر).
+ * 3. إذا كان الدرس في يوم آخر → أقرب تكرار له.
+ */
 export function computeNextOccurrenceMs(day: string, time: string, now = new Date()): number {
   const targetDay = DAY_INDEX[day];
-  if (targetDay == null) return now.getTime() + 365 * 24 * 60 * 60 * 1000;
+  if (targetDay == null) {
+    // يوم غير معروف → إعادة قيمة بعيدة
+    return now.getTime() + 365 * 24 * 60 * 60_000;
+  }
 
-  const clock = getKuwaitClock(now);
-  const timeMinutes = parseTimeToMinutes(time) ?? PRAYER_TIME_MINUTES.المغرب;
+  const clock        = getKuwaitClock(now);
+  const timeMinutes  = parseTimeToMinutes(time) ?? PRAYER_TIME_MINUTES.المغرب;
+  const nowMinutes   = clock.hour * 60 + clock.minute;
+
   let daysUntil = (targetDay - clock.weekday + 7) % 7;
-  const nowMinutes = clock.hour * 60 + clock.minute;
 
-  if (daysUntil === 0 && nowMinutes >= timeMinutes + 90) {
+  // إذا كان الدرس اليوم لكن وقته مرّ → انتقل للأسبوع القادم
+  if (daysUntil === 0 && nowMinutes >= timeMinutes) {
     daysUntil = 7;
   }
 
   return kuwaitDateAt(daysUntil, timeMinutes, now).getTime();
 }
 
+/**
+ * هل الدرس قائم اليوم (nextOccurrenceMs في نطاق اليوم الكويتي الحالي)؟
+ */
+export function isLessonToday(nextOccurrenceMs: number, now = new Date()): boolean {
+  const todayClock = getKuwaitClock(now);
+  const nextClock  = getKuwaitClock(new Date(nextOccurrenceMs));
+  return (
+    nextClock.year  === todayClock.year  &&
+    nextClock.month === todayClock.month &&
+    nextClock.day   === todayClock.day
+  );
+}
+
+/**
+ * هل مرّ وقت الدرس اليوم؟
+ * يُستخدم لإخفاء الدروس المنتهية من قسم "دروس اليوم".
+ */
+export function isLessonTimePassedToday(day: string, time: string, now = new Date()): boolean {
+  const targetDay = DAY_INDEX[day];
+  if (targetDay == null) return false;
+  const clock       = getKuwaitClock(now);
+  const timeMinutes = parseTimeToMinutes(time) ?? PRAYER_TIME_MINUTES.المغرب;
+  const nowMinutes  = clock.hour * 60 + clock.minute;
+  return targetDay === clock.weekday && nowMinutes >= timeMinutes;
+}
+
 export function formatGregorianDate(date: Date): string {
   return new Intl.DateTimeFormat("ar-KW", {
     timeZone: KUWAIT_TZ,
     weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
+    year:    "numeric",
+    month:   "long",
+    day:     "numeric",
   }).format(date);
 }
 
@@ -192,59 +262,125 @@ export function formatHijriDate(date: Date): string {
   try {
     return new Intl.DateTimeFormat("ar-SA-u-ca-islamic", {
       timeZone: KUWAIT_TZ,
-      day: "numeric",
+      day:   "numeric",
       month: "long",
-      year: "numeric",
+      year:  "numeric",
     }).format(date);
   } catch {
     return "";
   }
 }
 
+/**
+ * تحويل الفارق الزمني إلى نص عربي واضح.
+ *
+ * الحالات:
+ *  ≤ 0          → "انتهى"   (إذا مرّ ولو ثانية)
+ *  ≤ 2 min      → "الآن"
+ *  ≤ 59 min     → "بعد X دقيقة" / "بعد دقيقتين"
+ *  < 1 h        → "بعد أقل من ساعة"
+ *  1 h          → "بعد ساعة"
+ *  2 h          → "بعد ساعتين"
+ *  < 24 h       → "بعد X ساعات"
+ *  < 48 h       → "غداً"
+ *  ≤ 6 days     → "بعد X أيام"
+ *  ≤ 13 days    → "الأسبوع القادم"
+ *  ≤ 20 days    → "بعد أسبوعين"
+ *  months       → "بعد X أشهر"
+ */
 export function formatRelativeTime(targetMs: number, now = Date.now()): string {
   const diffMs = targetMs - now;
-  if (diffMs <= 0) return "الآن";
+
+  if (diffMs <= 0)          return "انتهى";
 
   const minutes = Math.floor(diffMs / 60_000);
+  if (minutes <= 2)         return "الآن";
+  if (minutes === 2)        return "بعد دقيقتين";
   if (minutes < 60) {
-    if (minutes <= 1) return "الآن";
-    if (minutes === 2) return "بعد دقيقتين";
-    if (minutes <= 10) return `بعد ${minutes} دقائق`;
-    return `بعد ${minutes} دقيقة`;
+    if (minutes <= 10)      return `بعد ${minutes} دقائق`;
+    return                  `بعد ${minutes} دقيقة`;
   }
+  if (minutes < 90)         return "بعد أقل من ساعة";
 
   const hours = Math.floor(minutes / 60);
-  if (hours === 1) return "بعد ساعة";
-  if (hours === 2) return "بعد ساعتين";
-  if (hours < 24) return `بعد ${hours} ساعات`;
+  if (hours < 24) {
+    if (hours === 1)        return "بعد ساعة";
+    if (hours === 2)        return "بعد ساعتين";
+    return                  `بعد ${hours} ساعات`;
+  }
 
   const days = Math.floor(minutes / (24 * 60));
-  if (days === 1) return "غداً";
-  if (days === 2) return "بعد يومين";
-  if (days <= 6) return `بعد ${days} أيام`;
-  if (days <= 13) return "الأسبوع القادم";
-  if (days <= 20) return "بعد أسبوعين";
+  if (days === 1)           return "غداً";
+  if (days === 2)           return "بعد يومين";
+  if (days <= 6)            return `بعد ${days} أيام`;
+  if (days <= 13)           return "الأسبوع القادم";
+  if (days <= 20)           return "بعد أسبوعين";
 
   const months = Math.floor(days / 30);
-  if (months >= 1) return months === 1 ? "بعد شهر" : `بعد ${months} أشهر`;
+  if (months >= 1)          return months === 1 ? "بعد شهر" : `بعد ${months} أشهر`;
   return `بعد ${days} أيام`;
+}
+
+/**
+ * الوصف الموجز لحالة الدرس، مع حالة خاصة "غداً فجراً".
+ */
+export function formatRelativeTimeDetailed(targetMs: number, time: string, now = Date.now()): string {
+  const basic = formatRelativeTime(targetMs, now);
+
+  // إذا كان الدرس غداً وكان وقته الفجر → "غداً فجراً"
+  if (basic === "غداً" && /فجر/u.test(time)) {
+    return "غداً فجراً";
+  }
+
+  return basic;
 }
 
 export function isOccurrencePast(day: string, time: string, recurring = true, now = new Date()): boolean {
   if (!day) return false;
-  const nextMs = computeNextOccurrenceMs(day, time, now);
-  const clock = getKuwaitClock(now);
-  const targetDay = DAY_INDEX[day];
+  const targetDay   = DAY_INDEX[day];
   if (targetDay == null) return false;
-
-  const daysUntil = (targetDay - clock.weekday + 7) % 7;
+  const clock       = getKuwaitClock(now);
   const timeMinutes = parseTimeToMinutes(time) ?? PRAYER_TIME_MINUTES.المغرب;
-  const nowMinutes = clock.hour * 60 + clock.minute;
+  const nowMinutes  = clock.hour * 60 + clock.minute;
 
-  if (daysUntil === 0 && nowMinutes >= timeMinutes + 90) {
+  if (targetDay === clock.weekday && nowMinutes >= timeMinutes) {
     return !recurring;
   }
 
+  const nextMs = computeNextOccurrenceMs(day, time, now);
   if (!recurring && nextMs < now.getTime()) return true;
   return false;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   اختبارات الوحدة الداخلية — تُنفَّذ عند استيراد الوحدة في وضع التطوير
+   ────────────────────────────────────────────────────────────── */
+if (import.meta.env?.DEV) {
+  void (async () => {
+    type Case = { label: string; day: string; time: string; nowKWT: string; expectTodayOrFuture: "today" | "future" };
+    const cases: Case[] = [
+      { label: "فجر السبت — من وقت العصر",   day: "السبت",    time: "بعد الفجر",  nowKWT: "2026-07-04T15:45:00+03:00", expectTodayOrFuture: "future" },
+      { label: "مغرب السبت — من وقت الظهر",  day: "السبت",    time: "بعد المغرب", nowKWT: "2026-07-04T12:00:00+03:00", expectTodayOrFuture: "today" },
+      { label: "درس الجمعة — من الأربعاء",    day: "الجمعة",   time: "9:00 م",     nowKWT: "2026-07-01T20:00:00+03:00", expectTodayOrFuture: "future" },
+      { label: "درس اليوم نفسه — لم يمرّ",    day: "الأربعاء", time: "8:00 م",     nowKWT: "2026-07-01T18:00:00+03:00", expectTodayOrFuture: "today" },
+      { label: "درس اليوم نفسه — مرّ",        day: "الأربعاء", time: "8:00 م",     nowKWT: "2026-07-01T21:00:00+03:00", expectTodayOrFuture: "future" },
+      { label: "عشاء الخميس — من العصر",      day: "الخميس",   time: "بعد العشاء", nowKWT: "2026-07-02T15:30:00+03:00", expectTodayOrFuture: "today" },
+      { label: "فجر يوم آخر — من منتصف الليل",day: "الجمعة",   time: "الفجر",      nowKWT: "2026-07-03T00:30:00+03:00", expectTodayOrFuture: "future" },
+    ];
+    let pass = 0;
+    for (const c of cases) {
+      const now  = new Date(c.nowKWT);
+      const msVal = computeNextOccurrenceMs(c.day, c.time, now);
+      const today = isLessonToday(msVal, now);
+      const ok    = c.expectTodayOrFuture === "today" ? today : !today;
+      if (!ok) {
+        console.warn(`[lesson-time] FAIL: ${c.label} — got today=${today}`);
+      } else {
+        pass++;
+      }
+    }
+    if (pass < cases.length) {
+      console.warn(`[lesson-time] ${pass}/${cases.length} passed`);
+    }
+  })();
 }

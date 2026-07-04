@@ -200,6 +200,7 @@ function LessonImportImageContent() {
   const [sourceUrl, setSourceUrl] = useState("");
   const [notes, setNotes] = useState("");
   const [lastFile, setLastFile] = useState<File | null>(null);
+  const [lastError, setLastError] = useState<string | null>(null);
 
   const applyResponse = useCallback((res: Awaited<ReturnType<typeof extractLessonFromImageUpload>>) => {
     if (res.vision_enabled != null) setVisionEnabled(res.vision_enabled);
@@ -224,23 +225,29 @@ function LessonImportImageContent() {
   const onUpload = async (file: File | null) => {
     if (!file) return;
     setLastFile(file);
+    setLastError(null);
     setBusy(true);
     try {
       const res = await extractLessonFromImageUpload(file, { sourceUrl: sourceUrl.trim() || undefined, notes: notes.trim() || undefined });
       if (!res.ok) {
-        showError(res.error || res.message || "تعذر معالجة الصورة");
+        const msg = res.error || "تعذر معالجة الصورة — يُرجى المحاولة مرة أخرى.";
+        setLastError(msg);
+        showError(msg);
         return;
       }
+      setLastError(null);
       applyResponse(res);
       if (res.storage_error) {
-        showError(`تعذر رفع الصورة للتخزين: ${res.storage_error}`);
+        showError("تعذر رفع الصورة للتخزين — البيانات المستخرجة متاحة للمراجعة.");
       } else if (res.vision_enabled === false) {
         showSuccess("تم رفع الصورة — أدخل البيانات يدويًا");
       } else {
         showSuccess("تم استخراج البيانات — راجعها ثم اعتمد");
       }
     } catch {
-      showError("تعذر رفع الصورة");
+      const msg = "تعذر رفع الصورة — تحقق من اتصال الإنترنت وحاول مجدداً.";
+      setLastError(msg);
+      showError(msg);
     } finally {
       setBusy(false);
     }
@@ -377,14 +384,30 @@ function LessonImportImageContent() {
           style={{ display: "none" }}
           onChange={(e) => onUpload(e.target.files?.[0] || null)}
         />
-        <button
-          type="button"
-          disabled={busy}
-          onClick={() => fileRef.current?.click()}
-          style={{ padding: "0.625rem 1.25rem", background: C.emerald, color: C.parchment, border: "none", borderRadius: "0.375rem", cursor: "pointer", fontFamily: "inherit", fontWeight: 600 }}
-        >
-          {busy ? "جاري المعالجة…" : "اختر صورة إعلان الدرس"}
-        </button>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.625rem", flexWrap: "wrap" }}>
+          <button
+            type="button"
+            disabled={busy}
+            onClick={() => fileRef.current?.click()}
+            style={{ padding: "0.625rem 1.25rem", background: C.emerald, color: C.parchment, border: "none", borderRadius: "0.375rem", cursor: "pointer", fontFamily: "inherit", fontWeight: 600 }}
+          >
+            {busy ? "جاري المعالجة…" : "اختر صورة إعلان الدرس"}
+          </button>
+          {!busy && lastError && lastFile && (
+            <button
+              type="button"
+              onClick={() => onUpload(lastFile)}
+              style={{ padding: "0.625rem 1.25rem", background: "#FEF3C7", color: "#92400E", border: "1px solid #FCD34D", borderRadius: "0.375rem", cursor: "pointer", fontFamily: "inherit", fontWeight: 600 }}
+            >
+              إعادة المحاولة
+            </button>
+          )}
+        </div>
+        {lastError && (
+          <p role="alert" style={{ fontSize: "0.8125rem", color: "#991B1B", marginTop: "0.5rem", background: "#FEE2E2", padding: "0.5rem 0.75rem", borderRadius: "0.375rem" }}>
+            {lastError}
+          </p>
+        )}
         <p style={{ fontSize: "0.75rem", color: C.inkSoft, marginTop: "0.5rem" }}>JPEG / PNG / WebP — حتى 5 ميغابايت</p>
       </section>
 
