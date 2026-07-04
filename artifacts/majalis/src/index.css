@@ -14588,3 +14588,136 @@ html[data-theme="dark"] .qc-card { background: var(--majalis-panel); }
 
 /* Display font for major headings */
 .font-display { font-family: var(--font-display) !important; }
+
+/* ================================================================
+   صفحة "جاري التعديل" — UnderConstruction (متجاوبة، تدعم الوضع الداكن)
+   ================================================================ */
+.uc-page {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1.5rem, 5vw, 3.5rem) 1rem;
+}
+.uc-card {
+  width: 100%;
+  max-width: 34rem;
+  background: var(--majalis-panel, #fff);
+  border: 1px solid var(--majalis-line, #e5ddd0);
+  border-radius: 1.1rem;
+  box-shadow: var(--majalis-shadow, 0 22px 70px rgba(36, 31, 24, 0.12));
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  text-align: center;
+}
+.uc-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 66px;
+  height: 66px;
+  margin-bottom: 1.1rem;
+  border-radius: 50%;
+  color: #fff;
+  background: linear-gradient(160deg, var(--majalis-emerald, #1f6e54), var(--majalis-emerald-deep, #164e3c));
+  box-shadow: 0 8px 22px rgba(22, 78, 60, 0.28);
+  animation: uc-pulse 2.4s ease-in-out infinite;
+}
+@keyframes uc-pulse {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-4px) rotate(-6deg); }
+}
+.uc-title {
+  margin: 0 0 0.5rem;
+  font-size: clamp(1.4rem, 4vw, 1.9rem);
+  font-weight: 800;
+  color: var(--majalis-emerald-deep, #164e3c);
+}
+.uc-desc {
+  margin: 0 auto 1.5rem;
+  max-width: 30rem;
+  color: var(--majalis-ink-soft, #5c564c);
+  line-height: 1.8;
+  font-size: 0.95rem;
+}
+.uc-progress { margin: 0 auto 1.5rem; max-width: 26rem; text-align: right; }
+.uc-progress__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--majalis-ink-soft, #5c564c);
+}
+.uc-progress__pct {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--majalis-emerald, #1f6e54);
+  font-variant-numeric: tabular-nums;
+}
+.uc-progress__track {
+  height: 10px;
+  border-radius: 999px;
+  background: var(--majalis-parchment-deep, #f0e8d6);
+  overflow: hidden;
+}
+.uc-progress__fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--majalis-emerald, #1f6e54), var(--majalis-brass, #b08d2e));
+  background-size: 200% 100%;
+  animation: uc-shimmer 2s linear infinite;
+  transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes uc-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+.uc-features { margin: 0 auto 1.75rem; max-width: 26rem; text-align: right; }
+.uc-features__title {
+  margin: 0 0 0.6rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--majalis-brass-deep, #8a6d1e);
+}
+.uc-features__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.4rem; }
+.uc-feat {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.55rem 0.75rem;
+  border-radius: 0.6rem;
+  border: 1px solid var(--majalis-line, #e5ddd0);
+  background: var(--majalis-parchment, #faf5ea);
+  font-size: 0.875rem;
+}
+.uc-feat__label { flex: 1; color: var(--majalis-ink, #241f18); }
+.uc-feat__status { font-size: 0.7rem; font-weight: 700; white-space: nowrap; }
+.uc-feat__icon { flex-shrink: 0; }
+.uc-feat--done .uc-feat__icon { color: var(--majalis-emerald, #1f6e54); }
+.uc-feat--done .uc-feat__status { color: var(--majalis-emerald, #1f6e54); }
+.uc-feat--progress .uc-feat__icon { color: var(--majalis-brass-deep, #8a6d1e); animation: uc-spin 1.6s linear infinite; }
+.uc-feat--progress .uc-feat__status { color: var(--majalis-brass-deep, #8a6d1e); }
+.uc-feat--planned { opacity: 0.72; }
+.uc-feat--planned .uc-feat__icon,
+.uc-feat--planned .uc-feat__status { color: var(--majalis-ink-soft, #5c564c); }
+@keyframes uc-spin { to { transform: rotate(360deg); } }
+.uc-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0.6rem 1.4rem;
+  border-radius: 0.6rem;
+  background: var(--majalis-emerald, #1f6e54);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.9rem;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+.uc-back:hover { background: var(--majalis-emerald-deep, #164e3c); transform: translateY(-1px); }
+@media (prefers-reduced-motion: reduce) {
+  .uc-badge, .uc-progress__fill, .uc-feat--progress .uc-feat__icon { animation: none; }
+}
