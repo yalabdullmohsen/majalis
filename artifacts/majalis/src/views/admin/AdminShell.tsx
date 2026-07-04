@@ -40,43 +40,80 @@ export type AdminSection =
   | "telegram"
   | "prophet-stories";
 
-export const ADMIN_NAV: { key: AdminSection; label: string }[] = [
-  { key: "dashboard",       label: "لوحة التحكم" },
-  { key: "prophet-stories", label: "📖 قصص الأنبياء — مراجعة" },
-  { key: "telegram",        label: "📢 Telegram" },
-  { key: "universities", label: "دليل الجامعات" },
-  { key: "submissions", label: "مقترحات المحتوى" },
-  { key: "smart-cms", label: "CMS الذكي" },
-  { key: "aggregator", label: "محرك التجميع" },
-  { key: "knowledge-engine", label: "Auto Knowledge Engine" },
-  { key: "scholarly-verification", label: "التوثيق العلمي" },
-  { key: "verified-knowledge", label: "المعرفة الموثقة" },
-  { key: "knowledge-reasoning", label: "محرك الاستدلال" },
-  { key: "search-analytics", label: "تحليل البحث" },
-  { key: "digital-learning", label: "التعليم الرقمي" },
-  { key: "autonomous-ai", label: "المنظومة الذاتية" },
-  { key: "global-reference", label: "المرجع العالمي" },
-  { key: "islamic-intelligence", label: "الاستخبارات العلمية" },
-  { key: "open-platform", label: "Open Platform" },
-  { key: "governance", label: "الحوكمة المؤسسية" },
-  { key: "knowledge-graph", label: "الرسم البياني المعرفي" },
-  { key: "quiz", label: "أسئلة المسابقة" },
-  { key: "lessons", label: "الدروس" },
-  { key: "sheikhs", label: "المشايخ" },
-  { key: "library", label: "المكتبة" },
-  { key: "miracles", label: "الإعجاز العلمي" },
-  { key: "fawaid", label: "الفوائد" },
-  { key: "adhkar", label: "الأذكار" },
-  { key: "qa", label: "الأسئلة" },
-  { key: "users", label: "المستخدمون" },
-  { key: "reports", label: "التقارير" },
-  { key: "fiqh-council", label: "المجمع الفقهي" },
-  { key: "fatwa", label: "الفتاوى" },
-  { key: "rulings", label: "الأحكام الشرعية" },
-  { key: "annual-courses", label: "الدورات العلمية" },
-  { key: "updates", label: "المستجدات" },
-  { key: "settings", label: "الإعدادات" },
+type NavItem = { key: AdminSection; label: string; icon?: string };
+type NavGroup = { group: string; items: NavItem[] };
+
+/** التنقّل مُجمّع منطقياً: عام، محتوى ديني، مراجعة، معرفة، أتمتة، إدارة. */
+export const ADMIN_NAV_GROUPS: NavGroup[] = [
+  {
+    group: "عام",
+    items: [
+      { key: "dashboard", label: "لوحة التحكم", icon: "🏠" },
+      { key: "reports", label: "التقارير", icon: "📊" },
+      { key: "search-analytics", label: "تحليل البحث", icon: "🔍" },
+    ],
+  },
+  {
+    group: "المحتوى الديني",
+    items: [
+      { key: "lessons", label: "الدروس", icon: "📚" },
+      { key: "sheikhs", label: "المشايخ", icon: "👤" },
+      { key: "library", label: "المكتبة", icon: "📖" },
+      { key: "rulings", label: "الأحكام الشرعية", icon: "⚖️" },
+      { key: "fatwa", label: "الفتاوى", icon: "📜" },
+      { key: "qa", label: "الأسئلة", icon: "❓" },
+      { key: "quiz", label: "أسئلة المسابقة", icon: "🎯" },
+      { key: "fawaid", label: "الفوائد", icon: "💡" },
+      { key: "adhkar", label: "الأذكار", icon: "🤲" },
+      { key: "miracles", label: "الإعجاز العلمي", icon: "🔬" },
+      { key: "annual-courses", label: "الدورات العلمية", icon: "🎓" },
+      { key: "updates", label: "المستجدات", icon: "📰" },
+    ],
+  },
+  {
+    group: "المراجعة والتوثيق",
+    items: [
+      { key: "submissions", label: "مقترحات المحتوى", icon: "📥" },
+      { key: "prophet-stories", label: "قصص الأنبياء", icon: "📖" },
+      { key: "fiqh-council", label: "المجمع الفقهي", icon: "🏛️" },
+      { key: "scholarly-verification", label: "التوثيق العلمي", icon: "✅" },
+      { key: "verified-knowledge", label: "المعرفة الموثقة", icon: "🛡️" },
+    ],
+  },
+  {
+    group: "المعرفة والذكاء",
+    items: [
+      { key: "knowledge-engine", label: "محرّك المعرفة", icon: "⚙️" },
+      { key: "knowledge-reasoning", label: "محرّك الاستدلال", icon: "🧠" },
+      { key: "islamic-intelligence", label: "الاستخبارات العلمية", icon: "🛰️" },
+      { key: "global-reference", label: "المرجع العالمي", icon: "🌍" },
+      { key: "knowledge-graph", label: "الرسم البياني المعرفي", icon: "🕸️" },
+      { key: "digital-learning", label: "التعليم الرقمي", icon: "💻" },
+      { key: "autonomous-ai", label: "المنظومة الذاتية", icon: "🤖" },
+    ],
+  },
+  {
+    group: "الأتمتة والتكامل",
+    items: [
+      { key: "telegram", label: "Telegram", icon: "📢" },
+      { key: "aggregator", label: "محرك التجميع", icon: "🔗" },
+      { key: "smart-cms", label: "CMS الذكي", icon: "🗂️" },
+      { key: "open-platform", label: "Open Platform", icon: "🔓" },
+    ],
+  },
+  {
+    group: "الإدارة",
+    items: [
+      { key: "users", label: "المستخدمون", icon: "👥" },
+      { key: "governance", label: "الحوكمة المؤسسية", icon: "🏢" },
+      { key: "universities", label: "دليل الجامعات", icon: "🏫" },
+      { key: "settings", label: "الإعدادات", icon: "⚙️" },
+    ],
+  },
 ];
+
+/** قائمة مسطّحة (للتوافق ولإيجاد عنوان القسم الحالي). */
+export const ADMIN_NAV: NavItem[] = ADMIN_NAV_GROUPS.flatMap((g) => g.items);
 
 type Flash = { type: "success" | "error"; message: string } | null;
 
@@ -136,11 +173,20 @@ type AdminShellProps = {
 
 export function AdminShell({ section, onSectionChange, children }: AdminShellProps) {
   const [flash, setFlash] = useState<Flash>(null);
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const { logout, user } = useAuth();
   const [, navigate] = useLocation();
   const flashTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => () => { if (flashTimerRef.current) clearTimeout(flashTimerRef.current); }, []);
+
+  // إغلاق الدرج عند تغيير القسم + منع تمرير الخلفية أثناء فتحه
+  useEffect(() => { setDrawerOpen(false); }, [section]);
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    document.body.style.overflow = drawerOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [drawerOpen]);
 
   const showSuccess = useCallback((message: string) => {
     if (flashTimerRef.current) clearTimeout(flashTimerRef.current);
@@ -161,110 +207,69 @@ export function AdminShell({ section, onSectionChange, children }: AdminShellPro
     navigate("/login");
   };
 
+  const activeLabel = ADMIN_NAV.find((n) => n.key === section)?.label ?? "لوحة التحكم";
+
   return (
     <AdminShellContext.Provider value={{ flash, showSuccess, showError, clearFlash }}>
-      <div style={{ display: "flex", minHeight: "calc(100vh - 60px)", background: C.parchment }}>
-        <aside
-          style={{
-            width: "220px",
-            flexShrink: 0,
-            borderLeft: `1px solid ${C.line}`,
-            background: C.parchmentDeep,
-            padding: "1.5rem 0",
-          }}
+      {/* شريط علوي بالجوال */}
+      <div className="admin-topbar">
+        <button
+          type="button"
+          className="admin-hamburger"
+          aria-label="فتح القائمة"
+          aria-expanded={drawerOpen}
+          onClick={() => setDrawerOpen(true)}
         >
-          <p
-            style={{
-              fontSize: "0.6875rem",
-              fontWeight: 700,
-              color: C.inkSoft,
-              padding: "0 1rem",
-              marginBottom: "0.75rem",
-              letterSpacing: "0.06em",
-            }}
-          >
-            لوحة تحكم المجلس العلمي
-          </p>
+          ☰
+        </button>
+        <p className="admin-topbar__title">{activeLabel}</p>
+      </div>
+
+      <div className="admin-shell">
+        {/* غطاء خلفي للدرج */}
+        <div
+          className={`admin-backdrop${drawerOpen ? " is-open" : ""}`}
+          onClick={() => setDrawerOpen(false)}
+          aria-hidden="true"
+        />
+
+        <aside className={`admin-sidebar${drawerOpen ? " is-open" : ""}`}>
+          <p className="admin-sidebar__brand">لوحة تحكم المجلس العلمي</p>
           {user?.profile?.full_name && (
-            <p style={{ fontSize: "0.75rem", color: C.inkSoft, padding: "0 1rem", marginBottom: "0.5rem" }}>
-              {user.profile.full_name}
-            </p>
+            <p className="admin-sidebar__user">{user.profile.full_name}</p>
           )}
-          <Link
-            href="/admin/auto-content"
-            style={{
-              display: "block",
-              padding: "0.5rem 1rem",
-              marginBottom: "0.35rem",
-              textDecoration: "none",
-              fontSize: "0.75rem",
-              color: C.brassDeep,
-            }}
-          >
-            الاستيراد التلقائي
-          </Link>
-          <Link
-            href="/admin/autonomous-platform"
-            style={{
-              display: "block",
-              padding: "0.5rem 1rem",
-              marginBottom: "0.35rem",
-              textDecoration: "none",
-              fontSize: "0.75rem",
-              color: C.emeraldDeep,
-              fontWeight: 600,
-            }}
-          >
-            ⚙ المنصة الذاتية AKP
-          </Link>
-          <Link
-            href="/"
-            style={{
-              display: "block",
-              padding: "0.5rem 1rem",
-              marginBottom: "0.35rem",
-              textDecoration: "none",
-              fontSize: "0.75rem",
-              color: C.brassDeep,
-            }}
-          >
-            ← العودة للموقع
-          </Link>
-          <button
-            type="button"
-            onClick={handleLogout}
-            className="admin-logout-btn"
-          >
+
+          <div className="admin-sidebar__quicklinks">
+            <Link href="/admin/auto-content" className="admin-quicklink">الاستيراد التلقائي</Link>
+            <Link href="/admin/autonomous-platform" className="admin-quicklink admin-quicklink--accent">⚙ المنصة الذاتية AKP</Link>
+            <Link href="/" className="admin-quicklink">← العودة للموقع</Link>
+          </div>
+          <button type="button" onClick={handleLogout} className="admin-logout-btn">
             تسجيل الخروج
           </button>
-          <nav style={{ marginTop: "0.75rem" }}>
-            {ADMIN_NAV.map((n) => (
-              <button
-                key={n.key}
-                type="button"
-                onClick={() => onSectionChange(n.key)}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  width: "100%",
-                  padding: "0.625rem 1rem",
-                  border: "none",
-                  borderRight: `3px solid ${section === n.key ? C.emerald : "transparent"}`,
-                  background: section === n.key ? C.sage : "transparent",
-                  color: section === n.key ? C.emeraldDeep : C.inkSoft,
-                  fontWeight: section === n.key ? 700 : 400,
-                  fontSize: "0.8125rem",
-                  cursor: "pointer",
-                  fontFamily: "inherit",
-                  textAlign: "right",
-                }}
-              >
-                {n.label}
-              </button>
+
+          <nav className="admin-nav" aria-label="أقسام لوحة التحكم">
+            {ADMIN_NAV_GROUPS.map((grp) => (
+              <div key={grp.group} className="admin-nav__group">
+                <p className="admin-nav__group-label">{grp.group}</p>
+                {grp.items.map((n) => (
+                  <button
+                    key={n.key}
+                    type="button"
+                    onClick={() => onSectionChange(n.key)}
+                    className={`admin-nav__item${section === n.key ? " is-active" : ""}`}
+                    aria-current={section === n.key ? "page" : undefined}
+                  >
+                    {n.icon && <span className="admin-nav__item-icon" aria-hidden="true">{n.icon}</span>}
+                    <span className="admin-nav__item-label">{n.label}</span>
+                  </button>
+                ))}
+              </div>
             ))}
           </nav>
         </aside>
-        <main style={{ flex: 1, padding: "1.75rem 2rem 3rem", overflow: "auto", minWidth: 0 }}>
+
+        <main className="admin-main">
           <FlashBanner flash={flash} onClose={clearFlash} />
           {children}
         </main>

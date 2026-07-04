@@ -47,6 +47,10 @@ export function InstagramManualAssistPanel({ source, onDone }: Props) {
         setBusy(false);
       }
     };
+    reader.onerror = () => {
+      setResult("✗ تعذّرت قراءة الملف");
+      setBusy(false);
+    };
     reader.readAsDataURL(file);
   };
 

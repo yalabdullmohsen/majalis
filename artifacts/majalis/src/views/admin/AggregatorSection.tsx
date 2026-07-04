@@ -36,17 +36,22 @@ export function AggregatorSection() {
 
   const load = async () => {
     setLoading(true);
-    const [s, j, d, a] = await Promise.all([
-      getCmsDashboardStats(),
-      getRecentImportJobs(8),
-      getDuplicateReport(),
-      getRecentAuditLogs(10),
-    ]);
-    setStats(s);
-    setJobs(j);
-    setDuplicates(d);
-    setAudit(a);
-    setLoading(false);
+    try {
+      const [s, j, d, a] = await Promise.all([
+        getCmsDashboardStats(),
+        getRecentImportJobs(8),
+        getDuplicateReport(),
+        getRecentAuditLogs(10),
+      ]);
+      setStats(s);
+      setJobs(j);
+      setDuplicates(d);
+      setAudit(a);
+    } catch {
+      showError("تعذّر تحميل بيانات محرك التجميع.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => { load(); }, []);
@@ -108,13 +113,13 @@ export function AggregatorSection() {
           { label: "سجل اليوم", value: stats.auditLogsToday },
         ].map((c) => (
           <div key={c.label} style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.625rem", padding: "1rem", textAlign: "center" }}>
-            <p style={{ margin: 0, fontSize: "1.5rem", fontWeight: 700, color: C.emeraldDeep }}>{c.value.toLocaleString("ar")}</p>
+            <p style={{ margin: 0, fontSize: "1.5rem", fontWeight: 700, color: C.emeraldDeep }}>{(c.value ?? 0).toLocaleString("ar")}</p>
             <p style={{ margin: "0.25rem 0 0", fontSize: "0.8125rem", color: C.inkSoft }}>{c.label}</p>
           </div>
         ))}
       </div>
 
-      {(stats.lastImportAt || stats.sources.length > 0) && (
+      {(stats.lastImportAt || (stats.sources ?? []).length > 0) && (
         <p style={{ margin: "0 0 1.25rem", fontSize: "0.8125rem", color: C.inkSoft, lineHeight: 1.7 }}>
           {stats.lastImportAt && (
             <>
@@ -125,7 +130,7 @@ export function AggregatorSection() {
               <br />
             </>
           )}
-          {stats.sources.length > 0 && <>مصادر العداد: {stats.sources.join("، ")}</>}
+          {(stats.sources ?? []).length > 0 && <>مصادر العداد: {(stats.sources ?? []).join("، ")}</>}
         </p>
       )}
 

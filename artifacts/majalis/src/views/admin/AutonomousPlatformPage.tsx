@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { C } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
-import { AdminShell } from "@/views/admin/AdminShell";
+import { AdminShell, useAdminShell } from "@/views/admin/AdminShell";
 
 const API_BASE = "/api/admin/autonomous-platform";
 
@@ -137,6 +137,7 @@ type ReviewItem = { id: string; content_type: string; source_slug?: string; stat
 type AlertItem = { id: string; severity: string; component: string; title: string; message?: string; created_at: string };
 
 function AutonomousPlatformContent() {
+  const { showError } = useAdminShell();
   const [loading, setLoading] = useState(true);
   const [dashboard, setDashboard] = useState<Dashboard | null>(null);
   const [reviewItems, setReviewItems] = useState<ReviewItem[]>([]);
@@ -181,13 +182,21 @@ function AutonomousPlatformContent() {
   };
 
   const resolveAlert = async (id: string) => {
-    await apiFetch(`resolve-alert&id=${id}`);
-    loadAlerts();
+    try {
+      await apiFetch(`resolve-alert&id=${id}`);
+      loadAlerts();
+    } catch {
+      showError("تعذر حل التنبيه.");
+    }
   };
 
   const reviewDecide = async (id: string, decision: string) => {
-    await apiPost("review-decide", { id, decision });
-    loadReview();
+    try {
+      await apiPost("review-decide", { id, decision });
+      loadReview();
+    } catch {
+      showError("تعذر تنفيذ القرار.");
+    }
   };
 
   const counts = dashboard?.counts;

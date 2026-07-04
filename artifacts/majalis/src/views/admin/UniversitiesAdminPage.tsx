@@ -164,8 +164,11 @@ function ProgramForm({
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
-    await onSave({ ...form, university_id: universityId });
-    setLoading(false);
+    try {
+      await onSave({ ...form, university_id: universityId });
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -238,10 +241,15 @@ function AdminContent() {
 
   const loadUniversities = useCallback(async () => {
     setLoading(true);
-    const items = await adminFetchUniversities();
-    setUniversities(items);
-    setLoading(false);
-  }, []);
+    try {
+      const items = await adminFetchUniversities();
+      setUniversities(items ?? []);
+    } catch {
+      showError("تعذّر تحميل قائمة الجامعات.");
+    } finally {
+      setLoading(false);
+    }
+  }, [showError]);
 
   const loadReminders = useCallback(async () => {
     const items = await adminFetchReminders();

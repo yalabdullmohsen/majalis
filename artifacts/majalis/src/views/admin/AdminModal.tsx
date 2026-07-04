@@ -31,7 +31,7 @@ export function Field({ label, children }: { label: string; children: React.Reac
 
 export function FieldRow({ children }: { children: React.ReactNode }) {
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem" }}>
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: "0.75rem" }}>
       {children}
     </div>
   );

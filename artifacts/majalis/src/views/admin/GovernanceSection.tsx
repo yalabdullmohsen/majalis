@@ -25,6 +25,7 @@ export function GovernanceSection() {
         setDashboard(d);
         setPlan(p);
       })
+      .catch(() => showError("تعذّر تحميل بيانات الحوكمة."))
       .finally(() => setLoading(false));
   };
 
@@ -89,7 +90,7 @@ export function GovernanceSection() {
         <StatCard label="معدل النجاح" value={`${m?.performance?.success_rate ?? 0}%`} />
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.5rem", marginBottom: "2rem" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "1.5rem", marginBottom: "2rem" }}>
         <Panel title="مراقبة النظام">
           <Row label="قاعدة البيانات" value={m?.database?.status || "—"} />
           <Row label="Vercel" value={m?.vercel?.status || "—"} />
@@ -99,7 +100,7 @@ export function GovernanceSection() {
           <Row label="النسخ الاحتياطي" value={m?.backups?.status || "—"} />
         </Panel>
 
-        <Panel title="الأدوار ({GOVERNANCE_ROLES.length})">
+        <Panel title={`الأدوار (${GOVERNANCE_ROLES.length})`}>
           {GOVERNANCE_ROLES.map((r) => (
             <div key={r.id} style={{ fontSize: "0.8125rem", padding: "0.2rem 0" }}>{r.label}</div>
           ))}

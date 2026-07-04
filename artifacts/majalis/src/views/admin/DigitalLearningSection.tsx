@@ -12,6 +12,7 @@ export function DigitalLearningSection() {
   useEffect(() => {
     fetchAdminLearningStats()
       .then(setStats)
+      .catch(() => showError("تعذّر تحميل إحصائيات التعليم الرقمي."))
       .finally(() => setLoading(false));
   }, []);
 
@@ -49,7 +50,7 @@ export function DigitalLearningSection() {
         <StatCard label="الشهادات" value={stats?.certificates_count ?? 0} />
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.5rem" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "1.5rem" }}>
         <InfoPanel title="أكثر الدروس مشاهدة" items={stats?.top_lessons?.length ? stats.top_lessons : ["لا توجد بيانات بعد"]} />
         <InfoPanel title="أصعب الاختبارات" items={stats?.hardest_quizzes?.length ? stats.hardest_quizzes : ["لا توجد بيانات بعد"]} />
         <InfoPanel title="المحتوى الأكثر تفاعلاً" items={stats?.engaging_content?.length ? stats.engaging_content : ["لا توجد بيانات بعد"]} />
@@ -74,13 +75,18 @@ function StatCard({ label, value }: { label: string; value: string | number }) {
   );
 }
 
-function InfoPanel({ title, items }: { title: string; items: string[] }) {
+function InfoPanel({ title, items }: { title: string; items: any[] }) {
+  const labelOf = (item: any) => {
+    if (item == null) return "—";
+    if (typeof item === "object") return String(item.title ?? item.name ?? item.label ?? item.query ?? "عنصر");
+    return String(item);
+  };
   return (
     <div style={{ padding: "1rem", borderRadius: "0.5rem", border: "1px solid var(--line)" }}>
       <h3 style={{ fontSize: "0.875rem", fontWeight: 700, marginBottom: "0.75rem" }}>{title}</h3>
       <ul style={{ margin: 0, paddingInlineStart: "1.25rem", fontSize: "0.8125rem" }}>
-        {items.map((item) => (
-          <li key={String(item)}>{String(item)}</li>
+        {items.map((item, idx) => (
+          <li key={idx}>{labelOf(item)}</li>
         ))}
       </ul>
     </div>

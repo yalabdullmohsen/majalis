@@ -3,6 +3,7 @@ import { adminGetUsers, adminUpdateUserRole } from "@/lib/supabase";
 import { assignGovernanceRole, syncLegacyRoles, LEGACY_ROLE_MAP } from "@/lib/governance-service";
 import { C } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
+import { useAdminShell } from "./AdminShell";
 
 const ROLES: Record<string, { label: string; bg: string; text: string }> = {
   admin:  { label: "مشرف",    bg: "#FEF3C7", text: "#92400E" },
@@ -17,6 +18,7 @@ const FILTERS: [string, string][] = [
 ];
 
 export function UsersSection() {
+  const { showSuccess, showError } = useAdminShell();
   const [users, setUsers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("all");
@@ -25,7 +27,7 @@ export function UsersSection() {
 
   const load = () => {
     setLoading(true);
-    adminGetUsers().then(({ data }) => {  setUsers(data); setLoading(false);  }).catch(() => {}).finally(() => setLoading(false));
+    adminGetUsers().then(({ data }) => {  setUsers(data ?? []); setLoading(false);  }).catch(() => {}).finally(() => setLoading(false));
   };
   useEffect(() => {
     load();
@@ -34,15 +36,25 @@ export function UsersSection() {
 
   const handleRoleChange = async (userId: string, newRole: string) => {
     setUpdatingId(userId);
-    await adminUpdateUserRole(userId, newRole);
-    const governanceRole = LEGACY_ROLE_MAP[newRole] || "read_only";
     try {
-      await assignGovernanceRole(userId, governanceRole);
+      const { error } = await adminUpdateUserRole(userId, newRole);
+      if (error) {
+        showError("تعذّر تغيير الصلاحية — تحقّق من صلاحياتك (RLS).");
+        return;
+      }
+      const governanceRole = LEGACY_ROLE_MAP[newRole] || "read_only";
+      try {
+        await assignGovernanceRole(userId, governanceRole);
+      } catch {
+        /* governance table may not exist yet */
+      }
+      showSuccess("تم تحديث الصلاحية.");
     } catch {
-      /* governance table may not exist yet */
+      showError("تعذّر تغيير الصلاحية.");
+    } finally {
+      setUpdatingId(null);
+      load();
     }
-    setUpdatingId(null);
-    load();
   };
 
   const filtered = users

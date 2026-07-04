@@ -12,7 +12,7 @@ import {
 } from "@/lib/lesson-automation-api";
 import { C } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
-import { AdminShell } from "@/views/admin/AdminShell";
+import { AdminShell, useAdminShell } from "@/views/admin/AdminShell";
 import { InstagramManualAssistPanel } from "@/views/admin/InstagramManualAssistPanel";
 
 const EMPTY: TrustedLessonSource = {
@@ -47,6 +47,7 @@ function formatDt(iso?: string) {
 }
 
 function AutomationSourcesContent() {
+  const { showError } = useAdminShell();
   const [sources, setSources] = useState<TrustedLessonSource[]>([]);
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
@@ -73,6 +74,8 @@ function AutomationSourcesContent() {
       setShowForm(false);
       setForm({ ...EMPTY });
       load();
+    } catch (e) {
+      showError(e instanceof Error ? e.message : "تعذر حفظ المصدر.");
     } finally {
       setBusy(false);
     }
@@ -175,10 +178,10 @@ function AutomationSourcesContent() {
                   <InstagramManualAssistPanel source={s} onDone={load} />
                 </div>
                 <div style={{ display: "flex", gap: "0.35rem", flexWrap: "wrap", alignItems: "flex-start" }}>
-                  <button type="button" disabled={busy} onClick={() => toggleTrustedSource(s.id!, !s.active).then(load)} style={{ fontSize: "0.75rem", padding: "0.25rem 0.5rem", cursor: "pointer", fontFamily: "inherit" }}>
+                  <button type="button" disabled={busy} onClick={() => toggleTrustedSource(s.id!, !s.active).then(load).catch(() => showError("تعذر تحديث حالة المصدر."))} style={{ fontSize: "0.75rem", padding: "0.25rem 0.5rem", cursor: "pointer", fontFamily: "inherit" }}>
                     {s.active ? "تعطيل" : "تفعيل"}
                   </button>
-                  <button type="button" disabled={busy} onClick={() => toggleAutoPublish(s.id!).then(load)} style={{ fontSize: "0.75rem", padding: "0.25rem 0.5rem", cursor: "pointer", fontFamily: "inherit" }}>
+                  <button type="button" disabled={busy} onClick={() => toggleAutoPublish(s.id!).then(load).catch(() => showError("تعذر تحديث النشر التلقائي."))} style={{ fontSize: "0.75rem", padding: "0.25rem 0.5rem", cursor: "pointer", fontFamily: "inherit" }}>
                     Auto-Publish
                   </button>
                   <button type="button" disabled={busy} onClick={() => { setForm(s); setShowForm(true); }} style={{ fontSize: "0.75rem", padding: "0.25rem 0.5rem", cursor: "pointer", fontFamily: "inherit" }}>تعديل</button>

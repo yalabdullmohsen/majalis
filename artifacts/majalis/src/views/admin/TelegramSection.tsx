@@ -432,7 +432,7 @@ function ReviewTab() {
                   {/* Quality badge */}
                   <span style={{
                     padding: "0.15rem 0.5rem", borderRadius: "999px", fontSize: "0.72rem", fontWeight: 700, flexShrink: 0,
-                    background: `${QUALITY_COLORS[lesson.quality_status]}20`,
+                    background: `${QUALITY_COLORS[lesson.quality_status] ?? "#999999"}20`,
                     color: QUALITY_COLORS[lesson.quality_status] || C.inkSoft,
                   }}>
                     {QUALITY_AR[lesson.quality_status] || lesson.quality_status}
@@ -494,47 +494,48 @@ function StatsTab() {
   if (loading) return <Spinner />;
   if (!data) return <EmptyState text="تعذّر تحميل الإحصائيات." />;
 
-  const { rawMessages: raw, extractedLessons: lessons } = data;
+  const raw = data?.rawMessages ?? ({} as TgStats["rawMessages"]);
+  const lessons = data?.extractedLessons ?? ({} as TgStats["extractedLessons"]);
 
   return (
     <div style={{ display: "grid", gap: "1rem" }}>
       {/* Summary cards */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: "0.75rem" }}>
-        <StatCard label="إجمالي الرسائل" value={raw.total} color={C.emerald} />
-        <StatCard label="دروس مُستخرجة" value={lessons.total} color="#2563eb" />
-        <StatCard label="بانتظار المراجعة" value={lessons.byReview.pending || 0} color="#d97706" />
-        <StatCard label="مُعتمدة" value={lessons.byReview.approved || 0} color="#16a34a" />
+        <StatCard label="إجمالي الرسائل" value={raw.total ?? 0} color={C.emerald} />
+        <StatCard label="دروس مُستخرجة" value={lessons.total ?? 0} color="#2563eb" />
+        <StatCard label="بانتظار المراجعة" value={lessons.byReview?.pending ?? 0} color="#d97706" />
+        <StatCard label="مُعتمدة" value={lessons.byReview?.approved ?? 0} color="#16a34a" />
         <StatCard label="معدل النجاح" value={`${data.successRate}%`} color="#7c3aed" />
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "1rem" }}>
         {/* Raw message breakdown */}
         <InfoCard title="حالة استخراج الرسائل">
-          {Object.entries(raw.byStatus).map(([status, count]) => (
-            <ProgressRow key={status} label={status} value={count as number} total={raw.total} />
+          {Object.entries(raw.byStatus ?? {}).map(([status, count]) => (
+            <ProgressRow key={status} label={status} value={count as number} total={raw.total ?? 0} />
           ))}
         </InfoCard>
 
         {/* Review breakdown */}
         <InfoCard title="حالة المراجعة">
-          {Object.entries(lessons.byReview).map(([status, count]) => (
-            <ProgressRow key={status} label={status} value={count as number} total={lessons.total} />
+          {Object.entries(lessons.byReview ?? {}).map(([status, count]) => (
+            <ProgressRow key={status} label={status} value={count as number} total={lessons.total ?? 0} />
           ))}
         </InfoCard>
 
         {/* Quality breakdown */}
         <InfoCard title="جودة الدروس">
-          {Object.entries(lessons.byQuality).map(([q, count]) => (
-            <ProgressRow key={q} label={QUALITY_AR[q] || q} value={count as number} total={lessons.total} color={QUALITY_COLORS[q]} />
+          {Object.entries(lessons.byQuality ?? {}).map(([q, count]) => (
+            <ProgressRow key={q} label={QUALITY_AR[q] || q} value={count as number} total={lessons.total ?? 0} color={QUALITY_COLORS[q]} />
           ))}
         </InfoCard>
 
         {/* Top sheikhs */}
         <InfoCard title="أكثر المشايخ حضوراً">
-          {lessons.topSheikhs.length === 0 ? (
+          {(lessons.topSheikhs ?? []).length === 0 ? (
             <span style={{ color: C.inkSoft, fontSize: "0.8rem" }}>لا توجد بيانات.</span>
-          ) : lessons.topSheikhs.map((s, i) => (
-            <div key={s.name} style={{ display: "flex", justifyContent: "space-between", padding: "0.2rem 0", fontSize: "0.82rem", borderBottom: i < lessons.topSheikhs.length - 1 ? `1px solid ${C.line}` : "none" }}>
+          ) : (lessons.topSheikhs ?? []).map((s, i) => (
+            <div key={s.name} style={{ display: "flex", justifyContent: "space-between", padding: "0.2rem 0", fontSize: "0.82rem", borderBottom: i < (lessons.topSheikhs ?? []).length - 1 ? `1px solid ${C.line}` : "none" }}>
               <span>{s.name}</span>
               <span style={{ fontWeight: 700, color: C.emerald }}>{s.count}</span>
             </div>

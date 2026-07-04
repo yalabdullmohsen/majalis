@@ -13,6 +13,7 @@ import "./index.css";
 import "./styles/design-system.css";
 import "./styles/highlighted-content.css";
 import "./styles/rulings-encyclopedia.css";
+import "./styles/admin.css";
 
 const queryClient = createAppQueryClient();
 

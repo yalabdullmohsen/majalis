@@ -18,8 +18,8 @@ export function MiraclesSection() {
 
   const load = () => {
     setLoading(true);
-    adminGetMiracles().then(({ data }) => { 
-      setItems(data);
+    adminGetMiracles().then(({ data }) => {
+      setItems(data ?? []);
       setLoading(false);
      }).catch(() => {}).finally(() => setLoading(false));
   };
@@ -37,13 +37,14 @@ export function MiraclesSection() {
   const handleSave = async () => {
     if (!form.title.trim()) return alert("العنوان مطلوب");
     setSaving(true);
-    await adminUpsertMiracle({
+    const { error } = await adminUpsertMiracle({
       ...form,
       title: sanitizeText(form.title, 300),
       category: sanitizeText(form.category, 120),
       body: sanitizeText(form.body ?? form.summary ?? "", 6000),
     });
     setSaving(false);
+    if (error) return alert("تعذّر الحفظ.");
     setOpen(false);
     load();
   };
@@ -82,7 +83,7 @@ export function MiraclesSection() {
                   <td style={{ padding: "0.625rem", color: C.inkSoft }}>{item.category || "—"}</td>
                   <td style={{ padding: "0.625rem" }}>
                     <button type="button" onClick={() => { setForm({ ...EMPTY, ...item }); setOpen(true); }} style={{ marginInlineEnd: "0.5rem" }}>تعديل</button>
-                    <button type="button" onClick={() => { if (confirm("حذف؟")) adminDeleteMiracle(item.id).then(load); }}>حذف</button>
+                    <button type="button" onClick={() => { if (confirm("حذف؟")) adminDeleteMiracle(item.id).then(load).catch(() => alert("تعذّر الحذف.")); }}>حذف</button>
                   </td>
                 </tr>
               ))}

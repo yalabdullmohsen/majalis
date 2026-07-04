@@ -172,11 +172,12 @@ const CSS = `
 `;
 
 function CitationsList({ citations }: { citations: Citation[] }) {
+  const list = citations ?? [];
   return (
     <div>
-      <div className="ps-citations-label">الاستشهادات القرآنية ({citations.length})</div>
+      <div className="ps-citations-label">الاستشهادات القرآنية ({list.length})</div>
       <div className="ps-citations">
-        {citations.map((c, i) => (
+        {list.map((c, i) => (
           <div key={i} className="ps-cit">
             <span className="ps-cit-ref">سورة {c.surah}: {c.ayahs}</span>
             <span className="ps-cit-note">— {c.note}</span>
@@ -197,7 +198,7 @@ function EditForm({
   onCancel: () => void;
 }) {
   const [citations, setCitations] = useState<Citation[]>(
-    story.citations.map((c) => ({ ...c }))
+    (story.citations ?? []).map((c) => ({ ...c }))
   );
   const [content, setContent] = useState(story.content);
   const [saving, setSaving] = useState(false);

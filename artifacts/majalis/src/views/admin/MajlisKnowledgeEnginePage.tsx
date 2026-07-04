@@ -170,7 +170,7 @@ function MajlisKnowledgeEngineContent() {
         <>
           <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", marginBottom: "1.25rem" }}>
             <StatCard label="صحة النظام" value={stats?.health?.score ?? "—"} color={stats?.health?.status === "healthy" ? C.emeraldDeep : "#92400E"} />
-            <StatCard label="المصادر" value={stats?.counts?.sources ?? stats?.subsystems?.sources ? (stats.subsystems as { sources?: { total?: number } }).sources?.total ?? stats?.sourcesTotal ?? 0 : stats?.sourcesTotal ?? 0} />
+            <StatCard label="المصادر" value={stats?.counts?.sources ?? (stats?.subsystems as { sources?: { total?: number } } | undefined)?.sources?.total ?? stats?.sourcesTotal ?? 0} />
             <StatCard label="المنصات" value={stats?.platformsSupported ?? platforms.length} />
             <StatCard label="مسودات" value={stats?.counts?.drafts ?? stats?.drafts ?? 0} />
             <StatCard label="بانتظار المراجعة" value={stats?.counts?.pendingReview ?? stats?.pendingReview ?? 0} color="#92400E" />

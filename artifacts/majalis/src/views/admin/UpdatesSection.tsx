@@ -17,7 +17,7 @@ export function UpdatesSection() {
   const [form, setForm] = useState<any>(EMPTY);
   const [saving, setSaving] = useState(false);
 
-  const load = () => { setLoading(true); adminGetAllUpdates().then(({ data }) => {  setItems(data.length > 0 ? data : UPDATES_SEED); setLoading(false);  }).catch(() => {}).finally(() => setLoading(false)); };
+  const load = () => { setLoading(true); adminGetAllUpdates().then(({ data }) => {  const rows = data ?? []; setItems(rows.length > 0 ? rows : UPDATES_SEED); setLoading(false);  }).catch(() => {}).finally(() => setLoading(false)); };
   useEffect(() => { load(); }, []);
   const set = (k: string, v: unknown) => setForm((f: any) => ({ ...f, [k]: v }));
 
@@ -33,7 +33,7 @@ export function UpdatesSection() {
           <strong style={{ display: "block", marginTop: "0.5rem" }}>{item.title}</strong>
           <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.5rem" }}>
             <button onClick={() => { setForm({ ...item }); setOpen(true); }} style={{ fontSize: "0.75rem" }}>تعديل</button>
-            <button onClick={() => { if (confirm("حذف؟")) adminDeleteUpdate(item.id).then(load); }} style={{ fontSize: "0.75rem", color: "#dc2626" }}>حذف</button>
+            <button onClick={() => { if (confirm("حذف؟")) adminDeleteUpdate(item.id).then(load).catch(() => showError("تعذّر الحذف.")); }} style={{ fontSize: "0.75rem", color: "#dc2626" }}>حذف</button>
           </div>
         </div>
       ))}

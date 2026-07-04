@@ -25,6 +25,7 @@ export function AutonomousAiSection() {
         setObs(dashboard);
         setEvents(evts);
       })
+      .catch(() => showError("تعذّر تحميل بيانات المنظومة الذاتية."))
       .finally(() => setLoading(false));
   };
 
@@ -89,7 +90,7 @@ export function AutonomousAiSection() {
         <StatCard label="مراحل Pipeline" value={Object.keys(PIPELINE_STAGE_LABELS).length} />
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.5rem", marginBottom: "2rem" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "1.5rem", marginBottom: "2rem" }}>
         <Panel title="حالة Cron Jobs">
           {(obs?.cronJobs || []).map((job) => (
             <div key={job.name} style={{ fontSize: "0.8125rem", padding: "0.25rem 0", display: "flex", justifyContent: "space-between" }}>

@@ -105,9 +105,20 @@ export function SmartCmsSection() {
   };
 
   const onReject = async (draftId: string) => {
-    await rejectContentDraft(draftId);
-    showSuccess("تم رفض المسودة");
-    load();
+    setBusy(true);
+    try {
+      const res = await rejectContentDraft(draftId);
+      if (res && (res as { ok?: boolean }).ok === false) {
+        showError((res as { error?: string }).error || "تعذّر رفض المسودة");
+        return;
+      }
+      showSuccess("تم رفض المسودة");
+      load();
+    } catch {
+      showError("تعذّر رفض المسودة");
+    } finally {
+      setBusy(false);
+    }
   };
 
   return (

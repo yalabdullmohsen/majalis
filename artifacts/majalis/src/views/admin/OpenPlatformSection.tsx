@@ -34,6 +34,7 @@ export function OpenPlatformSection() {
         setWebhooks(w);
         setPlan(p);
       })
+      .catch(() => showError("تعذّر تحميل بيانات المنصة المفتوحة."))
       .finally(() => setLoading(false));
   };
 
@@ -48,6 +49,8 @@ export function OpenPlatformSection() {
         setCreatedKey(result.key);
         showSuccess("تم إنشاء المفتاح — انسخه الآن");
         refresh();
+      } else {
+        showError("تعذّر إنشاء المفتاح.");
       }
     } catch {
       showError("فشل إنشاء المفتاح");
@@ -65,6 +68,10 @@ export function OpenPlatformSection() {
   };
 
   const handleCreateWebhook = async () => {
+    if (!newWebhookUrl.trim()) {
+      showError("أدخل رابطاً صحيحاً.");
+      return;
+    }
     try {
       await createWebhook(newWebhookUrl, WEBHOOK_EVENTS.slice(0, 3), "Webhook");
       showSuccess("تم إنشاء Webhook");
@@ -117,7 +124,7 @@ export function OpenPlatformSection() {
         <StatCard label="أخطاء" value={dashboard?.usage?.errors ?? 0} color="#dc2626" />
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.5rem", marginBottom: "2rem" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "1.5rem", marginBottom: "2rem" }}>
         <Panel title="إصدارات API">
           {API_VERSIONS.map((v) => (
             <div key={v} style={{ fontSize: "0.8125rem", padding: "0.25rem 0" }}>

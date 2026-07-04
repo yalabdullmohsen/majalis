@@ -22,6 +22,7 @@ export function GlobalReferenceSection() {
         setDashboard(d);
         setRoadmap(r);
       })
+      .catch(() => showError("تعذّر تحميل المرجع العالمي."))
       .finally(() => setLoading(false));
   }, []);
 
@@ -84,7 +85,7 @@ export function GlobalReferenceSection() {
         <StatCard label="غير مكتمل" value={dashboard?.counts?.incomplete ?? 0} color="#f59e0b" />
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.5rem", marginBottom: "2rem" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "1.5rem", marginBottom: "2rem" }}>
         <Panel title="المصادر الموثوقة">
           {(dashboard?.sources || []).map((s) => (
             <div key={s.slug} style={{ fontSize: "0.8125rem", padding: "0.25rem 0", display: "flex", justifyContent: "space-between" }}>

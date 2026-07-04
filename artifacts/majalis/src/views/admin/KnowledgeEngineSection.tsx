@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { C } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
 import { useAdminShell } from "@/views/admin/AdminShell";
@@ -36,9 +36,10 @@ export function KnowledgeEngineSection() {
   const [checkingHealth, setCheckingHealth] = useState(false);
   const [usingLegacy, setUsingLegacy] = useState(false);
   const [systemHealth, setSystemHealth] = useState<SystemHealth | null>(null);
+  const firstLoad = useRef(true);
 
   const load = useCallback(async () => {
-    setLoading(true);
+    if (firstLoad.current) setLoading(true);
     try {
       const [result, health] = await Promise.all([
         fetchAkeStats(7),
@@ -51,6 +52,7 @@ export function KnowledgeEngineSection() {
       showError("تعذر تحميل إحصائيات Auto Knowledge Engine.");
     } finally {
       setLoading(false);
+      firstLoad.current = false;
     }
   }, [showError]);
 
@@ -137,7 +139,7 @@ export function KnowledgeEngineSection() {
 
           {systemHealth?.errors && systemHealth.errors.length > 0 && (
             <div style={{ padding: "0.75rem 1rem", marginBottom: "1rem", borderRadius: "0.375rem", background: "#FEE2E2", border: "1px solid #FCA5A5", fontSize: "0.8125rem", color: "#991B1B" }}>
-              {systemHealth.errors.map((e) => <div key={e}>{e}</div>)}
+              {systemHealth.errors.map((e, i) => <div key={i}>{e}</div>)}
             </div>
           )}
 
@@ -154,7 +156,7 @@ export function KnowledgeEngineSection() {
             <StatCard label="ثقة متوسطة" value={`${stats?.avg_trust ?? 0}%`} />
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.25rem" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "1.25rem" }}>
             <div style={{ padding: "1.25rem", borderRadius: "0.5rem", border: `1px solid ${C.line}`, background: C.panel }}>
               <h3 style={{ margin: "0 0 1rem", fontSize: "0.9375rem", fontWeight: 700, color: C.emeraldDeep }}>
                 صحة Connectors

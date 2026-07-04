@@ -30,16 +30,21 @@ function QualityContent() {
 
   const load = useCallback(async () => {
     setLoading(true);
-    const [statsRes, logsRes, jobsRes] = await Promise.all([
-      adminGetFiqhQualityStats(),
-      adminGetFiqhReviewLogs(undefined, 15),
-      adminGetFiqhSyncJobs(5),
-    ]);
-    setStats(statsRes.data);
-    setLogs(logsRes.data || []);
-    const lastJob = jobsRes.data?.[0];
-    setLastSync(lastJob?.finished_at || lastJob?.started_at || statsRes.data?.last_sync_at || null);
-    setLoading(false);
+    try {
+      const [statsRes, logsRes, jobsRes] = await Promise.all([
+        adminGetFiqhQualityStats(),
+        adminGetFiqhReviewLogs(undefined, 15),
+        adminGetFiqhSyncJobs(5),
+      ]);
+      setStats(statsRes.data);
+      setLogs(logsRes.data || []);
+      const lastJob = jobsRes.data?.[0];
+      setLastSync(lastJob?.finished_at || lastJob?.started_at || statsRes.data?.last_sync_at || null);
+    } catch {
+      setLogs([]);
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   useEffect(() => { void load(); }, [load]);

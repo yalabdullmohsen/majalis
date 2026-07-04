@@ -51,9 +51,14 @@ export function RelationshipsSection() {
 
   async function load() {
     setLoading(true);
-    const data = await getAllKnowledgeRelationshipsAdmin();
-    setRows(data);
-    setLoading(false);
+    try {
+      const data = await getAllKnowledgeRelationshipsAdmin();
+      setRows(data ?? []);
+    } catch {
+      setRows([]);
+    } finally {
+      setLoading(false);
+    }
   }
 
   useEffect(() => { load(); }, []);
@@ -184,7 +189,7 @@ export function RelationshipsSection() {
         <h3 style={{ fontSize: "1rem", fontWeight: 700, marginBottom: "1rem", color: "#1f2937" }}>
           {editId ? "تعديل العلاقة" : "إضافة علاقة جديدة"}
         </h3>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "0.75rem" }}>
           <div>
             <label style={labelStyle}>نوع المصدر</label>
             <select style={fieldStyle} value={F.source_type}

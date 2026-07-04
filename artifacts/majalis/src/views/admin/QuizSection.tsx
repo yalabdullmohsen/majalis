@@ -106,7 +106,7 @@ export function QuizSection() {
   const load = useCallback(() => {
     setLoading(true);
     adminGetQuizQuestions()
-      .then(({ data }) => setItems(data))
+      .then(({ data }) => setItems(data ?? []))
       .catch(() => setItems([]))
       .finally(() => setLoading(false));
   }, []);

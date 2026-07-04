@@ -139,7 +139,7 @@ export function SubmissionsSection() {
                   {item.title}
                 </p>
                 <p style={{ color: "#6b7280", fontSize: "0.85rem", margin: "0 0 0.5rem", whiteSpace: "pre-wrap", wordBreak: "break-word" }}>
-                  {item.content.length > 300 ? `${item.content.slice(0, 300)}...` : item.content}
+                  {(() => { const content = item.content ?? ""; return content.length > 300 ? `${content.slice(0, 300)}...` : content; })()}
                 </p>
                 <p style={{ fontSize: "0.75rem", color: "#9ca3af", margin: 0 }}>
                   {item.author ? `بقلم: ${item.author} · ` : ""}

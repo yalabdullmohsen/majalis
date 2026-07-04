@@ -30,6 +30,7 @@ export function IslamicIntelligenceSection() {
         setAnalytics(a || d?.analytics || null);
         setPlan(p);
       })
+      .catch(() => showError("تعذّر تحميل الاستخبارات العلمية."))
       .finally(() => setLoading(false));
   };
 
@@ -111,7 +112,7 @@ export function IslamicIntelligenceSection() {
         <StatCard label="زمن البحث" value={`${analytics?.avg_response_ms ?? 0}ms`} />
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.5rem", marginBottom: "2rem" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "1.5rem", marginBottom: "2rem" }}>
         <Panel title="وكلاء الذكاء الاصطناعي (9)">
           {agents.map(([id, agent]) => (
             <div key={id} style={{ fontSize: "0.8125rem", padding: "0.35rem 0", display: "flex", justifyContent: "space-between", alignItems: "center" }}>

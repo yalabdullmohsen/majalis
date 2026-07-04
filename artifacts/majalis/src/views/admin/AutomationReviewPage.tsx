@@ -103,9 +103,15 @@ function AutomationReviewContent() {
   const onReject = async (draftId: string) => {
     setBusy(true);
     try {
-      await rejectAutomationDraft(draftId);
+      const res = await rejectAutomationDraft(draftId);
+      if (res && res.ok === false) {
+        showError(res.error || "تعذر الرفض");
+        return;
+      }
       showSuccess("تم الرفض");
       load();
+    } catch {
+      showError("تعذر الرفض");
     } finally {
       setBusy(false);
     }

@@ -65,8 +65,8 @@ export function LessonsSection() {
       setLoading,
       load: () => Promise.all([adminGetLessons(), adminGetSheikhs()]),
       onSuccess: ([{ data: l }, { data: s }]) => {
-        setItems(l);
-        setSheikhs(s);
+        setItems(l ?? []);
+        setSheikhs(s ?? []);
       },
       onError: () => {
         setItems([]);
@@ -104,7 +104,8 @@ export function LessonsSection() {
     };
     const { error } = await adminUpsertLesson(payload);
     setSaving(false);
-    if (!error) invalidateLessonsCache();
+    if (error) return alert("تعذّر الحفظ.");
+    invalidateLessonsCache();
     setOpen(false);
     load();
   };

@@ -5,9 +5,11 @@ import { ADHKAR_ITEMS } from "@/lib/adhkar-seed";
 import { getPublishedAdhkarItems } from "@/lib/adhkar-admin";
 import { C } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
+import { useAdminShell } from "./AdminShell";
 import { AdminSectionToolbar } from "./AdminSectionToolbar";
 
 export function ReportsSection() {
+  const { showError } = useAdminShell();
   const [stats, setStats] = useState<any>(null);
   const [dashboard, setDashboard] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -18,6 +20,7 @@ export function ReportsSection() {
         setStats(s);
         setDashboard(d.stats);
       })
+      .catch(() => showError("تعذّر تحميل التقارير."))
       .finally(() => setLoading(false));
   }, []);
 

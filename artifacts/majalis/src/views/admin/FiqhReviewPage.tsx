@@ -45,20 +45,25 @@ function ReviewContent() {
 
   const load = useCallback(async () => {
     setLoading(true);
-    const [itemsRes, dupRes] = await Promise.all([
-      adminGetAllFiqhCouncilItems(),
-      adminGetFiqhDuplicates(100),
-    ]);
-    setItems(itemsRes.data || []);
-    const slugs = new Set<string>();
-    for (const d of dupRes.data || []) {
-      const item = (itemsRes.data || []).find((i) => i.id === d.item_id);
-      const cand = (itemsRes.data || []).find((i) => i.id === d.candidate_id);
-      if (item) slugs.add(item.slug);
-      if (cand) slugs.add(cand.slug);
+    try {
+      const [itemsRes, dupRes] = await Promise.all([
+        adminGetAllFiqhCouncilItems(),
+        adminGetFiqhDuplicates(100),
+      ]);
+      setItems(itemsRes.data || []);
+      const slugs = new Set<string>();
+      for (const d of dupRes.data || []) {
+        const item = (itemsRes.data || []).find((i) => i.id === d.item_id);
+        const cand = (itemsRes.data || []).find((i) => i.id === d.candidate_id);
+        if (item) slugs.add(item.slug);
+        if (cand) slugs.add(cand.slug);
+      }
+      setDuplicateSlugs(slugs);
+    } catch {
+      setItems([]);
+    } finally {
+      setLoading(false);
     }
-    setDuplicateSlugs(slugs);
-    setLoading(false);
   }, []);
 
   useEffect(() => { void load(); }, [load]);

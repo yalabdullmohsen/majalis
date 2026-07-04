@@ -12,6 +12,7 @@ export function SearchAnalyticsSection() {
   useEffect(() => {
     fetchSearchAnalytics(30)
       .then(setAnalytics)
+      .catch(() => showError("تعذّر تحميل تحليلات البحث."))
       .finally(() => setLoading(false));
   }, []);
 
@@ -49,7 +50,7 @@ export function SearchAnalyticsSection() {
         <StatCard label="جودة النتائج" value={`${analytics?.quality_score ?? 0}/100`} />
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.5rem" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "1.5rem" }}>
         <AnalyticsList title="أكثر الكلمات بحثًا" items={analytics?.top_queries?.map((q) => `${q.query} (${q.count})`) || []} />
         <AnalyticsList title="أكثر الموضوعات زيارة" items={analytics?.top_topics?.map((t) => `${t.title} (${t.count})`) || []} />
         <AnalyticsList title="استعلامات بلا نتائج" items={analytics?.zero_result_queries?.map((q) => `${q.query} (${q.count})`) || []} />
@@ -83,8 +84,8 @@ function AnalyticsList({ title, items }: { title: string; items: string[] }) {
         <p style={{ fontSize: "0.8125rem", color: "var(--ink-soft)" }}>لا توجد بيانات بعد</p>
       ) : (
         <ul style={{ margin: 0, paddingInlineStart: "1.25rem", fontSize: "0.8125rem" }}>
-          {items.slice(0, 10).map((item) => (
-            <li key={item} style={{ marginBottom: "0.25rem" }}>{item}</li>
+          {items.slice(0, 10).map((item, i) => (
+            <li key={i} style={{ marginBottom: "0.25rem" }}>{item}</li>
           ))}
         </ul>
       )}

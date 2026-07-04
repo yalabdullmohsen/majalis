@@ -17,7 +17,7 @@ export function AnnualCoursesSection() {
   const [form, setForm] = useState<any>(EMPTY);
   const [saving, setSaving] = useState(false);
 
-  const load = () => { setLoading(true); adminGetAllAnnualCourses().then(({ data }) => {  setItems(data.length > 0 ? data : ANNUAL_COURSES_SEED); setLoading(false);  }).catch(() => {}).finally(() => setLoading(false)); };
+  const load = () => { setLoading(true); adminGetAllAnnualCourses().then(({ data }) => {  const rows = data ?? []; setItems(rows.length > 0 ? rows : ANNUAL_COURSES_SEED); setLoading(false);  }).catch(() => {}).finally(() => setLoading(false)); };
   useEffect(() => { load(); }, []);
   const set = (k: string, v: unknown) => setForm((f: any) => ({ ...f, [k]: v }));
 
@@ -27,12 +27,12 @@ export function AnnualCoursesSection() {
         <h2 style={{ margin: 0, color: C.emeraldDeep }}>الدورات العلمية ({items.length})</h2>
         <button onClick={() => { setForm({ ...EMPTY }); setOpen(true); }} style={{ padding: "0.5rem 1rem", background: C.emerald, color: C.parchment, border: "none", borderRadius: "0.375rem", cursor: "pointer" }}>+ إضافة</button>
       </div>
-      {loading ? <Loading /> : items.map((item) => (
-        <div key={item.id} style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.375rem", padding: "1rem", marginBottom: "0.75rem" }}>
+      {loading ? <Loading /> : items.map((item, idx) => (
+        <div key={item.id ?? item.title ?? idx} style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.375rem", padding: "1rem", marginBottom: "0.75rem" }}>
           <strong>{item.title}</strong> — {item.course_type}
           <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.5rem" }}>
             <button onClick={() => { setForm({ ...item }); setOpen(true); }} style={{ fontSize: "0.75rem" }}>تعديل</button>
-            <button onClick={() => { if (confirm("حذف؟")) adminDeleteAnnualCourse(item.id).then(load); }} style={{ fontSize: "0.75rem", color: "#dc2626" }}>حذف</button>
+            <button onClick={() => { if (!item.id) return; if (confirm("حذف؟")) adminDeleteAnnualCourse(item.id).then(load); }} style={{ fontSize: "0.75rem", color: "#dc2626" }}>حذف</button>
           </div>
         </div>
       ))}

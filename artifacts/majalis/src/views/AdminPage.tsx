@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "wouter";
 import { AdminShell, type AdminSection } from "@/views/admin/AdminShell";
+import { AdminSectionBoundary } from "@/views/admin/AdminUI";
 import { DashboardSection } from "@/views/admin/DashboardSection";
 import { LessonsSection } from "@/views/admin/LessonsSection";
 import { SheikhsSection } from "@/views/admin/SheikhsSection";
@@ -55,6 +56,7 @@ export default function AdminPage() {
 
   return (
     <AdminShell section={section} onSectionChange={setSection}>
+      <AdminSectionBoundary name={section} resetKey={section}>
       {section === "telegram" && <TelegramSection />}
       {section === "universities" && <UniversitiesSection />}
       {section === "prophet-stories" && <ProphetStoriesSection />}
@@ -90,6 +92,7 @@ export default function AdminPage() {
       {section === "rulings" && <RulingsSection />}
       {section === "annual-courses" && <AnnualCoursesSection />}
       {section === "updates" && <UpdatesSection />}
+      </AdminSectionBoundary>
     </AdminShell>
   );
 }

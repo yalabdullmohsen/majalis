@@ -12,6 +12,34 @@ import { useAdminShell } from "./AdminShell";
 
 type DashboardData = Awaited<ReturnType<typeof adminGetDashboardStats>>;
 
+const EMPTY_DASHBOARD: DashboardData = {
+  stats: {
+    totalLessons: 0,
+    coursesCount: 0,
+    lecturesCount: 0,
+    regularLessonsCount: 0,
+    totalSheikhs: 0,
+    totalUsers: 0,
+    todayViews: 0,
+    totalBooks: 0,
+    totalBenefits: 0,
+    totalQA: 0,
+    totalHadith: 0,
+    totalStories: 0,
+    totalMiracles: 0,
+    totalRulings: 0,
+    totalFiqhItems: 0,
+    pendingReports: 0,
+    totalTranscriptions: 0,
+    dbConnected: false,
+    serverOk: false,
+  },
+  recentReports: [],
+  recentLessons: [],
+  topViewedLessons: [],
+  topSearches: [],
+} as unknown as DashboardData;
+
 export function DashboardSection() {
   const { showSuccess, showError } = useAdminShell();
   const [data, setData] = useState<DashboardData | null>(null);
@@ -26,6 +54,10 @@ export function DashboardSection() {
       .then(([result, cms]) => {
         setData(result);
         setCmsStats(cms);
+      })
+      .catch(() => {
+        setData(EMPTY_DASHBOARD);
+        showError("تعذّر تحميل بيانات لوحة التحكم.");
       })
       .finally(() => setLoading(false));
     setLocalSearches(getTopSearchQueries(6));

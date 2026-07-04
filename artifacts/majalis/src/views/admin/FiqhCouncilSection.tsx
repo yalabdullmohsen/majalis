@@ -147,27 +147,31 @@ export function FiqhCouncilSection() {
       adminGetFiqhSessions(30),
       adminGetFiqhAlerts(25),
     ]).then(([allRes, reviewRes, sourcesRes, jobsRes, dupRes, statsRes, auditRes, logsRes, analyticsRes, unansweredRes, relRes, sessionsRes, alertsRes]) => {
-      setItems(allRes.data);
-      setReviewItems(reviewRes.data);
-      setSources(sourcesRes.data);
-      setSyncJobs(jobsRes.data);
-      setDuplicates(dupRes.data);
+      const reviewData = reviewRes.data ?? [];
+      const dupData = dupRes.data ?? [];
+      const jobsData = jobsRes.data ?? [];
+      const unansweredData = unansweredRes.data ?? [];
+      setItems(allRes.data ?? []);
+      setReviewItems(reviewData);
+      setSources(sourcesRes.data ?? []);
+      setSyncJobs(jobsData);
+      setDuplicates(dupData);
       setStats(statsRes);
-      setAuditLog(auditRes.data);
-      setResearchLogs(logsRes.data);
-      setResearchAnalytics(analyticsRes.data);
-      setUnanswered(unansweredRes.data);
-      setSuggestedRelations(relRes.data);
+      setAuditLog(auditRes.data ?? []);
+      setResearchLogs(logsRes.data ?? []);
+      setResearchAnalytics(analyticsRes.data ?? []);
+      setUnanswered(unansweredData);
+      setSuggestedRelations(relRes.data ?? []);
       setSessions(sessionsRes.data?.length ? sessionsRes.data : FIQH_SESSIONS_PUBLISHED_SEED);
       const computedAlerts = [
-        ...(reviewRes.data.length ? [{ id: "local-review", title: `${reviewRes.data.length} عناصر بانتظار المراجعة`, alert_type: "needs_review", severity: "warning", is_read: false }] : []),
-        ...(dupRes.data.length ? [{ id: "local-dup", title: `${dupRes.data.length} احتمالات تكرار`, alert_type: "duplicate_found", severity: "info", is_read: false }] : []),
-        ...(unansweredRes.data.length ? [{ id: "local-unanswered", title: `${unansweredRes.data.length} أسئلة بلا نتائج`, alert_type: "needs_review", severity: "info", is_read: false }] : []),
-        ...(jobsRes.data.some((j: FiqhSyncJob) => j.status === "failed") ? [{ id: "local-sync-fail", title: "فشل في آخر مزامنة", alert_type: "sync_failed", severity: "error", is_read: false }] : []),
+        ...(reviewData.length ? [{ id: "local-review", title: `${reviewData.length} عناصر بانتظار المراجعة`, alert_type: "needs_review", severity: "warning", is_read: false }] : []),
+        ...(dupData.length ? [{ id: "local-dup", title: `${dupData.length} احتمالات تكرار`, alert_type: "duplicate_found", severity: "info", is_read: false }] : []),
+        ...(unansweredData.length ? [{ id: "local-unanswered", title: `${unansweredData.length} أسئلة بلا نتائج`, alert_type: "needs_review", severity: "info", is_read: false }] : []),
+        ...(jobsData.some((j: FiqhSyncJob) => j.status === "failed") ? [{ id: "local-sync-fail", title: "فشل في آخر مزامنة", alert_type: "sync_failed", severity: "error", is_read: false }] : []),
       ];
       setAlerts([...computedAlerts, ...(alertsRes.data || [])]);
       if (allRes.error && allRes.usingSeed) showError("تعذّر تحميل البيانات — عرض البذور المحلية.");
-    }).finally(() => setLoading(false));
+    }).catch(() => showError("تعذّر تحميل بيانات المجمع الفقهي.")).finally(() => setLoading(false));
   };
 
   useEffect(() => { loadItems(); }, []);
@@ -280,20 +284,25 @@ export function FiqhCouncilSection() {
 
   const handleScanRelations = async () => {
     setScanningRelations(true);
-    const scan = scanAllPotentialRelations(items, 0.55);
-    setLocalRelationScan(scan.slice(0, 30));
-    for (const row of scan.slice(0, 20)) {
-      await adminUpsertSuggestedRelation({
-        item_id: row.itemId,
-        related_item_id: row.match.relatedItemId,
-        similarity_score: row.match.score,
-        match_reasons: row.match.reasons,
-      });
+    try {
+      const scan = scanAllPotentialRelations(items, 0.55);
+      setLocalRelationScan(scan.slice(0, 30));
+      for (const row of scan.slice(0, 20)) {
+        await adminUpsertSuggestedRelation({
+          item_id: row.itemId,
+          related_item_id: row.match.relatedItemId,
+          similarity_score: row.match.score,
+          match_reasons: row.match.reasons,
+        });
+      }
+      const { data } = await adminGetSuggestedRelations("pending");
+      setSuggestedRelations(data ?? []);
+      showSuccess(`تم فحص ${scan.length} علاقة محتملة`);
+    } catch {
+      showError("تعذّر فحص العلاقات المقترحة.");
+    } finally {
+      setScanningRelations(false);
     }
-    const { data } = await adminGetSuggestedRelations("pending");
-    setSuggestedRelations(data);
-    setScanningRelations(false);
-    showSuccess(`تم فحص ${scan.length} علاقة محتملة`);
   };
 
   const handleApproveRelation = async (id: string) => {

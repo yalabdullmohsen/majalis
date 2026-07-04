@@ -81,6 +81,7 @@ function SubmissionCard({ sub, onReview }: {
   const [expanded, setExpanded]   = useState(false);
   const [publishing, setPublishing] = useState(false);
   const [published, setPublished]   = useState(false);
+  const [publishError, setPublishError] = useState("");
   const sc = STATUS_COLOR[sub.status];
 
   async function handle(status: "approved" | "rejected") {
@@ -89,7 +90,7 @@ function SubmissionCard({ sub, onReview }: {
     setLoading(false);
   }
 
-  const meta = sub.meta as Record<string, string | number | undefined>;
+  const meta = (sub.meta ?? {}) as Record<string, string | number | undefined>;
   const isAudio = sub.file_mime?.startsWith("audio");
 
   return (
@@ -233,9 +234,16 @@ function SubmissionCard({ sub, onReview }: {
                   disabled={publishing}
                   onClick={async () => {
                     setPublishing(true);
-                    const res = await publishAdhanToLibrary(sub);
-                    if (res.ok) setPublished(true);
-                    setPublishing(false);
+                    setPublishError("");
+                    try {
+                      const res = await publishAdhanToLibrary(sub);
+                      if (res.ok) setPublished(true);
+                      else setPublishError(res.error || "فشل النشر في المكتبة.");
+                    } catch (e) {
+                      setPublishError(e instanceof Error ? e.message : "فشل النشر في المكتبة.");
+                    } finally {
+                      setPublishing(false);
+                    }
                   }}
                   style={{
                     padding: "0.45rem 1rem",
@@ -251,6 +259,9 @@ function SubmissionCard({ sub, onReview }: {
                 >
                   {publishing ? "جارٍ النشر..." : "🚀 نشر في مكتبة المؤذنين"}
                 </button>
+              )}
+              {publishError && (
+                <div style={{ marginTop: "0.5rem", fontSize: "0.75rem", color: "#991b1b" }}>{publishError}</div>
               )}
             </div>
           )}
@@ -272,9 +283,16 @@ function SubmissionCard({ sub, onReview }: {
                   disabled={publishing}
                   onClick={async () => {
                     setPublishing(true);
-                    const res = await publishLessonAsDraft(sub);
-                    if (res.ok) setPublished(true);
-                    setPublishing(false);
+                    setPublishError("");
+                    try {
+                      const res = await publishLessonAsDraft(sub);
+                      if (res.ok) setPublished(true);
+                      else setPublishError(res.error || "فشلت الإضافة كمسودة.");
+                    } catch (e) {
+                      setPublishError(e instanceof Error ? e.message : "فشلت الإضافة كمسودة.");
+                    } finally {
+                      setPublishing(false);
+                    }
                   }}
                   style={{
                     padding: "0.45rem 1rem",
@@ -290,6 +308,9 @@ function SubmissionCard({ sub, onReview }: {
                 >
                   {publishing ? "جارٍ الإضافة..." : "📝 إضافة كمسودة"}
                 </button>
+              )}
+              {publishError && (
+                <div style={{ marginTop: "0.5rem", fontSize: "0.75rem", color: "#991b1b" }}>{publishError}</div>
               )}
             </div>
           )}
@@ -405,7 +426,7 @@ export function SubmissionsReviewPanel() {
 
       {/* Stats */}
       {stats && (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "0.5rem", marginBottom: "1.25rem" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))", gap: "0.5rem", marginBottom: "1.25rem" }}>
           {[
             { label: "الكل",    val: stats.total,    bg: "#f3f4f6", color: "#374151" },
             { label: "⏳ معلق", val: stats.pending,  bg: "#fffbeb", color: "#92400e" },

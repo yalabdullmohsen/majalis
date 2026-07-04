@@ -8,6 +8,7 @@ import { validateRuling, findSimilarRulings } from "@/lib/rulings-validator";
 import { C } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
 import { adminListLoad } from "@/lib/admin-list-load";
+import { StatusBadge } from "./AdminUI";
 import { AdminModal, Field, inputSt, selectSt, textareaSt } from "./AdminModal";
 import { useAdminShell } from "./AdminShell";
 import type { ShariaRulingExtended } from "@/lib/rulings-types";
@@ -47,7 +48,8 @@ export function RulingsSection() {
       setLoading,
       load: async () => {
         const [{ data: dbData }, serviceData] = await Promise.all([adminGetAllRulings(), getAllRulingsForAdmin()]);
-        return (dbData.length > 0 ? dbData : serviceData) as ShariaRulingExtended[];
+        const rows = dbData ?? [];
+        return (rows.length > 0 ? rows : serviceData) as ShariaRulingExtended[];
       },
       onSuccess: (merged) => setItems(merged),
       onError: () => setItems([]),
@@ -77,7 +79,7 @@ export function RulingsSection() {
     if (!filter.trim()) return items;
     const q = filter.trim().toLowerCase();
     return items.filter(
-      (i) => i.title.toLowerCase().includes(q) || i.category.toLowerCase().includes(q),
+      (i) => (i.title ?? "").toLowerCase().includes(q) || (i.category ?? "").toLowerCase().includes(q),
     );
   }, [items, filter]);
 
@@ -203,12 +205,20 @@ export function RulingsSection() {
       {loading ? (
         <Loading />
       ) : (
-        filtered.slice(0, 100).map((item) => (
+        <>
+        {filtered.length > 100 && (
+          <p style={{ fontSize: "0.8125rem", color: C.inkSoft, marginBottom: "0.75rem" }}>
+            عرض 100 من {filtered.length.toLocaleString("ar")} — استخدم البحث لتضييق النتائج.
+          </p>
+        )}
+        {filtered.slice(0, 100).map((item) => (
           <div
             key={item.id}
             style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.375rem", padding: "1rem", marginBottom: "0.75rem" }}
           >
-            <strong>{item.title}</strong> —{" "}
+            <strong>{item.title}</strong>{" "}
+            <StatusBadge status={item.verification_status} />
+            {" — "}
             <span style={{ fontSize: "0.875rem", color: C.inkSoft }}>
               {item.category}
               {item.subcategory ? ` / ${item.subcategory}` : ""}
@@ -237,7 +247,8 @@ export function RulingsSection() {
               )}
             </div>
           </div>
-        ))
+        ))}
+        </>
       )}
 
       <AdminModal

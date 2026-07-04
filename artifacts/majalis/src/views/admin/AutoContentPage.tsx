@@ -88,8 +88,8 @@ function AutoContentAdmin() {
     if (!q) return items;
     return items.filter(
       (i) =>
-        i.title.includes(q) ||
-        i.source_name.includes(q) ||
+        (i.title ?? "").includes(q) ||
+        (i.source_name ?? "").includes(q) ||
         (i.category || "").includes(q),
     );
   }, [items, search]);

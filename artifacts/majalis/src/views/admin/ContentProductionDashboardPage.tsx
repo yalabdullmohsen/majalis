@@ -30,6 +30,7 @@ function ContentProductionDashboardContent() {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<ContentProductionDashboard | null>(null);
   const [runningJob, setRunningJob] = useState<string | null>(null);
+  const [jobError, setJobError] = useState<string | null>(null);
 
   const load = useCallback(() => {
     setLoading(true);
@@ -45,9 +46,12 @@ function ContentProductionDashboardContent() {
 
   const triggerJob = async (jobId: string) => {
     setRunningJob(jobId);
+    setJobError(null);
     try {
       await runContentProductionJob(jobId);
       load();
+    } catch {
+      setJobError("تعذّر تشغيل المهمة.");
     } finally {
       setRunningJob(null);
     }
@@ -72,6 +76,12 @@ function ContentProductionDashboardContent() {
           <Link href="/admin/auto-content" style={{ color: C.emeraldDeep }}>المقالات RSS</Link>
         </div>
       </div>
+
+      {jobError && (
+        <p role="alert" style={{ margin: "0 0 1rem", padding: "0.625rem 0.75rem", borderRadius: "0.375rem", background: "#FEE2E2", border: "1px solid #FCA5A5", color: "#991B1B", fontSize: "0.8125rem" }}>
+          {jobError}
+        </p>
+      )}
 
       {loading ? (
         <Loading />

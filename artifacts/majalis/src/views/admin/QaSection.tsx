@@ -43,11 +43,11 @@ export function QaSection() {
 
   const load = () => {
     setLoading(true);
-    adminGetQuestions().then(({ data }) => {  setItems(data); setLoading(false);  }).catch(() => {}).finally(() => setLoading(false));
+    adminGetQuestions().then(({ data }) => {  setItems(data ?? []); setLoading(false);  }).catch(() => {}).finally(() => setLoading(false));
   };
   useEffect(() => {
     load();
-    getQaCategories().then(({ data }) => setCategories(data));
+    getQaCategories().then(({ data }) => setCategories(data ?? [])).catch(() => setCategories([]));
   }, []);
 
   const firstCatId = categories[0]?.id || "";
