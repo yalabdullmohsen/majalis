@@ -10,11 +10,15 @@
 --   أو governance_user_roles.role_id IN ('super_admin','system_admin','content_manager')
 --
 -- الأثر:
+--   • نقل ملكية المحتوى: قبل الحذف تُنقل أعمدة التأليف (created_by /
+--     created_by_user_id / author_id / contributed_by) من الحسابات المحذوفة
+--     إلى المالك — فيصبح المالك مؤلّف محتواهم بدل تفريغ النسبة.
 --   • يحذف صفوف هؤلاء من profiles ثم من auth.users (يحذف الحساب نهائياً).
 --   • بيانات المستخدم الشخصية (إشارات مرجعية، تقييمات، مقترحات...) تُحذف تِبَعاً
 --     عبر ON DELETE CASCADE — وهذا سلوك مقصود لحذف الحساب.
---   • المحتوى الديني (دروس/أحكام/فتاوى...) لا يُحذف: كل مراجع created_by نحو
---     profiles هي ON DELETE SET NULL، فيبقى المحتوى وتُفرَّغ نسبة التأليف فقط.
+--   • أعمدة التوثيق/المراجعة (reviewed_by / verified_by) وأعمدة التدقيق
+--     (changed_by) لا تُنقل عمداً — كي لا نُزوّر مَن راجَع/وثّق المحتوى الديني؛
+--     تبقى كما هي أو تُفرَّغ طبيعياً (SET NULL).
 --
 -- ⚠️ عملية غير قابلة للتراجع. نفّذ القسم (أ) أولاً للمعاينة، ثم القسم (ب).
 -- شغّل في Supabase SQL Editor بدور الخدمة/المالك.
@@ -83,7 +87,42 @@ BEGIN
     RAISE EXCEPTION 'خطأ حماية: معرّف المالك ظهر ضمن قائمة الحذف — تم الإجهاض.';
   END IF;
 
-  -- حذف صفوف profiles أولاً (مراجع created_by نحوها = SET NULL فيبقى المحتوى)
+  -- نقل ملكية المحتوى للمالك قبل الحذف:
+  -- نكتشف من كتالوج القاعدة كل عمود FK نحو profiles(id) أو auth.users(id)
+  -- اسمه ضمن قائمة التأليف، ونحوّل صفوف الحسابات المحذوفة إلى المالك.
+  -- (أعمدة المراجعة/التوثيق/التدقيق مستثناة عمداً — انظر رأس الملف)
+  DECLARE
+    r        RECORD;
+    v_rows   INTEGER;
+    v_moved  INTEGER := 0;
+    authorship_cols TEXT[] := ARRAY['created_by', 'created_by_user_id', 'author_id', 'contributed_by'];
+  BEGIN
+    FOR r IN
+      SELECT n.nspname AS sch, c.relname AS tbl, a.attname AS col
+      FROM pg_constraint con
+      JOIN pg_class     c  ON c.oid  = con.conrelid
+      JOIN pg_namespace n  ON n.oid  = c.relnamespace
+      JOIN pg_attribute a  ON a.attrelid = con.conrelid AND a.attnum = ANY(con.conkey)
+      JOIN pg_class     fc ON fc.oid = con.confrelid
+      JOIN pg_namespace fn ON fn.oid = fc.relnamespace
+      WHERE con.contype = 'f'
+        AND ( (fn.nspname = 'auth'   AND fc.relname = 'users')
+           OR (fn.nspname = 'public' AND fc.relname = 'profiles') )
+        AND a.attname = ANY(authorship_cols)
+        AND array_length(con.conkey, 1) = 1   -- مفاتيح مفردة فقط
+    LOOP
+      EXECUTE format('UPDATE %I.%I SET %I = $1 WHERE %I = ANY($2)', r.sch, r.tbl, r.col, r.col)
+        USING v_owner_id, v_targets;
+      GET DIAGNOSTICS v_rows = ROW_COUNT;
+      IF v_rows > 0 THEN
+        RAISE NOTICE '  نقل % صف: %.% (%)', v_rows, r.sch, r.tbl, r.col;
+        v_moved := v_moved + v_rows;
+      END IF;
+    END LOOP;
+    RAISE NOTICE 'إجمالي صفوف المحتوى المنقولة ملكيتها للمالك: %', v_moved;
+  END;
+
+  -- حذف صفوف profiles أولاً (بقية المراجع نحوها = SET NULL)
   DELETE FROM profiles WHERE id = ANY(v_targets);
 
   -- حذف الحسابات من auth.users (يحذف بيانات المستخدم الشخصية تِبَعاً عبر CASCADE)
