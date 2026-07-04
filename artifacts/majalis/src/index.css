@@ -15717,3 +15717,319 @@ html[data-theme="dark"] .fip-status--beta { background: rgba(59,130,246,0.16); c
 /* لون الأحاديث الموضوعة (لم يكن موجوداً) — للبادج في القوائم */
 .hadith-grade--mawdu, .grade--mawdu { color: #B91C1C; background: rgba(185, 28, 28, 0.1); }
 html[data-theme="dark"] .hadith-grade--mawdu, html[data-theme="dark"] .grade--mawdu { color: #FCA5A5; background: rgba(185, 28, 28, 0.18); }
+
+/* ══════════════════════════════════════════════════════════════
+   Design System v5 — Premium Hero & Page Enhancements
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Hero v3: خلفية مع نمط هندسي إسلامي ── */
+.home-hero--v3 {
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M28 4L34 16L46 10L40 22L52 28L40 34L46 46L34 40L28 52L22 40L10 46L16 34L4 28L16 22L10 10L22 16Z' fill='none' stroke='rgba(255,255,255,0.07)' stroke-width='1'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse 80% 60% at 20% 40%, rgba(154, 109, 26, 0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 100% 80% at 80% 10%, rgba(22, 96, 72, 0.35) 0%, transparent 65%),
+    linear-gradient(160deg, #0b2820 0%, #0f3529 45%, #0a2218 100%);
+  background-size: 56px 56px, cover, cover, cover;
+}
+
+/* fade الأسفل إلى لون الصفحة */
+.home-hero--v3::after {
+  background: linear-gradient(180deg, transparent 50%, var(--majalis-parchment) 100%);
+  height: 5rem;
+}
+
+/* ── Hero Badge (الشارة فوق العنوان) ── */
+.home-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  background: rgba(154, 109, 26, 0.18);
+  border: 1px solid rgba(154, 109, 26, 0.35);
+  color: #f0c96b;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ── Stats Bar تحت البحث ── */
+.home-hero-stats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  padding-top: 0.25rem;
+}
+
+.home-hero-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.home-hero-stat-value {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.95);
+  line-height: 1;
+}
+
+.home-hero-stat-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.04em;
+}
+
+.home-hero-stat-sep {
+  width: 1px;
+  height: 2rem;
+  background: rgba(255, 255, 255, 0.12);
+  flex-shrink: 0;
+}
+
+/* ── Quick Links: تحسين الشبكة ── */
+.home-quick-grid {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 7.5rem), 1fr));
+  gap: 0.65rem;
+}
+
+.home-quick-link {
+  min-height: 5rem;
+  border-radius: 0.875rem;
+  background: var(--majalis-panel);
+  border: 1px solid var(--majalis-line);
+  box-shadow: 0 1px 3px rgba(26, 23, 20, 0.06);
+  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 200ms cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 200ms ease,
+              background 200ms ease;
+}
+
+.home-quick-link:hover {
+  transform: translateY(-2px) scale(1.015);
+  box-shadow: 0 8px 24px rgba(22, 96, 72, 0.12), 0 2px 6px rgba(26, 23, 20, 0.06);
+  border-color: rgba(22, 96, 72, 0.3);
+  background: var(--majalis-panel-raised, #FDFBF7);
+}
+
+.home-quick-link:active {
+  transform: translateY(0) scale(0.98);
+  transition-duration: 80ms;
+}
+
+/* ── Feature Strip (شريط المميزات) ── */
+.home-feature-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+.home-feature-strip-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1.25rem 0.875rem;
+  text-align: center;
+  border-radius: 1rem;
+  background: var(--majalis-panel);
+  border: 1px solid var(--majalis-line);
+  box-shadow: 0 1px 4px rgba(26, 23, 20, 0.05);
+  text-decoration: none;
+  transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.home-feature-strip-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(22, 96, 72, 0.1);
+}
+
+.home-feature-strip-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.75rem;
+  background: var(--majalis-emerald-soft, #EAF5EE);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.home-feature-strip-name {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--majalis-ink);
+  line-height: 1.3;
+}
+
+.home-feature-strip-meta {
+  font-size: 0.7rem;
+  color: var(--majalis-ink-soft);
+  line-height: 1.4;
+}
+
+/* ── Learning Path Card (بطاقة خارطة طالب العلم) — تحسين ── */
+.home-learning-path-card {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.35rem 1.5rem;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, #0b2820 0%, #0f3529 100%);
+  box-shadow: 0 8px 32px rgba(11, 40, 32, 0.28);
+  text-decoration: none;
+  transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 220ms cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.home-learning-path-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M28 4L34 16L46 10L40 22L52 28L40 34L46 46L34 40L28 52L22 40L10 46L16 34L4 28L16 22L10 10L22 16Z' fill='none' stroke='rgba(255,255,255,0.05)' stroke-width='1'/%3E%3C/svg%3E");
+  background-size: 56px 56px;
+  pointer-events: none;
+}
+
+.home-learning-path-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 48px rgba(11, 40, 32, 0.36);
+}
+
+.home-learning-path-card-icon {
+  font-size: 2.5rem;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.home-learning-path-card-body {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+}
+
+.home-learning-path-card-title {
+  margin: 0 0 0.3rem;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.4;
+}
+
+.home-learning-path-card-desc {
+  margin: 0;
+  font-size: 0.8rem;
+  color: rgba(167, 243, 208, 0.85);
+  line-height: 1.6;
+}
+
+.home-learning-path-card-arrow {
+  flex-shrink: 0;
+  color: rgba(167, 243, 208, 0.7);
+  font-size: 1.1rem;
+  position: relative;
+}
+
+/* ── Quiz Card ── */
+.home-quiz-card {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.15rem 1.4rem;
+  border-radius: 1rem;
+  background: var(--majalis-panel);
+  border: 1px solid var(--majalis-line);
+  border-right: 3px solid var(--majalis-brass);
+  box-shadow: 0 1px 4px rgba(26, 23, 20, 0.06);
+  text-decoration: none;
+  transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.home-quiz-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(26, 23, 20, 0.1);
+}
+
+.home-quiz-card-icon {
+  font-size: 2.25rem;
+  flex-shrink: 0;
+}
+
+.home-quiz-card-title {
+  margin: 0 0 0.2rem;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--majalis-emerald-deep);
+  line-height: 1.3;
+}
+
+.home-quiz-card-desc {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--majalis-ink-soft);
+  line-height: 1.5;
+}
+
+.home-quiz-card-btn {
+  flex-shrink: 0;
+  padding: 0.4rem 1rem;
+  background: var(--majalis-emerald);
+  color: #fff;
+  border-radius: 0.6rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* ── Widescreen Hero ── */
+@media (min-width: 768px) {
+  .home-feature-strip {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .home-hero-stats {
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .home-quick-grid {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 6.5rem), 1fr));
+  }
+
+  .home-feature-strip {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ── Dark mode overrides ── */
+html[data-theme="dark"] .home-quick-link:hover {
+  background: var(--majalis-panel-raised, #1E3028);
+  border-color: rgba(77, 184, 142, 0.25);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+html[data-theme="dark"] .home-feature-strip-card {
+  background: var(--majalis-panel, #1A2820);
+  border-color: var(--majalis-line, #263D33);
+}
+
+html[data-theme="dark"] .home-feature-strip-icon {
+  background: rgba(77, 184, 142, 0.12);
+}
+
+html[data-theme="dark"] .home-quiz-card {
+  background: var(--majalis-panel, #1A2820);
+  border-color: var(--majalis-line, #263D33);
+  border-right-color: var(--majalis-brass, #D4AD50);
+}

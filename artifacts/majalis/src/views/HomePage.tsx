@@ -46,28 +46,31 @@ function HomeQuranCirclesPreview() {
 const QUICK_LINKS = [
   { href: "/quran",        label: "القرآن",              meta: "مصحف وتلاوة" },
   { href: "/lessons",      label: "الدروس",              meta: "أحدث وقادمة" },
-  { href: "/qa",           label: "الأسئلة التعليمية",   meta: "فتاوى وإجابات" },
+  { href: "/qa",           label: "الأسئلة",             meta: "فتاوى وإجابات" },
   { href: "/rulings",      label: "الأحكام",             meta: "موسوعة شرعية" },
   { href: "/library",      label: "المكتبة",             meta: "كتب ومتون" },
   { href: "/fawaid",       label: "الفوائد",             meta: "مختصرات" },
   { href: "/hadith",       label: "الأحاديث",            meta: "موثقة" },
   { href: "/stories",      label: "القصص",               meta: "إسلامية" },
-  { href: "/search",       label: "البحث",               meta: "ذكي" },
+  { href: "/adhkar",       label: "الأذكار",             meta: "يومي" },
   { href: "/assistant",    label: "المساعد",             meta: "علمي" },
   { href: "/calendar",     label: "التقويم",             meta: "دروس" },
-  { href: "/adhkar",       label: "الأذكار",             meta: "يومي" },
   { href: "/muezzins",     label: "مكتبة المؤذنين",      meta: "أذانات العالم" },
-  { href: "/upload",       label: "ارفع أذانك",          meta: "ساهم معنا" },
-  { href: "/submit?type=lesson", label: "أضف درس",      meta: "شارك علمك" },
   { href: "/learning-plan", label: "خطة التعلّم",       meta: "مسار شخصي" },
   { href: "/flashcards",   label: "البطاقات",            meta: "مراجعة ذكية" },
-  { href: "/car-mode",     label: "وضع السيارة",         meta: "صوتيات أثناء القيادة" },
-  { href: "/mosque-mode",  label: "وضع المسجد",          meta: "وصول سريع" },
-  { href: "/study-room",   label: "غرفة الدراسة",        meta: "مؤقت Pomodoro" },
-  { href: "/family",       label: "الوضع العائلي",       meta: "تابع أبناءك" },
-  { href: "/vault",        label: "المحفظة العلمية",     meta: "محفوظاتك وملاحظاتك" },
+  { href: "/car-mode",     label: "وضع السيارة",         meta: "صوتيات" },
+  { href: "/vault",        label: "المحفظة العلمية",     meta: "محفوظاتك" },
   { href: "/researcher",   label: "ملف الباحث",          meta: "سيرتك البحثية" },
   { href: "/institutions", label: "دليل المؤسسات",       meta: "مساجد وجامعات" },
+];
+
+const FEATURE_STRIP = [
+  { href: "/quran",   icon: "📖", name: "القرآن",  meta: "اقرأ واستمع" },
+  { href: "/lessons", icon: "🎓", name: "الدروس",  meta: "مباشر ومسجل" },
+  { href: "/adhkar",  icon: "📿", name: "الأذكار", meta: "يومية وموثقة" },
+  { href: "/library", icon: "📚", name: "المكتبة", meta: "كتب ومتون" },
+  { href: "/qa",      icon: "💬", name: "الأسئلة", meta: "فتاوى علمية" },
+  { href: "/rulings", icon: "⚖️", name: "الأحكام", meta: "موسوعة شرعية" },
 ];
 
 function SafeHomeSection({ name, children }: { name: string; children: React.ReactNode }) {
@@ -97,9 +100,15 @@ export default function HomePage({
         </div>
       )}
 
+      {/* ── Hero ── */}
       <section className="home-hero home-hero--v3">
         <div className="home-container home-hero-grid home-hero-grid--v3">
           <div className="home-hero-copy home-hero-copy--v3">
+            {/* شارة علوية */}
+            <span className="home-hero-badge" aria-hidden="true">
+              ✦ منصة علمية متكاملة
+            </span>
+
             <img
               src="/logo.png"
               alt="المجلس العلمي"
@@ -113,6 +122,7 @@ export default function HomePage({
             <p className="home-hero-lead home-hero-lead--v3">
               دروس وفتاوى وقرآن ومحتوى موثّق في تطبيق واحد.
             </p>
+
             <form onSubmit={submitSearch} className="home-search home-search--v3" aria-label="البحث">
               <input
                 value={term}
@@ -122,13 +132,44 @@ export default function HomePage({
               />
               <button type="submit">بحث</button>
             </form>
+
+            {/* Stats bar */}
+            <div className="home-hero-stats" aria-hidden="true">
+              <div className="home-hero-stat">
+                <span className="home-hero-stat-value">+٢٠٠</span>
+                <span className="home-hero-stat-label">درس علمي</span>
+              </div>
+              <div className="home-hero-stat-sep" />
+              <div className="home-hero-stat">
+                <span className="home-hero-stat-value">+٥٠</span>
+                <span className="home-hero-stat-label">شيخ وعالم</span>
+              </div>
+              <div className="home-hero-stat-sep" />
+              <div className="home-hero-stat">
+                <span className="home-hero-stat-value">+١٠٠٠</span>
+                <span className="home-hero-stat-label">مسألة فقهية</span>
+              </div>
+            </div>
           </div>
         </div>
         <IslamicOrnament
           className="islamic-ornament-strip"
-          style={{ color: "rgba(176, 141, 46, 0.55)", position: "relative", zIndex: 2 }}
+          style={{ color: "rgba(176, 141, 46, 0.45)", position: "relative", zIndex: 2 }}
         />
       </section>
+
+      {/* ── Feature Strip ── */}
+      <div className="home-container" style={{ paddingTop: "1rem", paddingBottom: "0.5rem" }}>
+        <div className="home-feature-strip">
+          {FEATURE_STRIP.map((item) => (
+            <Link key={item.href} href={item.href} className="home-feature-strip-card">
+              <span className="home-feature-strip-icon" aria-hidden="true">{item.icon}</span>
+              <span className="home-feature-strip-name">{item.name}</span>
+              <span className="home-feature-strip-meta">{item.meta}</span>
+            </Link>
+          ))}
+        </div>
+      </div>
 
       <main className="home-container home-main home-main--v3">
 
@@ -153,7 +194,7 @@ export default function HomePage({
 
         <IslamicDivider />
 
-        {/* مواقيت الصلاة — مصدر حقيقة واحد */}
+        {/* مواقيت الصلاة */}
         <SafeHomeSection name="مواقيت الصلاة المدمجة">
           <HomeCompactPrayer />
         </SafeHomeSection>
@@ -179,32 +220,16 @@ export default function HomePage({
         {/* بطاقة خارطة طالب العلم */}
         <section className="home-section ds-section">
           <Link href="/learning-path" style={{ textDecoration: "none", display: "block" }}>
-            <div style={{
-              background: "linear-gradient(135deg, #064e3b, #065f46)",
-              borderRadius: "var(--ds-radius-lg, 0.625rem)",
-              padding: "1.5rem",
-              display: "flex",
-              alignItems: "center",
-              gap: "1.25rem",
-              boxShadow: "var(--ds-shadow-sm)",
-              transition: "box-shadow 0.15s",
-              overflow: "hidden",
-              position: "relative",
-            }}
-            onMouseEnter={(e) => { (e.currentTarget as HTMLDivElement).style.boxShadow = "var(--ds-shadow)"; }}
-            onMouseLeave={(e) => { (e.currentTarget as HTMLDivElement).style.boxShadow = "var(--ds-shadow-sm)"; }}
-            >
-              <div style={{ fontSize: "2.8rem", flexShrink: 0 }}>🗺️</div>
-              <div style={{ flex: 1 }}>
-                <p style={{ margin: "0 0 0.3rem", fontSize: "1.05rem", fontWeight: 800, color: "#fff" }}>
-                  ابدأ طلب العلم — خارطة طالب العلم
-                </p>
-                <p style={{ margin: 0, fontSize: "0.82rem", color: "#a7f3d0", lineHeight: 1.6 }}>
+            <div className="home-learning-path-card">
+              <span className="home-learning-path-card-icon">🗺️</span>
+              <div className="home-learning-path-card-body">
+                <p className="home-learning-path-card-title">ابدأ طلب العلم — خارطة طالب العلم</p>
+                <p className="home-learning-path-card-desc">
                   مسار علمي منظم في العقيدة والحديث والفقه والتفسير وغيرها،
                   كتاباً كتاباً من المبتدئ إلى المتقدم.
                 </p>
               </div>
-              <span style={{ flexShrink: 0, color: "#a7f3d0", fontSize: "1.2rem" }}>←</span>
+              <span className="home-learning-path-card-arrow">←</span>
             </div>
           </Link>
         </section>
@@ -214,48 +239,15 @@ export default function HomePage({
         {/* بطاقة لعبة سؤال وجواب */}
         <section className="home-section ds-section">
           <Link href="/quiz" style={{ textDecoration: "none", display: "block" }}>
-            <div style={{
-              background: "#fff",
-              border: "1px solid var(--ds-line-color)",
-              borderRadius: "var(--ds-radius-lg, 0.625rem)",
-              padding: "1.25rem 1.5rem",
-              boxShadow: "var(--ds-shadow-sm)",
-              display: "flex",
-              alignItems: "center",
-              gap: "1.25rem",
-              transition: "box-shadow 0.15s, border-color 0.15s",
-              borderRight: "4px solid var(--majalis-brass)",
-            }}
-            onMouseEnter={(e) => {
-              (e.currentTarget as HTMLDivElement).style.boxShadow = "var(--ds-shadow)";
-              (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(176,141,46,0.4)";
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLDivElement).style.boxShadow = "var(--ds-shadow-sm)";
-              (e.currentTarget as HTMLDivElement).style.borderColor = "var(--ds-line-color)";
-            }}
-            >
-              <div style={{ fontSize: "2.5rem", flexShrink: 0 }}>🕌</div>
-              <div style={{ flex: 1 }}>
-                <p style={{ margin: "0 0 0.25rem", fontSize: "1rem", fontWeight: 800, color: "var(--ds-emerald-deep)" }}>
-                  لعبة سؤال وجواب الإسلامية
-                </p>
-                <p style={{ margin: 0, fontSize: "0.82rem", color: "var(--majalis-ink-soft, #5c564c)", lineHeight: 1.5 }}>
+            <div className="home-quiz-card">
+              <span className="home-quiz-card-icon">🕌</span>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <p className="home-quiz-card-title">لعبة سؤال وجواب الإسلامية</p>
+                <p className="home-quiz-card-desc">
                   تنافس مع فريقك في أسئلة القرآن والحديث والفقه والتاريخ الإسلامي
                 </p>
               </div>
-              <span style={{
-                flexShrink: 0,
-                padding: "0.45rem 1.1rem",
-                background: "var(--ds-emerald)",
-                color: "#fff",
-                borderRadius: "var(--ds-radius, 0.5rem)",
-                fontSize: "0.82rem",
-                fontWeight: 700,
-                whiteSpace: "nowrap",
-              }}>
-                ابدأ اللعب ←
-              </span>
+              <span className="home-quiz-card-btn">ابدأ اللعب ←</span>
             </div>
           </Link>
         </section>
@@ -268,12 +260,11 @@ export default function HomePage({
 
         <IslamicDivider />
 
+        {/* أقسام التطبيق */}
         <section className="home-section ds-section">
           <div className="ds-section__head">
             <h2 className="ds-section__title">أقسام التطبيق</h2>
-            <Link href="/settings" className="ds-section__link">
-              الإعدادات
-            </Link>
+            <Link href="/settings" className="ds-section__link">الإعدادات</Link>
           </div>
           <div className="home-quick-grid">
             {QUICK_LINKS.map((item) => (
