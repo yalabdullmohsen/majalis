@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Spinner } from "@/components/ui/spinner";
 import { Link, useRoute } from "wouter";
 import {
   type Citation,
@@ -65,7 +66,7 @@ export default function CitationPublicPage() {
   if (loading) {
     return (
       <div dir="rtl" className="min-h-screen flex items-center justify-center bg-amber-50 dark:bg-gray-900">
-        <div className="animate-spin w-10 h-10 border-4 border-emerald-600 border-t-transparent rounded-full" />
+        <Spinner className="size-10 text-[var(--majalis-emerald)]" aria-label="جارٍ التحميل" />
       </div>
     );
   }
