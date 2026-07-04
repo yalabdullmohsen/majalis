@@ -151,11 +151,11 @@ export default function MyCitationsPage() {
   if (!isLoggedIn) {
     return (
       <div dir="rtl" className="min-h-screen flex flex-col items-center justify-center gap-6 p-6 text-center">
-        <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100">مكتبة الاقتباسات</h1>
-        <p className="text-gray-600 dark:text-gray-400">يرجى تسجيل الدخول للوصول لمكتبتك الشخصية</p>
+        <h1 className="text-2xl font-bold text-[var(--majalis-ink)]">مكتبة الاقتباسات</h1>
+        <p className="text-[var(--majalis-ink-soft)]">يرجى تسجيل الدخول للوصول لمكتبتك الشخصية</p>
         <Link
           href="/login"
-          className="px-6 py-3 bg-emerald-700 text-white rounded-xl hover:bg-emerald-800 font-medium"
+          className="px-6 py-3 citation-btn citation-btn--primary font-medium"
         >
           تسجيل الدخول
         </Link>
@@ -164,14 +164,14 @@ export default function MyCitationsPage() {
   }
 
   return (
-    <div dir="rtl" className="min-h-screen bg-gray-50 dark:bg-gray-950 print:bg-white">
+    <div dir="rtl" className="min-h-screen bg-[var(--majalis-parchment)] print:bg-white">
       {/* الرأس */}
-      <div className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 px-4 py-5 print:hidden">
+      <div className="bg-[var(--majalis-panel)] border-b border-[var(--majalis-line)] px-4 py-5 print:hidden">
         <div className="max-w-4xl mx-auto">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-              <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100">📑 اقتباساتي</h1>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">
+              <h1 className="text-xl font-bold text-[var(--majalis-ink)]">📑 اقتباساتي</h1>
+              <p className="text-sm text-[var(--majalis-ink-soft)] mt-0.5">
                 {saved.length} اقتباس محفوظ
               </p>
             </div>
@@ -180,29 +180,29 @@ export default function MyCitationsPage() {
               <div className="relative group">
                 <button
                   type="button"
-                  className="flex items-center gap-1.5 px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:border-emerald-500 transition-colors"
+                  className="flex items-center gap-1.5 px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-[var(--majalis-panel)] text-[var(--majalis-ink-soft)] hover:border-emerald-500 transition-colors"
                 >
                   ⬇️ تصدير
                 </button>
-                <div className="absolute top-full right-0 mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl z-50 min-w-[140px] hidden group-hover:block">
+                <div className="absolute top-full right-0 mt-1 bg-[var(--majalis-panel)] border border-[var(--majalis-line)] rounded-lg shadow-xl z-50 min-w-[140px] hidden group-hover:block">
                   <button
                     type="button"
                     onClick={() => handleExport("markdown")}
-                    className="block w-full text-right px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700"
+                    className="block w-full text-right px-4 py-2 text-sm text-[var(--majalis-ink-soft)] hover:bg-[var(--mn-surface-hover)]"
                   >
                     📝 Markdown
                   </button>
                   <button
                     type="button"
                     onClick={() => handleExport("pdf")}
-                    className="block w-full text-right px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700"
+                    className="block w-full text-right px-4 py-2 text-sm text-[var(--majalis-ink-soft)] hover:bg-[var(--mn-surface-hover)]"
                   >
                     🖨️ PDF (طباعة)
                   </button>
                 </div>
               </div>
               {exportStatus && (
-                <span className="text-xs text-emerald-700 dark:text-emerald-400">{exportStatus}</span>
+                <span className="text-xs text-[var(--majalis-emerald)]">{exportStatus}</span>
               )}
             </div>
           </div>
@@ -215,7 +215,7 @@ export default function MyCitationsPage() {
               onChange={(e) => handleSearch(e.target.value)}
               placeholder="ابحث في اقتباساتك وملاحظاتك..."
               className="w-full border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-2.5 text-sm text-right
-                bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100
+                bg-[var(--majalis-parchment)] text-[var(--majalis-ink)]
                 focus:ring-2 focus:ring-emerald-500 outline-none"
               dir="rtl"
             />
@@ -227,16 +227,16 @@ export default function MyCitationsPage() {
         {/* الشريط الجانبي */}
         <aside className="lg:w-56 print:hidden space-y-3">
           {/* التبويبات */}
-          <nav className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+          <nav className="bg-[var(--majalis-panel)] rounded-xl border border-[var(--majalis-line)] overflow-hidden">
             {TABS.map((t) => (
               <button
                 key={t}
                 type="button"
                 onClick={() => handleTabChange(t)}
-                className={`w-full text-right px-4 py-3 text-sm font-medium transition-colors border-b border-gray-100 dark:border-gray-700 last:border-0 ${
+                className={`w-full text-right px-4 py-3 text-sm font-medium transition-colors border-b border-[var(--majalis-line)] last:border-0 ${
                   tab === t && activeFolder === null
-                    ? "bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400"
-                    : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800"
+                    ? "bg-[var(--majalis-emerald-muted)] text-[var(--majalis-emerald)]"
+                    : "text-[var(--majalis-ink-soft)] hover:bg-[var(--mn-surface-hover)]"
                 }`}
               >
                 {t === "الكل" && "📋 "}
@@ -249,15 +249,15 @@ export default function MyCitationsPage() {
           </nav>
 
           {/* المجلدات */}
-          <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
-            <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 dark:border-gray-700">
-              <span className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+          <div className="bg-[var(--majalis-panel)] rounded-xl border border-[var(--majalis-line)] overflow-hidden">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--majalis-line)]">
+              <span className="text-xs font-semibold text-[var(--majalis-ink-soft)] uppercase tracking-wide">
                 المجلدات
               </span>
               <button
                 type="button"
                 onClick={() => setShowNewFolder(!showNewFolder)}
-                className="text-emerald-600 text-lg leading-none hover:text-emerald-800"
+                className="text-[var(--majalis-emerald)] text-lg leading-none hover:opacity-80"
                 title="مجلد جديد"
               >
                 +
@@ -265,14 +265,14 @@ export default function MyCitationsPage() {
             </div>
 
             {showNewFolder && (
-              <div className="p-3 border-b border-gray-100 dark:border-gray-700 space-y-2">
+              <div className="p-3 border-b border-[var(--majalis-line)] space-y-2">
                 <input
                   type="text"
                   value={newFolderName}
                   onChange={(e) => setNewFolderName(e.target.value)}
                   placeholder="اسم المجلد..."
                   className="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-2 py-1.5 text-xs text-right
-                    bg-white dark:bg-gray-800 focus:ring-2 focus:ring-emerald-500 outline-none"
+                    bg-[var(--majalis-panel)] focus:ring-2 focus:ring-emerald-500 outline-none"
                   dir="rtl"
                   onKeyDown={(e) => { if (e.key === "Enter") handleCreateFolder(); }}
                 />
@@ -290,7 +290,7 @@ export default function MyCitationsPage() {
                 <button
                   type="button"
                   onClick={handleCreateFolder}
-                  className="w-full py-1.5 text-xs bg-emerald-700 text-white rounded-lg hover:bg-emerald-800"
+                  className="w-full py-1.5 text-xs citation-btn citation-btn--primary"
                 >
                   إنشاء
                 </button>
@@ -298,7 +298,7 @@ export default function MyCitationsPage() {
             )}
 
             {folders.length === 0 ? (
-              <p className="text-xs text-gray-400 dark:text-gray-500 text-center py-3">لا توجد مجلدات</p>
+              <p className="text-xs text-[var(--majalis-ink-soft)] opacity-60 text-center py-3">لا توجد مجلدات</p>
             ) : (
               folders.map((f) => (
                 <button
@@ -307,12 +307,12 @@ export default function MyCitationsPage() {
                   onClick={() => handleFolderClick(f.id)}
                   className={`w-full flex items-center gap-2 px-4 py-2.5 text-sm text-right transition-colors border-b border-gray-50 dark:border-gray-800 last:border-0 ${
                     activeFolder === f.id
-                      ? "bg-emerald-50 dark:bg-emerald-900/20"
-                      : "hover:bg-gray-50 dark:hover:bg-gray-800"
+                      ? "bg-[var(--majalis-emerald-muted)]"
+                      : "hover:bg-[var(--mn-surface-hover)]"
                   }`}
                 >
                   <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: f.color }} />
-                  <span className="truncate text-gray-700 dark:text-gray-300">{f.folder_name}</span>
+                  <span className="truncate text-[var(--majalis-ink-soft)]">{f.folder_name}</span>
                 </button>
               ))
             )}
@@ -328,11 +328,11 @@ export default function MyCitationsPage() {
           ) : displayed.length === 0 ? (
             <div className="text-center py-16 space-y-3">
               <p className="text-4xl">📑</p>
-              <p className="text-gray-500 dark:text-gray-400 text-sm">
+              <p className="text-[var(--majalis-ink-soft)] text-sm">
                 {searchQuery ? "لا توجد نتائج مطابقة" : "لا توجد اقتباسات محفوظة بعد"}
               </p>
               {!searchQuery && (
-                <p className="text-xs text-gray-400">
+                <p className="text-xs text-[var(--majalis-ink-soft)] opacity-60">
                   ابدأ بالاقتباس من أي محتوى في المنصة
                 </p>
               )}
@@ -352,7 +352,7 @@ export default function MyCitationsPage() {
                 return (
                   <div
                     key={item.id}
-                    className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+                    className="bg-[var(--majalis-panel)] rounded-xl border border-[var(--majalis-line)] overflow-hidden shadow-sm hover:shadow-md transition-shadow"
                   >
                     {/* شريط ملوَّن */}
                     <div className="h-1" style={{ background: typeColor }} />
@@ -369,7 +369,7 @@ export default function MyCitationsPage() {
                               {typeLabel}
                             </span>
                           )}
-                          <span className="text-sm font-semibold text-gray-800 dark:text-gray-100 truncate">
+                          <span className="text-sm font-semibold text-[var(--majalis-ink)] truncate">
                             {src?.title_ar || "اقتباس"}
                           </span>
                         </div>
@@ -385,14 +385,14 @@ export default function MyCitationsPage() {
 
                       {/* النص */}
                       <blockquote className="border-r-2 border-emerald-500 pr-3">
-                        <p className="text-gray-800 dark:text-gray-200 text-sm leading-relaxed line-clamp-3">
+                        <p className="text-[var(--majalis-ink)] text-sm leading-relaxed line-clamp-3">
                           {cit?.quoted_text || ""}
                         </p>
                       </blockquote>
 
                       {/* بيانات المصدر */}
                       {(src?.author_name || src?.book_name) && (
-                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                        <p className="text-xs text-[var(--majalis-ink-soft)]">
                           {src.author_name}{src.author_name && src.book_name && " — "}{src.book_name}
                         </p>
                       )}
@@ -404,23 +404,23 @@ export default function MyCitationsPage() {
                             value={editNoteText}
                             onChange={(e) => setEditNoteText(e.target.value)}
                             rows={2}
-                            className="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-1.5 text-xs text-right
-                              bg-white dark:bg-gray-800 focus:ring-2 focus:ring-emerald-500 outline-none resize-none"
+                            className="w-full border border-[var(--majalis-line)] rounded-lg px-3 py-1.5 text-xs text-right
+                              bg-[var(--majalis-parchment)] text-[var(--majalis-ink)] focus:ring-2 focus:ring-[var(--majalis-emerald)] outline-none resize-none"
                             dir="rtl"
                           />
                           <div className="flex gap-2">
-                            <button type="button" onClick={() => handleSaveNote(item)} className="text-xs px-3 py-1 bg-emerald-700 text-white rounded-lg hover:bg-emerald-800">حفظ</button>
-                            <button type="button" onClick={() => setEditNoteId(null)} className="text-xs px-3 py-1 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-600 dark:text-gray-300">إلغاء</button>
+                            <button type="button" onClick={() => handleSaveNote(item)} className="text-xs px-3 py-1 citation-btn citation-btn--primary">حفظ</button>
+                            <button type="button" onClick={() => setEditNoteId(null)} className="text-xs px-3 py-1 border border-[var(--majalis-line)] rounded-lg text-[var(--majalis-ink-soft)]">إلغاء</button>
                           </div>
                         </div>
                       ) : item.personal_note ? (
                         <div className="flex items-start gap-1.5">
-                          <span className="text-xs text-gray-400">📝</span>
-                          <p className="text-xs text-gray-600 dark:text-gray-400 italic">{item.personal_note}</p>
+                          <span className="text-xs text-[var(--majalis-ink-soft)] opacity-60">📝</span>
+                          <p className="text-xs text-[var(--majalis-ink-soft)] italic">{item.personal_note}</p>
                           <button
                             type="button"
                             onClick={() => { setEditNoteId(item.id); setEditNoteText(item.personal_note || ""); }}
-                            className="text-xs text-gray-400 hover:text-emerald-600 flex-shrink-0"
+                            className="text-xs text-[var(--majalis-ink-soft)] opacity-60 hover:opacity-100 hover:text-[var(--majalis-emerald)] flex-shrink-0"
                           >
                             ✏️
                           </button>
@@ -428,11 +428,11 @@ export default function MyCitationsPage() {
                       ) : null}
 
                       {/* أزرار */}
-                      <div className="flex flex-wrap items-center gap-2 pt-1 border-t border-gray-100 dark:border-gray-700">
+                      <div className="flex flex-wrap items-center gap-2 pt-1 border-t border-[var(--majalis-line)]">
                         {cit?.deep_link_slug && (
                           <Link
                             href={`/c/${cit.deep_link_slug}`}
-                            className="text-xs text-emerald-700 dark:text-emerald-400 hover:underline"
+                            className="text-xs text-[var(--majalis-emerald)] hover:underline"
                           >
                             🔗 عرض الاقتباس
                           </Link>
@@ -440,11 +440,11 @@ export default function MyCitationsPage() {
                         <button
                           type="button"
                           onClick={() => { setEditNoteId(item.id); setEditNoteText(item.personal_note || ""); }}
-                          className="text-xs text-gray-500 dark:text-gray-400 hover:text-emerald-700 dark:hover:text-emerald-400"
+                          className="text-xs text-[var(--majalis-ink-soft)] hover:text-[var(--majalis-emerald)]"
                         >
                           {item.personal_note ? "تعديل الملاحظة" : "إضافة ملاحظة"}
                         </button>
-                        <span className="text-xs text-gray-400 mr-auto">
+                        <span className="text-xs text-[var(--majalis-ink-soft)] opacity-60 mr-auto">
                           استُخدم {item.usage_count} مرة
                         </span>
                       </div>

@@ -28,7 +28,7 @@ function AnswerText({ text }: { text: string }) {
         if (/^\[\d+\]$/.test(part)) {
           const num = part.slice(1, -1);
           return (
-            <sup key={i} className="text-emerald-600 dark:text-emerald-400 font-bold ml-0.5 cursor-default">
+            <sup key={i} className="text-[var(--majalis-emerald)] font-bold ml-0.5 cursor-default">
               [{num}]
             </sup>
           );
@@ -42,11 +42,11 @@ function AnswerText({ text }: { text: string }) {
 /** شارة جودة الإجابة */
 function QualityBadge({ quality }: { quality: string }) {
   const config = {
-    full:       { label: "جواب مكتمل",  bg: "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300" },
+    full:       { label: "جواب مكتمل",  bg: "bg-[var(--mn-surface-active)] text-[var(--mn-text-active)]" },
     partial:    { label: "جواب جزئي",   bg: "bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300" },
-    no_sources: { label: "مصادر محدودة", bg: "bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400" },
+    no_sources: { label: "مصادر محدودة", bg: "bg-[var(--majalis-parchment-deep)] text-[var(--majalis-ink-soft)]" },
     blocked:    { label: "توجيه مباشر",  bg: "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400" },
-  }[quality] || { label: quality, bg: "bg-gray-100 text-gray-600" };
+  }[quality] || { label: quality, bg: "bg-[var(--majalis-parchment-deep)] text-[var(--majalis-ink-soft)]" };
 
   return (
     <span className={`text-xs px-2 py-0.5 rounded font-medium ${config.bg}`}>
@@ -78,7 +78,7 @@ export function ResearchAnswer({ result, onSave }: Props) {
       <div className="flex items-center gap-2 flex-wrap">
         <QualityBadge quality={result.quality} />
         {result.sources?.length > 0 && (
-          <span className="text-xs text-gray-400 dark:text-gray-500">
+          <span className="text-xs text-[var(--majalis-ink-soft)] opacity-70">
             {result.sources.length} مصدر مُسترجَع
           </span>
         )}
@@ -86,14 +86,14 @@ export function ResearchAnswer({ result, onSave }: Props) {
           <span className="text-xs text-blue-500 dark:text-blue-400">من الذاكرة المؤقتة</span>
         )}
         {result.durationMs && (
-          <span className="text-xs text-gray-300 dark:text-gray-600 mr-auto">
+          <span className="text-xs text-[var(--majalis-ink-soft)] opacity-40 mr-auto">
             {(result.durationMs / 1000).toFixed(1)}ث
           </span>
         )}
       </div>
 
       {/* تبويبات */}
-      <div className="flex gap-1 overflow-x-auto pb-1 scrollbar-hide border-b border-gray-200 dark:border-gray-700">
+      <div className="flex gap-1 overflow-x-auto pb-1 scrollbar-hide border-b border-[var(--majalis-line)]">
         {visibleTabs.map((t) => (
           <button
             key={t.key}
@@ -101,8 +101,8 @@ export function ResearchAnswer({ result, onSave }: Props) {
             onClick={() => setActiveTab(t.key)}
             className={`flex-shrink-0 px-3 py-1.5 text-sm rounded-t font-medium transition-colors ${
               activeTab === t.key
-                ? "bg-emerald-600 text-white"
-                : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                ? "bg-[var(--majalis-emerald)] text-white"
+                : "text-[var(--majalis-ink-soft)] hover:bg-[var(--mn-surface-hover)]"
             }`}
           >
             {t.label}
@@ -121,7 +121,7 @@ export function ResearchAnswer({ result, onSave }: Props) {
         {/* تبويب الجواب */}
         {activeTab === "answer" && (
           <div className="space-y-4">
-            <div className="bg-amber-50 dark:bg-gray-800 border border-amber-200 dark:border-gray-700 rounded-xl p-5">
+            <div className="bg-[var(--majalis-parchment)] border border-[var(--majalis-line)] rounded-xl p-5">
               <AnswerText text={result.answer} />
             </div>
 
@@ -132,8 +132,8 @@ export function ResearchAnswer({ result, onSave }: Props) {
                 onClick={() => {
                   navigator.clipboard.writeText(result.answer).catch(() => {});
                 }}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-sm bg-gray-100 dark:bg-gray-700
-                  text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+                className="flex items-center gap-1.5 px-3 py-1.5 text-sm bg-[var(--majalis-parchment-deep)]
+                  text-[var(--majalis-ink)] rounded-lg hover:bg-[var(--mn-surface-hover)] transition-colors"
               >
                 📋 نسخ الجواب
               </button>
@@ -141,8 +141,7 @@ export function ResearchAnswer({ result, onSave }: Props) {
                 <button
                   type="button"
                   onClick={onSave}
-                  className="flex items-center gap-1.5 px-3 py-1.5 text-sm bg-emerald-600 text-white
-                    rounded-lg hover:bg-emerald-700 transition-colors"
+                  className="citation-btn citation-btn--primary"
                 >
                   💾 حفظ في المكتبة
                 </button>
@@ -152,7 +151,7 @@ export function ResearchAnswer({ result, onSave }: Props) {
             {/* المصادر الأصلية (مختصرة) */}
             {result.sources?.length > 0 && (
               <div>
-                <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wide">
+                <p className="text-xs font-semibold text-[var(--majalis-ink-soft)] mb-2 uppercase tracking-wide">
                   المصادر الأصلية
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -164,7 +163,7 @@ export function ResearchAnswer({ result, onSave }: Props) {
                   <button
                     type="button"
                     onClick={() => setActiveTab("all")}
-                    className="mt-2 text-sm text-emerald-600 dark:text-emerald-400 hover:underline"
+                    className="mt-2 text-sm text-[var(--majalis-emerald)] hover:underline"
                   >
                     عرض جميع المصادر ({result.sources.length}) ←
                   </button>
@@ -183,21 +182,21 @@ export function ResearchAnswer({ result, onSave }: Props) {
             </div>
             <div className="space-y-3">
               {result.opinions?.map((op, i) => (
-                <div key={i} className="border border-gray-200 dark:border-gray-700 rounded-xl p-4">
+                <div key={i} className="border border-[var(--majalis-line)] rounded-xl p-4">
                   <div className="flex items-start gap-3">
-                    <span className="text-lg font-bold text-emerald-600 dark:text-emerald-400 flex-shrink-0">
+                    <span className="text-lg font-bold text-[var(--majalis-emerald)] flex-shrink-0">
                       {i + 1}.
                     </span>
                     <div className="min-w-0 flex-1">
-                      <p className="font-semibold text-gray-800 dark:text-gray-100 text-sm mb-1">{op.title}</p>
-                      <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-2 line-clamp-4">
+                      <p className="font-semibold text-[var(--majalis-ink)] text-sm mb-1">{op.title}</p>
+                      <p className="text-sm text-[var(--majalis-ink-soft)] leading-relaxed mb-2 line-clamp-4">
                         {op.excerpt}
                       </p>
-                      <p className="text-xs text-gray-400 dark:text-gray-500">
+                      <p className="text-xs text-[var(--majalis-ink-soft)] opacity-70">
                         📚 {op.source}
                         {op.source_url && (
                           <a href={op.source_url} target="_blank" rel="noopener noreferrer"
-                            className="mr-2 text-emerald-600 hover:underline">
+                            className="mr-2 text-[var(--majalis-emerald)] hover:underline">
                             المصدر الأصلي ↗
                           </a>
                         )}
@@ -214,7 +213,7 @@ export function ResearchAnswer({ result, onSave }: Props) {
         {["hadith", "fiqh", "lessons", "books", "all"].includes(activeTab) && (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {getSourcesForTab(activeTab).length === 0 ? (
-              <div className="col-span-full text-center text-gray-400 dark:text-gray-500 py-8">
+              <div className="col-span-full text-center text-[var(--majalis-ink-soft)] opacity-60 py-8">
                 لا توجد نتائج في هذا التصنيف
               </div>
             ) : (

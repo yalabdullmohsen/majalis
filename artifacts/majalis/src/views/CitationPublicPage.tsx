@@ -65,7 +65,7 @@ export default function CitationPublicPage() {
 
   if (loading) {
     return (
-      <div dir="rtl" className="min-h-screen flex items-center justify-center bg-amber-50 dark:bg-gray-900">
+      <div dir="rtl" className="min-h-screen flex items-center justify-center bg-[var(--majalis-parchment)]">
         <Spinner className="size-10 text-[var(--majalis-emerald)]" aria-label="جارٍ التحميل" />
       </div>
     );
@@ -73,9 +73,9 @@ export default function CitationPublicPage() {
 
   if (error || !citation) {
     return (
-      <div dir="rtl" className="min-h-screen flex flex-col items-center justify-center gap-6 bg-amber-50 dark:bg-gray-900 p-6">
-        <p className="text-gray-600 dark:text-gray-400 text-lg">{error || "الاقتباس غير موجود"}</p>
-        <Link href="/" className="text-emerald-700 dark:text-emerald-400 hover:underline">
+      <div dir="rtl" className="min-h-screen flex flex-col items-center justify-center gap-6 bg-[var(--majalis-parchment)] p-6">
+        <p className="text-[var(--majalis-ink-soft)] text-lg">{error || "الاقتباس غير موجود"}</p>
+        <Link href="/" className="text-[var(--majalis-emerald)] hover:underline">
           العودة للرئيسية
         </Link>
       </div>
@@ -101,13 +101,13 @@ export default function CitationPublicPage() {
   }, [citation, src, slug]);
 
   return (
-    <div dir="rtl" className="min-h-screen bg-amber-50 dark:bg-gray-900 flex flex-col">
+    <div dir="rtl" className="min-h-screen bg-[var(--majalis-parchment)] flex flex-col">
       {/* شريط التنقل */}
-      <nav className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-3 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2 text-emerald-700 dark:text-emerald-400 font-bold text-lg">
+      <nav className="bg-[var(--majalis-panel)] border-b border-[var(--majalis-line)] px-4 py-3 flex items-center justify-between">
+        <Link href="/" className="flex items-center gap-2 text-[var(--majalis-emerald)] font-bold text-lg">
           مجالس
         </Link>
-        <span className="text-xs text-gray-400">تطبيق العلم الشرعي</span>
+        <span className="text-xs text-[var(--majalis-ink-soft)] opacity-60">تطبيق العلم الشرعي</span>
       </nav>
 
       {/* بطاقة الاقتباس الرئيسية */}
@@ -115,7 +115,7 @@ export default function CitationPublicPage() {
         <div className="w-full max-w-xl space-y-6">
 
           {/* بطاقة الاقتباس */}
-          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-amber-100 dark:border-gray-700">
+          <div className="bg-[var(--majalis-panel)] rounded-2xl shadow-xl overflow-hidden border border-amber-100 dark:border-gray-700">
             {/* شريط ملوَّن */}
             <div className="h-1.5" style={{ background: typeColor }} />
 
@@ -129,7 +129,7 @@ export default function CitationPublicPage() {
                   >
                     {typeLabel}
                   </span>
-                  <span className="text-sm font-semibold text-gray-700 dark:text-gray-200">
+                  <span className="text-sm font-semibold text-[var(--majalis-ink-soft)]">
                     {src.title_ar}
                   </span>
                 </div>
@@ -139,7 +139,7 @@ export default function CitationPublicPage() {
               <blockquote className="border-r-4 border-emerald-600 pr-4">
                 <p
                   ref={contentRef}
-                  className="text-gray-900 dark:text-gray-100 text-lg leading-relaxed font-arabic"
+                  className="text-[var(--majalis-ink)] text-lg leading-relaxed font-arabic"
                 >
                   {citation.quoted_text}
                 </p>
@@ -147,7 +147,7 @@ export default function CitationPublicPage() {
 
               {/* بيانات المصدر */}
               {src && (
-                <div className="text-sm text-gray-500 dark:text-gray-400 space-y-0.5">
+                <div className="text-sm text-[var(--majalis-ink-soft)] space-y-0.5">
                   {src.author_name && <p>الكاتب/الشيخ: <span className="font-medium">{src.author_name}</span></p>}
                   {src.book_name && (
                     <p>
@@ -167,7 +167,7 @@ export default function CitationPublicPage() {
             <button
               type="button"
               onClick={copyLink}
-              className="flex items-center gap-1.5 px-4 py-2 text-sm bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-xl hover:border-emerald-500 text-gray-700 dark:text-gray-200 transition-colors shadow-sm"
+              className="flex items-center gap-1.5 px-4 py-2 text-sm bg-[var(--majalis-panel)] border border-gray-300 dark:border-gray-600 rounded-xl hover:border-emerald-500 text-[var(--majalis-ink-soft)] transition-colors shadow-sm"
             >
               🔗 {copied ? "تم النسخ ✓" : "نسخ الرابط"}
             </button>
@@ -175,7 +175,7 @@ export default function CitationPublicPage() {
             <button
               type="button"
               onClick={() => setShowQr(!showQr)}
-              className="flex items-center gap-1.5 px-4 py-2 text-sm bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-xl hover:border-emerald-500 text-gray-700 dark:text-gray-200 transition-colors shadow-sm"
+              className="flex items-center gap-1.5 px-4 py-2 text-sm bg-[var(--majalis-panel)] border border-gray-300 dark:border-gray-600 rounded-xl hover:border-emerald-500 text-[var(--majalis-ink-soft)] transition-colors shadow-sm"
             >
               📱 QR Code
             </button>
@@ -183,7 +183,7 @@ export default function CitationPublicPage() {
             <a
               href={getCitationImageUrl(slug)}
               download={`citation-${slug}.svg`}
-              className="flex items-center gap-1.5 px-4 py-2 text-sm bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-xl hover:border-emerald-500 text-gray-700 dark:text-gray-200 transition-colors shadow-sm"
+              className="flex items-center gap-1.5 px-4 py-2 text-sm bg-[var(--majalis-panel)] border border-gray-300 dark:border-gray-600 rounded-xl hover:border-emerald-500 text-[var(--majalis-ink-soft)] transition-colors shadow-sm"
             >
               🖼️ تحميل بطاقة
             </a>
@@ -196,7 +196,7 @@ export default function CitationPublicPage() {
                 className={`flex items-center gap-1.5 px-4 py-2 text-sm rounded-xl border transition-colors shadow-sm ${
                   saved
                     ? "bg-amber-50 dark:bg-amber-900/30 border-amber-400 text-amber-700 dark:text-amber-400"
-                    : "bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:border-amber-400"
+                    : "bg-[var(--majalis-panel)] border-gray-300 dark:border-gray-600 text-[var(--majalis-ink-soft)] hover:border-amber-400"
                 }`}
               >
                 {saved ? "⭐ محفوظ" : "⭐ احفظ في مكتبتي"}
@@ -207,13 +207,13 @@ export default function CitationPublicPage() {
           {/* QR Code */}
           {showQr && (
             <div className="flex justify-center">
-              <div className="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow border border-gray-200 dark:border-gray-700 text-center space-y-2">
+              <div className="bg-[var(--majalis-panel)] p-4 rounded-2xl shadow border border-[var(--majalis-line)] text-center space-y-2">
                 <img
                   src={getQrCodeUrl(slug)}
                   alt="QR Code للاقتباس"
                   className="w-48 h-48 mx-auto"
                 />
-                <p className="text-xs text-gray-400">{getShareUrl(slug)}</p>
+                <p className="text-xs text-[var(--majalis-ink-soft)] opacity-60">{getShareUrl(slug)}</p>
               </div>
             </div>
           )}
@@ -223,7 +223,7 @@ export default function CitationPublicPage() {
             <div className="text-center">
               <Link
                 href={sourceHref}
-                className="text-sm text-emerald-700 dark:text-emerald-400 hover:underline"
+                className="text-sm text-[var(--majalis-emerald)] hover:underline"
               >
                 شاهد السياق الكامل ←
               </Link>
@@ -231,9 +231,9 @@ export default function CitationPublicPage() {
           )}
 
           {/* تذييل */}
-          <p className="text-center text-xs text-gray-400 dark:text-gray-500 pb-4">
+          <p className="text-center text-xs text-[var(--majalis-ink-soft)] opacity-60 pb-4">
             تم إنشاء هذا الاقتباس عبر{" "}
-            <Link href="/" className="text-emerald-700 dark:text-emerald-400 hover:underline">
+            <Link href="/" className="text-[var(--majalis-emerald)] hover:underline">
               منصة مجالس
             </Link>
           </p>

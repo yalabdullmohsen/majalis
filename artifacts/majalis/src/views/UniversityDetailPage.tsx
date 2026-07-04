@@ -18,49 +18,48 @@ function ProgramCard({ program: p }: { program: UniversityProgram }) {
   const req = p.admission_requirements?.[0];
 
   return (
-    <div className="border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden">
+    <div className="border border-[var(--majalis-line)] rounded-xl overflow-hidden">
       <button
         type="button"
         onClick={() => setOpen(!open)}
-        className="w-full flex items-start gap-3 p-4 text-right hover:bg-gray-50
-          dark:hover:bg-gray-700/50 transition-colors"
+        className="w-full flex items-start gap-3 p-4 text-right hover:bg-[var(--mn-surface-hover)] transition-colors"
       >
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap mb-1">
             <span className="text-xs bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400
               px-2 py-0.5 rounded-full font-medium">{p.degree_level}</span>
-            <span className="text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300
+            <span className="text-xs bg-[var(--majalis-parchment-deep)] text-[var(--majalis-ink-soft)]
               px-2 py-0.5 rounded-full">{p.study_mode}</span>
             {p.has_scholarship && (
               <span className="text-xs bg-amber-50 dark:bg-amber-900/20 text-amber-700
                 dark:text-amber-400 px-2 py-0.5 rounded-full font-medium">🎓 منحة</span>
             )}
           </div>
-          <p className="font-semibold text-gray-800 dark:text-gray-100 text-sm">{p.program_name}</p>
+          <p className="font-semibold text-[var(--majalis-ink)] text-sm">{p.program_name}</p>
           {p.faculty_department && (
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{p.faculty_department}</p>
+            <p className="text-xs text-[var(--majalis-ink-soft)] mt-0.5">{p.faculty_department}</p>
           )}
         </div>
-        <span className="text-gray-400 dark:text-gray-500 flex-shrink-0 mt-1">
+        <span className="text-[var(--majalis-ink-soft)] opacity-60 flex-shrink-0 mt-1">
           {open ? "▲" : "▼"}
         </span>
       </button>
 
       {open && (
-        <div className="border-t border-gray-100 dark:border-gray-700 px-4 py-4 space-y-4
-          bg-gray-50 dark:bg-gray-800/50">
+        <div className="border-t border-[var(--majalis-line)] px-4 py-4 space-y-4
+          bg-[var(--majalis-parchment)]">
           <div className="grid grid-cols-2 gap-3 text-sm">
-            <div><p className="text-xs text-gray-400 mb-0.5">لغة الدراسة</p><p className="font-medium">{p.study_language}</p></div>
-            <div><p className="text-xs text-gray-400 mb-0.5">مدة البرنامج</p><p className="font-medium">{p.duration || "—"}</p></div>
-            {p.specialization && <div className="col-span-2"><p className="text-xs text-gray-400 mb-0.5">التخصص</p><p className="font-medium">{p.specialization}</p></div>}
+            <div><p className="text-xs text-[var(--majalis-ink-soft)] opacity-60 mb-0.5">لغة الدراسة</p><p className="font-medium">{p.study_language}</p></div>
+            <div><p className="text-xs text-[var(--majalis-ink-soft)] opacity-60 mb-0.5">مدة البرنامج</p><p className="font-medium">{p.duration || "—"}</p></div>
+            {p.specialization && <div className="col-span-2"><p className="text-xs text-[var(--majalis-ink-soft)] opacity-60 mb-0.5">التخصص</p><p className="font-medium">{p.specialization}</p></div>}
             {p.tuition_fees && (
-              <div><p className="text-xs text-gray-400 mb-0.5">الرسوم الدراسية</p>
+              <div><p className="text-xs text-[var(--majalis-ink-soft)] opacity-60 mb-0.5">الرسوم الدراسية</p>
                 <p className="font-medium">{p.tuition_fees.toLocaleString("ar-SA")} {p.currency}</p></div>
             )}
             {p.has_scholarship && p.scholarship_details && (
               <div className="col-span-2">
-                <p className="text-xs text-gray-400 mb-0.5">تفاصيل المنحة</p>
-                <p className="text-emerald-700 dark:text-emerald-400 font-medium">{p.scholarship_details}</p>
+                <p className="text-xs text-[var(--majalis-ink-soft)] opacity-60 mb-0.5">تفاصيل المنحة</p>
+                <p className="text-[var(--majalis-emerald)] font-medium">{p.scholarship_details}</p>
               </div>
             )}
           </div>
@@ -69,11 +68,11 @@ function ProgramCard({ program: p }: { program: UniversityProgram }) {
             <div className="space-y-3">
               {req.requirements?.length > 0 && (
                 <div>
-                  <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wide">شروط القبول</p>
+                  <p className="text-xs font-semibold text-[var(--majalis-ink-soft)] mb-2 uppercase tracking-wide">شروط القبول</p>
                   <ul className="space-y-1">
                     {req.requirements.map((r, i) => (
-                      <li key={i} className="flex gap-2 text-sm text-gray-700 dark:text-gray-300">
-                        <span className="text-emerald-600 dark:text-emerald-400 flex-shrink-0">✓</span>
+                      <li key={i} className="flex gap-2 text-sm text-[var(--majalis-ink-soft)]">
+                        <span className="text-[var(--majalis-emerald)] flex-shrink-0">✓</span>
                         <span>{r}</span>
                       </li>
                     ))}
@@ -83,10 +82,10 @@ function ProgramCard({ program: p }: { program: UniversityProgram }) {
 
               {req.required_documents?.length > 0 && (
                 <div>
-                  <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wide">المستندات المطلوبة</p>
+                  <p className="text-xs font-semibold text-[var(--majalis-ink-soft)] mb-2 uppercase tracking-wide">المستندات المطلوبة</p>
                   <ul className="space-y-1">
                     {req.required_documents.map((d, i) => (
-                      <li key={i} className="flex gap-2 text-sm text-gray-700 dark:text-gray-300">
+                      <li key={i} className="flex gap-2 text-sm text-[var(--majalis-ink-soft)]">
                         <span className="text-blue-500 flex-shrink-0">📄</span>
                         <span>{d}</span>
                       </li>
@@ -97,12 +96,12 @@ function ProgramCard({ program: p }: { program: UniversityProgram }) {
 
               {req.application_steps?.length > 0 && (
                 <div>
-                  <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wide">خطوات التقديم</p>
+                  <p className="text-xs font-semibold text-[var(--majalis-ink-soft)] mb-2 uppercase tracking-wide">خطوات التقديم</p>
                   <ol className="space-y-2">
                     {req.application_steps.map((s) => (
-                      <li key={s.step} className="flex gap-3 text-sm text-gray-700 dark:text-gray-300">
-                        <span className="flex-shrink-0 w-6 h-6 rounded-full bg-emerald-600 text-white text-xs
-                          flex items-center justify-center font-bold">{s.step}</span>
+                      <li key={s.step} className="flex gap-3 text-sm text-[var(--majalis-ink-soft)]">
+                        <span className="flex-shrink-0 w-6 h-6 rounded-full text-white text-xs
+                          flex items-center justify-center font-bold" style={{ background: "var(--majalis-emerald)" }}>{s.step}</span>
                         <span className="pt-0.5">{s.text}</span>
                       </li>
                     ))}
@@ -113,7 +112,7 @@ function ProgramCard({ program: p }: { program: UniversityProgram }) {
               <div className="flex items-center gap-4 flex-wrap text-sm">
                 {req.application_deadline && (
                   <div>
-                    <span className="text-gray-400 text-xs block">موعد التقديم</span>
+                    <span className="text-[var(--majalis-ink-soft)] opacity-60 text-xs block">موعد التقديم</span>
                     <span className="font-medium text-orange-600 dark:text-orange-400">
                       🗓️ {req.application_deadline}
                     </span>
@@ -121,8 +120,7 @@ function ProgramCard({ program: p }: { program: UniversityProgram }) {
                 )}
                 {req.application_url && (
                   <a href={req.application_url} target="_blank" rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 px-4 py-2 bg-emerald-600 hover:bg-emerald-700
-                      text-white rounded-xl text-sm font-medium transition-colors">
+                    className="flex items-center gap-1.5 px-4 py-2 citation-btn citation-btn--primary rounded-xl text-sm font-medium transition-colors">
                     📝 رابط التقديم الرسمي ↗
                   </a>
                 )}
@@ -144,7 +142,7 @@ function DetailContent({ university: u }: { university: University }) {
   );
 
   return (
-    <div dir="rtl" className="min-h-screen bg-gray-50 dark:bg-gray-900 pb-24">
+    <div dir="rtl" className="min-h-screen bg-[var(--majalis-parchment)] pb-24">
       {/* شريط التحديث + تنبيه */}
       <div className="bg-amber-50 dark:bg-amber-900/10 border-b border-amber-200 dark:border-amber-800
         px-4 py-2 text-xs text-amber-700 dark:text-amber-300 text-center">
@@ -152,7 +150,7 @@ function DetailContent({ university: u }: { university: University }) {
       </div>
 
       {/* Header */}
-      <div className="bg-gradient-to-l from-emerald-800 to-emerald-600 text-white px-4 py-8">
+      <div className="text-white px-4 py-8" style={{ background: "linear-gradient(to left, var(--majalis-emerald-deep), var(--majalis-emerald))" }}>
         <div className="max-w-3xl mx-auto">
           <Link href="/universities" className="text-emerald-200 text-sm hover:text-white mb-4 block w-fit">
             → دليل الجامعات
@@ -212,19 +210,19 @@ function DetailContent({ university: u }: { university: University }) {
         {/* نبذة */}
         {u.about && (
           <section>
-            <h2 className="text-lg font-bold text-gray-800 dark:text-gray-100 mb-3">عن الجامعة</h2>
-            <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">{u.about}</p>
+            <h2 className="text-lg font-bold text-[var(--majalis-ink)] mb-3">عن الجامعة</h2>
+            <p className="text-sm text-[var(--majalis-ink-soft)] leading-relaxed">{u.about}</p>
           </section>
         )}
 
         {/* البرامج حسب الدرجة */}
         {Object.keys(programsByDegree).length > 0 && (
           <section>
-            <h2 className="text-lg font-bold text-gray-800 dark:text-gray-100 mb-4">البرامج الدراسية</h2>
+            <h2 className="text-lg font-bold text-[var(--majalis-ink)] mb-4">البرامج الدراسية</h2>
             {Object.entries(programsByDegree).map(([degree, progs]) => (
               <div key={degree} className="mb-5">
-                <h3 className="text-sm font-bold text-gray-600 dark:text-gray-300 mb-2
-                  border-b border-gray-200 dark:border-gray-700 pb-1">
+                <h3 className="text-sm font-bold text-[var(--majalis-ink-soft)] mb-2
+                  border-b border-[var(--majalis-line)] pb-1">
                   {degree} ({progs.length} برنامج)
                 </h3>
                 <div className="space-y-2">
@@ -238,17 +236,17 @@ function DetailContent({ university: u }: { university: University }) {
         {/* الأسئلة الشائعة */}
         {u.university_faqs && u.university_faqs.length > 0 && (
           <section>
-            <h2 className="text-lg font-bold text-gray-800 dark:text-gray-100 mb-4">أسئلة شائعة</h2>
+            <h2 className="text-lg font-bold text-[var(--majalis-ink)] mb-4">أسئلة شائعة</h2>
             <div className="space-y-3">
               {u.university_faqs.map((faq) => (
-                <details key={faq.id} className="border border-gray-200 dark:border-gray-700 rounded-xl">
+                <details key={faq.id} className="border border-[var(--majalis-line)] rounded-xl">
                   <summary className="px-4 py-3 cursor-pointer text-sm font-medium
-                    text-gray-800 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700/50
+                    text-[var(--majalis-ink)] hover:bg-[var(--mn-surface-hover)]
                     rounded-xl transition-colors select-none">
                     {faq.question}
                   </summary>
-                  <div className="px-4 pb-4 pt-2 text-sm text-gray-600 dark:text-gray-400 leading-relaxed
-                    border-t border-gray-100 dark:border-gray-700">
+                  <div className="px-4 pb-4 pt-2 text-sm text-[var(--majalis-ink-soft)] leading-relaxed
+                    border-t border-[var(--majalis-line)]">
                     {faq.answer}
                   </div>
                 </details>
@@ -260,14 +258,14 @@ function DetailContent({ university: u }: { university: University }) {
         {/* وسائل التواصل */}
         {Object.keys(u.social_links || {}).length > 0 && (
           <section>
-            <h2 className="text-lg font-bold text-gray-800 dark:text-gray-100 mb-3">وسائل التواصل</h2>
+            <h2 className="text-lg font-bold text-[var(--majalis-ink)] mb-3">وسائل التواصل</h2>
             <div className="flex flex-wrap gap-2">
               {Object.entries(u.social_links).map(([platform, url]) => (
                 url && (
                   <a key={platform} href={url} target="_blank" rel="noopener noreferrer"
-                    className="px-3 py-1.5 bg-white dark:bg-gray-800 border border-gray-200
-                      dark:border-gray-700 rounded-xl text-sm text-gray-700 dark:text-gray-300
-                      hover:border-emerald-400 transition-colors">
+                    className="px-3 py-1.5 bg-[var(--majalis-panel)] border border-[var(--majalis-line)]
+                      rounded-xl text-sm text-[var(--majalis-ink-soft)]
+                      hover:border-[var(--majalis-emerald)] transition-colors">
                     {platform} ↗
                   </a>
                 )
@@ -277,7 +275,7 @@ function DetailContent({ university: u }: { university: University }) {
         )}
 
         {/* إخلاء مسؤولية */}
-        <div className="bg-gray-100 dark:bg-gray-800 rounded-xl px-4 py-3 text-xs text-gray-500 dark:text-gray-400">
+        <div className="bg-[var(--majalis-parchment-deep)] rounded-xl px-4 py-3 text-xs text-[var(--majalis-ink-soft)]">
           📌 المعلومات أعلاه مُدخَلة يدوياً لأغراض توجيهية فقط. الرسوم والشروط وتواريخ القبول
           قد تتغير. تحقق دائماً من الموقع الرسمي للجامعة أو تواصل معها مباشرة قبل اتخاذ قرار.
         </div>
@@ -309,7 +307,7 @@ export default function UniversityDetailPage() {
       <div dir="rtl" className="flex items-center justify-center min-h-screen">
         <div className="text-center space-y-3">
           <Spinner className="size-10 text-[var(--majalis-emerald)]" aria-label="جارٍ التحميل" />
-          <p className="text-sm text-gray-400">جارٍ التحميل…</p>
+          <p className="text-sm text-[var(--majalis-ink-soft)] opacity-60">جارٍ التحميل…</p>
         </div>
       </div>
     );
@@ -320,8 +318,8 @@ export default function UniversityDetailPage() {
       <div dir="rtl" className="flex items-center justify-center min-h-screen text-center">
         <div>
           <p className="text-5xl mb-4">🏛️</p>
-          <p className="text-lg font-bold text-gray-700 dark:text-gray-200 mb-2">الجامعة غير موجودة</p>
-          <Link href="/universities" className="text-emerald-600 hover:underline text-sm">
+          <p className="text-lg font-bold text-[var(--majalis-ink-soft)] mb-2">الجامعة غير موجودة</p>
+          <Link href="/universities" className="text-[var(--majalis-emerald)] hover:underline text-sm">
             → العودة للدليل
           </Link>
         </div>

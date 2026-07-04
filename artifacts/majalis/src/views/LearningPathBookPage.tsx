@@ -73,19 +73,19 @@ export default function LearningPathBookPage() {
 
   if (loading) {
     return (
-      <div dir="rtl" className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
-        <div className="text-gray-400">جارٍ التحميل…</div>
+      <div dir="rtl" className="min-h-screen bg-[var(--majalis-parchment)] flex items-center justify-center">
+        <div className="text-[var(--majalis-ink-soft)] opacity-60">جارٍ التحميل…</div>
       </div>
     );
   }
 
   if (notFound || !book) {
     return (
-      <div dir="rtl" className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col items-center justify-center gap-4">
+      <div dir="rtl" className="min-h-screen bg-[var(--majalis-parchment)] flex flex-col items-center justify-center gap-4">
         <div className="text-5xl">📚</div>
-        <p className="text-gray-500">الكتاب غير موجود</p>
+        <p className="text-[var(--majalis-ink-soft)]">الكتاب غير موجود</p>
         <Link href="/learning-path">
-          <span className="text-emerald-600 hover:underline cursor-pointer text-sm">← العودة للخارطة</span>
+          <span className="text-[var(--majalis-emerald)] hover:underline cursor-pointer text-sm">← العودة للخارطة</span>
         </Link>
       </div>
     );
@@ -94,17 +94,17 @@ export default function LearningPathBookPage() {
   const status = progress?.status ?? "not_started";
 
   return (
-    <div dir="rtl" className="min-h-screen bg-gray-50 dark:bg-gray-900 pb-24">
+    <div dir="rtl" className="min-h-screen bg-[var(--majalis-parchment)] pb-24">
       {/* Breadcrumb */}
-      <div className="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 px-4 py-3">
-        <div className="max-w-4xl mx-auto flex items-center gap-2 text-sm text-gray-500 flex-wrap">
-          <Link href="/learning-path"><span className="hover:text-emerald-600 cursor-pointer">الخارطة</span></Link>
+      <div className="bg-[var(--majalis-panel)] border-b border-[var(--majalis-line)] px-4 py-3">
+        <div className="max-w-4xl mx-auto flex items-center gap-2 text-sm text-[var(--majalis-ink-soft)] flex-wrap">
+          <Link href="/learning-path"><span className="hover:text-[var(--majalis-emerald)] cursor-pointer">الخارطة</span></Link>
           <span>›</span>
           <Link href={`/learning-path/${book.science.slug}`}>
-            <span className="hover:text-emerald-600 cursor-pointer">{book.science.name}</span>
+            <span className="hover:text-[var(--majalis-emerald)] cursor-pointer">{book.science.name}</span>
           </Link>
           <span>›</span>
-          <span className="text-gray-800 dark:text-gray-200 font-medium line-clamp-1">{book.title}</span>
+          <span className="text-[var(--majalis-ink)] font-medium line-clamp-1">{book.title}</span>
         </div>
       </div>
 
@@ -126,7 +126,7 @@ export default function LearningPathBookPage() {
             </div>
 
             {/* بيانات الكتاب */}
-            <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 p-4 space-y-3">
+            <div className="bg-[var(--majalis-panel)] rounded-2xl border border-[var(--majalis-line)] p-4 space-y-3">
               {[
                 { label: "العلم",      value: book.science.name },
                 { label: "المستوى",   value: book.level.name },
@@ -135,8 +135,8 @@ export default function LearningPathBookPage() {
                 book.pages_count > 0    && { label: "عدد الصفحات",    value: `${book.pages_count} صفحة` },
               ].filter(Boolean).map((item) => item && (
                 <div key={item.label} className="flex justify-between items-center text-sm">
-                  <span className="text-gray-500 dark:text-gray-400">{item.label}</span>
-                  <span className="font-medium text-gray-800 dark:text-gray-200">{item.value}</span>
+                  <span className="text-[var(--majalis-ink-soft)]">{item.label}</span>
+                  <span className="font-medium text-[var(--majalis-ink)]">{item.value}</span>
                 </div>
               ))}
             </div>
@@ -145,7 +145,7 @@ export default function LearningPathBookPage() {
             <div className="mt-3 flex flex-col gap-2">
               {book.pdf_url && (
                 <a href={book.pdf_url} target="_blank" rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 py-2 rounded-xl border border-emerald-200 text-emerald-700 dark:text-emerald-400 text-sm hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors">
+                  className="flex items-center justify-center gap-2 py-2 rounded-xl border border-[var(--majalis-emerald)] text-[var(--majalis-emerald)] text-sm hover:bg-[var(--majalis-emerald-muted)] transition-colors">
                   📄 تحميل PDF
                 </a>
               )}
@@ -163,7 +163,7 @@ export default function LearningPathBookPage() {
             {/* العنوان والحالة */}
             <div>
               <div className="flex items-start justify-between gap-3 mb-2">
-                <h1 className="text-xl md:text-2xl font-extrabold text-gray-900 dark:text-white leading-tight">
+                <h1 className="text-xl md:text-2xl font-extrabold text-[var(--majalis-ink)] leading-tight">
                   {book.title}
                 </h1>
                 <span
@@ -180,7 +180,7 @@ export default function LearningPathBookPage() {
                 <p className="text-sm text-gray-500 mb-3">✍️ {book.author}</p>
               )}
               {book.summary && (
-                <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">{book.summary}</p>
+                <p className="text-sm text-[var(--majalis-ink-soft)] leading-relaxed">{book.summary}</p>
               )}
             </div>
 
@@ -191,7 +191,7 @@ export default function LearningPathBookPage() {
                   <button
                     onClick={() => handleStatus("in_progress")}
                     disabled={saving}
-                    className="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium rounded-xl transition-colors disabled:opacity-50"
+                    className="px-5 py-2 citation-btn citation-btn--primary text-sm font-medium rounded-xl transition-colors disabled:opacity-50"
                   >
                     ▶ ابدأ قراءة الكتاب
                   </button>
@@ -216,30 +216,30 @@ export default function LearningPathBookPage() {
               </div>
             ) : (
               <Link href="/login">
-                <span className="inline-block px-5 py-2 border border-gray-200 text-gray-600 dark:text-gray-400 text-sm rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors cursor-pointer">
+                <span className="inline-block px-5 py-2 border border-gray-200 text-[var(--majalis-ink-soft)] text-sm rounded-xl hover:bg-[var(--mn-surface-hover)] transition-colors cursor-pointer">
                   سجّل الدخول لتتبع تقدمك
                 </span>
               </Link>
             )}
             {saveMsg && (
-              <p className="text-sm font-medium text-emerald-700 dark:text-emerald-400">{saveMsg}</p>
+              <p className="text-sm font-medium text-[var(--majalis-emerald)]">{saveMsg}</p>
             )}
 
             {/* الشروحات */}
             {explanations.length > 0 && (
               <section>
-                <h2 className="font-bold text-gray-800 dark:text-white text-base mb-3">🎙️ شروحات الكتاب</h2>
+                <h2 className="font-bold text-[var(--majalis-ink)] text-base mb-3">🎙️ شروحات الكتاب</h2>
                 <div className="space-y-2">
                   {explanations.map((exp) => (
-                    <div key={exp.id} className="flex items-center gap-3 p-3 bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700">
+                    <div key={exp.id} className="flex items-center gap-3 p-3 bg-[var(--majalis-panel)] rounded-xl border border-[var(--majalis-line)]">
                       <span className="text-lg">{EXPLANATION_ICONS[exp.type]}</span>
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-gray-800 dark:text-gray-200">{exp.sheikh_name}</p>
-                        {exp.notes && <p className="text-xs text-gray-500 mt-0.5">{exp.notes}</p>}
+                        <p className="text-sm font-medium text-[var(--majalis-ink)]">{exp.sheikh_name}</p>
+                        {exp.notes && <p className="text-xs text-[var(--majalis-ink-soft)] mt-0.5">{exp.notes}</p>}
                       </div>
                       {exp.url && (
                         <a href={exp.url} target="_blank" rel="noopener noreferrer"
-                          className="text-xs text-emerald-600 hover:underline flex-shrink-0">
+                          className="text-xs text-[var(--majalis-emerald)] hover:underline flex-shrink-0">
                           اذهب →
                         </a>
                       )}
@@ -252,11 +252,11 @@ export default function LearningPathBookPage() {
             {/* الفوائد */}
             {benefits.length > 0 && (
               <section>
-                <h2 className="font-bold text-gray-800 dark:text-white text-base mb-3">💡 فوائد من الكتاب</h2>
+                <h2 className="font-bold text-[var(--majalis-ink)] text-base mb-3">💡 فوائد من الكتاب</h2>
                 <ul className="space-y-2">
                   {benefits.map((b) => (
-                    <li key={b.id} className="flex gap-2 items-start text-sm text-gray-700 dark:text-gray-300">
-                      <span className="text-emerald-500 mt-0.5 flex-shrink-0">•</span>
+                    <li key={b.id} className="flex gap-2 items-start text-sm text-[var(--majalis-ink-soft)]">
+                      <span className="text-[var(--majalis-emerald)] mt-0.5 flex-shrink-0">•</span>
                       <span className="leading-relaxed">{b.content}</span>
                     </li>
                   ))}

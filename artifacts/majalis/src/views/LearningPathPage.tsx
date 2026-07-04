@@ -13,7 +13,7 @@ function LoadingSkeleton() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {Array.from({ length: 6 }).map((_, i) => (
-        <div key={i} className="bg-gray-100 dark:bg-gray-800 rounded-2xl h-36 animate-pulse" />
+        <div key={i} className="bg-[var(--majalis-parchment-deep)] rounded-2xl h-36 animate-pulse" />
       ))}
     </div>
   );
@@ -53,7 +53,7 @@ export default function LearningPathPage() {
   const totalProgress  = progress.length;
 
   return (
-    <div dir="rtl" className="min-h-screen bg-gray-50 dark:bg-gray-900 pb-24">
+    <div dir="rtl" className="min-h-screen bg-[var(--majalis-parchment)] pb-24">
 
       {/* Hero */}
       <div
@@ -115,8 +115,8 @@ export default function LearningPathPage() {
       <div className="max-w-5xl mx-auto px-4 py-10">
 
         {/* كيف تعمل الخارطة */}
-        <div className="mb-10 bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 p-6">
-          <h2 className="font-bold text-gray-800 dark:text-white text-lg mb-4">📋 كيف تعمل الخارطة؟</h2>
+        <div className="mb-10 bg-[var(--majalis-panel)] rounded-2xl border border-[var(--majalis-line)] p-6">
+          <h2 className="font-bold text-[var(--majalis-ink)] text-lg mb-4">📋 كيف تعمل الخارطة؟</h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {[
               { n: "١", title: "اختر علماً", desc: "من العقيدة والحديث والفقه وغيرها" },
@@ -124,12 +124,12 @@ export default function LearningPathPage() {
               { n: "٣", title: "أكمل الكتب", desc: "واختبر نفسك وتابع إنجازاتك" },
             ].map((s) => (
               <div key={s.n} className="flex gap-3 items-start">
-                <span className="flex-shrink-0 w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 font-bold flex items-center justify-center text-sm">
+                <span className="flex-shrink-0 w-8 h-8 rounded-full bg-[var(--majalis-emerald-muted)] text-[var(--majalis-emerald)] font-bold flex items-center justify-center text-sm">
                   {s.n}
                 </span>
                 <div>
-                  <p className="font-semibold text-gray-800 dark:text-white text-sm">{s.title}</p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{s.desc}</p>
+                  <p className="font-semibold text-[var(--majalis-ink)] text-sm">{s.title}</p>
+                  <p className="text-xs text-[var(--majalis-ink-soft)] mt-0.5">{s.desc}</p>
                 </div>
               </div>
             ))}
@@ -137,7 +137,7 @@ export default function LearningPathPage() {
         </div>
 
         {/* العلوم */}
-        <h2 className="font-extrabold text-gray-900 dark:text-white text-xl mb-5">
+        <h2 className="font-extrabold text-[var(--majalis-ink)] text-xl mb-5">
           🌿 العلوم الشرعية
         </h2>
 
@@ -148,7 +148,7 @@ export default function LearningPathPage() {
         {loading ? (
           <LoadingSkeleton />
         ) : sciences.length === 0 ? (
-          <div className="text-center py-16 text-gray-400">
+          <div className="text-center py-16 text-[var(--majalis-ink-soft)] opacity-60">
             <div className="text-4xl mb-2">📚</div>
             <p>لا توجد علوم متاحة بعد</p>
           </div>
