@@ -6,6 +6,7 @@ import { UnifiedLessonCard } from "@/components/lessons/UnifiedLessonCard";
 import { getUnifiedActiveLessons } from "@/lib/lessons-service";
 import { sortKuwaitLessons, type KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 import { fromKuwaitLesson } from "@/lib/unified-lesson-card";
+import { getKuwaitClock } from "@/lib/lesson-time";
 
 type HomeTab = "all" | "men" | "women";
 
@@ -15,10 +16,19 @@ const HOME_TABS: { id: HomeTab; label: string }[] = [
   { id: "women", label: "الدروس النسائية" },
 ];
 
+const ARABIC_WEEKDAY: Record<number, string> = {
+  0: "الأحد",
+  1: "الاثنين",
+  2: "الثلاثاء",
+  3: "الأربعاء",
+  4: "الخميس",
+  5: "الجمعة",
+  6: "السبت",
+};
+
 function isCourse(lesson: KuwaitLessonRecord) {
   return lesson.isCourse || lesson.activityType === "دورة";
 }
-
 
 export function HomeUpcomingLessons({
   initialLessons,
@@ -42,7 +52,14 @@ export function HomeUpcomingLessons({
       .finally(() => setLoading(false));
   }, [initialLessons]);
 
-  const lessons = sortKuwaitLessons(
+  const clock = getKuwaitClock();
+  const todayArabic = ARABIC_WEEKDAY[clock.weekday] ?? "";
+
+  const todayLessons = sortKuwaitLessons(
+    allLessons.filter((l) => l.day === todayArabic),
+  ).slice(0, 6);
+
+  const upcomingLessons = sortKuwaitLessons(
     allLessons.filter((lesson) => {
       if (tab === "men") return !lesson.hasWomenSection;
       if (tab === "women") return lesson.hasWomenSection;
@@ -51,45 +68,76 @@ export function HomeUpcomingLessons({
   ).slice(0, 4);
 
   return (
-    <section className="home-section" aria-labelledby="upcoming-lessons-heading">
-      <div className="home-section-head">
-        <div>
-          <p className="home-eyebrow">جدول الأسبوع</p>
-          <h2 id="upcoming-lessons-heading">الدروس القادمة</h2>
-          <p>دروس علمية مرتّبة حسب أقرب موعد.</p>
-        </div>
-        <div className="home-section-head-links">
-          <Link href="/calendar" className="home-section-link">التقويم</Link>
-          <Link href="/lessons" className="home-section-link">كل الدروس</Link>
-        </div>
-      </div>
+    <>
+      {/* ── دروس اليوم ── */}
+      {(loading || todayLessons.length > 0) && (
+        <section className="home-section" aria-labelledby="today-lessons-heading">
+          <div className="home-section-head">
+            <div>
+              <p className="home-eyebrow">اليوم · {todayArabic}</p>
+              <h2 id="today-lessons-heading">دروس اليوم</h2>
+              <p>الدروس المجدولة لهذا اليوم بتوقيت الكويت.</p>
+            </div>
+            <div className="home-section-head-links">
+              <Link href="/lessons" className="home-section-link">كل الدروس</Link>
+            </div>
+          </div>
 
-      <div className="home-lessons-tabs" role="tablist" aria-label="تصفية الدروس">
-        {HOME_TABS.map(({ id, label }) => (
-          <button
-            key={id}
-            role="tab"
-            aria-selected={tab === id}
-            onClick={() => setTab(id)}
-            className={`home-lessons-tab${tab === id ? " is-active" : ""}`}
+          <PageLoadingGuard
+            loading={loading}
+            empty={!loading && todayLessons.length === 0}
+            emptyText="لا توجد دروس مجدولة اليوم"
           >
-            {label}
-          </button>
-        ))}
-      </div>
+            <div className="home-kuwait-grid lesson-unified-grid">
+              {todayLessons.map((lesson) => (
+                <UnifiedLessonCard key={lesson.id} lesson={fromKuwaitLesson(lesson)} compact />
+              ))}
+            </div>
+          </PageLoadingGuard>
+        </section>
+      )}
 
-      <PageLoadingGuard
-        loading={loading}
-        empty={!loading && lessons.length === 0}
-        emptyText="لا توجد دروس في هذه الفئة"
-      >
-        <div className="home-kuwait-grid lesson-unified-grid">
-          {lessons.map((lesson) => (
-            <UnifiedLessonCard key={lesson.id} lesson={fromKuwaitLesson(lesson)} compact />
+      {/* ── الدروس القادمة ── */}
+      <section className="home-section" aria-labelledby="upcoming-lessons-heading">
+        <div className="home-section-head">
+          <div>
+            <p className="home-eyebrow">جدول الأسبوع</p>
+            <h2 id="upcoming-lessons-heading">الدروس القادمة</h2>
+            <p>دروس علمية مرتّبة حسب أقرب موعد.</p>
+          </div>
+          <div className="home-section-head-links">
+            <Link href="/calendar" className="home-section-link">التقويم</Link>
+            <Link href="/lessons" className="home-section-link">كل الدروس</Link>
+          </div>
+        </div>
+
+        <div className="home-lessons-tabs" role="tablist" aria-label="تصفية الدروس">
+          {HOME_TABS.map(({ id, label }) => (
+            <button
+              key={id}
+              role="tab"
+              aria-selected={tab === id}
+              onClick={() => setTab(id)}
+              className={`home-lessons-tab${tab === id ? " is-active" : ""}`}
+            >
+              {label}
+            </button>
           ))}
         </div>
-      </PageLoadingGuard>
-    </section>
+
+        <PageLoadingGuard
+          loading={loading}
+          empty={!loading && upcomingLessons.length === 0}
+          emptyText="لا توجد دروس في هذه الفئة"
+        >
+          <div className="home-kuwait-grid lesson-unified-grid">
+            {upcomingLessons.map((lesson) => (
+              <UnifiedLessonCard key={lesson.id} lesson={fromKuwaitLesson(lesson)} compact />
+            ))}
+          </div>
+        </PageLoadingGuard>
+      </section>
+    </>
   );
 }
 

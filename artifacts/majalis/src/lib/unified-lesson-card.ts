@@ -8,6 +8,7 @@ import {
   formatGregorianDate,
   formatHijriDate,
   formatRelativeTime,
+  formatShortLessonTime,
 } from "./lesson-time";
 import type { ActivityType, KuwaitLessonRecord } from "./kuwait-lessons";
 import { getRelativeStatusLabel } from "./kuwait-lessons";
@@ -49,12 +50,12 @@ export function fromKuwaitLesson(lesson: KuwaitLessonRecord, archived = false): 
   return {
     id: lesson.id,
     title: cleanDisplayText(lesson.title),
-    sheikhName: formatSheikhName(lesson.sheikhName.replace(/^الشيخ:\s*/u, "")) || cleanDisplayText(lesson.sheikhName),
+    sheikhName: formatSheikhName(lesson.sheikhName.replace(/^الشيخ(?:ة)?:\s*/u, "")) || cleanDisplayText(lesson.sheikhName),
     sheikhImage: lesson.sheikhImage,
     lessonImage: resolveLessonPosterUrl(lesson.lessonImage),
     category: cleanDisplayText(lesson.category) || "أخرى",
     day: cleanDisplayText(lesson.day),
-    time: cleanTimeText(cleanDisplayText(lesson.time)),
+    time: formatShortLessonTime(lesson.time),
     mosque: cleanDisplayText(lesson.mosque),
     region: cleanDisplayText(lesson.region),
     governorate: cleanDisplayText(lesson.governorate),
@@ -121,7 +122,7 @@ export function fromDbLesson(lesson: {
     sheikhName: formatSheikhName(sheikhName),
     category: cleanDisplayText(lesson.category) || "أخرى",
     day: cleanDisplayText(day),
-    time: cleanTimeText(cleanDisplayText(time)),
+    time: formatShortLessonTime(time),
     mosque: cleanDisplayText(lesson.mosque),
     region: cleanDisplayText(lesson.region),
     governorate: cleanDisplayText(lesson.city),

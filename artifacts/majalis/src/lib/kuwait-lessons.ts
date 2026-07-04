@@ -133,7 +133,7 @@ function enrichScheduleFields(
   return {
     ...lesson,
     time: cleanTimeText(lesson.time),
-    sheikhName: formatSheikhName(lesson.sheikhName.replace(/^الشيخ:\s*/u, "")) || lesson.sheikhName,
+    sheikhName: formatSheikhName(lesson.sheikhName.replace(/^الشيخ(?:ة)?:\s*/u, "")) || lesson.sheikhName,
     sortKey: lesson.sortKey ?? nextMs,
     nextOccurrenceMs: nextMs,
     gregorianDate: lesson.gregorianDate || (lesson.day ? formatGregorianDate(nextDate) : undefined),
