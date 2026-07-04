@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from "react";
+import { Spinner } from "@/components/ui/spinner";
 import { ResearchAnswer } from "@/components/rag/ResearchAnswer";
 import {
   searchRAG,
@@ -245,7 +246,7 @@ export default function ScholarlyResearchPage() {
             {loading && (
               <div className="flex flex-col items-center justify-center py-16 gap-4">
                 <div className="relative">
-                  <div className="w-12 h-12 rounded-full border-4 border-emerald-200 dark:border-emerald-900 border-t-emerald-600 animate-spin" />
+                  <Spinner className="size-12 text-[var(--majalis-emerald)]" aria-label="يبحث في المصادر" />
                 </div>
                 <p className="text-sm text-gray-400 dark:text-gray-500">يبحث في المصادر الشرعية…</p>
               </div>

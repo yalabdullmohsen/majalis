@@ -14921,6 +14921,62 @@ html[data-theme="dark"] .qc-card { background: var(--majalis-panel); }
 /* Display font for major headings */
 .font-display { font-family: var(--font-display) !important; }
 
+/* ══ Skeleton card / table / page variants ══ */
+
+/* بطاقة هيكلية */
+.sk-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: var(--card-padding, 1rem);
+  border-radius: var(--card-radius, 1rem);
+  background: var(--majalis-panel);
+  border: 1px solid var(--majalis-line);
+}
+.sk-card__thumb {
+  height: 10rem;
+  border-radius: 0.625rem;
+}
+.sk-card__body { display: flex; flex-direction: column; gap: 0.5rem; }
+.sk-card__title { height: 1rem; width: 70%; border-radius: 0.375rem; }
+.sk-card__line  { height: 0.75rem; width: 90%; border-radius: 0.375rem; }
+.sk-card__line--short { width: 55%; }
+
+/* شبكة بطاقات هيكلية */
+.sk-card-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+}
+
+/* جدول هيكلي */
+.sk-table { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--majalis-line); border-radius: 0.75rem; overflow: hidden; }
+.sk-table__head, .sk-table__row {
+  display: flex; gap: 0.75rem; padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--majalis-line);
+}
+.sk-table__head { background: var(--majalis-parchment-deep); }
+.sk-table__row:last-child { border-bottom: none; }
+.sk-table__cell { height: 0.75rem; flex: 1; border-radius: 0.375rem; }
+.sk-table__cell--head { height: 0.875rem; }
+
+/* صفحة هيكلية */
+.sk-page { display: flex; flex-direction: column; gap: 1.25rem; padding: 1.5rem; }
+.sk-page__title    { height: 1.5rem; width: 40%; border-radius: 0.5rem; }
+.sk-page__subtitle { height: 0.875rem; width: 55%; border-radius: 0.375rem; }
+
+/* تلاشٍ ناعم عند ظهور المحتوى */
+.mj-fade-in {
+  animation: mj-fade 280ms cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+@keyframes mj-fade {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mj-fade-in { animation: none; }
+}
+
 /* ══ Semantic danger tokens ══ */
 :root {
   --majalis-danger:       #c0392b;
