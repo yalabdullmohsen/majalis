@@ -348,7 +348,7 @@ export async function fetchPrayerTimes(governorateId?: string): Promise<PrayerTi
           ...buildPayload(timings, { timezone: "Asia/Kuwait" }, {
             gregorian: { date: kuwaitDateParam() },
           }, cityName),
-          source: "Supabase (مواقيت محدّثة)",
+          source: "مواقيت محدّثة",
         };
       }
     } catch {

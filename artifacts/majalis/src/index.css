@@ -14113,7 +14113,7 @@ html[data-theme="dark"] .navbar-v3 {
    ================================================================ */
 
 :root {
-  --bottom-nav-h: 56px;
+  --bottom-nav-h: 50px;
 }
 
 .bottom-nav {
@@ -14124,50 +14124,55 @@ html[data-theme="dark"] .navbar-v3 {
   /* ── Bottom Nav Shell ── */
   .bottom-nav {
     display: flex;
+    align-items: stretch;
     position: fixed;
     bottom: 0;
     inset-inline: 0;
     z-index: 200;
     height: calc(var(--bottom-nav-h) + env(safe-area-inset-bottom, 0px));
     padding-bottom: env(safe-area-inset-bottom, 0px);
-    background: var(--majalis-panel, #fff);
-    border-top: 1px solid var(--majalis-line, #e5ddd0);
-    box-shadow: 0 -2px 12px rgba(36, 31, 24, 0.08);
+    background: color-mix(in srgb, var(--majalis-panel, #fff) 88%, transparent);
+    -webkit-backdrop-filter: saturate(1.6) blur(14px);
+    backdrop-filter: saturate(1.6) blur(14px);
+    border-top: 1px solid color-mix(in srgb, var(--majalis-line, #e5ddd0) 70%, transparent);
+    box-shadow: 0 -1px 10px rgba(36, 31, 24, 0.06);
+    overflow: visible;
   }
 
-  /* ── Tab item ── */
+  /* ── Tab item (slim) ── */
   .bottom-nav__tab {
     flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 3px;
-    padding: 6px 4px 4px;
+    gap: 2px;
+    padding: 4px 2px 3px;
     text-decoration: none;
     color: var(--majalis-ink-soft, #5c564c);
-    font-size: 10px;
+    font-size: 9.5px;
     font-weight: 600;
     font-family: inherit;
     border: none;
     background: none;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
-    transition: color 0.12s;
+    transition: color 0.14s ease;
   }
 
   .bottom-nav__tab-icon {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 44px;
-    height: 28px;
-    border-radius: 14px;
-    transition: background 0.15s;
+    width: 42px;
+    height: 24px;
+    border-radius: 12px;
+    transition: background 0.18s ease, transform 0.18s ease;
   }
 
   .bottom-nav__tab-label {
     line-height: 1;
+    letter-spacing: -0.01em;
   }
 
   /* ── Active state — pill indicator (iOS/MD3 style) ── */
@@ -14177,6 +14182,66 @@ html[data-theme="dark"] .navbar-v3 {
 
   .bottom-nav__tab.is-active .bottom-nav__tab-icon {
     background: rgba(22, 78, 60, 0.1);
+    transform: translateY(-1px);
+  }
+
+  /* ── زرّ الصلاة المركزي (مواقيت حيّة) ── */
+  .bottom-nav__center {
+    flex: 1.15;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1px;
+    padding-bottom: 4px;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
+  }
+
+  .bottom-nav__center-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    margin-top: -20px;
+    border-radius: 50%;
+    color: #fff;
+    background: linear-gradient(160deg, var(--majalis-emerald, #1f6e54), var(--majalis-emerald-deep, #164e3c));
+    border: 3px solid var(--majalis-panel, #fff);
+    box-shadow: 0 6px 16px rgba(22, 78, 60, 0.32);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+
+  .bottom-nav__center:active .bottom-nav__center-btn {
+    transform: scale(0.94);
+  }
+
+  .bottom-nav__center.is-active .bottom-nav__center-btn {
+    box-shadow: 0 6px 20px rgba(22, 78, 60, 0.5);
+  }
+
+  .bottom-nav__center-meta {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 3px;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .bottom-nav__center-name {
+    font-size: 9.5px;
+    font-weight: 700;
+    color: var(--majalis-emerald-deep, #164e3c);
+  }
+
+  .bottom-nav__center-time {
+    font-size: 9px;
+    font-weight: 600;
+    color: var(--majalis-ink-soft, #5c564c);
+    font-variant-numeric: tabular-nums;
   }
 
   /* ── Push main content above the bar ── */
