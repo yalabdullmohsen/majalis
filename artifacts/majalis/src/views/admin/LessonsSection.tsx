@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
-import { adminGetLessons, adminUpsertLesson, adminDeleteLesson, adminGetSheikhs, upsertSeedLessonsToDb } from "@/lib/supabase";
+import { adminGetAllLessons, adminUpsertLesson, adminDeleteLesson, adminGetSheikhs, upsertSeedLessonsToDb } from "@/lib/supabase";
 import { invalidateLessonsCache } from "@/lib/lessons-service";
 import { sanitizeText } from "@/lib/sanitize";
 import { C, GOVERNORATES } from "@/lib/theme";
@@ -63,7 +63,7 @@ export function LessonsSection() {
     adminListLoad({
       label: "admin:lessons",
       setLoading,
-      load: () => Promise.all([adminGetLessons(), adminGetSheikhs()]),
+      load: () => Promise.all([adminGetAllLessons(), adminGetSheikhs()]),
       onSuccess: ([{ data: l }, { data: s }]) => {
         setItems(l ?? []);
         setSheikhs(s ?? []);

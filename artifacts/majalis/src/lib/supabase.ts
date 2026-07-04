@@ -671,8 +671,7 @@ export async function adminResolveReport(id: string) {
 }
 
 export async function adminGetSheikhs() {
-  const { data, error } = await supabase.from("sheikhs").select("*").order("name");
-  return { data: data || [], error };
+  return adminFetchAll("sheikhs", "*", "name", true);
 }
 
 export async function adminUpsertSheikh(data: any) {
@@ -721,11 +720,55 @@ export async function deleteSheikhImage(imageUrl: string) {
   return await supabase.storage.from("sheikhs").remove([path]);
 }
 
-export async function adminGetLessons() {
-  const { data, error } = await supabase
-    .from("lessons").select("*, sheikhs(name)")
-    .order("created_at", { ascending: false });
-  return { data: data || [], error };
+// ── Helper: جلب جميع الصفوف من جدول بدون حد PostgREST (1000 صف افتراضياً) ──
+async function adminFetchAll(
+  table: string,
+  selectStr: string,
+  orderCol = "created_at",
+  ascending = false,
+): Promise<{ data: any[]; error: any }> {
+  const PAGE = 500;
+  let all: any[] = [];
+  let page = 0;
+  while (true) {
+    const from = page * PAGE;
+    const to = from + PAGE - 1;
+    const { data, error, count } = await (supabase as any)
+      .from(table)
+      .select(selectStr, { count: "exact" })
+      .order(orderCol, { ascending })
+      .range(from, to);
+    if (error) return { data: all, error };
+    all = all.concat(data ?? []);
+    if (all.length >= (count ?? 0) || (data?.length ?? 0) < PAGE) break;
+    page++;
+  }
+  return { data: all, error: null };
+}
+
+export async function adminGetLessons(page = 0, pageSize = 500) {
+  const from = page * pageSize;
+  const to   = from + pageSize - 1;
+  const { data, error, count } = await supabase
+    .from("lessons")
+    .select("*, sheikhs(name)", { count: "exact" })
+    .order("created_at", { ascending: false })
+    .range(from, to);
+  return { data: data || [], error, count: count ?? 0 };
+}
+
+export async function adminGetAllLessons() {
+  const PAGE = 500;
+  let all: any[] = [];
+  let page = 0;
+  while (true) {
+    const { data, error, count } = await adminGetLessons(page, PAGE);
+    if (error) return { data: all, error };
+    all = all.concat(data);
+    if (all.length >= (count ?? 0) || data.length < PAGE) break;
+    page++;
+  }
+  return { data: all, error: null };
 }
 
 export async function adminUpsertLesson(data: any) {
@@ -784,10 +827,7 @@ export async function adminDeleteLesson(id: string) {
 }
 
 export async function adminGetLibrary() {
-  const { data, error } = await supabase
-    .from("library_items").select("*, sheikhs(name)")
-    .order("created_at", { ascending: false });
-  return { data: data || [], error };
+  return adminFetchAll("library_items", "*, sheikhs(name)");
 }
 
 export async function adminUpsertLibraryItem(data: any) {
@@ -802,10 +842,7 @@ export async function adminDeleteLibraryItem(id: string) {
 }
 
 export async function adminGetMiracles() {
-  const { data, error } = await supabase
-    .from("scientific_miracles").select("*")
-    .order("created_at", { ascending: false });
-  return { data: data || [], error };
+  return adminFetchAll("scientific_miracles", "*");
 }
 
 export async function adminUpsertMiracle(data: any) {
@@ -819,9 +856,7 @@ export async function adminDeleteMiracle(id: string) {
 }
 
 export async function adminGetAllFawaid() {
-  const { data, error } = await supabase
-    .from("fawaid").select("*").order("created_at", { ascending: false });
-  return { data: data || [], error };
+  return adminFetchAll("fawaid", "*");
 }
 
 export async function adminUpsertFawaid(data: any) {
@@ -836,11 +871,7 @@ export async function adminDeleteFawaid(id: string) {
 }
 
 export async function adminGetUsers() {
-  const { data, error } = await supabase
-    .from("profiles")
-    .select("*")
-    .order("created_at", { ascending: false });
-  return { data: data || [], error };
+  return adminFetchAll("profiles", "*");
 }
 
 export async function adminUpdateUserRole(userId: string, role: string) {
@@ -925,11 +956,7 @@ export async function getQaQuestions({ categoryId, search }: { categoryId?: stri
 }
 
 export async function adminGetQuestions() {
-  const { data, error } = await supabase
-    .from("qa_questions")
-    .select("*, qa_categories(name, slug)")
-    .order("created_at", { ascending: false });
-  return { data: data || [], error };
+  return adminFetchAll("qa_questions", "*, qa_categories(name, slug)");
 }
 
 export async function adminUpsertQuestion(data: any) {
@@ -1035,11 +1062,7 @@ export async function getQuizQuestions({ section, level }: { section?: string; l
 }
 
 export async function adminGetQuizQuestions() {
-  const { data, error } = await supabase
-    .from("quiz_questions")
-    .select("*")
-    .order("created_at", { ascending: false });
-  return { data: data || [], error };
+  return adminFetchAll("quiz_questions", "*");
 }
 
 export async function adminUpsertQuizQuestion(data: any) {
