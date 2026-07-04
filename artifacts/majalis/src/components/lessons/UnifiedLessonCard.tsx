@@ -108,7 +108,7 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
 
   return (
     <article
-      className={`lesson-unified-card${compact ? " lesson-unified-card--compact" : ""} ${prominenceClass(lesson.sortKey, lesson.archived)}`.trim()}
+      className={`lesson-unified-card card-v2${compact ? " lesson-unified-card--compact" : ""} ${prominenceClass(lesson.sortKey, lesson.archived)}`.trim()}
     >
       <header className="lesson-unified-card__header">
         <span className="lesson-unified-card__category">{lesson.category}</span>

@@ -24,67 +24,109 @@ html {
 }
 
 :root {
-  /* ══ الألوان الأساسية — نظام فاتح ومضيء بطبيعته ══ */
-  --majalis-ink:           #1A1714;   /* حبر دافئ عميق */
-  --majalis-ink-soft:      #6B6460;   /* حبر ثانوي — توازن مع الخلفية الفاتحة */
-  --majalis-ink-muted:     #A09A94;   /* حبر خافت للعناصر الثلاثية */
-  --majalis-charcoal:      #18181B;
-  --majalis-parchment:     #F9F6EF;   /* رق — أبيض دافئ نقي */
-  --majalis-parchment-deep:#F0EBE0;
-  --majalis-panel:         #FFFFFF;   /* سطح البطاقات — أبيض نقي */
-  --majalis-panel-raised:  #FDFBF7;   /* سطح مرفوع خفيف */
+  /* ══════════════════════════════════════════════════
+     DESIGN SYSTEM v2 — الهوية البصرية الجديدة
+     جميع المتغيرات القديمة تشير إلى القيم الجديدة
+     ══════════════════════════════════════════════════ */
 
-  /* ══ لون العلامة — زمرد مُكرَّم ══ */
-  --majalis-emerald:       #166048;   /* زمرد محوري — دافئ ومتزن */
-  --majalis-emerald-deep:  #0F4433;   /* زمرد عميق للعناصر الفاعلة */
-  --majalis-emerald-muted: rgba(22, 96, 72, 0.07); /* طبقة خلفية خفيفة */
-  --majalis-emerald-soft:  #EAF5EE;   /* خلفية إشعار ناجح */
+  /* ── الألوان الأساسية ── */
+  --majalis-ink:           #2B2621;
+  --majalis-ink-soft:      #5C554C;
+  --majalis-ink-muted:     #8A847E;
+  --majalis-charcoal:      #1A1714;
+  --majalis-parchment:     #FBF8F3;
+  --majalis-parchment-deep:#F3EAD9;
+  --majalis-panel:         #FFFFFF;
+  --majalis-panel-raised:  #FBF8F3;
 
-  /* ══ الذهب — لون التميز والإسناد الشرعي ══ */
-  --majalis-brass:         #9A6D1A;   /* ذهب دافئ مُهدَّأ */
-  --majalis-brass-deep:    #7A5214;   /* ذهب عميق */
-  --majalis-brass-soft:    #FDF4E0;   /* خلفية الإسناد */
+  /* ── الأخضر الإسلامي — v2-green ── */
+  --majalis-emerald:       #1F6F52;
+  --majalis-emerald-deep:  #154F3B;
+  --majalis-emerald-muted: rgba(31, 111, 82, 0.08);
+  --majalis-emerald-soft:  #EAF3EF;
 
-  /* ══ ألوان مساندة ══ */
+  /* ── الأزرق الهادئ (جديد) ── */
+  --majalis-blue:          #3E6E8E;
+  --majalis-blue-deep:     #2C5470;
+  --majalis-blue-soft:     #E6EEF3;
+
+  /* ── الذهب ── */
+  --majalis-brass:         #C6A059;
+  --majalis-brass-deep:    #8A6018;
+  --majalis-brass-soft:    #FBF3E2;
+
+  /* ── ألوان مساندة ── */
   --majalis-sage:          #D4E8DB;
-  --majalis-danger:        #C0392B;
-  --majalis-danger-muted:  #FEF2F2;
+  --majalis-danger:        #DC2626;
+  --majalis-danger-muted:  #FEE2E2;
   --majalis-success:       #16A34A;
   --majalis-warning:       #D97706;
 
-  /* ══ الحدود والظلال ══ */
-  --majalis-line:          #E8E2D8;   /* حدود خفيفة — أكثر هواء */
-  --majalis-line-strong:   #D8D0C4;
-  --majalis-shadow:        0 4px 16px rgba(26,23,20,0.06), 0 1px 4px rgba(26,23,20,0.04);
-  --majalis-shadow-sm:     0 1px 3px rgba(26,23,20,0.08), 0 1px 2px rgba(26,23,20,0.04);
-  --majalis-shadow-lg:     0 12px 40px rgba(26,23,20,0.09), 0 4px 12px rgba(26,23,20,0.05);
-  --majalis-shadow-xl:     0 24px 64px rgba(26,23,20,0.10), 0 8px 24px rgba(26,23,20,0.06);
+  /* ── الحدود والظلال (دافئة) ── */
+  --majalis-line:          #D8D2C7;
+  --majalis-line-strong:   #C5BDB2;
+  --majalis-shadow:        0 4px 12px rgba(43,38,33,0.08), 0 1px 3px rgba(43,38,33,0.05);
+  --majalis-shadow-sm:     0 1px 2px rgba(43,38,33,0.06);
+  --majalis-shadow-lg:     0 12px 32px rgba(43,38,33,0.10), 0 4px 10px rgba(43,38,33,0.06);
+  --majalis-shadow-xl:     0 24px 64px rgba(43,38,33,0.13), 0 8px 20px rgba(43,38,33,0.07);
 
-  /* ══ الخطوط ══ */
-  --font-primary:  "Cairo", "Tajawal", "Segoe UI", Tahoma, system-ui, sans-serif;
+  /* ── الخطوط ── */
+  --font-primary:  "Cairo", "Tajawal", system-ui, sans-serif;
   --font-ui:       var(--font-primary);
-  --font-display:  "Amiri", "Cairo", Georgia, serif;
+  --font-display:  "Cairo", system-ui, sans-serif;
   --font-reading:  var(--font-primary);
   --font-body:     var(--font-primary);
-  /* خط قرآني عثماني — حصري للنص القرآني فقط، لا يُستخدم لغرض آخر */
   --font-quran:    "Amiri Quran", "Scheherazade New", "KFGQPC Hafs Uthmanic", serif;
 
-  /* ══ نظام الحركة — Spring بدل Linear لإحساس طبيعي ══ */
+  /* ── نظام الحركة — Spring ── */
   --motion-fast:   120ms cubic-bezier(0.16, 1, 0.3, 1);
   --motion-normal: 220ms cubic-bezier(0.16, 1, 0.3, 1);
   --motion-spring: 380ms cubic-bezier(0.34, 1.56, 0.64, 1);
   --motion-slow:   350ms cubic-bezier(0.16, 1, 0.3, 1);
   --motion-sheet:  340ms cubic-bezier(0.32, 0.72, 0, 1);
 
-  /* ══ ألوان إضافية للهوية ══ */
-  --majalis-ivory:      #FDFAF3;
+  /* ── متغيرات bridge — للتوافق مع الكود الحالي ── */
+  --majalis-ivory:      #FBF8F3;
   --majalis-gold-light: #F5E6A3;
+  --majalis-gold:       #C6A059;
 
-  /* ══ دعم الحواف الآمنة (Capacitor/iOS) ══ */
+  /* ── الحواف الآمنة (Capacitor/iOS) ── */
   --safe-top:    env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --safe-left:   env(safe-area-inset-left, 0px);
   --safe-right:  env(safe-area-inset-right, 0px);
+
+  /* ── جسر v2 ← majalis (ليُستخدم كلاهما بتطابق) ── */
+  --v2-green:        var(--majalis-emerald);
+  --v2-green-deep:   var(--majalis-emerald-deep);
+  --v2-green-soft:   var(--majalis-emerald-soft);
+  --v2-green-mid:    #5FA98A;
+  --v2-blue:         var(--majalis-blue);
+  --v2-blue-deep:    var(--majalis-blue-deep);
+  --v2-blue-soft:    var(--majalis-blue-soft);
+  --v2-gold:         var(--majalis-brass);
+  --v2-gold-soft:    var(--majalis-brass-soft);
+  --v2-ink:          var(--majalis-ink);
+  --v2-ink-2:        var(--majalis-ink-soft);
+  --v2-ink-3:        var(--majalis-ink-muted);
+  --v2-surface-0:    var(--majalis-panel);
+  --v2-surface-1:    var(--majalis-parchment);
+  --v2-surface-2:    var(--majalis-parchment-deep);
+  --v2-border:       var(--majalis-line);
+  --v2-border-soft:  #EDE8E0;
+  --v2-shadow-1:     var(--majalis-shadow-sm);
+  --v2-shadow-2:     var(--majalis-shadow);
+  --v2-shadow-3:     var(--majalis-shadow-lg);
+  --v2-shadow-4:     var(--majalis-shadow-xl);
+  --v2-r-sm:         8px;
+  --v2-r-md:         12px;
+  --v2-r-lg:         16px;
+  --v2-r-xl:         24px;
+  --v2-ease:         cubic-bezier(0.16, 1, 0.3, 1);
+  --v2-spring:       cubic-bezier(0.34, 1.56, 0.64, 1);
+  --v2-t-fast:       var(--motion-fast);
+  --v2-t-std:        var(--motion-normal);
+  --v2-t-slow:       var(--motion-slow);
 }
 
 html[data-theme="dark"] {
@@ -478,7 +520,7 @@ html[data-theme="dark"] .home-page {
   color: var(--majalis-parchment);
   background:
     radial-gradient(circle at 18% 22%, rgba(176, 141, 46, 0.24), transparent 17rem),
-    linear-gradient(135deg, #0f352b 0%, var(--majalis-emerald-deep) 48%, #0b2a23 100%);
+    linear-gradient(135deg, var(--majalis-emerald-deep) 0%, var(--majalis-emerald) 48%, #0D3322 100%);
   isolation: isolate;
 }
 
@@ -13368,17 +13410,17 @@ html[data-theme="dark"] {
 
 /* ─── Phase 2: Navbar polish ──────────────────────────────── */
 .navbar-v3 {
-  background: rgba(250, 245, 234, 0.96) !important;
-  backdrop-filter: blur(14px) !important;
-  -webkit-backdrop-filter: blur(14px) !important;
-  border-bottom: 1px solid rgba(224, 215, 196, 0.7) !important;
-  box-shadow: 0 2px 18px rgba(36, 31, 24, 0.06) !important;
+  background: rgba(251, 248, 243, 0.92) !important;
+  backdrop-filter: blur(16px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+  border-bottom: 1px solid rgba(216, 210, 199, 0.6) !important;
+  box-shadow: 0 1px 12px rgba(43, 38, 33, 0.06) !important;
 }
 
 html[data-theme="dark"] .navbar-v3 {
-  background: rgba(12, 20, 16, 0.97) !important;
-  border-color: rgba(53, 82, 68, 0.55) !important;
-  box-shadow: 0 2px 18px rgba(0,0,0,.35) !important;
+  background: rgba(10, 18, 14, 0.94) !important;
+  border-color: rgba(38, 61, 51, 0.6) !important;
+  box-shadow: 0 2px 18px rgba(0,0,0,.38) !important;
 }
 
 /* ─── Phase 3: Islamic Decorative Elements ─────────────────── */
@@ -16090,17 +16132,48 @@ html[data-theme="dark"] .home-quiz-card {
 }
 
 /* صفحات المحتوى: PageHeader تحسين */
+/* ── Page Hero Header — v2 style applied globally ── */
 .ds-page-header {
-  padding: 1.25rem 0 0.75rem;
-  border-bottom: 1px solid var(--majalis-line, #E8E2D8);
-  margin-bottom: 1.5rem;
+  position: relative;
+  background: linear-gradient(155deg, var(--majalis-emerald) 0%, var(--majalis-emerald-deep) 100%);
+  color: #fff;
+  padding: 2.25rem 1.5rem 2.75rem;
+  margin-bottom: 2rem;
+  overflow: hidden;
+  direction: rtl;
 }
-
+.ds-page-header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cpolygon points='20,2.5 22.9,13.3 33.5,8.5 26.4,17.5 37.5,20 26.4,22.5 33.5,31.5 22.9,26.7 20,37.5 17.1,26.7 6.5,31.5 13.6,22.5 2.5,20 13.6,17.5 6.5,8.5 17.1,13.3' fill='none' stroke='white' stroke-width='0.5' opacity='0.07'/%3E%3C/svg%3E");
+  background-size: 40px 40px;
+  pointer-events: none;
+}
 .ds-page-header__eyebrow {
-  color: var(--majalis-brass, #9A6D1A);
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
   font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.65);
+  margin: 0 0 0.4rem;
+}
+.ds-page-header__title {
+  font-size: clamp(1.6rem, 4vw, 2.25rem);
+  font-weight: 900;
+  line-height: 1.2;
+  margin: 0 0 0.65rem;
+  color: #fff;
+}
+.ds-page-header__subtitle {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.82);
+  margin: 0;
+  max-width: 60ch;
+}
+html[data-theme="dark"] .ds-page-header {
+  background: linear-gradient(155deg, #1A3D2E 0%, #0F2519 100%);
 }
 
 /* بطاقات المحتوى العام */

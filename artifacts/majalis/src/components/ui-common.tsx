@@ -74,7 +74,7 @@ export function SkeletonPage() {
 
 export function PageHeader({ eyebrow, title, subtitle }: { eyebrow?: string; title: string; subtitle?: string }) {
   return (
-    <header className="ds-page-header">
+    <header className="ds-page-header" dir="rtl">
       {eyebrow && <p className="ds-page-header__eyebrow">{eyebrow}</p>}
       <h1 className="ds-page-header__title">{title}</h1>
       {subtitle && <p className="ds-page-header__subtitle">{subtitle}</p>}
