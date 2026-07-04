@@ -36,6 +36,7 @@ import { RelationshipsSection } from "@/views/admin/RelationshipsSection";
 import { TelegramSection } from "@/views/admin/TelegramSection";
 import { UniversitiesSection } from "@/views/admin/UniversitiesAdminPage";
 import { ProphetStoriesSection } from "@/views/admin/ProphetStoriesSection";
+import { IslamicStoriesSection } from "@/views/admin/IslamicStoriesSection";
 
 export default function AdminPage() {
   const [location] = useLocation();
@@ -58,6 +59,7 @@ export default function AdminPage() {
       {section === "telegram" && <TelegramSection />}
       {section === "universities" && <UniversitiesSection />}
       {section === "prophet-stories" && <ProphetStoriesSection />}
+      {section === "islamic-stories" && <IslamicStoriesSection />}
       {section === "submissions" && <SubmissionsSection />}
       {section === "dashboard" && <DashboardSection />}
       {section === "aggregator" && <AggregatorSection />}
