@@ -38,7 +38,8 @@ export type AdminSection =
   | "universities"
   | "telegram"
   | "prophet-stories"
-  | "islamic-stories";
+  | "islamic-stories"
+  | "image-import";
 
 type NavItem = { key: AdminSection; label: string; icon: string };
 
@@ -81,6 +82,7 @@ const NAV_GROUPS: Array<{ title?: string; items: NavItem[] }> = [
   {
     title: "الاستيراد والأتمتة",
     items: [
+      { key: "image-import",     label: "استخلاص من صور",   icon: "🖼" },
       { key: "smart-cms",        label: "CMS الذكي",        icon: "🤖" },
       { key: "aggregator",       label: "محرك التجميع",     icon: "⚙" },
       { key: "knowledge-engine", label: "Auto Knowledge",    icon: "🧠" },

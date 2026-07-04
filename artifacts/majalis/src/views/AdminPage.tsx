@@ -37,6 +37,7 @@ import { TelegramSection } from "@/views/admin/TelegramSection";
 import { UniversitiesSection } from "@/views/admin/UniversitiesAdminPage";
 import { ProphetStoriesSection } from "@/views/admin/ProphetStoriesSection";
 import { IslamicStoriesSection } from "@/views/admin/IslamicStoriesSection";
+import { ImageImportSection } from "@/views/admin/ImageImportSection";
 
 export default function AdminPage() {
   const [location] = useLocation();
@@ -56,6 +57,7 @@ export default function AdminPage() {
 
   return (
     <AdminShell section={section} onSectionChange={setSection}>
+      {section === "image-import" && <ImageImportSection />}
       {section === "telegram" && <TelegramSection />}
       {section === "universities" && <UniversitiesSection />}
       {section === "prophet-stories" && <ProphetStoriesSection />}
