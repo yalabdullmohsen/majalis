@@ -1207,36 +1207,104 @@ p, li {
   }
 }
 
-/* Design System v4 — global compact overhaul */
+/* Design System v5 — Premium Light-First System */
 :root {
-  --ds-base: 14px;
-  --ds-space-1: 0.2rem;
-  --ds-space-2: 0.4rem;
-  --ds-space-3: 0.625rem;
-  --ds-space-4: 0.875rem;
-  --ds-space-5: 1.125rem;
-  --ds-space-6: 1.375rem;
-  --ds-radius-sm: 0.3rem;
-  --ds-radius: 0.45rem;
-  --ds-radius-lg: 0.55rem;
-  --ds-emerald: #1a664f;
-  --ds-emerald-deep: #124636;
-  --ds-emerald-soft: #e6f2ec;
-  --ds-emerald-muted: #2d8a6a;
-  --ds-parchment: #fbf8f2;
-  --ds-parchment-deep: #f2ece2;
-  --ds-ink: #1c1914;
-  --ds-ink-soft: #5a5348;
-  --ds-line-color: #e2dbd0;
+  /* ── Base ── */
+  --ds-base:   15px;
+
+  /* ── Spacing scale ── */
+  --ds-space-0-5: 0.125rem;
+  --ds-space-1:   0.25rem;
+  --ds-space-1-5: 0.375rem;
+  --ds-space-2:   0.5rem;
+  --ds-space-2-5: 0.625rem;
+  --ds-space-3:   0.75rem;
+  --ds-space-3-5: 0.875rem;
+  --ds-space-4:   1rem;
+  --ds-space-5:   1.25rem;
+  --ds-space-6:   1.5rem;
+  --ds-space-8:   2rem;
+  --ds-space-10:  2.5rem;
+  --ds-space-12:  3rem;
+
+  /* ── Radius ── */
+  --ds-radius-xs: 0.25rem;
+  --ds-radius-sm: 0.375rem;
+  --ds-radius:    0.5rem;
+  --ds-radius-lg: 0.75rem;
+  --ds-radius-xl: 1rem;
+  --ds-radius-2xl:1.25rem;
+  --ds-radius-full: 9999px;
+
+  /* ── Shadows — subtle, premium ── */
+  --ds-shadow-xs: 0 1px 2px rgba(26,23,20,.04);
+  --ds-shadow-sm: 0 1px 3px rgba(26,23,20,.06), 0 1px 2px rgba(26,23,20,.04);
+  --ds-shadow:    0 4px 6px -1px rgba(26,23,20,.07), 0 2px 4px -1px rgba(26,23,20,.04);
+  --ds-shadow-md: 0 10px 15px -3px rgba(26,23,20,.07), 0 4px 6px -2px rgba(26,23,20,.04);
+  --ds-shadow-lg: 0 20px 25px -5px rgba(26,23,20,.07), 0 10px 10px -5px rgba(26,23,20,.03);
+
+  /* ── Colors ── */
+  --ds-emerald:        #166048;
+  --ds-emerald-deep:   #0F4433;
+  --ds-emerald-soft:   #EAF5EE;
+  --ds-emerald-muted:  rgba(22, 96, 72, 0.08);
+  --ds-gold:           #9A6D1A;
+  --ds-gold-soft:      #FDF4E0;
+  --ds-parchment:      #F9F6EF;
+  --ds-parchment-deep: #F0EBE0;
+  --ds-ink:            #1A1714;
+  --ds-ink-soft:       #6B6460;
+  --ds-ink-muted:      #A09A94;
+  --ds-line-color:     #E8E2D8;
+  --ds-line-strong:    #D8D0C4;
+
+  /* ── Heading token — أسود بدل زمرد ── */
+  --ds-heading: var(--ds-ink);
+
+  /* ── Typography scale ── */
+  --ds-text-2xs: 0.6875rem;
+  --ds-text-xs:  0.75rem;
+  --ds-text-sm:  0.875rem;
+  --ds-text-base:1rem;
+  --ds-text-md:  1.0625rem;
+  --ds-text-lg:  1.125rem;
+  --ds-text-xl:  1.25rem;
+  --ds-text-2xl: 1.5rem;
+  --ds-text-3xl: 1.875rem;
+
+  /* ── Layout ── */
+  --ds-max:         75rem;
+  --ds-content-max: 44rem;
+  --ds-line:        1.65;
+
+  /* ── Motion — Spring curves ── */
+  --ds-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ds-ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ds-ease:        cubic-bezier(0.4, 0, 0.2, 1);
+  --ds-transition:  200ms cubic-bezier(0.16, 1, 0.3, 1);
+  --ds-transition-fast: 120ms cubic-bezier(0.16, 1, 0.3, 1);
+  --ds-transition-slow: 350ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 html[data-theme="dark"] {
-  --ds-parchment: #141412;
-  --ds-parchment-deep: #1c1b18;
-  --ds-ink: #f5f0e8;
-  --ds-ink-soft: #b8b0a4;
-  --ds-line-color: #2e2c28;
-  --ds-emerald-soft: #1a2e26;
+  --ds-parchment:      #0D1410;
+  --ds-parchment-deep: #151E1A;
+  --ds-ink:            #F4F1EC;
+  --ds-ink-soft:       #B5ADA6;
+  --ds-ink-muted:      #7A736C;
+  --ds-line-color:     #263D33;
+  --ds-line-strong:    #304D42;
+  --ds-emerald:        #4DB88E;
+  --ds-emerald-deep:   #8FD4B4;
+  --ds-emerald-soft:   #0F2A20;
+  --ds-emerald-muted:  rgba(77, 184, 142, 0.1);
+  --ds-gold:           #D4AD50;
+  --ds-gold-soft:      #231A08;
+  --ds-heading:        var(--ds-ink);
+  --ds-shadow-xs: 0 1px 2px rgba(0,0,0,0.25);
+  --ds-shadow-sm: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+  --ds-shadow:    0 4px 6px -1px rgba(0,0,0,0.3), 0 2px 4px -1px rgba(0,0,0,0.2);
+  --ds-shadow-md: 0 10px 15px -3px rgba(0,0,0,0.35), 0 4px 6px -2px rgba(0,0,0,0.2);
 }
 
 body {
@@ -4351,3 +4419,366 @@ html[data-theme="dark"] .tasbih-wird-pill.is-active {
   line-height: 1.75;
   color: var(--text-body, #374151);
 }
+
+/* ════════════════════════════════════════════════════════════════════
+   نظام التصميم v5 — الطبقة المتميزة
+   Premium Design Layer — overrides & refinements for a light-first,
+   Apple/Linear quality UI inspired by Islamic architecture.
+   ════════════════════════════════════════════════════════════════════ */
+
+/* ── 1. إعادة ضبط الخلفية والنص ── */
+body {
+  background: var(--ds-parchment);
+  color: var(--ds-ink);
+  font-size: var(--ds-text-base);
+  line-height: var(--ds-line);
+}
+
+/* ── 2. العناوين — أسود/داكن بدل الزمرد ── */
+.ds-page-header__title,
+.ds-section__title,
+.ds-sheet__head h2,
+.search-page-title,
+.search-results-group-title,
+.page-card-header p,
+.lesson-detail-title,
+.profile-section-title,
+.user-stats-section__title,
+.admin-section-title,
+h1, h2, h3 {
+  color: var(--ds-heading);
+}
+
+/* العناوين التي كانت دائماً بالزمرد الداكن */
+.ds-page-header__title { font-size: var(--ds-text-2xl); font-weight: 800; line-height: 1.25; }
+.ds-section__title     { font-size: var(--ds-text-lg);  font-weight: 700; }
+
+/* ── 3. البطاقات — أكثر رقياً ── */
+.ui-card,
+.ds-card,
+.page-card,
+.library-card {
+  background: var(--majalis-panel, #fff);
+  border: 1px solid var(--ds-line-color);
+  border-radius: var(--ds-radius-lg);
+  box-shadow: var(--ds-shadow-xs);
+  transition: box-shadow var(--ds-transition), border-color var(--ds-transition), transform var(--ds-transition-fast);
+}
+
+.ui-card:hover,
+.ds-card:hover,
+.page-card:hover {
+  box-shadow: var(--ds-shadow);
+  border-color: color-mix(in srgb, var(--ds-emerald) 25%, var(--ds-line-color));
+  transform: translateY(-1px);
+}
+
+/* ── 4. الأزرار — أكثر صقلاً ── */
+.ds-btn,
+.ui-card-btn,
+.page-action-btn,
+.login-submit,
+.citation-btn {
+  border-radius: var(--ds-radius);
+  font-weight: 700;
+  transition: background var(--ds-transition-fast), box-shadow var(--ds-transition-fast), transform 100ms;
+}
+
+.ds-btn--primary,
+.ui-card-btn,
+.page-action-btn,
+.login-submit {
+  background: var(--ds-emerald);
+  border-color: var(--ds-emerald);
+  box-shadow: 0 1px 3px rgba(22, 96, 72, 0.25);
+}
+
+.ds-btn--primary:hover:not(:disabled),
+.ui-card-btn:hover:not(:disabled),
+.page-action-btn:hover:not(:disabled),
+.login-submit:hover:not(:disabled) {
+  background: var(--ds-emerald-deep);
+  box-shadow: 0 4px 12px rgba(22, 96, 72, 0.3);
+  transform: translateY(-1px);
+}
+
+.ds-btn--primary:active:not(:disabled),
+.login-submit:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* ── 5. حقول الإدخال ── */
+.ds-input,
+.login-field input {
+  border-radius: var(--ds-radius);
+  border-color: var(--ds-line-color);
+  background: var(--majalis-panel, #fff);
+  color: var(--ds-ink);
+  transition: border-color var(--ds-transition-fast), box-shadow var(--ds-transition-fast);
+}
+
+.ds-input:focus,
+.login-field input:focus {
+  border-color: var(--ds-emerald);
+  box-shadow: 0 0 0 3px rgba(22, 96, 72, 0.12);
+  outline: none;
+}
+
+/* ── 6. الشارات — أكثر دقة ── */
+.ds-badge {
+  font-size: var(--ds-text-2xs);
+  font-weight: 700;
+  border-radius: var(--ds-radius-full);
+  padding: 0.15rem 0.5rem;
+  background: var(--ds-emerald-soft);
+  color: var(--ds-emerald-deep);
+}
+
+/* ── 7. الهيكل العظمي (Skeleton) ── */
+.ds-skeleton {
+  background: linear-gradient(90deg,
+    var(--ds-parchment-deep) 25%,
+    color-mix(in srgb, var(--ds-parchment-deep) 60%, white) 50%,
+    var(--ds-parchment-deep) 75%
+  );
+  background-size: 200% 100%;
+  animation: ds-shimmer 1.4s ease-in-out infinite;
+}
+
+/* ── 8. شريط التنقل السفلي — iOS premium ── */
+@media (max-width: 879px) {
+  .bottom-nav {
+    background: color-mix(in srgb, var(--majalis-panel) 92%, transparent);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-top: 1px solid color-mix(in srgb, var(--majalis-line) 60%, transparent);
+    box-shadow: 0 -1px 0 color-mix(in srgb, var(--majalis-line) 40%, transparent),
+                0 -8px 24px rgba(26,23,20,0.06);
+  }
+
+  .bottom-nav__tab-icon {
+    width: 46px;
+    height: 30px;
+    border-radius: 15px;
+    transition: background var(--ds-transition-fast), transform 100ms;
+  }
+
+  .bottom-nav__tab:active .bottom-nav__tab-icon {
+    transform: scale(0.9);
+  }
+
+  .bottom-nav__tab.is-active .bottom-nav__tab-icon {
+    background: color-mix(in srgb, var(--ds-emerald) 12%, transparent);
+  }
+
+  .bottom-nav__tab.is-active {
+    color: var(--ds-emerald-deep);
+  }
+}
+
+/* ── 9. الشريط العلوي (NavBar) ── */
+.navbar-v3 {
+  background: color-mix(in srgb, var(--majalis-parchment) 94%, transparent) !important;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom-color: color-mix(in srgb, var(--majalis-line) 60%, transparent) !important;
+}
+
+.navbar-brand {
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: var(--ds-ink) !important;
+  letter-spacing: -0.01em;
+}
+
+.site-brand-name {
+  font-weight: 800;
+  color: var(--ds-ink);
+  font-size: 0.9rem;
+}
+
+.navbar-login {
+  border-radius: var(--ds-radius);
+  background: var(--ds-emerald);
+  font-weight: 700;
+  box-shadow: 0 1px 4px rgba(22, 96, 72, 0.2);
+  transition: background var(--ds-transition-fast), box-shadow var(--ds-transition-fast);
+}
+
+.navbar-login:hover {
+  background: var(--ds-emerald-deep);
+  box-shadow: 0 4px 12px rgba(22, 96, 72, 0.3);
+}
+
+.navbar-menu-btn {
+  border-radius: var(--ds-radius);
+  font-weight: 600;
+  background: var(--ds-parchment-deep) !important;
+  border-color: transparent !important;
+  color: var(--ds-ink) !important;
+}
+
+.navbar-menu-btn:hover {
+  background: var(--ds-line-color) !important;
+}
+
+/* ── 10. صفحة القراءة — Kindle-quality ── */
+.reading-text {
+  font-size: var(--reading-font-size, 1.0625rem);
+  line-height: var(--reading-line-height, 2.0);
+  color: var(--ds-ink);
+  max-width: 38rem;
+  margin-inline: auto;
+}
+
+/* ── 11. الإحصائيات ── */
+.ds-stat strong,
+.user-stat-card__value,
+.profile-stat-card__value {
+  color: var(--ds-ink);
+  font-weight: 800;
+}
+
+/* ── 12. أنماط هندسية إسلامية — كخلفية خفيفة ── */
+.majalis-geo-bg {
+  position: relative;
+  overflow: hidden;
+}
+.majalis-geo-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 12px,
+      color-mix(in srgb, var(--ds-emerald) 5%, transparent) 12px,
+      color-mix(in srgb, var(--ds-emerald) 5%, transparent) 13px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 12px,
+      color-mix(in srgb, var(--ds-emerald) 5%, transparent) 12px,
+      color-mix(in srgb, var(--ds-emerald) 5%, transparent) 13px
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+.majalis-geo-bg > * { position: relative; z-index: 1; }
+
+/* ── 13. خلفية النمط الهندسي للـ Hero ── */
+.majalis-hero-pattern {
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, color-mix(in srgb, var(--ds-emerald) 8%, transparent), transparent),
+    linear-gradient(180deg, var(--ds-parchment) 0%, var(--majalis-panel, #fff) 100%);
+}
+
+/* ── 14. القسم الرئيسي ── */
+.home-section-title {
+  color: var(--ds-ink) !important;
+  font-weight: 800;
+}
+
+.home-quick-link {
+  border-radius: var(--ds-radius-lg);
+  transition: border-color var(--ds-transition-fast), box-shadow var(--ds-transition-fast), transform var(--ds-transition-fast);
+}
+
+.home-quick-link:hover {
+  border-color: color-mix(in srgb, var(--ds-emerald) 35%, var(--ds-line-color));
+  box-shadow: var(--ds-shadow-sm);
+  transform: translateY(-1px);
+}
+
+/* ── 15. النتائج والمحتوى ── */
+.search-result-row:hover {
+  border-color: color-mix(in srgb, var(--ds-emerald) 25%, var(--ds-line-color));
+  box-shadow: var(--ds-shadow-xs);
+  transform: translateY(-1px);
+}
+
+/* ── 16. Scrollbar أنيق ── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--ds-line-color) 70%, transparent);
+  border-radius: var(--ds-radius-full);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ds-ink-muted, #A09A94);
+}
+
+/* ── 17. الوضع الداكن — Premium layer overrides ── */
+html[data-theme="dark"] .ui-card,
+html[data-theme="dark"] .ds-card,
+html[data-theme="dark"] .page-card {
+  background: var(--majalis-panel, #1A2820);
+  border-color: var(--ds-line-color);
+  box-shadow: var(--ds-shadow-xs);
+}
+
+html[data-theme="dark"] .navbar-v3 {
+  background: color-mix(in srgb, var(--majalis-parchment) 90%, transparent) !important;
+}
+
+html[data-theme="dark"] .bottom-nav {
+  background: color-mix(in srgb, var(--majalis-panel) 88%, transparent);
+  border-top-color: var(--ds-line-color);
+}
+
+html[data-theme="dark"] .ds-input,
+html[data-theme="dark"] .login-field input {
+  background: var(--majalis-parchment-deep);
+  border-color: var(--ds-line-color);
+  color: var(--ds-ink);
+}
+
+/* ── 18. تحسين الانتقالات العامة ── */
+@media (prefers-reduced-motion: no-preference) {
+  .ui-card,
+  .ds-card,
+  .page-card,
+  .home-quick-link,
+  .search-result-row,
+  .ds-btn,
+  .ui-card-btn,
+  .page-action-btn {
+    will-change: transform;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── 19. الروابط السريعة في الصفحة الرئيسية ── */
+.home-quick-link {
+  color: var(--ds-ink) !important;
+  border-radius: var(--ds-radius-lg);
+}
+
+.home-quick-link span {
+  color: var(--ds-ink-soft) !important;
+}
+
+/* ── 20. بطاقة الدرس ── */
+.lesson-card__title,
+.lesson-card h3 {
+  color: var(--ds-ink);
+  font-weight: 700;
+}
+
+/* ══════════════════════════════════════════════════════════════════ */

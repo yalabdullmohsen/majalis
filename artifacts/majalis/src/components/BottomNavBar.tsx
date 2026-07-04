@@ -2,11 +2,10 @@
 
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
-import { BookOpen, GraduationCap, Home, LayoutGrid, Moon } from "lucide-react";
+import { BookOpen, GraduationCap, Home, LayoutGrid, Sunset } from "lucide-react";
 import { MoreBottomSheet } from "./MoreBottomSheet";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 
-// مجموعتان تُحيطان بزرّ الصلاة المركزي
 const LEFT_TABS = [
   { href: "/",        label: "الرئيسية", Icon: Home },
   { href: "/lessons", label: "الدروس",   Icon: GraduationCap },
@@ -25,31 +24,34 @@ export function BottomNavBar() {
     if (href === "/") return location === "/";
     return location === href || location.startsWith(href + "/");
   };
+
   const prayerActive =
     location.startsWith("/prayer-countdown") || location.startsWith("/prayer-times");
-
   const next = countdown?.next;
 
-  const renderTab = ({ href, label, Icon }: { href: string; label: string; Icon: typeof Home }) => (
-    <Link
-      key={href}
-      href={href}
-      className={`bottom-nav__tab${isActive(href) ? " is-active" : ""}`}
-      aria-current={isActive(href) ? "page" : undefined}
-    >
-      <span className="bottom-nav__tab-icon">
-        <Icon size={21} strokeWidth={isActive(href) ? 2.2 : 1.7} aria-hidden="true" />
-      </span>
-      <span className="bottom-nav__tab-label">{label}</span>
-    </Link>
-  );
+  const renderTab = ({ href, label, Icon }: { href: string; label: string; Icon: typeof Home }) => {
+    const active = isActive(href);
+    return (
+      <Link
+        key={href}
+        href={href}
+        className={`bottom-nav__tab${active ? " is-active" : ""}`}
+        aria-current={active ? "page" : undefined}
+      >
+        <span className="bottom-nav__tab-icon">
+          <Icon size={22} strokeWidth={active ? 2.3 : 1.6} aria-hidden="true" />
+        </span>
+        <span className="bottom-nav__tab-label">{label}</span>
+      </Link>
+    );
+  };
 
   return (
     <>
       <nav className="bottom-nav" aria-label="التنقل السفلي">
         {LEFT_TABS.map(renderTab)}
 
-        {/* زرّ الصلاة المركزي — مواقيت حيّة في نصّ القائمة */}
+        {/* زرّ الصلاة المركزي */}
         <Link
           href="/prayer-countdown"
           className={`bottom-nav__center${prayerActive ? " is-active" : ""}`}
@@ -57,7 +59,7 @@ export function BottomNavBar() {
           aria-label={next ? `الصلاة القادمة: ${next.name} ${next.time}` : "مواقيت الصلاة"}
         >
           <span className="bottom-nav__center-btn">
-            <Moon size={22} strokeWidth={2} aria-hidden="true" />
+            <Sunset size={22} strokeWidth={1.8} aria-hidden="true" />
           </span>
           <span className="bottom-nav__center-meta">
             {next ? (
@@ -73,7 +75,6 @@ export function BottomNavBar() {
 
         {RIGHT_TABS.map(renderTab)}
 
-        {/* زرّ "المزيد" — يفتح الشبكة الشاملة */}
         <button
           type="button"
           className={`bottom-nav__tab${moreOpen ? " is-active" : ""}`}
@@ -83,7 +84,7 @@ export function BottomNavBar() {
           aria-expanded={moreOpen}
         >
           <span className="bottom-nav__tab-icon">
-            <LayoutGrid size={21} strokeWidth={1.7} aria-hidden="true" />
+            <LayoutGrid size={22} strokeWidth={moreOpen ? 2.3 : 1.6} aria-hidden="true" />
           </span>
           <span className="bottom-nav__tab-label">المزيد</span>
         </button>

@@ -26,13 +26,16 @@ function useIsMobile() {
 function tabStyle(active: boolean): React.CSSProperties {
   return {
     fontSize: "0.875rem",
-    padding: "0.375rem 0.75rem",
-    borderRadius: "0.375rem",
+    padding: "0.375rem 0.875rem",
+    borderRadius: "0.5rem",
     whiteSpace: "nowrap",
     textDecoration: "none",
     color: active ? C.emeraldDeep : C.inkSoft,
-    background: active ? C.sage : "transparent",
-    fontWeight: active ? 700 : 400,
+    background: active
+      ? "color-mix(in srgb, var(--majalis-emerald) 10%, transparent)"
+      : "transparent",
+    fontWeight: active ? 700 : 500,
+    transition: "background 120ms ease, color 120ms ease",
   };
 }
 

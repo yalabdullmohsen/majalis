@@ -24,53 +24,95 @@ html {
 }
 
 :root {
-  --majalis-ink: #241F18;
-  --majalis-ink-soft: #5B5446;
-  --majalis-charcoal: #1A1A1A;
-  --majalis-parchment: #FAF5EA;
-  --majalis-parchment-deep: #F0E8D6;
-  --majalis-panel: #FFFFFF;
-  --majalis-emerald: #1F6E54;
-  --majalis-emerald-deep: #164E3C;
-  --majalis-brass: #B08D2E;
-  --majalis-brass-deep: #8A6D1E;
-  --majalis-sage: #CFE0D3;
-  --majalis-line: #E0D7C4;
-  --majalis-shadow: 0 22px 70px rgba(36, 31, 24, 0.12);
-  --font-primary: "Cairo", "Tajawal", "Segoe UI", Tahoma, system-ui, sans-serif;
-  --font-ui: var(--font-primary);
-  /* خط العرض: Amiri يستحضر طابع الخط العربي الكلاسيكي للعناوين الكبيرة */
-  --font-display: "Amiri", "Cairo", Georgia, serif;
-  --font-reading: var(--font-primary);
-  --font-body: var(--font-primary);
+  /* ══ الألوان الأساسية — نظام فاتح ومضيء بطبيعته ══ */
+  --majalis-ink:           #1A1714;   /* حبر دافئ عميق */
+  --majalis-ink-soft:      #6B6460;   /* حبر ثانوي — توازن مع الخلفية الفاتحة */
+  --majalis-ink-muted:     #A09A94;   /* حبر خافت للعناصر الثلاثية */
+  --majalis-charcoal:      #18181B;
+  --majalis-parchment:     #F9F6EF;   /* رق — أبيض دافئ نقي */
+  --majalis-parchment-deep:#F0EBE0;
+  --majalis-panel:         #FFFFFF;   /* سطح البطاقات — أبيض نقي */
+  --majalis-panel-raised:  #FDFBF7;   /* سطح مرفوع خفيف */
+
+  /* ══ لون العلامة — زمرد مُكرَّم ══ */
+  --majalis-emerald:       #166048;   /* زمرد محوري — دافئ ومتزن */
+  --majalis-emerald-deep:  #0F4433;   /* زمرد عميق للعناصر الفاعلة */
+  --majalis-emerald-muted: rgba(22, 96, 72, 0.07); /* طبقة خلفية خفيفة */
+  --majalis-emerald-soft:  #EAF5EE;   /* خلفية إشعار ناجح */
+
+  /* ══ الذهب — لون التميز والإسناد الشرعي ══ */
+  --majalis-brass:         #9A6D1A;   /* ذهب دافئ مُهدَّأ */
+  --majalis-brass-deep:    #7A5214;   /* ذهب عميق */
+  --majalis-brass-soft:    #FDF4E0;   /* خلفية الإسناد */
+
+  /* ══ ألوان مساندة ══ */
+  --majalis-sage:          #D4E8DB;
+  --majalis-danger:        #C0392B;
+  --majalis-danger-muted:  #FEF2F2;
+  --majalis-success:       #16A34A;
+  --majalis-warning:       #D97706;
+
+  /* ══ الحدود والظلال ══ */
+  --majalis-line:          #E8E2D8;   /* حدود خفيفة — أكثر هواء */
+  --majalis-line-strong:   #D8D0C4;
+  --majalis-shadow:        0 4px 16px rgba(26,23,20,0.06), 0 1px 4px rgba(26,23,20,0.04);
+  --majalis-shadow-sm:     0 1px 3px rgba(26,23,20,0.08), 0 1px 2px rgba(26,23,20,0.04);
+  --majalis-shadow-lg:     0 12px 40px rgba(26,23,20,0.09), 0 4px 12px rgba(26,23,20,0.05);
+  --majalis-shadow-xl:     0 24px 64px rgba(26,23,20,0.10), 0 8px 24px rgba(26,23,20,0.06);
+
+  /* ══ الخطوط ══ */
+  --font-primary:  "Cairo", "Tajawal", "Segoe UI", Tahoma, system-ui, sans-serif;
+  --font-ui:       var(--font-primary);
+  --font-display:  "Amiri", "Cairo", Georgia, serif;
+  --font-reading:  var(--font-primary);
+  --font-body:     var(--font-primary);
   /* خط قرآني عثماني — حصري للنص القرآني فقط، لا يُستخدم لغرض آخر */
-  --font-quran: "Amiri Quran", "Scheherazade New", "KFGQPC Hafs Uthmanic", serif;
-  /* رموز الحركة الهادفة (تحترم prefers-reduced-motion) */
-  --motion-fast:    150ms cubic-bezier(0.4, 0, 0.2, 1);
-  --motion-normal:  250ms cubic-bezier(0.4, 0, 0.2, 1);
-  --motion-spring:  320ms cubic-bezier(0.34, 1.56, 0.64, 1);
-  --motion-slow:    400ms cubic-bezier(0.4, 0, 0.2, 1);
-  --motion-sheet:   350ms cubic-bezier(0.32, 0.72, 0, 1);
-  /* ألوان إضافية للهوية */
-  --majalis-ivory:  #FDF8EF;
+  --font-quran:    "Amiri Quran", "Scheherazade New", "KFGQPC Hafs Uthmanic", serif;
+
+  /* ══ نظام الحركة — Spring بدل Linear لإحساس طبيعي ══ */
+  --motion-fast:   120ms cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-normal: 220ms cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-spring: 380ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  --motion-slow:   350ms cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-sheet:  340ms cubic-bezier(0.32, 0.72, 0, 1);
+
+  /* ══ ألوان إضافية للهوية ══ */
+  --majalis-ivory:      #FDFAF3;
   --majalis-gold-light: #F5E6A3;
-  --majalis-emerald-muted: rgba(31, 110, 84, 0.08);
+
+  /* ══ دعم الحواف الآمنة (Capacitor/iOS) ══ */
+  --safe-top:    env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left:   env(safe-area-inset-left, 0px);
+  --safe-right:  env(safe-area-inset-right, 0px);
 }
 
 html[data-theme="dark"] {
-  --majalis-ink: #F7F1E6;
-  --majalis-ink-soft: #C9BFAE;
-  --majalis-charcoal: #FDF8EF;
-  --majalis-parchment: #111A16;
-  --majalis-parchment-deep: #19251F;
-  --majalis-panel: #1C2A23;
-  --majalis-emerald: #4FB58E;
-  --majalis-emerald-deep: #8FD7B8;
-  --majalis-brass: #D7B957;
-  --majalis-brass-deep: #F1D776;
-  --majalis-sage: #254234;
-  --majalis-line: #355244;
-  --majalis-shadow: 0 22px 70px rgba(0, 0, 0, 0.35);
+  /* ══ وضع داكن — معماري أصيل لا مجرد عكس للألوان ══ */
+  --majalis-ink:           #F4F1EC;   /* أبيض دافئ — لا بارد */
+  --majalis-ink-soft:      #B5ADA6;
+  --majalis-ink-muted:     #7A736C;
+  --majalis-charcoal:      #F4F1EC;
+  --majalis-parchment:     #0D1410;   /* خلفية خضراء داكنة عميقة */
+  --majalis-parchment-deep:#151E1A;
+  --majalis-panel:         #1A2820;   /* سطح البطاقات */
+  --majalis-panel-raised:  #203028;
+  --majalis-emerald:       #4DB88E;   /* أكثر إشراقاً في الداكن */
+  --majalis-emerald-deep:  #8FD4B4;
+  --majalis-emerald-muted: rgba(77, 184, 142, 0.1);
+  --majalis-emerald-soft:  #0F2A20;
+  --majalis-brass:         #D4AD50;
+  --majalis-brass-deep:    #EDD278;
+  --majalis-brass-soft:    #231A08;
+  --majalis-sage:          #1E3228;
+  --majalis-danger:        #F87171;
+  --majalis-danger-muted:  #1F1010;
+  --majalis-line:          #263D33;   /* حدود داكنة */
+  --majalis-line-strong:   #304D42;
+  --majalis-shadow:        0 4px 16px rgba(0,0,0,0.3), 0 1px 4px rgba(0,0,0,0.2);
+  --majalis-shadow-sm:     0 1px 3px rgba(0,0,0,0.3);
+  --majalis-shadow-lg:     0 12px 40px rgba(0,0,0,0.4);
+  --majalis-shadow-xl:     0 24px 64px rgba(0,0,0,0.5);
 }
 
 html[data-font="default"] {
