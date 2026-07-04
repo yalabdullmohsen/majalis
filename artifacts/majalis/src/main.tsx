@@ -15,6 +15,7 @@ import "./styles/patterns.css";
 import "./styles/highlighted-content.css";
 import "./styles/rulings-encyclopedia.css";
 import "./styles/admin.css";
+import "./styles/majalis-v2.css";
 
 const queryClient = createAppQueryClient();
 

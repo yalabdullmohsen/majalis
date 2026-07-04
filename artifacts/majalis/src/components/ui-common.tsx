@@ -86,13 +86,38 @@ export function Card({ children, className = "" }: { children: React.ReactNode; 
   return <div className={`ui-card ds-card ${className}`.trim()}>{children}</div>;
 }
 
-export function Loading() {
+export function Loading({ label = "جارٍ التحميل…" }: { label?: string } = {}) {
   return (
-    <div className="ds-empty" role="status" aria-live="polite">
-      <div className="ds-skeleton" style={{ width: "2rem", height: "2rem", borderRadius: "50%", margin: "0 auto 0.75rem" }} />
-      <p>جارٍ التحميل...</p>
+    <div className="ds-empty" role="status" aria-live="polite" aria-label={label}
+      style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.875rem", padding: "2.5rem 1rem" }}>
+      <IslamicLoaderInline />
+      <p style={{ fontSize: "0.85rem", color: "var(--v2-ink-3, #8A847E)", margin: 0 }}>{label}</p>
     </div>
   );
+}
+
+function IslamicLoaderInline() {
+  const size = 44;
+  const cx = size / 2;
+  const pts = star8Pts(cx, cx, size * 0.43, size * 0.22);
+  return (
+    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} aria-hidden="true"
+      style={{ display: "block", animation: "ui-common-rotate 2s linear infinite", flexShrink: 0 }}>
+      <style>{`@keyframes ui-common-rotate{to{transform:rotate(360deg)}}
+        @media(prefers-reduced-motion:reduce){svg[aria-hidden]{animation:none!important}}`}</style>
+      <polygon points={pts} fill="none" stroke="var(--v2-green,#1F6F52)" strokeWidth="1.6"
+        strokeLinejoin="round" opacity="0.85" />
+      <circle cx={cx} cy={cx} r={size * 0.09} fill="var(--v2-green,#1F6F52)" opacity="0.6" />
+    </svg>
+  );
+}
+
+function star8Pts(cx: number, cy: number, r1: number, r2: number) {
+  return Array.from({ length: 16 }, (_, i) => {
+    const r = i % 2 === 0 ? r1 : r2;
+    const a = (Math.PI / 8) * i - Math.PI / 2;
+    return `${(cx + r * Math.cos(a)).toFixed(2)},${(cy + r * Math.sin(a)).toFixed(2)}`;
+  }).join(" ");
 }
 
 export function ErrorState({ text, onRetry }: { text: string; onRetry?: () => void }) {

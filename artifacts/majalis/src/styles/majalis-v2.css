@@ -1,0 +1,599 @@
+/* ══════════════════════════════════════════════════════════════
+   MajlisIlm — Design System v2
+   نظام التصميم المُحدَّث — الهوية البصرية الجديدة
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── 1. Tokens (متغيرات CSS تتجاوز الموجودة) ── */
+:root {
+  /* ── لوحة ألوان محسّنة ── */
+  --v2-green:        #1F6F52;
+  --v2-green-deep:   #154F3B;
+  --v2-green-mid:    #5FA98A;
+  --v2-green-soft:   #EAF3EF;
+  --v2-blue:         #3E6E8E;
+  --v2-blue-deep:    #2C5470;
+  --v2-blue-soft:    #E6EEF3;
+  --v2-gold:         #C6A059;
+  --v2-gold-soft:    #FBF3E2;
+  --v2-ink:          #2B2621;
+  --v2-ink-2:        #5C554C;
+  --v2-ink-3:        #8A847E;
+  --v2-surface-0:    #FFFFFF;
+  --v2-surface-1:    #FBF8F3;
+  --v2-surface-2:    #F3EAD9;
+  --v2-border:       #D8D2C7;
+  --v2-border-soft:  #EDE8E0;
+
+  /* ── ظلال دافئة 4 مستويات ── */
+  --v2-shadow-1: 0 1px 2px rgba(43,38,33,.06);
+  --v2-shadow-2: 0 4px 12px rgba(43,38,33,.08), 0 1px 3px rgba(43,38,33,.05);
+  --v2-shadow-3: 0 12px 32px rgba(43,38,33,.10), 0 4px 10px rgba(43,38,33,.06);
+  --v2-shadow-4: 0 24px 64px rgba(43,38,33,.13), 0 8px 20px rgba(43,38,33,.07);
+
+  /* ── انحناءات ── */
+  --v2-r-sm: 8px;
+  --v2-r-md: 12px;
+  --v2-r-lg: 16px;
+  --v2-r-xl: 24px;
+
+  /* ── حركة ── */
+  --v2-ease:   cubic-bezier(0.16, 1, 0.3, 1);
+  --v2-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --v2-t-fast:   120ms var(--v2-ease);
+  --v2-t-std:    220ms var(--v2-ease);
+  --v2-t-slow:   380ms var(--v2-ease);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --v2-t-fast: 0ms;
+    --v2-t-std:  150ms;
+    --v2-t-slow: 150ms;
+    --v2-spring: linear;
+  }
+}
+
+/* ── 2. نظام الأزرار المُحدَّث ── */
+
+/* زر أساسي */
+.btn-v2 {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0 1.25rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: background var(--v2-t-fast), box-shadow var(--v2-t-fast), transform var(--v2-t-fast);
+  font-family: inherit;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.btn-v2--primary {
+  background: var(--v2-green);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(31,111,82,.25);
+}
+.btn-v2--primary:hover {
+  background: var(--v2-green-deep);
+  box-shadow: 0 4px 16px rgba(31,111,82,.35);
+  transform: translateY(-1px);
+}
+.btn-v2--primary:active { transform: translateY(0); box-shadow: 0 1px 4px rgba(31,111,82,.2); }
+.btn-v2--outline {
+  background: transparent;
+  color: var(--v2-green);
+  border: 1.5px solid var(--v2-green);
+}
+.btn-v2--outline:hover { background: var(--v2-green-soft); }
+.btn-v2--ghost {
+  background: transparent;
+  color: var(--v2-ink-2);
+}
+.btn-v2--ghost:hover { background: var(--v2-surface-2); }
+.btn-v2--sm { min-height: 36px; padding: 0 0.875rem; font-size: 0.825rem; }
+.btn-v2--gold {
+  background: var(--v2-gold);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(198,160,89,.3);
+}
+.btn-v2--gold:hover { filter: brightness(0.92); transform: translateY(-1px); }
+
+/* ── 3. نظام البطاقات ── */
+.card-v2 {
+  background: var(--v2-surface-0);
+  border: 1px solid var(--v2-border-soft);
+  border-radius: var(--v2-r-lg);
+  box-shadow: var(--v2-shadow-1);
+  transition: box-shadow var(--v2-t-std), transform var(--v2-t-std);
+  overflow: hidden;
+}
+.card-v2:hover {
+  box-shadow: var(--v2-shadow-3);
+  transform: translateY(-3px);
+}
+.card-v2--flat { box-shadow: none; }
+.card-v2--flat:hover { box-shadow: var(--v2-shadow-2); transform: translateY(-2px); }
+.card-v2--accent-left { border-right: 3px solid var(--v2-green); }
+.card-v2--accent-gold { border-right: 3px solid var(--v2-gold); }
+.card-v2__body { padding: 1.25rem; }
+.card-v2__header { padding: 1rem 1.25rem; border-bottom: 1px solid var(--v2-border-soft); }
+.card-v2__footer { padding: 0.875rem 1.25rem; border-top: 1px solid var(--v2-border-soft); background: var(--v2-surface-1); }
+
+/* ── 4. شارات الحالة ── */
+.badge-v2 {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1;
+}
+.badge-v2--green  { background: var(--v2-green-soft);  color: var(--v2-green-deep); }
+.badge-v2--blue   { background: var(--v2-blue-soft);   color: var(--v2-blue-deep); }
+.badge-v2--gold   { background: var(--v2-gold-soft);   color: #8A6018; }
+.badge-v2--gray   { background: var(--v2-surface-2);   color: var(--v2-ink-2); }
+.badge-v2--danger { background: #FEE2E2; color: #991B1B; }
+.badge-v2--dot::before {
+  content: "";
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+/* ── 5. تايبوغرافيا المقياس ── */
+.text-v2-display { font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; line-height: 1.15; color: var(--v2-ink); letter-spacing: -0.02em; }
+.text-v2-h1 { font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 800; line-height: 1.2; color: var(--v2-ink); }
+.text-v2-h2 { font-size: clamp(1.375rem, 3vw, 2rem);  font-weight: 700; line-height: 1.3; color: var(--v2-ink); }
+.text-v2-h3 { font-size: 1.25rem; font-weight: 700; line-height: 1.4; color: var(--v2-ink); }
+.text-v2-body { font-size: 1rem; line-height: 1.7; color: var(--v2-ink-2); }
+.text-v2-small { font-size: 0.875rem; line-height: 1.55; color: var(--v2-ink-2); }
+.text-v2-caption { font-size: 0.75rem; line-height: 1.45; color: var(--v2-ink-3); }
+.text-v2-reading {
+  font-size: 1.125rem;
+  line-height: 2;
+  color: var(--v2-ink);
+  max-width: 72ch;
+  margin-inline: auto;
+}
+.text-v2-quran {
+  font-family: var(--font-quran, "Amiri Quran", serif);
+  font-size: 1.5rem;
+  line-height: 2.1;
+  color: var(--v2-ink);
+  direction: rtl;
+  text-align: center;
+}
+
+/* ── 6. الهيكل المحسّن للناف بار (CSS فقط — لا تعدّل TSX) ── */
+
+/* ── NavBar v2 overrides ── */
+.navbar-v3 {
+  background: rgba(255,255,255,0.85) !important;
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border-bottom: 1px solid var(--v2-border-soft) !important;
+  box-shadow: 0 1px 0 rgba(43,38,33,0.06);
+  transition: background var(--v2-t-std), box-shadow var(--v2-t-std);
+}
+html[data-theme="dark"] .navbar-v3 {
+  background: rgba(26,40,32,0.9) !important;
+  border-bottom-color: rgba(48,77,66,0.6) !important;
+}
+.navbar-v3__inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+.navbar-brand {
+  gap: 0.625rem;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: var(--v2-ink) !important;
+  text-decoration: none;
+  transition: opacity var(--v2-t-fast);
+}
+.navbar-brand:hover { opacity: 0.8; }
+.site-brand-name {
+  background: linear-gradient(135deg, var(--v2-green) 0%, var(--v2-blue) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 900;
+}
+/* تبويبات التنقل — مؤشر Underline */
+.navbar-v3__tabs a {
+  position: relative;
+  padding: 0.4rem 0.875rem;
+  border-radius: 0;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--v2-ink-2);
+  text-decoration: none;
+  transition: color var(--v2-t-fast);
+}
+.navbar-v3__tabs a::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  inset-inline-start: 0.875rem;
+  inset-inline-end: 0.875rem;
+  height: 2px;
+  background: var(--v2-green);
+  border-radius: 2px;
+  transform: scaleX(0);
+  transition: transform var(--v2-t-std);
+  transform-origin: center;
+}
+.navbar-v3__tabs a:hover { color: var(--v2-green); }
+.navbar-v3__tabs a:hover::after { transform: scaleX(0.6); }
+
+/* زر البحث المُحسَّن */
+.navbar-search-hint { font-size: 0.8rem; }
+
+/* ── 7. تحسينات BottomNavBar (CSS فقط) ── */
+
+/* ── Bottom Nav v2 ── */
+@media (max-width: 879px) {
+  .bottom-nav {
+    background: rgba(255,255,255,0.94) !important;
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-top: 1px solid var(--v2-border-soft);
+    box-shadow: 0 -4px 24px rgba(43,38,33,0.08);
+  }
+  html[data-theme="dark"] .bottom-nav {
+    background: rgba(26,40,32,0.96) !important;
+    border-top-color: rgba(48,77,66,0.5);
+  }
+  .bottom-nav__tab.is-active .bottom-nav__tab-icon {
+    background: var(--v2-green-soft);
+    border-radius: 12px;
+    color: var(--v2-green);
+  }
+  .bottom-nav__center-btn {
+    background: linear-gradient(135deg, var(--v2-green) 0%, var(--v2-green-deep) 100%) !important;
+    box-shadow: 0 4px 16px rgba(31,111,82,0.4) !important;
+  }
+}
+
+/* ── 8. عنصر الفاصل الهندسي الإسلامي ── */
+.islamic-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 2.5rem 0;
+  color: var(--v2-ink-3);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.islamic-divider::before,
+.islamic-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--v2-border), transparent);
+}
+.islamic-divider__diamond {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+/* ── 9. Skeleton loader ── */
+@keyframes v2-shimmer {
+  0%   { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+.skeleton-v2 {
+  background: linear-gradient(
+    90deg,
+    var(--v2-surface-2) 25%,
+    var(--v2-surface-1) 50%,
+    var(--v2-surface-2) 75%
+  );
+  background-size: 400% 100%;
+  animation: v2-shimmer 1.6s ease-in-out infinite;
+  border-radius: var(--v2-r-sm);
+}
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-v2 { animation: none; background: var(--v2-surface-2); }
+}
+.skeleton-v2--line { height: 1rem; margin-bottom: 0.5rem; }
+.skeleton-v2--line:last-child { width: 70%; }
+.skeleton-v2--card { height: 180px; border-radius: var(--v2-r-lg); }
+.skeleton-v2--circle { border-radius: 50%; }
+
+/* ── 10. تحديث focus ring عالمي ── */
+:focus-visible {
+  outline: 2px solid var(--v2-green);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ── 11. تحديث عام للحالات الفارغة ── */
+.empty-v2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 3rem 2rem;
+  text-align: center;
+  color: var(--v2-ink-3);
+  direction: rtl;
+}
+.empty-v2__icon { font-size: 2.5rem; opacity: 0.5; }
+.empty-v2__title { font-size: 1.1rem; font-weight: 700; color: var(--v2-ink-2); margin: 0; }
+.empty-v2__desc { font-size: 0.875rem; line-height: 1.65; max-width: 40ch; margin: 0; }
+.empty-v2__action { margin-top: 0.5rem; }
+
+/* ── 12. Section Layout v2 ── */
+.section-v2 {
+  padding: 3rem 1.5rem;
+}
+.section-v2--sm { padding: 2rem 1.5rem; }
+.section-v2__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  direction: rtl;
+}
+.section-v2__eyebrow {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--v2-green);
+  margin: 0 0 0.35rem;
+}
+.section-v2__title {
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  font-weight: 800;
+  color: var(--v2-ink);
+  margin: 0;
+  line-height: 1.25;
+}
+.section-v2__more {
+  font-size: 0.825rem;
+  font-weight: 600;
+  color: var(--v2-green);
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: opacity var(--v2-t-fast);
+}
+.section-v2__more:hover { opacity: 0.75; }
+
+/* شبكة بطاقات متجاوبة */
+.grid-v2 {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+.grid-v2--sm { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+.grid-v2--lg { grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); }
+@media (max-width: 480px) {
+  .grid-v2, .grid-v2--sm, .grid-v2--lg { grid-template-columns: 1fr; }
+}
+
+/* ── 13. القراءة المريحة ── */
+.reading-container-v2 {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  direction: rtl;
+}
+.reading-container-v2 p { margin-bottom: 1.25em; line-height: 1.85; }
+.reading-container-v2 blockquote {
+  border-right: 3px solid var(--v2-gold);
+  margin: 1.5rem 0;
+  padding: 0.875rem 1.25rem;
+  background: var(--v2-gold-soft);
+  border-radius: 0 var(--v2-r-md) var(--v2-r-md) 0;
+  font-style: normal;
+  color: var(--v2-ink-2);
+}
+
+/* ── 14. NavBar — زر Command Search ── */
+.navbar-search-cmd {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: var(--v2-r-sm);
+  border: 1px solid var(--v2-border);
+  background: var(--v2-surface-1);
+  cursor: pointer;
+  font-size: 0.825rem;
+  color: var(--v2-ink-2);
+  font-family: inherit;
+  transition: background var(--v2-t-fast), border-color var(--v2-t-fast), box-shadow var(--v2-t-fast);
+}
+.navbar-search-cmd:hover {
+  background: var(--v2-surface-0);
+  border-color: var(--v2-green);
+  box-shadow: 0 0 0 3px var(--v2-green-soft);
+}
+.navbar-search-kbd {
+  font-size: 0.65rem;
+  opacity: 0.55;
+  padding: 0.05rem 0.3rem;
+  border: 1px solid var(--v2-border);
+  border-radius: 4px;
+  background: var(--v2-surface-0);
+  font-family: inherit;
+}
+html[data-theme="dark"] .navbar-search-cmd {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.1);
+  color: var(--majalis-ink, #F4F1EC);
+}
+
+/* ── 15. تحسين بطاقات الصفحة الرئيسية ── */
+.home-section {
+  position: relative;
+}
+
+/* شارة الدرجة (صحيح/ضعيف/موضوع) بألوان ناعمة بدل إشارة مرور */
+.hadith-grade--sahih { background: var(--v2-green-soft); color: var(--v2-green-deep); }
+.hadith-grade--daif  { background: var(--v2-blue-soft);  color: var(--v2-blue-deep); }
+.hadith-grade--mawdu { background: #F3F4F6;              color: var(--v2-ink-2); }
+.hadith-grade--hasan { background: #FEF9EC;              color: #7A6018; }
+
+/* ── 16. Tabs (مؤشر Underline متحرك) ── */
+.tabs-v2 {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--v2-border-soft);
+  direction: rtl;
+}
+.tabs-v2__tab {
+  position: relative;
+  padding: 0.625rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--v2-ink-2);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  transition: color var(--v2-t-fast);
+  white-space: nowrap;
+}
+.tabs-v2__tab::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  height: 2px;
+  background: var(--v2-green);
+  border-radius: 2px 2px 0 0;
+  transform: scaleX(0);
+  transition: transform var(--v2-t-std);
+}
+.tabs-v2__tab:hover { color: var(--v2-green); }
+.tabs-v2__tab.is-active { color: var(--v2-green); font-weight: 700; }
+.tabs-v2__tab.is-active::after { transform: scaleX(1); }
+
+/* ── 17. Form inputs ── */
+.input-v2 {
+  width: 100%;
+  min-height: 48px;
+  padding: 0.625rem 0.875rem;
+  border: 1.5px solid var(--v2-border);
+  border-radius: var(--v2-r-md);
+  background: var(--v2-surface-0);
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: var(--v2-ink);
+  direction: rtl;
+  transition: border-color var(--v2-t-fast), box-shadow var(--v2-t-fast);
+  box-sizing: border-box;
+  outline: none;
+}
+.input-v2:focus {
+  border-color: var(--v2-green);
+  box-shadow: 0 0 0 3px var(--v2-green-soft);
+}
+.input-v2::placeholder { color: var(--v2-ink-3); }
+.input-v2:disabled { background: var(--v2-surface-2); opacity: 0.6; cursor: not-allowed; }
+.label-v2 {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--v2-ink-2);
+  margin-bottom: 0.35rem;
+  direction: rtl;
+}
+
+/* ── 18. Toast / Flash ── */
+.toast-v2 {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.625rem;
+  padding: 0.875rem 1rem;
+  border-radius: var(--v2-r-md);
+  font-size: 0.875rem;
+  box-shadow: var(--v2-shadow-3);
+  max-width: 360px;
+  direction: rtl;
+  animation: toast-in var(--v2-t-slow) both;
+}
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(0.5rem) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.toast-v2--success { background: var(--v2-green-soft);  border-right: 3px solid var(--v2-green); color: var(--v2-green-deep); }
+.toast-v2--error   { background: #FEE2E2;                border-right: 3px solid #DC2626;         color: #991B1B; }
+.toast-v2--info    { background: var(--v2-blue-soft);   border-right: 3px solid var(--v2-blue);  color: var(--v2-blue-deep); }
+
+/* ── 19. تدرّج الهيدر للصفحات الداخلية ── */
+.page-hero-v2 {
+  background: linear-gradient(160deg, var(--v2-green) 0%, var(--v2-green-deep) 100%);
+  color: #fff;
+  padding: 2.5rem 1.5rem 3rem;
+  position: relative;
+  overflow: hidden;
+  direction: rtl;
+}
+.page-hero-v2::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cpolygon points='20,2.5 22.9,13.3 33.5,8.5 26.4,17.5 37.5,20 26.4,22.5 33.5,31.5 22.9,26.7 20,37.5 17.1,26.7 6.5,31.5 13.6,22.5 2.5,20 13.6,17.5 6.5,8.5 17.1,13.3' fill='none' stroke='white' stroke-width='0.6' opacity='0.08'/%3E%3C/svg%3E");
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+.page-hero-v2__eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.65);
+  margin: 0 0 0.5rem;
+}
+.page-hero-v2__title {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 900;
+  margin: 0 0 0.75rem;
+  line-height: 1.15;
+  color: #fff;
+}
+.page-hero-v2__subtitle {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: rgba(255,255,255,0.82);
+  margin: 0;
+  max-width: 60ch;
+}
+
+/* ── 20. Dark mode overrides ── */
+html[data-theme="dark"] {
+  --v2-surface-0: #1A2820;
+  --v2-surface-1: #1F3028;
+  --v2-surface-2: #263D33;
+  --v2-border:     #304D42;
+  --v2-border-soft:#263D33;
+  --v2-ink:        #F0EDE8;
+  --v2-ink-2:      #B5ADA6;
+  --v2-ink-3:      #7A736C;
+  --v2-green-soft: rgba(31,111,82,0.18);
+  --v2-blue-soft:  rgba(62,110,142,0.2);
+  --v2-gold-soft:  rgba(198,160,89,0.15);
+}
