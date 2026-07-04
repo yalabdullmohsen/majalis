@@ -14943,6 +14943,74 @@ html[data-theme="dark"] .qc-card { background: var(--majalis-panel); }
 /* Display font for major headings */
 .font-display { font-family: var(--font-display) !important; }
 
+/* ══ HomeRecommendations mini-card ══ */
+.rec-mini-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: var(--majalis-panel);
+  border: 1px solid var(--majalis-line);
+  border-radius: 0.75rem;
+  text-decoration: none;
+  color: inherit;
+  min-height: 6.25rem;
+  transition: border-color var(--mn-transition), box-shadow var(--mn-transition);
+}
+.rec-mini-card:hover {
+  border-color: var(--majalis-emerald);
+  box-shadow: 0 4px 16px rgba(31, 110, 84, 0.1);
+}
+.rec-mini-card__arrow {
+  color: var(--majalis-line);
+  font-size: 0.875rem;
+  transition: color var(--mn-transition);
+}
+.rec-mini-card:hover .rec-mini-card__arrow {
+  color: var(--majalis-emerald);
+}
+.rec-mini-card__title {
+  color: var(--majalis-ink);
+  transition: color var(--mn-transition);
+}
+.rec-mini-card:hover .rec-mini-card__title {
+  color: var(--majalis-emerald-deep);
+}
+
+/* ══ QuizModal option buttons ══ */
+.quiz-opt {
+  background: var(--majalis-parchment);
+  border-color: var(--majalis-line);
+  color: var(--majalis-ink);
+}
+.quiz-opt:hover:not(:disabled) {
+  border-color: var(--majalis-emerald);
+  background: var(--mn-surface-active);
+}
+.quiz-opt--selected {
+  background: var(--mn-surface-active);
+  border-color: var(--mn-border-active);
+  color: var(--mn-text-active);
+}
+.quiz-opt--correct {
+  background: rgba(22, 163, 74, 0.08);
+  border-color: #16a34a;
+  color: #15803d;
+}
+.quiz-opt--wrong {
+  background: var(--majalis-danger-muted);
+  border-color: var(--majalis-danger);
+  color: var(--majalis-danger);
+}
+.quiz-result--correct {
+  background: rgba(22, 163, 74, 0.08);
+  color: #15803d;
+}
+.quiz-result--wrong {
+  background: var(--majalis-danger-muted);
+  color: var(--majalis-danger);
+}
+
 /* ══ Universities ══ */
 .univ-card {
   background: var(--majalis-panel);

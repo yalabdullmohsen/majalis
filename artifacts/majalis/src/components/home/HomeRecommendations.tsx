@@ -21,8 +21,7 @@ function RecMiniCard({ item }: { item: RecommendedItem }) {
     <Link
       href={href}
       onClick={() => trackEvent({ event_type: "view", content_id: item.id, content_type: item.content_type })}
-      className="flex flex-col gap-2 p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700
-        hover:border-emerald-400 dark:hover:border-emerald-600 hover:shadow-md transition-all group min-h-[100px]"
+      className="rec-mini-card group"
     >
       <div className="flex items-center justify-between">
         <span
@@ -31,14 +30,13 @@ function RecMiniCard({ item }: { item: RecommendedItem }) {
         >
           {label}
         </span>
-        <span className="text-gray-300 dark:text-gray-600 group-hover:text-emerald-400 transition-colors text-sm">←</span>
+        <span className="rec-mini-card__arrow">←</span>
       </div>
-      <p className="text-sm font-medium text-gray-800 dark:text-gray-100 leading-snug line-clamp-3
-        group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition-colors">
+      <p className="text-sm font-medium leading-snug line-clamp-3 rec-mini-card__title">
         {title}
       </p>
       {item.category && (
-        <p className="text-xs text-gray-400 dark:text-gray-500 mt-auto">{item.category}</p>
+        <p className="text-xs mt-auto" style={{ color: "var(--majalis-ink-soft)" }}>{item.category}</p>
       )}
     </Link>
   );
@@ -84,9 +82,9 @@ export function HomeRecommendations() {
             <h2>يُقترح لك اليوم</h2>
           </div>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+        <div className="sk-card-grid" aria-hidden="true">
           {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="h-24 bg-gray-100 dark:bg-gray-800 rounded-xl animate-pulse" />
+            <div key={i} className="ds-skeleton" style={{ height: "6rem", borderRadius: "0.75rem" }} />
           ))}
         </div>
       </section>

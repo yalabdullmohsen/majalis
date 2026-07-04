@@ -53,21 +53,23 @@ export function QuizModal({ quizzes, token, onClose }: Props) {
       dir="rtl"
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
-      <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden">
+      <div className="rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden"
+        style={{ background: "var(--majalis-panel)" }}>
         {/* رأس النافذة */}
-        <div className="bg-emerald-700 text-white px-6 py-4 flex items-center justify-between">
+        <div className="px-6 py-4 flex items-center justify-between"
+          style={{ background: "var(--majalis-emerald)", color: "#fff" }}>
           <h2 className="font-bold text-lg">اختبر نفسك 📝</h2>
-          <button onClick={onClose} className="text-emerald-200 hover:text-white text-xl leading-none">✕</button>
+          <button onClick={onClose} className="text-xl leading-none opacity-80 hover:opacity-100">✕</button>
         </div>
 
         <div className="p-6">
           {done ? (
             <div className="text-center py-6">
               <div className="text-6xl mb-4">{score === quizzes.length ? "🏆" : score >= quizzes.length / 2 ? "✅" : "📚"}</div>
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+              <h3 className="text-xl font-bold mb-2" style={{ color: "var(--majalis-ink)" }}>
                 النتيجة: {score} / {quizzes.length}
               </h3>
-              <p className="text-gray-500 dark:text-gray-400 mb-6">
+              <p className="mb-6" style={{ color: "var(--majalis-ink-soft)" }}>
                 {score === quizzes.length
                   ? "ممتاز! أتقنت الاختبار كاملاً"
                   : score >= quizzes.length / 2
@@ -76,7 +78,7 @@ export function QuizModal({ quizzes, token, onClose }: Props) {
               </p>
               <button
                 onClick={onClose}
-                className="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-medium transition-colors"
+                className="citation-btn citation-btn--primary px-6 py-2.5 rounded-xl"
               >
                 إغلاق
               </button>
@@ -84,19 +86,23 @@ export function QuizModal({ quizzes, token, onClose }: Props) {
           ) : (
             <>
               {/* تقدم الاختبار */}
-              <div className="flex items-center justify-between text-xs text-gray-500 mb-4">
+              <div className="flex items-center justify-between text-xs mb-4" style={{ color: "var(--majalis-ink-soft)" }}>
                 <span>سؤال {idx + 1} من {quizzes.length}</span>
                 <span>النقاط: {score}</span>
               </div>
-              <div className="h-1 bg-gray-100 dark:bg-gray-700 rounded-full mb-5">
+              <div className="h-1 rounded-full mb-5" style={{ background: "var(--majalis-line)" }}>
                 <div
-                  className="h-full bg-emerald-500 rounded-full transition-all"
-                  style={{ width: `${((idx) / quizzes.length) * 100}%` }}
+                  className="h-full rounded-full"
+                  style={{
+                    width: `${((idx) / quizzes.length) * 100}%`,
+                    background: "var(--majalis-emerald)",
+                    transition: "width 250ms ease",
+                  }}
                 />
               </div>
 
               {/* السؤال */}
-              <p className="text-base font-semibold text-gray-900 dark:text-white mb-5 leading-relaxed">
+              <p className="text-base font-semibold mb-5 leading-relaxed" style={{ color: "var(--majalis-ink)" }}>
                 {current?.question}
               </p>
 
@@ -112,10 +118,10 @@ export function QuizModal({ quizzes, token, onClose }: Props) {
                       onClick={() => handleAnswer(opt)}
                       disabled={!!selected || loading}
                       className={`w-full text-right px-4 py-3 rounded-xl border text-sm font-medium transition-all
-                        ${isCorrect ? "bg-green-50 border-green-400 text-green-800 dark:bg-green-900/30 dark:text-green-300"
-                          : isWrong ? "bg-red-50 border-red-400 text-red-800 dark:bg-red-900/30 dark:text-red-300"
-                          : isSelected ? "bg-emerald-50 border-emerald-400 dark:bg-emerald-900/20"
-                          : "bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:border-emerald-300 hover:bg-emerald-50 dark:hover:bg-emerald-900/10"
+                        ${isCorrect ? "quiz-opt--correct"
+                          : isWrong ? "quiz-opt--wrong"
+                          : isSelected ? "quiz-opt--selected"
+                          : "quiz-opt"
                         }`}
                     >
                       {opt}
@@ -126,7 +132,7 @@ export function QuizModal({ quizzes, token, onClose }: Props) {
 
               {/* النتيجة والتوضيح */}
               {result && (
-                <div className={`mt-4 p-3 rounded-xl text-sm ${result.correct ? "bg-green-50 text-green-800 dark:bg-green-900/20 dark:text-green-300" : "bg-red-50 text-red-800 dark:bg-red-900/20 dark:text-red-300"}`}>
+                <div className={`mt-4 p-3 rounded-xl text-sm ${result.correct ? "quiz-result--correct" : "quiz-result--wrong"}`}>
                   <p className="font-medium mb-1">{result.correct ? "✅ إجابة صحيحة" : "❌ إجابة خاطئة"}</p>
                   {result.explanation && <p>{result.explanation}</p>}
                 </div>
@@ -135,7 +141,7 @@ export function QuizModal({ quizzes, token, onClose }: Props) {
               {selected && (
                 <button
                   onClick={next}
-                  className="mt-4 w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-medium transition-colors"
+                  className="citation-btn citation-btn--primary mt-4 w-full py-2.5 rounded-xl"
                 >
                   {idx + 1 >= quizzes.length ? "عرض النتيجة النهائية" : "السؤال التالي →"}
                 </button>
