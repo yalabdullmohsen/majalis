@@ -39,19 +39,19 @@ export default function LearningPathSciencePage() {
 
   if (loading) {
     return (
-      <div dir="rtl" className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
-        <div className="text-gray-400">جارٍ التحميل…</div>
+      <div dir="rtl" className="min-h-screen bg-[var(--majalis-parchment)] flex items-center justify-center">
+        <div className="text-[var(--majalis-ink-soft)] opacity-60">جارٍ التحميل…</div>
       </div>
     );
   }
 
   if (notFound || !science) {
     return (
-      <div dir="rtl" className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col items-center justify-center gap-4">
+      <div dir="rtl" className="min-h-screen bg-[var(--majalis-parchment)] flex flex-col items-center justify-center gap-4">
         <div className="text-5xl">📚</div>
-        <p className="text-gray-500">العلم غير موجود</p>
+        <p className="text-[var(--majalis-ink-soft)]">العلم غير موجود</p>
         <Link href="/learning-path">
-          <span className="text-emerald-600 hover:underline cursor-pointer text-sm">← العودة للخارطة</span>
+          <span className="text-[var(--majalis-emerald)] hover:underline cursor-pointer text-sm">← العودة للخارطة</span>
         </Link>
       </div>
     );
@@ -62,7 +62,7 @@ export default function LearningPathSciencePage() {
   const pct = allBooks.length > 0 ? Math.round((completedCount / allBooks.length) * 100) : 0;
 
   return (
-    <div dir="rtl" className="min-h-screen bg-gray-50 dark:bg-gray-900 pb-24">
+    <div dir="rtl" className="min-h-screen bg-[var(--majalis-parchment)] pb-24">
       {/* Hero */}
       <div
         className="relative py-10 px-4"
@@ -97,8 +97,8 @@ export default function LearningPathSciencePage() {
       {/* لماذا تدرس هذا العلم */}
       {science.why_study && (
         <div className="max-w-4xl mx-auto px-4 mt-6">
-          <div className="bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 rounded-2xl p-4">
-            <p className="text-emerald-800 dark:text-emerald-300 text-sm leading-relaxed">
+          <div className="bg-[var(--majalis-emerald-muted)] border border-[var(--majalis-emerald)] rounded-2xl p-4" style={{ borderColor: "color-mix(in srgb, var(--majalis-emerald) 30%, transparent)" }}>
+            <p className="text-[var(--majalis-emerald)] text-sm leading-relaxed">
               <strong>💡 لماذا تدرس {science.name}؟ </strong>
               {science.why_study}
             </p>
@@ -108,14 +108,14 @@ export default function LearningPathSciencePage() {
 
       {/* المستويات */}
       <div className="max-w-4xl mx-auto px-4 mt-8">
-        <h2 className="font-bold text-gray-800 dark:text-white text-lg mb-6">مسار التعلم</h2>
+        <h2 className="font-bold text-[var(--majalis-ink)] text-lg mb-6">مسار التعلم</h2>
         {levels.length === 0 ? (
-          <div className="text-center py-16 text-gray-400">
+          <div className="text-center py-16 text-[var(--majalis-ink-soft)] opacity-60">
             <div className="text-4xl mb-2">📖</div>
             <p>لم تُضَف كتب لهذا العلم بعد</p>
           </div>
         ) : (
-          <Suspense fallback={<div className="text-gray-400 text-center py-8">جارٍ التحميل…</div>}>
+          <Suspense fallback={<div className="text-[var(--majalis-ink-soft)] opacity-60 text-center py-8">جارٍ التحميل…</div>}>
             <LevelTimeline
               levels={levels}
               _scienceSlug={science.slug}

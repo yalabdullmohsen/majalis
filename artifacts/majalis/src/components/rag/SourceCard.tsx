@@ -13,8 +13,8 @@ export function SourceCard({ source, compact = false }: Props) {
 
   const card = (
     <div
-      className={`relative bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700
-        hover:border-emerald-400 dark:hover:border-emerald-600 hover:shadow-md transition-all
+      className={`relative bg-[var(--majalis-panel)] rounded-xl border border-[var(--majalis-line)]
+        hover:border-[var(--majalis-emerald)] hover:shadow-md transition-all
         ${compact ? "p-3" : "p-4"}`}
     >
       {/* شريط ملوَّن جانبي */}
@@ -40,27 +40,27 @@ export function SourceCard({ source, compact = false }: Props) {
             </span>
           )}
           {/* مؤشر الموثوقية */}
-          <span className="text-xs text-gray-400 dark:text-gray-500 mr-auto">
+          <span className="text-xs text-[var(--majalis-ink-soft)] opacity-70 mr-auto">
             {source.authority}% موثوقية
           </span>
         </div>
 
         {/* العنوان */}
-        <p className={`font-semibold text-gray-800 dark:text-gray-100 leading-snug mb-1
+        <p className={`font-semibold text-[var(--majalis-ink)] leading-snug mb-1
           ${compact ? "text-sm line-clamp-1" : "text-sm line-clamp-2"}`}>
           {source.title}
         </p>
 
         {/* المقتطف */}
         {!compact && source.excerpt && (
-          <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed line-clamp-3 mb-2">
+          <p className="text-sm text-[var(--majalis-ink-soft)] leading-relaxed line-clamp-3 mb-2">
             {source.excerpt}
           </p>
         )}
 
         {/* المصدر */}
         {source.source_ref && (
-          <p className="text-xs text-gray-400 dark:text-gray-500">
+          <p className="text-xs text-[var(--majalis-ink-soft)] opacity-70">
             📚 {source.source_ref}
           </p>
         )}

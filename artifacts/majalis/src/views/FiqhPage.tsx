@@ -61,9 +61,12 @@ export default function FiqhPage() {
   const latestFatwas = useMemo(() => getLatestFatwas(6), []);
 
   return (
-    <div dir="rtl" className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div dir="rtl" className="min-h-screen bg-[var(--majalis-parchment)]">
       {/* Hero */}
-      <div className="bg-gradient-to-l from-teal-900 to-teal-700 text-white px-4 py-10">
+      <div
+        className="text-white px-4 py-10"
+        style={{ background: "linear-gradient(to left, var(--majalis-emerald-deep), var(--majalis-emerald))" }}
+      >
         <div className="max-w-5xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-white/10 text-teal-100 text-sm px-4 py-1.5 rounded-full mb-4">
             <span>⚖️</span>
@@ -77,7 +80,7 @@ export default function FiqhPage() {
       </div>
 
       {/* Tabs */}
-      <div className="sticky top-0 z-10 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 shadow-sm">
+      <div className="sticky top-0 z-10 bg-[var(--majalis-panel)] border-b border-[var(--majalis-line)] shadow-sm">
         <div className="max-w-5xl mx-auto px-4 flex gap-1 overflow-x-auto">
           {TABS.map((t) => (
             <button
@@ -85,8 +88,8 @@ export default function FiqhPage() {
               onClick={() => setActiveTab(t.key)}
               className={`flex items-center gap-1.5 px-5 py-3.5 text-sm font-medium whitespace-nowrap border-b-2 transition-colors ${
                 activeTab === t.key
-                  ? "border-teal-600 text-teal-700 dark:text-teal-400"
-                  : "border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400"
+                  ? "border-[var(--mn-border-active)] text-[var(--mn-text-active)]"
+                  : "border-transparent text-[var(--majalis-ink-soft)] hover:text-[var(--majalis-ink-soft)]"
               }`}
             >
               <span>{t.icon}</span>
@@ -102,9 +105,9 @@ export default function FiqhPage() {
         {activeTab === "fatawa" && (
           <div>
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-bold text-gray-900 dark:text-white">📋 الفتاوى الشرعية</h2>
+              <h2 className="text-xl font-bold text-[var(--majalis-ink)]">📋 الفتاوى الشرعية</h2>
               <Link href="/fatwa">
-                <span className="text-sm text-teal-600 hover:underline cursor-pointer">عرض الكل ←</span>
+                <span className="text-sm text-[var(--majalis-emerald)] hover:underline cursor-pointer">عرض الكل ←</span>
               </Link>
             </div>
 
@@ -127,7 +130,10 @@ export default function FiqhPage() {
 
             <div className="mt-8 text-center">
               <Link href="/fatwa">
-                <span className="inline-block px-8 py-3 bg-teal-600 hover:bg-teal-700 text-white rounded-xl font-medium transition-colors cursor-pointer">
+                <span
+                  className="inline-block px-8 py-3 text-white rounded-xl font-medium transition-colors cursor-pointer"
+                  style={{ background: "var(--majalis-emerald)" }}
+                >
                   استعرض جميع الفتاوى
                 </span>
               </Link>
@@ -139,9 +145,9 @@ export default function FiqhPage() {
         {activeTab === "rulings" && (
           <div>
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-bold text-gray-900 dark:text-white">📚 الأحكام الشرعية</h2>
+              <h2 className="text-xl font-bold text-[var(--majalis-ink)]">📚 الأحكام الشرعية</h2>
               <Link href="/rulings">
-                <span className="text-sm text-teal-600 hover:underline cursor-pointer">عرض الكل ←</span>
+                <span className="text-sm text-[var(--majalis-emerald)] hover:underline cursor-pointer">عرض الكل ←</span>
               </Link>
             </div>
 
@@ -149,9 +155,9 @@ export default function FiqhPage() {
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
               {RULINGS_CATEGORIES.map((cat) => (
                 <Link key={cat.slug} href={`/rulings?category=${encodeURIComponent(cat.name)}`}>
-                  <div className="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl p-4 text-center hover:shadow-md hover:border-teal-300 transition-all cursor-pointer">
+                  <div className="bg-[var(--majalis-panel)] border border-[var(--majalis-line)] rounded-xl p-4 text-center hover:shadow-md hover:border-[var(--majalis-emerald)] transition-all cursor-pointer">
                     <div className="text-2xl mb-1">{cat.icon}</div>
-                    <div className="text-sm font-medium text-gray-800 dark:text-gray-200">{cat.name}</div>
+                    <div className="text-sm font-medium text-[var(--majalis-ink)]">{cat.name}</div>
                   </div>
                 </Link>
               ))}
@@ -165,10 +171,10 @@ export default function FiqhPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {rulings.slice(0, 8).map((r) => (
                   <Link key={r.id} href={`/rulings/${r.id}`}>
-                    <div className="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl p-4 hover:shadow-md transition-all cursor-pointer">
-                      <h3 className="font-semibold text-gray-900 dark:text-white text-sm line-clamp-2 mb-1">{r.title}</h3>
+                    <div className="bg-[var(--majalis-panel)] border border-[var(--majalis-line)] rounded-xl p-4 hover:shadow-md transition-all cursor-pointer">
+                      <h3 className="font-semibold text-[var(--majalis-ink)] text-sm line-clamp-2 mb-1">{r.title}</h3>
                       {r.category && (
-                        <span className="text-xs bg-teal-50 dark:bg-teal-900/20 text-teal-700 dark:text-teal-400 px-2 py-0.5 rounded-full">{r.category}</span>
+                        <span className="text-xs bg-[var(--majalis-emerald-muted)] text-[var(--majalis-emerald)] px-2 py-0.5 rounded-full">{r.category}</span>
                       )}
                     </div>
                   </Link>
@@ -178,7 +184,10 @@ export default function FiqhPage() {
 
             <div className="mt-8 text-center">
               <Link href="/rulings">
-                <span className="inline-block px-8 py-3 bg-teal-600 hover:bg-teal-700 text-white rounded-xl font-medium transition-colors cursor-pointer">
+                <span
+                  className="inline-block px-8 py-3 text-white rounded-xl font-medium transition-colors cursor-pointer"
+                  style={{ background: "var(--majalis-emerald)" }}
+                >
                   استعرض موسوعة الأحكام
                 </span>
               </Link>
@@ -190,8 +199,8 @@ export default function FiqhPage() {
         {activeTab === "council" && (
           <div>
             <div className="mb-6">
-              <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">🏛️ المجمع الفقهي الإسلامي</h2>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
+              <h2 className="text-xl font-bold text-[var(--majalis-ink)] mb-2">🏛️ المجمع الفقهي الإسلامي</h2>
+              <p className="text-sm text-[var(--majalis-ink-soft)]">
                 قرارات وبيانات وفتاوى المجامع الفقهية المعتمدة — موثقة بمصادرها
               </p>
             </div>
@@ -199,12 +208,12 @@ export default function FiqhPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
               {COUNCIL_SECTIONS.map((s) => (
                 <Link key={s.href} href={s.href}>
-                  <div className="flex items-start gap-3 p-4 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl hover:shadow-md hover:border-teal-300 transition-all cursor-pointer">
+                  <div className="flex items-start gap-3 p-4 bg-[var(--majalis-panel)] border border-[var(--majalis-line)] rounded-xl hover:shadow-md hover:border-[var(--majalis-emerald)] transition-all cursor-pointer">
                     <div className="flex-1 min-w-0">
-                      <p className="font-semibold text-gray-900 dark:text-white text-sm">{s.label}</p>
-                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{s.desc}</p>
+                      <p className="font-semibold text-[var(--majalis-ink)] text-sm">{s.label}</p>
+                      <p className="text-xs text-[var(--majalis-ink-soft)] mt-0.5">{s.desc}</p>
                     </div>
-                    <span className="text-gray-400 text-lg flex-shrink-0">←</span>
+                    <span className="text-[var(--majalis-ink-soft)] opacity-60 text-lg flex-shrink-0">←</span>
                   </div>
                 </Link>
               ))}
@@ -212,7 +221,10 @@ export default function FiqhPage() {
 
             <div className="text-center">
               <Link href="/fiqh-council">
-                <span className="inline-block px-8 py-3 bg-teal-600 hover:bg-teal-700 text-white rounded-xl font-medium transition-colors cursor-pointer">
+                <span
+                  className="inline-block px-8 py-3 text-white rounded-xl font-medium transition-colors cursor-pointer"
+                  style={{ background: "var(--majalis-emerald)" }}
+                >
                   دخول المجمع الفقهي
                 </span>
               </Link>
@@ -228,12 +240,12 @@ export default function FiqhPage() {
 function FatwaCard({ item }: { item: any }) {
   return (
     <Link href={item.id ? `/fatwa/${item.id}` : "/fatwa"}>
-      <div className="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl p-4 hover:shadow-md transition-all cursor-pointer h-full">
-        <h3 className="font-semibold text-gray-900 dark:text-white text-sm line-clamp-2 mb-2 leading-snug">
+      <div className="bg-[var(--majalis-panel)] border border-[var(--majalis-line)] rounded-xl p-4 hover:shadow-md transition-all cursor-pointer h-full">
+        <h3 className="font-semibold text-[var(--majalis-ink)] text-sm line-clamp-2 mb-2 leading-snug">
           {item.title || item.question || "فتوى شرعية"}
         </h3>
         {(item.category || item.subject) && (
-          <span className="text-xs bg-teal-50 dark:bg-teal-900/20 text-teal-700 dark:text-teal-400 px-2 py-0.5 rounded-full">
+          <span className="text-xs bg-[var(--majalis-emerald-muted)] text-[var(--majalis-emerald)] px-2 py-0.5 rounded-full">
             {item.category || item.subject}
           </span>
         )}

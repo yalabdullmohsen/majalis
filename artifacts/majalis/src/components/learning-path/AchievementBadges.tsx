@@ -7,7 +7,7 @@ interface Props {
 export function AchievementBadges({ achievements }: Props) {
   if (achievements.length === 0) {
     return (
-      <div className="text-center py-8 text-gray-400 dark:text-gray-500">
+      <div className="text-center py-8 text-[var(--majalis-ink-soft)] opacity-60">
         <div className="text-4xl mb-2">🌱</div>
         <p className="text-sm">أكمل كتابك الأول لتحصل على أول وسام!</p>
       </div>
@@ -23,8 +23,8 @@ export function AchievementBadges({ achievements }: Props) {
           style={{ borderColor: `${a.badge_color}40`, background: `${a.badge_color}08` }}
         >
           <span className="text-3xl">{a.badge_icon}</span>
-          <span className="text-xs font-semibold text-gray-700 dark:text-gray-300">{a.badge_name}</span>
-          <span className="text-xs text-gray-400">
+          <span className="text-xs font-semibold text-[var(--majalis-ink-soft)]">{a.badge_name}</span>
+          <span className="text-xs text-[var(--majalis-ink-soft)] opacity-60">
             {new Date(a.earned_at).toLocaleDateString("ar-KW", { day: "numeric", month: "short" })}
           </span>
         </div>

@@ -62,10 +62,10 @@ function CompareContent() {
       <div dir="rtl" className="flex items-center justify-center min-h-[60vh] text-center px-4">
         <div>
           <p className="text-5xl mb-4">⇔</p>
-          <p className="text-lg font-bold text-gray-700 dark:text-gray-200 mb-2">لا توجد جامعات للمقارنة</p>
-          <p className="text-sm text-gray-400 mb-4">اختر جامعتين على الأقل من الدليل لتبدأ المقارنة.</p>
+          <p className="text-lg font-bold text-[var(--majalis-ink-soft)] mb-2">لا توجد جامعات للمقارنة</p>
+          <p className="text-sm text-[var(--majalis-ink-soft)] opacity-60 mb-4">اختر جامعتين على الأقل من الدليل لتبدأ المقارنة.</p>
           <Link href="/universities"
-            className="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-medium transition-colors">
+            className="px-5 py-2 citation-btn citation-btn--primary rounded-xl text-sm font-medium transition-colors">
             → الدليل
           </Link>
         </div>
@@ -74,9 +74,9 @@ function CompareContent() {
   }
 
   return (
-    <div dir="rtl" className="min-h-screen bg-gray-50 dark:bg-gray-900 pb-10">
+    <div dir="rtl" className="min-h-screen bg-[var(--majalis-parchment)] pb-10">
       {/* Header */}
-      <div className="bg-gradient-to-l from-emerald-800 to-emerald-600 text-white px-4 py-6">
+      <div className="text-white px-4 py-6" style={{ background: "linear-gradient(to left, var(--majalis-emerald-deep), var(--majalis-emerald))" }}>
         <div className="max-w-5xl mx-auto">
           <Link href="/universities" className="text-emerald-200 text-sm hover:text-white mb-3 block w-fit">
             → دليل الجامعات
@@ -93,22 +93,22 @@ function CompareContent() {
         </div>
 
         {/* جدول المقارنة */}
-        <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700
+        <div className="bg-[var(--majalis-panel)] rounded-2xl border border-[var(--majalis-line)]
           overflow-hidden shadow-sm">
           <table className="w-full min-w-[600px]">
             <thead>
-              <tr className="border-b border-gray-200 dark:border-gray-700">
-                <th className="px-4 py-3 text-right text-xs font-semibold text-gray-500 dark:text-gray-400
-                  w-32 sticky right-0 bg-white dark:bg-gray-800">المعيار</th>
+              <tr className="border-b border-[var(--majalis-line)]">
+                <th className="px-4 py-3 text-right text-xs font-semibold text-[var(--majalis-ink-soft)]
+                  w-32 sticky right-0 bg-[var(--majalis-panel)]">المعيار</th>
                 {compareList.map((u) => (
                   <th key={u.slug} className="px-4 py-3 text-center min-w-[180px]">
                     <div className="space-y-1">
-                      <p className="text-sm font-bold text-gray-800 dark:text-gray-100 leading-snug">
+                      <p className="text-sm font-bold text-[var(--majalis-ink)] leading-snug">
                         {u.name_ar}
                       </p>
                       <div className="flex justify-center gap-1">
                         <a href={`/universities/${u.slug}`}
-                          className="text-xs text-emerald-600 dark:text-emerald-400 hover:underline">
+                          className="text-xs text-[var(--majalis-emerald)] hover:underline">
                           التفاصيل
                         </a>
                         <span className="text-gray-300">|</span>
@@ -123,15 +123,15 @@ function CompareContent() {
             <tbody>
               {COMPARE_ROWS.map((row, i) => (
                 <tr key={row.label}
-                  className={`border-b border-gray-100 dark:border-gray-700/50 ${
-                    i % 2 === 0 ? "bg-gray-50/50 dark:bg-gray-800/50" : ""
+                  className={`border-b border-[var(--majalis-line)] ${
+                    i % 2 === 0 ? "bg-[var(--majalis-parchment)]" : ""
                   }`}>
-                  <td className="px-4 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400
+                  <td className="px-4 py-3 text-xs font-semibold text-[var(--majalis-ink-soft)]
                     sticky right-0 bg-inherit">
                     {row.label}
                   </td>
                   {compareList.map((u) => (
-                    <td key={u.slug} className="px-4 py-3 text-sm text-center text-gray-700 dark:text-gray-300">
+                    <td key={u.slug} className="px-4 py-3 text-sm text-center text-[var(--majalis-ink-soft)]">
                       {row.label === "حالة الاعتماد" ? (
                         <span className="px-2 py-0.5 rounded-full text-white text-xs font-medium"
                           style={{ background: ACCREDITATION_COLOR[u.accreditation_status] }}>
@@ -151,7 +151,7 @@ function CompareContent() {
           {compareList.map((u) => (
             u.website_url ? (
               <a key={u.slug} href={u.website_url} target="_blank" rel="noopener noreferrer"
-                className="text-center py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white
+                className="text-center py-2.5 citation-btn citation-btn--primary
                   rounded-xl text-sm font-medium transition-colors">
                 🌐 موقع {u.name_ar.split(" ")[1] || u.name_ar} ↗
               </a>

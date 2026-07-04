@@ -98,14 +98,14 @@ export default function ContentActions({ contentType, contentId }: Props) {
   };
 
   return (
-    <div dir="rtl" className="flex flex-wrap items-center gap-3 p-4 bg-gray-50 rounded-xl border">
+    <div dir="rtl" className="flex flex-wrap items-center gap-3 p-4 bg-[var(--majalis-parchment)] rounded-xl border border-[var(--majalis-line)]">
       <div className="flex items-center gap-1">
         {[1, 2, 3, 4, 5].map((star) => (
           <button
             key={star}
             type="button"
             onClick={() => handleRating(star)}
-            className={`text-2xl transition-transform hover:scale-110 ${rating >= star ? "text-amber-400" : "text-gray-300"}`}
+            className={`text-2xl transition-transform hover:scale-110 ${rating >= star ? "text-amber-400" : "text-[var(--majalis-line)]"}`}
           >
             
           </button>
@@ -116,7 +116,7 @@ export default function ContentActions({ contentType, contentId }: Props) {
         type="button"
         onClick={handleBookmark}
         className={`flex items-center gap-1 px-3 py-1.5 rounded-lg text-sm font-medium transition-all border
-          ${bookmarked ? "bg-amber-50 border-amber-300 text-amber-700" : "bg-white border-gray-300 text-gray-600 hover:border-amber-300"}`}
+          ${bookmarked ? "bg-amber-50 border-amber-300 text-amber-700" : "bg-[var(--majalis-panel)] border-[var(--majalis-line)] text-[var(--majalis-ink-soft)] hover:border-amber-300"}`}
       >
         {bookmarked ? "محفوظ" : "احفظ"}
       </button>
@@ -124,14 +124,14 @@ export default function ContentActions({ contentType, contentId }: Props) {
       <button
         type="button"
         onClick={() => setShowReport(!showReport)}
-        className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-sm font-medium border bg-white border-gray-300 text-gray-600 hover:border-red-300 hover:text-red-600 transition-all"
+        className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-sm font-medium border bg-[var(--majalis-panel)] border-[var(--majalis-line)] text-[var(--majalis-ink-soft)] hover:border-[var(--majalis-danger)] hover:text-[var(--majalis-danger)] transition-all"
       >
         إبلاغ
       </button>
 
       {showReport && (
-        <div className="w-full mt-3 p-4 bg-white rounded-xl border border-red-200 space-y-3">
-          <h4 className="font-medium text-gray-700">نوع الخطأ</h4>
+        <div className="w-full mt-3 p-4 bg-[var(--majalis-panel)] rounded-xl border border-[var(--majalis-danger)] space-y-3">
+          <h4 className="font-medium text-[var(--majalis-ink-soft)]">نوع الخطأ</h4>
           <div className="flex flex-wrap gap-2">
             {REPORT_TYPES.map((type) => (
               <button
@@ -139,7 +139,7 @@ export default function ContentActions({ contentType, contentId }: Props) {
                 type="button"
                 onClick={() => setReportType(type)}
                 className={`px-3 py-1 rounded-lg text-sm border transition-all
-                  ${reportType === type ? "bg-red-600 text-white border-red-600" : "border-gray-300 text-gray-600 hover:border-red-300"}`}
+                  ${reportType === type ? "bg-[var(--majalis-danger)] text-white border-[var(--majalis-danger)]" : "border-[var(--majalis-line)] text-[var(--majalis-ink-soft)] hover:border-[var(--majalis-danger)]"}`}
               >
                 {type.replace("_", " ")}
               </button>
@@ -150,7 +150,7 @@ export default function ContentActions({ contentType, contentId }: Props) {
             onChange={(e) => setReportDesc(e.target.value)}
             rows={2}
             placeholder="تفاصيل إضافية (اختياري)..."
-            className="w-full border rounded-lg px-3 py-2 text-sm text-right focus:ring-2 focus:ring-red-400 outline-none resize-none"
+            className="w-full border border-[var(--majalis-line)] bg-[var(--majalis-parchment)] text-[var(--majalis-ink)] rounded-lg px-3 py-2 text-sm text-right focus:ring-2 focus:ring-[var(--majalis-danger)] outline-none resize-none"
           />
           <button
             type="button"

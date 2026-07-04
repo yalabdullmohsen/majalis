@@ -13,7 +13,7 @@ export function ScienceCard({ science, progressCount = 0, totalBooks = 0 }: Prop
   return (
     <Link href={`/learning-path/${science.slug}`}>
       <div
-        className="group relative bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 p-5 hover:shadow-lg transition-all duration-200 cursor-pointer overflow-hidden"
+        className="group relative bg-[var(--majalis-panel)] rounded-2xl border border-[var(--majalis-line)] p-5 hover:shadow-lg transition-all duration-200 cursor-pointer overflow-hidden"
         style={{ borderTop: `3px solid ${science.color}` }}
       >
         {/* خلفية زخرفية */}
@@ -25,11 +25,11 @@ export function ScienceCard({ science, progressCount = 0, totalBooks = 0 }: Prop
         <div className="flex items-start gap-3">
           <span className="text-3xl flex-shrink-0 leading-none mt-0.5">{science.icon}</span>
           <div className="flex-1 min-w-0">
-            <h3 className="font-bold text-gray-900 dark:text-white text-base leading-snug mb-1">
+            <h3 className="font-bold text-[var(--majalis-ink)] text-base leading-snug mb-1">
               {science.name}
             </h3>
             {science.description && (
-              <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-2 leading-relaxed">
+              <p className="text-xs text-[var(--majalis-ink-soft)] line-clamp-2 leading-relaxed">
                 {science.description}
               </p>
             )}
@@ -38,11 +38,11 @@ export function ScienceCard({ science, progressCount = 0, totalBooks = 0 }: Prop
 
         {totalBooks > 0 && (
           <div className="mt-4">
-            <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 mb-1">
+            <div className="flex items-center justify-between text-xs text-[var(--majalis-ink-soft)] mb-1">
               <span>{progressCount} / {totalBooks} كتاب</span>
               <span>{pct}%</span>
             </div>
-            <div className="h-1.5 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+            <div className="h-1.5 bg-[var(--majalis-parchment-deep)] rounded-full overflow-hidden">
               <div
                 className="h-full rounded-full transition-all duration-500"
                 style={{ width: `${pct}%`, background: science.color }}
@@ -52,7 +52,7 @@ export function ScienceCard({ science, progressCount = 0, totalBooks = 0 }: Prop
         )}
 
         <div className="mt-3 flex items-center justify-end">
-          <span className="text-xs font-medium text-gray-400 dark:text-gray-500 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+          <span className="text-xs font-medium text-[var(--majalis-ink-soft)] opacity-70 group-hover:text-[var(--majalis-emerald)] group-hover:opacity-100 transition-colors">
             استعرض المسار ←
           </span>
         </div>
