@@ -296,7 +296,7 @@ function Router() {
       <Route path="/surah-stories" component={QuranComingSoon} />
       <Route path="/quran/tajweed" component={QuranComingSoon} />
       {/* مسارات الاختصار — public redirects */}
-      <Route path="/mushaf" component={QuranComingSoon} />
+      <Route path="/mushaf"><Redirect to="/quran" /></Route>
       <Route path="/research"><Redirect to="/fiqh-council/research" /></Route>
       {/* الفقه الإسلامي الموحّد + السيرة النبوية */}
       <Route path="/fiqh"><SafeLazyRoute component={FiqhPage} /></Route>
