@@ -30,6 +30,13 @@ export type AdhanEvent = {
 /** Fired on window when adhan or advance notification triggers */
 export const ADHAN_EVENT_NAME = "majalis:adhan";
 
+/**
+ * أقصى تأخّر مسموح به قبل اعتبار المؤقّت "قديماً". مؤقّتات JS تتوقف أثناء نوم
+ * الجهاز/الخلفية ثم تُطلَق متأخّرة عند الاستيقاظ — فنمنع تشغيل أذانٍ فات وقته
+ * (مثلاً بساعة). القيمة بالملّي ثانية.
+ */
+const STALE_TOLERANCE_MS = 5 * 60_000; // 5 دقائق
+
 const _timers: ReturnType<typeof setTimeout>[] = [];
 
 function clearAllTimers() {
@@ -104,7 +111,10 @@ function scheduleForPrayer(slot: PrayerSlot, key: PrayerKey) {
   if (adhanDelay < 0) adhanDelay += 24 * 3600_000; // next day
   if (adhanDelay > 24 * 3600_000) return; // too far ahead
 
+  const adhanTargetEpoch = Date.now() + adhanDelay;
   const t1 = setTimeout(() => {
+    // مؤقّت متأخّر (نوم/خلفية): لا تُشغّل أذاناً فات وقته بأكثر من المسموح
+    if (Date.now() - adhanTargetEpoch > STALE_TOLERANCE_MS) return;
     const fresh = loadAdhanPrefs();
     if (!fresh.globalEnabled || !fresh.prayers[key].enabled) return;
     const muezzinId = getEffectiveMuezzinId(fresh, key);
@@ -116,7 +126,7 @@ function scheduleForPrayer(slot: PrayerSlot, key: PrayerKey) {
   _timers.push(t1);
 
   // Also register with SW for background-tab notifications
-  postSwSchedule(key, PRAYER_ARABIC[key] ?? slot.name, adhanDelay);
+  postSwSchedule(key, PRAYER_ARABIC[key] ?? slot.name, adhanDelay, adhanTargetEpoch);
 
   // ── Advance reminder timer ──
   const advMin = prayerPrefs.advanceMinutes;
@@ -124,7 +134,9 @@ function scheduleForPrayer(slot: PrayerSlot, key: PrayerKey) {
     let advDelay = slotMs - nowMs - advMin * 60_000;
     if (advDelay < 0) advDelay += 24 * 3600_000;
     if (advDelay < 24 * 3600_000) {
+      const advTargetEpoch = Date.now() + advDelay;
       const t2 = setTimeout(() => {
+        if (Date.now() - advTargetEpoch > STALE_TOLERANCE_MS) return; // تذكير متأخّر — تجاهله
         const fresh = loadAdhanPrefs();
         if (!fresh.globalEnabled || !fresh.prayers[key].enabled) return;
         if (fresh.prayers[key].advanceMinutes === 0) return;
@@ -175,8 +187,8 @@ export function stopAdhanScheduler() {
 }
 
 /** Posts SCHEDULE_ADHAN to the SW so notifications fire even in background tabs. */
-function postSwSchedule(prayerKey: PrayerKey, prayerArabic: string, delayMs: number) {
+function postSwSchedule(prayerKey: PrayerKey, prayerArabic: string, delayMs: number, fireAt: number) {
   const sw = navigator.serviceWorker?.controller;
   if (!sw) return;
-  sw.postMessage({ type: "SCHEDULE_ADHAN", prayerKey, prayerArabic, delayMs });
+  sw.postMessage({ type: "SCHEDULE_ADHAN", prayerKey, prayerArabic, delayMs, fireAt });
 }

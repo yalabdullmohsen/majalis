@@ -150,7 +150,7 @@ self.addEventListener("message", (event) => {
   const msg = event.data;
   if (!msg || msg.type !== "SCHEDULE_ADHAN") return;
 
-  const { prayerKey, prayerArabic, delayMs } = msg;
+  const { prayerKey, prayerArabic, delayMs, fireAt } = msg;
   if (typeof delayMs !== "number" || delayMs < 0) return;
 
   // Cancel any existing timer for this prayer
@@ -158,9 +158,16 @@ self.addEventListener("message", (event) => {
     clearTimeout(_adhanTimers.get(prayerKey));
   }
 
+  const STALE_TOLERANCE_MS = 5 * 60000; // لا تُظهر إشعاراً لأذانٍ فات وقته (نوم/خلفية)
+
   const promise = new Promise((resolve) => {
     const tid = setTimeout(() => {
       _adhanTimers.delete(prayerKey);
+      // مؤقّت متأخّر: تجاهل الإشعار إن فات وقته بأكثر من المسموح
+      if (typeof fireAt === "number" && Date.now() - fireAt > STALE_TOLERANCE_MS) {
+        resolve();
+        return;
+      }
       self.registration.showNotification(`🕌 حان وقت ${prayerArabic}`, {
         body: "حيَّ على الصلاة، حيَّ على الفلاح",
         icon: "/logo.png?v=9",
