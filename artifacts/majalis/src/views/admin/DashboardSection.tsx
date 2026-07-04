@@ -167,7 +167,7 @@ export function DashboardSection() {
               <button
                 key={item.label}
                 type="button"
-                onClick={() => onSectionChange(item.section)}
+                onClick={() => item.section && onSectionChange(item.section)}
                 style={{
                   display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
                   gap: "0.35rem", padding: "0.875rem 0.5rem",
