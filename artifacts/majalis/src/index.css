@@ -16907,3 +16907,130 @@ html[data-theme="dark"] .home-daily-meaning {
 .flash-toast--success { background: var(--majalis-emerald, #166048); }
 .flash-toast--error   { background: var(--majalis-danger, #C0392B); }
 .flash-toast--info    { background: var(--majalis-brass-deep, #7A5214); }
+
+/* ══════════════════════════════════════════════════════════════
+   Design System v5 — Adhkar & Islamic Content Cards
+   ══════════════════════════════════════════════════════════════ */
+
+/* نص الأذكار: خط عربي جميل + تباعد سطور */
+.adhkar-card__text {
+  font-family: var(--font-display, "Amiri", serif);
+  font-size: clamp(0.95rem, 3vw, 1.1rem);
+  line-height: 2.1;
+  color: var(--majalis-ink, #1A1714);
+}
+
+/* رأس بطاقة الذكر */
+.adhkar-card__count {
+  font-size: 0.75rem;
+  background: var(--majalis-emerald-soft, #EAF5EE);
+  color: var(--majalis-emerald-deep, #0F4433);
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+/* التحسين العام لبطاقات الأذكار */
+.adhkar-card {
+  border-radius: 0.875rem;
+  border: 1px solid var(--majalis-line, #E8E2D8);
+  background: var(--majalis-panel, #fff);
+  box-shadow: 0 1px 3px rgba(26, 23, 20, 0.05);
+  transition: box-shadow 220ms cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 220ms ease,
+              transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.adhkar-card:hover {
+  box-shadow: 0 6px 20px rgba(22, 96, 72, 0.09);
+  border-color: color-mix(in srgb, var(--majalis-emerald) 22%, var(--majalis-line));
+  transform: translateY(-1px);
+}
+
+/* بطاقات الأسئلة والأجوبة */
+.qa-card__question {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--majalis-ink, #1A1714);
+  line-height: 1.7;
+}
+
+.qa-card__answer {
+  font-size: 0.88rem;
+  color: var(--majalis-ink-soft);
+  line-height: 1.85;
+}
+
+/* بطاقة السؤال: حد أيمن زمردي */
+.qa-card {
+  border-right: 3px solid var(--majalis-emerald-soft, #EAF5EE);
+  transition: border-right-color 220ms ease;
+}
+
+.qa-card:hover {
+  border-right-color: var(--majalis-emerald, #166048);
+}
+
+/* بطاقات الفوائد */
+.faidah-card__body {
+  font-family: var(--font-display, "Amiri", serif);
+  font-size: clamp(0.9rem, 2.8vw, 1rem);
+  line-height: 2;
+}
+
+/* نظام الشارات (Tags) */
+.page-tag,
+.content-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.18rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  background: var(--majalis-parchment-deep, #F0EBE0);
+  color: var(--majalis-ink-soft);
+  border: 1px solid var(--majalis-line, #E8E2D8);
+  transition: background 150ms ease, color 150ms ease;
+  white-space: nowrap;
+}
+
+.page-tag--active,
+.content-tag--active {
+  background: var(--majalis-emerald-soft, #EAF5EE);
+  color: var(--majalis-emerald-deep, #0F4433);
+  border-color: rgba(22, 96, 72, 0.25);
+}
+
+/* ── Dark mode ── */
+html[data-theme="dark"] .adhkar-card {
+  background: var(--majalis-panel, #1A2820);
+  border-color: var(--majalis-line, #263D33);
+}
+
+html[data-theme="dark"] .adhkar-card:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  border-color: rgba(77, 184, 142, 0.25);
+}
+
+html[data-theme="dark"] .adhkar-card__count {
+  background: rgba(77, 184, 142, 0.12);
+  color: var(--majalis-emerald, #4DB88E);
+}
+
+html[data-theme="dark"] .adhkar-card__text {
+  color: var(--majalis-ink, #E8F4EE);
+}
+
+html[data-theme="dark"] .page-tag,
+html[data-theme="dark"] .content-tag {
+  background: var(--majalis-parchment-deep, #151E1A);
+  border-color: var(--majalis-line, #263D33);
+  color: var(--majalis-ink-soft);
+}
+
+html[data-theme="dark"] .page-tag--active,
+html[data-theme="dark"] .content-tag--active {
+  background: rgba(77, 184, 142, 0.12);
+  color: var(--majalis-emerald, #4DB88E);
+  border-color: rgba(77, 184, 142, 0.2);
+}
