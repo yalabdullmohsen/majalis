@@ -95,10 +95,10 @@ export function IslamicStoriesSection() {
   useEffect(() => { load(); }, []);
 
   const toggleExpand = (id: number) =>
-    setExpanded(prev => { const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n; });
+    setExpanded(prev => { const n = new Set(prev); if (n.has(id)) n.delete(id); else n.add(id); return n; });
 
   const toggleFull = (id: number) =>
-    setShowFull(prev => { const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n; });
+    setShowFull(prev => { const n = new Set(prev); if (n.has(id)) n.delete(id); else n.add(id); return n; });
 
   const setApproval = async (story: IslamicStory, approve: boolean) => {
     if (working.has(story.id)) return;
