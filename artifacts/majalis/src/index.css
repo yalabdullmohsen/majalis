@@ -74,6 +74,66 @@ html[data-font="naskh"] {
   --card-radius: 1rem;
   --card-padding: clamp(0.875rem, 3vw, 1.125rem);
   --card-shadow: 0 8px 28px rgba(36, 31, 24, 0.07);
+
+  /* ══ نظام القوائم الموحّد (Menu Design Tokens) ══ */
+  --mn-item-h:          44px;
+  --mn-item-py:         0.65rem;
+  --mn-item-px:         0.75rem;
+  --mn-icon-size:       1.25rem;
+  --mn-chip-radius:     999px;
+  --mn-chip-py:         0.4rem;
+  --mn-chip-px:         0.85rem;
+  --mn-chip-font:       0.78rem;
+  --mn-surface-hover:   var(--majalis-emerald-muted);
+  --mn-surface-active:  var(--majalis-sage);
+  --mn-text-default:    var(--majalis-ink-soft);
+  --mn-text-active:     var(--majalis-emerald-deep);
+  --mn-border-default:  var(--majalis-line);
+  --mn-border-active:   var(--majalis-emerald);
+  --mn-popup-radius:    0.75rem;
+  --mn-popup-shadow:    0 8px 32px rgba(36, 31, 24, 0.12);
+  --mn-separator-color: var(--majalis-line);
+  --mn-transition:      150ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* alias للتوافق مع كود قديم */
+  --majalis-border: var(--majalis-line);
+
+  /* ══ جسر shadcn → majalis (يجعل Radix UI يرث الهوية البصرية) ══ */
+  --background:          var(--majalis-parchment);
+  --foreground:          var(--majalis-ink);
+  --card:                var(--majalis-panel);
+  --card-foreground:     var(--majalis-ink);
+  --popover:             var(--majalis-panel);
+  --popover-foreground:  var(--majalis-ink);
+  --primary:             var(--majalis-emerald);
+  --primary-foreground:  #fff;
+  --secondary:           var(--majalis-parchment-deep);
+  --secondary-foreground: var(--majalis-ink);
+  --muted:               var(--majalis-parchment-deep);
+  --muted-foreground:    var(--majalis-ink-soft);
+  --accent:              var(--majalis-sage);
+  --accent-foreground:   var(--majalis-emerald-deep);
+  --destructive:         #991b1b;
+  --border:              var(--majalis-line);
+  --input:               var(--majalis-line);
+  --ring:                var(--majalis-emerald);
+}
+
+html[data-theme="dark"] {
+  /* ══ جسر shadcn → majalis (وضع داكن) ══ */
+  --background:          var(--majalis-parchment);
+  --foreground:          var(--majalis-ink);
+  --card:                var(--majalis-panel);
+  --card-foreground:     var(--majalis-ink);
+  --popover:             var(--majalis-panel);
+  --popover-foreground:  var(--majalis-ink);
+  --muted:               var(--majalis-parchment-deep);
+  --muted-foreground:    var(--majalis-ink-soft);
+  --accent:              var(--majalis-sage);
+  --accent-foreground:   var(--majalis-emerald-deep);
+  --border:              var(--majalis-line);
+  --input:               var(--majalis-line);
+  --ring:                var(--majalis-emerald);
 }
 
 body {
@@ -6205,8 +6265,305 @@ html[data-theme="dark"] .home-page {
   color: var(--majalis-parchment);
 }
 
-.notification-bell-icon {
+/* ── Notification Bell (موحّد بنظام القوائم) ── */
+.notif-bell-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--mn-item-h);
+  height: var(--mn-item-h);
+  border: none;
+  background: transparent;
+  border-radius: 50%;
+  cursor: pointer;
+  color: var(--mn-text-default);
+  transition: background var(--mn-transition), color var(--mn-transition);
+}
+
+.notif-bell-btn:hover {
+  background: var(--mn-surface-hover);
+  color: var(--mn-text-active);
+}
+
+.notif-bell-btn:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.notif-bell-icon {
+  color: currentColor;
+}
+
+.notif-badge {
+  position: absolute;
+  top: -2px;
+  inset-inline-end: -2px;
+  background: #dc2626;
+  color: #fff;
+  font-size: 0.625rem;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 3px;
+  line-height: 1;
+}
+
+.notif-panel {
+  position: absolute;
+  inset-inline-start: 0;
+  top: calc(100% + 0.5rem);
+  width: clamp(18rem, 85vw, 22rem);
+  background: var(--majalis-panel);
+  border: 1px solid var(--mn-border-default);
+  border-radius: var(--mn-popup-radius);
+  box-shadow: var(--mn-popup-shadow);
+  z-index: 300;
+  overflow: hidden;
+  animation: notif-in var(--motion-fast) ease;
+}
+
+@keyframes notif-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.notif-panel__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.875rem 1rem 0.75rem;
+  border-bottom: 1px solid var(--mn-separator-color);
+}
+
+.notif-panel__title {
+  margin: 0;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--majalis-ink);
+}
+
+.notif-panel__mark-all {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-family: inherit;
+  color: var(--majalis-emerald);
+  font-weight: 600;
+  padding: 0;
+  transition: color var(--mn-transition);
+}
+
+.notif-panel__mark-all:hover {
   color: var(--majalis-emerald-deep);
+  text-decoration: underline;
+}
+
+.notif-panel__list {
+  max-height: 20rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.notif-panel__empty {
+  text-align: center;
+  color: var(--mn-text-default);
+  padding: 2rem 1rem;
+  font-size: 0.875rem;
+}
+
+.notif-item {
+  padding: 0.875rem 1rem;
+  border-bottom: 1px solid var(--mn-separator-color);
+  transition: background var(--mn-transition);
+}
+
+.notif-item:last-child {
+  border-bottom: none;
+}
+
+.notif-item--unread {
+  background: var(--majalis-emerald-muted);
+}
+
+.notif-item__title {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--majalis-ink);
+  line-height: 1.5;
+}
+
+.notif-item__body {
+  margin: 0.25rem 0 0;
+  font-size: 0.78rem;
+  color: var(--mn-text-default);
+  line-height: 1.5;
+}
+
+.notif-item__date {
+  margin: 0.35rem 0 0;
+  font-size: 0.72rem;
+  color: var(--mn-text-default);
+  opacity: 0.75;
+}
+
+/* الوضع الداكن */
+html[data-theme="dark"] .notif-badge { background: #ef4444; }
+
+/* ── Tabs الموحّدة (mj-tabs) ── */
+.mj-tabs-list {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  background: var(--majalis-parchment-deep);
+  border-radius: 0.625rem;
+  border: 1px solid var(--mn-border-default);
+}
+
+.mj-tabs-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.9rem;
+  border: none;
+  border-radius: 0.45rem;
+  background: transparent;
+  color: var(--mn-text-default);
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background var(--mn-transition), color var(--mn-transition), box-shadow var(--mn-transition);
+  min-height: 36px;
+  white-space: nowrap;
+}
+
+.mj-tabs-trigger:hover {
+  background: var(--mn-surface-hover);
+  color: var(--mn-text-active);
+}
+
+.mj-tabs-trigger[data-state="active"] {
+  background: var(--majalis-panel);
+  color: var(--majalis-emerald-deep);
+  font-weight: 700;
+  box-shadow: 0 1px 4px rgba(36, 31, 24, 0.10);
+}
+
+.mj-tabs-trigger:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.mj-tabs-trigger:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.mj-tabs-content {
+  margin-top: 0.75rem;
+}
+
+.mj-tabs-content:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: 0.35rem;
+}
+
+/* ── Shared Popup Menu (Dropdown + Context) ── */
+.mj-menu-popup {
+  z-index: 500;
+  min-width: 10rem;
+  max-height: min(var(--radix-dropdown-menu-content-available-height, 85vh), 85vh);
+  overflow-y: auto;
+  background: var(--majalis-panel);
+  border: 1px solid var(--mn-border-default);
+  border-radius: var(--mn-popup-radius);
+  box-shadow: var(--mn-popup-shadow);
+  padding: 0.3rem;
+  /* دخول سلس */
+  animation: menu-in var(--motion-fast) ease;
+}
+
+@keyframes menu-in {
+  from { opacity: 0; transform: scale(0.97) translateY(-4px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+[data-state="closed"] .mj-menu-popup,
+.mj-menu-popup[data-state="closed"] {
+  animation: menu-out var(--motion-fast) ease forwards;
+}
+
+@keyframes menu-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+.mj-menu-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 0.75rem;
+  border-radius: 0.45rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: var(--majalis-ink);
+  cursor: default;
+  user-select: none;
+  outline: none;
+  transition: background var(--mn-transition), color var(--mn-transition);
+  min-height: 38px;
+  /* أيقونات */
+  --icon-size: var(--mn-icon-size);
+}
+
+.mj-menu-item:hover,
+.mj-menu-item:focus,
+.mj-menu-item[data-highlighted] {
+  background: var(--mn-surface-active);
+  color: var(--mn-text-active);
+}
+
+.mj-menu-item[data-disabled] {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* عنصر تدمير */
+.mj-menu-item--danger {
+  color: #b91c1c;
+}
+
+.mj-menu-item--danger:hover,
+.mj-menu-item--danger[data-highlighted] {
+  background: rgba(185, 28, 28, 0.08);
+  color: #991b1b;
+}
+
+.mj-menu-label {
+  padding: 0.4rem 0.75rem 0.25rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: var(--majalis-brass-deep);
+  text-transform: uppercase;
+}
+
+.mj-menu-separator {
+  height: 1px;
+  background: var(--mn-separator-color);
+  margin: 0.25rem -0.3rem;
 }
 
 @media (max-width: 640px) {
@@ -11310,17 +11667,28 @@ body.assistant-panel-open {
 }
 
 .fiqh-review-filters button {
-  border: 1px solid var(--line, #e8e0d4);
-  background: #fff;
-  border-radius: 999px;
-  padding: 0.35rem 0.75rem;
-  font-size: 0.75rem;
+  border: 1px solid var(--mn-border-default);
+  background: var(--majalis-panel);
+  border-radius: var(--mn-chip-radius);
+  padding: var(--mn-chip-py) var(--mn-chip-px);
+  font-size: var(--mn-chip-font);
+  font-family: inherit;
+  color: var(--mn-text-default);
   cursor: pointer;
+  transition: background var(--mn-transition), border-color var(--mn-transition), color var(--mn-transition);
+  min-height: var(--mn-item-h);
+}
+
+.fiqh-review-filters button:hover {
+  background: var(--mn-surface-hover);
+  border-color: var(--mn-border-active);
+  color: var(--mn-text-active);
 }
 
 .fiqh-review-filter--active {
-  background: rgba(22, 78, 60, 0.12) !important;
-  border-color: var(--emerald, #1b5e3b) !important;
+  background: var(--mn-surface-active) !important;
+  border-color: var(--mn-border-active) !important;
+  color: var(--mn-text-active) !important;
   font-weight: 700;
 }
 
@@ -12186,7 +12554,7 @@ body.has-assistant-fab .app-main {
 .qa-v2-section-title {
   font-size: 1rem;
   font-weight: 800;
-  color: var(--color-primary, #0d4a3a);
+  color: var(--majalis-emerald-deep);
   margin: 0 0 0.75rem;
 }
 
@@ -12215,38 +12583,43 @@ body.has-assistant-fab .app-main {
   align-items: flex-start;
   gap: 0.2rem;
   padding: 0.875rem;
-  border: 1px solid rgba(13, 74, 58, 0.12);
+  border: 1px solid var(--majalis-line);
   border-radius: 0.75rem;
-  background: #fff;
+  background: var(--majalis-panel);
   cursor: pointer;
   font-family: inherit;
   text-align: right;
-  transition: border-color 0.15s, box-shadow 0.15s;
+  transition: border-color var(--mn-transition), box-shadow var(--mn-transition), background var(--mn-transition);
+}
+
+.qa-v2-category-card:hover {
+  background: var(--mn-surface-hover);
 }
 
 .qa-v2-category-card.is-active {
-  border-color: #0d4a3a;
-  box-shadow: 0 0 0 2px rgba(13, 74, 58, 0.12);
+  border-color: var(--mn-border-active);
+  box-shadow: 0 0 0 2px var(--majalis-emerald-muted);
+  background: var(--mn-surface-active);
 }
 
 .qa-v2-category-card__name {
   font-weight: 700;
   font-size: 0.9rem;
-  color: #1e293b;
+  color: var(--majalis-ink);
 }
 
 .qa-v2-category-card__count {
   font-size: 0.75rem;
   font-weight: 700;
-  color: #0d4a3a;
-  background: rgba(13, 74, 58, 0.08);
+  color: var(--mn-text-active);
+  background: var(--majalis-emerald-muted);
   padding: 0.15rem 0.5rem;
   border-radius: 999px;
 }
 
 .qa-v2-category-card__desc {
   font-size: 0.65rem;
-  color: #94a3b8;
+  color: var(--mn-text-default);
   line-height: 1.4;
 }
 
@@ -12273,8 +12646,8 @@ body.has-assistant-fab .app-main {
 }
 
 .lessons-v2-stat {
-  background: #fff;
-  border: 1px solid rgba(13, 74, 58, 0.1);
+  background: var(--majalis-panel);
+  border: 1px solid var(--majalis-line);
   border-radius: 0.75rem;
   padding: 0.75rem;
   text-align: center;
@@ -12283,12 +12656,12 @@ body.has-assistant-fab .app-main {
 .lessons-v2-stat strong {
   display: block;
   font-size: 1.25rem;
-  color: #0d4a3a;
+  color: var(--majalis-emerald-deep);
 }
 
 .lessons-v2-stat span {
   font-size: 0.75rem;
-  color: #64748b;
+  color: var(--mn-text-default);
 }
 
 .lessons-v2-toolbar {
@@ -12303,12 +12676,19 @@ body.has-assistant-fab .app-main {
 .lessons-v2-filter-toggle {
   display: none;
   padding: 0.5rem 1rem;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--mn-border-default);
   border-radius: 0.5rem;
-  background: #fff;
+  background: var(--majalis-panel);
+  color: var(--majalis-ink);
   font-family: inherit;
   font-weight: 600;
   cursor: pointer;
+  transition: background var(--mn-transition), border-color var(--mn-transition);
+}
+
+.lessons-v2-filter-toggle:hover {
+  background: var(--mn-surface-hover);
+  border-color: var(--mn-border-active);
 }
 
 @media (max-width: 960px) {
@@ -12353,7 +12733,7 @@ body.has-assistant-fab .app-main {
 .lessons-v2-section__title {
   font-size: 1.1rem;
   font-weight: 800;
-  color: #0d4a3a;
+  color: var(--majalis-emerald-deep);
   margin: 0 0 0.75rem;
 }
 
@@ -12371,7 +12751,7 @@ body.has-assistant-fab .app-main {
 .lessons-v2-filters__head h2 {
   margin: 0;
   font-size: 1rem;
-  color: #0d4a3a;
+  color: var(--majalis-emerald-deep);
 }
 
 .lessons-v2-filters__close {
@@ -12390,9 +12770,18 @@ body.has-assistant-fab .app-main {
 .lessons-v2-search input {
   width: 100%;
   padding: 0.5rem 0.75rem;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--mn-border-default);
   border-radius: 0.5rem;
   font-family: inherit;
+  background: var(--majalis-panel);
+  color: var(--majalis-ink);
+  transition: border-color var(--mn-transition);
+}
+
+.lessons-v2-search input:focus {
+  outline: none;
+  border-color: var(--mn-border-active);
+  box-shadow: 0 0 0 3px rgba(31, 110, 84, 0.12);
 }
 
 .lessons-v2-filters-grid {
@@ -12406,14 +12795,22 @@ body.has-assistant-fab .app-main {
   flex-direction: column;
   gap: 0.25rem;
   font-size: 0.8rem;
-  color: #64748b;
+  color: var(--mn-text-default);
 }
 
 .lessons-v2-filters-grid select {
   padding: 0.45rem;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--mn-border-default);
   border-radius: 0.5rem;
   font-family: inherit;
+  background: var(--majalis-panel);
+  color: var(--majalis-ink);
+  transition: border-color var(--mn-transition);
+}
+
+.lessons-v2-filters-grid select:focus {
+  outline: none;
+  border-color: var(--mn-border-active);
 }
 
 .lessons-v2-sheet-backdrop {
@@ -12489,7 +12886,7 @@ body.has-assistant-fab .app-main {
 
 .admin-feature-status__table th,
 .admin-feature-status__table td {
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid var(--mn-border-default);
   padding: 0.5rem 0.4rem;
   text-align: right;
   vertical-align: top;
