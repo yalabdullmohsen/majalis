@@ -194,7 +194,7 @@
       "destination": "/favicon.png"
     },
     {
-      "source": "/((?!api/|assets/|feed.xml|sitemap.xml|favicon.ico|favicon.png|robots.txt).*)",
+      "source": "/((?!api/|assets/|feed.xml|sitemap.xml|favicon.ico|favicon.png|robots.txt|version.json).*)",
       "destination": "/index.html"
     }
   ],
@@ -218,6 +218,12 @@
     },
     {
       "source": "/index.html",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/version.json",
       "headers": [
         { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
       ]
