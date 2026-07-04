@@ -115,18 +115,19 @@ function ResultCard({
         alignItems: "flex-start",
         gap: "0.75rem",
         width: "100%",
-        padding: "0.75rem 1rem",
-        background: "none",
+        padding: "0.8rem 1.25rem",
+        background: "transparent",
         border: "none",
-        borderBottom: `1px solid ${C.line}`,
+        borderBottom: `1px solid var(--majalis-line, #E8E2D8)`,
         cursor: "pointer",
         textAlign: "right",
         direction: "rtl",
-        minHeight: "44px",
-        transition: "background 0.1s",
+        minHeight: "48px",
+        transition: "background 150ms ease",
+        fontFamily: "inherit",
       }}
-      onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "var(--majalis-sage)"; }}
-      onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "none"; }}
+      onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "color-mix(in srgb, var(--majalis-emerald) 6%, var(--majalis-parchment, #F9F6EF))"; }}
+      onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "transparent"; }}
     >
       <span style={{ fontSize: "1.2rem", lineHeight: 1, flexShrink: 0, marginTop: "0.1rem" }}>
         {meta.icon}
@@ -335,8 +336,10 @@ export function GlobalSearchModal({ onClose }: Props) {
         display: "flex",
         alignItems: "flex-start",
         justifyContent: "center",
-        paddingTop: "clamp(3rem, 10vh, 6rem)",
-        background: "rgba(0,0,0,0.55)",
+        paddingTop: "clamp(2.5rem, 8vh, 5rem)",
+        background: "rgba(15, 20, 18, 0.65)",
+        backdropFilter: "blur(8px) saturate(160%)",
+        WebkitBackdropFilter: "blur(8px) saturate(160%)",
         direction: "rtl",
       };
 
@@ -348,10 +351,11 @@ export function GlobalSearchModal({ onClose }: Props) {
         overflow: "hidden",
       }
     : {
-        width: "min(96vw, 44rem)",
-        background: "var(--majalis-parchment)",
-        borderRadius: "1rem",
-        boxShadow: "0 24px 64px rgba(0,0,0,0.28)",
+        width: "min(96vw, 46rem)",
+        background: "var(--majalis-panel, #fff)",
+        borderRadius: "1.25rem",
+        boxShadow: "0 32px 80px rgba(0,0,0,0.32), 0 8px 24px rgba(0,0,0,0.18)",
+        border: "1px solid var(--majalis-line, #E8E2D8)",
         overflow: "hidden",
         maxHeight: "82vh",
         display: "flex",
@@ -369,10 +373,10 @@ export function GlobalSearchModal({ onClose }: Props) {
         <div style={{
           display: "flex",
           alignItems: "center",
-          padding: isMobile ? "0.75rem 1rem" : "0.75rem 1rem",
-          borderBottom: `1px solid ${C.line}`,
-          gap: "0.5rem",
-          background: "var(--majalis-parchment)",
+          padding: isMobile ? "0.75rem 1rem" : "0.875rem 1.25rem",
+          borderBottom: `1px solid var(--majalis-line, #E8E2D8)`,
+          gap: "0.6rem",
+          background: "var(--majalis-panel, #fff)",
           flexShrink: 0,
         }}>
           {/* زر الإغلاق/رجوع */}
@@ -417,12 +421,13 @@ export function GlobalSearchModal({ onClose }: Props) {
               flex: 1,
               border: "none",
               outline: "none",
-              fontSize: "1rem",
+              fontSize: isMobile ? "1rem" : "1.1rem",
               background: "transparent",
               color: "var(--majalis-ink)",
               direction: "rtl",
               minHeight: "44px",
               fontFamily: "inherit",
+              fontWeight: 500,
             }}
           />
 
@@ -461,10 +466,11 @@ export function GlobalSearchModal({ onClose }: Props) {
         <div style={{
           display: "flex",
           gap: "0.35rem",
-          padding: "0.5rem 1rem",
+          padding: "0.5rem 1.25rem",
           overflowX: "auto",
           flexShrink: 0,
-          borderBottom: `1px solid ${C.line}`,
+          borderBottom: `1px solid var(--majalis-line, #E8E2D8)`,
+          background: "var(--majalis-parchment-deep, #F0EBE0)",
           scrollbarWidth: "none",
           WebkitOverflowScrolling: "touch",
         }}>
@@ -477,17 +483,19 @@ export function GlobalSearchModal({ onClose }: Props) {
                 onClick={() => setActiveFilter(chip.key)}
                 style={{
                   flexShrink: 0,
-                  padding: "0.3rem 0.8rem",
+                  padding: "0.3rem 0.85rem",
                   borderRadius: "2rem",
-                  border: `1px solid ${active ? C.emerald : C.line}`,
-                  background: active ? C.sage : "transparent",
-                  color: active ? C.emeraldDeep : "var(--majalis-ink-soft)",
-                  fontWeight: active ? 700 : 400,
-                  fontSize: "0.8rem",
+                  border: `1px solid ${active ? "var(--majalis-emerald, #166048)" : "var(--majalis-line, #E8E2D8)"}`,
+                  background: active ? "var(--majalis-emerald, #166048)" : "var(--majalis-panel, #fff)",
+                  color: active ? "#fff" : "var(--majalis-ink-soft)",
+                  fontWeight: active ? 700 : 500,
+                  fontSize: "0.78rem",
                   cursor: "pointer",
                   fontFamily: "inherit",
-                  minHeight: "36px",
+                  minHeight: "32px",
                   whiteSpace: "nowrap",
+                  transition: "background 150ms ease, color 150ms ease, border-color 150ms ease",
+                  boxShadow: active ? "0 2px 6px rgba(22, 96, 72, 0.2)" : "none",
                 }}
               >
                 {chip.label}
@@ -721,13 +729,13 @@ export function GlobalSearchModal({ onClose }: Props) {
 
         {/* ── ذيل ─────────────────────────────────────────────────────── */}
         <div style={{
-          padding: "0.5rem 1rem",
-          borderTop: `1px solid ${C.line}`,
+          padding: "0.5rem 1.25rem",
+          borderTop: `1px solid var(--majalis-line, #E8E2D8)`,
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
           flexShrink: 0,
-          background: "var(--majalis-parchment)",
+          background: "var(--majalis-parchment-deep, #F0EBE0)",
         }}>
           {!isMobile && (
             <span style={{ fontSize: "0.7rem", color: "var(--majalis-ink-soft)" }}>
