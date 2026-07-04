@@ -11,9 +11,9 @@ import { computeNextOccurrenceMs, getKuwaitClock, isLessonToday } from "@/lib/le
 type HomeTab = "all" | "men" | "women";
 
 const HOME_TABS: { id: HomeTab; label: string }[] = [
-  { id: "all", label: "الكل" },
-  { id: "men", label: "الدروس الرجالية" },
-  { id: "women", label: "الدروس النسائية" },
+  { id: "all",   label: "الكل" },
+  { id: "men",   label: "الدروس الرجالية" },
+  { id: "women", label: "للنساء فقط" },
 ];
 
 const ARABIC_WEEKDAY: Record<number, string> = {
@@ -66,8 +66,10 @@ export function HomeUpcomingLessons({
 
   const upcomingLessons = sortKuwaitLessons(
     allLessons.filter((lesson) => {
-      if (tab === "men") return !lesson.hasWomenSection;
-      if (tab === "women") return lesson.hasWomenSection;
+      // "الدروس الرجالية": كل الدروس غير المخصصة للنساء فقط (عام + رجالي)
+      if (tab === "men")   return !lesson.isWomenOnly;
+      // "للنساء فقط": الدروس المخصصة للنساء حصراً بنص صريح
+      if (tab === "women") return lesson.isWomenOnly === true;
       return true;
     }),
   ).slice(0, 4);

@@ -196,7 +196,16 @@ export default async function handler(req, res) {
       storage_error: upload.ok ? undefined : upload.error,
     });
   } catch (err) {
-    console.error("[admin/lesson-from-image]", err);
-    sendJson(res, 500, { ok: false, error: String(err.message || err) });
+    // تُسجَّل التفاصيل الكاملة خادمياً فقط — لا تُكشف للعميل
+    console.error("[admin/lesson-from-image] unhandled error:", {
+      name: err?.name,
+      status: err?.status,
+      code: err?.code,
+      message: err?.message?.slice(0, 200),
+    });
+    sendJson(res, 500, {
+      ok: false,
+      error: "تعذر معالجة الطلب. يُرجى المحاولة مرة أخرى أو إدخال البيانات يدويًا.",
+    });
   }
 }

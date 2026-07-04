@@ -1,5 +1,5 @@
 import { Suspense, useEffect, useRef, useState, type ComponentType } from "react";
-import { Redirect, Route, Switch, Router as WouterRouter, useLocation } from "wouter";
+import { Redirect, Route, Switch, Router as WouterRouter, useLocation, useParams } from "wouter";
 import { AuthProvider } from "@/components/AuthProvider";
 import { FontPreferenceProvider } from "@/components/FontPreferenceProvider";
 import { ThemePreferenceProvider } from "@/components/ThemePreferenceProvider";
@@ -170,11 +170,15 @@ function AdhanSchedulerBootstrap() {
   return null;
 }
 
-function SafeLazyRoute({ component: Component }: { component: ComponentType }) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function SafeLazyRoute({ component: Component }: { component: ComponentType<any> }) {
+  // useParams يُعيد params المسار الحالي (مثل { id } أو { slug })
+  // ويُمرَّر كـ prop "params" لجميع صفحات التفاصيل
+  const params = useParams();
   return (
     <ErrorBoundary>
       <Suspense fallback={<LazyRouteFallback />}>
-        <Component />
+        <Component params={params} />
       </Suspense>
     </ErrorBoundary>
   );

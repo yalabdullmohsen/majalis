@@ -51,6 +51,8 @@ export type KuwaitLessonRecord = {
   courseId?: string;
   isCourse?: boolean;
   hasWomenSection?: boolean;
+  /** true فقط إذا كان الدرس للنساء فقط (audience = نساء) */
+  isWomenOnly?: boolean;
   source?: "supabase" | "seed";
   archivedAt?: string | null;
 };
@@ -187,7 +189,10 @@ export function mapLessonRow(row: any): KuwaitLessonRecord {
     streamUrl: row.live_url,
     siteUrl: row.book_url,
     isCourse: Boolean(row.is_course),
-    hasWomenSection: row.audience === "الكل" || row.audience === "نساء" || Boolean(row.has_women_section),
+    // isWomenOnly = true فقط عند وجود نص صريح (audience = نساء)
+    // hasWomenSection = true عند وجود مكان مخصص للنساء — بمعزل عن audience
+    isWomenOnly: row.audience === "نساء",
+    hasWomenSection: Boolean(row.has_women_section) || row.audience === "نساء",
     courseId: row.course_id,
     recurring: row.is_recurring !== false && !row.end_date,
     archivedAt: row.archived_at || null,
