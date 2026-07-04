@@ -790,7 +790,9 @@ export async function adminUpsertLesson(data: any) {
 }
 
 export async function adminDeleteLesson(id: string) {
-  return await supabase.from("lessons").delete().eq("id", id);
+  // نُرجع الصفوف المحذوفة عبر .select() حتى نميّز الحذف الفعلي عن منع RLS الصامت
+  // (حذف لا تسمح به السياسة يعيد data=[] وerror=null دون حذف أي صف).
+  return await supabase.from("lessons").delete().eq("id", id).select("id");
 }
 
 export async function adminGetLibrary() {

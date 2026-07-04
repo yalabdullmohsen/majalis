@@ -85,8 +85,17 @@ export function LessonsSection() {
   };
   const handleDelete = async (id: string, title: string) => {
     if (!confirm(`هل تريد حذف الدرس "${title}"؟`)) return;
-    const { error } = await adminDeleteLesson(id);
-    if (!error) invalidateLessonsCache();
+    const { data, error } = await adminDeleteLesson(id);
+    if (error) {
+      alert(`تعذّر حذف الدرس: ${error.message || "خطأ غير معروف"}`);
+      return;
+    }
+    if (!data || data.length === 0) {
+      // RLS منع الحذف صامتاً (لم يُحذف أي صف) — غالباً صلاحية المشرف غير مُفعّلة على الخادم
+      alert("لم يُحذف الدرس. تأكّد أنك مسجّل الدخول بحساب مشرف معتمد؛ إن استمرّت المشكلة فصلاحية الإشراف قد تكون غير مُفعّلة على مستوى قاعدة البيانات.");
+      return;
+    }
+    invalidateLessonsCache();
     load();
   };
   const handleSave = async () => {
