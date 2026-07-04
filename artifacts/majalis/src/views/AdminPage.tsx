@@ -34,6 +34,7 @@ import { SubmissionsSection } from "@/views/admin/SubmissionsSection";
 import { QuizSection } from "@/views/admin/QuizSection";
 import { RelationshipsSection } from "@/views/admin/RelationshipsSection";
 import { TelegramSection } from "@/views/admin/TelegramSection";
+import { LessonsReviewSection } from "@/views/admin/LessonsReviewSection";
 
 export default function AdminPage() {
   const [location] = useLocation();
@@ -71,6 +72,7 @@ export default function AdminPage() {
       {section === "knowledge-graph" && <RelationshipsSection />}
       {section === "quiz" && <QuizSection />}
       {section === "telegram" && <TelegramSection />}
+      {section === "lessons-review" && <LessonsReviewSection />}
       {section === "lessons" && <LessonsSection />}
       {section === "sheikhs" && <SheikhsSection />}
       {section === "library" && <LibrarySection />}

@@ -37,7 +37,8 @@ export type AdminSection =
   | "quiz"
   | "knowledge-graph"
   | "universities"
-  | "telegram";
+  | "telegram"
+  | "lessons-review";
 
 export const ADMIN_NAV: { key: AdminSection; label: string }[] = [
   { key: "dashboard",    label: "لوحة التحكم" },
@@ -59,6 +60,7 @@ export const ADMIN_NAV: { key: AdminSection; label: string }[] = [
   { key: "knowledge-graph", label: "الرسم البياني المعرفي" },
   { key: "quiz", label: "أسئلة المسابقة" },
   { key: "telegram", label: "تكامل Telegram" },
+  { key: "lessons-review", label: "مراجعة جودة الدروس" },
   { key: "lessons", label: "الدروس" },
   { key: "sheikhs", label: "المشايخ" },
   { key: "library", label: "المكتبة" },

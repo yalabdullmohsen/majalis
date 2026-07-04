@@ -87,12 +87,25 @@ export function buildLessonSlug(title) {
   return base || `lesson-${Date.now()}`;
 }
 
+// Strip Arabic diacritics and normalize letter variants before building the key
+// so that دiacritics differences don't create separate duplicate records.
+function normalizeForKey(text) {
+  return String(text || "")
+    .trim()
+    .replace(/[ً-ٰٟـ]/g, "") // tashkeel
+    .replace(/[أإآٱ]/g, "ا")
+    .replace(/[ة]/g, "ه")
+    .replace(/[ى]/g, "ي")
+    .replace(/\s+/g, " ")
+    .toLowerCase();
+}
+
 export function buildExternalKey(data) {
   const parts = [
-    pick(data, "title").slice(0, 40),
-    pick(data, "speaker_name", "sheikh_name"),
-    pick(data, "mosque"),
-    pick(data, "day_of_week", "day"),
+    normalizeForKey(pick(data, "title")).slice(0, 40),
+    normalizeForKey(pick(data, "speaker_name", "sheikh_name")),
+    normalizeForKey(pick(data, "mosque")),
+    normalizeForKey(pick(data, "day_of_week", "day")),
   ].filter(Boolean);
   return parts.join("|").slice(0, 120) || `draft-${Date.now()}`;
 }

@@ -385,25 +385,43 @@ export default function LessonsPage({
             onRetry={() => window.location.reload()}
           >
             <>
-              {!filters.search && filters.governorate === "كل المحافظات" && (
-                <>
-                  <section className="lessons-v2-section">
-                    <h2 className="lessons-v2-section__title">الأقرب موعدًا</h2>
-                    {renderGrid(featuredSections.upcoming)}
-                  </section>
-                  {featuredSections.featured.length > 0 && (
+              {!filters.search && filters.governorate === "كل المحافظات" && (() => {
+                // Track IDs shown in featured sections so the main grid doesn't repeat them.
+                const featuredIds = new Set([
+                  ...featuredSections.upcoming.map((l) => l.id),
+                  ...featuredSections.featured.map((l) => l.id),
+                  ...featuredSections.popular.map((l) => l.id),
+                ]);
+                const filteredMain = filtered.filter((l) => !featuredIds.has(l.id));
+                return (
+                  <>
                     <section className="lessons-v2-section">
-                      <h2 className="lessons-v2-section__title">المميز — بث مباشر</h2>
-                      {renderGrid(featuredSections.featured, "feat-")}
+                      <h2 className="lessons-v2-section__title">الأقرب موعدًا</h2>
+                      {renderGrid(featuredSections.upcoming)}
                     </section>
-                  )}
-                  <section className="lessons-v2-section">
-                    <h2 className="lessons-v2-section__title">الشائع</h2>
-                    {renderGrid(featuredSections.popular, "pop-")}
-                  </section>
-                </>
-              )}
+                    {featuredSections.featured.length > 0 && (
+                      <section className="lessons-v2-section">
+                        <h2 className="lessons-v2-section__title">المميز — بث مباشر</h2>
+                        {renderGrid(featuredSections.featured, "feat-")}
+                      </section>
+                    )}
+                    <section className="lessons-v2-section">
+                      <h2 className="lessons-v2-section__title">الشائع</h2>
+                      {renderGrid(featuredSections.popular, "pop-")}
+                    </section>
+                    {filteredMain.length > 0 && (
+                      <section className="lessons-v2-section">
+                        <h2 className="lessons-v2-section__title">
+                          {isAdmin ? `${filteredMain.length} ` : ""}{tab === "courses" ? "دورة" : tab === "women" ? "نشاط للنساء" : tab === "men" ? "درس رجالي" : "درس"}
+                        </h2>
+                        {renderGrid(filteredMain)}
+                      </section>
+                    )}
+                  </>
+                );
+              })()}
 
+              {(filters.search || filters.governorate !== "كل المحافظات") && (
               <section className="lessons-v2-section">
                 <h2 className="lessons-v2-section__title">
                   {isAdmin ? `${filtered.length} ` : ""}{tab === "courses" ? "دورة" : tab === "women" ? "نشاط للنساء" : tab === "men" ? "درس رجالي" : "درس"}
@@ -414,6 +432,7 @@ export default function LessonsPage({
                   renderGrid(filtered)
                 )}
               </section>
+              )}
 
               {filteredArchived.length > 0 && (
                 <section className="lessons-past-section" aria-labelledby="past-lessons-heading">
