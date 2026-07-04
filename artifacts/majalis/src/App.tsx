@@ -44,6 +44,7 @@ const HadithPage = lazy(() => import("@/views/HadithPage"));
 const HadithIndexPage = lazy(() => import("@/views/HadithIndexPage"));
 const HadithDaifPage = lazy(() => import("@/views/HadithDaifPage"));
 const HadithMawduPage = lazy(() => import("@/views/HadithMawduPage"));
+const TawhidPage = lazy(() => import("@/views/TawhidPage"));
 const StoriesPage = lazy(() => import("@/views/StoriesPage"));
 const AdhkarPage = lazy(() => import("@/views/AdhkarPage"));
 const QaPage = lazy(() => import("@/views/QaPage"));
@@ -308,6 +309,7 @@ function Router() {
       <Route path="/mushaf"><Redirect to="/quran" /></Route>
       <Route path="/research"><Redirect to="/fiqh-council/research" /></Route>
       {/* الفقه الإسلامي الموحّد + السيرة النبوية */}
+      <Route path="/tawhid"><SafeLazyRoute component={TawhidPage} /></Route>
       <Route path="/fiqh"><SafeLazyRoute component={FiqhPage} /></Route>
       <Route path="/seerah"><SafeLazyRoute component={SeerahPage} /></Route>
       <Route path="/quran/surah-stories/:number" component={QuranComingSoon} />

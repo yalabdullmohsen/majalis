@@ -4420,6 +4420,107 @@ html[data-theme="dark"] .tasbih-wird-pill.is-active {
   color: var(--text-body, #374151);
 }
 
+/* ── صفحة التوحيد المستقلة (/tawhid) ── */
+.tawheed-breadcrumb {
+  display: flex;
+  gap: 0.35rem;
+  align-items: center;
+  font-size: 0.78rem;
+  color: var(--text-muted, #6b7280);
+  margin-bottom: 1.25rem;
+  direction: rtl;
+}
+.tawheed-breadcrumb a { color: var(--majalis-emerald, #1a6b52); text-decoration: none; }
+.tawheed-breadcrumb a:hover { text-decoration: underline; }
+
+.tawheed-page-header {
+  background: linear-gradient(135deg, var(--majalis-emerald, #1a6b52) 0%, #0f4a38 100%);
+  color: #fff;
+  border-radius: 1rem;
+  padding: 2rem 1.5rem;
+  margin-bottom: 2rem;
+  direction: rtl;
+}
+.tawheed-page-header__title {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 900;
+  margin: 0.25rem 0 0.5rem;
+  color: #fff;
+}
+.tawheed-page-header__subtitle {
+  font-size: 0.95rem;
+  line-height: 1.85;
+  color: rgba(255,255,255,0.88);
+  margin: 0 0 1rem;
+  max-width: 64ch;
+}
+.tawheed-page-header__ayah {
+  background: rgba(255,255,255,0.12);
+  border-radius: 0.625rem;
+  padding: 0.75rem 1rem;
+  margin: 0;
+  font-family: "Amiri Quran", "Scheherazade New", serif;
+  font-size: 1rem;
+  line-height: 2;
+  color: #fff;
+  border: none;
+}
+.tawheed-page-header__ayah cite {
+  display: block;
+  font-style: normal;
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.7);
+  margin-top: 0.2rem;
+  font-family: inherit;
+}
+
+/* شارة الحديث داخل صفحة التوحيد */
+.tawheed-hadith-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.7rem;
+  line-height: 1.4;
+  color: var(--text-muted, #6b7280);
+  background: var(--bg-base, #f3f4f6);
+  border-radius: 0.35rem;
+  padding: 0.18rem 0.45rem;
+  border-right: 3px solid;
+  direction: rtl;
+}
+
+/* شبكة الروابط ذات الصلة */
+.tawheed-related-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.75rem;
+}
+.tawheed-related-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.875rem 1rem;
+  border: 1px solid var(--ds-line-color, #e5e3dd);
+  border-radius: 0.75rem;
+  background: var(--bg-card, #fff);
+  text-decoration: none;
+  transition: box-shadow 0.15s, transform 0.15s;
+  direction: rtl;
+}
+.tawheed-related-card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,.08);
+  transform: translateY(-2px);
+}
+.tawheed-related-card__label {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--majalis-emerald, #1a6b52);
+}
+.tawheed-related-card__desc {
+  font-size: 0.75rem;
+  color: var(--text-muted, #6b7280);
+}
+
 /* ════════════════════════════════════════════════════════════════════
    نظام التصميم v5 — الطبقة المتميزة
    Premium Design Layer — overrides & refinements for a light-first,
