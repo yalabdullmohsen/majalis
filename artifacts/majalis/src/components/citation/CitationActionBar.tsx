@@ -72,7 +72,10 @@ function SelectionTooltip({
       <button
         type="button"
         onMouseDown={(e) => { e.preventDefault(); onCite(selText, selStart, selEnd); setPos(null); }}
-        className="flex items-center gap-1 px-2 py-1 rounded hover:bg-emerald-700 transition-colors"
+        className="flex items-center gap-1 px-2 py-1 rounded transition-colors"
+        style={{ "--tw-hover-bg": "var(--majalis-emerald-deep)" } as React.CSSProperties}
+        onMouseEnter={(e) => { e.currentTarget.style.background = "var(--majalis-emerald-deep)"; }}
+        onMouseLeave={(e) => { e.currentTarget.style.background = ""; }}
         title="اقتبس"
       >
         📑 اقتباس
@@ -152,8 +155,8 @@ export function CitationActionBar({
   if (!src && !sourceId) return null;
 
   const btnClass = compact
-    ? "p-2 rounded-lg text-sm hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-gray-600 dark:text-gray-300"
-    : "flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-gray-600 dark:text-gray-300";
+    ? "p-2 rounded-lg text-sm transition-colors hover:bg-[var(--mn-surface-hover)]"
+    : "flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm transition-colors hover:bg-[var(--mn-surface-hover)]";
 
   return (
     <>
