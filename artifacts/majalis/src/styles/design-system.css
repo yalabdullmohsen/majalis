@@ -42,13 +42,7 @@ html {
 }
 
 :root {
-  --majalis-emerald: var(--ds-emerald);
-  --majalis-emerald-deep: var(--ds-emerald-deep);
-  --majalis-parchment: var(--ds-parchment);
-  --majalis-parchment-deep: var(--ds-parchment-deep);
-  --majalis-ink: var(--ds-ink);
-  --majalis-ink-soft: var(--ds-ink-soft);
-  --majalis-line: var(--ds-line-color);
+  /* مِشكاة: --majalis-* tokens تُعرَّف في index.css — لا تتجاوزها هنا */
   --card-radius: var(--ds-radius-lg);
   --card-padding: var(--ds-space-3);
   --card-shadow: var(--ds-shadow);

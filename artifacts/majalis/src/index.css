@@ -25,70 +25,86 @@ html {
 
 :root {
   /* ══════════════════════════════════════════════════
-     DESIGN SYSTEM v2 — الهوية البصرية الجديدة
-     جميع المتغيرات القديمة تشير إلى القيم الجديدة
+     مِشكاة — هوية بصرية — الليل هو الوضع الافتراضي
+     الذهب هو الضوء • المشربية هي الزخرفة الوحيدة
      ══════════════════════════════════════════════════ */
 
-  /* ── الألوان الأساسية ── */
-  --majalis-ink:           #2B2621;
-  --majalis-ink-soft:      #5C554C;
-  --majalis-ink-muted:     #8A847E;
-  --majalis-charcoal:      #1A1714;
-  --majalis-parchment:     #FBF8F3;
-  --majalis-parchment-deep:#F3EAD9;
-  --majalis-panel:         #FFFFFF;
-  --majalis-panel-raised:  #FBF8F3;
+  /* ── لوحة مِشكاة الأساسية ── */
+  --msk-canvas:        #171C2E;
+  --msk-canvas-1:      #1F2540;
+  --msk-canvas-2:      #262D4E;
+  --msk-canvas-glass:  rgba(23,28,46,.92);
+  --msk-manuscript:    #FAF3E4;
+  --msk-manuscript-2:  #F3E7CC;
+  --msk-gold:          #D9AE5C;
+  --msk-gold-deep:     #C49540;
+  --msk-gold-dim:      rgba(217,174,92,.12);
+  --msk-gold-glow:     rgba(217,174,92,.18);
+  --msk-gold-border:   rgba(217,174,92,.25);
+  --msk-sky:           #4FA8C9;
+  --msk-sky-dim:       rgba(79,168,201,.12);
+  --msk-text:          #F0E9DA;
+  --msk-text-2:        #B2A891;
+  --msk-text-3:        #7A7266;
+  --msk-green:         #2E8B67;
+  --msk-red:           #C1595A;
+  --msk-red-dim:       rgba(193,89,90,.15);
+  --msk-border:        rgba(217,174,92,.15);
+  --msk-border-strong: rgba(217,174,92,.28);
+  --msk-divider:       rgba(255,255,255,.05);
+  --msk-shadow-sm:     0 1px 3px rgba(0,0,0,.35);
+  --msk-shadow:        0 4px 16px rgba(0,0,0,.38), 0 1px 4px rgba(0,0,0,.22);
+  --msk-shadow-lg:     0 12px 40px rgba(0,0,0,.48);
+  --msk-shadow-gold:   0 0 28px rgba(217,174,92,.14);
 
-  /* ── الأخضر الإسلامي — v2-green ── */
-  --majalis-emerald:       #1F6F52;
-  --majalis-emerald-deep:  #154F3B;
-  --majalis-emerald-muted: rgba(31, 111, 82, 0.08);
-  --majalis-emerald-soft:  #EAF3EF;
+  /* ── جسر: --majalis-* → مِشكاة (ليل — وضع افتراضي) ── */
+  --majalis-ink:           var(--msk-text);
+  --majalis-ink-soft:      var(--msk-text-2);
+  --majalis-ink-muted:     var(--msk-text-3);
+  --majalis-charcoal:      var(--msk-text);
+  --majalis-parchment:     #FAF3E4;   /* يُستخدم كنص فاتح على الخلفيات الداكنة */
+  --majalis-parchment-deep:#F3E7CC;
+  --majalis-panel:         var(--msk-canvas-1);
+  --majalis-panel-raised:  var(--msk-canvas-2);
+  --majalis-emerald:       var(--msk-gold);
+  --majalis-emerald-deep:  var(--msk-gold-deep);
+  --majalis-emerald-muted: var(--msk-gold-dim);
+  --majalis-emerald-soft:  rgba(217,174,92,.06);
+  --majalis-blue:          var(--msk-sky);
+  --majalis-blue-deep:     #2C88A8;
+  --majalis-blue-soft:     var(--msk-sky-dim);
+  --majalis-brass:         var(--msk-gold);
+  --majalis-brass-deep:    var(--msk-gold-deep);
+  --majalis-brass-soft:    rgba(217,174,92,.06);
+  --majalis-sage:          rgba(217,174,92,.08);
+  --majalis-danger:        var(--msk-red);
+  --majalis-danger-muted:  var(--msk-red-dim);
+  --majalis-success:       var(--msk-green);
+  --majalis-warning:       #E8A42A;
+  --majalis-line:          var(--msk-border);
+  --majalis-line-strong:   var(--msk-border-strong);
+  --majalis-shadow:        var(--msk-shadow);
+  --majalis-shadow-sm:     var(--msk-shadow-sm);
+  --majalis-shadow-lg:     var(--msk-shadow-lg);
+  --majalis-shadow-xl:     0 24px 64px rgba(0,0,0,.55);
+  --majalis-gold:          var(--msk-gold);
+  --majalis-gold-light:    rgba(217,174,92,.2);
+  --majalis-ivory:         var(--msk-canvas-1);
 
-  /* ── الأزرق الهادئ (جديد) ── */
-  --majalis-blue:          #3E6E8E;
-  --majalis-blue-deep:     #2C5470;
-  --majalis-blue-soft:     #E6EEF3;
-
-  /* ── الذهب ── */
-  --majalis-brass:         #C6A059;
-  --majalis-brass-deep:    #8A6018;
-  --majalis-brass-soft:    #FBF3E2;
-
-  /* ── ألوان مساندة ── */
-  --majalis-sage:          #D4E8DB;
-  --majalis-danger:        #DC2626;
-  --majalis-danger-muted:  #FEE2E2;
-  --majalis-success:       #16A34A;
-  --majalis-warning:       #D97706;
-
-  /* ── الحدود والظلال (دافئة) ── */
-  --majalis-line:          #D8D2C7;
-  --majalis-line-strong:   #C5BDB2;
-  --majalis-shadow:        0 4px 12px rgba(43,38,33,0.08), 0 1px 3px rgba(43,38,33,0.05);
-  --majalis-shadow-sm:     0 1px 2px rgba(43,38,33,0.06);
-  --majalis-shadow-lg:     0 12px 32px rgba(43,38,33,0.10), 0 4px 10px rgba(43,38,33,0.06);
-  --majalis-shadow-xl:     0 24px 64px rgba(43,38,33,0.13), 0 8px 20px rgba(43,38,33,0.07);
-
-  /* ── الخطوط ── */
-  --font-primary:  "Cairo", "Tajawal", system-ui, sans-serif;
+  /* ── الخطوط — Almarai للواجهة، Amiri Quran للعناوين ── */
+  --font-primary:  "Almarai", "Cairo", "Tajawal", system-ui, sans-serif;
   --font-ui:       var(--font-primary);
-  --font-display:  "Cairo", system-ui, sans-serif;
+  --font-display:  "Amiri Quran", "Amiri", serif;
   --font-reading:  var(--font-primary);
   --font-body:     var(--font-primary);
   --font-quran:    "Amiri Quran", "Scheherazade New", "KFGQPC Hafs Uthmanic", serif;
 
-  /* ── نظام الحركة — Spring ── */
-  --motion-fast:   120ms cubic-bezier(0.16, 1, 0.3, 1);
-  --motion-normal: 220ms cubic-bezier(0.16, 1, 0.3, 1);
-  --motion-spring: 380ms cubic-bezier(0.34, 1.56, 0.64, 1);
-  --motion-slow:   350ms cubic-bezier(0.16, 1, 0.3, 1);
+  /* ── الحركة — تلاشٍ وهبوط (لا ارتداد) ── */
+  --motion-fast:   120ms ease-out;
+  --motion-normal: 220ms ease-out;
+  --motion-spring: 360ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --motion-slow:   350ms ease-out;
   --motion-sheet:  340ms cubic-bezier(0.32, 0.72, 0, 1);
-
-  /* ── متغيرات bridge — للتوافق مع الكود الحالي ── */
-  --majalis-ivory:      #FBF8F3;
-  --majalis-gold-light: #F5E6A3;
-  --majalis-gold:       #C6A059;
 
   /* ── الحواف الآمنة (Capacitor/iOS) ── */
   --safe-top:    env(safe-area-inset-top, 0px);
@@ -96,28 +112,28 @@ html {
   --safe-left:   env(safe-area-inset-left, 0px);
   --safe-right:  env(safe-area-inset-right, 0px);
 
-  /* ── جسر v2 ← majalis (ليُستخدم كلاهما بتطابق) ── */
-  --v2-green:        var(--majalis-emerald);
-  --v2-green-deep:   var(--majalis-emerald-deep);
-  --v2-green-soft:   var(--majalis-emerald-soft);
-  --v2-green-mid:    #5FA98A;
-  --v2-blue:         var(--majalis-blue);
-  --v2-blue-deep:    var(--majalis-blue-deep);
-  --v2-blue-soft:    var(--majalis-blue-soft);
-  --v2-gold:         var(--majalis-brass);
-  --v2-gold-soft:    var(--majalis-brass-soft);
-  --v2-ink:          var(--majalis-ink);
-  --v2-ink-2:        var(--majalis-ink-soft);
-  --v2-ink-3:        var(--majalis-ink-muted);
-  --v2-surface-0:    var(--majalis-panel);
-  --v2-surface-1:    var(--majalis-parchment);
-  --v2-surface-2:    var(--majalis-parchment-deep);
-  --v2-border:       var(--majalis-line);
-  --v2-border-soft:  #EDE8E0;
-  --v2-shadow-1:     var(--majalis-shadow-sm);
-  --v2-shadow-2:     var(--majalis-shadow);
-  --v2-shadow-3:     var(--majalis-shadow-lg);
-  --v2-shadow-4:     var(--majalis-shadow-xl);
+  /* ── جسر v2 ── */
+  --v2-green:        var(--msk-gold);
+  --v2-green-deep:   var(--msk-gold-deep);
+  --v2-green-soft:   rgba(217,174,92,.06);
+  --v2-green-mid:    rgba(217,174,92,.40);
+  --v2-blue:         var(--msk-sky);
+  --v2-blue-deep:    #2C88A8;
+  --v2-blue-soft:    var(--msk-sky-dim);
+  --v2-gold:         var(--msk-gold);
+  --v2-gold-soft:    rgba(217,174,92,.06);
+  --v2-ink:          var(--msk-text);
+  --v2-ink-2:        var(--msk-text-2);
+  --v2-ink-3:        var(--msk-text-3);
+  --v2-surface-0:    var(--msk-canvas-1);
+  --v2-surface-1:    var(--msk-canvas);
+  --v2-surface-2:    var(--msk-canvas-2);
+  --v2-border:       var(--msk-border);
+  --v2-border-soft:  var(--msk-divider);
+  --v2-shadow-1:     var(--msk-shadow-sm);
+  --v2-shadow-2:     var(--msk-shadow);
+  --v2-shadow-3:     var(--msk-shadow-lg);
+  --v2-shadow-4:     0 24px 64px rgba(0,0,0,.55);
   --v2-r-sm:         8px;
   --v2-r-md:         12px;
   --v2-r-lg:         16px;
@@ -130,31 +146,115 @@ html {
 }
 
 html[data-theme="dark"] {
-  /* ══ وضع داكن — معماري أصيل لا مجرد عكس للألوان ══ */
-  --majalis-ink:           #F4F1EC;   /* أبيض دافئ — لا بارد */
-  --majalis-ink-soft:      #B5ADA6;
-  --majalis-ink-muted:     #7A736C;
-  --majalis-charcoal:      #F4F1EC;
-  --majalis-parchment:     #0D1410;   /* خلفية خضراء داكنة عميقة */
-  --majalis-parchment-deep:#151E1A;
-  --majalis-panel:         #1A2820;   /* سطح البطاقات */
-  --majalis-panel-raised:  #203028;
-  --majalis-emerald:       #4DB88E;   /* أكثر إشراقاً في الداكن */
-  --majalis-emerald-deep:  #8FD4B4;
-  --majalis-emerald-muted: rgba(77, 184, 142, 0.1);
-  --majalis-emerald-soft:  #0F2A20;
-  --majalis-brass:         #D4AD50;
-  --majalis-brass-deep:    #EDD278;
-  --majalis-brass-soft:    #231A08;
-  --majalis-sage:          #1E3228;
-  --majalis-danger:        #F87171;
-  --majalis-danger-muted:  #1F1010;
-  --majalis-line:          #263D33;   /* حدود داكنة */
-  --majalis-line-strong:   #304D42;
-  --majalis-shadow:        0 4px 16px rgba(0,0,0,0.3), 0 1px 4px rgba(0,0,0,0.2);
-  --majalis-shadow-sm:     0 1px 3px rgba(0,0,0,0.3);
-  --majalis-shadow-lg:     0 12px 40px rgba(0,0,0,0.4);
-  --majalis-shadow-xl:     0 24px 64px rgba(0,0,0,0.5);
+  /* ── وضع الليل — مطابق للافتراضي مِشكاة (navy/gold) ── */
+  --msk-canvas:        #171C2E;
+  --msk-canvas-1:      #1F2540;
+  --msk-canvas-2:      #262D4E;
+  --msk-canvas-glass:  rgba(23,28,46,.92);
+  --msk-gold:          #D9AE5C;
+  --msk-gold-deep:     #C49540;
+  --msk-gold-dim:      rgba(217,174,92,.12);
+  --msk-text:          #F0E9DA;
+  --msk-text-2:        #B2A891;
+  --msk-text-3:        #7A7266;
+  --msk-border:        rgba(217,174,92,.15);
+  --msk-border-strong: rgba(217,174,92,.28);
+  --majalis-ink:       var(--msk-text);
+  --majalis-ink-soft:  var(--msk-text-2);
+  --majalis-ink-muted: var(--msk-text-3);
+  --majalis-panel:     var(--msk-canvas-1);
+  --majalis-panel-raised: var(--msk-canvas-2);
+  --majalis-emerald:   var(--msk-gold);
+  --majalis-emerald-deep: var(--msk-gold-deep);
+  --majalis-emerald-muted: var(--msk-gold-dim);
+  --majalis-emerald-soft:  rgba(217,174,92,.06);
+  --majalis-brass:     var(--msk-gold);
+  --majalis-sage:      rgba(217,174,92,.08);
+  --majalis-line:      var(--msk-border);
+  --majalis-line-strong: var(--msk-border-strong);
+  --majalis-shadow:    0 4px 16px rgba(0,0,0,.38), 0 1px 4px rgba(0,0,0,.22);
+  --majalis-shadow-sm: 0 1px 3px rgba(0,0,0,.35);
+  --majalis-shadow-lg: 0 12px 40px rgba(0,0,0,.48);
+  --majalis-shadow-xl: 0 24px 64px rgba(0,0,0,.55);
+}
+
+/* ══ وضع النهار — المخطوطة الدافئة ══ */
+html[data-theme="light"] {
+  --msk-canvas:        #FAFAF7;
+  --msk-canvas-1:      #FFFFFF;
+  --msk-canvas-2:      #F3EFE8;
+  --msk-canvas-glass:  rgba(250,250,247,.94);
+  --msk-gold:          #9A7128;
+  --msk-gold-deep:     #6E4F14;
+  --msk-gold-dim:      rgba(154,113,40,.10);
+  --msk-gold-glow:     rgba(154,113,40,.12);
+  --msk-gold-border:   rgba(154,113,40,.20);
+  --msk-sky:           #1E7A9A;
+  --msk-sky-dim:       rgba(30,122,154,.10);
+  --msk-text:          #2B2420;
+  --msk-text-2:        #6B6152;
+  --msk-text-3:        #9A9086;
+  --msk-green:         #1F6F52;
+  --msk-red:           #9B1C1C;
+  --msk-red-dim:       rgba(155,28,28,.08);
+  --msk-border:        #DDD5C7;
+  --msk-border-strong: #C5BAB0;
+  --msk-divider:       rgba(0,0,0,.07);
+  --msk-shadow-sm:     0 1px 2px rgba(43,36,32,.06);
+  --msk-shadow:        0 4px 12px rgba(43,36,32,.08), 0 1px 3px rgba(43,36,32,.05);
+  --msk-shadow-lg:     0 12px 32px rgba(43,36,32,.10);
+  --msk-shadow-gold:   0 0 24px rgba(154,113,40,.10);
+
+  --majalis-ink:           #2B2420;
+  --majalis-ink-soft:      #6B6152;
+  --majalis-ink-muted:     #9A9086;
+  --majalis-charcoal:      #1A1714;
+  --majalis-parchment:     #FAF3E4;
+  --majalis-parchment-deep:#F3E7CC;
+  --majalis-panel:         #FFFFFF;
+  --majalis-panel-raised:  #F3EFE8;
+  --majalis-emerald:       #9A7128;
+  --majalis-emerald-deep:  #6E4F14;
+  --majalis-emerald-muted: rgba(154,113,40,.10);
+  --majalis-emerald-soft:  #F5EDD8;
+  --majalis-blue:          #1E7A9A;
+  --majalis-blue-deep:     #145878;
+  --majalis-blue-soft:     rgba(30,122,154,.10);
+  --majalis-brass:         #9A7128;
+  --majalis-brass-deep:    #6E4F14;
+  --majalis-brass-soft:    rgba(154,113,40,.06);
+  --majalis-sage:          #EAF3EF;
+  --majalis-danger:        #9B1C1C;
+  --majalis-danger-muted:  rgba(155,28,28,.08);
+  --majalis-success:       #1F6F52;
+  --majalis-warning:       #B45309;
+  --majalis-line:          #DDD5C7;
+  --majalis-line-strong:   #C5BAB0;
+  --majalis-shadow:        0 4px 12px rgba(43,36,32,.08), 0 1px 3px rgba(43,36,32,.05);
+  --majalis-shadow-sm:     0 1px 2px rgba(43,36,32,.06);
+  --majalis-shadow-lg:     0 12px 32px rgba(43,36,32,.10);
+  --majalis-shadow-xl:     0 24px 64px rgba(43,36,32,.13);
+  --majalis-gold:          #9A7128;
+  --majalis-gold-light:    rgba(154,113,40,.18);
+  --majalis-ivory:         #FFFFFF;
+  --v2-green:        #9A7128;
+  --v2-green-deep:   #6E4F14;
+  --v2-green-soft:   rgba(154,113,40,.06);
+  --v2-green-mid:    rgba(154,113,40,.4);
+  --v2-gold:         #9A7128;
+  --v2-gold-soft:    rgba(154,113,40,.06);
+  --v2-ink:          #2B2420;
+  --v2-ink-2:        #6B6152;
+  --v2-ink-3:        #9A9086;
+  --v2-surface-0:    #FFFFFF;
+  --v2-surface-1:    #FAFAF7;
+  --v2-surface-2:    #F3EFE8;
+  --v2-border:       #DDD5C7;
+  --v2-border-soft:  rgba(0,0,0,.07);
+  --v2-shadow-1:     0 1px 2px rgba(43,36,32,.06);
+  --v2-shadow-2:     0 4px 12px rgba(43,36,32,.08);
+  --v2-shadow-3:     0 12px 32px rgba(43,36,32,.10);
+  --v2-shadow-4:     0 24px 64px rgba(43,36,32,.13);
 }
 
 html[data-font="default"] {
@@ -184,63 +284,68 @@ html[data-font="naskh"] {
   --mn-chip-py:         0.4rem;
   --mn-chip-px:         0.85rem;
   --mn-chip-font:       0.78rem;
-  --mn-surface-hover:   var(--majalis-emerald-muted);
-  --mn-surface-active:  var(--majalis-sage);
-  --mn-text-default:    var(--majalis-ink-soft);
-  --mn-text-active:     var(--majalis-emerald-deep);
-  --mn-border-default:  var(--majalis-line);
-  --mn-border-active:   var(--majalis-emerald);
+  --mn-surface-hover:   var(--msk-gold-dim);
+  --mn-surface-active:  rgba(217,174,92,.08);
+  --mn-text-default:    var(--msk-text-2);
+  --mn-text-active:     var(--msk-gold);
+  --mn-border-default:  var(--msk-border);
+  --mn-border-active:   var(--msk-gold);
   --mn-popup-radius:    0.75rem;
-  --mn-popup-shadow:    0 8px 32px rgba(36, 31, 24, 0.12);
+  --mn-popup-shadow:    0 8px 32px rgba(0,0,0,.32);
   --mn-separator-color: var(--majalis-line);
   --mn-transition:      150ms cubic-bezier(0.4, 0, 0.2, 1);
 
   /* alias للتوافق مع كود قديم */
   --majalis-border: var(--majalis-line);
 
-  /* ══ جسر shadcn → majalis (يجعل Radix UI يرث الهوية البصرية) ══ */
-  --background:          var(--majalis-parchment);
-  --foreground:          var(--majalis-ink);
-  --card:                var(--majalis-panel);
-  --card-foreground:     var(--majalis-ink);
-  --popover:             var(--majalis-panel);
-  --popover-foreground:  var(--majalis-ink);
-  --primary:             var(--majalis-emerald);
-  --primary-foreground:  #fff;
-  --secondary:           var(--majalis-parchment-deep);
-  --secondary-foreground: var(--majalis-ink);
-  --muted:               var(--majalis-parchment-deep);
-  --muted-foreground:    var(--majalis-ink-soft);
-  --accent:              var(--majalis-sage);
-  --accent-foreground:   var(--majalis-emerald-deep);
-  --destructive:         #991b1b;
-  --border:              var(--majalis-line);
-  --input:               var(--majalis-line);
-  --ring:                var(--majalis-emerald);
+  /* ══ جسر shadcn → مِشكاة ══ */
+  --background:          var(--msk-canvas);
+  --foreground:          var(--msk-text);
+  --card:                var(--msk-canvas-1);
+  --card-foreground:     var(--msk-text);
+  --popover:             var(--msk-canvas-1);
+  --popover-foreground:  var(--msk-text);
+  --primary:             var(--msk-gold);
+  --primary-foreground:  var(--msk-canvas);
+  --secondary:           var(--msk-canvas-2);
+  --secondary-foreground:var(--msk-text-2);
+  --muted:               var(--msk-canvas-2);
+  --muted-foreground:    var(--msk-text-3);
+  --accent:              var(--msk-gold-dim);
+  --accent-foreground:   var(--msk-gold);
+  --destructive:         var(--msk-red);
+  --border:              var(--msk-border);
+  --input:               var(--msk-border);
+  --ring:                var(--msk-gold);
 }
 
-html[data-theme="dark"] {
-  /* ══ جسر shadcn → majalis (وضع داكن) ══ */
-  --background:          var(--majalis-parchment);
-  --foreground:          var(--majalis-ink);
-  --card:                var(--majalis-panel);
-  --card-foreground:     var(--majalis-ink);
-  --popover:             var(--majalis-panel);
-  --popover-foreground:  var(--majalis-ink);
-  --muted:               var(--majalis-parchment-deep);
-  --muted-foreground:    var(--majalis-ink-soft);
-  --accent:              var(--majalis-sage);
-  --accent-foreground:   var(--majalis-emerald-deep);
-  --border:              var(--majalis-line);
-  --input:               var(--majalis-line);
-  --ring:                var(--majalis-emerald);
+/* shadcn bridge للنهار — يرث من light tokens */
+html[data-theme="light"] {
+  --background:          var(--msk-canvas);
+  --foreground:          var(--msk-text);
+  --card:                var(--msk-canvas-1);
+  --card-foreground:     var(--msk-text);
+  --popover:             var(--msk-canvas-1);
+  --popover-foreground:  var(--msk-text);
+  --primary:             var(--msk-gold);
+  --primary-foreground:  #FAF3E4;
+  --secondary:           var(--msk-canvas-2);
+  --secondary-foreground:var(--msk-text-2);
+  --muted:               var(--msk-canvas-2);
+  --muted-foreground:    var(--msk-text-3);
+  --accent:              var(--msk-gold-dim);
+  --accent-foreground:   var(--msk-gold);
+  --destructive:         var(--msk-red);
+  --border:              var(--msk-border);
+  --input:               var(--msk-border);
+  --ring:                var(--msk-gold);
 }
 
 body {
   font-family: var(--font-body);
-  font-weight: 600;
-  background: var(--majalis-parchment);
-  color: var(--majalis-ink);
+  font-weight: 400;
+  background: var(--msk-canvas);
+  color: var(--msk-text);
   line-height: 1.7;
   letter-spacing: 0;
   text-rendering: optimizeLegibility;
@@ -251,44 +356,45 @@ body {
   max-width: 100%;
 }
 
-html[data-theme="dark"] img:not(.navbar-logo) {
-  filter: brightness(0.92) contrast(1.05);
+/* في وضع الليل (افتراضي) — الصور تعمل بشكل طبيعي على الخلفية الداكنة */
+html[data-theme="light"] img:not(.navbar-logo) {
+  filter: none;
 }
 
 html[data-theme="dark"] input,
 html[data-theme="dark"] textarea,
 html[data-theme="dark"] select {
-  background: var(--majalis-panel);
-  color: var(--majalis-ink);
-  border-color: var(--majalis-line);
+  background: var(--msk-canvas-1);
+  color: var(--msk-text);
+  border-color: var(--msk-border);
 }
 
 html[data-theme="dark"] .app-shell,
 html[data-theme="dark"] .app-main,
 html[data-theme="dark"] .legal-page,
 html[data-theme="dark"] .page-shell {
-  background: var(--majalis-parchment);
-  color: var(--majalis-ink);
+  background: var(--msk-canvas);
+  color: var(--msk-text);
 }
 
 html[data-theme="dark"] .navbar-v3 {
-  background: var(--majalis-parchment) !important;
-  border-color: var(--majalis-line) !important;
+  background: var(--msk-canvas-glass) !important;
+  border-color: var(--msk-border) !important;
 }
 
 html[data-theme="dark"] .legal-page-hero {
   background:
-    radial-gradient(circle at top right, rgba(79, 181, 142, 0.2), transparent 20rem),
-    linear-gradient(135deg, #08110e, #14251f) !important;
-  color: var(--majalis-ink) !important;
+    radial-gradient(circle at top right, rgba(217,174,92,.12), transparent 20rem),
+    linear-gradient(135deg, #0F1220, #171C2E) !important;
+  color: var(--msk-text) !important;
 }
 
 html[data-theme="dark"] .legal-page-body,
 html[data-theme="dark"] .legal-section,
 html[data-theme="dark"] .settings-account-card,
 html[data-theme="dark"] .settings-choice {
-  background: var(--majalis-panel);
-  color: var(--majalis-ink);
+  background: var(--msk-canvas-1);
+  color: var(--msk-text);
 }
 
 .home-section-error {
@@ -495,18 +601,37 @@ input, textarea, select { font-family: inherit; }
   to { transform: rotate(360deg); }
 }
 
+/* ── مِشكاة: حركة — تلاشٍ وهبوط (لا ارتداد) ── */
+@keyframes msk-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes msk-settle {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes msk-settle-sm {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes msk-gold-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 var(--msk-gold-glow); }
+  50%       { box-shadow: 0 0 16px 4px var(--msk-gold-glow); }
+}
+
 .home-page {
-  background:
-    radial-gradient(circle at top right, rgba(176, 141, 46, 0.14), transparent 32rem),
-    linear-gradient(180deg, #fbf7ed 0%, var(--majalis-parchment) 42%, #f6eedf 100%);
+  background: var(--msk-canvas);
   min-height: 100vh;
   overflow-x: hidden;
 }
 
-html[data-theme="dark"] .home-page {
+html[data-theme="light"] .home-page {
   background:
-    radial-gradient(circle at top right, rgba(79, 181, 142, 0.14), transparent 32rem),
-    linear-gradient(180deg, #0d1713 0%, var(--majalis-parchment) 48%, #101c17 100%);
+    radial-gradient(circle at top right, rgba(154,113,40,.07), transparent 32rem),
+    linear-gradient(180deg, #FAFAF7 0%, #FAF3E4 52%, #F5ECD8 100%);
 }
 
 .home-container {
@@ -517,10 +642,11 @@ html[data-theme="dark"] .home-page {
 
 .home-hero {
   position: relative;
-  color: var(--majalis-parchment);
+  color: var(--msk-manuscript);
   background:
-    radial-gradient(circle at 18% 22%, rgba(176, 141, 46, 0.24), transparent 17rem),
-    linear-gradient(135deg, var(--majalis-emerald-deep) 0%, var(--majalis-emerald) 48%, #0D3322 100%);
+    radial-gradient(ellipse at 88% 8%, rgba(217,174,92,.15) 0%, transparent 48%),
+    radial-gradient(ellipse at 12% 88%, rgba(79,168,201,.07) 0%, transparent 38%),
+    #1B2240;
   isolation: isolate;
 }
 
@@ -530,18 +656,17 @@ html[data-theme="dark"] .home-page {
   inset-inline: 0;
   bottom: -1px;
   height: 90px;
-  background: linear-gradient(180deg, transparent, var(--majalis-parchment));
+  background: linear-gradient(180deg, transparent, var(--msk-canvas));
   z-index: -1;
 }
 
+/* مشربية — النمط الهندسي الإسلامي الوحيد في مِشكاة */
 .home-hero-pattern {
   position: absolute;
   inset: 0;
-  opacity: 0.1;
-  background-image:
-    linear-gradient(30deg, rgba(250, 245, 234, 0.42) 12%, transparent 12.5%, transparent 87%, rgba(250, 245, 234, 0.42) 87.5%, rgba(250, 245, 234, 0.42)),
-    linear-gradient(150deg, rgba(250, 245, 234, 0.42) 12%, transparent 12.5%, transparent 87%, rgba(250, 245, 234, 0.42) 87.5%, rgba(250, 245, 234, 0.42));
-  background-size: 64px 112px;
+  opacity: 0.065;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Crect fill='none' stroke='white' stroke-width='0.7' x='0.4' y='0.4' width='47.2' height='47.2'/%3E%3Cpolygon points='14,0.4 34,0.4 47.6,14 47.6,34 34,47.6 14,47.6 0.4,34 0.4,14' fill='none' stroke='white' stroke-width='0.7'/%3E%3Crect fill='none' stroke='white' stroke-width='0.45' x='14' y='14' width='20' height='20'/%3E%3Ccircle cx='24' cy='24' r='3.5' fill='none' stroke='white' stroke-width='0.45'/%3E%3C/svg%3E");
+  background-size: 48px 48px;
 }
 
 .home-hero-grid {
@@ -555,6 +680,11 @@ html[data-theme="dark"] .home-page {
 
 .home-hero-copy {
   max-width: 720px;
+  animation: msk-settle 0.6s ease-out both;
+}
+
+.home-hero-card {
+  animation: msk-settle 0.7s 0.12s ease-out both;
 }
 
 .home-kicker,
@@ -677,14 +807,14 @@ html[data-theme="dark"] .home-page {
 
 .home-hero-card {
   position: relative;
-  border: 1px solid rgba(250, 245, 234, 0.18);
+  border: 1px solid var(--msk-gold-border);
   border-radius: 2rem;
   padding: clamp(1.35rem, 3vw, 2rem);
   background:
-    linear-gradient(160deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.04)),
-    rgba(9, 38, 31, 0.58);
-  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.28);
-  backdrop-filter: blur(12px);
+    linear-gradient(160deg, rgba(217,174,92,.10), rgba(217,174,92,.03)),
+    rgba(23,28,46,.75);
+  box-shadow: 0 28px 80px rgba(0,0,0,.32), var(--msk-shadow-gold);
+  backdrop-filter: blur(16px);
 }
 
 .home-hero-card::before {
@@ -849,7 +979,7 @@ html[data-theme="dark"] .home-page {
 }
 
 .home-section-head h2 {
-  color: var(--majalis-emerald-deep);
+  color: var(--msk-gold);
   font-family: var(--font-body);
   font-size: clamp(1.08rem, 2.24vw, 1.48rem);
   font-weight: 700;
@@ -859,17 +989,24 @@ html[data-theme="dark"] .home-page {
 
 .home-section-head p {
   max-width: 40rem;
+  color: var(--msk-text-2);
 }
 
 .home-section-link {
   flex-shrink: 0;
-  color: var(--majalis-brass-deep);
-  border: 1px solid var(--majalis-line);
+  color: var(--msk-gold);
+  border: 1px solid var(--msk-gold-border);
   border-radius: 999px;
   padding: 0.48rem 0.95rem;
   font-size: 0.86rem;
-  font-weight: 800;
-  background: rgba(255, 255, 255, 0.62);
+  font-weight: 700;
+  background: var(--msk-gold-dim);
+  transition: background var(--motion-fast), border-color var(--motion-fast);
+}
+
+.home-section-link:hover {
+  background: rgba(217,174,92,.18);
+  border-color: var(--msk-gold);
 }
 
 .home-lessons-grid,
@@ -8869,28 +9006,33 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 }
 
 .lesson-unified-card {
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border);
   border-radius: 0.85rem;
-  background: linear-gradient(180deg, #fafaf8 0%, #f4f4f1 100%);
+  background: var(--msk-canvas-1);
   overflow: hidden;
-  box-shadow: 0 1px 2px rgba(26, 60, 46, 0.04);
+  box-shadow: var(--msk-shadow-sm);
   display: flex;
   flex-direction: column;
   height: 100%;
-  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  transition: box-shadow var(--motion-normal), border-color var(--motion-normal);
+}
+
+.lesson-unified-card:hover {
+  box-shadow: var(--msk-shadow), var(--msk-shadow-gold);
+  border-color: var(--msk-gold-border);
 }
 
 .lesson-unified-card--today {
-  border-color: rgba(26, 60, 46, 0.35);
-  box-shadow: 0 2px 8px rgba(26, 60, 46, 0.08);
+  border-color: var(--msk-gold-border);
+  box-shadow: var(--msk-shadow-sm), var(--msk-shadow-gold);
 }
 
 .lesson-unified-card--soon {
-  border-color: rgba(26, 60, 46, 0.22);
+  border-color: rgba(217,174,92,.18);
 }
 
 .lesson-unified-card--archived {
-  opacity: 0.72;
+  opacity: 0.6;
 }
 
 .lesson-unified-card__header {
@@ -8899,13 +9041,15 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
   justify-content: space-between;
   gap: 0.5rem;
   padding: 0.65rem 1rem;
-  background: var(--majalis-emerald-deep);
-  color: var(--majalis-parchment);
+  background: linear-gradient(135deg, var(--msk-canvas-2), #222A48);
+  color: var(--msk-manuscript);
+  border-bottom: 1px solid var(--msk-gold-border);
 }
 
 .lesson-unified-card__category {
   font-size: 0.78rem;
   font-weight: 700;
+  color: var(--msk-gold);
 }
 
 .lesson-unified-card__status {
@@ -8913,16 +9057,16 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
   font-weight: 700;
   padding: 0.2rem 0.55rem;
   border-radius: 999px;
-  background: rgba(212, 175, 95, 0.2);
-  color: #f5e6c8;
-  border: 1px solid rgba(212, 175, 95, 0.32);
+  background: var(--msk-gold-dim);
+  color: var(--msk-gold);
+  border: 1px solid var(--msk-gold-border);
   white-space: nowrap;
 }
 
 .lesson-unified-card--today .lesson-unified-card__status {
-  background: rgba(255, 255, 255, 0.18);
-  border-color: rgba(255, 255, 255, 0.35);
-  color: #fff;
+  background: var(--msk-gold);
+  border-color: var(--msk-gold);
+  color: var(--msk-canvas);
 }
 
 .lesson-unified-card__body {
@@ -9461,7 +9605,7 @@ body:not(.mobile-nav-body-lock) .mobile-nav-layer {
   align-items: center;
   gap: 0.55rem;
   text-decoration: none;
-  color: var(--majalis-emerald-deep);
+  color: var(--msk-gold);
   min-width: 0;
 }
 
@@ -9480,7 +9624,7 @@ body:not(.mobile-nav-body-lock) .mobile-nav-layer {
 
 html[data-theme="dark"] .navbar-search-submit,
 html[data-theme="dark"] .navbar-login {
-  color: #07110e;
+  color: var(--msk-canvas);
 }
 
 .navbar-login {
@@ -9880,13 +10024,13 @@ body.mobile-nav-body-lock {
 }
 
 html[data-theme="dark"] .side-nav-drawer--v2 {
-  background: #1a1814;
-  border-color: #3a3530;
+  background: var(--msk-canvas-1);
+  border-color: var(--msk-border);
 }
 
 html[data-theme="dark"] .side-nav-link--v2.is-active {
-  background: #1a3d30;
-  color: #9fd4bc;
+  background: var(--msk-gold-dim);
+  color: var(--msk-gold);
 }
 
 body.side-nav-open {
@@ -13052,28 +13196,28 @@ body.has-assistant-fab .app-main {
   --ds-r-2xl: 2.5rem;
   --ds-r-full: 999px;
 
-  --ds-shadow-xs: 0 1px 4px rgba(36, 31, 24, 0.05);
-  --ds-shadow-sm: 0 4px 14px rgba(36, 31, 24, 0.07);
-  --ds-shadow-md: 0 10px 30px rgba(36, 31, 24, 0.10);
-  --ds-shadow-lg: 0 20px 52px rgba(36, 31, 24, 0.13);
-  --ds-shadow-xl: 0 32px 72px rgba(36, 31, 24, 0.16);
+  --ds-shadow-xs: 0 1px 4px rgba(0,0,0,.28);
+  --ds-shadow-sm: 0 4px 14px rgba(0,0,0,.32);
+  --ds-shadow-md: 0 10px 30px rgba(0,0,0,.36);
+  --ds-shadow-lg: 0 20px 52px rgba(0,0,0,.42);
+  --ds-shadow-xl: 0 32px 72px rgba(0,0,0,.48);
 
   --ds-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --ds-t-fast: 0.14s var(--ds-ease);
   --ds-t-mid: 0.22s var(--ds-ease);
 
-  --ds-gold-grad: linear-gradient(135deg, #D6B862 0%, #C6A059 55%, #A07840 100%);
-  --ds-emerald-grad: linear-gradient(135deg, #5FA98A 0%, #1F6F52 55%, #154F3B 100%);
-  --ds-hero-grad: linear-gradient(155deg, #0a2b22 0%, #154F3B 42%, #1F6F52 72%, #0d3526 100%);
+  --ds-gold-grad: linear-gradient(135deg, #E2BC6A 0%, #D9AE5C 55%, #C49540 100%);
+  --ds-emerald-grad: linear-gradient(135deg, #E2BC6A 0%, #D9AE5C 55%, #C49540 100%);
+  --ds-hero-grad: linear-gradient(155deg, #0F1220 0%, #171C2E 42%, #1F2540 72%, #131829 100%);
 }
 
 html[data-theme="dark"] {
-  --ds-shadow-xs: 0 1px 4px rgba(0,0,0,.20);
-  --ds-shadow-sm: 0 4px 14px rgba(0,0,0,.28);
-  --ds-shadow-md: 0 10px 30px rgba(0,0,0,.34);
-  --ds-shadow-lg: 0 20px 52px rgba(0,0,0,.40);
-  --ds-shadow-xl: 0 32px 72px rgba(0,0,0,.46);
-  --ds-hero-grad: linear-gradient(155deg, #060f0c 0%, #0e2018 42%, #132c22 72%, #080f0c 100%);
+  --ds-shadow-xs: 0 1px 4px rgba(0,0,0,.28);
+  --ds-shadow-sm: 0 4px 14px rgba(0,0,0,.34);
+  --ds-shadow-md: 0 10px 30px rgba(0,0,0,.40);
+  --ds-shadow-lg: 0 20px 52px rgba(0,0,0,.46);
+  --ds-shadow-xl: 0 32px 72px rgba(0,0,0,.52);
+  --ds-hero-grad: linear-gradient(155deg, #0F1220 0%, #171C2E 42%, #1F2540 72%, #131829 100%);
 }
 
 /* ─── Phase 1: Unified Button Component ───────────────────── */
@@ -13103,25 +13247,26 @@ html[data-theme="dark"] {
 .ds-btn-lg  { min-height: 52px; padding: 0.75rem 1.75rem; font-size: 1rem; }
 
 .ds-btn-primary {
-  background: var(--ds-emerald-grad);
-  color: #fff;
-  box-shadow: 0 4px 18px rgba(31, 110, 84, 0.28);
+  background: var(--ds-gold-grad);
+  color: var(--msk-canvas);
+  box-shadow: 0 4px 18px var(--msk-gold-glow);
+  font-weight: 700;
 }
-.ds-btn-primary:hover { box-shadow: 0 8px 28px rgba(31, 110, 84, 0.40); }
+.ds-btn-primary:hover { box-shadow: 0 8px 28px var(--msk-gold-glow); }
 
 .ds-btn-gold {
   background: var(--ds-gold-grad);
-  color: #241F18;
-  box-shadow: 0 4px 18px rgba(176, 141, 46, 0.26);
+  color: var(--msk-canvas);
+  box-shadow: 0 4px 18px var(--msk-gold-glow);
 }
-.ds-btn-gold:hover { box-shadow: 0 8px 28px rgba(176, 141, 46, 0.38); }
+.ds-btn-gold:hover { box-shadow: 0 8px 28px var(--msk-gold-glow); }
 
 .ds-btn-ghost {
   background: transparent;
-  color: var(--majalis-emerald);
-  border: 1.5px solid var(--majalis-line);
+  color: var(--msk-gold);
+  border: 1.5px solid var(--msk-gold-border);
 }
-.ds-btn-ghost:hover { background: var(--majalis-sage); border-color: var(--majalis-emerald); }
+.ds-btn-ghost:hover { background: var(--msk-gold-dim); border-color: var(--msk-gold); }
 
 /* ─── Phase 1: Unified Card Component ────────────────────── */
 .ds-card {
@@ -13417,18 +13562,25 @@ html[data-theme="dark"] {
 }
 
 /* ─── Phase 2: Navbar polish ──────────────────────────────── */
+/* مِشكاة navbar — زجاج ليلي بافتراضي */
 .navbar-v3 {
-  background: rgba(251, 248, 243, 0.92) !important;
-  backdrop-filter: blur(16px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
-  border-bottom: 1px solid rgba(216, 210, 199, 0.6) !important;
-  box-shadow: 0 1px 12px rgba(43, 38, 33, 0.06) !important;
+  background: var(--msk-canvas-glass) !important;
+  backdrop-filter: blur(18px) saturate(1.6) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(1.6) !important;
+  border-bottom: 1px solid var(--msk-border) !important;
+  box-shadow: 0 1px 20px rgba(0,0,0,.28) !important;
 }
 
 html[data-theme="dark"] .navbar-v3 {
-  background: rgba(10, 18, 14, 0.94) !important;
-  border-color: rgba(38, 61, 51, 0.6) !important;
-  box-shadow: 0 2px 18px rgba(0,0,0,.38) !important;
+  background: var(--msk-canvas-glass) !important;
+  border-color: var(--msk-border) !important;
+  box-shadow: 0 2px 20px rgba(0,0,0,.38) !important;
+}
+
+html[data-theme="light"] .navbar-v3 {
+  background: rgba(250,250,247,.94) !important;
+  border-color: rgba(221,213,199,.7) !important;
+  box-shadow: 0 1px 12px rgba(43,36,32,.06) !important;
 }
 
 /* ─── Phase 3: Islamic Decorative Elements ─────────────────── */
@@ -13726,23 +13878,25 @@ html[data-theme="dark"] .navbar-v3 {
 }
 .home-lessons-tab {
   padding: 0.35rem 0.9rem;
-  border: 1px solid var(--ds-line-color, #e5e7eb);
+  border: 1px solid var(--msk-border);
   border-radius: 2rem;
-  background: #fff;
+  background: var(--msk-canvas-1);
   font-size: 0.82rem;
   font-weight: 600;
-  color: var(--majalis-ink-soft, #6b7280);
+  color: var(--msk-text-2);
   cursor: pointer;
-  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  transition: background var(--motion-fast), color var(--motion-fast), border-color var(--motion-fast);
 }
 .home-lessons-tab:hover {
-  border-color: var(--majalis-emerald, #2d6a4f);
-  color: var(--majalis-emerald, #2d6a4f);
+  border-color: var(--msk-gold-border);
+  color: var(--msk-gold);
+  background: var(--msk-gold-dim);
 }
 .home-lessons-tab.is-active {
-  background: var(--majalis-emerald, #2d6a4f);
-  border-color: var(--majalis-emerald, #2d6a4f);
-  color: #fff;
+  background: var(--msk-gold);
+  border-color: var(--msk-gold);
+  color: var(--msk-canvas);
+  font-weight: 700;
 }
 
 /* ── Sunrise prayer cell ── */
@@ -14635,9 +14789,11 @@ html[data-theme="dark"] .navbar-v3 {
     z-index: 200;
     height: calc(var(--bottom-nav-h) + env(safe-area-inset-bottom, 0px));
     padding-bottom: env(safe-area-inset-bottom, 0px);
-    background: var(--majalis-panel, #fff);
-    border-top: 1px solid var(--majalis-line, #e5ddd0);
-    box-shadow: 0 -2px 12px rgba(36, 31, 24, 0.08);
+    background: var(--msk-canvas-glass);
+    backdrop-filter: blur(16px) saturate(1.4);
+    -webkit-backdrop-filter: blur(16px) saturate(1.4);
+    border-top: 1px solid var(--msk-border);
+    box-shadow: 0 -2px 20px rgba(0,0,0,.28);
   }
 
   /* ── Tab item ── */
@@ -14677,15 +14833,15 @@ html[data-theme="dark"] .navbar-v3 {
 
   /* ── Active state — pill indicator (iOS/MD3 style) ── */
   .bottom-nav__tab.is-active {
-    color: var(--majalis-emerald-deep, #164e3c);
+    color: var(--msk-gold);
   }
 
   .bottom-nav__tab.is-active .bottom-nav__tab-icon {
-    background: rgba(22, 78, 60, 0.1);
+    background: var(--msk-gold-dim);
   }
 
   .bottom-nav__tab:focus-visible {
-    outline: 2px solid var(--majalis-emerald);
+    outline: 2px solid var(--msk-gold);
     outline-offset: -2px;
     border-radius: 0.5rem;
   }
@@ -14843,19 +14999,23 @@ html[data-theme="dark"] .navbar-v3 {
    ================================================================ */
 
 html[data-theme="dark"] .bottom-nav {
-  background: var(--majalis-panel, #111a15);
-  border-top-color: var(--majalis-line, #2a3d33);
-  box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.25);
+  background: var(--msk-canvas-glass);
+  border-top-color: var(--msk-border);
+  box-shadow: 0 -2px 16px rgba(0,0,0,.32);
 }
 
 html[data-theme="dark"] .home-search-strip {
-  background: var(--majalis-parchment, #111a15);
-  border-bottom-color: var(--majalis-line, #2a3d33);
+  background: var(--msk-canvas-1);
+  border-bottom-color: var(--msk-border);
 }
 
 html[data-theme="dark"] .home-search-compact {
-  background: var(--majalis-panel, #1a2821);
-  border-color: var(--majalis-line, #2a3d33);
+  background: var(--msk-canvas-1);
+  border-color: var(--msk-border);
+}
+
+html[data-theme="dark"] .more-sheet-item {
+  background: var(--msk-canvas-2);
 }
 
 
@@ -14939,8 +15099,8 @@ html[data-theme="dark"] .home-search-compact {
   background: var(--majalis-emerald-muted, rgba(31,110,84,0.1));
   color: var(--majalis-emerald);
 }
-html[data-theme="dark"] .more-sheet-item  { background: var(--majalis-parchment-deep); }
-html[data-theme="dark"] .more-sheet-item:hover { background: var(--majalis-panel); }
+html[data-theme="dark"] .more-sheet-item  { background: var(--msk-canvas-1); }
+html[data-theme="dark"] .more-sheet-item:hover { background: var(--msk-canvas-2); }
 
 /* Prayer Countdown Page */
 .prayer-countdown-page {
@@ -16614,21 +16774,22 @@ html[data-theme="dark"] .side-nav-link--v2.is-active {
 
 /* ── Dark mode ── */
 html[data-theme="dark"] .bottom-sheet-overlay {
-  background: rgba(5, 10, 8, 0.65);
+  background: rgba(10, 12, 24, 0.72);
 }
 
 html[data-theme="dark"] .bottom-sheet {
-  box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.4);
+  background: var(--msk-canvas-1);
+  box-shadow: 0 -8px 40px rgba(0,0,0,.45);
 }
 
 html[data-theme="dark"] .more-sheet-item:hover {
-  background: rgba(77, 184, 142, 0.1);
-  border-color: rgba(77, 184, 142, 0.2);
+  background: var(--msk-gold-dim);
+  border-color: var(--msk-gold-border);
 }
 
 html[data-theme="dark"] .more-sheet-item__icon {
-  background: rgba(77, 184, 142, 0.12);
-  color: var(--majalis-emerald, #4DB88E);
+  background: var(--msk-gold-dim);
+  color: var(--msk-gold);
 }
 
 /* ══════════════════════════════════════════════════════════════

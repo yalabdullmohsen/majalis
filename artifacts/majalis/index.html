@@ -11,7 +11,7 @@
     <meta name="description" content="تطبيق علمي عربي يجمع الدروس الشرعية والدورات والمحاضرات والقرآن والأذكار والفوائد في مكان واحد لطالب العلم." />
     <meta name="keywords" content="المجلس العلمي, دروس علمية, دروس شرعية, محاضرات إسلامية, دورات شرعية, طلب العلم, القرآن الكريم, السنة النبوية, الفوائد العلمية, الأذكار" />
     <meta name="robots" content="index, follow" />
-    <meta name="theme-color" content="#164E3C" />
+    <meta name="theme-color" content="#171C2E" />
     <meta name="author" content="المجلس العلمي" />
     <link rel="canonical" href="https://majlisilm.com/" />
     <meta property="og:site_name" content="المجلس العلمي" />
@@ -36,8 +36,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <!-- DNS prefetch for external assets -->
     <link rel="dns-prefetch" href="https://ngmvmlulzacrlicuagyp.supabase.co" />
-    <!-- Cairo (body) + Amiri (display headings) — preloaded for CLS -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Tajawal:wght@400;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet" />
+    <!-- مِشكاة: Almarai (واجهة) + Cairo (احتياطي) + Amiri Quran (عناوين) — preloaded for CLS -->
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Cairo:wght@400;600;700;800&family=Tajawal:wght@400;700&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
     <!-- Uthmanic Quran font + optional scripts — deferred -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Aref+Ruqaa:wght@400;700&family=Scheherazade+New:wght@400;500;700&family=Noto+Naskh+Arabic:wght@400;700&display=swap" media="print" onload="this.media='all'" />
     <noscript>
@@ -100,6 +100,15 @@
   <body>
     <script>
       try {
+        /* مِشكاة: تطبيق الوضع (ليل/نهار) فوراً لمنع الوميض */
+        var storedTheme = localStorage.getItem("majalis-theme-preference");
+        var resolved = storedTheme === "light" ? "light"
+          : storedTheme === "dark" ? "dark"
+          : (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+        document.documentElement.dataset.theme = resolved;
+        document.documentElement.classList.toggle("dark", resolved === "dark");
+        document.documentElement.style.colorScheme = resolved === "light" ? "light" : "dark";
+
         var storedFont = localStorage.getItem("majalis-font-preference");
         document.documentElement.dataset.font =
           storedFont === "ruqaa" || storedFont === "naskh" || storedFont === "default"
