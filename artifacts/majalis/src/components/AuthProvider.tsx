@@ -74,16 +74,26 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       )
       .then(() => import("@/lib/supabase"))
       .then((mod) => {
-      const { data: sub } = mod.supabase.auth.onAuthStateChange(async () => {
-        try {
-          const next = await RequestManager.run("auth:onAuthStateChange", () => mod.getCurrentUser());
-          if (active) setUser(next);
-        } catch {
-          if (active) setUser(null);
-        }
+        const { data: sub } = mod.supabase.auth.onAuthStateChange(async (event) => {
+          // SIGN_OUT هو الحالة الوحيدة التي تُسمح فيها بمسح المستخدم
+          // باقي الأحداث (TOKEN_REFRESHED, SIGNED_IN, USER_UPDATED…) تُحدّث فقط
+          if (event === "SIGNED_OUT") {
+            if (active) setUser(null);
+            return;
+          }
+          try {
+            const next = await RequestManager.run(
+              `auth:onAuthStateChange:${event}`,
+              () => mod.getCurrentUser(),
+            );
+            // لا نمسح المستخدم إذا فشل الاستعلام — نحتفظ بالقيمة السابقة
+            if (active && next !== null && next !== undefined) setUser(next);
+          } catch {
+            // خطأ شبكة مؤقت — لا نمسح الجلسة، نتجاهل الخطأ
+          }
+        });
+        unsubscribe = () => sub.subscription.unsubscribe();
       });
-      unsubscribe = () => sub.subscription.unsubscribe();
-    });
 
     return () => {
       active = false;

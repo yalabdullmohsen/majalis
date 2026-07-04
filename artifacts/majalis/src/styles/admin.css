@@ -1076,3 +1076,249 @@ html[data-theme="dark"]  .admin-badge--published{ background: rgba(59,130,246,.1
 .ii-guide__step div { display: flex; flex-direction: column; gap: .2rem; }
 .ii-guide__step strong { font-size: .875rem; color: var(--majalis-ink); }
 .ii-guide__step p { font-size: .78rem; color: var(--majalis-ink-soft); margin: 0; line-height: 1.55; }
+
+/* ═══════════════════════════════════════════════════════════════
+   بطاقات مركز الإدارة (dsc-*)
+   ═══════════════════════════════════════════════════════════════ */
+
+/* إحصائيات سريعة */
+.dsc-quick-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1.75rem;
+}
+.dsc-qstat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  background: var(--majalis-panel, #fff);
+  border: 1px solid var(--majalis-line, #e4ddd0);
+  border-radius: 0.875rem;
+  padding: 0.875rem 0.75rem;
+  text-align: center;
+  transition: box-shadow 0.2s;
+}
+.dsc-qstat:hover { box-shadow: 0 4px 16px rgba(0,0,0,.07); }
+.dsc-qstat__icon { font-size: 1.35rem; }
+.dsc-qstat__n {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--majalis-emerald-deep, #1a6b52);
+  line-height: 1;
+}
+.dsc-qstat__label { font-size: 0.72rem; color: var(--majalis-ink-soft, #6b7280); }
+
+/* فاصل أقسام */
+.dsc-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1.5rem 0 1.25rem;
+  color: var(--majalis-ink-soft, #6b7280);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+.dsc-divider::before,
+.dsc-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--majalis-line, #e4ddd0);
+}
+
+/* شريط البحث والفلترة */
+.dsc-toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+.dsc-search-wrap {
+  position: relative;
+}
+.dsc-search-icon {
+  position: absolute;
+  inset-inline-start: 0.875rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.95rem;
+  pointer-events: none;
+}
+.dsc-search {
+  width: 100%;
+  padding: 0.65rem 0.875rem 0.65rem 2.25rem;
+  border: 1px solid var(--majalis-line, #e4ddd0);
+  border-radius: 0.75rem;
+  background: var(--majalis-panel, #fff);
+  font-size: 0.875rem;
+  color: var(--majalis-ink, #1c1c1c);
+  box-sizing: border-box;
+  outline: none;
+  direction: rtl;
+}
+.dsc-search:focus { border-color: var(--majalis-emerald, #1a6b52); }
+.dsc-group-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.dsc-group-tab {
+  padding: 0.35rem 0.75rem;
+  border: 1px solid var(--majalis-line, #e4ddd0);
+  border-radius: 999px;
+  background: transparent;
+  font-size: 0.775rem;
+  color: var(--majalis-ink-soft, #6b7280);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  font-family: inherit;
+}
+.dsc-group-tab:hover { background: var(--majalis-parchment, #f5f0e8); }
+.dsc-group-tab.is-active {
+  background: var(--majalis-emerald, #1a6b52);
+  color: #fff;
+  border-color: var(--majalis-emerald, #1a6b52);
+}
+
+/* رسالة البحث الفارغة */
+.dsc-empty {
+  text-align: center;
+  padding: 2.5rem;
+  color: var(--majalis-ink-soft, #6b7280);
+  font-size: 0.9rem;
+}
+
+/* مجموعة من البطاقات */
+.dsc-group { margin-bottom: 2rem; }
+.dsc-group__title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--majalis-ink-soft, #6b7280);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0 0 0.75rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--majalis-line, #e4ddd0);
+}
+.dsc-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+/* بطاقة القسم */
+.dsc-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  background: var(--majalis-panel, #fff);
+  border: 1px solid var(--majalis-line, #e4ddd0);
+  border-radius: 1rem;
+  padding: 1.1rem 1.15rem;
+  transition: box-shadow 0.2s, transform 0.15s;
+}
+.dsc-card:hover {
+  box-shadow: 0 6px 24px rgba(0,0,0,.08);
+  transform: translateY(-2px);
+}
+.dsc-card__head {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+}
+.dsc-card__icon {
+  font-size: 1.6rem;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+.dsc-card__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.dsc-card__title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--majalis-ink, #1c1c1c);
+  margin: 0;
+}
+.dsc-card__pub {
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  width: fit-content;
+}
+.dsc-card__pub--yes { background: #d1fae5; color: #065f46; }
+.dsc-card__pub--no  { background: #f3f4f6; color: #6b7280; }
+.dsc-card__desc {
+  font-size: 0.8rem;
+  color: var(--majalis-ink-soft, #6b7280);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* معلومات التوسيع */
+.dsc-card__info {
+  background: var(--majalis-parchment, #f5f0e8);
+  border-radius: 0.625rem;
+  padding: 0.7rem 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.dsc-card__info p {
+  font-size: 0.775rem;
+  color: var(--majalis-ink, #1c1c1c);
+  margin: 0;
+  line-height: 1.65;
+}
+.dsc-card__info strong { color: var(--majalis-emerald-deep, #1a6b52); }
+
+/* أزرار البطاقة */
+.dsc-card__actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--majalis-line, #e4ddd0);
+}
+.dsc-card__info-btn {
+  font-size: 0.75rem;
+  color: var(--majalis-emerald-deep, #1a6b52);
+  background: transparent;
+  border: 1px solid var(--majalis-emerald-deep, #1a6b52);
+  border-radius: 0.5rem;
+  padding: 0.3rem 0.65rem;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  font-family: inherit;
+}
+.dsc-card__info-btn:hover {
+  background: var(--majalis-emerald-deep, #1a6b52);
+  color: #fff;
+}
+.dsc-card__enter-btn {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #fff;
+  background: var(--majalis-emerald, #1a6b52);
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.35rem 0.85rem;
+  cursor: pointer;
+  transition: background 0.15s, opacity 0.15s;
+  font-family: inherit;
+}
+.dsc-card__enter-btn:hover { opacity: 0.87; }
+
+@media (max-width: 640px) {
+  .dsc-cards-grid { grid-template-columns: 1fr; }
+  .dsc-quick-stats { grid-template-columns: repeat(3, 1fr); }
+  .dsc-toolbar { gap: 0.5rem; }
+}
