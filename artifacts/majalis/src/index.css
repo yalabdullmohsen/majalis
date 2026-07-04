@@ -16190,3 +16190,183 @@ html[data-theme="dark"] .content-hub-chip--active {
 html[data-theme="dark"] .ds-page-header {
   border-bottom-color: var(--majalis-line, #263D33);
 }
+
+/* ══════════════════════════════════════════════════════════════
+   Design System v5 — Auth Pages (Login / Register)
+   ══════════════════════════════════════════════════════════════ */
+
+/* صفحة تسجيل الدخول: خلفية مع نمط هندسي خفيف */
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: clamp(2.5rem, 8vh, 5rem) 1.25rem 4rem;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M28 4L34 16L46 10L40 22L52 28L40 34L46 46L34 40L28 52L22 40L10 46L16 34L4 28L16 22L10 10L22 16Z' fill='none' stroke='rgba(22,96,72,0.06)' stroke-width='1'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(22, 96, 72, 0.07) 0%, transparent 65%),
+    var(--majalis-parchment, #F9F6EF);
+  background-size: 56px 56px, cover, cover;
+}
+
+/* بطاقة تسجيل الدخول: elevation متميزة */
+.login-card {
+  width: 100%;
+  max-width: 22rem;
+  padding: 2.25rem 2rem;
+  border-radius: 1.25rem;
+  border: 1px solid var(--majalis-line, #E8E2D8);
+  background: var(--majalis-panel, #fff);
+  box-shadow:
+    0 4px 16px rgba(26, 23, 20, 0.07),
+    0 12px 40px rgba(22, 96, 72, 0.06),
+    0 1px 3px rgba(26, 23, 20, 0.05);
+}
+
+/* رأس البطاقة */
+.login-card__brand {
+  font-size: 0.95rem;
+  color: var(--majalis-emerald-deep, #0F4433);
+}
+
+.login-card__title {
+  font-size: 1.2rem;
+  color: var(--majalis-ink, #1A1714);
+}
+
+/* حقول الإدخال */
+.login-field input {
+  padding: 0.7rem 0.875rem;
+  border-radius: 0.625rem;
+  border: 1.5px solid var(--majalis-line, #E8E2D8);
+  background: var(--majalis-parchment, #F9F6EF);
+  font-size: 0.9rem;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.login-field input:focus {
+  border-color: var(--majalis-emerald, #166048);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(22, 96, 72, 0.1);
+}
+
+/* زر تسجيل الدخول */
+.login-submit {
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  background: var(--majalis-emerald, #166048);
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(22, 96, 72, 0.25);
+  transition: background 180ms ease,
+              box-shadow 180ms ease,
+              transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.login-submit:not(:disabled):hover {
+  background: var(--majalis-emerald-deep, #0F4433);
+  box-shadow: 0 6px 20px rgba(22, 96, 72, 0.32);
+  transform: translateY(-1px);
+}
+
+.login-submit:not(:disabled):active {
+  transform: translateY(0) scale(0.98);
+  transition-duration: 80ms;
+}
+
+/* OAuth divider */
+.login-oauth__divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1.25rem 0 0.875rem;
+  color: var(--majalis-ink-muted, #A09A94);
+  font-size: 0.78rem;
+}
+
+.login-oauth__divider::before,
+.login-oauth__divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--majalis-line, #E8E2D8);
+}
+
+/* زر Google */
+.login-oauth__btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.65rem 1rem;
+  border-radius: 0.75rem;
+  border: 1.5px solid var(--majalis-line, #E8E2D8);
+  background: var(--majalis-panel, #fff);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--majalis-ink, #1A1714);
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.login-oauth__btn:hover {
+  border-color: color-mix(in srgb, var(--majalis-emerald) 25%, var(--majalis-line));
+  box-shadow: 0 2px 8px rgba(26, 23, 20, 0.08);
+  transform: translateY(-1px);
+}
+
+.login-oauth__btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* روابط التذييل */
+.login-back-link {
+  font-size: 0.85rem;
+  transition: color 150ms ease;
+}
+
+.login-back-link:hover {
+  color: var(--majalis-emerald, #166048);
+}
+
+.login-back-link--primary {
+  color: var(--majalis-emerald, #166048);
+  font-weight: 700;
+}
+
+/* ── Dark mode ── */
+html[data-theme="dark"] .login-page {
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M28 4L34 16L46 10L40 22L52 28L40 34L46 46L34 40L28 52L22 40L10 46L16 34L4 28L16 22L10 10L22 16Z' fill='none' stroke='rgba(77,184,142,0.06)' stroke-width='1'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(77, 184, 142, 0.06) 0%, transparent 65%),
+    var(--majalis-parchment, #0D1410);
+  background-size: 56px 56px, cover, cover;
+}
+
+html[data-theme="dark"] .login-card {
+  background: var(--majalis-panel, #1A2820);
+  border-color: var(--majalis-line, #263D33);
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.2),
+    0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+html[data-theme="dark"] .login-field input {
+  background: var(--majalis-parchment-deep, #151E1A);
+  border-color: var(--majalis-line, #263D33);
+  color: var(--majalis-ink, #E8F4EE);
+}
+
+html[data-theme="dark"] .login-field input:focus {
+  border-color: var(--majalis-emerald, #4DB88E);
+  box-shadow: 0 0 0 3px rgba(77, 184, 142, 0.12);
+}
+
+html[data-theme="dark"] .login-oauth__btn {
+  background: var(--majalis-panel, #1A2820);
+  border-color: var(--majalis-line, #263D33);
+  color: var(--majalis-ink, #E8F4EE);
+}
