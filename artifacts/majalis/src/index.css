@@ -16675,3 +16675,97 @@ html[data-theme="dark"] .ui-skeleton {
   );
   background-size: 200% 100%;
 }
+
+/* ══════════════════════════════════════════════════════════════
+   Design System v5 — Typography & Prose Enhancements
+   ══════════════════════════════════════════════════════════════ */
+
+/* نصوص القراءة (محتوى علمي) */
+.prose-content,
+.lesson-detail-body,
+.qa-answer-body,
+.fatwa-body,
+.hadith-text,
+.faid-text {
+  line-height: 2;
+  font-size: clamp(0.95rem, 2.5vw, 1.05rem);
+  color: var(--majalis-ink, #1A1714);
+  word-spacing: 0.03em;
+}
+
+.prose-content p,
+.lesson-detail-body p,
+.qa-answer-body p {
+  margin: 0 0 1.25em;
+}
+
+/* العناوين الفرعية في المحتوى */
+.prose-content h2,
+.lesson-detail-body h2,
+.qa-answer-body h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--majalis-ink, #1A1714);
+  margin: 1.75em 0 0.65em;
+  padding-bottom: 0.4em;
+  border-bottom: 1px solid var(--majalis-line, #E8E2D8);
+}
+
+.prose-content h3,
+.lesson-detail-body h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--majalis-emerald-deep, #0F4433);
+  margin: 1.5em 0 0.5em;
+}
+
+/* نص القرآن والحديث */
+.quran-text,
+.ayah-text {
+  font-family: var(--font-quran, "Amiri Quran", serif);
+  font-size: clamp(1.1rem, 3.5vw, 1.4rem);
+  line-height: 2.4;
+  text-align: center;
+  color: var(--majalis-ink, #1A1714);
+  word-spacing: 0.05em;
+}
+
+.hadith-arabic-text {
+  font-family: var(--font-display, "Amiri", serif);
+  font-size: clamp(1rem, 3vw, 1.2rem);
+  line-height: 2.2;
+  color: var(--majalis-emerald-deep, #0F4433);
+  border-right: 3px solid var(--majalis-emerald, #166048);
+  padding-right: 1rem;
+  margin: 1rem 0;
+}
+
+/* تمييز النص المنقول (اقتباس) */
+.content-quote,
+.scholarly-quote {
+  border-right: 3px solid var(--majalis-brass, #9A6D1A);
+  padding: 0.875rem 1rem 0.875rem 0.75rem;
+  background: var(--majalis-brass-soft, #FDF4E0);
+  border-radius: 0 0.5rem 0.5rem 0;
+  font-style: normal;
+  color: var(--majalis-ink, #1A1714);
+  line-height: 1.9;
+}
+
+/* ── Dark mode ── */
+html[data-theme="dark"] .prose-content,
+html[data-theme="dark"] .lesson-detail-body,
+html[data-theme="dark"] .qa-answer-body {
+  color: var(--majalis-ink, #E8F4EE);
+}
+
+html[data-theme="dark"] .hadith-arabic-text {
+  color: var(--majalis-emerald, #4DB88E);
+  border-right-color: var(--majalis-emerald, #4DB88E);
+}
+
+html[data-theme="dark"] .content-quote,
+html[data-theme="dark"] .scholarly-quote {
+  background: rgba(154, 109, 26, 0.08);
+  border-right-color: var(--majalis-brass, #D4AD50);
+}
