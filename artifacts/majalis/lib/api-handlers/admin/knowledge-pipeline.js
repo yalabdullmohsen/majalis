@@ -1,20 +1,12 @@
 import { sendJson } from "../../api/_http.mjs";
+import { requireAdminAccess } from "../../../lib/admin-auth.mjs";
 import { runKnowledgeSync, getKnowledgePipelineStats } from "../../../lib/knowledge-sync.mjs";
 import { getRecommendations, searchHybrid } from "../../../lib/knowledge-engine/recommendations.mjs";
 import { getSupabaseAdmin } from "../../../lib/supabase-admin.mjs";
 
-function verifyAdminAuth(req) {
-  const secret = String(process.env.ADMIN_API_SECRET || process.env.CRON_SECRET || "").trim();
-  if (!secret) return process.env.NODE_ENV !== "production";
-  const auth = String(req.headers.authorization || "");
-  return auth === `Bearer ${secret}`;
-}
-
 export default async function handler(req, res) {
-  if (!verifyAdminAuth(req)) {
-    sendJson(res, 401, { ok: false, message: "غير مصرح." });
-    return;
-  }
+  const auth = await requireAdminAccess(req, res, sendJson);
+  if (!auth) return;
 
   const action = req.query?.action || req.body?.action || "stats";
   const admin = getSupabaseAdmin();

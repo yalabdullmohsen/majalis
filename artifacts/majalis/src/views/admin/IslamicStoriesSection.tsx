@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
-import { useAdminShell } from "./AdminShell";
+import { useAuth } from "@/components/AuthProvider";
 
 type IslamicStory = {
   id: number;
@@ -70,7 +70,7 @@ const CSS = `
 `;
 
 export function IslamicStoriesSection() {
-  const { currentUser } = useAdminShell();
+  const { user } = useAuth();
   const [stories, setStories] = useState<IslamicStory[]>([]);
   const [loading, setLoading] = useState(true);
   const [expanded, setExpanded] = useState<Set<number>>(new Set());
@@ -107,14 +107,14 @@ export function IslamicStoriesSection() {
       .from("islamic_stories")
       .update({
         is_approved: approve,
-        verified_by: approve ? (currentUser?.email || "admin") : null,
+        verified_by: approve ? (user?.email || "admin") : null,
         approved_at: approve ? new Date().toISOString() : null,
       })
       .eq("id", story.id);
     if (!error) {
       setStories(prev =>
         prev.map(s => s.id === story.id
-          ? { ...s, is_approved: approve, verified_by: approve ? (currentUser?.email || "admin") : null }
+          ? { ...s, is_approved: approve, verified_by: approve ? (user?.email || "admin") : null }
           : s
         )
       );
