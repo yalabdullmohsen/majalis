@@ -14721,3 +14721,54 @@ html[data-theme="dark"] .qc-card { background: var(--majalis-panel); }
 @media (prefers-reduced-motion: reduce) {
   .uc-badge, .uc-progress__fill, .uc-feat--progress .uc-feat__icon { animation: none; }
 }
+
+/* ── صفحة "مميزات قيد التطوير" — FeaturesInProgress ── */
+.fip-page {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: clamp(1.5rem, 4vw, 3rem) 1rem;
+}
+.fip-head { text-align: center; margin-bottom: 2rem; }
+.fip-overall {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  background: var(--majalis-parchment-deep, #f0e8d6);
+  font-size: 0.8rem;
+  color: var(--majalis-ink-soft, #5c564c);
+}
+.fip-overall strong { color: var(--majalis-emerald, #1f6e54); font-size: 1rem; font-variant-numeric: tabular-nums; }
+.fip-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+.fip-card {
+  background: var(--majalis-panel, #fff);
+  border: 1px solid var(--majalis-line, #e5ddd0);
+  border-radius: 0.9rem;
+  padding: 1.25rem;
+  box-shadow: var(--ds-shadow, 0 2px 8px rgba(22, 78, 60, 0.07));
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.fip-card__top { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.5rem; }
+.fip-card__title { margin: 0; font-size: 1rem; font-weight: 700; color: var(--majalis-emerald-deep, #164e3c); line-height: 1.5; }
+.fip-card__desc { margin: 0; font-size: 0.85rem; color: var(--majalis-ink-soft, #5c564c); line-height: 1.7; flex: 1; }
+.fip-status {
+  flex-shrink: 0;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.fip-status--in-progress { background: #FEF3C7; color: #92400E; }
+.fip-status--beta { background: #DBEAFE; color: #1E40AF; }
+.fip-status--planned { background: var(--majalis-parchment-deep, #f0e8d6); color: var(--majalis-ink-soft, #5c564c); }
+html[data-theme="dark"] .fip-status--in-progress { background: rgba(251,191,36,0.16); color: #FCD34D; }
+html[data-theme="dark"] .fip-status--beta { background: rgba(59,130,246,0.16); color: #93C5FD; }
