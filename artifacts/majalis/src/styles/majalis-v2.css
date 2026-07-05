@@ -1000,6 +1000,54 @@ html[data-theme="dark"] .side-nav-link--v2.is-active {
   text-align: center;
 }
 
+/* ══ تنسيق ذهبي شامل للقوائم ══════════════════════════════════════════════ */
+
+/* Bottom nav — تسميات ذهبية لكل التابات */
+.bottom-nav__tab {
+  color: #B8922E !important;
+}
+.bottom-nav__tab.is-active {
+  color: #D9AE5C !important;
+}
+.bottom-nav__tab.is-active .bottom-nav__tab-icon {
+  background: rgba(217,174,92,0.12) !important;
+}
+
+/* Navbar — نص القائمة والبحث ذهبي */
+.navbar-menu-btn__label {
+  color: #C49540 !important;
+  font-weight: 700 !important;
+}
+.navbar-search-hint {
+  color: #C49540 !important;
+  font-weight: 700 !important;
+}
+.navbar-search-cmd svg {
+  color: #C49540 !important;
+}
+
+/* Navbar brand — اسم التطبيق بجانب الشعار */
+.navbar-brand {
+  color: #C49540 !important;
+}
+.navbar-brand-name,
+.navbar-brand strong,
+.navbar-brand span {
+  color: #C49540 !important;
+}
+
+/* القائمة الجانبية — تسميات المجموعات ذهبية */
+.side-nav-group__title {
+  color: #C49540 !important;
+}
+
+/* dark mode */
+html[data-theme="dark"] .bottom-nav__tab { color: rgba(217,174,92,0.70) !important; }
+html[data-theme="dark"] .bottom-nav__tab.is-active { color: #D9AE5C !important; }
+html[data-theme="dark"] .navbar-menu-btn__label,
+html[data-theme="dark"] .navbar-search-hint,
+html[data-theme="dark"] .navbar-search-cmd svg { color: #D9AE5C !important; }
+
 /* ── أطراف ذهبية: زر المزيد في bottom nav ── */
 .bottom-nav__tab:last-child {
   border: 1.5px solid rgba(196,149,64,0.55) !important;
