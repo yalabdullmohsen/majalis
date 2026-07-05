@@ -65,8 +65,8 @@ html {
   --majalis-ink-soft:      var(--msk-text-2);
   --majalis-ink-muted:     var(--msk-text-3);
   --majalis-charcoal:      var(--msk-text);
-  --majalis-parchment:     #FAF3E4;
-  --majalis-parchment-deep:#F3E7CC;
+  --majalis-parchment:     #FFFFFF;
+  --majalis-parchment-deep:#F7FBF9;
   --majalis-panel:         var(--msk-canvas-1);
   --majalis-panel-raised:  var(--msk-canvas-2);
   --majalis-emerald:       var(--msk-gold);
@@ -290,8 +290,8 @@ html[data-theme="light"] {
   --majalis-ink-soft:      #5C5550;
   --majalis-ink-muted:     #918A85;
   --majalis-charcoal:      #0F0E0D;
-  --majalis-parchment:     #FAF3E4;
-  --majalis-parchment-deep:#F3E7CC;
+  --majalis-parchment:     #FFFFFF;
+  --majalis-parchment-deep:#F7FBF9;
   --majalis-panel:         #FFFFFF;
   --majalis-panel-raised:  #F0EDE8;
   --majalis-emerald:       #0E6E52;
@@ -13601,8 +13601,8 @@ html[data-theme="dark"] {
 
 /* ─── Phase 1: Unified Card Component ────────────────────── */
 .ds-card {
-  border: 1px solid var(--msk-border, #E0DBD5);
-  background: transparent;
+  border: 1px solid var(--msk-border, rgba(14,110,82,0.10));
+  background: var(--msk-canvas, #FFFFFF);
   border-radius: var(--ds-r-lg);
   box-shadow: var(--ds-shadow-sm);
   transition: transform var(--ds-t-fast), box-shadow var(--ds-t-fast);
