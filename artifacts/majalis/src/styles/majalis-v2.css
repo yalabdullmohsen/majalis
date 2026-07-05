@@ -1,7 +1,39 @@
 /* ══════════════════════════════════════════════════════════════
-   MajlisIlm — Design System v2
-   نظام التصميم المُحدَّث — الهوية البصرية الجديدة
+   مجالس — Design System v3
+   هوية بصرية مستلهَمة من شعار "المجلس العلمي" (القوس + الكتاب)
    ══════════════════════════════════════════════════════════════ */
+
+/* ══ نظام ألوان مجالس (مستخرج رقمياً من الشعار) ══════════════════ */
+:root {
+  /* الأخضر الزمردي — مستخرج من شريط القوس الأيسر */
+  --mj-emerald-950: #0E351D;
+  --mj-emerald-800: #1A4826;
+  --mj-emerald-600: #2E6A36;
+  --mj-emerald-text: #162D16;
+
+  /* الذهبي — مستخرج من الشريط الأيمن والكتاب */
+  --mj-gold-900:       #795B25;
+  --mj-gold-600:       #A78747;
+  --mj-gold-300:       #F5E2AC;
+  --mj-gold-text:      #755A2B;
+
+  /* العاجي — خلفية الشعار الورقية */
+  --mj-ivory-50:  #F4F3EE;
+  --mj-ivory-100: #ECE9E0;
+  --mj-surface:   #FFFFFF;
+
+  /* الخطوط */
+  --mj-font-display: "El Messiri", "Reem Kufi", "Amiri", serif;
+  --mj-font-seal:    "Reem Kufi", "Amiri", serif;
+  --mj-font-latin:   "Cinzel", "Georgia", serif;
+}
+
+html[data-theme="dark"] {
+  --mj-ivory-50:  #1F2540;
+  --mj-ivory-100: #262D4E;
+  --mj-surface:   #171C2E;
+  --mj-gold-300:  #D9AE5C;
+}
 
 /* ── 1. Tokens: مِشكاة — tokens تُعرَّف في index.css، هنا فقط حركة ── */
 :root {
@@ -1214,4 +1246,386 @@ html[data-theme="dark"] .bottom-nav__tab:last-child {
 }
 .ds-section__link {
   color: #D9AE5C !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   مجالس — تحديث الهوية البصرية v3
+   مستلهَم من شعار "المجلس العلمي" — القوس + الكتاب + الألوان
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ── focus ring عالمي بالأخضر الزمردي ── */
+:focus-visible {
+  outline: 2.5px solid var(--mj-emerald-600, #2E6A36) !important;
+  outline-offset: 3px !important;
+  border-radius: 4px !important;
+}
+
+/* ══ الطباعة — El Messiri للعناوين الرئيسية ══ */
+
+/* عناوين الأقسام والصفحات → El Messiri */
+.ds-section__title,
+.home-section h2,
+.home-eyebrow,
+.page-header h1,
+.page-heading,
+.home-hero-copy h1:not(.home-hero-title--v3),
+.tawheed-page-header__title,
+.hero-title {
+  font-family: var(--mj-font-display) !important;
+}
+
+/* عناوين إرشادية أصغر (اختياري) */
+.ds-section__eyebrow {
+  font-family: var(--mj-font-seal) !important;
+  letter-spacing: 0.04em !important;
+}
+
+/* ══ تذييل الصفحة — خلفية زمردية داكنة (emerald-950) ══ */
+.site-footer,
+.site-footer--v3 {
+  background: var(--mj-emerald-950, #0E351D) !important;
+  border-top: none !important;
+  color: var(--mj-ivory-50, #F4F3EE) !important;
+}
+.site-footer-brand strong {
+  color: var(--mj-gold-300, #F5E2AC) !important;
+  font-family: var(--mj-font-display) !important;
+}
+.site-footer-brand p,
+.site-footer-copy {
+  color: rgba(244,243,238,0.65) !important;
+}
+.site-footer-nav { border-top-color: rgba(244,243,238,0.10) !important; }
+.site-footer-link {
+  color: rgba(244,243,238,0.70) !important;
+}
+.site-footer-link:hover {
+  color: var(--mj-gold-300, #F5E2AC) !important;
+}
+.site-footer-group p {
+  color: var(--mj-gold-300, #F5E2AC) !important;
+  font-family: var(--mj-font-display) !important;
+}
+
+/* ══ البطاقات — حد علوي متدرج (توقيع الشريطين) ══ */
+.card-v2,
+.ds-card,
+.ui-card {
+  position: relative !important;
+  overflow: hidden !important;
+}
+.card-v2::before,
+.ds-card::before,
+.ui-card::before {
+  content: '' !important;
+  position: absolute !important;
+  inset-inline-start: 0 !important;
+  inset-block-start: 0 !important;
+  width: 100% !important;
+  height: 3px !important;
+  background: linear-gradient(90deg,
+    var(--mj-emerald-800, #1A4826) 0%,
+    var(--mj-emerald-600, #2E6A36) 45%,
+    var(--mj-gold-600, #A78747) 55%,
+    var(--mj-gold-900, #795B25) 100%
+  ) !important;
+  opacity: 0.75 !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+}
+
+/* ══ فواصل الأقسام — القوس المبسّط ══ */
+.islamic-divider {
+  position: relative !important;
+  height: 56px !important;
+  background: transparent !important;
+  display: block !important;
+  overflow: visible !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0.5rem 0 !important;
+}
+.islamic-divider::before {
+  content: '' !important;
+  display: block !important;
+  width: 100% !important;
+  height: 56px !important;
+  background-image: url('/arch-divider.svg') !important;
+  background-size: 100% 100% !important;
+  background-repeat: no-repeat !important;
+  opacity: 0.85 !important;
+}
+/* إخفاء الزخرفة النصية القديمة داخل المقسّم */
+.islamic-divider svg,
+.islamic-divider span {
+  display: none !important;
+}
+
+/* ══ قارئ القرآن — إطار ذهبي رفيع ══ */
+.quran-reader .ui-card,
+.quran-page,
+.quran-reader-frame {
+  border: 1.5px solid rgba(167,135,71,0.30) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(167,135,71,0.08),
+    0 4px 16px rgba(26,72,38,0.08) !important;
+}
+/* إطار الآية — خط طرفي ذهبي رفيع */
+.quran-text {
+  border-inline: 3px solid transparent !important;
+  background-image:
+    linear-gradient(white, white),
+    linear-gradient(180deg, var(--mj-emerald-600, #2E6A36), var(--mj-gold-600, #A78747)) !important;
+  background-origin: border-box !important;
+  background-clip: padding-box, border-box !important;
+  border-radius: 4px !important;
+  padding-inline: 1rem !important;
+}
+html[data-theme="dark"] .quran-text {
+  background-image:
+    linear-gradient(#1F2540, #1F2540),
+    linear-gradient(180deg, var(--mj-emerald-600, #2E6A36), var(--mj-gold-600, #A78747)) !important;
+}
+
+/* ══ شارة التوثيق (is_approved / verified_by) — طابع ختم الشعار ══ */
+.verified-badge,
+.fiqh-verified-badge,
+.fiqh-search-verified-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.3rem !important;
+  font-size: 0.72rem !important;
+  font-weight: 600 !important;
+  color: var(--mj-gold-900, #795B25) !important;
+  background: linear-gradient(135deg,
+    rgba(167,135,71,0.10),
+    rgba(245,226,172,0.20)
+  ) !important;
+  border: 1px solid rgba(167,135,71,0.30) !important;
+  border-radius: 999px !important;
+  padding: 0.15rem 0.55rem !important;
+  font-family: var(--mj-font-seal) !important;
+}
+.verified-badge::before,
+.fiqh-verified-badge::before,
+.fiqh-search-verified-badge::before {
+  content: '' !important;
+  display: inline-block !important;
+  width: 14px !important;
+  height: 14px !important;
+  background-image: url('/seal-verified.svg') !important;
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+  flex-shrink: 0 !important;
+}
+
+/* ══ المساعد العلمي — قوس حول أيقونة الأفاتار ══ */
+.assistant-header {
+  position: relative !important;
+}
+/* حد علوي بتدرج الشريطين */
+.assistant-page {
+  --assistant-arch-border: linear-gradient(90deg,
+    var(--mj-emerald-800, #1A4826),
+    var(--mj-gold-600, #A78747));
+}
+.assistant-message-assistant:not(.assistant-message-failure) {
+  border-top: 2px solid rgba(46,106,54,0.35) !important;
+  border-radius: var(--v2-r-md, 12px) !important;
+}
+
+/* ══ أزرار v2 محدَّثة — ألوان الشعار ══ */
+.btn-v2--primary {
+  background: linear-gradient(135deg, var(--mj-emerald-600, #2E6A36), var(--mj-emerald-800, #1A4826)) !important;
+  color: #fff !important;
+  box-shadow: 0 2px 8px rgba(26,72,38,.30) !important;
+}
+.btn-v2--primary:hover {
+  background: linear-gradient(135deg, var(--mj-emerald-800, #1A4826), var(--mj-emerald-950, #0E351D)) !important;
+  box-shadow: 0 4px 16px rgba(26,72,38,.40) !important;
+}
+.btn-v2--gold {
+  background: linear-gradient(135deg, var(--mj-gold-600, #A78747), var(--mj-gold-900, #795B25)) !important;
+  color: #fff !important;
+  box-shadow: 0 2px 8px rgba(121,91,37,.30) !important;
+}
+/* زر ثانوي ذهبي — نص gold-900 على بيج فاتح (تباين 5.7:1 — يجتاز AA) */
+.btn-v2--outline-gold {
+  background: transparent !important;
+  border: 1.5px solid var(--mj-gold-600, #A78747) !important;
+  color: var(--mj-gold-900, #795B25) !important;
+}
+.btn-v2--outline-gold:hover {
+  background: rgba(167,135,71,0.08) !important;
+}
+
+/* ══ بطاقة الشهادة/الإنجاز ══ */
+.achievement-card {
+  position: relative;
+  background: var(--mj-ivory-50, #F4F3EE);
+  border: 2px solid var(--mj-gold-600, #A78747);
+  border-radius: 16px;
+  padding: 2rem 1.5rem 1.5rem;
+  text-align: center;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(26,72,38,0.12), 0 2px 8px rgba(121,91,37,0.10);
+}
+/* زوايا زخرفية */
+.achievement-card::before,
+.achievement-card::after {
+  content: '';
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background-image: url('/corner-ornament.svg');
+  background-size: 60px 60px;
+  pointer-events: none;
+  opacity: 0.65;
+}
+.achievement-card::before { top: 0; right: 0; transform: scaleX(-1); }
+.achievement-card::after  { bottom: 0; left: 0; transform: scaleY(-1); }
+
+.achievement-card__seal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 1rem;
+  background-image: url('/seal-verified.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  filter: drop-shadow(0 2px 6px rgba(121,91,37,0.30));
+}
+.achievement-card__title {
+  font-family: var(--mj-font-display) !important;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--mj-emerald-800, #1A4826);
+  margin-bottom: 0.35rem;
+}
+.achievement-card__subtitle {
+  font-size: 0.85rem;
+  color: var(--mj-gold-text, #755A2B);
+  margin-bottom: 1rem;
+  font-family: var(--mj-font-seal);
+}
+.achievement-card__name {
+  font-family: var(--mj-font-display) !important;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--mj-emerald-950, #0E351D);
+  border-bottom: 1px solid rgba(167,135,71,0.30);
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+.achievement-card__latin {
+  font-family: var(--mj-font-latin, "Cinzel", serif) !important;
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--mj-emerald-600, #2E6A36);
+  opacity: 0.75;
+}
+
+/* ══ بطل الصفحة — القوس المبسّط فوق العنوان ══ */
+.home-hero--v3 {
+  position: relative;
+  overflow: hidden;
+}
+/* نقش القبة الخافت (3% شفافية) في أعلى الخلفية فقط */
+.home-hero--v3::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  left: 0;
+  right: 0;
+  height: 180px;
+  background-image: url('/arch-divider.svg');
+  background-size: 120% auto;
+  background-repeat: no-repeat;
+  background-position: center top;
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 0;
+  transform: scaleY(-1);
+}
+
+/* ══ قوس القسم — العنصر التوقيعي بين الأقسام ══ */
+/* فاصل قوسي ذو ارتفاع كافٍ يظهر الشكل واضحاً */
+.arch-section-divider {
+  display: block;
+  width: 100%;
+  height: 56px;
+  background-image: url('/arch-divider.svg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  opacity: 0.80;
+  margin: 0.25rem 0;
+}
+
+/* ══ شاشة البداية/splash — مركز شعار الختم ══ */
+.splash-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: var(--mj-ivory-50, #F4F3EE);
+}
+.splash-screen__logo {
+  width: 140px;
+  height: 140px;
+  animation: splash-rise 0.8s cubic-bezier(0.16,1,0.3,1) forwards;
+  opacity: 0;
+}
+.splash-screen__name {
+  font-family: var(--mj-font-display) !important;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--mj-emerald-800, #1A4826);
+  margin-top: 1rem;
+  animation: splash-fade 0.6s 0.4s ease-out forwards;
+  opacity: 0;
+}
+.splash-screen__latin {
+  font-family: var(--mj-font-latin, "Cinzel", serif) !important;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mj-emerald-600, #2E6A36);
+  margin-top: 0.4rem;
+  opacity: 0;
+  animation: splash-fade 0.6s 0.7s ease-out forwards;
+}
+
+@keyframes splash-rise {
+  from { opacity: 0; transform: translateY(20px) scale(0.92); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes splash-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .splash-screen__logo,
+  .splash-screen__name,
+  .splash-screen__latin { animation: none !important; opacity: 1 !important; }
+}
+
+/* ══ وضع داكن — تعديلات ═══════════════════════════════════════════ */
+html[data-theme="dark"] .site-footer,
+html[data-theme="dark"] .site-footer--v3 {
+  background: #060E08 !important;
+}
+html[data-theme="dark"] .achievement-card {
+  background: var(--msk-canvas-1, #1F2540) !important;
+  border-color: rgba(167,135,71,0.40) !important;
+}
+html[data-theme="dark"] .achievement-card__title {
+  color: var(--mj-gold-300, #D9AE5C) !important;
+}
+html[data-theme="dark"] .achievement-card__name {
+  color: #F0E9DA !important;
 }
