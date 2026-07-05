@@ -8,10 +8,13 @@ import { formatSheikhName, sheikhNameKey } from "@/lib/sheikh-name";
 import {
   cleanTimeText,
   computeNextOccurrenceMs,
+  DAY_INDEX,
   formatGregorianDate,
   formatHijriDate,
   formatRelativeTime,
+  getKuwaitClock,
   isOccurrencePast,
+  parseTimeToMinutes,
 } from "@/lib/lesson-time";
 
 export type ActivityType = "درس" | "دورة";
@@ -441,5 +444,25 @@ export const DEFAULT_KUWAIT_FILTERS: KuwaitLessonFilters = {
 
 export function getRelativeStatusLabel(lesson: KuwaitLessonRecord, archived = false): string {
   if (archived) return "منتهٍ";
+
+  const now = Date.now();
+  const diffMs = lesson.nextOccurrenceMs - now;
+
+  // Lesson is happening right now (started ≤90 min ago, not yet finished)
+  if (diffMs <= 0 && diffMs > -90 * 60_000) return "جارٍ الآن";
+
+  // Check if today's session already ended (nextOccurrenceMs jumped to next week)
+  if (lesson.day) {
+    const clock = getKuwaitClock();
+    const targetDay = DAY_INDEX[lesson.day];
+    if (targetDay !== undefined && targetDay === clock.weekday) {
+      const timeMin = parseTimeToMinutes(lesson.time);
+      if (timeMin !== null) {
+        const nowMin = clock.hour * 60 + clock.minute;
+        if (nowMin > timeMin + 90) return "انتهى اليوم";
+      }
+    }
+  }
+
   return formatRelativeTime(lesson.nextOccurrenceMs);
 }

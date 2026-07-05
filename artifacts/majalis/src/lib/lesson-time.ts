@@ -1,6 +1,6 @@
 const KUWAIT_TZ = "Asia/Kuwait";
 
-const DAY_INDEX: Record<string, number> = {
+export const DAY_INDEX: Record<string, number> = {
   الأحد: 0,
   الاثنين: 1,
   الثلاثاء: 2,
@@ -100,25 +100,43 @@ export function parseTimeToMinutes(timeRaw: string): number | null {
   const time = cleanTimeText(timeRaw);
   if (!time) return null;
 
+  // HH:MM with optional Arabic/Latin AM/PM suffix
   const explicit = time.match(/(\d{1,2})\s*[:٫]\s*(\d{2})/u);
   if (explicit) {
     let hour = Number(explicit[1]);
     const minute = Number(explicit[2]);
-    if (/مساء|م\b|pm/i.test(time) && hour < 12) hour += 12;
-    if (/صباح|ص\b|am/i.test(time) && hour === 12) hour = 0;
-    if (/م\b/u.test(time) && hour < 12) hour += 12;
+    // Look at what comes directly after the matched digits — that's where م/ص lives.
+    // We cannot use \b for Arabic chars because they are \W in JS regex, so \b
+    // only fires when Arabic is adjacent to an ASCII word-char (rare). Instead we
+    // slice the tail and test the first char directly.
+    const tail = time.slice((explicit.index ?? 0) + explicit[0].length).trimStart();
+    // PM: م alone or مساء (not followed by another Arabic letter like in مسجد)
+    const isPM =
+      /^م(?![؀-ۿ])/u.test(tail) || // م then non-Arabic (end/space/dash/…)
+      /^مساء/u.test(tail) ||                  // مساءً مساء
+      /مساء/u.test(time) ||                   // مساء anywhere in string
+      /pm/i.test(time);
+    // AM: ص alone or صباح
+    const isAM =
+      /^ص(?![؀-ۿ])/u.test(tail) ||
+      /^صباح/u.test(tail) ||
+      /صباح/u.test(time) ||
+      /am/i.test(time);
+    if (isPM && hour < 12) hour += 12;
+    if (isAM && hour === 12) hour = 0;
     return hour * 60 + minute;
   }
 
-  const hourOnly = time.match(/(\d{1,2})\s*(?:مساء|صباح|م\b|ص\b)/u);
+  // H + AM/PM only (e.g. "8م", "8مساء", "8 مساءً")
+  const hourOnly = time.match(/(\d{1,2})\s*(م(?:ساء[ًا]?)?|ص(?:باح[ًا]?)?)/u);
   if (hourOnly) {
     let hour = Number(hourOnly[1]);
-    if (/مساء|م\b/u.test(time) && hour < 12) hour += 12;
-    if (/صباح|ص\b/u.test(time) && hour === 12) hour = 0;
+    if (/^م/u.test(hourOnly[2]) && hour < 12) hour += 12;
+    if (/^ص/u.test(hourOnly[2]) && hour === 12) hour = 0;
     return hour * 60;
   }
 
-  // Match prayer names with or without definite article "ال"
+  // Prayer-relative times (بعد المغرب، قبل الفجر، …)
   for (const [root, minutes] of PRAYER_ROOTS) {
     if (root.test(time)) {
       if (/بعد/u.test(time)) return minutes + 20;
@@ -181,22 +199,33 @@ export function formatHijriDate(date: Date): string {
 
 export function formatRelativeTime(targetMs: number, now = Date.now()): string {
   const diffMs = targetMs - now;
-  if (diffMs <= 0) return "الآن";
+  if (diffMs <= 0) return "جارٍ الآن";
 
-  const minutes = Math.floor(diffMs / 60_000);
-  if (minutes < 60) {
-    if (minutes <= 1) return "الآن";
-    if (minutes === 2) return "بعد دقيقتين";
-    if (minutes <= 10) return `بعد ${minutes} دقائق`;
-    return `بعد ${minutes} دقيقة`;
+  const totalMinutes = Math.floor(diffMs / 60_000);
+  if (totalMinutes <= 1) return "جارٍ الآن";
+  if (totalMinutes === 2) return "بعد دقيقتين";
+  if (totalMinutes < 60) {
+    if (totalMinutes <= 10) return `بعد ${totalMinutes} دقائق`;
+    return `بعد ${totalMinutes} دقيقة`;
   }
 
-  const hours = Math.floor(minutes / 60);
-  if (hours === 1) return "بعد ساعة";
-  if (hours === 2) return "بعد ساعتين";
-  if (hours < 24) return `بعد ${hours} ساعات`;
+  const hours = Math.floor(totalMinutes / 60);
+  const remainingMin = totalMinutes % 60;
+  if (hours < 24) {
+    const base =
+      hours === 1 ? "ساعة" :
+      hours === 2 ? "ساعتين" :
+      `${hours} ساعات`;
+    if (remainingMin === 0) return `بعد ${base}`;
+    const minLabel =
+      remainingMin === 1 ? "دقيقة" :
+      remainingMin === 2 ? "دقيقتين" :
+      remainingMin <= 10 ? `${remainingMin} دقائق` :
+      `${remainingMin} دقيقة`;
+    return `بعد ${base} و${minLabel}`;
+  }
 
-  const days = Math.floor(minutes / (24 * 60));
+  const days = Math.floor(totalMinutes / (24 * 60));
   if (days === 1) return "غداً";
   if (days === 2) return "بعد يومين";
   if (days <= 6) return `بعد ${days} أيام`;
