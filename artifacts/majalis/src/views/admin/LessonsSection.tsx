@@ -38,7 +38,7 @@ const DELIVERY = ["حضور فقط", "بث مباشر", "كلاهما"];
 const STATUSES: Record<string, string> = { approved: "معتمد", pending: "معلّق", rejected: "مرفوض" };
 const STATUS_COLORS: Record<string, { bg: string; text: string }> = {
   approved: { bg: "#D1FAE5", text: C.emeraldDeep },
-  pending:  { bg: "#FEF3C7", text: "#92400E" },
+  pending:  { bg: "rgba(14,110,82,0.08)", text: "#0E6E52" },
   rejected: { bg: "#FEE2E2", text: "#991B1B" },
 };
 const EMPTY: any = {
@@ -223,7 +223,7 @@ export function LessonsSection() {
           />
           <Link
             href="/admin/sources"
-            style={{ padding: "0.5rem 1rem", borderRadius: "0.375rem", background: "#FEF3C7", color: "#92400E", textDecoration: "none", fontFamily: "inherit", fontSize: "0.875rem", fontWeight: 600, display: "inline-flex", alignItems: "center" }}
+            style={{ padding: "0.5rem 1rem", borderRadius: "0.375rem", background: "rgba(14,110,82,0.08)", color: "#0E6E52", textDecoration: "none", fontFamily: "inherit", fontSize: "0.875rem", fontWeight: 600, display: "inline-flex", alignItems: "center" }}
           >
             أتمتة المصادر
           </Link>
@@ -358,7 +358,7 @@ export function LessonsSection() {
           <Field label="اسم الشيخ (إن لم يُربط بحساب)">
             <input style={inputSt} value={form.speaker_name || ""} onChange={e => set("speaker_name", e.target.value)} placeholder="مثال: عبدالله الأنصاري" />
             {looksLikeTopic(form.speaker_name) && (
-              <div style={{ marginTop: "0.3rem", padding: "0.35rem 0.6rem", borderRadius: "0.35rem", background: "#FEF3C7", color: "#92400E", fontSize: "0.75rem", fontWeight: 600 }}>
+              <div style={{ marginTop: "0.3rem", padding: "0.35rem 0.6rem", borderRadius: "0.35rem", background: "rgba(14,110,82,0.08)", color: "#0E6E52", fontSize: "0.75rem", fontWeight: 600 }}>
                 ⚠️ يبدو أن هذا موضوع وليس اسم شيخ. يُرجى التأكد من إدخال الاسم الصحيح.
               </div>
             )}

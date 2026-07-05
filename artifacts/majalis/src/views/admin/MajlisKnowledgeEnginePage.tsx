@@ -169,11 +169,11 @@ function MajlisKnowledgeEngineContent() {
       {loading ? <Loading /> : (
         <>
           <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", marginBottom: "1.25rem" }}>
-            <StatCard label="صحة النظام" value={stats?.health?.score ?? "—"} color={stats?.health?.status === "healthy" ? C.emeraldDeep : "#92400E"} />
+            <StatCard label="صحة النظام" value={stats?.health?.score ?? "—"} color={stats?.health?.status === "healthy" ? C.emeraldDeep : "#0E6E52"} />
             <StatCard label="المصادر" value={stats?.counts?.sources ?? (stats?.subsystems as { sources?: { total?: number } } | undefined)?.sources?.total ?? stats?.sourcesTotal ?? 0} />
             <StatCard label="المنصات" value={stats?.platformsSupported ?? platforms.length} />
             <StatCard label="مسودات" value={stats?.counts?.drafts ?? stats?.drafts ?? 0} />
-            <StatCard label="بانتظار المراجعة" value={stats?.counts?.pendingReview ?? stats?.pendingReview ?? 0} color="#92400E" />
+            <StatCard label="بانتظار المراجعة" value={stats?.counts?.pendingReview ?? stats?.pendingReview ?? 0} color="#0E6E52" />
             <StatCard label="منشور اليوم" value={stats?.counts?.publishedToday ?? stats?.publishedToday ?? 0} />
             <StatCard label="Queue" value={stats?.subsystems?.queue ? (stats.subsystems.queue as { pending?: number }).pending ?? 0 : stats?.queue?.pending ?? 0} />
             <StatCard label="Self-Heal" value={stats?.counts?.self_heal_log ?? "—"} />
@@ -182,7 +182,7 @@ function MajlisKnowledgeEngineContent() {
                 <StatCard label="AKP جاهزية %" value={akp.readinessPct ?? "—"} />
                 <StatCard label="منشور AKP اليوم" value={akp.counts?.published ?? akp.productionVelocity?.itemsToday ?? 0} />
                 <StatCard label="DLQ" value={akp.counts?.dlq ?? 0} color="#991B1B" />
-                <StatCard label="مراجعة AKP" value={akp.counts?.reviewPending ?? 0} color="#92400E" />
+                <StatCard label="مراجعة AKP" value={akp.counts?.reviewPending ?? 0} color="#0E6E52" />
               </>
             )}
           </div>

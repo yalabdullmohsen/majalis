@@ -36,8 +36,8 @@ export const QA_RULING_TYPES = ["حلال", "حرام", "مكروه", "مباح"
 export const QA_RULING_COLORS: Record<string, { bg: string; text: string }> = {
   "حلال": { bg: "#D1FAE5", text: "#065F46" },
   "مباح": { bg: "#DBEAFE", text: "#1E40AF" },
-  "سنة": { bg: "#FEF3C7", text: "#92400E" },
-  "مندوب": { bg: "#FEF3C7", text: "#92400E" },
+  "سنة": { bg: "rgba(14,110,82,0.08)", text: "#0A5040" },
+  "مندوب": { bg: "rgba(14,110,82,0.08)", text: "#0A5040" },
   "مكروه": { bg: "#FFEDD5", text: "#9A3412" },
   "حرام": { bg: "#FEE2E2", text: "#991B1B" },
 };

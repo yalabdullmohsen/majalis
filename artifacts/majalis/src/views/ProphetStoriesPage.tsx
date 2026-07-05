@@ -755,11 +755,11 @@ const PROPHETS_CSS = `
   white-space: nowrap;
   transition: all 0.2s;
 }
-.prophets-lux-tab:hover { border-color: ${GOLD}; color: #92400e; background: #fffbeb; }
+.prophets-lux-tab:hover { border-color: ${GOLD}; color: #0E6E52; background: rgba(14,110,82,0.06); }
 .prophets-lux-tab--active {
   background: ${GOLD}18;
   border-color: ${GOLD};
-  color: #92400e;
+  color: #0E6E52;
   font-weight: 700;
 }
 
@@ -772,7 +772,7 @@ const PROPHETS_CSS = `
 
 /* ── Disclaimer ── */
 .prophets-lux-disclaimer {
-  background: #fffbeb;
+  background: rgba(14,110,82,0.06);
   border: 1px solid #fde68a;
   border-radius: 10px;
   padding: 0.85rem 1.2rem;
@@ -870,7 +870,7 @@ const PROPHETS_CSS = `
 .prophet-lux-card__quran {
   font-family: 'Amiri Quran', 'Amiri', serif;
   font-size: 0.8rem;
-  color: #92400e;
+  color: #0E6E52;
   margin-bottom: 0.25rem;
   opacity: 0.85;
 }
@@ -1378,7 +1378,7 @@ const PROPHETS_CSS = `
   transition: all 0.2s;
   box-shadow: 0 1px 3px rgba(0,0,0,0.06);
 }
-.prophet-quiz__opt:hover:not([disabled]) { border-color: ${GOLD}; background: #fffbeb; color: #92400e; }
+.prophet-quiz__opt:hover:not([disabled]) { border-color: ${GOLD}; background: rgba(14,110,82,0.06); color: #0E6E52; }
 .prophet-quiz__opt--correct { background: #dcfce7 !important; border-color: #16a34a !important; color: #14532d !important; }
 .prophet-quiz__opt--wrong { background: #fee2e2 !important; border-color: #dc2626 !important; color: #7f1d1d !important; }
 .prophet-quiz__done {
@@ -1389,15 +1389,15 @@ const PROPHETS_CSS = `
   gap: 1rem;
   padding: 2rem;
 }
-.prophet-quiz__done h2 { font-family: 'Amiri', serif; font-size: 2rem; color: #92400e; margin: 0; }
-.prophet-quiz__score { font-size: 1.5rem; color: #b45309; font-weight: 700; margin: 0; }
+.prophet-quiz__done h2 { font-family: 'Amiri', serif; font-size: 2rem; color: #0E6E52; margin: 0; }
+.prophet-quiz__score { font-size: 1.5rem; color: #0E6E52; font-weight: 700; margin: 0; }
 .prophet-quiz__remark { color: #6b7280; font-size: 1rem; margin: 0; }
 .prophet-quiz__btn {
   margin-top: 0.5rem;
   padding: 0.75rem 2rem;
   background: ${GOLD}20;
   border: 1px solid ${GOLD};
-  color: #92400e;
+  color: #0E6E52;
   border-radius: 10px;
   cursor: pointer;
   font-family: 'Cairo', sans-serif;

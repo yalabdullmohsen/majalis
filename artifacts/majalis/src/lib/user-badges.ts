@@ -176,7 +176,7 @@ const LEVEL_DEFS = [
   { titleAr: "طالب علم",       color: "#1a6b52" },
   { titleAr: "حافظ",           color: "#0e7490" },
   { titleAr: "طالب جاد",       color: "#7c3aed" },
-  { titleAr: "مجاز",           color: "#b45309" },
+  { titleAr: "مجاز",           color: "#0E6E52" },
 ] as const;
 
 export type XpSources = {

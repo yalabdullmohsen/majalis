@@ -67,7 +67,7 @@ export default function SubmitContentPage() {
           gap: "0.75rem",
           padding: "0.875rem 1rem",
           background: "linear-gradient(135deg, #f0f7f3, #fefdf5)",
-          border: "1.5px solid rgba(176,141,46,0.4)",
+          border: "1.5px solid rgba(14,110,82,0.3)",
           borderRadius: "0.625rem",
           marginBottom: "1.5rem",
           cursor: "pointer",

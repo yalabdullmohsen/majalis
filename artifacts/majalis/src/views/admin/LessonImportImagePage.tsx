@@ -39,8 +39,8 @@ const labelStyle: React.CSSProperties = {
 
 function ConfidenceBadge({ score }: { score: number }) {
   const pct = Math.round(score * 100);
-  const color = pct >= 75 ? C.emeraldDeep : pct >= 45 ? "#92400E" : "#991B1B";
-  const bg = pct >= 75 ? "#D1FAE5" : pct >= 45 ? "#FEF3C7" : "#FEE2E2";
+  const color = pct >= 75 ? C.emeraldDeep : pct >= 45 ? "#0E6E52" : "#991B1B";
+  const bg = pct >= 75 ? "#D1FAE5" : pct >= 45 ? "rgba(14,110,82,0.08)" : "#FEE2E2";
   return (
     <span style={{ padding: "0.25rem 0.625rem", borderRadius: "999px", background: bg, color, fontSize: "0.75rem", fontWeight: 600 }}>
       ثقة الاستخراج: {pct}%
@@ -83,8 +83,8 @@ function FieldStatusGrid({
         const isOk = val && conf >= 0.5;
         const isWarn = val && conf < 0.5;
         const isMissing = !val;
-        const bg = isOk ? "#D1FAE5" : isWarn ? "#FEF3C7" : "#FEE2E2";
-        const color = isOk ? C.emeraldDeep : isWarn ? "#92400E" : "#991B1B";
+        const bg = isOk ? "#D1FAE5" : isWarn ? "rgba(14,110,82,0.08)" : "#FEE2E2";
+        const color = isOk ? C.emeraldDeep : isWarn ? "#0E6E52" : "#991B1B";
         const icon = isOk ? "✓" : isWarn ? "⚠" : "✗";
         return (
           <div key={field} style={{ background: bg, border: `1px solid ${color}30`, borderRadius: "0.375rem", padding: "0.35rem 0.6rem" }} title={reason || val || "غير موجود"}>
@@ -473,7 +473,7 @@ function LessonImportImageContent() {
       </div>
 
       {visionEnabled === false && (
-        <div style={{ background: "#FEF3C7", border: "1px solid #FCD34D", borderRadius: "0.5rem", padding: "0.75rem 1rem", marginBottom: "1rem", fontSize: "0.875rem", color: "#92400E" }}>
+        <div style={{ background: "rgba(14,110,82,0.08)", border: "1px solid #FCD34D", borderRadius: "0.5rem", padding: "0.75rem 1rem", marginBottom: "1rem", fontSize: "0.875rem", color: "#0E6E52" }}>
           {visionMessage || "الاستخراج التلقائي غير مفعّل. يمكنك إدخال البيانات يدويًا."}
         </div>
       )}
@@ -511,7 +511,7 @@ function LessonImportImageContent() {
             <button
               type="button"
               onClick={() => onUpload(lastFile)}
-              style={{ padding: "0.625rem 1.25rem", background: "#FEF3C7", color: "#92400E", border: "1px solid #FCD34D", borderRadius: "0.375rem", cursor: "pointer", fontFamily: "inherit", fontWeight: 600 }}
+              style={{ padding: "0.625rem 1.25rem", background: "rgba(14,110,82,0.08)", color: "#0E6E52", border: "1px solid #FCD34D", borderRadius: "0.375rem", cursor: "pointer", fontFamily: "inherit", fontWeight: 600 }}
             >
               إعادة المحاولة
             </button>
@@ -555,7 +555,7 @@ function LessonImportImageContent() {
                 {extractedText || "—"}
               </pre>
               {warnings.length > 0 && (
-                <ul style={{ margin: "0.75rem 0 0", paddingInlineStart: "1rem", fontSize: "0.75rem", color: "#92400E" }}>
+                <ul style={{ margin: "0.75rem 0 0", paddingInlineStart: "1rem", fontSize: "0.75rem", color: "#0E6E52" }}>
                   {warnings.map((w, i) => (
                     <li key={i}>{w.message}</li>
                   ))}

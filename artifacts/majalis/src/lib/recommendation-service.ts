@@ -80,9 +80,9 @@ export const CONTENT_TYPE_HREF: Record<RecContentType, (id: string) => string> =
 export const CONTENT_TYPE_COLOR: Record<RecContentType, string> = {
   lesson:     "#065f46",
   hadith:     "#1d4ed8",
-  fatwa:      "#b45309",
+  fatwa:      "#0E6E52",
   benefit:    "#047857",
-  book:       "#92400e",
+  book:       "#0E6E52",
   scholar:    "#7c3aed",
   qa:         "#0369a1",
   ruling:     "#6b7280",

@@ -525,7 +525,7 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
                 {running ? "جارٍ الاستيراد…" : "اختيار ملف"}
               </button>
               {canRetry && !running && (
-                <button type="button" onClick={retryImport} style={{ ...BTN, borderColor: "#92400E", color: "#92400E" }}>
+                <button type="button" onClick={retryImport} style={{ ...BTN, borderColor: "#0E6E52", color: "#0E6E52" }}>
                   إعادة المحاولة
                 </button>
               )}
@@ -566,7 +566,7 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
             )}
 
             {error && (
-              <p style={{ margin: "0.75rem 0 0", color: "#92400E", fontSize: "0.875rem" }}>{error}</p>
+              <p style={{ margin: "0.75rem 0 0", color: "#0E6E52", fontSize: "0.875rem" }}>{error}</p>
             )}
 
             {report && (
@@ -575,7 +575,7 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
                   marginTop: "0.875rem",
                   padding: "0.875rem",
                   borderRadius: "0.375rem",
-                  background: report.ok ? "#D1FAE5" : "#FEF3C7",
+                  background: report.ok ? "#D1FAE5" : "rgba(14,110,82,0.08)",
                   border: `1px solid ${C.line}`,
                   fontSize: "0.875rem",
                 }}
@@ -606,7 +606,7 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
                   </p>
                 )}
                 {[...(report.validationErrors || []), ...(report.importErrors || [])].slice(0, 20).map((msg) => (
-                  <p key={msg} style={{ margin: "0.25rem 0 0", color: "#92400E", fontSize: "0.8125rem" }}>
+                  <p key={msg} style={{ margin: "0.25rem 0 0", color: "#0E6E52", fontSize: "0.8125rem" }}>
                     • {msg}
                   </p>
                 ))}

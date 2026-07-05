@@ -6,7 +6,7 @@ import { Loading } from "@/components/ui-common";
 import { useAdminShell } from "./AdminShell";
 
 const ROLES: Record<string, { label: string; bg: string; text: string }> = {
-  admin:  { label: "مشرف",    bg: "#FEF3C7", text: "#92400E" },
+  admin:  { label: "مشرف",    bg: "rgba(14,110,82,0.08)", text: "#0E6E52" },
   sheikh: { label: "شيخ",     bg: "#D1FAE5", text: C.emeraldDeep },
   user:   { label: "مستخدم",  bg: C.parchmentDeep, text: C.inkSoft },
 };

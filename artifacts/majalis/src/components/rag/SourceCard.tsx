@@ -35,7 +35,7 @@ export function SourceCard({ source, compact = false }: Props) {
           </span>
           {/* درجة الحديث */}
           {grade && (
-            <span className="text-xs bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-300 px-2 py-0.5 rounded font-medium">
+            <span className="text-xs bg-emerald-100 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-300 px-2 py-0.5 rounded font-medium">
               {grade}
             </span>
           )}

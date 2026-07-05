@@ -106,7 +106,7 @@ export function QaSection() {
           <span style={{ padding: "0.1rem 0.5rem", borderRadius: "0.75rem", background: C.sage, color: C.emeraldDeep, fontSize: "0.7rem" }}>{publishedCount} منشور</span>
           <span style={{ padding: "0.1rem 0.5rem", borderRadius: "0.75rem", background: C.parchmentDeep, color: C.inkSoft, fontSize: "0.7rem" }}>{draftCount} مسودة</span>
           {reviewCount > 0 && (
-            <span style={{ padding: "0.1rem 0.5rem", borderRadius: "0.75rem", background: "#FEF3C7", color: "#92400E", fontSize: "0.7rem" }}>{reviewCount} يحتاج مراجعة</span>
+            <span style={{ padding: "0.1rem 0.5rem", borderRadius: "0.75rem", background: "rgba(14,110,82,0.08)", color: "#0E6E52", fontSize: "0.7rem" }}>{reviewCount} يحتاج مراجعة</span>
           )}
         </h2>
         <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
@@ -165,7 +165,7 @@ export function QaSection() {
                       {rc ? <span style={{ padding: "0.125rem 0.5rem", borderRadius: "999px", background: rc.bg, color: rc.text, fontSize: "0.7rem", fontWeight: 700 }}>{item.ruling_type}</span> : <span style={{ color: C.inkSoft }}>—</span>}
                     </td>
                     <td style={{ padding: "0.625rem 0.75rem" }}>
-                      <span style={{ padding: "0.125rem 0.5rem", borderRadius: "999px", background: approved ? "#D1FAE5" : "#FEF3C7", color: approved ? "#065F46" : "#92400E", fontSize: "0.7rem", fontWeight: 700, whiteSpace: "nowrap" }}>
+                      <span style={{ padding: "0.125rem 0.5rem", borderRadius: "999px", background: approved ? "#D1FAE5" : "rgba(14,110,82,0.08)", color: approved ? "#065F46" : "#0E6E52", fontSize: "0.7rem", fontWeight: 700, whiteSpace: "nowrap" }}>
                         {QA_REVIEW_LABELS[item.review_status] || item.review_status}
                       </span>
                     </td>

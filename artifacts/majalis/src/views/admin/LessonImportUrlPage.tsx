@@ -206,7 +206,7 @@ function LessonImportUrlContent() {
       </div>
 
       {(visionEnabled === false || visionMessage) && (
-        <div style={{ background: "#FEF3C7", border: "1px solid #FCD34D", borderRadius: "0.5rem", padding: "0.75rem 1rem", marginBottom: "1rem", fontSize: "0.875rem", color: "#92400E" }}>
+        <div style={{ background: "rgba(14,110,82,0.08)", border: "1px solid #FCD34D", borderRadius: "0.5rem", padding: "0.75rem 1rem", marginBottom: "1rem", fontSize: "0.875rem", color: "#0E6E52" }}>
           {visionMessage || "الاستخراج التلقائي غير مفعّل. يمكنك إدخال البيانات يدويًا."}
         </div>
       )}

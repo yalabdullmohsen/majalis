@@ -117,12 +117,12 @@ export function BulkImport({ title, template, hint, importRow, onDone }: BulkImp
               )}
 
               {result && (
-                <div style={{ marginTop: "0.875rem", padding: "0.875rem 1rem", borderRadius: "0.375rem", background: result.fail > 0 ? "#FEF3C7" : "#D1FAE5", border: `1px solid ${C.line}` }}>
-                  <p style={{ margin: 0, fontSize: "0.875rem", fontWeight: 600, color: result.fail > 0 ? "#92400E" : C.emeraldDeep }}>
+                <div style={{ marginTop: "0.875rem", padding: "0.875rem 1rem", borderRadius: "0.375rem", background: result.fail > 0 ? "rgba(14,110,82,0.08)" : "#D1FAE5", border: `1px solid ${C.line}` }}>
+                  <p style={{ margin: 0, fontSize: "0.875rem", fontWeight: 600, color: result.fail > 0 ? "#0E6E52" : C.emeraldDeep }}>
                     تم استيراد {result.ok} سجلًا بنجاح{result.fail > 0 ? ` · فشل ${result.fail}` : ""}
                   </p>
                   {result.errors.length > 0 && (
-                    <ul style={{ margin: "0.5rem 0 0", paddingInlineStart: "1.1rem", fontSize: "0.8125rem", color: "#92400E", maxHeight: "8rem", overflowY: "auto" }}>
+                    <ul style={{ margin: "0.5rem 0 0", paddingInlineStart: "1.1rem", fontSize: "0.8125rem", color: "#0E6E52", maxHeight: "8rem", overflowY: "auto" }}>
                       {result.errors.map((er, i) => <li key={i} style={{ marginBottom: "0.2rem" }}>{er}</li>)}
                     </ul>
                   )}

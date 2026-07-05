@@ -85,7 +85,7 @@ function InstagramIntegrationContent() {
             <div style={{ display: "grid", gap: "0.5rem", fontSize: "0.8125rem" }}>
               <div>الحالة: <StatusBadge ok={status?.configured ?? false} label={status?.configured ? "Graph API مُعدّ" : "Instagram connector not configured"} /></div>
               {status?.manualAssistMode && (
-                <div style={{ color: "#92400E" }}>Manual Assist Mode نشط — ارفع الإعلانات يدويًا من صفحة المصادر.</div>
+                <div style={{ color: "#0E6E52" }}>Manual Assist Mode نشط — ارفع الإعلانات يدويًا من صفحة المصادر.</div>
               )}
               <div>App ID: {status?.appId || "—"}</div>
               <div>Business Account ID: {status?.businessAccountId || "—"}</div>

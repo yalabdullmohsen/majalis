@@ -55,7 +55,7 @@ html {
 .quran-ayah.is-highlighted {
   background: rgba(31, 110, 84, 0.08);
   border-radius: 0.5rem;
-  outline: 2px solid rgba(176, 141, 46, 0.35);
+  outline: 2px solid rgba(14, 110, 82, 0.35);
 }
 
 .quran-reciter-card {

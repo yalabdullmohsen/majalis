@@ -49,7 +49,7 @@ const STATUS_COLORS: Record<string, { bg: string; text: string }> = {
 
 const LEVEL_COLORS: Record<string, { bg: string; text: string }> = {
   beginner:     { bg: "#D1FAE5", text: "#065F46" },
-  intermediate: { bg: "#FEF3C7", text: "#92400E" },
+  intermediate: { bg: "rgba(14,110,82,0.08)", text: "#0E6E52" },
   advanced:     { bg: "#FEE2E2", text: "#991B1B" },
 };
 
@@ -87,7 +87,7 @@ const BTN_PRIMARY: React.CSSProperties = {
   border: "none",
 };
 const BTN_DANGER: React.CSSProperties = { ...BTN, color: "#dc2626" };
-const BTN_WARN: React.CSSProperties = { ...BTN, background: "#FEF3C7", color: "#92400E", border: "1px solid #FDE68A" };
+const BTN_WARN: React.CSSProperties = { ...BTN, background: "rgba(14,110,82,0.08)", color: "#0E6E52", border: "1px solid #FDE68A" };
 
 export function QuizSection() {
   const { showSuccess, showError } = useAdminShell();
@@ -270,7 +270,7 @@ export function QuizSection() {
                       {STATUS_LABELS[item.status] || item.status}
                     </span>
                     {item.is_used && (
-                      <span style={{ fontSize: "0.7rem", padding: "0.15rem 0.5rem", borderRadius: "99px", background: "#FEF3C7", color: "#92400E" }}>مُستخدَم</span>
+                      <span style={{ fontSize: "0.7rem", padding: "0.15rem 0.5rem", borderRadius: "99px", background: "rgba(14,110,82,0.08)", color: "#0E6E52" }}>مُستخدَم</span>
                     )}
                     <span style={{ fontSize: "0.7rem", color: C.inkSoft }}>{item.section}</span>
                   </div>

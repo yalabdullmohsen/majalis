@@ -29,7 +29,7 @@ function gapLabel(reason: string) {
 
 function priorityColor(priority: QualityGap["priority"]) {
   if (priority === "high") return "#991B1B";
-  if (priority === "medium") return "#B45309";
+  if (priority === "medium") return "#0E6E52";
   return C.inkSoft;
 }
 
@@ -138,8 +138,8 @@ export function VerifiedKnowledgeSection() {
       </div>
 
       {(report?.recommendations?.length ?? 0) > 0 && (
-        <div style={{ marginBottom: "1.5rem", padding: "0.75rem 1rem", borderRadius: "0.5rem", background: "#FEF3C7", border: "1px solid #F59E0B" }}>
-          <p style={{ margin: 0, fontWeight: 600, color: "#92400E" }}>توصيات</p>
+        <div style={{ marginBottom: "1.5rem", padding: "0.75rem 1rem", borderRadius: "0.5rem", background: "rgba(14,110,82,0.08)", border: "1px solid #F59E0B" }}>
+          <p style={{ margin: 0, fontWeight: 600, color: "#0E6E52" }}>توصيات</p>
           <ul style={{ margin: "0.5rem 0 0", paddingRight: "1.25rem", color: "#78350F", fontSize: "0.875rem" }}>
             {report?.recommendations?.map((rec) => (
               <li key={rec}>{rec}</li>

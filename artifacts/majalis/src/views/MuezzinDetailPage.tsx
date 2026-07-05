@@ -24,7 +24,7 @@ const STYLE_COLOR: Record<string, { bg: string; text: string; border: string }> 
   "خاشع":    { bg: "#f0fdf4", text: "#065f46", border: "#bbf7d0" },
   "رسمي":    { bg: "#eff6ff", text: "#1d4ed8", border: "#bfdbfe" },
   "تقليدي":  { bg: "#faf5ff", text: "#6d28d9", border: "#ddd6fe" },
-  "كلاسيكي": { bg: "#fff7ed", text: "#92400e", border: "#fed7aa" },
+  "كلاسيكي": { bg: "#fff7ed", text: "#0E6E52", border: "rgba(14,110,82,0.25)" },
 };
 
 function StarRating({ rating }: { rating: number }) {

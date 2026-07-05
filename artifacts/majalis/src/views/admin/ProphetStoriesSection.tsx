@@ -47,7 +47,7 @@ const CSS = `
   font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.55rem;
   border-radius: 9999px; letter-spacing: 0.03em;
 }
-.ps-badge.pending { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+.ps-badge.pending { background: rgba(14,110,82,0.08); color: #0E6E52; border: 1px solid #fde68a; }
 .ps-badge.done { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
 .ps-badge.edit-mode { background: #dbeafe; color: #1e40af; border: 1px solid #93c5fd; }
 .ps-toggle { font-size: 0.8rem; color: #94a3b8; }
@@ -108,7 +108,7 @@ const CSS = `
 .ps-loading { text-align: center; padding: 3rem; color: #64748b; }
 .ps-empty { text-align: center; padding: 3rem; color: #64748b; }
 .ps-warning {
-  background: #fffbeb; border: 1px solid #fde68a; border-radius: 0.5rem;
+  background: rgba(14,110,82,0.06); border: 1px solid #fde68a; border-radius: 0.5rem;
   padding: 0.75rem 1rem; font-size: 0.8125rem; color: #78350f;
   margin-bottom: 1.25rem; line-height: 1.6;
 }

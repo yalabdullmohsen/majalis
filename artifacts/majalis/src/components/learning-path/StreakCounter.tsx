@@ -9,7 +9,7 @@ export function StreakCounter({ streak }: Props) {
 
   return (
     <div className="flex gap-3">
-      <div className="flex-1 bg-orange-50 dark:bg-orange-900/20 rounded-2xl p-4 text-center border border-orange-100 dark:border-orange-800">
+      <div className="flex-1 bg-emerald-50 dark:bg-emerald-900/20 rounded-2xl p-4 text-center border border-emerald-100 dark:border-emerald-800">
         <div className="text-3xl font-bold text-orange-600 dark:text-orange-400">{current_streak}</div>
         <div className="text-xs text-orange-500 dark:text-orange-400 mt-1">🔥 أيام متتالية</div>
       </div>

@@ -425,7 +425,7 @@
   flex-shrink: 0;
 }
 .admin-status-dot--ok    { background: #d1fae5; color: #065f46; }
-.admin-status-dot--warn  { background: #fef3c7; color: #92400e; }
+.admin-status-dot--warn  { background: #DBEAFE; color: #1D4ED8; }
 .admin-status-dot--error { background: #fee2e2; color: #991b1b; }
 .admin-status-label {
   font-size: 0.72rem;
@@ -676,7 +676,7 @@ a.admin-info-panel__item-title:hover { color: var(--majalis-emerald-deep); }
   background: currentColor;
   flex-shrink: 0;
 }
-.admin-badge--pending   { background: #FEF3C7; color: #92400E; border-color: #FDE68A; }
+.admin-badge--pending   { background: #F0F9FF; color: #0369A1; border-color: #BAE6FD; }
 .admin-badge--approved  { background: #D1FAE5; color: #065F46; border-color: #A7F3D0; }
 .admin-badge--rejected  { background: #FEE2E2; color: #991B1B; border-color: #FECACA; }
 .admin-badge--draft     { background: #E5E7EB; color: #374151; border-color: #D1D5DB; }
@@ -829,11 +829,11 @@ html[data-theme="dark"]  .admin-badge--published{ background: rgba(59,130,246,.1
 .ii-chip--wait     { background: #f1f5f9; color: #64748b; border-color: #e2e8f0; }
 .ii-chip--analyze  { background: #dbeafe; color: #1d4ed8; border-color: #bfdbfe; }
 .ii-chip--done     { background: #d1fae5; color: #065f46; border-color: #a7f3d0; }
-.ii-chip--review   { background: #fef3c7; color: #92400e; border-color: #fde68a; }
+.ii-chip--review   { background: #F0F9FF; color: #0369A1; border-color: #BAE6FD; }
 .ii-chip--fail     { background: #fee2e2; color: #991b1b; border-color: #fecaca; }
 .ii-chip--approved { background: #d1fae5; color: #065f46; border-color: #6ee7b7; }
 .ii-chip--rejected { background: #fee2e2; color: #991b1b; border-color: #fca5a5; }
-.ii-chip--dup      { background: #fffbeb; color: #b45309; border-color: #fcd34d; }
+.ii-chip--dup      { background: #F5F3FF; color: #6D28D9; border-color: #DDD6FE; }
 
 /* ── مؤشر الثقة ────────────────────────────────────────────────────── */
 .ii-conf { display: flex; flex-direction: column; gap: .18rem; margin-top: .3rem; }
@@ -931,8 +931,8 @@ html[data-theme="dark"]  .admin-badge--published{ background: rgba(59,130,246,.1
 /* تحذير التكرار */
 .ii-dup-warn {
   display: flex; gap: .4rem; align-items: flex-start;
-  background: #fffbeb; border: 1px solid #fcd34d; border-radius: .5rem;
-  padding: .45rem .75rem; font-size: .78rem; color: #92400e; font-weight: 600;
+  background: rgba(14,110,82,0.06); border: 1px solid #fcd34d; border-radius: .5rem;
+  padding: .45rem .75rem; font-size: .78rem; color: #0369A1; font-weight: 600;
   width: 100%;
 }
 
@@ -988,7 +988,7 @@ html[data-theme="dark"]  .admin-badge--published{ background: rgba(59,130,246,.1
 }
 
 /* تحذيرات */
-.ii-warnings { margin: .25rem 0 0; padding-right: 1rem; font-size: .75rem; color: #92400e; list-style: none; }
+.ii-warnings { margin: .25rem 0 0; padding-right: 1rem; font-size: .75rem; color: #0369A1; list-style: none; }
 .ii-warnings li { padding: .2rem 0; }
 
 /* صندوق الخطأ */

@@ -52,7 +52,7 @@ type Dashboard = {
 
 function Score({ value, label }: { value?: number; label: string }) {
   const v = value ?? 0;
-  const color = v >= 80 ? "#065F46" : v >= 50 ? "#92400E" : "#991B1B";
+  const color = v >= 80 ? "#065F46" : v >= 50 ? "#0E6E52" : "#991B1B";
   return (
     <div style={{ textAlign: "center", padding: "0.75rem 1rem", border: `1px solid ${C.line}`, borderRadius: "0.5rem", minWidth: "90px" }}>
       <div style={{ fontSize: "1.75rem", fontWeight: 800, color }}>{v}</div>
@@ -84,7 +84,7 @@ function Panel({ title, children, action }: { title: string; children: React.Rea
 
 function statusColor(s: string) {
   if (s === "available") return "#065F46";
-  if (s === "slow") return "#92400E";
+  if (s === "slow") return "#0E6E52";
   if (s === "dead" || s === "blocked") return "#991B1B";
   if (s === "unauthorized") return "#7C3AED";
   return C.inkSoft;
@@ -250,9 +250,9 @@ function AutonomousPlatformContent() {
         <Stat label="نشر اليوم" value={counts?.published ?? 0} color="#065F46" />
         <Stat label="مصادر نشطة" value={`${counts?.sourcesHealthy ?? 0}/${counts?.sources ?? 0}`} />
         <Stat label="مصادر معطلة" value={counts?.sourcesDead ?? 0} color={(counts?.sourcesDead ?? 0) > 0 ? "#991B1B" : undefined} />
-        <Stat label="قيد المراجعة" value={counts?.reviewPending ?? 0} color={(counts?.reviewPending ?? 0) > 0 ? "#92400E" : undefined} />
+        <Stat label="قيد المراجعة" value={counts?.reviewPending ?? 0} color={(counts?.reviewPending ?? 0) > 0 ? "#0E6E52" : undefined} />
         <Stat label="DLQ" value={counts?.dlq ?? 0} color={(counts?.dlq ?? 0) > 0 ? "#991B1B" : undefined} />
-        <Stat label="تنبيهات مفتوحة" value={counts?.alerts ?? 0} color={(counts?.alerts ?? 0) > 0 ? "#92400E" : undefined} />
+        <Stat label="تنبيهات مفتوحة" value={counts?.alerts ?? 0} color={(counts?.alerts ?? 0) > 0 ? "#0E6E52" : undefined} />
         <Stat label="مكررات اليوم" value={counts?.duplicates ?? 0} />
         <Stat label="قائمة الانتظار" value={counts?.queuePending ?? 0} />
         <Stat label="إعادة المحاولة" value={counts?.retryPending ?? 0} />
@@ -301,7 +301,7 @@ function AutonomousPlatformContent() {
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))", gap: "0.6rem" }}>
               {Object.entries(dashboard?.pipelines || {}).map(([type, p]) => {
                 const pct = p.quota ? Math.round(((p.publishedToday || 0) / p.quota) * 100) : 0;
-                const color = pct >= 80 ? "#065F46" : pct >= 40 ? "#92400E" : C.inkSoft;
+                const color = pct >= 80 ? "#065F46" : pct >= 40 ? "#0E6E52" : C.inkSoft;
                 return (
                   <div key={type} style={{ padding: "0.6rem 0.75rem", border: `1px solid ${C.line}`, borderRadius: "0.375rem" }}>
                     <div style={{ fontSize: "0.72rem", color: C.inkSoft, marginBottom: "0.2rem" }}>{p.label || type}</div>
@@ -440,7 +440,7 @@ function AutonomousPlatformContent() {
           ) : (
             <div style={{ display: "grid", gap: "0.5rem" }}>
               {alerts.map((alert) => {
-                const sevColor = alert.severity === "critical" ? "#991B1B" : alert.severity === "error" ? "#DC2626" : alert.severity === "warning" ? "#92400E" : C.emeraldDeep;
+                const sevColor = alert.severity === "critical" ? "#991B1B" : alert.severity === "error" ? "#DC2626" : alert.severity === "warning" ? "#0E6E52" : C.emeraldDeep;
                 return (
                   <div key={alert.id} style={{ padding: "0.6rem 0.75rem", border: `1px solid ${sevColor}44`, borderRadius: "0.375rem", background: `${sevColor}08` }}>
                     <div style={{ display: "flex", gap: "0.5rem", alignItems: "center", marginBottom: "0.2rem" }}>

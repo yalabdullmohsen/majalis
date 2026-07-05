@@ -344,7 +344,7 @@ export default function UploadPage() {
 
       {/* Notice */}
       <div style={{
-        background: "#fffbeb",
+        background: "rgba(14,110,82,0.06)",
         border: "1.5px solid #fde68a",
         borderRadius: "0.875rem",
         padding: "0.875rem 1rem",
@@ -353,7 +353,7 @@ export default function UploadPage() {
         gap: "0.625rem",
       }}>
         <span style={{ fontSize: "1.1rem", flexShrink: 0 }}>⚠️</span>
-        <div style={{ fontSize: "0.8rem", color: "#92400e", lineHeight: 1.6 }}>
+        <div style={{ fontSize: "0.8rem", color: "#0E6E52", lineHeight: 1.6 }}>
           <strong>تنبيه:</strong> يُشترط أن يكون المحتوى موثوقاً من علماء معتمدين.
           لا يُقبل المحتوى المجهول المصدر أو المخالف لأهل السنة والجماعة.
           الفريق يراجع كل الطلبات ويحتفظ بحق القبول أو الرفض.

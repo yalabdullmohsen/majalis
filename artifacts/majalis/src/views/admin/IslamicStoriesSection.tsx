@@ -46,7 +46,7 @@ const CSS = `
 .is-name { font-size: 0.975rem; font-weight: 700; color: #1e293b; }
 .is-meta { font-size: 0.75rem; color: #64748b; margin-top: 2px; }
 .is-badge { font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.55rem; border-radius: 9999px; letter-spacing: 0.03em; }
-.is-badge.pending { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+.is-badge.pending { background: rgba(14,110,82,0.08); color: #0E6E52; border: 1px solid #fde68a; }
 .is-badge.done { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
 .is-toggle { font-size: 0.75rem; color: #94a3b8; }
 .is-body { padding: 1.1rem 1.25rem; border-top: 1px solid #e2e8f0; }
@@ -160,7 +160,7 @@ export function IslamicStoriesSection() {
           <div className="is-stats">
             <div className="is-stat"><strong>{stories.length}</strong><span>إجمالي</span></div>
             <div className="is-stat"><strong style={{ color: "#16a34a" }}>{approved}</strong><span>معتمد</span></div>
-            <div className="is-stat"><strong style={{ color: "#b45309" }}>{pending}</strong><span>قيد المراجعة</span></div>
+            <div className="is-stat"><strong style={{ color: "#0E6E52" }}>{pending}</strong><span>قيد المراجعة</span></div>
             <div className="is-stat">صحابة: <strong>{catApproved("صحابة")}/{catCount("صحابة")}</strong></div>
             <div className="is-stat">فتوحات: <strong>{catApproved("فتوحات")}/{catCount("فتوحات")}</strong></div>
             <div className="is-stat">تاريخ: <strong>{catApproved("تاريخ")}/{catCount("تاريخ")}</strong></div>

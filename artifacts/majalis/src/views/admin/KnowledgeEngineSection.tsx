@@ -115,7 +115,7 @@ export function KnowledgeEngineSection() {
       </div>
 
       {usingLegacy && (
-        <div style={{ padding: "0.75rem 1rem", marginBottom: "1rem", borderRadius: "0.375rem", background: "#FEF3C7", border: "1px solid #F59E0B", fontSize: "0.8125rem", color: "#92400E" }}>
+        <div style={{ padding: "0.75rem 1rem", marginBottom: "1rem", borderRadius: "0.375rem", background: "rgba(14,110,82,0.08)", border: "1px solid #F59E0B", fontSize: "0.8125rem", color: "#0E6E52" }}>
           ⚠️ نفّذ migration: supabase/auto_knowledge_engine_v13.sql في Supabase SQL Editor.
         </div>
       )}

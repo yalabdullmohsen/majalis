@@ -163,7 +163,7 @@ export function Phase2TrialImport({ onDone }: Phase2TrialImportProps) {
             </div>
 
             {error && (
-              <p style={{ color: "#92400E", fontSize: "0.875rem", margin: "0 0 0.75rem" }}>{error}</p>
+              <p style={{ color: "#0E6E52", fontSize: "0.875rem", margin: "0 0 0.75rem" }}>{error}</p>
             )}
 
             {result && (
@@ -171,7 +171,7 @@ export function Phase2TrialImport({ onDone }: Phase2TrialImportProps) {
                 style={{
                   padding: "1rem",
                   borderRadius: "0.375rem",
-                  background: result.ok ? "#D1FAE5" : "#FEF3C7",
+                  background: result.ok ? "#D1FAE5" : "rgba(14,110,82,0.08)",
                   border: `1px solid ${C.line}`,
                   fontSize: "0.875rem",
                 }}
@@ -196,7 +196,7 @@ export function Phase2TrialImport({ onDone }: Phase2TrialImportProps) {
                       {row.report.stats?.failed ?? 0}
                     </span>
                     {[...(row.report.validationErrors || []), ...(row.report.importErrors || [])].map((msg) => (
-                      <p key={msg} style={{ margin: "0.25rem 0 0", color: "#92400E", fontSize: "0.8125rem" }}>
+                      <p key={msg} style={{ margin: "0.25rem 0 0", color: "#0E6E52", fontSize: "0.8125rem" }}>
                         • {msg}
                       </p>
                     ))}

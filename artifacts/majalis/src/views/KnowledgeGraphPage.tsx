@@ -65,9 +65,9 @@ const SVG_H       = 580;
 
 // الألوان للنظام القديم
 const OLD_TYPE_COLOR: Record<KnowledgeSourceType, string> = {
-  scholar:  "#b45309",
+  scholar:  "#0E6E52",
   lesson:   "#0369a1",
-  book:     "#92400e",
+  book:     "#0E6E52",
   fatwa:    "#7c3aed",
   fawaid:   "#047857",
   question: "#6b7280",

@@ -29,7 +29,7 @@ type DraftRow = {
 
 const DECISION_COLORS: Record<string, { bg: string; text: string }> = {
   approved: { bg: "#D1FAE5", text: C.emeraldDeep },
-  pending_review: { bg: "#FEF3C7", text: "#92400E" },
+  pending_review: { bg: "rgba(14,110,82,0.08)", text: "#0E6E52" },
   duplicate: { bg: "#FFEDD5", text: "#C2410C" },
   rejected: { bg: "#FEE2E2", text: "#991B1B" },
 };
@@ -46,7 +46,7 @@ function formatDt(iso?: string) {
 function confidenceColor(score: number) {
   const pct = Math.round(score * 100);
   if (pct >= 75) return { bg: "#D1FAE5", text: C.emeraldDeep };
-  if (pct >= 45) return { bg: "#FEF3C7", text: "#92400E" };
+  if (pct >= 45) return { bg: "rgba(14,110,82,0.08)", text: "#0E6E52" };
   return { bg: "#FEE2E2", text: "#991B1B" };
 }
 
@@ -213,7 +213,7 @@ function AutomationReviewContent() {
                         <p style={{ margin: "0.35rem 0", fontSize: "0.8125rem", color: C.inkSoft }}>
                           {speaker} · {mosque} · {formatDt(d.created_at)}
                         </p>
-                        {d.decision_reason && <p style={{ margin: 0, fontSize: "0.75rem", color: "#92400E" }}>{d.decision_reason}</p>}
+                        {d.decision_reason && <p style={{ margin: 0, fontSize: "0.75rem", color: "#0E6E52" }}>{d.decision_reason}</p>}
                         {d.missing_fields && d.missing_fields.length > 0 && (
                           <p style={{ margin: "0.25rem 0", fontSize: "0.75rem", color: "#991B1B" }}>
                             حقول ناقصة: {d.missing_fields.join("، ")}

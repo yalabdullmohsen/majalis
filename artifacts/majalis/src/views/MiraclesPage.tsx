@@ -37,7 +37,7 @@ const CATEGORY_PALETTE: Record<string, { bg: string; accent: string }> = {
   "علم البحار":    { bg: "#0c4a6e", accent: "#38bdf8" },
   "علم الأجنة":    { bg: "#2e1065", accent: "#c4b5fd" },
   "الرياضيات":     { bg: "#1c1917", accent: "#d6d3d1" },
-  "التاريخ":       { bg: "#422006", accent: "#fde68a" },
+  "التاريخ":       { bg: "#422006", accent: "rgba(14,110,82,0.25)" },
   "الإعجاز اللغوي": { bg: "#14532d", accent: "#86efac" },
 };
 

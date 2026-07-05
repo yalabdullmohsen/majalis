@@ -4,7 +4,7 @@ import { formatFileSize, type UserSubmission, type SubmissionStatus } from "@/li
 import { Link } from "wouter";
 
 const STATUS_META: Record<SubmissionStatus, { icon: string; label: string; bg: string; color: string; border: string }> = {
-  pending:  { icon: "⏳", label: "قيد المراجعة",  bg: "#fffbeb", color: "#92400e", border: "#fde68a" },
+  pending:  { icon: "⏳", label: "قيد المراجعة",  bg: "#F0F9FF", color: "#0369A1", border: "#A7F3D0" },
   approved: { icon: "✅", label: "مقبول",          bg: "#f0fdf4", color: "#065f46", border: "#86efac" },
   rejected: { icon: "❌", label: "مرفوض",          bg: "#fef2f2", color: "#991b1b", border: "#fca5a5" },
 };
@@ -239,7 +239,7 @@ export default function MySubmissionsPage() {
         <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "0.5rem", marginBottom: "1.25rem" }}>
           {[
             { label: "الكل",          val: stats.total,    bg: "#f3f4f6", color: "#374151" },
-            { label: "⏳ قيد المراجعة", val: stats.pending,  bg: "#fffbeb", color: "#92400e" },
+            { label: "⏳ قيد المراجعة", val: stats.pending,  bg: "#F0F9FF", color: "#0369A1" },
             { label: "✅ مقبول",       val: stats.approved, bg: "#f0fdf4", color: "#065f46" },
             { label: "❌ مرفوض",       val: stats.rejected, bg: "#fef2f2", color: "#991b1b" },
           ].map((s) => (

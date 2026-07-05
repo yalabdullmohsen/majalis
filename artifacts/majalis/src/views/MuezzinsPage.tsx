@@ -13,7 +13,7 @@ const STYLE_COLOR: Record<string, { bg: string; text: string }> = {
   "خاشع":    { bg: "#f0fdf4", text: "#065f46" },
   "رسمي":    { bg: "#eff6ff", text: "#1d4ed8" },
   "تقليدي":  { bg: "#faf5ff", text: "#6d28d9" },
-  "كلاسيكي": { bg: "#fff7ed", text: "#92400e" },
+  "كلاسيكي": { bg: "#fff7ed", text: "#0E6E52" },
 };
 
 function StarRating({ rating }: { rating: number }) {

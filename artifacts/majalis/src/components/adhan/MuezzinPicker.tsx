@@ -5,7 +5,7 @@ const STYLE_COLOR: Record<string, string> = {
   "خاشع":    "#065f46",
   "رسمي":    "#1d4ed8",
   "تقليدي":  "#7c3aed",
-  "كلاسيكي": "#92400e",
+  "كلاسيكي": "#0E6E52",
 };
 
 type Props = {

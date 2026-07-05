@@ -294,7 +294,7 @@ export function RelationshipsSection() {
                     <span style={{ color: "#9ca3af", fontSize: "0.75rem" }}>
                       {REL_TYPES.find((t) => t.value === r.relationship_type)?.label ?? r.relationship_type}
                     </span>
-                    <span style={{ fontSize: "0.7rem", background: "#fef3c7", color: "#92400e", borderRadius: "4px", padding: "2px 6px" }}>
+                    <span style={{ fontSize: "0.7rem", background: "rgba(14,110,82,0.08)", color: "#0E6E52", borderRadius: "4px", padding: "2px 6px" }}>
                       {SOURCE_TYPES.find((t) => t.value === r.target_type)?.label ?? r.target_type}
                     </span>
                     <code style={{ fontSize: "0.75rem", color: "#374151" }}>{r.target_id.slice(0, 20)}{r.target_id.length > 20 ? "…" : ""}</code>
@@ -306,12 +306,12 @@ export function RelationshipsSection() {
                   <span style={{
                     fontSize: "0.7rem", borderRadius: "999px", padding: "2px 8px",
                     background: r.is_verified ? "#d1fae5" : "#fef9c3",
-                    color: r.is_verified ? "#065f46" : "#92400e",
+                    color: r.is_verified ? "#065f46" : "#0E6E52",
                   }}>
                     {r.is_verified ? "محققة" : "قيد المراجعة"}
                   </span>
                   <button type="button" onClick={() => handleToggleVerified(r)}
-                    style={{ padding: "0.25rem 0.625rem", fontSize: "0.75rem", background: r.is_verified ? "#fef3c7" : "#d1fae5",
+                    style={{ padding: "0.25rem 0.625rem", fontSize: "0.75rem", background: r.is_verified ? "rgba(14,110,82,0.08)" : "#d1fae5",
                       border: "1px solid #d1d5db", borderRadius: "0.25rem", cursor: "pointer", fontFamily: "inherit" }}>
                     {r.is_verified ? "إلغاء التحقق" : "تحقق"}
                   </button>

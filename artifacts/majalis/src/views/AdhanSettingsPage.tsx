@@ -118,7 +118,7 @@ export default function AdhanSettingsPage() {
           onChange={toggleGlobal}
         />
         {!prefs.globalEnabled && (
-          <div style={{ fontSize: "0.78rem", color: "#b45309", background: "#fefce8", padding: "0.5rem 0.75rem", borderRadius: "0.4rem", marginTop: "0.5rem" }}>
+          <div style={{ fontSize: "0.78rem", color: "#0E6E52", background: "rgba(14,110,82,0.08)", padding: "0.5rem 0.75rem", borderRadius: "0.4rem", marginTop: "0.5rem" }}>
             الإشعارات معطلة — لن يُشغَّل أذان ولن تصل تنبيهات.
           </div>
         )}

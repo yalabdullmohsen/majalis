@@ -38,7 +38,7 @@ function HighlightText({ text, query }: { text: string; query: string }) {
   return (
     <>
       {text.slice(0, idx)}
-      <mark style={{ background: "#FEF3C7", color: "#92400E", borderRadius: "2px", padding: "0 2px" }}>
+      <mark style={{ background: "rgba(14,110,82,0.10)", color: "#0A5040", borderRadius: "2px", padding: "0 2px" }}>
         {text.slice(idx, idx + nQuery.length)}
       </mark>
       {text.slice(idx + nQuery.length)}

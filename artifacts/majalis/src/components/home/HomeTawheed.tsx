@@ -11,7 +11,7 @@ type HadithRef = {
 
 const GRADE_COLOR: Record<HadithRef["grade"], string> = {
   صحيح:  "#15803d",
-  حسن:   "#b45309",
+  حسن:   "#0E6E52",
   ضعيف:  "#dc2626",
   موضوع: "#7f1d1d",
 };

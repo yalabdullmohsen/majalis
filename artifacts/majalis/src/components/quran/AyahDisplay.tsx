@@ -243,7 +243,7 @@ export function AyahDisplay({
               )}
               {/* مؤشر الملاحظة */}
               {hasNote && (
-                <span aria-hidden="true" title="يوجد ملاحظة" style={{ fontSize: "0.6rem", color: "#92400E", marginInlineStart: "2px" }}>📝</span>
+                <span aria-hidden="true" title="يوجد ملاحظة" style={{ fontSize: "0.6rem", color: "#0E6E52", marginInlineStart: "2px" }}>📝</span>
               )}
             </span>
           );

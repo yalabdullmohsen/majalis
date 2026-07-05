@@ -3,12 +3,12 @@ import { GeometricPattern } from "@/components/design/GeometricPattern";
 
 const LEVEL_COLOR: Record<string, string> = {
   "مبتدئ": "#d1fae5",
-  "متوسط": "#fef3c7",
+  "متوسط": "rgba(14,110,82,0.08)",
   "متقدم": "#fee2e2",
 };
 const LEVEL_TEXT: Record<string, string> = {
   "مبتدئ": "#065f46",
-  "متوسط": "#92400e",
+  "متوسط": "#0E6E52",
   "متقدم": "#991b1b",
 };
 

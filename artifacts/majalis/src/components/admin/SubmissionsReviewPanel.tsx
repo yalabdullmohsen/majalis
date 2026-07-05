@@ -19,7 +19,7 @@ const STATUS_LABEL: Record<SubmissionStatus, string> = {
 };
 
 const STATUS_COLOR: Record<SubmissionStatus, { bg: string; text: string; border: string }> = {
-  pending:  { bg: "#fffbeb", text: "#92400e", border: "#fde68a" },
+  pending:  { bg: "#F0F9FF", text: "#0369A1", border: "#BAE6FD" },
   approved: { bg: "#f0fdf4", text: "#065f46", border: "#86efac" },
   rejected: { bg: "#fef2f2", text: "#991b1b", border: "#fca5a5" },
 };
@@ -410,7 +410,7 @@ export function SubmissionsReviewPanel() {
             📋 طلبات رفع المحتوى
           </h2>
           {pending > 0 && (
-            <div style={{ fontSize: "0.78rem", color: "#92400e", fontWeight: 600 }}>
+            <div style={{ fontSize: "0.78rem", color: "#0369A1", fontWeight: 600 }}>
               ⏳ {pending} طلب بانتظار المراجعة
             </div>
           )}
@@ -429,7 +429,7 @@ export function SubmissionsReviewPanel() {
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))", gap: "0.5rem", marginBottom: "1.25rem" }}>
           {[
             { label: "الكل",    val: stats.total,    bg: "#f3f4f6", color: "#374151" },
-            { label: "⏳ معلق", val: stats.pending,  bg: "#fffbeb", color: "#92400e" },
+            { label: "⏳ معلق", val: stats.pending,  bg: "#F0F9FF", color: "#0369A1" },
             { label: "✅ قبول", val: stats.approved, bg: "#f0fdf4", color: "#065f46" },
             { label: "❌ رفض",  val: stats.rejected, bg: "#fef2f2", color: "#991b1b" },
             { label: "🎙️ أذان / 📚 درس", val: `${stats.adhan}/${stats.lesson}`, bg: "#eff6ff", color: "#1d4ed8" },

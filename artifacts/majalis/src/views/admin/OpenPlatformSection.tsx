@@ -107,7 +107,7 @@ export function OpenPlatformSection() {
       </div>
 
       {createdKey && (
-        <div style={{ padding: "1rem", marginBottom: "1rem", background: "#fef3c7", borderRadius: "0.5rem", fontSize: "0.875rem" }}>
+        <div style={{ padding: "1rem", marginBottom: "1rem", background: "rgba(14,110,82,0.08)", borderRadius: "0.5rem", fontSize: "0.875rem" }}>
           <strong>مفتاح API (يُعرض مرة واحدة):</strong>
           <code style={{ display: "block", marginTop: "0.5rem", wordBreak: "break-all" }}>{createdKey}</code>
         </div>

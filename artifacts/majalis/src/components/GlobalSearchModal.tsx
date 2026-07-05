@@ -24,18 +24,18 @@ const POPULAR_QUERIES = [
 const KIND_META: Record<string, { label: string; icon: string; color: string }> = {
   lesson:        { label: "درس",      icon: "📚", color: "#065F46" },
   hadith:        { label: "حديث",     icon: "📿", color: "#1E40AF" },
-  library:       { label: "كتاب",     icon: "📖", color: "#92400E" },
+  library:       { label: "كتاب",     icon: "📖", color: "#0E6E52" },
   fatwa:         { label: "فتوى",     icon: "🕌", color: "#5B21B6" },
   fiqh:          { label: "فقه",      icon: "⚖️", color: "#065F46" },
   fiqh_decision: { label: "قرار فقهي", icon: "⚖️", color: "#065F46" },
   ruling:        { label: "حكم",      icon: "📋", color: "#1E40AF" },
-  fawaid:        { label: "فائدة",    icon: "💡", color: "#92400E" },
+  fawaid:        { label: "فائدة",    icon: "💡", color: "#0E6E52" },
   qa:            { label: "سؤال",     icon: "❓", color: "#5B21B6" },
   quran:         { label: "قرآن",     icon: "📗", color: "#065F46" },
   course:        { label: "دورة",     icon: "🎓", color: "#1E40AF" },
-  miracle:       { label: "إعجاز",    icon: "✨", color: "#92400E" },
+  miracle:       { label: "إعجاز",    icon: "✨", color: "#0E6E52" },
   article:       { label: "مقال",     icon: "📰", color: "#5B21B6" },
-  update:        { label: "مستجد",    icon: "🔔", color: "#92400E" },
+  update:        { label: "مستجد",    icon: "🔔", color: "#0E6E52" },
   topic:         { label: "موضوع",    icon: "🏷️", color: "#1E40AF" },
   knowledge:     { label: "معرفة",    icon: "🧠", color: "#065F46" },
   sheikh:        { label: "شيخ",      icon: "👤", color: "#5B21B6" },
@@ -86,7 +86,7 @@ function Highlight({ text, query }: { text: string; query: string }) {
   return (
     <>
       {before}
-      <mark style={{ background: "#FEF3C7", color: "#92400E", borderRadius: "2px", padding: "0 2px" }}>
+      <mark style={{ background: "rgba(14,110,82,0.10)", color: "#0A5040", borderRadius: "2px", padding: "0 2px" }}>
         {match}
       </mark>
       {after}

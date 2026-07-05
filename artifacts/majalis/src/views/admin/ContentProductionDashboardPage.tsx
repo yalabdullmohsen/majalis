@@ -92,7 +92,7 @@ function ContentProductionDashboardContent() {
             <StatCard label="إنتاج اليوم" value={prod?.today?.published ?? 0} />
             <StatCard label="إنتاج الأسبوع" value={prod?.week?.published ?? 0} />
             <StatCard label="إنتاج الشهر" value={prod?.month?.published ?? 0} />
-            <StatCard label="مرفوض اليوم" value={prod?.today?.rejected ?? 0} color="#92400E" />
+            <StatCard label="مرفوض اليوم" value={prod?.today?.rejected ?? 0} color="#0E6E52" />
             <StatCard label="مكرر اليوم" value={prod?.today?.duplicate ?? 0} />
             <StatCard label="مصادر نشطة" value={data?.readiness?.activeSources ?? 0} />
             <StatCard label="تنبيهات" value={data?.readiness?.openAlerts ?? 0} color="#991B1B" />

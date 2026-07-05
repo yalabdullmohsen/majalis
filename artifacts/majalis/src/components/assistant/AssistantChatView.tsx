@@ -196,8 +196,8 @@ export function AssistantChatView({
                       fontSize: "0.7rem",
                       padding: "0.15rem 0.5rem",
                       borderRadius: "99px",
-                      background: message.grounded ? "#D1FAE5" : "#FEF3C7",
-                      color: message.grounded ? "#065F46" : "#92400E",
+                      background: message.grounded ? "#D1FAE5" : "rgba(14,110,82,0.08)",
+                      color: message.grounded ? "#065F46" : "#0A5040",
                       fontWeight: 600,
                     }}>
                       {safetyLabel(message.safetyClassification)}

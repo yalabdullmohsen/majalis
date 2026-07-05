@@ -133,7 +133,7 @@ export function SmartCmsSection() {
           <h3 style={{ margin: "0 0 0.75rem", fontSize: "0.9375rem", color: C.emeraldDeep }}>أتمتة المصادر المعتمدة</h3>
           <a
             href="/admin/automation/sources"
-            style={{ display: "inline-block", padding: "0.5rem 1rem", background: "#FEF3C7", color: "#92400E", borderRadius: "0.375rem", textDecoration: "none", fontFamily: "inherit", fontWeight: 600, fontSize: "0.875rem", marginInlineEnd: "0.5rem" }}
+            style={{ display: "inline-block", padding: "0.5rem 1rem", background: "rgba(14,110,82,0.08)", color: "#0E6E52", borderRadius: "0.375rem", textDecoration: "none", fontFamily: "inherit", fontWeight: 600, fontSize: "0.875rem", marginInlineEnd: "0.5rem" }}
           >
             مصادر + Auto-Publish
           </a>

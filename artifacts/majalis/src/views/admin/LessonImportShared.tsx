@@ -25,8 +25,8 @@ export const labelStyle: React.CSSProperties = {
 
 export function ConfidenceBadge({ score }: { score: number }) {
   const pct = Math.round(score * 100);
-  const color = pct >= 75 ? C.emeraldDeep : pct >= 45 ? "#92400E" : "#991B1B";
-  const bg = pct >= 75 ? "#D1FAE5" : pct >= 45 ? "#FEF3C7" : "#FEE2E2";
+  const color = pct >= 75 ? C.emeraldDeep : pct >= 45 ? "#0E6E52" : "#991B1B";
+  const bg = pct >= 75 ? "#D1FAE5" : pct >= 45 ? "rgba(14,110,82,0.08)" : "#FEE2E2";
   return (
     <span style={{ padding: "0.25rem 0.625rem", borderRadius: "999px", background: bg, color, fontSize: "0.75rem", fontWeight: 600 }}>
       ثقة الاستخراج: {pct}%
@@ -69,8 +69,8 @@ export function FieldStatusGrid({
         const isOk = val && conf >= 0.5;
         const isWarn = val && conf < 0.5;
         const isMissing = !val;
-        const bg = isOk ? "#D1FAE5" : isWarn ? "#FEF3C7" : "#FEE2E2";
-        const color = isOk ? C.emeraldDeep : isWarn ? "#92400E" : "#991B1B";
+        const bg = isOk ? "#D1FAE5" : isWarn ? "rgba(14,110,82,0.08)" : "#FEE2E2";
+        const color = isOk ? C.emeraldDeep : isWarn ? "#0E6E52" : "#991B1B";
         const icon = isOk ? "✓" : isWarn ? "⚠" : "✗";
         return (
           <div key={field} style={{ background: bg, border: `1px solid ${color}30`, borderRadius: "0.375rem", padding: "0.35rem 0.6rem" }} title={reason || val || "غير موجود"}>
@@ -379,7 +379,7 @@ export function LessonImportReviewPanel({
             {extractedText || "—"}
           </pre>
           {warnings.length > 0 && (
-            <ul style={{ margin: "0.75rem 0 0", paddingInlineStart: "1rem", fontSize: "0.75rem", color: "#92400E" }}>
+            <ul style={{ margin: "0.75rem 0 0", paddingInlineStart: "1rem", fontSize: "0.75rem", color: "#0E6E52" }}>
               {warnings.map((w, i) => (
                 <li key={i}>{w.message}</li>
               ))}
