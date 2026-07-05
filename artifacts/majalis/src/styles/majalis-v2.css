@@ -737,3 +737,57 @@ html[data-theme="dark"] .home-more-card {
   background: var(--msk-canvas-1, #1E2434) !important;
   border-color: rgba(217,174,92,0.12) !important;
 }
+
+/* ── القائمة الجانبية — أبيض نظيف ── */
+.side-nav-drawer--v2 {
+  background: #FFFFFF !important;
+  border-left: 1px solid rgba(14,110,82,0.10) !important;
+  box-shadow: -12px 0 40px rgba(14,110,82,0.10), -2px 0 8px rgba(14,110,82,0.05) !important;
+}
+.side-nav-drawer__head--v2 {
+  background: #FFFFFF !important;
+  border-bottom: 1px solid rgba(14,110,82,0.10) !important;
+}
+.side-nav-drawer__brand {
+  color: #0E6E52 !important;
+}
+.side-nav-close {
+  color: #5C5550 !important;
+}
+.side-nav-close:hover {
+  background: rgba(14,110,82,0.08) !important;
+  color: #0E6E52 !important;
+}
+.side-nav-group__title {
+  color: #0E6E52 !important;
+}
+.side-nav-link--v2 {
+  color: #1C1A18 !important;
+}
+.side-nav-link--v2:hover:not(.is-active) {
+  background: rgba(14,110,82,0.06) !important;
+  color: #0E6E52 !important;
+}
+.side-nav-link--v2.is-active {
+  background: rgba(14,110,82,0.08) !important;
+  color: #0E6E52 !important;
+  font-weight: 700 !important;
+}
+/* dark mode القائمة */
+html[data-theme="dark"] .side-nav-drawer--v2 {
+  background: var(--msk-canvas-1, #1E2434) !important;
+  border-left-color: rgba(217,174,92,0.15) !important;
+}
+html[data-theme="dark"] .side-nav-drawer__head--v2 {
+  background: var(--msk-canvas-1, #1E2434) !important;
+  border-bottom-color: rgba(217,174,92,0.15) !important;
+}
+html[data-theme="dark"] .side-nav-close,
+html[data-theme="dark"] .side-nav-group__title,
+html[data-theme="dark"] .side-nav-link--v2 {
+  color: rgba(250,245,234,0.85) !important;
+}
+html[data-theme="dark"] .side-nav-link--v2.is-active {
+  background: rgba(217,174,92,0.12) !important;
+  color: #D9AE5C !important;
+}
