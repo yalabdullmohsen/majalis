@@ -447,7 +447,7 @@ html[data-theme="dark"] .settings-choice {
 }
 
 .home-section-error {
-  border: 1px solid #f59e0b;
+  border: 1px solid color-mix(in srgb, var(--majalis-emerald) 50%, #d97706);
   border-radius: 1rem;
   background: rgba(14,110,82,0.08);
   color: #78350f;
@@ -470,12 +470,12 @@ html[data-theme="dark"] .settings-choice {
 
 html[data-theme="dark"] .home-section-error {
   background: #3a2a12;
-  border-color: #0E6E52;
+  border-color: var(--majalis-emerald);
   color: #fde68a;
 }
 
 html[data-theme="dark"] .home-section-error button {
-  background: var(--majalis-panel);
+  background: transparent;
   color: var(--majalis-ink);
 }
 
@@ -516,7 +516,7 @@ input, textarea, select { font-family: inherit; }
 .font-selector-label {
   font-size: 0.78rem;
   font-weight: 700;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
 }
 
 .font-selector-options {
@@ -526,11 +526,11 @@ input, textarea, select { font-family: inherit; }
 }
 
 .font-selector-btn {
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: 999px;
   padding: 0.3rem 0.75rem;
-  background: var(--majalis-panel);
-  color: var(--majalis-ink-soft);
+  background: transparent;
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.78rem;
   font-weight: 700;
   line-height: 1.4;
@@ -555,9 +555,9 @@ input, textarea, select { font-family: inherit; }
   gap: 1rem;
   align-items: center;
   padding: 1rem;
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: 1rem;
-  background: var(--majalis-panel);
+  background: transparent;
 }
 
 .settings-avatar {
@@ -573,7 +573,7 @@ input, textarea, select { font-family: inherit; }
 }
 
 .settings-note {
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.85rem;
   margin-top: 0.35rem;
 }
@@ -592,9 +592,9 @@ input, textarea, select { font-family: inherit; }
 }
 
 .settings-choice {
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: 0.9rem;
-  background: var(--majalis-panel);
+  background: transparent;
   color: var(--majalis-ink);
   padding: 0.85rem;
   text-align: right;
@@ -603,7 +603,7 @@ input, textarea, select { font-family: inherit; }
 }
 
 .settings-choice span {
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.82rem;
 }
 
@@ -953,7 +953,7 @@ html[data-theme="light"] .home-page {
 }
 
 .home-stat-card span {
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.9rem;
   font-weight: 700;
 }
@@ -1010,7 +1010,7 @@ html[data-theme="light"] .home-page {
 .home-library-card p,
 .home-miracle-card p,
 .home-empty-card p {
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.9rem;
   line-height: 1.75;
 }
@@ -1092,7 +1092,7 @@ html[data-theme="light"] .home-page {
 
 .home-card-row {
   justify-content: space-between;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.78rem;
   margin-bottom: 1rem;
 }
@@ -1124,7 +1124,7 @@ html[data-theme="light"] .home-page {
 }
 
 .home-lesson-card p {
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.92rem;
   line-height: 1.85;
   margin-bottom: 1rem;
@@ -1190,7 +1190,7 @@ html[data-theme="light"] .home-page {
 }
 
 .home-sheikh-card p {
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.86rem;
   min-height: 3rem;
   line-height: 1.75;
@@ -1344,7 +1344,7 @@ html[data-theme="light"] .home-page {
 }
 
 .home-trust-strip p {
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.88rem;
 }
 
@@ -1352,7 +1352,7 @@ html[data-theme="light"] .home-page {
   font-size: 0.8125rem;
   color: var(--majalis-brass-deep);
   background: var(--majalis-parchment-deep);
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: 0.5rem;
   padding: 0.75rem 1rem;
   margin-bottom: 1rem;
@@ -1368,7 +1368,7 @@ html[data-theme="light"] .home-page {
   margin-top: 2rem;
   padding: clamp(1.25rem, 4vw, 2rem);
   border-radius: 1.25rem;
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   background: linear-gradient(135deg, #f0e8d6, #fff);
   box-shadow: var(--majalis-shadow);
 }
@@ -1382,7 +1382,7 @@ html[data-theme="light"] .home-page {
 }
 
 .home-cta-banner p {
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   max-width: 36rem;
   line-height: 1.85;
   font-weight: 600;
@@ -1545,7 +1545,7 @@ html[data-theme="light"] .home-page {
 }
 
 .assistant-intro {
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.95rem;
   line-height: 1.85;
   max-width: 36rem;
@@ -1588,7 +1588,7 @@ html[data-theme="light"] .home-page {
 }
 
 .assistant-header p {
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.95rem;
   line-height: 1.85;
   max-width: 36rem;
@@ -1646,7 +1646,7 @@ html[data-theme="light"] .home-page {
   margin: 0;
   padding: 0.5rem 0.75rem;
   font-size: 0.82rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   text-align: center;
   border-top: 1px solid var(--majalis-line);
   background: transparent;
@@ -1774,11 +1774,11 @@ html[data-theme="light"] .home-page {
   gap: 0.5rem;
   padding: 0.85rem 1rem;
   border-bottom: 1px solid var(--majalis-line);
-  background: var(--majalis-panel);
+  background: transparent;
 }
 
 .assistant-quick-prompts button {
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: 999px;
   padding: 0.4rem 0.75rem;
   background: var(--majalis-parchment-deep);
@@ -1814,7 +1814,7 @@ html[data-theme="light"] .home-page {
 
 .assistant-chat {
   margin-top: 0;
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: 1rem;
   background: rgba(255, 255, 255, 0.84);
   box-shadow: 0 12px 36px rgba(36, 31, 24, 0.08);
@@ -1828,7 +1828,7 @@ html[data-theme="light"] .home-page {
   padding: 0.9rem 1rem;
   border-bottom: 1px solid var(--majalis-line);
   background: var(--majalis-parchment-deep);
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.9rem;
 }
 
@@ -1851,7 +1851,7 @@ html[data-theme="light"] .home-page {
   max-width: min(88%, 42rem);
   border-radius: 1.1rem;
   padding: 0.85rem 1rem;
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
 }
 
 .assistant-message span {
@@ -1925,7 +1925,7 @@ html[data-theme="light"] .home-page {
 .assistant-loading {
   align-self: flex-end;
   margin: 0;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   background: var(--majalis-parchment-deep);
 }
 
@@ -1941,14 +1941,14 @@ html[data-theme="light"] .home-page {
   gap: 0.75rem;
   padding: 1rem;
   border-top: 1px solid var(--majalis-line);
-  background: var(--majalis-panel);
+  background: transparent;
 }
 
 .assistant-form textarea {
   width: 100%;
   resize: vertical;
   min-height: 5rem;
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: 0.9rem;
   padding: 0.85rem 1rem;
   color: var(--majalis-ink);
@@ -2022,7 +2022,7 @@ html[data-theme="light"] .home-page {
 .condolence-hero {
   overflow: hidden;
   position: relative;
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: 2rem;
   padding: clamp(1.75rem, 5vw, 3.25rem);
   color: var(--majalis-parchment);
@@ -2065,7 +2065,7 @@ html[data-theme="light"] .home-page {
 .condolence-panel,
 .condolence-preview-wrap,
 .condolence-archive {
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: 1.35rem;
   background: rgba(255, 255, 255, 0.88);
   box-shadow: 0 16px 48px rgba(36, 31, 24, 0.08);
@@ -2092,7 +2092,7 @@ html[data-theme="light"] .home-page {
 .condolence-panel label {
   display: grid;
   gap: 0.35rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.86rem;
   font-weight: 800;
   margin-bottom: 0.85rem;
@@ -2102,7 +2102,7 @@ html[data-theme="light"] .home-page {
 .condolence-panel select,
 .condolence-panel textarea {
   width: 100%;
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: 0.75rem;
   padding: 0.7rem 0.85rem;
   color: var(--majalis-ink);
@@ -2131,7 +2131,7 @@ html[data-theme="light"] .home-page {
 }
 
 .condolence-template-grid button {
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: 0.85rem;
   padding: 0.8rem;
   color: var(--majalis-ink);
@@ -2150,7 +2150,7 @@ html[data-theme="light"] .home-page {
 }
 
 .condolence-template-grid span {
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.78rem;
   margin-top: 0.2rem;
 }
@@ -2174,7 +2174,7 @@ html[data-theme="light"] .home-page {
 .condolence-actions button:nth-child(even) {
   color: var(--majalis-emerald-deep);
   background: var(--majalis-parchment-deep);
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
 }
 
 .condolence-success {
@@ -2319,13 +2319,13 @@ html[data-theme="light"] .home-page {
 }
 
 .condolence-archive p {
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.9rem;
 }
 
 .condolence-archive button {
   width: 100%;
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: 0.8rem;
   background: var(--majalis-parchment);
   padding: 0.75rem;
@@ -2339,7 +2339,7 @@ html[data-theme="light"] .home-page {
 }
 
 .condolence-archive span {
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.78rem;
 }
 
@@ -2382,7 +2382,7 @@ html[data-theme="light"] .home-page {
   flex-wrap: wrap;
   margin-bottom: 1rem;
   font-size: 0.8125rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
 }
 
 .page-search-form {
@@ -2396,10 +2396,10 @@ html[data-theme="light"] .home-page {
   flex: 1;
   padding: 0.625rem 0.875rem;
   border-radius: 0.5rem;
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   font-size: 0.9rem;
   outline: none;
-  background: var(--majalis-panel);
+  background: transparent;
   color: var(--majalis-ink);
 }
 
@@ -2446,9 +2446,9 @@ html[data-theme="light"] .home-page {
 .page-toggle-btn {
   padding: 0.55rem 1rem;
   border-radius: 0.5rem;
-  border: 1px solid var(--majalis-line);
-  background: var(--majalis-panel);
-  color: var(--majalis-ink-soft);
+  border: 1px solid var(--msk-border, #E0DBD5);
+  background: transparent;
+  color: var(--msk-text-2, #5C5550);
   cursor: pointer;
   font-family: inherit;
   font-size: 0.85rem;
@@ -2471,8 +2471,8 @@ html[data-theme="light"] .home-page {
 .page-card {
   padding: 1rem 1.125rem;
   border-radius: 0.5rem;
-  border: 1px solid var(--majalis-line);
-  background: var(--majalis-panel);
+  border: 1px solid var(--msk-border, #E0DBD5);
+  background: transparent;
 }
 
 .sheikh-card {
@@ -2570,7 +2570,7 @@ html[data-theme="light"] .home-page {
 
 .page-meta {
   font-size: 0.8rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   margin: 0 0 0.35rem;
 }
 
@@ -2592,8 +2592,8 @@ html[data-theme="light"] .home-page {
   font-size: 0.75rem;
   padding: 0.125rem 0.5rem;
   border-radius: 0.25rem;
-  border: 1px solid var(--majalis-line);
-  color: var(--majalis-ink-soft);
+  border: 1px solid var(--msk-border, #E0DBD5);
+  color: var(--msk-text-2, #5C5550);
 }
 
 .page-action-btn {
@@ -2674,9 +2674,9 @@ html[data-theme="light"] .home-page {
   flex-shrink: 0;
   padding: 0.45rem 0.85rem;
   border-radius: 999px;
-  border: 1px solid var(--majalis-line);
-  background: var(--majalis-panel);
-  color: var(--majalis-ink-soft);
+  border: 1px solid var(--msk-border, #E0DBD5);
+  background: transparent;
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.8125rem;
   font-weight: 600;
   text-decoration: none;
@@ -2786,9 +2786,9 @@ html[data-theme="light"] .home-page {
   font-size: 0.8125rem;
   padding: 0.375rem 0.875rem;
   border-radius: 999px;
-  border: 1px solid var(--majalis-line);
-  background: var(--majalis-panel);
-  color: var(--majalis-ink-soft);
+  border: 1px solid var(--msk-border, #E0DBD5);
+  background: transparent;
+  color: var(--msk-text-2, #5C5550);
   cursor: pointer;
   font-family: inherit;
   white-space: nowrap;
@@ -2808,8 +2808,8 @@ html[data-theme="light"] .home-page {
 
 .qa-item {
   border-radius: 0.5rem;
-  border: 1px solid var(--majalis-line);
-  background: var(--majalis-panel);
+  border: 1px solid var(--msk-border, #E0DBD5);
+  background: transparent;
   overflow: hidden;
 }
 
@@ -2922,7 +2922,7 @@ html[data-theme="light"] .home-page {
   gap: 0.5rem;
   margin-top: 0.875rem;
   font-size: 0.75rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
 }
 
 .qa-item__actions {
@@ -2941,7 +2941,7 @@ html[data-theme="light"] .home-page {
 .qa-config-hint {
   color: var(--majalis-brass-deep);
   background: var(--majalis-parchment-deep);
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
 }
 
 .qa-inline-error {
@@ -2958,8 +2958,8 @@ html[data-theme="light"] .home-page {
 .qa-skeleton-item {
   padding: 1rem 1.25rem;
   border-radius: 0.5rem;
-  border: 1px solid var(--majalis-line);
-  background: var(--majalis-panel);
+  border: 1px solid var(--msk-border, #E0DBD5);
+  background: transparent;
 }
 
 .qa-skeleton-item--row {
@@ -3003,8 +3003,8 @@ html[data-theme="light"] .home-page {
   gap: 0.75rem;
   padding: 0.875rem 1.125rem;
   border-radius: 0.5rem;
-  border: 1px solid var(--majalis-line);
-  background: var(--majalis-panel);
+  border: 1px solid var(--msk-border, #E0DBD5);
+  background: transparent;
 }
 
 .search-result-copy {
@@ -3515,8 +3515,8 @@ html[data-theme="light"] .home-page {
   width: 100%;
   padding: 0.85rem 1rem;
   border-radius: 0.75rem;
-  border: 1px solid var(--majalis-line);
-  background: var(--majalis-panel);
+  border: 1px solid var(--msk-border, #E0DBD5);
+  background: transparent;
   cursor: pointer;
   font-family: inherit;
   text-align: right;
@@ -3529,7 +3529,7 @@ html[data-theme="light"] .home-page {
 }
 
 .cond-template-picker__btn span {
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.8rem;
   line-height: 1.55;
 }
@@ -3562,12 +3562,12 @@ html[data-theme="light"] .home-page {
   gap: 0.4rem;
   padding: 0.65rem 0.75rem;
   border-radius: 0.65rem;
-  border: 1px solid var(--majalis-line);
-  background: var(--majalis-panel);
+  border: 1px solid var(--msk-border, #E0DBD5);
+  background: transparent;
   cursor: pointer;
   font-size: 0.92rem;
   font-weight: 600;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
 }
 
 .cond-gender-option input {
@@ -3601,8 +3601,8 @@ html[data-theme="light"] .home-page {
 }
 
 .condolences-block {
-  background: var(--majalis-panel);
-  border: 1px solid var(--majalis-line);
+  background: transparent;
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: 0.75rem;
   padding: 1rem 1.125rem;
 }
@@ -3661,9 +3661,9 @@ html[data-theme="light"] .home-page {
   min-width: 8rem;
   padding: 0.55rem 0.75rem;
   border-radius: 0.5rem;
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   background: var(--majalis-parchment-deep);
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-family: inherit;
   font-size: 0.8125rem;
   cursor: pointer;
@@ -3689,7 +3689,7 @@ html[data-theme="light"] .home-page {
 .cond-field span {
   font-size: 0.75rem;
   font-weight: 700;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
 }
 
 .cond-field input,
@@ -3698,8 +3698,8 @@ html[data-theme="light"] .home-page {
   box-sizing: border-box;
   padding: 0.625rem 0.75rem;
   border-radius: 0.5rem;
-  border: 1px solid var(--majalis-line);
-  background: var(--majalis-panel);
+  border: 1px solid var(--msk-border, #E0DBD5);
+  background: transparent;
   color: var(--majalis-ink);
   font-family: var(--font-body);
   font-size: 1rem;
@@ -3746,8 +3746,8 @@ html[data-theme="light"] .home-page {
 
 .cond-btn--ghost {
   background: transparent;
-  color: var(--majalis-ink-soft);
-  border: 1px solid var(--majalis-line);
+  color: var(--msk-text-2, #5C5550);
+  border: 1px solid var(--msk-border, #E0DBD5);
 }
 
 .cond-copy-status {
@@ -3870,7 +3870,7 @@ html[data-theme="light"] .home-page {
 
 .la-section-bar__sub {
   margin-top: 0.45rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   max-width: 40rem;
   line-height: 1.75;
 }
@@ -4075,7 +4075,7 @@ html[data-theme="light"] .home-page {
 .lesson-card-label {
   display: block;
   font-size: 0.6875rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   margin-bottom: 0.15rem;
 }
 
@@ -4248,7 +4248,7 @@ html[data-theme="light"] .home-page {
 }
 
 .la-poster__desc {
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.95rem;
   line-height: 1.85;
 }
@@ -4292,7 +4292,7 @@ html[data-theme="light"] .home-page {
   padding: 0.85rem;
   border-radius: 0.65rem;
   background: #fff;
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   text-align: center;
   margin-bottom: 0.75rem;
 }
@@ -4306,7 +4306,7 @@ html[data-theme="light"] .home-page {
 }
 
 .la-poster__region {
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.9rem;
   margin-top: 0.15rem;
 }
@@ -4316,7 +4316,7 @@ html[data-theme="light"] .home-page {
   z-index: 2;
   text-align: center;
   font-size: 0.85rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   margin-bottom: 0.75rem;
   padding: 0.45rem 0.65rem;
   border-radius: 999px;
@@ -4401,7 +4401,7 @@ html[data-theme="light"] .home-page {
   height: 5rem;
   object-fit: contain;
   border-radius: 0.45rem;
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   background: #fff;
 }
 
@@ -4409,7 +4409,7 @@ html[data-theme="light"] .home-page {
   display: block;
   margin-top: 0.35rem;
   font-size: 0.72rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
 }
 
 .la-actions {
@@ -4557,7 +4557,7 @@ html[data-theme="light"] .home-page {
   padding: 1rem;
   border-radius: 0.85rem;
   background: #fff;
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   box-shadow: 0 10px 28px rgba(36, 31, 24, 0.06);
 }
 
@@ -4567,7 +4567,7 @@ html[data-theme="light"] .home-page {
   flex-direction: column;
   gap: 0.35rem;
   font-size: 0.82rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-weight: 700;
 }
 
@@ -4576,7 +4576,7 @@ html[data-theme="light"] .home-page {
   width: 100%;
   padding: 0.55rem 0.65rem;
   border-radius: 0.55rem;
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   background: var(--majalis-parchment);
   color: var(--majalis-ink);
   font-size: 0.9rem;
@@ -4610,7 +4610,7 @@ html[data-theme="light"] .home-page {
 }
 
 .la-empty-text {
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.92rem;
 }
 
@@ -4635,7 +4635,7 @@ html[data-theme="light"] .home-page {
   border-radius: 1rem;
   overflow: hidden;
   background: #fff;
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   box-shadow: var(--majalis-shadow);
 }
 
@@ -4676,7 +4676,7 @@ html[data-theme="light"] .home-page {
 }
 
 .la-course-desc {
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   line-height: 1.75;
   margin-bottom: 0.65rem;
 }
@@ -4694,9 +4694,9 @@ html[data-theme="light"] .home-page {
   padding: 0.3rem 0.65rem;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.75);
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   font-size: 0.78rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
 }
 
 .la-course-body { padding: 1.25rem 1.5rem 1.5rem; }
@@ -4724,7 +4724,7 @@ html[data-theme="light"] .home-page {
   padding: 0.65rem 0.85rem;
   border-radius: 0.55rem;
   background: var(--majalis-parchment);
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   font-size: 0.92rem;
   line-height: 1.6;
 }
@@ -4743,7 +4743,7 @@ html[data-theme="light"] .home-page {
   padding: 0.75rem;
   border-radius: 0.65rem;
   background: var(--majalis-parchment);
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
 }
 
 .la-lecture-num {
@@ -4768,7 +4768,7 @@ html[data-theme="light"] .home-page {
 .la-lecture-meta {
   margin-top: 0.2rem;
   font-size: 0.82rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
 }
 
 .la-weekly-grid {
@@ -4802,7 +4802,7 @@ html[data-theme="light"] .home-page {
 
 .la-weekly-area {
   font-size: 0.78rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
 }
 
 .la-course-actions {
@@ -4868,7 +4868,7 @@ html[data-theme="light"] .home-page {
 }
 
 .lad-card {
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: 1.35rem;
   background: rgba(255, 255, 255, 0.92);
   box-shadow: 0 14px 40px rgba(36, 31, 24, 0.08);
@@ -4891,7 +4891,7 @@ html[data-theme="light"] .home-page {
   align-items: center;
   justify-content: center;
   min-height: 10rem;
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: 1rem;
   background: linear-gradient(180deg, #fff, var(--majalis-parchment-deep));
   padding: 0.65rem;
@@ -4937,9 +4937,9 @@ html[data-theme="light"] .home-page {
 }
 
 .lad-badge--muted {
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   background: var(--majalis-parchment-deep);
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
 }
 
 .lad-card__title {
@@ -4961,7 +4961,7 @@ html[data-theme="light"] .home-page {
   font-family: var(--font-reading);
   font-size: 0.92rem;
   line-height: 1.85;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
 }
 
 .lad-card__progress {
@@ -4982,14 +4982,14 @@ html[data-theme="light"] .home-page {
   margin-top: 0.85rem;
   padding: 0.75rem;
   border-radius: 0.85rem;
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   background: var(--majalis-parchment-deep);
 }
 
 .lad-meta-label {
   display: block;
   font-size: 0.72rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   margin-bottom: 0.2rem;
 }
 
@@ -5009,11 +5009,11 @@ html[data-theme="light"] .home-page {
 
 .lad-tag {
   border-radius: 999px;
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   background: #fff;
   padding: 0.2rem 0.55rem;
   font-size: 0.72rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
 }
 
 .lad-card__actions {
@@ -5079,7 +5079,7 @@ html[data-theme="light"] .home-page {
   max-height: min(90vh, 920px);
   overflow: auto;
   border-radius: 1.35rem;
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   background: var(--majalis-parchment);
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.25);
 }
@@ -5098,7 +5098,7 @@ html[data-theme="light"] .home-page {
 }
 
 .lad-modal__poster {
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: 1rem;
   background: #fff;
   padding: 0.5rem;
@@ -5135,13 +5135,13 @@ html[data-theme="light"] .home-page {
 .lad-modal__teacher {
   margin-top: 0.35rem;
   font-size: 0.95rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
 }
 
 .lad-modal__start {
   margin-top: 0.35rem;
   font-size: 0.85rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
 }
 
 .lad-modal__intro {
@@ -5164,7 +5164,7 @@ html[data-theme="light"] .home-page {
 }
 
 .lad-session {
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: 1rem;
   background: #fff;
   padding: 0.9rem;
@@ -5191,7 +5191,7 @@ html[data-theme="light"] .home-page {
   font-family: var(--font-reading);
   font-size: 0.88rem;
   line-height: 1.8;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
 }
 
 @media (max-width: 980px) {
@@ -5267,7 +5267,7 @@ html[data-theme="light"] .home-page {
 .ui-card {
   border: 1px solid rgba(224, 215, 196, 0.9);
   border-radius: 1.15rem;
-  background: var(--majalis-panel);
+  background: transparent;
   box-shadow: 0 8px 28px rgba(36, 31, 24, 0.07);
   transition: transform 0.16s ease, box-shadow 0.16s ease;
 }
@@ -5320,7 +5320,7 @@ html[data-theme="light"] .home-page {
 }
 
 .home-prayer-date {
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.88rem;
 }
 
@@ -5350,8 +5350,8 @@ html[data-theme="light"] .home-page {
   gap: 0.35rem;
   padding: 0.85rem;
   border-radius: 0.9rem;
-  border: 1px solid var(--majalis-line);
-  background: var(--majalis-panel);
+  border: 1px solid var(--msk-border, #E0DBD5);
+  background: transparent;
 }
 
 .prayer-status-block strong {
@@ -5361,13 +5361,13 @@ html[data-theme="light"] .home-page {
 }
 
 .prayer-status-block span:last-child {
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.82rem;
   font-weight: 600;
 }
 
 .prayer-status-label {
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.78rem;
   font-weight: 800;
 }
@@ -5433,17 +5433,17 @@ html[data-theme="light"] .home-page {
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.82rem;
   font-weight: 700;
 }
 
 .kuwait-filters-grid select {
   min-height: 44px;
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: 0.75rem;
   padding: 0.55rem 0.75rem;
-  background: var(--majalis-panel);
+  background: transparent;
   color: var(--majalis-ink);
   font-family: inherit;
   font-size: 0.88rem;
@@ -5495,7 +5495,7 @@ html[data-theme="light"] .home-page {
 }
 
 .home-kuwait-sheikh {
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.82rem;
   font-weight: 700;
   margin-bottom: 0.25rem;
@@ -5521,7 +5521,7 @@ html[data-theme="light"] .home-page {
 }
 
 .home-kuwait-meta dt {
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-weight: 700;
 }
 
@@ -5560,7 +5560,7 @@ html[data-theme="light"] .home-page {
 }
 
 .home-prayer-name {
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.82rem;
   font-weight: 700;
 }
@@ -5589,7 +5589,7 @@ html[data-theme="light"] .home-page {
 }
 
 .home-daily-meta {
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.88rem;
   margin-bottom: 0.35rem;
 }
@@ -5649,7 +5649,7 @@ html[data-theme="light"] .home-page {
 }
 
 .assistant-message-reply {
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
 }
 
 /* ── Condolences & Cards pages ── */
@@ -5682,7 +5682,7 @@ html[data-theme="light"] .home-page {
 .cond-export-note {
   margin: 0.25rem 0 0;
   font-size: 0.78rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   line-height: 1.6;
 }
 
@@ -5699,7 +5699,7 @@ html[data-theme="light"] .home-page {
 
 .cond-page-desc,
 .cards-back-link {
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.9rem;
   margin-bottom: 1rem;
 }
@@ -5713,17 +5713,17 @@ html[data-theme="light"] .home-page {
 .cond-form-label {
   display: block;
   margin-bottom: 0.35rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.85rem;
   font-weight: 700;
 }
 
 .cond-input {
   width: 100%;
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: 0.75rem;
   padding: 0.7rem 0.85rem;
-  background: var(--majalis-panel);
+  background: transparent;
   color: var(--majalis-ink);
   font-size: 0.92rem;
   outline: none;
@@ -5743,7 +5743,7 @@ html[data-theme="light"] .home-page {
   display: flex;
   align-items: center;
   gap: 0.55rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.88rem;
   font-weight: 600;
 }
@@ -5801,7 +5801,7 @@ html[data-theme="light"] .home-page {
 .cards-textarea,
 .cards-input {
   width: 100%;
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: 0.75rem;
   padding: 0.75rem 0.9rem;
   margin-bottom: 0.65rem;
@@ -5822,8 +5822,8 @@ html[data-theme="light"] .home-page {
   border: 2px solid var(--majalis-line);
   border-radius: 0.85rem;
   padding: 0.65rem;
-  background: var(--majalis-panel);
-  color: var(--majalis-ink-soft);
+  background: transparent;
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.85rem;
   font-weight: 700;
   text-align: center;
@@ -5853,10 +5853,10 @@ html[data-theme="light"] .home-page {
   flex: 1;
   min-width: 5.5rem;
   min-height: 44px;
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: 0.65rem;
-  background: var(--majalis-panel);
-  color: var(--majalis-ink-soft);
+  background: transparent;
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.82rem;
   font-weight: 700;
 }
@@ -5961,8 +5961,8 @@ html[data-theme="light"] .home-page {
 
 .content-hub-chip {
   border: 1.5px solid var(--majalis-line);
-  background: var(--majalis-panel);
-  color: var(--majalis-ink-soft);
+  background: transparent;
+  color: var(--msk-text-2, #5C5550);
   border-radius: 999px;
   padding: 0.4rem 0.95rem;
   font-size: 0.82rem;
@@ -5996,8 +5996,8 @@ html[data-theme="light"] .home-page {
 }
 
 .content-mini-card {
-  border: 1px solid var(--majalis-line);
-  background: var(--majalis-panel);
+  border: 1px solid var(--msk-border, #E0DBD5);
+  background: transparent;
   border-radius: 0.85rem;
   padding: 1rem 1.05rem;
   display: flex;
@@ -6055,9 +6055,9 @@ html[data-theme="light"] .home-page {
   gap: 0.45rem;
   min-height: 100%;
   padding: 1rem;
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: 1rem;
-  background: var(--majalis-panel);
+  background: transparent;
   color: var(--majalis-ink);
   box-shadow: var(--card-shadow);
   transition: transform 0.18s ease, border-color 0.18s ease;
@@ -6080,7 +6080,7 @@ html[data-theme="light"] .home-page {
 
 .home-content-card p {
   margin: 0;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.88rem;
 }
 
@@ -6092,9 +6092,9 @@ html[data-theme="light"] .home-page {
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: 0.85rem;
-  background: var(--majalis-panel);
+  background: transparent;
   color: var(--majalis-emerald-deep);
   padding: 0 0.9rem;
   font-family: inherit;
@@ -6103,7 +6103,7 @@ html[data-theme="light"] .home-page {
 }
 
 .fiqh-filter-toggle span {
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.78rem;
 }
 
@@ -6125,16 +6125,16 @@ html[data-theme="light"] .home-page {
 .fiqh-mobile-category-card {
   display: grid;
   gap: 0.25rem;
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: 1rem;
   padding: 0.9rem;
-  background: var(--majalis-panel);
+  background: transparent;
   color: var(--majalis-ink);
   min-height: 5rem;
 }
 
 .fiqh-mobile-category-card span {
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.82rem;
 }
 
@@ -6157,7 +6157,7 @@ html[data-theme="light"] .home-page {
 
 .tasbih-stat span,
 .prayer-status-card__label {
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.78rem;
 }
 
@@ -6199,9 +6199,9 @@ html[data-theme="light"] .home-page {
 }
 
 .tasbih-wird-tab {
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: 0.85rem;
-  background: var(--majalis-panel);
+  background: transparent;
   color: var(--majalis-ink);
   padding: 0.75rem;
   text-align: right;
@@ -6219,7 +6219,7 @@ html[data-theme="light"] .home-page {
 .tasbih-progress-label,
 .tasbih-saved,
 .tasbih-offline-note {
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.82rem;
 }
 
@@ -6272,10 +6272,10 @@ html[data-theme="light"] .home-page {
 .tasbih-target-field input,
 .tasbih-add-row input {
   min-height: 44px;
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: 0.65rem;
   padding: 0 0.75rem;
-  background: var(--majalis-panel);
+  background: transparent;
   color: var(--majalis-ink);
   font-family: inherit;
 }
@@ -6311,10 +6311,10 @@ html[data-theme="light"] .home-page {
 }
 
 .prayer-track-cell {
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: 0.9rem;
   padding: 0.85rem;
-  background: var(--majalis-panel);
+  background: transparent;
   display: grid;
   gap: 0.75rem;
 }
@@ -6341,8 +6341,8 @@ html[data-theme="light"] .home-page {
 .prayer-track-options select {
   min-height: 40px;
   border-radius: 0.55rem;
-  border: 1px solid var(--majalis-line);
-  background: var(--majalis-panel);
+  border: 1px solid var(--msk-border, #E0DBD5);
+  background: transparent;
   color: var(--majalis-ink);
   padding: 0 0.65rem;
   font-family: inherit;
@@ -6353,7 +6353,7 @@ html[data-theme="light"] .home-page {
 }
 
 .prayer-stat-strip span {
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: 0.75rem;
   padding: 0.65rem;
   background: var(--majalis-parchment-deep);
@@ -6435,7 +6435,7 @@ html[data-theme="light"] .home-page {
 
 .prayer-rank-card__eyebrow,
 .prayer-rank-card__meta {
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.85rem;
 }
 
@@ -6458,7 +6458,7 @@ html[data-theme="light"] .home-page {
 .content-mini-card__meta {
   margin: 0;
   font-size: 0.75rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
@@ -6484,7 +6484,7 @@ html[data-theme="light"] .home-page {
 .content-mini-card__evidence,
 .content-mini-card__ref {
   font-size: 0.85rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   line-height: 1.7;
   margin: 0.35rem 0 0;
 }
@@ -6503,7 +6503,7 @@ html[data-theme="light"] .home-page {
 .content-submit-form textarea,
 .content-submit-form input {
   width: 100%;
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: 0.65rem;
   padding: 0.75rem;
   margin-bottom: 0.65rem;
@@ -6549,9 +6549,9 @@ html[data-theme="light"] .home-page {
 }
 
 .template-btn--ghost {
-  background: var(--majalis-panel);
+  background: transparent;
   color: var(--majalis-ink);
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
 }
 
 .template-btn--primary {
@@ -6612,7 +6612,7 @@ html[data-theme="light"] .home-page {
   inset-inline-start: 0;
   top: calc(100% + 0.5rem);
   width: clamp(18rem, 85vw, 22rem);
-  background: var(--majalis-panel);
+  background: transparent;
   border: 1px solid var(--mn-border-default);
   border-radius: var(--mn-popup-radius);
   box-shadow: var(--mn-popup-shadow);
@@ -6746,7 +6746,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 }
 
 .mj-tabs-trigger[data-state="active"] {
-  background: var(--majalis-panel);
+  background: transparent;
   color: var(--majalis-emerald-deep);
   font-weight: 700;
   box-shadow: 0 1px 4px rgba(36, 31, 24, 0.10);
@@ -6778,7 +6778,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
   min-width: 10rem;
   max-height: min(var(--radix-dropdown-menu-content-available-height, 85vh), 85vh);
   overflow-y: auto;
-  background: var(--majalis-panel);
+  background: transparent;
   border: 1px solid var(--mn-border-default);
   border-radius: var(--mn-popup-radius);
   box-shadow: var(--mn-popup-shadow);
@@ -7012,13 +7012,13 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 
 .search-page-hint {
   text-align: center;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   padding: 2rem 0;
 }
 
 .search-page-summary {
   font-size: 0.8125rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   margin: 0 0 1.5rem;
 }
 
@@ -7098,7 +7098,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 
 .lesson-card-pro__meta dt {
   font-size: 0.6875rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   margin-bottom: 0.15rem;
   font-weight: 600;
 }
@@ -7113,7 +7113,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 .lesson-card-pro__desc {
   margin: 0;
   font-size: 0.875rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   line-height: 1.75;
 }
 
@@ -7148,9 +7148,9 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
   min-height: 44px;
   padding: 0.55rem 1rem;
   border-radius: 0.75rem;
-  border: 1px solid var(--majalis-line);
-  background: var(--majalis-panel);
-  color: var(--majalis-ink-soft);
+  border: 1px solid var(--msk-border, #E0DBD5);
+  background: transparent;
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.85rem;
   font-weight: 700;
   transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
@@ -7247,9 +7247,9 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 }
 
 .kuwait-tab {
-  border: 1px solid var(--majalis-line);
-  background: var(--majalis-panel);
-  color: var(--majalis-ink-soft);
+  border: 1px solid var(--msk-border, #E0DBD5);
+  background: transparent;
+  color: var(--msk-text-2, #5C5550);
   border-radius: 999px;
   padding: 0.45rem 1rem;
   font-size: 0.875rem;
@@ -7258,9 +7258,10 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 }
 
 .kuwait-tab--active {
-  background: var(--majalis-sage);
-  color: var(--majalis-emerald-deep);
-  border-color: rgba(31, 110, 84, 0.25);
+  background: var(--msk-gold, #0E6E52);
+  color: #fff;
+  border-color: transparent;
+  font-weight: 700;
 }
 
 .kuwait-lesson-card--archived {
@@ -7344,7 +7345,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
   min-height: 40px;
   padding: 0.45rem 0.9rem;
   border-radius: 0.75rem;
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   background: var(--majalis-parchment);
   color: var(--majalis-emerald-deep);
   font-size: 0.8125rem;
@@ -7373,7 +7374,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 
 .sheikh-course-desc {
   margin: 0;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   line-height: 1.75;
   font-size: 0.875rem;
 }
@@ -7387,7 +7388,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 }
 
 .sheikh-series-more {
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-weight: 700;
 }
 
@@ -7415,8 +7416,8 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 .navbar-search-form {
   display: flex;
   align-items: center;
-  background: var(--majalis-panel);
-  border: 1px solid var(--majalis-line);
+  background: transparent;
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: 0.75rem;
   padding: 0.15rem 0.15rem 0.15rem 0.5rem;
   position: relative;
@@ -7440,8 +7441,8 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
   right: 0;
   left: 0;
   z-index: 60;
-  background: var(--majalis-panel);
-  border: 1px solid var(--majalis-line);
+  background: transparent;
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: 0.85rem;
   box-shadow: 0 16px 40px rgba(36, 31, 24, 0.12);
   max-height: 18rem;
@@ -7453,7 +7454,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
   margin: 0.35rem 0.5rem 0.25rem;
   font-size: 0.6875rem;
   font-weight: 700;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
 }
 
 .search-suggestion-item {
@@ -7479,7 +7480,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 
 .search-suggestion-meta {
   font-size: 0.6875rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
 }
 
 @media (max-width: 720px) {
@@ -7551,7 +7552,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 }
 
 .adhkar-card__meta dt {
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-weight: 600;
   min-width: 3.5rem;
 }
@@ -7575,7 +7576,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
   padding: 0.75rem;
   border-radius: 0.85rem;
   background: var(--majalis-parchment);
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
 }
 
 .tasbeeh-counter__head {
@@ -7610,8 +7611,8 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
   flex: 1;
   min-height: 40px;
   border-radius: 0.65rem;
-  border: 1px solid var(--majalis-line);
-  background: var(--majalis-panel);
+  border: 1px solid var(--msk-border, #E0DBD5);
+  background: transparent;
   font-weight: 700;
   font-family: inherit;
   cursor: pointer;
@@ -7619,7 +7620,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 
 .tasbeeh-counter__btn--ghost {
   background: transparent;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
 }
 
 .tasbeeh-counter__done {
@@ -7650,13 +7651,13 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
   min-height: 36px;
   padding: 0.35rem 0.75rem;
   border-radius: 0.6rem;
-  border: 1px solid var(--majalis-line);
-  background: var(--majalis-panel);
+  border: 1px solid var(--msk-border, #E0DBD5);
+  background: transparent;
   font-size: 0.8125rem;
   font-weight: 700;
   font-family: inherit;
   cursor: pointer;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
 }
 
 .reading-toolbar__btn--active,
@@ -7668,7 +7669,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 .reading-toolbar__size {
   font-size: 0.75rem;
   font-weight: 700;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   min-width: 2.5rem;
   text-align: center;
 }
@@ -7681,14 +7682,14 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
   padding: 0.85rem;
   border-radius: 0.75rem;
   background: var(--majalis-parchment);
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
 }
 
 .faidah-card__meta,
 .qa-card__ref,
 .qa-card__evidence {
   font-size: 0.8125rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   line-height: 1.75;
 }
 
@@ -7713,7 +7714,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 }
 .hadith-stat {
   font-size: 0.875rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
 }
 .hadith-stat strong {
   color: var(--majalis-accent, #2563eb);
@@ -7726,7 +7727,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
   padding: 0.2em 0.75em;
   font-size: 0.8125rem;
   cursor: pointer;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
 }
 .hadith-clear-search:hover { background: var(--majalis-surface-2, #f1f5f9); }
 
@@ -7748,7 +7749,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
   font-size: 0.8125rem;
   background: none;
   cursor: pointer;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   transition: all 0.15s;
   flex-shrink: 0;
 }
@@ -7857,7 +7858,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 }
 .hadith-badge--num {
   background: var(--majalis-surface-2, #f1f5f9);
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   border: 1px solid var(--majalis-border, #e2e8f0);
 }
 
@@ -7885,7 +7886,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 }
 .hadith-card__chapter {
   font-size: 0.8125rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   margin: 0;
   font-style: italic;
 }
@@ -7916,7 +7917,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 }
 .hadith-meta-item {
   font-size: 0.8125rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
 }
 .hadith-meta-label { font-weight: 600; color: var(--majalis-ink); }
 
@@ -7932,7 +7933,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
   border-radius: 999px;
   padding: 0.1em 0.55em;
   font-size: 0.72rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
 }
 
 /* Card actions */
@@ -7950,7 +7951,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
   padding: 0.3em 0.7em;
   font-size: 0.85rem;
   cursor: pointer;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   transition: all 0.15s;
   line-height: 1;
 }
@@ -8023,7 +8024,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
   height: 2rem;
   font-size: 0.875rem;
   cursor: pointer;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -8040,7 +8041,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 }
 .hadith-modal__chapter {
   font-size: 0.875rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   margin: 0;
   font-style: italic;
 }
@@ -8071,7 +8072,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 }
 .hadith-modal__meta-item strong {
   font-size: 0.75rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   text-transform: uppercase;
   letter-spacing: 0.03em;
 }
@@ -8099,7 +8100,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 }
 .hadith-modal__keywords strong {
   font-size: 0.8125rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   display: block;
   margin-bottom: 0.4rem;
 }
@@ -8129,7 +8130,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 .hadith-modal-btn:hover { opacity: 0.88; }
 .hadith-modal__footer p {
   font-size: 0.78rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   margin: 0;
   text-align: center;
 }
@@ -8142,7 +8143,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   margin: 0;
 }
 
@@ -8249,7 +8250,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 .story-card__body {
   font-size: 0.9rem;
   line-height: 1.75;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   margin: 0;
 }
 
@@ -8258,7 +8259,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
   flex-wrap: wrap;
   gap: 0.5rem;
   font-size: 0.8rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   margin-top: auto;
   padding-top: 0.5rem;
   border-top: 1px solid var(--majalis-border, #e2e8f0);
@@ -8294,7 +8295,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 
 .qa-card__views {
   font-size: 0.6875rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-weight: 700;
 }
 
@@ -8329,8 +8330,8 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
   min-height: 40px;
   padding: 0.45rem 1rem;
   border-radius: 0.65rem;
-  border: 1px solid var(--majalis-line);
-  background: var(--majalis-panel);
+  border: 1px solid var(--msk-border, #E0DBD5);
+  background: transparent;
   font-weight: 700;
   font-family: inherit;
   cursor: pointer;
@@ -8338,7 +8339,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 
 .home-daily-strip-lead {
   margin: 0.25rem 0 0;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.875rem;
 }
 
@@ -8405,8 +8406,8 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 }
 
 .cal-nav-btn {
-  border: 1px solid var(--majalis-line);
-  background: var(--majalis-panel);
+  border: 1px solid var(--msk-border, #E0DBD5);
+  background: transparent;
   border-radius: 0.5rem;
   width: 2rem;
   height: 2rem;
@@ -8420,8 +8421,8 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 }
 
 .cal-view-tab {
-  border: 1px solid var(--majalis-line);
-  background: var(--majalis-panel);
+  border: 1px solid var(--msk-border, #E0DBD5);
+  background: transparent;
   border-radius: 0.5rem;
   padding: 0.4rem 0.75rem;
   font-size: 0.82rem;
@@ -8447,7 +8448,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
   margin-bottom: 0.5rem;
   font-size: 0.75rem;
   font-weight: 700;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   text-align: center;
 }
 
@@ -8459,9 +8460,9 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 
 .cal-cell {
   aspect-ratio: 1;
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: 0.5rem;
-  background: var(--majalis-panel);
+  background: transparent;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -8521,8 +8522,8 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 .cal-day-item {
   width: 100%;
   text-align: right;
-  border: 1px solid var(--majalis-line);
-  background: var(--majalis-panel);
+  border: 1px solid var(--msk-border, #E0DBD5);
+  background: transparent;
   border-radius: 0.5rem;
   padding: 0.5rem;
   margin-bottom: 0.35rem;
@@ -8546,7 +8547,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 }
 
 .cal-empty {
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.9rem;
   padding: 1rem 0;
 }
@@ -8636,7 +8637,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 .site-footer-brand p,
 .site-footer-copy {
   margin: 0;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.875rem;
   line-height: 1.7;
 }
@@ -8698,7 +8699,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 .legal-section li {
   line-height: 1.85;
   font-size: 0.9375rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
 }
 
 .legal-section ul {
@@ -8726,7 +8727,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
   padding: 0.75rem 1rem;
   text-align: center;
   font-size: 0.875rem;
-  color: #0E6E52;
+  color: var(--majalis-emerald);
 }
 
 .home-section-head-links {
@@ -8799,7 +8800,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 
 .sci-ann-section__lead {
   margin: 0.35rem 0 0;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.92rem;
   line-height: 1.7;
   max-width: 38rem;
@@ -8812,7 +8813,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 }
 
 .sci-ann-card {
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: 0.85rem;
   background: linear-gradient(180deg, #faf8f4 0%, #f5f2eb 100%);
   overflow: hidden;
@@ -8869,7 +8870,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 .sci-ann-card__book {
   margin: 0;
   font-size: 0.85rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   line-height: 1.65;
 }
 
@@ -8890,7 +8891,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 .sci-ann-card__meta-label {
   font-size: 0.72rem;
   font-weight: 700;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
 }
 
 .sci-ann-card__meta-row strong {
@@ -8968,7 +8969,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 }
 
 .sci-ann-detail {
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: 1rem;
   background: linear-gradient(180deg, #faf8f4 0%, #f5f2eb 100%);
   overflow: hidden;
@@ -9037,7 +9038,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 .sci-ann-detail__row dt {
   font-size: 0.75rem;
   font-weight: 700;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
 }
 
 .sci-ann-detail__row dd {
@@ -9048,14 +9049,14 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 
 .sci-ann-detail__muted {
   margin: 0 0 0.75rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.85rem;
 }
 
 .sci-ann-detail__map {
   border-radius: 0.65rem;
   overflow: hidden;
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   aspect-ratio: 16 / 10;
 }
 
@@ -9068,7 +9069,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 .sci-ann-detail__notes {
   margin: 0;
   padding-inline-start: 1.15rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   line-height: 1.75;
   font-size: 0.92rem;
 }
@@ -9219,7 +9220,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 .lesson-unified-card__meta-label {
   font-size: 0.68rem;
   font-weight: 700;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
 }
 
 .lesson-unified-card__meta-cell strong {
@@ -9233,7 +9234,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 .lesson-unified-card__note {
   margin: 0;
   font-size: 0.84rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   line-height: 1.65;
 }
 
@@ -9274,7 +9275,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 
 .lesson-unified-card__btn--ghost {
   background: transparent;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   border-color: var(--majalis-line);
 }
 
@@ -9321,7 +9322,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
   height: 5rem;
   object-fit: contain;
   border-radius: 0.35rem;
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   background: #fff;
 }
 
@@ -9337,7 +9338,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
   margin: 0;
   padding: 0.35rem;
   list-style: none;
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: 0.65rem;
   background: #fff;
   box-shadow: 0 8px 24px rgba(26, 60, 46, 0.08);
@@ -9383,7 +9384,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 
 .lesson-detail-summary {
   margin: 0.5rem 0 0;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   line-height: 1.65;
 }
 
@@ -9417,19 +9418,19 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
   margin: 2rem 0;
   padding: 1.5rem;
   text-align: center;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.95rem;
   border: 1px dashed var(--majalis-line);
   border-radius: 0.75rem;
-  background: var(--majalis-panel);
+  background: transparent;
 }
 
 .lessons-contact-card {
   margin-top: 2rem;
   padding: 1.25rem 1.35rem;
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: 0.75rem;
-  background: var(--majalis-panel);
+  background: transparent;
   text-align: center;
 }
 
@@ -9567,7 +9568,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
   padding: 1.25rem;
   margin-bottom: 1.25rem;
   background: linear-gradient(135deg, #fff 0%, #f3ede0 100%);
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
 }
 .home-banner__title { margin: 0.35rem 0; color: var(--majalis-emerald-deep); font-size: 1.35rem; }
 .home-banner__lead { margin: 0; color: var(--majalis-ink-soft); line-height: 1.7; }
@@ -9597,7 +9598,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
   min-height: 8.5rem;
   text-decoration: none;
   color: inherit;
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   background: #fff;
 }
 .home-feature-card--v3:hover {
@@ -9719,8 +9720,8 @@ body:not(.mobile-nav-body-lock) .mobile-nav-layer {
 
 .navbar-menu-btn,
 .navbar-logout {
-  border: 1px solid var(--majalis-line);
-  background: var(--majalis-panel);
+  border: 1px solid var(--msk-border, #E0DBD5);
+  background: transparent;
   color: var(--majalis-ink);
   border-radius: 0.45rem;
   padding: 0.4rem 0.75rem;
@@ -9728,6 +9729,57 @@ body:not(.mobile-nav-body-lock) .mobile-nav-layer {
   font-weight: 700;
   font-size: 0.82rem;
   cursor: pointer;
+}
+
+/* زر القائمة — تصميم محسَّن */
+.navbar-menu-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  overflow: hidden;
+  transition: border-color 160ms ease, background 160ms ease, color 160ms ease, transform 120ms ease;
+}
+.navbar-menu-btn:hover {
+  border-color: color-mix(in srgb, var(--majalis-emerald) 35%, var(--majalis-line));
+  color: var(--majalis-emerald-deep);
+  transform: translateY(-1px);
+}
+.navbar-menu-btn:active { transform: scale(0.97); }
+
+/* تفاصيل هندسية إسلامية خلف الزر */
+.navbar-menu-btn__geo {
+  position: absolute;
+  inset-inline-end: -6px;
+  top: -6px;
+  width: 22px;
+  height: 22px;
+  opacity: 0.07;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%230E6E52' d='M12 0l3 9h9l-7 5 3 9-8-6-8 6 3-9-7-5h9z'/%3E%3C/svg%3E") center/contain no-repeat;
+  pointer-events: none;
+}
+
+.navbar-menu-btn__icon {
+  flex-shrink: 0;
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+.navbar-menu-btn--open .navbar-menu-btn__icon {
+  transform: rotate(90deg);
+}
+.navbar-menu-btn__label {
+  font-size: 0.8rem;
+}
+
+html[data-theme="dark"] .navbar-menu-btn {
+  border-color: rgba(217, 174, 92, 0.2);
+}
+html[data-theme="dark"] .navbar-menu-btn:hover {
+  border-color: rgba(217, 174, 92, 0.45);
+  color: var(--msk-gold);
+}
+html[data-theme="dark"] .navbar-menu-btn__geo {
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23D9AE5C' d='M12 0l3 9h9l-7 5 3 9-8-6-8 6 3-9-7-5h9z'/%3E%3C/svg%3E") center/contain no-repeat;
+  opacity: 0.12;
 }
 
 html[data-theme="dark"] .navbar-search-submit,
@@ -9779,7 +9831,7 @@ html[data-theme="dark"] .navbar-login {
   border-radius: 0.35rem;
   border: 1.5px solid var(--majalis-line);
   background: transparent;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   cursor: pointer;
   letter-spacing: 0.02em;
   transition: border-color 0.15s, color 0.15s;
@@ -9796,7 +9848,7 @@ html[data-theme="dark"] .navbar-login {
   font-weight: 700;
   padding: 0.4rem 0.85rem;
   border-radius: 0.45rem;
-  background: var(--majalis-panel);
+  background: transparent;
   color: var(--majalis-emerald-deep);
   border: 1px solid var(--majalis-emerald);
   text-decoration: none;
@@ -9893,9 +9945,9 @@ body.mobile-nav-body-lock {
   color: var(--majalis-emerald-deep);
 }
 .page-action-btn--secondary {
-  background: var(--majalis-panel);
+  background: transparent;
   color: var(--majalis-emerald-deep);
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
 }
 
 .login-page {
@@ -9910,8 +9962,8 @@ body.mobile-nav-body-lock {
   max-width: 24rem;
   padding: 2rem;
   border-radius: 0.75rem;
-  border: 1px solid var(--majalis-line);
-  background: var(--majalis-panel);
+  border: 1px solid var(--msk-border, #E0DBD5);
+  background: transparent;
   box-shadow: 0 10px 30px rgba(22, 78, 60, 0.06);
 }
 
@@ -9937,7 +9989,7 @@ body.mobile-nav-body-lock {
 .login-card__subtitle {
   margin: 0;
   font-size: 0.875rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   line-height: 1.6;
 }
 
@@ -9957,7 +10009,7 @@ body.mobile-nav-body-lock {
 }
 
 .login-alert--warn {
-  color: #0E6E52;
+  color: var(--majalis-emerald);
   background: rgba(14,110,82,0.06);
   border: 1px solid #fde68a;
 }
@@ -9980,7 +10032,7 @@ body.mobile-nav-body-lock {
   box-sizing: border-box;
   padding: 0.625rem 0.75rem;
   border-radius: 0.5rem;
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   background: var(--majalis-parchment);
   color: var(--majalis-ink);
   font-size: 0.875rem;
@@ -10030,7 +10082,7 @@ body.mobile-nav-body-lock {
   width: calc(100% - 2rem);
   margin: 0 1rem 0.75rem;
   padding: 0.55rem 0.75rem;
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: 0.45rem;
   background: #fff;
   color: #991b1b;
@@ -10089,7 +10141,7 @@ body.mobile-nav-body-lock {
   border: none;
   background: transparent;
   cursor: pointer;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   padding: 0.5rem;
   min-width: var(--mobile-touch-min, 44px);
   min-height: var(--mobile-touch-min, 44px);
@@ -10120,7 +10172,7 @@ body.mobile-nav-body-lock {
   min-height: var(--mobile-touch-min, 44px);
   border-radius: 0.5rem;
   text-decoration: none;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-weight: 600;
   transition: background 0.15s, color 0.15s;
   touch-action: manipulation;
@@ -10193,12 +10245,12 @@ body.side-nav-open {
 }
 .quran-surah-meta,
 .quran-source-note {
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.88rem;
 }
 .quran-trust-badge {
   flex-shrink: 0;
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: 999px;
   padding: 0.25rem 0.7rem;
   color: var(--majalis-emerald-deep);
@@ -10207,7 +10259,7 @@ body.side-nav-open {
   font-weight: 800;
 }
 .quran-science-card {
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: 1rem;
   background: color-mix(in srgb, var(--majalis-panel) 78%, var(--majalis-sage));
   padding: 1rem;
@@ -10218,7 +10270,7 @@ body.side-nav-open {
   grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
   gap: 0.6rem;
   margin: 0.75rem 0;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
 }
 .quran-link-row {
   display: flex;
@@ -10227,15 +10279,15 @@ body.side-nav-open {
   margin-top: 0.75rem;
 }
 .quran-link-row a {
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: 999px;
   padding: 0.35rem 0.75rem;
-  background: var(--majalis-panel);
+  background: transparent;
   color: var(--majalis-emerald-deep);
   font-weight: 800;
 }
 .quran-error {
-  border: 1px solid #f59e0b;
+  border: 1px solid color-mix(in srgb, var(--majalis-emerald) 50%, #d97706);
   border-radius: 0.75rem;
   background: rgba(14,110,82,0.08);
   color: #78350f;
@@ -10402,7 +10454,7 @@ body.assistant-panel-open {
   max-height: min(78vh, 42rem);
   display: flex;
   flex-direction: column;
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: 1.15rem;
   background: var(--majalis-parchment);
   box-shadow: 0 24px 64px rgba(36, 31, 24, 0.22);
@@ -10441,7 +10493,7 @@ body.assistant-panel-open {
   text-decoration: none;
   padding: 0.35rem 0.55rem;
   border-radius: 0.45rem;
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   background: #fff;
   white-space: nowrap;
 }
@@ -10470,10 +10522,10 @@ body.assistant-panel-open {
   justify-content: center;
   width: 2rem;
   height: 2rem;
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: 0.55rem;
   background: #fff;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   cursor: pointer;
 }
 
@@ -10482,7 +10534,7 @@ body.assistant-panel-open {
   padding: 0.55rem 1rem 0.65rem;
   font-size: 0.78rem;
   line-height: 1.65;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   border-bottom: 1px solid var(--majalis-line);
 }
 
@@ -10509,21 +10561,21 @@ body.assistant-panel-open {
 .assistant-chat-view--compact .assistant-form {
   padding: 0.65rem 0.85rem 0.85rem;
   border-top: 1px solid var(--majalis-line);
-  background: var(--majalis-panel);
+  background: transparent;
 }
 
 .assistant-message-label {
   display: block;
   font-size: 0.72rem;
   font-weight: 800;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   margin-bottom: 0.35rem;
 }
 
 .assistant-message-bubble {
   max-width: 100%;
   border-radius: 1rem;
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   background: #fff;
   padding: 0.75rem 0.85rem;
   box-shadow: 0 4px 14px rgba(36, 31, 24, 0.05);
@@ -10665,7 +10717,7 @@ body.assistant-panel-open {
   padding: 0.35rem 0.5rem;
   border: none;
   background: transparent;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-family: inherit;
   font-size: 0.75rem;
   cursor: pointer;
@@ -11005,7 +11057,7 @@ body.assistant-panel-open {
   padding: 0.9rem 1rem;
   border-radius: 0.75rem;
   border: 1px solid rgba(22, 78, 60, 0.12);
-  background: var(--majalis-panel);
+  background: transparent;
   text-decoration: none;
   transition: box-shadow 0.15s ease, transform 0.15s ease;
 }
@@ -11024,7 +11076,7 @@ body.assistant-panel-open {
 }
 
 .fiqh-council-category-count {
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.75rem;
 }
 
@@ -12016,7 +12068,7 @@ body.assistant-panel-open {
   border-radius: 999px;
 }
 
-.fiqh-completion-bar--mid .fiqh-completion-bar-fill { background: #0E6E52; }
+.fiqh-completion-bar--mid .fiqh-completion-bar-fill { background: var(--majalis-emerald); }
 .fiqh-completion-bar--low .fiqh-completion-bar-fill { background: #B91C1C; }
 
 .fiqh-review-filters {
@@ -12028,7 +12080,7 @@ body.assistant-panel-open {
 
 .fiqh-review-filters button {
   border: 1px solid var(--mn-border-default);
-  background: var(--majalis-panel);
+  background: transparent;
   border-radius: var(--mn-chip-radius);
   padding: var(--mn-chip-py) var(--mn-chip-px);
   font-size: var(--mn-chip-font);
@@ -12092,7 +12144,7 @@ body.assistant-panel-open {
   padding: 0.15rem 0.5rem;
   border-radius: 999px;
   background: rgba(180, 83, 9, 0.12);
-  color: #0E6E52;
+  color: var(--majalis-emerald);
 }
 
 .fiqh-review-issues {
@@ -12446,7 +12498,7 @@ svg {
 
   .fiqh-filter-panel {
     display: none;
-    border: 1px solid var(--majalis-line);
+    border: 1px solid var(--msk-border, #E0DBD5);
     border-radius: 1rem;
     padding: 0.85rem;
     background: var(--majalis-panel);
@@ -12731,7 +12783,7 @@ svg {
   gap: 0.25rem;
   margin-bottom: 0.75rem;
   font-size: 0.8125rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
 }
 
 .lesson-detail-breadcrumb a {
@@ -12756,14 +12808,14 @@ svg {
   gap: 0.15rem;
   padding: 0.55rem 0.85rem;
   border-radius: 0.65rem;
-  background: var(--majalis-panel);
-  border: 1px solid var(--majalis-line);
+  background: transparent;
+  border: 1px solid var(--msk-border, #E0DBD5);
   min-width: 5.5rem;
 }
 
 .lesson-detail-stat span {
   font-size: 0.75rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
 }
 
 .lesson-detail-stat strong {
@@ -12785,7 +12837,7 @@ svg {
 
 .radio-player__status {
   margin: 0.35rem 0 0.75rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.875rem;
 }
 
@@ -12819,8 +12871,8 @@ svg {
 
 .radio-live-badge--paused,
 .radio-live-badge--idle {
-  background: var(--majalis-panel);
-  color: var(--majalis-ink-soft);
+  background: transparent;
+  color: var(--msk-text-2, #5C5550);
 }
 
 .quran-radio-page .radio-card {
@@ -12943,9 +12995,9 @@ body.has-assistant-fab .app-main {
   align-items: flex-start;
   gap: 0.2rem;
   padding: 0.875rem;
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: 0.75rem;
-  background: var(--majalis-panel);
+  background: transparent;
   cursor: pointer;
   font-family: inherit;
   text-align: right;
@@ -12985,10 +13037,88 @@ body.has-assistant-fab .app-main {
 
 .qa-corrections-badge {
   font-size: 0.75rem;
-  color: #0E6E52;
+  color: var(--majalis-emerald);
   background: rgba(14,110,82,0.08);
   padding: 0.2rem 0.5rem;
   border-radius: 999px;
+}
+
+/* ── Lessons banner geometric pattern ── */
+.lessons-geo-banner {
+  position: relative;
+  height: 0;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 0;
+}
+.lessons-geo-banner__pattern {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 160px;
+  color: var(--majalis-emerald);
+  opacity: 0.6;
+}
+html[data-theme="dark"] .lessons-geo-banner__pattern {
+  color: var(--msk-gold);
+  opacity: 0.35;
+}
+
+/* ── Admin lesson card toolbar ── */
+.lesson-card-admin-wrap {
+  position: relative;
+}
+.lesson-admin-toolbar {
+  display: flex;
+  gap: 0.4rem;
+  padding: 0.4rem 0.6rem;
+  background: color-mix(in srgb, var(--majalis-emerald) 6%, var(--majalis-panel));
+  border: 1px solid color-mix(in srgb, var(--majalis-emerald) 15%, var(--majalis-line));
+  border-top: none;
+  border-radius: 0 0 0.75rem 0.75rem;
+  justify-content: flex-start;
+}
+.lesson-admin-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-family: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid;
+  transition: background 140ms ease, color 140ms ease;
+}
+.lesson-admin-btn--edit {
+  border-color: color-mix(in srgb, var(--majalis-emerald) 30%, transparent);
+  color: var(--majalis-emerald-deep);
+  background: color-mix(in srgb, var(--majalis-emerald) 8%, transparent);
+}
+.lesson-admin-btn--edit:hover {
+  background: color-mix(in srgb, var(--majalis-emerald) 16%, transparent);
+}
+.lesson-admin-btn--delete {
+  border-color: rgba(220, 38, 38, 0.25);
+  color: #9b1c1c;
+  background: rgba(254, 226, 226, 0.5);
+}
+.lesson-admin-btn--delete:hover {
+  background: rgba(254, 226, 226, 0.9);
+}
+html[data-theme="dark"] .lesson-admin-toolbar {
+  background: color-mix(in srgb, var(--msk-gold) 6%, var(--msk-canvas-1));
+  border-color: color-mix(in srgb, var(--msk-gold) 15%, var(--msk-border));
+}
+html[data-theme="dark"] .lesson-admin-btn--delete {
+  color: #fca5a5;
+  background: rgba(127, 29, 29, 0.25);
+  border-color: rgba(220, 38, 38, 0.3);
+}
+html[data-theme="dark"] .lesson-admin-btn--delete:hover {
+  background: rgba(127, 29, 29, 0.45);
 }
 
 /* ── Lessons page v2 ── */
@@ -13006,8 +13136,8 @@ body.has-assistant-fab .app-main {
 }
 
 .lessons-v2-stat {
-  background: var(--majalis-panel);
-  border: 1px solid var(--majalis-line);
+  background: transparent;
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: 0.75rem;
   padding: 0.75rem;
   text-align: center;
@@ -13038,7 +13168,7 @@ body.has-assistant-fab .app-main {
   padding: 0.5rem 1rem;
   border: 1px solid var(--mn-border-default);
   border-radius: 0.5rem;
-  background: var(--majalis-panel);
+  background: transparent;
   color: var(--majalis-ink);
   font-family: inherit;
   font-weight: 600;
@@ -13133,7 +13263,7 @@ body.has-assistant-fab .app-main {
   border: 1px solid var(--mn-border-default);
   border-radius: 0.5rem;
   font-family: inherit;
-  background: var(--majalis-panel);
+  background: transparent;
   color: var(--majalis-ink);
   transition: border-color var(--mn-transition);
 }
@@ -13163,7 +13293,7 @@ body.has-assistant-fab .app-main {
   border: 1px solid var(--mn-border-default);
   border-radius: 0.5rem;
   font-family: inherit;
-  background: var(--majalis-panel);
+  background: transparent;
   color: var(--majalis-ink);
   transition: border-color var(--mn-transition);
 }
@@ -13207,14 +13337,14 @@ body.has-assistant-fab .app-main {
 
 .admin-feature-status__eyebrow {
   font-size: 0.75rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   margin: 0 0 0.25rem;
 }
 
 .admin-feature-status__intro {
   margin: 0.5rem 0 0;
   font-size: 0.9rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   max-width: 42rem;
 }
 
@@ -13268,14 +13398,14 @@ body.has-assistant-fab .app-main {
 
 .admin-feature-status__notes {
   font-size: 0.78rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   max-width: 14rem;
 }
 
 .admin-feature-status__cli {
   margin-top: 1rem;
   font-size: 0.85rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
 }
 
 .admin-feature-status__error {
@@ -13378,8 +13508,8 @@ html[data-theme="dark"] {
 
 /* ─── Phase 1: Unified Card Component ────────────────────── */
 .ds-card {
-  border: 1px solid var(--majalis-line);
-  background: var(--majalis-panel);
+  border: 1px solid var(--msk-border, #E0DBD5);
+  background: transparent;
   border-radius: var(--ds-r-lg);
   box-shadow: var(--ds-shadow-sm);
   transition: transform var(--ds-t-fast), box-shadow var(--ds-t-fast);
@@ -13393,7 +13523,7 @@ html[data-theme="dark"] {
   padding: 0.625rem 0.875rem;
   border: 1.5px solid var(--majalis-line);
   border-radius: var(--ds-r-sm);
-  background: var(--majalis-panel);
+  background: transparent;
   color: var(--majalis-ink);
   font-family: var(--font-body);
   font-size: 0.9rem;
@@ -13443,7 +13573,7 @@ html[data-theme="dark"] {
   font-size: 0.84rem;
   font-weight: 700;
   text-decoration: none;
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: var(--ds-r-full);
   padding: 0.35rem 0.875rem;
   background: rgba(255,255,255,.6);
@@ -13553,7 +13683,7 @@ html[data-theme="dark"] {
   color: var(--majalis-emerald-deep);
   border: 1.5px solid var(--majalis-line);
   border-radius: var(--ds-r-lg);
-  background: var(--majalis-panel);
+  background: transparent;
   box-shadow: var(--ds-shadow-xs);
   transition: transform var(--ds-t-fast), box-shadow var(--ds-t-fast), border-color var(--ds-t-fast), background var(--ds-t-fast);
 }
@@ -13819,7 +13949,7 @@ html[data-theme="light"] .navbar-v3 {
   padding-top: 0.75rem;
   border-top: 1px solid var(--majalis-line);
   font-size: 0.78rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
 }
 .janaza-source-link {
   color: var(--majalis-emerald-deep);
@@ -13855,7 +13985,7 @@ html[data-theme="light"] .navbar-v3 {
 }
 .kuwait-lessons-subtitle {
   font-size: 0.88rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   max-width: 42rem;
 }
 .kuwait-lessons-source-link {
@@ -13885,7 +14015,7 @@ html[data-theme="light"] .navbar-v3 {
 }
 .kuwait-lessons-feed-note {
   font-size: 0.8rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   margin-bottom: 1rem;
 }
 .kuwait-lessons-feed-note a { color: var(--majalis-emerald-deep); }
@@ -13893,24 +14023,24 @@ html[data-theme="light"] .navbar-v3 {
 .kuwait-lessons-feed-wrap {
   border-radius: 0.75rem;
   overflow: hidden;
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   min-height: 400px;
 }
 .kuwait-lessons-feed-wrap iframe { width: 100% !important; border: none !important; }
 .kuwait-lessons-attribution {
   font-size: 0.75rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   margin-top: 0.6rem;
 }
 .kuwait-lessons-attribution a { color: var(--majalis-emerald-deep); }
 .kuwait-lessons-sheikhs-section { margin-bottom: 2rem; }
 .kuwait-lessons-footer-note {
   font-size: 0.78rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   padding: 0.75rem 1rem;
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: 0.5rem;
-  background: var(--majalis-panel);
+  background: transparent;
   margin-top: 1rem;
 }
 .kuwait-lessons-footer-note a { color: var(--majalis-emerald-deep); }
@@ -13928,8 +14058,8 @@ html[data-theme="light"] .navbar-v3 {
   gap: 0.9rem;
   padding: 0.9rem 1rem;
   border-radius: 0.75rem;
-  border: 1px solid var(--majalis-line);
-  background: var(--majalis-panel);
+  border: 1px solid var(--msk-border, #E0DBD5);
+  background: transparent;
   text-decoration: none;
   color: inherit;
   transition: border-color 0.15s, box-shadow 0.15s, transform 0.12s;
@@ -13967,7 +14097,7 @@ html[data-theme="light"] .navbar-v3 {
 }
 .sheikh-card__specialty {
   font-size: 0.75rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   margin: 0 0 0.35rem;
   line-height: 1.4;
 }
@@ -14009,11 +14139,11 @@ html[data-theme="light"] .navbar-v3 {
 
 /* ── Sunrise prayer cell ── */
 .prayer-time-cell--sunrise {
-  border-color: #f59e0b;
+  border-color: var(--majalis-emerald);
   background: rgba(14,110,82,0.06);
 }
 .prayer-time-cell--sunrise span {
-  color: #0E6E52;
+  color: var(--majalis-emerald);
 }
 
 /* ── Home prayer + ranks side-by-side layout ── */
@@ -14939,6 +15069,27 @@ html[data-theme="light"] .navbar-v3 {
     line-height: 1;
   }
 
+  /* ── Prayer tab: icon container needs relative for badge ── */
+  .bottom-nav__tab-icon--prayer {
+    position: relative;
+  }
+
+  /* ── Prayer time badge فوق أيقونة الصلاة ── */
+  .bottom-nav__prayer-badge {
+    position: absolute;
+    top: -5px;
+    inset-inline-end: -2px;
+    background: var(--msk-gold);
+    color: var(--msk-canvas);
+    font-size: 7.5px;
+    font-weight: 700;
+    border-radius: 999px;
+    padding: 1px 4px;
+    line-height: 1.5;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
   /* ── Active state — pill indicator (iOS/MD3 style) ── */
   .bottom-nav__tab.is-active {
     color: var(--msk-gold);
@@ -15159,7 +15310,7 @@ html[data-theme="dark"] .more-sheet-item {
 }
 .bottom-sheet {
   width: 100%; max-height: 92dvh;
-  background: var(--majalis-panel);
+  background: transparent;
   border-radius: 1.25rem 1.25rem 0 0;
   overflow-y: auto;
   overscroll-behavior: contain;
@@ -15189,7 +15340,7 @@ html[data-theme="dark"] .more-sheet-item {
   gap: 0.4rem; padding: 0.85rem 0.5rem;
   border-radius: 0.75rem;
   background: var(--majalis-parchment);
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   text-decoration: none;
   color: var(--majalis-ink);
   font-size: 0.72rem;
@@ -15244,7 +15395,7 @@ html[data-theme="dark"] .more-sheet-item:hover { background: var(--msk-canvas-2)
   padding: 0.5rem 1.25rem;
   border-radius: 2rem;
   background: var(--majalis-sage);
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-size: 0.82rem;
 }
 .prayer-countdown__prev-timer { font-variant-numeric: tabular-nums; }
@@ -15257,7 +15408,7 @@ html[data-theme="dark"] .more-sheet-item:hover { background: var(--msk-canvas-2)
   display: flex; flex-direction: column; align-items: center;
   padding: 0.6rem 0.5rem; border-radius: 0.75rem;
   background: var(--majalis-parchment);
-  border: 1px solid var(--majalis-line);
+  border: 1px solid var(--msk-border, #E0DBD5);
   font-size: 0.7rem; gap: 0.2rem;
 }
 .prayer-slot-chip--next {
@@ -15309,8 +15460,8 @@ html[data-theme="dark"] .qc-card { background: var(--majalis-panel); }
   flex-direction: column;
   gap: 0.5rem;
   padding: 1rem;
-  background: var(--majalis-panel);
-  border: 1px solid var(--majalis-line);
+  background: transparent;
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: 0.75rem;
   text-decoration: none;
   color: inherit;
@@ -15373,8 +15524,8 @@ html[data-theme="dark"] .qc-card { background: var(--majalis-panel); }
 
 /* ══ Universities ══ */
 .univ-card {
-  background: var(--majalis-panel);
-  border: 1px solid var(--majalis-line);
+  background: transparent;
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-radius: 1rem;
   overflow: hidden;
   display: flex;
@@ -15440,7 +15591,7 @@ html[data-theme="dark"] .univ-badge--degree { background: rgba(96, 165, 250, 0.1
   position: fixed;
   bottom: 0; right: 0; left: 0;
   z-index: 30;
-  background: var(--majalis-panel);
+  background: transparent;
   border-top: 1px solid var(--majalis-line);
   box-shadow: 0 -4px 24px rgba(36, 31, 24, 0.1);
   padding: 0.75rem 1rem;
@@ -15484,7 +15635,7 @@ html[data-theme="dark"] .univ-badge--degree { background: rgba(96, 165, 250, 0.1
   border: none;
   cursor: pointer;
   font-size: 0.875rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   padding: 0.375rem 0.5rem;
   border-radius: 0.375rem;
   transition: color var(--mn-transition);
@@ -15530,8 +15681,8 @@ html[data-theme="dark"] .univ-badge--degree { background: rgba(96, 165, 250, 0.1
   gap: 0.75rem;
   padding: var(--card-padding, 1rem);
   border-radius: var(--card-radius, 1rem);
-  background: var(--majalis-panel);
-  border: 1px solid var(--majalis-line);
+  background: transparent;
+  border: 1px solid var(--msk-border, #E0DBD5);
 }
 .sk-card__thumb {
   height: 10rem;
@@ -15600,7 +15751,7 @@ html[data-theme="dark"] {
 .admin-sidebar {
   width: 15rem;
   flex-shrink: 0;
-  background: var(--majalis-panel);
+  background: transparent;
   border-left: 1px solid var(--majalis-line);
   padding: 1rem 0.75rem;
   overflow-y: auto;
@@ -15662,7 +15813,7 @@ html[data-theme="dark"] {
 
 .admin-sidebar__user {
   font-size: 0.78rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   padding: 0 0.25rem;
 }
 
@@ -16119,8 +16270,8 @@ html[data-theme="dark"] .hadith-grade--mawdu, html[data-theme="dark"] .grade--ma
 .home-quick-link {
   min-height: 5rem;
   border-radius: 0.875rem;
-  background: var(--majalis-panel);
-  border: 1px solid var(--majalis-line);
+  background: transparent;
+  border: 1px solid var(--msk-border, #E0DBD5);
   box-shadow: 0 1px 3px rgba(26, 23, 20, 0.06);
   transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1),
               box-shadow 200ms cubic-bezier(0.16, 1, 0.3, 1),
@@ -16155,8 +16306,8 @@ html[data-theme="dark"] .hadith-grade--mawdu, html[data-theme="dark"] .grade--ma
   padding: 1.25rem 0.875rem;
   text-align: center;
   border-radius: 1rem;
-  background: var(--majalis-panel);
-  border: 1px solid var(--majalis-line);
+  background: transparent;
+  border: 1px solid var(--msk-border, #E0DBD5);
   box-shadow: 0 1px 4px rgba(26, 23, 20, 0.05);
   text-decoration: none;
   transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1),
@@ -16189,7 +16340,7 @@ html[data-theme="dark"] .hadith-grade--mawdu, html[data-theme="dark"] .grade--ma
 
 .home-feature-strip-meta {
   font-size: 0.7rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   line-height: 1.4;
 }
 
@@ -16264,8 +16415,8 @@ html[data-theme="dark"] .hadith-grade--mawdu, html[data-theme="dark"] .grade--ma
   gap: 1.25rem;
   padding: 1.15rem 1.4rem;
   border-radius: 1rem;
-  background: var(--majalis-panel);
-  border: 1px solid var(--majalis-line);
+  background: transparent;
+  border: 1px solid var(--msk-border, #E0DBD5);
   border-right: 3px solid var(--majalis-brass);
   box-shadow: 0 1px 4px rgba(26, 23, 20, 0.06);
   text-decoration: none;
@@ -16294,7 +16445,7 @@ html[data-theme="dark"] .hadith-grade--mawdu, html[data-theme="dark"] .grade--ma
 .home-quiz-card-desc {
   margin: 0;
   font-size: 0.78rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   line-height: 1.5;
 }
 
@@ -16490,7 +16641,7 @@ html[data-theme="dark"] .ds-page-header {
   border-radius: 0.55rem;
   font-size: 0.82rem;
   font-weight: 600;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   background: transparent;
   border: none;
   cursor: pointer;
@@ -16920,7 +17071,7 @@ html[data-theme="dark"] .more-sheet-item__icon {
   border-radius: 0.5rem;
   background: var(--majalis-parchment-deep, #F0EBE0);
   border: 1px solid var(--majalis-line, #E8E2D8);
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   font-weight: 600;
   font-size: 0.82rem;
   text-decoration: none;
@@ -17003,7 +17154,7 @@ html[data-theme="dark"] .more-sheet-item__icon {
 html[data-theme="dark"] .lesson-detail-back {
   background: var(--majalis-parchment-deep, #151E1A);
   border-color: var(--majalis-line, #263D33);
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
 }
 
 html[data-theme="dark"] .lesson-detail-back:hover {
@@ -17155,7 +17306,7 @@ html[data-theme="dark"] .scholarly-quote {
 /* البيانات الوصفية (الراوي، المصدر) */
 .home-daily-meta {
   font-size: 0.78rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   margin: 0.2rem 0;
 }
 
@@ -17166,7 +17317,7 @@ html[data-theme="dark"] .scholarly-quote {
 /* المعنى */
 .home-daily-meaning {
   font-size: 0.82rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   line-height: 1.7;
   margin: 0.75rem 0 0;
   padding-top: 0.75rem;
@@ -17307,7 +17458,7 @@ html[data-theme="dark"] .home-daily-meaning {
 
 .qa-card__answer {
   font-size: 0.88rem;
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   line-height: 1.85;
 }
 
@@ -17338,7 +17489,7 @@ html[data-theme="dark"] .home-daily-meaning {
   font-size: 0.68rem;
   font-weight: 700;
   background: var(--majalis-parchment-deep, #F0EBE0);
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
   border: 1px solid var(--majalis-line, #E8E2D8);
   transition: background 150ms ease, color 150ms ease;
   white-space: nowrap;
@@ -17375,7 +17526,7 @@ html[data-theme="dark"] .page-tag,
 html[data-theme="dark"] .content-tag {
   background: var(--majalis-parchment-deep, #151E1A);
   border-color: var(--majalis-line, #263D33);
-  color: var(--majalis-ink-soft);
+  color: var(--msk-text-2, #5C5550);
 }
 
 html[data-theme="dark"] .page-tag--active,
@@ -17383,4 +17534,86 @@ html[data-theme="dark"] .content-tag--active {
   background: rgba(77, 184, 142, 0.12);
   color: var(--majalis-emerald, #4DB88E);
   border-color: rgba(77, 184, 142, 0.2);
+}
+
+/* ── صفحة الصلاة المبسّطة (PrayerTimesPage) ── */
+.prayer-times-clean {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100dvh - var(--mobile-header-h, 4rem) - var(--bottom-nav-h, 56px) - env(safe-area-inset-bottom, 0px));
+  padding: 2rem 1.5rem;
+  text-align: center;
+  direction: rtl;
+}
+.prayer-times-clean__label {
+  font-size: 0.875rem;
+  color: var(--msk-text-2);
+  letter-spacing: 0.04em;
+  margin-bottom: 0.5rem;
+}
+.prayer-times-clean__name {
+  font-size: clamp(2.25rem, 9vw, 4rem);
+  font-weight: 700;
+  color: var(--msk-gold);
+  margin: 0 0 0.25rem;
+  font-family: var(--font-display, inherit);
+}
+.prayer-times-clean__timer {
+  font-size: clamp(3.5rem, 16vw, 7rem);
+  font-weight: 700;
+  color: var(--msk-text);
+  letter-spacing: 0.02em;
+  line-height: 1;
+  margin-top: 0.5rem;
+  font-variant-numeric: tabular-nums;
+  font-family: var(--font-display, inherit);
+}
+.prayer-times-clean__hint {
+  font-size: 0.9rem;
+  color: var(--msk-text-2);
+  margin-top: 1rem;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Toast — مجالس
+   ══════════════════════════════════════════════════════════════ */
+.msk-toast {
+  border-radius: 1rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  direction: rtl;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .msk-toast[data-state="open"],
+  .msk-toast[data-state="closed"] {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ── CSS أنبياء Lux ── */
+.prophets-lux-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 1rem 1rem 0;
+}
+.prophets-lux-tab {
+  border: 1px solid var(--msk-border, #E0DBD5);
+  background: transparent;
+  color: var(--msk-text-2);
+  border-radius: 999px;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.prophets-lux-tab--active {
+  background: var(--msk-gold);
+  color: #fff;
+  border-color: transparent;
 }

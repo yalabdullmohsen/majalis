@@ -20,7 +20,6 @@ const PROPHET_HUE: Record<string, string> = {
 
 const GOLD = "#D4AF37";
 const GOLD_LIGHT = "#F0D060";
-const DARK_BG = "#1E2A4A";
 
 function prophetColor(slug: string) { return PROPHET_HUE[slug] || GOLD; }
 
@@ -234,7 +233,7 @@ function ProphetDetailView({
       </div>
 
       {/* Hero Section */}
-      <div className="prophet-detail-lux__hero" style={{ background: `linear-gradient(135deg, ${color}20 0%, ${DARK_BG} 60%)` }}>
+      <div className="prophet-detail-lux__hero" style={{ background: `linear-gradient(135deg, ${color}20 0%, var(--msk-canvas-deep, #0D1F3C) 60%)` }}>
         <div className="prophet-detail-lux__hero-pattern" aria-hidden="true">
           {[...Array(12)].map((_, i) => (
             <IslamicStar key={i} size={28} color={GOLD} opacity={0.06 + (i % 4) * 0.02} />
@@ -662,15 +661,15 @@ const PROPHETS_CSS = `
 /* ── Page Shell ── */
 .prophets-lux-page {
   min-height: 100vh;
-  background: #f8f5ee;
-  color: #1a1a1a;
+  background: var(--msk-canvas, #FAF8F5);
+  color: var(--msk-text, #1C1A18);
   font-family: 'Cairo', 'Tajawal', sans-serif;
   direction: rtl;
 }
 
 /* ── Light Content Section ── */
 .prophets-light-section {
-  background: #f8f5ee;
+  background: var(--msk-canvas, #FAF8F5);
 }
 
 /* ── Hero ── */
@@ -735,8 +734,8 @@ const PROPHETS_CSS = `
   padding: 0.85rem 1.25rem;
   overflow-x: auto;
   scrollbar-width: none;
-  border-bottom: 1px solid #e5e0d5;
-  background: #fff;
+  border-bottom: 1px solid var(--msk-border, #e5e0d5);
+  background: var(--msk-canvas-1, #fff);
   position: sticky;
   top: 0;
   z-index: 10;
@@ -824,8 +823,8 @@ const PROPHETS_CSS = `
 /* ── Prophet Card ── */
 .prophet-lux-card {
   position: relative;
-  background: #fff;
-  border: 1px solid #e5e0d5;
+  background: var(--msk-canvas-1, #fff);
+  border: 1px solid var(--msk-border, #e5e0d5);
   border-radius: 16px;
   padding: 1.25rem 1rem 1rem;
   cursor: pointer;
@@ -870,7 +869,7 @@ const PROPHETS_CSS = `
 .prophet-lux-card__quran {
   font-family: 'Amiri Quran', 'Amiri', serif;
   font-size: 0.8rem;
-  color: #0E6E52;
+  color: var(--msk-gold, #0E6E52);
   margin-bottom: 0.25rem;
   opacity: 0.85;
 }
@@ -928,7 +927,7 @@ const PROPHETS_CSS = `
 /* ── Detail View ── */
 .prophet-detail-lux {
   min-height: 100vh;
-  background: linear-gradient(180deg, #0A1628 0%, #0D1F3C 50%, #0A1628 100%);
+  background: linear-gradient(180deg, var(--msk-canvas-deep, #0A1628) 0%, color-mix(in srgb, var(--msk-canvas-deep, #0A1628) 60%, #0D1F3C) 50%, var(--msk-canvas-deep, #0A1628) 100%);
   color: #F5F5F0;
   direction: rtl;
 }

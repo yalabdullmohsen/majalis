@@ -4,6 +4,7 @@ import { PageHeader } from "@/components/ui-common";
 import { PageLoadingGuard } from "@/components/PageLoadingGuard";
 import { useAuth } from "@/components/AuthProvider";
 import { UnifiedLessonCard } from "@/components/lessons/UnifiedLessonCard";
+import { supabase } from "@/lib/supabase";
 import {
   DEFAULT_KUWAIT_FILTERS,
   buildSearchSuggestions,
@@ -342,22 +343,75 @@ export default function LessonsPage({
     }
   };
 
+  const handleAdminDelete = useCallback(async (lessonId: string) => {
+    if (!isAdmin) return;
+    if (!window.confirm("هل أنت متأكد من حذف هذا الدرس؟")) return;
+    try {
+      const { error } = await supabase.from("lessons").delete().eq("id", lessonId);
+      if (error) throw error;
+      setActiveLessons((prev) => prev.filter((l) => l.id !== lessonId));
+      setArchivedLessons((prev) => prev.filter((l) => l.id !== lessonId));
+    } catch (err) {
+      alert(`فشل الحذف: ${(err as Error)?.message || err}`);
+    }
+  }, [isAdmin]);
+
   const renderGrid = (lessons: KuwaitLessonRecord[], prefix = "") => (
     <div className="page-card-grid lesson-unified-grid">
       {lessons.map((lesson) => (
-        <UnifiedLessonCard
-          key={`${prefix}${lesson.id}`}
-          lesson={fromKuwaitLesson(lesson, prefix.startsWith("archived"))}
-          showRegister={isLoggedIn && !lesson.id.startsWith("kw-")}
-          registered={myReg.includes(lesson.id)}
-          onToggleRegister={() => toggleReg(lesson.id)}
-        />
+        <div key={`${prefix}${lesson.id}`} className={isAdmin ? "lesson-card-admin-wrap" : ""}>
+          <UnifiedLessonCard
+            lesson={fromKuwaitLesson(lesson, prefix.startsWith("archived"))}
+            showRegister={isLoggedIn && !lesson.id.startsWith("kw-")}
+            registered={myReg.includes(lesson.id)}
+            onToggleRegister={() => toggleReg(lesson.id)}
+          />
+          {isAdmin && (
+            <div className="lesson-admin-toolbar">
+              <a
+                href={`/admin?edit=${lesson.id}`}
+                className="lesson-admin-btn lesson-admin-btn--edit"
+                title="تعديل"
+              >
+                <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                  <path d="M9.5 1.5L12.5 4.5L4 13H1V10L9.5 1.5Z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round"/>
+                </svg>
+                تعديل
+              </a>
+              {!lesson.id.startsWith("kw-") && (
+                <button
+                  type="button"
+                  className="lesson-admin-btn lesson-admin-btn--delete"
+                  title="حذف"
+                  onClick={() => handleAdminDelete(lesson.id)}
+                >
+                  <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                    <path d="M2 3.5h10M5 3.5V2h4v1.5M5.5 6v4M8.5 6v4M3 3.5l.5 8h7l.5-8" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  حذف
+                </button>
+              )}
+            </div>
+          )}
+        </div>
       ))}
     </div>
   );
 
   return (
     <div className="page-shell lessons-page-v2 ds-page">
+      <div className="lessons-geo-banner" aria-hidden="true">
+        <svg className="lessons-geo-banner__pattern" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+          <defs>
+            <pattern id="geo-star" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
+              <path d="M30 2l5 16h17L39 28l5 17-14-10-14 10 5-17-13-10h17z" fill="currentColor" opacity="0.07"/>
+              <path d="M0 30l3 9h9l-7 5 3 9-8-6-8 6 3-9-7-5h9z" fill="currentColor" opacity="0.04"/>
+              <path d="M60 30l3 9h9l-7 5 3 9-8-6-8 6 3-9-7-5h9z" fill="currentColor" opacity="0.04"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#geo-star)"/>
+        </svg>
+      </div>
       <PageHeader
         eyebrow="المجلس العلمي"
         title="الدروس"
@@ -375,7 +429,7 @@ export default function LessonsPage({
               className={`kuwait-tab${tab === tabId ? " kuwait-tab--active" : ""}`}
               onClick={() => setTab(tabId)}
             >
-              {TAB_LABELS[tabId]} ({tabCounts[tabId]})
+              {TAB_LABELS[tabId]}
             </button>
           ))}
         </div>

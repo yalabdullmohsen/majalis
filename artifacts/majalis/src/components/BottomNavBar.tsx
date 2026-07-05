@@ -51,26 +51,22 @@ export function BottomNavBar() {
       <nav className="bottom-nav" aria-label="التنقل السفلي">
         {LEFT_TABS.map(renderTab)}
 
-        {/* زرّ الصلاة المركزي */}
+        {/* عنصر الصلاة — عنصر خامس رسمي بنفس أسلوب باقي العناصر */}
         <Link
-          href="/prayer-countdown"
-          className={`bottom-nav__center${prayerActive ? " is-active" : ""}`}
+          href="/prayer-times"
+          className={`bottom-nav__tab${prayerActive ? " is-active" : ""}`}
           aria-current={prayerActive ? "page" : undefined}
           aria-label={next ? `الصلاة القادمة: ${next.name} ${next.time}` : "مواقيت الصلاة"}
         >
-          <span className="bottom-nav__center-btn">
-            <Sunset size={22} strokeWidth={1.8} aria-hidden="true" />
-          </span>
-          <span className="bottom-nav__center-meta">
-            {next ? (
-              <>
-                <span className="bottom-nav__center-name">{next.name}</span>
-                <span className="bottom-nav__center-time">{next.time}</span>
-              </>
-            ) : (
-              <span className="bottom-nav__center-name">الصلاة</span>
+          <span className="bottom-nav__tab-icon bottom-nav__tab-icon--prayer">
+            <Sunset size={22} strokeWidth={prayerActive ? 2.3 : 1.6} aria-hidden="true" />
+            {next && (
+              <span className="bottom-nav__prayer-badge" aria-hidden="true">
+                {next.time}
+              </span>
             )}
           </span>
+          <span className="bottom-nav__tab-label">الصلاة</span>
         </Link>
 
         {RIGHT_TABS.map(renderTab)}

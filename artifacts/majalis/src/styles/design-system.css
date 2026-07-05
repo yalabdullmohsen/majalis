@@ -4199,7 +4199,7 @@ html[data-theme="dark"] .tasbih-wird-pill.is-active {
 }
 .inst-card__link:hover { opacity: 0.8; }
 .inst-card__link--web { background: var(--ds-emerald-soft); color: var(--ds-emerald-deep); }
-.inst-card__link--map { background: rgba(14,110,82,0.08); color: #0E6E52; }
+.inst-card__link--map { background: color-mix(in srgb, var(--majalis-emerald) 8%, transparent); color: var(--majalis-emerald, #0E6E52); }
 
 .inst-disclaimer {
   font-size: 0.78rem;
@@ -4217,8 +4217,8 @@ html[data-theme="dark"] .tasbih-wird-pill.is-active {
   font-size: 0.7rem;
   padding: 0.15rem 0.5rem;
   border-radius: 999px;
-  background: rgba(14,110,82,0.08);
-  color: #0E6E52;
+  background: color-mix(in srgb, var(--majalis-emerald) 8%, transparent);
+  color: var(--majalis-emerald, #0E6E52);
   font-weight: 600;
 }
 

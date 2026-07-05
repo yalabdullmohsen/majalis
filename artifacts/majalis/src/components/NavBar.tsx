@@ -131,13 +131,23 @@ export default function NavBar() {
             {/* Hamburger — always visible, opens SideNavDrawer */}
             <button
               type="button"
-              className="navbar-menu-btn navbar-menu-btn--drawer"
+              className={`navbar-menu-btn navbar-menu-btn--drawer${isMenuOpen ? " navbar-menu-btn--open" : ""}`}
               onClick={toggleMenu}
               aria-expanded={isMenuOpen}
               aria-controls="main-navigation-drawer"
               aria-label={isMenuOpen ? t("nav_close") : t("nav_menu")}
             >
-              {isMenuOpen ? t("nav_close") : t("nav_menu")}
+              <span className="navbar-menu-btn__geo" aria-hidden="true" />
+              {isMenuOpen ? (
+                <svg className="navbar-menu-btn__icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M2.5 2.5L13.5 13.5M13.5 2.5L2.5 13.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+                </svg>
+              ) : (
+                <svg className="navbar-menu-btn__icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M1 4h14M1 8h14M1 12h14" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"/>
+                </svg>
+              )}
+              <span className="navbar-menu-btn__label">{isMenuOpen ? t("nav_close") : t("nav_menu")}</span>
             </button>
             <Link href="/" className="navbar-brand">
               <img
