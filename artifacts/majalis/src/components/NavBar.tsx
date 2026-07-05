@@ -122,7 +122,7 @@ export default function NavBar() {
     <>
       <header
         className={`navbar-v3 sticky top-0 border-b${isMenuOpen || moreOpen ? " navbar-v3--menu-open" : ""}`}
-        style={{ background: C.parchment, borderColor: C.line }}
+        style={{ background: C.panel, borderColor: C.line, boxShadow: "0 1px 8px rgba(22,78,60,0.07)" }}
       >
         <div className="navbar-v3__inner">
           <div className="navbar-v3__start">
@@ -174,16 +174,13 @@ export default function NavBar() {
               onClick={() => window.dispatchEvent(new Event("global-search-open"))}
               aria-label="البحث الشامل (⌘K)"
               title="البحث الشامل (⌘K)"
-              style={{
-                display: "flex", alignItems: "center", gap: "0.3rem",
-                padding: "0.3rem 0.7rem", borderRadius: "0.5rem",
-                border: "1px solid rgba(0,0,0,0.12)", background: "rgba(255,255,255,0.7)",
-                cursor: "pointer", fontSize: "0.8rem", color: "#5c564c",
-              }}
+              className="navbar-search-global"
             >
-              <span>🔍</span>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              </svg>
               <span className="navbar-search-hint">بحث</span>
-              <kbd style={{ fontSize: "0.65rem", opacity: 0.6, padding: "0.05rem 0.3rem", border: "1px solid #ccc", borderRadius: "0.25rem", background: "#f5f3ef" }}>⌘K</kbd>
+              <kbd className="navbar-search-kbd">⌘K</kbd>
             </button>
             {/* Desktop: search + auth + lang */}
             {!isMobile && <SearchBox />}

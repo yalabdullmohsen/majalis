@@ -3616,9 +3616,13 @@ html[data-theme="dark"] .home-page {
 }
 
 .site-brand-name {
-  font-weight: 700;
-  font-size: 1.0625rem;
+  font-family: "Lalezar", "Amiri", "Scheherazade New", serif;
+  font-weight: 400;
+  font-size: 1.35rem;
   white-space: nowrap;
+  color: var(--majalis-emerald-deep);
+  letter-spacing: 0.03em;
+  line-height: 1.2;
 }
 
 .sheikh-avatar-ring {
@@ -4874,7 +4878,7 @@ html[data-theme="dark"] .home-page {
 /* ── Mobile UX & touch targets ── */
 @media (max-width: 880px) {
   .site-brand-name {
-    font-size: 0.95rem;
+    font-size: 1.1rem;
     max-width: 9rem;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -9012,6 +9016,42 @@ body:not(.mobile-nav-body-lock) .mobile-nav-layer {
   font-size: 0.82rem;
   cursor: pointer;
 }
+.navbar-menu-btn--drawer {
+  font-family: "Aref Ruqaa", "Amiri", serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  background: #fff;
+  color: var(--majalis-emerald-deep);
+  border-color: rgba(22,78,60,0.18);
+}
+.navbar-search-global {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(22,78,60,0.18);
+  background: #fff;
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: var(--majalis-emerald-deep);
+  font-family: inherit;
+  font-weight: 600;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.navbar-search-global:hover {
+  border-color: var(--majalis-emerald);
+  box-shadow: 0 0 0 3px rgba(22,78,60,0.06);
+}
+.navbar-search-kbd {
+  font-size: 0.6rem;
+  opacity: 0.55;
+  padding: 0.05rem 0.3rem;
+  border: 1px solid var(--majalis-line);
+  border-radius: 0.25rem;
+  background: var(--majalis-parchment-deep);
+  font-family: inherit;
+}
 
 html[data-theme="dark"] .navbar-search-submit,
 html[data-theme="dark"] .navbar-login {
@@ -9342,7 +9382,7 @@ body.mobile-nav-body-lock {
   max-width: 85vw;
   height: 100%;
   height: 100dvh;
-  background: var(--majalis-parchment);
+  background: var(--majalis-panel);
   border-left: 1px solid var(--majalis-line);
   transform: translateX(0);
   display: flex;
@@ -9366,6 +9406,12 @@ body.mobile-nav-body-lock {
   align-items: center;
   gap: 0.65rem;
   color: var(--majalis-emerald-deep);
+}
+.side-nav-drawer__brand strong {
+  font-family: "Lalezar", "Amiri", serif;
+  font-weight: 400;
+  font-size: 1.2rem;
+  letter-spacing: 0.03em;
 }
 
 .side-nav-close {

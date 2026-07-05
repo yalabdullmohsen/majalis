@@ -45,18 +45,26 @@ export function cleanTimeText(time: string): string {
     .trim();
 }
 
-/** وقت مختصر للبطاقات — مثل «بعد المغرب». */
+/** وقت مختصر للبطاقات — يعرض الساعة الصريحة إن وُجدت، وإلا يكتب «بعد صلاة X». */
 export function formatShortLessonTime(time: string): string {
   const t = cleanTimeText(time);
   if (!t) return "";
-  if (/مغرب/u.test(t)) return "بعد المغرب";
-  if (/فجر/u.test(t)) return "بعد الفجر";
-  if (/عصر/u.test(t)) return "بعد العصر";
-  if (/ظهر/u.test(t)) return "بعد الظهر";
-  if (/عشاء/u.test(t)) return "بعد العشاء";
+
+  // إذا كان الوقت محدداً بالساعة (مثل 4:30م أو 8م أو 7 مساءً)، اعرضه كما هو
+  if (/\d{1,2}\s*[:٫]\s*\d{2}/u.test(t) || /\d{1,2}\s*(م|ص|مساء|صباح)/u.test(t)) {
+    return t.length > 26 ? `${t.slice(0, 24).trim()}…` : t;
+  }
+
+  // أوقات الصلاة — يُضاف «صلاة» للوضوح
+  if (/مغرب/u.test(t)) return "بعد صلاة المغرب";
+  if (/فجر/u.test(t)) return "بعد صلاة الفجر";
+  if (/عصر/u.test(t)) return "بعد صلاة العصر";
+  if (/ظهر/u.test(t)) return "بعد صلاة الظهر";
+  if (/عشاء/u.test(t)) return "بعد صلاة العشاء";
+  if (/شروق/u.test(t)) return "بعد صلاة الشروق";
   if (/الصباح|صباح/u.test(t)) return "صباحاً";
   if (/مساء/u.test(t)) return "مساءً";
-  return t.length > 24 ? `${t.slice(0, 22).trim()}…` : t;
+  return t.length > 26 ? `${t.slice(0, 24).trim()}…` : t;
 }
 
 export function getKuwaitClock(date = new Date()): KuwaitClock {
