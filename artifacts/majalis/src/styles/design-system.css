@@ -4463,7 +4463,7 @@ html[data-theme="dark"] .tasbih-wird-pill.is-active {
   display: block;
   font-style: normal;
   font-size: 0.72rem;
-  color: rgba(255,255,255,0.7);
+  color: rgba(255,255,255,0.82);
   margin-top: 0.2rem;
   font-family: inherit;
 }

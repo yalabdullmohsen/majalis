@@ -787,6 +787,189 @@ html[data-theme="dark"] .side-nav-group__title,
 html[data-theme="dark"] .side-nav-link--v2 {
   color: rgba(250,245,234,0.85) !important;
 }
+
+/* ══ مكوّنات SharedBlocks — Phase 3 ══════════════════════════════════════════ */
+
+/* QuranQuoteBox — على خلفية بيضاء */
+.msk-quran-box {
+  margin: 0.5rem 0 0;
+  padding: 0.6rem 0.75rem;
+  border-right: 3px solid var(--msk-gold, #0E6E52);
+  background: var(--msk-canvas-1, #F7FBF9);
+  border-radius: 0 0.625rem 0.625rem 0;
+  font-family: "Amiri Quran", "Scheherazade New", serif;
+  font-size: 0.95rem;
+  line-height: 2;
+  color: var(--msk-text, #1C1A18);
+  direction: rtl;
+}
+.msk-quran-box__text { margin: 0; }
+.msk-quran-box__ref {
+  display: block;
+  font-style: normal;
+  font-size: 0.72rem;
+  color: var(--msk-gold, #0E6E52);
+  font-weight: 700;
+  margin-top: 0.3rem;
+  letter-spacing: 0.02em;
+}
+/* على خلفية زمردية (hero) */
+.msk-quran-box--on-green {
+  border-right: none;
+  background: rgba(255,255,255,0.12);
+  border-radius: 0.625rem;
+  padding: 0.75rem 1rem;
+  color: #FFFFFF;
+}
+.msk-quran-box--on-green .msk-quran-box__ref { color: rgba(255,255,255,0.75); }
+
+/* HadithQuoteBox */
+.msk-hadith-box {
+  margin: 0.5rem 0 0;
+  padding: 0.75rem 1rem;
+  border-right: 3px solid var(--msk-gold, #0E6E52);
+  background: var(--msk-canvas-1, #F7FBF9);
+  border-radius: 0 0.625rem 0.625rem 0;
+  direction: rtl;
+}
+.msk-hadith-box__text {
+  font-family: "Almarai", "Cairo", system-ui, sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.85;
+  color: var(--msk-text, #1C1A18);
+  margin: 0 0 0.4rem;
+}
+.msk-hadith-box__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.4rem;
+}
+.msk-hadith-box__narrator,
+.msk-hadith-box__source {
+  font-size: 0.72rem;
+  color: var(--msk-text-2, #5C5550);
+}
+.msk-hadith-box__grade {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+}
+.msk-hadith-grade--sahih { background: rgba(21,128,61,0.10); color: #15803d; }
+.msk-hadith-grade--hasan { background: rgba(14,110,82,0.10); color: #0E6E52; }
+.msk-hadith-grade--daif  { background: rgba(220,38,38,0.10); color: #dc2626; }
+.msk-hadith-grade--mawdu { background: rgba(127,29,29,0.10); color: #7f1d1d; }
+
+/* FeaturedCard */
+.msk-featured-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 1rem;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  color: inherit;
+}
+.msk-featured-card:hover { text-decoration: none; color: inherit; }
+.msk-featured-card__accent {
+  position: absolute;
+  top: 0; right: 0;
+  width: 100%; height: 3px;
+}
+.msk-featured-card__icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+.msk-featured-card__badge {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(14,110,82,0.10);
+  color: var(--msk-gold, #0E6E52);
+  align-self: flex-start;
+}
+.msk-featured-card__title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--msk-text, #1C1A18);
+  margin: 0;
+  line-height: 1.35;
+}
+.msk-featured-card__desc {
+  font-size: 0.82rem;
+  color: var(--msk-text-2, #5C5550);
+  margin: 0;
+  line-height: 1.55;
+}
+
+/* NumberedListCard */
+.msk-numbered-card {
+  padding: 1rem;
+}
+.msk-numbered-card__title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--msk-text, #1C1A18);
+  margin: 0 0 0.75rem;
+}
+.msk-numbered-card__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.msk-numbered-card__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+.msk-numbered-card__num {
+  flex-shrink: 0;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin-top: 0.1rem;
+}
+.msk-numbered-card__label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--msk-text, #1C1A18);
+  display: block;
+}
+.msk-numbered-card__desc {
+  font-size: 0.8rem;
+  color: var(--msk-text-2, #5C5550);
+  margin: 0.15rem 0 0;
+  line-height: 1.5;
+}
+
+/* dark mode للمكوّنات المشتركة */
+html[data-theme="dark"] .msk-quran-box,
+html[data-theme="dark"] .msk-hadith-box {
+  background: rgba(217,174,92,0.05);
+  border-right-color: rgba(217,174,92,0.4);
+  color: var(--msk-text, #E8E3DC);
+}
+html[data-theme="dark"] .msk-quran-box__ref {
+  color: rgba(217,174,92,0.85);
+}
+html[data-theme="dark"] .msk-featured-card__badge {
+  background: rgba(217,174,92,0.12);
+  color: #D9AE5C;
+}
 html[data-theme="dark"] .side-nav-link--v2.is-active {
   background: rgba(217,174,92,0.12) !important;
   color: #D9AE5C !important;
