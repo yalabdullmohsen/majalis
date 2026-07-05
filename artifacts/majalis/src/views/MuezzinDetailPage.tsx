@@ -329,8 +329,8 @@ export default function MuezzinDetailPage() {
         )}
 
         {/* Per-prayer preview labels */}
-        <div style={{ marginTop: "0.5rem", padding: "0.75rem", borderRadius: "0.6rem", background: "rgba(255,255,255,0.05)", border: "1px solid #e5e7eb" }}>
-          <div style={{ fontSize: "0.75rem", color: "#6b7280", marginBottom: "0.5rem", fontWeight: 600 }}>
+        <div style={{ marginTop: "0.5rem", padding: "0.75rem", borderRadius: "0.6rem", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.10)" }}>
+          <div style={{ fontSize: "0.75rem", color: "var(--majalis-ink-muted, #9BA3B5)", marginBottom: "0.5rem", fontWeight: 600 }}>
             توزيع الأذانات على الصلوات:
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>

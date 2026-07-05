@@ -45,7 +45,7 @@ export default function SubmitContentPage() {
   };
 
   return (
-    <div style={{ maxWidth: 600, margin: "2rem auto", padding: "1.5rem", background: "var(--majalis-panel, rgba(255,255,255,0.08))", borderRadius: "0.75rem", boxShadow: "0 2px 12px rgba(0,0,0,.08)", direction: "rtl" }}>
+    <div style={{ maxWidth: 600, margin: "2rem auto", padding: "1.5rem", background: "var(--majalis-panel, rgba(255,255,255,0.08))", borderRadius: "0.75rem", boxShadow: "0 4px 24px rgba(0,0,0,0.30)", direction: "rtl" }}>
       <div style={{ marginBottom: "1.25rem" }}>
         <Link href="/" style={{ color: "#6b7280", fontSize: "0.85rem", textDecoration: "none" }}>
           ← الرئيسية
