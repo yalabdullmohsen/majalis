@@ -3616,13 +3616,10 @@ html[data-theme="dark"] .home-page {
 }
 
 .site-brand-name {
-  font-family: "Lalezar", "Amiri", "Scheherazade New", serif;
-  font-weight: 400;
-  font-size: 1.35rem;
-  white-space: nowrap;
-  color: var(--majalis-emerald-deep);
-  letter-spacing: 0.03em;
-  line-height: 1.2;
+  display: block;
+  flex-shrink: 0;
+  height: 40px;
+  width: auto;
 }
 
 .sheikh-avatar-ring {
@@ -4878,10 +4875,8 @@ html[data-theme="dark"] .home-page {
 /* ── Mobile UX & touch targets ── */
 @media (max-width: 880px) {
   .site-brand-name {
-    font-size: 1.1rem;
-    max-width: 9rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    height: 34px;
+    max-width: 52vw;
   }
 
   .navbar-logo {
@@ -9407,11 +9402,10 @@ body.mobile-nav-body-lock {
   gap: 0.65rem;
   color: var(--majalis-emerald-deep);
 }
-.side-nav-drawer__brand strong {
-  font-family: "Lalezar", "Amiri", serif;
-  font-weight: 400;
-  font-size: 1.2rem;
-  letter-spacing: 0.03em;
+.side-nav-drawer__brand svg {
+  display: block;
+  height: 32px;
+  width: auto;
 }
 
 .side-nav-close {
@@ -11678,11 +11672,8 @@ svg {
   }
 
   .site-brand-name {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: clamp(0.82rem, 3.2vw, 0.95rem);
-    max-width: clamp(5.5rem, 28vw, 9rem);
+    height: clamp(28px, 7vw, 34px);
+    max-width: 50vw;
   }
 
   .navbar-logo {
@@ -11914,7 +11905,8 @@ svg {
 /* 430px — large phones */
 @media (max-width: 430px) {
   .site-brand-name {
-    max-width: clamp(4.5rem, 24vw, 7rem);
+    height: clamp(26px, 6.5vw, 30px);
+    max-width: 48vw;
   }
 
   .navbar-menu-btn {
@@ -11936,8 +11928,8 @@ svg {
   }
 
   .site-brand-name {
-    max-width: 4.25rem;
-    font-size: 0.78rem;
+    height: clamp(24px, 6vw, 28px);
+    max-width: 46vw;
   }
 
   .navbar-menu-btn--drawer {

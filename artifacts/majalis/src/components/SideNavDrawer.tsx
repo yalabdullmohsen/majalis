@@ -148,7 +148,18 @@ export function SideNavDrawer({ open, onClose, lang = "ar", onLangToggle, onLogo
         <div className="side-nav-drawer__head side-nav-drawer__head--v2">
           <div className="side-nav-drawer__brand">
             <img src="/logo.png" alt="" width={36} height={36} />
-            <strong>المجلس العلمي</strong>
+            <svg viewBox="0 0 180 38" height="32" aria-label="المجلس العلمي" role="img" style={{ display: "block" }}>
+              <defs>
+                <linearGradient id="sng" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#6b4a0e"/>
+                  <stop offset="50%" stopColor="#e8b840"/>
+                  <stop offset="100%" stopColor="#6b4a0e"/>
+                </linearGradient>
+              </defs>
+              <text x="90" y="28" textAnchor="middle" fontFamily="'Amiri', 'Scheherazade New', serif" fontSize="24" direction="rtl" xmlLang="ar">
+                <tspan fill="url(#sng)">المجلس</tspan><tspan fill="#b0a080">ُ</tspan><tspan fill="url(#sng)"> العلمي</tspan><tspan fill="#b0a080">ُّ</tspan>
+              </text>
+            </svg>
           </div>
           <button type="button" onClick={onClose} aria-label="إغلاق" className="side-nav-close">
             <X size={22} aria-hidden="true" />

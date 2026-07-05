@@ -147,7 +147,34 @@ export default function NavBar() {
                 loading="eager"
                 decoding="async"
               />
-              <span className="site-brand-name">المجلس العلمي</span>
+              <svg
+                className="site-brand-name"
+                viewBox="0 0 220 44"
+                height="40"
+                aria-label="المجلس العلمي"
+                role="img"
+                style={{ display: "block", flexShrink: 0, overflow: "visible" }}
+              >
+                <defs>
+                  <linearGradient id="nbg" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#6b4a0e"/>
+                    <stop offset="25%" stopColor="#b8821e"/>
+                    <stop offset="50%" stopColor="#e8b840"/>
+                    <stop offset="75%" stopColor="#b8821e"/>
+                    <stop offset="100%" stopColor="#6b4a0e"/>
+                  </linearGradient>
+                </defs>
+                <text
+                  x="110" y="34"
+                  textAnchor="middle"
+                  fontFamily="'Amiri', 'Scheherazade New', serif"
+                  fontSize="30"
+                  direction="rtl"
+                  xmlLang="ar"
+                >
+                  <tspan fill="url(#nbg)">المجلس</tspan><tspan fill="#b0a080">ُ</tspan><tspan fill="url(#nbg)"> العلمي</tspan><tspan fill="#b0a080">ُّ</tspan>
+                </text>
+              </svg>
             </Link>
           </div>
 
