@@ -35,6 +35,21 @@ html[data-theme="dark"] {
   --mj-gold-300:  #D9AE5C;
 }
 
+/* ══ ترقيع المتغيرات القديمة --mn-* (غير معرَّفة — كانت تسقط على أسود) ══ */
+:root {
+  --mn-text-default:   var(--msk-text-2,  #5C5550);
+  --mn-border-default: var(--msk-border,  rgba(14,110,82,0.12));
+  --mn-border-active:  var(--msk-gold,    #0E6E52);
+  --mn-surface-hover:  rgba(14,110,82,0.05);
+  --mn-transition:     200ms ease;
+}
+html[data-theme="dark"] {
+  --mn-text-default:   var(--msk-text-2,  #B2A891);
+  --mn-border-default: var(--msk-border,  rgba(217,174,92,0.18));
+  --mn-border-active:  var(--msk-gold,    #D9AE5C);
+  --mn-surface-hover:  rgba(217,174,92,0.06);
+}
+
 /* ── 1. Tokens: مِشكاة — tokens تُعرَّف في index.css، هنا فقط حركة ── */
 :root {
   /* ── انحناءات ── */
@@ -1628,4 +1643,91 @@ html[data-theme="dark"] .achievement-card__title {
 }
 html[data-theme="dark"] .achievement-card__name {
   color: #F0E9DA !important;
+}
+
+/* ══ صفحة الدروس — ألوان واجهة متسقة ══════════════════════════════ */
+
+/* عناوين الأقسام داخل صفحة الدروس */
+.lessons-v2-section__title,
+.lessons-past-section__title {
+  color: var(--majalis-emerald-deep, #0A5040) !important;
+  font-family: var(--mj-font-display, "El Messiri", serif) !important;
+}
+
+/* الإحصائيات السفلية */
+.lessons-v2-stat {
+  background: rgba(14,110,82,0.04) !important;
+  border-color: rgba(14,110,82,0.12) !important;
+}
+.lessons-v2-stat strong {
+  color: var(--majalis-emerald-deep, #0A5040) !important;
+}
+.lessons-v2-stat span {
+  color: var(--msk-text-2, #5C5550) !important;
+}
+
+/* شريط التصفية والتبويبات */
+.lessons-v2-filter-toggle {
+  border-color: rgba(14,110,82,0.20) !important;
+  color: var(--majalis-emerald-deep, #0A5040) !important;
+  background: rgba(14,110,82,0.04) !important;
+}
+.lessons-v2-filter-toggle:hover {
+  background: rgba(14,110,82,0.09) !important;
+  border-color: rgba(14,110,82,0.30) !important;
+}
+
+/* لوحة التصفية */
+.lessons-v2-filters__head h2 {
+  color: var(--majalis-emerald-deep, #0A5040) !important;
+  font-family: var(--mj-font-display, "El Messiri", serif) !important;
+}
+.lessons-v2-filters__close {
+  color: var(--msk-text-2, #5C5550) !important;
+}
+.lessons-v2-filters-grid label {
+  color: var(--msk-text-2, #5C5550) !important;
+  font-size: 0.8rem !important;
+}
+.lessons-v2-filters-grid select,
+.lessons-v2-search input {
+  color: var(--msk-text, #1C1A18) !important;
+  border-color: rgba(14,110,82,0.15) !important;
+  background: var(--msk-canvas, #FFFFFF) !important;
+}
+.lessons-v2-filters-grid select:focus,
+.lessons-v2-search input:focus {
+  border-color: var(--majalis-emerald, #0E6E52) !important;
+}
+
+/* اقتراحات البحث */
+.lessons-search-suggestions {
+  color: var(--msk-text, #1C1A18) !important;
+}
+
+/* حالة الفراغ */
+.lessons-empty-state {
+  color: var(--msk-text-2, #5C5550) !important;
+}
+
+/* وضع داكن — صفحة الدروس */
+html[data-theme="dark"] .lessons-v2-stat {
+  background: rgba(217,174,92,0.06) !important;
+  border-color: rgba(217,174,92,0.15) !important;
+}
+html[data-theme="dark"] .lessons-v2-stat strong {
+  color: var(--msk-gold, #D9AE5C) !important;
+}
+html[data-theme="dark"] .lessons-v2-stat span {
+  color: var(--msk-text-2, #B2A891) !important;
+}
+html[data-theme="dark"] .lessons-v2-section__title,
+html[data-theme="dark"] .lessons-past-section__title {
+  color: var(--msk-gold, #D9AE5C) !important;
+}
+html[data-theme="dark"] .lessons-v2-filters-grid select,
+html[data-theme="dark"] .lessons-v2-search input {
+  background: var(--msk-canvas-1, #1F2540) !important;
+  color: var(--msk-text, #F0E9DA) !important;
+  border-color: rgba(217,174,92,0.18) !important;
 }
