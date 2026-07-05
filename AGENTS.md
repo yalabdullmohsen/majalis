@@ -39,6 +39,28 @@ session — the app navigates home yet stays logged-out (NavBar shows the green 
 a logged-in NavBar instead shows the user's name plus a "خروج"/Logout button). To test
 authenticated flows you need a pre-confirmed account or to confirm the email out of band.
 
+### ⚠️ قاعدة Git الحرجة — يجب اتباعها دائماً
+
+**جذر git الصحيح:** `/Users/alabdullmohsen/majalis-correct/` (جذر الـ monorepo)
+
+جميع عمليات `git add / commit / push` **يجب** تنفيذها من هذا المسار، لأن:
+- Vercel يبني من `artifacts/majalis/` داخل المستودع
+- أي commit من داخل `artifacts/majalis/` يضع الملفات في `src/` بجذر المستودع — **مسار خاطئ** لا يُبنى
+
+```bash
+# ✅ الطريقة الصحيحة دائماً
+cd /Users/alabdullmohsen/majalis-correct
+git add artifacts/majalis/src/index.css   # المسار يبدأ بـ artifacts/majalis/
+git commit -m "..."
+git push origin main
+
+# ❌ خطأ — يُفسد النشر
+cd /Users/alabdullmohsen/majalis-correct/artifacts/majalis
+git add src/index.css   # يذهب لجذر المستودع وليس artifacts/majalis/
+```
+
+**التحقق السريع:** `git rev-parse --show-toplevel` يجب أن يُعيد `/Users/alabdullmohsen/majalis-correct`
+
 ### Lint / test / build
 
 - There is **no ESLint/Prettier-script, and no automated test suite** wired up. The quality gate is

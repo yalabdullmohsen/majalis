@@ -73,6 +73,19 @@ const MyLearningPage = lazy(() => import("@/views/MyLearningPage"));
 const LearningQuizPage = lazy(() => import("@/views/learning/LearningQuizPage"));
 const LearningCalendarPage = lazy(() => import("@/views/learning/LearningCalendarPage"));
 const CertificateVerifyPage = lazy(() => import("@/views/learning/CertificateVerifyPage"));
+const LibraryPage = lazy(() => import("@/views/LibraryPage"));
+const LibraryDetailPage = lazy(() => import("@/views/LibraryDetailPage"));
+const HadithPage = lazy(() => import("@/views/HadithPage"));
+const FawaidPage = lazy(() => import("@/views/FawaidPage"));
+const StoriesPage = lazy(() => import("@/views/StoriesPage"));
+const SeerahPage = lazy(() => import("@/views/SeerahPage"));
+const MiraclesPage = lazy(() => import("@/views/MiraclesPage"));
+const FlashCardsPage = lazy(() => import("@/views/FlashCardsPage"));
+const LearningPlanPage = lazy(() => import("@/views/LearningPlanPage"));
+const LearningPathPage = lazy(() => import("@/views/LearningPathPage"));
+const UniversitiesPage = lazy(() => import("@/views/UniversitiesPage"));
+const FeaturesInProgressPage = lazy(() => import("@/views/FeaturesInProgressPage"));
+const ProphetStoriesPage = lazy(() => import("@/views/ProphetStoriesPage"));
 
 function SeoManager() {
   const [location] = useLocation();
@@ -190,6 +203,21 @@ export default function AppRoutes() {
         <Route path="/fatwa"><SafeLazyRoute component={FatwaPage} /></Route>
         <Route path="/rulings/:id"><SafeLazyRoute component={RulingDetailPage} /></Route>
         <Route path="/rulings"><SafeLazyRoute component={RulingsPage} /></Route>
+        <Route path="/fiqh"><Redirect to="/fiqh-council" /></Route>
+        <Route path="/library/:id"><SafeLazyRoute component={LibraryDetailPage} /></Route>
+        <Route path="/library"><SafeLazyRoute component={LibraryPage} /></Route>
+        <Route path="/hadith"><SafeLazyRoute component={HadithPage} /></Route>
+        <Route path="/fawaid"><SafeLazyRoute component={FawaidPage} /></Route>
+        <Route path="/stories"><SafeLazyRoute component={StoriesPage} /></Route>
+        <Route path="/seerah"><SafeLazyRoute component={SeerahPage} /></Route>
+        <Route path="/miracles"><SafeLazyRoute component={MiraclesPage} /></Route>
+        <Route path="/flashcards"><SafeLazyRoute component={FlashCardsPage} /></Route>
+        <Route path="/learning-plan"><SafeLazyRoute component={LearningPlanPage} /></Route>
+        <Route path="/learning-path"><SafeLazyRoute component={LearningPathPage} /></Route>
+        <Route path="/universities"><SafeLazyRoute component={UniversitiesPage} /></Route>
+        <Route path="/features-in-progress"><SafeLazyRoute component={FeaturesInProgressPage} /></Route>
+        <Route path="/prophet-stories/:slug"><SafeLazyRoute component={ProphetStoriesPage} /></Route>
+        <Route path="/prophet-stories"><SafeLazyRoute component={ProphetStoriesPage} /></Route>
         <Route path="/updates/auto/:slug"><SafeLazyRoute component={AutoContentDetailPage} /></Route>
         <Route path="/updates"><SafeLazyRoute component={UpdatesPage} /></Route>
         <Route path="/developers"><SafeLazyRoute component={DeveloperPage} /></Route>
