@@ -305,6 +305,35 @@ export default function HomePage({
 
         <IslamicDivider />
 
+        {/* قصص الأنبياء والصحابة */}
+        <section className="home-section home-stories-section" aria-labelledby="stories-home-heading">
+          <div className="home-section-head">
+            <div>
+              <p className="home-eyebrow">التاريخ الإسلامي</p>
+              <h2 id="stories-home-heading">القصص والسِّيَر</h2>
+            </div>
+          </div>
+          <div className="home-stories-grid">
+            {[
+              { href: "/prophets",        icon: "⭐", title: "قصص الأنبياء",      desc: "من آدم إلى محمد ﷺ — قصص الرسل والأنبياء" },
+              { href: "/islamic-stories", icon: "🏛",  title: "صحابة وفتوحات",    desc: "سير الصحابة الكرام والفتوحات الإسلامية" },
+              { href: "/stories",         icon: "📖", title: "القصص الإسلامية",  desc: "قصص ووقائع من تاريخ الإسلام العريق" },
+              { href: "/seerah",          icon: "🌙", title: "السيرة النبوية",    desc: "حياة النبي محمد ﷺ — من الميلاد إلى الوفاة" },
+            ].map(({ href, icon, title, desc }) => (
+              <Link key={href} href={href} className="home-story-card">
+                <span className="home-story-card__icon" aria-hidden="true">{icon}</span>
+                <div className="home-story-card__body">
+                  <strong className="home-story-card__title">{title}</strong>
+                  <span className="home-story-card__desc">{desc}</span>
+                </div>
+                <span className="home-story-card__arrow" aria-hidden="true">←</span>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        <IslamicDivider />
+
         <SafeHomeSection name="المزيد من الأقسام">
           <HomeMoreSections />
         </SafeHomeSection>

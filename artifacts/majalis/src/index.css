@@ -5270,16 +5270,17 @@ html[data-theme="light"] .home-page {
 }
 
 .ui-card {
-  border: 1px solid rgba(224, 215, 196, 0.9);
-  border-radius: 1.15rem;
-  background: transparent;
-  box-shadow: 0 8px 28px rgba(36, 31, 24, 0.07);
-  transition: transform 0.16s ease, box-shadow 0.16s ease;
+  border: 1px solid rgba(14,110,82,0.10);
+  border-radius: 1rem;
+  background: #FFFFFF;
+  box-shadow: 0 2px 8px rgba(14,110,82,0.06);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
 
 .ui-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 14px 36px rgba(36, 31, 24, 0.1);
+  box-shadow: 0 8px 24px rgba(14,110,82,0.12);
+  border-color: rgba(14,110,82,0.18);
 }
 
 .ui-card-btn {
@@ -9120,20 +9121,21 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 }
 
 .lesson-unified-card {
-  border: 1px solid var(--msk-border);
-  border-radius: 0.85rem;
-  background: var(--msk-canvas-1);
+  border: 1px solid rgba(14,110,82,0.10);
+  border-radius: 1rem;
+  background: #FFFFFF;
   overflow: hidden;
-  box-shadow: var(--msk-shadow-sm);
+  box-shadow: 0 2px 10px rgba(14,110,82,0.06);
   display: flex;
   flex-direction: column;
   height: 100%;
-  transition: box-shadow var(--motion-normal), border-color var(--motion-normal);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
 }
 
 .lesson-unified-card:hover {
-  box-shadow: var(--msk-shadow), var(--msk-shadow-gold);
-  border-color: var(--msk-gold-border);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(14,110,82,0.12);
+  border-color: rgba(14,110,82,0.20);
 }
 
 .lesson-unified-card--today {
@@ -9154,33 +9156,36 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
-  padding: 0.65rem 1rem;
-  background: linear-gradient(135deg, var(--msk-canvas-2), #222A48);
-  color: var(--msk-manuscript);
-  border-bottom: 1px solid var(--msk-gold-border);
+  padding: 0.55rem 1rem;
+  background: color-mix(in srgb, var(--majalis-emerald) 8%, transparent);
+  border-bottom: 1px solid rgba(14,110,82,0.10);
 }
 
 .lesson-unified-card__category {
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   font-weight: 700;
-  color: var(--msk-gold);
+  color: var(--majalis-emerald, #0E6E52);
 }
 
 .lesson-unified-card__status {
   font-size: 0.72rem;
-  font-weight: 700;
-  padding: 0.2rem 0.55rem;
+  font-weight: 600;
+  padding: 0.18rem 0.5rem;
   border-radius: 999px;
-  background: var(--msk-gold-dim);
-  color: var(--msk-gold);
-  border: 1px solid var(--msk-gold-border);
+  background: rgba(14,110,82,0.10);
+  color: var(--majalis-emerald, #0E6E52);
+  border: 1px solid rgba(14,110,82,0.15);
   white-space: nowrap;
 }
 
 .lesson-unified-card--today .lesson-unified-card__status {
-  background: var(--msk-gold);
-  border-color: var(--msk-gold);
-  color: var(--msk-canvas);
+  background: var(--majalis-emerald, #0E6E52);
+  border-color: var(--majalis-emerald, #0E6E52);
+  color: #fff;
+}
+.lesson-unified-card--today .lesson-unified-card__header {
+  background: color-mix(in srgb, var(--majalis-emerald) 12%, transparent);
+  border-bottom-color: rgba(14,110,82,0.15);
 }
 
 .lesson-unified-card__body {
@@ -9203,7 +9208,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
   margin: 0;
   font-size: 0.88rem;
   font-weight: 700;
-  color: #8a6830;
+  color: var(--majalis-emerald, #0E6E52);
 }
 
 .lesson-unified-card__meta {
@@ -9256,20 +9261,27 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
   align-items: center;
   justify-content: center;
   min-height: 40px;
-  padding: 0.5rem 0.85rem;
-  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.65rem;
   font-size: 0.82rem;
   font-weight: 700;
   font-family: inherit;
   text-decoration: none;
   border: 1px solid transparent;
   cursor: pointer;
+  transition: transform 0.14s ease, box-shadow 0.14s ease, background 0.14s ease;
 }
+.lesson-unified-card__btn:active { transform: scale(0.97); }
 
 .lesson-unified-card__btn--primary {
-  background: var(--majalis-emerald-deep);
-  color: var(--majalis-parchment);
-  border-color: var(--majalis-emerald-deep);
+  background: var(--majalis-emerald, #0E6E52);
+  color: #fff;
+  border-color: var(--majalis-emerald, #0E6E52);
+  box-shadow: 0 2px 8px rgba(14,110,82,0.25);
+}
+.lesson-unified-card__btn--primary:hover {
+  background: var(--majalis-emerald-deep, #0A5040);
+  box-shadow: 0 4px 14px rgba(14,110,82,0.35);
 }
 
 .lesson-unified-card__btn--secondary {
@@ -9640,10 +9652,25 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
   display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 11rem), 1fr)); gap: 0.75rem;
 }
 .home-more-card {
-  padding: 0.85rem; text-decoration: none; color: inherit; display: grid; gap: 0.25rem;
+  padding: 1rem 1.1rem;
+  text-decoration: none;
+  color: inherit;
+  display: grid;
+  gap: 0.3rem;
+  background: #FFFFFF;
+  border: 1px solid rgba(14,110,82,0.10);
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px rgba(14,110,82,0.05);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
-.home-more-card strong { color: var(--majalis-emerald-deep); }
-.home-more-card span { font-size: 0.84rem; color: var(--majalis-ink-soft); }
+.home-more-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(14,110,82,0.10);
+  border-color: rgba(14,110,82,0.18);
+}
+.home-more-card:active { transform: scale(0.97); }
+.home-more-card strong { color: var(--majalis-emerald-deep); font-size: 0.9rem; font-weight: 700; }
+.home-more-card span { font-size: 0.78rem; color: var(--msk-text-2); }
 
 .home-occasions-grid {
   display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr)); gap: 0.75rem;
@@ -16386,6 +16413,94 @@ html[data-theme="dark"] .home-feature-strip-icon {
   line-height: 1.4;
 }
 
+/* ── قسم القصص والسير في الصفحة الرئيسية ── */
+.home-stories-section {
+  padding-block: 0.5rem;
+}
+.home-stories-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+.home-story-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.1rem;
+  background: #FFFFFF;
+  border: 1px solid rgba(14,110,82,0.10);
+  border-radius: 1.1rem;
+  box-shadow: 0 2px 10px rgba(14,110,82,0.06);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  position: relative;
+  overflow: hidden;
+}
+.home-story-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(14,110,82,0.03) 0%, transparent 55%);
+  pointer-events: none;
+}
+.home-story-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(14,110,82,0.12);
+  border-color: rgba(14,110,82,0.20);
+}
+.home-story-card:active { transform: scale(0.98); }
+.home-story-card__icon {
+  font-size: 2rem;
+  line-height: 1;
+  flex-shrink: 0;
+  width: 2.75rem;
+  height: 2.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--majalis-emerald) 10%, transparent);
+  border-radius: 0.75rem;
+}
+.home-story-card__body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.home-story-card__title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--majalis-emerald-deep, #0A5040);
+  display: block;
+}
+.home-story-card__desc {
+  font-size: 0.78rem;
+  color: var(--msk-text-2, #5C5550);
+  line-height: 1.5;
+  display: block;
+}
+.home-story-card__arrow {
+  font-size: 1rem;
+  color: var(--majalis-emerald, #0E6E52);
+  flex-shrink: 0;
+  opacity: 0.6;
+}
+html[data-theme="dark"] .home-story-card {
+  background: var(--msk-canvas-1, #1E2434);
+  border-color: rgba(217,174,92,0.12);
+}
+html[data-theme="dark"] .home-story-card::before {
+  background: linear-gradient(135deg, rgba(217,174,92,0.04) 0%, transparent 55%);
+}
+html[data-theme="dark"] .home-story-card__title {
+  color: var(--msk-gold, #D9AE5C);
+}
+@media (min-width: 480px) {
+  .home-stories-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
 /* ── بطاقات قصص الأنبياء ── */
 .prophet-home-card {
   background: #ffffff;
@@ -16612,7 +16727,7 @@ html[data-theme="dark"] .home-quiz-card {
 }
 
 .lesson-unified-card__header {
-  background: var(--majalis-emerald-deep, #0F4433);
+  background: color-mix(in srgb, var(--majalis-emerald) 8%, transparent);
 }
 
 .lesson-unified-card__title {
