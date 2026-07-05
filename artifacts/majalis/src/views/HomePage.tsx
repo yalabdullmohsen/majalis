@@ -23,6 +23,7 @@ import { IslamicOrnament } from "@/components/design/IslamicOrnament";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
 import { HomeContinueReading } from "@/components/home/HomeContinueReading";
 import { HijriSacredMonthBanner } from "@/components/HijriSacredMonthBanner";
+import { BookOpen, GraduationCap, Moon, BookMarked, MessageCircleQuestion, Scale } from "lucide-react";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 
 function HomeQuranCirclesPreview() {
@@ -65,12 +66,12 @@ const QUICK_LINKS = [
 ];
 
 const FEATURE_STRIP = [
-  { href: "/quran",   icon: "📖", name: "القرآن",  meta: "اقرأ واستمع" },
-  { href: "/lessons", icon: "🎓", name: "الدروس",  meta: "مباشر ومسجل" },
-  { href: "/adhkar",  icon: "📿", name: "الأذكار", meta: "يومية وموثقة" },
-  { href: "/library", icon: "📚", name: "المكتبة", meta: "كتب ومتون" },
-  { href: "/qa",      icon: "💬", name: "الأسئلة", meta: "فتاوى علمية" },
-  { href: "/rulings", icon: "⚖️", name: "الأحكام", meta: "موسوعة شرعية" },
+  { href: "/quran",   Icon: BookOpen,               name: "القرآن",  meta: "اقرأ واستمع" },
+  { href: "/lessons", Icon: GraduationCap,           name: "الدروس",  meta: "مباشر ومسجل" },
+  { href: "/adhkar",  Icon: Moon,                    name: "الأذكار", meta: "يومية وموثقة" },
+  { href: "/library", Icon: BookMarked,              name: "المكتبة", meta: "كتب ومتون" },
+  { href: "/qa",      Icon: MessageCircleQuestion,   name: "الأسئلة", meta: "فتاوى علمية" },
+  { href: "/rulings", Icon: Scale,                   name: "الأحكام", meta: "موسوعة شرعية" },
 ];
 
 function SafeHomeSection({ name, children }: { name: string; children: React.ReactNode }) {
@@ -144,11 +145,13 @@ export default function HomePage({
       {/* ── Feature Strip ── */}
       <div className="home-container" style={{ paddingTop: "1rem", paddingBottom: "0.5rem" }}>
         <div className="home-feature-strip">
-          {FEATURE_STRIP.map((item) => (
-            <Link key={item.href} href={item.href} className="home-feature-strip-card">
-              <span className="home-feature-strip-icon" aria-hidden="true">{item.icon}</span>
-              <span className="home-feature-strip-name">{item.name}</span>
-              <span className="home-feature-strip-meta">{item.meta}</span>
+          {FEATURE_STRIP.map(({ href, Icon, name, meta }) => (
+            <Link key={href} href={href} className="home-feature-strip-card">
+              <span className="home-feature-strip-icon" aria-hidden="true">
+                <Icon size={22} strokeWidth={1.6} />
+              </span>
+              <span className="home-feature-strip-name">{name}</span>
+              <span className="home-feature-strip-meta">{meta}</span>
             </Link>
           ))}
         </div>

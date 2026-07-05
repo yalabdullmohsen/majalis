@@ -802,12 +802,12 @@ html[data-theme="light"] .home-page {
 .home-search button {
   border: 0;
   border-radius: 0.95rem;
-  color: var(--majalis-ink);
-  background: linear-gradient(135deg, #d2b45d, var(--majalis-brass));
+  color: #fff;
+  background: var(--msk-gold, #0E6E52);
   font-weight: 800;
   font-size: 0.95rem;
   padding: 0.95rem 1.6rem;
-  box-shadow: 0 12px 26px rgba(14, 110, 82, 0.28);
+  box-shadow: 0 6px 16px color-mix(in srgb, var(--msk-gold) 30%, transparent);
 }
 
 .home-hero-actions,
@@ -9503,7 +9503,9 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
   padding: 0.45rem 0.85rem;
   font-size: 0.78rem;
   border-radius: 0.65rem;
-  box-shadow: 0 4px 12px rgba(14, 110, 82, 0.2);
+  background: var(--msk-gold, #0E6E52);
+  color: #fff;
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--msk-gold) 25%, transparent);
 }
 
 .home-search--v3 input {
@@ -10168,19 +10170,28 @@ body.mobile-nav-body-lock {
   display: flex;
   align-items: center;
   gap: 0.65rem;
-  padding: 0.65rem 0.75rem;
+  padding: 0.6rem 0.75rem;
   min-height: var(--mobile-touch-min, 44px);
-  border-radius: 0.5rem;
+  border-radius: 0.6rem;
   text-decoration: none;
   color: var(--msk-text-2, #5C5550);
   font-weight: 600;
-  transition: background 0.15s, color 0.15s;
+  font-size: 0.875rem;
+  transition: background 0.14s ease, color 0.14s ease;
   touch-action: manipulation;
+  /* لا خلفية افتراضية — الخلفية للنشط فقط */
+  background: transparent;
+}
+
+.side-nav-link--v2:hover:not(.is-active) {
+  background: color-mix(in srgb, var(--msk-gold) 8%, transparent);
+  color: var(--msk-gold);
 }
 
 .side-nav-link--v2.is-active {
-  background: var(--majalis-sage);
-  color: var(--majalis-emerald-deep);
+  background: color-mix(in srgb, var(--msk-gold) 12%, transparent);
+  color: var(--msk-gold);
+  font-weight: 700;
 }
 
 html[data-theme="dark"] .side-nav-drawer--v2 {
@@ -10188,8 +10199,11 @@ html[data-theme="dark"] .side-nav-drawer--v2 {
   border-color: var(--msk-border);
 }
 
+html[data-theme="dark"] .side-nav-link--v2:hover:not(.is-active) {
+  background: color-mix(in srgb, var(--msk-gold) 10%, transparent);
+}
 html[data-theme="dark"] .side-nav-link--v2.is-active {
-  background: var(--msk-gold-dim);
+  background: color-mix(in srgb, var(--msk-gold) 15%, transparent);
   color: var(--msk-gold);
 }
 
@@ -12339,6 +12353,8 @@ svg {
   height: 100%;
   font-size: 0.85rem;
   border-radius: 999px;
+  background: var(--msk-gold, #0E6E52);
+  color: #fff;
 }
 
 .home-hero-assistant-link--v3 {
@@ -13055,13 +13071,13 @@ body.has-assistant-fab .app-main {
   position: absolute;
   inset: 0;
   width: 100%;
-  height: 160px;
-  color: var(--majalis-emerald);
-  opacity: 0.6;
+  height: 180px;
+  color: var(--msk-gold, #0E6E52);
+  opacity: 0.55;
 }
 html[data-theme="dark"] .lessons-geo-banner__pattern {
-  color: var(--msk-gold);
-  opacity: 0.35;
+  color: var(--msk-gold, #D9AE5C);
+  opacity: 0.28;
 }
 
 /* ── Admin lesson card toolbar ── */
@@ -16323,12 +16339,16 @@ html[data-theme="dark"] .hadith-grade--mawdu, html[data-theme="dark"] .grade--ma
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 0.75rem;
-  background: var(--majalis-emerald-soft, #EAF5EE);
+  background: color-mix(in srgb, var(--majalis-emerald) 10%, transparent);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.2rem;
   flex-shrink: 0;
+  color: var(--majalis-emerald, #0E6E52);
+}
+html[data-theme="dark"] .home-feature-strip-icon {
+  background: color-mix(in srgb, var(--msk-gold) 12%, transparent);
+  color: var(--msk-gold);
 }
 
 .home-feature-strip-name {
@@ -16493,9 +16513,7 @@ html[data-theme="dark"] .home-feature-strip-card {
   border-color: var(--majalis-line, #263D33);
 }
 
-html[data-theme="dark"] .home-feature-strip-icon {
-  background: rgba(77, 184, 142, 0.12);
-}
+/* home-feature-strip-icon dark: defined above with color-mix */
 
 html[data-theme="dark"] .home-quiz-card {
   background: var(--majalis-panel, #1A2820);
