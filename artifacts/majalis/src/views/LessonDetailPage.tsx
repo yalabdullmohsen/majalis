@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
+import { useAuth } from "@/components/AuthProvider";
 import { getLessonById, getSheikhs } from "@/lib/supabase";
 import { Loading, Empty } from "@/components/ui-common";
 import ContentActions from "@/components/ContentActions";
@@ -113,6 +114,7 @@ export default function LessonDetailPage({
   params: { id: string };
   initialLesson?: KuwaitLessonRecord | null;
 }) {
+  const { isAdmin } = useAuth();
   const [lesson, setLesson] = useState<any>(null);
   const [kuwaitLesson, setKuwaitLesson] = useState<KuwaitLessonRecord | null>(initialLesson ?? null);
   const [similar, setSimilar] = useState<KuwaitLessonRecord[]>([]);
@@ -417,6 +419,15 @@ export default function LessonDetailPage({
             مشاركة
           </button>
           <FavoriteButton contentType="lesson" contentId={unified.id} />
+          {isAdmin && (
+            <a
+              href={`/admin?section=lessons&q=${encodeURIComponent(unified.title)}`}
+              className="lesson-unified-card__btn lesson-admin-edit-btn"
+              title="تعديل الدرس في لوحة التحكم"
+            >
+              ✏️ تعديل
+            </a>
+          )}
           <button
             type="button"
             className="lesson-unified-card__btn lesson-unified-card__btn--secondary"

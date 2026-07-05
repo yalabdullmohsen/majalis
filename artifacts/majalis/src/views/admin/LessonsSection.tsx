@@ -82,7 +82,10 @@ export function LessonsSection() {
   const [items, setItems] = useState<any[]>([]);
   const [sheikhs, setSheikhs] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get("q") || "";
+  });
   const [statusFilter, setStatusFilter] = useState("all");
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState<any>(EMPTY);

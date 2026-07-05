@@ -2224,4 +2224,29 @@ html[data-theme="dark"] .fiqh-item__title {
   color: var(--msk-gold, #D9AE5C) !important;
 }
 
+/* ── زر التعديل السريع للمشرفين ── */
+.lesson-admin-edit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: linear-gradient(135deg, #795B25, #A78747) !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  border-radius: 8px;
+  padding: 0.45rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none !important;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.15s;
+  box-shadow: 0 2px 8px rgba(121,91,37,0.3);
+}
+.lesson-admin-edit-btn:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+html[data-theme="dark"] .lesson-admin-edit-btn {
+  background: linear-gradient(135deg, #A78747, #C8A55A) !important;
+}
+
 /* ── نهاية الإصلاح الشامل ── */
