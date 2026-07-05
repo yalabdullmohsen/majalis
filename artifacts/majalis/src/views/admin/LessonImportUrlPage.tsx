@@ -8,6 +8,7 @@ import {
   rejectLessonImportFromUrl,
   reExtractLessonFromUrl,
   saveLessonImportFromUrl,
+  type DebugLog,
   type ParsedLessonFields,
   type LessonImportResponse,
 } from "@/lib/lesson-import-api";
@@ -39,6 +40,9 @@ function LessonImportUrlContent() {
   const [confidence, setConfidence] = useState(0);
   const [missingFields, setMissingFields] = useState<string[]>([]);
   const [warnings, setWarnings] = useState<{ field: string; message: string }[]>([]);
+  const [fieldConfidence, setFieldConfidence] = useState<Record<string, number>>({});
+  const [failureReasons, setFailureReasons] = useState<Record<string, string>>({});
+  const [debugLog, setDebugLog] = useState<DebugLog | null>(null);
   const [sheikhHint, setSheikhHint] = useState("");
   const [platformLabel, setPlatformLabel] = useState("");
   const [duplicateMessage, setDuplicateMessage] = useState("");
@@ -54,6 +58,9 @@ function LessonImportUrlContent() {
     if (res.confidence_score != null) setConfidence(res.confidence_score);
     if (res.missing_fields) setMissingFields(res.missing_fields);
     if (res.warnings) setWarnings(res.warnings as { field: string; message: string }[]);
+    if (res.field_confidence) setFieldConfidence(res.field_confidence);
+    if (res.failure_reasons) setFailureReasons(res.failure_reasons);
+    if (res.debug_log !== undefined) setDebugLog(res.debug_log ?? null);
     if (res.platform_label) setPlatformLabel(String(res.platform_label));
     const dup = res.duplicate as { isDuplicate?: boolean; draft?: { status?: string }; lesson?: { title?: string } } | undefined;
     if (dup?.isDuplicate) {
@@ -247,6 +254,9 @@ function LessonImportUrlContent() {
           sheikhHint={sheikhHint}
           platformLabel={platformLabel}
           duplicateMessage={duplicateMessage}
+          fieldConfidence={fieldConfidence}
+          failureReasons={failureReasons}
+          debugLog={debugLog}
           onApprove={onApprove}
           onSaveDraft={onSaveDraft}
           onReject={onReject}

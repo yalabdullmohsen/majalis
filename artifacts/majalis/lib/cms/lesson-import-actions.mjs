@@ -28,7 +28,10 @@ export function buildImportApiResponse({ result, sheikhMatch, draft, imageUrl, v
     message: result?.message || (visionEnabled === false ? MANUAL_MESSAGE : undefined),
     extracted_text: result?.extracted_text || parsed.raw_ocr_text || "",
     parsed_fields: parsed,
-    confidence_score: result?.confidence_score != null ? result.confidence_score : Number(parsed.confidence) || 0,
+    confidence_score: result?.confidence_score != null ? result.confidence_score : 0,
+    field_confidence: result?.field_confidence || {},
+    failure_reasons: result?.failure_reasons || {},
+    debug_log: result?.debug_log || null,
     warnings: validation.warnings || [],
     missing_fields: missing,
     suggested_sheikh_match: sheikhMatch

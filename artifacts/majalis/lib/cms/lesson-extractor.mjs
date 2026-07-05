@@ -1,96 +1,203 @@
 /**
- * Vision + OCR + AI enrichment for lesson posters (Arabic).
- * Falls back to manual entry when ANTHROPIC_API_KEY is missing.
+ * Multi-stage lesson extraction pipeline for Arabic Islamic posters.
  *
- * سياسة الأخطاء:
- *  - جميع أخطاء Anthropic تُصنَّف هنا ولا تُمرَّر خاماً للواجهة
- *  - التسجيل الكامل في console بدون كشف المفتاح السري
- *  - إعادة المحاولة تلقائياً عند 429 و5xx مع Exponential Backoff
+ * Pipeline:
+ *   Stage 1 — Primary Vision (comprehensive Arabic prompt)
+ *   Stage 2 — Fallback Vision (text-first prompt, when Stage 1 confidence < 40%)
+ *   Stage 3 — DB Enrichment (fill gaps from sheikh/lesson history)
+ *   Stage 4 — Confidence computation (server-side, not AI-reported)
+ *   Stage 5 — Debug log (stored in draft for admin inspection)
+ *
+ * Security policy:
+ *   - All Anthropic errors classified + translated to Arabic before reaching client
+ *   - API keys never logged
+ *   - No Quran/Hadith/Fatwa auto-generation
  */
 import Anthropic from "@anthropic-ai/sdk";
 import { validateLessonDraft, buildExternalKey, buildLessonSlug } from "./content-validator.mjs";
+import { getSupabaseAdmin } from "../supabase-admin.mjs";
 
 const MODEL = "claude-sonnet-4-6";
 const MAX_RETRIES = 3;
-const BASE_BACKOFF_MS = 1000;
-const TIMEOUT_MS = 60_000;
+const BASE_BACKOFF_MS = 1_000;
+const TIMEOUT_MS = 90_000;
+const FALLBACK_CONFIDENCE_THRESHOLD = 0.4; // رفع Stage 2 إذا كانت الثقة أقل من هذا
 
-const EXTRACTION_PROMPT = `أنت نظام استخراج بيانات لمنصة علمية إسلامية كويتية.
-من صورة إعلان درس/دورة، استخرج كل المعلومات بدقة.
+// ── أوزان حساب الثقة (المجموع = 100) ────────────────────────────────────────
+const FIELD_WEIGHTS = {
+  title: 25,
+  speaker_name: 20,
+  day_of_week: 15,
+  lesson_time: 15,
+  mosque: 15,
+  city: 10,
+};
 
-قواعد تصنيف الجمهور:
-- audience = "نساء" فقط إذا وُجد نص صريح مثل "للنساء فقط" أو "خاص بالنساء" أو "دروس نسائية"
-- audience = "رجال" فقط إذا وُجد نص صريح مثل "للرجال فقط" أو "خاص بالرجال"
-- audience = "الكل" في كل الحالات الأخرى
-- has_women_section = true فقط إذا وُجد "يوجد مكان للنساء" أو "مصلى النساء" (لا علاقة بـ audience)
+// ── أسباب فشل الحقول ─────────────────────────────────────────────────────────
+const FIELD_FAILURE_REASONS = {
+  title: "لم يُعثر على عنوان الدرس في الصورة",
+  speaker_name: "تعذر التعرف على اسم الشيخ",
+  day_of_week: "لم يُذكر يوم صريح في الصورة",
+  lesson_time: "لم يُذكر وقت صريح (لا ساعة ولا صلاة مرجعية)",
+  mosque: "لم يُذكر اسم المسجد أو المكان",
+  city: "لم تُذكر المحافظة أو المنطقة",
+};
 
-قواعد نوع المكان (venue_type):
-- "مسجد" إذا ذُكر مسجد أو جامع أو مصلى
-- "مجلس" إذا ذُكر مجلس (مجلس فلان / المجلس الأسبوعي)
-- "ديوان" إذا ذُكر ديوان
-- "مزرعة" إذا ذُكرت مزرعة أو استراحة مزرعة
-- "استراحة" إذا ذُكرت استراحة أو شاليه
-- "مركز" إذا ذُكر مركز أو دار علم أو مكتبة
-- "جامعة" إذا ذُكرت جامعة أو كلية
-- "أخرى" إذا كان النوع غير واضح أو غير محدد
-- اسم المكان في "mosque" يكون الاسم الصريح فقط بدون كلمة النوع (مثال: "ديوان آل فلان" → venue_type="ديوان" mosque="آل فلان")
+// ── Prompt المرحلة الأولى: استخراج شامل ────────────────────────────────────
+const PRIMARY_PROMPT = `أنت نظام استخراج بيانات متخصص في قراءة إعلانات الدروس الإسلامية الكويتية.
 
-قواعد الأيام:
-- إذا تكرر الدرس أكثر من يوم، اذكرها مفصولة بـ ، في day_of_week مثل: "السبت،الجمعة"
+[الخطوة الأولى — قراءة النص الكامل]
+اقرأ كل نص مرئي في الصورة بدقة تامة: العناوين، الأسماء، الأرقام، الأوقات، المواقع، الشعارات، أرقام الهاتف.
 
-أعد JSON فقط بدون markdown:
+[الخطوة الثانية — استخراج البيانات من النص]
+
+عنوان الدرس (title):
+- العنوان هو اسم الدرس أو الدورة أو المحاضرة
+- مثال: "شرح كتاب الأربعين النووية" أو "درس في التجويد"
+- كلمات مؤشرة: شرح / دراسة / درس / دورة / محاضرة / حلقة / مجلس + اسم الكتاب
+
+اسم الشيخ (speaker_name):
+- ابحث عن: "الشيخ:" أو "للشيخ" أو "فضيلة" أو "الأستاذ" ثم الاسم
+- احتفظ بالاسم الكامل مع اللقب (الشيخ / الدكتور / الأستاذ)
+
+اليوم (day_of_week):
+- أيام الأسبوع: السبت، الأحد، الاثنين، الثلاثاء، الأربعاء، الخميس، الجمعة
+- "كل يوم X" أو "أسبوعياً" → استخرج اليوم
+- إذا تكرر أكثر من يوم: افصلها بـ ، مثل "السبت،الجمعة"
+
+الوقت (lesson_time):
+- وقت صريح: "7:30 مساءً" أو "19:30" → استخرجه كما هو
+- بعد صلاة مغرب / عشاء / فجر / عصر → "بعد المغرب" / "بعد العشاء" / "بعد الفجر" / "بعد العصر"
+- "عقب صلاة الجمعة" → "بعد صلاة الجمعة"
+
+نوع المكان (venue_type) واسمه (mosque):
+- مسجد / جامع / مصلى → venue_type="مسجد"
+- ديوان → venue_type="ديوان"
+- مجلس → venue_type="مجلس"
+- مزرعة / استراحة مزرعة → venue_type="مزرعة"
+- استراحة / شاليه → venue_type="استراحة"
+- مركز / دار علم / مكتبة → venue_type="مركز"
+- جامعة / كلية → venue_type="جامعة"
+- اسم المكان في mosque بدون كلمة النوع (مثال: "مسجد الرحمة" → mosque="الرحمة")
+
+الموقع (region, city):
+- المحافظات: العاصمة، حولي، الفروانية، مبارك الكبير، الأحمدي، الجهراء
+- المناطق: السالمية، الرميثية، السلام، الفحيحيل، القادسية، الروضة، الصليبية، إلخ
+
+الجمهور (audience):
+- "للنساء فقط" أو "خاص بالنساء" → audience="نساء"
+- "للرجال فقط" → audience="رجال"
+- "يوجد مكان للنساء" أو "مصلى نساء" → audience="الكل"، has_women_section=true
+- الافتراضي: audience="الكل"
+
+أعد JSON فقط (بلا markdown):
 {
-  "title": "عنوان الدرس",
-  "speaker_name": "اسم الشيخ",
-  "gregorian_date": "YYYY-MM-DD إن وُجد",
-  "day_of_week": "السبت إن كان يوماً واحداً — أو مفصولاً بـ ، مثل السبت،الجمعة إن تكرر أكثر من يوم",
-  "lesson_time": "الوقت",
-  "venue_type": "مسجد|مجلس|ديوان|مزرعة|استراحة|مركز|جامعة|أخرى — استنتج من السياق",
-  "mosque": "اسم المكان فقط بدون نوعه",
-  "region": "المنطقة",
-  "city": "المحافظة",
-  "country": "الدولة",
+  "raw_ocr_text": "النص الكامل المقروء من الصورة بدون حذف أي كلمة",
+  "title": "",
+  "speaker_name": "",
+  "gregorian_date": "",
+  "hijri_date": "",
+  "day_of_week": "",
+  "lesson_time": "",
+  "venue_type": "مسجد",
+  "mosque": "",
+  "region": "",
+  "city": "",
+  "country": "الكويت",
   "category": "تفسير|فقه|عقيدة|حديث|سيرة|تجويد|أخرى",
-  "description": "وصف مختصر",
-  "organizer": "الجهة المنظمة",
-  "cooperative_org": "الجهة المتعاونة إن وُجدت",
+  "description": "",
+  "organizer": "",
+  "cooperative_org": "",
   "audience": "الكل",
   "has_live_stream": false,
-  "women_section": "مكان النساء إن ذُكر",
   "has_women_section": false,
-  "phone": "رقم الهاتف",
-  "live_url": "رابط البث إن وُجد",
-  "registration_url": "رابط التسجيل",
-  "maps_url": "رابط الخريطة",
+  "women_section": "",
+  "phone": "",
+  "live_url": "",
+  "registration_url": "",
+  "maps_url": "",
   "links": [],
   "is_course": false,
   "activity_type": "درس",
-  "start_date": "YYYY-MM-DD إن وُجد",
-  "end_date": "YYYY-MM-DD إن وُجد",
-  "raw_ocr_text": "النص العربي الكامل المقروء من الصورة",
-  "keywords": ["كلمات", "مفتاحية"],
-  "slug": "مقترح-slug",
-  "confidence": 0.0
+  "start_date": "",
+  "end_date": "",
+  "keywords": [],
+  "slug": "",
+  "field_confidence": {
+    "title": 0.0,
+    "speaker_name": 0.0,
+    "day_of_week": 0.0,
+    "lesson_time": 0.0,
+    "mosque": 0.0,
+    "city": 0.0
+  }
 }
 
-إذا لم تجد حقلًا اتركه فارغاً "" أو false. لا تخمّن fatwa أو أحكام.`;
+ملاحظة: في field_confidence، ضع 1.0 إذا وجدت الحقل بوضوح، 0.5 إذا استنتجته، 0.0 إذا لم تجده.
+لا تخمّن أحكاماً شرعية أو فتاوى.`;
 
+// ── Prompt المرحلة الثانية: استخراج تركيزي عند فشل المرحلة الأولى ─────────
+const FALLBACK_PROMPT = `اقرأ هذه الصورة بتركيز تام.
+
+أولاً، اكتب كل نص مرئي في الصورة كلمة كلمة (حتى لو كان صغيراً أو في زاوية أو في تذييل الصورة).
+
+ثانياً، بناءً على ما قرأت، أجب:
+- من هو الشيخ؟ (ابحث عن كلمة "للشيخ" أو "الشيخ")
+- ما عنوان الدرس؟ (ابحث عن اسم الكتاب أو الموضوع)
+- متى يُعقد؟ (يوم + وقت)
+- أين يُعقد؟ (مسجد / ديوان / مجلس + اسمه + منطقته)
+- ما رقم الهاتف؟
+
+أعد JSON:
+{
+  "raw_ocr_text": "كل النصوص المرئية كاملة",
+  "title": "",
+  "speaker_name": "",
+  "day_of_week": "",
+  "lesson_time": "",
+  "venue_type": "مسجد",
+  "mosque": "",
+  "region": "",
+  "city": "",
+  "country": "الكويت",
+  "phone": "",
+  "organizer": "",
+  "category": "أخرى",
+  "audience": "الكل",
+  "has_live_stream": false,
+  "has_women_section": false,
+  "is_course": false,
+  "activity_type": "درس",
+  "keywords": [],
+  "links": [],
+  "field_confidence": {
+    "title": 0.0,
+    "speaker_name": 0.0,
+    "day_of_week": 0.0,
+    "lesson_time": 0.0,
+    "mosque": 0.0,
+    "city": 0.0
+  }
+}`;
+
+// ── Prompt الإثراء (enrichment) ───────────────────────────────────────────────
 const ENRICH_PROMPT = `راجع بيانات الدرس التالية وأصلح:
 - الأخطاء الإملائية العربية
 - صيغة التاريخ والوقت
 - تصنيف الدرس
-- slug SEO بالإنجليزية/transliteration
+- slug SEO بالإنجليزية/transliteration (بلا مسافات)
 - meta description للSEO (≤160 حرف)
 
-أعد JSON:
+أعد JSON فقط:
 {
-  "corrected": { ...same fields as input... },
+  "corrected": {},
   "suggestions": [{ "field": "", "old": "", "new": "", "reason": "" }],
   "seo_title": "",
   "seo_description": "",
   "slug": ""
 }`;
 
+// ── Client ────────────────────────────────────────────────────────────────────
 export function isVisionEnabled() {
   return Boolean((process.env.ANTHROPIC_API_KEY || "").trim());
 }
@@ -105,6 +212,7 @@ function getClient() {
   return _client;
 }
 
+// ── JSON parser ───────────────────────────────────────────────────────────────
 function parseJson(text) {
   const raw = String(text || "").trim();
   const start = raw.indexOf("{");
@@ -117,12 +225,11 @@ function parseJson(text) {
   }
 }
 
-/** تصنيف خطأ Anthropic SDK وتحويله لرسالة عربية آمنة. */
+// ── Error classifier ──────────────────────────────────────────────────────────
 function classifyAnthropicError(err) {
   const status = err?.status ?? err?.statusCode ?? 0;
   const msg = String(err?.message || err?.error?.message || "").toLowerCase();
 
-  // 400: Credit / Auth / Model
   if (status === 400) {
     if (msg.includes("credit") || msg.includes("balance")) {
       return { code: "credit_exhausted", arabic: "رصيد API منتهٍ — يُرجى شحن حساب Anthropic.", retryable: false };
@@ -135,18 +242,10 @@ function classifyAnthropicError(err) {
     }
     return { code: "bad_request", arabic: "طلب غير صالح — يُرجى المحاولة مجدداً.", retryable: false };
   }
-  if (status === 401) {
-    return { code: "unauthorized", arabic: "مفتاح API غير صالح أو منتهي الصلاحية.", retryable: false };
-  }
-  if (status === 403) {
-    return { code: "forbidden", arabic: "لا تملك صلاحية استخدام هذه الخدمة.", retryable: false };
-  }
-  if (status === 404) {
-    return { code: "not_found", arabic: "النموذج أو الخدمة غير موجودة.", retryable: false };
-  }
-  if (status === 429) {
-    return { code: "rate_limit", arabic: "تجاوزت حد الطلبات — سيُعاد المحاولة تلقائياً.", retryable: true };
-  }
+  if (status === 401) return { code: "unauthorized", arabic: "مفتاح API غير صالح أو منتهي الصلاحية.", retryable: false };
+  if (status === 403) return { code: "forbidden", arabic: "لا تملك صلاحية استخدام هذه الخدمة.", retryable: false };
+  if (status === 404) return { code: "not_found", arabic: "النموذج أو الخدمة غير موجودة.", retryable: false };
+  if (status === 429) return { code: "rate_limit", arabic: "تجاوزت حد الطلبات — سيُعاد المحاولة تلقائياً.", retryable: true };
   if (status === 408 || err?.name === "APIConnectionTimeoutError") {
     return { code: "timeout", arabic: "انتهت مهلة الاتصال — سيُعاد المحاولة.", retryable: true };
   }
@@ -156,47 +255,40 @@ function classifyAnthropicError(err) {
   if (err?.name === "APIConnectionError") {
     return { code: "network_error", arabic: "تعذر الاتصال بالخادم — تحقق من الشبكة وأعد المحاولة.", retryable: true };
   }
-  return { code: "unknown", arabic: "تعذر الاستخراج التلقائي حالياً — يمكنك إدخال البيانات يدويًا.", retryable: false };
+  return { code: "unknown", arabic: "تعذر الاستخراج التلقائي — يمكنك إدخال البيانات يدويًا.", retryable: false };
 }
 
-/**
- * استدعاء API مع Retry تلقائي وExponential Backoff.
- * يُعيد { ok, text?, errorCode?, errorArabic? }
- */
+// ── Retry wrapper ─────────────────────────────────────────────────────────────
 async function callWithRetry(fn, label) {
   let lastErr;
   for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
     const t0 = Date.now();
     try {
       const result = await fn();
-      const elapsed = Date.now() - t0;
-      console.log(`[lesson-extractor] ${label} success attempt=${attempt} ms=${elapsed}`);
-      return { ok: true, text: result };
+      console.log(`[lesson-extractor] ${label} ok attempt=${attempt} ms=${Date.now() - t0}`);
+      return { ok: true, text: result, ms: Date.now() - t0 };
     } catch (err) {
       lastErr = err;
-      const classified = classifyAnthropicError(err);
-      const elapsed = Date.now() - t0;
-      // لا نُسجّل API key أو بيانات المستخدم
+      const c = classifyAnthropicError(err);
       console.error(
-        `[lesson-extractor] ${label} error attempt=${attempt} ms=${elapsed} code=${classified.code} status=${err?.status ?? 0} model=${MODEL}`,
+        `[lesson-extractor] ${label} error attempt=${attempt} ms=${Date.now() - t0} code=${c.code} status=${err?.status ?? 0}`,
       );
-
-      if (!classified.retryable || attempt === MAX_RETRIES) {
-        return { ok: false, errorCode: classified.code, errorArabic: classified.arabic };
+      if (!c.retryable || attempt === MAX_RETRIES) {
+        return { ok: false, errorCode: c.code, errorArabic: c.arabic, ms: Date.now() - t0 };
       }
       const delay = BASE_BACKOFF_MS * Math.pow(2, attempt - 1) + Math.random() * 500;
       console.log(`[lesson-extractor] ${label} retry in ${Math.round(delay)}ms`);
       await new Promise((r) => setTimeout(r, delay));
     }
   }
-  // مسار احتياطي
-  const classified = classifyAnthropicError(lastErr);
-  return { ok: false, errorCode: classified.code, errorArabic: classified.arabic };
+  const c = classifyAnthropicError(lastErr);
+  return { ok: false, errorCode: c.code, errorArabic: c.arabic };
 }
 
-async function callVision({ imageBase64, mimeType, textPrompt }) {
+// ── Vision call ───────────────────────────────────────────────────────────────
+async function callVision({ imageBase64, mimeType, prompt }) {
   const client = getClient();
-  if (!client) return { ok: false, errorCode: "no_key", errorArabic: "مفتاح API غير مضبوط." };
+  if (!client) return { ok: false, errorCode: "no_key", errorArabic: "مفتاح API غير مضبوط.", ms: 0 };
 
   return callWithRetry(async () => {
     const response = await client.messages.create({
@@ -207,29 +299,181 @@ async function callVision({ imageBase64, mimeType, textPrompt }) {
           role: "user",
           content: [
             { type: "image", source: { type: "base64", media_type: mimeType || "image/jpeg", data: imageBase64 } },
-            { type: "text", text: textPrompt || EXTRACTION_PROMPT },
+            { type: "text", text: prompt },
           ],
         },
       ],
     });
-    const block = response.content?.find((b) => b.type === "text");
-    return block?.text || "";
-  }, "callVision");
+    return response.content?.find((b) => b.type === "text")?.text || "";
+  }, `callVision[${prompt === PRIMARY_PROMPT ? "primary" : "fallback"}]`);
 }
 
+// ── Text call ─────────────────────────────────────────────────────────────────
 async function callText(prompt, data) {
   const client = getClient();
-  if (!client) return { ok: false, errorCode: "no_key", errorArabic: "مفتاح API غير مضبوط." };
+  if (!client) return { ok: false, errorCode: "no_key", errorArabic: "مفتاح API غير مضبوط.", ms: 0 };
 
   return callWithRetry(async () => {
     const response = await client.messages.create({
       model: MODEL,
-      max_tokens: 4096,
+      max_tokens: 2048,
       messages: [{ role: "user", content: `${prompt}\n\n${JSON.stringify(data, null, 2)}` }],
     });
-    const block = response.content?.find((b) => b.type === "text");
-    return block?.text || "";
-  }, "callText");
+    return response.content?.find((b) => b.type === "text")?.text || "";
+  }, "callEnrich");
+}
+
+// ── Confidence computation (server-side) ──────────────────────────────────────
+function computeConfidenceScore(data) {
+  let score = 0;
+  for (const [field, weight] of Object.entries(FIELD_WEIGHTS)) {
+    const val = String(data[field] || "").trim();
+    if (val) score += weight;
+  }
+  return Math.round(score) / 100;
+}
+
+// ── Failure reasons builder ───────────────────────────────────────────────────
+function buildFailureReasons(data, fieldConfidences = {}) {
+  const reasons = {};
+  for (const [field, reason] of Object.entries(FIELD_FAILURE_REASONS)) {
+    const val = String(data[field] || "").trim();
+    if (!val) {
+      reasons[field] = reason;
+    } else if (fieldConfidences[field] < 0.5) {
+      reasons[field] = `تم استنتاج "${val}" — يُرجى التحقق يدوياً`;
+    }
+  }
+  return reasons;
+}
+
+// ── Missing fields ────────────────────────────────────────────────────────────
+function buildMissingFields(data) {
+  const checks = [
+    { key: "title", label: "عنوان الدرس" },
+    { key: "speaker_name", label: "اسم الشيخ" },
+    { key: "day_of_week", label: "اليوم" },
+    { key: "lesson_time", label: "الوقت" },
+    { key: "mosque", label: "المسجد" },
+    { key: "city", label: "المحافظة" },
+  ];
+  return checks.filter((c) => !String(data[c.key] || "").trim()).map((c) => c.key);
+}
+
+// ── DB enrichment ─────────────────────────────────────────────────────────────
+async function enrichFromDatabase(data, debugStages) {
+  const admin = getSupabaseAdmin();
+  if (!admin) return data;
+
+  const t0 = Date.now();
+  const enriched = { ...data };
+  const dbInfo = { fields_filled: [], sources: {} };
+
+  // إثراء من سجل دروس الشيخ
+  const speakerName = String(data.speaker_name || "").trim();
+  if (speakerName && (!enriched.mosque || !enriched.city || !enriched.day_of_week)) {
+    try {
+      const normalized = speakerName.replace(/^(الشيخ|فضيلة|معالي|د\.|دكتور)\s+/u, "").trim();
+      const { data: sheikhLessons } = await admin
+        .from("lessons")
+        .select("mosque, day_of_week, lesson_time, city, region")
+        .or(`speaker_name.ilike.%${normalized}%,title.ilike.%${normalized}%`)
+        .eq("status", "approved")
+        .order("created_at", { ascending: false })
+        .limit(3);
+
+      if (sheikhLessons?.length > 0) {
+        const latest = sheikhLessons[0];
+        if (!enriched.mosque && latest.mosque) {
+          enriched.mosque = latest.mosque;
+          dbInfo.fields_filled.push("mosque");
+          dbInfo.sources.mosque = "sheikh_lesson_history";
+        }
+        if (!enriched.city && latest.city) {
+          enriched.city = latest.city;
+          dbInfo.fields_filled.push("city");
+          dbInfo.sources.city = "sheikh_lesson_history";
+        }
+        if (!enriched.region && latest.region) {
+          enriched.region = latest.region;
+          dbInfo.fields_filled.push("region");
+          dbInfo.sources.region = "sheikh_lesson_history";
+        }
+      }
+    } catch (e) {
+      console.warn("[lesson-extractor] db_sheikh_enrichment failed:", e?.message);
+    }
+  }
+
+  // إثراء اسم الشيخ من جدول sheikhs
+  if (speakerName && !enriched.city) {
+    try {
+      const normalized = speakerName.replace(/^(الشيخ|فضيلة|معالي|د\.|دكتور)\s+/u, "").trim();
+      const { data: sheikhs } = await admin
+        .from("sheikhs")
+        .select("name, city")
+        .ilike("name", `%${normalized.split(" ")[0]}%`)
+        .limit(3);
+
+      const match = sheikhs?.find((s) => s.city);
+      if (match?.city) {
+        enriched.city = match.city;
+        dbInfo.fields_filled.push("city");
+        dbInfo.sources.city = "sheikhs_table";
+      }
+    } catch (e) {
+      console.warn("[lesson-extractor] db_sheikh_city_lookup failed:", e?.message);
+    }
+  }
+
+  debugStages.push({ stage: "db_enrichment", ms: Date.now() - t0, ...dbInfo });
+  return enriched;
+}
+
+// ── Merge two extraction results (take best per field) ────────────────────────
+function mergeExtractions(primary, fallback) {
+  if (!fallback) return primary;
+  const merged = { ...primary };
+  const FIELDS = ["title", "speaker_name", "day_of_week", "lesson_time", "mosque", "region", "city", "phone", "organizer", "category", "description", "venue_type", "raw_ocr_text"];
+  for (const field of FIELDS) {
+    if (!String(merged[field] || "").trim() && String(fallback[field] || "").trim()) {
+      merged[field] = fallback[field];
+    }
+  }
+  // دمج field_confidence
+  const fc = { ...(primary.field_confidence || {}), ...(fallback.field_confidence || {}) };
+  for (const [f, score] of Object.entries(fallback.field_confidence || {})) {
+    if (!primary.field_confidence?.[f] || score > (primary.field_confidence[f] || 0)) {
+      fc[f] = score;
+    }
+  }
+  merged.field_confidence = fc;
+  return merged;
+}
+
+// ── Normalize payload ─────────────────────────────────────────────────────────
+function normalizePayload(extracted, enriched = {}) {
+  const corrected = enriched.corrected || {};
+  const base = {
+    ...emptyLessonPayload(),
+    ...extracted,
+    ...corrected,
+    start_date: corrected.start_date || extracted.start_date || extracted.gregorian_date || "",
+    gregorian_date: extracted.gregorian_date || corrected.gregorian_date || extracted.start_date || "",
+    has_live_stream: Boolean(extracted.has_live_stream || extracted.live_url),
+    has_women_section: Boolean(
+      extracted.has_women_section || (extracted.women_section && String(extracted.women_section).trim()),
+    ),
+    audience: corrected.audience || extracted.audience || "الكل",
+    seo_title: enriched.seo_title || extracted.title || "",
+    seo_description: enriched.seo_description || extracted.description || "",
+    slug: enriched.slug || extracted.slug || buildLessonSlug(extracted.title || ""),
+    external_key: buildExternalKey({ ...extracted, ...corrected }),
+  };
+  // تنظيف venue_type: تأكد أنه ضمن القائمة المعتمدة
+  const VALID_VENUE_TYPES = ["مسجد", "مجلس", "ديوان", "مزرعة", "استراحة", "مركز", "جامعة", "أخرى"];
+  if (!VALID_VENUE_TYPES.includes(base.venue_type)) base.venue_type = "مسجد";
+  return base;
 }
 
 export function emptyLessonPayload() {
@@ -237,8 +481,10 @@ export function emptyLessonPayload() {
     title: "",
     speaker_name: "",
     gregorian_date: "",
+    hijri_date: "",
     day_of_week: "",
     lesson_time: "",
+    venue_type: "مسجد",
     mosque: "",
     region: "",
     city: "العاصمة",
@@ -267,42 +513,11 @@ export function emptyLessonPayload() {
   };
 }
 
-function normalizePayload(extracted, enriched = {}) {
-  const corrected = enriched.corrected || {};
-  const merged = {
-    ...emptyLessonPayload(),
-    ...extracted,
-    ...corrected,
-    start_date: corrected.start_date || extracted.start_date || extracted.gregorian_date || "",
-    gregorian_date: extracted.gregorian_date || corrected.gregorian_date || extracted.start_date || "",
-    has_live_stream: Boolean(extracted.has_live_stream || extracted.live_url),
-    // has_women_section = صحيح فقط إذا كان هناك نص صريح عن مكان للنساء
-    has_women_section: Boolean(
-      extracted.has_women_section || (extracted.women_section && String(extracted.women_section).trim()),
-    ),
-    // audience لا يُعدَّل — الاستخراج يحدده بشكل صحيح
-    audience: corrected.audience || extracted.audience || "الكل",
-    seo_title: enriched.seo_title || extracted.title || "",
-    seo_description: enriched.seo_description || extracted.description || "",
-    slug: enriched.slug || extracted.slug || buildLessonSlug(extracted.title),
-    external_key: buildExternalKey({ ...extracted, ...corrected }),
-  };
-  return merged;
-}
-
-function buildMissingFields(data) {
-  const checks = [
-    { key: "title", label: "عنوان الدرس" },
-    { key: "speaker_name", label: "اسم الشيخ" },
-    { key: "day_of_week", label: "اليوم" },
-    { key: "lesson_time", label: "الوقت" },
-    { key: "mosque", label: "المسجد" },
-    { key: "city", label: "المحافظة" },
-  ];
-  return checks.filter((c) => !String(data[c.key] || "").trim()).map((c) => c.key);
-}
-
+// ── Main extraction function ──────────────────────────────────────────────────
 export async function extractLessonFromImage({ imageBase64, mimeType = "image/jpeg" }) {
+  const pipelineStart = Date.now();
+  const debugStages = [];
+
   if (!isVisionEnabled()) {
     const empty = emptyLessonPayload();
     return {
@@ -315,19 +530,24 @@ export async function extractLessonFromImage({ imageBase64, mimeType = "image/jp
       aiSuggestions: [],
       validation: validateLessonDraft(empty),
       missing_fields: buildMissingFields(empty),
+      failure_reasons: buildFailureReasons(empty),
+      debug_log: { stages: [], total_ms: 0 },
       rawVision: "",
     };
   }
 
-  const visionResult = await callVision({ imageBase64, mimeType });
-  if (!visionResult.ok) {
+  // ── Stage 1: Primary Vision ────────────────────────────────────────────────
+  const s1Start = Date.now();
+  const primaryResult = await callVision({ imageBase64, mimeType, prompt: PRIMARY_PROMPT });
+
+  if (!primaryResult.ok) {
     const empty = emptyLessonPayload();
     return {
       visionEnabled: true,
       extraction_failed: true,
-      errorCode: visionResult.errorCode,
-      errorArabic: visionResult.errorArabic,
-      message: visionResult.errorArabic,
+      errorCode: primaryResult.errorCode,
+      errorArabic: primaryResult.errorArabic,
+      message: primaryResult.errorArabic,
       extracted: empty,
       extracted_text: "",
       parsed_fields: empty,
@@ -335,39 +555,112 @@ export async function extractLessonFromImage({ imageBase64, mimeType = "image/jp
       aiSuggestions: [],
       validation: validateLessonDraft(empty),
       missing_fields: buildMissingFields(empty),
+      failure_reasons: { _global: primaryResult.errorArabic },
+      debug_log: {
+        stages: [{ stage: "primary_vision", ok: false, error: primaryResult.errorCode, ms: primaryResult.ms }],
+        total_ms: Date.now() - pipelineStart,
+      },
       rawVision: "",
     };
   }
 
-  const visionText = visionResult.text || "";
-  const extracted = parseJson(visionText) || { raw_ocr_text: visionText, title: "" };
+  const primaryText = primaryResult.text || "";
+  let primaryData = parseJson(primaryText) || { raw_ocr_text: primaryText };
 
-  // الإثراء اختياري — فشله لا يوقف العملية
-  let enriched = { corrected: extracted, suggestions: [] };
-  const enrichResult = await callText(ENRICH_PROMPT, extracted);
-  if (enrichResult.ok) {
-    enriched = parseJson(enrichResult.text) || enriched;
-  } else {
-    console.warn(`[lesson-extractor] enrich failed (non-fatal): ${enrichResult.errorCode}`);
+  debugStages.push({
+    stage: "primary_vision",
+    ok: true,
+    ms: Date.now() - s1Start,
+    fields_found: Object.keys(FIELD_WEIGHTS).filter((f) => String(primaryData[f] || "").trim()),
+    fields_missing: Object.keys(FIELD_WEIGHTS).filter((f) => !String(primaryData[f] || "").trim()),
+    raw_confidence: computeConfidenceScore(primaryData),
+  });
+
+  // ── Stage 2: Fallback Vision (if confidence < threshold) ──────────────────
+  let finalData = primaryData;
+  const primaryConfidence = computeConfidenceScore(primaryData);
+
+  if (primaryConfidence < FALLBACK_CONFIDENCE_THRESHOLD) {
+    const s2Start = Date.now();
+    const fallbackResult = await callVision({ imageBase64, mimeType, prompt: FALLBACK_PROMPT });
+
+    if (fallbackResult.ok) {
+      const fallbackData = parseJson(fallbackResult.text || "") || {};
+      finalData = mergeExtractions(primaryData, fallbackData);
+
+      debugStages.push({
+        stage: "fallback_vision",
+        ok: true,
+        ms: Date.now() - s2Start,
+        fields_recovered: Object.keys(FIELD_WEIGHTS).filter(
+          (f) => !String(primaryData[f] || "").trim() && String(fallbackData[f] || "").trim(),
+        ),
+        confidence_after_merge: computeConfidenceScore(finalData),
+      });
+    } else {
+      debugStages.push({ stage: "fallback_vision", ok: false, error: fallbackResult.errorCode, ms: Date.now() - s2Start });
+    }
   }
 
-  const merged = normalizePayload(extracted, enriched);
+  // ── Stage 3: DB Enrichment ────────────────────────────────────────────────
+  const currentConfidence = computeConfidenceScore(finalData);
+  if (currentConfidence < 0.85) {
+    finalData = await enrichFromDatabase(finalData, debugStages);
+  }
+
+  // ── Stage 4: Enrich (spelling + SEO) ─────────────────────────────────────
+  let enriched = { corrected: finalData, suggestions: [] };
+  const enrichResult = await callText(ENRICH_PROMPT, finalData);
+  if (enrichResult.ok) {
+    const parsed = parseJson(enrichResult.text);
+    if (parsed) enriched = parsed;
+  } else {
+    console.warn(`[lesson-extractor] enrich non-fatal: ${enrichResult.errorCode}`);
+  }
+
+  // ── Stage 5: Normalize + confidence ──────────────────────────────────────
+  const merged = normalizePayload(finalData, enriched);
+  const fieldConfidences = finalData.field_confidence || {};
+  const finalConfidence = computeConfidenceScore(merged);
   const validation = validateLessonDraft(merged);
+  const missing = buildMissingFields(merged);
+  const failureReasons = buildFailureReasons(merged, fieldConfidences);
+
+  debugStages.push({
+    stage: "final",
+    ok: true,
+    ms: Date.now() - pipelineStart,
+    confidence: finalConfidence,
+    missing_fields: missing,
+    failure_reasons: failureReasons,
+  });
+
+  const debugLog = {
+    stages: debugStages,
+    field_confidence: fieldConfidences,
+    failure_reasons: failureReasons,
+    raw_ocr_text: merged.raw_ocr_text || primaryText,
+    total_ms: Date.now() - pipelineStart,
+  };
 
   return {
     visionEnabled: true,
     extraction_failed: false,
     extracted: merged,
-    extracted_text: merged.raw_ocr_text || visionText,
+    extracted_text: merged.raw_ocr_text || primaryText,
     parsed_fields: merged,
-    confidence_score: Number(merged.confidence) || 0,
+    confidence_score: finalConfidence,
+    field_confidence: fieldConfidences,
+    failure_reasons: failureReasons,
     aiSuggestions: enriched.suggestions || [],
     validation,
-    missing_fields: buildMissingFields(merged),
-    rawVision: visionText,
+    missing_fields: missing,
+    rawVision: primaryText,
+    debug_log: debugLog,
   };
 }
 
+// ── Text extraction (URL-based) ───────────────────────────────────────────────
 export async function extractLessonFromText({ text, sourceUrl }) {
   if (!isVisionEnabled()) {
     const empty = { ...emptyLessonPayload(), description: text?.slice(0, 500) || "" };
@@ -376,8 +669,10 @@ export async function extractLessonFromText({ text, sourceUrl }) {
       message: "الاستخراج التلقائي غير مفعّل. يمكنك إدخال البيانات يدويًا.",
       extracted: empty,
       parsed_fields: empty,
+      confidence_score: 0,
       validation: validateLessonDraft(empty),
       missing_fields: buildMissingFields(empty),
+      failure_reasons: buildFailureReasons(empty),
     };
   }
 
@@ -389,12 +684,11 @@ export async function extractLessonFromText({ text, sourceUrl }) {
       messages: [
         {
           role: "user",
-          content: `${EXTRACTION_PROMPT}\n\nالمصدر: ${sourceUrl || ""}\n\nالنص:\n${text}`,
+          content: `${PRIMARY_PROMPT}\n\nالمصدر: ${sourceUrl || ""}\n\nالنص:\n${text}`,
         },
       ],
     });
-    const block = response.content?.find((b) => b.type === "text");
-    return block?.text || "";
+    return response.content?.find((b) => b.type === "text")?.text || "";
   }, "extractFromText");
 
   if (!result.ok) {
@@ -407,18 +701,25 @@ export async function extractLessonFromText({ text, sourceUrl }) {
       message: result.errorArabic,
       extracted: empty,
       parsed_fields: empty,
+      confidence_score: 0,
       validation: validateLessonDraft(empty),
       missing_fields: buildMissingFields(empty),
+      failure_reasons: buildFailureReasons(empty),
     };
   }
 
   const extracted = parseJson(result.text) || { title: "", description: text?.slice(0, 500) };
   const merged = normalizePayload(extracted, {});
+  const confidence = computeConfidenceScore(merged);
+
   return {
     visionEnabled: true,
     extraction_failed: false,
     extracted: merged,
     parsed_fields: merged,
+    confidence_score: confidence,
+    field_confidence: extracted.field_confidence || {},
+    failure_reasons: buildFailureReasons(merged, extracted.field_confidence || {}),
     aiSuggestions: [],
     validation: validateLessonDraft(merged),
     missing_fields: buildMissingFields(merged),

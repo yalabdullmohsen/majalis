@@ -122,6 +122,29 @@ export type ParsedLessonFields = {
   source_url?: string;
 };
 
+export type DebugStage = {
+  stage: string;
+  ok?: boolean;
+  ms?: number;
+  fields_found?: string[];
+  fields_missing?: string[];
+  fields_recovered?: string[];
+  fields_filled?: string[];
+  sources?: Record<string, string>;
+  error?: string;
+  confidence?: number;
+  raw_confidence?: number;
+  confidence_after_merge?: number;
+};
+
+export type DebugLog = {
+  stages: DebugStage[];
+  field_confidence?: Record<string, number>;
+  failure_reasons?: Record<string, string>;
+  raw_ocr_text?: string;
+  total_ms?: number;
+};
+
 export type LessonImportResponse = {
   ok: boolean;
   error?: string;
@@ -130,6 +153,9 @@ export type LessonImportResponse = {
   extracted_text?: string;
   parsed_fields?: ParsedLessonFields;
   confidence_score?: number;
+  field_confidence?: Record<string, number>;
+  failure_reasons?: Record<string, string>;
+  debug_log?: DebugLog | null;
   warnings?: { field: string; message: string }[];
   missing_fields?: string[];
   suggested_sheikh_match?: {

@@ -9,6 +9,7 @@ import {
   reExtractLessonImportDraft,
   rejectLessonImportDraft,
   saveLessonImportDraft,
+  type DebugLog,
   type ParsedLessonFields,
 } from "@/lib/lesson-import-api";
 import { C, GOVERNORATES } from "@/lib/theme";
@@ -51,14 +52,88 @@ function MissingBadge({ fields }: { fields: string[] }) {
   if (!fields.length) {
     return (
       <span style={{ padding: "0.25rem 0.625rem", borderRadius: "999px", background: "#D1FAE5", color: C.emeraldDeep, fontSize: "0.75rem" }}>
-        البيانات الأساسية مكتملة
+        ✓ البيانات الأساسية مكتملة
       </span>
     );
   }
   return (
     <span style={{ padding: "0.25rem 0.625rem", borderRadius: "999px", background: "#FEE2E2", color: "#991B1B", fontSize: "0.75rem" }}>
-      حقول ناقصة: {fields.map((f) => FIELD_LABELS[f] || f).join("، ")}
+      ✗ تحتاج مراجعة: {fields.map((f) => FIELD_LABELS[f] || f).join("، ")}
     </span>
+  );
+}
+
+const KEY_FIELDS: Array<keyof typeof FIELD_LABELS> = ["title", "speaker_name", "day_of_week", "lesson_time", "mosque", "city"];
+
+function FieldStatusGrid({
+  parsed,
+  fieldConfidence,
+  failureReasons,
+}: {
+  parsed: ParsedLessonFields;
+  fieldConfidence: Record<string, number>;
+  failureReasons: Record<string, string>;
+}) {
+  return (
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: "0.4rem", marginBottom: "0.75rem" }}>
+      {KEY_FIELDS.map((field) => {
+        const val = String((parsed as Record<string, unknown>)[field] || "").trim();
+        const conf = fieldConfidence[field] ?? (val ? 1 : 0);
+        const reason = failureReasons[field];
+        const isOk = val && conf >= 0.5;
+        const isWarn = val && conf < 0.5;
+        const isMissing = !val;
+        const bg = isOk ? "#D1FAE5" : isWarn ? "#FEF3C7" : "#FEE2E2";
+        const color = isOk ? C.emeraldDeep : isWarn ? "#92400E" : "#991B1B";
+        const icon = isOk ? "✓" : isWarn ? "⚠" : "✗";
+        return (
+          <div key={field} style={{ background: bg, border: `1px solid ${color}30`, borderRadius: "0.375rem", padding: "0.35rem 0.6rem" }} title={reason || val || "غير موجود"}>
+            <div style={{ fontSize: "0.65rem", color, fontWeight: 700 }}>{icon} {FIELD_LABELS[field] || field}</div>
+            <div style={{ fontSize: "0.72rem", color: "#374151", marginTop: "0.15rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+              {isMissing ? (reason || "لم يُستخرج") : val}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+function DebugLogPanel({ log }: { log: DebugLog }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div style={{ background: "#F1F5F9", border: "1px solid #CBD5E1", borderRadius: "0.5rem", marginBottom: "0.75rem" }}>
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        style={{ width: "100%", background: "none", border: "none", padding: "0.5rem 0.75rem", textAlign: "right", cursor: "pointer", fontFamily: "inherit", fontSize: "0.8rem", color: "#475569", display: "flex", justifyContent: "space-between" }}
+      >
+        <span>تفاصيل الاستخراج (Debug) — {log.total_ms ?? 0} ms</span>
+        <span>{open ? "▲" : "▼"}</span>
+      </button>
+      {open && (
+        <div style={{ padding: "0.5rem 0.75rem", borderTop: "1px solid #CBD5E1", fontSize: "0.75rem", direction: "ltr" }}>
+          {log.stages.map((s, i) => (
+            <div key={i} style={{ marginBottom: "0.5rem", padding: "0.4rem", background: s.ok === false ? "#FEE2E2" : "#fff", borderRadius: "0.25rem", border: "1px solid #E2E8F0" }}>
+              <strong>{s.stage}</strong>
+              {s.ms != null && <span style={{ color: "#64748B", marginRight: "0.5rem" }}>({s.ms}ms)</span>}
+              {s.error && <span style={{ color: "#DC2626" }}> ✗ {s.error}</span>}
+              {s.fields_found?.length ? <div style={{ color: "#16A34A" }}>✓ {s.fields_found.join(", ")}</div> : null}
+              {s.fields_missing?.length ? <div style={{ color: "#DC2626" }}>✗ missing: {s.fields_missing.join(", ")}</div> : null}
+              {s.fields_recovered?.length ? <div style={{ color: "#2563EB" }}>↑ recovered: {s.fields_recovered.join(", ")}</div> : null}
+              {s.fields_filled?.length ? <div style={{ color: "#7C3AED" }}>DB: {s.fields_filled.join(", ")}</div> : null}
+              {s.raw_confidence != null && <div style={{ color: "#64748B" }}>confidence: {Math.round(s.raw_confidence * 100)}%</div>}
+            </div>
+          ))}
+          {log.raw_ocr_text && (
+            <details style={{ marginTop: "0.5rem" }}>
+              <summary style={{ cursor: "pointer", color: "#475569" }}>raw_ocr_text</summary>
+              <pre style={{ whiteSpace: "pre-wrap", fontSize: "0.7rem", marginTop: "0.25rem", direction: "rtl", color: "#1E293B" }}>{log.raw_ocr_text}</pre>
+            </details>
+          )}
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -229,6 +304,9 @@ function LessonImportImageContent() {
   const [confidence, setConfidence] = useState(0);
   const [missingFields, setMissingFields] = useState<string[]>([]);
   const [warnings, setWarnings] = useState<{ field: string; message: string }[]>([]);
+  const [fieldConfidence, setFieldConfidence] = useState<Record<string, number>>({});
+  const [failureReasons, setFailureReasons] = useState<Record<string, string>>({});
+  const [debugLog, setDebugLog] = useState<DebugLog | null>(null);
   const [sheikhHint, setSheikhHint] = useState("");
   const [sourceUrl, setSourceUrl] = useState("");
   const [notes, setNotes] = useState("");
@@ -245,6 +323,9 @@ function LessonImportImageContent() {
     if (res.confidence_score != null) setConfidence(res.confidence_score);
     if (res.missing_fields) setMissingFields(res.missing_fields);
     if (res.warnings) setWarnings(res.warnings as { field: string; message: string }[]);
+    if (res.field_confidence) setFieldConfidence(res.field_confidence);
+    if (res.failure_reasons) setFailureReasons(res.failure_reasons);
+    if (res.debug_log !== undefined) setDebugLog(res.debug_log ?? null);
     const match = res.suggested_sheikh_match;
     if (match?.matched?.name) {
       setSheikhHint(`مطابقة: ${match.matched.name}`);
@@ -446,7 +527,7 @@ function LessonImportImageContent() {
 
       {hasDraft && (
         <>
-          <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1rem" }}>
+          <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "0.75rem" }}>
             <ConfidenceBadge score={confidence} />
             <MissingBadge fields={missingFields} />
             {sheikhHint && (
@@ -455,6 +536,9 @@ function LessonImportImageContent() {
               </span>
             )}
           </div>
+
+          <FieldStatusGrid parsed={parsed} fieldConfidence={fieldConfidence} failureReasons={failureReasons} />
+          {debugLog && <DebugLogPanel log={debugLog} />}
 
           <div style={{ display: "grid", gap: "1rem", gridTemplateColumns: "minmax(240px, 1fr) minmax(280px, 2fr)", marginBottom: "1rem" }}>
             <section style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.625rem", padding: "1rem" }}>
