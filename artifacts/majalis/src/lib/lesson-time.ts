@@ -202,6 +202,13 @@ function kuwaitDateAt(dayOffset: number, minutes: number, base = new Date()): Da
  * 3. إذا كان الدرس في يوم آخر → أقرب تكرار له.
  */
 export function computeNextOccurrenceMs(day: string, time: string, now = new Date()): number {
+  // دعم الأيام المتعددة المفصولة بـ ، — يُعاد أقرب تكرار قادم
+  if (day.includes("،")) {
+    const days = day.split("،").map(d => d.trim()).filter(Boolean);
+    const occurrences = days.map(d => computeNextOccurrenceMs(d, time, now));
+    return Math.min(...occurrences);
+  }
+
   const targetDay = DAY_INDEX[day];
   if (targetDay == null) {
     // يوم غير معروف → إعادة قيمة بعيدة

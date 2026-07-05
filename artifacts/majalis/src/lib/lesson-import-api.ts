@@ -94,6 +94,7 @@ export type ParsedLessonFields = {
   start_date?: string;
   day_of_week?: string;
   lesson_time?: string;
+  venue_type?: string;
   mosque?: string;
   region?: string;
   city?: string;
@@ -276,9 +277,10 @@ export const FIELD_LABELS: Record<string, string> = {
   speaker_name: "اسم الشيخ",
   gregorian_date: "التاريخ الميلادي",
   start_date: "تاريخ البداية",
-  day_of_week: "اليوم",
+  day_of_week: "أيام الدرس",
   lesson_time: "الوقت",
-  mosque: "المسجد",
+  venue_type: "نوع المكان",
+  mosque: "اسم المكان",
   region: "المنطقة",
   city: "المحافظة",
   country: "الدولة",
@@ -305,6 +307,7 @@ export const EMPTY_PARSED: ParsedLessonFields = {
   gregorian_date: "",
   day_of_week: "",
   lesson_time: "",
+  venue_type: "مسجد",
   mosque: "",
   region: "",
   city: "العاصمة",

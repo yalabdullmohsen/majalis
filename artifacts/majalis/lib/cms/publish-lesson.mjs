@@ -20,7 +20,12 @@ function mapDraftToLesson(extracted, opts = {}) {
     speaker_name: d.speaker_name || d.sheikh_name || null,
     sheikh_id: opts.sheikhId || null,
     mosque_id: opts.mosqueId || null,
-    mosque: d.mosque || d.location || null,
+    mosque: (() => {
+      const name = (d.mosque || d.location || "").trim();
+      const type = (d.venue_type || "").trim();
+      if (type && type !== "مسجد" && name) return `${type} — ${name}`;
+      return name || null;
+    })(),
     city: d.city || d.governorate || "العاصمة",
     region: d.region || null,
     country: d.country || "الكويت",

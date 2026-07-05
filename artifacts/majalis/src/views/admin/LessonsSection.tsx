@@ -11,6 +11,8 @@ import { AdminModal, Field, FieldRow, inputSt, selectSt, textareaSt } from "./Ad
 import { BulkImport } from "./BulkImport";
 
 const CATEGORIES = ["تفسير", "فقه", "عقيدة", "حديث", "سيرة", "تجويد", "أخرى"];
+const VENUE_TYPES = ["مسجد", "مجلس", "ديوان", "مزرعة", "استراحة", "مركز", "جامعة", "أخرى"] as const;
+const WEEK_DAYS   = ["السبت", "الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة"] as const;
 
 // كلمات تدل على موضوع/عنوان وليس اسم شيخ
 const TOPIC_HINT_RE = /^(فضل|حكم|أحكام|شرح|تفسير|أصول|أحاديث|السيرة|الفقه|العقيدة|كتاب|موضوع|بحث|أهمية|منهج|آداب|مسائل|فوائد|دروس|حقوق|واجبات|أساسيات)/u;
@@ -19,6 +21,18 @@ function looksLikeTopic(name: string): boolean {
   if (!name.trim()) return false;
   return TOPIC_HINT_RE.test(name.trim());
 }
+
+/** استخراج نوع المكان واسمه من قيمة حقل mosque المخزَّنة */
+function parseVenueFromMosque(mosque: string): { type: string; name: string } {
+  const raw = (mosque || "").trim();
+  for (const t of VENUE_TYPES) {
+    if (t !== "مسجد" && raw.startsWith(`${t} — `)) {
+      return { type: t, name: raw.slice(t.length + 3) };
+    }
+  }
+  return { type: "مسجد", name: raw };
+}
+
 const AUDIENCE = ["الكل", "رجال", "نساء", "أطفال"];
 const DELIVERY = ["حضور فقط", "بث مباشر", "كلاهما"];
 const STATUSES: Record<string, string> = { approved: "معتمد", pending: "معلّق", rejected: "مرفوض" };
@@ -31,6 +45,7 @@ const EMPTY: any = {
   title: "",
   sheikh_id: "",
   speaker_name: "",
+  venue_type: "مسجد",
   mosque: "",
   city: "العاصمة",
   region: "",
@@ -38,7 +53,7 @@ const EMPTY: any = {
   audience: "الكل",
   delivery: "حضور فقط",
   schedule: "",
-  day_of_week: "",
+  days_of_week: [] as string[],
   lesson_time: "",
   description: "",
   end_date: "",
@@ -104,10 +119,12 @@ export function LessonsSection() {
     delete rest.sheikhs;
     const rawTime = item.lesson_time || "";
     const hhmm = toHHMM(rawTime);
-    // نحفظ القيمة الأصلية فقط إذا كانت نصاً وليست HH:MM
     const needsConversion = rawTime && !/^\d{1,2}:\d{2}$/.test(rawTime.trim());
     setOrigTime(needsConversion ? rawTime : null);
-    setForm({ ...EMPTY, ...rest, sheikh_id: item.sheikh_id || "", lesson_time: hhmm });
+    const { type: venueType, name: venueName } = parseVenueFromMosque(item.mosque || "");
+    const storedDays = (item.day_of_week || "").trim();
+    const daysArr = storedDays ? storedDays.split("،").map((d: string) => d.trim()).filter(Boolean) : [];
+    setForm({ ...EMPTY, ...rest, sheikh_id: item.sheikh_id || "", lesson_time: hhmm, venue_type: venueType, mosque: venueName, days_of_week: daysArr });
     setOpen(true);
   };
   const handleDelete = async (id: string, title: string) => {
@@ -128,15 +145,26 @@ export function LessonsSection() {
   const handleSave = async () => {
     if (!form.title.trim()) return alert("عنوان الدرس مطلوب");
     setSaving(true);
+    // دمج نوع المكان مع اسمه في حقل mosque
+    const venueName = (form.mosque || "").trim();
+    const combinedMosque = form.venue_type && form.venue_type !== "مسجد" && venueName
+      ? `${form.venue_type} — ${venueName}`
+      : venueName;
+    // تحويل مصفوفة الأيام إلى نص مفصول بـ ،
+    const dayOfWeek = Array.isArray(form.days_of_week) && form.days_of_week.length > 0
+      ? form.days_of_week.join("،")
+      : "";
+    const { venue_type: _vt, days_of_week: _dw, ...rest } = form;
     const payload = {
-      ...form,
+      ...rest,
       title: sanitizeText(form.title, 500),
       speaker_name: sanitizeText(form.speaker_name, 200),
       description: sanitizeText(form.description, 8000),
-      mosque: sanitizeText(form.mosque, 400),
+      mosque: sanitizeText(combinedMosque, 400),
       region: sanitizeText(form.region, 400),
       schedule: sanitizeText(form.schedule, 300),
       sheikh_id: form.sheikh_id || null,
+      day_of_week: dayOfWeek,
     };
     const { error } = await adminUpsertLesson(payload);
     setSaving(false);
@@ -313,9 +341,16 @@ export function LessonsSection() {
             </select>
           </Field>
         </FieldRow>
-        <Field label="المسجد / المكان">
-          <input style={inputSt} value={form.mosque || ""} onChange={e => set("mosque", e.target.value)} placeholder="اسم المسجد أو المركز" />
-        </Field>
+        <FieldRow>
+          <Field label="نوع المكان">
+            <select style={selectSt} value={form.venue_type || "مسجد"} onChange={e => set("venue_type", e.target.value)}>
+              {VENUE_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
+            </select>
+          </Field>
+          <Field label="اسم المكان">
+            <input style={inputSt} value={form.mosque || ""} onChange={e => set("mosque", e.target.value)} placeholder={form.venue_type === "مسجد" ? "مسجد الرحمة" : form.venue_type === "ديوان" ? "ديوان آل فلان" : form.venue_type === "مجلس" ? "مجلس الشيخ فلان" : "اسم المكان"} />
+          </Field>
+        </FieldRow>
         <FieldRow>
           <Field label="المنطقة">
             <input style={inputSt} value={form.region || ""} onChange={e => set("region", e.target.value)} placeholder="مثال: الصديق" />
@@ -341,19 +376,35 @@ export function LessonsSection() {
             </select>
           </Field>
         </FieldRow>
-        <FieldRow>
-          <Field label="اليوم">
-            <select style={selectSt} value={form.day_of_week || ""} onChange={e => set("day_of_week", e.target.value)}>
-              <option value="">اختر اليوم</option>
-              {["السبت", "الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة"].map(d => (
-                <option key={d} value={d}>{d}</option>
-              ))}
-            </select>
-          </Field>
-          <Field label="تاريخ الانتهاء (اختياري)">
-            <input type="date" style={inputSt} value={form.end_date || ""} onChange={e => set("end_date", e.target.value || null)} />
-          </Field>
-        </FieldRow>
+        <Field label="أيام الدرس (يمكن اختيار أكثر من يوم)">
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem 1rem", padding: "0.5rem 0" }}>
+            {WEEK_DAYS.map(d => {
+              const selected = Array.isArray(form.days_of_week) && form.days_of_week.includes(d);
+              return (
+                <label key={d} style={{ display: "flex", alignItems: "center", gap: "0.35rem", cursor: "pointer", fontSize: "0.875rem", color: selected ? C.emeraldDeep : C.ink, fontWeight: selected ? 700 : 400 }}>
+                  <input
+                    type="checkbox"
+                    checked={selected}
+                    onChange={e => {
+                      const cur: string[] = Array.isArray(form.days_of_week) ? form.days_of_week : [];
+                      set("days_of_week", e.target.checked ? [...cur, d] : cur.filter(x => x !== d));
+                    }}
+                    style={{ accentColor: C.emerald, width: "1rem", height: "1rem" }}
+                  />
+                  {d}
+                </label>
+              );
+            })}
+          </div>
+          {Array.isArray(form.days_of_week) && form.days_of_week.length > 1 && (
+            <div style={{ marginTop: "0.35rem", fontSize: "0.75rem", color: C.inkSoft }}>
+              الدرس يتكرر كل: {form.days_of_week.join(" و")}
+            </div>
+          )}
+        </Field>
+        <Field label="تاريخ الانتهاء (اختياري)">
+          <input type="date" style={inputSt} value={form.end_date || ""} onChange={e => set("end_date", e.target.value || null)} />
+        </Field>
         <FieldRow>
           <Field label="الجدول الزمني">
             <input style={inputSt} value={form.schedule || ""} onChange={e => set("schedule", e.target.value)} placeholder="كل اثنين بعد العشاء" />

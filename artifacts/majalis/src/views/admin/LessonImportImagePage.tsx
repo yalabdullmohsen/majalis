@@ -16,6 +16,8 @@ import { Loading } from "@/components/ui-common";
 import { AdminShell, useAdminShell } from "@/views/admin/AdminShell";
 
 const CATEGORIES = ["تفسير", "فقه", "عقيدة", "حديث", "سيرة", "تجويد", "أخرى"];
+const VENUE_TYPES = ["مسجد", "مجلس", "ديوان", "مزرعة", "استراحة", "مركز", "جامعة", "أخرى"] as const;
+const WEEK_DAYS = ["السبت", "الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة"] as const;
 
 const inputStyle: React.CSSProperties = {
   width: "100%",
@@ -87,17 +89,48 @@ function LessonImportForm({
         <label style={labelStyle}>{FIELD_LABELS.gregorian_date}</label>
         <input type="date" style={inputStyle} value={parsed.gregorian_date || parsed.start_date || ""} disabled={disabled} onChange={(e) => { set("gregorian_date", e.target.value); set("start_date", e.target.value); }} />
       </div>
-      <div>
-        <label style={labelStyle}>{FIELD_LABELS.day_of_week}</label>
-        <input style={inputStyle} value={parsed.day_of_week || ""} disabled={disabled} onChange={(e) => set("day_of_week", e.target.value)} placeholder="مثل: الجمعة" />
+      <div style={{ gridColumn: "1 / -1" }}>
+        <label style={labelStyle}>{FIELD_LABELS.day_of_week} (اختر يوماً أو أكثر)</label>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem 1rem", padding: "0.4rem 0" }}>
+          {WEEK_DAYS.map(d => {
+            const selected = (parsed.day_of_week || "").split("،").map(x => x.trim()).includes(d);
+            return (
+              <label key={d} style={{ display: "flex", alignItems: "center", gap: "0.3rem", cursor: disabled ? "default" : "pointer", fontSize: "0.875rem", fontWeight: selected ? 700 : 400, color: selected ? C.emeraldDeep : C.ink }}>
+                <input
+                  type="checkbox"
+                  disabled={disabled}
+                  checked={selected}
+                  onChange={e => {
+                    const cur = (parsed.day_of_week || "").split("،").map(x => x.trim()).filter(Boolean);
+                    const next = e.target.checked ? [...cur, d] : cur.filter(x => x !== d);
+                    set("day_of_week", next.join("،"));
+                  }}
+                  style={{ accentColor: C.emerald, width: "1rem", height: "1rem" }}
+                />
+                {d}
+              </label>
+            );
+          })}
+        </div>
+        {(parsed.day_of_week || "").includes("،") && (
+          <div style={{ fontSize: "0.75rem", color: C.inkSoft, marginTop: "0.25rem" }}>
+            يتكرر كل: {(parsed.day_of_week || "").split("،").join(" و")}
+          </div>
+        )}
       </div>
       <div>
         <label style={labelStyle}>{FIELD_LABELS.lesson_time}</label>
         <input style={inputStyle} value={parsed.lesson_time || ""} disabled={disabled} onChange={(e) => set("lesson_time", e.target.value)} placeholder="مثل: بعد العشاء" />
       </div>
       <div>
+        <label style={labelStyle}>{FIELD_LABELS.venue_type}</label>
+        <select style={inputStyle} value={parsed.venue_type || "مسجد"} disabled={disabled} onChange={(e) => set("venue_type", e.target.value)}>
+          {VENUE_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
+        </select>
+      </div>
+      <div>
         <label style={labelStyle}>{FIELD_LABELS.mosque}</label>
-        <input style={inputStyle} value={parsed.mosque || ""} disabled={disabled} onChange={(e) => set("mosque", e.target.value)} />
+        <input style={inputStyle} value={parsed.mosque || ""} disabled={disabled} onChange={(e) => set("mosque", e.target.value)} placeholder={parsed.venue_type === "ديوان" ? "ديوان آل فلان" : parsed.venue_type === "مجلس" ? "مجلس الشيخ فلان" : "اسم المكان"} />
       </div>
       <div>
         <label style={labelStyle}>{FIELD_LABELS.region}</label>

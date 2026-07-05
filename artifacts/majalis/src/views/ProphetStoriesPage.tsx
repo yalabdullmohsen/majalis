@@ -2,6 +2,9 @@
 
 import { useState, useCallback, useEffect, useRef } from "react";
 import { PROPHETS, getProphet, searchProphets, type ProphetRecord } from "@/lib/prophets-data";
+import { supabase } from "@/lib/supabase";
+
+type Citation = { surah: string; ayahs: string; note: string };
 
 // ── Palette & Helpers ────────────────────────────────────────────────────────
 
@@ -161,10 +164,27 @@ function ProphetDetailView({
 }) {
   const p = getProphet(slug);
   const [fontSize, setFontSize] = useState(16);
+  const [dbStory, setDbStory] = useState<{ content: string; citations: Citation[] } | null>(null);
+  const [dbLoading, setDbLoading] = useState(true);
   const prevProphet = p && p.id > 1 ? PROPHETS[p.id - 2] : null;
   const nextProphet = p && p.id < PROPHETS.length ? PROPHETS[p.id] : null;
 
   useEffect(() => { window.scrollTo({ top: 0, behavior: "smooth" }); }, [slug]);
+
+  useEffect(() => {
+    setDbStory(null);
+    setDbLoading(true);
+    supabase
+      .from("prophet_stories")
+      .select("content, citations")
+      .eq("slug", slug)
+      .eq("is_approved", true)
+      .maybeSingle()
+      .then(({ data }) => {
+        setDbStory(data ?? null);
+        setDbLoading(false);
+      });
+  }, [slug]);
 
   if (!p) {
     return (
@@ -314,6 +334,40 @@ function ProphetDetailView({
             ))}
           </div>
         </section>
+
+        {/* القصة الكاملة — تُعرض فقط إذا كانت معتمدة في قاعدة البيانات */}
+        {!dbLoading && dbStory?.content && (
+          <section className="prophet-section-lux">
+            <div className="prophet-section-lux__header">
+              <IslamicStar size={22} color={color} />
+              <h2 className="prophet-section-lux__title">القصة الكاملة</h2>
+            </div>
+            <div className="prophet-db-story">
+              {dbStory.content.split("\n").filter(Boolean).map((para, i) => (
+                <p key={i} className="prophet-section-lux__text" style={{ marginBottom: "1rem" }}>{para}</p>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* الاستشهادات القرآنية */}
+        {!dbLoading && dbStory?.citations && dbStory.citations.length > 0 && (
+          <section className="prophet-section-lux">
+            <div className="prophet-section-lux__header">
+              <IslamicStar size={22} color={color} />
+              <h2 className="prophet-section-lux__title">الاستشهادات القرآنية</h2>
+            </div>
+            <div className="prophet-citations">
+              {dbStory.citations.map((c, i) => (
+                <div key={i} className="prophet-citation-card">
+                  <span className="prophet-citation-card__surah">سورة {c.surah}</span>
+                  {c.ayahs && <span className="prophet-citation-card__ayahs">الآيات: {c.ayahs}</span>}
+                  {c.note && <p className="prophet-citation-card__note">{c.note}</p>}
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* مصدر المعلومات */}
         <footer className="prophet-story-lux__footer">
@@ -1122,6 +1176,39 @@ const PROPHETS_CSS = `
   border-top: 1px solid ${GOLD}20;
   color: #888;
   font-size: 0.82rem;
+}
+
+/* ── DB Story & Citations ── */
+.prophet-db-story { margin-top: 0.25rem; }
+.prophet-citations {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.prophet-citation-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid ${GOLD}25;
+  border-radius: 10px;
+  padding: 0.85rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.prophet-citation-card__surah {
+  font-family: 'Amiri', serif;
+  font-size: 1rem;
+  color: ${GOLD_LIGHT};
+  font-weight: 600;
+}
+.prophet-citation-card__ayahs {
+  font-size: 0.8rem;
+  color: #aaa;
+}
+.prophet-citation-card__note {
+  font-size: 0.88rem;
+  color: #d0d0c8;
+  line-height: 1.7;
+  margin: 0.25rem 0 0;
 }
 
 /* ── Nav ── */

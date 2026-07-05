@@ -299,7 +299,7 @@ export function filterKuwaitLessons(
     if (filters.sheikh !== "كل المشايخ" && sheikhNameKey(lesson.sheikhName) !== sheikhNameKey(filters.sheikh)) {
       return false;
     }
-    if (filters.day !== "الكل" && lesson.day !== filters.day) return false;
+    if (filters.day !== "الكل" && !lesson.day.split("،").map(d => d.trim()).includes(filters.day)) return false;
     if (filters.category !== "الكل" && lesson.category !== filters.category) return false;
     if (filters.activityType !== "الكل" && lesson.activityType !== filters.activityType) return false;
     if (filters.contentKind !== "الكل") {
