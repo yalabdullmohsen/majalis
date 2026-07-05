@@ -1,0 +1,1653 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: 01-smoke.spec.ts >> Smoke — صفحات عامة >> [/lessons] — الدروس
+- Location: tests/01-smoke.spec.ts:41:5
+
+# Error details
+
+```
+Test timeout of 30000ms exceeded.
+```
+
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - link "تخطّي إلى المحتوى" [ref=e4] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=e5]:
+    - generic [ref=e6]:
+      - generic [ref=e7]:
+        - button "القائمة" [ref=e8] [cursor=pointer]:
+          - img [ref=e9]
+          - generic [ref=e11]: القائمة
+        - link "المجلس العلمي" [ref=e12] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e13]: المجلس العلمي
+      - button "البحث الشامل (⌘K)" [ref=e15] [cursor=pointer]:
+        - img [ref=e16]
+        - generic [ref=e19]: ⌘K
+  - main [ref=e20]:
+    - generic [ref=e21]:
+      - img
+      - generic [ref=e22]:
+        - paragraph [ref=e23]: المجلس العلمي
+        - heading "الدروس" [level=1] [ref=e24]
+        - paragraph [ref=e25]: جميع الدروس والدورات العلمية — مرتّبة حسب أقرب موعد.
+      - generic [ref=e26]:
+        - tablist "تبويبات الدروس" [ref=e27]:
+          - tab "الكل" [selected] [ref=e28] [cursor=pointer]
+          - tab "الدروس الرجالية" [ref=e29] [cursor=pointer]
+          - tab "الدروس النسائية" [ref=e30] [cursor=pointer]
+          - tab "دورات" [ref=e31] [cursor=pointer]
+        - button "فتح التصفية" [ref=e32] [cursor=pointer]: تصفية وبحث
+      - main [ref=e34]:
+        - generic [ref=e35]:
+          - heading "الأقرب موعدًا" [level=2] [ref=e36]
+          - generic [ref=e37]:
+            - article [ref=e39]:
+              - generic [ref=e40]:
+                - generic [ref=e41]: تأصيل
+                - generic [ref=e42]: بعد 50 دقيقة
+              - generic [ref=e43]:
+                - generic [ref=e44]:
+                  - 'img "الشيخ: محمد سليمان الأجراح" [ref=e46]'
+                  - generic [ref=e47]:
+                    - heading "دورة الشيخ الأجراح العلمية الثالثة شرح كتاب التوحيد د.مطلق الجاسر (7/5 7/8)" [level=3] [ref=e48]
+                    - paragraph [ref=e49]: "الشيخ: محمد سليمان الأجراح"
+                - generic [ref=e50]:
+                  - generic [ref=e51]: بث مباشر
+                  - generic [ref=e52]: 4 لقاءات
+                - generic [ref=e53]:
+                  - generic [ref=e54]:
+                    - generic [ref=e55]: نوع النشاط
+                    - strong [ref=e56]: دورة
+                  - generic [ref=e57]:
+                    - generic [ref=e58]: اليوم
+                    - strong [ref=e59]: الأحد
+                  - generic [ref=e60]:
+                    - generic [ref=e61]: التاريخ
+                    - strong [ref=e62]: الأحد، ٥ يوليو ٢٠٢٦
+                  - generic [ref=e63]:
+                    - generic [ref=e64]: التاريخ الهجري
+                    - strong [ref=e65]: ٢٠ محرم ١٤٤٨ هـ
+                  - generic [ref=e66]:
+                    - generic [ref=e67]: الوقت
+                    - strong [ref=e68]: بعد العصر
+                  - generic [ref=e69]:
+                    - generic [ref=e70]: المكان
+                    - strong [ref=e71]: مسجد موضى السور
+                  - generic [ref=e72]:
+                    - generic [ref=e73]: المنطقة
+                    - strong [ref=e74]: الصديق
+                  - generic [ref=e75]:
+                    - generic [ref=e76]: المحافظة
+                    - strong [ref=e77]: حولي
+                  - generic [ref=e78]:
+                    - generic [ref=e79]: الجلسات
+                    - strong [ref=e80]: شرح كتاب التوحيد د.مطلق الجاسر (7/5 7/8) · شرح تنبيه الفقيه وتفقيه النبيه الشيخ أسامة الشطي (7/12 7/15) · شرح فتح الرحيم الملك العلام د.عبدالمحسن المعيلي (7/19 7/22) · شرح متن الأجرومية الشيخ خالد العتيبي (7/26 7/29)
+                - paragraph [ref=e81]: "يوجد مكان للنساء للتسجيل: 51104812"
+                - generic [ref=e82]:
+                  - link "التفاصيل" [ref=e83] [cursor=pointer]:
+                    - /url: /lessons/kw-ajraa-murtaqa-course-3-0
+                  - button "مشاركة" [ref=e84] [cursor=pointer]
+                  - button "نسخ الرابط" [ref=e85] [cursor=pointer]
+                  - button "نسخ البيانات" [ref=e86] [cursor=pointer]
+                  - button "إضافة للمفضلة" [ref=e87] [cursor=pointer]: حفظ
+                  - button "إضافة للتقويم" [ref=e88] [cursor=pointer]
+            - article [ref=e90]:
+              - generic [ref=e91]:
+                - generic [ref=e92]: عقيدة
+                - generic [ref=e93]: بعد 5 ساعات
+              - generic [ref=e94]:
+                - generic [ref=e95]:
+                  - 'img "الشيخ: سالم بن سعد الطويل" [ref=e97]'
+                  - generic [ref=e98]:
+                    - heading "شرح كتاب التوحيد من صحيح البخاري" [level=3] [ref=e99]
+                    - paragraph [ref=e100]: "الشيخ: سالم بن سعد الطويل"
+                - generic [ref=e102]: بث مباشر
+                - generic [ref=e103]:
+                  - generic [ref=e104]:
+                    - generic [ref=e105]: نوع النشاط
+                    - strong [ref=e106]: درس
+                  - generic [ref=e107]:
+                    - generic [ref=e108]: اليوم
+                    - strong [ref=e109]: الأحد
+                  - generic [ref=e110]:
+                    - generic [ref=e111]: التاريخ
+                    - strong [ref=e112]: الأحد، ٥ يوليو ٢٠٢٦
+                  - generic [ref=e113]:
+                    - generic [ref=e114]: التاريخ الهجري
+                    - strong [ref=e115]: ٢٠ محرم ١٤٤٨ هـ
+                  - generic [ref=e116]:
+                    - generic [ref=e117]: الوقت
+                    - strong [ref=e118]: مساءً
+                  - generic [ref=e119]:
+                    - generic [ref=e120]: المكان
+                    - strong [ref=e121]: ديوان أحمد غربي الشمري
+                  - generic [ref=e122]:
+                    - generic [ref=e123]: المنطقة
+                    - strong [ref=e124]: جنوب عبدالله المبارك
+                - paragraph [ref=e125]: "المؤلف: العلامة محمد بن صالح العثيمين"
+                - generic [ref=e126]:
+                  - link "التفاصيل" [ref=e127] [cursor=pointer]:
+                    - /url: /lessons/kw-salem-altaweel-tawheed-bukhari-0
+                  - button "مشاركة" [ref=e128] [cursor=pointer]
+                  - button "نسخ الرابط" [ref=e129] [cursor=pointer]
+                  - button "نسخ البيانات" [ref=e130] [cursor=pointer]
+                  - button "إضافة للمفضلة" [ref=e131] [cursor=pointer]: حفظ
+                  - button "إضافة للتقويم" [ref=e132] [cursor=pointer]
+                  - link "رابط البث" [ref=e133] [cursor=pointer]:
+                    - /url: https://www.saltaweel.com
+            - article [ref=e135]:
+              - generic [ref=e136]:
+                - generic [ref=e137]: عقيدة
+                - generic [ref=e138]: بعد 6 ساعات
+              - generic [ref=e139]:
+                - generic [ref=e140]:
+                  - 'img "الشيخ: سالم بن سعد الطويل" [ref=e142]'
+                  - generic [ref=e143]:
+                    - heading "شرح كتاب التوحيد من صحيح البخاري" [level=3] [ref=e144]
+                    - paragraph [ref=e145]: "الشيخ: سالم بن سعد الطويل"
+                - generic [ref=e147]: بث مباشر
+                - generic [ref=e148]:
+                  - generic [ref=e149]:
+                    - generic [ref=e150]: نوع النشاط
+                    - strong [ref=e151]: درس
+                  - generic [ref=e152]:
+                    - generic [ref=e153]: اليوم
+                    - strong [ref=e154]: الأحد
+                  - generic [ref=e155]:
+                    - generic [ref=e156]: التاريخ
+                    - strong [ref=e157]: الأحد، ٥ يوليو ٢٠٢٦
+                  - generic [ref=e158]:
+                    - generic [ref=e159]: التاريخ الهجري
+                    - strong [ref=e160]: ٢٠ محرم ١٤٤٨ هـ
+                  - generic [ref=e161]:
+                    - generic [ref=e162]: الوقت
+                    - strong [ref=e163]: مساءً
+                  - generic [ref=e164]:
+                    - generic [ref=e165]: المكان
+                    - strong [ref=e166]: "ديوان: أحمد غربي الرمالي الشمري (أبو عبدالعزيز)"
+                  - generic [ref=e167]:
+                    - generic [ref=e168]: المنطقة
+                    - strong [ref=e169]: جنوب عبدالله المبارك
+                - paragraph [ref=e170]: "الدرس كل أحد. · توجد نسخ للحضور. · جميع الدروس تنقل عن طريق البث المباشر في حسابات الشيخ حفظه الله. · المتن: شرح كتاب التوحيد من صحيح البخاري"
+                - generic [ref=e171]:
+                  - link "التفاصيل" [ref=e172] [cursor=pointer]:
+                    - /url: /lessons/sci-tawheed-saltaweel
+                  - button "مشاركة" [ref=e173] [cursor=pointer]
+                  - button "نسخ الرابط" [ref=e174] [cursor=pointer]
+                  - button "نسخ البيانات" [ref=e175] [cursor=pointer]
+                  - button "إضافة للمفضلة" [ref=e176] [cursor=pointer]: حفظ
+                  - button "إضافة للتقويم" [ref=e177] [cursor=pointer]
+                  - link "رابط البث" [ref=e178] [cursor=pointer]:
+                    - /url: https://www.saltaweel.com
+            - article [ref=e180]:
+              - generic [ref=e181]:
+                - generic [ref=e182]: حديث
+                - generic [ref=e183]: بعد 15 ساعات
+              - generic [ref=e184]:
+                - generic [ref=e185]:
+                  - 'img "الشيخ: راشد صليهم فهد الصليهم" [ref=e187]'
+                  - generic [ref=e188]:
+                    - heading "الدورة العلمية التأصيلية بلوغ المرام قبل المغرب" [level=3] [ref=e189]
+                    - paragraph [ref=e190]: "الشيخ: راشد صليهم فهد الصليهم"
+                - generic [ref=e191]:
+                  - generic [ref=e192]: بث مباشر
+                  - generic [ref=e193]: 3 لقاءات
+                - generic [ref=e194]:
+                  - generic [ref=e195]:
+                    - generic [ref=e196]: نوع النشاط
+                    - strong [ref=e197]: درس
+                  - generic [ref=e198]:
+                    - generic [ref=e199]: اليوم
+                    - strong [ref=e200]: الاثنين
+                  - generic [ref=e201]:
+                    - generic [ref=e202]: التاريخ
+                    - strong [ref=e203]: الاثنين، ٦ يوليو ٢٠٢٦
+                  - generic [ref=e204]:
+                    - generic [ref=e205]: التاريخ الهجري
+                    - strong [ref=e206]: ٢١ محرم ١٤٤٨ هـ
+                  - generic [ref=e207]:
+                    - generic [ref=e208]: الوقت
+                    - strong [ref=e209]: 6:00م
+                  - generic [ref=e210]:
+                    - generic [ref=e211]: المكان
+                    - strong [ref=e212]: مسجد أبو واقد الليثي
+                  - generic [ref=e213]:
+                    - generic [ref=e214]: المنطقة
+                    - strong [ref=e215]: القيروان
+                  - generic [ref=e216]:
+                    - generic [ref=e217]: المحافظة
+                    - strong [ref=e218]: العاصمة
+                  - generic [ref=e219]:
+                    - generic [ref=e220]: الجلسات
+                    - strong [ref=e221]: بلوغ المرام قبل المغرب · القواعد المثلى المغرب · دعوى تعارض السنة مع العلم التجريبي بعد العشاء
+                - paragraph [ref=e222]: "ثلاثة دروس في جلسة واحدة كل اثنين: بلوغ المرام، القواعد المثلى في صفات الله وأسمائه الحسنى، ودعوى تعارض السنة مع العلم التجريبي."
+                - generic [ref=e223]:
+                  - link "التفاصيل" [ref=e224] [cursor=pointer]:
+                    - /url: /lessons/kw-rasid-alsolayhim-tasiliyya-0
+                  - button "مشاركة" [ref=e225] [cursor=pointer]
+                  - button "نسخ الرابط" [ref=e226] [cursor=pointer]
+                  - button "نسخ البيانات" [ref=e227] [cursor=pointer]
+                  - button "إضافة للمفضلة" [ref=e228] [cursor=pointer]: حفظ
+                  - button "إضافة للتقويم" [ref=e229] [cursor=pointer]
+        - generic [ref=e230]:
+          - heading "المميز — بث مباشر" [level=2] [ref=e231]
+          - generic [ref=e232]:
+            - article [ref=e234]:
+              - generic [ref=e235]:
+                - generic [ref=e236]: حديث
+                - generic [ref=e237]: بعد 16 ساعات
+              - generic [ref=e238]:
+                - generic [ref=e239]:
+                  - 'img "الشيخ: راشد صليهم فهد الصليهم" [ref=e241]'
+                  - generic [ref=e242]:
+                    - heading "الدورة العلمية التأصيلية القواعد المثلى المغرب" [level=3] [ref=e243]
+                    - paragraph [ref=e244]: "الشيخ: راشد صليهم فهد الصليهم"
+                - generic [ref=e245]:
+                  - generic [ref=e246]: بث مباشر
+                  - generic [ref=e247]: 3 لقاءات
+                - generic [ref=e248]:
+                  - generic [ref=e249]:
+                    - generic [ref=e250]: نوع النشاط
+                    - strong [ref=e251]: درس
+                  - generic [ref=e252]:
+                    - generic [ref=e253]: اليوم
+                    - strong [ref=e254]: الاثنين
+                  - generic [ref=e255]:
+                    - generic [ref=e256]: التاريخ
+                    - strong [ref=e257]: الاثنين، ٦ يوليو ٢٠٢٦
+                  - generic [ref=e258]:
+                    - generic [ref=e259]: التاريخ الهجري
+                    - strong [ref=e260]: ٢١ محرم ١٤٤٨ هـ
+                  - generic [ref=e261]:
+                    - generic [ref=e262]: الوقت
+                    - strong [ref=e263]: 7:20م
+                  - generic [ref=e264]:
+                    - generic [ref=e265]: المكان
+                    - strong [ref=e266]: مسجد أبو واقد الليثي
+                  - generic [ref=e267]:
+                    - generic [ref=e268]: المنطقة
+                    - strong [ref=e269]: القيروان
+                  - generic [ref=e270]:
+                    - generic [ref=e271]: المحافظة
+                    - strong [ref=e272]: العاصمة
+                  - generic [ref=e273]:
+                    - generic [ref=e274]: الجلسات
+                    - strong [ref=e275]: بلوغ المرام قبل المغرب · القواعد المثلى المغرب · دعوى تعارض السنة مع العلم التجريبي بعد العشاء
+                - paragraph [ref=e276]: "ثلاثة دروس في جلسة واحدة كل اثنين: بلوغ المرام، القواعد المثلى في صفات الله وأسمائه الحسنى، ودعوى تعارض السنة مع العلم التجريبي."
+                - generic [ref=e277]:
+                  - link "التفاصيل" [ref=e278] [cursor=pointer]:
+                    - /url: /lessons/kw-rasid-alsolayhim-tasiliyya-1
+                  - button "مشاركة" [ref=e279] [cursor=pointer]
+                  - button "نسخ الرابط" [ref=e280] [cursor=pointer]
+                  - button "نسخ البيانات" [ref=e281] [cursor=pointer]
+                  - button "إضافة للمفضلة" [ref=e282] [cursor=pointer]: حفظ
+                  - button "إضافة للتقويم" [ref=e283] [cursor=pointer]
+            - article [ref=e285]:
+              - generic [ref=e286]:
+                - generic [ref=e287]: حديث
+                - generic [ref=e288]: بعد 17 ساعات
+              - generic [ref=e289]:
+                - generic [ref=e290]:
+                  - 'img "الشيخ: راشد صليهم فهد الصليهم" [ref=e292]'
+                  - generic [ref=e293]:
+                    - heading "الدورة العلمية التأصيلية دعوى تعارض السنة مع العلم التجريبي بعد العشاء" [level=3] [ref=e294]
+                    - paragraph [ref=e295]: "الشيخ: راشد صليهم فهد الصليهم"
+                - generic [ref=e296]:
+                  - generic [ref=e297]: بث مباشر
+                  - generic [ref=e298]: 3 لقاءات
+                - generic [ref=e299]:
+                  - generic [ref=e300]:
+                    - generic [ref=e301]: نوع النشاط
+                    - strong [ref=e302]: درس
+                  - generic [ref=e303]:
+                    - generic [ref=e304]: اليوم
+                    - strong [ref=e305]: الاثنين
+                  - generic [ref=e306]:
+                    - generic [ref=e307]: التاريخ
+                    - strong [ref=e308]: الاثنين، ٦ يوليو ٢٠٢٦
+                  - generic [ref=e309]:
+                    - generic [ref=e310]: التاريخ الهجري
+                    - strong [ref=e311]: ٢١ محرم ١٤٤٨ هـ
+                  - generic [ref=e312]:
+                    - generic [ref=e313]: الوقت
+                    - strong [ref=e314]: 8:50م
+                  - generic [ref=e315]:
+                    - generic [ref=e316]: المكان
+                    - strong [ref=e317]: مسجد أبو واقد الليثي
+                  - generic [ref=e318]:
+                    - generic [ref=e319]: المنطقة
+                    - strong [ref=e320]: القيروان
+                  - generic [ref=e321]:
+                    - generic [ref=e322]: المحافظة
+                    - strong [ref=e323]: العاصمة
+                  - generic [ref=e324]:
+                    - generic [ref=e325]: الجلسات
+                    - strong [ref=e326]: بلوغ المرام قبل المغرب · القواعد المثلى المغرب · دعوى تعارض السنة مع العلم التجريبي بعد العشاء
+                - paragraph [ref=e327]: "ثلاثة دروس في جلسة واحدة كل اثنين: بلوغ المرام، القواعد المثلى في صفات الله وأسمائه الحسنى، ودعوى تعارض السنة مع العلم التجريبي."
+                - generic [ref=e328]:
+                  - link "التفاصيل" [ref=e329] [cursor=pointer]:
+                    - /url: /lessons/kw-rasid-alsolayhim-tasiliyya-2
+                  - button "مشاركة" [ref=e330] [cursor=pointer]
+                  - button "نسخ الرابط" [ref=e331] [cursor=pointer]
+                  - button "نسخ البيانات" [ref=e332] [cursor=pointer]
+                  - button "إضافة للمفضلة" [ref=e333] [cursor=pointer]: حفظ
+                  - button "إضافة للتقويم" [ref=e334] [cursor=pointer]
+            - article [ref=e336]:
+              - generic [ref=e337]:
+                - generic [ref=e338]: فقه
+                - generic [ref=e339]: غداً
+              - generic [ref=e340]:
+                - generic [ref=e341]:
+                  - 'img "الشيخ: سالم بن سعد الطويل" [ref=e343]'
+                  - generic [ref=e344]:
+                    - heading "شرح كتاب تنبيه الأفهام بشرح عمدة الأحكام" [level=3] [ref=e345]
+                    - paragraph [ref=e346]: "الشيخ: سالم بن سعد الطويل"
+                - generic [ref=e348]: بث مباشر
+                - generic [ref=e349]:
+                  - generic [ref=e350]:
+                    - generic [ref=e351]: نوع النشاط
+                    - strong [ref=e352]: درس
+                  - generic [ref=e353]:
+                    - generic [ref=e354]: اليوم
+                    - strong [ref=e355]: الاثنين
+                  - generic [ref=e356]:
+                    - generic [ref=e357]: التاريخ
+                    - strong [ref=e358]: الاثنين، ٦ يوليو ٢٠٢٦
+                  - generic [ref=e359]:
+                    - generic [ref=e360]: التاريخ الهجري
+                    - strong [ref=e361]: ٢١ محرم ١٤٤٨ هـ
+                  - generic [ref=e362]:
+                    - generic [ref=e363]: الوقت
+                    - strong [ref=e364]: مساءً
+                  - generic [ref=e365]:
+                    - generic [ref=e366]: المكان
+                    - strong [ref=e367]: ديوان مشعل الجنفاوي
+                  - generic [ref=e368]:
+                    - generic [ref=e369]: المنطقة
+                    - strong [ref=e370]: سعد العبدالله
+                - paragraph [ref=e371]: "المؤلف: العلامة محمد بن صالح العثيمين"
+                - generic [ref=e372]:
+                  - link "التفاصيل" [ref=e373] [cursor=pointer]:
+                    - /url: /lessons/kw-salem-altaweel-tanbih-alafham-0
+                  - button "مشاركة" [ref=e374] [cursor=pointer]
+                  - button "نسخ الرابط" [ref=e375] [cursor=pointer]
+                  - button "نسخ البيانات" [ref=e376] [cursor=pointer]
+                  - button "إضافة للمفضلة" [ref=e377] [cursor=pointer]: حفظ
+                  - button "إضافة للتقويم" [ref=e378] [cursor=pointer]
+                  - link "رابط البث" [ref=e379] [cursor=pointer]:
+                    - /url: https://www.saltaweel.com
+            - article [ref=e381]:
+              - generic [ref=e382]:
+                - generic [ref=e383]: فقه
+                - generic [ref=e384]: بعد يومين
+              - generic [ref=e385]:
+                - generic [ref=e386]:
+                  - 'img "الشيخ: أسامة الشطي" [ref=e388]'
+                  - generic [ref=e389]:
+                    - heading "شرح كتاب الصلاة من إعانة الطالب" [level=3] [ref=e390]
+                    - paragraph [ref=e391]: "الشيخ: أسامة الشطي"
+                - generic [ref=e393]: بث مباشر
+                - generic [ref=e394]:
+                  - generic [ref=e395]:
+                    - generic [ref=e396]: نوع النشاط
+                    - strong [ref=e397]: درس
+                  - generic [ref=e398]:
+                    - generic [ref=e399]: اليوم
+                    - strong [ref=e400]: الثلاثاء
+                  - generic [ref=e401]:
+                    - generic [ref=e402]: التاريخ
+                    - strong [ref=e403]: الثلاثاء، ٧ يوليو ٢٠٢٦
+                  - generic [ref=e404]:
+                    - generic [ref=e405]: التاريخ الهجري
+                    - strong [ref=e406]: ٢٢ محرم ١٤٤٨ هـ
+                  - generic [ref=e407]:
+                    - generic [ref=e408]: الوقت
+                    - strong [ref=e409]: بعد العشاء
+                  - generic [ref=e410]:
+                    - generic [ref=e411]: المكان
+                    - strong [ref=e412]: مسجد أحمد العميري
+                  - generic [ref=e413]:
+                    - generic [ref=e414]: المنطقة
+                    - strong [ref=e415]: الكويت
+                - paragraph [ref=e416]: ابتداءً من يوم الثلاثاء 2026/06/09، مع نقل مباشر عبر قناة معهد الأندلس الشرعي في تليجرام.
+                - generic [ref=e417]:
+                  - link "التفاصيل" [ref=e418] [cursor=pointer]:
+                    - /url: /lessons/kw-osama-shatti-prayer-book-0
+                  - button "مشاركة" [ref=e419] [cursor=pointer]
+                  - button "نسخ الرابط" [ref=e420] [cursor=pointer]
+                  - button "نسخ البيانات" [ref=e421] [cursor=pointer]
+                  - button "إضافة للمفضلة" [ref=e422] [cursor=pointer]: حفظ
+                  - button "إضافة للتقويم" [ref=e423] [cursor=pointer]
+                  - link "رابط البث" [ref=e424] [cursor=pointer]:
+                    - /url: https://www.andlous.com
+        - generic [ref=e425]:
+          - heading "الشائع" [level=2] [ref=e426]
+          - generic [ref=e427]:
+            - article [ref=e429]:
+              - generic [ref=e430]:
+                - generic [ref=e431]: تأصيل
+                - generic [ref=e432]: بعد 12 أشهر
+              - generic [ref=e433]:
+                - generic [ref=e434]:
+                  - 'img "الشيخ: مطلق الجاسر وآخرون" [ref=e436]'
+                  - generic [ref=e437]:
+                    - heading "دورة مدارج الطلب المسار الانتقائي متاح 24 ساعة" [level=3] [ref=e438]
+                    - paragraph [ref=e439]: "الشيخ: مطلق الجاسر وآخرون"
+                - generic [ref=e441]: بث مباشر
+                - generic [ref=e442]:
+                  - generic [ref=e443]:
+                    - generic [ref=e444]: نوع النشاط
+                    - strong [ref=e445]: دورة
+                  - generic [ref=e446]:
+                    - generic [ref=e447]: اليوم
+                    - strong [ref=e448]: غير محدد
+                  - generic [ref=e449]:
+                    - generic [ref=e450]: التاريخ
+                    - strong [ref=e451]: الاثنين، ٥ يوليو ٢٠٢٧
+                  - generic [ref=e452]:
+                    - generic [ref=e453]: التاريخ الهجري
+                    - strong [ref=e454]: ١ صفر ١٤٤٩ هـ
+                  - generic [ref=e455]:
+                    - generic [ref=e456]: الوقت
+                    - strong [ref=e457]: متاح 24 ساعة
+                  - generic [ref=e458]:
+                    - generic [ref=e459]: المكان
+                    - strong [ref=e460]: منصة معهد مرتقى (أونلاين)
+                  - generic [ref=e461]:
+                    - generic [ref=e462]: المنطقة
+                    - strong [ref=e463]: أونلاين
+                - paragraph [ref=e464]: تسجيل مجاني للرجال والنساء. متابعة دورية عبر قناة التلقرام.
+                - generic [ref=e465]:
+                  - link "التفاصيل" [ref=e466] [cursor=pointer]:
+                    - /url: /lessons/kw-murtaqa-madarij-altalab-0
+                  - button "مشاركة" [ref=e467] [cursor=pointer]
+                  - button "نسخ الرابط" [ref=e468] [cursor=pointer]
+                  - button "نسخ البيانات" [ref=e469] [cursor=pointer]
+                  - button "إضافة للمفضلة" [ref=e470] [cursor=pointer]: حفظ
+                  - button "إضافة للتقويم" [ref=e471] [cursor=pointer]
+                  - link "رابط البث" [ref=e472] [cursor=pointer]:
+                    - /url: https://www.instagram.com/murtaqaa_kw
+            - article [ref=e474]:
+              - generic [ref=e475]:
+                - generic [ref=e476]: فقه
+                - generic [ref=e477]: بعد 6 أيام
+              - generic [ref=e478]:
+                - generic [ref=e479]:
+                  - 'img "الشيخة: لولوة الوهيب وأخريات" [ref=e481]'
+                  - generic [ref=e482]:
+                    - heading "برنامج شرعي مبسط المستوى الرابع جلسات الأحد والثلاثاء والخميس" [level=3] [ref=e483]
+                    - paragraph [ref=e484]: "الشيخة: لولوة الوهيب وأخريات"
+                - generic [ref=e485]:
+                  - generic [ref=e486]:
+                    - generic [ref=e487]: نوع النشاط
+                    - strong [ref=e488]: درس
+                  - generic [ref=e489]:
+                    - generic [ref=e490]: اليوم
+                    - strong [ref=e491]: الأحد
+                  - generic [ref=e492]:
+                    - generic [ref=e493]: التاريخ
+                    - strong [ref=e494]: الأحد، ١٢ يوليو ٢٠٢٦
+                  - generic [ref=e495]:
+                    - generic [ref=e496]: التاريخ الهجري
+                    - strong [ref=e497]: ٢٧ محرم ١٤٤٨ هـ
+                  - generic [ref=e498]:
+                    - generic [ref=e499]: الوقت
+                    - strong [ref=e500]: 4:30م 8:30م
+                  - generic [ref=e501]:
+                    - generic [ref=e502]: المكان
+                    - strong [ref=e503]: أكاديمية جوري الضاحي
+                  - generic [ref=e504]:
+                    - generic [ref=e505]: المنطقة
+                    - strong [ref=e506]: كيفان
+                  - generic [ref=e507]:
+                    - generic [ref=e508]: المحافظة
+                    - strong [ref=e509]: العاصمة
+                - paragraph [ref=e510]: "حضوري للتسجيل: @jouryaldahi (إنستقرام) أو 66240438"
+                - generic [ref=e511]:
+                  - link "التفاصيل" [ref=e512] [cursor=pointer]:
+                    - /url: /lessons/kw-jury-aldahi-sharia-program-4-0
+                  - button "مشاركة" [ref=e513] [cursor=pointer]
+                  - button "نسخ الرابط" [ref=e514] [cursor=pointer]
+                  - button "نسخ البيانات" [ref=e515] [cursor=pointer]
+                  - button "إضافة للمفضلة" [ref=e516] [cursor=pointer]: حفظ
+                  - button "إضافة للتقويم" [ref=e517] [cursor=pointer]
+            - article [ref=e519]:
+              - generic [ref=e520]:
+                - generic [ref=e521]: تأصيل
+                - generic [ref=e522]: غداً
+              - generic [ref=e523]:
+                - generic [ref=e524]:
+                  - 'img "الشيخ: محمد سليمان الأجراح" [ref=e526]'
+                  - generic [ref=e527]:
+                    - heading "دورة الشيخ الأجراح العلمية الثالثة شرح تنبيه الفقيه وتفقيه النبيه الشيخ أسامة الشطي (7/12 7/15)" [level=3] [ref=e528]
+                    - paragraph [ref=e529]: "الشيخ: محمد سليمان الأجراح"
+                - generic [ref=e530]:
+                  - generic [ref=e531]: بث مباشر
+                  - generic [ref=e532]: 4 لقاءات
+                - generic [ref=e533]:
+                  - generic [ref=e534]:
+                    - generic [ref=e535]: نوع النشاط
+                    - strong [ref=e536]: دورة
+                  - generic [ref=e537]:
+                    - generic [ref=e538]: اليوم
+                    - strong [ref=e539]: الاثنين
+                  - generic [ref=e540]:
+                    - generic [ref=e541]: التاريخ
+                    - strong [ref=e542]: الاثنين، ٦ يوليو ٢٠٢٦
+                  - generic [ref=e543]:
+                    - generic [ref=e544]: التاريخ الهجري
+                    - strong [ref=e545]: ٢١ محرم ١٤٤٨ هـ
+                  - generic [ref=e546]:
+                    - generic [ref=e547]: الوقت
+                    - strong [ref=e548]: بعد العصر
+                  - generic [ref=e549]:
+                    - generic [ref=e550]: المكان
+                    - strong [ref=e551]: مسجد موضى السور
+                  - generic [ref=e552]:
+                    - generic [ref=e553]: المنطقة
+                    - strong [ref=e554]: الصديق
+                  - generic [ref=e555]:
+                    - generic [ref=e556]: المحافظة
+                    - strong [ref=e557]: حولي
+                  - generic [ref=e558]:
+                    - generic [ref=e559]: الجلسات
+                    - strong [ref=e560]: شرح كتاب التوحيد د.مطلق الجاسر (7/5 7/8) · شرح تنبيه الفقيه وتفقيه النبيه الشيخ أسامة الشطي (7/12 7/15) · شرح فتح الرحيم الملك العلام د.عبدالمحسن المعيلي (7/19 7/22) · شرح متن الأجرومية الشيخ خالد العتيبي (7/26 7/29)
+                - paragraph [ref=e561]: دورة علمية مكثفة تضم نخبة من المشايخ، من الأحد إلى الأربعاء بعد صلاة العصر. يوجد مكان للنساء. المحاضرة الافتتاحية للشيخ د.عثمان الخميس.
+                - generic [ref=e562]:
+                  - link "التفاصيل" [ref=e563] [cursor=pointer]:
+                    - /url: /lessons/kw-ajraa-murtaqa-course-3-1
+                  - button "مشاركة" [ref=e564] [cursor=pointer]
+                  - button "نسخ الرابط" [ref=e565] [cursor=pointer]
+                  - button "نسخ البيانات" [ref=e566] [cursor=pointer]
+                  - button "إضافة للمفضلة" [ref=e567] [cursor=pointer]: حفظ
+                  - button "إضافة للتقويم" [ref=e568] [cursor=pointer]
+            - article [ref=e570]:
+              - generic [ref=e571]:
+                - generic [ref=e572]: تأصيل
+                - generic [ref=e573]: بعد يومين
+              - generic [ref=e574]:
+                - generic [ref=e575]:
+                  - 'img "الشيخ: محمد سليمان الأجراح" [ref=e577]'
+                  - generic [ref=e578]:
+                    - heading "دورة الشيخ الأجراح العلمية الثالثة شرح فتح الرحيم الملك العلام د.عبدالمحسن المعيلي (7/19 7/22)" [level=3] [ref=e579]
+                    - paragraph [ref=e580]: "الشيخ: محمد سليمان الأجراح"
+                - generic [ref=e581]:
+                  - generic [ref=e582]: بث مباشر
+                  - generic [ref=e583]: 4 لقاءات
+                - generic [ref=e584]:
+                  - generic [ref=e585]:
+                    - generic [ref=e586]: نوع النشاط
+                    - strong [ref=e587]: دورة
+                  - generic [ref=e588]:
+                    - generic [ref=e589]: اليوم
+                    - strong [ref=e590]: الثلاثاء
+                  - generic [ref=e591]:
+                    - generic [ref=e592]: التاريخ
+                    - strong [ref=e593]: الثلاثاء، ٧ يوليو ٢٠٢٦
+                  - generic [ref=e594]:
+                    - generic [ref=e595]: التاريخ الهجري
+                    - strong [ref=e596]: ٢٢ محرم ١٤٤٨ هـ
+                  - generic [ref=e597]:
+                    - generic [ref=e598]: الوقت
+                    - strong [ref=e599]: بعد العصر
+                  - generic [ref=e600]:
+                    - generic [ref=e601]: المكان
+                    - strong [ref=e602]: مسجد موضى السور
+                  - generic [ref=e603]:
+                    - generic [ref=e604]: المنطقة
+                    - strong [ref=e605]: الصديق
+                  - generic [ref=e606]:
+                    - generic [ref=e607]: المحافظة
+                    - strong [ref=e608]: حولي
+                  - generic [ref=e609]:
+                    - generic [ref=e610]: الجلسات
+                    - strong [ref=e611]: شرح كتاب التوحيد د.مطلق الجاسر (7/5 7/8) · شرح تنبيه الفقيه وتفقيه النبيه الشيخ أسامة الشطي (7/12 7/15) · شرح فتح الرحيم الملك العلام د.عبدالمحسن المعيلي (7/19 7/22) · شرح متن الأجرومية الشيخ خالد العتيبي (7/26 7/29)
+                - paragraph [ref=e612]: دورة علمية مكثفة تضم نخبة من المشايخ، من الأحد إلى الأربعاء بعد صلاة العصر. يوجد مكان للنساء. المحاضرة الافتتاحية للشيخ د.عثمان الخميس.
+                - generic [ref=e613]:
+                  - link "التفاصيل" [ref=e614] [cursor=pointer]:
+                    - /url: /lessons/kw-ajraa-murtaqa-course-3-2
+                  - button "مشاركة" [ref=e615] [cursor=pointer]
+                  - button "نسخ الرابط" [ref=e616] [cursor=pointer]
+                  - button "نسخ البيانات" [ref=e617] [cursor=pointer]
+                  - button "إضافة للمفضلة" [ref=e618] [cursor=pointer]: حفظ
+                  - button "إضافة للتقويم" [ref=e619] [cursor=pointer]
+        - generic [ref=e620]:
+          - heading "جميع الدروس" [level=2] [ref=e621]
+          - generic [ref=e622]:
+            - article [ref=e624]:
+              - generic [ref=e625]:
+                - generic [ref=e626]: فقه
+                - generic [ref=e627]: غداً
+              - generic [ref=e628]:
+                - generic [ref=e629]:
+                  - 'img "الشيخ: حسين بن مبارك المويزري" [ref=e631]'
+                  - generic [ref=e632]:
+                    - heading "روضة الأفهام في شرح زوائد المحرر على بلوغ المرام" [level=3] [ref=e633]
+                    - paragraph [ref=e634]: "الشيخ: حسين بن مبارك المويزري"
+                - generic [ref=e635]:
+                  - generic [ref=e636]:
+                    - generic [ref=e637]: نوع النشاط
+                    - strong [ref=e638]: درس
+                  - generic [ref=e639]:
+                    - generic [ref=e640]: اليوم
+                    - strong [ref=e641]: الاثنين
+                  - generic [ref=e642]:
+                    - generic [ref=e643]: التاريخ
+                    - strong [ref=e644]: الاثنين، ٦ يوليو ٢٠٢٦
+                  - generic [ref=e645]:
+                    - generic [ref=e646]: التاريخ الهجري
+                    - strong [ref=e647]: ٢١ محرم ١٤٤٨ هـ
+                  - generic [ref=e648]:
+                    - generic [ref=e649]: الوقت
+                    - strong [ref=e650]: بعد العصر
+                  - generic [ref=e651]:
+                    - generic [ref=e652]: المكان
+                    - strong [ref=e653]: مسجد سعد بن دبيس بين ق6 وق7
+                  - generic [ref=e654]:
+                    - generic [ref=e655]: المنطقة
+                    - strong [ref=e656]: الفردوس
+                  - generic [ref=e657]:
+                    - generic [ref=e658]: المحافظة
+                    - strong [ref=e659]: الفروانية
+                - paragraph [ref=e660]: "خاص بالرجال. · المتن: روضة الأفهام في شرح زوائد المحرر على بلوغ المرام"
+                - generic [ref=e661]:
+                  - link "التفاصيل" [ref=e662] [cursor=pointer]:
+                    - /url: /lessons/sci-rawdat-alafham-muwaiziri
+                  - button "مشاركة" [ref=e663] [cursor=pointer]
+                  - button "نسخ الرابط" [ref=e664] [cursor=pointer]
+                  - button "نسخ البيانات" [ref=e665] [cursor=pointer]
+                  - button "إضافة للمفضلة" [ref=e666] [cursor=pointer]: حفظ
+                  - button "إضافة للتقويم" [ref=e667] [cursor=pointer]
+            - article [ref=e669]:
+              - generic [ref=e670]:
+                - generic [ref=e671]: تأصيل
+                - generic [ref=e672]: غداً
+              - generic [ref=e673]:
+                - generic [ref=e674]:
+                  - 'img "الشيخ: راشد صليهم فهد الصليهم" [ref=e676]'
+                  - generic [ref=e677]:
+                    - heading "الدورة العلمية التأصيلية بلوغ المرام من أدلة الأحكام" [level=3] [ref=e678]
+                    - paragraph [ref=e679]: "الشيخ: راشد صليهم فهد الصليهم"
+                - generic [ref=e681]: 3 لقاءات
+                - generic [ref=e682]:
+                  - generic [ref=e683]:
+                    - generic [ref=e684]: نوع النشاط
+                    - strong [ref=e685]: دورة
+                  - generic [ref=e686]:
+                    - generic [ref=e687]: اليوم
+                    - strong [ref=e688]: الاثنين
+                  - generic [ref=e689]:
+                    - generic [ref=e690]: التاريخ
+                    - strong [ref=e691]: الاثنين، ٦ يوليو ٢٠٢٦
+                  - generic [ref=e692]:
+                    - generic [ref=e693]: التاريخ الهجري
+                    - strong [ref=e694]: ٢١ محرم ١٤٤٨ هـ
+                  - generic [ref=e695]:
+                    - generic [ref=e696]: الوقت
+                    - strong [ref=e697]: بعد المغرب
+                  - generic [ref=e698]:
+                    - generic [ref=e699]: المكان
+                    - strong [ref=e700]: مسجد أبي واقد الليثي
+                  - generic [ref=e701]:
+                    - generic [ref=e702]: المنطقة
+                    - strong [ref=e703]: القيروان
+                  - generic [ref=e704]:
+                    - generic [ref=e705]: المحافظة
+                    - strong [ref=e706]: العاصمة
+                  - generic [ref=e707]:
+                    - generic [ref=e708]: الجلسات
+                    - strong [ref=e709]: بلوغ المرام من أدلة الأحكام · القواعد المثلى في صفات الله وأسمائه الحسنى · قراءة في كتاب دعوى تعارض السنة النبوية مع العلم التجريبي
+                - paragraph [ref=e710]: الجلسة الأولى من اليوم العلمي.
+                - generic [ref=e711]:
+                  - link "التفاصيل" [ref=e712] [cursor=pointer]:
+                    - /url: /lessons/kw-rashed-fundamental-course-0
+                  - button "مشاركة" [ref=e713] [cursor=pointer]
+                  - button "نسخ الرابط" [ref=e714] [cursor=pointer]
+                  - button "نسخ البيانات" [ref=e715] [cursor=pointer]
+                  - button "إضافة للمفضلة" [ref=e716] [cursor=pointer]: حفظ
+                  - button "إضافة للتقويم" [ref=e717] [cursor=pointer]
+                  - link "الموقع" [ref=e718] [cursor=pointer]:
+                    - /url: https://goo.gl/maps/65SD8fH7smhudxTP9
+            - article [ref=e720]:
+              - generic [ref=e721]:
+                - generic [ref=e722]: تأصيل
+                - generic [ref=e723]: غداً
+              - generic [ref=e724]:
+                - generic [ref=e725]:
+                  - 'img "الشيخ: راشد صليهم فهد الصليهم" [ref=e727]'
+                  - generic [ref=e728]:
+                    - heading "الدورة العلمية التأصيلية القواعد المثلى في صفات الله وأسمائه الحسنى" [level=3] [ref=e729]
+                    - paragraph [ref=e730]: "الشيخ: راشد صليهم فهد الصليهم"
+                - generic [ref=e732]: 3 لقاءات
+                - generic [ref=e733]:
+                  - generic [ref=e734]:
+                    - generic [ref=e735]: نوع النشاط
+                    - strong [ref=e736]: دورة
+                  - generic [ref=e737]:
+                    - generic [ref=e738]: اليوم
+                    - strong [ref=e739]: الاثنين
+                  - generic [ref=e740]:
+                    - generic [ref=e741]: التاريخ
+                    - strong [ref=e742]: الاثنين، ٦ يوليو ٢٠٢٦
+                  - generic [ref=e743]:
+                    - generic [ref=e744]: التاريخ الهجري
+                    - strong [ref=e745]: ٢١ محرم ١٤٤٨ هـ
+                  - generic [ref=e746]:
+                    - generic [ref=e747]: الوقت
+                    - strong [ref=e748]: بعد المغرب
+                  - generic [ref=e749]:
+                    - generic [ref=e750]: المكان
+                    - strong [ref=e751]: مسجد أبي واقد الليثي
+                  - generic [ref=e752]:
+                    - generic [ref=e753]: المنطقة
+                    - strong [ref=e754]: القيروان
+                  - generic [ref=e755]:
+                    - generic [ref=e756]: المحافظة
+                    - strong [ref=e757]: العاصمة
+                  - generic [ref=e758]:
+                    - generic [ref=e759]: الجلسات
+                    - strong [ref=e760]: بلوغ المرام من أدلة الأحكام · القواعد المثلى في صفات الله وأسمائه الحسنى · قراءة في كتاب دعوى تعارض السنة النبوية مع العلم التجريبي
+                - paragraph [ref=e761]: الجلسة الثانية من اليوم العلمي.
+                - generic [ref=e762]:
+                  - link "التفاصيل" [ref=e763] [cursor=pointer]:
+                    - /url: /lessons/kw-rashed-fundamental-course-1
+                  - button "مشاركة" [ref=e764] [cursor=pointer]
+                  - button "نسخ الرابط" [ref=e765] [cursor=pointer]
+                  - button "نسخ البيانات" [ref=e766] [cursor=pointer]
+                  - button "إضافة للمفضلة" [ref=e767] [cursor=pointer]: حفظ
+                  - button "إضافة للتقويم" [ref=e768] [cursor=pointer]
+                  - link "الموقع" [ref=e769] [cursor=pointer]:
+                    - /url: https://goo.gl/maps/65SD8fH7smhudxTP9
+            - article [ref=e771]:
+              - generic [ref=e772]:
+                - generic [ref=e773]: تأصيل
+                - generic [ref=e774]: غداً
+              - generic [ref=e775]:
+                - generic [ref=e776]:
+                  - 'img "الشيخ: راشد صليهم فهد الصليهم" [ref=e778]'
+                  - generic [ref=e779]:
+                    - heading "الدورة العلمية التأصيلية قراءة في كتاب دعوى تعارض السنة النبوية مع العلم التجريبي" [level=3] [ref=e780]
+                    - paragraph [ref=e781]: "الشيخ: راشد صليهم فهد الصليهم"
+                - generic [ref=e783]: 3 لقاءات
+                - generic [ref=e784]:
+                  - generic [ref=e785]:
+                    - generic [ref=e786]: نوع النشاط
+                    - strong [ref=e787]: دورة
+                  - generic [ref=e788]:
+                    - generic [ref=e789]: اليوم
+                    - strong [ref=e790]: الاثنين
+                  - generic [ref=e791]:
+                    - generic [ref=e792]: التاريخ
+                    - strong [ref=e793]: الاثنين، ٦ يوليو ٢٠٢٦
+                  - generic [ref=e794]:
+                    - generic [ref=e795]: التاريخ الهجري
+                    - strong [ref=e796]: ٢١ محرم ١٤٤٨ هـ
+                  - generic [ref=e797]:
+                    - generic [ref=e798]: الوقت
+                    - strong [ref=e799]: بعد العشاء
+                  - generic [ref=e800]:
+                    - generic [ref=e801]: المكان
+                    - strong [ref=e802]: مسجد أبي واقد الليثي
+                  - generic [ref=e803]:
+                    - generic [ref=e804]: المنطقة
+                    - strong [ref=e805]: القيروان
+                  - generic [ref=e806]:
+                    - generic [ref=e807]: المحافظة
+                    - strong [ref=e808]: العاصمة
+                  - generic [ref=e809]:
+                    - generic [ref=e810]: الجلسات
+                    - strong [ref=e811]: بلوغ المرام من أدلة الأحكام · القواعد المثلى في صفات الله وأسمائه الحسنى · قراءة في كتاب دعوى تعارض السنة النبوية مع العلم التجريبي
+                - paragraph [ref=e812]: الجلسة الثالثة من اليوم العلمي.
+                - generic [ref=e813]:
+                  - link "التفاصيل" [ref=e814] [cursor=pointer]:
+                    - /url: /lessons/kw-rashed-fundamental-course-2
+                  - button "مشاركة" [ref=e815] [cursor=pointer]
+                  - button "نسخ الرابط" [ref=e816] [cursor=pointer]
+                  - button "نسخ البيانات" [ref=e817] [cursor=pointer]
+                  - button "إضافة للمفضلة" [ref=e818] [cursor=pointer]: حفظ
+                  - button "إضافة للتقويم" [ref=e819] [cursor=pointer]
+                  - link "الموقع" [ref=e820] [cursor=pointer]:
+                    - /url: https://goo.gl/maps/65SD8fH7smhudxTP9
+            - article [ref=e822]:
+              - generic [ref=e823]:
+                - generic [ref=e824]: فقه
+                - generic [ref=e825]: بعد يومين
+              - generic [ref=e826]:
+                - generic [ref=e827]:
+                  - 'img "الشيخ: دهام أبو خشبة" [ref=e829]'
+                  - generic [ref=e830]:
+                    - heading "شرح كتاب عمدة الأحكام" [level=3] [ref=e831]
+                    - paragraph [ref=e832]: "الشيخ: دهام أبو خشبة"
+                - generic [ref=e833]:
+                  - generic [ref=e834]:
+                    - generic [ref=e835]: نوع النشاط
+                    - strong [ref=e836]: درس
+                  - generic [ref=e837]:
+                    - generic [ref=e838]: اليوم
+                    - strong [ref=e839]: الثلاثاء
+                  - generic [ref=e840]:
+                    - generic [ref=e841]: التاريخ
+                    - strong [ref=e842]: الثلاثاء، ٧ يوليو ٢٠٢٦
+                  - generic [ref=e843]:
+                    - generic [ref=e844]: التاريخ الهجري
+                    - strong [ref=e845]: ٢٢ محرم ١٤٤٨ هـ
+                  - generic [ref=e846]:
+                    - generic [ref=e847]: الوقت
+                    - strong [ref=e848]: بعد العصر
+                  - generic [ref=e849]:
+                    - generic [ref=e850]: المكان
+                    - strong [ref=e851]: مسجد أبو طاهر السلفي
+                  - generic [ref=e852]:
+                    - generic [ref=e853]: المنطقة
+                    - strong [ref=e854]: صباح الأحمد
+                  - generic [ref=e855]:
+                    - generic [ref=e856]: المحافظة
+                    - strong [ref=e857]: الأحمدي
+                - paragraph [ref=e858]: "كل يوم ثلاثاء. · يبدأ من 16/6/2026. · المتن: عمدة الأحكام"
+                - generic [ref=e859]:
+                  - link "التفاصيل" [ref=e860] [cursor=pointer]:
+                    - /url: /lessons/sci-umdat-ahkam-daham
+                  - button "مشاركة" [ref=e861] [cursor=pointer]
+                  - button "نسخ الرابط" [ref=e862] [cursor=pointer]
+                  - button "نسخ البيانات" [ref=e863] [cursor=pointer]
+                  - button "إضافة للمفضلة" [ref=e864] [cursor=pointer]: حفظ
+                  - button "إضافة للتقويم" [ref=e865] [cursor=pointer]
+            - article [ref=e867]:
+              - generic [ref=e868]:
+                - generic [ref=e869]: تفسير
+                - generic [ref=e870]: بعد يومين
+              - generic [ref=e871]:
+                - generic [ref=e872]:
+                  - 'img "الشيخ: سالم بن سعد الطويل" [ref=e874]'
+                  - generic [ref=e875]:
+                    - heading "المختصر في تفسير القرآن الكريم" [level=3] [ref=e876]
+                    - paragraph [ref=e877]: "الشيخ: سالم بن سعد الطويل"
+                - generic [ref=e879]: بث مباشر
+                - generic [ref=e880]:
+                  - generic [ref=e881]:
+                    - generic [ref=e882]: نوع النشاط
+                    - strong [ref=e883]: درس
+                  - generic [ref=e884]:
+                    - generic [ref=e885]: اليوم
+                    - strong [ref=e886]: الثلاثاء
+                  - generic [ref=e887]:
+                    - generic [ref=e888]: التاريخ
+                    - strong [ref=e889]: الثلاثاء، ٧ يوليو ٢٠٢٦
+                  - generic [ref=e890]:
+                    - generic [ref=e891]: التاريخ الهجري
+                    - strong [ref=e892]: ٢٢ محرم ١٤٤٨ هـ
+                  - generic [ref=e893]:
+                    - generic [ref=e894]: الوقت
+                    - strong [ref=e895]: مساءً
+                  - generic [ref=e896]:
+                    - generic [ref=e897]: المكان
+                    - strong [ref=e898]: مدينة صباح الأحمد
+                  - generic [ref=e899]:
+                    - generic [ref=e900]: المنطقة
+                    - strong [ref=e901]: صباح الأحمد
+                  - generic [ref=e902]:
+                    - generic [ref=e903]: المحافظة
+                    - strong [ref=e904]: الأحمدي
+                - paragraph [ref=e905]: "الدواوين خلف المنزل. المؤلف: جماعة من علماء التفسير"
+                - generic [ref=e906]:
+                  - link "التفاصيل" [ref=e907] [cursor=pointer]:
+                    - /url: /lessons/kw-salem-altaweel-mukhtasar-tafsir-0
+                  - button "مشاركة" [ref=e908] [cursor=pointer]
+                  - button "نسخ الرابط" [ref=e909] [cursor=pointer]
+                  - button "نسخ البيانات" [ref=e910] [cursor=pointer]
+                  - button "إضافة للمفضلة" [ref=e911] [cursor=pointer]: حفظ
+                  - button "إضافة للتقويم" [ref=e912] [cursor=pointer]
+                  - link "رابط البث" [ref=e913] [cursor=pointer]:
+                    - /url: https://www.saltaweel.com
+            - article [ref=e915]:
+              - generic [ref=e916]:
+                - generic [ref=e917]: تأصيل
+                - generic [ref=e918]: بعد 3 أيام
+              - generic [ref=e919]:
+                - generic [ref=e920]:
+                  - 'img "الشيخ: محمد سليمان الأجراح" [ref=e922]'
+                  - generic [ref=e923]:
+                    - heading "دورة الشيخ الأجراح العلمية الثالثة شرح متن الأجرومية الشيخ خالد العتيبي (7/26 7/29)" [level=3] [ref=e924]
+                    - paragraph [ref=e925]: "الشيخ: محمد سليمان الأجراح"
+                - generic [ref=e926]:
+                  - generic [ref=e927]: بث مباشر
+                  - generic [ref=e928]: 4 لقاءات
+                - generic [ref=e929]:
+                  - generic [ref=e930]:
+                    - generic [ref=e931]: نوع النشاط
+                    - strong [ref=e932]: دورة
+                  - generic [ref=e933]:
+                    - generic [ref=e934]: اليوم
+                    - strong [ref=e935]: الأربعاء
+                  - generic [ref=e936]:
+                    - generic [ref=e937]: التاريخ
+                    - strong [ref=e938]: الأربعاء، ٨ يوليو ٢٠٢٦
+                  - generic [ref=e939]:
+                    - generic [ref=e940]: التاريخ الهجري
+                    - strong [ref=e941]: ٢٣ محرم ١٤٤٨ هـ
+                  - generic [ref=e942]:
+                    - generic [ref=e943]: الوقت
+                    - strong [ref=e944]: بعد العصر
+                  - generic [ref=e945]:
+                    - generic [ref=e946]: المكان
+                    - strong [ref=e947]: مسجد موضى السور
+                  - generic [ref=e948]:
+                    - generic [ref=e949]: المنطقة
+                    - strong [ref=e950]: الصديق
+                  - generic [ref=e951]:
+                    - generic [ref=e952]: المحافظة
+                    - strong [ref=e953]: حولي
+                  - generic [ref=e954]:
+                    - generic [ref=e955]: الجلسات
+                    - strong [ref=e956]: شرح كتاب التوحيد د.مطلق الجاسر (7/5 7/8) · شرح تنبيه الفقيه وتفقيه النبيه الشيخ أسامة الشطي (7/12 7/15) · شرح فتح الرحيم الملك العلام د.عبدالمحسن المعيلي (7/19 7/22) · شرح متن الأجرومية الشيخ خالد العتيبي (7/26 7/29)
+                - paragraph [ref=e957]: دورة علمية مكثفة تضم نخبة من المشايخ، من الأحد إلى الأربعاء بعد صلاة العصر. يوجد مكان للنساء. المحاضرة الافتتاحية للشيخ د.عثمان الخميس.
+                - generic [ref=e958]:
+                  - link "التفاصيل" [ref=e959] [cursor=pointer]:
+                    - /url: /lessons/kw-ajraa-murtaqa-course-3-3
+                  - button "مشاركة" [ref=e960] [cursor=pointer]
+                  - button "نسخ الرابط" [ref=e961] [cursor=pointer]
+                  - button "نسخ البيانات" [ref=e962] [cursor=pointer]
+                  - button "إضافة للمفضلة" [ref=e963] [cursor=pointer]: حفظ
+                  - button "إضافة للتقويم" [ref=e964] [cursor=pointer]
+            - article [ref=e966]:
+              - generic [ref=e967]:
+                - generic [ref=e968]: فقه
+                - generic [ref=e969]: بعد 3 أيام
+              - generic [ref=e970]:
+                - generic [ref=e971]:
+                  - 'img "الشيخ: عثمان بن محمد الخميس" [ref=e973]'
+                  - generic [ref=e974]:
+                    - heading "شرح كتاب تلخيص مختصر المقنع" [level=3] [ref=e975]
+                    - paragraph [ref=e976]: "الشيخ: عثمان بن محمد الخميس"
+                - generic [ref=e978]: بث مباشر
+                - generic [ref=e979]:
+                  - generic [ref=e980]:
+                    - generic [ref=e981]: نوع النشاط
+                    - strong [ref=e982]: درس
+                  - generic [ref=e983]:
+                    - generic [ref=e984]: اليوم
+                    - strong [ref=e985]: الأربعاء
+                  - generic [ref=e986]:
+                    - generic [ref=e987]: التاريخ
+                    - strong [ref=e988]: الأربعاء، ٨ يوليو ٢٠٢٦
+                  - generic [ref=e989]:
+                    - generic [ref=e990]: التاريخ الهجري
+                    - strong [ref=e991]: ٢٣ محرم ١٤٤٨ هـ
+                  - generic [ref=e992]:
+                    - generic [ref=e993]: الوقت
+                    - strong [ref=e994]: بعد المغرب
+                  - generic [ref=e995]:
+                    - generic [ref=e996]: المكان
+                    - strong [ref=e997]: مسجد الياقوت
+                  - generic [ref=e998]:
+                    - generic [ref=e999]: المنطقة
+                    - strong [ref=e1000]: الصديق
+                  - generic [ref=e1001]:
+                    - generic [ref=e1002]: المحافظة
+                    - strong [ref=e1003]: حولي
+                - paragraph [ref=e1004]: "آخر التحديثات الظاهرة في المواد: «المحرمات إلى أمد» ثم «باب الشروط في النكاح القسم الثاني»."
+                - generic [ref=e1005]:
+                  - link "التفاصيل" [ref=e1006] [cursor=pointer]:
+                    - /url: /lessons/kw-othman-talkhis-mukhtasar-almuqni-0
+                  - button "مشاركة" [ref=e1007] [cursor=pointer]
+                  - button "نسخ الرابط" [ref=e1008] [cursor=pointer]
+                  - button "نسخ البيانات" [ref=e1009] [cursor=pointer]
+                  - button "إضافة للمفضلة" [ref=e1010] [cursor=pointer]: حفظ
+                  - button "إضافة للتقويم" [ref=e1011] [cursor=pointer]
+                  - link "رابط البث" [ref=e1012] [cursor=pointer]:
+                    - /url: https://reach.link/othmanalkhamees
+                  - link "الموقع" [ref=e1013] [cursor=pointer]:
+                    - /url: https://maps.app.goo.gl/5Bwe3w794cvREzGG8
+            - article [ref=e1015]:
+              - generic [ref=e1016]:
+                - generic [ref=e1017]: عقيدة
+                - generic [ref=e1018]: بعد 3 أيام
+              - generic [ref=e1019]:
+                - generic [ref=e1020]:
+                  - 'img "الشيخ: سالم بن سعد الطويل" [ref=e1022]'
+                  - generic [ref=e1023]:
+                    - heading "شرح كتاب الأجوبة السنيّة في العقيدة السلفية يُعقد مرة كل أسبوعين" [level=3] [ref=e1024]
+                    - paragraph [ref=e1025]: "الشيخ: سالم بن سعد الطويل"
+                - generic [ref=e1027]: بث مباشر
+                - generic [ref=e1028]:
+                  - generic [ref=e1029]:
+                    - generic [ref=e1030]: نوع النشاط
+                    - strong [ref=e1031]: درس
+                  - generic [ref=e1032]:
+                    - generic [ref=e1033]: اليوم
+                    - strong [ref=e1034]: الأربعاء
+                  - generic [ref=e1035]:
+                    - generic [ref=e1036]: التاريخ
+                    - strong [ref=e1037]: الأربعاء، ٨ يوليو ٢٠٢٦
+                  - generic [ref=e1038]:
+                    - generic [ref=e1039]: التاريخ الهجري
+                    - strong [ref=e1040]: ٢٣ محرم ١٤٤٨ هـ
+                  - generic [ref=e1041]:
+                    - generic [ref=e1042]: الوقت
+                    - strong [ref=e1043]: مساءً
+                  - generic [ref=e1044]:
+                    - generic [ref=e1045]: المكان
+                    - strong [ref=e1046]: ديوان الطرجم
+                  - generic [ref=e1047]:
+                    - generic [ref=e1048]: المنطقة
+                    - strong [ref=e1049]: الفنيطيس
+                - paragraph [ref=e1050]: "المؤلف: الشيخ عمر العمر. يُعقد مرة كل أسبوعين."
+                - generic [ref=e1051]:
+                  - link "التفاصيل" [ref=e1052] [cursor=pointer]:
+                    - /url: /lessons/kw-salem-altaweel-ajwiba-sunniyah-0
+                  - button "مشاركة" [ref=e1053] [cursor=pointer]
+                  - button "نسخ الرابط" [ref=e1054] [cursor=pointer]
+                  - button "نسخ البيانات" [ref=e1055] [cursor=pointer]
+                  - button "إضافة للمفضلة" [ref=e1056] [cursor=pointer]: حفظ
+                  - button "إضافة للتقويم" [ref=e1057] [cursor=pointer]
+                  - link "رابط البث" [ref=e1058] [cursor=pointer]:
+                    - /url: https://www.saltaweel.com
+            - article [ref=e1060]:
+              - generic [ref=e1061]:
+                - generic [ref=e1062]: تفسير
+                - generic [ref=e1063]: بعد 4 أيام
+              - generic [ref=e1064]:
+                - generic [ref=e1065]:
+                  - 'img "الشيخ: منصور بن ناصر الخالدي" [ref=e1067]'
+                  - generic [ref=e1068]:
+                    - heading "قراءة كتب متنوعة والتفسير الواضح" [level=3] [ref=e1069]
+                    - paragraph [ref=e1070]: "الشيخ: منصور بن ناصر الخالدي"
+                - generic [ref=e1071]:
+                  - generic [ref=e1072]:
+                    - generic [ref=e1073]: نوع النشاط
+                    - strong [ref=e1074]: درس
+                  - generic [ref=e1075]:
+                    - generic [ref=e1076]: اليوم
+                    - strong [ref=e1077]: الجمعة
+                  - generic [ref=e1078]:
+                    - generic [ref=e1079]: التاريخ
+                    - strong [ref=e1080]: الجمعة، ١٠ يوليو ٢٠٢٦
+                  - generic [ref=e1081]:
+                    - generic [ref=e1082]: التاريخ الهجري
+                    - strong [ref=e1083]: ٢٥ محرم ١٤٤٨ هـ
+                  - generic [ref=e1084]:
+                    - generic [ref=e1085]: الوقت
+                    - strong [ref=e1086]: بعد الفجر
+                  - generic [ref=e1087]:
+                    - generic [ref=e1088]: المكان
+                    - strong [ref=e1089]: مسجد العلاء بن عقبة
+                  - generic [ref=e1090]:
+                    - generic [ref=e1091]: المنطقة
+                    - strong [ref=e1092]: الفردوس
+                  - generic [ref=e1093]:
+                    - generic [ref=e1094]: المحافظة
+                    - strong [ref=e1095]: الفروانية
+                - paragraph [ref=e1096]: يوجد مكان مخصص للنساء.
+                - generic [ref=e1097]:
+                  - link "التفاصيل" [ref=e1098] [cursor=pointer]:
+                    - /url: /lessons/kw-mansour-altafsir-alwadih-0
+                  - button "مشاركة" [ref=e1099] [cursor=pointer]
+                  - button "نسخ الرابط" [ref=e1100] [cursor=pointer]
+                  - button "نسخ البيانات" [ref=e1101] [cursor=pointer]
+                  - button "إضافة للمفضلة" [ref=e1102] [cursor=pointer]: حفظ
+                  - button "إضافة للتقويم" [ref=e1103] [cursor=pointer]
+                  - link "الموقع" [ref=e1104] [cursor=pointer]:
+                    - /url: https://maps.google.com/?q=29.283262219859182,47.873629180186754
+            - article [ref=e1106]:
+              - generic [ref=e1107]:
+                - generic [ref=e1108]: تفسير
+                - generic [ref=e1109]: بعد 5 أيام
+              - generic [ref=e1110]:
+                - generic [ref=e1111]:
+                  - 'img "الشيخ: عثمان بن محمد الخميس" [ref=e1113]'
+                  - generic [ref=e1114]:
+                    - heading "تفسير سورة النحل" [level=3] [ref=e1115]
+                    - paragraph [ref=e1116]: "الشيخ: عثمان بن محمد الخميس"
+                - generic [ref=e1118]: بث مباشر
+                - generic [ref=e1119]:
+                  - generic [ref=e1120]:
+                    - generic [ref=e1121]: نوع النشاط
+                    - strong [ref=e1122]: درس
+                  - generic [ref=e1123]:
+                    - generic [ref=e1124]: اليوم
+                    - strong [ref=e1125]: الجمعة
+                  - generic [ref=e1126]:
+                    - generic [ref=e1127]: التاريخ
+                    - strong [ref=e1128]: الجمعة، ١٠ يوليو ٢٠٢٦
+                  - generic [ref=e1129]:
+                    - generic [ref=e1130]: التاريخ الهجري
+                    - strong [ref=e1131]: ٢٥ محرم ١٤٤٨ هـ
+                  - generic [ref=e1132]:
+                    - generic [ref=e1133]: الوقت
+                    - strong [ref=e1134]: بعد المغرب
+                  - generic [ref=e1135]:
+                    - generic [ref=e1136]: المكان
+                    - strong [ref=e1137]: مسجد موضي
+                  - generic [ref=e1138]:
+                    - generic [ref=e1139]: المنطقة
+                    - strong [ref=e1140]: الصديق
+                  - generic [ref=e1141]:
+                    - generic [ref=e1142]: المحافظة
+                    - strong [ref=e1143]: حولي
+                - paragraph [ref=e1144]: "المتابعة الحالية: البداية من الآية رقم 40."
+                - generic [ref=e1145]:
+                  - link "التفاصيل" [ref=e1146] [cursor=pointer]:
+                    - /url: /lessons/kw-othman-tafsir-nahl-0
+                  - button "مشاركة" [ref=e1147] [cursor=pointer]
+                  - button "نسخ الرابط" [ref=e1148] [cursor=pointer]
+                  - button "نسخ البيانات" [ref=e1149] [cursor=pointer]
+                  - button "إضافة للمفضلة" [ref=e1150] [cursor=pointer]: حفظ
+                  - button "إضافة للتقويم" [ref=e1151] [cursor=pointer]
+                  - link "رابط البث" [ref=e1152] [cursor=pointer]:
+                    - /url: https://reach.link/othmanalkhamees
+                  - link "الموقع" [ref=e1153] [cursor=pointer]:
+                    - /url: https://maps.app.goo.gl/4EjbJEgGmsnGWENBA
+            - article [ref=e1155]:
+              - generic [ref=e1156]:
+                - generic [ref=e1157]: حديث
+                - generic [ref=e1158]: بعد 5 أيام
+              - generic [ref=e1159]:
+                - generic [ref=e1160]:
+                  - 'img "الشيخ: عثمان بن محمد الخميس" [ref=e1162]'
+                  - generic [ref=e1163]:
+                    - heading "قراءة كتاب صحيح مسلم" [level=3] [ref=e1164]
+                    - paragraph [ref=e1165]: "الشيخ: عثمان بن محمد الخميس"
+                - generic [ref=e1167]: بث مباشر
+                - generic [ref=e1168]:
+                  - generic [ref=e1169]:
+                    - generic [ref=e1170]: نوع النشاط
+                    - strong [ref=e1171]: درس
+                  - generic [ref=e1172]:
+                    - generic [ref=e1173]: اليوم
+                    - strong [ref=e1174]: السبت
+                  - generic [ref=e1175]:
+                    - generic [ref=e1176]: التاريخ
+                    - strong [ref=e1177]: السبت، ١١ يوليو ٢٠٢٦
+                  - generic [ref=e1178]:
+                    - generic [ref=e1179]: التاريخ الهجري
+                    - strong [ref=e1180]: ٢٦ محرم ١٤٤٨ هـ
+                  - generic [ref=e1181]:
+                    - generic [ref=e1182]: الوقت
+                    - strong [ref=e1183]: صباحاً
+                  - generic [ref=e1184]:
+                    - generic [ref=e1185]: المكان
+                    - strong [ref=e1186]: مسجد الياقوت
+                  - generic [ref=e1187]:
+                    - generic [ref=e1188]: المنطقة
+                    - strong [ref=e1189]: الصديق
+                  - generic [ref=e1190]:
+                    - generic [ref=e1191]: المحافظة
+                    - strong [ref=e1192]: حولي
+                - paragraph [ref=e1193]: "المتابعة الحالية: الحديث 989 الصفحة 400."
+                - generic [ref=e1194]:
+                  - link "التفاصيل" [ref=e1195] [cursor=pointer]:
+                    - /url: /lessons/kw-othman-sahih-muslim-0
+                  - button "مشاركة" [ref=e1196] [cursor=pointer]
+                  - button "نسخ الرابط" [ref=e1197] [cursor=pointer]
+                  - button "نسخ البيانات" [ref=e1198] [cursor=pointer]
+                  - button "إضافة للمفضلة" [ref=e1199] [cursor=pointer]: حفظ
+                  - button "إضافة للتقويم" [ref=e1200] [cursor=pointer]
+                  - link "رابط البث" [ref=e1201] [cursor=pointer]:
+                    - /url: https://reach.link/othmanalkhamees
+                  - link "الموقع" [ref=e1202] [cursor=pointer]:
+                    - /url: https://maps.app.goo.gl/5Bwe3w794cvREzGG8
+            - article [ref=e1204]:
+              - generic [ref=e1205]:
+                - generic [ref=e1206]: تأصيل
+                - generic [ref=e1207]: بعد 12 أشهر
+              - generic [ref=e1208]:
+                - generic [ref=e1209]:
+                  - 'img "الشيخ: مطلق جاسر مطلق الجاسر" [ref=e1211]'
+                  - generic [ref=e1212]:
+                    - heading "دورة طلائع العلم لطلاب العلم المبتدئين الدورة الإلكترونية" [level=3] [ref=e1213]
+                    - paragraph [ref=e1214]: "الشيخ: مطلق جاسر مطلق الجاسر"
+                - generic [ref=e1216]: بث مباشر
+                - generic [ref=e1217]:
+                  - generic [ref=e1218]:
+                    - generic [ref=e1219]: نوع النشاط
+                    - strong [ref=e1220]: دورة
+                  - generic [ref=e1221]:
+                    - generic [ref=e1222]: اليوم
+                    - strong [ref=e1223]: الإثنين
+                  - generic [ref=e1224]:
+                    - generic [ref=e1225]: التاريخ
+                    - strong [ref=e1226]: الاثنين، ٥ يوليو ٢٠٢٧
+                  - generic [ref=e1227]:
+                    - generic [ref=e1228]: التاريخ الهجري
+                    - strong [ref=e1229]: ١ صفر ١٤٤٩ هـ
+                  - generic [ref=e1230]:
+                    - generic [ref=e1231]: الوقت
+                    - strong [ref=e1232]: بعد العشاء
+                  - generic [ref=e1233]:
+                    - generic [ref=e1234]: المكان
+                    - strong [ref=e1235]: إلكتروني
+                  - generic [ref=e1236]:
+                    - generic [ref=e1237]: المنطقة
+                    - strong [ref=e1238]: الكويت
+                - paragraph [ref=e1239]: دورة إلكترونية متكاملة لتأهيل طلاب العلم المبتدئين على منهج علمي أصيل.
+                - generic [ref=e1240]:
+                  - link "التفاصيل" [ref=e1241] [cursor=pointer]:
+                    - /url: /lessons/kw-mutlaq-aljasr-talaeea-elm-0
+                  - button "مشاركة" [ref=e1242] [cursor=pointer]
+                  - button "نسخ الرابط" [ref=e1243] [cursor=pointer]
+                  - button "نسخ البيانات" [ref=e1244] [cursor=pointer]
+                  - button "إضافة للمفضلة" [ref=e1245] [cursor=pointer]: حفظ
+                  - button "إضافة للتقويم" [ref=e1246] [cursor=pointer]
+        - region "الدروس السابقة" [ref=e1247]:
+          - heading "الدروس السابقة" [level=2] [ref=e1248]
+          - generic [ref=e1249]:
+            - article [ref=e1251]:
+              - generic [ref=e1252]:
+                - generic [ref=e1253]: أخرى
+                - generic [ref=e1254]: منتهٍ
+              - generic [ref=e1255]:
+                - generic [ref=e1256]:
+                  - 'img "الشيخ: فيصل زويد" [ref=e1258]'
+                  - generic [ref=e1259]:
+                    - heading "ملتقى إجازتي طاعة إلا من أتى بقلب سليم" [level=3] [ref=e1260]
+                    - paragraph [ref=e1261]: "الشيخ: فيصل زويد"
+                - generic [ref=e1262]:
+                  - generic [ref=e1263]: بث مباشر
+                  - generic [ref=e1264]: 5 لقاءات
+                - generic [ref=e1265]:
+                  - generic [ref=e1266]:
+                    - generic [ref=e1267]: نوع النشاط
+                    - strong [ref=e1268]: دورة
+                  - generic [ref=e1269]:
+                    - generic [ref=e1270]: اليوم
+                    - strong [ref=e1271]: الأحد
+                  - generic [ref=e1272]:
+                    - generic [ref=e1273]: التاريخ
+                    - strong [ref=e1274]: الأحد، ٥ يوليو ٢٠٢٦
+                  - generic [ref=e1275]:
+                    - generic [ref=e1276]: التاريخ الهجري
+                    - strong [ref=e1277]: ٢٠ محرم ١٤٤٨ هـ
+                  - generic [ref=e1278]:
+                    - generic [ref=e1279]: الوقت
+                    - strong [ref=e1280]: بعد المغرب
+                  - generic [ref=e1281]:
+                    - generic [ref=e1282]: المكان
+                    - strong [ref=e1283]: مسجد جبير بن مطعم
+                  - generic [ref=e1284]:
+                    - generic [ref=e1285]: المنطقة
+                    - strong [ref=e1286]: الرابية
+                  - generic [ref=e1287]:
+                    - generic [ref=e1288]: المحافظة
+                    - strong [ref=e1289]: الفروانية
+                  - generic [ref=e1290]:
+                    - generic [ref=e1291]: الجلسات
+                    - strong [ref=e1292]: ليس في العمر إجازة · القرآن ربيع القلوب · إلا من أتى بقلب سليم · الثبات حتى الممات · حياة القلوب
+                - paragraph [ref=e1293]: جميع الدروس بعد صلاة المغرب. · سيتم بث الأنشطة عبر حسابات الجمعية.
+                - generic [ref=e1294]:
+                  - link "التفاصيل" [ref=e1295] [cursor=pointer]:
+                    - /url: /lessons/course-ijazati-taah-2026-2
+                  - button "مشاركة" [ref=e1296] [cursor=pointer]
+                  - button "نسخ الرابط" [ref=e1297] [cursor=pointer]
+                  - button "نسخ البيانات" [ref=e1298] [cursor=pointer]
+                  - button "إضافة للمفضلة" [ref=e1299] [cursor=pointer]: حفظ
+                  - button "إضافة للتقويم" [ref=e1300] [cursor=pointer]
+            - article [ref=e1302]:
+              - generic [ref=e1303]:
+                - generic [ref=e1304]: أخرى
+                - generic [ref=e1305]: منتهٍ
+              - generic [ref=e1306]:
+                - generic [ref=e1307]:
+                  - 'img "الشيخ: نصار خالد نصار العجمي" [ref=e1309]'
+                  - generic [ref=e1310]:
+                    - heading "ملتقى إجازتي طاعة ليس في العمر إجازة" [level=3] [ref=e1311]
+                    - paragraph [ref=e1312]: "الشيخ: نصار خالد نصار العجمي"
+                - generic [ref=e1313]:
+                  - generic [ref=e1314]: بث مباشر
+                  - generic [ref=e1315]: 5 لقاءات
+                - generic [ref=e1316]:
+                  - generic [ref=e1317]:
+                    - generic [ref=e1318]: نوع النشاط
+                    - strong [ref=e1319]: دورة
+                  - generic [ref=e1320]:
+                    - generic [ref=e1321]: اليوم
+                    - strong [ref=e1322]: الأحد
+                  - generic [ref=e1323]:
+                    - generic [ref=e1324]: التاريخ
+                    - strong [ref=e1325]: الأحد، ٥ يوليو ٢٠٢٦
+                  - generic [ref=e1326]:
+                    - generic [ref=e1327]: التاريخ الهجري
+                    - strong [ref=e1328]: ٢٠ محرم ١٤٤٨ هـ
+                  - generic [ref=e1329]:
+                    - generic [ref=e1330]: الوقت
+                    - strong [ref=e1331]: بعد المغرب
+                  - generic [ref=e1332]:
+                    - generic [ref=e1333]: المكان
+                    - strong [ref=e1334]: مسجد صقر الفرماوي
+                  - generic [ref=e1335]:
+                    - generic [ref=e1336]: المنطقة
+                    - strong [ref=e1337]: إشبيلية
+                  - generic [ref=e1338]:
+                    - generic [ref=e1339]: المحافظة
+                    - strong [ref=e1340]: الفروانية
+                  - generic [ref=e1341]:
+                    - generic [ref=e1342]: الجلسات
+                    - strong [ref=e1343]: ليس في العمر إجازة · القرآن ربيع القلوب · إلا من أتى بقلب سليم · الثبات حتى الممات · حياة القلوب
+                - paragraph [ref=e1344]: جميع الدروس بعد صلاة المغرب. · سيتم بث الأنشطة عبر حسابات الجمعية.
+                - generic [ref=e1345]:
+                  - link "التفاصيل" [ref=e1346] [cursor=pointer]:
+                    - /url: /lessons/course-ijazati-taah-2026-0
+                  - button "مشاركة" [ref=e1347] [cursor=pointer]
+                  - button "نسخ الرابط" [ref=e1348] [cursor=pointer]
+                  - button "نسخ البيانات" [ref=e1349] [cursor=pointer]
+                  - button "إضافة للمفضلة" [ref=e1350] [cursor=pointer]: حفظ
+                  - button "إضافة للتقويم" [ref=e1351] [cursor=pointer]
+            - article [ref=e1353]:
+              - generic [ref=e1354]:
+                - generic [ref=e1355]: أخرى
+                - generic [ref=e1356]: منتهٍ
+              - generic [ref=e1357]:
+                - generic [ref=e1358]:
+                  - 'img "الشيخ: سعد هزاع العتيبي" [ref=e1360]'
+                  - generic [ref=e1361]:
+                    - heading "ملتقى إجازتي طاعة الثبات حتى الممات" [level=3] [ref=e1362]
+                    - paragraph [ref=e1363]: "الشيخ: سعد هزاع العتيبي"
+                - generic [ref=e1364]:
+                  - generic [ref=e1365]: بث مباشر
+                  - generic [ref=e1366]: 5 لقاءات
+                - generic [ref=e1367]:
+                  - generic [ref=e1368]:
+                    - generic [ref=e1369]: نوع النشاط
+                    - strong [ref=e1370]: دورة
+                  - generic [ref=e1371]:
+                    - generic [ref=e1372]: اليوم
+                    - strong [ref=e1373]: الاثنين
+                  - generic [ref=e1374]:
+                    - generic [ref=e1375]: التاريخ
+                    - strong [ref=e1376]: الاثنين، ٦ يوليو ٢٠٢٦
+                  - generic [ref=e1377]:
+                    - generic [ref=e1378]: التاريخ الهجري
+                    - strong [ref=e1379]: ٢١ محرم ١٤٤٨ هـ
+                  - generic [ref=e1380]:
+                    - generic [ref=e1381]: الوقت
+                    - strong [ref=e1382]: بعد المغرب
+                  - generic [ref=e1383]:
+                    - generic [ref=e1384]: المكان
+                    - strong [ref=e1385]: مسجد محمد الحبيب
+                  - generic [ref=e1386]:
+                    - generic [ref=e1387]: المنطقة
+                    - strong [ref=e1388]: خيطان
+                  - generic [ref=e1389]:
+                    - generic [ref=e1390]: المحافظة
+                    - strong [ref=e1391]: الفروانية
+                  - generic [ref=e1392]:
+                    - generic [ref=e1393]: الجلسات
+                    - strong [ref=e1394]: ليس في العمر إجازة · القرآن ربيع القلوب · إلا من أتى بقلب سليم · الثبات حتى الممات · حياة القلوب
+                - paragraph [ref=e1395]: جميع الدروس بعد صلاة المغرب. · سيتم بث الأنشطة عبر حسابات الجمعية.
+                - generic [ref=e1396]:
+                  - link "التفاصيل" [ref=e1397] [cursor=pointer]:
+                    - /url: /lessons/course-ijazati-taah-2026-3
+                  - button "مشاركة" [ref=e1398] [cursor=pointer]
+                  - button "نسخ الرابط" [ref=e1399] [cursor=pointer]
+                  - button "نسخ البيانات" [ref=e1400] [cursor=pointer]
+                  - button "إضافة للمفضلة" [ref=e1401] [cursor=pointer]: حفظ
+                  - button "إضافة للتقويم" [ref=e1402] [cursor=pointer]
+            - article [ref=e1404]:
+              - generic [ref=e1405]:
+                - generic [ref=e1406]: أخرى
+                - generic [ref=e1407]: منتهٍ
+              - generic [ref=e1408]:
+                - generic [ref=e1409]:
+                  - 'img "الشيخ: بندر محمد الميموني" [ref=e1411]'
+                  - generic [ref=e1412]:
+                    - heading "ملتقى إجازتي طاعة حياة القلوب" [level=3] [ref=e1413]
+                    - paragraph [ref=e1414]: "الشيخ: بندر محمد الميموني"
+                - generic [ref=e1415]:
+                  - generic [ref=e1416]: بث مباشر
+                  - generic [ref=e1417]: 5 لقاءات
+                - generic [ref=e1418]:
+                  - generic [ref=e1419]:
+                    - generic [ref=e1420]: نوع النشاط
+                    - strong [ref=e1421]: دورة
+                  - generic [ref=e1422]:
+                    - generic [ref=e1423]: اليوم
+                    - strong [ref=e1424]: الثلاثاء
+                  - generic [ref=e1425]:
+                    - generic [ref=e1426]: التاريخ
+                    - strong [ref=e1427]: الثلاثاء، ٧ يوليو ٢٠٢٦
+                  - generic [ref=e1428]:
+                    - generic [ref=e1429]: التاريخ الهجري
+                    - strong [ref=e1430]: ٢٢ محرم ١٤٤٨ هـ
+                  - generic [ref=e1431]:
+                    - generic [ref=e1432]: الوقت
+                    - strong [ref=e1433]: بعد المغرب
+                  - generic [ref=e1434]:
+                    - generic [ref=e1435]: المكان
+                    - strong [ref=e1436]: مسجد مجاهد بن جبر
+                  - generic [ref=e1437]:
+                    - generic [ref=e1438]: المنطقة
+                    - strong [ref=e1439]: الرحاب
+                  - generic [ref=e1440]:
+                    - generic [ref=e1441]: المحافظة
+                    - strong [ref=e1442]: الفروانية
+                  - generic [ref=e1443]:
+                    - generic [ref=e1444]: الجلسات
+                    - strong [ref=e1445]: ليس في العمر إجازة · القرآن ربيع القلوب · إلا من أتى بقلب سليم · الثبات حتى الممات · حياة القلوب
+                - paragraph [ref=e1446]: جميع الدروس بعد صلاة المغرب. · سيتم بث الأنشطة عبر حسابات الجمعية.
+                - generic [ref=e1447]:
+                  - link "التفاصيل" [ref=e1448] [cursor=pointer]:
+                    - /url: /lessons/course-ijazati-taah-2026-4
+                  - button "مشاركة" [ref=e1449] [cursor=pointer]
+                  - button "نسخ الرابط" [ref=e1450] [cursor=pointer]
+                  - button "نسخ البيانات" [ref=e1451] [cursor=pointer]
+                  - button "إضافة للمفضلة" [ref=e1452] [cursor=pointer]: حفظ
+                  - button "إضافة للتقويم" [ref=e1453] [cursor=pointer]
+            - article [ref=e1455]:
+              - generic [ref=e1456]:
+                - generic [ref=e1457]: أخرى
+                - generic [ref=e1458]: منتهٍ
+              - generic [ref=e1459]:
+                - generic [ref=e1460]:
+                  - 'img "الشيخ: حامد علي المسعد" [ref=e1462]'
+                  - generic [ref=e1463]:
+                    - heading "ملتقى إجازتي طاعة القرآن ربيع القلوب" [level=3] [ref=e1464]
+                    - paragraph [ref=e1465]: "الشيخ: حامد علي المسعد"
+                - generic [ref=e1466]:
+                  - generic [ref=e1467]: بث مباشر
+                  - generic [ref=e1468]: 5 لقاءات
+                - generic [ref=e1469]:
+                  - generic [ref=e1470]:
+                    - generic [ref=e1471]: نوع النشاط
+                    - strong [ref=e1472]: دورة
+                  - generic [ref=e1473]:
+                    - generic [ref=e1474]: اليوم
+                    - strong [ref=e1475]: الثلاثاء
+                  - generic [ref=e1476]:
+                    - generic [ref=e1477]: التاريخ
+                    - strong [ref=e1478]: الثلاثاء، ٧ يوليو ٢٠٢٦
+                  - generic [ref=e1479]:
+                    - generic [ref=e1480]: التاريخ الهجري
+                    - strong [ref=e1481]: ٢٢ محرم ١٤٤٨ هـ
+                  - generic [ref=e1482]:
+                    - generic [ref=e1483]: الوقت
+                    - strong [ref=e1484]: بعد المغرب
+                  - generic [ref=e1485]:
+                    - generic [ref=e1486]: المكان
+                    - strong [ref=e1487]: مسجد سهل بن سعد
+                  - generic [ref=e1488]:
+                    - generic [ref=e1489]: المنطقة
+                    - strong [ref=e1490]: الرحاب
+                  - generic [ref=e1491]:
+                    - generic [ref=e1492]: المحافظة
+                    - strong [ref=e1493]: الفروانية
+                  - generic [ref=e1494]:
+                    - generic [ref=e1495]: الجلسات
+                    - strong [ref=e1496]: ليس في العمر إجازة · القرآن ربيع القلوب · إلا من أتى بقلب سليم · الثبات حتى الممات · حياة القلوب
+                - paragraph [ref=e1497]: جميع الدروس بعد صلاة المغرب. · سيتم بث الأنشطة عبر حسابات الجمعية.
+                - generic [ref=e1498]:
+                  - link "التفاصيل" [ref=e1499] [cursor=pointer]:
+                    - /url: /lessons/course-ijazati-taah-2026-1
+                  - button "مشاركة" [ref=e1500] [cursor=pointer]
+                  - button "نسخ الرابط" [ref=e1501] [cursor=pointer]
+                  - button "نسخ البيانات" [ref=e1502] [cursor=pointer]
+                  - button "إضافة للمفضلة" [ref=e1503] [cursor=pointer]: حفظ
+                  - button "إضافة للتقويم" [ref=e1504] [cursor=pointer]
+            - article [ref=e1506]:
+              - generic [ref=e1507]:
+                - generic [ref=e1508]: أخرى
+                - generic [ref=e1509]: منتهٍ
+              - generic [ref=e1510]:
+                - generic [ref=e1511]:
+                  - 'img "الشيخ: محمد ضاوي العصيمي" [ref=e1513]'
+                  - generic [ref=e1514]:
+                    - heading "فاضت" [level=3] [ref=e1515]
+                    - paragraph [ref=e1516]: "الشيخ: محمد ضاوي العصيمي"
+                - generic [ref=e1518]: بث مباشر
+                - generic [ref=e1519]:
+                  - generic [ref=e1520]:
+                    - generic [ref=e1521]: نوع النشاط
+                    - strong [ref=e1522]: درس
+                  - generic [ref=e1523]:
+                    - generic [ref=e1524]: اليوم
+                    - strong [ref=e1525]: الثلاثاء
+                  - generic [ref=e1526]:
+                    - generic [ref=e1527]: التاريخ
+                    - strong [ref=e1528]: الثلاثاء، ٧ يوليو ٢٠٢٦
+                  - generic [ref=e1529]:
+                    - generic [ref=e1530]: التاريخ الهجري
+                    - strong [ref=e1531]: ٢٢ محرم ١٤٤٨ هـ
+                  - generic [ref=e1532]:
+                    - generic [ref=e1533]: الوقت
+                    - strong [ref=e1534]: بعد المغرب
+                  - generic [ref=e1535]:
+                    - generic [ref=e1536]: المكان
+                    - strong [ref=e1537]: مسجد حصن الصقر
+                  - generic [ref=e1538]:
+                    - generic [ref=e1539]: المنطقة
+                    - strong [ref=e1540]: الرقعي بجانب صالة الأفراح
+                  - generic [ref=e1541]:
+                    - generic [ref=e1542]: المحافظة
+                    - strong [ref=e1543]: الفروانية
+                - paragraph [ref=e1544]: درس إيماني يعالج رقة القلب وزيادة الإيمان وأثر المواعظ في حياة المسلم. · يهدف إلى تذكير المسلم بالله تعالى، وإحياء القلب، وتعظيم مراقبة الله، وترقيق النفس بالكتاب والسنة. · للرجال يوجد مكان مخصص للنساء. · بث مباشر عبر إنستغرام.
+                - generic [ref=e1545]:
+                  - link "التفاصيل" [ref=e1546] [cursor=pointer]:
+                    - /url: /lessons/sci-fadat-dawwi-al-usaimi
+                  - button "مشاركة" [ref=e1547] [cursor=pointer]
+                  - button "نسخ الرابط" [ref=e1548] [cursor=pointer]
+                  - button "نسخ البيانات" [ref=e1549] [cursor=pointer]
+                  - button "إضافة للمفضلة" [ref=e1550] [cursor=pointer]: حفظ
+                  - button "إضافة للتقويم" [ref=e1551] [cursor=pointer]
+                  - link "رابط البث" [ref=e1552] [cursor=pointer]:
+                    - /url: https://www.instagram.com/dr_alosimi/
+                  - link "الموقع" [ref=e1553] [cursor=pointer]:
+                    - /url: https://www.google.com/maps/search/?api=1&query=%D9%85%D8%B3%D8%AC%D8%AF+%D8%AD%D8%B5%D9%86+%D8%A7%D9%84%D8%B5%D9%82%D8%B1+%D8%A7%D9%84%D8%B1%D9%82%D8%B9%D9%8A+%D8%A7%D9%84%D9%83%D9%88%D9%8A%D8%AA
+            - article [ref=e1555]:
+              - generic [ref=e1556]:
+                - generic [ref=e1557]: أخرى
+                - generic [ref=e1558]: منتهٍ
+              - generic [ref=e1559]:
+                - generic [ref=e1560]:
+                  - 'img "الشيخ: مطلق جاسر مطلق الجاسر" [ref=e1562]'
+                  - generic [ref=e1563]:
+                    - heading "دورة إلكترونية لطلاب العلم المبتدئين" [level=3] [ref=e1564]
+                    - paragraph [ref=e1565]: "الشيخ: مطلق جاسر مطلق الجاسر"
+                - generic [ref=e1567]:
+                  - generic [ref=e1568]: نوع النشاط
+                  - strong [ref=e1569]: دورة
+                - paragraph [ref=e1570]: "8 متون في 8 علوم خلال شهرين (حسب الإعلان الأصلي). · الدراسة مجانية عن بُعد الدروس مسجلة. · متابعة يومية على التلغرام. · شهادة بعد اجتياز كل متن بنجاح. · جميع متون الدورة متاحة بصيغة PDF. · المتون: تفسير الفاتحة والمعوذات، من جوامع كلم النبي ﷺ، القول السديد، المسائل الفقهية للشيخ عبدالله بن خلف الدحيان، قصيدة السير إلى الله، الأرجوزة الميئية في السيرة، منظومة درة الطالب، مكارم الأخلاق لابن عثيمين."
+                - generic [ref=e1571]:
+                  - link "التفاصيل" [ref=e1572] [cursor=pointer]:
+                    - /url: /lessons/sci-talae-alilm-murtaqaa
+                  - button "مشاركة" [ref=e1573] [cursor=pointer]
+                  - button "نسخ الرابط" [ref=e1574] [cursor=pointer]
+                  - button "نسخ البيانات" [ref=e1575] [cursor=pointer]
+                  - button "إضافة للمفضلة" [ref=e1576] [cursor=pointer]: حفظ
+                  - button "إضافة للتقويم" [ref=e1577] [cursor=pointer]
+      - generic [ref=e1578]:
+        - generic [ref=e1579]:
+          - strong [ref=e1580]: "25"
+          - text: درس
+        - generic [ref=e1581]:
+          - strong [ref=e1582]: "9"
+          - text: دورة
+        - generic [ref=e1583]:
+          - strong [ref=e1584]: "11"
+          - text: شيخ
+        - generic [ref=e1585]:
+          - strong [ref=e1586]: "17"
+          - text: مسجد
+        - generic [ref=e1587]:
+          - strong [ref=e1588]: الأحد، ٥ يوليو ٢٠٢٦
+          - text: آخر تحديث
+  - contentinfo "تذييل موقع المجلس العلمي" [ref=e1589]:
+    - generic [ref=e1590]:
+      - generic [ref=e1591]:
+        - img [ref=e1592]
+        - img [ref=e1595]
+        - generic [ref=e1596]:
+          - strong [ref=e1597]: المجلس العلمي
+          - paragraph [ref=e1598]: تطبيق علمي شرعي للدروس والعبادة والمحتوى اليومي.
+          - paragraph [ref=e1599]:
+            - link "yalabdullmohsen1@gmail.com" [ref=e1600] [cursor=pointer]:
+              - /url: mailto:yalabdullmohsen1@gmail.com
+      - generic [ref=e1601]:
+        - generic [ref=e1602]:
+          - paragraph [ref=e1603]: المحتوى
+          - navigation [ref=e1604]:
+            - link "الدروس" [ref=e1605] [cursor=pointer]:
+              - /url: /lessons
+            - link "الفوائد" [ref=e1606] [cursor=pointer]:
+              - /url: /fawaid
+            - link "الأحاديث" [ref=e1607] [cursor=pointer]:
+              - /url: /hadith
+            - link "القصص" [ref=e1608] [cursor=pointer]:
+              - /url: /stories
+            - link "الأسئلة" [ref=e1609] [cursor=pointer]:
+              - /url: /qa
+        - generic [ref=e1610]:
+          - paragraph [ref=e1611]: العبادة
+          - navigation [ref=e1612]:
+            - link "القرآن" [ref=e1613] [cursor=pointer]:
+              - /url: /quran
+            - link "الأذكار" [ref=e1614] [cursor=pointer]:
+              - /url: /adhkar
+            - link "مواقيت الصلاة" [ref=e1615] [cursor=pointer]:
+              - /url: /prayer-times
+            - link "التسابيح" [ref=e1616] [cursor=pointer]:
+              - /url: /tasbih
+        - generic [ref=e1617]:
+          - paragraph [ref=e1618]: التطبيق
+          - navigation [ref=e1619]:
+            - link "من نحن" [ref=e1620] [cursor=pointer]:
+              - /url: /about
+            - link "تواصل معنا" [ref=e1621] [cursor=pointer]:
+              - /url: /contact
+            - link "مميزات قيد التطوير" [ref=e1622] [cursor=pointer]:
+              - /url: /features-in-progress
+            - link "الخصوصية" [ref=e1623] [cursor=pointer]:
+              - /url: /privacy
+            - link "الشروط" [ref=e1624] [cursor=pointer]:
+              - /url: /terms
+      - paragraph [ref=e1625]: © 2026 المجلس العلمي
+  - navigation "التنقل السفلي" [ref=e1626]:
+    - link "الرئيسية" [ref=e1627] [cursor=pointer]:
+      - /url: /
+      - img [ref=e1629]
+      - generic [ref=e1632]: الرئيسية
+    - link "الدروس" [ref=e1633] [cursor=pointer]:
+      - /url: /lessons
+      - img [ref=e1635]
+      - generic [ref=e1638]: الدروس
+    - 'link "الصلاة القادمة: العصر 3:27 م" [ref=e1639] [cursor=pointer]':
+      - /url: /prayer-times
+      - generic [ref=e1640]:
+        - img [ref=e1641]
+        - generic: 3:27 م
+      - generic [ref=e1646]: الصلاة
+    - link "القرآن" [ref=e1647] [cursor=pointer]:
+      - /url: /quran
+      - img [ref=e1649]
+      - generic [ref=e1651]: القرآن
+    - button "قائمة التطبيق" [ref=e1652] [cursor=pointer]:
+      - img [ref=e1654]
+      - generic [ref=e1659]: المزيد
+```

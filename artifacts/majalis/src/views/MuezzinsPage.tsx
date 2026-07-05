@@ -49,7 +49,7 @@ function MuezzinCard({ muezzin, onPreview, previewing, isFav, onToggleFav }: {
 
   return (
     <div style={{
-      background: "#fff",
+      background: "var(--majalis-panel, rgba(255,255,255,0.08))",
       borderRadius: "1rem",
       border: `1.5px solid ${isFav ? "#bbf7d0" : "#e5e7eb"}`,
       padding: "1.1rem 1rem",
@@ -61,7 +61,7 @@ function MuezzinCard({ muezzin, onPreview, previewing, isFav, onToggleFav }: {
       {/* Header */}
       <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "0.5rem" }}>
         <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ fontWeight: 700, fontSize: "0.95rem", color: "#111827", marginBottom: "0.15rem" }}>
+          <div style={{ fontWeight: 700, fontSize: "0.95rem", color: "var(--majalis-ink)", marginBottom: "0.15rem" }}>
             {muezzin.name}
           </div>
           <div style={{ fontSize: "0.75rem", color: "#6b7280" }}>
@@ -101,7 +101,7 @@ function MuezzinCard({ muezzin, onPreview, previewing, isFav, onToggleFav }: {
       {/* Rating row */}
       <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
         <StarRating rating={muezzin.rating} />
-        <span style={{ fontSize: "0.78rem", fontWeight: 600, color: "#374151" }}>{muezzin.rating}</span>
+        <span style={{ fontSize: "0.78rem", fontWeight: 600, color: "var(--majalis-ink-soft)" }}>{muezzin.rating}</span>
         <span style={{ fontSize: "0.72rem", color: "#9ca3af" }}>({formatNum(muezzin.totalRatings)} تقييم)</span>
       </div>
 
@@ -139,7 +139,7 @@ function MuezzinCard({ muezzin, onPreview, previewing, isFav, onToggleFav }: {
               borderRadius: "0.5rem",
               border: "1.5px solid #134a3a",
               background: "transparent",
-              color: "#134a3a",
+              color: "var(--majalis-emerald)",
               fontSize: "0.8rem",
               fontWeight: 600,
               cursor: "pointer",
@@ -234,10 +234,10 @@ export default function MuezzinsPage() {
       <div style={{ marginBottom: "1.25rem" }}>
         <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between" }}>
           <div>
-            <p style={{ fontSize: "0.75rem", color: "#134a3a", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.06em", margin: "0 0 0.25rem" }}>
+            <p style={{ fontSize: "0.75rem", color: "var(--majalis-emerald)", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.06em", margin: "0 0 0.25rem" }}>
               الأذان
             </p>
-            <h1 style={{ fontSize: "1.4rem", fontWeight: 800, color: "#111827", margin: "0 0 0.35rem" }}>
+            <h1 style={{ fontSize: "1.4rem", fontWeight: 800, color: "var(--majalis-ink)", margin: "0 0 0.35rem" }}>
               🎙️ مكتبة المؤذنين
             </h1>
           </div>
@@ -266,7 +266,7 @@ export default function MuezzinsPage() {
 
       {/* Default muezzin banner */}
       {defaultSet && (
-        <div style={{ background: "#f0fdf4", border: "1px solid #bbf7d0", borderRadius: "0.6rem", padding: "0.6rem 0.875rem", marginBottom: "1rem", fontSize: "0.82rem", color: "#065f46", fontWeight: 600 }}>
+        <div style={{ background: "rgba(46,139,103,0.10)", border: "1px solid rgba(46,139,103,0.25)", borderRadius: "0.6rem", padding: "0.6rem 0.875rem", marginBottom: "1rem", fontSize: "0.82rem", color: "var(--majalis-emerald)", fontWeight: 600 }}>
           ✓ تم تعيين المؤذن الافتراضي بنجاح
         </div>
       )}
@@ -283,11 +283,11 @@ export default function MuezzinsPage() {
             width: "100%",
             padding: "0.65rem 2.25rem 0.65rem 0.875rem",
             borderRadius: "0.75rem",
-            border: "1.5px solid #e5e7eb",
+            border: "1.5px solid rgba(255,255,255,0.10)",
             fontSize: "0.875rem",
             fontFamily: "inherit",
             direction: "rtl",
-            background: "#fff",
+            background: "var(--majalis-panel, rgba(255,255,255,0.08))",
             boxSizing: "border-box",
             outline: "none",
           }}
@@ -404,7 +404,7 @@ export default function MuezzinsPage() {
       {community.length > 0 && (
         <div style={{ marginTop: "2rem" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.875rem" }}>
-            <h2 style={{ fontSize: "0.95rem", fontWeight: 700, color: "#111827", margin: 0 }}>
+            <h2 style={{ fontSize: "0.95rem", fontWeight: 700, color: "var(--majalis-ink)", margin: 0 }}>
               🌍 أذانات من المجتمع
             </h2>
             {isAdmin && (
@@ -450,7 +450,7 @@ export default function MuezzinsPage() {
       }}>
         <div style={{ fontSize: "2rem" }}>🎙️</div>
         <div style={{ flex: 1 }}>
-          <div style={{ fontWeight: 700, fontSize: "0.95rem", color: "#134a3a", marginBottom: "0.2rem" }}>
+          <div style={{ fontWeight: 700, fontSize: "0.95rem", color: "var(--majalis-emerald)", marginBottom: "0.2rem" }}>
             هل لديك تسجيل أذان جميل؟
           </div>
           <div style={{ fontSize: "0.8rem", color: "#6b7280" }}>
@@ -479,7 +479,7 @@ export default function MuezzinsPage() {
               borderRadius: "0.6rem",
               border: "1.5px solid #134a3a",
               background: "transparent",
-              color: "#134a3a",
+              color: "var(--majalis-emerald)",
               fontSize: "0.82rem",
               fontWeight: 600,
               cursor: "pointer",
@@ -494,7 +494,7 @@ export default function MuezzinsPage() {
       {/* Link to settings */}
       <div style={{ marginTop: "1.25rem", textAlign: "center" }}>
         <Link href="/adhan-settings">
-          <span style={{ fontSize: "0.82rem", color: "#134a3a", fontWeight: 600, textDecoration: "underline", cursor: "pointer" }}>
+          <span style={{ fontSize: "0.82rem", color: "var(--majalis-emerald)", fontWeight: 600, textDecoration: "underline", cursor: "pointer" }}>
             إعدادات الأذان التفصيلية ←
           </span>
         </Link>
@@ -511,7 +511,7 @@ function CommunityMuezzinCard({ muezzin, previewing, onPreview }: {
   const isPlaying = previewing === muezzin.id;
   return (
     <div style={{
-      background: "#fff",
+      background: "var(--majalis-panel, rgba(255,255,255,0.08))",
       borderRadius: "1rem",
       border: "1.5px solid #bfdbfe",
       padding: "1rem",
@@ -521,7 +521,7 @@ function CommunityMuezzinCard({ muezzin, previewing, onPreview }: {
     }}>
       <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between" }}>
         <div>
-          <div style={{ fontWeight: 700, fontSize: "0.875rem", color: "#111827" }}>{muezzin.name}</div>
+          <div style={{ fontWeight: 700, fontSize: "0.875rem", color: "var(--majalis-ink)" }}>{muezzin.name}</div>
           <div style={{ fontSize: "0.72rem", color: "#6b7280" }}>📍 {muezzin.origin} · {muezzin.country}</div>
         </div>
         <span style={{ padding: "0.15rem 0.45rem", borderRadius: "999px", fontSize: "0.65rem", fontWeight: 700, background: "#eff6ff", color: "#1d4ed8" }}>
@@ -563,11 +563,11 @@ function CommunityMuezzinCard({ muezzin, previewing, onPreview }: {
 const selectStyle: React.CSSProperties = {
   padding: "0.45rem 0.75rem",
   borderRadius: "0.6rem",
-  border: "1.5px solid #e5e7eb",
-  background: "#fff",
+  border: "1.5px solid rgba(255,255,255,0.10)",
+  background: "var(--majalis-panel, rgba(255,255,255,0.08))",
   fontSize: "0.8rem",
   fontFamily: "inherit",
-  color: "#374151",
+  color: "var(--majalis-ink-soft)",
   cursor: "pointer",
   direction: "rtl",
 };

@@ -2,10 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import { MUEZZINS, previewAdhan, stopAdhan, type Muezzin } from "@/lib/adhan-audio";
 
 const STYLE_COLOR: Record<string, string> = {
-  "خاشع":    "#065f46",
-  "رسمي":    "#1d4ed8",
-  "تقليدي":  "#7c3aed",
-  "كلاسيكي": "#0E6E52",
+  "خاشع":    "var(--majalis-emerald, #2E8B67)",
+  "رسمي":    "#60A5FA",
+  "تقليدي":  "#A78BFA",
+  "كلاسيكي": "var(--majalis-emerald, #2E8B67)",
 };
 
 type Props = {
@@ -48,33 +48,36 @@ export function MuezzinPicker({ selected, onSelect, onClose }: Props) {
       position: "fixed",
       inset: 0,
       zIndex: 3000,
-      background: "rgba(0,0,0,0.5)",
+      background: "rgba(0,0,0,0.65)",
       display: "flex",
       alignItems: "flex-end",
       justifyContent: "center",
     }} onClick={onClose}>
       <div
         style={{
-          background: "#fff",
+          background: "var(--majalis-panel-raised, rgba(20,27,45,0.97))",
           borderRadius: "1.25rem 1.25rem 0 0",
           width: "min(100vw, 540px)",
           maxHeight: "82vh",
           overflowY: "auto",
           direction: "rtl",
           padding: "0 0 2rem",
+          border: "1px solid rgba(255,255,255,0.10)",
+          borderBottom: "none",
+          boxShadow: "0 -8px 40px rgba(0,0,0,0.50)",
         }}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Handle */}
         <div style={{ display: "flex", justifyContent: "center", padding: "0.75rem 0 0" }}>
-          <div style={{ width: 40, height: 4, borderRadius: 999, background: "#e5e7eb" }} />
+          <div style={{ width: 40, height: 4, borderRadius: 999, background: "rgba(255,255,255,0.15)" }} />
         </div>
 
         <div style={{ padding: "1rem 1.25rem 0.5rem" }}>
-          <h3 style={{ margin: 0, fontSize: "1.05rem", fontWeight: 700, color: "#134a3a" }}>
+          <h3 style={{ margin: 0, fontSize: "1.05rem", fontWeight: 700, color: "var(--majalis-emerald, #2E8B67)" }}>
             اختر المؤذن
           </h3>
-          <p style={{ margin: "0.3rem 0 0", fontSize: "0.78rem", color: "#6b7280" }}>
+          <p style={{ margin: "0.3rem 0 0", fontSize: "0.78rem", color: "var(--majalis-ink-muted, #9BA3B5)" }}>
             اضغط ▶ للمعاينة • اضغط الاسم للاختيار
           </p>
         </div>
@@ -83,7 +86,7 @@ export function MuezzinPicker({ selected, onSelect, onClose }: Props) {
           {MUEZZINS.map((m) => {
             const isSelected = selected === m.id;
             const isPlaying = previewing === m.id;
-            const styleColor = STYLE_COLOR[m.style] ?? "#374151";
+            const styleColor = STYLE_COLOR[m.style] ?? "var(--majalis-ink-soft)";
             return (
               <div
                 key={m.id}
@@ -94,8 +97,8 @@ export function MuezzinPicker({ selected, onSelect, onClose }: Props) {
                   padding: "0.75rem 0.875rem",
                   borderRadius: "0.75rem",
                   marginBottom: "0.4rem",
-                  background: isSelected ? "#f0fdf4" : "#fafafa",
-                  border: `1.5px solid ${isSelected ? "#134a3a" : "#f3f4f6"}`,
+                  background: isSelected ? "rgba(46,139,103,0.15)" : "rgba(255,255,255,0.04)",
+                  border: `1.5px solid ${isSelected ? "var(--majalis-emerald, #2E8B67)" : "rgba(255,255,255,0.08)"}`,
                   cursor: "pointer",
                   transition: "border-color 0.15s, background 0.15s",
                 }}
@@ -105,8 +108,8 @@ export function MuezzinPicker({ selected, onSelect, onClose }: Props) {
                 <div style={{
                   width: 18, height: 18,
                   borderRadius: "50%",
-                  border: `2px solid ${isSelected ? "#134a3a" : "#d1d5db"}`,
-                  background: isSelected ? "#134a3a" : "transparent",
+                  border: `2px solid ${isSelected ? "var(--majalis-emerald, #2E8B67)" : "rgba(255,255,255,0.25)"}`,
+                  background: isSelected ? "var(--majalis-emerald, #2E8B67)" : "transparent",
                   flexShrink: 0,
                   display: "flex", alignItems: "center", justifyContent: "center",
                 }}>
@@ -115,17 +118,17 @@ export function MuezzinPicker({ selected, onSelect, onClose }: Props) {
 
                 {/* Info */}
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontWeight: 600, fontSize: "0.9rem", color: "#111827" }}>
+                  <div style={{ fontWeight: 600, fontSize: "0.9rem", color: "var(--majalis-ink, #EDE9DD)" }}>
                     {m.name}
                   </div>
-                  <div style={{ fontSize: "0.73rem", color: "#6b7280", marginTop: "0.1rem" }}>
+                  <div style={{ fontSize: "0.73rem", color: "var(--majalis-ink-muted, #9BA3B5)", marginTop: "0.1rem" }}>
                     {m.origin}
                     <span style={{
                       marginRight: "0.5rem",
                       padding: "0.1rem 0.4rem",
                       borderRadius: "999px",
                       fontSize: "0.68rem",
-                      background: `${styleColor}18`,
+                      background: `rgba(46,139,103,0.15)`,
                       color: styleColor,
                       fontWeight: 600,
                     }}>
@@ -144,7 +147,7 @@ export function MuezzinPicker({ selected, onSelect, onClose }: Props) {
                     height: 34,
                     borderRadius: "50%",
                     border: "none",
-                    background: isPlaying ? "#ef4444" : "#134a3a",
+                    background: isPlaying ? "var(--msk-red, #C1595A)" : "var(--majalis-emerald, #2E8B67)",
                     color: "#fff",
                     cursor: "pointer",
                     fontSize: "0.85rem",

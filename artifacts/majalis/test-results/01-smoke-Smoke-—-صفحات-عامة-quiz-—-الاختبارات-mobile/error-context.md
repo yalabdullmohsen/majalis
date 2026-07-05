@@ -1,0 +1,165 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: 01-smoke.spec.ts >> Smoke — صفحات عامة >> [/quiz] — الاختبارات
+- Location: tests/01-smoke.spec.ts:41:5
+
+# Error details
+
+```
+Test timeout of 30000ms exceeded.
+```
+
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - link "تخطّي إلى المحتوى" [ref=e4] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=e5]:
+    - generic [ref=e6]:
+      - generic [ref=e7]:
+        - button "القائمة" [ref=e8] [cursor=pointer]:
+          - img [ref=e9]
+          - generic [ref=e11]: القائمة
+        - link "المجلس العلمي" [ref=e12] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e13]: المجلس العلمي
+      - button "البحث الشامل (⌘K)" [ref=e15] [cursor=pointer]:
+        - img [ref=e16]
+        - generic [ref=e19]: ⌘K
+  - main [ref=e20]:
+    - generic [ref=e23]:
+      - generic [ref=e24]:
+        - generic [ref=e25]: 🕌
+        - heading "لعبة سؤال وجواب" [level=1] [ref=e26]
+        - paragraph [ref=e27]: لعبة جماعية تنافسية بطابع إسلامي — فريقان يتنافسان على النقاط
+      - generic [ref=e28]:
+        - heading "🏆 أسماء الفريقين" [level=2] [ref=e29]
+        - generic [ref=e30]:
+          - generic [ref=e31]:
+            - generic [ref=e32]: الفريق الأول
+            - textbox [ref=e33]: الفريق الأول
+          - generic [ref=e34]:
+            - generic [ref=e35]: الفريق الثاني
+            - textbox [ref=e36]: الفريق الثاني
+      - generic [ref=e37]:
+        - generic [ref=e38]:
+          - heading "📚 اختر الفئات" [level=2] [ref=e39]
+          - generic [ref=e40]: 0/6 (2 كحد أدنى)
+        - generic [ref=e41]:
+          - button "القرآن الكريم" [ref=e42] [cursor=pointer]:
+            - img [ref=e44]
+            - text: القرآن الكريم
+          - button "الحديث الشريف" [ref=e46] [cursor=pointer]:
+            - img [ref=e48]
+            - text: الحديث الشريف
+          - button "السيرة النبوية" [ref=e51] [cursor=pointer]:
+            - img [ref=e53]
+            - text: السيرة النبوية
+          - button "قصص الأنبياء" [ref=e55] [cursor=pointer]:
+            - img [ref=e57]
+            - text: قصص الأنبياء
+          - button "الفقه" [ref=e59] [cursor=pointer]:
+            - img [ref=e61]
+            - text: الفقه
+          - button "العقيدة" [ref=e65] [cursor=pointer]:
+            - img [ref=e67]
+            - text: العقيدة
+          - button "التاريخ الإسلامي" [ref=e71] [cursor=pointer]:
+            - img [ref=e73]
+            - text: التاريخ الإسلامي
+          - button "الأخلاق والصحابة" [ref=e75] [cursor=pointer]:
+            - img [ref=e77]
+            - text: الأخلاق والصحابة
+      - generic [ref=e80]:
+        - heading "⚡ وسائل المساعدة (لكل فريق 3 وسائل)" [level=3] [ref=e81]
+        - generic [ref=e82]:
+          - generic [ref=e83]:
+            - generic [ref=e84]: خصم نقاط
+            - generic [ref=e85]: تُخصم نقاط الخلية من رصيد الخصم
+          - generic [ref=e86]:
+            - generic [ref=e87]: استبعاد لاعب
+            - generic [ref=e88]: يُستبعد لاعب من الفريق المنافس
+          - generic [ref=e89]:
+            - generic [ref=e90]: تمرير السؤال
+            - generic [ref=e91]: يُحوَّل السؤال للفريق المنافس
+      - button "اختر فئتين على الأقل" [disabled] [ref=e92]
+  - contentinfo "تذييل موقع المجلس العلمي" [ref=e93]:
+    - generic [ref=e94]:
+      - generic [ref=e95]:
+        - img [ref=e96]
+        - img [ref=e99]
+        - generic [ref=e100]:
+          - strong [ref=e101]: المجلس العلمي
+          - paragraph [ref=e102]: تطبيق علمي شرعي للدروس والعبادة والمحتوى اليومي.
+          - paragraph [ref=e103]:
+            - link "yalabdullmohsen1@gmail.com" [ref=e104] [cursor=pointer]:
+              - /url: mailto:yalabdullmohsen1@gmail.com
+      - generic [ref=e105]:
+        - generic [ref=e106]:
+          - paragraph [ref=e107]: المحتوى
+          - navigation [ref=e108]:
+            - link "الدروس" [ref=e109] [cursor=pointer]:
+              - /url: /lessons
+            - link "الفوائد" [ref=e110] [cursor=pointer]:
+              - /url: /fawaid
+            - link "الأحاديث" [ref=e111] [cursor=pointer]:
+              - /url: /hadith
+            - link "القصص" [ref=e112] [cursor=pointer]:
+              - /url: /stories
+            - link "الأسئلة" [ref=e113] [cursor=pointer]:
+              - /url: /qa
+        - generic [ref=e114]:
+          - paragraph [ref=e115]: العبادة
+          - navigation [ref=e116]:
+            - link "القرآن" [ref=e117] [cursor=pointer]:
+              - /url: /quran
+            - link "الأذكار" [ref=e118] [cursor=pointer]:
+              - /url: /adhkar
+            - link "مواقيت الصلاة" [ref=e119] [cursor=pointer]:
+              - /url: /prayer-times
+            - link "التسابيح" [ref=e120] [cursor=pointer]:
+              - /url: /tasbih
+        - generic [ref=e121]:
+          - paragraph [ref=e122]: التطبيق
+          - navigation [ref=e123]:
+            - link "من نحن" [ref=e124] [cursor=pointer]:
+              - /url: /about
+            - link "تواصل معنا" [ref=e125] [cursor=pointer]:
+              - /url: /contact
+            - link "مميزات قيد التطوير" [ref=e126] [cursor=pointer]:
+              - /url: /features-in-progress
+            - link "الخصوصية" [ref=e127] [cursor=pointer]:
+              - /url: /privacy
+            - link "الشروط" [ref=e128] [cursor=pointer]:
+              - /url: /terms
+      - paragraph [ref=e129]: © 2026 المجلس العلمي
+  - navigation "التنقل السفلي" [ref=e130]:
+    - link "الرئيسية" [ref=e131] [cursor=pointer]:
+      - /url: /
+      - img [ref=e133]
+      - generic [ref=e136]: الرئيسية
+    - link "الدروس" [ref=e137] [cursor=pointer]:
+      - /url: /lessons
+      - img [ref=e139]
+      - generic [ref=e142]: الدروس
+    - 'link "الصلاة القادمة: العصر 3:27 م" [ref=e143] [cursor=pointer]':
+      - /url: /prayer-times
+      - generic [ref=e144]:
+        - img [ref=e145]
+        - generic: 3:27 م
+      - generic [ref=e150]: الصلاة
+    - link "القرآن" [ref=e151] [cursor=pointer]:
+      - /url: /quran
+      - img [ref=e153]
+      - generic [ref=e155]: القرآن
+    - button "قائمة التطبيق" [ref=e156] [cursor=pointer]:
+      - img [ref=e158]
+      - generic [ref=e163]: المزيد
+```

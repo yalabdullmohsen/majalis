@@ -526,7 +526,7 @@ export default function IslamicStoriesPage() {
           }}>
             <IslamicStar size={48} color={GOLD} opacity={0.3} />
             <div style={{ marginTop: 16, fontSize: 15 }}>لا توجد قصص معتمدة بعد.</div>
-            <div style={{ fontSize: 13, marginTop: 8, color: "#444" }}>يمكن اعتماد القصص من لوحة التحكم.</div>
+            <div style={{ fontSize: 13, marginTop: 8, color: "var(--majalis-ink-soft, #C9C5B8)" }}>يمكن اعتماد القصص من لوحة التحكم.</div>
           </div>
         ) : filtered.length === 0 ? (
           <div style={{ textAlign: "center", padding: 48, color: "#666" }}>

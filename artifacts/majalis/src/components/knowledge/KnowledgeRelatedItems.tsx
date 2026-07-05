@@ -59,7 +59,7 @@ export function KnowledgeRelatedItems({ sourceType, sourceId, title = "مواد 
 
   return (
     <aside style={{ marginTop: "2rem", direction: "rtl" }}>
-      <h3 style={{ fontSize: "0.9375rem", fontWeight: 700, marginBottom: "0.75rem", color: "#065f46" }}>
+      <h3 style={{ fontSize: "0.9375rem", fontWeight: 700, marginBottom: "0.75rem", color: "var(--majalis-emerald, #2E8B67)" }}>
         {title}
       </h3>
       <div style={{ display: "grid", gap: "0.5rem" }}>
@@ -74,27 +74,27 @@ export function KnowledgeRelatedItems({ sourceType, sourceId, title = "مواد 
               <div style={{
                 padding: "0.75rem 1rem",
                 borderRadius: "0.375rem",
-                border: "1px solid #e5e7eb",
-                background: "#f9fafb",
+                border: "1px solid rgba(255,255,255,0.10)",
+                background: "rgba(255,255,255,0.05)",
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
                 gap: "0.75rem",
                 transition: "border-color 0.15s",
               }}
-                onMouseEnter={(e) => (e.currentTarget.style.borderColor = "#6ee7b7")}
-                onMouseLeave={(e) => (e.currentTarget.style.borderColor = "#e5e7eb")}
+                onMouseEnter={(e) => (e.currentTarget.style.borderColor = "rgba(46,139,103,0.40)")}
+                onMouseLeave={(e) => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.10)")}
               >
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.125rem" }}>
-                  <span style={{ fontWeight: 600, fontSize: "0.875rem", color: "#1f2937" }}>
+                  <span style={{ fontWeight: 600, fontSize: "0.875rem", color: "var(--majalis-ink, #EDE9DD)" }}>
                     {rel.label ?? linkedId}
                   </span>
-                  <span style={{ fontSize: "0.75rem", color: "#6b7280" }}>
+                  <span style={{ fontSize: "0.75rem", color: "var(--majalis-ink-muted, #9BA3B5)" }}>
                     {TYPE_LABEL[linkedType]} · {REL_LABEL[rel.relationship_type] ?? rel.relationship_type}
                   </span>
                 </div>
                 <span style={{
-                  fontSize: "0.7rem", background: "#d1fae5", color: "#065f46",
+                  fontSize: "0.7rem", background: "rgba(46,139,103,0.15)", color: "var(--majalis-emerald, #2E8B67)",
                   borderRadius: "999px", padding: "2px 8px", flexShrink: 0,
                 }}>
                   {TYPE_LABEL[linkedType]}

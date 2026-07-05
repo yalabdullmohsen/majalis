@@ -219,7 +219,7 @@ export default function MuezzinDetailPage() {
 
       {/* Biography */}
       <Section title="📖 نبذة">
-        <p style={{ fontSize: "0.875rem", color: "#374151", lineHeight: 1.7, margin: 0 }}>
+        <p style={{ fontSize: "0.875rem", color: "var(--majalis-ink-soft)", lineHeight: 1.7, margin: 0 }}>
           {muezzin.biography}
         </p>
       </Section>
@@ -228,7 +228,7 @@ export default function MuezzinDetailPage() {
       <Section title="⭐ التقييم">
         <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "0.875rem" }}>
           <StarRating rating={muezzin.rating} />
-          <span style={{ fontSize: "1.5rem", fontWeight: 800, color: "#111827" }}>{muezzin.rating}</span>
+          <span style={{ fontSize: "1.5rem", fontWeight: 800, color: "var(--majalis-ink)" }}>{muezzin.rating}</span>
           <span style={{ fontSize: "0.8rem", color: "#6b7280" }}>
             من أصل 5.0 · {formatNum(muezzin.totalRatings)} تقييم
           </span>
@@ -236,7 +236,7 @@ export default function MuezzinDetailPage() {
 
         {/* Interactive user rating */}
         <div style={{ borderTop: "1px solid #f3f4f6", paddingTop: "0.75rem" }}>
-          <div style={{ fontSize: "0.78rem", color: "#374151", fontWeight: 600, marginBottom: "0.5rem" }}>
+          <div style={{ fontSize: "0.78rem", color: "var(--majalis-ink-soft)", fontWeight: 600, marginBottom: "0.5rem" }}>
             {userRating > 0 ? "تقييمك:" : "قيّم هذا المؤذن:"}
           </div>
           <div style={{ display: "flex", gap: "0.3rem" }}>
@@ -260,7 +260,7 @@ export default function MuezzinDetailPage() {
             ))}
           </div>
           {ratedFlash && (
-            <div style={{ fontSize: "0.75rem", color: "#065f46", fontWeight: 600, marginTop: "0.35rem" }}>
+            <div style={{ fontSize: "0.75rem", color: "var(--majalis-emerald)", fontWeight: 600, marginTop: "0.35rem" }}>
               ✓ شكراً على تقييمك!
             </div>
           )}
@@ -276,9 +276,9 @@ export default function MuezzinDetailPage() {
               borderRadius: "999px",
               fontSize: "0.78rem",
               fontWeight: 600,
-              background: "#f3f4f6",
-              color: "#374151",
-              border: "1px solid #e5e7eb",
+              background: "rgba(255,255,255,0.05)",
+              color: "var(--majalis-ink-soft)",
+              border: "1px solid rgba(255,255,255,0.10)",
             }}>
               {tag}
             </span>
@@ -322,14 +322,14 @@ export default function MuezzinDetailPage() {
           }}>
             <span style={{ fontSize: "1rem" }}>🌙</span>
             <div style={{ flex: 1 }}>
-              <div style={{ fontSize: "0.85rem", color: "#374151", fontWeight: 600 }}>أذان الفجر</div>
+              <div style={{ fontSize: "0.85rem", color: "var(--majalis-ink-soft)", fontWeight: 600 }}>أذان الفجر</div>
               <div style={{ fontSize: "0.72rem", color: "#9ca3af" }}>يُستخدم الأذان العام للفجر لهذا المؤذن</div>
             </div>
           </div>
         )}
 
         {/* Per-prayer preview labels */}
-        <div style={{ marginTop: "0.5rem", padding: "0.75rem", borderRadius: "0.6rem", background: "#f8fafc", border: "1px solid #e5e7eb" }}>
+        <div style={{ marginTop: "0.5rem", padding: "0.75rem", borderRadius: "0.6rem", background: "rgba(255,255,255,0.05)", border: "1px solid #e5e7eb" }}>
           <div style={{ fontSize: "0.75rem", color: "#6b7280", marginBottom: "0.5rem", fontWeight: 600 }}>
             توزيع الأذانات على الصلوات:
           </div>
@@ -337,7 +337,7 @@ export default function MuezzinDetailPage() {
             {PRAYER_KEYS.map((key) => (
               <div key={key} style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.8rem" }}>
                 <span>{PRAYER_ICON[key]}</span>
-                <span style={{ fontWeight: 600, color: "#374151", width: "3.5rem" }}>{PRAYER_ARABIC[key]}</span>
+                <span style={{ fontWeight: 600, color: "var(--majalis-ink-soft)", width: "3.5rem" }}>{PRAYER_ARABIC[key]}</span>
                 <span style={{ color: "#6b7280" }}>
                   {key === "fajr" && muezzin.fajrUrl ? "أذان الفجر الخاص" : "الأذان العام"}
                 </span>
@@ -382,7 +382,7 @@ export default function MuezzinDetailPage() {
           borderRadius: "0.875rem",
           border: "1.5px solid #134a3a",
           background: "transparent",
-          color: "#134a3a",
+          color: "var(--majalis-emerald)",
           fontSize: "0.875rem",
           fontWeight: 600,
           cursor: "pointer",
@@ -404,12 +404,12 @@ export default function MuezzinDetailPage() {
                   padding: "0.75rem 0.875rem",
                   borderRadius: "0.75rem",
                   border: "1.5px solid #f3f4f6",
-                  background: "#fff",
+                  background: "var(--majalis-panel, rgba(255,255,255,0.08))",
                   cursor: "pointer",
                 }}>
                   <span style={{ fontSize: "1.25rem" }}>🎙️</span>
                   <div style={{ flex: 1 }}>
-                    <div style={{ fontWeight: 600, fontSize: "0.875rem", color: "#111827" }}>{m.name}</div>
+                    <div style={{ fontWeight: 600, fontSize: "0.875rem", color: "var(--majalis-ink)" }}>{m.name}</div>
                     <div style={{ fontSize: "0.72rem", color: "#9ca3af" }}>{m.origin} · {m.style}</div>
                   </div>
                   <div style={{ fontSize: "0.8rem", color: "#f59e0b", fontWeight: 600 }}>
@@ -445,7 +445,7 @@ function AudioRow({ label, sublabel, duration, isPlaying, onPlay, icon, highligh
     }}>
       <span style={{ fontSize: "1.1rem" }}>{icon}</span>
       <div style={{ flex: 1 }}>
-        <div style={{ fontWeight: 600, fontSize: "0.875rem", color: "#111827" }}>{label}</div>
+        <div style={{ fontWeight: 600, fontSize: "0.875rem", color: "var(--majalis-ink)" }}>{label}</div>
         <div style={{ fontSize: "0.72rem", color: "#6b7280" }}>{sublabel}</div>
       </div>
       <span style={{ fontSize: "0.72rem", color: "#9ca3af" }}>{formatDuration(duration)}</span>
@@ -474,10 +474,10 @@ function AudioRow({ label, sublabel, duration, isPlaying, onPlay, icon, highligh
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div style={{ marginBottom: "1.25rem" }}>
-      <h2 style={{ fontSize: "0.82rem", fontWeight: 700, color: "#374151", margin: "0 0 0.625rem", textTransform: "uppercase", letterSpacing: "0.04em" }}>
+      <h2 style={{ fontSize: "0.82rem", fontWeight: 700, color: "var(--majalis-ink-soft)", margin: "0 0 0.625rem", textTransform: "uppercase", letterSpacing: "0.04em" }}>
         {title}
       </h2>
-      <div style={{ background: "#fff", borderRadius: "0.875rem", border: "1px solid #e5e7eb", padding: "0.875rem 1rem" }}>
+      <div style={{ background: "var(--majalis-panel, rgba(255,255,255,0.08))", borderRadius: "0.875rem", border: "1px solid rgba(255,255,255,0.10)", padding: "0.875rem 1rem" }}>
         {children}
       </div>
     </div>
@@ -504,9 +504,9 @@ const backBtnStyle: React.CSSProperties = {
   marginBottom: "1rem",
   padding: "0.4rem 0.875rem",
   borderRadius: "0.5rem",
-  border: "1.5px solid #e5e7eb",
-  background: "#fff",
-  color: "#374151",
+  border: "1.5px solid rgba(255,255,255,0.10)",
+  background: "var(--majalis-panel, rgba(255,255,255,0.08))",
+  color: "var(--majalis-ink-soft)",
   fontSize: "0.8rem",
   fontWeight: 600,
   cursor: "pointer",

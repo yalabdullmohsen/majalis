@@ -76,7 +76,7 @@ function FileDropZone({ accept, maxMb, onFile, file, hint }: {
         {file ? (
           <div>
             <div style={{ fontSize: "1.75rem", marginBottom: "0.4rem" }}>✅</div>
-            <div style={{ fontWeight: 600, fontSize: "0.875rem", color: "#065f46" }}>
+            <div style={{ fontWeight: 600, fontSize: "0.875rem", color: "var(--majalis-emerald)" }}>
               {file.name}
             </div>
             <div style={{ fontSize: "0.75rem", color: "#6b7280", marginTop: "0.2rem" }}>
@@ -93,7 +93,7 @@ function FileDropZone({ accept, maxMb, onFile, file, hint }: {
         ) : (
           <div>
             <div style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>📁</div>
-            <div style={{ fontWeight: 600, fontSize: "0.875rem", color: "#374151" }}>
+            <div style={{ fontWeight: 600, fontSize: "0.875rem", color: "var(--majalis-ink-soft)" }}>
               اسحب وأفلت أو اضغط للاختيار
             </div>
             <div style={{ fontSize: "0.75rem", color: "#9ca3af", marginTop: "0.25rem" }}>
@@ -152,7 +152,7 @@ function AdhanForm() {
       {/* Info banner */}
       <div style={infoBanner}>
         <span style={{ fontSize: "1.1rem" }}>🎙️</span>
-        <span style={{ fontSize: "0.82rem", color: "#134a3a" }}>
+        <span style={{ fontSize: "0.82rem", color: "var(--majalis-emerald)" }}>
           ارفع تسجيلاً صوتياً للأذان · يُراجَع من قِبل الفريق قبل نشره في المكتبة.
         </span>
       </div>
@@ -263,7 +263,7 @@ function LessonForm() {
       {/* Info banner */}
       <div style={infoBanner}>
         <span style={{ fontSize: "1.1rem" }}>📚</span>
-        <span style={{ fontSize: "0.82rem", color: "#134a3a" }}>
+        <span style={{ fontSize: "0.82rem", color: "var(--majalis-emerald)" }}>
           أضف درساً علمياً موثّقاً · يمكن رفع ملف صوت/فيديو أو إرسال معلومات الدرس فقط.
         </span>
       </div>
@@ -331,10 +331,10 @@ export default function UploadPage() {
     <div style={{ direction: "rtl", maxWidth: 680, margin: "0 auto", padding: "1.25rem 1rem 5rem" }}>
       {/* Header */}
       <div style={{ marginBottom: "1.5rem" }}>
-        <p style={{ fontSize: "0.75rem", color: "#134a3a", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.06em", margin: "0 0 0.25rem" }}>
+        <p style={{ fontSize: "0.75rem", color: "var(--majalis-emerald)", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.06em", margin: "0 0 0.25rem" }}>
           المشاركة
         </p>
-        <h1 style={{ fontSize: "1.4rem", fontWeight: 800, color: "#111827", margin: "0 0 0.35rem" }}>
+        <h1 style={{ fontSize: "1.4rem", fontWeight: 800, color: "var(--majalis-ink)", margin: "0 0 0.35rem" }}>
           📤 رفع محتوى إسلامي
         </h1>
         <p style={{ fontSize: "0.82rem", color: "#6b7280", margin: 0 }}>
@@ -353,7 +353,7 @@ export default function UploadPage() {
         gap: "0.625rem",
       }}>
         <span style={{ fontSize: "1.1rem", flexShrink: 0 }}>⚠️</span>
-        <div style={{ fontSize: "0.8rem", color: "#0E6E52", lineHeight: 1.6 }}>
+        <div style={{ fontSize: "0.8rem", color: "var(--majalis-emerald)", lineHeight: 1.6 }}>
           <strong>تنبيه:</strong> يُشترط أن يكون المحتوى موثوقاً من علماء معتمدين.
           لا يُقبل المحتوى المجهول المصدر أو المخالف لأهل السنة والجماعة.
           الفريق يراجع كل الطلبات ويحتفظ بحق القبول أو الرفض.
@@ -361,7 +361,7 @@ export default function UploadPage() {
       </div>
 
       {/* Tabs */}
-      <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1.5rem", background: "#f3f4f6", borderRadius: "0.75rem", padding: "0.25rem" }}>
+      <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1.5rem", background: "rgba(255,255,255,0.05)", borderRadius: "0.75rem", padding: "0.25rem" }}>
         {([
           { id: "adhan",  icon: "🎙️", label: "رفع أذان"  },
           { id: "lesson", icon: "📚", label: "رفع درس"   },
@@ -396,7 +396,7 @@ export default function UploadPage() {
       </div>
 
       {/* Form card */}
-      <div style={{ background: "#fff", borderRadius: "1rem", border: "1.5px solid #e5e7eb", padding: "1.25rem 1.25rem 1.5rem" }}>
+      <div style={{ background: "var(--majalis-panel, rgba(255,255,255,0.08))", borderRadius: "1rem", border: "1.5px solid rgba(255,255,255,0.10)", padding: "1.25rem 1.25rem 1.5rem" }}>
         {tab === "adhan"  ? <AdhanForm  /> : <LessonForm />}
       </div>
 
@@ -420,7 +420,7 @@ export default function UploadPage() {
 // ─── Shared helpers ───────────────────────────────────────────────────────────
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <label style={{ display: "flex", flexDirection: "column", gap: "0.4rem", fontSize: "0.82rem", fontWeight: 600, color: "#374151" }}>
+    <label style={{ display: "flex", flexDirection: "column", gap: "0.4rem", fontSize: "0.82rem", fontWeight: 600, color: "var(--majalis-ink-soft)" }}>
       {label}
       {children}
     </label>
@@ -482,8 +482,8 @@ const infoBanner: React.CSSProperties = {
   alignItems: "center",
   gap: "0.625rem",
   padding: "0.7rem 0.875rem",
-  background: "#f0fdf4",
-  border: "1px solid #bbf7d0",
+  background: "rgba(46,139,103,0.10)",
+  border: "1px solid rgba(46,139,103,0.25)",
   borderRadius: "0.75rem",
 };
 
@@ -495,12 +495,12 @@ const row2: React.CSSProperties = {
 
 const inp: React.CSSProperties = {
   padding: "0.6rem 0.75rem",
-  border: "1.5px solid #e5e7eb",
+  border: "1.5px solid rgba(255,255,255,0.10)",
   borderRadius: "0.6rem",
   fontSize: "0.875rem",
   fontFamily: "inherit",
   background: "#fafafa",
-  color: "#111827",
+  color: "var(--majalis-ink)",
   direction: "rtl",
   width: "100%",
   boxSizing: "border-box",

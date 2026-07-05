@@ -45,14 +45,14 @@ export default function SubmitContentPage() {
   };
 
   return (
-    <div style={{ maxWidth: 600, margin: "2rem auto", padding: "1.5rem", background: "#fff", borderRadius: "0.75rem", boxShadow: "0 2px 12px rgba(0,0,0,.08)", direction: "rtl" }}>
+    <div style={{ maxWidth: 600, margin: "2rem auto", padding: "1.5rem", background: "var(--majalis-panel, rgba(255,255,255,0.08))", borderRadius: "0.75rem", boxShadow: "0 2px 12px rgba(0,0,0,.08)", direction: "rtl" }}>
       <div style={{ marginBottom: "1.25rem" }}>
         <Link href="/" style={{ color: "#6b7280", fontSize: "0.85rem", textDecoration: "none" }}>
           ← الرئيسية
         </Link>
       </div>
 
-      <h1 style={{ fontSize: "1.5rem", fontWeight: 700, marginBottom: "0.5rem", color: "#0D1B2A" }}>
+      <h1 style={{ fontSize: "1.5rem", fontWeight: 700, marginBottom: "0.5rem", color: "var(--majalis-ink)" }}>
         أضف محتوى
       </h1>
       <p style={{ color: "#6b7280", fontSize: "0.9rem", marginBottom: "1rem" }}>
@@ -79,7 +79,7 @@ export default function SubmitContentPage() {
       >
         <div style={{ fontSize: "1.5rem" }}>📚</div>
         <div>
-          <p style={{ margin: 0, fontWeight: 700, fontSize: "0.9rem", color: "#134a3a" }}>أضف درساً علمياً</p>
+          <p style={{ margin: 0, fontWeight: 700, fontSize: "0.9rem", color: "var(--majalis-emerald)" }}>أضف درساً علمياً</p>
           <p style={{ margin: "0.15rem 0 0", fontSize: "0.78rem", color: "#6b7280" }}>
             شارك درساً، محاضرة، أو موضوعاً علمياً مفيداً
           </p>
@@ -87,13 +87,13 @@ export default function SubmitContentPage() {
       </div>
 
       {status === "success" && (
-        <div role="status" style={{ padding: "1rem", background: "#f0fdf4", border: "1px solid #86efac", borderRadius: "0.5rem", color: "#166534", marginBottom: "1.25rem", fontWeight: 600 }}>
+        <div role="status" style={{ padding: "1rem", background: "rgba(46,139,103,0.10)", border: "1px solid rgba(46,139,103,0.30)", borderRadius: "0.5rem", color: "var(--majalis-emerald)", marginBottom: "1.25rem", fontWeight: 600 }}>
           {message}
         </div>
       )}
 
       {status === "error" && (
-        <div role="alert" style={{ padding: "1rem", background: "#fef2f2", border: "1px solid #fca5a5", borderRadius: "0.5rem", color: "#991b1b", marginBottom: "1.25rem" }}>
+        <div role="alert" style={{ padding: "1rem", background: "rgba(193,89,90,0.10)", border: "1px solid rgba(193,89,90,0.30)", borderRadius: "0.5rem", color: "var(--msk-red, #C1595A)", marginBottom: "1.25rem" }}>
           {message}
         </div>
       )}
@@ -171,7 +171,7 @@ const labelStyle: React.CSSProperties = {
   flexDirection: "column",
   fontWeight: 600,
   fontSize: "0.875rem",
-  color: "#374151",
+  color: "var(--majalis-ink-soft)",
   gap: "0.4rem",
   marginBottom: "0",
 };
@@ -184,7 +184,7 @@ const inputStyle: React.CSSProperties = {
   fontSize: "0.9rem",
   fontFamily: "inherit",
   background: "#fafafa",
-  color: "#0D1B2A",
+  color: "var(--majalis-ink)",
   outline: "none",
   width: "100%",
   boxSizing: "border-box",

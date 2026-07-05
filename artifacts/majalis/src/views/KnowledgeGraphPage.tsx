@@ -401,7 +401,7 @@ export default function KnowledgeGraphPage() {
               </p>
             </div>
           ) : (
-            <div style={{ border: `1px solid ${C.line}`, borderRadius: "0.75rem", overflow: "hidden", background: "#f9fafb" }}>
+            <div style={{ border: `1px solid ${C.line}`, borderRadius: "0.75rem", overflow: "hidden", background: "var(--majalis-panel, rgba(255,255,255,0.07))" }}>
               <svg
                 ref={svgRef}
                 viewBox={`0 0 ${SVG_W} ${SVG_H}`}
@@ -471,7 +471,7 @@ export default function KnowledgeGraphPage() {
             <div style={{
               marginTop: "1rem", padding: "1rem 1.25rem",
               border: `2px solid ${getColor(selected.nodeType)}`,
-              borderRadius: "0.75rem", background: "#fff",
+              borderRadius: "0.75rem", background: "var(--majalis-panel, rgba(255,255,255,0.07))",
             }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "1rem" }}>
                 <div style={{ flex: 1 }}>
@@ -641,7 +641,7 @@ export default function KnowledgeGraphPage() {
                     <Link key={node.id} href={getNodeHref(node)} style={{ textDecoration: "none" }}>
                       <div style={{
                         padding: "0.875rem 1rem", borderRadius: "0.5rem",
-                        border: `1px solid ${C.line}`, background: "#fff",
+                        border: `1px solid ${C.line}`, background: "var(--majalis-panel, rgba(255,255,255,0.07))",
                         transition: "border-color 0.15s",
                       }}
                         onMouseEnter={(e) => (e.currentTarget.style.borderColor = color)}

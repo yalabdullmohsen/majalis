@@ -1,0 +1,481 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: 01-smoke.spec.ts >> Smoke — صفحات عامة >> [/fiqh-council] — الفقه
+- Location: tests/01-smoke.spec.ts:41:5
+
+# Error details
+
+```
+Test timeout of 30000ms exceeded.
+```
+
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - link "تخطّي إلى المحتوى" [ref=e4] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=e5]:
+    - generic [ref=e6]:
+      - generic [ref=e7]:
+        - button "القائمة" [ref=e8] [cursor=pointer]:
+          - img [ref=e9]
+          - generic [ref=e11]: القائمة
+        - link "المجلس العلمي" [ref=e12] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e13]: المجلس العلمي
+      - button "البحث الشامل (⌘K)" [ref=e15] [cursor=pointer]:
+        - img [ref=e16]
+        - generic [ref=e19]: ⌘K
+  - main [ref=e20]:
+    - generic [ref=e21]:
+      - generic [ref=e22]:
+        - paragraph [ref=e23]: الفقه المعاصر
+        - heading "المجمع الفقهي الإسلامي" [level=1] [ref=e24]
+        - paragraph [ref=e25]: المجمع الفقهي الإسلامي مرجع منظم للقرارات والفتاوى الجماعية والبحوث والتوصيات الشرعية، يُعنى بقضايا العصر مع الالتزام بضوابط الفقه الإسلامي والمراجع المعتمدة.
+      - navigation "أقسام المجمع الفقهي" [ref=e26]:
+        - link "الرئيسية" [ref=e27] [cursor=pointer]:
+          - /url: /fiqh-council
+        - link "البيانات الحية" [ref=e28] [cursor=pointer]:
+          - /url: /fiqh-council/live
+        - link "المسائل" [ref=e29] [cursor=pointer]:
+          - /url: /fiqh-council/issues
+        - link "الفهرس" [ref=e30] [cursor=pointer]:
+          - /url: /fiqh-council/index
+        - link "الإحصائيات" [ref=e31] [cursor=pointer]:
+          - /url: /fiqh-council/stats
+        - link "القرارات" [ref=e32] [cursor=pointer]:
+          - /url: /fiqh-council/resolutions
+        - link "الفتاوى" [ref=e33] [cursor=pointer]:
+          - /url: /fiqh-council/fatwas
+        - link "التوصيات" [ref=e34] [cursor=pointer]:
+          - /url: /fiqh-council/recommendations
+        - link "فقه النوازل" [ref=e35] [cursor=pointer]:
+          - /url: /fiqh-council/nawazil
+        - link "البحوث" [ref=e36] [cursor=pointer]:
+          - /url: /fiqh-council/research
+        - link "التصنيفات" [ref=e37] [cursor=pointer]:
+          - /url: /fiqh-council/categories
+        - link "البحث" [ref=e38] [cursor=pointer]:
+          - /url: /fiqh-council/search
+        - link "مساعد الباحث" [ref=e39] [cursor=pointer]:
+          - /url: /fiqh-council/research-assistant
+        - link "المقارنة" [ref=e40] [cursor=pointer]:
+          - /url: /fiqh-council/compare
+        - link "الأرشيف" [ref=e41] [cursor=pointer]:
+          - /url: /fiqh-council/archive
+      - combobox "بحث في المجمع الفقهي" [ref=e43]
+      - generic [ref=e44]:
+        - link "عرض البيانات الحية" [ref=e45] [cursor=pointer]:
+          - /url: /fiqh-council/live
+        - link "البحث في قرارات المجمع" [ref=e46] [cursor=pointer]:
+          - /url: /fiqh-council/search
+        - link "المسائل الفقهية" [ref=e47] [cursor=pointer]:
+          - /url: /fiqh-council/issues
+        - link "الفهرس الموضوعي" [ref=e48] [cursor=pointer]:
+          - /url: /fiqh-council/index
+        - link "الإحصائيات" [ref=e49] [cursor=pointer]:
+          - /url: /fiqh-council/stats
+        - link "فقه النوازل" [ref=e50] [cursor=pointer]:
+          - /url: /fiqh-council/nawazil
+        - link "مساعد الباحث" [ref=e51] [cursor=pointer]:
+          - /url: /fiqh-council/research-assistant
+      - region "تصنيفات المجمع الفقهي" [ref=e52]:
+        - link "العبادات 0 مادة" [ref=e53] [cursor=pointer]:
+          - /url: /fiqh-council/search?category=%D8%A7%D9%84%D8%B9%D8%A8%D8%A7%D8%AF%D8%A7%D8%AA
+          - strong [ref=e54]: العبادات
+          - generic [ref=e55]: 0 مادة
+        - link "المعاملات 0 مادة" [ref=e56] [cursor=pointer]:
+          - /url: /fiqh-council/search?category=%D8%A7%D9%84%D9%85%D8%B9%D8%A7%D9%85%D9%84%D8%A7%D8%AA
+          - strong [ref=e57]: المعاملات
+          - generic [ref=e58]: 0 مادة
+        - link "الأسرة 1 مادة" [ref=e59] [cursor=pointer]:
+          - /url: /fiqh-council/search?category=%D8%A7%D9%84%D8%A3%D8%B3%D8%B1%D8%A9
+          - strong [ref=e60]: الأسرة
+          - generic [ref=e61]: 1 مادة
+        - link "الطب والنوازل 1 مادة" [ref=e62] [cursor=pointer]:
+          - /url: /fiqh-council/search?category=%D8%A7%D9%84%D8%B7%D8%A8%20%D9%88%D8%A7%D9%84%D9%86%D9%88%D8%A7%D8%B2%D9%84
+          - strong [ref=e63]: الطب والنوازل
+          - generic [ref=e64]: 1 مادة
+        - link "الاقتصاد الإسلامي 1 مادة" [ref=e65] [cursor=pointer]:
+          - /url: /fiqh-council/search?category=%D8%A7%D9%84%D8%A7%D9%82%D8%AA%D8%B5%D8%A7%D8%AF%20%D8%A7%D9%84%D8%A5%D8%B3%D9%84%D8%A7%D9%85%D9%8A
+          - strong [ref=e66]: الاقتصاد الإسلامي
+          - generic [ref=e67]: 1 مادة
+        - link "الأقليات المسلمة 1 مادة" [ref=e68] [cursor=pointer]:
+          - /url: /fiqh-council/search?category=%D8%A7%D9%84%D8%A3%D9%82%D9%84%D9%8A%D8%A7%D8%AA%20%D8%A7%D9%84%D9%85%D8%B3%D9%84%D9%85%D8%A9
+          - strong [ref=e69]: الأقليات المسلمة
+          - generic [ref=e70]: 1 مادة
+        - link "القضايا المعاصرة 0 مادة" [ref=e71] [cursor=pointer]:
+          - /url: /fiqh-council/search?category=%D8%A7%D9%84%D9%82%D8%B6%D8%A7%D9%8A%D8%A7%20%D8%A7%D9%84%D9%85%D8%B9%D8%A7%D8%B5%D8%B1%D8%A9
+          - strong [ref=e72]: القضايا المعاصرة
+          - generic [ref=e73]: 0 مادة
+        - link "الأطعمة والأشربة 0 مادة" [ref=e74] [cursor=pointer]:
+          - /url: /fiqh-council/search?category=%D8%A7%D9%84%D8%A3%D8%B7%D8%B9%D9%85%D8%A9%20%D9%88%D8%A7%D9%84%D8%A3%D8%B4%D8%B1%D8%A8%D8%A9
+          - strong [ref=e75]: الأطعمة والأشربة
+          - generic [ref=e76]: 0 مادة
+        - link "الزكاة والوقف 1 مادة" [ref=e77] [cursor=pointer]:
+          - /url: /fiqh-council/search?category=%D8%A7%D9%84%D8%B2%D9%83%D8%A7%D8%A9%20%D9%88%D8%A7%D9%84%D9%88%D9%82%D9%81
+          - strong [ref=e78]: الزكاة والوقف
+          - generic [ref=e79]: 1 مادة
+        - link "الحج والعمرة 1 مادة" [ref=e80] [cursor=pointer]:
+          - /url: /fiqh-council/search?category=%D8%A7%D9%84%D8%AD%D8%AC%20%D9%88%D8%A7%D9%84%D8%B9%D9%85%D8%B1%D8%A9
+          - strong [ref=e81]: الحج والعمرة
+          - generic [ref=e82]: 1 مادة
+        - link "النوازل المعاصرة 0 مادة" [ref=e83] [cursor=pointer]:
+          - /url: /fiqh-council/search?category=%D8%A7%D9%84%D9%86%D9%88%D8%A7%D8%B2%D9%84%20%D8%A7%D9%84%D9%85%D8%B9%D8%A7%D8%B5%D8%B1%D8%A9
+          - strong [ref=e84]: النوازل المعاصرة
+          - generic [ref=e85]: 0 مادة
+      - generic [ref=e86]:
+        - generic [ref=e87]:
+          - heading "آخر جلسة" [level=2] [ref=e88]
+          - paragraph [ref=e89]:
+            - strong [ref=e90]: الدورة الرابعة والعشرون — المجمع الفقهي الإسلامي
+          - paragraph [ref=e91]: منعقدة · 2024-03-15
+          - link "تفاصيل الجلسة" [ref=e92] [cursor=pointer]:
+            - /url: /fiqh-council/sessions/session-24-2024
+        - generic [ref=e93]:
+          - heading "الجلسة القادمة" [level=2] [ref=e94]
+          - paragraph [ref=e95]: لم تُنشر بيانات موثقة بعد.
+      - generic [ref=e96]:
+        - generic [ref=e97]:
+          - heading "أهم المسائل الفقهية" [level=2] [ref=e98]
+          - link "عرض الكل" [ref=e99] [cursor=pointer]:
+            - /url: /fiqh-council/issues
+        - generic [ref=e100]:
+          - link [ref=e101] [cursor=pointer]:
+            - /url: /fiqh-council/issues/crypto-currency
+            - article [ref=e102]:
+              - generic [ref=e103]:
+                - paragraph [ref=e104]: التعامل بالعملات الرقمية (المشفّرة)
+                - generic [ref=e105]: مسألة فقهية
+              - paragraph [ref=e106]: الاقتصاد الإسلامي
+              - paragraph [ref=e107]: لا تُعدّ العملات الرقمية غير المُغطّاة بأصول حقيقية نقوداً شرعية؛ والتداول المضاربي فيها فيه غرر وجهالة.
+          - link [ref=e108] [cursor=pointer]:
+            - /url: /fiqh-council/issues/organ-donation
+            - article [ref=e109]:
+              - generic [ref=e110]:
+                - paragraph [ref=e111]: التبرع بالأعضاء بعد الوفاة
+                - generic [ref=e112]: مسألة فقهية
+              - paragraph [ref=e113]: الطب والنوازل
+              - paragraph [ref=e114]: يجوز التبرع بالأعضاء بعد الوفاة عند تحقق الشروط الشرعية والطبية.
+          - link [ref=e115] [cursor=pointer]:
+            - /url: /fiqh-council/issues/muslim-minorities-rights
+            - article [ref=e116]:
+              - generic [ref=e117]:
+                - paragraph [ref=e118]: حقوق الأقليات المسلمة
+                - generic [ref=e119]: مسألة فقهية
+              - paragraph [ref=e120]: الأقليات المسلمة
+              - paragraph [ref=e121]: للمسلمين حق ممارسة العبادات مع الالتزام بعقودهم وعهودهم مع الدول التي يقيمون فيها.
+          - link [ref=e122] [cursor=pointer]:
+            - /url: /fiqh-council/issues/zakat-stocks
+            - article [ref=e123]:
+              - generic [ref=e124]:
+                - paragraph [ref=e125]: زكاة الأسهم والصناديق الاستثمارية
+                - generic [ref=e126]: مسألة فقهية
+              - paragraph [ref=e127]: الزكاة والوقف
+              - paragraph [ref=e128]: تُزكّى الأسهم التجارية بقيمتها السوقية؛ والاستثمارية أرباحها عند بلوغ النصاب.
+      - generic [ref=e129]:
+        - generic [ref=e130]:
+          - heading "أحدث القرارات" [level=2] [ref=e131]
+          - link "عرض الكل" [ref=e132] [cursor=pointer]:
+            - /url: /fiqh-council/resolutions
+        - generic [ref=e133]:
+          - link [ref=e134] [cursor=pointer]:
+            - /url: /fiqh-council/fiqh-crypto-2024
+            - article [ref=e135]:
+              - generic [ref=e136]:
+                - paragraph [ref=e137]: حكم التعامل بالعملات الرقمية (المشفّرة)
+                - generic [ref=e138]: قرار
+              - paragraph [ref=e139]: قرار · الاقتصاد الإسلامي · الاقتصاد · 2024-03-15 · الجلسة 24 · المجمع الفقهي الإسلامي
+              - paragraph [ref=e140]: بيان حول حكم التعامل بالعملات الرقمية من حيث البيع والشراء والاستثمار.
+          - link [ref=e141] [cursor=pointer]:
+            - /url: /fiqh-council/fiqh-zakat-stocks
+            - article [ref=e142]:
+              - generic [ref=e143]:
+                - paragraph [ref=e144]: زكاة الأسهم والصناديق الاستثمارية
+                - generic [ref=e145]: قرار
+              - paragraph [ref=e146]: قرار · الزكاة والوقف · 2022-12-05 · الجلسة 19 · المجمع الفقهي الإسلامي
+              - paragraph [ref=e147]: قرار يبيّن كيفية إخراج زكاة الأسهم والصناديق الاستثمارية.
+      - generic [ref=e148]:
+        - generic [ref=e149]:
+          - heading "أحدث الفتاوى الجماعية" [level=2] [ref=e150]
+          - link "عرض الكل" [ref=e151] [cursor=pointer]:
+            - /url: /fiqh-council/fatwas
+        - link [ref=e153] [cursor=pointer]:
+          - /url: /fiqh-council/fiqh-collective-fatwa-hajj
+          - article [ref=e154]:
+            - generic [ref=e155]:
+              - paragraph [ref=e156]: "فتوى جماعية: حكم تأخير الحج لمن استطاع مادياً"
+              - generic [ref=e157]: فتوى جماعية
+            - paragraph [ref=e158]: فتوى جماعية · الحج والعمرة · 2022-08-01 · الجلسة 18 · المجمع الفقهي الإسلامي
+            - paragraph [ref=e159]: فتوى جماعية بشأن وجوب الحج على الفور لمن توفرت شروطه.
+      - generic [ref=e160]:
+        - generic [ref=e161]:
+          - heading "أحدث التوصيات" [level=2] [ref=e162]
+          - link "عرض الكل" [ref=e163] [cursor=pointer]:
+            - /url: /fiqh-council/recommendations
+        - link [ref=e165] [cursor=pointer]:
+          - /url: /fiqh-council/fiqh-organ-donation
+          - article [ref=e166]:
+            - generic [ref=e167]:
+              - paragraph [ref=e168]: حكم التبرع بالأعضاء بعد الوفاة
+              - generic [ref=e169]: توصية
+            - paragraph [ref=e170]: توصية · الطب والنوازل · الطب · 2023-11-08 · الجلسة 22 · المجمع الفقهي الإسلامي
+            - paragraph [ref=e171]: توصية بشأن التبرع بالأعضاء لإنقاذ حياة المرضى وفق ضوابط شرعية.
+      - generic [ref=e172]:
+        - generic [ref=e173]:
+          - heading "فقه النوازل" [level=2] [ref=e174]
+          - link "عرض الكل" [ref=e175] [cursor=pointer]:
+            - /url: /fiqh-council/nawazil
+        - generic [ref=e176]:
+          - link [ref=e177] [cursor=pointer]:
+            - /url: /fiqh-council/fiqh-crypto-2024
+            - article [ref=e178]:
+              - generic [ref=e179]:
+                - paragraph [ref=e180]: حكم التعامل بالعملات الرقمية (المشفّرة)
+                - generic [ref=e181]: قرار
+              - paragraph [ref=e182]: قرار · الاقتصاد الإسلامي · الاقتصاد · 2024-03-15 · الجلسة 24 · المجمع الفقهي الإسلامي
+              - paragraph [ref=e183]: بيان حول حكم التعامل بالعملات الرقمية من حيث البيع والشراء والاستثمار.
+          - link [ref=e184] [cursor=pointer]:
+            - /url: /fiqh-council/fiqh-organ-donation
+            - article [ref=e185]:
+              - generic [ref=e186]:
+                - paragraph [ref=e187]: حكم التبرع بالأعضاء بعد الوفاة
+                - generic [ref=e188]: توصية
+              - paragraph [ref=e189]: توصية · الطب والنوازل · الطب · 2023-11-08 · الجلسة 22 · المجمع الفقهي الإسلامي
+              - paragraph [ref=e190]: توصية بشأن التبرع بالأعضاء لإنقاذ حياة المرضى وفق ضوابط شرعية.
+          - link [ref=e191] [cursor=pointer]:
+            - /url: /fiqh-council/fiqh-minorities-rights
+            - article [ref=e192]:
+              - generic [ref=e193]:
+                - paragraph [ref=e194]: حقوق الأقليات المسلمة في البلدان غير الإسلامية
+                - generic [ref=e195]: حكم
+              - paragraph [ref=e196]: حكم · الأقليات المسلمة · 2023-06-20 · الجلسة 21 · المجمع الفقهي الإسلامي
+              - paragraph [ref=e197]: بيان يؤكّد حقوق المسلمين في ممارسة شعائرهم والحفاظ على هويتهم.
+      - generic [ref=e198]:
+        - heading "الأكثر قراءة" [level=2] [ref=e200]
+        - generic [ref=e201]:
+          - link [ref=e202] [cursor=pointer]:
+            - /url: /fiqh-council/fiqh-zakat-stocks
+            - article [ref=e203]:
+              - generic [ref=e204]:
+                - paragraph [ref=e205]: زكاة الأسهم والصناديق الاستثمارية
+                - generic [ref=e206]: قرار
+              - paragraph [ref=e207]: قرار · الزكاة والوقف · 2022-12-05 · الجلسة 19 · المجمع الفقهي الإسلامي
+              - paragraph [ref=e208]: قرار يبيّن كيفية إخراج زكاة الأسهم والصناديق الاستثمارية.
+          - link [ref=e209] [cursor=pointer]:
+            - /url: /fiqh-council/fiqh-crypto-2024
+            - article [ref=e210]:
+              - generic [ref=e211]:
+                - paragraph [ref=e212]: حكم التعامل بالعملات الرقمية (المشفّرة)
+                - generic [ref=e213]: قرار
+              - paragraph [ref=e214]: قرار · الاقتصاد الإسلامي · الاقتصاد · 2024-03-15 · الجلسة 24 · المجمع الفقهي الإسلامي
+              - paragraph [ref=e215]: بيان حول حكم التعامل بالعملات الرقمية من حيث البيع والشراء والاستثمار.
+          - link [ref=e216] [cursor=pointer]:
+            - /url: /fiqh-council/fiqh-marriage-contract
+            - article [ref=e217]:
+              - generic [ref=e218]:
+                - paragraph [ref=e219]: ضوابط عقد النكاح الإلكتروني
+                - generic [ref=e220]: بحث
+              - paragraph [ref=e221]: بحث · الأسرة · 2023-04-12 · الجلسة 20 · المجمع الفقهي الإسلامي
+              - paragraph [ref=e222]: بحث في صحة عقد النكاح عبر الوسائل الإلكترونية والشروط اللازمة.
+          - link [ref=e223] [cursor=pointer]:
+            - /url: /fiqh-council/fiqh-collective-fatwa-hajj
+            - article [ref=e224]:
+              - generic [ref=e225]:
+                - paragraph [ref=e226]: "فتوى جماعية: حكم تأخير الحج لمن استطاع مادياً"
+                - generic [ref=e227]: فتوى جماعية
+              - paragraph [ref=e228]: فتوى جماعية · الحج والعمرة · 2022-08-01 · الجلسة 18 · المجمع الفقهي الإسلامي
+              - paragraph [ref=e229]: فتوى جماعية بشأن وجوب الحج على الفور لمن توفرت شروطه.
+      - generic [ref=e230]:
+        - generic [ref=e231]:
+          - heading "التصنيفات الفقهية" [level=2] [ref=e232]
+          - link "جميع التصنيفات" [ref=e233] [cursor=pointer]:
+            - /url: /fiqh-council/categories
+        - generic [ref=e234]:
+          - link "العبادات 0 عنصر" [ref=e235] [cursor=pointer]:
+            - /url: /fiqh-council/categories?cat=%D8%A7%D9%84%D8%B9%D8%A8%D8%A7%D8%AF%D8%A7%D8%AA
+            - generic [ref=e236]: العبادات
+            - generic [ref=e237]: 0 عنصر
+          - link "المعاملات 0 عنصر" [ref=e238] [cursor=pointer]:
+            - /url: /fiqh-council/categories?cat=%D8%A7%D9%84%D9%85%D8%B9%D8%A7%D9%85%D9%84%D8%A7%D8%AA
+            - generic [ref=e239]: المعاملات
+            - generic [ref=e240]: 0 عنصر
+          - link "الأسرة 1 عنصر" [ref=e241] [cursor=pointer]:
+            - /url: /fiqh-council/categories?cat=%D8%A7%D9%84%D8%A3%D8%B3%D8%B1%D8%A9
+            - generic [ref=e242]: الأسرة
+            - generic [ref=e243]: 1 عنصر
+          - link "الطب والنوازل 1 عنصر" [ref=e244] [cursor=pointer]:
+            - /url: /fiqh-council/categories?cat=%D8%A7%D9%84%D8%B7%D8%A8%20%D9%88%D8%A7%D9%84%D9%86%D9%88%D8%A7%D8%B2%D9%84
+            - generic [ref=e245]: الطب والنوازل
+            - generic [ref=e246]: 1 عنصر
+          - link "الاقتصاد الإسلامي 1 عنصر" [ref=e247] [cursor=pointer]:
+            - /url: /fiqh-council/categories?cat=%D8%A7%D9%84%D8%A7%D9%82%D8%AA%D8%B5%D8%A7%D8%AF%20%D8%A7%D9%84%D8%A5%D8%B3%D9%84%D8%A7%D9%85%D9%8A
+            - generic [ref=e248]: الاقتصاد الإسلامي
+            - generic [ref=e249]: 1 عنصر
+          - link "الأقليات المسلمة 1 عنصر" [ref=e250] [cursor=pointer]:
+            - /url: /fiqh-council/categories?cat=%D8%A7%D9%84%D8%A3%D9%82%D9%84%D9%8A%D8%A7%D8%AA%20%D8%A7%D9%84%D9%85%D8%B3%D9%84%D9%85%D8%A9
+            - generic [ref=e251]: الأقليات المسلمة
+            - generic [ref=e252]: 1 عنصر
+          - link "القضايا المعاصرة 0 عنصر" [ref=e253] [cursor=pointer]:
+            - /url: /fiqh-council/categories?cat=%D8%A7%D9%84%D9%82%D8%B6%D8%A7%D9%8A%D8%A7%20%D8%A7%D9%84%D9%85%D8%B9%D8%A7%D8%B5%D8%B1%D8%A9
+            - generic [ref=e254]: القضايا المعاصرة
+            - generic [ref=e255]: 0 عنصر
+          - link "الأطعمة والأشربة 0 عنصر" [ref=e256] [cursor=pointer]:
+            - /url: /fiqh-council/categories?cat=%D8%A7%D9%84%D8%A3%D8%B7%D8%B9%D9%85%D8%A9%20%D9%88%D8%A7%D9%84%D8%A3%D8%B4%D8%B1%D8%A8%D8%A9
+            - generic [ref=e257]: الأطعمة والأشربة
+            - generic [ref=e258]: 0 عنصر
+          - link "الزكاة والوقف 1 عنصر" [ref=e259] [cursor=pointer]:
+            - /url: /fiqh-council/categories?cat=%D8%A7%D9%84%D8%B2%D9%83%D8%A7%D8%A9%20%D9%88%D8%A7%D9%84%D9%88%D9%82%D9%81
+            - generic [ref=e260]: الزكاة والوقف
+            - generic [ref=e261]: 1 عنصر
+          - link "الحج والعمرة 1 عنصر" [ref=e262] [cursor=pointer]:
+            - /url: /fiqh-council/categories?cat=%D8%A7%D9%84%D8%AD%D8%AC%20%D9%88%D8%A7%D9%84%D8%B9%D9%85%D8%B1%D8%A9
+            - generic [ref=e263]: الحج والعمرة
+            - generic [ref=e264]: 1 عنصر
+          - link "النوازل المعاصرة 0 عنصر" [ref=e265] [cursor=pointer]:
+            - /url: /fiqh-council/categories?cat=%D8%A7%D9%84%D9%86%D9%88%D8%A7%D8%B2%D9%84%20%D8%A7%D9%84%D9%85%D8%B9%D8%A7%D8%B5%D8%B1%D8%A9
+            - generic [ref=e266]: النوازل المعاصرة
+            - generic [ref=e267]: 0 عنصر
+      - generic [ref=e268]:
+        - heading "المصادر الرسمية" [level=2] [ref=e270]
+        - generic [ref=e271]:
+          - generic [ref=e272]:
+            - strong [ref=e273]: IslamWeb — المجمع الفقهي
+            - generic [ref=e274]: IslamWeb.net
+          - generic [ref=e275]:
+            - strong [ref=e276]: الأكاديمية الإسلامية للفقه
+            - generic [ref=e277]: OIC
+      - generic [ref=e278]:
+        - generic [ref=e279]:
+          - heading "آخر المحتوى" [level=2] [ref=e280]
+          - link "الأرشيف" [ref=e281] [cursor=pointer]:
+            - /url: /fiqh-council/archive
+        - generic [ref=e282]:
+          - link [ref=e283] [cursor=pointer]:
+            - /url: /fiqh-council/fiqh-crypto-2024
+            - article [ref=e284]:
+              - generic [ref=e285]:
+                - paragraph [ref=e286]: حكم التعامل بالعملات الرقمية (المشفّرة)
+                - generic [ref=e287]: قرار
+              - paragraph [ref=e288]: قرار · الاقتصاد الإسلامي · الاقتصاد · 2024-03-15 · الجلسة 24 · المجمع الفقهي الإسلامي
+              - paragraph [ref=e289]: بيان حول حكم التعامل بالعملات الرقمية من حيث البيع والشراء والاستثمار.
+          - link [ref=e290] [cursor=pointer]:
+            - /url: /fiqh-council/fiqh-organ-donation
+            - article [ref=e291]:
+              - generic [ref=e292]:
+                - paragraph [ref=e293]: حكم التبرع بالأعضاء بعد الوفاة
+                - generic [ref=e294]: توصية
+              - paragraph [ref=e295]: توصية · الطب والنوازل · الطب · 2023-11-08 · الجلسة 22 · المجمع الفقهي الإسلامي
+              - paragraph [ref=e296]: توصية بشأن التبرع بالأعضاء لإنقاذ حياة المرضى وفق ضوابط شرعية.
+          - link [ref=e297] [cursor=pointer]:
+            - /url: /fiqh-council/fiqh-minorities-rights
+            - article [ref=e298]:
+              - generic [ref=e299]:
+                - paragraph [ref=e300]: حقوق الأقليات المسلمة في البلدان غير الإسلامية
+                - generic [ref=e301]: حكم
+              - paragraph [ref=e302]: حكم · الأقليات المسلمة · 2023-06-20 · الجلسة 21 · المجمع الفقهي الإسلامي
+              - paragraph [ref=e303]: بيان يؤكّد حقوق المسلمين في ممارسة شعائرهم والحفاظ على هويتهم.
+          - link [ref=e304] [cursor=pointer]:
+            - /url: /fiqh-council/fiqh-marriage-contract
+            - article [ref=e305]:
+              - generic [ref=e306]:
+                - paragraph [ref=e307]: ضوابط عقد النكاح الإلكتروني
+                - generic [ref=e308]: بحث
+              - paragraph [ref=e309]: بحث · الأسرة · 2023-04-12 · الجلسة 20 · المجمع الفقهي الإسلامي
+              - paragraph [ref=e310]: بحث في صحة عقد النكاح عبر الوسائل الإلكترونية والشروط اللازمة.
+          - link [ref=e311] [cursor=pointer]:
+            - /url: /fiqh-council/fiqh-zakat-stocks
+            - article [ref=e312]:
+              - generic [ref=e313]:
+                - paragraph [ref=e314]: زكاة الأسهم والصناديق الاستثمارية
+                - generic [ref=e315]: قرار
+              - paragraph [ref=e316]: قرار · الزكاة والوقف · 2022-12-05 · الجلسة 19 · المجمع الفقهي الإسلامي
+              - paragraph [ref=e317]: قرار يبيّن كيفية إخراج زكاة الأسهم والصناديق الاستثمارية.
+          - link [ref=e318] [cursor=pointer]:
+            - /url: /fiqh-council/fiqh-collective-fatwa-hajj
+            - article [ref=e319]:
+              - generic [ref=e320]:
+                - paragraph [ref=e321]: "فتوى جماعية: حكم تأخير الحج لمن استطاع مادياً"
+                - generic [ref=e322]: فتوى جماعية
+              - paragraph [ref=e323]: فتوى جماعية · الحج والعمرة · 2022-08-01 · الجلسة 18 · المجمع الفقهي الإسلامي
+              - paragraph [ref=e324]: فتوى جماعية بشأن وجوب الحج على الفور لمن توفرت شروطه.
+  - contentinfo "تذييل موقع المجلس العلمي" [ref=e325]:
+    - generic [ref=e326]:
+      - generic [ref=e327]:
+        - img [ref=e328]
+        - img [ref=e331]
+        - generic [ref=e332]:
+          - strong [ref=e333]: المجلس العلمي
+          - paragraph [ref=e334]: تطبيق علمي شرعي للدروس والعبادة والمحتوى اليومي.
+          - paragraph [ref=e335]:
+            - link "yalabdullmohsen1@gmail.com" [ref=e336] [cursor=pointer]:
+              - /url: mailto:yalabdullmohsen1@gmail.com
+      - generic [ref=e337]:
+        - generic [ref=e338]:
+          - paragraph [ref=e339]: المحتوى
+          - navigation [ref=e340]:
+            - link "الدروس" [ref=e341] [cursor=pointer]:
+              - /url: /lessons
+            - link "الفوائد" [ref=e342] [cursor=pointer]:
+              - /url: /fawaid
+            - link "الأحاديث" [ref=e343] [cursor=pointer]:
+              - /url: /hadith
+            - link "القصص" [ref=e344] [cursor=pointer]:
+              - /url: /stories
+            - link "الأسئلة" [ref=e345] [cursor=pointer]:
+              - /url: /qa
+        - generic [ref=e346]:
+          - paragraph [ref=e347]: العبادة
+          - navigation [ref=e348]:
+            - link "القرآن" [ref=e349] [cursor=pointer]:
+              - /url: /quran
+            - link "الأذكار" [ref=e350] [cursor=pointer]:
+              - /url: /adhkar
+            - link "مواقيت الصلاة" [ref=e351] [cursor=pointer]:
+              - /url: /prayer-times
+            - link "التسابيح" [ref=e352] [cursor=pointer]:
+              - /url: /tasbih
+        - generic [ref=e353]:
+          - paragraph [ref=e354]: التطبيق
+          - navigation [ref=e355]:
+            - link "من نحن" [ref=e356] [cursor=pointer]:
+              - /url: /about
+            - link "تواصل معنا" [ref=e357] [cursor=pointer]:
+              - /url: /contact
+            - link "مميزات قيد التطوير" [ref=e358] [cursor=pointer]:
+              - /url: /features-in-progress
+            - link "الخصوصية" [ref=e359] [cursor=pointer]:
+              - /url: /privacy
+            - link "الشروط" [ref=e360] [cursor=pointer]:
+              - /url: /terms
+      - paragraph [ref=e361]: © 2026 المجلس العلمي
+  - navigation "التنقل السفلي" [ref=e362]:
+    - link "الرئيسية" [ref=e363] [cursor=pointer]:
+      - /url: /
+      - img [ref=e365]
+      - generic [ref=e368]: الرئيسية
+    - link "الدروس" [ref=e369] [cursor=pointer]:
+      - /url: /lessons
+      - img [ref=e371]
+      - generic [ref=e374]: الدروس
+    - 'link "الصلاة القادمة: المغرب 6:52 م" [ref=e375] [cursor=pointer]':
+      - /url: /prayer-times
+      - generic [ref=e376]:
+        - img [ref=e377]
+        - generic: 6:52 م
+      - generic [ref=e382]: الصلاة
+    - link "القرآن" [ref=e383] [cursor=pointer]:
+      - /url: /quran
+      - img [ref=e385]
+      - generic [ref=e387]: القرآن
+    - button "قائمة التطبيق" [ref=e388] [cursor=pointer]:
+      - img [ref=e390]
+      - generic [ref=e395]: المزيد
+```

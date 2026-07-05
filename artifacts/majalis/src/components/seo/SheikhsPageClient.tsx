@@ -49,17 +49,17 @@ export default function SheikhsPageClient({
 
       {/* ─── القنوات الرسمية الموثّقة ─── */}
       <section style={{ marginBottom: "2.5rem" }}>
-        <h2 style={{ fontSize: "1.1rem", fontWeight: 700, color: "#0D1B2A", marginBottom: "1rem", borderRight: "3px solid #C9A84C", paddingRight: "0.75rem" }}>
+        <h2 style={{ fontSize: "1.1rem", fontWeight: 700, color: "var(--majalis-ink, #EDE9DD)", marginBottom: "1rem", borderRight: "3px solid var(--majalis-brass, #C9A84C)", paddingRight: "0.75rem" }}>
           القنوات الرسمية الموثّقة
         </h2>
-        <p style={{ fontSize: "0.82rem", color: "#6b7280", marginBottom: "1.25rem" }}>
+        <p style={{ fontSize: "0.82rem", color: "var(--majalis-ink-muted, #9BA3B5)", marginBottom: "1.25rem" }}>
           ⚠️ نعرض هنا روابط المصادر الرسمية فقط — لا نستضيف أي محتوى للمشايخ على موقعنا.
         </p>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: "1.25rem" }}>
           {OFFICIAL_CHANNELS.map((ch) => (
             <div
               key={ch.id}
-              style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: "0.75rem", overflow: "hidden", boxShadow: "0 1px 4px rgba(0,0,0,.06)" }}
+              style={{ background: "var(--majalis-panel, rgba(255,255,255,0.07))", border: "1px solid rgba(255,255,255,0.10)", borderRadius: "0.75rem", overflow: "hidden", boxShadow: "0 4px 20px rgba(0,0,0,0.30)" }}
             >
               {ch.embedPlaylist && (
                 <div style={{ aspectRatio: "16/9", background: "#000" }}>
@@ -74,7 +74,7 @@ export default function SheikhsPageClient({
                 </div>
               )}
               <div style={{ padding: "1rem" }}>
-                <p style={{ fontWeight: 700, fontSize: "0.95rem", color: "#0D1B2A", marginBottom: "0.75rem" }}>
+                <p style={{ fontWeight: 700, fontSize: "0.95rem", color: "var(--majalis-ink, #EDE9DD)", marginBottom: "0.75rem" }}>
                   {ch.name}
                 </p>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
@@ -87,13 +87,13 @@ export default function SheikhsPageClient({
                       style={{
                         display: "inline-block",
                         padding: "0.3rem 0.75rem",
-                        background: "#f3f4f6",
-                        color: "#374151",
+                        background: "rgba(255,255,255,0.07)",
+                        color: "var(--majalis-ink-soft, #C9C5B8)",
                         borderRadius: "0.375rem",
                         fontSize: "0.78rem",
                         fontWeight: 600,
                         textDecoration: "none",
-                        border: "1px solid #e5e7eb",
+                        border: "1px solid rgba(255,255,255,0.12)",
                         transition: "background 0.15s",
                       }}
                     >
@@ -112,7 +112,7 @@ export default function SheikhsPageClient({
         <Empty text="لا يوجد مشايخ بعد." />
       ) : (
         <>
-          <h2 style={{ fontSize: "1.1rem", fontWeight: 700, color: "#0D1B2A", marginBottom: "1rem", borderRight: "3px solid #C9A84C", paddingRight: "0.75rem" }}>
+          <h2 style={{ fontSize: "1.1rem", fontWeight: 700, color: "var(--majalis-ink, #EDE9DD)", marginBottom: "1rem", borderRight: "3px solid var(--majalis-brass, #C9A84C)", paddingRight: "0.75rem" }}>
             مشايخ المنصة
           </h2>
           <p className="seo-listing-intro">

@@ -5,8 +5,8 @@ import { Link } from "wouter";
 
 const STATUS_META: Record<SubmissionStatus, { icon: string; label: string; bg: string; color: string; border: string }> = {
   pending:  { icon: "⏳", label: "قيد المراجعة",  bg: "#F0F9FF", color: "#0369A1", border: "#A7F3D0" },
-  approved: { icon: "✅", label: "مقبول",          bg: "#f0fdf4", color: "#065f46", border: "#86efac" },
-  rejected: { icon: "❌", label: "مرفوض",          bg: "#fef2f2", color: "#991b1b", border: "#fca5a5" },
+  approved: { icon: "✅", label: "مقبول",          bg: "#f0fdf4", color: "var(--majalis-emerald)", border: "#86efac" },
+  rejected: { icon: "❌", label: "مرفوض",          bg: "#fef2f2", color: "var(--msk-red, #C1595A)", border: "#fca5a5" },
 };
 
 const TYPE_ICON: Record<string, string> = { adhan: "🎙️", lesson: "📚" };
@@ -35,7 +35,7 @@ function SubmissionRow({ sub }: { sub: UserSubmission }) {
 
   return (
     <div style={{
-      background: "#fff",
+      background: "var(--majalis-panel, rgba(255,255,255,0.08))",
       borderRadius: "1rem",
       border: `1.5px solid ${sm.border}`,
       overflow: "hidden",
@@ -55,7 +55,7 @@ function SubmissionRow({ sub }: { sub: UserSubmission }) {
         <div style={{ display: "flex", gap: "0.5rem", alignItems: "flex-start", marginBottom: "0.5rem" }}>
           <span style={{ fontSize: "1.25rem" }}>{TYPE_ICON[sub.type] ?? "📄"}</span>
           <div style={{ flex: 1 }}>
-            <div style={{ fontWeight: 700, fontSize: "0.9rem", color: "#111827" }}>{sub.title}</div>
+            <div style={{ fontWeight: 700, fontSize: "0.9rem", color: "var(--majalis-ink)" }}>{sub.title}</div>
             <div style={{ fontSize: "0.72rem", color: "#6b7280", marginTop: "0.15rem" }}>
               {TYPE_LABEL[sub.type] ?? sub.type}
               {sub.file_name && ` · ${sub.file_name} (${formatFileSize(sub.file_size_kb)})`}
@@ -102,14 +102,14 @@ function SubmissionRow({ sub }: { sub: UserSubmission }) {
 
         {/* Approved adhan notice */}
         {sub.status === "approved" && sub.type === "adhan" && (
-          <div style={{ marginTop: "0.5rem", fontSize: "0.78rem", color: "#065f46", fontWeight: 600 }}>
+          <div style={{ marginTop: "0.5rem", fontSize: "0.78rem", color: "var(--majalis-emerald)", fontWeight: 600 }}>
             🎉 تهانينا! تسجيلك قُبِل وسيُضاف قريباً إلى مكتبة المؤذنين.
           </div>
         )}
 
         {/* Approved lesson notice */}
         {sub.status === "approved" && sub.type === "lesson" && (
-          <div style={{ marginTop: "0.5rem", fontSize: "0.78rem", color: "#065f46", fontWeight: 600 }}>
+          <div style={{ marginTop: "0.5rem", fontSize: "0.78rem", color: "var(--majalis-emerald)", fontWeight: 600 }}>
             🎉 تهانينا! درسك قُبِل وسيُضاف قريباً إلى قسم الدروس.
           </div>
         )}
@@ -118,7 +118,7 @@ function SubmissionRow({ sub }: { sub: UserSubmission }) {
         {sub.status === "rejected" && (
           <div style={{ marginTop: "0.75rem" }}>
             <Link href="/upload">
-              <span style={{ fontSize: "0.78rem", color: "#134a3a", fontWeight: 600, textDecoration: "underline", cursor: "pointer" }}>
+              <span style={{ fontSize: "0.78rem", color: "var(--majalis-emerald)", fontWeight: 600, textDecoration: "underline", cursor: "pointer" }}>
                 إعادة الإرسال بعد التعديل ←
               </span>
             </Link>
@@ -172,10 +172,10 @@ export default function MySubmissionsPage() {
     <div style={{ direction: "rtl", maxWidth: 620, margin: "0 auto", padding: "1.25rem 1rem 5rem" }}>
       {/* Header */}
       <div style={{ marginBottom: "1.5rem" }}>
-        <p style={{ fontSize: "0.75rem", color: "#134a3a", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.06em", margin: "0 0 0.25rem" }}>
+        <p style={{ fontSize: "0.75rem", color: "var(--majalis-emerald)", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.06em", margin: "0 0 0.25rem" }}>
           المساهمات
         </p>
-        <h1 style={{ fontSize: "1.4rem", fontWeight: 800, color: "#111827", margin: "0 0 0.35rem" }}>
+        <h1 style={{ fontSize: "1.4rem", fontWeight: 800, color: "var(--majalis-ink)", margin: "0 0 0.35rem" }}>
           📋 مساهماتي
         </h1>
         <p style={{ fontSize: "0.82rem", color: "#6b7280", margin: 0 }}>
@@ -184,8 +184,8 @@ export default function MySubmissionsPage() {
       </div>
 
       {/* Search by email */}
-      <div style={{ background: "#fff", borderRadius: "1rem", border: "1.5px solid #e5e7eb", padding: "1.25rem", marginBottom: "1.5rem" }}>
-        <p style={{ fontSize: "0.85rem", fontWeight: 600, color: "#374151", margin: "0 0 0.875rem" }}>
+      <div style={{ background: "var(--majalis-panel, rgba(255,255,255,0.08))", borderRadius: "1rem", border: "1.5px solid rgba(255,255,255,0.10)", padding: "1.25rem", marginBottom: "1.5rem" }}>
+        <p style={{ fontSize: "0.85rem", fontWeight: 600, color: "var(--majalis-ink-soft)", margin: "0 0 0.875rem" }}>
           🔍 ابحث بالبريد الإلكتروني الذي أدخلته عند الإرسال:
         </p>
         <form onSubmit={handleSearch} style={{ display: "flex", gap: "0.5rem" }}>
@@ -199,7 +199,7 @@ export default function MySubmissionsPage() {
               flex: 1,
               padding: "0.65rem 0.875rem",
               borderRadius: "0.6rem",
-              border: "1.5px solid #e5e7eb",
+              border: "1.5px solid rgba(255,255,255,0.10)",
               fontSize: "0.875rem",
               fontFamily: "inherit",
               direction: "ltr",
@@ -229,7 +229,7 @@ export default function MySubmissionsPage() {
 
       {/* Error */}
       {err && (
-        <div style={{ padding: "0.75rem 1rem", background: "#fef2f2", border: "1px solid #fca5a5", borderRadius: "0.6rem", color: "#991b1b", fontSize: "0.85rem", marginBottom: "1rem" }}>
+        <div style={{ padding: "0.75rem 1rem", background: "rgba(193,89,90,0.10)", border: "1px solid rgba(193,89,90,0.30)", borderRadius: "0.6rem", color: "var(--msk-red, #C1595A)", fontSize: "0.85rem", marginBottom: "1rem" }}>
           {err}
         </div>
       )}
@@ -238,10 +238,10 @@ export default function MySubmissionsPage() {
       {stats && (
         <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "0.5rem", marginBottom: "1.25rem" }}>
           {[
-            { label: "الكل",          val: stats.total,    bg: "#f3f4f6", color: "#374151" },
+            { label: "الكل",          val: stats.total,    bg: "#f3f4f6", color: "var(--majalis-ink-soft)" },
             { label: "⏳ قيد المراجعة", val: stats.pending,  bg: "#F0F9FF", color: "#0369A1" },
-            { label: "✅ مقبول",       val: stats.approved, bg: "#f0fdf4", color: "#065f46" },
-            { label: "❌ مرفوض",       val: stats.rejected, bg: "#fef2f2", color: "#991b1b" },
+            { label: "✅ مقبول",       val: stats.approved, bg: "#f0fdf4", color: "var(--majalis-emerald)" },
+            { label: "❌ مرفوض",       val: stats.rejected, bg: "#fef2f2", color: "var(--msk-red, #C1595A)" },
           ].map((s) => (
             <div key={s.label} style={{ background: s.bg, borderRadius: "0.75rem", padding: "0.75rem", textAlign: "center" }}>
               <div style={{ fontSize: "1.4rem", fontWeight: 800, color: s.color }}>{s.val}</div>

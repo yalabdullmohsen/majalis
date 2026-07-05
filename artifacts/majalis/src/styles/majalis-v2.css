@@ -2512,4 +2512,130 @@ html[data-theme="dark"] .aie-modal__footer { background: #171C2E; }
   .aie-btn { width: 100%; text-align: center; }
 }
 
+/* ═══════════════════════════════════════════════════════
+   DARK-THEME OVERRIDES — تصحيح الألوان للتصميم الداكن
+   ═══════════════════════════════════════════════════════ */
+
+/* design-system.css overrides — خلفيات بيضاء/فاتحة */
+.mosque-mode__card,
+.rp-input:focus {
+  background: var(--majalis-panel) !important;
+  color: var(--majalis-ink) !important;
+}
+.mosque-mode__label,
+.mosque-mode__link-label {
+  color: var(--majalis-emerald) !important;
+}
+.notif-banner--warn {
+  background: rgba(202, 138, 4, 0.12) !important;
+  color: #FDE68A !important;
+  border-color: rgba(202, 138, 4, 0.30) !important;
+}
+.notif-banner--err {
+  background: rgba(193, 89, 90, 0.12) !important;
+  color: #FCA5A5 !important;
+  border-color: rgba(193, 89, 90, 0.30) !important;
+}
+.push-prompt--info {
+  background: rgba(59, 130, 246, 0.10) !important;
+  color: #93C5FD !important;
+  border-color: rgba(59, 130, 246, 0.25) !important;
+}
+
+/* ألوان نص داكنة في سياق العرض العام */
+.page-shell p,
+.page-shell span:not([class]),
+.page-shell li {
+  color: var(--majalis-ink-soft);
+}
+.page-shell h1,
+.page-shell h2,
+.page-shell h3,
+.page-shell h4 {
+  color: var(--majalis-ink);
+}
+
+/* بطاقات المكتبة والمحتوى — خلفية شفافة */
+.library-detail-read a,
+.library-read-btn {
+  color: #fff !important;
+}
+
+/* إصلاح حقول البحث والفلاتر */
+.lessons-v2-search input,
+.lessons-v2-filters-grid select {
+  color: var(--majalis-ink) !important;
+}
+.lessons-v2-search input::placeholder {
+  color: var(--majalis-ink-muted) !important;
+}
+
+/* النصوص داخل بطاقات الأحكام الشرعية */
+.rulings-encyclopedia-card *,
+.fiqh-council-card * {
+  color: var(--majalis-ink-soft);
+}
+.rulings-encyclopedia-card h3,
+.fiqh-council-card h3 {
+  color: var(--majalis-ink) !important;
+}
+
+/* زر "اقرأ" وروابط المحتوى */
+.lesson-detail-back,
+.lesson-detail-breadcrumb a {
+  color: var(--majalis-ink-soft) !important;
+}
+.lesson-detail-breadcrumb a:hover {
+  color: var(--majalis-brass) !important;
+}
+
+/* ContentDetailLayout — نص الصفحات التفصيلية */
+.content-detail-article,
+.content-detail-body p,
+.content-detail-body li {
+  color: var(--majalis-ink-soft) !important;
+}
+.content-detail-article h2,
+.content-detail-article h3 {
+  color: var(--majalis-ink) !important;
+}
+
+/* الجداول */
+table td, table th {
+  color: var(--majalis-ink-soft);
+  border-color: rgba(255,255,255,0.08);
+}
+table th {
+  color: var(--majalis-ink);
+  background: rgba(255,255,255,0.04);
+}
+
+/* القائمة الجانبية */
+.side-nav-item,
+.side-nav-link {
+  color: var(--majalis-ink-soft) !important;
+}
+.side-nav-item--active,
+.side-nav-link--active {
+  color: var(--majalis-brass) !important;
+}
+
+/* الفلاتر والتبويبات */
+.content-hub-chip--active,
+.lessons-v2-tab--active {
+  background: var(--majalis-emerald) !important;
+  color: #fff !important;
+}
+
+/* أزرار الإجراءات العامة */
+.aie-trigger {
+  color: var(--majalis-brass) !important;
+}
+
+/* إصلاح نص صفحة الشيوخ والأسماء */
+.sheikh-card__name,
+.researcher-card__name {
+  color: var(--majalis-ink) !important;
+}
+
 /* ── نهاية الإصلاح الشامل ── */

@@ -14,10 +14,10 @@ export function HijriSacredMonthBanner() {
     <div
       role="banner"
       style={{
-        background: "#fff",
-        borderBottom: "1px solid #d1fae5",
-        boxShadow: "0 2px 8px rgba(6,78,59,0.08)",
-        borderRight: "4px solid #059669",
+        background: "rgba(46,139,103,0.12)",
+        borderBottom: "1px solid rgba(46,139,103,0.25)",
+        boxShadow: "0 2px 8px rgba(0,0,0,0.20)",
+        borderRight: "4px solid var(--majalis-emerald, #2E8B67)",
         display: "flex",
         alignItems: "center",
         gap: "0.65rem",
@@ -29,13 +29,13 @@ export function HijriSacredMonthBanner() {
       <span style={{ fontSize: "1rem", flexShrink: 0, lineHeight: 1 }}>🌙</span>
 
       <div style={{ flex: 1, minWidth: 0, display: "flex", alignItems: "center", flexWrap: "wrap", gap: "0.25rem 0.5rem" }}>
-        <span style={{ fontWeight: 700, fontSize: "0.875rem", color: "#065f46", whiteSpace: "nowrap" }}>
+        <span style={{ fontWeight: 700, fontSize: "0.875rem", color: "var(--majalis-emerald, #4ADE80)", whiteSpace: "nowrap" }}>
           {monthName} {year}هـ — الشهر الحرام
         </span>
         {firstDeed && (
           <>
-            <span style={{ color: "#9ca3af", fontSize: "0.75rem" }}>·</span>
-            <span style={{ fontSize: "0.8rem", color: "#374151", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "30ch" }}>
+            <span style={{ color: "var(--majalis-ink-muted, #9BA3B5)", fontSize: "0.75rem" }}>·</span>
+            <span style={{ fontSize: "0.8rem", color: "var(--majalis-ink-soft, #C9C5B8)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "30ch" }}>
               {firstDeed}
             </span>
           </>
@@ -48,9 +48,9 @@ export function HijriSacredMonthBanner() {
         aria-label="إغلاق"
         style={{
           background: "none",
-          border: "1px solid #e5e7eb",
+          border: "1px solid rgba(255,255,255,0.15)",
           borderRadius: "6px",
-          color: "#9ca3af",
+          color: "var(--majalis-ink-muted, #9BA3B5)",
           fontSize: "0.8rem",
           cursor: "pointer",
           padding: "0.15rem 0.45rem",
@@ -58,8 +58,8 @@ export function HijriSacredMonthBanner() {
           flexShrink: 0,
           transition: "border-color 0.15s, color 0.15s",
         }}
-        onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = "#9ca3af"; (e.currentTarget as HTMLButtonElement).style.color = "#6b7280"; }}
-        onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = "#e5e7eb"; (e.currentTarget as HTMLButtonElement).style.color = "#9ca3af"; }}
+        onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = "rgba(255,255,255,0.35)"; (e.currentTarget as HTMLButtonElement).style.color = "var(--majalis-ink)"; }}
+        onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = "rgba(255,255,255,0.15)"; (e.currentTarget as HTMLButtonElement).style.color = "var(--majalis-ink-muted)"; }}
       >
         ×
       </button>
