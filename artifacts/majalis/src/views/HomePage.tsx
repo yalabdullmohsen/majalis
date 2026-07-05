@@ -112,14 +112,23 @@ export default function HomePage({
 
             <img
               src="/logo.png"
-              alt="المجلس العلمي"
+              alt=""
               className="home-hero-logo"
               width={72}
               height={72}
               loading="eager"
               decoding="async"
+              aria-hidden="true"
             />
-            <h1 className="home-hero-title home-hero-title--v3">المجلس العلمي</h1>
+            <h1 className="home-hero-title home-hero-title--v3">
+              <img
+                src="/logo-calligraphy.png"
+                alt="المجلس العلمي"
+                className="home-hero-calligraphy"
+                loading="eager"
+                decoding="async"
+              />
+            </h1>
             <p className="home-hero-lead home-hero-lead--v3">
               دروس وفتاوى وقرآن ومحتوى موثّق في تطبيق واحد.
             </p>

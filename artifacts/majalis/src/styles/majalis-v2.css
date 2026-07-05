@@ -974,3 +974,13 @@ html[data-theme="dark"] .side-nav-link--v2.is-active {
   background: rgba(217,174,92,0.12) !important;
   color: #D9AE5C !important;
 }
+
+/* ── شعار الخط العربي في Hero الرئيسية ── */
+.home-hero-calligraphy {
+  display: block;
+  height: clamp(80px, 16vw, 140px);
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 12px rgba(0,0,0,0.25));
+}
