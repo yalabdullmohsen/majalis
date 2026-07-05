@@ -26,17 +26,36 @@ const EN_WEEKDAY_TO_INDEX: Record<string, number> = {
 };
 
 /**
- * أوقات الصلاة الثابتة — قيم متوسطة للكويت (تُستخدم فقط عند غياب الوقت المحدد)
- * المستخدم يُدخل وقت الصلاة الفعلي أو النص ("بعد الفجر") فيُحوّل بدقة
+ * أوقات الصلاة الافتراضية — متوسطات سنوية دقيقة للكويت.
+ * تُستبدَل تلقائياً بالأوقات الفعلية من API عبر setPrayerTimesCache().
+ *
+ * ملاحظة: القيم القديمة (الفجر 4:15، العصر 15:30، المغرب 18:30) كانت قاصرة
+ * في الصيف — الصيف الكويتي يؤخّر العصر لـ16:35+ والمغرب لـ19:10+.
  */
 const PRAYER_TIME_MINUTES: Record<string, number> = {
-  الفجر:   4 * 60 + 15,   // 4:15 ص متوسط سنوي في الكويت
-  الشروق:  5 * 60 + 45,   // 5:45 ص
+  الفجر:   4 * 60 + 20,   // 4:20 ص متوسط سنوي
+  الشروق:  5 * 60 + 40,   // 5:40 ص
   الظهر:  12 * 60 +  5,   // 12:05 م
-  العصر:  15 * 60 + 30,   // 3:30 م
-  المغرب: 18 * 60 + 30,   // 6:30 م (يتغير موسمياً)
-  العشاء: 20 * 60,         // 8:00 م
+  العصر:  16 * 60 +  5,   // 4:05 م (متوسط حنفي+شافعي سنوي في الكويت)
+  المغرب: 18 * 60 + 45,   // 6:45 م (متوسط سنوي)
+  العشاء: 20 * 60 + 10,   // 8:10 م (متوسط سنوي)
 };
+
+/**
+ * كاش الأوقات الفعلية من API — يُحدَّث عند جلب مواقيت الصلاة.
+ * المفاتيح: "الفجر" | "الشروق" | "الظهر" | "العصر" | "المغرب" | "العشاء"
+ */
+let _livePrayerCache: Record<string, number> | null = null;
+
+/** يُستدعى من مكون مواقيت الصلاة عند نجاح الجلب */
+export function setPrayerTimesCache(times: Record<string, number>): void {
+  _livePrayerCache = { ...times };
+}
+
+/** يُعيد وقت الصلاة: من الكاش الحي أولاً، ثم الافتراضي */
+function effectivePrayerMinutes(key: string): number {
+  return _livePrayerCache?.[key] ?? PRAYER_TIME_MINUTES[key];
+}
 
 export type KuwaitClock = {
   year:    number;
@@ -122,14 +141,14 @@ export function getKuwaitClock(date = new Date()): KuwaitClock {
   };
 }
 
-// جذور أسماء الصلوات للمطابقة مع/بدون "ال"
-const PRAYER_ROOTS: Array<[RegExp, number]> = [
-  [/فجر/u,   PRAYER_TIME_MINUTES.الفجر],
-  [/شروق/u,  PRAYER_TIME_MINUTES.الشروق],
-  [/ظهر/u,   PRAYER_TIME_MINUTES.الظهر],
-  [/عصر/u,   PRAYER_TIME_MINUTES.العصر],
-  [/مغرب/u,  PRAYER_TIME_MINUTES.المغرب],
-  [/عشاء/u,  PRAYER_TIME_MINUTES.العشاء],
+// ترتيب مطابقة الصلوات — يُقرأ وقتها من effectivePrayerMinutes (كاش حي أولاً)
+const PRAYER_ROOT_KEYS: Array<[RegExp, string]> = [
+  [/فجر/u,   "الفجر"],
+  [/شروق/u,  "الشروق"],
+  [/ظهر/u,   "الظهر"],
+  [/عصر/u,   "العصر"],
+  [/مغرب/u,  "المغرب"],
+  [/عشاء/u,  "العشاء"],
 ];
 
 /** تحويل الأرقام العربية-الهندية (٠-٩) إلى لاتينية. */
@@ -169,9 +188,10 @@ export function parseTimeToMinutes(timeRaw: string): number | null {
     return Math.max(0, Math.min(23, hour)) * 60;
   }
 
-  // أسماء الصلوات
-  for (const [root, baseMinutes] of PRAYER_ROOTS) {
+  // أسماء الصلوات — يستخدم الأوقات الفعلية من API إن وُجدت
+  for (const [root, prayerKey] of PRAYER_ROOT_KEYS) {
     if (root.test(time)) {
+      const baseMinutes = effectivePrayerMinutes(prayerKey);
       if (/بعد/u.test(time)) return baseMinutes + 20;
       if (/قبل/u.test(time)) return Math.max(0, baseMinutes - 60);
       return baseMinutes;
@@ -216,7 +236,7 @@ export function computeNextOccurrenceMs(day: string, time: string, now = new Dat
   }
 
   const clock        = getKuwaitClock(now);
-  const timeMinutes  = parseTimeToMinutes(time) ?? PRAYER_TIME_MINUTES.المغرب;
+  const timeMinutes  = parseTimeToMinutes(time) ?? effectivePrayerMinutes("المغرب");
   const nowMinutes   = clock.hour * 60 + clock.minute;
 
   let daysUntil = (targetDay - clock.weekday + 7) % 7;

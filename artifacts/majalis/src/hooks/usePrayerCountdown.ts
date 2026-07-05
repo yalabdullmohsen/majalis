@@ -5,6 +5,7 @@ import {
   type PrayerCountdown,
   type PrayerTimesPayload,
 } from "@/lib/prayer-times";
+import { setPrayerTimesCache } from "@/lib/lesson-time";
 
 export function usePrayerCountdown(governorateId?: string) {
   const [data, setData] = useState<PrayerTimesPayload | null>(null);
@@ -16,7 +17,15 @@ export function usePrayerCountdown(governorateId?: string) {
     setLoading(true);
     fetchPrayerTimes(governorateId)
       .then((payload) => {
-        if (!cancelled) setData(payload);
+        if (!cancelled) {
+          setData(payload);
+          // مزامنة أوقات الصلاة الفعلية مع حساب مواعيد الدروس
+          const cache: Record<string, number> = {};
+          for (const p of payload.prayers) {
+            if (p.minutes != null) cache[p.name] = p.minutes;
+          }
+          setPrayerTimesCache(cache);
+        }
       })
       .catch(() => {
         if (!cancelled) setData(null);

@@ -142,16 +142,17 @@ function buildPayload(
   };
 }
 
-/** Approximate Kuwait prayer times when all network sources fail. */
+/**
+ * أوقات صلاة تقريبية للكويت عند فشل جميع مصادر الشبكة.
+ * المتوسطات السنوية الدقيقة (تختلف بين الشتاء والصيف بنحو ساعة).
+ */
 function staticPrayerFallback(cityName = "الكويت – محافظة العاصمة"): PrayerTimesPayload {
-  const timings: Record<string, string> = {
-    Fajr: "04:30",
-    Sunrise: "05:50",
-    Dhuhr: "11:45",
-    Asr: "15:10",
-    Maghrib: "17:35",
-    Isha: "19:00",
-  };
+  const month = new Date().getMonth() + 1; // 1-12
+  const isSummer = month >= 5 && month <= 9; // مايو–سبتمبر
+
+  const timings: Record<string, string> = isSummer
+    ? { Fajr: "04:00", Sunrise: "05:30", Dhuhr: "12:05", Asr: "16:35", Maghrib: "19:10", Isha: "20:35" }
+    : { Fajr: "05:10", Sunrise: "06:30", Dhuhr: "12:00", Asr: "15:05", Maghrib: "17:25", Isha: "18:45" };
 
   const readable = new Intl.DateTimeFormat("ar-KW", {
     timeZone: "Asia/Kuwait",
