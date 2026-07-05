@@ -1,3 +1,6 @@
+/* ══ خط Amiri للعناوين الرئيسية ══ */
+@import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap');
+
 /* ══ Tailwind v4: ربط dark: variant بـ data-theme="dark" ══ */
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
@@ -30,10 +33,10 @@ html {
      ══════════════════════════════════════════════════ */
 
   /* ── لوحة مجالس الأساسية (نهار — وضع افتراضي) ── */
-  --msk-canvas:        #FAF8F5;
-  --msk-canvas-1:      #FFFFFF;
+  --msk-canvas:        #FFFFFF;
+  --msk-canvas-1:      #F7FBF9;
   --msk-canvas-2:      #F0EDE8;
-  --msk-canvas-glass:  rgba(250,248,245,.94);
+  --msk-canvas-glass:  rgba(255,255,255,.94);
   --msk-manuscript:    #FAF3E4;
   --msk-manuscript-2:  #F3E7CC;
   --msk-gold:          #0E6E52;
@@ -49,7 +52,7 @@ html {
   --msk-green:         #0E6E52;
   --msk-red:           #9B1C1C;
   --msk-red-dim:       rgba(155,28,28,.08);
-  --msk-border:        #E0DBD5;
+  --msk-border:        rgba(14,110,82,0.10);
   --msk-border-strong: #C8C0B8;
   --msk-divider:       rgba(0,0,0,.06);
   --msk-shadow-sm:     0 1px 2px rgba(28,26,24,.06);
@@ -229,10 +232,10 @@ html[data-theme="dark"] {
 
 /* ══ وضع النهار — الزمرد الإسلامي ══ */
 html[data-theme="light"] {
-  --msk-canvas:        #FAF8F5;
-  --msk-canvas-1:      #FFFFFF;
+  --msk-canvas:        #FFFFFF;
+  --msk-canvas-1:      #F7FBF9;
   --msk-canvas-2:      #F0EDE8;
-  --msk-canvas-glass:  rgba(250,248,245,.94);
+  --msk-canvas-glass:  rgba(255,255,255,.94);
   --msk-gold:          #0E6E52;
   --msk-gold-deep:     #0A5040;
   --msk-gold-dim:      rgba(14,110,82,.12);
@@ -246,7 +249,7 @@ html[data-theme="light"] {
   --msk-green:         #0E6E52;
   --msk-red:           #9B1C1C;
   --msk-red-dim:       rgba(155,28,28,.08);
-  --msk-border:        #E0DBD5;
+  --msk-border:        rgba(14,110,82,0.10);
   --msk-border-strong: #C8C0B8;
   --msk-divider:       rgba(0,0,0,.06);
   --msk-shadow-sm:     0 1px 2px rgba(28,26,24,.06);
@@ -3962,6 +3965,8 @@ html[data-theme="light"] .home-page {
 }
 
 .site-brand-name {
+  font-family: 'Amiri', 'Scheherazade New', serif;
+  font-display: swap;
   font-weight: 700;
   font-size: 1.0625rem;
   white-space: nowrap;
@@ -9722,15 +9727,18 @@ body:not(.mobile-nav-body-lock) .mobile-nav-layer {
 
 .navbar-menu-btn,
 .navbar-logout {
-  border: 1px solid var(--msk-border, #E0DBD5);
-  background: transparent;
+  border: 1px solid rgba(14,110,82,0.15);
+  background: #FFFFFF;
   color: var(--majalis-ink);
-  border-radius: 0.45rem;
+  border-radius: 0.65rem;
   padding: 0.4rem 0.75rem;
   font-family: inherit;
   font-weight: 700;
   font-size: 0.82rem;
   cursor: pointer;
+  height: 38px;
+  box-shadow: 0 1px 4px rgba(14,110,82,0.10), 0 0 0 1px rgba(14,110,82,0.10);
+  transition: all 0.15s ease;
 }
 
 /* زر القائمة — تصميم محسَّن */
@@ -9740,12 +9748,12 @@ body:not(.mobile-nav-body-lock) .mobile-nav-layer {
   align-items: center;
   gap: 0.4rem;
   overflow: hidden;
-  transition: border-color 160ms ease, background 160ms ease, color 160ms ease, transform 120ms ease;
 }
 .navbar-menu-btn:hover {
-  border-color: color-mix(in srgb, var(--majalis-emerald) 35%, var(--majalis-line));
+  background: #f0faf5;
+  box-shadow: 0 2px 8px rgba(14,110,82,0.15);
+  border-color: rgba(14,110,82,0.20);
   color: var(--majalis-emerald-deep);
-  transform: translateY(-1px);
 }
 .navbar-menu-btn:active { transform: scale(0.97); }
 
@@ -9769,15 +9777,20 @@ body:not(.mobile-nav-body-lock) .mobile-nav-layer {
   transform: rotate(90deg);
 }
 .navbar-menu-btn__label {
-  font-size: 0.8rem;
+  font-family: 'Amiri', 'Scheherazade New', serif;
+  font-size: 0.85rem;
 }
 
 html[data-theme="dark"] .navbar-menu-btn {
+  background: rgba(255,255,255,0.06);
   border-color: rgba(217, 174, 92, 0.2);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.25), 0 0 0 1px rgba(217,174,92,0.12);
 }
 html[data-theme="dark"] .navbar-menu-btn:hover {
+  background: rgba(217,174,92,0.08);
   border-color: rgba(217, 174, 92, 0.45);
   color: var(--msk-gold);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.30);
 }
 html[data-theme="dark"] .navbar-menu-btn__geo {
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23D9AE5C' d='M12 0l3 9h9l-7 5 3 9-8-6-8 6 3-9-7-5h9z'/%3E%3C/svg%3E") center/contain no-repeat;
@@ -12310,8 +12323,10 @@ svg {
 }
 
 .home-hero-title--v3 {
+  font-family: 'Amiri', 'Scheherazade New', serif;
+  font-display: swap;
   font-size: clamp(2rem, 6vw, 3.5rem);
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1.15;
   margin: 0;
   text-wrap: balance;
@@ -13832,9 +13847,9 @@ html[data-theme="dark"] .navbar-v3 {
 }
 
 html[data-theme="light"] .navbar-v3 {
-  background: rgba(250,250,247,.94) !important;
-  border-color: rgba(221,213,199,.7) !important;
-  box-shadow: 0 1px 12px rgba(43,36,32,.06) !important;
+  background: rgba(255,255,255,.96) !important;
+  border-color: rgba(14,110,82,0.12) !important;
+  box-shadow: 0 1px 12px rgba(14,110,82,0.06) !important;
 }
 
 /* ─── Phase 3: Islamic Decorative Elements ─────────────────── */
@@ -16318,21 +16333,28 @@ html[data-theme="dark"] .hadith-grade--mawdu, html[data-theme="dark"] .grade--ma
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.6rem;
-  padding: 1.25rem 0.875rem;
+  gap: 0.4rem;
+  padding: 0.9rem 0.65rem;
   text-align: center;
   border-radius: 1rem;
-  background: transparent;
-  border: 1px solid var(--msk-border, #E0DBD5);
-  box-shadow: 0 1px 4px rgba(26, 23, 20, 0.05);
+  background: #ffffff;
+  border: 1px solid rgba(14,110,82,0.10);
+  box-shadow: 0 2px 8px rgba(14,110,82,0.06);
   text-decoration: none;
-  transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 220ms cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.15s;
 }
 
 .home-feature-strip-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(22, 96, 72, 0.1);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(14,110,82,0.12);
+  background: #f5fbf8;
+}
+
+.home-feature-strip-card:active {
+  transform: scale(0.97);
+  background: #e8f5ef;
 }
 
 .home-feature-strip-icon {
@@ -16362,6 +16384,53 @@ html[data-theme="dark"] .home-feature-strip-icon {
   font-size: 0.7rem;
   color: var(--msk-text-2, #5C5550);
   line-height: 1.4;
+}
+
+/* ── بطاقات قصص الأنبياء ── */
+.prophet-home-card {
+  background: #ffffff;
+  border: 1px solid rgba(14,110,82,0.12);
+  border-radius: 1.25rem;
+  padding: 1.25rem;
+  box-shadow: 0 2px 12px rgba(14,110,82,0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+.prophet-home-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(14,110,82,0.03) 0%, transparent 60%);
+  pointer-events: none;
+}
+.prophet-home-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(14,110,82,0.12);
+}
+html[data-theme="dark"] .prophet-home-card {
+  background: var(--msk-canvas-1);
+  border-color: rgba(217,174,92,0.15);
+}
+html[data-theme="dark"] .prophet-home-card::before {
+  background: linear-gradient(135deg, rgba(217,174,92,0.04) 0%, transparent 60%);
+}
+
+/* ── تأثيرات التفاعل العامة ── */
+.bottom-nav__tab:active,
+.kuwait-tab:active,
+[role="button"]:active {
+  transform: scale(0.96);
+  transition: transform 0.1s ease;
+}
+
+/* ── انتقالات الصفحة ── */
+.page-shell {
+  animation: fadeInPage 0.2s ease;
+}
+@keyframes fadeInPage {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 /* ── Learning Path Card (بطاقة خارطة طالب العلم) — تحسين ── */

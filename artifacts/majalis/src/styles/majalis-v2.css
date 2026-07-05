@@ -390,33 +390,35 @@ html[data-theme="dark"] .navbar-v3 {
   align-items: center;
   gap: 0.35rem;
   padding: 0.375rem 0.75rem;
-  border-radius: var(--v2-r-sm);
-  border: 1px solid var(--v2-border);
-  background: var(--v2-surface-1);
+  border-radius: 0.65rem;
+  border: 1px solid rgba(14,110,82,0.15);
+  background: #FFFFFF;
   cursor: pointer;
   font-size: 0.825rem;
   color: var(--v2-ink-2);
   font-family: inherit;
-  transition: background var(--v2-t-fast), border-color var(--v2-t-fast), box-shadow var(--v2-t-fast);
+  height: 38px;
+  box-shadow: 0 1px 4px rgba(14,110,82,0.10), 0 0 0 1px rgba(14,110,82,0.10);
+  transition: all 0.15s ease;
 }
 .navbar-search-cmd:hover {
-  background: var(--v2-surface-0);
-  border-color: var(--v2-green);
-  box-shadow: 0 0 0 3px var(--v2-green-soft);
+  background: #f0faf5;
+  border-color: rgba(14,110,82,0.20);
+  box-shadow: 0 2px 8px rgba(14,110,82,0.15);
 }
 .navbar-search-kbd {
-  font-size: 0.65rem;
-  opacity: 0.55;
-  padding: 0.05rem 0.3rem;
-  border: 1px solid var(--v2-border);
-  border-radius: 4px;
-  background: var(--v2-surface-0);
-  font-family: inherit;
+  display: none;
 }
 html[data-theme="dark"] .navbar-search-cmd {
   background: rgba(255,255,255,0.06);
-  border-color: rgba(255,255,255,0.1);
+  border-color: rgba(217,174,92,0.2);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.25), 0 0 0 1px rgba(217,174,92,0.12);
   color: var(--majalis-ink, #F4F1EC);
+}
+html[data-theme="dark"] .navbar-search-cmd:hover {
+  background: rgba(217,174,92,0.08);
+  border-color: rgba(217,174,92,0.40);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.30);
 }
 
 /* ── 15. تحسين بطاقات الصفحة الرئيسية ── */

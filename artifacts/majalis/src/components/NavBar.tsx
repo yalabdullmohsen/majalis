@@ -184,8 +184,8 @@ export default function NavBar() {
             <button
               type="button"
               onClick={() => window.dispatchEvent(new Event("global-search-open"))}
-              aria-label="البحث الشامل (⌘K)"
-              title="البحث الشامل (⌘K)"
+              aria-label="البحث الشامل"
+              title="البحث الشامل"
               className="navbar-search-cmd"
             >
               <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
@@ -193,7 +193,6 @@ export default function NavBar() {
                 <path d="M11 11L13.5 13.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
               </svg>
               <span className="navbar-search-hint">بحث</span>
-              <kbd className="navbar-search-kbd">⌘K</kbd>
             </button>
             {/* Desktop: search + auth + lang */}
             {!isMobile && <SearchBox />}
