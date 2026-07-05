@@ -1052,7 +1052,7 @@ html[data-theme="dark"] .side-nav-link--v2.is-active {
 
 /* ── اسم المجلس العلمي — خط ثلث ذهبي ── */
 .site-brand-name {
-  font-family: "Aref Ruqaa", "Amiri", serif !important;
+  font-family: "Katibeh", "Aref Ruqaa", "Amiri", serif !important;
   font-size: clamp(1.25rem, 4vw, 1.65rem) !important;
   font-weight: 700 !important;
   color: #C49540 !important;

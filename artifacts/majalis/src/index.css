@@ -1,5 +1,7 @@
 /* ══ خط Amiri للعناوين الرئيسية ══ */
 @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap');
+/* ══ خط Katibeh — ثلث عربي للعنوان الرئيسي ══ */
+@import url('https://fonts.googleapis.com/css2?family=Katibeh&display=swap');
 
 /* ══ Tailwind v4: ربط dark: variant بـ data-theme="dark" ══ */
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
