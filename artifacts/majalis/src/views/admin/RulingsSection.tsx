@@ -38,7 +38,7 @@ export function RulingsSection() {
   const [importText, setImportText] = useState("");
   const [importFormat, setImportFormat] = useState<"csv" | "json" | "markdown">("csv");
   const [importResult, setImportResult] = useState<string | null>(null);
-  const [filter, setFilter] = useState("");
+  const [filter, setFilter] = useState(() => { const p = new URLSearchParams(window.location.search); return p.get("q") || ""; });
 
   const subcategoryOptions = useMemo(() => flattenCategories(), []);
 

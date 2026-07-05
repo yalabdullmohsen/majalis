@@ -1,4 +1,5 @@
 import { Link } from "wouter";
+import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { useAuth } from "@/components/AuthProvider";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { useEffect, useMemo, useState } from "react";
@@ -102,6 +103,7 @@ export default function LibraryPage({
               <span className="library-card-cta">عرض التفاصيل</span>
             </Link>
           ))}
+        <AdminQuickEdit section="library" />
         </div>
       </PageLoadingGuard>
     </ContentHubLayout>

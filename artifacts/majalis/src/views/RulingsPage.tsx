@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { useAuth } from "@/components/AuthProvider";
 import { PageHeader, Loading, Empty } from "@/components/ui-common";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
@@ -229,6 +230,7 @@ export default function RulingsPage() {
       <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="بحث وتصفية">
         {filtersPanel}
       </FilterBottomSheet>
+      <AdminQuickEdit section="rulings" />
     </div>
   );
 }

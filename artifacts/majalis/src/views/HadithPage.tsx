@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { getVerifiedHadith } from "@/lib/supabase";
 import { RequestManager } from "@/lib/request-manager";
 import { arabicMatchAny } from "@/lib/arabic-search";
@@ -376,6 +377,7 @@ function HadithDetailModal({ h, onClose }: { h: HadithItem; onClose: () => void 
           <p>⚠️ تحقق من صحة الحديث ومصدره قبل النشر أو الاستشهاد به.</p>
         </footer>
       </div>
+      <AdminQuickEdit section="qa" />
     </div>
   );
 }

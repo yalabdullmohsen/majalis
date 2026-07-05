@@ -93,7 +93,7 @@ export function QuizSection() {
   const { showSuccess, showError } = useAdminShell();
   const [items, setItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(() => { const p = new URLSearchParams(window.location.search); return p.get("q") || ""; });
   const [sectionFilter, setSectionFilter] = useState("الكل");
   const [levelFilter, setLevelFilter] = useState("الكل");
   const [statusFilter, setStatusFilter] = useState("الكل");

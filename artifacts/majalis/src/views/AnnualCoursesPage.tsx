@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { PageHeader, Loading, Empty } from "@/components/ui-common";
@@ -85,6 +86,7 @@ export default function AnnualCoursesPage() {
           ))}
         </div>
       )}
+      <AdminQuickEdit section="annual-courses" />
     </div>
   );
 }

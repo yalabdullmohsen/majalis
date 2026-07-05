@@ -37,7 +37,7 @@ const BTN: React.CSSProperties = {
 export function AdhkarSection() {
   const { showSuccess, showError } = useAdminShell();
   const [items, setItems] = useState(() => getAllAdhkarForAdmin());
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(() => { const p = new URLSearchParams(window.location.search); return p.get("q") || ""; });
   const [category, setCategory] = useState("all");
   const [open, setOpen] = useState(false);
   const [preview, setPreview] = useState<AdhkarItem | null>(null);

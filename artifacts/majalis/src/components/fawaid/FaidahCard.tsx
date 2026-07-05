@@ -34,6 +34,8 @@ export function FaidahCard({ item }: Props) {
       shareTitle={item.category || "فائدة"}
       shareText={cleaned}
       className="faidah-card"
+      adminEditType="fawaid"
+      adminEditData={{ text: item.text, source: item.source || "", category: item.category || "" }}
     />
   );
 }

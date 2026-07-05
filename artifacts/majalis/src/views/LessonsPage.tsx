@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState, useCallback } from "react";
+import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { useLocation } from "wouter";
 import { PageHeader } from "@/components/ui-common";
 import { PageLoadingGuard } from "@/components/PageLoadingGuard";
@@ -190,6 +191,7 @@ function LessonsFilterPanel({
           </select>
         </label>
       </div>
+      <AdminQuickEdit section="lessons" />
     </div>
   );
 }

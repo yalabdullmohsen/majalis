@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { supabase } from "@/lib/supabase";
 import { isSupabaseConfigured } from "@/lib/supabase-config";
 
@@ -55,6 +56,7 @@ function OrnamentalDivider({ color = GOLD }: { color?: string }) {
       <div style={{ flex: 1, height: 1, background: `linear-gradient(to right, transparent, ${color})` }} />
       <IslamicStar size={14} color={color} />
       <div style={{ flex: 1, height: 1, background: `linear-gradient(to left, transparent, ${color})` }} />
+      <AdminQuickEdit section="islamic-stories" />
     </div>
   );
 }

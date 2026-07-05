@@ -84,6 +84,7 @@ export default function AnnualCourseDetailPage({ params }: { params: { id: strin
       tags={item.keywords}
       body={item.body}
       copyText={copyText}
+      adminEdit={{ contentType: "annual-course", contentId: item.id, initialData: { title: item.title, description: item.body, location: item.location, start_date: item.start_date } }}
       related={
         <RelatedLinks
           items={related.map((r) => ({

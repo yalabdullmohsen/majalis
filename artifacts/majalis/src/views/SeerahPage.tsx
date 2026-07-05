@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { usePageView } from "@/hooks/usePageView";
+import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 
 const PHASES = [
   {
@@ -265,6 +266,7 @@ export default function SeerahPage() {
         </div>
 
       </div>
+      <AdminQuickEdit section="prophet-stories" />
     </>
   );
 }

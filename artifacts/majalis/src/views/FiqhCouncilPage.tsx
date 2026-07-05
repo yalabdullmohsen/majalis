@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { Link, useLocation } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { PageHeader, Loading, Empty } from "@/components/ui-common";
@@ -171,6 +172,7 @@ export function FiqhCouncilFilters({
           </label>
         </div>
       </div>
+      <AdminQuickEdit section="fiqh-council" />
     </div>
   );
 }

@@ -31,6 +31,8 @@ export function AdhkarCard({ item }: Props) {
       shareText={item.text}
       extra={<TasbeehCounter storageId={`adhkar-${item.id}`} target={item.count} compact label="عداد الذكر" />}
       className="adhkar-card"
+      adminEditType="adhkar"
+      adminEditData={{ text: item.text, times: item.count ? String(item.count) : "", category: category?.name || "" }}
     />
   );
 }

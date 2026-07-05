@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { PageHeader, Loading, Empty } from "@/components/ui-common";
 import { PlatformContentCard } from "@/components/platform/ContentDetailLayout";
 import { getFatwas } from "@/lib/platform-content-service";
@@ -129,6 +130,7 @@ export default function FatwaPage() {
           ))}
         </div>
       )}
+      <AdminQuickEdit section="fatwa" />
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { useAuth } from "@/components/AuthProvider";
 import { getAkpStories } from "@/lib/supabase";
 import { RequestManager } from "@/lib/request-manager";
@@ -124,6 +125,7 @@ export default function StoriesPage() {
       <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="بحث وتصفية">
         {filtersPanel}
       </FilterBottomSheet>
+      <AdminQuickEdit section="islamic-stories" />
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import { memo, useCallback, useEffect, useState } from "react";
 import { resolveLessonPosterUrl } from "@/lib/lesson-image";
 import { Link } from "wouter";
+import { AdminInlineEdit } from "@/components/AdminInlineEdit";
 import {
   buildLessonCopyText,
   buildLessonShareUrl,
@@ -175,6 +176,12 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
               <button type="button" className="lesson-unified-card__btn lesson-unified-card__btn--secondary" onClick={handleShare}>
                 مشاركة
               </button>
+              <AdminInlineEdit
+                contentType="lesson"
+                contentId={lesson.id}
+                initialData={{ title: lesson.title, category: lesson.category, mosque: lesson.mosque, region: lesson.region, day_of_week: lesson.day, lesson_time: lesson.time, description: lesson.description }}
+                className="lesson-unified-card__btn lesson-unified-card__btn--secondary"
+              />
               <button type="button" className="lesson-unified-card__btn lesson-unified-card__btn--secondary" onClick={handleCopyLink}>
                 {linkCopied ? "تم النسخ" : "نسخ الرابط"}
               </button>

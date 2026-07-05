@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { useAuth } from "@/components/AuthProvider";
 import { getMiracles } from "@/lib/supabase";
 import { PageHeader, Chip } from "@/components/ui-common";
@@ -219,6 +220,7 @@ export default function MiraclesPage({
       <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="تصفية المقالات">
         {filterPanel}
       </FilterBottomSheet>
+      <AdminQuickEdit section="miracles" />
     </div>
   );
 }

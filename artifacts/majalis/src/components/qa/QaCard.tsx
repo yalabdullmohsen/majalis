@@ -59,6 +59,8 @@ export function QaCard({ item, defaultOpen = false }: Props) {
       defaultOpen={defaultOpen}
       headerAsButton
       className="qa-card"
+      adminEditType="qa"
+      adminEditData={{ question: item.question, answer: item.answer || "", category: catName || "" }}
     />
   );
 }

@@ -75,6 +75,7 @@ export default function LibraryDetailPage({ params }: { params: { id: string } }
       tags={item.keywords}
       body={item.description}
       copyText={[item.title, item.author, item.description].filter(Boolean).join("\n\n")}
+      adminEdit={{ contentType: "library", contentId: item.id, initialData: { title: item.title, author: item.author, category: item.category, description: item.description } }}
       related={
         related.length > 0 ? (
           <RelatedLinks

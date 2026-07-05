@@ -73,6 +73,7 @@ export default function FatwaDetailPage({ params }: { params: { id: string } }) 
       body={item.answer}
       sourceUrls={item.source_urls}
       copyText={copyText}
+      adminEdit={{ contentType: "fatwa", contentId: item.id, initialData: { title: item.question, question: item.question, answer: item.answer, category: item.category } }}
       related={
         <RelatedLinks
           items={related.map((r) => ({

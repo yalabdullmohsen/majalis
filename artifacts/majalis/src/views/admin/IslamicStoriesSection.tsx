@@ -78,7 +78,7 @@ export function IslamicStoriesSection() {
   const [working, setWorking] = useState<Set<number>>(new Set());
   const [filterCategory, setFilterCategory] = useState("الكل");
   const [filterStatus, setFilterStatus] = useState("الكل");
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(() => { const p = new URLSearchParams(window.location.search); return p.get("q") || ""; });
 
   const load = async () => {
     setLoading(true);

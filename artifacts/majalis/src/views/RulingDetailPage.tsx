@@ -76,6 +76,7 @@ export default function RulingDetailPage({ params }: { params: { id: string } })
       tags={item.keywords}
       body={item.body}
       copyText={copyText}
+      adminEdit={{ contentType: "ruling", contentId: item.id, initialData: { title: item.title, category: item.category, subcategory: item.subcategory, content: item.body, evidence: item.evidence } }}
       related={
         <RelatedLinks
           items={related.map((r) => ({

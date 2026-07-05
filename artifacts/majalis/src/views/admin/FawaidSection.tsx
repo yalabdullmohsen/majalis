@@ -20,7 +20,7 @@ export function FawaidSection() {
   const [items, setItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("all");
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(() => { const p = new URLSearchParams(window.location.search); return p.get("q") || ""; });
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState<any>(EMPTY_FAWAID);
   const [saving, setSaving] = useState(false);

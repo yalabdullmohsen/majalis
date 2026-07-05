@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { readPreferences, writePreferences } from "@/lib/user-preferences";
+import { AdminInlineEdit, type InlineEditContentType } from "@/components/AdminInlineEdit";
 
 type Props = {
   text: string;
@@ -11,6 +12,8 @@ type Props = {
   showSave?: boolean;
   showReadingMode?: boolean;
   showPrint?: boolean;
+  /** لتفعيل زر التعديل المباشر */
+  adminEdit?: { contentType: InlineEditContentType; initialData?: Record<string, unknown> };
 };
 
 async function copyText(text: string) {
@@ -30,6 +33,7 @@ export function ContentActionBar({
   showSave = false,
   showReadingMode = true,
   showPrint = false,
+  adminEdit,
 }: Props) {
   const [copied, setCopied] = useState(false);
   const [readingMode, setReadingMode] = useState(() => readPreferences().readingMode);
@@ -78,6 +82,14 @@ export function ContentActionBar({
       <button type="button" className="content-action-bar__btn" onClick={handleShare}>
         مشاركة
       </button>
+      {adminEdit && contentId && (
+        <AdminInlineEdit
+          contentType={adminEdit.contentType}
+          contentId={contentId}
+          initialData={adminEdit.initialData}
+          className="content-action-bar__btn"
+        />
+      )}
       {showSave && contentType && contentId && (
         <FavoriteButton contentType={contentType} contentId={contentId} compact />
       )}

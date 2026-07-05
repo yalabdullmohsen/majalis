@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { Link } from "wouter";
 import { Breadcrumbs } from "./Breadcrumbs";
+import { AdminInlineEdit, type InlineEditContentType } from "@/components/AdminInlineEdit";
 
 type Props = {
   breadcrumbs: { label: string; href?: string }[];
@@ -14,9 +15,21 @@ type Props = {
   sourceUrls?: string[];
   copyText?: string;
   shareUrl?: string;
+  /** لتفعيل زر التعديل المباشر — نوع المحتوى ومعرفه */
+  adminEdit?: { contentType: InlineEditContentType; contentId: string | number; initialData?: Record<string, unknown> };
 };
 
-function ShareCopyBar({ copyText, shareUrl, title }: { copyText?: string; shareUrl?: string; title: string }) {
+function ShareCopyBar({
+  copyText,
+  shareUrl,
+  title,
+  adminEdit,
+}: {
+  copyText?: string;
+  shareUrl?: string;
+  title: string;
+  adminEdit?: Props["adminEdit"];
+}) {
   const handleCopy = async () => {
     if (!copyText) return;
     try {
@@ -39,7 +52,7 @@ function ShareCopyBar({ copyText, shareUrl, title }: { copyText?: string; shareU
     if (url) await navigator.clipboard.writeText(url);
   };
 
-  if (!copyText && !shareUrl) return null;
+  if (!copyText && !shareUrl && !adminEdit) return null;
 
   return (
     <div className="content-detail-actions">
@@ -48,9 +61,19 @@ function ShareCopyBar({ copyText, shareUrl, title }: { copyText?: string; shareU
           نسخ
         </button>
       )}
-      <button type="button" onClick={handleShare} className="content-detail-action-btn">
-        مشاركة
-      </button>
+      {(copyText || shareUrl) && (
+        <button type="button" onClick={handleShare} className="content-detail-action-btn">
+          مشاركة
+        </button>
+      )}
+      {adminEdit && (
+        <AdminInlineEdit
+          contentType={adminEdit.contentType}
+          contentId={adminEdit.contentId}
+          initialData={adminEdit.initialData}
+          className="content-detail-action-btn"
+        />
+      )}
     </div>
   );
 }
@@ -67,6 +90,7 @@ export function ContentDetailLayout({
   sourceUrls,
   copyText,
   shareUrl,
+  adminEdit,
 }: Props) {
   return (
     <div className="page-shell narrow content-detail-page">
@@ -83,9 +107,7 @@ export function ContentDetailLayout({
             ))}
           </div>
         )}
-        {copyText && (
-          <ShareCopyBar copyText={copyText} shareUrl={shareUrl} title={title} />
-        )}
+        <ShareCopyBar copyText={copyText} shareUrl={shareUrl} title={title} adminEdit={adminEdit} />
       </header>
 
       {body && (
