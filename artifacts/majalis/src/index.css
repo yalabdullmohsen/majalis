@@ -12959,11 +12959,11 @@ html[data-theme="dark"] {
 
 /* ─── Phase 2: Navbar polish ──────────────────────────────── */
 .navbar-v3 {
-  background: rgba(250, 245, 234, 0.96) !important;
+  background: rgba(255, 255, 255, 0.97) !important;
   backdrop-filter: blur(14px) !important;
   -webkit-backdrop-filter: blur(14px) !important;
   border-bottom: 1px solid rgba(224, 215, 196, 0.7) !important;
-  box-shadow: 0 2px 18px rgba(36, 31, 24, 0.06) !important;
+  box-shadow: 0 1px 10px rgba(22, 78, 60, 0.07) !important;
 }
 
 html[data-theme="dark"] .navbar-v3 {
