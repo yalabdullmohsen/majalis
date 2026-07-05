@@ -421,7 +421,7 @@ export const HADITH_CLASS_META: Record<HadithClass, {
   },
 };
 
-export function HadithSection({ authenticityClass = "sahih" }: { authenticityClass?: HadithClass }) {
+export function HadithSection({ authenticityClass = "sahih", embedded = false }: { authenticityClass?: HadithClass; embedded?: boolean }) {
   const meta = HADITH_CLASS_META[authenticityClass];
   const [items, setItems] = useState<HadithItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -519,13 +519,17 @@ export function HadithSection({ authenticityClass = "sahih" }: { authenticityCla
     </div>
   );
 
-  return (
-    <div className="page-shell content-hub-page ds-page hadith-page">
-      <PageHeader
-        eyebrow={meta.eyebrow}
-        title={meta.title}
-        subtitle={meta.subtitle}
-      />
+  const inner = (
+    <>
+      {embedded ? (
+        <div className="hadith-section-header">
+          <span className="hadith-section-eyebrow">{meta.eyebrow}</span>
+          <h2 className="hadith-section-title">{meta.title}</h2>
+          <p className="hadith-section-subtitle">{meta.subtitle}</p>
+        </div>
+      ) : (
+        <PageHeader eyebrow={meta.eyebrow} title={meta.title} subtitle={meta.subtitle} />
+      )}
 
       <div className="ds-section__head">
         <div className="hadith-stats-row">
@@ -582,20 +586,19 @@ export function HadithSection({ authenticityClass = "sahih" }: { authenticityCla
         </div>
       )}
 
-      {/* Desktop sidebar filters */}
-      <aside className="ds-filters-panel ds-filters-panel--desktop">
-        <div className="ds-filters-panel__head">
-          <h2>بحث وتصفية</h2>
-        </div>
-        {filtersPanel}
-      </aside>
+      {!embedded && (
+        <aside className="ds-filters-panel ds-filters-panel--desktop">
+          <div className="ds-filters-panel__head">
+            <h2>بحث وتصفية</h2>
+          </div>
+          {filtersPanel}
+        </aside>
+      )}
 
-      {/* Mobile filter sheet */}
       <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="بحث وتصفية">
         {filtersPanel}
       </FilterBottomSheet>
 
-      {/* Detail modal */}
       {expandedHadith && (
         <HadithDetailModal
           h={expandedHadith}
@@ -603,7 +606,7 @@ export function HadithSection({ authenticityClass = "sahih" }: { authenticityCla
         />
       )}
 
-      {!loading && displayItems.length > 0 && (
+      {!embedded && !loading && displayItems.length > 0 && (
         <RecommendationWidget
           context="hadith"
           contentType="hadith"
@@ -612,11 +615,42 @@ export function HadithSection({ authenticityClass = "sahih" }: { authenticityCla
           className="mt-8"
         />
       )}
+    </>
+  );
+
+  if (embedded) {
+    return <section className="hadith-embedded-section">{inner}</section>;
+  }
+
+  return (
+    <div className="page-shell content-hub-page ds-page hadith-page">
+      {inner}
     </div>
   );
 }
 
-// المسار /hadith/sahih — الأحاديث الصحيحة (والقسم الافتراضي)
 export default function HadithPage() {
-  return <HadithSection authenticityClass="sahih" />;
+  return (
+    <div className="page-shell content-hub-page ds-page hadith-page hadith-page--stacked">
+      <PageHeader
+        eyebrow="السنة النبوية الشريفة"
+        title="الأحاديث النبوية"
+        subtitle="الأحاديث الصحيحة والضعيفة والموضوعة — مع بيان درجة كل حديث ومصدره"
+      />
+      <div className="hadith-stacked-sections">
+        <HadithSection authenticityClass="sahih" embedded />
+        <div className="hadith-section-sep" role="separator" aria-hidden="true" />
+        <HadithSection authenticityClass="daif" embedded />
+        <div className="hadith-section-sep" role="separator" aria-hidden="true" />
+        <HadithSection authenticityClass="mawdu" embedded />
+      </div>
+      <RecommendationWidget
+        context="hadith"
+        contentType="hadith"
+        limit={4}
+        layout="row"
+        className="mt-8"
+      />
+    </div>
+  );
 }

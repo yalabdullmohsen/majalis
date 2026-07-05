@@ -129,7 +129,7 @@ function PrayerTrackerSheet({
             position: "fixed",
             bottom: "8.2rem",
             left: "0.85rem",
-            background: stats.todayDone === 5 ? "#22c55e" : stats.todayDone === 0 ? "#ef4444" : "var(--majalis-brass, #b8860b)",
+            background: stats.todayDone === 5 ? "#22c55e" : stats.todayDone === 0 ? "#ef4444" : "#0E6E52",
             color: "#fff",
             fontSize: "0.6rem",
             fontWeight: 700,
@@ -478,21 +478,21 @@ export default function PrayerTimesPage() {
                 className="prayer-time-cell ui-card"
                 style={{
                   gridColumn: "1 / -1",
-                  background: "linear-gradient(135deg, #fff8f0, #fff3e0)",
-                  border: "1.5px solid #FB8C00",
+                  background: "linear-gradient(135deg, #FEF9C3, #FEF08A)",
+                  border: "1.5px solid #CA8A04",
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
                   padding: "0.75rem 1.25rem",
                 }}
               >
-                <span style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontWeight: 600, color: "#E65100" }}>
+                <span style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontWeight: 600, color: "#854D0E" }}>
                   ☀️ الشروق
-                  <span style={{ fontSize: "0.7rem", fontWeight: 400, color: "#BF360C", padding: "0.1rem 0.4rem", background: "#FFE0B2", borderRadius: 999 }}>
+                  <span style={{ fontSize: "0.7rem", fontWeight: 400, color: "#713F12", padding: "0.1rem 0.4rem", background: "#FEF08A", borderRadius: 999 }}>
                     وقت الكراهة
                   </span>
                 </span>
-                <strong style={{ fontSize: "1.1rem", color: "#E65100" }}>{sunrise.time}</strong>
+                <strong style={{ fontSize: "1.1rem", color: "#854D0E" }}>{sunrise.time}</strong>
               </div>
             )}
           </div>

@@ -133,28 +133,11 @@ export default function HomePage({
               <button type="submit">بحث</button>
             </form>
 
-            {/* Stats bar */}
-            <div className="home-hero-stats" aria-hidden="true">
-              <div className="home-hero-stat">
-                <span className="home-hero-stat-value">+٢٠٠</span>
-                <span className="home-hero-stat-label">درس علمي</span>
-              </div>
-              <div className="home-hero-stat-sep" />
-              <div className="home-hero-stat">
-                <span className="home-hero-stat-value">+٥٠</span>
-                <span className="home-hero-stat-label">شيخ وعالم</span>
-              </div>
-              <div className="home-hero-stat-sep" />
-              <div className="home-hero-stat">
-                <span className="home-hero-stat-value">+١٠٠٠</span>
-                <span className="home-hero-stat-label">مسألة فقهية</span>
-              </div>
-            </div>
           </div>
         </div>
         <IslamicOrnament
           className="islamic-ornament-strip"
-          style={{ color: "rgba(176, 141, 46, 0.45)", position: "relative", zIndex: 2 }}
+          style={{ color: "rgba(14, 110, 82, 0.30)", position: "relative", zIndex: 2 }}
         />
       </section>
 
