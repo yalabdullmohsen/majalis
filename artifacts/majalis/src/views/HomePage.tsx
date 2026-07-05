@@ -129,9 +129,6 @@ export default function HomePage({
                 decoding="async"
               />
             </h1>
-            <p className="home-hero-lead home-hero-lead--v3">
-              دروس وفتاوى وقرآن ومحتوى موثّق في تطبيق واحد.
-            </p>
 
             <form onSubmit={submitSearch} className="home-search home-search--v3" aria-label="البحث">
               <input
