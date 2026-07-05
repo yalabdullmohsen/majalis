@@ -102,6 +102,12 @@
     <script>
       try {
         /* مِشكاة: تطبيق الوضع (ليل/نهار) فوراً لمنع الوميض */
+        /* ترحيل v3-emerald: إعادة تعيين التفضيل عند أول تشغيل بعد تغيير الهوية */
+        var _dsv = "v3-emerald-2025";
+        if (localStorage.getItem("majalis-design-v") !== _dsv) {
+          localStorage.setItem("majalis-design-v", _dsv);
+          localStorage.removeItem("majalis-theme-preference");
+        }
         var storedTheme = localStorage.getItem("majalis-theme-preference");
         var resolved = storedTheme === "light" ? "light"
           : storedTheme === "dark" ? "dark"

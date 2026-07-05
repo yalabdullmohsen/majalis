@@ -16,8 +16,16 @@ export function isThemePreference(value: string | null | undefined): value is Th
   return value === "light" || value === "dark" || value === "system";
 }
 
+const DESIGN_VERSION     = "v3-emerald-2025";
+const DESIGN_VERSION_KEY = "majalis-design-v";
+
 export function readThemePreference(): ThemePreference {
-  if (typeof window === "undefined") return "system";
+  if (typeof window === "undefined") return "light";
+  if (window.localStorage.getItem(DESIGN_VERSION_KEY) !== DESIGN_VERSION) {
+    window.localStorage.setItem(DESIGN_VERSION_KEY, DESIGN_VERSION);
+    window.localStorage.removeItem(THEME_STORAGE_KEY);
+    return "light";
+  }
   const stored = window.localStorage.getItem(THEME_STORAGE_KEY);
   return isThemePreference(stored) ? stored : "light";
 }
