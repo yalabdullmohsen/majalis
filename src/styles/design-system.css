@@ -1558,7 +1558,7 @@ html[data-theme="dark"] .login-oauth__btn {
 /* ── البند 1: Home Quiz Card ─────────────────────────────── */
 .ds-quiz-home-card {
   background: linear-gradient(135deg, #f0f7f3 0%, #fefdf5 100%);
-  border: 1.5px solid rgba(176, 141, 46, 0.45);
+  border: 1.5px solid rgba(14, 110, 82, 0.45);
   border-radius: 1rem;
   padding: 1.75rem;
 }
@@ -1578,7 +1578,7 @@ html[data-theme="dark"] .login-oauth__btn {
 .ds-quiz-home-card__badge {
   display: inline-block;
   padding: 0.2rem 0.625rem;
-  background: rgba(176, 141, 46, 0.12);
+  background: rgba(14, 110, 82, 0.12);
   color: #8a6a1a;
   border-radius: 999px;
   font-size: 0.73rem;
@@ -1661,7 +1661,7 @@ html[data-theme="dark"] .login-oauth__btn {
 /* ── البند 4: Compact Prayer Strip ──────────────────────── */
 .hcp-strip {
   background: #fafdf8;
-  border: 1px solid rgba(176, 141, 46, 0.28);
+  border: 1px solid rgba(14, 110, 82, 0.28);
   border-radius: 0.75rem;
   padding: 0.75rem 1rem;
 }
@@ -1738,10 +1738,10 @@ html[data-theme="dark"] .login-oauth__btn {
 
 /* ── البند 2: About Section ─────────────────────────────── */
 .home-about {
-  background: linear-gradient(135deg, rgba(22,78,60,0.03) 0%, rgba(176,141,46,0.04) 100%);
+  background: linear-gradient(135deg, rgba(22,78,60,0.03) 0%, rgba(14,110,82,0.04) 100%);
   border-radius: 1rem;
   padding: 2rem;
-  border: 1px solid rgba(176, 141, 46, 0.2);
+  border: 1px solid rgba(14, 110, 82, 0.2);
 }
 
 .home-about__eyebrow {
@@ -2032,7 +2032,7 @@ html[data-theme="dark"] .tasbih-wird-pill {
   margin-bottom: 0.75rem;
 }
 
-.push-prompt--warn { border-color: #fcd34d; background: #fffbeb; }
+.push-prompt--warn { border-color: #fcd34d; background: rgba(14,110,82,0.06); }
 .push-prompt--info { border-color: #93c5fd; background: #eff6ff; font-size: 0.82rem; color: #1e40af; }
 
 .push-prompt__text {
@@ -4199,7 +4199,7 @@ html[data-theme="dark"] .tasbih-wird-pill.is-active {
 }
 .inst-card__link:hover { opacity: 0.8; }
 .inst-card__link--web { background: var(--ds-emerald-soft); color: var(--ds-emerald-deep); }
-.inst-card__link--map { background: #fff3e0; color: #b45309; }
+.inst-card__link--map { background: rgba(14,110,82,0.08); color: #0E6E52; }
 
 .inst-disclaimer {
   font-size: 0.78rem;
@@ -4217,8 +4217,8 @@ html[data-theme="dark"] .tasbih-wird-pill.is-active {
   font-size: 0.7rem;
   padding: 0.15rem 0.5rem;
   border-radius: 999px;
-  background: #fef3c7;
-  color: #92400e;
+  background: rgba(14,110,82,0.08);
+  color: #0E6E52;
   font-weight: 600;
 }
 

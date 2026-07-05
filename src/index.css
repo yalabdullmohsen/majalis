@@ -80,7 +80,7 @@ html {
   --majalis-danger:        var(--msk-red);
   --majalis-danger-muted:  var(--msk-red-dim);
   --majalis-success:       var(--msk-green);
-  --majalis-warning:       #B45309;
+  --majalis-warning:       #0E6E52;
   --majalis-line:          var(--msk-border);
   --majalis-line-strong:   var(--msk-border-strong);
   --majalis-shadow:        var(--msk-shadow);
@@ -276,7 +276,7 @@ html[data-theme="light"] {
   --majalis-danger:        #9B1C1C;
   --majalis-danger-muted:  rgba(155,28,28,.08);
   --majalis-success:       #0E6E52;
-  --majalis-warning:       #B45309;
+  --majalis-warning:       #0E6E52;
   --majalis-line:          #E0DBD5;
   --majalis-line-strong:   #C8C0B8;
   --majalis-shadow:        0 4px 12px rgba(28,26,24,.08), 0 1px 3px rgba(28,26,24,.05);
@@ -449,7 +449,7 @@ html[data-theme="dark"] .settings-choice {
 .home-section-error {
   border: 1px solid #f59e0b;
   border-radius: 1rem;
-  background: #fef3c7;
+  background: rgba(14,110,82,0.08);
   color: #78350f;
   padding: 1rem;
   display: grid;
@@ -470,7 +470,7 @@ html[data-theme="dark"] .settings-choice {
 
 html[data-theme="dark"] .home-section-error {
   background: #3a2a12;
-  border-color: #b45309;
+  border-color: #0E6E52;
   color: #fde68a;
 }
 
@@ -807,7 +807,7 @@ html[data-theme="light"] .home-page {
   font-weight: 800;
   font-size: 0.95rem;
   padding: 0.95rem 1.6rem;
-  box-shadow: 0 12px 26px rgba(176, 141, 46, 0.28);
+  box-shadow: 0 12px 26px rgba(14, 110, 82, 0.28);
 }
 
 .home-hero-actions,
@@ -1159,7 +1159,7 @@ html[data-theme="light"] .home-page {
   border-radius: 2rem;
   overflow: hidden;
   background:
-    radial-gradient(circle at 50% 20%, rgba(176, 141, 46, 0.34), transparent 42%),
+    radial-gradient(circle at 50% 20%, rgba(14, 110, 82, 0.34), transparent 42%),
     linear-gradient(145deg, var(--majalis-sage), #e9dfca);
   box-shadow: 0 14px 34px rgba(36, 31, 24, 0.12);
 }
@@ -1315,7 +1315,7 @@ html[data-theme="light"] .home-page {
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
   padding-top: 2rem;
-  border-top: 1px solid rgba(176, 141, 46, 0.28);
+  border-top: 1px solid rgba(14, 110, 82, 0.28);
 }
 
 .home-trust-strip div {
@@ -1681,7 +1681,7 @@ html[data-theme="light"] .home-page {
   padding: clamp(1.5rem, 4vw, 2.5rem);
   color: var(--majalis-parchment);
   background:
-    radial-gradient(circle at 12% 16%, rgba(176, 141, 46, 0.25), transparent 18rem),
+    radial-gradient(circle at 12% 16%, rgba(14, 110, 82, 0.25), transparent 18rem),
     linear-gradient(135deg, #10372d, var(--majalis-emerald-deep));
   box-shadow: var(--majalis-shadow);
 }
@@ -2027,7 +2027,7 @@ html[data-theme="light"] .home-page {
   padding: clamp(1.75rem, 5vw, 3.25rem);
   color: var(--majalis-parchment);
   background:
-    radial-gradient(circle at 12% 18%, rgba(176, 141, 46, 0.28), transparent 18rem),
+    radial-gradient(circle at 12% 18%, rgba(14, 110, 82, 0.28), transparent 18rem),
     linear-gradient(135deg, #0f352b, #1c4539 58%, #091f1a);
   box-shadow: var(--majalis-shadow);
 }
@@ -2288,7 +2288,7 @@ html[data-theme="light"] .home-page {
 .condolence-template-ornamental {
   color: #faf5ea;
   background:
-    linear-gradient(30deg, rgba(176, 141, 46, 0.12) 12%, transparent 12.5%, transparent 87%, rgba(176, 141, 46, 0.12) 87.5%),
+    linear-gradient(30deg, rgba(14, 110, 82, 0.12) 12%, transparent 12.5%, transparent 87%, rgba(14, 110, 82, 0.12) 87.5%),
     linear-gradient(145deg, #0d2b23, #143b31);
   background-size: 72px 126px, auto;
 }
@@ -3837,7 +3837,7 @@ html[data-theme="light"] .home-page {
   padding: clamp(2rem, 5vw, 3.5rem) 0 clamp(2.5rem, 6vw, 4rem);
   background:
     radial-gradient(circle at 88% 12%, rgba(22, 78, 60, 0.08), transparent 20rem),
-    radial-gradient(circle at 12% 18%, rgba(176, 141, 46, 0.14), transparent 18rem),
+    radial-gradient(circle at 12% 18%, rgba(14, 110, 82, 0.14), transparent 18rem),
     linear-gradient(180deg, #f7f0e2 0%, var(--majalis-parchment) 100%);
   border-block: 1px solid var(--majalis-line);
 }
@@ -3971,7 +3971,7 @@ html[data-theme="light"] .home-page {
   position: relative;
   overflow: hidden;
   border-radius: 999px;
-  border: 2px solid #c8a24a;
+  border: 2px solid rgba(14,110,82,0.4);
   background: #fff;
   box-shadow: 0 4px 14px rgba(36, 31, 24, 0.12);
   flex-shrink: 0;
@@ -4153,7 +4153,7 @@ html[data-theme="light"] .home-page {
   border-radius: 1.1rem;
   padding: clamp(1.1rem, 3vw, 1.6rem);
   background:
-    radial-gradient(circle at 50% 0%, rgba(176, 141, 46, 0.08), transparent 55%),
+    radial-gradient(circle at 50% 0%, rgba(14, 110, 82, 0.08), transparent 55%),
     linear-gradient(180deg, #fffefb 0%, #faf5ea 48%, #f3ead8 100%);
   border: 1.5px solid var(--majalis-brass);
   box-shadow:
@@ -4165,7 +4165,7 @@ html[data-theme="light"] .home-page {
   content: "";
   position: absolute;
   inset: 0.65rem;
-  border: 1px solid rgba(176, 141, 46, 0.35);
+  border: 1px solid rgba(14, 110, 82, 0.35);
   border-radius: 0.75rem;
   pointer-events: none;
 }
@@ -4177,7 +4177,7 @@ html[data-theme="light"] .home-page {
   z-index: 1;
   opacity: 0.65;
   background:
-    radial-gradient(circle at 30% 30%, transparent 58%, rgba(176, 141, 46, 0.55) 59%, rgba(176, 141, 46, 0.55) 62%, transparent 63%),
+    radial-gradient(circle at 30% 30%, transparent 58%, rgba(14, 110, 82, 0.55) 59%, rgba(14, 110, 82, 0.55) 62%, transparent 63%),
     linear-gradient(135deg, rgba(22, 78, 60, 0.18), transparent 55%);
 }
 
@@ -4320,8 +4320,8 @@ html[data-theme="light"] .home-page {
   margin-bottom: 0.75rem;
   padding: 0.45rem 0.65rem;
   border-radius: 999px;
-  background: rgba(176, 141, 46, 0.1);
-  border: 1px solid rgba(176, 141, 46, 0.22);
+  background: rgba(14, 110, 82, 0.1);
+  border: 1px solid rgba(14, 110, 82, 0.22);
 }
 
 .la-poster__weekly {
@@ -4330,7 +4330,7 @@ html[data-theme="light"] .home-page {
   padding: 0.75rem;
   border-radius: 0.65rem;
   background: rgba(255, 255, 255, 0.75);
-  border: 1px dashed rgba(176, 141, 46, 0.45);
+  border: 1px dashed rgba(14, 110, 82, 0.45);
   margin-bottom: 0.75rem;
   text-align: center;
 }
@@ -4468,14 +4468,14 @@ html[data-theme="light"] .home-page {
 .la-page {
   min-height: 100vh;
   background:
-    radial-gradient(circle at top left, rgba(176, 141, 46, 0.1), transparent 22rem),
+    radial-gradient(circle at top left, rgba(14, 110, 82, 0.1), transparent 22rem),
     linear-gradient(180deg, #fbf7ed 0%, var(--majalis-parchment) 100%);
   padding-bottom: 3rem;
 }
 
 .la-page-hero {
   background:
-    radial-gradient(circle at 18% 22%, rgba(176, 141, 46, 0.18), transparent 16rem),
+    radial-gradient(circle at 18% 22%, rgba(14, 110, 82, 0.18), transparent 16rem),
     linear-gradient(135deg, #0f352b 0%, var(--majalis-emerald-deep) 48%, #0b2a23 100%);
   color: var(--majalis-parchment);
 }
@@ -4645,7 +4645,7 @@ html[data-theme="light"] .home-page {
   gap: 1.25rem;
   padding: 1.5rem;
   align-items: flex-start;
-  background: linear-gradient(135deg, rgba(22, 78, 60, 0.08), rgba(176, 141, 46, 0.08));
+  background: linear-gradient(135deg, rgba(22, 78, 60, 0.08), rgba(14, 110, 82, 0.08));
   border-bottom: 1px solid var(--majalis-line);
 }
 
@@ -4968,8 +4968,8 @@ html[data-theme="light"] .home-page {
   margin-top: 0.55rem;
   padding: 0.55rem 0.75rem;
   border-radius: 0.75rem;
-  border: 1px solid rgba(176, 141, 46, 0.35);
-  background: rgba(176, 141, 46, 0.12);
+  border: 1px solid rgba(14, 110, 82, 0.35);
+  background: rgba(14, 110, 82, 0.12);
   color: var(--majalis-brass-deep);
   font-size: 0.82rem;
   line-height: 1.65;
@@ -5148,8 +5148,8 @@ html[data-theme="light"] .home-page {
   margin-top: 0.85rem;
   padding: 0.75rem 0.9rem;
   border-radius: 0.85rem;
-  border: 1px solid rgba(176, 141, 46, 0.35);
-  background: rgba(176, 141, 46, 0.1);
+  border: 1px solid rgba(14, 110, 82, 0.35);
+  background: rgba(14, 110, 82, 0.1);
   font-family: var(--font-reading);
   font-size: 0.9rem;
   line-height: 1.85;
@@ -5378,8 +5378,8 @@ html[data-theme="light"] .home-page {
 }
 
 .prayer-status-block--next {
-  border-color: rgba(176, 141, 46, 0.35);
-  background: linear-gradient(180deg, #fbf5e7, #fff);
+  border-color: rgba(14, 110, 82, 0.35);
+  background: linear-gradient(180deg, #EAF3EF, #fff);
 }
 
 .prayer-status-block--remaining {
@@ -5398,8 +5398,8 @@ html[data-theme="light"] .home-page {
 }
 
 .home-prayer-cell.is-next {
-  background: linear-gradient(180deg, #fbf5e7, var(--majalis-parchment-deep));
-  border: 1px solid rgba(176, 141, 46, 0.25);
+  background: linear-gradient(180deg, #EAF3EF, var(--majalis-parchment-deep));
+  border: 1px solid rgba(14, 110, 82, 0.25);
 }
 
 .home-prayer-icon {
@@ -7831,7 +7831,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
   border: 1px solid #bbf7d0;
 }
 .hadith-badge--nawawi {
-  background: #fefce8;
+  background: rgba(14,110,82,0.08);
   color: #854d0e;
   border: 1px solid #fde68a;
 }
@@ -8265,7 +8265,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 }
 
 .story-card__category {
-  background: var(--majalis-gold-faint, #fffbeb);
+  background: var(--majalis-gold-faint, rgba(14,110,82,0.06));
   color: var(--majalis-gold, #C9A84C);
   border: 1px solid var(--majalis-gold-light, #fde68a);
   border-radius: 0.3rem;
@@ -8721,12 +8721,12 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 }
 
 .home-maintenance-banner {
-  background: #fef3c7;
+  background: rgba(14,110,82,0.08);
   border-bottom: 1px solid #d97706;
   padding: 0.75rem 1rem;
   text-align: center;
   font-size: 0.875rem;
-  color: #92400e;
+  color: #0E6E52;
 }
 
 .home-section-head-links {
@@ -9502,7 +9502,7 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
   padding: 0.45rem 0.85rem;
   font-size: 0.78rem;
   border-radius: 0.65rem;
-  box-shadow: 0 4px 12px rgba(176, 141, 46, 0.2);
+  box-shadow: 0 4px 12px rgba(14, 110, 82, 0.2);
 }
 
 .home-search--v3 input {
@@ -9957,8 +9957,8 @@ body.mobile-nav-body-lock {
 }
 
 .login-alert--warn {
-  color: #92400e;
-  background: #fffbeb;
+  color: #0E6E52;
+  background: rgba(14,110,82,0.06);
   border: 1px solid #fde68a;
 }
 
@@ -10237,7 +10237,7 @@ body.side-nav-open {
 .quran-error {
   border: 1px solid #f59e0b;
   border-radius: 0.75rem;
-  background: #fef3c7;
+  background: rgba(14,110,82,0.08);
   color: #78350f;
   padding: 1rem;
   margin-bottom: 1rem;
@@ -10340,11 +10340,11 @@ body.assistant-panel-open {
   gap: 0.45rem;
   min-height: var(--assistant-fab-size);
   padding: 0.55rem 1rem 0.55rem 0.85rem;
-  border: 1px solid rgba(176, 141, 46, 0.35);
+  border: 1px solid rgba(14, 110, 82, 0.35);
   border-radius: 999px;
   background: linear-gradient(135deg, #d2b45d, var(--majalis-brass));
   color: var(--majalis-ink);
-  box-shadow: 0 10px 28px rgba(176, 141, 46, 0.32);
+  box-shadow: 0 10px 28px rgba(14, 110, 82, 0.32);
   cursor: pointer;
   font-family: inherit;
   font-size: 0.82rem;
@@ -10355,7 +10355,7 @@ body.assistant-panel-open {
 
 .assistant-fab:hover {
   transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 14px 34px rgba(176, 141, 46, 0.38);
+  box-shadow: 0 14px 34px rgba(14, 110, 82, 0.38);
 }
 
 .assistant-fab:active {
@@ -10691,7 +10691,7 @@ body.assistant-panel-open {
   flex-shrink: 0;
   overflow: hidden;
   border-radius: 1rem;
-  border: 1.5px solid #c8a24a;
+  border: 1.5px solid rgba(14,110,82,0.3);
   background: linear-gradient(180deg, #f3ebd8 0%, #faf6ee 100%);
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.65) inset,
@@ -10936,7 +10936,7 @@ body.assistant-panel-open {
 
 .fiqh-council-page {
   --fiqh-accent: #164e3c;
-  --fiqh-gold: #c4a35a;
+  --fiqh-gold: #0E6E52;
 }
 
 .fiqh-council-subnav {
@@ -10987,7 +10987,7 @@ body.assistant-panel-open {
 
 .fiqh-council-section-link {
   font-size: 0.8125rem;
-  color: var(--fiqh-gold, #c4a35a);
+  color: var(--fiqh-gold, #0E6E52);
   text-decoration: none;
   font-weight: 600;
 }
@@ -12016,8 +12016,8 @@ body.assistant-panel-open {
   border-radius: 999px;
 }
 
-.fiqh-completion-bar--mid .fiqh-completion-bar-fill { background: #b8860b; }
-.fiqh-completion-bar--low .fiqh-completion-bar-fill { background: #b45309; }
+.fiqh-completion-bar--mid .fiqh-completion-bar-fill { background: #0E6E52; }
+.fiqh-completion-bar--low .fiqh-completion-bar-fill { background: #B91C1C; }
 
 .fiqh-review-filters {
   display: flex;
@@ -12092,7 +12092,7 @@ body.assistant-panel-open {
   padding: 0.15rem 0.5rem;
   border-radius: 999px;
   background: rgba(180, 83, 9, 0.12);
-  color: #92400e;
+  color: #0E6E52;
 }
 
 .fiqh-review-issues {
@@ -12145,7 +12145,7 @@ body.assistant-panel-open {
   margin-top: 0.25rem;
 }
 
-.fiqh-quality-stat--warn .fiqh-quality-stat-value { color: #b45309; }
+.fiqh-quality-stat--warn .fiqh-quality-stat-value { color: #0A5040; }
 .fiqh-quality-stat--error .fiqh-quality-stat-value { color: #b91c1c; }
 
 .fiqh-quality-meta {
@@ -12985,8 +12985,8 @@ body.has-assistant-fab .app-main {
 
 .qa-corrections-badge {
   font-size: 0.75rem;
-  color: #b45309;
-  background: #fffbeb;
+  color: #0E6E52;
+  background: rgba(14,110,82,0.08);
   padding: 0.2rem 0.5rem;
   border-radius: 999px;
 }
@@ -13465,7 +13465,7 @@ html[data-theme="dark"] {
   overflow: hidden;
   padding-block: clamp(2.75rem, 9vw, 5rem) clamp(3.5rem, 10vw, 6rem);
   background:
-    radial-gradient(ellipse 60% 50% at 15% 30%, rgba(176, 141, 46, 0.30) 0%, transparent 100%),
+    radial-gradient(ellipse 60% 50% at 15% 30%, rgba(14, 110, 82, 0.30) 0%, transparent 100%),
     radial-gradient(ellipse 50% 60% at 85% 70%, rgba(31, 110, 84, 0.22) 0%, transparent 100%),
     var(--ds-hero-grad);
   color: var(--majalis-parchment);
@@ -13508,8 +13508,8 @@ html[data-theme="dark"] {
   padding: 0.45rem;
   background: rgba(255, 255, 255, 0.96);
   box-shadow:
-    0 0 0 4px rgba(176, 141, 46, 0.30),
-    0 0 0 8px rgba(176, 141, 46, 0.10),
+    0 0 0 4px rgba(14, 110, 82, 0.30),
+    0 0 0 8px rgba(14, 110, 82, 0.10),
     0 20px 48px rgba(0, 0, 0, 0.24);
 }
 
@@ -13527,7 +13527,7 @@ html[data-theme="dark"] {
   background: rgba(255, 255, 255, 0.98);
   border: 1.5px solid rgba(250, 245, 234, 0.30);
   box-shadow:
-    0 0 0 4px rgba(176, 141, 46, 0.12),
+    0 0 0 4px rgba(14, 110, 82, 0.12),
     0 24px 56px rgba(0, 0, 0, 0.22);
 }
 
@@ -14010,10 +14010,10 @@ html[data-theme="light"] .navbar-v3 {
 /* ── Sunrise prayer cell ── */
 .prayer-time-cell--sunrise {
   border-color: #f59e0b;
-  background: #fffbeb;
+  background: rgba(14,110,82,0.06);
 }
 .prayer-time-cell--sunrise span {
-  color: #92400e;
+  color: #0E6E52;
 }
 
 /* ── Home prayer + ranks side-by-side layout ── */
@@ -14538,7 +14538,7 @@ html[data-theme="light"] .navbar-v3 {
 }
 
 .prophets-disclaimer {
-  background: #fffbeb;
+  background: rgba(14,110,82,0.06);
   border: 1px solid #fbbf24;
   border-radius: 10px;
   padding: 12px 16px;
@@ -14549,7 +14549,7 @@ html[data-theme="light"] .navbar-v3 {
 }
 .dark .prophets-disclaimer {
   background: #292100;
-  border-color: #a16207;
+  border-color: rgba(14,110,82,0.4);
   color: #fde68a;
 }
 
@@ -14654,7 +14654,7 @@ html[data-theme="light"] .navbar-v3 {
   display: inline-block;
   font-size: 0.78rem;
   color: #d97706;
-  background: #fffbeb;
+  background: rgba(14,110,82,0.06);
   border: 1px solid #fde68a;
   border-radius: 4px;
   padding: 1px 8px;
@@ -14662,7 +14662,7 @@ html[data-theme="light"] .navbar-v3 {
 }
 .dark .prophet-card__quran-title {
   background: #292100;
-  border-color: #a16207;
+  border-color: rgba(14,110,82,0.4);
   color: #fde68a;
 }
 .prophet-card__people {
@@ -14736,14 +14736,14 @@ html[data-theme="light"] .navbar-v3 {
   display: inline-block;
   font-size: 0.88rem;
   color: #d97706;
-  background: #fffbeb;
+  background: rgba(14,110,82,0.06);
   border: 1px solid #fde68a;
   border-radius: 6px;
   padding: 3px 14px;
 }
 .dark .prophet-detail__quran-title {
   background: #292100;
-  border-color: #a16207;
+  border-color: rgba(14,110,82,0.4);
   color: #fde68a;
 }
 .prophet-detail__meta-row {
@@ -15681,7 +15681,7 @@ html[data-theme="dark"] {
   background: transparent;
 }
 .admin-sidebar__quick-link--brass:hover {
-  background: rgba(176, 141, 46, 0.1);
+  background: rgba(14, 110, 82, 0.1);
 }
 
 .admin-sidebar__quick-link--emerald {
@@ -15977,7 +15977,7 @@ html[data-theme="dark"] {
   font-weight: 700;
   white-space: nowrap;
 }
-.fip-status--in-progress { background: #FEF3C7; color: #92400E; }
+.fip-status--in-progress { background: rgba(14,110,82,0.08); color: #0A5040; }
 .fip-status--beta { background: #DBEAFE; color: #1E40AF; }
 .fip-status--planned { background: var(--majalis-parchment-deep, #f0e8d6); color: var(--majalis-ink-soft, #5c564c); }
 html[data-theme="dark"] .fip-status--in-progress { background: rgba(251,191,36,0.16); color: #FCD34D; }
