@@ -1,65 +1,8 @@
-# See https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
-
-# compiled output
-dist
-.next
-tmp
-out-tsc
-*.tsbuildinfo
-.expo
-.expo-shared
-
-# dependencies
-node_modules
-
-# IDEs and editors
-/.idea
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
-
-# IDE - VSCode
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-
-# misc
-/.env
-/.env.*
-!.env*.example
-**/.env
-**/.env.*
-!**/.env*.example
-/.sass-cache
-/connect.lock
-/coverage
-/libpeerconnection.log
-npm-debug.log
-yarn-error.log
-testem.log
-/typings
-
-# System Files
+node_modules/
+dist/
+.env
+.env.local
+.env.production
+*.local
 .DS_Store
-Thumbs.db
-
-.cursor/rules/nx-rules.mdc
-.github/instructions/nx.instructions.md
-
-# Replit
-.cache/
-.local/
-d29e1c8-build/
-
-# Generated import scale-test CSVs (100k+ rows)
-artifacts/majalis/data/imports/test-fixtures/
-
-# Playwright test artifacts
-test-results/
-artifacts/majalis/test-results/
-playwright-report/
+.tsbuildinfo
