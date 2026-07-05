@@ -2638,4 +2638,12 @@ table th {
   color: var(--majalis-ink) !important;
 }
 
+/* ── تصحيح ألوان design-system.css على الخلفية الداكنة ── */
+.hcp-prayer-cell__time                        { color: var(--majalis-ink, #EDE9DD) !important; }
+.hcp-prayer-cell--next .hcp-prayer-cell__name { color: var(--majalis-emerald, #2E8B67) !important; }
+.hcp-prayer-cell--next .hcp-prayer-cell__time { color: var(--majalis-emerald, #2E8B67) !important; }
+.hcp-strip__countdown                         { color: var(--majalis-ink-muted, #9BA3B5) !important; }
+.home-about__title                            { color: var(--majalis-emerald, #2E8B67) !important; }
+.home-about__body                             { color: var(--majalis-ink-soft, #C9C5B8) !important; }
+.home-about__eyebrow                          { color: var(--majalis-brass, #C9A84C) !important; }
 /* ── نهاية الإصلاح الشامل ── */

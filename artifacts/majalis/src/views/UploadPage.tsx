@@ -79,7 +79,7 @@ function FileDropZone({ accept, maxMb, onFile, file, hint }: {
             <div style={{ fontWeight: 600, fontSize: "0.875rem", color: "var(--majalis-emerald)" }}>
               {file.name}
             </div>
-            <div style={{ fontSize: "0.75rem", color: "#6b7280", marginTop: "0.2rem" }}>
+            <div style={{ fontSize: "0.75rem", color: "var(--majalis-ink-muted, #9BA3B5)", marginTop: "0.2rem" }}>
               {(file.size / (1024 * 1024)).toFixed(2)} MB
             </div>
             <button
@@ -96,7 +96,7 @@ function FileDropZone({ accept, maxMb, onFile, file, hint }: {
             <div style={{ fontWeight: 600, fontSize: "0.875rem", color: "var(--majalis-ink-soft)" }}>
               اسحب وأفلت أو اضغط للاختيار
             </div>
-            <div style={{ fontSize: "0.75rem", color: "#9ca3af", marginTop: "0.25rem" }}>
+            <div style={{ fontSize: "0.75rem", color: "var(--majalis-ink-muted, #9BA3B5)", marginTop: "0.25rem" }}>
               {hint} · الحجم الأقصى {maxMb} MB
             </div>
           </div>
@@ -337,7 +337,7 @@ export default function UploadPage() {
         <h1 style={{ fontSize: "1.4rem", fontWeight: 800, color: "var(--majalis-ink)", margin: "0 0 0.35rem" }}>
           📤 رفع محتوى إسلامي
         </h1>
-        <p style={{ fontSize: "0.82rem", color: "#6b7280", margin: 0 }}>
+        <p style={{ fontSize: "0.82rem", color: "var(--majalis-ink-muted, #9BA3B5)", margin: 0 }}>
           شارك أذاناً أو درساً علمياً · يُراجَع من فريق المجالس قبل النشر.
         </p>
       </div>
@@ -407,7 +407,7 @@ export default function UploadPage() {
           { icon: "2️⃣", text: "يراجع الفريق المحتوى خلال 2–5 أيام" },
           { icon: "3️⃣", text: "عند القبول يُضاف للمكتبة ويُنسب لك" },
         ].map((s) => (
-          <div key={s.icon} style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.8rem", color: "#6b7280" }}>
+          <div key={s.icon} style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.8rem", color: "var(--majalis-ink-muted, #9BA3B5)" }}>
             <span>{s.icon}</span>
             <span>{s.text}</span>
           </div>

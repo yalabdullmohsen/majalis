@@ -59,14 +59,17 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
   const [statusLabel, setStatusLabel] = useState(lesson.statusLabel);
 
   useEffect(() => {
-    setStatusLabel(lesson.statusLabel);
-    const timer = window.setInterval(() => {
-      // نُعيد الحساب بشكل حديث كل دقيقة — لا نعتمد على nextOccurrenceMs القديم
+    // حساب فوري عند التحميل — يستخدم كاش أوقات الصلاة الحالي بدل القيمة المخزّنة مسبقاً
+    function refresh() {
       const freshMs = computeNextOccurrenceMs(lesson.day, lesson.time);
       setStatusLabel(formatRelativeTimeDetailed(freshMs, lesson.time));
-    }, 60_000);
-    return () => window.clearInterval(timer);
-  }, [lesson.day, lesson.time, lesson.statusLabel]);
+    }
+    refresh();
+    // إعادة فحص بعد 5 ثوانٍ للتقاط بيانات API إن وصلت بعد التحميل
+    const earlyTimer = window.setTimeout(refresh, 5_000);
+    const timer = window.setInterval(refresh, 60_000);
+    return () => { window.clearTimeout(earlyTimer); window.clearInterval(timer); };
+  }, [lesson.day, lesson.time]);
 
   const handleCopy = useCallback(async () => {
     try {

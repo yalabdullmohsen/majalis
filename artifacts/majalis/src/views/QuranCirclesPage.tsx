@@ -106,7 +106,7 @@ export default function QuranCirclesPage() {
 
       {/* المحتوى */}
       {error ? (
-        <div role="alert" style={{ textAlign: "center", padding: "3rem 1rem", color: "#991b1b" }}>
+        <div role="alert" style={{ textAlign: "center", padding: "3rem 1rem", color: "var(--msk-red, #C1595A)" }}>
           <p style={{ fontSize: "1.1rem", marginBottom: "0.5rem" }}>⚠️ {error}</p>
           <button type="button" onClick={() => setLevel(level)}
             style={{ padding: "0.5rem 1.5rem", background: "var(--majalis-emerald)", color: "#fff", border: "none", borderRadius: "0.5rem", cursor: "pointer" }}>

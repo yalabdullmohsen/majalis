@@ -45,7 +45,7 @@ function SubmissionRow({ sub }: { sub: UserSubmission }) {
       <div style={{ background: sm.bg, padding: "0.5rem 1rem", display: "flex", alignItems: "center", gap: "0.4rem", borderBottom: `1px solid ${sm.border}` }}>
         <span>{sm.icon}</span>
         <span style={{ fontSize: "0.78rem", fontWeight: 700, color: sm.color }}>{sm.label}</span>
-        <span style={{ marginRight: "auto", fontSize: "0.72rem", color: "#9ca3af" }}>
+        <span style={{ marginRight: "auto", fontSize: "0.72rem", color: "var(--majalis-ink-muted, #9BA3B5)" }}>
           {new Date(sub.created_at).toLocaleDateString("ar-KW", { dateStyle: "medium" })}
         </span>
       </div>
@@ -56,7 +56,7 @@ function SubmissionRow({ sub }: { sub: UserSubmission }) {
           <span style={{ fontSize: "1.25rem" }}>{TYPE_ICON[sub.type] ?? "📄"}</span>
           <div style={{ flex: 1 }}>
             <div style={{ fontWeight: 700, fontSize: "0.9rem", color: "var(--majalis-ink)" }}>{sub.title}</div>
-            <div style={{ fontSize: "0.72rem", color: "#6b7280", marginTop: "0.15rem" }}>
+            <div style={{ fontSize: "0.72rem", color: "var(--majalis-ink-muted, #9BA3B5)", marginTop: "0.15rem" }}>
               {TYPE_LABEL[sub.type] ?? sub.type}
               {sub.file_name && ` · ${sub.file_name} (${formatFileSize(sub.file_size_kb)})`}
             </div>
@@ -178,7 +178,7 @@ export default function MySubmissionsPage() {
         <h1 style={{ fontSize: "1.4rem", fontWeight: 800, color: "var(--majalis-ink)", margin: "0 0 0.35rem" }}>
           📋 مساهماتي
         </h1>
-        <p style={{ fontSize: "0.82rem", color: "#6b7280", margin: 0 }}>
+        <p style={{ fontSize: "0.82rem", color: "var(--majalis-ink-muted, #9BA3B5)", margin: 0 }}>
           تتبّع حالة الأذانات والدروس التي أرسلتها للمراجعة.
         </p>
       </div>
@@ -255,7 +255,7 @@ export default function MySubmissionsPage() {
       {list !== null && list.length === 0 && (
         <div style={{ textAlign: "center", padding: "3rem 1rem" }}>
           <div style={{ fontSize: "2.5rem", marginBottom: "0.75rem" }}>📭</div>
-          <p style={{ color: "#9ca3af", fontSize: "0.9rem" }}>لا توجد مساهمات مرتبطة بهذا البريد.</p>
+          <p style={{ color: "var(--majalis-ink-muted, #9BA3B5)", fontSize: "0.9rem" }}>لا توجد مساهمات مرتبطة بهذا البريد.</p>
           <Link href="/upload">
             <button type="button" style={{
               marginTop: "0.75rem",
@@ -277,7 +277,7 @@ export default function MySubmissionsPage() {
 
       {list !== null && list.length > 0 && (
         <div>
-          <div style={{ fontSize: "0.78rem", color: "#6b7280", marginBottom: "0.875rem" }}>
+          <div style={{ fontSize: "0.78rem", color: "var(--majalis-ink-muted, #9BA3B5)", marginBottom: "0.875rem" }}>
             {list.length} مساهمة
           </div>
           {list.map((sub) => <SubmissionRow key={sub.id} sub={sub} />)}
@@ -287,7 +287,7 @@ export default function MySubmissionsPage() {
       {/* CTA if no search yet */}
       {list === null && !loading && (
         <div style={{ textAlign: "center", padding: "1rem" }}>
-          <div style={{ fontSize: "0.82rem", color: "#9ca3af", marginBottom: "1rem" }}>
+          <div style={{ fontSize: "0.82rem", color: "var(--majalis-ink-muted, #9BA3B5)", marginBottom: "1rem" }}>
             أو ارفع محتوىً جديداً:
           </div>
           <Link href="/upload">

@@ -132,7 +132,7 @@ function StoryCard({ story, onSelect }: { story: IslamicStory; onSelect: () => v
         {story.tags.slice(0, 3).map(tag => (
           <span key={tag} style={{
             background: "#ffffff0a",
-            color: "#888",
+            color: "var(--majalis-ink-soft, #C9C5B8)",
             borderRadius: 20,
             padding: "2px 8px",
             fontSize: 10,
@@ -301,7 +301,7 @@ function StoryDetail({ story, onBack }: { story: IslamicStory; onBack: () => voi
           {story.tags.map(tag => (
             <span key={tag} style={{
               background: "#ffffff0a",
-              color: "#888",
+              color: "var(--majalis-ink-soft, #C9C5B8)",
               border: "1px solid #ffffff11",
               borderRadius: 20,
               padding: "4px 12px",
@@ -467,7 +467,7 @@ export default function IslamicStoriesPage() {
 
         {/* Category Filter */}
         <div style={{ marginBottom: 14 }}>
-          <div style={{ color: "#666", fontSize: 11, marginBottom: 8 }}>التصنيف</div>
+          <div style={{ color: "var(--majalis-ink-muted, #9BA3B5)", fontSize: 11, marginBottom: 8 }}>التصنيف</div>
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
             {CATEGORY_LABELS.map(cat => (
               <button
@@ -482,7 +482,7 @@ export default function IslamicStoriesPage() {
 
         {/* Era Filter */}
         <div style={{ marginBottom: 24 }}>
-          <div style={{ color: "#666", fontSize: 11, marginBottom: 8 }}>الحقبة الزمنية</div>
+          <div style={{ color: "var(--majalis-ink-muted, #9BA3B5)", fontSize: 11, marginBottom: 8 }}>الحقبة الزمنية</div>
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
             {ERA_LABELS.map(e => (
               <button
@@ -497,7 +497,7 @@ export default function IslamicStoriesPage() {
 
         {/* Results count */}
         {!loading && (
-          <div style={{ color: "#666", fontSize: 13, marginBottom: 16 }}>
+          <div style={{ color: "var(--majalis-ink-muted, #9BA3B5)", fontSize: 13, marginBottom: 16 }}>
             {filtered.length} قصة
             {search && ` — نتائج البحث عن "${search}"`}
           </div>
@@ -522,14 +522,14 @@ export default function IslamicStoriesPage() {
           <div style={{
             textAlign: "center",
             padding: 60,
-            color: "#666",
+            color: "var(--majalis-ink-muted, #9BA3B5)",
           }}>
             <IslamicStar size={48} color={GOLD} opacity={0.3} />
             <div style={{ marginTop: 16, fontSize: 15 }}>لا توجد قصص معتمدة بعد.</div>
             <div style={{ fontSize: 13, marginTop: 8, color: "var(--majalis-ink-soft, #C9C5B8)" }}>يمكن اعتماد القصص من لوحة التحكم.</div>
           </div>
         ) : filtered.length === 0 ? (
-          <div style={{ textAlign: "center", padding: 48, color: "#666" }}>
+          <div style={{ textAlign: "center", padding: 48, color: "var(--majalis-ink-muted, #9BA3B5)" }}>
             <div style={{ fontSize: 32, marginBottom: 8 }}>🔍</div>
             <div>لا توجد نتائج للبحث أو الفلتر المحدد.</div>
           </div>

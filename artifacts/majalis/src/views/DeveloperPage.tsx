@@ -3,7 +3,7 @@ import { Link } from "wouter";
 export default function DeveloperPage() {
   return (
     <div style={{ maxWidth: 900, margin: "2rem auto", padding: "0 1rem", fontFamily: "system-ui, sans-serif" }}>
-      <h1 style={{ color: "#1a472a" }}>المجلس العلمي — Open Islamic Platform</h1>
+      <h1 style={{ color: "var(--majalis-ink, #EDE9DD)" }}>المجلس العلمي — Open Islamic Platform</h1>
       <p style={{ fontSize: "1.125rem", lineHeight: 1.7 }}>
         واجهة برمجة احترافية للوصول إلى المحتوى العلمي الإسلامي: القرآن، الأحاديث، الفتاوى، الدروس، والمزيد.
       </p>

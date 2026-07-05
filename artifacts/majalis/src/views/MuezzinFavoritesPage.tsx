@@ -69,10 +69,10 @@ export default function MuezzinFavoritesPage() {
         <button type="button" style={backBtn}>← مكتبة المؤذنين</button>
       </Link>
 
-      <h1 style={{ fontSize: "1.3rem", fontWeight: 800, color: "#111827", margin: "0 0 0.25rem" }}>
+      <h1 style={{ fontSize: "1.3rem", fontWeight: 800, color: "var(--majalis-ink, #EDE9DD)", margin: "0 0 0.25rem" }}>
         ❤️ المؤذنون المفضلون
       </h1>
-      <p style={{ fontSize: "0.82rem", color: "#6b7280", marginBottom: "1.25rem" }}>
+      <p style={{ fontSize: "0.82rem", color: "var(--majalis-ink-muted, #9BA3B5)", marginBottom: "1.25rem" }}>
         {favList.length > 0
           ? `${favList.length} مؤذن في قائمة مفضلتك`
           : "لا يوجد مؤذنون مفضلون بعد — اضغط 🤍 في الصفحة الرئيسية لإضافتهم."}
@@ -133,7 +133,7 @@ export default function MuezzinFavoritesPage() {
 
                 {/* Info */}
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontWeight: 700, fontSize: "0.9rem", color: "#111827" }}>
+                  <div style={{ fontWeight: 700, fontSize: "0.9rem", color: "var(--majalis-ink, #EDE9DD)" }}>
                     {m.name}
                     {isDefault && (
                       <span style={{ marginRight: "0.4rem", fontSize: "0.65rem", background: "#134a3a", color: "#fff", padding: "0.1rem 0.4rem", borderRadius: "999px" }}>
@@ -141,7 +141,7 @@ export default function MuezzinFavoritesPage() {
                       </span>
                     )}
                   </div>
-                  <div style={{ fontSize: "0.72rem", color: "#6b7280" }}>
+                  <div style={{ fontSize: "0.72rem", color: "var(--majalis-ink-muted, #9BA3B5)" }}>
                     📍 {m.origin} · {m.country}
                   </div>
                   <div style={{ display: "flex", gap: "0.35rem", marginTop: "0.35rem", flexWrap: "wrap" }}>

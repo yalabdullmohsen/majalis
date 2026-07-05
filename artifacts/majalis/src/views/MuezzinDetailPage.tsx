@@ -229,7 +229,7 @@ export default function MuezzinDetailPage() {
         <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "0.875rem" }}>
           <StarRating rating={muezzin.rating} />
           <span style={{ fontSize: "1.5rem", fontWeight: 800, color: "var(--majalis-ink)" }}>{muezzin.rating}</span>
-          <span style={{ fontSize: "0.8rem", color: "#6b7280" }}>
+          <span style={{ fontSize: "0.8rem", color: "var(--majalis-ink-muted, #9BA3B5)" }}>
             من أصل 5.0 · {formatNum(muezzin.totalRatings)} تقييم
           </span>
         </div>
@@ -288,7 +288,7 @@ export default function MuezzinDetailPage() {
 
       {/* Audio player */}
       <Section title="🎵 أذانات الفريضة الخمس">
-        <p style={{ fontSize: "0.75rem", color: "#6b7280", marginBottom: "0.875rem" }}>
+        <p style={{ fontSize: "0.75rem", color: "var(--majalis-ink-muted, #9BA3B5)", marginBottom: "0.875rem" }}>
           اضغط على أي وقت للاستماع · الأذانات بصوت {muezzin.name}
         </p>
 
@@ -323,7 +323,7 @@ export default function MuezzinDetailPage() {
             <span style={{ fontSize: "1rem" }}>🌙</span>
             <div style={{ flex: 1 }}>
               <div style={{ fontSize: "0.85rem", color: "var(--majalis-ink-soft)", fontWeight: 600 }}>أذان الفجر</div>
-              <div style={{ fontSize: "0.72rem", color: "#9ca3af" }}>يُستخدم الأذان العام للفجر لهذا المؤذن</div>
+              <div style={{ fontSize: "0.72rem", color: "var(--majalis-ink-muted, #9BA3B5)" }}>يُستخدم الأذان العام للفجر لهذا المؤذن</div>
             </div>
           </div>
         )}
@@ -338,10 +338,10 @@ export default function MuezzinDetailPage() {
               <div key={key} style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.8rem" }}>
                 <span>{PRAYER_ICON[key]}</span>
                 <span style={{ fontWeight: 600, color: "var(--majalis-ink-soft)", width: "3.5rem" }}>{PRAYER_ARABIC[key]}</span>
-                <span style={{ color: "#6b7280" }}>
+                <span style={{ color: "var(--majalis-ink-muted, #9BA3B5)" }}>
                   {key === "fajr" && muezzin.fajrUrl ? "أذان الفجر الخاص" : "الأذان العام"}
                 </span>
-                <span style={{ marginRight: "auto", color: "#9ca3af", fontSize: "0.72rem" }}>
+                <span style={{ marginRight: "auto", color: "var(--majalis-ink-muted, #9BA3B5)", fontSize: "0.72rem" }}>
                   {key === "fajr" && muezzin.fajrUrl
                     ? formatDuration(muezzin.durationSec + 15)
                     : formatDuration(muezzin.durationSec)}
@@ -410,7 +410,7 @@ export default function MuezzinDetailPage() {
                   <span style={{ fontSize: "1.25rem" }}>🎙️</span>
                   <div style={{ flex: 1 }}>
                     <div style={{ fontWeight: 600, fontSize: "0.875rem", color: "var(--majalis-ink)" }}>{m.name}</div>
-                    <div style={{ fontSize: "0.72rem", color: "#9ca3af" }}>{m.origin} · {m.style}</div>
+                    <div style={{ fontSize: "0.72rem", color: "var(--majalis-ink-muted, #9BA3B5)" }}>{m.origin} · {m.style}</div>
                   </div>
                   <div style={{ fontSize: "0.8rem", color: "#f59e0b", fontWeight: 600 }}>
                     ★ {m.rating}
@@ -446,9 +446,9 @@ function AudioRow({ label, sublabel, duration, isPlaying, onPlay, icon, highligh
       <span style={{ fontSize: "1.1rem" }}>{icon}</span>
       <div style={{ flex: 1 }}>
         <div style={{ fontWeight: 600, fontSize: "0.875rem", color: "var(--majalis-ink)" }}>{label}</div>
-        <div style={{ fontSize: "0.72rem", color: "#6b7280" }}>{sublabel}</div>
+        <div style={{ fontSize: "0.72rem", color: "var(--majalis-ink-muted, #9BA3B5)" }}>{sublabel}</div>
       </div>
-      <span style={{ fontSize: "0.72rem", color: "#9ca3af" }}>{formatDuration(duration)}</span>
+      <span style={{ fontSize: "0.72rem", color: "var(--majalis-ink-muted, #9BA3B5)" }}>{formatDuration(duration)}</span>
       <button
         type="button"
         onClick={onPlay}

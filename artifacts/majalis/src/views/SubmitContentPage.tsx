@@ -47,7 +47,7 @@ export default function SubmitContentPage() {
   return (
     <div style={{ maxWidth: 600, margin: "2rem auto", padding: "1.5rem", background: "var(--majalis-panel, rgba(255,255,255,0.08))", borderRadius: "0.75rem", boxShadow: "0 4px 24px rgba(0,0,0,0.30)", direction: "rtl" }}>
       <div style={{ marginBottom: "1.25rem" }}>
-        <Link href="/" style={{ color: "#6b7280", fontSize: "0.85rem", textDecoration: "none" }}>
+        <Link href="/" style={{ color: "var(--majalis-ink-muted, #9BA3B5)", fontSize: "0.85rem", textDecoration: "none" }}>
           ← الرئيسية
         </Link>
       </div>
@@ -55,7 +55,7 @@ export default function SubmitContentPage() {
       <h1 style={{ fontSize: "1.5rem", fontWeight: 700, marginBottom: "0.5rem", color: "var(--majalis-ink)" }}>
         أضف محتوى
       </h1>
-      <p style={{ color: "#6b7280", fontSize: "0.9rem", marginBottom: "1rem" }}>
+      <p style={{ color: "var(--majalis-ink-muted, #9BA3B5)", fontSize: "0.9rem", marginBottom: "1rem" }}>
         يصل مقترحك للأدمن لمراجعته قبل النشر.
       </p>
 
@@ -80,7 +80,7 @@ export default function SubmitContentPage() {
         <div style={{ fontSize: "1.5rem" }}>📚</div>
         <div>
           <p style={{ margin: 0, fontWeight: 700, fontSize: "0.9rem", color: "var(--majalis-emerald)" }}>أضف درساً علمياً</p>
-          <p style={{ margin: "0.15rem 0 0", fontSize: "0.78rem", color: "#6b7280" }}>
+          <p style={{ margin: "0.15rem 0 0", fontSize: "0.78rem", color: "var(--majalis-ink-muted, #9BA3B5)" }}>
             شارك درساً، محاضرة، أو موضوعاً علمياً مفيداً
           </p>
         </div>

@@ -25,7 +25,7 @@ export default function PrayerCountdownPage() {
   if (!data?.prayers?.length || !countdown) {
     return (
       <div className="prayer-countdown-page" dir="rtl">
-        <p style={{ color: "#991b1b" }}>تعذّر تحميل مواقيت الصلاة — تحقق من الاتصال.</p>
+        <p style={{ color: "var(--msk-red, #C1595A)" }}>تعذّر تحميل مواقيت الصلاة — تحقق من الاتصال.</p>
       </div>
     );
   }
