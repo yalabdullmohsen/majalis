@@ -94,6 +94,20 @@ html {
   --majalis-gold-light:    rgba(14,110,82,.18);
   --majalis-ivory:         var(--msk-canvas-1);
 
+  /* ── جسر إرثي: متغيرات design-system.css القديمة ── */
+  --bg-card:             var(--msk-canvas,   #FFFFFF);
+  --bg-base:             var(--msk-canvas-1, #F7FBF9);
+  --text-base:           var(--msk-text,     #1C1A18);
+  --text-body:           var(--msk-text-2,   #5C5550);
+  --text-muted:          var(--msk-text-3,   #918A85);
+  --majalis-accent:      var(--msk-gold,     #0E6E52);
+  --majalis-surface-2:   var(--msk-canvas-1, #F7FBF9);
+  --majalis-surface-hover: rgba(14,110,82,0.04);
+  --majalis-surface-muted: var(--msk-canvas-1, #F7FBF9);
+  --ds-surface-2:        var(--msk-canvas-1, #F7FBF9);
+  --color-parchment:     var(--msk-canvas,   #FFFFFF);
+  --color-line:          var(--msk-border,   rgba(14,110,82,0.10));
+
   /* ── الخطوط — Almarai للواجهة، Amiri Quran للعناوين ── */
   --font-primary:  "Almarai", "Cairo", "Tajawal", system-ui, sans-serif;
   --font-ui:       var(--font-primary);
@@ -206,6 +220,21 @@ html[data-theme="dark"] {
   --majalis-gold:          var(--msk-gold);
   --majalis-gold-light:    rgba(217,174,92,.2);
   --majalis-ivory:         var(--msk-canvas-1);
+
+  /* ── جسر إرثي: وضع الليل ── */
+  --bg-card:             var(--msk-canvas-1, #1F2540);
+  --bg-base:             var(--msk-canvas,   #171C2E);
+  --text-base:           var(--msk-text,     #E8E3DC);
+  --text-body:           var(--msk-text-2,   #B8B0A8);
+  --text-muted:          var(--msk-text-3,   #7A7570);
+  --majalis-accent:      var(--msk-gold,     #D9AE5C);
+  --majalis-surface-2:   var(--msk-canvas-1, #1F2540);
+  --majalis-surface-hover: rgba(217,174,92,0.06);
+  --majalis-surface-muted: var(--msk-canvas-1, #1F2540);
+  --ds-surface-2:        var(--msk-canvas-1, #1F2540);
+  --color-parchment:     var(--msk-canvas-1, #1F2540);
+  --color-line:          var(--msk-border,   rgba(217,174,92,0.15));
+
   --v2-green:        var(--msk-gold);
   --v2-green-deep:   var(--msk-gold-deep);
   --v2-green-soft:   rgba(217,174,92,.06);
@@ -8616,8 +8645,8 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 /* ── Launch: footer, legal pages, compact home ── */
 .site-footer {
   margin-top: auto;
-  border-top: 1px solid var(--majalis-line);
-  background: var(--majalis-parchment-deep);
+  border-top: 1px solid var(--msk-border, rgba(14,110,82,0.10));
+  background: var(--msk-canvas, #FFFFFF);
   padding: 2rem 1.25rem 2.5rem;
 }
 
@@ -13508,7 +13537,7 @@ html[data-theme="dark"] .lesson-admin-btn--delete:hover {
   --ds-t-mid: 0.22s var(--ds-ease);
 
   --ds-gold-grad: linear-gradient(135deg, #E2BC6A 0%, #D9AE5C 55%, #C49540 100%);
-  --ds-emerald-grad: linear-gradient(135deg, #E2BC6A 0%, #D9AE5C 55%, #C49540 100%);
+  --ds-emerald-grad: linear-gradient(135deg, #0E6E52 0%, #0A5040 100%);
   --ds-hero-grad: linear-gradient(155deg, #0F1220 0%, #171C2E 42%, #1F2540 72%, #131829 100%);
 }
 
@@ -13519,6 +13548,7 @@ html[data-theme="dark"] {
   --ds-shadow-lg: 0 20px 52px rgba(0,0,0,.46);
   --ds-shadow-xl: 0 32px 72px rgba(0,0,0,.52);
   --ds-hero-grad: linear-gradient(155deg, #0F1220 0%, #171C2E 42%, #1F2540 72%, #131829 100%);
+  --ds-emerald-grad: linear-gradient(135deg, #D9AE5C 0%, #C49540 100%);
 }
 
 /* ─── Phase 1: Unified Button Component ───────────────────── */
@@ -13612,7 +13642,6 @@ html[data-theme="dark"] {
   border-bottom: 1.5px solid var(--majalis-line);
   position: relative;
 }
-/* Gold accent rule on the right */
 .ds-section__head::after {
   content: "";
   position: absolute;
@@ -13620,7 +13649,7 @@ html[data-theme="dark"] {
   right: 0;
   width: 2.75rem;
   height: 1.5px;
-  background: var(--ds-gold-grad);
+  background: var(--ds-emerald-grad);
   border-radius: var(--ds-r-full);
 }
 .ds-section__title {
