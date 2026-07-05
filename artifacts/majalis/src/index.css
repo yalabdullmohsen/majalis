@@ -7247,10 +7247,15 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
 
 .kuwait-tabs {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  overflow-x: auto;
   gap: 0.5rem;
   margin-bottom: 1rem;
+  padding-bottom: 0.25rem;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
 }
+.kuwait-tabs::-webkit-scrollbar { display: none; }
 
 .kuwait-tab {
   border: 1px solid var(--msk-border, #E0DBD5);
