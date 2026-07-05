@@ -1739,6 +1739,312 @@ html[data-theme="dark"] .lessons-v2-search input {
   border-color: rgba(217,174,92,0.18) !important;
 }
 
+/* ═══════════════════════════════════════════════════════════════════════
+   مجالس — إصلاح شامل لجميع الصفحات
+   خلفية العاجي الخفيف + العناوين بالزمردي + El Messiri
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── 1. خلفية الصفحات: عاجي خفيف بدل الأبيض القاسي ── */
+.page-shell {
+  background: var(--msk-canvas-1, #F7FBF9) !important;
+}
+html[data-theme="dark"] .page-shell {
+  background: var(--msk-canvas, #171C2E) !important;
+}
+
+/* بطاقات عامة: خلفية بيضاء لتتمايز عن خلفية الصفحة */
+.page-card,
+.ui-card,
+.ds-card {
+  background: var(--msk-canvas, #FFFFFF) !important;
+}
+html[data-theme="dark"] .page-card,
+html[data-theme="dark"] .ui-card,
+html[data-theme="dark"] .ds-card {
+  background: var(--msk-canvas-1, #1F2540) !important;
+}
+
+/* ── 2. عناوين page-shell عالمية: El Messiri + زمردي ── */
+.page-shell h1:not([class*="ds-page-header"]),
+.page-shell h2:not([class*="ds-page-header"]),
+.page-shell h3,
+.page-shell h4 {
+  font-family: var(--mj-font-display, "El Messiri", serif) !important;
+  color: var(--majalis-emerald-deep, #0A5040) !important;
+}
+html[data-theme="dark"] .page-shell h1:not([class*="ds-page-header"]),
+html[data-theme="dark"] .page-shell h2:not([class*="ds-page-header"]),
+html[data-theme="dark"] .page-shell h3,
+html[data-theme="dark"] .page-shell h4 {
+  color: var(--msk-gold, #D9AE5C) !important;
+}
+
+/* ── 3. نماذج البحث العامة ── */
+.page-search-form input,
+.page-search-input {
+  color: var(--msk-text, #1C1A18) !important;
+  border-color: rgba(14,110,82,0.18) !important;
+  background: var(--msk-canvas, #FFFFFF) !important;
+}
+.page-search-form input:focus,
+.page-search-input:focus {
+  border-color: var(--majalis-emerald, #0E6E52) !important;
+  box-shadow: 0 0 0 3px rgba(14,110,82,0.10) !important;
+}
+html[data-theme="dark"] .page-search-form input,
+html[data-theme="dark"] .page-search-input {
+  background: var(--msk-canvas-1, #1F2540) !important;
+  color: var(--msk-text, #F0E9DA) !important;
+  border-color: rgba(217,174,92,0.20) !important;
+}
+
+/* ── 4. صفحة الأسئلة والأجوبة (QA) ── */
+.qa-item {
+  background: var(--msk-canvas, #FFFFFF) !important;
+}
+.qa-item__question {
+  color: var(--majalis-emerald-deep, #0A5040) !important;
+  font-family: var(--mj-font-display, "El Messiri", serif) !important;
+}
+.qa-item__answer {
+  color: var(--msk-text, #1C1A18) !important;
+}
+.qa-item__category {
+  background: rgba(14,110,82,0.08) !important;
+  color: var(--majalis-emerald-deep, #0A5040) !important;
+}
+html[data-theme="dark"] .qa-item {
+  background: var(--msk-canvas-1, #1F2540) !important;
+}
+html[data-theme="dark"] .qa-item__question {
+  color: var(--msk-gold, #D9AE5C) !important;
+}
+html[data-theme="dark"] .qa-item__answer {
+  color: var(--msk-text, #F0E9DA) !important;
+}
+
+/* ── 5. صفحة الأحاديث ── */
+.hadith-card {
+  background: var(--msk-canvas, #FFFFFF) !important;
+}
+.hadith-card__title {
+  color: var(--majalis-emerald-deep, #0A5040) !important;
+  font-family: var(--mj-font-display, "El Messiri", serif) !important;
+}
+.hadith-card__chapter {
+  color: var(--msk-text-2, #5C5550) !important;
+}
+.hadith-card__text {
+  border-inline-start-color: var(--majalis-emerald, #0E6E52) !important;
+  background: rgba(14,110,82,0.04) !important;
+  color: var(--msk-text, #1C1A18) !important;
+}
+html[data-theme="dark"] .hadith-card {
+  background: var(--msk-canvas-1, #1F2540) !important;
+}
+html[data-theme="dark"] .hadith-card__title {
+  color: var(--msk-gold, #D9AE5C) !important;
+}
+html[data-theme="dark"] .hadith-card__text {
+  background: rgba(217,174,92,0.05) !important;
+  border-inline-start-color: var(--msk-gold, #D9AE5C) !important;
+  color: var(--msk-text, #F0E9DA) !important;
+}
+
+/* ── 6. صفحة المكتبة ── */
+.library-card-link {
+  color: inherit !important;
+}
+.home-library-card h3 {
+  color: var(--majalis-emerald-deep, #0A5040) !important;
+  font-family: var(--mj-font-display, "El Messiri", serif) !important;
+}
+html[data-theme="dark"] .home-library-card h3 {
+  color: var(--msk-gold, #D9AE5C) !important;
+}
+
+/* ── 7. صفحة الفتاوى ── */
+.fatwa-item__title,
+.fatwa-card__title,
+.fatwa-question {
+  color: var(--majalis-emerald-deep, #0A5040) !important;
+  font-family: var(--mj-font-display, "El Messiri", serif) !important;
+}
+html[data-theme="dark"] .fatwa-item__title,
+html[data-theme="dark"] .fatwa-card__title,
+html[data-theme="dark"] .fatwa-question {
+  color: var(--msk-gold, #D9AE5C) !important;
+}
+
+/* ── 8. صفحة الأذكار والفوائد ── */
+/* نص الذكر: محتوى ديني — لا تغيير على لون المتن */
+.adhkar-card__text,
+.faidah-card__body,
+.qa-card__question,
+.qa-card__answer {
+  color: var(--msk-text, #1C1A18) !important;
+}
+/* العداد والتصنيف */
+.adhkar-card__count {
+  color: var(--majalis-emerald-deep, #0A5040) !important;
+  font-family: var(--mj-font-seal, "Reem Kufi", serif) !important;
+}
+html[data-theme="dark"] .adhkar-card__text,
+html[data-theme="dark"] .faidah-card__body {
+  color: var(--msk-text, #F0E9DA) !important;
+}
+
+/* الفوائد: عنوان البطاقة */
+.fawaid-card .page-card-header p,
+.fawaid-card-title {
+  color: var(--majalis-emerald-deep, #0A5040) !important;
+  font-family: var(--mj-font-display, "El Messiri", serif) !important;
+}
+html[data-theme="dark"] .fawaid-card .page-card-header p,
+html[data-theme="dark"] .fawaid-card-title {
+  color: var(--msk-gold, #D9AE5C) !important;
+}
+
+/* ── 9. صفحة القرآن ── */
+.quran-surah-header h2,
+.quran-surah-name {
+  color: var(--majalis-emerald-deep, #0A5040) !important;
+  font-family: var(--mj-font-display, "El Messiri", serif) !important;
+}
+html[data-theme="dark"] .quran-surah-header h2,
+html[data-theme="dark"] .quran-surah-name {
+  color: var(--msk-gold, #D9AE5C) !important;
+}
+
+/* ── 10. صفحة القصص والسِّيَر ── */
+.story-card__title,
+.seerah-card__title,
+.prophet-card__name,
+.islamic-story-card__title {
+  color: var(--majalis-emerald-deep, #0A5040) !important;
+  font-family: var(--mj-font-display, "El Messiri", serif) !important;
+}
+html[data-theme="dark"] .story-card__title,
+html[data-theme="dark"] .seerah-card__title,
+html[data-theme="dark"] .prophet-card__name,
+html[data-theme="dark"] .islamic-story-card__title {
+  color: var(--msk-gold, #D9AE5C) !important;
+}
+
+/* ── 11. مجلس الفقه والموسوعة الشرعية ── */
+.fiqh-council-card__title,
+.fiqh-item__title,
+.fiqh-session-title,
+.fiqh-research-title,
+.rulings-card__title,
+.ruling-card-title {
+  color: var(--majalis-emerald-deep, #0A5040) !important;
+  font-family: var(--mj-font-display, "El Messiri", serif) !important;
+}
+html[data-theme="dark"] .fiqh-council-card__title,
+html[data-theme="dark"] .fiqh-item__title,
+html[data-theme="dark"] .fiqh-session-title,
+html[data-theme="dark"] .rulings-card__title {
+  color: var(--msk-gold, #D9AE5C) !important;
+}
+
+/* ── 12. المشايخ والمؤسسات ── */
+.sheikh-card__name,
+.sheikh-name,
+.institution-card__name {
+  color: var(--majalis-emerald-deep, #0A5040) !important;
+  font-family: var(--mj-font-display, "El Messiri", serif) !important;
+}
+html[data-theme="dark"] .sheikh-card__name,
+html[data-theme="dark"] .sheikh-name {
+  color: var(--msk-gold, #D9AE5C) !important;
+}
+
+/* ── 13. الدورات والمسارات التعليمية ── */
+.course-card__title,
+.learning-path-item__title,
+.annual-course-card__title {
+  color: var(--majalis-emerald-deep, #0A5040) !important;
+  font-family: var(--mj-font-display, "El Messiri", serif) !important;
+}
+html[data-theme="dark"] .course-card__title,
+html[data-theme="dark"] .learning-path-item__title {
+  color: var(--msk-gold, #D9AE5C) !important;
+}
+
+/* ── 14. الصفحات التعريفية (عن المنصة، الاتصال) ── */
+.about-section h2,
+.about-section h3,
+.contact-section h2,
+.legal-page h2,
+.legal-page h3 {
+  color: var(--majalis-emerald-deep, #0A5040) !important;
+  font-family: var(--mj-font-display, "El Messiri", serif) !important;
+}
+html[data-theme="dark"] .about-section h2,
+html[data-theme="dark"] .about-section h3 {
+  color: var(--msk-gold, #D9AE5C) !important;
+}
+
+/* ── 15. شارات الحكم الشرعي وعلامات التصفية ── */
+.filter-chip,
+.topic-chip,
+.tag-chip,
+.search-chip {
+  color: var(--majalis-emerald-deep, #0A5040) !important;
+  border-color: rgba(14,110,82,0.22) !important;
+  background: rgba(14,110,82,0.06) !important;
+}
+.filter-chip.is-active,
+.filter-chip--active,
+.topic-chip.is-active,
+.tag-chip--active {
+  background: var(--majalis-emerald, #0E6E52) !important;
+  color: #FFFFFF !important;
+  border-color: transparent !important;
+}
+
+/* ── 16. صفحة التقويم والإعلانات ── */
+.calendar-event-title,
+.announcement-card__title,
+.announcement-title {
+  color: var(--majalis-emerald-deep, #0A5040) !important;
+  font-family: var(--mj-font-display, "El Messiri", serif) !important;
+}
+html[data-theme="dark"] .calendar-event-title,
+html[data-theme="dark"] .announcement-card__title {
+  color: var(--msk-gold, #D9AE5C) !important;
+}
+
+/* ── 17. page-card-header: خط El Messiri لعناوين البطاقات العامة ── */
+.page-card-header p {
+  font-family: var(--mj-font-display, "El Messiri", serif) !important;
+  color: var(--majalis-emerald-deep, #0A5040) !important;
+}
+html[data-theme="dark"] .page-card-header p {
+  color: var(--msk-gold, #D9AE5C) !important;
+}
+
+/* ── 18. إصلاح ألوان page-shell h2 على الخلفية الجديدة ── */
+/* نستثني بطاقات الدروس من تغيير الخط حفاظاً على تصميمها */
+.lesson-unified-card .lesson-unified-card__title,
+.lesson-unified-card h2,
+.lesson-unified-card h3 {
+  font-family: inherit !important;
+}
+
+/* ── 19. عناوين الأقسام الداخلية في صفحة التوحيد وباقي الصفحات المحتوى ── */
+.tawheed-section-title,
+.tawheed-subsection h3,
+.home-section h2 {
+  font-family: var(--mj-font-display, "El Messiri", serif) !important;
+  color: var(--majalis-emerald-deep, #0A5040) !important;
+}
+html[data-theme="dark"] .tawheed-section-title,
+html[data-theme="dark"] .home-section h2 {
+  color: var(--msk-gold, #D9AE5C) !important;
+}
+
 /* ══════════════════════════════════════════════════════════════════
    إصلاح شامل لألوان النص — جميع الصفحات
    تاريخ: 2026-07-05
