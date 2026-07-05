@@ -975,6 +975,20 @@ html[data-theme="dark"] .side-nav-link--v2.is-active {
   color: #D9AE5C !important;
 }
 
+/* ── شعار الرسالة في Hero ── */
+.home-hero-badge {
+  display: block !important;
+  border-radius: 0.5rem !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  font-size: 0.82rem !important;
+  font-weight: 600 !important;
+  line-height: 1.6 !important;
+  padding: 0.5rem 1rem !important;
+  max-width: 38rem;
+  text-align: center;
+}
+
 /* ── شعار الخط العربي في Hero الرئيسية ── */
 .home-hero-calligraphy {
   display: block;

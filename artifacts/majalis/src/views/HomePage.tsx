@@ -106,8 +106,8 @@ export default function HomePage({
         <div className="home-container home-hero-grid home-hero-grid--v3">
           <div className="home-hero-copy home-hero-copy--v3">
             {/* شارة علوية */}
-            <span className="home-hero-badge" aria-hidden="true">
-              ✦ منصة علمية متكاملة
+            <span className="home-hero-badge">
+              نؤمن أن التقنية وسيلة، ورسالتنا أن نجعلها في خدمة الإسلام والمعرفة النافعة
             </span>
 
             <img
