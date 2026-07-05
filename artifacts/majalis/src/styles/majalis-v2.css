@@ -1000,6 +1000,24 @@ html[data-theme="dark"] .side-nav-link--v2.is-active {
   text-align: center;
 }
 
+/* ── اسم المجلس العلمي — خط ثلث ذهبي ── */
+.site-brand-name {
+  font-family: "Aref Ruqaa", "Amiri", serif !important;
+  font-size: clamp(1.25rem, 4vw, 1.65rem) !important;
+  font-weight: 700 !important;
+  color: #C49540 !important;
+  letter-spacing: 0.01em !important;
+  white-space: nowrap !important;
+  line-height: 1.1 !important;
+  text-shadow: 0 1px 4px rgba(196,149,64,0.18) !important;
+}
+@media (max-width: 430px) {
+  .site-brand-name {
+    font-size: clamp(1.05rem, 3.5vw, 1.3rem) !important;
+    max-width: none !important;
+  }
+}
+
 /* ══ تنسيق ذهبي شامل للقوائم ══════════════════════════════════════════════ */
 
 /* Bottom nav — تسميات ذهبية لكل التابات */
