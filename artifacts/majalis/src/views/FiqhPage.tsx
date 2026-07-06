@@ -6,13 +6,17 @@ import { getLatestFatwas } from "@/lib/fatwa-seed";
 import { getRulingsEncyclopedia } from "@/lib/rulings-service";
 import { RULINGS_CATEGORY_TREE } from "@/lib/rulings-categories";
 import { Loading, Empty } from "@/components/ui-common";
+import { getQaQuestions } from "@/lib/supabase";
+import { SEED_QA, QA_CATEGORIES } from "@/lib/qa-seed";
+import { RequestManager } from "@/lib/request-manager";
 import type { ShariaRulingExtended } from "@/lib/rulings-types";
 
-type Tab = "fatawa" | "rulings" | "council";
+type Tab = "fatawa" | "rulings" | "qa" | "council";
 
 const TABS: { key: Tab; label: string; icon: string }[] = [
   { key: "fatawa",  label: "الفتاوى",         icon: "📋" },
   { key: "rulings", label: "الأحكام الشرعية", icon: "📚" },
+  { key: "qa",      label: "الأسئلة والأجوبة", icon: "💬" },
   { key: "council", label: "المجمع الفقهي",    icon: "🏛️" },
 ];
 
@@ -37,8 +41,10 @@ export default function FiqhPage() {
   const [activeTab, setActiveTab] = useState<Tab>(initialTab);
   const [fatwas, setFatwas]       = useState<any[]>([]);
   const [rulings, setRulings]     = useState<ShariaRulingExtended[]>([]);
+  const [qaItems, setQaItems]     = useState<any[]>([]);
   const [loadingF, setLoadingF]   = useState(false);
   const [loadingR, setLoadingR]   = useState(false);
+  const [loadingQ, setLoadingQ]   = useState(false);
 
   usePageView("fiqh", null);
 
@@ -55,6 +61,15 @@ export default function FiqhPage() {
       getRulingsEncyclopedia({ page: 1, limit: 12, category: "الكل" })
         .then(({ data }) => setRulings(data))
         .finally(() => setLoadingR(false));
+    }
+    if (activeTab === "qa" && qaItems.length === 0) {
+      setLoadingQ(true);
+      RequestManager.run("fiqh:qa-preview", () =>
+        getQaQuestions({ search: "" }),
+      )
+        .then(({ data }) => setQaItems(Array.isArray(data) ? data.slice(0, 8) : []))
+        .catch(() => setQaItems(SEED_QA.slice(0, 8)))
+        .finally(() => setLoadingQ(false));
     }
   }, [activeTab]);
 
@@ -189,6 +204,63 @@ export default function FiqhPage() {
                   style={{ background: "var(--majalis-emerald)" }}
                 >
                   استعرض موسوعة الأحكام
+                </span>
+              </Link>
+            </div>
+          </div>
+        )}
+
+        {/* تبويب الأسئلة والأجوبة */}
+        {activeTab === "qa" && (
+          <div>
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-xl font-bold text-[var(--majalis-ink)]">💬 الأسئلة والأجوبة الشرعية</h2>
+              <Link href="/qa">
+                <span className="text-sm text-[var(--majalis-emerald)] hover:underline cursor-pointer">عرض الكل ←</span>
+              </Link>
+            </div>
+
+            {/* تصنيفات الأسئلة */}
+            <div className="flex flex-wrap gap-2 mb-6">
+              {QA_CATEGORIES.slice(0, 8).map((cat) => (
+                <Link key={cat.id} href={`/qa?cat=${cat.slug}`}>
+                  <span className="inline-block px-3 py-1.5 text-xs font-medium bg-[var(--majalis-emerald-muted)] text-[var(--majalis-emerald)] rounded-full cursor-pointer hover:opacity-80 transition-opacity">
+                    {cat.name}
+                  </span>
+                </Link>
+              ))}
+            </div>
+
+            {loadingQ ? (
+              <Loading />
+            ) : qaItems.length === 0 ? (
+              <Empty text="لا توجد أسئلة بعد" />
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {qaItems.map((item: any) => (
+                  <Link key={item.id} href={`/qa/${item.id}`}>
+                    <div className="bg-[var(--majalis-panel)] border border-[var(--majalis-line)] rounded-xl p-4 hover:shadow-md transition-all cursor-pointer h-full">
+                      <p className="font-semibold text-[var(--majalis-ink)] text-sm line-clamp-2 mb-2 leading-snug">
+                        {item.question}
+                      </p>
+                      {(item.qa_categories?.name || item.category_name) && (
+                        <span className="text-xs bg-[var(--majalis-emerald-muted)] text-[var(--majalis-emerald)] px-2 py-0.5 rounded-full">
+                          {item.qa_categories?.name ?? item.category_name}
+                        </span>
+                      )}
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            )}
+
+            <div className="mt-8 text-center">
+              <Link href="/qa">
+                <span
+                  className="inline-block px-8 py-3 text-white rounded-xl font-medium transition-colors cursor-pointer"
+                  style={{ background: "var(--majalis-emerald)" }}
+                >
+                  استعرض جميع الأسئلة والأجوبة
                 </span>
               </Link>
             </div>

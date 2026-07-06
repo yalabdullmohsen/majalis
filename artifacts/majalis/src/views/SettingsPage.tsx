@@ -4,10 +4,8 @@ import { Link } from "wouter";
 import { LegalBackLink, LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
 import { useAuth } from "@/components/AuthProvider";
 import { useFontPreference } from "@/components/FontPreferenceProvider";
-import { useThemePreference } from "@/components/ThemePreferenceProvider";
 import { useUserPreferences } from "@/components/UserPreferencesProvider";
 import { FONT_OPTIONS, type FontPreference } from "@/lib/font-preference";
-import { THEME_OPTIONS, type ThemePreference } from "@/lib/theme-preference";
 import { clearQuranCache } from "@/lib/quran-api";
 import { DEFAULT_PREFERENCES, type UserPreferences } from "@/lib/user-preferences";
 import { useQuranPreferences, type QuranFontId } from "@/hooks/useQuranPreferences";
@@ -40,7 +38,6 @@ export default function SettingsPage() {
   const { user, isLoggedIn, logout } = useAuth();
   const { lang, setLang, t } = useLanguage();
   const { preference: fontPreference, setPreference: setFontPreference } = useFontPreference();
-  const { preference: themePreference, resolvedTheme, setPreference: setThemePreference } = useThemePreference();
   const { preferences, updatePreferences } = useUserPreferences();
   const { prefs: quranPrefs, setPref: setQuranPref, bumpFont } = useQuranPreferences();
 
@@ -78,20 +75,6 @@ export default function SettingsPage() {
       </LegalSection>
 
       <LegalSection title={t("settings_interface")}>
-        <div className="settings-option-grid" role="group" aria-label="اختيار الوضع">
-          {THEME_OPTIONS.map((option) => (
-            <button
-              key={option.id}
-              type="button"
-              className={`settings-choice${themePreference === option.id ? " is-active" : ""}`}
-              onClick={() => setThemePreference(option.id as ThemePreference)}
-            >
-              <strong>{option.label}</strong>
-              <span>{option.description}</span>
-            </button>
-          ))}
-        </div>
-        <p className="settings-note">{t("settings_current_mode")}: {resolvedTheme === "dark" ? t("settings_dark") : t("settings_light")}</p>
         <label className="settings-field">
           <span>{t("settings_font_size")}</span>
           <select name="interface-font-size" value={preferences.fontSize} onChange={(e) => update("fontSize", e.target.value as UserPreferences["fontSize"])}>
@@ -216,7 +199,7 @@ export default function SettingsPage() {
         <p>{t("settings_privacy_desc")}</p>
         <div className="settings-actions">
           <button type="button" className="ui-card-btn" onClick={() => {
-            const blob = new Blob([JSON.stringify({ preferences, fontPreference, themePreference }, null, 2)], { type: "application/json" });
+            const blob = new Blob([JSON.stringify({ preferences, fontPreference }, null, 2)], { type: "application/json" });
             const url = URL.createObjectURL(blob);
             const a = document.createElement("a");
             a.href = url;

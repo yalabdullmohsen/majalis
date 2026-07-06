@@ -16,6 +16,8 @@ const HOME_TABS: { id: HomeTab; label: string }[] = [
   { id: "women", label: "للنساء فقط" },
 ];
 
+const TAB_STORAGE_KEY = "majalis-lesson-tab";
+
 const ARABIC_WEEKDAY: Record<number, string> = {
   0: "الأحد",
   1: "الاثنين",
@@ -30,6 +32,12 @@ function isCourse(lesson: KuwaitLessonRecord) {
   return lesson.isCourse || lesson.activityType === "دورة";
 }
 
+function readStoredTab(): HomeTab {
+  if (typeof window === "undefined") return "all";
+  const v = window.localStorage.getItem(TAB_STORAGE_KEY);
+  return v === "men" || v === "women" ? v : "all";
+}
+
 export function HomeUpcomingLessons({
   initialLessons,
 }: {
@@ -38,7 +46,7 @@ export function HomeUpcomingLessons({
   const [allLessons, setAllLessons] = useState<KuwaitLessonRecord[]>(
     initialLessons ? initialLessons.filter((l) => !isCourse(l)) : [],
   );
-  const [tab, setTab] = useState<HomeTab>("all");
+  const [tab, setTab] = useState<HomeTab>(readStoredTab);
   const [loading, setLoading] = useState(!initialLessons);
 
   useEffect(() => {
@@ -52,27 +60,46 @@ export function HomeUpcomingLessons({
       .finally(() => setLoading(false));
   }, [initialLessons]);
 
+  function handleTab(t: HomeTab) {
+    setTab(t);
+    if (typeof window !== "undefined") window.localStorage.setItem(TAB_STORAGE_KEY, t);
+  }
+
   const clock = getKuwaitClock();
   const todayArabic = ARABIC_WEEKDAY[clock.weekday] ?? "";
 
-  // نعيد حساب nextOccurrenceMs بشكل حديث لكل درس — لا نعتمد على القيم المُخزّنة
-  // لأن القيم المخزّنة تصبح قديمة إذا مرّ وقت الدرس دون إعادة تحميل
+  function applyTabFilter(lesson: KuwaitLessonRecord) {
+    if (tab === "men")   return !lesson.isWomenOnly;
+    if (tab === "women") return lesson.isWomenOnly === true;
+    return true;
+  }
+
   const todayLessons = sortKuwaitLessons(
     allLessons.filter((l) => {
       const freshMs = computeNextOccurrenceMs(l.day, l.time);
-      return isLessonToday(freshMs);
+      return isLessonToday(freshMs) && applyTabFilter(l);
     }),
   ).slice(0, 6);
 
   const upcomingLessons = sortKuwaitLessons(
-    allLessons.filter((lesson) => {
-      // "الدروس الرجالية": كل الدروس غير المخصصة للنساء فقط (عام + رجالي)
-      if (tab === "men")   return !lesson.isWomenOnly;
-      // "للنساء فقط": الدروس المخصصة للنساء حصراً بنص صريح
-      if (tab === "women") return lesson.isWomenOnly === true;
-      return true;
-    }),
+    allLessons.filter((lesson) => applyTabFilter(lesson)),
   ).slice(0, 4);
+
+  const filterStrip = (
+    <div className="home-lessons-tabs" role="tablist" aria-label="تصفية الدروس">
+      {HOME_TABS.map(({ id, label }) => (
+        <button
+          key={id}
+          role="tab"
+          aria-selected={tab === id}
+          onClick={() => handleTab(id)}
+          className={`home-lessons-tab${tab === id ? " is-active" : ""}`}
+        >
+          {label}
+        </button>
+      ))}
+    </div>
+  );
 
   return (
     <>
@@ -90,10 +117,12 @@ export function HomeUpcomingLessons({
             </div>
           </div>
 
+          {filterStrip}
+
           <PageLoadingGuard
             loading={loading}
             empty={!loading && todayLessons.length === 0}
-            emptyText="لا توجد دروس مجدولة اليوم"
+            emptyText="لا توجد دروس في هذه الفئة اليوم"
           >
             <div className="home-kuwait-grid lesson-unified-grid">
               {todayLessons.map((lesson) => (
@@ -118,19 +147,7 @@ export function HomeUpcomingLessons({
           </div>
         </div>
 
-        <div className="home-lessons-tabs" role="tablist" aria-label="تصفية الدروس">
-          {HOME_TABS.map(({ id, label }) => (
-            <button
-              key={id}
-              role="tab"
-              aria-selected={tab === id}
-              onClick={() => setTab(id)}
-              className={`home-lessons-tab${tab === id ? " is-active" : ""}`}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
+        {filterStrip}
 
         <PageLoadingGuard
           loading={loading}

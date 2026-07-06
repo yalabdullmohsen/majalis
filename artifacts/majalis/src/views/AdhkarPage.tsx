@@ -1,11 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
-import { Link, useLocation } from "wouter";
-import { ADHKAR_CATEGORIES } from "@/lib/adhkar-seed";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useLocation } from "wouter";
+import { ADHKAR_CATEGORIES, type AdhkarItem } from "@/lib/adhkar-seed";
 import { usePublishedAdhkarItems } from "@/lib/adhkar-service";
-import { getReadingProgress, restoreScrollForSection } from "@/lib/reading-progress";
 import { PageHeader, Empty } from "@/components/ui-common";
-import { AdhkarCard } from "@/components/adhkar/AdhkarCard";
-import { useAuth } from "@/components/AuthProvider";
 
 const FEATURED_CATEGORY_SLUGS = new Set([
   "morning", "evening", "sleep", "wakeup", "home-in", "home-out",
@@ -17,90 +14,156 @@ const FEATURED_CATEGORIES = ADHKAR_CATEGORIES.filter((c) =>
   FEATURED_CATEGORY_SLUGS.has(c.slug),
 );
 
-function useDebouncedValue<T>(value: T, delayMs = 300): T {
-  const [debounced, setDebounced] = useState(value);
+function toArabicNumeral(n: number): string {
+  return n.toLocaleString("ar-EG", { useGrouping: false });
+}
+
+function DhikrBottomSheet({
+  item,
+  onClose,
+}: {
+  item: AdhkarItem;
+  onClose: () => void;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    const id = window.setTimeout(() => setDebounced(value), delayMs);
-    return () => window.clearTimeout(id);
-  }, [value, delayMs]);
-  return debounced;
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") onClose();
+    }
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [onClose]);
+
+  return (
+    <div
+      className="adhkar-sheet-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-label="تفاصيل الذكر"
+      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+    >
+      <div ref={ref} className="adhkar-sheet">
+        <div className="adhkar-sheet-handle" aria-hidden="true" />
+        <button
+          type="button"
+          className="adhkar-sheet-close"
+          onClick={onClose}
+          aria-label="إغلاق"
+        >
+          ✕
+        </button>
+        <h2 className="adhkar-sheet-title">تفاصيل الذكر</h2>
+
+        <div className="adhkar-sheet-text">{item.text}</div>
+
+        <dl className="adhkar-sheet-details">
+          <div className="adhkar-sheet-row">
+            <dt>عدد المرات</dt>
+            <dd>{toArabicNumeral(item.count)} مرة</dd>
+          </div>
+          {item.narrator && (
+            <div className="adhkar-sheet-row">
+              <dt>الراوي</dt>
+              <dd>{item.narrator}</dd>
+            </div>
+          )}
+          {item.source && (
+            <div className="adhkar-sheet-row">
+              <dt>المصدر</dt>
+              <dd>{item.source}</dd>
+            </div>
+          )}
+          {item.grade && (
+            <div className="adhkar-sheet-row">
+              <dt>الدرجة</dt>
+              <dd>
+                <span className={`adhkar-grade adhkar-grade--${item.grade === "صحيح" ? "sahih" : item.grade === "حسن" ? "hasan" : "other"}`}>
+                  {item.grade}
+                </span>
+              </dd>
+            </div>
+          )}
+          {item.reference && (
+            <div className="adhkar-sheet-row">
+              <dt>المرجع</dt>
+              <dd>{item.reference}</dd>
+            </div>
+          )}
+        </dl>
+
+        <button type="button" className="adhkar-sheet-dismiss" onClick={onClose}>
+          إغلاق
+        </button>
+      </div>
+    </div>
+  );
 }
 
 export default function AdhkarPage() {
-  const { isAdmin } = useAuth();
   const [location] = useLocation();
   const [category, setCategory] = useState("all");
-  const [search, setSearch] = useState("");
-  const debouncedSearch = useDebouncedValue(search);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [showSheet, setShowSheet] = useState(false);
+  const [animKey, setAnimKey] = useState(0);
   const { data: publishedItems = [], isLoading, isError } = usePublishedAdhkarItems();
-  const lastRead = getReadingProgress("adhkar");
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const cat = params.get("cat");
     if (cat) {
       const match = ADHKAR_CATEGORIES.find((c) => c.slug === cat || c.id === cat);
-      if (match) setCategory(match.id);
+      if (match) {
+        setCategory(match.id);
+        setCurrentIndex(0);
+      }
     }
-    restoreScrollForSection("adhkar");
   }, [location]);
 
   const items = useMemo(() => {
-    const q = debouncedSearch.trim().toLowerCase();
-    let list = publishedItems;
-    if (category !== "all") {
-      list = list.filter((i) => i.categoryId === category);
+    if (category === "all") return publishedItems;
+    return publishedItems.filter((i) => i.categoryId === category);
+  }, [category, publishedItems]);
+
+  const current = items[currentIndex] ?? null;
+  const total = items.length;
+
+  function changeCategory(catId: string) {
+    setCategory(catId);
+    setCurrentIndex(0);
+    setAnimKey((k) => k + 1);
+  }
+
+  function goNext() {
+    if (currentIndex < total - 1) {
+      setCurrentIndex((i) => i + 1);
+      setAnimKey((k) => k + 1);
     }
-    if (!q) return list;
-    return list.filter(
-      (a) =>
-        a.text.includes(q) ||
-        a.keywords.some((k: string) => k.includes(q)) ||
-        a.source?.includes(q) ||
-        a.reference?.includes(q),
-    );
-  }, [debouncedSearch, category, publishedItems]);
+  }
+
+  function goPrev() {
+    if (currentIndex > 0) {
+      setCurrentIndex((i) => i - 1);
+      setAnimKey((k) => k + 1);
+    }
+  }
 
   const activeCategory = ADHKAR_CATEGORIES.find((c) => c.id === category);
 
   return (
-    <div className="page-shell narrow content-hub-page adhkar-page adhkar-page--v2">
+    <div className="page-shell narrow content-hub-page adhkar-page adhkar-page--focus">
       <PageHeader
         eyebrow="العبادة اليومية"
         title="الأذكار"
-        subtitle="أذكار وأدعية من القرآن والسنة — قراءة هادئة، عداد تسبيح، ومشاركة سهلة."
+        subtitle="قراءة ذكر واحد بتركيز كامل — من القرآن والسنة الصحيحة."
       />
 
-      <div className="adhkar-hero ui-card">
-        <div className="adhkar-hero__stats">
-          {isAdmin && (
-            <>
-              <div><strong>{publishedItems.length}</strong><span>ذكر</span></div>
-              <div><strong>{FEATURED_CATEGORIES.length}</strong><span>قسم</span></div>
-            </>
-          )}
-          <Link href="/tasbih" className="adhkar-hero__tasbih-link">عداد التسبيح ←</Link>
-        </div>
-        {lastRead && (
-          <a href={`#content-${lastRead.id}`} className="adhkar-hero__continue">
-            متابعة آخر ذكر: {lastRead.title || "ذكر سابق"}
-          </a>
-        )}
-      </div>
-
-      <input
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        placeholder="ابحث في الأذكار..."
-        className="page-search-input full content-hub-search"
-        aria-label="بحث في الأذكار"
-      />
-
+      {/* شريط التصنيفات */}
       <div className="content-hub-chips adhkar-chips">
         <button
           type="button"
           className={`content-hub-chip${category === "all" ? " content-hub-chip--active" : ""}`}
-          onClick={() => setCategory("all")}
+          onClick={() => changeCategory("all")}
         >
           الكل
         </button>
@@ -109,7 +172,7 @@ export default function AdhkarPage() {
             key={cat.id}
             type="button"
             className={`content-hub-chip${category === cat.id ? " content-hub-chip--active" : ""}`}
-            onClick={() => setCategory(cat.id)}
+            onClick={() => changeCategory(cat.id)}
           >
             {cat.name}
           </button>
@@ -120,18 +183,78 @@ export default function AdhkarPage() {
         <p className="adhkar-category-desc">{activeCategory.description}</p>
       )}
 
+      {/* منطقة الذكر الرئيسية */}
       {isLoading ? (
         <p className="adhkar-loading-hint">جاري تحميل الأذكار…</p>
       ) : isError ? (
         <Empty text="تعذّر تحميل الأذكار من قاعدة البيانات." />
-      ) : items.length === 0 ? (
-        <Empty text="لا توجد أذكار مطابقة." />
-      ) : (
-        <div className="adhkar-grid adhkar-grid--relaxed">
-          {items.map((item) => (
-            <AdhkarCard key={item.id} item={item} />
-          ))}
+      ) : total === 0 ? (
+        <Empty text="لا توجد أذكار في هذا القسم." />
+      ) : current ? (
+        <div className="adhkar-focus-shell">
+          {/* عداد */}
+          <p className="adhkar-focus-counter" aria-live="polite">
+            {toArabicNumeral(currentIndex + 1)} / {toArabicNumeral(total)}
+          </p>
+
+          {/* نص الذكر */}
+          <div key={animKey} className="adhkar-focus-card adhkar-anim-fade">
+            <p className="adhkar-focus-text" lang="ar" dir="rtl">
+              {current.text}
+            </p>
+
+            {current.count > 1 && (
+              <p className="adhkar-focus-count">
+                {toArabicNumeral(current.count)} مرة
+              </p>
+            )}
+          </div>
+
+          {/* أزرار التنقل */}
+          <div className="adhkar-focus-nav">
+            <button
+              type="button"
+              className="adhkar-focus-btn adhkar-focus-btn--prev"
+              onClick={goPrev}
+              disabled={currentIndex === 0}
+              aria-label="الذكر السابق"
+            >
+              ← السابق
+            </button>
+
+            <button
+              type="button"
+              className="adhkar-focus-btn adhkar-focus-btn--details"
+              onClick={() => setShowSheet(true)}
+              aria-label="عرض تفاصيل الذكر"
+            >
+              التفاصيل
+            </button>
+
+            <button
+              type="button"
+              className="adhkar-focus-btn adhkar-focus-btn--next"
+              onClick={goNext}
+              disabled={currentIndex === total - 1}
+              aria-label="الذكر التالي"
+            >
+              التالي →
+            </button>
+          </div>
+
+          {/* شريط التقدم */}
+          <div className="adhkar-focus-progress" role="progressbar" aria-valuenow={currentIndex + 1} aria-valuemax={total}>
+            <div
+              className="adhkar-focus-progress-fill"
+              style={{ width: `${((currentIndex + 1) / total) * 100}%` }}
+            />
+          </div>
         </div>
+      ) : null}
+
+      {/* Bottom Sheet للتفاصيل */}
+      {showSheet && current && (
+        <DhikrBottomSheet item={current} onClose={() => setShowSheet(false)} />
       )}
     </div>
   );

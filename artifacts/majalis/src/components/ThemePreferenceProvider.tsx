@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
+import { createContext, useContext, useMemo, type ReactNode } from "react";
 import {
   applyThemePreference,
   readThemePreference,
@@ -18,34 +18,15 @@ type ThemePreferenceContextValue = {
 const ThemePreferenceContext = createContext<ThemePreferenceContextValue | null>(null);
 
 export function ThemePreferenceProvider({ children }: { children: ReactNode }) {
-  const [preference, setPreferenceState] = useState<ThemePreference>(() => readThemePreference());
-  const [resolvedTheme, setResolvedTheme] = useState<"light" | "dark">(() => resolveTheme(preference));
-
-  useEffect(() => {
-    applyThemePreference(preference);
-    setResolvedTheme(resolveTheme(preference));
-
-    if (preference !== "system" || typeof window === "undefined") return;
-    const media = window.matchMedia?.("(prefers-color-scheme: dark)");
-    if (!media) return;
-
-    const onChange = () => {
-      applyThemePreference("system");
-      setResolvedTheme(resolveTheme("system"));
-    };
-    media.addEventListener("change", onChange);
-    return () => media.removeEventListener("change", onChange);
-  }, [preference]);
+  applyThemePreference("light");
 
   const value = useMemo<ThemePreferenceContextValue>(() => ({
-    preference,
-    resolvedTheme,
+    preference: readThemePreference(),
+    resolvedTheme: resolveTheme("light"),
     setPreference: (next) => {
-      setPreferenceState(next);
       writeThemePreference(next);
-      setResolvedTheme(resolveTheme(next));
     },
-  }), [preference, resolvedTheme]);
+  }), []);
 
   return (
     <ThemePreferenceContext.Provider value={value}>
