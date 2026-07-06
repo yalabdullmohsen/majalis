@@ -169,8 +169,8 @@ export default function LearningPathBookPage() {
                 <span
                   className="flex-shrink-0 text-xs font-medium px-3 py-1 rounded-full"
                   style={{
-                    background: status === "completed" ? "#dcfce7" : status === "in_progress" ? "#fef9c3" : "#f3f4f6",
-                    color: status === "completed" ? "#15803d" : status === "in_progress" ? "#854d0e" : "#6b7280",
+                    background: status === "completed" ? "#dcfce7" : status === "in_progress" ? "#E6EDE9" : "#f3f4f6",
+                    color: status === "completed" ? "#15803d" : status === "in_progress" ? "#18362A" : "#6b7280",
                   }}
                 >
                   {status === "completed" ? "✓ مكتمل" : status === "in_progress" ? "⏳ جاري" : "لم يبدأ"}

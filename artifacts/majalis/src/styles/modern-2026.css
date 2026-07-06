@@ -1321,13 +1321,48 @@ html[data-theme="light"] .muezzin-bio { color: var(--txt-muted, #52525B) !import
 }
 
 /* ══ 40. Legacy Token Bridge — إعادة تعريف الرموز القديمة للتوافق ═══════════ */
-/* الرموز القديمة --text-* تُحوَّل إلى الرموز الجديدة --txt-* */
 :root {
-  --text-base:       var(--txt-primary,   #111827);
+  --text-base:       var(--txt-primary,   #122019);
   --text-soft:       var(--txt-secondary, #374151);
   --text-muted:      var(--txt-muted,     #52525B);
   --text-subtle:     var(--txt-subdued,   #6B7280);
   --text-disabled:   var(--txt-disabled,  #A1A1AA);
-  --text-accent:     var(--txt-accent,    #166534);
-  --text-inverse:    var(--txt-inverse,   #FFFFFF);
+  --text-accent:     var(--txt-accent,    #18362A);
+  --text-inverse:    var(--txt-inverse,   #FAF8F2);
+
+  /* ── تحديث رموز m26 لتطابق هوية Emerald ── */
+  --m26-bg:           #FAF8F2;
+  --m26-bg-2:         #F1F3F2;
+  --m26-surface:      #FAF8F2;
+  --m26-surface-2:    #F1F3F2;
+  --m26-surface-3:    #E1E5E3;
+  --m26-green-950:    #07100D;
+  --m26-green-800:    #12281F;
+  --m26-green-700:    #153025;
+  --m26-green-600:    #18362A;
+  --m26-green-100:    #E1E5E3;
+  --m26-green-50:     #F1F3F2;
+}
+
+/* ══ 41. نقش نجمة ثمانية الأضلاع — سطح الأبطال والرؤوس ════════════════════ */
+/*
+ * الاستخدام: أضف .majalis-star-bg لأي عنصر تريده يحمل نقش النجمة.
+ * يُسمح فقط لـ: hero sections, page headers, featured cards.
+ * يُمنع تماماً خلف: نص قرآني، نص حديث، نماذج، جداول.
+ */
+.majalis-star-bg {
+  background-color: #18362A;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M50,4 L57.27,32.45 L82.53,17.47 L67.55,42.73 L96,50 L67.55,57.27 L82.53,82.53 L57.27,67.55 L50,96 L42.73,67.55 L17.47,82.53 L32.45,57.27 L4,50 L32.45,42.73 L17.47,17.47 L42.73,32.45 Z' fill='none' stroke='%23FFFFFF' stroke-opacity='0.055' stroke-width='1.1'/%3E%3Ccircle cx='50' cy='50' r='1.4' fill='%23FFFFFF' fill-opacity='0.08'/%3E%3C/svg%3E");
+  background-size: 100px 100px;
+  color: #FAF8F2;
+}
+
+/* رأس النجمة — الوضع الاحتفالي للصفحات الرئيسية */
+.majalis-star-hero {
+  position: relative;
+  background-color: #18362A;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M50,4 L57.27,32.45 L82.53,17.47 L67.55,42.73 L96,50 L67.55,57.27 L82.53,82.53 L57.27,67.55 L50,96 L42.73,67.55 L17.47,82.53 L32.45,57.27 L4,50 L32.45,42.73 L17.47,17.47 L42.73,32.45 Z' fill='none' stroke='%23FFFFFF' stroke-opacity='0.06' stroke-width='1.2'/%3E%3Ccircle cx='50' cy='50' r='1.4' fill='%23FFFFFF' fill-opacity='0.09'/%3E%3C/svg%3E");
+  background-size: 100px 100px;
+  color: #FAF8F2;
+  padding: 2.5rem 1.5rem;
 }

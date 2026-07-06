@@ -28,18 +28,18 @@ const CATEGORY_PATTERN: Record<string, PatternType> = {
   "الإعجاز اللغوي": "vines",     // تشعبات لغوية
 };
 
-// ألوان رأس البطاقة حسب الفئة
+// ألوان رأس البطاقة حسب الفئة — سُلَّم Emerald
 const CATEGORY_PALETTE: Record<string, { bg: string; accent: string }> = {
-  "علم الأحياء":   { bg: "#064e3b", accent: "#34d399" },
-  "علم الفلك":     { bg: "#1e1b4b", accent: "#a5b4fc" },
-  "علم الأرض":     { bg: "#451a03", accent: "#fbbf24" },
-  "الطب":          { bg: "#500724", accent: "#f9a8d4" },
-  "الفيزياء":      { bg: "#0c4a6e", accent: "#7dd3fc" },
-  "علم البحار":    { bg: "#0c4a6e", accent: "#38bdf8" },
-  "علم الأجنة":    { bg: "#2e1065", accent: "#c4b5fd" },
-  "الرياضيات":     { bg: "#1c1917", accent: "#d6d3d1" },
-  "التاريخ":       { bg: "#422006", accent: "rgba(14,110,82,0.25)" },
-  "الإعجاز اللغوي": { bg: "#14532d", accent: "#86efac" },
+  "علم الأحياء":   { bg: "#18362A", accent: "#97A59F" },
+  "علم الفلك":     { bg: "#12281F", accent: "#BEC7C3" },
+  "علم الأرض":     { bg: "#153025", accent: "#97A59F" },
+  "الطب":          { bg: "#0E2019", accent: "#BEC7C3" },
+  "الفيزياء":      { bg: "#18362A", accent: "#97A59F" },
+  "علم البحار":    { bg: "#153025", accent: "#BEC7C3" },
+  "علم الأجنة":    { bg: "#12281F", accent: "#97A59F" },
+  "الرياضيات":     { bg: "#0E2019", accent: "#BEC7C3" },
+  "التاريخ":       { bg: "#18362A", accent: "#97A59F" },
+  "الإعجاز اللغوي": { bg: "#18362A", accent: "#BEC7C3" },
 };
 
 const CATEGORY_ICONS: Record<string, string> = {
@@ -57,7 +57,7 @@ const CATEGORY_ICONS: Record<string, string> = {
 
 const SOURCE_COLORS: Record<string, string> = {
   "قرآن": "#1a5c35",
-  "سنة":  "#78350f",
+  "سنة":  "#153025",
 };
 
 const DISCLAIMER =

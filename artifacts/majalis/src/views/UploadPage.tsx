@@ -345,7 +345,7 @@ export default function UploadPage() {
       {/* Notice */}
       <div style={{
         background: "rgba(14,110,82,0.06)",
-        border: "1.5px solid #fde68a",
+        border: "1.5px solid rgba(24,54,42,0.3)",
         borderRadius: "0.875rem",
         padding: "0.875rem 1rem",
         marginBottom: "1.5rem",

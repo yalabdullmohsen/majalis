@@ -25,17 +25,17 @@ interface IslamicStory {
   is_approved: boolean;
 }
 
-// ─────────────────── Palette ─────────────────────────────────────────────────
-const GOLD = "#D4AF37";
-const DARK_BG = "#0F1A2E";
-const CARD_BG = "#162035";
-const ACCENT_GREEN = "#1A6B4A";
-const ACCENT_PURPLE = "#4A2D7B";
+// ─────────────────── Palette — Emerald Identity ──────────────────────────────
+const GOLD = "#BEC7C3";
+const DARK_BG = "#18362A";
+const CARD_BG = "#153025";
+const ACCENT_GREEN = "#1E4A37";
+const ACCENT_PURPLE = "#2A3E50";
 
 const CATEGORY_COLORS: Record<string, string> = {
-  صحابة: "#B8860B",
-  فتوحات: "#8B1A1A",
-  تاريخ: "#1A5C8B",
+  صحابة: "#97A59F",
+  فتوحات: "#7A9090",
+  تاريخ: "#6B8888",
 };
 
 const ERA_LABELS: Era[] = ["الكل", "نبوي", "راشدي", "أموي", "عباسي", "عثماني", "حديث"];
@@ -405,7 +405,9 @@ export default function IslamicStoriesPage() {
 
       {/* Hero */}
       <div style={{
-        background: `linear-gradient(180deg, #0A1525 0%, ${DARK_BG} 100%)`,
+        backgroundColor: DARK_BG,
+        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M50,4 L57.27,32.45 L82.53,17.47 L67.55,42.73 L96,50 L67.55,57.27 L82.53,82.53 L57.27,67.55 L50,96 L42.73,67.55 L17.47,82.53 L32.45,57.27 L4,50 L32.45,42.73 L17.47,17.47 L42.73,32.45 Z' fill='none' stroke='%23FFFFFF' stroke-opacity='0.055' stroke-width='1.1'/%3E%3Ccircle cx='50' cy='50' r='1.4' fill='%23FFFFFF' fill-opacity='0.08'/%3E%3C/svg%3E")`,
+        backgroundSize: "100px 100px",
         padding: "48px 20px 40px",
         textAlign: "center",
         position: "relative",

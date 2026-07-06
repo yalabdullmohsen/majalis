@@ -18,7 +18,7 @@ const VARIANT_META: Record<
 > = {
   default:     { Icon: Info,          color: "var(--msk-text-2)"  },
   success:     { Icon: CheckCircle2,  color: "var(--msk-gold)"    },
-  warning:     { Icon: AlertTriangle, color: "#D97706"             },
+  warning:     { Icon: AlertTriangle, color: "#97A59F"             },
   destructive: { Icon: XCircle,       color: "#DC2626"             },
   info:        { Icon: Info,          color: "var(--msk-text-2)"  },
 }

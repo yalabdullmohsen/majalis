@@ -2527,9 +2527,9 @@ html[data-theme="dark"] .aie-modal__footer { background: #171C2E; }
   color: var(--majalis-emerald) !important;
 }
 .notif-banner--warn {
-  background: rgba(202, 138, 4, 0.12) !important;
-  color: #FDE68A !important;
-  border-color: rgba(202, 138, 4, 0.30) !important;
+  background: rgba(24, 54, 42, 0.10) !important;
+  color: #97A59F !important;
+  border-color: rgba(24, 54, 42, 0.25) !important;
 }
 .notif-banner--err {
   background: rgba(193, 89, 90, 0.12) !important;

@@ -83,7 +83,7 @@ export default function LearningPathDashboardPage() {
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
               {[
                 { value: completed.length,  label: "كتاب مكتمل",  bg: "#dcfce7", color: "#15803d" },
-                { value: inProgress.length, label: "جاري حالياً", bg: "#fef9c3", color: "#854d0e" },
+                { value: inProgress.length, label: "جاري حالياً", bg: "#E6EDE9", color: "#18362A" },
                 { value: progress.length,   label: "كتاب بدأت",   bg: "#eff6ff", color: "#1d4ed8" },
                 { value: achievements.length, label: "وسام حصلت",  bg: "#faf5ff", color: "#6b21a8" },
               ].map((stat) => (

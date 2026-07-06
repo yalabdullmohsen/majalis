@@ -305,7 +305,7 @@ export function RelationshipsSection() {
                 <div style={{ display: "flex", gap: "0.5rem", flexShrink: 0, alignItems: "center" }}>
                   <span style={{
                     fontSize: "0.7rem", borderRadius: "999px", padding: "2px 8px",
-                    background: r.is_verified ? "#d1fae5" : "#fef9c3",
+                    background: r.is_verified ? "#d1fae5" : "#E6EDE9",
                     color: r.is_verified ? "#065f46" : "#0E6E52",
                   }}>
                     {r.is_verified ? "محققة" : "قيد المراجعة"}

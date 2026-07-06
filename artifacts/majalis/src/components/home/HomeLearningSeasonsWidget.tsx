@@ -57,7 +57,7 @@ function getSeasons(): Season[] {
       description: "شهر رمضان المبارك 1448هـ",
       suggestion: "خطة تعلّم رمضانية مكثّفة",
       href: "/learning-plan",
-      color: "#d97706",
+      color: "#18362A",
     },
     {
       id: "dhul-hijja-1448",

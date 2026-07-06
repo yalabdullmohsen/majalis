@@ -10,17 +10,17 @@ type Citation = { surah: string; ayahs: string; note: string };
 // ── Palette & Helpers ────────────────────────────────────────────────────────
 
 const PROPHET_HUE: Record<string, string> = {
-  adam: "#8B6914", idris: "#4169E1", nuh: "#1A6B8A", hud: "#7C5A2A",
-  salih: "#7B6B4A", ibrahim: "#C8971A", lut: "#4A7A3A", ismail: "#8B1A1A",
-  "is-haq": "#5A7A28", yaqub: "#3A6B8B", yusuf: "#7B4DB5", ayyub: "#C87C3A",
-  shuayb: "#2A7A55", musa: "#1A6AB5", harun: "#1A7A45", "dhul-kifl": "#8B8B1A",
-  dawud: "#8B1A1A", sulayman: "#B8A020", ilyas: "#B56030", "al-yasa": "#2A7A5A",
-  yunus: "#1A8B8B", zakariyya: "#3A6B42", yahya: "#25A05A", isa: "#2A4E9B",
-  muhammad: "#164E3C",
+  adam: "#5D726A", idris: "#4A6B6B", nuh: "#3D6560", hud: "#5A7066",
+  salih: "#5B6B60", ibrahim: "#18362A", lut: "#3A6A4A", ismail: "#2A5E42",
+  "is-haq": "#3D6050", yaqub: "#356055", yusuf: "#2D5545", ayyub: "#4A6055",
+  shuayb: "#25504A", musa: "#18362A", harun: "#1E4A38", "dhul-kifl": "#354A42",
+  dawud: "#2A3E35", sulayman: "#153025", ilyas: "#3A5548", "al-yasa": "#266050",
+  yunus: "#1A5555", zakariyya: "#2A503C", yahya: "#205540", isa: "#1E3F50",
+  muhammad: "#18362A",
 };
 
-const GOLD = "#D4AF37";
-const GOLD_LIGHT = "#F0D060";
+const GOLD = "#BEC7C3";
+const GOLD_LIGHT = "#E1E5E3";
 
 function prophetColor(slug: string) { return PROPHET_HUE[slug] || GOLD; }
 
@@ -699,8 +699,10 @@ const PROPHETS_CSS = `
   padding: 4rem 1.5rem 3rem;
   text-align: center;
   overflow: hidden;
-  background: linear-gradient(180deg, #1E2A4A 0%, #2D3B5C 60%, #1E2A4A 100%);
-  border-bottom: 1px solid ${GOLD}25;
+  background-color: #18362A;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M50,4 L57.27,32.45 L82.53,17.47 L67.55,42.73 L96,50 L67.55,57.27 L82.53,82.53 L57.27,67.55 L50,96 L42.73,67.55 L17.47,82.53 L32.45,57.27 L4,50 L32.45,42.73 L17.47,17.47 L42.73,32.45 Z' fill='none' stroke='%23FFFFFF' stroke-opacity='0.055' stroke-width='1.1'/%3E%3Ccircle cx='50' cy='50' r='1.4' fill='%23FFFFFF' fill-opacity='0.08'/%3E%3C/svg%3E");
+  background-size: 100px 100px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 .prophets-lux-hero__stars {
   position: absolute; inset: 0;
@@ -793,11 +795,11 @@ const PROPHETS_CSS = `
 /* ── Disclaimer ── */
 .prophets-lux-disclaimer {
   background: rgba(14,110,82,0.06);
-  border: 1px solid #fde68a;
+  border: 1px solid rgba(24,54,42,0.3);
   border-radius: 10px;
   padding: 0.85rem 1.2rem;
   font-size: 0.84rem;
-  color: #78350f;
+  color: #18362A;
   margin-bottom: 1.25rem;
   line-height: 1.65;
 }

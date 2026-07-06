@@ -473,7 +473,7 @@ function LessonImportImageContent() {
       </div>
 
       {visionEnabled === false && (
-        <div style={{ background: "rgba(14,110,82,0.08)", border: "1px solid #FCD34D", borderRadius: "0.5rem", padding: "0.75rem 1rem", marginBottom: "1rem", fontSize: "0.875rem", color: "#0E6E52" }}>
+        <div style={{ background: "rgba(14,110,82,0.08)", border: "1px solid rgba(24,54,42,0.3)", borderRadius: "0.5rem", padding: "0.75rem 1rem", marginBottom: "1rem", fontSize: "0.875rem", color: "#0E6E52" }}>
           {visionMessage || "الاستخراج التلقائي غير مفعّل. يمكنك إدخال البيانات يدويًا."}
         </div>
       )}
@@ -511,7 +511,7 @@ function LessonImportImageContent() {
             <button
               type="button"
               onClick={() => onUpload(lastFile)}
-              style={{ padding: "0.625rem 1.25rem", background: "rgba(14,110,82,0.08)", color: "#0E6E52", border: "1px solid #FCD34D", borderRadius: "0.375rem", cursor: "pointer", fontFamily: "inherit", fontWeight: 600 }}
+              style={{ padding: "0.625rem 1.25rem", background: "rgba(14,110,82,0.08)", color: "#0E6E52", border: "1px solid rgba(24,54,42,0.3)", borderRadius: "0.375rem", cursor: "pointer", fontFamily: "inherit", fontWeight: 600 }}
             >
               إعادة المحاولة
             </button>

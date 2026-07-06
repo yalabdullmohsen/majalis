@@ -15,47 +15,49 @@
    §2. متغيرات التصميم العليا (Elite Tokens)
    ══════════════════════════════════════════════ */
 :root {
-  /* الخضر الاحترافي */
-  --elite-forest:      #052E16;
-  --elite-forest-2:    #0A4A38;
-  --elite-green:       #166534;
-  --elite-green-mid:   #1B8A45;
-  --elite-sage:        #DCFCE7;
-  --elite-sage-2:      #F0FDF4;
+  /* ── الزمردي الغامق (مستخرَج من الصور المرجعية) ── */
+  --elite-forest:       #18362A;
+  --elite-forest-2:     #153025;
+  --elite-green:        #18362A;
+  --elite-green-mid:    #153025;
+  --elite-green-light:  #5D726A;
+  --elite-sage:         #E1E5E3;
+  --elite-sage-2:       #F1F3F2;
+  --elite-mark:         #005424;
 
-  /* الذهبي الفاخر */
-  --elite-gold-deep:   #78350F;
-  --elite-gold:        #B45309;
-  --elite-gold-warm:   #D97706;
-  --elite-gold-light:  #FDE68A;
-  --elite-gold-pale:   #FFFBEB;
+  /* ── خلفيات وعاج ── */
+  --elite-white:        #FAF8F2;
+  --elite-cream:        #F1F3F2;
+  --elite-off-white:    #E1E5E3;
+  --elite-mist:         #BEC7C3;
 
-  /* الأبيض والخلفيات */
-  --elite-white:       #FFFFFF;
-  --elite-cream:       #FAFAF9;
-  --elite-off-white:   #F5F5F4;
-  --elite-mist:        #F0F0EF;
+  /* ── النصوص ── */
+  --elite-ink:          #122019;
+  --elite-ink-2:        #1a2e24;
+  --elite-ink-3:        #2a3e35;
+  --elite-ink-soft:     #5D726A;
+  --elite-ink-muted:    #97A59F;
+  --elite-ink-faint:    #BEC7C3;
 
-  /* النصوص */
-  --elite-ink:         #0C0C0C;
-  --elite-ink-2:       #1C1C1C;
-  --elite-ink-3:       #2D2D2D;
-  --elite-ink-soft:    #4A4A4A;
-  --elite-ink-muted:   #6B6B6B;
-  --elite-ink-faint:   #919191;
+  /* ── الحدود ── */
+  --elite-border:       rgba(24,54,42,0.09);
+  --elite-border-2:     rgba(24,54,42,0.15);
+  --elite-border-green: rgba(24,54,42,0.22);
 
-  /* الحدود */
-  --elite-border:      rgba(0,0,0,0.07);
-  --elite-border-2:    rgba(0,0,0,0.12);
-  --elite-border-green:rgba(22,101,52,0.20);
+  /* ── الظلال ── */
+  --elite-shadow-xs:    0 1px 2px rgba(18,32,25,0.05), 0 1px 1px rgba(18,32,25,0.04);
+  --elite-shadow-sm:    0 2px 4px rgba(18,32,25,0.06), 0 1px 2px rgba(18,32,25,0.05);
+  --elite-shadow-md:    0 4px 12px rgba(18,32,25,0.07), 0 2px 4px rgba(18,32,25,0.05);
+  --elite-shadow-lg:    0 12px 32px rgba(18,32,25,0.09), 0 4px 8px rgba(18,32,25,0.05);
+  --elite-shadow-xl:    0 24px 48px rgba(18,32,25,0.11), 0 8px 16px rgba(18,32,25,0.06);
+  --elite-shadow-green: 0 4px 20px rgba(24,54,42,0.18), 0 2px 6px rgba(24,54,42,0.10);
 
-  /* الظلال */
-  --elite-shadow-xs: 0 1px 2px rgba(0,0,0,0.04), 0 1px 1px rgba(0,0,0,0.03);
-  --elite-shadow-sm: 0 2px 4px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.04);
-  --elite-shadow-md: 0 4px 12px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.04);
-  --elite-shadow-lg: 0 12px 32px rgba(0,0,0,0.08), 0 4px 8px rgba(0,0,0,0.04);
-  --elite-shadow-xl: 0 24px 48px rgba(0,0,0,0.10), 0 8px 16px rgba(0,0,0,0.05);
-  --elite-shadow-green: 0 4px 20px rgba(22,101,52,0.18), 0 2px 6px rgba(22,101,52,0.10);
+  /* ── الزمرد — تفاصيل فاخرة ── */
+  --elite-gold-deep:    #0E2019;
+  --elite-gold:         #153025;
+  --elite-gold-warm:    #18362A;
+  --elite-gold-light:   #97A59F;
+  --elite-gold-pale:    #F1F3F2;
 
   /* الانحناءات */
   --elite-r-xs:   4px;
@@ -178,14 +180,9 @@ html[data-theme="light"] .navbar-search-cmd svg {
    ══════════════════════════════════════════════ */
 html:not([data-theme="dark"]) .home-hero--v3,
 html[data-theme="light"] .home-hero--v3 {
-  background:
-    linear-gradient(145deg,
-      #052E16 0%,
-      #083D20 20%,
-      #0A4A38 45%,
-      #0D5C47 70%,
-      #126B52 100%
-    ) !important;
+  background-color: #18362A !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M50,4 L57.27,32.45 L82.53,17.47 L67.55,42.73 L96,50 L67.55,57.27 L82.53,82.53 L57.27,67.55 L50,96 L42.73,67.55 L17.47,82.53 L32.45,57.27 L4,50 L32.45,42.73 L17.47,17.47 L42.73,32.45 Z' fill='none' stroke='%23FFFFFF' stroke-opacity='0.055' stroke-width='1.1'/%3E%3Ccircle cx='50' cy='50' r='1.4' fill='%23FFFFFF' fill-opacity='0.08'/%3E%3C/svg%3E") !important;
+  background-size: 100px 100px !important;
   position: relative !important;
   overflow: hidden !important;
   min-height: 480px !important;
@@ -195,29 +192,23 @@ html[data-theme="light"] .home-hero--v3 {
   justify-content: center !important;
 }
 
-/* نمط هندسي إسلامي خلفي */
 html:not([data-theme="dark"]) .home-hero--v3::before,
 html[data-theme="light"] .home-hero--v3::before {
   content: '' !important;
   position: absolute !important;
   inset: 0 !important;
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='rgba(255,255,255,0.04)' stroke-width='0.8'%3E%3Cpolygon points='60,5 75,30 105,20 90,45 105,70 75,60 60,85 45,60 15,70 30,45 15,20 45,30'/%3E%3Ccircle cx='60' cy='45' r='22'/%3E%3Cpolygon points='60,23 67,38 83,38 70,48 75,63 60,53 45,63 50,48 37,38 53,38'/%3E%3C/g%3E%3C/svg%3E") !important;
-  background-size: 120px 120px !important;
-  opacity: 1 !important;
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255,255,255,0.04) 0%, transparent 70%) !important;
   pointer-events: none !important;
 }
 
-/* توهج ذهبي في الجانب */
 html:not([data-theme="dark"]) .home-hero--v3::after,
 html[data-theme="light"] .home-hero--v3::after {
   content: '' !important;
   position: absolute !important;
-  top: -20% !important;
-  left: -5% !important;
-  width: 50% !important;
-  height: 80% !important;
-  background: radial-gradient(ellipse at center, rgba(202,138,4,0.10) 0%, transparent 70%) !important;
+  bottom: 0 !important;
+  inset-inline: 0 !important;
+  height: 30% !important;
+  background: linear-gradient(to top, rgba(24,54,42,0.6), transparent) !important;
   pointer-events: none !important;
 }
 
@@ -437,7 +428,9 @@ html[data-theme="light"] .home-feature-strip-meta {
    ══════════════════════════════════════════════ */
 html:not([data-theme="dark"]) .elite-stats-section,
 html[data-theme="light"] .elite-stats-section {
-  background: linear-gradient(135deg, var(--elite-forest, #052E16) 0%, var(--elite-forest-2, #0A4A38) 100%) !important;
+  background-color: var(--elite-forest, #18362A) !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M50,4 L57.27,32.45 L82.53,17.47 L67.55,42.73 L96,50 L67.55,57.27 L82.53,82.53 L57.27,67.55 L50,96 L42.73,67.55 L17.47,82.53 L32.45,57.27 L4,50 L32.45,42.73 L17.47,17.47 L42.73,32.45 Z' fill='none' stroke='%23FFFFFF' stroke-opacity='0.055' stroke-width='1.1'/%3E%3Ccircle cx='50' cy='50' r='1.4' fill='%23FFFFFF' fill-opacity='0.08'/%3E%3C/svg%3E') !important;
+  background-size: 100px 100px !important;
   padding: 3rem 1.5rem !important;
   position: relative !important;
   overflow: hidden !important;
@@ -448,9 +441,8 @@ html[data-theme="light"] .elite-stats-section::before {
   content: '' !important;
   position: absolute !important;
   inset: 0 !important;
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Ccircle cx='40' cy='40' r='30' fill='none' stroke='rgba(255,255,255,0.03)' stroke-width='0.5'/%3E%3Ccircle cx='40' cy='40' r='18' fill='none' stroke='rgba(255,255,255,0.03)' stroke-width='0.5'/%3E%3C/g%3E%3C/svg%3E") !important;
-  background-size: 80px 80px !important;
+  background: radial-gradient(ellipse 70% 50% at 50% 100%, rgba(255,255,255,0.04), transparent) !important;
+  pointer-events: none !important;
 }
 
 .elite-stats-grid {
@@ -901,7 +893,9 @@ html[data-theme="light"] .lesson-unified-card:hover {
 
 html:not([data-theme="dark"]) .lesson-unified-card__header,
 html[data-theme="light"] .lesson-unified-card__header {
-  background: linear-gradient(135deg, var(--elite-forest, #052E16), var(--elite-forest-2, #0A4A38)) !important;
+  background-color: var(--elite-forest, #18362A) !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M50,4 L57.27,32.45 L82.53,17.47 L67.55,42.73 L96,50 L67.55,57.27 L82.53,82.53 L57.27,67.55 L50,96 L42.73,67.55 L17.47,82.53 L32.45,57.27 L4,50 L32.45,42.73 L17.47,17.47 L42.73,32.45 Z' fill='none' stroke='%23FFFFFF' stroke-opacity='0.055' stroke-width='1.1'/%3E%3Ccircle cx='50' cy='50' r='1.4' fill='%23FFFFFF' fill-opacity='0.08'/%3E%3C/svg%3E') !important;
+  background-size: 100px 100px !important;
   border-bottom: none !important;
   padding: 1.25rem !important;
 }
@@ -962,7 +956,9 @@ html[data-theme="light"] .home-learning-path-card {
   align-items: center !important;
   gap: 1.25rem !important;
   padding: 1.5rem !important;
-  background: linear-gradient(135deg, var(--elite-forest, #052E16) 0%, var(--elite-forest-2, #0A4A38) 100%) !important;
+  background-color: var(--elite-forest, #18362A) !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M50,4 L57.27,32.45 L82.53,17.47 L67.55,42.73 L96,50 L67.55,57.27 L82.53,82.53 L57.27,67.55 L50,96 L42.73,67.55 L17.47,82.53 L32.45,57.27 L4,50 L32.45,42.73 L17.47,17.47 L42.73,32.45 Z' fill='none' stroke='%23FFFFFF' stroke-opacity='0.055' stroke-width='1.1'/%3E%3Ccircle cx='50' cy='50' r='1.4' fill='%23FFFFFF' fill-opacity='0.08'/%3E%3C/svg%3E') !important;
+  background-size: 100px 100px !important;
   border-radius: var(--elite-r-xl, 24px) !important;
   border: none !important;
   box-shadow: var(--elite-shadow-lg) !important;
@@ -1169,12 +1165,14 @@ html[data-theme="light"] .side-nav-group__title {
    ══════════════════════════════════════════════ */
 html:not([data-theme="dark"]) .pt-hero,
 html[data-theme="light"] .pt-hero {
-  background: linear-gradient(135deg, var(--elite-forest, #052E16), var(--elite-forest-2, #0A4A38)) !important;
+  background-color: var(--elite-forest, #18362A) !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M50,4 L57.27,32.45 L82.53,17.47 L67.55,42.73 L96,50 L67.55,57.27 L82.53,82.53 L57.27,67.55 L50,96 L42.73,67.55 L17.47,82.53 L32.45,57.27 L4,50 L32.45,42.73 L17.47,17.47 L42.73,32.45 Z' fill='none' stroke='%23FFFFFF' stroke-opacity='0.055' stroke-width='1.1'/%3E%3Ccircle cx='50' cy='50' r='1.4' fill='%23FFFFFF' fill-opacity='0.08'/%3E%3C/svg%3E') !important;
+  background-size: 100px 100px !important;
   border-radius: var(--elite-r-xl, 24px) !important;
   border: none !important;
   padding: 2rem !important;
   box-shadow: var(--elite-shadow-lg) !important;
-  color: #FFFFFF !important;
+  color: #FAF8F2 !important;
 }
 
 html:not([data-theme="dark"]) .pt-hero__name,
@@ -1496,13 +1494,15 @@ html[data-theme="light"] {
    ══════════════════════════════════════════════ */
 html:not([data-theme="dark"]) .min-h-screen,
 html[data-theme="light"] .min-h-screen {
-  background-color: var(--elite-cream, #FAFAF9) !important;
+  background-color: var(--elite-white, #FAF8F2) !important;
 }
 
 /* Hero داخلي عام (all inner pages) */
 html:not([data-theme="dark"]) [style*="linear-gradient(to left, var(--majalis-emerald"],
 html[data-theme="light"] [style*="linear-gradient(to left, var(--majalis-emerald"] {
-  background: linear-gradient(145deg, var(--elite-forest, #052E16) 0%, var(--elite-forest-2, #0A4A38) 100%) !important;
+  background-color: var(--elite-forest, #18362A) !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M50,4 L57.27,32.45 L82.53,17.47 L67.55,42.73 L96,50 L67.55,57.27 L82.53,82.53 L57.27,67.55 L50,96 L42.73,67.55 L17.47,82.53 L32.45,57.27 L4,50 L32.45,42.73 L17.47,17.47 L42.73,32.45 Z' fill='none' stroke='%23FFFFFF' stroke-opacity='0.055' stroke-width='1.1'/%3E%3Ccircle cx='50' cy='50' r='1.4' fill='%23FFFFFF' fill-opacity='0.08'/%3E%3C/svg%3E') !important;
+  background-size: 100px 100px !important;
 }
 
 /* Universities hero */
@@ -1510,7 +1510,9 @@ html:not([data-theme="dark"]) .uni-hero,
 html[data-theme="light"] .uni-hero,
 html:not([data-theme="dark"]) [class*="universities"] .text-white.py-10,
 html[data-theme="light"] [class*="universities"] .text-white.py-10 {
-  background: linear-gradient(145deg, var(--elite-forest, #052E16) 0%, var(--elite-forest-2, #0A4A38) 100%) !important;
+  background-color: var(--elite-forest, #18362A) !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M50,4 L57.27,32.45 L82.53,17.47 L67.55,42.73 L96,50 L67.55,57.27 L82.53,82.53 L57.27,67.55 L50,96 L42.73,67.55 L17.47,82.53 L32.45,57.27 L4,50 L32.45,42.73 L17.47,17.47 L42.73,32.45 Z' fill='none' stroke='%23FFFFFF' stroke-opacity='0.055' stroke-width='1.1'/%3E%3Ccircle cx='50' cy='50' r='1.4' fill='%23FFFFFF' fill-opacity='0.08'/%3E%3C/svg%3E') !important;
+  background-size: 100px 100px !important;
   padding: 3rem 1.25rem !important;
 }
 
@@ -1716,6 +1718,154 @@ html:not([data-theme="dark"]) .border-b-2.border-\[var\(--mn-border-active\)\],
 html[data-theme="light"] .border-b-2.border-\[var\(--mn-border-active\)\] {
   border-color: var(--elite-green, #166534) !important;
   color: var(--elite-forest, #052E16) !important;
+}
+
+/* ══════════════════════════════════════════════
+   §49. صفحات القصص والسيرة والأنبياء والموسوعات
+   ══════════════════════════════════════════════ */
+
+/* رأس صفحات القصص — نقش النجمة لا تدرّج */
+html:not([data-theme="dark"]) .stories-hero,
+html[data-theme="light"] .stories-hero,
+html:not([data-theme="dark"]) .prophets-hero,
+html[data-theme="light"] .prophets-hero,
+html:not([data-theme="dark"]) .seerah-hero,
+html[data-theme="light"] .seerah-hero,
+html:not([data-theme="dark"]) .timeline-hero,
+html[data-theme="light"] .timeline-hero,
+html:not([data-theme="dark"]) .miracles-hero,
+html[data-theme="light"] .miracles-hero,
+html:not([data-theme="dark"]) .stories-header,
+html[data-theme="light"] .stories-header,
+html:not([data-theme="dark"]) .page-hero-dark,
+html[data-theme="light"] .page-hero-dark {
+  background-color: #18362A !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M50,4 L57.27,32.45 L82.53,17.47 L67.55,42.73 L96,50 L67.55,57.27 L82.53,82.53 L57.27,67.55 L50,96 L42.73,67.55 L17.47,82.53 L32.45,57.27 L4,50 L32.45,42.73 L17.47,17.47 L42.73,32.45 Z' fill='none' stroke='%23FFFFFF' stroke-opacity='0.055' stroke-width='1.1'/%3E%3Ccircle cx='50' cy='50' r='1.4' fill='%23FFFFFF' fill-opacity='0.08'/%3E%3C/svg%3E') !important;
+  background-size: 100px 100px !important;
+  color: #FAF8F2 !important;
+}
+
+/* متن صفحات القصص — سطح عاجي صلب (لا نقش خلف النص) */
+html:not([data-theme="dark"]) .stories-body,
+html[data-theme="light"] .stories-body,
+html:not([data-theme="dark"]) .story-content,
+html[data-theme="light"] .story-content,
+html:not([data-theme="dark"]) .prophet-detail-body,
+html[data-theme="light"] .prophet-detail-body,
+html:not([data-theme="dark"]) .seerah-content,
+html[data-theme="light"] .seerah-content {
+  background: #FAF8F2 !important;
+  color: #122019 !important;
+}
+
+/* بطاقة القصة — سطح عاجي هادئ */
+html:not([data-theme="dark"]) .story-card,
+html[data-theme="light"] .story-card,
+html:not([data-theme="dark"]) .prophet-card,
+html[data-theme="light"] .prophet-card,
+html:not([data-theme="dark"]) .stories-page .ui-card,
+html[data-theme="light"] .stories-page .ui-card,
+html:not([data-theme="dark"]) .miracles-page .ui-card,
+html[data-theme="light"] .miracles-page .ui-card {
+  background: #FAF8F2 !important;
+  border: 1px solid rgba(24,54,42,0.10) !important;
+  color: #122019 !important;
+}
+
+/* شارة نوع القصة — زمردي فاتح */
+html:not([data-theme="dark"]) .story-type-badge,
+html[data-theme="light"] .story-type-badge {
+  background: #F1F3F2 !important;
+  color: #18362A !important;
+  border: 1px solid rgba(24,54,42,0.15) !important;
+  font-size: 0.7rem !important;
+  font-weight: 700 !important;
+  padding: 0.2rem 0.6rem !important;
+  border-radius: 999px !important;
+}
+
+/* الرقم التسلسلي لعناصر السداسية — زمردي نقي */
+html:not([data-theme="dark"]) .story-step-num,
+html[data-theme="light"] .story-step-num {
+  background: #18362A !important;
+  color: #FAF8F2 !important;
+  border-radius: 50% !important;
+  width: 2rem !important;
+  height: 2rem !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-weight: 700 !important;
+}
+
+/* فاصل بين عناصر القصة — رفيع زمردي */
+html:not([data-theme="dark"]) .story-step-divider,
+html[data-theme="light"] .story-step-divider {
+  border-color: #E1E5E3 !important;
+  border-width: 1px !important;
+}
+
+/* الخط الزمني — نقطة ورابط */
+html:not([data-theme="dark"]) .timeline-dot,
+html[data-theme="light"] .timeline-dot {
+  background: #18362A !important;
+  border: 2px solid #FAF8F2 !important;
+  box-shadow: 0 0 0 2px rgba(24,54,42,0.25) !important;
+}
+html:not([data-theme="dark"]) .timeline-line,
+html[data-theme="light"] .timeline-line {
+  background: #E1E5E3 !important;
+}
+
+/* بطاقات صندوق الآية/الحديث — سطح أبيض صلب دائماً */
+html:not([data-theme="dark"]) .quran-quote-box,
+html[data-theme="light"] .quran-quote-box,
+html:not([data-theme="dark"]) .hadith-quote-box,
+html[data-theme="light"] .hadith-quote-box,
+html:not([data-theme="dark"]) [class*="QuranQuote"],
+html[data-theme="light"] [class*="QuranQuote"],
+html:not([data-theme="dark"]) [class*="HadithQuote"],
+html[data-theme="light"] [class*="HadithQuote"] {
+  background: #FFFFFF !important;
+  border: 1px solid #E1E5E3 !important;
+  border-radius: 12px !important;
+  color: #122019 !important;
+}
+
+/* ══════════════════════════════════════════════
+   §50. شريط التنقل السفلي — أيقونات Emerald
+   ══════════════════════════════════════════════ */
+html:not([data-theme="dark"]) .bottom-nav__item--active .bottom-nav__icon,
+html[data-theme="light"] .bottom-nav__item--active .bottom-nav__icon,
+html:not([data-theme="dark"]) .bottom-nav .active .bottom-nav__icon,
+html[data-theme="light"] .bottom-nav .active .bottom-nav__icon {
+  color: #18362A !important;
+}
+html:not([data-theme="dark"]) .bottom-nav__item--active .bottom-nav__label,
+html[data-theme="light"] .bottom-nav__item--active .bottom-nav__label {
+  color: #18362A !important;
+  font-weight: 700 !important;
+}
+
+/* ══════════════════════════════════════════════
+   §51. تحييد Amber/Gold — إحلال Emerald محله
+   ══════════════════════════════════════════════ */
+/* إشعارات المعلومات — من الأمبر إلى الزمردي */
+html:not([data-theme="dark"]) [class*="amber-50"],
+html[data-theme="light"] [class*="amber-50"] {
+  background-color: #F1F3F2 !important;
+}
+html:not([data-theme="dark"]) [class*="amber-100"],
+html[data-theme="light"] [class*="amber-100"],
+html:not([data-theme="dark"]) [class*="amber-200"],
+html[data-theme="light"] [class*="amber-200"] {
+  border-color: #E1E5E3 !important;
+}
+html:not([data-theme="dark"]) [class*="amber-700"],
+html[data-theme="light"] [class*="amber-700"],
+html:not([data-theme="dark"]) [class*="amber-900"],
+html[data-theme="light"] [class*="amber-900"] {
+  color: #18362A !important;
 }
 
 /* ══════════════════════════════════════════════

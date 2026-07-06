@@ -287,7 +287,7 @@ export default function AdhanSettingsPage() {
               <Sunrise
                 size={16}
                 strokeWidth={2}
-                style={{ color: "#D97706" }}
+                style={{ color: "#18362A" }}
               />
               الشروق
               <span
@@ -307,7 +307,7 @@ export default function AdhanSettingsPage() {
               style={{
                 fontSize: "0.875rem",
                 fontWeight: 700,
-                color: "#D97706",
+                color: "#18362A",
                 fontVariantNumeric: "tabular-nums",
               }}
             >

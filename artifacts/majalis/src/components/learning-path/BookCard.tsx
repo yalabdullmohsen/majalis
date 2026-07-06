@@ -43,8 +43,8 @@ export function BookCard({ book, scienceColor = "#059669", progress, onMarkDone 
         <span
           className="absolute top-2 left-2 text-xs font-medium px-2 py-0.5 rounded-full"
           style={{
-            background: status === "completed" ? "var(--mn-surface-active)" : status === "in_progress" ? "#fef9c3" : "var(--majalis-parchment-deep)",
-            color: status === "completed" ? "var(--mn-text-active)" : status === "in_progress" ? "#854d0e" : "var(--majalis-ink-soft)",
+            background: status === "completed" ? "var(--mn-surface-active)" : status === "in_progress" ? "#E6EDE9" : "var(--majalis-parchment-deep)",
+            color: status === "completed" ? "var(--mn-text-active)" : status === "in_progress" ? "#18362A" : "var(--majalis-ink-soft)",
           }}
         >
           {status === "completed" ? "✓ مكتمل" : status === "in_progress" ? "⏳ جاري" : "لم يبدأ"}

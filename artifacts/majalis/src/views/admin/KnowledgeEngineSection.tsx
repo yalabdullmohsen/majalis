@@ -23,7 +23,7 @@ function StatCard({ label, value, sub }: { label: string; value: string | number
 
 const HEALTH_COLORS: Record<string, string> = {
   healthy: C.emeraldDeep,
-  degraded: "#D97706",
+  degraded: "#97A59F",
   down: "#991B1B",
   unknown: C.inkSoft,
 };
@@ -115,7 +115,7 @@ export function KnowledgeEngineSection() {
       </div>
 
       {usingLegacy && (
-        <div style={{ padding: "0.75rem 1rem", marginBottom: "1rem", borderRadius: "0.375rem", background: "rgba(14,110,82,0.08)", border: "1px solid #F59E0B", fontSize: "0.8125rem", color: "#0E6E52" }}>
+        <div style={{ padding: "0.75rem 1rem", marginBottom: "1rem", borderRadius: "0.375rem", background: "rgba(14,110,82,0.08)", border: "1px solid rgba(24,54,42,0.4)", fontSize: "0.8125rem", color: "#0E6E52" }}>
           ⚠️ نفّذ migration: supabase/auto_knowledge_engine_v13.sql في Supabase SQL Editor.
         </div>
       )}
