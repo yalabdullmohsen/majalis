@@ -1375,8 +1375,7 @@ p, h1, h2, h3, h4, h5, h6, span, a, button, label, li {
 /* ══════════════════════════════════════════════
    §35. متغيرات الخلفية الأساسية (Inner Pages)
    ══════════════════════════════════════════════ */
-html,
-{
+html {
   --majalis-parchment:        var(--elite-cream, #FAFAF9) !important;
   --majalis-parchment-deep:   var(--elite-off-white, #F5F5F4) !important;
   --majalis-panel:            var(--elite-white, #FFFFFF) !important;

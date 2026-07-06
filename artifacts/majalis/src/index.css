@@ -165,7 +165,7 @@ html {
 
 
 /* ══ وضع النهار — الزمرد الإسلامي ══ */
-{
+html {
   --msk-canvas:        #FFFFFF;
   --msk-canvas-1:      #F7FBF9;
   --msk-canvas-2:      #F0EDE8;
@@ -306,7 +306,7 @@ html[data-font="naskh"] {
 }
 
 /* shadcn bridge للنهار — يرث من light tokens */
-{
+html {
   --background:          var(--msk-canvas);
   --foreground:          var(--msk-text);
   --card:                var(--msk-canvas-1);

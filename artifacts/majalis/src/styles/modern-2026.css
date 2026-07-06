@@ -124,8 +124,7 @@
 
 /* ══ 2. Light Theme Overrides ════════════════════════════════════════════════ */
 :root,
-html,
-{
+html {
   --msk-canvas:        #FFFFFF;
   --msk-canvas-1:      #F8F9FA;
   --msk-canvas-2:      #F1F3F5;
