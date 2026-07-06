@@ -244,7 +244,13 @@ export function dedupeKuwaitLessons(lessons: KuwaitLessonRecord[]): KuwaitLesson
 }
 
 export function sortKuwaitLessons(lessons: KuwaitLessonRecord[]): KuwaitLessonRecord[] {
-  return [...lessons].sort((a, b) => {
+  // نعيد حساب nextOccurrenceMs الآن — القيمة المُخزّنة تصبح قديمة بمرور الأيام
+  const now = new Date();
+  const enriched = lessons.map((l) => ({
+    ...l,
+    nextOccurrenceMs: computeNextOccurrenceMs(l.day, l.time, now),
+  }));
+  return enriched.sort((a, b) => {
     if (a.nextOccurrenceMs !== b.nextOccurrenceMs) return a.nextOccurrenceMs - b.nextOccurrenceMs;
     const gov = a.governorate.localeCompare(b.governorate, "ar");
     if (gov !== 0) return gov;
