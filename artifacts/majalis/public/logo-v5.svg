@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 96" role="img" aria-label="المجلس العلمي">
+  <defs>
+    <linearGradient id="grad-green" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#052E16"/>
+      <stop offset="100%" stop-color="#166534"/>
+    </linearGradient>
+    <linearGradient id="grad-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D97706"/>
+      <stop offset="100%" stop-color="#B45309"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="1.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- === الإطار الهندسي الإسلامي (نجمة ثمانية مبسطة) === -->
+  <!-- نجمة 8 نقاط كبيرة - يسار -->
+  <g transform="translate(42,48)" opacity="0.18">
+    <polygon points="0,-22 5.7,-5.7 22,0 5.7,5.7 0,22 -5.7,5.7 -22,0 -5.7,-5.7"
+      fill="url(#grad-gold)" stroke="none"/>
+    <polygon points="0,-22 5.7,-5.7 22,0 5.7,5.7 0,22 -5.7,5.7 -22,0 -5.7,-5.7"
+      fill="none" stroke="#D97706" stroke-width="0.5"
+      transform="rotate(22.5)"/>
+  </g>
+  <!-- دائرة ديكوراتيف صغيرة -->
+  <circle cx="42" cy="48" r="8" fill="none" stroke="url(#grad-gold)" stroke-width="1" opacity="0.4"/>
+  <circle cx="42" cy="48" r="3" fill="url(#grad-gold)" opacity="0.6"/>
+
+  <!-- === نص المجلس العلمي === -->
+  <text
+    x="170"
+    y="42"
+    font-family="'Katibeh', 'Cairo', 'El Messiri', 'Amiri', serif"
+    font-size="30"
+    font-weight="700"
+    text-anchor="middle"
+    direction="rtl"
+    fill="url(#grad-green)"
+    filter="url(#glow)"
+    letter-spacing="0.5">المجلس العلمي</text>
+
+  <!-- === خط ذهبي فاخر تحت النص === -->
+  <g transform="translate(96,52)">
+    <!-- الخط الرئيسي -->
+    <line x1="0" y1="0" x2="148" y2="0" stroke="url(#grad-gold)" stroke-width="1.5" opacity="0.8"/>
+    <!-- نقطة مركزية ذهبية -->
+    <circle cx="74" cy="0" r="2.5" fill="url(#grad-gold)"/>
+    <!-- نقطتان جانبيتان -->
+    <circle cx="16" cy="0" r="1.5" fill="url(#grad-gold)" opacity="0.6"/>
+    <circle cx="132" cy="0" r="1.5" fill="url(#grad-gold)" opacity="0.6"/>
+    <!-- زخرفة طرفية يمين -->
+    <path d="M0,0 Q5,-4 10,0" fill="none" stroke="url(#grad-gold)" stroke-width="1" opacity="0.5"/>
+    <!-- زخرفة طرفية يسار -->
+    <path d="M148,0 Q143,-4 138,0" fill="none" stroke="url(#grad-gold)" stroke-width="1" opacity="0.5"/>
+  </g>
+
+  <!-- === عبارة فرعية === -->
+  <text
+    x="170"
+    y="76"
+    font-family="'Cairo', 'IBM Plex Sans Arabic', system-ui, sans-serif"
+    font-size="10"
+    font-weight="500"
+    text-anchor="middle"
+    direction="rtl"
+    fill="#4A4A4A"
+    letter-spacing="1">منصة المعرفة الإسلامية</text>
+
+  <!-- === نجمة ثمانية - يمين === -->
+  <g transform="translate(278,48)" opacity="0.18">
+    <polygon points="0,-22 5.7,-5.7 22,0 5.7,5.7 0,22 -5.7,5.7 -22,0 -5.7,-5.7"
+      fill="url(#grad-gold)" stroke="none"/>
+    <polygon points="0,-22 5.7,-5.7 22,0 5.7,5.7 0,22 -5.7,5.7 -22,0 -5.7,-5.7"
+      fill="none" stroke="#D97706" stroke-width="0.5"
+      transform="rotate(22.5)"/>
+  </g>
+  <circle cx="278" cy="48" r="8" fill="none" stroke="url(#grad-gold)" stroke-width="1" opacity="0.4"/>
+  <circle cx="278" cy="48" r="3" fill="url(#grad-gold)" opacity="0.6"/>
+</svg>
