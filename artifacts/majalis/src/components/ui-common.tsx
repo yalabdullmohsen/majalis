@@ -72,9 +72,33 @@ export function SkeletonPage() {
   );
 }
 
-export function PageHeader({ eyebrow, title, subtitle }: { eyebrow?: string; title: string; subtitle?: string }) {
+export function PageHeader({
+  eyebrow,
+  title,
+  subtitle,
+  showBack = true,
+}: {
+  eyebrow?: string;
+  title: string;
+  subtitle?: string;
+  showBack?: boolean;
+}) {
   return (
     <header className="ds-page-header" dir="rtl">
+      {showBack && (
+        <button
+          type="button"
+          className="ds-page-back-btn"
+          onClick={() =>
+            window.history.length > 1
+              ? window.history.back()
+              : (window.location.href = "/")
+          }
+          aria-label="رجوع"
+        >
+          ← رجوع
+        </button>
+      )}
       {eyebrow && <p className="ds-page-header__eyebrow">{eyebrow}</p>}
       <h1 className="ds-page-header__title">{title}</h1>
       {subtitle && <p className="ds-page-header__subtitle">{subtitle}</p>}

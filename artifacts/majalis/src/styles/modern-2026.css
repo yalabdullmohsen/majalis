@@ -1061,6 +1061,51 @@ html[data-theme="light"] .muezzin-meta { color: var(--txt-muted, #52525B) !impor
 html:not([data-theme="dark"]) .muezzin-bio,
 html[data-theme="light"] .muezzin-bio { color: var(--txt-muted, #52525B) !important; }
 
+/* ══ 39b. Back Button — زر الرجوع العالمي ══════════════════════════════════ */
+.ds-page-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.375rem 0.875rem;
+  margin-bottom: 0.75rem;
+  border: 1.5px solid var(--majalis-line, #e5e7eb);
+  border-radius: 9999px;
+  background: var(--majalis-panel, #fff);
+  color: var(--txt-secondary, #374151);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  line-height: 1;
+}
+.ds-page-back-btn:hover {
+  background: var(--m26-green-50, #F0FDF4);
+  border-color: var(--majalis-emerald, #16A34A);
+  color: var(--majalis-emerald, #16A34A);
+}
+
+/* زر الرجوع داخل legal-page-hero (خلفية داكنة) */
+.legal-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.375rem 0.875rem;
+  margin-bottom: 0.75rem;
+  border: 1.5px solid rgba(255,255,255,0.4);
+  border-radius: 9999px;
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.9);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  line-height: 1;
+}
+.legal-back-btn:hover {
+  background: rgba(255,255,255,0.22);
+  border-color: rgba(255,255,255,0.7);
+}
+
 /* ══ 40. Adhkar Focus Mode ══════════════════════════════════════════════════ */
 .adhkar-page--focus .adhkar-focus-shell {
   display: flex;
