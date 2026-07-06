@@ -3859,8 +3859,7 @@ input, textarea, select { font-family: inherit; }
 }
 
 .site-brand-name {
-  font-family: 'Amiri', 'Scheherazade New', serif;
-  font-display: swap;
+  font-family: "Cairo", "IBM Plex Sans Arabic", system-ui, sans-serif;
   font-weight: 700;
   font-size: 1.0625rem;
   white-space: nowrap;
@@ -9624,17 +9623,16 @@ body:not(.mobile-nav-body-lock) .mobile-nav-layer {
 
 .navbar-menu-btn,
 .navbar-logout {
-  border: 1px solid rgba(14,110,82,0.15);
-  background: #FFFFFF;
+  border: 1px solid var(--elite-border, rgba(24,54,42,0.09));
+  background: var(--elite-off-white, #F5F5F4);
   color: var(--majalis-ink);
-  border-radius: 0.65rem;
-  padding: 0.4rem 0.75rem;
+  border-radius: var(--elite-r-md, 12px);
+  padding: 0.375rem 0.75rem;
   font-family: inherit;
   font-weight: 700;
   font-size: 0.82rem;
   cursor: pointer;
-  height: 38px;
-  box-shadow: 0 1px 4px rgba(14,110,82,0.10), 0 0 0 1px rgba(14,110,82,0.10);
+  height: 36px;
   transition: all 0.15s ease;
 }
 
@@ -9647,24 +9645,14 @@ body:not(.mobile-nav-body-lock) .mobile-nav-layer {
   overflow: hidden;
 }
 .navbar-menu-btn:hover {
-  background: #f0faf5;
-  box-shadow: 0 2px 8px rgba(14,110,82,0.15);
-  border-color: rgba(14,110,82,0.20);
-  color: var(--majalis-emerald-deep);
+  background: var(--elite-white, #FAF8F2);
+  border-color: var(--elite-border-2, rgba(24,54,42,0.15));
+  box-shadow: var(--elite-shadow-sm, 0 2px 4px rgba(18,32,25,0.06));
+  color: var(--elite-forest, #18362A);
 }
 .navbar-menu-btn:active { transform: scale(0.97); }
 
-/* تفاصيل هندسية إسلامية خلف الزر */
-.navbar-menu-btn__geo {
-  position: absolute;
-  inset-inline-end: -6px;
-  top: -6px;
-  width: 22px;
-  height: 22px;
-  opacity: 0.07;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%230E6E52' d='M12 0l3 9h9l-7 5 3 9-8-6-8 6 3-9-7-5h9z'/%3E%3C/svg%3E") center/contain no-repeat;
-  pointer-events: none;
-}
+.navbar-menu-btn__geo { display: none; }
 
 .navbar-menu-btn__icon {
   flex-shrink: 0;
@@ -9674,7 +9662,6 @@ body:not(.mobile-nav-body-lock) .mobile-nav-layer {
   transform: rotate(90deg);
 }
 .navbar-menu-btn__label {
-  font-family: 'Amiri', 'Scheherazade New', serif;
   font-size: 0.85rem;
 }
 
@@ -12189,14 +12176,12 @@ svg {
 }
 
 .home-hero-title--v3 {
-  font-family: 'Amiri', 'Scheherazade New', serif;
-  font-display: swap;
-  font-size: clamp(2rem, 6vw, 3.5rem);
-  font-weight: 700;
-  line-height: 1.15;
+  font-size: 0;
+  line-height: 0;
   margin: 0;
-  text-wrap: balance;
-  overflow-wrap: normal;
+  padding: 0;
+  display: flex;
+  align-items: center;
 }
 
 .home-hero-lead--v3 {
@@ -16086,7 +16071,7 @@ body.has-assistant-fab .app-main {
 .home-hero-stat-label {
   font-size: 0.68rem;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.70);
   letter-spacing: 0.04em;
 }
 
@@ -16507,20 +16492,14 @@ body.has-assistant-fab .app-main {
 /* ── Page Hero Header — v2 style applied globally ── */
 .ds-page-header {
   position: relative;
-  background: linear-gradient(155deg, var(--majalis-emerald) 0%, var(--majalis-emerald-deep) 100%);
-  color: #fff;
+  background-color: var(--elite-forest, #18362A);
+  background-image: url("/star-pattern.svg");
+  background-size: 100px 100px;
+  color: var(--elite-white, #FAF8F2);
   padding: 2.25rem 1.5rem 2.75rem;
   margin-bottom: 2rem;
   overflow: hidden;
   direction: rtl;
-}
-.ds-page-header::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cpolygon points='20,2.5 22.9,13.3 33.5,8.5 26.4,17.5 37.5,20 26.4,22.5 33.5,31.5 22.9,26.7 20,37.5 17.1,26.7 6.5,31.5 13.6,22.5 2.5,20 13.6,17.5 6.5,8.5 17.1,13.3' fill='none' stroke='white' stroke-width='0.5' opacity='0.07'/%3E%3C/svg%3E");
-  background-size: 40px 40px;
-  pointer-events: none;
 }
 .ds-page-header__eyebrow {
   font-size: 0.72rem;
@@ -16540,7 +16519,7 @@ body.has-assistant-fab .app-main {
 .ds-page-header__subtitle {
   font-size: 0.95rem;
   line-height: 1.7;
-  color: rgba(255,255,255,0.82);
+  color: rgba(250,248,242,0.88);
   margin: 0;
   max-width: 60ch;
 }

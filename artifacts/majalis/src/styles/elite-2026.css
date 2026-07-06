@@ -115,25 +115,14 @@ body {
 }
 
 .site-brand-name {
-  font-family: var(--font-brand) !important;
-  font-size: clamp(1.1rem, 3.5vw, 1.5rem) !important;
+  font-family: var(--font-display) !important;
+  font-size: clamp(1.05rem, 3vw, 1.35rem) !important;
   font-weight: 700 !important;
-  color: var(--elite-forest, #052E16) !important;
+  color: var(--elite-forest, #18362A) !important;
   letter-spacing: 0.01em !important;
   white-space: nowrap !important;
-  line-height: 1 !important;
+  line-height: 1.1 !important;
   text-shadow: none !important;
-}
-
-/* شريط ذهبي خفيف أسفل اسم العلامة */
-.site-brand-name::after {
-  content: '';
-  display: block;
-  height: 2px;
-  width: 60%;
-  margin: 2px auto 0;
-  background: linear-gradient(90deg, transparent, var(--elite-gold-warm, #D97706), transparent);
-  border-radius: 1px;
 }
 
 /* Search command button */
@@ -234,9 +223,9 @@ body {
 /* شعار الخط العربي */
 .home-hero-calligraphy {
   display: block !important;
-  height: clamp(70px, 14vw, 120px) !important;
+  height: clamp(44px, 9vw, 72px) !important;
   width: auto !important;
-  max-width: min(420px, 100%) !important;
+  max-width: min(300px, 60vw) !important;
   object-fit: contain !important;
   filter:
     drop-shadow(0 0 1px rgba(255,255,255,0.9))
@@ -251,20 +240,22 @@ body {
   filter: drop-shadow(0 4px 16px rgba(0,0,0,0.40)) !important;
 }
 
-/* وحدة الهوية: أيقونة + شعار خطي معًا */
+/* وحدة الهوية: أيقونة + شعار خطي في صف أفقي واحد */
 .home-hero-identity {
   display: flex !important;
-  flex-direction: column !important;
+  flex-direction: row !important;
   align-items: center !important;
-  gap: 0.5rem !important;
+  justify-content: center !important;
+  gap: 0.75rem !important;
   width: 100% !important;
   max-width: 100% !important;
 }
 
-/* حجم أصغر للأيقونة داخل وحدة الهوية لإعطاء الشعار الخطي الأولوية البصرية */
+/* الأيقونة — أصغر قليلاً لتتناسب مع ارتفاع الشعار الخطي */
 .home-hero-identity .home-hero-logo {
-  width: 52px !important;
-  height: 52px !important;
+  width: 48px !important;
+  height: 48px !important;
+  flex-shrink: 0 !important;
 }
 
 /* نموذج البحث في Hero */
