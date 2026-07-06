@@ -221,15 +221,42 @@ function kuwaitDateAt(dayOffset: number, minutes: number, base = new Date()): Da
  * 2. إذا كان الدرس اليوم ووقته مرّ (ولو بدقيقة) → الأسبوع القادم (درس أسبوعي متكرر).
  * 3. إذا كان الدرس في يوم آخر → أقرب تكرار له.
  */
+/**
+ * تُحلِّل اسم اليوم بأي صيغة وتُعيد رقمه (0=أحد … 6=سبت)، أو null إذا لم تُعرف.
+ * تدعم: أسماء عربية كاملة، أسماء إنجليزية، أرقام، همزات متنوعة، بادئة "يوم ".
+ */
+function resolveDayIndex(day: string): number | null {
+  const d = day.trim();
+  // عربي مباشر
+  if (DAY_INDEX[d] != null) return DAY_INDEX[d];
+  // إنجليزي
+  if (EN_WEEKDAY_TO_INDEX[d] != null) return EN_WEEKDAY_TO_INDEX[d];
+  // رقم صحيح 0-6
+  const num = Number(d);
+  if (Number.isInteger(num) && num >= 0 && num <= 6) return num;
+  // إزالة بادئة "يوم " ثم إعادة المحاولة
+  const stripped = d.replace(/^يوم\s+/u, "");
+  if (DAY_INDEX[stripped] != null) return DAY_INDEX[stripped];
+  // تطبيع الهمزات (إ/أ → ا) ثم إعادة المحاولة — يعالج "الإثنين" و"الأحد"
+  const normalized = stripped.replace(/[إأ]/gu, "ا");
+  if (DAY_INDEX[normalized] != null) return DAY_INDEX[normalized];
+  // بحث جزئي: أول مطابقة للاسم العربي داخل النص
+  for (const [name, idx] of Object.entries(DAY_INDEX)) {
+    if (d.includes(name)) return idx;
+  }
+  return null;
+}
+
 export function computeNextOccurrenceMs(day: string, time: string, now = new Date()): number {
-  // دعم الأيام المتعددة المفصولة بـ ، — يُعاد أقرب تكرار قادم
-  if (day.includes("،")) {
-    const days = day.split("،").map(d => d.trim()).filter(Boolean);
+  // دعم الأيام المتعددة المفصولة بـ ، أو / — يُعاد أقرب تكرار قادم
+  const separator = day.includes("،") ? "،" : day.includes("/") ? "/" : null;
+  if (separator) {
+    const days = day.split(separator).map(d => d.trim()).filter(Boolean);
     const occurrences = days.map(d => computeNextOccurrenceMs(d, time, now));
     return Math.min(...occurrences);
   }
 
-  const targetDay = DAY_INDEX[day];
+  const targetDay = resolveDayIndex(day);
   if (targetDay == null) {
     // يوم غير معروف → إعادة قيمة بعيدة
     return now.getTime() + 365 * 24 * 60 * 60_000;
