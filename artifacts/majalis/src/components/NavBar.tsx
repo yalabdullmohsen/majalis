@@ -149,17 +149,20 @@ export default function NavBar() {
               )}
               <span className="navbar-menu-btn__label">{isMenuOpen ? t("nav_close") : t("nav_menu")}</span>
             </button>
-            <Link href="/" className="navbar-brand">
+            <Link href="/" className="navbar-brand" aria-label="مجالس">
               <img
                 src="/logo.png"
                 alt=""
                 className="navbar-logo"
-                width={40}
-                height={40}
+                width={34}
+                height={34}
                 loading="eager"
                 decoding="async"
               />
-              <span className="site-brand-name">المجلس العلمي</span>
+              <span className="site-brand-logotype">
+                <strong className="site-brand-logotype__main">مجالس</strong>
+                <span className="site-brand-logotype__sub">العلميّة</span>
+              </span>
             </Link>
           </div>
 

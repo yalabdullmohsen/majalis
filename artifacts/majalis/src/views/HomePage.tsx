@@ -207,18 +207,6 @@ export default function HomePage({
               نؤمن أن التقنية وسيلة، ورسالتنا أن نجعلها في خدمة الإسلام والمعرفة النافعة
             </span>
 
-            {/* 3. الفقرة الوصفية */}
-            <p style={{
-              color: "rgba(255,255,255,0.82)",
-              fontSize: "clamp(0.9rem, 2.5vw, 1.0625rem)",
-              maxWidth: "480px",
-              lineHeight: "1.7",
-              margin: "0 auto",
-              textAlign: "center",
-            }}>
-              منصة المعرفة الإسلامية الشاملة — قرآن وأحاديث وفتاوى ودروس علمية موثقة
-            </p>
-
             {/* 4. شريط البحث */}
             <form onSubmit={submitSearch} className="home-search home-search--v3" aria-label="البحث">
               <input

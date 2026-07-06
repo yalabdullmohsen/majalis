@@ -125,6 +125,32 @@ body {
   text-shadow: none !important;
 }
 
+/* Logotype — بديل site-brand-name */
+.site-brand-logotype {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-end !important;
+  gap: 0 !important;
+  font-family: var(--font-display) !important;
+  text-decoration: none !important;
+  line-height: 1 !important;
+}
+.site-brand-logotype__main {
+  font-size: 1.15rem !important;
+  font-weight: 900 !important;
+  color: var(--elite-forest, #18362A) !important;
+  letter-spacing: 0.01em !important;
+  line-height: 1.1 !important;
+}
+.site-brand-logotype__sub {
+  font-size: 0.58rem !important;
+  font-weight: 600 !important;
+  color: var(--elite-forest, #18362A) !important;
+  opacity: 0.55 !important;
+  letter-spacing: 0.07em !important;
+  line-height: 1.6 !important;
+}
+
 /* Search command button */
 .navbar-search-cmd {
   background: var(--elite-off-white, #F5F5F4) !important;

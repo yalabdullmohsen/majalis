@@ -21,13 +21,15 @@ import { regionsForGovernorate } from "@/lib/kuwait-regions";
 import { fromKuwaitLesson } from "@/lib/unified-lesson-card";
 import { registerForLesson, unregisterFromLesson, getMyRegistrations } from "@/lib/supabase";
 
-type TabId = "all" | "men" | "women" | "courses";
+type TabId = "all" | "men" | "women" | "courses" | "makkah" | "madinah";
 
 const TAB_LABELS: Record<TabId, string> = {
   all: "الكل",
   men: "الدروس الرجالية",
   women: "الدروس النسائية",
   courses: "دورات",
+  makkah: "الحرم المكي",
+  madinah: "المسجد النبوي",
 };
 
 function useTabFromUrl(): [TabId, (tab: TabId) => void] {
@@ -56,7 +58,7 @@ function readTabFromUrl(): TabId {
   if (typeof window === "undefined") return "all";
   const params = new URLSearchParams(window.location.search);
   const value = params.get("tab");
-  if (value === "courses" || value === "men" || value === "women") return value;
+  if (value === "courses" || value === "men" || value === "women" || value === "makkah" || value === "madinah") return value;
   return "all";
 }
 
@@ -64,6 +66,12 @@ function filterByTab(lessons: KuwaitLessonRecord[], tab: TabId): KuwaitLessonRec
   if (tab === "courses") return lessons.filter((l) => l.isCourse || l.activityType === "دورة");
   if (tab === "men") return lessons.filter((l) => !l.hasWomenSection);
   if (tab === "women") return lessons.filter((l) => l.hasWomenSection);
+  if (tab === "makkah") return lessons.filter((l) =>
+    /مك[ةه]|الحرم المك|المسجد الحرام|البيت الحرام/u.test(l.mosque || "")
+  );
+  if (tab === "madinah") return lessons.filter((l) =>
+    /المدين[ةه]|المسجد النبوي|الحرم النبوي/u.test(l.mosque || "")
+  );
   return lessons;
 }
 
