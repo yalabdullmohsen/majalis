@@ -248,12 +248,13 @@ function resolveDayIndex(day: string): number | null {
 }
 
 export function computeNextOccurrenceMs(day: string, time: string, now = new Date()): number {
-  // دعم الأيام المتعددة المفصولة بـ ، أو / — يُعاد أقرب تكرار قادم
-  const separator = day.includes("،") ? "،" : day.includes("/") ? "/" : null;
-  if (separator) {
-    const days = day.split(separator).map(d => d.trim()).filter(Boolean);
-    const occurrences = days.map(d => computeNextOccurrenceMs(d, time, now));
-    return Math.min(...occurrences);
+  // دعم الأيام المتعددة: مفصولة بـ ، أو / أو " و " — يُعاد أقرب تكرار قادم
+  if (/[،/]/.test(day) || / و /.test(day)) {
+    const days = day.split(/[،/]| و /).map(d => d.trim()).filter(Boolean);
+    if (days.length > 1) {
+      const occurrences = days.map(d => computeNextOccurrenceMs(d, time, now));
+      return Math.min(...occurrences);
+    }
   }
 
   const targetDay = resolveDayIndex(day);
@@ -290,11 +291,21 @@ export function isLessonToday(nextOccurrenceMs: number, now = new Date()): boole
 }
 
 /**
+ * هل يوم الدرس هو يوم اليوم الحالي في الكويت؟
+ * تعيد true لكل دروس يوم اليوم — سواء مرّ وقتها أم لا.
+ * تُستخدَم لإبراز دروس اليوم كاملةً في الواجهة.
+ */
+export function isLessonThisDay(day: string, now = new Date()): boolean {
+  const target = resolveDayIndex(day);
+  if (target == null) return false;
+  return target === getKuwaitClock(now).weekday;
+}
+
+/**
  * هل مرّ وقت الدرس اليوم؟
- * يُستخدم لإخفاء الدروس المنتهية من قسم "دروس اليوم".
  */
 export function isLessonTimePassedToday(day: string, time: string, now = new Date()): boolean {
-  const targetDay = DAY_INDEX[day];
+  const targetDay = resolveDayIndex(day);
   if (targetDay == null) return false;
   const clock       = getKuwaitClock(now);
   const timeMinutes = parseTimeToMinutes(time) ?? PRAYER_TIME_MINUTES.المغرب;
@@ -391,7 +402,7 @@ export function formatRelativeTimeDetailed(targetMs: number, time: string, now =
 
 export function isOccurrencePast(day: string, time: string, recurring = true, now = new Date()): boolean {
   if (!day) return false;
-  const targetDay   = DAY_INDEX[day];
+  const targetDay   = resolveDayIndex(day);
   if (targetDay == null) return false;
   const clock       = getKuwaitClock(now);
   const timeMinutes = parseTimeToMinutes(time) ?? PRAYER_TIME_MINUTES.المغرب;

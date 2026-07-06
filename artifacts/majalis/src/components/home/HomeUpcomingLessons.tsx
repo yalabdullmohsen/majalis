@@ -6,7 +6,7 @@ import { UnifiedLessonCard } from "@/components/lessons/UnifiedLessonCard";
 import { getUnifiedActiveLessons } from "@/lib/lessons-service";
 import { sortKuwaitLessons, type KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 import { fromKuwaitLesson } from "@/lib/unified-lesson-card";
-import { computeNextOccurrenceMs, getKuwaitClock, isLessonToday } from "@/lib/lesson-time";
+import { computeNextOccurrenceMs, getKuwaitClock, isLessonThisDay } from "@/lib/lesson-time";
 
 type HomeTab = "all" | "men" | "women";
 
@@ -74,12 +74,19 @@ export function HomeUpcomingLessons({
     return true;
   }
 
-  const todayLessons = sortKuwaitLessons(
-    allLessons.filter((l) => {
+  // دروس اليوم: كل دروس يوم اليوم الحالي — قبل وقتها أو بعده (تُعرض المنتهية بـ "انتهى")
+  const todayLessons = allLessons
+    .filter(l => isLessonThisDay(l.day) && applyTabFilter(l))
+    .map(l => {
       const freshMs = computeNextOccurrenceMs(l.day, l.time);
-      return isLessonToday(freshMs) && applyTabFilter(l);
-    }),
-  ).slice(0, 6);
+      // إذا انتقل الحساب للأسبوع القادم (مرّ الوقت)، أعِد وقت اليوم نفسه
+      const todayMs = freshMs > clock.dayStartMs + 24 * 3_600_000
+        ? freshMs - 7 * 24 * 3_600_000
+        : freshMs;
+      return { ...l, nextOccurrenceMs: todayMs };
+    })
+    .sort((a, b) => a.nextOccurrenceMs - b.nextOccurrenceMs)
+    .slice(0, 6);
 
   const upcomingLessons = sortKuwaitLessons(
     allLessons.filter((lesson) => applyTabFilter(lesson)),
@@ -110,7 +117,7 @@ export function HomeUpcomingLessons({
             <div>
               <p className="home-eyebrow">اليوم · {todayArabic}</p>
               <h2 id="today-lessons-heading">دروس اليوم</h2>
-              <p>الدروس المجدولة لهذا اليوم ولم يمرّ وقتها بعد.</p>
+              <p>الدروس المجدولة لهذا اليوم — القادمة والمنتهية.</p>
             </div>
             <div className="home-section-head-links">
               <Link href="/lessons" className="home-section-link">كل الدروس</Link>
