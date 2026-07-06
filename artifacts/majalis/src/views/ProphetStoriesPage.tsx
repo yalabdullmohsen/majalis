@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback, useEffect, useRef } from "react";
+import { Link } from "wouter";
 import { PROPHETS, getProphet, searchProphets, type ProphetRecord } from "@/lib/prophets-data";
 import { supabase } from "@/lib/supabase";
 
@@ -634,17 +635,37 @@ export default function ProphetStoriesPage() {
                   <p>لا توجد نتائج لـ «{search}»</p>
                 </div>
               ) : (
-                <div className="prophets-lux-grid">
-                  {results.map(p => (
-                    <ProphetCard
-                      key={p.slug}
-                      prophet={p}
-                      onSelect={() => setSelectedSlug(p.slug)}
-                      isBookmarked={isBookmarked(p.slug)}
-                      onBookmark={e => { e.stopPropagation(); toggleBookmark(p.slug); }}
-                    />
-                  ))}
-                </div>
+                <>
+                  <div className="prophets-lux-grid">
+                    {results.map(p => (
+                      <ProphetCard
+                        key={p.slug}
+                        prophet={p}
+                        onSelect={() => setSelectedSlug(p.slug)}
+                        isBookmarked={isBookmarked(p.slug)}
+                        onBookmark={e => { e.stopPropagation(); toggleBookmark(p.slug); }}
+                      />
+                    ))}
+                  </div>
+                  {/* ── بطاقة الانتقال إلى السيرة النبوية ── */}
+                  {!search && (
+                    <Link href="/seerah" style={{ textDecoration: "none", display: "block", marginTop: "1.5rem" }}>
+                      <div className="prophets-seerah-bridge">
+                        <div className="prophets-seerah-bridge__ornament" aria-hidden="true">
+                          <IslamicStar size={28} color={GOLD} opacity={0.7} />
+                        </div>
+                        <div className="prophets-seerah-bridge__body">
+                          <div className="prophets-seerah-bridge__eyebrow">التسلسل التاريخي · الفصل الأخير</div>
+                          <h3 className="prophets-seerah-bridge__title">بداية السيرة النبوية الشريفة</h3>
+                          <p className="prophets-seerah-bridge__desc">
+                            امتداداً لرسالة الأنبياء، وُلد خاتم النبيين محمد ﷺ — اقرأ سيرته من النسب إلى الرسالة والهجرة والفتح.
+                          </p>
+                        </div>
+                        <div className="prophets-seerah-bridge__arrow" aria-hidden="true">←</div>
+                      </div>
+                    </Link>
+                  )}
+                </>
               )}
             </div>
           )}

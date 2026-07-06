@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "wouter";
 import { usePageView } from "@/hooks/usePageView";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 
@@ -153,12 +154,19 @@ export default function SeerahPage() {
       <style>{SEERAH_CSS}</style>
       <div className="seerah-page" dir="rtl">
 
+        {/* رابط عكسي لقصص الأنبياء */}
+        <div style={{ padding: "0.75rem 1rem 0", direction: "rtl" }}>
+          <Link href="/prophets" className="seerah-back-link">
+            ← قصص الأنبياء الكرام
+          </Link>
+        </div>
+
         {/* Hero */}
         <div className="seerah-hero">
           <div className="seerah-hero__badge">📖 سيرة النبي ﷺ</div>
           <h1 className="seerah-hero__title">السيرة النبوية الشريفة</h1>
           <p className="seerah-hero__sub">
-            حياة النبي محمد ﷺ من مولده الكريم إلى وفاته — 12 مرحلة تاريخية
+            امتداداً لرسالة الأنبياء — حياة خاتمهم محمد ﷺ من المولد إلى الوفاة في 12 مرحلة
           </p>
         </div>
 

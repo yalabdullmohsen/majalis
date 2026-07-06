@@ -2646,4 +2646,497 @@ table th {
 .home-about__title                            { color: var(--majalis-emerald, #2E8B67) !important; }
 .home-about__body                             { color: var(--majalis-ink-soft, #C9C5B8) !important; }
 .home-about__eyebrow                          { color: var(--majalis-brass, #C9A84C) !important; }
+/* ══ صفحة مواقيت الصلاة — تصميم جديد ══════════════════════════════════════ */
+.pt-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 2rem 1rem 5rem;
+  min-height: 80vh;
+  direction: rtl;
+}
+
+/* ── العداد الرئيسي ── */
+.pt-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+  padding: 2.5rem 2rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(201,168,76,0.20);
+  border-radius: 1.25rem;
+  width: 100%;
+  max-width: 480px;
+  backdrop-filter: blur(4px);
+  animation: pt-fade-in 0.4s ease;
+}
+.pt-hero__label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--majalis-brass, #C9A84C);
+}
+.pt-hero__name {
+  font-size: clamp(2rem, 6vw, 3rem);
+  font-weight: 800;
+  color: var(--majalis-ink, #EDE9DD);
+  margin: 0;
+  font-family: "Katibeh", "Amiri", serif;
+  animation: pt-fade-in 0.3s ease;
+}
+.pt-hero__time {
+  font-size: 1.1rem;
+  color: var(--majalis-ink-muted, #9BA3B5);
+  direction: ltr;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+}
+.pt-hero__countdown {
+  font-size: clamp(2.8rem, 10vw, 4.5rem);
+  font-weight: 700;
+  color: var(--majalis-emerald, #2E8B67);
+  letter-spacing: 0.05em;
+  font-variant-numeric: tabular-nums;
+  font-family: "Amiri", monospace;
+  line-height: 1.1;
+  transition: opacity 0.2s;
+  animation: pt-pulse 1s ease-in-out infinite;
+}
+@keyframes pt-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.85; }
+}
+@keyframes pt-fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.pt-hero__hint {
+  font-size: 0.75rem;
+  color: var(--majalis-ink-muted, #9BA3B5);
+  margin-top: 0.25rem;
+}
+.pt-hero__reset {
+  background: none;
+  border: 1px solid rgba(201,168,76,0.30);
+  border-radius: 999px;
+  color: var(--majalis-brass, #C9A84C);
+  font-size: 0.72rem;
+  padding: 0.2rem 0.75rem;
+  cursor: pointer;
+  font-family: inherit;
+  transition: border-color 0.15s, background 0.15s;
+}
+.pt-hero__reset:hover {
+  background: rgba(201,168,76,0.10);
+  border-color: var(--majalis-brass, #C9A84C);
+}
+
+/* ── شريط الصلوات ── */
+.pt-prayers {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 560px;
+}
+.pt-prayer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.75rem 0.5rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.04);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, transform 0.15s;
+  font-family: inherit;
+}
+.pt-prayer:hover {
+  border-color: rgba(201,168,76,0.35);
+  background: rgba(201,168,76,0.06);
+  transform: translateY(-2px);
+}
+.pt-prayer--next {
+  border-color: var(--majalis-emerald, #2E8B67);
+  background: rgba(46,139,103,0.10);
+}
+.pt-prayer--pinned {
+  border-color: var(--majalis-brass, #C9A84C);
+  background: rgba(201,168,76,0.10);
+}
+.pt-prayer__name {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--majalis-ink, #EDE9DD);
+}
+.pt-prayer--next .pt-prayer__name,
+.pt-prayer--next .pt-prayer__time {
+  color: var(--majalis-emerald, #2E8B67);
+}
+.pt-prayer--pinned .pt-prayer__name,
+.pt-prayer--pinned .pt-prayer__time {
+  color: var(--majalis-brass, #C9A84C);
+}
+.pt-prayer__time {
+  font-size: 0.8rem;
+  color: var(--majalis-ink-muted, #9BA3B5);
+  direction: ltr;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── المدينة ── */
+.pt-city {
+  font-size: 0.72rem;
+  color: var(--majalis-ink-muted, #9BA3B5);
+  text-align: center;
+}
+
+/* ── حالات تحميل وخطأ ── */
+.pt-skeleton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 30vh;
+}
+.pt-skeleton__label {
+  color: var(--majalis-ink-muted, #9BA3B5);
+  font-size: 0.9rem;
+}
+.pt-error {
+  color: var(--msk-red, #C1595A);
+  text-align: center;
+  padding: 2rem;
+}
+/* ══ نهاية صفحة مواقيت الصلاة ══════════════════════════════════════════════ */
+
+/* ══ بطاقة الانتقال: قصص الأنبياء → السيرة النبوية ══════════════════════ */
+.prophets-seerah-bridge {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, rgba(201,168,76,0.08) 0%, rgba(46,139,103,0.08) 100%);
+  border: 1.5px solid rgba(201,168,76,0.30);
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, transform 0.2s;
+  direction: rtl;
+}
+.prophets-seerah-bridge:hover {
+  border-color: rgba(201,168,76,0.60);
+  background: linear-gradient(135deg, rgba(201,168,76,0.14) 0%, rgba(46,139,103,0.12) 100%);
+  transform: translateY(-2px);
+}
+.prophets-seerah-bridge__ornament { flex-shrink: 0; }
+.prophets-seerah-bridge__body { flex: 1; min-width: 0; }
+.prophets-seerah-bridge__eyebrow {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--majalis-brass, #C9A84C);
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
+.prophets-seerah-bridge__title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--majalis-ink, #EDE9DD);
+  margin: 0 0 0.35rem;
+  font-family: "Katibeh", "Amiri", serif;
+}
+.prophets-seerah-bridge__desc {
+  font-size: 0.82rem;
+  color: var(--majalis-ink-soft, #C9C5B8);
+  line-height: 1.6;
+  margin: 0;
+}
+.prophets-seerah-bridge__arrow {
+  font-size: 1.25rem;
+  color: var(--majalis-brass, #C9A84C);
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+.prophets-seerah-bridge:hover .prophets-seerah-bridge__arrow {
+  transform: translateX(-4px);
+}
+
+/* رابط عكسي من السيرة لقصص الأنبياء */
+.seerah-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.78rem;
+  color: var(--majalis-brass, #C9A84C);
+  text-decoration: none;
+  border: 1px solid rgba(201,168,76,0.25);
+  border-radius: 999px;
+  padding: 0.2rem 0.75rem;
+  transition: border-color 0.15s, background 0.15s;
+  margin-bottom: 1rem;
+  direction: rtl;
+}
+.seerah-back-link:hover {
+  background: rgba(201,168,76,0.08);
+  border-color: rgba(201,168,76,0.50);
+}
+/* ══ نهاية بطاقة الانتقال ══════════════════════════════════════════════════ */
+
+/* ══ صفحة تسجيل الدخول — تحسينات ══════════════════════════════════════════ */
+.login-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+.login-back-link--primary {
+  display: block;
+  text-align: center;
+  padding: 0.7rem 1.25rem;
+  border-radius: 0.5rem;
+  background: rgba(46,139,103,0.15);
+  border: 1.5px solid var(--majalis-emerald, #2E8B67);
+  color: var(--majalis-emerald, #2E8B67) !important;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: background 0.15s, border-color 0.15s;
+}
+.login-back-link--primary:hover {
+  background: rgba(46,139,103,0.25);
+}
+.login-back-link:not(.login-back-link--primary) {
+  display: block;
+  text-align: center;
+  color: var(--majalis-ink-muted, #9BA3B5) !important;
+  font-size: 0.85rem;
+  text-decoration: none;
+  padding: 0.4rem;
+  transition: color 0.15s;
+}
+.login-back-link:not(.login-back-link--primary):hover {
+  color: var(--majalis-ink, #EDE9DD) !important;
+}
+/* ══ نهاية تحسينات تسجيل الدخول ══════════════════════════════════════════ */
+
+/* ══ تاريخ الإشعارات ══════════════════════════════════════════════════════ */
+.nh-section {
+  margin-top: 1.5rem;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 0.875rem;
+  overflow: hidden;
+}
+.nh-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.875rem 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.nh-header__title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--majalis-ink, #EDE9DD);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.nh-header__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  background: var(--majalis-emerald, #2E8B67);
+  color: #fff;
+  border-radius: 999px;
+  font-size: 0.65rem;
+  font-weight: 700;
+}
+.nh-header__actions { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+.nh-btn {
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: transparent;
+  color: var(--majalis-ink-muted, #9BA3B5);
+  font-size: 0.72rem;
+  cursor: pointer;
+  font-family: inherit;
+  transition: border-color 0.15s, color 0.15s;
+}
+.nh-btn:hover { border-color: rgba(255,255,255,0.25); color: var(--majalis-ink); }
+.nh-btn--danger { color: var(--msk-red, #C1595A); border-color: rgba(193,89,90,0.25); }
+.nh-btn--danger:hover { border-color: rgba(193,89,90,0.50); }
+
+.nh-search-wrap {
+  position: relative;
+  padding: 0.625rem 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.nh-search {
+  width: 100%;
+  padding: 0.45rem 2rem 0.45rem 0.65rem;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 0.5rem;
+  color: var(--majalis-ink, #EDE9DD);
+  font-family: inherit;
+  font-size: 0.85rem;
+  direction: rtl;
+  box-sizing: border-box;
+}
+.nh-search:focus { outline: none; border-color: rgba(46,139,103,0.40); }
+.nh-search::placeholder { color: var(--majalis-ink-muted, #9BA3B5); }
+.nh-search-clear {
+  position: absolute;
+  left: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--majalis-ink-muted);
+  cursor: pointer;
+  font-size: 0.75rem;
+  padding: 0.25rem;
+}
+
+.nh-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  padding: 0 1rem;
+}
+.nh-tab {
+  padding: 0.55rem 1rem;
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  color: var(--majalis-ink-muted, #9BA3B5);
+  font-family: inherit;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+  margin-bottom: -1px;
+}
+.nh-tab--active { color: var(--majalis-emerald, #2E8B67); border-bottom-color: var(--majalis-emerald); font-weight: 700; }
+
+.nh-list { display: flex; flex-direction: column; }
+.nh-row {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.875rem 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  cursor: pointer;
+  transition: background 0.12s;
+  align-items: flex-start;
+}
+.nh-row:last-child { border-bottom: none; }
+.nh-row:hover { background: rgba(255,255,255,0.03); }
+.nh-row--read .nh-row__dot { background: transparent; border: 1.5px solid rgba(255,255,255,0.15); }
+.nh-row__dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--majalis-emerald, #2E8B67);
+  flex-shrink: 0;
+  margin-top: 0.35rem;
+  transition: background 0.15s;
+}
+.nh-row__body { flex: 1; min-width: 0; }
+.nh-row__title { font-size: 0.875rem; font-weight: 600; color: var(--majalis-ink, #EDE9DD); margin-bottom: 0.15rem; }
+.nh-row--read .nh-row__title { color: var(--majalis-ink-soft, #C9C5B8); font-weight: 400; }
+.nh-row__body-text { font-size: 0.78rem; color: var(--majalis-ink-soft, #C9C5B8); margin-bottom: 0.2rem; line-height: 1.5; }
+.nh-row__meta { font-size: 0.68rem; color: var(--majalis-ink-muted, #9BA3B5); }
+.nh-row__actions {
+  display: flex;
+  gap: 0.25rem;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.nh-row:hover .nh-row__actions { opacity: 1; }
+.nh-action {
+  background: none;
+  border: none;
+  color: var(--majalis-ink-muted, #9BA3B5);
+  cursor: pointer;
+  padding: 0.2rem;
+  border-radius: 0.25rem;
+  display: flex;
+  align-items: center;
+  transition: color 0.15s;
+}
+.nh-action:hover { color: var(--majalis-ink); }
+.nh-action--del:hover { color: var(--msk-red, #C1595A); }
+.nh-empty { padding: 2rem; text-align: center; color: var(--majalis-ink-muted, #9BA3B5); font-size: 0.875rem; }
+/* ══ نهاية تاريخ الإشعارات ════════════════════════════════════════════════ */
+
+/* ══ تبويبات الدروس — override للتصميم الداكن ══════════════════════════════ */
+.kuwait-tab {
+  border-color: rgba(255,255,255,0.10) !important;
+  color: var(--majalis-ink-muted, #9BA3B5) !important;
+  background: rgba(255,255,255,0.04) !important;
+  white-space: nowrap;
+  cursor: pointer;
+  font-family: inherit;
+}
+.kuwait-tab:hover:not(.kuwait-tab--active) {
+  border-color: rgba(201,168,76,0.30) !important;
+  color: var(--majalis-ink, #EDE9DD) !important;
+  background: rgba(255,255,255,0.07) !important;
+}
+.kuwait-tab--active {
+  background: var(--majalis-emerald, #2E8B67) !important;
+  color: #fff !important;
+  border-color: transparent !important;
+  font-weight: 700;
+}
+/* ══ نهاية override التبويبات ═══════════════════════════════════════════════ */
+
+/* ══ شريط تصفية الدروس — تحسين بصري ════════════════════════════════════════ */
+.lessons-filter-tabs {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  background: rgba(255,255,255,0.03);
+  border-radius: 0.875rem;
+  border: 1px solid rgba(255,255,255,0.07);
+}
+.lessons-filter-tab {
+  flex: 1;
+  min-width: 80px;
+  padding: 0.55rem 1rem;
+  border-radius: 0.625rem;
+  border: none;
+  background: transparent;
+  color: var(--majalis-ink-muted, #9BA3B5);
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+.lessons-filter-tab:hover {
+  background: rgba(255,255,255,0.06);
+  color: var(--majalis-ink, #EDE9DD);
+}
+.lessons-filter-tab--active {
+  background: var(--majalis-emerald, #2E8B67);
+  color: #fff;
+  font-weight: 700;
+}
+/* ══ نهاية شريط تصفية الدروس ════════════════════════════════════════════════ */
+
 /* ── نهاية الإصلاح الشامل ── */
