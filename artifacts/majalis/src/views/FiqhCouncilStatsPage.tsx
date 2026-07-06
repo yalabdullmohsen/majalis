@@ -68,7 +68,7 @@ export default function FiqhCouncilStatsPage() {
           ["issues", "المسائل الفقهية"],
         ].map(([key, label]) => (
           <div key={key} className="fiqh-admin-stat">
-            <strong>{(s as any)[key] ?? 0}</strong>
+            <strong>{(s as unknown as Record<string, number>)[key] ?? 0}</strong>
             <span>{label}</span>
           </div>
         ))}

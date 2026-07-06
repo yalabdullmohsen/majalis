@@ -47,7 +47,7 @@ export default function FiqhPage() {
       setLoadingF(true);
       getFatwas({ category: "الكل", format: "الكل", search: "" })
         .then(({ data }) => setFatwas(data.slice(0, 12)))
-        .catch(() => setFatwas(getLatestFatwas(12) as any[]))
+        .catch(() => setFatwas(getLatestFatwas(12)))
         .finally(() => setLoadingF(false));
     }
     if (activeTab === "rulings" && rulings.length === 0) {
@@ -116,7 +116,7 @@ export default function FiqhPage() {
               <Loading />
             ) : fatwas.length === 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {(latestFatwas as any[]).map((f: any, i: number) => (
+                {latestFatwas.map((f, i) => (
                   <FatwaCard key={i} item={f} />
                 ))}
               </div>
