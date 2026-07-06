@@ -190,7 +190,7 @@ function ProphetDetailView({
     return (
       <div style={{ padding: "2rem", textAlign: "center" }}>
         <button className="prophet-lux-back" onClick={onBack}>← العودة</button>
-        <p style={{ color: "#ccc", marginTop: "1rem" }}>النبي غير موجود</p>
+        <p style={{ color: "var(--txt-muted, #52525B)", marginTop: "1rem" }}>النبي غير موجود</p>
       </div>
     );
   }
