@@ -303,8 +303,8 @@ html[data-theme="light"] .home-search--v3 input::placeholder {
 html:not([data-theme="dark"]) .home-search--v3 button,
 html[data-theme="light"] .home-search--v3 button {
   padding: 0.875rem 1.5rem !important;
-  background: var(--elite-gold-warm, #D97706) !important;
-  color: #FFFFFF !important;
+  background: #FAF8F2 !important;
+  color: #18362A !important;
   font-size: 0.9375rem !important;
   font-weight: 700 !important;
   font-family: var(--font-body) !important;
@@ -317,7 +317,7 @@ html[data-theme="light"] .home-search--v3 button {
 
 html:not([data-theme="dark"]) .home-search--v3 button:hover,
 html[data-theme="light"] .home-search--v3 button:hover {
-  background: var(--elite-gold, #B45309) !important;
+  background: #E1E5E3 !important;
 }
 
 /* الزخرفة الإسلامية في Hero */
@@ -477,7 +477,7 @@ html[data-theme="light"] .elite-stats-section::before {
 
 .elite-stat-card:hover {
   background: rgba(255,255,255,0.10) !important;
-  border-color: rgba(202,138,4,0.40) !important;
+  border-color: rgba(250,248,242,0.28) !important;
   transform: translateY(-2px) !important;
 }
 
@@ -487,8 +487,8 @@ html[data-theme="light"] .elite-stats-section::before {
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  background: rgba(202,138,4,0.15) !important;
-  color: #FDE68A !important;
+  background: rgba(250,248,242,0.10) !important;
+  color: #FAF8F2 !important;
   border-radius: var(--elite-r-md) !important;
   flex-shrink: 0 !important;
 }
@@ -975,7 +975,7 @@ html[data-theme="light"] .home-learning-path-card::before {
   left: -20px !important;
   width: 120px !important;
   height: 120px !important;
-  background: rgba(202,138,4,0.08) !important;
+  background: rgba(255,255,255,0.06) !important;
   border-radius: 50% !important;
   pointer-events: none !important;
 }
@@ -1034,16 +1034,16 @@ html[data-theme="light"] .home-quiz-card {
   align-items: center !important;
   gap: 1.25rem !important;
   padding: 1.5rem !important;
-  background: var(--elite-gold-pale, #FFFBEB) !important;
-  border: 1.5px solid rgba(180,83,9,0.20) !important;
+  background: var(--elite-sage-2, #F1F3F2) !important;
+  border: 1.5px solid var(--elite-border-2, rgba(24,54,42,0.15)) !important;
   border-radius: var(--elite-r-xl, 24px) !important;
   transition: all var(--elite-base) var(--elite-ease) !important;
 }
 
 html:not([data-theme="dark"]) .home-quiz-card:hover,
 html[data-theme="light"] .home-quiz-card:hover {
-  background: #FEF3C7 !important;
-  border-color: rgba(180,83,9,0.35) !important;
+  background: var(--elite-sage, #E1E5E3) !important;
+  border-color: var(--elite-border-green, rgba(24,54,42,0.25)) !important;
   box-shadow: var(--elite-shadow-md) !important;
   transform: translateY(-2px) !important;
 }
@@ -1074,7 +1074,7 @@ html:not([data-theme="dark"]) .home-quiz-card-btn,
 html[data-theme="light"] .home-quiz-card-btn {
   font-size: 0.8125rem !important;
   font-weight: 700 !important;
-  color: var(--elite-gold, #B45309) !important;
+  color: var(--elite-forest, #18362A) !important;
   white-space: nowrap !important;
   margin-right: auto !important;
 }
@@ -1402,10 +1402,10 @@ html[data-theme="light"] .home-stories-grid {
    ══════════════════════════════════════════════ */
 html:not([data-theme="dark"]) .home-maintenance-banner,
 html[data-theme="light"] .home-maintenance-banner {
-  background: var(--elite-gold-pale, #FFFBEB) !important;
-  border: 1px solid rgba(180,83,9,0.20) !important;
+  background: var(--elite-sage-2, #F1F3F2) !important;
+  border: 1px solid var(--elite-border-2, rgba(24,54,42,0.15)) !important;
   border-radius: var(--elite-r-md) !important;
-  color: var(--elite-gold-deep, #78350F) !important;
+  color: var(--elite-forest, #18362A) !important;
   padding: 0.875rem 1.25rem !important;
   font-size: 0.875rem !important;
   font-weight: 500 !important;
