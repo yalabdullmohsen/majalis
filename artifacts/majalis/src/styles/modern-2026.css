@@ -1,0 +1,844 @@
+/* ══════════════════════════════════════════════════════════════════════════════
+   مجالس — Modern Design System 2026
+   نظام تصميم حديث: أبيض نقي · أخضر إسلامي · ذهبي رفيع
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=El+Messiri:wght@500;600;700&display=swap');
+
+/* ══ 1. Design Tokens ══════════════════════════════════════════════════════════ */
+:root {
+  /* الألوان الأساسية */
+  --m26-white:        #FFFFFF;
+  --m26-bg:           #F8F9FA;
+  --m26-bg-2:         #F1F3F5;
+  --m26-surface:      #FFFFFF;
+  --m26-surface-2:    #F8F9FA;
+
+  /* الأخضر الإسلامي */
+  --m26-green-950:    #052E16;
+  --m26-green-800:    #166534;
+  --m26-green-600:    #16A34A;
+  --m26-green-500:    #22C55E;
+  --m26-green-100:    #DCFCE7;
+  --m26-green-50:     #F0FDF4;
+
+  /* الذهبي */
+  --m26-gold-700:     #A16207;
+  --m26-gold-500:     #CA8A04;
+  --m26-gold-200:     #FEF08A;
+  --m26-gold-50:      #FEFCE8;
+
+  /* النص */
+  --m26-text:         #111827;
+  --m26-text-2:       #374151;
+  --m26-text-3:       #6B7280;
+  --m26-text-4:       #9CA3AF;
+
+  /* الحدود */
+  --m26-border:       #E5E7EB;
+  --m26-border-2:     #D1D5DB;
+  --m26-border-focus: #166534;
+
+  /* الظلال */
+  --m26-shadow-xs:    0 1px 2px rgba(0,0,0,0.05);
+  --m26-shadow-sm:    0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+  --m26-shadow-md:    0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.04);
+  --m26-shadow-lg:    0 10px 15px rgba(0,0,0,0.08), 0 4px 6px rgba(0,0,0,0.04);
+  --m26-shadow-xl:    0 20px 25px rgba(0,0,0,0.09), 0 8px 10px rgba(0,0,0,0.04);
+
+  /* الأنيميشن */
+  --m26-ease:         cubic-bezier(0.16, 1, 0.3, 1);
+  --m26-duration-fast: 120ms;
+  --m26-duration-base: 200ms;
+  --m26-duration-slow: 350ms;
+
+  /* الانحناءات */
+  --m26-r-xs: 4px;
+  --m26-r-sm: 8px;
+  --m26-r-md: 12px;
+  --m26-r-lg: 16px;
+  --m26-r-xl: 24px;
+  --m26-r-2xl: 32px;
+  --m26-r-full: 9999px;
+}
+
+/* ══ 2. Light Theme Override — يُلغي الوضع الداكن المتبقي ═══════════════════ */
+:root,
+html:not([data-theme="dark"]),
+html[data-theme="light"] {
+  --msk-canvas:        #FFFFFF;
+  --msk-canvas-1:      #F8F9FA;
+  --msk-canvas-2:      #F1F3F5;
+  --msk-canvas-glass:  rgba(255,255,255,0.92);
+  --msk-text:          #111827;
+  --msk-text-2:        #374151;
+  --msk-text-3:        #6B7280;
+  --msk-border:        rgba(0,0,0,0.08);
+  --msk-gold:          #166534;
+  --msk-gold-deep:     #052E16;
+
+  --majalis-ink:          #111827;
+  --majalis-ink-soft:     #374151;
+  --majalis-ink-muted:    #6B7280;
+  --majalis-emerald:      #166534;
+  --majalis-brass:        #A16207;
+  --majalis-panel:        #FFFFFF;
+  --majalis-panel-raised: #F8F9FA;
+  --msk-canvas-glass:     rgba(255,255,255,0.92);
+  --msk-red:              #DC2626;
+}
+
+/* ══ 3. Base Reset & Typography ══════════════════════════════════════════════ */
+html:not([data-theme="dark"]) body,
+html[data-theme="light"] body {
+  background: var(--m26-bg, #F8F9FA);
+  color: var(--m26-text, #111827);
+  font-family: "IBM Plex Sans Arabic", "Segoe UI", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ══ 4. Navbar 2026 ══════════════════════════════════════════════════════════ */
+html:not([data-theme="dark"]) .navbar-v3,
+html[data-theme="light"] .navbar-v3 {
+  background: rgba(255,255,255,0.92) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  border-bottom: 1px solid rgba(0,0,0,0.06) !important;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.04) !important;
+}
+
+html:not([data-theme="dark"]) .site-brand-name,
+html[data-theme="light"] .site-brand-name {
+  color: var(--m26-green-800, #166534) !important;
+  text-shadow: none !important;
+}
+
+html:not([data-theme="dark"]) .navbar-menu-btn,
+html[data-theme="light"] .navbar-menu-btn {
+  color: var(--m26-text, #111827) !important;
+}
+
+html:not([data-theme="dark"]) .navbar-search-cmd,
+html[data-theme="light"] .navbar-search-cmd {
+  background: var(--m26-bg, #F8F9FA) !important;
+  border: 1px solid var(--m26-border, #E5E7EB) !important;
+  color: var(--m26-text-3, #6B7280) !important;
+  box-shadow: var(--m26-shadow-xs) !important;
+}
+
+/* ══ 5. Cards — Modern 2026 ══════════════════════════════════════════════════ */
+html:not([data-theme="dark"]) .lesson-unified-card,
+html:not([data-theme="dark"]) .ui-card,
+html:not([data-theme="dark"]) .card-v2,
+html:not([data-theme="dark"]) .page-card,
+html[data-theme="light"] .lesson-unified-card,
+html[data-theme="light"] .ui-card,
+html[data-theme="light"] .card-v2,
+html[data-theme="light"] .page-card {
+  background: var(--m26-surface, #FFFFFF) !important;
+  border: 1px solid var(--m26-border, #E5E7EB) !important;
+  border-radius: var(--m26-r-lg, 16px) !important;
+  box-shadow: var(--m26-shadow-sm) !important;
+  transition: box-shadow var(--m26-duration-base) var(--m26-ease),
+              transform var(--m26-duration-base) var(--m26-ease),
+              border-color var(--m26-duration-base) var(--m26-ease) !important;
+}
+
+html:not([data-theme="dark"]) .lesson-unified-card:hover,
+html:not([data-theme="dark"]) .ui-card:hover,
+html:not([data-theme="dark"]) .page-card:hover,
+html[data-theme="light"] .lesson-unified-card:hover,
+html[data-theme="light"] .ui-card:hover,
+html[data-theme="light"] .page-card:hover {
+  box-shadow: var(--m26-shadow-md) !important;
+  border-color: var(--m26-border-2, #D1D5DB) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* ══ 6. Buttons — Modern ══════════════════════════════════════════════════════ */
+html:not([data-theme="dark"]) .ds-btn,
+html[data-theme="light"] .ds-btn {
+  font-family: "IBM Plex Sans Arabic", inherit;
+  font-weight: 600;
+  border-radius: var(--m26-r-md);
+  transition: all var(--m26-duration-fast) var(--m26-ease);
+}
+
+html:not([data-theme="dark"]) .ds-btn--primary,
+html[data-theme="light"] .ds-btn--primary {
+  background: var(--m26-green-800, #166534) !important;
+  color: #fff !important;
+  border-color: transparent !important;
+  box-shadow: 0 1px 2px rgba(22,101,52,0.20) !important;
+}
+html:not([data-theme="dark"]) .ds-btn--primary:hover,
+html[data-theme="light"] .ds-btn--primary:hover {
+  background: var(--m26-green-950, #052E16) !important;
+  box-shadow: 0 4px 12px rgba(22,101,52,0.25) !important;
+}
+
+/* ══ 7. Home Page — Hero Modern ══════════════════════════════════════════════ */
+html:not([data-theme="dark"]) .home-hero,
+html[data-theme="light"] .home-hero {
+  background: linear-gradient(160deg,
+    #FFFFFF 0%,
+    var(--m26-green-50, #F0FDF4) 60%,
+    var(--m26-gold-50, #FEFCE8) 100%) !important;
+  border-bottom: 1px solid var(--m26-border, #E5E7EB) !important;
+}
+
+html:not([data-theme="dark"]) .home-hero__title,
+html[data-theme="light"] .home-hero__title {
+  color: var(--m26-green-950, #052E16) !important;
+  font-family: "El Messiri", serif !important;
+}
+
+html:not([data-theme="dark"]) .home-hero__sub,
+html[data-theme="light"] .home-hero__sub {
+  color: var(--m26-text-2, #374151) !important;
+}
+
+/* ══ 8. Prayer Card ══════════════════════════════════════════════════════════ */
+html:not([data-theme="dark"]) .prayer-card,
+html[data-theme="light"] .prayer-card {
+  background: #FFFFFF !important;
+  border: 1px solid var(--m26-border, #E5E7EB) !important;
+  box-shadow: var(--m26-shadow-lg) !important;
+  border-radius: var(--m26-r-xl) !important;
+}
+
+html:not([data-theme="dark"]) .prayer-card__name,
+html[data-theme="light"] .prayer-card__name {
+  color: var(--m26-green-800, #166534) !important;
+}
+
+html:not([data-theme="dark"]) .prayer-card__timer,
+html[data-theme="light"] .prayer-card__timer {
+  color: var(--m26-green-950, #052E16) !important;
+}
+
+/* صفحة الصلاة الجديدة */
+html:not([data-theme="dark"]) .pt-hero,
+html[data-theme="light"] .pt-hero {
+  background: #FFFFFF !important;
+  border-color: rgba(22,163,74,0.20) !important;
+  box-shadow: var(--m26-shadow-lg) !important;
+}
+
+html:not([data-theme="dark"]) .pt-hero__name,
+html[data-theme="light"] .pt-hero__name {
+  color: var(--m26-green-950, #052E16) !important;
+}
+
+html:not([data-theme="dark"]) .pt-hero__countdown,
+html[data-theme="light"] .pt-hero__countdown {
+  color: var(--m26-green-800, #166534) !important;
+  animation: none !important;
+}
+
+html:not([data-theme="dark"]) .pt-prayer,
+html[data-theme="light"] .pt-prayer {
+  background: #FFFFFF !important;
+  border-color: var(--m26-border, #E5E7EB) !important;
+}
+
+html:not([data-theme="dark"]) .pt-prayer:hover,
+html[data-theme="light"] .pt-prayer:hover {
+  border-color: var(--m26-green-600, #16A34A) !important;
+  background: var(--m26-green-50, #F0FDF4) !important;
+}
+
+html:not([data-theme="dark"]) .pt-prayer--next,
+html[data-theme="light"] .pt-prayer--next {
+  border-color: var(--m26-green-600, #16A34A) !important;
+  background: var(--m26-green-50, #F0FDF4) !important;
+}
+
+html:not([data-theme="dark"]) .pt-prayer--pinned,
+html[data-theme="light"] .pt-prayer--pinned {
+  border-color: var(--m26-gold-500, #CA8A04) !important;
+  background: var(--m26-gold-50, #FEFCE8) !important;
+}
+
+html:not([data-theme="dark"]) .pt-prayer__name,
+html[data-theme="light"] .pt-prayer__name {
+  color: var(--m26-text, #111827) !important;
+}
+
+html:not([data-theme="dark"]) .pt-prayer--next .pt-prayer__name,
+html:not([data-theme="dark"]) .pt-prayer--next .pt-prayer__time,
+html[data-theme="light"] .pt-prayer--next .pt-prayer__name,
+html[data-theme="light"] .pt-prayer--next .pt-prayer__time {
+  color: var(--m26-green-800, #166534) !important;
+}
+
+html:not([data-theme="dark"]) .pt-prayer__time,
+html[data-theme="light"] .pt-prayer__time {
+  color: var(--m26-text-3, #6B7280) !important;
+}
+
+html:not([data-theme="dark"]) .pt-hero__label,
+html[data-theme="light"] .pt-hero__label {
+  color: var(--m26-gold-700, #A16207) !important;
+}
+
+html:not([data-theme="dark"]) .pt-hero__time,
+html[data-theme="light"] .pt-hero__time {
+  color: var(--m26-text-3, #6B7280) !important;
+}
+
+/* ══ 9. Side Nav ════════════════════════════════════════════════════════════ */
+html:not([data-theme="dark"]) .side-nav-drawer--v2,
+html[data-theme="light"] .side-nav-drawer--v2 {
+  background: #FFFFFF !important;
+  border-inline-end: 1px solid var(--m26-border, #E5E7EB) !important;
+  box-shadow: var(--m26-shadow-xl) !important;
+}
+
+html:not([data-theme="dark"]) .side-nav-close,
+html[data-theme="light"] .side-nav-close {
+  color: var(--m26-text-3, #6B7280) !important;
+}
+
+html:not([data-theme="dark"]) .side-nav-group__title,
+html[data-theme="light"] .side-nav-group__title {
+  color: var(--m26-text-4, #9CA3AF) !important;
+}
+
+html:not([data-theme="dark"]) .side-nav-item,
+html[data-theme="light"] .side-nav-item {
+  color: var(--m26-text-2, #374151) !important;
+  border-radius: var(--m26-r-md) !important;
+}
+
+html:not([data-theme="dark"]) .side-nav-item:hover,
+html[data-theme="light"] .side-nav-item:hover {
+  background: var(--m26-green-50, #F0FDF4) !important;
+  color: var(--m26-green-800, #166534) !important;
+}
+
+html:not([data-theme="dark"]) .side-nav-item--active,
+html[data-theme="light"] .side-nav-item--active {
+  background: var(--m26-green-100, #DCFCE7) !important;
+  color: var(--m26-green-800, #166534) !important;
+  font-weight: 700 !important;
+}
+
+/* ══ 10. Bottom Nav ══════════════════════════════════════════════════════════ */
+html:not([data-theme="dark"]) .bottom-nav,
+html[data-theme="light"] .bottom-nav {
+  background: rgba(255,255,255,0.95) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  border-top: 1px solid var(--m26-border, #E5E7EB) !important;
+  box-shadow: 0 -2px 12px rgba(0,0,0,0.06) !important;
+}
+
+html:not([data-theme="dark"]) .bottom-nav__item,
+html[data-theme="light"] .bottom-nav__item {
+  color: var(--m26-text-3, #6B7280) !important;
+}
+
+html:not([data-theme="dark"]) .bottom-nav__item--active,
+html[data-theme="light"] .bottom-nav__item--active {
+  color: var(--m26-green-800, #166534) !important;
+}
+
+/* ══ 11. Login Page ════════════════════════════════════════════════════════ */
+html:not([data-theme="dark"]) .login-page,
+html[data-theme="light"] .login-page {
+  background: linear-gradient(160deg, #F0FDF4 0%, #FAFAFA 60%, #FEFCE8 100%) !important;
+  min-height: 100vh !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+html:not([data-theme="dark"]) .login-card,
+html[data-theme="light"] .login-card {
+  background: #FFFFFF !important;
+  border: 1px solid var(--m26-border, #E5E7EB) !important;
+  border-radius: var(--m26-r-xl, 24px) !important;
+  box-shadow: var(--m26-shadow-xl) !important;
+  padding: 2.5rem !important;
+}
+
+html:not([data-theme="dark"]) .login-card__brand,
+html[data-theme="light"] .login-card__brand {
+  color: var(--m26-green-950, #052E16) !important;
+  font-family: "El Messiri", serif !important;
+  font-size: 1.3rem !important;
+}
+
+html:not([data-theme="dark"]) .login-card__title,
+html[data-theme="light"] .login-card__title {
+  color: var(--m26-text, #111827) !important;
+  font-size: 1.5rem !important;
+}
+
+html:not([data-theme="dark"]) .login-card__subtitle,
+html[data-theme="light"] .login-card__subtitle {
+  color: var(--m26-text-3, #6B7280) !important;
+}
+
+html:not([data-theme="dark"]) .login-field label,
+html[data-theme="light"] .login-field label {
+  color: var(--m26-text-2, #374151) !important;
+  font-weight: 600 !important;
+}
+
+html:not([data-theme="dark"]) .login-field input,
+html[data-theme="light"] .login-field input {
+  background: var(--m26-bg, #F8F9FA) !important;
+  border: 1.5px solid var(--m26-border, #E5E7EB) !important;
+  border-radius: var(--m26-r-md, 12px) !important;
+  color: var(--m26-text, #111827) !important;
+  font-family: inherit !important;
+  padding: 0.75rem 1rem !important;
+  transition: border-color 0.15s !important;
+}
+
+html:not([data-theme="dark"]) .login-field input:focus,
+html[data-theme="light"] .login-field input:focus {
+  outline: none !important;
+  border-color: var(--m26-green-600, #16A34A) !important;
+  box-shadow: 0 0 0 3px rgba(22,163,74,0.10) !important;
+}
+
+html:not([data-theme="dark"]) .login-submit,
+html[data-theme="light"] .login-submit {
+  background: var(--m26-green-800, #166534) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: var(--m26-r-md, 12px) !important;
+  padding: 0.75rem 1.5rem !important;
+  font-weight: 700 !important;
+  font-size: 1rem !important;
+  width: 100% !important;
+  cursor: pointer !important;
+  box-shadow: 0 2px 8px rgba(22,101,52,0.25) !important;
+  transition: all 0.15s !important;
+}
+
+html:not([data-theme="dark"]) .login-submit:hover,
+html[data-theme="light"] .login-submit:hover {
+  background: var(--m26-green-950, #052E16) !important;
+  box-shadow: 0 4px 16px rgba(22,101,52,0.30) !important;
+}
+
+html:not([data-theme="dark"]) .login-oauth__btn,
+html[data-theme="light"] .login-oauth__btn {
+  background: #FFFFFF !important;
+  border: 1.5px solid var(--m26-border, #E5E7EB) !important;
+  color: var(--m26-text-2, #374151) !important;
+  border-radius: var(--m26-r-md, 12px) !important;
+  box-shadow: var(--m26-shadow-xs) !important;
+  transition: all 0.15s !important;
+}
+
+html:not([data-theme="dark"]) .login-oauth__btn:hover,
+html[data-theme="light"] .login-oauth__btn:hover {
+  border-color: var(--m26-border-2, #D1D5DB) !important;
+  box-shadow: var(--m26-shadow-sm) !important;
+}
+
+/* ══ 12. Forms Modern ══════════════════════════════════════════════════════ */
+html:not([data-theme="dark"]) input[type="text"],
+html:not([data-theme="dark"]) input[type="email"],
+html:not([data-theme="dark"]) input[type="search"],
+html:not([data-theme="dark"]) input[type="password"],
+html:not([data-theme="dark"]) input[type="number"],
+html:not([data-theme="dark"]) select,
+html:not([data-theme="dark"]) textarea,
+html[data-theme="light"] input[type="text"],
+html[data-theme="light"] input[type="email"],
+html[data-theme="light"] input[type="search"],
+html[data-theme="light"] input[type="password"],
+html[data-theme="light"] input[type="number"],
+html[data-theme="light"] select,
+html[data-theme="light"] textarea {
+  background: #FFFFFF;
+  border: 1.5px solid var(--m26-border, #E5E7EB);
+  border-radius: var(--m26-r-md, 12px);
+  color: var(--m26-text, #111827);
+  font-family: "IBM Plex Sans Arabic", inherit;
+  padding: 0.625rem 0.875rem;
+  transition: border-color var(--m26-duration-fast), box-shadow var(--m26-duration-fast);
+}
+
+html:not([data-theme="dark"]) input:focus,
+html:not([data-theme="dark"]) select:focus,
+html:not([data-theme="dark"]) textarea:focus,
+html[data-theme="light"] input:focus,
+html[data-theme="light"] select:focus,
+html[data-theme="light"] textarea:focus {
+  outline: none;
+  border-color: var(--m26-green-600, #16A34A);
+  box-shadow: 0 0 0 3px rgba(22,163,74,0.12);
+}
+
+/* ══ 13. Lesson Cards Enhanced ════════════════════════════════════════════ */
+html:not([data-theme="dark"]) .lesson-unified-card__header,
+html[data-theme="light"] .lesson-unified-card__header {
+  background: var(--m26-green-50, #F0FDF4) !important;
+  border-bottom: 1px solid var(--m26-border, #E5E7EB) !important;
+}
+
+html:not([data-theme="dark"]) .lesson-unified-card__status,
+html[data-theme="light"] .lesson-unified-card__status {
+  background: var(--m26-green-100, #DCFCE7) !important;
+  color: var(--m26-green-800, #166534) !important;
+  border: none !important;
+  border-radius: var(--m26-r-full) !important;
+  padding: 0.2rem 0.65rem !important;
+  font-size: 0.72rem !important;
+  font-weight: 700 !important;
+}
+
+/* ══ 14. Page Shell ═══════════════════════════════════════════════════════ */
+html:not([data-theme="dark"]) .page-shell,
+html[data-theme="light"] .page-shell {
+  color: var(--m26-text, #111827) !important;
+}
+
+html:not([data-theme="dark"]) .page-shell h1,
+html:not([data-theme="dark"]) .page-shell h2,
+html:not([data-theme="dark"]) .page-shell h3,
+html[data-theme="light"] .page-shell h1,
+html[data-theme="light"] .page-shell h2,
+html[data-theme="light"] .page-shell h3 {
+  color: var(--m26-text, #111827) !important;
+}
+
+html:not([data-theme="dark"]) .page-shell p,
+html[data-theme="light"] .page-shell p {
+  color: var(--m26-text-2, #374151) !important;
+}
+
+/* Page Header eyebrow */
+html:not([data-theme="dark"]) .ds-eyebrow,
+html[data-theme="light"] .ds-eyebrow {
+  color: var(--m26-green-800, #166534) !important;
+}
+
+/* ══ 15. Tabs Modern ══════════════════════════════════════════════════════ */
+html:not([data-theme="dark"]) .kuwait-tab,
+html[data-theme="light"] .kuwait-tab {
+  background: #FFFFFF !important;
+  border-color: var(--m26-border, #E5E7EB) !important;
+  color: var(--m26-text-3, #6B7280) !important;
+  box-shadow: var(--m26-shadow-xs) !important;
+}
+
+html:not([data-theme="dark"]) .kuwait-tab:hover:not(.kuwait-tab--active),
+html[data-theme="light"] .kuwait-tab:hover:not(.kuwait-tab--active) {
+  border-color: var(--m26-green-600, #16A34A) !important;
+  color: var(--m26-green-800, #166534) !important;
+  background: var(--m26-green-50, #F0FDF4) !important;
+  box-shadow: var(--m26-shadow-xs) !important;
+}
+
+html:not([data-theme="dark"]) .kuwait-tab--active,
+html[data-theme="light"] .kuwait-tab--active {
+  background: var(--m26-green-800, #166534) !important;
+  color: #fff !important;
+  border-color: transparent !important;
+  box-shadow: 0 2px 8px rgba(22,101,52,0.25) !important;
+}
+
+/* ══ 16. الإشعارات في الثيم الفاتح ══════════════════════════════════════ */
+html:not([data-theme="dark"]) .nh-section,
+html[data-theme="light"] .nh-section {
+  background: #FFFFFF !important;
+  border-color: var(--m26-border, #E5E7EB) !important;
+}
+
+html:not([data-theme="dark"]) .nh-header,
+html[data-theme="light"] .nh-header {
+  border-color: var(--m26-border, #E5E7EB) !important;
+}
+
+html:not([data-theme="dark"]) .nh-header__title,
+html[data-theme="light"] .nh-header__title { color: var(--m26-text, #111827) !important; }
+html:not([data-theme="dark"]) .nh-row,
+html[data-theme="light"] .nh-row { border-color: var(--m26-border, #E5E7EB) !important; }
+html:not([data-theme="dark"]) .nh-row:hover,
+html[data-theme="light"] .nh-row:hover { background: var(--m26-green-50, #F0FDF4) !important; }
+html:not([data-theme="dark"]) .nh-row__title,
+html[data-theme="light"] .nh-row__title { color: var(--m26-text, #111827) !important; }
+html:not([data-theme="dark"]) .nh-row__body-text,
+html[data-theme="light"] .nh-row__body-text { color: var(--m26-text-2, #374151) !important; }
+html:not([data-theme="dark"]) .nh-row__meta,
+html[data-theme="light"] .nh-row__meta { color: var(--m26-text-4, #9CA3AF) !important; }
+html:not([data-theme="dark"]) .nh-search,
+html[data-theme="light"] .nh-search {
+  background: var(--m26-bg, #F8F9FA) !important;
+  border-color: var(--m26-border, #E5E7EB) !important;
+  color: var(--m26-text, #111827) !important;
+}
+html:not([data-theme="dark"]) .nh-tab,
+html[data-theme="light"] .nh-tab { color: var(--m26-text-3, #6B7280) !important; }
+html:not([data-theme="dark"]) .nh-tab--active,
+html[data-theme="light"] .nh-tab--active {
+  color: var(--m26-green-800, #166534) !important;
+  border-bottom-color: var(--m26-green-800, #166534) !important;
+}
+
+/* ══ 17. Page Card Grid ══════════════════════════════════════════════════ */
+html:not([data-theme="dark"]) .page-card,
+html[data-theme="light"] .page-card {
+  background: #FFFFFF;
+  border: 1px solid var(--m26-border, #E5E7EB);
+  border-radius: var(--m26-r-lg, 16px);
+  box-shadow: var(--m26-shadow-sm);
+  padding: 1.25rem;
+  color: var(--m26-text, #111827);
+  text-decoration: none;
+  display: block;
+  transition: all var(--m26-duration-base) var(--m26-ease);
+}
+html:not([data-theme="dark"]) .page-card:hover,
+html[data-theme="light"] .page-card:hover {
+  box-shadow: var(--m26-shadow-md);
+  border-color: var(--m26-green-600, #16A34A);
+  transform: translateY(-2px);
+}
+html:not([data-theme="dark"]) .page-card p,
+html[data-theme="light"] .page-card p { color: var(--m26-text-2, #374151); }
+html:not([data-theme="dark"]) .page-tag,
+html[data-theme="light"] .page-tag {
+  background: var(--m26-green-100, #DCFCE7);
+  color: var(--m26-green-800, #166534);
+  border: none;
+  border-radius: var(--m26-r-full);
+  padding: 0.15rem 0.6rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+html:not([data-theme="dark"]) .page-meta,
+html[data-theme="light"] .page-meta { color: var(--m26-text-3, #6B7280); }
+html:not([data-theme="dark"]) .page-desc,
+html[data-theme="light"] .page-desc { color: var(--m26-text-2, #374151); }
+
+/* ══ 18. Mosque Mode Card ═══════════════════════════════════════════════ */
+html:not([data-theme="dark"]) .mosque-mode-card,
+html[data-theme="light"] .mosque-mode-card {
+  background: #FFFFFF !important;
+  border-color: var(--m26-border, #E5E7EB) !important;
+  box-shadow: var(--m26-shadow-md) !important;
+}
+
+/* ══ 19. Admin Shell ════════════════════════════════════════════════════ */
+html:not([data-theme="dark"]) .admin-shell,
+html[data-theme="light"] .admin-shell {
+  background: var(--m26-bg, #F8F9FA) !important;
+}
+html:not([data-theme="dark"]) .admin-shell__sidebar,
+html[data-theme="light"] .admin-shell__sidebar {
+  background: #FFFFFF !important;
+  border-inline-end: 1px solid var(--m26-border) !important;
+  box-shadow: var(--m26-shadow-sm) !important;
+}
+html:not([data-theme="dark"]) .admin-shell__main,
+html[data-theme="light"] .admin-shell__main {
+  background: var(--m26-bg, #F8F9FA) !important;
+}
+
+/* ══ 20. MuezzinPicker في الثيم الفاتح ═══════════════════════════════ */
+html:not([data-theme="dark"]) .pt-hero__reset,
+html[data-theme="light"] .pt-hero__reset {
+  color: var(--m26-gold-700, #A16207) !important;
+  border-color: rgba(161,98,7,0.30) !important;
+}
+html:not([data-theme="dark"]) .pt-city,
+html[data-theme="light"] .pt-city { color: var(--m26-text-4, #9CA3AF) !important; }
+
+/* ══ 21. Empty States Modern ═════════════════════════════════════════ */
+html:not([data-theme="dark"]) .empty-state,
+html[data-theme="light"] .empty-state {
+  background: #FFFFFF !important;
+  border: 1px solid var(--m26-border) !important;
+  border-radius: var(--m26-r-xl) !important;
+  padding: 3rem 2rem !important;
+  text-align: center !important;
+}
+
+/* ══ 22. Tables Modern ═══════════════════════════════════════════════ */
+html:not([data-theme="dark"]) table,
+html[data-theme="light"] table {
+  background: #FFFFFF;
+  border-collapse: collapse;
+  border-radius: var(--m26-r-lg);
+  overflow: hidden;
+  box-shadow: var(--m26-shadow-sm);
+}
+html:not([data-theme="dark"]) th,
+html[data-theme="light"] th {
+  background: var(--m26-bg, #F8F9FA) !important;
+  color: var(--m26-text-2, #374151) !important;
+  font-weight: 700 !important;
+  border-color: var(--m26-border, #E5E7EB) !important;
+}
+html:not([data-theme="dark"]) td,
+html[data-theme="light"] td {
+  color: var(--m26-text, #111827) !important;
+  border-color: var(--m26-border, #E5E7EB) !important;
+}
+
+/* ══ 23. Skeleton Loading ════════════════════════════════════════════ */
+@keyframes m26-shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+.skeleton-block,
+[aria-busy="true"] .skeleton-item {
+  background: linear-gradient(90deg,
+    #F0F0F0 25%,
+    #E8E8E8 50%,
+    #F0F0F0 75%
+  ) !important;
+  background-size: 200% 100% !important;
+  animation: m26-shimmer 1.5s ease-in-out infinite !important;
+  border-radius: var(--m26-r-md) !important;
+  color: transparent !important;
+}
+
+/* ══ 24. Transition Card — قصص الأنبياء ← السيرة ═══════════════════ */
+html:not([data-theme="dark"]) .prophets-seerah-bridge,
+html[data-theme="light"] .prophets-seerah-bridge {
+  background: linear-gradient(135deg, var(--m26-green-50, #F0FDF4), var(--m26-gold-50, #FEFCE8)) !important;
+  border-color: rgba(22,163,74,0.25) !important;
+}
+html:not([data-theme="dark"]) .prophets-seerah-bridge:hover,
+html[data-theme="light"] .prophets-seerah-bridge:hover {
+  border-color: rgba(22,163,74,0.50) !important;
+  box-shadow: var(--m26-shadow-md) !important;
+}
+html:not([data-theme="dark"]) .prophets-seerah-bridge__title,
+html[data-theme="light"] .prophets-seerah-bridge__title { color: var(--m26-green-950, #052E16) !important; }
+html:not([data-theme="dark"]) .prophets-seerah-bridge__eyebrow,
+html[data-theme="light"] .prophets-seerah-bridge__eyebrow { color: var(--m26-gold-700, #A16207) !important; }
+html:not([data-theme="dark"]) .prophets-seerah-bridge__desc,
+html[data-theme="light"] .prophets-seerah-bridge__desc { color: var(--m26-text-2, #374151) !important; }
+html:not([data-theme="dark"]) .prophets-seerah-bridge__arrow,
+html[data-theme="light"] .prophets-seerah-bridge__arrow { color: var(--m26-green-600, #16A34A) !important; }
+
+/* رابط السيرة العكسي */
+html:not([data-theme="dark"]) .seerah-back-link,
+html[data-theme="light"] .seerah-back-link {
+  color: var(--m26-green-800, #166534) !important;
+  border-color: rgba(22,163,74,0.25) !important;
+}
+html:not([data-theme="dark"]) .seerah-back-link:hover,
+html[data-theme="light"] .seerah-back-link:hover {
+  background: var(--m26-green-50, #F0FDF4) !important;
+  border-color: rgba(22,163,74,0.50) !important;
+}
+
+/* ══ 25. Notif Banner ════════════════════════════════════════════════ */
+html:not([data-theme="dark"]) .notif-banner--warn,
+html[data-theme="light"] .notif-banner--warn {
+  background: var(--m26-gold-50, #FEFCE8) !important;
+  border-color: rgba(202,138,4,0.35) !important;
+  color: var(--m26-gold-700, #A16207) !important;
+}
+html:not([data-theme="dark"]) .notif-banner--err,
+html[data-theme="light"] .notif-banner--err {
+  background: #FEF2F2 !important;
+  border-color: rgba(220,38,38,0.25) !important;
+  color: #B91C1C !important;
+}
+html:not([data-theme="dark"]) .notif-card,
+html[data-theme="light"] .notif-card {
+  background: #FFFFFF !important;
+  border-color: var(--m26-border, #E5E7EB) !important;
+  box-shadow: var(--m26-shadow-sm) !important;
+}
+html:not([data-theme="dark"]) .notif-card__title,
+html[data-theme="light"] .notif-card__title { color: var(--m26-text, #111827) !important; }
+html:not([data-theme="dark"]) .notif-row__label,
+html[data-theme="light"] .notif-row__label { color: var(--m26-text, #111827) !important; }
+html:not([data-theme="dark"]) .notif-row__sub,
+html[data-theme="light"] .notif-row__sub { color: var(--m26-text-3, #6B7280) !important; }
+html:not([data-theme="dark"]) .notif-toggle,
+html[data-theme="light"] .notif-toggle {
+  background: var(--m26-border, #E5E7EB) !important;
+}
+html:not([data-theme="dark"]) .notif-toggle--on,
+html[data-theme="light"] .notif-toggle--on {
+  background: var(--m26-green-600, #16A34A) !important;
+}
+html:not([data-theme="dark"]) .notif-test-btn,
+html[data-theme="light"] .notif-test-btn {
+  background: var(--m26-green-800, #166534) !important;
+  color: #fff !important;
+}
+html:not([data-theme="dark"]) .notif-saved,
+html[data-theme="light"] .notif-saved {
+  background: var(--m26-green-50, #F0FDF4) !important;
+  color: var(--m26-green-800, #166534) !important;
+  border-color: rgba(22,163,74,0.25) !important;
+}
+html:not([data-theme="dark"]) .notif-time__label,
+html[data-theme="light"] .notif-time__label { color: var(--m26-text-2, #374151) !important; }
+html:not([data-theme="dark"]) .notif-time__input,
+html[data-theme="light"] .notif-time__input {
+  background: var(--m26-bg) !important;
+  border-color: var(--m26-border) !important;
+  color: var(--m26-text) !important;
+}
+html:not([data-theme="dark"]) .notif-time__hint,
+html[data-theme="light"] .notif-time__hint { color: var(--m26-text-4, #9CA3AF) !important; }
+
+/* ══ 26. Smart CMS Section في الثيم الفاتح ══════════════════════════ */
+html:not([data-theme="dark"]) textarea,
+html[data-theme="light"] textarea {
+  color: var(--m26-text, #111827);
+}
+
+/* ══ 27. HijriSacredMonthBanner ═══════════════════════════════════ */
+html:not([data-theme="dark"]) [role="banner"],
+html[data-theme="light"] [role="banner"] {
+  background: var(--m26-green-50, #F0FDF4) !important;
+  border-color: rgba(22,163,74,0.25) !important;
+}
+
+/* ══ 28. Micro-interactions ══════════════════════════════════════════ */
+@media (prefers-reduced-motion: no-preference) {
+  html:not([data-theme="dark"]) .ds-btn,
+  html:not([data-theme="dark"]) .kuwait-tab,
+  html:not([data-theme="dark"]) .page-card,
+  html[data-theme="light"] .ds-btn,
+  html[data-theme="light"] .kuwait-tab,
+  html[data-theme="light"] .page-card {
+    transition: all var(--m26-duration-base) var(--m26-ease);
+  }
+  html:not([data-theme="dark"]) .ds-btn:active,
+  html[data-theme="light"] .ds-btn:active {
+    transform: scale(0.97);
+  }
+}
+
+/* ══ 29. Focus Visible Accessibility ════════════════════════════════ */
+html:not([data-theme="dark"]) :focus-visible,
+html[data-theme="light"] :focus-visible {
+  outline: 2px solid var(--m26-green-600, #16A34A);
+  outline-offset: 2px;
+}
+
+/* ══ 30. Home Story Cards في الثيم الفاتح ════════════════════════ */
+html:not([data-theme="dark"]) .home-story-card,
+html:not([data-theme="dark"]) .home-feature-strip-card,
+html:not([data-theme="dark"]) .home-more-card,
+html[data-theme="light"] .home-story-card,
+html[data-theme="light"] .home-feature-strip-card,
+html[data-theme="light"] .home-more-card {
+  background: #FFFFFF !important;
+  border: 1px solid var(--m26-border, #E5E7EB) !important;
+  box-shadow: var(--m26-shadow-sm) !important;
+}
+html:not([data-theme="dark"]) .home-story-card:hover,
+html[data-theme="light"] .home-story-card:hover {
+  box-shadow: var(--m26-shadow-md) !important;
+}
