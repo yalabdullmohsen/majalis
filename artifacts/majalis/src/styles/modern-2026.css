@@ -1060,3 +1060,15 @@ html[data-theme="light"] .muezzin-meta { color: var(--txt-muted, #52525B) !impor
 
 html:not([data-theme="dark"]) .muezzin-bio,
 html[data-theme="light"] .muezzin-bio { color: var(--txt-muted, #52525B) !important; }
+
+/* ══ 40. Legacy Token Bridge — إعادة تعريف الرموز القديمة للتوافق ═══════════ */
+/* الرموز القديمة --text-* تُحوَّل إلى الرموز الجديدة --txt-* */
+:root {
+  --text-base:       var(--txt-primary,   #111827);
+  --text-soft:       var(--txt-secondary, #374151);
+  --text-muted:      var(--txt-muted,     #52525B);
+  --text-subtle:     var(--txt-subdued,   #6B7280);
+  --text-disabled:   var(--txt-disabled,  #A1A1AA);
+  --text-accent:     var(--txt-accent,    #166534);
+  --text-inverse:    var(--txt-inverse,   #FFFFFF);
+}

@@ -46,7 +46,7 @@ export default function FawaidPage({
   const [submitted, setSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState("");
   const [filtersOpen, setFiltersOpen] = useState(false);
-  const { user, isLoggedIn, isAdmin } = useAuth() as any;
+  const { user, isLoggedIn, isAdmin } = useAuth();
   const debouncedSearch = useDebouncedValue(search);
 
   useEffect(() => {
@@ -85,10 +85,11 @@ export default function FawaidPage({
       setSubmitError("يرجى الانتظار قليلًا قبل إرسال فائدة أخرى.");
       return;
     }
+    if (!user) return;
     setSubmitError("");
     setSubmitting(true);
     try {
-      const { error: insertError } = await submitFawaid(user.id, text, authorName || user?.profile?.full_name || "");
+      const { error: insertError } = await submitFawaid(user.id, text, authorName || user.profile?.full_name || "");
       if (insertError) throw insertError;
       setSubmitted(true);
       setText("");

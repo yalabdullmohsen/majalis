@@ -111,8 +111,8 @@ function QuranComingSoon() {
       fontFamily: "inherit", direction: "rtl", textAlign: "center", padding: "2rem",
     }}>
       <span style={{ fontSize: "3rem", opacity: 0.4 }}>📖</span>
-      <h2 style={{ margin: 0, fontSize: "1.5rem", fontWeight: 700, color: "var(--text-base, #1a1a1a)" }}>قريباً</h2>
-      <p style={{ margin: 0, color: "var(--text-muted, #6b7280)", fontSize: "1rem" }}>
+      <h2 style={{ margin: 0, fontSize: "1.5rem", fontWeight: 700, color: "var(--txt-primary, #111827)" }}>قريباً</h2>
+      <p style={{ margin: 0, color: "var(--txt-muted, #52525B)", fontSize: "1rem" }}>
         قسم القرآن الكريم قيد التطوير
       </p>
     </div>
