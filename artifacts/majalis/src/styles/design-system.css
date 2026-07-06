@@ -1280,26 +1280,6 @@ p, li {
   --ds-transition-slow: 350ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-html[data-theme="dark"] {
-  --ds-parchment:      #0D1410;
-  --ds-parchment-deep: #151E1A;
-  --ds-ink:            #F4F1EC;
-  --ds-ink-soft:       #B5ADA6;
-  --ds-ink-muted:      #7A736C;
-  --ds-line-color:     #263D33;
-  --ds-line-strong:    #304D42;
-  --ds-emerald:        #4DB88E;
-  --ds-emerald-deep:   #8FD4B4;
-  --ds-emerald-soft:   #0F2A20;
-  --ds-emerald-muted:  rgba(77, 184, 142, 0.1);
-  --ds-gold:           #D4AD50;
-  --ds-gold-soft:      #231A08;
-  --ds-heading:        var(--ds-ink);
-  --ds-shadow-xs: 0 1px 2px rgba(0,0,0,0.25);
-  --ds-shadow-sm: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
-  --ds-shadow:    0 4px 6px -1px rgba(0,0,0,0.3), 0 2px 4px -1px rgba(0,0,0,0.2);
-  --ds-shadow-md: 0 10px 15px -3px rgba(0,0,0,0.35), 0 4px 6px -2px rgba(0,0,0,0.2);
-}
 
 body {
   background: var(--msk-canvas, var(--ds-parchment));
@@ -1545,11 +1525,6 @@ hr.decorative,
   cursor: not-allowed;
 }
 
-html[data-theme="dark"] .login-oauth__btn {
-  background: #1f2937;
-  border-color: #374151;
-  color: #d1d5db;
-}
 
 /* ══════════════════════════════════════════════════════════════
    Home Polish Additions (home/full-polish)
@@ -1867,9 +1842,6 @@ html[data-theme="dark"] .login-oauth__btn {
   stroke: var(--majalis-gold, #B08D2E);
 }
 
-html[data-theme="dark"] .tc-ring-track { stroke: #2a2a2a; }
-html[data-theme="dark"] .tc-ring-fill  { stroke: #22a370; }
-html[data-theme="dark"] .tc-ring-fill--done { stroke: #d4a93a; }
 
 /* Content inside ring */
 .tc-ring-inner {
@@ -1922,8 +1894,6 @@ html[data-theme="dark"] .tc-ring-fill--done { stroke: #d4a93a; }
   color: var(--majalis-gold, #B08D2E);
 }
 
-html[data-theme="dark"] .tc-ring-count { color: #d1fae5; }
-html[data-theme="dark"] .tc-ring-btn--done .tc-ring-count { color: #d4a93a; }
 
 /* Keyboard hint below counter */
 .tc-keyboard-hint {
@@ -2010,11 +1980,6 @@ html[data-theme="dark"] .tc-ring-btn--done .tc-ring-count { color: #d4a93a; }
   color: #6b7280;
 }
 
-html[data-theme="dark"] .tasbih-wird-pill {
-  background: #1e1e1e;
-  border-color: #333;
-  color: #d1d5db;
-}
 
 /* ═══════════════════════════════════════════════════════
    Push Notification Prompt
@@ -2063,100 +2028,29 @@ html[data-theme="dark"] .tasbih-wird-pill {
 .push-prompt__btn--off:hover:not(:disabled) { background: #b91c1c; }
 
 /* ═══════════════════════════════════════════════════════
-   البند 7 — Dark Mode: تغطية شاملة للعناصر المضافة
-   ═══════════════════════════════════════════════════════ */
-
-html[data-theme="dark"] {
-  /* خلفية العناصر التي تستخدم #fff صريحاً */
-  --majalis-panel: #1C2A23;
-  color-scheme: dark;
-}
 
 /* شريط الصلاة المدمج */
-html[data-theme="dark"] .hcp-strip {
-  background: var(--majalis-panel);
-  border-color: var(--majalis-line);
-}
 
-html[data-theme="dark"] .hcp-prayer-cell {
-  background: var(--majalis-parchment-deep);
-  border-color: var(--majalis-line);
-  color: var(--majalis-ink);
-}
 
-html[data-theme="dark"] .hcp-prayer-cell--next {
-  background: color-mix(in srgb, var(--majalis-emerald) 15%, var(--majalis-panel));
-  border-color: var(--majalis-emerald);
-}
 
-html[data-theme="dark"] .hcp-strip__label { color: var(--majalis-ink-soft); }
-html[data-theme="dark"] .hcp-strip__link  { color: var(--majalis-emerald); }
-html[data-theme="dark"] .hcp-strip__countdown { color: var(--majalis-ink-soft); }
-html[data-theme="dark"] .hcp-strip__countdown-time { color: var(--majalis-emerald-deep); }
 
 /* بطاقات عامة */
-html[data-theme="dark"] .ui-card,
-html[data-theme="dark"] .ds-card {
-  background: var(--majalis-panel);
-  border-color: var(--majalis-line);
-}
 
 /* نماذج إدخال */
-html[data-theme="dark"] .ds-input,
-html[data-theme="dark"] .login-field input,
-html[data-theme="dark"] .tasbih-add-row input {
-  background: var(--majalis-parchment-deep);
-  border-color: var(--majalis-line);
-  color: var(--majalis-ink);
-}
 
 /* أزرار ثانوية */
-html[data-theme="dark"] .tasbeeh-counter__btn,
-html[data-theme="dark"] .tasbeeh-counter__preset {
-  background: var(--majalis-parchment-deep);
-  border-color: var(--majalis-line);
-  color: var(--majalis-ink);
-}
 
-html[data-theme="dark"] .tasbeeh-counter__preset.is-active {
-  background: color-mix(in srgb, var(--majalis-emerald) 20%, var(--majalis-panel));
-  border-color: var(--majalis-emerald);
-  color: var(--majalis-emerald-deep);
-}
 
 /* الحلقة */
-html[data-theme="dark"] .tasbeeh-counter--pro {
-  background: var(--majalis-parchment-deep);
-  border-color: var(--majalis-line);
-}
 
 /* إشعارات Push */
-html[data-theme="dark"] .push-prompt {
-  background: var(--majalis-panel);
-  border-color: var(--majalis-line);
-}
 
 /* صفحة تسجيل الدخول */
-html[data-theme="dark"] .login-card {
-  background: var(--majalis-panel);
-  border-color: var(--majalis-line);
-}
 
-html[data-theme="dark"] .login-page {
-  background: var(--majalis-parchment);
-}
 
 /* إحصاء التسبيح */
-html[data-theme="dark"] .tasbih-stat {
-  background: var(--majalis-panel);
-  border-color: var(--majalis-line);
-}
 
 /* الإضافات الأخيرة للصفحة الرئيسية */
-html[data-theme="dark"] .home-about-section {
-  background: var(--majalis-panel);
-  border-color: var(--majalis-line);
-}
 
 /* ═══════════════════════════════════════════════════════
    User Stats Page — البند 9
@@ -2214,13 +2108,7 @@ html[data-theme="dark"] .home-about-section {
   text-decoration: none;
 }
 
-html[data-theme="dark"] .user-stat-card__value { color: var(--majalis-emerald-deep); }
 
-html[data-theme="dark"] .tasbih-wird-pill.is-active {
-  background: #22a370;
-  border-color: #22a370;
-  color: #fff;
-}
 
 /* Streak stat cell */
 .tasbih-stat--streak strong {
@@ -4812,29 +4700,9 @@ h1, h2, h3 {
 }
 
 /* ── 17. الوضع الداكن — Premium layer overrides ── */
-html[data-theme="dark"] .ui-card,
-html[data-theme="dark"] .ds-card,
-html[data-theme="dark"] .page-card {
-  background: var(--majalis-panel, #1A2820);
-  border-color: var(--ds-line-color);
-  box-shadow: var(--ds-shadow-xs);
-}
 
-html[data-theme="dark"] .navbar-v3 {
-  background: color-mix(in srgb, var(--majalis-parchment) 90%, transparent) !important;
-}
 
-html[data-theme="dark"] .bottom-nav {
-  background: color-mix(in srgb, var(--majalis-panel) 88%, transparent);
-  border-top-color: var(--ds-line-color);
-}
 
-html[data-theme="dark"] .ds-input,
-html[data-theme="dark"] .login-field input {
-  background: var(--majalis-parchment-deep);
-  border-color: var(--ds-line-color);
-  color: var(--ds-ink);
-}
 
 /* ── 18. تحسين الانتقالات العامة ── */
 @media (prefers-reduced-motion: no-preference) {

@@ -251,6 +251,8 @@ function formatHms(totalSeconds: number): string {
   return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
 }
 
+const PRAYER_GRACE_MINUTES = 30;
+
 export function computePrayerCountdown(prayers: PrayerSlot[]): PrayerCountdown {
   const status = computePrayerStatus(prayers);
   const now = kuwaitNowParts();
@@ -259,6 +261,9 @@ export function computePrayerCountdown(prayers: PrayerSlot[]): PrayerCountdown {
   if (status.next?.minutes != null) {
     if (status.next.minutes > now.minutes) {
       remainingSeconds = (status.next.minutes - now.minutes) * 60 - now.seconds;
+    } else if (now.minutes - status.next.minutes < PRAYER_GRACE_MINUTES) {
+      // فترة السماح: الصلاة بدأت منذ أقل من 30 دقيقة — العداد يبقى صفراً
+      remainingSeconds = 0;
     } else {
       remainingSeconds = ((24 * 60 - now.minutes) + status.next.minutes) * 60 - now.seconds;
     }
@@ -281,10 +286,17 @@ export function computePrayerStatus(prayers: PrayerSlot[]): PrayerStatus {
   let next: PrayerSlot | null = null;
 
   for (const prayer of obligatory) {
-    if (prayer.minutes! <= nowMinutes) {
+    const elapsed = nowMinutes - prayer.minutes!;
+    if (elapsed >= PRAYER_GRACE_MINUTES) {
+      // مضى عليها 30 دقيقة أو أكثر — انتهى وقتها
       previous = prayer;
       current = prayer;
-    } else if (!next) {
+    } else if (elapsed >= 0) {
+      // بدأت منذ أقل من 30 دقيقة — فترة السماح: العداد يبقى عليها
+      next = prayer;
+      break;
+    } else {
+      // لم تحن بعد
       next = prayer;
       break;
     }
@@ -304,6 +316,8 @@ export function computePrayerStatus(prayers: PrayerSlot[]): PrayerStatus {
   if (next?.minutes != null) {
     if (next.minutes > nowMinutes) {
       remainingMs = (next.minutes - nowMinutes) * 60_000;
+    } else if (nowMinutes - next.minutes < PRAYER_GRACE_MINUTES) {
+      remainingMs = 0;
     } else {
       remainingMs = ((24 * 60 - nowMinutes) + next.minutes) * 60_000;
     }

@@ -1,23 +1,4 @@
 /* ══ خط Amiri للعناوين الرئيسية ══ */
-@import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap');
-/* ══ خط Katibeh — ثلث عربي للعنوان الرئيسي ══ */
-@import url('https://fonts.googleapis.com/css2?family=Katibeh&display=swap');
-
-/* ══ Tailwind v4: ربط dark: variant بـ data-theme="dark" ══ */
-@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
-
-/* ══ Utility classes ══ */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -182,105 +163,9 @@ html {
   --v2-t-slow:       var(--motion-slow);
 }
 
-html[data-theme="dark"] {
-  /* ── وضع الليل — مِشكاة (navy/gold) — override كامل ── */
-  --msk-canvas:        #171C2E;
-  --msk-canvas-1:      #1F2540;
-  --msk-canvas-2:      #262D4E;
-  --msk-canvas-glass:  rgba(23,28,46,.92);
-  --msk-gold:          #D9AE5C;
-  --msk-gold-deep:     #C49540;
-  --msk-gold-dim:      rgba(217,174,92,.12);
-  --msk-gold-glow:     rgba(217,174,92,.18);
-  --msk-gold-border:   rgba(217,174,92,.25);
-  --msk-sky:           #4FA8C9;
-  --msk-sky-dim:       rgba(79,168,201,.12);
-  --msk-text:          #F0E9DA;
-  --msk-text-2:        #B2A891;
-  --msk-text-3:        #7A7266;
-  --msk-green:         #2E8B67;
-  --msk-red:           #C1595A;
-  --msk-red-dim:       rgba(193,89,90,.15);
-  --msk-border:        rgba(217,174,92,.15);
-  --msk-border-strong: rgba(217,174,92,.28);
-  --msk-divider:       rgba(255,255,255,.05);
-  --msk-shadow-sm:     0 1px 3px rgba(0,0,0,.35);
-  --msk-shadow:        0 4px 16px rgba(0,0,0,.38), 0 1px 4px rgba(0,0,0,.22);
-  --msk-shadow-lg:     0 12px 40px rgba(0,0,0,.48);
-  --msk-shadow-gold:   0 0 28px rgba(217,174,92,.14);
-  --majalis-ink:           var(--msk-text);
-  --majalis-ink-soft:      var(--msk-text-2);
-  --majalis-ink-muted:     var(--msk-text-3);
-  --majalis-charcoal:      var(--msk-text);
-  --majalis-parchment:     #FAF3E4;
-  --majalis-parchment-deep:#F3E7CC;
-  --majalis-panel:         var(--msk-canvas-1);
-  --majalis-panel-raised:  var(--msk-canvas-2);
-  --majalis-emerald:       var(--msk-gold);
-  --majalis-emerald-deep:  var(--msk-gold-deep);
-  --majalis-emerald-muted: var(--msk-gold-dim);
-  --majalis-emerald-soft:  rgba(217,174,92,.06);
-  --majalis-blue:          var(--msk-sky);
-  --majalis-blue-deep:     #2C88A8;
-  --majalis-blue-soft:     var(--msk-sky-dim);
-  --majalis-brass:         var(--msk-gold);
-  --majalis-brass-deep:    var(--msk-gold-deep);
-  --majalis-brass-soft:    rgba(217,174,92,.06);
-  --majalis-sage:          rgba(217,174,92,.08);
-  --majalis-danger:        var(--msk-red);
-  --majalis-danger-muted:  var(--msk-red-dim);
-  --majalis-success:       var(--msk-green);
-  --majalis-warning:       #E8A42A;
-  --majalis-line:          var(--msk-border);
-  --majalis-line-strong:   var(--msk-border-strong);
-  --majalis-shadow:        0 4px 16px rgba(0,0,0,.38), 0 1px 4px rgba(0,0,0,.22);
-  --majalis-shadow-sm:     0 1px 3px rgba(0,0,0,.35);
-  --majalis-shadow-lg:     0 12px 40px rgba(0,0,0,.48);
-  --majalis-shadow-xl:     0 24px 64px rgba(0,0,0,.55);
-  --majalis-gold:          var(--msk-gold);
-  --majalis-gold-light:    rgba(217,174,92,.2);
-  --majalis-ivory:         var(--msk-canvas-1);
-
-  /* ── جسر إرثي: وضع الليل ── */
-  --bg-card:             var(--msk-canvas-1, #1F2540);
-  --bg-base:             var(--msk-canvas,   #171C2E);
-  --text-base:           var(--msk-text,     #E8E3DC);
-  --text-body:           var(--msk-text-2,   #B8B0A8);
-  --text-muted:          var(--msk-text-3,   #7A7570);
-  --majalis-accent:      var(--msk-gold,     #D9AE5C);
-  --majalis-surface-2:   var(--msk-canvas-1, #1F2540);
-  --majalis-surface-hover: rgba(217,174,92,0.06);
-  --majalis-surface-muted: var(--msk-canvas-1, #1F2540);
-  --ds-surface-2:        var(--msk-canvas-1, #1F2540);
-  --color-parchment:     var(--msk-canvas-1, #1F2540);
-  --color-line:          var(--msk-border,   rgba(217,174,92,0.15));
-
-  --v2-green:        var(--msk-gold);
-  --v2-green-deep:   var(--msk-gold-deep);
-  --v2-green-soft:   rgba(217,174,92,.06);
-  --v2-green-mid:    rgba(217,174,92,.40);
-  --v2-blue:         var(--msk-sky);
-  --v2-blue-deep:    #2C88A8;
-  --v2-blue-soft:    var(--msk-sky-dim);
-  --v2-gold:         var(--msk-gold);
-  --v2-gold-soft:    rgba(217,174,92,.06);
-  --v2-ink:          var(--msk-text);
-  --v2-ink-2:        var(--msk-text-2);
-  --v2-ink-3:        var(--msk-text-3);
-  --v2-surface-0:    var(--msk-canvas-1);
-  --v2-surface-1:    var(--msk-canvas);
-  --v2-surface-2:    var(--msk-canvas-2);
-  --v2-border:       var(--msk-border);
-  --v2-border-soft:  var(--msk-divider);
-  --v2-shadow-1:     0 1px 3px rgba(0,0,0,.35);
-  --v2-shadow-2:     0 4px 16px rgba(0,0,0,.38);
-  --v2-shadow-3:     0 12px 40px rgba(0,0,0,.48);
-  --v2-shadow-4:     0 24px 64px rgba(0,0,0,.55);
-  --mn-surface-active:  rgba(217,174,92,.08);
-}
 
 /* ══ وضع النهار — الزمرد الإسلامي ══ */
-html[data-theme="light"] {
+{
   --msk-canvas:        #FFFFFF;
   --msk-canvas-1:      #F7FBF9;
   --msk-canvas-2:      #F0EDE8;
@@ -421,7 +306,7 @@ html[data-font="naskh"] {
 }
 
 /* shadcn bridge للنهار — يرث من light tokens */
-html[data-theme="light"] {
+{
   --background:          var(--msk-canvas);
   --foreground:          var(--msk-text);
   --card:                var(--msk-canvas-1);
@@ -458,45 +343,14 @@ body {
 }
 
 /* في وضع الليل (افتراضي) — الصور تعمل بشكل طبيعي على الخلفية الداكنة */
-html[data-theme="light"] img:not(.navbar-logo) {
+img:not(.navbar-logo) {
   filter: none;
 }
 
-html[data-theme="dark"] input,
-html[data-theme="dark"] textarea,
-html[data-theme="dark"] select {
-  background: var(--msk-canvas-1);
-  color: var(--msk-text);
-  border-color: var(--msk-border);
-}
 
-html[data-theme="dark"] .app-shell,
-html[data-theme="dark"] .app-main,
-html[data-theme="dark"] .legal-page,
-html[data-theme="dark"] .page-shell {
-  background: var(--msk-canvas);
-  color: var(--msk-text);
-}
 
-html[data-theme="dark"] .navbar-v3 {
-  background: var(--msk-canvas-glass) !important;
-  border-color: var(--msk-border) !important;
-}
 
-html[data-theme="dark"] .legal-page-hero {
-  background:
-    radial-gradient(circle at top right, rgba(217,174,92,.12), transparent 20rem),
-    linear-gradient(135deg, #0F1220, #171C2E) !important;
-  color: var(--msk-text) !important;
-}
 
-html[data-theme="dark"] .legal-page-body,
-html[data-theme="dark"] .legal-section,
-html[data-theme="dark"] .settings-account-card,
-html[data-theme="dark"] .settings-choice {
-  background: var(--msk-canvas-1);
-  color: var(--msk-text);
-}
 
 .home-section-error {
   border: 1px solid rgba(24,54,42,0.35);
@@ -520,16 +374,7 @@ html[data-theme="dark"] .settings-choice {
   font-weight: 800;
 }
 
-html[data-theme="dark"] .home-section-error {
-  background: #0E2019;
-  border-color: var(--majalis-emerald);
-  color: #BEC7C3;
-}
 
-html[data-theme="dark"] .home-section-error button {
-  background: transparent;
-  color: var(--majalis-ink);
-}
 
 h1,
 h2,
@@ -729,7 +574,7 @@ input, textarea, select { font-family: inherit; }
   overflow-x: hidden;
 }
 
-html[data-theme="light"] .home-page {
+.home-page {
   background:
     radial-gradient(circle at top right, rgba(14,110,82,.06), transparent 32rem),
     linear-gradient(180deg, #FAFAF7 0%, #FAF8F5 100%);
@@ -6763,7 +6608,6 @@ html[data-theme="light"] .home-page {
 }
 
 /* الوضع الداكن */
-html[data-theme="dark"] .notif-badge { background: #ef4444; }
 
 /* ── Tabs الموحّدة (mj-tabs) ── */
 .mj-tabs-list {
@@ -8207,31 +8051,6 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
   margin: 0;
 }
 
-/* ─── Dark mode ──────────────────────────────────────── */
-[data-theme="dark"] .hadith-badge--collection  { background: #1e3a5f; color: #93c5fd; border-color: #1e40af; }
-[data-theme="dark"] .hadith-badge--tirmidhi   { background: #0c2a3f; color: #7dd3fc; border-color: #0369a1; }
-[data-theme="dark"] .hadith-badge--abudawud   { background: #3b0764; color: #f0abfc; border-color: #a21caf; }
-[data-theme="dark"] .hadith-badge--nasai      { background: #052e16; color: #86efac; border-color: #166534; }
-[data-theme="dark"] .hadith-badge--ibnmajah   { background: #4c0519; color: #fda4af; border-color: #9f1239; }
-[data-theme="dark"] .hadith-grade--sahih       { background: #14532d; color: #86efac; }
-[data-theme="dark"] .hadith-grade--hasan-sahih { background: #064e3b; color: #6ee7b7; }
-[data-theme="dark"] .hadith-grade--hasan       { background: #153025; color: #BEC7C3; }
-[data-theme="dark"] .hadith-grade--daif        { background: #7f1d1d; color: #fca5a5; }
-[data-theme="dark"] .hadith-card__text,
-[data-theme="dark"] .hadith-modal__text        { background: rgba(255,255,255,0.05); }
-[data-theme="dark"] .hadith-modal              { background: var(--majalis-surface, #1e293b); }
-[data-theme="dark"] .hadith-modal__explanation { background: #1e3a5f; }
-[data-theme="dark"] .hadith-modal__explanation h3 { color: #93c5fd; }
-[data-theme="dark"] .hadith-modal__meta-item   { background: rgba(255,255,255,0.06); }
-
-/* ─── Hadith stacked page (three sections) ───────────── */
-.hadith-page--stacked { display: flex; flex-direction: column; gap: 0; }
-
-.hadith-stacked-sections {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
 
 .hadith-section-sep {
   height: 2px;
@@ -8279,9 +8098,6 @@ html[data-theme="dark"] .notif-badge { background: #ef4444; }
   max-width: 65ch;
 }
 
-[data-theme="dark"] .hadith-section-sep {
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12) 20%, rgba(255,255,255,0.12) 80%, transparent);
-}
 
 /* --- Stories page --- */
 .story-card {
@@ -9862,26 +9678,7 @@ body:not(.mobile-nav-body-lock) .mobile-nav-layer {
   font-size: 0.85rem;
 }
 
-html[data-theme="dark"] .navbar-menu-btn {
-  background: rgba(255,255,255,0.06);
-  border-color: rgba(217, 174, 92, 0.2);
-  box-shadow: 0 1px 4px rgba(0,0,0,0.25), 0 0 0 1px rgba(217,174,92,0.12);
-}
-html[data-theme="dark"] .navbar-menu-btn:hover {
-  background: rgba(217,174,92,0.08);
-  border-color: rgba(217, 174, 92, 0.45);
-  color: var(--msk-gold);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.30);
-}
-html[data-theme="dark"] .navbar-menu-btn__geo {
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23D9AE5C' d='M12 0l3 9h9l-7 5 3 9-8-6-8 6 3-9-7-5h9z'/%3E%3C/svg%3E") center/contain no-repeat;
-  opacity: 0.12;
-}
 
-html[data-theme="dark"] .navbar-search-submit,
-html[data-theme="dark"] .navbar-login {
-  color: var(--msk-canvas);
-}
 
 .navbar-login {
   display: inline-flex;
@@ -10288,18 +10085,6 @@ body.mobile-nav-body-lock {
   font-weight: 700;
 }
 
-html[data-theme="dark"] .side-nav-drawer--v2 {
-  background: var(--msk-canvas-1);
-  border-color: var(--msk-border);
-}
-
-html[data-theme="dark"] .side-nav-link--v2:hover:not(.is-active) {
-  background: color-mix(in srgb, var(--msk-gold) 10%, transparent);
-}
-html[data-theme="dark"] .side-nav-link--v2.is-active {
-  background: color-mix(in srgb, var(--msk-gold) 15%, transparent);
-  color: var(--msk-gold);
-}
 
 body.side-nav-open {
   overflow: hidden;
@@ -13171,10 +12956,6 @@ body.has-assistant-fab .app-main {
   color: var(--msk-gold, #0E6E52);
   opacity: 0.55;
 }
-html[data-theme="dark"] .lessons-geo-banner__pattern {
-  color: var(--msk-gold, #D9AE5C);
-  opacity: 0.28;
-}
 
 /* ── Admin lesson card toolbar ── */
 .lesson-card-admin-wrap {
@@ -13219,18 +13000,6 @@ html[data-theme="dark"] .lessons-geo-banner__pattern {
 }
 .lesson-admin-btn--delete:hover {
   background: rgba(254, 226, 226, 0.9);
-}
-html[data-theme="dark"] .lesson-admin-toolbar {
-  background: color-mix(in srgb, var(--msk-gold) 6%, var(--msk-canvas-1));
-  border-color: color-mix(in srgb, var(--msk-gold) 15%, var(--msk-border));
-}
-html[data-theme="dark"] .lesson-admin-btn--delete {
-  color: #fca5a5;
-  background: rgba(127, 29, 29, 0.25);
-  border-color: rgba(220, 38, 38, 0.3);
-}
-html[data-theme="dark"] .lesson-admin-btn--delete:hover {
-  background: rgba(127, 29, 29, 0.45);
 }
 
 /* ── Lessons page v2 ── */
@@ -13561,15 +13330,6 @@ html[data-theme="dark"] .lesson-admin-btn--delete:hover {
   --ds-hero-grad: linear-gradient(155deg, #0F1220 0%, #171C2E 42%, #1F2540 72%, #131829 100%);
 }
 
-html[data-theme="dark"] {
-  --ds-shadow-xs: 0 1px 4px rgba(0,0,0,.28);
-  --ds-shadow-sm: 0 4px 14px rgba(0,0,0,.34);
-  --ds-shadow-md: 0 10px 30px rgba(0,0,0,.40);
-  --ds-shadow-lg: 0 20px 52px rgba(0,0,0,.46);
-  --ds-shadow-xl: 0 32px 72px rgba(0,0,0,.52);
-  --ds-hero-grad: linear-gradient(155deg, #0F1220 0%, #171C2E 42%, #1F2540 72%, #131829 100%);
-  --ds-emerald-grad: linear-gradient(135deg, #D9AE5C 0%, #C49540 100%);
-}
 
 /* ─── Phase 1: Unified Button Component ───────────────────── */
 .ds-btn {
@@ -13921,13 +13681,8 @@ html[data-theme="dark"] {
   box-shadow: 0 1px 20px rgba(0,0,0,.28) !important;
 }
 
-html[data-theme="dark"] .navbar-v3 {
-  background: var(--msk-canvas-glass) !important;
-  border-color: var(--msk-border) !important;
-  box-shadow: 0 2px 20px rgba(0,0,0,.38) !important;
-}
 
-html[data-theme="light"] .navbar-v3 {
+.navbar-v3 {
   background: rgba(255,255,255,.96) !important;
   border-color: rgba(14,110,82,0.12) !important;
   box-shadow: 0 1px 12px rgba(14,110,82,0.06) !important;
@@ -15366,28 +15121,9 @@ html[data-theme="light"] .navbar-v3 {
 }
 
 /* ================================================================
-   Dark mode — bottom nav
-   ================================================================ */
 
-html[data-theme="dark"] .bottom-nav {
-  background: var(--msk-canvas-glass);
-  border-top-color: var(--msk-border);
-  box-shadow: 0 -2px 16px rgba(0,0,0,.32);
-}
 
-html[data-theme="dark"] .home-search-strip {
-  background: var(--msk-canvas-1);
-  border-bottom-color: var(--msk-border);
-}
 
-html[data-theme="dark"] .home-search-compact {
-  background: var(--msk-canvas-1);
-  border-color: var(--msk-border);
-}
-
-html[data-theme="dark"] .more-sheet-item {
-  background: var(--msk-canvas-2);
-}
 
 
 /* ═══════════════════════════════════════════════════════════
@@ -15470,8 +15206,6 @@ html[data-theme="dark"] .more-sheet-item {
   background: var(--majalis-emerald-muted, rgba(31,110,84,0.1));
   color: var(--majalis-emerald);
 }
-html[data-theme="dark"] .more-sheet-item  { background: var(--msk-canvas-1); }
-html[data-theme="dark"] .more-sheet-item:hover { background: var(--msk-canvas-2); }
 
 /* Prayer Countdown Page */
 .prayer-countdown-page {
@@ -15529,7 +15263,6 @@ html[data-theme="dark"] .more-sheet-item:hover { background: var(--msk-canvas-2)
 }
 .prayer-slot-chip__name { font-weight: 600; }
 .prayer-slot-chip__time { opacity: 0.75; font-variant-numeric: tabular-nums; }
-html[data-theme="dark"] .prayer-slot-chip { background: var(--majalis-parchment-deep); }
 
 /* Quran Circles Cards */
 .qc-card {
@@ -15561,7 +15294,6 @@ html[data-theme="dark"] .prayer-slot-chip { background: var(--majalis-parchment-
 }
 .qc-card__capacity-bar { height: 100%; background: var(--majalis-emerald); border-radius: 2px; }
 .qc-card__footer { padding: 0.75rem 1rem; border-top: 1px solid var(--majalis-line); display: flex; gap: 0.5rem; }
-html[data-theme="dark"] .qc-card { background: var(--majalis-panel); }
 
 /* Display font for major headings */
 .font-display { font-family: var(--font-display) !important; }
@@ -15676,7 +15408,6 @@ html[data-theme="dark"] .qc-card { background: var(--majalis-panel); }
 .univ-badge--mode      { background: var(--majalis-parchment-deep); color: var(--majalis-ink-soft); }
 .univ-badge--scholarship { background: rgba(180, 131, 20, 0.12); color: var(--majalis-brass-deep); }
 
-html[data-theme="dark"] .univ-badge--degree { background: rgba(96, 165, 250, 0.15); color: #93c5fd; }
 
 .univ-btn {
   display: inline-flex;
@@ -15844,10 +15575,6 @@ html[data-theme="dark"] .univ-badge--degree { background: rgba(96, 165, 250, 0.1
 :root {
   --majalis-danger:       #c0392b;
   --majalis-danger-muted: #fdecea;
-}
-html[data-theme="dark"] {
-  --majalis-danger:       #e57373;
-  --majalis-danger-muted: #2d1515;
 }
 
 /* ══ Admin Shell ══ */
@@ -16243,8 +15970,6 @@ html[data-theme="dark"] {
 .fip-status--in-progress { background: rgba(14,110,82,0.08); color: #0A5040; }
 .fip-status--beta { background: #DBEAFE; color: #1E40AF; }
 .fip-status--planned { background: var(--majalis-parchment-deep, #f0e8d6); color: var(--majalis-ink-soft, #5c564c); }
-html[data-theme="dark"] .fip-status--in-progress { background: rgba(24,54,42,0.25); color: #BEC7C3; }
-html[data-theme="dark"] .fip-status--beta { background: rgba(59,130,246,0.16); color: #93C5FD; }
 
 /* ── فهرس الأحاديث (3 أقسام) — HadithIndex ── */
 .hadith-index-grid {
@@ -16297,7 +16022,6 @@ html[data-theme="dark"] .fip-status--beta { background: rgba(59,130,246,0.16); c
 
 /* لون الأحاديث الموضوعة (لم يكن موجوداً) — للبادج في القوائم */
 .hadith-grade--mawdu, .grade--mawdu { color: #B91C1C; background: rgba(185, 28, 28, 0.1); }
-html[data-theme="dark"] .hadith-grade--mawdu, html[data-theme="dark"] .grade--mawdu { color: #FCA5A5; background: rgba(185, 28, 28, 0.18); }
 
 /* ══════════════════════════════════════════════════════════════
    Design System v5 — Premium Hero & Page Enhancements
@@ -16449,10 +16173,6 @@ html[data-theme="dark"] .hadith-grade--mawdu, html[data-theme="dark"] .grade--ma
   flex-shrink: 0;
   color: var(--majalis-emerald, #0E6E52);
 }
-html[data-theme="dark"] .home-feature-strip-icon {
-  background: color-mix(in srgb, var(--msk-gold) 12%, transparent);
-  color: var(--msk-gold);
-}
 
 .home-feature-strip-name {
   font-size: 0.82rem;
@@ -16541,16 +16261,6 @@ html[data-theme="dark"] .home-feature-strip-icon {
   flex-shrink: 0;
   opacity: 0.6;
 }
-html[data-theme="dark"] .home-story-card {
-  background: var(--msk-canvas-1, #1E2434);
-  border-color: rgba(217,174,92,0.12);
-}
-html[data-theme="dark"] .home-story-card::before {
-  background: linear-gradient(135deg, rgba(217,174,92,0.04) 0%, transparent 55%);
-}
-html[data-theme="dark"] .home-story-card__title {
-  color: var(--msk-gold, #D9AE5C);
-}
 @media (min-width: 480px) {
   .home-stories-grid { grid-template-columns: repeat(2, 1fr); }
 }
@@ -16576,13 +16286,6 @@ html[data-theme="dark"] .home-story-card__title {
 .prophet-home-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(14,110,82,0.12);
-}
-html[data-theme="dark"] .prophet-home-card {
-  background: var(--msk-canvas-1);
-  border-color: rgba(217,174,92,0.15);
-}
-html[data-theme="dark"] .prophet-home-card::before {
-  background: linear-gradient(135deg, rgba(217,174,92,0.04) 0%, transparent 60%);
 }
 
 /* ── تأثيرات التفاعل العامة ── */
@@ -16740,24 +16443,10 @@ html[data-theme="dark"] .prophet-home-card::before {
 }
 
 /* ── Dark mode overrides ── */
-html[data-theme="dark"] .home-quick-link:hover {
-  background: var(--majalis-panel-raised, #1E3028);
-  border-color: rgba(77, 184, 142, 0.25);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-}
 
-html[data-theme="dark"] .home-feature-strip-card {
-  background: var(--majalis-panel, #1A2820);
-  border-color: var(--majalis-line, #263D33);
-}
 
 /* home-feature-strip-icon dark: defined above with color-mix */
 
-html[data-theme="dark"] .home-quiz-card {
-  background: var(--majalis-panel, #1A2820);
-  border-color: var(--majalis-line, #263D33);
-  border-right-color: var(--majalis-brass, #D4AD50);
-}
 
 /* ══════════════════════════════════════════════════════════════
    Design System v5 — Lesson Cards & Tabs Refinement
@@ -16855,9 +16544,6 @@ html[data-theme="dark"] .home-quiz-card {
   margin: 0;
   max-width: 60ch;
 }
-html[data-theme="dark"] .ds-page-header {
-  background: linear-gradient(155deg, #1A3D2E 0%, #0F2519 100%);
-}
 
 /* بطاقات المحتوى العام */
 .content-mini-card {
@@ -16915,37 +16601,11 @@ html[data-theme="dark"] .ds-page-header {
 }
 
 /* ── Dark mode ── */
-html[data-theme="dark"] .lesson-unified-card {
-  background: var(--majalis-panel, #1A2820);
-  border-color: var(--majalis-line, #263D33);
-}
 
-html[data-theme="dark"] .content-mini-card {
-  background: var(--majalis-panel, #1A2820);
-  border-color: var(--majalis-line, #263D33);
-}
 
-html[data-theme="dark"] .tabs-bar,
-html[data-theme="dark"] .page-tab-row {
-  background: var(--majalis-parchment-deep, #151E1A);
-  border-color: var(--majalis-line, #263D33);
-}
 
-html[data-theme="dark"] .tab-btn--active,
-html[data-theme="dark"] .page-tab-btn--active {
-  background: var(--majalis-panel, #1A2820);
-  color: var(--majalis-emerald, #4DB88E);
-}
 
-html[data-theme="dark"] .content-hub-chip--active {
-  background: var(--majalis-emerald, #4DB88E);
-  color: var(--majalis-parchment, #0D1410);
-  border-color: var(--majalis-emerald, #4DB88E);
-}
 
-html[data-theme="dark"] .ds-page-header {
-  border-bottom-color: var(--majalis-line, #263D33);
-}
 
 /* ══════════════════════════════════════════════════════════════
    Design System v5 — Auth Pages (Login / Register)
@@ -17094,38 +16754,10 @@ html[data-theme="dark"] .ds-page-header {
 }
 
 /* ── Dark mode ── */
-html[data-theme="dark"] .login-page {
-  background:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M28 4L34 16L46 10L40 22L52 28L40 34L46 46L34 40L28 52L22 40L10 46L16 34L4 28L16 22L10 10L22 16Z' fill='none' stroke='rgba(77,184,142,0.06)' stroke-width='1'/%3E%3C/svg%3E"),
-    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(77, 184, 142, 0.06) 0%, transparent 65%),
-    var(--majalis-parchment, #0D1410);
-  background-size: 56px 56px, cover, cover;
-}
 
-html[data-theme="dark"] .login-card {
-  background: var(--majalis-panel, #1A2820);
-  border-color: var(--majalis-line, #263D33);
-  box-shadow:
-    0 4px 16px rgba(0, 0, 0, 0.2),
-    0 12px 40px rgba(0, 0, 0, 0.15);
-}
 
-html[data-theme="dark"] .login-field input {
-  background: var(--majalis-parchment-deep, #151E1A);
-  border-color: var(--majalis-line, #263D33);
-  color: var(--majalis-ink, #E8F4EE);
-}
 
-html[data-theme="dark"] .login-field input:focus {
-  border-color: var(--majalis-emerald, #4DB88E);
-  box-shadow: 0 0 0 3px rgba(77, 184, 142, 0.12);
-}
 
-html[data-theme="dark"] .login-oauth__btn {
-  background: var(--majalis-panel, #1A2820);
-  border-color: var(--majalis-line, #263D33);
-  color: var(--majalis-ink, #E8F4EE);
-}
 
 /* ══════════════════════════════════════════════════════════════
    Design System v5 — SideNavDrawer Premium
@@ -17205,26 +16837,6 @@ html[data-theme="dark"] .login-oauth__btn {
   margin-bottom: 1.25rem;
 }
 
-/* ── Dark mode ── */
-html[data-theme="dark"] .mobile-nav-layer--drawer {
-  background: rgba(5, 10, 8, 0.65);
-}
-
-html[data-theme="dark"] .side-nav-drawer--v2 {
-  background: var(--majalis-parchment, #0D1410);
-  border-left-color: var(--majalis-line, #263D33);
-  box-shadow: -12px 0 40px rgba(0, 0, 0, 0.4);
-}
-
-html[data-theme="dark"] .side-nav-link--v2:hover:not(.is-active) {
-  background: color-mix(in srgb, var(--majalis-emerald) 12%, var(--majalis-parchment));
-}
-
-html[data-theme="dark"] .side-nav-link--v2.is-active {
-  background: rgba(77, 184, 142, 0.12);
-  color: var(--majalis-emerald, #4DB88E);
-}
-
 /* ══════════════════════════════════════════════════════════════
    Design System v5 — MoreBottomSheet + BottomNavBar
    ══════════════════════════════════════════════════════════════ */
@@ -17288,24 +16900,9 @@ html[data-theme="dark"] .side-nav-link--v2.is-active {
 }
 
 /* ── Dark mode ── */
-html[data-theme="dark"] .bottom-sheet-overlay {
-  background: rgba(10, 12, 24, 0.72);
-}
 
-html[data-theme="dark"] .bottom-sheet {
-  background: var(--msk-canvas-1);
-  box-shadow: 0 -8px 40px rgba(0,0,0,.45);
-}
 
-html[data-theme="dark"] .more-sheet-item:hover {
-  background: var(--msk-gold-dim);
-  border-color: var(--msk-gold-border);
-}
 
-html[data-theme="dark"] .more-sheet-item__icon {
-  background: var(--msk-gold-dim);
-  color: var(--msk-gold);
-}
 
 /* ══════════════════════════════════════════════════════════════
    Design System v5 — Lesson Detail & Content Pages
@@ -17407,31 +17004,9 @@ html[data-theme="dark"] .more-sheet-item__icon {
 }
 
 /* ── Dark mode ── */
-html[data-theme="dark"] .lesson-detail-back {
-  background: var(--majalis-parchment-deep, #151E1A);
-  border-color: var(--majalis-line, #263D33);
-  color: var(--msk-text-2, #5C5550);
-}
 
-html[data-theme="dark"] .lesson-detail-back:hover {
-  background: rgba(77, 184, 142, 0.1);
-  border-color: rgba(77, 184, 142, 0.2);
-}
 
-html[data-theme="dark"] .lesson-detail-card {
-  border-color: var(--majalis-line, #263D33);
-}
 
-html[data-theme="dark"] .page-skeleton,
-html[data-theme="dark"] .ui-skeleton {
-  background: linear-gradient(
-    90deg,
-    var(--majalis-parchment-deep, #151E1A) 25%,
-    var(--majalis-panel, #1A2820) 50%,
-    var(--majalis-parchment-deep, #151E1A) 75%
-  );
-  background-size: 200% 100%;
-}
 
 /* ══════════════════════════════════════════════════════════════
    Design System v5 — Typography & Prose Enhancements
@@ -17510,22 +17085,8 @@ html[data-theme="dark"] .ui-skeleton {
 }
 
 /* ── Dark mode ── */
-html[data-theme="dark"] .prose-content,
-html[data-theme="dark"] .lesson-detail-body,
-html[data-theme="dark"] .qa-answer-body {
-  color: var(--majalis-ink, #E8F4EE);
-}
 
-html[data-theme="dark"] .hadith-arabic-text {
-  color: var(--majalis-emerald, #4DB88E);
-  border-right-color: var(--majalis-emerald, #4DB88E);
-}
 
-html[data-theme="dark"] .content-quote,
-html[data-theme="dark"] .scholarly-quote {
-  background: rgba(154, 109, 26, 0.08);
-  border-right-color: var(--majalis-brass, #D4AD50);
-}
 
 /* ══════════════════════════════════════════════════════════════
    Design System v5 — Daily Content Cards (Home sections)
@@ -17598,21 +17159,8 @@ html[data-theme="dark"] .scholarly-quote {
 }
 
 /* ── Dark mode ── */
-html[data-theme="dark"] .home-daily-card--hadith::before {
-  color: rgba(77, 184, 142, 0.06);
-}
 
-html[data-theme="dark"] .home-daily-card--dhikr {
-  background: linear-gradient(
-    135deg,
-    var(--majalis-panel, #1A2820) 0%,
-    rgba(154, 109, 26, 0.05) 100%
-  );
-}
 
-html[data-theme="dark"] .home-daily-meaning {
-  border-top-color: var(--majalis-line, #263D33);
-}
 
 /* ══════════════════════════════════════════════════════════════
    Design System v5 — Page Transition & Loading States
@@ -17759,38 +17307,11 @@ html[data-theme="dark"] .home-daily-meaning {
 }
 
 /* ── Dark mode ── */
-html[data-theme="dark"] .adhkar-card {
-  background: var(--majalis-panel, #1A2820);
-  border-color: var(--majalis-line, #263D33);
-}
 
-html[data-theme="dark"] .adhkar-card:hover {
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-  border-color: rgba(77, 184, 142, 0.25);
-}
 
-html[data-theme="dark"] .adhkar-card__count {
-  background: rgba(77, 184, 142, 0.12);
-  color: var(--majalis-emerald, #4DB88E);
-}
 
-html[data-theme="dark"] .adhkar-card__text {
-  color: var(--majalis-ink, #E8F4EE);
-}
 
-html[data-theme="dark"] .page-tag,
-html[data-theme="dark"] .content-tag {
-  background: var(--majalis-parchment-deep, #151E1A);
-  border-color: var(--majalis-line, #263D33);
-  color: var(--msk-text-2, #5C5550);
-}
 
-html[data-theme="dark"] .page-tag--active,
-html[data-theme="dark"] .content-tag--active {
-  background: rgba(77, 184, 142, 0.12);
-  color: var(--majalis-emerald, #4DB88E);
-  border-color: rgba(77, 184, 142, 0.2);
-}
 
 /* ── صفحة الصلاة المبسّطة (PrayerTimesPage) ── */
 /* ── صفحة الصلاة — بطاقة العداد ── */
@@ -17894,14 +17415,6 @@ html[data-theme="dark"] .content-tag--active {
   font-size: 0.72rem;
   color: var(--msk-text-2);
   font-variant-numeric: tabular-nums;
-}
-html[data-theme="dark"] .prayer-card {
-  background: var(--msk-canvas-1, #1E2434);
-  border-color: var(--msk-border, rgba(255,255,255,0.08));
-}
-html[data-theme="dark"] .prayer-today-item {
-  background: var(--msk-canvas-1, #1E2434);
-  border-color: var(--msk-border, rgba(255,255,255,0.07));
 }
 /* Fallback — kept for backwards compat if any page still uses old classes */
 .prayer-times-clean {

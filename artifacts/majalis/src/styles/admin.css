@@ -687,23 +687,6 @@ a.admin-info-panel__item-title:hover { color: var(--majalis-emerald-deep); }
 }
 
 /* وضع داكن للشارات */
-:root[data-theme="dark"] .admin-badge--pending,
-html[data-theme="dark"]  .admin-badge--pending  { background: rgba(251,191,36,.15); color:#FCD34D; border-color:rgba(251,191,36,.3); }
-:root[data-theme="dark"] .admin-badge--approved,
-html[data-theme="dark"]  .admin-badge--approved { background: rgba(16,185,129,.15); color:#6EE7B7; border-color:rgba(16,185,129,.3); }
-:root[data-theme="dark"] .admin-badge--rejected,
-html[data-theme="dark"]  .admin-badge--rejected { background: rgba(239,68,68,.15);  color:#FCA5A5; border-color:rgba(239,68,68,.3); }
-:root[data-theme="dark"] .admin-badge--draft,
-html[data-theme="dark"]  .admin-badge--draft    { background: rgba(148,163,184,.15);color:#CBD5E1; border-color:rgba(148,163,184,.3); }
-:root[data-theme="dark"] .admin-badge--published,
-html[data-theme="dark"]  .admin-badge--published{ background: rgba(59,130,246,.15); color:#93C5FD; border-color:rgba(59,130,246,.3); }
-
-/* ── جداول متجاوبة ────────────────────────────────────────────────── */
-.admin-table-scroll {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  border-radius: 0.5rem;
-}
 .admin-table-scroll table { min-width: 640px; }
 
 /* ── بطاقة خطأ القسم ─────────────────────────────────────────────── */

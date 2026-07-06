@@ -124,27 +124,8 @@
 }
 
 /* ══════════════════════════════════════════════════
-   الوضع الداكن
-   ══════════════════════════════════════════════════ */
-html[data-theme="dark"] .geo-star-grid {
-  background-color: var(--majalis-parchment, #0D1410);
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M28 4L34 16L46 10L40 22L52 28L40 34L46 46L34 40L28 52L22 40L10 46L16 34L4 28L16 22L10 10L22 16Z' fill='none' stroke='rgba(77,184,142,0.08)' stroke-width='1'/%3E%3C/svg%3E");
-}
 
-html[data-theme="dark"] .geo-hero-gradient {
-  background:
-    radial-gradient(ellipse 120% 80% at 50% -10%,
-      color-mix(in srgb, var(--majalis-emerald, #4DB88E) 15%, transparent),
-      transparent 70%
-    ),
-    var(--majalis-parchment, #0D1410);
-}
 
-html[data-theme="dark"] .geo-divider::before {
-  background: var(--majalis-parchment, #0D1410);
-  color: var(--majalis-brass, #D4AD50);
-}
 
 /* ══════════════════════════════════════════════════
    SVG pattern — قابل للإدراج inline كـ data URL

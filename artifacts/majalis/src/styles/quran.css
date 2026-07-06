@@ -333,11 +333,6 @@
   .qs-ayah-inline__share { opacity: 1; }
 }
 
-html[data-theme="dark"] .qs-ayah-inline__share {
-  background: #1e1e1e;
-  border-color: #3a3a3a;
-  color: #9ca3af;
-}
 
 /* ── Player bar (sticky bottom) ── */
 .qs-player-bar {
@@ -1272,19 +1267,6 @@ html[data-theme="dark"] .qs-ayah-inline__share {
 .qs-juz-ayah__text { margin: 0; line-height: 2.1; font-family: var(--font-quran, 'Amiri Quran', serif); color: var(--text-base, #1a1a1a); }
 
 /* ── Dark mode overrides ── */
-html[data-theme="dark"] .qs-mushaf-body { color: #e8e4da; }
-html[data-theme="dark"] .qs-ayah-inline--playing {
-  background: rgba(110, 231, 183, .1);
-}
-html[data-theme="dark"] .qs-view-tab.is-active { background: var(--msk-gold); }
-html[data-theme="dark"] .qs-ctrl-btn { background: #1a1a1a; border-color: #333; color: #e8e8e8; }
-html[data-theme="dark"] .qs-context-sheet { background: #1a1a1a; }
-html[data-theme="dark"] .qs-context-sheet__btn { background: #242424; border-color: #333; color: #e8e8e8; }
-html[data-theme="dark"] .qs-page-view__frame { background: #2a2419; }
-html[data-theme="dark"] .qs-surah-item.is-active { background: #0f3329; color: #6ee7b7; }
-html[data-theme="dark"] .qs-reciter-picker__dropdown { background: #1a1a1a; }
-html[data-theme="dark"] .qs-search__result:hover { background: #0f3329; }
-html[data-theme="dark"] .qs-radio-card.is-active { background: #1a1308; }
 
 /* ═══════════════════════════════════════════════════════════════════════════
    MUSHAF IMMERSIVE READER  (.mf-*)
