@@ -191,15 +191,37 @@ body {
   color: rgba(250,248,242,0.88) !important;
 }
 
-/* ── عناوين صفحة الدروس وفروعها — أبيض على شريط غابات ── */
+/* ══════════════════════════════════════════════
+   §4c. عناوين الأقسام — أبيض على شريط غابات (جميع الصفحات)
+   ══════════════════════════════════════════════ */
+.ds-section__title,
 .lessons-v2-section__title,
-.lessons-past-section__title {
+.lessons-past-section__title,
+.cards-page-title,
+.search-page-title,
+.hadith-section-title,
+.fiqh-council-section-title,
+.qa-v2-section-title,
+.kuwait-lessons-section-title,
+.profile-section-title,
+.user-stats-section__title,
+.admin-section-title,
+.fm-section-title,
+.rp-section-title {
   color: #fff !important;
   background: var(--elite-forest, #18362A) !important;
   padding: 0.35rem 0.8rem !important;
   border-radius: 0.45rem !important;
   display: inline-block !important;
   margin-bottom: 0.75rem !important;
+}
+
+/* إلغاء الشخطة الزخرفية الزمردية تحت عناوين الأقسام */
+.ds-section__head::after {
+  display: none !important;
+}
+.ds-section__head {
+  border-bottom: none !important;
 }
 
 /* ══════════════════════════════════════════════
