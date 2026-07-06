@@ -153,6 +153,44 @@ body {
   color: var(--elite-ink-muted) !important;
 }
 
+/* ── Navbar menu button — يُلغي الحدود الذهبية من majalis-v2.css ── */
+.navbar-menu-btn,
+.navbar-logout {
+  border: 1px solid var(--elite-border, rgba(24,54,42,0.09)) !important;
+  background: var(--elite-off-white, #F5F5F4) !important;
+  border-radius: var(--elite-r-md, 12px) !important;
+  box-shadow: none !important;
+  color: var(--elite-ink, #1A1A1A) !important;
+}
+.navbar-menu-btn:hover,
+.navbar-logout:hover {
+  background: var(--elite-white, #FAF8F2) !important;
+  border-color: var(--elite-border-2, rgba(24,54,42,0.15)) !important;
+  box-shadow: var(--elite-shadow-sm, 0 2px 4px rgba(18,32,25,0.06)) !important;
+  color: var(--elite-forest, #18362A) !important;
+}
+
+/* ══════════════════════════════════════════════
+   §4b. PageHeader — تعديل cascade التباين
+   يُلغي design-system.css (2nd) الذي يُطبِّق ألواناً داكنة
+   على خلفية داكنة → نسبة تباين 1.14:1 / 1.27:1 (غير مرئي)
+   ══════════════════════════════════════════════ */
+.ds-page-header {
+  background-color: var(--elite-forest, #18362A) !important;
+  background-image: url("/star-pattern.svg") !important;
+  background-size: 100px 100px !important;
+  color: var(--elite-white, #FAF8F2) !important;
+}
+.ds-page-header__eyebrow {
+  color: rgba(255,255,255,0.82) !important;
+}
+.ds-page-header__title {
+  color: #fff !important;
+}
+.ds-page-header__subtitle {
+  color: rgba(250,248,242,0.88) !important;
+}
+
 /* ══════════════════════════════════════════════
    §5. Hero — الواجهة الرئيسية الفاخرة
    ══════════════════════════════════════════════ */
