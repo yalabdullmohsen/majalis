@@ -64,7 +64,7 @@ function MuezzinCard({ muezzin, onPreview, previewing, isFav, onToggleFav }: {
           <div style={{ fontWeight: 700, fontSize: "0.95rem", color: "var(--majalis-ink)", marginBottom: "0.15rem" }}>
             {muezzin.name}
           </div>
-          <div style={{ fontSize: "0.75rem", color: "#6b7280" }}>
+          <div style={{ fontSize: "0.75rem", color: "var(--txt-subdued, #6B7280)" }}>
             📍 {muezzin.origin} · {muezzin.country}
           </div>
         </div>
@@ -96,17 +96,17 @@ function MuezzinCard({ muezzin, onPreview, previewing, isFav, onToggleFav }: {
       </div>
 
       {/* Category */}
-      <div style={{ fontSize: "0.72rem", color: "#9ca3af" }}>{muezzin.category}</div>
+      <div style={{ fontSize: "0.72rem", color: "var(--txt-muted, #52525B)" }}>{muezzin.category}</div>
 
       {/* Rating row */}
       <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
         <StarRating rating={muezzin.rating} />
         <span style={{ fontSize: "0.78rem", fontWeight: 600, color: "var(--majalis-ink-soft)" }}>{muezzin.rating}</span>
-        <span style={{ fontSize: "0.72rem", color: "#9ca3af" }}>({formatNum(muezzin.totalRatings)} تقييم)</span>
+        <span style={{ fontSize: "0.72rem", color: "var(--txt-muted, #52525B)" }}>({formatNum(muezzin.totalRatings)} تقييم)</span>
       </div>
 
       {/* Followers */}
-      <div style={{ fontSize: "0.75rem", color: "#6b7280" }}>
+      <div style={{ fontSize: "0.75rem", color: "var(--txt-subdued, #6B7280)" }}>
         👥 {formatNum(muezzin.followers)} متابع
       </div>
 
@@ -259,7 +259,7 @@ export default function MuezzinsPage() {
             </button>
           </Link>
         </div>
-        <p style={{ fontSize: "0.82rem", color: "#6b7280", margin: 0 }}>
+        <p style={{ fontSize: "0.82rem", color: "var(--txt-subdued, #6B7280)", margin: 0 }}>
           اختر مؤذنك المفضل من أصوات مختارة من أرجاء العالم الإسلامي.
         </p>
       </div>
@@ -273,7 +273,7 @@ export default function MuezzinsPage() {
 
       {/* Search */}
       <div style={{ position: "relative", marginBottom: "0.875rem" }}>
-        <span style={{ position: "absolute", right: "0.75rem", top: "50%", transform: "translateY(-50%)", color: "#9ca3af", fontSize: "1rem" }}>🔍</span>
+        <span style={{ position: "absolute", right: "0.75rem", top: "50%", transform: "translateY(-50%)", color: "var(--txt-muted, #52525B)", fontSize: "1rem" }}>🔍</span>
         <input
           type="search"
           value={query}
@@ -330,7 +330,7 @@ export default function MuezzinsPage() {
       </div>
 
       {/* Results count */}
-      <div style={{ fontSize: "0.78rem", color: "#6b7280", marginBottom: "0.875rem" }}>
+      <div style={{ fontSize: "0.78rem", color: "var(--txt-subdued, #6B7280)", marginBottom: "0.875rem" }}>
         {isAdmin && <>{filtered.length} مؤذن</>}
         {(styleFilter || countryFilter || query) && (
           <button
@@ -345,7 +345,7 @@ export default function MuezzinsPage() {
 
       {/* Grid */}
       {filtered.length === 0 ? (
-        <div style={{ textAlign: "center", padding: "3rem 1rem", color: "#9ca3af", fontSize: "0.9rem" }}>
+        <div style={{ textAlign: "center", padding: "3rem 1rem", color: "var(--txt-muted, #52525B)", fontSize: "0.9rem" }}>
           لا توجد نتائج مطابقة
         </div>
       ) : (
@@ -386,7 +386,7 @@ export default function MuezzinsPage() {
                     borderRadius: "0.5rem",
                     border: "1px dashed #d1d5db",
                     background: "transparent",
-                    color: "#6b7280",
+                    color: "var(--txt-subdued, #6B7280)",
                     fontSize: "0.72rem",
                     cursor: "pointer",
                     fontFamily: "inherit",
@@ -453,7 +453,7 @@ export default function MuezzinsPage() {
           <div style={{ fontWeight: 700, fontSize: "0.95rem", color: "var(--majalis-emerald)", marginBottom: "0.2rem" }}>
             هل لديك تسجيل أذان جميل؟
           </div>
-          <div style={{ fontSize: "0.8rem", color: "#6b7280" }}>
+          <div style={{ fontSize: "0.8rem", color: "var(--txt-subdued, #6B7280)" }}>
             شارك صوتك مع مجتمع المجالس — يُراجع الفريق ويُنشر في المكتبة.
           </div>
         </div>
@@ -522,18 +522,18 @@ function CommunityMuezzinCard({ muezzin, previewing, onPreview }: {
       <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between" }}>
         <div>
           <div style={{ fontWeight: 700, fontSize: "0.875rem", color: "var(--majalis-ink)" }}>{muezzin.name}</div>
-          <div style={{ fontSize: "0.72rem", color: "#6b7280" }}>📍 {muezzin.origin} · {muezzin.country}</div>
+          <div style={{ fontSize: "0.72rem", color: "var(--txt-subdued, #6B7280)" }}>📍 {muezzin.origin} · {muezzin.country}</div>
         </div>
         <span style={{ padding: "0.15rem 0.45rem", borderRadius: "999px", fontSize: "0.65rem", fontWeight: 700, background: "#eff6ff", color: "#1d4ed8" }}>
           مجتمع
         </span>
       </div>
       {muezzin.biography && (
-        <p style={{ fontSize: "0.72rem", color: "#9ca3af", margin: 0, lineHeight: 1.5 }}>
+        <p style={{ fontSize: "0.72rem", color: "var(--txt-muted, #52525B)", margin: 0, lineHeight: 1.5 }}>
           {muezzin.biography.length > 80 ? `${muezzin.biography.slice(0, 80)}...` : muezzin.biography}
         </p>
       )}
-      <div style={{ display: "flex", gap: "0.4rem", fontSize: "0.72rem", color: "#6b7280" }}>
+      <div style={{ display: "flex", gap: "0.4rem", fontSize: "0.72rem", color: "var(--txt-subdued, #6B7280)" }}>
         <span>🎨 {muezzin.style}</span>
         {muezzin.rating > 0 && <span>★ {muezzin.rating}</span>}
       </div>

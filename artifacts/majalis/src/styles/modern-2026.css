@@ -1024,3 +1024,39 @@ html[data-theme="light"] .tasbih-count {
 }
 html:not([data-theme="dark"]) .tasbih-label,
 html[data-theme="light"] .tasbih-label { color: var(--txt-muted, #52525B) !important; }
+
+/* ══ 37. Prophet Stories — Light Card Contrast Fixes ════════════════════════ */
+html:not([data-theme="dark"]) .prophets-lux-count,
+html[data-theme="light"] .prophets-lux-count { color: var(--txt-muted, #52525B) !important; }
+
+html:not([data-theme="dark"]) .prophet-lux-card__place,
+html[data-theme="light"] .prophet-lux-card__place { color: var(--txt-muted, #52525B) !important; }
+
+html:not([data-theme="dark"]) .prophets-lux-empty,
+html[data-theme="light"] .prophets-lux-empty { color: var(--txt-muted, #52525B) !important; }
+
+html:not([data-theme="dark"]) .prophet-timeline__title,
+html[data-theme="light"] .prophet-timeline__title { color: var(--txt-muted, #52525B) !important; }
+
+html:not([data-theme="dark"]) .prophet-timeline__era,
+html[data-theme="light"] .prophet-timeline__era { color: var(--txt-muted, #52525B) !important; }
+
+html:not([data-theme="dark"]) .prophet-quiz__remark,
+html[data-theme="light"] .prophet-quiz__remark { color: var(--txt-muted, #52525B) !important; }
+
+html:not([data-theme="dark"]) .prophets-lux-search-clear,
+html[data-theme="light"] .prophets-lux-search-clear { color: var(--txt-muted, #52525B) !important; }
+
+/* ══ 38. Seerah Page — Timeline Contrast ════════════════════════════════════ */
+html:not([data-theme="dark"]) .seerah-timeline__dot,
+html[data-theme="light"] .seerah-timeline__dot { color: var(--txt-muted, #52525B) !important; }
+
+html:not([data-theme="dark"]) .seerah-timeline__year,
+html[data-theme="light"] .seerah-timeline__year { color: var(--txt-muted, #52525B) !important; }
+
+/* ══ 39. Muezzin Detail / Favorites — Contrast Fixes ════════════════════════ */
+html:not([data-theme="dark"]) .muezzin-meta,
+html[data-theme="light"] .muezzin-meta { color: var(--txt-muted, #52525B) !important; }
+
+html:not([data-theme="dark"]) .muezzin-bio,
+html[data-theme="light"] .muezzin-bio { color: var(--txt-muted, #52525B) !important; }

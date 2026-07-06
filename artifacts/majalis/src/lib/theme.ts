@@ -1,7 +1,7 @@
 export const C = {
   ink:           "var(--majalis-ink)",
   inkSoft:       "var(--majalis-ink-soft)",
-  inkMuted:      "var(--majalis-ink-muted, #A09A94)",
+  inkMuted:      "var(--majalis-ink-muted, #52525B)",
   charcoal:      "var(--majalis-charcoal)",
   parchment:     "var(--majalis-parchment)",
   parchmentDeep: "var(--majalis-parchment-deep)",

@@ -87,7 +87,7 @@ export default function MuezzinFavoritesPage() {
       {favList.length === 0 ? (
         <div style={{ textAlign: "center", padding: "3rem 1rem" }}>
           <div style={{ fontSize: "3rem", marginBottom: "0.75rem" }}>🤍</div>
-          <p style={{ color: "#9ca3af", fontSize: "0.9rem" }}>قائمة مفضلتك فارغة</p>
+          <p style={{ color: "var(--txt-muted, #52525B)", fontSize: "0.9rem" }}>قائمة مفضلتك فارغة</p>
           <Link href="/muezzins">
             <button type="button" style={{
               marginTop: "0.75rem",
@@ -151,7 +151,7 @@ export default function MuezzinFavoritesPage() {
                     <span style={{ fontSize: "0.7rem", color: "#f59e0b", fontWeight: 600 }}>
                       ★ {m.rating}
                     </span>
-                    <span style={{ fontSize: "0.7rem", color: "#9ca3af" }}>
+                    <span style={{ fontSize: "0.7rem", color: "var(--txt-muted, #52525B)" }}>
                       {formatNum(m.followers)} متابع
                     </span>
                   </div>

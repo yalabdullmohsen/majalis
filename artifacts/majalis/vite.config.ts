@@ -69,7 +69,13 @@ export default defineConfig({
             if (id.includes("recharts") || id.includes("d3-") || id.includes("victory")) return "charts";
             if (id.includes("adhan")) return "adhan";
             if (id.includes("react") || id.includes("wouter") || id.includes("scheduler")) return "vendor";
+            if (id.includes("zod") || id.includes("react-hook-form") || id.includes("@hookform")) return "forms";
+            if (id.includes("framer-motion") || id.includes("motion")) return "animation";
+            if (id.includes("cmdk") || id.includes("vaul") || id.includes("sonner")) return "ui-extra";
           }
+          if (id.includes("src/views/AdminPage") || id.includes("src/views/Admin")) return "admin-page";
+          if (id.includes("src/views/QuranCirclesPage") || id.includes("src/views/QuranPage") || id.includes("src/views/QuranRadioPage")) return "quran-pages";
+          if (id.includes("src/views/Scholarly") || id.includes("scholarly-research")) return "scholarly";
         },
       },
     },
