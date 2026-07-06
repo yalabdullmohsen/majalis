@@ -19,7 +19,6 @@ import { HomeTawheed } from "@/components/home/HomeTawheed";
 import { HomeLearningSeasonsWidget } from "@/components/home/HomeLearningSeasonsWidget";
 import { HomeRecommendations } from "@/components/home/HomeRecommendations";
 import { IslamicDivider } from "@/components/design/IslamicDivider";
-import { IslamicOrnament } from "@/components/design/IslamicOrnament";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
 import { HomeContinueReading } from "@/components/home/HomeContinueReading";
 import { HijriSacredMonthBanner } from "@/components/HijriSacredMonthBanner";
@@ -180,35 +179,35 @@ export default function HomePage({
         <div className="home-container home-hero-grid home-hero-grid--v3">
           <div className="home-hero-copy home-hero-copy--v3">
 
-            {/* شارة علوية */}
+            {/* 1. وحدة الهوية: أيقونة + شعار خطي معًا — كتلة بصرية واحدة */}
+            <div className="home-hero-identity">
+              <img
+                src="/logo.png"
+                alt=""
+                className="home-hero-logo"
+                width={52}
+                height={52}
+                loading="eager"
+                decoding="async"
+                aria-hidden="true"
+              />
+              <h1 className="home-hero-title home-hero-title--v3">
+                <img
+                  src="/logo-calligraphy.png"
+                  alt="المجلس العلمي"
+                  className="home-hero-calligraphy"
+                  loading="eager"
+                  decoding="async"
+                />
+              </h1>
+            </div>
+
+            {/* 2. الجملة التعريفية */}
             <span className="home-hero-badge">
               نؤمن أن التقنية وسيلة، ورسالتنا أن نجعلها في خدمة الإسلام والمعرفة النافعة
             </span>
 
-            {/* الشعار */}
-            <img
-              src="/logo.png"
-              alt=""
-              className="home-hero-logo"
-              width={64}
-              height={64}
-              loading="eager"
-              decoding="async"
-              aria-hidden="true"
-            />
-
-            {/* اسم المنصة */}
-            <h1 className="home-hero-title home-hero-title--v3">
-              <img
-                src="/logo-calligraphy.png"
-                alt="المجلس العلمي"
-                className="home-hero-calligraphy"
-                loading="eager"
-                decoding="async"
-              />
-            </h1>
-
-            {/* عبارة تعريفية */}
+            {/* 3. الفقرة الوصفية */}
             <p style={{
               color: "rgba(255,255,255,0.82)",
               fontSize: "clamp(0.9rem, 2.5vw, 1.0625rem)",
@@ -220,12 +219,12 @@ export default function HomePage({
               منصة المعرفة الإسلامية الشاملة — قرآن وأحاديث وفتاوى ودروس علمية موثقة
             </p>
 
-            {/* بحث */}
+            {/* 4. شريط البحث */}
             <form onSubmit={submitSearch} className="home-search home-search--v3" aria-label="البحث">
               <input
                 value={term}
                 onChange={(e) => setTerm(e.target.value)}
-                placeholder="ابحث في القرآن، الأحاديث، الدروس..."
+                placeholder="ابحث في القرآن والأحاديث..."
                 aria-label="البحث في التطبيق"
               />
               <button type="submit">بحث</button>
@@ -233,10 +232,6 @@ export default function HomePage({
 
           </div>
         </div>
-        <IslamicOrnament
-          className="islamic-ornament-strip"
-          style={{ color: "rgba(255,255,255,0.05)", position: "relative", zIndex: 2 }}
-        />
       </section>
 
       {/* ══════════════════ Feature Strip ══════════════════ */}
