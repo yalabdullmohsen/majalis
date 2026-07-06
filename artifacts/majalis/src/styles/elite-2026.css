@@ -181,7 +181,7 @@ html[data-theme="light"] .navbar-search-cmd svg {
 html:not([data-theme="dark"]) .home-hero--v3,
 html[data-theme="light"] .home-hero--v3 {
   background-color: #18362A !important;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M50,4 L57.27,32.45 L82.53,17.47 L67.55,42.73 L96,50 L67.55,57.27 L82.53,82.53 L57.27,67.55 L50,96 L42.73,67.55 L17.47,82.53 L32.45,57.27 L4,50 L32.45,42.73 L17.47,17.47 L42.73,32.45 Z' fill='none' stroke='%23FFFFFF' stroke-opacity='0.055' stroke-width='1.1'/%3E%3Ccircle cx='50' cy='50' r='1.4' fill='%23FFFFFF' fill-opacity='0.08'/%3E%3C/svg%3E") !important;
+  background-image: url("/star-pattern.svg") !important;
   background-size: 100px 100px !important;
   position: relative !important;
   overflow: hidden !important;
@@ -429,7 +429,7 @@ html[data-theme="light"] .home-feature-strip-meta {
 html:not([data-theme="dark"]) .elite-stats-section,
 html[data-theme="light"] .elite-stats-section {
   background-color: var(--elite-forest, #18362A) !important;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M50,4 L57.27,32.45 L82.53,17.47 L67.55,42.73 L96,50 L67.55,57.27 L82.53,82.53 L57.27,67.55 L50,96 L42.73,67.55 L17.47,82.53 L32.45,57.27 L4,50 L32.45,42.73 L17.47,17.47 L42.73,32.45 Z' fill='none' stroke='%23FFFFFF' stroke-opacity='0.055' stroke-width='1.1'/%3E%3Ccircle cx='50' cy='50' r='1.4' fill='%23FFFFFF' fill-opacity='0.08'/%3E%3C/svg%3E') !important;
+  background-image: url("/star-pattern.svg") !important;
   background-size: 100px 100px !important;
   padding: 3rem 1.5rem !important;
   position: relative !important;
@@ -894,7 +894,7 @@ html[data-theme="light"] .lesson-unified-card:hover {
 html:not([data-theme="dark"]) .lesson-unified-card__header,
 html[data-theme="light"] .lesson-unified-card__header {
   background-color: var(--elite-forest, #18362A) !important;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M50,4 L57.27,32.45 L82.53,17.47 L67.55,42.73 L96,50 L67.55,57.27 L82.53,82.53 L57.27,67.55 L50,96 L42.73,67.55 L17.47,82.53 L32.45,57.27 L4,50 L32.45,42.73 L17.47,17.47 L42.73,32.45 Z' fill='none' stroke='%23FFFFFF' stroke-opacity='0.055' stroke-width='1.1'/%3E%3Ccircle cx='50' cy='50' r='1.4' fill='%23FFFFFF' fill-opacity='0.08'/%3E%3C/svg%3E') !important;
+  background-image: url("/star-pattern.svg") !important;
   background-size: 100px 100px !important;
   border-bottom: none !important;
   padding: 1.25rem !important;
@@ -957,7 +957,7 @@ html[data-theme="light"] .home-learning-path-card {
   gap: 1.25rem !important;
   padding: 1.5rem !important;
   background-color: var(--elite-forest, #18362A) !important;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M50,4 L57.27,32.45 L82.53,17.47 L67.55,42.73 L96,50 L67.55,57.27 L82.53,82.53 L57.27,67.55 L50,96 L42.73,67.55 L17.47,82.53 L32.45,57.27 L4,50 L32.45,42.73 L17.47,17.47 L42.73,32.45 Z' fill='none' stroke='%23FFFFFF' stroke-opacity='0.055' stroke-width='1.1'/%3E%3Ccircle cx='50' cy='50' r='1.4' fill='%23FFFFFF' fill-opacity='0.08'/%3E%3C/svg%3E') !important;
+  background-image: url("/star-pattern.svg") !important;
   background-size: 100px 100px !important;
   border-radius: var(--elite-r-xl, 24px) !important;
   border: none !important;
@@ -1166,7 +1166,7 @@ html[data-theme="light"] .side-nav-group__title {
 html:not([data-theme="dark"]) .pt-hero,
 html[data-theme="light"] .pt-hero {
   background-color: var(--elite-forest, #18362A) !important;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M50,4 L57.27,32.45 L82.53,17.47 L67.55,42.73 L96,50 L67.55,57.27 L82.53,82.53 L57.27,67.55 L50,96 L42.73,67.55 L17.47,82.53 L32.45,57.27 L4,50 L32.45,42.73 L17.47,17.47 L42.73,32.45 Z' fill='none' stroke='%23FFFFFF' stroke-opacity='0.055' stroke-width='1.1'/%3E%3Ccircle cx='50' cy='50' r='1.4' fill='%23FFFFFF' fill-opacity='0.08'/%3E%3C/svg%3E') !important;
+  background-image: url("/star-pattern.svg") !important;
   background-size: 100px 100px !important;
   border-radius: var(--elite-r-xl, 24px) !important;
   border: none !important;
@@ -1501,7 +1501,7 @@ html[data-theme="light"] .min-h-screen {
 html:not([data-theme="dark"]) [style*="linear-gradient(to left, var(--majalis-emerald"],
 html[data-theme="light"] [style*="linear-gradient(to left, var(--majalis-emerald"] {
   background-color: var(--elite-forest, #18362A) !important;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M50,4 L57.27,32.45 L82.53,17.47 L67.55,42.73 L96,50 L67.55,57.27 L82.53,82.53 L57.27,67.55 L50,96 L42.73,67.55 L17.47,82.53 L32.45,57.27 L4,50 L32.45,42.73 L17.47,17.47 L42.73,32.45 Z' fill='none' stroke='%23FFFFFF' stroke-opacity='0.055' stroke-width='1.1'/%3E%3Ccircle cx='50' cy='50' r='1.4' fill='%23FFFFFF' fill-opacity='0.08'/%3E%3C/svg%3E') !important;
+  background-image: url("/star-pattern.svg") !important;
   background-size: 100px 100px !important;
 }
 
@@ -1511,7 +1511,7 @@ html[data-theme="light"] .uni-hero,
 html:not([data-theme="dark"]) [class*="universities"] .text-white.py-10,
 html[data-theme="light"] [class*="universities"] .text-white.py-10 {
   background-color: var(--elite-forest, #18362A) !important;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M50,4 L57.27,32.45 L82.53,17.47 L67.55,42.73 L96,50 L67.55,57.27 L82.53,82.53 L57.27,67.55 L50,96 L42.73,67.55 L17.47,82.53 L32.45,57.27 L4,50 L32.45,42.73 L17.47,17.47 L42.73,32.45 Z' fill='none' stroke='%23FFFFFF' stroke-opacity='0.055' stroke-width='1.1'/%3E%3Ccircle cx='50' cy='50' r='1.4' fill='%23FFFFFF' fill-opacity='0.08'/%3E%3C/svg%3E') !important;
+  background-image: url("/star-pattern.svg") !important;
   background-size: 100px 100px !important;
   padding: 3rem 1.25rem !important;
 }
@@ -1740,7 +1740,7 @@ html[data-theme="light"] .stories-header,
 html:not([data-theme="dark"]) .page-hero-dark,
 html[data-theme="light"] .page-hero-dark {
   background-color: #18362A !important;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M50,4 L57.27,32.45 L82.53,17.47 L67.55,42.73 L96,50 L67.55,57.27 L82.53,82.53 L57.27,67.55 L50,96 L42.73,67.55 L17.47,82.53 L32.45,57.27 L4,50 L32.45,42.73 L17.47,17.47 L42.73,32.45 Z' fill='none' stroke='%23FFFFFF' stroke-opacity='0.055' stroke-width='1.1'/%3E%3Ccircle cx='50' cy='50' r='1.4' fill='%23FFFFFF' fill-opacity='0.08'/%3E%3C/svg%3E') !important;
+  background-image: url("/star-pattern.svg") !important;
   background-size: 100px 100px !important;
   color: #FAF8F2 !important;
 }
