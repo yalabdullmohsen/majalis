@@ -10,7 +10,7 @@ import {
   saveLessonImportDraft,
   type ParsedLessonFields,
 } from "@/lib/lesson-import-api";
-import { C, GOVERNORATES } from "@/lib/theme";
+import { GOVERNORATES } from "@/lib/theme";
 import { useAdminShell } from "@/views/admin/AdminShell";
 
 // ── ثوابت ─────────────────────────────────────────────────────────────────
