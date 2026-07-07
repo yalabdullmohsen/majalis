@@ -2,7 +2,6 @@
  * QuranBookmarksPanel — إشارات مرجعية وملاحظات وتقدم الحفظ
  */
 import { useCallback, useEffect, useState } from "react";
-import { C } from "@/lib/theme";
 import {
   getBookmarks,
   getBookmarkLists,
@@ -19,9 +18,8 @@ type Props = {
   onClose: () => void;
 };
 
-// ── Hifz status labels ─────────────────────────────────────────────────────
 const HIFZ_STATUS_LABELS: Record<string, { label: string; color: string }> = {
-  not_started: { label: "لم يُبدأ",   color: C.inkSoft },
+  not_started: { label: "لم يُبدأ",   color: "var(--majalis-ink-soft)" },
   memorizing:  { label: "جارٍ الحفظ", color: "#0E6E52" },
   memorized:   { label: "محفوظ ✓",    color: "#065F46" },
   reviewing:   { label: "مراجعة",     color: "#1E40AF" },
@@ -33,12 +31,10 @@ function HifzList() {
 
   if (progress.length === 0) {
     return (
-      <div style={{ padding: "2rem 1rem", textAlign: "center", color: C.inkSoft }}>
-        <p style={{ fontSize: "1.5rem", margin: "0 0 0.5rem" }}>📖</p>
-        <p style={{ margin: 0 }}>لا يوجد سور مضافة لمتابعة الحفظ بعد.</p>
-        <p style={{ margin: "0.5rem 0 0", fontSize: "0.82rem" }}>
-          اضغط مطولاً على أي آية ثم اختر "إضافة للحفظ".
-        </p>
+      <div className="qbp-empty">
+        <p className="qbp-empty__icon">📖</p>
+        <p className="qbp-empty__text">لا يوجد سور مضافة لمتابعة الحفظ بعد.</p>
+        <p className="qbp-empty__hint">اضغط مطولاً على أي آية ثم اختر "إضافة للحفظ".</p>
       </div>
     );
   }
@@ -46,34 +42,22 @@ function HifzList() {
   return (
     <div>
       {progress.map((h) => {
-        const pct = h.totalAyahs > 0 ? Math.round((h.memorizedAyahs / h.totalAyahs) * 100) : 0;
-        const status = HIFZ_STATUS_LABELS[h.status] ?? { label: h.status, color: C.inkSoft };
+        const pct    = h.totalAyahs > 0 ? Math.round((h.memorizedAyahs / h.totalAyahs) * 100) : 0;
+        const status = HIFZ_STATUS_LABELS[h.status] ?? { label: h.status, color: "var(--majalis-ink-soft)" };
         return (
-          <div
-            key={h.surahNum}
-            style={{
-              padding: "0.75rem 1rem",
-              borderBottom: `1px solid ${C.line}`,
-            }}
-          >
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.35rem" }}>
-              <span style={{ fontWeight: 600, color: "var(--majalis-ink, #2c2412)", fontSize: "0.9rem" }}>
-                سورة رقم {h.surahNum}
-              </span>
-              <span style={{ fontSize: "0.72rem", fontWeight: 700, color: status.color }}>
-                {status.label}
-              </span>
+          <div key={h.surahNum} className="qbp-hifz-row">
+            <div className="qbp-hifz-head">
+              <span className="qbp-hifz-name">سورة رقم {h.surahNum}</span>
+              <span className="qbp-hifz-status" style={{ color: status.color }}>{status.label}</span>
             </div>
-            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-              <div style={{ flex: 1, height: "6px", background: "#e5e3dd", borderRadius: "3px", overflow: "hidden" }}>
-                <div style={{ height: "100%", width: `${pct}%`, background: C.emerald, borderRadius: "3px", transition: "width 0.3s" }} />
+            <div className="qbp-hifz-bar-wrap">
+              <div className="qbp-hifz-bar">
+                <div className="qbp-hifz-fill" style={{ width: `${pct}%` }} />
               </div>
-              <span style={{ fontSize: "0.72rem", color: C.inkSoft, flexShrink: 0 }}>
-                {h.memorizedAyahs}/{h.totalAyahs} ({pct}%)
-              </span>
+              <span className="qbp-hifz-pct">{h.memorizedAyahs}/{h.totalAyahs} ({pct}%)</span>
             </div>
             {h.nextReviewAt && (
-              <p style={{ margin: "0.2rem 0 0", fontSize: "0.7rem", color: C.inkSoft }}>
+              <p className="qbp-hifz-review">
                 موعد المراجعة: {new Date(h.nextReviewAt).toLocaleDateString("ar")}
               </p>
             )}
@@ -85,7 +69,6 @@ function HifzList() {
 }
 
 function NotesList({ onGoTo }: { onGoTo: (s: number, a: number) => void }) {
-  // Notes are loaded from localStorage — we'll show a simple list
   const [noteKeys] = useState<{ surahNum: number; ayahNum: number; text: string; updatedAt: number }[]>(() => {
     try {
       return JSON.parse(localStorage.getItem("mj-quran-notes-v1") || "[]");
@@ -94,12 +77,10 @@ function NotesList({ onGoTo }: { onGoTo: (s: number, a: number) => void }) {
 
   if (noteKeys.length === 0) {
     return (
-      <div style={{ padding: "2rem 1rem", textAlign: "center", color: C.inkSoft }}>
-        <p style={{ fontSize: "1.5rem", margin: "0 0 0.5rem" }}>📝</p>
-        <p style={{ margin: 0 }}>لا توجد ملاحظات بعد.</p>
-        <p style={{ margin: "0.5rem 0 0", fontSize: "0.82rem" }}>
-          اضغط مطولاً على أي آية وأضف ملاحظة خاصة بك.
-        </p>
+      <div className="qbp-empty">
+        <p className="qbp-empty__icon">📝</p>
+        <p className="qbp-empty__text">لا توجد ملاحظات بعد.</p>
+        <p className="qbp-empty__hint">اضغط مطولاً على أي آية وأضف ملاحظة خاصة بك.</p>
       </div>
     );
   }
@@ -110,26 +91,11 @@ function NotesList({ onGoTo }: { onGoTo: (s: number, a: number) => void }) {
         <button
           key={`${note.surahNum}-${note.ayahNum}`}
           type="button"
-          onClick={() => { onGoTo(note.surahNum, note.ayahNum); }}
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "flex-start",
-            width: "100%",
-            padding: "0.75rem 1rem",
-            background: "none",
-            border: "none",
-            borderBottom: `1px solid ${C.line}`,
-            cursor: "pointer",
-            textAlign: "right",
-          }}
-          onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = C.sage; }}
-          onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "none"; }}
+          onClick={() => onGoTo(note.surahNum, note.ayahNum)}
+          className="qbp-note-btn"
         >
-          <span style={{ fontSize: "0.72rem", color: C.emeraldDeep, fontWeight: 700, marginBottom: "0.2rem" }}>
-            السورة {note.surahNum} · الآية {note.ayahNum}
-          </span>
-          <span style={{ fontSize: "0.875rem", color: "var(--majalis-ink, #2c2412)", lineHeight: 1.5 }}>
+          <span className="qbp-note-ref">السورة {note.surahNum} · الآية {note.ayahNum}</span>
+          <span className="qbp-note-text">
             {note.text.slice(0, 120)}{note.text.length > 120 ? "…" : ""}
           </span>
         </button>
@@ -141,7 +107,7 @@ function NotesList({ onGoTo }: { onGoTo: (s: number, a: number) => void }) {
 function BookmarksList({ onGoTo }: { onGoTo: (s: number, a: number) => void }) {
   const [bookmarks, setBookmarks] = useState<QuranBookmark[]>([]);
   const [activeList, setActiveList] = useState<string>("all");
-  const [lists, setLists] = useState<string[]>([]);
+  const [lists, setLists]           = useState<string[]>([]);
 
   useEffect(() => {
     const all = getBookmarks();
@@ -158,105 +124,51 @@ function BookmarksList({ onGoTo }: { onGoTo: (s: number, a: number) => void }) {
 
   if (bookmarks.length === 0) {
     return (
-      <div style={{ padding: "2rem 1rem", textAlign: "center", color: C.inkSoft }}>
-        <p style={{ fontSize: "1.5rem", margin: "0 0 0.5rem" }}>🔖</p>
-        <p style={{ margin: 0 }}>لا توجد إشارات مرجعية بعد.</p>
-        <p style={{ margin: "0.5rem 0 0", fontSize: "0.82rem" }}>
-          اضغط مطولاً على أي آية وأضفها للمفضلة.
-        </p>
+      <div className="qbp-empty">
+        <p className="qbp-empty__icon">🔖</p>
+        <p className="qbp-empty__text">لا توجد إشارات مرجعية بعد.</p>
+        <p className="qbp-empty__hint">اضغط مطولاً على أي آية وأضفها للمفضلة.</p>
       </div>
     );
   }
 
   return (
     <div>
-      {/* List filter chips */}
       {lists.length > 2 && (
-        <div style={{ display: "flex", gap: "0.35rem", padding: "0.5rem 1rem", overflowX: "auto", scrollbarWidth: "none" }}>
-          {lists.map((l) => (
-            <button
-              key={l}
-              type="button"
-              onClick={() => setActiveList(l)}
-              style={{
-                flexShrink: 0,
-                padding: "0.25rem 0.75rem",
-                borderRadius: "2rem",
-                border: `1px solid ${activeList === l ? C.emerald : C.line}`,
-                background: activeList === l ? C.sage : "transparent",
-                color: activeList === l ? C.emeraldDeep : C.inkSoft,
-                fontWeight: activeList === l ? 700 : 400,
-                fontSize: "0.8rem",
-                cursor: "pointer",
-                fontFamily: "inherit",
-              }}
-            >
-              {l === "all" ? "الكل" : l}
-            </button>
-          ))}
+        <div className="qbp-list-filters">
+          {lists.map((l) => {
+            const active = activeList === l;
+            return (
+              <button
+                key={l}
+                type="button"
+                onClick={() => setActiveList(l)}
+                className="qbp-list-chip"
+                style={{
+                  "--qbp-chip-border": active ? "var(--majalis-emerald)" : "var(--majalis-line)",
+                  "--qbp-chip-bg":     active ? "var(--majalis-sage)" : "transparent",
+                  "--qbp-chip-color":  active ? "var(--majalis-emerald-deep)" : "var(--majalis-ink-soft)",
+                  "--qbp-chip-fw":     active ? "700" : "400",
+                } as React.CSSProperties}
+              >
+                {l === "all" ? "الكل" : l}
+              </button>
+            );
+          })}
         </div>
       )}
 
       {filtered.map((bk) => (
-        <div
-          key={`${bk.surahNum}-${bk.ayahNum}`}
-          style={{
-            display: "flex",
-            alignItems: "flex-start",
-            gap: "0.5rem",
-            padding: "0.75rem 1rem",
-            borderBottom: `1px solid ${C.line}`,
-          }}
-        >
-          <button
-            type="button"
-            onClick={() => onGoTo(bk.surahNum, bk.ayahNum)}
-            style={{
-              flex: 1,
-              background: "none",
-              border: "none",
-              cursor: "pointer",
-              textAlign: "right",
-              padding: 0,
-            }}
-          >
-            <div style={{ fontSize: "0.72rem", color: C.emeraldDeep, fontWeight: 700, marginBottom: "0.2rem" }}>
-              {bk.surahName} · الآية {bk.ayahNum}
-            </div>
-            <div
-              dir="rtl"
-              lang="ar"
-              style={{
-                fontSize: "0.9rem",
-                fontFamily: '"Amiri Quran", serif',
-                lineHeight: 1.7,
-                color: "var(--majalis-ink, #2c2412)",
-                overflow: "hidden",
-                display: "-webkit-box",
-                WebkitLineClamp: 2,
-                WebkitBoxOrient: "vertical",
-              }}
-            >
-              {bk.text}
-            </div>
+        <div key={`${bk.surahNum}-${bk.ayahNum}`} className="qbp-bk-row">
+          <button type="button" onClick={() => onGoTo(bk.surahNum, bk.ayahNum)} className="qbp-bk-nav-btn">
+            <span className="qbp-bk-ref">{bk.surahName} · الآية {bk.ayahNum}</span>
+            <span dir="rtl" lang="ar" className="qbp-bk-text">{bk.text}</span>
           </button>
           <button
             type="button"
             onClick={() => handleRemove(bk.surahNum, bk.ayahNum)}
             aria-label="حذف الإشارة"
-            style={{
-              border: "none",
-              background: "none",
-              cursor: "pointer",
-              color: "#dc2626",
-              fontSize: "0.9rem",
-              flexShrink: 0,
-              minWidth: "32px",
-              minHeight: "32px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
+            className="qbp-bk-del"
           >
             ×
           </button>
@@ -267,9 +179,9 @@ function BookmarksList({ onGoTo }: { onGoTo: (s: number, a: number) => void }) {
 }
 
 const TABS: { id: Tab; label: string; icon: string }[] = [
-  { id: "bookmarks", label: "إشارات",   icon: "🔖" },
-  { id: "notes",     label: "ملاحظات",  icon: "📝" },
-  { id: "hifz",      label: "الحفظ",    icon: "🧠" },
+  { id: "bookmarks", label: "إشارات",  icon: "🔖" },
+  { id: "notes",     label: "ملاحظات", icon: "📝" },
+  { id: "hifz",      label: "الحفظ",   icon: "🧠" },
 ];
 
 export function QuranBookmarksPanel({ onGoTo, onClose }: Props) {
@@ -282,72 +194,39 @@ export function QuranBookmarksPanel({ onGoTo, onClose }: Props) {
 
   return (
     <>
-      <div
-        style={{ position: "fixed", inset: 0, zIndex: 8900, background: "rgba(0,0,0,0.4)" }}
-        onClick={onClose}
-        aria-hidden="true"
-      />
-      <div
-        role="dialog"
-        aria-modal="true"
-        aria-label="المفضلة والملاحظات والحفظ"
-        style={{
-          position: "fixed",
-          bottom: 0, right: 0, left: 0,
-          zIndex: 8901,
-          background: "var(--majalis-parchment, #faf9f6)",
-          borderRadius: "1.25rem 1.25rem 0 0",
-          boxShadow: "0 -12px 40px rgba(0,0,0,0.2)",
-          maxHeight: "80dvh",
-          display: "flex",
-          flexDirection: "column",
-          direction: "rtl",
-          paddingBottom: "env(safe-area-inset-bottom, 0px)",
-        }}
-      >
-        {/* Handle */}
-        <div aria-hidden style={{ width: "40px", height: "4px", borderRadius: "2px", background: "#c9c6c0", margin: "0.75rem auto 0", flexShrink: 0 }} />
+      <div className="qbp-backdrop" onClick={onClose} aria-hidden="true" />
+      <div role="dialog" aria-modal="true" aria-label="المفضلة والملاحظات والحفظ" className="qbp-drawer">
+        <div aria-hidden className="eap-handle" />
 
-        {/* Header */}
-        <div style={{ padding: "0.5rem 1rem", display: "flex", justifyContent: "space-between", alignItems: "center", flexShrink: 0 }}>
-          <h2 style={{ margin: 0, fontSize: "1rem", fontWeight: 700, color: C.emeraldDeep }}>
-            مكتبتي الشخصية
-          </h2>
-          <button type="button" onClick={onClose} aria-label="إغلاق"
-            style={{ border: "none", background: "none", cursor: "pointer", fontSize: "1rem", color: C.inkSoft, minWidth: "44px", minHeight: "44px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-            ✕
-          </button>
+        <div className="qbp-header">
+          <h2 className="qbp-title">مكتبتي الشخصية</h2>
+          <button type="button" onClick={onClose} aria-label="إغلاق" className="qbp-close">✕</button>
         </div>
 
-        {/* Tabs */}
-        <div style={{ display: "flex", borderBottom: `1px solid ${C.line}`, flexShrink: 0 }}>
-          {TABS.map((t) => (
-            <button
-              key={t.id}
-              type="button"
-              onClick={() => setTab(t.id)}
-              role="tab"
-              aria-selected={tab === t.id}
-              style={{
-                flex: 1,
-                padding: "0.6rem 0.5rem",
-                border: "none",
-                borderBottom: `2px solid ${tab === t.id ? C.emerald : "transparent"}`,
-                background: "none",
-                color: tab === t.id ? C.emeraldDeep : C.inkSoft,
-                fontWeight: tab === t.id ? 700 : 400,
-                fontSize: "0.82rem",
-                cursor: "pointer",
-                fontFamily: "inherit",
-              }}
-            >
-              {t.icon} {t.label}
-            </button>
-          ))}
+        <div className="qbp-tabs" role="tablist">
+          {TABS.map((t) => {
+            const active = tab === t.id;
+            return (
+              <button
+                key={t.id}
+                type="button"
+                onClick={() => setTab(t.id)}
+                role="tab"
+                aria-selected={active}
+                className="qbp-tab"
+                style={{
+                  "--qbp-tab-border": active ? "var(--majalis-emerald)" : "transparent",
+                  "--qbp-tab-color":  active ? "var(--majalis-emerald-deep)" : "var(--majalis-ink-soft)",
+                  "--qbp-tab-fw":     active ? "700" : "400",
+                } as React.CSSProperties}
+              >
+                {t.icon} {t.label}
+              </button>
+            );
+          })}
         </div>
 
-        {/* Content */}
-        <div style={{ flex: 1, overflowY: "auto", WebkitOverflowScrolling: "touch" }}>
+        <div className="qbp-body">
           {tab === "bookmarks" && <BookmarksList onGoTo={handleGoTo} />}
           {tab === "notes"     && <NotesList onGoTo={handleGoTo} />}
           {tab === "hifz"      && <HifzList />}

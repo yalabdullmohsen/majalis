@@ -4,7 +4,6 @@ import type { PlayerState } from "@/hooks/useAyahPlayer";
 import { copyAyahText, shareAyahAsImage } from "@/lib/share-ayah";
 import { addBookmark, removeBookmark, isBookmarked, saveNote, getNote } from "@/lib/quran-personal";
 import { ExploreAyahPanel } from "@/components/quran/ExploreAyahPanel";
-import { C } from "@/lib/theme";
 
 type Props = {
   ayahs: Ayah[];
@@ -38,7 +37,7 @@ function NoteForm({
 }) {
   const [text, setText] = useState(() => getNote(surahNum, ayahNum));
   return (
-    <div style={{ padding: "0.75rem 1rem" }}>
+    <div className="ayd-note-wrap">
       <textarea
         value={text}
         onChange={(e) => setText(e.target.value)}
@@ -46,28 +45,17 @@ function NoteForm({
         dir="rtl"
         rows={3}
         autoFocus
-        style={{
-          width: "100%",
-          border: `1px solid ${C.line}`,
-          borderRadius: "0.5rem",
-          padding: "0.5rem",
-          fontFamily: "inherit",
-          fontSize: "0.9rem",
-          resize: "vertical",
-          background: "var(--majalis-parchment)",
-          color: "var(--majalis-ink)",
-          boxSizing: "border-box",
-        }}
+        className="ayd-note-textarea"
       />
-      <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.5rem", justifyContent: "flex-end" }}>
-        <button type="button" onClick={onClose}
-          style={{ padding: "0.3rem 0.75rem", border: `1px solid ${C.line}`, borderRadius: "0.4rem", background: "none", cursor: "pointer", fontSize: "0.82rem", fontFamily: "inherit" }}>
+      <div className="ayd-note-actions">
+        <button type="button" onClick={onClose} className="ayd-note-cancel">
           إلغاء
         </button>
         <button
           type="button"
           onClick={() => { saveNote(surahNum, ayahNum, text); onClose(); }}
-          style={{ padding: "0.3rem 0.75rem", border: "none", borderRadius: "0.4rem", background: C.emerald, color: "#fff", cursor: "pointer", fontSize: "0.82rem", fontFamily: "inherit", fontWeight: 600 }}>
+          className="ayd-note-save"
+        >
           حفظ
         </button>
       </div>
@@ -266,11 +254,11 @@ export function AyahDisplay({
               )}
               {/* مؤشر الإشارة المرجعية */}
               {isBookmarked(surahNum, ayah.numberInSurah) && (
-                <span aria-hidden="true" title="مؤشر مرجعي" style={{ fontSize: "0.6rem", color: C.emerald, marginInlineStart: "2px" }}>🔖</span>
+                <span aria-hidden="true" title="مؤشر مرجعي" className="ayd-inline-icon ayd-inline-icon--bookmark">🔖</span>
               )}
               {/* مؤشر الملاحظة */}
               {hasNote && (
-                <span aria-hidden="true" title="يوجد ملاحظة" style={{ fontSize: "0.6rem", color: "#0E6E52", marginInlineStart: "2px" }}>📝</span>
+                <span aria-hidden="true" title="يوجد ملاحظة" className="ayd-inline-icon ayd-inline-icon--note">📝</span>
               )}
             </span>
           );
@@ -337,11 +325,10 @@ export function AyahDisplay({
             aria-hidden="true"
           />
           <div
-            className="qs-context-sheet"
+            className="qs-context-sheet qs-context-sheet--safe"
             role="dialog"
             aria-modal="true"
             aria-label="خيارات الآية"
-            style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
           >
             <div className="qs-context-sheet__handle" aria-hidden="true" />
             <p className="qs-context-sheet__ref">
@@ -360,9 +347,8 @@ export function AyahDisplay({
                 {/* Primary: Explore */}
                 <button
                   type="button"
-                  className="qs-context-sheet__btn qs-context-sheet__btn--primary"
+                  className="qs-context-sheet__btn qs-context-sheet__btn--primary qs-context-sheet__btn--explore"
                   onClick={() => { setExploreAyah(contextAyah); setShowExplore(true); setContextAyah(null); }}
-                  style={{ background: C.emeraldDeep, color: "#fff" }}
                 >
                   <span aria-hidden="true">🔗</span> استكشف الآية
                 </button>
@@ -394,9 +380,8 @@ export function AyahDisplay({
 
                 <button
                   type="button"
-                  className="qs-context-sheet__btn"
+                  className={`qs-context-sheet__btn${bookmarked ? " qs-context-sheet__btn--bookmarked" : ""}`}
                   onClick={handleToggleBookmark}
-                  style={bookmarked ? { color: C.emeraldDeep, fontWeight: 700 } : {}}
                 >
                   <span aria-hidden="true">{bookmarked ? "🔖✓" : "🔖"}</span>{" "}
                   {bookmarked ? "في المفضلة" : "أضف للمفضلة"}

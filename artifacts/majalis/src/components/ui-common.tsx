@@ -112,10 +112,9 @@ export function Card({ children, className = "" }: { children: React.ReactNode; 
 
 export function Loading({ label = "جارٍ التحميل…" }: { label?: string } = {}) {
   return (
-    <div className="ds-empty" role="status" aria-live="polite" aria-label={label}
-      style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.875rem", padding: "2.5rem 1rem" }}>
+    <div className="ds-empty ds-loading-wrap" role="status" aria-live="polite" aria-label={label}>
       <IslamicLoaderInline />
-      <p style={{ fontSize: "0.85rem", color: "var(--v2-ink-3, #8A847E)", margin: 0 }}>{label}</p>
+      <p className="ds-loading-label">{label}</p>
     </div>
   );
 }
@@ -126,7 +125,7 @@ function IslamicLoaderInline() {
   const pts = star8Pts(cx, cx, size * 0.43, size * 0.22);
   return (
     <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} aria-hidden="true"
-      style={{ display: "block", animation: "ui-common-rotate 2s linear infinite", flexShrink: 0 }}>
+      className="ds-loader-svg">
       <style>{`@keyframes ui-common-rotate{to{transform:rotate(360deg)}}
         @media(prefers-reduced-motion:reduce){svg[aria-hidden]{animation:none!important}}`}</style>
       <polygon points={pts} fill="none" stroke="var(--v2-green,#1F6F52)" strokeWidth="1.6"
@@ -147,7 +146,7 @@ function star8Pts(cx: number, cy: number, r1: number, r2: number) {
 export function ErrorState({ text, onRetry }: { text: string; onRetry?: () => void }) {
   return (
     <div className="ui-card ds-empty" role="alert">
-      <p style={{ color: "#b91c1c", marginBottom: onRetry ? "0.75rem" : 0 }}>{text}</p>
+      <p className="ds-error-text" style={{ marginBottom: onRetry ? "0.75rem" : 0 }}>{text}</p>
       {onRetry && (
         <button type="button" className="ds-btn ds-btn--primary" onClick={onRetry}>
           إعادة المحاولة

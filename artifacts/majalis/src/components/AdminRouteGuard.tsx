@@ -3,7 +3,6 @@ import { Link, useLocation } from "wouter";
 import { useAuth } from "./AuthProvider";
 import { Loading } from "./ui-common";
 import { ADMIN_ACCESS_DENIED_MESSAGE } from "@/lib/auth-messages";
-import { C } from "@/lib/theme";
 
 /**
  * AdminRouteGuard — حارس صفحات لوحة التحكم
@@ -104,26 +103,8 @@ export function AdminRouteGuard({ children }: { children: React.ReactNode }) {
     return (
       <div className="login-page">
         <div className="login-card login-card--denied">
-          <h1
-            style={{
-              color: C.emeraldDeep,
-              fontSize: "1.25rem",
-              marginBottom: "0.75rem",
-              textAlign: "center",
-            }}
-          >
-            غير مصرح
-          </h1>
-          <p
-            style={{
-              color: C.inkSoft,
-              marginBottom: "1.25rem",
-              lineHeight: 1.7,
-              textAlign: "center",
-            }}
-          >
-            {ADMIN_ACCESS_DENIED_MESSAGE}
-          </p>
+          <h1 className="access-denied__title">غير مصرح</h1>
+          <p className="access-denied__body">{ADMIN_ACCESS_DENIED_MESSAGE}</p>
           <div className="login-actions">
             <Link href="/login" className="login-back-link">
               العودة لتسجيل الدخول

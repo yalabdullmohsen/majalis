@@ -3,12 +3,11 @@
  * - بحث فوري (live) بـ 300ms debounce
  * - تطبيع عربي: تشكيل، همزة، تاء مربوطة، ألف مقصورة
  * - تظليل الكلمة المطابقة
- * - فلاتر: سورة، جزء، نوع (مكية/مدنية)
+ * - فلاتر: سورة، نوع (مع/بدون تشكيل)
  * - سجل بحث محلي
  * - المصدر: AlQuran Cloud API فقط — لا توليد AI
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { C } from "@/lib/theme";
 import { searchQuran, type SearchMatch } from "@/lib/quran-api";
 import { normalizeArabic } from "@/lib/arabic-search";
 import { addSearchHistory, getSearchHistory, clearSearchHistory } from "@/lib/search-history";
@@ -19,18 +18,15 @@ type Props = {
 
 const DEBOUNCE_MS = 300;
 const MAX_RESULTS = 40;
-
 const POPULAR = ["الرحمن", "الإخلاص", "الكرسي", "الفاتحة", "يسين", "النور"];
 
-// ── تطبيع الاستعلام قبل الإرسال ──────────────────────────────────────────
 function buildNormalizedQuery(raw: string): string {
   return normalizeArabic(raw.trim());
 }
 
-// ── تظليل الكلمة المطابقة ────────────────────────────────────────────────
 function HighlightText({ text, query }: { text: string; query: string }) {
   if (!query.trim() || !text) return <>{text}</>;
-  const nText = normalizeArabic(text);
+  const nText  = normalizeArabic(text);
   const nQuery = normalizeArabic(query.trim());
   if (!nQuery || nQuery.length < 2) return <>{text}</>;
   const idx = nText.indexOf(nQuery);
@@ -38,59 +34,18 @@ function HighlightText({ text, query }: { text: string; query: string }) {
   return (
     <>
       {text.slice(0, idx)}
-      <mark style={{ background: "rgba(14,110,82,0.10)", color: "#0A5040", borderRadius: "2px", padding: "0 2px" }}>
-        {text.slice(idx, idx + nQuery.length)}
-      </mark>
+      <mark className="gsm-highlight">{text.slice(idx, idx + nQuery.length)}</mark>
       {text.slice(idx + nQuery.length)}
     </>
   );
 }
 
-// ── بطاقة نتيجة واحدة ────────────────────────────────────────────────────
-function ResultCard({
-  match,
-  query,
-  onClick,
-}: {
-  match: SearchMatch;
-  query: string;
-  onClick: () => void;
-}) {
+function ResultCard({ match, query, onClick }: { match: SearchMatch; query: string; onClick: () => void }) {
   return (
     <li>
-      <button
-        type="button"
-        onClick={onClick}
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          width: "100%",
-          padding: "0.65rem 1rem",
-          background: "none",
-          border: "none",
-          borderBottom: `1px solid ${C.line}`,
-          cursor: "pointer",
-          textAlign: "right",
-          gap: "0.25rem",
-          minHeight: "44px",
-        }}
-        onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = C.sage; }}
-        onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "none"; }}
-      >
-        <span style={{ fontSize: "0.7rem", fontWeight: 700, color: C.emeraldDeep }}>
-          {match.surahName} · الآية {match.ayahNumber}
-        </span>
-        <span
-          dir="rtl"
-          lang="ar"
-          style={{
-            fontSize: "0.95rem",
-            fontFamily: '"Amiri Quran", "KFGQPC Uthmanic Script", "Scheherazade New", serif',
-            lineHeight: 1.9,
-            color: "var(--majalis-ink, #2c2412)",
-            textAlign: "right",
-          }}
-        >
+      <button type="button" onClick={onClick} className="qss-card">
+        <span className="qss-card__ref">{match.surahName} · الآية {match.ayahNumber}</span>
+        <span dir="rtl" lang="ar" className="qss-card__text">
           <HighlightText text={match.text} query={query} />
         </span>
       </button>
@@ -98,14 +53,13 @@ function ResultCard({
   );
 }
 
-// ── Skeleton ──────────────────────────────────────────────────────────────
 function Skeleton() {
   return (
-    <div style={{ padding: "0.5rem 0" }}>
+    <div className="qss-skel-pad">
       {[1, 2, 3].map((i) => (
-        <div key={i} style={{ padding: "0.65rem 1rem", borderBottom: `1px solid ${C.line}` }}>
-          <div style={{ height: "0.7rem", background: C.sage, borderRadius: "4px", width: "40%", marginBottom: "0.4rem" }} />
-          <div style={{ height: "1rem", background: C.parchmentDeep, borderRadius: "4px", width: `${70 + i * 5}%` }} />
+        <div key={i} className="qss-skel-row">
+          <div className="qss-skel-line1" />
+          <div className="qss-skel-line2" style={{ width: `${70 + i * 5}%` }} />
         </div>
       ))}
     </div>
@@ -113,14 +67,14 @@ function Skeleton() {
 }
 
 export function QuranSearch({ onGoToResult }: Props) {
-  const [query, setQuery] = useState("");
-  const [results, setResults] = useState<SearchMatch[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-  const [searched, setSearched] = useState(false);
-  const [history, setHistory] = useState<string[]>(() => getSearchHistory().slice(0, 6));
+  const [query, setQuery]           = useState("");
+  const [results, setResults]       = useState<SearchMatch[]>([]);
+  const [loading, setLoading]       = useState(false);
+  const [error, setError]           = useState(false);
+  const [searched, setSearched]     = useState(false);
+  const [history, setHistory]       = useState<string[]>(() => getSearchHistory().slice(0, 6));
   const [withTashkeel, setWithTashkeel] = useState(false);
-  const [filterSurah, setFilterSurah] = useState<number | null>(null);
+  const [filterSurah, setFilterSurah]   = useState<number | null>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const abortRef = useRef<AbortController | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -129,20 +83,13 @@ export function QuranSearch({ onGoToResult }: Props) {
 
   const doSearch = useCallback(async (q: string) => {
     const raw = q.trim();
-    if (!raw || raw.length < 2) {
-      setResults([]);
-      setSearched(false);
-      return;
-    }
+    if (!raw || raw.length < 2) { setResults([]); setSearched(false); return; }
     abortRef.current?.abort();
     abortRef.current = new AbortController();
     setLoading(true);
     setError(false);
     setSearched(true);
-
-    // استخدام النص الأصلي (مع تشكيل) أو المُطبَّع حسب خيار المستخدم
     const queryToSend = withTashkeel ? raw : buildNormalizedQuery(raw);
-
     try {
       const res = await searchQuran(queryToSend);
       addSearchHistory(raw);
@@ -155,7 +102,6 @@ export function QuranSearch({ onGoToResult }: Props) {
     }
   }, [withTashkeel]);
 
-  // Debounced live search
   useEffect(() => {
     if (timerRef.current) clearTimeout(timerRef.current);
     if (!query.trim() || query.trim().length < 2) {
@@ -173,27 +119,22 @@ export function QuranSearch({ onGoToResult }: Props) {
     return results.filter((r) => r.surahNumber === filterSurah);
   }, [results, filterSurah]);
 
-  // سُوَر موجودة في النتائج للفلتر
   const surahsInResults = useMemo(() => {
     const m = new Map<number, string>();
     for (const r of results) m.set(r.surahNumber, r.surahName);
     return [...m.entries()].sort((a, b) => a[0] - b[0]);
   }, [results]);
 
+  const filterBtnStyle = (active: boolean) => ({
+    "--qss-bg":     active ? "var(--majalis-sage)" : "transparent",
+    "--qss-border": active ? "var(--majalis-emerald)" : "var(--majalis-line)",
+    "--qss-color":  active ? "var(--majalis-emerald-deep)" : "var(--majalis-ink-soft)",
+  } as React.CSSProperties);
+
   return (
-    <div
-      role="search"
-      aria-label="البحث في القرآن الكريم"
-      style={{ direction: "rtl", borderBottom: `1px solid ${C.line}` }}
-    >
-      {/* ── Input row ── */}
-      <div style={{
-        display: "flex",
-        gap: "0.35rem",
-        padding: "0.75rem 1rem 0.5rem",
-        alignItems: "center",
-      }}>
-        <span style={{ color: C.inkSoft, fontSize: "1rem", flexShrink: 0 }}>🔍</span>
+    <div role="search" aria-label="البحث في القرآن الكريم" className="qss-wrap">
+      <div className="qss-input-row">
+        <span className="qss-icon">🔍</span>
         <input
           ref={inputRef}
           type="search"
@@ -203,76 +144,38 @@ export function QuranSearch({ onGoToResult }: Props) {
           aria-label="بحث في القرآن"
           dir="rtl"
           autoComplete="off"
-          style={{
-            flex: 1,
-            border: "none",
-            outline: "none",
-            background: "transparent",
-            fontSize: "0.95rem",
-            color: "var(--majalis-ink, #2c2412)",
-            fontFamily: "inherit",
-            minHeight: "40px",
-          }}
+          className="qss-input"
         />
         {query && (
           <button
             type="button"
             onClick={() => { setQuery(""); setResults([]); setSearched(false); }}
             aria-label="مسح"
-            style={{
-              border: "none", background: C.parchmentDeep, borderRadius: "50%",
-              width: "28px", height: "28px", cursor: "pointer",
-              color: C.inkSoft, fontSize: "0.75rem", flexShrink: 0,
-              display: "flex", alignItems: "center", justifyContent: "center",
-            }}
+            className="qss-clear"
           >
             ✕
           </button>
         )}
-        {loading && <span style={{ fontSize: "0.75rem", color: C.inkSoft, flexShrink: 0 }}>○</span>}
+        {loading && <span className="qss-loading">○</span>}
       </div>
 
-      {/* ── Options row ── */}
-      <div style={{
-        display: "flex",
-        gap: "0.35rem",
-        padding: "0 1rem 0.5rem",
-        alignItems: "center",
-        flexWrap: "wrap",
-      }}>
+      <div className="qss-opts">
         <button
           type="button"
           onClick={() => setWithTashkeel((v) => !v)}
-          style={{
-            padding: "0.2rem 0.6rem",
-            borderRadius: "2rem",
-            border: `1px solid ${withTashkeel ? C.emerald : C.line}`,
-            background: withTashkeel ? C.sage : "transparent",
-            color: withTashkeel ? C.emeraldDeep : C.inkSoft,
-            fontSize: "0.75rem",
-            cursor: "pointer",
-            fontFamily: "inherit",
-          }}
+          className="qss-filter-btn"
+          style={filterBtnStyle(withTashkeel)}
         >
           {withTashkeel ? "✓ مع التشكيل" : "بدون تشكيل"}
         </button>
 
-        {/* فلتر السورة */}
         {surahsInResults.length > 1 && (
-          <div style={{ display: "flex", gap: "0.25rem", flexWrap: "wrap" }}>
+          <div className="qss-surah-filters">
             <button
               type="button"
               onClick={() => setFilterSurah(null)}
-              style={{
-                padding: "0.2rem 0.6rem",
-                borderRadius: "2rem",
-                border: `1px solid ${filterSurah === null ? C.emerald : C.line}`,
-                background: filterSurah === null ? C.sage : "transparent",
-                color: filterSurah === null ? C.emeraldDeep : C.inkSoft,
-                fontSize: "0.72rem",
-                cursor: "pointer",
-                fontFamily: "inherit",
-              }}
+              className="qss-filter-btn"
+              style={{ ...filterBtnStyle(filterSurah === null), fontSize: "0.72rem" }}
             >
               الكل ({results.length})
             </button>
@@ -281,17 +184,8 @@ export function QuranSearch({ onGoToResult }: Props) {
                 key={num}
                 type="button"
                 onClick={() => setFilterSurah(filterSurah === num ? null : num)}
-                style={{
-                  padding: "0.2rem 0.6rem",
-                  borderRadius: "2rem",
-                  border: `1px solid ${filterSurah === num ? C.emerald : C.line}`,
-                  background: filterSurah === num ? C.sage : "transparent",
-                  color: filterSurah === num ? C.emeraldDeep : C.inkSoft,
-                  fontSize: "0.72rem",
-                  cursor: "pointer",
-                  fontFamily: "inherit",
-                  whiteSpace: "nowrap",
-                }}
+                className="qss-filter-btn"
+                style={{ ...filterBtnStyle(filterSurah === num), fontSize: "0.72rem" }}
               >
                 {name} ({results.filter((r) => r.surahNumber === num).length})
               </button>
@@ -300,25 +194,30 @@ export function QuranSearch({ onGoToResult }: Props) {
         )}
       </div>
 
-      {/* ── Body ── */}
-      <div style={{ maxHeight: "55vh", overflowY: "auto", WebkitOverflowScrolling: "touch" }}>
-
-        {/* قبل البحث: سجل + شائع */}
+      <div className="qss-body">
         {!query.trim() && (
-          <div style={{ padding: "0.5rem 1rem" }}>
+          <div className="qss-prebody">
             {history.length > 0 && (
               <div style={{ marginBottom: "1rem" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.4rem" }}>
-                  <span style={{ fontSize: "0.72rem", fontWeight: 700, color: C.inkSoft }}>بحثت سابقاً</span>
-                  <button type="button" onClick={() => { clearSearchHistory(); setHistory([]); }}
-                    style={{ fontSize: "0.72rem", color: C.emeraldDeep, background: "none", border: "none", cursor: "pointer" }}>
+                <div className="qss-hist-head">
+                  <span className="qss-hist-label">بحثت سابقاً</span>
+                  <button type="button" onClick={() => { clearSearchHistory(); setHistory([]); }} className="qss-hist-clear">
                     مسح
                   </button>
                 </div>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "0.3rem" }}>
+                <div className="qss-pills">
                   {history.map((h) => (
-                    <button key={h} type="button" onClick={() => setQuery(h)}
-                      style={{ padding: "0.2rem 0.6rem", borderRadius: "2rem", background: C.parchmentDeep, border: `1px solid ${C.line}`, fontSize: "0.8rem", cursor: "pointer", fontFamily: "inherit", color: "var(--majalis-ink)" }}>
+                    <button
+                      key={h}
+                      type="button"
+                      onClick={() => setQuery(h)}
+                      className="qss-pill"
+                      style={{
+                        "--qss-pill-bg":     "var(--majalis-parchment-deep)",
+                        "--qss-pill-border": "var(--majalis-line)",
+                        "--qss-pill-color":  "var(--majalis-ink)",
+                      } as React.CSSProperties}
+                    >
                       🕐 {h}
                     </button>
                   ))}
@@ -326,13 +225,20 @@ export function QuranSearch({ onGoToResult }: Props) {
               </div>
             )}
             <div>
-              <span style={{ fontSize: "0.72rem", fontWeight: 700, color: C.inkSoft, display: "block", marginBottom: "0.4rem" }}>
-                بحث شائع
-              </span>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "0.3rem" }}>
+              <span className="qss-popular-label">بحث شائع</span>
+              <div className="qss-pills">
                 {POPULAR.map((p) => (
-                  <button key={p} type="button" onClick={() => setQuery(p)}
-                    style={{ padding: "0.2rem 0.6rem", borderRadius: "2rem", background: C.sage, border: `1px solid ${C.emerald}`, fontSize: "0.8rem", cursor: "pointer", fontFamily: "inherit", color: C.emeraldDeep }}>
+                  <button
+                    key={p}
+                    type="button"
+                    onClick={() => setQuery(p)}
+                    className="qss-pill"
+                    style={{
+                      "--qss-pill-bg":     "var(--majalis-sage)",
+                      "--qss-pill-border": "var(--majalis-emerald)",
+                      "--qss-pill-color":  "var(--majalis-emerald-deep)",
+                    } as React.CSSProperties}
+                  >
                     {p}
                   </button>
                 ))}
@@ -341,37 +247,32 @@ export function QuranSearch({ onGoToResult }: Props) {
           </div>
         )}
 
-        {/* تحميل */}
         {loading && <Skeleton />}
 
-        {/* خطأ */}
         {error && !loading && (
-          <div style={{ padding: "1.5rem 1rem", textAlign: "center", color: C.inkSoft }}>
-            <p style={{ margin: "0 0 0.5rem" }}>⚠️ تعذر الاتصال بالمصدر.</p>
-            <button type="button" onClick={() => doSearch(query)}
-              style={{ padding: "0.35rem 0.8rem", background: C.emerald, color: "#fff", border: "none", borderRadius: "0.4rem", cursor: "pointer", fontFamily: "inherit" }}>
+          <div className="qss-error">
+            <p>⚠️ تعذر الاتصال بالمصدر.</p>
+            <button type="button" onClick={() => doSearch(query)} className="qss-retry-btn">
               أعد المحاولة
             </button>
           </div>
         )}
 
-        {/* لا نتائج */}
         {searched && !loading && !error && filteredResults.length === 0 && (
-          <div style={{ padding: "1.5rem 1rem", textAlign: "center", color: C.inkSoft }}>
-            <p style={{ margin: "0 0 0.5rem" }}>لا نتائج لـ «{query}»</p>
-            <p style={{ fontSize: "0.82rem", margin: 0 }}>
+          <div className="qss-empty">
+            <p>لا نتائج لـ «{query}»</p>
+            <p style={{ fontSize: "0.82rem" }}>
               جرّب تبسيط الكلمة أو الضغط على "مع التشكيل" لبحث أدق.
             </p>
           </div>
         )}
 
-        {/* النتائج */}
         {filteredResults.length > 0 && !loading && (
           <>
-            <p style={{ margin: 0, padding: "0.25rem 1rem", fontSize: "0.72rem", color: C.inkSoft, borderBottom: `1px solid ${C.line}` }}>
+            <p className="qss-results-hdr">
               {filteredResults.length} نتيجة · المصدر: AlQuran Cloud (حفص عن عاصم)
             </p>
-            <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
+            <ol className="qss-results-list">
               {filteredResults.map((r) => (
                 <ResultCard
                   key={`${r.surahNumber}-${r.ayahNumber}`}

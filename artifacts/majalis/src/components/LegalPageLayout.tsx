@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import { C } from "@/lib/theme";
 
 type Props = {
   eyebrow: string;
@@ -18,7 +17,7 @@ function goBack() {
 export function LegalPageLayout({ eyebrow, title, children }: Props) {
   return (
     <div className="legal-page">
-      <div className="legal-page-hero" style={{ background: C.emeraldDeep, color: C.parchment }}>
+      <div className="legal-page-hero">
         <div className="legal-page-inner">
           <button type="button" className="legal-back-btn" onClick={goBack} aria-label="رجوع">
             ← رجوع

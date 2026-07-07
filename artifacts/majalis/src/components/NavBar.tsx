@@ -9,7 +9,6 @@ import { SearchSuggestions } from "./SearchSuggestions";
 import { SideNavDrawer } from "./SideNavDrawer";
 import { MobileMoreMenu } from "./MobileMoreMenu";
 
-import { C } from "@/lib/theme";
 import { useMobileNavState } from "@/hooks/useMobileNavState";
 import { PRIMARY_NAV_ITEMS } from "@/lib/navigation";
 
@@ -23,20 +22,8 @@ function useIsMobile() {
   return mobile;
 }
 
-function tabStyle(active: boolean): React.CSSProperties {
-  return {
-    fontSize: "0.875rem",
-    padding: "0.375rem 0.875rem",
-    borderRadius: "0.5rem",
-    whiteSpace: "nowrap",
-    textDecoration: "none",
-    color: active ? C.emeraldDeep : C.inkSoft,
-    background: active
-      ? "color-mix(in srgb, var(--majalis-emerald) 10%, transparent)"
-      : "transparent",
-    fontWeight: active ? 700 : 500,
-    transition: "background 120ms ease, color 120ms ease",
-  };
+function tabCls(active: boolean, extra = "") {
+  return `nav-tab${active ? " nav-tab--active" : ""}${extra ? " " + extra : ""}`;
 }
 
 function SearchBox({ onSubmitDone }: { onSubmitDone?: () => void }) {
@@ -169,12 +156,12 @@ export default function NavBar() {
           {!isMobile && (
             <nav className="navbar-v3__tabs" aria-label={lang === "en" ? "Main navigation" : "التنقل الرئيسي"}>
               {PRIMARY_NAV_ITEMS.map((item) => (
-                <Link key={item.href} href={item.href} style={tabStyle(isActive(item.href))}>
+                <Link key={item.href} href={item.href} className={tabCls(isActive(item.href))}>
                   {item.label}
                 </Link>
               ))}
               {isAdmin && (
-                <Link href="/admin" style={{ ...tabStyle(location.startsWith("/admin")), color: C.brassDeep }}>
+                <Link href="/admin" className={tabCls(location.startsWith("/admin"), "nav-tab--admin")}>
                   {t("nav_admin_panel")}
                 </Link>
               )}
@@ -235,7 +222,6 @@ export default function NavBar() {
           isLoggedIn={isLoggedIn}
           onLogout={handleLogout}
           searchBox={<SearchBox onSubmitDone={closeMore} />}
-          tabStyle={tabStyle}
           location={location}
         />
       )}

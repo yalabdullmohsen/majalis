@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useLocation } from "wouter";
-import { C } from "@/lib/theme";
 import {
   intelligentSearch,
   trackSearchClick,
@@ -22,24 +21,24 @@ const POPULAR_QUERIES = [
 ];
 
 const KIND_META: Record<string, { label: string; icon: string; color: string }> = {
-  lesson:        { label: "درس",      icon: "📚", color: "#065F46" },
-  hadith:        { label: "حديث",     icon: "📿", color: "#1E40AF" },
-  library:       { label: "كتاب",     icon: "📖", color: "#0E6E52" },
-  fatwa:         { label: "فتوى",     icon: "🕌", color: "#5B21B6" },
-  fiqh:          { label: "فقه",      icon: "⚖️", color: "#065F46" },
+  lesson:        { label: "درس",       icon: "📚", color: "#065F46" },
+  hadith:        { label: "حديث",      icon: "📿", color: "#1E40AF" },
+  library:       { label: "كتاب",      icon: "📖", color: "#0E6E52" },
+  fatwa:         { label: "فتوى",      icon: "🕌", color: "#5B21B6" },
+  fiqh:          { label: "فقه",       icon: "⚖️", color: "#065F46" },
   fiqh_decision: { label: "قرار فقهي", icon: "⚖️", color: "#065F46" },
-  ruling:        { label: "حكم",      icon: "📋", color: "#1E40AF" },
-  fawaid:        { label: "فائدة",    icon: "💡", color: "#0E6E52" },
-  qa:            { label: "سؤال",     icon: "❓", color: "#5B21B6" },
-  quran:         { label: "قرآن",     icon: "📗", color: "#065F46" },
-  course:        { label: "دورة",     icon: "🎓", color: "#1E40AF" },
-  miracle:       { label: "إعجاز",    icon: "✨", color: "#0E6E52" },
-  article:       { label: "مقال",     icon: "📰", color: "#5B21B6" },
-  update:        { label: "مستجد",    icon: "🔔", color: "#0E6E52" },
-  topic:         { label: "موضوع",    icon: "🏷️", color: "#1E40AF" },
-  knowledge:     { label: "معرفة",    icon: "🧠", color: "#065F46" },
-  sheikh:        { label: "شيخ",      icon: "👤", color: "#5B21B6" },
-  adhkar:        { label: "ذكر",      icon: "📿", color: "#065F46" },
+  ruling:        { label: "حكم",       icon: "📋", color: "#1E40AF" },
+  fawaid:        { label: "فائدة",     icon: "💡", color: "#0E6E52" },
+  qa:            { label: "سؤال",      icon: "❓", color: "#5B21B6" },
+  quran:         { label: "قرآن",      icon: "📗", color: "#065F46" },
+  course:        { label: "دورة",      icon: "🎓", color: "#1E40AF" },
+  miracle:       { label: "إعجاز",     icon: "✨", color: "#0E6E52" },
+  article:       { label: "مقال",      icon: "📰", color: "#5B21B6" },
+  update:        { label: "مستجد",     icon: "🔔", color: "#0E6E52" },
+  topic:         { label: "موضوع",     icon: "🏷️", color: "#1E40AF" },
+  knowledge:     { label: "معرفة",     icon: "🧠", color: "#065F46" },
+  sheikh:        { label: "شيخ",       icon: "👤", color: "#5B21B6" },
+  adhkar:        { label: "ذكر",       icon: "📿", color: "#065F46" },
 };
 
 const FILTER_CHIPS: { key: string; label: string }[] = [
@@ -70,25 +69,20 @@ function useIsMobile() {
   return mobile;
 }
 
-/** تمييز الكلمة المطابقة داخل النص */
 function Highlight({ text, query }: { text: string; query: string }) {
   if (!query.trim() || !text) return <>{text}</>;
   const nText = normalizeArabic(text);
   const nQuery = normalizeArabic(query.trim());
   if (!nQuery) return <>{text}</>;
-
-  // نبحث عن موضع أول تطابق في النص الأصلي بناءً على موضعه في النص المُعيَّر
   const idx = nText.indexOf(nQuery);
   if (idx === -1) return <>{text}</>;
   const before = text.slice(0, idx);
-  const match = text.slice(idx, idx + nQuery.length);
-  const after = text.slice(idx + nQuery.length);
+  const match  = text.slice(idx, idx + nQuery.length);
+  const after  = text.slice(idx + nQuery.length);
   return (
     <>
       {before}
-      <mark style={{ background: "rgba(14,110,82,0.10)", color: "#0A5040", borderRadius: "2px", padding: "0 2px" }}>
-        {match}
-      </mark>
+      <mark className="gsm-highlight">{match}</mark>
       {after}
     </>
   );
@@ -110,68 +104,26 @@ function ResultCard({
     <button
       type="button"
       onClick={() => onSelect(result)}
-      style={{
-        display: "flex",
-        alignItems: "flex-start",
-        gap: "0.75rem",
-        width: "100%",
-        padding: "0.8rem 1.25rem",
-        background: "transparent",
-        border: "none",
-        borderBottom: `1px solid var(--majalis-line, #E8E2D8)`,
-        cursor: "pointer",
-        textAlign: "right",
-        direction: "rtl",
-        minHeight: "48px",
-        transition: "background 150ms ease",
-        fontFamily: "inherit",
-      }}
-      onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "color-mix(in srgb, var(--majalis-emerald) 6%, var(--majalis-parchment, #F9F6EF))"; }}
-      onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "transparent"; }}
+      className="gsm-result-btn"
     >
-      <span style={{ fontSize: "1.2rem", lineHeight: 1, flexShrink: 0, marginTop: "0.1rem" }}>
-        {meta.icon}
-      </span>
-      <div style={{ flex: 1, minWidth: 0 }}>
-        <p style={{
-          margin: "0 0 0.15rem",
-          fontSize: "0.9rem",
-          fontWeight: 700,
-          color: "var(--majalis-ink)",
-          lineHeight: 1.4,
-          overflow: "hidden",
-          display: "-webkit-box",
-          WebkitLineClamp: 2,
-          WebkitBoxOrient: "vertical",
-        }}>
+      <span className="gsm-result-icon">{meta.icon}</span>
+      <div className="gsm-result-body">
+        <p className="gsm-result-title">
           <Highlight text={result.title} query={query} />
         </p>
         {result.summary && (
-          <p style={{
-            margin: 0,
-            fontSize: "0.78rem",
-            color: "var(--majalis-ink-soft)",
-            lineHeight: 1.5,
-            overflow: "hidden",
-            display: "-webkit-box",
-            WebkitLineClamp: 2,
-            WebkitBoxOrient: "vertical",
-          }}>
+          <p className="gsm-result-summary">
             <Highlight text={result.summary.slice(0, 180)} query={query} />
           </p>
         )}
       </div>
-      <span style={{
-        flexShrink: 0,
-        padding: "0.15rem 0.5rem",
-        borderRadius: "0.3rem",
-        fontSize: "0.68rem",
-        fontWeight: 600,
-        color: meta.color,
-        background: `${meta.color}18`,
-        whiteSpace: "nowrap",
-        marginTop: "0.1rem",
-      }}>
+      <span
+        className="gsm-result-badge"
+        style={{
+          "--gsm-rb-bg":    `${meta.color}18`,
+          "--gsm-rb-color": meta.color,
+        } as React.CSSProperties}
+      >
         {meta.label}
       </span>
     </button>
@@ -182,21 +134,13 @@ function ResultCard({
 
 function SkeletonResults() {
   return (
-    <div style={{ padding: "0.5rem 0" }}>
+    <div className="gsm-skeleton">
       {[1, 2, 3, 4].map((i) => (
-        <div
-          key={i}
-          style={{
-            display: "flex",
-            gap: "0.75rem",
-            padding: "0.75rem 1rem",
-            borderBottom: `1px solid ${C.line}`,
-          }}
-        >
-          <div style={{ width: "1.5rem", height: "1.5rem", borderRadius: "4px", background: "var(--majalis-sage)", flexShrink: 0, marginTop: "0.1rem" }} />
-          <div style={{ flex: 1 }}>
-            <div style={{ height: "0.875rem", background: "var(--majalis-sage)", borderRadius: "4px", marginBottom: "0.4rem", width: `${60 + i * 8}%` }} />
-            <div style={{ height: "0.75rem", background: "var(--majalis-parchment-deep)", borderRadius: "4px", width: `${40 + i * 5}%` }} />
+        <div key={i} className="gsm-skel-row">
+          <div className="gsm-skel-icon" />
+          <div className="gsm-skel-body">
+            <div className="gsm-skel-line"  style={{ width: `${60 + i * 8}%` }} />
+            <div className="gsm-skel-line2" style={{ width: `${40 + i * 5}%` }} />
           </div>
         </div>
       ))}
@@ -209,25 +153,23 @@ function SkeletonResults() {
 type Props = { onClose: () => void };
 
 export function GlobalSearchModal({ onClose }: Props) {
-  const [query, setQuery] = useState("");
+  const [query, setQuery]           = useState("");
   const [activeFilter, setActiveFilter] = useState("all");
-  const [results, setResults] = useState<IntelligentSearchResult[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-  const [history, setHistory] = useState<string[]>(() => getSearchHistory());
-  const [, navigate] = useLocation();
-  const inputRef = useRef<HTMLInputElement>(null);
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const abortRef = useRef<AbortController | null>(null);
-  const isMobile = useIsMobile();
+  const [results, setResults]       = useState<IntelligentSearchResult[]>([]);
+  const [loading, setLoading]       = useState(false);
+  const [error, setError]           = useState(false);
+  const [history, setHistory]       = useState<string[]>(() => getSearchHistory());
+  const [, navigate]                = useLocation();
+  const inputRef  = useRef<HTMLInputElement>(null);
+  const timerRef  = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const abortRef  = useRef<AbortController | null>(null);
+  const isMobile  = useIsMobile();
 
-  // Focus input on open
   useEffect(() => {
     const t = setTimeout(() => inputRef.current?.focus(), 80);
     return () => clearTimeout(t);
   }, []);
 
-  // Close via popstate (Android back / Capacitor)
   useEffect(() => {
     const onPop = () => onClose();
     window.history.pushState({ searchOverlay: true }, "");
@@ -235,7 +177,6 @@ export function GlobalSearchModal({ onClose }: Props) {
     return () => window.removeEventListener("popstate", onPop);
   }, [onClose]);
 
-  // Prevent body scroll while open
   useEffect(() => {
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -250,15 +191,13 @@ export function GlobalSearchModal({ onClose }: Props) {
         setError(false);
         return;
       }
-      // إلغاء الطلب السابق
       abortRef.current?.abort();
       abortRef.current = new AbortController();
-
       setLoading(true);
       setError(false);
       try {
         const opts = filter !== "all" ? { type: filter, limit: 20 } : { limit: 24 };
-        const res = await intelligentSearch(q.trim(), opts);
+        const res  = await intelligentSearch(q.trim(), opts);
         setResults(res.results ?? []);
       } catch (err: unknown) {
         if ((err as Error)?.name !== "AbortError") setError(true);
@@ -269,7 +208,6 @@ export function GlobalSearchModal({ onClose }: Props) {
     [],
   );
 
-  // Debounced search on query/filter change
   useEffect(() => {
     if (timerRef.current) clearTimeout(timerRef.current);
     if (!query.trim()) {
@@ -293,10 +231,7 @@ export function GlobalSearchModal({ onClose }: Props) {
   );
 
   const handleQuickQuery = useCallback(
-    (q: string) => {
-      setQuery(q);
-      addSearchHistory(q);
-    },
+    (q: string) => { setQuery(q); addSearchHistory(q); },
     [],
   );
 
@@ -313,95 +248,31 @@ export function GlobalSearchModal({ onClose }: Props) {
     setHistory([]);
   };
 
-  const topLocal = getTopSearchQueries(6).map((e) => e.query);
-
-  // ── تخطيط الحاوية: full-screen على الجوال، modal على سطح المكتب ──────────
-  const containerStyle: React.CSSProperties = isMobile
-    ? {
-        position: "fixed",
-        inset: 0,
-        zIndex: 10000,
-        display: "flex",
-        flexDirection: "column",
-        background: "var(--majalis-parchment)",
-        direction: "rtl",
-        // دعم safe area على iOS
-        paddingTop: "env(safe-area-inset-top, 0px)",
-        paddingBottom: "env(safe-area-inset-bottom, 0px)",
-      }
-    : {
-        position: "fixed",
-        inset: 0,
-        zIndex: 10000,
-        display: "flex",
-        alignItems: "flex-start",
-        justifyContent: "center",
-        paddingTop: "clamp(2.5rem, 8vh, 5rem)",
-        background: "rgba(15, 20, 18, 0.65)",
-        backdropFilter: "blur(8px) saturate(160%)",
-        WebkitBackdropFilter: "blur(8px) saturate(160%)",
-        direction: "rtl",
-      };
-
-  const cardStyle: React.CSSProperties = isMobile
-    ? {
-        flex: 1,
-        display: "flex",
-        flexDirection: "column",
-        overflow: "hidden",
-      }
-    : {
-        width: "min(96vw, 46rem)",
-        background: "var(--majalis-panel, #fff)",
-        borderRadius: "1.25rem",
-        boxShadow: "0 32px 80px rgba(0,0,0,0.32), 0 8px 24px rgba(0,0,0,0.18)",
-        border: "1px solid var(--majalis-line, #E8E2D8)",
-        overflow: "hidden",
-        maxHeight: "82vh",
-        display: "flex",
-        flexDirection: "column",
-      };
-
-  const isEmpty = !query.trim();
+  const topLocal  = getTopSearchQueries(6).map((e) => e.query);
+  const isEmpty   = !query.trim();
   const hasResults = results.length > 0;
 
   return (
-    <div style={containerStyle} onClick={isMobile ? undefined : onClose}>
-      <div style={cardStyle} onClick={(e) => e.stopPropagation()}>
+    <div
+      className={`gsm-overlay${isMobile ? " gsm-overlay--mobile" : ""}`}
+      onClick={isMobile ? undefined : onClose}
+    >
+      <div
+        className={`gsm-card${isMobile ? " gsm-card--mobile" : ""}`}
+        onClick={(e) => e.stopPropagation()}
+      >
 
         {/* ── شريط البحث ─────────────────────────────────────────────── */}
-        <div style={{
-          display: "flex",
-          alignItems: "center",
-          padding: isMobile ? "0.75rem 1rem" : "0.875rem 1.25rem",
-          borderBottom: `1px solid var(--majalis-line, #E8E2D8)`,
-          gap: "0.6rem",
-          background: "var(--majalis-panel, #fff)",
-          flexShrink: 0,
-        }}>
-          {/* زر الإغلاق/رجوع */}
+        <div className={`gsm-topbar${isMobile ? " gsm-topbar--mobile" : ""}`}>
           <button
             type="button"
             onClick={onClose}
             aria-label="إغلاق البحث"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              minWidth: "44px",
-              minHeight: "44px",
-              border: "none",
-              background: "none",
-              cursor: "pointer",
-              fontSize: "1.1rem",
-              color: "var(--majalis-ink-soft)",
-              flexShrink: 0,
-            }}
+            className="gsm-close-btn"
           >
             {isMobile ? "←" : "✕"}
           </button>
 
-          {/* حقل الإدخال */}
           <input
             ref={inputRef}
             value={query}
@@ -417,18 +288,7 @@ export function GlobalSearchModal({ onClose }: Props) {
             autoCorrect="off"
             autoCapitalize="off"
             spellCheck={false}
-            style={{
-              flex: 1,
-              border: "none",
-              outline: "none",
-              fontSize: isMobile ? "1rem" : "1.1rem",
-              background: "transparent",
-              color: "var(--majalis-ink)",
-              direction: "rtl",
-              minHeight: "44px",
-              fontFamily: "inherit",
-              fontWeight: 500,
-            }}
+            className={`gsm-input${isMobile ? " gsm-input--mobile" : ""}`}
           />
 
           {query && (
@@ -436,44 +296,17 @@ export function GlobalSearchModal({ onClose }: Props) {
               type="button"
               onClick={() => setQuery("")}
               aria-label="مسح النص"
-              style={{
-                minWidth: "32px",
-                minHeight: "32px",
-                border: "none",
-                background: "var(--majalis-parchment-deep)",
-                borderRadius: "50%",
-                cursor: "pointer",
-                fontSize: "0.8rem",
-                color: "var(--majalis-ink-soft)",
-                flexShrink: 0,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
+              className="gsm-clear-btn"
             >
               ✕
             </button>
           )}
 
-          {loading && (
-            <span style={{ fontSize: "0.75rem", color: "var(--majalis-ink-soft)", flexShrink: 0 }}>
-              ○
-            </span>
-          )}
+          {loading && <span className="gsm-loading-dot">○</span>}
         </div>
 
         {/* ── فلاتر النوع ────────────────────────────────────────────── */}
-        <div style={{
-          display: "flex",
-          gap: "0.35rem",
-          padding: "0.5rem 1.25rem",
-          overflowX: "auto",
-          flexShrink: 0,
-          borderBottom: `1px solid var(--majalis-line, #E8E2D8)`,
-          background: "var(--majalis-parchment-deep, #F0EBE0)",
-          scrollbarWidth: "none",
-          WebkitOverflowScrolling: "touch",
-        }}>
+        <div className="gsm-filters">
           {FILTER_CHIPS.map((chip) => {
             const active = activeFilter === chip.key;
             return (
@@ -481,22 +314,14 @@ export function GlobalSearchModal({ onClose }: Props) {
                 key={chip.key}
                 type="button"
                 onClick={() => setActiveFilter(chip.key)}
+                className="gsm-chip"
                 style={{
-                  flexShrink: 0,
-                  padding: "0.3rem 0.85rem",
-                  borderRadius: "2rem",
-                  border: `1px solid ${active ? "var(--majalis-emerald, #166048)" : "var(--majalis-line, #E8E2D8)"}`,
-                  background: active ? "var(--majalis-emerald, #166048)" : "var(--majalis-panel, #fff)",
-                  color: active ? "#fff" : "var(--majalis-ink-soft)",
-                  fontWeight: active ? 700 : 500,
-                  fontSize: "0.78rem",
-                  cursor: "pointer",
-                  fontFamily: "inherit",
-                  minHeight: "32px",
-                  whiteSpace: "nowrap",
-                  transition: "background 150ms ease, color 150ms ease, border-color 150ms ease",
-                  boxShadow: active ? "0 2px 6px rgba(22, 96, 72, 0.2)" : "none",
-                }}
+                  "--gsm-chip-bg":     active ? "var(--majalis-emerald)" : "var(--majalis-panel)",
+                  "--gsm-chip-color":  active ? "var(--majalis-parchment)" : "var(--majalis-ink-soft)",
+                  "--gsm-chip-border": active ? "var(--majalis-emerald)" : "var(--majalis-line)",
+                  "--gsm-chip-fw":     active ? "700" : "500",
+                  "--gsm-chip-shadow": active ? "0 2px 6px rgba(22,96,72,0.2)" : "none",
+                } as React.CSSProperties}
               >
                 {chip.label}
               </button>
@@ -505,44 +330,31 @@ export function GlobalSearchModal({ onClose }: Props) {
         </div>
 
         {/* ── منطقة النتائج ─────────────────────────────────────────── */}
-        <div style={{ flex: 1, overflowY: "auto", WebkitOverflowScrolling: "touch" }}>
+        <div className="gsm-results-area">
 
-          {/* حالة فارغة: قبل الكتابة */}
           {isEmpty && (
-            <div style={{ padding: "1rem" }}>
+            <div className="gsm-empty-pad">
 
-              {/* سجل البحث المحلي */}
               {history.length > 0 && (
-                <section style={{ marginBottom: "1.25rem" }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem" }}>
-                    <p style={{ margin: 0, fontSize: "0.73rem", fontWeight: 700, color: "var(--majalis-ink-soft)", letterSpacing: "0.04em" }}>
-                      بحثت سابقاً
-                    </p>
-                    <button
-                      type="button"
-                      onClick={handleClearHistory}
-                      style={{ fontSize: "0.72rem", color: C.emeraldDeep, background: "none", border: "none", cursor: "pointer", fontFamily: "inherit" }}
-                    >
+                <section className="gsm-section">
+                  <div className="gsm-section__head">
+                    <p className="gsm-section__label">بحثت سابقاً</p>
+                    <button type="button" onClick={handleClearHistory} className="gsm-clear-hist-btn">
                       مسح
                     </button>
                   </div>
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem" }}>
+                  <div className="gsm-pills">
                     {history.slice(0, 8).map((q) => (
                       <button
                         key={q}
                         type="button"
                         onClick={() => handleQuickQuery(q)}
+                        className="gsm-pill"
                         style={{
-                          padding: "0.3rem 0.75rem",
-                          borderRadius: "2rem",
-                          background: "var(--majalis-parchment-deep)",
-                          border: `1px solid ${C.line}`,
-                          fontSize: "0.82rem",
-                          color: "var(--majalis-ink)",
-                          cursor: "pointer",
-                          fontFamily: "inherit",
-                          minHeight: "36px",
-                        }}
+                          "--gsm-pill-bg":     "var(--majalis-parchment-deep)",
+                          "--gsm-pill-border": "var(--majalis-line)",
+                          "--gsm-pill-color":  "var(--majalis-ink)",
+                        } as React.CSSProperties}
                       >
                         🕐 {q}
                       </button>
@@ -551,29 +363,21 @@ export function GlobalSearchModal({ onClose }: Props) {
                 </section>
               )}
 
-              {/* بحث شائع من السجل المحلي */}
               {topLocal.length > 0 && (
-                <section style={{ marginBottom: "1.25rem" }}>
-                  <p style={{ margin: "0 0 0.5rem", fontSize: "0.73rem", fontWeight: 700, color: "var(--majalis-ink-soft)", letterSpacing: "0.04em" }}>
-                    الأكثر بحثاً لديك
-                  </p>
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem" }}>
+                <section className="gsm-section">
+                  <p className="gsm-section__label">الأكثر بحثاً لديك</p>
+                  <div className="gsm-pills">
                     {topLocal.map((q) => (
                       <button
                         key={q}
                         type="button"
                         onClick={() => handleQuickQuery(q)}
+                        className="gsm-pill"
                         style={{
-                          padding: "0.3rem 0.75rem",
-                          borderRadius: "2rem",
-                          background: "var(--majalis-sage)",
-                          border: `1px solid ${C.emerald}`,
-                          fontSize: "0.82rem",
-                          color: C.emeraldDeep,
-                          cursor: "pointer",
-                          fontFamily: "inherit",
-                          minHeight: "36px",
-                        }}
+                          "--gsm-pill-bg":     "var(--majalis-sage)",
+                          "--gsm-pill-border": "var(--majalis-emerald)",
+                          "--gsm-pill-color":  "var(--majalis-emerald-deep)",
+                        } as React.CSSProperties}
                       >
                         🔥 {q}
                       </button>
@@ -582,28 +386,20 @@ export function GlobalSearchModal({ onClose }: Props) {
                 </section>
               )}
 
-              {/* مواضيع شائعة */}
-              <section>
-                <p style={{ margin: "0 0 0.5rem", fontSize: "0.73rem", fontWeight: 700, color: "var(--majalis-ink-soft)", letterSpacing: "0.04em" }}>
-                  مواضيع شائعة
-                </p>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem" }}>
+              <section className="gsm-section">
+                <p className="gsm-section__label">مواضيع شائعة</p>
+                <div className="gsm-pills">
                   {POPULAR_QUERIES.map((q) => (
                     <button
                       key={q}
                       type="button"
                       onClick={() => handleQuickQuery(q)}
+                      className="gsm-pill"
                       style={{
-                        padding: "0.3rem 0.75rem",
-                        borderRadius: "2rem",
-                        background: "var(--majalis-parchment-deep)",
-                        border: `1px solid ${C.line}`,
-                        fontSize: "0.82rem",
-                        color: "var(--majalis-ink)",
-                        cursor: "pointer",
-                        fontFamily: "inherit",
-                        minHeight: "36px",
-                      }}
+                        "--gsm-pill-bg":     "var(--majalis-parchment-deep)",
+                        "--gsm-pill-border": "var(--majalis-line)",
+                        "--gsm-pill-color":  "var(--majalis-ink)",
+                      } as React.CSSProperties}
                     >
                       {q}
                     </button>
@@ -611,12 +407,9 @@ export function GlobalSearchModal({ onClose }: Props) {
                 </div>
               </section>
 
-              {/* روابط سريعة */}
-              <section style={{ marginTop: "1.25rem" }}>
-                <p style={{ margin: "0 0 0.5rem", fontSize: "0.73rem", fontWeight: 700, color: "var(--majalis-ink-soft)", letterSpacing: "0.04em" }}>
-                  تصفح
-                </p>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem" }}>
+              <section className="gsm-section">
+                <p className="gsm-section__label">تصفح</p>
+                <div className="gsm-quicklinks">
                   {[
                     { href: "/quran",   label: "القرآن",  icon: "📗" },
                     { href: "/adhkar",  label: "الأذكار", icon: "📿" },
@@ -629,20 +422,7 @@ export function GlobalSearchModal({ onClose }: Props) {
                       key={l.href}
                       type="button"
                       onClick={() => { onClose(); navigate(l.href); }}
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "0.35rem",
-                        padding: "0.35rem 0.8rem",
-                        borderRadius: "2rem",
-                        background: "var(--majalis-panel)",
-                        border: `1px solid ${C.line}`,
-                        fontSize: "0.82rem",
-                        cursor: "pointer",
-                        color: "var(--majalis-ink)",
-                        fontFamily: "inherit",
-                        minHeight: "36px",
-                      }}
+                      className="gsm-quicklink-btn"
                     >
                       {l.icon} {l.label}
                     </button>
@@ -652,60 +432,36 @@ export function GlobalSearchModal({ onClose }: Props) {
             </div>
           )}
 
-          {/* تحميل */}
           {!isEmpty && loading && !hasResults && <SkeletonResults />}
 
-          {/* خطأ */}
           {!isEmpty && error && !loading && (
-            <div style={{ padding: "2rem 1rem", textAlign: "center", color: "var(--majalis-ink-soft)" }}>
-              <p style={{ fontSize: "1.5rem", margin: "0 0 0.5rem" }}>⚠️</p>
-              <p style={{ margin: "0 0 0.75rem", fontWeight: 600 }}>تعذر الاتصال</p>
-              <p style={{ margin: "0 0 1rem", fontSize: "0.85rem" }}>تحقق من الاتصال بالإنترنت وأعد المحاولة.</p>
-              <button
-                type="button"
-                onClick={() => doSearch(query, activeFilter)}
-                style={{
-                  padding: "0.5rem 1.25rem",
-                  background: C.emerald,
-                  color: "#fff",
-                  border: "none",
-                  borderRadius: "0.5rem",
-                  cursor: "pointer",
-                  fontFamily: "inherit",
-                  fontWeight: 600,
-                  minHeight: "44px",
-                }}
-              >
+            <div className="gsm-error-state">
+              <p className="gsm-state-icon">⚠️</p>
+              <p className="gsm-state-title">تعذر الاتصال</p>
+              <p className="gsm-state-hint">تحقق من الاتصال بالإنترنت وأعد المحاولة.</p>
+              <button type="button" onClick={() => doSearch(query, activeFilter)} className="gsm-retry-btn">
                 أعد المحاولة
               </button>
             </div>
           )}
 
-          {/* لا نتائج */}
           {!isEmpty && !loading && !error && !hasResults && (
-            <div style={{ padding: "2rem 1rem", textAlign: "center", color: "var(--majalis-ink-soft)" }}>
-              <p style={{ fontSize: "1.5rem", margin: "0 0 0.5rem" }}>🔍</p>
-              <p style={{ margin: "0 0 0.5rem", fontWeight: 600 }}>لا نتائج لـ «{query}»</p>
-              <p style={{ margin: "0 0 1rem", fontSize: "0.85rem" }}>
-                جرب تبسيط الكلمة أو إزالة التشكيل.
-              </p>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", justifyContent: "center" }}>
+            <div className="gsm-empty-state">
+              <p className="gsm-state-icon">🔍</p>
+              <p className="gsm-state-title">لا نتائج لـ «{query}»</p>
+              <p className="gsm-state-hint">جرب تبسيط الكلمة أو إزالة التشكيل.</p>
+              <div className="gsm-pills" style={{ justifyContent: "center" }}>
                 {POPULAR_QUERIES.slice(0, 4).map((q) => (
                   <button
                     key={q}
                     type="button"
                     onClick={() => handleQuickQuery(q)}
+                    className="gsm-pill"
                     style={{
-                      padding: "0.35rem 0.8rem",
-                      borderRadius: "2rem",
-                      background: "var(--majalis-parchment-deep)",
-                      border: `1px solid ${C.line}`,
-                      fontSize: "0.82rem",
-                      cursor: "pointer",
-                      fontFamily: "inherit",
-                      minHeight: "36px",
-                      color: "var(--majalis-ink)",
-                    }}
+                      "--gsm-pill-bg":     "var(--majalis-parchment-deep)",
+                      "--gsm-pill-border": "var(--majalis-line)",
+                      "--gsm-pill-color":  "var(--majalis-ink)",
+                    } as React.CSSProperties}
                   >
                     {q}
                   </button>
@@ -714,9 +470,8 @@ export function GlobalSearchModal({ onClose }: Props) {
             </div>
           )}
 
-          {/* النتائج */}
           {hasResults && (
-            <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
+            <ul className="gsm-result-list">
               {results.map((r, i) => (
                 <li key={r.id ?? i}>
                   <ResultCard result={r} query={query} onSelect={handleSelect} />
@@ -724,41 +479,16 @@ export function GlobalSearchModal({ onClose }: Props) {
               ))}
             </ul>
           )}
-
         </div>
 
         {/* ── ذيل ─────────────────────────────────────────────────────── */}
-        <div style={{
-          padding: "0.5rem 1.25rem",
-          borderTop: `1px solid var(--majalis-line, #E8E2D8)`,
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          flexShrink: 0,
-          background: "var(--majalis-parchment-deep, #F0EBE0)",
-        }}>
-          {!isMobile && (
-            <span style={{ fontSize: "0.7rem", color: "var(--majalis-ink-soft)" }}>
-              ⌘K للفتح · Esc للإغلاق · Enter للبحث الكامل
-            </span>
-          )}
-          {isMobile && <span />}
+        <div className="gsm-footer">
+          {!isMobile
+            ? <span className="gsm-footer__hint">⌘K للفتح · Esc للإغلاق · Enter للبحث الكامل</span>
+            : <span />
+          }
           {query.trim() && (
-            <button
-              type="button"
-              onClick={handleSubmitSearch}
-              style={{
-                fontSize: "0.82rem",
-                color: C.emeraldDeep,
-                background: "none",
-                border: "none",
-                cursor: "pointer",
-                fontWeight: 700,
-                fontFamily: "inherit",
-                minHeight: "44px",
-                padding: "0 0.5rem",
-              }}
-            >
+            <button type="button" onClick={handleSubmitSearch} className="gsm-footer__all-btn">
               عرض كل النتائج ←
             </button>
           )}

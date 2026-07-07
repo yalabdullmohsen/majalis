@@ -3,7 +3,6 @@ import { Link } from "wouter";
 import { adminGetDashboardStats, adminGetStats } from "@/lib/supabase";
 import { ADHKAR_ITEMS } from "@/lib/adhkar-seed";
 import { getPublishedAdhkarItems } from "@/lib/adhkar-admin";
-import { C } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
 import { useAdminShell } from "./AdminShell";
 import { AdminSectionToolbar } from "./AdminSectionToolbar";
@@ -74,7 +73,7 @@ export function ReportsSection() {
           <div
             key={c.label}
             className="rpt-stat-card"
-            style={{ "--rpt-bg": c.alert ? "#FEE2E2" : C.sage, "--rpt-border": c.alert ? "#dc2626" : C.line, "--rpt-value": c.alert ? "#dc2626" : C.emeraldDeep } as React.CSSProperties}
+            style={{ "--rpt-bg": c.alert ? "#FEE2E2" : "var(--majalis-sage)", "--rpt-border": c.alert ? "#dc2626" : "var(--majalis-line)", "--rpt-value": c.alert ? "#dc2626" : "var(--majalis-emerald-deep)" } as React.CSSProperties}
           >
             <p className="rpt-stat-value">
               {c.value}
