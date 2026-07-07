@@ -5007,3 +5007,201 @@ button.primary:hover {
   gap: 0.5rem;
   margin-top: 0.5rem;
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   §50  Muezzin Detail  (mzd-*)
+   ═══════════════════════════════════════════════════════════════ */
+.mzd-page {
+  direction: rtl;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 1rem 1rem 5rem;
+}
+.mzd-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.875rem;
+  border-radius: 0.5rem;
+  border: 1.5px solid rgba(255,255,255,0.10);
+  background: var(--majalis-panel, rgba(255,255,255,0.08));
+  color: var(--majalis-ink-soft);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+.mzd-hero {
+  background: linear-gradient(135deg, #134a3a 0%, #0c3020 100%);
+  border-radius: 1.25rem;
+  padding: 1.5rem 1.25rem;
+  color: #fff;
+  margin-bottom: 1.25rem;
+  position: relative;
+  overflow: hidden;
+}
+.mzd-hero__pattern {
+  position: absolute;
+  inset: 0;
+  opacity: 0.05;
+  background-image: repeating-linear-gradient(45deg, #fff 0, #fff 1px, transparent 0, transparent 50%);
+  background-size: 12px 12px;
+  pointer-events: none;
+}
+.mzd-hero__icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  margin-bottom: 0.875rem;
+}
+.mzd-hero__name { font-size: 1.35rem; font-weight: 800; margin: 0 0 0.2rem; }
+.mzd-hero__origin { font-size: 0.82rem; opacity: 0.8; margin-bottom: 0.75rem; }
+.mzd-style-badge {
+  display: inline-block;
+  padding: 0.2rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+.mzd-style-badge--khashi   { background: #f0fdf4; color: #065f46; border: 1px solid #bbf7d0; }
+.mzd-style-badge--rasmi    { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+.mzd-style-badge--taqlidi  { background: #faf5ff; color: #6d28d9; border: 1px solid #ddd6fe; }
+.mzd-style-badge--kilasiki { background: #fff7ed; color: #0E6E52; border: 1px solid rgba(14,110,82,0.25); }
+.mzd-hero__stats  { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.mzd-hero__stat   { text-align: center; }
+.mzd-hero__stat-value { font-size: 1.2rem; font-weight: 700; }
+.mzd-hero__stat-label { font-size: 0.68rem; opacity: 0.75; }
+.mzd-fav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 1rem;
+  border-radius: 999px;
+  border: 1.5px solid rgba(255,255,255,0.35);
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: border-color 0.15s, background 0.15s;
+}
+.mzd-fav-btn.is-fav { border-color: #fca5a5; background: rgba(239,68,68,0.2); }
+.mzd-banner {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 0.6rem;
+  padding: 0.6rem 0.875rem;
+  margin-bottom: 1rem;
+  font-size: 0.82rem;
+  color: #065f46;
+  font-weight: 600;
+}
+.mzd-section { margin-bottom: 1.25rem; }
+.mzd-section__title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--majalis-ink-soft);
+  margin: 0 0 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.mzd-section__body {
+  background: var(--majalis-panel, rgba(255,255,255,0.08));
+  border-radius: 0.875rem;
+  border: 1px solid rgba(255,255,255,0.10);
+  padding: 0.875rem 1rem;
+}
+.mzd-bio { font-size: 0.875rem; color: var(--majalis-ink-soft); line-height: 1.7; margin: 0; }
+.mzd-rating-row { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.875rem; }
+.mzd-rating-num { font-size: 1.5rem; font-weight: 800; color: var(--majalis-ink); }
+.mzd-rating-label { font-size: 0.8rem; color: var(--majalis-ink-muted, #9BA3B5); }
+.mzd-stars-row { display: inline-flex; gap: 0.1rem; }
+.mzd-star { font-size: 1.1rem; color: #e5e7eb; }
+.mzd-star.is-active { color: #f59e0b; }
+.mzd-user-rating { border-top: 1px solid #f3f4f6; padding-top: 0.75rem; }
+.mzd-user-rating__label { font-size: 0.78rem; color: var(--majalis-ink-soft); font-weight: 600; margin-bottom: 0.5rem; }
+.mzd-user-rating__stars { display: flex; gap: 0.3rem; }
+.mzd-star-btn {
+  background: none; border: none; cursor: pointer;
+  font-size: 1.6rem; padding: 0.1rem;
+  color: #e5e7eb; transition: color 0.1s; font-family: inherit;
+}
+.mzd-star-btn.is-active { color: #f59e0b; }
+.mzd-flash { font-size: 0.75rem; color: var(--majalis-emerald); font-weight: 600; margin-top: 0.35rem; }
+.mzd-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+.mzd-tag {
+  padding: 0.25rem 0.7rem; border-radius: 999px; font-size: 0.78rem; font-weight: 600;
+  background: rgba(255,255,255,0.05); color: var(--majalis-ink-soft);
+  border: 1px solid rgba(255,255,255,0.10);
+}
+.mzd-audio-hint { font-size: 0.75rem; color: var(--majalis-ink-muted, #9BA3B5); margin-bottom: 0.875rem; }
+.mzd-audio-row {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.75rem 0.875rem; border-radius: 0.75rem;
+  border: 1.5px solid #e5e7eb; background: #fafafa; margin-bottom: 0.5rem;
+}
+.mzd-audio-row--highlight { border-color: #bbf7d0; background: #f0fdf4; }
+.mzd-audio-row__icon { font-size: 1.1rem; }
+.mzd-audio-row__info { flex: 1; }
+.mzd-audio-row__title { font-weight: 600; font-size: 0.875rem; color: var(--majalis-ink); }
+.mzd-audio-row__subtitle { font-size: 0.72rem; color: var(--majalis-ink-muted, #9BA3B5); }
+.mzd-audio-row__duration { font-size: 0.72rem; color: var(--majalis-ink-muted, #9BA3B5); }
+.mzd-audio-row__play {
+  width: 36px; height: 36px; border-radius: 50%; border: none;
+  background: #134a3a; color: #fff; cursor: pointer;
+  font-size: 0.9rem; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; font-family: inherit;
+}
+.mzd-audio-row__play.is-playing { background: #ef4444; }
+.mzd-fajr-fallback {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.75rem; border-radius: 0.6rem;
+  background: #fafafa; border: 1px solid #f3f4f6; margin-bottom: 0.4rem;
+}
+.mzd-fajr-fallback__icon { font-size: 1rem; }
+.mzd-fajr-fallback__info { flex: 1; }
+.mzd-fajr-fallback__title { font-size: 0.85rem; color: var(--majalis-ink-soft); font-weight: 600; }
+.mzd-fajr-fallback__subtitle { font-size: 0.72rem; color: var(--majalis-ink-muted, #9BA3B5); }
+.mzd-prayer-grid {
+  margin-top: 0.5rem; padding: 0.75rem; border-radius: 0.6rem;
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.10);
+}
+.mzd-prayer-grid__title { font-size: 0.75rem; color: var(--majalis-ink-muted, #9BA3B5); margin-bottom: 0.5rem; font-weight: 600; }
+.mzd-prayer-rows { display: flex; flex-direction: column; gap: 0.3rem; }
+.mzd-prayer-row { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; }
+.mzd-prayer-row__name { font-weight: 600; color: var(--majalis-ink-soft); width: 3.5rem; }
+.mzd-prayer-row__type { color: var(--majalis-ink-muted, #9BA3B5); }
+.mzd-prayer-row__duration { margin-inline-start: auto; color: var(--majalis-ink-muted, #9BA3B5); font-size: 0.72rem; }
+.mzd-set-default-btn {
+  width: 100%; padding: 0.875rem; border-radius: 0.875rem; border: none;
+  background: linear-gradient(135deg, #134a3a, #0c3020);
+  color: #fff; font-size: 0.9rem; font-weight: 700;
+  cursor: pointer; font-family: inherit; margin-bottom: 0.75rem;
+}
+.mzd-settings-link {
+  display: block; width: 100%; padding: 0.75rem; border-radius: 0.875rem;
+  border: 1.5px solid #134a3a; background: transparent;
+  color: var(--majalis-emerald); font-size: 0.875rem; font-weight: 600;
+  cursor: pointer; font-family: inherit; margin-bottom: 2rem;
+  text-align: center;
+}
+.mzd-related-list { display: flex; flex-direction: column; gap: 0.5rem; }
+.mzd-related-card {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.75rem 0.875rem; border-radius: 0.75rem;
+  border: 1.5px solid #f3f4f6;
+  background: var(--majalis-panel, rgba(255,255,255,0.08)); cursor: pointer;
+}
+.mzd-related-card__icon { font-size: 1.25rem; }
+.mzd-related-card__info { flex: 1; }
+.mzd-related-card__name { font-weight: 600; font-size: 0.875rem; color: var(--majalis-ink); }
+.mzd-related-card__meta { font-size: 0.72rem; color: var(--majalis-ink-muted, #9BA3B5); }
+.mzd-related-card__rating { font-size: 0.8rem; color: #f59e0b; font-weight: 600; }
