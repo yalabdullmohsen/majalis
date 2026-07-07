@@ -78,11 +78,11 @@ function ConfidenceBar({ score }: { score: number }) {
   const color = pct >= 75 ? "#22c55e" : pct >= 45 ? "#f59e0b" : "#ef4444";
   const label = pct >= 75 ? "ثقة عالية" : pct >= 45 ? "تحقق مطلوب" : "غير موثوق";
   return (
-    <div className="ii-conf">
+    <div className="ii-conf" style={{ "--iis-pct": `${pct}%`, "--iis-color": color } as React.CSSProperties}>
       <div className="ii-conf__bar" role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100}>
-        <div className="ii-conf__fill" style={{ width: `${pct}%`, background: color }} />
+        <div className="ii-conf__fill" />
       </div>
-      <span className="ii-conf__label" style={{ color }}>{pct}% · {label}</span>
+      <span className="ii-conf__label">{pct}% · {label}</span>
     </div>
   );
 }
@@ -92,7 +92,7 @@ function StatusChip({ status }: { status: JobStatus }) {
   const m = STATUS_META[status];
   return (
     <span className={`ii-chip ${m.css}`}>
-      <span className="ii-chip__dot" style={{ background: m.dot }} aria-hidden="true" />
+      <span className="ii-chip__dot" style={{ "--iis-dot": m.dot } as React.CSSProperties} aria-hidden="true" />
       {m.label}
     </span>
   );
@@ -127,7 +127,7 @@ function DropZone({ onFiles, busy }: { onFiles: (f: File[]) => void; busy: boole
         type="file"
         multiple
         accept={ACCEPTED_MIME.join(",")}
-        style={{ display: "none" }}
+        className="hidden"
         onChange={(e) => { if (e.target.files) accept(e.target.files); e.target.value = ""; }}
         disabled={busy}
       />
@@ -219,22 +219,22 @@ function ReviewForm({
     <div className="ii-form-grid">
       {/* عنوان الدرس */}
       <div className="ii-form-grid__full">
-        <label style={lbl}>{FIELD_LABELS.title} *</label>
-        <input style={inp} value={parsed.title || ""} disabled={disabled}
+        <label className="iis-label">{FIELD_LABELS.title} *</label>
+        <input className="iis-input" value={parsed.title || ""} disabled={disabled}
           onChange={(e) => set("title", e.target.value)} />
       </div>
 
       {/* اسم الشيخ */}
       <div>
-        <label style={lbl}>{FIELD_LABELS.speaker_name}</label>
-        <input style={inp} value={parsed.speaker_name || ""} disabled={disabled}
+        <label className="iis-label">{FIELD_LABELS.speaker_name}</label>
+        <input className="iis-input" value={parsed.speaker_name || ""} disabled={disabled}
           onChange={(e) => set("speaker_name", e.target.value)} />
       </div>
 
       {/* التصنيف */}
       <div>
-        <label style={lbl}>{FIELD_LABELS.category}</label>
-        <select style={inp} value={parsed.category || ""} disabled={disabled}
+        <label className="iis-label">{FIELD_LABELS.category}</label>
+        <select className="iis-input" value={parsed.category || ""} disabled={disabled}
           onChange={(e) => set("category", e.target.value)}>
           <option value="">— اختر —</option>
           {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
@@ -243,8 +243,8 @@ function ReviewForm({
 
       {/* نوع النشاط */}
       <div>
-        <label style={lbl}>نوع النشاط</label>
-        <select style={inp} value={parsed.activity_type || "درس"} disabled={disabled}
+        <label className="iis-label">نوع النشاط</label>
+        <select className="iis-input" value={parsed.activity_type || "درس"} disabled={disabled}
           onChange={(e) => set("activity_type", e.target.value)}>
           {ACTIVITY_TYPES.map((a) => <option key={a} value={a}>{a}</option>)}
         </select>
@@ -252,8 +252,8 @@ function ReviewForm({
 
       {/* اليوم */}
       <div>
-        <label style={lbl}>{FIELD_LABELS.day_of_week}</label>
-        <select style={inp} value={parsed.day_of_week || ""} disabled={disabled}
+        <label className="iis-label">{FIELD_LABELS.day_of_week}</label>
+        <select className="iis-input" value={parsed.day_of_week || ""} disabled={disabled}
           onChange={(e) => set("day_of_week", e.target.value)}>
           <option value="">— اليوم —</option>
           {DAYS_AR.map((d) => <option key={d} value={d}>{d}</option>)}
@@ -262,44 +262,44 @@ function ReviewForm({
 
       {/* الوقت */}
       <div>
-        <label style={lbl}>{FIELD_LABELS.lesson_time}</label>
-        <input style={inp} value={parsed.lesson_time || ""} disabled={disabled}
+        <label className="iis-label">{FIELD_LABELS.lesson_time}</label>
+        <input className="iis-input" value={parsed.lesson_time || ""} disabled={disabled}
           placeholder="مثال: بعد المغرب أو 20:00"
           onChange={(e) => set("lesson_time", e.target.value)} />
       </div>
 
       {/* التاريخ الميلادي */}
       <div>
-        <label style={lbl}>{FIELD_LABELS.gregorian_date}</label>
-        <input type="date" style={inp} value={parsed.gregorian_date || ""} disabled={disabled}
+        <label className="iis-label">{FIELD_LABELS.gregorian_date}</label>
+        <input type="date" className="iis-input" value={parsed.gregorian_date || ""} disabled={disabled}
           onChange={(e) => { set("gregorian_date", e.target.value); set("start_date", e.target.value); }} />
       </div>
 
       {/* تاريخ الانتهاء */}
       <div>
-        <label style={lbl}>{FIELD_LABELS.end_date}</label>
-        <input type="date" style={inp} value={parsed.end_date || ""} disabled={disabled}
+        <label className="iis-label">{FIELD_LABELS.end_date}</label>
+        <input type="date" className="iis-input" value={parsed.end_date || ""} disabled={disabled}
           onChange={(e) => set("end_date", e.target.value)} />
       </div>
 
       {/* المسجد */}
       <div>
-        <label style={lbl}>{FIELD_LABELS.mosque}</label>
-        <input style={inp} value={parsed.mosque || ""} disabled={disabled}
+        <label className="iis-label">{FIELD_LABELS.mosque}</label>
+        <input className="iis-input" value={parsed.mosque || ""} disabled={disabled}
           onChange={(e) => set("mosque", e.target.value)} />
       </div>
 
       {/* المنطقة */}
       <div>
-        <label style={lbl}>{FIELD_LABELS.region}</label>
-        <input style={inp} value={parsed.region || ""} disabled={disabled}
+        <label className="iis-label">{FIELD_LABELS.region}</label>
+        <input className="iis-input" value={parsed.region || ""} disabled={disabled}
           onChange={(e) => set("region", e.target.value)} />
       </div>
 
       {/* المحافظة */}
       <div>
-        <label style={lbl}>{FIELD_LABELS.city}</label>
-        <select style={inp} value={parsed.city || "العاصمة"} disabled={disabled}
+        <label className="iis-label">{FIELD_LABELS.city}</label>
+        <select className="iis-input" value={parsed.city || "العاصمة"} disabled={disabled}
           onChange={(e) => set("city", e.target.value)}>
           {GOVERNORATES.map((g) => <option key={g} value={g}>{g}</option>)}
         </select>
@@ -307,50 +307,50 @@ function ReviewForm({
 
       {/* الدولة */}
       <div>
-        <label style={lbl}>{FIELD_LABELS.country}</label>
-        <input style={inp} value={parsed.country || "الكويت"} disabled={disabled}
+        <label className="iis-label">{FIELD_LABELS.country}</label>
+        <input className="iis-input" value={parsed.country || "الكويت"} disabled={disabled}
           onChange={(e) => set("country", e.target.value)} />
       </div>
 
       {/* الجهة المنظمة */}
       <div>
-        <label style={lbl}>{FIELD_LABELS.organizer}</label>
-        <input style={inp} value={parsed.organizer || ""} disabled={disabled}
+        <label className="iis-label">{FIELD_LABELS.organizer}</label>
+        <input className="iis-input" value={parsed.organizer || ""} disabled={disabled}
           onChange={(e) => set("organizer", e.target.value)} />
       </div>
 
       {/* الجهة المتعاونة */}
       <div>
-        <label style={lbl}>{FIELD_LABELS.cooperative_org}</label>
-        <input style={inp} value={parsed.cooperative_org || ""} disabled={disabled}
+        <label className="iis-label">{FIELD_LABELS.cooperative_org}</label>
+        <input className="iis-input" value={parsed.cooperative_org || ""} disabled={disabled}
           onChange={(e) => set("cooperative_org", e.target.value)} />
       </div>
 
       {/* رقم التواصل */}
       <div>
-        <label style={lbl}>{FIELD_LABELS.phone}</label>
-        <input style={inp} value={parsed.phone || ""} disabled={disabled} dir="ltr"
+        <label className="iis-label">{FIELD_LABELS.phone}</label>
+        <input className="iis-input" value={parsed.phone || ""} disabled={disabled} dir="ltr"
           onChange={(e) => set("phone", e.target.value)} />
       </div>
 
       {/* رابط البث */}
       <div>
-        <label style={lbl}>{FIELD_LABELS.live_url}</label>
-        <input style={inp} value={parsed.live_url || ""} disabled={disabled} dir="ltr"
+        <label className="iis-label">{FIELD_LABELS.live_url}</label>
+        <input className="iis-input" value={parsed.live_url || ""} disabled={disabled} dir="ltr"
           placeholder="https://..." onChange={(e) => set("live_url", e.target.value)} />
       </div>
 
       {/* رابط التسجيل */}
       <div>
-        <label style={lbl}>{FIELD_LABELS.registration_url}</label>
-        <input style={inp} value={parsed.registration_url || ""} disabled={disabled} dir="ltr"
+        <label className="iis-label">{FIELD_LABELS.registration_url}</label>
+        <input className="iis-input" value={parsed.registration_url || ""} disabled={disabled} dir="ltr"
           placeholder="https://..." onChange={(e) => set("registration_url", e.target.value)} />
       </div>
 
       {/* رابط الخريطة */}
       <div>
-        <label style={lbl}>{FIELD_LABELS.maps_url}</label>
-        <input style={inp} value={parsed.maps_url || ""} disabled={disabled} dir="ltr"
+        <label className="iis-label">{FIELD_LABELS.maps_url}</label>
+        <input className="iis-input" value={parsed.maps_url || ""} disabled={disabled} dir="ltr"
           placeholder="https://maps.google.com/..." onChange={(e) => set("maps_url", e.target.value)} />
       </div>
 
@@ -375,9 +375,9 @@ function ReviewForm({
 
       {/* الكلمات المفتاحية */}
       <div className="ii-form-grid__full">
-        <label style={lbl}>{FIELD_LABELS.keywords}</label>
+        <label className="iis-label">{FIELD_LABELS.keywords}</label>
         <input
-          style={inp}
+          className="iis-input"
           value={(parsed.keywords || []).join("، ")}
           disabled={disabled}
           placeholder="كلمات مفتاحية مفصولة بفاصلة"
@@ -389,9 +389,9 @@ function ReviewForm({
 
       {/* الوصف */}
       <div className="ii-form-grid__full">
-        <label style={lbl}>{FIELD_LABELS.description}</label>
+        <label className="iis-label">{FIELD_LABELS.description}</label>
         <textarea
-          style={{ ...inp, minHeight: "5rem", resize: "vertical" }}
+          className="iis-input iis-textarea"
           value={parsed.description || ""}
           disabled={disabled}
           onChange={(e) => set("description", e.target.value)}
@@ -479,7 +479,7 @@ function JobDetail({
 
           {job.extractedText && (
             <>
-              <p className="ii-detail__section-title" style={{ marginTop: "1rem" }}>النص المستخرج</p>
+              <p className="ii-detail__section-title iis-section-mt">النص المستخرج</p>
               <pre className="ii-ocr">{job.extractedText}</pre>
             </>
           )}
@@ -503,11 +503,11 @@ function JobDetail({
         <div className="ii-detail__right">
           <p className="ii-detail__section-title">مراجعة وتعديل البيانات</p>
           {isDone ? (
-            <div style={{ padding: "2rem", textAlign: "center", color: C.inkSoft }}>
-              <p style={{ fontSize: "2.5rem", margin: "0 0 0.5rem" }}>
+            <div className="iis-done-wrap">
+              <p className="iis-done-icon">
                 {job.status === "approved" ? "✅" : "🗑"}
               </p>
-              <p style={{ fontSize: "0.9rem", margin: 0 }}>
+              <p className="iis-done-msg">
                 {job.status === "approved"
                   ? "تم اعتماد الدرس ونشره في المنصة بنجاح."
                   : "تم رفض هذه المسودة وحذفها."}
@@ -908,7 +908,7 @@ export function ImageImportSection() {
               />
             ) : (
               <div className="ii-queue__empty">
-                <span aria-hidden="true" style={{ fontSize: "3rem" }}>👆</span>
+                <span aria-hidden="true" className="iis-drop-icon">👆</span>
                 <p>اختر صورة من القائمة لمراجعة بياناتها</p>
               </div>
             )}
