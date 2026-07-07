@@ -1522,7 +1522,7 @@
   inset-inline: 0;
   z-index: 21;
   max-height: 78dvh;
-  background: #18140e;
+  background: #0e2018;
   border-radius: 1.25rem 1.25rem 0 0;
   display: flex;
   flex-direction: column;
@@ -1591,8 +1591,8 @@
 .mf-index-item:hover,
 .mf-index-item:active { background: rgba(255,255,255,0.07); }
 .mf-index-item.is-active {
-  background: rgba(255,198,0,0.12);
-  color: #ffc840;
+  background: rgba(106,181,142,0.14);
+  color: #a8e8c8;
 }
 .mf-index-item__num {
   width: 2rem;
@@ -1601,7 +1601,7 @@
   text-align: center;
   flex-shrink: 0;
 }
-.mf-index-item.is-active .mf-index-item__num { color: rgba(255,198,0,0.7); }
+.mf-index-item.is-active .mf-index-item__num { color: rgba(106,181,142,0.7); }
 .mf-index-item__name {
   flex: 1;
   font-size: 1rem;
@@ -1614,7 +1614,7 @@
   white-space: nowrap;
   flex-shrink: 0;
 }
-.mf-index-item.is-active .mf-index-item__meta { color: rgba(255,198,0,0.55); }
+.mf-index-item.is-active .mf-index-item__meta { color: rgba(106,181,142,0.55); }
 
 /* ── Responsive ─────────────────────────────────────────────────────────── */
 @media (min-width: 768px) {
@@ -1669,12 +1669,12 @@
    VISUAL REDESIGN — قسم المصحف الشريف (بصري خالص — النص لا يُمس)
    ═══════════════════════════════════════════════════════════════════════════ */
 
-/* ─── لوحة الألوان الجديدة ─────────────────────────────────────────────── */
+/* ─── لوحة الألوان — مستوحاة من نظام تصميم التطبيق ─────────────────────── */
 :root {
-  --mf-gold:       #B8874A;
-  --mf-gold-soft:  rgba(184,135,74,0.45);
-  --mf-gold-faint: rgba(184,135,74,0.18);
-  --mf-bg-warm:    #1c1408;
+  --mf-gold:       #6ab58e;
+  --mf-gold-soft:  rgba(106,181,142,0.45);
+  --mf-gold-faint: rgba(106,181,142,0.18);
+  --mf-bg-warm:    #0d1f17;
   --mf-ink:        #1A1610;
   --qs-parchment:  #F8F2E4;
 }
@@ -1683,10 +1683,10 @@
    وضع المصحف الصوري (.mf-*)
    ═══════════════════════════════════════════════════════════════════════════ */
 
-/* خلفية دافئة داكنة بدل الأسود البارد */
+/* خلفية خضراء غابية داكنة — مستوحاة من ألوان التطبيق */
 .mf-shell {
   background: radial-gradient(ellipse 120% 80% at 50% 30%,
-    #231a0c 0%, #15100a 55%, #0d0b07 100%) !important;
+    #122b1e 0%, #0a1e13 55%, #060f0a 100%) !important;
 }
 
 /* ── غلاف الصفحة مع إطار ذهبي مزدوج رفيع ── */
@@ -1721,7 +1721,7 @@
   pointer-events: none;
   z-index: 2;
   opacity: 0.8;
-  filter: drop-shadow(0 0 3px rgba(184,135,74,0.4));
+  filter: drop-shadow(0 0 3px rgba(106,181,142,0.4));
 }
 .mf-corner--tl { top: -14px; left:  -14px; }
 .mf-corner--tr { top: -14px; right: -14px; }
@@ -1748,29 +1748,29 @@
   .mf-page-img.is-loaded.mf-slide-prev { animation: none; opacity: 1; }
 }
 
-/* ── تحسين مظهر الهيدر — دفء أكثر ── */
+/* ── تحسين مظهر الهيدر — خضرة التطبيق ── */
 .mf-header__surah {
   letter-spacing: 0.03em;
   text-shadow: 0 1px 6px rgba(0,0,0,0.6);
 }
 .mf-header__page {
-  color: rgba(255,210,140,0.6);
+  color: rgba(168,232,200,0.65);
 }
 
-/* ── أزرار التنقل — ذهبي دافئ عند التفاعل ── */
+/* ── أزرار التنقل — أخضر غابي عند التفاعل ── */
 .mf-nav-btn:hover:not(:disabled) {
-  background: rgba(184,135,74,0.22) !important;
-  border-color: rgba(184,135,74,0.35);
+  background: rgba(106,181,142,0.22) !important;
+  border-color: rgba(106,181,142,0.35);
 }
 .mf-chrome-btn:hover {
-  background: rgba(184,135,74,0.18) !important;
+  background: rgba(106,181,142,0.18) !important;
 }
 
-/* ── ورقة الفهرس — ألوان دافئة ── */
-.mf-index-sheet       { background: #1c1509; }
-.mf-index-item.is-active { background: rgba(184,135,74,0.14); color: var(--mf-gold); }
-.mf-index-item.is-active .mf-index-item__num { color: rgba(184,135,74,0.7); }
-.mf-index-item.is-active .mf-index-item__meta { color: rgba(184,135,74,0.5); }
+/* ── ورقة الفهرس — ألوان التطبيق ── */
+.mf-index-sheet       { background: #0e2018; }
+.mf-index-item.is-active { background: rgba(106,181,142,0.15); color: #a8e8c8; }
+.mf-index-item.is-active .mf-index-item__num { color: rgba(106,181,142,0.7); }
+.mf-index-item.is-active .mf-index-item__meta { color: rgba(106,181,142,0.5); }
 
 /* ═══════════════════════════════════════════════════════════════════════════
    وضع السورة النصي — الإطار والرأس (.qs-*)

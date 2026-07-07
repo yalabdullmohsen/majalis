@@ -30,11 +30,11 @@ function EightStar({ className }: { className: string }) {
       <path
         d="M14 1.5 L16 8.5 L22.5 5.5 L19.5 11.8 L26.5 14 L19.5 16.2 L22.5 22.5 L16 19.5 L14 26.5 L12 19.5 L5.5 22.5 L8.5 16.2 L1.5 14 L8.5 11.8 L5.5 5.5 L12 8.5 Z"
         fill="none"
-        stroke="#B8874A"
+        stroke="#6ab58e"
         strokeWidth="1.1"
         strokeLinejoin="round"
       />
-      <circle cx="14" cy="14" r="2.5" fill="none" stroke="#B8874A" strokeWidth="0.8" opacity="0.6" />
+      <circle cx="14" cy="14" r="2.5" fill="none" stroke="#6ab58e" strokeWidth="0.8" opacity="0.6" />
     </svg>
   );
 }
