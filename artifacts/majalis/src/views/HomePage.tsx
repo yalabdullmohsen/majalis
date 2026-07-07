@@ -10,6 +10,22 @@ import { HomeDailyCorner } from "@/components/home/HomeDailyCorner";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
 import { HijriSacredMonthBanner } from "@/components/HijriSacredMonthBanner";
 
+/* ── روابط الوصول السريع ── */
+const QUICK_LINKS = [
+  { href: "/quran",          icon: "📖", label: "القرآن" },
+  { href: "/adhkar",         icon: "📿", label: "الأذكار" },
+  { href: "/prayer-times",   icon: "🕌", label: "أوقات الصلاة" },
+  { href: "/lessons",        icon: "🎓", label: "الدروس" },
+  { href: "/hadith",         icon: "📜", label: "الأحاديث" },
+  { href: "/fawaid",         icon: "💡", label: "الفوائد" },
+  { href: "/qa",             icon: "❓", label: "الأسئلة" },
+  { href: "/tasbih",         icon: "📿", label: "التسبيح" },
+  { href: "/seerah",         icon: "🌙", label: "السيرة" },
+  { href: "/flashcards",     icon: "🃏", label: "البطاقات" },
+];
+
+const QUICK_SEARCHES = ["صلاة الفجر", "آية الكرسي", "دعاء القنوت", "أذكار الصباح", "صيام الاثنين"];
+
 /* ── المميزات البارزة (4 بطاقات كبيرة) ── */
 const FEATURED = [
   { href: "/quran",   icon: "📖", title: "القرآن الكريم",     desc: "مصحف رقمي كامل برواية حفص — تصفح الصفحات ببساطة",          cta: "افتح المصحف" },
@@ -82,6 +98,7 @@ function SafeHomeSection({ name, children }: { name: string; children: React.Rea
 export default function HomePage() {
   const [term, setTerm] = useState("");
   const [, navigate] = useLocation();
+  const quickSearch = (q: string) => { navigate(`/search/${encodeURIComponent(q)}`); };
 
   const submitSearch = (e: FormEvent) => {
     e.preventDefault();
@@ -124,14 +141,38 @@ export default function HomePage() {
               <input
                 value={term}
                 onChange={(e) => setTerm(e.target.value)}
-                placeholder="ابحث في القرآن والأحاديث..."
+                placeholder="ابحث في القرآن والأحاديث والفوائد..."
                 aria-label="البحث في التطبيق"
               />
               <button type="submit">بحث</button>
             </form>
+            <div className="home-quick-searches" aria-label="بحث سريع">
+              {QUICK_SEARCHES.map((q) => (
+                <button
+                  key={q}
+                  type="button"
+                  onClick={() => quickSearch(q)}
+                  className="home-quick-search-chip"
+                >
+                  {q}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </section>
+
+      {/* ══ وصول سريع ══ */}
+      <nav className="hp-quick-nav" aria-label="وصول سريع">
+        <div className="hp-quick-nav__track">
+          {QUICK_LINKS.map(({ href, icon, label }) => (
+            <Link key={href} href={href} className="hp-quick-link">
+              <span className="hp-quick-link__icon">{icon}</span>
+              <span className="hp-quick-link__label">{label}</span>
+            </Link>
+          ))}
+        </div>
+      </nav>
 
       {/* ══════════════════ Main Content ══════════════════ */}
       <main className="home-container home-main home-main--v3">

@@ -9808,3 +9808,163 @@ body {
 .cm-qr-link { color: var(--majalis-ink-soft); }
 .cm-status { color: var(--mn-text-active, var(--majalis-emerald-deep)); }
 .cm-qr-btn { color: var(--mn-text-active, var(--majalis-emerald-deep)); }
+
+/* ── §187 — HomePage Quick Access & Quick Search ─────────────────────────── */
+.home-quick-searches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.75rem;
+  justify-content: flex-start;
+}
+.home-quick-search-chip {
+  font-size: 0.72rem;
+  padding: 0.2rem 0.65rem;
+  border-radius: 99px;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.9);
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+.home-quick-search-chip:hover {
+  background: rgba(255,255,255,0.2);
+  border-color: rgba(255,255,255,0.45);
+}
+
+/* Quick Nav bar */
+.hp-quick-nav {
+  background: var(--majalis-panel);
+  border-bottom: 1px solid var(--majalis-line);
+  position: sticky;
+  top: var(--navbar-h, 3.5rem);
+  z-index: 40;
+  padding: 0 0.5rem;
+}
+.hp-quick-nav__track {
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  max-width: 62rem;
+  margin: 0 auto;
+  -webkit-overflow-scrolling: touch;
+}
+.hp-quick-nav__track::-webkit-scrollbar { display: none; }
+.hp-quick-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0.55rem 0.75rem;
+  text-decoration: none;
+  color: var(--majalis-ink-soft);
+  font-size: 0.68rem;
+  flex-shrink: 0;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+.hp-quick-link:hover,
+.hp-quick-link[aria-current="page"] {
+  color: var(--majalis-emerald-deep);
+  border-bottom-color: var(--majalis-emerald-deep);
+}
+.hp-quick-link__icon { font-size: 1.1rem; line-height: 1; }
+.hp-quick-link__label { font-weight: 600; }
+
+/* ── §188 — General Design Improvements 2026 ────────────────────────────── */
+
+/* Smooth scroll and better focus indicators */
+:root {
+  scroll-behavior: smooth;
+}
+:focus-visible {
+  outline: 2px solid var(--majalis-emerald);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+/* Enhanced card hover animations */
+.ui-card {
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.ui-card:hover {
+  box-shadow: 0 4px 20px rgba(14,110,82,0.1);
+  transform: translateY(-1px);
+}
+
+/* Better button animations */
+button, .btn {
+  transition-property: background-color, border-color, color, box-shadow, transform, opacity;
+  transition-duration: 0.15s;
+  transition-timing-function: ease;
+}
+
+/* Skeleton pulse improvement */
+@keyframes skeleton-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.ds-skeleton {
+  background: linear-gradient(90deg, var(--majalis-parchment) 25%, color-mix(in srgb, var(--majalis-parchment) 60%, var(--majalis-line)) 50%, var(--majalis-parchment) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s infinite ease-in-out;
+}
+
+/* Improved scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--majalis-line); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: var(--majalis-ink-muted); }
+
+/* Text selection */
+::selection {
+  background: color-mix(in srgb, var(--majalis-emerald) 20%, transparent);
+  color: var(--majalis-emerald-deep);
+}
+
+/* Better link in prose */
+.prose a, .content-body a {
+  color: var(--majalis-emerald-deep);
+  text-underline-offset: 3px;
+}
+
+/* Glassmorphism utility */
+.glass-panel {
+  background: rgba(255,255,255,0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.5);
+}
+[data-theme="dark"] .glass-panel {
+  background: rgba(20,30,25,0.75);
+  border-color: rgba(255,255,255,0.1);
+}
+
+/* Animated entrance for sections */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fade-up 0.4s ease both; }
+.fade-up--d1 { animation-delay: 0.05s; }
+.fade-up--d2 { animation-delay: 0.1s; }
+.fade-up--d3 { animation-delay: 0.15s; }
+
+/* Badge improvements */
+.badge, .page-tag {
+  letter-spacing: 0.03em;
+  font-size: 0.7rem;
+}
+
+/* Improved home hero */
+.home-hero-badge {
+  display: block;
+  max-width: 38rem;
+  line-height: 1.65;
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
