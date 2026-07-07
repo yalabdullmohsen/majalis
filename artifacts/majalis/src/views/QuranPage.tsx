@@ -5,13 +5,20 @@ import "@/styles/mushaf.css";
 
 const PDF_URL  = "/quran.pdf";
 const PAGE_KEY = "mj-mushaf-page-v2";
-const TOTAL    = 600;
+const BM_KEY   = "mj-mushaf-bookmarks";
+const TOTAL    = 604;
 
 function lsGet(k: string, fb: number) {
   try { const v = localStorage.getItem(k); return v ? +JSON.parse(v) : fb; } catch { return fb; }
 }
 function lsSet(k: string, v: number) {
-  try { localStorage.setItem(k, String(v)); } catch { /* ignore */ }
+  try { localStorage.setItem(k, String(v)); } catch { /* */ }
+}
+function lsGetArr(k: string): number[] {
+  try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : []; } catch { return []; }
+}
+function lsSetArr(k: string, v: number[]) {
+  try { localStorage.setItem(k, JSON.stringify(v)); } catch { /* */ }
 }
 
 function Star({ cls }: { cls?: string }) {
@@ -23,22 +30,60 @@ function Star({ cls }: { cls?: string }) {
   );
 }
 
-export default function QuranPage() {
-  const [page, setPage]           = useState(() => Math.min(lsGet(PAGE_KEY, 1), TOTAL));
-  const [pdfDoc, setPdfDoc]       = useState<any>(null);
-  const [rendering, setRendering] = useState(true);
-  const [loadErr, setLoadErr]     = useState(false);
-  const [uiOn, setUiOn]           = useState(true);
-  // تحرير رقم الصفحة مباشرة في الـ footer
-  const [editingPage, setEditingPage] = useState(false);
-  const [editVal, setEditVal]     = useState("");
+/* ══ بيانات السور (اسم + الصفحة الأولى) ══ */
+const SURAHS: [string, number][] = [
+  ["الفاتحة",1],["البقرة",2],["آل عمران",50],["النساء",77],["المائدة",106],
+  ["الأنعام",128],["الأعراف",151],["الأنفال",177],["التوبة",187],["يونس",208],
+  ["هود",221],["يوسف",235],["الرعد",249],["إبراهيم",255],["الحجر",262],
+  ["النحل",267],["الإسراء",282],["الكهف",293],["مريم",305],["طه",312],
+  ["الأنبياء",322],["الحج",332],["المؤمنون",342],["النور",350],["الفرقان",359],
+  ["الشعراء",367],["النمل",377],["القصص",385],["العنكبوت",396],["الروم",404],
+  ["لقمان",411],["السجدة",415],["الأحزاب",418],["سبأ",428],["فاطر",434],
+  ["يس",440],["الصافات",446],["ص",453],["الزمر",458],["غافر",467],
+  ["فصلت",477],["الشورى",483],["الزخرف",489],["الدخان",496],["الجاثية",499],
+  ["الأحقاف",502],["محمد",507],["الفتح",511],["الحجرات",515],["ق",518],
+  ["الذاريات",520],["الطور",523],["النجم",526],["القمر",528],["الرحمن",531],
+  ["الواقعة",534],["الحديد",537],["المجادلة",542],["الحشر",545],["الممتحنة",549],
+  ["الصف",551],["الجمعة",553],["المنافقون",554],["التغابن",556],["الطلاق",558],
+  ["التحريم",560],["الملك",562],["القلم",564],["الحاقة",566],["المعارج",568],
+  ["نوح",570],["الجن",572],["المزمل",574],["المدثر",575],["القيامة",577],
+  ["الإنسان",578],["المرسلات",580],["النبأ",582],["النازعات",583],["عبس",585],
+  ["التكوير",586],["الانفطار",587],["المطففين",587],["الانشقاق",589],["البروج",590],
+  ["الطارق",591],["الأعلى",591],["الغاشية",592],["الفجر",593],["البلد",594],
+  ["الشمس",595],["الليل",595],["الضحى",596],["الشرح",596],["التين",597],
+  ["العلق",597],["القدر",598],["البينة",598],["الزلزلة",599],["العاديات",599],
+  ["القارعة",600],["التكاثر",600],["العصر",601],["الهمزة",601],["الفيل",601],
+  ["قريش",602],["الماعون",602],["الكوثر",602],["الكافرون",603],["النصر",603],
+  ["المسد",603],["الإخلاص",604],["الفلق",604],["الناس",604],
+];
 
-  const canvasRef  = useRef<HTMLCanvasElement>(null);
-  const frameRef   = useRef<HTMLDivElement>(null);
-  const taskRef    = useRef<any>(null);
-  const uiTimer    = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const touchRef   = useRef<{ x: number; y: number } | null>(null);
+const AJZAA: [string, number][] = Array.from({ length: 30 }, (_, i) => {
+  const pages = [1,22,42,62,82,102,121,142,162,182,201,221,241,261,281,301,321,341,361,381,401,421,441,461,481,501,521,542,561,581];
+  return [`الجزء ${i + 1}`, pages[i]];
+});
+
+type NavTab = "surahs" | "juz" | "bookmarks";
+
+export default function QuranPage() {
+  const [page, setPage]             = useState(() => Math.min(lsGet(PAGE_KEY, 1), TOTAL));
+  const [pdfDoc, setPdfDoc]         = useState<any>(null);
+  const [rendering, setRendering]   = useState(true);
+  const [loadErr, setLoadErr]       = useState(false);
+  const [uiOn, setUiOn]             = useState(true);
+  const [editingPage, setEditingPage] = useState(false);
+  const [editVal, setEditVal]       = useState("");
+  const [navOpen, setNavOpen]       = useState(false);
+  const [navTab, setNavTab]         = useState<NavTab>("surahs");
+  const [search, setSearch]         = useState("");
+  const [bookmarks, setBookmarks]   = useState<number[]>(() => lsGetArr(BM_KEY));
+
+  const canvasRef    = useRef<HTMLCanvasElement>(null);
+  const frameRef     = useRef<HTMLDivElement>(null);
+  const taskRef      = useRef<any>(null);
+  const uiTimer      = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const touchRef     = useRef<{ x: number; y: number } | null>(null);
   const pageInputRef = useRef<HTMLInputElement>(null);
+  const searchRef    = useRef<HTMLInputElement>(null);
 
   /* ── تحميل PDF.js ── */
   useEffect(() => {
@@ -62,7 +107,7 @@ export default function QuranPage() {
   /* ── رسم الصفحة ── */
   const draw = useCallback(async (doc: any, p: number) => {
     if (!doc || !canvasRef.current || !frameRef.current) return;
-    if (taskRef.current) { try { taskRef.current.cancel(); } catch { /* ignore */ } taskRef.current = null; }
+    if (taskRef.current) { try { taskRef.current.cancel(); } catch { /* */ } taskRef.current = null; }
     setRendering(true);
     try {
       const pg  = await doc.getPage(p);
@@ -103,19 +148,19 @@ export default function QuranPage() {
   /* ── لوحة المفاتيح ── */
   useEffect(() => {
     const h = (e: KeyboardEvent) => {
-      if (editingPage) return;
+      if (editingPage || navOpen) return;
       if (e.key === "ArrowLeft")  go(page + 1);
       else if (e.key === "ArrowRight") go(page - 1);
       else if (e.key === "Escape") window.history.back();
     };
     window.addEventListener("keydown", h);
     return () => window.removeEventListener("keydown", h);
-  }, [page, editingPage]);
+  }, [page, editingPage, navOpen]);
 
-  const go = (n: number) => {
+  const go = useCallback((n: number) => {
     const p = Math.max(1, Math.min(TOTAL, n));
     setPage(p); lsSet(PAGE_KEY, p); bump();
-  };
+  }, [bump]);
 
   /* ── اللمس ── */
   const onTS = (e: React.TouchEvent) => {
@@ -130,18 +175,17 @@ export default function QuranPage() {
     go(dx < 0 ? page + 1 : page - 1);
   };
 
-  /* النقر على مناطق الصفحة */
   const onFrameClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (editingPage) return;
+    if (editingPage || navOpen) return;
     const { clientX, currentTarget } = e;
     const w = currentTarget.clientWidth;
     const zone = clientX / w;
-    if (zone < 0.35)      go(page + 1);   // يسار → التالية (RTL)
-    else if (zone > 0.65) go(page - 1);   // يمين → السابقة
-    else bump();                           // وسط → يُظهر الـ UI
+    if (zone < 0.35)      go(page + 1);
+    else if (zone > 0.65) go(page - 1);
+    else bump();
   };
 
-  /* تحرير رقم الصفحة */
+  /* ── تحرير رقم الصفحة ── */
   const startEdit = () => {
     setEditingPage(true);
     setEditVal(String(page));
@@ -154,6 +198,39 @@ export default function QuranPage() {
     setEditingPage(false);
   };
 
+  /* ── علامات المرجعية ── */
+  const isBookmarked = bookmarks.includes(page);
+  const toggleBookmark = () => {
+    const next = isBookmarked
+      ? bookmarks.filter(b => b !== page)
+      : [...bookmarks, page].sort((a, b) => a - b);
+    setBookmarks(next);
+    lsSetArr(BM_KEY, next);
+    bump();
+  };
+
+  /* ── فتح لوحة التنقل ── */
+  const openNav = (tab: NavTab = "surahs") => {
+    setNavTab(tab);
+    setSearch("");
+    setNavOpen(true);
+    setTimeout(() => searchRef.current?.focus(), 80);
+  };
+  const goTo = (p: number) => { go(p); setNavOpen(false); };
+
+  /* ── قائمة السور المفلترة ── */
+  const filteredSurahs = SURAHS.filter(([name]) =>
+    !search || name.includes(search)
+  );
+
+  /* ── اسم السورة الحالية ── */
+  const currentSurah = (() => {
+    for (let i = SURAHS.length - 1; i >= 0; i--) {
+      if (page >= SURAHS[i][1]) return `${i + 1}. ${SURAHS[i][0]}`;
+    }
+    return "";
+  })();
+
   return (
     <div className="mshf-shell" dir="rtl">
 
@@ -164,12 +241,40 @@ export default function QuranPage() {
             <path d="M15 18l-6-6 6-6"/>
           </svg>
         </button>
+
         <div className="mshf-title-wrap">
           <Star cls="mshf-star" />
-          <span className="mshf-title">المصحف الشريف</span>
+          <div className="mshf-title-col">
+            <span className="mshf-title">المصحف الشريف</span>
+            {currentSurah && <span className="mshf-surah-name">{currentSurah}</span>}
+          </div>
           <Star cls="mshf-star" />
         </div>
-        <div className="mshf-top__right" />
+
+        <div className="mshf-top__actions">
+          <button
+            className={`mshf-icon-btn${isBookmarked ? " mshf-icon-btn--active" : ""}`}
+            onClick={toggleBookmark}
+            aria-label={isBookmarked ? "إزالة العلامة" : "إضافة علامة"}
+            title={isBookmarked ? "إزالة العلامة" : "إضافة علامة"}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill={isBookmarked ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/>
+            </svg>
+          </button>
+          <button
+            className="mshf-icon-btn"
+            onClick={() => openNav("surahs")}
+            aria-label="فهرس السور"
+            title="فهرس السور"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/>
+              <line x1="8" y1="18" x2="21" y2="18"/><circle cx="3" cy="6" r="1" fill="currentColor"/>
+              <circle cx="3" cy="12" r="1" fill="currentColor"/><circle cx="3" cy="18" r="1" fill="currentColor"/>
+            </svg>
+          </button>
+        </div>
       </header>
 
       {/* ══ منطقة الصفحة ══ */}
@@ -180,7 +285,6 @@ export default function QuranPage() {
         onTouchEnd={onTE}
         onClick={onFrameClick}
       >
-        {/* تحميل */}
         {rendering && !loadErr && (
           <div className="mshf-loading">
             <div className="mshf-spinner" />
@@ -188,7 +292,6 @@ export default function QuranPage() {
           </div>
         )}
 
-        {/* خطأ */}
         {loadErr && (
           <div className="mshf-err">
             <div className="mshf-err__icon">⚠</div>
@@ -197,7 +300,6 @@ export default function QuranPage() {
           </div>
         )}
 
-        {/* canvas + إطار */}
         {!loadErr && (
           <div className="mshf-wrap">
             <Star cls="mshf-c mshf-c--tl" />
@@ -207,12 +309,11 @@ export default function QuranPage() {
             <canvas
               ref={canvasRef}
               className={`mshf-canvas${!rendering ? " ready" : ""}`}
-              aria-label={`صفحة ${page}`}
+              aria-label={`صفحة ${page} — ${currentSurah}`}
             />
           </div>
         )}
 
-        {/* مناطق النقر (شفافة فوق الصورة) */}
         {!loadErr && !rendering && (
           <>
             <div className="mshf-tap mshf-tap--next" onClick={e => { e.stopPropagation(); go(page + 1); }} aria-label="التالية" />
@@ -223,13 +324,12 @@ export default function QuranPage() {
 
       {/* ══ شريط سفلي ══ */}
       <footer className={`mshf-bot${uiOn ? " on" : ""}`}>
-        <button className="mshf-nav" onClick={() => go(page - 1)} disabled={page <= 1}>
+        <button className="mshf-nav" onClick={() => go(page - 1)} disabled={page <= 1} aria-label="السابقة">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
             <path d="M15 18l-6-6 6-6"/>
           </svg>
         </button>
 
-        {/* رقم الصفحة — قابل للتحرير */}
         <div className="mshf-pgnum">
           {editingPage ? (
             <input
@@ -253,12 +353,142 @@ export default function QuranPage() {
           )}
         </div>
 
-        <button className="mshf-nav" onClick={() => go(page + 1)} disabled={page >= TOTAL}>
+        <button className="mshf-nav" onClick={() => go(page + 1)} disabled={page >= TOTAL} aria-label="التالية">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
             <path d="M9 18l6-6-6-6"/>
           </svg>
         </button>
       </footer>
+
+      {/* ══ لوحة التنقل (فهرس السور / الأجزاء / العلامات) ══ */}
+      {navOpen && (
+        <div className="mshf-nav-overlay" onClick={() => setNavOpen(false)}>
+          <div className="mshf-nav-panel" onClick={e => e.stopPropagation()}>
+
+            {/* رأس اللوحة */}
+            <div className="mshf-nav-panel__head">
+              <div className="mshf-nav-panel__tabs">
+                {([["surahs","السور"],["juz","الأجزاء"],["bookmarks","العلامات"]] as [NavTab, string][]).map(([id, label]) => (
+                  <button
+                    key={id}
+                    className={`mshf-nav-panel__tab${navTab === id ? " active" : ""}`}
+                    onClick={() => { setNavTab(id); setSearch(""); }}
+                  >{label}</button>
+                ))}
+              </div>
+              <button className="mshf-nav-panel__close" onClick={() => setNavOpen(false)} aria-label="إغلاق">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                  <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+              </button>
+            </div>
+
+            {/* بحث (للسور فقط) */}
+            {navTab === "surahs" && (
+              <div className="mshf-nav-search">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                  <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+                <input
+                  ref={searchRef}
+                  className="mshf-nav-search__input"
+                  placeholder="ابحث عن سورة…"
+                  value={search}
+                  onChange={e => setSearch(e.target.value)}
+                  aria-label="بحث في السور"
+                />
+                {search && (
+                  <button className="mshf-nav-search__clear" onClick={() => setSearch("")} aria-label="مسح البحث">✕</button>
+                )}
+              </div>
+            )}
+
+            {/* محتوى اللوحة */}
+            <div className="mshf-nav-panel__body">
+
+              {/* السور */}
+              {navTab === "surahs" && (
+                <div className="mshf-surah-list">
+                  {filteredSurahs.length === 0 ? (
+                    <p className="mshf-nav-empty">لا نتائج</p>
+                  ) : filteredSurahs.map(([name, startPage]) => {
+                    const idx = SURAHS.findIndex(s => s[0] === name);
+                    const isActive = page >= startPage && (idx === SURAHS.length - 1 || page < SURAHS[idx + 1][1]);
+                    return (
+                      <button
+                        key={name}
+                        className={`mshf-surah-item${isActive ? " active" : ""}`}
+                        onClick={() => goTo(startPage)}
+                      >
+                        <span className="mshf-surah-item__num">{idx + 1}</span>
+                        <span className="mshf-surah-item__name">{name}</span>
+                        <span className="mshf-surah-item__page">ص {startPage}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+
+              {/* الأجزاء */}
+              {navTab === "juz" && (
+                <div className="mshf-juz-grid">
+                  {AJZAA.map(([label, startPage], i) => {
+                    const isActive = page >= startPage && (i === AJZAA.length - 1 || page < AJZAA[i + 1][1]);
+                    return (
+                      <button
+                        key={label}
+                        className={`mshf-juz-item${isActive ? " active" : ""}`}
+                        onClick={() => goTo(startPage)}
+                      >
+                        <span className="mshf-juz-item__n">{i + 1}</span>
+                        <span className="mshf-juz-item__pg">ص {startPage}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+
+              {/* العلامات */}
+              {navTab === "bookmarks" && (
+                <div className="mshf-bm-list">
+                  {bookmarks.length === 0 ? (
+                    <div className="mshf-nav-empty">
+                      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+                        <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/>
+                      </svg>
+                      <p>لا توجد علامات محفوظة</p>
+                      <p className="mshf-nav-empty__sub">اضغط 🔖 لحفظ صفحة</p>
+                    </div>
+                  ) : bookmarks.map(p => {
+                    const surah = (() => { for (let i = SURAHS.length - 1; i >= 0; i--) if (p >= SURAHS[i][1]) return `${SURAHS[i][0]}`; return ""; })();
+                    return (
+                      <div key={p} className="mshf-bm-item">
+                        <button className="mshf-bm-item__btn" onClick={() => goTo(p)}>
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true">
+                            <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/>
+                          </svg>
+                          <div>
+                            <span className="mshf-bm-item__page">صفحة {p}</span>
+                            <span className="mshf-bm-item__surah">{surah}</span>
+                          </div>
+                        </button>
+                        <button
+                          className="mshf-bm-item__del"
+                          onClick={() => {
+                            const next = bookmarks.filter(b => b !== p);
+                            setBookmarks(next); lsSetArr(BM_KEY, next);
+                          }}
+                          aria-label="حذف العلامة"
+                        >✕</button>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
