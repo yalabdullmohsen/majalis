@@ -16,17 +16,6 @@ type Season = {
 function getSeasons(): Season[] {
   return [
     {
-      id: "ashura-1448",
-      name: "Ashura",
-      arabicName: "عاشوراء",
-      startDate: new Date("2026-07-04"),
-      endDate: new Date("2026-07-06"),
-      description: "يوم عاشوراء — العاشر من المحرم 1448هـ",
-      suggestion: "صم يوم عاشوراء ويوماً قبله",
-      href: "/daily-wird",
-      color: "#1a6b52",
-    },
-    {
       id: "rajab-1448",
       name: "Rajab",
       arabicName: "رجب",

@@ -2010,6 +2010,19 @@ button.hcp-prayer-cell:focus-visible {
   border-color: rgba(255,220,40,0.4) !important;
 }
 
+/* زر التفاصيل — أخضر داكن يطابق رأس البطاقة */
+.lesson-unified-card__btn--primary {
+  background: var(--elite-forest, #18362A) !important;
+  border-color: var(--elite-forest, #18362A) !important;
+  color: var(--elite-white, #FAF8F2) !important;
+  box-shadow: 0 2px 8px rgba(24,54,42,0.30) !important;
+}
+.lesson-unified-card__btn--primary:hover {
+  background: #0f2318 !important;
+  border-color: #0f2318 !important;
+  box-shadow: 0 4px 14px rgba(24,54,42,0.40) !important;
+}
+
 /* ══════════════════════════════════════════════
    §57. بطاقات الإعلانات التسويقية — الرئيسية
    ══════════════════════════════════════════════ */
