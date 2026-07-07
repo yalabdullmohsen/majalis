@@ -44,16 +44,16 @@ export function AnnualCoursesSection() {
         if (error) return showError(error.message);
         showSuccess("تم الحفظ"); setOpen(false); load();
       }} saving={saving}>
-        <Field label="العنوان"><input style={inputSt} value={form.title || ""} onChange={(e) => set("title", e.target.value)} /></Field>
-        <Field label="النوع"><select style={selectSt} value={form.course_type} onChange={(e) => set("course_type", e.target.value)}>{COURSE_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}</select></Field>
-        <Field label="الملخص"><textarea style={textareaSt} value={form.summary || ""} onChange={(e) => set("summary", e.target.value)} rows={2} /></Field>
-        <Field label="التفاصيل"><textarea style={textareaSt} value={form.body || ""} onChange={(e) => set("body", e.target.value)} rows={4} /></Field>
-        <Field label="الموسم"><input style={inputSt} value={form.season || ""} onChange={(e) => set("season", e.target.value)} /></Field>
-        <Field label="السنة"><input style={inputSt} type="number" value={form.year || ""} onChange={(e) => set("year", Number(e.target.value))} /></Field>
-        <Field label="المكان"><input style={inputSt} value={form.venue_name || ""} onChange={(e) => set("venue_name", e.target.value)} /></Field>
-        <Field label="المدينة"><input style={inputSt} value={form.venue_city || ""} onChange={(e) => set("venue_city", e.target.value)} /></Field>
-        <Field label="رابط التسجيل"><input style={inputSt} value={form.registration_url || ""} onChange={(e) => set("registration_url", e.target.value)} /></Field>
-        <Field label="الحالة"><select style={selectSt} value={form.status || "approved"} onChange={(e) => set("status", e.target.value)}><option value="approved">منشور</option><option value="pending">معلّق</option></select></Field>
+        <Field label="العنوان"><input className="adm-input" value={form.title || ""} onChange={(e) => set("title", e.target.value)} /></Field>
+        <Field label="النوع"><select className="adm-select" value={form.course_type} onChange={(e) => set("course_type", e.target.value)}>{COURSE_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}</select></Field>
+        <Field label="الملخص"><textarea className="adm-textarea" value={form.summary || ""} onChange={(e) => set("summary", e.target.value)} rows={2} /></Field>
+        <Field label="التفاصيل"><textarea className="adm-textarea" value={form.body || ""} onChange={(e) => set("body", e.target.value)} rows={4} /></Field>
+        <Field label="الموسم"><input className="adm-input" value={form.season || ""} onChange={(e) => set("season", e.target.value)} /></Field>
+        <Field label="السنة"><input className="adm-input" type="number" value={form.year || ""} onChange={(e) => set("year", Number(e.target.value))} /></Field>
+        <Field label="المكان"><input className="adm-input" value={form.venue_name || ""} onChange={(e) => set("venue_name", e.target.value)} /></Field>
+        <Field label="المدينة"><input className="adm-input" value={form.venue_city || ""} onChange={(e) => set("venue_city", e.target.value)} /></Field>
+        <Field label="رابط التسجيل"><input className="adm-input" value={form.registration_url || ""} onChange={(e) => set("registration_url", e.target.value)} /></Field>
+        <Field label="الحالة"><select className="adm-select" value={form.status || "approved"} onChange={(e) => set("status", e.target.value)}><option value="approved">منشور</option><option value="pending">معلّق</option></select></Field>
       </AdminModal>
     </div>
   );

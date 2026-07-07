@@ -45,11 +45,11 @@ export function UpdatesSection() {
         if (error) return showError(error.message);
         showSuccess("تم الحفظ"); setOpen(false); load();
       }} saving={saving}>
-        <Field label="العنوان"><input style={inputSt} value={form.title || ""} onChange={(e) => set("title", e.target.value)} /></Field>
-        <Field label="النوع"><select style={selectSt} value={form.update_type} onChange={(e) => set("update_type", e.target.value)}>{UPDATE_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}</select></Field>
-        <Field label="الملخص"><textarea style={textareaSt} value={form.summary || ""} onChange={(e) => set("summary", e.target.value)} rows={2} /></Field>
-        <Field label="رابط"><input style={inputSt} value={form.source_url || ""} onChange={(e) => set("source_url", e.target.value)} /></Field>
-        <Field label="الحالة"><select style={selectSt} value={form.status || "approved"} onChange={(e) => set("status", e.target.value)}><option value="approved">منشور</option><option value="pending">معلّق</option></select></Field>
+        <Field label="العنوان"><input className="adm-input" value={form.title || ""} onChange={(e) => set("title", e.target.value)} /></Field>
+        <Field label="النوع"><select className="adm-select" value={form.update_type} onChange={(e) => set("update_type", e.target.value)}>{UPDATE_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}</select></Field>
+        <Field label="الملخص"><textarea className="adm-textarea" value={form.summary || ""} onChange={(e) => set("summary", e.target.value)} rows={2} /></Field>
+        <Field label="رابط"><input className="adm-input" value={form.source_url || ""} onChange={(e) => set("source_url", e.target.value)} /></Field>
+        <Field label="الحالة"><select className="adm-select" value={form.status || "approved"} onChange={(e) => set("status", e.target.value)}><option value="approved">منشور</option><option value="pending">معلّق</option></select></Field>
       </AdminModal>
     </div>
   );

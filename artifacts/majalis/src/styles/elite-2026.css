@@ -6753,3 +6753,24 @@ button.primary:hover {
    §109 — FatwaDetailPage  (ftd-*)
    ============================================================ */
 .ftd-audio { width: 100%; }
+
+/* ============================================================
+   §110 — Admin shared input/select/textarea (adm-*)
+   Replaces exported inputSt / selectSt / textareaSt objects
+   ============================================================ */
+.adm-input,
+.adm-select,
+.adm-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.375rem;
+  border: 1px solid var(--majalis-line);
+  background: var(--majalis-panel);
+  color: var(--majalis-ink);
+  font-size: 0.875rem;
+  font-family: inherit;
+  outline: none;
+}
+.adm-select  { cursor: pointer; }
+.adm-textarea { min-height: 5rem; resize: vertical; }

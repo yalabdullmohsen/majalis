@@ -170,35 +170,35 @@ export function SheikhsSection() {
 
       <AdminModal title={form.id ? "تعديل بيانات الشيخ" : "إضافة شيخ جديد"} open={open} onClose={() => setOpen(false)} onSave={handleSave} saving={saving}>
         <Field label="الاسم الكامل *">
-          <input style={inputSt} value={form.name} onChange={e => set("name", e.target.value)} placeholder="اسم الشيخ" />
+          <input className="adm-input" value={form.name} onChange={e => set("name", e.target.value)} placeholder="اسم الشيخ" />
         </Field>
         <Field label="المحافظة">
-          <select style={selectSt} value={form.city || ""} onChange={e => set("city", e.target.value)}>
+          <select className="adm-select" value={form.city || ""} onChange={e => set("city", e.target.value)}>
             <option value="">اختر المحافظة</option>
             {GOVERNORATES.map(g => <option key={g} value={g}>{g}</option>)}
           </select>
         </Field>
         <Field label="نبذة تعريفية مختصرة">
-          <textarea style={textareaSt} value={form.bio || ""} onChange={e => set("bio", e.target.value)} placeholder="وصف مختصر يظهر في بطاقة الشيخ..." />
+          <textarea className="adm-textarea" value={form.bio || ""} onChange={e => set("bio", e.target.value)} placeholder="وصف مختصر يظهر في بطاقة الشيخ..." />
         </Field>
         <Field label="السيرة العلمية التفصيلية">
           <textarea style={{ ...textareaSt, minHeight: "7rem" }} value={form.biography || ""} onChange={e => set("biography", e.target.value)} placeholder="السيرة العلمية الكاملة..." />
         </Field>
         <Field label="التخصصات (افصل بفاصلة)">
-          <input style={inputSt} value={form.specialties || ""} onChange={e => set("specialties", e.target.value)} placeholder="الفقه، العقيدة، التفسير" />
+          <input className="adm-input" value={form.specialties || ""} onChange={e => set("specialties", e.target.value)} placeholder="الفقه، العقيدة، التفسير" />
         </Field>
         <Field label="المؤهلات العلمية (افصل بفاصلة)">
-          <input style={inputSt} value={form.qualifications || ""} onChange={e => set("qualifications", e.target.value)} placeholder="بكالوريوس شريعة، ماجستير فقه مقارن" />
+          <input className="adm-input" value={form.qualifications || ""} onChange={e => set("qualifications", e.target.value)} placeholder="بكالوريوس شريعة، ماجستير فقه مقارن" />
         </Field>
         <Field label="الإجازات العلمية">
-          <input style={inputSt} value={form.ijazah || ""} onChange={e => set("ijazah", e.target.value)} placeholder="إجازات التسميع والرواية..." />
+          <input className="adm-input" value={form.ijazah || ""} onChange={e => set("ijazah", e.target.value)} placeholder="إجازات التسميع والرواية..." />
         </Field>
         <FieldRow>
           <Field label="سنوات الخبرة">
-            <input type="number" style={inputSt} value={form.years_experience || ""} onChange={e => set("years_experience", e.target.value)} placeholder="عدد السنوات" min={0} />
+            <input type="number" className="adm-input" value={form.years_experience || ""} onChange={e => set("years_experience", e.target.value)} placeholder="عدد السنوات" min={0} />
           </Field>
           <Field label="رابط صورة خارجي (اختياري)">
-            <input style={inputSt} value={form.image_url || form.photo_url || ""} onChange={e => { set("image_url", e.target.value); set("photo_url", e.target.value); setImagePreview(e.target.value); setImageFile(null); }} placeholder="https://..." />
+            <input className="adm-input" value={form.image_url || form.photo_url || ""} onChange={e => { set("image_url", e.target.value); set("photo_url", e.target.value); setImagePreview(e.target.value); setImageFile(null); }} placeholder="https://..." />
           </Field>
         </FieldRow>
         <Field label="صورة الشيخ">

@@ -323,23 +323,23 @@ export function LessonsSection() {
 
       <AdminModal title={form.id ? "تعديل الدرس" : "إضافة درس جديد"} open={open} onClose={() => setOpen(false)} onSave={handleSave} saving={saving}>
         <Field label="عنوان الدرس *">
-          <input style={inputSt} value={form.title} onChange={e => set("title", e.target.value)} placeholder="عنوان الدرس أو الدورة" />
+          <input className="adm-input" value={form.title} onChange={e => set("title", e.target.value)} placeholder="عنوان الدرس أو الدورة" />
         </Field>
         <Field label="الشيخ">
-          <select style={selectSt} value={form.sheikh_id || ""} onChange={e => set("sheikh_id", e.target.value)}>
+          <select className="adm-select" value={form.sheikh_id || ""} onChange={e => set("sheikh_id", e.target.value)}>
             <option value="">اختر الشيخ (اختياري)</option>
             {sheikhs.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
           </select>
         </Field>
         <FieldRow>
           <Field label="التصنيف">
-            <select style={selectSt} value={form.category || ""} onChange={e => set("category", e.target.value)}>
+            <select className="adm-select" value={form.category || ""} onChange={e => set("category", e.target.value)}>
               <option value="">اختر التصنيف</option>
               {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
             </select>
           </Field>
           <Field label="المحافظة">
-            <select style={selectSt} value={form.city || ""} onChange={e => set("city", e.target.value)}>
+            <select className="adm-select" value={form.city || ""} onChange={e => set("city", e.target.value)}>
               <option value="">اختر المحافظة</option>
               {GOVERNORATES.map(g => <option key={g} value={g}>{g}</option>)}
             </select>
@@ -347,20 +347,20 @@ export function LessonsSection() {
         </FieldRow>
         <FieldRow>
           <Field label="نوع المكان">
-            <select style={selectSt} value={form.venue_type || "مسجد"} onChange={e => set("venue_type", e.target.value)}>
+            <select className="adm-select" value={form.venue_type || "مسجد"} onChange={e => set("venue_type", e.target.value)}>
               {VENUE_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
             </select>
           </Field>
           <Field label="اسم المكان">
-            <input style={inputSt} value={form.mosque || ""} onChange={e => set("mosque", e.target.value)} placeholder={form.venue_type === "مسجد" ? "مسجد الرحمة" : form.venue_type === "ديوان" ? "ديوان آل فلان" : form.venue_type === "مجلس" ? "مجلس الشيخ فلان" : "اسم المكان"} />
+            <input className="adm-input" value={form.mosque || ""} onChange={e => set("mosque", e.target.value)} placeholder={form.venue_type === "مسجد" ? "مسجد الرحمة" : form.venue_type === "ديوان" ? "ديوان آل فلان" : form.venue_type === "مجلس" ? "مجلس الشيخ فلان" : "اسم المكان"} />
           </Field>
         </FieldRow>
         <FieldRow>
           <Field label="المنطقة">
-            <input style={inputSt} value={form.region || ""} onChange={e => set("region", e.target.value)} placeholder="مثال: الصديق" />
+            <input className="adm-input" value={form.region || ""} onChange={e => set("region", e.target.value)} placeholder="مثال: الصديق" />
           </Field>
           <Field label="اسم الشيخ (إن لم يُربط بحساب)">
-            <input style={inputSt} value={form.speaker_name || ""} onChange={e => set("speaker_name", e.target.value)} placeholder="مثال: عبدالله الأنصاري" />
+            <input className="adm-input" value={form.speaker_name || ""} onChange={e => set("speaker_name", e.target.value)} placeholder="مثال: عبدالله الأنصاري" />
             {looksLikeTopic(form.speaker_name) && (
               <div style={{ marginTop: "0.3rem", padding: "0.35rem 0.6rem", borderRadius: "0.35rem", background: "rgba(14,110,82,0.08)", color: "#0E6E52", fontSize: "0.75rem", fontWeight: 600 }}>
                 ⚠️ يبدو أن هذا موضوع وليس اسم شيخ. يُرجى التأكد من إدخال الاسم الصحيح.
@@ -370,12 +370,12 @@ export function LessonsSection() {
         </FieldRow>
         <FieldRow>
           <Field label="الجمهور المستهدف">
-            <select style={selectSt} value={form.audience} onChange={e => set("audience", e.target.value)}>
+            <select className="adm-select" value={form.audience} onChange={e => set("audience", e.target.value)}>
               {AUDIENCE.map(a => <option key={a} value={a}>{a}</option>)}
             </select>
           </Field>
           <Field label="طريقة الحضور">
-            <select style={selectSt} value={form.delivery} onChange={e => set("delivery", e.target.value)}>
+            <select className="adm-select" value={form.delivery} onChange={e => set("delivery", e.target.value)}>
               {DELIVERY.map(d => <option key={d} value={d}>{d}</option>)}
             </select>
           </Field>
@@ -407,16 +407,16 @@ export function LessonsSection() {
           )}
         </Field>
         <Field label="تاريخ الانتهاء (اختياري)">
-          <input type="date" style={inputSt} value={form.end_date || ""} onChange={e => set("end_date", e.target.value || null)} />
+          <input type="date" className="adm-input" value={form.end_date || ""} onChange={e => set("end_date", e.target.value || null)} />
         </Field>
         <FieldRow>
           <Field label="الجدول الزمني">
-            <input style={inputSt} value={form.schedule || ""} onChange={e => set("schedule", e.target.value)} placeholder="كل اثنين بعد العشاء" />
+            <input className="adm-input" value={form.schedule || ""} onChange={e => set("schedule", e.target.value)} placeholder="كل اثنين بعد العشاء" />
           </Field>
           <Field label="وقت الدرس">
             <input
               type="time"
-              style={inputSt}
+              className="adm-input"
               value={form.lesson_time || ""}
               onChange={e => { set("lesson_time", e.target.value); setOrigTime(null); }}
             />
@@ -430,10 +430,10 @@ export function LessonsSection() {
           </Field>
         </FieldRow>
         <Field label="الوصف">
-          <textarea style={textareaSt} value={form.description || ""} onChange={e => set("description", e.target.value)} placeholder="وصف موجز للدرس أو الدورة..." />
+          <textarea className="adm-textarea" value={form.description || ""} onChange={e => set("description", e.target.value)} placeholder="وصف موجز للدرس أو الدورة..." />
         </Field>
         <Field label="الحالة">
-          <select style={selectSt} value={form.status} onChange={e => set("status", e.target.value)}>
+          <select className="adm-select" value={form.status} onChange={e => set("status", e.target.value)}>
             {Object.entries(STATUSES).map(([v, l]) => <option key={v} value={v}>{l}</option>)}
           </select>
         </Field>

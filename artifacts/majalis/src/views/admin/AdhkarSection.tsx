@@ -201,26 +201,26 @@ export function AdhkarSection() {
 
       <AdminModal title={form.id.startsWith("adh-custom") && !items.some((i) => i.id === form.id) ? "إضافة ذكر" : "تعديل ذكر"} open={open} onClose={() => setOpen(false)} onSave={handleSave} saving={saving}>
         <Field label="القسم">
-          <select value={form.categoryId} onChange={(e) => setForm((f) => ({ ...f, categoryId: e.target.value }))} style={selectSt}>
+          <select value={form.categoryId} onChange={(e) => setForm((f) => ({ ...f, categoryId: e.target.value }))} className="adm-select">
             {ADHKAR_CATEGORIES.map((c) => (
               <option key={c.id} value={c.id}>{c.name}</option>
             ))}
           </select>
         </Field>
         <Field label="نص الذكر">
-          <textarea value={form.text} onChange={(e) => setForm((f) => ({ ...f, text: e.target.value }))} style={textareaSt} />
+          <textarea value={form.text} onChange={(e) => setForm((f) => ({ ...f, text: e.target.value }))} className="adm-textarea" />
         </Field>
         <Field label="عدد التكرار">
-          <input type="number" min={1} value={form.count} onChange={(e) => setForm((f) => ({ ...f, count: Number(e.target.value) || 1 }))} style={inputSt} />
+          <input type="number" min={1} value={form.count} onChange={(e) => setForm((f) => ({ ...f, count: Number(e.target.value) || 1 }))} className="adm-input" />
         </Field>
         <Field label="المصدر">
-          <input value={form.source ?? ""} onChange={(e) => setForm((f) => ({ ...f, source: e.target.value }))} style={inputSt} />
+          <input value={form.source ?? ""} onChange={(e) => setForm((f) => ({ ...f, source: e.target.value }))} className="adm-input" />
         </Field>
         <Field label="الراوي">
-          <input value={form.narrator ?? ""} onChange={(e) => setForm((f) => ({ ...f, narrator: e.target.value }))} style={inputSt} />
+          <input value={form.narrator ?? ""} onChange={(e) => setForm((f) => ({ ...f, narrator: e.target.value }))} className="adm-input" />
         </Field>
         <Field label="الدرجة">
-          <input value={form.grade ?? ""} onChange={(e) => setForm((f) => ({ ...f, grade: e.target.value }))} style={inputSt} />
+          <input value={form.grade ?? ""} onChange={(e) => setForm((f) => ({ ...f, grade: e.target.value }))} className="adm-input" />
         </Field>
       </AdminModal>
 

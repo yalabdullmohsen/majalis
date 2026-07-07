@@ -259,10 +259,10 @@ export function RulingsSection() {
         saving={saving}
       >
         <Field label="العنوان">
-          <input style={inputSt} value={form.title || ""} onChange={(e) => set("title", e.target.value)} />
+          <input className="adm-input" value={form.title || ""} onChange={(e) => set("title", e.target.value)} />
         </Field>
         <Field label="التصنيف">
-          <select style={selectSt} value={form.category} onChange={(e) => set("category", e.target.value)}>
+          <select className="adm-select" value={form.category} onChange={(e) => set("category", e.target.value)}>
             {RULING_CATEGORIES.map((c) => (
               <option key={c} value={c}>{c}</option>
             ))}
@@ -272,7 +272,7 @@ export function RulingsSection() {
           </select>
         </Field>
         <Field label="التصنيف الفرعي">
-          <select style={selectSt} value={form.subcategory || ""} onChange={(e) => set("subcategory", e.target.value)}>
+          <select className="adm-select" value={form.subcategory || ""} onChange={(e) => set("subcategory", e.target.value)}>
             <option value="">—</option>
             {subcategoryOptions.map((s) => (
               <option key={s.slug} value={s.sub}>{s.sub}</option>
@@ -280,27 +280,27 @@ export function RulingsSection() {
           </select>
         </Field>
         <Field label="الملخص">
-          <textarea style={textareaSt} value={form.summary || ""} onChange={(e) => set("summary", e.target.value)} rows={2} />
+          <textarea className="adm-textarea" value={form.summary || ""} onChange={(e) => set("summary", e.target.value)} rows={2} />
         </Field>
         <Field label="التفصيل">
-          <textarea style={textareaSt} value={form.body || ""} onChange={(e) => set("body", e.target.value)} rows={8} />
+          <textarea className="adm-textarea" value={form.body || ""} onChange={(e) => set("body", e.target.value)} rows={8} />
         </Field>
         <Field label="الراجح">
-          <input style={inputSt} value={form.prevailing_view || ""} onChange={(e) => set("prevailing_view", e.target.value)} />
+          <input className="adm-input" value={form.prevailing_view || ""} onChange={(e) => set("prevailing_view", e.target.value)} />
         </Field>
         <Field label="درجة الحديث">
-          <input style={inputSt} value={form.hadith_grade || ""} onChange={(e) => set("hadith_grade", e.target.value)} />
+          <input className="adm-input" value={form.hadith_grade || ""} onChange={(e) => set("hadith_grade", e.target.value)} />
         </Field>
         <Field label="الكلمات المفتاحية (فاصلة)">
           <input
-            style={inputSt}
+            className="adm-input"
             value={(form.keywords || []).join("، ")}
             onChange={(e) => set("keywords", e.target.value.split(/[،,]/).map((s) => s.trim()).filter(Boolean))}
           />
         </Field>
         <Field label="المراجع (JSON)">
           <textarea
-            style={textareaSt}
+            className="adm-textarea"
             value={JSON.stringify(form.references || [], null, 2)}
             onChange={(e) => {
               try { set("references", JSON.parse(e.target.value)); } catch { /* ignore */ }
@@ -313,13 +313,13 @@ export function RulingsSection() {
             type="number"
             min={1}
             max={100}
-            style={inputSt}
+            className="adm-input"
             value={form.importance_score ?? 50}
             onChange={(e) => set("importance_score", Number(e.target.value))}
           />
         </Field>
         <Field label="الحالة">
-          <select style={selectSt} value={form.status || "approved"} onChange={(e) => set("status", e.target.value)}>
+          <select className="adm-select" value={form.status || "approved"} onChange={(e) => set("status", e.target.value)}>
             <option value="approved">منشور</option>
             <option value="pending">معلّق</option>
             <option value="draft">مسودة</option>
@@ -327,7 +327,7 @@ export function RulingsSection() {
         </Field>
         <Field label="التحقق">
           <select
-            style={selectSt}
+            className="adm-select"
             value={form.verification_status || "approved"}
             onChange={(e) => set("verification_status", e.target.value)}
           >

@@ -93,9 +93,9 @@ export function MiraclesSection() {
       )}
 
       <AdminModal open={open} title={form.id ? "تعديل مقال" : "إضافة مقال"} onClose={() => setOpen(false)} onSave={handleSave} saving={saving}>
-        <Field label="العنوان"><input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} style={inputSt} /></Field>
-        <Field label="التصنيف"><input value={form.category || ""} onChange={(e) => setForm({ ...form, category: e.target.value })} style={inputSt} /></Field>
-        <Field label="المحتوى"><textarea value={form.body || form.summary || ""} onChange={(e) => setForm({ ...form, body: e.target.value })} style={textareaSt} rows={6} /></Field>
+        <Field label="العنوان"><input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className="adm-input" /></Field>
+        <Field label="التصنيف"><input value={form.category || ""} onChange={(e) => setForm({ ...form, category: e.target.value })} className="adm-input" /></Field>
+        <Field label="المحتوى"><textarea value={form.body || form.summary || ""} onChange={(e) => setForm({ ...form, body: e.target.value })} className="adm-textarea" rows={6} /></Field>
       </AdminModal>
     </div>
   );

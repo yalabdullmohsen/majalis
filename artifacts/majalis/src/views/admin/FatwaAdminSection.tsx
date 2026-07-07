@@ -49,13 +49,13 @@ export function FatwaAdminSection() {
         if (error) return showError(error.message);
         showSuccess("تم الحفظ"); setOpen(false); load();
       }} saving={saving}>
-        <Field label="السؤال"><textarea style={textareaSt} value={form.question || ""} onChange={(e) => set("question", e.target.value)} rows={2} /></Field>
-        <Field label="الجواب"><textarea style={textareaSt} value={form.answer || ""} onChange={(e) => set("answer", e.target.value)} rows={6} /></Field>
-        <Field label="التصنيف"><select style={selectSt} value={form.category} onChange={(e) => set("category", e.target.value)}>{FATWA_CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}</select></Field>
-        <Field label="الصيغة"><select style={selectSt} value={form.format} onChange={(e) => set("format", e.target.value)}><option value="written">مكتوبة</option><option value="audio">صوتية</option><option value="both">كلاهما</option></select></Field>
-        <Field label="المفتي"><input style={inputSt} value={form.mufti_name || ""} onChange={(e) => set("mufti_name", e.target.value)} /></Field>
-        <Field label="رابط صوتي"><input style={inputSt} value={form.audio_url || ""} onChange={(e) => set("audio_url", e.target.value)} /></Field>
-        <Field label="الحالة"><select style={selectSt} value={form.status || "approved"} onChange={(e) => set("status", e.target.value)}><option value="approved">منشور</option><option value="pending">معلّق</option></select></Field>
+        <Field label="السؤال"><textarea className="adm-textarea" value={form.question || ""} onChange={(e) => set("question", e.target.value)} rows={2} /></Field>
+        <Field label="الجواب"><textarea className="adm-textarea" value={form.answer || ""} onChange={(e) => set("answer", e.target.value)} rows={6} /></Field>
+        <Field label="التصنيف"><select className="adm-select" value={form.category} onChange={(e) => set("category", e.target.value)}>{FATWA_CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}</select></Field>
+        <Field label="الصيغة"><select className="adm-select" value={form.format} onChange={(e) => set("format", e.target.value)}><option value="written">مكتوبة</option><option value="audio">صوتية</option><option value="both">كلاهما</option></select></Field>
+        <Field label="المفتي"><input className="adm-input" value={form.mufti_name || ""} onChange={(e) => set("mufti_name", e.target.value)} /></Field>
+        <Field label="رابط صوتي"><input className="adm-input" value={form.audio_url || ""} onChange={(e) => set("audio_url", e.target.value)} /></Field>
+        <Field label="الحالة"><select className="adm-select" value={form.status || "approved"} onChange={(e) => set("status", e.target.value)}><option value="approved">منشور</option><option value="pending">معلّق</option></select></Field>
       </AdminModal>
     </div>
   );

@@ -202,7 +202,7 @@ export function QaSection() {
         </Field>
         <FieldRow>
           <Field label="التصنيف">
-            <select style={selectSt} value={form.category_id || ""} onChange={(e) => set("category_id", e.target.value)}>
+            <select className="adm-select" value={form.category_id || ""} onChange={(e) => set("category_id", e.target.value)}>
               <option value="">اختر التصنيف</option>
               {categories.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
             </select>
@@ -219,10 +219,10 @@ export function QaSection() {
         </Field>
         <FieldRow>
           <Field label="المرجع">
-            <input style={inputSt} value={form.reference || ""} onChange={(e) => set("reference", e.target.value)} placeholder="اسم الكتاب أو المصدر..." />
+            <input className="adm-input" value={form.reference || ""} onChange={(e) => set("reference", e.target.value)} placeholder="اسم الكتاب أو المصدر..." />
           </Field>
           <Field label="درجة الاعتماد">
-            <select style={selectSt} value={form.review_status} onChange={(e) => set("review_status", e.target.value)}>
+            <select className="adm-select" value={form.review_status} onChange={(e) => set("review_status", e.target.value)}>
               <option value="needs_review">{QA_REVIEW_LABELS.needs_review}</option>
               <option value="approved">{QA_REVIEW_LABELS.approved}</option>
             </select>

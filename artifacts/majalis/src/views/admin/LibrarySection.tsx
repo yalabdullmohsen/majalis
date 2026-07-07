@@ -97,15 +97,15 @@ export function LibrarySection() {
       )}
 
       <AdminModal open={open} title={form.id ? "تعديل مادة" : "إضافة مادة"} onClose={() => setOpen(false)} onSave={handleSave} saving={saving}>
-        <Field label="العنوان"><input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} style={inputSt} /></Field>
-        <Field label="المؤلف"><input value={form.author || ""} onChange={(e) => setForm({ ...form, author: e.target.value })} style={inputSt} /></Field>
-        <Field label="التصنيف"><input value={form.category || ""} onChange={(e) => setForm({ ...form, category: e.target.value })} style={inputSt} /></Field>
+        <Field label="العنوان"><input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className="adm-input" /></Field>
+        <Field label="المؤلف"><input value={form.author || ""} onChange={(e) => setForm({ ...form, author: e.target.value })} className="adm-input" /></Field>
+        <Field label="التصنيف"><input value={form.category || ""} onChange={(e) => setForm({ ...form, category: e.target.value })} className="adm-input" /></Field>
         <Field label="النوع">
-          <select value={form.item_type || "كتاب"} onChange={(e) => setForm({ ...form, item_type: e.target.value })} style={selectSt}>
+          <select value={form.item_type || "كتاب"} onChange={(e) => setForm({ ...form, item_type: e.target.value })} className="adm-select">
             {TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
           </select>
         </Field>
-        <Field label="الوصف"><textarea value={form.description || ""} onChange={(e) => setForm({ ...form, description: e.target.value })} style={textareaSt} rows={4} /></Field>
+        <Field label="الوصف"><textarea value={form.description || ""} onChange={(e) => setForm({ ...form, description: e.target.value })} className="adm-textarea" rows={4} /></Field>
       </AdminModal>
     </div>
   );

@@ -107,14 +107,14 @@ export function InstagramManualAssistPanel({ source, onDone }: Props) {
           )}
           {mode === "url" && (
             <>
-              <input placeholder="رابط المنشور" value={postUrl} onChange={(e) => setPostUrl(e.target.value)} style={inputSt} dir="ltr" />
-              <input placeholder="رابط الصورة (اختياري)" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} style={inputSt} dir="ltr" />
+              <input placeholder="رابط المنشور" value={postUrl} onChange={(e) => setPostUrl(e.target.value)} className="adm-input" dir="ltr" />
+              <input placeholder="رابط الصورة (اختياري)" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} className="adm-input" dir="ltr" />
               <button type="button" disabled={busy} onClick={onSubmit} style={{ fontSize: "0.75rem", padding: "0.3rem 0.6rem", cursor: "pointer", fontFamily: "inherit" }}>فحص بالذكاء الاصطناعي</button>
             </>
           )}
           {mode === "caption" && (
             <>
-              <textarea placeholder="الصق Caption الإعلان" value={caption} onChange={(e) => setCaption(e.target.value)} rows={3} style={inputSt} />
+              <textarea placeholder="الصق Caption الإعلان" value={caption} onChange={(e) => setCaption(e.target.value)} rows={3} className="adm-input" />
               <button type="button" disabled={busy} onClick={onSubmit} style={{ fontSize: "0.75rem", padding: "0.3rem 0.6rem", cursor: "pointer", fontFamily: "inherit" }}>إنشاء مسودة</button>
             </>
           )}

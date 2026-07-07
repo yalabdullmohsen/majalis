@@ -128,17 +128,17 @@ function AutomationSourcesContent() {
         <section style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.625rem", padding: "1rem", marginBottom: "1rem" }}>
           <h3 style={{ margin: "0 0 0.75rem", color: C.emeraldDeep }}>{form.id ? "تعديل مصدر" : "مصدر جديد"}</h3>
           <div style={{ display: "grid", gap: "0.75rem", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))" }}>
-            <input placeholder="اسم المصدر" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} style={inputSt} />
-            <input placeholder="الرابط" value={form.url} onChange={(e) => setForm({ ...form, url: e.target.value })} style={inputSt} dir="ltr" />
-            <select value={form.source_type} onChange={(e) => setForm({ ...form, source_type: e.target.value, platform: e.target.value })} style={inputSt}>
+            <input placeholder="اسم المصدر" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="adm-input" />
+            <input placeholder="الرابط" value={form.url} onChange={(e) => setForm({ ...form, url: e.target.value })} className="adm-input" dir="ltr" />
+            <select value={form.source_type} onChange={(e) => setForm({ ...form, source_type: e.target.value, platform: e.target.value })} className="adm-input">
               {SOURCE_TYPES.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
             </select>
-            <input placeholder="الدولة" value={form.country || ""} onChange={(e) => setForm({ ...form, country: e.target.value })} style={inputSt} />
-            <input placeholder="المدينة" value={form.city || ""} onChange={(e) => setForm({ ...form, city: e.target.value })} style={inputSt} />
-            <select value={form.trust_level} onChange={(e) => setForm({ ...form, trust_level: e.target.value })} style={inputSt}>
+            <input placeholder="الدولة" value={form.country || ""} onChange={(e) => setForm({ ...form, country: e.target.value })} className="adm-input" />
+            <input placeholder="المدينة" value={form.city || ""} onChange={(e) => setForm({ ...form, city: e.target.value })} className="adm-input" />
+            <select value={form.trust_level} onChange={(e) => setForm({ ...form, trust_level: e.target.value })} className="adm-input">
               {TRUST_LEVELS.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
             </select>
-            <input placeholder="feed URL (RSS)" value={form.feed_url || ""} onChange={(e) => setForm({ ...form, feed_url: e.target.value })} style={inputSt} dir="ltr" />
+            <input placeholder="feed URL (RSS)" value={form.feed_url || ""} onChange={(e) => setForm({ ...form, feed_url: e.target.value })} className="adm-input" dir="ltr" />
             <label style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.875rem" }}>
               <input type="checkbox" checked={form.auto_publish_allowed} onChange={(e) => setForm({ ...form, auto_publish_allowed: e.target.checked })} />
               Auto-Publish

@@ -139,10 +139,10 @@ export function FawaidSection() {
           <textarea style={{ ...textareaSt, minHeight: "7rem" }} value={form.text} onChange={e => set("text", e.target.value)} placeholder="اكتب نص الفائدة العلمية أو الأثر..." />
         </Field>
         <Field label="القائل / المصدر">
-          <input style={inputSt} value={form.author_name || ""} onChange={e => set("author_name", e.target.value)} placeholder="اسم العالم أو المرجع (اختياري)" />
+          <input className="adm-input" value={form.author_name || ""} onChange={e => set("author_name", e.target.value)} placeholder="اسم العالم أو المرجع (اختياري)" />
         </Field>
         <Field label="الحالة">
-          <select style={selectSt} value={form.status} onChange={e => set("status", e.target.value)}>
+          <select className="adm-select" value={form.status} onChange={e => set("status", e.target.value)}>
             {Object.entries(STATUS_OPTIONS).map(([v, l]) => <option key={v} value={v}>{l}</option>)}
           </select>
         </Field>

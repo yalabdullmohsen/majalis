@@ -299,31 +299,31 @@ export function QuizSection() {
       {/* Add/Edit Modal */}
       <AdminModal title={form.id ? "تعديل السؤال" : "سؤال جديد"} open={open} onClose={() => setOpen(false)} onSave={handleSave} saving={saving}>
         <Field label="القسم / الموضوع">
-          <select style={selectSt} value={form.section} onChange={(e) => set("section", e.target.value)}>
+          <select className="adm-select" value={form.section} onChange={(e) => set("section", e.target.value)}>
             {SECTIONS.map((s) => <option key={s} value={s}>{s}</option>)}
           </select>
         </Field>
         <FieldRow>
           <Field label="المستوى">
-            <select style={selectSt} value={form.level} onChange={(e) => set("level", e.target.value)}>
+            <select className="adm-select" value={form.level} onChange={(e) => set("level", e.target.value)}>
               {LEVELS.map((l) => <option key={l.value} value={l.value}>{l.label}</option>)}
             </select>
           </Field>
           <Field label="الحالة">
-            <select style={selectSt} value={form.status} onChange={(e) => set("status", e.target.value)}>
+            <select className="adm-select" value={form.status} onChange={(e) => set("status", e.target.value)}>
               <option value="published">منشور</option>
               <option value="draft">مسودة</option>
             </select>
           </Field>
         </FieldRow>
         <Field label="نص السؤال">
-          <textarea style={textareaSt} value={form.question} onChange={(e) => set("question", e.target.value)} placeholder="اكتب السؤال هنا..." rows={3} />
+          <textarea className="adm-textarea" value={form.question} onChange={(e) => set("question", e.target.value)} placeholder="اكتب السؤال هنا..." rows={3} />
         </Field>
         <Field label="الجواب">
-          <textarea style={textareaSt} value={form.answer} onChange={(e) => set("answer", e.target.value)} placeholder="الجواب الصحيح..." rows={2} />
+          <textarea className="adm-textarea" value={form.answer} onChange={(e) => set("answer", e.target.value)} placeholder="الجواب الصحيح..." rows={2} />
         </Field>
         <Field label="تلميح (اختياري)">
-          <input style={inputSt} value={form.hint || ""} onChange={(e) => set("hint", e.target.value)} placeholder="تلميح يساعد الفريق..." />
+          <input className="adm-input" value={form.hint || ""} onChange={(e) => set("hint", e.target.value)} placeholder="تلميح يساعد الفريق..." />
         </Field>
       </AdminModal>
     </div>

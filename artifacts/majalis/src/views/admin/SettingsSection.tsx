@@ -59,7 +59,7 @@ export function SettingsSection() {
             <span style={{ fontSize: "0.875rem" }}>تفعيل رسالة الصيانة على الرئيسية</span>
           </label>
           <Field label="رسالة الصيانة">
-            <textarea value={maintenanceMessage} onChange={(e) => setMaintenanceMessage(e.target.value)} style={textareaSt} rows={2} />
+            <textarea value={maintenanceMessage} onChange={(e) => setMaintenanceMessage(e.target.value)} className="adm-textarea" rows={2} />
           </Field>
         </section>
 

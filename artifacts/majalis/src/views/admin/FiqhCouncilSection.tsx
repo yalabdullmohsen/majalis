@@ -734,11 +734,11 @@ export function FiqhCouncilSection() {
       ) : (
         <>
           <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1rem" }}>
-            <select value={filterType} onChange={(e) => setFilterType(e.target.value)} style={selectSt}>
+            <select value={filterType} onChange={(e) => setFilterType(e.target.value)} className="adm-select">
               <option value="الكل">كل الأنواع</option>
               {FIQH_ITEM_TYPES.map((t) => <option key={t} value={t}>{FIQH_ITEM_TYPE_LABELS[t]}</option>)}
             </select>
-            <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)} style={selectSt}>
+            <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)} className="adm-select">
               <option value="الكل">كل الحالات</option>
               {Object.entries(FIQH_ITEM_STATUS_LABELS).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
             </select>
@@ -772,32 +772,32 @@ export function FiqhCouncilSection() {
       )}
 
       <AdminModal open={open} onClose={() => setOpen(false)} title="عنصر المجمع الفقهي" onSave={handleSave} saving={saving}>
-        <Field label="العنوان"><input style={inputSt} value={form.title || ""} onChange={(e) => set("title", e.target.value)} /></Field>
-        <Field label="الرابط (slug)"><input style={inputSt} value={form.slug || ""} onChange={(e) => set("slug", e.target.value)} placeholder="يُولَّد تلقائياً من العنوان" /></Field>
+        <Field label="العنوان"><input className="adm-input" value={form.title || ""} onChange={(e) => set("title", e.target.value)} /></Field>
+        <Field label="الرابط (slug)"><input className="adm-input" value={form.slug || ""} onChange={(e) => set("slug", e.target.value)} placeholder="يُولَّد تلقائياً من العنوان" /></Field>
         <Field label="النوع">
-          <select style={selectSt} value={form.type} onChange={(e) => set("type", e.target.value)}>
+          <select className="adm-select" value={form.type} onChange={(e) => set("type", e.target.value)}>
             {FIQH_ITEM_TYPES.map((t) => <option key={t} value={t}>{FIQH_ITEM_TYPE_LABELS[t]}</option>)}
           </select>
         </Field>
         <Field label="التصنيف">
-          <select style={selectSt} value={form.category} onChange={(e) => set("category", e.target.value)}>
+          <select className="adm-select" value={form.category} onChange={(e) => set("category", e.target.value)}>
             {FIQH_COUNCIL_CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
           </select>
         </Field>
-        <Field label="الملخص"><textarea style={textareaSt} value={form.summary || ""} onChange={(e) => set("summary", e.target.value)} rows={2} /></Field>
-        <Field label="المحتوى"><textarea style={textareaSt} value={form.content || ""} onChange={(e) => set("content", e.target.value)} rows={5} /></Field>
-        <Field label="نص الحكم / الفتوى"><textarea style={textareaSt} value={form.ruling_text || ""} onChange={(e) => set("ruling_text", e.target.value)} rows={3} /></Field>
+        <Field label="الملخص"><textarea className="adm-textarea" value={form.summary || ""} onChange={(e) => set("summary", e.target.value)} rows={2} /></Field>
+        <Field label="المحتوى"><textarea className="adm-textarea" value={form.content || ""} onChange={(e) => set("content", e.target.value)} rows={5} /></Field>
+        <Field label="نص الحكم / الفتوى"><textarea className="adm-textarea" value={form.ruling_text || ""} onChange={(e) => set("ruling_text", e.target.value)} rows={3} /></Field>
         <Field label="الأدلة (نوع|نص|مصدر — سطر لكل دليل)">
-          <textarea style={textareaSt} value={form.evidence || ""} onChange={(e) => set("evidence", e.target.value)} rows={3} placeholder="قرآن|يَا أَيُّهَا..." />
+          <textarea className="adm-textarea" value={form.evidence || ""} onChange={(e) => set("evidence", e.target.value)} rows={3} placeholder="قرآن|يَا أَيُّهَا..." />
         </Field>
-        <Field label="المصدر"><input style={inputSt} value={form.source_name || ""} onChange={(e) => set("source_name", e.target.value)} /></Field>
-        <Field label="رابط المصدر"><input style={inputSt} value={form.source_url || ""} onChange={(e) => set("source_url", e.target.value)} /></Field>
-        <Field label="المجلس"><input style={inputSt} value={form.council_name || ""} onChange={(e) => set("council_name", e.target.value)} /></Field>
-        <Field label="رقم الجلسة"><input style={inputSt} value={form.session_number || ""} onChange={(e) => set("session_number", e.target.value)} /></Field>
-        <Field label="تاريخ الجلسة"><input style={inputSt} type="date" value={form.session_date || ""} onChange={(e) => set("session_date", e.target.value)} /></Field>
-        <Field label="الوسوم (مفصولة بفاصلة)"><input style={inputSt} value={form.tags || ""} onChange={(e) => set("tags", e.target.value)} /></Field>
+        <Field label="المصدر"><input className="adm-input" value={form.source_name || ""} onChange={(e) => set("source_name", e.target.value)} /></Field>
+        <Field label="رابط المصدر"><input className="adm-input" value={form.source_url || ""} onChange={(e) => set("source_url", e.target.value)} /></Field>
+        <Field label="المجلس"><input className="adm-input" value={form.council_name || ""} onChange={(e) => set("council_name", e.target.value)} /></Field>
+        <Field label="رقم الجلسة"><input className="adm-input" value={form.session_number || ""} onChange={(e) => set("session_number", e.target.value)} /></Field>
+        <Field label="تاريخ الجلسة"><input className="adm-input" type="date" value={form.session_date || ""} onChange={(e) => set("session_date", e.target.value)} /></Field>
+        <Field label="الوسوم (مفصولة بفاصلة)"><input className="adm-input" value={form.tags || ""} onChange={(e) => set("tags", e.target.value)} /></Field>
         <Field label="الحالة">
-          <select style={selectSt} value={form.status || "draft"} onChange={(e) => set("status", e.target.value)}>
+          <select className="adm-select" value={form.status || "draft"} onChange={(e) => set("status", e.target.value)}>
             {Object.entries(FIQH_ITEM_STATUS_LABELS).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
           </select>
         </Field>
