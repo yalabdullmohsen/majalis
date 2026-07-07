@@ -1129,6 +1129,72 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   animation: adhkarFadeIn 0.3s ease forwards;
 }
 
+/* ══ عدّاد التسبيح (Tap Counter) ══ */
+.adhkar-tapper-wrap {
+  display: flex; flex-direction: column;
+  align-items: center; gap: 0.5rem;
+}
+
+.adhkar-tapper {
+  position: relative;
+  width: 120px; height: 120px;
+  border: none; background: transparent;
+  cursor: pointer; padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.1s ease;
+}
+.adhkar-tapper:active { transform: scale(0.93); }
+.adhkar-tapper--done { cursor: default; }
+.adhkar-tapper--done:active { transform: none; }
+
+.adhkar-ring {
+  position: absolute; inset: 0;
+  pointer-events: none;
+}
+
+.adhkar-tapper__inner {
+  position: absolute; inset: 0;
+  display: flex; align-items: center;
+  justify-content: center; gap: 0.15rem;
+  background: var(--majalis-panel, #fff);
+  border-radius: 50%;
+  margin: 6px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+.adhkar-tapper__cur {
+  font-size: 1.6rem; font-weight: 800;
+  color: var(--majalis-emerald, #16A34A);
+  line-height: 1; font-variant-numeric: tabular-nums;
+}
+.adhkar-tapper__sep {
+  font-size: 1rem; color: rgba(0,0,0,0.2);
+  align-self: flex-end; margin-bottom: 0.15rem;
+}
+.adhkar-tapper__tot {
+  font-size: 0.85rem; font-weight: 600;
+  color: rgba(0,0,0,0.35); align-self: flex-end;
+  margin-bottom: 0.1rem;
+}
+.adhkar-tapper__check {
+  font-size: 2.2rem; color: var(--majalis-emerald, #16A34A);
+  animation: adhkarCheckPop 0.35s cubic-bezier(0.22,1,0.36,1);
+}
+@keyframes adhkarCheckPop {
+  from { transform: scale(0.4); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+.adhkar-tapper__hint {
+  font-size: 0.78rem; color: var(--txt-subdued, #6B7280);
+  margin: 0; text-align: center;
+}
+.adhkar-tapper__complete {
+  font-size: 0.875rem; font-weight: 600;
+  color: var(--majalis-emerald, #16A34A);
+  margin: 0; text-align: center;
+}
+
 /* Bottom Sheet */
 .adhkar-sheet-overlay {
   position: fixed;
