@@ -93,8 +93,9 @@ export function HomeUpcomingLessons({
     .sort((a, b) => a.nextOccurrenceMs - b.nextOccurrenceMs)
     .slice(0, 6);
 
+  const todayIds = new Set(todayLessons.map(l => l.id));
   const upcomingLessons = sortKuwaitLessons(
-    allLessons.filter((lesson) => applyTabFilter(lesson)),
+    allLessons.filter((lesson) => applyTabFilter(lesson) && !todayIds.has(lesson.id)),
   ).slice(0, 4);
 
   const filterStrip = (
