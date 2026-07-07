@@ -11,7 +11,6 @@ import {
   setAdhkarHidden,
   upsertAdhkarItem,
 } from "@/lib/adhkar-admin";
-import { C } from "@/lib/theme";
 import { AdminModal, Field } from "./AdminModal";
 import { AdminSectionToolbar } from "./AdminSectionToolbar";
 import { useAdminShell } from "./AdminShell";
@@ -22,16 +21,6 @@ const EMPTY: AdhkarItem = {
   text: "",
   count: 1,
   keywords: [],
-};
-
-const BTN: React.CSSProperties = {
-  padding: "0.25rem 0.75rem",
-  borderRadius: "0.25rem",
-  border: `1px solid ${C.line}`,
-  background: C.panel,
-  cursor: "pointer",
-  fontSize: "0.75rem",
-  fontFamily: "inherit",
 };
 
 export function AdhkarSection() {
@@ -115,18 +104,7 @@ export function AdhkarSection() {
         onSearchChange={setSearch}
         searchPlaceholder="ابحث في الأذكار..."
         actions={
-          <button
-            type="button"
-            onClick={openAdd}
-            style={{
-              ...BTN,
-              background: C.emerald,
-              color: C.parchment,
-              border: "none",
-              fontWeight: 600,
-              padding: "0.5rem 1.25rem",
-            }}
-          >
+          <button type="button" onClick={openAdd} className="adh-add-btn">
             + إضافة ذكر
           </button>
         }
@@ -134,7 +112,7 @@ export function AdhkarSection() {
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="adm-select" style={{ width: "auto", flex: "0 1 200px" }}
+            className="adm-select adh-cat-select"
           >
             <option value="all">كل الأقسام</option>
             {ADHKAR_CATEGORIES.map((c) => (
@@ -144,49 +122,29 @@ export function AdhkarSection() {
         }
       />
 
-      <div style={{ display: "grid", gap: "0.75rem" }}>
+      <div className="adh-list">
         {filtered.map((item) => {
           const hidden = isAdhkarHidden(item.id);
           return (
-            <div
-              key={item.id}
-              style={{
-                background: C.panel,
-                border: `1px solid ${C.line}`,
-                borderRadius: "0.375rem",
-                padding: "1rem 1.25rem",
-                opacity: hidden ? 0.65 : 1,
-              }}
-            >
-              <div style={{ display: "flex", justifyContent: "space-between", gap: "1rem", marginBottom: "0.5rem" }}>
-                <span
-                  style={{
-                    padding: "0.125rem 0.5rem",
-                    borderRadius: "0.25rem",
-                    background: hidden ? "#FEE2E2" : "#D1FAE5",
-                    color: hidden ? "#991B1B" : C.emeraldDeep,
-                    fontSize: "0.75rem",
-                    flexShrink: 0,
-                  }}
-                >
+            <div key={item.id} className={`adh-item${hidden ? " adh-item--hidden" : ""}`}>
+              <div className="adh-item__hdr">
+                <span className={`adh-status${hidden ? " adh-status--hidden" : ""}`}>
                   {hidden ? "مخفي" : "منشور"}
                 </span>
-                <p style={{ margin: 0, flex: 1, textAlign: "right", lineHeight: 1.75, fontSize: "0.9375rem" }}>
-                  {item.text}
-                </p>
+                <p className="adh-item__text">{item.text}</p>
               </div>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "0.5rem" }}>
-                <div style={{ display: "flex", gap: "0.35rem", flexWrap: "wrap" }}>
-                  <button type="button" style={BTN} onClick={() => setPreview(item)}>معاينة</button>
-                  <button type="button" style={BTN} onClick={() => openEdit(item)}>تعديل</button>
-                  <button type="button" style={BTN} onClick={() => togglePublish(item)}>
+              <div className="adh-item__ftr">
+                <div className="adh-btns">
+                  <button type="button" className="adh-btn" onClick={() => setPreview(item)}>معاينة</button>
+                  <button type="button" className="adh-btn" onClick={() => openEdit(item)}>تعديل</button>
+                  <button type="button" className="adh-btn" onClick={() => togglePublish(item)}>
                     {hidden ? "نشر" : "إخفاء"}
                   </button>
-                  <button type="button" style={{ ...BTN, color: "#dc2626" }} onClick={() => handleDelete(item)}>
+                  <button type="button" className="adh-btn adh-btn--del" onClick={() => handleDelete(item)}>
                     حذف
                   </button>
                 </div>
-                <span style={{ fontSize: "0.75rem", color: C.inkSoft }}>
+                <span className="adh-item__meta">
                   {categoryName(item.categoryId)} · ×{item.count}
                   {item.source ? ` · ${item.source}` : ""}
                 </span>
@@ -195,7 +153,7 @@ export function AdhkarSection() {
           );
         })}
         {filtered.length === 0 && (
-          <p style={{ textAlign: "center", color: C.inkSoft, padding: "2rem" }}>لا توجد أذكار مطابقة.</p>
+          <p className="adh-empty">لا توجد أذكار مطابقة.</p>
         )}
       </div>
 
@@ -225,21 +183,15 @@ export function AdhkarSection() {
       </AdminModal>
 
       {preview && (
-        <div
-          style={{ position: "fixed", inset: 0, background: "rgba(36,31,24,0.6)", zIndex: 1000, display: "flex", alignItems: "center", justifyContent: "center", padding: "1rem" }}
-          onClick={() => setPreview(null)}
-        >
-          <div
-            style={{ background: C.parchment, borderRadius: "0.5rem", padding: "1.5rem", maxWidth: "32rem", width: "100%", border: `1px solid ${C.line}` }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <h3 style={{ margin: "0 0 1rem", color: C.emeraldDeep }}>معاينة الذكر</h3>
-            <p style={{ lineHeight: 1.9, margin: "0 0 1rem" }}>{preview.text}</p>
-            <p style={{ fontSize: "0.8125rem", color: C.inkSoft, margin: 0 }}>
+        <div className="adm-modal__overlay" onClick={() => setPreview(null)}>
+          <div className="adh-preview-box" onClick={(e) => e.stopPropagation()}>
+            <h3 className="adh-preview-h3">معاينة الذكر</h3>
+            <p className="adh-preview-text">{preview.text}</p>
+            <p className="adh-preview-meta">
               {categoryName(preview.categoryId)} · ×{preview.count}
               {preview.source ? ` · ${preview.source}` : ""}
             </p>
-            <button type="button" onClick={() => setPreview(null)} style={{ ...BTN, marginTop: "1rem" }}>إغلاق</button>
+            <button type="button" onClick={() => setPreview(null)} className="adh-btn adh-btn--mt">إغلاق</button>
           </div>
         </div>
       )}
