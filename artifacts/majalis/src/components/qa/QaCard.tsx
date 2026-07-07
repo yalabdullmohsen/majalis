@@ -7,7 +7,7 @@ import { getQaViewCount } from "@/lib/qa-utils";
 function RulingBadge({ ruling }: { ruling: string }) {
   const c = QA_RULING_COLORS[ruling] || { bg: C.parchmentDeep, text: C.inkSoft };
   return (
-    <span className="qa-badge" style={{ background: c.bg, color: c.text }}>
+    <span className="qa-badge" style={{ "--qa-badge-bg": c.bg, "--qa-badge-color": c.text } as React.CSSProperties}>
       {ruling}
     </span>
   );

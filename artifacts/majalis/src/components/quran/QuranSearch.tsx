@@ -59,7 +59,7 @@ function Skeleton() {
       {[1, 2, 3].map((i) => (
         <div key={i} className="qss-skel-row">
           <div className="qss-skel-line1" />
-          <div className="qss-skel-line2" style={{ width: `${70 + i * 5}%` }} />
+          <div className="qss-skel-line2" style={{ "--qss-skel-w": `${70 + i * 5}%` } as React.CSSProperties} />
         </div>
       ))}
     </div>
@@ -125,10 +125,11 @@ export function QuranSearch({ onGoToResult }: Props) {
     return [...m.entries()].sort((a, b) => a[0] - b[0]);
   }, [results]);
 
-  const filterBtnStyle = (active: boolean) => ({
+  const filterBtnStyle = (active: boolean, fs?: string) => ({
     "--qss-bg":     active ? "var(--majalis-sage)" : "transparent",
     "--qss-border": active ? "var(--majalis-emerald)" : "var(--majalis-line)",
     "--qss-color":  active ? "var(--majalis-emerald-deep)" : "var(--majalis-ink-soft)",
+    ...(fs ? { "--qss-fs": fs } : {}),
   } as React.CSSProperties);
 
   return (
@@ -175,7 +176,7 @@ export function QuranSearch({ onGoToResult }: Props) {
               type="button"
               onClick={() => setFilterSurah(null)}
               className="qss-filter-btn"
-              style={{ ...filterBtnStyle(filterSurah === null), fontSize: "0.72rem" }}
+              style={filterBtnStyle(filterSurah === null, "0.72rem")}
             >
               الكل ({results.length})
             </button>
@@ -185,7 +186,7 @@ export function QuranSearch({ onGoToResult }: Props) {
                 type="button"
                 onClick={() => setFilterSurah(filterSurah === num ? null : num)}
                 className="qss-filter-btn"
-                style={{ ...filterBtnStyle(filterSurah === num), fontSize: "0.72rem" }}
+                style={filterBtnStyle(filterSurah === num, "0.72rem")}
               >
                 {name} ({results.filter((r) => r.surahNumber === num).length})
               </button>
@@ -198,7 +199,7 @@ export function QuranSearch({ onGoToResult }: Props) {
         {!query.trim() && (
           <div className="qss-prebody">
             {history.length > 0 && (
-              <div style={{ marginBottom: "1rem" }}>
+              <div className="qss-hist-wrap">
                 <div className="qss-hist-head">
                   <span className="qss-hist-label">بحثت سابقاً</span>
                   <button type="button" onClick={() => { clearSearchHistory(); setHistory([]); }} className="qss-hist-clear">
@@ -261,7 +262,7 @@ export function QuranSearch({ onGoToResult }: Props) {
         {searched && !loading && !error && filteredResults.length === 0 && (
           <div className="qss-empty">
             <p>لا نتائج لـ «{query}»</p>
-            <p style={{ fontSize: "0.82rem" }}>
+            <p className="qss-empty-hint">
               جرّب تبسيط الكلمة أو الضغط على "مع التشكيل" لبحث أدق.
             </p>
           </div>

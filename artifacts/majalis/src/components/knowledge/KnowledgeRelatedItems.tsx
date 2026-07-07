@@ -58,11 +58,9 @@ export function KnowledgeRelatedItems({ sourceType, sourceId, title = "مواد 
   if (loading || items.length === 0) return null;
 
   return (
-    <aside style={{ marginTop: "2rem", direction: "rtl" }}>
-      <h3 style={{ fontSize: "0.9375rem", fontWeight: 700, marginBottom: "0.75rem", color: "var(--majalis-emerald, #2E8B67)" }}>
-        {title}
-      </h3>
-      <div style={{ display: "grid", gap: "0.5rem" }}>
+    <aside className="kri-aside">
+      <h3 className="kri-title">{title}</h3>
+      <div className="kri-grid">
         {items.map((rel) => {
           const isSource = rel.source_type === sourceType && rel.source_id === sourceId;
           const linkedType = isSource ? rel.target_type : rel.source_type;
@@ -70,35 +68,15 @@ export function KnowledgeRelatedItems({ sourceType, sourceId, title = "مواد 
           const href = TYPE_HREF[linkedType]?.(linkedId) ?? "#";
 
           return (
-            <Link key={rel.id} href={href} style={{ textDecoration: "none" }}>
-              <div style={{
-                padding: "0.75rem 1rem",
-                borderRadius: "0.375rem",
-                border: "1px solid rgba(255,255,255,0.10)",
-                background: "rgba(255,255,255,0.05)",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                gap: "0.75rem",
-                transition: "border-color 0.15s",
-              }}
-                onMouseEnter={(e) => (e.currentTarget.style.borderColor = "rgba(46,139,103,0.40)")}
-                onMouseLeave={(e) => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.10)")}
-              >
-                <div style={{ display: "flex", flexDirection: "column", gap: "0.125rem" }}>
-                  <span style={{ fontWeight: 600, fontSize: "0.875rem", color: "var(--majalis-ink, #EDE9DD)" }}>
-                    {rel.label ?? linkedId}
-                  </span>
-                  <span style={{ fontSize: "0.75rem", color: "var(--majalis-ink-muted, #9BA3B5)" }}>
+            <Link key={rel.id} href={href} className="kri-link">
+              <div className="kri-item">
+                <div className="kri-item-body">
+                  <span className="kri-item-name">{rel.label ?? linkedId}</span>
+                  <span className="kri-item-sub">
                     {TYPE_LABEL[linkedType]} · {REL_LABEL[rel.relationship_type] ?? rel.relationship_type}
                   </span>
                 </div>
-                <span style={{
-                  fontSize: "0.7rem", background: "rgba(46,139,103,0.15)", color: "var(--majalis-emerald, #2E8B67)",
-                  borderRadius: "999px", padding: "2px 8px", flexShrink: 0,
-                }}>
-                  {TYPE_LABEL[linkedType]}
-                </span>
+                <span className="kri-type-badge">{TYPE_LABEL[linkedType]}</span>
               </div>
             </Link>
           );

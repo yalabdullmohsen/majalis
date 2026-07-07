@@ -19,8 +19,8 @@ export function AchievementBadges({ achievements }: Props) {
       {achievements.map((a) => (
         <div
           key={a.id}
-          className="flex flex-col items-center gap-1.5 p-3 rounded-2xl border text-center"
-          style={{ borderColor: `${a.badge_color}40`, background: `${a.badge_color}08` }}
+          className="flex flex-col items-center gap-1.5 p-3 rounded-2xl border text-center ach-badge-card"
+          style={{ "--ach-bc-border": `${a.badge_color}40`, "--ach-bc-bg": `${a.badge_color}08` } as React.CSSProperties}
         >
           <span className="text-3xl">{a.badge_icon}</span>
           <span className="text-xs font-semibold text-[var(--majalis-ink-soft)]">{a.badge_name}</span>

@@ -16,7 +16,6 @@ export function AdhanNotificationBar() {
       const detail = (e as CustomEvent<AdhanEvent>).detail;
       const id = ++counter.current;
       setEvents((prev) => [...prev, { ...detail, id }]);
-      // Auto-dismiss after 60s
       const t = setTimeout(() => { dismiss(id); timersRef.current.delete(id); }, 60_000);
       timersRef.current.set(id, t);
     };
@@ -35,18 +34,7 @@ export function AdhanNotificationBar() {
   if (events.length === 0) return null;
 
   return (
-    <div style={{
-      position: "fixed",
-      top: "4.5rem",
-      left: "50%",
-      transform: "translateX(-50%)",
-      zIndex: 2000,
-      display: "flex",
-      flexDirection: "column",
-      gap: "0.5rem",
-      width: "min(92vw, 420px)",
-      direction: "rtl",
-    }}>
+    <div className="anb-stack">
       {events.map((ev) => (
         <AdhanToast key={ev.id} event={ev} onDismiss={() => dismiss(ev.id)} />
       ))}
@@ -64,66 +52,30 @@ function AdhanToast({ event, onDismiss }: { event: ActiveEvent; onDismiss: () =>
   }
 
   return (
-    <div style={{
-      background: isAdhan ? "linear-gradient(135deg, #134a3a, #0c3020)" : "#1d4ed8",
-      color: "#fff",
-      borderRadius: "0.875rem",
-      padding: "0.875rem 1rem",
-      boxShadow: "0 8px 32px rgba(0,0,0,0.35)",
-      display: "flex",
-      alignItems: "center",
-      gap: "0.75rem",
-      animation: "adhan-slide-in 0.35s cubic-bezier(0.34,1.56,0.64,1)",
-    }}>
-      <span style={{ fontSize: "1.5rem", flexShrink: 0 }}>
+    <div className={`anb-toast${isAdhan ? " anb-toast--adhan" : " anb-toast--reminder"}`}>
+      <span className="anb-toast__icon">
         {isAdhan ? "🕌" : "⏰"}
       </span>
-      <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ fontWeight: 700, fontSize: "0.95rem", marginBottom: "0.15rem" }}>
+      <div className="anb-toast__body">
+        <div className="anb-toast__title">
           {isAdhan ? `حان وقت ${event.prayerName}` : `تنبيه: ${event.prayerName}`}
         </div>
-        <div style={{ fontSize: "0.78rem", opacity: 0.85 }}>
+        <div className="anb-toast__sub">
           {isAdhan
             ? "الله أكبر — حي على الصلاة"
             : `${event.prayerName} بعد ${event.minutesBefore} دقيقة`}
         </div>
       </div>
-      <div style={{ display: "flex", gap: "0.35rem", flexShrink: 0 }}>
+      <div className="anb-toast__actions">
         {isAdhan && playing && (
-          <button
-            type="button"
-            onClick={handleStop}
-            style={toastBtnStyle("#ffffff22")}
-            title="إيقاف الأذان"
-          >
+          <button type="button" onClick={handleStop} className="anb-btn" title="إيقاف الأذان">
             ⏹
           </button>
         )}
-        <button
-          type="button"
-          onClick={onDismiss}
-          style={toastBtnStyle("#ffffff22")}
-          title="إغلاق"
-        >
+        <button type="button" onClick={onDismiss} className="anb-btn" title="إغلاق">
           ✕
         </button>
       </div>
     </div>
   );
-}
-
-function toastBtnStyle(bg: string) {
-  return {
-    background: bg,
-    border: "none",
-    color: "#fff",
-    borderRadius: "0.4rem",
-    width: 30,
-    height: 30,
-    cursor: "pointer",
-    fontSize: "0.85rem",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  } as const;
 }

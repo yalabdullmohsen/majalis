@@ -53,11 +53,9 @@ export function QuizModal({ quizzes, token, onClose }: Props) {
       dir="rtl"
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
-      <div className="rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden"
-        style={{ background: "var(--majalis-panel)" }}>
+      <div className="rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden qzm-modal">
         {/* رأس النافذة */}
-        <div className="px-6 py-4 flex items-center justify-between"
-          style={{ background: "var(--majalis-emerald)", color: "#fff" }}>
+        <div className="px-6 py-4 flex items-center justify-between qzm-modal-head">
           <h2 className="font-bold text-lg">اختبر نفسك 📝</h2>
           <button onClick={onClose} className="text-xl leading-none opacity-80 hover:opacity-100">✕</button>
         </div>
@@ -66,10 +64,10 @@ export function QuizModal({ quizzes, token, onClose }: Props) {
           {done ? (
             <div className="text-center py-6">
               <div className="text-6xl mb-4">{score === quizzes.length ? "🏆" : score >= quizzes.length / 2 ? "✅" : "📚"}</div>
-              <h3 className="text-xl font-bold mb-2" style={{ color: "var(--majalis-ink)" }}>
+              <h3 className="text-xl font-bold mb-2 qzm-ink">
                 النتيجة: {score} / {quizzes.length}
               </h3>
-              <p className="mb-6" style={{ color: "var(--majalis-ink-soft)" }}>
+              <p className="mb-6 qzm-ink-soft">
                 {score === quizzes.length
                   ? "ممتاز! أتقنت الاختبار كاملاً"
                   : score >= quizzes.length / 2
@@ -86,23 +84,19 @@ export function QuizModal({ quizzes, token, onClose }: Props) {
           ) : (
             <>
               {/* تقدم الاختبار */}
-              <div className="flex items-center justify-between text-xs mb-4" style={{ color: "var(--majalis-ink-soft)" }}>
+              <div className="flex items-center justify-between text-xs mb-4 qzm-ink-soft">
                 <span>سؤال {idx + 1} من {quizzes.length}</span>
                 <span>النقاط: {score}</span>
               </div>
-              <div className="h-1 rounded-full mb-5" style={{ background: "var(--majalis-line)" }}>
+              <div className="h-1 rounded-full mb-5 qzm-progress-track">
                 <div
-                  className="h-full rounded-full"
-                  style={{
-                    width: `${((idx) / quizzes.length) * 100}%`,
-                    background: "var(--majalis-emerald)",
-                    transition: "width 250ms ease",
-                  }}
+                  className="h-full rounded-full qzm-progress-fill"
+                  style={{ "--qzm-prog-w": `${((idx) / quizzes.length) * 100}%` } as React.CSSProperties}
                 />
               </div>
 
               {/* السؤال */}
-              <p className="text-base font-semibold mb-5 leading-relaxed" style={{ color: "var(--majalis-ink)" }}>
+              <p className="text-base font-semibold mb-5 leading-relaxed qzm-ink">
                 {current?.question}
               </p>
 

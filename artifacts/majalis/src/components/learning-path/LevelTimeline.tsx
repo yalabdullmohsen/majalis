@@ -28,37 +28,37 @@ export function LevelTimeline({ levels, progress }: Props) {
             return prevCompleted > 0;
           })();
 
+          const dotBg = completed === levelBooks.length && levelBooks.length > 0
+            ? level.color
+            : inProgress > 0
+            ? `${level.color}88`
+            : "var(--majalis-line)";
+
           return (
             <div key={level.id} className="flex gap-4 md:gap-6">
               {/* نقطة الـ timeline */}
               <div className="flex-shrink-0 w-12 flex flex-col items-center relative z-10 hidden md:flex">
                 <div
-                  className="w-5 h-5 rounded-full border-2 border-[var(--majalis-panel)] shadow-sm mt-1"
-                  style={{
-                    background: completed === levelBooks.length && levelBooks.length > 0
-                      ? level.color
-                      : inProgress > 0
-                      ? `${level.color}88`
-                      : "var(--majalis-line)",
-                  }}
+                  className="w-5 h-5 rounded-full border-2 border-[var(--majalis-panel)] shadow-sm mt-1 lt-dot"
+                  style={{ "--lt-dot-bg": dotBg } as React.CSSProperties}
                 />
               </div>
 
               {/* بطاقة المستوى */}
               <div className="flex-1">
                 <div
-                  className="rounded-2xl border overflow-hidden"
-                  style={{ borderColor: isUnlocked ? `${level.color}40` : "var(--majalis-line)" }}
+                  className="rounded-2xl border overflow-hidden lt-level-card"
+                  style={{ "--lt-border": isUnlocked ? `${level.color}40` : "var(--majalis-line)" } as React.CSSProperties}
                 >
                   {/* رأس المستوى */}
                   <div
-                    className="px-5 py-3 flex items-center justify-between"
-                    style={{ background: isUnlocked ? `${level.color}12` : "var(--majalis-parchment)" }}
+                    className="px-5 py-3 flex items-center justify-between lt-level-head"
+                    style={{ "--lt-head-bg": isUnlocked ? `${level.color}12` : "var(--majalis-parchment)" } as React.CSSProperties}
                   >
                     <div className="flex items-center gap-3">
                       <span
-                        className="text-xs font-bold px-2.5 py-0.5 rounded-full text-white"
-                        style={{ background: isUnlocked ? level.color : "var(--majalis-ink-soft)" }}
+                        className="text-xs font-bold px-2.5 py-0.5 rounded-full text-white lt-badge"
+                        style={{ "--lt-badge-bg": isUnlocked ? level.color : "var(--majalis-ink-soft)" } as React.CSSProperties}
                       >
                         المستوى {idx + 1}
                       </span>
@@ -81,8 +81,8 @@ export function LevelTimeline({ levels, progress }: Props) {
                   {levelBooks.length > 0 && (
                     <div className="h-1 bg-[var(--majalis-parchment-deep)]">
                       <div
-                        className="h-full transition-all duration-500"
-                        style={{ width: `${pct}%`, background: level.color }}
+                        className="h-full transition-all duration-500 lt-prog-fill"
+                        style={{ "--lt-prog-w": `${pct}%`, "--lt-color": level.color } as React.CSSProperties}
                       />
                     </div>
                   )}
@@ -136,14 +136,18 @@ export function LevelTimeline({ levels, progress }: Props) {
 function StatusDot({ status, color }: { status: string; color: string }) {
   if (status === "completed") {
     return (
-      <span className="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-white text-xs mt-0.5"
-        style={{ background: color }}>✓</span>
+      <span
+        className="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-white text-xs mt-0.5 lt-status-done"
+        style={{ "--lt-color": color } as React.CSSProperties}
+      >✓</span>
     );
   }
   if (status === "in_progress") {
     return (
-      <span className="flex-shrink-0 w-5 h-5 rounded-full border-2 mt-0.5"
-        style={{ borderColor: color, background: `${color}22` }} />
+      <span
+        className="flex-shrink-0 w-5 h-5 rounded-full border-2 mt-0.5 lt-status-progress"
+        style={{ "--lt-color": color } as React.CSSProperties}
+      />
     );
   }
   return (

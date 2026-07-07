@@ -231,77 +231,7 @@ function markCellUsed(board: Cell[][], cell: Cell | null): Cell[][] {
   );
 }
 
-// ─── Style helpers ─────────────────────────────────────────────────────────
-
-const inputStyle: React.CSSProperties = {
-  width: "100%",
-  padding: "0.625rem 0.75rem",
-  borderRadius: "var(--ds-radius, 0.5rem)",
-  border: `1px solid var(--ds-line-color)`,
-  background: "#fff",
-  color: S.ink,
-  fontSize: "0.9rem",
-  outline: "none",
-  boxSizing: "border-box",
-  fontFamily: "inherit",
-};
-
-const primaryBtn = (disabled = false): React.CSSProperties => ({
-  padding: "0.875rem 1.5rem",
-  borderRadius: "var(--ds-radius-lg, 0.625rem)",
-  background: disabled ? S.cardAlt : S.emerald,
-  color: disabled ? S.inkSoft : "#fff",
-  border: "none",
-  fontSize: "1rem",
-  fontWeight: 700,
-  cursor: disabled ? "not-allowed" : "pointer",
-  fontFamily: "inherit",
-  transition: "background 0.15s",
-});
-
-const goldBtn = (): React.CSSProperties => ({
-  padding: "0.875rem 1.5rem",
-  borderRadius: "var(--ds-radius-lg, 0.625rem)",
-  background: `linear-gradient(135deg, var(--majalis-brass), var(--majalis-brass-deep))`,
-  color: "#fff",
-  border: "none",
-  fontSize: "1rem",
-  fontWeight: 700,
-  cursor: "pointer",
-  fontFamily: "inherit",
-});
-
-const ghostBtn: React.CSSProperties = {
-  background: "transparent",
-  border: `1px solid var(--ds-line-color)`,
-  color: S.inkSoft,
-  padding: "0.5rem 1rem",
-  borderRadius: "var(--ds-radius, 0.5rem)",
-  cursor: "pointer",
-  fontSize: "0.875rem",
-  fontFamily: "inherit",
-};
-
-const sectionCard: React.CSSProperties = {
-  background: S.card,
-  borderRadius: "var(--ds-radius-lg, 0.625rem)",
-  padding: "1.5rem",
-  marginBottom: "1rem",
-  border: `1px solid var(--ds-line-color)`,
-  boxShadow: "var(--ds-shadow-sm, 0 1px 2px rgba(22,78,60,0.05))",
-};
-
-const lifelineStyle = (color: string, bg: string): React.CSSProperties => ({
-  padding: "0.4rem 0.75rem",
-  borderRadius: "var(--ds-radius, 0.5rem)",
-  background: bg,
-  color,
-  border: `1px solid ${color}`,
-  cursor: "pointer",
-  fontSize: "0.8rem",
-  fontWeight: 600,
-  fontFamily: "inherit",
-});
+// ─── Style helpers removed — using CSS classes (qzg-*) ────────────────────
 
 // ─── Timer Bar ─────────────────────────────────────────────────────────────
 
@@ -310,21 +240,16 @@ function TimerBar({ seconds, maxSeconds }: { seconds: number; maxSeconds: number
   const color = pct > 0.4 ? "#22c55e" : pct > 0.2 ? "#f59e0b" : "#ef4444";
   const label = seconds <= 0 ? "انتهى الوقت" : `${seconds}ث`;
   return (
-    <div style={{ margin: "0 0 0.875rem" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.3rem" }}>
-        <span style={{ fontSize: "0.75rem", color: S.inkSoft, fontWeight: 600 }}>⏱ الوقت</span>
-        <span style={{ fontSize: "0.82rem", fontWeight: 700, color }}>{label}</span>
+    <div
+      className="qzg-timer"
+      style={{ "--qzg-timer-color": color, "--qzg-timer-pct": `${Math.max(0, pct * 100)}%` } as React.CSSProperties}
+    >
+      <div className="qzg-timer__head">
+        <span className="qzg-timer__label">⏱ الوقت</span>
+        <span className="qzg-timer__count">{label}</span>
       </div>
-      <div style={{ height: "0.45rem", borderRadius: 999, background: "var(--ds-line-color, #e5e7eb)", overflow: "hidden" }}>
-        <div
-          style={{
-            height: "100%",
-            borderRadius: 999,
-            background: color,
-            width: `${Math.max(0, pct * 100)}%`,
-            transition: "width 1s linear, background 0.3s ease",
-          }}
-        />
+      <div className="qzg-timer__track">
+        <div className="qzg-timer__fill" />
       </div>
     </div>
   );
@@ -334,36 +259,36 @@ function TimerBar({ seconds, maxSeconds }: { seconds: number; maxSeconds: number
 
 function ScoreBar({ teams, activeTeam }: { teams: [Team, Team]; activeTeam: TeamId }) {
   return (
-    <div style={{ display: "flex", gap: "0.75rem", marginBottom: "1.25rem" }}>
+    <div className="qzg-score-row">
       {teams.map((t) => {
         const active = t.id === activeTeam;
         const activeBg = t.id === "team1" ? S.emerald : "#8B4515";
         return (
           <div
             key={t.id}
+            className={`qzg-team-card${active ? " qzg-team-card--active" : ""}`}
             style={{
-              flex: 1,
-              padding: "0.875rem 1rem",
-              borderRadius: "var(--ds-radius-lg, 0.625rem)",
-              background: active ? activeBg : S.cardAlt,
-              border: `2px solid ${active ? "var(--majalis-brass)" : "var(--ds-line-color)"}`,
-              textAlign: "center",
-              transition: "all 0.3s ease",
-              boxShadow: active ? "var(--ds-shadow, 0 2px 8px rgba(22,78,60,0.07))" : "none",
-            }}
+              "--qzg-team-bg": active ? activeBg : S.cardAlt,
+              "--qzg-team-border": active ? "var(--majalis-brass)" : "var(--ds-line-color)",
+              "--qzg-name-color": active ? "#fff" : S.ink,
+              "--qzg-score-color": active ? "var(--majalis-brass)" : S.emeraldDeep,
+              "--qzg-unit-color": active ? "rgba(255,255,255,0.7)" : S.inkSoft,
+            } as React.CSSProperties}
           >
-            {active && (
-              <p style={{ margin: "0 0 0.2rem", fontSize: "0.7rem", color: "var(--majalis-brass)", fontWeight: 700 }}>▶ دوره ◀</p>
-            )}
-            <p style={{ margin: 0, fontSize: "0.9rem", fontWeight: 700, color: active ? "#fff" : S.ink }}>{t.name}</p>
-            <p style={{ margin: "0.25rem 0 0", fontSize: "1.6rem", fontWeight: 800, color: active ? "var(--majalis-brass)" : S.emeraldDeep }}>
-              {t.score.toLocaleString("ar-EG")}
-            </p>
-            <p style={{ margin: 0, fontSize: "0.7rem", color: active ? "rgba(255,255,255,0.7)" : S.inkSoft }}>نقطة</p>
-            <div style={{ display: "flex", justifyContent: "center", gap: "0.3rem", marginTop: "0.4rem", flexWrap: "wrap" }}>
-              {t.lifelines.penalize && <span style={{ fontSize: "0.6rem", padding: "0.1rem 0.35rem", borderRadius: 999, border: "1px solid #FFB347", color: active ? "#FFB347" : "#9A6B10" }}>خصم</span>}
-              {t.lifelines.eliminate && <span style={{ fontSize: "0.6rem", padding: "0.1rem 0.35rem", borderRadius: 999, border: "1px solid #9B59B6", color: active ? "#C080FF" : "#7D3C98" }}>استبعاد</span>}
-              {t.lifelines.pass && <span style={{ fontSize: "0.6rem", padding: "0.1rem 0.35rem", borderRadius: 999, border: "1px solid #2E86C1", color: active ? "#80C0FF" : "#1A5276" }}>تمرير</span>}
+            {active && <p className="qzg-team-card__turn">▶ دوره ◀</p>}
+            <p className="qzg-team-card__name">{t.name}</p>
+            <p className="qzg-team-card__score">{t.score.toLocaleString("ar-EG")}</p>
+            <p className="qzg-team-card__unit">نقطة</p>
+            <div className="qzg-team-card__lifelines">
+              {t.lifelines.penalize && (
+                <span className="qzg-lifeline" style={{ "--qzg-ll-border": "#FFB347", "--qzg-ll-color": active ? "#FFB347" : "#9A6B10" } as React.CSSProperties}>خصم</span>
+              )}
+              {t.lifelines.eliminate && (
+                <span className="qzg-lifeline" style={{ "--qzg-ll-border": "#9B59B6", "--qzg-ll-color": active ? "#C080FF" : "#7D3C98" } as React.CSSProperties}>استبعاد</span>
+              )}
+              {t.lifelines.pass && (
+                <span className="qzg-lifeline" style={{ "--qzg-ll-border": "#2E86C1", "--qzg-ll-color": active ? "#80C0FF" : "#1A5276" } as React.CSSProperties}>تمرير</span>
+              )}
             </div>
           </div>
         );
@@ -387,35 +312,35 @@ function SetupPhase({ onStart }: { onStart: (cats: string[], names: [string, str
   const canStart = selected.length >= 2 && name1.trim() && name2.trim();
 
   return (
-    <div style={{ maxWidth: 640, margin: "0 auto" }}>
-      <div style={{ textAlign: "center", marginBottom: "2rem" }}>
-        <div style={{ fontSize: "3rem", marginBottom: "0.5rem" }}>🕌</div>
-        <h1 style={{ margin: 0, fontSize: "2rem", color: S.emeraldDeep, fontWeight: 800 }}>لعبة سؤال وجواب</h1>
-        <p style={{ margin: "0.5rem 0 0", color: S.inkSoft, fontSize: "0.9rem" }}>
+    <div className="qzg-setup">
+      <div className="qzg-setup__hero">
+        <div className="qzg-setup__icon">🕌</div>
+        <h1 className="qzg-setup__title">لعبة سؤال وجواب</h1>
+        <p className="qzg-setup__sub">
           لعبة جماعية تنافسية بطابع إسلامي — فريقان يتنافسان على النقاط
         </p>
       </div>
 
-      <section style={sectionCard}>
-        <h2 style={{ margin: "0 0 1rem", color: S.gold, fontSize: "0.95rem", fontWeight: 700 }}>🏆 أسماء الفريقين</h2>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem" }}>
+      <section className="qzg-section-card">
+        <h2 className="qzg-section-h2">🏆 أسماء الفريقين</h2>
+        <div className="qzg-teams-grid">
           <div>
-            <label style={{ display: "block", fontSize: "0.78rem", color: S.inkSoft, marginBottom: "0.35rem" }}>الفريق الأول</label>
-            <input value={name1} onChange={(e) => setName1(e.target.value)} maxLength={20} style={inputStyle} />
+            <label className="qzg-team-label">الفريق الأول</label>
+            <input value={name1} onChange={(e) => setName1(e.target.value)} maxLength={20} className="qzg-input" />
           </div>
           <div>
-            <label style={{ display: "block", fontSize: "0.78rem", color: S.inkSoft, marginBottom: "0.35rem" }}>الفريق الثاني</label>
-            <input value={name2} onChange={(e) => setName2(e.target.value)} maxLength={20} style={inputStyle} />
+            <label className="qzg-team-label">الفريق الثاني</label>
+            <input value={name2} onChange={(e) => setName2(e.target.value)} maxLength={20} className="qzg-input" />
           </div>
         </div>
       </section>
 
-      <section style={sectionCard}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
-          <h2 style={{ margin: 0, color: S.gold, fontSize: "0.95rem", fontWeight: 700 }}>📚 اختر الفئات</h2>
-          <span style={{ fontSize: "0.78rem", color: S.inkSoft }}>{selected.length}/6 (2 كحد أدنى)</span>
+      <section className="qzg-section-card">
+        <div className="qzg-cats-head">
+          <h2 className="qzg-section-h2 qzg-section-h2--flush">📚 اختر الفئات</h2>
+          <span className="qzg-cats-count">{selected.length}/6 (2 كحد أدنى)</span>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))", gap: "0.6rem" }}>
+        <div className="qzg-cats-grid">
           {GAME_CATEGORIES.map((cat) => {
             const on = selected.includes(cat.id);
             const maxed = !on && selected.length >= 6;
@@ -425,22 +350,18 @@ function SetupPhase({ onStart }: { onStart: (cats: string[], names: [string, str
                 type="button"
                 onClick={() => toggle(cat.id)}
                 disabled={maxed}
+                className="qzg-cat-btn"
                 style={{
-                  padding: "0.75rem 0.5rem",
-                  borderRadius: "var(--ds-radius-lg, 0.625rem)",
-                  border: `2px solid ${on ? "var(--ds-emerald)" : "var(--ds-line-color)"}`,
-                  background: on ? S.emeraldSoft : S.cardAlt,
-                  color: on ? S.emeraldDeep : maxed ? S.inkSoft : S.ink,
-                  cursor: maxed ? "not-allowed" : "pointer",
-                  textAlign: "center",
-                  fontSize: "0.82rem",
-                  fontWeight: on ? 700 : 400,
-                  transition: "border-color 0.2s, background 0.2s",
-                  fontFamily: "inherit",
-                  opacity: maxed ? 0.5 : 1,
-                }}
+                  "--qzg-cb-border": on ? "var(--ds-emerald, var(--majalis-emerald))" : "var(--ds-line-color)",
+                  "--qzg-cb-bg": on ? "var(--ds-emerald-soft, var(--majalis-emerald-muted))" : "var(--ds-parchment-deep, var(--majalis-parchment-deep))",
+                  "--qzg-cb-color": on ? "var(--ds-emerald-deep, var(--majalis-emerald-deep))" : maxed ? "var(--ds-ink-soft)" : "var(--ds-ink)",
+                  "--qzg-cb-cursor": maxed ? "not-allowed" : "pointer",
+                  "--qzg-cb-fw": on ? 700 : 400,
+                  "--qzg-cb-opacity": maxed ? 0.5 : 1,
+                  "--qzg-cb-icon-opacity": maxed ? 0.4 : 1,
+                } as React.CSSProperties}
               >
-                <div style={{ display: "flex", justifyContent: "center", marginBottom: "0.35rem", opacity: maxed ? 0.4 : 1 }}>
+                <div className="qzg-cat-btn__icon">
                   <CategoryIcon name={cat.icon} size={20} />
                 </div>
                 {cat.name}
@@ -450,17 +371,17 @@ function SetupPhase({ onStart }: { onStart: (cats: string[], names: [string, str
         </div>
       </section>
 
-      <section style={{ ...sectionCard, marginBottom: "1.5rem" }}>
-        <h3 style={{ margin: "0 0 0.75rem", color: S.gold, fontSize: "0.88rem", fontWeight: 700 }}>⚡ وسائل المساعدة (لكل فريق 3 وسائل)</h3>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "0.5rem", fontSize: "0.78rem" }}>
+      <section className="qzg-section-card qzg-section-card--mb-lg">
+        <h3 className="qzg-lifelines-h3">⚡ وسائل المساعدة (لكل فريق 3 وسائل)</h3>
+        <div className="qzg-lifelines-grid">
           {([
             ["#FFB347", "خصم نقاط", "تُخصم نقاط الخلية من رصيد الخصم"],
             ["#9B59B6", "استبعاد لاعب", "يُستبعد لاعب من الفريق المنافس"],
             ["#2E86C1", "تمرير السؤال", "يُحوَّل السؤال للفريق المنافس"],
           ] as [string, string, string][]).map(([color, title, desc]) => (
-            <div key={title} style={{ padding: "0.6rem", borderRadius: "var(--ds-radius, 0.5rem)", background: S.cardAlt, textAlign: "center", border: `1px solid var(--ds-line-color)` }}>
-              <div style={{ color, fontWeight: 700, marginBottom: "0.25rem", fontSize: "0.82rem" }}>{title}</div>
-              <div style={{ color: S.inkSoft, lineHeight: 1.5 }}>{desc}</div>
+            <div key={title} className="qzg-lifeline-info">
+              <div className="qzg-lifeline-info__title" style={{ "--qzg-ll-info-color": color } as React.CSSProperties}>{title}</div>
+              <div className="qzg-lifeline-info__desc">{desc}</div>
             </div>
           ))}
         </div>
@@ -470,7 +391,7 @@ function SetupPhase({ onStart }: { onStart: (cats: string[], names: [string, str
         type="button"
         onClick={() => canStart && onStart(selected, [name1.trim() || "الفريق الأول", name2.trim() || "الفريق الثاني"])}
         disabled={!canStart}
-        style={{ ...primaryBtn(!canStart), width: "100%", fontSize: "1.1rem" }}
+        className={`qzg-btn-primary qzg-btn-primary--wide${canStart ? "" : " qzg-btn-primary--disabled"}`}
       >
         {canStart ? "ابدأ اللعبة 🎮" : selected.length < 2 ? "اختر فئتين على الأقل" : "أدخل أسماء الفريقين"}
       </button>
@@ -503,32 +424,18 @@ function BoardPhase({
     <div>
       <ScoreBar teams={state.teams} activeTeam={state.activeTeam} />
 
-      <div style={{ overflowX: "auto", WebkitOverflowScrolling: "touch" as unknown as undefined }}>
+      <div className="qzg-board-scroll">
         <div
+          className="qzg-board-grid"
           style={{
-            display: "grid",
-            gridTemplateColumns: `repeat(${colCount}, minmax(105px, 1fr))`,
-            gap: "0.45rem",
-            minWidth: colCount * 115,
-          }}
+            "--qzg-board-cols": `repeat(${colCount}, minmax(105px, 1fr))`,
+            "--qzg-board-min-w": `${colCount * 115}px`,
+          } as React.CSSProperties}
         >
           {activeCats.map((cat) => (
-            <div
-              key={cat.id}
-              style={{
-                padding: "0.6rem 0.35rem",
-                background: S.emeraldSoft,
-                borderRadius: "var(--ds-radius, 0.5rem)",
-                textAlign: "center",
-                fontSize: "0.72rem",
-                fontWeight: 700,
-                color: S.emeraldDeep,
-                border: `1px solid var(--ds-line-color)`,
-                lineHeight: 1.4,
-              }}
-            >
-              <div style={{ display: "flex", justifyContent: "center" }}><CategoryIcon name={cat.icon} size={16} /></div>
-              <div style={{ marginTop: "0.2rem" }}>{cat.name}</div>
+            <div key={cat.id} className="qzg-board-cat">
+              <div className="qzg-board-cat__icon"><CategoryIcon name={cat.icon} size={16} /></div>
+              <div className="qzg-board-cat__name">{cat.name}</div>
             </div>
           ))}
 
@@ -542,19 +449,14 @@ function BoardPhase({
                   type="button"
                   disabled={cell.used}
                   onClick={() => dispatch({ type: "SELECT_CELL", cell, pool: poolRef.current ?? ALL_QUESTIONS, persistedUsedIds })}
+                  className="qzg-board-cell"
                   style={{
-                    padding: "1rem 0.375rem",
-                    borderRadius: "var(--ds-radius, 0.5rem)",
-                    border: `1px solid ${cell.used ? "var(--ds-line-color)" : "var(--ds-emerald)"}`,
-                    background: cell.used ? S.cardAlt : S.card,
-                    color: cell.used ? S.inkSoft : S.emeraldDeep,
-                    fontSize: "1.2rem",
-                    fontWeight: 800,
-                    cursor: cell.used ? "default" : "pointer",
-                    transition: "all 0.2s ease",
-                    opacity: cell.used ? 0.4 : 1,
-                    fontFamily: "inherit",
-                  }}
+                    "--qzg-cell-border": cell.used ? "var(--ds-line-color)" : "var(--ds-emerald, var(--majalis-emerald))",
+                    "--qzg-cell-bg": cell.used ? "var(--ds-parchment-deep, var(--majalis-parchment-deep))" : "#fff",
+                    "--qzg-cell-color": cell.used ? "var(--ds-ink-soft)" : "var(--ds-emerald-deep, var(--majalis-emerald-deep))",
+                    "--qzg-cell-cursor": cell.used ? "default" : "pointer",
+                    "--qzg-cell-opacity": cell.used ? 0.4 : 1,
+                  } as React.CSSProperties}
                 >
                   {cell.used ? "—" : pts}
                 </button>
@@ -564,8 +466,8 @@ function BoardPhase({
         </div>
       </div>
 
-      <div style={{ marginTop: "1.25rem", display: "flex", justifyContent: "center" }}>
-        <button type="button" onClick={() => dispatch({ type: "RESET" })} style={ghostBtn}>
+      <div className="qzg-board-reset-row">
+        <button type="button" onClick={() => dispatch({ type: "RESET" })} className="qzg-btn-ghost">
           ← إعادة الإعداد
         </button>
       </div>
@@ -600,52 +502,32 @@ function QuestionPhase({
   const scoringTeam = passedToOpponent ? teams.find((t) => t.id !== activeTeam) : activeTeamObj;
 
   return (
-    <div style={{ maxWidth: 640, margin: "0 auto" }}>
+    <div className="qzg-question-wrap">
       <ScoreBar teams={teams} activeTeam={activeTeam} />
 
       <TimerBar seconds={timerSec} maxSeconds={maxTimerSec} />
 
-      <div style={{ ...sectionCard, border: `2px solid var(--majalis-brass)`, marginBottom: "1rem" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem", flexWrap: "wrap", gap: "0.5rem" }}>
-          <span style={{ fontSize: "0.82rem", color: S.inkSoft }}>{cat?.icon} {cat?.name}</span>
-          <span style={{ padding: "0.3rem 0.875rem", borderRadius: 999, background: S.emeraldSoft, color: S.emeraldDeep, fontWeight: 800, fontSize: "1rem", border: `1px solid var(--ds-emerald)` }}>
-            {activeCell.points} نقطة
-          </span>
+      <div className="qzg-section-card qzg-section-card--brass qzg-section-card--mb-sm">
+        <div className="qzg-q-header">
+          <span className="qzg-q-cat-label">{cat?.icon} {cat?.name}</span>
+          <span className="qzg-q-points-badge">{activeCell.points} نقطة</span>
         </div>
 
         {passedToOpponent && (
-          <div style={{ padding: "0.5rem 0.75rem", background: "#EFF6FF", borderRadius: "var(--ds-radius, 0.5rem)", marginBottom: "0.875rem", fontSize: "0.82rem", color: "#1D4ED8", border: "1px solid #BFDBFE" }}>
+          <div className="qzg-q-passed-banner">
             📨 تم إرسال السؤال — يجيب الآن: <strong>{scoringTeam?.name}</strong>
           </div>
         )}
 
         {activeQuestion ? (
-          <p style={{ margin: 0, fontSize: "1.2rem", fontWeight: 700, color: S.ink, lineHeight: 1.9, textAlign: "center", padding: "0.75rem 0" }}>
-            {activeQuestion.q}
-          </p>
+          <p className="qzg-q-text">{activeQuestion.q}</p>
         ) : (
-          <p style={{ margin: 0, color: S.inkSoft, textAlign: "center", fontSize: "0.9rem" }}>
-            لا يوجد سؤال متاح — حدد النتيجة يدوياً
-          </p>
+          <p className="qzg-q-noq">لا يوجد سؤال متاح — حدد النتيجة يدوياً</p>
         )}
 
         {!passedToOpponent && (
-          <div style={{ marginTop: "0.75rem", paddingTop: "0.75rem", borderTop: `1px solid var(--ds-line-color)`, textAlign: "center" }}>
-            <button
-              type="button"
-              onClick={() => dispatch({ type: "TRANSFER_QUESTION" })}
-              style={{
-                padding: "0.45rem 1.1rem",
-                borderRadius: "var(--ds-radius, 0.5rem)",
-                background: "#EFF6FF",
-                color: "#1D4ED8",
-                border: "1px solid #BFDBFE",
-                cursor: "pointer",
-                fontSize: "0.82rem",
-                fontWeight: 600,
-                fontFamily: "inherit",
-              }}
-            >
+          <div className="qzg-q-transfer-row">
+            <button type="button" onClick={() => dispatch({ type: "TRANSFER_QUESTION" })} className="qzg-btn-transfer">
               📤 أرسل للفريق الآخر
             </button>
           </div>
@@ -653,65 +535,63 @@ function QuestionPhase({
       </div>
 
       {!revealed && (
-        <button
-          type="button"
-          onClick={() => setRevealed(true)}
-          style={{ ...goldBtn(), width: "100%", marginBottom: "0.75rem" }}
-        >
+        <button type="button" onClick={() => setRevealed(true)} className="qzg-btn-gold qzg-btn-gold--wide qzg-btn-gold--mb">
           🔍 كشف الإجابة
         </button>
       )}
 
       {revealed && (
         <>
-          <div style={{ ...sectionCard, marginBottom: "0.75rem" }}>
-            <p style={{ margin: "0 0 0.5rem", fontSize: "0.78rem", color: S.gold, fontWeight: 700 }}>الإجابة الصحيحة:</p>
-            <p style={{ margin: 0, fontSize: "1.1rem", color: S.ink, fontWeight: 600, lineHeight: 1.8 }}>{activeQuestion?.a ?? "—"}</p>
+          <div className="qzg-section-card qzg-section-card--mb-sm">
+            <p className="qzg-answer-label">الإجابة الصحيحة:</p>
+            <p className="qzg-answer-text">{activeQuestion?.a ?? "—"}</p>
             {showHint && (
-              <p style={{ margin: "0.625rem 0 0", fontSize: "0.85rem", color: S.inkSoft, lineHeight: 1.6, paddingTop: "0.625rem", borderTop: `1px solid var(--ds-line-color)` }}>
-                💡 {activeQuestion?.hint}
-              </p>
+              <p className="qzg-hint-text">💡 {activeQuestion?.hint}</p>
             )}
             {!showHint && activeQuestion?.hint && (
-              <button type="button" onClick={() => dispatch({ type: "REVEAL_HINT" })} style={{ ...ghostBtn, marginTop: "0.625rem", fontSize: "0.78rem" }}>
+              <button type="button" onClick={() => dispatch({ type: "REVEAL_HINT" })} className="qzg-btn-ghost qzg-btn-ghost--mt">
                 عرض الشرح
               </button>
             )}
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.625rem", marginBottom: "0.875rem" }}>
-            <button type="button" onClick={onMarkCorrect} style={{ padding: "0.875rem 1rem", borderRadius: "var(--ds-radius, 0.5rem)", background: S.correct, color: "#fff", border: "none", fontWeight: 700, fontSize: "0.95rem", cursor: "pointer", fontFamily: "inherit", textAlign: "center" }}>
+          <div className="qzg-result-grid">
+            <button type="button" onClick={onMarkCorrect} className="qzg-btn-correct">
               ✅ صحيح +{activeCell.points}
             </button>
-            <button type="button" onClick={onMarkWrong} style={{ padding: "0.875rem 1rem", borderRadius: "var(--ds-radius, 0.5rem)", background: S.wrong, color: "#fff", border: "none", fontWeight: 700, fontSize: "0.95rem", cursor: "pointer", fontFamily: "inherit", textAlign: "center" }}>
+            <button type="button" onClick={onMarkWrong} className="qzg-btn-wrong">
               ❌ خطأ
             </button>
           </div>
         </>
       )}
 
-      <div style={{ ...sectionCard }}>
-        <p style={{ margin: "0 0 0.625rem", fontSize: "0.82rem", color: S.gold, fontWeight: 700 }}>
-          ⚡ وسائل المساعدة — {activeTeamObj.name}
-        </p>
-        <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+      <div className="qzg-section-card">
+        <p className="qzg-lifelines-label">⚡ وسائل المساعدة — {activeTeamObj.name}</p>
+        <div className="qzg-lifelines-flex">
           {activeTeamObj.lifelines.penalize && (
-            <button type="button" onClick={() => dispatch({ type: "USE_LIFELINE_PENALIZE" })} style={lifelineStyle("#FFB347", "#FFF8EE")}>
+            <button type="button" onClick={() => dispatch({ type: "USE_LIFELINE_PENALIZE" })}
+              className="qzg-ll-btn"
+              style={{ "--qzg-ll-bg": "#FFF8EE", "--qzg-ll-c": "#FFB347", "--qzg-ll-border": "#FFB347" } as React.CSSProperties}>
               خصم {activeCell.points} من الخصم
             </button>
           )}
           {activeTeamObj.lifelines.eliminate && (
-            <button type="button" onClick={() => dispatch({ type: "USE_LIFELINE_ELIMINATE" })} style={lifelineStyle("#9B59B6", "#F5EEF8")}>
+            <button type="button" onClick={() => dispatch({ type: "USE_LIFELINE_ELIMINATE" })}
+              className="qzg-ll-btn"
+              style={{ "--qzg-ll-bg": "#F5EEF8", "--qzg-ll-c": "#9B59B6", "--qzg-ll-border": "#9B59B6" } as React.CSSProperties}>
               استبعاد لاعب
             </button>
           )}
           {activeTeamObj.lifelines.pass && !passedToOpponent && (
-            <button type="button" onClick={() => dispatch({ type: "PASS_QUESTION" })} style={lifelineStyle("#2E86C1", "#EBF5FB")}>
+            <button type="button" onClick={() => dispatch({ type: "PASS_QUESTION" })}
+              className="qzg-ll-btn"
+              style={{ "--qzg-ll-bg": "#EBF5FB", "--qzg-ll-c": "#2E86C1", "--qzg-ll-border": "#2E86C1" } as React.CSSProperties}>
               تمرير للخصم (وسيلة)
             </button>
           )}
           {!activeTeamObj.lifelines.penalize && !activeTeamObj.lifelines.eliminate && !activeTeamObj.lifelines.pass && (
-            <span style={{ fontSize: "0.8rem", color: S.inkSoft, padding: "0.4rem 0" }}>لا وسائل متبقية</span>
+            <span className="qzg-no-lifelines">لا وسائل متبقية</span>
           )}
         </div>
       </div>
@@ -726,29 +606,29 @@ function WinnerPhase({ teams, onReset }: { teams: [Team, Team]; onReset: () => v
   const isDraw = a.score === b.score;
 
   return (
-    <div style={{ textAlign: "center", maxWidth: 480, margin: "0 auto", paddingTop: "1rem" }}>
-      <div style={{ fontSize: "4rem", marginBottom: "1rem" }}>{isDraw ? "🤝" : "🏆"}</div>
-      <h1 style={{ margin: "0 0 0.5rem", fontSize: "2rem", color: S.emeraldDeep, fontWeight: 800 }}>
-        {isDraw ? "تعادل!" : `فاز ${a.name}`}
-      </h1>
-      <p style={{ color: S.inkSoft, marginBottom: "2rem", fontSize: "0.95rem" }}>
+    <div className="qzg-winner-wrap">
+      <div className="qzg-winner-trophy">{isDraw ? "🤝" : "🏆"}</div>
+      <h1 className="qzg-winner-title">{isDraw ? "تعادل!" : `فاز ${a.name}`}</h1>
+      <p className="qzg-winner-sub">
         {isDraw ? "تعادل الفريقان — أنتما متكافئان!" : "أحسنتم جميعاً وبارك الله في سعيكم"}
       </p>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "2rem" }}>
+      <div className="qzg-winner-grid">
         {[a, b].map((team, i) => (
-          <div key={team.id} style={{ ...sectionCard, border: `2px solid ${i === 0 ? "var(--majalis-brass)" : "var(--ds-line-color)"}`, marginBottom: 0 }}>
-            <div style={{ fontSize: "1.75rem", marginBottom: "0.5rem" }}>{i === 0 ? (isDraw ? "🤝" : "🥇") : "🥈"}</div>
-            <p style={{ margin: "0 0 0.5rem", fontWeight: 700, color: S.ink, fontSize: "0.95rem" }}>{team.name}</p>
-            <p style={{ margin: 0, fontSize: "2.25rem", fontWeight: 800, color: i === 0 ? S.gold : S.inkSoft }}>
+          <div key={team.id}
+            className="qzg-section-card qzg-winner-card"
+            style={{ "--qzg-wc-border": i === 0 ? "var(--majalis-brass)" : "var(--ds-line-color)" } as React.CSSProperties}>
+            <div className="qzg-winner-rank">{i === 0 ? (isDraw ? "🤝" : "🥇") : "🥈"}</div>
+            <p className="qzg-winner-name">{team.name}</p>
+            <p className="qzg-winner-score" style={{ "--qzg-winner-score-color": i === 0 ? "var(--majalis-brass)" : "var(--majalis-ink-soft)" } as React.CSSProperties}>
               {team.score.toLocaleString("ar-EG")}
             </p>
-            <p style={{ margin: "0.25rem 0 0", fontSize: "0.78rem", color: S.inkSoft }}>نقطة</p>
+            <p className="qzg-winner-unit">نقطة</p>
           </div>
         ))}
       </div>
 
-      <button type="button" onClick={onReset} style={{ ...goldBtn(), paddingInline: "2.5rem" }}>
+      <button type="button" onClick={onReset} className="qzg-btn-gold qzg-btn-gold--px">
         🔄 لعبة جديدة
       </button>
     </div>
@@ -827,20 +707,11 @@ export function IslamicQuizGame() {
   }, [state.activeQuestion, clearTimer]);
 
   return (
-    <div
-      style={{
-        minHeight: "calc(100vh - 64px)",
-        background: S.bg,
-        padding: "1.25rem 1rem",
-        direction: "rtl",
-        fontFamily: "inherit",
-        color: S.ink,
-      }}
-    >
-      <div style={{ maxWidth: 860, margin: "0 auto", paddingBottom: "3rem" }}>
+    <div className="qzg-root">
+      <div className="qzg-inner">
         {(state.phase === "board" || state.phase === "question") && (
-          <div style={{ textAlign: "center", marginBottom: "1rem", paddingBottom: "0.75rem", borderBottom: `1px solid var(--ds-line-color)` }}>
-            <span style={{ color: S.gold, fontWeight: 700 }}>🕌 لعبة سؤال وجواب الإسلامية</span>
+          <div className="qzg-game-title-bar">
+            <span className="qzg-game-title">🕌 لعبة سؤال وجواب الإسلامية</span>
           </div>
         )}
 

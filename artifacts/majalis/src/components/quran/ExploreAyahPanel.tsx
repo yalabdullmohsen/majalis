@@ -68,8 +68,8 @@ function Skeleton() {
         <div key={i} className="eap-skel__row">
           <div className="eap-skel__avatar" />
           <div className="eap-skel__body">
-            <div className="eap-skel__line1" style={{ width: `${60 + i * 10}%` }} />
-            <div className="eap-skel__line2" style={{ width: `${40 + i * 8}%` }} />
+            <div className="eap-skel__line1" style={{ "--eap-w1": `${60 + i * 10}%` } as React.CSSProperties} />
+            <div className="eap-skel__line2" style={{ "--eap-w2": `${40 + i * 8}%` } as React.CSSProperties} />
           </div>
         </div>
       ))}

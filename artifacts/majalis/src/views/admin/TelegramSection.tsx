@@ -166,14 +166,14 @@ function ProgressRow({ label, value, total, color = "var(--majalis-emerald)" }: 
 }
 
 function Btn({
-  children, onClick, loading = false, variant = "primary", small = false, style: extraStyle,
+  children, onClick, loading = false, variant = "primary", small = false, className: extraClass,
 }: {
   children: React.ReactNode;
   onClick?: () => void;
   loading?: boolean;
   variant?: "primary" | "secondary" | "danger";
   small?: boolean;
-  style?: React.CSSProperties;
+  className?: string;
 }) {
   const bg = variant === "primary" ? "var(--majalis-emerald-deep)" : variant === "danger" ? "#dc2626" : "var(--majalis-line)";
   const color = variant === "secondary" ? "var(--majalis-ink)" : "#fff";
@@ -182,13 +182,12 @@ function Btn({
       type="button"
       onClick={onClick}
       disabled={loading}
-      className="tgm-btn"
+      className={`tgm-btn${extraClass ? ` ${extraClass}` : ""}`}
       style={{
         "--tgm-btn-pad": small ? "0.3rem 0.65rem" : "0.45rem 1rem",
         "--tgm-btn-fs": small ? "0.78rem" : "0.85rem",
         "--tgm-btn-bg": loading ? "var(--majalis-line)" : bg,
         "--tgm-btn-color": loading ? "var(--majalis-ink-soft)" : color,
-        ...extraStyle,
       } as React.CSSProperties}
     >
       {loading ? "…" : children}
@@ -330,7 +329,7 @@ function ChannelsTab() {
   };
 
   return (
-    <div style={{ display: "grid", gap: "1rem" }}>
+    <div className="tgm-grid-gap">
       <InfoCard title="إضافة قناة جديدة">
         <div className="tgm-ch-add-row">
           <input
@@ -447,7 +446,7 @@ function ReviewTab() {
   };
 
   return (
-    <div style={{ display: "grid", gap: "1rem" }}>
+    <div className="tgm-grid-gap">
       <div className="tgm-filters-row">
         {["all", "complete", "needs_review", "incomplete"].map((q) => (
           <button
@@ -463,7 +462,7 @@ function ReviewTab() {
           </button>
         ))}
         {selected.size > 0 && (
-          <Btn loading={acting === "bulk"} small onClick={bulkApprove} style={{ marginRight: "auto" }}>
+          <Btn loading={acting === "bulk"} small onClick={bulkApprove} className="tgm-btn--auto">
             موافقة جماعية ({selected.size})
           </Btn>
         )}
@@ -488,11 +487,11 @@ function ReviewTab() {
                     type="checkbox"
                     checked={selected.has(lesson.id)}
                     onChange={() => toggleSelect(lesson.id)}
-                    style={{ marginTop: 3, flexShrink: 0, accentColor: "var(--majalis-emerald)" }}
+                    className="tgm-lesson-check"
                   />
                   <div className="tgm-lesson-info">
                     <div className="tgm-lesson-title">
-                      {lesson.title || <span style={{ color: "var(--majalis-ink-soft)" }}>بدون عنوان</span>}
+                      {lesson.title || <span className="tgm-no-title">بدون عنوان</span>}
                     </div>
                     <div className="tgm-lesson-meta">
                       {lesson.sheikh_name && <span>👤 {lesson.sheikh_name}</span>}
@@ -518,7 +517,7 @@ function ReviewTab() {
                 {raw && (
                   <div className="tgm-raw-source">
                     {raw.channel_username && <span>📢 @{raw.channel_username}</span>}
-                    {raw.message_date && <span style={{ marginRight: "0.75rem" }}>🗓 {new Date(raw.message_date).toLocaleDateString("ar-KW")}</span>}
+                    {raw.message_date && <span className="tgm-date-span">🗓 {new Date(raw.message_date).toLocaleDateString("ar-KW")}</span>}
                   </div>
                 )}
 
@@ -570,7 +569,7 @@ function StatsTab() {
   const lessons = data?.extractedLessons ?? ({} as TgStats["extractedLessons"]);
 
   return (
-    <div style={{ display: "grid", gap: "1rem" }}>
+    <div className="tgm-grid-gap">
       <div className="tgm-stats-grid">
         <StatCard label="إجمالي الرسائل" value={raw.total ?? 0} color="var(--majalis-emerald)" />
         <StatCard label="دروس مُستخرجة" value={lessons.total ?? 0} color="#2563eb" />
@@ -600,7 +599,7 @@ function StatsTab() {
 
         <InfoCard title="أكثر المشايخ حضوراً">
           {(lessons.topSheikhs ?? []).length === 0 ? (
-            <span style={{ color: "var(--majalis-ink-soft)", fontSize: "0.8rem" }}>لا توجد بيانات.</span>
+            <span className="tgm-sheikh-empty">لا توجد بيانات.</span>
           ) : (lessons.topSheikhs ?? []).map((s) => (
             <div key={s.name} className="tgm-sheikh-row">
               <span>{s.name}</span>
@@ -608,6 +607,7 @@ function StatsTab() {
             </div>
           ))}
         </InfoCard>
+
       </div>
 
       {data.channels.list.length > 0 && (

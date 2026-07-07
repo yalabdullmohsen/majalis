@@ -30,7 +30,7 @@ export default function SheikhDetailClient({
       {sheikh.bio && <p className="seo-listing-intro">{sheikh.bio}</p>}
 
       {Array.isArray(sheikh.specialties) && sheikh.specialties.length > 0 && (
-        <div className="sheikh-detail-tags" style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginBottom: "1.25rem" }}>
+        <div className="sheikh-detail-tags">
           {sheikh.specialties.map((tag: string) => (
             <span key={tag} className="ui-tag">{tag}</span>
           ))}
@@ -38,7 +38,7 @@ export default function SheikhDetailClient({
       )}
 
       {sheikh.ijazah && (
-        <p className="seo-listing-intro" style={{ marginTop: 0 }}>
+        <p className="seo-listing-intro seo-listing-intro--flush">
           <strong>الإجازة:</strong> {sheikh.ijazah}
         </p>
       )}

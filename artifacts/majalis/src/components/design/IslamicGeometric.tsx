@@ -27,7 +27,7 @@ export function IslamicLoader({ size = 48, color = "var(--v2-green, #1F6F52)" }:
       viewBox={`0 0 ${size} ${size}`}
       aria-hidden="true"
       role="img"
-      style={{ display: "block" }}
+      className="igd-loader-svg"
     >
       <style>{`
         @keyframes islamic-rotate {
@@ -69,7 +69,7 @@ export function IslamicDividerStar({
   return (
     <div
       className="islamic-divider"
-      style={{ color, ...style }}
+      style={{ "--igd-divider-color": color, ...style } as React.CSSProperties}
       aria-hidden={!label}
       role={label ? "separator" : undefined}
       aria-label={label}
@@ -77,7 +77,7 @@ export function IslamicDividerStar({
       <svg width="20" height="20" viewBox="0 0 20 20" className="islamic-divider__diamond" aria-hidden="true">
         <polygon points={star8Points(10, 10, 9, 5)} fill={starColor} opacity="0.55" />
       </svg>
-      {label && <span style={{ color: "var(--v2-ink-3, #8A847E)", letterSpacing: "0.08em" }}>{label}</span>}
+      {label && <span className="igd-divider-label">{label}</span>}
       {label && (
         <svg width="20" height="20" viewBox="0 0 20 20" className="islamic-divider__diamond" aria-hidden="true">
           <polygon points={star8Points(10, 10, 9, 5)} fill={starColor} opacity="0.55" />
@@ -110,16 +110,8 @@ export function IslamicPatternBg({
   return (
     <svg
       aria-hidden="true"
-      style={{
-        position: "absolute",
-        inset: 0,
-        width: "100%",
-        height: "100%",
-        pointerEvents: "none",
-        zIndex: 0,
-        ...style,
-      }}
-      className={className}
+      className={`igd-pattern-bg${className ? ` ${className}` : ""}`}
+      style={style}
     >
       <defs>
         <pattern id={id} x="0" y="0" width={tileSize} height={tileSize} patternUnits="userSpaceOnUse">
@@ -154,12 +146,15 @@ export function AchievementFrame({
   const r2 = size * 0.32;
 
   return (
-    <div style={{ position: "relative", width: size, height: size, flexShrink: 0 }}>
+    <div
+      className="igd-achievement-frame"
+      style={{ "--igd-frame-size": `${size}px` } as React.CSSProperties}
+    >
       <svg
         width={size}
         height={size}
         viewBox={`0 0 ${size} ${size}`}
-        style={{ position: "absolute", inset: 0 }}
+        className="igd-achievement-svg"
         aria-hidden="true"
       >
         <polygon
@@ -176,15 +171,7 @@ export function AchievementFrame({
           strokeLinejoin="round"
         />
       </svg>
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
+      <div className="igd-achievement-center">
         {children}
       </div>
     </div>
@@ -195,30 +182,9 @@ export function AchievementFrame({
 
 export function IslamicPageLoader({ label = "جارٍ التحميل…" }: { label?: string }) {
   return (
-    <div
-      role="status"
-      aria-label={label}
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: "1rem",
-        minHeight: "40vh",
-        padding: "2rem",
-      }}
-    >
+    <div role="status" aria-label={label} className="igd-page-loader">
       <IslamicLoader size={52} />
-      <p
-        style={{
-          fontSize: "0.875rem",
-          color: "var(--v2-ink-3, #8A847E)",
-          margin: 0,
-          fontWeight: 500,
-        }}
-      >
-        {label}
-      </p>
+      <p className="igd-page-loader__label">{label}</p>
     </div>
   );
 }

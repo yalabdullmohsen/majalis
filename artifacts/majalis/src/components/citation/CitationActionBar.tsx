@@ -66,8 +66,8 @@ function SelectionTooltip({
   return (
     <div
       dir="rtl"
-      className="fixed z-[500] -translate-x-1/2 flex items-center gap-1 bg-gray-900 dark:bg-gray-700 text-white rounded-lg shadow-xl px-2 py-1 text-xs"
-      style={{ top: pos.top, left: pos.left }}
+      className="cab-tooltip"
+      style={{ "--cab-top": `${pos.top}px`, "--cab-left": `${pos.left}px` } as React.CSSProperties}
     >
       <button
         type="button"

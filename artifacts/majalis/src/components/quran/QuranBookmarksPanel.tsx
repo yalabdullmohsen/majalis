@@ -48,11 +48,11 @@ function HifzList() {
           <div key={h.surahNum} className="qbp-hifz-row">
             <div className="qbp-hifz-head">
               <span className="qbp-hifz-name">سورة رقم {h.surahNum}</span>
-              <span className="qbp-hifz-status" style={{ color: status.color }}>{status.label}</span>
+              <span className="qbp-hifz-status" style={{ "--qbp-hifz-status-color": status.color } as React.CSSProperties}>{status.label}</span>
             </div>
             <div className="qbp-hifz-bar-wrap">
               <div className="qbp-hifz-bar">
-                <div className="qbp-hifz-fill" style={{ width: `${pct}%` }} />
+                <div className="qbp-hifz-fill" style={{ "--qbp-fill-w": `${pct}%` } as React.CSSProperties} />
               </div>
               <span className="qbp-hifz-pct">{h.memorizedAyahs}/{h.totalAyahs} ({pct}%)</span>
             </div>

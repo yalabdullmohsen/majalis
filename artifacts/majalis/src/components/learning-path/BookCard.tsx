@@ -22,12 +22,8 @@ export function BookCard({ book, scienceColor = "#059669", progress, onMarkDone 
     <div className="bg-[var(--majalis-panel)] rounded-2xl border border-[var(--majalis-line)] overflow-hidden hover:shadow-md transition-all duration-200">
       {/* غلاف الكتاب أو تدرج لوني */}
       <div
-        className="h-24 relative flex items-center justify-center"
-        style={{
-          background: book.cover_image_url
-            ? undefined
-            : `linear-gradient(135deg, ${scienceColor}22, ${scienceColor}44)`,
-        }}
+        className={`h-24 relative flex items-center justify-center${book.cover_image_url ? "" : " bc-cover--gradient"}`}
+        style={book.cover_image_url ? undefined : { "--bc-color": scienceColor } as React.CSSProperties}
       >
         {book.cover_image_url ? (
           <img
@@ -41,11 +37,7 @@ export function BookCard({ book, scienceColor = "#059669", progress, onMarkDone 
         )}
         {/* شارة الحالة */}
         <span
-          className="absolute top-2 left-2 text-xs font-medium px-2 py-0.5 rounded-full"
-          style={{
-            background: status === "completed" ? "var(--mn-surface-active)" : status === "in_progress" ? "#E6EDE9" : "var(--majalis-parchment-deep)",
-            color: status === "completed" ? "var(--mn-text-active)" : status === "in_progress" ? "#18362A" : "var(--majalis-ink-soft)",
-          }}
+          className={`absolute top-2 left-2 text-xs font-medium px-2 py-0.5 rounded-full bc-status-badge bc-status-badge--${status}`}
         >
           {status === "completed" ? "✓ مكتمل" : status === "in_progress" ? "⏳ جاري" : "لم يبدأ"}
         </span>

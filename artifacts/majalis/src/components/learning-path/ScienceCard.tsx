@@ -13,14 +13,11 @@ export function ScienceCard({ science, progressCount = 0, totalBooks = 0 }: Prop
   return (
     <Link href={`/learning-path/${science.slug}`}>
       <div
-        className="group relative bg-[var(--majalis-panel)] rounded-2xl border border-[var(--majalis-line)] p-5 hover:shadow-lg transition-all duration-200 cursor-pointer overflow-hidden"
-        style={{ borderTop: `3px solid ${science.color}` }}
+        className="group relative bg-[var(--majalis-panel)] rounded-2xl border border-[var(--majalis-line)] p-5 hover:shadow-lg transition-all duration-200 cursor-pointer overflow-hidden sc-card"
+        style={{ "--sc-color": science.color } as React.CSSProperties}
       >
         {/* خلفية زخرفية */}
-        <div
-          className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-300 pointer-events-none"
-          style={{ background: `radial-gradient(circle at 70% 20%, ${science.color}, transparent 60%)` }}
-        />
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-300 pointer-events-none sc-card__glow" />
 
         <div className="flex items-start gap-3">
           <span className="text-3xl flex-shrink-0 leading-none mt-0.5">{science.icon}</span>
@@ -44,8 +41,8 @@ export function ScienceCard({ science, progressCount = 0, totalBooks = 0 }: Prop
             </div>
             <div className="h-1.5 bg-[var(--majalis-parchment-deep)] rounded-full overflow-hidden">
               <div
-                className="h-full rounded-full transition-all duration-500"
-                style={{ width: `${pct}%`, background: science.color }}
+                className="h-full rounded-full transition-all duration-500 sc-card__prog"
+                style={{ "--sc-prog-w": `${pct}%` } as React.CSSProperties}
               />
             </div>
           </div>

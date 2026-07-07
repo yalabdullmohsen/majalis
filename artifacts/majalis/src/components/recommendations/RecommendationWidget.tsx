@@ -26,18 +26,16 @@ function RecCard({ item }: { item: RecommendedItem }) {
   };
 
   return (
-    <Link href={href} onClick={handleClick} className="block group">
+    <Link href={href} onClick={handleClick} className="block group"
+      style={{ "--rw-color": color } as React.CSSProperties}>
       <div className="relative p-4 bg-[var(--majalis-panel)] rounded-xl border border-[var(--majalis-line)] hover:border-[var(--majalis-emerald)] hover:shadow-md transition-all duration-200 h-full">
         {/* شريط ملوَّن */}
-        <div className="absolute top-0 right-0 h-full w-1 rounded-r-xl" style={{ background: color }} />
+        <div className="absolute top-0 right-0 h-full w-1 rounded-r-xl rw-color-bg" />
 
         <div className="pr-2">
           {/* الوسم */}
           <div className="flex items-center justify-between mb-2">
-            <span
-              className="px-1.5 py-0.5 rounded text-xs text-white font-medium"
-              style={{ background: color }}
-            >
+            <span className="px-1.5 py-0.5 rounded text-xs text-white font-medium rw-color-bg">
               {label}
             </span>
             {item.category && (
@@ -178,20 +176,15 @@ export function RecommendationWidget({
                 href={href}
                 onClick={() => trackEvent({ event_type: "view", content_id: item.id, content_type: item.content_type })}
                 className="flex items-center gap-3 p-3 bg-[var(--majalis-panel)] rounded-lg border border-[var(--majalis-line)] hover:border-[var(--majalis-emerald)] hover:shadow-sm transition-all group"
+                style={{ "--rw-color": color } as React.CSSProperties}
               >
-                <span
-                  className="w-2 h-2 rounded-full flex-shrink-0"
-                  style={{ background: color }}
-                />
+                <span className="w-2 h-2 rounded-full flex-shrink-0 rw-color-bg" />
                 <div className="min-w-0 flex-1">
                   <p className="text-sm text-[var(--majalis-ink)] truncate group-hover:text-[var(--majalis-emerald)]">
                     {title}
                   </p>
                 </div>
-                <span
-                  className="text-xs text-white px-1.5 py-0.5 rounded flex-shrink-0"
-                  style={{ background: color }}
-                >
+                <span className="text-xs text-white px-1.5 py-0.5 rounded flex-shrink-0 rw-color-bg">
                   {label}
                 </span>
               </Link>

@@ -18,19 +18,25 @@ export function SourceCard({ source, compact = false }: Props) {
         ${compact ? "p-3" : "p-4"}`}
     >
       {/* شريط ملوَّن جانبي */}
-      <div className="absolute top-0 right-0 h-full w-1 rounded-r-xl" style={{ background: color }} />
+      <div
+        className="absolute top-0 right-0 h-full w-1 rounded-r-xl sc-color-bar"
+        style={{ "--sc-color": color } as React.CSSProperties}
+      />
 
       <div className="pr-2">
         <div className="flex items-center gap-2 mb-2 flex-wrap">
           {/* رقم المصدر */}
           <span
-            className="text-xs font-bold text-white px-1.5 py-0.5 rounded-full min-w-[1.4rem] text-center"
-            style={{ background: color }}
+            className="text-xs font-bold text-white px-1.5 py-0.5 rounded-full min-w-[1.4rem] text-center sc-color-bg"
+            style={{ "--sc-color": color } as React.CSSProperties}
           >
             {source.index}
           </span>
           {/* نوع المحتوى */}
-          <span className="text-xs text-white px-2 py-0.5 rounded font-medium" style={{ background: color }}>
+          <span
+            className="text-xs text-white px-2 py-0.5 rounded font-medium sc-color-bg"
+            style={{ "--sc-color": color } as React.CSSProperties}
+          >
             {source.type_label}
           </span>
           {/* درجة الحديث */}

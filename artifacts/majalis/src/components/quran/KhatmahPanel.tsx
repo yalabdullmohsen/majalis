@@ -26,7 +26,7 @@ function ProgressBar({ value, max }: { value: number; max: number }) {
   const pct = max > 0 ? Math.min(100, Math.round((value / max) * 100)) : 0;
   return (
     <div className="kht-progress-bar">
-      <div className="kht-prog-inner" style={{ width: `${pct}%` }} />
+      <div className="kht-prog-inner" style={{ "--kht-pct": `${pct}%` } as React.CSSProperties} />
     </div>
   );
 }
@@ -60,7 +60,7 @@ function PlanCard({ plan, currentPage }: { plan: KhatmahPlan; currentPage: numbe
             </span>
           </div>
           <p className="kht-plan-daily">
-            المطلوب اليوم: <strong style={{ color: "var(--majalis-ink)" }}>{pagesPerDay} صفحة</strong>
+            المطلوب اليوم: <strong className="kht-daily-highlight">{pagesPerDay} صفحة</strong>
           </p>
         </>
       )}
@@ -111,7 +111,7 @@ export function KhatmahPanel({ currentPage, onClose }: Props) {
             ))}
           </div>
 
-          <div style={{ marginBottom: "1rem" }}>
+          <div className="kht-plans-wrap">
             <div className="kht-plans-head">
               <h3 className="kht-plans-title">خطط الختمة</h3>
               <button type="button" onClick={() => setCreating(!creating)} className="kht-new-plan-btn">

@@ -1148,6 +1148,9 @@ p, li {
   color: var(--ds-ink-soft);
   margin-bottom: var(--ds-space-3);
 }
+.seo-listing-intro--flush { margin-top: 0; }
+
+.sheikh-detail-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem; }
 
 .content-submit-panel {
   margin-top: var(--ds-space-5);
