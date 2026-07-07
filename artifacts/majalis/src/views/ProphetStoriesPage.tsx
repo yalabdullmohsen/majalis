@@ -44,7 +44,7 @@ function useBookmarks() {
 
 function IslamicStar({ size = 32, color = GOLD, opacity = 1 }: { size?: number; color?: string; opacity?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 100 100" style={{ opacity }} aria-hidden="true">
+    <svg width={size} height={size} viewBox="0 0 100 100" opacity={opacity} aria-hidden="true">
       <polygon
         points="50,2 61,35 95,35 68,57 79,91 50,70 21,91 32,57 5,35 39,35"
         fill={color}
@@ -234,7 +234,7 @@ function ProphetDetailView({
       </div>
 
       {/* Hero Section */}
-      <div className="prophet-detail-lux__hero" style={{ background: `linear-gradient(135deg, ${color}20 0%, var(--msk-canvas-deep, #0D1F3C) 60%)` }}>
+      <div className="prophet-detail-lux__hero">
         <div className="prophet-detail-lux__hero-pattern" aria-hidden="true">
           {[...Array(12)].map((_, i) => (
             <IslamicStar key={i} size={28} color={GOLD} opacity={0.06 + (i % 4) * 0.02} />
@@ -276,7 +276,7 @@ function ProphetDetailView({
       </div>
 
       {/* قصة كاملة */}
-      <article className="prophet-story-lux" style={{ fontSize }}>
+      <article className="prophet-story-lux" style={{ "--pstory-fs": `${fontSize}px` } as React.CSSProperties}>
 
         {/* النبذة */}
         <section className="prophet-section-lux">
@@ -309,7 +309,7 @@ function ProphetDetailView({
           <ul className="prophet-attrs-list">
             {p.keyAttributes.map((a, i) => (
               <li key={i} className="prophet-attrs-list__item">
-                <span className="prophet-attrs-list__bullet" style={{ background: color }}>✦</span>
+                <span className="prophet-attrs-list__bullet">✦</span>
                 {a}
               </li>
             ))}
@@ -325,7 +325,7 @@ function ProphetDetailView({
           <div className="prophet-lessons-grid">
             {p.lessons.map((l, i) => (
               <div key={i} className="prophet-lesson-card">
-                <span className="prophet-lesson-card__num" style={{ color }}>{i + 1}</span>
+                <span className="prophet-lesson-card__num">{i + 1}</span>
                 <p className="prophet-lesson-card__text">{l}</p>
               </div>
             ))}
@@ -403,17 +403,16 @@ function TimelineView({ onSelect }: { onSelect: (slug: string) => void }) {
         const color = prophetColor(p.slug);
         const side = idx % 2 === 0 ? "right" : "left";
         return (
-          <div key={p.slug} className={`prophet-timeline__item prophet-timeline__item--${side}`}>
+          <div key={p.slug} className={`prophet-timeline__item prophet-timeline__item--${side}`} style={{ "--item-color": color } as React.CSSProperties}>
             <button
               className="prophet-timeline__dot"
-              style={{ background: color, boxShadow: `0 0 12px ${color}60` }}
               onClick={() => onSelect(p.slug)}
               aria-label={`قصة ${p.arabicName}`}
             >
               <IslamicStar size={16} color="#fff" />
             </button>
             <div className="prophet-timeline__card" onClick={() => onSelect(p.slug)}>
-              <h3 className="prophet-timeline__name" style={{ color }}>{p.arabicName}</h3>
+              <h3 className="prophet-timeline__name">{p.arabicName}</h3>
               <p className="prophet-timeline__title">{p.title}</p>
               <p className="prophet-timeline__era">{p.era}</p>
             </div>
@@ -468,7 +467,7 @@ function QuizView({ onClose }: { onClose: () => void }) {
       <div className="prophet-quiz__header">
         <span>سؤال {idx + 1} من {QUIZ_QUESTIONS.length}</span>
         <div className="prophet-quiz__progress">
-          <div className="prophet-quiz__progress-bar" style={{ width: `${((idx) / QUIZ_QUESTIONS.length) * 100}%` }} />
+          <div className="prophet-quiz__progress-bar" style={{ "--quiz-pct": `${(idx / QUIZ_QUESTIONS.length) * 100}%` } as React.CSSProperties} />
         </div>
         <button className="prophet-quiz__close" onClick={onClose}>✕</button>
       </div>
@@ -551,10 +550,10 @@ export default function ProphetStoriesPage() {
                 key={i}
                 className="prophets-lux-hero__star-wrap"
                 style={{
-                  top: `${Math.sin(i * 1.37) * 40 + 50}%`,
-                  left: `${(i / 10) * 100}%`,
-                  animationDelay: `${i * 0.5}s`,
-                }}
+                  "--star-top": `${Math.sin(i * 1.37) * 40 + 50}%`,
+                  "--star-left": `${(i / 10) * 100}%`,
+                  "--star-delay": `${i * 0.5}s`,
+                } as React.CSSProperties}
               >
                 <IslamicStar size={16 + (i % 3) * 10} color={GOLD} opacity={0.07 + (i % 4) * 0.03} />
               </div>
@@ -702,7 +701,10 @@ const PROPHETS_CSS = `
 }
 .prophets-lux-hero__star-wrap {
   position: absolute;
+  top: var(--star-top);
+  left: var(--star-left);
   animation: lux-pulse 4s ease-in-out infinite;
+  animation-delay: var(--star-delay, 0s);
 }
 @keyframes lux-pulse {
   0%, 100% { transform: scale(1); opacity: 0.7; }
@@ -997,7 +999,8 @@ const PROPHETS_CSS = `
   padding: 3rem 1.5rem;
   text-align: center;
   overflow: hidden;
-  border-bottom: 1px solid var(--prophet-color, ${GOLD})20;
+  border-bottom: 1px solid color-mix(in srgb, var(--prophet-color, ${GOLD}) 20%, transparent);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--prophet-color, ${GOLD}) 13%, transparent) 0%, var(--msk-canvas-deep, #0D1F3C) 60%);
 }
 .prophet-detail-lux__hero-pattern {
   position: absolute; inset: 0;
@@ -1083,7 +1086,7 @@ const PROPHETS_CSS = `
   margin: 0 auto;
   padding: 1.5rem;
   line-height: 1.8;
-  font-size: 16px;
+  font-size: var(--pstory-fs, 16px);
   transition: font-size 0.2s;
 }
 .prophet-disclaimer-lux {
@@ -1152,6 +1155,7 @@ const PROPHETS_CSS = `
   font-size: 0.65rem;
   color: #fff;
   margin-top: 0.15rem;
+  background: var(--prophet-color, ${GOLD});
 }
 
 /* Lessons */
@@ -1176,6 +1180,7 @@ const PROPHETS_CSS = `
   font-family: 'Amiri', serif;
   flex-shrink: 0;
   line-height: 1;
+  color: var(--prophet-color, ${GOLD});
 }
 .prophet-lesson-card__text { color: #d0d0c8; font-size: 0.9rem; line-height: 1.7; margin: 0; }
 
@@ -1287,6 +1292,8 @@ const PROPHETS_CSS = `
   transition: transform 0.2s;
   flex-shrink: 0;
   z-index: 2;
+  background: var(--item-color, ${GOLD});
+  box-shadow: 0 0 12px color-mix(in srgb, var(--item-color, ${GOLD}) 38%, transparent);
 }
 .prophet-timeline__dot:hover { transform: translateX(-50%) scale(1.2); }
 .prophet-timeline__card {
@@ -1304,7 +1311,7 @@ const PROPHETS_CSS = `
   font-family: 'Amiri', serif;
   font-size: 1rem;
   margin: 0 0 0.2rem;
-  color: #111827;
+  color: var(--item-color, #111827);
 }
 .prophet-timeline__title { font-size: 0.75rem; color: #6b7280; margin: 0 0 0.15rem; }
 .prophet-timeline__era { font-size: 0.7rem; color: #9ca3af; margin: 0; }
@@ -1353,6 +1360,7 @@ const PROPHETS_CSS = `
   background: ${GOLD};
   border-radius: 2px;
   transition: width 0.3s;
+  width: var(--quiz-pct, 0%);
 }
 .prophet-quiz__close {
   background: none; border: none;

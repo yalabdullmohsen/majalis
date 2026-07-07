@@ -18,14 +18,14 @@ function SectionGroup({
 }) {
   if (!items.length) return null;
   return (
-    <section className="search-results-group" style={{ marginBottom: "2rem" }}>
+    <section className="search-results-group tpc-section-group">
       <h2 className="search-results-group-title">
         {title}
         <span className="search-results-count">{items.length}</span>
       </h2>
       <div className="search-results-list">
         {items.map((item) => (
-          <Link key={`${item.kind}-${item.id || item.title}`} href={item.href} style={{ textDecoration: "none" }}>
+          <Link key={`${item.kind}-${item.id || item.title}`} href={item.href} className="tpc-result-link">
             <div className="search-result-row">
               <div className="search-result-copy">
                 <span>{displayText(item.title)}</span>
@@ -80,15 +80,15 @@ export default function TopicPage() {
 
   return (
     <div className="page-shell narrow search-page">
-      <nav style={{ marginBottom: "1rem", fontSize: "0.875rem" }}>
+      <nav className="tpc-breadcrumb">
         <Link href="/topics">الموضوعات العلمية</Link>
-        <span style={{ margin: "0 0.5rem" }}>/</span>
+        <span className="tpc-sep">/</span>
         <span>{topic.title}</span>
       </nav>
 
       <h1 className="search-page-title">{topic.title}</h1>
       {topic.title_en && (
-        <p className="search-page-hint" style={{ marginTop: "-0.5rem" }}>
+        <p className="search-page-hint tpc-title-en">
           {topic.title_en}
         </p>
       )}
@@ -106,21 +106,11 @@ export default function TopicPage() {
       )}
 
       {relatedTopics.length > 0 && (
-        <aside style={{ marginTop: "2rem", padding: "1rem", borderRadius: "0.5rem", border: "1px solid var(--line, #e5e7eb)" }}>
-          <h2 style={{ fontSize: "1rem", fontWeight: 700, marginBottom: "0.75rem" }}>موضوعات ذات صلة</h2>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
+        <aside className="tpc-related">
+          <h2 className="tpc-related__title">موضوعات ذات صلة</h2>
+          <div className="tpc-related__chips">
             {relatedTopics.map((t) => (
-              <Link
-                key={t.slug}
-                href={`/topics/${t.slug}`}
-                style={{
-                  padding: "0.375rem 0.75rem",
-                  borderRadius: "999px",
-                  background: "var(--panel-soft, #f3f4f6)",
-                  textDecoration: "none",
-                  fontSize: "0.875rem",
-                }}
-              >
+              <Link key={t.slug} href={`/topics/${t.slug}`} className="tpc-related__chip">
                 {t.title}
               </Link>
             ))}

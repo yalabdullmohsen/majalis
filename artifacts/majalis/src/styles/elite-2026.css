@@ -6189,3 +6189,95 @@ button.primary:hover {
   font-family: inherit;
 }
 .scp-submit-btn.is-loading { background: #9ca3af; cursor: not-allowed; }
+
+/* ============================================================
+   §66 — CertificateVerifyPage  (cvp-*)
+   ============================================================ */
+.cvp-shell { text-align: center; padding-top: 3rem; }
+.cvp-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem; }
+.cvp-result { padding: 2rem; border-radius: 0.5rem; }
+.cvp-result--valid  { border: 2px solid var(--emerald-deep); background: var(--panel); }
+.cvp-result--invalid { border: 1px solid var(--line); }
+.cvp-checkmark    { font-size: 3rem; margin-bottom: 0.5rem; }
+.cvp-result-title { font-weight: 700; margin-bottom: 0.5rem; }
+.cvp-result-desc  { color: var(--ink-soft); }
+.cvp-result-code  { font-size: 0.875rem; margin-top: 0.5rem; }
+.cvp-result-msg   { color: var(--ink-soft); }
+.cvp-back-link    { display: inline-block; margin-top: 2rem; }
+
+/* ============================================================
+   §67 — NotFoundPage  (nf-*)
+   ============================================================ */
+.nf-page {
+  min-height: calc(100vh - 5rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+}
+.nf-card {
+  width: min(100%, 44rem);
+  text-align: center;
+  border: 1px solid var(--majalis-line);
+  border-radius: 1.5rem;
+  background: var(--majalis-panel);
+  padding: clamp(2rem, 6vw, 3.25rem);
+  box-shadow: 0 18px 54px rgba(36,31,24,0.08);
+}
+.nf-code {
+  color: var(--majalis-brass-deep);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.75rem;
+}
+.nf-title {
+  color: var(--majalis-emerald-deep);
+  font-size: clamp(2rem, 7vw, 3.5rem);
+  line-height: 1.15;
+  margin-bottom: 0.85rem;
+}
+.nf-desc {
+  color: var(--majalis-ink-soft);
+  font-size: 1rem;
+  line-height: 1.9;
+  max-width: 34rem;
+  margin: 0 auto 1.5rem;
+}
+.nf-links {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.nf-link {
+  border-radius: 999px;
+  padding: 0.75rem 1.25rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+.nf-link--primary   { background: var(--majalis-emerald); color: var(--majalis-parchment); }
+.nf-link--secondary { border: 1px solid var(--majalis-line); color: var(--majalis-emerald-deep); background: var(--majalis-parchment); }
+
+/* ============================================================
+   §68 — TopicPage  (tpc-*)
+   ============================================================ */
+.tpc-section-group { margin-bottom: 2rem; }
+.tpc-result-link   { text-decoration: none; }
+.tpc-breadcrumb    { margin-bottom: 1rem; font-size: 0.875rem; }
+.tpc-sep           { margin: 0 0.5rem; }
+.tpc-title-en      { margin-top: -0.5rem; }
+.tpc-related {
+  margin-top: 2rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--line, #e5e7eb);
+}
+.tpc-related__title { font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem; }
+.tpc-related__chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.tpc-related__chip {
+  padding: 0.375rem 0.75rem;
+  border-radius: 999px;
+  background: var(--panel-soft, #f3f4f6);
+  text-decoration: none;
+  font-size: 0.875rem;
+}
