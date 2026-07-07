@@ -219,7 +219,22 @@ body {
 
 /* ══════════════════════════════════════════════
    §4c. عناوين الأقسام — أبيض على شريط غابات (جميع الصفحات)
+   specificity: 0-2-0 = 20 يتغلب على .page-shell h2 (0-1-1 = 11)
    ══════════════════════════════════════════════ */
+.page-shell .ds-section__title,
+.page-shell .lessons-v2-section__title,
+.page-shell .lessons-past-section__title,
+.page-shell .cards-page-title,
+.page-shell .search-page-title,
+.page-shell .hadith-section-title,
+.page-shell .fiqh-council-section-title,
+.page-shell .qa-v2-section-title,
+.page-shell .kuwait-lessons-section-title,
+.page-shell .profile-section-title,
+.page-shell .user-stats-section__title,
+.page-shell .admin-section-title,
+.page-shell .fm-section-title,
+.page-shell .rp-section-title,
 .ds-section__title,
 .lessons-v2-section__title,
 .lessons-past-section__title,

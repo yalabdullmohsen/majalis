@@ -445,7 +445,7 @@ export default function LessonsPage({
       <PageHeader
         eyebrow="المجلس العلمي"
         title="الدروس"
-        subtitle="جميع الدروس والدورات العلمية — مرتّبة حسب أقرب موعد."
+        subtitle="جميع الدروس والدورات العلمية، مرتّبة حسب أقرب موعد."
       />
 
       <div className="lessons-v2-toolbar">
@@ -491,7 +491,7 @@ export default function LessonsPage({
                   </section>
                   {featuredSections.featured.length > 0 && (
                     <section className="lessons-v2-section">
-                      <h2 className="lessons-v2-section__title">المميز — بث مباشر</h2>
+                      <h2 className="lessons-v2-section__title">المميز: بث مباشر</h2>
                       {renderGrid(featuredSections.featured, "feat-")}
                     </section>
                   )}
