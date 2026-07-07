@@ -1896,18 +1896,53 @@ button.hcp-prayer-cell:focus-visible {
 /* ══════════════════════════════════════════════
    §54. Lesson Detail Hero — خلفية خضراء داكنة
    ══════════════════════════════════════════════ */
+
+/* إزالة padding البطاقة لجعل الـ hero ملاصقاً للحواف */
+.lesson-detail-card {
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+/* الـ hero: أخضر داكن + نمط النجوم */
 .lesson-detail-hero {
   background-color: var(--elite-forest, #18362A) !important;
   background-image: url("/star-pattern.svg") !important;
   background-size: 100px 100px !important;
-  border-radius: 12px 12px 0 0 !important;
+  border-radius: 0 !important;
   padding: 2rem 1.75rem !important;
   color: var(--elite-white, #FAF8F2) !important;
+  margin-bottom: 0 !important;
 }
-.lesson-detail-title {
+
+/* العنوان: أبيض — specificity 0-3-0 يتغلب على قاعدة majalis-v2 (0-2-1) */
+.lesson-detail-card .lesson-detail-hero .lesson-detail-title {
   color: #fff !important;
   text-shadow: 0 1px 4px rgba(0,0,0,0.25) !important;
 }
+
+/* إعادة padding للأقسام الداخلية */
+.lesson-detail-stats-row,
+.lesson-card-pro__meta.lesson-detail-meta,
+.lesson-detail-body,
+.lesson-detail-actions,
+.lesson-detail-map,
+.lesson-detail-qr {
+  padding-inline: clamp(1.15rem, 3vw, 1.5rem) !important;
+}
+.lesson-detail-stats-row {
+  padding-top: 0.75rem !important;
+}
+.lesson-detail-actions {
+  padding-bottom: clamp(1.15rem, 3vw, 1.5rem) !important;
+}
+.lesson-detail-map {
+  padding-bottom: clamp(1.15rem, 3vw, 1.5rem) !important;
+}
+.lesson-detail-qr {
+  padding-bottom: clamp(1.15rem, 3vw, 1.5rem) !important;
+  text-align: center !important;
+}
+
 .lesson-detail-hero .lesson-card-pro__sheikh {
   color: rgba(250,248,242,0.88) !important;
 }
