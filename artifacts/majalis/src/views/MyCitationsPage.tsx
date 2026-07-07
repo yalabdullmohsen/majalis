@@ -282,8 +282,8 @@ export default function MyCitationsPage() {
                       key={c}
                       type="button"
                       onClick={() => setNewFolderColor(c)}
-                      className={`w-5 h-5 rounded-full border-2 ${newFolderColor === c ? "border-gray-800 dark:border-white" : "border-transparent"}`}
-                      style={{ background: c }}
+                      className={`w-5 h-5 rounded-full border-2 cit-color-swatch ${newFolderColor === c ? "border-gray-800 dark:border-white" : "border-transparent"}`}
+                      style={{ "--swatch-bg": c } as React.CSSProperties}
                     />
                   ))}
                 </div>
@@ -311,7 +311,7 @@ export default function MyCitationsPage() {
                       : "hover:bg-[var(--mn-surface-hover)]"
                   }`}
                 >
-                  <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: f.color }} />
+                  <span className="w-2.5 h-2.5 rounded-full flex-shrink-0 cit-folder-dot" style={{ "--folder-dot-bg": f.color } as React.CSSProperties} />
                   <span className="truncate text-[var(--majalis-ink-soft)]">{f.folder_name}</span>
                 </button>
               ))
@@ -353,9 +353,10 @@ export default function MyCitationsPage() {
                   <div
                     key={item.id}
                     className="bg-[var(--majalis-panel)] rounded-xl border border-[var(--majalis-line)] overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+                    style={{ "--cit-type-color": typeColor } as React.CSSProperties}
                   >
                     {/* شريط ملوَّن */}
-                    <div className="h-1" style={{ background: typeColor }} />
+                    <div className="h-1 cit-type-bar" />
 
                     <div className="p-4 space-y-3">
                       {/* العنوان والنوع */}
@@ -363,8 +364,7 @@ export default function MyCitationsPage() {
                         <div className="flex items-center gap-2 min-w-0">
                           {typeLabel && (
                             <span
-                              className="px-1.5 py-0.5 rounded text-xs text-white font-medium flex-shrink-0"
-                              style={{ background: typeColor }}
+                              className="px-1.5 py-0.5 rounded text-xs text-white font-medium flex-shrink-0 cit-type-badge"
                             >
                               {typeLabel}
                             </span>

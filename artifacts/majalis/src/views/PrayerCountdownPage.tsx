@@ -17,7 +17,7 @@ export default function PrayerCountdownPage() {
   if (loading) {
     return (
       <div className="prayer-countdown-page" dir="rtl">
-        <p style={{ color: "var(--majalis-ink-soft)" }}>جارٍ تحميل المواقيت…</p>
+        <p className="pcp-loading-msg">جارٍ تحميل المواقيت…</p>
       </div>
     );
   }
@@ -25,7 +25,7 @@ export default function PrayerCountdownPage() {
   if (!data?.prayers?.length || !countdown) {
     return (
       <div className="prayer-countdown-page" dir="rtl">
-        <p style={{ color: "var(--msk-red, #C1595A)" }}>تعذّر تحميل مواقيت الصلاة — تحقق من الاتصال.</p>
+        <p className="pcp-error-msg">تعذّر تحميل مواقيت الصلاة — تحقق من الاتصال.</p>
       </div>
     );
   }
@@ -58,7 +58,7 @@ export default function PrayerCountdownPage() {
       {countdown.previous && (
         <div className="prayer-countdown__prev">
           <span>{PRAYER_AR[countdown.previous.key] ?? countdown.previous.key}</span>
-          <span style={{ opacity: 0.5 }}>انقضت</span>
+          <span className="pcp-expired">انقضت</span>
         </div>
       )}
 
@@ -68,8 +68,7 @@ export default function PrayerCountdownPage() {
           const isNext = countdown.next?.key === p.key;
           const isPrev = countdown.previous?.key === p.key;
           return (
-            <div key={p.key} className={`prayer-slot-chip${isNext ? " prayer-slot-chip--next" : ""}`}
-              style={isPrev && !isNext ? { opacity: 0.55 } : {}}>
+            <div key={p.key} className={`prayer-slot-chip${isNext ? " prayer-slot-chip--next" : ""}${isPrev && !isNext ? " prayer-slot-chip--prev" : ""}`}>
               <span className="prayer-slot-chip__name">{PRAYER_AR[p.key] ?? p.key}</span>
               <span className="prayer-slot-chip__time">{p.time24}</span>
             </div>
@@ -77,7 +76,7 @@ export default function PrayerCountdownPage() {
         })}
       </div>
 
-      <p style={{ marginTop: "1.5rem", fontSize: "0.72rem", color: "var(--majalis-ink-soft)", textAlign: "center" }}>
+      <p className="pcp-city-label">
         {data.city} · {data.source}
       </p>
     </div>

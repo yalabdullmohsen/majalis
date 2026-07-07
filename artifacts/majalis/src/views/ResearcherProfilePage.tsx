@@ -155,9 +155,9 @@ export default function ResearcherProfilePage() {
 
   if (!isLoggedIn) {
     return (
-      <div className="page-shell narrow" dir="rtl" style={{ textAlign: "center", paddingTop: "3rem" }}>
-        <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>🔐</div>
-        <p style={{ color: "var(--majalis-ink-soft)", marginBottom: "1rem" }}>
+      <div className="page-shell narrow rpr-login-prompt" dir="rtl">
+        <div className="rpr-login-icon">🔐</div>
+        <p className="rpr-login-msg">
           سجّل الدخول لإنشاء ملفك البحثي.
         </p>
         <Link href="/login?next=/researcher" className="ui-card-btn">تسجيل الدخول</Link>
@@ -168,7 +168,7 @@ export default function ResearcherProfilePage() {
   if (loading) {
     return (
       <div className="page-shell narrow" dir="rtl">
-        <div className="profile-loading" style={{ margin: "3rem auto" }}>
+        <div className="profile-loading rpr-loading-center">
           <span className="profile-loading__dot" /><span className="profile-loading__dot" /><span className="profile-loading__dot" />
         </div>
       </div>

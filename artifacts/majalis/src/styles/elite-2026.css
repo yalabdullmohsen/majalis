@@ -6565,3 +6565,28 @@ button.primary:hover {
   font-weight: 600;
   background: var(--panel, #fff);
 }
+
+/* ============================================================
+   §84 — PrayerCountdownPage  (pcp-*)
+   ============================================================ */
+.pcp-loading-msg        { color: var(--majalis-ink-soft); }
+.pcp-error-msg          { color: var(--msk-red, #C1595A); }
+.pcp-expired            { opacity: 0.5; }
+.prayer-slot-chip--prev { opacity: 0.55; }
+.pcp-city-label         { margin-top: 1.5rem; font-size: 0.72rem; color: var(--majalis-ink-soft); text-align: center; }
+
+/* ============================================================
+   §85 — ResearcherProfilePage  (rpr-*)
+   ============================================================ */
+.rpr-login-prompt   { text-align: center; padding-top: 3rem; }
+.rpr-login-icon     { font-size: 3rem; margin-bottom: 1rem; }
+.rpr-login-msg      { color: var(--majalis-ink-soft); margin-bottom: 1rem; }
+.rpr-loading-center { margin: 3rem auto; }
+
+/* ============================================================
+   §86 — MyCitationsPage  (cit-*)
+   ============================================================ */
+.cit-color-swatch { background: var(--swatch-bg); }
+.cit-folder-dot   { background: var(--folder-dot-bg); }
+.cit-type-bar     { background: var(--cit-type-color, #065f46); }
+.cit-type-badge   { background: var(--cit-type-color, #065f46); }
