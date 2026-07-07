@@ -1353,6 +1353,101 @@ body > #root > div {
 }
 
 /* ══════════════════════════════════════════════
+   §24b. HomeDailyCorner — الركن اليومي
+   ══════════════════════════════════════════════ */
+.hdc { margin: 0; }
+.hdc__head {
+  display: flex; align-items: flex-start;
+  justify-content: space-between; gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+.hdc__title { margin: 0; font-size: 1.15rem; font-weight: 700; }
+
+/* تبويبات */
+.hdc__tabs {
+  position: relative;
+  display: flex; gap: 0.4rem;
+  margin-bottom: 0.75rem;
+  overflow: hidden;
+}
+.hdc__tab {
+  display: flex; align-items: center; gap: 0.35rem;
+  padding: 0.4rem 0.75rem;
+  border: 1.5px solid var(--elite-border, rgba(0,0,0,0.08));
+  border-radius: 2rem;
+  background: transparent;
+  color: var(--elite-muted, #6b7280);
+  font-family: inherit; font-size: 0.8125rem; font-weight: 600;
+  cursor: pointer; white-space: nowrap;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.hdc__tab.active {
+  background: var(--elite-forest, #18362A);
+  border-color: var(--elite-forest, #18362A);
+  color: #fff;
+}
+.hdc__tab-icon { font-size: 0.9rem; line-height: 1; }
+
+/* شريط تقدم التدوير التلقائي */
+.hdc__progress {
+  position: absolute; bottom: 0; right: 0; left: 0;
+  height: 2px;
+  background: var(--elite-border, rgba(0,0,0,0.07));
+  border-radius: 1px; overflow: hidden;
+  pointer-events: none;
+}
+.hdc__progress-fill {
+  display: block; height: 100%;
+  background: var(--elite-forest, #18362A);
+  width: 0;
+  animation: hdc-progress linear forwards;
+}
+@keyframes hdc-progress { from { width: 0; } to { width: 100%; } }
+
+/* بطاقة المحتوى */
+.hdc__card {
+  min-height: 130px;
+  padding: 1.25rem 1.25rem 1rem !important;
+}
+.hdc__body { display: flex; flex-direction: column; gap: 0.6rem; }
+.hdc__text {
+  font-size: 1rem; line-height: 1.75;
+  color: var(--elite-ink, #0C0C0C);
+  font-family: var(--font-quran, inherit);
+}
+.hdc__quote {
+  margin: 0; padding: 0;
+  font-size: 1rem; line-height: 1.75;
+  color: var(--elite-ink, #0C0C0C);
+  font-family: var(--font-quran, inherit);
+  border: none;
+  font-style: normal;
+}
+.hdc__meta {
+  font-size: 0.78rem; color: var(--elite-muted, #6b7280);
+  margin: 0; line-height: 1.5;
+}
+.hdc__meaning {
+  font-size: 0.84rem; color: var(--elite-muted, #6b7280);
+  margin: 0; line-height: 1.6;
+  border-right: 2px solid var(--elite-forest, #18362A);
+  padding-right: 0.65rem;
+}
+.hdc__loading { font-size: 0.85rem; color: var(--elite-muted); margin: 0; }
+.hdc__qa-link {
+  display: flex; flex-direction: column; gap: 0.5rem;
+  text-decoration: none; color: inherit;
+}
+.hdc__question {
+  font-size: 1rem; font-weight: 600;
+  color: var(--elite-ink); line-height: 1.6; margin: 0;
+}
+.hdc__qa-cta {
+  font-size: 0.78rem; font-weight: 600;
+  color: var(--elite-forest, #18362A);
+}
+
+/* ══════════════════════════════════════════════
    §25. Forms — نماذج الإدخال
    ══════════════════════════════════════════════ */
 .page-search-input {

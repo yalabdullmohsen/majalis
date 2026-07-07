@@ -6,10 +6,7 @@ import { SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { HomeCompactPrayer } from "@/components/home/HomeCompactPrayer";
 import { HomeAboutSection } from "@/components/home/HomeAboutSection";
 import { HomeUpcomingLessons } from "@/components/home/HomeUpcomingLessons";
-import { HomeDailyFaida } from "@/components/home/HomeDailyFaida";
-import { HomeDailyDhikr } from "@/components/home/HomeDailyDhikr";
-import { HomeDailyQuestion } from "@/components/home/HomeDailyQuestion";
-import { HomeDailyHadith } from "@/components/home/HomeDailyHadith";
+import { HomeDailyCorner } from "@/components/home/HomeDailyCorner";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
 import { HijriSacredMonthBanner } from "@/components/HijriSacredMonthBanner";
 
@@ -181,21 +178,10 @@ export default function HomePage() {
           ))}
         </section>
 
-        {/* محتوى يومي */}
-        <section className="home-daily-row">
-          <SafeHomeSection name="ذكر اليوم">
-            <HomeDailyDhikr />
-          </SafeHomeSection>
-          <SafeHomeSection name="حديث اليوم">
-            <HomeDailyHadith />
-          </SafeHomeSection>
-          <SafeHomeSection name="سؤال اليوم">
-            <HomeDailyQuestion />
-          </SafeHomeSection>
-          <SafeHomeSection name="فائدة اليوم">
-            <HomeDailyFaida />
-          </SafeHomeSection>
-        </section>
+        {/* الركن اليومي — مدمج */}
+        <SafeHomeSection name="الركن اليومي">
+          <HomeDailyCorner />
+        </SafeHomeSection>
 
         <SafeHomeSection name="عن المجلس العلمي">
           <HomeAboutSection />
