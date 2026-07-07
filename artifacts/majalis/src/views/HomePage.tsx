@@ -5,6 +5,7 @@ import { Link, useLocation } from "wouter";
 import { SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { HomeCompactPrayer } from "@/components/home/HomeCompactPrayer";
 import { HomeAboutSection } from "@/components/home/HomeAboutSection";
+import { HomeUpcomingLessons } from "@/components/home/HomeUpcomingLessons";
 import { HomeDailyFaida } from "@/components/home/HomeDailyFaida";
 import { HomeDailyDhikr } from "@/components/home/HomeDailyDhikr";
 import { HomeDailyQuestion } from "@/components/home/HomeDailyQuestion";
@@ -172,6 +173,13 @@ export default function HomePage() {
 
       {/* ══════════════════ Main Content ══════════════════ */}
       <main className="home-container home-main home-main--v3">
+
+        {/* الدروس — أول قسم */}
+        <SafeHomeSection name="الدروس">
+          <HomeUpcomingLessons />
+        </SafeHomeSection>
+
+        <IslamicDivider />
 
         {/* مواقيت الصلاة */}
         <SafeHomeSection name="مواقيت الصلاة">
