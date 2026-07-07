@@ -12,6 +12,28 @@ import { C } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
 import { useAdminShell } from "./AdminShell";
 
+const ERROR_MESSAGES: Record<string, string> = {
+  unknown_action:    "تعذّر تحليل المحتوى — يُرجى المحاولة مرة أخرى.",
+  missing_text:      "يُرجى إدخال نص قبل التحليل.",
+  missing_image:     "يُرجى رفع صورة.",
+  missing_url:       "يُرجى إدخال رابط صحيح.",
+  draft_not_found:   "لم يُعثر على المسودة.",
+  extraction_failed: "تعذّر تحليل المحتوى — يُرجى المحاولة مرة أخرى.",
+  credit_exhausted:  "رصيد API منتهٍ — يُرجى التواصل مع المشرف.",
+  invalid_api_key:   "مفتاح API غير صالح — يُرجى التواصل مع المشرف.",
+  rate_limit:        "تجاوزت حد الطلبات، انتظر دقيقة ثم أعد المحاولة.",
+  timeout:           "انتهت مهلة الاتصال — يُرجى المحاولة مرة أخرى.",
+  no_key:            "خدمة الذكاء الاصطناعي غير مضبوطة — تواصل مع المشرف.",
+  network_error:     "تعذّر الاتصال بالخادم — تحقق من الشبكة وأعد المحاولة.",
+  server_error:      "خطأ مؤقت في الخادم — يُرجى المحاولة مرة أخرى.",
+  supabase_admin_missing: "تعذّر حفظ المسودة — تعذّر الاتصال بقاعدة البيانات.",
+};
+
+function translateError(raw?: string): string {
+  if (!raw) return "تعذّر العملية.";
+  return ERROR_MESSAGES[raw] ?? raw.replace(/_/g, " ");
+}
+
 type Draft = {
   id: string;
   source_type: string;
@@ -59,8 +81,8 @@ export function SmartCmsSection() {
 
   useEffect(() => { load(); }, [load]);
 
-  const handleSuccess = (res: { ok: boolean; error?: string; extracted?: Record<string, unknown>; draft?: Record<string, unknown> }) => {
-    if (!res.ok) { showError(res.error || "تعذّر تحليل المحتوى"); return false; }
+  const handleSuccess = (res: { ok: boolean; error?: string; message?: string; extracted?: Record<string, unknown>; draft?: Record<string, unknown> }) => {
+    if (!res.ok) { showError(res.message || translateError(res.error)); return false; }
     const ext = res.extracted || {};
     setPreview(ext);
     setPreviewJson(JSON.stringify(ext, null, 2));
@@ -109,7 +131,7 @@ export function SmartCmsSection() {
         ? (() => { try { return JSON.parse(previewJson); } catch { return preview; } })()
         : preview;
       const res = await approveContentDraft(draftId, data || undefined);
-      if (!res.ok) { showError(res.validation?.errors?.map(e => e.message).join(" — ") || res.error || "تعذّر الاعتماد"); return; }
+      if (!res.ok) { showError(res.validation?.errors?.map((e: { message: string }) => e.message).join(" — ") || translateError(res.error) || "تعذّر الاعتماد"); return; }
       invalidateLessonsCache();
       setPreview(null); setPreviewDraftId(null); setPreviewEditing(false);
       showSuccess("تم اعتماد المحتوى ونشره");

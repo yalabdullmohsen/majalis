@@ -660,6 +660,131 @@ export async function extractLessonFromImage({ imageBase64, mimeType = "image/jp
   };
 }
 
+// ── Action Registry ───────────────────────────────────────────────────────────
+export const SUPPORTED_CONTENT_TYPES = [
+  "lesson", "article", "fatwa", "hadith", "story", "book",
+  "news", "announcement", "event", "scholar_bio", "seerah",
+];
+
+const LESSON_HINTS = ["درس أسبوعي", "إعلان", "مناسبة", "دورة"];
+
+function buildGeneralPrompt(hint) {
+  return `أنت نظام استخراج بيانات من نصوص المحتوى الإسلامي.
+نوع المحتوى المتوقع: ${hint || "عام"}
+
+اقرأ النص بدقة تامة ثم أعد JSON فقط (بلا markdown):
+{
+  "content_type": "${hint || "عام"}",
+  "title": "",
+  "speaker_name": "",
+  "author": "",
+  "day_of_week": "",
+  "lesson_time": "",
+  "venue_type": "مسجد",
+  "mosque": "",
+  "region": "",
+  "city": "",
+  "country": "الكويت",
+  "date": "",
+  "category": "",
+  "description": "",
+  "body": "",
+  "source": "",
+  "organizer": "",
+  "phone": "",
+  "audience": "الكل",
+  "has_live_stream": false,
+  "has_women_section": false,
+  "is_course": false,
+  "activity_type": "درس",
+  "keywords": [],
+  "links": [],
+  "field_confidence": {
+    "title": 0.0,
+    "speaker_name": 0.0,
+    "day_of_week": 0.0,
+    "lesson_time": 0.0,
+    "mosque": 0.0,
+    "city": 0.0
+  }
+}
+
+تعليمات:
+- title: العنوان الرئيسي للمحتوى
+- speaker_name / author: اسم الشيخ أو المؤلف أو المصدر
+- body: النص الكامل أو ملخص وافٍ (≤800 حرف)
+- description: وصف مختصر للـ SEO (≤160 حرف)
+- category: تصنيف الموضوع (فقه / عقيدة / حديث / سيرة / تفسير / تجويد / أخرى)
+- في field_confidence: ضع 1.0 إذا وجدت الحقل بوضوح، 0.5 إذا استنتجته، 0.0 إذا لم تجده
+- لا تخمّن أحكاماً شرعية أو فتاوى من عندك`;
+}
+
+export async function extractContentFromText({ text, hint = "" }) {
+  const useLesson = LESSON_HINTS.some((h) => hint.includes(h)) || !hint;
+  const prompt = useLesson ? PRIMARY_PROMPT : buildGeneralPrompt(hint);
+
+  if (!isVisionEnabled()) {
+    const empty = { ...emptyLessonPayload(), description: text?.slice(0, 500) || "", content_type: hint || "lesson" };
+    return {
+      visionEnabled: false,
+      message: "الاستخراج التلقائي غير مفعّل — يمكنك إدخال البيانات يدويًا.",
+      extracted: empty,
+      parsed_fields: empty,
+      confidence_score: 0,
+      validation: validateLessonDraft(empty),
+      missing_fields: buildMissingFields(empty),
+      failure_reasons: buildFailureReasons(empty),
+    };
+  }
+
+  const result = await callWithRetry(async () => {
+    const client = getClient();
+    const response = await client.messages.create({
+      model: MODEL,
+      max_tokens: 4096,
+      messages: [{ role: "user", content: `${prompt}\n\nالنص:\n${text}` }],
+    });
+    return response.content?.find((b) => b.type === "text")?.text || "";
+  }, `extractContentFromText[${hint || "general"}]`);
+
+  if (!result.ok) {
+    const empty = emptyLessonPayload();
+    return {
+      visionEnabled: true,
+      extraction_failed: true,
+      errorCode: result.errorCode,
+      errorArabic: result.errorArabic,
+      message: result.errorArabic,
+      extracted: empty,
+      parsed_fields: empty,
+      confidence_score: 0,
+      validation: validateLessonDraft(empty),
+      missing_fields: buildMissingFields(empty),
+      failure_reasons: buildFailureReasons(empty),
+    };
+  }
+
+  const extracted = parseJson(result.text) || { title: "", description: text?.slice(0, 500), content_type: hint };
+  const merged = normalizePayload(extracted, {});
+  merged.content_type = hint || merged.content_type || "lesson";
+  if (extracted.body) merged.body = extracted.body;
+  if (extracted.author) merged.author = extracted.author;
+  const confidence = computeConfidenceScore(merged);
+
+  return {
+    visionEnabled: true,
+    extraction_failed: false,
+    extracted: merged,
+    parsed_fields: merged,
+    confidence_score: confidence,
+    field_confidence: extracted.field_confidence || {},
+    failure_reasons: buildFailureReasons(merged, extracted.field_confidence || {}),
+    aiSuggestions: [],
+    validation: validateLessonDraft(merged),
+    missing_fields: buildMissingFields(merged),
+  };
+}
+
 // ── Text extraction (URL-based) ───────────────────────────────────────────────
 export async function extractLessonFromText({ text, sourceUrl }) {
   if (!isVisionEnabled()) {
