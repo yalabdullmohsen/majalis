@@ -4357,3 +4357,241 @@ button.primary:hover {
 .search-kind-badge--courses     { background: #EFF6FF; color: #1D4ED8; border-color: rgba(29,78,216,0.2); }
 .search-kind-badge--update,
 .search-kind-badge--updates     { background: #F1F5F9; color: #475569; border-color: rgba(71,85,105,0.2); }
+
+/* ══════════════════════════════════════════════
+   §47. Settings Page — صفحة الإعدادات
+   ══════════════════════════════════════════════ */
+
+/* حاوية قسم الإعداد */
+.settings-account-card {
+  display: flex !important;
+  align-items: center !important;
+  gap: 1rem !important;
+  padding: 1rem !important;
+  background: var(--elite-sage-2, #F1F3F2) !important;
+  border-radius: var(--elite-r-md, 12px) !important;
+  margin-bottom: 0.75rem !important;
+}
+
+.settings-avatar {
+  width: 48px !important;
+  height: 48px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: var(--elite-forest, #18362A) !important;
+  color: #FAF8F2 !important;
+  border-radius: 50% !important;
+  font-size: 1.25rem !important;
+  font-weight: 700 !important;
+  flex-shrink: 0 !important;
+}
+
+.settings-account-card p {
+  margin: 0 !important;
+  font-size: 0.85rem !important;
+  color: var(--elite-ink, #122019) !important;
+  line-height: 1.6 !important;
+}
+
+/* أزرار الإجراءات */
+.settings-actions {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 0.5rem !important;
+  margin-top: 0.5rem !important;
+}
+
+.settings-danger-btn {
+  padding: 0.5rem 1rem !important;
+  background: transparent !important;
+  border: 1.5px solid rgba(192,57,43,0.3) !important;
+  border-radius: var(--elite-r-md, 12px) !important;
+  color: #C0392B !important;
+  font-size: 0.825rem !important;
+  font-weight: 600 !important;
+  font-family: inherit !important;
+  cursor: pointer !important;
+  transition: all 0.15s !important;
+}
+
+.settings-danger-btn:hover:not(:disabled) {
+  background: rgba(192,57,43,0.07) !important;
+  border-color: rgba(192,57,43,0.5) !important;
+}
+
+.settings-danger-btn:disabled {
+  opacity: 0.4 !important;
+  cursor: not-allowed !important;
+}
+
+/* حقل الإعداد (label + input/select) */
+.settings-field {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.35rem !important;
+  font-size: 0.82rem !important;
+  font-weight: 600 !important;
+  color: var(--elite-ink-soft, #5D726A) !important;
+}
+
+.settings-field input[type="text"],
+.settings-field input[type="range"],
+.settings-field select {
+  font-family: inherit !important;
+  font-size: 0.875rem !important;
+  color: var(--elite-ink, #122019) !important;
+}
+
+.settings-field input[type="text"],
+.settings-field select {
+  padding: 0.5rem 0.75rem !important;
+  border: 1.5px solid var(--elite-border-2, rgba(24,54,42,0.15)) !important;
+  border-radius: var(--elite-r-sm, 8px) !important;
+  background: var(--elite-white, #FAF8F2) !important;
+  transition: border-color 0.15s !important;
+}
+
+.settings-field input[type="text"]:focus,
+.settings-field select:focus {
+  outline: none !important;
+  border-color: var(--elite-forest, #18362A) !important;
+  box-shadow: 0 0 0 3px rgba(24,54,42,0.08) !important;
+}
+
+.settings-field strong {
+  font-size: 0.8rem !important;
+  color: var(--elite-forest, #18362A) !important;
+}
+
+/* شبكة خيارات الخط */
+.settings-option-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr)) !important;
+  gap: 0.5rem !important;
+}
+
+.settings-choice {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.2rem !important;
+  padding: 0.75rem !important;
+  background: var(--elite-white, #FAF8F2) !important;
+  border: 1.5px solid var(--elite-border-2, rgba(24,54,42,0.12)) !important;
+  border-radius: var(--elite-r-md, 12px) !important;
+  cursor: pointer !important;
+  text-align: center !important;
+  transition: all 0.15s !important;
+  font-family: inherit !important;
+  color: var(--elite-ink-soft, #5D726A) !important;
+}
+
+.settings-choice strong {
+  font-size: 0.85rem !important;
+  color: var(--elite-ink, #122019) !important;
+}
+
+.settings-choice span {
+  font-size: 0.7rem !important;
+  color: var(--elite-ink-muted, #97A59F) !important;
+}
+
+.settings-choice:hover {
+  border-color: var(--elite-forest, #18362A) !important;
+  background: var(--elite-sage-2, #F0FDF4) !important;
+}
+
+.settings-choice.is-active {
+  border-color: var(--elite-forest, #18362A) !important;
+  background: var(--elite-forest, #18362A) !important;
+}
+
+.settings-choice.is-active strong,
+.settings-choice.is-active span {
+  color: #FAF8F2 !important;
+}
+
+/* ملاحظة نصية */
+.settings-note {
+  font-size: 0.78rem !important;
+  color: var(--elite-ink-muted, #97A59F) !important;
+  line-height: 1.6 !important;
+  margin: 0.25rem 0 0 !important;
+}
+
+/* ══ مفتاح التبديل (Toggle Switch) ══ */
+.settings-toggle-row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 1rem !important;
+  padding: 0.55rem 0 !important;
+  border-bottom: 1px solid var(--elite-border, rgba(0,0,0,0.06)) !important;
+  cursor: pointer !important;
+}
+
+.settings-toggle-row:last-of-type {
+  border-bottom: none !important;
+}
+
+.settings-toggle-row span {
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  color: var(--elite-ink, #122019) !important;
+  line-height: 1.4 !important;
+}
+
+/* التبديل الإلكتروني - iOS style */
+.settings-toggle-row input[type="checkbox"] {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  width: 2.8rem !important;
+  height: 1.55rem !important;
+  background: rgba(24,54,42,0.18) !important;
+  border-radius: 999px !important;
+  position: relative !important;
+  cursor: pointer !important;
+  flex-shrink: 0 !important;
+  transition: background 0.2s !important;
+  border: none !important;
+  outline: none !important;
+}
+
+.settings-toggle-row input[type="checkbox"]:checked {
+  background: var(--elite-forest, #18362A) !important;
+}
+
+.settings-toggle-row input[type="checkbox"]::after {
+  content: '' !important;
+  position: absolute !important;
+  width: 1.15rem !important;
+  height: 1.15rem !important;
+  background: #fff !important;
+  border-radius: 50% !important;
+  top: 0.2rem !important;
+  right: 0.2rem !important;
+  transition: right 0.2s !important;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.22) !important;
+}
+
+.settings-toggle-row input[type="checkbox"]:checked::after {
+  right: calc(2.8rem - 1.15rem - 0.2rem) !important;
+}
+
+.settings-toggle-row input[type="checkbox"]:focus-visible {
+  box-shadow: 0 0 0 3px rgba(24,54,42,0.2) !important;
+}
+
+/* ══════════════════════════════════════════════
+   §48. Lesson Detail — sheikh row fix
+   ══════════════════════════════════════════════ */
+.lesson-detail-sheikh-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.lesson-detail-sheikh-row .lesson-card-pro__sheikh {
+  margin: 0;
+}

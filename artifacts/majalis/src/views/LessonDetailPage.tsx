@@ -295,8 +295,8 @@ export default function LessonDetailPage({
           )}
           <div className="lesson-detail-hero__copy">
             {hasValue(sheikhName) && (
-              <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", flexWrap: "wrap" }}>
-                <p className="lesson-card-pro__sheikh" style={{ margin: 0 }}>{sheikhName}</p>
+              <div className="lesson-detail-sheikh-row">
+                <p className="lesson-card-pro__sheikh">{sheikhName}</p>
                 {lesson?.sheikhs?.id && (
                   <ScholarFollowButton sheikhId={lesson.sheikhs.id} compact />
                 )}
