@@ -116,7 +116,7 @@ function ParentView({ userId }: { userId: string }) {
 
   if (loading) {
     return (
-      <div className="profile-loading" style={{ margin: "3rem auto" }}>
+      <div className="profile-loading fm-loading-wrap">
         <span className="profile-loading__dot" /><span className="profile-loading__dot" /><span className="profile-loading__dot" />
       </div>
     );
@@ -244,7 +244,7 @@ function ChildView({ userId }: { userId: string }) {
   if (existingLink) {
     return (
       <div className="fm-joined">
-        <div style={{ fontSize: "3rem" }}>✅</div>
+        <div className="fm-joined__icon">✅</div>
         <p>أنت مرتبط بحساب ولي الأمر. يمكنه متابعة إنجازاتك.</p>
       </div>
     );
@@ -253,7 +253,7 @@ function ChildView({ userId }: { userId: string }) {
   if (joined) {
     return (
       <div className="fm-joined">
-        <div style={{ fontSize: "3rem" }}>🎉</div>
+        <div className="fm-joined__icon">🎉</div>
         <p>تم الانضمام بنجاح! يمكن لولي أمرك الآن متابعة تقدمك.</p>
       </div>
     );
@@ -305,9 +305,9 @@ export default function FamilyModePage() {
 
   if (!isLoggedIn) {
     return (
-      <div className="page-shell narrow" dir="rtl" style={{ textAlign: "center", paddingTop: "3rem" }}>
-        <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>🔐</div>
-        <p style={{ color: "var(--majalis-ink-soft)", marginBottom: "1rem" }}>
+      <div className="page-shell narrow fm-login-prompt" dir="rtl">
+        <div className="fm-login-icon">🔐</div>
+        <p className="fm-login-msg">
           سجّل الدخول للوصول إلى الوضع العائلي.
         </p>
         <Link href="/login?next=/family" className="ui-card-btn">تسجيل الدخول</Link>
@@ -352,8 +352,7 @@ export default function FamilyModePage() {
       {role && (
         <button
           type="button"
-          className="fm-btn"
-          style={{ marginTop: "1.5rem" }}
+          className="fm-btn fm-btn--back"
           onClick={() => setRole(null)}
         >
           ← رجوع

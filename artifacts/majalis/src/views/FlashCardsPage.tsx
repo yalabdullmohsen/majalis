@@ -69,7 +69,7 @@ function QualityBar({
             key={opt.value}
             type="button"
             className="fc-quality__btn"
-            style={{ borderColor: opt.color, color: opt.color }}
+            style={{ "--fc-btn-color": opt.color } as React.CSSProperties}
             onClick={() => onRate(opt.value)}
           >
             {opt.label}
@@ -198,9 +198,9 @@ export default function FlashCardsPage() {
 
   if (!isLoggedIn) {
     return (
-      <div className="page-shell narrow" dir="rtl" style={{ textAlign: "center", paddingTop: "3rem" }}>
-        <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>🔐</div>
-        <p style={{ color: "var(--majalis-ink-soft)", marginBottom: "1rem" }}>
+      <div className="page-shell narrow flc-login-prompt" dir="rtl">
+        <div className="flc-login-icon">🔐</div>
+        <p className="flc-login-msg">
           سجّل الدخول للوصول إلى بطاقات المراجعة.
         </p>
         <Link href="/login?next=/flashcards" className="ui-card-btn">
@@ -230,7 +230,7 @@ export default function FlashCardsPage() {
           {/* Progress */}
           <div className="fc-progress">
             <div className="fc-progress__bar">
-              <div className="fc-progress__fill" style={{ width: `${progress}%` }} />
+              <div className="fc-progress__fill" style={{ "--fc-pct": `${progress}%` } as React.CSSProperties} />
             </div>
             <span className="fc-progress__text">{currentIdx + 1} / {cards.length}</span>
           </div>
@@ -249,9 +249,9 @@ export default function FlashCardsPage() {
         </div>
       ) : (
         <div className="fc-empty">
-          <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>✅</div>
+          <div className="flc-empty-icon">✅</div>
           <p>لا توجد بطاقات مستحقة الآن. تفقّد لاحقاً!</p>
-          <Link href="/learning-plan" className="lp-plan__action-btn lp-plan__action-btn--primary" style={{ marginTop: "1.5rem", display: "inline-block" }}>
+          <Link href="/learning-plan" className="lp-plan__action-btn lp-plan__action-btn--primary flc-empty-link">
             خطتي العلمية
           </Link>
         </div>

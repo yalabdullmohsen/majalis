@@ -6369,3 +6369,81 @@ button.primary:hover {
   font-family: inherit;
 }
 .lcd-footer-link { margin-top: 2rem; font-size: 0.875rem; }
+
+/* ============================================================
+   §73 — FlashCardsPage  (flc-*)
+   ============================================================ */
+.flc-login-prompt { text-align: center; padding-top: 3rem; }
+.flc-login-icon   { font-size: 3rem; margin-bottom: 1rem; }
+.flc-login-msg    { color: var(--majalis-ink-soft, #5c564c); margin-bottom: 1rem; }
+.flc-empty-icon   { font-size: 3rem; margin-bottom: 1rem; }
+.flc-empty-link   { margin-top: 1.5rem; display: inline-block; }
+.fc-quality__btn  { border-color: var(--fc-btn-color); color: var(--fc-btn-color); }
+.fc-progress__fill { width: var(--fc-pct, 0%); }
+
+/* ============================================================
+   §74 — FamilyModePage  (fm-* additions)
+   ============================================================ */
+.fm-loading-wrap  { margin: 3rem auto; }
+.fm-login-prompt  { text-align: center; padding-top: 3rem; }
+.fm-login-icon    { font-size: 3rem; margin-bottom: 1rem; }
+.fm-login-msg     { color: var(--majalis-ink-soft, #5c564c); margin-bottom: 1rem; }
+.fm-joined__icon  { font-size: 3rem; }
+.fm-btn--back     { margin-top: 1.5rem; }
+
+/* ============================================================
+   §75 — AssistantPage  (asp-*)
+   ============================================================ */
+.asp-researcher-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.75rem;
+}
+.asp-researcher-link {
+  display: inline-block;
+  padding: 0.3rem 0.75rem;
+  border-radius: 2rem;
+  background: rgba(6,78,59,0.08);
+  border: 1px solid rgba(6,78,59,0.2);
+  font-size: 0.78rem;
+  color: var(--ds-emerald-deep, #064e3b);
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.asp-researcher-link:hover {
+  background: rgba(6,78,59,0.14);
+  text-decoration: none;
+}
+.asp-quick-prompts { margin-top: 1rem; }
+.asp-quick-prompts__label {
+  margin: 0 0 0.5rem;
+  font-size: 0.8rem;
+  color: var(--majalis-ink-soft, #5c564c);
+}
+.asp-quick-prompts__grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.asp-quick-btn {
+  padding: 0.35rem 0.8rem;
+  border-radius: 2rem;
+  background: #fff;
+  border: 1px solid var(--ds-line-color, #e5e1d9);
+  font-size: 0.8rem;
+  cursor: pointer;
+  color: var(--majalis-ink, #2c2412);
+  transition: background 0.15s;
+  font-family: inherit;
+}
+.asp-quick-btn:hover { background: #f9f7f3; }
+.asp-footer {
+  padding: 0.75rem 1rem;
+  font-size: 0.75rem;
+  color: var(--majalis-ink-soft, #5c564c);
+  border-top: 1px solid var(--ds-line-color, #e5e1d9);
+  text-align: center;
+  direction: rtl;
+}

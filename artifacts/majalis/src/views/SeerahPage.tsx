@@ -155,7 +155,7 @@ export default function SeerahPage() {
       <div className="seerah-page" dir="rtl">
 
         {/* رابط عكسي لقصص الأنبياء */}
-        <div style={{ padding: "0.75rem 1rem 0", direction: "rtl" }}>
+        <div className="seerah-back-wrap">
           <Link href="/prophets" className="seerah-back-link">
             ← قصص الأنبياء الكرام
           </Link>
@@ -199,10 +199,7 @@ export default function SeerahPage() {
                 aria-current={activeId === phase.id ? "true" : undefined}
                 aria-label={`المرحلة ${phase.num}: ${phase.title}`}
               >
-                <span
-                  className="seerah-timeline__dot"
-                  style={activeId === phase.id ? { background: phase.color, borderColor: phase.color, color: "#fff" } : undefined}
-                >
+                <span className="seerah-timeline__dot">
                   {phase.num}
                 </span>
                 <span className="seerah-timeline__label">
@@ -214,15 +211,15 @@ export default function SeerahPage() {
           </nav>
 
           {/* Detail Panel */}
-          <div className="seerah-panel" id="seerah-panel">
-            <div className="seerah-panel__header" style={{ borderBottomColor: active.color + "50" }}>
+          <div className="seerah-panel" id="seerah-panel" style={{ "--panel-color": active.color } as React.CSSProperties}>
+            <div className="seerah-panel__header">
               <span className="seerah-panel__icon">{active.icon}</span>
-              <div style={{ flex: 1 }}>
-                <div className="seerah-panel__num" style={{ color: active.color }}>
+              <div className="seerah-panel__header-body">
+                <div className="seerah-panel__num">
                   المرحلة {active.num} من {PHASES.length}
                 </div>
                 <h2 className="seerah-panel__title">{active.title}</h2>
-                <div className="seerah-panel__year" style={{ color: active.color }}>
+                <div className="seerah-panel__year">
                   {active.year}
                 </div>
               </div>
@@ -235,7 +232,6 @@ export default function SeerahPage() {
                 <span
                   key={t}
                   className="seerah-panel__topic"
-                  style={{ borderColor: active.color + "50", color: active.color, background: active.color + "0d" }}
                 >
                   {t}
                 </span>
@@ -503,7 +499,7 @@ const SEERAH_CSS = `
   align-items: flex-start;
   gap: 1rem;
   padding-bottom: 1.25rem;
-  border-bottom: 2px solid #e5e7eb;
+  border-bottom: 2px solid color-mix(in srgb, var(--panel-color, #18362A) 31%, transparent);
   margin-bottom: 1.25rem;
 }
 .seerah-panel__icon {
@@ -692,5 +688,24 @@ const SEERAH_CSS = `
 .seerah-prophets-banner__link:hover {
   background: rgba(24,54,42,0.1);
   text-decoration: none;
+}
+
+/* ── ديناميكي: ألوان المراحل ── */
+.seerah-back-wrap {
+  padding: 0.75rem 1rem 0;
+  direction: rtl;
+}
+.seerah-timeline__item--active .seerah-timeline__dot {
+  background: var(--phase-color, #18362A);
+  border-color: var(--phase-color, #18362A);
+  color: #fff;
+}
+.seerah-panel__header-body { flex: 1; }
+.seerah-panel__num  { color: var(--panel-color, #18362A); }
+.seerah-panel__year { color: var(--panel-color, #18362A); }
+.seerah-panel__topic {
+  border-color: color-mix(in srgb, var(--panel-color, #18362A) 31%, transparent);
+  color: var(--panel-color, #18362A);
+  background: color-mix(in srgb, var(--panel-color, #18362A) 5%, transparent);
 }
 `;

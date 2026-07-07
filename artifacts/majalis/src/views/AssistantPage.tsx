@@ -34,22 +34,12 @@ export default function AssistantPage() {
           عالم مختص.
         </p>
 
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem", marginTop: "0.75rem" }}>
+        <div className="asp-researcher-links">
           {RESEARCHER_LINKS.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              style={{
-                display: "inline-block",
-                padding: "0.3rem 0.75rem",
-                borderRadius: "2rem",
-                background: "rgba(6,78,59,0.08)",
-                border: "1px solid rgba(6,78,59,0.2)",
-                fontSize: "0.78rem",
-                color: "var(--ds-emerald-deep, #064e3b)",
-                fontWeight: 600,
-                textDecoration: "none",
-              }}
+              className="asp-researcher-link"
             >
               {link.label} ←
             </Link>
@@ -57,26 +47,17 @@ export default function AssistantPage() {
         </div>
 
         {chat.messages.length === 0 && (
-          <div style={{ marginTop: "1rem" }}>
-            <p style={{ margin: "0 0 0.5rem", fontSize: "0.8rem", color: "var(--majalis-ink-soft, #5c564c)" }}>
+          <div className="asp-quick-prompts">
+            <p className="asp-quick-prompts__label">
               أسئلة مقترحة:
             </p>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
+            <div className="asp-quick-prompts__grid">
               {QUICK_PROMPTS.map((prompt) => (
                 <button
                   key={prompt}
                   type="button"
                   onClick={() => chat.sendQuestion(prompt)}
-                  style={{
-                    padding: "0.35rem 0.8rem",
-                    borderRadius: "2rem",
-                    background: "#fff",
-                    border: "1px solid var(--ds-line-color, #e5e1d9)",
-                    fontSize: "0.8rem",
-                    cursor: "pointer",
-                    color: "var(--majalis-ink, #2c2412)",
-                    transition: "background 0.15s",
-                  }}
+                  className="asp-quick-btn"
                 >
                   {prompt}
                 </button>
@@ -98,14 +79,7 @@ export default function AssistantPage() {
         />
       </section>
 
-      <footer style={{
-        padding: "0.75rem 1rem",
-        fontSize: "0.75rem",
-        color: "var(--majalis-ink-soft, #5c564c)",
-        borderTop: "1px solid var(--ds-line-color, #e5e1d9)",
-        textAlign: "center",
-        direction: "rtl",
-      }}>
+      <footer className="asp-footer">
         ⚠️ الإجابات مولَّدة آليًا وتحتمل الخطأ — راجع أهل العلم في المسائل الشخصية الدقيقة.
       </footer>
     </div>
