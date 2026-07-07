@@ -5905,3 +5905,89 @@ button.primary:hover {
 .myl-achievements      { margin-top: 2rem; }
 .myl-achievements-wrap { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 .myl-achievement-badge { padding: 0.375rem 0.75rem; border-radius: 999px; background: var(--emerald-light, #d1fae5); font-size: 0.8125rem; }
+
+/* ══════════════════════════════════════════════════════
+   §60  Quran Circles Page  (qcp-*)
+   ══════════════════════════════════════════════════════ */
+
+/* ─ Header ─ */
+.qcp-header  { padding: 1.5rem 0 1rem; border-bottom: 1px solid var(--majalis-line); margin-bottom: 1rem; }
+.qcp-eyebrow { color: var(--majalis-emerald); font-size: 0.82rem; font-weight: 700; margin-bottom: 0.25rem; }
+.qcp-title   { font-family: var(--font-display); font-size: clamp(1.4rem, 5vw, 2rem); font-weight: 700; color: var(--majalis-ink); margin-bottom: 0.35rem; }
+.qcp-subtitle { color: var(--majalis-ink-soft); font-size: 0.9rem; }
+
+/* ─ Filters ─ */
+.qcp-filters     { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem; }
+.qcp-filter-row  { display: flex; gap: 0.4rem; overflow-x: auto; padding-bottom: 0.25rem; }
+.qcp-filter-label { font-size: 0.75rem; color: var(--majalis-ink-soft); padding-top: 0.4rem; white-space: nowrap; }
+.qcp-filter-pill { padding: 0.35rem 0.85rem; border-radius: 2rem; border: 1px solid var(--majalis-line); background: var(--majalis-panel); color: var(--majalis-ink-soft); font-size: 0.8rem; font-weight: 400; cursor: pointer; white-space: nowrap; transition: all 0.15s; min-height: 44px; }
+.qcp-filter-pill.is-active { border-color: var(--majalis-emerald); background: var(--majalis-emerald); color: #fff; font-weight: 700; }
+
+/* ─ Grid ─ */
+.qcp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); gap: 1rem; margin-top: 1rem; }
+
+/* ─ Skeleton ─ */
+.qcp-skeleton { animation: pulse 1.5s ease-in-out infinite; }
+.qcp-skeleton__head { height: 4.5rem; opacity: 0.4; }
+.qcp-skeleton__bar  { background: var(--majalis-line); border-radius: 0.5rem; margin-bottom: 0.5rem; }
+.qcp-skeleton__bar--1 { height: 1rem;  width: 60%; }
+.qcp-skeleton__bar--2 { height: 0.8rem; width: 40%; margin-bottom: 0; }
+
+/* ─ Error ─ */
+.qcp-error      { text-align: center; padding: 3rem 1rem; color: var(--msk-red, #C1595A); }
+.qcp-error__msg { font-size: 1.1rem; margin-bottom: 0.5rem; }
+.qcp-retry-btn  { padding: 0.5rem 1.5rem; background: var(--majalis-emerald); color: #fff; border: none; border-radius: 0.5rem; cursor: pointer; }
+
+/* ─ Empty state ─ */
+.qcp-empty        { text-align: center; padding: 4rem 1rem; color: var(--majalis-ink-soft); }
+.qcp-empty__icon  { font-size: 2rem; margin-bottom: 0.75rem; }
+.qcp-empty__title { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.4rem; }
+.qcp-empty__desc  { font-size: 0.85rem; }
+.qcp-clear-btn    { margin-top: 1rem; padding: 0.5rem 1.5rem; background: var(--majalis-sage); color: var(--majalis-emerald-deep); border: none; border-radius: 0.5rem; cursor: pointer; font-weight: 600; }
+
+/* ══════════════════════════════════════════════════════
+   §61  Prophetic Medicine Page  (pmp-*)
+   ══════════════════════════════════════════════════════ */
+
+/* ─ Hero ─ */
+.pmp-hero { border-radius: 1.25rem; margin-bottom: 1.5rem; text-align: center; }
+.pmp-hero__eyebrow { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em; color: #97A59F; margin-bottom: 0.5rem; text-transform: uppercase; }
+.pmp-hero__title   { font-size: clamp(1.6rem, 4vw, 2.25rem); font-weight: 800; color: #FAF8F2; margin: 0 0 0.6rem; }
+.pmp-hero__subtitle { font-size: 0.95rem; color: #BEC7C3; max-width: 520px; margin: 0 auto; line-height: 1.7; }
+
+/* ─ Disclaimer ─ */
+.pmp-disclaimer { background: rgba(24,54,42,0.07); border: 1px solid rgba(24,54,42,0.25); border-radius: 0.875rem; padding: 0.75rem 1rem; margin-bottom: 1.25rem; font-size: 0.82rem; color: var(--msk-text-2); line-height: 1.65; direction: rtl; }
+
+/* ─ Misc ─ */
+.pmp-count { margin: 0; }
+.pmp-desktop-filters { margin-bottom: 1rem; }
+.pmp-filter-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+/* ─ Card ─ */
+.pmp-card { border: 1px solid var(--msk-border); border-radius: 1rem; overflow: hidden; background: var(--msk-canvas-1, var(--msk-canvas)); display: flex; flex-direction: column; }
+.pmp-card__head { background: var(--pm-bg, #18362A); background-image: url("/star-pattern.svg"); background-size: 100px 100px; padding: 1rem 1rem 0.875rem; display: flex; align-items: center; gap: 0.75rem; }
+.pmp-card__icon { font-size: 1.75rem; line-height: 1; flex-shrink: 0; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.35)); }
+.pmp-card__head-info { flex: 1; }
+.pmp-card__name { font-weight: 800; font-size: 1rem; color: #FAF8F2; margin: 0 0 0.2rem; }
+.pmp-card__badges { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+
+/* ─ Category badge (uses CSS vars from article) ─ */
+.pmp-cat-badge {
+  padding: 0.15rem 0.6rem;
+  border-radius: 1rem;
+  font-size: 0.7rem;
+  background: color-mix(in srgb, var(--pm-accent, #BEC7C3) 13%, transparent);
+  color: var(--pm-accent, #BEC7C3);
+  font-weight: 600;
+  border: 1px solid color-mix(in srgb, var(--pm-accent, #BEC7C3) 27%, transparent);
+}
+
+/* ─ Card body ─ */
+.pmp-card__body { padding: 0.875rem 1rem; flex: 1; display: flex; flex-direction: column; gap: 0.65rem; direction: rtl; }
+.pmp-hadith { border-right: 3px solid var(--msk-gold); padding-right: 0.65rem; margin: 0; font-size: 0.9rem; line-height: 1.8; color: var(--msk-text); font-weight: 600; }
+.pmp-hadith-source { font-size: 0.72rem; color: var(--msk-text-2); margin: 0; font-weight: 600; }
+.pmp-benefits { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.pmp-benefit-badge { padding: 0.2rem 0.6rem; border-radius: 1rem; font-size: 0.7rem; background: rgba(24,54,42,0.08); color: var(--msk-gold); font-weight: 600; border: 1px solid rgba(24,54,42,0.18); }
+.pmp-body-text { font-size: 0.875rem; line-height: 1.75; color: var(--msk-text); margin: 0; }
+.pmp-item-disclaimer { font-size: 0.75rem; color: var(--msk-text-2); margin: 0; font-style: italic; border-top: 1px solid var(--msk-border); padding-top: 0.5rem; }
+.pmp-toggle-btn { color: var(--msk-gold); background: none; border: none; cursor: pointer; font-size: 0.82rem; font-weight: 600; padding: 0.2rem 0; align-self: flex-start; font-family: inherit; }
