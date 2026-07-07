@@ -76,6 +76,8 @@ export default function QuranPage() {
   const [navTab, setNavTab]         = useState<NavTab>("surahs");
   const [search, setSearch]         = useState("");
   const [bookmarks, setBookmarks]   = useState<number[]>(() => lsGetArr(BM_KEY));
+  const [nightMode, setNightMode]   = useState(() => localStorage.getItem("mj-mushaf-night") === "1");
+  const [zoom, setZoom]             = useState(() => { try { const v = localStorage.getItem("mj-mushaf-zoom"); return v ? parseFloat(v) : 1.0; } catch { return 1.0; } });
 
   const canvasRef    = useRef<HTMLCanvasElement>(null);
   const frameRef     = useRef<HTMLDivElement>(null);
@@ -105,7 +107,7 @@ export default function QuranPage() {
   }, []);
 
   /* ── رسم الصفحة ── */
-  const draw = useCallback(async (doc: any, p: number) => {
+  const draw = useCallback(async (doc: any, p: number, z: number) => {
     if (!doc || !canvasRef.current || !frameRef.current) return;
     if (taskRef.current) { try { taskRef.current.cancel(); } catch { /* */ } taskRef.current = null; }
     setRendering(true);
@@ -115,7 +117,7 @@ export default function QuranPage() {
       const fr  = frameRef.current;
       const dpr = Math.min(window.devicePixelRatio || 1, 3);
       const vp0 = pg.getViewport({ scale: 1 });
-      const sc  = Math.min((fr.clientWidth * dpr) / vp0.width, (fr.clientHeight * dpr) / vp0.height) * 0.97;
+      const sc  = Math.min((fr.clientWidth * dpr) / vp0.width, (fr.clientHeight * dpr) / vp0.height) * 0.97 * z;
       const vp  = pg.getViewport({ scale: sc });
       cvs.width  = vp.width;
       cvs.height = vp.height;
@@ -134,7 +136,7 @@ export default function QuranPage() {
     }
   }, []);
 
-  useEffect(() => { if (pdfDoc) draw(pdfDoc, page); }, [pdfDoc, page, draw]);
+  useEffect(() => { if (pdfDoc) draw(pdfDoc, page, zoom); }, [pdfDoc, page, draw, zoom]);
 
   /* ── مؤقت الـ UI ── */
   const bump = useCallback(() => {
@@ -206,6 +208,22 @@ export default function QuranPage() {
       : [...bookmarks, page].sort((a, b) => a - b);
     setBookmarks(next);
     lsSetArr(BM_KEY, next);
+    bump();
+  };
+
+  /* ── الوضع الليلي ── */
+  const toggleNight = () => {
+    const next = !nightMode;
+    setNightMode(next);
+    try { localStorage.setItem("mj-mushaf-night", next ? "1" : "0"); } catch { /* */ }
+    bump();
+  };
+
+  /* ── التكبير / التصغير ── */
+  const adjustZoom = (delta: number) => {
+    const next = Math.max(0.7, Math.min(1.35, Math.round((zoom + delta) * 10) / 10));
+    setZoom(next);
+    try { localStorage.setItem("mj-mushaf-zoom", String(next)); } catch { /* */ }
     bump();
   };
 
@@ -287,6 +305,17 @@ export default function QuranPage() {
             </svg>
           </button>
           <button
+            className={`mshf-icon-btn${nightMode ? " mshf-icon-btn--active" : ""}`}
+            onClick={toggleNight}
+            aria-label={nightMode ? "الوضع النهاري" : "الوضع الليلي"}
+            title={nightMode ? "الوضع النهاري" : "الوضع الليلي"}
+          >
+            {nightMode
+              ? <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/><line x1="12" y1="21" x2="12" y2="23" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/><line x1="1" y1="12" x2="3" y2="12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/><line x1="21" y1="12" x2="23" y2="12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>
+              : <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            }
+          </button>
+          <button
             className="mshf-icon-btn"
             onClick={() => openNav("surahs")}
             aria-label="فهرس السور"
@@ -304,7 +333,7 @@ export default function QuranPage() {
       {/* ══ منطقة الصفحة ══ */}
       <div
         ref={frameRef}
-        className="mshf-frame"
+        className={`mshf-frame${nightMode ? " mshf-frame--night" : ""}`}
         onTouchStart={onTS}
         onTouchEnd={onTE}
         onClick={onFrameClick}
@@ -332,7 +361,7 @@ export default function QuranPage() {
             <Star cls="mshf-c mshf-c--br" />
             <canvas
               ref={canvasRef}
-              className={`mshf-canvas${!rendering ? " ready" : ""}`}
+              className={`mshf-canvas${!rendering ? " ready" : ""}${nightMode ? " mshf-canvas--night" : ""}`}
               aria-label={`صفحة ${page} — ${currentSurah}`}
             />
           </div>
@@ -351,6 +380,12 @@ export default function QuranPage() {
         <button className="mshf-nav" onClick={() => go(page - 1)} disabled={page <= 1} aria-label="السابقة">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
             <path d="M15 18l-6-6 6-6"/>
+          </svg>
+        </button>
+
+        <button className="mshf-zoom-btn" onClick={() => adjustZoom(-0.1)} disabled={zoom <= 0.7} aria-label="تصغير" title="تصغير">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/>
           </svg>
         </button>
 
@@ -377,6 +412,12 @@ export default function QuranPage() {
             </button>
           )}
         </div>
+
+        <button className="mshf-zoom-btn" onClick={() => adjustZoom(+0.1)} disabled={zoom >= 1.35} aria-label="تكبير" title="تكبير">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/>
+          </svg>
+        </button>
 
         <button className="mshf-nav" onClick={() => go(page + 1)} disabled={page >= TOTAL} aria-label="التالية">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">

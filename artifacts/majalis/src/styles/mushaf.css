@@ -109,9 +109,13 @@
 .mshf-canvas {
   display: block;
   opacity: 0;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.2s ease, filter 0.3s ease;
 }
 .mshf-canvas.ready { opacity: 1; }
+
+/* الوضع الليلي */
+.mshf-frame--night { background: #1a160e; }
+.mshf-canvas--night { filter: invert(0.92) sepia(0.15) hue-rotate(170deg); }
 
 /* ── تحميل ── */
 .mshf-loading {
@@ -181,6 +185,19 @@
 }
 .mshf-nav:hover:not(:disabled) { background: rgba(255,255,255,0.22); }
 .mshf-nav:disabled { opacity: 0.25; cursor: not-allowed; }
+
+/* زر الزوم */
+.mshf-zoom-btn {
+  display: flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px;
+  border: none; border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.6); cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.15s, opacity 0.15s;
+}
+.mshf-zoom-btn:hover:not(:disabled) { background: rgba(255,255,255,0.18); color: #fff; }
+.mshf-zoom-btn:disabled { opacity: 0.22; cursor: not-allowed; }
 
 /* رقم الصفحة */
 .mshf-pgnum {
