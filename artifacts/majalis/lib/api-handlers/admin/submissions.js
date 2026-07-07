@@ -1,6 +1,16 @@
 import { sendJson } from "../../api/_http.mjs";
 import { requireAdminAccess } from "../../../lib/admin-auth.mjs";
 import { getSupabaseAdmin } from "../../../lib/supabase-admin.mjs";
+import { sendMessage } from "../../../lib/telegram/bot.mjs";
+
+async function notifyTelegramNewLesson(title, speaker, lessonId) {
+  const chatId = String(process.env.TELEGRAM_ADMIN_CHAT_ID || "").trim();
+  if (!chatId) return;
+  const who = speaker ? `\nالشيخ: <b>${speaker}</b>` : "";
+  const text = `📚 درس جديد (قُبل يدوياً)\n<b>${title || "بدون عنوان"}</b>${who}\n\n🔗 <a href="https://majlisilm.com/lessons/${lessonId}">عرض الدرس</a>`;
+  try { await sendMessage(chatId, text, { parse_mode: "HTML", disable_web_page_preview: true }); }
+  catch { /* best-effort */ }
+}
 
 export default async function handler(req, res) {
   const auth = await requireAdminAccess(req, res, sendJson);
@@ -59,7 +69,7 @@ export default async function handler(req, res) {
     let publishError = null;
 
     if (submission.type === "درس") {
-      const { error } = await admin.from("lessons").insert({
+      const { data: lessonRow, error } = await admin.from("lessons").insert({
         title: submission.title,
         description: submission.content,
         status: "approved",
@@ -67,8 +77,11 @@ export default async function handler(req, res) {
         speaker_name: submission.author || "مجتمع المنصة",
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
-      });
+      }).select("id, title, speaker_name").single();
       publishError = error;
+      if (!error && lessonRow) {
+        notifyTelegramNewLesson(lessonRow.title, lessonRow.speaker_name, lessonRow.id).catch(() => {});
+      }
     } else if (submission.type === "فائدة") {
       const { error } = await admin.from("fawaid").insert({
         text: `${submission.title}\n${submission.content}`.trim(),

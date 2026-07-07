@@ -4,6 +4,17 @@
 import { getSupabaseAdmin } from "../supabase-admin.mjs";
 import { validateLessonDraft, buildExternalKey } from "./content-validator.mjs";
 import { writeRevisionLogs } from "./audit-revision.mjs";
+import { sendMessage } from "../telegram/bot.mjs";
+
+async function sendTelegramNewLesson(title, speaker, lessonId) {
+  const chatId = String(process.env.TELEGRAM_ADMIN_CHAT_ID || "").trim();
+  if (!chatId) return;
+  const who = speaker ? `\nالشيخ: <b>${speaker}</b>` : "";
+  const text = `📚 درس جديد أُضيف للمنصة\n<b>${title || "بدون عنوان"}</b>${who}\n\n🔗 <a href="https://majlisilm.com/lessons/${lessonId}">عرض الدرس</a>`;
+  try {
+    await sendMessage(chatId, text, { parse_mode: "HTML", disable_web_page_preview: true });
+  } catch { /* best-effort */ }
+}
 
 function mapDraftToLesson(extracted, opts = {}) {
   const d = extracted || {};
@@ -131,6 +142,8 @@ export async function publishLessonDraft({
       })),
       action: "create",
     });
+    // إشعار Telegram عند درس جديد (best-effort)
+    sendTelegramNewLesson(record.title, record.speaker_name, record.id).catch(() => {});
   }
 
   await admin.from("cms_content_index").upsert(
