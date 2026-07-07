@@ -3,202 +3,186 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import "@/styles/mushaf.css";
 
-const PDF_URL = "/quran.pdf";
+const PDF_URL  = "/quran.pdf";
 const PAGE_KEY = "mj-mushaf-page-v2";
+const TOTAL    = 600;
 
-function lsGet(key: string, fallback: number): number {
-  try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; }
-  catch { return fallback; }
+function lsGet(k: string, fb: number) {
+  try { const v = localStorage.getItem(k); return v ? +JSON.parse(v) : fb; } catch { return fb; }
 }
-function lsSet(key: string, val: number) {
-  try { localStorage.setItem(key, JSON.stringify(val)); } catch { /* ignore */ }
+function lsSet(k: string, v: number) {
+  try { localStorage.setItem(k, String(v)); } catch { /* ignore */ }
 }
 
-function Star({ className }: { className?: string }) {
+function Star({ cls }: { cls?: string }) {
   return (
-    <svg className={className} viewBox="0 0 32 32" aria-hidden="true">
-      <path
-        d="M16 2 L18.5 10 L26 8 L23 15.5 L30 16 L23 16.5 L26 24 L18.5 22 L16 30 L13.5 22 L6 24 L9 16.5 L2 16 L9 15.5 L6 8 L13.5 10 Z"
-        fill="none" stroke="rgba(106,181,142,0.7)" strokeWidth="1" strokeLinejoin="round"
-      />
+    <svg className={cls} viewBox="0 0 32 32" aria-hidden="true">
+      <path d="M16 2 L18.5 10 L26 8 L23 15.5 L30 16 L23 16.5 L26 24 L18.5 22 L16 30 L13.5 22 L6 24 L9 16.5 L2 16 L9 15.5 L6 8 L13.5 10 Z"
+        fill="none" stroke="rgba(106,181,142,0.65)" strokeWidth="1" strokeLinejoin="round" />
     </svg>
   );
 }
 
 export default function QuranPage() {
-  const [page, setPage]         = useState(() => lsGet(PAGE_KEY, 1));
-  const [total, setTotal]       = useState(604);
-  const [pdfDoc, setPdfDoc]     = useState<any>(null);
+  const [page, setPage]           = useState(() => Math.min(lsGet(PAGE_KEY, 1), TOTAL));
+  const [pdfDoc, setPdfDoc]       = useState<any>(null);
   const [rendering, setRendering] = useState(true);
-  const [loadErr, setLoadErr]   = useState(false);
-  const [showUI, setShowUI]     = useState(true);
-  const [showJump, setShowJump] = useState(false);
-  const [jumpVal, setJumpVal]   = useState("");
+  const [loadErr, setLoadErr]     = useState(false);
+  const [uiOn, setUiOn]           = useState(true);
+  // تحرير رقم الصفحة مباشرة في الـ footer
+  const [editingPage, setEditingPage] = useState(false);
+  const [editVal, setEditVal]     = useState("");
 
-  const canvasRef    = useRef<HTMLCanvasElement>(null);
-  const frameRef     = useRef<HTMLDivElement>(null);
-  const renderTask   = useRef<any>(null);
-  const uiTimer      = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const touchStart   = useRef<{ x: number; y: number } | null>(null);
+  const canvasRef  = useRef<HTMLCanvasElement>(null);
+  const frameRef   = useRef<HTMLDivElement>(null);
+  const taskRef    = useRef<any>(null);
+  const uiTimer    = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const touchRef   = useRef<{ x: number; y: number } | null>(null);
+  const pageInputRef = useRef<HTMLInputElement>(null);
 
-  // ── تحميل PDF.js والملف ──────────────────────────────────────────────────────
+  /* ── تحميل PDF.js ── */
   useEffect(() => {
-    let cancelled = false;
-    const cdnUrl = "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.4.168/build/pdf.min.mjs";
-
+    let dead = false;
+    const url = "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.4.168/build/pdf.min.mjs";
     (async () => {
       try {
-        const lib: any = await import(/* @vite-ignore */ cdnUrl);
+        const lib: any = await import(/* @vite-ignore */ url);
         lib.GlobalWorkerOptions.workerSrc =
           "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.4.168/build/pdf.worker.min.mjs";
-
         const doc = await lib.getDocument(PDF_URL).promise;
-        if (cancelled) return;
-        setTotal(doc.numPages);
-        setPdfDoc(doc);          // ← state يُشغّل re-render وrenderPage
-      } catch (err) {
-        console.error("PDF load error:", err);
-        if (!cancelled) setLoadErr(true);
+        if (!dead) setPdfDoc(doc);
+      } catch (e) {
+        console.error(e);
+        if (!dead) setLoadErr(true);
       }
     })();
-    return () => { cancelled = true; };
+    return () => { dead = true; };
   }, []);
 
-  // ── رسم الصفحة ───────────────────────────────────────────────────────────────
-  const renderPage = useCallback(async (doc: any, pageNum: number) => {
+  /* ── رسم الصفحة ── */
+  const draw = useCallback(async (doc: any, p: number) => {
     if (!doc || !canvasRef.current || !frameRef.current) return;
-
-    // إلغاء أي render سابق
-    if (renderTask.current) {
-      try { renderTask.current.cancel(); } catch { /* ignore */ }
-      renderTask.current = null;
-    }
-
+    if (taskRef.current) { try { taskRef.current.cancel(); } catch { /* ignore */ } taskRef.current = null; }
     setRendering(true);
     try {
-      const pdfPage = await doc.getPage(pageNum);
-      const canvas  = canvasRef.current;
-      const frame   = frameRef.current;
-      const dpr     = Math.min(window.devicePixelRatio || 1, 2);
-
-      const vp0    = pdfPage.getViewport({ scale: 1 });
-      const scaleW = (frame.clientWidth  * dpr) / vp0.width;
-      const scaleH = (frame.clientHeight * dpr) / vp0.height;
-      const scale  = Math.min(scaleW, scaleH) * 0.94; // هامش بسيط للإطار
-      const vp     = pdfPage.getViewport({ scale });
-
-      canvas.width  = vp.width;
-      canvas.height = vp.height;
-      canvas.style.width  = `${vp.width  / dpr}px`;
-      canvas.style.height = `${vp.height / dpr}px`;
-
-      const ctx = canvas.getContext("2d")!;
-      ctx.fillStyle = "#F8F3E6";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      const task = pdfPage.render({ canvasContext: ctx, viewport: vp });
-      renderTask.current = task;
-      await task.promise;
-      renderTask.current = null;
+      const pg  = await doc.getPage(p);
+      const cvs = canvasRef.current;
+      const fr  = frameRef.current;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const vp0 = pg.getViewport({ scale: 1 });
+      const sc  = Math.min((fr.clientWidth * dpr) / vp0.width, (fr.clientHeight * dpr) / vp0.height) * 0.92;
+      const vp  = pg.getViewport({ scale: sc });
+      cvs.width  = vp.width;
+      cvs.height = vp.height;
+      cvs.style.width  = `${vp.width  / dpr}px`;
+      cvs.style.height = `${vp.height / dpr}px`;
+      const ctx = cvs.getContext("2d")!;
+      ctx.fillStyle = "#F9F3E8";
+      ctx.fillRect(0, 0, cvs.width, cvs.height);
+      const t = pg.render({ canvasContext: ctx, viewport: vp });
+      taskRef.current = t;
+      await t.promise;
+      taskRef.current = null;
       setRendering(false);
     } catch (e: any) {
-      if (e?.name !== "RenderingCancelledException") {
-        setRendering(false);
-      }
+      if (e?.name !== "RenderingCancelledException") setRendering(false);
     }
   }, []);
 
-  // يُشغَّل عند تغيّر الـ PDF أو الصفحة
-  useEffect(() => {
-    if (pdfDoc) renderPage(pdfDoc, page);
-  }, [pdfDoc, page, renderPage]);
+  useEffect(() => { if (pdfDoc) draw(pdfDoc, page); }, [pdfDoc, page, draw]);
 
-  // ── مؤقت إخفاء الـ UI ────────────────────────────────────────────────────────
-  const resetTimer = useCallback(() => {
+  /* ── مؤقت الـ UI ── */
+  const bump = useCallback(() => {
     if (uiTimer.current) clearTimeout(uiTimer.current);
-    setShowUI(true);
-    uiTimer.current = setTimeout(() => setShowUI(false), 3500);
+    setUiOn(true);
+    uiTimer.current = setTimeout(() => setUiOn(false), 3200);
   }, []);
 
-  useEffect(() => {
-    resetTimer();
-    return () => { if (uiTimer.current) clearTimeout(uiTimer.current); };
-  }, [page, resetTimer]);
+  useEffect(() => { bump(); return () => { if (uiTimer.current) clearTimeout(uiTimer.current); }; }, [page, bump]);
 
-  // ── لوحة المفاتيح ─────────────────────────────────────────────────────────────
+  /* ── لوحة المفاتيح ── */
   useEffect(() => {
     const h = (e: KeyboardEvent) => {
-      if (e.target instanceof HTMLInputElement) return;
-      if      (e.key === "ArrowLeft")  goTo(page + 1);
-      else if (e.key === "ArrowRight") goTo(page - 1);
-      else if (e.key === "Escape")     window.history.back();
+      if (editingPage) return;
+      if (e.key === "ArrowLeft")  go(page + 1);
+      else if (e.key === "ArrowRight") go(page - 1);
+      else if (e.key === "Escape") window.history.back();
     };
     window.addEventListener("keydown", h);
     return () => window.removeEventListener("keydown", h);
-  }, [page, total]); // goTo is inline and stable
+  }, [page, editingPage]);
 
-  const goTo = (n: number) => {
-    const p = Math.max(1, Math.min(total, n));
-    setPage(p);
-    lsSet(PAGE_KEY, p);
-    resetTimer();
+  const go = (n: number) => {
+    const p = Math.max(1, Math.min(TOTAL, n));
+    setPage(p); lsSet(PAGE_KEY, p); bump();
   };
 
-  // ── سحب باللمس ───────────────────────────────────────────────────────────────
-  const onTouchStart = (e: React.TouchEvent) => {
-    touchStart.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+  /* ── اللمس ── */
+  const onTS = (e: React.TouchEvent) => {
+    touchRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
   };
-  const onTouchEnd = (e: React.TouchEvent) => {
-    if (!touchStart.current) return;
-    const dx = e.changedTouches[0].clientX - touchStart.current.x;
-    const dy = Math.abs(e.changedTouches[0].clientY - touchStart.current.y);
-    touchStart.current = null;
-    if (dy > 70 || Math.abs(dx) < 40) { resetTimer(); return; }
-    goTo(dx < 0 ? page + 1 : page - 1);
+  const onTE = (e: React.TouchEvent) => {
+    if (!touchRef.current) return;
+    const dx = e.changedTouches[0].clientX - touchRef.current.x;
+    const dy = Math.abs(e.changedTouches[0].clientY - touchRef.current.y);
+    touchRef.current = null;
+    if (dy > 60 || Math.abs(dx) < 35) { bump(); return; }
+    go(dx < 0 ? page + 1 : page - 1);
   };
 
-  const submitJump = () => {
-    const n = parseInt(jumpVal, 10);
-    if (!isNaN(n)) goTo(n);
-    setShowJump(false);
-    setJumpVal("");
+  /* النقر على مناطق الصفحة */
+  const onFrameClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (editingPage) return;
+    const { clientX, currentTarget } = e;
+    const w = currentTarget.clientWidth;
+    const zone = clientX / w;
+    if (zone < 0.35)      go(page + 1);   // يسار → التالية (RTL)
+    else if (zone > 0.65) go(page - 1);   // يمين → السابقة
+    else bump();                           // وسط → يُظهر الـ UI
+  };
+
+  /* تحرير رقم الصفحة */
+  const startEdit = () => {
+    setEditingPage(true);
+    setEditVal(String(page));
+    bump();
+    setTimeout(() => pageInputRef.current?.select(), 30);
+  };
+  const commitEdit = () => {
+    const n = parseInt(editVal, 10);
+    if (!isNaN(n)) go(n);
+    setEditingPage(false);
   };
 
   return (
     <div className="mshf-shell" dir="rtl">
 
-      {/* ── شريط علوي ── */}
-      <header className={`mshf-bar mshf-bar--top${showUI ? " mshf-bar--show" : ""}`}>
-        <button className="mshf-chrome-btn" onClick={() => window.history.back()}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-            <polyline points="9 18 15 12 9 6"/>
+      {/* ══ شريط علوي ══ */}
+      <header className={`mshf-top${uiOn ? " on" : ""}`}>
+        <button className="mshf-back" onClick={() => window.history.back()} aria-label="رجوع">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+            <path d="M15 18l-6-6 6-6"/>
           </svg>
-          رجوع
         </button>
-        <div className="mshf-bar__center">
-          <Star className="mshf-star" />
-          <span className="mshf-bar__title">المصحف الشريف</span>
-          <Star className="mshf-star" />
+        <div className="mshf-title-wrap">
+          <Star cls="mshf-star" />
+          <span className="mshf-title">المصحف الشريف</span>
+          <Star cls="mshf-star" />
         </div>
-        <button className="mshf-chrome-btn" onClick={() => { setShowJump(true); setJumpVal(String(page)); resetTimer(); }}>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-          </svg>
-          انتقال
-        </button>
+        <div className="mshf-top__right" />
       </header>
 
-      {/* ── منطقة الـ canvas ── */}
+      {/* ══ منطقة الصفحة ══ */}
       <div
         ref={frameRef}
         className="mshf-frame"
-        onTouchStart={onTouchStart}
-        onTouchEnd={onTouchEnd}
-        onClick={resetTimer}
+        onTouchStart={onTS}
+        onTouchEnd={onTE}
+        onClick={onFrameClick}
       >
         {/* تحميل */}
         {rendering && !loadErr && (
-          <div className="mshf-skeleton">
+          <div className="mshf-loading">
             <div className="mshf-spinner" />
             <span>{pdfDoc ? "جاري الرسم…" : "جاري تحميل المصحف…"}</span>
           </div>
@@ -206,68 +190,75 @@ export default function QuranPage() {
 
         {/* خطأ */}
         {loadErr && (
-          <div className="mshf-error">
-            <span className="mshf-error__icon">⚠️</span>
+          <div className="mshf-err">
+            <div className="mshf-err__icon">⚠</div>
             <p>تعذّر تحميل المصحف</p>
-            <p className="mshf-error__sub">تحقق من اتصالك بالإنترنت</p>
-            <button onClick={() => window.location.reload()} className="mshf-retry">إعادة المحاولة</button>
+            <button onClick={() => window.location.reload()} className="mshf-err__btn">إعادة المحاولة</button>
           </div>
         )}
 
-        {/* الصفحة */}
+        {/* canvas + إطار */}
         {!loadErr && (
-          <div className="mshf-page-wrap">
-            <Star className="mshf-corner mshf-corner--tl" />
-            <Star className="mshf-corner mshf-corner--tr" />
-            <Star className="mshf-corner mshf-corner--bl" />
-            <Star className="mshf-corner mshf-corner--br" />
+          <div className="mshf-wrap">
+            <Star cls="mshf-c mshf-c--tl" />
+            <Star cls="mshf-c mshf-c--tr" />
+            <Star cls="mshf-c mshf-c--bl" />
+            <Star cls="mshf-c mshf-c--br" />
             <canvas
               ref={canvasRef}
-              className={`mshf-canvas${!rendering ? " mshf-canvas--loaded" : ""}`}
-              aria-label={`صفحة ${page} من المصحف الشريف`}
+              className={`mshf-canvas${!rendering ? " ready" : ""}`}
+              aria-label={`صفحة ${page}`}
             />
           </div>
+        )}
+
+        {/* مناطق النقر (شفافة فوق الصورة) */}
+        {!loadErr && !rendering && (
+          <>
+            <div className="mshf-tap mshf-tap--next" onClick={e => { e.stopPropagation(); go(page + 1); }} aria-label="التالية" />
+            <div className="mshf-tap mshf-tap--prev" onClick={e => { e.stopPropagation(); go(page - 1); }} aria-label="السابقة" />
+          </>
         )}
       </div>
 
-      {/* ── شريط سفلي ── */}
-      <footer className={`mshf-bar mshf-bar--bot${showUI ? " mshf-bar--show" : ""}`}>
-        <button className="mshf-nav-btn" onClick={() => goTo(page - 1)} disabled={page <= 1}>
-          ‹ السابقة
+      {/* ══ شريط سفلي ══ */}
+      <footer className={`mshf-bot${uiOn ? " on" : ""}`}>
+        <button className="mshf-nav" onClick={() => go(page - 1)} disabled={page <= 1}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+            <path d="M15 18l-6-6 6-6"/>
+          </svg>
         </button>
-        <button
-          className="mshf-page-badge"
-          onClick={() => { setShowJump(true); setJumpVal(String(page)); resetTimer(); }}
-        >
-          {page} <span className="mshf-page-badge__of">/ {total}</span>
-        </button>
-        <button className="mshf-nav-btn" onClick={() => goTo(page + 1)} disabled={page >= total}>
-          التالية ›
-        </button>
-      </footer>
 
-      {/* ── مربع الانتقال ── */}
-      {showJump && (
-        <div className="mshf-jump-overlay" onClick={() => setShowJump(false)}>
-          <div className="mshf-jump-box" onClick={e => e.stopPropagation()}>
-            <p className="mshf-jump-label">انتقل إلى صفحة (١ – {total})</p>
+        {/* رقم الصفحة — قابل للتحرير */}
+        <div className="mshf-pgnum">
+          {editingPage ? (
             <input
-              autoFocus
+              ref={pageInputRef}
+              className="mshf-pgnum__input"
               type="number"
               min={1}
-              max={total}
-              value={jumpVal}
-              onChange={e => setJumpVal(e.target.value)}
-              onKeyDown={e => e.key === "Enter" && submitJump()}
-              className="mshf-jump-input"
+              max={TOTAL}
+              value={editVal}
+              onChange={e => setEditVal(e.target.value)}
+              onBlur={commitEdit}
+              onKeyDown={e => { if (e.key === "Enter") commitEdit(); if (e.key === "Escape") setEditingPage(false); }}
+              onClick={e => e.stopPropagation()}
             />
-            <div className="mshf-jump-actions">
-              <button className="mshf-jump-cancel" onClick={() => setShowJump(false)}>إلغاء</button>
-              <button className="mshf-jump-go" onClick={submitJump}>انتقال</button>
-            </div>
-          </div>
+          ) : (
+            <button className="mshf-pgnum__btn" onClick={e => { e.stopPropagation(); startEdit(); }}>
+              <span className="mshf-pgnum__cur">{page}</span>
+              <span className="mshf-pgnum__sep">/</span>
+              <span className="mshf-pgnum__tot">{TOTAL}</span>
+            </button>
+          )}
         </div>
-      )}
+
+        <button className="mshf-nav" onClick={() => go(page + 1)} disabled={page >= TOTAL}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+            <path d="M9 18l6-6-6-6"/>
+          </svg>
+        </button>
+      </footer>
     </div>
   );
 }
