@@ -24,45 +24,6 @@ import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 
 const ADVANCE_OPTIONS: AdvanceMinutes[] = [0, 5, 10, 15, 20, 30];
 
-// ── أنماط مشتركة ────────────────────────────────────────────────────────────
-const card: React.CSSProperties = {
-  background: "var(--msk-canvas-1, #fff)",
-  borderRadius: "1rem",
-  border: "1px solid var(--msk-border)",
-  overflow: "hidden",
-  marginBottom: "1.25rem",
-};
-
-const cardHeader: React.CSSProperties = {
-  display: "flex",
-  alignItems: "center",
-  gap: "0.5rem",
-  padding: "0.75rem 1rem 0.625rem",
-  borderBottom: "1px solid var(--msk-border)",
-  color: "var(--msk-gold)",
-  fontSize: "0.8125rem",
-  fontWeight: 700,
-};
-
-const cardBody: React.CSSProperties = {
-  padding: "0.875rem 1rem",
-};
-
-const row: React.CSSProperties = {
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "space-between",
-  minHeight: 44,
-};
-
-const rowSep: React.CSSProperties = {
-  ...row,
-  borderBottom: "1px solid var(--msk-border)",
-  paddingBottom: "0.75rem",
-  marginBottom: "0.75rem",
-};
-
-// ── مفتاح Toggle ─────────────────────────────────────────────────────────────
 function Toggle({
   checked,
   onChange,
@@ -79,50 +40,23 @@ function Toggle({
       aria-checked={checked}
       id={id}
       onClick={() => onChange(!checked)}
-      style={{
-        position: "relative",
-        display: "inline-flex",
-        alignItems: "center",
-        width: 44,
-        height: 26,
-        borderRadius: 999,
-        border: "none",
-        background: checked ? "var(--msk-gold)" : "var(--msk-border)",
-        cursor: "pointer",
-        transition: "background 0.2s",
-        flexShrink: 0,
-        padding: 0,
-      }}
+      className={`ads-toggle${checked ? " is-on" : ""}`}
     >
-      <span
-        style={{
-          position: "absolute",
-          width: 20,
-          height: 20,
-          borderRadius: "50%",
-          background: "#fff",
-          boxShadow: "0 1px 4px rgba(0,0,0,0.2)",
-          transition: "transform 0.2s",
-          transform: checked ? "translateX(20px)" : "translateX(3px)",
-        }}
-      />
+      <span className="ads-toggle__thumb" />
     </button>
   );
 }
 
-// ── الصفحة الرئيسية ──────────────────────────────────────────────────────────
 export default function AdhanSettingsPage() {
   const [prefs, setPrefs] = useState<AdhanPreferences>(() => loadAdhanPrefs());
   const [pickerFor, setPickerFor] = useState<PrayerKey | "default" | null>(null);
   const [saved, setSaved] = useState(false);
   const savedTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // اختيار المحافظة
   const [selectedGovId, setSelectedGovId] = useState(
     () => getSelectedGovernorate().id,
   );
 
-  // وقت الشروق من hook مواقيت الصلاة
   const { data: prayerData } = usePrayerCountdown(selectedGovId);
   const sunriseTime =
     prayerData?.prayers.find((p: { key: string }) => p.key === "Sunrise")
@@ -178,267 +112,108 @@ export default function AdhanSettingsPage() {
   const defaultMuezzin = getMuezzin(prefs.defaultMuezzinId);
 
   return (
-    <div
-      style={{
-        direction: "rtl",
-        maxWidth: 600,
-        margin: "0 auto",
-        padding: "1.25rem 1rem 5rem",
-      }}
-    >
-      {/* العنوان */}
-      <h1
-        style={{
-          fontSize: "1.25rem",
-          fontWeight: 800,
-          color: "var(--msk-text)",
-          marginBottom: "0.2rem",
-        }}
-      >
-        إعدادات الأذان
-      </h1>
-      <p
-        style={{
-          fontSize: "0.82rem",
-          color: "var(--msk-text-2)",
-          marginBottom: "1.25rem",
-        }}
-      >
-        خصّص المؤذن والتنبيهات لكل صلاة بشكل مستقل.
-      </p>
+    <div className="ads-page">
+      <h1 className="ads-title">إعدادات الأذان</h1>
+      <p className="ads-subtitle">خصّص المؤذن والتنبيهات لكل صلاة بشكل مستقل.</p>
 
-      {/* رسالة حفظ */}
       {saved && (
-        <div
-          style={{
-            background: "var(--msk-gold-dim)",
-            border: "1px solid var(--msk-gold-border)",
-            borderRadius: "0.75rem",
-            padding: "0.5rem 0.875rem",
-            marginBottom: "1rem",
-            fontSize: "0.82rem",
-            color: "var(--msk-gold)",
-            fontWeight: 600,
-            display: "flex",
-            alignItems: "center",
-            gap: "0.4rem",
-          }}
-        >
+        <div className="ads-saved">
           <span>✓</span> تم الحفظ
         </div>
       )}
 
-      {/* ══ مجموعة الموقع ══════════════════════════════════════════ */}
-      <div style={card}>
-        <div style={cardHeader}>
+      {/* ══ الموقع ══ */}
+      <div className="ads-card">
+        <div className="ads-card__head">
           <MapPin size={15} strokeWidth={2} />
           <span>الموقع</span>
         </div>
-        <div style={cardBody}>
-          {/* اختيار المحافظة */}
-          <div style={rowSep}>
-            <label
-              htmlFor="gov-select"
-              style={{
-                fontSize: "0.875rem",
-                fontWeight: 600,
-                color: "var(--msk-text)",
-              }}
-            >
-              المحافظة
-            </label>
+        <div className="ads-card__body">
+          <div className="ads-row-sep">
+            <label htmlFor="gov-select" className="ads-gov-label">المحافظة</label>
             <select
               id="gov-select"
               value={selectedGovId}
               onChange={(e) => handleGovChange(e.target.value)}
-              style={{
-                border: "1.5px solid var(--msk-border)",
-                borderRadius: "0.625rem",
-                padding: "0.35rem 0.75rem",
-                fontSize: "0.875rem",
-                fontWeight: 600,
-                color: "var(--msk-text)",
-                background: "var(--msk-canvas)",
-                fontFamily: "inherit",
-                cursor: "pointer",
-                minWidth: 130,
-              }}
+              className="ads-gov-select"
             >
               {KUWAIT_GOVERNORATES.map((g) => (
-                <option key={g.id} value={g.id}>
-                  {g.name}
-                </option>
+                <option key={g.id} value={g.id}>{g.name}</option>
               ))}
             </select>
           </div>
 
-          {/* وقت الشروق — للعرض فقط */}
-          <div style={row}>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "0.4rem",
-                color: "var(--msk-text)",
-                fontSize: "0.875rem",
-                fontWeight: 600,
-              }}
-            >
-              <Sunrise
-                size={16}
-                strokeWidth={2}
-                style={{ color: "#18362A" }}
-              />
+          <div className="ads-row">
+            <div className="ads-sunrise-inner">
+              <Sunrise size={16} strokeWidth={2} color="#18362A" />
               الشروق
-              <span
-                style={{
-                  fontSize: "0.7rem",
-                  fontWeight: 400,
-                  color: "var(--msk-text-3)",
-                  background: "var(--msk-canvas-2)",
-                  borderRadius: 999,
-                  padding: "0.1rem 0.4rem",
-                }}
-              >
-                وقت الكراهة
-              </span>
+              <span className="ads-sunrise-tag">وقت الكراهة</span>
             </div>
-            <span
-              style={{
-                fontSize: "0.875rem",
-                fontWeight: 700,
-                color: "#18362A",
-                fontVariantNumeric: "tabular-nums",
-              }}
-            >
-              {sunriseTime ?? "—"}
-            </span>
+            <span className="ads-sunrise-time">{sunriseTime ?? "—"}</span>
           </div>
         </div>
       </div>
 
-      {/* ══ مجموعة الأذان ══════════════════════════════════════════ */}
-      <div style={card}>
-        <div style={cardHeader}>
+      {/* ══ الأذان ══ */}
+      <div className="ads-card">
+        <div className="ads-card__head">
           <Music size={15} strokeWidth={2} />
           <span>الأذان</span>
         </div>
-        <div style={cardBody}>
-          <p
-            style={{
-              fontSize: "0.78rem",
-              color: "var(--msk-text-2)",
-              marginBottom: "0.75rem",
-            }}
-          >
+        <div className="ads-card__body">
+          <p className="ads-adhan-desc">
             المؤذن الافتراضي — يُستخدم لجميع الصلوات ما لم تخصّص مؤذناً لكل صلاة.
           </p>
 
-          <div style={row}>
+          <div className="ads-row">
             <div>
-              <div
-                style={{
-                  fontWeight: 600,
-                  fontSize: "0.9rem",
-                  color: "var(--msk-text)",
-                }}
-              >
-                {defaultMuezzin.name}
-              </div>
-              <div
-                style={{ fontSize: "0.75rem", color: "var(--msk-text-2)" }}
-              >
+              <div className="ads-muezzin-name">{defaultMuezzin.name}</div>
+              <div className="ads-muezzin-origin">
                 {defaultMuezzin.origin} · {defaultMuezzin.style}
               </div>
             </div>
-            <button
-              type="button"
-              onClick={() => setPickerFor("default")}
-              style={pillBtn}
-            >
+            <button type="button" onClick={() => setPickerFor("default")} className="ads-pill-btn">
               تغيير
             </button>
           </div>
 
-          {/* روابط سريعة */}
-          <div
-            style={{
-              display: "flex",
-              gap: "0.5rem",
-              marginTop: "1rem",
-            }}
-          >
-            <Link href="/muezzins" style={{ flex: 1, textDecoration: "none" }}>
-              <div style={quickLink}>
-                <span style={{ fontSize: "0.82rem", color: "var(--msk-gold)", fontWeight: 600 }}>
-                  مكتبة المؤذنين
-                </span>
-                <ChevronLeft size={14} style={{ color: "var(--msk-text-3)" }} />
+          <div className="ads-quick-links">
+            <Link href="/muezzins" className="ads-quick-link-anchor ads-quick-link-anchor--full">
+              <div className="ads-quick-link">
+                <span className="ads-quick-link__label">مكتبة المؤذنين</span>
+                <ChevronLeft size={14} color="var(--msk-text-3)" />
               </div>
             </Link>
-            <Link href="/upload" style={{ textDecoration: "none" }}>
-              <div style={{ ...quickLink, color: "var(--msk-text-2)" }}>
-                <span style={{ fontSize: "0.82rem", fontWeight: 600 }}>
-                  ارفع أذانك
-                </span>
+            <Link href="/upload" className="ads-quick-link-anchor">
+              <div className="ads-quick-link ads-quick-link--upload">
+                <span className="ads-quick-link__label">ارفع أذانك</span>
               </div>
             </Link>
           </div>
         </div>
       </div>
 
-      {/* ══ مجموعة الإشعارات ══════════════════════════════════════ */}
-      <div style={card}>
-        <div style={cardHeader}>
+      {/* ══ الإشعارات ══ */}
+      <div className="ads-card">
+        <div className="ads-card__head">
           <Bell size={15} strokeWidth={2} />
           <span>الإشعارات</span>
         </div>
-        <div style={cardBody}>
-          {/* مفتاح عام */}
-          <div style={rowSep}>
+        <div className="ads-card__body">
+          <div className="ads-row-sep">
             <div>
-              <div
-                style={{
-                  fontWeight: 600,
-                  fontSize: "0.875rem",
-                  color: "var(--msk-text)",
-                }}
-              >
-                تفعيل إشعارات الأذان
-              </div>
-              <div
-                style={{
-                  fontSize: "0.72rem",
-                  color: "var(--msk-text-2)",
-                  marginTop: "0.1rem",
-                }}
-              >
-                تشغيل الأذان وإرسال تنبيه عند كل وقت صلاة
-              </div>
+              <div className="ads-global-label">تفعيل إشعارات الأذان</div>
+              <div className="ads-global-desc">تشغيل الأذان وإرسال تنبيه عند كل وقت صلاة</div>
             </div>
-            <Toggle
-              checked={prefs.globalEnabled}
-              onChange={toggleGlobal}
-              id="global-toggle"
-            />
+            <Toggle checked={prefs.globalEnabled} onChange={toggleGlobal} id="global-toggle" />
           </div>
 
           {!prefs.globalEnabled && (
-            <div
-              style={{
-                fontSize: "0.78rem",
-                color: "var(--msk-gold)",
-                background: "var(--msk-gold-dim)",
-                padding: "0.5rem 0.75rem",
-                borderRadius: "0.5rem",
-                marginBottom: "0.875rem",
-              }}
-            >
+            <div className="ads-global-disabled">
               الإشعارات معطلة — لن يُشغَّل أذان ولن تصل تنبيهات.
             </div>
           )}
 
-          {/* إعدادات كل صلاة */}
           {PRAYER_KEYS.map((key, idx) => {
             const p = prefs.prayers[key];
             const effectiveMuezzinId = getEffectiveMuezzinId(prefs, key);
@@ -449,94 +224,34 @@ export default function AdhanSettingsPage() {
             return (
               <div
                 key={key}
-                style={{
-                  borderBottom: isLast ? "none" : "1px solid var(--msk-border)",
-                  paddingBottom: isLast ? 0 : "0.875rem",
-                  marginBottom: isLast ? 0 : "0.875rem",
-                  opacity: p.enabled ? 1 : 0.55,
-                  transition: "opacity 0.15s",
-                }}
+                className={`ads-prayer-item${isLast ? " is-last" : ""}${!p.enabled ? " is-disabled" : ""}`}
               >
-                {/* صف الصلاة + toggle */}
-                <div style={row}>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "0.5rem",
-                    }}
-                  >
-                    <span style={{ fontSize: "1.05rem" }}>
-                      {PRAYER_ICON[key]}
-                    </span>
-                    <span
-                      style={{
-                        fontWeight: 700,
-                        fontSize: "0.95rem",
-                        color: "var(--msk-text)",
-                      }}
-                    >
-                      {PRAYER_ARABIC[key]}
-                    </span>
+                <div className="ads-row">
+                  <div className="ads-prayer-icon-row">
+                    <span className="ads-prayer-icon">{PRAYER_ICON[key]}</span>
+                    <span className="ads-prayer-name">{PRAYER_ARABIC[key]}</span>
                   </div>
-                  <Toggle
-                    checked={p.enabled}
-                    onChange={(v) => togglePrayer(key, v)}
-                  />
+                  <Toggle checked={p.enabled} onChange={(v) => togglePrayer(key, v)} />
                 </div>
 
-                {/* تفاصيل إضافية عند التفعيل */}
                 {p.enabled && (
-                  <div
-                    style={{
-                      marginTop: "0.5rem",
-                      paddingRight: "1.75rem",
-                    }}
-                  >
-                    {/* المؤذن */}
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        marginBottom: "0.375rem",
-                      }}
-                    >
-                      <span
-                        style={{
-                          fontSize: "0.8rem",
-                          color: "var(--msk-text-2)",
-                        }}
-                      >
+                  <div className="ads-prayer-details">
+                    <div className="ads-prayer-muezzin-row">
+                      <span className="ads-prayer-muezzin-name">
                         {muezzin.name}
                         {!hasOverride && (
-                          <span
-                            style={{
-                              fontSize: "0.68rem",
-                              color: "var(--msk-text-3)",
-                              marginRight: "0.3rem",
-                            }}
-                          >
-                            (افتراضي)
-                          </span>
+                          <span className="ads-prayer-muezzin-override">(افتراضي)</span>
                         )}
                       </span>
-                      <div style={{ display: "flex", gap: "0.3rem" }}>
-                        <button
-                          type="button"
-                          onClick={() => setPickerFor(key)}
-                          style={pillBtn}
-                        >
+                      <div className="ads-prayer-muezzin-btns">
+                        <button type="button" onClick={() => setPickerFor(key)} className="ads-pill-btn">
                           تغيير
                         </button>
                         {hasOverride && (
                           <button
                             type="button"
-                            onClick={() => {
-                              patchPrayerPrefs(key, { muezzinId: "" });
-                              refresh();
-                            }}
-                            style={pillBtnGhost}
+                            onClick={() => { patchPrayerPrefs(key, { muezzinId: "" }); refresh(); }}
+                            className="ads-pill-btn-ghost"
                           >
                             إلغاء
                           </button>
@@ -544,45 +259,15 @@ export default function AdhanSettingsPage() {
                       </div>
                     </div>
 
-                    {/* تنبيه مسبق */}
                     <div>
-                      <div
-                        style={{
-                          fontSize: "0.72rem",
-                          color: "var(--msk-text-3)",
-                          marginBottom: "0.25rem",
-                        }}
-                      >
-                        تنبيه مسبق
-                      </div>
-                      <div style={{ display: "flex", gap: "0.3rem", flexWrap: "wrap" }}>
+                      <div className="ads-advance-label">تنبيه مسبق</div>
+                      <div className="ads-advance-row">
                         {ADVANCE_OPTIONS.map((min) => (
                           <button
                             key={min}
                             type="button"
                             onClick={() => setAdvance(key, min)}
-                            style={{
-                              padding: "0.2rem 0.55rem",
-                              borderRadius: "999px",
-                              border: "1.5px solid",
-                              borderColor:
-                                p.advanceMinutes === min
-                                  ? "var(--msk-gold)"
-                                  : "var(--msk-border)",
-                              background:
-                                p.advanceMinutes === min
-                                  ? "var(--msk-gold)"
-                                  : "transparent",
-                              color:
-                                p.advanceMinutes === min
-                                  ? "var(--msk-canvas)"
-                                  : "var(--msk-text-2)",
-                              fontSize: "0.72rem",
-                              fontWeight: 600,
-                              cursor: "pointer",
-                              fontFamily: "inherit",
-                              transition: "all 0.15s",
-                            }}
+                            className={`ads-advance-btn${p.advanceMinutes === min ? " is-active" : ""}`}
                           >
                             {min === 0 ? "بدون" : `${min} د`}
                           </button>
@@ -597,7 +282,6 @@ export default function AdhanSettingsPage() {
         </div>
       </div>
 
-      {/* Muezzin Picker Modal */}
       {pickerFor && (
         <MuezzinPicker
           selected={
@@ -616,43 +300,3 @@ export default function AdhanSettingsPage() {
     </div>
   );
 }
-
-// ── أنماط الأزرار المشتركة ───────────────────────────────────────────────────
-const pillBtn: React.CSSProperties = {
-  padding: "0.28rem 0.7rem",
-  borderRadius: "999px",
-  border: "1.5px solid var(--msk-gold-border)",
-  background: "var(--msk-gold-dim)",
-  color: "var(--msk-gold)",
-  fontSize: "0.78rem",
-  fontWeight: 600,
-  cursor: "pointer",
-  fontFamily: "inherit",
-  transition: "all 0.15s",
-  flexShrink: 0,
-};
-
-const pillBtnGhost: React.CSSProperties = {
-  padding: "0.28rem 0.7rem",
-  borderRadius: "999px",
-  border: "1.5px solid var(--msk-border)",
-  background: "transparent",
-  color: "var(--msk-text-2)",
-  fontSize: "0.78rem",
-  fontWeight: 600,
-  cursor: "pointer",
-  fontFamily: "inherit",
-  transition: "all 0.15s",
-  flexShrink: 0,
-};
-
-const quickLink: React.CSSProperties = {
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "space-between",
-  padding: "0.55rem 0.75rem",
-  background: "var(--msk-canvas-2)",
-  border: "1px solid var(--msk-border)",
-  borderRadius: "0.625rem",
-  cursor: "pointer",
-};
