@@ -204,6 +204,7 @@
 }
 .mshf-error__icon { font-size: 2.5rem; }
 .mshf-error p { margin: 0; font-size: 0.9375rem; }
+.mshf-error__sub { font-size: 0.78rem !important; color: rgba(168,232,200,0.5) !important; }
 .mshf-retry {
   padding: 0.5rem 1.25rem;
   border-radius: 0.65rem;
