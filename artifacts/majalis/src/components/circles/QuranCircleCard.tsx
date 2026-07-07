@@ -33,8 +33,10 @@ export function QuranCircleCard({ circle: c }: Props) {
 
       <div className="qc-card__body">
         <div className="qc-card__badges">
-          <span className="qc-badge qc-badge--level"
-            style={{ background: LEVEL_COLOR[c.level] ?? "#f3f4f6", color: LEVEL_TEXT[c.level] ?? "#374151" }}>
+          <span
+            className="qc-badge qc-badge--level"
+            style={{ "--qcl-bg": LEVEL_COLOR[c.level] ?? "#f3f4f6", "--qcl-color": LEVEL_TEXT[c.level] ?? "#374151" } as React.CSSProperties}
+          >
             {c.level}
           </span>
           <span className="qc-badge qc-badge--mode">{c.mode}</span>
@@ -42,30 +44,30 @@ export function QuranCircleCard({ circle: c }: Props) {
         </div>
 
         {daysLabel && (
-          <p style={{ fontSize: "0.78rem", color: "var(--majalis-ink-soft)" }}>
+          <p className="qc-card__meta">
             📅 {daysLabel}{c.schedule_time ? ` — ${c.schedule_time}` : ""}
           </p>
         )}
 
         {c.location && (
-          <p style={{ fontSize: "0.78rem", color: "var(--majalis-ink-soft)" }}>📍 {c.location}</p>
+          <p className="qc-card__meta">📍 {c.location}</p>
         )}
 
         {c.description && (
-          <p style={{ fontSize: "0.8rem", color: "var(--majalis-ink-soft)", lineHeight: 1.5, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
-            {c.description}
-          </p>
+          <p className="qc-card__desc">{c.description}</p>
         )}
 
         {pct !== null && (
           <div>
-            <p style={{ fontSize: "0.7rem", color: "var(--majalis-ink-soft)", marginBottom: "0.25rem" }}>
+            <p className="qc-card__capacity-label">
               {c.enrolled_count}/{c.capacity} مشترك
               {pct >= 90 && " · المقاعد تنتهي"}
             </p>
             <div className="qc-card__capacity">
-              <div className="qc-card__capacity-bar"
-                style={{ width: `${pct}%`, background: pct >= 90 ? "#ef4444" : "var(--majalis-emerald)" }} />
+              <div
+                className="qc-card__capacity-bar"
+                style={{ "--qcc-pct": `${pct}%`, "--qcc-bar-color": pct >= 90 ? "#ef4444" : "var(--majalis-emerald)" } as React.CSSProperties}
+              />
             </div>
           </div>
         )}
@@ -74,12 +76,11 @@ export function QuranCircleCard({ circle: c }: Props) {
       {c.contact_info && (
         <div className="qc-card__footer">
           {c.mode !== "حضوري" && c.meeting_link ? (
-            <a href={c.meeting_link} target="_blank" rel="noopener noreferrer"
-              style={{ flex: 1, textAlign: "center", padding: "0.5rem", background: "var(--majalis-emerald)", color: "#fff", borderRadius: "0.6rem", fontSize: "0.8rem", fontWeight: 700, textDecoration: "none" }}>
+            <a href={c.meeting_link} target="_blank" rel="noopener noreferrer" className="qc-card__join-btn">
               انضم عن بُعد
             </a>
           ) : (
-            <span style={{ flex: 1, fontSize: "0.78rem", color: "var(--majalis-ink-soft)", display: "flex", alignItems: "center", gap: "0.3rem" }}>
+            <span className="qc-card__contact">
               📞 {c.contact_info}
             </span>
           )}

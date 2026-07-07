@@ -8,7 +8,7 @@ function IslamicStarFooter() {
     return `${(cx + r * Math.cos(a)).toFixed(2)},${(cx + r * Math.sin(a)).toFixed(2)}`;
   }).join(" ");
   return (
-    <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true" style={{ opacity: 0.4 }}>
+    <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true" className="footer-star">
       <polygon points={pts} fill="none" stroke="var(--majalis-brass,#C6A059)" strokeWidth="1.2" strokeLinejoin="round" />
       <circle cx={cx} cy={cx} r="2.5" fill="var(--majalis-brass,#C6A059)" />
     </svg>

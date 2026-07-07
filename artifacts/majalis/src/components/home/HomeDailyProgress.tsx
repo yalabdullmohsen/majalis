@@ -39,7 +39,7 @@ export function HomeDailyProgress() {
                 <span>{stats.percent}%</span>
               </div>
               <div className="home-progress-card__bar" aria-hidden="true">
-                <span style={{ width: `${stats.percent}%` }} />
+                <span style={{ "--hdp-pct": `${stats.percent}%` } as React.CSSProperties} />
               </div>
               <p className="home-progress-card__meta">
                 {stats.done} من {stats.target}

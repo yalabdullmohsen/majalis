@@ -21,7 +21,7 @@ export function FiqhCompletionBar({ score, className = "", showLabel = true }: P
         </span>
       )}
       <div className="fiqh-completion-bar-track" role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100}>
-        <div className="fiqh-completion-bar-fill" style={{ width: `${pct}%` }} />
+        <div className="fiqh-completion-bar-fill" style={{ "--fcb-pct": `${pct}%` } as React.CSSProperties} />
       </div>
     </div>
   );

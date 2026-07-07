@@ -10,7 +10,7 @@ function IslamicStar({ size = 44 }: { size?: number }) {
   }).join(" ");
   return (
     <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} aria-hidden="true"
-      style={{ animation: "lrf-rotate 2s linear infinite", display: "block", flexShrink: 0 }}>
+      className="ds-loader-svg">
       <style>{`
         @keyframes lrf-rotate{to{transform:rotate(360deg)}}
         @media(prefers-reduced-motion:reduce){svg{animation:none!important;opacity:.4}}
@@ -30,15 +30,9 @@ export function LazyRouteFallback() {
   }, [retries]);
 
   return (
-    <div style={{
-      display: "flex", flexDirection: "column", alignItems: "center",
-      justifyContent: "center", gap: "1rem", minHeight: "50vh",
-      padding: "2rem",
-    }} role="status" aria-label="جارٍ تحميل الصفحة…">
+    <div className="lrf-wrap" role="status" aria-label="جارٍ تحميل الصفحة…">
       <IslamicStar size={48} />
-      <p style={{ fontSize: "0.85rem", color: "var(--v2-ink-3,#8A847E)", margin: 0 }}>
-        جارٍ تحميل الصفحة…
-      </p>
+      <p className="lrf-label">جارٍ تحميل الصفحة…</p>
     </div>
   );
 }

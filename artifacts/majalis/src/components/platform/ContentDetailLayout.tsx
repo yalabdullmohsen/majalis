@@ -160,7 +160,7 @@ type CardProps = {
 
 export function PlatformContentCard({ href, title, meta, tag, summary }: CardProps) {
   return (
-    <Link href={href} style={{ textDecoration: "none" }}>
+    <Link href={href} className="platform-card-link">
       <article className="page-card platform-content-card">
         <div className="page-card-header">
           <p>{title}</p>

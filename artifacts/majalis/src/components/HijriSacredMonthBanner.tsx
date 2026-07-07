@@ -229,86 +229,25 @@ export function HijriSacredMonthBanner() {
     <div
       role="complementary"
       aria-label="تذكير إسلامي"
-      style={{
-        direction: "rtl",
-        margin: "0.75rem 1rem 0",
-        borderRadius: "0.9rem",
-        border: `1.5px solid ${accent}22`,
-        borderRight: `4px solid ${accent}`,
-        background: `linear-gradient(135deg, ${accent}10 0%, ${accent}05 60%, transparent 100%)`,
-        boxShadow: `0 2px 12px ${accent}12, 0 1px 3px rgba(0,0,0,0.06)`,
-        padding: "0.75rem 0.9rem",
-        display: "flex",
-        flexDirection: "column",
-        gap: "0.45rem",
-        position: "relative",
-        overflow: "hidden",
-      }}
+      className="hmb-wrap"
+      style={{ "--hmb-accent": accent, "--hmb-type-color": typeColor } as React.CSSProperties}
     >
       {/* ── الصف الأول: العنوان + الشارات ── */}
-      <div style={{ display: "flex", alignItems: "center", gap: "0.45rem", flexWrap: "wrap" }}>
-        {/* اسم الفترة */}
-        <span style={{
-          fontWeight: 800,
-          fontSize: "0.76rem",
-          color: accent,
-          letterSpacing: "0.01em",
-          flexShrink: 0,
-        }}>
-          {period.title}
-        </span>
+      <div className="hmb-row">
+        <span className="hmb-period-title">{period.title}</span>
+        <span className="hmb-type-badge">{current.label}</span>
 
-        {/* شارة نوع العبادة */}
-        <span style={{
-          fontSize: "0.67rem",
-          fontWeight: 700,
-          color: typeColor,
-          background: `${typeColor}14`,
-          border: `1px solid ${typeColor}35`,
-          borderRadius: "99px",
-          padding: "0.06rem 0.55rem",
-          whiteSpace: "nowrap",
-          flexShrink: 0,
-        }}>
-          {current.label}
-        </span>
-
-        {/* عداد تنازلي للحدث القادم */}
         {period.countdown && period.countdown.days >= 0 && (
-          <span style={{
-            fontSize: "0.67rem",
-            fontWeight: 700,
-            color: "#fff",
-            background: accent,
-            borderRadius: "99px",
-            padding: "0.06rem 0.6rem",
-            whiteSpace: "nowrap",
-            flexShrink: 0,
-          }}>
+          <span className="hmb-countdown">
             {period.countdown.days === 0 ? period.countdown.label : `${period.countdown.days} يوم ${period.countdown.label}`}
           </span>
         )}
 
-        {/* زر الإغلاق */}
         <button
           type="button"
           onClick={() => setDismissed(true)}
           aria-label="إغلاق التذكير"
-          style={{
-            marginInlineStart: "auto",
-            background: "none",
-            border: "none",
-            color: "var(--majalis-ink-muted, #9BA3B5)",
-            fontSize: "1rem",
-            lineHeight: 1,
-            cursor: "pointer",
-            padding: "0.1rem 0.3rem",
-            flexShrink: 0,
-            borderRadius: "4px",
-            transition: "color 0.15s",
-          }}
-          onMouseEnter={(e) => { e.currentTarget.style.color = "var(--majalis-ink)"; }}
-          onMouseLeave={(e) => { e.currentTarget.style.color = "var(--majalis-ink-muted)"; }}
+          className="hmb-dismiss-btn"
         >
           ×
         </button>
@@ -317,42 +256,17 @@ export function HijriSacredMonthBanner() {
       {/* ── نص التذكير مع حركة fade ── */}
       <div
         key={index}
-        style={{
-          display: "flex",
-          alignItems: "flex-start",
-          gap: "0.55rem",
-          opacity: visible ? 1 : 0,
-          transform: visible ? "translateY(0)" : "translateY(4px)",
-          transition: "opacity 0.28s ease, transform 0.28s ease",
-        }}
+        className={`hmb-content${visible ? " hmb-content--visible" : " hmb-content--hidden"}`}
       >
-        <span style={{
-          fontSize: "1.1rem",
-          flexShrink: 0,
-          lineHeight: 1.2,
-          marginTop: "0.05rem",
-        }}>
-          {current.icon}
-        </span>
-        <p style={{
-          margin: 0,
-          fontSize: "0.83rem",
-          color: "var(--majalis-ink-soft, #C5C0BA)",
-          lineHeight: 1.6,
-          fontWeight: current.urgent ? 600 : 400,
-        }}>
+        <span className="hmb-icon">{current.icon}</span>
+        <p className={`hmb-body${current.urgent ? " hmb-body--urgent" : ""}`}>
           {current.body}
         </p>
       </div>
 
       {/* ── نقاط الترقيم (dots) ── */}
       {reminders.length > 1 && (
-        <div style={{
-          display: "flex",
-          gap: "0.3rem",
-          marginTop: "0.1rem",
-          alignItems: "center",
-        }}>
+        <div className="hmb-dots">
           {reminders.map((_, i) => {
             const active = i === index % reminders.length;
             return (
@@ -364,28 +278,11 @@ export function HijriSacredMonthBanner() {
                   setVisible(false);
                   setTimeout(() => { setIndex(i); setVisible(true); }, 280);
                 }}
-                style={{
-                  width: active ? 18 : 6,
-                  height: 5,
-                  borderRadius: "99px",
-                  border: "none",
-                  background: active ? accent : `${accent}40`,
-                  cursor: "pointer",
-                  padding: 0,
-                  transition: "width 0.35s ease, background 0.25s ease",
-                  flexShrink: 0,
-                }}
+                className={`hmb-dot${active ? " hmb-dot--active" : ""}`}
               />
             );
           })}
-          <span style={{
-            marginInlineStart: "auto",
-            fontSize: "0.62rem",
-            color: `${accent}80`,
-            fontWeight: 500,
-          }}>
-            {index + 1}/{reminders.length}
-          </span>
+          <span className="hmb-dot-counter">{index + 1}/{reminders.length}</span>
         </div>
       )}
     </div>

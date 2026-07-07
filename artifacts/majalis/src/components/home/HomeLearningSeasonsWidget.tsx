@@ -100,17 +100,17 @@ export function HomeLearningSeasonsWidget() {
       </div>
 
       {/* Featured season card */}
-      <div className="lsw-featured" style={{ borderColor: featured.color }}>
+      <div className="lsw-featured" style={{ "--lsw-color": featured.color } as React.CSSProperties}>
         <div className="lsw-featured__header">
           <div>
-            <span className="lsw-featured__name" style={{ color: featured.color }}>
+            <span className="lsw-featured__name">
               {featured.arabicName}
             </span>
             <p className="lsw-featured__desc">{featured.description}</p>
           </div>
           <div className="lsw-featured__countdown">
             {isNow ? (
-              <span className="lsw-featured__now" style={{ background: featured.color }}>
+              <span className="lsw-featured__now">
                 الآن
               </span>
             ) : (
@@ -124,7 +124,7 @@ export function HomeLearningSeasonsWidget() {
         <p className="lsw-featured__suggestion">
           💡 <strong>اقتراح:</strong> {featured.suggestion}
         </p>
-        <Link href={featured.href} className="lsw-featured__cta" style={{ background: featured.color }}>
+        <Link href={featured.href} className="lsw-featured__cta">
           ابدأ الآن ←
         </Link>
       </div>
@@ -135,8 +135,8 @@ export function HomeLearningSeasonsWidget() {
           {upcoming.slice(active ? 0 : 1).map((s) => {
             const d = daysUntil(s.startDate);
             return (
-              <div key={s.id} className="lsw-mini-item">
-                <span className="lsw-mini-item__dot" style={{ background: s.color }} />
+              <div key={s.id} className="lsw-mini-item" style={{ "--lsw-dot-color": s.color } as React.CSSProperties}>
+                <span className="lsw-mini-item__dot" />
                 <span className="lsw-mini-item__name">{s.arabicName}</span>
                 <span className="lsw-mini-item__days">{d} يوم</span>
               </div>

@@ -20,23 +20,11 @@ function HadithBadge({ h }: { h: HadithRef }) {
   const color = GRADE_COLOR[h.grade];
   return (
     <span
-      style={{
-        display: "inline-flex",
-        alignItems: "center",
-        gap: "0.3rem",
-        marginTop: "0.45rem",
-        fontSize: "0.7rem",
-        lineHeight: 1.4,
-        color: "var(--ds-ink-soft, #6b7280)",
-        background: "var(--ds-surface-2, #f3f4f6)",
-        borderRadius: "0.35rem",
-        padding: "0.18rem 0.45rem",
-        borderRight: `3px solid ${color}`,
-        direction: "rtl",
-      }}
+      className="hadith-badge"
+      style={{ "--hdb-color": color } as React.CSSProperties}
       title={h.extra}
     >
-      <span style={{ fontWeight: 700, color, fontSize: "0.68rem" }}>{h.grade}</span>
+      <span className="hadith-badge__grade">{h.grade}</span>
       <span>·</span>
       <span>{h.source} ({h.number})</span>
       <span>·</span>
@@ -166,7 +154,7 @@ export function HomeTawheed() {
             <p className="tawheed-principle-card__title">{p.title}</p>
             <p className="tawheed-principle-card__body">{p.body}</p>
             {p.hadith && (
-              <div style={{ marginTop: "0.35rem" }}>
+              <div className="tawheed-principle-card__hadith">
                 <HadithBadge h={p.hadith} />
               </div>
             )}

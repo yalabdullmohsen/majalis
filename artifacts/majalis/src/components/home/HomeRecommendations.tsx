@@ -25,8 +25,8 @@ function RecMiniCard({ item }: { item: RecommendedItem }) {
     >
       <div className="flex items-center justify-between">
         <span
-          className="text-xs text-white px-2 py-0.5 rounded font-medium"
-          style={{ background: color }}
+          className="rec-mini-card__badge"
+          style={{ "--rec-badge-bg": color } as React.CSSProperties}
         >
           {label}
         </span>
@@ -36,7 +36,7 @@ function RecMiniCard({ item }: { item: RecommendedItem }) {
         {title}
       </p>
       {item.category && (
-        <p className="text-xs mt-auto" style={{ color: "var(--majalis-ink-soft)" }}>{item.category}</p>
+        <p className="rec-mini-card__cat">{item.category}</p>
       )}
     </Link>
   );
@@ -84,7 +84,7 @@ export function HomeRecommendations() {
         </div>
         <div className="sk-card-grid" aria-hidden="true">
           {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="ds-skeleton" style={{ height: "6rem", borderRadius: "0.75rem" }} />
+            <div key={i} className="ds-skeleton ds-skeleton--card" />
           ))}
         </div>
       </section>

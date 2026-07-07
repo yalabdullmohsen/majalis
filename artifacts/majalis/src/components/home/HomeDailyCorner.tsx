@@ -91,7 +91,7 @@ export function HomeDailyCorner() {
         {/* شريط التقدم للتدوير التلقائي */}
         {!manual && (
           <span className="hdc__progress" aria-hidden="true">
-            <span className="hdc__progress-fill" style={{ animationDuration: `${ROTATE_MS}ms` }} />
+            <span className="hdc__progress-fill" style={{ "--hdc-rotate-ms": `${ROTATE_MS}ms` } as React.CSSProperties} />
           </span>
         )}
       </div>

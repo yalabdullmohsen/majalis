@@ -18,18 +18,9 @@ function Skeleton({ variant }: { variant: SkeletonVariant }) {
   if (variant === "list") return <QaSkeleton count={5} />;
   return (
     <div className="ds-empty" role="status" aria-live="polite" aria-busy="true">
-      <div
-        className="ds-skeleton"
-        style={{ width: "100%", maxWidth: "28rem", height: "0.75rem", margin: "0 auto 0.5rem" }}
-      />
-      <div
-        className="ds-skeleton"
-        style={{ width: "100%", maxWidth: "20rem", height: "0.75rem", margin: "0 auto 0.5rem" }}
-      />
-      <div
-        className="ds-skeleton"
-        style={{ width: "100%", maxWidth: "24rem", height: "0.75rem", margin: "0 auto" }}
-      />
+      <div className="ds-skeleton adv-skel-line1" />
+      <div className="ds-skeleton adv-skel-line2" />
+      <div className="ds-skeleton adv-skel-line3" />
     </div>
   );
 }

@@ -123,15 +123,15 @@ export function MoreBottomSheet({ open, onClose }: Props) {
           <button
             type="button"
             onClick={onClose}
-            style={{ float: "left", background: "none", border: "none", fontSize: "1.1rem", cursor: "pointer", color: "var(--majalis-ink-soft)", lineHeight: 1 }}
+            className="bottom-sheet__close-btn"
             aria-label="إغلاق"
           >✕</button>
         </div>
 
-        <div style={{ padding: "0.75rem 1rem 2rem", overflowY: "auto" }}>
+        <div className="bottom-sheet__body">
           {SHEET_SECTIONS.map((section) => (
-            <div key={section.group} style={{ marginBottom: "1.25rem" }}>
-              <p style={{ fontSize: "0.7rem", fontWeight: 700, color: "var(--majalis-emerald)", letterSpacing: "0.06em", marginBottom: "0.5rem", textTransform: "uppercase" }}>
+            <div key={section.group} className="bottom-sheet__section">
+              <p className="bottom-sheet__section-label">
                 {section.group}
               </p>
               <div className="bottom-sheet__grid">
@@ -142,8 +142,7 @@ export function MoreBottomSheet({ open, onClose }: Props) {
                       key={href}
                       href={href}
                       onClick={onClose}
-                      className="more-sheet-item"
-                      style={active ? { background: "var(--majalis-sage)", borderColor: "var(--majalis-emerald)", color: "var(--majalis-emerald-deep)" } : {}}
+                      className={`more-sheet-item${active ? " more-sheet-item--active" : ""}`}
                       aria-current={active ? "page" : undefined}
                     >
                       <span className="more-sheet-item__icon">

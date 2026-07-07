@@ -71,7 +71,7 @@ export function UnderConstruction({
               <span className="uc-progress__pct">{pct.toLocaleString("ar-EG")}٪</span>
             </div>
             <div className="uc-progress__track">
-              <div className="uc-progress__fill" style={{ width: `${pct}%` }} />
+              <div className="uc-progress__fill" style={{ "--uc-pct": `${pct}%` } as React.CSSProperties} />
             </div>
           </div>
         )}

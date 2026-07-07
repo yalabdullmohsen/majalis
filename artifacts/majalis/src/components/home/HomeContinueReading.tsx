@@ -53,7 +53,7 @@ export function HomeContinueReading() {
                 <div className="home-resume__card-track">
                   <div
                     className="home-resume__card-fill"
-                    style={{ width: `${item.position.pct}%` }}
+                    style={{ "--hrc-pct": `${item.position.pct}%` } as React.CSSProperties}
                   />
                 </div>
                 <span className="home-resume__card-pct">{item.position.pct}٪</span>

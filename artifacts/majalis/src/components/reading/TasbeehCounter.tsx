@@ -34,14 +34,13 @@ function ProgressRing({
     <button
       type="button"
       className={[
-        "tc-ring-btn",
+        "tc-ring-btn tc-btn-wrap",
         pulse ? "tc-ring-btn--pulse" : "",
         goalReached ? "tc-ring-btn--done" : "",
       ].filter(Boolean).join(" ")}
       onClick={onClick}
       onPointerDown={(e) => e.currentTarget.setPointerCapture(e.pointerId)}
       aria-label={`${count} — اضغط للتسبيح`}
-      style={{ touchAction: "manipulation", userSelect: "none" }}
     >
       <svg viewBox="0 0 160 160" className="tc-ring-svg" aria-hidden="true">
         <circle cx="80" cy="80" r={RING_R} className="tc-ring-track" />
@@ -52,7 +51,6 @@ function ProgressRing({
           strokeDashoffset={offset}
           strokeLinecap="round"
           transform="rotate(-90 80 80)"
-          style={{ transition: "stroke-dashoffset 0.3s ease, stroke 0.35s ease" }}
         />
       </svg>
       <div className="tc-ring-inner">
@@ -127,7 +125,7 @@ export function TasbeehCounter({
         </div>
         {activeTarget > 0 && (
           <div className="tasbeeh-counter__bar" aria-hidden="true">
-            <span style={{ width: `${progress}%` }} />
+            <span style={{ "--tc-pct": `${progress}%` } as React.CSSProperties} />
           </div>
         )}
         <div className="tasbeeh-counter__actions">
