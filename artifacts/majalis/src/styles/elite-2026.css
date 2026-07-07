@@ -4595,3 +4595,415 @@ button.primary:hover {
 .lesson-detail-sheikh-row .lesson-card-pro__sheikh {
   margin: 0;
 }
+
+/* ══════════════════════════════════════════════
+   §49. Islamic Stories Page — القصص الإسلامية
+   ══════════════════════════════════════════════ */
+
+/* إحصائيات التصنيفات */
+.isp-stats-row {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.isp-stat-chip {
+  padding: 0.35rem 1rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  border: 1px solid;
+}
+
+.isp-stat-chip--companions { background: rgba(151,165,159,0.12); color: #97A59F; border-color: rgba(151,165,159,0.3); }
+.isp-stat-chip--conquests  { background: rgba(122,144,144,0.12); color: #7A9090; border-color: rgba(122,144,144,0.3); }
+.isp-stat-chip--history    { background: rgba(107,136,136,0.12); color: #6B8888; border-color: rgba(107,136,136,0.3); }
+
+/* البحث والفلاتر */
+.isp-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.isp-search {
+  width: 100%;
+  padding: 0.65rem 1rem;
+  background: var(--elite-white, #FAF8F2);
+  border: 1.5px solid var(--elite-border-2, rgba(24,54,42,0.15));
+  border-radius: 0.65rem;
+  color: var(--elite-ink, #122019);
+  font-size: 0.9rem;
+  font-family: inherit;
+  transition: border-color 0.15s;
+  direction: rtl;
+}
+
+.isp-search:focus {
+  outline: none;
+  border-color: var(--elite-forest, #18362A);
+  box-shadow: 0 0 0 3px rgba(24,54,42,0.08);
+}
+
+.isp-search::placeholder { color: var(--elite-ink-muted, #97A59F); }
+
+.isp-filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.isp-filter-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--elite-ink-muted, #97A59F);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.isp-filter-chips {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.isp-chip {
+  padding: 0.3rem 0.85rem;
+  background: var(--elite-white, #FAF8F2);
+  border: 1px solid var(--elite-border-2, rgba(24,54,42,0.15));
+  border-radius: 999px;
+  color: var(--elite-ink-soft, #5D726A);
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.isp-chip:hover {
+  border-color: var(--elite-forest, #18362A);
+  color: var(--elite-forest, #18362A);
+}
+
+.isp-chip.is-active {
+  background: var(--elite-forest, #18362A);
+  border-color: transparent;
+  color: #FAF8F2;
+}
+
+.isp-result-count {
+  font-size: 0.8rem;
+  color: var(--elite-ink-muted, #97A59F);
+  margin: 0;
+}
+
+/* شبكة البطاقات */
+.isp-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+/* بطاقة القصة */
+.isp-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1.25rem 1.1rem;
+  background: var(--elite-forest, #18362A);
+  border: 1px solid rgba(190,199,195,0.2);
+  border-radius: var(--elite-r-lg, 16px);
+  cursor: pointer;
+  transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s, background 0.18s;
+  text-align: right;
+  direction: rtl;
+}
+
+.isp-card:hover,
+.isp-card:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(24,54,42,0.28);
+  border-color: rgba(190,199,195,0.45);
+  background: #153025;
+  outline: none;
+}
+
+.isp-card--companions:hover { border-color: rgba(151,165,159,0.6); }
+.isp-card--conquests:hover  { border-color: rgba(122,144,144,0.6); }
+.isp-card--history:hover    { border-color: rgba(107,136,136,0.6); }
+
+.isp-card__head {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+
+.isp-card__icon {
+  font-size: 1.75rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.isp-card__meta-badges {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* شارة الفئة والحقبة */
+.isp-badge {
+  padding: 0.15rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.isp-badge--cat  { background: rgba(190,199,195,0.18); color: #BEC7C3; border: 1px solid rgba(190,199,195,0.3); }
+.isp-badge--era  { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.6); }
+
+.isp-card__divider {
+  height: 1px;
+  background: linear-gradient(to left, transparent, rgba(190,199,195,0.25), transparent);
+  display: flex;
+  align-items: center;
+}
+
+.isp-card__title {
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.45;
+}
+
+.isp-card__summary {
+  color: rgba(255,255,255,0.65);
+  font-size: 0.82rem;
+  line-height: 1.65;
+  margin: 0;
+  flex: 1;
+}
+
+.isp-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.isp-tag {
+  background: rgba(255,255,255,0.06);
+  color: rgba(190,199,195,0.85);
+  border-radius: 999px;
+  padding: 0.15rem 0.55rem;
+  font-size: 0.68rem;
+}
+
+.isp-tag--large {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+}
+
+.isp-card__cta {
+  color: var(--elite-mist, #BEC7C3);
+  font-size: 0.78rem;
+  font-weight: 600;
+  margin-top: 0.2rem;
+  transition: color 0.15s;
+}
+
+.isp-card:hover .isp-card__cta {
+  color: #fff;
+}
+
+/* حالات خاصة */
+.isp-skeleton {
+  background: var(--elite-forest, #18362A);
+  border-radius: var(--elite-r-lg, 16px);
+  height: 200px;
+  opacity: 0.6;
+  animation: isp-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes isp-pulse {
+  0%, 100% { opacity: 0.6; }
+  50%       { opacity: 0.3; }
+}
+
+.isp-error {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 2rem;
+  background: rgba(220,38,38,0.08);
+  border: 1px solid rgba(220,38,38,0.2);
+  border-radius: var(--elite-r-lg, 16px);
+  color: #EF4444;
+  font-size: 0.9rem;
+}
+
+.isp-error__icon { font-size: 1.5rem; }
+
+.isp-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 3rem 1rem;
+  text-align: center;
+  color: var(--elite-ink-soft, #5D726A);
+}
+
+.isp-empty__icon { font-size: 2.5rem; opacity: 0.4; }
+.isp-empty__hint { font-size: 0.82rem; color: var(--elite-ink-muted, #97A59F); margin: 0; }
+
+/* ── صفحة التفاصيل ── */
+.isp-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-bottom: 2rem;
+}
+
+.isp-detail__back {
+  align-self: flex-start;
+  background: transparent;
+  border: 1px solid rgba(190,199,195,0.35);
+  color: var(--elite-ink-soft, #5D726A);
+  border-radius: var(--elite-r-sm, 8px);
+  padding: 0.5rem 1.1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.isp-detail__back:hover {
+  background: var(--elite-sage-2, #F1F3F2);
+  border-color: var(--elite-forest, #18362A);
+  color: var(--elite-forest, #18362A);
+}
+
+.isp-detail__hero {
+  background: var(--elite-forest, #18362A);
+  background-image: url("/star-pattern.svg");
+  background-size: 100px 100px;
+  border-radius: var(--elite-r-xl, 24px);
+  padding: 2rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.isp-detail__badges {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.isp-detail__icon { font-size: 2.5rem; line-height: 1; }
+
+.isp-detail__title {
+  color: #fff;
+  font-size: clamp(1.25rem, 4vw, 1.75rem);
+  font-weight: 800;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.isp-detail__summary {
+  color: rgba(250,248,242,0.82);
+  font-size: 0.95rem;
+  line-height: 1.75;
+  margin: 0;
+}
+
+.isp-detail__section {
+  background: var(--elite-white, #FAF8F2);
+  border: 1px solid var(--elite-border, rgba(0,0,0,0.07));
+  border-radius: var(--elite-r-lg, 16px);
+  padding: 1.25rem 1.5rem;
+}
+
+.isp-detail__section--content  { }
+.isp-detail__section--lessons  { background: rgba(21,128,61,0.05); border-color: rgba(21,128,61,0.15); }
+.isp-detail__section--figures  { background: #F5F3FF; border-color: rgba(109,40,217,0.15); }
+.isp-detail__section--sources  { background: #FFFBEB; border-color: rgba(180,130,10,0.18); }
+
+.isp-detail__section-title {
+  font-size: 0.9rem !important;
+  font-weight: 700 !important;
+  margin: 0 0 0.875rem !important;
+  background: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  display: block !important;
+  color: var(--elite-forest, #18362A) !important;
+}
+
+.isp-detail__section-title--green  { color: #15803D !important; }
+.isp-detail__section-title--purple { color: #6D28D9 !important; }
+.isp-detail__section-title--gold   { color: #92400E !important; }
+
+.isp-detail__body {
+  font-size: 0.9rem;
+  line-height: 1.9;
+  color: var(--elite-ink, #122019);
+  white-space: pre-wrap;
+}
+
+.isp-lessons-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.isp-lessons-list__item {
+  display: flex;
+  gap: 0.6rem;
+  font-size: 0.875rem;
+  color: var(--elite-ink, #122019);
+  line-height: 1.6;
+  align-items: flex-start;
+}
+
+.isp-lessons-list__star {
+  color: #15803D;
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+.isp-detail__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 480px) {
+  .isp-detail__grid { grid-template-columns: 1fr; }
+}
+
+.isp-detail__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.isp-detail__list-item {
+  font-size: 0.84rem;
+  color: var(--elite-ink-soft, #5D726A);
+  line-height: 1.5;
+}
+
+.isp-detail__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
