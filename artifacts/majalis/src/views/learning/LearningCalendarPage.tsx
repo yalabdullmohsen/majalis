@@ -33,25 +33,25 @@ export default function LearningCalendarPage() {
     <div className="page-shell narrow">
       <PageHeader title="التقويم العلمي" subtitle="الدروس والدورات والمناسبات" />
 
-      <div style={{ display: "grid", gap: "0.75rem" }}>
+      <div className="lcd-grid">
         {events.map((ev) => (
-          <article key={ev.id} style={{ padding: "1rem", borderRadius: "0.5rem", border: "1px solid var(--line)", display: "flex", justifyContent: "space-between", alignItems: "center", gap: "1rem" }}>
+          <article key={ev.id} className="lcd-event">
             <div>
-              <span style={{ fontSize: "0.75rem", color: "var(--ink-soft)" }}>{TYPE_LABELS[ev.event_type] || ev.event_type}</span>
-              <h3 style={{ fontWeight: 600, marginTop: "0.125rem" }}>{ev.title}</h3>
-              <p style={{ fontSize: "0.8125rem", color: "var(--ink-soft)", marginTop: "0.25rem" }}>
+              <span className="lcd-event__type">{TYPE_LABELS[ev.event_type] || ev.event_type}</span>
+              <h3 className="lcd-event__title">{ev.title}</h3>
+              <p className="lcd-event__date">
                 {format(new Date(ev.starts_at), "EEEE d MMMM yyyy", { locale: arSA })}
                 {ev.location && ` · ${ev.location}`}
               </p>
             </div>
-            <button type="button" onClick={() => handleSubscribe(ev.id)} style={{ padding: "0.375rem 0.75rem", borderRadius: "0.375rem", border: "1px solid var(--emerald-deep)", background: "transparent", cursor: "pointer", fontSize: "0.8125rem", flexShrink: 0 }}>
+            <button type="button" onClick={() => handleSubscribe(ev.id)} className="lcd-subscribe-btn">
               أضف للتقويم
             </button>
           </article>
         ))}
       </div>
 
-      <p style={{ marginTop: "2rem", fontSize: "0.875rem" }}>
+      <p className="lcd-footer-link">
         <Link href="/calendar">تقويم الدروس الكامل</Link>
       </p>
     </div>

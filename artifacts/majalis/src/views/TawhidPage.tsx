@@ -119,12 +119,10 @@ function HadithBadge({ h }: { h: HadithRef }) {
   return (
     <span
       className="tawheed-hadith-badge"
-      style={{ borderRightColor: GRADE_COLOR[h.grade] }}
+      style={{ "--grade-color": GRADE_COLOR[h.grade] } as React.CSSProperties}
       title={h.extra}
     >
-      <span style={{ fontWeight: 700, color: GRADE_COLOR[h.grade], fontSize: "0.68rem" }}>
-        {h.grade}
-      </span>
+      <span className="tawheed-hadith-badge__grade">{h.grade}</span>
       <span>·</span>
       <span>{h.source} ({h.number})</span>
       <span>·</span>
@@ -170,7 +168,7 @@ export default function TawhidPage() {
       </header>
 
       {/* أنواع التوحيد */}
-      <section aria-labelledby="types-heading" style={{ marginBottom: "2rem" }}>
+      <section aria-labelledby="types-heading" className="twh-section">
         <h2 id="types-heading" className="tawheed-principles-heading">
           أنواع التوحيد الثلاثة
         </h2>
@@ -179,12 +177,9 @@ export default function TawhidPage() {
             <div
               key={t.num}
               className="tawheed-type-card"
-              style={{ borderTop: `3px solid ${t.color}` }}
+              style={{ "--card-color": t.color } as React.CSSProperties}
             >
-              <div
-                className="tawheed-type-card__num"
-                style={{ background: t.color }}
-              >
+              <div className="tawheed-type-card__num">
                 {t.num}
               </div>
               <p className="tawheed-type-card__title">{t.title}</p>
@@ -200,7 +195,7 @@ export default function TawhidPage() {
       </section>
 
       {/* مسائل مهمة */}
-      <section aria-labelledby="principles-heading" style={{ marginBottom: "2rem" }}>
+      <section aria-labelledby="principles-heading" className="twh-section">
         <h2 id="principles-heading" className="tawheed-principles-heading">
           مسائل مهمة في التوحيد
         </h2>
@@ -210,19 +205,8 @@ export default function TawhidPage() {
               <p className="tawheed-principle-card__title">{p.title}</p>
               <p className="tawheed-principle-card__body">{p.body}</p>
               {p.hadith && (
-                <div style={{ marginTop: "0.5rem" }}>
-                  <p
-                    style={{
-                      fontFamily: "Amiri Quran, Scheherazade New, serif",
-                      fontSize: "0.9rem",
-                      lineHeight: 1.9,
-                      color: "var(--text-base, #1a1a1a)",
-                      margin: "0 0 0.25rem",
-                      direction: "rtl",
-                    }}
-                  >
-                    «{p.hadith.text}»
-                  </p>
+                <div className="twh-hadith-wrap">
+                  <p className="twh-hadith-text">«{p.hadith.text}»</p>
                   <HadithBadge h={p.hadith} />
                 </div>
               )}
@@ -232,7 +216,7 @@ export default function TawhidPage() {
       </section>
 
       {/* أقسام ذات صلة */}
-      <section aria-labelledby="related-heading" style={{ marginBottom: "3rem" }}>
+      <section aria-labelledby="related-heading" className="twh-section twh-section--mb3">
         <h2 id="related-heading" className="tawheed-principles-heading">
           استكشف أيضاً
         </h2>

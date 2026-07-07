@@ -45,11 +45,9 @@ function LevelBar({ stats }: { stats: ProfileStats }) {
       : 100;
 
   return (
-    <div className="profile-level-bar">
+    <div className="profile-level-bar" style={{ "--level-color": level.color } as React.CSSProperties}>
       <div className="profile-level-bar__head">
-        <span className="profile-level-bar__title" style={{ color: level.color }}>
-          {level.titleAr}
-        </span>
+        <span className="profile-level-bar__title">{level.titleAr}</span>
         <span className="profile-level-bar__xp">
           {level.xp.toLocaleString("ar-KW")} / {level.nextLevelXp.toLocaleString("ar-KW")} XP
         </span>
@@ -57,7 +55,7 @@ function LevelBar({ stats }: { stats: ProfileStats }) {
       <div className="profile-level-bar__track">
         <div
           className="profile-level-bar__fill"
-          style={{ width: `${pct}%`, background: level.color }}
+          style={{ "--level-pct": `${pct}%` } as React.CSSProperties}
         />
       </div>
       <div className="profile-level-bar__meta">
@@ -159,7 +157,7 @@ function ResumeList({
                 <div className="profile-resume__track">
                   <div
                     className="profile-resume__fill"
-                    style={{ width: `${item.position.pct}%` }}
+                    style={{ "--resume-pct": `${item.position.pct}%` } as React.CSSProperties}
                   />
                 </div>
               )}
@@ -283,11 +281,9 @@ export default function UserStatsPage() {
 
   if (!isLoggedIn) {
     return (
-      <div className="page-shell narrow" dir="rtl" style={{ textAlign: "center", paddingTop: "3rem" }}>
-        <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>🔐</div>
-        <p style={{ color: "var(--majalis-ink-soft)", marginBottom: "1rem" }}>
-          سجّل الدخول لعرض ملفك الشخصي وإنجازاتك.
-        </p>
+      <div className="page-shell narrow usp-login-prompt" dir="rtl">
+        <div className="usp-login-icon">🔐</div>
+        <p className="usp-login-msg">سجّل الدخول لعرض ملفك الشخصي وإنجازاتك.</p>
         <Link href="/login?next=/profile" className="ui-card-btn">
           تسجيل الدخول
         </Link>
@@ -310,20 +306,14 @@ export default function UserStatsPage() {
 
       {/* ── بطاقة الهوية ── */}
       {stats && (
-        <div className="profile-identity ui-card">
+        <div className="profile-identity ui-card" style={{ "--level-color": stats.level.color } as React.CSSProperties}>
           <div className="profile-identity__left">
-            <div
-              className="profile-identity__avatar"
-              style={{ background: stats.level.color }}
-            >
+            <div className="profile-identity__avatar">
               {displayName.slice(0, 1)}
             </div>
             <div>
               <div className="profile-identity__name">{displayName}</div>
-              <div
-                className="profile-identity__level-badge"
-                style={{ color: stats.level.color, borderColor: stats.level.color }}
-              >
+              <div className="profile-identity__level-badge">
                 {stats.level.titleAr}
               </div>
             </div>
