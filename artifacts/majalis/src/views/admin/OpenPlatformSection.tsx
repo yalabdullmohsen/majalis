@@ -14,6 +14,24 @@ import {
   type OpenPlatformDashboard,
 } from "@/lib/open-platform-service";
 
+function StatCard({ label, value, color }: { label: string; value: string | number; color?: string }) {
+  return (
+    <div className="ii-stat" style={color ? { "--ii-val-color": color } as React.CSSProperties : undefined}>
+      <div className="ii-stat__label">{label}</div>
+      <div className="ii-stat__value">{value}</div>
+    </div>
+  );
+}
+
+function Panel({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <div className="ii-panel">
+      <h3 className="ii-panel-h3">{title}</h3>
+      {children}
+    </div>
+  );
+}
+
 export function OpenPlatformSection() {
   const { showSuccess, showError } = useAdminShell();
   const [dashboard, setDashboard] = useState<OpenPlatformDashboard | null>(null);
@@ -96,24 +114,24 @@ export function OpenPlatformSection() {
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem", flexWrap: "wrap", gap: "0.75rem" }}>
-        <h2 style={{ margin: 0 }}>Open Islamic Platform — لوحة المطورين</h2>
-        <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
-          <a href="/api/v1/docs?format=html" target="_blank" rel="noreferrer" style={{ padding: "0.5rem 1rem", border: "1px solid var(--line)", borderRadius: "0.375rem", textDecoration: "none" }}>
+      <div className="ops-header">
+        <h2 className="ops-title">Open Islamic Platform — لوحة المطورين</h2>
+        <div className="ops-btn-group">
+          <a href="/api/v1/docs?format=html" target="_blank" rel="noreferrer" className="ops-docs-link">
             التوثيق
           </a>
-          <button type="button" onClick={handleReport}>إنشاء التقرير</button>
+          <button type="button" onClick={handleReport} className="ops-btn">إنشاء التقرير</button>
         </div>
       </div>
 
       {createdKey && (
-        <div style={{ padding: "1rem", marginBottom: "1rem", background: "rgba(14,110,82,0.08)", borderRadius: "0.5rem", fontSize: "0.875rem" }}>
+        <div className="ops-created-key">
           <strong>مفتاح API (يُعرض مرة واحدة):</strong>
-          <code style={{ display: "block", marginTop: "0.5rem", wordBreak: "break-all" }}>{createdKey}</code>
+          <code className="ops-created-code">{createdKey}</code>
         </div>
       )}
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: "1rem", marginBottom: "2rem" }}>
+      <div className="ii-stats-grid">
         <StatCard label="Endpoints" value={API_VERSIONS.length * 20 + "+"} />
         <StatCard label="الأقسام" value={dashboard?.resources?.length ?? 0} />
         <StatCard label="مفاتيح API" value={dashboard?.keys?.length ?? 0} />
@@ -124,10 +142,10 @@ export function OpenPlatformSection() {
         <StatCard label="أخطاء" value={dashboard?.usage?.errors ?? 0} color="#dc2626" />
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "1.5rem", marginBottom: "2rem" }}>
+      <div className="ii-panels-grid">
         <Panel title="إصدارات API">
           {API_VERSIONS.map((v) => (
-            <div key={v} style={{ fontSize: "0.8125rem", padding: "0.25rem 0" }}>
+            <div key={v} className="ops-api-row">
               <a href={`/api/${v}/docs?format=html`} target="_blank" rel="noreferrer"><code>/api/{v}</code></a>
               {v === "v1" && " — Stable"}
               {v === "v2" && " — Enhanced metadata"}
@@ -142,19 +160,19 @@ export function OpenPlatformSection() {
             placeholder="اسم المفتاح"
             value={newKeyName}
             onChange={(e) => setNewKeyName(e.target.value)}
-            style={{ width: "100%", marginBottom: "0.5rem", padding: "0.5rem" }}
+            className="ops-key-input"
           />
-          <button type="button" onClick={handleCreateKey}>إنشاء مفتاح</button>
+          <button type="button" onClick={handleCreateKey} className="ops-btn">إنشاء مفتاح</button>
         </Panel>
 
         <Panel title="مفاتيح API">
           {(dashboard?.keys || []).map((k) => (
-            <div key={k.id} style={{ fontSize: "0.8125rem", padding: "0.35rem 0", display: "flex", justifyContent: "space-between" }}>
+            <div key={k.id} className="ops-key-row">
               <span>{k.name} ({k.key_prefix}...)</span>
-              <button type="button" style={{ fontSize: "0.75rem" }} onClick={() => handleRevoke(k.id)}>إلغاء</button>
+              <button type="button" className="ops-revoke-btn" onClick={() => handleRevoke(k.id)}>إلغاء</button>
             </div>
           ))}
-          {!dashboard?.keys?.length && <p style={{ fontSize: "0.8125rem", color: "var(--ink-soft)" }}>لا مفاتيح بعد</p>}
+          {!dashboard?.keys?.length && <p className="ii-muted">لا مفاتيح بعد</p>}
         </Panel>
 
         <Panel title="Webhooks">
@@ -163,17 +181,17 @@ export function OpenPlatformSection() {
             placeholder="https://example.com/webhook"
             value={newWebhookUrl}
             onChange={(e) => setNewWebhookUrl(e.target.value)}
-            style={{ width: "100%", marginBottom: "0.5rem", padding: "0.5rem" }}
+            className="ops-key-input"
           />
-          <button type="button" onClick={handleCreateWebhook}>إضافة Webhook</button>
+          <button type="button" onClick={handleCreateWebhook} className="ops-btn">إضافة Webhook</button>
           {webhooks.map((w) => (
-            <div key={w.id} style={{ fontSize: "0.75rem", marginTop: "0.5rem", wordBreak: "break-all" }}>{w.url}</div>
+            <div key={w.id} className="ops-webhook-url">{w.url}</div>
           ))}
         </Panel>
 
         <Panel title="الأقسام المغطاة">
           {(dashboard?.resources || []).slice(0, 12).map((r) => (
-            <div key={r.id} style={{ fontSize: "0.8125rem", padding: "0.15rem 0" }}>
+            <div key={r.id} className="ops-resource-row">
               <code>GET /api/v1/{r.id}</code> — {r.label}
             </div>
           ))}
@@ -181,45 +199,27 @@ export function OpenPlatformSection() {
 
         <Panel title="سجل الطلبات">
           {logs.slice(0, 8).map((l) => (
-            <div key={l.id} style={{ fontSize: "0.75rem", padding: "0.2rem 0" }}>
+            <div key={l.id} className="ops-log-row">
               {l.method} {l.path} — {l.status_code} ({l.response_ms}ms)
             </div>
           ))}
-          {!logs.length && <p style={{ fontSize: "0.8125rem", color: "var(--ink-soft)" }}>لا سجلات بعد</p>}
+          {!logs.length && <p className="ii-muted">لا سجلات بعد</p>}
         </Panel>
       </div>
 
       {plan && (
         <section>
-          <h3 style={{ fontSize: "1rem", fontWeight: 700, marginBottom: "1rem" }}>خطة الإصدار القادم</h3>
+          <h3 className="ops-plan-h3">خطة الإصدار القادم</h3>
           {plan.roadmap?.map((r: any) => (
-            <div key={r.version} style={{ marginBottom: "1rem", padding: "1rem", border: "1px solid var(--line)", borderRadius: "0.5rem" }}>
+            <div key={r.version} className="ops-release-box">
               <strong>{r.version}</strong>
-              <ul style={{ margin: "0.5rem 0 0", paddingInlineStart: "1.25rem", fontSize: "0.8125rem" }}>
+              <ul className="ops-release-ul">
                 {r.features?.map((f: string) => <li key={f}>{f}</li>)}
               </ul>
             </div>
           ))}
         </section>
       )}
-    </div>
-  );
-}
-
-function StatCard({ label, value, color }: { label: string; value: string | number; color?: string }) {
-  return (
-    <div style={{ padding: "1rem", borderRadius: "0.5rem", border: "1px solid var(--line)" }}>
-      <div style={{ fontSize: "0.75rem", color: "var(--ink-soft)" }}>{label}</div>
-      <div style={{ fontSize: "1.5rem", fontWeight: 700, color: color || "inherit" }}>{value}</div>
-    </div>
-  );
-}
-
-function Panel({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <div style={{ padding: "1rem", borderRadius: "0.5rem", border: "1px solid var(--line)" }}>
-      <h3 style={{ fontSize: "0.875rem", fontWeight: 700, marginBottom: "0.75rem" }}>{title}</h3>
-      {children}
     </div>
   );
 }

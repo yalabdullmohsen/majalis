@@ -8,19 +8,11 @@ import {
 import { runImportJob, previewDedup } from "@/lib/cms";
 import { getCmsDashboardStats, getRecentImportJobs, getDuplicateReport } from "@/lib/cms/supabase-cms";
 import { getRecentAuditLogs } from "@/lib/cms/audit-log";
-import { C } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
 import { AdminSectionToolbar } from "./AdminSectionToolbar";
 import { useAdminShell } from "./AdminShell";
 import { ContentFileImport } from "./ContentFileImport";
 import { Phase2TrialImport } from "./Phase2TrialImport";
-
-const monoTextarea: React.CSSProperties = {
-  width: "100%", boxSizing: "border-box", minHeight: "12rem", resize: "vertical",
-  padding: "0.75rem", borderRadius: "0.375rem", border: `1px solid ${C.line}`,
-  background: "#fffdf8", color: C.ink, fontSize: "0.8125rem", lineHeight: 1.6,
-  fontFamily: "ui-monospace, Menlo, monospace", direction: "ltr", textAlign: "left",
-};
 
 export function AggregatorSection() {
   const { showSuccess, showError } = useAdminShell();
@@ -102,7 +94,7 @@ export function AggregatorSection() {
         }
       />
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))", gap: "0.75rem", marginBottom: "1.5rem" }}>
+      <div className="agg-stats-grid">
         {[
           { label: "فهرس CMS / محتوى", value: stats.indexTotal },
           { label: "عمليات استيراد", value: stats.importJobsTotal },
@@ -112,15 +104,15 @@ export function AggregatorSection() {
           { label: "مؤرشفة", value: stats.archivedCount },
           { label: "سجل اليوم", value: stats.auditLogsToday },
         ].map((c) => (
-          <div key={c.label} style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.625rem", padding: "1rem", textAlign: "center" }}>
-            <p style={{ margin: 0, fontSize: "1.5rem", fontWeight: 700, color: C.emeraldDeep }}>{(c.value ?? 0).toLocaleString("ar")}</p>
-            <p style={{ margin: "0.25rem 0 0", fontSize: "0.8125rem", color: C.inkSoft }}>{c.label}</p>
+          <div key={c.label} className="agg-stat">
+            <p className="agg-stat__value">{(c.value ?? 0).toLocaleString("ar")}</p>
+            <p className="agg-stat__label">{c.label}</p>
           </div>
         ))}
       </div>
 
       {(stats.lastImportAt || (stats.sources ?? []).length > 0) && (
-        <p style={{ margin: "0 0 1.25rem", fontSize: "0.8125rem", color: C.inkSoft, lineHeight: 1.7 }}>
+        <p className="agg-last-import">
           {stats.lastImportAt && (
             <>
               آخر استيراد: {stats.lastImportType || "—"} — {stats.lastImportStatus || "—"}
@@ -134,13 +126,13 @@ export function AggregatorSection() {
         </p>
       )}
 
-      <section style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.625rem", padding: "1.25rem", marginBottom: "1.5rem" }}>
-        <h3 style={{ margin: "0 0 1rem", color: C.emeraldDeep }}>استيراد محتوى (JSON)</h3>
-        <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "0.75rem" }}>
+      <section className="agg-import-section">
+        <h3 className="agg-import-h3">استيراد محتوى (JSON)</h3>
+        <div className="agg-import-row">
           <select
             value={kind}
             onChange={(e) => setKind(e.target.value as CmsContentKind)}
-            style={{ padding: "0.5rem", borderRadius: "0.375rem", border: `1px solid ${C.line}`, fontFamily: "inherit" }}
+            className="agg-select"
           >
             {CMS_CONTENT_KINDS.map((k) => (
               <option key={k} value={k}>{CMS_KIND_LABELS[k]}</option>
@@ -150,32 +142,32 @@ export function AggregatorSection() {
             type="button"
             onClick={runImport}
             disabled={running || !jsonText.trim()}
-            style={{ padding: "0.5rem 1.25rem", borderRadius: "0.375rem", border: "none", background: C.emerald, color: C.parchment, cursor: "pointer", fontFamily: "inherit", fontWeight: 600 }}
+            className="agg-run-btn"
           >
             {running ? "جارٍ الاستيراد…" : "تشغيل Aggregator"}
           </button>
         </div>
         <textarea
-          style={monoTextarea}
+          className="blk-mono-textarea"
           value={jsonText}
           onChange={(e) => setJsonText(e.target.value)}
           placeholder={'[{"title":"…","external_key":"…","speaker_name":"…"}]'}
           spellCheck={false}
         />
         {lastResult && (
-          <p style={{ marginTop: "0.75rem", fontSize: "0.875rem", color: C.inkSoft }}>
+          <p className="agg-last-result">
             آخر عملية: {lastResult.inserted} إضافة · {lastResult.updated} تحديث · {lastResult.duplicates} تكرار · {lastResult.errors} خطأ
           </p>
         )}
       </section>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1rem" }}>
-        <section style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.625rem", padding: "1.25rem" }}>
-          <h3 style={{ margin: "0 0 0.75rem", color: C.emeraldDeep, fontSize: "1rem" }}>آخر عمليات الاستيراد</h3>
+      <div className="agg-panels-grid">
+        <section className="agg-panel">
+          <h3 className="agg-panel-h3">آخر عمليات الاستيراد</h3>
           {jobs.length === 0 ? (
-            <p style={{ color: C.inkSoft, fontSize: "0.875rem" }}>لا توجد عمليات استيراد بعد</p>
+            <p className="agg-panel-empty">لا توجد عمليات استيراد بعد</p>
           ) : (
-            <ul style={{ margin: 0, paddingInlineStart: "1.1rem", fontSize: "0.8125rem", lineHeight: 1.9 }}>
+            <ul className="agg-panel-ul">
               {jobs.map((j) => (
                 <li key={j.id}>
                   {CMS_KIND_LABELS[j.content_kind as CmsContentKind] || j.content_kind}
@@ -187,12 +179,12 @@ export function AggregatorSection() {
           )}
         </section>
 
-        <section style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.625rem", padding: "1.25rem" }}>
-          <h3 style={{ margin: "0 0 0.75rem", color: C.emeraldDeep, fontSize: "1rem" }}>سجل التدقيق (Audit)</h3>
+        <section className="agg-panel">
+          <h3 className="agg-panel-h3">سجل التدقيق (Audit)</h3>
           {audit.length === 0 ? (
-            <p style={{ color: C.inkSoft, fontSize: "0.875rem" }}>لا سجلات بعد</p>
+            <p className="agg-panel-empty">لا سجلات بعد</p>
           ) : (
-            <ul style={{ margin: 0, paddingInlineStart: "1.1rem", fontSize: "0.8125rem", lineHeight: 1.9 }}>
+            <ul className="agg-panel-ul">
               {audit.map((a) => (
                 <li key={a.id}>{a.action} — {a.table_name}</li>
               ))}
@@ -200,12 +192,12 @@ export function AggregatorSection() {
           )}
         </section>
 
-        <section style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.625rem", padding: "1.25rem" }}>
-          <h3 style={{ margin: "0 0 0.75rem", color: C.emeraldDeep, fontSize: "1rem" }}>تكرارات محتملة</h3>
+        <section className="agg-panel">
+          <h3 className="agg-panel-h3">تكرارات محتملة</h3>
           {duplicates.length === 0 ? (
-            <p style={{ color: C.inkSoft, fontSize: "0.875rem" }}>لا تكرارات في external_key</p>
+            <p className="agg-panel-empty">لا تكرارات في external_key</p>
           ) : (
-            <ul style={{ margin: 0, paddingInlineStart: "1.1rem", fontSize: "0.8125rem", lineHeight: 1.9 }}>
+            <ul className="agg-panel-ul">
               {duplicates.map((d) => (
                 <li key={d.key}>{d.key} × {d.count}</li>
               ))}

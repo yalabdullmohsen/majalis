@@ -1,7 +1,6 @@
 import { useRef, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { adminImportFetch } from "@/lib/admin-api";
-import { C } from "@/lib/theme";
 import { chunkRows, formatImportApiError, parseImportFile, UPLOAD_BATCH_SIZE } from "@/lib/import-parse";
 
 const IMPORT_TYPES = [
@@ -15,18 +14,6 @@ const IMPORT_TYPES = [
   { value: "adhkar", label: "الأذكار" },
   { value: "rulings", label: "الفتاوى" },
 ];
-
-const BTN: React.CSSProperties = {
-  padding: "0.5rem 1.1rem",
-  borderRadius: "0.375rem",
-  border: `1px solid ${C.emerald}`,
-  background: C.panel,
-  color: C.emeraldDeep,
-  cursor: "pointer",
-  fontFamily: "inherit",
-  fontSize: "0.875rem",
-  fontWeight: 600,
-};
 
 const POLL_INTERVAL_MS = 1000;
 const KICK_AFTER_MS = 3000;
@@ -441,7 +428,7 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
 
   return (
     <>
-      <button type="button" onClick={() => setOpen(true)} style={BTN}>
+      <button type="button" onClick={() => setOpen(true)} className="cfi-trigger-btn">
         ⇪ استيراد من ملف
       </button>
       <input
@@ -453,144 +440,76 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
       />
 
       {open && (
-        <div
-          style={{
-            position: "fixed",
-            inset: 0,
-            background: "rgba(36,31,24,0.6)",
-            zIndex: 1000,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "1rem",
-          }}
-          onClick={close}
-        >
-          <div
-            style={{
-              width: "100%",
-              maxWidth: "32rem",
-              background: C.parchment,
-              borderRadius: "0.5rem",
-              border: `1px solid ${C.line}`,
-              padding: "1.25rem",
-              boxShadow: "0 8px 32px rgba(0,0,0,0.2)",
-            }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <h2 style={{ margin: "0 0 0.75rem", fontSize: "1.0625rem", color: C.emeraldDeep }}>
-              استيراد من ملف (JSON / CSV)
-            </h2>
-            <p style={{ margin: "0 0 1rem", fontSize: "0.85rem", color: C.inkSoft, lineHeight: 1.8 }}>
+        <div className="adm-modal__overlay" onClick={close}>
+          <div className="cfi-dialog" onClick={(e) => e.stopPropagation()}>
+            <h2 className="cfi-title">استيراد من ملف (JSON / CSV)</h2>
+            <p className="cfi-desc">
               يُحلَّل الملف محليًا ثم تُرفع الدفعات إلى مهمة استيراد — الملفات الصغيرة تُعالَج فورًا،
               والكبيرة في الخلفية مع تتبع التقدّم كل ثانية.
             </p>
 
-            <label style={{ display: "block", marginBottom: "0.75rem", fontSize: "0.875rem" }}>
+            <label className="cfi-type-label">
               نوع المحتوى
               <select
                 value={type}
                 onChange={(e) => setType(e.target.value)}
                 disabled={running}
-                style={{
-                  display: "block",
-                  width: "100%",
-                  marginTop: "0.35rem",
-                  padding: "0.5rem",
-                  borderRadius: "0.375rem",
-                  border: `1px solid ${C.line}`,
-                  fontFamily: "inherit",
-                }}
+                className="cfi-type-select"
               >
                 {IMPORT_TYPES.map((t) => (
-                  <option key={t.value} value={t.value}>
-                    {t.label}
-                  </option>
+                  <option key={t.value} value={t.value}>{t.label}</option>
                 ))}
               </select>
             </label>
 
-            <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+            <div className="cfi-btn-row">
               <button
                 type="button"
                 disabled={running}
                 onClick={() => inputRef.current?.click()}
-                style={{
-                  ...BTN,
-                  background: running ? C.sage : C.emerald,
-                  color: C.parchment,
-                  border: "none",
-                }}
+                className="cfi-choose-btn"
               >
                 {running ? "جارٍ الاستيراد…" : "اختيار ملف"}
               </button>
               {canRetry && !running && (
-                <button type="button" onClick={retryImport} style={{ ...BTN, borderColor: "#0E6E52", color: "#0E6E52" }}>
+                <button type="button" onClick={retryImport} className="cfi-retry-btn">
                   إعادة المحاولة
                 </button>
               )}
-              <button type="button" onClick={close} disabled={running} style={BTN}>
+              <button type="button" onClick={close} disabled={running} className="cfi-close-btn">
                 إغلاق
               </button>
             </div>
 
-            {filename && (
-              <p style={{ margin: "0.75rem 0 0", fontSize: "0.8125rem", color: C.inkSoft }}>
-                الملف: {filename}
-              </p>
-            )}
+            {filename && <p className="cfi-filename">الملف: {filename}</p>}
 
             {running && (
-              <div style={{ marginTop: "0.875rem" }}>
-                <div
-                  style={{
-                    height: "8px",
-                    borderRadius: "4px",
-                    background: C.line,
-                    overflow: "hidden",
-                  }}
-                >
+              <div className="blk-progress">
+                <div className="blk-progress__track">
                   <div
-                    style={{
-                      height: "100%",
-                      width: `${progressPct}%`,
-                      background: C.emerald,
-                      transition: "width 0.3s ease",
-                    }}
+                    className="blk-progress__fill"
+                    style={{ "--blk-pct": `${progressPct}%` } as React.CSSProperties}
                   />
                 </div>
-                <p style={{ margin: "0.35rem 0 0", fontSize: "0.8125rem", color: C.inkSoft }}>
-                  {phase} ({progressPct}%)
-                </p>
+                <p className="blk-progress__text">{phase} ({progressPct}%)</p>
               </div>
             )}
 
-            {error && (
-              <p style={{ margin: "0.75rem 0 0", color: "#0E6E52", fontSize: "0.875rem" }}>{error}</p>
-            )}
+            {error && <p className="cfi-error">{error}</p>}
 
             {report && (
-              <div
-                style={{
-                  marginTop: "0.875rem",
-                  padding: "0.875rem",
-                  borderRadius: "0.375rem",
-                  background: report.ok ? "#D1FAE5" : "rgba(14,110,82,0.08)",
-                  border: `1px solid ${C.line}`,
-                  fontSize: "0.875rem",
-                }}
-              >
-                <p style={{ margin: 0, fontWeight: 600 }}>
+              <div className={`cfi-report${report.ok ? " cfi-report--ok" : " cfi-report--fail"}`}>
+                <p className="cfi-report__hd">
                   {report.ok ? "✓ نجح الاستيراد" : "✗ اكتمل مع أخطاء"} — {report.label || type}
                 </p>
                 {report.jobId && (
-                  <p style={{ margin: "0.35rem 0 0", fontSize: "0.8125rem", color: C.inkSoft }}>
+                  <p className="cfi-report__meta">
                     معرّف المهمة: <code>{report.jobId}</code>
                     {report.targetTable ? ` · الجدول: ${report.targetTable}` : ""}
                   </p>
                 )}
                 {report.stats && (
-                  <p style={{ margin: "0.5rem 0 0" }}>
+                  <p className="cfi-report__stats">
                     قرئ {report.stats.read} · استورد {report.stats.imported} · تخطى {report.stats.skipped} ·
                     فشل {report.stats.failed}
                     {(report.stats.rejected ?? report.stats.invalid)
@@ -599,16 +518,14 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
                   </p>
                 )}
                 {report.timings && (
-                  <p style={{ margin: "0.35rem 0 0", fontSize: "0.8125rem", color: C.inkSoft }}>
+                  <p className="cfi-report__timing">
                     تحليل {report.timings.parse_ms ?? "—"}ms · تحقق {report.timings.validation_ms ?? "—"}ms ·
                     قاعدة البيانات {report.timings.database_ms ?? "—"}ms · الإجمالي{" "}
                     {report.timings.total_ms ?? "—"}ms
                   </p>
                 )}
                 {[...(report.validationErrors || []), ...(report.importErrors || [])].slice(0, 20).map((msg) => (
-                  <p key={msg} style={{ margin: "0.25rem 0 0", color: "#0E6E52", fontSize: "0.8125rem" }}>
-                    • {msg}
-                  </p>
+                  <p key={msg} className="cfi-report__err">• {msg}</p>
                 ))}
               </div>
             )}

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { adminGetSheikhs, adminUpsertSheikh, adminDeleteSheikh, uploadSheikhImage, deleteSheikhImage } from "@/lib/supabase";
-import { C, GOVERNORATES } from "@/lib/theme";
+import { GOVERNORATES } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
 import { AdminModal, Field, FieldRow } from "./AdminModal";
 import { BulkImport } from "./BulkImport";
@@ -15,9 +15,6 @@ const EMPTY: any = {
   name: "", bio: "", biography: "", city: "", photo_url: "", image_url: "",
   years_experience: "", is_verified: false, specialties: "", qualifications: "", ijazah: "",
 };
-
-const BTN_EDIT: React.CSSProperties = { padding: "0.25rem 0.625rem", borderRadius: "0.25rem", border: `1px solid ${C.line}`, background: C.panel, color: C.emeraldDeep, cursor: "pointer", fontSize: "0.75rem", fontFamily: "inherit" };
-const BTN_DEL: React.CSSProperties = { ...BTN_EDIT, color: "#dc2626" };
 
 export function SheikhsSection() {
   const [items, setItems] = useState<any[]>([]);
@@ -110,9 +107,9 @@ export function SheikhsSection() {
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.875rem", flexWrap: "wrap", gap: "0.75rem" }}>
-        <h2 style={{ margin: 0, fontSize: "1.125rem", fontWeight: 700, color: C.emeraldDeep }}>المشايخ ({items.length})</h2>
-        <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+      <div className="skh-header">
+        <h2 className="skh-title">المشايخ ({items.length})</h2>
+        <div className="skh-actions">
           <BulkImport
             title="استيراد المشايخ"
             hint="التخصصات والمؤهلات يمكن أن تكون مصفوفة نصوص أو نصًا مفصولًا بفواصل."
@@ -125,46 +122,52 @@ export function SheikhsSection() {
             })}
             onDone={load}
           />
-          <button onClick={openAdd} style={{ padding: "0.5rem 1.25rem", borderRadius: "0.375rem", background: C.emerald, color: C.parchment, border: "none", cursor: "pointer", fontFamily: "inherit", fontSize: "0.875rem", fontWeight: 600 }}>+ إضافة شيخ</button>
+          <button onClick={openAdd} className="skh-add-btn">+ إضافة شيخ</button>
         </div>
       </div>
-      <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="بحث في المشايخ..." className="adm-input" style={{ maxWidth: "20rem", marginBottom: "1rem" }} />
+      <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="بحث في المشايخ..." className="adm-input skh-search" />
 
       {loading ? <Loading /> : (
-        <div style={{ overflowX: "auto" }}>
-          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.875rem" }}>
+        <div className="skh-table-wrap">
+          <table className="skh-table">
             <thead>
-              <tr style={{ background: C.parchmentDeep }}>
+              <tr className="skh-thead-row">
                 {["الاسم", "المحافظة", "الحالة", "التخصصات", "سنوات الخبرة", "إجراءات"].map(h => (
-                  <th key={h} style={{ padding: "0.625rem 0.75rem", textAlign: "right", color: C.emeraldDeep, fontWeight: 700, borderBottom: `1px solid ${C.line}`, whiteSpace: "nowrap" }}>{h}</th>
+                  <th key={h} className="skh-th">{h}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
               {filtered.map(item => (
-                <tr key={item.id} style={{ borderBottom: `1px solid ${C.line}` }}>
-                  <td style={{ padding: "0.625rem 0.75rem", color: C.ink, fontWeight: 600 }}>{item.name}</td>
-                  <td style={{ padding: "0.625rem 0.75rem", color: C.inkSoft }}>{item.city || "—"}</td>
-                  <td style={{ padding: "0.625rem 0.75rem" }}>
-                    <span style={{ padding: "0.125rem 0.5rem", borderRadius: "0.25rem", background: item.is_verified ? C.sage : C.parchmentDeep, color: item.is_verified ? C.emeraldDeep : C.inkSoft, fontSize: "0.75rem" }}>
+                <tr key={item.id} className="skh-tr">
+                  <td className="skh-td skh-td--name">{item.name}</td>
+                  <td className="skh-td">{item.city || "—"}</td>
+                  <td className="skh-td">
+                    <span
+                      className="skh-verified-badge"
+                      style={item.is_verified
+                        ? { "--skh-badge-bg": "var(--majalis-sage)", "--skh-badge-color": "var(--majalis-emerald-deep)" } as React.CSSProperties
+                        : undefined
+                      }
+                    >
                       {item.is_verified ? "معتمد" : "غير معتمد"}
                     </span>
                   </td>
-                  <td style={{ padding: "0.625rem 0.75rem", color: C.inkSoft, maxWidth: "180px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                  <td className="skh-td skh-td--specialty">
                     {(item.specialties || []).join("، ") || "—"}
                   </td>
-                  <td style={{ padding: "0.625rem 0.75rem", color: C.inkSoft, textAlign: "center" }}>{item.years_experience ?? "—"}</td>
-                  <td style={{ padding: "0.625rem 0.75rem" }}>
-                    <div style={{ display: "flex", gap: "0.375rem" }}>
-                      <button onClick={() => openEdit(item)} style={BTN_EDIT}>تعديل</button>
-                      <button onClick={() => handleDelete(item.id, item.name)} style={BTN_DEL}>حذف</button>
+                  <td className="skh-td skh-td--center">{item.years_experience ?? "—"}</td>
+                  <td className="skh-td">
+                    <div className="skh-cell-actions">
+                      <button onClick={() => openEdit(item)} className="skh-btn-edit">تعديل</button>
+                      <button onClick={() => handleDelete(item.id, item.name)} className="skh-btn-del">حذف</button>
                     </div>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-          {filtered.length === 0 && <p style={{ textAlign: "center", color: C.inkSoft, padding: "2rem" }}>{search ? "لا يوجد مشايخ مطابقون" : "لا يوجد مشايخ — ابدأ بإضافة أول شيخ"}</p>}
+          {filtered.length === 0 && <p className="skh-empty">{search ? "لا يوجد مشايخ مطابقون" : "لا يوجد مشايخ — ابدأ بإضافة أول شيخ"}</p>}
         </div>
       )}
 
@@ -182,7 +185,7 @@ export function SheikhsSection() {
           <textarea className="adm-textarea" value={form.bio || ""} onChange={e => set("bio", e.target.value)} placeholder="وصف مختصر يظهر في بطاقة الشيخ..." />
         </Field>
         <Field label="السيرة العلمية التفصيلية">
-          <textarea className="adm-textarea" style={{ minHeight: "7rem" }} value={form.biography || ""} onChange={e => set("biography", e.target.value)} placeholder="السيرة العلمية الكاملة..." />
+          <textarea className="adm-textarea skh-textarea--tall" value={form.biography || ""} onChange={e => set("biography", e.target.value)} placeholder="السيرة العلمية الكاملة..." />
         </Field>
         <Field label="التخصصات (افصل بفاصلة)">
           <input className="adm-input" value={form.specialties || ""} onChange={e => set("specialties", e.target.value)} placeholder="الفقه، العقيدة، التفسير" />
@@ -202,22 +205,22 @@ export function SheikhsSection() {
           </Field>
         </FieldRow>
         <Field label="صورة الشيخ">
-          <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
+          <div className="skh-img-row">
             <SheikhAvatar src={imagePreview || resolveSheikhImageUrl(form)} name={form.name || "شيخ"} size={96} />
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+            <div className="skh-img-actions">
               <input ref={fileInputRef} type="file" accept="image/png,image/jpeg,image/jpg,image/webp" hidden onChange={(e) => handleImagePick(e.target.files?.[0] || null)} />
-              <button type="button" style={BTN_EDIT} onClick={() => fileInputRef.current?.click()}>رفع صورة</button>
+              <button type="button" className="skh-btn-edit" onClick={() => fileInputRef.current?.click()}>رفع صورة</button>
               {(imagePreview || resolveSheikhImageUrl(form)) && (
-                <button type="button" style={BTN_DEL} onClick={handleRemoveImage}>حذف الصورة</button>
+                <button type="button" className="skh-btn-del" onClick={handleRemoveImage}>حذف الصورة</button>
               )}
-              <span style={{ fontSize: "0.75rem", color: C.inkSoft }}>معاينة قبل الحفظ — تُرفع عند الضغط على «حفظ»</span>
+              <span className="skh-img-hint">معاينة قبل الحفظ — تُرفع عند الضغط على «حفظ»</span>
             </div>
           </div>
         </Field>
         <Field label="الاعتماد">
-          <label style={{ display: "flex", alignItems: "center", gap: "0.5rem", cursor: "pointer" }}>
+          <label className="skh-checkbox-label">
             <input type="checkbox" checked={!!form.is_verified} onChange={e => set("is_verified", e.target.checked)} />
-            <span style={{ color: C.inkSoft, fontSize: "0.875rem" }}>شيخ معتمد ومُراجَع من فريق المنصة</span>
+            <span className="skh-checkbox-text">شيخ معتمد ومُراجَع من فريق المنصة</span>
           </label>
         </Field>
       </AdminModal>
