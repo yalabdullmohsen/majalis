@@ -78,10 +78,7 @@ export default function FiqhPage() {
   return (
     <div dir="rtl" className="min-h-screen bg-[var(--majalis-parchment)]">
       {/* Hero */}
-      <div
-        className="text-white px-4 py-10"
-        style={{ background: "linear-gradient(to left, var(--majalis-emerald-deep), var(--majalis-emerald))" }}
-      >
+      <div className="text-white px-4 py-10 ldb-hero">
         <div className="max-w-5xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-white/10 text-teal-100 text-sm px-4 py-1.5 rounded-full mb-4">
             <span>⚖️</span>
@@ -146,8 +143,7 @@ export default function FiqhPage() {
             <div className="mt-8 text-center">
               <Link href="/fatwa">
                 <span
-                  className="inline-block px-8 py-3 text-white rounded-xl font-medium transition-colors cursor-pointer"
-                  style={{ background: "var(--majalis-emerald)" }}
+                  className="inline-block px-8 py-3 text-white rounded-xl font-medium transition-colors cursor-pointer fqp-cta-btn"
                 >
                   استعرض جميع الفتاوى
                 </span>
@@ -200,8 +196,7 @@ export default function FiqhPage() {
             <div className="mt-8 text-center">
               <Link href="/rulings">
                 <span
-                  className="inline-block px-8 py-3 text-white rounded-xl font-medium transition-colors cursor-pointer"
-                  style={{ background: "var(--majalis-emerald)" }}
+                  className="inline-block px-8 py-3 text-white rounded-xl font-medium transition-colors cursor-pointer fqp-cta-btn"
                 >
                   استعرض موسوعة الأحكام
                 </span>
@@ -257,8 +252,7 @@ export default function FiqhPage() {
             <div className="mt-8 text-center">
               <Link href="/qa">
                 <span
-                  className="inline-block px-8 py-3 text-white rounded-xl font-medium transition-colors cursor-pointer"
-                  style={{ background: "var(--majalis-emerald)" }}
+                  className="inline-block px-8 py-3 text-white rounded-xl font-medium transition-colors cursor-pointer fqp-cta-btn"
                 >
                   استعرض جميع الأسئلة والأجوبة
                 </span>
@@ -294,8 +288,7 @@ export default function FiqhPage() {
             <div className="text-center">
               <Link href="/fiqh-council">
                 <span
-                  className="inline-block px-8 py-3 text-white rounded-xl font-medium transition-colors cursor-pointer"
-                  style={{ background: "var(--majalis-emerald)" }}
+                  className="inline-block px-8 py-3 text-white rounded-xl font-medium transition-colors cursor-pointer fqp-cta-btn"
                 >
                   دخول المجمع الفقهي
                 </span>

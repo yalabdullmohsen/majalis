@@ -6498,3 +6498,70 @@ button.primary:hover {
   color: var(--card-sub);
   border-top: 1px solid color-mix(in srgb, var(--card-sub) 25%, transparent);
 }
+
+/* ============================================================
+   §79 — KnowledgeGraphPage  (kng-* additions)
+   ============================================================ */
+.kng-filter-chip--typed.is-active {
+  background: var(--chip-color, var(--majalis-emerald));
+  border-color: var(--chip-color, var(--majalis-emerald));
+  color: #fff;
+}
+.kng-legend-dot { background: var(--lg-color, #6b7280); }
+.kng-panel { border-color: var(--panel-color, var(--majalis-line)); }
+.kng-type-badge {
+  background: color-mix(in srgb, var(--panel-color, var(--majalis-emerald)) 9%, transparent);
+  color: var(--panel-color, var(--majalis-emerald));
+}
+.kng-result-badge {
+  background: color-mix(in srgb, var(--rcard-color, #6b7280) 9%, transparent);
+  color: var(--rcard-color, #6b7280);
+}
+.kng-result-card:hover { border-color: var(--rcard-color, var(--majalis-emerald)); }
+.kng-type-chip {
+  border-color: var(--tc-color);
+  background: color-mix(in srgb, var(--tc-color) 6%, transparent);
+  color: var(--tc-color);
+}
+
+/* ============================================================
+   §80 — FiqhPage  (fqp-*)
+   ============================================================ */
+.fqp-cta-btn { background: var(--majalis-emerald); }
+
+/* ============================================================
+   §81 — VaultPage additions  (vault-login-*)
+   ============================================================ */
+.vault-login-prompt  { text-align: center; padding-top: 3rem; }
+.vault-login-icon    { font-size: 3rem; margin-bottom: 1rem; }
+.vault-login-msg     { color: var(--majalis-ink-soft, #5c564c); margin-bottom: 1rem; }
+.vault-loading-wrap  { margin: 3rem auto; }
+
+/* ============================================================
+   §82 — UpdatesPage  (upd-*)
+   ============================================================ */
+.updates-type-badge { background: var(--badge-color, #64748B); }
+.upd-auto-badge     { background: #0F766E; margin-inline-start: 0.35rem; }
+.upd-title-link     { text-decoration: none; }
+.upd-source-name    { font-size: 0.8125rem; opacity: 0.85; }
+
+/* ============================================================
+   §83 — TopicsIndexPage  (tip-*)
+   ============================================================ */
+.tip-section       { margin-bottom: 2rem; }
+.tip-section-title { font-size: 1.125rem; font-weight: 700; margin-bottom: 0.75rem; }
+.tip-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 0.75rem;
+}
+.tip-link {
+  display: block;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--line, #e5e7eb);
+  text-decoration: none;
+  text-align: center;
+  font-weight: 600;
+  background: var(--panel, #fff);
+}

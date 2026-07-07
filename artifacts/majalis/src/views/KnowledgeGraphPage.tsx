@@ -321,8 +321,8 @@ export default function KnowledgeGraphPage() {
           <div className="kng-filter-chips">
             {(["all", ...allTypes]).map((t) => (
               <button key={t} type="button" onClick={() => setFilterType(t)}
-                className={`kng-filter-chip${filterType === t ? " is-active" : ""}`}
-                style={filterType === t && t !== "all" ? { background: getColor(t), borderColor: getColor(t), color: "#fff" } : undefined}
+                className={`kng-filter-chip${t !== "all" ? " kng-filter-chip--typed" : ""}${filterType === t ? " is-active" : ""}`}
+                style={{ "--chip-color": getColor(t) } as React.CSSProperties}
               >
                 {t === "all" ? "الكل" : getTypeLabel(t)}
               </button>
@@ -333,7 +333,7 @@ export default function KnowledgeGraphPage() {
           <div className="kng-legend">
             {allTypes.map((t) => (
               <div key={t} className="kng-legend-item">
-                <span className="kng-legend-dot" style={{ background: getColor(t) }} />
+                <span className="kng-legend-dot" style={{ "--lg-color": getColor(t) } as React.CSSProperties} />
                 {getTypeLabel(t)}
               </div>
             ))}
@@ -411,11 +411,10 @@ export default function KnowledgeGraphPage() {
 
           {/* Selected node panel */}
           {selected && (
-            <div className="kng-panel" style={{ borderColor: getColor(selected.nodeType) }}>
+            <div className="kng-panel" style={{ "--panel-color": getColor(selected.nodeType) } as React.CSSProperties}>
               <div className="kng-panel__head">
                 <div className="kng-panel__info">
-                  <span className="kng-type-badge"
-                    style={{ background: `${getColor(selected.nodeType)}18`, color: getColor(selected.nodeType) }}>
+                  <span className="kng-type-badge">
                     {getTypeLabel(selected.nodeType)}
                   </span>
                   <h3 className="kng-panel__title">{selected.label}</h3>
@@ -517,12 +516,9 @@ export default function KnowledgeGraphPage() {
                 {tagResults.map((node) => {
                   const color = NODE_TYPE_COLOR[node.node_type as KnNodeType] ?? "#6b7280";
                   return (
-                    <Link key={node.id} href={getNodeHref(node)} className="kng-result-link">
-                      <div className="kng-result-card"
-                        onMouseEnter={(e) => (e.currentTarget.style.borderColor = color)}
-                        onMouseLeave={(e) => (e.currentTarget.style.borderColor = "")}
-                      >
-                        <span className="kng-result-badge" style={{ background: `${color}18`, color }}>
+                    <Link key={node.id} href={getNodeHref(node)} className="kng-result-link" style={{ "--rcard-color": color } as React.CSSProperties}>
+                      <div className="kng-result-card">
+                        <span className="kng-result-badge">
                           {NODE_TYPE_LABEL[node.node_type as KnNodeType] ?? node.node_type}
                         </span>
                         <div className="kng-result-title">{node.title}</div>
@@ -549,7 +545,7 @@ export default function KnowledgeGraphPage() {
                   <button key={t} type="button"
                     onClick={() => navigate(`/knowledge-graph?type=${t}`)}
                     className="kng-type-chip"
-                    style={{ borderColor: NODE_TYPE_COLOR[t], background: `${NODE_TYPE_COLOR[t]}10`, color: NODE_TYPE_COLOR[t] }}
+                    style={{ "--tc-color": NODE_TYPE_COLOR[t] } as React.CSSProperties}
                   >
                     {NODE_TYPE_LABEL[t]}
                   </button>

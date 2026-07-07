@@ -73,19 +73,19 @@ export default function UpdatesPage() {
               <div className="updates-timeline-meta">
                 <span
                   className="updates-type-badge"
-                  style={{ background: TYPE_COLORS[item.update_type] || "#64748B" }}
+                  style={{ "--badge-color": TYPE_COLORS[item.update_type] || "#64748B" } as React.CSSProperties}
                 >
                   {item.update_type}
                 </span>
                 {item.isAuto && (
-                  <span className="updates-type-badge" style={{ background: "#0F766E", marginInlineStart: "0.35rem" }}>
+                  <span className="updates-type-badge upd-auto-badge">
                     مصدر موثوق
                   </span>
                 )}
                 <time dateTime={item.published_at}>{formatDate(item.published_at)}</time>
               </div>
               {item.source_url ? (
-                <Link href={item.source_url} style={{ textDecoration: "none" }}>
+                <Link href={item.source_url} className="upd-title-link">
                   <h2 className="updates-timeline-title">{item.title}</h2>
                 </Link>
               ) : (
@@ -93,7 +93,7 @@ export default function UpdatesPage() {
               )}
               {item.summary && <p className="updates-timeline-summary">{item.summary}</p>}
               {item.isAuto && item.source_name && (
-                <p className="updates-timeline-summary" style={{ fontSize: "0.8125rem", opacity: 0.85 }}>
+                <p className="updates-timeline-summary upd-source-name">
                   المصدر: {item.source_name}
                 </p>
               )}

@@ -205,9 +205,9 @@ export default function VaultPage() {
 
   if (!isLoggedIn) {
     return (
-      <div className="page-shell narrow" dir="rtl" style={{ textAlign: "center", paddingTop: "3rem" }}>
-        <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>🔐</div>
-        <p style={{ color: "var(--majalis-ink-soft)", marginBottom: "1rem" }}>
+      <div className="page-shell narrow vault-login-prompt" dir="rtl">
+        <div className="vault-login-icon">🔐</div>
+        <p className="vault-login-msg">
           سجّل الدخول للوصول إلى محفظتك العلمية.
         </p>
         <Link href="/login?next=/vault" className="ui-card-btn">تسجيل الدخول</Link>
@@ -273,7 +273,7 @@ export default function VaultPage() {
       </div>
 
       {loading ? (
-        <div className="profile-loading" style={{ margin: "3rem auto" }}>
+        <div className="profile-loading vault-loading-wrap">
           <span className="profile-loading__dot" /><span className="profile-loading__dot" /><span className="profile-loading__dot" />
         </div>
       ) : (
