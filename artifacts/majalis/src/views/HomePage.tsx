@@ -44,6 +44,17 @@ const FEATURE_CATS = [
     ],
   },
   {
+    id: "haramain",
+    icon: "🕋",
+    label: "الحرمان الشريفان",
+    items: [
+      { href: "/lessons?filter=haramain", icon: "🕋", title: "دروس المسجد الحرام",    desc: "دروس مكة المكرمة والمسجد الحرام" },
+      { href: "/lessons?filter=nabawi",   icon: "🕌", title: "دروس المسجد النبوي",    desc: "دروس المدينة المنورة والمسجد النبوي" },
+      { href: "/fiqh-council",            icon: "⚖️", title: "المجمع الفقهي",          desc: "قرارات المجامع الفقهية الكبرى" },
+      { href: "/annual-courses",          icon: "🎓", title: "الدورات العلمية",         desc: "دورات العلماء والمؤسسات الشرعية" },
+    ],
+  },
+  {
     id: "worship",
     icon: "📿",
     label: "العبادة والأذكار",

@@ -138,7 +138,11 @@ export function LessonsSection() {
     load();
   };
   const handleSave = async () => {
-    if (!form.title.trim()) return alert("عنوان الدرس مطلوب");
+    if (!form.title?.trim()) {
+      form.title = form.speaker_name?.trim()
+        ? `درس الشيخ ${form.speaker_name.trim()}`
+        : `درس — ${new Date().toLocaleDateString("ar-SA")}`;
+    }
     setSaving(true);
     const venueName = (form.mosque || "").trim();
     const combinedMosque = form.venue_type && form.venue_type !== "مسجد" && venueName

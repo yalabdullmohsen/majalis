@@ -7,7 +7,6 @@ import {
   getQaCategories,
 } from "@/lib/supabase";
 import {
-  C,
   QA_RULING_TYPES,
   QA_RULING_CATEGORY_SLUG,
   QA_RULING_COLORS,
@@ -27,9 +26,6 @@ const EMPTY: any = {
   review_status: "needs_review",
   status: "draft",
 };
-
-const BTN_EDIT: React.CSSProperties = { padding: "0.25rem 0.625rem", borderRadius: "0.25rem", border: `1px solid ${C.line}`, background: C.panel, color: C.emeraldDeep, cursor: "pointer", fontSize: "0.75rem", fontFamily: "inherit" };
-const BTN_DEL: React.CSSProperties = { ...BTN_EDIT, color: "#dc2626" };
 
 export function QaSection() {
   const [items, setItems] = useState<any[]>([]);
@@ -100,16 +96,22 @@ export function QaSection() {
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem", flexWrap: "wrap", gap: "0.75rem" }}>
-        <h2 style={{ margin: 0, fontSize: "1.125rem", fontWeight: 700, color: C.emeraldDeep, display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap" }}>
+      <div className="qa-header">
+        <h2 className="qa-title">
           الأسئلة والأجوبة ({items.length})
-          <span style={{ padding: "0.1rem 0.5rem", borderRadius: "0.75rem", background: C.sage, color: C.emeraldDeep, fontSize: "0.7rem" }}>{publishedCount} منشور</span>
-          <span style={{ padding: "0.1rem 0.5rem", borderRadius: "0.75rem", background: C.parchmentDeep, color: C.inkSoft, fontSize: "0.7rem" }}>{draftCount} مسودة</span>
+          <span className="qa-badge" style={{ "--qa-badge-bg": "var(--majalis-sage)", "--qa-badge-color": "var(--majalis-emerald-deep)" } as React.CSSProperties}>
+            {publishedCount} منشور
+          </span>
+          <span className="qa-badge" style={{ "--qa-badge-bg": "var(--majalis-parchment-deep)", "--qa-badge-color": "var(--majalis-ink-soft)" } as React.CSSProperties}>
+            {draftCount} مسودة
+          </span>
           {reviewCount > 0 && (
-            <span style={{ padding: "0.1rem 0.5rem", borderRadius: "0.75rem", background: "rgba(14,110,82,0.08)", color: "#0E6E52", fontSize: "0.7rem" }}>{reviewCount} يحتاج مراجعة</span>
+            <span className="qa-badge" style={{ "--qa-badge-bg": "rgba(14,110,82,0.08)", "--qa-badge-color": "#0E6E52" } as React.CSSProperties}>
+              {reviewCount} يحتاج مراجعة
+            </span>
           )}
         </h2>
-        <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+        <div className="qa-actions">
           <BulkImport
             title="استيراد الأسئلة والأجوبة"
             hint="يمكن ربط التصنيف باسمه عبر الحقل category_name (يُطابَق تلقائيًا)."
@@ -125,63 +127,79 @@ export function QaSection() {
             }}
             onDone={load}
           />
-          <button onClick={openAdd} style={{ padding: "0.5rem 1.25rem", borderRadius: "0.375rem", background: C.emerald, color: C.parchment, border: "none", cursor: "pointer", fontFamily: "inherit", fontSize: "0.875rem", fontWeight: 600 }}>+ إضافة سؤال</button>
+          <button onClick={openAdd} className="qa-add-btn">+ إضافة سؤال</button>
         </div>
       </div>
 
-      {/* أدوات الفلترة والبحث */}
-      <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", alignItems: "center", marginBottom: "1.25rem" }}>
+      <div className="qa-filters">
         <input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="بحث في السؤال والجواب..."
-          className="adm-input" style={{ width: "auto", flex: "1 1 220px" }}
+          className="adm-input qa-search"
         />
-        <select value={filter} onChange={(e) => setFilter(e.target.value)} className="adm-select" style={{ width: "auto", flex: "0 1 200px" }}>
+        <select value={filter} onChange={(e) => setFilter(e.target.value)} className="adm-select qa-filter-select">
           <option value="all">كل التصنيفات</option>
           {categories.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
         </select>
       </div>
 
       {loading ? <Loading /> : (
-        <div style={{ overflowX: "auto" }}>
-          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.875rem" }}>
+        <div className="qa-table-wrap">
+          <table className="qa-table">
             <thead>
-              <tr style={{ background: C.parchmentDeep }}>
+              <tr className="qa-thead-row">
                 {["السؤال", "التصنيف", "نوع الحكم", "الاعتماد", "النشر", "إجراءات"].map((h) => (
-                  <th key={h} style={{ padding: "0.625rem 0.75rem", textAlign: "right", color: C.emeraldDeep, fontWeight: 700, borderBottom: `1px solid ${C.line}`, whiteSpace: "nowrap" }}>{h}</th>
+                  <th key={h} className="qa-th">{h}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
               {filtered.map((item) => {
-                const rc = item.ruling_type ? (QA_RULING_COLORS[item.ruling_type] || { bg: C.parchmentDeep, text: C.inkSoft }) : null;
+                const rc = item.ruling_type ? (QA_RULING_COLORS[item.ruling_type] || null) : null;
                 const approved = item.review_status === "approved";
                 return (
-                  <tr key={item.id} style={{ borderBottom: `1px solid ${C.line}` }}>
-                    <td style={{ padding: "0.625rem 0.75rem", color: C.ink, fontWeight: 600, maxWidth: "280px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{item.question}</td>
-                    <td style={{ padding: "0.625rem 0.75rem", color: C.inkSoft, whiteSpace: "nowrap" }}>{item.qa_categories?.name || "—"}</td>
-                    <td style={{ padding: "0.625rem 0.75rem" }}>
-                      {rc ? <span style={{ padding: "0.125rem 0.5rem", borderRadius: "999px", background: rc.bg, color: rc.text, fontSize: "0.7rem", fontWeight: 700 }}>{item.ruling_type}</span> : <span style={{ color: C.inkSoft }}>—</span>}
+                  <tr key={item.id} className="qa-tr">
+                    <td className="qa-td qa-td--question">{item.question}</td>
+                    <td className="qa-td qa-td--muted">{item.qa_categories?.name || "—"}</td>
+                    <td className="qa-td">
+                      {rc ? (
+                        <span
+                          className="qa-ruling-badge"
+                          style={{ "--qa-rb-bg": rc.bg, "--qa-rb-color": rc.text } as React.CSSProperties}
+                        >
+                          {item.ruling_type}
+                        </span>
+                      ) : <span className="qa-ruling-none">—</span>}
                     </td>
-                    <td style={{ padding: "0.625rem 0.75rem" }}>
-                      <span style={{ padding: "0.125rem 0.5rem", borderRadius: "999px", background: approved ? "#D1FAE5" : "rgba(14,110,82,0.08)", color: approved ? "#065F46" : "#0E6E52", fontSize: "0.7rem", fontWeight: 700, whiteSpace: "nowrap" }}>
+                    <td className="qa-td">
+                      <span
+                        className="qa-review-badge"
+                        style={{
+                          "--qa-rev-bg": approved ? "#D1FAE5" : "rgba(14,110,82,0.08)",
+                          "--qa-rev-color": approved ? "#065F46" : "#0E6E52",
+                        } as React.CSSProperties}
+                      >
                         {QA_REVIEW_LABELS[item.review_status] || item.review_status}
                       </span>
                     </td>
-                    <td style={{ padding: "0.625rem 0.75rem" }}>
+                    <td className="qa-td">
                       <button
                         onClick={() => toggleStatus(item)}
                         title={item.status === "published" ? "اضغط لإخفائه" : "اضغط لنشره"}
-                        style={{ padding: "0.2rem 0.625rem", borderRadius: "999px", border: "none", cursor: "pointer", fontFamily: "inherit", fontSize: "0.7rem", fontWeight: 700, whiteSpace: "nowrap", background: item.status === "published" ? C.emerald : C.parchmentDeep, color: item.status === "published" ? C.parchment : C.inkSoft }}
+                        className="qa-publish-btn"
+                        style={{
+                          "--qa-pub-bg": item.status === "published" ? "var(--majalis-emerald)" : "var(--majalis-parchment-deep)",
+                          "--qa-pub-color": item.status === "published" ? "var(--majalis-parchment)" : "var(--majalis-ink-soft)",
+                        } as React.CSSProperties}
                       >
                         {item.status === "published" ? "منشور" : "مسودة"}
                       </button>
                     </td>
-                    <td style={{ padding: "0.625rem 0.75rem" }}>
-                      <div style={{ display: "flex", gap: "0.375rem" }}>
-                        <button onClick={() => openEdit(item)} style={BTN_EDIT}>تعديل</button>
-                        <button onClick={() => handleDelete(item.id, item.question)} style={BTN_DEL}>حذف</button>
+                    <td className="qa-td">
+                      <div className="qa-cell-actions">
+                        <button onClick={() => openEdit(item)} className="qa-btn-edit">تعديل</button>
+                        <button onClick={() => handleDelete(item.id, item.question)} className="qa-btn-del">حذف</button>
                       </div>
                     </td>
                   </tr>
@@ -189,16 +207,16 @@ export function QaSection() {
               })}
             </tbody>
           </table>
-          {filtered.length === 0 && <p style={{ textAlign: "center", color: C.inkSoft, padding: "2rem" }}>لا توجد أسئلة مطابقة — أضف سؤالًا جديدًا</p>}
+          {filtered.length === 0 && <p className="qa-empty">لا توجد أسئلة مطابقة — أضف سؤالًا جديدًا</p>}
         </div>
       )}
 
       <AdminModal title={form.id ? "تعديل السؤال" : "إضافة سؤال جديد"} open={open} onClose={() => setOpen(false)} onSave={handleSave} saving={saving}>
         <Field label="السؤال *">
-          <textarea className="adm-textarea" style={{ minHeight: "3.5rem" }} value={form.question} onChange={(e) => set("question", e.target.value)} placeholder="اكتب نص السؤال..." />
+          <textarea className="adm-textarea qa-textarea--sm" value={form.question} onChange={(e) => set("question", e.target.value)} placeholder="اكتب نص السؤال..." />
         </Field>
         <Field label="الجواب *">
-          <textarea className="adm-textarea" style={{ minHeight: "8rem" }} value={form.answer} onChange={(e) => set("answer", e.target.value)} placeholder="اكتب الجواب العلمي التفصيلي..." />
+          <textarea className="adm-textarea qa-textarea--lg" value={form.answer} onChange={(e) => set("answer", e.target.value)} placeholder="اكتب الجواب العلمي التفصيلي..." />
         </Field>
         <FieldRow>
           <Field label="التصنيف">
@@ -208,14 +226,19 @@ export function QaSection() {
             </select>
           </Field>
           <Field label="نوع الحكم">
-            <select className="adm-select" style={{ opacity: isRuling ? 1 : 0.5 }} disabled={!isRuling} value={form.ruling_type || ""} onChange={(e) => set("ruling_type", e.target.value)}>
+            <select
+              className={`adm-select${!isRuling ? " qa-ruling-select--faded" : ""}`}
+              disabled={!isRuling}
+              value={form.ruling_type || ""}
+              onChange={(e) => set("ruling_type", e.target.value)}
+            >
               <option value="">{isRuling ? "اختر نوع الحكم" : "— لأحكام الشرعية فقط"}</option>
               {QA_RULING_TYPES.map((r) => <option key={r} value={r}>{r}</option>)}
             </select>
           </Field>
         </FieldRow>
         <Field label="الدليل الشرعي">
-          <textarea className="adm-textarea" style={{ minHeight: "3.5rem" }} value={form.evidence || ""} onChange={(e) => set("evidence", e.target.value)} placeholder="الآية أو الحديث أو الدليل..." />
+          <textarea className="adm-textarea qa-textarea--sm" value={form.evidence || ""} onChange={(e) => set("evidence", e.target.value)} placeholder="الآية أو الحديث أو الدليل..." />
         </Field>
         <FieldRow>
           <Field label="المرجع">
@@ -229,8 +252,13 @@ export function QaSection() {
           </Field>
         </FieldRow>
         <Field label="حالة النشر">
-          <label style={{ display: "flex", alignItems: "center", gap: "0.5rem", cursor: "pointer", fontSize: "0.875rem", color: C.ink }}>
-            <input type="checkbox" checked={form.status === "published"} onChange={(e) => set("status", e.target.checked ? "published" : "draft")} style={{ width: "1rem", height: "1rem", cursor: "pointer" }} />
+          <label className="qa-status-label">
+            <input
+              type="checkbox"
+              className="qa-status-checkbox"
+              checked={form.status === "published"}
+              onChange={(e) => set("status", e.target.checked ? "published" : "draft")}
+            />
             {form.status === "published" ? "منشور (ظاهر للجميع)" : "مسودة (غير ظاهر)"}
           </label>
         </Field>

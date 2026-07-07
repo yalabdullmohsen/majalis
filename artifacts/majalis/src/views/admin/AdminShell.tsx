@@ -39,7 +39,8 @@ export type AdminSection =
   | "telegram"
   | "prophet-stories"
   | "islamic-stories"
-  | "image-import";
+  | "image-import"
+  | "haramain-lessons";
 
 type NavItem = { key: AdminSection; label: string; icon: string };
 
@@ -89,6 +90,7 @@ const NAV_GROUPS: Array<{ title?: string; items: NavItem[] }> = [
       { key: "telegram",         label: "Telegram",          icon: "📢" },
       { key: "prophet-stories",  label: "قصص الأنبياء",     icon: "📖" },
       { key: "islamic-stories",  label: "القصص الإسلامية",  icon: "🕌" },
+      { key: "haramain-lessons", label: "دروس الحرمين",     icon: "🕋" },
       { key: "updates",          label: "المستجدات",        icon: "📡" },
       { key: "universities",     label: "دليل الجامعات",    icon: "🏫" },
     ],
@@ -215,6 +217,9 @@ export function AdminShell({ section, onSectionChange, children }: AdminShellPro
           ☰
         </button>
         <p className="admin-topbar__title">{currentLabel}</p>
+        <Link href="/" className="admin-topbar__back" aria-label="العودة للموقع">
+          ← الموقع
+        </Link>
       </div>
 
       <div className="admin-shell">
@@ -294,6 +299,12 @@ export function AdminShell({ section, onSectionChange, children }: AdminShellPro
 
         {/* ── المحتوى الرئيسي ── */}
         <main className="admin-main">
+          <div className="admin-main-header">
+            <Link href="/" className="admin-back-btn" aria-label="العودة للموقع الرئيسي">
+              ← العودة للموقع
+            </Link>
+            <span className="admin-main-header__title">{currentLabel}</span>
+          </div>
           <FlashBanner flash={flash} onClose={clearFlash} />
           {children}
         </main>
