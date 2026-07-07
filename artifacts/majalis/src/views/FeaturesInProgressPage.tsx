@@ -94,20 +94,19 @@ export default function FeaturesInProgressPage() {
               </div>
               <p className="fip-card__desc">{f.description}</p>
               <div
-                className="uc-progress"
+                className="uc-progress fip-progress"
                 role="progressbar"
                 aria-valuenow={pct}
                 aria-valuemin={0}
                 aria-valuemax={100}
                 aria-label={`نسبة إنجاز ${f.title}`}
-                style={{ margin: 0, maxWidth: "none" }}
               >
                 <div className="uc-progress__head">
                   <span>نسبة الإنجاز</span>
                   <span className="uc-progress__pct">{pct.toLocaleString("ar-EG")}٪</span>
                 </div>
                 <div className="uc-progress__track">
-                  <div className="uc-progress__fill" style={{ width: `${pct}%` }} />
+                  <div className="uc-progress__fill fip-prog-fill" style={{ "--fip-pct": `${pct}%` } as React.CSSProperties} />
                 </div>
               </div>
             </article>
@@ -115,7 +114,7 @@ export default function FeaturesInProgressPage() {
         })}
       </div>
 
-      <div style={{ textAlign: "center", marginTop: "2rem" }}>
+      <div className="fip-back-wrap">
         <Link href="/" className="uc-back">
           <ArrowRight size={18} aria-hidden="true" />
           <span>العودة للرئيسية</span>

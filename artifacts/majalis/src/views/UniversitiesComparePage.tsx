@@ -76,7 +76,7 @@ function CompareContent() {
   return (
     <div dir="rtl" className="min-h-screen bg-[var(--majalis-parchment)] pb-10">
       {/* Header */}
-      <div className="text-white px-4 py-6" style={{ background: "linear-gradient(to left, var(--majalis-emerald-deep), var(--majalis-emerald))" }}>
+      <div className="text-white px-4 py-6 ldb-hero">
         <div className="max-w-5xl mx-auto">
           <Link href="/universities" className="text-emerald-200 text-sm hover:text-white mb-3 block w-fit">
             → دليل الجامعات
@@ -133,8 +133,8 @@ function CompareContent() {
                   {compareList.map((u) => (
                     <td key={u.slug} className="px-4 py-3 text-sm text-center text-[var(--majalis-ink-soft)]">
                       {row.label === "حالة الاعتماد" ? (
-                        <span className="px-2 py-0.5 rounded-full text-white text-xs font-medium"
-                          style={{ background: ACCREDITATION_COLOR[u.accreditation_status] }}>
+                        <span className="px-2 py-0.5 rounded-full text-white text-xs font-medium ucp-acc-badge"
+                          style={{ "--acc-color": ACCREDITATION_COLOR[u.accreditation_status] } as React.CSSProperties}>
                           {row.fn(u)}
                         </span>
                       ) : row.fn(u)}
@@ -147,7 +147,7 @@ function CompareContent() {
         </div>
 
         {/* روابط التقديم */}
-        <div className="mt-4 grid gap-3" style={{ gridTemplateColumns: `repeat(${compareList.length}, minmax(0,1fr))` }}>
+        <div className="mt-4 ucp-apply-grid" style={{ "--col-count": compareList.length } as React.CSSProperties}>
           {compareList.map((u) => (
             u.website_url ? (
               <a key={u.slug} href={u.website_url} target="_blank" rel="noopener noreferrer"

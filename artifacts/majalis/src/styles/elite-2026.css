@@ -6590,3 +6590,53 @@ button.primary:hover {
 .cit-folder-dot   { background: var(--folder-dot-bg); }
 .cit-type-bar     { background: var(--cit-type-color, #065f46); }
 .cit-type-badge   { background: var(--cit-type-color, #065f46); }
+
+/* ============================================================
+   §87 — HadithIndexPage  (hadith-index-card additions)
+   ============================================================ */
+.hadith-index-card { border-top-color: var(--hadith-accent); }
+.hadith-index-card__icon  { background: var(--hadith-accent); }
+.hadith-index-card__title { color: var(--hadith-accent); }
+
+/* ============================================================
+   §88 — NotificationSettingsPage  (nsp-*)
+   ============================================================ */
+.nsp-confirm-row   { display: flex; gap: 0.4rem; align-items: center; }
+.nsp-confirm-label { font-size: 0.75rem; color: var(--msk-red, #C1595A); }
+.nsp-quick-links   { margin-top: 2rem; }
+
+/* ============================================================
+   §89 — LearningPathSciencePage  (lps-*)
+   ============================================================ */
+.lps-hero {
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--lps-color) 93%, transparent),
+    color-mix(in srgb, var(--lps-color) 60%, transparent)
+  );
+}
+.lps-prog-fill { width: var(--lps-pct, 0%); }
+.lps-why-box   { border-color: color-mix(in srgb, var(--majalis-emerald) 30%, transparent); }
+
+/* ============================================================
+   §90 — UniversityDetailPage  (udp-*)
+   ============================================================ */
+.udp-step-num  { background: var(--majalis-emerald); }
+.udp-acc-badge { background: var(--acc-color, #065f46); }
+
+/* ============================================================
+   §91 — UniversitiesComparePage  (ucp-*)
+   ============================================================ */
+.ucp-acc-badge   { background: var(--acc-color, #065f46); }
+.ucp-apply-grid  {
+  display: grid;
+  grid-template-columns: repeat(var(--col-count, 1), minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+/* ============================================================
+   §92 — FeaturesInProgressPage  (fip-*)
+   ============================================================ */
+.fip-progress  { margin: 0; max-width: none; }
+.fip-prog-fill { width: var(--fip-pct, 0%); }
+.fip-back-wrap { text-align: center; margin-top: 2rem; }

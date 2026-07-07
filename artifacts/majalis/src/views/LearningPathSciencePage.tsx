@@ -65,8 +65,8 @@ export default function LearningPathSciencePage() {
     <div dir="rtl" className="min-h-screen bg-[var(--majalis-parchment)] pb-24">
       {/* Hero */}
       <div
-        className="relative py-10 px-4"
-        style={{ background: `linear-gradient(135deg, ${science.color}ee, ${science.color}99)` }}
+        className="relative py-10 px-4 lps-hero"
+        style={{ "--lps-color": science.color } as React.CSSProperties}
       >
         <div className="max-w-4xl mx-auto">
           <Link href="/learning-path">
@@ -84,7 +84,7 @@ export default function LearningPathSciencePage() {
               {allBooks.length > 0 && (
                 <div className="mt-3 flex items-center gap-3">
                   <div className="flex-1 max-w-xs h-1.5 bg-white/20 rounded-full overflow-hidden">
-                    <div className="h-full bg-white rounded-full transition-all" style={{ width: `${pct}%` }} />
+                    <div className="h-full bg-white rounded-full transition-all lps-prog-fill" style={{ "--lps-pct": `${pct}%` } as React.CSSProperties} />
                   </div>
                   <span className="text-white/80 text-xs">{completedCount}/{allBooks.length} كتاب</span>
                 </div>
@@ -97,7 +97,7 @@ export default function LearningPathSciencePage() {
       {/* لماذا تدرس هذا العلم */}
       {science.why_study && (
         <div className="max-w-4xl mx-auto px-4 mt-6">
-          <div className="bg-[var(--majalis-emerald-muted)] border border-[var(--majalis-emerald)] rounded-2xl p-4" style={{ borderColor: "color-mix(in srgb, var(--majalis-emerald) 30%, transparent)" }}>
+          <div className="bg-[var(--majalis-emerald-muted)] border border-[var(--majalis-emerald)] rounded-2xl p-4 lps-why-box">
             <p className="text-[var(--majalis-emerald)] text-sm leading-relaxed">
               <strong>💡 لماذا تدرس {science.name}؟ </strong>
               {science.why_study}

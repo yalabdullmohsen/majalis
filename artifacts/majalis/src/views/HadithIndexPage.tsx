@@ -86,11 +86,11 @@ export default function HadithIndexPage() {
           const count = counts[s.cls];
           const Icon = s.Icon;
           return (
-            <Link key={s.cls} href={s.href} className="hadith-index-card" style={{ borderTopColor: s.accent }}>
-              <span className="hadith-index-card__icon" style={{ background: s.accent }} aria-hidden="true">
+            <Link key={s.cls} href={s.href} className="hadith-index-card" style={{ "--hadith-accent": s.accent } as React.CSSProperties}>
+              <span className="hadith-index-card__icon" aria-hidden="true">
                 <Icon size={22} strokeWidth={2} color="#fff" />
               </span>
-              <h2 className="hadith-index-card__title" style={{ color: s.accent }}>{meta.title}</h2>
+              <h2 className="hadith-index-card__title">{meta.title}</h2>
               <p className="hadith-index-card__desc">{s.description}</p>
               <span className="hadith-index-card__count">
                 {count == null ? "…" : `${count.toLocaleString("ar-EG")} ${meta.countUnit}`}

@@ -100,8 +100,7 @@ function ProgramCard({ program: p }: { program: UniversityProgram }) {
                   <ol className="space-y-2">
                     {req.application_steps.map((s) => (
                       <li key={s.step} className="flex gap-3 text-sm text-[var(--majalis-ink-soft)]">
-                        <span className="flex-shrink-0 w-6 h-6 rounded-full text-white text-xs
-                          flex items-center justify-center font-bold" style={{ background: "var(--majalis-emerald)" }}>{s.step}</span>
+                        <span className="flex-shrink-0 w-6 h-6 rounded-full text-white text-xs flex items-center justify-center font-bold udp-step-num">{s.step}</span>
                         <span className="pt-0.5">{s.text}</span>
                       </li>
                     ))}
@@ -150,7 +149,7 @@ function DetailContent({ university: u }: { university: University }) {
       </div>
 
       {/* Header */}
-      <div className="text-white px-4 py-8" style={{ background: "linear-gradient(to left, var(--majalis-emerald-deep), var(--majalis-emerald))" }}>
+      <div className="text-white px-4 py-8 ldb-hero">
         <div className="max-w-3xl mx-auto">
           <Link href="/universities" className="text-emerald-200 text-sm hover:text-white mb-4 block w-fit">
             → دليل الجامعات
@@ -172,8 +171,8 @@ function DetailContent({ university: u }: { university: University }) {
                 <span className="bg-white/20 px-2.5 py-0.5 rounded-full">
                   📍 {u.city ? `${u.city}، ` : ""}{u.country}
                 </span>
-                <span className="px-2.5 py-0.5 rounded-full text-white text-xs font-medium"
-                  style={{ background: accColor }}>
+                <span className="px-2.5 py-0.5 rounded-full text-white text-xs font-medium udp-acc-badge"
+                  style={{ "--acc-color": accColor } as React.CSSProperties}>
                   {ACCREDITATION_LABELS[u.accreditation_status]}
                 </span>
                 {u.is_verified && (

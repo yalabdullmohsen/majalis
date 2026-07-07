@@ -222,8 +222,8 @@ export default function NotificationSettingsPage() {
                 حذف الكل
               </button>
             ) : (
-              <span style={{ display: "flex", gap: "0.4rem", alignItems: "center" }}>
-                <span style={{ fontSize: "0.75rem", color: "var(--msk-red, #C1595A)" }}>تأكيد؟</span>
+              <span className="nsp-confirm-row">
+                <span className="nsp-confirm-label">تأكيد؟</span>
                 <button className="nh-btn nh-btn--danger" onClick={handleClearAll}>نعم</button>
                 <button className="nh-btn" onClick={() => setConfirmClear(false)}>إلغاء</button>
               </span>
@@ -274,7 +274,7 @@ export default function NotificationSettingsPage() {
         </div>
       </div>
 
-      <nav className="profile-quick-links" style={{ marginTop: "2rem" }} aria-label="روابط">
+      <nav className="profile-quick-links nsp-quick-links" aria-label="روابط">
         <Link href="/flashcards" className="profile-quick-link">البطاقات</Link>
         <Link href="/learning-plan" className="profile-quick-link">خطة التعلّم</Link>
         <Link href="/settings" className="profile-quick-link">الإعدادات</Link>
