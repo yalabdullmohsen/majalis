@@ -28,15 +28,6 @@ const EMPTY: TrustedLessonSource = {
   active: true,
 };
 
-const inputSt: React.CSSProperties = {
-  width: "100%",
-  padding: "0.5rem",
-  borderRadius: "0.375rem",
-  border: `1px solid ${C.line}`,
-  fontFamily: "inherit",
-  fontSize: "0.875rem",
-};
-
 function formatDt(iso?: string) {
   if (!iso) return "—";
   try {

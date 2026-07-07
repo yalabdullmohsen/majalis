@@ -14,7 +14,7 @@ import {
   QA_REVIEW_LABELS,
 } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
-import { AdminModal, Field, FieldRow, inputSt, selectSt, textareaSt } from "./AdminModal";
+import { AdminModal, Field, FieldRow } from "./AdminModal";
 import { BulkImport } from "./BulkImport";
 
 const EMPTY: any = {
@@ -135,9 +135,9 @@ export function QaSection() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="بحث في السؤال والجواب..."
-          style={{ ...inputSt, width: "auto", flex: "1 1 220px" }}
+          className="adm-input" style={{ width: "auto", flex: "1 1 220px" }}
         />
-        <select value={filter} onChange={(e) => setFilter(e.target.value)} style={{ ...selectSt, width: "auto", flex: "0 1 200px" }}>
+        <select value={filter} onChange={(e) => setFilter(e.target.value)} className="adm-select" style={{ width: "auto", flex: "0 1 200px" }}>
           <option value="all">كل التصنيفات</option>
           {categories.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
         </select>
@@ -195,10 +195,10 @@ export function QaSection() {
 
       <AdminModal title={form.id ? "تعديل السؤال" : "إضافة سؤال جديد"} open={open} onClose={() => setOpen(false)} onSave={handleSave} saving={saving}>
         <Field label="السؤال *">
-          <textarea style={{ ...textareaSt, minHeight: "3.5rem" }} value={form.question} onChange={(e) => set("question", e.target.value)} placeholder="اكتب نص السؤال..." />
+          <textarea className="adm-textarea" style={{ minHeight: "3.5rem" }} value={form.question} onChange={(e) => set("question", e.target.value)} placeholder="اكتب نص السؤال..." />
         </Field>
         <Field label="الجواب *">
-          <textarea style={{ ...textareaSt, minHeight: "8rem" }} value={form.answer} onChange={(e) => set("answer", e.target.value)} placeholder="اكتب الجواب العلمي التفصيلي..." />
+          <textarea className="adm-textarea" style={{ minHeight: "8rem" }} value={form.answer} onChange={(e) => set("answer", e.target.value)} placeholder="اكتب الجواب العلمي التفصيلي..." />
         </Field>
         <FieldRow>
           <Field label="التصنيف">
@@ -208,14 +208,14 @@ export function QaSection() {
             </select>
           </Field>
           <Field label="نوع الحكم">
-            <select style={{ ...selectSt, opacity: isRuling ? 1 : 0.5 }} disabled={!isRuling} value={form.ruling_type || ""} onChange={(e) => set("ruling_type", e.target.value)}>
+            <select className="adm-select" style={{ opacity: isRuling ? 1 : 0.5 }} disabled={!isRuling} value={form.ruling_type || ""} onChange={(e) => set("ruling_type", e.target.value)}>
               <option value="">{isRuling ? "اختر نوع الحكم" : "— لأحكام الشرعية فقط"}</option>
               {QA_RULING_TYPES.map((r) => <option key={r} value={r}>{r}</option>)}
             </select>
           </Field>
         </FieldRow>
         <Field label="الدليل الشرعي">
-          <textarea style={{ ...textareaSt, minHeight: "3.5rem" }} value={form.evidence || ""} onChange={(e) => set("evidence", e.target.value)} placeholder="الآية أو الحديث أو الدليل..." />
+          <textarea className="adm-textarea" style={{ minHeight: "3.5rem" }} value={form.evidence || ""} onChange={(e) => set("evidence", e.target.value)} placeholder="الآية أو الحديث أو الدليل..." />
         </Field>
         <FieldRow>
           <Field label="المرجع">

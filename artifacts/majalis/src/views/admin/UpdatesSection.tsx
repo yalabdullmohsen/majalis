@@ -4,7 +4,7 @@ import { UPDATES_SEED } from "@/lib/updates-seed";
 import { UPDATE_TYPES } from "@/lib/platform-types";
 import { C } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
-import { AdminModal, Field, inputSt, selectSt, textareaSt } from "./AdminModal";
+import { AdminModal, Field } from "./AdminModal";
 import { useAdminShell } from "./AdminShell";
 
 const EMPTY = { title: "", summary: "", update_type: "إعلان", source_url: "", status: "approved", published_at: new Date().toISOString() };

@@ -12,7 +12,7 @@ import {
   upsertAdhkarItem,
 } from "@/lib/adhkar-admin";
 import { C } from "@/lib/theme";
-import { AdminModal, Field, inputSt, selectSt, textareaSt } from "./AdminModal";
+import { AdminModal, Field } from "./AdminModal";
 import { AdminSectionToolbar } from "./AdminSectionToolbar";
 import { useAdminShell } from "./AdminShell";
 
@@ -134,7 +134,7 @@ export function AdhkarSection() {
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            style={{ ...selectSt, width: "auto", flex: "0 1 200px" }}
+            className="adm-select" style={{ width: "auto", flex: "0 1 200px" }}
           >
             <option value="all">كل الأقسام</option>
             {ADHKAR_CATEGORIES.map((c) => (

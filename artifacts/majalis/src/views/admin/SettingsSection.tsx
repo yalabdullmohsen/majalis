@@ -5,7 +5,7 @@ import { getSiteSettings, updateSiteSettings } from "@/lib/site-settings";
 import { C } from "@/lib/theme";
 import { AdminSectionToolbar } from "./AdminSectionToolbar";
 import { useAdminShell } from "./AdminShell";
-import { Field, textareaSt } from "./AdminModal";
+import { Field } from "./AdminModal";
 
 export function SettingsSection() {
   const { showSuccess, showError } = useAdminShell();

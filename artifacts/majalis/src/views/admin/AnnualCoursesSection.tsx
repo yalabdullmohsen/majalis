@@ -4,7 +4,7 @@ import { ANNUAL_COURSES_SEED } from "@/lib/annual-courses-seed";
 import { COURSE_TYPES } from "@/lib/platform-types";
 import { C } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
-import { AdminModal, Field, inputSt, selectSt, textareaSt } from "./AdminModal";
+import { AdminModal, Field } from "./AdminModal";
 import { useAdminShell } from "./AdminShell";
 
 const EMPTY = { title: "", summary: "", body: "", course_type: "سنوية", venue_city: "", registration_open: true, status: "approved" };

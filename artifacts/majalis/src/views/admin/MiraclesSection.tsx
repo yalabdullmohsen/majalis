@@ -3,7 +3,7 @@ import { adminGetMiracles, adminUpsertMiracle, adminDeleteMiracle } from "@/lib/
 import { sanitizeText } from "@/lib/sanitize";
 import { C } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
-import { AdminModal, Field, inputSt, textareaSt } from "./AdminModal";
+import { AdminModal, Field } from "./AdminModal";
 import { BulkImport } from "./BulkImport";
 
 const EMPTY: any = { title: "", category: "", body: "", status: "approved" };
@@ -64,7 +64,7 @@ export function MiraclesSection() {
         </div>
       </div>
 
-      <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="بحث..." style={{ ...inputSt, maxWidth: "20rem", marginBottom: "1rem" }} />
+      <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="بحث..." className="adm-input" style={{ maxWidth: "20rem", marginBottom: "1rem" }} />
 
       {loading ? <Loading /> : (
         <div style={{ overflowX: "auto" }}>

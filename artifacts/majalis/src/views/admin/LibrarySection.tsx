@@ -3,7 +3,7 @@ import { adminGetLibrary, adminUpsertLibraryItem, adminDeleteLibraryItem } from 
 import { sanitizeText } from "@/lib/sanitize";
 import { C } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
-import { AdminModal, Field, inputSt, selectSt, textareaSt } from "./AdminModal";
+import { AdminModal, Field } from "./AdminModal";
 import { BulkImport } from "./BulkImport";
 
 const TYPES = ["كتاب", "متن", "تفريغ", "ملخص", "صوت", "مرئي"];
@@ -66,7 +66,7 @@ export function LibrarySection() {
         </div>
       </div>
 
-      <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="بحث..." style={{ ...inputSt, maxWidth: "20rem", marginBottom: "1rem" }} />
+      <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="بحث..." className="adm-input" style={{ maxWidth: "20rem", marginBottom: "1rem" }} />
 
       {loading ? <Loading /> : (
         <div style={{ overflowX: "auto" }}>

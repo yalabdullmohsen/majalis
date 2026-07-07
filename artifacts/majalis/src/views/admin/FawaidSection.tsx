@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { adminGetAllFawaid, moderateFawaid, adminDeleteFawaid, adminUpsertFawaid } from "@/lib/supabase";
 import { C } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
-import { AdminModal, Field, inputSt, selectSt, textareaSt } from "./AdminModal";
+import { AdminModal, Field } from "./AdminModal";
 import { BulkImport } from "./BulkImport";
 
 const STATUS_OPTIONS: Record<string, string> = { approved: "مقبول", pending: "معلّق", rejected: "مرفوض" };
@@ -72,7 +72,7 @@ export function FawaidSection() {
         </div>
       </div>
 
-      <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="بحث في الفوائد..." style={{ ...inputSt, maxWidth: "20rem", marginBottom: "0.75rem" }} />
+      <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="بحث في الفوائد..." className="adm-input" style={{ maxWidth: "20rem", marginBottom: "0.75rem" }} />
 
       <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1.25rem" }}>
           {FILTERS.map(([v, l]) => (
@@ -136,7 +136,7 @@ export function FawaidSection() {
 
       <AdminModal title={form.id ? "تعديل الفائدة" : "إضافة فائدة جديدة"} open={open} onClose={() => setOpen(false)} onSave={handleSave} saving={saving}>
         <Field label="نص الفائدة *">
-          <textarea style={{ ...textareaSt, minHeight: "7rem" }} value={form.text} onChange={e => set("text", e.target.value)} placeholder="اكتب نص الفائدة العلمية أو الأثر..." />
+          <textarea className="adm-textarea" style={{ minHeight: "7rem" }} value={form.text} onChange={e => set("text", e.target.value)} placeholder="اكتب نص الفائدة العلمية أو الأثر..." />
         </Field>
         <Field label="القائل / المصدر">
           <input className="adm-input" value={form.author_name || ""} onChange={e => set("author_name", e.target.value)} placeholder="اسم العالم أو المرجع (اختياري)" />

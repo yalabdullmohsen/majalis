@@ -4,15 +4,6 @@ import { runInstagramManualAssist } from "@/lib/instagram-integration-api";
 import { C } from "@/lib/theme";
 import type { TrustedLessonSource } from "@/lib/lesson-automation-api";
 
-const inputSt: React.CSSProperties = {
-  width: "100%",
-  padding: "0.4rem",
-  borderRadius: "0.375rem",
-  border: `1px solid ${C.line}`,
-  fontFamily: "inherit",
-  fontSize: "0.8125rem",
-};
-
 type Props = {
   source: TrustedLessonSource;
   onDone: () => void;

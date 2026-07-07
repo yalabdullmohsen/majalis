@@ -4,7 +4,7 @@ import { FATWA_SEED } from "@/lib/fatwa-seed";
 import { FATWA_CATEGORIES } from "@/lib/platform-types";
 import { C } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
-import { AdminModal, Field, inputSt, selectSt, textareaSt } from "./AdminModal";
+import { AdminModal, Field } from "./AdminModal";
 import { useAdminShell } from "./AdminShell";
 
 const EMPTY = { question: "", answer: "", summary: "", category: "فقه عام", format: "written", mufti_name: "", status: "approved" };

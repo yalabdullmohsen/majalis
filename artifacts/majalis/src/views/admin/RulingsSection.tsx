@@ -9,7 +9,7 @@ import { C } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
 import { adminListLoad } from "@/lib/admin-list-load";
 import { StatusBadge } from "./AdminUI";
-import { AdminModal, Field, inputSt, selectSt, textareaSt } from "./AdminModal";
+import { AdminModal, Field } from "./AdminModal";
 import { useAdminShell } from "./AdminShell";
 import type { ShariaRulingExtended } from "@/lib/rulings-types";
 
@@ -187,7 +187,7 @@ export function RulingsSection() {
           onChange={(e) => setImportText(e.target.value)}
           rows={5}
           placeholder="الصق محتوى الاستيراد هنا..."
-          style={{ ...textareaSt, width: "100%", marginBottom: "0.5rem" }}
+          className="adm-textarea" style={{ marginBottom: "0.5rem" }}
         />
         <button type="button" onClick={handleImport} style={{ padding: "0.45rem 0.85rem", cursor: "pointer" }}>
           استيراد
@@ -199,7 +199,7 @@ export function RulingsSection() {
         value={filter}
         onChange={(e) => setFilter(e.target.value)}
         placeholder="بحث في الأحكام..."
-        style={{ ...inputSt, width: "100%", marginBottom: "0.75rem" }}
+        className="adm-input" style={{ marginBottom: "0.75rem" }}
       />
 
       {loading ? (

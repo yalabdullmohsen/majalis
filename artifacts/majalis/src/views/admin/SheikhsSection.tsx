@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { adminGetSheikhs, adminUpsertSheikh, adminDeleteSheikh, uploadSheikhImage, deleteSheikhImage } from "@/lib/supabase";
 import { C, GOVERNORATES } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
-import { AdminModal, Field, FieldRow, inputSt, selectSt, textareaSt } from "./AdminModal";
+import { AdminModal, Field, FieldRow } from "./AdminModal";
 import { BulkImport } from "./BulkImport";
 import { SheikhAvatar } from "@/components/lessons/SheikhAvatar";
 import { resolveSheikhImageUrl } from "@/lib/sheikh-image";
@@ -128,7 +128,7 @@ export function SheikhsSection() {
           <button onClick={openAdd} style={{ padding: "0.5rem 1.25rem", borderRadius: "0.375rem", background: C.emerald, color: C.parchment, border: "none", cursor: "pointer", fontFamily: "inherit", fontSize: "0.875rem", fontWeight: 600 }}>+ إضافة شيخ</button>
         </div>
       </div>
-      <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="بحث في المشايخ..." style={{ ...inputSt, maxWidth: "20rem", marginBottom: "1rem" }} />
+      <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="بحث في المشايخ..." className="adm-input" style={{ maxWidth: "20rem", marginBottom: "1rem" }} />
 
       {loading ? <Loading /> : (
         <div style={{ overflowX: "auto" }}>
@@ -182,7 +182,7 @@ export function SheikhsSection() {
           <textarea className="adm-textarea" value={form.bio || ""} onChange={e => set("bio", e.target.value)} placeholder="وصف مختصر يظهر في بطاقة الشيخ..." />
         </Field>
         <Field label="السيرة العلمية التفصيلية">
-          <textarea style={{ ...textareaSt, minHeight: "7rem" }} value={form.biography || ""} onChange={e => set("biography", e.target.value)} placeholder="السيرة العلمية الكاملة..." />
+          <textarea className="adm-textarea" style={{ minHeight: "7rem" }} value={form.biography || ""} onChange={e => set("biography", e.target.value)} placeholder="السيرة العلمية الكاملة..." />
         </Field>
         <Field label="التخصصات (افصل بفاصلة)">
           <input className="adm-input" value={form.specialties || ""} onChange={e => set("specialties", e.target.value)} placeholder="الفقه، العقيدة، التفسير" />

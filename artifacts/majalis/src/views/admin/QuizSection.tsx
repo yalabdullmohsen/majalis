@@ -11,7 +11,7 @@ import {
 import { sanitizeText } from "@/lib/sanitize";
 import { C } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
-import { AdminModal, Field, FieldRow, inputSt, selectSt, textareaSt } from "./AdminModal";
+import { AdminModal, Field, FieldRow } from "./AdminModal";
 import { useAdminShell } from "./AdminShell";
 
 const SECTIONS = [
@@ -222,19 +222,19 @@ export function QuizSection() {
       {/* Filters */}
       <div style={{ display: "flex", gap: "0.625rem", marginBottom: "1rem", flexWrap: "wrap", alignItems: "center" }}>
         <input
-          style={{ ...inputSt, maxWidth: "220px" }}
+          className="adm-input" style={{ maxWidth: "220px" }}
           placeholder="بحث في الأسئلة..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <select style={{ ...selectSt, maxWidth: "160px" }} value={sectionFilter} onChange={(e) => setSectionFilter(e.target.value)}>
+        <select className="adm-select" style={{ maxWidth: "160px" }} value={sectionFilter} onChange={(e) => setSectionFilter(e.target.value)}>
           {uniqueSections.map((s) => <option key={s} value={s}>{s}</option>)}
         </select>
-        <select style={{ ...selectSt, maxWidth: "150px" }} value={levelFilter} onChange={(e) => setLevelFilter(e.target.value)}>
+        <select className="adm-select" style={{ maxWidth: "150px" }} value={levelFilter} onChange={(e) => setLevelFilter(e.target.value)}>
           <option value="الكل">كل المستويات</option>
           {LEVELS.map((l) => <option key={l.value} value={l.value}>{l.label}</option>)}
         </select>
-        <select style={{ ...selectSt, maxWidth: "130px" }} value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
+        <select className="adm-select" style={{ maxWidth: "130px" }} value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
           <option value="الكل">كل الحالات</option>
           <option value="published">منشور</option>
           <option value="draft">مسودة</option>

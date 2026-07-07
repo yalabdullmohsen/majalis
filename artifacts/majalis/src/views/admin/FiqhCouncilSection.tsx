@@ -52,7 +52,7 @@ import {
 } from "@/lib/fiqh-council-types";
 import { C } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
-import { AdminModal, Field, inputSt, selectSt, textareaSt } from "./AdminModal";
+import { AdminModal, Field } from "./AdminModal";
 import { useAdminShell } from "./AdminShell";
 import { FiqhCompletionBarFromItem } from "@/components/fiqh-council/FiqhCompletionBar";
 
@@ -586,7 +586,7 @@ export function FiqhCouncilSection() {
                       <select
                         id={`link-${q.id}`}
                         defaultValue=""
-                        style={{ ...selectSt, fontSize: "0.75rem", minWidth: "12rem" }}
+                        className="adm-select" style={{ fontSize: "0.75rem", minWidth: "12rem" }}
                       >
                         <option value="">ربط بمادة فقهية...</option>
                         {items.filter((i) => i.status === "published").slice(0, 80).map((item) => (
@@ -746,7 +746,7 @@ export function FiqhCouncilSection() {
               value={adminSearch}
               onChange={(e) => setAdminSearch(e.target.value)}
               placeholder="بحث..."
-              style={{ ...inputSt, flex: 1, minWidth: "140px" }}
+              className="adm-input" style={{ flex: 1, minWidth: "140px" }}
             />
           </div>
 

@@ -1,5 +1,4 @@
 import { C } from "@/lib/theme";
-import { inputSt } from "./AdminModal";
 
 type Props = {
   title: string;
@@ -61,7 +60,7 @@ export function AdminSectionToolbar({
               value={search ?? ""}
               onChange={(e) => onSearchChange(e.target.value)}
               placeholder={searchPlaceholder}
-              style={{ ...inputSt, maxWidth: "20rem", flex: "1 1 12rem" }}
+              className="adm-input" style={{ maxWidth: "20rem", flex: "1 1 12rem" }}
               aria-label="بحث"
             />
           )}

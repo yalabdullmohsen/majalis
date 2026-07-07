@@ -7,7 +7,7 @@ import { sanitizeText } from "@/lib/sanitize";
 import { C, GOVERNORATES } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
 import { adminListLoad } from "@/lib/admin-list-load";
-import { AdminModal, Field, FieldRow, inputSt, selectSt, textareaSt } from "./AdminModal";
+import { AdminModal, Field, FieldRow } from "./AdminModal";
 import { BulkImport } from "./BulkImport";
 
 const CATEGORIES = ["تفسير", "فقه", "عقيدة", "حديث", "سيرة", "تجويد", "أخرى"];
@@ -265,8 +265,8 @@ export function LessonsSection() {
         </div>
       )}
       <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1rem" }}>
-        <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="بحث في الدروس..." style={{ ...inputSt, maxWidth: "20rem", flex: "1 1 12rem" }} />
-        <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} style={{ ...selectSt, width: "auto" }}>
+        <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="بحث في الدروس..." className="adm-input" style={{ maxWidth: "20rem", flex: "1 1 12rem" }} />
+        <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} className="adm-select" style={{ width: "auto" }}>
           <option value="all">كل الحالات</option>
           {Object.entries(STATUSES).map(([v, l]) => <option key={v} value={v}>{l}</option>)}
         </select>
