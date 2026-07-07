@@ -516,6 +516,113 @@ label {
   color: var(--txt-muted, #52525B) !important;
   font-weight: var(--fw-semibold) !important;
 }
+/* أيقونة الصلاة */
+.pt-prayer__icon { font-size: 1.1rem; line-height: 1; flex-shrink: 0; }
+.pt-prayer { display: flex !important; align-items: center !important; gap: 0.5rem !important; }
+.pt-prayer__name { flex: 1 !important; text-align: right !important; }
+/* صلاة فائتة */
+.pt-prayer--past {
+  opacity: 0.45 !important;
+}
+.pt-prayer--past .pt-prayer__name,
+.pt-prayer--past .pt-prayer__time { text-decoration: line-through; }
+.pt-prayer__done { color: var(--m26-green-600, #16A34A) !important; font-size: 0.8rem; font-weight: 700; }
+/* أيقونة في العداد */
+.pt-hero__icon { display: block; font-size: 2rem; margin-bottom: 0.25rem; line-height: 1; }
+.pt-hero__name { display: flex !important; flex-direction: column !important; align-items: center !important; gap: 0 !important; }
+/* شريط التاريخ */
+.pt-date-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  padding: 0.6rem 1rem 0.25rem;
+  text-align: center;
+}
+.pt-date-hijri { font-size: 0.88rem; font-weight: 700; color: var(--m26-green-700, #15803D) !important; }
+.pt-date-sep   { color: var(--txt-muted, #52525B); font-size: 0.8rem; }
+.pt-date-greg  { font-size: 0.8rem; color: var(--txt-muted, #52525B) !important; }
+/* بادج غداً */
+.pt-tomorrow-badge {
+  background: rgba(255,255,255,0.15);
+  border-radius: 999px;
+  padding: 0.1rem 0.55rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+.pt-hero__hint-inner {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+/* منتقي المحافظة */
+.pt-gov-section {
+  padding: 0.75rem 1rem 0.25rem;
+  text-align: center;
+}
+.pt-gov-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--txt-muted, #52525B) !important;
+  margin-bottom: 0.5rem;
+}
+.pt-gov-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  justify-content: center;
+}
+.pt-gov-chip {
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,0.12);
+  background: #fff;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--txt-primary, #111827);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.pt-gov-chip:hover {
+  border-color: var(--m26-green-600, #16A34A);
+  background: var(--m26-green-50, #F0FDF4);
+}
+.pt-gov-chip--active {
+  background: var(--m26-green-700, #15803D) !important;
+  border-color: var(--m26-green-700, #15803D) !important;
+  color: #fff !important;
+}
+/* روابط سريعة */
+.pt-quick-links {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  padding: 0.75rem 1rem 1.25rem;
+  flex-wrap: wrap;
+}
+.pt-quick-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,0.10);
+  background: #fff;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--txt-primary, #111827) !important;
+  text-decoration: none;
+  transition: background 0.15s, border-color 0.15s;
+}
+.pt-quick-link:hover {
+  border-color: var(--m26-green-500, #22C55E);
+  background: var(--m26-green-50, #F0FDF4);
+}
 
 /* ══ 14. Login Page ══════════════════════════════════════════════════════════ */
 .login-page {

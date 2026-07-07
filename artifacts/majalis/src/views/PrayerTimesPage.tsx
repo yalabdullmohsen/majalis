@@ -1,8 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import { Link } from "wouter";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
-import type { PrayerSlot } from "@/lib/prayer-times";
+import {
+  KUWAIT_GOVERNORATES,
+  getSelectedGovernorate,
+  setSelectedGovernorate,
+  type PrayerSlot,
+} from "@/lib/prayer-times";
 
 const PRAYER_AR: Record<string, string> = {
   Fajr:    "الفجر",
@@ -12,6 +18,39 @@ const PRAYER_AR: Record<string, string> = {
   Maghrib: "المغرب",
   Isha:    "العشاء",
 };
+
+const PRAYER_ICON: Record<string, string> = {
+  Fajr:    "🌙",
+  Sunrise: "🌅",
+  Dhuhr:   "☀️",
+  Asr:     "🌤️",
+  Maghrib: "🌇",
+  Isha:    "🌃",
+};
+
+const HIJRI_MONTHS = [
+  "محرم","صفر","ربيع الأول","ربيع الآخر",
+  "جمادى الأولى","جمادى الآخرة","رجب","شعبان",
+  "رمضان","شوال","ذو القعدة","ذو الحجة",
+];
+
+function formatHijri(raw: string | null): string {
+  if (!raw) return "";
+  const [d, m, y] = raw.split("-").map(Number);
+  if (!d || !m || !y) return raw;
+  const monthName = HIJRI_MONTHS[(m - 1)] ?? "";
+  return `${d} ${monthName} ${y} هـ`;
+}
+
+function kuwaitDateReadable(): string {
+  return new Intl.DateTimeFormat("ar-KW", {
+    timeZone: "Asia/Kuwait",
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  }).format(new Date());
+}
 
 // ── الوقت الحالي بتوقيت الكويت (ثوانٍ منذ منتصف الليل) ──
 function kuwaitNowSeconds(): { totalMinutes: number; seconds: number } {
@@ -28,14 +67,13 @@ function kuwaitNowSeconds(): { totalMinutes: number; seconds: number } {
   return { totalMinutes: h * 60 + m, seconds: s };
 }
 
-// ── حساب الثواني المتبقية لصلاة بحسب minutes (دقائق منذ منتصف الليل) ──
+// ── حساب الثواني المتبقية لصلاة بحسب minutes ──
 function secondsUntilPrayer(prayerMinutes: number | null): { seconds: number; isTomorrow: boolean } {
   if (prayerMinutes == null) return { seconds: 0, isTomorrow: false };
   const now = kuwaitNowSeconds();
   if (prayerMinutes > now.totalMinutes) {
     return { seconds: (prayerMinutes - now.totalMinutes) * 60 - now.seconds, isTomorrow: false };
   }
-  // الصلاة مضت اليوم → احسب حتى الغد
   return {
     seconds: (24 * 60 - now.totalMinutes + prayerMinutes) * 60 - now.seconds,
     isTomorrow: true,
@@ -51,8 +89,15 @@ function formatHms(totalSeconds: number): string {
 }
 
 export default function PrayerTimesPage() {
-  const { data, countdown, loading } = usePrayerCountdown();
+  const [govId, setGovId] = useState(() => getSelectedGovernorate().id);
+  const { data, countdown, loading } = usePrayerCountdown(govId);
   const [pinnedKey, setPinnedKey] = useState<string | null>(null);
+
+  function handleGov(id: string) {
+    setSelectedGovernorate(id);
+    setGovId(id);
+    setPinnedKey(null);
+  }
 
   if (loading) {
     return (
@@ -73,18 +118,16 @@ export default function PrayerTimesPage() {
   }
 
   const prayers: PrayerSlot[] = (data?.prayers ?? []).filter((p) => p.time);
+  const nowInfo = kuwaitNowSeconds();
 
-  // تحديد الصلاة المعروضة في العداد
   const displayKey  = pinnedKey ?? countdown.next.key;
   const displayItem = prayers.find((p) => p.key === displayKey);
   const displayName = PRAYER_AR[displayKey] ?? countdown.next.name;
   const displayTime = displayItem?.time ?? countdown.next.time;
 
-  // حساب الوقت المتبقي للصلاة المختارة
   let displayHms: string;
   let isTomorrow = false;
   if (pinnedKey && pinnedKey !== countdown.next.key) {
-    // الصلاة المثبّتة ليست التالية تلقائياً — احسب بتوقيت الكويت من p.minutes
     const { seconds, isTomorrow: tmrw } = secondsUntilPrayer(displayItem?.minutes ?? null);
     displayHms = formatHms(seconds);
     isTomorrow = tmrw;
@@ -92,17 +135,33 @@ export default function PrayerTimesPage() {
     displayHms = countdown.remainingHms ?? "--:--:--";
   }
 
-  const isNext = (key: string) => key === countdown.next?.key;
+  const isNext   = (key: string) => key === countdown.next?.key;
   const isPinned = (key: string) => key === displayKey;
+  const isPast   = (p: PrayerSlot) =>
+    p.minutes != null && p.minutes < nowInfo.totalMinutes && !isNext(p.key);
+
+  const hijriStr = formatHijri(data?.date?.hijri ?? null);
+  const gregStr  = kuwaitDateReadable();
 
   return (
     <div className="pt-wrap" dir="rtl">
+
+      {/* ── التاريخ ── */}
+      <div className="pt-date-row">
+        {hijriStr && <span className="pt-date-hijri">{hijriStr}</span>}
+        <span className="pt-date-sep" aria-hidden="true">·</span>
+        <span className="pt-date-greg">{gregStr}</span>
+      </div>
+
       {/* ── العداد الرئيسي ── */}
       <section className="pt-hero" aria-label="العداد التنازلي">
         <div className="pt-hero__label">
           {pinnedKey && pinnedKey !== countdown.next.key ? "الوقت المتبقي لـ" : "الصلاة القادمة"}
         </div>
         <h1 className="pt-hero__name" key={displayKey}>
+          <span className="pt-hero__icon" aria-hidden="true">
+            {PRAYER_ICON[displayKey] ?? "🕌"}
+          </span>
           {displayName}
         </h1>
         <div className="pt-hero__time">{displayTime}</div>
@@ -118,15 +177,17 @@ export default function PrayerTimesPage() {
         </div>
         <div className="pt-hero__hint">
           {pinnedKey && pinnedKey !== countdown.next.key ? (
-            <span style={{ display: "flex", alignItems: "center", gap: "0.5rem", justifyContent: "center", flexWrap: "wrap" }}>
-              {isTomorrow && <span style={{ background: "rgba(255,255,255,0.15)", borderRadius: "999px", padding: "0.1rem 0.55rem", fontSize: "0.72rem", fontWeight: 700 }}>غداً</span>}
-              <button className="pt-hero__reset" onClick={() => setPinnedKey(null)}>العودة للصلاة القادمة</button>
+            <span className="pt-hero__hint-inner">
+              {isTomorrow && <span className="pt-tomorrow-badge">غداً</span>}
+              <button className="pt-hero__reset" onClick={() => setPinnedKey(null)}>
+                العودة للصلاة القادمة
+              </button>
             </span>
           ) : "الوقت المتبقي"}
         </div>
       </section>
 
-      {/* ── شريط الصلوات الخمس القابل للنقر ── */}
+      {/* ── شريط الصلوات ── */}
       {prayers.length > 0 && (
         <nav className="pt-prayers" role="list" aria-label="صلوات اليوم">
           {prayers.map((p) => (
@@ -135,24 +196,52 @@ export default function PrayerTimesPage() {
               role="listitem"
               className={[
                 "pt-prayer",
-                isNext(p.key) ? "pt-prayer--next" : "",
+                isNext(p.key)   ? "pt-prayer--next"   : "",
                 isPinned(p.key) ? "pt-prayer--pinned" : "",
+                isPast(p)       ? "pt-prayer--past"   : "",
               ].filter(Boolean).join(" ")}
               onClick={() => setPinnedKey(p.key === pinnedKey ? null : p.key)}
               aria-pressed={isPinned(p.key)}
               aria-label={`صلاة ${PRAYER_AR[p.key] ?? p.name} — ${p.time}`}
             >
+              <span className="pt-prayer__icon" aria-hidden="true">
+                {PRAYER_ICON[p.key] ?? "🕌"}
+              </span>
               <span className="pt-prayer__name">{PRAYER_AR[p.key] ?? p.name}</span>
               <span className="pt-prayer__time">{p.time}</span>
+              {isPast(p) && <span className="pt-prayer__done" aria-label="انتهت">✓</span>}
             </button>
           ))}
         </nav>
       )}
 
-      {/* ── بيانات المدينة ── */}
-      {data?.city && (
-        <p className="pt-city">{data.city}</p>
-      )}
+      {/* ── اختيار المحافظة ── */}
+      <div className="pt-gov-section">
+        <p className="pt-gov-label">المحافظة</p>
+        <div className="pt-gov-chips" role="group" aria-label="اختيار المحافظة">
+          {KUWAIT_GOVERNORATES.map((gov) => (
+            <button
+              key={gov.id}
+              className={`pt-gov-chip${govId === gov.id ? " pt-gov-chip--active" : ""}`}
+              onClick={() => handleGov(gov.id)}
+              aria-pressed={govId === gov.id}
+            >
+              {gov.name}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* ── روابط سريعة ── */}
+      <div className="pt-quick-links">
+        <Link href="/qibla" className="pt-quick-link">
+          <span aria-hidden="true">🧭</span> اتجاه القبلة
+        </Link>
+        <Link href="/tasbih" className="pt-quick-link">
+          <span aria-hidden="true">📿</span> التسبيح
+        </Link>
+      </div>
+
     </div>
   );
 }
