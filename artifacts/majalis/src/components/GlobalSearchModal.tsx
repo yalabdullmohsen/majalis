@@ -450,7 +450,7 @@ export function GlobalSearchModal({ onClose }: Props) {
               <p className="gsm-state-icon">🔍</p>
               <p className="gsm-state-title">لا نتائج لـ «{query}»</p>
               <p className="gsm-state-hint">جرب تبسيط الكلمة أو إزالة التشكيل.</p>
-              <div className="gsm-pills" style={{ justifyContent: "center" }}>
+              <div className="gsm-pills gsm-pills--center">
                 {POPULAR_QUERIES.slice(0, 4).map((q) => (
                   <button
                     key={q}

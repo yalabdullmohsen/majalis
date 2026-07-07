@@ -83,35 +83,18 @@ function safetyLabel(classification: string): string {
 
 function CitationCard({ cite }: { cite: { title: string; href: string; source_name?: string | null; trust_score?: number } }) {
   return (
-    <a
-      href={cite.href}
-      target="_blank"
-      rel="noopener noreferrer"
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: "0.5rem",
-        padding: "0.4rem 0.75rem",
-        borderRadius: "0.375rem",
-        background: "var(--ds-parchment, #FAF7F2)",
-        border: "1px solid var(--ds-line, #E5DDD0)",
-        textDecoration: "none",
-        color: "var(--ds-ink, #2C2416)",
-        fontSize: "0.8rem",
-        transition: "background 0.15s",
-      }}
-    >
-      <span style={{ fontSize: "1rem" }}>📚</span>
-      <span style={{ flex: 1 }}>
-        <strong style={{ display: "block", fontSize: "0.8125rem" }}>{cite.title}</strong>
+    <a href={cite.href} target="_blank" rel="noopener noreferrer" className="acv-cite-card">
+      <span className="acv-cite-card__icon">📚</span>
+      <span className="acv-cite-card__body">
+        <strong className="acv-cite-card__title">{cite.title}</strong>
         {cite.source_name && (
-          <span style={{ fontSize: "0.7rem", color: "var(--ds-ink-soft, #8A7560)" }}>{cite.source_name}</span>
+          <span className="acv-cite-card__source">{cite.source_name}</span>
         )}
       </span>
       {cite.trust_score != null && (
-        <span style={{ fontSize: "0.7rem", color: "#059669", fontWeight: 700 }}>{cite.trust_score}%</span>
+        <span className="acv-cite-card__score">{cite.trust_score}%</span>
       )}
-      <span style={{ fontSize: "0.75rem", color: "var(--ds-ink-soft, #8A7560)" }}>←</span>
+      <span className="acv-cite-card__arrow">←</span>
     </a>
   );
 }

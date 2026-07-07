@@ -8498,6 +8498,7 @@ body {
   font-family: inherit;
 }
 .gsm-pills { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.gsm-pills--center { justify-content: center; }
 .gsm-pill {
   padding: 0.3rem 0.75rem;
   border-radius: 2rem;
@@ -9537,7 +9538,7 @@ body {
 .coming-soon-wrap__body  { margin: 0; color: var(--txt-muted, #52525B); font-size: 1rem; }
 
 /* ── §176 — AppShell, SiteFooter, RelatedKnowledge ──────────────────────── */
-.app-shell { min-height: 100vh; direction: rtl; }
+.app-shell { min-height: 100vh; direction: var(--app-dir, rtl); }
 .navbar-v3-placeholder { min-height: 4rem; }
 .footer-star { opacity: 0.4; }
 
@@ -9767,3 +9768,43 @@ body {
 
 /* ── §184 — ContentDetailLayout & misc link fixes ───────────────────────── */
 .platform-card-link { text-decoration: none; }
+
+/* ── §185 — AssistantChatView CitationCard ──────────────────────────────── */
+.acv-cite-card {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.4rem 0.75rem; border-radius: 0.375rem;
+  background: var(--majalis-parchment); border: 1px solid var(--majalis-line);
+  text-decoration: none; color: var(--majalis-ink);
+  font-size: 0.8rem; transition: background 0.15s;
+}
+.acv-cite-card:hover { background: var(--majalis-parchment-deep); }
+.acv-cite-card__icon { font-size: 1rem; }
+.acv-cite-card__body { flex: 1; }
+.acv-cite-card__title { display: block; font-size: 0.8125rem; font-weight: 700; }
+.acv-cite-card__source { font-size: 0.7rem; color: var(--majalis-ink-soft); }
+.acv-cite-card__score { font-size: 0.7rem; color: #059669; font-weight: 700; }
+.acv-cite-card__arrow { font-size: 0.75rem; color: var(--majalis-ink-soft); }
+
+/* ── §186 — CitationModal ────────────────────────────────────────────────── */
+.cm-modal { background: var(--majalis-panel); color: var(--majalis-ink); }
+.cm-header { border-bottom: 1px solid var(--majalis-line); }
+.cm-type-badge { background: var(--cm-type-color, var(--majalis-emerald-deep)); }
+.cm-close { color: var(--majalis-ink-soft); }
+.cm-tabs { border-bottom: 1px solid var(--majalis-line); }
+.cm-tab { color: var(--majalis-ink-soft); }
+.cm-tab--active { border-bottom: 2px solid var(--mn-border-active, var(--majalis-emerald)); color: var(--mn-text-active, var(--majalis-emerald-deep)); }
+.cm-label { color: var(--majalis-ink-soft); }
+.cm-field {
+  border: 1px solid var(--majalis-line);
+  background: var(--majalis-parchment);
+  color: var(--majalis-ink);
+}
+.cm-field:focus { outline: 2px solid var(--majalis-emerald); }
+.cm-field--readonly { background: var(--majalis-parchment-deep); color: var(--majalis-ink-soft); }
+.cm-preview-card { background: var(--majalis-parchment-deep); border-color: var(--majalis-line); }
+.cm-preview-title { color: var(--majalis-emerald-deep); }
+.cm-preview-text { color: var(--majalis-ink); border-right: 4px solid var(--majalis-emerald); }
+.cm-preview-ref { color: var(--majalis-ink-soft); }
+.cm-qr-link { color: var(--majalis-ink-soft); }
+.cm-status { color: var(--mn-text-active, var(--majalis-emerald-deep)); }
+.cm-qr-btn { color: var(--mn-text-active, var(--majalis-emerald-deep)); }

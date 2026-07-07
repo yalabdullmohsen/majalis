@@ -205,16 +205,10 @@ function SafeLazyRoute({ component: Component }: { component: ComponentType<any>
 
 function QuranComingSoon() {
   return (
-    <div style={{
-      display: "flex", flexDirection: "column", alignItems: "center",
-      justifyContent: "center", minHeight: "60vh", gap: "1rem",
-      fontFamily: "inherit", direction: "rtl", textAlign: "center", padding: "2rem",
-    }}>
-      <span style={{ fontSize: "3rem", opacity: 0.4 }}>📖</span>
-      <h2 style={{ margin: 0, fontSize: "1.5rem", fontWeight: 700, color: "var(--txt-primary, #111827)" }}>قريباً</h2>
-      <p style={{ margin: 0, color: "var(--txt-muted, #52525B)", fontSize: "1rem" }}>
-        قسم القرآن الكريم قيد التطوير
-      </p>
+    <div className="coming-soon-wrap">
+      <span className="coming-soon-wrap__icon">📖</span>
+      <h2 className="coming-soon-wrap__title">قريباً</h2>
+      <p className="coming-soon-wrap__body">قسم القرآن الكريم قيد التطوير</p>
     </div>
   );
 }
@@ -435,7 +429,7 @@ function AppShell() {
 
   return (
     <WouterRouter base={(import.meta.env.BASE_URL || "/").replace(/\/$/, "")}>
-      <div className="app-shell" style={{ minHeight: "100vh", direction: dir }}>
+      <div className="app-shell" style={{ "--app-dir": dir } as React.CSSProperties}>
         <a href="#main-content" className="skip-link">{t("skip_to_content")}</a>
         <SeoManager />
         <IslamicReminderBootstrap />

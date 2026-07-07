@@ -135,15 +135,13 @@ export function CitationModal({ source, initialText = "", startOffset, endOffset
       className="fixed inset-0 z-[200] flex items-center justify-center bg-black/60 p-4"
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
-      <div className="relative rounded-2xl shadow-2xl w-full max-w-xl max-h-[90vh] flex flex-col overflow-hidden"
-        style={{ background: "var(--majalis-panel)", color: "var(--majalis-ink)" }}>
+      <div className="relative rounded-2xl shadow-2xl w-full max-w-xl max-h-[90vh] flex flex-col overflow-hidden cm-modal">
         {/* رأس النافذة */}
-        <div className="flex items-center justify-between px-5 py-4"
-          style={{ borderBottom: "1px solid var(--majalis-line)" }}>
+        <div className="flex items-center justify-between px-5 py-4 cm-header">
           <div className="flex items-center gap-2">
             <span
-              className="px-2 py-0.5 rounded text-xs text-white font-medium"
-              style={{ background: typeColor }}
+              className="px-2 py-0.5 rounded text-xs text-white font-medium cm-type-badge"
+              style={{ "--cm-type-color": typeColor } as React.CSSProperties}
             >
               {typeLabel}
             </span>
@@ -154,8 +152,7 @@ export function CitationModal({ source, initialText = "", startOffset, endOffset
           <button
             type="button"
             onClick={onClose}
-            className="text-xl leading-none transition-colors"
-            style={{ color: "var(--majalis-ink-soft)" }}
+            className="text-xl leading-none transition-colors cm-close"
             aria-label="إغلاق"
           >
             ×
@@ -163,17 +160,13 @@ export function CitationModal({ source, initialText = "", startOffset, endOffset
         </div>
 
         {/* التبويبات */}
-        <div className="flex" style={{ borderBottom: "1px solid var(--majalis-line)" }}>
+        <div className="flex cm-tabs">
           {(["preview", "share", "save"] as const).map((t) => (
             <button
               key={t}
               type="button"
               onClick={() => handleTabChange(t)}
-              className="flex-1 py-2.5 text-sm font-medium transition-colors"
-              style={tab === t ? {
-                borderBottom: "2px solid var(--mn-border-active)",
-                color: "var(--mn-text-active)"
-              } : { color: "var(--majalis-ink-soft)" }}
+              className={`flex-1 py-2.5 text-sm font-medium transition-colors ${tab === t ? "cm-tab--active" : "cm-tab"}`}
             >
               {t === "preview" ? "معاينة" : t === "share" ? "مشاركة" : "حفظ"}
             </button>
@@ -188,23 +181,14 @@ export function CitationModal({ source, initialText = "", startOffset, endOffset
             <>
               {/* تعديل النص */}
               <div>
-                <label className="block text-xs font-medium mb-1"
-                  style={{ color: "var(--majalis-ink-soft)" }}>
+                <label className="block text-xs font-medium mb-1 cm-label">
                   النص المقتبس ({text.length}/{MAX_QUOTE_LENGTH} حرف)
                 </label>
                 <textarea
                   value={text}
                   onChange={(e) => setText(e.target.value.slice(0, MAX_QUOTE_LENGTH))}
                   rows={4}
-                  className="w-full rounded-lg px-3 py-2 text-sm text-right leading-relaxed outline-none resize-none"
-                  style={{
-                    border: "1px solid var(--majalis-line)",
-                    background: "var(--majalis-parchment)",
-                    color: "var(--majalis-ink)",
-                    boxShadow: "0 0 0 0",
-                  }}
-                  onFocus={(e) => { e.currentTarget.style.outline = `2px solid var(--majalis-emerald)`; }}
-                  onBlur={(e) => { e.currentTarget.style.outline = "none"; }}
+                  className="w-full rounded-lg px-3 py-2 text-sm text-right leading-relaxed outline-none resize-none cm-field"
                   dir="rtl"
                 />
               </div>
@@ -212,19 +196,11 @@ export function CitationModal({ source, initialText = "", startOffset, endOffset
               {/* أسلوب التوثيق (للأبحاث والمقالات فقط) */}
               {["article", "research"].includes(source.content_type) && (
                 <div>
-                  <label className="block text-xs font-medium mb-1"
-                    style={{ color: "var(--majalis-ink-soft)" }}>
-                    أسلوب التوثيق
-                  </label>
+                  <label className="block text-xs font-medium mb-1 cm-label">أسلوب التوثيق</label>
                   <select
                     value={style}
                     onChange={(e) => setStyle(e.target.value as CitationStyle)}
-                    className="w-full rounded-lg px-3 py-2 text-sm outline-none"
-                    style={{
-                      border: "1px solid var(--majalis-line)",
-                      background: "var(--majalis-parchment)",
-                      color: "var(--majalis-ink)",
-                    }}
+                    className="w-full rounded-lg px-3 py-2 text-sm outline-none cm-field"
                   >
                     {(Object.keys(STYLE_LABEL) as CitationStyle[]).map((s) => (
                       <option key={s} value={s}>{STYLE_LABEL[s]}</option>
@@ -234,27 +210,13 @@ export function CitationModal({ source, initialText = "", startOffset, endOffset
               )}
 
               {/* بطاقة المعاينة */}
-              <div
-                ref={cardRef}
-                dir="rtl"
-                className="border rounded-xl p-5 space-y-3"
-                style={{
-                  background: "var(--majalis-parchment-deep)",
-                  borderColor: "var(--majalis-line)",
-                }}
-              >
-                <p className="text-sm font-bold" style={{ color: "var(--majalis-emerald-deep)" }}>
-                  مجالس — منصة العلم الشرعي
-                </p>
-                <p className="leading-relaxed text-base font-arabic pr-3"
-                  style={{
-                    color: "var(--majalis-ink)",
-                    borderRight: "4px solid var(--majalis-emerald)",
-                  }}>
+              <div ref={cardRef} dir="rtl" className="border rounded-xl p-5 space-y-3 cm-preview-card">
+                <p className="text-sm font-bold cm-preview-title">مجالس — منصة العلم الشرعي</p>
+                <p className="leading-relaxed text-base font-arabic pr-3 cm-preview-text">
                   {text || "أدخل النص المراد اقتباسه..."}
                 </p>
                 {formatted && (
-                  <p className="text-xs mt-2" style={{ color: "var(--majalis-ink-soft)" }}>— {formatted}</p>
+                  <p className="text-xs mt-2 cm-preview-ref">— {formatted}</p>
                 )}
               </div>
 
@@ -284,20 +246,12 @@ export function CitationModal({ source, initialText = "", startOffset, endOffset
               {shareUrl ? (
                 <>
                   <div>
-                    <label className="block text-xs font-medium mb-1"
-                      style={{ color: "var(--majalis-ink-soft)" }}>
-                      الرابط المباشر
-                    </label>
+                    <label className="block text-xs font-medium mb-1 cm-label">الرابط المباشر</label>
                     <div className="flex gap-2">
                       <input
                         readOnly
                         value={shareUrl}
-                        className="flex-1 rounded-lg px-3 py-2 text-sm text-left font-mono outline-none"
-                        style={{
-                          border: "1px solid var(--majalis-line)",
-                          background: "var(--majalis-parchment-deep)",
-                          color: "var(--majalis-ink-soft)",
-                        }}
+                        className="flex-1 rounded-lg px-3 py-2 text-sm text-left font-mono outline-none cm-field cm-field--readonly"
                         dir="ltr"
                       />
                       <button
@@ -315,8 +269,7 @@ export function CitationModal({ source, initialText = "", startOffset, endOffset
                     <button
                       type="button"
                       onClick={() => setShowQr(!showQr)}
-                      className="text-sm hover:underline transition-colors"
-                      style={{ color: "var(--mn-text-active)" }}
+                      className="text-sm hover:underline transition-colors cm-qr-btn"
                     >
                       {showQr ? "إخفاء QR Code" : "عرض QR Code"}
                     </button>
@@ -330,8 +283,7 @@ export function CitationModal({ source, initialText = "", startOffset, endOffset
                         <a
                           href={getQrCodeUrl(citation.deep_link_slug)}
                           download={`qr-${citation.deep_link_slug}.png`}
-                          className="text-xs hover:underline"
-                          style={{ color: "var(--majalis-ink-soft)" }}
+                          className="text-xs hover:underline cm-qr-link"
                         >
                           تحميل QR Code
                         </a>
@@ -367,23 +319,13 @@ export function CitationModal({ source, initialText = "", startOffset, endOffset
                 احفظ هذا الاقتباس في مكتبتك الشخصية مع ملاحظة اختيارية.
               </p>
               <div>
-                <label className="block text-xs font-medium mb-1"
-                  style={{ color: "var(--majalis-ink-soft)" }}>
-                  ملاحظة شخصية (اختياري)
-                </label>
+                <label className="block text-xs font-medium mb-1 cm-label">ملاحظة شخصية (اختياري)</label>
                 <textarea
                   value={note}
                   onChange={(e) => setNote(e.target.value)}
                   rows={3}
                   placeholder="ملاحظتك الخاصة على هذا الاقتباس..."
-                  className="w-full rounded-lg px-3 py-2 text-sm text-right outline-none resize-none"
-                  style={{
-                    border: "1px solid var(--majalis-line)",
-                    background: "var(--majalis-parchment)",
-                    color: "var(--majalis-ink)",
-                  }}
-                  onFocus={(e) => { e.currentTarget.style.outline = `2px solid var(--majalis-emerald)`; }}
-                  onBlur={(e) => { e.currentTarget.style.outline = "none"; }}
+                  className="w-full rounded-lg px-3 py-2 text-sm text-right outline-none resize-none cm-field"
                   dir="rtl"
                 />
               </div>
@@ -399,8 +341,7 @@ export function CitationModal({ source, initialText = "", startOffset, endOffset
           )}
 
           {status && (
-            <p className="text-sm text-center font-medium py-1"
-              style={{ color: "var(--mn-text-active)" }}>
+            <p className="text-sm text-center font-medium py-1 cm-status">
               {status}
             </p>
           )}
