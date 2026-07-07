@@ -318,18 +318,41 @@ body {
   display: inline-flex !important;
   align-items: center !important;
   gap: 0.5rem !important;
-  padding: 0.5rem 1.25rem !important;
+  padding: 0.55rem 1.5rem !important;
   border-radius: var(--elite-r-pill) !important;
-  font-size: 0.8125rem !important;
-  font-weight: 500 !important;
-  letter-spacing: 0.01em !important;
-  color: rgba(255,255,255,0.90) !important;
-  background: rgba(255,255,255,0.10) !important;
-  border: 1px solid rgba(255,255,255,0.18) !important;
-  backdrop-filter: blur(8px) !important;
+  font-size: 0.875rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.04em !important;
+  /* نص ذهبي متدرج لامع */
+  background: linear-gradient(
+    100deg,
+    #b8860b 0%,
+    #ffd700 25%,
+    #fffacd 50%,
+    #ffd700 75%,
+    #b8860b 100%
+  ) !important;
+  background-size: 300% 100% !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  /* إطار ذهبي شفاف */
+  border: 1.5px solid rgba(255, 215, 0, 0.45) !important;
+  /* خلفية داكنة شفافة لإبراز الذهب */
+  -webkit-box-decoration-break: clone !important;
+  box-decoration-break: clone !important;
+  /* ظل توهّج ذهبي */
+  filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.35)) !important;
   text-align: center !important;
-  max-width: 480px !important;
-  line-height: 1.6 !important;
+  max-width: 520px !important;
+  line-height: 1.7 !important;
+  animation: badge-shimmer 3s ease-in-out infinite !important;
+}
+
+@keyframes badge-shimmer {
+  0%   { background-position: 200% center; }
+  50%  { background-position: 0%   center; }
+  100% { background-position: 200% center; }
 }
 
 /* شعار الخط العربي */
