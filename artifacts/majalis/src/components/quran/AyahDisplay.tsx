@@ -115,6 +115,10 @@ export function AyahDisplay({
   const visibleAyahs = ayahs.slice(page * AYAHS_PER_PAGE, (page + 1) * AYAHS_PER_PAGE);
   const isSurahWithoutBismillah = surahNum === 1 || surahNum === 9;
 
+  // بيانات بصرية فقط — لا تعديل على النص
+  const juzNum  = visibleAyahs[0]?.juz  ?? null;
+  const pageNum = visibleAyahs[0]?.page ?? null;
+
   function startPress(ayah: Ayah, e: React.PointerEvent) {
     pressStartPos.current = { x: e.clientX, y: e.clientY };
     longPressTimer.current = setTimeout(() => {
@@ -206,8 +210,23 @@ export function AyahDisplay({
         <p className="qs-surah-header__hint">اضغط مطوّلاً على أي آية للخيارات</p>
       </header>
 
-      {/* ── Clean Mushaf flowing text — wrapped in decorative frame ── */}
+      {/* ── إطار المصحف — بصري خالص — النص داخله لا يُمس ── */}
       <div className="qs-mushaf-frame">
+
+        {/* شارة السورة (يمين) + شارة الجزء (يسار) — بصري — aria-hidden */}
+        {juzNum !== null && (
+          <div className="qs-mushaf-badge-row" aria-hidden="true" dir="rtl">
+            <span className="qs-mushaf-badge">
+              <span className="qs-mushaf-badge__gem" />
+              {surahName}
+            </span>
+            <span className="qs-mushaf-badge">
+              <span className="qs-mushaf-badge__gem" />
+              الجزء {toArabic(juzNum)}
+            </span>
+          </div>
+        )}
+
       <div
         className="qs-mushaf-body qs-mushaf-clean"
         lang="ar"
@@ -249,6 +268,17 @@ export function AyahDisplay({
           );
         })}
       </div>
+
+        {/* ميدالية رقم الصفحة — أسفل الإطار — بصري — aria-hidden */}
+        {pageNum !== null && (
+          <div className="qs-page-medallion" aria-hidden="true">
+            <div className="qs-page-medallion__ring">
+              {toArabic(pageNum)}
+            </div>
+            <span className="qs-page-medallion__label">صفحة</span>
+          </div>
+        )}
+
       </div>{/* /qs-mushaf-frame */}
 
       {/* ── Page navigation ── */}
