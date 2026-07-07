@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
-import { BookOpen, GraduationCap, Home, LayoutGrid, Sunset } from "lucide-react";
+import { GraduationCap, Home, LayoutGrid, Sunset } from "lucide-react";
 import { MoreBottomSheet } from "./MoreBottomSheet";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 
@@ -11,9 +11,7 @@ const LEFT_TABS = [
   { href: "/lessons", label: "الدروس",   Icon: GraduationCap },
 ] as const;
 
-const RIGHT_TABS = [
-  { href: "/quran",   label: "القرآن",   Icon: BookOpen },
-] as const;
+const RIGHT_TABS: { href: string; label: string; Icon: React.ComponentType<{ size?: number; className?: string }> }[] = [];
 
 export function BottomNavBar() {
   const [location] = useLocation();
