@@ -1,5 +1,33 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { Link } from "wouter";
 import { getQaCategories, getQaQuestions } from "@/lib/supabase";
+
+const FIQH_HUB_TABS = [
+  { key: "fatawa",  label: "الفتاوى",         href: "/fatwa" },
+  { key: "rulings", label: "الأحكام الشرعية", href: "/rulings" },
+  { key: "qa",      label: "الأسئلة الشرعية", href: "/qa" },
+  { key: "council", label: "المجمع الفقهي",   href: "/fiqh-council" },
+] as const;
+type FiqhTab = (typeof FIQH_HUB_TABS)[number]["key"];
+
+function FiqhHubStrip({ current }: { current: FiqhTab }) {
+  return (
+    <nav className="fiqh-hub-strip" dir="rtl" aria-label="الأقسام الشرعية">
+      <Link href="/fiqh" className="fiqh-hub-strip__brand">⚖️ الفقه الإسلامي</Link>
+      <span className="fiqh-hub-strip__sep" aria-hidden="true">·</span>
+      {FIQH_HUB_TABS.map((item) => (
+        <Link
+          key={item.key}
+          href={item.href}
+          className={`fiqh-hub-strip__tab${item.key === current ? " fiqh-hub-strip__tab--active" : ""}`}
+          aria-current={item.key === current ? "page" : undefined}
+        >
+          {item.label}
+        </Link>
+      ))}
+    </nav>
+  );
+}
 import { RequestManager } from "@/lib/request-manager";
 import { QA_DISCLAIMER } from "@/lib/theme";
 import { PageHeader, QaSkeleton } from "@/components/ui-common";
@@ -215,6 +243,8 @@ export default function QaPage({
         title="الأسئلة والأجوبة"
         subtitle="أحدث الأسئلة والأجوبة الشرعية الموثقة."
       />
+
+      <FiqhHubStrip current="qa" />
 
       <Disclaimer />
 

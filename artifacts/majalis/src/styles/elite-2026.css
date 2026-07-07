@@ -1808,6 +1808,65 @@ tr:last-child td {
 }
 
 /* ══════════════════════════════════════════════
+   §53. Fiqh Hub Navigation Strip
+   ══════════════════════════════════════════════ */
+.fiqh-hub-strip {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.2rem !important;
+  flex-wrap: wrap !important;
+  padding: 0.55rem 1rem !important;
+  background: rgba(24, 54, 42, 0.04) !important;
+  border: 1px solid rgba(24, 54, 42, 0.1) !important;
+  border-radius: 0.75rem !important;
+  margin-bottom: 1.25rem !important;
+  overflow-x: auto !important;
+  scrollbar-width: none !important;
+}
+.fiqh-hub-strip::-webkit-scrollbar { display: none; }
+.fiqh-hub-strip__brand {
+  font-size: 0.78rem !important;
+  font-weight: 700 !important;
+  color: var(--elite-forest, #18362A) !important;
+  text-decoration: none !important;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+  padding: 0.15rem 0 !important;
+}
+.fiqh-hub-strip__brand:hover { text-decoration: underline !important; }
+.fiqh-hub-strip__sep {
+  color: rgba(24, 54, 42, 0.3) !important;
+  font-size: 0.72rem !important;
+  flex-shrink: 0 !important;
+  padding: 0 0.15rem !important;
+}
+.fiqh-hub-strip__tab {
+  font-size: 0.75rem !important;
+  font-weight: 500 !important;
+  color: rgba(24, 54, 42, 0.6) !important;
+  text-decoration: none !important;
+  padding: 0.18rem 0.6rem !important;
+  border-radius: 2rem !important;
+  white-space: nowrap !important;
+  transition: background 0.15s, color 0.15s !important;
+  border: 1px solid transparent !important;
+}
+.fiqh-hub-strip__tab:hover {
+  background: rgba(24, 54, 42, 0.08) !important;
+  color: var(--elite-forest, #18362A) !important;
+  text-decoration: none !important;
+}
+.fiqh-hub-strip__tab--active {
+  background: var(--elite-forest, #18362A) !important;
+  color: #FAF8F2 !important;
+  font-weight: 700 !important;
+}
+.fiqh-hub-strip__tab--active:hover {
+  background: var(--elite-forest, #18362A) !important;
+  color: #FAF8F2 !important;
+}
+
+/* ══════════════════════════════════════════════
    §52. Prayer Cell — تفاعل النقر (عداد الوقت)
    ══════════════════════════════════════════════ */
 button.hcp-prayer-cell {

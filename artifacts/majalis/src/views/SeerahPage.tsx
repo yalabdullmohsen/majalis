@@ -161,6 +161,15 @@ export default function SeerahPage() {
           </Link>
         </div>
 
+        {/* لافتة الربط: السيرة امتداد لقصص الأنبياء */}
+        <div className="seerah-prophets-banner" dir="rtl">
+          <span className="seerah-prophets-banner__icon" aria-hidden="true">📖</span>
+          <p className="seerah-prophets-banner__text">
+            <strong>السيرة النبوية</strong> خاتمة قصص الأنبياء الكرام وامتدادها الطبيعي — فهي بعثة خاتم الأنبياء والمرسلين محمد ﷺ التي أتمّ الله بها الدين وأكمل النعمة.
+          </p>
+          <Link href="/prophets" className="seerah-prophets-banner__link">قصص الأنبياء ←</Link>
+        </div>
+
         {/* Hero */}
         <div className="seerah-hero">
           <div className="seerah-hero__badge">📖 سيرة النبي ﷺ</div>
@@ -635,6 +644,53 @@ const SEERAH_CSS = `
 .seerah-back-link:hover {
   background: rgba(24,54,42,0.12);
   border-color: rgba(24,54,42,0.3);
+  text-decoration: none;
+}
+
+/* ── لافتة الربط: السيرة امتداد لقصص الأنبياء ── */
+.seerah-prophets-banner {
+  max-width: 920px;
+  margin: 0.75rem auto 0;
+  padding: 0.9rem 1.25rem;
+  background: #EDF7F2;
+  border: 1px solid rgba(24,54,42,0.15);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  font-family: 'Cairo', 'Tajawal', sans-serif;
+  flex-wrap: wrap;
+}
+@media (max-width: 640px) {
+  .seerah-prophets-banner { margin: 0.5rem 0.75rem 0; padding: 0.75rem 1rem; gap: 0.7rem; }
+}
+.seerah-prophets-banner__icon {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.seerah-prophets-banner__text {
+  flex: 1;
+  min-width: 180px;
+  font-size: 0.83rem;
+  color: #18362A;
+  line-height: 1.75;
+  margin: 0;
+}
+.seerah-prophets-banner__link {
+  flex-shrink: 0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #18362A;
+  text-decoration: none;
+  padding: 0.3rem 0.8rem;
+  border: 1px solid rgba(24,54,42,0.28);
+  border-radius: 2rem;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+.seerah-prophets-banner__link:hover {
+  background: rgba(24,54,42,0.1);
   text-decoration: none;
 }
 `;

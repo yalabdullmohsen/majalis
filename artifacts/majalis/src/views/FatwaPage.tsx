@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { Link } from "wouter";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { PageHeader, Loading, Empty } from "@/components/ui-common";
 import { PlatformContentCard } from "@/components/platform/ContentDetailLayout";
@@ -6,6 +7,33 @@ import { getFatwas } from "@/lib/platform-content-service";
 import { getLatestFatwas, getMostReadFatwas, getMostSearchedFatwas } from "@/lib/fatwa-seed";
 import { FATWA_CATEGORIES } from "@/lib/platform-types";
 import { usePageView } from "@/hooks/usePageView";
+
+const FIQH_HUB_TABS = [
+  { key: "fatawa",  label: "الفتاوى",         href: "/fatwa" },
+  { key: "rulings", label: "الأحكام الشرعية", href: "/rulings" },
+  { key: "qa",      label: "الأسئلة الشرعية", href: "/qa" },
+  { key: "council", label: "المجمع الفقهي",   href: "/fiqh-council" },
+] as const;
+type FiqhTab = (typeof FIQH_HUB_TABS)[number]["key"];
+
+function FiqhHubStrip({ current }: { current: FiqhTab }) {
+  return (
+    <nav className="fiqh-hub-strip" dir="rtl" aria-label="الأقسام الشرعية">
+      <Link href="/fiqh" className="fiqh-hub-strip__brand">⚖️ الفقه الإسلامي</Link>
+      <span className="fiqh-hub-strip__sep" aria-hidden="true">·</span>
+      {FIQH_HUB_TABS.map((item) => (
+        <Link
+          key={item.key}
+          href={item.href}
+          className={`fiqh-hub-strip__tab${item.key === current ? " fiqh-hub-strip__tab--active" : ""}`}
+          aria-current={item.key === current ? "page" : undefined}
+        >
+          {item.label}
+        </Link>
+      ))}
+    </nav>
+  );
+}
 
 function useDebouncedValue<T>(value: T, delayMs = 350): T {
   const [debounced, setDebounced] = useState(value);
@@ -55,6 +83,8 @@ export default function FatwaPage() {
         title="الفتاوى الشرعية"
         subtitle="أحدث الفتاوى والأكثر قراءة والأكثر بحثاً — مكتوبة وصوتية مع تصنيف وبحث ذكي."
       />
+
+      <FiqhHubStrip current="fatawa" />
 
       <div className="content-hub-chips">
         {[
