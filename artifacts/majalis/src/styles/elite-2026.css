@@ -2133,18 +2133,22 @@ button.hcp-prayer-cell:focus-visible {
 }
 
 
-/* §58 — صفحة التوحيد: فرض اللون الأبيض على كل النصوص داخل الهيدر الأخضر */
-.tawheed-page-header,
+/* §58 — صفحة التوحيد: فرض اللون الأبيض — specificity 0-2-1 يتغلب على .page-shell h1 0-1-1 */
+.page-shell .tawheed-page-header h1,
+.page-shell .tawheed-page-header h2,
+.page-shell .tawheed-page-header h3,
+.page-shell .tawheed-page-header p,
+.page-shell .tawheed-page-header blockquote,
+.page-shell .tawheed-page-header .home-eyebrow,
+.page-shell .tawheed-page-header__title,
+.page-shell .tawheed-page-header__subtitle,
+.page-shell .tawheed-page-header__ayah,
 .tawheed-page-header h1,
 .tawheed-page-header h2,
-.tawheed-page-header h3,
 .tawheed-page-header p,
 .tawheed-page-header blockquote,
-.tawheed-page-header .home-eyebrow,
-.tawheed-page-header__title,
-.tawheed-page-header__subtitle,
-.tawheed-page-header__ayah {
+.tawheed-page-header__title {
   color: #fff !important;
 }
-.tawheed-page-header__subtitle { color: rgba(255,255,255,0.88) !important; }
-.tawheed-page-header__ayah cite { color: rgba(255,255,255,0.82) !important; }
+.page-shell .tawheed-page-header__subtitle { color: rgba(255,255,255,0.88) !important; }
+.page-shell .tawheed-page-header__ayah cite { color: rgba(255,255,255,0.82) !important; }
