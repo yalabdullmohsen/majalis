@@ -5,7 +5,6 @@ import { Link, useLocation } from "wouter";
 import {
   BarChart2,
   Bell,
-  BookOpen,
   BookMarked,
   BookText,
   BookUser,
@@ -94,7 +93,6 @@ const DRAWER_GROUPS: NavGroup[] = [
     id: "quran-adhkar",
     title: "القرآن والأذكار",
     items: [
-      { href: "/quran",            label: "القرآن الكريم",    Icon: BookOpen },
       { href: "/quran-circles",    label: "حلقات التحفيظ",    Icon: CreditCard },
       { href: "/quran-radio",      label: "إذاعة القرآن",     Icon: Radio },
       { href: "/quran-live",       label: "البث المباشر",      Icon: Tv },
