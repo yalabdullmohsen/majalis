@@ -1807,3 +1807,30 @@ tr:last-child td {
   .home-hero--v3 { background: white !important; color: black !important; }
 }
 
+/* ══════════════════════════════════════════════
+   §52. Prayer Cell — تفاعل النقر (عداد الوقت)
+   ══════════════════════════════════════════════ */
+button.hcp-prayer-cell {
+  cursor: pointer !important;
+  font-family: inherit !important;
+}
+button.hcp-prayer-cell:focus-visible {
+  outline: 2px solid var(--elite-forest, #18362A) !important;
+  outline-offset: 2px !important;
+}
+.hcp-prayer-cell--sel {
+  background: rgba(24, 54, 42, 0.1) !important;
+  border-color: var(--elite-forest, #18362A) !important;
+}
+.hcp-prayer-cell--sel .hcp-prayer-cell__name {
+  color: var(--elite-forest, #18362A) !important;
+  font-weight: 700 !important;
+}
+.hcp-prayer-cell--sel .hcp-prayer-cell__time {
+  color: var(--elite-forest, #18362A) !important;
+}
+.hcp-strip__countdown--sel {
+  color: var(--elite-forest, #18362A) !important;
+  font-weight: 600 !important;
+}
+

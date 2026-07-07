@@ -27,7 +27,30 @@ export default function NotificationBell() {
       )
       .subscribe();
 
-    return () => { supabase.removeChannel(channel); };
+    // إشعار تلقائي عند إضافة درس جديد
+    const lessonChannel = supabase
+      .channel("kuwait-lessons-auto-notify")
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "kuwait_lessons" },
+        async (payload) => {
+          const { data: { user } } = await supabase.auth.getUser();
+          if (!user) return;
+          const lesson = payload.new as Record<string, unknown>;
+          await supabase.from("notifications").insert({
+            user_id: user.id,
+            title: "درس جديد أُضيف تلقائياً",
+            body: `"${String(lesson.title || "درس جديد")}" — ${String(lesson.mosque || lesson.governorate || "").trim()}`.replace(/ — $/, ""),
+            is_read: false,
+          });
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+      supabase.removeChannel(lessonChannel);
+    };
   }, []);
 
   useEffect(() => {

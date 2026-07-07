@@ -615,4 +615,26 @@ const SEERAH_CSS = `
   color: #4b5563;
 }
 .seerah-sources__bullet { color: #059669; font-size: 1.1rem; line-height: 1; }
+
+/* ── رابط عكسي لقصص الأنبياء ── */
+.seerah-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.9rem;
+  background: rgba(24,54,42,0.06);
+  border: 1px solid rgba(24,54,42,0.18);
+  border-radius: 2rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #18362A;
+  text-decoration: none;
+  transition: background 0.15s, border-color 0.15s;
+  font-family: 'Cairo', 'Tajawal', sans-serif;
+}
+.seerah-back-link:hover {
+  background: rgba(24,54,42,0.12);
+  border-color: rgba(24,54,42,0.3);
+  text-decoration: none;
+}
 `;

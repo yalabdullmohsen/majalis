@@ -1427,4 +1427,78 @@ const PROPHETS_CSS = `
   transition: all 0.2s;
 }
 .prophet-quiz__btn:hover { background: ${GOLD}35; }
+
+/* ── بطاقة الانتقال إلى السيرة النبوية ── */
+.prophets-seerah-bridge {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  background: linear-gradient(135deg, #18362A 0%, #0E4530 100%);
+  border-radius: 16px;
+  border: 1px solid rgba(190,199,195,0.25);
+  box-shadow: 0 4px 20px rgba(24,54,42,0.18);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  color: #FAF8F2;
+}
+.prophets-seerah-bridge:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(24,54,42,0.28);
+}
+.prophets-seerah-bridge__ornament {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  background: rgba(190,199,195,0.12);
+  border: 1px solid rgba(190,199,195,0.25);
+  border-radius: 50%;
+}
+.prophets-seerah-bridge__body {
+  flex: 1;
+  min-width: 0;
+}
+.prophets-seerah-bridge__eyebrow {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  color: #a7f3d0;
+  text-transform: uppercase;
+  margin-bottom: 0.3rem;
+}
+.prophets-seerah-bridge__title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #FAF8F2;
+  margin: 0 0 0.35rem;
+  line-height: 1.3;
+  font-family: 'Cairo', sans-serif;
+}
+.prophets-seerah-bridge__desc {
+  font-size: 0.83rem;
+  color: rgba(225,229,227,0.82);
+  line-height: 1.65;
+  margin: 0;
+}
+.prophets-seerah-bridge__arrow {
+  flex-shrink: 0;
+  font-size: 1.4rem;
+  color: ${GOLD};
+  opacity: 0.85;
+  transition: transform 0.2s;
+}
+.prophets-seerah-bridge:hover .prophets-seerah-bridge__arrow {
+  transform: translateX(-4px);
+}
+@media (max-width: 560px) {
+  .prophets-seerah-bridge {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding: 1rem;
+  }
+  .prophets-seerah-bridge__arrow { display: none; }
+}
 `;
