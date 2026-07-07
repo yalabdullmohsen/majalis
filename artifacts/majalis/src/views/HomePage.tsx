@@ -237,42 +237,6 @@ export default function HomePage({
         </div>
       </div>
 
-      {/* ══════════════════ Stats Section ══════════════════ */}
-      <section className="elite-stats-section" aria-label="إحصائيات المنصة">
-        <div className="elite-stats-grid">
-          {PLATFORM_STATS.map(({ Icon, value, label }) => (
-            <div key={label} className="elite-stat-card">
-              <div className="elite-stat-icon" aria-hidden="true">
-                <Icon size={18} strokeWidth={1.6} />
-              </div>
-              <span className="elite-stat-value">{value}</span>
-              <span className="elite-stat-label">{label}</span>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ══════════════════ Features Showcase ══════════════════ */}
-      <section className="elite-features-section" aria-label="أقسام المنصة">
-        <div className="elite-features-header">
-          <span className="elite-features-eyebrow">ما يميز المجلس العلمي</span>
-          <h2 className="elite-features-title">محتوى شرعي موثق في كل مكان</h2>
-          <p className="elite-features-subtitle">
-            من القرآن الكريم إلى الفتاوى والأحكام — كل ما يحتاجه طالب العلم في منصة واحدة
-          </p>
-        </div>
-        <div className="elite-features-grid">
-          {PLATFORM_FEATURES.map(({ href, Icon, name, desc }) => (
-            <Link key={href} href={href} className="elite-feature-card">
-              <div className="elite-feature-icon-wrap" aria-hidden="true">
-                <Icon size={22} strokeWidth={1.6} />
-              </div>
-              <span className="elite-feature-name">{name}</span>
-              <span className="elite-feature-desc">{desc}</span>
-            </Link>
-          ))}
-        </div>
-      </section>
 
       {/* ══════════════════ Main Content ══════════════════ */}
       <main className="home-container home-main home-main--v3">

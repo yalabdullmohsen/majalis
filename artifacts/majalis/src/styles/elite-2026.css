@@ -1893,3 +1893,39 @@ button.hcp-prayer-cell:focus-visible {
   font-weight: 600 !important;
 }
 
+/* ══════════════════════════════════════════════
+   §54. Lesson Detail Hero — خلفية خضراء داكنة
+   ══════════════════════════════════════════════ */
+.lesson-detail-hero {
+  background-color: var(--elite-forest, #18362A) !important;
+  background-image: url("/star-pattern.svg") !important;
+  background-size: 100px 100px !important;
+  border-radius: 12px 12px 0 0 !important;
+  padding: 2rem 1.75rem !important;
+  color: var(--elite-white, #FAF8F2) !important;
+}
+.lesson-detail-title {
+  color: #fff !important;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.25) !important;
+}
+.lesson-detail-hero .lesson-card-pro__sheikh {
+  color: rgba(250,248,242,0.88) !important;
+}
+.lesson-detail-hero .lesson-detail-summary {
+  color: rgba(250,248,242,0.80) !important;
+}
+.lesson-detail-hero .page-tag {
+  background: rgba(255,255,255,0.15) !important;
+  color: #FAF8F2 !important;
+  border-color: rgba(255,255,255,0.25) !important;
+}
+.lesson-detail-hero .page-soft-tag {
+  background: rgba(255,255,255,0.10) !important;
+  color: rgba(250,248,242,0.82) !important;
+  border-color: rgba(255,255,255,0.18) !important;
+}
+.lesson-detail-hero .scholar-follow-btn {
+  border-color: rgba(255,255,255,0.35) !important;
+  color: rgba(250,248,242,0.88) !important;
+}
+

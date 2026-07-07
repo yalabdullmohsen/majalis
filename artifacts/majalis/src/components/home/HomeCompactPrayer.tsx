@@ -68,6 +68,23 @@ function useCompactPrayer() {
 export function HomeCompactPrayer() {
   const { data, nextKey, countdown } = useCompactPrayer();
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
+  const [selectedCountdown, setSelectedCountdown] = useState<string>("");
+
+  useEffect(() => {
+    if (!selectedKey || !data?.prayers?.length) {
+      setSelectedCountdown("");
+      return;
+    }
+    const prayer = data.prayers.find((p: PrayerSlot) => p.key === selectedKey);
+    if (!prayer || prayer.minutes == null) {
+      setSelectedCountdown("—");
+      return;
+    }
+    const tick = () => setSelectedCountdown(getRemainingForPrayer(prayer.minutes!));
+    tick();
+    const t = setInterval(tick, 1000);
+    return () => clearInterval(t);
+  }, [selectedKey, data]);
 
   if (!data?.prayers?.length) return null;
 
@@ -91,9 +108,7 @@ export function HomeCompactPrayer() {
             <span className="hcp-strip__countdown hcp-strip__countdown--sel" aria-live="polite">
               متبقٍّ لـ{selectedPrayer.name}:{" "}
               <span className="hcp-strip__countdown-time" dir="ltr">
-                {selectedPrayer.minutes != null
-                  ? getRemainingForPrayer(selectedPrayer.minutes)
-                  : "—"}
+                {selectedCountdown || "—"}
               </span>
             </span>
           ) : (
