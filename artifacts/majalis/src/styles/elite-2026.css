@@ -6774,3 +6774,40 @@ button.primary:hover {
 }
 .adm-select  { cursor: pointer; }
 .adm-textarea { min-height: 5rem; resize: vertical; }
+
+/* ============================================================
+   §111 — Admin shared utility: text colours & layout helpers
+   ============================================================ */
+.adm-empty-msg  { color: var(--majalis-ink-soft); }
+.text-approved  { color: #16a34a; }
+.text-forest    { color: var(--elite-forest); }
+.text-emerald   { color: var(--ds-emerald); }
+.iss-empty      { padding: 2rem; text-align: center; color: #64748b; }
+.dsc-divider--mt2 { margin-top: 2rem; }
+.admin-info-panel__list--ordered { padding-inline-start: 1.25rem; list-style: decimal; }
+.fsp-meta-note  { font-size: 0.8125rem; color: var(--ds-ink-soft, #6b7280); }
+.fsp-result-pre { overflow: auto; max-height: 20rem; font-size: 0.75rem; }
+
+/* ============================================================
+   §112 — AdminSectionToolbar (ast-*)
+   ============================================================ */
+.ast-wrap           { margin-bottom: 1.25rem; }
+.ast-header         { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; }
+.ast-header--padded { margin-bottom: 0.875rem; }
+.ast-title          { margin: 0; font-size: 1.125rem; font-weight: 700; color: var(--majalis-emerald-deep); display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+.ast-actions        { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.ast-toolbar        { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; }
+.ast-search         { max-width: 20rem; flex: 1 1 12rem; }
+
+/* ============================================================
+   §113 — Admin CRUD card pattern (shared across sections)
+   ============================================================ */
+.adm-section-hdr  { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+.adm-section-h2   { margin: 0; color: var(--majalis-emerald-deep); }
+.adm-btn-add      { padding: 0.5rem 1rem; background: var(--majalis-emerald); color: var(--majalis-parchment); border: none; border-radius: 0.375rem; cursor: pointer; }
+.adm-item-card    { background: var(--majalis-panel); border: 1px solid var(--majalis-line); border-radius: 0.375rem; padding: 1rem; margin-bottom: 0.75rem; }
+.adm-item-actions { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
+.adm-btn-sm       { font-size: 0.75rem; }
+.adm-btn-del      { font-size: 0.75rem; color: #dc2626; }
+.adm-type-badge   { font-size: 0.75rem; background: var(--majalis-sage); padding: 0.125rem 0.5rem; border-radius: 0.25rem; }
+.adm-block-title  { display: block; margin-top: 0.5rem; }

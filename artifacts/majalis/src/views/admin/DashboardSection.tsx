@@ -512,7 +512,7 @@ export function DashboardSection() {
 
       {/* ── بلاغات معلّقة ── */}
       {recentReports.length > 0 && (
-        <div className="admin-reports-panel" style={{ marginBottom: "1.5rem" }}>
+        <div className="admin-reports-panel">
           <p className="admin-reports-panel__title">🚩 بلاغات تحتاج مراجعة</p>
           {recentReports.map((rep: any) => (
             <div key={rep.id} className="admin-report-item">
@@ -581,7 +581,7 @@ export function DashboardSection() {
       )}
 
       {/* ── لوحات المعلومات الإضافية ── */}
-      <div className="dsc-divider" style={{ marginTop: "2rem" }}>
+      <div className="dsc-divider dsc-divider--mt2">
         <span>آخر النشاطات</span>
       </div>
       <div className="admin-info-grid">
@@ -607,7 +607,7 @@ export function DashboardSection() {
           {topViewedLessons.length === 0 ? (
             <p className="admin-info-panel__empty">لا توجد مشاهدات مسجّلة بعد.</p>
           ) : (
-            <ol className="admin-info-panel__list" style={{ paddingInlineStart: "1.25rem", listStyle: "decimal" }}>
+            <ol className="admin-info-panel__list admin-info-panel__list--ordered">
               {topViewedLessons.map((item) => (
                 <li key={item.id} className="admin-info-panel__item">
                   <Link href={`/lessons/${item.id}`} className="admin-info-panel__item-title">{item.title}</Link>
@@ -622,7 +622,7 @@ export function DashboardSection() {
           {searches.length === 0 ? (
             <p className="admin-info-panel__empty">لا توجد عمليات بحث مسجّلة بعد.</p>
           ) : (
-            <ol className="admin-info-panel__list" style={{ paddingInlineStart: "1.25rem", listStyle: "decimal" }}>
+            <ol className="admin-info-panel__list admin-info-panel__list--ordered">
               {searches.map((item) => (
                 <li key={item.query} className="admin-info-panel__item">
                   <Link href={`/search/${encodeURIComponent(item.query)}`} className="admin-info-panel__item-title">

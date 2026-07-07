@@ -141,7 +141,7 @@ export function IslamicStoriesSection() {
 
   if (loading) {
     return (
-      <div style={{ padding: "2rem", textAlign: "center", color: "#64748b", direction: "rtl" }}>
+      <div className="iss-empty">
         جاري التحميل…
       </div>
     );
@@ -159,8 +159,8 @@ export function IslamicStoriesSection() {
           </p>
           <div className="is-stats">
             <div className="is-stat"><strong>{stories.length}</strong><span>إجمالي</span></div>
-            <div className="is-stat"><strong style={{ color: "#16a34a" }}>{approved}</strong><span>معتمد</span></div>
-            <div className="is-stat"><strong style={{ color: "#0E6E52" }}>{pending}</strong><span>قيد المراجعة</span></div>
+            <div className="is-stat"><strong className="text-approved">{approved}</strong><span>معتمد</span></div>
+            <div className="is-stat"><strong className="text-emerald">{pending}</strong><span>قيد المراجعة</span></div>
             <div className="is-stat">صحابة: <strong>{catApproved("صحابة")}/{catCount("صحابة")}</strong></div>
             <div className="is-stat">فتوحات: <strong>{catApproved("فتوحات")}/{catCount("فتوحات")}</strong></div>
             <div className="is-stat">تاريخ: <strong>{catApproved("تاريخ")}/{catCount("تاريخ")}</strong></div>
@@ -190,7 +190,7 @@ export function IslamicStoriesSection() {
         {/* Stories List */}
         <div className="is-list">
           {filtered.length === 0 ? (
-            <div style={{ textAlign: "center", padding: "2rem", color: "#64748b" }}>
+            <div className="iss-empty">
               لا توجد نتائج
             </div>
           ) : filtered.map(story => {

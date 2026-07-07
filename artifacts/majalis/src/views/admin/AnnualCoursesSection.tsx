@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { adminGetAllAnnualCourses, adminUpsertAnnualCourse, adminDeleteAnnualCourse } from "@/lib/platform-supabase";
 import { ANNUAL_COURSES_SEED } from "@/lib/annual-courses-seed";
 import { COURSE_TYPES } from "@/lib/platform-types";
-import { C } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
 import { AdminModal, Field } from "./AdminModal";
 import { useAdminShell } from "./AdminShell";
@@ -23,16 +22,16 @@ export function AnnualCoursesSection() {
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "1rem" }}>
-        <h2 style={{ margin: 0, color: C.emeraldDeep }}>الدورات العلمية ({items.length})</h2>
-        <button onClick={() => { setForm({ ...EMPTY }); setOpen(true); }} style={{ padding: "0.5rem 1rem", background: C.emerald, color: C.parchment, border: "none", borderRadius: "0.375rem", cursor: "pointer" }}>+ إضافة</button>
+      <div className="adm-section-hdr">
+        <h2 className="adm-section-h2">الدورات العلمية ({items.length})</h2>
+        <button onClick={() => { setForm({ ...EMPTY }); setOpen(true); }} className="adm-btn-add">+ إضافة</button>
       </div>
       {loading ? <Loading /> : items.map((item, idx) => (
-        <div key={item.id ?? item.title ?? idx} style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.375rem", padding: "1rem", marginBottom: "0.75rem" }}>
+        <div key={item.id ?? item.title ?? idx} className="adm-item-card">
           <strong>{item.title}</strong> — {item.course_type}
-          <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.5rem" }}>
-            <button onClick={() => { setForm({ ...item }); setOpen(true); }} style={{ fontSize: "0.75rem" }}>تعديل</button>
-            <button onClick={() => { if (!item.id) return; if (confirm("حذف؟")) adminDeleteAnnualCourse(item.id).then(load); }} style={{ fontSize: "0.75rem", color: "#dc2626" }}>حذف</button>
+          <div className="adm-item-actions">
+            <button onClick={() => { setForm({ ...item }); setOpen(true); }} className="adm-btn-sm">تعديل</button>
+            <button onClick={() => { if (!item.id) return; if (confirm("حذف؟")) adminDeleteAnnualCourse(item.id).then(load); }} className="adm-btn-del">حذف</button>
           </div>
         </div>
       ))}

@@ -24,7 +24,6 @@ import {
   fiqhItemHref,
   type FiqhCouncilItem,
 } from "@/lib/fiqh-council-types";
-import { C } from "@/lib/theme";
 
 const QUEUE_LABELS: Record<FiqhReviewQueueKind, string> = {
   needs_review: "بانتظار المراجعة",
@@ -143,7 +142,7 @@ function ReviewContent() {
       </div>
 
       {filtered.length === 0 ? (
-        <p style={{ color: C.inkSoft }}>لا توجد مواد في هذه القائمة.</p>
+        <p className="adm-empty-msg">لا توجد مواد في هذه القائمة.</p>
       ) : (
         <div className="fiqh-review-list">
           {filtered.map((item) => {

@@ -453,8 +453,8 @@ export function ProphetStoriesSection() {
         </p>
         <div className="ps-stats">
           <div className="ps-stat"><strong>{stories.length}</strong><span>إجمالي</span></div>
-          <div className="ps-stat"><strong style={{ color: "#16a34a" }}>{approved}</strong><span>معتمد</span></div>
-          <div className="ps-stat"><strong style={{ color: "#18362A" }}>{pending}</strong><span>ينتظر</span></div>
+          <div className="ps-stat"><strong className="text-approved">{approved}</strong><span>معتمد</span></div>
+          <div className="ps-stat"><strong className="text-forest">{pending}</strong><span>ينتظر</span></div>
         </div>
       </div>
 

@@ -228,7 +228,7 @@ export default function FeatureStatusPage() {
               </div>
             ) : null}
             {health?.bootstrapDetail?.migrationStatus && (
-              <p style={{ fontSize: "0.8125rem", color: "var(--ds-ink-soft)" }}>
+              <p className="fsp-meta-note">
                 Migrations: {health.bootstrapDetail.migrationStatus.appliedCount} applied,{" "}
                 {health.bootstrapDetail.migrationStatus.pendingCount} pending
               </p>
@@ -379,7 +379,7 @@ export default function FeatureStatusPage() {
           {activateResult && (
             <section className="ui-card">
               <h2>نتيجة التفعيل</h2>
-              <pre style={{ overflow: "auto", maxHeight: 320, fontSize: 12 }}>{activateResult}</pre>
+              <pre className="fsp-result-pre">{activateResult}</pre>
             </section>
           )}
         </>

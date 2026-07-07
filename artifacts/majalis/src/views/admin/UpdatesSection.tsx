@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { adminGetAllUpdates, adminUpsertUpdate, adminDeleteUpdate } from "@/lib/platform-supabase";
 import { UPDATES_SEED } from "@/lib/updates-seed";
 import { UPDATE_TYPES } from "@/lib/platform-types";
-import { C } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
 import { AdminModal, Field } from "./AdminModal";
 import { useAdminShell } from "./AdminShell";
@@ -23,17 +22,17 @@ export function UpdatesSection() {
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "1rem" }}>
-        <h2 style={{ margin: 0, color: C.emeraldDeep }}>آخر المستجدات ({items.length})</h2>
-        <button onClick={() => { setForm({ ...EMPTY }); setOpen(true); }} style={{ padding: "0.5rem 1rem", background: C.emerald, color: C.parchment, border: "none", borderRadius: "0.375rem", cursor: "pointer" }}>+ إضافة</button>
+      <div className="adm-section-hdr">
+        <h2 className="adm-section-h2">آخر المستجدات ({items.length})</h2>
+        <button onClick={() => { setForm({ ...EMPTY }); setOpen(true); }} className="adm-btn-add">+ إضافة</button>
       </div>
       {loading ? <Loading /> : items.map((item) => (
-        <div key={item.id} style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.375rem", padding: "1rem", marginBottom: "0.75rem" }}>
-          <span style={{ fontSize: "0.75rem", background: C.sage, padding: "0.125rem 0.5rem", borderRadius: "0.25rem" }}>{item.update_type}</span>
-          <strong style={{ display: "block", marginTop: "0.5rem" }}>{item.title}</strong>
-          <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.5rem" }}>
-            <button onClick={() => { setForm({ ...item }); setOpen(true); }} style={{ fontSize: "0.75rem" }}>تعديل</button>
-            <button onClick={() => { if (confirm("حذف؟")) adminDeleteUpdate(item.id).then(load).catch(() => showError("تعذّر الحذف.")); }} style={{ fontSize: "0.75rem", color: "#dc2626" }}>حذف</button>
+        <div key={item.id} className="adm-item-card">
+          <span className="adm-type-badge">{item.update_type}</span>
+          <strong className="adm-block-title">{item.title}</strong>
+          <div className="adm-item-actions">
+            <button onClick={() => { setForm({ ...item }); setOpen(true); }} className="adm-btn-sm">تعديل</button>
+            <button onClick={() => { if (confirm("حذف؟")) adminDeleteUpdate(item.id).then(load).catch(() => showError("تعذّر الحذف.")); }} className="adm-btn-del">حذف</button>
           </div>
         </div>
       ))}

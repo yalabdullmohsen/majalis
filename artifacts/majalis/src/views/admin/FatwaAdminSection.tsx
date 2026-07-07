@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { adminGetAllFatwas, adminUpsertFatwa, adminDeleteFatwa, adminSetPlatformContentStatus } from "@/lib/platform-supabase";
 import { FATWA_SEED } from "@/lib/fatwa-seed";
 import { FATWA_CATEGORIES } from "@/lib/platform-types";
-import { C } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
 import { AdminModal, Field } from "./AdminModal";
 import { useAdminShell } from "./AdminShell";
@@ -27,17 +26,17 @@ export function FatwaAdminSection() {
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "1rem" }}>
-        <h2 style={{ margin: 0, color: C.emeraldDeep }}>الفتاوى ({items.length})</h2>
-        <button onClick={() => { setForm({ ...EMPTY }); setOpen(true); }} style={{ padding: "0.5rem 1rem", background: C.emerald, color: C.parchment, border: "none", borderRadius: "0.375rem", cursor: "pointer" }}>+ إضافة</button>
+      <div className="adm-section-hdr">
+        <h2 className="adm-section-h2">الفتاوى ({items.length})</h2>
+        <button onClick={() => { setForm({ ...EMPTY }); setOpen(true); }} className="adm-btn-add">+ إضافة</button>
       </div>
       {loading ? <Loading /> : items.map((item) => (
-        <div key={item.id} style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.375rem", padding: "1rem", marginBottom: "0.75rem" }}>
+        <div key={item.id} className="adm-item-card">
           <strong>{item.question}</strong>
-          <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.5rem" }}>
-            <button onClick={() => { setForm({ ...item }); setOpen(true); }} style={{ fontSize: "0.75rem" }}>تعديل</button>
-            {item.status !== "approved" && <button onClick={() => adminSetPlatformContentStatus("fatwas", item.id, "approved").then(load)} style={{ fontSize: "0.75rem" }}>نشر</button>}
-            <button onClick={() => { if (confirm("حذف؟")) adminDeleteFatwa(item.id).then(load); }} style={{ fontSize: "0.75rem", color: "#dc2626" }}>حذف</button>
+          <div className="adm-item-actions">
+            <button onClick={() => { setForm({ ...item }); setOpen(true); }} className="adm-btn-sm">تعديل</button>
+            {item.status !== "approved" && <button onClick={() => adminSetPlatformContentStatus("fatwas", item.id, "approved").then(load)} className="adm-btn-sm">نشر</button>}
+            <button onClick={() => { if (confirm("حذف؟")) adminDeleteFatwa(item.id).then(load); }} className="adm-btn-del">حذف</button>
           </div>
         </div>
       ))}
