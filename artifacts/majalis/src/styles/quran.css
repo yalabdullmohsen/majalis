@@ -184,8 +184,9 @@
   font-family: "Amiri Quran", "Scheherazade New", serif;
   font-size: var(--qs-font-size, 26px);
   direction: rtl;
-  margin: .5rem 0;
-  color: var(--text-body, #1a1a1a);
+  text-align: center;
+  margin: 0.25rem 0.5rem 0;
+  color: var(--mf-ink, #1A1610);
   line-height: 2;
 }
 .qs-surah-header__title {
@@ -220,19 +221,18 @@
   display: inline;
 }
 
-/* Playing ayah: subtle green highlight without breaking flow */
+/* Playing ayah: تغيير اللون فقط — لا صندوق يقطع السطر */
 .qs-ayah-inline--playing .qs-ayah-inline__text {
-  background: rgba(22, 78, 60, .13);
-  border-radius: 3px;
-  padding: 0 2px;
-  color: #0a2e20;
+  color: #0a3a25;
+  text-decoration: underline;
+  text-decoration-color: rgba(22, 78, 60, 0.4);
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
 }
 
-/* Target ayah (jump destination): subtle gold highlight */
+/* Target ayah (jump destination) */
 .qs-ayah-inline--target .qs-ayah-inline__text {
-  background: rgba(176, 141, 46, .13);
-  border-radius: 3px;
-  padding: 0 2px;
+  color: #5c3800;
 }
 
 /* Ayah text span — inline, cursor pointer for tap-to-select */
@@ -877,12 +877,10 @@
   -webkit-user-select: text;
 }
 .qs-mushaf-clean .qs-ayah-inline:active {
-  background: rgba(180, 140, 40, .08);
-  border-radius: 4px;
+  opacity: 0.75;
 }
 .qs-mushaf-clean .qs-ayah-inline--playing {
-  background: rgba(22, 78, 60, .07);
-  border-radius: 4px;
+  /* التمييز عبر اللون فقط، بلا صندوق */
 }
 
 /* Ayah number — ornamental style */
@@ -1827,16 +1825,22 @@
 .qs-mushaf-frame {
   position: relative;
   background: var(--qs-parchment, #F8F2E4);
-  border: 1px solid var(--mf-gold-soft, rgba(184,135,74,0.45));
-  box-shadow:
-    inset 0 0 0 3px var(--qs-parchment, #F8F2E4),
-    inset 0 0 0 4px var(--mf-gold-faint, rgba(184,135,74,0.18)),
-    0 3px 20px rgba(184,135,74,0.06);
-  border-radius: 2px;
-  margin: 0 -0.25rem;
+  border: 1.5px solid var(--mf-gold, #B8874A);
+  border-radius: 1px;
+  margin: 0.5rem 0;
   padding: 0;
+  box-shadow: 0 2px 16px rgba(184,135,74,0.12);
 }
-.qs-mushaf-frame::before,
+/* الحد الذهبي الداخلي الثاني — يكمّل الإطار المزدوج */
+.qs-mushaf-frame::before {
+  content: '';
+  display: block;
+  position: absolute;
+  inset: 4px;
+  border: 1px solid var(--mf-gold-soft, rgba(184,135,74,0.5));
+  pointer-events: none;
+  z-index: 0;
+}
 .qs-mushaf-frame::after { display: none; }
 
 /* ── زخارف الزوايا الأربع — بصري خالص ── */
@@ -1923,8 +1927,8 @@
   border: none;
   border-radius: 0;
   background-color: var(--qs-parchment, #F8F2E4);
-  /* روزيت: ٨ نتوءات ذهبية + قرص ذهبي مركزي + ثقب عاجي للرقم */
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='6' r='7' fill='%23B8874A'/%3E%3Ccircle cx='81' cy='19' r='7' fill='%23B8874A'/%3E%3Ccircle cx='94' cy='50' r='7' fill='%23B8874A'/%3E%3Ccircle cx='81' cy='81' r='7' fill='%23B8874A'/%3E%3Ccircle cx='50' cy='94' r='7' fill='%23B8874A'/%3E%3Ccircle cx='19' cy='81' r='7' fill='%23B8874A'/%3E%3Ccircle cx='6' cy='50' r='7' fill='%23B8874A'/%3E%3Ccircle cx='19' cy='19' r='7' fill='%23B8874A'/%3E%3Ccircle cx='50' cy='50' r='36' fill='%23B8874A'/%3E%3Ccircle cx='50' cy='50' r='23' fill='%23F8F2E4'/%3E%3C/svg%3E");
+  /* نجمة ثمانية ذهبية مع ثقب عاجي للرقم — شكل مسنّن حقيقي */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='50,6 62,22 81,19 78,39 94,50 78,62 81,81 62,78 50,94 38,78 19,81 22,62 6,50 22,39 19,19 38,22' fill='%23B8874A'/%3E%3Ccircle cx='50' cy='50' r='19' fill='%23F8F2E4'/%3E%3C/svg%3E");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   font-size:   0.56em;
@@ -1988,10 +1992,11 @@
 /* ── وضع ليلي ── */
 .quran-shell--night .qs-mushaf-frame {
   background: #111009;
-  border-color: rgba(184,135,74,0.25);
-  box-shadow:
-    inset 0 0 0 3px #111009,
-    inset 0 0 0 4px rgba(184,135,74,0.12);
+  border-color: rgba(184,135,74,0.5);
+  box-shadow: 0 2px 16px rgba(0,0,0,0.3);
+}
+.quran-shell--night .qs-mushaf-frame::before {
+  border-color: rgba(184,135,74,0.22);
 }
 .quran-shell--night .qs-mushaf-frame .qs-mushaf-body {
   color: #e8d5b0;
@@ -2016,7 +2021,7 @@
 .quran-shell--night .qs-mushaf-corner { color: rgba(184,135,74,0.45); }
 .quran-shell--night .qs-ayah-num {
   background-color: #111009;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='6' r='7' fill='%23B8874A' opacity='0.5'/%3E%3Ccircle cx='81' cy='19' r='7' fill='%23B8874A' opacity='0.5'/%3E%3Ccircle cx='94' cy='50' r='7' fill='%23B8874A' opacity='0.5'/%3E%3Ccircle cx='81' cy='81' r='7' fill='%23B8874A' opacity='0.5'/%3E%3Ccircle cx='50' cy='94' r='7' fill='%23B8874A' opacity='0.5'/%3E%3Ccircle cx='19' cy='81' r='7' fill='%23B8874A' opacity='0.5'/%3E%3Ccircle cx='6' cy='50' r='7' fill='%23B8874A' opacity='0.5'/%3E%3Ccircle cx='19' cy='19' r='7' fill='%23B8874A' opacity='0.5'/%3E%3Ccircle cx='50' cy='50' r='36' fill='%23B8874A' opacity='0.5'/%3E%3Ccircle cx='50' cy='50' r='23' fill='%23111009'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='50,6 62,22 81,19 78,39 94,50 78,62 81,81 62,78 50,94 38,78 19,81 22,62 6,50 22,39 19,19 38,22' fill='%23B8874A' opacity='0.55'/%3E%3Ccircle cx='50' cy='50' r='19' fill='%23111009'/%3E%3C/svg%3E");
   color: #D4A94A;
 }
 .quran-shell--night .qs-bismillah { color: #e8d5b0; }
@@ -2024,10 +2029,10 @@
 /* ── وضع دافئ ── */
 .quran-shell--warm .qs-mushaf-frame {
   background: #fdf0d8;
-  border-color: rgba(184,135,74,0.5);
-  box-shadow:
-    inset 0 0 0 3px #fdf0d8,
-    inset 0 0 0 4px rgba(184,135,74,0.22);
+  border-color: #B8874A;
+}
+.quran-shell--warm .qs-mushaf-frame::before {
+  border-color: rgba(184,135,74,0.4);
 }
 .quran-shell--warm .qs-mushaf-frame .qs-mushaf-body { color: #2c1a0e; }
 .quran-shell--warm .qs-surah-header__title { color: #5a2d00; }
@@ -2037,7 +2042,7 @@
 .quran-shell--warm .qs-mushaf-footer-row__page { color: #4a2800; }
 .quran-shell--warm .qs-ayah-num {
   background-color: #fdf0d8;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='6' r='7' fill='%23B8874A'/%3E%3Ccircle cx='81' cy='19' r='7' fill='%23B8874A'/%3E%3Ccircle cx='94' cy='50' r='7' fill='%23B8874A'/%3E%3Ccircle cx='81' cy='81' r='7' fill='%23B8874A'/%3E%3Ccircle cx='50' cy='94' r='7' fill='%23B8874A'/%3E%3Ccircle cx='19' cy='81' r='7' fill='%23B8874A'/%3E%3Ccircle cx='6' cy='50' r='7' fill='%23B8874A'/%3E%3Ccircle cx='19' cy='19' r='7' fill='%23B8874A'/%3E%3Ccircle cx='50' cy='50' r='36' fill='%23B8874A'/%3E%3Ccircle cx='50' cy='50' r='23' fill='%23fdf0d8'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='50,6 62,22 81,19 78,39 94,50 78,62 81,81 62,78 50,94 38,78 19,81 22,62 6,50 22,39 19,19 38,22' fill='%23B8874A'/%3E%3Ccircle cx='50' cy='50' r='19' fill='%23fdf0d8'/%3E%3C/svg%3E");
   color: #5c3800;
 }
 .quran-shell--warm .qs-bismillah { color: #2c1a0e; }

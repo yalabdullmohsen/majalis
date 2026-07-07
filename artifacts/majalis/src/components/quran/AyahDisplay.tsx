@@ -200,12 +200,6 @@ export function AyahDisplay({
     >
       {/* ── Surah header ── */}
       <header className="qs-surah-header">
-        <div className="qs-surah-header__ornament" aria-hidden="true">﷽</div>
-        {!isSurahWithoutBismillah && (
-          <p className="qs-bismillah" lang="ar" dir="rtl">
-            بِسۡمِ ٱللَّهِ ٱلرَّحۡمَـٰنِ ٱلرَّحِيمِ
-          </p>
-        )}
         <h2 className="qs-surah-header__title" lang="ar">{surahName}</h2>
         <p className="qs-surah-header__hint">اضغط مطوّلاً على أي آية للخيارات</p>
       </header>
@@ -233,6 +227,13 @@ export function AyahDisplay({
           <span className="qs-surah-name-box__title">{surahName}</span>
           <span className="qs-surah-name-box__orn">❖</span>
         </div>
+
+        {/* البسملة — فوق النص مباشرة، داخل الإطار */}
+        {!isSurahWithoutBismillah && (
+          <p className="qs-bismillah" lang="ar" dir="rtl" aria-label="بسم الله الرحمن الرحيم">
+            بِسۡمِ ٱللَّهِ ٱلرَّحۡمَـٰنِ ٱلرَّحِيمِ
+          </p>
+        )}
 
       <div
         className="qs-mushaf-body qs-mushaf-clean"
