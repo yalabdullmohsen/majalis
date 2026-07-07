@@ -182,7 +182,7 @@
 }
 .qs-bismillah {
   font-family: "Amiri Quran", "Scheherazade New", serif;
-  font-size: clamp(1.4rem, 3.5vw, 2rem);
+  font-size: var(--qs-font-size, 26px);
   direction: rtl;
   margin: .5rem 0;
   color: var(--text-body, #1a1a1a);
@@ -1818,45 +1818,101 @@
 }
 
 /* ── إطار منطقة النص القرآني (يُحيط بـ qs-mushaf-body فقط) ── */
+/* ══════════════════════════════════════════════════════════════════════
+   إطار المصحف الذهبي — تصميم طباعي مرجعي — CSS/markup فقط
+   النص القرآني لا يُمس بأي حال
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── الإطار الكامل: حدان ذهبيان رفيعان (خارجي + داخلي بـ box-shadow) ── */
 .qs-mushaf-frame {
   position: relative;
-  background: var(--qs-parchment);
-  border-top:    2px solid var(--mf-gold-soft);
-  border-bottom: 2px solid var(--mf-gold-soft);
-  border-left:   1px solid var(--mf-gold-faint);
-  border-right:  1px solid var(--mf-gold-faint);
-  border-radius: 3px;
-  margin: 0 -0.25rem;
+  background: var(--qs-parchment, #F8F2E4);
+  border: 1px solid var(--mf-gold-soft, rgba(184,135,74,0.45));
   box-shadow:
-    0 3px 24px rgba(184,135,74,0.07),
-    0 1px 6px  rgba(0,0,0,0.04);
+    inset 0 0 0 3px var(--qs-parchment, #F8F2E4),
+    inset 0 0 0 4px var(--mf-gold-faint, rgba(184,135,74,0.18)),
+    0 3px 20px rgba(184,135,74,0.06);
+  border-radius: 2px;
+  margin: 0 -0.25rem;
+  padding: 0;
 }
-/* خطان داخليان رفيعان أعلى وأسفل */
 .qs-mushaf-frame::before,
-.qs-mushaf-frame::after {
-  content: '';
-  position: absolute;
-  left: 10%;
-  right: 10%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--mf-gold-faint), transparent);
-  pointer-events: none;
-}
-.qs-mushaf-frame::before { top: 4px; }
-.qs-mushaf-frame::after  { bottom: 4px; }
+.qs-mushaf-frame::after { display: none; }
 
-/* لون حبر النص داخل الإطار + تحسين دقة عرض الخط */
+/* ── زخارف الزوايا الأربع — بصري خالص ── */
+.qs-mushaf-corner {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--mf-gold, #B8874A);
+  font-size: 9px;
+  line-height: 1;
+  user-select: none;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.75;
+}
+.qs-mushaf-corner--tl { top: 3px;    left: 3px; }
+.qs-mushaf-corner--tr { top: 3px;    right: 3px; }
+.qs-mushaf-corner--bl { bottom: 3px; left: 3px; }
+.qs-mushaf-corner--br { bottom: 3px; right: 3px; }
+
+/* ── سطر رأس الصفحة: اسم السورة (يمين) / الجزء (يسار) — بسيط بلا صندوق ── */
+.qs-mushaf-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.35rem 1.1rem 0.3rem;
+  font-size: 0.67rem;
+  font-weight: 600;
+  color: var(--mf-ink, #1A1610);
+  direction: rtl;
+  font-family: "Tajawal", "IBM Plex Sans Arabic", system-ui, sans-serif;
+  border-bottom: 1px solid var(--mf-gold-faint, rgba(184,135,74,0.18));
+  user-select: none;
+}
+
+/* ── صندوق اسم السورة — مستطيل بحد ذهبي — بصري خالص ── */
+.qs-surah-name-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  margin: 0.8rem auto 0.4rem;
+  padding: 0.28rem 1.2rem;
+  border: 1px solid var(--mf-gold-soft, rgba(184,135,74,0.45));
+  width: fit-content;
+  min-width: 48%;
+  direction: rtl;
+  user-select: none;
+}
+.qs-surah-name-box__title {
+  font-family: "Amiri Quran", "Scheherazade New", serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--mf-ink, #1A1610);
+}
+.qs-surah-name-box__orn {
+  color: var(--mf-gold, #B8874A);
+  font-size: 0.72rem;
+  flex-shrink: 0;
+  opacity: 0.8;
+}
+
+/* ── نص الآيات داخل الإطار — حبر أسود على عاجي ── */
 .qs-mushaf-frame .qs-mushaf-body {
-  color: var(--mf-ink);
-  padding-top:    1.5rem;
-  padding-bottom: 2.25rem;
+  color: var(--mf-ink, #1A1610);
+  padding-top:    0.75rem;
+  padding-bottom: 0.75rem;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ── فاصلة نهاية الآية: حلقة دائرية زمردية + رقم ذهبي + ٨ نقاط ── */
-/*    بصري خالص — النص لا يُمس                                      */
+/* ── فاصلة نهاية الآية: دائرة ذهبية مسنّنة (٨ نتوءات) + رقم شرقي — بصري خالص ── */
 .qs-ayah-num {
   position: relative;
   display: inline-flex;
@@ -1864,16 +1920,16 @@
   justify-content: center;
   width:  1.85em;
   height: 1.85em;
-  border: 1.2px solid var(--majalis-emerald, #164E3C);
-  border-radius: 50%;
-  /* عاجي + SVG يحوي ٨ نقاط ذهبية على المحيط */
+  border: none;
+  border-radius: 0;
   background-color: var(--qs-parchment, #F8F2E4);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='3.5' r='3' fill='%23B8874A'/%3E%3Ccircle cx='83' cy='17' r='3' fill='%23B8874A'/%3E%3Ccircle cx='96.5' cy='50' r='3' fill='%23B8874A'/%3E%3Ccircle cx='83' cy='83' r='3' fill='%23B8874A'/%3E%3Ccircle cx='50' cy='96.5' r='3' fill='%23B8874A'/%3E%3Ccircle cx='17' cy='83' r='3' fill='%23B8874A'/%3E%3Ccircle cx='3.5' cy='50' r='3' fill='%23B8874A'/%3E%3Ccircle cx='17' cy='17' r='3' fill='%23B8874A'/%3E%3C/svg%3E");
+  /* روزيت: ٨ نتوءات ذهبية + قرص ذهبي مركزي + ثقب عاجي للرقم */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='6' r='7' fill='%23B8874A'/%3E%3Ccircle cx='81' cy='19' r='7' fill='%23B8874A'/%3E%3Ccircle cx='94' cy='50' r='7' fill='%23B8874A'/%3E%3Ccircle cx='81' cy='81' r='7' fill='%23B8874A'/%3E%3Ccircle cx='50' cy='94' r='7' fill='%23B8874A'/%3E%3Ccircle cx='19' cy='81' r='7' fill='%23B8874A'/%3E%3Ccircle cx='6' cy='50' r='7' fill='%23B8874A'/%3E%3Ccircle cx='19' cy='19' r='7' fill='%23B8874A'/%3E%3Ccircle cx='50' cy='50' r='36' fill='%23B8874A'/%3E%3Ccircle cx='50' cy='50' r='23' fill='%23F8F2E4'/%3E%3C/svg%3E");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   font-size:   0.56em;
   font-weight: 700;
-  color: #8B6400; /* ذهبي داكن — تباين ~4.6:1 على العاجي */
+  color: #2c2412; /* حبر داكن — تباين ~12:1 على العاجي */
   vertical-align: middle;
   margin: 0 0.22em;
   user-select: none;
@@ -1881,79 +1937,30 @@
   font-family: "Tajawal", "IBM Plex Sans Arabic", system-ui, sans-serif;
   line-height: 1;
 }
-/* إلغاء الشكل القديم */
 .qs-ayah-num::before,
-.qs-ayah-num::after {
-  display: none;
-}
+.qs-ayah-num::after { display: none; }
 
-/* ── شريط شارة الجزء / السورة — أعلى الإطار — بصري خالص ── */
-.qs-mushaf-badge-row {
+/* ── تذييل الصفحة: رقم الصفحة + خطان زخرفيان — بصري خالص ── */
+.qs-mushaf-footer-row {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.5rem 0.875rem 0.1rem;
-  direction: rtl;
-}
-.qs-mushaf-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3em;
-  padding: 0.18em 0.6em;
-  border: 1px solid var(--mf-gold-soft, rgba(184,135,74,0.45));
-  border-radius: 999px;
-  font-size: 0.7rem;
-  font-weight: 600;
-  color: var(--majalis-emerald, #164E3C); /* تباين ~8.75:1 على العاجي */
-  background: rgba(248,242,228,0.65);
-  line-height: 1.4;
-  font-family: "Tajawal", "IBM Plex Sans Arabic", system-ui, sans-serif;
-  user-select: none;
-  -webkit-user-select: none;
-  white-space: nowrap;
-}
-.qs-mushaf-badge__gem {
-  display: inline-block;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--majalis-emerald, #164E3C);
-  flex-shrink: 0;
-  opacity: 0.85;
-}
-
-/* ── ميدالية رقم الصفحة — أسفل الإطار — بصري خالص ── */
-.qs-page-medallion {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.15rem;
-  padding: 0.1rem 0 0.875rem;
-}
-.qs-page-medallion__ring {
-  position: relative;
-  width: 2.25rem;
-  height: 2.25rem;
-  border-radius: 50%;
-  border: 1px solid var(--mf-gold-soft, rgba(184,135,74,0.5));
-  display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: #8B6400; /* تباين ~4.6:1 على العاجي */
-  background-color: var(--qs-parchment, #F8F2E4);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='3.5' r='2.5' fill='%23B8874A' opacity='0.55'/%3E%3Ccircle cx='83' cy='17' r='2.5' fill='%23B8874A' opacity='0.55'/%3E%3Ccircle cx='96.5' cy='50' r='2.5' fill='%23B8874A' opacity='0.55'/%3E%3Ccircle cx='83' cy='83' r='2.5' fill='%23B8874A' opacity='0.55'/%3E%3Ccircle cx='50' cy='96.5' r='2.5' fill='%23B8874A' opacity='0.55'/%3E%3Ccircle cx='17' cy='83' r='2.5' fill='%23B8874A' opacity='0.55'/%3E%3Ccircle cx='3.5' cy='50' r='2.5' fill='%23B8874A' opacity='0.55'/%3E%3Ccircle cx='17' cy='17' r='2.5' fill='%23B8874A' opacity='0.55'/%3E%3C/svg%3E");
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  font-family: "Tajawal", "IBM Plex Sans Arabic", system-ui, sans-serif;
-}
-.qs-page-medallion__label {
-  font-size: 0.58rem;
-  color: var(--text-muted, #6b7280);
-  font-family: "Tajawal", system-ui, sans-serif;
-  letter-spacing: 0.03em;
+  gap: 0.5rem;
+  padding: 0.4rem 1rem;
+  border-top: 1px solid var(--mf-gold-faint, rgba(184,135,74,0.18));
   user-select: none;
+}
+.qs-mushaf-footer-row__line {
+  flex: 1;
+  max-width: 2.5rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--mf-gold-soft, rgba(184,135,74,0.45)), transparent);
+}
+.qs-mushaf-footer-row__page {
+  font-size: 0.63rem;
+  font-weight: 600;
+  color: var(--mf-ink, #1A1610);
+  font-family: "Tajawal", "IBM Plex Sans Arabic", system-ui, sans-serif;
 }
 
 /* ── شريط التحكم — تحسين بصري ── */
@@ -1978,13 +1985,13 @@
 /* ═══════════════════════════════════════════════════════════════════════════
    تكيّف الأوضاع (ليلي / دافئ) مع التصميم الجديد
    ═══════════════════════════════════════════════════════════════════════════ */
+/* ── وضع ليلي ── */
 .quran-shell--night .qs-mushaf-frame {
   background: #111009;
-  border-color: rgba(184,135,74,0.28);
-}
-.quran-shell--night .qs-mushaf-frame::before,
-.quran-shell--night .qs-mushaf-frame::after {
-  background: linear-gradient(90deg, transparent, rgba(184,135,74,0.12), transparent);
+  border-color: rgba(184,135,74,0.25);
+  box-shadow:
+    inset 0 0 0 3px #111009,
+    inset 0 0 0 4px rgba(184,135,74,0.12);
 }
 .quran-shell--night .qs-mushaf-frame .qs-mushaf-body {
   color: #e8d5b0;
@@ -1993,55 +2000,47 @@
   background: linear-gradient(90deg, transparent, rgba(184,135,74,0.28), transparent);
 }
 .quran-shell--night .qs-surah-header__title { color: #6ee7b7; text-shadow: none; }
-/* الوضع الليلي: فاصلة الآية + الشارات + الميدالية */
+.quran-shell--night .qs-mushaf-header-row {
+  color: #c8b48a;
+  border-bottom-color: rgba(184,135,74,0.12);
+}
+.quran-shell--night .qs-surah-name-box {
+  border-color: rgba(184,135,74,0.25);
+}
+.quran-shell--night .qs-surah-name-box__title { color: #e8d5b0; }
+.quran-shell--night .qs-surah-name-box__orn   { color: rgba(184,135,74,0.55); }
+.quran-shell--night .qs-mushaf-footer-row {
+  border-top-color: rgba(184,135,74,0.12);
+}
+.quran-shell--night .qs-mushaf-footer-row__page { color: #c8b48a; }
+.quran-shell--night .qs-mushaf-corner { color: rgba(184,135,74,0.45); }
 .quran-shell--night .qs-ayah-num {
-  border-color: rgba(110,231,183,0.45);
-  background-color: #1a1610;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='3.5' r='3' fill='%23B8874A' opacity='0.45'/%3E%3Ccircle cx='83' cy='17' r='3' fill='%23B8874A' opacity='0.45'/%3E%3Ccircle cx='96.5' cy='50' r='3' fill='%23B8874A' opacity='0.45'/%3E%3Ccircle cx='83' cy='83' r='3' fill='%23B8874A' opacity='0.45'/%3E%3Ccircle cx='50' cy='96.5' r='3' fill='%23B8874A' opacity='0.45'/%3E%3Ccircle cx='17' cy='83' r='3' fill='%23B8874A' opacity='0.45'/%3E%3Ccircle cx='3.5' cy='50' r='3' fill='%23B8874A' opacity='0.45'/%3E%3Ccircle cx='17' cy='17' r='3' fill='%23B8874A' opacity='0.45'/%3E%3C/svg%3E");
+  background-color: #111009;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='6' r='7' fill='%23B8874A' opacity='0.5'/%3E%3Ccircle cx='81' cy='19' r='7' fill='%23B8874A' opacity='0.5'/%3E%3Ccircle cx='94' cy='50' r='7' fill='%23B8874A' opacity='0.5'/%3E%3Ccircle cx='81' cy='81' r='7' fill='%23B8874A' opacity='0.5'/%3E%3Ccircle cx='50' cy='94' r='7' fill='%23B8874A' opacity='0.5'/%3E%3Ccircle cx='19' cy='81' r='7' fill='%23B8874A' opacity='0.5'/%3E%3Ccircle cx='6' cy='50' r='7' fill='%23B8874A' opacity='0.5'/%3E%3Ccircle cx='19' cy='19' r='7' fill='%23B8874A' opacity='0.5'/%3E%3Ccircle cx='50' cy='50' r='36' fill='%23B8874A' opacity='0.5'/%3E%3Ccircle cx='50' cy='50' r='23' fill='%23111009'/%3E%3C/svg%3E");
   color: #D4A94A;
 }
-.quran-shell--night .qs-ayah-num::before,
-.quran-shell--night .qs-ayah-num::after { display: none; }
-.quran-shell--night .qs-mushaf-badge {
-  border-color: rgba(184,135,74,0.28);
-  background: rgba(26,22,16,0.75);
-  color: #6ee7b7;
-}
-.quran-shell--night .qs-mushaf-badge__gem { background: #6ee7b7; }
-.quran-shell--night .qs-page-medallion__ring {
-  border-color: rgba(184,135,74,0.3);
-  background-color: #1a1610;
-  color: #D4A94A;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='3.5' r='2.5' fill='%23B8874A' opacity='0.4'/%3E%3Ccircle cx='83' cy='17' r='2.5' fill='%23B8874A' opacity='0.4'/%3E%3Ccircle cx='96.5' cy='50' r='2.5' fill='%23B8874A' opacity='0.4'/%3E%3Ccircle cx='83' cy='83' r='2.5' fill='%23B8874A' opacity='0.4'/%3E%3Ccircle cx='50' cy='96.5' r='2.5' fill='%23B8874A' opacity='0.4'/%3E%3Ccircle cx='17' cy='83' r='2.5' fill='%23B8874A' opacity='0.4'/%3E%3Ccircle cx='3.5' cy='50' r='2.5' fill='%23B8874A' opacity='0.4'/%3E%3Ccircle cx='17' cy='17' r='2.5' fill='%23B8874A' opacity='0.4'/%3E%3C/svg%3E");
-}
+.quran-shell--night .qs-bismillah { color: #e8d5b0; }
 
+/* ── وضع دافئ ── */
 .quran-shell--warm .qs-mushaf-frame {
   background: #fdf0d8;
-  border-top-color:    rgba(184,135,74,0.55);
-  border-bottom-color: rgba(184,135,74,0.55);
-}
-.quran-shell--warm .qs-mushaf-frame .qs-mushaf-body {
-  color: #2c1a0e;
-}
-.quran-shell--warm .qs-surah-header__title { color: #5a2d00; }
-/* الوضع الدافئ: فاصلة الآية + الشارات + الميدالية */
-.quran-shell--warm .qs-ayah-num {
-  border-color: var(--majalis-emerald, #164E3C);
-  background-color: #fdf0d8;
-  color: #7A5200;
-}
-.quran-shell--warm .qs-ayah-num::before,
-.quran-shell--warm .qs-ayah-num::after { display: none; }
-.quran-shell--warm .qs-mushaf-badge {
-  background: rgba(253,240,216,0.8);
   border-color: rgba(184,135,74,0.5);
-  color: var(--majalis-emerald, #164E3C);
+  box-shadow:
+    inset 0 0 0 3px #fdf0d8,
+    inset 0 0 0 4px rgba(184,135,74,0.22);
 }
-.quran-shell--warm .qs-page-medallion__ring {
+.quran-shell--warm .qs-mushaf-frame .qs-mushaf-body { color: #2c1a0e; }
+.quran-shell--warm .qs-surah-header__title { color: #5a2d00; }
+.quran-shell--warm .qs-mushaf-header-row { color: #4a2800; }
+.quran-shell--warm .qs-surah-name-box { border-color: rgba(184,135,74,0.5); }
+.quran-shell--warm .qs-surah-name-box__title { color: #3c1e00; }
+.quran-shell--warm .qs-mushaf-footer-row__page { color: #4a2800; }
+.quran-shell--warm .qs-ayah-num {
   background-color: #fdf0d8;
-  color: #7A5200;
-  border-color: rgba(184,135,74,0.55);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='6' r='7' fill='%23B8874A'/%3E%3Ccircle cx='81' cy='19' r='7' fill='%23B8874A'/%3E%3Ccircle cx='94' cy='50' r='7' fill='%23B8874A'/%3E%3Ccircle cx='81' cy='81' r='7' fill='%23B8874A'/%3E%3Ccircle cx='50' cy='94' r='7' fill='%23B8874A'/%3E%3Ccircle cx='19' cy='81' r='7' fill='%23B8874A'/%3E%3Ccircle cx='6' cy='50' r='7' fill='%23B8874A'/%3E%3Ccircle cx='19' cy='19' r='7' fill='%23B8874A'/%3E%3Ccircle cx='50' cy='50' r='36' fill='%23B8874A'/%3E%3Ccircle cx='50' cy='50' r='23' fill='%23fdf0d8'/%3E%3C/svg%3E");
+  color: #5c3800;
 }
+.quran-shell--warm .qs-bismillah { color: #2c1a0e; }
 
 /* ── الاستجابة — الإطار يتقلص بهدوء على الشاشات الصغيرة ── */
 @media (max-width: 480px) {

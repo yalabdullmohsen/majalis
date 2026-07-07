@@ -210,22 +210,29 @@ export function AyahDisplay({
         <p className="qs-surah-header__hint">اضغط مطوّلاً على أي آية للخيارات</p>
       </header>
 
-      {/* ── إطار المصحف — بصري خالص — النص داخله لا يُمس ── */}
+      {/* ── إطار المصحف الذهبي — بصري خالص — النص داخله لا يُمس مطلقاً ── */}
       <div className="qs-mushaf-frame">
 
-        {/* شارة السورة (يمين) + شارة الجزء (يسار) — بصري — aria-hidden */}
+        {/* زخارف الزوايا الأربع */}
+        <span className="qs-mushaf-corner qs-mushaf-corner--tl" aria-hidden="true">✦</span>
+        <span className="qs-mushaf-corner qs-mushaf-corner--tr" aria-hidden="true">✦</span>
+        <span className="qs-mushaf-corner qs-mushaf-corner--bl" aria-hidden="true">✦</span>
+        <span className="qs-mushaf-corner qs-mushaf-corner--br" aria-hidden="true">✦</span>
+
+        {/* سطر رأس الصفحة: اسم السورة يمين + الجزء يسار */}
         {juzNum !== null && (
-          <div className="qs-mushaf-badge-row" aria-hidden="true" dir="rtl">
-            <span className="qs-mushaf-badge">
-              <span className="qs-mushaf-badge__gem" />
-              {surahName}
-            </span>
-            <span className="qs-mushaf-badge">
-              <span className="qs-mushaf-badge__gem" />
-              الجزء {toArabic(juzNum)}
-            </span>
+          <div className="qs-mushaf-header-row" aria-hidden="true" dir="rtl">
+            <span>{surahName}</span>
+            <span>الجزء {toArabic(juzNum)}</span>
           </div>
         )}
+
+        {/* صندوق اسم السورة — مستطيل بحد ذهبي */}
+        <div className="qs-surah-name-box" aria-hidden="true" dir="rtl">
+          <span className="qs-surah-name-box__orn">❖</span>
+          <span className="qs-surah-name-box__title">{surahName}</span>
+          <span className="qs-surah-name-box__orn">❖</span>
+        </div>
 
       <div
         className="qs-mushaf-body qs-mushaf-clean"
@@ -269,13 +276,12 @@ export function AyahDisplay({
         })}
       </div>
 
-        {/* ميدالية رقم الصفحة — أسفل الإطار — بصري — aria-hidden */}
+        {/* تذييل الصفحة: رقم الصفحة + خطان زخرفيان */}
         {pageNum !== null && (
-          <div className="qs-page-medallion" aria-hidden="true">
-            <div className="qs-page-medallion__ring">
-              {toArabic(pageNum)}
-            </div>
-            <span className="qs-page-medallion__label">صفحة</span>
+          <div className="qs-mushaf-footer-row" aria-hidden="true">
+            <span className="qs-mushaf-footer-row__line" />
+            <span className="qs-mushaf-footer-row__page">{toArabic(pageNum)}</span>
+            <span className="qs-mushaf-footer-row__line" />
           </div>
         )}
 
