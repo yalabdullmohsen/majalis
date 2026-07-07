@@ -26,6 +26,7 @@ import { lazyWithRetry } from "@/lib/lazy-with-retry";
 import { LazyRouteFallback } from "@/components/LazyRouteFallback";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import { startAdhanScheduler } from "@/lib/adhan-scheduler";
+import { loadNotifPrefs, scheduleIslamicReminder } from "@/lib/local-notifications";
 
 const lazy = lazyWithRetry;
 
@@ -157,6 +158,23 @@ const UniversitiesAdminPage = lazyWithRetry(() => import("@/views/admin/Universi
 function SeoManager() {
   const [location] = useLocation();
   usePageSeo(location);
+  return null;
+}
+
+function IslamicReminderBootstrap() {
+  const fired = useRef(false);
+  useEffect(() => {
+    if (fired.current) return;
+    fired.current = true;
+    const prefs = loadNotifPrefs();
+    if (prefs.enabled) scheduleIslamicReminder();
+    // تأجير تلقائي: نُرسل مرة بعد 30 دقيقة من فتح التطبيق
+    const t = setTimeout(() => {
+      const p = loadNotifPrefs();
+      if (p.enabled) scheduleIslamicReminder();
+    }, 30 * 60 * 1000);
+    return () => clearTimeout(t);
+  }, []);
   return null;
 }
 
@@ -420,6 +438,7 @@ function AppShell() {
       <div className="app-shell" style={{ minHeight: "100vh", direction: dir }}>
         <a href="#main-content" className="skip-link">{t("skip_to_content")}</a>
         <SeoManager />
+        <IslamicReminderBootstrap />
         <AdhanSchedulerBootstrap />
         <AdhanNotificationBar />
         <NavBar />

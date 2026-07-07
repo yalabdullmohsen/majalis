@@ -2204,3 +2204,166 @@ button.hcp-prayer-cell:focus-visible {
   display: inline-block !important;
   margin-bottom: 0.75rem !important;
 }
+
+/* ══════════════════════════════════════════════
+   §60. تبويبات الدروس (kuwait-tab) — سمة فاتحة
+   ══════════════════════════════════════════════ */
+.kuwait-tabs {
+  background: #F4F6F5 !important;
+  border-radius: 0.7rem !important;
+  padding: 0.3rem !important;
+  gap: 0.25rem !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+}
+
+.kuwait-tab {
+  color: var(--elite-ink-soft, #4A5568) !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0.5rem !important;
+  padding: 0.4rem 0.85rem !important;
+  font-size: 0.83rem !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  white-space: nowrap !important;
+  box-shadow: none !important;
+}
+
+.kuwait-tab:hover:not(.kuwait-tab--active) {
+  color: var(--elite-forest, #18362A) !important;
+  background: rgba(24,54,42,0.07) !important;
+  border: none !important;
+}
+
+.kuwait-tab--active {
+  background: #18362A !important;
+  color: #fff !important;
+  border: none !important;
+  font-weight: 700 !important;
+  box-shadow: 0 2px 6px rgba(24,54,42,0.25) !important;
+}
+
+/* ══════════════════════════════════════════════
+   §61. أزرار التصفية وحقول الإدخال العامة
+   ══════════════════════════════════════════════ */
+.lessons-v2-filter-toggle {
+  background: #fff !important;
+  border: 1.5px solid rgba(24,54,42,0.14) !important;
+  color: var(--elite-forest, #18362A) !important;
+  border-radius: 0.6rem !important;
+  font-weight: 600 !important;
+  font-size: 0.83rem !important;
+  padding: 0.4rem 0.85rem !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  box-shadow: 0 1px 3px rgba(24,54,42,0.07) !important;
+}
+.lessons-v2-filter-toggle:hover {
+  background: #f0fdf4 !important;
+  border-color: rgba(24,54,42,0.28) !important;
+  box-shadow: 0 2px 6px rgba(24,54,42,0.12) !important;
+}
+
+/* ── حقول الإدخال العامة ── */
+input[type="text"],
+input[type="search"],
+input[type="email"],
+input[type="password"],
+textarea,
+select {
+  border-radius: 0.55rem !important;
+  border: 1.5px solid rgba(24,54,42,0.13) !important;
+  background: #fff !important;
+  color: var(--elite-ink, #1A1A1A) !important;
+  font-family: inherit !important;
+  font-size: 0.875rem !important;
+  padding: 0.5rem 0.75rem !important;
+  transition: border-color 0.15s, box-shadow 0.15s !important;
+  outline: none !important;
+}
+input[type="text"]:focus,
+input[type="search"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--elite-forest, #18362A) !important;
+  box-shadow: 0 0 0 3px rgba(24,54,42,0.10) !important;
+}
+input::placeholder,
+textarea::placeholder {
+  color: var(--elite-ink-muted, #9BA3B5) !important;
+}
+
+/* ── قائمة Select ── */
+select {
+  appearance: auto !important;
+  cursor: pointer !important;
+}
+select:hover {
+  border-color: rgba(24,54,42,0.25) !important;
+}
+
+/* ── أزرار عامة أساسية ── */
+.btn-primary,
+.btn--primary,
+button.primary {
+  background: #18362A !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 0.6rem !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  transition: background 0.15s, transform 0.12s !important;
+}
+.btn-primary:hover,
+.btn--primary:hover,
+button.primary:hover {
+  background: #0E2820 !important;
+  transform: translateY(-1px) !important;
+}
+
+/* ── شريط الأدوات العلوي في صفحة الدروس ── */
+.lessons-v2-toolbar {
+  background: transparent !important;
+  gap: 0.6rem !important;
+  align-items: center !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  margin-bottom: 1rem !important;
+}
+
+/* ── لوحة الفلاتر الجانبية ── */
+.lessons-v2-filters {
+  background: #fff !important;
+  border: 1px solid rgba(24,54,42,0.10) !important;
+  border-radius: 0.85rem !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08) !important;
+}
+.lessons-v2-filters__head {
+  border-bottom: 1px solid rgba(24,54,42,0.08) !important;
+}
+.lessons-v2-filters__head h2 {
+  color: var(--elite-forest, #18362A) !important;
+  font-weight: 800 !important;
+}
+.lessons-v2-filters__close {
+  background: rgba(24,54,42,0.07) !important;
+  border: none !important;
+  color: var(--elite-forest, #18362A) !important;
+  border-radius: 0.45rem !important;
+  cursor: pointer !important;
+  font-size: 0.9rem !important;
+  padding: 0.3rem 0.55rem !important;
+  transition: background 0.15s !important;
+}
+.lessons-v2-filters__close:hover {
+  background: rgba(24,54,42,0.14) !important;
+}
+.lessons-v2-filters-grid label {
+  color: var(--elite-ink-soft, #4A5568) !important;
+  font-weight: 600 !important;
+  font-size: 0.8rem !important;
+}
