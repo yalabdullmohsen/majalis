@@ -156,16 +156,16 @@ export default function TawhidPage() {
       </nav>
 
       {/* رأس الصفحة */}
-      <header className="tawheed-page-header" style={{ color: "#fff" }}>
-        <p className="home-eyebrow" style={{ color: "#fff" }}>عقيدة أهل السنة والجماعة</p>
-        <h1 className="tawheed-page-header__title" style={{ color: "#fff" }}>التوحيد</h1>
-        <p className="tawheed-page-header__subtitle" style={{ color: "rgba(255,255,255,0.88)" }}>
+      <header id="tawhid-header" className="tawheed-page-header">
+        <p className="home-eyebrow">عقيدة أهل السنة والجماعة</p>
+        <h1 className="tawheed-page-header__title">التوحيد</h1>
+        <p className="tawheed-page-header__subtitle">
           التوحيد هو أساس الدين وأصله، وهو إفراد الله بالخلق والأمر والعبادة.
           وهو أول واجب على المكلّف وأعظم ما دعا إليه الأنبياء والمرسلون.
         </p>
-        <blockquote className="tawheed-page-header__ayah" style={{ color: "#fff" }}>
+        <blockquote className="tawheed-page-header__ayah">
           ﴿وَمَا خَلَقْتُ الْجِنَّ وَالْإِنسَ إِلَّا لِيَعْبُدُونِ﴾
-          <cite style={{ color: "rgba(255,255,255,0.82)" }}> — الذاريات: ٥٦</cite>
+          <cite> — الذاريات: ٥٦</cite>
         </blockquote>
       </header>
 
