@@ -55,7 +55,7 @@ function IslamicStar({ size = 32, color = GOLD, opacity = 1 }: { size?: number; 
 
 function GeometricBorder({ color = GOLD, size = 18 }: { color?: string; size?: number }) {
   return (
-    <div style={{ display: "flex", gap: 4, alignItems: "center", opacity: 0.6 }}>
+    <div className="prophet-geo-border">
       {[...Array(3)].map((_, i) => (
         <IslamicStar key={i} size={size} color={color} opacity={0.8 - i * 0.2} />
       ))}
@@ -188,9 +188,9 @@ function ProphetDetailView({
 
   if (!p) {
     return (
-      <div style={{ padding: "2rem", textAlign: "center" }}>
+      <div className="prophet-not-found">
         <button className="prophet-lux-back" onClick={onBack}>← العودة</button>
-        <p style={{ color: "var(--txt-muted, #52525B)", marginTop: "1rem" }}>النبي غير موجود</p>
+        <p className="prophet-not-found__msg">النبي غير موجود</p>
       </div>
     );
   }
@@ -341,7 +341,7 @@ function ProphetDetailView({
             </div>
             <div className="prophet-db-story">
               {dbStory.content.split("\n").filter(Boolean).map((para, i) => (
-                <p key={i} className="prophet-section-lux__text" style={{ marginBottom: "1rem" }}>{para}</p>
+                <p key={i} className="prophet-section-lux__text prophet-db-para">{para}</p>
               ))}
             </div>
           </section>
@@ -641,7 +641,7 @@ export default function ProphetStoriesPage() {
                   </div>
                   {/* ── بطاقة الانتقال إلى السيرة النبوية ── */}
                   {!search && (
-                    <Link href="/seerah" style={{ textDecoration: "none", display: "block", marginTop: "1.5rem" }}>
+                    <Link href="/seerah" className="prophets-seerah-link">
                       <div className="prophets-seerah-bridge">
                         <div className="prophets-seerah-bridge__ornament" aria-hidden="true">
                           <IslamicStar size={28} color={GOLD} opacity={0.7} />
@@ -1493,4 +1493,9 @@ const PROPHETS_CSS = `
   }
   .prophets-seerah-bridge__arrow { display: none; }
 }
+.prophet-geo-border { display: flex; gap: 4px; align-items: center; opacity: 0.6; }
+.prophet-not-found { padding: 2rem; text-align: center; }
+.prophet-not-found__msg { color: var(--txt-muted, #52525B); margin-top: 1rem; }
+.prophet-db-para { margin-bottom: 1rem; }
+.prophets-seerah-link { text-decoration: none; display: block; margin-top: 1.5rem; }
 `;

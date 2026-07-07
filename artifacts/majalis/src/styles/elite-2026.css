@@ -5505,3 +5505,110 @@ button.primary:hover {
   border: 1px solid transparent; cursor: pointer; font-family: inherit;
   font-size: 0.875rem; font-weight: 600;
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   §53  Miracles Page  (miracle-item + miracles-*)
+   ═══════════════════════════════════════════════════════════════ */
+.miracles-count { margin: 0; }
+.miracle-item {
+  border: 1px solid var(--majalis-line);
+  border-radius: 1rem;
+  overflow: hidden;
+  background: var(--majalis-panel);
+  display: flex;
+  flex-direction: column;
+}
+.miracle-item__head {
+  background: var(--mk-bg, #1a5c35);
+  padding: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+.miracle-item__head-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.miracle-item__icon {
+  font-size: 1.8rem;
+  line-height: 1;
+  flex-shrink: 0;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3));
+}
+.miracle-item__head-info { flex: 1; }
+.miracle-item__title { color: #fff; margin-bottom: 0.25rem; }
+.miracle-item__badges { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+.miracle-item__cat-badge {
+  padding: 0.15rem 0.6rem;
+  border-radius: 1rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  background: color-mix(in srgb, var(--mk-accent, #97A59F) 25%, transparent);
+  color: var(--mk-accent, #97A59F);
+  border: 1px solid color-mix(in srgb, var(--mk-accent, #97A59F) 40%, transparent);
+}
+.miracle-item__src-badge {
+  padding: 0.15rem 0.6rem;
+  border-radius: 1rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+}
+.miracle-item__body-wrap {
+  padding: 1rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.miracle-item__ref {
+  font-family: var(--font-quran);
+  font-size: 1rem;
+  color: var(--mk-border, #c9a84c);
+  border-inline-end: 3px solid var(--mk-border, #c9a84c);
+  padding-inline-end: 0.5rem;
+  line-height: 1.8;
+}
+.miracle-item__body { font-size: 0.875rem; line-height: 1.75; flex: 1; }
+.miracle-item__toggle {
+  color: var(--majalis-emerald);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.25rem 0;
+  align-self: flex-start;
+  font-family: inherit;
+}
+.miracle-item__source {
+  font-size: 0.75rem;
+  color: var(--majalis-ink-soft);
+  margin-top: auto;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--majalis-line);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   §54  Quran Radio Page  (qrp-*)
+   ═══════════════════════════════════════════════════════════════ */
+.qrp-content { padding: 1.5rem 1rem 8rem; max-width: 860px; margin: 0 auto; }
+.qrp-section-head { margin-bottom: 1rem; }
+.qrp-intro { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1rem; direction: rtl; }
+.qrp-now-playing {
+  margin-top: 1.25rem; padding: 1rem;
+  background: var(--bg-card, #fff);
+  border: 1px solid var(--majalis-gold, #B08D2E);
+  border-radius: 0.75rem; direction: rtl;
+}
+.qrp-now-playing__head {
+  display: flex; justify-content: space-between;
+  align-items: center; flex-wrap: wrap; gap: 0.5rem;
+}
+.qrp-now-playing__name { font-weight: 700; margin-bottom: 0.15rem; }
+.qrp-now-playing__type { font-size: 0.82rem; color: var(--text-muted); }
+.qrp-now-playing__btns { display: flex; gap: 0.5rem; margin-top: 0.75rem; flex-wrap: wrap; }
+.qrp-volume-pct { font-size: 0.78rem; color: var(--text-muted); }
+.qrp-video { width: 100%; border-radius: 0.4rem; max-height: 200px; background: #000; }

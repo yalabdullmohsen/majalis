@@ -126,7 +126,7 @@ export default function MiraclesPage({
       <p className="miracles-disclaimer">{DISCLAIMER}</p>
 
       <div className="ds-section__head">
-        {isAdmin && <p className="ds-section__title" style={{ margin: 0 }}>{items.length} مقالة</p>}
+        {isAdmin && <p className="ds-section__title miracles-count">{items.length} مقالة</p>}
         <FilterToggle onClick={() => setFiltersOpen(true)} label="تصفية" />
       </div>
 
@@ -149,23 +149,21 @@ export default function MiraclesPage({
               <article
                 key={item.id}
                 className="miracle-item"
-                style={{ border: "1px solid var(--majalis-line)", borderRadius: "1rem", overflow: "hidden", background: "var(--majalis-panel)", display: "flex", flexDirection: "column" }}
+                style={{ "--mk-bg": palette.bg, "--mk-accent": palette.accent, "--mk-border": borderColor } as React.CSSProperties}
               >
                 {/* رأس ملوّن بنمط موضوعي */}
-                <div style={{ background: palette.bg, padding: "1rem", position: "relative", overflow: "hidden" }}>
+                <div className="miracle-item__head">
                   <GeometricPattern pattern={pattern} color={palette.accent} opacity={0.15} />
-                  <div style={{ position: "relative", display: "flex", alignItems: "center", gap: "0.75rem" }}>
-                    <span style={{ fontSize: "1.8rem", lineHeight: 1, flexShrink: 0, filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.3))" }}>{icon}</span>
-                    <div style={{ flex: 1 }}>
-                      <p className="miracle-item__title" style={{ color: "#fff", marginBottom: "0.25rem" }}>{item.title}</p>
-                      <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap" }}>
+                  <div className="miracle-item__head-row">
+                    <span className="miracle-item__icon">{icon}</span>
+                    <div className="miracle-item__head-info">
+                      <p className="miracle-item__title">{item.title}</p>
+                      <div className="miracle-item__badges">
                         {item.category && (
-                          <span style={{ padding: "0.15rem 0.6rem", borderRadius: "1rem", fontSize: "0.7rem", background: `${palette.accent}25`, color: palette.accent, fontWeight: 600, border: `1px solid ${palette.accent}40` }}>
-                            {item.category}
-                          </span>
+                          <span className="miracle-item__cat-badge">{item.category}</span>
                         )}
                         {item.source_type && (
-                          <span style={{ padding: "0.15rem 0.6rem", borderRadius: "1rem", fontSize: "0.7rem", background: "rgba(255,255,255,0.15)", color: "#fff", fontWeight: 600 }}>
+                          <span className="miracle-item__src-badge">
                             {item.source_type === "قرآن" ? "📖 قرآن" : "📚 سنة"}
                           </span>
                         )}
@@ -175,15 +173,13 @@ export default function MiraclesPage({
                 </div>
 
                 {/* المحتوى */}
-                <div style={{ padding: "1rem", flex: 1, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                <div className="miracle-item__body-wrap">
                   {item.reference && (
-                    <p className="miracle-item__ref" style={{ fontFamily: "var(--font-quran)", fontSize: "1rem", color: borderColor, borderRight: `3px solid ${borderColor}`, paddingRight: "0.5rem", lineHeight: 1.8 }}>
-                      ﴾ {item.reference} ﴿
-                    </p>
+                    <p className="miracle-item__ref">﴾ {item.reference} ﴿</p>
                   )}
                   {bodyText && (
                     <>
-                      <p className="miracle-item__body" style={{ fontSize: "0.875rem", lineHeight: 1.75, flex: 1 }}>
+                      <p className="miracle-item__body">
                         {isExpanded ? bodyText : `${preview}${bodyText.length > 220 ? "..." : ""}`}
                       </p>
                       {bodyText.length > 220 && (
@@ -191,7 +187,6 @@ export default function MiraclesPage({
                           type="button"
                           className="miracle-item__toggle"
                           onClick={() => setExpanded(isExpanded ? null : item.id)}
-                          style={{ color: "var(--majalis-emerald)", background: "none", border: "none", cursor: "pointer", fontSize: "0.82rem", fontWeight: 600, padding: "0.25rem 0", alignSelf: "flex-start" }}
                         >
                           {isExpanded ? "▲ عرض أقل" : "▼ اقرأ المزيد"}
                         </button>
@@ -199,9 +194,7 @@ export default function MiraclesPage({
                     </>
                   )}
                   {item.scholarly_source && (
-                    <p className="miracle-item__source" style={{ fontSize: "0.75rem", color: "var(--majalis-ink-soft)", marginTop: "auto", paddingTop: "0.5rem", borderTop: "1px solid var(--majalis-line)" }}>
-                      📚 {item.scholarly_source}
-                    </p>
+                    <p className="miracle-item__source">📚 {item.scholarly_source}</p>
                   )}
                 </div>
               </article>
