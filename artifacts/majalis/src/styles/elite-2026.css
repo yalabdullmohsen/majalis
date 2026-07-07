@@ -1598,6 +1598,48 @@ html {
   color: var(--elite-ink-soft, #4A4A4A) !important;
 }
 
+/* رأس القسم المضمّن — خلفية خضراء + نص أبيض (مثل بطاقات الدروس) */
+.hadith-section-header {
+  background-color: var(--elite-forest, #18362A) !important;
+  background-image: url("/star-pattern.svg") !important;
+  background-size: 100px 100px !important;
+  border-radius: var(--elite-r-lg, 16px) !important;
+  padding: 1rem 1.25rem !important;
+  margin-bottom: 0.5rem !important;
+  gap: 0.3rem !important;
+}
+.hadith-section-eyebrow {
+  color: rgba(255,255,255,0.72) !important;
+  opacity: 1 !important;
+}
+/* إلغاء شارة الخلفية عن العنوان داخل رأس القسم (الخلفية الداكنة تكفي) */
+.hadith-section-header .hadith-section-title {
+  background: transparent !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  display: block !important;
+  font-size: 1.25rem !important;
+  margin-bottom: 0 !important;
+}
+.hadith-section-subtitle {
+  color: rgba(255,255,255,0.80) !important;
+}
+
+/* إصلاح شامل: ألوان نصوص الإحصائيات والفلاتر */
+.hadith-stat { color: var(--elite-ink-soft, #4A4A4A) !important; }
+.hadith-stat strong { color: var(--elite-forest, #18362A) !important; }
+.hadith-quick-cat { color: var(--elite-ink-soft, #4A4A4A) !important; }
+.hadith-quick-cat:hover { color: var(--elite-forest, #18362A) !important; border-color: var(--elite-forest, #18362A) !important; }
+.hadith-quick-cat--active { background: var(--elite-forest, #18362A) !important; border-color: var(--elite-forest, #18362A) !important; color: #fff !important; }
+.hadith-filter-label { color: var(--elite-ink-soft, #4A4A4A) !important; }
+.hadith-meta-label { color: var(--elite-forest, #18362A) !important; }
+.hadith-meta-item { color: var(--elite-ink-soft, #4A4A4A) !important; }
+.hadith-keyword { color: var(--elite-ink-soft, #4A4A4A) !important; }
+.hadith-action-btn { color: var(--elite-ink-soft, #4A4A4A) !important; }
+.hadith-card__text { border-inline-start-color: var(--elite-forest, #18362A) !important; }
+.hadith-modal__text { border-inline-start-color: var(--elite-forest, #18362A) !important; }
+.hadith-modal-btn { background: var(--elite-forest, #18362A) !important; color: #fff !important; }
+
 /* ══════════════════════════════════════════════
    §39. Adhkar Page تحسينات
    ══════════════════════════════════════════════ */

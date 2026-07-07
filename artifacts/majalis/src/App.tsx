@@ -153,7 +153,6 @@ const UniversitiesPage = lazy(() => import("@/views/UniversitiesPage"));
 const UniversityDetailPage = lazy(() => import("@/views/UniversityDetailPage"));
 const UniversitiesComparePage = lazy(() => import("@/views/UniversitiesComparePage"));
 const UniversitiesAdminPage = lazyWithRetry(() => import("@/views/admin/UniversitiesAdminPage"), "UniversitiesAdminPage");
-const QuranPage = lazy(() => import("@/views/QuranPage"));
 
 function SeoManager() {
   const [location] = useLocation();
@@ -329,7 +328,6 @@ function Router() {
       <Route path="/surah-stories" component={QuranComingSoon} />
       <Route path="/quran/tajweed" component={QuranComingSoon} />
       {/* مسارات الاختصار — public redirects */}
-      <Route path="/mushaf"><Redirect to="/quran" /></Route>
       <Route path="/research"><Redirect to="/fiqh-council/research" /></Route>
       {/* الفقه الإسلامي الموحّد + السيرة النبوية */}
       <Route path="/tawhid"><SafeLazyRoute component={TawhidPage} /></Route>
@@ -337,7 +335,6 @@ function Router() {
       <Route path="/seerah"><SafeLazyRoute component={SeerahPage} /></Route>
       <Route path="/quran/surah-stories/:number" component={QuranComingSoon} />
       <Route path="/quran/surah-stories" component={QuranComingSoon} />
-      <Route path="/quran"><Suspense fallback={<LazyRouteFallback />}><QuranPage /></Suspense></Route>
       <Route path="/prayer-times"><SafeLazyRoute component={PrayerTimesPage} /></Route>
       <Route path="/prayer-countdown"><SafeLazyRoute component={PrayerCountdownPage} /></Route>
       <Route path="/prayer-ranks"><SafeLazyRoute component={PrayerRanksPage} /></Route>
