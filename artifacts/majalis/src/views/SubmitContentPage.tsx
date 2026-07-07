@@ -45,68 +45,45 @@ export default function SubmitContentPage() {
   };
 
   return (
-    <div style={{ maxWidth: 600, margin: "2rem auto", padding: "1.5rem", background: "var(--majalis-panel, rgba(255,255,255,0.08))", borderRadius: "0.75rem", boxShadow: "0 4px 24px rgba(0,0,0,0.30)", direction: "rtl" }}>
-      <div style={{ marginBottom: "1.25rem" }}>
-        <Link href="/" style={{ color: "var(--majalis-ink-muted, #9BA3B5)", fontSize: "0.85rem", textDecoration: "none" }}>
-          ← الرئيسية
-        </Link>
+    <div className="scp-page">
+      <div className="scp-back-row">
+        <Link href="/" className="scp-back-link">← الرئيسية</Link>
       </div>
 
-      <h1 style={{ fontSize: "1.5rem", fontWeight: 700, marginBottom: "0.5rem", color: "var(--majalis-ink)" }}>
-        أضف محتوى
-      </h1>
-      <p style={{ color: "var(--majalis-ink-muted, #9BA3B5)", fontSize: "0.9rem", marginBottom: "1rem" }}>
-        يصل مقترحك للأدمن لمراجعته قبل النشر.
-      </p>
+      <h1 className="scp-title">أضف محتوى</h1>
+      <p className="scp-subtitle">يصل مقترحك للأدمن لمراجعته قبل النشر.</p>
 
-      {/* Banner بارز للدروس */}
       <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "0.75rem",
-          padding: "0.875rem 1rem",
-          background: "linear-gradient(135deg, #f0f7f3, #fefdf5)",
-          border: "1.5px solid rgba(14,110,82,0.3)",
-          borderRadius: "0.625rem",
-          marginBottom: "1.5rem",
-          cursor: "pointer",
-        }}
+        className="scp-banner"
         onClick={() => setContentType("درس")}
         role="button"
         tabIndex={0}
         onKeyDown={(e) => e.key === "Enter" && setContentType("درس")}
       >
-        <div style={{ fontSize: "1.5rem" }}>📚</div>
+        <div className="scp-banner__emoji">📚</div>
         <div>
-          <p style={{ margin: 0, fontWeight: 700, fontSize: "0.9rem", color: "var(--majalis-emerald)" }}>أضف درساً علمياً</p>
-          <p style={{ margin: "0.15rem 0 0", fontSize: "0.78rem", color: "var(--majalis-ink-muted, #9BA3B5)" }}>
-            شارك درساً، محاضرة، أو موضوعاً علمياً مفيداً
-          </p>
+          <p className="scp-banner__heading">أضف درساً علمياً</p>
+          <p className="scp-banner__desc">شارك درساً، محاضرة، أو موضوعاً علمياً مفيداً</p>
         </div>
       </div>
 
       {status === "success" && (
-        <div role="status" style={{ padding: "1rem", background: "rgba(46,139,103,0.10)", border: "1px solid rgba(46,139,103,0.30)", borderRadius: "0.5rem", color: "var(--majalis-emerald)", marginBottom: "1.25rem", fontWeight: 600 }}>
-          {message}
-        </div>
+        <div role="status" className="scp-feedback scp-feedback--success">{message}</div>
       )}
 
       {status === "error" && (
-        <div role="alert" style={{ padding: "1rem", background: "rgba(193,89,90,0.10)", border: "1px solid rgba(193,89,90,0.30)", borderRadius: "0.5rem", color: "var(--msk-red, #C1595A)", marginBottom: "1.25rem" }}>
-          {message}
-        </div>
+        <div role="alert" className="scp-feedback scp-feedback--error">{message}</div>
       )}
 
       <form onSubmit={handleSubmit}>
-        <label style={labelStyle}>
+        <label className="scp-label">
           نوع المحتوى
           <select
             name="content-type"
             value={contentType}
             onChange={(e) => setContentType(e.target.value as ContentType)}
             required
-            style={inputStyle}
+            className="scp-input"
           >
             {CONTENT_TYPES.map((t) => (
               <option key={t} value={t}>{t}</option>
@@ -114,7 +91,7 @@ export default function SubmitContentPage() {
           </select>
         </label>
 
-        <label style={{ ...labelStyle, marginTop: "1rem" }}>
+        <label className="scp-label scp-label--mt">
           عنوان الموضوع
           <input
             type="text"
@@ -124,11 +101,11 @@ export default function SubmitContentPage() {
             minLength={3}
             maxLength={500}
             placeholder="اكتب عنواناً مختصراً للموضوع"
-            style={inputStyle}
+            className="scp-input"
           />
         </label>
 
-        <label style={{ ...labelStyle, marginTop: "1rem" }}>
+        <label className="scp-label scp-label--mt">
           التفاصيل
           <textarea
             value={details}
@@ -138,11 +115,11 @@ export default function SubmitContentPage() {
             maxLength={8000}
             rows={6}
             placeholder="اكتب التفاصيل هنا..."
-            style={{ ...inputStyle, resize: "vertical" }}
+            className="scp-input scp-input--textarea"
           />
         </label>
 
-        <label style={{ ...labelStyle, marginTop: "1rem", marginBottom: "1.5rem" }}>
+        <label className="scp-label scp-label--mt scp-label--mb">
           اسمك (اختياري)
           <input
             type="text"
@@ -150,14 +127,14 @@ export default function SubmitContentPage() {
             onChange={(e) => setAuthor(e.target.value)}
             maxLength={200}
             placeholder="للنسب الصحيح"
-            style={inputStyle}
+            className="scp-input"
           />
         </label>
 
         <button
           type="submit"
           disabled={status === "loading"}
-          style={{ width: "100%", padding: "0.75rem", background: status === "loading" ? "#9ca3af" : "#C9A84C", color: "#fff", border: "none", borderRadius: "0.5rem", fontSize: "1rem", fontWeight: 700, cursor: status === "loading" ? "not-allowed" : "pointer", fontFamily: "inherit" }}
+          className={`scp-submit-btn${status === "loading" ? " is-loading" : ""}`}
         >
           {status === "loading" ? "جارٍ الإرسال..." : "إرسال المقترح"}
         </button>
@@ -165,28 +142,3 @@ export default function SubmitContentPage() {
     </div>
   );
 }
-
-const labelStyle: React.CSSProperties = {
-  display: "flex",
-  flexDirection: "column",
-  fontWeight: 600,
-  fontSize: "0.875rem",
-  color: "var(--majalis-ink-soft)",
-  gap: "0.4rem",
-  marginBottom: "0",
-};
-
-const inputStyle: React.CSSProperties = {
-  marginTop: "0.375rem",
-  padding: "0.6rem 0.75rem",
-  border: "1px solid #d1d5db",
-  borderRadius: "0.4rem",
-  fontSize: "0.9rem",
-  fontFamily: "inherit",
-  background: "#fafafa",
-  color: "var(--majalis-ink)",
-  outline: "none",
-  width: "100%",
-  boxSizing: "border-box",
-  direction: "rtl",
-};

@@ -5991,3 +5991,201 @@ button.primary:hover {
 .pmp-body-text { font-size: 0.875rem; line-height: 1.75; color: var(--msk-text); margin: 0; }
 .pmp-item-disclaimer { font-size: 0.75rem; color: var(--msk-text-2); margin: 0; font-style: italic; border-top: 1px solid var(--msk-border); padding-top: 0.5rem; }
 .pmp-toggle-btn { color: var(--msk-gold); background: none; border: none; cursor: pointer; font-size: 0.82rem; font-weight: 600; padding: 0.2rem 0; align-self: flex-start; font-family: inherit; }
+
+/* ══════════════════════════════════════════════════════
+   §62  Learning Path Detail Page  (lpd-*)
+   ══════════════════════════════════════════════════════ */
+
+.lpd-breadcrumb { margin-bottom: 1rem; font-size: 0.875rem; }
+.lpd-title      { font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; }
+.lpd-subtitle   { color: var(--ink-soft); margin-bottom: 1rem; }
+.lpd-meta { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.lpd-badge { padding: 0.25rem 0.75rem; border-radius: 999px; }
+.lpd-badge--level    { background: var(--panel-soft); }
+.lpd-badge--progress { background: var(--emerald-light, #d1fae5); }
+.lpd-enroll-btn { margin-bottom: 1.5rem; padding: 0.625rem 1.25rem; border-radius: 0.375rem; background: var(--emerald-deep); color: #fff; border: none; cursor: pointer; }
+.lpd-next-module { padding: 1rem; border-radius: 0.5rem; border: 1px solid var(--line); margin-bottom: 1.5rem; background: var(--panel-soft, #f9fafb); }
+.lpd-section-title { font-size: 1.125rem; font-weight: 700; margin-bottom: 1rem; }
+.lpd-modules-grid { display: grid; gap: 0.75rem; }
+.lpd-module { padding: 1rem; border-radius: 0.5rem; border: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+.lpd-module__type    { font-size: 0.75rem; color: var(--ink-soft); }
+.lpd-module__title   { font-weight: 600; margin-top: 0.125rem; }
+.lpd-module__desc    { font-size: 0.8125rem; color: var(--ink-soft); margin-top: 0.25rem; }
+.lpd-module__actions { display: flex; gap: 0.5rem; flex-shrink: 0; }
+.lpd-quiz-link    { padding: 0.375rem 0.75rem; border-radius: 0.375rem; background: var(--emerald-deep); color: #fff; text-decoration: none; font-size: 0.875rem; }
+.lpd-complete-btn { padding: 0.375rem 0.75rem; border-radius: 0.375rem; border: 1px solid var(--emerald-deep); background: transparent; cursor: pointer; font-size: 0.875rem; }
+.lpd-insights { margin-top: 2rem; padding: 1.25rem; border-radius: 0.5rem; border: 1px solid var(--line); }
+.lpd-insights__title       { font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem; }
+.lpd-insights__summary     { font-size: 0.875rem; margin-bottom: 0.75rem; }
+.lpd-insights__points      { font-size: 0.8125rem; padding-inline-start: 1.25rem; }
+.lpd-insights__disclaimer  { font-size: 0.7rem; color: var(--ink-soft); margin-top: 0.75rem; }
+
+/* ============================================================
+   §63 — LearningQuizPage  (lqp-*)
+   ============================================================ */
+.lqp-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; }
+.lqp-score { font-size: 2rem; font-weight: 700; }
+.lqp-score--pass { color: var(--emerald-deep); }
+.lqp-score--fail { color: #dc2626; }
+.lqp-pass-msg { margin-bottom: 1rem; }
+.lqp-error-section { margin-top: 1.5rem; }
+.lqp-error-section__title { font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem; }
+.lqp-error-item { padding: 0.75rem; border-radius: 0.375rem; border: 1px solid var(--line); margin-bottom: 0.5rem; }
+.lqp-error-item__q   { font-weight: 600; font-size: 0.875rem; }
+.lqp-error-item__exp { font-size: 0.8125rem; color: var(--ink-soft); margin-top: 0.25rem; }
+.lqp-error-item__ref { font-size: 0.75rem; margin-top: 0.25rem; }
+.lqp-back-link { display: inline-block; margin-top: 1.5rem; }
+.lqp-breadcrumb { margin-bottom: 1rem; font-size: 0.875rem; }
+.lqp-progress { margin-bottom: 1rem; font-size: 0.875rem; color: var(--ink-soft); }
+.lqp-question { font-size: 1.125rem; font-weight: 700; margin-bottom: 1.5rem; }
+.lqp-mc-grid { display: grid; gap: 0.5rem; }
+.lqp-mc-btn {
+  padding: 0.75rem 1rem;
+  border-radius: 0.375rem;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  cursor: pointer;
+  text-align: start;
+  font-family: inherit;
+  font-size: inherit;
+  transition: border-color 0.15s, background 0.15s;
+}
+.lqp-mc-btn.is-selected {
+  border: 2px solid var(--emerald-deep);
+  background: var(--emerald-light, #d1fae5);
+}
+.lqp-tf-row { display: flex; gap: 0.75rem; }
+.lqp-tf-btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.375rem;
+  border: 1px solid var(--line);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  background: var(--panel);
+}
+.lqp-text-inp {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 0.375rem;
+  border: 1px solid var(--line);
+  font-family: inherit;
+  font-size: inherit;
+  box-sizing: border-box;
+}
+.lqp-next-btn {
+  margin-top: 1.5rem;
+  padding: 0.625rem 1.5rem;
+  border-radius: 0.375rem;
+  background: var(--emerald-deep);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 600;
+}
+.lqp-next-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ============================================================
+   §64 — LearningPathsPage  (lpp-*)
+   ============================================================ */
+.lpp-nav-links { display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.lpp-nav-link { padding: 0.5rem 1rem; border-radius: 0.375rem; text-decoration: none; font-size: 0.875rem; font-weight: 500; }
+.lpp-nav-link--primary { background: var(--emerald-deep, #065f46); color: #fff; }
+.lpp-nav-link--outline { border: 1px solid var(--line); color: var(--ink); }
+.lpp-category { margin-bottom: 2.5rem; }
+.lpp-category-title { font-size: 1.125rem; font-weight: 700; margin-bottom: 1rem; }
+.lpp-paths-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+.lpp-path-link { text-decoration: none; }
+.lpp-path-card { padding: 1.25rem; border-radius: 0.5rem; border: 1px solid var(--line, #e5e7eb); background: var(--panel, #fff); height: 100%; }
+.lpp-path-card__title { font-weight: 700; margin-bottom: 0.5rem; color: var(--emerald-deep); }
+.lpp-path-card__desc  { font-size: 0.875rem; color: var(--ink-soft); margin-bottom: 0.75rem; line-height: 1.5; }
+.lpp-path-card__meta  { display: flex; gap: 0.5rem; flex-wrap: wrap; font-size: 0.75rem; }
+.lpp-path-card__badge { padding: 0.125rem 0.5rem; border-radius: 999px; background: var(--panel-soft, #f3f4f6); }
+
+/* ============================================================
+   §65 — SubmitContentPage  (scp-*)
+   ============================================================ */
+.scp-page {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: var(--majalis-panel, rgba(255,255,255,0.08));
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.30);
+  direction: rtl;
+}
+.scp-back-row { margin-bottom: 1.25rem; }
+.scp-back-link { color: var(--majalis-ink-muted, #9BA3B5); font-size: 0.85rem; text-decoration: none; }
+.scp-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--majalis-ink); }
+.scp-subtitle { color: var(--majalis-ink-muted, #9BA3B5); font-size: 0.9rem; margin-bottom: 1rem; }
+.scp-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1rem;
+  background: linear-gradient(135deg, #f0f7f3, #fefdf5);
+  border: 1.5px solid rgba(14,110,82,0.3);
+  border-radius: 0.625rem;
+  margin-bottom: 1.5rem;
+  cursor: pointer;
+}
+.scp-banner__emoji   { font-size: 1.5rem; }
+.scp-banner__heading { margin: 0; font-weight: 700; font-size: 0.9rem; color: var(--majalis-emerald); }
+.scp-banner__desc    { margin: 0.15rem 0 0; font-size: 0.78rem; color: var(--majalis-ink-muted, #9BA3B5); }
+.scp-feedback {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+.scp-feedback--success {
+  background: rgba(46,139,103,0.10);
+  border: 1px solid rgba(46,139,103,0.30);
+  color: var(--majalis-emerald);
+  font-weight: 600;
+}
+.scp-feedback--error {
+  background: rgba(193,89,90,0.10);
+  border: 1px solid rgba(193,89,90,0.30);
+  color: var(--msk-red, #C1595A);
+}
+.scp-label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--majalis-ink-soft);
+  gap: 0.4rem;
+  margin-bottom: 0;
+}
+.scp-label--mt { margin-top: 1rem; }
+.scp-label--mb { margin-bottom: 1.5rem; }
+.scp-input {
+  margin-top: 0.375rem;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.4rem;
+  font-size: 0.9rem;
+  font-family: inherit;
+  background: #fafafa;
+  color: var(--majalis-ink);
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+  direction: rtl;
+}
+.scp-input--textarea { resize: vertical; }
+.scp-submit-btn {
+  width: 100%;
+  padding: 0.75rem;
+  background: #C9A84C;
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+}
+.scp-submit-btn.is-loading { background: #9ca3af; cursor: not-allowed; }

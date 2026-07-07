@@ -60,57 +60,50 @@ export default function LearningQuizPage() {
   if (phase === "done" && result) {
     return (
       <div className="page-shell narrow">
-        <h1 style={{ fontSize: "1.5rem", fontWeight: 700, marginBottom: "1rem" }}>نتيجة الاختبار</h1>
-        <p style={{ fontSize: "2rem", fontWeight: 700, color: result.passed ? "var(--emerald-deep)" : "#dc2626" }}>
+        <h1 className="lqp-title">نتيجة الاختبار</h1>
+        <p className={`lqp-score ${result.passed ? "lqp-score--pass" : "lqp-score--fail"}`}>
           {result.score_pct}%
         </p>
-        <p style={{ marginBottom: "1rem" }}>{result.passed ? "مبارك! اجتزت الاختبار" : "حاول مرة أخرى"}</p>
+        <p className="lqp-pass-msg">{result.passed ? "مبارك! اجتزت الاختبار" : "حاول مرة أخرى"}</p>
 
         {result.error_analysis?.length > 0 && (
-          <section style={{ marginTop: "1.5rem" }}>
-            <h2 style={{ fontSize: "1rem", fontWeight: 700, marginBottom: "0.75rem" }}>تحليل الأخطاء</h2>
+          <section className="lqp-error-section">
+            <h2 className="lqp-error-section__title">تحليل الأخطاء</h2>
             {result.error_analysis.map((err: any) => (
-              <div key={err.question_id} style={{ padding: "0.75rem", borderRadius: "0.375rem", border: "1px solid var(--line)", marginBottom: "0.5rem" }}>
-                <p style={{ fontWeight: 600, fontSize: "0.875rem" }}>{err.question}</p>
-                {err.explanation && <p style={{ fontSize: "0.8125rem", color: "var(--ink-soft)", marginTop: "0.25rem" }}>{err.explanation}</p>}
-                {err.reference_source && <p style={{ fontSize: "0.75rem", marginTop: "0.25rem" }}>المرجع: {err.reference_source}</p>}
+              <div key={err.question_id} className="lqp-error-item">
+                <p className="lqp-error-item__q">{err.question}</p>
+                {err.explanation && <p className="lqp-error-item__exp">{err.explanation}</p>}
+                {err.reference_source && <p className="lqp-error-item__ref">المرجع: {err.reference_source}</p>}
               </div>
             ))}
           </section>
         )}
 
-        <Link href={`/learning/paths/${slug}`} style={{ display: "inline-block", marginTop: "1.5rem" }}>العودة للمسار</Link>
+        <Link href={`/learning/paths/${slug}`} className="lqp-back-link">العودة للمسار</Link>
       </div>
     );
   }
 
   return (
     <div className="page-shell narrow">
-      <nav style={{ marginBottom: "1rem", fontSize: "0.875rem" }}>
+      <nav className="lqp-breadcrumb">
         <Link href={`/learning/paths/${slug}`}>المسار</Link> / {quiz.title}
       </nav>
 
-      <div style={{ marginBottom: "1rem", fontSize: "0.875rem", color: "var(--ink-soft)" }}>
+      <div className="lqp-progress">
         سؤال {index + 1} من {questions.length}
       </div>
 
-      <h2 style={{ fontSize: "1.125rem", fontWeight: 700, marginBottom: "1.5rem" }}>{current.question}</h2>
+      <h2 className="lqp-question">{current.question}</h2>
 
       {current.question_type === "multiple_choice" && current.options && (
-        <div style={{ display: "grid", gap: "0.5rem" }}>
+        <div className="lqp-mc-grid">
           {current.options.map((opt, i) => (
             <button
               key={opt}
               type="button"
               onClick={() => setSelected(i)}
-              style={{
-                padding: "0.75rem 1rem",
-                borderRadius: "0.375rem",
-                border: selected === i ? "2px solid var(--emerald-deep)" : "1px solid var(--line)",
-                background: selected === i ? "var(--emerald-light, #d1fae5)" : "var(--panel)",
-                cursor: "pointer",
-                textAlign: "start",
-              }}
+              className={`lqp-mc-btn${selected === i ? " is-selected" : ""}`}
             >
               {opt}
             </button>
@@ -119,9 +112,9 @@ export default function LearningQuizPage() {
       )}
 
       {current.question_type === "true_false" && (
-        <div style={{ display: "flex", gap: "0.75rem" }}>
+        <div className="lqp-tf-row">
           {["صح", "خطأ"].map((opt) => (
-            <button key={opt} type="button" onClick={() => setSelected(opt === "صح")} style={{ padding: "0.75rem 1.5rem", borderRadius: "0.375rem", border: "1px solid var(--line)", cursor: "pointer" }}>
+            <button key={opt} type="button" onClick={() => setSelected(opt === "صح")} className="lqp-tf-btn">
               {opt}
             </button>
           ))}
@@ -134,7 +127,7 @@ export default function LearningQuizPage() {
           value={textInput}
           onChange={(e) => setTextInput(e.target.value)}
           placeholder="اكتب إجابتك..."
-          style={{ width: "100%", padding: "0.75rem", borderRadius: "0.375rem", border: "1px solid var(--line)" }}
+          className="lqp-text-inp"
         />
       )}
 
@@ -142,7 +135,7 @@ export default function LearningQuizPage() {
         type="button"
         onClick={submitAnswer}
         disabled={current.question_type !== "text" && selected === null}
-        style={{ marginTop: "1.5rem", padding: "0.625rem 1.5rem", borderRadius: "0.375rem", background: "var(--emerald-deep)", color: "#fff", border: "none", cursor: "pointer" }}
+        className="lqp-next-btn"
       >
         {index + 1 >= questions.length ? "إنهاء الاختبار" : "التالي"}
       </button>
