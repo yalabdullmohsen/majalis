@@ -160,8 +160,7 @@ export default function NavBar() {
                 decoding="async"
               />
               <span className="site-brand-logotype">
-                <strong className="site-brand-logotype__main">مجالس</strong>
-                <span className="site-brand-logotype__sub">العلميّة</span>
+                <strong className="site-brand-logotype__main site-brand-gold-shimmer">المجلس العلمي</strong>
               </span>
             </Link>
           </div>

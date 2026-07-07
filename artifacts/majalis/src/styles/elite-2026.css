@@ -142,13 +142,29 @@ body {
   letter-spacing: 0.01em !important;
   line-height: 1.1 !important;
 }
+
+/* ذهب لامع للعلامة التجارية */
+.site-brand-gold-shimmer {
+  background: linear-gradient(
+    100deg,
+    #b8860b 0%, #ffd700 28%, #fffacd 50%, #ffd700 72%, #b8860b 100%
+  ) !important;
+  background-size: 300% 100% !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+  animation: brand-gold-shimmer 4s ease-in-out infinite !important;
+  filter: drop-shadow(0 0 6px rgba(255,215,0,0.25)) !important;
+}
+@keyframes brand-gold-shimmer {
+  0%   { background-position: 200% center; }
+  50%  { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
 .site-brand-logotype__sub {
-  font-size: 0.58rem !important;
-  font-weight: 600 !important;
-  color: var(--elite-forest, #18362A) !important;
-  opacity: 0.55 !important;
-  letter-spacing: 0.07em !important;
-  line-height: 1.6 !important;
+  display: none !important;
 }
 
 /* Search command button */
@@ -166,10 +182,12 @@ body {
   box-shadow: var(--elite-shadow-sm) !important;
 }
 
-/* Nav label */
+/* Nav label — padding-inline-end يمنع قطع التاء المربوطة في RTL */
 .navbar-menu-btn__label {
   color: var(--elite-ink-soft, #4A4A4A) !important;
   font-weight: 600 !important;
+  padding-inline-end: 3px !important;
+  overflow: visible !important;
 }
 .navbar-search-hint {
   color: var(--elite-ink-muted) !important;
@@ -2172,3 +2190,17 @@ button.hcp-prayer-cell:focus-visible {
 }
 #tawhid-header .tawheed-page-header__subtitle { color: rgba(255,255,255,0.88) !important; }
 #tawhid-header cite { color: rgba(255,255,255,0.82) !important; }
+
+/* §59 — عناوين أقسام الدروس: نص أبيض على خلفية غابة داكنة
+   specificity 0-3-0 يتغلب على majalis-v2.css (0-1-0) */
+.page-shell.lessons-page-v2 .lessons-v2-section__title,
+.page-shell.lessons-page-v2 .lessons-past-section__title,
+.page-shell .lessons-v2-section .lessons-v2-section__title,
+.page-shell .lessons-past-section .lessons-past-section__title {
+  color: #fff !important;
+  background: #18362A !important;
+  padding: 0.35rem 0.85rem !important;
+  border-radius: 0.45rem !important;
+  display: inline-block !important;
+  margin-bottom: 0.75rem !important;
+}
