@@ -210,7 +210,7 @@ body {
 .ds-page-header__eyebrow {
   color: rgba(255,255,255,0.82) !important;
 }
-.ds-page-header__title {
+.ds-page-header .ds-page-header__title {
   color: #fff !important;
 }
 .ds-page-header__subtitle {
@@ -1962,5 +1962,13 @@ button.hcp-prayer-cell:focus-visible {
 .lesson-detail-hero .scholar-follow-btn {
   border-color: rgba(255,255,255,0.35) !important;
   color: rgba(250,248,242,0.88) !important;
+}
+
+/* ══════════════════════════════════════════════
+   §55. رابط "التفاصيل" في شريط مواقيت الصلاة
+   ══════════════════════════════════════════════ */
+.hcp-strip__link {
+  color: var(--elite-forest, #18362A) !important;
+  font-weight: 700 !important;
 }
 
