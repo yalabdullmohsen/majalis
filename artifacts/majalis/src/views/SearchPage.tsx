@@ -3,7 +3,7 @@ import { Link, useParams, useLocation } from "wouter";
 import { searchEverything, type SearchResults } from "@/lib/supabase";
 import { searchDemoContent } from "@/lib/demo-content";
 import { displayText } from "@/lib/display-text";
-import { SearchSkeleton } from "@/components/ui-common";
+import { SearchSkeleton, PageHeader } from "@/components/ui-common";
 import { SearchSuggestions } from "@/components/SearchSuggestions";
 import { SheikhAvatar } from "@/components/lessons/SheikhAvatar";
 import { resolveLessonSheikhImage } from "@/lib/sheikh-image";
@@ -40,41 +40,58 @@ const EMPTY: SearchResults = {
   stories: [],
 };
 
+const KIND_LABELS: Record<string, string> = {
+  lesson: "درس",       lessons: "درس",
+  fatwa: "فتوى",       fatwas: "فتوى",
+  ruling: "حكم",       rulings: "حكم",
+  qa: "سؤال",
+  fawaid: "فائدة",
+  adhkar: "ذكر",
+  library: "كتاب",
+  miracle: "إعجاز",    miracles: "إعجاز",
+  course: "دورة",      courses: "دورة",
+  update: "مستجد",     updates: "مستجد",
+  fiqh_decision: "مجمع فقهي", fiqh_council: "مجمع فقهي",
+  knowledge: "معرفة",
+  quran: "قرآن",
+  hadith: "حديث",
+  story: "قصة",        stories: "قصة",
+  sheikh: "شيخ",
+};
+
 const KIND_GROUP_LABELS: Record<string, string> = {
-  lesson: "الدروس",
-  lessons: "الدروس",
-  fatwa: "الفتاوى",
-  fatwas: "الفتاوى",
-  ruling: "الأحكام الشرعية",
-  rulings: "الأحكام الشرعية",
+  lesson: "الدروس",       lessons: "الدروس",
+  fatwa: "الفتاوى",        fatwas: "الفتاوى",
+  ruling: "الأحكام الشرعية", rulings: "الأحكام الشرعية",
   qa: "الأسئلة والأجوبة",
   fawaid: "الفوائد",
   adhkar: "الأذكار",
   library: "المكتبة",
-  miracle: "الإعجاز العلمي",
-  miracles: "الإعجاز العلمي",
-  course: "الدورات العلمية",
-  courses: "الدورات العلمية",
-  update: "آخر المستجدات",
-  updates: "آخر المستجدات",
-  fiqh_decision: "المجمع الفقهي",
-  fiqh_council: "المجمع الفقهي",
+  miracle: "الإعجاز العلمي", miracles: "الإعجاز العلمي",
+  course: "الدورات العلمية", courses: "الدورات العلمية",
+  update: "آخر المستجدات",  updates: "آخر المستجدات",
+  fiqh_decision: "المجمع الفقهي", fiqh_council: "المجمع الفقهي",
   knowledge: "محرك المعرفة",
   quran: "القرآن",
   hadith: "الأحاديث الصحيحة",
-  story: "القصص الإسلامية",
-  stories: "القصص الإسلامية",
+  story: "القصص الإسلامية", stories: "القصص الإسلامية",
   sheikh: "المشايخ",
 };
+
+function KindBadge({ kind }: { kind: string }) {
+  const label = KIND_LABELS[kind];
+  if (!label) return null;
+  return <span className={`search-kind-badge search-kind-badge--${kind.replace("_", "-")}`}>{label}</span>;
+}
 
 function Group({ title, items, render, id }: { title: string; items: any[]; render: (i: any) => React.ReactNode; id?: string }) {
   if (items.length === 0) return null;
   return (
-    <div id={id} className="search-results-group" style={{ marginBottom: "2rem" }}>
-      <h2 className="search-results-group-title">
-        {title}
+    <div id={id} className="search-results-group">
+      <div className="search-results-group-head">
+        <h2 className="search-results-group-title">{title}</h2>
         <span className="search-results-count">{items.length}</span>
-      </h2>
+      </div>
       <div className="search-results-list">{items.map(render)}</div>
     </div>
   );
@@ -84,19 +101,22 @@ function IntelligentResultRow({ item, query }: { item: IntelligentSearchResult; 
   return (
     <Link
       href={item.href}
-      style={{ textDecoration: "none" }}
+      className="search-result-link"
       onClick={() => void trackSearchClick({ query, resultId: item.id, kind: item.kind })}
     >
       <div className="search-result-row">
         <div className="search-result-copy">
-          <span>{displayText(item.title)}</span>
+          <div className="search-result-title-row">
+            <span className="search-result-title">{displayText(item.title)}</span>
+            <KindBadge kind={item.kind} />
+          </div>
           <span className="search-result-meta">
-            {[item.kind_label, item.source_name, item.verification_status === "verified" ? "موثق" : null, item.updated_at ? new Date(item.updated_at).toLocaleDateString("ar-KW") : null]
+            {[item.source_name, item.verification_status === "verified" ? "✓ موثق" : null]
               .filter(Boolean)
               .join(" · ")}
           </span>
           {item.keywords && item.keywords.length > 0 && (
-            <span className="search-result-meta" style={{ fontSize: "0.7rem", opacity: 0.8 }}>
+            <span className="search-result-keywords">
               {item.keywords.slice(0, 4).join(" · ")}
             </span>
           )}
@@ -110,23 +130,28 @@ function ResultRow({
   href,
   title,
   meta,
+  kind,
   avatarSrc,
   avatarName,
 }: {
   href: string;
   title: string;
   meta?: string;
+  kind?: string;
   avatarSrc?: string;
   avatarName?: string;
 }) {
   return (
-    <Link href={href} style={{ textDecoration: "none" }}>
+    <Link href={href} className="search-result-link">
       <div className="search-result-row">
         {avatarName && (
-          <SheikhAvatar src={avatarSrc} name={avatarName} size={56} className="search-result-avatar" />
+          <SheikhAvatar src={avatarSrc} name={avatarName} size={40} className="search-result-avatar" />
         )}
         <div className="search-result-copy">
-          <span>{title}</span>
+          <div className="search-result-title-row">
+            <span className="search-result-title">{title}</span>
+            {kind && <KindBadge kind={kind} />}
+          </div>
           {meta && <span className="search-result-meta">{meta}</span>}
         </div>
       </div>
@@ -136,13 +161,16 @@ function ResultRow({
 
 function FiqhResultRow({ row }: { row: FiqhGlobalSearchRow }) {
   return (
-    <Link href={row.href} style={{ textDecoration: "none" }}>
+    <Link href={row.href} className="search-result-link">
       <div className="search-result-row search-result-row--fiqh">
         <div className="search-result-copy">
-          <span>{displayText(row.title)}</span>
+          <div className="search-result-title-row">
+            <span className="search-result-title">{displayText(row.title)}</span>
+            <KindBadge kind="fiqh_council" />
+          </div>
           <span className="search-result-meta">
             {row.searchMeta || row.kindLabel}
-            {row.verified && <span className="fiqh-search-verified-badge">موثق</span>}
+            {row.verified && <span className="search-verified-dot"> · ✓ موثق</span>}
           </span>
         </div>
       </div>
@@ -174,7 +202,6 @@ export default function SearchPage() {
       return;
     }
 
-    // توحيد النص العربي: الهمزات والتاء المربوطة والتشكيل
     const query = normalizeArabic(rawQuery) || rawQuery.trim();
 
     setLoading(true);
@@ -233,12 +260,7 @@ export default function SearchPage() {
       setIntelligentResults([]);
       const unifiedMatches = await searchUnifiedLessons(query);
       if (unifiedMatches.length > 0) {
-        setResults({
-          ...EMPTY,
-          lessons: unifiedMatches.map(lessonRecordToSearchRow),
-          usingDemo: false,
-          error: null,
-        });
+        setResults({ ...EMPTY, lessons: unifiedMatches.map(lessonRecordToSearchRow), usingDemo: false, error: null });
         return;
       }
       const demo = searchDemoContent(query);
@@ -270,38 +292,31 @@ export default function SearchPage() {
   };
 
   const localExtra = q.trim() ? searchLocalExtensions(q) : { occasions: [], nawawi: [], quran: [] };
+  const hasActiveFilter = Object.values(filters).some(Boolean);
 
   const intelligentTotal = intelligentResults.length;
   const legacyTotal =
     fiqhResults.length +
-    results.lessons.length +
-    results.library.length +
-    results.miracles.length +
-    results.qa.length +
-    results.fawaid.length +
-    results.adhkar.length +
-    (results.fatwas?.length || 0) +
-    (results.rulings?.length || 0) +
-    (results.courses?.length || 0) +
-    (results.updates?.length || 0) +
-    (results.hadith?.length || 0) +
-    (results.stories?.length || 0) +
-    localExtra.occasions.length +
-    localExtra.nawawi.length +
-    localExtra.quran.length;
+    results.lessons.length + results.library.length + results.miracles.length +
+    results.qa.length + results.fawaid.length + results.adhkar.length +
+    (results.fatwas?.length || 0) + (results.rulings?.length || 0) +
+    (results.courses?.length || 0) + (results.updates?.length || 0) +
+    (results.hadith?.length || 0) + (results.stories?.length || 0) +
+    localExtra.occasions.length + localExtra.nawawi.length + localExtra.quran.length;
 
   const total = intelligentTotal > 0 ? intelligentTotal : legacyTotal;
 
   return (
     <div className="page-shell narrow search-page ds-page">
-      <h1 className="search-page-title">البحث العلمي</h1>
+      <PageHeader
+        eyebrow="الاستكشاف"
+        title="البحث العلمي"
+        subtitle="يفهم المعنى ويربط الآيات والأحاديث والفتاوى والدروس."
+      />
 
       <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          submitSearch(term);
-        }}
-        className="page-search-form search-page-form"
+        onSubmit={(e) => { e.preventDefault(); submitSearch(term); }}
+        className="search-page-form"
       >
         <SearchSuggestions
           value={term}
@@ -309,70 +324,116 @@ export default function SearchPage() {
           onSubmit={submitSearch}
           placeholder="ابحث في القرآن والحديث والفتاوى والدروس والكتب..."
         />
-        <button type="submit" className="ds-btn ds-btn--primary">بحث</button>
+        <button type="submit" className="search-page-submit ds-btn ds-btn--primary">بحث</button>
       </form>
 
+      {/* شريط الأدوات */}
       <div className="search-toolbar">
-        <button type="button" className="ds-filter-toggle" style={{ display: "inline-flex" }} onClick={() => setShowFilters(!showFilters)}>
+        <button
+          type="button"
+          className={`search-adv-toggle${showFilters ? " is-active" : ""}`}
+          onClick={() => setShowFilters(!showFilters)}
+        >
           {showFilters ? "إخفاء الفلاتر" : "بحث متقدم"}
+          {hasActiveFilter && <span className="search-adv-dot" />}
         </button>
-        <Link href="/topics" className="ds-section__link">الموضوعات العلمية</Link>
-        {responseMs !== null && (
-          <span className="search-result-meta">{responseMs} ms</span>
+        <Link href="/topics" className="search-toolbar-link">الموضوعات العلمية ←</Link>
+        {responseMs !== null && q.trim() && (
+          <span className="search-response-ms">{responseMs} ms</span>
         )}
       </div>
 
+      {/* الفلاتر المتقدمة */}
       {showFilters && (
-        <div className="search-filters-grid">
-          <select value={filters.type} onChange={(e) => setFilters({ ...filters, type: e.target.value })}>
-            <option value="">كل الأنواع</option>
-            <option value="lesson">دروس</option>
-            <option value="fatwa">فتاوى</option>
-            <option value="qa">أسئلة</option>
-            <option value="fawaid">فوائد</option>
-            <option value="library">كتب</option>
-            <option value="knowledge">محرك المعرفة</option>
-          </select>
-          <input
-            type="text"
-            placeholder="العالم / المؤلف"
-            value={filters.author}
-            onChange={(e) => setFilters({ ...filters, author: e.target.value })}
-          />
-          <select value={filters.status} onChange={(e) => setFilters({ ...filters, status: e.target.value })}>
-            <option value="">كل حالات التوثيق</option>
-            <option value="verified">موثق</option>
-            <option value="needs_review">يحتاج مراجعة</option>
-          </select>
-          <select value={filters.language} onChange={(e) => setFilters({ ...filters, language: e.target.value })}>
-            <option value="">كل اللغات</option>
-            <option value="ar">العربية</option>
-            <option value="en">English</option>
-          </select>
+        <div className="search-filters-panel ui-card">
+          <div className="search-filters-grid">
+            <label className="search-filter-field">
+              <span>نوع المحتوى</span>
+              <select value={filters.type} onChange={(e) => setFilters({ ...filters, type: e.target.value })}>
+                <option value="">كل الأنواع</option>
+                <option value="lesson">دروس</option>
+                <option value="fatwa">فتاوى</option>
+                <option value="qa">أسئلة</option>
+                <option value="fawaid">فوائد</option>
+                <option value="library">كتب</option>
+                <option value="knowledge">محرك المعرفة</option>
+              </select>
+            </label>
+            <label className="search-filter-field">
+              <span>العالم / المؤلف</span>
+              <input
+                type="text"
+                placeholder="اسم العالم..."
+                value={filters.author}
+                onChange={(e) => setFilters({ ...filters, author: e.target.value })}
+              />
+            </label>
+            <label className="search-filter-field">
+              <span>حالة التوثيق</span>
+              <select value={filters.status} onChange={(e) => setFilters({ ...filters, status: e.target.value })}>
+                <option value="">الكل</option>
+                <option value="verified">موثق</option>
+                <option value="needs_review">يحتاج مراجعة</option>
+              </select>
+            </label>
+            <label className="search-filter-field">
+              <span>اللغة</span>
+              <select value={filters.language} onChange={(e) => setFilters({ ...filters, language: e.target.value })}>
+                <option value="">الكل</option>
+                <option value="ar">العربية</option>
+                <option value="en">English</option>
+              </select>
+            </label>
+          </div>
+          {hasActiveFilter && (
+            <button
+              type="button"
+              className="search-filters-clear"
+              onClick={() => setFilters({ type: "", author: "", status: "", language: "" })}
+            >
+              مسح الفلاتر ✕
+            </button>
+          )}
         </div>
       )}
 
+      {/* الحالات */}
       {!q.trim() ? (
-        <p className="search-page-hint">
-          اكتب سؤالك أو موضوعك — المحرك يفهم المعنى ويربط الآيات والأحاديث والفتاوى والدروس.
-        </p>
+        <div className="search-empty-state">
+          <p className="search-empty-hint">
+            اكتب سؤالك أو موضوعك — المحرك يفهم المعنى ويربط الآيات والأحاديث والفتاوى والدروس.
+          </p>
+          <div className="search-suggestion-chips">
+            {["الصلاة", "الزكاة", "الحج", "التوبة", "القرآن"].map((s) => (
+              <button key={s} type="button" className="search-suggestion-chip" onClick={() => submitSearch(s)}>
+                {s}
+              </button>
+            ))}
+          </div>
+        </div>
       ) : loading ? (
         <SearchSkeleton />
       ) : (
         <>
           {total === 0 ? (
-            <p className="search-page-hint">
-              لا توجد نتائج مطابقة لـ «{q}».
-            </p>
+            <div className="search-no-results">
+              <p className="search-no-results__msg">لا توجد نتائج مطابقة لـ «{q}»</p>
+              <p className="search-no-results__hint">جرّب كلمات مختلفة أو تحقق من الإملاء.</p>
+            </div>
           ) : (
             <>
-              <p className="search-page-summary">
-                {total} نتيجة لـ «<span>{q}</span>»
-              </p>
+              <div className="search-summary-row">
+                <p className="search-page-summary">
+                  <strong>{total.toLocaleString("ar-EG")}</strong> نتيجة لـ «{q}»
+                </p>
+                {responseMs !== null && (
+                  <span className="search-response-ms">{responseMs} ms</span>
+                )}
+              </div>
 
               {matchedTopics.length > 0 && (
                 <div className="search-topic-chips">
-                  <span className="search-result-meta" style={{ fontWeight: 700 }}>موضوعات ذات صلة:</span>
+                  <span className="search-topic-chips__label">موضوعات ذات صلة:</span>
                   {matchedTopics.map((t) => (
                     <Link key={t.slug} href={`/topics/${t.slug}`} className="search-topic-chip">
                       {t.title}
@@ -399,76 +460,82 @@ export default function SearchPage() {
                       title={fiqhQuery ? "من المجمع الفقهي الإسلامي" : "نتائج المجمع الفقهي"}
                       id="fiqh-council"
                       items={fiqhResults}
-                      render={(row: FiqhGlobalSearchRow) => (
-                        <FiqhResultRow key={row.id} row={row} />
-                      )}
+                      render={(row: FiqhGlobalSearchRow) => <FiqhResultRow key={row.id} row={row} />}
                     />
                   )}
-                  <Group
-                    title="الدروس"
-                    items={results.lessons}
-                    render={(l) => (
-                      <ResultRow
-                        key={l.id}
-                        href={`/lessons/${l.id}`}
-                        title={displayText(l.title)}
-                        meta={l.searchMeta || l.speaker_name || l.sheikhs?.name || l.category}
-                        avatarSrc={resolveLessonSheikhImage(l)}
-                        avatarName={l.speaker_name || l.sheikhs?.name || "شيخ"}
-                      />
-                    )}
-                  />
+                  <Group title="الدروس" items={results.lessons} render={(l) => (
+                    <ResultRow key={l.id} href={`/lessons/${l.id}`} kind="lesson"
+                      title={displayText(l.title)}
+                      meta={l.searchMeta || l.speaker_name || l.sheikhs?.name || l.category}
+                      avatarSrc={resolveLessonSheikhImage(l)}
+                      avatarName={l.speaker_name || l.sheikhs?.name || "شيخ"}
+                    />
+                  )} />
                   <Group title="الفوائد" items={results.fawaid} render={(f) => (
-                    <ResultRow key={f.id} href="/fawaid" title={displayText(f.text)} meta={f.author_name} />
+                    <ResultRow key={f.id} href="/fawaid" kind="fawaid" title={displayText(f.text)} meta={f.author_name} />
                   )} />
                   <Group title="المكتبة" items={results.library} render={(book) => (
-                    <ResultRow
-                      key={book.id}
-                      href={`/library/${book.id}`}
+                    <ResultRow key={book.id} href={`/library/${book.id}`} kind="library"
                       title={displayText(book.title)}
                       meta={[book.author || book.author_name, book.category].filter(Boolean).join(" · ")}
                     />
                   )} />
                   <Group title="الأسئلة والأجوبة" items={results.qa} render={(x) => (
-                    <ResultRow key={x.id} href="/qa" title={displayText(x.question)} meta={x.qa_categories?.name} />
+                    <ResultRow key={x.id} href="/qa" kind="qa" title={displayText(x.question)} meta={x.qa_categories?.name} />
                   )} />
                   <Group title="الأذكار" id="adhkar" items={results.adhkar} render={(a) => (
-                    <ResultRow key={a.id} href="/adhkar" title={displayText(a.text)} meta={a.category || a.source} />
+                    <ResultRow key={a.id} href="/adhkar" kind="adhkar" title={displayText(a.text)} meta={a.category || a.source} />
                   )} />
                   <Group title="المناسبات" items={localExtra.occasions} render={(o) => (
                     <ResultRow key={o.id} href={o.href} title={o.title} meta={o.meta} />
                   )} />
                   <Group title="الأربعون النووية" items={localExtra.nawawi} render={(h) => (
-                    <ResultRow key={h.id} href={h.href} title={h.title} meta={h.meta} />
+                    <ResultRow key={h.id} href={h.href} kind="hadith" title={h.title} meta={h.meta} />
                   )} />
                   <Group title="القرآن" items={localExtra.quran} render={(s) => (
-                    <ResultRow key={s.id} href={s.href} title={s.title} meta={s.meta} />
+                    <ResultRow key={s.id} href={s.href} kind="quran" title={s.title} meta={s.meta} />
                   )} />
                   {fiqhResults.length === 0 && (
                     <Group title="المجمع الفقهي" items={results.fiqh_decisions || []} render={(d) => (
-                      <ResultRow key={d.id} href={`/fiqh-council/${d.slug || d.id}`} title={displayText(d.title)} meta={d.searchMeta || d.category} />
+                      <ResultRow key={d.id} href={`/fiqh-council/${d.slug || d.id}`} kind="fiqh_decision"
+                        title={displayText(d.title)} meta={d.searchMeta || d.category}
+                      />
                     )} />
                   )}
                   <Group title="الفتاوى" items={results.fatwas || []} render={(f) => (
-                    <ResultRow key={f.id} href={`/fatwa/${f.id}`} title={displayText(f.question)} meta={f.searchMeta || f.category} />
+                    <ResultRow key={f.id} href={`/fatwa/${f.id}`} kind="fatwa"
+                      title={displayText(f.question)} meta={f.searchMeta || f.category}
+                    />
                   )} />
                   <Group title="الأحكام الشرعية" items={results.rulings || []} render={(r) => (
-                    <ResultRow key={r.id} href={`/rulings/${r.id}`} title={displayText(r.title)} meta={r.searchMeta || r.category} />
+                    <ResultRow key={r.id} href={`/rulings/${r.id}`} kind="ruling"
+                      title={displayText(r.title)} meta={r.searchMeta || r.category}
+                    />
                   )} />
                   <Group title="الدورات العلمية" items={results.courses || []} render={(c) => (
-                    <ResultRow key={c.id} href={`/annual-courses/${c.id}`} title={displayText(c.title)} meta={c.searchMeta || c.course_type} />
+                    <ResultRow key={c.id} href={`/annual-courses/${c.id}`} kind="course"
+                      title={displayText(c.title)} meta={c.searchMeta || c.course_type}
+                    />
                   )} />
                   <Group title="آخر المستجدات" items={results.updates || []} render={(u) => (
-                    <ResultRow key={u.id} href="/updates" title={displayText(u.title)} meta={u.searchMeta || u.update_type} />
+                    <ResultRow key={u.id} href="/updates" kind="update"
+                      title={displayText(u.title)} meta={u.searchMeta || u.update_type}
+                    />
                   )} />
                   <Group title="الأحاديث الصحيحة" items={results.hadith || []} render={(h) => (
-                    <ResultRow key={h.id} href="/hadith" title={displayText(h.title || h.text)} meta={h.narrator || h.collection} />
+                    <ResultRow key={h.id} href="/hadith" kind="hadith"
+                      title={displayText(h.title || h.text)} meta={h.narrator || h.collection}
+                    />
                   )} />
                   <Group title="القصص الإسلامية" items={results.stories || []} render={(s) => (
-                    <ResultRow key={s.id} href="/stories" title={displayText(s.title)} meta={s.category || s.topic} />
+                    <ResultRow key={s.id} href="/stories" kind="story"
+                      title={displayText(s.title)} meta={s.category || s.topic}
+                    />
                   )} />
                   <Group title="الإعجاز العلمي" items={results.miracles} render={(m) => (
-                    <ResultRow key={m.id} href="/miracles" title={displayText(m.title)} meta={m.category} />
+                    <ResultRow key={m.id} href="/miracles" kind="miracle"
+                      title={displayText(m.title)} meta={m.category}
+                    />
                   )} />
                 </>
               )}

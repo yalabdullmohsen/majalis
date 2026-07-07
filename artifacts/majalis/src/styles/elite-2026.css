@@ -3965,3 +3965,395 @@ button.primary:hover {
   margin: 0;
   line-height: 1.6;
 }
+
+/* ══════════════════════════════════════════════
+   §46. Search Page — البحث العلمي
+   ══════════════════════════════════════════════ */
+.search-page-form {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.search-page-submit {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+/* شريط الأدوات */
+.search-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+
+.search-adv-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.38rem 0.85rem;
+  background: var(--elite-sage-2, #F1F3F2);
+  border: 1px solid var(--elite-border-2, rgba(24,54,42,0.15));
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--elite-ink-soft, #5D726A);
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.search-adv-toggle:hover,
+.search-adv-toggle.is-active {
+  background: var(--elite-forest, #18362A);
+  border-color: transparent;
+  color: #fff;
+}
+
+.search-adv-dot {
+  width: 6px;
+  height: 6px;
+  background: #22C55E;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.search-toolbar-link {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--elite-forest, #18362A);
+  text-decoration: none;
+}
+
+.search-toolbar-link:hover {
+  text-decoration: underline;
+}
+
+.search-response-ms {
+  font-size: 0.72rem;
+  color: var(--elite-ink-faint, #97A59F);
+  margin-right: auto;
+}
+
+/* لوحة الفلاتر المتقدمة */
+.search-filters-panel {
+  padding: 1rem !important;
+  margin-bottom: 1rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.75rem !important;
+}
+
+.search-filters-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+}
+
+@media (min-width: 480px) {
+  .search-filters-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.search-filter-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--elite-ink-soft, #5D726A);
+}
+
+.search-filter-field select,
+.search-filter-field input {
+  padding: 0.45rem 0.65rem;
+  border: 1.5px solid var(--elite-border-2, rgba(24,54,42,0.12));
+  border-radius: 0.5rem;
+  background: var(--elite-white, #FAF8F2);
+  color: var(--elite-ink, #122019);
+  font-family: inherit;
+  font-size: 0.82rem;
+  transition: border-color 0.15s;
+}
+
+.search-filter-field select:focus,
+.search-filter-field input:focus {
+  outline: none;
+  border-color: var(--elite-forest, #18362A);
+  box-shadow: 0 0 0 2px rgba(24,54,42,0.08);
+}
+
+.search-filters-clear {
+  align-self: flex-start;
+  padding: 0.3rem 0.75rem;
+  background: transparent;
+  border: 1px solid rgba(192,57,43,0.3);
+  border-radius: 999px;
+  color: #C0392B;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.search-filters-clear:hover {
+  background: rgba(192,57,43,0.07);
+}
+
+/* الحالة الفارغة */
+.search-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+.search-empty-hint {
+  font-size: 0.9rem;
+  color: var(--elite-ink-soft, #5D726A);
+  line-height: 1.7;
+  max-width: 40rem;
+  margin: 0;
+}
+
+.search-suggestion-chips {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.search-suggestion-chip {
+  padding: 0.4rem 1rem;
+  background: var(--elite-white, #FAF8F2);
+  border: 1.5px solid var(--elite-border-2, rgba(24,54,42,0.15));
+  border-radius: 999px;
+  color: var(--elite-forest, #18362A);
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.search-suggestion-chip:hover {
+  background: var(--elite-forest, #18362A);
+  border-color: transparent;
+  color: #fff;
+}
+
+/* لا توجد نتائج */
+.search-no-results {
+  padding: 2.5rem 1rem;
+  text-align: center;
+}
+
+.search-no-results__msg {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--elite-ink, #122019);
+  margin: 0 0 0.5rem;
+}
+
+.search-no-results__hint {
+  font-size: 0.875rem;
+  color: var(--elite-ink-soft, #5D726A);
+  margin: 0;
+}
+
+/* ملخص النتائج */
+.search-summary-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.search-page-summary {
+  font-size: 0.875rem;
+  color: var(--elite-ink-soft, #5D726A);
+  margin: 0;
+}
+
+.search-page-summary strong {
+  color: var(--elite-forest, #18362A);
+}
+
+/* رقاقات الموضوعات */
+.search-topic-chips {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.search-topic-chips__label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--elite-ink-soft, #5D726A);
+}
+
+.search-topic-chip {
+  padding: 0.3rem 0.8rem;
+  background: var(--elite-sage-2, #F0FDF4);
+  border: 1px solid rgba(24,54,42,0.15);
+  border-radius: 999px;
+  color: var(--elite-forest, #18362A);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.15s;
+}
+
+.search-topic-chip:hover {
+  background: var(--elite-forest, #18362A);
+  border-color: transparent;
+  color: #fff;
+}
+
+/* مجموعات النتائج */
+.search-results-group {
+  margin-bottom: 1.5rem;
+}
+
+.search-results-group-head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1.5px solid var(--elite-border, rgba(0,0,0,0.07));
+}
+
+.search-results-group-title {
+  font-size: 0.85rem !important;
+  font-weight: 700 !important;
+  color: var(--elite-ink, #122019) !important;
+  margin: 0 !important;
+  background: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  display: inline !important;
+}
+
+.search-results-count {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--elite-ink-faint, #97A59F);
+  background: var(--elite-sage-2, #F1F3F2);
+  border-radius: 999px;
+  padding: 0.1rem 0.5rem;
+}
+
+.search-results-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+/* صف النتيجة */
+.search-result-link {
+  text-decoration: none !important;
+  display: block;
+}
+
+.search-result-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 0.6rem;
+  transition: background 0.12s;
+  cursor: pointer;
+}
+
+.search-result-row:hover {
+  background: var(--elite-sage-2, #F0FDF4);
+}
+
+.search-result-row--fiqh {
+  border-right: 2px solid var(--elite-forest, #18362A);
+}
+
+.search-result-avatar {
+  flex-shrink: 0;
+}
+
+.search-result-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.search-result-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.search-result-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--elite-ink, #122019);
+  line-height: 1.4;
+}
+
+.search-result-meta {
+  font-size: 0.75rem;
+  color: var(--elite-ink-muted, #97A59F);
+  line-height: 1.4;
+}
+
+.search-result-keywords {
+  font-size: 0.7rem;
+  color: var(--elite-ink-faint, #BEC7C3);
+  line-height: 1.4;
+}
+
+.search-verified-dot {
+  color: #16A34A;
+}
+
+/* شارات النوع */
+.search-kind-badge {
+  display: inline-block;
+  padding: 0.08rem 0.45rem;
+  border-radius: 999px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+  background: var(--elite-sage-2, #F0FDF4);
+  color: var(--elite-forest, #18362A);
+  border: 1px solid rgba(24,54,42,0.15);
+}
+
+.search-kind-badge--lesson      { background: #EFF6FF; color: #1D4ED8; border-color: rgba(29,78,216,0.2); }
+.search-kind-badge--fatwa       { background: #FFF7ED; color: #C2410C; border-color: rgba(194,65,12,0.2); }
+.search-kind-badge--ruling      { background: #FFF7ED; color: #C2410C; border-color: rgba(194,65,12,0.2); }
+.search-kind-badge--qa          { background: #F5F3FF; color: #6D28D9; border-color: rgba(109,40,217,0.2); }
+.search-kind-badge--fawaid      { background: #FEFCE8; color: #A16207; border-color: rgba(161,98,7,0.2); }
+.search-kind-badge--adhkar      { background: #F0FDF4; color: #15803D; border-color: rgba(21,128,61,0.2); }
+.search-kind-badge--library     { background: #FDF4FF; color: #7E22CE; border-color: rgba(126,34,206,0.2); }
+.search-kind-badge--hadith      { background: #FFF1F2; color: #BE123C; border-color: rgba(190,18,60,0.2); }
+.search-kind-badge--quran       { background: #F0FDF4; color: #15803D; border-color: rgba(21,128,61,0.2); }
+.search-kind-badge--story,
+.search-kind-badge--stories     { background: #FFF7ED; color: #C2410C; border-color: rgba(194,65,12,0.2); }
+.search-kind-badge--fiqh-council,
+.search-kind-badge--fiqh-decision { background: #EFF6FF; color: #1D4ED8; border-color: rgba(29,78,216,0.2); }
+.search-kind-badge--miracle,
+.search-kind-badge--miracles    { background: #F0FDFA; color: #0F766E; border-color: rgba(15,118,110,0.2); }
+.search-kind-badge--course,
+.search-kind-badge--courses     { background: #EFF6FF; color: #1D4ED8; border-color: rgba(29,78,216,0.2); }
+.search-kind-badge--update,
+.search-kind-badge--updates     { background: #F1F5F9; color: #475569; border-color: rgba(71,85,105,0.2); }
