@@ -194,6 +194,12 @@
   cursor: pointer; transition: background 0.15s;
 }
 .mshf-pgnum__btn:hover { background: rgba(106,181,142,0.15); }
+.mshf-pgnum__juz {
+  font-size: 0.7rem; color: rgba(168,232,200,0.7);
+  font-weight: 600; margin-left: 0.4rem;
+  background: rgba(106,181,142,0.15);
+  border-radius: 0.5rem; padding: 0.1rem 0.35rem;
+}
 .mshf-pgnum__cur {
   font-size: 1.1rem; font-weight: 700; color: #fff;
   font-variant-numeric: tabular-nums;

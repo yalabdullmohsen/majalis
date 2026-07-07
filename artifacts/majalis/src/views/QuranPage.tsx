@@ -209,14 +209,29 @@ export default function QuranPage() {
     bump();
   };
 
+  const navBodyRef = useRef<HTMLDivElement>(null);
+
   /* ── فتح لوحة التنقل ── */
   const openNav = (tab: NavTab = "surahs") => {
     setNavTab(tab);
     setSearch("");
     setNavOpen(true);
-    setTimeout(() => searchRef.current?.focus(), 80);
+    // على سطح المكتب فقط نفتح لوحة المفاتيح تلقائياً
+    if (tab === "surahs" && window.matchMedia("(pointer: fine)").matches) {
+      setTimeout(() => searchRef.current?.focus(), 80);
+    }
   };
   const goTo = (p: number) => { go(p); setNavOpen(false); };
+
+  /* ── تمرير تلقائي للسورة الحالية عند فتح اللوحة ── */
+  useEffect(() => {
+    if (!navOpen || navTab !== "surahs") return;
+    setTimeout(() => {
+      navBodyRef.current
+        ?.querySelector(".mshf-surah-item.active")
+        ?.scrollIntoView({ block: "center", behavior: "smooth" });
+    }, 120);
+  }, [navOpen, navTab]);
 
   /* ── قائمة السور المفلترة ── */
   const filteredSurahs = SURAHS.filter(([name]) =>
@@ -229,6 +244,15 @@ export default function QuranPage() {
       if (page >= SURAHS[i][1]) return `${i + 1}. ${SURAHS[i][0]}`;
     }
     return "";
+  })();
+
+  /* ── رقم الجزء الحالي ── */
+  const currentJuz = (() => {
+    const pages = [1,22,42,62,82,102,121,142,162,182,201,221,241,261,281,301,321,341,361,381,401,421,441,461,481,501,521,542,561,581];
+    for (let i = pages.length - 1; i >= 0; i--) {
+      if (page >= pages[i]) return i + 1;
+    }
+    return 1;
   })();
 
   return (
@@ -346,6 +370,7 @@ export default function QuranPage() {
             />
           ) : (
             <button className="mshf-pgnum__btn" onClick={e => { e.stopPropagation(); startEdit(); }}>
+              <span className="mshf-pgnum__juz">ج{currentJuz}</span>
               <span className="mshf-pgnum__cur">{page}</span>
               <span className="mshf-pgnum__sep">/</span>
               <span className="mshf-pgnum__tot">{TOTAL}</span>
@@ -404,7 +429,7 @@ export default function QuranPage() {
             )}
 
             {/* محتوى اللوحة */}
-            <div className="mshf-nav-panel__body">
+            <div ref={navBodyRef} className="mshf-nav-panel__body">
 
               {/* السور */}
               {navTab === "surahs" && (
