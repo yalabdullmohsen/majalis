@@ -132,6 +132,7 @@ const DRAWER_GROUPS: NavGroup[] = [
       { href: "/miracles",             label: "الإعجاز العلمي",   Icon: Lightbulb },
       { href: "/prophetic-medicine",  label: "الطب النبوي",      Icon: Heart },
       { href: "/scholarly-research",  label: "الباحث الشرعي",    Icon: Microscope },
+      { href: "/academic-research",   label: "الأبحاث العلمية",  Icon: Layers },
       { href: "/seerah",             label: "السيرة النبوية",   Icon: BookUser },
       { href: "/knowledge-graph",    label: "خارطة المعرفة",    Icon: GitBranch },
       { href: "/universities",       label: "دليل الجامعات",    Icon: Building2 },

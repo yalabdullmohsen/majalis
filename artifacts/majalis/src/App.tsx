@@ -149,6 +149,7 @@ const IslamicStoriesPage = lazy(() => import("@/views/IslamicStoriesPage"));
 const CitationPublicPage = lazy(() => import("@/views/CitationPublicPage"));
 const MyCitationsPage = lazy(() => import("@/views/MyCitationsPage"));
 const ScholarlyResearchPage = lazy(() => import("@/views/ScholarlyResearchPage"));
+const AcademicResearchPage  = lazy(() => import("@/views/AcademicResearchPage"));
 const UniversitiesPage = lazy(() => import("@/views/UniversitiesPage"));
 const UniversityDetailPage = lazy(() => import("@/views/UniversityDetailPage"));
 const UniversitiesComparePage = lazy(() => import("@/views/UniversitiesComparePage"));
@@ -307,6 +308,7 @@ function Router() {
         </ErrorBoundary>
       </Route>
       <Route path="/scholarly-research"><SafeLazyRoute component={ScholarlyResearchPage} /></Route>
+      <Route path="/academic-research"><SafeLazyRoute component={AcademicResearchPage} /></Route>
       <Route path="/learning-path/dashboard"><SafeLazyRoute component={LearningPathDashboardPage} /></Route>
       <Route path="/learning-path/book/:bookId"><SafeLazyRoute component={LearningPathBookPage} /></Route>
       <Route path="/learning-path/:scienceSlug"><SafeLazyRoute component={LearningPathSciencePage} /></Route>

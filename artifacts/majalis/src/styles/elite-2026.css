@@ -2961,3 +2961,297 @@ button.primary:hover {
   padding: 2.5rem 1rem !important;
   text-align: center !important;
 }
+
+/* ══════════════════════════════════════════════════════════════════════
+   §40 — صفحة الأبحاث العلمية الأكاديمية (ar-*)
+   ══════════════════════════════════════════════════════════════════════ */
+
+.ar-page {
+  min-height: 100vh;
+  background: var(--elite-white, #FAF8F2);
+  direction: rtl;
+}
+
+/* ── Hero ── */
+.ar-hero {
+  background: linear-gradient(135deg, #18362A 0%, #1e4d38 60%, #24603f 100%);
+  padding: 3rem 1.25rem 2.5rem;
+}
+.ar-hero__inner {
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+}
+.ar-hero__eyebrow {
+  color: rgba(255,255,255,0.55);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin: 0 0 0.5rem;
+}
+.ar-hero__title {
+  color: #fff;
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 800;
+  margin: 0 0 0.75rem;
+  line-height: 1.2;
+}
+.ar-hero__sub {
+  color: rgba(255,255,255,0.72);
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  margin: 0;
+  max-width: 520px;
+  margin-inline: auto;
+}
+
+/* ── إحصاءات ── */
+.ar-stats {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  background: #fff;
+  border-bottom: 1px solid rgba(24,54,42,0.08);
+  box-shadow: 0 2px 12px rgba(24,54,42,0.05);
+}
+.ar-stat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.25rem 0.5rem;
+  border-inline-end: 1px solid rgba(24,54,42,0.07);
+  max-width: 180px;
+}
+.ar-stat:last-child { border-inline-end: none; }
+.ar-stat__n {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--elite-forest, #18362A);
+  line-height: 1;
+}
+.ar-stat__lbl {
+  font-size: 0.72rem;
+  color: rgba(24,54,42,0.5);
+  margin-top: 0.3rem;
+  font-weight: 500;
+}
+
+/* ── تبويبات ── */
+.ar-tabs-bar {
+  display: flex;
+  gap: 0.75rem;
+  padding: 1.25rem 1rem;
+  max-width: 860px;
+  margin: 0 auto;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.ar-tabs-bar::-webkit-scrollbar { display: none; }
+
+.ar-tab-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.15rem;
+  flex: 1;
+  min-width: 160px;
+  padding: 1rem 1.1rem;
+  border: 1.5px solid rgba(24,54,42,0.1);
+  border-radius: 16px;
+  background: #fff;
+  cursor: pointer;
+  transition: border-color 0.18s, background 0.18s, box-shadow 0.18s;
+  font-family: inherit;
+  text-align: right;
+}
+.ar-tab-btn:hover {
+  border-color: rgba(24,54,42,0.25);
+  box-shadow: 0 2px 12px rgba(24,54,42,0.07);
+}
+.ar-tab-btn--active {
+  border-color: var(--elite-forest, #18362A) !important;
+  background: rgba(24,54,42,0.04) !important;
+  box-shadow: 0 2px 16px rgba(24,54,42,0.1) !important;
+}
+.ar-tab-btn__icon { font-size: 1.4rem; line-height: 1; margin-bottom: 0.2rem; }
+.ar-tab-btn__label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #1a2e24;
+}
+.ar-tab-btn__sub {
+  font-size: 0.7rem;
+  color: rgba(24,54,42,0.5);
+  font-weight: 400;
+}
+.ar-tab-btn--active .ar-tab-btn__label { color: var(--elite-forest, #18362A); }
+
+/* ── محتوى التبويب ── */
+.ar-content {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 1rem 3rem;
+}
+
+.ar-tab-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* شريط البحث */
+.ar-search-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.ar-search-bar__icon {
+  position: absolute;
+  right: 1rem;
+  width: 18px;
+  height: 18px;
+  color: rgba(24,54,42,0.4);
+  pointer-events: none;
+  flex-shrink: 0;
+}
+.ar-search-bar__input {
+  width: 100%;
+  background: #fff;
+  border: 1.5px solid rgba(24,54,42,0.12);
+  border-radius: 14px;
+  padding: 0.85rem 3rem 0.85rem 1.25rem;
+  font-size: 0.9375rem;
+  font-family: inherit;
+  color: #1a2e24;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.ar-search-bar__input::placeholder { color: rgba(24,54,42,0.35); }
+.ar-search-bar__input:focus {
+  outline: none;
+  border-color: var(--elite-forest, #18362A);
+  box-shadow: 0 0 0 3px rgba(24,54,42,0.08);
+}
+
+/* التصنيفات */
+.ar-cats__label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: rgba(24,54,42,0.45);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+.ar-cats__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.6rem;
+}
+.ar-cat-item {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.7rem 0.9rem;
+  background: #fff;
+  border: 1px solid rgba(24,54,42,0.09);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  font-family: inherit;
+  text-align: right;
+}
+.ar-cat-item:hover {
+  background: rgba(24,54,42,0.04);
+  border-color: rgba(24,54,42,0.2);
+}
+.ar-cat-item__icon { font-size: 1.1rem; flex-shrink: 0; }
+.ar-cat-item__label { font-size: 0.82rem; font-weight: 600; color: #1a2e24; }
+
+/* الحالة الفارغة */
+.ar-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 3rem 1rem;
+  background: #fff;
+  border: 1px solid rgba(24,54,42,0.08);
+  border-radius: 18px;
+  text-align: center;
+}
+.ar-empty__icon { font-size: 2.5rem; line-height: 1; }
+.ar-empty__title { font-size: 1rem; font-weight: 700; color: #1a2e24; margin: 0; }
+.ar-empty__sub { font-size: 0.85rem; color: rgba(24,54,42,0.5); margin: 0; max-width: 340px; line-height: 1.6; }
+.ar-empty__btn {
+  margin-top: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.55rem 1.4rem;
+  background: var(--elite-forest, #18362A);
+  color: #fff;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+.ar-empty__btn:hover { opacity: 0.88; text-decoration: none; }
+
+/* prompt الإرسال الشخصي */
+.ar-submit-prompt {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  background: linear-gradient(135deg, rgba(24,54,42,0.05) 0%, rgba(24,54,42,0.02) 100%);
+  border: 1px solid rgba(24,54,42,0.12);
+  border-radius: 18px;
+  padding: 1.5rem;
+}
+.ar-submit-prompt__icon { font-size: 2.5rem; flex-shrink: 0; line-height: 1; }
+.ar-submit-prompt__title { font-size: 1rem; font-weight: 700; color: #1a2e24; margin: 0 0 0.35rem; }
+.ar-submit-prompt__sub { font-size: 0.85rem; color: rgba(24,54,42,0.6); margin: 0 0 0.75rem; line-height: 1.6; }
+.ar-submit-prompt__btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1.25rem;
+  background: var(--elite-forest, #18362A);
+  color: #fff;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+.ar-submit-prompt__btn:hover { opacity: 0.88; text-decoration: none; }
+
+/* رابط التذييل */
+.ar-footer-link {
+  display: flex;
+  justify-content: center;
+  padding: 1.5rem 1rem 3rem;
+  max-width: 860px;
+  margin: 0 auto;
+}
+.ar-footer-link__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.4rem;
+  border: 1.5px solid rgba(24,54,42,0.2);
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--elite-forest, #18362A);
+  text-decoration: none;
+  background: rgba(24,54,42,0.04);
+  transition: background 0.15s;
+}
+.ar-footer-link__btn:hover { background: rgba(24,54,42,0.09); text-decoration: none; }
+
+@media (max-width: 600px) {
+  .ar-tabs-bar { gap: 0.5rem; }
+  .ar-tab-btn { min-width: 130px; padding: 0.8rem 0.85rem; }
+  .ar-cats__grid { grid-template-columns: repeat(2, 1fr); }
+}
