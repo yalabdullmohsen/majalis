@@ -24,12 +24,12 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://majlisilm.com"),
   title: {
     default: "المجلس العلمي — دروس شرعية ودورات علمية",
-    template: "%s | مجالس العلم",
+    template: "%s | المجلس العلمي",
   },
   description: siteDescription,
   keywords: [
     "المجلس العلمي",
-    "مجالس العلم",
+    "المجلس العلمي",
     "دروس شرعية",
     "دورات علمية",
     "طلب العلم",

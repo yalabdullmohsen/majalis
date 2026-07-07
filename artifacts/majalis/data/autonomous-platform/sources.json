@@ -463,7 +463,7 @@
   },
   {
     "slug": "internal-fawaid",
-    "name": "مجالس العلم — فوائد موثقة",
+    "name": "المجلس العلمي — فوائد موثقة",
     "source_type": "internal",
     "source_url": "supabase:fawaid",
     "priority": 10,
@@ -494,7 +494,7 @@
   },
   {
     "slug": "internal-qa",
-    "name": "مجالس العلم — أسئلة منشورة",
+    "name": "المجلس العلمي — أسئلة منشورة",
     "source_type": "internal",
     "source_url": "supabase:qa_questions",
     "priority": 10,
@@ -524,7 +524,7 @@
   },
   {
     "slug": "internal-rulings",
-    "name": "مجالس العلم — أحكام شرعية",
+    "name": "المجلس العلمي — أحكام شرعية",
     "source_type": "internal",
     "source_url": "supabase:sharia_rulings",
     "priority": 9,

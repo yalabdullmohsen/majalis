@@ -179,7 +179,7 @@ function fromQaSeed() {
       const evidenceArr = ev ? splitEvidence(ev, ref) : [];
       const refs = ref
         ? [{ text: ref, source: ref }]
-        : [{ text: "مجالس العلم — الأسئلة والأجوبة", source: "qa-seed" }];
+        : [{ text: "المجلس العلمي — الأسئلة والأجوبة", source: "qa-seed" }];
 
       return makeRuling({
         external_key: `qa-ruling-${q.id}`,
@@ -246,7 +246,7 @@ function fromFawaidSeed() {
           body: unesc(body),
           category: "طلب العلم والدعوة",
           subcategory: "طلب العلم",
-          references: [{ text: "فوائد فقهية — مجالس العلم", source: "fawaid-seed" }],
+          references: [{ text: "فوائد فقهية — المجلس العلمي", source: "fawaid-seed" }],
           keywords: ["فوائد", "فقه"],
           source_origin: "fawaid-seed",
           importance_score: 55,
@@ -368,7 +368,7 @@ function fromQuizCsv() {
         body: `**السؤال:** ${question}\n\n**الجواب:** ${answer}`,
         category: cat.category,
         subcategory: cat.subcategory,
-        references: [{ text: "اختبار مجالس العلم — قسم الأحكام", source: "مجالس العلم" }],
+        references: [{ text: "اختبار المجلس العلمي — قسم الأحكام", source: "المجلس العلمي" }],
         keywords: [section, category],
         source_origin: "quiz_questions.csv",
         importance_score: 45,

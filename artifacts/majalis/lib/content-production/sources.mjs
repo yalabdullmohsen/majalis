@@ -102,7 +102,7 @@ export async function ingestFromQaQuestions(admin, source, limit = 50) {
     const r = await stageItem(admin, "questions", {
       source_slug: source.slug,
       source_url: `qa:${row.id}`,
-      source_name: "مجالس العلم — الأسئلة والأجوبة",
+      source_name: "المجلس العلمي — الأسئلة والأجوبة",
       external_key: `qa-quiz-${row.id}`,
       question: row.question,
       body: row.question,
@@ -113,7 +113,7 @@ export async function ingestFromQaQuestions(admin, source, limit = 50) {
         options,
         correct_index: correctIndex,
         category: row.qa_categories?.name || "عام",
-        source_name: "مجالس العلم — الأسئلة والأجوبة",
+        source_name: "المجلس العلمي — الأسئلة والأجوبة",
         source_url: `qa:${row.id}`,
         reference: row.reference,
         keywords: [],
@@ -161,10 +161,10 @@ export async function ingestFromFawaid(admin, source, limit = 80) {
     const r = await stageItem(admin, "fawaid", {
       source_slug: source.slug,
       source_url: `fawaid:${row.id}`,
-      source_name: row.author_name || "مجالس العلم",
+      source_name: row.author_name || "المجلس العلمي",
       external_key: `fawaid-cp-${row.id}`,
       body: row.text,
-      metadata: { author_name: row.author_name, source_name: row.author_name || "مجالس العلم" },
+      metadata: { author_name: row.author_name, source_name: row.author_name || "المجلس العلمي" },
     });
     if (r.staged) staged += 1;
   }

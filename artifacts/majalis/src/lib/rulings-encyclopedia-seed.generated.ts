@@ -45,7 +45,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-01-05T08:00:00Z",
     "created_at": "2024-01-05T08:00:00Z",
-    "updated_at": "2026-07-04T03:46:45.111Z"
+    "updated_at": "2026-07-07T04:48:00.860Z"
   },
   {
     "id": "ruling-prayer-pillars",
@@ -84,7 +84,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-07-04T03:46:45.112Z"
+    "updated_at": "2026-07-07T04:48:00.861Z"
   },
   {
     "id": "ruling-zakat-conditions",
@@ -123,7 +123,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-08-14T06:00:00Z",
     "created_at": "2023-08-14T06:00:00Z",
-    "updated_at": "2026-07-04T03:46:45.112Z"
+    "updated_at": "2026-07-07T04:48:00.861Z"
   },
   {
     "id": "ruling-hajj-pillars",
@@ -162,7 +162,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-06-01T05:00:00Z",
     "created_at": "2023-06-01T05:00:00Z",
-    "updated_at": "2026-07-04T03:46:45.112Z"
+    "updated_at": "2026-07-07T04:48:00.861Z"
   },
   {
     "id": "ruling-trade-conditions",
@@ -201,7 +201,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-04-22T04:00:00Z",
     "created_at": "2023-04-22T04:00:00Z",
-    "updated_at": "2026-07-04T03:46:45.112Z"
+    "updated_at": "2026-07-07T04:48:00.861Z"
   },
   {
     "id": "ruling-inheritance-shares",
@@ -240,7 +240,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-02-10T03:00:00Z",
     "created_at": "2023-02-10T03:00:00Z",
-    "updated_at": "2026-07-04T03:46:45.112Z"
+    "updated_at": "2026-07-07T04:48:00.861Z"
   },
   {
     "id": "ruling-wudu-nullifiers-part-1",
@@ -284,7 +284,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-01-05T08:00:00Z",
     "created_at": "2024-01-05T08:00:00Z",
-    "updated_at": "2026-07-04T03:46:45.111Z"
+    "updated_at": "2026-07-07T04:48:00.860Z"
   },
   {
     "id": "ruling-wudu-nullifiers-part-2",
@@ -328,7 +328,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-01-05T08:00:00Z",
     "created_at": "2024-01-05T08:00:00Z",
-    "updated_at": "2026-07-04T03:46:45.111Z"
+    "updated_at": "2026-07-07T04:48:00.860Z"
   },
   {
     "id": "ruling-wudu-nullifiers-part-3",
@@ -372,7 +372,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-01-05T08:00:00Z",
     "created_at": "2024-01-05T08:00:00Z",
-    "updated_at": "2026-07-04T03:46:45.111Z"
+    "updated_at": "2026-07-07T04:48:00.860Z"
   },
   {
     "id": "ruling-wudu-nullifiers-part-4",
@@ -416,7 +416,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-01-05T08:00:00Z",
     "created_at": "2024-01-05T08:00:00Z",
-    "updated_at": "2026-07-04T03:46:45.111Z"
+    "updated_at": "2026-07-07T04:48:00.860Z"
   },
   {
     "id": "ruling-wudu-nullifiers-part-5",
@@ -460,7 +460,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-01-05T08:00:00Z",
     "created_at": "2024-01-05T08:00:00Z",
-    "updated_at": "2026-07-04T03:46:45.111Z"
+    "updated_at": "2026-07-07T04:48:00.860Z"
   },
   {
     "id": "ruling-prayer-pillars-part-1",
@@ -499,7 +499,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-07-04T03:46:45.112Z"
+    "updated_at": "2026-07-07T04:48:00.861Z"
   },
   {
     "id": "ruling-prayer-pillars-part-2",
@@ -538,7 +538,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-07-04T03:46:45.112Z"
+    "updated_at": "2026-07-07T04:48:00.861Z"
   },
   {
     "id": "ruling-prayer-pillars-part-3",
@@ -577,7 +577,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-07-04T03:46:45.112Z"
+    "updated_at": "2026-07-07T04:48:00.861Z"
   },
   {
     "id": "ruling-prayer-pillars-part-4",
@@ -616,7 +616,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-07-04T03:46:45.112Z"
+    "updated_at": "2026-07-07T04:48:00.861Z"
   },
   {
     "id": "ruling-prayer-pillars-part-5",
@@ -655,7 +655,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-07-04T03:46:45.112Z"
+    "updated_at": "2026-07-07T04:48:00.861Z"
   },
   {
     "id": "ruling-prayer-pillars-part-6",
@@ -694,7 +694,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-07-04T03:46:45.112Z"
+    "updated_at": "2026-07-07T04:48:00.861Z"
   },
   {
     "id": "ruling-prayer-pillars-part-7",
@@ -733,7 +733,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-07-04T03:46:45.112Z"
+    "updated_at": "2026-07-07T04:48:00.861Z"
   },
   {
     "id": "ruling-prayer-pillars-part-8",
@@ -772,7 +772,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-07-04T03:46:45.112Z"
+    "updated_at": "2026-07-07T04:48:00.861Z"
   },
   {
     "id": "ruling-prayer-pillars-part-9",
@@ -811,7 +811,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-07-04T03:46:45.112Z"
+    "updated_at": "2026-07-07T04:48:00.861Z"
   },
   {
     "id": "ruling-prayer-pillars-part-10",
@@ -850,7 +850,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-07-04T03:46:45.112Z"
+    "updated_at": "2026-07-07T04:48:00.861Z"
   },
   {
     "id": "ruling-prayer-pillars-part-11",
@@ -889,7 +889,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-07-04T03:46:45.112Z"
+    "updated_at": "2026-07-07T04:48:00.861Z"
   },
   {
     "id": "ruling-prayer-pillars-part-12",
@@ -928,7 +928,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-07-04T03:46:45.112Z"
+    "updated_at": "2026-07-07T04:48:00.861Z"
   },
   {
     "id": "ruling-zakat-conditions-part-1",
@@ -967,7 +967,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-08-14T06:00:00Z",
     "created_at": "2023-08-14T06:00:00Z",
-    "updated_at": "2026-07-04T03:46:45.112Z"
+    "updated_at": "2026-07-07T04:48:00.861Z"
   },
   {
     "id": "ruling-zakat-conditions-part-2",
@@ -1006,7 +1006,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-08-14T06:00:00Z",
     "created_at": "2023-08-14T06:00:00Z",
-    "updated_at": "2026-07-04T03:46:45.112Z"
+    "updated_at": "2026-07-07T04:48:00.861Z"
   },
   {
     "id": "ruling-zakat-conditions-part-3",
@@ -1045,7 +1045,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-08-14T06:00:00Z",
     "created_at": "2023-08-14T06:00:00Z",
-    "updated_at": "2026-07-04T03:46:45.112Z"
+    "updated_at": "2026-07-07T04:48:00.861Z"
   },
   {
     "id": "ruling-zakat-conditions-part-4",
@@ -1084,7 +1084,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-08-14T06:00:00Z",
     "created_at": "2023-08-14T06:00:00Z",
-    "updated_at": "2026-07-04T03:46:45.112Z"
+    "updated_at": "2026-07-07T04:48:00.861Z"
   },
   {
     "id": "ruling-zakat-conditions-part-5",
@@ -1123,7 +1123,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-08-14T06:00:00Z",
     "created_at": "2023-08-14T06:00:00Z",
-    "updated_at": "2026-07-04T03:46:45.112Z"
+    "updated_at": "2026-07-07T04:48:00.861Z"
   },
   {
     "id": "ruling-zakat-conditions-part-6",
@@ -1162,7 +1162,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-08-14T06:00:00Z",
     "created_at": "2023-08-14T06:00:00Z",
-    "updated_at": "2026-07-04T03:46:45.112Z"
+    "updated_at": "2026-07-07T04:48:00.861Z"
   },
   {
     "id": "ruling-hajj-pillars-part-1",
@@ -1201,7 +1201,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-06-01T05:00:00Z",
     "created_at": "2023-06-01T05:00:00Z",
-    "updated_at": "2026-07-04T03:46:45.112Z"
+    "updated_at": "2026-07-07T04:48:00.861Z"
   },
   {
     "id": "ruling-hajj-pillars-part-2",
@@ -1240,7 +1240,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-06-01T05:00:00Z",
     "created_at": "2023-06-01T05:00:00Z",
-    "updated_at": "2026-07-04T03:46:45.112Z"
+    "updated_at": "2026-07-07T04:48:00.861Z"
   },
   {
     "id": "ruling-hajj-pillars-part-3",
@@ -1279,7 +1279,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-06-01T05:00:00Z",
     "created_at": "2023-06-01T05:00:00Z",
-    "updated_at": "2026-07-04T03:46:45.112Z"
+    "updated_at": "2026-07-07T04:48:00.861Z"
   },
   {
     "id": "ruling-hajj-pillars-part-4",
@@ -1318,7 +1318,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-06-01T05:00:00Z",
     "created_at": "2023-06-01T05:00:00Z",
-    "updated_at": "2026-07-04T03:46:45.112Z"
+    "updated_at": "2026-07-07T04:48:00.861Z"
   },
   {
     "id": "ruling-trade-conditions-part-1",
@@ -1357,7 +1357,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-04-22T04:00:00Z",
     "created_at": "2023-04-22T04:00:00Z",
-    "updated_at": "2026-07-04T03:46:45.112Z"
+    "updated_at": "2026-07-07T04:48:00.861Z"
   },
   {
     "id": "ruling-trade-conditions-part-2",
@@ -1396,7 +1396,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-04-22T04:00:00Z",
     "created_at": "2023-04-22T04:00:00Z",
-    "updated_at": "2026-07-04T03:46:45.112Z"
+    "updated_at": "2026-07-07T04:48:00.861Z"
   },
   {
     "id": "ruling-trade-conditions-part-3",
@@ -1435,7 +1435,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-04-22T04:00:00Z",
     "created_at": "2023-04-22T04:00:00Z",
-    "updated_at": "2026-07-04T03:46:45.112Z"
+    "updated_at": "2026-07-07T04:48:00.861Z"
   },
   {
     "id": "ruling-trade-conditions-part-4",
@@ -1474,7 +1474,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-04-22T04:00:00Z",
     "created_at": "2023-04-22T04:00:00Z",
-    "updated_at": "2026-07-04T03:46:45.112Z"
+    "updated_at": "2026-07-07T04:48:00.861Z"
   },
   {
     "id": "ruling-trade-conditions-part-5",
@@ -1513,7 +1513,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-04-22T04:00:00Z",
     "created_at": "2023-04-22T04:00:00Z",
-    "updated_at": "2026-07-04T03:46:45.112Z"
+    "updated_at": "2026-07-07T04:48:00.861Z"
   },
   {
     "id": "ruling-inheritance-shares-part-1",
@@ -1552,7 +1552,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-02-10T03:00:00Z",
     "created_at": "2023-02-10T03:00:00Z",
-    "updated_at": "2026-07-04T03:46:45.112Z"
+    "updated_at": "2026-07-07T04:48:00.861Z"
   },
   {
     "id": "ruling-inheritance-shares-part-2",
@@ -1591,7 +1591,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-02-10T03:00:00Z",
     "created_at": "2023-02-10T03:00:00Z",
-    "updated_at": "2026-07-04T03:46:45.112Z"
+    "updated_at": "2026-07-07T04:48:00.861Z"
   },
   {
     "id": "ruling-inheritance-shares-part-3",
@@ -1630,7 +1630,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-02-10T03:00:00Z",
     "created_at": "2023-02-10T03:00:00Z",
-    "updated_at": "2026-07-04T03:46:45.112Z"
+    "updated_at": "2026-07-07T04:48:00.861Z"
   },
   {
     "id": "ruling-inheritance-shares-part-4",
@@ -1669,7 +1669,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-02-10T03:00:00Z",
     "created_at": "2023-02-10T03:00:00Z",
-    "updated_at": "2026-07-04T03:46:45.112Z"
+    "updated_at": "2026-07-07T04:48:00.861Z"
   },
   {
     "id": "ruling-inheritance-shares-part-5",
@@ -1708,7 +1708,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-02-10T03:00:00Z",
     "created_at": "2023-02-10T03:00:00Z",
-    "updated_at": "2026-07-04T03:46:45.112Z"
+    "updated_at": "2026-07-07T04:48:00.861Z"
   },
   {
     "id": "issue-ruling-crypto-currency",
@@ -1748,9 +1748,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-crypto"
     ],
-    "published_at": "2026-07-04T03:46:45.118Z",
-    "created_at": "2026-07-04T03:46:45.118Z",
-    "updated_at": "2026-07-04T03:46:45.118Z"
+    "published_at": "2026-07-07T04:48:00.865Z",
+    "created_at": "2026-07-07T04:48:00.865Z",
+    "updated_at": "2026-07-07T04:48:00.865Z"
   },
   {
     "id": "issue-ruling-organ-donation",
@@ -1790,9 +1790,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-organ-donation"
     ],
-    "published_at": "2026-07-04T03:46:45.118Z",
-    "created_at": "2026-07-04T03:46:45.118Z",
-    "updated_at": "2026-07-04T03:46:45.118Z"
+    "published_at": "2026-07-07T04:48:00.865Z",
+    "created_at": "2026-07-07T04:48:00.865Z",
+    "updated_at": "2026-07-07T04:48:00.865Z"
   },
   {
     "id": "issue-ruling-muslim-minorities-rights",
@@ -1831,9 +1831,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-minorities"
     ],
-    "published_at": "2026-07-04T03:46:45.118Z",
-    "created_at": "2026-07-04T03:46:45.118Z",
-    "updated_at": "2026-07-04T03:46:45.118Z"
+    "published_at": "2026-07-07T04:48:00.865Z",
+    "created_at": "2026-07-07T04:48:00.865Z",
+    "updated_at": "2026-07-07T04:48:00.865Z"
   },
   {
     "id": "issue-ruling-zakat-stocks",
@@ -1872,9 +1872,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-zakat-stocks"
     ],
-    "published_at": "2026-07-04T03:46:45.118Z",
-    "created_at": "2026-07-04T03:46:45.118Z",
-    "updated_at": "2026-07-04T03:46:45.118Z"
+    "published_at": "2026-07-07T04:48:00.865Z",
+    "created_at": "2026-07-07T04:48:00.865Z",
+    "updated_at": "2026-07-07T04:48:00.865Z"
   },
   {
     "id": "issue-ruling-hajj-delay",
@@ -1913,9 +1913,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-hajj"
     ],
-    "published_at": "2026-07-04T03:46:45.118Z",
-    "created_at": "2026-07-04T03:46:45.118Z",
-    "updated_at": "2026-07-04T03:46:45.118Z"
+    "published_at": "2026-07-07T04:48:00.865Z",
+    "created_at": "2026-07-07T04:48:00.865Z",
+    "updated_at": "2026-07-07T04:48:00.865Z"
   },
   {
     "id": "fatwa-ruling-fatwa-prayer-combine",
@@ -1957,9 +1957,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
       "fatwa-prayer-combine"
     ],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.117Z",
-    "created_at": "2026-07-04T03:46:45.117Z",
-    "updated_at": "2026-07-04T03:46:45.117Z"
+    "published_at": "2026-07-07T04:48:00.864Z",
+    "created_at": "2026-07-07T04:48:00.864Z",
+    "updated_at": "2026-07-07T04:48:00.864Z"
   },
   {
     "id": "fatwa-ruling-fatwa-zakat-gold",
@@ -2000,9 +2000,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
       "fatwa-zakat-gold"
     ],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.117Z",
-    "created_at": "2026-07-04T03:46:45.117Z",
-    "updated_at": "2026-07-04T03:46:45.117Z"
+    "published_at": "2026-07-07T04:48:00.864Z",
+    "created_at": "2026-07-07T04:48:00.864Z",
+    "updated_at": "2026-07-07T04:48:00.864Z"
   },
   {
     "id": "fatwa-ruling-fatwa-music-voice",
@@ -2043,9 +2043,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
       "fatwa-music-voice"
     ],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.117Z",
-    "created_at": "2026-07-04T03:46:45.117Z",
-    "updated_at": "2026-07-04T03:46:45.117Z"
+    "published_at": "2026-07-07T04:48:00.864Z",
+    "created_at": "2026-07-07T04:48:00.864Z",
+    "updated_at": "2026-07-07T04:48:00.864Z"
   },
   {
     "id": "fatwa-ruling-fatwa-fasting-travel",
@@ -2087,9 +2087,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
       "fatwa-fasting-travel"
     ],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.117Z",
-    "created_at": "2026-07-04T03:46:45.117Z",
-    "updated_at": "2026-07-04T03:46:45.117Z"
+    "published_at": "2026-07-07T04:48:00.864Z",
+    "created_at": "2026-07-07T04:48:00.864Z",
+    "updated_at": "2026-07-07T04:48:00.864Z"
   },
   {
     "id": "fatwa-ruling-fatwa-inheritance-daughter",
@@ -2130,9 +2130,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
       "fatwa-inheritance-daughter"
     ],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.117Z",
-    "created_at": "2026-07-04T03:46:45.117Z",
-    "updated_at": "2026-07-04T03:46:45.117Z"
+    "published_at": "2026-07-07T04:48:00.864Z",
+    "created_at": "2026-07-07T04:48:00.864Z",
+    "updated_at": "2026-07-07T04:48:00.864Z"
   },
   {
     "id": "qa-ruling-seed-qa-42",
@@ -2169,8 +2169,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 70,
-    "popularity_score": 402,
-    "view_count": 402,
+    "popularity_score": 415,
+    "view_count": 415,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -2180,9 +2180,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-43",
@@ -2219,8 +2219,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 70,
-    "popularity_score": 114,
-    "view_count": 114,
+    "popularity_score": 275,
+    "view_count": 275,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -2230,9 +2230,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-44",
@@ -2275,8 +2275,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 70,
-    "popularity_score": 498,
-    "view_count": 498,
+    "popularity_score": 331,
+    "view_count": 331,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -2286,9 +2286,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-45",
@@ -2331,8 +2331,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 70,
-    "popularity_score": 195,
-    "view_count": 195,
+    "popularity_score": 363,
+    "view_count": 363,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -2342,9 +2342,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-46",
@@ -2381,8 +2381,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 70,
-    "popularity_score": 453,
-    "view_count": 453,
+    "popularity_score": 242,
+    "view_count": 242,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -2392,9 +2392,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-144",
@@ -2431,8 +2431,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 70,
-    "popularity_score": 318,
-    "view_count": 318,
+    "popularity_score": 582,
+    "view_count": 582,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -2442,9 +2442,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.116Z",
-    "created_at": "2026-07-04T03:46:45.116Z",
-    "updated_at": "2026-07-04T03:46:45.116Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-145",
@@ -2481,8 +2481,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 70,
-    "popularity_score": 439,
-    "view_count": 439,
+    "popularity_score": 495,
+    "view_count": 495,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -2492,9 +2492,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.116Z",
-    "created_at": "2026-07-04T03:46:45.116Z",
-    "updated_at": "2026-07-04T03:46:45.116Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-146",
@@ -2531,8 +2531,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 70,
-    "popularity_score": 542,
-    "view_count": 542,
+    "popularity_score": 144,
+    "view_count": 144,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -2542,9 +2542,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.116Z",
-    "created_at": "2026-07-04T03:46:45.116Z",
-    "updated_at": "2026-07-04T03:46:45.116Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-147",
@@ -2580,8 +2580,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 70,
-    "popularity_score": 122,
-    "view_count": 122,
+    "popularity_score": 558,
+    "view_count": 558,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -2591,9 +2591,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.116Z",
-    "created_at": "2026-07-04T03:46:45.116Z",
-    "updated_at": "2026-07-04T03:46:45.116Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-148",
@@ -2636,8 +2636,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 70,
-    "popularity_score": 122,
-    "view_count": 122,
+    "popularity_score": 250,
+    "view_count": 250,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -2647,9 +2647,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.116Z",
-    "created_at": "2026-07-04T03:46:45.116Z",
-    "updated_at": "2026-07-04T03:46:45.116Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "curriculum-1",
@@ -2700,9 +2700,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.119Z",
-    "created_at": "2026-07-04T03:46:45.119Z",
-    "updated_at": "2026-07-04T03:46:45.119Z"
+    "published_at": "2026-07-07T04:48:00.866Z",
+    "created_at": "2026-07-07T04:48:00.866Z",
+    "updated_at": "2026-07-07T04:48:00.866Z"
   },
   {
     "id": "curriculum-2",
@@ -2747,9 +2747,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.119Z",
-    "created_at": "2026-07-04T03:46:45.119Z",
-    "updated_at": "2026-07-04T03:46:45.119Z"
+    "published_at": "2026-07-07T04:48:00.866Z",
+    "created_at": "2026-07-07T04:48:00.866Z",
+    "updated_at": "2026-07-07T04:48:00.866Z"
   },
   {
     "id": "curriculum-3",
@@ -2794,9 +2794,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.119Z",
-    "created_at": "2026-07-04T03:46:45.119Z",
-    "updated_at": "2026-07-04T03:46:45.119Z"
+    "published_at": "2026-07-07T04:48:00.866Z",
+    "created_at": "2026-07-07T04:48:00.866Z",
+    "updated_at": "2026-07-07T04:48:00.866Z"
   },
   {
     "id": "curriculum-4",
@@ -2841,9 +2841,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.119Z",
-    "created_at": "2026-07-04T03:46:45.119Z",
-    "updated_at": "2026-07-04T03:46:45.119Z"
+    "published_at": "2026-07-07T04:48:00.866Z",
+    "created_at": "2026-07-07T04:48:00.866Z",
+    "updated_at": "2026-07-07T04:48:00.866Z"
   },
   {
     "id": "curriculum-5",
@@ -2888,9 +2888,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.119Z",
-    "created_at": "2026-07-04T03:46:45.119Z",
-    "updated_at": "2026-07-04T03:46:45.119Z"
+    "published_at": "2026-07-07T04:48:00.866Z",
+    "created_at": "2026-07-07T04:48:00.866Z",
+    "updated_at": "2026-07-07T04:48:00.866Z"
   },
   {
     "id": "curriculum-6",
@@ -2935,9 +2935,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.119Z",
-    "created_at": "2026-07-04T03:46:45.119Z",
-    "updated_at": "2026-07-04T03:46:45.119Z"
+    "published_at": "2026-07-07T04:48:00.866Z",
+    "created_at": "2026-07-07T04:48:00.866Z",
+    "updated_at": "2026-07-07T04:48:00.866Z"
   },
   {
     "id": "curriculum-7",
@@ -2976,9 +2976,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.119Z",
-    "created_at": "2026-07-04T03:46:45.119Z",
-    "updated_at": "2026-07-04T03:46:45.119Z"
+    "published_at": "2026-07-07T04:48:00.866Z",
+    "created_at": "2026-07-07T04:48:00.866Z",
+    "updated_at": "2026-07-07T04:48:00.866Z"
   },
   {
     "id": "curriculum-8",
@@ -3023,9 +3023,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.119Z",
-    "created_at": "2026-07-04T03:46:45.119Z",
-    "updated_at": "2026-07-04T03:46:45.119Z"
+    "published_at": "2026-07-07T04:48:00.866Z",
+    "created_at": "2026-07-07T04:48:00.866Z",
+    "updated_at": "2026-07-07T04:48:00.866Z"
   },
   {
     "id": "curriculum-9",
@@ -3070,9 +3070,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.119Z",
-    "created_at": "2026-07-04T03:46:45.119Z",
-    "updated_at": "2026-07-04T03:46:45.119Z"
+    "published_at": "2026-07-07T04:48:00.866Z",
+    "created_at": "2026-07-07T04:48:00.866Z",
+    "updated_at": "2026-07-07T04:48:00.866Z"
   },
   {
     "id": "curriculum-10",
@@ -3117,9 +3117,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.119Z",
-    "created_at": "2026-07-04T03:46:45.119Z",
-    "updated_at": "2026-07-04T03:46:45.119Z"
+    "published_at": "2026-07-07T04:48:00.866Z",
+    "created_at": "2026-07-07T04:48:00.866Z",
+    "updated_at": "2026-07-07T04:48:00.866Z"
   },
   {
     "id": "curriculum-11",
@@ -3164,9 +3164,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.119Z",
-    "created_at": "2026-07-04T03:46:45.119Z",
-    "updated_at": "2026-07-04T03:46:45.119Z"
+    "published_at": "2026-07-07T04:48:00.866Z",
+    "created_at": "2026-07-07T04:48:00.866Z",
+    "updated_at": "2026-07-07T04:48:00.866Z"
   },
   {
     "id": "curriculum-12",
@@ -3211,9 +3211,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.119Z",
-    "created_at": "2026-07-04T03:46:45.119Z",
-    "updated_at": "2026-07-04T03:46:45.119Z"
+    "published_at": "2026-07-07T04:48:00.866Z",
+    "created_at": "2026-07-07T04:48:00.866Z",
+    "updated_at": "2026-07-07T04:48:00.866Z"
   },
   {
     "id": "curriculum-13",
@@ -3258,9 +3258,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.119Z",
-    "created_at": "2026-07-04T03:46:45.119Z",
-    "updated_at": "2026-07-04T03:46:45.119Z"
+    "published_at": "2026-07-07T04:48:00.866Z",
+    "created_at": "2026-07-07T04:48:00.866Z",
+    "updated_at": "2026-07-07T04:48:00.866Z"
   },
   {
     "id": "curriculum-14",
@@ -3305,9 +3305,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.119Z",
-    "created_at": "2026-07-04T03:46:45.119Z",
-    "updated_at": "2026-07-04T03:46:45.119Z"
+    "published_at": "2026-07-07T04:48:00.866Z",
+    "created_at": "2026-07-07T04:48:00.866Z",
+    "updated_at": "2026-07-07T04:48:00.866Z"
   },
   {
     "id": "curriculum-15",
@@ -3352,9 +3352,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.119Z",
-    "created_at": "2026-07-04T03:46:45.119Z",
-    "updated_at": "2026-07-04T03:46:45.119Z"
+    "published_at": "2026-07-07T04:48:00.866Z",
+    "created_at": "2026-07-07T04:48:00.866Z",
+    "updated_at": "2026-07-07T04:48:00.866Z"
   },
   {
     "id": "curriculum-16",
@@ -3393,9 +3393,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.119Z",
-    "created_at": "2026-07-04T03:46:45.119Z",
-    "updated_at": "2026-07-04T03:46:45.119Z"
+    "published_at": "2026-07-07T04:48:00.866Z",
+    "created_at": "2026-07-07T04:48:00.866Z",
+    "updated_at": "2026-07-07T04:48:00.866Z"
   },
   {
     "id": "curriculum-17",
@@ -3440,9 +3440,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.119Z",
-    "created_at": "2026-07-04T03:46:45.119Z",
-    "updated_at": "2026-07-04T03:46:45.119Z"
+    "published_at": "2026-07-07T04:48:00.866Z",
+    "created_at": "2026-07-07T04:48:00.866Z",
+    "updated_at": "2026-07-07T04:48:00.866Z"
   },
   {
     "id": "curriculum-18",
@@ -3487,9 +3487,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.119Z",
-    "created_at": "2026-07-04T03:46:45.119Z",
-    "updated_at": "2026-07-04T03:46:45.119Z"
+    "published_at": "2026-07-07T04:48:00.866Z",
+    "created_at": "2026-07-07T04:48:00.866Z",
+    "updated_at": "2026-07-07T04:48:00.866Z"
   },
   {
     "id": "curriculum-19",
@@ -3534,9 +3534,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.119Z",
-    "created_at": "2026-07-04T03:46:45.119Z",
-    "updated_at": "2026-07-04T03:46:45.119Z"
+    "published_at": "2026-07-07T04:48:00.866Z",
+    "created_at": "2026-07-07T04:48:00.866Z",
+    "updated_at": "2026-07-07T04:48:00.866Z"
   },
   {
     "id": "curriculum-20",
@@ -3581,9 +3581,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.119Z",
-    "created_at": "2026-07-04T03:46:45.119Z",
-    "updated_at": "2026-07-04T03:46:45.119Z"
+    "published_at": "2026-07-07T04:48:00.866Z",
+    "created_at": "2026-07-07T04:48:00.866Z",
+    "updated_at": "2026-07-07T04:48:00.866Z"
   },
   {
     "id": "curriculum-21",
@@ -3628,9 +3628,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.119Z",
-    "created_at": "2026-07-04T03:46:45.119Z",
-    "updated_at": "2026-07-04T03:46:45.119Z"
+    "published_at": "2026-07-07T04:48:00.866Z",
+    "created_at": "2026-07-07T04:48:00.866Z",
+    "updated_at": "2026-07-07T04:48:00.866Z"
   },
   {
     "id": "curriculum-22",
@@ -3669,9 +3669,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.119Z",
-    "created_at": "2026-07-04T03:46:45.119Z",
-    "updated_at": "2026-07-04T03:46:45.119Z"
+    "published_at": "2026-07-07T04:48:00.866Z",
+    "created_at": "2026-07-07T04:48:00.866Z",
+    "updated_at": "2026-07-07T04:48:00.866Z"
   },
   {
     "id": "curriculum-23",
@@ -3716,9 +3716,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.119Z",
-    "created_at": "2026-07-04T03:46:45.119Z",
-    "updated_at": "2026-07-04T03:46:45.119Z"
+    "published_at": "2026-07-07T04:48:00.866Z",
+    "created_at": "2026-07-07T04:48:00.866Z",
+    "updated_at": "2026-07-07T04:48:00.866Z"
   },
   {
     "id": "curriculum-24",
@@ -3763,9 +3763,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.119Z",
-    "created_at": "2026-07-04T03:46:45.119Z",
-    "updated_at": "2026-07-04T03:46:45.119Z"
+    "published_at": "2026-07-07T04:48:00.866Z",
+    "created_at": "2026-07-07T04:48:00.866Z",
+    "updated_at": "2026-07-07T04:48:00.866Z"
   },
   {
     "id": "curriculum-25",
@@ -3810,9 +3810,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.119Z",
-    "created_at": "2026-07-04T03:46:45.119Z",
-    "updated_at": "2026-07-04T03:46:45.119Z"
+    "published_at": "2026-07-07T04:48:00.866Z",
+    "created_at": "2026-07-07T04:48:00.866Z",
+    "updated_at": "2026-07-07T04:48:00.866Z"
   },
   {
     "id": "curriculum-26",
@@ -3857,9 +3857,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.119Z",
-    "created_at": "2026-07-04T03:46:45.119Z",
-    "updated_at": "2026-07-04T03:46:45.119Z"
+    "published_at": "2026-07-07T04:48:00.866Z",
+    "created_at": "2026-07-07T04:48:00.866Z",
+    "updated_at": "2026-07-07T04:48:00.866Z"
   },
   {
     "id": "curriculum-27",
@@ -3898,9 +3898,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.119Z",
-    "created_at": "2026-07-04T03:46:45.119Z",
-    "updated_at": "2026-07-04T03:46:45.119Z"
+    "published_at": "2026-07-07T04:48:00.866Z",
+    "created_at": "2026-07-07T04:48:00.866Z",
+    "updated_at": "2026-07-07T04:48:00.866Z"
   },
   {
     "id": "curriculum-28",
@@ -3945,9 +3945,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.119Z",
-    "created_at": "2026-07-04T03:46:45.119Z",
-    "updated_at": "2026-07-04T03:46:45.119Z"
+    "published_at": "2026-07-07T04:48:00.866Z",
+    "created_at": "2026-07-07T04:48:00.866Z",
+    "updated_at": "2026-07-07T04:48:00.866Z"
   },
   {
     "id": "curriculum-29",
@@ -3992,9 +3992,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.119Z",
-    "created_at": "2026-07-04T03:46:45.119Z",
-    "updated_at": "2026-07-04T03:46:45.119Z"
+    "published_at": "2026-07-07T04:48:00.866Z",
+    "created_at": "2026-07-07T04:48:00.866Z",
+    "updated_at": "2026-07-07T04:48:00.866Z"
   },
   {
     "id": "curriculum-30",
@@ -4039,9 +4039,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.119Z",
-    "created_at": "2026-07-04T03:46:45.119Z",
-    "updated_at": "2026-07-04T03:46:45.119Z"
+    "published_at": "2026-07-07T04:48:00.866Z",
+    "created_at": "2026-07-07T04:48:00.866Z",
+    "updated_at": "2026-07-07T04:48:00.866Z"
   },
   {
     "id": "curriculum-31",
@@ -4080,9 +4080,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.119Z",
-    "created_at": "2026-07-04T03:46:45.119Z",
-    "updated_at": "2026-07-04T03:46:45.119Z"
+    "published_at": "2026-07-07T04:48:00.866Z",
+    "created_at": "2026-07-07T04:48:00.866Z",
+    "updated_at": "2026-07-07T04:48:00.866Z"
   },
   {
     "id": "curriculum-32",
@@ -4127,9 +4127,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.119Z",
-    "created_at": "2026-07-04T03:46:45.119Z",
-    "updated_at": "2026-07-04T03:46:45.119Z"
+    "published_at": "2026-07-07T04:48:00.866Z",
+    "created_at": "2026-07-07T04:48:00.866Z",
+    "updated_at": "2026-07-07T04:48:00.866Z"
   },
   {
     "id": "curriculum-33",
@@ -4174,9 +4174,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.119Z",
-    "created_at": "2026-07-04T03:46:45.119Z",
-    "updated_at": "2026-07-04T03:46:45.119Z"
+    "published_at": "2026-07-07T04:48:00.866Z",
+    "created_at": "2026-07-07T04:48:00.866Z",
+    "updated_at": "2026-07-07T04:48:00.866Z"
   },
   {
     "id": "curriculum-34",
@@ -4221,9 +4221,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.119Z",
-    "created_at": "2026-07-04T03:46:45.119Z",
-    "updated_at": "2026-07-04T03:46:45.119Z"
+    "published_at": "2026-07-07T04:48:00.866Z",
+    "created_at": "2026-07-07T04:48:00.866Z",
+    "updated_at": "2026-07-07T04:48:00.866Z"
   },
   {
     "id": "curriculum-35",
@@ -4268,9 +4268,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.119Z",
-    "created_at": "2026-07-04T03:46:45.119Z",
-    "updated_at": "2026-07-04T03:46:45.119Z"
+    "published_at": "2026-07-07T04:48:00.866Z",
+    "created_at": "2026-07-07T04:48:00.866Z",
+    "updated_at": "2026-07-07T04:48:00.866Z"
   },
   {
     "id": "curriculum-36",
@@ -4315,9 +4315,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.119Z",
-    "created_at": "2026-07-04T03:46:45.119Z",
-    "updated_at": "2026-07-04T03:46:45.119Z"
+    "published_at": "2026-07-07T04:48:00.866Z",
+    "created_at": "2026-07-07T04:48:00.866Z",
+    "updated_at": "2026-07-07T04:48:00.866Z"
   },
   {
     "id": "qa-ruling-seed-qa-1",
@@ -4335,13 +4335,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -4352,8 +4352,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 542,
-    "view_count": 542,
+    "popularity_score": 544,
+    "view_count": 544,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -4363,9 +4363,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.862Z",
+    "created_at": "2026-07-07T04:48:00.862Z",
+    "updated_at": "2026-07-07T04:48:00.862Z"
   },
   {
     "id": "qa-ruling-seed-qa-2",
@@ -4383,13 +4383,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -4400,8 +4400,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 208,
-    "view_count": 208,
+    "popularity_score": 326,
+    "view_count": 326,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -4411,9 +4411,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.862Z",
+    "created_at": "2026-07-07T04:48:00.862Z",
+    "updated_at": "2026-07-07T04:48:00.862Z"
   },
   {
     "id": "qa-ruling-seed-qa-3",
@@ -4431,13 +4431,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -4448,8 +4448,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 109,
-    "view_count": 109,
+    "popularity_score": 329,
+    "view_count": 329,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -4459,9 +4459,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.862Z",
+    "created_at": "2026-07-07T04:48:00.862Z",
+    "updated_at": "2026-07-07T04:48:00.862Z"
   },
   {
     "id": "qa-ruling-seed-qa-4",
@@ -4479,13 +4479,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -4496,8 +4496,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 550,
-    "view_count": 550,
+    "popularity_score": 320,
+    "view_count": 320,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -4507,9 +4507,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.862Z",
+    "created_at": "2026-07-07T04:48:00.862Z",
+    "updated_at": "2026-07-07T04:48:00.862Z"
   },
   {
     "id": "qa-ruling-seed-qa-5",
@@ -4527,13 +4527,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -4544,8 +4544,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 474,
-    "view_count": 474,
+    "popularity_score": 267,
+    "view_count": 267,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -4555,9 +4555,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.862Z",
+    "created_at": "2026-07-07T04:48:00.862Z",
+    "updated_at": "2026-07-07T04:48:00.862Z"
   },
   {
     "id": "qa-ruling-seed-qa-6",
@@ -4575,13 +4575,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -4592,8 +4592,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 516,
-    "view_count": 516,
+    "popularity_score": 512,
+    "view_count": 512,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -4603,9 +4603,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.862Z",
+    "created_at": "2026-07-07T04:48:00.862Z",
+    "updated_at": "2026-07-07T04:48:00.862Z"
   },
   {
     "id": "qa-ruling-seed-qa-7",
@@ -4623,13 +4623,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -4640,8 +4640,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 126,
-    "view_count": 126,
+    "popularity_score": 439,
+    "view_count": 439,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -4651,9 +4651,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.862Z",
+    "created_at": "2026-07-07T04:48:00.862Z",
+    "updated_at": "2026-07-07T04:48:00.862Z"
   },
   {
     "id": "qa-ruling-seed-qa-8",
@@ -4671,13 +4671,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -4688,8 +4688,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 476,
-    "view_count": 476,
+    "popularity_score": 168,
+    "view_count": 168,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -4699,9 +4699,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.862Z",
+    "created_at": "2026-07-07T04:48:00.862Z",
+    "updated_at": "2026-07-07T04:48:00.862Z"
   },
   {
     "id": "qa-ruling-seed-qa-9",
@@ -4719,13 +4719,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -4736,8 +4736,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 457,
-    "view_count": 457,
+    "popularity_score": 461,
+    "view_count": 461,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -4747,9 +4747,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.862Z",
+    "created_at": "2026-07-07T04:48:00.862Z",
+    "updated_at": "2026-07-07T04:48:00.862Z"
   },
   {
     "id": "qa-ruling-seed-qa-10",
@@ -4767,13 +4767,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -4784,8 +4784,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 410,
-    "view_count": 410,
+    "popularity_score": 303,
+    "view_count": 303,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -4795,9 +4795,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.862Z",
+    "created_at": "2026-07-07T04:48:00.862Z",
+    "updated_at": "2026-07-07T04:48:00.862Z"
   },
   {
     "id": "qa-ruling-seed-qa-11",
@@ -4815,13 +4815,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -4832,8 +4832,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 220,
-    "view_count": 220,
+    "popularity_score": 403,
+    "view_count": 403,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -4843,9 +4843,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.862Z",
+    "created_at": "2026-07-07T04:48:00.862Z",
+    "updated_at": "2026-07-07T04:48:00.862Z"
   },
   {
     "id": "qa-ruling-seed-qa-12",
@@ -4863,13 +4863,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -4880,8 +4880,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 347,
-    "view_count": 347,
+    "popularity_score": 229,
+    "view_count": 229,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -4891,9 +4891,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.862Z",
+    "created_at": "2026-07-07T04:48:00.862Z",
+    "updated_at": "2026-07-07T04:48:00.862Z"
   },
   {
     "id": "qa-ruling-seed-qa-13",
@@ -4911,13 +4911,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -4928,8 +4928,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 498,
-    "view_count": 498,
+    "popularity_score": 561,
+    "view_count": 561,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -4939,9 +4939,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.862Z",
+    "created_at": "2026-07-07T04:48:00.862Z",
+    "updated_at": "2026-07-07T04:48:00.862Z"
   },
   {
     "id": "qa-ruling-seed-qa-14",
@@ -4959,13 +4959,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -4976,8 +4976,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 350,
-    "view_count": 350,
+    "popularity_score": 165,
+    "view_count": 165,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -4987,9 +4987,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.862Z",
+    "created_at": "2026-07-07T04:48:00.862Z",
+    "updated_at": "2026-07-07T04:48:00.862Z"
   },
   {
     "id": "qa-ruling-seed-qa-15",
@@ -5007,13 +5007,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -5024,8 +5024,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 464,
-    "view_count": 464,
+    "popularity_score": 221,
+    "view_count": 221,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -5035,9 +5035,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.862Z",
+    "created_at": "2026-07-07T04:48:00.862Z",
+    "updated_at": "2026-07-07T04:48:00.862Z"
   },
   {
     "id": "qa-ruling-seed-qa-16",
@@ -5055,13 +5055,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -5072,8 +5072,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 478,
-    "view_count": 478,
+    "popularity_score": 106,
+    "view_count": 106,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -5083,9 +5083,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.862Z",
+    "created_at": "2026-07-07T04:48:00.862Z",
+    "updated_at": "2026-07-07T04:48:00.862Z"
   },
   {
     "id": "qa-ruling-seed-qa-17",
@@ -5103,397 +5103,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "anbiya",
-      "الأنبياء"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 511,
-    "view_count": 511,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-17"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-18",
-    "external_key": "qa-ruling-seed-qa-18",
-    "title": "النبي الذي أرسل إلى قوم ثمود؟",
-    "summary": "صالح عليه السلام.",
-    "body": "**السؤال:** من النبي الذي أرسل إلى قوم ثمود؟\n\n**الجواب:** صالح عليه السلام.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "anbiya",
-      "الأنبياء"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 525,
-    "view_count": 525,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-18"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-19",
-    "external_key": "qa-ruling-seed-qa-19",
-    "title": "النبي الذي ابتلعه الحوت؟",
-    "summary": "يونس عليه السلام.",
-    "body": "**السؤال:** من النبي الذي ابتلعه الحوت؟\n\n**الجواب:** يونس عليه السلام.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "anbiya",
-      "الأنبياء"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 284,
-    "view_count": 284,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-19"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-20",
-    "external_key": "qa-ruling-seed-qa-20",
-    "title": "النبي الذي رفعه الله إليه؟",
-    "summary": "عيسى عليه السلام.",
-    "body": "**السؤال:** من النبي الذي رفعه الله إليه؟\n\n**الجواب:** عيسى عليه السلام.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "anbiya",
-      "الأنبياء"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 325,
-    "view_count": 325,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-20"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-21",
-    "external_key": "qa-ruling-seed-qa-21",
-    "title": "والد إسماعيل عليه السلام؟",
-    "summary": "إبراهيم عليه السلام.",
-    "body": "**السؤال:** من والد إسماعيل عليه السلام؟\n\n**الجواب:** إبراهيم عليه السلام.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "anbiya",
-      "الأنبياء"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 212,
-    "view_count": 212,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-21"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-22",
-    "external_key": "qa-ruling-seed-qa-22",
-    "title": "النبي الذي سخر الله له الريح؟",
-    "summary": "سليمان عليه السلام.",
-    "body": "**السؤال:** من النبي الذي سخر الله له الريح؟\n\n**الجواب:** سليمان عليه السلام.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "anbiya",
-      "الأنبياء"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 152,
-    "view_count": 152,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-22"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-23",
-    "external_key": "qa-ruling-seed-qa-23",
-    "title": "النبي الذي اشتهر بالصبر على البلاء؟",
-    "summary": "أيوب عليه السلام.",
-    "body": "**السؤال:** من النبي الذي اشتهر بالصبر على البلاء؟\n\n**الجواب:** أيوب عليه السلام.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "anbiya",
-      "الأنبياء"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 517,
-    "view_count": 517,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-23"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-24",
-    "external_key": "qa-ruling-seed-qa-24",
-    "title": "أول الخلفاء الراشدين؟",
-    "summary": "أبو بكر الصديق.",
-    "body": "**السؤال:** من أول الخلفاء الراشدين؟\n\n**الجواب:** أبو بكر الصديق.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "anbiya",
-      "الأنبياء"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 276,
-    "view_count": 276,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-24"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-25",
-    "external_key": "qa-ruling-seed-qa-25",
-    "title": "ثاني الخلفاء الراشدين؟",
-    "summary": "عمر بن الخطاب.",
-    "body": "**السؤال:** من ثاني الخلفاء الراشدين؟\n\n**الجواب:** عمر بن الخطاب.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -5511,13 +5127,397 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "verification_status": "approved",
     "source_origin": "qa-seed",
     "linked_qa_ids": [
+      "seed-qa-17"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-07T04:48:00.862Z",
+    "created_at": "2026-07-07T04:48:00.862Z",
+    "updated_at": "2026-07-07T04:48:00.862Z"
+  },
+  {
+    "id": "qa-ruling-seed-qa-18",
+    "external_key": "qa-ruling-seed-qa-18",
+    "title": "النبي الذي أرسل إلى قوم ثمود؟",
+    "summary": "صالح عليه السلام.",
+    "body": "**السؤال:** من النبي الذي أرسل إلى قوم ثمود؟\n\n**الجواب:** صالح عليه السلام.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
+    "subcategories": [
+      "طلب العلم"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "references": [
+      {
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "keywords": [
+      "طلب العلم",
+      "anbiya",
+      "الأنبياء"
+    ],
+    "benefits": [],
+    "importance_score": 50,
+    "popularity_score": 529,
+    "view_count": 529,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
+      "seed-qa-18"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-07T04:48:00.862Z",
+    "created_at": "2026-07-07T04:48:00.862Z",
+    "updated_at": "2026-07-07T04:48:00.862Z"
+  },
+  {
+    "id": "qa-ruling-seed-qa-19",
+    "external_key": "qa-ruling-seed-qa-19",
+    "title": "النبي الذي ابتلعه الحوت؟",
+    "summary": "يونس عليه السلام.",
+    "body": "**السؤال:** من النبي الذي ابتلعه الحوت؟\n\n**الجواب:** يونس عليه السلام.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
+    "subcategories": [
+      "طلب العلم"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "references": [
+      {
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "keywords": [
+      "طلب العلم",
+      "anbiya",
+      "الأنبياء"
+    ],
+    "benefits": [],
+    "importance_score": 50,
+    "popularity_score": 560,
+    "view_count": 560,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
+      "seed-qa-19"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-07T04:48:00.862Z",
+    "created_at": "2026-07-07T04:48:00.862Z",
+    "updated_at": "2026-07-07T04:48:00.862Z"
+  },
+  {
+    "id": "qa-ruling-seed-qa-20",
+    "external_key": "qa-ruling-seed-qa-20",
+    "title": "النبي الذي رفعه الله إليه؟",
+    "summary": "عيسى عليه السلام.",
+    "body": "**السؤال:** من النبي الذي رفعه الله إليه؟\n\n**الجواب:** عيسى عليه السلام.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
+    "subcategories": [
+      "طلب العلم"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "references": [
+      {
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "keywords": [
+      "طلب العلم",
+      "anbiya",
+      "الأنبياء"
+    ],
+    "benefits": [],
+    "importance_score": 50,
+    "popularity_score": 375,
+    "view_count": 375,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
+      "seed-qa-20"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
+  },
+  {
+    "id": "qa-ruling-seed-qa-21",
+    "external_key": "qa-ruling-seed-qa-21",
+    "title": "والد إسماعيل عليه السلام؟",
+    "summary": "إبراهيم عليه السلام.",
+    "body": "**السؤال:** من والد إسماعيل عليه السلام؟\n\n**الجواب:** إبراهيم عليه السلام.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
+    "subcategories": [
+      "طلب العلم"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "references": [
+      {
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "keywords": [
+      "طلب العلم",
+      "anbiya",
+      "الأنبياء"
+    ],
+    "benefits": [],
+    "importance_score": 50,
+    "popularity_score": 236,
+    "view_count": 236,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
+      "seed-qa-21"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
+  },
+  {
+    "id": "qa-ruling-seed-qa-22",
+    "external_key": "qa-ruling-seed-qa-22",
+    "title": "النبي الذي سخر الله له الريح؟",
+    "summary": "سليمان عليه السلام.",
+    "body": "**السؤال:** من النبي الذي سخر الله له الريح؟\n\n**الجواب:** سليمان عليه السلام.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
+    "subcategories": [
+      "طلب العلم"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "references": [
+      {
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "keywords": [
+      "طلب العلم",
+      "anbiya",
+      "الأنبياء"
+    ],
+    "benefits": [],
+    "importance_score": 50,
+    "popularity_score": 367,
+    "view_count": 367,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
+      "seed-qa-22"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
+  },
+  {
+    "id": "qa-ruling-seed-qa-23",
+    "external_key": "qa-ruling-seed-qa-23",
+    "title": "النبي الذي اشتهر بالصبر على البلاء؟",
+    "summary": "أيوب عليه السلام.",
+    "body": "**السؤال:** من النبي الذي اشتهر بالصبر على البلاء؟\n\n**الجواب:** أيوب عليه السلام.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
+    "subcategories": [
+      "طلب العلم"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "references": [
+      {
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "keywords": [
+      "طلب العلم",
+      "anbiya",
+      "الأنبياء"
+    ],
+    "benefits": [],
+    "importance_score": 50,
+    "popularity_score": 154,
+    "view_count": 154,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
+      "seed-qa-23"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
+  },
+  {
+    "id": "qa-ruling-seed-qa-24",
+    "external_key": "qa-ruling-seed-qa-24",
+    "title": "أول الخلفاء الراشدين؟",
+    "summary": "أبو بكر الصديق.",
+    "body": "**السؤال:** من أول الخلفاء الراشدين؟\n\n**الجواب:** أبو بكر الصديق.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
+    "subcategories": [
+      "طلب العلم"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "references": [
+      {
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "keywords": [
+      "طلب العلم",
+      "anbiya",
+      "الأنبياء"
+    ],
+    "benefits": [],
+    "importance_score": 50,
+    "popularity_score": 435,
+    "view_count": 435,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
+      "seed-qa-24"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
+  },
+  {
+    "id": "qa-ruling-seed-qa-25",
+    "external_key": "qa-ruling-seed-qa-25",
+    "title": "ثاني الخلفاء الراشدين؟",
+    "summary": "عمر بن الخطاب.",
+    "body": "**السؤال:** من ثاني الخلفاء الراشدين؟\n\n**الجواب:** عمر بن الخطاب.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
+    "subcategories": [
+      "طلب العلم"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "references": [
+      {
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
+        "source": "qa-seed"
+      }
+    ],
+    "keywords": [
+      "طلب العلم",
+      "anbiya",
+      "الأنبياء"
+    ],
+    "benefits": [],
+    "importance_score": 50,
+    "popularity_score": 220,
+    "view_count": 220,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
       "seed-qa-25"
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-26",
@@ -5535,13 +5535,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -5552,8 +5552,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 474,
-    "view_count": 474,
+    "popularity_score": 156,
+    "view_count": 156,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -5563,9 +5563,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-27",
@@ -5583,13 +5583,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -5600,8 +5600,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 229,
-    "view_count": 229,
+    "popularity_score": 444,
+    "view_count": 444,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -5611,9 +5611,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-28",
@@ -5631,13 +5631,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -5648,8 +5648,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 260,
-    "view_count": 260,
+    "popularity_score": 176,
+    "view_count": 176,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -5659,9 +5659,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-29",
@@ -5679,13 +5679,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -5696,8 +5696,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 266,
-    "view_count": 266,
+    "popularity_score": 422,
+    "view_count": 422,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -5707,9 +5707,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-30",
@@ -5727,13 +5727,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -5744,8 +5744,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 143,
-    "view_count": 143,
+    "popularity_score": 272,
+    "view_count": 272,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -5755,9 +5755,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-31",
@@ -5775,13 +5775,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -5792,8 +5792,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 185,
-    "view_count": 185,
+    "popularity_score": 413,
+    "view_count": 413,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -5803,9 +5803,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-32",
@@ -5823,13 +5823,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -5840,8 +5840,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 140,
-    "view_count": 140,
+    "popularity_score": 112,
+    "view_count": 112,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -5851,9 +5851,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-33",
@@ -5871,13 +5871,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -5888,8 +5888,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 508,
-    "view_count": 508,
+    "popularity_score": 324,
+    "view_count": 324,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -5899,9 +5899,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-34",
@@ -5919,13 +5919,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -5936,8 +5936,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 365,
-    "view_count": 365,
+    "popularity_score": 306,
+    "view_count": 306,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -5947,9 +5947,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-35",
@@ -5967,13 +5967,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -5984,8 +5984,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 264,
-    "view_count": 264,
+    "popularity_score": 513,
+    "view_count": 513,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -5995,9 +5995,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-36",
@@ -6015,13 +6015,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -6032,8 +6032,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 330,
-    "view_count": 330,
+    "popularity_score": 267,
+    "view_count": 267,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -6043,9 +6043,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-37",
@@ -6063,13 +6063,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -6080,8 +6080,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 172,
-    "view_count": 172,
+    "popularity_score": 584,
+    "view_count": 584,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -6091,9 +6091,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-38",
@@ -6111,13 +6111,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -6128,8 +6128,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 289,
-    "view_count": 289,
+    "popularity_score": 279,
+    "view_count": 279,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -6139,9 +6139,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-39",
@@ -6159,13 +6159,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -6176,8 +6176,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 273,
-    "view_count": 273,
+    "popularity_score": 250,
+    "view_count": 250,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -6187,9 +6187,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-40",
@@ -6208,13 +6208,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "prevailing_view": "واجب",
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -6225,8 +6225,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 396,
-    "view_count": 396,
+    "popularity_score": 162,
+    "view_count": 162,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -6236,9 +6236,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-41",
@@ -6257,13 +6257,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "prevailing_view": "واجب",
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -6274,8 +6274,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 107,
-    "view_count": 107,
+    "popularity_score": 177,
+    "view_count": 177,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -6285,9 +6285,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-47",
@@ -6305,13 +6305,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -6322,8 +6322,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 413,
-    "view_count": 413,
+    "popularity_score": 465,
+    "view_count": 465,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -6333,9 +6333,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-48",
@@ -6353,13 +6353,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -6370,8 +6370,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 340,
-    "view_count": 340,
+    "popularity_score": 302,
+    "view_count": 302,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -6381,9 +6381,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-49",
@@ -6401,13 +6401,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -6418,8 +6418,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 234,
-    "view_count": 234,
+    "popularity_score": 173,
+    "view_count": 173,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -6429,9 +6429,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-50",
@@ -6449,13 +6449,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -6466,8 +6466,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 570,
-    "view_count": 570,
+    "popularity_score": 383,
+    "view_count": 383,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -6477,9 +6477,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-51",
@@ -6497,13 +6497,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -6514,8 +6514,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 527,
-    "view_count": 527,
+    "popularity_score": 297,
+    "view_count": 297,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -6525,9 +6525,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-52",
@@ -6545,13 +6545,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -6562,8 +6562,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 384,
-    "view_count": 384,
+    "popularity_score": 320,
+    "view_count": 320,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -6573,9 +6573,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-53",
@@ -6594,13 +6594,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "prevailing_view": "واجب",
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -6611,8 +6611,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 243,
-    "view_count": 243,
+    "popularity_score": 143,
+    "view_count": 143,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -6622,9 +6622,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-54",
@@ -6643,13 +6643,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "prevailing_view": "واجب",
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -6660,8 +6660,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 391,
-    "view_count": 391,
+    "popularity_score": 261,
+    "view_count": 261,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -6671,9 +6671,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-55",
@@ -6692,13 +6692,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "prevailing_view": "واجب",
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -6709,8 +6709,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 491,
-    "view_count": 491,
+    "popularity_score": 388,
+    "view_count": 388,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -6720,9 +6720,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-56",
@@ -6740,13 +6740,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -6757,8 +6757,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 187,
-    "view_count": 187,
+    "popularity_score": 460,
+    "view_count": 460,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -6768,9 +6768,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-57",
@@ -6788,13 +6788,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -6805,8 +6805,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 222,
-    "view_count": 222,
+    "popularity_score": 516,
+    "view_count": 516,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -6816,9 +6816,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-58",
@@ -6836,13 +6836,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -6853,8 +6853,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 519,
-    "view_count": 519,
+    "popularity_score": 461,
+    "view_count": 461,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -6864,9 +6864,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-59",
@@ -6884,13 +6884,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -6901,8 +6901,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 169,
-    "view_count": 169,
+    "popularity_score": 434,
+    "view_count": 434,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -6912,9 +6912,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-60",
@@ -6932,13 +6932,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -6949,8 +6949,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 483,
-    "view_count": 483,
+    "popularity_score": 312,
+    "view_count": 312,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -6960,9 +6960,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-61",
@@ -6980,13 +6980,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -6997,8 +6997,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 494,
-    "view_count": 494,
+    "popularity_score": 382,
+    "view_count": 382,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -7008,9 +7008,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-62",
@@ -7028,13 +7028,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -7045,8 +7045,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 223,
-    "view_count": 223,
+    "popularity_score": 280,
+    "view_count": 280,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -7056,9 +7056,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-63",
@@ -7076,13 +7076,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -7093,8 +7093,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 105,
-    "view_count": 105,
+    "popularity_score": 458,
+    "view_count": 458,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -7104,9 +7104,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-64",
@@ -7124,13 +7124,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -7141,8 +7141,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 163,
-    "view_count": 163,
+    "popularity_score": 432,
+    "view_count": 432,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -7152,9 +7152,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-65",
@@ -7172,13 +7172,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -7189,8 +7189,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 247,
-    "view_count": 247,
+    "popularity_score": 253,
+    "view_count": 253,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -7200,9 +7200,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-66",
@@ -7221,13 +7221,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "prevailing_view": "واجب",
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -7238,8 +7238,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 350,
-    "view_count": 350,
+    "popularity_score": 223,
+    "view_count": 223,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -7249,9 +7249,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-67",
@@ -7269,13 +7269,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -7286,8 +7286,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 425,
-    "view_count": 425,
+    "popularity_score": 232,
+    "view_count": 232,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -7297,9 +7297,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-68",
@@ -7317,13 +7317,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -7334,8 +7334,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 495,
-    "view_count": 495,
+    "popularity_score": 327,
+    "view_count": 327,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -7345,9 +7345,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-69",
@@ -7365,13 +7365,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -7382,8 +7382,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 205,
-    "view_count": 205,
+    "popularity_score": 230,
+    "view_count": 230,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -7393,9 +7393,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-70",
@@ -7413,13 +7413,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -7430,8 +7430,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 377,
-    "view_count": 377,
+    "popularity_score": 596,
+    "view_count": 596,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -7441,9 +7441,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-71",
@@ -7461,13 +7461,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -7478,8 +7478,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 473,
-    "view_count": 473,
+    "popularity_score": 556,
+    "view_count": 556,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -7489,9 +7489,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-72",
@@ -7509,13 +7509,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -7526,8 +7526,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 597,
-    "view_count": 597,
+    "popularity_score": 122,
+    "view_count": 122,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -7537,9 +7537,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-73",
@@ -7557,13 +7557,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -7574,8 +7574,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 306,
-    "view_count": 306,
+    "popularity_score": 193,
+    "view_count": 193,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -7585,9 +7585,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-74",
@@ -7605,13 +7605,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -7622,8 +7622,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 123,
-    "view_count": 123,
+    "popularity_score": 403,
+    "view_count": 403,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -7633,9 +7633,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-75",
@@ -7653,13 +7653,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -7670,8 +7670,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 563,
-    "view_count": 563,
+    "popularity_score": 489,
+    "view_count": 489,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -7681,9 +7681,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-76",
@@ -7701,13 +7701,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -7718,8 +7718,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 518,
-    "view_count": 518,
+    "popularity_score": 490,
+    "view_count": 490,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -7729,9 +7729,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-77",
@@ -7749,13 +7749,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -7766,8 +7766,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 504,
-    "view_count": 504,
+    "popularity_score": 487,
+    "view_count": 487,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -7777,9 +7777,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-78",
@@ -7797,13 +7797,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -7814,8 +7814,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 554,
-    "view_count": 554,
+    "popularity_score": 311,
+    "view_count": 311,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -7825,9 +7825,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-79",
@@ -7846,13 +7846,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "prevailing_view": "واجب",
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -7863,8 +7863,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 438,
-    "view_count": 438,
+    "popularity_score": 176,
+    "view_count": 176,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -7874,9 +7874,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-80",
@@ -7895,13 +7895,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "prevailing_view": "مستحب",
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -7912,8 +7912,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 290,
-    "view_count": 290,
+    "popularity_score": 327,
+    "view_count": 327,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -7923,9 +7923,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-81",
@@ -7943,13 +7943,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -7960,8 +7960,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 137,
-    "view_count": 137,
+    "popularity_score": 435,
+    "view_count": 435,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -7971,9 +7971,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-82",
@@ -7991,13 +7991,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -8008,8 +8008,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 266,
-    "view_count": 266,
+    "popularity_score": 440,
+    "view_count": 440,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -8019,9 +8019,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-83",
@@ -8039,13 +8039,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -8056,8 +8056,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 507,
-    "view_count": 507,
+    "popularity_score": 217,
+    "view_count": 217,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -8067,9 +8067,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-84",
@@ -8087,13 +8087,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -8104,8 +8104,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 138,
-    "view_count": 138,
+    "popularity_score": 258,
+    "view_count": 258,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -8115,9 +8115,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-85",
@@ -8135,13 +8135,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -8152,8 +8152,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 197,
-    "view_count": 197,
+    "popularity_score": 287,
+    "view_count": 287,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -8163,9 +8163,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-86",
@@ -8183,13 +8183,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -8200,8 +8200,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 564,
-    "view_count": 564,
+    "popularity_score": 409,
+    "view_count": 409,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -8211,9 +8211,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-87",
@@ -8231,13 +8231,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -8248,8 +8248,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 131,
-    "view_count": 131,
+    "popularity_score": 282,
+    "view_count": 282,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -8259,9 +8259,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-88",
@@ -8279,13 +8279,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -8296,8 +8296,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 416,
-    "view_count": 416,
+    "popularity_score": 350,
+    "view_count": 350,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -8307,9 +8307,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-89",
@@ -8327,13 +8327,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -8344,8 +8344,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 473,
-    "view_count": 473,
+    "popularity_score": 468,
+    "view_count": 468,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -8355,9 +8355,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-90",
@@ -8375,13 +8375,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -8392,8 +8392,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 272,
-    "view_count": 272,
+    "popularity_score": 552,
+    "view_count": 552,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -8403,9 +8403,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-91",
@@ -8423,13 +8423,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -8440,8 +8440,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 203,
-    "view_count": 203,
+    "popularity_score": 224,
+    "view_count": 224,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -8451,9 +8451,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-92",
@@ -8472,13 +8472,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "prevailing_view": "ركن",
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -8489,8 +8489,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 121,
-    "view_count": 121,
+    "popularity_score": 333,
+    "view_count": 333,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -8500,9 +8500,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-93",
@@ -8521,13 +8521,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "prevailing_view": "واجب",
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -8538,8 +8538,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 443,
-    "view_count": 443,
+    "popularity_score": 360,
+    "view_count": 360,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -8549,9 +8549,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-94",
@@ -8569,13 +8569,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -8586,8 +8586,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 192,
-    "view_count": 192,
+    "popularity_score": 425,
+    "view_count": 425,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -8597,9 +8597,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-95",
@@ -8617,13 +8617,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -8634,8 +8634,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 523,
-    "view_count": 523,
+    "popularity_score": 378,
+    "view_count": 378,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -8645,9 +8645,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-96",
@@ -8665,13 +8665,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -8682,8 +8682,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 585,
-    "view_count": 585,
+    "popularity_score": 111,
+    "view_count": 111,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -8693,9 +8693,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-97",
@@ -8713,13 +8713,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -8730,8 +8730,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 367,
-    "view_count": 367,
+    "popularity_score": 374,
+    "view_count": 374,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -8741,9 +8741,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-98",
@@ -8761,13 +8761,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -8778,8 +8778,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 306,
-    "view_count": 306,
+    "popularity_score": 378,
+    "view_count": 378,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -8789,9 +8789,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-99",
@@ -8809,13 +8809,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -8826,8 +8826,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 165,
-    "view_count": 165,
+    "popularity_score": 434,
+    "view_count": 434,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -8837,9 +8837,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-100",
@@ -8857,13 +8857,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -8874,8 +8874,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 149,
-    "view_count": 149,
+    "popularity_score": 332,
+    "view_count": 332,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -8885,9 +8885,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-101",
@@ -8905,13 +8905,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -8922,8 +8922,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 254,
-    "view_count": 254,
+    "popularity_score": 454,
+    "view_count": 454,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -8933,9 +8933,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-102",
@@ -8953,13 +8953,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -8970,8 +8970,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 507,
-    "view_count": 507,
+    "popularity_score": 482,
+    "view_count": 482,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -8981,9 +8981,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-103",
@@ -9001,13 +9001,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -9018,8 +9018,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 368,
-    "view_count": 368,
+    "popularity_score": 222,
+    "view_count": 222,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -9029,9 +9029,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-104",
@@ -9049,13 +9049,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -9066,8 +9066,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 312,
-    "view_count": 312,
+    "popularity_score": 153,
+    "view_count": 153,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -9077,9 +9077,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-105",
@@ -9097,13 +9097,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -9114,8 +9114,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 315,
-    "view_count": 315,
+    "popularity_score": 547,
+    "view_count": 547,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -9125,9 +9125,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   },
   {
     "id": "qa-ruling-seed-qa-106",
@@ -9145,13 +9145,13 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
     "references": [
       {
-        "text": "مجالس العلم — الأسئلة والأجوبة",
+        "text": "المجلس العلمي — الأسئلة والأجوبة",
         "source": "qa-seed"
       }
     ],
@@ -9162,8 +9162,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "benefits": [],
     "importance_score": 50,
-    "popularity_score": 320,
-    "view_count": 320,
+    "popularity_score": 512,
+    "view_count": 512,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
@@ -9173,9 +9173,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-04T03:46:45.115Z",
-    "created_at": "2026-07-04T03:46:45.115Z",
-    "updated_at": "2026-07-04T03:46:45.115Z"
+    "published_at": "2026-07-07T04:48:00.863Z",
+    "created_at": "2026-07-07T04:48:00.863Z",
+    "updated_at": "2026-07-07T04:48:00.863Z"
   }
 ] as ShariaRulingExtended[];
 

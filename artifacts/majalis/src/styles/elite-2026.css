@@ -2132,3 +2132,19 @@ button.hcp-prayer-cell:focus-visible {
   line-height: 1.2 !important;
 }
 
+
+/* §58 — صفحة التوحيد: فرض اللون الأبيض على كل النصوص داخل الهيدر الأخضر */
+.tawheed-page-header,
+.tawheed-page-header h1,
+.tawheed-page-header h2,
+.tawheed-page-header h3,
+.tawheed-page-header p,
+.tawheed-page-header blockquote,
+.tawheed-page-header .home-eyebrow,
+.tawheed-page-header__title,
+.tawheed-page-header__subtitle,
+.tawheed-page-header__ayah {
+  color: #fff !important;
+}
+.tawheed-page-header__subtitle { color: rgba(255,255,255,0.88) !important; }
+.tawheed-page-header__ayah cite { color: rgba(255,255,255,0.82) !important; }
