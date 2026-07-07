@@ -2402,6 +2402,56 @@ button.hcp-prayer-cell:focus-visible {
   border-color: rgba(24,54,42,0.28) !important;
   box-shadow: 0 2px 6px rgba(24,54,42,0.12) !important;
 }
+.lessons-v2-filter-toggle--active {
+  background: var(--elite-forest, #18362A) !important;
+  border-color: var(--elite-forest, #18362A) !important;
+  color: #fff !important;
+}
+.lessons-v2-filter-toggle--active:hover {
+  background: #224d3a !important;
+}
+.lessons-v2-filter-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.25rem;
+  height: 1.25rem;
+  background: rgba(255,255,255,0.25);
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  margin-right: 0.35rem;
+  padding: 0 0.25rem;
+  line-height: 1;
+}
+.lessons-v2-toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.lessons-v2-clear-btn {
+  background: rgba(220,53,69,0.08) !important;
+  border: 1.5px solid rgba(220,53,69,0.25) !important;
+  color: #C0392B !important;
+  border-radius: 0.6rem !important;
+  font-weight: 600 !important;
+  font-size: 0.78rem !important;
+  padding: 0.4rem 0.65rem !important;
+  cursor: pointer !important;
+  transition: all 0.15s !important;
+  white-space: nowrap;
+}
+.lessons-v2-clear-btn:hover {
+  background: rgba(220,53,69,0.15) !important;
+  border-color: rgba(220,53,69,0.5) !important;
+}
+.lessons-v2-result-count {
+  font-size: 0.8rem !important;
+  color: var(--txt-muted, #52525B) !important;
+  padding: 0.25rem 1rem 0 !important;
+  margin: 0 !important;
+  font-weight: 500 !important;
+}
 
 /* ── حقول الإدخال العامة ── */
 input[type="text"],

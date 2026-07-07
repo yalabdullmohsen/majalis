@@ -328,6 +328,21 @@ export default function LessonsPage({
     });
   };
 
+  const activeFilterCount = useMemo(() => {
+    let n = 0;
+    if (filters.search.trim()) n++;
+    if (filters.governorate !== DEFAULT_KUWAIT_FILTERS.governorate) n++;
+    if (filters.region !== DEFAULT_KUWAIT_FILTERS.region) n++;
+    if (filters.mosque !== DEFAULT_KUWAIT_FILTERS.mosque) n++;
+    if (filters.sheikh !== DEFAULT_KUWAIT_FILTERS.sheikh) n++;
+    if (filters.day !== DEFAULT_KUWAIT_FILTERS.day) n++;
+    if (filters.category !== DEFAULT_KUWAIT_FILTERS.category) n++;
+    if (filters.timeSlot !== DEFAULT_KUWAIT_FILTERS.timeSlot) n++;
+    if (filters.activityType !== DEFAULT_KUWAIT_FILTERS.activityType) n++;
+    if (filters.hasLiveStream !== DEFAULT_KUWAIT_FILTERS.hasLiveStream) n++;
+    return n;
+  }, [filters]);
+
   const toggleReg = async (lessonId: string) => {
     if (!isLoggedIn || !user) return alert("يرجى تسجيل الدخول أولاً");
     try {
@@ -453,15 +468,40 @@ export default function LessonsPage({
             </button>
           ))}
         </div>
-        <button
-          type="button"
-          className="lessons-v2-filter-toggle"
-          onClick={() => setFiltersOpen(true)}
-          aria-label="فتح التصفية"
-        >
-          تصفية وبحث
-        </button>
+        <div className="lessons-v2-toolbar-actions">
+          {activeFilterCount > 0 && (
+            <button
+              type="button"
+              className="lessons-v2-clear-btn"
+              onClick={() => setFilters(DEFAULT_KUWAIT_FILTERS)}
+              aria-label="مسح جميع الفلاتر"
+            >
+              مسح ✕
+            </button>
+          )}
+          <button
+            type="button"
+            className={`lessons-v2-filter-toggle${activeFilterCount > 0 ? " lessons-v2-filter-toggle--active" : ""}`}
+            onClick={() => setFiltersOpen(true)}
+            aria-label="فتح التصفية"
+          >
+            تصفية وبحث
+            {activeFilterCount > 0 && (
+              <span className="lessons-v2-filter-badge" aria-label={`${activeFilterCount} فلتر نشط`}>
+                {activeFilterCount}
+              </span>
+            )}
+          </button>
+        </div>
       </div>
+
+      {activeFilterCount > 0 && !loading && (
+        <p className="lessons-v2-result-count" aria-live="polite">
+          {filtered.length === 0
+            ? "لا توجد نتائج مطابقة"
+            : `${filtered.length} ${filtered.length === 1 ? "نتيجة" : "نتائج"} مطابقة`}
+        </p>
+      )}
 
       <div className="lessons-v2-layout">
         <main className="lessons-v2-main">
