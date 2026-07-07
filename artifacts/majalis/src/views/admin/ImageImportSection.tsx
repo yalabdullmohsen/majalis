@@ -203,18 +203,6 @@ function ReviewForm({
   const set = (key: keyof ParsedLessonFields, v: unknown) =>
     onChange({ ...parsed, [key]: v });
 
-  const inp: React.CSSProperties = {
-    width: "100%", padding: "0.45rem 0.6rem",
-    border: `1px solid ${C.line}`, borderRadius: "0.375rem",
-    fontFamily: "inherit", fontSize: "0.8125rem", background: "#fff",
-    transition: "border-color .15s",
-  };
-  const lbl: React.CSSProperties = {
-    display: "block", fontSize: "0.68rem", fontWeight: 700,
-    color: C.emeraldDeep, marginBottom: "0.2rem",
-    letterSpacing: "0.02em",
-  };
-
   return (
     <div className="ii-form-grid">
       {/* عنوان الدرس */}
