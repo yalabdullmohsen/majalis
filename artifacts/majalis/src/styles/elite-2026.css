@@ -3571,3 +3571,86 @@ button.primary:hover {
   padding: 0.45rem !important;
 }
 .nb-foot__link { padding: 0.45rem !important; font-size: 0.78rem !important; }
+
+/* ══════════════════════════════════════════════
+   §QiblaPage — وصلة القبلة التفاعلية
+   ══════════════════════════════════════════════ */
+.qibla-page { background: var(--elite-white, #FAF8F2) !important; }
+.qibla-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 0.5rem 1rem 2rem;
+}
+.qibla-svg {
+  width: min(280px, 90vw);
+  height: min(280px, 90vw);
+  filter: drop-shadow(0 4px 16px rgba(22,163,74,0.15));
+}
+--qibla-bg: #F0FDF4;
+.qibla-aligned-badge {
+  background: var(--elite-forest, #18362A) !important;
+  color: var(--elite-white, #FAF8F2) !important;
+  border-radius: 999px;
+  padding: 0.45rem 1.25rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  animation: qibla-pop 0.4s cubic-bezier(0.22,1,0.36,1);
+}
+@keyframes qibla-pop {
+  from { transform: scale(0.6); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+.qibla-info-row {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.qibla-info-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  background: #fff;
+  border: 1px solid rgba(22,163,74,0.15);
+  border-radius: 0.75rem;
+  padding: 0.6rem 1.1rem;
+  min-width: 90px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+.qibla-info-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--txt-muted, #52525B);
+  text-align: center;
+}
+.qibla-info-value {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--elite-forest, #18362A);
+}
+.qibla-permit-btn {
+  background: var(--elite-forest, #18362A) !important;
+  color: #fff !important;
+  border: none;
+  border-radius: 0.6rem;
+  padding: 0.55rem 1.25rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.qibla-hint {
+  font-size: 0.8rem;
+  color: var(--txt-muted, #52525B);
+  text-align: center;
+  max-width: 260px;
+}
+.qibla-loading, .qibla-error {
+  font-size: 0.9rem;
+  color: var(--txt-muted, #52525B);
+  text-align: center;
+  padding: 2rem 1rem;
+}
