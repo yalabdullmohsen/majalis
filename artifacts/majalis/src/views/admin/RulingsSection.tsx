@@ -5,7 +5,6 @@ import { RULING_CATEGORIES } from "@/lib/platform-types";
 import { RULINGS_CATEGORY_TREE, flattenCategories } from "@/lib/rulings-categories";
 import { importRulingsFromText, RULINGS_CSV_TEMPLATE } from "@/lib/rulings-import";
 import { validateRuling, findSimilarRulings } from "@/lib/rulings-validator";
-import { C } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
 import { adminListLoad } from "@/lib/admin-list-load";
 import { StatusBadge } from "./AdminUI";
@@ -119,16 +118,16 @@ export function RulingsSection() {
 
   return (
     <div className="rulings-admin">
-      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "1rem", flexWrap: "wrap", gap: "0.5rem" }}>
-        <h2 style={{ margin: 0, color: C.emeraldDeep }}>موسوعة الأحكام ({stats.total})</h2>
-        <div style={{ display: "flex", gap: "0.5rem" }}>
+      <div className="rls-header">
+        <h2 className="rls-title">موسوعة الأحكام ({stats.total})</h2>
+        <div className="rls-btn-group">
           <button
             type="button"
             onClick={() => {
               setForm({ ...EMPTY });
               setOpen(true);
             }}
-            style={{ padding: "0.5rem 1rem", background: C.emerald, color: C.parchment, border: "none", borderRadius: "0.375rem", cursor: "pointer" }}
+            className="rls-add-btn"
           >
             + إضافة حكم
           </button>
@@ -155,21 +154,14 @@ export function RulingsSection() {
       </div>
 
       <div className="rulings-admin-import">
-        <h3 style={{ marginTop: 0 }}>استيراد جماعي (CSV / JSON / Markdown)</h3>
-        <div style={{ display: "flex", gap: "0.5rem", marginBottom: "0.5rem", flexWrap: "wrap" }}>
+        <h3 className="rls-import-h3">استيراد جماعي (CSV / JSON / Markdown)</h3>
+        <div className="rls-fmt-row">
           {(["csv", "json", "markdown"] as const).map((f) => (
             <button
               key={f}
               type="button"
               onClick={() => setImportFormat(f)}
-              style={{
-                padding: "0.35rem 0.75rem",
-                background: importFormat === f ? C.emerald : C.panel,
-                color: importFormat === f ? C.parchment : C.ink,
-                border: `1px solid ${C.line}`,
-                borderRadius: "0.25rem",
-                cursor: "pointer",
-              }}
+              className={`rls-fmt-btn${importFormat === f ? " rls-fmt-btn--active" : ""}`}
             >
               {f.toUpperCase()}
             </button>
@@ -177,7 +169,7 @@ export function RulingsSection() {
           <button
             type="button"
             onClick={() => setImportText(RULINGS_CSV_TEMPLATE)}
-            style={{ fontSize: "0.8rem" }}
+            className="rls-tmpl-btn"
           >
             تحميل قالب CSV
           </button>
@@ -187,19 +179,19 @@ export function RulingsSection() {
           onChange={(e) => setImportText(e.target.value)}
           rows={5}
           placeholder="الصق محتوى الاستيراد هنا..."
-          className="adm-textarea" style={{ marginBottom: "0.5rem" }}
+          className="adm-textarea rls-textarea--mb"
         />
-        <button type="button" onClick={handleImport} style={{ padding: "0.45rem 0.85rem", cursor: "pointer" }}>
+        <button type="button" onClick={handleImport} className="rls-import-btn">
           استيراد
         </button>
-        {importResult && <p style={{ fontSize: "0.85rem", marginTop: "0.5rem" }}>{importResult}</p>}
+        {importResult && <p className="rls-import-result">{importResult}</p>}
       </div>
 
       <input
         value={filter}
         onChange={(e) => setFilter(e.target.value)}
         placeholder="بحث في الأحكام..."
-        className="adm-input" style={{ marginBottom: "0.75rem" }}
+        className="adm-input rls-filter-mb"
       />
 
       {loading ? (
@@ -207,24 +199,21 @@ export function RulingsSection() {
       ) : (
         <>
         {filtered.length > 100 && (
-          <p style={{ fontSize: "0.8125rem", color: C.inkSoft, marginBottom: "0.75rem" }}>
+          <p className="rls-hint">
             عرض 100 من {filtered.length.toLocaleString("ar")} — استخدم البحث لتضييق النتائج.
           </p>
         )}
         {filtered.slice(0, 100).map((item) => (
-          <div
-            key={item.id}
-            style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.375rem", padding: "1rem", marginBottom: "0.75rem" }}
-          >
+          <div key={item.id} className="adm-item-card">
             <strong>{item.title}</strong>{" "}
             <StatusBadge status={item.verification_status} />
             {" — "}
-            <span style={{ fontSize: "0.875rem", color: C.inkSoft }}>
+            <span className="rls-item-cat">
               {item.category}
               {item.subcategory ? ` / ${item.subcategory}` : ""}
             </span>
-            <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.5rem", flexWrap: "wrap" }}>
-              <button type="button" onClick={() => { setForm({ ...item }); setOpen(true); }} style={{ fontSize: "0.75rem" }}>
+            <div className="rls-item-actions">
+              <button type="button" onClick={() => { setForm({ ...item }); setOpen(true); }} className="rls-edit-btn">
                 تعديل
               </button>
               <button
@@ -232,7 +221,7 @@ export function RulingsSection() {
                 onClick={() => {
                   if (confirm("حذف؟")) adminDeleteRuling(item.id).then(load);
                 }}
-                style={{ fontSize: "0.75rem", color: "#dc2626" }}
+                className="rls-del-btn"
               >
                 حذف
               </button>
@@ -240,7 +229,7 @@ export function RulingsSection() {
                 <button
                   type="button"
                   onClick={() => adminUpsertRuling({ ...item, verification_status: "approved" }).then(load)}
-                  style={{ fontSize: "0.75rem", color: C.emerald }}
+                  className="rls-approve-btn"
                 >
                   اعتماد
                 </button>

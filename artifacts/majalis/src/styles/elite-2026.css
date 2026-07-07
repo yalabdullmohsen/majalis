@@ -6988,4 +6988,53 @@ button.primary:hover {
 .igst-badge         { display: inline-block; padding: 0.2rem 0.5rem; border-radius: 0.25rem; font-size: 0.75rem; }
 .igst-badge--ok     { background: #ECFDF5; color: #065F46; }
 .igst-badge--err    { background: #FEF2F2; color: #991B1B; }
+
+/* ============================================================
+   §124 — RulingsSection (rls-*)
+   ============================================================ */
+.rls-header         { display: flex; justify-content: space-between; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem; }
+.rls-title          { margin: 0; color: var(--majalis-emerald-deep); }
+.rls-btn-group      { display: flex; gap: 0.5rem; }
+.rls-add-btn        { padding: 0.5rem 1rem; background: var(--majalis-emerald); color: var(--majalis-parchment); border: none; border-radius: 0.375rem; cursor: pointer; }
+.rls-import-h3      { margin-top: 0; }
+.rls-fmt-row        { display: flex; gap: 0.5rem; margin-bottom: 0.5rem; flex-wrap: wrap; }
+.rls-fmt-btn        { padding: 0.35rem 0.75rem; background: var(--majalis-panel); color: var(--majalis-ink); border: 1px solid var(--majalis-line); border-radius: 0.25rem; cursor: pointer; }
+.rls-fmt-btn--active { background: var(--majalis-emerald); color: var(--majalis-parchment); }
+.rls-tmpl-btn       { font-size: 0.8rem; }
+.rls-textarea--mb   { margin-bottom: 0.5rem; }
+.rls-import-btn     { padding: 0.45rem 0.85rem; cursor: pointer; }
+.rls-import-result  { font-size: 0.85rem; margin-top: 0.5rem; }
+.rls-filter-mb      { margin-bottom: 0.75rem; }
+.rls-hint           { font-size: 0.8125rem; color: var(--majalis-ink-soft); margin-bottom: 0.75rem; }
+.rls-item-cat       { font-size: 0.875rem; color: var(--majalis-ink-soft); }
+.rls-item-actions   { display: flex; gap: 0.5rem; margin-top: 0.5rem; flex-wrap: wrap; }
+.rls-edit-btn       { font-size: 0.75rem; }
+.rls-del-btn        { font-size: 0.75rem; color: #dc2626; }
+.rls-approve-btn    { font-size: 0.75rem; color: var(--majalis-emerald); }
+
+/* ============================================================
+   §125 — SubmissionsSection (sub-*)
+   ============================================================ */
+.sub-header           { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; }
+.sub-title            { font-size: 1.25rem; font-weight: 700; margin: 0; }
+.sub-filter-row       { display: flex; gap: 0.5rem; }
+.sub-filter-btn       { padding: 0.375rem 0.875rem; border-radius: 0.375rem; border: 1px solid #e5e7eb; background: #fff; color: #6b7280; font-weight: 400; cursor: pointer; font-family: inherit; font-size: 0.8125rem; }
+.sub-filter-btn--active { border-color: #C9A84C; background: rgba(14,110,82,0.06); color: #0E6E52; font-weight: 700; }
+.sub-loading          { color: #9ca3af; }
+.sub-empty            { color: #9ca3af; padding: 2rem; text-align: center; }
+.sub-list             { display: flex; flex-direction: column; gap: 0.875rem; }
+.sub-card             { padding: 1rem 1.25rem; background: #fff; border-radius: 0.5rem; border: 1px solid #e5e7eb; box-shadow: 0 1px 3px rgba(0,0,0,.05); }
+.sub-card__row        { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+.sub-card__body       { flex: 1; min-width: 0; }
+.sub-card__tags       { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem; }
+.sub-type-badge       { font-size: 0.7rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: 0.25rem; background: var(--sub-type-bg, #f3f4f6); color: var(--sub-type-color, #374151); }
+.sub-card__title      { font-weight: 600; margin: 0 0 0.25rem; color: #0D1B2A; word-break: break-word; }
+.sub-card__content    { color: #6b7280; font-size: 0.85rem; margin: 0 0 0.5rem; white-space: pre-wrap; word-break: break-word; }
+.sub-card__meta       { font-size: 0.75rem; color: #9ca3af; margin: 0; }
+.sub-action-col       { display: flex; flex-direction: column; gap: 0.5rem; flex-shrink: 0; }
+.sub-approve-btn      { padding: 0.4rem 0.875rem; background: #16a34a; color: #fff; border: none; border-radius: 0.375rem; font-size: 0.8125rem; font-weight: 600; cursor: pointer; font-family: inherit; }
+.sub-approve-btn--acting { cursor: not-allowed; opacity: 0.6; }
+.sub-reject-btn       { padding: 0.4rem 0.875rem; background: #dc2626; color: #fff; border: none; border-radius: 0.375rem; font-size: 0.8125rem; font-weight: 600; cursor: pointer; font-family: inherit; }
+.sub-reject-btn--acting  { cursor: not-allowed; opacity: 0.6; }
+.sub-divider          { border-top: 2px solid #f3f4f6; margin-top: 2rem; padding-top: 0.5rem; }
 .iis-drop-icon  { font-size: 3rem; }
