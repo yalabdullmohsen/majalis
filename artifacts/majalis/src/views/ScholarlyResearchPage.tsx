@@ -131,7 +131,7 @@ export default function ScholarlyResearchPage() {
   return (
     <div dir="rtl" className="min-h-screen bg-[var(--majalis-parchment)]">
       {/* ── Header ───────────────────────────────────── */}
-      <div className="text-white py-10 px-4" style={{ background: "linear-gradient(to left, var(--majalis-emerald-deep), var(--majalis-emerald))" }}>
+      <div className="text-white py-10 px-4 ldb-hero">
         <div className="max-w-3xl mx-auto text-center">
           <h1 className="text-2xl font-bold mb-2">🔬 الباحث الشرعي</h1>
           <p className="text-emerald-100 text-sm leading-relaxed max-w-xl mx-auto">

@@ -127,7 +127,7 @@ export default function FatwaPage() {
             ))}
           </div>
 
-          <div className="content-hub-chips" style={{ marginTop: "0.5rem" }}>
+          <div className="content-hub-chips ftp-chips-sub">
             {[["الكل", "الكل"], ["written", "مكتوبة"], ["audio", "صوتية"]].map(([val, label]) => (
               <button
                 key={val}

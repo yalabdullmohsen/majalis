@@ -28,7 +28,7 @@ function WirdRing({ pct, pages, target }: { pct: number; pages: number; target: 
         strokeDasharray={circ}
         strokeDashoffset={circ * (1 - Math.min(pct, 1))}
         transform="rotate(-90 74 74)"
-        style={{ transition: "stroke-dashoffset 0.4s ease" }}
+        className="dwd-ring-fill"
       />
       <text x="74" y="67" textAnchor="middle" fill={done ? "#16A34A" : "#18362A"}
         fontSize="24" fontWeight="800" fontFamily="inherit">

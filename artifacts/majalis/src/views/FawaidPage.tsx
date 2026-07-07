@@ -135,7 +135,7 @@ export default function FawaidPage({
 
       <div className="ds-section__head">
         {isAdmin && (
-          <div className="page-stats-row" style={{ marginBottom: 0 }}>
+          <div className="page-stats-row page-stats-row--flush">
             <span>{displayItems.length} فائدة</span>
             <span>{FAWAID_CATEGORIES.length} تصنيف</span>
           </div>

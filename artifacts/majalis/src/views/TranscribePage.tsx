@@ -308,8 +308,8 @@ export default function TranscribePage() {
               </div>
               <div className="h-2 w-full rounded-full bg-[#E0D7C4]">
                 <div
-                  className="h-2 rounded-full bg-[#1F6E54] transition-all duration-500"
-                  style={{ width: `${progress}%` }}
+                  className="h-2 rounded-full bg-[#1F6E54] transition-all duration-500 tp-prog-fill"
+                  style={{ "--tp-pct": `${progress}%` } as React.CSSProperties}
                 />
               </div>
             </div>

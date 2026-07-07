@@ -269,7 +269,7 @@ export default function StudyRoomPage() {
       {/* Stats */}
       {isLoggedIn ? (
         loadingData ? (
-          <div className="profile-loading" style={{ margin: "2rem auto" }}>
+          <div className="profile-loading stp-loading-center">
             <span className="profile-loading__dot" /><span className="profile-loading__dot" /><span className="profile-loading__dot" />
           </div>
         ) : (

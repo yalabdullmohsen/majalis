@@ -250,7 +250,7 @@ export default function QaPage({
 
       <div className="ds-section__head">
         {isAdmin && (
-          <div className="page-stats-row" style={{ marginBottom: 0 }}>
+          <div className="page-stats-row page-stats-row--flush">
             <span>{sortedItems.length} سؤال</span>
             <span>{categoryGrid.length} تصنيف</span>
             {correctionsCount > 0 && (

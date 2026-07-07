@@ -115,8 +115,8 @@ export default function LearningPathBookPage() {
           <div className="md:col-span-1">
             {/* غلاف */}
             <div
-              className="rounded-2xl h-52 flex items-center justify-center mb-4 overflow-hidden"
-              style={{ background: `linear-gradient(135deg, ${book.science.color}22, ${book.science.color}44)` }}
+              className="rounded-2xl h-52 flex items-center justify-center mb-4 overflow-hidden lpb-cover"
+              style={{ "--book-color": book.science.color } as React.CSSProperties}
             >
               {book.cover_image_url ? (
                 <img src={book.cover_image_url} alt={book.title} className="w-full h-full object-cover" loading="lazy" />
@@ -167,11 +167,7 @@ export default function LearningPathBookPage() {
                   {book.title}
                 </h1>
                 <span
-                  className="flex-shrink-0 text-xs font-medium px-3 py-1 rounded-full"
-                  style={{
-                    background: status === "completed" ? "#dcfce7" : status === "in_progress" ? "#E6EDE9" : "#f3f4f6",
-                    color: status === "completed" ? "#15803d" : status === "in_progress" ? "#18362A" : "#6b7280",
-                  }}
+                  className={`flex-shrink-0 text-xs font-medium px-3 py-1 rounded-full lpb-status lpb-status--${status === "completed" ? "completed" : status === "in_progress" ? "in-progress" : "pending"}`}
                 >
                   {status === "completed" ? "✓ مكتمل" : status === "in_progress" ? "⏳ جاري" : "لم يبدأ"}
                 </span>

@@ -195,7 +195,7 @@ export default function RulingsPage() {
 
       <div className="ds-section__head">
         {isAdmin && (
-          <div className="page-stats-row ruling-stats-bar" style={{ marginBottom: 0 }}>
+          <div className="page-stats-row ruling-stats-bar page-stats-row--flush">
             <span>{encyclopediaTotal || total} حكم</span>
             <span>{mainCategories} قسم</span>
             <span>{stats.length} تصنيف</span>

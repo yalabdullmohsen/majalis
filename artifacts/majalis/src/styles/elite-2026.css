@@ -6689,3 +6689,67 @@ button.primary:hover {
    ============================================================ */
 .adhkar-ring-fill { transition: stroke-dashoffset 0.18s ease; }
 .adhkar-prog-fill { width: var(--adhkar-pct, 0%); }
+
+/* ============================================================
+   §99 — shared: page-stats-row--flush
+   ============================================================ */
+.page-stats-row--flush { margin-bottom: 0; }
+
+/* ============================================================
+   §100 — LearningPathPage  (lpth-*)
+   ============================================================ */
+.lpth-hero { background: linear-gradient(135deg, #064e3b 0%, #065f46 50%, #047857 100%); }
+
+/* ============================================================
+   §101 — LearningPathBookPage  (lpb-*)
+   ============================================================ */
+.lpb-cover {
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--book-color) 13%, transparent),
+    color-mix(in srgb, var(--book-color) 27%, transparent)
+  );
+}
+.lpb-status--completed   { background: #dcfce7; color: #15803d; }
+.lpb-status--in-progress { background: #E6EDE9; color: #18362A; }
+.lpb-status--pending     { background: #f3f4f6; color: #6b7280; }
+
+/* ============================================================
+   §102 — TranscribePage  (tp-*)
+   ============================================================ */
+.tp-prog-fill { width: var(--tp-pct, 0%); }
+
+/* ============================================================
+   §103 — StudyRoomPage  (stp-*)
+   ============================================================ */
+.stp-loading-center { margin: 2rem auto; }
+
+/* ============================================================
+   §104 — AuthCallbackPage
+   ============================================================ */
+.auth-callback-loading { display: flex; justify-content: center; align-items: center; min-height: 60vh; }
+
+/* ============================================================
+   §105 — DailyWirdPage  (dwd-*)
+   ============================================================ */
+.dwd-ring-fill { transition: stroke-dashoffset 0.4s ease; }
+
+/* ============================================================
+   §106 — AutoContentDetailPage  (acd-*)
+   ============================================================ */
+.acd-detail-hint { font-size: 0.875rem; }
+
+/* ============================================================
+   §107 — FiqhCouncilIssuesPage  (fci-*)
+   ============================================================ */
+.fci-chips-row { margin-bottom: 1rem; }
+
+/* ============================================================
+   §108 — FatwaPage  (ftp-*)
+   ============================================================ */
+.ftp-chips-sub { margin-top: 0.5rem; }
+
+/* ============================================================
+   §109 — FatwaDetailPage  (ftd-*)
+   ============================================================ */
+.ftd-audio { width: 100%; }

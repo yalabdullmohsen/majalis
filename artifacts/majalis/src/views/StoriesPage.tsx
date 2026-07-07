@@ -83,7 +83,7 @@ export default function StoriesPage() {
 
       <div className="ds-section__head">
         {isAdmin && (
-          <div className="page-stats-row" style={{ marginBottom: 0 }}>
+          <div className="page-stats-row page-stats-row--flush">
             <span>{displayItems.length} قصة</span>
             {categories.length > 1 && <span>{categories.length - 1} تصنيف</span>}
           </div>

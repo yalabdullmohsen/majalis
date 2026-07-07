@@ -74,7 +74,7 @@ export default function AutoContentDetailPage({ params }: { params: { slug: stri
       sourceUrls={item.original_url ? [item.original_url] : undefined}
       copyText={`${item.title}\n\n${item.summary || ""}\n\n${item.content || ""}`}
       related={
-        <p style={{ fontSize: "0.875rem" }}>
+        <p className="acd-detail-hint">
           <Link href="/updates">← العودة للمستجدات</Link>
         </p>
       }

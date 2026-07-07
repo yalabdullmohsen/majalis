@@ -87,7 +87,7 @@ export default function FatwaDetailPage({ params }: { params: { id: string } }) 
       {item.audio_url && (item.format === "audio" || item.format === "both") && (
         <section className="content-detail-audio ui-card">
           <h2>الفتوى الصوتية</h2>
-          <audio controls src={item.audio_url} style={{ width: "100%" }}>
+          <audio controls src={item.audio_url} className="ftd-audio">
             متصفحك لا يدعم تشغيل الصوت.
           </audio>
         </section>

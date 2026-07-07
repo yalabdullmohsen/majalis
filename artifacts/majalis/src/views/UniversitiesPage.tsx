@@ -79,7 +79,7 @@ function UniversitiesContent() {
   return (
     <div dir="rtl" className="min-h-screen bg-[var(--majalis-parchment)] pb-24">
       {/* Header */}
-      <div className="text-white py-10 px-4" style={{ background: "linear-gradient(to left, var(--majalis-emerald-deep), var(--majalis-emerald))" }}>
+      <div className="text-white py-10 px-4 ldb-hero">
         <div className="max-w-5xl mx-auto text-center">
           <h1 className="text-2xl font-bold mb-2">🎓 دليل الجامعات والكليات الشرعية</h1>
           <p className="text-emerald-100 text-sm max-w-xl mx-auto leading-relaxed">

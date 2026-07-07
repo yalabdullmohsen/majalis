@@ -22,7 +22,7 @@ export default function AuthCallbackPage() {
   }, [navigate]);
 
   return (
-    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "60vh" }}>
+    <div className="auth-callback-loading">
       <Loading />
     </div>
   );

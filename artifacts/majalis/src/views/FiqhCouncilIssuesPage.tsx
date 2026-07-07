@@ -45,7 +45,7 @@ export default function FiqhCouncilIssuesPage() {
 
       <FiqhCouncilSubnav />
 
-      <div className="content-hub-chips" style={{ marginBottom: "1rem" }}>
+      <div className="content-hub-chips fci-chips-row">
         {["الكل", ...FIQH_COUNCIL_CATEGORIES].map((cat) => (
           <button
             key={cat}

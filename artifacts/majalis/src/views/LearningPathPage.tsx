@@ -57,8 +57,7 @@ export default function LearningPathPage() {
 
       {/* Hero */}
       <div
-        className="relative overflow-hidden"
-        style={{ background: "linear-gradient(135deg, #064e3b 0%, #065f46 50%, #047857 100%)" }}
+        className="relative overflow-hidden lpth-hero"
       >
         {/* زخرفة إسلامية خلفية */}
         <div className="absolute inset-0 opacity-5 pointer-events-none select-none flex items-center justify-center">
