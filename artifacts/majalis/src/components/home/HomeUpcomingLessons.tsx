@@ -68,13 +68,17 @@ export function HomeUpcomingLessons({
   const clock = getKuwaitClock();
   const todayArabic = ARABIC_WEEKDAY[clock.weekday] ?? "";
 
+  // الوقت الحالي بالمللي ثانية (توقيت الكويت)
+  const nowMs = clock.dayStartMs + (clock.hour * 60 + clock.minute) * 60_000;
+  const TWO_HOURS_MS = 2 * 3_600_000;
+
   function applyTabFilter(lesson: KuwaitLessonRecord) {
     if (tab === "men")   return !lesson.isWomenOnly;
     if (tab === "women") return lesson.isWomenOnly === true;
     return true;
   }
 
-  // دروس اليوم: كل دروس يوم اليوم الحالي — قبل وقتها أو بعده (تُعرض المنتهية بـ "انتهى")
+  // دروس اليوم: يُعرض الدرس فقط إذا لم يمرّ على بدايته أكثر من ساعتين
   const todayLessons = allLessons
     .filter(l => isLessonThisDay(l.day) && applyTabFilter(l))
     .map(l => {
@@ -85,6 +89,7 @@ export function HomeUpcomingLessons({
         : freshMs;
       return { ...l, nextOccurrenceMs: todayMs };
     })
+    .filter(l => nowMs <= l.nextOccurrenceMs + TWO_HOURS_MS)
     .sort((a, b) => a.nextOccurrenceMs - b.nextOccurrenceMs)
     .slice(0, 6);
 
