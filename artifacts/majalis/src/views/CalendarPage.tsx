@@ -17,7 +17,7 @@ import { getUnifiedActiveLessons } from "@/lib/lessons-service";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 import { PageHeader, Loading } from "@/components/ui-common";
 import { HijriSacredMonthBanner } from "@/components/HijriSacredMonthBanner";
-import { getHijriDateString } from "@/lib/hijri-utils";
+import { getHijriDateString, gregorianToHijri } from "@/lib/hijri-utils";
 
 type ViewMode = "month" | "week" | "day";
 
@@ -94,10 +94,16 @@ function EventModal({ event, onClose }: { event: CalendarEvent; onClose: () => v
   );
 }
 
+function hijriDayNum(date: Date): string {
+  const h = gregorianToHijri(date);
+  return h ? String(h.day) : "";
+}
+
 export default function CalendarPage() {
+  const today = new Date();
   const [view, setView] = useState<ViewMode>("month");
-  const [cursor, setCursor] = useState(new Date());
-  const [selected, setSelected] = useState(new Date());
+  const [cursor, setCursor] = useState(today);
+  const [selected, setSelected] = useState(today);
   const [events, setEvents] = useState<CalendarEvent[]>([]);
   const [loading, setLoading] = useState(true);
   const [modalEvent, setModalEvent] = useState<CalendarEvent | null>(null);
@@ -122,6 +128,12 @@ export default function CalendarPage() {
   });
 
   const selectedEvents = eventsForDate(selected, events);
+  const isViewingCurrentMonth = isSameMonth(cursor, today);
+
+  function goToday() {
+    setCursor(today);
+    setSelected(today);
+  }
 
   return (
     <div className="page-shell calendar-page">
@@ -137,6 +149,11 @@ export default function CalendarPage() {
           <button type="button" className="cal-nav-btn" onClick={() => setCursor(subMonths(cursor, 1))} aria-label="الشهر السابق">‹</button>
           <strong>{format(cursor, "MMMM yyyy", { locale: arSA })}</strong>
           <button type="button" className="cal-nav-btn" onClick={() => setCursor(addMonths(cursor, 1))} aria-label="الشهر التالي">›</button>
+          {!isViewingCurrentMonth && (
+            <button type="button" className="cal-today-btn" onClick={goToday} aria-label="انتقل لليوم">
+              اليوم
+            </button>
+          )}
         </div>
         <div className="cal-view-tabs">
           {(["month", "week", "day"] as ViewMode[]).map((v) => (
@@ -167,20 +184,36 @@ export default function CalendarPage() {
                 {monthDays.map((day) => {
                   const dayEvents = eventsForDate(day, events);
                   const isSelected = isSameDay(day, selected);
-                  const inMonth = isSameMonth(day, cursor);
+                  const isToday   = isSameDay(day, today);
+                  const inMonth   = isSameMonth(day, cursor);
+                  const hDay      = hijriDayNum(day);
+                  const shown     = dayEvents.slice(0, 2);
+                  const extra     = dayEvents.length - shown.length;
                   return (
                     <button
                       key={day.toISOString()}
                       type="button"
-                      className={`cal-cell${isSelected ? " is-selected" : ""}${!inMonth ? " is-outside" : ""}`}
-                      onClick={() => {
-                        setSelected(day);
-                        setView("day");
-                      }}
+                      className={[
+                        "cal-cell",
+                        isSelected ? "is-selected" : "",
+                        isToday    ? "is-today"    : "",
+                        !inMonth   ? "is-outside"  : "",
+                        dayEvents.length > 0 ? "has-events" : "",
+                      ].filter(Boolean).join(" ")}
+                      onClick={() => { setSelected(day); setView("day"); }}
+                      aria-label={`${format(day, "d MMMM", { locale: arSA })}${dayEvents.length > 0 ? ` — ${dayEvents.length} درس` : ""}`}
                     >
-                      <span className="cal-cell-num">{format(day, "d")}</span>
-                      {dayEvents.length > 0 && (
-                        <span className="cal-cell-dot" aria-label={`${dayEvents.length} درس`} />
+                      <div className="cal-cell-head">
+                        <span className="cal-cell-num">{format(day, "d")}</span>
+                        {hDay && <span className="cal-cell-hijri">{hDay}</span>}
+                      </div>
+                      {shown.map((ev) => (
+                        <span key={ev.id} className="cal-cell-event" title={ev.title}>
+                          {ev.title}
+                        </span>
+                      ))}
+                      {extra > 0 && (
+                        <span className="cal-cell-more">+{extra}</span>
                       )}
                     </button>
                   );

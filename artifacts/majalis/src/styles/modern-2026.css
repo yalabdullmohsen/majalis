@@ -1459,3 +1459,85 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   color: #FAF8F2;
   padding: 2.5rem 1.5rem;
 }
+
+/* ══ Calendar Improvements 2026 ══════════════════════════════════════════════ */
+/* خلايا التقويم — تخطيط مرن مع أحداث */
+.cal-cell {
+  aspect-ratio: unset !important;
+  min-height: 3.5rem !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  padding: 0.35rem 0.3rem !important;
+  flex-direction: column !important;
+  gap: 0.15rem !important;
+}
+.cal-cell.has-events { min-height: 5.5rem !important; }
+.cal-cell-head {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.15rem;
+  margin-bottom: 0.1rem;
+}
+.cal-cell-num {
+  font-size: 0.88rem !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  color: var(--txt-primary, #111827) !important;
+}
+.cal-cell-hijri {
+  font-size: 0.62rem !important;
+  font-weight: 500 !important;
+  color: var(--m26-green-700, #15803D) !important;
+  opacity: 0.75;
+  line-height: 1 !important;
+}
+/* اليوم الحالي */
+.cal-cell.is-today { background: var(--m26-green-50, #F0FDF4) !important; border-color: var(--m26-green-400, #4ADE80) !important; }
+.cal-cell.is-today .cal-cell-num { color: var(--m26-green-700, #15803D) !important; }
+/* حدث داخل الخلية */
+.cal-cell-event {
+  display: block;
+  width: 100%;
+  font-size: 0.58rem !important;
+  font-weight: 600 !important;
+  background: var(--m26-green-100, #DCFCE7) !important;
+  color: var(--m26-green-800, #166534) !important;
+  border-radius: 0.25rem;
+  padding: 0.08rem 0.25rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: right;
+  line-height: 1.4;
+}
+.cal-cell.is-selected .cal-cell-event,
+.cal-cell.is-today .cal-cell-event {
+  background: rgba(22,163,74,0.18) !important;
+  color: #14532D !important;
+}
+.cal-cell-more {
+  display: block;
+  font-size: 0.58rem !important;
+  font-weight: 700 !important;
+  color: var(--m26-green-600, #16A34A) !important;
+  text-align: right;
+  line-height: 1.2;
+}
+/* زر "اليوم" في التولبار */
+.cal-today-btn {
+  border: 1.5px solid var(--m26-green-600, #16A34A) !important;
+  color: var(--m26-green-700, #15803D) !important;
+  background: transparent !important;
+  border-radius: 999px !important;
+  font-size: 0.75rem !important;
+  font-weight: 700 !important;
+  padding: 0.2rem 0.7rem !important;
+  cursor: pointer !important;
+  transition: background 0.15s !important;
+  margin-right: 0.35rem !important;
+}
+.cal-today-btn:hover {
+  background: var(--m26-green-50, #F0FDF4) !important;
+}
