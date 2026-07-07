@@ -6872,4 +6872,71 @@ button.primary:hover {
 .iis-done-icon  { font-size: 2.5rem; margin: 0 0 0.5rem; }
 .iis-done-msg   { font-size: 0.9rem; margin: 0; }
 .iis-section-mt { margin-top: 1rem; }
+
+/* ============================================================
+   §118 — AdminModal (adm-modal__* / adm-field*)
+   ============================================================ */
+.adm-field              { margin-bottom: 0.875rem; }
+.adm-field__label       { display: block; font-size: 0.8125rem; font-weight: 600; color: var(--majalis-emerald-deep); margin-bottom: 0.3rem; }
+.adm-field-row          { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.75rem; }
+.adm-modal__overlay     { position: fixed; inset: 0; background: rgba(36,31,24,0.6); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 1rem; }
+.adm-modal__dialog      { width: 100%; max-width: 40rem; background: var(--majalis-parchment); border-radius: 0.5rem; border: 1px solid var(--majalis-line); max-height: 90vh; display: flex; flex-direction: column; box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
+.adm-modal__header      { padding: 1rem 1.25rem; border-bottom: 1px solid var(--majalis-line); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+.adm-modal__close       { background: none; border: none; cursor: pointer; color: var(--majalis-ink-soft); font-size: 1.25rem; line-height: 1; padding: 0.25rem 0.5rem; }
+.adm-modal__title       { margin: 0; font-size: 1.0625rem; font-weight: 700; color: var(--majalis-emerald-deep); }
+.adm-modal__body        { flex: 1; overflow-y: auto; padding: 1.25rem; }
+.adm-modal__footer      { padding: 0.875rem 1.25rem; border-top: 1px solid var(--majalis-line); display: flex; gap: 0.625rem; justify-content: flex-start; flex-shrink: 0; }
+.adm-modal__save        { padding: 0.5rem 1.5rem; border-radius: 0.375rem; border: none; background: var(--majalis-emerald); color: var(--majalis-parchment); cursor: pointer; font-family: inherit; font-size: 0.875rem; font-weight: 600; }
+.adm-modal__save--saving { background: var(--majalis-sage); cursor: default; }
+.adm-modal__cancel      { padding: 0.5rem 1.25rem; border-radius: 0.375rem; border: 1px solid var(--majalis-line); background: var(--majalis-panel); color: var(--majalis-ink-soft); cursor: pointer; font-family: inherit; font-size: 0.875rem; }
+
+/* ============================================================
+   §119 — SearchAnalyticsSection (sas-*)
+   ============================================================ */
+.sas-header      { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+.sas-header h2   { margin: 0; }
+.sas-stats-grid  { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+.sas-panels-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; }
+.sas-footer-note { margin-top: 2rem; font-size: 0.875rem; color: var(--ink-soft, var(--majalis-ink-soft)); }
+.sas-stat        { padding: 1rem; border-radius: 0.5rem; border: 1px solid var(--line, var(--majalis-line)); background: var(--panel, var(--majalis-panel)); }
+.sas-stat__label { font-size: 0.75rem; color: var(--ink-soft, var(--majalis-ink-soft)); margin-bottom: 0.25rem; }
+.sas-stat__value { font-size: 1.5rem; font-weight: 700; }
+.sas-list        { padding: 1rem; border-radius: 0.5rem; border: 1px solid var(--line, var(--majalis-line)); }
+.sas-list__title { font-size: 0.875rem; font-weight: 700; margin-bottom: 0.75rem; }
+.sas-list__empty { font-size: 0.8125rem; color: var(--ink-soft, var(--majalis-ink-soft)); }
+.sas-list__ul    { margin: 0; padding-inline-start: 1.25rem; font-size: 0.8125rem; }
+.sas-list__li    { margin-bottom: 0.25rem; }
+
+/* ============================================================
+   §120 — LessonImportUrlPage (liu-*)
+   ============================================================ */
+.liu-header        { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1rem; }
+.liu-title         { margin: 0 0 0.35rem; color: var(--majalis-emerald-deep); }
+.liu-desc          { margin: 0; color: var(--majalis-ink-soft); font-size: 0.875rem; }
+.liu-nav-links     { display: flex; gap: 0.75rem; font-size: 0.8125rem; }
+.liu-nav-link      { color: var(--majalis-emerald-deep); }
+.liu-vision-notice { background: rgba(14,110,82,0.08); border: 1px solid rgba(24,54,42,0.3); border-radius: 0.5rem; padding: 0.75rem 1rem; margin-bottom: 1rem; font-size: 0.875rem; color: #0E6E52; }
+.liu-section       { background: var(--majalis-panel); border: 1px solid var(--majalis-line); border-radius: 0.625rem; padding: 1rem; margin-bottom: 1rem; }
+.liu-section__h3   { margin: 0 0 0.75rem; font-size: 0.9375rem; color: var(--majalis-emerald-deep); }
+.liu-input--mb     { margin-bottom: 0.75rem; }
+.liu-import-btn    { padding: 0.625rem 1.25rem; background: var(--majalis-emerald); color: var(--majalis-parchment); border: none; border-radius: 0.375rem; cursor: pointer; font-family: inherit; font-weight: 600; }
+.liu-hints         { margin: 0.75rem 0 0; padding-inline-start: 1.1rem; font-size: 0.75rem; color: var(--majalis-ink-soft); }
+.liu-loading-wrap  { margin-top: 1rem; }
+
+/* ============================================================
+   §121 — MiraclesSection (mir-*)
+   ============================================================ */
+.mir-header     { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.75rem; }
+.mir-title      { margin: 0; font-size: 1.125rem; font-weight: 700; color: var(--majalis-emerald-deep); }
+.mir-btn-group  { display: flex; gap: 0.5rem; }
+.mir-add-btn    { padding: 0.5rem 1.25rem; border-radius: 0.375rem; background: var(--majalis-emerald); color: #fff; border: none; cursor: pointer; }
+.mir-search     { max-width: 20rem; margin-bottom: 1rem; }
+.mir-table-wrap { overflow-x: auto; }
+.mir-table      { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+.mir-thead-row  { background: var(--majalis-parchment-deep); }
+.mir-th         { padding: 0.625rem; text-align: right; color: var(--majalis-emerald-deep); }
+.mir-tr         { border-bottom: 1px solid var(--majalis-line); }
+.mir-td         { padding: 0.625rem; }
+.mir-td--muted  { padding: 0.625rem; color: var(--majalis-ink-soft); }
+.mir-edit-btn   { margin-inline-end: 0.5rem; }
 .iis-drop-icon  { font-size: 3rem; }

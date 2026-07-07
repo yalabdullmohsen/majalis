@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { adminGetMiracles, adminUpsertMiracle, adminDeleteMiracle } from "@/lib/supabase";
 import { sanitizeText } from "@/lib/sanitize";
-import { C } from "@/lib/theme";
 import { Loading } from "@/components/ui-common";
 import { AdminModal, Field } from "./AdminModal";
 import { BulkImport } from "./BulkImport";
@@ -51,38 +50,38 @@ export function MiraclesSection() {
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem", flexWrap: "wrap", gap: "0.75rem" }}>
-        <h2 style={{ margin: 0, fontSize: "1.125rem", fontWeight: 700, color: C.emeraldDeep }}>الإعجاز العلمي ({items.length})</h2>
-        <div style={{ display: "flex", gap: "0.5rem" }}>
+      <div className="mir-header">
+        <h2 className="mir-title">الإعجاز العلمي ({items.length})</h2>
+        <div className="mir-btn-group">
           <BulkImport
             title="استيراد مقالات"
             template={[{ title: "الإعجاز في خلق الإنسان", category: "الأجنة", body: "ملخص المقال...", status: "approved" }]}
             importRow={(row) => adminUpsertMiracle({ status: "approved", ...row })}
             onDone={load}
           />
-          <button type="button" onClick={() => { setForm({ ...EMPTY }); setOpen(true); }} style={{ padding: "0.5rem 1.25rem", borderRadius: "0.375rem", background: C.emerald, color: "white", border: "none", cursor: "pointer" }}>+ إضافة</button>
+          <button type="button" onClick={() => { setForm({ ...EMPTY }); setOpen(true); }} className="mir-add-btn">+ إضافة</button>
         </div>
       </div>
 
-      <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="بحث..." className="adm-input" style={{ maxWidth: "20rem", marginBottom: "1rem" }} />
+      <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="بحث..." className="adm-input mir-search" />
 
       {loading ? <Loading /> : (
-        <div style={{ overflowX: "auto" }}>
-          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.875rem" }}>
+        <div className="mir-table-wrap">
+          <table className="mir-table">
             <thead>
-              <tr style={{ background: C.parchmentDeep }}>
+              <tr className="mir-thead-row">
                 {["العنوان", "التصنيف", "إجراءات"].map((h) => (
-                  <th key={h} style={{ padding: "0.625rem", textAlign: "right", color: C.emeraldDeep }}>{h}</th>
+                  <th key={h} className="mir-th">{h}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
               {filtered.map((item) => (
-                <tr key={item.id} style={{ borderBottom: `1px solid ${C.line}` }}>
-                  <td style={{ padding: "0.625rem" }}>{item.title}</td>
-                  <td style={{ padding: "0.625rem", color: C.inkSoft }}>{item.category || "—"}</td>
-                  <td style={{ padding: "0.625rem" }}>
-                    <button type="button" onClick={() => { setForm({ ...EMPTY, ...item }); setOpen(true); }} style={{ marginInlineEnd: "0.5rem" }}>تعديل</button>
+                <tr key={item.id} className="mir-tr">
+                  <td className="mir-td">{item.title}</td>
+                  <td className="mir-td mir-td--muted">{item.category || "—"}</td>
+                  <td className="mir-td">
+                    <button type="button" onClick={() => { setForm({ ...EMPTY, ...item }); setOpen(true); }} className="mir-edit-btn">تعديل</button>
                     <button type="button" onClick={() => { if (confirm("حذف؟")) adminDeleteMiracle(item.id).then(load).catch(() => alert("تعذّر الحذف.")); }}>حذف</button>
                   </td>
                 </tr>
