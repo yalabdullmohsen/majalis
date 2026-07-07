@@ -142,7 +142,7 @@ export default function CardsPage() {
                     onClick={() => setSelectedTemplate(t)}
                     className={`cards-template-btn${selectedTemplate.id === t.id ? " is-active" : ""}`}
                   >
-                    <span className="cards-template-swatch" style={{ background: t.swatch }} />
+                    <span className="cards-template-swatch" style={{ "--swatch-bg": t.swatch } as React.CSSProperties} />
                     {t.name}
                   </button>
                 ))}
@@ -185,44 +185,27 @@ export default function CardsPage() {
             <div
               className="cards-preview-frame"
               style={{
-                width: dimensions.width * previewScale,
-                height: dimensions.height * previewScale,
-              }}
+                "--cpf-w": `${dimensions.width * previewScale}px`,
+                "--cpf-h": `${dimensions.height * previewScale}px`,
+                "--cpf-scale": previewScale,
+                "--cpf-cw": `${dimensions.width}px`,
+                "--cpf-ch": `${dimensions.height}px`,
+                "--card-bg": selectedTemplate.bg,
+                "--card-border": selectedTemplate.border,
+                "--card-text": selectedTemplate.textColor,
+                "--card-sub": selectedTemplate.subColor,
+                "--card-quote-fs": `${dimensions.width > 500 ? 34 : 26}px`,
+              } as React.CSSProperties}
             >
-              <div
-                style={{
-                  transform: `scale(${previewScale})`,
-                  transformOrigin: "top right",
-                  width: dimensions.width,
-                  height: dimensions.height,
-                }}
-              >
+              <div className="cards-export-scaler">
                 <div
                   ref={cardRef}
                   className="cards-export-canvas"
-                  style={{
-                    width: dimensions.width,
-                    height: dimensions.height,
-                    background: selectedTemplate.bg,
-                    border: selectedTemplate.border,
-                  }}
                 >
-                  <p
-                    className="cards-export-quote"
-                    style={{
-                      fontSize: dimensions.width > 500 ? 34 : 26,
-                      color: selectedTemplate.textColor,
-                    }}
-                  >
+                  <p className="cards-export-quote">
                     {quote || "أدخل اقتباسك هنا"}
                   </p>
-                  <div
-                    className="cards-export-source"
-                    style={{
-                      color: selectedTemplate.subColor,
-                      borderTop: `1px solid ${selectedTemplate.subColor}40`,
-                    }}
-                  >
+                  <div className="cards-export-source">
                     {source}
                   </div>
                   {showLogo && (

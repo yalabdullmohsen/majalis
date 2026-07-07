@@ -58,7 +58,7 @@ export default function LearningPathDashboardPage() {
   return (
     <div dir="rtl" className="min-h-screen bg-[var(--majalis-parchment)] pb-24">
       {/* Hero */}
-      <div className="text-white px-4 py-10" style={{ background: "linear-gradient(to left, var(--majalis-emerald-deep), var(--majalis-emerald))" }}>
+      <div className="text-white px-4 py-10 ldb-hero">
         <div className="max-w-4xl mx-auto">
           <Link href="/learning-path">
             <span className="text-emerald-200 hover:text-white text-sm cursor-pointer inline-flex items-center gap-1 mb-3">
@@ -89,11 +89,11 @@ export default function LearningPathDashboardPage() {
               ].map((stat) => (
                 <div
                   key={stat.label}
-                  className="rounded-2xl p-4 text-center border"
-                  style={{ background: stat.bg, borderColor: `${stat.color}30` }}
+                  className="rounded-2xl p-4 text-center border ldb-stat-card"
+                  style={{ "--stat-bg": stat.bg, "--stat-color": stat.color } as React.CSSProperties}
                 >
-                  <div className="text-3xl font-bold" style={{ color: stat.color }}>{stat.value}</div>
-                  <div className="text-xs mt-1" style={{ color: stat.color }}>{stat.label}</div>
+                  <div className="text-3xl font-bold ldb-stat-val">{stat.value}</div>
+                  <div className="text-xs mt-1 ldb-stat-label">{stat.label}</div>
                 </div>
               ))}
             </div>
@@ -118,7 +118,7 @@ export default function LearningPathDashboardPage() {
                         <div className="flex-1 min-w-0">
                           <p className="text-sm font-medium text-[var(--majalis-ink-soft)] line-clamp-1">كتاب جاري</p>
                           <div className="h-1.5 bg-[var(--majalis-parchment-deep)] rounded-full mt-1.5">
-                            <div className="h-full bg-yellow-400 rounded-full" style={{ width: `${p.progress_percent}%` }} />
+                            <div className="h-full bg-yellow-400 rounded-full ldb-prog-fill" style={{ "--ldb-prog": `${p.progress_percent}%` } as React.CSSProperties} />
                           </div>
                         </div>
                         <span className="text-xs text-[var(--majalis-ink-soft)] opacity-60">{p.progress_percent}%</span>
@@ -140,7 +140,7 @@ export default function LearningPathDashboardPage() {
             </div>
 
             {/* اقتراح */}
-            <div className="bg-[var(--majalis-emerald-muted)] rounded-2xl p-5 text-center" style={{ border: "1px solid color-mix(in srgb, var(--majalis-emerald) 30%, transparent)" }}>
+            <div className="bg-[var(--majalis-emerald-muted)] rounded-2xl p-5 text-center ldb-suggest">
               <p className="text-[var(--majalis-emerald)] font-medium mb-3">
                 {completed.length === 0
                   ? "ابدأ أول كتاب في مسيرتك العلمية اليوم!"

@@ -143,7 +143,7 @@ function PlanDisplay({
           <div className="lp-plan__progress-bar">
             <div
               className="lp-plan__progress-fill"
-              style={{ width: items.length ? `${Math.round((doneCount / items.length) * 100)}%` : "0%" }}
+              style={{ "--plan-pct": items.length ? `${Math.round((doneCount / items.length) * 100)}%` : "0%" } as React.CSSProperties}
             />
           </div>
           <span className="lp-plan__progress-text">{doneCount} / {items.length}</span>
@@ -248,9 +248,9 @@ export default function LearningPlanPage() {
 
   if (!isLoggedIn) {
     return (
-      <div className="page-shell narrow" dir="rtl" style={{ textAlign: "center", paddingTop: "3rem" }}>
-        <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>🔐</div>
-        <p style={{ color: "var(--majalis-ink-soft)", marginBottom: "1rem" }}>
+      <div className="page-shell narrow lpn-login-prompt" dir="rtl">
+        <div className="lpn-login-icon">🔐</div>
+        <p className="lpn-login-msg">
           سجّل الدخول لإنشاء خطة تعلّم شخصية.
         </p>
         <Link href="/login?next=/learning-plan" className="ui-card-btn">
@@ -332,13 +332,13 @@ export default function LearningPlanPage() {
       )}
 
       {step === "loading" && (
-        <div style={{ textAlign: "center", padding: "4rem 0" }}>
+        <div className="lpn-building">
           <div className="profile-loading">
             <span className="profile-loading__dot" />
             <span className="profile-loading__dot" />
             <span className="profile-loading__dot" />
           </div>
-          <p style={{ marginTop: "1rem", color: "var(--majalis-ink-soft)" }}>جارٍ بناء خطتك…</p>
+          <p className="lpn-building__msg">جارٍ بناء خطتك…</p>
         </div>
       )}
 

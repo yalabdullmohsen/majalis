@@ -6447,3 +6447,54 @@ button.primary:hover {
   text-align: center;
   direction: rtl;
 }
+
+/* ============================================================
+   §76 — LearningPlanPage  (lpn-*)
+   ============================================================ */
+.lpn-login-prompt  { text-align: center; padding-top: 3rem; }
+.lpn-login-icon    { font-size: 3rem; margin-bottom: 1rem; }
+.lpn-login-msg     { color: var(--majalis-ink-soft, #5c564c); margin-bottom: 1rem; }
+.lpn-building      { text-align: center; padding: 4rem 0; }
+.lpn-building__msg { margin-top: 1rem; color: var(--majalis-ink-soft, #5c564c); }
+.lp-plan__progress-fill { width: var(--plan-pct, 0%); }
+
+/* ============================================================
+   §77 — LearningPathDashboardPage  (ldb-*)
+   ============================================================ */
+.ldb-hero {
+  background: linear-gradient(to left, var(--majalis-emerald-deep), var(--majalis-emerald));
+}
+.ldb-stat-card {
+  background: var(--stat-bg);
+  border-color: color-mix(in srgb, var(--stat-color) 19%, transparent);
+}
+.ldb-stat-val   { color: var(--stat-color); }
+.ldb-stat-label { color: var(--stat-color); }
+.ldb-prog-fill  { width: var(--ldb-prog, 0%); }
+.ldb-suggest    { border: 1px solid color-mix(in srgb, var(--majalis-emerald) 30%, transparent); }
+
+/* ============================================================
+   §78 — CardsPage  (cards-* additions)
+   ============================================================ */
+.cards-template-swatch { background: var(--swatch-bg, #0f0f0f); }
+.cards-preview-frame   { width: var(--cpf-w); height: var(--cpf-h); }
+.cards-export-scaler {
+  transform: scale(var(--cpf-scale, 1));
+  transform-origin: top right;
+  width: var(--cpf-cw);
+  height: var(--cpf-ch);
+}
+.cards-export-canvas {
+  width: var(--cpf-cw);
+  height: var(--cpf-ch);
+  background: var(--card-bg);
+  border: var(--card-border);
+}
+.cards-export-quote {
+  font-size: var(--card-quote-fs, 30px);
+  color: var(--card-text);
+}
+.cards-export-source {
+  color: var(--card-sub);
+  border-top: 1px solid color-mix(in srgb, var(--card-sub) 25%, transparent);
+}
