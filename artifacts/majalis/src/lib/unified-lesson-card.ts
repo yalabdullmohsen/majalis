@@ -3,7 +3,6 @@ import { cleanDisplayText } from "./display-text";
 import { extractLessonSchedule } from "./lesson-display";
 import { formatSheikhName } from "./sheikh-name";
 import {
-  cleanTimeText,
   computeNextOccurrenceMs,
   formatGregorianDate,
   formatHijriDate,

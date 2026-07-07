@@ -43,7 +43,6 @@ const MiraclesPage = lazy(() => import("@/views/MiraclesPage"));
 const PropheticMedicinePage = lazy(() => import("@/views/PropheticMedicinePage"));
 const FawaidPage = lazy(() => import("@/views/FawaidPage"));
 const HadithPage = lazy(() => import("@/views/HadithPage"));
-const HadithIndexPage = lazy(() => import("@/views/HadithIndexPage"));
 const HadithDaifPage = lazy(() => import("@/views/HadithDaifPage"));
 const HadithMawduPage = lazy(() => import("@/views/HadithMawduPage"));
 const TawhidPage = lazy(() => import("@/views/TawhidPage"));
@@ -189,7 +188,6 @@ function AdhanSchedulerBootstrap() {
   return null;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function SafeLazyRoute({ component: Component }: { component: ComponentType<any> }) {
   // useParams يُعيد params المسار الحالي (مثل { id } أو { slug })
   // ويُمرَّر كـ prop "params" لجميع صفحات التفاصيل

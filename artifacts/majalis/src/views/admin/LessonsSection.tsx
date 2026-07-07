@@ -157,6 +157,7 @@ export function LessonsSection() {
     const dayOfWeek = Array.isArray(form.days_of_week) && form.days_of_week.length > 0
       ? form.days_of_week.join("،")
       : "";
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { venue_type: _vt, days_of_week: _dw, ...rest } = form;
     const payload = {
       ...rest,

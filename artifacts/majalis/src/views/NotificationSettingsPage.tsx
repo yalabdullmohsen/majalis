@@ -113,7 +113,7 @@ export default function NotificationSettingsPage() {
     return () => clearTimeout(t);
   }, [prefs]);
 
-  useEffect(() => { refreshHistory(); }, [searchQ, histTab]); // eslint-disable-line
+  useEffect(() => { refreshHistory(); }, [searchQ, histTab]);
 
   const handleEnable = async () => {
     setRequesting(true);

@@ -10,7 +10,6 @@ import {
   computeNextOccurrenceMs,
   formatGregorianDate,
   formatHijriDate,
-  formatRelativeTime,
   formatRelativeTimeDetailed,
   isOccurrencePast,
 } from "@/lib/lesson-time";

@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { PageHeader, Chip } from "@/components/ui-common";
+import { Chip } from "@/components/ui-common";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
 import {
   PROPHETIC_MEDICINE_ITEMS,

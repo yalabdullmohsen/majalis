@@ -248,16 +248,6 @@ export default function LessonsPage({
 
   const tabLessons = useMemo(() => filterByTab(activeLessons, tab), [activeLessons, tab]);
 
-  const tabCounts = useMemo(
-    () => ({
-      all: activeLessons.length,
-      men: filterByTab(activeLessons, "men").length,
-      women: filterByTab(activeLessons, "women").length,
-      courses: filterByTab(activeLessons, "courses").length,
-    }),
-    [activeLessons],
-  );
-
   const options = useMemo(() => extractFilterOptions(tabLessons), [tabLessons]);
 
   const regionOptions = useMemo(() => {
