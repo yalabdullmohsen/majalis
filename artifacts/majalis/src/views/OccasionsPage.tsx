@@ -60,8 +60,7 @@ export default function OccasionsPage() {
             value={monthFilter}
             onChange={setMonthFilter}
             includeAll
-            className="ds-input"
-            style={{ maxWidth: "16rem" }}
+            className="ds-input ocp-month-filter"
           />
           <span className="occasions-filter__count">
             ({filtered.length.toLocaleString("ar-EG")})
@@ -73,7 +72,7 @@ export default function OccasionsPage() {
       {loading ? (
         <Loading />
       ) : filtered.length === 0 ? (
-        <p className="occasions-filter__count" style={{ padding: "1rem 0" }}>
+        <p className="occasions-filter__count occasions-filter__count--empty">
           لا توجد مناسبات في هذا الشهر.
         </p>
       ) : (

@@ -32,7 +32,7 @@ function RingProgress({ pct, size = 120 }: { pct: number; size?: number }) {
         strokeDasharray={circ}
         strokeDashoffset={circ * (1 - pct)}
         transform={`rotate(-90 ${size / 2} ${size / 2})`}
-        style={{ transition: "stroke-dashoffset 0.18s ease" }}
+        className="adhkar-ring-fill"
       />
     </svg>
   );
@@ -281,8 +281,8 @@ export default function AdhkarPage() {
           {/* شريط تقدم الأذكار */}
           <div className="adhkar-focus-progress" role="progressbar" aria-valuenow={currentIndex + 1} aria-valuemax={total}>
             <div
-              className="adhkar-focus-progress-fill"
-              style={{ width: `${((currentIndex + 1) / total) * 100}%` }}
+              className="adhkar-focus-progress-fill adhkar-prog-fill"
+              style={{ "--adhkar-pct": `${((currentIndex + 1) / total) * 100}%` } as React.CSSProperties}
             />
           </div>
         </div>

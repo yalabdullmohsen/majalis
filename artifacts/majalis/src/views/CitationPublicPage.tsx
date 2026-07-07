@@ -115,17 +115,17 @@ export default function CitationPublicPage() {
         <div className="w-full max-w-xl space-y-6">
 
           {/* بطاقة الاقتباس */}
-          <div className="bg-[var(--majalis-panel)] rounded-2xl shadow-xl overflow-hidden border border-amber-100 dark:border-gray-700">
+          <div className="bg-[var(--majalis-panel)] rounded-2xl shadow-xl overflow-hidden border border-amber-100 dark:border-gray-700"
+            style={{ "--cit-type-color": typeColor } as React.CSSProperties}>
             {/* شريط ملوَّن */}
-            <div className="h-1.5" style={{ background: typeColor }} />
+            <div className="h-1.5 cit-type-bar" />
 
             <div className="p-6 space-y-4">
               {/* نوع المحتوى والعنوان */}
               {src && (
                 <div className="flex items-center gap-2 flex-wrap">
                   <span
-                    className="px-2 py-0.5 rounded text-xs text-white font-medium"
-                    style={{ background: typeColor }}
+                    className="px-2 py-0.5 rounded text-xs text-white font-medium cit-type-badge"
                   >
                     {typeLabel}
                   </span>

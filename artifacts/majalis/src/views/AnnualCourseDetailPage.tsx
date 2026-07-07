@@ -139,7 +139,7 @@ export default function AnnualCourseDetailPage({ params }: { params: { id: strin
               title="خريطة مكان الدورة"
               src={mapEmbed}
               loading="lazy"
-              style={{ width: "100%", height: "280px", border: 0, borderRadius: "0.5rem", marginTop: "1rem" }}
+              className="acd-map-iframe"
               allowFullScreen
             />
           )}
@@ -150,7 +150,7 @@ export default function AnnualCourseDetailPage({ params }: { params: { id: strin
         <section className="ui-card content-detail-section">
           <Link
             href={item.registration_url}
-            style={{ display: "inline-block", padding: "0.75rem 1.5rem", borderRadius: "0.5rem", background: "var(--emerald, #164E3C)", color: "#fff", fontWeight: 700, textDecoration: "none" }}
+            className="acd-register-link"
           >
             التسجيل في الدورة
           </Link>

@@ -6640,3 +6640,52 @@ button.primary:hover {
 .fip-progress  { margin: 0; max-width: none; }
 .fip-prog-fill { width: var(--fip-pct, 0%); }
 .fip-back-wrap { text-align: center; margin-top: 2rem; }
+
+/* ============================================================
+   §93 — KuwaitLessonsPage  (sheikh-avatar additions)
+   ============================================================ */
+.sheikh-avatar--initials { background: var(--avatar-bg, #1b5e3b); }
+.sheikh-avatar--hidden   { display: none; }
+
+/* ============================================================
+   §94 — QiblaPage  (qibla-* additions)
+   ============================================================ */
+.qibla-north-icon { filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2)); }
+.qibla-aligned    { color: #16A34A; }
+
+/* ============================================================
+   §95 — OccasionsPage  (ocp-*)
+   ============================================================ */
+.ocp-month-filter                   { max-width: 16rem; }
+.occasions-filter__count--empty     { padding: 1rem 0; }
+
+/* ============================================================
+   §96 — CitationPublicPage  (reuses cit-* from §86)
+   ============================================================ */
+/* No new rules needed — uses cit-type-bar and cit-type-badge from §86 */
+
+/* ============================================================
+   §97 — AnnualCourseDetailPage  (acd-*)
+   ============================================================ */
+.acd-map-iframe {
+  width: 100%;
+  height: 280px;
+  border: 0;
+  border-radius: 0.5rem;
+  margin-top: 1rem;
+}
+.acd-register-link {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  background: var(--emerald, #164E3C);
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* ============================================================
+   §98 — AdhkarPage  (adhkar-* additions)
+   ============================================================ */
+.adhkar-ring-fill { transition: stroke-dashoffset 0.18s ease; }
+.adhkar-prog-fill { width: var(--adhkar-pct, 0%); }

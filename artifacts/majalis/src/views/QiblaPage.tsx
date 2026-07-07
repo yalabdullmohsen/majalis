@@ -98,7 +98,7 @@ function QiblaCompass({
           fill="rgba(22,163,74,0.18)"
         />
         {/* رأس السهم: الكعبة */}
-        <text x="100" y="17" textAnchor="middle" fontSize="14" style={{ filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.2))" }}>
+        <text x="100" y="17" textAnchor="middle" fontSize="14" className="qibla-north-icon">
           🕋
         </text>
         {/* مركز الوصلة */}
@@ -211,7 +211,7 @@ export default function QiblaPage() {
               {delta != null && (
                 <div className="qibla-info-card">
                   <span className="qibla-info-label">الدقة</span>
-                  <strong className="qibla-info-value" style={{ color: aligned ? "#16A34A" : undefined }}>
+                  <strong className={`qibla-info-value${aligned ? " qibla-aligned" : ""}`}>
                     {Math.max(0, 100 - Math.round(delta * 3))}%
                   </strong>
                 </div>
