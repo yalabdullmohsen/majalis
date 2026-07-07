@@ -9,12 +9,15 @@ export type KuwaitGovernorate = {
   lon: number;
 };
 
+// الإحداثيات مضبوطة على مراكز المحافظات الجغرافية الفعلية
+// المصدر: خرائط الكويت الرسمية + WGS84
+// الطريقة: Method 9 (Kuwait Ministry of Awqaf) — زاوية الفجر 18° / العشاء 17.5°
 export const KUWAIT_GOVERNORATES: KuwaitGovernorate[] = [
-  { id: "capital",   name: "العاصمة",        lat: 29.3759, lon: 47.9774 },
-  { id: "hawalli",   name: "حولي",            lat: 29.3241, lon: 48.0318 },
-  { id: "farwaniya", name: "الفروانية",       lat: 29.2786, lon: 47.9598 },
-  { id: "mubarak",   name: "مبارك الكبير",   lat: 29.2183, lon: 48.0796 },
-  { id: "jahra",     name: "الجهراء",         lat: 29.3375, lon: 47.6581 },
+  { id: "capital",   name: "العاصمة",        lat: 29.3697, lon: 47.9783 },
+  { id: "hawalli",   name: "حولي",            lat: 29.3339, lon: 48.0668 },
+  { id: "farwaniya", name: "الفروانية",       lat: 29.2800, lon: 47.9600 },
+  { id: "mubarak",   name: "مبارك الكبير",   lat: 29.2200, lon: 48.0800 },
+  { id: "jahra",     name: "الجهراء",         lat: 29.3418, lon: 47.6583 },
   { id: "ahmadi",    name: "الأحمدي",         lat: 29.0769, lon: 48.0838 },
 ];
 
@@ -175,9 +178,11 @@ async function fetchAlAdhanDirect(
   cityName: string,
 ): Promise<PrayerTimesPayload> {
   const dateParam = kuwaitDateParam();
+  // school=0: حساب العصر على مذهب الشافعية (ظل الشيء مساوٍ لطوله) — المعتمد لدى الأوقاف الكويتية
+  // timezonestring: صريح لمنع أي خطأ في التوقيت
   const url =
     `https://api.aladhan.com/v1/timings/${dateParam}` +
-    `?latitude=${lat}&longitude=${lon}&method=${KUWAIT_METHOD}`;
+    `?latitude=${lat}&longitude=${lon}&method=${KUWAIT_METHOD}&school=0&timezonestring=Asia%2FKuwait`;
 
   const response = await requestFetch(url, {
     headers: { Accept: "application/json" },
