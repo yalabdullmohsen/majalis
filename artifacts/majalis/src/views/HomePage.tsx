@@ -82,6 +82,12 @@ const SITE_ANNOUNCEMENTS = [
     desc: "موسوعة شرعية في الفقه والعبادات والمعاملات",
   },
   {
+    href: "/scholarly-research",
+    icon: "🔬",
+    title: "الأبحاث العلمية",
+    desc: "باحث شرعي متقدم مدعوم بالذكاء الاصطناعي في المصادر الإسلامية",
+  },
+  {
     href: "/stories",
     icon: "🗺️",
     title: "القصص الإسلامية",

@@ -28,7 +28,7 @@
   padding: 0 0.5rem;
   padding-top: max(0.5rem, env(safe-area-inset-top));
   height: calc(52px + max(0rem, env(safe-area-inset-top)));
-  background: linear-gradient(to bottom, rgba(7,18,11,0.97) 60%, transparent);
+  background: linear-gradient(to bottom, rgba(24,54,42,0.96) 55%, rgba(24,54,42,0));
   opacity: 0;
   transform: translateY(-8px);
   transition: opacity 0.25s ease, transform 0.25s ease;
@@ -39,13 +39,13 @@
 .mshf-back {
   display: flex; align-items: center; justify-content: center;
   width: 44px; height: 44px;
-  border: none; background: rgba(255,255,255,0.08);
+  border: none; background: rgba(255,255,255,0.12);
   border-radius: 50%;
   color: #fff; cursor: pointer;
   flex-shrink: 0;
   transition: background 0.15s;
 }
-.mshf-back:hover { background: rgba(106,181,142,0.2); }
+.mshf-back:hover { background: rgba(255,255,255,0.22); }
 
 .mshf-title-wrap {
   flex: 1; display: flex; align-items: center;
@@ -54,9 +54,9 @@
 .mshf-title {
   font-size: 1rem; font-weight: 700; color: #fff;
   letter-spacing: 0.05em;
-  text-shadow: 0 1px 8px rgba(0,0,0,0.5);
+  text-shadow: 0 1px 6px rgba(0,0,0,0.35);
 }
-.mshf-star { width: 16px; height: 16px; opacity: 0.7; flex-shrink: 0; }
+.mshf-star { width: 16px; height: 16px; opacity: 0.75; flex-shrink: 0; }
 .mshf-top__right { width: 44px; flex-shrink: 0; }
 
 /* ══ منطقة الـ canvas ══ */
@@ -67,8 +67,7 @@
   justify-content: center;
   position: relative;
   overflow: hidden;
-  background: radial-gradient(ellipse 100% 70% at 50% 30%,
-    #102218 0%, #091710 60%, #060e0b 100%);
+  background: #F9F3E8;
 }
 
 /* ── مناطق النقر للتنقل ── */
@@ -87,21 +86,11 @@
 .mshf-wrap {
   position: relative;
   display: inline-flex;
-  border: 1px solid rgba(106,181,142,0.3);
-  border-radius: 3px;
+  border: 1px solid rgba(106,181,142,0.25);
+  border-radius: 2px;
   box-shadow:
-    inset 0 0 0 3px #0b1a12,
-    inset 0 0 0 4px rgba(106,181,142,0.12),
-    0 24px 80px rgba(0,0,0,0.85),
-    0 6px 24px rgba(0,0,0,0.5);
-}
-.mshf-wrap::after {
-  content: '';
-  position: absolute;
-  inset: 4px;
-  border: 1px solid rgba(106,181,142,0.1);
-  pointer-events: none;
-  z-index: 1;
+    0 8px 40px rgba(0,0,0,0.18),
+    0 2px 8px rgba(0,0,0,0.10);
 }
 
 /* ── زوايا هندسية ── */
@@ -130,14 +119,15 @@
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
   gap: 0.75rem;
-  color: rgba(168,232,200,0.5);
+  color: rgba(24,54,42,0.5);
   font-size: 0.875rem;
   pointer-events: none;
+  background: #F9F3E8;
 }
 .mshf-spinner {
   width: 32px; height: 32px;
-  border: 3px solid rgba(106,181,142,0.15);
-  border-top-color: rgba(106,181,142,0.75);
+  border: 3px solid rgba(24,54,42,0.1);
+  border-top-color: rgba(24,54,42,0.55);
   border-radius: 50%;
   animation: mshf-spin 0.7s linear infinite;
 }
@@ -148,21 +138,21 @@
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
   gap: 0.75rem; padding: 2rem; text-align: center;
-  color: rgba(255,255,255,0.7);
+  color: rgba(24,54,42,0.75);
 }
 .mshf-err__icon { font-size: 2.5rem; line-height: 1; }
 .mshf-err p { margin: 0; font-size: 0.9375rem; }
 .mshf-err__btn {
   margin-top: 0.25rem;
   padding: 0.5rem 1.25rem;
-  border: 1px solid rgba(106,181,142,0.35);
+  border: 1px solid rgba(24,54,42,0.25);
   border-radius: 0.6rem;
-  background: rgba(106,181,142,0.1);
-  color: #a8e8c8; font-family: inherit;
+  background: rgba(24,54,42,0.08);
+  color: #18362A; font-family: inherit;
   font-size: 0.875rem; font-weight: 700; cursor: pointer;
   transition: background 0.15s;
 }
-.mshf-err__btn:hover { background: rgba(106,181,142,0.2); }
+.mshf-err__btn:hover { background: rgba(24,54,42,0.15); }
 
 /* ══ شريط سفلي ══ */
 .mshf-bot {
@@ -172,7 +162,7 @@
   display: flex; align-items: center; gap: 0.5rem;
   padding: 0.6rem 0.75rem;
   padding-bottom: max(0.6rem, env(safe-area-inset-bottom));
-  background: linear-gradient(to top, rgba(7,18,11,0.97) 60%, transparent);
+  background: linear-gradient(to top, rgba(24,54,42,0.96) 55%, rgba(24,54,42,0));
   opacity: 0;
   transform: translateY(8px);
   transition: opacity 0.25s ease, transform 0.25s ease;
@@ -185,11 +175,11 @@
   width: 44px; height: 44px;
   display: flex; align-items: center; justify-content: center;
   border: none; border-radius: 50%;
-  background: rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.12);
   color: #fff; cursor: pointer; flex-shrink: 0;
   transition: background 0.15s, opacity 0.15s;
 }
-.mshf-nav:hover:not(:disabled) { background: rgba(106,181,142,0.2); }
+.mshf-nav:hover:not(:disabled) { background: rgba(255,255,255,0.22); }
 .mshf-nav:disabled { opacity: 0.25; cursor: not-allowed; }
 
 /* رقم الصفحة */

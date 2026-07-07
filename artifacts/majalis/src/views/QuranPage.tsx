@@ -68,9 +68,9 @@ export default function QuranPage() {
       const pg  = await doc.getPage(p);
       const cvs = canvasRef.current;
       const fr  = frameRef.current;
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const dpr = Math.min(window.devicePixelRatio || 1, 3);
       const vp0 = pg.getViewport({ scale: 1 });
-      const sc  = Math.min((fr.clientWidth * dpr) / vp0.width, (fr.clientHeight * dpr) / vp0.height) * 0.92;
+      const sc  = Math.min((fr.clientWidth * dpr) / vp0.width, (fr.clientHeight * dpr) / vp0.height) * 0.97;
       const vp  = pg.getViewport({ scale: sc });
       cvs.width  = vp.width;
       cvs.height = vp.height;
