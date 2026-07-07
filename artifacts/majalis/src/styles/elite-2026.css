@@ -3582,13 +3582,13 @@ button.primary:hover {
   align-items: center;
   gap: 1.25rem;
   padding: 0.5rem 1rem 2rem;
+  --qibla-bg: #F0FDF4;
 }
 .qibla-svg {
   width: min(280px, 90vw);
   height: min(280px, 90vw);
   filter: drop-shadow(0 4px 16px rgba(22,163,74,0.15));
 }
---qibla-bg: #F0FDF4;
 .qibla-aligned-badge {
   background: var(--elite-forest, #18362A) !important;
   color: var(--elite-white, #FAF8F2) !important;
