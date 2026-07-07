@@ -139,8 +139,8 @@ function SkeletonResults() {
         <div key={i} className="gsm-skel-row">
           <div className="gsm-skel-icon" />
           <div className="gsm-skel-body">
-            <div className="gsm-skel-line"  style={{ width: `${60 + i * 8}%` }} />
-            <div className="gsm-skel-line2" style={{ width: `${40 + i * 5}%` }} />
+            <div className="gsm-skel-line"  style={{ "--gsm-skel-w1": `${60 + i * 8}%` } as React.CSSProperties} />
+            <div className="gsm-skel-line2" style={{ "--gsm-skel-w2": `${40 + i * 5}%` } as React.CSSProperties} />
           </div>
         </div>
       ))}

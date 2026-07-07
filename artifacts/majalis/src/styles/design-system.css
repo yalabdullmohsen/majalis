@@ -296,6 +296,7 @@ html {
   border-radius: var(--ds-radius-sm);
   /* يحترم تفضيل تقليل الحركة */
 }
+.ds-skeleton--line { width: var(--sk-w, 100%); height: var(--sk-h, 0.75rem); }
 
 @keyframes ds-shimmer {
   from { background-position: 200% 0; }
@@ -1335,6 +1336,8 @@ body {
   max-height: min(70vh, 640px);
   overflow-y: auto;
 }
+.ds-virtual-list__track { height: var(--vl-total, 0px); position: relative; }
+.ds-virtual-list__item  { position: absolute; top: var(--vl-top, 0); left: 0; right: 0; height: var(--vl-h, 48px); }
 
 .reading-toolbar--minimal {
   margin-top: var(--ds-space-2);

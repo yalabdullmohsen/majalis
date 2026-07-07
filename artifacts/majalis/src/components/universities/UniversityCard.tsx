@@ -24,8 +24,7 @@ export function UniversityCard({ university: u, compact = false }: Props) {
       <div className="univ-card__head">
         {u.logo_url ? (
           <img src={u.logo_url} alt={u.name_ar} loading="lazy" decoding="async"
-            className="w-10 h-10 rounded-full object-contain"
-            style={{ background: "rgba(255,255,255,0.9)" }} />
+            className="w-10 h-10 rounded-full object-contain univ-card__logo" />
         ) : (
           <div className="univ-card__head-avatar">{u.name_ar[0]}</div>
         )}
@@ -38,7 +37,7 @@ export function UniversityCard({ university: u, compact = false }: Props) {
       {/* محتوى */}
       <div className="p-4 flex-1 space-y-3">
         {/* الموقع */}
-        <div className="flex items-center gap-1.5 text-xs" style={{ color: "var(--majalis-ink-soft)" }}>
+        <div className="flex items-center gap-1.5 text-xs univ-card__location">
           <span>📍</span>
           <span>{u.city ? `${u.city}، ` : ""}{u.country}</span>
           {u.is_verified && (
@@ -48,14 +47,14 @@ export function UniversityCard({ university: u, compact = false }: Props) {
 
         {/* الاعتماد */}
         <div className="flex items-center gap-1.5">
-          <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: accColor }} />
-          <span className="text-xs" style={{ color: "var(--majalis-ink-soft)" }}>
+          <span className="w-2 h-2 rounded-full flex-shrink-0 univ-card__acc-dot" style={{ "--univ-acc": accColor } as React.CSSProperties} />
+          <span className="text-xs univ-card__meta">
             {ACCREDITATION_LABELS[u.accreditation_status]}
           </span>
         </div>
 
         {!compact && u.about && (
-          <p className="text-xs leading-relaxed line-clamp-3" style={{ color: "var(--majalis-ink-soft)" }}>
+          <p className="text-xs leading-relaxed line-clamp-3 univ-card__meta">
             {u.about}
           </p>
         )}
@@ -80,7 +79,7 @@ export function UniversityCard({ university: u, compact = false }: Props) {
         </div>
 
         {/* آخر تحديث */}
-        <p className="text-xs" style={{ color: "var(--majalis-line)" }}>
+        <p className="text-xs univ-card__updated">
           آخر تحديث: {new Date(u.last_updated_at).toLocaleDateString("ar-SA")}
         </p>
       </div>

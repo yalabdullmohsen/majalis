@@ -269,7 +269,7 @@ export function LessonsSection() {
                         <span>
                           {item.speaker_name}
                           {looksLikeTopic(item.speaker_name) && (
-                            <span title="يبدو أن هذا موضوع وليس اسم شيخ" style={{ marginRight: "0.3rem", cursor: "help" }}>⚠️</span>
+                            <span title="يبدو أن هذا موضوع وليس اسم شيخ" className="les-topic-warn">⚠️</span>
                           )}
                         </span>
                       ) : "—")}

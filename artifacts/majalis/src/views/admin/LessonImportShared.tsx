@@ -112,7 +112,7 @@ export function DebugLogPanel({ log }: { log: DebugLog }) {
             </div>
           ))}
           {log.raw_ocr_text && (
-            <details className="lis-debug-ocr" style={{ marginTop: "0.5rem" }}>
+            <details className="lis-debug-ocr lis-debug-ocr--mt">
               <summary>raw_ocr_text</summary>
               <pre>{log.raw_ocr_text}</pre>
             </details>
@@ -182,7 +182,7 @@ export function LessonImportForm({
                     const next = e.target.checked ? [...cur, d] : cur.filter(x => x !== d);
                     set("day_of_week", next.join("\u060c"));
                   }}
-                  style={{ accentColor: "var(--majalis-emerald)", width: "1rem", height: "1rem" }}
+                  className="lis-day-checkbox"
                 />
                 {d}
               </label>
@@ -260,11 +260,11 @@ export function LessonImportForm({
       </div>
       <div className="lis-checkbox-row">
         <input type="checkbox" checked={Boolean(parsed.has_live_stream)} disabled={disabled} onChange={(e) => set("has_live_stream", e.target.checked)} id="has-live" />
-        <label htmlFor="has-live" className="lis-label" style={{ margin: 0 }}>{FIELD_LABELS.has_live_stream}</label>
+        <label htmlFor="has-live" className="lis-label lis-label--inline">{FIELD_LABELS.has_live_stream}</label>
       </div>
       <div className="lis-checkbox-row">
         <input type="checkbox" checked={Boolean(parsed.has_women_section)} disabled={disabled} onChange={(e) => set("has_women_section", e.target.checked)} id="has-women" />
-        <label htmlFor="has-women" className="lis-label" style={{ margin: 0 }}>{FIELD_LABELS.has_women_section}</label>
+        <label htmlFor="has-women" className="lis-label lis-label--inline">{FIELD_LABELS.has_women_section}</label>
       </div>
       <div className="lis-full-col">
         <label className="lis-label">{FIELD_LABELS.keywords}</label>

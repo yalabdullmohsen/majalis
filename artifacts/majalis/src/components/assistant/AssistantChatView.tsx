@@ -116,13 +116,13 @@ export function AssistantChatView({
 
       {/* Categorized suggestions shown only on empty chat */}
       {showSuggestions && (
-        <div style={{ marginBottom: "1rem" }}>
+        <div className="acv-suggestions">
           {SUGGESTED_CATEGORIES.map((cat) => (
-            <div key={cat.label} style={{ marginBottom: "0.75rem" }}>
-              <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "var(--ds-ink-soft, #8A7560)", marginBottom: "0.375rem", display: "flex", alignItems: "center", gap: "0.375rem" }}>
+            <div key={cat.label} className="acv-cat">
+              <div className="acv-cat__head">
                 <span>{cat.icon}</span> {cat.label}
               </div>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "0.375rem" }}>
+              <div className="acv-cat__pills">
                 {cat.questions.map((q) => (
                   <button
                     key={q}
@@ -130,18 +130,6 @@ export function AssistantChatView({
                     disabled={loading}
                     onClick={() => onQuickPrompt(q)}
                     className="assistant-quick-prompt-chip"
-                    style={{
-                      padding: "0.3rem 0.625rem",
-                      borderRadius: "99px",
-                      border: "1px solid var(--ds-line, #E5DDD0)",
-                      background: "var(--ds-panel, #FFFFFF)",
-                      color: "var(--ds-ink, #2C2416)",
-                      fontSize: "0.8rem",
-                      cursor: "pointer",
-                      fontFamily: "inherit",
-                      textAlign: "right",
-                      transition: "background 0.15s",
-                    }}
                   >
                     {q}
                   </button>
@@ -174,19 +162,12 @@ export function AssistantChatView({
 
                 {/* Safety + confidence badge */}
                 {message.safetyClassification && (
-                  <div style={{ marginTop: "0.5rem", display: "flex", gap: "0.5rem", alignItems: "center", flexWrap: "wrap" }}>
-                    <span style={{
-                      fontSize: "0.7rem",
-                      padding: "0.15rem 0.5rem",
-                      borderRadius: "99px",
-                      background: message.grounded ? "#D1FAE5" : "rgba(14,110,82,0.08)",
-                      color: message.grounded ? "#065F46" : "#0A5040",
-                      fontWeight: 600,
-                    }}>
+                  <div className="acv-safety-row">
+                    <span className={`acv-safety-badge${message.grounded ? " acv-safety-badge--grounded" : ""}`}>
                       {safetyLabel(message.safetyClassification)}
                     </span>
                     {message.confidence != null && message.grounded && message.confidence > 0 && (
-                      <span style={{ fontSize: "0.7rem", color: "var(--ds-ink-soft, #8A7560)" }}>
+                      <span className="acv-confidence">
                         ثقة: {Math.round(message.confidence * (message.confidence <= 1 ? 100 : 1))}%
                       </span>
                     )}
@@ -195,11 +176,11 @@ export function AssistantChatView({
 
                 {/* Citation cards */}
                 {message.citations && message.citations.length > 0 && (
-                  <div style={{ marginTop: "0.75rem" }}>
-                    <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "var(--ds-ink-soft, #8A7560)", marginBottom: "0.375rem" }}>
+                  <div className="acv-citations">
+                    <div className="acv-citations__head">
                       المصادر ({message.citations.length})
                     </div>
-                    <div style={{ display: "flex", flexDirection: "column", gap: "0.375rem" }}>
+                    <div className="acv-citations__list">
                       {message.citations.slice(0, 5).map((cite, i) => (
                         <CitationCard key={`${cite.href}-${i}`} cite={cite} />
                       ))}
@@ -208,13 +189,7 @@ export function AssistantChatView({
                 )}
 
                 {/* Disclaimer */}
-                <p className="assistant-disclaimer" style={{
-                  marginTop: "0.625rem",
-                  fontSize: "0.75rem",
-                  color: "var(--majalis-brass-deep, #7A5C1E)",
-                  borderTop: "1px solid var(--ds-line, #E5DDD0)",
-                  paddingTop: "0.375rem",
-                }}>
+                <p className="assistant-disclaimer">
                   ⚠️ {message.disclaimer || "هذه إجابة تعليمية مختصرة وليست فتوى شخصية ملزمة."}
                 </p>
               </>

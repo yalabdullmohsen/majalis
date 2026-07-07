@@ -112,7 +112,7 @@ export function FeaturedCard({
       {accentColor && (
         <span
           className="msk-featured-card__accent"
-          style={{ background: accentColor }}
+          style={{ "--msk-accent": accentColor } as React.CSSProperties}
           aria-hidden="true"
         />
       )}
@@ -143,7 +143,7 @@ export function NumberedListCard({
           <li key={item.num} className="msk-numbered-card__item">
             <span
               className="msk-numbered-card__num"
-              style={{ background: accentColor }}
+              style={{ "--msk-accent": accentColor } as React.CSSProperties}
               aria-hidden="true"
             >
               {item.num}

@@ -36,7 +36,8 @@ export function Toaster() {
           <Toast key={id} variant={variant} {...props}>
             {/* أيقونة النوع */}
             <span
-              style={{ color, flexShrink: 0, marginTop: "0.05rem" }}
+              className="toast-icon"
+              style={{ "--toast-icon-color": color } as React.CSSProperties}
               aria-hidden="true"
             >
               <Icon size={18} strokeWidth={2} />

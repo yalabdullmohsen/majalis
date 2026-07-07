@@ -855,6 +855,7 @@
   position: absolute;
   top: 0; right: 0;
   width: 100%; height: 3px;
+  background: var(--msk-accent, var(--majalis-emerald));
 }
 .msk-featured-card__icon {
   font-size: 1.5rem;
@@ -919,6 +920,7 @@
   font-weight: 700;
   color: #FFFFFF;
   margin-top: 0.1rem;
+  background: var(--msk-accent, var(--majalis-emerald));
 }
 .msk-numbered-card__label {
   font-size: 0.9rem;

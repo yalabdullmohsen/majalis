@@ -51,14 +51,14 @@ function VirtualListInner<T>({
       onScroll={onScroll}
       role="list"
     >
-      <div style={{ height: totalHeight, position: "relative" }}>
+      <div className="ds-virtual-list__track" style={{ "--vl-total": `${totalHeight}px` } as React.CSSProperties}>
         {slice.map((item, i) => {
           const index = start + i;
           return (
             <div
               key={getKey(item, index)}
               className="ds-virtual-list__item"
-              style={{ position: "absolute", top: index * itemHeight, left: 0, right: 0, height: itemHeight }}
+              style={{ "--vl-top": `${index * itemHeight}px`, "--vl-h": `${itemHeight}px` } as React.CSSProperties}
               role="listitem"
             >
               {renderItem(item, index)}

@@ -44,45 +44,18 @@ export function MuezzinPicker({ selected, onSelect, onClose }: Props) {
   }
 
   return (
-    <div style={{
-      position: "fixed",
-      inset: 0,
-      zIndex: 3000,
-      background: "rgba(0,0,0,0.65)",
-      display: "flex",
-      alignItems: "flex-end",
-      justifyContent: "center",
-    }} onClick={onClose}>
-      <div
-        style={{
-          background: "var(--majalis-panel-raised, rgba(20,27,45,0.97))",
-          borderRadius: "1.25rem 1.25rem 0 0",
-          width: "min(100vw, 540px)",
-          maxHeight: "82vh",
-          overflowY: "auto",
-          direction: "rtl",
-          padding: "0 0 2rem",
-          border: "1px solid rgba(255,255,255,0.10)",
-          borderBottom: "none",
-          boxShadow: "0 -8px 40px rgba(0,0,0,0.50)",
-        }}
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* Handle */}
-        <div style={{ display: "flex", justifyContent: "center", padding: "0.75rem 0 0" }}>
-          <div style={{ width: 40, height: 4, borderRadius: 999, background: "rgba(255,255,255,0.15)" }} />
+    <div className="mzp-overlay" onClick={onClose}>
+      <div className="mzp-sheet" onClick={(e) => e.stopPropagation()}>
+        <div className="mzp-handle-row">
+          <div className="mzp-handle" />
         </div>
 
-        <div style={{ padding: "1rem 1.25rem 0.5rem" }}>
-          <h3 style={{ margin: 0, fontSize: "1.05rem", fontWeight: 700, color: "var(--majalis-emerald, #2E8B67)" }}>
-            اختر المؤذن
-          </h3>
-          <p style={{ margin: "0.3rem 0 0", fontSize: "0.78rem", color: "var(--majalis-ink-muted, #9BA3B5)" }}>
-            اضغط ▶ للمعاينة • اضغط الاسم للاختيار
-          </p>
+        <div className="mzp-header">
+          <h3 className="mzp-title">اختر المؤذن</h3>
+          <p className="mzp-subtitle">اضغط ▶ للمعاينة • اضغط الاسم للاختيار</p>
         </div>
 
-        <div style={{ padding: "0.5rem 1rem" }}>
+        <div className="mzp-list">
           {MUEZZINS.map((m) => {
             const isSelected = selected === m.id;
             const isPlaying = previewing === m.id;
@@ -90,72 +63,30 @@ export function MuezzinPicker({ selected, onSelect, onClose }: Props) {
             return (
               <div
                 key={m.id}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.75rem",
-                  padding: "0.75rem 0.875rem",
-                  borderRadius: "0.75rem",
-                  marginBottom: "0.4rem",
-                  background: isSelected ? "rgba(46,139,103,0.15)" : "rgba(255,255,255,0.04)",
-                  border: `1.5px solid ${isSelected ? "var(--majalis-emerald, #2E8B67)" : "rgba(255,255,255,0.08)"}`,
-                  cursor: "pointer",
-                  transition: "border-color 0.15s, background 0.15s",
-                }}
+                className={`mzp-item${isSelected ? " mzp-item--selected" : ""}`}
                 onClick={() => handleSelect(m.id)}
               >
-                {/* Selection indicator */}
-                <div style={{
-                  width: 18, height: 18,
-                  borderRadius: "50%",
-                  border: `2px solid ${isSelected ? "var(--majalis-emerald, #2E8B67)" : "rgba(255,255,255,0.25)"}`,
-                  background: isSelected ? "var(--majalis-emerald, #2E8B67)" : "transparent",
-                  flexShrink: 0,
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                }}>
-                  {isSelected && <span style={{ color: "#fff", fontSize: "0.6rem" }}>✓</span>}
+                <div className={`mzp-radio${isSelected ? " mzp-radio--selected" : ""}`}>
+                  {isSelected && <span className="mzp-check">✓</span>}
                 </div>
 
-                {/* Info */}
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontWeight: 600, fontSize: "0.9rem", color: "var(--majalis-ink, #EDE9DD)" }}>
-                    {m.name}
-                  </div>
-                  <div style={{ fontSize: "0.73rem", color: "var(--majalis-ink-muted, #9BA3B5)", marginTop: "0.1rem" }}>
+                <div className="mzp-info">
+                  <div className="mzp-name">{m.name}</div>
+                  <div className="mzp-origin">
                     {m.origin}
-                    <span style={{
-                      marginRight: "0.5rem",
-                      padding: "0.1rem 0.4rem",
-                      borderRadius: "999px",
-                      fontSize: "0.68rem",
-                      background: `rgba(46,139,103,0.15)`,
-                      color: styleColor,
-                      fontWeight: 600,
-                    }}>
+                    <span
+                      className="mzp-style-badge"
+                      style={{ "--mzp-style-color": styleColor } as React.CSSProperties}
+                    >
                       {m.style}
                     </span>
                   </div>
                 </div>
 
-                {/* Preview button */}
                 <button
                   type="button"
                   onClick={(e) => { e.stopPropagation(); handlePreview(m); }}
-                  style={{
-                    flexShrink: 0,
-                    width: 34,
-                    height: 34,
-                    borderRadius: "50%",
-                    border: "none",
-                    background: isPlaying ? "var(--msk-red, #C1595A)" : "var(--majalis-emerald, #2E8B67)",
-                    color: "#fff",
-                    cursor: "pointer",
-                    fontSize: "0.85rem",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    transition: "background 0.15s",
-                  }}
+                  className={`mzp-preview-btn${isPlaying ? " mzp-preview-btn--playing" : ""}`}
                   title={isPlaying ? "إيقاف" : "معاينة 15 ثانية"}
                 >
                   {isPlaying ? "⏹" : "▶"}

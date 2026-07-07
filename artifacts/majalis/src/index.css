@@ -15537,7 +15537,8 @@ body.has-assistant-fab .app-main {
 .sk-table__head { background: var(--majalis-parchment-deep); }
 .sk-table__row:last-child { border-bottom: none; }
 .sk-table__cell { height: 0.75rem; flex: 1; border-radius: 0.375rem; }
-.sk-table__cell--head { height: 0.875rem; }
+.sk-table__cell--head  { height: 0.875rem; }
+.sk-table__cell--wide  { width: 45%; flex: none; }
 
 /* صفحة هيكلية */
 .sk-page { display: flex; flex-direction: column; gap: 1.25rem; padding: 1.5rem; }

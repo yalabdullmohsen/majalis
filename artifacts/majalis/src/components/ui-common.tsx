@@ -4,7 +4,7 @@ import { C } from "@/lib/theme";
 
 /** خط نص واحد بعرض قابل للتخصيص */
 export function SkeletonLine({ width = "100%", height = "0.75rem" }: { width?: string; height?: string }) {
-  return <div className="ds-skeleton" style={{ width, height }} aria-hidden="true" />;
+  return <div className="ds-skeleton ds-skeleton--line" style={{ "--sk-w": width, "--sk-h": height } as React.CSSProperties} aria-hidden="true" />;
 }
 
 /** بطاقة هيكلية: صورة + عنوان + سطرا نص */
@@ -47,7 +47,7 @@ export function SkeletonTable({ rows = 5, cols = 4 }: { rows?: number; cols?: nu
         {Array.from({ length: rows }).map((_, r) => (
           <div key={r} className="sk-table__row">
             {Array.from({ length: cols }).map((_, c) => (
-              <div key={c} className="ds-skeleton sk-table__cell" style={{ width: c === 0 ? "45%" : "15%" }} />
+              <div key={c} className={`ds-skeleton sk-table__cell${c === 0 ? " sk-table__cell--wide" : ""}`} />
             ))}
           </div>
         ))}
@@ -146,7 +146,7 @@ function star8Pts(cx: number, cy: number, r1: number, r2: number) {
 export function ErrorState({ text, onRetry }: { text: string; onRetry?: () => void }) {
   return (
     <div className="ui-card ds-empty" role="alert">
-      <p className="ds-error-text" style={{ marginBottom: onRetry ? "0.75rem" : 0 }}>{text}</p>
+      <p className={`ds-error-text${onRetry ? " ds-error-text--mb" : ""}`}>{text}</p>
       {onRetry && (
         <button type="button" className="ds-btn ds-btn--primary" onClick={onRetry}>
           إعادة المحاولة

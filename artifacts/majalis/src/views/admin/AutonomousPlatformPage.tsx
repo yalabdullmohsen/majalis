@@ -248,7 +248,7 @@ function AutonomousPlatformContent() {
       </div>
 
       <div className="aup-status-bar">
-        <span>قاعدة البيانات: <strong style={{ color: health?.database === "connected" ? "#065F46" : "#991B1B" }}>{health?.database || "—"}</strong></span>
+        <span>قاعدة البيانات: <strong className={health?.database === "connected" ? "aup-db-connected" : "aup-db-error"}>{health?.database || "—"}</strong></span>
         <span>MKE: <strong>{health?.mke || "—"}</strong></span>
         <span>أتمتة: <strong>{health?.automation || "—"}</strong></span>
         <span>آخر تشغيل: <strong>{fmtDt(dashboard?.lastRun?.started_at)}</strong></span>
@@ -291,9 +291,9 @@ function AutonomousPlatformContent() {
                     <div className="aup-pipeline-bar">
                       <div className="aup-pipeline-fill" style={{ "--aup-pf-w": `${Math.min(100, pct)}%`, "--aup-pf-color": color } as React.CSSProperties} />
                     </div>
-                    <div style={{ fontSize: "0.65rem", color, marginTop: "0.2rem" }}>{pct}%</div>
+                    <div className="aup-pipeline-pct" style={{ "--aup-pc-color": color } as React.CSSProperties}>{pct}%</div>
                     <div className="aup-pipeline-sub">{p.quotaPeriod || "daily"}</div>
-                    <div style={{ marginTop: "0.4rem" }}>
+                    <div className="aup-pipeline-run-wrap">
                       <RunBtn label="تشغيل" busy={busy === type} onClick={() => run(type)} />
                     </div>
                   </div>
@@ -314,7 +314,7 @@ function AutonomousPlatformContent() {
                     <span>إنتاج: {r.produced ?? 0}</span>
                     <span>نشر: {r.published ?? 0}</span>
                     <span>{fmtMs(r.duration_ms)}</span>
-                    <span style={{ color: "var(--majalis-ink-soft)" }}>{fmtDt(r.started_at)}</span>
+                    <span className="aup-run-time">{fmtDt(r.started_at)}</span>
                   </div>
                 ))}
               </div>
@@ -353,7 +353,7 @@ function AutonomousPlatformContent() {
               ))}
             </div>
           )}
-          <div style={{ marginTop: "0.75rem" }}>
+          <div className="aup-queue-mt">
             <RunBtn label="فحص صحة المصادر" busy={busy === "monitor"} onClick={() => run("monitor")} />
           </div>
         </Panel>
@@ -372,13 +372,13 @@ function AutonomousPlatformContent() {
                 <div key={item.id} className="aup-review-card">
                   <div className="aup-review-head">
                     <StatusBadge status={item.content_type} />
-                    {item.source_slug && <span style={{ fontSize: "0.7rem", color: "var(--majalis-ink-soft)" }}>{item.source_slug}</span>}
+                    {item.source_slug && <span className="aup-item-slug">{item.source_slug}</span>}
                     <span className="aup-review-date">{fmtDt(item.created_at)}</span>
                   </div>
                   <div className="aup-review-text">
                     {item.payload?.title || item.payload?.text?.slice(0, 120) || "(لا عنوان)"}
                   </div>
-                  <div style={{ display: "flex", gap: "0.4rem" }}>
+                  <div className="aup-item-actions">
                     <button type="button" onClick={() => reviewDecide(item.id, "approved")} className="aup-approve-btn">قبول</button>
                     <button type="button" onClick={() => reviewDecide(item.id, "rejected")} className="aup-reject-btn">رفض</button>
                     <button type="button" onClick={() => reviewDecide(item.id, "duplicate")} className="aup-dup-btn">مكرر</button>
@@ -432,7 +432,7 @@ function AutonomousPlatformContent() {
 
       {dashboard?.lastError && (
         <div className="aup-last-error">
-          <strong style={{ color: "#991B1B" }}>آخر خطأ:</strong> {dashboard.lastError.message || JSON.stringify(dashboard.lastError).slice(0, 120)} · {fmtDt(dashboard.lastError.created_at)}
+          <strong className="aup-error-label">آخر خطأ:</strong> {dashboard.lastError.message || JSON.stringify(dashboard.lastError).slice(0, 120)} · {fmtDt(dashboard.lastError.created_at)}
         </div>
       )}
     </div>

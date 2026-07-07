@@ -255,7 +255,7 @@ function StatusTab() {
       </InfoCard>
 
       <InfoCard title="ضبط الـ Webhook">
-        <div style={{ display: "flex", gap: "0.5rem", marginBottom: "0.75rem" }}>
+        <div className="tgm-webhook-row">
           <input
             value={webhookUrl}
             onChange={(e) => setWebhookUrl(e.target.value)}

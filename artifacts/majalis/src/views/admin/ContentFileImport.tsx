@@ -435,7 +435,7 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
         ref={inputRef}
         type="file"
         accept=".json,.csv,application/json,text/csv"
-        style={{ display: "none" }}
+        className="lip-hidden-input"
         onChange={onFileChange}
       />
 

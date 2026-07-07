@@ -85,8 +85,8 @@ function FieldStatusGrid({
             style={{ "--lis-fc-bg": bg, "--lis-fc-border": `${color}30`, "--lis-fc-color": color } as React.CSSProperties}
             title={reason || val || "غير موجود"}
           >
-            <div style={{ fontSize: "0.65rem", fontWeight: 700 }}>{icon} {FIELD_LABELS[field] || field}</div>
-            <div style={{ fontSize: "0.72rem", color: "#374151", marginTop: "0.15rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+            <div className="lis-field-cell__label">{icon} {FIELD_LABELS[field] || field}</div>
+            <div className="lis-field-cell__value">
               {isMissing ? (reason || "لم يُستخرج") : val}
             </div>
           </div>
@@ -117,18 +117,18 @@ function DebugLogPanel({ log }: { log: DebugLog }) {
               style={{ "--lis-ds-bg": s.ok === false ? "#FEE2E2" : "#fff" } as React.CSSProperties}
             >
               <strong>{s.stage}</strong>
-              {s.ms != null && <span style={{ color: "#64748B", marginRight: "0.5rem" }}>({s.ms}ms)</span>}
-              {s.error && <span style={{ color: "#DC2626" }}> ✗ {s.error}</span>}
-              {s.fields_found?.length ? <div style={{ color: "#16A34A" }}>✓ {s.fields_found.join(", ")}</div> : null}
-              {s.fields_missing?.length ? <div style={{ color: "#DC2626" }}>✗ missing: {s.fields_missing.join(", ")}</div> : null}
-              {s.fields_recovered?.length ? <div style={{ color: "#2563EB" }}>↑ recovered: {s.fields_recovered.join(", ")}</div> : null}
-              {s.fields_filled?.length ? <div style={{ color: "#7C3AED" }}>DB: {s.fields_filled.join(", ")}</div> : null}
-              {s.raw_confidence != null && <div style={{ color: "#64748B" }}>confidence: {Math.round(s.raw_confidence * 100)}%</div>}
+              {s.ms != null && <span className="lis-debug-ms">({s.ms}ms)</span>}
+              {s.error && <span className="lis-debug-err"> ✗ {s.error}</span>}
+              {s.fields_found?.length ? <div className="lis-debug-found">✓ {s.fields_found.join(", ")}</div> : null}
+              {s.fields_missing?.length ? <div className="lis-debug-missing">✗ missing: {s.fields_missing.join(", ")}</div> : null}
+              {s.fields_recovered?.length ? <div className="lis-debug-recovered">↑ recovered: {s.fields_recovered.join(", ")}</div> : null}
+              {s.fields_filled?.length ? <div className="lis-debug-filled">DB: {s.fields_filled.join(", ")}</div> : null}
+              {s.raw_confidence != null && <div className="lis-debug-conf">confidence: {Math.round(s.raw_confidence * 100)}%</div>}
             </div>
           ))}
           {log.raw_ocr_text && (
-            <details style={{ marginTop: "0.5rem" }}>
-              <summary style={{ cursor: "pointer", color: "#475569" }}>raw_ocr_text</summary>
+            <details className="lis-debug-ocr lis-debug-ocr--mt">
+              <summary>raw_ocr_text</summary>
               <pre className="lip-ocr-pre">{log.raw_ocr_text}</pre>
             </details>
           )}
@@ -269,11 +269,11 @@ function LessonImportForm({
       </div>
       <div className="lip-checkbox-row">
         <input type="checkbox" checked={Boolean(parsed.has_live_stream)} disabled={disabled} onChange={(e) => set("has_live_stream", e.target.checked)} id="has-live" />
-        <label htmlFor="has-live" className="lis-label" style={{ margin: 0 }}>{FIELD_LABELS.has_live_stream}</label>
+        <label htmlFor="has-live" className="lis-label lis-label--inline">{FIELD_LABELS.has_live_stream}</label>
       </div>
       <div className="lip-checkbox-row">
         <input type="checkbox" checked={Boolean(parsed.has_women_section)} disabled={disabled} onChange={(e) => set("has_women_section", e.target.checked)} id="has-women" />
-        <label htmlFor="has-women" className="lis-label" style={{ margin: 0 }}>{FIELD_LABELS.has_women_section}</label>
+        <label htmlFor="has-women" className="lis-label lis-label--inline">{FIELD_LABELS.has_women_section}</label>
       </div>
       <div className="lis-full-col">
         <label className="lis-label">{FIELD_LABELS.keywords}</label>
@@ -502,7 +502,7 @@ function LessonImportImageContent() {
           type="file"
           accept="image/jpeg,image/png,image/webp,image/gif"
           disabled={busy}
-          style={{ display: "none" }}
+          className="lip-hidden-input"
           onChange={(e) => onUpload(e.target.files?.[0] || null)}
         />
         <div className="lip-upload-row">
@@ -588,7 +588,7 @@ function LessonImportImageContent() {
       )}
 
       {busy && (
-        <div style={{ marginTop: "1rem" }}>
+        <div className="lip-loading-wrap">
           <Loading />
         </div>
       )}
