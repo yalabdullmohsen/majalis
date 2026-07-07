@@ -365,13 +365,12 @@ export function formatRelativeTime(targetMs: number, now = Date.now()): string {
     if (minutes <= 10)      return `بعد ${minutes} دقائق`;
     return                  `بعد ${minutes} دقيقة`;
   }
-  if (minutes < 90)         return "بعد أقل من ساعة";
-
   const hours = Math.floor(minutes / 60);
+  const remMin = minutes % 60;
   if (hours < 24) {
-    if (hours === 1)        return "بعد ساعة";
-    if (hours === 2)        return "بعد ساعتين";
-    return                  `بعد ${hours} ساعات`;
+    const hStr = hours === 1 ? "ساعة" : hours === 2 ? "ساعتين" : `${hours} ساعات`;
+    if (remMin === 0) return `بعد ${hStr}`;
+    return `بعد ${hStr} و${remMin} دقيقة`;
   }
 
   const days = Math.floor(minutes / (24 * 60));

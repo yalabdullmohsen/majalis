@@ -10,118 +10,60 @@ import { HomeDailyFaida } from "@/components/home/HomeDailyFaida";
 import { HomeDailyDhikr } from "@/components/home/HomeDailyDhikr";
 import { HomeDailyQuestion } from "@/components/home/HomeDailyQuestion";
 import { HomeDailyHadith } from "@/components/home/HomeDailyHadith";
-import { IslamicDivider } from "@/components/design/IslamicDivider";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
 import { HijriSacredMonthBanner } from "@/components/HijriSacredMonthBanner";
 
-const SITE_ANNOUNCEMENTS = [
+/* ── المميزات البارزة (4 بطاقات كبيرة) ── */
+const FEATURED = [
+  { href: "/quran",   icon: "📖", title: "القرآن الكريم",     desc: "مصحف رقمي كامل برواية حفص — تصفح الصفحات ببساطة",          cta: "افتح المصحف" },
+  { href: "/lessons", icon: "🎓", title: "الدروس العلمية",    desc: "دروس ومحاضرات مجدولة لهذا الأسبوع من علماء الكويت",        cta: "شاهد الدروس" },
+  { href: "/hadith",  icon: "📜", title: "الأحاديث النبوية",  desc: "أحاديث موثقة ومسندة مع الشرح والتخريج",                   cta: "تصفح الأحاديث" },
+  { href: "/library", icon: "📚", title: "المكتبة العلمية",   desc: "كتب شرعية ومتون علمية في الفقه والعقيدة والتفسير والحديث",  cta: "استعرض الكتب" },
+];
+
+/* ── أقسام مصنّفة ── */
+const FEATURE_CATS = [
   {
-    href: "/lessons",
-    icon: "🎓",
-    title: "الدروس العلمية",
-    desc: "دروس أسبوعية ودورات علمية مرتّبة حسب أقرب موعد",
-  },
-  {
-    href: "/seerah",
+    id: "seerah",
     icon: "🌙",
-    title: "السيرة النبوية",
-    desc: "حياة النبي محمد ﷺ من الميلاد إلى الوفاة",
+    label: "السيرة والتاريخ",
+    items: [
+      { href: "/seerah",          icon: "🌙", title: "السيرة النبوية",    desc: "حياته ﷺ من الميلاد إلى الوفاة" },
+      { href: "/prophets",        icon: "⭐", title: "قصص الأنبياء",     desc: "من آدم إلى محمد ﷺ" },
+      { href: "/islamic-stories", icon: "🏛", title: "صحابة وفتوحات",    desc: "سير الصحابة والفتوحات" },
+      { href: "/stories",         icon: "🗺️", title: "القصص الإسلامية",  desc: "وقائع من التاريخ الإسلامي" },
+    ],
   },
   {
-    href: "/prophets",
-    icon: "⭐",
-    title: "قصص الأنبياء",
-    desc: "من آدم إلى محمد ﷺ، قصص الرسل والأنبياء",
-  },
-  {
-    href: "/islamic-stories",
-    icon: "🏛",
-    title: "صحابة وفتوحات",
-    desc: "سير الصحابة الكرام والفتوحات الإسلامية",
-  },
-  {
-    href: "/fawaid",
-    icon: "💡",
-    title: "الفوائد الدينية",
-    desc: "مختصرات وفوائد علمية منتقاة",
-  },
-  {
-    href: "/adhkar",
-    icon: "📿",
-    title: "الأذكار",
-    desc: "أذكار الصباح والمساء وأذكار اليوم الموثقة",
-  },
-  {
-    href: "/quran",
-    icon: "📖",
-    title: "القرآن الكريم",
-    desc: "مصحف رقمي مع تلاوات ومعاني",
-  },
-  {
-    href: "/library",
-    icon: "📚",
-    title: "المكتبة العلمية",
-    desc: "كتب شرعية ومتون علمية في فنون متعددة",
-  },
-  {
-    href: "/qa",
-    icon: "❓",
-    title: "الأسئلة والأجوبة",
-    desc: "فتاوى وأجوبة شرعية من العلماء",
-  },
-  {
-    href: "/hadith",
-    icon: "📜",
-    title: "الأحاديث النبوية",
-    desc: "أحاديث موثقة ومسندة مع شرحها",
-  },
-  {
-    href: "/rulings",
+    id: "fiqh",
     icon: "⚖️",
-    title: "الأحكام الشرعية",
-    desc: "موسوعة شرعية في الفقه والعبادات والمعاملات",
+    label: "الفقه والأحكام",
+    items: [
+      { href: "/qa",                 icon: "❓", title: "الأسئلة والأجوبة",  desc: "فتاوى من العلماء" },
+      { href: "/rulings",            icon: "⚖️", title: "الأحكام الشرعية",  desc: "موسوعة الفقه والعبادات" },
+      { href: "/tawhid",             icon: "🕋", title: "التوحيد",           desc: "العقيدة الإسلامية" },
+      { href: "/scholarly-research", icon: "🔬", title: "الباحث الشرعي",    desc: "بحث بالذكاء الاصطناعي" },
+      { href: "/academic-research",  icon: "🎓", title: "الأبحاث العلمية",  desc: "رسائل وأبحاث أكاديمية" },
+    ],
   },
   {
-    href: "/scholarly-research",
-    icon: "🔬",
-    title: "الباحث الشرعي",
-    desc: "بحث متقدم بالذكاء الاصطناعي في المصادر الإسلامية الموثقة",
+    id: "worship",
+    icon: "📿",
+    label: "العبادة والأذكار",
+    items: [
+      { href: "/adhkar",   icon: "📿", title: "الأذكار",           desc: "أذكار الصباح والمساء" },
+      { href: "/fawaid",   icon: "💡", title: "الفوائد الدينية",   desc: "فوائد علمية منتقاة" },
+      { href: "/car-mode", icon: "🚗", title: "وضع السيارة",       desc: "تلاوات أثناء القيادة" },
+    ],
   },
   {
-    href: "/academic-research",
-    icon: "🎓",
-    title: "الأبحاث العلمية",
-    desc: "رسائل الماجستير والدكتوراه وأبحاث المؤسسات والباحثين",
-  },
-  {
-    href: "/stories",
-    icon: "🗺️",
-    title: "القصص الإسلامية",
-    desc: "قصص ووقائع من التاريخ الإسلامي العريق",
-  },
-  {
-    href: "/tawhid",
-    icon: "🕋",
-    title: "التوحيد",
-    desc: "العقيدة الإسلامية وأصول الدين",
-  },
-  {
-    href: "/learning-path",
-    icon: "🗺️",
-    title: "خارطة طالب العلم",
-    desc: "مسار علمي منظم من المبتدئ إلى المتقدم",
-  },
-  {
-    href: "/flashcards",
-    icon: "🃏",
-    title: "البطاقات الدعوية",
-    desc: "مراجعة ذكية للمعلومات الشرعية",
-  },
-  {
-    href: "/car-mode",
-    icon: "🚗",
-    title: "وضع السيارة",
-    desc: "صوتيات وتلاوات للاستماع أثناء القيادة",
+    id: "tools",
+    icon: "🛠",
+    label: "أدوات التعلم",
+    items: [
+      { href: "/learning-path", icon: "🗺️", title: "خارطة طالب العلم", desc: "مسار من المبتدئ إلى المتقدم" },
+      { href: "/flashcards",    icon: "🃏", title: "البطاقات الدعوية",  desc: "مراجعة ذكية" },
+    ],
   },
 ];
 
@@ -191,39 +133,53 @@ export default function HomePage() {
           <HomeUpcomingLessons />
         </SafeHomeSection>
 
-        <IslamicDivider />
-
         {/* مواقيت الصلاة */}
         <SafeHomeSection name="مواقيت الصلاة">
           <HomeCompactPrayer />
         </SafeHomeSection>
 
-        <IslamicDivider />
-
-        {/* أقسام الموقع كإعلانات تسويقية */}
-        <section className="home-section home-stories-section home-announce-section" aria-labelledby="announcements-heading">
-          <div className="home-section-head home-announce-head">
-            <div>
-              <p className="home-eyebrow">استكشف المنصة</p>
-              <h2 id="announcements-heading">ما يقدمه المجلس العلمي</h2>
-              <p className="home-announce-sub">محتوى علمي متنوع في مكان واحد: الدروس والقرآن والأحاديث والفتاوى وأكثر.</p>
-            </div>
+        {/* ══ استكشف المنصة — تسويقي ══ */}
+        <section className="hp-features" aria-labelledby="features-heading">
+          <div className="hp-features__head">
+            <p className="home-eyebrow">استكشف المنصة</p>
+            <h2 id="features-heading">ما يقدمه المجلس العلمي</h2>
           </div>
-          <div className="home-stories-grid">
-            {SITE_ANNOUNCEMENTS.map(({ href, icon, title, desc }) => (
-              <Link key={href} href={href} className="home-story-card">
-                <span className="home-story-card__icon" aria-hidden="true">{icon}</span>
-                <div className="home-story-card__body">
-                  <strong className="home-story-card__title">{title}</strong>
-                  <span className="home-story-card__desc">{desc}</span>
+
+          {/* مميزات بارزة */}
+          <div className="hp-featured-grid">
+            {FEATURED.map(({ href, icon, title, desc, cta }) => (
+              <Link key={href} href={href} className="hp-featured-card">
+                <div className="hp-featured-card__icon" aria-hidden="true">{icon}</div>
+                <div className="hp-featured-card__body">
+                  <strong className="hp-featured-card__title">{title}</strong>
+                  <p className="hp-featured-card__desc">{desc}</p>
                 </div>
-                <span className="home-story-card__arrow" aria-hidden="true">←</span>
+                <span className="hp-featured-card__cta">{cta} →</span>
               </Link>
             ))}
           </div>
-        </section>
 
-        <IslamicDivider />
+          {/* أقسام بالتصنيف */}
+          {FEATURE_CATS.map(cat => (
+            <div key={cat.id} className="hp-cat">
+              <div className="hp-cat__head">
+                <span className="hp-cat__icon" aria-hidden="true">{cat.icon}</span>
+                <h3 className="hp-cat__title">{cat.label}</h3>
+              </div>
+              <div className="hp-cat__grid">
+                {cat.items.map(({ href, icon, title, desc }) => (
+                  <Link key={href} href={href} className="hp-cat-card">
+                    <span className="hp-cat-card__icon" aria-hidden="true">{icon}</span>
+                    <div className="hp-cat-card__body">
+                      <strong className="hp-cat-card__title">{title}</strong>
+                      <span className="hp-cat-card__desc">{desc}</span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          ))}
+        </section>
 
         {/* محتوى يومي */}
         <section className="home-daily-row">
@@ -240,8 +196,6 @@ export default function HomePage() {
             <HomeDailyFaida />
           </SafeHomeSection>
         </section>
-
-        <IslamicDivider />
 
         <SafeHomeSection name="عن المجلس العلمي">
           <HomeAboutSection />
