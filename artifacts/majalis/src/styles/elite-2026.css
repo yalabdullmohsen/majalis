@@ -2409,3 +2409,380 @@ button.primary:hover {
   font-weight: 600 !important;
   font-size: 0.8rem !important;
 }
+
+/* ══════════════════════════════════════════════════════════════════════
+   §39 — الإشعارات — تصميم مستوحى من elite forest
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── جرس الإشعارات ── */
+.notif-bell-btn {
+  color: var(--elite-forest, #18362A) !important;
+  background: transparent !important;
+  transition: background 0.18s, color 0.18s !important;
+}
+.notif-bell-btn:hover {
+  background: rgba(24,54,42,0.08) !important;
+  color: var(--elite-forest, #18362A) !important;
+}
+
+/* الشارة الحمراء */
+.notif-badge {
+  background: #C0392B !important;
+  font-size: 0.6rem !important;
+  font-weight: 800 !important;
+  min-width: 16px !important;
+  height: 16px !important;
+  box-shadow: 0 1px 4px rgba(192,57,43,0.4) !important;
+}
+
+/* ── لوحة الإشعارات المنسدلة ── */
+.notif-panel {
+  background: var(--elite-white, #FAF8F2) !important;
+  border: 1px solid rgba(24,54,42,0.14) !important;
+  border-radius: 16px !important;
+  box-shadow:
+    0 8px 40px rgba(24,54,42,0.14),
+    0 2px 8px rgba(0,0,0,0.06) !important;
+  overflow: hidden !important;
+}
+
+.notif-panel__head {
+  background: var(--elite-forest, #18362A) !important;
+  border-bottom: none !important;
+  padding: 1rem 1.1rem 0.9rem !important;
+}
+.notif-panel__title {
+  color: #fff !important;
+  font-size: 0.9375rem !important;
+  font-weight: 700 !important;
+}
+.notif-panel__mark-all {
+  color: rgba(255,255,255,0.75) !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  border: 1px solid rgba(255,255,255,0.22) !important;
+  border-radius: 999px !important;
+  padding: 0.2rem 0.65rem !important;
+  transition: background 0.15s !important;
+}
+.notif-panel__mark-all:hover {
+  background: rgba(255,255,255,0.12) !important;
+  text-decoration: none !important;
+  color: #fff !important;
+}
+
+.notif-panel__list {
+  max-height: 22rem !important;
+}
+
+.notif-panel__empty {
+  color: var(--elite-ink-soft, #4A5568) !important;
+  font-size: 0.875rem !important;
+  padding: 2.5rem 1rem !important;
+}
+
+/* عنصر إشعار */
+.notif-item {
+  padding: 0.85rem 1.1rem !important;
+  border-bottom: 1px solid rgba(24,54,42,0.07) !important;
+  background: transparent !important;
+  transition: background 0.14s !important;
+  position: relative !important;
+}
+.notif-item:hover {
+  background: rgba(24,54,42,0.04) !important;
+}
+.notif-item:last-child { border-bottom: none !important; }
+
+/* غير مقروء — شريط جانبي أخضر */
+.notif-item--unread {
+  background: rgba(24,54,42,0.045) !important;
+  border-inline-start: 3px solid var(--elite-forest, #18362A) !important;
+}
+.notif-item--unread:hover {
+  background: rgba(24,54,42,0.07) !important;
+}
+
+.notif-item__title {
+  color: var(--elite-forest, #18362A) !important;
+  font-weight: 700 !important;
+  font-size: 0.875rem !important;
+}
+.notif-item__body {
+  color: var(--elite-ink-soft, #4A5568) !important;
+  font-size: 0.78rem !important;
+  margin-top: 0.2rem !important;
+}
+.notif-item__date {
+  color: #8a9a8e !important;
+  font-size: 0.7rem !important;
+  margin-top: 0.3rem !important;
+  opacity: 1 !important;
+}
+
+/* ── صفحة إعدادات الإشعارات ── */
+.notif-banner--warn {
+  background: rgba(24,54,42,0.07) !important;
+  color: var(--elite-forest, #18362A) !important;
+  border: 1px solid rgba(24,54,42,0.22) !important;
+  border-radius: 12px !important;
+  font-weight: 600 !important;
+}
+.notif-banner--err {
+  background: #FEF2F2 !important;
+  color: #991b1b !important;
+  border: 1px solid rgba(185,28,28,0.22) !important;
+  border-radius: 12px !important;
+}
+
+.notif-card {
+  background: #fff !important;
+  border: 1px solid rgba(24,54,42,0.10) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 2px 12px rgba(24,54,42,0.05) !important;
+  padding: 1.25rem 1.35rem !important;
+}
+.notif-card__title {
+  color: var(--elite-forest, #18362A) !important;
+  font-size: 0.78rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.07em !important;
+  text-transform: uppercase !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.notif-row__label {
+  color: #1a2e24 !important;
+  font-weight: 600 !important;
+}
+.notif-row__sub { color: var(--elite-ink-soft, #4A5568) !important; }
+
+/* التبديل */
+.notif-toggle {
+  background: rgba(24,54,42,0.15) !important;
+  border-radius: 999px !important;
+}
+.notif-toggle--on {
+  background: var(--elite-forest, #18362A) !important;
+}
+.notif-toggle__thumb {
+  box-shadow: 0 1px 4px rgba(0,0,0,0.22) !important;
+}
+
+/* وقت التذكير */
+.notif-time__label { color: var(--elite-ink-soft, #4A5568) !important; }
+.notif-time__input {
+  border: 1.5px solid rgba(24,54,42,0.2) !important;
+  border-radius: 8px !important;
+  color: var(--elite-forest, #18362A) !important;
+  background: var(--elite-white, #FAF8F2) !important;
+  font-weight: 700 !important;
+}
+.notif-time__input:focus { border-color: var(--elite-forest, #18362A) !important; outline: none !important; }
+.notif-time__hint { color: #8a9a8e !important; }
+
+/* زر الاختبار */
+.notif-test-btn {
+  background: var(--elite-forest, #18362A) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 10px !important;
+  font-weight: 700 !important;
+  font-size: 0.9rem !important;
+  padding: 0.75rem !important;
+  transition: opacity 0.15s !important;
+}
+.notif-test-btn:hover { opacity: 0.88 !important; }
+
+/* تم الحفظ */
+.notif-saved {
+  background: var(--elite-forest, #18362A) !important;
+  color: #fff !important;
+  border: none !important;
+  box-shadow: 0 4px 20px rgba(24,54,42,0.3) !important;
+}
+
+/* ── سجل الإشعارات (nh-*) ── */
+.nh-section {
+  background: #fff !important;
+  border: 1px solid rgba(24,54,42,0.10) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 2px 12px rgba(24,54,42,0.05) !important;
+  overflow: hidden !important;
+}
+
+.nh-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 1rem 1.25rem 0.75rem !important;
+  border-bottom: 1px solid rgba(24,54,42,0.08) !important;
+  background: var(--elite-forest, #18362A) !important;
+}
+.nh-header__title {
+  color: #fff !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+}
+.nh-header__badge {
+  background: #fff !important;
+  color: var(--elite-forest, #18362A) !important;
+  font-size: 0.72rem !important;
+  font-weight: 800 !important;
+  min-width: 20px !important;
+  height: 20px !important;
+  border-radius: 999px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 4px !important;
+  margin-inline-start: 0.4rem !important;
+}
+.nh-header__actions { gap: 0.4rem !important; }
+
+.nh-btn {
+  padding: 0.3rem 0.75rem !important;
+  border-radius: 999px !important;
+  border: 1px solid rgba(255,255,255,0.3) !important;
+  background: rgba(255,255,255,0.1) !important;
+  color: rgba(255,255,255,0.85) !important;
+  font-size: 0.78rem !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: background 0.15s !important;
+}
+.nh-btn:hover {
+  background: rgba(255,255,255,0.2) !important;
+  color: #fff !important;
+  border-color: rgba(255,255,255,0.45) !important;
+}
+.nh-btn--danger {
+  color: #ffb3b3 !important;
+  border-color: rgba(255,100,100,0.35) !important;
+  background: rgba(255,80,80,0.08) !important;
+}
+.nh-btn--danger:hover {
+  background: rgba(255,80,80,0.18) !important;
+  color: #ff7070 !important;
+}
+
+/* بحث */
+.nh-search-wrap {
+  padding: 0.6rem 1rem !important;
+  border-bottom: 1px solid rgba(24,54,42,0.07) !important;
+  background: var(--elite-white, #FAF8F2) !important;
+}
+.nh-search {
+  background: #fff !important;
+  border: 1.5px solid rgba(24,54,42,0.14) !important;
+  border-radius: 10px !important;
+  color: #1a2e24 !important;
+  font-size: 0.88rem !important;
+  padding: 0.5rem 0.85rem !important;
+}
+.nh-search:focus {
+  outline: none !important;
+  border-color: var(--elite-forest, #18362A) !important;
+}
+.nh-search-clear {
+  color: var(--elite-ink-soft, #4A5568) !important;
+}
+
+/* تبويبات */
+.nh-tabs {
+  display: flex !important;
+  gap: 0 !important;
+  border-bottom: 1px solid rgba(24,54,42,0.08) !important;
+  background: var(--elite-white, #FAF8F2) !important;
+  padding: 0 1rem !important;
+}
+.nh-tab {
+  flex: 1 !important;
+  padding: 0.65rem 0.5rem !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  color: var(--elite-ink-soft, #4A5568) !important;
+  border: none !important;
+  border-bottom: 2px solid transparent !important;
+  background: transparent !important;
+  cursor: pointer !important;
+  transition: color 0.15s, border-color 0.15s !important;
+  font-family: inherit !important;
+}
+.nh-tab--active {
+  color: var(--elite-forest, #18362A) !important;
+  border-bottom-color: var(--elite-forest, #18362A) !important;
+  font-weight: 700 !important;
+}
+
+/* قائمة الإشعارات */
+.nh-list { background: #fff !important; }
+
+.nh-row {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 0.75rem !important;
+  padding: 0.875rem 1.1rem !important;
+  border-bottom: 1px solid rgba(24,54,42,0.06) !important;
+  transition: background 0.14s !important;
+  cursor: pointer !important;
+  background: transparent !important;
+}
+.nh-row:hover { background: rgba(24,54,42,0.04) !important; }
+.nh-row:last-child { border-bottom: none !important; }
+
+.nh-row__dot {
+  width: 8px !important;
+  height: 8px !important;
+  border-radius: 50% !important;
+  background: var(--elite-forest, #18362A) !important;
+  flex-shrink: 0 !important;
+  margin-top: 0.35rem !important;
+}
+.nh-row--read .nh-row__dot {
+  background: transparent !important;
+  border: 1.5px solid rgba(24,54,42,0.2) !important;
+}
+
+.nh-row__title {
+  color: #1a2e24 !important;
+  font-weight: 700 !important;
+  font-size: 0.875rem !important;
+}
+.nh-row--read .nh-row__title {
+  color: var(--elite-ink-soft, #4A5568) !important;
+  font-weight: 400 !important;
+}
+.nh-row__body-text {
+  color: var(--elite-ink-soft, #4A5568) !important;
+  font-size: 0.78rem !important;
+}
+.nh-row__meta { color: #8a9a8e !important; font-size: 0.7rem !important; }
+
+.nh-row__actions { opacity: 0 !important; }
+.nh-row:hover .nh-row__actions { opacity: 1 !important; }
+
+.nh-action {
+  color: var(--elite-ink-soft, #4A5568) !important;
+  border: 1px solid rgba(24,54,42,0.12) !important;
+  border-radius: 6px !important;
+  padding: 0.25rem !important;
+  background: transparent !important;
+  transition: background 0.13s, color 0.13s !important;
+}
+.nh-action:hover {
+  background: rgba(24,54,42,0.08) !important;
+  color: var(--elite-forest, #18362A) !important;
+}
+.nh-action--del:hover {
+  background: rgba(192,57,43,0.08) !important;
+  color: #C0392B !important;
+  border-color: rgba(192,57,43,0.2) !important;
+}
+
+.nh-empty {
+  color: var(--elite-ink-soft, #4A5568) !important;
+  font-size: 0.875rem !important;
+  padding: 2.5rem 1rem !important;
+  text-align: center !important;
+}
