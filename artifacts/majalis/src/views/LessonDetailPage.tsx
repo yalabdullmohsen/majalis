@@ -249,7 +249,6 @@ export default function LessonDetailPage({
   const mapsEmbed = buildMapsEmbed(unified.mapsUrl, unified.mosque, unified.region);
   const activityLabel = normalizeActivityLabel(unified.activityType);
   const keywords = unified.keywords || [];
-  const tags = [...new Set([unified.category, activityLabel, ...(keywords.slice(0, 6))].filter(Boolean))];
   const level = inferLessonLevel(unified.category);
   const addedDate = lesson?.created_at || lesson?.updated_at || unified.gregorianDate;
 
@@ -312,9 +311,9 @@ export default function LessonDetailPage({
               {unified.hasLiveStream && <span className="page-soft-tag">بث مباشر</span>}
               {unified.hasRecording && <span className="page-soft-tag">تسجيل</span>}
             </div>
-            {(unified.note || unified.description) && (
+            {unified.note && (
               <p className="lesson-detail-summary">
-                {cleanDisplayText(unified.note || unified.description?.slice(0, 220) || "")}
+                {cleanDisplayText(unified.note)}
               </p>
             )}
           </div>
@@ -373,17 +372,6 @@ export default function LessonDetailPage({
             <div className="lesson-detail-tags">
               {keywords.map((kw) => (
                 <span key={kw} className="page-soft-tag">{kw}</span>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {tags.length > 0 && (
-          <div className="lesson-detail-body">
-            <h2>الوسوم</h2>
-            <div className="lesson-detail-tags">
-              {tags.map((tag) => (
-                <span key={tag} className="page-soft-tag">{tag}</span>
               ))}
             </div>
           </div>
