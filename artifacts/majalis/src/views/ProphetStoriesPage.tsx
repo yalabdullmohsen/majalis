@@ -277,9 +277,6 @@ function ProphetDetailView({
 
       {/* قصة كاملة */}
       <article className="prophet-story-lux" style={{ fontSize }}>
-        <div className="prophet-disclaimer-lux">
-          ⚠️ هذا المحتوى موسوعي تعريفي — راجع كتب التفسير المعتمدة كتفسير ابن كثير للتفاصيل الشرعية.
-        </div>
 
         {/* النبذة */}
         <section className="prophet-section-lux">
@@ -603,11 +600,6 @@ export default function ProphetStoriesPage() {
           {/* Grid + Bookmarks View */}
           {(view === "grid" || view === "bookmarks") && (
             <div className="prophets-lux-container">
-              {/* تنبيه */}
-              <div className="prophets-lux-disclaimer">
-                ⚠️ هذا المحتوى موسوعي تعريفي مختصر. للاستزادة راجع كتب التفسير المعتمدة كتفسير ابن كثير وقصص الأنبياء للأئمة الموثوقين.
-              </div>
-
               {/* بحث */}
               <div className="prophets-lux-search-wrap">
                 <input
