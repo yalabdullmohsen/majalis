@@ -13,23 +13,41 @@ const PRAYER_AR: Record<string, string> = {
   Isha:    "العشاء",
 };
 
-// ── مساعد: فرق بالدقائق بين توقيت صلاة واللحظة الحالية ──
-function minutesUntil(timeStr: string): number | null {
-  if (!timeStr) return null;
-  const [h, m] = timeStr.split(":").map(Number);
-  if (isNaN(h) || isNaN(m)) return null;
-  const now = new Date();
-  const target = new Date(now);
-  target.setHours(h, m, 0, 0);
-  let diff = (target.getTime() - now.getTime()) / 60000;
-  if (diff < 0) diff += 24 * 60;
-  return Math.floor(diff);
+// ── الوقت الحالي بتوقيت الكويت (ثوانٍ منذ منتصف الليل) ──
+function kuwaitNowSeconds(): { totalMinutes: number; seconds: number } {
+  const parts = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Asia/Kuwait",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
+  }).formatToParts(new Date());
+  const h = Number(parts.find((p) => p.type === "hour")?.value ?? 0);
+  const m = Number(parts.find((p) => p.type === "minute")?.value ?? 0);
+  const s = Number(parts.find((p) => p.type === "second")?.value ?? 0);
+  return { totalMinutes: h * 60 + m, seconds: s };
 }
 
-function hmsFromMinutes(totalMin: number): string {
-  const h = Math.floor(totalMin / 60);
-  const m = totalMin % 60;
-  return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:00`;
+// ── حساب الثواني المتبقية لصلاة بحسب minutes (دقائق منذ منتصف الليل) ──
+function secondsUntilPrayer(prayerMinutes: number | null): { seconds: number; isTomorrow: boolean } {
+  if (prayerMinutes == null) return { seconds: 0, isTomorrow: false };
+  const now = kuwaitNowSeconds();
+  if (prayerMinutes > now.totalMinutes) {
+    return { seconds: (prayerMinutes - now.totalMinutes) * 60 - now.seconds, isTomorrow: false };
+  }
+  // الصلاة مضت اليوم → احسب حتى الغد
+  return {
+    seconds: (24 * 60 - now.totalMinutes + prayerMinutes) * 60 - now.seconds,
+    isTomorrow: true,
+  };
+}
+
+function formatHms(totalSeconds: number): string {
+  const s = Math.max(0, totalSeconds);
+  const h = Math.floor(s / 3600);
+  const m = Math.floor((s % 3600) / 60);
+  const sec = s % 60;
+  return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(sec).padStart(2, "0")}`;
 }
 
 export default function PrayerTimesPage() {
@@ -64,9 +82,12 @@ export default function PrayerTimesPage() {
 
   // حساب الوقت المتبقي للصلاة المختارة
   let displayHms: string;
+  let isTomorrow = false;
   if (pinnedKey && pinnedKey !== countdown.next.key) {
-    const mins = minutesUntil(displayTime ?? "");
-    displayHms = mins !== null ? hmsFromMinutes(mins) : "--:--:--";
+    // الصلاة المثبّتة ليست التالية تلقائياً — احسب بتوقيت الكويت من p.minutes
+    const { seconds, isTomorrow: tmrw } = secondsUntilPrayer(displayItem?.minutes ?? null);
+    displayHms = formatHms(seconds);
+    isTomorrow = tmrw;
   } else {
     displayHms = countdown.remainingHms ?? "--:--:--";
   }
@@ -96,9 +117,12 @@ export default function PrayerTimesPage() {
           {displayHms}
         </div>
         <div className="pt-hero__hint">
-          {pinnedKey && pinnedKey !== countdown.next.key
-            ? <button className="pt-hero__reset" onClick={() => setPinnedKey(null)}>العودة للصلاة القادمة</button>
-            : "الوقت المتبقي"}
+          {pinnedKey && pinnedKey !== countdown.next.key ? (
+            <span style={{ display: "flex", alignItems: "center", gap: "0.5rem", justifyContent: "center", flexWrap: "wrap" }}>
+              {isTomorrow && <span style={{ background: "rgba(255,255,255,0.15)", borderRadius: "999px", padding: "0.1rem 0.55rem", fontSize: "0.72rem", fontWeight: 700 }}>غداً</span>}
+              <button className="pt-hero__reset" onClick={() => setPinnedKey(null)}>العودة للصلاة القادمة</button>
+            </span>
+          ) : "الوقت المتبقي"}
         </div>
       </section>
 
