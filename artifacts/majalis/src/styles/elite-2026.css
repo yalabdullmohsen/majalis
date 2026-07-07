@@ -167,6 +167,25 @@ body {
   display: none !important;
 }
 
+/* ── شريط البحث الأنيق ─────────────────────────────────────────────────── */
+.navbar-search-form {
+  border-radius: 2rem !important;
+  padding: 0.1rem 0.1rem 0.1rem 0.6rem !important;
+  border-color: var(--elite-border-2, rgba(24,54,42,0.13)) !important;
+  max-width: 13rem !important;
+  transition: max-width 0.25s ease, border-color 0.15s !important;
+}
+.navbar-search-form:focus-within {
+  max-width: 18rem !important;
+  border-color: var(--majalis-emerald) !important;
+  box-shadow: 0 0 0 2px rgba(14,110,82,0.08) !important;
+}
+.navbar-search-submit {
+  border-radius: 1.5rem !important;
+  padding: 0.25rem 0.65rem !important;
+  font-size: 0.72rem !important;
+}
+
 /* Search command button */
 .navbar-search-cmd {
   background: var(--elite-off-white, #F5F5F4) !important;
@@ -8213,6 +8232,26 @@ button.primary:hover {
 .hrm-card__import-btn { margin-inline-start: auto; padding: 0.25rem 0.75rem; background: none; border: 1px solid var(--majalis-emerald); color: var(--majalis-emerald-deep); border-radius: 0.25rem; cursor: pointer; font-size: 0.75rem; font-family: inherit; }
 .hrm-card__import-btn:hover { background: var(--majalis-emerald); color: var(--majalis-parchment); }
 .hrm-card__import-btn:disabled { opacity: 0.5; cursor: wait; }
+.hrm-import-btn--all { background: var(--majalis-emerald-deep) !important; }
+.hrm-filter-section { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem; }
+.hrm-filters--cats { flex-wrap: wrap; }
+.hrm-filter-btn--sm { font-size: 0.72rem !important; padding: 0.2rem 0.55rem !important; }
+.hrm-search { width: 100%; padding: 0.45rem 0.75rem; border: 1px solid var(--majalis-line); border-radius: 0.375rem; background: var(--majalis-panel); font-family: inherit; font-size: 0.8125rem; color: var(--majalis-ink); }
+.hrm-search:focus { outline: none; border-color: var(--majalis-emerald); }
+.hrm-empty { padding: 2rem; text-align: center; color: var(--majalis-ink-soft); font-size: 0.875rem; }
+.hrm-progress-wrap { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; }
+.hrm-progress-bar { flex: 1; height: 8px; background: var(--majalis-line); border-radius: 4px; overflow: hidden; }
+.hrm-progress-fill { height: 100%; background: var(--majalis-emerald); border-radius: 4px; width: var(--hrm-pf-w, 0%); transition: width 0.3s; }
+.hrm-progress-label { font-size: 0.75rem; color: var(--majalis-emerald-deep); font-weight: 700; white-space: nowrap; }
+.hrm-card--makkah { border-top: 3px solid var(--majalis-gold, #C9A84C); }
+.hrm-card--madinah { border-top: 3px solid var(--majalis-emerald); }
+.hrm-card__head { display: flex; gap: 0.4rem; flex-wrap: wrap; align-items: center; }
+.hrm-card__course-tag { font-size: 0.68rem; padding: 0.1rem 0.4rem; background: #FEF9C3; color: #854D0E; border-radius: 0.25rem; font-weight: 600; }
+.hrm-card__tags { display: flex; gap: 0.35rem; flex-wrap: wrap; }
+.hrm-card__tag { font-size: 0.68rem; padding: 0.1rem 0.4rem; background: var(--majalis-parchment-deep); color: var(--majalis-ink-soft); border-radius: 0.25rem; }
+.hrm-card__tag--recurring { background: var(--majalis-sage); color: var(--majalis-emerald-deep); }
+.hrm-card__link { font-size: 0.72rem; color: var(--majalis-emerald-deep); text-decoration: none; }
+.hrm-card__link:hover { text-decoration: underline; }
 
 /* ── §162 — تحسينات UX شاملة ── انسجام الألوان وتقليص البحث ──────────────── */
 
@@ -10618,4 +10657,194 @@ button, .btn {
 .bc-status-badge--not_started {
   background: var(--majalis-parchment-deep);
   color: var(--majalis-ink-soft);
+}
+
+/* ══════════════════════════════════════════════
+   §201 — تحسينات شاملة للموقع (Site-wide Enhancements)
+   ══════════════════════════════════════════════ */
+
+/* ── بطاقات المحتوى — تحسين الظل والتحويم ───────────────────────────────── */
+.lesson-card,
+.lesson-item,
+.content-card,
+.fawaid-card,
+.story-card {
+  transition: transform 0.18s ease, box-shadow 0.18s ease !important;
+}
+.lesson-card:hover,
+.lesson-item:hover,
+.content-card:hover,
+.fawaid-card:hover,
+.story-card:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 20px rgba(14,110,82,0.10) !important;
+}
+
+/* ── الأزرار الأساسية — شكل أكثر نعومة ────────────────────────────────── */
+.btn-primary,
+.majalis-btn,
+.adm-btn {
+  border-radius: 0.5rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.01em !important;
+  transition: all 0.15s ease !important;
+}
+
+/* ── صفحة الرئيسية — تحسين الأقسام ────────────────────────────────────── */
+.home-section-title {
+  font-size: clamp(1.05rem, 2.2vw, 1.25rem) !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.01em !important;
+  color: var(--majalis-ink) !important;
+  margin-bottom: 1.1rem !important;
+}
+
+/* ── العناوين الصفحية — تحسين البروز ──────────────────────────────────── */
+.page-header__title {
+  font-size: clamp(1.4rem, 4vw, 2rem) !important;
+  font-weight: 900 !important;
+  line-height: 1.25 !important;
+  letter-spacing: -0.02em !important;
+}
+.page-header__eyebrow {
+  font-size: 0.75rem !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  font-weight: 700 !important;
+}
+
+/* ── وسوم الفئات (Tags) — تجانس اللون ──────────────────────────────────── */
+.ui-tag {
+  font-size: 0.72rem !important;
+  padding: 0.18rem 0.6rem !important;
+  border-radius: 2rem !important;
+  font-weight: 600 !important;
+  background: var(--majalis-sage, #DCFCE7) !important;
+  color: var(--majalis-emerald-deep) !important;
+  border: none !important;
+}
+
+/* ── شريط التصفح السفلي — نعومة التحويم ──────────────────────────────── */
+.bottom-nav-item,
+.bnav-item {
+  transition: color 0.15s ease, background 0.15s ease !important;
+}
+
+/* ── جداول الإدارة — تحسين قابلية القراءة ──────────────────────────────── */
+.adm-table tr:hover,
+.qa-table tr:hover,
+.les-table tr:hover {
+  background: rgba(14,110,82,0.04) !important;
+}
+.adm-table th,
+.qa-table th,
+.les-table th {
+  font-weight: 700 !important;
+  font-size: 0.75rem !important;
+  letter-spacing: 0.04em !important;
+  color: var(--majalis-ink-soft) !important;
+  background: var(--majalis-parchment-deep) !important;
+}
+
+/* ── المدخلات — حدود أوضح عند التركيز ──────────────────────────────────── */
+input[type="text"]:focus,
+input[type="search"]:focus,
+input[type="email"]:focus,
+textarea:focus,
+select:focus {
+  outline: none !important;
+  border-color: var(--majalis-emerald) !important;
+  box-shadow: 0 0 0 2px rgba(14,110,82,0.10) !important;
+}
+
+/* ── إشعارات الفلاش — تموضع ثابت ───────────────────────────────────────── */
+.admin-flash {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 100 !important;
+  border-radius: 0 !important;
+}
+
+/* ── قسم "لا يوجد بيانات" — توحيد الشكل ───────────────────────────────── */
+.empty-state,
+.empty-msg,
+[class*="empty"] {
+  font-size: 0.875rem !important;
+  color: var(--majalis-ink-soft) !important;
+  text-align: center !important;
+  padding: 2.5rem 1rem !important;
+}
+
+/* ── شرائح التقدم — شكل أحدث ───────────────────────────────────────────── */
+[class*="progress-bar"],
+[class*="prog-bar"] {
+  border-radius: 9999px !important;
+  overflow: hidden !important;
+}
+
+/* ── التبويبات — تحسين الانتقال ─────────────────────────────────────────── */
+[class*="-tab"],
+[class*="tab-"] {
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease !important;
+}
+
+/* ── الشارات — مزيد من التميز ───────────────────────────────────────────── */
+.badge,
+[class*="-badge"] {
+  letter-spacing: 0.01em !important;
+  font-variant-numeric: tabular-nums !important;
+}
+
+/* ── Skeleton loaders — رسوم متحركة أفضل ───────────────────────────────── */
+[class*="skel"],
+[class*="skeleton"] {
+  animation: skel-pulse 1.5s ease-in-out infinite !important;
+}
+@keyframes skel-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+
+/* ── تحسين التمرير (Scrollbar) ───────────────────────────────────────────── */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--majalis-emerald) transparent;
+}
+*::-webkit-scrollbar { width: 6px; height: 6px; }
+*::-webkit-scrollbar-thumb { background: var(--majalis-emerald); border-radius: 9999px; }
+*::-webkit-scrollbar-track { background: transparent; }
+
+/* ── تحسين الطباعة العربية ───────────────────────────────────────────────── */
+.page-shell,
+.content-body,
+.lesson-desc,
+[class*="-desc"],
+[class*="-content"],
+[class*="-text"] {
+  font-feature-settings: "kern" 1, "liga" 1 !important;
+  text-rendering: optimizeLegibility !important;
+}
+
+/* ── تحسين الرابط ────────────────────────────────────────────────────────── */
+a:focus-visible {
+  outline: 2px solid var(--majalis-emerald) !important;
+  outline-offset: 2px !important;
+  border-radius: 2px !important;
+}
+
+/* ── التحريك الفائق للعناصر ─────────────────────────────────────────────── */
+@media (prefers-reduced-motion: no-preference) {
+  .lesson-card,
+  .hrm-card,
+  .qa-card,
+  .fatwa-card,
+  .muezzin-card {
+    will-change: transform !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
