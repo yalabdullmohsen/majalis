@@ -24,7 +24,6 @@ import { HomeContinueReading } from "@/components/home/HomeContinueReading";
 import { HijriSacredMonthBanner } from "@/components/HijriSacredMonthBanner";
 import {
   BookOpen, GraduationCap, Moon, BookMarked, MessageCircleQuestion, Scale,
-  Headphones, Star, Globe, Landmark, ScrollText, Layers,
 } from "lucide-react";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 
@@ -87,64 +86,6 @@ const FEATURE_STRIP = [
   { href: "/library", Icon: BookMarked,           name: "المكتبة", meta: "كتب ومتون" },
   { href: "/qa",      Icon: MessageCircleQuestion, name: "الأسئلة", meta: "فتاوى علمية" },
   { href: "/rulings", Icon: Scale,                name: "الأحكام", meta: "موسوعة شرعية" },
-];
-
-const PLATFORM_STATS = [
-  { Icon: BookOpen,   value: "١٢٠٠+",  label: "درس علمي موثق" },
-  { Icon: GraduationCap, value: "٥٠٠+", label: "شيخ وعالم" },
-  { Icon: ScrollText, value: "٣٠٠٠+",  label: "كتاب ومرجع" },
-  { Icon: Star,       value: "٢٧٠٠٠+", label: "مستخدم نشط" },
-];
-
-const PLATFORM_FEATURES = [
-  {
-    href: "/quran",
-    Icon: BookOpen,
-    name: "القرآن الكريم",
-    desc: "المصحف الشريف مع التلاوات والتفسير والبحث الآيي",
-  },
-  {
-    href: "/lessons",
-    Icon: GraduationCap,
-    name: "الدروس العلمية",
-    desc: "أكثر من ألف درس موثق من علماء معتمدين، مباشر ومسجل",
-  },
-  {
-    href: "/library",
-    Icon: BookMarked,
-    name: "المكتبة الإسلامية",
-    desc: "آلاف الكتب والمتون والمصادر الشرعية المنظمة",
-  },
-  {
-    href: "/rulings",
-    Icon: Scale,
-    name: "الأحكام الشرعية",
-    desc: "موسوعة شاملة في الفقه الإسلامي والفتاوى الموثقة",
-  },
-  {
-    href: "/seerah",
-    Icon: Globe,
-    name: "السيرة النبوية",
-    desc: "حياة النبي ﷺ من الميلاد إلى الوفاة بالتفصيل",
-  },
-  {
-    href: "/adhkar",
-    Icon: Moon,
-    name: "الأذكار اليومية",
-    desc: "أذكار الصباح والمساء ودعاء الأوقات بأسانيدها",
-  },
-  {
-    href: "/muezzins",
-    Icon: Headphones,
-    name: "مكتبة الأذانات",
-    desc: "استمع إلى أصوات المؤذنين من أشهر المساجد حول العالم",
-  },
-  {
-    href: "/institutions",
-    Icon: Landmark,
-    name: "دليل المؤسسات",
-    desc: "مساجد وجامعات ومراكز إسلامية في العالم العربي والإسلامي",
-  },
 ];
 
 function SafeHomeSection({ name, children }: { name: string; children: React.ReactNode }) {
