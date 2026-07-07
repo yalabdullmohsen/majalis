@@ -1,13 +1,5 @@
 /**
  * KnowledgeGraphPage — صفحة استكشاف الرسم البياني المعرفي الإسلامي
- *
- * يدعم مصدرين:
- *   1. النظام الجديد (kn_nodes / kn_edges) عبر /api/knowledge-graph/*
- *   2. النظام القديم (knowledge_relationships) عبر Supabase client
- *
- * طريقة العرض:
- *   - شبكة SVG تفاعلية بمحاكاة قوة (force-directed)
- *   - عند اختيار عقدة → توسيع الرسم منها بعمق إضافي
  */
 
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -29,9 +21,8 @@ import {
   type KnowledgeRelationship,
   type KnowledgeSourceType,
 } from "@/lib/supabase";
-import { C } from "@/lib/theme";
 
-// ── Types للرسم ───────────────────────────────────────────────────────────
+// ── Types ──────────────────────────────────────────────────────────────────
 
 type GraphNode = {
   id: string;
@@ -63,7 +54,6 @@ const MAX_STEPS   = 180;
 const SVG_W       = 960;
 const SVG_H       = 580;
 
-// الألوان للنظام القديم
 const OLD_TYPE_COLOR: Record<KnowledgeSourceType, string> = {
   scholar:  "#0E6E52",
   lesson:   "#0369a1",
@@ -126,8 +116,6 @@ function runForce(nodes: GraphNode[], edges: GraphEdge[]) {
   }
 }
 
-// ── بناء الرسم من المصدر الجديد ──────────────────────────────────────────
-
 function buildNewGraph(nodes: KnNode[], edges: KnEdge[]): { gNodes: GraphNode[]; gEdges: GraphEdge[] } {
   const gNodes: GraphNode[] = nodes.map((n) => ({
     id: n.id,
@@ -149,8 +137,6 @@ function buildNewGraph(nodes: KnNode[], edges: KnEdge[]): { gNodes: GraphNode[];
 
   return { gNodes, gEdges };
 }
-
-// ── بناء الرسم من المصدر القديم ─────────────────────────────────────────
 
 function buildOldGraph(rels: KnowledgeRelationship[]): { gNodes: GraphNode[]; gEdges: GraphEdge[] } {
   const nodeSet = new Map<string, GraphNode>();
@@ -177,8 +163,6 @@ function buildOldGraph(rels: KnowledgeRelationship[]): { gNodes: GraphNode[]; gE
   return { gNodes: Array.from(nodeSet.values()), gEdges };
 }
 
-// ── الصفحة الرئيسية ───────────────────────────────────────────────────────
-
 type DataSource = "new" | "old";
 type Tab = "graph" | "explore";
 
@@ -203,17 +187,10 @@ export default function KnowledgeGraphPage() {
   const animRef  = useRef<number>(0);
   const svgRef   = useRef<SVGSVGElement>(null);
 
-  // ── تحميل البيانات ─────────────────────────────────────────────────────
-
   const loadNew = useCallback(async () => {
     setLoading(true);
     const nodes = await fetchKnNodes(undefined, 120);
-    if (nodes.length === 0) {
-      // fallback إلى النظام القديم
-      setSource("old");
-      return;
-    }
-    // نحتاج edges — نأخذ العقدة الأولى كمركز
+    if (nodes.length === 0) { setSource("old"); return; }
     if (nodes.length > 0 && !centerNodeId) {
       const sub = await fetchKnSubgraph(nodes[0].id, 2);
       if (sub) {
@@ -248,7 +225,6 @@ export default function KnowledgeGraphPage() {
     else loadOld();
   }, [source, loadNew, loadOld]);
 
-  // توسيع من عقدة محددة
   const expandFromNode = useCallback(async (nodeId: string, depth: number) => {
     if (source !== "new") return;
     setLoading(true);
@@ -262,8 +238,6 @@ export default function KnowledgeGraphPage() {
     }
     setLoading(false);
   }, [source]);
-
-  // ── محاكاة القوة ──────────────────────────────────────────────────────
 
   useEffect(() => {
     if (gNodes.length === 0) return;
@@ -280,9 +254,7 @@ export default function KnowledgeGraphPage() {
     }
     animRef.current = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(animRef.current);
-  }, [gEdges]); // intentional: nodesRef is a ref (stable), only re-run on gEdges change
-
-  // ── البحث بالوسم ─────────────────────────────────────────────────────
+  }, [gEdges]);
 
   const handleTagSearch = useCallback(async () => {
     if (!searchTag.trim()) return;
@@ -291,8 +263,6 @@ export default function KnowledgeGraphPage() {
     setTagResults(res?.nodes ?? []);
     setTagLoading(false);
   }, [searchTag]);
-
-  // ── الرسم المرئي ─────────────────────────────────────────────────────
 
   const nodeMap  = new Map(gNodes.map((n) => [n.id, n]));
   const allTypes = Array.from(new Set(gNodes.map((n) => n.nodeType)));
@@ -311,46 +281,32 @@ export default function KnowledgeGraphPage() {
   }
 
   return (
-    <div dir="rtl" style={{ padding: "1.25rem", maxWidth: "1000px", margin: "0 auto" }}>
+    <div dir="rtl" className="kng-page">
 
-      {/* ─ Header ─ */}
-      <div style={{ marginBottom: "1.25rem" }}>
-        <h1 style={{ fontSize: "1.4rem", fontWeight: 700, color: C.emeraldDeep, marginBottom: "0.25rem" }}>
-          الرسم البياني المعرفي الإسلامي
-        </h1>
-        <p style={{ fontSize: "0.875rem", color: C.inkSoft }}>
+      {/* Header */}
+      <div className="kng-header">
+        <h1 className="kng-title">الرسم البياني المعرفي الإسلامي</h1>
+        <p className="kng-subtitle">
           شبكة دلالية تربط الآيات والأحاديث والفتاوى والعلماء والكتب والدروس.
           {nodeCount > 0 && ` ${nodeCount} عقدة · ${edgeCount} علاقة`}
         </p>
       </div>
 
-      {/* ─ Tabs ─ */}
-      <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1rem", borderBottom: `1px solid ${C.line}` }}>
+      {/* Tabs */}
+      <div className="kng-tabs">
         {(["graph", "explore"] as Tab[]).map((t) => (
           <button key={t} type="button" onClick={() => setTab(t)}
-            style={{
-              padding: "0.5rem 1.25rem", fontSize: "0.875rem", fontFamily: "inherit",
-              border: "none", cursor: "pointer",
-              borderBottom: tab === t ? `2px solid ${C.emeraldDeep}` : "2px solid transparent",
-              background: "transparent", fontWeight: tab === t ? 700 : 400,
-              color: tab === t ? C.emeraldDeep : C.inkSoft,
-            }}
+            className={`kng-tab${tab === t ? " is-active" : ""}`}
           >
             {t === "graph" ? "شبكة العلاقات" : "استكشاف الموضوعات"}
           </button>
         ))}
 
-        {/* مصدر البيانات */}
-        <div style={{ marginRight: "auto", display: "flex", alignItems: "center", gap: "0.5rem" }}>
-          <span style={{ fontSize: "0.8rem", color: C.inkSoft }}>المصدر:</span>
+        <div className="kng-source-group">
+          <span className="kng-source-label">المصدر:</span>
           {(["new", "old"] as DataSource[]).map((s) => (
             <button key={s} type="button" onClick={() => setSource(s)}
-              style={{
-                padding: "0.25rem 0.75rem", fontSize: "0.78rem", borderRadius: "999px",
-                border: `1px solid ${C.line}`, cursor: "pointer", fontFamily: "inherit",
-                background: source === s ? C.emeraldDeep : "transparent",
-                color: source === s ? "#fff" : C.inkSoft,
-              }}
+              className={`kng-source-btn${source === s ? " is-active" : ""}`}
             >
               {s === "new" ? "الجديد (kn_nodes)" : "القديم (relations)"}
             </button>
@@ -358,62 +314,50 @@ export default function KnowledgeGraphPage() {
         </div>
       </div>
 
-      {/* ═══════ تبويب: الشبكة ══════════════════════════════════════════ */}
+      {/* ══ Graph Tab ══ */}
       {tab === "graph" && (
         <>
-          {/* فلاتر */}
-          <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "0.75rem", alignItems: "center" }}>
+          {/* Filter chips */}
+          <div className="kng-filter-chips">
             {(["all", ...allTypes]).map((t) => (
               <button key={t} type="button" onClick={() => setFilterType(t)}
-                style={{
-                  padding: "0.3rem 0.875rem", borderRadius: "999px", fontSize: "0.8rem",
-                  border: `1px solid ${C.line}`, cursor: "pointer", fontFamily: "inherit",
-                  background: filterType === t ? (t === "all" ? C.emeraldDeep : getColor(t)) : "transparent",
-                  color: filterType === t ? "#fff" : C.inkSoft,
-                }}
+                className={`kng-filter-chip${filterType === t ? " is-active" : ""}`}
+                style={filterType === t && t !== "all" ? { background: getColor(t), borderColor: getColor(t), color: "#fff" } : undefined}
               >
                 {t === "all" ? "الكل" : getTypeLabel(t)}
               </button>
             ))}
           </div>
 
-          {/* legend */}
-          <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", marginBottom: "0.5rem" }}>
+          {/* Legend */}
+          <div className="kng-legend">
             {allTypes.map((t) => (
-              <div key={t} style={{ display: "flex", alignItems: "center", gap: "0.3rem", fontSize: "0.75rem" }}>
-                <span style={{ width: 10, height: 10, borderRadius: "50%", background: getColor(t), display: "inline-block" }} />
+              <div key={t} className="kng-legend-item">
+                <span className="kng-legend-dot" style={{ background: getColor(t) }} />
                 {getTypeLabel(t)}
               </div>
             ))}
           </div>
 
-          {/* SVG */}
+          {/* SVG Graph */}
           {loading ? (
-            <div style={{ textAlign: "center", padding: "4rem", color: C.inkSoft }}>جارٍ تحميل الرسم البياني...</div>
+            <div className="kng-loading">جارٍ تحميل الرسم البياني...</div>
           ) : gNodes.length === 0 ? (
-            <div style={{
-              border: `1px dashed ${C.line}`, borderRadius: "0.75rem",
-              padding: "3rem", textAlign: "center", color: C.inkSoft,
-            }}>
-              <p style={{ marginBottom: "0.5rem", fontWeight: 600 }}>لا توجد بيانات بعد</p>
-              <p style={{ fontSize: "0.85rem" }}>
+            <div className="kng-empty">
+              <p className="kng-empty__title">لا توجد بيانات بعد</p>
+              <p className="kng-empty__desc">
                 شغّل <code>knowledge_graph_islamic_v1.sql</code> و<code>knowledge_graph_islamic_seed_v1.sql</code> في Supabase، ثم أعد التحميل.
               </p>
             </div>
           ) : (
-            <div style={{ border: `1px solid ${C.line}`, borderRadius: "0.75rem", overflow: "hidden", background: "var(--majalis-panel, rgba(255,255,255,0.07))" }}>
-              <svg
-                ref={svgRef}
-                viewBox={`0 0 ${SVG_W} ${SVG_H}`}
-                style={{ width: "100%", maxHeight: "580px", display: "block" }}
-              >
+            <div className="kng-svg-wrap">
+              <svg ref={svgRef} viewBox={`0 0 ${SVG_W} ${SVG_H}`} className="kng-svg">
                 <defs>
                   <marker id="arr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
                     <polygon points="0 0, 8 3, 0 6" fill="#9ca3af" />
                   </marker>
                 </defs>
 
-                {/* الحواف */}
                 {visEdges.map((e, i) => {
                   const src = nodeMap.get(e.source);
                   const tgt = nodeMap.get(e.target);
@@ -428,20 +372,19 @@ export default function KnowledgeGraphPage() {
                         markerEnd="url(#arr)" opacity={0.7}
                       />
                       <text x={mx} y={my - 5} textAnchor="middle"
-                        fontSize="9" fill="#9ca3af" fontFamily="inherit" style={{ pointerEvents: "none" }}>
+                        fontSize="9" fill="#9ca3af" fontFamily="inherit" className="kng-svg-label">
                         {e.label.length > 10 ? e.label.slice(0, 8) + "…" : e.label}
                       </text>
                     </g>
                   );
                 })}
 
-                {/* العقد */}
                 {visNodes.map((node) => {
-                  const isSel  = selected?.id === node.id;
-                  const color  = getColor(node.nodeType);
+                  const isSel    = selected?.id === node.id;
+                  const color    = getColor(node.nodeType);
                   const isCenter = node.id === centerNodeId;
                   return (
-                    <g key={node.id} style={{ cursor: "pointer" }}
+                    <g key={node.id} className="kng-svg-node"
                       onClick={() => setSelected(isSel ? null : node)}>
                       <circle
                         cx={node.x} cy={node.y}
@@ -455,7 +398,7 @@ export default function KnowledgeGraphPage() {
                         textAnchor="middle" fontSize={isSel ? "10" : "9"}
                         fill={isSel ? "#fff" : color}
                         fontFamily="inherit" fontWeight={isSel ? 700 : 500}
-                        style={{ pointerEvents: "none" }}
+                        className="kng-svg-label"
                       >
                         {node.label}
                       </text>
@@ -466,78 +409,42 @@ export default function KnowledgeGraphPage() {
             </div>
           )}
 
-          {/* لوحة التفاصيل */}
+          {/* Selected node panel */}
           {selected && (
-            <div style={{
-              marginTop: "1rem", padding: "1rem 1.25rem",
-              border: `2px solid ${getColor(selected.nodeType)}`,
-              borderRadius: "0.75rem", background: "var(--majalis-panel, rgba(255,255,255,0.07))",
-            }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "1rem" }}>
-                <div style={{ flex: 1 }}>
-                  <span style={{
-                    fontSize: "0.7rem", background: `${getColor(selected.nodeType)}18`,
-                    color: getColor(selected.nodeType), borderRadius: "4px", padding: "2px 8px", fontWeight: 700,
-                  }}>
+            <div className="kng-panel" style={{ borderColor: getColor(selected.nodeType) }}>
+              <div className="kng-panel__head">
+                <div className="kng-panel__info">
+                  <span className="kng-type-badge"
+                    style={{ background: `${getColor(selected.nodeType)}18`, color: getColor(selected.nodeType) }}>
                     {getTypeLabel(selected.nodeType)}
                   </span>
-                  <h3 style={{ margin: "0.5rem 0 0.25rem", fontSize: "1rem", fontWeight: 700 }}>
-                    {selected.label}
-                  </h3>
+                  <h3 className="kng-panel__title">{selected.label}</h3>
                 </div>
-                <div style={{ display: "flex", gap: "0.5rem", alignItems: "center", flexShrink: 0 }}>
-                  {/* توسيع الرسم من هذه العقدة */}
+                <div className="kng-panel__actions">
                   {source === "new" && (
                     <>
-                      <select
-                        value={expandDepth}
-                        onChange={(e) => setExpandDepth(Number(e.target.value))}
-                        style={{
-                          fontSize: "0.8rem", padding: "0.25rem 0.5rem",
-                          border: `1px solid ${C.line}`, borderRadius: "4px",
-                          fontFamily: "inherit",
-                        }}
-                      >
+                      <select value={expandDepth} onChange={(e) => setExpandDepth(Number(e.target.value))} className="kng-expand-select">
                         <option value={1}>عمق 1</option>
                         <option value={2}>عمق 2</option>
                         <option value={3}>عمق 3</option>
                       </select>
-                      <button type="button"
-                        onClick={() => expandFromNode(selected.id, expandDepth)}
-                        style={{
-                          padding: "0.35rem 0.75rem", fontSize: "0.8rem",
-                          background: C.emeraldDeep, color: "#fff",
-                          border: "none", borderRadius: "4px", cursor: "pointer",
-                          fontFamily: "inherit",
-                        }}
-                      >
+                      <button type="button" onClick={() => expandFromNode(selected.id, expandDepth)} className="kng-expand-btn">
                         توسيع
                       </button>
                     </>
                   )}
                   {selected.href && (
-                    <Link href={selected.href}
-                      style={{
-                        padding: "0.35rem 0.75rem", fontSize: "0.8rem",
-                        background: "#f3f4f6", color: C.ink,
-                        borderRadius: "4px", textDecoration: "none",
-                        border: `1px solid ${C.line}`,
-                      }}
-                    >
-                      عرض المحتوى
-                    </Link>
+                    <Link href={selected.href} className="kng-view-link">عرض المحتوى</Link>
                   )}
-                  <button type="button" onClick={() => setSelected(null)}
-                    style={{ background: "none", border: "none", cursor: "pointer", fontSize: "1.25rem", color: C.inkSoft }}>
-                    ×
-                  </button>
+                  <button type="button" onClick={() => setSelected(null)} className="kng-close-btn">×</button>
                 </div>
               </div>
 
-              {/* العلاقات */}
-              <div style={{ marginTop: "0.75rem", fontSize: "0.8125rem" }}>
-                <strong style={{ color: C.ink }}>علاقاته ({visEdges.filter(e => e.source === selected.id || e.target === selected.id).length}):</strong>
-                <ul style={{ margin: "0.5rem 0 0", paddingInlineStart: "1.25rem", display: "flex", flexDirection: "column", gap: "0.25rem" }}>
+              <div className="kng-panel__rels">
+                <strong className="kng-panel__rels-title">
+                  علاقاته ({visEdges.filter(e => e.source === selected.id || e.target === selected.id).length}):
+                </strong>
+                <ul className="kng-panel__rel-list">
                   {visEdges
                     .filter((e) => e.source === selected.id || e.target === selected.id)
                     .slice(0, 8)
@@ -545,82 +452,55 @@ export default function KnowledgeGraphPage() {
                       const otherId = e.source === selected.id ? e.target : e.source;
                       const other = nodeMap.get(otherId);
                       return (
-                        <li key={i} style={{ color: C.ink }}>
+                        <li key={i} className="kng-panel__rel-item">
                           {e.source === selected.id ? "←" : "→"}{" "}
-                          <span style={{ fontWeight: 600 }}>{e.label}</span>
+                          <span className="kng-panel__rel-label">{e.label}</span>
                           {other ? ` · ${getTypeLabel(other.nodeType)}: ${other.label}` : ""}
                         </li>
                       );
                     })}
                   {visEdges.filter(e => e.source === selected.id || e.target === selected.id).length === 0 && (
-                    <li style={{ color: C.inkSoft }}>لا توجد علاقات مرئية</li>
+                    <li className="kng-panel__rel-empty">لا توجد علاقات مرئية</li>
                   )}
                 </ul>
               </div>
             </div>
           )}
 
-          <p style={{ marginTop: "1rem", fontSize: "0.75rem", color: C.inkSoft }}>
+          <p className="kng-note">
             جميع العلاقات المعروضة موثقة بمصدر معتمد. يمكن إضافة علاقات من لوحة الإدارة.
           </p>
         </>
       )}
 
-      {/* ═══════ تبويب: الاستكشاف ══════════════════════════════════════ */}
+      {/* ══ Explore Tab ══ */}
       {tab === "explore" && (
-        <div>
-          <div style={{ marginBottom: "1.5rem" }}>
-            <h2 style={{ fontSize: "1.1rem", fontWeight: 700, color: C.ink, marginBottom: "0.5rem" }}>
-              استكشاف الموضوعات
-            </h2>
-            <p style={{ fontSize: "0.875rem", color: C.inkSoft, marginBottom: "1rem" }}>
-              ابحث بوسم موضوعي (عقيدة، فقه، سيرة...) لاستكشاف العقد المرتبطة.
-            </p>
+        <div className="kng-explore">
+          <div className="kng-explore__search-section">
+            <h2 className="kng-explore__title">استكشاف الموضوعات</h2>
+            <p className="kng-explore__desc">ابحث بوسم موضوعي (عقيدة، فقه، سيرة...) لاستكشاف العقد المرتبطة.</p>
 
-            {/* شريط البحث */}
-            <div style={{ display: "flex", gap: "0.5rem", maxWidth: "500px" }}>
+            <div className="kng-search-bar">
               <input
                 type="text"
                 value={searchTag}
                 onChange={(e) => setSearchTag(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleTagSearch()}
                 placeholder="مثال: عقيدة، صلاة، زكاة، السيرة..."
-                style={{
-                  flex: 1, padding: "0.6rem 1rem", fontSize: "0.9rem",
-                  border: `1px solid ${C.line}`, borderRadius: "0.5rem",
-                  fontFamily: "inherit", direction: "rtl",
-                  outline: "none",
-                }}
+                className="kng-search-input"
               />
-              <button type="button" onClick={handleTagSearch}
-                disabled={tagLoading}
-                style={{
-                  padding: "0.6rem 1.25rem", fontSize: "0.9rem",
-                  background: C.emeraldDeep, color: "#fff",
-                  border: "none", borderRadius: "0.5rem",
-                  cursor: tagLoading ? "wait" : "pointer",
-                  fontFamily: "inherit",
-                }}
-              >
+              <button type="button" onClick={handleTagSearch} disabled={tagLoading} className="kng-search-btn">
                 {tagLoading ? "..." : "بحث"}
               </button>
             </div>
           </div>
 
-          {/* وسوم مقترحة */}
-          <div style={{ marginBottom: "1.25rem" }}>
-            <p style={{ fontSize: "0.8rem", color: C.inkSoft, marginBottom: "0.5rem" }}>وسوم مقترحة:</p>
-            <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+          <div className="kng-suggest-tags">
+            <p className="kng-suggest-tags__label">وسوم مقترحة:</p>
+            <div className="kng-suggest-tags__chips">
               {["العقيدة", "الصلاة", "الزكاة", "الصوم", "الحج", "السيرة", "الأخلاق", "القرآن"].map((tag) => (
-                <button key={tag} type="button"
-                  onClick={() => { setSearchTag(tag); }}
-                  style={{
-                    padding: "0.3rem 0.875rem", borderRadius: "999px",
-                    fontSize: "0.8rem", border: `1px solid ${C.line}`,
-                    background: searchTag === tag ? C.emeraldDeep : "transparent",
-                    color: searchTag === tag ? "#fff" : C.inkSoft,
-                    cursor: "pointer", fontFamily: "inherit",
-                  }}
+                <button key={tag} type="button" onClick={() => setSearchTag(tag)}
+                  className={`kng-suggest-chip${searchTag === tag ? " is-active" : ""}`}
                 >
                   {tag}
                 </button>
@@ -628,43 +508,26 @@ export default function KnowledgeGraphPage() {
             </div>
           </div>
 
-          {/* نتائج البحث */}
           {tagResults.length > 0 && (
-            <div>
-              <h3 style={{ fontSize: "0.9rem", fontWeight: 700, color: C.ink, marginBottom: "0.75rem" }}>
+            <div className="kng-tag-results">
+              <h3 className="kng-tag-results__title">
                 {tagResults.length} عقدة مرتبطة بـ "{searchTag}"
               </h3>
-              <div style={{ display: "grid", gap: "0.5rem", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))" }}>
+              <div className="kng-tag-results__grid">
                 {tagResults.map((node) => {
                   const color = NODE_TYPE_COLOR[node.node_type as KnNodeType] ?? "#6b7280";
                   return (
-                    <Link key={node.id} href={getNodeHref(node)} style={{ textDecoration: "none" }}>
-                      <div style={{
-                        padding: "0.875rem 1rem", borderRadius: "0.5rem",
-                        border: `1px solid ${C.line}`, background: "var(--majalis-panel, rgba(255,255,255,0.07))",
-                        transition: "border-color 0.15s",
-                      }}
+                    <Link key={node.id} href={getNodeHref(node)} className="kng-result-link">
+                      <div className="kng-result-card"
                         onMouseEnter={(e) => (e.currentTarget.style.borderColor = color)}
-                        onMouseLeave={(e) => (e.currentTarget.style.borderColor = C.line)}
+                        onMouseLeave={(e) => (e.currentTarget.style.borderColor = "")}
                       >
-                        <span style={{
-                          fontSize: "0.7rem", fontWeight: 700,
-                          background: `${color}18`, color,
-                          borderRadius: "4px", padding: "2px 6px",
-                        }}>
+                        <span className="kng-result-badge" style={{ background: `${color}18`, color }}>
                           {NODE_TYPE_LABEL[node.node_type as KnNodeType] ?? node.node_type}
                         </span>
-                        <div style={{ marginTop: "0.4rem", fontWeight: 600, fontSize: "0.875rem", color: C.ink }}>
-                          {node.title}
-                        </div>
+                        <div className="kng-result-title">{node.title}</div>
                         {node.summary && (
-                          <div style={{
-                            fontSize: "0.75rem", color: C.inkSoft, marginTop: "0.25rem",
-                            overflow: "hidden", display: "-webkit-box",
-                            WebkitLineClamp: 2, WebkitBoxOrient: "vertical",
-                          }}>
-                            {node.summary}
-                          </div>
+                          <div className="kng-result-summary">{node.summary}</div>
                         )}
                       </div>
                     </Link>
@@ -675,29 +538,18 @@ export default function KnowledgeGraphPage() {
           )}
 
           {tagResults.length === 0 && searchTag && !tagLoading && (
-            <p style={{ color: C.inkSoft, fontSize: "0.875rem" }}>
-              لا توجد نتائج للوسم "{searchTag}". جرّب وسماً آخر.
-            </p>
+            <p className="kng-no-results">لا توجد نتائج للوسم "{searchTag}". جرّب وسماً آخر.</p>
           )}
 
-          {/* عرض العقد حسب النوع */}
           {!searchTag && (
-            <div>
-              <h3 style={{ fontSize: "0.9rem", fontWeight: 700, color: C.ink, marginBottom: "0.75rem" }}>
-                استعراض حسب النوع
-              </h3>
-              <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
+            <div className="kng-type-browse">
+              <h3 className="kng-type-browse__title">استعراض حسب النوع</h3>
+              <div className="kng-type-browse__chips">
                 {(Object.keys(NODE_TYPE_LABEL) as KnNodeType[]).map((t) => (
                   <button key={t} type="button"
                     onClick={() => navigate(`/knowledge-graph?type=${t}`)}
-                    style={{
-                      padding: "0.5rem 1rem", borderRadius: "0.5rem",
-                      border: `1px solid ${NODE_TYPE_COLOR[t]}`,
-                      background: `${NODE_TYPE_COLOR[t]}10`,
-                      color: NODE_TYPE_COLOR[t],
-                      cursor: "pointer", fontFamily: "inherit",
-                      fontSize: "0.875rem", fontWeight: 600,
-                    }}
+                    className="kng-type-chip"
+                    style={{ borderColor: NODE_TYPE_COLOR[t], background: `${NODE_TYPE_COLOR[t]}10`, color: NODE_TYPE_COLOR[t] }}
                   >
                     {NODE_TYPE_LABEL[t]}
                   </button>
