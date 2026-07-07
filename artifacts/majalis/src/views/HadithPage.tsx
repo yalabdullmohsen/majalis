@@ -637,7 +637,7 @@ export default function HadithPage() {
       <PageHeader
         eyebrow="السنة النبوية الشريفة"
         title="الأحاديث النبوية"
-        subtitle="الأحاديث الصحيحة والضعيفة والموضوعة — مع بيان درجة كل حديث ومصدره"
+        subtitle="الأحاديث الصحيحة والضعيفة والموضوعة، مع بيان درجة كل حديث ومصدره."
       />
       <div className="hadith-stacked-sections">
         <HadithSection authenticityClass="sahih" embedded />

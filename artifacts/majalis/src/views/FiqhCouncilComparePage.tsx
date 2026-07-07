@@ -93,7 +93,7 @@ export default function FiqhCouncilComparePage() {
       <PageHeader
         eyebrow="أداة الباحث"
         title="مقارنة القرارات الفقهية"
-        subtitle="قارِن بين قرارين أو أكثر — المصدر، التاريخ، الأدلة، ونقاط الاتفاق والاختلاف."
+        subtitle="قارِن بين قرارين أو أكثر: المصدر، التاريخ، الأدلة، ونقاط الاتفاق والاختلاف."
       />
 
       <FiqhCouncilSubnav />

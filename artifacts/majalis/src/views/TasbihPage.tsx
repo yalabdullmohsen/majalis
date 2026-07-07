@@ -107,7 +107,7 @@ export default function TasbihPage() {
       <PageHeader
         eyebrow="الأذكار"
         title="عداد التسبيح"
-        subtitle="عدّ بدون حد أقصى، اختر هدفك، واستمر حتى بعد تجاوزه — مع حفظ تلقائي."
+        subtitle="عدّ بدون حد أقصى، اختر هدفك، واستمر حتى بعد تجاوزه، مع حفظ تلقائي."
       />
 
       {/* Stats grid */}

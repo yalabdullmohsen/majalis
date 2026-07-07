@@ -1987,3 +1987,135 @@ button.hcp-prayer-cell:focus-visible {
   font-weight: 700 !important;
 }
 
+/* ══════════════════════════════════════════════
+   §56. رأس بطاقة الدرس — أخضر داكن + نجوم
+   ══════════════════════════════════════════════ */
+.lesson-unified-card__header {
+  background-color: var(--elite-forest, #18362A) !important;
+  background-image: url("/star-pattern.svg") !important;
+  background-size: 80px 80px !important;
+}
+.lesson-unified-card__category {
+  color: rgba(250,248,242,0.92) !important;
+  font-weight: 700 !important;
+}
+.lesson-unified-card__status {
+  background: rgba(255,255,255,0.18) !important;
+  color: var(--elite-white, #FAF8F2) !important;
+  border: 1px solid rgba(255,255,255,0.22) !important;
+}
+.lesson-unified-card--today .lesson-unified-card__status {
+  background: rgba(255,220,40,0.25) !important;
+  color: #fef3c7 !important;
+  border-color: rgba(255,220,40,0.4) !important;
+}
+
+/* ══════════════════════════════════════════════
+   §57. بطاقات الإعلانات التسويقية — الرئيسية
+   ══════════════════════════════════════════════ */
+.home-announce-section {
+  padding-block: 1rem 2rem !important;
+}
+.home-announce-head {
+  margin-bottom: 1.5rem !important;
+  padding: 1.5rem 1.75rem !important;
+  background: var(--elite-forest, #18362A) !important;
+  background-image: url("/star-pattern.svg") !important;
+  background-size: 90px 90px !important;
+  border-radius: 1.25rem !important;
+  color: var(--elite-white, #FAF8F2) !important;
+}
+.home-announce-head .home-eyebrow {
+  color: rgba(250,248,242,0.70) !important;
+  font-size: 0.78rem !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  margin-bottom: 0.3rem !important;
+}
+.home-announce-head h2 {
+  color: #fff !important;
+  font-size: 1.45rem !important;
+  font-weight: 800 !important;
+  margin: 0 0 0.4rem !important;
+}
+.home-announce-sub {
+  color: rgba(250,248,242,0.80) !important;
+  font-size: 0.88rem !important;
+  line-height: 1.55 !important;
+  margin: 0 !important;
+}
+.home-announce-section .home-stories-grid {
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 0.85rem !important;
+}
+@media (min-width: 640px) {
+  .home-announce-section .home-stories-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+@media (min-width: 1024px) {
+  .home-announce-section .home-stories-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+}
+.home-announce-section .home-story-card {
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  padding: 1.15rem !important;
+  gap: 0.65rem !important;
+  min-height: 130px !important;
+  border-radius: 1.15rem !important;
+  background: #fff !important;
+  border: 1.5px solid rgba(24,54,42,0.12) !important;
+  box-shadow: 0 2px 10px rgba(24,54,42,0.06) !important;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease, background 0.18s ease !important;
+}
+.home-announce-section .home-story-card:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 12px 28px rgba(24,54,42,0.14) !important;
+  border-color: rgba(24,54,42,0.30) !important;
+  background: #f0fdf8 !important;
+}
+.home-announce-section .home-story-card__icon {
+  font-size: 1.5rem !important;
+  width: 2.75rem !important;
+  height: 2.75rem !important;
+  background: var(--elite-forest, #18362A) !important;
+  border-radius: 0.7rem !important;
+  color: #fff !important;
+  flex-shrink: 0 !important;
+}
+.home-announce-section .home-story-card__body {
+  flex: 1 !important;
+}
+.home-announce-section .home-story-card__title {
+  font-size: 0.92rem !important;
+  font-weight: 800 !important;
+  color: var(--elite-forest, #18362A) !important;
+  display: block !important;
+  margin-bottom: 0.25rem !important;
+}
+.home-announce-section .home-story-card__desc {
+  font-size: 0.75rem !important;
+  color: #6b7280 !important;
+  line-height: 1.55 !important;
+  display: block !important;
+}
+.home-announce-section .home-story-card__arrow {
+  align-self: flex-end !important;
+  font-size: 1rem !important;
+  color: var(--elite-forest, #18362A) !important;
+  opacity: 0.85 !important;
+  font-weight: 700 !important;
+  margin-top: auto !important;
+}
+
+/* عنوان الرئيسية — نص بدلاً من الصورة الخطية */
+.home-hero-title.home-hero-title--v3 {
+  font-size: clamp(1.6rem, 5vw, 2.4rem) !important;
+  font-weight: 800 !important;
+  color: var(--elite-white, #FAF8F2) !important;
+  letter-spacing: -0.01em !important;
+  line-height: 1.2 !important;
+}
+

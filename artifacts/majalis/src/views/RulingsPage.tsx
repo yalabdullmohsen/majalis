@@ -188,7 +188,7 @@ export default function RulingsPage() {
       <PageHeader
         eyebrow="موسوعة الفقه"
         title="الأحكام الشرعية"
-        subtitle="مكتبة علمية شاملة للأحكام — موثقة بالأدلة والمراجع."
+        subtitle="مكتبة علمية شاملة للأحكام، موثقة بالأدلة والمراجع."
       />
 
       <FiqhHubStrip current="rulings" />

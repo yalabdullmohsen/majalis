@@ -3,7 +3,6 @@
 import { useState, type FormEvent } from "react";
 import { Link, useLocation } from "wouter";
 import { SectionErrorBoundary } from "@/components/ErrorBoundary";
-import { HomeUpcomingLessons } from "@/components/home/HomeUpcomingLessons";
 import { HomeCompactPrayer } from "@/components/home/HomeCompactPrayer";
 import { HomeAboutSection } from "@/components/home/HomeAboutSection";
 import { HomeDailyFaida } from "@/components/home/HomeDailyFaida";
@@ -13,7 +12,6 @@ import { HomeDailyHadith } from "@/components/home/HomeDailyHadith";
 import { IslamicDivider } from "@/components/design/IslamicDivider";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
 import { HijriSacredMonthBanner } from "@/components/HijriSacredMonthBanner";
-import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 
 const SITE_ANNOUNCEMENTS = [
   {
@@ -32,7 +30,7 @@ const SITE_ANNOUNCEMENTS = [
     href: "/prophets",
     icon: "⭐",
     title: "قصص الأنبياء",
-    desc: "من آدم إلى محمد ﷺ — قصص الرسل والأنبياء",
+    desc: "من آدم إلى محمد ﷺ، قصص الرسل والأنبياء",
   },
   {
     href: "/islamic-stories",
@@ -118,11 +116,7 @@ function SafeHomeSection({ name, children }: { name: string; children: React.Rea
   return <SectionErrorBoundary name={name}>{children}</SectionErrorBoundary>;
 }
 
-export default function HomePage({
-  initialFeaturedLessons,
-}: {
-  initialFeaturedLessons?: KuwaitLessonRecord[];
-} = {}) {
+export default function HomePage() {
   const [term, setTerm] = useState("");
   const [, navigate] = useLocation();
 
@@ -156,15 +150,7 @@ export default function HomePage({
                 decoding="async"
                 aria-hidden="true"
               />
-              <h1 className="home-hero-title home-hero-title--v3">
-                <img
-                  src="/logo-calligraphy.png"
-                  alt="المجلس العلمي"
-                  className="home-hero-calligraphy"
-                  loading="eager"
-                  decoding="async"
-                />
-              </h1>
+              <h1 className="home-hero-title home-hero-title--v3">المجلس العلمي</h1>
             </div>
 
             <span className="home-hero-badge">
@@ -194,19 +180,13 @@ export default function HomePage({
 
         <IslamicDivider />
 
-        {/* الدروس — أهم محتوى */}
-        <SafeHomeSection name="أحدث الدروس">
-          <HomeUpcomingLessons initialLessons={initialFeaturedLessons} />
-        </SafeHomeSection>
-
-        <IslamicDivider />
-
-        {/* أقسام الموقع كإعلانات */}
-        <section className="home-section home-stories-section" aria-labelledby="announcements-heading">
-          <div className="home-section-head">
+        {/* أقسام الموقع كإعلانات تسويقية */}
+        <section className="home-section home-stories-section home-announce-section" aria-labelledby="announcements-heading">
+          <div className="home-section-head home-announce-head">
             <div>
-              <p className="home-eyebrow">المجلس العلمي</p>
-              <h2 id="announcements-heading">أقسام المنصة</h2>
+              <p className="home-eyebrow">استكشف المنصة</p>
+              <h2 id="announcements-heading">ما يقدمه المجلس العلمي</h2>
+              <p className="home-announce-sub">محتوى علمي متنوع في مكان واحد: الدروس والقرآن والأحاديث والفتاوى وأكثر.</p>
             </div>
           </div>
           <div className="home-stories-grid">

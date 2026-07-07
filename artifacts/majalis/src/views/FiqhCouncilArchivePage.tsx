@@ -26,7 +26,7 @@ export default function FiqhCouncilArchivePage() {
       <PageHeader
         eyebrow="الفقه المعاصر"
         title="أرشيف المجمع الفقهي"
-        subtitle="قرارات وفتاوى وتوصيات سابقة — للمرجعية والبحث."
+        subtitle="قرارات وفتاوى وتوصيات سابقة، للمرجعية والبحث."
       />
 
       <FiqhCouncilSubnav />

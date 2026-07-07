@@ -81,7 +81,7 @@ export default function FatwaPage() {
       <PageHeader
         eyebrow="مركز الفتاوى"
         title="الفتاوى الشرعية"
-        subtitle="أحدث الفتاوى والأكثر قراءة والأكثر بحثاً — مكتوبة وصوتية مع تصنيف وبحث ذكي."
+        subtitle="أحدث الفتاوى والأكثر قراءة والأكثر بحثاً، مكتوبة وصوتية مع تصنيف وبحث ذكي."
       />
 
       <FiqhHubStrip current="fatawa" />

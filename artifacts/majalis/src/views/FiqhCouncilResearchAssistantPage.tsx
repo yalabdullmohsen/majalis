@@ -23,7 +23,7 @@ export default function FiqhCouncilResearchAssistantPage() {
       <PageHeader
         eyebrow="أداة الباحث"
         title="مساعد الباحث الفقهي"
-        subtitle="يبحث في القرارات والفتاوى والتوصيات المنشورة فقط — ويربط كل جواب بمراجعها دون إصدار فتوى جديدة."
+        subtitle="يبحث في القرارات والفتاوى والتوصيات المنشورة فقط، ويربط كل جواب بمراجعها دون إصدار فتوى جديدة."
       />
 
       <FiqhCouncilSubnav />

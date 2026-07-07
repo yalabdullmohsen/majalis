@@ -218,7 +218,7 @@ export default function FlashCardsPage() {
       <PageHeader
         eyebrow="التعلّم الذكي"
         title="📇 بطاقات المراجعة"
-        subtitle="راجع الأحاديث الموثّقة بأسلوب التكرار المتباعد — كل يوم بضع دقائق تُرسّخ العلم."
+        subtitle="راجع الأحاديث الموثّقة بأسلوب التكرار المتباعد، كل يوم بضع دقائق تُرسّخ العلم."
       />
 
       {stats && <StatsBar stats={stats} />}

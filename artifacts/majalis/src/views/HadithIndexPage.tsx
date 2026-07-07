@@ -77,7 +77,7 @@ export default function HadithIndexPage() {
       <PageHeader
         eyebrow="السنة النبوية الشريفة"
         title="الأحاديث النبوية"
-        subtitle="ثلاثة أقسام مستقلة ومفصولة: الصحيحة، ثم الضعيفة، ثم الموضوعة والمكذوبة — لمنع أي اختلاط."
+        subtitle="ثلاثة أقسام مستقلة ومفصولة: الصحيحة، ثم الضعيفة، ثم الموضوعة والمكذوبة، لمنع أي اختلاط."
       />
 
       <div className="hadith-index-grid">

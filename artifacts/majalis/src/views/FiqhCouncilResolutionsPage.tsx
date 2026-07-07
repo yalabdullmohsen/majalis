@@ -5,7 +5,7 @@ export default function FiqhCouncilResolutionsPage() {
     <FiqhCouncilListPage
       typeFilter="resolution"
       title="قرارات المجمع الفقهي"
-      subtitle="قرارات المجمع الفقهي الإسلامي في القضايا المعاصرة — مع تصنيف ومراجع."
+      subtitle="قرارات المجمع الفقهي الإسلامي في القضايا المعاصرة، مع تصنيف ومراجع."
       showTypeFilter={false}
     />
   );

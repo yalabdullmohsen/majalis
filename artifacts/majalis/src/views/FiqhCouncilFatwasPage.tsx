@@ -5,7 +5,7 @@ export default function FiqhCouncilFatwasPage() {
     <FiqhCouncilListPage
       typeFilter="fatwa"
       title="الفتاوى الجماعية"
-      subtitle="فتاوى جماعية صادرة عن المجمع الفقهي الإسلامي — مع أدلة ومراجع."
+      subtitle="فتاوى جماعية صادرة عن المجمع الفقهي الإسلامي، مع أدلة ومراجع."
       showTypeFilter={false}
     />
   );

@@ -5,7 +5,7 @@ export default function FiqhCouncilRecommendationsPage() {
     <FiqhCouncilListPage
       typeFilter="recommendation"
       title="توصيات المجمع الفقهي"
-      subtitle="توصيات رسمية صادرة عن المجمع الفقهي الإسلامي — مع مراجع ومصادر موثقة."
+      subtitle="توصيات رسمية صادرة عن المجمع الفقهي الإسلامي، مع مراجع ومصادر موثقة."
       showTypeFilter={false}
     />
   );

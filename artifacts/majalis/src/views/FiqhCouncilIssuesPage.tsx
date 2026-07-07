@@ -40,7 +40,7 @@ export default function FiqhCouncilIssuesPage() {
       <PageHeader
         eyebrow="موسوعة علمية"
         title="المسائل الفقهية"
-        subtitle="كل مسألة ملف جامع يربط القرارات والفتاوى والبحوث والتوصيات والأدلة — لا فتوى منفردة."
+        subtitle="كل مسألة ملف جامع يربط القرارات والفتاوى والبحوث والتوصيات والأدلة، لا فتوى منفردة."
       />
 
       <FiqhCouncilSubnav />

@@ -95,7 +95,7 @@ export default function FiqhCouncilLivePage() {
       <PageHeader
         eyebrow="بيانات حية"
         title="البيانات الحية للمجمع الفقهي"
-        subtitle="آخر الجلسات والقرارات والتوصيات — من مصادر موثقة فقط، دون اختلاق."
+        subtitle="آخر الجلسات والقرارات والتوصيات، من مصادر موثقة فقط، دون اختلاق."
       />
 
       <FiqhCouncilSubnav />

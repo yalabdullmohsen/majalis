@@ -39,7 +39,7 @@ export default function AnnualCoursesPage() {
       <PageHeader
         eyebrow="برامج طلب العلم"
         title="الدورات العلمية"
-        subtitle="الدورات السنوية والموسمية والبرامج العلمية والمتون — مع الجداول والمشايخ والتسجيل."
+        subtitle="الدورات السنوية والموسمية والبرامج العلمية والمتون، مع الجداول والمشايخ والتسجيل."
       />
 
       <div className="page-stats-row">

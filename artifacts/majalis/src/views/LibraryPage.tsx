@@ -76,7 +76,7 @@ export default function LibraryPage({
       className="content-hub library-hub"
       eyebrow="الأرشيف العلمي"
       title="المكتبة العلمية"
-      subtitle="كتب أساسية في الحديث والتفسير والعقيدة والفقه — مرتبة وموثقة."
+      subtitle="كتب أساسية في الحديث والتفسير والعقيدة والفقه، مرتبة وموثقة."
       stats={isAdmin ? [{ label: "كتاب", value: filtered.length }] : []}
       filters={filtersPanel}
       filtersOpen={filtersOpen}
