@@ -427,6 +427,42 @@ export const UPDATES_SEED: PlatformUpdate[] = [
     published_at: "2026-07-08T06:00:00Z",
     status: "approved",
   },
+  {
+    id: "update-rulings-5-new",
+    title: "تحديث: 5 أحكام شرعية جديدة",
+    summary: "إضافة أحكام جديدة تشمل: القروض العقارية البنكية، زكاة الراتب، شروط الجمعة، أنواع العِدَّة، وأحكام التعصيب في الميراث.",
+    update_type: "إعلان",
+    source_url: "/rulings",
+    published_at: "2026-07-08T15:00:00Z",
+    status: "approved",
+  },
+  {
+    id: "update-fiqh-sessions-expanded",
+    title: "تحديث: إضافة جلسات مجمع فقهي تاريخية",
+    summary: "إضافة 5 جلسات جديدة للمجمع الفقهي الإسلامي (14-17 و23) تغطي موضوعات الجائحة، التأمين، التمويل الإسلامي، والوصايا الرقمية.",
+    update_type: "إعلان",
+    source_url: "/fiqh-council",
+    published_at: "2026-07-08T16:00:00Z",
+    status: "approved",
+  },
+  {
+    id: "update-fawaid-curated-14",
+    title: "تحديث: 14 فائدة علمية جديدة",
+    summary: "إضافة فوائد منتقاة في العقيدة، الحديث، السيرة، اللغة، طلب العلم، والدعوة من كتب الأئمة والمحدثين.",
+    update_type: "إعلان",
+    source_url: "/fawaid",
+    published_at: "2026-07-08T17:00:00Z",
+    status: "approved",
+  },
+  {
+    id: "update-scholars-65",
+    title: "تحديث: الموسوعة العلمية تضم 65 عالماً",
+    summary: "إضافة 10 علماء جدد منهم: الإمام الذهبي، ابن حجر، القرطبي، الشاطبي، ابن باز، ابن عثيمين، الألباني، والرازي.",
+    update_type: "إعلان",
+    source_url: "/sheikhs",
+    published_at: "2026-07-06T09:00:00Z",
+    status: "approved",
+  },
 ];
 
 export function getSortedUpdates(limit?: number) {
