@@ -8818,6 +8818,13 @@ body {
   transition: background 150ms, color 150ms, border-color 150ms;
   box-shadow: var(--gsm-chip-shadow, none);
 }
+.gsm-chip--active {
+  background: var(--majalis-emerald);
+  color: var(--majalis-parchment);
+  border-color: var(--majalis-emerald);
+  font-weight: 700;
+  box-shadow: 0 2px 6px rgba(22,96,72,0.2);
+}
 .gsm-results-area {
   flex: 1;
   overflow-y: auto;
@@ -8858,6 +8865,11 @@ body {
   cursor: pointer;
   font-family: inherit;
   min-height: 36px;
+}
+.gsm-pill--trend {
+  background: var(--majalis-sage);
+  border-color: var(--majalis-emerald);
+  color: var(--majalis-emerald-deep);
 }
 .gsm-quicklinks { display: flex; flex-wrap: wrap; gap: 0.35rem; }
 .gsm-quicklink-btn {

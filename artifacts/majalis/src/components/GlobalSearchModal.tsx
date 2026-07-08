@@ -314,14 +314,7 @@ export function GlobalSearchModal({ onClose }: Props) {
                 key={chip.key}
                 type="button"
                 onClick={() => setActiveFilter(chip.key)}
-                className="gsm-chip"
-                style={{
-                  "--gsm-chip-bg":     active ? "var(--majalis-emerald)" : "var(--majalis-panel)",
-                  "--gsm-chip-color":  active ? "var(--majalis-parchment)" : "var(--majalis-ink-soft)",
-                  "--gsm-chip-border": active ? "var(--majalis-emerald)" : "var(--majalis-line)",
-                  "--gsm-chip-fw":     active ? "700" : "500",
-                  "--gsm-chip-shadow": active ? "0 2px 6px rgba(22,96,72,0.2)" : "none",
-                } as React.CSSProperties}
+                className={`gsm-chip${active ? " gsm-chip--active" : ""}`}
               >
                 {chip.label}
               </button>
@@ -350,11 +343,6 @@ export function GlobalSearchModal({ onClose }: Props) {
                         type="button"
                         onClick={() => handleQuickQuery(q)}
                         className="gsm-pill"
-                        style={{
-                          "--gsm-pill-bg":     "var(--majalis-parchment-deep)",
-                          "--gsm-pill-border": "var(--majalis-line)",
-                          "--gsm-pill-color":  "var(--majalis-ink)",
-                        } as React.CSSProperties}
                       >
                         🕐 {q}
                       </button>
@@ -372,12 +360,7 @@ export function GlobalSearchModal({ onClose }: Props) {
                         key={q}
                         type="button"
                         onClick={() => handleQuickQuery(q)}
-                        className="gsm-pill"
-                        style={{
-                          "--gsm-pill-bg":     "var(--majalis-sage)",
-                          "--gsm-pill-border": "var(--majalis-emerald)",
-                          "--gsm-pill-color":  "var(--majalis-emerald-deep)",
-                        } as React.CSSProperties}
+                        className="gsm-pill gsm-pill--trend"
                       >
                         🔥 {q}
                       </button>
@@ -395,11 +378,6 @@ export function GlobalSearchModal({ onClose }: Props) {
                       type="button"
                       onClick={() => handleQuickQuery(q)}
                       className="gsm-pill"
-                      style={{
-                        "--gsm-pill-bg":     "var(--majalis-parchment-deep)",
-                        "--gsm-pill-border": "var(--majalis-line)",
-                        "--gsm-pill-color":  "var(--majalis-ink)",
-                      } as React.CSSProperties}
                     >
                       {q}
                     </button>
@@ -457,11 +435,6 @@ export function GlobalSearchModal({ onClose }: Props) {
                     type="button"
                     onClick={() => handleQuickQuery(q)}
                     className="gsm-pill"
-                    style={{
-                      "--gsm-pill-bg":     "var(--majalis-parchment-deep)",
-                      "--gsm-pill-border": "var(--majalis-line)",
-                      "--gsm-pill-color":  "var(--majalis-ink)",
-                    } as React.CSSProperties}
                   >
                     {q}
                   </button>
