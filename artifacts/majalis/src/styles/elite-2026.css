@@ -13909,6 +13909,36 @@ img[loading="lazy"]:not([src=""]) {
 
 /* ── نهاية §TOAST-REDESIGN ───────────────────────────────────────── */
 
+/* ══════════════════════════════════════════════════════════════════
+   §NAV-PROGRESS — شريط تقدم التنقل
+   ══════════════════════════════════════════════════════════════════ */
+
+.nav-progress-track {
+  position: fixed !important;
+  top: 0 !important;
+  right: 0 !important;
+  left: 0 !important;
+  height: 3px !important;
+  z-index: 99999 !important;
+  pointer-events: none !important;
+  background: transparent !important;
+}
+
+.nav-progress-bar {
+  height: 100% !important;
+  background: linear-gradient(
+    90deg,
+    var(--majalis-emerald, #0E6E52) 0%,
+    #2aad7c 50%,
+    var(--majalis-emerald, #0E6E52) 100%
+  ) !important;
+  border-radius: 0 2px 2px 0 !important;
+  transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  box-shadow: 0 0 8px var(--majalis-emerald, #0E6E52) !important;
+}
+
+/* ── نهاية §NAV-PROGRESS ─────────────────────────────────────────── */
+
 /* ── نهاية §UI-REFRESH-2026 ─────────────────────────────────────── */
 
 /* ── نهاية §PERF-UX-2026 ─────────────────────────────────────── */

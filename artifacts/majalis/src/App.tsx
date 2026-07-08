@@ -25,6 +25,7 @@ import { LazyRouteFallback } from "@/components/LazyRouteFallback";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import { startAdhanScheduler } from "@/lib/adhan-scheduler";
 import { loadNotifPrefs, scheduleIslamicReminder } from "@/lib/local-notifications";
+import { NavProgressBar } from "@/components/NavProgressBar";
 
 const lazy = lazyWithRetry;
 
@@ -434,6 +435,7 @@ function AppShell() {
     <WouterRouter base={(import.meta.env.BASE_URL || "/").replace(/\/$/, "")}>
       <div className="app-shell" style={{ "--app-dir": dir } as React.CSSProperties}>
         <a href="#main-content" className="skip-link">{t("skip_to_content")}</a>
+        <NavProgressBar />
         <SeoManager />
         <IslamicReminderBootstrap />
         <AdhanSchedulerBootstrap />
