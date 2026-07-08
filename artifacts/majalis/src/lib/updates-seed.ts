@@ -400,6 +400,33 @@ export const UPDATES_SEED: PlatformUpdate[] = [
     published_at: "2026-07-08T07:00:00Z",
     status: "approved",
   },
+  {
+    id: "update-islamic-stories-expanded",
+    title: "تحديث: إضافة قصص إسلامية جديدة",
+    summary: "إضافة 5 قصص إسلامية جديدة: عثمان بن عفان، علي بن أبي طالب، بلال الحبشي، فتح الأندلس، وعائشة أم المؤمنين.",
+    update_type: "إعلان",
+    source_url: "/stories",
+    published_at: "2026-07-08T12:00:00Z",
+    status: "approved",
+  },
+  {
+    id: "update-sharia-rulings-expanded",
+    title: "تحديث: توسعة موسوعة الأحكام الشرعية",
+    summary: "إضافة 5 أحكام شرعية جديدة: موجبات الغسل، التيمم، أركان الحج، أنواع الطلاق، وشروط البيع.",
+    update_type: "إعلان",
+    source_url: "/rulings",
+    published_at: "2026-07-08T11:00:00Z",
+    status: "approved",
+  },
+  {
+    id: "update-prophetic-medicine-expanded",
+    title: "تحديث: إثراء الطب النبوي",
+    summary: "إضافة 4 مواد جديدة في قسم الطب النبوي: الخل، العدس، النوم على الجنب الأيمن، والسواك.",
+    update_type: "إعلان",
+    source_url: "/prophetic-medicine",
+    published_at: "2026-07-08T06:00:00Z",
+    status: "approved",
+  },
 ];
 
 export function getSortedUpdates(limit?: number) {
