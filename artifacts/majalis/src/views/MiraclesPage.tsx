@@ -8,6 +8,7 @@ import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBotto
 import { MIRACLE_CATEGORIES } from "@/lib/miracles-seed";
 import { safeLoadEffect } from "@/lib/safe-load";
 import { GeometricPattern } from "@/components/design/GeometricPattern";
+import { applyPageSeo } from "@/lib/seo";
 
 const CATEGORIES = MIRACLE_CATEGORIES;
 const SOURCE_TYPES = ["الكل", "قرآن", "سنة"];
@@ -77,6 +78,15 @@ export default function MiraclesPage({
   const [expanded, setExpanded] = useState<string | null>(null);
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [reloadKey, setReloadKey] = useState(0);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/miracles",
+      title: "الإعجاز العلمي في القرآن والسنة | المجلس العلمي",
+      description: "موضوعات الإعجاز العلمي في القرآن الكريم والسنة النبوية — إعجاز طبي وكوني وعددي وبيولوجي موثّق بالأدلة العلمية.",
+      keywords: ["إعجاز علمي", "إعجاز قرآني", "معجزات", "علم وإسلام", "إعجاز بيولوجي", "إعجاز كوني"],
+    });
+  }, []);
 
   useEffect(() => {
     if (initialItems && category === "الكل" && sourceType === "الكل" && reloadKey === 0) return;

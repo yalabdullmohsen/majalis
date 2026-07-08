@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { PageHeader, Loading } from "@/components/ui-common";
 import { fetchAllTopics } from "@/lib/scholarly-intelligence-service";
+import { applyPageSeo } from "@/lib/seo";
 
 // ── Static fallback topics per category ──────────────────────────────────────
 
@@ -86,6 +87,15 @@ export default function TopicsIndexPage() {
   const [topics, setTopics] = useState<Array<{ slug: string; title: string; category?: string }>>([]);
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState(ALL_CAT);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/topics",
+      title: "الموضوعات العلمية الشرعية | المجلس العلمي",
+      description: "استعرض المحتوى الشرعي مجمّعاً حسب الموضوع — فقه، عقيدة، أخلاق، قرآن، حديث، سيرة. آيات وأحاديث وفتاوى ودروس.",
+      keywords: ["موضوعات إسلامية", "فقه إسلامي", "علوم شرعية", "تصنيف إسلامي", "محتوى شرعي"],
+    });
+  }, []);
 
   useEffect(() => {
     fetchAllTopics()

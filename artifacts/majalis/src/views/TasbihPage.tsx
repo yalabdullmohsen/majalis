@@ -3,6 +3,7 @@ import { PageHeader } from "@/components/ui-common";
 import { useAuth } from "@/components/AuthProvider";
 import { TasbeehCounter } from "@/components/reading/TasbeehCounter";
 import { setTaskProgress } from "@/lib/daily-progress";
+import { applyPageSeo } from "@/lib/seo";
 import {
   computeStreakDays,
   computeTasbeehStats,
@@ -32,6 +33,15 @@ export default function TasbihPage() {
   const [syncNote, setSyncNote] = useState<string | null>(null);
 
   const active = items.find((item) => item.id === activeId) || items[0];
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/tasbih",
+      title: "التسبيح الرقمي | المجلس العلمي",
+      description: "عداد التسبيح الرقمي مع أوراد قابلة للتخصيص — سبّح بحمد الله واذكر الله في أي وقت مع متابعة تقدمك اليومي.",
+      keywords: ["تسبيح", "ذكر الله", "عداد تسبيح", "أوراد", "أذكار"],
+    });
+  }, []);
 
   useEffect(() => {
     if (!isLoggedIn) return;

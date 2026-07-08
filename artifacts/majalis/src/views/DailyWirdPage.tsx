@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { PageHeader } from "@/components/ui-common";
 import {
@@ -7,6 +7,7 @@ import {
   saveDailyWirdState,
 } from "@/lib/quran-api";
 import { incrementTaskProgress } from "@/lib/daily-progress";
+import { applyPageSeo } from "@/lib/seo";
 
 function toAr(n: number): string {
   return n.toLocaleString("ar-EG", { useGrouping: false });
@@ -49,6 +50,15 @@ function WirdRing({ pct, pages, target }: { pct: number; pages: number; target: 
 export default function DailyWirdPage() {
   const [state, setState] = useState(getDailyWirdState);
   const surahs = getSurahList();
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/daily-wird",
+      title: "الورد اليومي من القرآن | المجلس العلمي",
+      description: "تتبّع وردك اليومي من القرآن الكريم — حدّد هدفك اليومي من الصفحات وتابع تقدمك نحو ختم القرآن.",
+      keywords: ["ورد يومي", "ختم القرآن", "قراءة قرآن", "حفظ قرآن", "مصحف يومي"],
+    });
+  }, []);
 
   const today = new Date().toISOString().slice(0, 10);
   const todayCompleted = state.lastDate === today ? state.completedToday : 0;

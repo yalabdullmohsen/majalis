@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { PageHeader, Loading } from "@/components/ui-common";
 import { fetchLearningPaths, levelLabel, type LearningPath } from "@/lib/digital-learning-service";
+import { applyPageSeo } from "@/lib/seo";
 
 // ── Static fallback paths ─────────────────────────────────────────────────────
 
@@ -53,6 +54,15 @@ export default function LearningPathsPage() {
   const [paths, setPaths] = useState<LearningPath[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState(ALL_CAT);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/learning-path",
+      title: "المسارات العلمية الشرعية | المجلس العلمي",
+      description: "مسارات تعليمية منظمة في العلوم الشرعية — فقه وعقيدة وقرآن وحديث وسيرة وأخلاق. من المبتدئ إلى المتقدم مع شهادات إتمام.",
+      keywords: ["مسارات تعليمية", "طلب العلم", "تعلم الفقه", "تعلم القرآن", "شهادات إسلامية"],
+    });
+  }, []);
 
   useEffect(() => {
     fetchLearningPaths()
