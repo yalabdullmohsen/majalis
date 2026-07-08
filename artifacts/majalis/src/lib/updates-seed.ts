@@ -634,6 +634,42 @@ export const UPDATES_SEED: PlatformUpdate[] = [
     published_at: "2026-07-08T18:00:00Z",
     status: "approved",
   },
+  {
+    id: "update-courses-49",
+    title: "تحديث: الدورات العلمية — 49 دورة",
+    summary: "إضافة 5 دورات: شرح الطحاوية والبلاغة القرآنية وفقه المعاملات المالية والأذكار والنحو العربي.",
+    update_type: "دورة",
+    source_url: "/lessons",
+    published_at: "2026-07-08T19:00:00Z",
+    status: "approved",
+  },
+  {
+    id: "update-miracles-55",
+    title: "تحديث: الإعجاز العلمي — 55 معجزة",
+    summary: "إضافة 3 معجزات: تواصل النمل وظلمات البحار العميقة ودور النوم في تجديد الجسم (نظرية الـ Glymphatic).",
+    update_type: "إعلان",
+    source_url: "/miracles",
+    published_at: "2026-07-08T20:00:00Z",
+    status: "approved",
+  },
+  {
+    id: "update-stories-21",
+    title: "تحديث: القصص الإسلامية — 21 قصة",
+    summary: "إضافة قصتين: طارق بن زياد فاتح الأندلس وجبل طارق، وابن بطوطة الرحّالة الأكبر في التاريخ الوسيط.",
+    update_type: "إعلان",
+    source_url: "/stories",
+    published_at: "2026-07-08T21:00:00Z",
+    status: "approved",
+  },
+  {
+    id: "update-fawaid-330",
+    title: "تحديث: الفوائد العلمية — 330 فائدة",
+    summary: "إضافة 10 فوائد جديدة في الأخلاق والزهد والفقه والأذكار والقرآن والصبر والرحمة.",
+    update_type: "إعلان",
+    source_url: "/fawaid",
+    published_at: "2026-07-08T22:00:00Z",
+    status: "approved",
+  },
 ];
 
 export function getSortedUpdates(limit?: number) {
