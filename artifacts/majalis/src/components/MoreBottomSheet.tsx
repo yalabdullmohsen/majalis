@@ -36,26 +36,36 @@ function IconMedicine()   { return <svg viewBox="0 0 24 24" fill="none" stroke="
 function IconQibla()      { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/><path d="M12 8l2 4-2 4-2-4z" fill="currentColor" stroke="none"/></svg>; }
 function IconGraph()      { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="5" cy="5" r="2"/><circle cx="19" cy="5" r="2"/><circle cx="12" cy="19" r="2"/><path d="M7 5h10M6.3 7.2L10.5 17M17.7 7.2L13.5 17"/></svg>; }
 function IconOccasions()  { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2l1.5 5h5l-4 3 1.5 5L12 12l-4 3 1.5-5-4-3h5z"/></svg>; }
+function IconTv()         { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="20" height="15" rx="2"/><polyline points="17 2 12 7 7 2"/></svg>; }
+function IconMic()        { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>; }
+function IconUpdates()    { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M4 11a9 9 0 0115.373-6.373"/><path d="M20 13a9 9 0 01-15.373 6.373"/><polyline points="20 3 20 9 14 9"/><polyline points="4 21 4 15 10 15"/></svg>; }
+function IconArbaeen()    { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>; }
+function IconMyLearning() { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>; }
+function IconAbout()      { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>; }
 
 const SHEET_SECTIONS = [
   { group: "القرآن الكريم", items: [
-    { href: "/quran",            label: "المصحف",         Icon: IconQuran },
-    { href: "/quran-circles",    label: "حلقات التحفيظ",  Icon: IconCircles },
-    { href: "/quran-radio",      label: "إذاعة القرآن",   Icon: IconRadio },
-    { href: "/quran/tajweed",    label: "التجويد",        Icon: IconLessons },
+    { href: "/quran",            label: "المصحف",          Icon: IconQuran },
+    { href: "/quran-circles",    label: "حلقات التحفيظ",   Icon: IconCircles },
+    { href: "/quran-radio",      label: "إذاعة القرآن",    Icon: IconRadio },
+    { href: "/quran-live",       label: "البث المباشر",    Icon: IconTv },
+    { href: "/quran/tajweed",    label: "التجويد",         Icon: IconLessons },
+    { href: "/muezzins",         label: "مكتبة المؤذنين",  Icon: IconMic },
   ]},
   { group: "المحتوى العلمي", items: [
-    { href: "/lessons",          label: "الدروس",            Icon: IconLessons },
-    { href: "/annual-courses",   label: "الدورات",           Icon: IconLessons },
-    { href: "/library",          label: "المكتبة",           Icon: IconLibrary },
-    { href: "/hadith",           label: "الأحاديث",          Icon: IconHadith },
-    { href: "/fawaid",           label: "الفوائد",           Icon: IconFawaid },
-    { href: "/stories",          label: "القصص الإسلامية",   Icon: IconStories },
-    { href: "/islamic-stories",  label: "صحابة وفتوحات",     Icon: IconStories },
-    { href: "/prophets",         label: "قصص الأنبياء",      Icon: IconProphets },
-    { href: "/seerah",           label: "السيرة النبوية",     Icon: IconSeerah },
-    { href: "/miracles",         label: "الإعجاز العلمي",    Icon: IconMiracles },
-    { href: "/prophetic-medicine", label: "الطب النبوي",     Icon: IconMedicine },
+    { href: "/lessons",            label: "الدروس",            Icon: IconLessons },
+    { href: "/annual-courses",     label: "الدورات",           Icon: IconLessons },
+    { href: "/library",            label: "المكتبة",           Icon: IconLibrary },
+    { href: "/hadith",             label: "الأحاديث",          Icon: IconHadith },
+    { href: "/arbaeen-nawawi",     label: "الأربعون النووية",  Icon: IconArbaeen },
+    { href: "/fawaid",             label: "الفوائد",           Icon: IconFawaid },
+    { href: "/updates",            label: "آخر المستجدات",     Icon: IconUpdates },
+    { href: "/stories",            label: "القصص الإسلامية",   Icon: IconStories },
+    { href: "/islamic-stories",    label: "صحابة وفتوحات",     Icon: IconStories },
+    { href: "/prophets",           label: "قصص الأنبياء",      Icon: IconProphets },
+    { href: "/seerah",             label: "السيرة النبوية",    Icon: IconSeerah },
+    { href: "/miracles",           label: "الإعجاز العلمي",    Icon: IconMiracles },
+    { href: "/prophetic-medicine", label: "الطب النبوي",       Icon: IconMedicine },
   ]},
   { group: "الأحكام والفقه", items: [
     { href: "/qa",                  label: "الأسئلة",         Icon: IconQA },
@@ -77,17 +87,19 @@ const SHEET_SECTIONS = [
     { href: "/occasions",        label: "المناسبات الإسلامية", Icon: IconOccasions },
   ]},
   { group: "التعلّم والأدوات", items: [
-    { href: "/flashcards",       label: "البطاقات",          Icon: IconFlashcards },
-    { href: "/learning-plan",    label: "خطة التعلّم",       Icon: IconLearning },
-    { href: "/learning-path",    label: "خارطة طالب العلم",  Icon: IconLearning },
-    { href: "/knowledge-graph",  label: "خارطة المعرفة",     Icon: IconGraph },
-    { href: "/quiz",             label: "سؤال وجواب",        Icon: IconQuiz },
-    { href: "/assistant",        label: "المساعد",           Icon: IconAssistant },
-    { href: "/search",           label: "البحث",             Icon: IconSearch },
-    { href: "/calendar",         label: "التقويم",           Icon: IconCalendar },
-    { href: "/universities",     label: "الجامعات",          Icon: IconUniversities },
-    { href: "/features-in-progress", label: "مميزات قيد التطوير", Icon: IconSettings },
-    { href: "/settings",         label: "الإعدادات",         Icon: IconSettings },
+    { href: "/flashcards",           label: "البطاقات",               Icon: IconFlashcards },
+    { href: "/learning-plan",        label: "خطة التعلّم",            Icon: IconLearning },
+    { href: "/learning-path",        label: "خارطة طالب العلم",       Icon: IconLearning },
+    { href: "/my-learning",          label: "لوحتي التعليمية",        Icon: IconMyLearning },
+    { href: "/knowledge-graph",      label: "خارطة المعرفة",          Icon: IconGraph },
+    { href: "/quiz",                 label: "سؤال وجواب",             Icon: IconQuiz },
+    { href: "/assistant",            label: "المساعد",                Icon: IconAssistant },
+    { href: "/search",               label: "البحث",                  Icon: IconSearch },
+    { href: "/calendar",             label: "التقويم",                Icon: IconCalendar },
+    { href: "/universities",         label: "الجامعات",               Icon: IconUniversities },
+    { href: "/features-in-progress", label: "مميزات قيد التطوير",     Icon: IconSettings },
+    { href: "/settings",             label: "الإعدادات",              Icon: IconSettings },
+    { href: "/about",                label: "عن التطبيق",             Icon: IconAbout },
   ]},
 ];
 
