@@ -81,8 +81,9 @@ export const FORBIDDEN_AI_GENERATION = [
   "religious_decision",
 ];
 
-export const MIN_QUALITY_TO_PUBLISH = 55;
-export const MIN_TRUST_TO_PUBLISH = 40;
+// خُفِّفت العتبات لقبول بيانات ناقصة أو جزئية
+export const MIN_QUALITY_TO_PUBLISH = 30;
+export const MIN_TRUST_TO_PUBLISH = 20;
 export const DUPLICATE_THRESHOLD = 0.88;
 
 export function isAllowedKind(source, kind) {

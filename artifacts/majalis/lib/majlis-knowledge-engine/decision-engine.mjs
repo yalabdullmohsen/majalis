@@ -79,15 +79,16 @@ export async function makeContentDecision({
   const completeness = fieldCompletenessScore(parsed);
   const trustScore = source ? computeSourceTrustScore(source) : 0;
 
+  // خُفِّفت شروط القبول لزيادة استيعاب البيانات الجزئية
   const checks = {
-    isAuthenticAnnouncement: completeness >= 0.5 && Boolean(parsed.title),
+    isAuthenticAnnouncement: completeness >= 0.15 && Boolean(parsed.title),
     isIslamicLesson: !isNonLessonContent(parsed),
     sheikhKnown: Boolean(sheikhMatch?.id || parsed.speaker_name),
     mosqueKnown: Boolean(mosqueMatch?.id || parsed.mosque),
     hasConflict: false,
     isDuplicate: false,
-    dataComplete: completeness >= 0.75,
-    trustHigh: trustScore >= 80,
+    dataComplete: completeness >= 0.30,
+    trustHigh: trustScore >= 40,
     canAutoPublish: autoEval.autoPublish,
     needsReview: !autoEval.autoPublish,
   };

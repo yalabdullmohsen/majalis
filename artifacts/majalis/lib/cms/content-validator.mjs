@@ -2,8 +2,12 @@
  * Validates lesson/course drafts before publish.
  */
 
+// حقل العنوان فقط إلزامي — باقي الحقول تصبح تحذيرات لزيادة كمية المحتوى المستورد
 const REQUIRED_LESSON_FIELDS = [
   { key: "title", label: "عنوان الدرس" },
+];
+
+const RECOMMENDED_LESSON_FIELDS = [
   { key: "speaker_name", label: "اسم الشيخ", alt: "sheikh_name" },
   { key: "day_of_week", label: "اليوم", alt: "day" },
   { key: "lesson_time", label: "الوقت", alt: "time" },
@@ -53,6 +57,13 @@ export function validateLessonDraft(data = {}) {
     const value = pick(data, field.key, ...(field.alt ? [field.alt] : []));
     if (!value) {
       errors.push({ field: field.key, message: `${field.label} مطلوب للنشر` });
+    }
+  }
+
+  for (const field of RECOMMENDED_LESSON_FIELDS) {
+    const value = pick(data, field.key, ...(field.alt ? [field.alt] : []));
+    if (!value) {
+      warnings.push({ field: field.key, message: `${field.label} غير مكتمل — يُنصح بإضافته` });
     }
   }
 
