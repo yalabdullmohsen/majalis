@@ -1,4 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
+import { Award, BookOpen, BookText, Bookmark, Flame, GraduationCap, Leaf, Medal, RotateCw } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { PageHeader } from "@/components/ui-common";
@@ -19,16 +21,16 @@ function StatCard({
   label,
   value,
   sub,
-  icon,
+  Icon,
 }: {
   label: string;
   value: string | number;
   sub?: string;
-  icon: string;
+  Icon: LucideIcon;
 }) {
   return (
     <div className="profile-stat-card">
-      <span className="profile-stat-card__icon">{icon}</span>
+      <span className="profile-stat-card__icon" aria-hidden="true"><Icon size={20} strokeWidth={1.6} /></span>
       <strong className="profile-stat-card__value">{value}</strong>
       <span className="profile-stat-card__label">{label}</span>
       {sub && <span className="profile-stat-card__sub">{sub}</span>}
@@ -331,7 +333,7 @@ export default function UserStatsPage() {
           </div>
           <div className="profile-identity__streak">
             <span className="profile-identity__streak-num">{stats.streakDays}</span>
-            <span className="profile-identity__streak-label">🔥 يوم متواصل</span>
+            <span className="profile-identity__streak-label"><Flame size={14} strokeWidth={2} aria-hidden="true" /> يوم متواصل</span>
           </div>
         </div>
       )}
@@ -344,17 +346,17 @@ export default function UserStatsPage() {
         <section className="profile-stats-section">
           <h2 className="profile-section-title">إحصاءاتك</h2>
           <div className="profile-stats-grid">
-            <StatCard icon="🔥" label="أيام متواصلة" value={stats.streakDays} />
-            <StatCard icon="📖" label="دروس مكتملة" value={stats.completedLessons} />
-            <StatCard icon="📕" label="كتب مقروءة" value={stats.booksRead} />
+            <StatCard Icon={Flame}         label="أيام متواصلة" value={stats.streakDays} />
+            <StatCard Icon={GraduationCap} label="دروس مكتملة" value={stats.completedLessons} />
+            <StatCard Icon={BookText}      label="كتب مقروءة" value={stats.booksRead} />
             <StatCard
-              icon="📿"
+              Icon={RotateCw}
               label="تسبيحات اليوم"
               value={stats.tasbihToday.toLocaleString("ar-KW")}
               sub={`${stats.tasbihLifetime.toLocaleString("ar-KW")} إجمالي`}
             />
-            <StatCard icon="🔖" label="محفوظات" value={stats.savedItems} />
-            <StatCard icon="🏅" label="شارات محرزة" value={stats.earnedBadges.length} sub={`من ${BADGE_DEFS.length}`} />
+            <StatCard Icon={Bookmark} label="محفوظات" value={stats.savedItems} />
+            <StatCard Icon={Award}    label="شارات محرزة" value={stats.earnedBadges.length} sub={`من ${BADGE_DEFS.length}`} />
           </div>
         </section>
       )}
@@ -375,7 +377,7 @@ export default function UserStatsPage() {
       {/* ── لوحة الشارات ── */}
       {stats && (
         <section className="profile-badges-section">
-          <h2 className="profile-section-title">🏅 الإنجازات والشارات</h2>
+          <h2 className="profile-section-title"><Medal size={18} strokeWidth={1.8} aria-hidden="true" /> الإنجازات والشارات</h2>
           <p className="profile-badges-hint">
             {stats.earnedBadges.length} من {BADGE_DEFS.length} شارة محرزة
           </p>
@@ -385,10 +387,10 @@ export default function UserStatsPage() {
 
       {/* ── روابط سريعة ── */}
       <nav className="profile-quick-links" aria-label="روابط الملف">
-        <Link href="/lessons" className="profile-quick-link">📚 الدروس</Link>
-        <Link href="/library" className="profile-quick-link">📕 المكتبة</Link>
-        <Link href="/tasbih" className="profile-quick-link">📿 التسبيح</Link>
-        <Link href="/adhkar" className="profile-quick-link">🌿 الأذكار</Link>
+        <Link href="/lessons" className="profile-quick-link"><GraduationCap size={15} strokeWidth={1.8} aria-hidden="true" /> الدروس</Link>
+        <Link href="/library" className="profile-quick-link"><BookOpen size={15} strokeWidth={1.8} aria-hidden="true" /> المكتبة</Link>
+        <Link href="/tasbih" className="profile-quick-link"><RotateCw size={15} strokeWidth={1.8} aria-hidden="true" /> التسبيح</Link>
+        <Link href="/adhkar" className="profile-quick-link"><Leaf size={15} strokeWidth={1.8} aria-hidden="true" /> الأذكار</Link>
       </nav>
     </div>
   );

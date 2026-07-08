@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { Coffee, Pause, Target } from "lucide-react";
 import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { PageHeader } from "@/components/ui-common";
@@ -253,7 +254,7 @@ export default function StudyRoomPage() {
         </svg>
         <div className="sr-timer__content">
           <span className="sr-timer__phase">
-            {phase === "work" ? "🎯 تركيز" : phase === "rest" ? "☕ راحة" : "⏸ جاهز"}
+            {phase === "work" ? <><Target size={14} strokeWidth={2} aria-hidden="true" /> تركيز</> : phase === "rest" ? <><Coffee size={14} strokeWidth={2} aria-hidden="true" /> راحة</> : <><Pause size={14} strokeWidth={2} aria-hidden="true" /> جاهز</>}
           </span>
           <span className="sr-timer__time">{formatTime(secondsLeft)}</span>
         </div>
@@ -268,7 +269,7 @@ export default function StudyRoomPage() {
         ) : (
           <>
             <button type="button" className="sr-btn sr-btn--pause" onClick={pause}>
-              ⏸ إيقاف
+              <Pause size={14} strokeWidth={2} aria-hidden="true" /> إيقاف
             </button>
             <button type="button" className="sr-btn sr-btn--reset" onClick={reset}>
               ↺ إعادة

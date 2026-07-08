@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BookMarked, BookOpen, Building2, Compass, Lightbulb, RotateCw, ScrollText, VolumeX } from "lucide-react";
+import { BookMarked, Building2, Compass, Lightbulb, RotateCw, ScrollText, VolumeX } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { Link } from "wouter";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
