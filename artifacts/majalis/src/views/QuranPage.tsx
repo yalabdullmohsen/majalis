@@ -1,14 +1,17 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, memo } from "react";
 import "@/styles/mushaf.css";
 
-const PDF_URL  = "/quran.pdf";
+/* ══ ثوابت ══ */
+const CDN   = "https://cdn.qurancdn.com/images/quran/pages/v4/page";
+const TOTAL = 604;
 const PAGE_KEY = "mj-mushaf-page-v2";
+const NIGHT_KEY = "mj-mushaf-night";
 const BM_KEY   = "mj-mushaf-bookmarks";
-const TOTAL    = 604;
 
-function lsGet(k: string, fb: number) {
+/* ══ localStorage helpers ══ */
+function lsGet(k: string, fb: number): number {
   try { const v = localStorage.getItem(k); return v ? +JSON.parse(v) : fb; } catch { return fb; }
 }
 function lsSet(k: string, v: number) {
@@ -21,16 +24,12 @@ function lsSetArr(k: string, v: number[]) {
   try { localStorage.setItem(k, JSON.stringify(v)); } catch { /* */ }
 }
 
-function Star({ cls }: { cls?: string }) {
-  return (
-    <svg className={cls} viewBox="0 0 32 32" aria-hidden="true">
-      <path d="M16 2 L18.5 10 L26 8 L23 15.5 L30 16 L23 16.5 L26 24 L18.5 22 L16 30 L13.5 22 L6 24 L9 16.5 L2 16 L9 15.5 L6 8 L13.5 10 Z"
-        fill="none" stroke="rgba(106,181,142,0.65)" strokeWidth="1" strokeLinejoin="round" />
-    </svg>
-  );
+/* ══ بناء URL الصورة ══ */
+function pageUrl(n: number): string {
+  return `${CDN}${String(n).padStart(3, "0")}.png`;
 }
 
-/* ══ بيانات السور (اسم + الصفحة الأولى) ══ */
+/* ══ بيانات السور ══ */
 const SURAHS: [string, number][] = [
   ["الفاتحة",1],["البقرة",2],["آل عمران",50],["النساء",77],["المائدة",106],
   ["الأنعام",128],["الأعراف",151],["الأنفال",177],["التوبة",187],["يونس",208],
@@ -57,95 +56,114 @@ const SURAHS: [string, number][] = [
   ["المسد",603],["الإخلاص",604],["الفلق",604],["الناس",604],
 ];
 
-const AJZAA: [string, number][] = Array.from({ length: 30 }, (_, i) => {
-  const pages = [1,22,42,62,82,102,121,142,162,182,201,221,241,261,281,301,321,341,361,381,401,421,441,461,481,501,521,542,561,581];
-  return [`الجزء ${i + 1}`, pages[i]];
+/* ══ بيانات الأجزاء ══ */
+const JUZ_PAGES = [1,22,42,62,82,102,121,142,162,182,201,221,241,261,281,301,321,341,361,381,401,421,441,461,481,501,521,542,561,581];
+const AJZAA: [string, number][] = JUZ_PAGES.map((p, i) => [`الجزء ${i + 1}`, p]);
+
+/* ══ بيانات الأحزاب (60 حزباً) ══ */
+const HIZ_PAGES = [1,8,14,22,29,36,43,50,56,62,69,76,82,89,96,102,108,115,121,127,134,142,148,154,162,169,175,182,188,195,201,207,214,221,227,235,241,249,255,261,268,276,282,288,294,301,308,315,321,327,334,341,348,355,362,369,377,385,392,401];
+const AHZAB: [string, number][] = HIZ_PAGES.map((p, i) => [`الحزب ${i + 1}`, p]);
+
+type NavTab = "surahs" | "juz" | "ahzab" | "bookmarks";
+
+/* ══ مكون الصفحة (memo) ══ */
+interface PageImgProps {
+  page: number;
+  night: boolean;
+  loaded: boolean;
+  onLoad: () => void;
+  onError: () => void;
+}
+const PageImg = memo(function PageImg({ page, night, loaded, onLoad, onError }: PageImgProps) {
+  return (
+    <img
+      key={page}
+      src={pageUrl(page)}
+      alt={`صفحة ${page}`}
+      className={`mshf-page-img${loaded ? " loaded" : ""}${night ? " night" : ""}`}
+      loading="eager"
+      draggable={false}
+      onLoad={onLoad}
+      onError={onError}
+    />
+  );
 });
 
-type NavTab = "surahs" | "juz" | "bookmarks";
-
+/* ══ المكون الرئيسي ══ */
 export default function QuranPage() {
-  const [page, setPage]             = useState(() => Math.min(lsGet(PAGE_KEY, 1), TOTAL));
-  const [pdfDoc, setPdfDoc]         = useState<any>(null);
-  const [rendering, setRendering]   = useState(true);
-  const [loadErr, setLoadErr]       = useState(false);
-  const [uiOn, setUiOn]             = useState(true);
+  const [page, setPage]           = useState(() => Math.min(lsGet(PAGE_KEY, 1), TOTAL));
+  const [imgLoaded, setImgLoaded] = useState(false);
+  const [imgErr, setImgErr]       = useState(false);
+  const [uiOn, setUiOn]           = useState(true);
   const [editingPage, setEditingPage] = useState(false);
-  const [editVal, setEditVal]       = useState("");
-  const [navOpen, setNavOpen]       = useState(false);
-  const [navTab, setNavTab]         = useState<NavTab>("surahs");
-  const [search, setSearch]         = useState("");
-  const [bookmarks, setBookmarks]   = useState<number[]>(() => lsGetArr(BM_KEY));
-  const [nightMode, setNightMode]   = useState(() => localStorage.getItem("mj-mushaf-night") === "1");
-  const [zoom, setZoom]             = useState(() => { try { const v = localStorage.getItem("mj-mushaf-zoom"); return v ? parseFloat(v) : 1.0; } catch { return 1.0; } });
+  const [editVal, setEditVal]     = useState("");
+  const [navOpen, setNavOpen]     = useState(false);
+  const [navTab, setNavTab]       = useState<NavTab>("surahs");
+  const [search, setSearch]       = useState("");
+  const [bookmarks, setBookmarks] = useState<number[]>(() => lsGetArr(BM_KEY));
+  const [nightMode, setNightMode] = useState(() => localStorage.getItem(NIGHT_KEY) === "1");
 
-  const canvasRef    = useRef<HTMLCanvasElement>(null);
-  const frameRef     = useRef<HTMLDivElement>(null);
-  const taskRef      = useRef<any>(null);
+  /* انتقال الصفحة */
+  const [animDir, setAnimDir]     = useState<"" | "left" | "right">("");
+  const [displayPage, setDisplayPage] = useState(page);
+
+  /* image cache */
+  const cache = useRef<Map<number, string>>(new Map());
+
   const uiTimer      = useRef<ReturnType<typeof setTimeout> | null>(null);
   const touchRef     = useRef<{ x: number; y: number } | null>(null);
   const pageInputRef = useRef<HTMLInputElement>(null);
   const searchRef    = useRef<HTMLInputElement>(null);
+  const navBodyRef   = useRef<HTMLDivElement>(null);
+  const animating    = useRef(false);
 
-  /* ── تحميل PDF.js ── */
+  /* ── preload صورة ── */
+  const preload = useCallback((n: number) => {
+    if (n < 1 || n > TOTAL || cache.current.has(n)) return;
+    const url = pageUrl(n);
+    const img = new Image();
+    img.onload = () => cache.current.set(n, url);
+    img.src = url;
+  }, []);
+
+  /* preload الجوار عند تغيير الصفحة */
   useEffect(() => {
-    let dead = false;
-    const url = "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.4.168/build/pdf.min.mjs";
-    (async () => {
-      try {
-        const lib: any = await import(/* @vite-ignore */ url);
-        lib.GlobalWorkerOptions.workerSrc =
-          "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.4.168/build/pdf.worker.min.mjs";
-        const doc = await lib.getDocument(PDF_URL).promise;
-        if (!dead) setPdfDoc(doc);
-      } catch (e) {
-        console.error(e);
-        if (!dead) setLoadErr(true);
-      }
-    })();
-    return () => { dead = true; };
-  }, []);
+    preload(page - 1);
+    preload(page + 1);
+    preload(page + 2);
+  }, [page, preload]);
 
-  /* ── رسم الصفحة ── */
-  const draw = useCallback(async (doc: any, p: number, z: number) => {
-    if (!doc || !canvasRef.current || !frameRef.current) return;
-    if (taskRef.current) { try { taskRef.current.cancel(); } catch { /* */ } taskRef.current = null; }
-    setRendering(true);
-    try {
-      const pg  = await doc.getPage(p);
-      const cvs = canvasRef.current;
-      const fr  = frameRef.current;
-      const dpr = Math.min(window.devicePixelRatio || 1, 3);
-      const vp0 = pg.getViewport({ scale: 1 });
-      const sc  = Math.min((fr.clientWidth * dpr) / vp0.width, (fr.clientHeight * dpr) / vp0.height) * 0.97 * z;
-      const vp  = pg.getViewport({ scale: sc });
-      cvs.width  = vp.width;
-      cvs.height = vp.height;
-      cvs.style.width  = `${vp.width  / dpr}px`;
-      cvs.style.height = `${vp.height / dpr}px`;
-      const ctx = cvs.getContext("2d")!;
-      ctx.fillStyle = "#F9F3E8";
-      ctx.fillRect(0, 0, cvs.width, cvs.height);
-      const t = pg.render({ canvasContext: ctx, viewport: vp });
-      taskRef.current = t;
-      await t.promise;
-      taskRef.current = null;
-      setRendering(false);
-    } catch (e: any) {
-      if (e?.name !== "RenderingCancelledException") setRendering(false);
-    }
-  }, []);
-
-  useEffect(() => { if (pdfDoc) draw(pdfDoc, page, zoom); }, [pdfDoc, page, draw, zoom]);
-
-  /* ── مؤقت الـ UI ── */
+  /* ── bump UI timer ── */
   const bump = useCallback(() => {
     if (uiTimer.current) clearTimeout(uiTimer.current);
     setUiOn(true);
-    uiTimer.current = setTimeout(() => setUiOn(false), 3200);
+    uiTimer.current = setTimeout(() => setUiOn(false), 3500);
   }, []);
 
-  useEffect(() => { bump(); return () => { if (uiTimer.current) clearTimeout(uiTimer.current); }; }, [page, bump]);
+  useEffect(() => {
+    bump();
+    return () => { if (uiTimer.current) clearTimeout(uiTimer.current); };
+  }, [page, bump]);
+
+  /* ── الانتقال بالأنيمشن ── */
+  const go = useCallback((n: number) => {
+    if (animating.current) return;
+    const p = Math.max(1, Math.min(TOTAL, n));
+    if (p === page) return;
+    const dir = p > page ? "left" : "right";
+    animating.current = true;
+    setAnimDir(dir);
+    setTimeout(() => {
+      setPage(p);
+      setDisplayPage(p);
+      lsSet(PAGE_KEY, p);
+      setImgLoaded(false);
+      setImgErr(false);
+      setAnimDir("");
+      animating.current = false;
+      bump();
+    }, 220);
+  }, [page, bump]);
 
   /* ── لوحة المفاتيح ── */
   useEffect(() => {
@@ -157,91 +175,114 @@ export default function QuranPage() {
     };
     window.addEventListener("keydown", h);
     return () => window.removeEventListener("keydown", h);
-  }, [page, editingPage, navOpen]);
+  }, [page, editingPage, navOpen, go]);
 
-  const go = useCallback((n: number) => {
-    const p = Math.max(1, Math.min(TOTAL, n));
-    setPage(p); lsSet(PAGE_KEY, p); bump();
-  }, [bump]);
-
-  /* ── اللمس ── */
-  const onTS = (e: React.TouchEvent) => {
+  /* ── اللمس (swipe) ── */
+  const onTS = useCallback((e: React.TouchEvent) => {
     touchRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-  };
-  const onTE = (e: React.TouchEvent) => {
+  }, []);
+
+  const onTE = useCallback((e: React.TouchEvent) => {
     if (!touchRef.current) return;
     const dx = e.changedTouches[0].clientX - touchRef.current.x;
     const dy = Math.abs(e.changedTouches[0].clientY - touchRef.current.y);
     touchRef.current = null;
-    if (dy > 60 || Math.abs(dx) < 35) { bump(); return; }
+    if (dy > 60 || Math.abs(dx) < 40) { bump(); return; }
     go(dx < 0 ? page + 1 : page - 1);
-  };
+  }, [page, go, bump]);
 
-  const onFrameClick = (e: React.MouseEvent<HTMLDivElement>) => {
+  /* ── نقر على الصفحة ── */
+  const onFrameClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     if (editingPage || navOpen) return;
     const { clientX, currentTarget } = e;
     const w = currentTarget.clientWidth;
     const zone = clientX / w;
-    if (zone < 0.35)      go(page + 1);
-    else if (zone > 0.65) go(page - 1);
-    else bump();
-  };
+    if (zone < 0.3)      go(page + 1);
+    else if (zone > 0.7) go(page - 1);
+    else { setUiOn(v => !v); if (uiTimer.current) clearTimeout(uiTimer.current); }
+  }, [editingPage, navOpen, page, go]);
 
   /* ── تحرير رقم الصفحة ── */
-  const startEdit = () => {
+  const startEdit = useCallback(() => {
     setEditingPage(true);
     setEditVal(String(page));
     bump();
     setTimeout(() => pageInputRef.current?.select(), 30);
-  };
-  const commitEdit = () => {
+  }, [page, bump]);
+
+  const commitEdit = useCallback(() => {
     const n = parseInt(editVal, 10);
     if (!isNaN(n)) go(n);
     setEditingPage(false);
-  };
+  }, [editVal, go]);
 
   /* ── علامات المرجعية ── */
-  const isBookmarked = bookmarks.includes(page);
-  const toggleBookmark = () => {
+  const isBookmarked = useMemo(() => bookmarks.includes(page), [bookmarks, page]);
+  const toggleBookmark = useCallback(() => {
     const next = isBookmarked
       ? bookmarks.filter(b => b !== page)
       : [...bookmarks, page].sort((a, b) => a - b);
     setBookmarks(next);
     lsSetArr(BM_KEY, next);
     bump();
-  };
+  }, [isBookmarked, bookmarks, page, bump]);
 
   /* ── الوضع الليلي ── */
-  const toggleNight = () => {
-    const next = !nightMode;
-    setNightMode(next);
-    try { localStorage.setItem("mj-mushaf-night", next ? "1" : "0"); } catch { /* */ }
+  const toggleNight = useCallback(() => {
+    setNightMode(v => {
+      const next = !v;
+      try { localStorage.setItem(NIGHT_KEY, next ? "1" : "0"); } catch { /* */ }
+      return next;
+    });
     bump();
-  };
+  }, [bump]);
 
-  /* ── التكبير / التصغير ── */
-  const adjustZoom = (delta: number) => {
-    const next = Math.max(0.7, Math.min(1.35, Math.round((zoom + delta) * 10) / 10));
-    setZoom(next);
-    try { localStorage.setItem("mj-mushaf-zoom", String(next)); } catch { /* */ }
-    bump();
-  };
+  /* ── السورة الحالية ── */
+  const currentSurah = useMemo(() => {
+    for (let i = SURAHS.length - 1; i >= 0; i--) {
+      if (page >= SURAHS[i][1]) return { name: SURAHS[i][0], idx: i + 1 };
+    }
+    return { name: "", idx: 0 };
+  }, [page]);
 
-  const navBodyRef = useRef<HTMLDivElement>(null);
+  /* ── الجزء الحالي ── */
+  const currentJuz = useMemo(() => {
+    for (let i = JUZ_PAGES.length - 1; i >= 0; i--) {
+      if (page >= JUZ_PAGES[i]) return i + 1;
+    }
+    return 1;
+  }, [page]);
+
+  /* ── الحزب الحالي ── */
+  const currentHizb = useMemo(() => {
+    for (let i = HIZ_PAGES.length - 1; i >= 0; i--) {
+      if (page >= HIZ_PAGES[i]) return i + 1;
+    }
+    return 1;
+  }, [page]);
+
+  /* ── شريط التقدم ── */
+  const progress = useMemo(() => ((page - 1) / (TOTAL - 1)) * 100, [page]);
+
+  /* ── السور المفلترة ── */
+  const filteredSurahs = useMemo(
+    () => SURAHS.filter(([name]) => !search || name.includes(search)),
+    [search]
+  );
 
   /* ── فتح لوحة التنقل ── */
-  const openNav = (tab: NavTab = "surahs") => {
+  const openNav = useCallback((tab: NavTab = "surahs") => {
     setNavTab(tab);
     setSearch("");
     setNavOpen(true);
-    // على سطح المكتب فقط نفتح لوحة المفاتيح تلقائياً
     if (tab === "surahs" && window.matchMedia("(pointer: fine)").matches) {
       setTimeout(() => searchRef.current?.focus(), 80);
     }
-  };
-  const goTo = (p: number) => { go(p); setNavOpen(false); };
+  }, []);
 
-  /* ── تمرير تلقائي للسورة الحالية عند فتح اللوحة ── */
+  const goTo = useCallback((p: number) => { go(p); setNavOpen(false); }, [go]);
+
+  /* تمرير تلقائي للسورة النشطة */
   useEffect(() => {
     if (!navOpen || navTab !== "surahs") return;
     setTimeout(() => {
@@ -251,30 +292,14 @@ export default function QuranPage() {
     }, 120);
   }, [navOpen, navTab]);
 
-  /* ── قائمة السور المفلترة ── */
-  const filteredSurahs = SURAHS.filter(([name]) =>
-    !search || name.includes(search)
-  );
-
-  /* ── اسم السورة الحالية ── */
-  const currentSurah = (() => {
-    for (let i = SURAHS.length - 1; i >= 0; i--) {
-      if (page >= SURAHS[i][1]) return `${i + 1}. ${SURAHS[i][0]}`;
-    }
-    return "";
-  })();
-
-  /* ── رقم الجزء الحالي ── */
-  const currentJuz = (() => {
-    const pages = [1,22,42,62,82,102,121,142,162,182,201,221,241,261,281,301,321,341,361,381,401,421,441,461,481,501,521,542,561,581];
-    for (let i = pages.length - 1; i >= 0; i--) {
-      if (page >= pages[i]) return i + 1;
-    }
-    return 1;
-  })();
-
+  /* ══════════════════════════════════════════════════════
+     JSX
+  ══════════════════════════════════════════════════════ */
   return (
-    <div className="mshf-shell" dir="rtl">
+    <div className={`mshf-shell${nightMode ? " mshf-night" : ""}`} dir="rtl">
+
+      {/* شريط التقدم */}
+      <div className="mshf-progress" style={{ width: `${progress}%` }} />
 
       {/* ══ شريط علوي ══ */}
       <header className={`mshf-top${uiOn ? " on" : ""}`}>
@@ -285,46 +310,52 @@ export default function QuranPage() {
         </button>
 
         <div className="mshf-title-wrap">
-          <Star cls="mshf-star" />
           <div className="mshf-title-col">
-            <span className="mshf-title">المصحف الشريف</span>
-            {currentSurah && <span className="mshf-surah-name">{currentSurah}</span>}
+            <span className="mshf-title-main">المصحف الشريف</span>
+            <span className="mshf-title-sub">
+              {currentSurah.name && `${currentSurah.idx}. ${currentSurah.name}`}
+              {" · "}ج{currentJuz} · ح{currentHizb}
+            </span>
           </div>
-          <Star cls="mshf-star" />
         </div>
 
-        <div className="mshf-top__actions">
+        <div className="mshf-top-actions">
           <button
-            className={`mshf-icon-btn${isBookmarked ? " mshf-icon-btn--active" : ""}`}
+            className={`mshf-icon-btn${isBookmarked ? " active" : ""}`}
             onClick={toggleBookmark}
             aria-label={isBookmarked ? "إزالة العلامة" : "إضافة علامة"}
-            title={isBookmarked ? "إزالة العلامة" : "إضافة علامة"}
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill={isBookmarked ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill={isBookmarked ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2">
               <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/>
             </svg>
           </button>
+
           <button
-            className={`mshf-icon-btn${nightMode ? " mshf-icon-btn--active" : ""}`}
+            className={`mshf-icon-btn${nightMode ? " active" : ""}`}
             onClick={toggleNight}
             aria-label={nightMode ? "الوضع النهاري" : "الوضع الليلي"}
-            title={nightMode ? "الوضع النهاري" : "الوضع الليلي"}
           >
             {nightMode
-              ? <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/><line x1="12" y1="21" x2="12" y2="23" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/><line x1="1" y1="12" x2="3" y2="12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/><line x1="21" y1="12" x2="23" y2="12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>
-              : <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+              ? <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                  <circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/>
+                  <line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/>
+                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                  <line x1="2" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22" y2="12"/>
+                  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+              : <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
             }
           </button>
-          <button
-            className="mshf-icon-btn"
-            onClick={() => openNav("surahs")}
-            aria-label="فهرس السور"
-            title="فهرس السور"
-          >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+
+          <button className="mshf-icon-btn" onClick={() => openNav("surahs")} aria-label="الفهرس">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/>
-              <line x1="8" y1="18" x2="21" y2="18"/><circle cx="3" cy="6" r="1" fill="currentColor"/>
-              <circle cx="3" cy="12" r="1" fill="currentColor"/><circle cx="3" cy="18" r="1" fill="currentColor"/>
+              <line x1="8" y1="18" x2="21" y2="18"/>
+              <circle cx="3" cy="6" r="1" fill="currentColor" stroke="none"/>
+              <circle cx="3" cy="12" r="1" fill="currentColor" stroke="none"/>
+              <circle cx="3" cy="18" r="1" fill="currentColor" stroke="none"/>
             </svg>
           </button>
         </div>
@@ -332,60 +363,51 @@ export default function QuranPage() {
 
       {/* ══ منطقة الصفحة ══ */}
       <div
-        ref={frameRef}
-        className={`mshf-frame${nightMode ? " mshf-frame--night" : ""}`}
+        className={`mshf-page-container${animDir ? ` anim-${animDir}` : ""}`}
         onTouchStart={onTS}
         onTouchEnd={onTE}
         onClick={onFrameClick}
       >
-        {rendering && !loadErr && (
+        {/* spinner */}
+        {!imgLoaded && !imgErr && (
           <div className="mshf-loading">
             <div className="mshf-spinner" />
-            <span>{pdfDoc ? "جاري الرسم…" : "جاري تحميل المصحف…"}</span>
+            <span>جاري التحميل…</span>
           </div>
         )}
 
-        {loadErr && (
+        {/* خطأ */}
+        {imgErr && (
           <div className="mshf-err">
-            <div className="mshf-err__icon">⚠</div>
-            <p>تعذّر تحميل المصحف</p>
-            <button onClick={() => window.location.reload()} className="mshf-err__btn">إعادة المحاولة</button>
+            <p>تعذّر تحميل الصفحة</p>
+            <button onClick={() => { setImgErr(false); setImgLoaded(false); }} className="mshf-err-btn">
+              إعادة المحاولة
+            </button>
           </div>
         )}
 
-        {!loadErr && (
-          <div className="mshf-wrap">
-            <Star cls="mshf-c mshf-c--tl" />
-            <Star cls="mshf-c mshf-c--tr" />
-            <Star cls="mshf-c mshf-c--bl" />
-            <Star cls="mshf-c mshf-c--br" />
-            <canvas
-              ref={canvasRef}
-              className={`mshf-canvas${!rendering ? " ready" : ""}${nightMode ? " mshf-canvas--night" : ""}`}
-              aria-label={`صفحة ${page} — ${currentSurah}`}
-            />
-          </div>
-        )}
-
-        {!loadErr && !rendering && (
-          <>
-            <div className="mshf-tap mshf-tap--next" onClick={e => { e.stopPropagation(); go(page + 1); }} aria-label="التالية" />
-            <div className="mshf-tap mshf-tap--prev" onClick={e => { e.stopPropagation(); go(page - 1); }} aria-label="السابقة" />
-          </>
+        {/* صورة الصفحة */}
+        {!imgErr && (
+          <PageImg
+            page={displayPage}
+            night={nightMode}
+            loaded={imgLoaded}
+            onLoad={() => setImgLoaded(true)}
+            onError={() => setImgErr(true)}
+          />
         )}
       </div>
 
       {/* ══ شريط سفلي ══ */}
       <footer className={`mshf-bot${uiOn ? " on" : ""}`}>
-        <button className="mshf-nav" onClick={() => go(page - 1)} disabled={page <= 1} aria-label="السابقة">
+        <button
+          className="mshf-nav-btn"
+          onClick={() => go(page - 1)}
+          disabled={page <= 1}
+          aria-label="السابقة"
+        >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
             <path d="M15 18l-6-6 6-6"/>
-          </svg>
-        </button>
-
-        <button className="mshf-zoom-btn" onClick={() => adjustZoom(-0.1)} disabled={zoom <= 0.7} aria-label="تصغير" title="تصغير">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/>
           </svg>
         </button>
 
@@ -393,121 +415,148 @@ export default function QuranPage() {
           {editingPage ? (
             <input
               ref={pageInputRef}
-              className="mshf-pgnum__input"
+              className="mshf-pgnum-input"
               type="number"
               min={1}
               max={TOTAL}
               value={editVal}
               onChange={e => setEditVal(e.target.value)}
               onBlur={commitEdit}
-              onKeyDown={e => { if (e.key === "Enter") commitEdit(); if (e.key === "Escape") setEditingPage(false); }}
+              onKeyDown={e => {
+                if (e.key === "Enter") commitEdit();
+                if (e.key === "Escape") setEditingPage(false);
+              }}
               onClick={e => e.stopPropagation()}
             />
           ) : (
-            <button className="mshf-pgnum__btn" onClick={e => { e.stopPropagation(); startEdit(); }}>
-              <span className="mshf-pgnum__juz">ج{currentJuz}</span>
-              <span className="mshf-pgnum__cur">{page}</span>
-              <span className="mshf-pgnum__sep">/</span>
-              <span className="mshf-pgnum__tot">{TOTAL}</span>
+            <button
+              className="mshf-pgnum-btn"
+              onClick={e => { e.stopPropagation(); startEdit(); }}
+            >
+              <span className="mshf-pgnum-cur">{page}</span>
+              <span className="mshf-pgnum-sep">/</span>
+              <span className="mshf-pgnum-tot">{TOTAL}</span>
             </button>
           )}
         </div>
 
-        <button className="mshf-zoom-btn" onClick={() => adjustZoom(+0.1)} disabled={zoom >= 1.35} aria-label="تكبير" title="تكبير">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/>
-          </svg>
-        </button>
-
-        <button className="mshf-nav" onClick={() => go(page + 1)} disabled={page >= TOTAL} aria-label="التالية">
+        <button
+          className="mshf-nav-btn"
+          onClick={() => go(page + 1)}
+          disabled={page >= TOTAL}
+          aria-label="التالية"
+        >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
             <path d="M9 18l6-6-6-6"/>
           </svg>
         </button>
       </footer>
 
-      {/* ══ لوحة التنقل (فهرس السور / الأجزاء / العلامات) ══ */}
+      {/* ══ Bottom Sheet (الفهرس) ══ */}
       {navOpen && (
-        <div className="mshf-nav-overlay" onClick={() => setNavOpen(false)}>
-          <div className="mshf-nav-panel" onClick={e => e.stopPropagation()}>
+        <div className="mshf-sheet-overlay" onClick={() => setNavOpen(false)}>
+          <div className="mshf-sheet" onClick={e => e.stopPropagation()}>
 
-            {/* رأس اللوحة */}
-            <div className="mshf-nav-panel__head">
-              <div className="mshf-nav-panel__tabs">
-                {([["surahs","السور"],["juz","الأجزاء"],["bookmarks","العلامات"]] as [NavTab, string][]).map(([id, label]) => (
+            {/* drag handle */}
+            <div className="mshf-sheet-handle" />
+
+            {/* رأس */}
+            <div className="mshf-sheet-head">
+              <div className="mshf-sheet-tabs">
+                {([ ["surahs","السور"], ["juz","الأجزاء"], ["ahzab","الأحزاب"], ["bookmarks","العلامات"] ] as [NavTab, string][]).map(([id, label]) => (
                   <button
                     key={id}
-                    className={`mshf-nav-panel__tab${navTab === id ? " active" : ""}`}
+                    className={`mshf-sheet-tab${navTab === id ? " active" : ""}`}
                     onClick={() => { setNavTab(id); setSearch(""); }}
                   >{label}</button>
                 ))}
               </div>
-              <button className="mshf-nav-panel__close" onClick={() => setNavOpen(false)} aria-label="إغلاق">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+              <button className="mshf-sheet-close" onClick={() => setNavOpen(false)} aria-label="إغلاق">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
                   <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
                 </svg>
               </button>
             </div>
 
-            {/* بحث (للسور فقط) */}
+            {/* بحث السور */}
             {navTab === "surahs" && (
-              <div className="mshf-nav-search">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+              <div className="mshf-search-bar">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                   <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
                 </svg>
                 <input
                   ref={searchRef}
-                  className="mshf-nav-search__input"
+                  className="mshf-search-input"
                   placeholder="ابحث عن سورة…"
                   value={search}
                   onChange={e => setSearch(e.target.value)}
                   aria-label="بحث في السور"
                 />
                 {search && (
-                  <button className="mshf-nav-search__clear" onClick={() => setSearch("")} aria-label="مسح البحث">✕</button>
+                  <button className="mshf-search-clear" onClick={() => setSearch("")}>✕</button>
                 )}
               </div>
             )}
 
-            {/* محتوى اللوحة */}
-            <div ref={navBodyRef} className="mshf-nav-panel__body">
+            {/* المحتوى */}
+            <div ref={navBodyRef} className="mshf-sheet-body">
 
               {/* السور */}
               {navTab === "surahs" && (
                 <div className="mshf-surah-list">
-                  {filteredSurahs.length === 0 ? (
-                    <p className="mshf-nav-empty">لا نتائج</p>
-                  ) : filteredSurahs.map(([name, startPage]) => {
-                    const idx = SURAHS.findIndex(s => s[0] === name);
-                    const isActive = page >= startPage && (idx === SURAHS.length - 1 || page < SURAHS[idx + 1][1]);
+                  {filteredSurahs.length === 0
+                    ? <p className="mshf-empty">لا نتائج</p>
+                    : filteredSurahs.map(([name, sp]) => {
+                        const idx = SURAHS.findIndex(s => s[0] === name);
+                        const isActive = page >= sp && (idx === SURAHS.length - 1 || page < SURAHS[idx + 1][1]);
+                        return (
+                          <button
+                            key={name}
+                            className={`mshf-surah-row${isActive ? " active" : ""}`}
+                            onClick={() => goTo(sp)}
+                          >
+                            <span className="mshf-surah-num">{idx + 1}</span>
+                            <span className="mshf-surah-name">{name}</span>
+                            <span className="mshf-surah-page">ص {sp}</span>
+                          </button>
+                        );
+                      })
+                  }
+                </div>
+              )}
+
+              {/* الأجزاء */}
+              {navTab === "juz" && (
+                <div className="mshf-grid5">
+                  {AJZAA.map(([, sp], i) => {
+                    const isActive = page >= sp && (i === AJZAA.length - 1 || page < AJZAA[i + 1][1]);
                     return (
                       <button
-                        key={name}
-                        className={`mshf-surah-item${isActive ? " active" : ""}`}
-                        onClick={() => goTo(startPage)}
+                        key={i}
+                        className={`mshf-grid-item${isActive ? " active" : ""}`}
+                        onClick={() => goTo(sp)}
                       >
-                        <span className="mshf-surah-item__num">{idx + 1}</span>
-                        <span className="mshf-surah-item__name">{name}</span>
-                        <span className="mshf-surah-item__page">ص {startPage}</span>
+                        <span className="mshf-grid-num">{i + 1}</span>
+                        <span className="mshf-grid-pg">ص {sp}</span>
                       </button>
                     );
                   })}
                 </div>
               )}
 
-              {/* الأجزاء */}
-              {navTab === "juz" && (
-                <div className="mshf-juz-grid">
-                  {AJZAA.map(([label, startPage], i) => {
-                    const isActive = page >= startPage && (i === AJZAA.length - 1 || page < AJZAA[i + 1][1]);
+              {/* الأحزاب */}
+              {navTab === "ahzab" && (
+                <div className="mshf-grid6">
+                  {AHZAB.map(([, sp], i) => {
+                    const isActive = page >= sp && (i === AHZAB.length - 1 || page < AHZAB[i + 1][1]);
                     return (
                       <button
-                        key={label}
-                        className={`mshf-juz-item${isActive ? " active" : ""}`}
-                        onClick={() => goTo(startPage)}
+                        key={i}
+                        className={`mshf-grid-item${isActive ? " active" : ""}`}
+                        onClick={() => goTo(sp)}
                       >
-                        <span className="mshf-juz-item__n">{i + 1}</span>
-                        <span className="mshf-juz-item__pg">ص {startPage}</span>
+                        <span className="mshf-grid-num">{i + 1}</span>
+                        <span className="mshf-grid-pg">ص {sp}</span>
                       </button>
                     );
                   })}
@@ -518,33 +567,33 @@ export default function QuranPage() {
               {navTab === "bookmarks" && (
                 <div className="mshf-bm-list">
                   {bookmarks.length === 0 ? (
-                    <div className="mshf-nav-empty">
-                      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+                    <div className="mshf-empty mshf-empty--center">
+                      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
                         <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/>
                       </svg>
                       <p>لا توجد علامات محفوظة</p>
-                      <p className="mshf-nav-empty__sub">اضغط 🔖 لحفظ صفحة</p>
+                      <p className="mshf-empty-sub">اضغط على أيقونة العلامة لحفظ صفحة</p>
                     </div>
                   ) : bookmarks.map(p => {
-                    const surah = (() => { for (let i = SURAHS.length - 1; i >= 0; i--) if (p >= SURAHS[i][1]) return `${SURAHS[i][0]}`; return ""; })();
+                    const s = (() => { for (let i = SURAHS.length - 1; i >= 0; i--) if (p >= SURAHS[i][1]) return SURAHS[i][0]; return ""; })();
                     return (
-                      <div key={p} className="mshf-bm-item">
-                        <button className="mshf-bm-item__btn" onClick={() => goTo(p)}>
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true">
+                      <div key={p} className="mshf-bm-row">
+                        <button className="mshf-bm-btn" onClick={() => goTo(p)}>
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="none">
                             <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/>
                           </svg>
-                          <div>
-                            <span className="mshf-bm-item__page">صفحة {p}</span>
-                            <span className="mshf-bm-item__surah">{surah}</span>
+                          <div className="mshf-bm-info">
+                            <span className="mshf-bm-page">صفحة {p}</span>
+                            <span className="mshf-bm-surah">{s}</span>
                           </div>
                         </button>
                         <button
-                          className="mshf-bm-item__del"
+                          className="mshf-bm-del"
                           onClick={() => {
                             const next = bookmarks.filter(b => b !== p);
                             setBookmarks(next); lsSetArr(BM_KEY, next);
                           }}
-                          aria-label="حذف العلامة"
+                          aria-label="حذف"
                         >✕</button>
                       </div>
                     );
