@@ -14183,7 +14183,7 @@ img[loading="lazy"]:not([src=""]) {
   background: #FFF5F5 !important;
 }
 .msk-toast--warning {
-  --toast-accent: #D97706 !important;
+  --toast-accent: #EA580C !important;
 }
 .msk-toast--info {
   --toast-accent: #2563EB !important;
