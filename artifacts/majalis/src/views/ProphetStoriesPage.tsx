@@ -3,6 +3,7 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { Link } from "wouter";
 import { PROPHETS, getProphet, searchProphets, type ProphetRecord } from "@/lib/prophets-data";
+import { applyPageSeo } from "@/lib/seo";
 import { supabase } from "@/lib/supabase";
 
 type Citation = { surah: string; ayahs: string; note: string };
@@ -501,6 +502,15 @@ export default function ProphetStoriesPage() {
   const [view, setView] = useState<View>("grid");
   const { toggle: toggleBookmark, has: isBookmarked, count: bookmarkCount } = useBookmarks();
   const searchRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/prophets",
+      title: "قصص الأنبياء والمرسلين | المجلس العلمي",
+      description: "قصص الأنبياء والمرسلين عليهم السلام من آدم إلى محمد ﷺ — سيرهم وقصصهم ومعجزاتهم وعبرهم من القرآن الكريم والسنة النبوية.",
+      keywords: ["قصص الأنبياء", "أنبياء الإسلام", "المرسلون", "قصص قرآنية", "آدم موسى عيسى محمد"],
+    });
+  }, []);
 
   // اختر النبي من URL إذا وُجد
   useEffect(() => {

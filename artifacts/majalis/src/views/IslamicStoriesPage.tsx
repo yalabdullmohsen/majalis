@@ -6,6 +6,7 @@ import { supabase } from "@/lib/supabase";
 import { isSupabaseConfigured } from "@/lib/supabase-config";
 import { PageHeader } from "@/components/ui-common";
 import { ISLAMIC_STORIES_SEED } from "@/lib/islamic-stories-seed";
+import { applyPageSeo } from "@/lib/seo";
 
 // ─────────────────── Types ────────────────────────────────────────────────────
 type Category = "الكل" | "صحابة" | "فتوحات" | "تاريخ";
@@ -161,6 +162,15 @@ export default function IslamicStoriesPage() {
   const [category, setCategory] = useState<Category>("الكل");
   const [era, setEra] = useState<Era>("الكل");
   const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/islamic-stories",
+      title: "قصص الصحابة والفتوحات الإسلامية | المجلس العلمي",
+      description: "قصص الصحابة الكرام والفتوحات الإسلامية والأحداث التاريخية — من الهجرة النبوية إلى فتح مكة وما بعدها من عصور الإسلام.",
+      keywords: ["قصص إسلامية", "الصحابة", "الفتوحات الإسلامية", "التاريخ الإسلامي", "السيرة"],
+    });
+  }, []);
 
   useEffect(() => {
     if (!isSupabaseConfigured()) {
