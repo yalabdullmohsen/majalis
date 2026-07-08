@@ -452,6 +452,76 @@ export const lessonAds: LessonAd[] = [
       },
     ],
   },
+  {
+    id: "nabil-alawadhi-seerah-weekly",
+    provider: "دروس الشيخ نبيل العوضي",
+    teacher: "الشيخ نبيل بن علي العوضي",
+    teacherImage: "/sheikhs/nabil-alawadhi.jpg",
+    title: "قراءة في السيرة النبوية",
+    shortDescription:
+      "درس أسبوعي ثابت في السيرة النبوية — يتناول حياة النبي ﷺ وغزواته وأخلاقه بأسلوب مشوق.",
+    category: "weekly",
+    tags: ["سيرة", "أسبوعي", "حضوري", "بث مباشر", "تاريخ إسلامي"],
+    hasWomenSection: true,
+    detailIntro: "درس ثابت يُقام أسبوعياً — يُتابعه عدد كبير من المهتمين بالسيرة النبوية.",
+    sessions: [
+      {
+        label: "المجلس الأسبوعي",
+        day: "الثلاثاء",
+        time: "بعد صلاة العشاء",
+        venue: "مسجد الإمام الذهبي",
+        district: "الروضة",
+        note: "متاح للرجال والنساء — قسم خاص للأسر.",
+      },
+    ],
+  },
+  {
+    id: "abdulaziz-alfawzan-fiqh-weekly",
+    provider: "دروس الشيخ عبدالعزيز الفوزان",
+    teacher: "د. عبدالعزيز بن فوزان الفوزان",
+    teacherImage: "",
+    title: "شرح زاد المستقنع في الفقه الحنبلي",
+    shortDescription:
+      "درس أسبوعي ثابت في شرح زاد المستقنع — أحد أهم متون الفقه الحنبلي المختصرة.",
+    category: "weekly",
+    tags: ["فقه", "حنبلي", "أسبوعي", "حضوري", "متن"],
+    hasWomenSection: false,
+    detailIntro: "شرح منهجي متواصل لكتاب زاد المستقنع — للطلاب المتوسطين في الفقه.",
+    sessions: [
+      {
+        label: "المجلس الأسبوعي",
+        day: "الأحد",
+        time: "8:30 مساءً",
+        venue: "جامع السلام",
+        district: "قرطبة",
+        note: "للرجال فقط — التسجيلات متاحة على قناة يوتيوب.",
+      },
+    ],
+  },
+  {
+    id: "khalid-almushlih-usool-program",
+    provider: "مركز التأصيل العلمي",
+    teacher: "د. خالد بن علي المشيقح",
+    teacherImage: "",
+    title: "برنامج أصول الفقه للمبتدئين",
+    shortDescription:
+      "برنامج منهجي لتعليم أصول الفقه من الصفر — يُناسب الطلاب الجدد والمهتمين بالفقه المقارن.",
+    category: "program",
+    tags: ["أصول الفقه", "برنامج تعليمي", "مبتدئ", "أسبوعي"],
+    hasWomenSection: true,
+    startDate: "2026-08-20",
+    detailIntro: "برنامج منظم يغطي المصطلحات الأساسية في أصول الفقه مع أمثلة تطبيقية.",
+    sessions: [
+      {
+        label: "الجلسة الأسبوعية",
+        day: "الخميس",
+        time: "7:30 مساءً",
+        venue: "مركز التأصيل العلمي",
+        district: "الصليبيخات",
+        note: "مناسب للرجال والنساء — متاح أونلاين أيضاً.",
+      },
+    ],
+  },
 ];
 
 export type LessonAdFilters = {
