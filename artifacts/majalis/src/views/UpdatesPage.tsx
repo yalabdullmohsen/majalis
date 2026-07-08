@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
-import { PageHeader, Loading, Empty } from "@/components/ui-common";
+import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { getMergedPlatformUpdates } from "@/lib/auto-content-service";
 import { UPDATE_TYPES } from "@/lib/platform-types";
 import { usePageView } from "@/hooks/usePageView";
@@ -73,7 +73,7 @@ export default function UpdatesPage() {
       </div>
 
       {loading ? (
-        <Loading />
+        <SkeletonCardGrid />
       ) : filtered.length === 0 ? (
         <Empty text="لا توجد مستجدات." />
       ) : (

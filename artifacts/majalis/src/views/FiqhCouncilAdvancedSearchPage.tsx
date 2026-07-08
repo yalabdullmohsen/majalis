@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
-import { PageHeader, Loading, Empty } from "@/components/ui-common";
+import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { PlatformContentCard } from "@/components/platform/ContentDetailLayout";
 import { FiqhCouncilSubnav } from "./FiqhCouncilPage";
 import { advancedSearchFiqhCouncil } from "@/lib/fiqh-council-service";
@@ -140,7 +140,7 @@ export default function FiqhCouncilAdvancedSearchPage() {
       </div>
 
       {loading ? (
-        <Loading />
+        <SkeletonCardGrid />
       ) : results.length === 0 ? (
         <Empty text="لا توجد نتائج مطابقة." />
       ) : (

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { BookMarked, BookOpen, Leaf, Moon, Scale, ScrollText, Shapes } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { Link } from "wouter";
-import { PageHeader, Loading } from "@/components/ui-common";
+import { PageHeader, SkeletonCardGrid } from "@/components/ui-common";
 import { fetchAllTopics } from "@/lib/scholarly-intelligence-service";
 import { applyPageSeo } from "@/lib/seo";
 
@@ -154,7 +154,7 @@ export default function TopicsIndexPage() {
         })}
       </div>
 
-      {loading && <Loading />}
+      {loading && <SkeletonCardGrid />}
 
       {!loading && Object.entries(displayed).map(([category, items]) => {
         const meta = CATEGORY_META[category] ?? CATEGORY_META.other;

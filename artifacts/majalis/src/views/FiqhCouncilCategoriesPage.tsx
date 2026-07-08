@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useSearch } from "wouter";
-import { PageHeader, Loading, Empty } from "@/components/ui-common";
+import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { PlatformContentCard } from "@/components/platform/ContentDetailLayout";
 import { getFiqhCouncilItems, getFiqhCouncilCategoryCounts } from "@/lib/fiqh-council-service";
 import {
@@ -97,7 +97,7 @@ export default function FiqhCouncilCategoriesPage() {
       </div>
 
       {loading ? (
-        <Loading />
+        <SkeletonCardGrid />
       ) : items.length === 0 ? (
         <Empty text="لا توجد عناصر في هذا التصنيف." />
       ) : (

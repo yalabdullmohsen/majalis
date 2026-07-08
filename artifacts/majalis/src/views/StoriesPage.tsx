@@ -4,7 +4,7 @@ import { useAuth } from "@/components/AuthProvider";
 import { getAkpStories } from "@/lib/supabase";
 import { RequestManager } from "@/lib/request-manager";
 import { arabicMatchAny } from "@/lib/arabic-search";
-import { PageHeader, Loading, Empty } from "@/components/ui-common";
+import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
 import { applyPageSeo } from "@/lib/seo";
 
@@ -102,7 +102,7 @@ export default function StoriesPage() {
       </div>
 
       {loading ? (
-        <Loading />
+        <SkeletonCardGrid />
       ) : displayItems.length === 0 ? (
         <Empty text={debouncedSearch.trim() ? `لا توجد قصص مطابقة لـ «${debouncedSearch.trim()}».` : "لا توجد قصص متاحة حاليًا."} />
       ) : (

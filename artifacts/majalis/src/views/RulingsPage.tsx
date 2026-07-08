@@ -4,7 +4,7 @@ import type { LucideIcon } from "lucide-react";
 import { Link } from "wouter";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { useAuth } from "@/components/AuthProvider";
-import { PageHeader, Loading, Empty } from "@/components/ui-common";
+import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
 
 const RULINGS_ICON_MAP: Record<string, LucideIcon> = {
@@ -226,7 +226,7 @@ export default function RulingsPage() {
       </div>
 
       {loading ? (
-        <Loading />
+        <SkeletonCardGrid />
       ) : items.length === 0 ? (
         <Empty
           text={

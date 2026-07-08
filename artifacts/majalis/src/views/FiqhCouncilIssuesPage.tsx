@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { FiqhCouncilSubnav } from "./FiqhCouncilPage";
-import { PageHeader, Loading, Empty } from "@/components/ui-common";
+import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { getFiqhIssues } from "@/lib/fiqh-council-issues-service";
 import { FIQH_COUNCIL_CATEGORIES, fiqhIssueHref, type FiqhCouncilIssue } from "@/lib/fiqh-council-types";
 import { applyPageSeo } from "@/lib/seo";
@@ -59,7 +59,7 @@ export default function FiqhCouncilIssuesPage() {
       </div>
 
       {loading ? (
-        <Loading />
+        <SkeletonCardGrid />
       ) : issues.length === 0 ? (
         <Empty text="لا توجد مسائل فقهية منشورة في هذا التصنيف." />
       ) : (

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
-import { PageHeader, Loading, Empty } from "@/components/ui-common";
+import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { PlatformContentCard } from "@/components/platform/ContentDetailLayout";
 import { getAnnualCourses } from "@/lib/platform-content-service";
 import { COURSE_TYPES } from "@/lib/platform-types";
@@ -79,7 +79,7 @@ export default function AnnualCoursesPage() {
       </div>
 
       {loading ? (
-        <Loading />
+        <SkeletonCardGrid />
       ) : items.length === 0 ? (
         <Empty text="لا توجد دورات مطابقة." />
       ) : (
