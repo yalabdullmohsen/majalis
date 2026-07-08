@@ -1,4 +1,5 @@
-import { useState, useMemo } from "react";
+import { useEffect, useState, useMemo } from "react";
+import { applyPageSeo } from "@/lib/seo";
 import { Chip } from "@/components/ui-common";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
 import {
@@ -19,6 +20,15 @@ const CATEGORY_COLORS: Record<string, { bg: string; accent: string }> = {
 
 export default function PropheticMedicinePage() {
   const [category, setCategory] = useState<PropheticMedicineCategory>("الكل");
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/prophetic-medicine",
+      title: "الطب النبوي | المجلس العلمي",
+      description: "موسوعة الطب النبوي — هدي النبي ﷺ في الصحة والتداوي بالأغذية والأعشاب والرقية الشرعية.",
+      keywords: ["طب نبوي", "هدي النبي", "تداوي", "أعشاب إسلامية", "رقية شرعية"],
+    });
+  }, []);
   const [expanded, setExpanded] = useState<string | null>(null);
   const [filtersOpen, setFiltersOpen] = useState(false);
 

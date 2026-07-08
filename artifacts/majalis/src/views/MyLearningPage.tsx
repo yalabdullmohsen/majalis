@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { Loading } from "@/components/ui-common";
+import { applyPageSeo } from "@/lib/seo";
 import {
   fetchUserLearningStats,
   fetchUserProgress,
@@ -13,6 +14,16 @@ import {
 
 export default function MyLearningPage() {
   const [stats, setStats] = useState<UserStats | null>(null);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/my-learning",
+      title: "تعلمي | المجلس العلمي",
+      description: "مركز التعلم الشخصي — إحصائياتك وشهاداتك ومكتبتك وملاحظاتك في المجلس العلمي.",
+      keywords: ["تعلمي", "تقدم التعلم", "شهادات إسلامية", "إحصائيات تعليمية"],
+      robots: "noindex, follow",
+    });
+  }, []);
   const [progress, setProgress] = useState<any>(null);
   const [certificates, setCertificates] = useState<Certificate[]>([]);
   const [library, setLibrary] = useState<any[]>([]);

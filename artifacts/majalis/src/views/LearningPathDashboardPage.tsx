@@ -1,6 +1,7 @@
 import { Suspense, lazy, useEffect, useState } from "react";
 import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
+import { applyPageSeo } from "@/lib/seo";
 import { supabase } from "@/lib/supabase";
 import type { LPProgress, LPAchievement, LPStreak } from "@/lib/learning-path-service";
 import { fetchProgress, fetchAchievements, fetchStreak } from "@/lib/learning-path-service";
@@ -15,6 +16,16 @@ const StreakCounter = lazy(() =>
 export default function LearningPathDashboardPage() {
   const { isLoggedIn } = useAuth();
   const [progress, setProgress]         = useState<LPProgress[]>([]);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/learning-path/dashboard",
+      title: "لوحة تقدم التعلم | المجلس العلمي",
+      description: "تابع تقدمك في مسارات التعلم الشرعي — إنجازاتك وسلسلة الأيام ونشاطك في الدراسة الإسلامية.",
+      keywords: ["لوحة تعلم", "تقدم شرعي", "إنجازات علمية", "مسار تعليمي", "تعلم إسلامي"],
+      robots: "noindex, follow",
+    });
+  }, []);
   const [achievements, setAchievements] = useState<LPAchievement[]>([]);
   const [streak, setStreak]             = useState<LPStreak>({ current_streak: 0, longest_streak: 0, last_activity_date: null });
   const [loading, setLoading]           = useState(true);

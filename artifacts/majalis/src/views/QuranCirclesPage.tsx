@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { QuranCircleCard } from "@/components/circles/QuranCircleCard";
 import { getQuranCircles, type QuranCircle, type CircleFilters } from "@/lib/quran-circles-service";
+import { applyPageSeo } from "@/lib/seo";
 import { IslamicDivider } from "@/components/design/IslamicDivider";
 
 const LEVEL_OPTIONS = ["الكل", "مبتدئ", "متوسط", "متقدم"];
@@ -35,6 +36,15 @@ export default function QuranCirclesPage() {
   const [circles, setCircles] = useState<QuranCircle[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError]     = useState<string | null>(null);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/quran-circles",
+      title: "حلقات القرآن الكريم | المجلس العلمي",
+      description: "اعثر على حلقات تحفيظ القرآن الكريم المناسبة — حلقات مختلطة وللرجال وللنساء بمستويات متدرجة.",
+      keywords: ["حلقات قرآن", "تحفيظ قرآن", "حلقة قرآنية", "حفظ القرآن", "تجويد"],
+    });
+  }, []);
   const [level, setLevel]     = useState("الكل");
   const [track, setTrack]     = useState("الكل");
   const [mode, setMode]       = useState("الكل");

@@ -5,6 +5,7 @@ import { getMergedPlatformUpdates } from "@/lib/auto-content-service";
 import { UPDATE_TYPES } from "@/lib/platform-types";
 import { usePageView } from "@/hooks/usePageView";
 import type { MergedUpdateItem } from "@/lib/auto-content/auto-content-utils";
+import { applyPageSeo } from "@/lib/seo";
 
 const TYPE_COLORS: Record<string, string> = {
   قرار: "#164E3C",
@@ -31,6 +32,15 @@ export default function UpdatesPage() {
   const [filter, setFilter] = useState("الكل");
 
   usePageView("updates", null);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/updates",
+      title: "آخر المستجدات | المجلس العلمي",
+      description: "آخر المستجدات العلمية والإضافات الجديدة في المجلس العلمي — قرارات وفتاوى ودروس ودورات حديثة.",
+      keywords: ["مستجدات إسلامية", "أخبار علمية", "جديد المجلس", "تحديثات شرعية", "أخبار فقهية"],
+    });
+  }, []);
 
   useEffect(() => {
     setLoading(true);

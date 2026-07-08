@@ -1,6 +1,7 @@
 import { Suspense, lazy, useEffect, useState } from "react";
 import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
+import { applyPageSeo } from "@/lib/seo";
 import { supabase } from "@/lib/supabase";
 import type { LPScience, LPProgress } from "@/lib/learning-path-service";
 import { fetchSciences, fetchProgress } from "@/lib/learning-path-service";
@@ -22,6 +23,15 @@ function LoadingSkeleton() {
 export default function LearningPathPage() {
   const { isLoggedIn } = useAuth();
   const [sciences, setSciences]   = useState<LPScience[]>([]);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/learning-path",
+      title: "مسارات التعلم الشرعي | المجلس العلمي",
+      description: "ابدأ رحلة التعلم الشرعي المنهجي — مسارات علمية منظمة في الفقه والعقيدة والتفسير والحديث.",
+      keywords: ["مسارات تعلم", "تعلم شرعي", "تعليم إسلامي", "منهج علمي", "دراسة شرعية"],
+    });
+  }, []);
   const [progress, setProgress]   = useState<LPProgress[]>([]);
   const [loading, setLoading]     = useState(true);
   const [error, setError]         = useState<string | null>(null);

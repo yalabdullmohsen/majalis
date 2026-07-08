@@ -9,6 +9,7 @@ import {
   type DailyStudyStats,
   type StudySession,
 } from "@/lib/study-session-service";
+import { applyPageSeo } from "@/lib/seo";
 
 // ─── Pomodoro config ──────────────────────────────────────────────────────────
 
@@ -93,6 +94,16 @@ function SessionHistory({ sessions }: { sessions: StudySession[] }) {
 
 export default function StudyRoomPage() {
   const { user, isLoggedIn } = useAuth();
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/study-room",
+      title: "غرفة المذاكرة | المجلس العلمي",
+      description: "غرفة المذاكرة الإسلامية — مؤقت بومودورو للمذاكرة وتسجيل جلسات الدراسة الشرعية.",
+      keywords: ["غرفة مذاكرة", "مذاكرة إسلامية", "بومودورو إسلامي", "جلسة دراسة", "تعلم شرعي"],
+      robots: "noindex, follow",
+    });
+  }, []);
 
   // Preset
   const [presetIdx, setPresetIdx] = useState(0);

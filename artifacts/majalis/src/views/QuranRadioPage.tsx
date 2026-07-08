@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { Link } from "wouter";
 import { RADIO_STATIONS, LIVE_CHANNELS, saveLastRadioId } from "@/lib/quran-radio";
+import { applyPageSeo } from "@/lib/seo";
 import { useRadioPlayer } from "@/hooks/useRadioPlayer";
 import "@/styles/quran.css";
 
@@ -16,6 +17,15 @@ const RADIO_STATE_LABELS = {
 
 export default function QuranRadioPage() {
   const radio = useRadioPlayer();
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/quran-radio",
+      title: "راديو القرآن الكريم | المجلس العلمي",
+      description: "استمع إلى القرآن الكريم عبر الإنترنت — محطات إذاعية متنوعة وبث مباشر للتلاوات القرآنية.",
+      keywords: ["راديو قرآن", "بث قرآن", "تلاوة قرآنية", "استماع قرآن", "إذاعة إسلامية"],
+    });
+  }, []);
   useEffect(() => {
     if (radio.station) {
       saveLastRadioId(radio.station.id);

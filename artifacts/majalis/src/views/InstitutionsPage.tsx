@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PageHeader } from "@/components/ui-common";
+import { applyPageSeo } from "@/lib/seo";
 
 // ─── Seed Data ────────────────────────────────────────────────────────────────
 
@@ -235,6 +236,15 @@ function InstitutionCard({ inst }: { inst: Institution }) {
 
 export default function InstitutionsPage() {
   const [filter, setFilter] = useState<Institution["type"] | "all">("all");
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/institutions",
+      title: "المؤسسات الإسلامية | المجلس العلمي",
+      description: "دليل المؤسسات الإسلامية والمراكز الشرعية — مساجد ومعاهد وجامعات وهيئات إسلامية.",
+      keywords: ["مؤسسات إسلامية", "مراكز إسلامية", "معاهد شرعية", "جامعات إسلامية", "هيئات دينية"],
+    });
+  }, []);
   const [search, setSearch] = useState("");
 
   const filtered = INSTITUTIONS.filter((inst) => {
