@@ -496,9 +496,9 @@ export const FIQH_ISSUE_ITEM_LINKS: Record<string, string[]> = {
   "organ-donation-will": ["fiqh-organ-donation-will"],
   "milk-bank-breastfeeding": ["fiqh-milk-bank-breastfeeding"],
   "minorities-kitabiyya-marriage": ["fiqh-minorities-kitabiyya-marriage"],
-  "ai-in-fatwa": ["fiqh-social-media-dawah"],
-  "stem-cell-therapy": ["fiqh-surrogacy"],
-  "digital-waqf": ["update-decision-waqf-digital"],
+  "ai-in-fatwa": ["fiqh-social-media-dawah", "fiqh-ai-fatwa-tools"],
+  "stem-cell-therapy": ["fiqh-surrogacy", "fiqh-genetic-testing"],
+  "digital-waqf": ["update-decision-waqf-digital", "fiqh-waqf-stocks"],
   "zakat-real-estate": ["fatwa-zakat-debt"],
   "gender-reassignment-surgery": [],
 };
