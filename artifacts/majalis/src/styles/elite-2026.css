@@ -13337,3 +13337,267 @@ a:focus-visible {
 }
 
 /* ── نهاية §REDESIGN-2026 ──────────────────────────────────────── */
+
+/* ══════════════════════════════════════════════════════════════════
+   §PERF-UX-2026 — Skeleton Screens + Performance + Icons + A11y
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ─── Skeleton Loading (Phase 2) ──────────────────────────────── */
+@keyframes skeleton-shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+.skeleton {
+  display: inline-block;
+  background: linear-gradient(
+    90deg,
+    rgba(0,0,0,0.06) 25%,
+    rgba(0,0,0,0.10) 37%,
+    rgba(0,0,0,0.06) 63%
+  );
+  background-size: 400px 100%;
+  animation: skeleton-shimmer 1.4s ease infinite;
+  border-radius: 4px;
+}
+
+/* Skeleton lesson card */
+.skeleton-lesson-card {
+  background: var(--rd-white, #fff);
+  border: 1px solid rgba(0,0,0,0.07);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.skeleton-lesson-card .sk-header  { width: 60%; height: 12px; margin-bottom: 10px; }
+.skeleton-lesson-card .sk-title   { width: 90%; height: 18px; margin-bottom: 8px; }
+.skeleton-lesson-card .sk-sub     { width: 50%; height: 12px; margin-bottom: 14px; }
+.skeleton-lesson-card .sk-meta    { display: flex; gap: 8px; margin-bottom: 12px; }
+.skeleton-lesson-card .sk-meta span { height: 10px; border-radius: 10px; }
+.skeleton-lesson-card .sk-btn     { width: 80px; height: 32px; border-radius: 8px; }
+
+/* ─── Quick Nav Lucide Icons ───────────────────────────────────── */
+.hp-quick-link__icon {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: var(--rd-emerald-deep, #0D5E3F) !important;
+  font-size: inherit !important;
+}
+
+/* ─── Featured Card Lucide Icons ─────────────────────────────── */
+.hp-featured-card__icon {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 52px !important;
+  height: 52px !important;
+  color: var(--rd-emerald-deep, #0D5E3F) !important;
+}
+
+/* ─── Hero preload hint (LCP optimization) ────────────────────── */
+.home-hero--v3 {
+  content-visibility: auto !important;
+}
+
+/* ─── Smooth page transitions ─────────────────────────────────── */
+.app-main {
+  animation: page-fade-in 0.25s ease forwards;
+}
+@keyframes page-fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Focus-visible styles (Keyboard A11y) ────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--rd-emerald, #10B981) !important;
+  outline-offset: 2px !important;
+  border-radius: 4px !important;
+}
+
+/* ─── Skip-to-main link ─────────────────────────────────────── */
+.skip-link {
+  position: fixed !important;
+  top: -100px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  z-index: 9999 !important;
+  background: var(--rd-emerald, #10B981) !important;
+  color: #fff !important;
+  padding: 10px 20px !important;
+  border-radius: 0 0 8px 8px !important;
+  font-weight: 700 !important;
+  text-decoration: none !important;
+  transition: top 0.2s !important;
+}
+.skip-link:focus {
+  top: 0 !important;
+}
+
+/* ─── Dark mode support ────────────────────────────────────────── */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --rd-white:      #1E2A25;
+    --rd-ivory:      #151E1A;
+    --rd-ink:        #F3F4F6;
+    --rd-ink-soft:   #D1D5DB;
+    --rd-ink-muted:  #9CA3AF;
+    --rd-nav-bg:     rgba(20,30,25,0.97);
+    --rd-nav-border: rgba(255,255,255,0.08);
+    --rd-card-shadow: 0 4px 12px rgba(0,0,0,0.35);
+  }
+
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      rgba(255,255,255,0.05) 25%,
+      rgba(255,255,255,0.10) 37%,
+      rgba(255,255,255,0.05) 63%
+    );
+    background-size: 400px 100%;
+  }
+}
+
+/* ─── Image lazy load fade-in ────────────────────────────────── */
+img[loading="lazy"] {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+img[loading="lazy"].loaded,
+img[loading="lazy"]:not([src=""]) {
+  opacity: 1;
+}
+
+/* ─── CTA Arrow RTL fix ─────────────────────────────────────── */
+.hp-featured-card__cta {
+  display: flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   §UI-REFRESH-2026 — تحسينات اللون والأيقونات وبادج الصلاة
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ─── تعميق اللون الأخضر: أقل فتوراً وأكثر ثراءً ──────────────── */
+:root {
+  --rd-emerald:       #059669;  /* Emerald 600 — أعمق وأثرى من 500 */
+  --rd-emerald-light: #34D399;  /* للخلفيات الفاتحة */
+}
+
+/* ─── Hero: تدرج أكثر عمقاً ────────────────────────────────────── */
+.home-hero--v3 {
+  background: linear-gradient(145deg, #052e16 0%, #064E3B 40%, #059669 100%) !important;
+}
+
+/* ─── أيقونات الأقسام في الصفحة الرئيسية ───────────────────────── */
+.hp-cat__icon {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 34px !important;
+  height: 34px !important;
+  background: linear-gradient(135deg, rgba(5,150,105,0.15) 0%, rgba(5,150,105,0.08) 100%) !important;
+  border-radius: 10px !important;
+  color: #059669 !important;
+  flex-shrink: 0 !important;
+}
+
+.hp-cat-card__icon {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 36px !important;
+  height: 36px !important;
+  background: linear-gradient(135deg, rgba(5,150,105,0.12) 0%, rgba(5,150,105,0.06) 100%) !important;
+  border-radius: 10px !important;
+  color: #059669 !important;
+  flex-shrink: 0 !important;
+  transition: background 0.2s ease !important;
+}
+
+.hp-cat-card:hover .hp-cat-card__icon {
+  background: linear-gradient(135deg, rgba(5,150,105,0.22) 0%, rgba(5,150,105,0.14) 100%) !important;
+}
+
+/* ─── عناوين بطاقات الدروس في الصفحة الرئيسية ─────────────────── */
+.lesson-unified-card.lesson-unified-card--compact .lesson-unified-card__title {
+  font-size: 1.05rem !important;
+  font-weight: 800 !important;
+  color: #111827 !important;
+  letter-spacing: -0.01em !important;
+  line-height: 1.3 !important;
+  -webkit-line-clamp: 3 !important;
+}
+
+/* ─── بادج وقت الصلاة في شريط التنقل السفلي ───────────────────── */
+.bottom-nav__tab-icon--prayer {
+  position: relative !important;
+}
+
+.bottom-nav__prayer-badge {
+  position: absolute !important;
+  top: -4px !important;
+  left: -2px !important;
+  background: #059669 !important;
+  color: #fff !important;
+  font-size: 0.52rem !important;
+  font-weight: 700 !important;
+  font-variant-numeric: tabular-nums !important;
+  line-height: 1 !important;
+  padding: 2px 4px !important;
+  border-radius: 5px !important;
+  white-space: nowrap !important;
+  pointer-events: none !important;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.20) !important;
+}
+
+/* ─── تحسين شريط التنقل السفلي: لون أعمق ──────────────────────── */
+.bottom-nav--v2 .bottom-nav__tab.is-active {
+  color: #059669 !important;
+}
+
+.bottom-nav--v2 .bottom-nav__tab.is-active .bottom-nav__tab-icon {
+  background: rgba(5,150,105,0.12) !important;
+}
+
+.bottom-nav--v2 .bottom-nav__tab:hover {
+  color: #047857 !important;
+}
+
+/* ─── أيقونات الوصول السريع: لون أعمق ──────────────────────────── */
+.hp-quick-link__icon {
+  color: #059669 !important;
+}
+
+.hp-quick-link {
+  transition: transform 0.15s ease !important;
+}
+
+.hp-quick-link:hover .hp-quick-link__icon {
+  color: #047857 !important;
+}
+
+/* ─── badge تصنيف بطاقة الدرس ───────────────────────────────────── */
+.lesson-unified-card.lesson-unified-card--compact .lesson-unified-card__category {
+  background: rgba(5,150,105,0.12) !important;
+  color: #047857 !important;
+}
+
+.lesson-unified-card.lesson-unified-card--compact .lesson-unified-card__category::before {
+  background: #059669 !important;
+}
+
+.lesson-unified-card.lesson-unified-card--compact .lesson-unified-card__sheikh {
+  color: #047857 !important;
+}
+
+/* ─── focus-visible: لون أعمق ───────────────────────────────────── */
+:focus-visible {
+  outline-color: #059669 !important;
+}
+
+/* ── نهاية §UI-REFRESH-2026 ─────────────────────────────────────── */
+
+/* ── نهاية §PERF-UX-2026 ─────────────────────────────────────── */

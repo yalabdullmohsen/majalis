@@ -8,8 +8,6 @@ import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 import { fromKuwaitLesson } from "@/lib/unified-lesson-card";
 import { computeNextOccurrenceMs, getKuwaitClock, isLessonThisDay } from "@/lib/lesson-time";
 
-type HomeTab = "all";
-
 const ARABIC_WEEKDAY: Record<number, string> = {
   0: "الأحد",
   1: "الاثنين",
@@ -32,7 +30,6 @@ export function HomeUpcomingLessons({
   const [allLessons, setAllLessons] = useState<KuwaitLessonRecord[]>(
     initialLessons ? initialLessons.filter((l) => !isCourse(l)) : [],
   );
-  const tab: HomeTab = "all";
   const [loading, setLoading] = useState(!initialLessons);
 
   useEffect(() => {
@@ -53,13 +50,9 @@ export function HomeUpcomingLessons({
   const nowMs = clock.dayStartMs + (clock.hour * 60 + clock.minute) * 60_000;
   const TWO_HOURS_MS = 2 * 3_600_000;
 
-  function applyTabFilter(_lesson: KuwaitLessonRecord) {
-    return true;
-  }
-
   // دروس اليوم: يُعرض الدرس فقط إذا لم يمرّ على بدايته أكثر من ساعتين
   const todayLessons = allLessons
-    .filter(l => isLessonThisDay(l.day) && applyTabFilter(l))
+    .filter(l => isLessonThisDay(l.day))
     .map(l => {
       const freshMs = computeNextOccurrenceMs(l.day, l.time);
       // إذا انتقل الحساب للأسبوع القادم (مرّ الوقت)، أعِد وقت اليوم نفسه

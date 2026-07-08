@@ -10,108 +10,117 @@ import { HomeUpcomingLessons } from "@/components/home/HomeUpcomingLessons";
 import { HomeDailyCorner } from "@/components/home/HomeDailyCorner";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
 import { HijriSacredMonthBanner } from "@/components/HijriSacredMonthBanner";
+import {
+  BookMarked, BookOpen, Bot, Building2, CalendarDays, Car, Clock,
+  Compass, FlaskConical, GraduationCap, HelpCircle, Landmark, Layers,
+  Lightbulb, Map, Mic2, Monitor, Moon, Network, Newspaper,
+  Radio, RotateCw, Scale, Scroll, Star, Target, Upload, Wrench,
+} from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 /* ── روابط الوصول السريع ── */
-const QUICK_LINKS = [
-  { href: "/quran",          icon: "📖", label: "القرآن" },
-  { href: "/adhkar",         icon: "📿", label: "الأذكار" },
-  { href: "/prayer-times",   icon: "🕌", label: "أوقات الصلاة" },
-  { href: "/lessons",        icon: "🎓", label: "الدروس" },
-  { href: "/hadith",         icon: "📜", label: "الأحاديث" },
-  { href: "/fawaid",         icon: "💡", label: "الفوائد" },
-  { href: "/qa",             icon: "❓", label: "الأسئلة" },
-  { href: "/tasbih",         icon: "📿", label: "التسبيح" },
-  { href: "/seerah",         icon: "🌙", label: "السيرة" },
-  { href: "/flashcards",     icon: "🃏", label: "البطاقات" },
-  { href: "/fatwa",          icon: "⚖️", label: "الفتاوى" },
-  { href: "/quiz",           icon: "🎯", label: "المسابقات" },
-  { href: "/occasions",      icon: "🌙", label: "المناسبات" },
-  { href: "/muezzins",       icon: "🎙️", label: "المؤذنون" },
-  { href: "/updates",        icon: "📰", label: "المستجدات" },
+const QUICK_LINKS: { href: string; Icon: LucideIcon; label: string }[] = [
+  { href: "/quran",        Icon: BookMarked,    label: "القرآن" },
+  { href: "/adhkar",       Icon: Star,          label: "الأذكار" },
+  { href: "/prayer-times", Icon: Clock,         label: "أوقات الصلاة" },
+  { href: "/lessons",      Icon: GraduationCap, label: "الدروس" },
+  { href: "/hadith",       Icon: Scroll,        label: "الأحاديث" },
+  { href: "/fawaid",       Icon: Lightbulb,     label: "الفوائد" },
+  { href: "/qa",           Icon: HelpCircle,    label: "الأسئلة" },
+  { href: "/tasbih",       Icon: Layers,        label: "التسبيح" },
+  { href: "/seerah",       Icon: Moon,          label: "السيرة" },
+  { href: "/fatwa",        Icon: Scale,         label: "الفتاوى" },
+  { href: "/quiz",         Icon: Target,        label: "المسابقات" },
+  { href: "/muezzins",     Icon: Mic2,          label: "المؤذنون" },
+  { href: "/updates",      Icon: Newspaper,     label: "المستجدات" },
+  { href: "/library",      Icon: BookOpen,      label: "المكتبة" },
 ];
 
 const QUICK_SEARCHES = ["صلاة الفجر", "آية الكرسي", "دعاء القنوت", "أذكار الصباح", "صيام الاثنين", "حديث النية", "أركان الإسلام", "زكاة المال"];
 
 /* ── المميزات البارزة (4 بطاقات كبيرة) ── */
-const FEATURED = [
-  { href: "/quran",   icon: "📖", title: "القرآن الكريم",     desc: "مصحف رقمي كامل برواية حفص — تصفح الصفحات ببساطة",          cta: "افتح المصحف" },
-  { href: "/lessons", icon: "🎓", title: "الدروس العلمية",    desc: "دروس ومحاضرات مجدولة لهذا الأسبوع من علماء الكويت",        cta: "شاهد الدروس" },
-  { href: "/hadith",  icon: "📜", title: "الأحاديث النبوية",  desc: "أحاديث موثقة ومسندة مع الشرح والتخريج",                   cta: "تصفح الأحاديث" },
-  { href: "/library", icon: "📚", title: "المكتبة العلمية",   desc: "كتب شرعية ومتون علمية في الفقه والعقيدة والتفسير والحديث",  cta: "استعرض الكتب" },
+const FEATURED: { href: string; Icon: LucideIcon; title: string; desc: string; cta: string }[] = [
+  { href: "/quran",   Icon: BookMarked,    title: "القرآن الكريم",    desc: "مصحف رقمي كامل برواية حفص — تصفح الصفحات ببساطة",         cta: "افتح المصحف" },
+  { href: "/lessons", Icon: GraduationCap, title: "الدروس العلمية",   desc: "دروس ومحاضرات مجدولة لهذا الأسبوع من علماء الكويت",       cta: "شاهد الدروس" },
+  { href: "/hadith",  Icon: Scroll,        title: "الأحاديث النبوية", desc: "أحاديث موثقة ومسندة مع الشرح والتخريج",                   cta: "تصفح الأحاديث" },
+  { href: "/library", Icon: BookOpen,      title: "المكتبة العلمية",  desc: "كتب شرعية ومتون علمية في الفقه والعقيدة والتفسير والحديث", cta: "استعرض الكتب" },
 ];
 
 /* ── أقسام مصنّفة ── */
-const FEATURE_CATS = [
+type CatItem = { href: string; Icon: LucideIcon; title: string; desc: string };
+type FeatureCat = { id: string; Icon: LucideIcon; label: string; items: CatItem[] };
+
+const FEATURE_CATS: FeatureCat[] = [
   {
     id: "seerah",
-    icon: "🌙",
+    Icon: Moon,
     label: "السيرة والتاريخ",
     items: [
-      { href: "/seerah",          icon: "🌙", title: "السيرة النبوية",    desc: "حياته ﷺ من الميلاد إلى الوفاة" },
-      { href: "/prophets",        icon: "⭐", title: "قصص الأنبياء",     desc: "من آدم إلى محمد ﷺ" },
-      { href: "/islamic-stories", icon: "🏛", title: "صحابة وفتوحات",    desc: "سير الصحابة والفتوحات" },
-      { href: "/stories",         icon: "🗺️", title: "القصص الإسلامية",  desc: "وقائع من التاريخ الإسلامي" },
+      { href: "/seerah",          Icon: Moon,     title: "السيرة النبوية",    desc: "حياته ﷺ من الميلاد إلى الوفاة" },
+      { href: "/prophets",        Icon: Star,     title: "قصص الأنبياء",     desc: "من آدم إلى محمد ﷺ" },
+      { href: "/islamic-stories", Icon: Landmark, title: "صحابة وفتوحات",    desc: "سير الصحابة والفتوحات" },
+      { href: "/stories",         Icon: Map,      title: "القصص الإسلامية",  desc: "وقائع من التاريخ الإسلامي" },
     ],
   },
   {
     id: "fiqh",
-    icon: "⚖️",
+    Icon: Scale,
     label: "الفقه والأحكام",
     items: [
-      { href: "/qa",                 icon: "❓", title: "الأسئلة والأجوبة",  desc: "فتاوى من العلماء" },
-      { href: "/rulings",            icon: "⚖️", title: "الأحكام الشرعية",  desc: "موسوعة الفقه والعبادات" },
-      { href: "/tawhid",             icon: "🕋", title: "التوحيد",           desc: "العقيدة الإسلامية" },
-      { href: "/scholarly-research", icon: "🔬", title: "الباحث الشرعي",    desc: "بحث بالذكاء الاصطناعي" },
-      { href: "/academic-research",  icon: "🎓", title: "الأبحاث العلمية",  desc: "رسائل وأبحاث أكاديمية" },
+      { href: "/qa",                 Icon: HelpCircle,   title: "الأسئلة والأجوبة",  desc: "فتاوى من العلماء" },
+      { href: "/rulings",            Icon: Scale,        title: "الأحكام الشرعية",   desc: "موسوعة الفقه والعبادات" },
+      { href: "/tawhid",             Icon: BookMarked,   title: "التوحيد",            desc: "العقيدة الإسلامية" },
+      { href: "/scholarly-research", Icon: FlaskConical, title: "الباحث الشرعي",     desc: "بحث بالذكاء الاصطناعي" },
+      { href: "/academic-research",  Icon: GraduationCap, title: "الأبحاث العلمية", desc: "رسائل وأبحاث أكاديمية" },
     ],
   },
   {
     id: "haramain",
-    icon: "🕋",
+    Icon: Building2,
     label: "الحرمان الشريفان",
     items: [
-      { href: "/lessons?filter=haramain", icon: "🕋", title: "دروس المسجد الحرام",    desc: "دروس مكة المكرمة والمسجد الحرام" },
-      { href: "/lessons?filter=nabawi",   icon: "🕌", title: "دروس المسجد النبوي",    desc: "دروس المدينة المنورة والمسجد النبوي" },
-      { href: "/fiqh-council",            icon: "⚖️", title: "المجمع الفقهي",          desc: "قرارات المجامع الفقهية الكبرى" },
-      { href: "/annual-courses",          icon: "🎓", title: "الدورات العلمية",         desc: "دورات العلماء والمؤسسات الشرعية" },
+      { href: "/lessons?filter=haramain", Icon: Building2,    title: "دروس المسجد الحرام",  desc: "دروس مكة المكرمة والمسجد الحرام" },
+      { href: "/lessons?filter=nabawi",   Icon: Landmark,     title: "دروس المسجد النبوي",  desc: "دروس المدينة المنورة والمسجد النبوي" },
+      { href: "/fiqh-council",            Icon: Scale,        title: "المجمع الفقهي",        desc: "قرارات المجامع الفقهية الكبرى" },
+      { href: "/annual-courses",          Icon: GraduationCap, title: "الدورات العلمية",     desc: "دورات العلماء والمؤسسات الشرعية" },
     ],
   },
   {
     id: "worship",
-    icon: "📿",
+    Icon: RotateCw,
     label: "العبادة والأذكار",
     items: [
-      { href: "/adhkar",      icon: "📿", title: "الأذكار",              desc: "أذكار الصباح والمساء" },
-      { href: "/fawaid",      icon: "💡", title: "الفوائد الدينية",      desc: "فوائد علمية منتقاة" },
-      { href: "/car-mode",    icon: "🚗", title: "وضع السيارة",          desc: "تلاوات أثناء القيادة" },
-      { href: "/daily-wird",  icon: "📖", title: "الورد اليومي",         desc: "ختم يومي منتظم للقرآن" },
-      { href: "/occasions",   icon: "🌙", title: "المناسبات الإسلامية",  desc: "أحداث دينية مع أعمالها" },
-      { href: "/tasbih",      icon: "📿", title: "التسبيح والذكر",       desc: "عداد تسبيح إلكتروني" },
+      { href: "/adhkar",      Icon: Star,        title: "الأذكار",              desc: "أذكار الصباح والمساء" },
+      { href: "/fawaid",      Icon: Lightbulb,   title: "الفوائد الدينية",      desc: "فوائد علمية منتقاة" },
+      { href: "/car-mode",    Icon: Car,         title: "وضع السيارة",          desc: "تلاوات أثناء القيادة" },
+      { href: "/daily-wird",  Icon: BookOpen,    title: "الورد اليومي",         desc: "ختم يومي منتظم للقرآن" },
+      { href: "/occasions",   Icon: CalendarDays, title: "المناسبات الإسلامية", desc: "أحداث دينية مع أعمالها" },
+      { href: "/tasbih",      Icon: RotateCw,    title: "التسبيح والذكر",       desc: "عداد تسبيح إلكتروني" },
     ],
   },
   {
     id: "tools",
-    icon: "🛠",
+    Icon: Wrench,
     label: "أدوات التعلم",
     items: [
-      { href: "/learning-path",   icon: "🗺️", title: "خارطة طالب العلم",  desc: "مسار من المبتدئ إلى المتقدم" },
-      { href: "/flashcards",      icon: "🃏", title: "البطاقات الدعوية",   desc: "مراجعة ذكية" },
-      { href: "/quiz",            icon: "🎯", title: "لعبة سؤال وجواب",   desc: "اختبر معلوماتك الإسلامية" },
-      { href: "/assistant",       icon: "🤖", title: "المساعد العلمي",    desc: "إرشاد فوري بالذكاء الاصطناعي" },
-      { href: "/calendar",        icon: "📅", title: "التقويم الهجري",    desc: "التواريخ والأيام المميزة" },
-      { href: "/knowledge-graph", icon: "🗺️", title: "خارطة المعرفة",    desc: "علاقات المعرفة الإسلامية" },
+      { href: "/learning-path",   Icon: Map,         title: "خارطة طالب العلم",  desc: "مسار من المبتدئ إلى المتقدم" },
+      { href: "/flashcards",      Icon: Layers,      title: "البطاقات الدعوية",   desc: "مراجعة ذكية" },
+      { href: "/quiz",            Icon: Target,      title: "لعبة سؤال وجواب",   desc: "اختبر معلوماتك الإسلامية" },
+      { href: "/assistant",       Icon: Bot,         title: "المساعد العلمي",    desc: "إرشاد فوري بالذكاء الاصطناعي" },
+      { href: "/calendar",        Icon: CalendarDays, title: "التقويم الهجري",   desc: "التواريخ والأيام المميزة" },
+      { href: "/knowledge-graph", Icon: Network,     title: "خارطة المعرفة",     desc: "علاقات المعرفة الإسلامية" },
     ],
   },
   {
     id: "digital",
-    icon: "💻",
+    Icon: Monitor,
     label: "الأدوات الرقمية",
     items: [
-      { href: "/qibla",        icon: "🧭",  title: "اتجاه القبلة",     desc: "بوصلة لمعرفة اتجاه الكعبة" },
-      { href: "/prayer-times", icon: "🕌",  title: "مواقيت الصلاة",    desc: "أوقات دقيقة للكويت" },
-      { href: "/muezzins",     icon: "🎙️", title: "مكتبة المؤذنين",  desc: "تلاوات وأذان بأجمل الأصوات" },
-      { href: "/quran-radio",  icon: "📻",  title: "إذاعة القرآن",     desc: "بث مستمر للقرآن الكريم" },
-      { href: "/submit",       icon: "📤",  title: "أضف محتوى",        desc: "ساهم في إثراء المنصة" },
+      { href: "/qibla",        Icon: Compass,     title: "اتجاه القبلة",    desc: "بوصلة لمعرفة اتجاه الكعبة" },
+      { href: "/prayer-times", Icon: Clock,       title: "مواقيت الصلاة",   desc: "أوقات دقيقة للكويت" },
+      { href: "/muezzins",     Icon: Mic2,        title: "مكتبة المؤذنين", desc: "تلاوات وأذان بأجمل الأصوات" },
+      { href: "/quran-radio",  Icon: Radio,       title: "إذاعة القرآن",    desc: "بث مستمر للقرآن الكريم" },
+      { href: "/submit",       Icon: Upload,      title: "أضف محتوى",       desc: "ساهم في إثراء المنصة" },
     ],
   },
 ];
@@ -214,9 +223,11 @@ export default function HomePage() {
       {/* ══ وصول سريع ══ */}
       <nav className="hp-quick-nav" aria-label="وصول سريع">
         <div className="hp-quick-nav__track">
-          {QUICK_LINKS.map(({ href, icon, label }) => (
-            <Link key={href} href={href} className="hp-quick-link">
-              <span className="hp-quick-link__icon">{icon}</span>
+          {QUICK_LINKS.map(({ href, Icon, label }) => (
+            <Link key={href} href={href} className="hp-quick-link" aria-label={label}>
+              <span className="hp-quick-link__icon" aria-hidden="true">
+                <Icon size={20} strokeWidth={1.8} />
+              </span>
               <span className="hp-quick-link__label">{label}</span>
             </Link>
           ))}
@@ -245,14 +256,16 @@ export default function HomePage() {
 
           {/* مميزات بارزة */}
           <div className="hp-featured-grid">
-            {FEATURED.map(({ href, icon, title, desc, cta }) => (
-              <Link key={href} href={href} className="hp-featured-card">
-                <div className="hp-featured-card__icon" aria-hidden="true">{icon}</div>
+            {FEATURED.map(({ href, Icon, title, desc, cta }) => (
+              <Link key={href} href={href} className="hp-featured-card" aria-label={title}>
+                <div className="hp-featured-card__icon" aria-hidden="true">
+                  <Icon size={28} strokeWidth={1.6} />
+                </div>
                 <div className="hp-featured-card__body">
                   <strong className="hp-featured-card__title">{title}</strong>
                   <p className="hp-featured-card__desc">{desc}</p>
                 </div>
-                <span className="hp-featured-card__cta">{cta} →</span>
+                <span className="hp-featured-card__cta" aria-hidden="true">{cta} ←</span>
               </Link>
             ))}
           </div>
@@ -261,13 +274,17 @@ export default function HomePage() {
           {FEATURE_CATS.map(cat => (
             <div key={cat.id} className="hp-cat">
               <div className="hp-cat__head">
-                <span className="hp-cat__icon" aria-hidden="true">{cat.icon}</span>
+                <span className="hp-cat__icon" aria-hidden="true">
+                  <cat.Icon size={18} strokeWidth={1.8} />
+                </span>
                 <h3 className="hp-cat__title">{cat.label}</h3>
               </div>
               <div className="hp-cat__grid">
-                {cat.items.map(({ href, icon, title, desc }) => (
+                {cat.items.map(({ href, Icon: ItemIcon, title, desc }) => (
                   <Link key={href} href={href} className="hp-cat-card">
-                    <span className="hp-cat-card__icon" aria-hidden="true">{icon}</span>
+                    <span className="hp-cat-card__icon" aria-hidden="true">
+                      <ItemIcon size={18} strokeWidth={1.8} />
+                    </span>
                     <div className="hp-cat-card__body">
                       <strong className="hp-cat-card__title">{title}</strong>
                       <span className="hp-cat-card__desc">{desc}</span>
