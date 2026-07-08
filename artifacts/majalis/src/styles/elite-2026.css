@@ -10848,3 +10848,126 @@ a:focus-visible {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ══════════════════════════════════════════════
+   §202 — تحسينات الصفحة الرئيسية v2
+   ══════════════════════════════════════════════ */
+
+/* ── بطاقات المميزات البارزة — تحسين بصري ──────────────────────────────── */
+.hp-featured-card {
+  position: relative !important;
+  overflow: hidden !important;
+  padding: 1.25rem !important;
+  gap: 1rem !important;
+  display: flex !important;
+  align-items: flex-start !important;
+}
+.hp-featured-card::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  background: linear-gradient(135deg, rgba(14,110,82,0.04) 0%, transparent 60%) !important;
+  opacity: 0 !important;
+  transition: opacity 0.2s !important;
+}
+.hp-featured-card:hover::before { opacity: 1 !important; }
+.hp-featured-card:hover { transform: translateY(-2px) !important; }
+.hp-featured-card__icon {
+  width: 3rem !important;
+  height: 3rem !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+  border-radius: 0.75rem !important;
+  font-size: 1.5rem !important;
+  box-shadow: 0 2px 8px rgba(14,110,82,0.15) !important;
+}
+
+/* ── بطاقات الأقسام المصنّفة ─────────────────────────────────────────── */
+.hp-cat-card {
+  padding: 0.875rem 1rem !important;
+  gap: 0.75rem !important;
+  display: flex !important;
+  align-items: center !important;
+}
+.hp-cat-card:hover {
+  background: var(--majalis-sage, #F0FDF4) !important;
+  transform: translateX(-2px) !important;
+}
+.hp-cat-card__icon {
+  width: 2.25rem !important;
+  height: 2.25rem !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+  background: var(--majalis-sage) !important;
+  border-radius: 0.5rem !important;
+}
+.hp-cat-card__body {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.1rem !important;
+}
+
+/* ── روابط الوصول السريع — تحسين ────────────────────────────────────── */
+.hp-quick-link {
+  border: 1px solid var(--majalis-line) !important;
+  border-radius: 0.75rem !important;
+  transition: border-color 0.15s, background 0.15s, transform 0.15s !important;
+}
+.hp-quick-link:hover {
+  border-color: var(--majalis-emerald) !important;
+  background: var(--majalis-sage) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* ── شرائح البحث السريع ──────────────────────────────────────────────── */
+.home-quick-search-chip {
+  border: 1px solid var(--majalis-line) !important;
+  background: var(--majalis-panel) !important;
+  color: var(--majalis-ink-soft) !important;
+  border-radius: 2rem !important;
+  padding: 0.3rem 0.75rem !important;
+  font-size: 0.78rem !important;
+  cursor: pointer !important;
+  font-family: inherit !important;
+  transition: all 0.15s ease !important;
+}
+.home-quick-search-chip:hover {
+  border-color: var(--majalis-emerald) !important;
+  color: var(--majalis-emerald-deep) !important;
+  background: var(--majalis-sage) !important;
+}
+
+/* ── البحث في Hero — شكل أجمل ────────────────────────────────────────── */
+.home-search input,
+.home-search--v3 input {
+  border-radius: 2rem 0 0 2rem !important;
+  border-inline-end: none !important;
+}
+.home-search button,
+.home-search--v3 button {
+  border-radius: 0 2rem 2rem 0 !important;
+}
+
+/* ── عنوان الفئات — توحيد ────────────────────────────────────────────── */
+.hp-cat__title {
+  font-size: 1rem !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.01em !important;
+}
+.hp-cat__icon {
+  font-size: 1.2rem !important;
+}
+
+/* ── قسم المميزات — مسافة ───────────────────────────────────────────── */
+.hp-features {
+  padding: 0 !important;
+}
+.hp-features__head h2 {
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem) !important;
+  font-weight: 900 !important;
+  margin: 0.25rem 0 !important;
+}
