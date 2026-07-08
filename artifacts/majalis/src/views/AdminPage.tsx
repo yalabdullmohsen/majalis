@@ -42,6 +42,18 @@ import { HaramainLessonsSection } from "@/views/admin/HaramainLessonsSection";
 
 export default function AdminPage() {
   const [location] = useLocation();
+
+  useEffect(() => {
+    document.title = "لوحة الإدارة | المجلس العلمي";
+    const meta = document.querySelector('meta[name="robots"]') as HTMLMetaElement | null;
+    if (meta) meta.content = "noindex, nofollow";
+    else {
+      const m = document.createElement("meta");
+      m.name = "robots"; m.content = "noindex, nofollow";
+      document.head.appendChild(m);
+    }
+  }, []);
+
   const initialSection = (() => {
     if (typeof window === "undefined") return "dashboard" as AdminSection;
     const params = new URLSearchParams(window.location.search);
