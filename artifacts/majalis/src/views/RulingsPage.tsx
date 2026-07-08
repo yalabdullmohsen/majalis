@@ -1,10 +1,20 @@
 import { useCallback, useEffect, useState } from "react";
-import { Scale } from "lucide-react";
+import { Banknote, BookOpen, Droplets, FileSignature, Flame, FlaskConical, GraduationCap, Handshake, Heart, Landmark, MapPin, Moon, Scale, ScrollText, Shield, Shirt, Users, Utensils } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { Link } from "wouter";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { useAuth } from "@/components/AuthProvider";
 import { PageHeader, Loading, Empty } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
+
+const RULINGS_ICON_MAP: Record<string, LucideIcon> = {
+  Landmark, Droplets, Banknote, Moon, MapPin, Handshake, Utensils, Shirt, Users,
+  ScrollText, Scale, FileSignature, Shield, Heart, BookOpen, GraduationCap, FlaskConical, Flame,
+};
+function CatIcon({ name }: { name?: string }) {
+  const I: LucideIcon = (name ? RULINGS_ICON_MAP[name] : undefined) ?? BookOpen;
+  return <I size={16} className="inline ml-1" />;
+}
 
 const FIQH_HUB_TABS = [
   { key: "fatawa",  label: "الفتاوى",         href: "/fatwa" },
@@ -182,7 +192,7 @@ export default function RulingsPage() {
                 }
                 onClick={() => handleCategorySelect(cat.name)}
               >
-                {cat.icon} {cat.name}{isAdmin ? ` (${count})` : ""}
+                <CatIcon name={cat.icon} />{cat.name}{isAdmin ? ` (${count})` : ""}
               </button>
             );
           })}

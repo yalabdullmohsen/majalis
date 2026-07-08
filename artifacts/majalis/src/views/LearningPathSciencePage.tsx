@@ -1,5 +1,6 @@
 import { Suspense, lazy, useEffect, useState } from "react";
-import { BookOpen, Lightbulb, ScrollText } from "lucide-react";
+import { BookMarked, BookOpen, FlaskConical, GraduationCap, Landmark, Lightbulb, Moon, ScrollText, Star } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { Link, useParams } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { applyPageSeo } from "@/lib/seo";
@@ -10,6 +11,15 @@ import { fetchScienceDetail, fetchProgress } from "@/lib/learning-path-service";
 const LevelTimeline = lazy(() =>
   import("@/components/learning-path/LevelTimeline").then((m) => ({ default: m.LevelTimeline }))
 );
+
+const SCIENCE_ICON_MAP: Record<string, LucideIcon> = {
+  BookOpen, BookMarked, FlaskConical, GraduationCap, Landmark, Moon, ScrollText, Star,
+};
+function ScienceIconEl({ name }: { name: string }) {
+  const I = SCIENCE_ICON_MAP[name];
+  if (I) return <I size={40} strokeWidth={1.3} />;
+  return <span>{name}</span>;
+}
 
 export default function LearningPathSciencePage() {
   const { scienceSlug } = useParams<{ scienceSlug: string }>();
@@ -86,7 +96,7 @@ export default function LearningPathSciencePage() {
             </span>
           </Link>
           <div className="flex items-start gap-4">
-            <span className="text-5xl">{science.icon}</span>
+            <span className="text-5xl"><ScienceIconEl name={science.icon} /></span>
             <div className="flex-1">
               <h1 className="text-2xl md:text-3xl font-extrabold text-white mb-2">{science.name}</h1>
               {science.description && (

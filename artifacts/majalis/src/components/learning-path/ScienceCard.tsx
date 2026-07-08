@@ -1,5 +1,16 @@
+import { BookOpen, BookMarked, FlaskConical, GraduationCap, Landmark, Moon, ScrollText, Star } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { Link } from "wouter";
 import type { LPScience } from "@/lib/learning-path-service";
+
+const SCIENCE_ICON_MAP: Record<string, LucideIcon> = {
+  BookOpen, BookMarked, FlaskConical, GraduationCap, Landmark, Moon, ScrollText, Star,
+};
+function ScienceIconEl({ name }: { name: string }) {
+  const I = SCIENCE_ICON_MAP[name];
+  if (I) return <I size={28} strokeWidth={1.5} />;
+  return <span>{name}</span>;
+}
 
 interface Props {
   science: LPScience;
@@ -20,7 +31,7 @@ export function ScienceCard({ science, progressCount = 0, totalBooks = 0 }: Prop
         <div className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-300 pointer-events-none sc-card__glow" />
 
         <div className="flex items-start gap-3">
-          <span className="text-3xl flex-shrink-0 leading-none mt-0.5">{science.icon}</span>
+          <span className="text-3xl flex-shrink-0 leading-none mt-0.5"><ScienceIconEl name={science.icon} /></span>
           <div className="flex-1 min-w-0">
             <h3 className="font-bold text-[var(--majalis-ink)] text-base leading-snug mb-1">
               {science.name}

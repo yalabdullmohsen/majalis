@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { BookOpen, Building2, ClipboardList, Landmark, Library, MessageCircle, Scale, ScrollText } from "lucide-react";
+import { Banknote, BookOpen, Building2, ClipboardList, Droplets, FileSignature, Flame, FlaskConical, GraduationCap, Handshake, Heart, Landmark, Library, MapPin, MessageCircle, Moon, Scale, ScrollText, Shield, Shirt, Users, Utensils } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { Link, useSearch } from "wouter";
 import { usePageView } from "@/hooks/usePageView";
@@ -15,6 +15,15 @@ import { RequestManager } from "@/lib/request-manager";
 import type { ShariaRulingExtended } from "@/lib/rulings-types";
 
 type Tab = "fatawa" | "rulings" | "qa" | "council";
+
+const RULINGS_ICON_MAP: Record<string, LucideIcon> = {
+  Landmark, Droplets, Banknote, Moon, MapPin, Handshake, Utensils, Shirt, Users,
+  ScrollText, Scale, FileSignature, Shield, Heart, BookOpen, GraduationCap, FlaskConical, Flame,
+};
+function CatIcon({ name }: { name?: string }) {
+  const I: LucideIcon = (name ? RULINGS_ICON_MAP[name] : undefined) ?? BookOpen;
+  return <I size={20} />;
+}
 
 const TABS: { key: Tab; label: string; Icon: LucideIcon }[] = [
   { key: "fatawa",  label: "الفتاوى",          Icon: ClipboardList },
@@ -180,7 +189,7 @@ export default function FiqhPage() {
               {RULINGS_CATEGORIES.map((cat) => (
                 <Link key={cat.slug} href={`/rulings?category=${encodeURIComponent(cat.name)}`}>
                   <div className="bg-[var(--majalis-panel)] border border-[var(--majalis-line)] rounded-xl p-4 text-center hover:shadow-md hover:border-[var(--majalis-emerald)] transition-all cursor-pointer">
-                    <div className="text-2xl mb-1">{cat.icon}</div>
+                    <div className="text-2xl mb-1"><CatIcon name={cat.icon} /></div>
                     <div className="text-sm font-medium text-[var(--majalis-ink)]">{cat.name}</div>
                   </div>
                 </Link>
