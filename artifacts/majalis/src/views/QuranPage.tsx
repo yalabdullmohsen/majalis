@@ -7,6 +7,7 @@ import {
   Bookmark, ChevronLeft, ChevronRight, List, Moon, Minus, Plus,
   Search, Sunrise, Sun, X,
 } from "lucide-react";
+import { useSearch } from "wouter";
 import "@/styles/mushaf.css";
 import { applyPageSeo } from "@/lib/seo";
 
@@ -129,8 +130,13 @@ const AyahItem = memo(function AyahItem({
    المكون الرئيسي
    ══════════════════════════════════════════════════════════════════════ */
 export default function QuranPage() {
+  const urlSearch = useSearch();
   /* ── حالة ── */
-  const [surahNum, setSurahNum] = useState<number>(() => lsGet(SURAH_KEY, 1));
+  const [surahNum, setSurahNum] = useState<number>(() => {
+    const fromUrl = parseInt(new URLSearchParams(urlSearch).get("surah") ?? "", 10);
+    if (fromUrl >= 1 && fromUrl <= TOTAL_SURAHS) return fromUrl;
+    return lsGet(SURAH_KEY, 1);
+  });
   const [readMode, setReadMode] = useState<ReadMode>(() => lsGet(MODE_KEY, "day"));
   const [fontSize, setFontSize] = useState<number>(() => lsGet(FONT_KEY, 1.9));
   const [bookmarks, setBookmarks] = useState<BmEntry[]>(() => lsGet(BM_KEY, []));
