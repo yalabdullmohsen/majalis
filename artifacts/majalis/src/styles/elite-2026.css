@@ -10971,3 +10971,447 @@ a:focus-visible {
   font-weight: 900 !important;
   margin: 0.25rem 0 !important;
 }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   §203 — تحسينات صفحة الدروس (LessonsPage / KuwaitLessonsPage)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* بطاقة الدرس — تأثير hover أنيق */
+.lesson-card,
+[class*="lesson-card"],
+.kl-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease !important;
+}
+.lesson-card:hover,
+[class*="lesson-card"]:hover,
+.kl-card:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.10) !important;
+}
+
+/* شارة التصنيف */
+.lesson-badge,
+.kl-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.15rem 0.65rem;
+  border-radius: 2rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: color-mix(in srgb, var(--majalis-emerald) 12%, transparent);
+  color: var(--majalis-emerald-deep);
+}
+
+/* صف معلومات الدرس */
+.lesson-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  align-items: center;
+  font-size: 0.8rem;
+  color: var(--v2-ink-3, #8A847E);
+}
+.lesson-meta-row .lesson-meta-sep { opacity: 0.4; }
+
+/* زر الاستيراد/التسجيل */
+.lesson-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 1.1rem;
+  border-radius: 2rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  background: var(--majalis-emerald);
+  color: var(--majalis-parchment);
+  border: none;
+  cursor: pointer;
+  transition: background 0.18s, transform 0.15s;
+}
+.lesson-cta-btn:hover {
+  background: var(--majalis-emerald-deep);
+  transform: scale(1.03);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   §204 — تحسينات صفحة الشيوخ (SheikhsPage / SheikhDetailPage)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* صورة الشيخ المدورة */
+.sheikh-avatar-wrap {
+  position: relative;
+  display: inline-block;
+}
+.sheikh-avatar-wrap::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  border: 2.5px solid var(--majalis-emerald);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.sheikh-avatar-wrap:hover::after { opacity: 1; }
+
+/* اسم الشيخ */
+.sheikh-name-heading {
+  font-size: clamp(1.1rem, 2.5vw, 1.35rem) !important;
+  font-weight: 800 !important;
+  color: var(--majalis-ink) !important;
+  letter-spacing: -0.01em !important;
+}
+
+/* شارة التخصص */
+.sheikh-specialty-tag {
+  display: inline-block;
+  padding: 0.15rem 0.6rem;
+  border-radius: 1rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  background: color-mix(in srgb, var(--majalis-gold) 15%, transparent);
+  color: #7c5e1b;
+  border: 1px solid color-mix(in srgb, var(--majalis-gold) 35%, transparent);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   §205 — تحسينات صفحة المكتبة (LibraryPage)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* بطاقة الكتاب */
+.book-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+.book-card:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.12) !important;
+}
+
+/* غلاف الكتاب */
+.book-cover {
+  border-radius: 0.5rem 0.25rem 0.25rem 0.5rem;
+  box-shadow: -3px 3px 8px rgba(0,0,0,0.18);
+  transition: box-shadow 0.2s;
+}
+.book-card:hover .book-cover {
+  box-shadow: -5px 5px 14px rgba(0,0,0,0.22);
+}
+
+/* تقييم الكتاب — نجوم */
+.book-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+  color: #c9a84c;
+  font-size: 0.8rem;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   §206 — تحسينات صفحة الفوائد (FawaidPage)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* بطاقة الفائدة */
+.fawaid-card {
+  border-right: 4px solid var(--majalis-emerald);
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s !important;
+}
+.fawaid-card:hover {
+  border-color: var(--majalis-gold, #c9a84c) !important;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.09) !important;
+  transform: translateX(-2px) !important;
+}
+
+/* نص الفائدة */
+.fawaid-text {
+  font-size: clamp(0.92rem, 2vw, 1.05rem) !important;
+  line-height: 1.8 !important;
+  color: var(--majalis-ink) !important;
+}
+
+/* مصدر الفائدة */
+.fawaid-source {
+  font-size: 0.78rem;
+  color: var(--v2-ink-3, #8A847E);
+  font-style: italic;
+  margin-top: 0.5rem;
+}
+
+/* زر نسخ الفائدة */
+.fawaid-copy-btn {
+  opacity: 0;
+  transition: opacity 0.2s;
+  background: color-mix(in srgb, var(--majalis-emerald) 10%, transparent);
+  color: var(--majalis-emerald-deep);
+  border: 1px solid color-mix(in srgb, var(--majalis-emerald) 30%, transparent);
+  border-radius: 1rem;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.72rem;
+  cursor: pointer;
+}
+.fawaid-card:hover .fawaid-copy-btn { opacity: 1; }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   §207 — تحسينات صفحة المعجزات (MiraclesPage)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* بطاقة المعجزة */
+.miracle-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease !important;
+}
+.miracle-card:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 10px 26px rgba(0,0,0,0.11) !important;
+}
+
+/* لون الخلفية حسب التصنيف */
+.miracle-card--cosmos { border-top: 3px solid #7c3aed; }
+.miracle-card--astronomy { border-top: 3px solid #1d4ed8; }
+.miracle-card--sea { border-top: 3px solid #0ea5e9; }
+.miracle-card--plant { border-top: 3px solid #16a34a; }
+.miracle-card--animal { border-top: 3px solid #d97706; }
+.miracle-card--embryo { border-top: 3px solid #db2777; }
+.miracle-card--medicine { border-top: 3px solid #dc2626; }
+.miracle-card--water { border-top: 3px solid #0284c7; }
+.miracle-card--insect { border-top: 3px solid #65a30d; }
+.miracle-card--iron { border-top: 3px solid #64748b; }
+.miracle-card--wind { border-top: 3px solid #06b6d4; }
+.miracle-card--cloud { border-top: 3px solid #8b5cf6; }
+
+/* شارة التصنيف */
+.miracle-cat-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.15rem 0.6rem;
+  border-radius: 2rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  background: color-mix(in srgb, var(--mk-accent, #97A59F) 15%, transparent);
+  color: var(--mk-accent, #97A59F);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   §208 — تحسينات صفحة الأذكار والأدعية
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* بطاقة الذكر */
+.adhkar-card {
+  transition: transform 0.18s ease, box-shadow 0.18s ease !important;
+}
+.adhkar-card:hover {
+  transform: scale(1.012) !important;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.10) !important;
+}
+
+/* نص الذكر */
+.adhkar-text {
+  font-family: "Noto Naskh Arabic", "Scheherazade New", serif !important;
+  font-size: clamp(1rem, 2.5vw, 1.2rem) !important;
+  line-height: 2 !important;
+}
+
+/* عداد الذكر */
+.adhkar-counter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: var(--majalis-emerald);
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 800;
+  box-shadow: 0 2px 8px rgba(21,128,61,0.3);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   §209 — تحسينات عامة للموقع (Animation & Micro-interactions)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ظهور تدريجي للبطاقات عند التحميل */
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-slide-up {
+  animation: fadeSlideUp 0.35s ease forwards;
+}
+.animate-fade-slide-up:nth-child(2) { animation-delay: 0.05s; }
+.animate-fade-slide-up:nth-child(3) { animation-delay: 0.10s; }
+.animate-fade-slide-up:nth-child(4) { animation-delay: 0.15s; }
+.animate-fade-slide-up:nth-child(5) { animation-delay: 0.20s; }
+.animate-fade-slide-up:nth-child(6) { animation-delay: 0.25s; }
+
+/* تأثير shimmer لعناصر التحميل */
+@keyframes shimmer {
+  from { background-position: 200% center; }
+  to { background-position: -200% center; }
+}
+.shimmer-text {
+  background: linear-gradient(90deg,
+    var(--majalis-ink) 25%,
+    color-mix(in srgb, var(--majalis-emerald) 60%, var(--majalis-ink)) 50%,
+    var(--majalis-ink) 75%
+  );
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 3s linear infinite;
+}
+
+/* نقطة نبض الحضور/البث المباشر */
+@keyframes pulseRing {
+  0%   { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(21,128,61,0.4); }
+  70%  { transform: scale(1);    box-shadow: 0 0 0 8px rgba(21,128,61,0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(21,128,61,0); }
+}
+.live-pulse {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: #22c55e;
+  animation: pulseRing 1.5s ease infinite;
+}
+
+/* تحسين شريط التقدم العام */
+.progress-bar-animated {
+  background: linear-gradient(90deg,
+    var(--majalis-emerald-deep),
+    var(--majalis-emerald),
+    #34d399,
+    var(--majalis-emerald)
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s linear infinite;
+}
+
+/* تحسين شارات الحالة */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem 0.7rem;
+  border-radius: 2rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+.status-badge--approved {
+  background: color-mix(in srgb, #22c55e 12%, transparent);
+  color: #166534;
+  border: 1px solid color-mix(in srgb, #22c55e 30%, transparent);
+}
+.status-badge--pending {
+  background: color-mix(in srgb, #f59e0b 12%, transparent);
+  color: #92400e;
+  border: 1px solid color-mix(in srgb, #f59e0b 30%, transparent);
+}
+.status-badge--rejected {
+  background: color-mix(in srgb, #ef4444 12%, transparent);
+  color: #7f1d1d;
+  border: 1px solid color-mix(in srgb, #ef4444 30%, transparent);
+}
+
+/* تحسين العناوين الرئيسية للصفحات */
+.page-hero-title {
+  font-size: clamp(1.4rem, 4vw, 2.2rem) !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.02em !important;
+  line-height: 1.2 !important;
+}
+.page-hero-subtitle {
+  font-size: clamp(0.85rem, 2vw, 1rem) !important;
+  color: var(--v2-ink-3, #8A847E) !important;
+  margin-top: 0.5rem !important;
+}
+
+/* مقسّم جمالي بنقطة وسطية */
+.section-divider-dot {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+.section-divider-dot::before,
+.section-divider-dot::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    to var(--div-dir, right),
+    transparent,
+    var(--majalis-line, #e0dbd4) 50%,
+    transparent
+  );
+}
+[dir="rtl"] .section-divider-dot { --div-dir: left; }
+
+/* تحسين عرض النص العربي القرآني */
+.quran-text {
+  font-family: "Noto Naskh Arabic", "Scheherazade New", "KFGQPC Uthmanic Script HAFS", serif !important;
+  font-size: clamp(1.05rem, 3vw, 1.35rem) !important;
+  line-height: 2.2 !important;
+  text-align: center !important;
+  direction: rtl !important;
+  color: var(--majalis-ink) !important;
+}
+
+/* تحسين عرض الحديث النبوي */
+.hadith-text {
+  font-family: "Noto Naskh Arabic", serif !important;
+  font-size: clamp(0.95rem, 2.2vw, 1.1rem) !important;
+  line-height: 2 !important;
+  color: var(--majalis-ink) !important;
+  border-right: 3px solid var(--majalis-emerald);
+  padding-right: 1rem;
+  margin: 0.75rem 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   §210 — تحسينات لوحة التحكم (Admin Dashboard)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* بطاقة الإحصاء */
+.admin-stat-card {
+  border-radius: 1rem;
+  padding: 1.25rem;
+  background: var(--majalis-panel);
+  border: 1px solid var(--majalis-line);
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+.admin-stat-card:hover {
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  border-color: var(--majalis-emerald);
+}
+
+/* رقم الإحصاء */
+.admin-stat-num {
+  font-size: clamp(1.5rem, 4vw, 2.2rem) !important;
+  font-weight: 900 !important;
+  color: var(--majalis-emerald-deep) !important;
+  line-height: 1 !important;
+}
+
+/* تسمية الإحصاء */
+.admin-stat-label {
+  font-size: 0.78rem !important;
+  color: var(--v2-ink-3, #8A847E) !important;
+  margin-top: 0.25rem !important;
+}
+
+/* تبويبات الأدمن */
+.admin-tab-btn {
+  transition: background 0.15s, color 0.15s, border-color 0.15s !important;
+}
+.admin-tab-btn:hover:not(.admin-tab-btn--active) {
+  background: color-mix(in srgb, var(--majalis-emerald) 8%, transparent) !important;
+  color: var(--majalis-emerald-deep) !important;
+}
+.admin-tab-btn--active {
+  background: var(--majalis-emerald) !important;
+  color: white !important;
+  font-weight: 700 !important;
+}
+
