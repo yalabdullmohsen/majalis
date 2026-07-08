@@ -90,8 +90,8 @@ function CompareContent() {
 
       <div className="max-w-5xl mx-auto px-2 py-6 overflow-x-auto">
         {/* تنبيه */}
-        <div className="bg-amber-50 dark:bg-amber-900/10 border border-amber-200 dark:border-amber-800
-          rounded-xl px-4 py-2 text-xs text-amber-700 dark:text-amber-300 mb-4">
+        <div className="bg-[var(--majalis-emerald-muted)] border border-[var(--majalis-emerald)]
+          rounded-xl px-4 py-2 text-xs text-[var(--majalis-emerald)] mb-4">
           <AlertTriangle size={13} className="inline ml-1" />البيانات تجريبية — تحقق من الموقع الرسمي لكل جامعة قبل التقديم.
         </div>
 

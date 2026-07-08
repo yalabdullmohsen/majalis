@@ -60,19 +60,19 @@ export default function LearningPathSciencePage() {
 
   if (loading) {
     return (
-      <div dir="rtl" className="min-h-screen bg-[var(--majalis-parchment)] flex items-center justify-center">
-        <div className="text-[var(--majalis-ink-soft)] opacity-60">جارٍ التحميل…</div>
+      <div dir="rtl" className="lps-loading">
+        <span className="txt-muted opacity-60">جارٍ التحميل…</span>
       </div>
     );
   }
 
   if (notFound || !science) {
     return (
-      <div dir="rtl" className="min-h-screen bg-[var(--majalis-parchment)] flex flex-col items-center justify-center gap-4">
-        <div className="text-5xl" aria-hidden="true"><ScrollText size={48} strokeWidth={1.3} /></div>
-        <p className="text-[var(--majalis-ink-soft)]">العلم غير موجود</p>
+      <div dir="rtl" className="lps-not-found">
+        <ScrollText size={48} strokeWidth={1.3} aria-hidden="true" />
+        <p className="txt-muted">العلم غير موجود</p>
         <Link href="/learning-path">
-          <span className="text-[var(--majalis-emerald)] hover:underline cursor-pointer text-sm">← العودة للخارطة</span>
+          <span className="lps-not-found__link cursor-pointer">← العودة للخارطة</span>
         </Link>
       </div>
     );
@@ -83,31 +83,34 @@ export default function LearningPathSciencePage() {
   const pct = allBooks.length > 0 ? Math.round((completedCount / allBooks.length) * 100) : 0;
 
   return (
-    <div dir="rtl" className="min-h-screen bg-[var(--majalis-parchment)] pb-24">
+    <div dir="rtl" className="lps-shell">
       {/* Hero */}
       <div
-        className="relative py-10 px-4 lps-hero"
+        className="lps-hero"
         style={{ "--lps-color": science.color } as React.CSSProperties}
       >
-        <div className="max-w-4xl mx-auto">
+        <div className="lps-hero__inner">
           <Link href="/learning-path">
-            <span className="text-white/80 hover:text-white text-sm cursor-pointer inline-flex items-center gap-1 mb-4">
-              ← خارطة طالب العلم
-            </span>
+            <span className="lps-hero__back">← خارطة طالب العلم</span>
           </Link>
-          <div className="flex items-start gap-4">
-            <span className="text-5xl"><ScienceIconEl name={science.icon} /></span>
-            <div className="flex-1">
-              <h1 className="text-2xl md:text-3xl font-extrabold text-white mb-2">{science.name}</h1>
+          <div className="lps-hero__body">
+            <span className="lps-hero__icon" aria-hidden="true">
+              <ScienceIconEl name={science.icon} />
+            </span>
+            <div className="lps-hero__info">
+              <h1 className="lps-hero__title">{science.name}</h1>
               {science.description && (
-                <p className="text-white/80 text-sm leading-relaxed max-w-xl">{science.description}</p>
+                <p className="lps-hero__desc">{science.description}</p>
               )}
               {allBooks.length > 0 && (
-                <div className="mt-3 flex items-center gap-3">
-                  <div className="flex-1 max-w-xs h-1.5 bg-white/20 rounded-full overflow-hidden">
-                    <div className="h-full bg-white rounded-full transition-all lps-prog-fill" style={{ "--lps-pct": `${pct}%` } as React.CSSProperties} />
+                <div className="lps-hero__progress">
+                  <div className="lps-hero__progress-bar">
+                    <div
+                      className="lps-prog-fill"
+                      style={{ "--lps-pct": `${pct}%` } as React.CSSProperties}
+                    />
                   </div>
-                  <span className="text-white/80 text-xs">{completedCount}/{allBooks.length} كتاب</span>
+                  <span className="lps-hero__progress-txt">{completedCount}/{allBooks.length} كتاب</span>
                 </div>
               )}
             </div>
@@ -117,10 +120,13 @@ export default function LearningPathSciencePage() {
 
       {/* لماذا تدرس هذا العلم */}
       {science.why_study && (
-        <div className="max-w-4xl mx-auto px-4 mt-6">
-          <div className="bg-[var(--majalis-emerald-muted)] border border-[var(--majalis-emerald)] rounded-2xl p-4 lps-why-box">
-            <p className="text-[var(--majalis-emerald)] text-sm leading-relaxed">
-              <strong className="inline-flex items-center gap-1"><Lightbulb size={14} strokeWidth={1.8} aria-hidden="true" /> لماذا تدرس {science.name}؟ </strong>
+        <div className="lps-why">
+          <div className="lps-why-box">
+            <p>
+              <strong className="inline-flex items-center gap-1">
+                <Lightbulb size={14} strokeWidth={1.8} aria-hidden="true" />
+                {" "}لماذا تدرس {science.name}؟{" "}
+              </strong>
               {science.why_study}
             </p>
           </div>
@@ -128,15 +134,17 @@ export default function LearningPathSciencePage() {
       )}
 
       {/* المستويات */}
-      <div className="max-w-4xl mx-auto px-4 mt-8">
-        <h2 className="font-bold text-[var(--majalis-ink)] text-lg mb-6">مسار التعلم</h2>
+      <div className="lps-levels">
+        <h2 className="lps-levels__title">مسار التعلم</h2>
         {levels.length === 0 ? (
-          <div className="text-center py-16 text-[var(--majalis-ink-soft)] opacity-60">
-            <div className="text-4xl mb-2" aria-hidden="true"><BookOpen size={44} strokeWidth={1.3} /></div>
+          <div className="lps-levels__empty">
+            <div className="lps-levels__empty-icon" aria-hidden="true">
+              <BookOpen size={44} strokeWidth={1.3} />
+            </div>
             <p>لم تُضَف كتب لهذا العلم بعد</p>
           </div>
         ) : (
-          <Suspense fallback={<div className="text-[var(--majalis-ink-soft)] opacity-60 text-center py-8">جارٍ التحميل…</div>}>
+          <Suspense fallback={<p className="txt-muted opacity-60 text-center py-8">جارٍ التحميل…</p>}>
             <LevelTimeline
               levels={levels}
               _scienceSlug={science.slug}
