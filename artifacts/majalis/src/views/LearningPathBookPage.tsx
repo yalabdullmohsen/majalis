@@ -85,19 +85,19 @@ export default function LearningPathBookPage() {
 
   if (loading) {
     return (
-      <div dir="rtl" className="min-h-screen bg-[var(--majalis-parchment)] flex items-center justify-center">
-        <div className="text-[var(--majalis-ink-soft)] opacity-60">جارٍ التحميل…</div>
+      <div dir="rtl" className="lpb-loading">
+        <span className="txt-muted opacity-60">جارٍ التحميل…</span>
       </div>
     );
   }
 
   if (notFound || !book) {
     return (
-      <div dir="rtl" className="min-h-screen bg-[var(--majalis-parchment)] flex flex-col items-center justify-center gap-4">
-        <div className="text-5xl" aria-hidden="true"><ScrollText size={48} strokeWidth={1.3} /></div>
-        <p className="text-[var(--majalis-ink-soft)]">الكتاب غير موجود</p>
+      <div dir="rtl" className="lpb-not-found">
+        <ScrollText size={48} strokeWidth={1.3} aria-hidden="true" />
+        <p className="txt-muted">الكتاب غير موجود</p>
         <Link href="/learning-path">
-          <span className="text-[var(--majalis-emerald)] hover:underline cursor-pointer text-sm">← العودة للخارطة</span>
+          <span className="lpb-not-found__link cursor-pointer">← العودة للخارطة</span>
         </Link>
       </div>
     );
@@ -106,156 +106,143 @@ export default function LearningPathBookPage() {
   const status = progress?.status ?? "not_started";
 
   return (
-    <div dir="rtl" className="min-h-screen bg-[var(--majalis-parchment)] pb-24">
+    <div dir="rtl" className="lpb-shell">
       {/* Breadcrumb */}
-      <div className="bg-[var(--majalis-panel)] border-b border-[var(--majalis-line)] px-4 py-3">
-        <div className="max-w-4xl mx-auto flex items-center gap-2 text-sm text-[var(--majalis-ink-soft)] flex-wrap">
-          <Link href="/learning-path"><span className="hover:text-[var(--majalis-emerald)] cursor-pointer">الخارطة</span></Link>
-          <span>›</span>
-          <Link href={`/learning-path/${book.science.slug}`}>
-            <span className="hover:text-[var(--majalis-emerald)] cursor-pointer">{book.science.name}</span>
+      <nav className="lpb-breadcrumb">
+        <div className="lpb-breadcrumb__inner">
+          <Link href="/learning-path">
+            <span className="lpb-breadcrumb__link">الخارطة</span>
           </Link>
           <span>›</span>
-          <span className="text-[var(--majalis-ink)] font-medium line-clamp-1">{book.title}</span>
+          <Link href={`/learning-path/${book.science.slug}`}>
+            <span className="lpb-breadcrumb__link">{book.science.name}</span>
+          </Link>
+          <span>›</span>
+          <span className="lpb-breadcrumb__cur">{book.title}</span>
         </div>
-      </div>
+      </nav>
 
-      <div className="max-w-4xl mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="lpb-body">
+        <div className="lpb-grid">
 
-          {/* العمود الأيسر — معلومات الكتاب */}
-          <div className="md:col-span-1">
+          {/* العمود الجانبي — معلومات الكتاب */}
+          <div className="lpb-sidebar">
             {/* غلاف */}
             <div
-              className="rounded-2xl h-52 flex items-center justify-center mb-4 overflow-hidden lpb-cover"
+              className="lpb-cover"
               style={{ "--book-color": book.science.color } as React.CSSProperties}
             >
               {book.cover_image_url ? (
-                <img src={book.cover_image_url} alt={book.title} className="w-full h-full object-cover" loading="lazy" />
+                <img src={book.cover_image_url} alt={book.title} loading="lazy" />
               ) : (
                 <BookOpen size={56} strokeWidth={1.2} className="opacity-50" />
               )}
             </div>
 
             {/* بيانات الكتاب */}
-            <div className="bg-[var(--majalis-panel)] rounded-2xl border border-[var(--majalis-line)] p-4 space-y-3">
-              {[
-                { label: "العلم",      value: book.science.name },
-                { label: "المستوى",   value: book.level.name },
-                { label: "الصعوبة",   value: DIFFICULTY_LABELS[book.difficulty] },
-                book.estimated_hours > 0 && { label: "الوقت التقديري", value: `${book.estimated_hours} ساعة` },
-                book.pages_count > 0    && { label: "عدد الصفحات",    value: `${book.pages_count} صفحة` },
-              ].filter(Boolean).map((item) => item && (
-                <div key={item.label} className="flex justify-between items-center text-sm">
-                  <span className="text-[var(--majalis-ink-soft)]">{item.label}</span>
-                  <span className="font-medium text-[var(--majalis-ink)]">{item.value}</span>
+            <div className="lpb-info-card">
+              {([
+                { label: "العلم",            value: book.science.name },
+                { label: "المستوى",          value: book.level.name },
+                { label: "الصعوبة",          value: DIFFICULTY_LABELS[book.difficulty] },
+                book.estimated_hours > 0 ? { label: "الوقت التقديري", value: `${book.estimated_hours} ساعة` } : null,
+                book.pages_count > 0    ? { label: "عدد الصفحات",    value: `${book.pages_count} صفحة` }    : null,
+              ] as ({ label: string; value: string } | null)[]).filter(Boolean).map((item) => item && (
+                <div key={item.label} className="lpb-info-row">
+                  <span className="lpb-info-label">{item.label}</span>
+                  <span className="lpb-info-value">{item.value}</span>
                 </div>
               ))}
             </div>
 
-            {/* روابط */}
-            <div className="mt-3 flex flex-col gap-2">
+            {/* روابط الكتاب */}
+            <div className="lpb-links">
               {book.pdf_url && (
-                <a href={book.pdf_url} target="_blank" rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 py-2 rounded-xl border border-[var(--majalis-emerald)] text-[var(--majalis-emerald)] text-sm hover:bg-[var(--majalis-emerald-muted)] transition-colors">
-                  <Download size={14} />تحميل PDF
+                <a href={book.pdf_url} target="_blank" rel="noopener noreferrer" className="lpb-link-btn">
+                  <Download size={14} aria-hidden="true" />تحميل PDF
                 </a>
               )}
               {book.audio_url && (
-                <a href={book.audio_url} target="_blank" rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 py-2 rounded-xl border border-blue-200 text-blue-700 dark:text-blue-400 text-sm hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors">
-                  <Headphones size={14} />الاستماع الصوتي
+                <a href={book.audio_url} target="_blank" rel="noopener noreferrer" className="lpb-link-btn lpb-link-btn--audio">
+                  <Headphones size={14} aria-hidden="true" />الاستماع الصوتي
                 </a>
               )}
             </div>
           </div>
 
-          {/* العمود الأيمن — المحتوى */}
-          <div className="md:col-span-2 space-y-6">
+          {/* المحتوى الرئيسي */}
+          <div className="lpb-content">
             {/* العنوان والحالة */}
             <div>
-              <div className="flex items-start justify-between gap-3 mb-2">
-                <h1 className="text-xl md:text-2xl font-extrabold text-[var(--majalis-ink)] leading-tight">
-                  {book.title}
-                </h1>
-                <span
-                  className={`flex-shrink-0 text-xs font-medium px-3 py-1 rounded-full lpb-status lpb-status--${status === "completed" ? "completed" : status === "in_progress" ? "in-progress" : "pending"}`}
-                >
-                  {status === "completed" ? <><CheckCircle2 size={12} strokeWidth={2} aria-hidden="true" /> مكتمل</> : status === "in_progress" ? <><Clock size={12} strokeWidth={2} aria-hidden="true" /> جاري</> : "لم يبدأ"}
+              <div className="lpb-title-row">
+                <h1 className="lpb-title">{book.title}</h1>
+                <span className={`lpb-status-badge lpb-status--${status === "completed" ? "completed" : status === "in_progress" ? "in-progress" : "pending"}`}>
+                  {status === "completed"
+                    ? <><CheckCircle2 size={12} strokeWidth={2} aria-hidden="true" /> مكتمل</>
+                    : status === "in_progress"
+                    ? <><Clock size={12} strokeWidth={2} aria-hidden="true" /> جاري</>
+                    : "لم يبدأ"}
                 </span>
               </div>
               {book.author && (
-                <p className="text-sm text-gray-500 mb-3 flex items-center gap-1"><PenLine size={13} />{book.author}</p>
+                <p className="lpb-author"><PenLine size={13} aria-hidden="true" />{book.author}</p>
               )}
-              {book.summary && (
-                <p className="text-sm text-[var(--majalis-ink-soft)] leading-relaxed">{book.summary}</p>
-              )}
+              {book.summary && <p className="lpb-summary">{book.summary}</p>}
             </div>
 
             {/* أزرار التقدم */}
             {isLoggedIn ? (
-              <div className="flex flex-wrap gap-2">
+              <div className="lpb-actions">
                 {status !== "in_progress" && status !== "completed" && (
-                  <button
-                    type="button"
-                    onClick={() => handleStatus("in_progress")}
-                    disabled={saving}
-                    className="px-5 py-2 citation-btn citation-btn--primary text-sm font-medium rounded-xl transition-colors disabled:opacity-50"
-                  >
+                  <button type="button" onClick={() => handleStatus("in_progress")} disabled={saving}
+                    className="lpb-btn-start citation-btn citation-btn--primary">
                     ▶ ابدأ قراءة الكتاب
                   </button>
                 )}
                 {status !== "completed" && (
-                  <button
-                    type="button"
-                    onClick={() => handleStatus("completed")}
-                    disabled={saving}
-                    className="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-xl transition-colors disabled:opacity-50"
-                  >
+                  <button type="button" onClick={() => handleStatus("completed")} disabled={saving}
+                    className="lpb-btn-complete">
                     ✓ أنهيت الكتاب
                   </button>
                 )}
                 {quizzes.length > 0 && (
-                  <button
-                            type="button"
-                    onClick={() => setQuizOpen(true)}
-                    className="px-5 py-2 border border-purple-300 text-purple-700 dark:text-purple-400 dark:border-purple-700 text-sm font-medium rounded-xl hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors"
-                  >
-                    <HelpCircle size={14} strokeWidth={1.8} aria-hidden="true" /> اختبر نفسك ({quizzes.length} سؤال)
+                  <button type="button" onClick={() => setQuizOpen(true)} className="lpb-btn-quiz">
+                    <HelpCircle size={14} strokeWidth={1.8} aria-hidden="true" />
+                    اختبر نفسك ({quizzes.length} سؤال)
                   </button>
                 )}
               </div>
             ) : (
               <Link href="/login">
-                <span className="inline-block px-5 py-2 border border-gray-200 text-[var(--majalis-ink-soft)] text-sm rounded-xl hover:bg-[var(--mn-surface-hover)] transition-colors cursor-pointer">
-                  سجّل الدخول لتتبع تقدمك
-                </span>
+                <span className="lpb-login-btn">سجّل الدخول لتتبع تقدمك</span>
               </Link>
             )}
-            {saveMsg && (
-              <p className="text-sm font-medium text-[var(--majalis-emerald)]">{saveMsg}</p>
-            )}
+            {saveMsg && <p className="lpb-save-msg">{saveMsg}</p>}
 
             {/* الشروحات */}
             {explanations.length > 0 && (
               <section>
-                <h2 className="font-bold text-[var(--majalis-ink)] text-base mb-3"><Mic2 size={16} strokeWidth={1.8} aria-hidden="true" /> شروحات الكتاب</h2>
-                <div className="space-y-2">
-                  {explanations.map((exp) => (
-                    <div key={exp.id} className="flex items-center gap-3 p-3 bg-[var(--majalis-panel)] rounded-xl border border-[var(--majalis-line)]">
-                      <span className="text-lg" aria-hidden="true">{(() => { const I = EXPLANATION_ICONS[exp.type] ?? Music2; return <I size={18} strokeWidth={1.6} />; })()}</span>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-[var(--majalis-ink)]">{exp.sheikh_name}</p>
-                        {exp.notes && <p className="text-xs text-[var(--majalis-ink-soft)] mt-0.5">{exp.notes}</p>}
+                <h2 className="lpb-section-title">
+                  <Mic2 size={16} strokeWidth={1.8} aria-hidden="true" /> شروحات الكتاب
+                </h2>
+                <div className="lpb-exp-list">
+                  {explanations.map((exp) => {
+                    const I = EXPLANATION_ICONS[exp.type] ?? Music2;
+                    return (
+                      <div key={exp.id} className="lpb-exp-item">
+                        <span className="lpb-exp-icon" aria-hidden="true"><I size={18} strokeWidth={1.6} /></span>
+                        <div className="lpb-exp-info">
+                          <p className="lpb-exp-sheikh">{exp.sheikh_name}</p>
+                          {exp.notes && <p className="lpb-exp-notes">{exp.notes}</p>}
+                        </div>
+                        {exp.url && (
+                          <a href={exp.url} target="_blank" rel="noopener noreferrer" className="lpb-exp-link">
+                            اذهب →
+                          </a>
+                        )}
                       </div>
-                      {exp.url && (
-                        <a href={exp.url} target="_blank" rel="noopener noreferrer"
-                          className="text-xs text-[var(--majalis-emerald)] hover:underline flex-shrink-0">
-                          اذهب →
-                        </a>
-                      )}
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </section>
             )}
@@ -263,12 +250,14 @@ export default function LearningPathBookPage() {
             {/* الفوائد */}
             {benefits.length > 0 && (
               <section>
-                <h2 className="font-bold text-[var(--majalis-ink)] text-base mb-3"><Lightbulb size={16} strokeWidth={1.8} aria-hidden="true" /> فوائد من الكتاب</h2>
-                <ul className="space-y-2">
+                <h2 className="lpb-section-title">
+                  <Lightbulb size={16} strokeWidth={1.8} aria-hidden="true" /> فوائد من الكتاب
+                </h2>
+                <ul className="lpb-benefits">
                   {benefits.map((b) => (
-                    <li key={b.id} className="flex gap-2 items-start text-sm text-[var(--majalis-ink-soft)]">
-                      <span className="text-[var(--majalis-emerald)] mt-0.5 flex-shrink-0">•</span>
-                      <span className="leading-relaxed">{b.content}</span>
+                    <li key={b.id} className="lpb-benefit">
+                      <span className="lpb-benefit__dot" aria-hidden="true">•</span>
+                      <span className="lpb-benefit__txt">{b.content}</span>
                     </li>
                   ))}
                 </ul>
