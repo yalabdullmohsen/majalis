@@ -22,9 +22,14 @@ const QUICK_LINKS = [
   { href: "/tasbih",         icon: "📿", label: "التسبيح" },
   { href: "/seerah",         icon: "🌙", label: "السيرة" },
   { href: "/flashcards",     icon: "🃏", label: "البطاقات" },
+  { href: "/fatwa",          icon: "⚖️", label: "الفتاوى" },
+  { href: "/quiz",           icon: "🎯", label: "المسابقات" },
+  { href: "/occasions",      icon: "🌙", label: "المناسبات" },
+  { href: "/muezzins",       icon: "🎙️", label: "المؤذنون" },
+  { href: "/updates",        icon: "📰", label: "المستجدات" },
 ];
 
-const QUICK_SEARCHES = ["صلاة الفجر", "آية الكرسي", "دعاء القنوت", "أذكار الصباح", "صيام الاثنين"];
+const QUICK_SEARCHES = ["صلاة الفجر", "آية الكرسي", "دعاء القنوت", "أذكار الصباح", "صيام الاثنين", "حديث النية", "أركان الإسلام", "زكاة المال"];
 
 /* ── المميزات البارزة (4 بطاقات كبيرة) ── */
 const FEATURED = [
@@ -75,9 +80,12 @@ const FEATURE_CATS = [
     icon: "📿",
     label: "العبادة والأذكار",
     items: [
-      { href: "/adhkar",   icon: "📿", title: "الأذكار",           desc: "أذكار الصباح والمساء" },
-      { href: "/fawaid",   icon: "💡", title: "الفوائد الدينية",   desc: "فوائد علمية منتقاة" },
-      { href: "/car-mode", icon: "🚗", title: "وضع السيارة",       desc: "تلاوات أثناء القيادة" },
+      { href: "/adhkar",      icon: "📿", title: "الأذكار",              desc: "أذكار الصباح والمساء" },
+      { href: "/fawaid",      icon: "💡", title: "الفوائد الدينية",      desc: "فوائد علمية منتقاة" },
+      { href: "/car-mode",    icon: "🚗", title: "وضع السيارة",          desc: "تلاوات أثناء القيادة" },
+      { href: "/daily-wird",  icon: "📖", title: "الورد اليومي",         desc: "ختم يومي منتظم للقرآن" },
+      { href: "/occasions",   icon: "🌙", title: "المناسبات الإسلامية",  desc: "أحداث دينية مع أعمالها" },
+      { href: "/tasbih",      icon: "📿", title: "التسبيح والذكر",       desc: "عداد تسبيح إلكتروني" },
     ],
   },
   {
@@ -85,8 +93,24 @@ const FEATURE_CATS = [
     icon: "🛠",
     label: "أدوات التعلم",
     items: [
-      { href: "/learning-path", icon: "🗺️", title: "خارطة طالب العلم", desc: "مسار من المبتدئ إلى المتقدم" },
-      { href: "/flashcards",    icon: "🃏", title: "البطاقات الدعوية",  desc: "مراجعة ذكية" },
+      { href: "/learning-path",   icon: "🗺️", title: "خارطة طالب العلم",  desc: "مسار من المبتدئ إلى المتقدم" },
+      { href: "/flashcards",      icon: "🃏", title: "البطاقات الدعوية",   desc: "مراجعة ذكية" },
+      { href: "/quiz",            icon: "🎯", title: "لعبة سؤال وجواب",   desc: "اختبر معلوماتك الإسلامية" },
+      { href: "/assistant",       icon: "🤖", title: "المساعد العلمي",    desc: "إرشاد فوري بالذكاء الاصطناعي" },
+      { href: "/calendar",        icon: "📅", title: "التقويم الهجري",    desc: "التواريخ والأيام المميزة" },
+      { href: "/knowledge-graph", icon: "🗺️", title: "خارطة المعرفة",    desc: "علاقات المعرفة الإسلامية" },
+    ],
+  },
+  {
+    id: "digital",
+    icon: "💻",
+    label: "الأدوات الرقمية",
+    items: [
+      { href: "/qibla",        icon: "🧭",  title: "اتجاه القبلة",     desc: "بوصلة لمعرفة اتجاه الكعبة" },
+      { href: "/prayer-times", icon: "🕌",  title: "مواقيت الصلاة",    desc: "أوقات دقيقة للكويت" },
+      { href: "/muezzins",     icon: "🎙️", title: "مكتبة المؤذنين",  desc: "تلاوات وأذان بأجمل الأصوات" },
+      { href: "/quran-radio",  icon: "📻",  title: "إذاعة القرآن",     desc: "بث مستمر للقرآن الكريم" },
+      { href: "/submit",       icon: "📤",  title: "أضف محتوى",        desc: "ساهم في إثراء المنصة" },
     ],
   },
 ];
@@ -161,6 +185,21 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ══ إحصائيات المنصة ══ */}
+      <div className="hp-stats-bar" aria-label="إحصائيات المنصة">
+        {[
+          { value: "٧٣+",  label: "كتاب شرعي" },
+          { value: "٥٠+",  label: "عالم وشيخ" },
+          { value: "٤٨٩+", label: "سؤال تعليمي" },
+          { value: "٦٠٤",  label: "صفحة مصحف" },
+        ].map(({ value, label }) => (
+          <div key={label} className="hp-stat-item">
+            <strong className="hp-stat-value">{value}</strong>
+            <span className="hp-stat-label">{label}</span>
+          </div>
+        ))}
+      </div>
 
       {/* ══ وصول سريع ══ */}
       <nav className="hp-quick-nav" aria-label="وصول سريع">

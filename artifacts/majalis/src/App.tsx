@@ -9,6 +9,7 @@ import { LanguageProvider, useLanguage } from "@/components/LanguageProvider";
 import NavBar from "@/components/NavBar";
 import SiteFooter from "@/components/SiteFooter";
 import { BottomNavBar } from "@/components/BottomNavBar";
+import { ScrollToTop } from "@/components/ScrollToTop";
 import { AssistantFloatingWidget } from "@/components/assistant/AssistantFloatingWidget";
 import { AdhanNotificationBar } from "@/components/adhan/AdhanNotificationBar";
 import { AchievementToast } from "@/components/AchievementToast";
@@ -441,6 +442,7 @@ function AppShell() {
         </main>
         <SiteFooter />
         <AssistantFloatingWidget />
+        <ScrollToTop />
         <BottomNavBar />
         {newBadges.length > 0 && (
           <AchievementToast badges={newBadges} onDismiss={dismissBadges} />
