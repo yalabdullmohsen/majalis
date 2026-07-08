@@ -5,7 +5,8 @@ import "@/styles/mushaf.css";
 import { applyPageSeo } from "@/lib/seo";
 
 /* ══ ثوابت ══ */
-const CDN   = "https://cdn.qurancdn.com/images/quran/pages/v4/page";
+const CDN_PRIMARY  = "https://cdn.jsdelivr.net/gh/QuranHub/quran-pages-images@main/kfgqpc/hafs-wasat";
+const CDN_FALLBACK = "https://raw.githubusercontent.com/QuranHub/quran-pages-images/main/kfgqpc/hafs-wasat";
 const TOTAL = 604;
 const PAGE_KEY = "mj-mushaf-page-v2";
 const NIGHT_KEY = "mj-mushaf-night";
@@ -26,8 +27,9 @@ function lsSetArr(k: string, v: number[]) {
 }
 
 /* ══ بناء URL الصورة ══ */
-function pageUrl(n: number): string {
-  return `${CDN}${String(n).padStart(3, "0")}.png`;
+function pageUrl(n: number, fallback = false): string {
+  const base = fallback ? CDN_FALLBACK : CDN_PRIMARY;
+  return `${base}/${n}.jpg`;
 }
 
 /* ══ بيانات السور ══ */
@@ -76,16 +78,26 @@ interface PageImgProps {
   onError: () => void;
 }
 const PageImg = memo(function PageImg({ page, night, loaded, onLoad, onError }: PageImgProps) {
+  const [useFallback, setUseFallback] = useState(false);
+
+  const handleError = () => {
+    if (!useFallback) {
+      setUseFallback(true); // جرب الـ fallback أولاً
+    } else {
+      onError(); // كلا الـ CDNs فشل
+    }
+  };
+
   return (
     <img
-      key={page}
-      src={pageUrl(page)}
+      key={`${page}-${useFallback ? "fb" : "pr"}`}
+      src={pageUrl(page, useFallback)}
       alt={`صفحة ${page}`}
       className={`mshf-page-img${loaded ? " loaded" : ""}${night ? " night" : ""}`}
       loading="eager"
       draggable={false}
       onLoad={onLoad}
-      onError={onError}
+      onError={handleError}
     />
   );
 });
