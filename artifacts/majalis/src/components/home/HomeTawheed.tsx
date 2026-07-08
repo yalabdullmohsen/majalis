@@ -10,10 +10,10 @@ type HadithRef = {
 };
 
 const GRADE_COLOR: Record<HadithRef["grade"], string> = {
-  صحيح:  "#15803d",
-  حسن:   "#0E6E52",
-  ضعيف:  "#dc2626",
-  موضوع: "#7f1d1d",
+  صحيح:  "var(--majalis-emerald, #0E6E52)",
+  حسن:   "var(--majalis-emerald-deep, #0A5040)",
+  ضعيف:  "var(--majalis-danger, #9B1C1C)",
+  موضوع: "var(--majalis-danger, #9B1C1C)",
 };
 
 function HadithBadge({ h }: { h: HadithRef }) {

@@ -281,7 +281,7 @@ function ScoreBar({ teams, activeTeam }: { teams: [Team, Team]; activeTeam: Team
             <p className="qzg-team-card__unit">نقطة</p>
             <div className="qzg-team-card__lifelines">
               {t.lifelines.penalize && (
-                <span className="qzg-lifeline" style={{ "--qzg-ll-border": "#FFB347", "--qzg-ll-color": active ? "#FFB347" : "#9A6B10" } as React.CSSProperties}>خصم</span>
+                <span className="qzg-lifeline" style={{ "--qzg-ll-border": "var(--majalis-danger,#9B1C1C)", "--qzg-ll-color": active ? "var(--majalis-danger,#9B1C1C)" : "var(--majalis-danger,#9B1C1C)" } as React.CSSProperties}>خصم</span>
               )}
               {t.lifelines.eliminate && (
                 <span className="qzg-lifeline" style={{ "--qzg-ll-border": "#9B59B6", "--qzg-ll-color": active ? "#C080FF" : "#7D3C98" } as React.CSSProperties}>استبعاد</span>
@@ -556,7 +556,7 @@ function QuestionPhase({
           {activeTeamObj.lifelines.penalize && (
             <button type="button" onClick={() => dispatch({ type: "USE_LIFELINE_PENALIZE" })}
               className="qzg-ll-btn"
-              style={{ "--qzg-ll-bg": "#FFF8EE", "--qzg-ll-c": "#FFB347", "--qzg-ll-border": "#FFB347" } as React.CSSProperties}>
+              style={{ "--qzg-ll-bg": "var(--majalis-danger-muted,rgba(155,28,28,.08))", "--qzg-ll-c": "var(--majalis-danger,#9B1C1C)", "--qzg-ll-border": "var(--majalis-danger,#9B1C1C)" } as React.CSSProperties}>
               خصم {activeCell.points} من الخصم
             </button>
           )}
