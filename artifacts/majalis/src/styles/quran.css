@@ -318,8 +318,8 @@
   opacity: 1;
 }
 .qs-ayah-inline__share:hover:not(:disabled) {
-  background: #f3f4f6;
-  border-color: #9ca3af;
+  background: var(--majalis-parchment-deep);
+  border-color: var(--majalis-line);
 }
 .qs-ayah-inline__share--img:hover:not(:disabled) {
   background: var(--majalis-gold, #0E6E52);
@@ -955,7 +955,7 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #9ca3af;
+  background: var(--majalis-line);
   flex-shrink: 0;
 }
 .qs-now-playing__dot--active {

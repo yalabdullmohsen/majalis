@@ -1490,7 +1490,7 @@ hr.decorative,
   align-items: center;
   gap: 0.75rem;
   margin-bottom: 0.75rem;
-  color: #9ca3af;
+  color: var(--majalis-ink-soft);
   font-size: 0.8rem;
 }
 
@@ -1499,7 +1499,7 @@ hr.decorative,
   content: "";
   flex: 1;
   height: 1px;
-  background: #e5e7eb;
+  background: var(--majalis-line);
 }
 
 .login-oauth__btn {
@@ -1510,19 +1510,19 @@ hr.decorative,
   width: 100%;
   min-height: 2.5rem;
   padding: 0.5rem 1rem;
-  border: 1.5px solid #e5e7eb;
+  border: 1.5px solid var(--majalis-line);
   border-radius: var(--ds-radius);
-  background: #fff;
+  background: var(--majalis-panel);
   font-family: inherit;
   font-size: 0.875rem;
   font-weight: 600;
-  color: #374151;
+  color: var(--majalis-ink);
   cursor: pointer;
   transition: border-color 0.15s, box-shadow 0.15s;
 }
 
 .login-oauth__btn:hover:not(:disabled) {
-  border-color: #d1d5db;
+  border-color: var(--majalis-emerald);
   box-shadow: 0 1px 4px rgba(0,0,0,.08);
 }
 
@@ -1697,7 +1697,7 @@ hr.decorative,
 
 .hcp-prayer-cell__name {
   font-size: 0.68rem;
-  color: #6b7280;
+  color: var(--majalis-ink-soft);
   font-weight: 600;
 }
 
@@ -1776,7 +1776,7 @@ hr.decorative,
 
 .hcp-strip__countdown {
   font-size: 0.7rem;
-  color: #6b7280;
+  color: var(--majalis-ink-soft);
   font-weight: 500;
 }
 
@@ -1839,7 +1839,7 @@ hr.decorative,
 
 .tc-ring-track {
   fill: none;
-  stroke: #e5e7eb;
+  stroke: var(--majalis-line);
   stroke-width: 9;
 }
 
@@ -1889,14 +1889,14 @@ hr.decorative,
 
 .tc-ring-total {
   font-size: 0.68rem;
-  color: #9ca3af;
+  color: var(--majalis-ink-soft);
   font-variant-numeric: tabular-nums;
   line-height: 1;
 }
 
 .tc-ring-hint {
   font-size: 0.65rem;
-  color: #9ca3af;
+  color: var(--majalis-ink-soft);
   margin-top: 0.15rem;
   line-height: 1;
 }
@@ -1909,7 +1909,7 @@ hr.decorative,
 /* Keyboard hint below counter */
 .tc-keyboard-hint {
   font-size: 0.65rem;
-  color: #9ca3af;
+  color: var(--majalis-ink-soft);
   text-align: center;
   margin: 0.25rem 0 0.75rem;
 }
@@ -1943,12 +1943,12 @@ hr.decorative,
   scroll-snap-align: start;
   padding: 0.45rem 0.85rem;
   border-radius: 99px;
-  border: 1.5px solid #e5e7eb;
-  background: #fff;
+  border: 1.5px solid var(--majalis-line);
+  background: var(--majalis-panel);
   font-family: inherit;
   font-size: 0.82rem;
   font-weight: 500;
-  color: #374151;
+  color: var(--majalis-ink);
   cursor: pointer;
   transition: border-color 0.15s, background 0.15s, color 0.15s;
   white-space: nowrap;
@@ -1987,8 +1987,8 @@ hr.decorative,
 }
 
 .tasbih-wird-pill:not(.is-active) .tasbih-pill-badge {
-  background: #f3f4f6;
-  color: #6b7280;
+  background: var(--majalis-parchment-deep);
+  color: var(--majalis-ink-soft);
 }
 
 

@@ -1236,8 +1236,8 @@ a.admin-info-panel__item-title:hover { color: var(--majalis-emerald-deep); }
   border-radius: 999px;
   width: fit-content;
 }
-.dsc-card__pub--yes { background: #d1fae5; color: #065f46; }
-.dsc-card__pub--no  { background: #f3f4f6; color: #6b7280; }
+.dsc-card__pub--yes { background: var(--majalis-emerald-muted); color: var(--majalis-emerald); }
+.dsc-card__pub--no  { background: var(--majalis-parchment-deep); color: var(--majalis-ink-soft); }
 .dsc-card__desc {
   font-size: 0.8rem;
   color: var(--majalis-ink-soft, #6b7280);
