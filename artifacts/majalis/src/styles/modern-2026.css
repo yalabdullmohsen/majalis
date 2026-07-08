@@ -78,9 +78,9 @@
 
   /* ارتفاعات الأسطر */
   --lh-tight:   1.2;
-  --lh-snug:    1.35;
-  --lh-normal:  1.55;
-  --lh-relaxed: 1.7;
+  --lh-snug:    1.4;
+  --lh-normal:  1.65;
+  --lh-relaxed: 1.8;
   --lh-loose:   1.85;
 
   /* تباعد الأحرف */
@@ -1582,3 +1582,145 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   white-space: nowrap;
   flex-shrink: 0;
 }
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   نظام الخطوط والألوان — مراجعة شاملة 2026
+   القاعدة: أبيض نقي (#FFFFFF) فوق الخلفيات الخضراء/الداكنة دائماً
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+/* ─── متغيرات عالمية لنص على الأسطح الخضراء ─── */
+:root {
+  --on-emerald-primary:   #FFFFFF;
+  --on-emerald-secondary: rgba(255, 255, 255, 0.92);
+  --on-emerald-muted:     rgba(255, 255, 255, 0.75);
+  --on-dark-primary:      #FFFFFF;
+  --on-dark-secondary:    rgba(255, 255, 255, 0.88);
+  --txt-body:             #1E1E1E;
+  --txt-body-light:       #374151;
+}
+
+/* ─── تحسين وزن الخط العام ─── */
+body {
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  line-height: var(--lh-normal, 1.65);
+}
+
+p { line-height: var(--lh-normal, 1.65); }
+
+/* ─── نص أبيض على جميع Hero sections ─── */
+.lpth-hero,
+.lpth-hero *:not(.lpth-hero__btn-primary):not(.lpth-hero__btn-primary *) {
+  color: var(--on-emerald-primary);
+}
+.lpth-hero__subtitle,
+.lpth-hero__eyebrow,
+.lpth-hero__stat-label {
+  color: var(--on-emerald-secondary) !important;
+}
+
+.ldb-hero,
+.ldb-hero * {
+  color: var(--on-emerald-primary);
+}
+.ldb-hero__subtitle,
+.ldb-hero__back { color: var(--on-emerald-secondary) !important; }
+
+/* ─── Hero عام لجميع الأقسام ─── */
+.prophets-hero,
+.seerah-hero,
+.prophets-hero *,
+.seerah-hero * {
+  color: var(--on-emerald-primary) !important;
+}
+
+.lesson-detail-hero,
+.lesson-detail-hero * {
+  color: var(--on-emerald-primary) !important;
+}
+
+/* ─── home hero v3 ─── */
+.home-hero--v3 .home-hero-title,
+.home-hero--v3 .home-hero-subtitle,
+.home-hero--v3 .home-hero-desc {
+  color: var(--on-emerald-primary) !important;
+}
+
+/* ─── الأزرار الزمردية: أبيض دائماً ─── */
+.btn-emerald,
+[class*="btn--primary"],
+[class*="btn--emerald"],
+.citation-btn--primary,
+.qzg-btn-gold,
+.lpth-hero__btn-primary,
+.ldb-hero__btn-primary {
+  color: #FFFFFF !important;
+}
+
+/* ─── النص فوق البطاقات الخضراء المائلة ─── */
+[class*="-card--emerald"] *,
+[class*="-card--dark"] *,
+[class*="-card--green"] * {
+  color: var(--on-emerald-primary);
+}
+
+/* ─── نص أبيض على badge وchip فوق الخضراء ─── */
+.content-hub-chip--active {
+  color: #FFFFFF !important;
+}
+
+/* ─── ظل نصي خفيف للعناوين فوق الصور/التدرجات ─── */
+.lesson-detail-hero .lesson-detail-title,
+.lesson-detail-hero h1,
+.lesson-detail-hero h2,
+.prophets-hero h1,
+.prophets-hero h2,
+.seerah-hero h1,
+.seerah-hero h2,
+.lpth-hero__title,
+.ldb-hero__title {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
+}
+
+/* ─── تحسين وضوح النصوص الثانوية على الأسطح الفاتحة ─── */
+.page-meta,
+.page-desc,
+.content-detail-meta {
+  color: #374151;
+  line-height: var(--lh-normal, 1.65);
+}
+
+/* ─── المناطق البيضاء: نص داكن ─── */
+.ui-card,
+.page-card,
+.majalis-panel {
+  color: #1E1E1E;
+}
+
+/* ─── تحسين الفقرات النصية ─── */
+.content-detail-body p {
+  line-height: 1.85;
+  color: #1E1E1E;
+  font-size: 1rem;
+}
+
+/* ─── ضمان النص الأبيض على شريط القراءة ─── */
+.reading-progress-bar {
+  background: linear-gradient(to right, var(--majalis-emerald, #0E6E52), #1a9e75);
+}
+
+/* ─── تحسين الفهرس والتسميات المرئية ─── */
+.page-eyebrow,
+.home-eyebrow,
+.ds-page-header__eyebrow {
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+/* ─── تباين نص الجداول والقوائم ─── */
+.site-footer * { color: inherit; }
+.site-footer-link { color: rgba(255,255,255,0.75); }
+.site-footer-link:hover { color: #FFFFFF; }
+
+/* ─── ضمان قابلية قراءة النص المعطّل فقط للعناصر disabled ─── */
+[disabled], [aria-disabled="true"] { opacity: 0.5; }

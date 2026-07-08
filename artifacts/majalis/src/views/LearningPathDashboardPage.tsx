@@ -52,11 +52,11 @@ export default function LearningPathDashboardPage() {
 
   if (!isLoggedIn) {
     return (
-      <div dir="rtl" className="min-h-screen bg-[var(--majalis-parchment)] flex flex-col items-center justify-center gap-4">
+      <div dir="rtl" className="ldb-auth-gate">
         <Lock size={40} strokeWidth={1.3} aria-hidden="true" />
-        <p className="text-[var(--majalis-ink-soft)]">يجب تسجيل الدخول لعرض لوحتك التعليمية</p>
+        <p className="ldb-auth-gate__text">يجب تسجيل الدخول لعرض لوحتك التعليمية</p>
         <Link href="/login">
-          <span className="px-6 py-2.5 citation-btn citation-btn--primary rounded-xl font-medium transition-colors cursor-pointer">
+          <span className="citation-btn citation-btn--primary cursor-pointer">
             تسجيل الدخول
           </span>
         </Link>
@@ -64,76 +64,73 @@ export default function LearningPathDashboardPage() {
     );
   }
 
-  const completed   = progress.filter((p) => p.status === "completed");
-  const inProgress  = progress.filter((p) => p.status === "in_progress");
+  const completed  = progress.filter((p) => p.status === "completed");
+  const inProgress = progress.filter((p) => p.status === "in_progress");
 
   return (
-    <div dir="rtl" className="min-h-screen bg-[var(--majalis-parchment)] pb-24">
-      {/* Hero */}
-      <div className="text-white px-4 py-10 ldb-hero">
-        <div className="max-w-4xl mx-auto">
+    <div dir="rtl" className="ldb-shell">
+      <div className="ldb-hero">
+        <div className="ldb-hero__inner">
           <Link href="/learning-path">
-            <span className="text-emerald-200 hover:text-white text-sm cursor-pointer inline-flex items-center gap-1 mb-3">
-              ← خارطة طالب العلم
-            </span>
+            <span className="ldb-hero__back">← خارطة طالب العلم</span>
           </Link>
-          <h1 className="text-2xl md:text-3xl font-extrabold mb-1">لوحتي التعليمية</h1>
-          <p className="text-emerald-100 text-sm">تابع تقدمك وإنجازاتك في مسيرة طلب العلم</p>
+          <h1 className="ldb-hero__title">لوحتي التعليمية</h1>
+          <p className="ldb-hero__subtitle">تابع تقدمك وإنجازاتك في مسيرة طلب العلم</p>
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 py-8">
+      <div className="ldb-body">
         {loading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="ldb-skeleton-grid">
             {Array.from({ length: 3 }).map((_, i) => (
-              <div key={i} className="bg-[var(--majalis-parchment-deep)] rounded-2xl h-28 animate-pulse" />
+              <div key={i} className="ldb-skeleton-card" />
             ))}
           </div>
         ) : (
           <>
             {/* إحصائيات سريعة */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+            <div className="ldb-stats-grid">
               {[
-                { value: completed.length,  label: "كتاب مكتمل",  bg: "#dcfce7", color: "#15803d" },
-                { value: inProgress.length, label: "جاري حالياً", bg: "#E6EDE9", color: "#18362A" },
-                { value: progress.length,   label: "كتاب بدأت",   bg: "#eff6ff", color: "#1d4ed8" },
-                { value: achievements.length, label: "وسام حصلت",  bg: "#faf5ff", color: "#6b21a8" },
+                { value: completed.length,    label: "كتاب مكتمل",  bg: "#dcfce7", color: "#15803d" },
+                { value: inProgress.length,   label: "جاري حالياً", bg: "#E6EDE9", color: "#18362A" },
+                { value: progress.length,     label: "كتاب بدأت",   bg: "#eff6ff", color: "#1d4ed8" },
+                { value: achievements.length, label: "وسام حصلت",   bg: "#faf5ff", color: "#6b21a8" },
               ].map((stat) => (
                 <div
                   key={stat.label}
-                  className="rounded-2xl p-4 text-center border ldb-stat-card"
+                  className="ldb-stat-card"
                   style={{ "--stat-bg": stat.bg, "--stat-color": stat.color } as React.CSSProperties}
                 >
-                  <div className="text-3xl font-bold ldb-stat-val">{stat.value}</div>
-                  <div className="text-xs mt-1 ldb-stat-label">{stat.label}</div>
+                  <div className="ldb-stat-val">{stat.value}</div>
+                  <div className="ldb-stat-label">{stat.label}</div>
                 </div>
               ))}
             </div>
 
             {/* الأيام المتتالية */}
-            <div className="mb-8">
-              <h2 className="font-bold text-[var(--majalis-ink)] text-base mb-3 flex items-center gap-2"><Flame size={16} strokeWidth={1.8} aria-hidden="true" /> الأيام المتتالية</h2>
-              <Suspense fallback={<div className="h-20 bg-[var(--majalis-parchment-deep)] rounded-2xl animate-pulse" />}>
+            <div className="ldb-section">
+              <h2 className="ldb-section__title"><Flame size={16} strokeWidth={1.8} aria-hidden="true" /> الأيام المتتالية</h2>
+              <Suspense fallback={<div className="ldb-skeleton-tall" />}>
                 <StreakCounter streak={streak} />
               </Suspense>
             </div>
 
             {/* الكتب الجارية */}
             {inProgress.length > 0 && (
-              <div className="mb-8">
-                <h2 className="font-bold text-[var(--majalis-ink)] text-base mb-3 flex items-center gap-2"><Clock size={16} strokeWidth={1.8} aria-hidden="true" /> تابع من حيث توقفت</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="ldb-section">
+                <h2 className="ldb-section__title"><Clock size={16} strokeWidth={1.8} aria-hidden="true" /> تابع من حيث توقفت</h2>
+                <div className="ldb-inprogress-grid">
                   {inProgress.slice(0, 4).map((p) => (
                     <Link key={p.book_id} href={`/learning-path/book/${p.book_id}`}>
-                      <div className="flex items-center gap-3 p-3 bg-[var(--majalis-panel)] rounded-xl border border-[var(--majalis-line)] hover:shadow-md transition-all cursor-pointer">
-                        <span className="text-2xl" aria-hidden="true"><BookOpen size={22} strokeWidth={1.5} /></span>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-[var(--majalis-ink-soft)] line-clamp-1">كتاب جاري</p>
-                          <div className="h-1.5 bg-[var(--majalis-parchment-deep)] rounded-full mt-1.5">
-                            <div className="h-full bg-[var(--majalis-emerald)] rounded-full ldb-prog-fill" style={{ "--ldb-prog": `${p.progress_percent}%` } as React.CSSProperties} />
+                      <div className="ldb-book-card">
+                        <span aria-hidden="true"><BookOpen size={22} strokeWidth={1.5} /></span>
+                        <div className="ldb-book-card__body">
+                          <p className="ldb-book-card__label">كتاب جاري</p>
+                          <div className="ldb-book-card__track">
+                            <div className="ldb-book-card__fill" style={{ "--ldb-prog": `${p.progress_percent}%` } as React.CSSProperties} />
                           </div>
                         </div>
-                        <span className="text-xs text-[var(--majalis-ink-soft)] opacity-60">{p.progress_percent}%</span>
+                        <span className="ldb-book-card__pct">{p.progress_percent}%</span>
                       </div>
                     </Link>
                   ))}
@@ -142,24 +139,24 @@ export default function LearningPathDashboardPage() {
             )}
 
             {/* الإنجازات */}
-            <div className="mb-8">
-              <h2 className="font-bold text-[var(--majalis-ink)] text-base mb-3 flex items-center gap-2"><Medal size={16} strokeWidth={1.8} aria-hidden="true" /> الأوسمة والإنجازات</h2>
-              <div className="bg-[var(--majalis-panel)] rounded-2xl border border-[var(--majalis-line)] p-5">
-                <Suspense fallback={<div className="h-24 bg-[var(--majalis-parchment-deep)] rounded-xl animate-pulse" />}>
+            <div className="ldb-section">
+              <h2 className="ldb-section__title"><Medal size={16} strokeWidth={1.8} aria-hidden="true" /> الأوسمة والإنجازات</h2>
+              <div className="ldb-achievements-wrap">
+                <Suspense fallback={<div className="ldb-skeleton-medium" />}>
                   <AchievementBadges achievements={achievements} />
                 </Suspense>
               </div>
             </div>
 
             {/* اقتراح */}
-            <div className="bg-[var(--majalis-emerald-muted)] rounded-2xl p-5 text-center ldb-suggest">
-              <p className="text-[var(--majalis-emerald)] font-medium mb-3">
+            <div className="ldb-suggest">
+              <p className="ldb-suggest__text">
                 {completed.length === 0
                   ? "ابدأ أول كتاب في مسيرتك العلمية اليوم!"
                   : `أحسنت! أكملت ${completed.length} كتاب. تابع مسيرتك!`}
               </p>
               <Link href="/learning-path">
-                <span className="inline-block px-6 py-2.5 citation-btn citation-btn--primary rounded-xl font-medium transition-colors cursor-pointer text-sm">
+                <span className="citation-btn citation-btn--primary cursor-pointer">
                   استعرض العلوم المتاحة
                 </span>
               </Link>

@@ -6771,17 +6771,41 @@ button.primary:hover {
 /* ============================================================
    §77 — LearningPathDashboardPage  (ldb-*)
    ============================================================ */
-.ldb-hero {
-  background: linear-gradient(to left, var(--majalis-emerald-deep), var(--majalis-emerald));
-}
-.ldb-stat-card {
-  background: var(--stat-bg);
-  border-color: color-mix(in srgb, var(--stat-color) 19%, transparent);
-}
-.ldb-stat-val   { color: var(--stat-color); }
-.ldb-stat-label { color: var(--stat-color); }
+.ldb-shell { min-height: 100vh; background: var(--majalis-parchment); padding-bottom: 6rem; direction: rtl; }
+.ldb-auth-gate { min-height: 100vh; background: var(--majalis-parchment); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; direction: rtl; }
+.ldb-auth-gate__text { color: var(--majalis-ink-soft); }
+.ldb-hero { background: linear-gradient(to left, var(--majalis-emerald-deep), var(--majalis-emerald)); color: #fff; padding: 2.5rem 1rem; }
+.ldb-hero__inner { max-width: 56rem; margin: 0 auto; }
+.ldb-hero__back { color: #a7f3d0; font-size: 0.875rem; cursor: pointer; display: inline-flex; align-items: center; gap: 0.25rem; margin-bottom: 0.75rem; }
+.ldb-hero__back:hover { color: #fff; }
+.ldb-hero__title { font-size: clamp(1.5rem, 4vw, 1.875rem); font-weight: 800; margin-bottom: 0.25rem; }
+.ldb-hero__subtitle { color: #a7f3d0; font-size: 0.875rem; }
+.ldb-body { max-width: 56rem; margin: 0 auto; padding: 2rem 1rem; }
+.ldb-skeleton-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+@media (max-width: 640px) { .ldb-skeleton-grid { grid-template-columns: 1fr; } }
+.ldb-skeleton-card { background: var(--majalis-parchment-deep); border-radius: 1rem; height: 7rem; animation: pulse 1.5s ease-in-out infinite; }
+.ldb-stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2rem; }
+@media (min-width: 640px) { .ldb-stats-grid { grid-template-columns: repeat(4, 1fr); } }
+.ldb-stat-card { background: var(--stat-bg); border-color: color-mix(in srgb, var(--stat-color) 19%, transparent); border-radius: 1rem; padding: 1rem; text-align: center; border-width: 1px; border-style: solid; }
+.ldb-stat-val   { color: var(--stat-color); font-size: 1.875rem; font-weight: 700; }
+.ldb-stat-label { color: var(--stat-color); font-size: 0.75rem; margin-top: 0.25rem; }
+.ldb-section { margin-bottom: 2rem; }
+.ldb-section__title { font-weight: 700; color: var(--majalis-ink); font-size: 1rem; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
+.ldb-skeleton-tall { height: 5rem; background: var(--majalis-parchment-deep); border-radius: 1rem; animation: pulse 1.5s ease-in-out infinite; }
+.ldb-skeleton-medium { height: 6rem; background: var(--majalis-parchment-deep); border-radius: 0.75rem; animation: pulse 1.5s ease-in-out infinite; }
+.ldb-inprogress-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+@media (min-width: 640px) { .ldb-inprogress-grid { grid-template-columns: repeat(2, 1fr); } }
+.ldb-book-card { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; background: var(--majalis-panel); border-radius: 0.75rem; border: 1px solid var(--majalis-line); transition: box-shadow 0.2s; cursor: pointer; }
+.ldb-book-card:hover { box-shadow: 0 6px 16px rgba(0,0,0,0.08); }
+.ldb-book-card__body { flex: 1; min-width: 0; }
+.ldb-book-card__label { font-size: 0.875rem; font-weight: 500; color: var(--majalis-ink-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ldb-book-card__track { height: 0.375rem; background: var(--majalis-parchment-deep); border-radius: 9999px; margin-top: 0.375rem; }
+.ldb-book-card__fill { height: 100%; background: var(--majalis-emerald); border-radius: 9999px; width: var(--ldb-prog, 0%); }
+.ldb-book-card__pct { font-size: 0.75rem; color: var(--majalis-ink-soft); opacity: 0.6; flex-shrink: 0; }
+.ldb-achievements-wrap { background: var(--majalis-panel); border-radius: 1rem; border: 1px solid var(--majalis-line); padding: 1.25rem; }
+.ldb-suggest { background: var(--majalis-emerald-muted); border-radius: 1rem; padding: 1.25rem; text-align: center; border: 1px solid color-mix(in srgb, var(--majalis-emerald) 30%, transparent); }
+.ldb-suggest__text { color: var(--majalis-emerald); font-weight: 500; margin-bottom: 0.75rem; }
 .ldb-prog-fill  { width: var(--ldb-prog, 0%); }
-.ldb-suggest    { border: 1px solid color-mix(in srgb, var(--majalis-emerald) 30%, transparent); }
 
 /* ============================================================
    §78 — CardsPage  (cards-* additions)
