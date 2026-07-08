@@ -1561,3 +1561,24 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   pointer-events: none;
   border-radius: 0 0 2px 2px;
 }
+
+/* ── رأس صفحة التفاصيل ── */
+.content-detail-header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.content-detail-readtime {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  color: var(--txt-secondary, #6b7280);
+  background: var(--surface-2, #f4f4f4);
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}

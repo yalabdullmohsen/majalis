@@ -3,6 +3,13 @@ import { Link } from "wouter";
 import { Breadcrumbs } from "./Breadcrumbs";
 import { AdminInlineEdit, type InlineEditContentType } from "@/components/AdminInlineEdit";
 import { ReadingProgressBar } from "@/components/ReadingProgressBar";
+import { Clock } from "lucide-react";
+
+function estimateReadMinutes(text?: string): number | null {
+  if (!text || text.length < 200) return null;
+  const words = text.trim().split(/\s+/).length;
+  return Math.max(1, Math.round(words / 180));
+}
 
 type Props = {
   breadcrumbs: { label: string; href?: string }[];
@@ -99,7 +106,15 @@ export function ContentDetailLayout({
       <Breadcrumbs items={breadcrumbs} />
 
       <header className="content-detail-header">
-        {meta && <p className="content-detail-meta">{meta}</p>}
+        <div className="content-detail-header-top">
+          {meta && <p className="content-detail-meta">{meta}</p>}
+          {estimateReadMinutes(body) && (
+            <span className="content-detail-readtime" aria-label={`وقت القراءة المتوقع: ${estimateReadMinutes(body)} دقيقة`}>
+              <Clock size={13} strokeWidth={2} aria-hidden="true" />
+              {estimateReadMinutes(body)} د
+            </span>
+          )}
+        </div>
         <h1 className="content-detail-title">{title}</h1>
         {subtitle && <p className="content-detail-subtitle">{subtitle}</p>}
         {tags && tags.length > 0 && (
