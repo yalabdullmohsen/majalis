@@ -126,7 +126,7 @@ export default function CitationPublicPage() {
         <div className="w-full max-w-xl space-y-6">
 
           {/* بطاقة الاقتباس */}
-          <div className="bg-[var(--majalis-panel)] rounded-2xl shadow-xl overflow-hidden border border-[var(--majalis-line)] dark:border-gray-700"
+          <div className="bg-[var(--majalis-panel)] rounded-2xl shadow-xl overflow-hidden border border-[var(--majalis-line)] "
             style={{ "--cit-type-color": typeColor } as React.CSSProperties}>
             {/* شريط ملوَّن */}
             <div className="h-1.5 cit-type-bar" />
@@ -178,7 +178,7 @@ export default function CitationPublicPage() {
             <button
               type="button"
               onClick={copyLink}
-              className="flex items-center gap-1.5 px-4 py-2 text-sm bg-[var(--majalis-panel)] border border-gray-300 dark:border-gray-600 rounded-xl hover:border-emerald-500 text-[var(--majalis-ink-soft)] transition-colors shadow-sm"
+              className="flex items-center gap-1.5 px-4 py-2 text-sm bg-[var(--majalis-panel)] border border-[var(--majalis-line)] rounded-xl hover:border-[var(--majalis-emerald)] text-[var(--majalis-ink-soft)] transition-colors shadow-sm"
             >
               <Link2 size={14} strokeWidth={2} aria-hidden="true" /> {copied ? "تم النسخ ✓" : "نسخ الرابط"}
             </button>
@@ -186,7 +186,7 @@ export default function CitationPublicPage() {
             <button
               type="button"
               onClick={() => setShowQr(!showQr)}
-              className="flex items-center gap-1.5 px-4 py-2 text-sm bg-[var(--majalis-panel)] border border-gray-300 dark:border-gray-600 rounded-xl hover:border-emerald-500 text-[var(--majalis-ink-soft)] transition-colors shadow-sm"
+              className="flex items-center gap-1.5 px-4 py-2 text-sm bg-[var(--majalis-panel)] border border-[var(--majalis-line)] rounded-xl hover:border-[var(--majalis-emerald)] text-[var(--majalis-ink-soft)] transition-colors shadow-sm"
             >
               <QrCode size={14} strokeWidth={2} aria-hidden="true" /> QR Code
             </button>
@@ -194,7 +194,7 @@ export default function CitationPublicPage() {
             <a
               href={getCitationImageUrl(slug)}
               download={`citation-${slug}.svg`}
-              className="flex items-center gap-1.5 px-4 py-2 text-sm bg-[var(--majalis-panel)] border border-gray-300 dark:border-gray-600 rounded-xl hover:border-emerald-500 text-[var(--majalis-ink-soft)] transition-colors shadow-sm"
+              className="flex items-center gap-1.5 px-4 py-2 text-sm bg-[var(--majalis-panel)] border border-[var(--majalis-line)] rounded-xl hover:border-[var(--majalis-emerald)] text-[var(--majalis-ink-soft)] transition-colors shadow-sm"
             >
               <Download size={14} strokeWidth={2} aria-hidden="true" /> تحميل بطاقة
             </a>
@@ -207,7 +207,7 @@ export default function CitationPublicPage() {
                 className={`flex items-center gap-1.5 px-4 py-2 text-sm rounded-xl border transition-colors shadow-sm ${
                   saved
                     ? "bg-[var(--majalis-emerald-muted)] border-[var(--majalis-emerald)] text-[var(--majalis-emerald)]"
-                    : "bg-[var(--majalis-panel)] border-gray-300 dark:border-gray-600 text-[var(--majalis-ink-soft)] hover:border-[var(--majalis-emerald)]"
+                    : "bg-[var(--majalis-panel)] border-[var(--majalis-line)] text-[var(--majalis-ink-soft)] hover:border-[var(--majalis-emerald)]"
                 }`}
               >
                 <Star size={14} strokeWidth={2} aria-hidden="true" /> {saved ? "محفوظ" : "احفظ في مكتبتي"}
