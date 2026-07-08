@@ -152,6 +152,7 @@ export const API_ROUTES = [
   { prefix: "/api/learning-path", module: "./api-handlers/learning-path.js", allowGet: true },
   // ── دليل الجامعات ─────────────────────────────────────────────────────────
   { prefix: "/api/cron/universities-review", module: "./api-handlers/cron/universities-review.js", allowGet: true, exact: true },
+  { prefix: "/api/cron/content-scoring",     module: "./api-handlers/cron/content-scoring.js",     allowGet: true, exact: true },
   { prefix: "/api/admin/reminders",    module: "./api-handlers/universities-vercel.js", allowGet: true },
   { prefix: "/api/admin/programs",     module: "./api-handlers/universities-vercel.js", allowGet: true },
   { prefix: "/api/admin/requirements", module: "./api-handlers/universities-vercel.js", allowGet: true },
