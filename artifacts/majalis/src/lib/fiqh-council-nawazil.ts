@@ -76,6 +76,58 @@ export const NAWAZIL_TOPICS: NawazilTopic[] = [
     slugHints: ["fiqh-minorities"],
     categoryHints: ["الأقليات المسلمة"],
   },
+  {
+    slug: "social-media",
+    title: "وسائل التواصل الاجتماعي",
+    description: "أحكام استخدام منصات التواصل الاجتماعي ونشر المحتوى والمتابعة.",
+    tags: ["تواصل اجتماعي", "إنترنت", "إعلام"],
+    categoryHints: ["القضايا المعاصرة"],
+  },
+  {
+    slug: "environment",
+    title: "حماية البيئة",
+    description: "الموقف الشرعي من حماية البيئة والمناخ والموارد الطبيعية.",
+    tags: ["بيئة", "مناخ", "طبيعة"],
+    categoryHints: ["القضايا المعاصرة"],
+  },
+  {
+    slug: "digital-economy",
+    title: "الاقتصاد الرقمي",
+    description: "أحكام التجارة الإلكترونية والمنصات الرقمية والعمل عبر الإنترنت.",
+    tags: ["تجارة إلكترونية", "اقتصاد رقمي", "معاملات"],
+    categoryHints: ["الاقتصاد الإسلامي"],
+  },
+  {
+    slug: "fasting-travel",
+    title: "الصيام في ظروف معاصرة",
+    description: "نوازل الصيام في العصر الحديث: السفر الجوي، المناطق القطبية، العمل.",
+    tags: ["صيام", "رمضان", "مسافر"],
+    slugHints: ["fiqh-fasting"],
+    categoryHints: ["العبادات"],
+  },
+  {
+    slug: "marriage-digital",
+    title: "عقود الزواج الإلكترونية",
+    description: "مدى اعتبار الإيجاب والقبول وعقود النكاح عبر منصات التواصل الرقمي.",
+    tags: ["زواج", "عقد نكاح", "رقمي"],
+    slugHints: ["fiqh-marriage"],
+    categoryHints: ["الأسرة"],
+  },
+  {
+    slug: "halal-food",
+    title: "المأكولات الحديثة والحلال",
+    description: "أحكام الطعام المصنّع والمكوّنات الاصطناعية ولحوم الطيور والبهائم المستنبتة.",
+    tags: ["حلال", "طعام", "مأكولات"],
+    categoryHints: ["الطعام والشراب"],
+  },
+  {
+    slug: "zakat-modern",
+    title: "الزكاة في العصر الحديث",
+    description: "زكاة الأسهم والصناديق والعقارات والمهن الحرة والديون.",
+    tags: ["زكاة", "أسهم", "استثمار"],
+    slugHints: ["fiqh-zakat"],
+    categoryHints: ["الزكاة والصدقات", "الاقتصاد الإسلامي"],
+  },
 ];
 
 export function matchNawazilTopic(

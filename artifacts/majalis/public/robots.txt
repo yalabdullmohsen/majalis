@@ -1,21 +1,44 @@
 # https://majlisilm.com/robots.txt
-# المجلس العلمي
+# المجلس العلمي — منصة علمية شرعية
 
 User-agent: *
 Allow: /
 Disallow: /admin
 Disallow: /admin/
 Disallow: /login
+Disallow: /register
 Disallow: /api/
+Disallow: /auth/
+Crawl-delay: 2
 
 User-agent: Googlebot
 Allow: /
+Crawl-delay: 1
 
 User-agent: Bingbot
 Allow: /
+Crawl-delay: 2
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: ia_archiver
+Allow: /
+
+User-agent: facebot
+Disallow: /admin
+Disallow: /admin/
+
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+User-agent: SemrushBot
+Crawl-delay: 10
+
+User-agent: MJ12bot
+Disallow: /
 
 Host: majlisilm.com
 Sitemap: https://majlisilm.com/sitemap.xml
 
-# RSS Feed
-# https://majlisilm.com/feed.xml
+# RSS Feed: https://majlisilm.com/feed.xml
