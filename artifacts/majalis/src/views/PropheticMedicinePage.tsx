@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
-import { AlertTriangle, BookOpen, CalendarDays, Leaf, Moon, ScrollText, Sunrise, Utensils } from "lucide-react";
+import { AlertTriangle, Apple, BedDouble, Beef, BookOpen, CalendarDays, Droplets, FlaskConical, Grape, Leaf, Moon, PersonStanding, Salad, ScrollText, ShowerHead, Sprout, Stethoscope, Sunrise, TreePalm, Utensils, Waves, Wheat } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { Chip } from "@/components/ui-common";
@@ -11,7 +11,9 @@ import {
 } from "@/lib/prophetic-medicine-seed";
 
 const PM_ICON_MAP: Record<string, LucideIcon> = {
-  Leaf, Moon, BookOpen, CalendarDays, Utensils, Sunrise,
+  Leaf, Moon, BookOpen, CalendarDays, Utensils, Sunrise, FlaskConical, Stethoscope,
+  Salad, TreePalm, Droplets, Sprout, ShowerHead, Apple, PersonStanding, Waves,
+  Wheat, Beef, BedDouble, Grape,
 };
 function PMIcon({ name }: { name: string }) {
   const I = PM_ICON_MAP[name] ?? Leaf;
