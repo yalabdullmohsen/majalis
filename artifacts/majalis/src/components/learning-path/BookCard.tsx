@@ -16,7 +16,7 @@ const DIFFICULTY_COLORS = {
   hard:   "text-[var(--majalis-ink-soft)] bg-[var(--majalis-parchment-deep)]",
 };
 
-export function BookCard({ book, scienceColor = "#059669", progress, onMarkDone }: Props) {
+export function BookCard({ book, scienceColor = "var(--majalis-emerald, #0E6E52)", progress, onMarkDone }: Props) {
   const status = progress?.status ?? "not_started";
 
   return (

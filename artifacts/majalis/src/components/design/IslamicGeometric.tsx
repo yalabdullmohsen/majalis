@@ -91,7 +91,7 @@ export function IslamicDividerStar({
 
 export function IslamicPatternBg({
   opacity = 0.045,
-  color = "#1F6F52",
+  color = "var(--majalis-emerald, #0E6E52)",
   tileSize = 64,
   style,
   className,

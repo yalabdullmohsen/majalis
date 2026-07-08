@@ -20,9 +20,9 @@ const STATUS_LABEL: Record<SubmissionStatus, string> = {
 };
 
 const STATUS_COLOR: Record<SubmissionStatus, { bg: string; text: string; border: string }> = {
-  pending:  { bg: "#F0F9FF", text: "#0369A1", border: "#BAE6FD" },
-  approved: { bg: "#f0fdf4", text: "#065f46", border: "#86efac" },
-  rejected: { bg: "#fef2f2", text: "#991b1b", border: "#fca5a5" },
+  pending:  { bg: "#F0F9FF",                             text: "#0369A1",                            border: "#BAE6FD" },
+  approved: { bg: "var(--majalis-emerald-soft,#EBF5F0)", text: "var(--majalis-emerald-deep,#0A5040)", border: "rgba(14,110,82,0.25)" },
+  rejected: { bg: "var(--majalis-danger-muted,rgba(155,28,28,0.07))", text: "var(--majalis-danger,#9B1C1C)", border: "rgba(155,28,28,0.2)" },
 };
 
 const TYPE_ICON: Record<SubmissionType, string> = {
@@ -56,7 +56,7 @@ function AudioPreview({ url }: { url: string }) {
       type="button"
       onClick={toggle}
       className="srp-audio-btn"
-      style={{ "--srp-audio-bg": playing ? "#ef4444" : "#134a3a" } as React.CSSProperties}
+      style={{ "--srp-audio-bg": playing ? "var(--majalis-danger,#9B1C1C)" : "var(--majalis-emerald-deep,#0A5040)" } as React.CSSProperties}
     >
       {playing ? "⏹ إيقاف" : "▶ استمع"}
     </button>
@@ -201,7 +201,7 @@ function SubmissionCard({ sub, onReview }: {
                     }
                   }}
                   className="srp-publish-btn"
-                  style={{ "--srp-pub-bg": publishing ? "#9ca3af" : "#134a3a", "--srp-pub-cursor": publishing ? "not-allowed" : "pointer" } as React.CSSProperties}
+                  style={{ "--srp-pub-bg": publishing ? "#9ca3af" : "var(--majalis-emerald-deep,#0A5040)", "--srp-pub-cursor": publishing ? "not-allowed" : "pointer" } as React.CSSProperties}
                 >
                   {publishing ? "جارٍ النشر..." : <><Rocket size={13} className="inline ml-1" />نشر في مكتبة المؤذنين</>}
                 </button>
@@ -325,10 +325,10 @@ export function SubmissionsReviewPanel() {
       {stats && (
         <div className="srp-stats-grid">
           {[
-            { label: "الكل",    val: stats.total,    bg: "#f3f4f6", color: "#374151" },
-            { label: "معلق",            val: stats.pending,  bg: "#F0F9FF", color: "#0369A1" },
-            { label: "مقبول",           val: stats.approved, bg: "#f0fdf4", color: "#065f46" },
-            { label: "مرفوض",           val: stats.rejected, bg: "#fef2f2", color: "#991b1b" },
+            { label: "الكل",    val: stats.total,    bg: "#f3f4f6",                             color: "#374151" },
+            { label: "معلق",   val: stats.pending,  bg: "#F0F9FF",                             color: "#0369A1" },
+            { label: "مقبول",  val: stats.approved, bg: "var(--majalis-emerald-soft,#EBF5F0)", color: "var(--majalis-emerald-deep,#0A5040)" },
+            { label: "مرفوض",  val: stats.rejected, bg: "var(--majalis-danger-muted,rgba(155,28,28,0.07))", color: "var(--majalis-danger,#9B1C1C)" },
             { label: "أذان / درس",      val: `${stats.adhan}/${stats.lesson}`, bg: "#eff6ff", color: "#1d4ed8" },
           ].map((s) => (
             <div
@@ -352,8 +352,8 @@ export function SubmissionsReviewPanel() {
             onClick={() => setFStatus(s)}
             className="srp-filter-btn"
             style={{
-              "--srp-filter-border": filterStatus === s ? "#134a3a" : "#e5e7eb",
-              "--srp-filter-bg":     filterStatus === s ? "#134a3a" : "#fff",
+              "--srp-filter-border": filterStatus === s ? "var(--majalis-emerald-deep,#0A5040)" : "#e5e7eb",
+              "--srp-filter-bg":     filterStatus === s ? "var(--majalis-emerald-deep,#0A5040)" : "#fff",
               "--srp-filter-color":  filterStatus === s ? "#fff" : "#374151",
             } as React.CSSProperties}
           >

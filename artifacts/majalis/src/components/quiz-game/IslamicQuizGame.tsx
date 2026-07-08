@@ -91,8 +91,8 @@ const S = {
   emerald:     "var(--ds-emerald)",
   emeraldDeep: "var(--ds-emerald-deep)",
   emeraldSoft: "var(--ds-emerald-soft)",
-  correct:     "#1A6B4A",
-  wrong:       "#8B1A1A",
+  correct:     "var(--majalis-emerald, #0E6E52)",
+  wrong:       "var(--majalis-danger, #9B1C1C)",
 } as const;
 
 // ─── Reducer helpers ───────────────────────────────────────────────────────
