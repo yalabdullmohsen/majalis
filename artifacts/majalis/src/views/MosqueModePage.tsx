@@ -70,7 +70,7 @@ export default function MosqueModePage() {
 
       {/* Header */}
       <div className="mosque-mode__header">
-        <Link href="/" className="mosque-mode__exit">✕</Link>
+        <Link href="/" className="mosque-mode__exit" aria-label="الخروج من وضع المسجد">✕</Link>
         <span className="mosque-mode__label"><Building2 size={15} strokeWidth={1.8} aria-hidden="true" /> وضع المسجد</span>
       </div>
 

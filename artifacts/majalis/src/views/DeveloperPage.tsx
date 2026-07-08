@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import { Link } from "wouter";
+import { applyPageSeo } from "@/lib/seo";
 
 const ENDPOINTS = [
   {
@@ -95,6 +97,15 @@ const METHOD_COLORS: Record<string, string> = {
 };
 
 export default function DeveloperPage() {
+  useEffect(() => {
+    applyPageSeo({
+      path: "/developer",
+      title: "واجهة برمجة التطبيقات | مجالس للمطورين",
+      description: "وثائق API مجالس — دمج المحتوى الإسلامي في تطبيقاتك بسهولة عبر REST API مفتوح.",
+      keywords: ["API إسلامي", "واجهة برمجية", "مطورون", "مجالس API", "بيانات إسلامية"],
+    });
+  }, []);
+
   return (
     <div className="dvp-page">
 

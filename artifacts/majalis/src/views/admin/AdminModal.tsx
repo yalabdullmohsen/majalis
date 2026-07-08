@@ -26,7 +26,7 @@ export function AdminModal({ title, open, onClose, onSave, saving, children }: A
     <div className="adm-modal__overlay" onClick={onClose}>
       <div className="adm-modal__dialog" onClick={(e) => e.stopPropagation()}>
         <div className="adm-modal__header">
-          <button onClick={onClose} className="adm-modal__close">×</button>
+          <button onClick={onClose} className="adm-modal__close" aria-label="إغلاق">×</button>
           <h2 className="adm-modal__title">{title}</h2>
         </div>
         <div className="adm-modal__body">{children}</div>

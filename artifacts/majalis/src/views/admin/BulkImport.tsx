@@ -60,7 +60,7 @@ export function BulkImport({ title, template, hint, importRow, onDone }: BulkImp
         <div className="adm-modal__overlay" onClick={close}>
           <div className="blk-dialog" onClick={e => e.stopPropagation()}>
             <div className="blk-header">
-              <button onClick={close} className="blk-close">×</button>
+              <button onClick={close} className="blk-close" aria-label="إغلاق">×</button>
               <h2 className="blk-title">{title}</h2>
             </div>
 
