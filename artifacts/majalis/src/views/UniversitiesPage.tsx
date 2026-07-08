@@ -93,7 +93,7 @@ function UniversitiesContent() {
       <div className="text-white py-10 px-4 ldb-hero">
         <div className="max-w-5xl mx-auto text-center">
           <h1 className="text-2xl font-bold mb-2 flex items-center justify-center gap-2"><GraduationCap size={22} strokeWidth={1.5} aria-hidden="true" /> دليل الجامعات والكليات الشرعية</h1>
-          <p className="text-emerald-100 text-sm max-w-xl mx-auto leading-relaxed">
+          <p className="text-white/85 text-sm max-w-xl mx-auto leading-relaxed">
             موسوعة شاملة للجامعات التي تُقدّم دراسات شرعية حول العالم.
             ابحث وقارن وصل لرابط التقديم الرسمي مباشرة.
           </p>

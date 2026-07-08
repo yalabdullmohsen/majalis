@@ -81,7 +81,7 @@ function CompareContent() {
       {/* Header */}
       <div className="text-white px-4 py-6 ldb-hero">
         <div className="max-w-5xl mx-auto">
-          <Link href="/universities" className="text-emerald-200 text-sm hover:text-white mb-3 block w-fit">
+          <Link href="/universities" className="text-white/70 text-sm hover:text-white mb-3 block w-fit">
             → دليل الجامعات
           </Link>
           <h1 className="text-xl font-bold">⇔ مقارنة الجامعات ({compareList.length})</h1>

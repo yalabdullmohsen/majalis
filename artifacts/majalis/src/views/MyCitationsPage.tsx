@@ -396,7 +396,7 @@ export default function MyCitationsPage() {
                       </div>
 
                       {/* النص */}
-                      <blockquote className="border-r-2 border-emerald-500 pr-3">
+                      <blockquote className="border-r-2 border-[var(--majalis-emerald)] pr-3">
                         <p className="text-[var(--majalis-ink)] text-sm leading-relaxed line-clamp-3">
                           {cit?.quoted_text || ""}
                         </p>

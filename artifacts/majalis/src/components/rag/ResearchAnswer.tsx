@@ -44,9 +44,9 @@ function AnswerText({ text }: { text: string }) {
 function QualityBadge({ quality }: { quality: string }) {
   const config = {
     full:       { label: "جواب مكتمل",  bg: "bg-[var(--mn-surface-active)] text-[var(--mn-text-active)]" },
-    partial:    { label: "جواب جزئي",   bg: "bg-[var(--majalis-emerald-muted)] text-[var(--majalis-emerald)] dark:bg-emerald-900/30 dark:text-emerald-300" },
+    partial:    { label: "جواب جزئي",   bg: "bg-[var(--majalis-emerald-muted)] text-[var(--majalis-emerald)]" },
     no_sources: { label: "مصادر محدودة", bg: "bg-[var(--majalis-parchment-deep)] text-[var(--majalis-ink-soft)]" },
-    blocked:    { label: "توجيه مباشر",  bg: "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400" },
+    blocked:    { label: "توجيه مباشر",  bg: "bg-[var(--majalis-parchment-deep)] text-[var(--majalis-ink-soft)]" },
   }[quality] || { label: quality, bg: "bg-[var(--majalis-parchment-deep)] text-[var(--majalis-ink-soft)]" };
 
   return (

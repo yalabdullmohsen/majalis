@@ -11,9 +11,9 @@ interface Props {
 }
 
 const DIFFICULTY_COLORS = {
-  easy:   "text-green-600 bg-green-50 dark:bg-green-900/20 dark:text-green-400",
-  medium: "text-[var(--majalis-emerald)] bg-[var(--majalis-emerald-muted)] dark:bg-emerald-900/20 dark:text-emerald-400",
-  hard:   "text-red-600 bg-red-50 dark:bg-red-900/20 dark:text-red-400",
+  easy:   "text-[var(--majalis-emerald)] bg-[var(--majalis-emerald-muted)]",
+  medium: "text-[var(--majalis-emerald)] bg-[var(--majalis-emerald-muted)]",
+  hard:   "text-[var(--majalis-ink-soft)] bg-[var(--majalis-parchment-deep)]",
 };
 
 export function BookCard({ book, scienceColor = "#059669", progress, onMarkDone }: Props) {

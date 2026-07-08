@@ -153,7 +153,7 @@ function DetailContent({ university: u }: { university: University }) {
       {/* Header */}
       <div className="text-white px-4 py-8 ldb-hero">
         <div className="max-w-3xl mx-auto">
-          <Link href="/universities" className="text-emerald-200 text-sm hover:text-white mb-4 block w-fit">
+          <Link href="/universities" className="text-white/70 text-sm hover:text-white mb-4 block w-fit">
             → دليل الجامعات
           </Link>
           <div className="flex items-start gap-4">
@@ -168,7 +168,7 @@ function DetailContent({ university: u }: { university: University }) {
             )}
             <div className="min-w-0 flex-1">
               <h1 className="text-xl font-bold mb-1 leading-snug">{u.name_ar}</h1>
-              {u.name_en && <p className="text-emerald-200 text-sm mb-2">{u.name_en}</p>}
+              {u.name_en && <p className="text-white/75 text-sm mb-2">{u.name_en}</p>}
               <div className="flex flex-wrap gap-2 text-sm">
                 <span className="bg-white/20 px-2.5 py-0.5 rounded-full flex items-center gap-1">
                   <MapPin size={12} aria-hidden="true" /> {u.city ? `${u.city}، ` : ""}{u.country}
@@ -188,8 +188,8 @@ function DetailContent({ university: u }: { university: University }) {
           <div className="flex gap-2 mt-5 flex-wrap">
             {u.website_url && (
               <a href={u.website_url} target="_blank" rel="noopener noreferrer"
-                className="px-4 py-2 bg-white text-emerald-800 rounded-xl text-sm font-semibold
-                  hover:bg-emerald-50 transition-colors">
+                className="px-4 py-2 bg-white text-[var(--majalis-emerald)] rounded-xl text-sm font-semibold
+                  hover:bg-white/90 transition-colors">
                 <Globe size={14} aria-hidden="true" /> الموقع الرسمي ↗
               </a>
             )}

@@ -329,7 +329,7 @@ function AdminContent() {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
                     <p className="font-semibold text-[var(--majalis-ink)] text-sm">{u.name_ar}</p>
-                    {u.is_verified && <span className="text-xs bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 px-1.5 py-0.5 rounded">✓ موثقة</span>}
+                    {u.is_verified && <span className="text-xs bg-[var(--majalis-emerald-muted)] text-[var(--majalis-emerald)] px-1.5 py-0.5 rounded">✓ موثقة</span>}
                     {!u.is_published && <span className="text-xs bg-red-50 dark:bg-red-900/20 text-red-500 px-1.5 py-0.5 rounded">غير منشورة</span>}
                   </div>
                   <p className="text-xs text-[var(--majalis-ink-soft)] mt-0.5">{u.country}{u.city ? ` — ${u.city}` : ""} | {u.university_programs?.length || 0} برنامج</p>
@@ -338,7 +338,7 @@ function AdminContent() {
                 <div className="flex gap-1.5 flex-shrink-0">
                   <Link href={`/universities/${u.slug}`} className="px-2.5 py-1.5 text-xs bg-[var(--majalis-parchment-deep)] text-[var(--majalis-ink-soft)] rounded-lg hover:bg-[var(--majalis-line)] transition-colors">عرض</Link>
                   <button type="button" onClick={() => { setEditTarget(u); setSection("edit"); }}
-                    className="px-2.5 py-1.5 text-xs bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 rounded-lg hover:bg-emerald-100 transition-colors">
+                    className="px-2.5 py-1.5 text-xs bg-[var(--majalis-emerald-muted)] text-[var(--majalis-emerald)] rounded-lg hover:bg-[var(--majalis-emerald-muted)] transition-colors">
                     تعديل
                   </button>
                 </div>
@@ -349,7 +349,7 @@ function AdminContent() {
                 <div className="space-y-1 pr-2 border-r border-[var(--majalis-line)]">
                   {u.university_programs.map((p) => (
                     <div key={p.id} className="flex items-center gap-2 text-xs text-[var(--majalis-ink-soft)]">
-                      <span className="text-emerald-500">•</span>
+                      <span className="text-[var(--majalis-emerald)]">•</span>
                       <span>{p.program_name}</span>
                       <span className="bg-[var(--majalis-parchment-deep)] px-1.5 py-0.5 rounded">{p.degree_level}</span>
                       {!p.is_active && <span className="text-red-400">(غير نشط)</span>}
@@ -411,7 +411,7 @@ function AdminContent() {
                 </div>
                 <div className="flex gap-1.5 flex-shrink-0">
                   <button type="button" onClick={() => handleReminderStatus(r.id, "reviewed")}
-                    className="px-2.5 py-1.5 text-xs bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 rounded-lg hover:bg-emerald-100 transition-colors">
+                    className="px-2.5 py-1.5 text-xs bg-[var(--majalis-emerald-muted)] text-[var(--majalis-emerald)] rounded-lg hover:bg-[var(--majalis-emerald-muted)] transition-colors">
                     تمت المراجعة
                   </button>
                   <button type="button" onClick={() => handleReminderStatus(r.id, "dismissed")}
