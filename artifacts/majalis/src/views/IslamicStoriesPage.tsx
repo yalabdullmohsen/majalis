@@ -5,6 +5,7 @@ import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { supabase } from "@/lib/supabase";
 import { isSupabaseConfigured } from "@/lib/supabase-config";
 import { PageHeader } from "@/components/ui-common";
+import { ISLAMIC_STORIES_SEED } from "@/lib/islamic-stories-seed";
 
 // ─────────────────── Types ────────────────────────────────────────────────────
 type Category = "الكل" | "صحابة" | "فتوحات" | "تاريخ";
@@ -163,7 +164,7 @@ export default function IslamicStoriesPage() {
 
   useEffect(() => {
     if (!isSupabaseConfigured()) {
-      setError("قاعدة البيانات غير مُهيأة.");
+      setStories(ISLAMIC_STORIES_SEED as unknown as IslamicStory[]);
       setLoading(false);
       return;
     }
@@ -174,8 +175,13 @@ export default function IslamicStoriesPage() {
       .order("category")
       .order("era")
       .then(({ data, error: err }) => {
-        if (err) setError("تعذّر تحميل القصص.");
-        else setStories((data || []) as IslamicStory[]);
+        if (err) {
+          setError("تعذّر تحميل القصص.");
+          setStories(ISLAMIC_STORIES_SEED as unknown as IslamicStory[]);
+        } else {
+          const rows = (data || []) as IslamicStory[];
+          setStories(rows.length > 0 ? rows : ISLAMIC_STORIES_SEED as unknown as IslamicStory[]);
+        }
         setLoading(false);
       });
   }, []);
