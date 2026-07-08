@@ -34,14 +34,6 @@
   overflow: auto;
 }
 
-.admin-section-loading {
-  min-height: 200px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0.4;
-}
-
 /* ── الشريط العلوي للجوال ────────────────────────────────────────── */
 .admin-topbar {
   display: none;
