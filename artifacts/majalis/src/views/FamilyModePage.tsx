@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Award, BookOpen, Bookmark, CheckCircle2, Lock, PartyPopper, User } from "lucide-react";
 import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { PageHeader } from "@/components/ui-common";
@@ -171,13 +172,13 @@ function ParentView({ userId }: { userId: string }) {
       {/* Active children */}
       {childStats.map((child) => (
         <div key={child.child_id} className="fm-child-card">
-          <div className="fm-child-card__avatar">👤</div>
+          <div className="fm-child-card__avatar" aria-hidden="true"><User size={22} strokeWidth={1.5} /></div>
           <div className="fm-child-card__info">
             <span className="fm-child-card__name">ابن ({child.invite_code})</span>
             <div className="fm-child-card__stats">
-              <span>📖 {child.completedLessons} درس</span>
-              <span>🔖 {child.savedItems} محفوظ</span>
-              <span>🏅 {child.badgesCount} شارة</span>
+              <span><BookOpen size={12} strokeWidth={1.8} aria-hidden="true" /> {child.completedLessons} درس</span>
+              <span><Bookmark size={12} strokeWidth={1.8} aria-hidden="true" /> {child.savedItems} محفوظ</span>
+              <span><Award size={12} strokeWidth={1.8} aria-hidden="true" /> {child.badgesCount} شارة</span>
             </div>
           </div>
           <button
@@ -245,7 +246,7 @@ function ChildView({ userId }: { userId: string }) {
   if (existingLink) {
     return (
       <div className="fm-joined">
-        <div className="fm-joined__icon">✅</div>
+        <div className="fm-joined__icon" aria-hidden="true"><CheckCircle2 size={36} strokeWidth={1.4} /></div>
         <p>أنت مرتبط بحساب ولي الأمر. يمكنه متابعة إنجازاتك.</p>
       </div>
     );
@@ -254,7 +255,7 @@ function ChildView({ userId }: { userId: string }) {
   if (joined) {
     return (
       <div className="fm-joined">
-        <div className="fm-joined__icon">🎉</div>
+        <div className="fm-joined__icon" aria-hidden="true"><PartyPopper size={36} strokeWidth={1.4} /></div>
         <p>تم الانضمام بنجاح! يمكن لولي أمرك الآن متابعة تقدمك.</p>
       </div>
     );
@@ -317,7 +318,7 @@ export default function FamilyModePage() {
   if (!isLoggedIn) {
     return (
       <div className="page-shell narrow fm-login-prompt" dir="rtl">
-        <div className="fm-login-icon">🔐</div>
+        <div className="fm-login-icon" aria-hidden="true"><Lock size={40} strokeWidth={1.3} /></div>
         <p className="fm-login-msg">
           سجّل الدخول للوصول إلى الوضع العائلي.
         </p>

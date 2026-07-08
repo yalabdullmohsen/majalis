@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { MapPin, Mic2 } from "lucide-react";
 import { Link } from "wouter";
 import { MUEZZINS, previewAdhan, stopAdhan } from "@/lib/adhan-audio";
 import { loadFavorites, toggleFavorite } from "@/lib/muezzin-favorites";
@@ -101,13 +102,13 @@ export default function MuezzinFavoritesPage() {
             const isDefault = defaultMuezzinId === m.id;
             return (
               <div key={m.id} className="mzf-card">
-                <div className="mzf-card__avatar">🎙️</div>
+                <div className="mzf-card__avatar" aria-hidden="true"><Mic2 size={24} strokeWidth={1.4} /></div>
                 <div className="mzf-card__info">
                   <div className="mzf-card__name">
                     {m.name}
                     {isDefault && <span className="mzf-card__default-tag">افتراضي</span>}
                   </div>
-                  <div className="mzf-card__origin">📍 {m.origin} · {m.country}</div>
+                  <div className="mzf-card__origin"><MapPin size={11} strokeWidth={1.8} aria-hidden="true" /> {m.origin} · {m.country}</div>
                   <div className="mzf-card__tags">
                     <span className={`mzf-style-badge mzf-style-badge--${styleCls}`}>{m.style}</span>
                     <span className="mzf-card__rating">★ {m.rating}</span>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { BookOpen, FileText, Lock } from "lucide-react";
 import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { applyPageSeo } from "@/lib/seo";
@@ -107,7 +108,7 @@ function NotesTab({
 
       {notes.length === 0 && (
         <div className="vault-empty">
-          <div className="vault-empty__icon">📝</div>
+          <div className="vault-empty__icon" aria-hidden="true"><FileText size={40} strokeWidth={1.3} /></div>
           <p>لا توجد ملاحظات بعد. ابدأ بتدوين أفكارك وفوائدك.</p>
         </div>
       )}
@@ -217,7 +218,7 @@ export default function VaultPage() {
   if (!isLoggedIn) {
     return (
       <div className="page-shell narrow vault-login-prompt" dir="rtl">
-        <div className="vault-login-icon">🔐</div>
+        <div className="vault-login-icon" aria-hidden="true"><Lock size={40} strokeWidth={1.3} /></div>
         <p className="vault-login-msg">
           سجّل الدخول للوصول إلى محفظتك العلمية.
         </p>
@@ -318,7 +319,7 @@ export default function VaultPage() {
             <div className="vault-list">
               {filteredResume.length === 0 && (
                 <div className="vault-empty">
-                  <div className="vault-empty__icon">📖</div>
+                  <div className="vault-empty__icon" aria-hidden="true"><BookOpen size={40} strokeWidth={1.3} /></div>
                   <p>{search ? "لا نتائج للبحث." : "لا يوجد محتوى قيد القراءة. سيُسجَّل هنا كل ما تفتحه."}</p>
                 </div>
               )}

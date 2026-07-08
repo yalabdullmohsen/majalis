@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect, useRef } from "react";
+import { Heart, MapPin, Mic2, Palette, Search, Upload } from "lucide-react";
 import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { MUEZZINS, previewAdhan, stopAdhan, type Muezzin, type MuezzinStyle } from "@/lib/adhan-audio";
@@ -53,7 +54,7 @@ function MuezzinCard({ muezzin, onPreview, previewing, isFav, onToggleFav }: {
       <div className="mzp-card__head">
         <div className="mzp-card__info">
           <div className="mzp-card__name">{muezzin.name}</div>
-          <div className="mzp-card__origin">📍 {muezzin.origin} · {muezzin.country}</div>
+          <div className="mzp-card__origin"><MapPin size={11} strokeWidth={1.8} aria-hidden="true" /> {muezzin.origin} · {muezzin.country}</div>
         </div>
         <div className="mzp-card__head-actions">
           <button
@@ -184,14 +185,14 @@ export default function MuezzinsPage() {
         <div className="mzp-header__top">
           <div>
             <p className="mzp-eyebrow">الأذان</p>
-            <h1 className="mzp-title">🎙️ مكتبة المؤذنين</h1>
+            <h1 className="mzp-title"><Mic2 size={20} strokeWidth={1.6} aria-hidden="true" /> مكتبة المؤذنين</h1>
           </div>
           <Link href="/muezzins/favorites">
             <button
               type="button"
               className={`mzp-fav-link-btn${favorites.size > 0 ? " has-favs" : ""}`}
             >
-              ❤️ {favorites.size > 0 ? `${favorites.size} مفضلة` : "المفضلة"}
+              <Heart size={14} strokeWidth={2} aria-hidden="true" /> {favorites.size > 0 ? `${favorites.size} مفضلة` : "المفضلة"}
             </button>
           </Link>
         </div>
@@ -205,7 +206,7 @@ export default function MuezzinsPage() {
 
       {/* Search */}
       <div className="mzp-search-wrap">
-        <span className="mzp-search-icon">🔍</span>
+        <span className="mzp-search-icon" aria-hidden="true"><Search size={16} strokeWidth={1.8} /></span>
         <input
           type="search"
           value={query}
@@ -304,14 +305,14 @@ export default function MuezzinsPage() {
 
       {/* Upload CTA */}
       <div className="mzp-cta">
-        <div className="mzp-cta__icon">🎙️</div>
+        <div className="mzp-cta__icon" aria-hidden="true"><Mic2 size={28} strokeWidth={1.4} /></div>
         <div className="mzp-cta__info">
           <div className="mzp-cta__title">هل لديك تسجيل أذان جميل؟</div>
           <div className="mzp-cta__desc">شارك صوتك مع مجتمع المجالس — يُراجع الفريق ويُنشر في المكتبة.</div>
         </div>
         <div className="mzp-cta__btns">
           <Link href="/upload">
-            <button type="button" className="mzp-cta__upload-btn">📤 ارفع أذانك</button>
+            <button type="button" className="mzp-cta__upload-btn"><Upload size={14} strokeWidth={2} aria-hidden="true" /> ارفع أذانك</button>
           </Link>
           <Link href="/my-submissions">
             <button type="button" className="mzp-cta__submissions-btn">مساهماتي</button>
@@ -340,7 +341,7 @@ function CommunityMuezzinCard({ muezzin, previewing, onPreview }: {
       <div className="mzp-com-card__head">
         <div className="mzp-com-card__info">
           <div className="mzp-com-card__name">{muezzin.name}</div>
-          <div className="mzp-com-card__origin">📍 {muezzin.origin} · {muezzin.country}</div>
+          <div className="mzp-com-card__origin"><MapPin size={11} strokeWidth={1.8} aria-hidden="true" /> {muezzin.origin} · {muezzin.country}</div>
         </div>
         <span className="mzp-com-badge">مجتمع</span>
       </div>
@@ -350,7 +351,7 @@ function CommunityMuezzinCard({ muezzin, previewing, onPreview }: {
         </p>
       )}
       <div className="mzp-com-card__meta">
-        <span>🎨 {muezzin.style}</span>
+        <span><Palette size={12} strokeWidth={1.8} aria-hidden="true" /> {muezzin.style}</span>
         {muezzin.rating > 0 && <span>★ {muezzin.rating}</span>}
       </div>
       <button
