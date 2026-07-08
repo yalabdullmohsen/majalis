@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useSearch } from "wouter";
 import { usePageView } from "@/hooks/usePageView";
+import { applyPageSeo } from "@/lib/seo";
 import { getFatwas } from "@/lib/platform-content-service";
 import { getLatestFatwas } from "@/lib/fatwa-seed";
 import { getRulingsEncyclopedia } from "@/lib/rulings-service";
@@ -47,6 +48,15 @@ export default function FiqhPage() {
   const [loadingQ, setLoadingQ]   = useState(false);
 
   usePageView("fiqh", null);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/fiqh",
+      title: "الفقه الإسلامي — فتاوى وأحكام وأسئلة | المجلس العلمي",
+      description: "مرجع شامل في الفقه الإسلامي: فتاوى موثقة، أحكام شرعية، أسئلة وأجوبة، وقرارات المجمع الفقهي.",
+      keywords: ["فقه إسلامي", "فتاوى", "أحكام شرعية", "الفقه الحنفي", "أسئلة شرعية"],
+    });
+  }, []);
 
   useEffect(() => {
     if (activeTab === "fatawa" && fatwas.length === 0) {

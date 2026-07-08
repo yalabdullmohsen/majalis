@@ -18,6 +18,7 @@ import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 import { PageHeader, Loading } from "@/components/ui-common";
 import { HijriSacredMonthBanner } from "@/components/HijriSacredMonthBanner";
 import { getHijriDateString, gregorianToHijri } from "@/lib/hijri-utils";
+import { applyPageSeo } from "@/lib/seo";
 
 type ViewMode = "month" | "week" | "day";
 
@@ -107,6 +108,15 @@ export default function CalendarPage() {
   const [events, setEvents] = useState<CalendarEvent[]>([]);
   const [loading, setLoading] = useState(true);
   const [modalEvent, setModalEvent] = useState<CalendarEvent | null>(null);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/calendar",
+      title: "التقويم الإسلامي والدروس | المجلس العلمي",
+      description: "تقويم الدروس والمناسبات الإسلامية — عرض شهري وأسبوعي ويومي مع الأحداث والحلقات العلمية.",
+      keywords: ["تقويم إسلامي", "مواعيد دروس", "التقويم الهجري", "الأحداث الإسلامية", "جدول الدروس"],
+    });
+  }, []);
 
   useEffect(() => {
     getUnifiedActiveLessons()

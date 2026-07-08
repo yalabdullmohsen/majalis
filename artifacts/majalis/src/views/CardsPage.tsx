@@ -1,6 +1,7 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "wouter";
 import html2canvas from "html2canvas";
+import { applyPageSeo } from "@/lib/seo";
 
 type SizeKey = "square" | "story" | "wide";
 
@@ -64,6 +65,15 @@ const SIZE_MAP: Record<SizeKey, { width: number; height: number; label: string }
 
 export default function CardsPage() {
   const [quote, setQuote] = useState(DEFAULT_QUOTE);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/cards",
+      title: "بطاقات الاقتباسات الإسلامية | المجلس العلمي",
+      description: "أنشئ بطاقات اقتباسات إسلامية جميلة قابلة للمشاركة — اختر القالب والحجم وصدّر بجودة عالية.",
+      keywords: ["بطاقات إسلامية", "اقتباسات إسلامية", "بطاقات دينية", "صور إسلامية", "بطاقات قرآنية"],
+    });
+  }, []);
   const [source, setSource] = useState(DEFAULT_SOURCE);
   const [selectedTemplate, setSelectedTemplate] = useState(TEMPLATES[0]);
   const [size, setSize] = useState<SizeKey>("square");

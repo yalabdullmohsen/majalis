@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "wouter";
+import { applyPageSeo } from "@/lib/seo";
 
 type Tab = "theses" | "institutions" | "personal";
 
@@ -134,6 +135,15 @@ function PersonalTab() {
 
 export default function AcademicResearchPage() {
   const [activeTab, setActiveTab] = useState<Tab>("theses");
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/academic-research",
+      title: "الأبحاث العلمية الإسلامية | المجلس العلمي",
+      description: "مستودع شامل للرسائل الجامعية وأبحاث المؤسسات والباحثين في العلوم الإسلامية — ماجستير ودكتوراه وبحوث متخصصة.",
+      keywords: ["أبحاث إسلامية", "رسائل جامعية", "رسائل ماجستير", "رسائل دكتوراه", "بحوث شرعية"],
+    });
+  }, []);
 
   return (
     <div className="ar-page" dir="rtl">
