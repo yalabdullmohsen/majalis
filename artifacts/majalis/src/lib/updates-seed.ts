@@ -571,6 +571,33 @@ export const UPDATES_SEED: PlatformUpdate[] = [
     published_at: "2026-07-08T11:00:00Z",
     status: "approved",
   },
+  {
+    id: "update-miracles-52",
+    title: "تحديث: الإعجاز العلمي — 52 معجزة موثّقة",
+    summary: "إضافة 3 معجزات: بصمة الأصابع وفردانية الخلق، نظام النحل والخلية السداسية، دوران الليل والنهار ودلالة كلمة «يُكوِّر».",
+    update_type: "إعلان",
+    source_url: "/miracles",
+    published_at: "2026-07-08T12:00:00Z",
+    status: "approved",
+  },
+  {
+    id: "update-stories-19",
+    title: "تحديث: القصص الإسلامية — 19 قصة",
+    summary: "إضافة 3 قصص: صلاح الدين الأيوبي وفتح القدس، عمر بن الخطاب الفاروق العادل، الخوارزمي أبو الجبر والخوارزميات.",
+    update_type: "إعلان",
+    source_url: "/stories",
+    published_at: "2026-07-08T13:00:00Z",
+    status: "approved",
+  },
+  {
+    id: "update-quiz-670",
+    title: "تحديث: بنك الأسئلة يتجاوز 670 سؤالاً",
+    summary: "إضافة 10 أسئلة (661-670) في العقيدة والفقه والقرآن والسيرة والحديث والتاريخ والرقائق.",
+    update_type: "إعلان",
+    source_url: "/quiz",
+    published_at: "2026-07-08T14:00:00Z",
+    status: "approved",
+  },
 ];
 
 export function getSortedUpdates(limit?: number) {
