@@ -13598,6 +13598,90 @@ img[loading="lazy"]:not([src=""]) {
   outline-color: #059669 !important;
 }
 
+/* ══════════════════════════════════════════════════════════════════
+   §TOAST-REDESIGN — إشعارات احترافية عائمة
+   ══════════════════════════════════════════════════════════════════ */
+
+/* Viewport — يظهر في أسفل الشاشة على الجوال */
+[data-radix-toast-viewport] {
+  position: fixed !important;
+  bottom: calc(72px + env(safe-area-inset-bottom, 0px)) !important;
+  left: 50% !important;
+  right: auto !important;
+  top: auto !important;
+  transform: translateX(-50%) !important;
+  width: min(92vw, 400px) !important;
+  display: flex !important;
+  flex-direction: column-reverse !important;
+  gap: 8px !important;
+  padding: 0 !important;
+  z-index: 9999 !important;
+  pointer-events: none !important;
+}
+
+/* بطاقة الإشعار */
+.msk-toast {
+  position: relative !important;
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 12px !important;
+  padding: 14px 16px !important;
+  background: rgba(255,255,255,0.96) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  border: 1px solid rgba(0,0,0,0.08) !important;
+  border-radius: 14px !important;
+  box-shadow:
+    0 4px 24px rgba(0,0,0,0.12),
+    0 1px 4px rgba(0,0,0,0.06) !important;
+  pointer-events: all !important;
+  width: 100% !important;
+  overflow: hidden !important;
+  direction: rtl !important;
+}
+
+/* شريط جانبي ملوّن حسب النوع */
+.msk-toast::before {
+  content: "" !important;
+  position: absolute !important;
+  right: 0 !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  width: 4px !important;
+  border-radius: 0 14px 14px 0 !important;
+  background: var(--toast-strip, #059669) !important;
+}
+
+/* ألوان الأنواع */
+[data-variant="success"] .msk-toast,
+.msk-toast[data-variant="success"] {
+  --toast-strip: #059669 !important;
+}
+[data-variant="destructive"] .msk-toast,
+.msk-toast[data-variant="destructive"] {
+  --toast-strip: #DC2626 !important;
+  background: rgba(254,242,242,0.97) !important;
+}
+[data-variant="warning"] .msk-toast,
+.msk-toast[data-variant="warning"] {
+  --toast-strip: #D97706 !important;
+}
+[data-variant="info"] .msk-toast,
+.msk-toast[data-variant="info"] {
+  --toast-strip: #2563EB !important;
+}
+
+.toast-icon {
+  color: var(--toast-icon-color, #059669) !important;
+  flex-shrink: 0 !important;
+  margin-top: 1px !important;
+  width: 20px !important;
+  height: 20px !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* ── نهاية §TOAST-REDESIGN ───────────────────────────────────────── */
+
 /* ── نهاية §UI-REFRESH-2026 ─────────────────────────────────────── */
 
 /* ── نهاية §PERF-UX-2026 ─────────────────────────────────────── */

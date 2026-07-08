@@ -1,6 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useLocation } from "wouter";
 import {
+  AlertTriangle, Bell, BookMarked, BookOpen, FileText,
+  GraduationCap, HelpCircle, Layers, Lightbulb,
+  Newspaper, RotateCw, Scale, Scroll, Search, Star, Tag, User,
+} from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+import {
   intelligentSearch,
   trackSearchClick,
   type IntelligentSearchResult,
@@ -20,25 +26,25 @@ const POPULAR_QUERIES = [
   "الإخلاص", "التوبة", "الدعاء", "فضل العلم", "صلة الرحم",
 ];
 
-const KIND_META: Record<string, { label: string; icon: string; color: string }> = {
-  lesson:        { label: "درس",       icon: "📚", color: "#065F46" },
-  hadith:        { label: "حديث",      icon: "📿", color: "#1E40AF" },
-  library:       { label: "كتاب",      icon: "📖", color: "#0E6E52" },
-  fatwa:         { label: "فتوى",      icon: "🕌", color: "#5B21B6" },
-  fiqh:          { label: "فقه",       icon: "⚖️", color: "#065F46" },
-  fiqh_decision: { label: "قرار فقهي", icon: "⚖️", color: "#065F46" },
-  ruling:        { label: "حكم",       icon: "📋", color: "#1E40AF" },
-  fawaid:        { label: "فائدة",     icon: "💡", color: "#0E6E52" },
-  qa:            { label: "سؤال",      icon: "❓", color: "#5B21B6" },
-  quran:         { label: "قرآن",      icon: "📗", color: "#065F46" },
-  course:        { label: "دورة",      icon: "🎓", color: "#1E40AF" },
-  miracle:       { label: "إعجاز",     icon: "✨", color: "#0E6E52" },
-  article:       { label: "مقال",      icon: "📰", color: "#5B21B6" },
-  update:        { label: "مستجد",     icon: "🔔", color: "#0E6E52" },
-  topic:         { label: "موضوع",     icon: "🏷️", color: "#1E40AF" },
-  knowledge:     { label: "معرفة",     icon: "🧠", color: "#065F46" },
-  sheikh:        { label: "شيخ",       icon: "👤", color: "#5B21B6" },
-  adhkar:        { label: "ذكر",       icon: "📿", color: "#065F46" },
+const KIND_META: Record<string, { label: string; Icon: LucideIcon; color: string }> = {
+  lesson:        { label: "درس",       Icon: GraduationCap, color: "#065F46" },
+  hadith:        { label: "حديث",      Icon: Scroll,        color: "#1E40AF" },
+  library:       { label: "كتاب",      Icon: BookOpen,      color: "#0E6E52" },
+  fatwa:         { label: "فتوى",      Icon: Scale,         color: "#5B21B6" },
+  fiqh:          { label: "فقه",       Icon: Scale,         color: "#065F46" },
+  fiqh_decision: { label: "قرار فقهي", Icon: Scale,         color: "#065F46" },
+  ruling:        { label: "حكم",       Icon: FileText,      color: "#1E40AF" },
+  fawaid:        { label: "فائدة",     Icon: Lightbulb,     color: "#0E6E52" },
+  qa:            { label: "سؤال",      Icon: HelpCircle,    color: "#5B21B6" },
+  quran:         { label: "قرآن",      Icon: BookMarked,    color: "#065F46" },
+  course:        { label: "دورة",      Icon: GraduationCap, color: "#1E40AF" },
+  miracle:       { label: "إعجاز",     Icon: Star,          color: "#0E6E52" },
+  article:       { label: "مقال",      Icon: Newspaper,     color: "#5B21B6" },
+  update:        { label: "مستجد",     Icon: Bell,          color: "#0E6E52" },
+  topic:         { label: "موضوع",     Icon: Tag,           color: "#1E40AF" },
+  knowledge:     { label: "معرفة",     Icon: Layers,        color: "#065F46" },
+  sheikh:        { label: "شيخ",       Icon: User,          color: "#5B21B6" },
+  adhkar:        { label: "ذكر",       Icon: RotateCw,      color: "#065F46" },
 };
 
 const FILTER_CHIPS: { key: string; label: string }[] = [
@@ -99,14 +105,14 @@ function ResultCard({
   query: string;
   onSelect: (r: IntelligentSearchResult) => void;
 }) {
-  const meta = KIND_META[result.kind] ?? { label: result.kind, icon: "📄", color: "#5B21B6" };
+  const meta = KIND_META[result.kind] ?? { label: result.kind, Icon: FileText, color: "#5B21B6" };
   return (
     <button
       type="button"
       onClick={() => onSelect(result)}
       className="gsm-result-btn"
     >
-      <span className="gsm-result-icon">{meta.icon}</span>
+      <span className="gsm-result-icon"><meta.Icon size={18} strokeWidth={1.8} aria-hidden="true" /></span>
       <div className="gsm-result-body">
         <p className="gsm-result-title">
           <Highlight text={result.title} query={query} />
@@ -389,12 +395,12 @@ export function GlobalSearchModal({ onClose }: Props) {
                 <p className="gsm-section__label">تصفح</p>
                 <div className="gsm-quicklinks">
                   {[
-                    { href: "/quran",   label: "القرآن",  icon: "📗" },
-                    { href: "/adhkar",  label: "الأذكار", icon: "📿" },
-                    { href: "/lessons", label: "الدروس",  icon: "📚" },
-                    { href: "/fatwa",   label: "الفتاوى", icon: "🕌" },
-                    { href: "/library", label: "المكتبة", icon: "📖" },
-                    { href: "/qa",      label: "الأسئلة", icon: "❓" },
+                    { href: "/quran",   label: "القرآن",  Icon: BookMarked },
+                    { href: "/adhkar",  label: "الأذكار", Icon: RotateCw },
+                    { href: "/lessons", label: "الدروس",  Icon: GraduationCap },
+                    { href: "/fatwa",   label: "الفتاوى", Icon: Scale },
+                    { href: "/library", label: "المكتبة", Icon: BookOpen },
+                    { href: "/qa",      label: "الأسئلة", Icon: HelpCircle },
                   ].map((l) => (
                     <button
                       key={l.href}
@@ -402,7 +408,8 @@ export function GlobalSearchModal({ onClose }: Props) {
                       onClick={() => { onClose(); navigate(l.href); }}
                       className="gsm-quicklink-btn"
                     >
-                      {l.icon} {l.label}
+                      <l.Icon size={14} strokeWidth={1.8} aria-hidden="true" />
+                      {l.label}
                     </button>
                   ))}
                 </div>
@@ -414,7 +421,7 @@ export function GlobalSearchModal({ onClose }: Props) {
 
           {!isEmpty && error && !loading && (
             <div className="gsm-error-state">
-              <p className="gsm-state-icon">⚠️</p>
+              <p className="gsm-state-icon"><AlertTriangle size={32} strokeWidth={1.5} aria-hidden="true" /></p>
               <p className="gsm-state-title">تعذر الاتصال</p>
               <p className="gsm-state-hint">تحقق من الاتصال بالإنترنت وأعد المحاولة.</p>
               <button type="button" onClick={() => doSearch(query, activeFilter)} className="gsm-retry-btn">
@@ -425,7 +432,7 @@ export function GlobalSearchModal({ onClose }: Props) {
 
           {!isEmpty && !loading && !error && !hasResults && (
             <div className="gsm-empty-state">
-              <p className="gsm-state-icon">🔍</p>
+              <p className="gsm-state-icon"><Search size={32} strokeWidth={1.5} aria-hidden="true" /></p>
               <p className="gsm-state-title">لا نتائج لـ «{query}»</p>
               <p className="gsm-state-hint">جرب تبسيط الكلمة أو إزالة التشكيل.</p>
               <div className="gsm-pills gsm-pills--center">
