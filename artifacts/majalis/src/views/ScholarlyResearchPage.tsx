@@ -103,9 +103,9 @@ export default function ScholarlyResearchPage() {
         answer_snapshot:  result.answer,
         sources_snapshot: result.sources,
       });
-      setSaveMsg(saved.ok ? "✅ تم الحفظ في مكتبتك" : "❌ فشل الحفظ");
+      setSaveMsg(saved.ok ? "تم الحفظ في مكتبتك" : "فشل الحفظ");
     } catch {
-      setSaveMsg("❌ فشل الحفظ");
+      setSaveMsg("فشل الحفظ");
     } finally {
       setTimeout(() => setSaveMsg(null), 4000);
     }

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import {
-  Award, BookOpen, CheckCircle2, Handshake, Library, Lightbulb, RefreshCw, ScrollText, Moon, Search, Send, Star, Scale, Building2, Landmark, Gem, Trophy, XCircle,
+  Award, BookOpen, CheckCircle2, Handshake, Library, Lightbulb, RefreshCw, ScrollText, Moon, Search, Send, Star, Scale, Building2, Landmark, Gem, Trophy, XCircle, Zap,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -363,7 +363,7 @@ function SetupPhase({ onStart }: { onStart: (cats: string[], names: [string, str
       </section>
 
       <section className="qzg-section-card qzg-section-card--mb-lg">
-        <h3 className="qzg-lifelines-h3">⚡ وسائل المساعدة (لكل فريق 3 وسائل)</h3>
+        <h3 className="qzg-lifelines-h3"><Zap size={14} className="inline ml-1" />وسائل المساعدة (لكل فريق 3 وسائل)</h3>
         <div className="qzg-lifelines-grid">
           {([
             ["#FFB347", "خصم نقاط", "تُخصم نقاط الخلية من رصيد الخصم"],
@@ -551,7 +551,7 @@ function QuestionPhase({
       )}
 
       <div className="qzg-section-card">
-        <p className="qzg-lifelines-label">⚡ وسائل المساعدة — {activeTeamObj.name}</p>
+        <p className="qzg-lifelines-label"><Zap size={14} className="inline ml-1" />وسائل المساعدة — {activeTeamObj.name}</p>
         <div className="qzg-lifelines-flex">
           {activeTeamObj.lifelines.penalize && (
             <button type="button" onClick={() => dispatch({ type: "USE_LIFELINE_PENALIZE" })}

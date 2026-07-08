@@ -341,7 +341,7 @@ export default function LearningPlanPage() {
               ← رجوع
             </button>
             <button type="button" className="lp-wizard__next" onClick={buildPlan}>
-              ابنِ خطتي ✨
+              ابنِ خطتي
             </button>
           </div>
         </>
