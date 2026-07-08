@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "wouter";
+import { Menu, Search, X } from "lucide-react";
 import { useAuth } from "./AuthProvider";
 import { useLanguage } from "./LanguageProvider";
 import NotificationBell from "./NotificationBell";
@@ -125,15 +126,10 @@ export default function NavBar() {
               aria-label={isMenuOpen ? t("nav_close") : t("nav_menu")}
             >
               <span className="navbar-menu-btn__geo" aria-hidden="true" />
-              {isMenuOpen ? (
-                <svg className="navbar-menu-btn__icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                  <path d="M2.5 2.5L13.5 13.5M13.5 2.5L2.5 13.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
-                </svg>
-              ) : (
-                <svg className="navbar-menu-btn__icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                  <path d="M1 4h14M1 8h14M1 12h14" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"/>
-                </svg>
-              )}
+              {isMenuOpen
+                ? <X className="navbar-menu-btn__icon" size={16} strokeWidth={1.8} aria-hidden="true" />
+                : <Menu className="navbar-menu-btn__icon" size={16} strokeWidth={1.7} aria-hidden="true" />
+              }
               <span className="navbar-menu-btn__label">{isMenuOpen ? t("nav_close") : t("nav_menu")}</span>
             </button>
             <Link href="/" className="navbar-brand" aria-label="مجالس">
@@ -177,10 +173,7 @@ export default function NavBar() {
               title="البحث الشامل"
               className="navbar-search-cmd"
             >
-              <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
-                <circle cx="6.5" cy="6.5" r="5" stroke="currentColor" strokeWidth="1.4"/>
-                <path d="M11 11L13.5 13.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
-              </svg>
+              <Search size={15} strokeWidth={1.4} aria-hidden="true" />
               <span className="navbar-search-hint">بحث</span>
             </button>
             {/* Desktop: search + auth + lang */}

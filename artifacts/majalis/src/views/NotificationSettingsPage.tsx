@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
+import { Archive, Trash2 } from "lucide-react";
 import { PageHeader } from "@/components/ui-common";
 import {
   loadNotifPrefs,
@@ -79,11 +80,11 @@ function NotifRow({ rec, onRead, onArchive, onDelete }: {
       <div className="nh-row__actions" onClick={e => e.stopPropagation()}>
         {!rec.isArchived && (
           <button type="button" className="nh-action" onClick={onArchive} title="أرشفة" aria-label="أرشفة">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+            <Archive size={14} strokeWidth={2} aria-hidden="true" />
           </button>
         )}
         <button type="button" className="nh-action nh-action--del" onClick={onDelete} title="حذف" aria-label="حذف">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2"/></svg>
+          <Trash2 size={14} strokeWidth={2} aria-hidden="true" />
         </button>
       </div>
     </div>

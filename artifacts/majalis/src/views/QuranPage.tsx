@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState, memo } from "react";
+import { Bookmark, ChevronLeft, ChevronRight, List, Moon, Search, Sun, X } from "lucide-react";
 import "@/styles/mushaf.css";
 import { applyPageSeo } from "@/lib/seo";
 
@@ -325,9 +326,7 @@ export default function QuranPage() {
       {/* ══ شريط علوي ══ */}
       <header className={`mshf-top${uiOn ? " on" : ""}`}>
         <button type="button" className="mshf-back" onClick={() => window.history.back()} aria-label="رجوع">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-            <path d="M15 18l-6-6 6-6"/>
-          </svg>
+          <ChevronLeft size={20} strokeWidth={2.2} aria-hidden="true" />
         </button>
 
         <div className="mshf-title-wrap">
@@ -347,9 +346,7 @@ export default function QuranPage() {
             onClick={toggleBookmark}
             aria-label={isBookmarked ? "إزالة العلامة" : "إضافة علامة"}
           >
-            <svg width="17" height="17" viewBox="0 0 24 24" fill={isBookmarked ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2">
-              <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/>
-            </svg>
+            <Bookmark size={17} strokeWidth={2} fill={isBookmarked ? "currentColor" : "none"} aria-hidden="true" />
           </button>
 
           <button
@@ -359,27 +356,13 @@ export default function QuranPage() {
             aria-label={nightMode ? "الوضع النهاري" : "الوضع الليلي"}
           >
             {nightMode
-              ? <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                  <circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/>
-                  <line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/>
-                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-                  <line x1="2" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22" y2="12"/>
-                  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-                </svg>
-              : <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                </svg>
+              ? <Sun size={16} strokeWidth={2} aria-hidden="true" />
+              : <Moon size={16} strokeWidth={2} aria-hidden="true" />
             }
           </button>
 
           <button type="button" className="mshf-icon-btn" onClick={() => openNav("surahs")} aria-label="الفهرس">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/>
-              <line x1="8" y1="18" x2="21" y2="18"/>
-              <circle cx="3" cy="6" r="1" fill="currentColor" stroke="none"/>
-              <circle cx="3" cy="12" r="1" fill="currentColor" stroke="none"/>
-              <circle cx="3" cy="18" r="1" fill="currentColor" stroke="none"/>
-            </svg>
+            <List size={17} strokeWidth={2} aria-hidden="true" />
           </button>
         </div>
       </header>
@@ -430,9 +413,7 @@ export default function QuranPage() {
           disabled={page <= 1}
           aria-label="السابقة"
         >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-            <path d="M15 18l-6-6 6-6"/>
-          </svg>
+          <ChevronLeft size={20} strokeWidth={2.2} aria-hidden="true" />
         </button>
 
         <div className="mshf-pgnum">
@@ -472,9 +453,7 @@ export default function QuranPage() {
           disabled={page >= TOTAL}
           aria-label="التالية"
         >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-            <path d="M9 18l6-6-6-6"/>
-          </svg>
+          <ChevronRight size={20} strokeWidth={2.2} aria-hidden="true" />
         </button>
       </footer>
 
@@ -499,18 +478,14 @@ export default function QuranPage() {
                 ))}
               </div>
               <button type="button" className="mshf-sheet-close" onClick={() => setNavOpen(false)} aria-label="إغلاق">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-                  <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-                </svg>
+                <X size={16} strokeWidth={2.2} aria-hidden="true" />
               </button>
             </div>
 
             {/* بحث السور */}
             {navTab === "surahs" && (
               <div className="mshf-search-bar">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                  <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                </svg>
+                <Search size={14} strokeWidth={2} aria-hidden="true" />
                 <input
                   ref={searchRef}
                   className="mshf-search-input"
@@ -598,9 +573,7 @@ export default function QuranPage() {
                 <div className="mshf-bm-list">
                   {bookmarks.length === 0 ? (
                     <div className="mshf-empty mshf-empty--center">
-                      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
-                        <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/>
-                      </svg>
+                      <Bookmark size={36} strokeWidth={1.5} aria-hidden="true" />
                       <p>لا توجد علامات محفوظة</p>
                       <p className="mshf-empty-sub">اضغط على أيقونة العلامة لحفظ صفحة</p>
                     </div>
@@ -609,9 +582,7 @@ export default function QuranPage() {
                     return (
                       <div key={p} className="mshf-bm-row">
                         <button type="button" className="mshf-bm-btn" onClick={() => goTo(p)}>
-                          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="none">
-                            <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/>
-                          </svg>
+                          <Bookmark size={13} fill="currentColor" stroke="none" aria-hidden="true" />
                           <div className="mshf-bm-info">
                             <span className="mshf-bm-page">صفحة {p}</span>
                             <span className="mshf-bm-surah">{s}</span>

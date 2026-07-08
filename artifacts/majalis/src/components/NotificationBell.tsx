@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
+import { Bell, Settings2 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
 function relativeTime(iso: string): string {
@@ -91,9 +92,7 @@ export default function NotificationBell() {
         aria-haspopup="dialog"
         className={`nb-btn${unread > 0 ? " nb-btn--live" : ""}${open ? " nb-btn--open" : ""}`}
       >
-        <svg className="nb-icon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
-          <path fill="currentColor" d="M12 2a5 5 0 0 0-5 5v2.1c0 .9-.3 1.8-.9 2.5L4.8 14.2A1 1 0 0 0 5.7 16H18.3a1 1 0 0 0 .9-1.5l-1.3-2.6a4 4 0 0 1-.9-2.5V7a5 5 0 0 0-5-5zm0 20a2.5 2.5 0 0 0 2.45-2h-4.9A2.5 2.5 0 0 0 12 22z"/>
-        </svg>
+        <Bell className="nb-icon" size={22} strokeWidth={1.8} aria-hidden="true" />
         {unread > 0 && (
           <span className="nb-badge" aria-label={`${unread} إشعارات غير مقروءة`}>
             {unread > 9 ? "9+" : unread}
@@ -123,9 +122,7 @@ export default function NotificationBell() {
             {notifications.length === 0 ? (
               <div className="nb-empty">
                 <div className="nb-empty__ring" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" strokeWidth="1.5">
-                    <path d="M12 2a5 5 0 0 0-5 5v2.1c0 .9-.3 1.8-.9 2.5L4.8 14.2A1 1 0 0 0 5.7 16H18.3a1 1 0 0 0 .9-1.5l-1.3-2.6a4 4 0 0 1-.9-2.5V7a5 5 0 0 0-5-5zm0 20a2.5 2.5 0 0 0 2.45-2h-4.9A2.5 2.5 0 0 0 12 22z"/>
-                  </svg>
+                  <Bell size={28} strokeWidth={1.5} />
                 </div>
                 <p className="nb-empty__msg">لا توجد إشعارات</p>
                 <p className="nb-empty__sub">سنُخبرك بكل جديد</p>
@@ -147,7 +144,7 @@ export default function NotificationBell() {
           {/* تذييل */}
           <div className="nb-foot">
             <Link href="/notifications" className="nb-foot__link" onClick={() => setOpen(false)}>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+              <Settings2 size={14} strokeWidth={2} aria-hidden="true" />
               إعدادات الإشعارات
             </Link>
           </div>

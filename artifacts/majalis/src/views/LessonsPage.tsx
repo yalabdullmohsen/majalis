@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState, useCallback } from "react";
+import { Pencil, Trash2 } from "lucide-react";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { useLocation } from "wouter";
 import { PageHeader } from "@/components/ui-common";
@@ -398,9 +399,7 @@ export default function LessonsPage({
                 className="lesson-admin-btn lesson-admin-btn--edit"
                 title="تعديل"
               >
-                <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                  <path d="M9.5 1.5L12.5 4.5L4 13H1V10L9.5 1.5Z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round"/>
-                </svg>
+                <Pencil size={13} strokeWidth={1.4} aria-hidden="true" />
                 تعديل
               </a>
               {!lesson.id.startsWith("kw-") && (
@@ -410,9 +409,7 @@ export default function LessonsPage({
                   title="حذف"
                   onClick={() => handleAdminDelete(lesson.id)}
                 >
-                  <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                    <path d="M2 3.5h10M5 3.5V2h4v1.5M5.5 6v4M8.5 6v4M3 3.5l.5 8h7l.5-8" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
+                  <Trash2 size={13} strokeWidth={1.4} aria-hidden="true" />
                   حذف
                 </button>
               )}

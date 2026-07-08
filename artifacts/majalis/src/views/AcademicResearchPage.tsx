@@ -5,7 +5,7 @@ import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import {
   BookOpen, Briefcase, Building2, FlaskConical, Globe,
-  GraduationCap, Landmark, Layers, Library, Moon, PenLine, Scale, ScrollText,
+  GraduationCap, Landmark, Layers, Library, Moon, PenLine, Scale, ScrollText, Search,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
@@ -60,9 +60,7 @@ function ThesesTab() {
   return (
     <div className="ar-tab-body">
       <div className="ar-search-bar">
-        <svg className="ar-search-bar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-        </svg>
+        <Search className="ar-search-bar__icon" size={16} strokeWidth={2} aria-hidden="true" />
         <input
           className="ar-search-bar__input"
           placeholder="ابحث في رسائل الماجستير والدكتوراه…"
@@ -94,9 +92,7 @@ function InstitutionsTab() {
   return (
     <div className="ar-tab-body">
       <div className="ar-search-bar">
-        <svg className="ar-search-bar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-        </svg>
+        <Search className="ar-search-bar__icon" size={16} strokeWidth={2} aria-hidden="true" />
         <input
           className="ar-search-bar__input"
           placeholder="ابحث في أبحاث المؤسسات والجامعات…"
@@ -205,9 +201,7 @@ export default function AcademicResearchPage() {
       {/* رابط الباحث الشرعي */}
       <div className="ar-footer-link">
         <Link href="/scholarly-research" className="ar-footer-link__btn">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-            <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
-          </svg>
+          <Search size={16} strokeWidth={2} aria-hidden="true" />
           البحث بالذكاء الاصطناعي في المصادر الشرعية
         </Link>
       </div>
