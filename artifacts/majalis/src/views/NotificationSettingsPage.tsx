@@ -78,11 +78,11 @@ function NotifRow({ rec, onRead, onArchive, onDelete }: {
       </div>
       <div className="nh-row__actions" onClick={e => e.stopPropagation()}>
         {!rec.isArchived && (
-          <button className="nh-action" onClick={onArchive} title="أرشفة" aria-label="أرشفة">
+          <button type="button" className="nh-action" onClick={onArchive} title="أرشفة" aria-label="أرشفة">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
           </button>
         )}
-        <button className="nh-action nh-action--del" onClick={onDelete} title="حذف" aria-label="حذف">
+        <button type="button" className="nh-action nh-action--del" onClick={onDelete} title="حذف" aria-label="حذف">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2"/></svg>
         </button>
       </div>
@@ -226,17 +226,17 @@ export default function NotificationSettingsPage() {
           </h2>
           <div className="nh-header__actions">
             {unread > 0 && (
-              <button className="nh-btn" onClick={handleMarkAll}>تعليم الكل مقروءاً</button>
+              <button type="button" className="nh-btn" onClick={handleMarkAll}>تعليم الكل مقروءاً</button>
             )}
             {!confirmClear ? (
-              <button className="nh-btn nh-btn--danger" onClick={() => setConfirmClear(true)}>
+              <button type="button" className="nh-btn nh-btn--danger" onClick={() => setConfirmClear(true)}>
                 حذف الكل
               </button>
             ) : (
               <span className="nsp-confirm-row">
                 <span className="nsp-confirm-label">تأكيد؟</span>
-                <button className="nh-btn nh-btn--danger" onClick={handleClearAll}>نعم</button>
-                <button className="nh-btn" onClick={() => setConfirmClear(false)}>إلغاء</button>
+                <button type="button" className="nh-btn nh-btn--danger" onClick={handleClearAll}>نعم</button>
+                <button type="button" className="nh-btn" onClick={() => setConfirmClear(false)}>إلغاء</button>
               </span>
             )}
           </div>
@@ -252,15 +252,15 @@ export default function NotificationSettingsPage() {
             placeholder="ابحث في الإشعارات…"
             aria-label="بحث في الإشعارات"
           />
-          {searchQ && <button className="nh-search-clear" onClick={() => setSearchQ("")}>✕</button>}
+          {searchQ && <button type="button" aria-label="مسح البحث" className="nh-search-clear" onClick={() => setSearchQ("")}>✕</button>}
         </div>
 
         {/* تبويبات */}
         <div className="nh-tabs">
-          <button className={`nh-tab${histTab === "inbox" ? " nh-tab--active" : ""}`} onClick={() => setHistTab("inbox")}>
+          <button type="button" className={`nh-tab${histTab === "inbox" ? " nh-tab--active" : ""}`} onClick={() => setHistTab("inbox")}>
             الصندوق {unread > 0 && `(${unread})`}
           </button>
-          <button className={`nh-tab${histTab === "archived" ? " nh-tab--active" : ""}`} onClick={() => setHistTab("archived")}>
+          <button type="button" className={`nh-tab${histTab === "archived" ? " nh-tab--active" : ""}`} onClick={() => setHistTab("archived")}>
             المؤرشف
           </button>
         </div>

@@ -134,6 +134,7 @@ function ProphetCard({
 
       {/* زر المفضلة */}
       <button
+        type="button"
         className="prophet-lux-card__bookmark"
         onClick={onBookmark}
         aria-label={isBookmarked ? "إزالة من المفضلة" : "إضافة للمفضلة"}
@@ -190,7 +191,7 @@ function ProphetDetailView({
   if (!p) {
     return (
       <div className="prophet-not-found">
-        <button className="prophet-lux-back" onClick={onBack}>← العودة</button>
+        <button type="button" className="prophet-lux-back" onClick={onBack}>← العودة</button>
         <p className="prophet-not-found__msg">النبي غير موجود</p>
       </div>
     );
@@ -215,21 +216,22 @@ function ProphetDetailView({
     <div className="prophet-detail-lux" style={{ "--prophet-color": color } as React.CSSProperties}>
       {/* زر العودة */}
       <div className="prophet-detail-lux__topbar">
-        <button className="prophet-lux-back" onClick={onBack}>← قائمة الأنبياء</button>
+        <button type="button" className="prophet-lux-back" onClick={onBack}>← قائمة الأنبياء</button>
         <div className="prophet-detail-lux__actions">
           <button
+            type="button"
             className="prophet-action-btn"
             onClick={onBookmark}
             title={isBookmarked ? "إزالة من المفضلة" : "حفظ في المفضلة"}
           >
             {isBookmarked ? "❤️ محفوظ" : "🤍 احفظ"}
           </button>
-          <button className="prophet-action-btn" onClick={share} title="مشاركة">
+          <button type="button" className="prophet-action-btn" onClick={share} title="مشاركة">
             🔗 شارك
           </button>
           <div className="prophet-font-controls">
-            <button onClick={() => setFontSize(s => Math.max(13, s - 1))} title="تصغير الخط">أ−</button>
-            <button onClick={() => setFontSize(s => Math.min(22, s + 1))} title="تكبير الخط">أ+</button>
+            <button type="button" onClick={() => setFontSize(s => Math.max(13, s - 1))} title="تصغير الخط" aria-label="تصغير الخط">أ−</button>
+            <button type="button" onClick={() => setFontSize(s => Math.min(22, s + 1))} title="تكبير الخط" aria-label="تكبير الخط">أ+</button>
           </div>
         </div>
       </div>
@@ -378,13 +380,13 @@ function ProphetDetailView({
       {/* التنقل بين الأنبياء */}
       <div className="prophet-nav-lux">
         {prevProphet ? (
-          <button className="prophet-nav-lux__btn" onClick={() => onNavigate(prevProphet.slug)}>
+          <button type="button" className="prophet-nav-lux__btn" onClick={() => onNavigate(prevProphet.slug)}>
             <span className="prophet-nav-lux__dir">← السابق</span>
             <span className="prophet-nav-lux__pname">{prevProphet.arabicName}</span>
           </button>
         ) : <span />}
         {nextProphet ? (
-          <button className="prophet-nav-lux__btn prophet-nav-lux__btn--next" onClick={() => onNavigate(nextProphet.slug)}>
+          <button type="button" className="prophet-nav-lux__btn prophet-nav-lux__btn--next" onClick={() => onNavigate(nextProphet.slug)}>
             <span className="prophet-nav-lux__dir">التالي →</span>
             <span className="prophet-nav-lux__pname">{nextProphet.arabicName}</span>
           </button>
@@ -406,6 +408,7 @@ function TimelineView({ onSelect }: { onSelect: (slug: string) => void }) {
         return (
           <div key={p.slug} className={`prophet-timeline__item prophet-timeline__item--${side}`} style={{ "--item-color": color } as React.CSSProperties}>
             <button
+              type="button"
               className="prophet-timeline__dot"
               onClick={() => onSelect(p.slug)}
               aria-label={`قصة ${p.arabicName}`}
@@ -457,7 +460,7 @@ function QuizView({ onClose }: { onClose: () => void }) {
           <p className="prophet-quiz__remark">
             {pct >= 80 ? "ممتاز! أنت عارف بقصص الأنبياء 🌟" : pct >= 60 ? "جيد! استمر في التعلم" : "واصل القراءة لتتعلم أكثر"}
           </p>
-          <button className="prophet-quiz__btn" onClick={onClose}>العودة للقائمة</button>
+          <button type="button" className="prophet-quiz__btn" onClick={onClose}>العودة للقائمة</button>
         </div>
       </div>
     );
@@ -470,7 +473,7 @@ function QuizView({ onClose }: { onClose: () => void }) {
         <div className="prophet-quiz__progress">
           <div className="prophet-quiz__progress-bar" style={{ "--quiz-pct": `${(idx / QUIZ_QUESTIONS.length) * 100}%` } as React.CSSProperties} />
         </div>
-        <button className="prophet-quiz__close" onClick={onClose}>✕</button>
+        <button type="button" aria-label="إغلاق الاختبار" className="prophet-quiz__close" onClick={onClose}>✕</button>
       </div>
       <div className="prophet-quiz__body">
         <IslamicStar size={36} color={GOLD} />
@@ -483,7 +486,7 @@ function QuizView({ onClose }: { onClose: () => void }) {
               else if (opt === answered) cls += " prophet-quiz__opt--wrong";
             }
             return (
-              <button key={opt} className={cls} onClick={() => answer(opt)}>{opt}</button>
+              <button type="button" key={opt} className={cls} onClick={() => answer(opt)}>{opt}</button>
             );
           })}
         </div>
@@ -588,6 +591,7 @@ export default function ProphetStoriesPage() {
             {(["grid", "timeline", "bookmarks", "quiz"] as const).map(v => (
               <button
                 key={v}
+                type="button"
                 className={`prophets-lux-tab ${view === v ? "prophets-lux-tab--active" : ""}`}
                 onClick={() => setView(v)}
               >
@@ -620,7 +624,7 @@ export default function ProphetStoriesPage() {
                   aria-label="بحث في قصص الأنبياء"
                 />
                 {search && (
-                  <button className="prophets-lux-search-clear" onClick={() => setSearch("")}>✕</button>
+                  <button type="button" aria-label="مسح البحث" className="prophets-lux-search-clear" onClick={() => setSearch("")}>✕</button>
                 )}
               </div>
 
