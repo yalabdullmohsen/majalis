@@ -415,7 +415,14 @@ function TimelineView({ onSelect }: { onSelect: (slug: string) => void }) {
             >
               <IslamicStar size={16} color="#fff" />
             </button>
-            <div className="prophet-timeline__card" onClick={() => onSelect(p.slug)}>
+            <div
+              className="prophet-timeline__card"
+              onClick={() => onSelect(p.slug)}
+              role="button"
+              tabIndex={0}
+              aria-label={`عرض قصة ${p.arabicName}`}
+              onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && onSelect(p.slug)}
+            >
               <h3 className="prophet-timeline__name">{p.arabicName}</h3>
               <p className="prophet-timeline__title">{p.title}</p>
               <p className="prophet-timeline__era">{p.era}</p>

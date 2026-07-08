@@ -201,7 +201,15 @@ export function IslamicStoriesSection() {
             return (
               <div key={story.id} className={`is-card${story.is_approved ? " approved" : ""}`}>
                 {/* Header */}
-                <div className="is-card-head" onClick={() => toggleExpand(story.id)}>
+                <div
+                  className="is-card-head"
+                  onClick={() => toggleExpand(story.id)}
+                  role="button"
+                  tabIndex={0}
+                  aria-expanded={isExpanded}
+                  aria-label={`${isExpanded ? "طي" : "توسيع"} قصة ${story.title}`}
+                  onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && toggleExpand(story.id)}
+                >
                   <span className="is-icon">{story.icon}</span>
                   <div className="is-info">
                     <div className="is-name">{story.title}</div>

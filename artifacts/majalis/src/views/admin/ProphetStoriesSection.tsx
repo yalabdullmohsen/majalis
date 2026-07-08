@@ -309,7 +309,15 @@ function StoryCard({
 
   return (
     <div className={`ps-card ${story.is_approved ? "approved" : ""} ${editing ? "editing" : ""}`}>
-      <div className="ps-card-head" onClick={handleHeadClick}>
+      <div
+        className="ps-card-head"
+        onClick={handleHeadClick}
+        role="button"
+        tabIndex={0}
+        aria-expanded={open}
+        aria-label={`${open ? "طي" : "توسيع"} ${story.arabic_name}`}
+        onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && handleHeadClick()}
+      >
         <span className="ps-name">{story.arabic_name}</span>
         {editing
           ? <span className="ps-badge edit-mode">✏ تعديل</span>
