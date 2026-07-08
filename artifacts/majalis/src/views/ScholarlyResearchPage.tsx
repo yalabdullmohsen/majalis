@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import { BookOpen, FlaskConical, Search } from "lucide-react";
+import { AlertTriangle, BookOpen, Download, FlaskConical, Save, Search } from "lucide-react";
 import { Spinner } from "@/components/ui/spinner";
 import { ResearchAnswer } from "@/components/rag/ResearchAnswer";
 import {
@@ -211,7 +211,7 @@ export default function ScholarlyResearchPage() {
                       className="px-3 py-2 text-sm bg-[var(--majalis-parchment-deep)] text-[var(--majalis-ink)]
                         rounded-xl hover:bg-[var(--mn-surface-hover)] transition-colors"
                     >
-                      💾
+                      <Save size={15} />
                     </button>
                     <button
                       type="button"
@@ -220,7 +220,7 @@ export default function ScholarlyResearchPage() {
                       className="px-3 py-2 text-sm bg-[var(--majalis-parchment-deep)] text-[var(--majalis-ink)]
                         rounded-xl hover:bg-[var(--mn-surface-hover)] transition-colors"
                     >
-                      ⬇️
+                      <Download size={15} />
                     </button>
                   </>
                 )}
@@ -266,7 +266,7 @@ export default function ScholarlyResearchPage() {
             {error && !loading && (
               <div className="bg-[var(--majalis-danger-muted)] border border-[var(--majalis-danger)]
                 rounded-xl p-4 text-sm text-[var(--majalis-danger)]">
-                ⚠️ {error}
+                <AlertTriangle size={13} className="inline ml-1" />{error}
               </div>
             )}
 

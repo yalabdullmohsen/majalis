@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ClipboardList, FileText, Flame, FolderOpen, Pencil, Star } from "lucide-react";
+import { ClipboardList, Download, FileText, Flame, FolderOpen, Link2, Pencil, Printer, Star } from "lucide-react";
 import { Link } from "wouter";
 import { Spinner } from "@/components/ui/spinner";
 import {
@@ -194,7 +194,7 @@ export default function MyCitationsPage() {
                   type="button"
                   className="flex items-center gap-1.5 px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-[var(--majalis-panel)] text-[var(--majalis-ink-soft)] hover:border-emerald-500 transition-colors"
                 >
-                  ⬇️ تصدير
+                  <Download size={13} className="inline ml-1" /> تصدير
                 </button>
                 <div className="absolute top-full right-0 mt-1 bg-[var(--majalis-panel)] border border-[var(--majalis-line)] rounded-lg shadow-xl z-50 min-w-[140px] hidden group-hover:block">
                   <button
@@ -209,7 +209,7 @@ export default function MyCitationsPage() {
                     onClick={() => handleExport("pdf")}
                     className="block w-full text-right px-4 py-2 text-sm text-[var(--majalis-ink-soft)] hover:bg-[var(--mn-surface-hover)]"
                   >
-                    🖨️ PDF (طباعة)
+                    <Printer size={13} className="inline ml-1" /> PDF (طباعة)
                   </button>
                 </div>
               </div>
@@ -446,7 +446,7 @@ export default function MyCitationsPage() {
                             href={`/c/${cit.deep_link_slug}`}
                             className="text-xs text-[var(--majalis-emerald)] hover:underline"
                           >
-                            🔗 عرض الاقتباس
+                            <Link2 size={12} className="inline ml-1" /> عرض الاقتباس
                           </Link>
                         )}
                         <button

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { AlertTriangle, Clock, Globe, RotateCw } from "lucide-react";
 import { Link } from "wouter";
 import { AdminShell, useAdminShell } from "@/views/admin/AdminShell";
 import {
@@ -391,7 +392,7 @@ function AdminContent() {
             <div key={r.id} className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4">
               <div className="flex items-start gap-3">
                 <span className="text-lg flex-shrink-0">
-                  {r.reminder_type === "annual_check" ? "🔄" : r.reminder_type === "deadline_approaching" ? "⏰" : "⚠️"}
+                  {r.reminder_type === "annual_check" ? <RotateCw size={16} /> : r.reminder_type === "deadline_approaching" ? <Clock size={16} /> : <AlertTriangle size={16} />}
                 </span>
                 <div className="flex-1 min-w-0">
                   <p className="font-semibold text-sm text-gray-800 dark:text-gray-100">
@@ -404,7 +405,7 @@ function AdminContent() {
                   {r.universities?.website_url && (
                     <a href={r.universities.website_url} target="_blank" rel="noopener noreferrer"
                       className="text-xs text-emerald-600 dark:text-emerald-400 hover:underline mt-1 block">
-                      🌐 فتح الموقع الرسمي للمراجعة ↗
+                      <Globe size={12} className="inline ml-1" />فتح الموقع الرسمي للمراجعة ↗
                     </a>
                   )}
                 </div>

@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect, useRef } from "react";
-import { Heart, MapPin, Mic2, Palette, Search, Upload } from "lucide-react";
+import { Heart, MapPin, Mic2, Palette, Search, Star, Upload, Users } from "lucide-react";
 import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { MUEZZINS, previewAdhan, stopAdhan, type Muezzin, type MuezzinStyle } from "@/lib/adhan-audio";
@@ -27,7 +27,7 @@ function StarRating({ rating }: { rating: number }) {
         <span
           key={i}
           className={`mzp-star${(i <= full || (i === full + 1 && frac >= 0.5)) ? " is-active" : ""}`}
-        >★</span>
+        ><Star size={12} /></span>
       ))}
     </span>
   );
@@ -63,7 +63,7 @@ function MuezzinCard({ muezzin, onPreview, previewing, isFav, onToggleFav }: {
             className={`mzp-fav-btn${isFav ? " is-fav" : ""}`}
             title={isFav ? "إزالة من المفضلة" : "إضافة للمفضلة"}
           >
-            {isFav ? "❤️" : "🤍"}
+            {isFav ? <Heart size={16} className="fill-red-500 text-red-500" /> : <Heart size={16} />}
           </button>
           <span className={`mzp-style-badge mzp-style-badge--${styleMod}`}>{muezzin.style}</span>
         </div>
@@ -77,7 +77,7 @@ function MuezzinCard({ muezzin, onPreview, previewing, isFav, onToggleFav }: {
         <span className="mzp-card__rating-count">({formatNum(muezzin.totalRatings)} تقييم)</span>
       </div>
 
-      <div className="mzp-card__followers">👥 {formatNum(muezzin.followers)} متابع</div>
+      <div className="mzp-card__followers"><Users size={13} className="inline ml-1" />{formatNum(muezzin.followers)} متابع</div>
 
       <div className="mzp-card__btns">
         <button
@@ -229,7 +229,7 @@ export default function MuezzinsPage() {
         <select value={sortKey} onChange={(e) => setSortKey(e.target.value as typeof sortKey)} className="mzp-filter-select">
           <option value="rating">الأعلى تقييماً</option>
           <option value="followers">الأكثر متابعة</option>
-          <option value="favorites">❤️ المفضلة فقط</option>
+          <option value="favorites">المفضلة فقط</option>
           <option value="name">الاسم (أ–ي)</option>
         </select>
       </div>
@@ -352,7 +352,7 @@ function CommunityMuezzinCard({ muezzin, previewing, onPreview }: {
       )}
       <div className="mzp-com-card__meta">
         <span><Palette size={12} strokeWidth={1.8} aria-hidden="true" /> {muezzin.style}</span>
-        {muezzin.rating > 0 && <span>★ {muezzin.rating}</span>}
+        {muezzin.rating > 0 && <span><Star size={11} className="inline ml-1" />{muezzin.rating}</span>}
       </div>
       <button
         type="button"

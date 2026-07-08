@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Smartphone } from "lucide-react";
 import { PageHeader } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
 
@@ -98,10 +99,8 @@ function QiblaCompass({
           points="100,182 96,122 100,112 104,122"
           fill="rgba(22,163,74,0.18)"
         />
-        {/* رأس السهم: الكعبة */}
-        <text x="100" y="17" textAnchor="middle" fontSize="14" className="qibla-north-icon">
-          🕋
-        </text>
+        {/* رأس السهم: القبلة */}
+        <polygon points="100,6 93,20 107,20" fill="#16A34A" opacity="0.75" />
         {/* مركز الوصلة */}
         <circle cx="100" cy="100" r="7" fill={aligned ? "#16A34A" : "#22C55E"} />
         <circle cx="100" cy="100" r="3" fill="#fff" />
@@ -236,7 +235,7 @@ export default function QiblaPage() {
 
             {heading == null && !permReq && (
               <p className="qibla-hint">
-                📱 على الجوال: وجّه الهاتف في الاتجاه الذي يشير فيه السهم.
+                <Smartphone size={13} className="inline ml-1" />على الجوال: وجّه الهاتف في الاتجاه الذي يشير فيه السهم.
               </p>
             )}
           </>

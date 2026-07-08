@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { AlertTriangle } from "lucide-react";
 import { Loading } from "@/components/ui-common";
 import { useAdminShell } from "@/views/admin/AdminShell";
 import {
@@ -113,7 +114,7 @@ export function KnowledgeEngineSection() {
 
       {usingLegacy && (
         <div className="ken-legacy-warn">
-          ⚠️ نفّذ migration: supabase/auto_knowledge_engine_v13.sql في Supabase SQL Editor.
+          <AlertTriangle size={13} className="inline ml-1" />نفّذ migration: supabase/auto_knowledge_engine_v13.sql في Supabase SQL Editor.
         </div>
       )}
 

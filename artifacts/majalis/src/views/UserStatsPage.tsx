@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Award, BookOpen, BookText, Bookmark, Flame, GraduationCap, Leaf, Medal, RotateCw } from "lucide-react";
+import { Award, BookOpen, BookText, Bookmark, FileText, Flame, GraduationCap, Leaf, Lock, MapPin, Medal, RotateCw } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
@@ -139,11 +139,11 @@ function ResumeList({
 
   return (
     <section className="profile-resume">
-      <h2 className="profile-section-title">📍 تابع من حيث توقفت</h2>
+      <h2 className="profile-section-title"><MapPin size={16} className="inline ml-1" /> تابع من حيث توقفت</h2>
       <div className="profile-resume__list">
         {items.map((item) => (
           <div key={`${item.content_type}-${item.content_id}`} className="profile-resume__item">
-            <span className="profile-resume__icon">{item.thumbnail_icon || "📄"}</span>
+            <span className="profile-resume__icon">{item.thumbnail_icon || <FileText size={18} strokeWidth={1.5} />}</span>
             <div className="profile-resume__body">
               <Link href={item.content_url} className="profile-resume__title">
                 {item.content_title}
@@ -295,7 +295,7 @@ export default function UserStatsPage() {
   if (!isLoggedIn) {
     return (
       <div className="page-shell narrow usp-login-prompt" dir="rtl">
-        <div className="usp-login-icon">🔐</div>
+        <div className="usp-login-icon"><Lock size={36} strokeWidth={1.3} /></div>
         <p className="usp-login-msg">سجّل الدخول لعرض ملفك الشخصي وإنجازاتك.</p>
         <Link href="/login?next=/profile" className="ui-card-btn">
           تسجيل الدخول

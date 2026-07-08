@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { AlertTriangle, Globe } from "lucide-react";
 import { Link } from "wouter";
 import { CompareProvider, useCompare } from "@/components/universities/CompareContext";
 import { applyPageSeo } from "@/lib/seo";
@@ -91,7 +92,7 @@ function CompareContent() {
         {/* تنبيه */}
         <div className="bg-amber-50 dark:bg-amber-900/10 border border-amber-200 dark:border-amber-800
           rounded-xl px-4 py-2 text-xs text-amber-700 dark:text-amber-300 mb-4">
-          ⚠️ البيانات تجريبية — تحقق من الموقع الرسمي لكل جامعة قبل التقديم.
+          <AlertTriangle size={13} className="inline ml-1" />البيانات تجريبية — تحقق من الموقع الرسمي لكل جامعة قبل التقديم.
         </div>
 
         {/* جدول المقارنة */}
@@ -155,7 +156,7 @@ function CompareContent() {
               <a key={u.slug} href={u.website_url} target="_blank" rel="noopener noreferrer"
                 className="text-center py-2.5 citation-btn citation-btn--primary
                   rounded-xl text-sm font-medium transition-colors">
-                🌐 موقع {u.name_ar.split(" ")[1] || u.name_ar} ↗
+                <Globe size={13} className="inline ml-1" />موقع {u.name_ar.split(" ")[1] || u.name_ar} ↗
               </a>
             ) : <div key={u.slug} />
           ))}

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { AlertTriangle } from "lucide-react";
 import { Link } from "wouter";
 import { adminGetAllLessons, adminUpsertLesson, adminDeleteLesson, adminGetSheikhs, upsertSeedLessonsToDb } from "@/lib/supabase";
 import { parseTimeToMinutes } from "@/lib/lesson-time";
@@ -269,7 +270,7 @@ export function LessonsSection() {
                         <span>
                           {item.speaker_name}
                           {looksLikeTopic(item.speaker_name) && (
-                            <span title="يبدو أن هذا موضوع وليس اسم شيخ" className="les-topic-warn">⚠️</span>
+                            <span title="يبدو أن هذا موضوع وليس اسم شيخ" className="les-topic-warn"><AlertTriangle size={12} /></span>
                           )}
                         </span>
                       ) : "—")}
@@ -342,7 +343,7 @@ export function LessonsSection() {
             <input className="adm-input" value={form.speaker_name || ""} onChange={e => set("speaker_name", e.target.value)} placeholder="مثال: عبدالله الأنصاري" />
             {looksLikeTopic(form.speaker_name) && (
               <div className="les-topic-warn">
-                ⚠️ يبدو أن هذا موضوع وليس اسم شيخ. يُرجى التأكد من إدخال الاسم الصحيح.
+                <AlertTriangle size={13} className="inline ml-1" />يبدو أن هذا موضوع وليس اسم شيخ. يُرجى التأكد من إدخال الاسم الصحيح.
               </div>
             )}
           </Field>

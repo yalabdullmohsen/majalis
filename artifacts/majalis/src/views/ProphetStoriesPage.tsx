@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback, useEffect, useRef } from "react";
-import { CalendarDays, Heart, HelpCircle, LayoutList } from "lucide-react";
+import { CalendarDays, Heart, HelpCircle, LayoutList, Link2 } from "lucide-react";
 import { Link } from "wouter";
 import { PROPHETS, getProphet, searchProphets, type ProphetRecord } from "@/lib/prophets-data";
 import { applyPageSeo } from "@/lib/seo";
@@ -141,7 +141,7 @@ function ProphetCard({
         aria-label={isBookmarked ? "إزالة من المفضلة" : "إضافة للمفضلة"}
         title={isBookmarked ? "إزالة من المفضلة" : "إضافة للمفضلة"}
       >
-        {isBookmarked ? "❤️" : "🤍"}
+        {isBookmarked ? <Heart size={16} className="fill-red-500 text-red-500" /> : <Heart size={16} />}
       </button>
 
       {/* حد خارجي ذهبي */}
@@ -225,10 +225,10 @@ function ProphetDetailView({
             onClick={onBookmark}
             title={isBookmarked ? "إزالة من المفضلة" : "حفظ في المفضلة"}
           >
-            {isBookmarked ? "❤️ محفوظ" : "🤍 احفظ"}
+            {isBookmarked ? <><Heart size={13} className="inline fill-red-500 text-red-500 ml-1" />محفوظ</> : <><Heart size={13} className="inline ml-1" />احفظ</>}
           </button>
           <button type="button" className="prophet-action-btn" onClick={share} title="مشاركة">
-            🔗 شارك
+            <Link2 size={13} className="inline ml-1" /> شارك
           </button>
           <div className="prophet-font-controls">
             <button type="button" onClick={() => setFontSize(s => Math.max(13, s - 1))} title="تصغير الخط" aria-label="تصغير الخط">أ−</button>

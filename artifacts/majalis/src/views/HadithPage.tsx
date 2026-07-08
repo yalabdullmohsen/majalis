@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { AlertTriangle, Star } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { getVerifiedHadith } from "@/lib/supabase";
@@ -187,7 +188,7 @@ function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) 
           onClick={handleSave}
           aria-label="حفظ في المفضلة"
         >
-          {saved ? "★" : "☆"}
+          {saved ? <Star size={15} className="fill-yellow-400 text-yellow-400" /> : <Star size={15} />}
         </button>
         <button
           type="button"
@@ -375,7 +376,7 @@ function HadithDetailModal({ h, onClose }: { h: HadithItem; onClose: () => void 
         />
 
         <footer className="hadith-modal__footer">
-          <p>⚠️ تحقق من صحة الحديث ومصدره قبل النشر أو الاستشهاد به.</p>
+          <p><AlertTriangle size={13} className="inline ml-1" />تحقق من صحة الحديث ومصدره قبل النشر أو الاستشهاد به.</p>
         </footer>
       </div>
       <AdminQuickEdit section="qa" />

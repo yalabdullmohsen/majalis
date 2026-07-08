@@ -342,12 +342,12 @@ export default function UploadPage() {
 
       <div className="ulp-steps">
         {[
-          { icon: "1️⃣", text: "ترسل الملف والمعلومات" },
-          { icon: "2️⃣", text: "يراجع الفريق المحتوى خلال 2–5 أيام" },
-          { icon: "3️⃣", text: "عند القبول يُضاف للمكتبة ويُنسب لك" },
+          { num: "١", text: "ترسل الملف والمعلومات" },
+          { num: "٢", text: "يراجع الفريق المحتوى خلال 2–5 أيام" },
+          { num: "٣", text: "عند القبول يُضاف للمكتبة ويُنسب لك" },
         ].map((s) => (
-          <div key={s.icon} className="ulp-step">
-            <span>{s.icon}</span>
+          <div key={s.num} className="ulp-step">
+            <span>{s.num}</span>
             <span>{s.text}</span>
           </div>
         ))}
