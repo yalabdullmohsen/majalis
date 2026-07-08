@@ -26,6 +26,7 @@ import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import { startAdhanScheduler } from "@/lib/adhan-scheduler";
 import { loadNotifPrefs, scheduleIslamicReminder } from "@/lib/local-notifications";
 import { NavProgressBar } from "@/components/NavProgressBar";
+import { recordRecentPage } from "@/lib/recent-pages";
 
 const lazy = lazyWithRetry;
 
@@ -163,6 +164,7 @@ const QuranPage = lazy(() => import("@/views/QuranPage"));
 function SeoManager() {
   const [location] = useLocation();
   usePageSeo(location);
+  useEffect(() => { recordRecentPage(location); }, [location]);
   return null;
 }
 

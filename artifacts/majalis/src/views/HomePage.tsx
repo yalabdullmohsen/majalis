@@ -3,6 +3,8 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import { Link, useLocation } from "wouter";
+import { getRecentPages, type RecentPage } from "@/lib/recent-pages";
+import { History } from "lucide-react";
 import { SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { HomeCompactPrayer } from "@/components/home/HomeCompactPrayer";
 import { HomeAboutSection } from "@/components/home/HomeAboutSection";
@@ -129,6 +131,27 @@ function SafeHomeSection({ name, children }: { name: string; children: React.Rea
   return <SectionErrorBoundary name={name}>{children}</SectionErrorBoundary>;
 }
 
+function RecentPagesBar() {
+  const [pages, setPages] = useState<RecentPage[]>([]);
+  useEffect(() => { setPages(getRecentPages(6)); }, []);
+  if (pages.length < 2) return null;
+  return (
+    <nav className="hp-recent-bar" aria-label="آخر صفحات زرتَها">
+      <span className="hp-recent-bar__label" aria-hidden="true">
+        <History size={14} strokeWidth={1.8} />
+        زرتَ مؤخراً
+      </span>
+      <div className="hp-recent-bar__chips">
+        {pages.map((p) => (
+          <Link key={p.href} href={p.href} className="hp-recent-chip">
+            {p.label}
+          </Link>
+        ))}
+      </div>
+    </nav>
+  );
+}
+
 export default function HomePage() {
   const [term, setTerm] = useState("");
   const [, navigate] = useLocation();
@@ -219,6 +242,9 @@ export default function HomePage() {
           </div>
         ))}
       </div>
+
+      {/* ══ زرتَ مؤخراً ══ */}
+      <RecentPagesBar />
 
       {/* ══ وصول سريع ══ */}
       <nav className="hp-quick-nav" aria-label="وصول سريع">

@@ -10417,6 +10417,54 @@ body {
   border-color: rgba(255,255,255,0.45);
 }
 
+/* ══ Recently Visited Bar ══ */
+.hp-recent-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem var(--hp-px, 1rem);
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  border-bottom: 1px solid var(--majalis-line);
+  background: var(--majalis-parchment-deep, #F5F5F4);
+  direction: rtl;
+}
+.hp-recent-bar::-webkit-scrollbar { display: none; }
+.hp-recent-bar__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--majalis-ink-soft);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.hp-recent-bar__chips {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: nowrap;
+}
+.hp-recent-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.65rem;
+  border-radius: 2rem;
+  border: 1px solid var(--majalis-line);
+  background: var(--majalis-panel);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--majalis-ink-soft);
+  white-space: nowrap;
+  text-decoration: none;
+  transition: border-color 0.15s, color 0.15s;
+}
+.hp-recent-chip:hover {
+  border-color: var(--majalis-emerald);
+  color: var(--majalis-emerald);
+}
+
 /* Quick Nav bar */
 .hp-quick-nav {
   background: var(--majalis-panel);
