@@ -101,7 +101,7 @@
 .mshf-shell {
   position: fixed;
   inset: 0;
-  z-index: 300;
+  z-index: 10100;
   display: flex;
   flex-direction: column;
   background: var(--mshf-bg);
@@ -116,13 +116,13 @@
 
 /* ══ شريط التقدم (2px) ══ */
 .mshf-progress {
-  position: fixed;
+  position: absolute;
   top: 0;
   right: 0;
   width: var(--mshf-pct, 0%);
   height: 2px;
   background: linear-gradient(to left, var(--mshf-bar-from, #0E6E52), var(--mshf-bar-to, #2aad7c));
-  z-index: 9999;
+  z-index: 10;
   transition: width 0.35s ease;
   pointer-events: none;
 }
