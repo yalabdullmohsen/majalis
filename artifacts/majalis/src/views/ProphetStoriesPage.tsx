@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback, useEffect, useRef } from "react";
+import { CalendarDays, Heart, HelpCircle, LayoutList } from "lucide-react";
 import { Link } from "wouter";
 import { PROPHETS, getProphet, searchProphets, type ProphetRecord } from "@/lib/prophets-data";
 import { applyPageSeo } from "@/lib/seo";
@@ -465,7 +466,7 @@ function QuizView({ onClose }: { onClose: () => void }) {
             {score} / {QUIZ_QUESTIONS.length} ({pct}%)
           </p>
           <p className="prophet-quiz__remark">
-            {pct >= 80 ? "ممتاز! أنت عارف بقصص الأنبياء 🌟" : pct >= 60 ? "جيد! استمر في التعلم" : "واصل القراءة لتتعلم أكثر"}
+            {pct >= 80 ? "ممتاز! أنت عارف بقصص الأنبياء ✦" : pct >= 60 ? "جيد! استمر في التعلم" : "واصل القراءة لتتعلم أكثر"}
           </p>
           <button type="button" className="prophet-quiz__btn" onClick={onClose}>العودة للقائمة</button>
         </div>
@@ -602,10 +603,10 @@ export default function ProphetStoriesPage() {
                 className={`prophets-lux-tab ${view === v ? "prophets-lux-tab--active" : ""}`}
                 onClick={() => setView(v)}
               >
-                {v === "grid" && "📋 القائمة"}
-                {v === "timeline" && "📅 الخط الزمني"}
-                {v === "bookmarks" && `❤️ المفضلة${bookmarkCount > 0 ? ` (${bookmarkCount})` : ""}`}
-                {v === "quiz" && "❓ اختبر نفسك"}
+                {v === "grid" && <><LayoutList size={15} strokeWidth={1.8} aria-hidden="true" /> القائمة</>}
+                {v === "timeline" && <><CalendarDays size={15} strokeWidth={1.8} aria-hidden="true" /> الخط الزمني</>}
+                {v === "bookmarks" && <><Heart size={15} strokeWidth={1.8} aria-hidden="true" /> المفضلة{bookmarkCount > 0 ? ` (${bookmarkCount})` : ""}</>}
+                {v === "quiz" && <><HelpCircle size={15} strokeWidth={1.8} aria-hidden="true" /> اختبر نفسك</>}
               </button>
             ))}
           </div>

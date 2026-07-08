@@ -1,4 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
+import { ScrollText } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { Chip } from "@/components/ui-common";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
@@ -99,7 +100,7 @@ export default function PropheticMedicinePage() {
               {/* محتوى البطاقة */}
               <div className="pmp-card__body">
                 <blockquote className="pmp-hadith">{item.hadith}</blockquote>
-                <p className="pmp-hadith-source">📚 {item.hadithSource}</p>
+                <p className="pmp-hadith-source"><ScrollText size={13} strokeWidth={1.8} aria-hidden="true" /> {item.hadithSource}</p>
 
                 <div className="pmp-benefits">
                   {item.benefits.map((b) => (

@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
+import { BookOpen, CheckCircle2, RotateCw } from "lucide-react";
 import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { PageHeader } from "@/components/ui-common";
@@ -34,14 +35,14 @@ function CardFace({
     >
       <div className="fc-card__inner">
         <div className="fc-card__front">
-          <span className="fc-card__label">📿 الحديث</span>
+          <span className="fc-card__label"><RotateCw size={13} strokeWidth={2} aria-hidden="true" /> الحديث</span>
           <p className="fc-card__text" dir="rtl">
             {card.front}
           </p>
           <span className="fc-card__hint">اضغط للكشف ←</span>
         </div>
         <div className="fc-card__back">
-          <span className="fc-card__label">📖 المصدر</span>
+          <span className="fc-card__label"><BookOpen size={13} strokeWidth={2} aria-hidden="true" /> المصدر</span>
           <p className="fc-card__text fc-card__text--back" dir="rtl">
             {card.back}
           </p>
@@ -260,7 +261,7 @@ export default function FlashCardsPage() {
         </div>
       ) : (
         <div className="fc-empty">
-          <div className="flc-empty-icon">✅</div>
+          <div className="flc-empty-icon"><CheckCircle2 size={48} strokeWidth={1.4} aria-hidden="true" /></div>
           <p>لا توجد بطاقات مستحقة الآن. تفقّد لاحقاً!</p>
           <Link href="/learning-plan" className="lp-plan__action-btn lp-plan__action-btn--primary flc-empty-link">
             خطتي العلمية

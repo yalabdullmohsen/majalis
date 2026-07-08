@@ -1,4 +1,11 @@
 import { useEffect, useState } from "react";
+import {
+  Bone, BookOpen, Bug, Clock, Cloud, Cog, Dna,
+  Droplets, Globe, Globe2, Leaf, Lightbulb, Microscope,
+  Mountain, ScrollText, Sparkles, Star, Stethoscope,
+  Telescope, Waves, Wind,
+} from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { useAuth } from "@/components/AuthProvider";
 import { getMiracles } from "@/lib/supabase";
@@ -63,27 +70,27 @@ const CATEGORY_PALETTE: Record<string, { bg: string; accent: string }> = {
   "الدم":     { bg: "#2a1010", accent: "#e8a0a0" },
 };
 
-const CATEGORY_ICONS: Record<string, string> = {
-  "الكون":    "🌌",
-  "الفلك":    "🔭",
-  "الجبال":   "⛰️",
-  "البحار":   "🌊",
-  "الأجنة":   "🔬",
-  "النبات":   "🌿",
-  "الحيوان":  "🐝",
-  "الطب":     "⚕️",
-  "المياه":   "💧",
-  "الحديد":   "⚙️",
-  "الرياح":   "🌬️",
-  "السحاب":   "☁️",
-  "الحشرات":  "🐜",
-  "الأرض":    "🌍",
-  "الزمن":    "⏳",
-  "الضوء":    "💡",
-  "الجلد":    "🧬",
-  "العظام":   "🦴",
-  "النجوم":   "⭐",
-  "الدم":     "🩸",
+const CATEGORY_ICONS: Record<string, LucideIcon> = {
+  "الكون":    Globe,
+  "الفلك":    Telescope,
+  "الجبال":   Mountain,
+  "البحار":   Waves,
+  "الأجنة":   Microscope,
+  "النبات":   Leaf,
+  "الحيوان":  Bug,
+  "الطب":     Stethoscope,
+  "المياه":   Droplets,
+  "الحديد":   Cog,
+  "الرياح":   Wind,
+  "السحاب":   Cloud,
+  "الحشرات":  Bug,
+  "الأرض":    Globe2,
+  "الزمن":    Clock,
+  "الضوء":    Lightbulb,
+  "الجلد":    Dna,
+  "العظام":   Bone,
+  "النجوم":   Star,
+  "الدم":     Droplets,
 };
 
 const SOURCE_COLORS: Record<string, string> = {
@@ -178,7 +185,7 @@ export default function MiraclesPage({
       >
         <div className="ds-grid">
           {items.map((item: any) => {
-            const icon        = CATEGORY_ICONS[item.category] ?? "✨";
+            const ItemIcon: LucideIcon = CATEGORY_ICONS[item.category] ?? Sparkles;
             const borderColor = SOURCE_COLORS[item.source_type] ?? "#c9a84c";
             const palette     = CATEGORY_PALETTE[item.category] ?? { bg: "#1a5c35", accent: "#86efac" };
             const pattern     = CATEGORY_PATTERN[item.category] ?? "stars";
@@ -195,7 +202,7 @@ export default function MiraclesPage({
                 <div className="miracle-item__head">
                   <GeometricPattern pattern={pattern} color={palette.accent} opacity={0.15} />
                   <div className="miracle-item__head-row">
-                    <span className="miracle-item__icon">{icon}</span>
+                    <span className="miracle-item__icon" aria-hidden="true"><ItemIcon size={22} strokeWidth={1.5} /></span>
                     <div className="miracle-item__head-info">
                       <p className="miracle-item__title">{item.title}</p>
                       <div className="miracle-item__badges">
@@ -204,7 +211,9 @@ export default function MiraclesPage({
                         )}
                         {item.source_type && (
                           <span className="miracle-item__src-badge">
-                            {item.source_type === "قرآن" ? "📖 قرآن" : "📚 سنة"}
+                            {item.source_type === "قرآن"
+                              ? <><BookOpen size={11} strokeWidth={2} aria-hidden="true" /> قرآن</>
+                              : <><ScrollText size={11} strokeWidth={2} aria-hidden="true" /> سنة</>}
                           </span>
                         )}
                       </div>
@@ -234,7 +243,7 @@ export default function MiraclesPage({
                     </>
                   )}
                   {item.scholarly_source && (
-                    <p className="miracle-item__source">📚 {item.scholarly_source}</p>
+                    <p className="miracle-item__source"><ScrollText size={13} strokeWidth={1.8} aria-hidden="true" /> {item.scholarly_source}</p>
                   )}
                 </div>
               </article>

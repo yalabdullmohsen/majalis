@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { Star } from "lucide-react";
 import { Loading, PageHeader } from "@/components/ui-common";
 import {
   loadIslamicOccasions,
@@ -75,7 +76,7 @@ export default function OccasionsPage() {
           <span className="occasions-filter__count">
             ({filtered.length.toLocaleString("ar-EG")})
           </span>
-          <span className="occasions-filter__sacred-note">⭐ شهر حرام</span>
+          <span className="occasions-filter__sacred-note"><Star size={13} strokeWidth={2} aria-hidden="true" /> شهر حرام</span>
         </div>
       )}
 
@@ -94,7 +95,7 @@ export default function OccasionsPage() {
                   {occasion.name}
                   <span className="occasion-detail__month-badge">
                     {getHijriMonthName(occasion.hijriMonth)}
-                    {isSacredMonth(occasion.hijriMonth) ? " ⭐" : ""}
+                    {isSacredMonth(occasion.hijriMonth) ? <Star size={12} strokeWidth={2} className="occasion-detail__sacred-star" aria-label="شهر حرام" /> : null}
                   </span>
                 </h2>
                 <CountdownBadge days={occasion.daysRemaining} />

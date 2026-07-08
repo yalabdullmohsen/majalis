@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { BookOpen, Leaf } from "lucide-react";
 import { Link } from "wouter";
 import { PageHeader } from "@/components/ui-common";
 import {
@@ -116,7 +117,7 @@ export default function DailyWirdPage() {
         </div>
 
         {done ? (
-          <p className="wird-done-msg">🌿 أكملت وردك لهذا اليوم</p>
+          <p className="wird-done-msg"><Leaf size={15} strokeWidth={1.8} aria-hidden="true" /> أكملت وردك لهذا اليوم</p>
         ) : (
           <p className="wird-remaining">
             {toAr(Math.max(0, state.pagesPerDay - todayCompleted))} صفحة متبقية
@@ -173,7 +174,7 @@ export default function DailyWirdPage() {
         </label>
 
         <Link href={`/quran?surah=${state.currentSurah}`} className="wird-quran-link">
-          📖 فتح المصحف من هذا الموضع
+          <BookOpen size={15} strokeWidth={1.8} aria-hidden="true" /> فتح المصحف من هذا الموضع
         </Link>
       </div>
     </div>

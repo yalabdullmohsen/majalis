@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { BookOpen, Building2, Cog, Heart, MapPin, Mic2, Moon, Music2, Star, Tag } from "lucide-react";
 import { Link, useRoute } from "wouter";
 import {
   getMuezzin,
@@ -132,10 +133,10 @@ export default function MuezzinDetailPage() {
       <div className="mzd-hero">
         <div className="mzd-hero__pattern" aria-hidden="true" />
 
-        <div className="mzd-hero__icon">🎙️</div>
+        <div className="mzd-hero__icon" aria-hidden="true"><Mic2 size={36} strokeWidth={1.4} /></div>
 
         <h1 className="mzd-hero__name">{muezzin.name}</h1>
-        <div className="mzd-hero__origin">📍 {muezzin.origin} · {muezzin.country}</div>
+        <div className="mzd-hero__origin"><MapPin size={13} strokeWidth={2} aria-hidden="true" /> {muezzin.origin} · {muezzin.country}</div>
 
         <span className={`mzd-style-badge mzd-style-badge--${styleMod}`}>
           {muezzin.style} · {muezzin.category}
@@ -161,7 +162,7 @@ export default function MuezzinDetailPage() {
           onClick={handleToggleFav}
           className={`mzd-fav-btn${fav ? " is-fav" : ""}`}
         >
-          {fav ? "❤️ في المفضلة" : "🤍 أضف للمفضلة"}
+          <Heart size={15} strokeWidth={1.8} aria-hidden="true" /> {fav ? "في المفضلة" : "أضف للمفضلة"}
         </button>
       </div>
 
@@ -173,12 +174,12 @@ export default function MuezzinDetailPage() {
       )}
 
       {/* Biography */}
-      <Section title="📖 نبذة">
+      <Section title={<><BookOpen size={16} strokeWidth={1.8} aria-hidden="true" /> نبذة</>}>
         <p className="mzd-bio">{muezzin.biography}</p>
       </Section>
 
       {/* Rating */}
-      <Section title="⭐ التقييم">
+      <Section title={<><Star size={16} strokeWidth={1.8} aria-hidden="true" /> التقييم</>}>
         <div className="mzd-rating-row">
           <StarRating rating={muezzin.rating} />
           <span className="mzd-rating-num">{muezzin.rating}</span>
@@ -209,7 +210,7 @@ export default function MuezzinDetailPage() {
       </Section>
 
       {/* Tags */}
-      <Section title="🏷️ التصنيفات">
+      <Section title={<><Tag size={16} strokeWidth={1.8} aria-hidden="true" /> التصنيفات</>}>
         <div className="mzd-tags">
           {muezzin.tags.map((tag) => (
             <span key={tag} className="mzd-tag">{tag}</span>
@@ -218,7 +219,7 @@ export default function MuezzinDetailPage() {
       </Section>
 
       {/* Audio player */}
-      <Section title="🎵 أذانات الفريضة الخمس">
+      <Section title={<><Music2 size={16} strokeWidth={1.8} aria-hidden="true" /> أذانات الفريضة الخمس</>}>
         <p className="mzd-audio-hint">
           اضغط على أي وقت للاستماع · الأذانات بصوت {muezzin.name}
         </p>
@@ -229,7 +230,7 @@ export default function MuezzinDetailPage() {
           duration={muezzin.durationSec}
           isPlaying={playState.key === "general"}
           onPlay={() => handlePlay("general")}
-          icon="🕌"
+          icon={<Building2 size={18} strokeWidth={1.5} />}
         />
 
         {muezzin.fajrUrl ? (
@@ -239,12 +240,12 @@ export default function MuezzinDetailPage() {
             duration={muezzin.durationSec + 15}
             isPlaying={playState.key === "fajr"}
             onPlay={() => handlePlay("fajr")}
-            icon="🌙"
+            icon={<Moon size={18} strokeWidth={1.5} />}
             highlight
           />
         ) : (
           <div className="mzd-fajr-fallback">
-            <span className="mzd-fajr-fallback__icon">🌙</span>
+            <span className="mzd-fajr-fallback__icon" aria-hidden="true"><Moon size={20} strokeWidth={1.5} /></span>
             <div className="mzd-fajr-fallback__info">
               <div className="mzd-fajr-fallback__title">أذان الفجر</div>
               <div className="mzd-fajr-fallback__subtitle">يُستخدم الأذان العام للفجر لهذا المؤذن</div>
@@ -276,24 +277,24 @@ export default function MuezzinDetailPage() {
       {/* Set as default */}
       {!isDefault && (
         <button type="button" onClick={handleSetDefault} className="mzd-set-default-btn">
-          🎙️ تعيين كمؤذن افتراضي
+          <Mic2 size={15} strokeWidth={1.8} aria-hidden="true" /> تعيين كمؤذن افتراضي
         </button>
       )}
 
       <Link href="/adhan-settings">
         <button type="button" className="mzd-settings-link">
-          ⚙️ إعدادات الأذان التفصيلية
+          <Cog size={15} strokeWidth={1.8} aria-hidden="true" /> إعدادات الأذان التفصيلية
         </button>
       </Link>
 
       {/* Related muezzins */}
       {related.length > 0 && (
-        <Section title="🎙️ قد يعجبك أيضاً">
+        <Section title={<><Mic2 size={16} strokeWidth={1.8} aria-hidden="true" /> قد يعجبك أيضاً</>}>
           <div className="mzd-related-list">
             {related.map((m) => (
               <Link key={m.id} href={`/muezzins/${m.id}`}>
                 <div className="mzd-related-card">
-                  <span className="mzd-related-card__icon">🎙️</span>
+                  <span className="mzd-related-card__icon" aria-hidden="true"><Mic2 size={18} strokeWidth={1.5} /></span>
                   <div className="mzd-related-card__info">
                     <div className="mzd-related-card__name">{m.name}</div>
                     <div className="mzd-related-card__meta">{m.origin} · {m.style}</div>
@@ -315,12 +316,12 @@ function AudioRow({ label, sublabel, duration, isPlaying, onPlay, icon, highligh
   duration: number;
   isPlaying: boolean;
   onPlay: () => void;
-  icon: string;
+  icon: React.ReactNode;
   highlight?: boolean;
 }) {
   return (
     <div className={`mzd-audio-row${highlight ? " mzd-audio-row--highlight" : ""}`}>
-      <span className="mzd-audio-row__icon">{icon}</span>
+      <span className="mzd-audio-row__icon" aria-hidden="true">{icon}</span>
       <div className="mzd-audio-row__info">
         <div className="mzd-audio-row__title">{label}</div>
         <div className="mzd-audio-row__subtitle">{sublabel}</div>
@@ -338,7 +339,7 @@ function AudioRow({ label, sublabel, duration, isPlaying, onPlay, icon, highligh
   );
 }
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
+function Section({ title, children }: { title: React.ReactNode; children: React.ReactNode }) {
   return (
     <div className="mzd-section">
       <h2 className="mzd-section__title">{title}</h2>

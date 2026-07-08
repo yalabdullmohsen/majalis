@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Leaf } from "lucide-react";
 import { useLocation } from "wouter";
 import { ADHKAR_CATEGORIES, type AdhkarItem } from "@/lib/adhkar-seed";
 import { usePublishedAdhkarItems } from "@/lib/adhkar-service";
@@ -254,7 +255,7 @@ export default function AdhkarPage() {
                 <p className="adhkar-tapper__hint">اضغط للعدّ</p>
               )}
               {done && isLast && (
-                <p className="adhkar-tapper__complete">🌿 أكملت جميع الأذكار</p>
+                <p className="adhkar-tapper__complete"><Leaf size={15} strokeWidth={1.8} aria-hidden="true" /> أكملت جميع الأذكار</p>
               )}
             </div>
           ) : (
