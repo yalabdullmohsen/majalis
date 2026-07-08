@@ -21,6 +21,7 @@ import {
   setSelectedGovernorate,
 } from "@/lib/prayer-times";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
+import { applyPageSeo } from "@/lib/seo";
 
 const ADVANCE_OPTIONS: AdvanceMinutes[] = [0, 5, 10, 15, 20, 30];
 
@@ -61,6 +62,16 @@ export default function AdhanSettingsPage() {
   const sunriseTime =
     prayerData?.prayers.find((p: { key: string }) => p.key === "Sunrise")
       ?.time ?? null;
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/adhan-settings",
+      title: "إعدادات الأذان | المجلس العلمي",
+      description: "خصّص إعدادات الأذان — اختر المؤذن والمحافظة وأوقات التنبيه لكل صلاة.",
+      keywords: ["إعدادات أذان", "تنبيه الصلاة", "أوقات الصلاة", "مؤذن", "الكويت"],
+      robots: "noindex, follow",
+    });
+  }, []);
 
   useEffect(
     () => () => {

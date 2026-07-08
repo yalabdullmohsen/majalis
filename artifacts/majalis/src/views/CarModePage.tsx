@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
 import { supabase } from "@/lib/supabase";
+import { applyPageSeo } from "@/lib/seo";
 
 type AudioLesson = {
   id: string;
@@ -26,6 +27,15 @@ export default function CarModePage() {
   const [playing, setPlaying] = useState(false);
   const [loading, setLoading] = useState(true);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/car-mode",
+      title: "وضع السيارة — الاستماع أثناء القيادة | المجلس العلمي",
+      description: "استمع إلى الدروس العلمية والقرآن الكريم أثناء القيادة — واجهة مبسطة آمنة للاستخدام في السيارة.",
+      keywords: ["وضع السيارة", "استماع أثناء القيادة", "دروس صوتية", "قيادة وتعلم"],
+    });
+  }, []);
 
   useEffect(() => {
     let cancelled = false;

@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { PageHeader } from "@/components/ui-common";
 import { supabase } from "@/lib/supabase";
+import { applyPageSeo } from "@/lib/seo";
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 
@@ -292,6 +293,16 @@ function ChildView({ userId }: { userId: string }) {
 export default function FamilyModePage() {
   const { user, isLoggedIn, loading: authLoading } = useAuth();
   const [role, setRole] = useState<"parent" | "child" | null>(null);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/family",
+      title: "الوضع العائلي | المجلس العلمي",
+      description: "إدارة التعلم العائلي — خصص المحتوى لكل فرد في العائلة وتابع التقدم في التعلم الشرعي.",
+      keywords: ["وضع عائلي", "تعلم العائلة", "تعليم أطفال", "الأسرة المسلمة"],
+      robots: "noindex, follow",
+    });
+  }, []);
 
   if (authLoading) {
     return (
