@@ -364,7 +364,7 @@ export default function KnowledgeGraphPage() {
               <svg ref={svgRef} viewBox={`0 0 ${SVG_W} ${SVG_H}`} className="kng-svg">
                 <defs>
                   <marker id="arr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
-                    <polygon points="0 0, 8 3, 0 6" fill="#9ca3af" />
+                    <polygon points="0 0, 8 3, 0 6" fill="var(--majalis-ink-soft, #4A4A4A)" opacity="0.5" />
                   </marker>
                 </defs>
 
@@ -378,11 +378,11 @@ export default function KnowledgeGraphPage() {
                     <g key={i}>
                       <line
                         x1={src.x} y1={src.y} x2={tgt.x} y2={tgt.y}
-                        stroke="#d1d5db" strokeWidth={Math.max(1, e.strength * 2.5)}
+                        stroke="var(--majalis-line, rgba(0,0,0,0.1))" strokeWidth={Math.max(1, e.strength * 2.5)}
                         markerEnd="url(#arr)" opacity={0.7}
                       />
                       <text x={mx} y={my - 5} textAnchor="middle"
-                        fontSize="9" fill="#9ca3af" fontFamily="inherit" className="kng-svg-label">
+                        fontSize="9" fill="var(--majalis-ink-soft, #4A4A4A)" fontFamily="inherit" className="kng-svg-label">
                         {e.label.length > 10 ? e.label.slice(0, 8) + "…" : e.label}
                       </text>
                     </g>

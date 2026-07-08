@@ -169,12 +169,13 @@ export default function NavBar() {
             <button
               type="button"
               onClick={() => window.dispatchEvent(new Event("global-search-open"))}
-              aria-label="البحث الشامل"
-              title="البحث الشامل"
+              aria-label="البحث الشامل (Ctrl+K)"
+              title="البحث الشامل — Ctrl+K"
               className="navbar-search-cmd"
             >
               <Search size={15} strokeWidth={1.4} aria-hidden="true" />
               <span className="navbar-search-hint">بحث</span>
+              <kbd className="navbar-search-kbd" aria-hidden="true">K</kbd>
             </button>
             {/* Desktop: search + auth + lang */}
             {!isMobile && <SearchBox />}

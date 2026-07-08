@@ -81,7 +81,7 @@ function QiblaCompass({
           />
         ))}
         {/* الجهات الأصلية */}
-        <text x="100" y="11" textAnchor="middle" fontSize="9" fontWeight="800" fill="#E53E3E">ش</text>
+        <text x="100" y="11" textAnchor="middle" fontSize="9" fontWeight="800" fill="var(--majalis-danger, #9B1C1C)">ش</text>
         <text x="100" y="196" textAnchor="middle" fontSize="9" fontWeight="700" fill="rgba(24,54,42,0.55)">ج</text>
         <text x="191" y="104" textAnchor="middle" fontSize="9" fontWeight="700" fill="rgba(24,54,42,0.55)">ق</text>
         <text x="9"   y="104" textAnchor="middle" fontSize="9" fontWeight="700" fill="rgba(24,54,42,0.55)">غ</text>
@@ -92,17 +92,17 @@ function QiblaCompass({
         {/* جسم السهم */}
         <polygon
           points="100,18 96,78 100,88 104,78"
-          fill={aligned ? "#16A34A" : "#22C55E"}
+          fill={aligned ? "var(--majalis-emerald, #0E6E52)" : "#22C55E"}
           opacity={aligned ? 1 : 0.9}
         />
         <polygon
           points="100,182 96,122 100,112 104,122"
-          fill="rgba(22,163,74,0.18)"
+          fill="var(--majalis-emerald-muted, rgba(14,110,82,0.18))"
         />
         {/* رأس السهم: القبلة */}
-        <polygon points="100,6 93,20 107,20" fill="#16A34A" opacity="0.75" />
+        <polygon points="100,6 93,20 107,20" fill="var(--majalis-emerald, #0E6E52)" opacity="0.75" />
         {/* مركز الوصلة */}
-        <circle cx="100" cy="100" r="7" fill={aligned ? "#16A34A" : "#22C55E"} />
+        <circle cx="100" cy="100" r="7" fill={aligned ? "var(--majalis-emerald, #0E6E52)" : "#22C55E"} />
         <circle cx="100" cy="100" r="3" fill="#fff" />
       </g>
 

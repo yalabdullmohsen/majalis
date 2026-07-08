@@ -41,7 +41,7 @@ function WirdRing({ pct, pages, target }: { pct: number; pages: number; target: 
         من {toAr(target)} صفحة
       </text>
       {done && (
-        <text x="74" y="100" textAnchor="middle" fill="#16A34A"
+        <text x="74" y="100" textAnchor="middle" fill="var(--majalis-emerald, #0E6E52)"
           fontSize="12" fontWeight="700" fontFamily="inherit">✓ اكتمل</text>
       )}
     </svg>

@@ -215,6 +215,24 @@ body {
 .navbar-search-cmd svg {
   color: var(--elite-ink-muted) !important;
 }
+.navbar-search-kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  font-size: 0.6rem;
+  font-weight: 700;
+  line-height: 1;
+  padding: 0.15rem 0.35rem;
+  border: 1px solid var(--elite-border-2, rgba(0,0,0,0.14));
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  background: var(--elite-white, #FFFFFF);
+  color: var(--elite-ink-muted, #97A59F);
+  letter-spacing: 0.03em;
+  margin-inline-start: 2px;
+  opacity: 0.75;
+}
 
 /* ── Navbar menu button — يُلغي الحدود الذهبية من majalis-v2.css ── */
 .navbar-menu-btn,
@@ -12619,7 +12637,7 @@ a:focus-visible {
   transition: opacity .2s, transform .2s, background .15s;
   opacity: .88;
 }
-.scroll-to-top:hover { opacity: 1; background: #145537; transform: translateY(-2px); }
+.scroll-to-top:hover { opacity: 1; background: var(--majalis-emerald-deep, #0A5040); transform: translateY(-2px); }
 .scroll-to-top:active { transform: scale(.93); }
 @media (min-width: 880px) {
   .scroll-to-top { bottom: 1.5rem; }
