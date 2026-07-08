@@ -68,8 +68,8 @@ function UniversityForm({
     }
   }
 
-  const inputCls = "w-full px-3 py-2 text-sm rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500";
-  const labelCls = "block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1";
+  const inputCls = "w-full px-3 py-2 text-sm rounded-xl border border-[var(--majalis-line)] bg-[var(--majalis-parchment)] text-[var(--majalis-ink)] focus:outline-none focus:ring-2 focus:ring-[var(--majalis-emerald)]";
+  const labelCls = "block text-xs font-medium text-[var(--majalis-ink-soft)] mb-1";
 
   return (
     <form dir="rtl" onSubmit={handleSubmit} className="space-y-4">
@@ -120,11 +120,11 @@ function UniversityForm({
       <div className="flex gap-4">
         <label className="flex items-center gap-2 cursor-pointer">
           <input type="checkbox" className="accent-emerald-600" checked={!!form.is_verified} onChange={(e) => set("is_verified", e.target.checked)} />
-          <span className="text-sm text-gray-700 dark:text-gray-200">موثقة</span>
+          <span className="text-sm text-[var(--majalis-ink)]">موثقة</span>
         </label>
         <label className="flex items-center gap-2 cursor-pointer">
           <input type="checkbox" className="accent-emerald-600" checked={!!form.is_published} onChange={(e) => set("is_published", e.target.checked)} />
-          <span className="text-sm text-gray-700 dark:text-gray-200">منشورة</span>
+          <span className="text-sm text-[var(--majalis-ink)]">منشورة</span>
         </label>
       </div>
 
@@ -134,7 +134,7 @@ function UniversityForm({
           {loading ? "جارٍ الحفظ…" : "حفظ"}
         </button>
         <button type="button" onClick={onCancel}
-          className="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 text-sm rounded-xl hover:bg-gray-200 transition-colors">
+          className="px-4 py-2 bg-[var(--majalis-parchment-deep)] text-[var(--majalis-ink)] text-sm rounded-xl hover:bg-[var(--majalis-line)] transition-colors">
           إلغاء
         </button>
       </div>
@@ -159,8 +159,8 @@ function ProgramForm({
   });
   const [loading, setLoading] = useState(false);
   const set = (k: keyof UniversityProgram, v: unknown) => setForm((p) => ({ ...p, [k]: v }));
-  const inputCls = "w-full px-3 py-2 text-sm rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500";
-  const labelCls = "block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1";
+  const inputCls = "w-full px-3 py-2 text-sm rounded-xl border border-[var(--majalis-line)] bg-[var(--majalis-parchment)] text-[var(--majalis-ink)] focus:outline-none focus:ring-2 focus:ring-[var(--majalis-emerald)]";
+  const labelCls = "block text-xs font-medium text-[var(--majalis-ink-soft)] mb-1";
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -173,8 +173,8 @@ function ProgramForm({
   }
 
   return (
-    <form dir="rtl" onSubmit={handleSubmit} className="bg-gray-50 dark:bg-gray-700/50 rounded-xl p-4 space-y-3">
-      <h4 className="font-semibold text-gray-800 dark:text-gray-100 text-sm">إضافة برنامج جديد</h4>
+    <form dir="rtl" onSubmit={handleSubmit} className="bg-[var(--majalis-parchment-deep)] rounded-xl p-4 space-y-3">
+      <h4 className="font-semibold text-[var(--majalis-ink)] text-sm">إضافة برنامج جديد</h4>
       <div className="grid grid-cols-2 gap-3">
         <div className="col-span-2">
           <label className={labelCls}>اسم البرنامج *</label>
@@ -213,7 +213,7 @@ function ProgramForm({
         <div className="col-span-2">
           <label className="flex items-center gap-2 cursor-pointer mb-2">
             <input type="checkbox" className="accent-emerald-600" checked={!!form.has_scholarship} onChange={(e) => set("has_scholarship", e.target.checked)} />
-            <span className="text-sm text-gray-700 dark:text-gray-200">يوجد منح دراسية</span>
+            <span className="text-sm text-[var(--majalis-ink)]">يوجد منح دراسية</span>
           </label>
           {form.has_scholarship && (
             <textarea className={inputCls} rows={2} placeholder="تفاصيل المنحة…" value={form.scholarship_details || ""} onChange={(e) => set("scholarship_details", e.target.value)} />
@@ -290,13 +290,13 @@ function AdminContent() {
   return (
     <div dir="rtl" className="space-y-6 max-w-4xl mx-auto">
       {/* Subnav */}
-      <div className="flex gap-1 border-b border-gray-200 dark:border-gray-700">
+      <div className="flex gap-1 border-b border-[var(--majalis-line)]">
         {(["list","add","reminders"] as Section[]).map((s) => (
           <button key={s} type="button" onClick={() => { setSection(s); setEditTarget(null); }}
             className={`px-4 py-2.5 text-sm font-medium border-b-2 transition-colors ${
               section === s
                 ? "border-emerald-600 text-emerald-700 dark:text-emerald-400"
-                : "border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+                : "border-transparent text-[var(--majalis-ink-soft)] hover:text-[var(--majalis-ink)]"
             }`}>
             {s === "list" ? "قائمة الجامعات" : s === "add" ? "+ إضافة جامعة" : <><Bell size={13} className="inline ml-1" />التذكيرات ({reminders.length})</>}
           </button>
@@ -307,8 +307,8 @@ function AdminContent() {
       {(section === "list" || section === "edit") && (
         <div className="space-y-4">
           {section === "edit" && editTarget && (
-            <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-5">
-              <h3 className="font-bold text-gray-800 dark:text-gray-100 mb-4">تعديل: {editTarget.name_ar}</h3>
+            <div className="bg-[var(--majalis-panel)] border border-[var(--majalis-line)] rounded-2xl p-5">
+              <h3 className="font-bold text-[var(--majalis-ink)] mb-4">تعديل: {editTarget.name_ar}</h3>
               <UniversityForm initial={editTarget} onSave={handleUpdate} onCancel={() => { setSection("list"); setEditTarget(null); }} />
             </div>
           )}
@@ -324,19 +324,19 @@ function AdminContent() {
           )}
 
           {!loading && universities.map((u) => (
-            <div key={u.id} className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-4 space-y-3">
+            <div key={u.id} className="bg-[var(--majalis-panel)] border border-[var(--majalis-line)] rounded-2xl p-4 space-y-3">
               <div className="flex items-start gap-3">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <p className="font-semibold text-gray-800 dark:text-gray-100 text-sm">{u.name_ar}</p>
+                    <p className="font-semibold text-[var(--majalis-ink)] text-sm">{u.name_ar}</p>
                     {u.is_verified && <span className="text-xs bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 px-1.5 py-0.5 rounded">✓ موثقة</span>}
                     {!u.is_published && <span className="text-xs bg-red-50 dark:bg-red-900/20 text-red-500 px-1.5 py-0.5 rounded">غير منشورة</span>}
                   </div>
-                  <p className="text-xs text-gray-400 mt-0.5">{u.country}{u.city ? ` — ${u.city}` : ""} | {u.university_programs?.length || 0} برنامج</p>
-                  <p className="text-xs text-gray-300 dark:text-gray-600">آخر تحديث: {new Date(u.last_updated_at).toLocaleDateString("ar-SA")}</p>
+                  <p className="text-xs text-[var(--majalis-ink-soft)] mt-0.5">{u.country}{u.city ? ` — ${u.city}` : ""} | {u.university_programs?.length || 0} برنامج</p>
+                  <p className="text-xs text-[var(--majalis-ink-soft)] opacity-40">آخر تحديث: {new Date(u.last_updated_at).toLocaleDateString("ar-SA")}</p>
                 </div>
                 <div className="flex gap-1.5 flex-shrink-0">
-                  <Link href={`/universities/${u.slug}`} className="px-2.5 py-1.5 text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-lg hover:bg-gray-200 transition-colors">عرض</Link>
+                  <Link href={`/universities/${u.slug}`} className="px-2.5 py-1.5 text-xs bg-[var(--majalis-parchment-deep)] text-[var(--majalis-ink-soft)] rounded-lg hover:bg-[var(--majalis-line)] transition-colors">عرض</Link>
                   <button type="button" onClick={() => { setEditTarget(u); setSection("edit"); }}
                     className="px-2.5 py-1.5 text-xs bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 rounded-lg hover:bg-emerald-100 transition-colors">
                     تعديل
@@ -346,12 +346,12 @@ function AdminContent() {
 
               {/* برامج */}
               {u.university_programs && u.university_programs.length > 0 && (
-                <div className="space-y-1 pr-2 border-r border-gray-100 dark:border-gray-700">
+                <div className="space-y-1 pr-2 border-r border-[var(--majalis-line)]">
                   {u.university_programs.map((p) => (
-                    <div key={p.id} className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+                    <div key={p.id} className="flex items-center gap-2 text-xs text-[var(--majalis-ink-soft)]">
                       <span className="text-emerald-500">•</span>
                       <span>{p.program_name}</span>
-                      <span className="bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded">{p.degree_level}</span>
+                      <span className="bg-[var(--majalis-parchment-deep)] px-1.5 py-0.5 rounded">{p.degree_level}</span>
                       {!p.is_active && <span className="text-red-400">(غير نشط)</span>}
                     </div>
                   ))}
@@ -373,8 +373,8 @@ function AdminContent() {
 
       {/* نموذج إضافة */}
       {section === "add" && (
-        <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-5">
-          <h3 className="font-bold text-gray-800 dark:text-gray-100 mb-4">إضافة جامعة جديدة</h3>
+        <div className="bg-[var(--majalis-panel)] border border-[var(--majalis-line)] rounded-2xl p-5">
+          <h3 className="font-bold text-[var(--majalis-ink)] mb-4">إضافة جامعة جديدة</h3>
           <UniversityForm onSave={handleCreate} onCancel={() => setSection("list")} />
         </div>
       )}
@@ -382,24 +382,24 @@ function AdminContent() {
       {/* التذكيرات */}
       {section === "reminders" && (
         <div className="space-y-3">
-          <p className="text-xs text-gray-400 dark:text-gray-500">
+          <p className="text-xs text-[var(--majalis-ink-soft)] opacity-60">
             هذه تذكيرات للمراجعة البشرية — لا يُحدَّث أي محتوى تلقائياً.
           </p>
           {reminders.length === 0 && (
             <div className="text-center py-10 text-[var(--majalis-ink-soft)] opacity-60">لا توجد تذكيرات معلّقة. ✅</div>
           )}
           {reminders.map((r) => (
-            <div key={r.id} className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4">
+            <div key={r.id} className="bg-[var(--majalis-panel)] border border-[var(--majalis-line)] rounded-xl p-4">
               <div className="flex items-start gap-3">
                 <span className="text-lg flex-shrink-0">
                   {r.reminder_type === "annual_check" ? <RotateCw size={16} /> : r.reminder_type === "deadline_approaching" ? <Clock size={16} /> : <AlertTriangle size={16} />}
                 </span>
                 <div className="flex-1 min-w-0">
-                  <p className="font-semibold text-sm text-gray-800 dark:text-gray-100">
+                  <p className="font-semibold text-sm text-[var(--majalis-ink)]">
                     {r.universities?.name_ar || "جامعة غير معروفة"}
                   </p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{r.notes}</p>
-                  <p className="text-xs text-gray-300 dark:text-gray-600 mt-0.5">
+                  <p className="text-xs text-[var(--majalis-ink-soft)] mt-0.5">{r.notes}</p>
+                  <p className="text-xs text-[var(--majalis-ink-soft)] opacity-40 mt-0.5">
                     موعد المراجعة: {new Date(r.due_date).toLocaleDateString("ar-SA")}
                   </p>
                   {r.universities?.website_url && (
@@ -415,7 +415,7 @@ function AdminContent() {
                     تمت المراجعة
                   </button>
                   <button type="button" onClick={() => handleReminderStatus(r.id, "dismissed")}
-                    className="px-2.5 py-1.5 text-xs bg-gray-100 dark:bg-gray-700 text-gray-500 rounded-lg hover:bg-gray-200 transition-colors">
+                    className="px-2.5 py-1.5 text-xs bg-[var(--majalis-parchment-deep)] text-[var(--majalis-ink-soft)] rounded-lg hover:bg-[var(--majalis-line)] transition-colors">
                     تجاهل
                   </button>
                 </div>
