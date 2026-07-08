@@ -13,6 +13,7 @@ import {
 } from "@/lib/fiqh-council-types";
 import { usePageView } from "@/hooks/usePageView";
 import { FiqhCouncilSubnav } from "./FiqhCouncilPage";
+import { applyPageSeo } from "@/lib/seo";
 import { FIQH_CATEGORY_TREE } from "@/lib/fiqh-council-categories";
 
 export default function FiqhCouncilCategoriesPage() {
@@ -24,6 +25,15 @@ export default function FiqhCouncilCategoriesPage() {
   const [loading, setLoading] = useState(true);
 
   usePageView("fiqh-council-categories", selectedCat);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/fiqh-council/index",
+      title: "الفهرس الموضوعي للمجمع الفقهي | المجلس العلمي",
+      description: "تصفح قرارات وفتاوى المجمع الفقهي حسب الموضوع والتصنيف — العبادات والمعاملات والأسرة والمعاصر.",
+      keywords: ["فهرس فقهي", "تصنيف فقهي", "أبواب الفقه", "مجمع فقهي", "قرارات فقهية"],
+    });
+  }, []);
 
   useEffect(() => {
     setLoading(true);

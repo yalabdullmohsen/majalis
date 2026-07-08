@@ -4,6 +4,7 @@ import { PageHeader, Loading, Empty } from "@/components/ui-common";
 import { PlatformContentCard } from "@/components/platform/ContentDetailLayout";
 import { FiqhCouncilSubnav } from "./FiqhCouncilPage";
 import { getAllNawazilItems, getNawazilTopicItems } from "@/lib/fiqh-council-service";
+import { applyPageSeo } from "@/lib/seo";
 import { NAWAZIL_TOPICS } from "@/lib/fiqh-council-nawazil";
 import {
   FIQH_ITEM_TYPE_LABELS,
@@ -17,6 +18,15 @@ export default function FiqhCouncilNawazilPage() {
   const [activeTopic, setActiveTopic] = useState<string | null>(null);
   const [items, setItems] = useState<FiqhCouncilItem[]>([]);
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/fiqh-council/nawazil",
+      title: "النوازل المعاصرة | المجمع الفقهي | المجلس العلمي",
+      description: "النوازل الفقهية المعاصرة — مسائل العصر الحديث من التقنية والاقتصاد الرقمي والطب والبيئة.",
+      keywords: ["نوازل معاصرة", "مسائل معاصرة", "فقه معاصر", "نوازل فقهية", "مستجدات فقهية"],
+    });
+  }, []);
 
   useEffect(() => {
     setLoading(true);
