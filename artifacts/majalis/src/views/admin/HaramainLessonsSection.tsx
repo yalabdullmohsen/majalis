@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { Calendar, CheckCircle2, Clock, Landmark, Link2, RefreshCw, User, Users, XCircle } from "lucide-react";
 import {
   HARAMAIN_LESSONS,
   getHaramainLessonsByType,
@@ -74,7 +75,7 @@ export function HaramainLessonsSection() {
     <div className="hrm-wrapper">
       <div className="hrm-header">
         <div>
-          <h2 className="hrm-title">🕋 دروس الحرمين الشريفين</h2>
+          <h2 className="hrm-title"><Landmark size={20} className="inline ml-2" />دروس الحرمين الشريفين</h2>
           <p className="hrm-subtitle">
             {HARAMAIN_LESSONS.length} درس — المسجد الحرام والمسجد النبوي · يظهر {lessons.length} درس
           </p>
@@ -116,7 +117,7 @@ export function HaramainLessonsSection() {
       {result && (
         <div className={`hrm-result${result.fail > 0 ? " hrm-result--fail" : " hrm-result--ok"}`}>
           <p className="hrm-result__text">
-            ✅ نجح: {result.ok} · {result.fail > 0 ? `❌ فشل: ${result.fail}` : "بدون أخطاء"}
+            <CheckCircle2 size={13} className="inline ml-1" />نجح: {result.ok} · {result.fail > 0 ? <><XCircle size={13} className="inline ml-1" />فشل: {result.fail}</> : "بدون أخطاء"}
           </p>
           {result.errors.length > 0 && (
             <ul className="hrm-result__errors">
@@ -142,7 +143,7 @@ export function HaramainLessonsSection() {
                 "--hrm-fb-border": filter === t ? "var(--majalis-emerald)" : "var(--majalis-line)",
               } as React.CSSProperties}
             >
-              {t === "all" ? "الكل" : t === "مكة" ? "🕋 المسجد الحرام" : "🕌 المسجد النبوي"}
+              {t === "all" ? "الكل" : t === "مكة" ? <><Landmark size={13} className="inline ml-1" />المسجد الحرام</> : <><Landmark size={13} className="inline ml-1" />المسجد النبوي</>}
             </button>
           ))}
         </div>
@@ -180,28 +181,28 @@ export function HaramainLessonsSection() {
           <div key={lesson.id} className={`hrm-card${lesson.haramain_type === "مكة" ? " hrm-card--makkah" : " hrm-card--madinah"}`}>
             <div className="hrm-card__head">
               <span className="hrm-card__badge">
-                {lesson.haramain_type === "مكة" ? "🕋 الحرام" : "🕌 النبوي"}
+                <Landmark size={11} className="inline ml-0.5" />{lesson.haramain_type === "مكة" ? "الحرام" : "النبوي"}
               </span>
               <span className="hrm-card__cat">{lesson.category}</span>
               {lesson.is_course && <span className="hrm-card__course-tag">دورة</span>}
             </div>
             <h3 className="hrm-card__title">{lesson.title}</h3>
-            <p className="hrm-card__speaker">👤 {lesson.speaker_name}</p>
+            <p className="hrm-card__speaker"><User size={11} className="inline ml-0.5" />{lesson.speaker_name}</p>
             <p className="hrm-card__meta">
-              <span>📅 {lesson.day_of_week}</span>
+              <span><Calendar size={11} className="inline ml-0.5" />{lesson.day_of_week}</span>
               <span className="hrm-card__sep">·</span>
-              <span>🕐 {lesson.lesson_time}</span>
+              <span><Clock size={11} className="inline ml-0.5" />{lesson.lesson_time}</span>
             </p>
             <p className="hrm-card__desc">{lesson.description}</p>
             <div className="hrm-card__tags">
-              <span className="hrm-card__tag">👥 {lesson.audience}</span>
+              <span className="hrm-card__tag"><Users size={11} className="inline ml-0.5" />{lesson.audience}</span>
               <span className="hrm-card__tag">{lesson.delivery}</span>
-              {lesson.is_recurring && <span className="hrm-card__tag hrm-card__tag--recurring">🔄 متكرر</span>}
+              {lesson.is_recurring && <span className="hrm-card__tag hrm-card__tag--recurring"><RefreshCw size={11} className="inline ml-0.5" />متكرر</span>}
             </div>
             <div className="hrm-card__footer">
               {lesson.live_url && (
                 <a href={lesson.live_url} target="_blank" rel="noopener noreferrer" className="hrm-card__link">
-                  🔗 رابط مباشر
+                  <Link2 size={11} className="inline ml-0.5" />رابط مباشر
                 </a>
               )}
               <button

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { useAdminShell } from "./AdminShell";
+import { AlertTriangle, BookOpen, Save } from "lucide-react";
 
 type Citation = { surah: string; ayahs: string; note: string };
 
@@ -268,7 +269,7 @@ function EditForm({
 
       <div className="ps-edit-actions">
         <button type="button" className="ps-save-btn" onClick={handleSave} disabled={saving}>
-          {saving ? "جاري الحفظ…" : "💾 حفظ التعديلات"}
+          {saving ? "جاري الحفظ…" : <><Save size={13} className="inline ml-1" aria-hidden="true" /> حفظ التعديلات</>}
         </button>
         <button type="button" className="ps-cancel-btn" onClick={onCancel} disabled={saving}>
           إلغاء
@@ -455,7 +456,7 @@ export function ProphetStoriesSection() {
       <style>{CSS}</style>
 
       <div className="ps-header">
-        <h2 className="ps-title">📖 قصص الأنبياء — مراجعة الاعتماد</h2>
+        <h2 className="ps-title flex items-center gap-2"><BookOpen size={18} strokeWidth={1.6} aria-hidden="true" /> قصص الأنبياء — مراجعة الاعتماد</h2>
         <p className="ps-subtitle">
           كل قصة محفوظة كمسودة (is_approved = false) ولا تظهر للمستخدمين حتى تعتمدها يدوياً
         </p>
@@ -467,7 +468,7 @@ export function ProphetStoriesSection() {
       </div>
 
       <div className="ps-warning">
-        ⚠️ <strong>تنبيه ديني:</strong> كل قصة مصدرها «قصص الأنبياء» لابن كثير والآيات القرآنية المذكورة.
+        <AlertTriangle size={13} className="inline ml-1" aria-hidden="true" /> <strong>تنبيه ديني:</strong> كل قصة مصدرها «قصص الأنبياء» لابن كثير والآيات القرآنية المذكورة.
         اقرأ الاستشهادات أولاً، ثم النص الكامل إن أردت، ثم اضغط «اعتماد» إذا اقتنعت بدقّتها.
         لا تُنشر قصة واحدة تلقائياً — الاعتماد قرارك وحدك.
       </div>

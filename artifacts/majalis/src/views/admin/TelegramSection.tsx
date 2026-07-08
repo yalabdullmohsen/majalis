@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useAdminShell } from "@/views/admin/AdminShell";
+import { Building2, MapPin, Send, User } from "lucide-react";
 
 type TgTab = "status" | "channels" | "review" | "stats";
 
@@ -494,9 +495,9 @@ function ReviewTab() {
                       {lesson.title || <span className="tgm-no-title">بدون عنوان</span>}
                     </div>
                     <div className="tgm-lesson-meta">
-                      {lesson.sheikh_name && <span>👤 {lesson.sheikh_name}</span>}
-                      {lesson.mosque && <span>🕌 {lesson.mosque}</span>}
-                      {lesson.area && <span>📍 {lesson.area}</span>}
+                      {lesson.sheikh_name && <span><User size={11} className="inline ml-0.5" aria-hidden="true" /> {lesson.sheikh_name}</span>}
+                      {lesson.mosque && <span><Building2 size={11} className="inline ml-0.5" aria-hidden="true" /> {lesson.mosque}</span>}
+                      {lesson.area && <span><MapPin size={11} className="inline ml-0.5" aria-hidden="true" /> {lesson.area}</span>}
                       {lesson.event_date && <span>📅 {lesson.event_date}</span>}
                       {lesson.event_time && <span>🕐 {lesson.event_time}</span>}
                       {lesson.category && <span>📂 {lesson.category}</span>}
@@ -516,7 +517,7 @@ function ReviewTab() {
 
                 {raw && (
                   <div className="tgm-raw-source">
-                    {raw.channel_username && <span>📢 @{raw.channel_username}</span>}
+                    {raw.channel_username && <span><Send size={11} className="inline ml-0.5" aria-hidden="true" /> @{raw.channel_username}</span>}
                     {raw.message_date && <span className="tgm-date-span">🗓 {new Date(raw.message_date).toLocaleDateString("ar-KW")}</span>}
                   </div>
                 )}

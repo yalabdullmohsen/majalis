@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
+import { Lightbulb } from "lucide-react";
 import {
   adminGetQuizQuestions,
   adminUpsertQuizQuestion,
@@ -256,7 +257,7 @@ export function QuizSection() {
                   <div className="qzs-item-answer">
                     <strong>الجواب:</strong> {item.answer || item.correct_answer}
                   </div>
-                  {item.hint && <div className="qzs-item-hint">💡 {item.hint}</div>}
+                  {item.hint && <div className="qzs-item-hint"><Lightbulb size={13} className="inline ml-1" />{item.hint}</div>}
                 </div>
                 <div className="qzs-item-actions">
                   <button className="qzs-btn" onClick={() => openEdit(item)}>تعديل</button>

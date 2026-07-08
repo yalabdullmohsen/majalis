@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { Ban, CheckCircle2, XCircle } from "lucide-react";
 import { Link } from "wouter";
 import { Loading } from "@/components/ui-common";
 import { adminFetch } from "@/lib/admin-api";
@@ -202,7 +203,7 @@ export default function FeatureStatusPage() {
                 const ok = health?.bootstrap?.[key] === true;
                 return (
                   <div key={key} className={`admin-bootstrap-flag${ok ? " admin-bootstrap-flag--ok" : ""}`}>
-                    <strong>{ok ? "✅" : "⛔"}</strong>
+                    {ok ? <CheckCircle2 size={15} className="text-green-600" /> : <Ban size={15} className="text-red-500" />}
                     <span>{label}</span>
                   </div>
                 );
@@ -236,12 +237,12 @@ export default function FeatureStatusPage() {
           </section>
 
           <section className="ui-card admin-feature-status__deploy">
-            <h2>Release Gate — {health?.ok ? "✅ Operational" : "⛔ BLOCKED"}</h2>
+            <h2>Release Gate — {health?.ok ? <><CheckCircle2 size={16} className="inline text-green-600 ml-1" />Operational</> : <><Ban size={16} className="inline text-red-500 ml-1" />BLOCKED</>}</h2>
             {health?.at && <p>آخر فحص: {health.at}</p>}
             {health?.blockers?.length ? (
               <ul>
                 {health.blockers.map((b) => (
-                  <li key={b}>⛔ {b}</li>
+                  <li key={b}><Ban size={13} className="inline text-red-500 ml-1" />{b}</li>
                 ))}
               </ul>
             ) : (
@@ -267,17 +268,17 @@ export default function FeatureStatusPage() {
             <section className="ui-card admin-feature-status__deploy">
               <h2>Services</h2>
               <ul>
-                <li>Database: {health.services.database?.ok ? "✅" : "❌"}</li>
+                <li>Database: {health.services.database?.ok ? <CheckCircle2 size={13} className="inline text-green-600 ml-1" /> : <XCircle size={13} className="inline text-red-500 ml-1" />}</li>
                 <li>
-                  sharia_rulings: {health.services.database?.rulings_using_db ? "✅ DB" : "❌"} (
+                  sharia_rulings: {health.services.database?.rulings_using_db ? <><CheckCircle2 size={13} className="inline text-green-600 ml-1" />DB</> : <XCircle size={13} className="inline text-red-500 ml-1" />} (
                   {health.services.database?.sharia_rulings_count ?? 0} rows, seed:{" "}
                   {health.services.database?.rulings_seed_available ?? 0})
                 </li>
-                <li>Supabase service role: {health.services.supabase?.serviceRole ? "✅" : "❌"}</li>
-                <li>Cron secrets: {health.services.cron?.ok ? "✅" : "❌"}</li>
-                <li>Assistant (Anthropic): {health.services.assistant?.anthropic ? "✅" : "❌"}</li>
-                <li>MKE: {health.services.mke?.ok ? "✅" : "❌"}</li>
-                <li>Automation: {health.services.automation?.ok ? "✅" : "❌"}</li>
+                <li>Supabase service role: {health.services.supabase?.serviceRole ? <CheckCircle2 size={13} className="inline text-green-600 ml-1" /> : <XCircle size={13} className="inline text-red-500 ml-1" />}</li>
+                <li>Cron secrets: {health.services.cron?.ok ? <CheckCircle2 size={13} className="inline text-green-600 ml-1" /> : <XCircle size={13} className="inline text-red-500 ml-1" />}</li>
+                <li>Assistant (Anthropic): {health.services.assistant?.anthropic ? <CheckCircle2 size={13} className="inline text-green-600 ml-1" /> : <XCircle size={13} className="inline text-red-500 ml-1" />}</li>
+                <li>MKE: {health.services.mke?.ok ? <CheckCircle2 size={13} className="inline text-green-600 ml-1" /> : <XCircle size={13} className="inline text-red-500 ml-1" />}</li>
+                <li>Automation: {health.services.automation?.ok ? <CheckCircle2 size={13} className="inline text-green-600 ml-1" /> : <XCircle size={13} className="inline text-red-500 ml-1" />}</li>
               </ul>
               {health.services.database?.tables && (
                 <details>
@@ -369,7 +370,7 @@ export default function FeatureStatusPage() {
               <ul>
                 {Object.entries(health.apiChecks).map(([k, v]) => (
                   <li key={k}>
-                    {v.ok ? "✅" : "❌"} {k} — HTTP {v.status}
+                    {v.ok ? <CheckCircle2 size={13} className="inline text-green-600 ml-1" /> : <XCircle size={13} className="inline text-red-500 ml-1" />}{k} — HTTP {v.status}
                   </li>
                 ))}
               </ul>

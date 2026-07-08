@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { BookOpen, Library } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/components/AuthProvider";
 
@@ -152,7 +153,7 @@ export function IslamicStoriesSection() {
       <style>{CSS}</style>
       <div className="is-wrap">
         <div className="is-header">
-          <h2 className="is-title">📖 القصص الإسلامية — مراجعة واعتماد</h2>
+          <h2 className="is-title"><BookOpen size={20} className="inline ml-2" />القصص الإسلامية — مراجعة واعتماد</h2>
           <p className="is-subtitle">
             جميع القصص محفوظة بـ is_approved = false — اعتمادك قرارك وحدك.
             لا تُنشر قصة للمستخدمين قبل موافقتك.
@@ -170,7 +171,7 @@ export function IslamicStoriesSection() {
         {/* Filters */}
         <div className="is-filters">
           <input
-            placeholder="🔍 بحث في العنوان أو التصنيف…"
+            placeholder="بحث في العنوان أو التصنيف…"
             value={search}
             onChange={e => setSearch(e.target.value)}
           />
@@ -258,7 +259,7 @@ export function IslamicStoriesSection() {
                         <div className="is-section-label">المصادر</div>
                         <div className="is-sources">
                           {story.sources.map((src, i) => (
-                            <div key={i} className="is-source">📚 {src}</div>
+                            <div key={i} className="is-source"><Library size={11} className="inline ml-0.5" />{src}</div>
                           ))}
                         </div>
                       </>

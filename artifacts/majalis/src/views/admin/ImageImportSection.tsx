@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { invalidateLessonsCache } from "@/lib/lessons-service";
+import { CheckCircle2, Image, Trash2, User } from "lucide-react";
 import {
   EMPTY_PARSED,
   FIELD_LABELS,
@@ -132,7 +133,7 @@ function DropZone({ onFiles, busy }: { onFiles: (f: File[]) => void; busy: boole
         disabled={busy}
       />
       <div className="ii-drop__body">
-        <span className="ii-drop__icon" aria-hidden="true">🖼</span>
+        <span className="ii-drop__icon" aria-hidden="true"><Image size={36} strokeWidth={1.3} /></span>
         <p className="ii-drop__title">
           {drag ? "أفلت الصور هنا" : "اسحب وأفلت صور الإعلانات هنا"}
         </p>
@@ -461,7 +462,7 @@ function JobDetail({
 
           {job.sheikhHint && (
             <div className="ii-sheikh-hint">
-              <span>👤</span> {job.sheikhHint}
+              <User size={12} className="inline ml-0.5" aria-hidden="true" /> {job.sheikhHint}
             </div>
           )}
 
@@ -493,7 +494,7 @@ function JobDetail({
           {isDone ? (
             <div className="iis-done-wrap">
               <p className="iis-done-icon">
-                {job.status === "approved" ? "✅" : "🗑"}
+                {job.status === "approved" ? <CheckCircle2 size={36} strokeWidth={1.4} className="text-green-600" aria-hidden="true" /> : <Trash2 size={36} strokeWidth={1.4} className="text-red-400" aria-hidden="true" />}
               </p>
               <p className="iis-done-msg">
                 {job.status === "approved"
