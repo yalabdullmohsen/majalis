@@ -372,6 +372,106 @@ export const FIQH_ISSUES_PUBLISHED_SEED: FiqhCouncilIssue[] = [
     updated_at: "2025-11-08T09:00:00Z",
     created_at: "2025-11-08T09:00:00Z",
   },
+  {
+    id: "seed-issue-ai-fatwa",
+    slug: "ai-in-fatwa",
+    title: "حكم الاستعانة بالذكاء الاصطناعي في الإفتاء",
+    summary: "مسألة فقهية مستحدثة حول توظيف برامج الذكاء الاصطناعي في تقديم الفتاوى الشرعية.",
+    description:
+      "انتشر في العصر الحديث توظيف برامج الذكاء الاصطناعي في الإجابة عن الأسئلة الشرعية، مما أثار تساؤلات فقهية حول الاستناد إلى هذه البرامج وموقع المفتي منها.",
+    category: "الاقتصاد الإسلامي",
+    subcategory: "التقنية والفقه",
+    ruling_summary:
+      "لا يجوز الاعتماد على الذكاء الاصطناعي مستقلاً في الإفتاء؛ وقد يُستعان به أداةً مساعدة للمفتي المؤهل في جمع المعلومات وتنظيمها.",
+    evidence_summary:
+      "الفتوى ولاية دينية تستلزم أهلية العلم والعدالة والتيقظ الشرعي، وهي صفات لا تتوفر في برامج الحاسوب.",
+    documentation_level: "official_verified",
+    status: "published",
+    views_count: 1120,
+    published_at: "2025-03-20T09:00:00Z",
+    updated_at: "2025-03-20T09:00:00Z",
+    created_at: "2025-03-20T09:00:00Z",
+  },
+  {
+    id: "seed-issue-stem-cells",
+    slug: "stem-cell-therapy",
+    title: "حكم العلاج بخلايا الجذع",
+    summary: "مسألة فقهية في الحكم الشرعي لاستخدام خلايا الجذع الجنينية والبالغة في العلاج الطبي.",
+    description:
+      "يُعدّ العلاج بخلايا الجذع من الثورات الطبية الحديثة، ويتشعب من حيث المصدر: خلايا جنينية (من أجنة مُستنبتة أو مُجهضة) أو خلايا بالغة (من صاحب العلاج). ولكل نوع حكمه الفقهي.",
+    category: "الطب والنوازل",
+    subcategory: "الطب",
+    ruling_summary:
+      "يجوز العلاج بخلايا الجذع البالغة المأخوذة من الشخص نفسه أو من متبرع بإذنه. أما الخلايا الجنينية المأخوذة من أجنة مُجهضة عمداً فمحرمة، ومن أجنة فائضة من التلقيح الصناعي محلّ خلاف معتبر.",
+    evidence_summary:
+      "أصل إباحة التداوي، وقاعدة الضرورة والحاجة، وحرمة الأجنة البشرية.",
+    documentation_level: "official_verified",
+    status: "published",
+    views_count: 760,
+    published_at: "2024-09-10T09:00:00Z",
+    updated_at: "2024-09-10T09:00:00Z",
+    created_at: "2024-09-10T09:00:00Z",
+  },
+  {
+    id: "seed-issue-digital-waqf",
+    slug: "digital-waqf",
+    title: "الوقف الرقمي وصكوك الوقف الإلكترونية",
+    summary: "مسألة فقهية في مشروعية الوقف على المحتوى الرقمي والبنية التحتية الإلكترونية، وصكوك الوقف الرقمية.",
+    description:
+      "مع تطور الاقتصاد الرقمي نشأت صور جديدة للوقف تشمل وقف المواقع والتطبيقات والمحتوى العلمي الإلكتروني، وصكوك الوقف المبنية على تقنية سلسلة الكتل.",
+    category: "الزكاة والوقف",
+    subcategory: "الوقف",
+    ruling_summary:
+      "يصح الوقف على المحتوى الرقمي النافع إذا توفرت شروط الوقف من ديمومة المنفعة وتعيين الجهة. وصكوك الوقف الرقمية حكمها حكم الوقف عموماً بشرط الشفافية والضمان.",
+    evidence_summary:
+      "أصل جواز الوقف على كل ما فيه منفعة مستمرة مباحة، وعموم الأدلة على الصدقة الجارية.",
+    documentation_level: "official_verified",
+    status: "published",
+    views_count: 540,
+    published_at: "2025-03-20T09:30:00Z",
+    updated_at: "2025-03-20T09:30:00Z",
+    created_at: "2025-03-20T09:30:00Z",
+  },
+  {
+    id: "seed-issue-zakat-real-estate",
+    slug: "zakat-real-estate",
+    title: "زكاة العقارات التجارية وعروض الاستثمار العقاري",
+    summary: "مسألة فقهية في كيفية إخراج زكاة العقارات المُعدّة للبيع أو الاستثمار والإيجار.",
+    description:
+      "تتعدد صور امتلاك العقارات بين: السكن الخاص (لا زكاة فيه)، والعقار للبيع (عروض تجارة تُزكّى)، والعقار للإيجار (زكاة الغلة لا العين)، وصناديق الاستثمار العقاري.",
+    category: "الزكاة والوقف",
+    subcategory: "الزكاة",
+    ruling_summary:
+      "العقار المعدّ للبيع تجب فيه زكاة عروض التجارة بقيمته السوقية. أما المعدّ للإيجار فتجب فيه زكاة الدخل (الغلة) إن بلغت نصاباً وحال عليها الحول.",
+    evidence_summary:
+      "حديث «في الإبل صدقتها» وأصل الزكاة في عروض التجارة، وقاعدة الزكاة في المال النامي.",
+    documentation_level: "official_verified",
+    status: "published",
+    views_count: 680,
+    published_at: "2024-06-01T09:00:00Z",
+    updated_at: "2024-06-01T09:00:00Z",
+    created_at: "2024-06-01T09:00:00Z",
+  },
+  {
+    id: "seed-issue-gender-reassignment",
+    slug: "gender-reassignment-surgery",
+    title: "حكم عمليات تغيير الجنس",
+    summary: "مسألة فقهية في الحكم الشرعي للعمليات الجراحية الهادفة لتغيير الجنس أو تصحيحه.",
+    description:
+      "تنقسم هذه العمليات إلى قسمين: تصحيح الخنثى المشكل للغلبة الطبية (مسألة فقهية قديمة)، وتغيير جنس الشخص السليم تشريحياً بدافع نفسي (مستحدثة).",
+    category: "الطب والنوازل",
+    subcategory: "الطب",
+    ruling_summary:
+      "يجوز جراحياً تصحيح حالة الخنثى المشكل للغلبة الطبية وفق رأي الأطباء. أما تغيير جنس الشخص السليم تشريحياً رغبةً نفسية فمحرّم شرعاً ولا يُرتّب عليه أحكام الجنس الجديد.",
+    evidence_summary:
+      "النهي عن تغيير خلق الله، وقاعدة حرمة الإضرار بالجسم، وأحاديث لعن المتشبهين من الرجال بالنساء والعكس.",
+    documentation_level: "official_verified",
+    status: "published",
+    views_count: 910,
+    published_at: "2023-11-08T09:00:00Z",
+    updated_at: "2023-11-08T09:00:00Z",
+    created_at: "2023-11-08T09:00:00Z",
+  },
 ];
 
 /** ربط المسائل بعناصر البذور عبر slug */
@@ -396,6 +496,11 @@ export const FIQH_ISSUE_ITEM_LINKS: Record<string, string[]> = {
   "organ-donation-will": ["fiqh-organ-donation-will"],
   "milk-bank-breastfeeding": ["fiqh-milk-bank-breastfeeding"],
   "minorities-kitabiyya-marriage": ["fiqh-minorities-kitabiyya-marriage"],
+  "ai-in-fatwa": [],
+  "stem-cell-therapy": [],
+  "digital-waqf": [],
+  "zakat-real-estate": [],
+  "gender-reassignment-surgery": [],
 };
 
 export const FIQH_ISSUE_TIMELINE_SEED: Record<string, Omit<FiqhTimelineEvent, "id" | "issue_id">[]> = {
