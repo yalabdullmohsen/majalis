@@ -3,14 +3,14 @@ import type { QuranCircle } from "@/lib/quran-circles-service";
 import { GeometricPattern } from "@/components/design/GeometricPattern";
 
 const LEVEL_COLOR: Record<string, string> = {
-  "مبتدئ": "#d1fae5",
-  "متوسط": "rgba(14,110,82,0.08)",
-  "متقدم": "#fee2e2",
+  "مبتدئ": "var(--majalis-emerald-soft, #EBF5F0)",
+  "متوسط": "var(--majalis-emerald-muted, rgba(14,110,82,0.08))",
+  "متقدم": "var(--majalis-danger-muted, rgba(155,28,28,0.08))",
 };
 const LEVEL_TEXT: Record<string, string> = {
-  "مبتدئ": "#065f46",
-  "متوسط": "#0E6E52",
-  "متقدم": "#991b1b",
+  "مبتدئ": "var(--majalis-emerald-deep, #0A5040)",
+  "متوسط": "var(--majalis-emerald, #0E6E52)",
+  "متقدم": "var(--majalis-danger, #9B1C1C)",
 };
 
 interface Props {
@@ -67,7 +67,7 @@ export function QuranCircleCard({ circle: c }: Props) {
             <div className="qc-card__capacity">
               <div
                 className="qc-card__capacity-bar"
-                style={{ "--qcc-pct": `${pct}%`, "--qcc-bar-color": pct >= 90 ? "#ef4444" : "var(--majalis-emerald)" } as React.CSSProperties}
+                style={{ "--qcc-pct": `${pct}%`, "--qcc-bar-color": pct >= 90 ? "var(--majalis-danger, #9B1C1C)" : "var(--majalis-emerald)" } as React.CSSProperties}
               />
             </div>
           </div>

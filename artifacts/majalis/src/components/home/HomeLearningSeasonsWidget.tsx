@@ -47,7 +47,7 @@ function getSeasons(): Season[] {
       description: "شهر رمضان المبارك 1448هـ",
       suggestion: "خطة تعلّم رمضانية مكثّفة",
       href: "/learning-plan",
-      color: "#18362A",
+      color: "var(--majalis-emerald-deep, #0A5040)",
     },
     {
       id: "dhul-hijja-1448",
@@ -58,7 +58,7 @@ function getSeasons(): Season[] {
       description: "أفضل أيام الدنيا — العشر الأول من ذي الحجة 1448هـ",
       suggestion: "مراجعة أعمال اليوم العظيمة",
       href: "/adhkar",
-      color: "#059669",
+      color: "var(--majalis-emerald, #0E6E52)",
     },
   ];
 }

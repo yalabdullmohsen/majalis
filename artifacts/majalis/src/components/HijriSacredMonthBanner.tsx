@@ -24,11 +24,11 @@ type Period = {
 // ─── ألوان أنواع العبادات ──────────────────────────────────────────────────
 const TYPE_COLOR: Record<ReminderType, string> = {
   fasting:  "#2563EB",
-  prayer:   "#16A34A",
+  prayer:   "var(--majalis-emerald, #0E6E52)",
   quran:    "#7C3AED",
   dhikr:    "#0891B2",
-  charity:  "#0E6E52",
-  hajj:     "#0E6E52",
+  charity:  "var(--majalis-emerald, #0E6E52)",
+  hajj:     "var(--majalis-emerald, #0E6E52)",
   general:  "#4B5563",
 };
 
@@ -62,7 +62,7 @@ function getPeriod(month: number, day: number, year: number): Period {
 
   if (month === 12 && day <= 13) {
     if (day === 9) return {
-      title: `يوم عرفة — ${day} ذو الحجة ${year}هـ`, accent: "#0E6E52",
+      title: `يوم عرفة — ${day} ذو الحجة ${year}هـ`, accent: "var(--majalis-emerald, #0E6E52)",
       reminders: [
         { Icon: Moon,    label: "يوم عرفة", body: "صيامه يُكفّر سنتين — الماضية والقادمة لغير الحاج.", type: "fasting", urgent: true },
         { Icon: RotateCw, label: "الدعاء",  body: "خير الدعاء دعاء يوم عرفة — أكثر منه الآن.", type: "dhikr", urgent: true },
@@ -70,7 +70,7 @@ function getPeriod(month: number, day: number, year: number): Period {
       ],
     };
     if (day === 10) return {
-      title: `عيد الأضحى المبارك — ${year}هـ`, accent: "#16A34A",
+      title: `عيد الأضحى المبارك — ${year}هـ`, accent: "var(--majalis-emerald, #0E6E52)",
       reminders: [
         { Icon: Star,    label: "الأضحية", body: "الأضحية سنّة مؤكدة — لا تُفوّت أجرها إن استطعت.", type: "general", urgent: true },
         { Icon: RotateCw, label: "التكبير", body: "أكثر من التكبير تعظيماً لله في يوم العيد.", type: "dhikr" },
@@ -78,7 +78,7 @@ function getPeriod(month: number, day: number, year: number): Period {
       ],
     };
     if (day >= 11 && day <= 13) return {
-      title: `أيام التشريق — ذو الحجة ${year}هـ`, accent: "#16A34A",
+      title: `أيام التشريق — ذو الحجة ${year}هـ`, accent: "var(--majalis-emerald, #0E6E52)",
       reminders: [
         { Icon: RotateCw, label: "التكبير", body: "أيام التشريق أيام أكل وشرب وذكر لله.", type: "dhikr" },
         { Icon: Heart,   label: "الصدقة",  body: "شارك لحم الأضحية مع المحتاجين.", type: "charity" },
@@ -86,7 +86,7 @@ function getPeriod(month: number, day: number, year: number): Period {
       ],
     };
     return {
-      title: `العشر الأُوَل من ذي الحجة ${year}هـ`, accent: "#0E6E52",
+      title: `العشر الأُوَل من ذي الحجة ${year}هـ`, accent: "var(--majalis-emerald, #0E6E52)",
       countdown: { days: 9 - day, label: "حتى يوم عرفة" },
       reminders: [
         { Icon: Star,    label: "أفضل الأيام", body: "ما من أيام العمل الصالح فيها أحبُّ إلى الله من هذه.", type: "general", urgent: true },
@@ -128,7 +128,7 @@ function getPeriod(month: number, day: number, year: number): Period {
   }
 
   if (month === 7) return {
-    title: `رَجَب الأصمّ ${year}هـ — شهر حرام`, accent: "#0E6E52",
+    title: `رَجَب الأصمّ ${year}هـ — شهر حرام`, accent: "var(--majalis-emerald, #0E6E52)",
     reminders: [
       { Icon: Moon,    label: "الصيام",    body: "رجب من الأشهر الحُرُم — أكثر من صيام النوافل.", type: "fasting" },
       { Icon: RotateCw, label: "الاستغفار", body: "اللهم بارك لنا في رجب وشعبان وبلّغنا رمضان.", type: "dhikr" },
@@ -152,7 +152,7 @@ function getPeriod(month: number, day: number, year: number): Period {
   }
 
   if (month === 10 && day <= 6) return {
-    title: `ست شوال ${year}هـ — لا تُفوّتها`, accent: "#16A34A",
+    title: `ست شوال ${year}هـ — لا تُفوّتها`, accent: "var(--majalis-emerald, #0E6E52)",
     countdown: { days: 6 - day, label: "حتى تنتهي الفرصة" },
     reminders: [
       { Icon: Moon,    label: "ست شوال",  body: "من صام رمضان وأتبعه ستاً من شوال كصيام الدهر.", type: "fasting", urgent: true },
@@ -162,7 +162,7 @@ function getPeriod(month: number, day: number, year: number): Period {
   };
 
   if (month === 11) return {
-    title: `ذو القَعدة ${year}هـ — شهر حرام`, accent: "#0E6E52",
+    title: `ذو القَعدة ${year}هـ — شهر حرام`, accent: "var(--majalis-emerald, #0E6E52)",
     reminders: [
       { Icon: Building2, label: "استعداد للحج", body: "ذو القعدة من أشهر الحج — تهيّأ للحج أو العمرة.", type: "hajj" },
       { Icon: Moon,      label: "الصيام",       body: "الأشهر الحرم من أفضل أوقات صيام النوافل.", type: "fasting" },
@@ -193,7 +193,7 @@ function getPeriod(month: number, day: number, year: number): Period {
   const slice = DAILY.slice(start, start + 5);
   return {
     title: `${MONTH_NAMES[month] ?? "هذا الشهر"} ${year}هـ`,
-    accent: "#18362A",
+    accent: "var(--majalis-emerald-deep, #0A5040)",
     reminders: slice.length >= 3 ? slice : DAILY.slice(0, 5),
   };
 }
