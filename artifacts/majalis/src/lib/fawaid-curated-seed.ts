@@ -275,6 +275,24 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   /* ── إضافات الحديث ── */
   { text: "صحيح البخاري أصح الكتب بعد كتاب الله؛ وقد استغرق البخاري ستة عشر عاماً في تصنيفه.", category: "الحديث", source: "هدي الساري مقدمة فتح الباري — ابن حجر العسقلاني", author_name: "ابن حجر العسقلاني", status: "approved", verification_status: "verified" },
   { text: "الحديث الصحيح حجة بنفسه؛ لا يحتاج إلى إذن من مذهب ولا تزكية من فقيه — قاعدة أهل السنة.", category: "الحديث", source: "صفة صلاة النبي — ناصر الدين الألباني", author_name: "الإمام الألباني", status: "approved", verification_status: "needs_review" },
+
+  /* ── إضافات الفقه ── */
+  { text: "الفقه ليس حفظ المسائل فحسب؛ بل فهم المقاصد وتنزيلها على الوقائع. والفقيه من يُحسن ذلك.", category: "الفقه", source: "الموافقات — أبو إسحاق الشاطبي", author_name: "الشاطبي", status: "approved", verification_status: "verified" },
+  { text: "من أتقن أصول الفقه أمن من الزلل؛ لأن الأصول ميزان الأحكام وبها يُفرَّق بين الصحيح والفاسد.", category: "الفقه", source: "إرشاد الفحول — الشوكاني", author_name: "الشوكاني", status: "approved", verification_status: "verified" },
+
+  /* ── إضافات السيرة ── */
+  { text: "دراسة السيرة النبوية واجب على كل مسلم؛ فهي التطبيق العملي للقرآن الكريم في حياة بشرية كاملة.", category: "السيرة", source: "الشمائل المحمدية — الترمذي", author_name: "الإمام الترمذي", status: "approved", verification_status: "verified" },
+
+  /* ── إضافات الزهد والتقوى ── */
+  { text: "الزهد ليس فراراً من الدنيا؛ بل ألّا تُسكن الدنيا قلبك وهي في يدك. فاعملها واتركها في يدك لا في قلبك.", category: "الزهد والتقوى", source: "إحياء علوم الدين — الغزالي", author_name: "الإمام الغزالي", status: "approved", verification_status: "verified" },
+  { text: "قيمة الوقت عند المؤمن من قيمة نفسه؛ فكل ساعة تمر بلا طاعة أو نفع هي خسارة لا تُعوَّض.", category: "الزهد والتقوى", source: "الفوائد — ابن القيم", author_name: "ابن القيم الجوزية", status: "approved", verification_status: "verified" },
+
+  /* ── إضافات الصبر والتوكل ── */
+  { text: "التوكل على الله لا يعني ترك الأسباب؛ بل أن تأخذ بالأسباب وقلبك معلق بالمسبب لا بالسبب.", category: "الصبر والتوكل", source: "مدارج السالكين — ابن القيم", author_name: "ابن القيم الجوزية", status: "approved", verification_status: "verified" },
+
+  /* ── إضافات اللغة العربية ── */
+  { text: "من أتقن العربية فتح له باب الفهم على الكتاب والسنة؛ ولغة القرآن ليست وسيلة فحسب بل هي من شريعته.", category: "اللغة العربية", source: "اقتضاء الصراط المستقيم — ابن تيمية", author_name: "ابن تيمية", status: "approved", verification_status: "verified" },
+  { text: "أفصح البشر لساناً رسول الله ﷺ — أوتي جوامع الكلم: كلمات قليلة تحمل معاني غزيرة لا يُحيط بها شرح.", category: "اللغة العربية", source: "جوامع الكلم — دراسة حديثية", author_name: "النبي محمد ﷺ", status: "approved", verification_status: "verified" },
 ];
 
 export const FAWAID_CURATED_SEED: FawaidCuratedItem[] = curated.map((item, i) => ({
