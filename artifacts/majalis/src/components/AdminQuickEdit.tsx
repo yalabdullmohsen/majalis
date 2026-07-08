@@ -1,3 +1,4 @@
+import { Pencil } from "lucide-react";
 import { useAuth } from "@/components/AuthProvider";
 
 type AdminQuickEditProps = {
@@ -22,7 +23,7 @@ export function AdminQuickEdit({ section, searchTerm, label }: AdminQuickEditPro
 
   return (
     <a href={href} className="admin-quick-edit-fab" title={`إدارة ${label || "القسم"} في لوحة التحكم`} aria-label="تعديل في لوحة التحكم">
-      <span className="admin-quick-edit-fab__icon">✏️</span>
+      <span className="admin-quick-edit-fab__icon"><Pencil size={16} strokeWidth={1.8} /></span>
       <span className="admin-quick-edit-fab__text">تعديل</span>
     </a>
   );

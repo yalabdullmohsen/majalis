@@ -9,6 +9,7 @@
  */
 
 import { useEffect, useState } from "react";
+import { Network } from "lucide-react";
 import { Link } from "wouter";
 import {
   fetchKnNode,
@@ -92,7 +93,7 @@ export function RelatedContentWidget({
   return (
     <aside dir="rtl" className="rcw-aside">
       <h2 className="rcw-title">
-        <span className="rcw-title__icon">🕸️</span>
+        <span className="rcw-title__icon"><Network size={16} strokeWidth={1.5} /></span>
         {title}
       </h2>
 

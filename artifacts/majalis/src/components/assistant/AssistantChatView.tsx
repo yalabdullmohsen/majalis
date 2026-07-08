@@ -1,5 +1,5 @@
 import type { RefObject } from "react";
-import { BookOpen, Globe, Landmark, Library, Scale, Users } from "lucide-react";
+import { AlertTriangle, BookOpen, Globe, Landmark, Library, Scale, Users } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import type { ChatMessage } from "@/hooks/useAssistantChat";
 import { AssistantReply } from "./AssistantReply";
@@ -192,7 +192,7 @@ export function AssistantChatView({
 
                 {/* Disclaimer */}
                 <p className="assistant-disclaimer">
-                  ⚠️ {message.disclaimer || "هذه إجابة تعليمية مختصرة وليست فتوى شخصية ملزمة."}
+                  <AlertTriangle size={13} className="inline ml-1" />{message.disclaimer || "هذه إجابة تعليمية مختصرة وليست فتوى شخصية ملزمة."}
                 </p>
               </>
             ) : (

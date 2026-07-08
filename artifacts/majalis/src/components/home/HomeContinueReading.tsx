@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { FileText, MapPin } from "lucide-react";
 import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { getResumeItems, type ResumeItem } from "@/lib/user-profile-service";
@@ -28,7 +29,7 @@ export function HomeContinueReading() {
   return (
     <section className="home-resume ds-section" dir="rtl" aria-label="تابع من حيث توقفت">
       <div className="ds-section__head">
-        <h2 className="ds-section__title">📍 تابع من حيث توقفت</h2>
+        <h2 className="ds-section__title"><MapPin size={16} className="inline ml-1" /> تابع من حيث توقفت</h2>
         <Link href="/profile" className="ds-section__link">ملفك ←</Link>
       </div>
       <div className="home-resume__cards">
@@ -38,7 +39,7 @@ export function HomeContinueReading() {
             href={item.content_url}
             className="home-resume__card"
           >
-            <span className="home-resume__card-icon">{item.thumbnail_icon || "📄"}</span>
+            <span className="home-resume__card-icon">{item.thumbnail_icon || <FileText size={20} strokeWidth={1.5} />}</span>
             <div className="home-resume__card-body">
               <span className="home-resume__card-type">
                 {TYPE_LABEL[item.content_type] ?? item.content_type}

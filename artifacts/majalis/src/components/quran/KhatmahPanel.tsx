@@ -2,7 +2,7 @@
  * KhatmahPanel — خطط الختمة وسلاسل القراءة والإحصائيات
  */
 import { useState } from "react";
-import { CalendarDays, Flame, Star } from "lucide-react";
+import { CalendarDays, CheckCircle2, Flame, Star } from "lucide-react";
 import {
   getKhatmahPlans,
   createKhatmahPlan,
@@ -46,7 +46,7 @@ function PlanCard({ plan, currentPage }: { plan: KhatmahPlan; currentPage: numbe
     <div className={`kht-plan-card${done ? " kht-plan-card--done" : " kht-plan-card--active"}`}>
       <div className="kht-plan-head">
         <strong className={`kht-plan-name${done ? " kht-plan-name--done" : ""}`}>
-          {done ? "✅ " : ""}{plan.name}
+          {done && <CheckCircle2 size={14} className="inline ml-1" />}{plan.name}
         </strong>
         {!done && <span className="kht-plan-days">{daysLeft} يوم متبقٍّ</span>}
       </div>

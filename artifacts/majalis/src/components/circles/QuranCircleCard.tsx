@@ -1,3 +1,4 @@
+import { CalendarDays, MapPin } from "lucide-react";
 import type { QuranCircle } from "@/lib/quran-circles-service";
 import { GeometricPattern } from "@/components/design/GeometricPattern";
 
@@ -45,12 +46,12 @@ export function QuranCircleCard({ circle: c }: Props) {
 
         {daysLabel && (
           <p className="qc-card__meta">
-            📅 {daysLabel}{c.schedule_time ? ` — ${c.schedule_time}` : ""}
+            <CalendarDays size={13} className="inline ml-1" />{daysLabel}{c.schedule_time ? ` — ${c.schedule_time}` : ""}
           </p>
         )}
 
         {c.location && (
-          <p className="qc-card__meta">📍 {c.location}</p>
+          <p className="qc-card__meta"><MapPin size={13} className="inline ml-1" />{c.location}</p>
         )}
 
         {c.description && (

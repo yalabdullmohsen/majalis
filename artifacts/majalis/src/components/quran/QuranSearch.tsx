@@ -8,7 +8,7 @@
  * - المصدر: AlQuran Cloud API فقط — لا توليد AI
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Search } from "lucide-react";
+import { AlertTriangle, Search } from "lucide-react";
 import { searchQuran, type SearchMatch } from "@/lib/quran-api";
 import { normalizeArabic } from "@/lib/arabic-search";
 import { addSearchHistory, getSearchHistory, clearSearchHistory } from "@/lib/search-history";
@@ -243,7 +243,7 @@ export function QuranSearch({ onGoToResult }: Props) {
 
         {error && !loading && (
           <div className="qss-error">
-            <p>⚠️ تعذر الاتصال بالمصدر.</p>
+            <p><AlertTriangle size={14} className="inline ml-1" />تعذر الاتصال بالمصدر.</p>
             <button type="button" onClick={() => doSearch(query)} className="qss-retry-btn">
               أعد المحاولة
             </button>

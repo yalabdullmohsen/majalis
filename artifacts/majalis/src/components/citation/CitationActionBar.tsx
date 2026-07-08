@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { ClipboardCopy, Link2 } from "lucide-react";
 import { CitationModal } from "./CitationModal";
 import { type CitationSource, type CitationContentType, CONTENT_TYPE_COLOR } from "@/lib/citation-service";
 
@@ -83,7 +84,7 @@ function SelectionTooltip({
         className="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-600 transition-colors"
         title="نسخ"
       >
-        📋 نسخ
+        <ClipboardCopy size={13} className="inline ml-1" />نسخ
       </button>
     </div>
   );
@@ -202,7 +203,7 @@ export function CitationActionBar({
           className={btnClass}
           title="مشاركة"
         >
-          🔗 {!compact && "مشاركة"}
+          <Link2 size={13} className="inline ml-1" />{!compact && "مشاركة"}
         </button>
 
         <button
@@ -211,7 +212,7 @@ export function CitationActionBar({
           className={btnClass}
           title="نسخ"
         >
-          {copied ? "✓" : "📋"} {!compact && (copied ? "تم النسخ" : "نسخ")}
+          <ClipboardCopy size={13} className="inline ml-1" />{!compact && (copied ? "تم النسخ" : "نسخ")}
         </button>
 
         <button

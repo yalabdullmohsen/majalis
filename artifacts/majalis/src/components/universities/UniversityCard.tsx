@@ -1,3 +1,4 @@
+import { GraduationCap, MapPin } from "lucide-react";
 import { Link } from "wouter";
 import type { University } from "@/lib/universities-service";
 import { ACCREDITATION_LABELS, ACCREDITATION_COLOR } from "@/lib/universities-service";
@@ -38,7 +39,7 @@ export function UniversityCard({ university: u, compact = false }: Props) {
       <div className="p-4 flex-1 space-y-3">
         {/* الموقع */}
         <div className="flex items-center gap-1.5 text-xs univ-card__location">
-          <span>📍</span>
+          <MapPin size={13} />
           <span>{u.city ? `${u.city}، ` : ""}{u.country}</span>
           {u.is_verified && (
             <span className="mr-auto univ-badge univ-badge--verified">✓ موثقة</span>
@@ -74,7 +75,7 @@ export function UniversityCard({ university: u, compact = false }: Props) {
             <span key={m} className="univ-badge univ-badge--mode">{m}</span>
           ))}
           {hasScholarship && (
-            <span className="univ-badge univ-badge--scholarship">🎓 منح متاحة</span>
+            <span className="univ-badge univ-badge--scholarship"><GraduationCap size={12} className="inline ml-1" />منح متاحة</span>
           )}
         </div>
 

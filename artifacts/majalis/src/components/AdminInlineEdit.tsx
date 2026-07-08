@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { AlertTriangle, Pencil } from "lucide-react";
 import { useAuth } from "@/components/AuthProvider";
 
 // ── أنواع المحتوى المدعومة ──────────────────────────────────────────────────
@@ -242,7 +243,7 @@ function AdminEditModal({ contentType, contentId, initialData = {}, onClose, onS
       <div className="aie-modal" dir="rtl">
         {/* رأس المودال */}
         <div className="aie-modal__header">
-          <h2 className="aie-modal__title">✏️ تعديل {LABELS[contentType]}</h2>
+          <h2 className="aie-modal__title"><Pencil size={15} className="inline ml-1" /> تعديل {LABELS[contentType]}</h2>
           <button type="button" className="aie-modal__close" onClick={onClose} aria-label="إغلاق">✕</button>
         </div>
 
@@ -276,7 +277,7 @@ function AdminEditModal({ contentType, contentId, initialData = {}, onClose, onS
 
         {/* الإجراءات */}
         <div className="aie-modal__footer">
-          {error && <p className="aie-modal__error">⚠️ {error}</p>}
+          {error && <p className="aie-modal__error"><AlertTriangle size={13} className="inline ml-1" />{error}</p>}
           {saved && <p className="aie-modal__success">✓ تم الحفظ بنجاح</p>}
           <div className="aie-modal__actions">
             <button type="button" className="aie-btn aie-btn--ghost" onClick={onClose} disabled={saving}>
@@ -319,7 +320,7 @@ export function AdminInlineEdit({ contentType, contentId, initialData, className
         title={`تعديل ${LABELS[contentType] || "المحتوى"}`}
         aria-label="تعديل"
       >
-        ✏️ تعديل
+        <Pencil size={14} className="inline ml-1" />تعديل
       </button>
 
       {open && (

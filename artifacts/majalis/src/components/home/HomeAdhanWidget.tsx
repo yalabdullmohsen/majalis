@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Mic2 } from "lucide-react";
+import { Bell, BellOff, Landmark, Mic2 } from "lucide-react";
 import { Link } from "wouter";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import { loadAdhanPrefs, patchAdhanPrefs, PRAYER_ARABIC } from "@/lib/adhan-preferences";
@@ -38,7 +38,7 @@ export function HomeAdhanWidget() {
       <div className="had-inner">
         <div className="had-header">
           <div className="had-header__label">
-            <span className="had-header__icon">🕌</span>
+            <span className="had-header__icon"><Landmark size={18} strokeWidth={1.5} /></span>
             <span className="had-header__text">مواقيت الصلاة</span>
           </div>
           <button
@@ -47,7 +47,7 @@ export function HomeAdhanWidget() {
             title={prefs.globalEnabled ? "إيقاف إشعارات الأذان" : "تفعيل إشعارات الأذان"}
             className={`had-notif-btn${prefs.globalEnabled ? " had-notif-btn--on" : ""}${toggling ? " had-notif-btn--toggling" : ""}`}
           >
-            <span className="had-notif-btn__icon">{prefs.globalEnabled ? "🔔" : "🔕"}</span>
+            <span className="had-notif-btn__icon">{prefs.globalEnabled ? <Bell size={16} strokeWidth={1.8} /> : <BellOff size={16} strokeWidth={1.8} />}</span>
             <span>{prefs.globalEnabled ? "إشعارات مفعّلة" : "إشعارات متوقفة"}</span>
           </button>
         </div>

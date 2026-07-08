@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import {
-  BookOpen, CheckCircle2, Handshake, Library, Lightbulb, ScrollText, Moon, Search, Star, Scale, Building2, Landmark, Gem, Trophy, XCircle,
+  BookOpen, CheckCircle2, Handshake, Library, Lightbulb, ScrollText, Moon, Search, Send, Star, Scale, Building2, Landmark, Gem, Trophy, XCircle,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -499,7 +499,7 @@ function QuestionPhase({
 
         {passedToOpponent && (
           <div className="qzg-q-passed-banner">
-            📨 تم إرسال السؤال — يجيب الآن: <strong>{scoringTeam?.name}</strong>
+            <Send size={14} className="inline ml-1" />تم إرسال السؤال — يجيب الآن: <strong>{scoringTeam?.name}</strong>
           </div>
         )}
 

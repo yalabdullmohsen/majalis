@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { CheckCircle2, ClipboardList, Clock, Library, Mic2, PenLine, RefreshCw, Rocket, XCircle } from "lucide-react";
+import { CheckCircle2, ClipboardList, Clock, GraduationCap, Library, Link2, MapPin, Mic2, PenLine, RefreshCw, Rocket, XCircle } from "lucide-react";
 import {
   listSubmissions,
   reviewSubmission,
@@ -125,9 +125,9 @@ function SubmissionCard({ sub, onReview }: {
             {sub.file_name && (
               <span className="srp-meta-chip">📎 {sub.file_name} ({formatFileSize(sub.file_size_kb)})</span>
             )}
-            {meta.country && <span className="srp-meta-chip">📍 {String(meta.country)}</span>}
+            {meta.country && <span className="srp-meta-chip"><MapPin size={11} className="inline ml-1" />{String(meta.country)}</span>}
             {meta.muezzin_style && <span className="srp-meta-chip">{String(meta.muezzin_style)}</span>}
-            {meta.sheikh && <span className="srp-meta-chip">🎓 {String(meta.sheikh)}</span>}
+            {meta.sheikh && <span className="srp-meta-chip"><GraduationCap size={11} className="inline ml-1" />{String(meta.sheikh)}</span>}
             {meta.topic && <span className="srp-meta-chip">{String(meta.topic)}</span>}
           </div>
         </div>
@@ -165,7 +165,7 @@ function SubmissionCard({ sub, onReview }: {
           {meta.source_url && (
             <div className="srp-detail-source">
               <a href={String(meta.source_url)} target="_blank" rel="noopener noreferrer" className="srp-link">
-                🔗 رابط المصدر
+                <Link2 size={13} className="inline ml-1" />رابط المصدر
               </a>
             </div>
           )}

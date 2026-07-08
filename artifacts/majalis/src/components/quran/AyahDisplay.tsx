@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { BookmarkCheck, PenLine } from "lucide-react";
+import { BookmarkCheck, Link2, PenLine } from "lucide-react";
 import type { Ayah } from "@/lib/quran-api";
 import type { PlayerState } from "@/hooks/useAyahPlayer";
 import { copyAyahText, shareAyahAsImage } from "@/lib/share-ayah";
@@ -351,7 +351,7 @@ export function AyahDisplay({
                   className="qs-context-sheet__btn qs-context-sheet__btn--primary qs-context-sheet__btn--explore"
                   onClick={() => { setExploreAyah(contextAyah); setShowExplore(true); setContextAyah(null); }}
                 >
-                  <span aria-hidden="true">🔗</span> استكشف الآية
+                  <Link2 size={14} aria-hidden="true" /> استكشف الآية
                 </button>
 
                 <button
