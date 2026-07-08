@@ -254,6 +254,27 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   /* ── إضافات الأسرة ── */
   { text: "خيركم خيركم لأهله — الأسرة الصالحة أساس المجتمع المسلم الصالح.", category: "الأسرة", source: "رواه الترمذي — صحيح", author_name: "النبي محمد ﷺ", status: "approved", verification_status: "verified" },
   { text: "البيت السعيد هو الذي تُعلَّم فيه الصلاة قبل القراءة والكتابة.", category: "الأسرة", source: "تربية الأولاد في الإسلام — عبد الله ناصح علوان", author_name: "عبد الله ناصح علوان", status: "approved", verification_status: "needs_review" },
+
+  /* ── إضافات العقيدة ── */
+  { text: "التوحيد أسُّ الدين وقمّته؛ فلا عمل يُقبل بلا توحيد، ولا توحيد يكتمل بلا إخلاص.", category: "العقيدة", source: "درء تعارض العقل والنقل — ابن تيمية", author_name: "ابن تيمية", status: "approved", verification_status: "verified" },
+  { text: "اليقين هو الركن الركين في بنيان الإيمان؛ من رُزق اليقين هانت عليه الدنيا وعظمت عنده الآخرة.", category: "العقيدة", source: "مدارج السالكين — ابن القيم", author_name: "ابن القيم الجوزية", status: "approved", verification_status: "verified" },
+  { text: "الإيمان قول وعمل ونية — لا يصح بعضها دون بعض في منظومة الاعتقاد الصحيح.", category: "العقيدة", source: "شرح السنة — الإمام البغوي", author_name: "الإمام البغوي", status: "approved", verification_status: "verified" },
+
+  /* ── إضافات طلب العلم ── */
+  { text: "لا تصلح الأُمة حتى يصلح علماؤها؛ وعلماء الأمة مصابيح الهداية في الظلمات.", category: "طلب العلم", source: "جامع بيان العلم — ابن عبد البر", author_name: "ابن عبد البر", status: "approved", verification_status: "verified" },
+  { text: "طالب العلم لا ينضجُ حتى يستوي عنده الثناء والذم سواء في طلبه.", category: "طلب العلم", source: "الجامع لأخلاق الراوي — الخطيب البغدادي", author_name: "الخطيب البغدادي", status: "approved", verification_status: "needs_review" },
+
+  /* ── إضافات القرآن ── */
+  { text: "من أراد علم الأولين والآخرين فليتدبّر القرآن — فيه جواب كل سؤال وشفاء كل داء.", category: "القرآن", source: "مقدمة في أصول التفسير — ابن تيمية", author_name: "ابن تيمية", status: "approved", verification_status: "verified" },
+  { text: "الحافظ للقرآن يُقال له يوم القيامة: اقرأ وارقَ ورتّل — فمنزلته عند آخر آية يحفظها.", category: "القرآن", source: "رواه الترمذي وأبو داود — صحيح", author_name: "النبي محمد ﷺ", status: "approved", verification_status: "verified" },
+
+  /* ── إضافات التربية ── */
+  { text: "التربية الصحيحة تبدأ بتربية النفس قبل تربية الأبناء — المُربّي القدوة أبلغ من المُربّي الواعظ.", category: "التربية", source: "تربية الأولاد في الإسلام — عبد الله ناصح علوان", author_name: "عبد الله ناصح علوان", status: "approved", verification_status: "needs_review" },
+  { text: "لا تُكثر أمر ولدك بالنهي؛ فإن الإكثار يُفضي إلى الجرأة. علّمه بالترغيب قبل الترهيب.", category: "التربية", source: "أدب الدنيا والدين — الماوردي", author_name: "الماوردي", status: "approved", verification_status: "verified" },
+
+  /* ── إضافات الحديث ── */
+  { text: "صحيح البخاري أصح الكتب بعد كتاب الله؛ وقد استغرق البخاري ستة عشر عاماً في تصنيفه.", category: "الحديث", source: "هدي الساري مقدمة فتح الباري — ابن حجر العسقلاني", author_name: "ابن حجر العسقلاني", status: "approved", verification_status: "verified" },
+  { text: "الحديث الصحيح حجة بنفسه؛ لا يحتاج إلى إذن من مذهب ولا تزكية من فقيه — قاعدة أهل السنة.", category: "الحديث", source: "صفة صلاة النبي — ناصر الدين الألباني", author_name: "الإمام الألباني", status: "approved", verification_status: "needs_review" },
 ];
 
 export const FAWAID_CURATED_SEED: FawaidCuratedItem[] = curated.map((item, i) => ({
