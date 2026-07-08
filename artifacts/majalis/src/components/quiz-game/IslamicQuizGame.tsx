@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import {
-  BookOpen, ScrollText, Moon, Star, Scale, Building2, Landmark, Gem,
+  BookOpen, CheckCircle2, Handshake, Library, Lightbulb, ScrollText, Moon, Search, Star, Scale, Building2, Landmark, Gem, Trophy, XCircle,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -314,7 +314,7 @@ function SetupPhase({ onStart }: { onStart: (cats: string[], names: [string, str
   return (
     <div className="qzg-setup">
       <div className="qzg-setup__hero">
-        <div className="qzg-setup__icon">🕌</div>
+        <div className="qzg-setup__icon"><Landmark size={40} strokeWidth={1.3} /></div>
         <h1 className="qzg-setup__title">لعبة سؤال وجواب</h1>
         <p className="qzg-setup__sub">
           لعبة جماعية تنافسية بطابع إسلامي — فريقان يتنافسان على النقاط
@@ -322,7 +322,7 @@ function SetupPhase({ onStart }: { onStart: (cats: string[], names: [string, str
       </div>
 
       <section className="qzg-section-card">
-        <h2 className="qzg-section-h2">🏆 أسماء الفريقين</h2>
+        <h2 className="qzg-section-h2"><Trophy size={18} className="inline ml-1" />أسماء الفريقين</h2>
         <div className="qzg-teams-grid">
           <div>
             <label className="qzg-team-label">الفريق الأول</label>
@@ -337,7 +337,7 @@ function SetupPhase({ onStart }: { onStart: (cats: string[], names: [string, str
 
       <section className="qzg-section-card">
         <div className="qzg-cats-head">
-          <h2 className="qzg-section-h2 qzg-section-h2--flush">📚 اختر الفئات</h2>
+          <h2 className="qzg-section-h2 qzg-section-h2--flush"><Library size={16} className="inline ml-1" />اختر الفئات</h2>
           <span className="qzg-cats-count">{selected.length}/6 (2 كحد أدنى)</span>
         </div>
         <div className="qzg-cats-grid">
@@ -520,7 +520,7 @@ function QuestionPhase({
 
       {!revealed && (
         <button type="button" onClick={() => setRevealed(true)} className="qzg-btn-gold qzg-btn-gold--wide qzg-btn-gold--mb">
-          🔍 كشف الإجابة
+          <Search size={14} className="inline ml-1" />كشف الإجابة
         </button>
       )}
 
@@ -530,7 +530,7 @@ function QuestionPhase({
             <p className="qzg-answer-label">الإجابة الصحيحة:</p>
             <p className="qzg-answer-text">{activeQuestion?.a ?? "—"}</p>
             {showHint && (
-              <p className="qzg-hint-text">💡 {activeQuestion?.hint}</p>
+              <p className="qzg-hint-text"><Lightbulb size={13} className="inline ml-1" />{activeQuestion?.hint}</p>
             )}
             {!showHint && activeQuestion?.hint && (
               <button type="button" onClick={() => dispatch({ type: "REVEAL_HINT" })} className="qzg-btn-ghost qzg-btn-ghost--mt">
@@ -541,10 +541,10 @@ function QuestionPhase({
 
           <div className="qzg-result-grid">
             <button type="button" onClick={onMarkCorrect} className="qzg-btn-correct">
-              ✅ صحيح +{activeCell.points}
+              <CheckCircle2 size={14} className="inline ml-1" />صحيح +{activeCell.points}
             </button>
             <button type="button" onClick={onMarkWrong} className="qzg-btn-wrong">
-              ❌ خطأ
+              <XCircle size={14} className="inline ml-1" />خطأ
             </button>
           </div>
         </>
@@ -591,7 +591,7 @@ function WinnerPhase({ teams, onReset }: { teams: [Team, Team]; onReset: () => v
 
   return (
     <div className="qzg-winner-wrap">
-      <div className="qzg-winner-trophy">{isDraw ? "🤝" : "🏆"}</div>
+      <div className="qzg-winner-trophy">{isDraw ? <Handshake size={48} strokeWidth={1.3} /> : <Trophy size={48} strokeWidth={1.3} />}</div>
       <h1 className="qzg-winner-title">{isDraw ? "تعادل!" : `فاز ${a.name}`}</h1>
       <p className="qzg-winner-sub">
         {isDraw ? "تعادل الفريقان — أنتما متكافئان!" : "أحسنتم جميعاً وبارك الله في سعيكم"}
@@ -695,7 +695,7 @@ export function IslamicQuizGame() {
       <div className="qzg-inner">
         {(state.phase === "board" || state.phase === "question") && (
           <div className="qzg-game-title-bar">
-            <span className="qzg-game-title">🕌 لعبة سؤال وجواب الإسلامية</span>
+            <span className="qzg-game-title"><Landmark size={16} className="inline ml-1" />لعبة سؤال وجواب الإسلامية</span>
           </div>
         )}
 

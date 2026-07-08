@@ -1,5 +1,32 @@
+import {
+  Banknote, BookOpen, Droplets, FileSignature, Flame, FlaskConical,
+  GraduationCap, Handshake, Heart, Landmark, Library, MapPin, Moon,
+  Scale, ScrollText, Shield, Shirt, Users, Utensils,
+} from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import type { CategoryStat } from "@/lib/rulings-types";
 import { RULINGS_CATEGORY_TREE } from "@/lib/rulings-categories";
+
+const ICON_MAP: Record<string, LucideIcon> = {
+  Landmark,
+  Droplets,
+  Banknote,
+  Moon,
+  MapPin,
+  Handshake,
+  Utensils,
+  Shirt,
+  Users,
+  ScrollText,
+  Scale,
+  FileSignature,
+  Shield,
+  Heart,
+  BookOpen,
+  GraduationCap,
+  FlaskConical,
+  Flame,
+};
 
 type Props = {
   stats: CategoryStat[];
@@ -24,7 +51,7 @@ export function RulingCategoryGrid({ stats, activeCategory, activeSubcategory, o
         className={`ruling-category-card${activeCategory === "الكل" ? " ruling-category-card--active" : ""}`}
         onClick={() => onSelect("الكل")}
       >
-        <span className="ruling-category-card__icon">📚</span>
+        <span className="ruling-category-card__icon"><Library size={18} strokeWidth={1.5} /></span>
         <span className="ruling-category-card__name">الكل</span>
         <span className="ruling-category-card__count">{total}</span>
       </button>
@@ -33,6 +60,7 @@ export function RulingCategoryGrid({ stats, activeCategory, activeSubcategory, o
         const count = countFor(main.name);
         if (count === 0 && activeCategory !== main.name) return null;
         const active = activeCategory === main.name && !activeSubcategory;
+        const IconComp = (main.icon && ICON_MAP[main.icon]) ? ICON_MAP[main.icon] : BookOpen;
         return (
           <div key={main.slug} className="ruling-category-group">
             <button
@@ -40,7 +68,7 @@ export function RulingCategoryGrid({ stats, activeCategory, activeSubcategory, o
               className={`ruling-category-card${active ? " ruling-category-card--active" : ""}`}
               onClick={() => onSelect(main.name)}
             >
-              <span className="ruling-category-card__icon">{main.icon || "📖"}</span>
+              <span className="ruling-category-card__icon"><IconComp size={18} strokeWidth={1.5} /></span>
               <span className="ruling-category-card__name">{main.name}</span>
               <span className="ruling-category-card__count">{count}</span>
             </button>

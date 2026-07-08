@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Mic2 } from "lucide-react";
 import { Link } from "wouter";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import { loadAdhanPrefs, patchAdhanPrefs, PRAYER_ARABIC } from "@/lib/adhan-preferences";
@@ -82,7 +83,7 @@ export function HomeAdhanWidget() {
 
         <div className="had-footer">
           <div className="had-footer__muezzin">
-            <span>🎙️</span>
+            <span><Mic2 size={14} strokeWidth={1.8} /></span>
             <span>{muezzin.name}</span>
           </div>
           <div className="had-footer__links">

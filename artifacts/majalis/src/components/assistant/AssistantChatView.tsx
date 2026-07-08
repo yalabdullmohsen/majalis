@@ -1,4 +1,6 @@
 import type { RefObject } from "react";
+import { BookOpen, Globe, Landmark, Library, Scale, Users } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import type { ChatMessage } from "@/hooks/useAssistantChat";
 import { AssistantReply } from "./AssistantReply";
 
@@ -14,9 +16,9 @@ type Props = {
   quickPrompts?: string[];
 };
 
-const SUGGESTED_CATEGORIES = [
+const SUGGESTED_CATEGORIES: { Icon: LucideIcon; label: string; questions: string[] }[] = [
   {
-    icon: "🕌",
+    Icon: Landmark,
     label: "عبادات",
     questions: [
       "ما هي أذكار الصباح والمساء؟",
@@ -25,7 +27,7 @@ const SUGGESTED_CATEGORIES = [
     ],
   },
   {
-    icon: "⚖️",
+    Icon: Scale,
     label: "فقه",
     questions: [
       "ما حكم القروض البنكية بفائدة؟",
@@ -34,7 +36,7 @@ const SUGGESTED_CATEGORIES = [
     ],
   },
   {
-    icon: "💰",
+    Icon: Scale,
     label: "معاملات",
     questions: [
       "ما حكم البيع والشراء عبر الإنترنت؟",
@@ -43,7 +45,7 @@ const SUGGESTED_CATEGORIES = [
     ],
   },
   {
-    icon: "📖",
+    Icon: BookOpen,
     label: "قرآن وسنة",
     questions: [
       "ما فضل قراءة القرآن يومياً؟",
@@ -52,7 +54,7 @@ const SUGGESTED_CATEGORIES = [
     ],
   },
   {
-    icon: "👨‍👩‍👧",
+    Icon: Users,
     label: "أسرة",
     questions: [
       "ما حقوق الوالدين في الإسلام؟",
@@ -61,7 +63,7 @@ const SUGGESTED_CATEGORIES = [
     ],
   },
   {
-    icon: "🌍",
+    Icon: Globe,
     label: "معاصر",
     questions: [
       "ما حكم متابعة مسلسلات التلفزيون؟",
@@ -84,7 +86,7 @@ function safetyLabel(classification: string): string {
 function CitationCard({ cite }: { cite: { title: string; href: string; source_name?: string | null; trust_score?: number } }) {
   return (
     <a href={cite.href} target="_blank" rel="noopener noreferrer" className="acv-cite-card">
-      <span className="acv-cite-card__icon">📚</span>
+      <span className="acv-cite-card__icon"><Library size={16} /></span>
       <span className="acv-cite-card__body">
         <strong className="acv-cite-card__title">{cite.title}</strong>
         {cite.source_name && (
@@ -120,7 +122,7 @@ export function AssistantChatView({
           {SUGGESTED_CATEGORIES.map((cat) => (
             <div key={cat.label} className="acv-cat">
               <div className="acv-cat__head">
-                <span>{cat.icon}</span> {cat.label}
+                <span>{(() => { const I = cat.Icon; return <I size={15} />; })()}</span> {cat.label}
               </div>
               <div className="acv-cat__pills">
                 {cat.questions.map((q) => (

@@ -2,6 +2,7 @@
  * KhatmahPanel — خطط الختمة وسلاسل القراءة والإحصائيات
  */
 import { useState } from "react";
+import { CalendarDays, Flame, Star } from "lucide-react";
 import {
   getKhatmahPlans,
   createKhatmahPlan,
@@ -64,7 +65,7 @@ function PlanCard({ plan, currentPage }: { plan: KhatmahPlan; currentPage: numbe
           </p>
         </>
       )}
-      {done && <p className="kht-plan-done-msg">تم إتمام الختمة بحمد الله! 🌟</p>}
+      {done && <p className="kht-plan-done-msg">تم إتمام الختمة بحمد الله! <Star size={15} className="inline ml-1" /></p>}
     </div>
   );
 }
@@ -83,10 +84,10 @@ export function KhatmahPanel({ currentPage, onClose }: Props) {
     setCreating(false);
   }
 
-  const STATS = [
-    { label: "سلسلة الأيام",      value: `${streak.current} 🔥`, sub: `أعلى: ${streak.longest}` },
-    { label: "الصفحة الحالية",    value: String(currentPage),    sub: "من 604" },
-    { label: "آيات هذا الأسبوع", value: String(totalAyahs),     sub: "آية" },
+  const STATS: { label: string; value: string; flame?: boolean; sub: string }[] = [
+    { label: "سلسلة الأيام",      value: String(streak.current), flame: true, sub: `أعلى: ${streak.longest}` },
+    { label: "الصفحة الحالية",    value: String(currentPage),                 sub: "من 604" },
+    { label: "آيات هذا الأسبوع", value: String(totalAyahs),                  sub: "آية" },
   ];
 
   return (
@@ -96,7 +97,7 @@ export function KhatmahPanel({ currentPage, onClose }: Props) {
         <div aria-hidden className="eap-handle" />
 
         <div className="kht-header">
-          <h2 className="kht-title">📅 خطة الختمة والتقدم</h2>
+          <h2 className="kht-title"><CalendarDays size={16} className="inline ml-1" /> خطة الختمة والتقدم</h2>
           <button type="button" onClick={onClose} aria-label="إغلاق" className="kht-close">✕</button>
         </div>
 
@@ -104,7 +105,7 @@ export function KhatmahPanel({ currentPage, onClose }: Props) {
           <div className="kht-stats-grid">
             {STATS.map((s) => (
               <div key={s.label} className="kht-stat-card">
-                <div className="kht-stat-value">{s.value}</div>
+                <div className="kht-stat-value">{s.value}{s.flame && <Flame size={14} className="inline ml-1" />}</div>
                 <div className="kht-stat-label">{s.label}</div>
                 <div className="kht-stat-label">{s.sub}</div>
               </div>

@@ -33,7 +33,7 @@ function StarRating({ rating }: { rating: number }) {
   return (
     <span className="mzd-stars-row">
       {[1, 2, 3, 4, 5].map((i) => (
-        <span key={i} className={`mzd-star${i <= Math.round(rating) ? " is-active" : ""}`}>★</span>
+        <span key={i} className={`mzd-star${i <= Math.round(rating) ? " is-active" : ""}`}><Star size={13} fill={i <= Math.round(rating) ? "currentColor" : "none"} strokeWidth={1.5} /></span>
       ))}
     </span>
   );
@@ -299,7 +299,7 @@ export default function MuezzinDetailPage() {
                     <div className="mzd-related-card__name">{m.name}</div>
                     <div className="mzd-related-card__meta">{m.origin} · {m.style}</div>
                   </div>
-                  <div className="mzd-related-card__rating">★ {m.rating}</div>
+                  <div className="mzd-related-card__rating"><Star size={12} fill="currentColor" strokeWidth={1.5} className="inline ml-0.5" /> {m.rating}</div>
                 </div>
               </Link>
             ))}

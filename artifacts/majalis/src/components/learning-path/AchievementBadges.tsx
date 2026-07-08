@@ -1,3 +1,4 @@
+import { Sprout } from "lucide-react";
 import type { LPAchievement } from "@/lib/learning-path-service";
 
 interface Props {
@@ -8,7 +9,7 @@ export function AchievementBadges({ achievements }: Props) {
   if (achievements.length === 0) {
     return (
       <div className="text-center py-8 text-[var(--majalis-ink-soft)] opacity-60">
-        <div className="text-4xl mb-2">🌱</div>
+        <div className="text-4xl mb-2"><Sprout size={40} strokeWidth={1.3} /></div>
         <p className="text-sm">أكمل كتابك الأول لتحصل على أول وسام!</p>
       </div>
     );

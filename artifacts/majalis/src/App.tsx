@@ -1,4 +1,5 @@
 import { Suspense, useEffect, useRef, useState, type ComponentType } from "react";
+import { BookOpen } from "lucide-react";
 import { Redirect, Route, Switch, Router as WouterRouter, useLocation, useParams } from "wouter";
 import { AuthProvider } from "@/components/AuthProvider";
 import { FontPreferenceProvider } from "@/components/FontPreferenceProvider";
@@ -207,7 +208,7 @@ function SafeLazyRoute({ component: Component }: { component: ComponentType<any>
 function QuranComingSoon() {
   return (
     <div className="coming-soon-wrap">
-      <span className="coming-soon-wrap__icon">📖</span>
+      <span className="coming-soon-wrap__icon"><BookOpen size={48} strokeWidth={1.2} /></span>
       <h2 className="coming-soon-wrap__title">قريباً</h2>
       <p className="coming-soon-wrap__body">قسم القرآن الكريم قيد التطوير</p>
     </div>

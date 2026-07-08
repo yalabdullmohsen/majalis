@@ -1,6 +1,7 @@
 "use client";
 
 import { Suspense, lazy, type ComponentType } from "react";
+import { BookOpen } from "lucide-react";
 import { Redirect, Route, Switch, useLocation } from "wouter";
 import { AdminRouteGuard } from "@/components/AdminRouteGuard";
 import AboutPage from "@/views/AboutPage";
@@ -106,7 +107,7 @@ function SafeLazyRoute({ component: Component }: { component: ComponentType }) {
 function QuranComingSoon() {
   return (
     <div className="coming-soon-wrap">
-      <span className="coming-soon-wrap__icon">📖</span>
+      <span className="coming-soon-wrap__icon"><BookOpen size={48} strokeWidth={1.2} /></span>
       <h2 className="coming-soon-wrap__title">قريباً</h2>
       <p className="coming-soon-wrap__body">
         قسم القرآن الكريم قيد التطوير

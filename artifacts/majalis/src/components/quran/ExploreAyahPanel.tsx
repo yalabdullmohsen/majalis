@@ -6,6 +6,8 @@
  * المصدر: intelligentSearch() — نص الآية كاستعلام بحث.
  */
 import { useCallback, useEffect, useState } from "react";
+import { Bell, BookOpen, Brain, ClipboardList, FileText, GraduationCap, HelpCircle, Landmark, Library, Lightbulb, Link2, Scale, ScrollText, Search, Sparkles, Tag } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { useLocation } from "wouter";
 import {
   intelligentSearch,
@@ -20,21 +22,21 @@ type Props = {
   onClose: () => void;
 };
 
-const KIND_META: Record<string, { label: string; icon: string }> = {
-  lesson:        { label: "درس",          icon: "📚" },
-  hadith:        { label: "حديث",         icon: "📿" },
-  library:       { label: "كتاب",         icon: "📖" },
-  fatwa:         { label: "فتوى",         icon: "🕌" },
-  fiqh_decision: { label: "قرار فقهي",   icon: "⚖️" },
-  fiqh:          { label: "فقه",          icon: "⚖️" },
-  ruling:        { label: "حكم شرعي",    icon: "📋" },
-  fawaid:        { label: "فائدة",        icon: "💡" },
-  qa:            { label: "سؤال",         icon: "❓" },
-  miracle:       { label: "إعجاز",        icon: "✨" },
-  course:        { label: "دورة",         icon: "🎓" },
-  update:        { label: "مستجد",        icon: "🔔" },
-  knowledge:     { label: "معرفة",        icon: "🧠" },
-  topic:         { label: "موضوع",        icon: "🏷️" },
+const KIND_META: Record<string, { label: string; Icon: LucideIcon }> = {
+  lesson:        { label: "درس",          Icon: Library         },
+  hadith:        { label: "حديث",         Icon: ScrollText      },
+  library:       { label: "كتاب",         Icon: BookOpen        },
+  fatwa:         { label: "فتوى",         Icon: Landmark        },
+  fiqh_decision: { label: "قرار فقهي",   Icon: Scale           },
+  fiqh:          { label: "فقه",          Icon: Scale           },
+  ruling:        { label: "حكم شرعي",    Icon: ClipboardList   },
+  fawaid:        { label: "فائدة",        Icon: Lightbulb       },
+  qa:            { label: "سؤال",         Icon: HelpCircle      },
+  miracle:       { label: "إعجاز",        Icon: Sparkles        },
+  course:        { label: "دورة",         Icon: GraduationCap   },
+  update:        { label: "مستجد",        Icon: Bell            },
+  knowledge:     { label: "معرفة",        Icon: Brain           },
+  topic:         { label: "موضوع",        Icon: Tag             },
 };
 
 const ORDER: string[] = [
@@ -123,7 +125,7 @@ export function ExploreAyahPanel({ ayahNum, surahName, ayahText, onClose }: Prop
 
         <div className="eap-header">
           <div>
-            <h2 className="eap-header__title">🔗 استكشف الآية</h2>
+            <h2 className="eap-header__title"><Link2 size={16} className="inline ml-1" />استكشف الآية</h2>
             <p className="eap-header__meta">
               سورة {surahName} · الآية {ayahNum}
               {!loading && ` · ${total} مصدر مرتبط`}
@@ -143,7 +145,7 @@ export function ExploreAyahPanel({ ayahNum, surahName, ayahText, onClose }: Prop
 
           {!loading && total === 0 && (
             <div className="eap-empty">
-              <p className="eap-empty__icon">🔍</p>
+              <p className="eap-empty__icon"><Search size={32} strokeWidth={1.4} /></p>
               <p className="eap-empty__text">لا يوجد محتوى مرتبط بهذه الآية حالياً في المنصة.</p>
             </div>
           )}
@@ -151,11 +153,11 @@ export function ExploreAyahPanel({ ayahNum, surahName, ayahText, onClose }: Prop
           {!loading && total > 0 && (
             <div className="eap-results-pad">
               {Array.from(groups.entries()).map(([kind, items]) => {
-                const meta = KIND_META[kind] ?? { label: kind, icon: "📄" };
+                const meta = KIND_META[kind] ?? { label: kind, Icon: FileText };
                 return (
                   <section key={kind} className="eap-section">
                     <div className="eap-section__head">
-                      <span className="eap-section__icon">{meta.icon}</span>
+                      <span className="eap-section__icon">{(() => { const I = meta.Icon; return <I size={14} />; })()}</span>
                       <span className="eap-section__label">{meta.label}</span>
                       <span className="eap-section__count">{items.length}</span>
                     </div>

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Clock, Landmark } from "lucide-react";
 import { ADHAN_EVENT_NAME, type AdhanEvent } from "@/lib/adhan-scheduler";
 import { stopAdhan } from "@/lib/adhan-audio";
 
@@ -54,7 +55,7 @@ function AdhanToast({ event, onDismiss }: { event: ActiveEvent; onDismiss: () =>
   return (
     <div className={`anb-toast${isAdhan ? " anb-toast--adhan" : " anb-toast--reminder"}`}>
       <span className="anb-toast__icon">
-        {isAdhan ? "🕌" : "⏰"}
+        {isAdhan ? <Landmark size={20} strokeWidth={1.5} /> : <Clock size={20} strokeWidth={1.5} />}
       </span>
       <div className="anb-toast__body">
         <div className="anb-toast__title">

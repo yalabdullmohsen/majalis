@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { CheckCircle2, ClipboardList, Clock, Library, Mic2, PenLine, RefreshCw, Rocket, XCircle } from "lucide-react";
 import {
   listSubmissions,
   reviewSubmission,
@@ -13,9 +14,9 @@ import {
 } from "@/lib/user-submissions-service";
 
 const STATUS_LABEL: Record<SubmissionStatus, string> = {
-  pending:  "⏳ قيد المراجعة",
-  approved: "✅ مقبول",
-  rejected: "❌ مرفوض",
+  pending:  "قيد المراجعة",
+  approved: "مقبول",
+  rejected: "مرفوض",
 };
 
 const STATUS_COLOR: Record<SubmissionStatus, { bg: string; text: string; border: string }> = {
@@ -25,8 +26,8 @@ const STATUS_COLOR: Record<SubmissionStatus, { bg: string; text: string; border:
 };
 
 const TYPE_ICON: Record<SubmissionType, string> = {
-  adhan:  "🎙️",
-  lesson: "📚",
+  adhan:  "أذان",
+  lesson: "درس",
 };
 
 function AudioPreview({ url }: { url: string }) {
@@ -178,10 +179,10 @@ function SubmissionCard({ sub, onReview }: {
           {/* Publish to muezzin library */}
           {sub.status === "approved" && sub.type === "adhan" && (
             <div className="srp-publish-box srp-publish-box--adhan">
-              <div className="srp-publish-title srp-publish-title--adhan">🎙️ نشر في مكتبة المؤذنين</div>
+              <div className="srp-publish-title srp-publish-title--adhan"><Mic2 size={14} className="inline ml-1" />نشر في مكتبة المؤذنين</div>
               <div className="srp-publish-desc">سيُضاف هذا التسجيل كمؤذن جديد في المكتبة ويظهر للمستخدمين.</div>
               {published ? (
-                <div className="srp-publish-success srp-publish-success--adhan">✅ تم النشر في المكتبة!</div>
+                <div className="srp-publish-success srp-publish-success--adhan"><CheckCircle2 size={14} className="inline ml-1" />تم النشر في المكتبة!</div>
               ) : (
                 <button
                   type="button"
@@ -202,7 +203,7 @@ function SubmissionCard({ sub, onReview }: {
                   className="srp-publish-btn"
                   style={{ "--srp-pub-bg": publishing ? "#9ca3af" : "#134a3a", "--srp-pub-cursor": publishing ? "not-allowed" : "pointer" } as React.CSSProperties}
                 >
-                  {publishing ? "جارٍ النشر..." : "🚀 نشر في مكتبة المؤذنين"}
+                  {publishing ? "جارٍ النشر..." : <><Rocket size={13} className="inline ml-1" />نشر في مكتبة المؤذنين</>}
                 </button>
               )}
               {publishError && <div className="srp-publish-error">{publishError}</div>}
@@ -212,10 +213,10 @@ function SubmissionCard({ sub, onReview }: {
           {/* Publish as lesson draft */}
           {sub.status === "approved" && sub.type === "lesson" && (
             <div className="srp-publish-box srp-publish-box--lesson">
-              <div className="srp-publish-title srp-publish-title--lesson">📚 إضافة للدروس كمسودة</div>
+              <div className="srp-publish-title srp-publish-title--lesson"><Library size={14} className="inline ml-1" />إضافة للدروس كمسودة</div>
               <div className="srp-publish-desc">سيُضاف الدرس في قسم الدروس بصفة مسودة — يمكن نشره لاحقاً.</div>
               {published ? (
-                <div className="srp-publish-success srp-publish-success--lesson">✅ تمت إضافته كمسودة!</div>
+                <div className="srp-publish-success srp-publish-success--lesson"><CheckCircle2 size={14} className="inline ml-1" />تمت إضافته كمسودة!</div>
               ) : (
                 <button
                   type="button"
@@ -236,7 +237,7 @@ function SubmissionCard({ sub, onReview }: {
                   className="srp-publish-btn"
                   style={{ "--srp-pub-bg": publishing ? "#9ca3af" : "#1d4ed8", "--srp-pub-cursor": publishing ? "not-allowed" : "pointer" } as React.CSSProperties}
                 >
-                  {publishing ? "جارٍ الإضافة..." : "📝 إضافة كمسودة"}
+                  {publishing ? "جارٍ الإضافة..." : <><PenLine size={13} className="inline ml-1" />إضافة كمسودة</>}
                 </button>
               )}
               {publishError && <div className="srp-publish-error">{publishError}</div>}
@@ -258,10 +259,10 @@ function SubmissionCard({ sub, onReview }: {
               </label>
               <div className="srp-review-btns">
                 <button type="button" disabled={loading} onClick={() => handle("approved")} className="srp-action-btn srp-action-btn--approve">
-                  {loading ? "..." : "✅ قبول"}
+                  {loading ? "..." : <><CheckCircle2 size={13} className="inline ml-1" />قبول</>}
                 </button>
                 <button type="button" disabled={loading} onClick={() => handle("rejected")} className="srp-action-btn srp-action-btn--reject">
-                  {loading ? "..." : "❌ رفض"}
+                  {loading ? "..." : <><XCircle size={13} className="inline ml-1" />رفض</>}
                 </button>
               </div>
             </div>
@@ -312,12 +313,12 @@ export function SubmissionsReviewPanel() {
       {/* Header */}
       <div className="srp-header">
         <div>
-          <h2 className="srp-header-title">📋 طلبات رفع المحتوى</h2>
+          <h2 className="srp-header-title"><ClipboardList size={18} className="inline ml-1" />طلبات رفع المحتوى</h2>
           {pending > 0 && (
-            <div className="srp-header-pending">⏳ {pending} طلب بانتظار المراجعة</div>
+            <div className="srp-header-pending"><Clock size={13} className="inline ml-1" />{pending} طلب بانتظار المراجعة</div>
           )}
         </div>
-        <button type="button" onClick={load} className="srp-refresh-btn">🔄 تحديث</button>
+        <button type="button" onClick={load} className="srp-refresh-btn"><RefreshCw size={13} className="inline ml-1" />تحديث</button>
       </div>
 
       {/* Stats */}
@@ -325,10 +326,10 @@ export function SubmissionsReviewPanel() {
         <div className="srp-stats-grid">
           {[
             { label: "الكل",    val: stats.total,    bg: "#f3f4f6", color: "#374151" },
-            { label: "⏳ معلق", val: stats.pending,  bg: "#F0F9FF", color: "#0369A1" },
-            { label: "✅ قبول", val: stats.approved, bg: "#f0fdf4", color: "#065f46" },
-            { label: "❌ رفض",  val: stats.rejected, bg: "#fef2f2", color: "#991b1b" },
-            { label: "🎙️ أذان / 📚 درس", val: `${stats.adhan}/${stats.lesson}`, bg: "#eff6ff", color: "#1d4ed8" },
+            { label: "معلق",            val: stats.pending,  bg: "#F0F9FF", color: "#0369A1" },
+            { label: "مقبول",           val: stats.approved, bg: "#f0fdf4", color: "#065f46" },
+            { label: "مرفوض",           val: stats.rejected, bg: "#fef2f2", color: "#991b1b" },
+            { label: "أذان / درس",      val: `${stats.adhan}/${stats.lesson}`, bg: "#eff6ff", color: "#1d4ed8" },
           ].map((s) => (
             <div
               key={s.label}
@@ -356,7 +357,7 @@ export function SubmissionsReviewPanel() {
               "--srp-filter-color":  filterStatus === s ? "#fff" : "#374151",
             } as React.CSSProperties}
           >
-            {{ all: "الكل", pending: "⏳ قيد المراجعة", approved: "✅ مقبول", rejected: "❌ مرفوض" }[s]}
+            {{ all: "الكل", pending: "قيد المراجعة", approved: "مقبول", rejected: "مرفوض" }[s]}
           </button>
         ))}
         <div className="srp-filter-divider" />
@@ -372,7 +373,7 @@ export function SubmissionsReviewPanel() {
               "--srp-filter-color":  filterType === t ? "#fff" : "#374151",
             } as React.CSSProperties}
           >
-            {{ all: "كل الأنواع", adhan: "🎙️ أذان", lesson: "📚 درس" }[t]}
+            {{ all: "كل الأنواع", adhan: "أذان", lesson: "درس" }[t]}
           </button>
         ))}
       </div>

@@ -2,6 +2,8 @@
  * QuranBookmarksPanel — إشارات مرجعية وملاحظات وتقدم الحفظ
  */
 import { useCallback, useEffect, useState } from "react";
+import { BookOpen, BookmarkCheck, Brain, PenLine } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import {
   getBookmarks,
   getBookmarkLists,
@@ -32,7 +34,7 @@ function HifzList() {
   if (progress.length === 0) {
     return (
       <div className="qbp-empty">
-        <p className="qbp-empty__icon">📖</p>
+        <p className="qbp-empty__icon"><BookOpen size={32} strokeWidth={1.3} /></p>
         <p className="qbp-empty__text">لا يوجد سور مضافة لمتابعة الحفظ بعد.</p>
         <p className="qbp-empty__hint">اضغط مطولاً على أي آية ثم اختر "إضافة للحفظ".</p>
       </div>
@@ -78,7 +80,7 @@ function NotesList({ onGoTo }: { onGoTo: (s: number, a: number) => void }) {
   if (noteKeys.length === 0) {
     return (
       <div className="qbp-empty">
-        <p className="qbp-empty__icon">📝</p>
+        <p className="qbp-empty__icon"><PenLine size={32} strokeWidth={1.3} /></p>
         <p className="qbp-empty__text">لا توجد ملاحظات بعد.</p>
         <p className="qbp-empty__hint">اضغط مطولاً على أي آية وأضف ملاحظة خاصة بك.</p>
       </div>
@@ -125,7 +127,7 @@ function BookmarksList({ onGoTo }: { onGoTo: (s: number, a: number) => void }) {
   if (bookmarks.length === 0) {
     return (
       <div className="qbp-empty">
-        <p className="qbp-empty__icon">🔖</p>
+        <p className="qbp-empty__icon"><BookmarkCheck size={32} strokeWidth={1.3} /></p>
         <p className="qbp-empty__text">لا توجد إشارات مرجعية بعد.</p>
         <p className="qbp-empty__hint">اضغط مطولاً على أي آية وأضفها للمفضلة.</p>
       </div>
@@ -172,10 +174,10 @@ function BookmarksList({ onGoTo }: { onGoTo: (s: number, a: number) => void }) {
   );
 }
 
-const TABS: { id: Tab; label: string; icon: string }[] = [
-  { id: "bookmarks", label: "إشارات",  icon: "🔖" },
-  { id: "notes",     label: "ملاحظات", icon: "📝" },
-  { id: "hifz",      label: "الحفظ",   icon: "🧠" },
+const TABS: { id: Tab; label: string; Icon: LucideIcon }[] = [
+  { id: "bookmarks", label: "إشارات",  Icon: BookmarkCheck },
+  { id: "notes",     label: "ملاحظات", Icon: PenLine       },
+  { id: "hifz",      label: "الحفظ",   Icon: Brain         },
 ];
 
 export function QuranBookmarksPanel({ onGoTo, onClose }: Props) {
@@ -209,7 +211,7 @@ export function QuranBookmarksPanel({ onGoTo, onClose }: Props) {
                 aria-selected={active}
                 className={`qbp-tab${active ? " qbp-tab--active" : ""}`}
               >
-                {t.icon} {t.label}
+                {(() => { const I = t.Icon; return <I size={13} className="inline ml-1" />; })()} {t.label}
               </button>
             );
           })}

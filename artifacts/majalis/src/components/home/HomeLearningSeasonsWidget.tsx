@@ -1,3 +1,4 @@
+import { Lightbulb } from "lucide-react";
 import { Link } from "wouter";
 
 // Approximate Gregorian dates for upcoming Islamic seasons (July 2026 onward)
@@ -122,7 +123,7 @@ export function HomeLearningSeasonsWidget() {
           </div>
         </div>
         <p className="lsw-featured__suggestion">
-          💡 <strong>اقتراح:</strong> {featured.suggestion}
+          <Lightbulb size={14} className="inline ml-1" /><strong>اقتراح:</strong> {featured.suggestion}
         </p>
         <Link href={featured.href} className="lsw-featured__cta">
           ابدأ الآن ←

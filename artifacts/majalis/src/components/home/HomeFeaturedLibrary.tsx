@@ -1,3 +1,4 @@
+import { BookOpen } from "lucide-react";
 import { Link } from "wouter";
 import { getFeaturedLibraryBooks } from "@/lib/library-service";
 
@@ -21,7 +22,7 @@ export function HomeFeaturedLibrary() {
         {books.map((book) => (
           <Link key={book.id} href={`/library/${book.id}`} className="ui-card home-library-card">
             <span className="home-library-icon" aria-hidden>
-              📖
+              <BookOpen size={20} strokeWidth={1.5} />
             </span>
             <div>
               <span className="page-tag">{book.category}</span>

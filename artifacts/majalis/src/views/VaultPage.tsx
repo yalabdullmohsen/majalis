@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BookOpen, FileText, Lock } from "lucide-react";
+import { BookmarkCheck, BookOpen, FileText, Lock } from "lucide-react";
 import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { applyPageSeo } from "@/lib/seo";
@@ -295,7 +295,7 @@ export default function VaultPage() {
             <div className="vault-list">
               {filteredBookmarks.length === 0 && (
                 <div className="vault-empty">
-                  <div className="vault-empty__icon">🔖</div>
+                  <div className="vault-empty__icon"><BookmarkCheck size={32} strokeWidth={1.3} /></div>
                   <p>{search ? "لا نتائج للبحث." : "لا توجد محفوظات بعد. احفظ دروساً وكتباً من صفحاتها."}</p>
                 </div>
               )}

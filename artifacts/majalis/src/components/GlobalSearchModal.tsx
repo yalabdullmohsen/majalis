@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useLocation } from "wouter";
 import {
-  AlertTriangle, Bell, BookMarked, BookOpen, FileText,
+  AlertTriangle, Bell, BookMarked, BookOpen, FileText, Flame,
   GraduationCap, HelpCircle, Layers, Lightbulb,
   Newspaper, RotateCw, Scale, Scroll, Search, Star, Tag, User,
 } from "lucide-react";
@@ -368,7 +368,7 @@ export function GlobalSearchModal({ onClose }: Props) {
                         onClick={() => handleQuickQuery(q)}
                         className="gsm-pill gsm-pill--trend"
                       >
-                        🔥 {q}
+                        <Flame size={12} className="inline ml-1" />{q}
                       </button>
                     ))}
                   </div>

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Award, BookOpen, Bookmark, CheckCircle2, Lock, PartyPopper, User } from "lucide-react";
+import { Award, Baby, BookOpen, Bookmark, CheckCircle2, Lock, PartyPopper, User, Users } from "lucide-react";
 import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { PageHeader } from "@/components/ui-common";
@@ -342,7 +342,7 @@ export default function FamilyModePage() {
             className="fm-role-btn"
             onClick={() => setRole("parent")}
           >
-            <span className="fm-role-btn__icon">👨‍👧</span>
+            <span className="fm-role-btn__icon"><Users size={28} strokeWidth={1.4} /></span>
             <span className="fm-role-btn__label">أنا ولي الأمر</span>
             <span className="fm-role-btn__sub">أتابع إنجازات أبنائي</span>
           </button>
@@ -351,7 +351,7 @@ export default function FamilyModePage() {
             className="fm-role-btn"
             onClick={() => setRole("child")}
           >
-            <span className="fm-role-btn__icon">🧒</span>
+            <span className="fm-role-btn__icon"><Baby size={28} strokeWidth={1.4} /></span>
             <span className="fm-role-btn__label">أنا الابن/البنت</span>
             <span className="fm-role-btn__sub">أدخل رمز ولي أمري</span>
           </button>

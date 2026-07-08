@@ -8,6 +8,7 @@
  * - المصدر: AlQuran Cloud API فقط — لا توليد AI
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Search } from "lucide-react";
 import { searchQuran, type SearchMatch } from "@/lib/quran-api";
 import { normalizeArabic } from "@/lib/arabic-search";
 import { addSearchHistory, getSearchHistory, clearSearchHistory } from "@/lib/search-history";
@@ -135,7 +136,7 @@ export function QuranSearch({ onGoToResult }: Props) {
   return (
     <div role="search" aria-label="البحث في القرآن الكريم" className="qss-wrap">
       <div className="qss-input-row">
-        <span className="qss-icon">🔍</span>
+        <span className="qss-icon"><Search size={16} /></span>
         <input
           ref={inputRef}
           type="search"

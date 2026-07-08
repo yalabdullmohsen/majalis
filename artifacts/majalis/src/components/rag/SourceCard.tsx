@@ -1,3 +1,4 @@
+import { Library } from "lucide-react";
 import { Link } from "wouter";
 import type { RAGSource } from "@/lib/rag-service";
 import { CONTENT_TYPE_COLOR } from "@/lib/rag-service";
@@ -67,7 +68,7 @@ export function SourceCard({ source, compact = false }: Props) {
         {/* المصدر */}
         {source.source_ref && (
           <p className="text-xs text-[var(--majalis-ink-soft)] opacity-70">
-            📚 {source.source_ref}
+            <Library size={11} className="inline ml-1" />{source.source_ref}
           </p>
         )}
       </div>

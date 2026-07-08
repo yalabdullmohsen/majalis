@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { ClipboardCopy, Library, Save, Scale } from "lucide-react";
 import { SourceCard } from "./SourceCard";
 import type { RAGResult, ContentType } from "@/lib/rag-service";
 
@@ -135,7 +136,7 @@ export function ResearchAnswer({ result, onSave }: Props) {
                 className="flex items-center gap-1.5 px-3 py-1.5 text-sm bg-[var(--majalis-parchment-deep)]
                   text-[var(--majalis-ink)] rounded-lg hover:bg-[var(--mn-surface-hover)] transition-colors"
               >
-                📋 نسخ الجواب
+                <ClipboardCopy size={14} className="inline ml-1" />نسخ الجواب
               </button>
               {onSave && (
                 <button
@@ -143,7 +144,7 @@ export function ResearchAnswer({ result, onSave }: Props) {
                   onClick={onSave}
                   className="citation-btn citation-btn--primary"
                 >
-                  💾 حفظ في المكتبة
+                  <Save size={14} className="inline ml-1" />حفظ في المكتبة
                 </button>
               )}
             </div>
@@ -178,7 +179,7 @@ export function ResearchAnswer({ result, onSave }: Props) {
           <div className="space-y-3">
             <div className="bg-blue-50 dark:bg-blue-900/10 border border-blue-200 dark:border-blue-800
               rounded-xl p-4 text-sm text-blue-700 dark:text-blue-300">
-              ⚖️ تعدّدت آراء العلماء في هذه المسألة. يعرض النظام الأقوال بمصادرها ولا يُرجِّح بنفسه.
+              <Scale size={13} className="inline ml-1" />تعدّدت آراء العلماء في هذه المسألة. يعرض النظام الأقوال بمصادرها ولا يُرجِّح بنفسه.
             </div>
             <div className="space-y-3">
               {result.opinions?.map((op, i) => (
@@ -193,7 +194,7 @@ export function ResearchAnswer({ result, onSave }: Props) {
                         {op.excerpt}
                       </p>
                       <p className="text-xs text-[var(--majalis-ink-soft)] opacity-70">
-                        📚 {op.source}
+                        <Library size={11} className="inline ml-1" />{op.source}
                         {op.source_url && (
                           <a href={op.source_url} target="_blank" rel="noopener noreferrer"
                             className="mr-2 text-[var(--majalis-emerald)] hover:underline">

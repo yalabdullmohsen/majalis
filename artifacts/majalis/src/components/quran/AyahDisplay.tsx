@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { BookmarkCheck, PenLine } from "lucide-react";
 import type { Ayah } from "@/lib/quran-api";
 import type { PlayerState } from "@/hooks/useAyahPlayer";
 import { copyAyahText, shareAyahAsImage } from "@/lib/share-ayah";
@@ -254,11 +255,11 @@ export function AyahDisplay({
               )}
               {/* مؤشر الإشارة المرجعية */}
               {isBookmarked(surahNum, ayah.numberInSurah) && (
-                <span aria-hidden="true" title="مؤشر مرجعي" className="ayd-inline-icon ayd-inline-icon--bookmark">🔖</span>
+                <span aria-hidden="true" title="مؤشر مرجعي" className="ayd-inline-icon ayd-inline-icon--bookmark"><BookmarkCheck size={12} /></span>
               )}
               {/* مؤشر الملاحظة */}
               {hasNote && (
-                <span aria-hidden="true" title="يوجد ملاحظة" className="ayd-inline-icon ayd-inline-icon--note">📝</span>
+                <span aria-hidden="true" title="يوجد ملاحظة" className="ayd-inline-icon ayd-inline-icon--note"><PenLine size={12} /></span>
               )}
             </span>
           );
@@ -383,7 +384,7 @@ export function AyahDisplay({
                   className={`qs-context-sheet__btn${bookmarked ? " qs-context-sheet__btn--bookmarked" : ""}`}
                   onClick={handleToggleBookmark}
                 >
-                  <span aria-hidden="true">{bookmarked ? "🔖✓" : "🔖"}</span>{" "}
+                  <BookmarkCheck size={14} fill={bookmarked ? "currentColor" : "none"} aria-hidden="true" />{" "}
                   {bookmarked ? "في المفضلة" : "أضف للمفضلة"}
                 </button>
 
@@ -392,7 +393,7 @@ export function AyahDisplay({
                   className="qs-context-sheet__btn"
                   onClick={() => setShowNote(true)}
                 >
-                  <span aria-hidden="true">📝</span> ملاحظة شخصية
+                  <PenLine size={14} aria-hidden="true" /> ملاحظة شخصية
                 </button>
 
                 <button

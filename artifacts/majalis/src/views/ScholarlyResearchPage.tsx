@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import { AlertTriangle, BookOpen, Download, FlaskConical, Save, Search } from "lucide-react";
+import { AlertTriangle, BookOpen, Download, FlaskConical, Inbox, Save, Search } from "lucide-react";
 import { Spinner } from "@/components/ui/spinner";
 import { ResearchAnswer } from "@/components/rag/ResearchAnswer";
 import {
@@ -296,7 +296,7 @@ export default function ScholarlyResearchPage() {
 
             {isLoggedIn && !libLoading && library.length === 0 && (
               <div className="text-center py-10 text-[var(--majalis-ink-soft)] opacity-60">
-                <p className="text-4xl mb-3">📭</p>
+                <p className="text-4xl mb-3"><Inbox size={40} strokeWidth={1.3} /></p>
                 <p>لم تحفظ أي بحث بعد.</p>
                 <button
                   type="button"
