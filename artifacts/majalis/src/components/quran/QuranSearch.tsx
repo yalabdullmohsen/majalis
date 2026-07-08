@@ -213,11 +213,6 @@ export function QuranSearch({ onGoToResult }: Props) {
                       type="button"
                       onClick={() => setQuery(h)}
                       className="qss-pill"
-                      style={{
-                        "--qss-pill-bg":     "var(--majalis-parchment-deep)",
-                        "--qss-pill-border": "var(--majalis-line)",
-                        "--qss-pill-color":  "var(--majalis-ink)",
-                      } as React.CSSProperties}
                     >
                       🕐 {h}
                     </button>
@@ -233,12 +228,7 @@ export function QuranSearch({ onGoToResult }: Props) {
                     key={p}
                     type="button"
                     onClick={() => setQuery(p)}
-                    className="qss-pill"
-                    style={{
-                      "--qss-pill-bg":     "var(--majalis-sage)",
-                      "--qss-pill-border": "var(--majalis-emerald)",
-                      "--qss-pill-color":  "var(--majalis-emerald-deep)",
-                    } as React.CSSProperties}
+                    className="qss-pill qss-pill--popular"
                   >
                     {p}
                   </button>

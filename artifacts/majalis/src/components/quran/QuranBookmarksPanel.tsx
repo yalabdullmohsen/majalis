@@ -143,13 +143,7 @@ function BookmarksList({ onGoTo }: { onGoTo: (s: number, a: number) => void }) {
                 key={l}
                 type="button"
                 onClick={() => setActiveList(l)}
-                className="qbp-list-chip"
-                style={{
-                  "--qbp-chip-border": active ? "var(--majalis-emerald)" : "var(--majalis-line)",
-                  "--qbp-chip-bg":     active ? "var(--majalis-sage)" : "transparent",
-                  "--qbp-chip-color":  active ? "var(--majalis-emerald-deep)" : "var(--majalis-ink-soft)",
-                  "--qbp-chip-fw":     active ? "700" : "400",
-                } as React.CSSProperties}
+                className={`qbp-list-chip${active ? " qbp-list-chip--active" : ""}`}
               >
                 {l === "all" ? "الكل" : l}
               </button>
@@ -213,12 +207,7 @@ export function QuranBookmarksPanel({ onGoTo, onClose }: Props) {
                 onClick={() => setTab(t.id)}
                 role="tab"
                 aria-selected={active}
-                className="qbp-tab"
-                style={{
-                  "--qbp-tab-border": active ? "var(--majalis-emerald)" : "transparent",
-                  "--qbp-tab-color":  active ? "var(--majalis-emerald-deep)" : "var(--majalis-ink-soft)",
-                  "--qbp-tab-fw":     active ? "700" : "400",
-                } as React.CSSProperties}
+                className={`qbp-tab${active ? " qbp-tab--active" : ""}`}
               >
                 {t.icon} {t.label}
               </button>

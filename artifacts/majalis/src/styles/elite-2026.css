@@ -9408,6 +9408,11 @@ body {
   display: block;
   margin-bottom: 0.4rem;
 }
+.qss-pill--popular {
+  background: var(--majalis-sage);
+  border-color: var(--majalis-emerald);
+  color: var(--majalis-emerald-deep);
+}
 .qss-error, .qss-empty {
   padding: 1.5rem 1rem;
   text-align: center;
@@ -9637,6 +9642,17 @@ body {
   font-size: 0.82rem;
   cursor: pointer;
   font-family: inherit;
+}
+.qbp-tab--active {
+  border-bottom-color: var(--majalis-emerald);
+  color: var(--majalis-emerald-deep);
+  font-weight: 700;
+}
+.qbp-list-chip--active {
+  border-color: var(--majalis-emerald);
+  background: var(--majalis-sage);
+  color: var(--majalis-emerald-deep);
+  font-weight: 700;
 }
 .qbp-empty { padding: 2rem 1rem; text-align: center; color: var(--majalis-ink-soft); }
 .qbp-empty__icon { font-size: 1.5rem; margin: 0 0 0.5rem; }
