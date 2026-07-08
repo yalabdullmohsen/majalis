@@ -52,21 +52,35 @@ export default function PrayerCountdownPage() {
         <GeometricPattern pattern="stars" color="var(--majalis-emerald)" opacity={1} />
       </div>
 
-      {/* الصلاة القادمة */}
+      {/* الصلاة القادمة / فترة ما بعد الأذان */}
       {countdown.next && (
         <>
-          <p className="prayer-countdown__next-label">الصلاة القادمة</p>
-          <h1 className="prayer-countdown__next-name font-display">
-            {PRAYER_AR[countdown.next.key] ?? countdown.next.key}
-          </h1>
-          <div className="prayer-countdown__timer" dir="ltr">
-            {countdown.remainingHms ?? "--:--:--"}
-          </div>
+          {countdown.sinceSeconds != null ? (
+            <>
+              <p className="prayer-countdown__next-label pcp-elapsed-label">وقت {PRAYER_AR[countdown.next.key] ?? countdown.next.key}</p>
+              <h1 className="prayer-countdown__next-name font-display">
+                {PRAYER_AR[countdown.next.key] ?? countdown.next.key}
+              </h1>
+              <div className="prayer-countdown__elapsed" aria-live="polite">
+                مضى على الأذان {Math.floor(countdown.sinceSeconds / 60)} دقيقة
+              </div>
+            </>
+          ) : (
+            <>
+              <p className="prayer-countdown__next-label">الصلاة القادمة</p>
+              <h1 className="prayer-countdown__next-name font-display">
+                {PRAYER_AR[countdown.next.key] ?? countdown.next.key}
+              </h1>
+              <div className="prayer-countdown__timer" dir="ltr">
+                {countdown.remainingHms ?? "--:--:--"}
+              </div>
+            </>
+          )}
         </>
       )}
 
       {/* الصلاة المنقضية */}
-      {countdown.previous && (
+      {countdown.sinceSeconds == null && countdown.previous && (
         <div className="prayer-countdown__prev">
           <span>{PRAYER_AR[countdown.previous.key] ?? countdown.previous.key}</span>
           <span className="pcp-expired">انقضت</span>

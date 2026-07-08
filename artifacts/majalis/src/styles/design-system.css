@@ -1788,6 +1788,11 @@ hr.decorative,
   letter-spacing: 0.01em;
 }
 
+.hcp-strip__countdown--elapsed {
+  color: var(--ds-emerald-deep, #134a3a);
+  font-weight: 600;
+}
+
 /* ═══════════════════════════════════════════════════════
    Tasbih — SVG Progress Ring Counter
    ═══════════════════════════════════════════════════════ */

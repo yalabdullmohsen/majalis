@@ -231,6 +231,8 @@ function formatRemaining(ms: number): string {
 
 export type PrayerCountdown = PrayerStatus & {
   remainingHms: string;
+  /** ثواني مضت منذ الأذان الأخير (خلال نافذة 30 دقيقة)، وإلا null */
+  sinceSeconds: number | null;
 };
 
 function kuwaitNowParts(): { minutes: number; seconds: number } {
@@ -262,12 +264,14 @@ export function computePrayerCountdown(prayers: PrayerSlot[]): PrayerCountdown {
   const status = computePrayerStatus(prayers);
   const now = kuwaitNowParts();
   let remainingSeconds = 0;
+  let sinceSeconds: number | null = null;
 
   if (status.next?.minutes != null) {
     if (status.next.minutes > now.minutes) {
       remainingSeconds = (status.next.minutes - now.minutes) * 60 - now.seconds;
     } else if (now.minutes - status.next.minutes < PRAYER_GRACE_MINUTES) {
-      // فترة السماح: الصلاة بدأت منذ أقل من 30 دقيقة — العداد يبقى صفراً
+      // فترة السماح: احسب كم مضى من الدقائق منذ الأذان
+      sinceSeconds = (now.minutes - status.next.minutes) * 60 + now.seconds;
       remainingSeconds = 0;
     } else {
       remainingSeconds = ((24 * 60 - now.minutes) + status.next.minutes) * 60 - now.seconds;
@@ -279,6 +283,7 @@ export function computePrayerCountdown(prayers: PrayerSlot[]): PrayerCountdown {
     remainingMs: remainingSeconds * 1000,
     remainingLabel: formatHms(remainingSeconds),
     remainingHms: formatHms(remainingSeconds),
+    sinceSeconds,
   };
 }
 

@@ -45,6 +45,7 @@ function useCompactPrayer() {
   const [data, setData] = useState<PrayerTimesPayload | null>(null);
   const [nextKey, setNextKey] = useState<string | null>(null);
   const [countdown, setCountdown] = useState("");
+  const [sinceSeconds, setSinceSeconds] = useState<number | null>(null);
 
   useEffect(() => {
     fetchPrayerTimes().then(setData).catch(() => {});
@@ -56,17 +57,18 @@ function useCompactPrayer() {
       const cd = computePrayerCountdown(data.prayers);
       setNextKey(cd.next?.key ?? null);
       setCountdown(cd.remainingHms ?? "");
+      setSinceSeconds(cd.sinceSeconds);
     };
     tick();
     const t = setInterval(tick, 1000);
     return () => clearInterval(t);
   }, [data]);
 
-  return { data, nextKey, countdown };
+  return { data, nextKey, countdown, sinceSeconds };
 }
 
 export function HomeCompactPrayer() {
-  const { data, nextKey, countdown } = useCompactPrayer();
+  const { data, nextKey, countdown, sinceSeconds } = useCompactPrayer();
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
   const [selectedCountdown, setSelectedCountdown] = useState<string>("");
 
@@ -109,6 +111,13 @@ export function HomeCompactPrayer() {
               متبقٍّ لـ{selectedPrayer.name}:{" "}
               <span className="hcp-strip__countdown-time" dir="ltr">
                 {selectedCountdown || "—"}
+              </span>
+            </span>
+          ) : sinceSeconds != null && nextPrayer ? (
+            <span className="hcp-strip__countdown hcp-strip__countdown--elapsed" aria-live="polite">
+              مضى على أذان {nextPrayer.name}{" "}
+              <span className="hcp-strip__countdown-time" dir="ltr">
+                {Math.floor(sinceSeconds / 60)} دقيقة
               </span>
             </span>
           ) : (
