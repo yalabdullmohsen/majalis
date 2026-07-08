@@ -1,21 +1,131 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
   <channel>
-    <title>المجلس العلمي</title>
+    <title>المجلس العلمي — آخر المستجدات</title>
     <link>https://majlisilm.com</link>
-    <description>آخر المستجدات العلمية — قرارات وفتاوى ودورات</description>
+    <description>أحدث الفتاوى والقرارات الفقهية والدروس والدورات العلمية من المجلس العلمي.</description>
     <language>ar</language>
-    <lastBuildDate>Tue, 07 Jul 2026 23:16:00 GMT</lastBuildDate>
+    <copyright>© 2026 المجلس العلمي</copyright>
+    <managingEditor>yalabdullmohsen1@gmail.com (المجلس العلمي)</managingEditor>
+    <lastBuildDate>Tue, 08 Jul 2026 12:00:00 GMT</lastBuildDate>
+    <ttl>360</ttl>
+    <image>
+      <url>https://majlisilm.com/logo.png</url>
+      <title>المجلس العلمي</title>
+      <link>https://majlisilm.com</link>
+    </image>
     <atom:link href="https://majlisilm.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <item><title>حكم التعامل بالعملات الرقمية (المشفّرة)</title><link>https://majlisilm.com/fiqh-council/fiqh-crypto-2024</link><description>حكم التعامل بالعملات الرقمية (المشفّرة)</description><pubDate>Tue, 07 Jul 2026 23:16:00 GMT</pubDate></item>
-    <item><title>حكم التبرع بالأعضاء بعد الوفاة</title><link>https://majlisilm.com/fiqh-council/fiqh-organ-donation</link><description>حكم التبرع بالأعضاء بعد الوفاة</description><pubDate>Tue, 07 Jul 2026 23:16:00 GMT</pubDate></item>
-    <item><title>حقوق الأقليات المسلمة في البلدان غير الإسلامية</title><link>https://majlisilm.com/fiqh-council/fiqh-minorities-rights</link><description>حقوق الأقليات المسلمة في البلدان غير الإسلامية</description><pubDate>Tue, 07 Jul 2026 23:16:00 GMT</pubDate></item>
-    <item><title>ضوابط عقد النكاح الإلكتروني</title><link>https://majlisilm.com/fiqh-council/fiqh-marriage-contract</link><description>ضوابط عقد النكاح الإلكتروني</description><pubDate>Tue, 07 Jul 2026 23:16:00 GMT</pubDate></item>
-    <item><title>زكاة الأسهم والصناديق الاستثمارية</title><link>https://majlisilm.com/fiqh-council/fiqh-zakat-stocks</link><description>زكاة الأسهم والصناديق الاستثمارية</description><pubDate>Tue, 07 Jul 2026 23:16:00 GMT</pubDate></item>
-    <item><title>هل يجوز الجمع بين الصلاتين للمسافر؟</title><link>https://majlisilm.com/fatwa/fatwa-prayer-combine</link><description>هل يجوز الجمع بين الصلاتين للمسافر؟</description><pubDate>Tue, 07 Jul 2026 23:16:00 GMT</pubDate></item>
-    <item><title>هل تجب الزكاة في الذهب المُدّخر للزينة؟</title><link>https://majlisilm.com/fatwa/fatwa-zakat-gold</link><description>هل تجب الزكاة في الذهب المُدّخر للزينة؟</description><pubDate>Tue, 07 Jul 2026 23:16:00 GMT</pubDate></item>
-    <item><title>ما حكم الاستماع إلى الأناشيد الإسلامية؟</title><link>https://majlisilm.com/fatwa/fatwa-music-voice</link><description>ما حكم الاستماع إلى الأناشيد الإسلامية؟</description><pubDate>Tue, 07 Jul 2026 23:16:00 GMT</pubDate></item>
-    <item><title>هل يجوز للمسافر الإفطار في رمضان؟</title><link>https://majlisilm.com/fatwa/fatwa-fasting-travel</link><description>هل يجوز للمسافر الإفطار في رمضان؟</description><pubDate>Tue, 07 Jul 2026 23:16:00 GMT</pubDate></item>
-    <item><title>ما نصيب البنت من الميراث؟</title><link>https://majlisilm.com/fatwa/fatwa-inheritance-daughter</link><description>ما نصيب البنت من الميراث؟</description><pubDate>Tue, 07 Jul 2026 23:16:00 GMT</pubDate></item>
+
+    <!-- أحدث الدروس -->
+    <item>
+      <title>دورة أحكام الصيام الكاملة</title>
+      <link>https://majlisilm.com/lessons?tab=courses</link>
+      <description>دورة علمية شاملة تغطي جميع أحكام الصيام من شروط وأركان وموانع وقضاء وكفارة.</description>
+      <dc:creator>المجلس العلمي</dc:creator>
+      <pubDate>Tue, 08 Jul 2026 10:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://majlisilm.com/lessons?tab=courses</guid>
+    </item>
+
+    <!-- قرارات المجمع الفقهي -->
+    <item>
+      <title>حكم التعامل بالعملات الرقمية (المشفّرة)</title>
+      <link>https://majlisilm.com/fiqh-council/fiqh-crypto-2024</link>
+      <description>قرار المجمع الفقهي في مسألة تداول وامتلاك العملات الرقمية المشفرة كالبيتكوين وما في حكمها، مع أدلة ومناقشات.</description>
+      <dc:creator>المجمع الفقهي الإسلامي</dc:creator>
+      <pubDate>Tue, 08 Jul 2026 09:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://majlisilm.com/fiqh-council/fiqh-crypto-2024</guid>
+    </item>
+    <item>
+      <title>حكم التبرع بالأعضاء بعد الوفاة</title>
+      <link>https://majlisilm.com/fiqh-council/fiqh-organ-donation</link>
+      <description>بيان المجمع الفقهي في حكم التبرع بالأعضاء بعد الوفاة وضوابطه الشرعية.</description>
+      <dc:creator>المجمع الفقهي الإسلامي</dc:creator>
+      <pubDate>Mon, 07 Jul 2026 09:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://majlisilm.com/fiqh-council/fiqh-organ-donation</guid>
+    </item>
+    <item>
+      <title>حقوق الأقليات المسلمة في البلدان غير الإسلامية</title>
+      <link>https://majlisilm.com/fiqh-council/fiqh-minorities-rights</link>
+      <description>توصيات المجمع الفقهي بشأن واجبات ومتطلبات الأقليات المسلمة في البلدان ذات الأغلبية غير المسلمة.</description>
+      <dc:creator>المجمع الفقهي الإسلامي</dc:creator>
+      <pubDate>Sun, 06 Jul 2026 09:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://majlisilm.com/fiqh-council/fiqh-minorities-rights</guid>
+    </item>
+    <item>
+      <title>ضوابط عقد النكاح الإلكتروني</title>
+      <link>https://majlisilm.com/fiqh-council/fiqh-marriage-contract</link>
+      <description>دراسة فقهية في مدى اعتبار العقود والإيجاب والقبول عبر منصات التواصل الرقمي الحديثة.</description>
+      <dc:creator>المجمع الفقهي الإسلامي</dc:creator>
+      <pubDate>Sat, 05 Jul 2026 09:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://majlisilm.com/fiqh-council/fiqh-marriage-contract</guid>
+    </item>
+    <item>
+      <title>زكاة الأسهم والصناديق الاستثمارية</title>
+      <link>https://majlisilm.com/fiqh-council/fiqh-zakat-stocks</link>
+      <description>كيفية احتساب زكاة الأسهم المتداولة في الأسواق المالية والصناديق الاستثمارية المختلطة.</description>
+      <dc:creator>المجمع الفقهي الإسلامي</dc:creator>
+      <pubDate>Fri, 04 Jul 2026 09:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://majlisilm.com/fiqh-council/fiqh-zakat-stocks</guid>
+    </item>
+
+    <!-- فتاوى -->
+    <item>
+      <title>هل يجوز الجمع بين الصلاتين للمسافر؟</title>
+      <link>https://majlisilm.com/fatwa/fatwa-prayer-combine</link>
+      <description>فتوى مفصّلة في حكم الجمع بين الصلاتين للمسافر وشروطه وضوابطه الشرعية وأقوال الفقهاء.</description>
+      <dc:creator>قسم الفتاوى</dc:creator>
+      <pubDate>Thu, 03 Jul 2026 09:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://majlisilm.com/fatwa/fatwa-prayer-combine</guid>
+    </item>
+    <item>
+      <title>هل تجب الزكاة في الذهب المُدّخر للزينة؟</title>
+      <link>https://majlisilm.com/fatwa/fatwa-zakat-gold</link>
+      <description>خلاف الفقهاء في وجوب الزكاة على حلي الذهب المعدّة للزينة وأدلة كل قول.</description>
+      <dc:creator>قسم الفتاوى</dc:creator>
+      <pubDate>Wed, 02 Jul 2026 09:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://majlisilm.com/fatwa/fatwa-zakat-gold</guid>
+    </item>
+    <item>
+      <title>ما حكم الاستماع إلى الأناشيد الإسلامية؟</title>
+      <link>https://majlisilm.com/fatwa/fatwa-music-voice</link>
+      <description>حكم سماع الأناشيد الإسلامية مع المقطوعات الموسيقية وبدونها وتفصيل العلماء في ذلك.</description>
+      <dc:creator>قسم الفتاوى</dc:creator>
+      <pubDate>Tue, 01 Jul 2026 09:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://majlisilm.com/fatwa/fatwa-music-voice</guid>
+    </item>
+    <item>
+      <title>هل يجوز للمسافر الإفطار في رمضان؟</title>
+      <link>https://majlisilm.com/fatwa/fatwa-fasting-travel</link>
+      <description>حكم الإفطار في السفر وشروطه وهل الأفضل الصيام أم الإفطار في رمضان للمسافر.</description>
+      <dc:creator>قسم الفتاوى</dc:creator>
+      <pubDate>Mon, 30 Jun 2026 09:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://majlisilm.com/fatwa/fatwa-fasting-travel</guid>
+    </item>
+    <item>
+      <title>ما نصيب البنت من الميراث؟</title>
+      <link>https://majlisilm.com/fatwa/fatwa-inheritance-daughter</link>
+      <description>تفصيل نصيب البنت من الميراث وفق أحوالها وعددها بالأدلة من الكتاب والسنة.</description>
+      <dc:creator>قسم الفتاوى</dc:creator>
+      <pubDate>Sun, 29 Jun 2026 09:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://majlisilm.com/fatwa/fatwa-inheritance-daughter</guid>
+    </item>
+
+    <!-- أقسام جديدة -->
+    <item>
+      <title>الأربعون النووية — شرح وفوائد</title>
+      <link>https://majlisilm.com/arbaeen-nawawi</link>
+      <description>أحاديث الأربعون النووية مع شرح موجز وفوائد مستخلصة من كل حديث.</description>
+      <dc:creator>المجلس العلمي</dc:creator>
+      <pubDate>Sat, 28 Jun 2026 09:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://majlisilm.com/arbaeen-nawawi</guid>
+    </item>
+    <item>
+      <title>المكتبة الشرعية — 73+ كتاباً موثقاً</title>
+      <link>https://majlisilm.com/library</link>
+      <description>فهرس المكتبة الشرعية الرقمية يضم أكثر من 73 كتاباً في التفسير والحديث والفقه والعقيدة.</description>
+      <dc:creator>المجلس العلمي</dc:creator>
+      <pubDate>Fri, 27 Jun 2026 09:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://majlisilm.com/library</guid>
+    </item>
   </channel>
 </rss>
