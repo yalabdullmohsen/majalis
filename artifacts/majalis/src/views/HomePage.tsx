@@ -199,9 +199,9 @@ export default function HomePage() {
       {/* ══ إحصائيات المنصة ══ */}
       <div className="hp-stats-bar" aria-label="إحصائيات المنصة">
         {[
-          { value: "٧٣+",  label: "كتاب شرعي" },
-          { value: "٥٠+",  label: "عالم وشيخ" },
-          { value: "٤٨٩+", label: "سؤال تعليمي" },
+          { value: "١٠٨",  label: "كتاب شرعي" },
+          { value: "٧٦+",  label: "عالم وشيخ" },
+          { value: "٦٨٠+", label: "سؤال تعليمي" },
           { value: "٦٠٤",  label: "صفحة مصحف" },
         ].map(({ value, label }) => (
           <div key={label} className="hp-stat-item">

@@ -12779,3 +12779,561 @@ a:focus-visible {
   transition: background .15s, color .15s;
 }
 .cvp-back-link:hover { background: var(--majalis-emerald-subtle, #f0fdf4); color: var(--majalis-emerald-deep, #166534); }
+
+/* ══════════════════════════════════════════════════════════════════
+   §REDESIGN-2026 — الإعادة التصميمية الشاملة للصفحة الرئيسية
+   Phase 1-8 | Color System · Bottom Nav · Lesson Cards · Hero
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ─── نظام الألوان الموحد (Phase 5) ──────────────────────────── */
+:root {
+  --rd-emerald:       #10B981; /* Primary — Emerald 500 */
+  --rd-emerald-deep:  #0D5E3F; /* Hover / dark active */
+  --rd-emerald-dark:  #064E3B; /* Hero dark */
+  --rd-gold:          #D4AF37; /* Secondary accent */
+  --rd-ivory:         #F5EFE7; /* Page background */
+  --rd-dark-card:     #1F3A3A; /* Dark sections */
+  --rd-ink:           #1F2937; /* Text on light bg */
+  --rd-ink-soft:      #4B5563; /* Muted text on light */
+  --rd-ink-muted:     #9CA3AF; /* Placeholder */
+  --rd-white:         #FFFFFF;
+  --rd-nav-bg:        rgba(255,255,255,0.97);
+  --rd-nav-border:    rgba(0,0,0,0.07);
+  --rd-card-shadow:   0 4px 12px rgba(0,0,0,0.10);
+  --rd-card-shadow-h: 0 8px 20px rgba(0,0,0,0.14);
+  --rd-btn-shadow:    0 2px 8px rgba(0,0,0,0.08);
+  --rd-hero-shadow:   0 8px 16px rgba(0,0,0,0.15);
+  --rd-radius-card:   12px;
+  --rd-radius-btn:    10px;
+  --rd-radius-input:  8px;
+  --rd-pad-card:      16px;
+  --rd-gap-card:      12px;
+  --rd-gap-btn:       8px;
+  --rd-margin-h:      16px;
+  --rd-margin-v:      24px;
+  --rd-transition:    all 0.3s ease;
+}
+
+/* ─── Bottom Nav v2 (Phase 2) ─────────────────────────────────── */
+.bottom-nav--v2 {
+  background: var(--rd-nav-bg) !important;
+  backdrop-filter: blur(20px) saturate(200%) !important;
+  border-top: 1px solid var(--rd-nav-border) !important;
+  box-shadow: 0 -2px 16px rgba(0,0,0,0.06) !important;
+  display: flex !important;
+  align-items: stretch !important;
+  justify-content: space-around !important;
+  gap: 0 !important;
+  padding: 0 !important;
+}
+
+.bottom-nav--v2 .bottom-nav__tab {
+  flex: 1 1 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  padding: 8px 4px 10px !important;
+  color: var(--rd-ink-muted) !important;
+  font-size: 0.625rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.01em !important;
+  border: none !important;
+  background: none !important;
+  text-decoration: none !important;
+  cursor: pointer !important;
+  transition: color 0.2s ease !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+.bottom-nav--v2 .bottom-nav__tab:hover {
+  color: var(--rd-emerald-deep) !important;
+}
+
+.bottom-nav--v2 .bottom-nav__tab.is-active {
+  color: var(--rd-emerald) !important;
+}
+
+.bottom-nav--v2 .bottom-nav__tab.is-active .bottom-nav__tab-icon {
+  background: rgba(16,185,129,0.10) !important;
+  border-radius: 8px !important;
+}
+
+.bottom-nav--v2 .bottom-nav__tab-icon {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 40px !important;
+  height: 32px !important;
+  border-radius: 8px !important;
+  transition: background 0.2s ease !important;
+}
+
+.bottom-nav--v2 .bottom-nav__tab-label {
+  font-size: 0.6rem !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+}
+
+/* ─── Hero Section المحسّن (Phase 6) ───────────────────────────── */
+.home-hero--v3 {
+  background: linear-gradient(145deg, #0D5E3F 0%, #10B981 55%, #065F46 100%) !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.home-hero--v3::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 80%, rgba(255,255,255,0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 80% 20%, rgba(255,255,255,0.04) 0%, transparent 70%) !important;
+  pointer-events: none !important;
+}
+
+.home-hero--v3 .home-hero-identity {
+  justify-content: center !important;
+  gap: 12px !important;
+}
+
+.home-hero-title--v3 {
+  color: var(--rd-white) !important;
+  font-size: clamp(1.6rem, 5vw, 2.4rem) !important;
+  font-weight: 800 !important;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+}
+
+.home-hero-badge {
+  color: rgba(255,255,255,0.85) !important;
+  font-size: 0.9rem !important;
+  font-weight: 500 !important;
+  line-height: 1.6 !important;
+  text-align: center !important;
+  max-width: 480px !important;
+  margin: 0 auto !important;
+}
+
+/* Search في Hero */
+.home-search--v3 {
+  background: rgba(255,255,255,0.15) !important;
+  border: 1.5px solid rgba(255,255,255,0.30) !important;
+  border-radius: var(--rd-radius-input) !important;
+  backdrop-filter: blur(10px) !important;
+  transition: border-color 0.2s, background 0.2s !important;
+}
+
+.home-search--v3:focus-within {
+  background: rgba(255,255,255,0.22) !important;
+  border-color: rgba(255,255,255,0.55) !important;
+}
+
+.home-search--v3 input {
+  color: var(--rd-white) !important;
+  background: transparent !important;
+}
+
+.home-search--v3 input::placeholder {
+  color: rgba(255,255,255,0.65) !important;
+}
+
+.home-search--v3 button {
+  background: var(--rd-white) !important;
+  color: var(--rd-emerald-deep) !important;
+  border-radius: 6px !important;
+  font-weight: 700 !important;
+  box-shadow: var(--rd-btn-shadow) !important;
+  transition: background 0.2s, transform 0.15s !important;
+}
+
+.home-search--v3 button:hover {
+  background: var(--rd-ivory) !important;
+  transform: scale(1.02) !important;
+}
+
+/* Quick search chips */
+.home-quick-search-chip {
+  background: rgba(255,255,255,0.15) !important;
+  color: rgba(255,255,255,0.9) !important;
+  border: 1px solid rgba(255,255,255,0.25) !important;
+  border-radius: 20px !important;
+  padding: 5px 12px !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: background 0.2s, color 0.2s !important;
+  white-space: nowrap !important;
+}
+
+.home-quick-search-chip:hover {
+  background: rgba(255,255,255,0.28) !important;
+  color: var(--rd-white) !important;
+}
+
+/* ─── شريط الإحصائيات المحسّن (Phase 5) ────────────────────────── */
+.hp-stats-bar {
+  background: var(--rd-white) !important;
+  border-bottom: 1px solid rgba(0,0,0,0.06) !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04) !important;
+  padding: 16px var(--rd-margin-h) !important;
+  gap: 0 !important;
+}
+
+.hp-stat-item {
+  border-inline-end: 1px solid rgba(0,0,0,0.07) !important;
+  padding: 0 20px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 2px !important;
+}
+
+.hp-stat-item:last-child {
+  border-inline-end: none !important;
+}
+
+.hp-stat-value {
+  color: var(--rd-emerald-deep) !important;
+  font-size: 1.35rem !important;
+  font-weight: 800 !important;
+  line-height: 1.1 !important;
+  font-feature-settings: "tnum" !important;
+}
+
+.hp-stat-label {
+  color: var(--rd-ink-soft) !important;
+  font-size: 0.72rem !important;
+  font-weight: 500 !important;
+}
+
+/* ─── Quick Nav (Phase 7) ─────────────────────────────────────── */
+.hp-quick-nav {
+  padding: 12px 0 !important;
+  border-bottom: 1px solid rgba(0,0,0,0.06) !important;
+}
+
+.hp-quick-nav__track {
+  padding: 0 var(--rd-margin-h) !important;
+  gap: 8px !important;
+}
+
+.hp-quick-link {
+  background: var(--rd-white) !important;
+  border: 1px solid rgba(0,0,0,0.08) !important;
+  border-radius: 10px !important;
+  padding: 8px 12px !important;
+  box-shadow: var(--rd-btn-shadow) !important;
+  transition: var(--rd-transition) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 4px !important;
+  min-width: 56px !important;
+  text-decoration: none !important;
+}
+
+.hp-quick-link:hover,
+.hp-quick-link:focus-visible {
+  background: rgba(16,185,129,0.06) !important;
+  border-color: var(--rd-emerald) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(16,185,129,0.12) !important;
+}
+
+.hp-quick-link__icon {
+  font-size: 1.2rem !important;
+  line-height: 1 !important;
+}
+
+.hp-quick-link__label {
+  font-size: 0.62rem !important;
+  font-weight: 700 !important;
+  color: var(--rd-ink-soft) !important;
+  white-space: nowrap !important;
+}
+
+/* ─── بطاقات الدروس الموحدة المحسّنة (Phase 3) ────────────────── */
+.lesson-unified-card.lesson-unified-card--compact {
+  border: 1px solid rgba(0,0,0,0.08) !important;
+  border-radius: var(--rd-radius-card) !important;
+  background: var(--rd-white) !important;
+  box-shadow: var(--rd-card-shadow) !important;
+  transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease !important;
+  overflow: hidden !important;
+}
+
+.lesson-unified-card.lesson-unified-card--compact:hover {
+  box-shadow: var(--rd-card-shadow-h) !important;
+  transform: translateY(-2px) !important;
+  border-color: rgba(16,185,129,0.25) !important;
+}
+
+.lesson-unified-card.lesson-unified-card--compact .lesson-unified-card__header {
+  background: linear-gradient(90deg, rgba(16,185,129,0.08) 0%, transparent 100%) !important;
+  border-bottom: 1px solid rgba(16,185,129,0.12) !important;
+  padding: 8px var(--rd-pad-card) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 8px !important;
+}
+
+.lesson-unified-card.lesson-unified-card--compact .lesson-unified-card__category {
+  background: rgba(16,185,129,0.12) !important;
+  color: var(--rd-emerald-deep) !important;
+  border-radius: 20px !important;
+  padding: 2px 10px !important;
+  font-size: 0.7rem !important;
+  font-weight: 700 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+}
+
+.lesson-unified-card.lesson-unified-card--compact .lesson-unified-card__category::before {
+  content: "" !important;
+  display: inline-block !important;
+  width: 7px !important;
+  height: 7px !important;
+  background: var(--rd-emerald) !important;
+  border-radius: 50% !important;
+  flex-shrink: 0 !important;
+}
+
+.lesson-unified-card.lesson-unified-card--compact .lesson-unified-card__status {
+  font-size: 0.7rem !important;
+  font-weight: 600 !important;
+  color: var(--rd-ink-muted) !important;
+  white-space: nowrap !important;
+}
+
+.lesson-unified-card.lesson-unified-card--compact .lesson-unified-card__top--compact {
+  padding: var(--rd-pad-card) !important;
+  padding-bottom: 10px !important;
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 12px !important;
+}
+
+.lesson-unified-card.lesson-unified-card--compact .lesson-unified-card__title {
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  color: var(--rd-ink) !important;
+  line-height: 1.35 !important;
+  margin: 0 0 4px !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+}
+
+.lesson-unified-card.lesson-unified-card--compact .lesson-unified-card__sheikh {
+  font-size: 0.8rem !important;
+  font-weight: 600 !important;
+  color: var(--rd-emerald-deep) !important;
+  margin: 0 !important;
+}
+
+.lesson-unified-card.lesson-unified-card--compact .lesson-unified-card__meta {
+  padding: 0 var(--rd-pad-card) 10px !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 6px !important;
+  border: none !important;
+}
+
+.lesson-unified-card.lesson-unified-card--compact .lesson-unified-card__meta-cell {
+  display: flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  background: rgba(0,0,0,0.03) !important;
+  border-radius: 6px !important;
+  padding: 3px 8px !important;
+}
+
+.lesson-unified-card.lesson-unified-card--compact .lesson-unified-card__meta-label {
+  font-size: 0.65rem !important;
+  color: var(--rd-ink-muted) !important;
+  font-weight: 500 !important;
+}
+
+.lesson-unified-card.lesson-unified-card--compact .lesson-unified-card__meta-cell strong {
+  font-size: 0.72rem !important;
+  font-weight: 700 !important;
+  color: var(--rd-ink-soft) !important;
+}
+
+.lesson-unified-card.lesson-unified-card--compact .lesson-unified-card__actions {
+  padding: 10px var(--rd-pad-card) var(--rd-pad-card) !important;
+  border-top: 1px solid rgba(0,0,0,0.05) !important;
+  gap: var(--rd-gap-btn) !important;
+}
+
+.lesson-unified-card.lesson-unified-card--compact .lesson-unified-card__btn--primary {
+  background: var(--rd-emerald) !important;
+  color: var(--rd-white) !important;
+  border-radius: var(--rd-radius-btn) !important;
+  font-size: 0.8rem !important;
+  font-weight: 700 !important;
+  padding: 8px 16px !important;
+  text-decoration: none !important;
+  box-shadow: 0 2px 8px rgba(16,185,129,0.30) !important;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.15s !important;
+  border: none !important;
+}
+
+.lesson-unified-card.lesson-unified-card--compact .lesson-unified-card__btn--primary:hover {
+  background: var(--rd-emerald-deep) !important;
+  box-shadow: 0 4px 12px rgba(16,185,129,0.40) !important;
+  transform: scale(1.02) !important;
+}
+
+/* ─── تحسينات عامة الـ Header (Phase 1) ───────────────────────── */
+.navbar-v3 {
+  background: var(--rd-white) !important;
+  border-bottom-color: rgba(0,0,0,0.07) !important;
+  box-shadow: 0 1px 8px rgba(0,0,0,0.05) !important;
+}
+
+.navbar-brand strong.site-brand-logotype__main {
+  color: var(--rd-emerald-deep) !important;
+  font-weight: 800 !important;
+  font-size: 1.05rem !important;
+}
+
+.navbar-search-cmd {
+  background: rgba(0,0,0,0.04) !important;
+  border: 1px solid rgba(0,0,0,0.08) !important;
+  border-radius: 8px !important;
+  color: var(--rd-ink-soft) !important;
+  transition: background 0.2s, border-color 0.2s !important;
+}
+
+.navbar-search-cmd:hover {
+  background: rgba(16,185,129,0.07) !important;
+  border-color: var(--rd-emerald) !important;
+  color: var(--rd-emerald-deep) !important;
+}
+
+/* ─── Featured Cards (Phase 5 colors) ─────────────────────────── */
+.hp-featured-card {
+  border-radius: var(--rd-radius-card) !important;
+  box-shadow: var(--rd-btn-shadow) !important;
+  transition: var(--rd-transition) !important;
+}
+
+.hp-featured-card:hover {
+  box-shadow: var(--rd-card-shadow) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* ─── Section Heads (Phase 7 spacing) ─────────────────────────── */
+.home-section {
+  margin-bottom: var(--rd-margin-v) !important;
+}
+
+.home-section-head {
+  margin-bottom: 14px !important;
+}
+
+.home-section-head h2 {
+  font-size: 1.15rem !important;
+  font-weight: 800 !important;
+  color: var(--rd-ink) !important;
+  margin: 0 0 2px !important;
+}
+
+.home-eyebrow {
+  font-size: 0.7rem !important;
+  font-weight: 700 !important;
+  color: var(--rd-emerald) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.06em !important;
+  margin-bottom: 4px !important;
+}
+
+.home-section-link {
+  color: var(--rd-emerald-deep) !important;
+  font-size: 0.8rem !important;
+  font-weight: 700 !important;
+  text-decoration: none !important;
+  padding: 6px 12px !important;
+  border: 1px solid rgba(16,185,129,0.25) !important;
+  border-radius: 8px !important;
+  transition: background 0.2s, border-color 0.2s !important;
+}
+
+.home-section-link:hover {
+  background: rgba(16,185,129,0.07) !important;
+  border-color: var(--rd-emerald) !important;
+}
+
+/* ─── Home Kuwait Grid (Phase 7 spacing) ─────────────────────── */
+.home-kuwait-grid {
+  gap: var(--rd-gap-card) !important;
+}
+
+/* ─── HP Features Cats (Phase 5 colors + Phase 7 spacing) ────── */
+.hp-cat-card {
+  border-radius: var(--rd-radius-card) !important;
+  padding: 12px !important;
+  transition: var(--rd-transition) !important;
+  box-shadow: var(--rd-btn-shadow) !important;
+}
+
+.hp-cat-card:hover {
+  box-shadow: var(--rd-card-shadow) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* ─── Responsive: mobile stats bar ────────────────────────────── */
+@media (max-width: 600px) {
+  .hp-stats-bar {
+    gap: 0 !important;
+    padding: 12px 8px !important;
+    overflow-x: auto !important;
+    justify-content: flex-start !important;
+  }
+
+  .hp-stat-item {
+    padding: 0 14px !important;
+    min-width: 70px !important;
+  }
+
+  .hp-stat-value {
+    font-size: 1.1rem !important;
+  }
+
+  .home-hero-title--v3 {
+    font-size: 1.5rem !important;
+  }
+
+  .home-hero-badge {
+    font-size: 0.82rem !important;
+  }
+}
+
+/* ─── WCAG contrast fixes (Phase 5) ───────────────────────────── */
+.bottom-nav--v2 .bottom-nav__tab-label {
+  color: inherit !important;
+}
+
+.lesson-unified-card--compact .lesson-unified-card__status {
+  color: var(--rd-ink-muted) !important;
+}
+
+/* ─── Page background consistency (Phase 8) ───────────────────── */
+.home-page--v3 {
+  background: var(--rd-ivory) !important;
+}
+
+.home-main--v3 {
+  padding-top: var(--rd-margin-v) !important;
+  padding-bottom: calc(var(--rd-margin-v) + 80px) !important;
+}
+
+/* ── نهاية §REDESIGN-2026 ──────────────────────────────────────── */
