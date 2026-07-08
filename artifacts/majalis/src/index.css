@@ -17457,3 +17457,30 @@ body.has-assistant-fab .app-main {
   color: #fff;
   border-color: transparent;
 }
+
+/* ── ShareButton ─────────────────────────────────────────── */
+.share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 1rem;
+  border-radius: 999px;
+  border: 1px solid var(--majalis-line, #E0DBD5);
+  background: var(--majalis-panel, #fff);
+  color: var(--majalis-emerald, #0E6E52);
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+.share-btn:hover {
+  background: rgba(14,110,82,0.06);
+  border-color: var(--majalis-emerald, #0E6E52);
+}
+.share-btn--sm {
+  padding: 0.3rem 0.7rem;
+  font-size: 0.8rem;
+  gap: 0.3rem;
+}

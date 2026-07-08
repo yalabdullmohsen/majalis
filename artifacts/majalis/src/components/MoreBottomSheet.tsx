@@ -7,7 +7,7 @@ import {
   Activity, BarChart3, BookOpen, Bot, Building2, Calendar, Compass, CreditCard,
   FileText, GraduationCap, Heart, HelpCircle, Info, Landmark, Library, Layers,
   Mic, Network, Radio, RefreshCw, Repeat2, Scale, ScrollText, Search, Settings,
-  Shield, Sparkles, Stethoscope, Tv, Users, Zap,
+  Shield, Sparkles, Stethoscope, Tv, Users, X, Zap,
 } from "lucide-react";
 
 const SHEET_SECTIONS = [
@@ -104,7 +104,7 @@ export function MoreBottomSheet({ open, onClose }: Props) {
             onClick={onClose}
             className="bottom-sheet__close-btn"
             aria-label="إغلاق"
-          >✕</button>
+          ><X size={18} strokeWidth={1.8} aria-hidden="true" /></button>
         </div>
 
         <div className="bottom-sheet__body">
