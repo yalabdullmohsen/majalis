@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, type FormEvent } from "react";
+import { GraduationCap } from "lucide-react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 
@@ -70,7 +71,7 @@ export default function SubmitContentPage() {
         tabIndex={0}
         onKeyDown={(e) => e.key === "Enter" && setContentType("درس")}
       >
-        <div className="scp-banner__emoji">📚</div>
+        <div className="scp-banner__emoji" aria-hidden="true"><GraduationCap size={32} strokeWidth={1.4} /></div>
         <div>
           <p className="scp-banner__heading">أضف درساً علمياً</p>
           <p className="scp-banner__desc">شارك درساً، محاضرة، أو موضوعاً علمياً مفيداً</p>

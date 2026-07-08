@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { BookOpen, Building2, GraduationCap, Globe, Library, MapPin, Search } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { PageHeader } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
 
@@ -175,11 +177,11 @@ const TYPE_LABELS: Record<Institution["type"], string> = {
   library: "المكتبات",
 };
 
-const TYPE_ICONS: Record<Institution["type"], string> = {
-  mosque: "🕌",
-  center: "🏛️",
-  university: "🎓",
-  library: "📚",
+const TYPE_ICONS: Record<Institution["type"], LucideIcon> = {
+  mosque: Building2,
+  center: Library,
+  university: GraduationCap,
+  library: BookOpen,
 };
 
 const TYPE_FILTERS: { key: Institution["type"] | "all"; label: string }[] = [
@@ -196,7 +198,7 @@ function InstitutionCard({ inst }: { inst: Institution }) {
   return (
     <div className="inst-card">
       <div className="inst-card__head">
-        <span className="inst-card__icon">{TYPE_ICONS[inst.type]}</span>
+        <span className="inst-card__icon" aria-hidden="true">{(() => { const I = TYPE_ICONS[inst.type]; return <I size={22} strokeWidth={1.5} />; })()}</span>
         <div className="inst-card__meta">
           <h3 className="inst-card__name">{inst.name}</h3>
           <span className="inst-card__location">
@@ -214,7 +216,7 @@ function InstitutionCard({ inst }: { inst: Institution }) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            🌐 الموقع الرسمي
+            <Globe size={13} strokeWidth={1.8} aria-hidden="true" /> الموقع الرسمي
           </a>
         )}
         {inst.mapQuery && (
@@ -224,7 +226,7 @@ function InstitutionCard({ inst }: { inst: Institution }) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            📍 الموقع على الخريطة
+            <MapPin size={13} strokeWidth={1.8} aria-hidden="true" /> الموقع على الخريطة
           </a>
         )}
       </div>
@@ -263,7 +265,7 @@ export default function InstitutionsPage() {
       <div className="home-container">
         <PageHeader
           eyebrow="الدليل الإسلامي"
-          title="🕌 دليل المؤسسات الإسلامية"
+          title="دليل المؤسسات الإسلامية"
           subtitle="فهرس بأبرز المساجد والجامعات والمراكز البحثية والمكتبات الإسلامية في العالم."
         />
 
@@ -311,7 +313,7 @@ export default function InstitutionsPage() {
         {/* Grid */}
         {filtered.length === 0 ? (
           <div className="vault-empty">
-            <div className="vault-empty__icon">🔍</div>
+            <div className="vault-empty__icon" aria-hidden="true"><Search size={40} strokeWidth={1.3} /></div>
             <p>لا توجد نتائج مطابقة.</p>
           </div>
         ) : (

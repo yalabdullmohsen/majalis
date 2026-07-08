@@ -18,10 +18,14 @@ import { validateLessonDraft, buildExternalKey, buildLessonSlug } from "./conten
 import { getSupabaseAdmin } from "../supabase-admin.mjs";
 
 const MODEL = "claude-sonnet-4-6";
-const MAX_RETRIES = 3;
+const MAX_RETRIES = 2;
 const BASE_BACKOFF_MS = 1_000;
-const TIMEOUT_MS = 90_000;
-const FALLBACK_CONFIDENCE_THRESHOLD = 0.4; // رفع Stage 2 إذا كانت الثقة أقل من هذا
+// BUG-001 fix: Vercel maxDuration=60s → keep client timeout safely below that
+const TIMEOUT_MS = 45_000;
+// BUG-002 fix: total pipeline budget (Stage1+2+3+4 must fit inside Vercel's 60s window)
+const PIPELINE_BUDGET_MS = 50_000;
+// BUG-002 fix: raised threshold requires better confidence to skip Stage 2
+const FALLBACK_CONFIDENCE_THRESHOLD = 0.3;
 
 // ── أوزان حساب الثقة (المجموع = 100) ────────────────────────────────────────
 const FIELD_WEIGHTS = {
@@ -608,14 +612,19 @@ export async function extractLessonFromImage({ imageBase64, mimeType = "image/jp
     finalData = await enrichFromDatabase(finalData, debugStages);
   }
 
-  // ── Stage 4: Enrich (spelling + SEO) ─────────────────────────────────────
+  // ── Stage 4: Enrich (spelling + SEO) — BUG-002: skip if budget exhausted ──
   let enriched = { corrected: finalData, suggestions: [] };
-  const enrichResult = await callText(ENRICH_PROMPT, finalData);
-  if (enrichResult.ok) {
-    const parsed = parseJson(enrichResult.text);
-    if (parsed) enriched = parsed;
+  const elapsedSoFar = Date.now() - pipelineStart;
+  if (elapsedSoFar < PIPELINE_BUDGET_MS - 12_000) {
+    const enrichResult = await callText(ENRICH_PROMPT, finalData);
+    if (enrichResult.ok) {
+      const parsed = parseJson(enrichResult.text);
+      if (parsed) enriched = parsed;
+    } else {
+      console.warn(`[lesson-extractor] enrich non-fatal: ${enrichResult.errorCode}`);
+    }
   } else {
-    console.warn(`[lesson-extractor] enrich non-fatal: ${enrichResult.errorCode}`);
+    console.warn(`[lesson-extractor] enrich skipped: budget exhausted elapsed=${elapsedSoFar}ms`);
   }
 
   // ── Stage 5: Normalize + confidence ──────────────────────────────────────

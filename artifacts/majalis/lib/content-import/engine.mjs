@@ -441,17 +441,29 @@ export async function processImportJob(jobId, opts = {}) {
   }
 }
 
+// BUG-003 fix: cron time budget — stop processing before Vercel kills the function
+const CRON_BUDGET_MS = 50_000;
+
 /**
- * Process all queued import jobs (cron / worker fallback).
+ * Process queued import jobs within a time budget (cron / worker fallback).
+ * Processes one job at a time to avoid sequential timeout accumulation.
  */
 export async function processQueuedImportJobs(limit = 3) {
+  const cronStart = Date.now();
   await runImportJobWatchdog();
-  const jobs = await listQueuedImportJobs(limit);
+  const jobs = await listQueuedImportJobs(Math.min(limit, 5));
   const results = [];
+
   for (const job of jobs) {
+    const elapsed = Date.now() - cronStart;
+    if (elapsed > CRON_BUDGET_MS) {
+      jobLog(job.id, "cron_budget_exceeded", { elapsed_ms: elapsed, remaining_jobs: jobs.length - results.length });
+      break;
+    }
     results.push(await processImportJob(job.id));
   }
-  return { ok: true, processed: results.length, results };
+
+  return { ok: true, processed: results.length, total_queued: jobs.length, results };
 }
 
 export { runImportJobWatchdog, TERMINAL_JOB_STATUSES };

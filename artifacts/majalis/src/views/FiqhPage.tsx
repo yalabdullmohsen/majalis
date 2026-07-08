@@ -1,4 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
+import { BookOpen, Building2, ClipboardList, MessageCircle, Scale } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { Link, useSearch } from "wouter";
 import { usePageView } from "@/hooks/usePageView";
 import { applyPageSeo } from "@/lib/seo";
@@ -14,11 +16,11 @@ import type { ShariaRulingExtended } from "@/lib/rulings-types";
 
 type Tab = "fatawa" | "rulings" | "qa" | "council";
 
-const TABS: { key: Tab; label: string; icon: string }[] = [
-  { key: "fatawa",  label: "الفتاوى",         icon: "📋" },
-  { key: "rulings", label: "الأحكام الشرعية", icon: "📚" },
-  { key: "qa",      label: "الأسئلة والأجوبة", icon: "💬" },
-  { key: "council", label: "المجمع الفقهي",    icon: "🏛️" },
+const TABS: { key: Tab; label: string; Icon: LucideIcon }[] = [
+  { key: "fatawa",  label: "الفتاوى",          Icon: ClipboardList },
+  { key: "rulings", label: "الأحكام الشرعية",  Icon: BookOpen },
+  { key: "qa",      label: "الأسئلة والأجوبة", Icon: MessageCircle },
+  { key: "council", label: "المجمع الفقهي",     Icon: Building2 },
 ];
 
 const COUNCIL_SECTIONS = [
@@ -91,7 +93,7 @@ export default function FiqhPage() {
       <div className="text-white px-4 py-10 ldb-hero">
         <div className="max-w-5xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-white/10 text-teal-100 text-sm px-4 py-1.5 rounded-full mb-4">
-            <span>⚖️</span>
+            <Scale size={16} strokeWidth={1.8} />
             <span>الفقه الإسلامي</span>
           </div>
           <h1 className="text-3xl md:text-4xl font-extrabold mb-3">الفقه الإسلامي</h1>
@@ -115,7 +117,7 @@ export default function FiqhPage() {
                   : "border-transparent text-[var(--majalis-ink-soft)] hover:text-[var(--majalis-ink-soft)]"
               }`}
             >
-              <span>{t.icon}</span>
+              <t.Icon size={15} strokeWidth={1.8} aria-hidden="true" />
               {t.label}
             </button>
           ))}

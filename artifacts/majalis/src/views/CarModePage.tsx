@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Mic2, Music2 } from "lucide-react";
 import { Link } from "wouter";
 import { supabase } from "@/lib/supabase";
 import { applyPageSeo } from "@/lib/seo";
@@ -157,12 +158,12 @@ export default function CarModePage() {
       {/* Header */}
       <div className="car-mode__header">
         <Link href="/" className="car-mode__exit">✕ خروج</Link>
-        <span className="car-mode__label">وضع السيارة 🚗</span>
+        <span className="car-mode__label">وضع السيارة</span>
       </div>
 
       {/* Now playing */}
       <div className="car-mode__now-playing">
-        <div className="car-mode__disk">{playing ? "🎵" : "🎙️"}</div>
+        <div className="car-mode__disk" aria-hidden="true">{playing ? <Music2 size={40} strokeWidth={1.4} /> : <Mic2 size={40} strokeWidth={1.4} />}</div>
         <p className="car-mode__category">{current.category ?? "درس"}</p>
         <h1 className="car-mode__title">{current.title}</h1>
         {current.speaker_name && (

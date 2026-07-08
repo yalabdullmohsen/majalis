@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from "react";
+import { BookOpen, FlaskConical, Search } from "lucide-react";
 import { Spinner } from "@/components/ui/spinner";
 import { ResearchAnswer } from "@/components/rag/ResearchAnswer";
 import {
@@ -143,7 +144,7 @@ export default function ScholarlyResearchPage() {
       {/* ── Header ───────────────────────────────────── */}
       <div className="text-white py-10 px-4 ldb-hero">
         <div className="max-w-3xl mx-auto text-center">
-          <h1 className="text-2xl font-bold mb-2">🔬 الباحث الشرعي</h1>
+          <h1 className="text-2xl font-bold mb-2 flex items-center justify-center gap-2"><FlaskConical size={22} strokeWidth={1.6} aria-hidden="true" /> الباحث الشرعي</h1>
           <p className="text-emerald-100 text-sm leading-relaxed max-w-xl mx-auto">
             يُجيب من المصادر الموثّقة فقط — آيات وأحاديث وقرارات مجامع وفتاوى علماء.
             لا يُصدر فتاوى شخصية ولا يُصنّف الأحاديث بنفسه.
@@ -165,7 +166,7 @@ export default function ScholarlyResearchPage() {
                   : "border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
               }`}
             >
-              {v === "search" ? "🔍 البحث" : "📚 مكتبتي"}
+              {v === "search" ? <><Search size={14} strokeWidth={1.8} aria-hidden="true" /> البحث</> : <><BookOpen size={14} strokeWidth={1.8} aria-hidden="true" /> مكتبتي</>}
             </button>
           ))}
         </div>
