@@ -6,20 +6,11 @@ import { applyPageSeo } from "@/lib/seo";
 import { supabase } from "@/lib/supabase";
 import type { LPScience, LPProgress } from "@/lib/learning-path-service";
 import { fetchSciences, fetchProgress } from "@/lib/learning-path-service";
+import { SkeletonCardGrid } from "@/components/ui-common";
 
 const ScienceCard = lazy(() =>
   import("@/components/learning-path/ScienceCard").then((m) => ({ default: m.ScienceCard }))
 );
-
-function LoadingSkeleton() {
-  return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      {Array.from({ length: 6 }).map((_, i) => (
-        <div key={i} className="bg-[var(--majalis-parchment-deep)] rounded-2xl h-36 animate-pulse" />
-      ))}
-    </div>
-  );
-}
 
 export default function LearningPathPage() {
   const { isLoggedIn } = useAuth();
@@ -156,14 +147,14 @@ export default function LearningPathPage() {
         )}
 
         {loading ? (
-          <LoadingSkeleton />
+          <SkeletonCardGrid count={6} />
         ) : sciences.length === 0 ? (
           <div className="text-center py-16 text-[var(--majalis-ink-soft)] opacity-60">
             <div className="text-4xl mb-2" aria-hidden="true"><BookOpen size={48} strokeWidth={1.3} /></div>
             <p>لا توجد علوم متاحة بعد</p>
           </div>
         ) : (
-          <Suspense fallback={<LoadingSkeleton />}>
+          <Suspense fallback={<SkeletonCardGrid count={6} />}>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {sciences.map((sci) => (
                 <ScienceCard
