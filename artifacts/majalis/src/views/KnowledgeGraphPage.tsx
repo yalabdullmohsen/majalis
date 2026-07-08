@@ -21,6 +21,7 @@ import {
   type KnowledgeRelationship,
   type KnowledgeSourceType,
 } from "@/lib/supabase";
+import { applyPageSeo } from "@/lib/seo";
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -169,6 +170,15 @@ type Tab = "graph" | "explore";
 export default function KnowledgeGraphPage() {
   const [, navigate] = useLocation();
   const [tab, setTab] = useState<Tab>("graph");
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/knowledge-graph",
+      title: "الرسم البياني المعرفي | المجلس العلمي",
+      description: "استكشف العلاقات بين المفاهيم الإسلامية — رسم بياني تفاعلي يربط العلماء والكتب والمسائل الفقهية.",
+      keywords: ["رسم بياني معرفي", "علاقات إسلامية", "استكشاف المعرفة", "خريطة علمية", "علم الشبكات"],
+    });
+  }, []);
   const [source, setSource] = useState<DataSource>("new");
   const [loading, setLoading] = useState(true);
   const [gNodes, setGNodes] = useState<GraphNode[]>([]);

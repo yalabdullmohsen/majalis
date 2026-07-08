@@ -12,9 +12,19 @@ import {
   fetchCitationBySlug,
 } from "@/lib/citation-service";
 import { useAuth } from "@/components/AuthProvider";
+import { applyPageSeo } from "@/lib/seo";
 
 export default function CitationPublicPage() {
   const [, params] = useRoute("/c/:slug");
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/c",
+      title: "مقتطف علمي مشترك | المجلس العلمي",
+      description: "مقتطف علمي من المجلس العلمي — استشهادات أكاديمية بأسلوب مفهرس وجاهز للمشاركة والنشر.",
+      keywords: ["مقتطف علمي", "استشهاد أكاديمي", "نص إسلامي", "مشاركة علمية"],
+    });
+  }, []);
   const slug = params?.slug || "";
   const { user } = useAuth();
 

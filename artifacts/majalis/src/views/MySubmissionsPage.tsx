@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 import { supabase } from "@/lib/supabase";
 import { formatFileSize, type UserSubmission, type SubmissionStatus } from "@/lib/user-submissions-service";
 import { Link } from "wouter";
+import { applyPageSeo } from "@/lib/seo";
 
 const STATUS_META: Record<SubmissionStatus, { icon: string; label: string; bg: string; color: string; border: string }> = {
   pending:  { icon: "⏳", label: "قيد المراجعة",  bg: "#F0F9FF", color: "#0369A1", border: "#A7F3D0" },
@@ -107,6 +108,16 @@ function SubmissionRow({ sub }: { sub: UserSubmission }) {
 
 export default function MySubmissionsPage() {
   const [email, setEmail]     = useState("");
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/my-submissions",
+      title: "مقدّماتي | المجلس العلمي",
+      description: "تتبع حالة المحتوى الذي أرسلته للمجلس العلمي — قيد المراجعة، مقبول، أو مرفوض.",
+      keywords: ["مقدماتي", "تقديم محتوى", "متابعة مقدمة", "المجلس العلمي"],
+      robots: "noindex, follow",
+    });
+  }, []);
   const [list, setList]       = useState<UserSubmission[] | null>(null);
   const [loading, setLoading] = useState(false);
   const [err, setErr]         = useState("");

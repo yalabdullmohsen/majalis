@@ -1,6 +1,8 @@
+import { useEffect } from "react";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import { GeometricPattern } from "@/components/design/GeometricPattern";
 import type { PrayerSlot } from "@/lib/prayer-times";
+import { applyPageSeo } from "@/lib/seo";
 
 const PRAYER_AR: Record<string, string> = {
   Fajr: "الفجر",
@@ -13,6 +15,15 @@ const PRAYER_AR: Record<string, string> = {
 
 export default function PrayerCountdownPage() {
   const { data, countdown, loading } = usePrayerCountdown();
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/prayer-countdown",
+      title: "العد التنازلي للصلاة | المجلس العلمي",
+      description: "عد تنازلي لوقت الصلاة القادمة — الفجر والظهر والعصر والمغرب والعشاء في الكويت.",
+      keywords: ["عد تنازلي صلاة", "وقت الصلاة", "الصلاة القادمة", "مواقيت الكويت", "أذان"],
+    });
+  }, []);
 
   if (loading) {
     return (

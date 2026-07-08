@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import { PageHeader } from "@/components/ui-common";
+import { applyPageSeo } from "@/lib/seo";
 
 export const RANKS = [
   {
@@ -93,6 +95,15 @@ export function PrayerRanksContent() {
 }
 
 export default function PrayerRanksPage() {
+  useEffect(() => {
+    applyPageSeo({
+      path: "/prayer-ranks",
+      title: "فضائل الصلاة ومراتبها | المجلس العلمي",
+      description: "تعرف على فضائل الصلاة ومراتبها في الإسلام — الصلوات الخمس وأسرارها وحكمها وفضائلها.",
+      keywords: ["فضائل الصلاة", "مراتب الصلاة", "الصلاة في الإسلام", "أهمية الصلاة", "فقه الصلاة"],
+    });
+  }, []);
+
   return (
     <div className="page-shell prayer-ranks-page">
       <PageHeader

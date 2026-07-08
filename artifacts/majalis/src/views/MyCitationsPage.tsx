@@ -11,6 +11,7 @@ import {
   fetchUserCitations,
 } from "@/lib/citation-service";
 import { useAuth } from "@/components/AuthProvider";
+import { applyPageSeo } from "@/lib/seo";
 
 const TABS = ["الكل", "المجلدات", "المفضلة", "الأكثر استخداماً"] as const;
 type Tab = (typeof TABS)[number];
@@ -22,6 +23,16 @@ const FOLDER_COLORS = [
 
 export default function MyCitationsPage() {
   const { isLoggedIn, loading: authLoading } = useAuth();
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/my-citations",
+      title: "استشهاداتي | المجلس العلمي",
+      description: "مجموعة استشهاداتي ومقتطفاتي العلمية المحفوظة — نظّمها في مجلدات وشاركها مع الآخرين.",
+      keywords: ["استشهادات", "مقتطفات علمية", "حفظ نصوص", "مكتبة شخصية", "أكاديمية إسلامية"],
+      robots: "noindex, follow",
+    });
+  }, []);
   const [tab, setTab] = useState<Tab>("الكل");
   const [saved, setSaved] = useState<SavedCitation[]>([]);
   const [folders, setFolders] = useState<CitationFolder[]>([]);
