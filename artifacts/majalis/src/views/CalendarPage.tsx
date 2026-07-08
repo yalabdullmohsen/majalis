@@ -15,7 +15,7 @@ import {
 import { arSA } from "date-fns/locale";
 import { getUnifiedActiveLessons } from "@/lib/lessons-service";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
-import { PageHeader, Loading } from "@/components/ui-common";
+import { PageHeader, SkeletonCardGrid } from "@/components/ui-common";
 import { HijriSacredMonthBanner } from "@/components/HijriSacredMonthBanner";
 import { getHijriDateString, gregorianToHijri } from "@/lib/hijri-utils";
 import { applyPageSeo } from "@/lib/seo";
@@ -180,7 +180,7 @@ export default function CalendarPage() {
       </div>
 
       {loading ? (
-        <Loading />
+        <SkeletonCardGrid count={12} />
       ) : (
         <>
           {view === "month" && (

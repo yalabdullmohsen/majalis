@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Leaf } from "lucide-react";
+import { Leaf, X } from "lucide-react";
 import { useLocation } from "wouter";
 import { ADHKAR_CATEGORIES, type AdhkarItem } from "@/lib/adhkar-seed";
 import { usePublishedAdhkarItems } from "@/lib/adhkar-service";
 import { PageHeader, Empty } from "@/components/ui-common";
+import { ShareButton } from "@/components/ShareButton";
 import { applyPageSeo } from "@/lib/seo";
 
 const FEATURED_CATEGORY_SLUGS = new Set([
@@ -56,7 +57,7 @@ function DhikrSheet({ item, onClose }: { item: AdhkarItem; onClose: () => void }
     >
       <div className="adhkar-sheet">
         <div className="adhkar-sheet-handle" aria-hidden="true" />
-        <button type="button" className="adhkar-sheet-close" onClick={onClose} aria-label="إغلاق">✕</button>
+        <button type="button" className="adhkar-sheet-close" onClick={onClose} aria-label="إغلاق"><X size={18} strokeWidth={1.8} aria-hidden="true" /></button>
         <h2 className="adhkar-sheet-title">تفاصيل الذكر</h2>
         <div className="adhkar-sheet-text">{item.text}</div>
         <dl className="adhkar-sheet-details">
@@ -75,6 +76,12 @@ function DhikrSheet({ item, onClose }: { item: AdhkarItem; onClose: () => void }
           )}
           {item.reference && <div className="adhkar-sheet-row"><dt>المرجع</dt><dd>{item.reference}</dd></div>}
         </dl>
+        <ShareButton
+          title="ذكر"
+          text={`${item.text}${item.source ? `\n— ${item.source}` : ""}`}
+          size="sm"
+          className="adhkar-sheet-share"
+        />
         <button type="button" className="adhkar-sheet-dismiss" onClick={onClose}>إغلاق</button>
       </div>
     </div>
