@@ -6,7 +6,7 @@ import type { LucideIcon } from "lucide-react";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { supabase } from "@/lib/supabase";
 import { isSupabaseConfigured } from "@/lib/supabase-config";
-import { PageHeader } from "@/components/ui-common";
+import { PageHeader, SkeletonCardGrid } from "@/components/ui-common";
 import { ISLAMIC_STORIES_SEED } from "@/lib/islamic-stories-seed";
 import { applyPageSeo } from "@/lib/seo";
 
@@ -149,17 +149,6 @@ function StoryDetail({ story, onBack }: { story: IslamicStory; onBack: () => voi
           ))}
         </div>
       )}
-    </div>
-  );
-}
-
-// ─────────────────── Loading ──────────────────────────────────────────────────
-function LoadingGrid() {
-  return (
-    <div className="isp-grid">
-      {[...Array(6)].map((_, i) => (
-        <div key={i} className="isp-skeleton" />
-      ))}
     </div>
   );
 }
@@ -307,7 +296,7 @@ export default function IslamicStoriesPage() {
 
       {/* المحتوى */}
       {loading ? (
-        <LoadingGrid />
+        <SkeletonCardGrid count={6} />
       ) : error ? (
         <div className="isp-error">
           <span className="isp-error__icon"><AlertTriangle size={20} strokeWidth={1.5} /></span>
