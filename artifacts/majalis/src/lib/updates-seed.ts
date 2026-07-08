@@ -598,6 +598,42 @@ export const UPDATES_SEED: PlatformUpdate[] = [
     published_at: "2026-07-08T14:00:00Z",
     status: "approved",
   },
+  {
+    id: "update-quiz-680",
+    title: "تحديث: بنك الأسئلة يبلغ 680 سؤالاً",
+    summary: "إضافة 10 أسئلة جديدة (671-680) في مصطلح الحديث والصلاة والغزوات وعلوم القرآن والعقيدة والتاريخ والأخلاق والصيام والسيرة.",
+    update_type: "إعلان",
+    source_url: "/quiz",
+    published_at: "2026-07-08T15:00:00Z",
+    status: "approved",
+  },
+  {
+    id: "update-qa-313",
+    title: "تحديث: الأسئلة الفقهية تبلغ 313 مسألة",
+    summary: "إضافة 10 مسائل جديدة (304-313) في الصلاة والزكاة والحج والأذكار والأنبياء والصيام والعقيدة.",
+    update_type: "إعلان",
+    source_url: "/qa",
+    published_at: "2026-07-08T16:00:00Z",
+    status: "approved",
+  },
+  {
+    id: "update-sheikhs-76",
+    title: "تحديث: قاعدة العلماء تضم 76 عالماً",
+    summary: "إضافة 6 علماء: البخاري ومسلم وابن تيمية وابن القيم والنووي إلى قائمة أئمة الأمة الكبار.",
+    update_type: "إعلان",
+    source_url: "/scholars",
+    published_at: "2026-07-08T17:00:00Z",
+    status: "approved",
+  },
+  {
+    id: "update-prophetic-medicine-46",
+    title: "تحديث: الطب النبوي — 46 مادة طبية",
+    summary: "إضافة 5 مداخل: زيت الزيتون والتمر والحجامة والقرآن شفاء والصيام ونظرية الـ Autophagy.",
+    update_type: "إعلان",
+    source_url: "/prophetic-medicine",
+    published_at: "2026-07-08T18:00:00Z",
+    status: "approved",
+  },
 ];
 
 export function getSortedUpdates(limit?: number) {
