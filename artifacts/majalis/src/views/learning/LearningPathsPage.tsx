@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { BookOpen, Building2, Leaf, Library, Moon, PenLine, Scale, ScrollText, Sprout, Target, Trophy } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { Link } from "wouter";
 import { PageHeader, Loading } from "@/components/ui-common";
 import { fetchLearningPaths, levelLabel, type LearningPath } from "@/lib/digital-learning-service";
@@ -31,21 +33,21 @@ const STATIC_PATHS: LearningPath[] = [
   { slug: "tarbiyah-dhati",       title: "التربية الذاتية لطالب العلم",     description: "منهج طالب العلم في تنظيم الوقت والمذاكرة والثبات على الطلب.",       level: "beginner",     category: "tarbiyah",estimated_hours: 8  },
 ];
 
-const CATEGORY_META: Record<string, { label: string; icon: string }> = {
-  aqeedah:  { label: "العقيدة",          icon: "☪️" },
-  fiqh:     { label: "الفقه",            icon: "⚖️" },
-  quran:    { label: "القرآن",           icon: "📖" },
-  hadith:   { label: "الحديث",          icon: "📜" },
-  akhlaq:   { label: "الأخلاق",          icon: "🌿" },
-  seerah:   { label: "السيرة",           icon: "🌙" },
-  language: { label: "اللغة",            icon: "✍️" },
-  dawah:    { label: "الدعوة",           icon: "🕌" },
-  tarbiyah: { label: "التربية",          icon: "🎯" },
-  other:    { label: "أخرى",            icon: "📚" },
+const CATEGORY_META: Record<string, { label: string; Icon: LucideIcon }> = {
+  aqeedah:  { label: "العقيدة",  Icon: Moon       },
+  fiqh:     { label: "الفقه",    Icon: Scale      },
+  quran:    { label: "القرآن",   Icon: BookOpen   },
+  hadith:   { label: "الحديث",   Icon: ScrollText },
+  akhlaq:   { label: "الأخلاق",  Icon: Leaf       },
+  seerah:   { label: "السيرة",   Icon: Moon       },
+  language: { label: "اللغة",    Icon: PenLine    },
+  dawah:    { label: "الدعوة",   Icon: Building2  },
+  tarbiyah: { label: "التربية",  Icon: Target     },
+  other:    { label: "أخرى",    Icon: Library    },
 };
 
-const LEVEL_ICON: Record<string, string> = {
-  beginner: "🟢", intermediate: "🟡", advanced: "🔴",
+const LEVEL_ICON: Record<string, LucideIcon> = {
+  beginner: Sprout, intermediate: BookOpen, advanced: Trophy,
 };
 
 const ALL_CAT = "الكل";
@@ -134,9 +136,9 @@ export default function LearningPathsPage() {
 
       {/* Level legend */}
       <div className="lpp-legend">
-        <span className="lpp-legend-item"><span>🟢</span> مبتدئ</span>
-        <span className="lpp-legend-item"><span>🟡</span> متوسط</span>
-        <span className="lpp-legend-item"><span>🔴</span> متقدم</span>
+        <span className="lpp-legend-item"><Sprout size={14} className="text-green-600" /> مبتدئ</span>
+        <span className="lpp-legend-item"><BookOpen size={14} className="text-yellow-600" /> متوسط</span>
+        <span className="lpp-legend-item"><Trophy size={14} className="text-red-600" /> متقدم</span>
       </div>
 
       {/* Category filter */}
@@ -157,7 +159,7 @@ export default function LearningPathsPage() {
               className={activeCategory === cat ? "lpp-cat-btn lpp-cat-btn--active" : "lpp-cat-btn"}
               onClick={() => setActiveCategory(cat)}
             >
-              {meta.icon} {meta.label}
+              {(() => { const I = meta.Icon; return <I size={13} className="inline ml-1" />; })()} {meta.label}
             </button>
           );
         })}
@@ -170,7 +172,7 @@ export default function LearningPathsPage() {
         return (
           <section key={category} className="lpp-category">
             <div className="lpp-category-header">
-              <span className="lpp-cat-icon">{meta.icon}</span>
+              <span className="lpp-cat-icon">{(() => { const I = meta.Icon; return <I size={18} strokeWidth={1.6} />; })()}</span>
               <h2 className="lpp-category-title">{meta.label}</h2>
               <span className="lpp-cat-count">{items.length}</span>
             </div>
@@ -180,7 +182,7 @@ export default function LearningPathsPage() {
                   <article className="lpp-path-card">
                     <div className="lpp-path-card__top">
                       <h3 className="lpp-path-card__title">{path.title}</h3>
-                      <span className="lpp-path-level-icon">{LEVEL_ICON[path.level] ?? "🟢"}</span>
+                      <span className="lpp-path-level-icon">{(() => { const I = LEVEL_ICON[path.level] ?? Sprout; return <I size={14} />; })()}</span>
                     </div>
                     {path.description && (
                       <p className="lpp-path-card__desc">{path.description}</p>

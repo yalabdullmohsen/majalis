@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Building2 } from "lucide-react";
+import { AlertTriangle, Building2 } from "lucide-react";
 import { QuranCircleCard } from "@/components/circles/QuranCircleCard";
 import { getQuranCircles, type QuranCircle, type CircleFilters } from "@/lib/quran-circles-service";
 import { applyPageSeo } from "@/lib/seo";
@@ -97,7 +97,7 @@ export default function QuranCirclesPage() {
 
       {error ? (
         <div role="alert" className="qcp-error">
-          <p className="qcp-error__msg">⚠️ {error}</p>
+          <p className="qcp-error__msg"><AlertTriangle size={13} className="inline ml-1" />{error}</p>
           <button type="button" onClick={() => setLevel(level)} className="qcp-retry-btn">
             إعادة المحاولة
           </button>

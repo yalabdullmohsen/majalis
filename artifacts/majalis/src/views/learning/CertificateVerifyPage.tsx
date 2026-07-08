@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { GraduationCap } from "lucide-react";
 import { useParams, Link } from "wouter";
 import { verifyLearningCertificate } from "@/lib/digital-learning-service";
 import { applyPageSeo } from "@/lib/seo";
@@ -49,7 +50,7 @@ export default function CertificateVerifyPage() {
   return (
     <div className="page-shell narrow cvp-shell">
       <div className="cvp-hero">
-        <div className="cvp-hero-icon">🎓</div>
+        <div className="cvp-hero-icon"><GraduationCap size={48} strokeWidth={1.3} /></div>
         <h1 className="cvp-title">التحقق من الشهادة</h1>
         <p className="cvp-subtitle">
           أدخل رمز الشهادة للتحقق من صحتها وصلاحيتها

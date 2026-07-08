@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { BookOpen, Lightbulb, Search, Users } from "lucide-react";
+import { AlertTriangle, BookOpen, Lightbulb, Search, Users } from "lucide-react";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { supabase } from "@/lib/supabase";
 import { isSupabaseConfigured } from "@/lib/supabase-config";
@@ -300,7 +300,7 @@ export default function IslamicStoriesPage() {
         <LoadingGrid />
       ) : error ? (
         <div className="isp-error">
-          <span className="isp-error__icon">⚠️</span>
+          <span className="isp-error__icon"><AlertTriangle size={20} strokeWidth={1.5} /></span>
           <span>{error}</span>
         </div>
       ) : stories.length === 0 ? (

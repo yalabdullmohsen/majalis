@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { Scale } from "lucide-react";
 import { Link } from "wouter";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { useAuth } from "@/components/AuthProvider";
@@ -16,7 +17,7 @@ type FiqhTab = (typeof FIQH_HUB_TABS)[number]["key"];
 function FiqhHubStrip({ current }: { current: FiqhTab }) {
   return (
     <nav className="fiqh-hub-strip" dir="rtl" aria-label="الأقسام الشرعية">
-      <Link href="/fiqh" className="fiqh-hub-strip__brand">⚖️ الفقه الإسلامي</Link>
+      <Link href="/fiqh" className="fiqh-hub-strip__brand"><Scale size={14} className="inline ml-1" />الفقه الإسلامي</Link>
       <span className="fiqh-hub-strip__sep" aria-hidden="true">·</span>
       {FIQH_HUB_TABS.map((item) => (
         <Link
