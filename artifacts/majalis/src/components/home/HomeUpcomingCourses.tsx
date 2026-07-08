@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { UnifiedLessonCard } from "@/components/lessons/UnifiedLessonCard";
 import { getUnifiedActiveLessons } from "@/lib/lessons-service";
 import { sortKuwaitLessons, type KuwaitLessonRecord } from "@/lib/kuwait-lessons";
@@ -38,7 +38,7 @@ export function HomeUpcomingCourses() {
       </div>
 
       {loading ? (
-        <Loading />
+        <SkeletonCardGrid count={4} />
       ) : (
         <div className="home-kuwait-grid lesson-unified-grid">
           {courses.map((lesson) => (

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import {
   loadIslamicOccasions,
   sortOccasionsByUpcoming,
@@ -39,7 +39,7 @@ export function HomeIslamicOccasions() {
         <Link href="/occasions" className="home-section-link">كل المناسبات</Link>
       </div>
       {loading ? (
-        <Loading />
+        <SkeletonCardGrid count={4} />
       ) : (
         <div className="home-occasions-grid">
           {items.map((occasion) => (

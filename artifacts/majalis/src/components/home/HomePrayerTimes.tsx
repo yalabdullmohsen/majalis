@@ -1,5 +1,4 @@
 import { Link } from "wouter";
-import { Loading } from "@/components/ui-common";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 
 export function HomePrayerTimes() {
@@ -19,7 +18,12 @@ export function HomePrayerTimes() {
       </div>
 
       {loading ? (
-        <Loading />
+        <div className="home-prayer-skeleton" aria-hidden="true">
+          <div className="ds-skeleton" style={{ height: "5rem", borderRadius: "1rem" }} />
+          <div className="home-prayer-grid" style={{ marginTop: "0.75rem" }}>
+            {[1,2,3,4,5].map(i => <div key={i} className="ds-skeleton" style={{ height: "3.5rem", borderRadius: "0.75rem" }} />)}
+          </div>
+        </div>
       ) : data && countdown ? (
         <div className="home-prayer-widget">
           <div className="prayer-status-card ui-card">
