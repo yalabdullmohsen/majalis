@@ -11,11 +11,11 @@
   --mj-emerald-600: #2E6A36;
   --mj-emerald-text: #162D16;
 
-  /* الذهبي — مستخرج من الشريط الأيمن والكتاب */
-  --mj-gold-900:       #795B25;
-  --mj-gold-600:       #A78747;
-  --mj-gold-300:       #F5E2AC;
-  --mj-gold-text:      #755A2B;
+  /* زمردي/عاجي — بديل الذهبي في الهوية الجديدة */
+  --mj-gold-900:       #0E6E52;
+  --mj-gold-600:       #1a9e75;
+  --mj-gold-300:       #F4F3EE;
+  --mj-gold-text:      #0A5040;
 
   /* العاجي — خلفية الشعار الورقية */
   --mj-ivory-50:  #F4F3EE;
@@ -1144,7 +1144,7 @@
   border-bottom-color: rgba(14,110,82,0.15) !important;
 }
 .ds-section__head::after {
-  background: linear-gradient(135deg, #D9AE5C, #C49540) !important;
+  background: linear-gradient(135deg, var(--majalis-emerald, #0E6E52), #1a9e75) !important;
 }
 .ds-section__link {
   color: var(--mj-gold-900, #795B25) !important;

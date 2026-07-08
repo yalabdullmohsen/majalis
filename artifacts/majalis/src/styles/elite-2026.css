@@ -143,11 +143,11 @@ body {
   line-height: 1.1 !important;
 }
 
-/* ذهب لامع للعلامة التجارية */
+/* بريق زمردي للعلامة التجارية */
 .site-brand-gold-shimmer {
   background: linear-gradient(
     100deg,
-    #b8860b 0%, #ffd700 28%, #fffacd 50%, #ffd700 72%, #b8860b 100%
+    #0E6E52 0%, #1a9e75 28%, #e8f5f0 50%, #1a9e75 72%, #0E6E52 100%
   ) !important;
   background-size: 300% 100% !important;
   -webkit-background-clip: text !important;
@@ -155,7 +155,7 @@ body {
   -webkit-text-fill-color: transparent !important;
   color: transparent !important;
   animation: brand-gold-shimmer 4s ease-in-out infinite !important;
-  filter: drop-shadow(0 0 6px rgba(255,215,0,0.25)) !important;
+  filter: drop-shadow(0 0 6px rgba(14,110,82,0.25)) !important;
 }
 @keyframes brand-gold-shimmer {
   0%   { background-position: 200% center; }
@@ -360,26 +360,26 @@ body {
   font-size: 0.875rem !important;
   font-weight: 700 !important;
   letter-spacing: 0.04em !important;
-  /* نص ذهبي متدرج لامع */
+  /* نص زمردي متدرج لامع */
   background: linear-gradient(
     100deg,
-    #b8860b 0%,
-    #ffd700 25%,
-    #fffacd 50%,
-    #ffd700 75%,
-    #b8860b 100%
+    #0E6E52 0%,
+    #1a9e75 25%,
+    #d6f0e8 50%,
+    #1a9e75 75%,
+    #0E6E52 100%
   ) !important;
   background-size: 300% 100% !important;
   -webkit-background-clip: text !important;
   background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
-  /* إطار ذهبي شفاف */
-  border: 1.5px solid rgba(255, 215, 0, 0.45) !important;
-  /* خلفية داكنة شفافة لإبراز الذهب */
+  /* إطار زمردي شفاف */
+  border: 1.5px solid rgba(14, 110, 82, 0.45) !important;
+  /* خلفية داكنة شفافة لإبراز الزمردي */
   -webkit-box-decoration-break: clone !important;
   box-decoration-break: clone !important;
-  /* ظل توهّج ذهبي */
-  filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.35)) !important;
+  /* ظل توهّج زمردي */
+  filter: drop-shadow(0 0 10px rgba(14, 110, 82, 0.35)) !important;
   text-align: center !important;
   max-width: 520px !important;
   line-height: 1.7 !important;
@@ -5160,7 +5160,7 @@ button.primary:hover {
 .mzd-rating-label { font-size: 0.8rem; color: var(--majalis-ink-muted, #9BA3B5); }
 .mzd-stars-row { display: inline-flex; gap: 0.1rem; }
 .mzd-star { font-size: 1.1rem; color: #e5e7eb; }
-.mzd-star.is-active { color: #f59e0b; }
+.mzd-star.is-active { color: var(--majalis-emerald, #0E6E52); }
 .mzd-user-rating { border-top: 1px solid #f3f4f6; padding-top: 0.75rem; }
 .mzd-user-rating__label { font-size: 0.78rem; color: var(--majalis-ink-soft); font-weight: 600; margin-bottom: 0.5rem; }
 .mzd-user-rating__stars { display: flex; gap: 0.3rem; }
@@ -5169,7 +5169,7 @@ button.primary:hover {
   font-size: 1.6rem; padding: 0.1rem;
   color: #e5e7eb; transition: color 0.1s; font-family: inherit;
 }
-.mzd-star-btn.is-active { color: #f59e0b; }
+.mzd-star-btn.is-active { color: var(--majalis-emerald, #0E6E52); }
 .mzd-flash { font-size: 0.75rem; color: var(--majalis-emerald); font-weight: 600; margin-top: 0.35rem; }
 .mzd-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
 .mzd-tag {
@@ -5239,7 +5239,7 @@ button.primary:hover {
 .mzd-related-card__info { flex: 1; }
 .mzd-related-card__name { font-weight: 600; font-size: 0.875rem; color: var(--majalis-ink); }
 .mzd-related-card__meta { font-size: 0.72rem; color: var(--majalis-ink-muted, #9BA3B5); }
-.mzd-related-card__rating { font-size: 0.8rem; color: #f59e0b; font-weight: 600; }
+.mzd-related-card__rating { font-size: 0.8rem; color: var(--majalis-emerald, #0E6E52); font-weight: 600; }
 
 /* ═══════════════════════════════════════════════════════════════
    §51  Muezzins Library  (mzp-*)
@@ -5351,7 +5351,7 @@ button.primary:hover {
 /* Stars */
 .mzp-stars { display: inline-flex; align-items: center; gap: 0.15rem; font-size: 0.8rem; }
 .mzp-star { font-size: 0.85rem; color: #e5e7eb; }
-.mzp-star.is-active { color: #f59e0b; }
+.mzp-star.is-active { color: var(--majalis-emerald, #0E6E52); }
 /* Community */
 .mzp-community { margin-top: 2rem; }
 .mzp-community__head { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.875rem; }
@@ -5889,7 +5889,7 @@ button.primary:hover {
 .mzf-card__default-tag { margin-right: 0.4rem; font-size: 0.65rem; background: #134a3a; color: #fff; padding: 0.1rem 0.4rem; border-radius: 999px; }
 .mzf-card__origin { font-size: 0.72rem; color: var(--majalis-ink-muted, #9BA3B5); }
 .mzf-card__tags { display: flex; gap: 0.35rem; margin-top: 0.35rem; flex-wrap: wrap; align-items: center; }
-.mzf-card__rating   { font-size: 0.7rem; color: #f59e0b; font-weight: 600; }
+.mzf-card__rating   { font-size: 0.7rem; color: var(--majalis-emerald, #0E6E52); font-weight: 600; }
 .mzf-card__followers { font-size: 0.7rem; color: var(--txt-muted, #52525B); }
 
 /* ─ Style badges ─ */
@@ -6215,7 +6215,7 @@ button.primary:hover {
 .lpp-path-level-icon { font-size: 1rem; flex-shrink: 0; }
 
 .lpp-path-card__badge--level { background: var(--majalis-emerald-subtle, #f0fdf4); color: var(--majalis-emerald-deep, #166534); }
-.lpp-path-card__badge--progress { background: #fef3c7; color: #92400e; }
+.lpp-path-card__badge--progress { background: rgba(14,110,82,0.1); color: var(--majalis-emerald, #0E6E52); }
 
 .lpp-progress-bar { height: 4px; border-radius: 999px; background: var(--majalis-line, #e5e7eb); overflow: hidden; margin-top: .75rem; }
 .lpp-progress-fill { height: 100%; width: var(--lpp-pct, 0%); background: var(--majalis-emerald, #22c55e); border-radius: 999px; }
@@ -6994,7 +6994,7 @@ button.primary:hover {
   flex-shrink: 0;
 }
 .fip-status--beta        { background: #dbeafe; color: #1d4ed8; }
-.fip-status--in-progress { background: #fef3c7; color: #92400e; }
+.fip-status--in-progress { background: rgba(14,110,82,0.1); color: var(--majalis-emerald, #0E6E52); }
 .fip-status--planned     { background: #f3f4f6; color: #374151; }
 .fip-progress  { margin: 0; max-width: none; }
 .fip-prog-fill { width: var(--fip-pct, 0%); }
@@ -11673,9 +11673,9 @@ a:focus-visible {
   border: 1px solid color-mix(in srgb, #22c55e 30%, transparent);
 }
 .status-badge--pending {
-  background: color-mix(in srgb, #f59e0b 12%, transparent);
-  color: #92400e;
-  border: 1px solid color-mix(in srgb, #f59e0b 30%, transparent);
+  background: color-mix(in srgb, var(--majalis-emerald, #0E6E52) 12%, transparent);
+  color: var(--majalis-emerald-deep, #134a3a);
+  border: 1px solid color-mix(in srgb, var(--majalis-emerald, #0E6E52) 30%, transparent);
 }
 .status-badge--rejected {
   background: color-mix(in srgb, #ef4444 12%, transparent);

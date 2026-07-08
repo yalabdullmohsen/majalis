@@ -1764,7 +1764,7 @@ hr.decorative,
 }
 
 .site-footer-email a:hover {
-  color: var(--ds-gold, #C9A84C);
+  color: var(--majalis-emerald, #0E6E52);
 }
 
 /* ── Compact Prayer countdown row ───────────────────────── */
@@ -1850,7 +1850,7 @@ hr.decorative,
 }
 
 .tc-ring-fill--done {
-  stroke: var(--majalis-gold, #B08D2E);
+  stroke: var(--majalis-emerald, #0E6E52);
 }
 
 
@@ -1870,7 +1870,7 @@ hr.decorative,
 .tc-ring-rounds {
   font-size: 0.75rem;
   font-weight: 700;
-  color: var(--majalis-gold, #B08D2E);
+  color: var(--majalis-emerald, #0E6E52);
   letter-spacing: 0.04em;
   line-height: 1;
 }
@@ -1884,7 +1884,7 @@ hr.decorative,
 }
 
 .tc-ring-btn--done .tc-ring-count {
-  color: var(--majalis-gold, #B08D2E);
+  color: var(--majalis-emerald, #0E6E52);
 }
 
 .tc-ring-total {
@@ -1902,7 +1902,7 @@ hr.decorative,
 }
 
 .tc-ring-btn--done .tc-ring-hint {
-  color: var(--majalis-gold, #B08D2E);
+  color: var(--majalis-emerald, #0E6E52);
 }
 
 
@@ -2123,7 +2123,7 @@ hr.decorative,
 
 /* Streak stat cell */
 .tasbih-stat--streak strong {
-  color: #f59e0b;
+  color: var(--majalis-emerald, #0E6E52);
 }
 
 /* Danger button variant */
@@ -3413,7 +3413,7 @@ hr.decorative,
   stroke-linecap: round;
   transition: stroke-dashoffset 1s linear, stroke 0.3s;
 }
-.sr-timer--rest .sr-timer__ring-fill { stroke: #f59e0b; }
+.sr-timer--rest .sr-timer__ring-fill { stroke: var(--ds-emerald-deep, #134a3a); }
 .sr-timer__content {
   position: absolute;
   inset: 0;
@@ -3451,7 +3451,7 @@ hr.decorative,
 }
 .sr-btn--start { background: var(--ds-emerald); color: #fff; border-color: var(--ds-emerald); }
 .sr-btn--start:hover { background: var(--ds-emerald-deep); }
-.sr-btn--pause { background: #f59e0b; color: #fff; border-color: #f59e0b; }
+.sr-btn--pause { background: var(--ds-emerald-deep, #134a3a); color: #fff; border-color: var(--ds-emerald-deep, #134a3a); }
 .sr-btn--reset:hover { border-color: var(--ds-emerald); }
 
 .sr-stats {
@@ -4250,7 +4250,7 @@ hr.decorative,
 .tawheed-type-card__ayah {
   margin: 0.5rem 0 0;
   padding: 0.6rem 0.75rem;
-  border-right: 3px solid var(--majalis-gold, #B08D2E);
+  border-right: 3px solid var(--majalis-emerald, #0E6E52);
   background: var(--bg-base, #faf9f6);
   border-radius: 0 0.375rem 0.375rem 0;
   font-family: "Amiri Quran", "Scheherazade New", serif;
@@ -4263,7 +4263,7 @@ hr.decorative,
   display: block;
   font-style: normal;
   font-size: 0.7rem;
-  color: var(--majalis-gold, #B08D2E);
+  color: var(--majalis-emerald, #0E6E52);
   font-weight: 700;
   margin-top: 0.25rem;
   font-family: inherit;
