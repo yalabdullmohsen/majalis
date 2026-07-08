@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { Link } from "wouter";
 import { Breadcrumbs } from "./Breadcrumbs";
 import { AdminInlineEdit, type InlineEditContentType } from "@/components/AdminInlineEdit";
+import { ReadingProgressBar } from "@/components/ReadingProgressBar";
 
 type Props = {
   breadcrumbs: { label: string; href?: string }[];
@@ -94,6 +95,7 @@ export function ContentDetailLayout({
 }: Props) {
   return (
     <div className="page-shell narrow content-detail-page">
+      <ReadingProgressBar />
       <Breadcrumbs items={breadcrumbs} />
 
       <header className="content-detail-header">
