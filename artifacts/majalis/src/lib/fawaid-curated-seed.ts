@@ -232,6 +232,28 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   /* ── إضافات الدعوة ── */
   { text: "الداعية يحتاج إلى فقه المقاصد؛ فلا يضيّع واجباً بحجة مستحب.", category: "الدعوة", source: "الموافقات — الإمام الشاطبي", author_name: "الإمام الشاطبي", status: "approved", verification_status: "verified" },
   { text: "الحكمة في الدعوة لا تعني التنازل عن الحق؛ بل حسن اختيار الوقت والأسلوب.", category: "الدعوة", source: "تفسير ابن سعدي — النحل: 125", author_name: "ابن سعدي", status: "approved", verification_status: "verified" },
+
+  /* ── إضافات الزهد والرقائق ── */
+  { text: "الزهد في الدنيا ليس ترك أسبابها؛ بل ألا تستعبدك ولا تملأ قلبك.", category: "الزهد", source: "مدارج السالكين — ابن القيم", author_name: "ابن القيم الجوزية", status: "approved", verification_status: "verified" },
+  { text: "ما أُفرغ في جوف ابن آدم أشد من الحب والغضب؛ فداوِهما بالصبر والاستعاذة.", category: "الزهد", source: "إغاثة اللهفان — ابن القيم", author_name: "ابن القيم الجوزية", status: "approved", verification_status: "verified" },
+  { text: "أكبر الكبائر حب الدنيا والأمن من مكر الله والقنوط من رحمته.", category: "الزهد", source: "الزهد — الإمام أحمد بن حنبل", author_name: "الإمام أحمد بن حنبل", status: "approved", verification_status: "needs_review" },
+
+  /* ── إضافات الأخلاق ── */
+  { text: "الإنسان كثير بأخلاقه؛ لا بماله ولا بجاهه.", category: "الأخلاق", source: "ديوان الإمام الشافعي", author_name: "الإمام الشافعي", status: "approved", verification_status: "needs_review" },
+  { text: "من جمع بين حسن الخُلق والعلم فقد أوتي خير الدنيا والآخرة.", category: "الأخلاق", source: "أدب الدنيا والدين — الماوردي", author_name: "الماوردي", status: "approved", verification_status: "verified" },
+  { text: "الكرم في النفس أعلى درجات الكرم؛ أن تجود بنفسك على الحق وإن شق.", category: "الأخلاق", source: "مدارج السالكين — ابن القيم", author_name: "ابن القيم الجوزية", status: "approved", verification_status: "verified" },
+
+  /* ── إضافات التفسير ── */
+  { text: "التفسير بالرأي المجرد دون علم محرّم؛ وتفسير القرآن بالقرآن هو أعلى درجات البيان.", category: "التفسير", source: "مقدمة في أصول التفسير — ابن تيمية", author_name: "ابن تيمية", status: "approved", verification_status: "verified" },
+  { text: "القرآن تدبّره في السر ثمرته في العلانية؛ من تدبّر آياته ظهر ذلك في سلوكه.", category: "التفسير", source: "التبيان في آداب حملة القرآن — النووي", author_name: "الإمام النووي", status: "approved", verification_status: "verified" },
+
+  /* ── إضافات الفقه ── */
+  { text: "الأصل في الأشياء الإباحة حتى يرد دليل على التحريم — قاعدة ذهبية في الفقه الإسلامي.", category: "الفقه", source: "قواعد الأحكام — العز بن عبد السلام", author_name: "العز بن عبد السلام", status: "approved", verification_status: "verified" },
+  { text: "درء المفسدة مقدّم على جلب المصلحة؛ وهذا أصل عظيم في الاجتهاد الفقهي.", category: "الفقه", source: "الأشباه والنظائر — ابن نجيم", author_name: "ابن نجيم الحنفي", status: "approved", verification_status: "verified" },
+
+  /* ── إضافات الأسرة ── */
+  { text: "خيركم خيركم لأهله — الأسرة الصالحة أساس المجتمع المسلم الصالح.", category: "الأسرة", source: "رواه الترمذي — صحيح", author_name: "النبي محمد ﷺ", status: "approved", verification_status: "verified" },
+  { text: "البيت السعيد هو الذي تُعلَّم فيه الصلاة قبل القراءة والكتابة.", category: "الأسرة", source: "تربية الأولاد في الإسلام — عبد الله ناصح علوان", author_name: "عبد الله ناصح علوان", status: "approved", verification_status: "needs_review" },
 ];
 
 export const FAWAID_CURATED_SEED: FawaidCuratedItem[] = curated.map((item, i) => ({
