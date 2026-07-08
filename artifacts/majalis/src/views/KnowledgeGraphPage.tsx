@@ -445,7 +445,7 @@ export default function KnowledgeGraphPage() {
                   {selected.href && (
                     <Link href={selected.href} className="kng-view-link">عرض المحتوى</Link>
                   )}
-                  <button type="button" onClick={() => setSelected(null)} className="kng-close-btn">×</button>
+                  <button type="button" onClick={() => setSelected(null)} className="kng-close-btn" aria-label="إغلاق">×</button>
                 </div>
               </div>
 

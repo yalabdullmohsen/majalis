@@ -58,7 +58,7 @@ export function QuizModal({ quizzes, token, onClose }: Props) {
         {/* رأس النافذة */}
         <div className="px-6 py-4 flex items-center justify-between qzm-modal-head">
           <h2 className="font-bold text-lg">اختبر نفسك <PenLine size={16} className="inline ml-1" /></h2>
-          <button type="button" onClick={onClose} className="text-xl leading-none opacity-80 hover:opacity-100">✕</button>
+          <button type="button" onClick={onClose} className="text-xl leading-none opacity-80 hover:opacity-100" aria-label="إغلاق">✕</button>
         </div>
 
         <div className="p-6">

@@ -280,7 +280,7 @@ export default function InstitutionsPage() {
             dir="rtl"
           />
           {search && (
-            <button type="button" className="vault-search-clear" onClick={() => setSearch("")}>✕</button>
+            <button type="button" className="vault-search-clear" onClick={() => setSearch("")} aria-label="مسح البحث">✕</button>
           )}
         </div>
 

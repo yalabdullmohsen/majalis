@@ -53,7 +53,7 @@ function AddNoteModal({
       <div className="vault-modal" onClick={(e) => e.stopPropagation()}>
         <div className="vault-modal__head">
           <h3 className="vault-modal__title">إضافة ملاحظة</h3>
-          <button type="button" className="vault-modal__close" onClick={onClose}>✕</button>
+          <button type="button" className="vault-modal__close" onClick={onClose} aria-label="إغلاق">✕</button>
         </div>
         <textarea
           className="vault-modal__textarea"
@@ -273,7 +273,7 @@ export default function VaultPage() {
           dir="rtl"
         />
         {search && (
-          <button type="button" className="vault-search-clear" onClick={() => setSearch("")}>✕</button>
+          <button type="button" className="vault-search-clear" onClick={() => setSearch("")} aria-label="مسح البحث">✕</button>
         )}
       </div>
 

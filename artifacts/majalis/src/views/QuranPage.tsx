@@ -495,7 +495,7 @@ export default function QuranPage() {
                   aria-label="بحث في السور"
                 />
                 {search && (
-                  <button type="button" className="mshf-search-clear" onClick={() => setSearch("")}>✕</button>
+                  <button type="button" className="mshf-search-clear" onClick={() => setSearch("")} aria-label="مسح البحث">✕</button>
                 )}
               </div>
             )}
