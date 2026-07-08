@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useSearch } from "wouter";
-import { PageHeader, Loading, Empty } from "@/components/ui-common";
+import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { FiqhCouncilSubnav } from "./FiqhCouncilPage";
 import { compareFiqhItems, getFiqhCouncilItems, getFiqhCouncilItemsBySlugs } from "@/lib/fiqh-council-service";
 import { applyPageSeo } from "@/lib/seo";
@@ -129,7 +129,7 @@ export default function FiqhCouncilComparePage() {
         )}
       </section>
 
-      {loading ? <Loading /> : selectedSlugs.length < 2 ? (
+      {loading ? <SkeletonCardGrid /> : selectedSlugs.length < 2 ? (
         <Empty text="اختر قرارين على الأقل للمقارنة." />
       ) : items.length < 2 ? (
         <Empty text="تعذّر تحميل العناصر المحددة." />

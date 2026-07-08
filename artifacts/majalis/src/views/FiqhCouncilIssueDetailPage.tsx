@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { FiqhCouncilSubnav } from "./FiqhCouncilPage";
-import { Loading, Empty } from "@/components/ui-common";
+import { SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { ContentDetailLayout } from "@/components/platform/ContentDetailLayout";
 import { FiqhTimeline } from "@/components/fiqh-council/FiqhTimeline";
 import { getFiqhIssueBySlug } from "@/lib/fiqh-council-issues-service";
@@ -70,7 +70,7 @@ export default function FiqhCouncilIssueDetailPage({ params }: { params: { slug:
     });
   }, [issue]);
 
-  if (loading) return <Loading />;
+  if (loading) return <SkeletonCardGrid />;
   if (!issue) return <Empty text="المسألة غير موجودة أو غير منشورة." />;
 
   const grouped = groupItemsByType(issue);

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { PageHeader, Loading, Empty } from "@/components/ui-common";
+import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { PlatformContentCard } from "@/components/platform/ContentDetailLayout";
 import { getArchivedFiqhCouncilItems } from "@/lib/fiqh-council-service";
 import {
@@ -44,7 +44,7 @@ export default function FiqhCouncilArchivePage() {
       <FiqhCouncilSearchBox placeholder="ابحث في الأرشيف..." />
 
       {loading ? (
-        <Loading />
+        <SkeletonCardGrid />
       ) : items.length === 0 ? (
         <Empty text="لا توجد عناصر مؤرشفة حالياً." />
       ) : (

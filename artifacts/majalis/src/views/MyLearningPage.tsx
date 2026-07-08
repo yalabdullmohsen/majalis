@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
 import {
   fetchUserLearningStats,
@@ -48,7 +48,7 @@ export default function MyLearningPage() {
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <Loading />;
+  if (loading) return <SkeletonCardGrid />;
 
   return (
     <div className="page-shell">

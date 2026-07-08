@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { FiqhCouncilSubnav } from "./FiqhCouncilPage";
-import { Loading, Empty } from "@/components/ui-common";
+import { SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { ContentDetailLayout } from "@/components/platform/ContentDetailLayout";
 import { FiqhTrustBox } from "@/components/fiqh-council/FiqhTrustBox";
 import {
@@ -67,7 +67,7 @@ export default function FiqhCouncilSessionDetailPage({ params }: { params: { slu
     });
   }, [session]);
 
-  if (loading) return <Loading />;
+  if (loading) return <SkeletonCardGrid />;
   if (!session) return <Empty text="الجلسة غير موجودة أو غير منشورة." />;
 
   const grouped = groupSessionItems(session.items);

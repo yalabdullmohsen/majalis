@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { FiqhCouncilSubnav } from "./FiqhCouncilPage";
-import { PageHeader, Loading } from "@/components/ui-common";
+import { PageHeader, SkeletonCardGrid } from "@/components/ui-common";
 import { getIssuesForTopicSection } from "@/lib/fiqh-council-issues-service";
 import {
   FIQH_TOPIC_INDEX_SECTIONS,
@@ -65,7 +65,7 @@ export default function FiqhCouncilTopicIndexPage() {
       <FiqhCouncilSubnav />
 
       {loading ? (
-        <Loading />
+        <SkeletonCardGrid />
       ) : (
         <div className="fiqh-topic-index">
           {sections.map((sec) => {

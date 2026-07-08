@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { FiqhCouncilSubnav } from "./FiqhCouncilPage";
-import { PageHeader, Loading } from "@/components/ui-common";
+import { PageHeader, SkeletonCardGrid } from "@/components/ui-common";
 import { PlatformContentCard } from "@/components/platform/ContentDetailLayout";
 import { FiqhTrustBox } from "@/components/fiqh-council/FiqhTrustBox";
 import { getFiqhLiveData, unavailableLabel } from "@/lib/fiqh-council-sessions-service";
@@ -80,7 +80,7 @@ export default function FiqhCouncilLivePage() {
     getFiqhLiveData().then(({ data }) => setLive(data)).finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <Loading />;
+  if (loading) return <SkeletonCardGrid />;
 
   const data = live || {
     last_session: null,

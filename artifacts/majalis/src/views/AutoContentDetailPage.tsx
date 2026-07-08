@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
-import { Loading, Empty } from "@/components/ui-common";
+import { SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { ContentDetailLayout } from "@/components/platform/ContentDetailLayout";
 import { fetchLiveAutoContentBySlug, getPublishedAutoContentBySlug } from "@/lib/auto-content-service";
 import { mapContentTypeToUpdateType } from "@/lib/auto-content/auto-content-utils";
@@ -54,7 +54,7 @@ export default function AutoContentDetailPage({ params }: { params: { slug: stri
     });
   }, [item]);
 
-  if (loading) return <Loading />;
+  if (loading) return <SkeletonCardGrid />;
   if (!item) return <Empty text="المادة غير موجودة أو لم تُعتمد بعد." />;
 
   const updateType = mapContentTypeToUpdateType(item.content_type);

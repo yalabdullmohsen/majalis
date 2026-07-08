@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { FiqhCouncilSubnav } from "./FiqhCouncilPage";
-import { PageHeader, Loading } from "@/components/ui-common";
+import { PageHeader, SkeletonCardGrid } from "@/components/ui-common";
 import { getFiqhCouncilPublicStats } from "@/lib/fiqh-council-service";
 import { fiqhItemHref, FIQH_ITEM_TYPE_LABELS, type FiqhPublicStats } from "@/lib/fiqh-council-types";
 import { applyPageSeo } from "@/lib/seo";
@@ -34,7 +34,7 @@ export default function FiqhCouncilStatsPage() {
     });
   }, []);
 
-  if (loading) return <Loading />;
+  if (loading) return <SkeletonCardGrid />;
 
   const s = stats || {
     resolutions: 0,
