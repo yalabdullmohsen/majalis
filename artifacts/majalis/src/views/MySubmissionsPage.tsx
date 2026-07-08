@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { CheckCircle2, Clock, FileText, GraduationCap, Mic2, Upload, XCircle } from "lucide-react";
+import { CheckCircle2, ClipboardList, Clock, FileText, GraduationCap, Mic2, PartyPopper, Search, Upload, XCircle } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { formatFileSize, type UserSubmission, type SubmissionStatus } from "@/lib/user-submissions-service";
@@ -84,14 +84,14 @@ function SubmissionRow({ sub }: { sub: UserSubmission }) {
         {/* Approved adhan notice */}
         {sub.status === "approved" && sub.type === "adhan" && (
           <div className="msr-card__notice">
-            🎉 تهانينا! تسجيلك قُبِل وسيُضاف قريباً إلى مكتبة المؤذنين.
+            <PartyPopper size={14} className="inline ml-1" />تهانينا! تسجيلك قُبِل وسيُضاف قريباً إلى مكتبة المؤذنين.
           </div>
         )}
 
         {/* Approved lesson notice */}
         {sub.status === "approved" && sub.type === "lesson" && (
           <div className="msr-card__notice">
-            🎉 تهانينا! درسك قُبِل وسيُضاف قريباً إلى قسم الدروس.
+            <PartyPopper size={14} className="inline ml-1" />تهانينا! درسك قُبِل وسيُضاف قريباً إلى قسم الدروس.
           </div>
         )}
 
@@ -162,13 +162,13 @@ export default function MySubmissionsPage() {
       {/* Header */}
       <div className="msp-header">
         <p className="msp-eyebrow">المساهمات</p>
-        <h1 className="msp-title">📋 مساهماتي</h1>
+        <h1 className="msp-title"><ClipboardList size={22} className="inline ml-2" />مساهماتي</h1>
         <p className="msp-subtitle">تتبّع حالة الأذانات والدروس التي أرسلتها للمراجعة.</p>
       </div>
 
       {/* Search by email */}
       <div className="msp-search-box">
-        <p className="msp-search-label">🔍 ابحث بالبريد الإلكتروني الذي أدخلته عند الإرسال:</p>
+        <p className="msp-search-label"><Search size={13} className="inline ml-1" />ابحث بالبريد الإلكتروني الذي أدخلته عند الإرسال:</p>
         <form onSubmit={handleSearch} className="msp-search-form">
           <input
             type="email"

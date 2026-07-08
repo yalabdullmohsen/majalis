@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { BookOpen, Building2, ClipboardList, MessageCircle, Scale } from "lucide-react";
+import { BookOpen, Building2, ClipboardList, Landmark, Library, MessageCircle, Scale, ScrollText } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { Link, useSearch } from "wouter";
 import { usePageView } from "@/hooks/usePageView";
@@ -130,7 +130,7 @@ export default function FiqhPage() {
         {activeTab === "fatawa" && (
           <div>
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-bold text-[var(--majalis-ink)]">📋 الفتاوى الشرعية</h2>
+              <h2 className="text-xl font-bold text-[var(--majalis-ink)] flex items-center gap-2"><ScrollText size={20} />الفتاوى الشرعية</h2>
               <Link href="/fatwa">
                 <span className="text-sm text-[var(--majalis-emerald)] hover:underline cursor-pointer">عرض الكل ←</span>
               </Link>
@@ -169,7 +169,7 @@ export default function FiqhPage() {
         {activeTab === "rulings" && (
           <div>
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-bold text-[var(--majalis-ink)]">📚 الأحكام الشرعية</h2>
+              <h2 className="text-xl font-bold text-[var(--majalis-ink)] flex items-center gap-2"><Library size={20} />الأحكام الشرعية</h2>
               <Link href="/rulings">
                 <span className="text-sm text-[var(--majalis-emerald)] hover:underline cursor-pointer">عرض الكل ←</span>
               </Link>
@@ -222,7 +222,7 @@ export default function FiqhPage() {
         {activeTab === "qa" && (
           <div>
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-bold text-[var(--majalis-ink)]">💬 الأسئلة والأجوبة الشرعية</h2>
+              <h2 className="text-xl font-bold text-[var(--majalis-ink)] flex items-center gap-2"><MessageCircle size={20} />الأسئلة والأجوبة الشرعية</h2>
               <Link href="/qa">
                 <span className="text-sm text-[var(--majalis-emerald)] hover:underline cursor-pointer">عرض الكل ←</span>
               </Link>
@@ -278,7 +278,7 @@ export default function FiqhPage() {
         {activeTab === "council" && (
           <div>
             <div className="mb-6">
-              <h2 className="text-xl font-bold text-[var(--majalis-ink)] mb-2">🏛️ المجمع الفقهي الإسلامي</h2>
+              <h2 className="text-xl font-bold text-[var(--majalis-ink)] mb-2 flex items-center gap-2"><Landmark size={20} />المجمع الفقهي الإسلامي</h2>
               <p className="text-sm text-[var(--majalis-ink-soft)]">
                 قرارات وبيانات وفتاوى المجامع الفقهية المعتمدة — موثقة بمصادرها
               </p>

@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { BookOpen, CheckCircle2, RotateCw } from "lucide-react";
+import { BookOpen, CheckCircle2, Lock, PartyPopper, RotateCw } from "lucide-react";
 import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { PageHeader } from "@/components/ui-common";
@@ -93,7 +93,7 @@ function SessionComplete({
 }) {
   return (
     <div className="fc-complete">
-      <div className="fc-complete__icon">🎉</div>
+      <div className="fc-complete__icon"><PartyPopper size={40} strokeWidth={1.3} /></div>
       <h2 className="fc-complete__title">انتهت جلسة المراجعة!</h2>
       <p className="fc-complete__sub">راجعت {reviewed} بطاقة اليوم — أحسنت!</p>
       <div className="fc-complete__actions">
@@ -211,7 +211,7 @@ export default function FlashCardsPage() {
   if (!isLoggedIn) {
     return (
       <div className="page-shell narrow flc-login-prompt" dir="rtl">
-        <div className="flc-login-icon">🔐</div>
+        <div className="flc-login-icon"><Lock size={40} strokeWidth={1.3} /></div>
         <p className="flc-login-msg">
           سجّل الدخول للوصول إلى بطاقات المراجعة.
         </p>
@@ -229,7 +229,7 @@ export default function FlashCardsPage() {
     <div className="page-shell narrow fc-page" dir="rtl">
       <PageHeader
         eyebrow="التعلّم الذكي"
-        title="📇 بطاقات المراجعة"
+        title="بطاقات المراجعة"
         subtitle="راجع الأحاديث الموثّقة بأسلوب التكرار المتباعد، كل يوم بضع دقائق تُرسّخ العلم."
       />
 

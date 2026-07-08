@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
-import { ScrollText } from "lucide-react";
+import { AlertTriangle, ScrollText } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { Chip } from "@/components/ui-common";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
@@ -63,7 +63,7 @@ export default function PropheticMedicinePage() {
       </div>
 
       {/* تنبيه */}
-      <div className="pmp-disclaimer">⚠️ {DISCLAIMER}</div>
+      <div className="pmp-disclaimer"><AlertTriangle size={13} className="inline ml-1" />{DISCLAIMER}</div>
 
       {/* شريط الفلتر */}
       <div className="ds-section__head">
@@ -112,7 +112,7 @@ export default function PropheticMedicinePage() {
                   <>
                     <p className="pmp-body-text">{item.body}</p>
                     {item.disclaimer && (
-                      <p className="pmp-item-disclaimer">⚠️ {item.disclaimer}</p>
+                      <p className="pmp-item-disclaimer"><AlertTriangle size={13} className="inline ml-1" />{item.disclaimer}</p>
                     )}
                   </>
                 )}

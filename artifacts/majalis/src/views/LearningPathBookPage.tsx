@@ -1,5 +1,5 @@
 import { Suspense, lazy, useCallback, useEffect, useRef, useState } from "react";
-import { CheckCircle2, Clock, HelpCircle, Lightbulb, Mic2, Music2, ScrollText, Video } from "lucide-react";
+import { BookOpen, CheckCircle2, Clock, Download, Headphones, HelpCircle, Lightbulb, Mic2, Music2, PenLine, ScrollText, Video } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { Link, useParams } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
@@ -73,10 +73,10 @@ export default function LearningPathBookPage() {
     try {
       await updateProgress(token, bookId, status);
       setProgress((prev) => ({ ...(prev ?? { book_id: bookId, progress_percent: 0, started_at: null, completed_at: null }), status }));
-      setSaveMsg(status === "completed" ? "✅ تم تسجيل إتمام الكتاب!" : "✅ تم تسجيل البدء!");
+      setSaveMsg(status === "completed" ? "تم تسجيل إتمام الكتاب!" : "تم تسجيل البدء!");
       setTimeout(() => setSaveMsg(null), 3000);
     } catch {
-      setSaveMsg("❌ حدث خطأ، حاول مجدداً");
+      setSaveMsg("حدث خطأ، حاول مجدداً");
       setTimeout(() => setSaveMsg(null), 3000);
     } finally {
       setSaving(false);
@@ -133,7 +133,7 @@ export default function LearningPathBookPage() {
               {book.cover_image_url ? (
                 <img src={book.cover_image_url} alt={book.title} className="w-full h-full object-cover" loading="lazy" />
               ) : (
-                <span className="text-7xl opacity-50">📗</span>
+                <BookOpen size={56} strokeWidth={1.2} className="opacity-50" />
               )}
             </div>
 
@@ -158,13 +158,13 @@ export default function LearningPathBookPage() {
               {book.pdf_url && (
                 <a href={book.pdf_url} target="_blank" rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 py-2 rounded-xl border border-[var(--majalis-emerald)] text-[var(--majalis-emerald)] text-sm hover:bg-[var(--majalis-emerald-muted)] transition-colors">
-                  📄 تحميل PDF
+                  <Download size={14} />تحميل PDF
                 </a>
               )}
               {book.audio_url && (
                 <a href={book.audio_url} target="_blank" rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 py-2 rounded-xl border border-blue-200 text-blue-700 dark:text-blue-400 text-sm hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors">
-                  🎧 الاستماع الصوتي
+                  <Headphones size={14} />الاستماع الصوتي
                 </a>
               )}
             </div>
@@ -185,7 +185,7 @@ export default function LearningPathBookPage() {
                 </span>
               </div>
               {book.author && (
-                <p className="text-sm text-gray-500 mb-3">✍️ {book.author}</p>
+                <p className="text-sm text-gray-500 mb-3 flex items-center gap-1"><PenLine size={13} />{book.author}</p>
               )}
               {book.summary && (
                 <p className="text-sm text-[var(--majalis-ink-soft)] leading-relaxed">{book.summary}</p>
