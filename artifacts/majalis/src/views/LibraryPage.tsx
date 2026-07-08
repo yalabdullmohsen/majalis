@@ -9,6 +9,7 @@ import { LIBRARY_CATEGORIES } from "@/lib/library-catalog";
 import { Chip } from "@/components/ui-common";
 import { PageLoadingGuard } from "@/components/PageLoadingGuard";
 import { ContentHubLayout } from "@/components/layout/ContentHubLayout";
+import { applyPageSeo } from "@/lib/seo";
 
 export default function LibraryPage({
   initialItems,
@@ -35,6 +36,15 @@ export default function LibraryPage({
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/library",
+      title: "المكتبة الشرعية الإسلامية | المجلس العلمي",
+      description: "مكتبة رقمية شاملة من الكتب والمراجع الشرعية — في الفقه والعقيدة والتفسير والحديث والسيرة والتزكية.",
+      keywords: ["مكتبة إسلامية", "كتب شرعية", "مراجع دينية", "مكتبة دينية", "كتب فقه"],
+    });
+  }, []);
 
   useEffect(() => {
     if (initialItems && category === "الكل") return;

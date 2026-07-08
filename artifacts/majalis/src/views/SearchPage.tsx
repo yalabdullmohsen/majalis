@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { applyPageSeo } from "@/lib/seo";
 import { Link, useParams, useLocation } from "wouter";
 import { searchEverything, type SearchResults } from "@/lib/supabase";
 import { searchDemoContent } from "@/lib/demo-content";
@@ -269,6 +270,16 @@ export default function SearchPage() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/search",
+      title: "بحث شامل في المحتوى الشرعي | المجلس العلمي",
+      description: "ابحث في الدروس والأحاديث والفتاوى والمكتبة الشرعية والقرآن — بحث شامل في المحتوى العلمي الإسلامي.",
+      keywords: ["بحث إسلامي", "بحث شرعي", "بحث قرآني", "بحث أحاديث", "المجلس العلمي"],
+      robots: "noindex, follow",
+    });
+  }, []);
 
   useEffect(() => {
     setTerm(q);

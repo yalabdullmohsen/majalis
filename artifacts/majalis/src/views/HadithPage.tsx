@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { applyPageSeo } from "@/lib/seo";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { getVerifiedHadith } from "@/lib/supabase";
 import { RequestManager } from "@/lib/request-manager";
@@ -632,6 +633,15 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
 }
 
 export default function HadithPage() {
+  useEffect(() => {
+    applyPageSeo({
+      path: "/hadith",
+      title: "الأحاديث النبوية الشريفة | المجلس العلمي",
+      description: "مكتبة الأحاديث النبوية الشريفة مع بيان درجة كل حديث — صحيح وضعيف وموضوع، بمصادر التخريج.",
+      keywords: ["أحاديث نبوية", "الحديث الشريف", "صحيح البخاري", "صحيح مسلم", "الحديث الضعيف"],
+    });
+  }, []);
+
   return (
     <div className="page-shell content-hub-page ds-page hadith-page hadith-page--stacked">
       <PageHeader

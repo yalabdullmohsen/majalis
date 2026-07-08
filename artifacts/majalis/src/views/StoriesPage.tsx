@@ -6,6 +6,7 @@ import { RequestManager } from "@/lib/request-manager";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { PageHeader, Loading, Empty } from "@/components/ui-common";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
+import { applyPageSeo } from "@/lib/seo";
 
 function useDebouncedValue<T>(value: T, delayMs = 350): T {
   const [debounced, setDebounced] = useState(value);
@@ -24,6 +25,15 @@ export default function StoriesPage() {
   const [category, setCategory] = useState("الكل");
   const [filtersOpen, setFiltersOpen] = useState(false);
   const debouncedSearch = useDebouncedValue(search);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/stories",
+      title: "القصص الإلهامية | المجلس العلمي",
+      description: "قصص إلهامية إسلامية تجمع الحكمة والعبرة من سير الصالحين والعلماء وأهل الفضل.",
+      keywords: ["قصص إسلامية", "قصص إلهامية", "قصص الصالحين", "حكايات علماء", "عبر إسلامية"],
+    });
+  }, []);
 
   useEffect(() => {
     setLoading(true);

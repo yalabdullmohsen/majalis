@@ -20,6 +20,7 @@ import { RequestManager } from "@/lib/request-manager";
 import { regionsForGovernorate } from "@/lib/kuwait-regions";
 import { fromKuwaitLesson } from "@/lib/unified-lesson-card";
 import { registerForLesson, unregisterFromLesson, getMyRegistrations } from "@/lib/supabase";
+import { applyPageSeo } from "@/lib/seo";
 
 type TabId = "all" | "men" | "women" | "courses" | "makkah" | "madinah";
 
@@ -222,6 +223,15 @@ export default function LessonsPage({
   const [myReg, setMyReg] = useState<string[]>([]);
   const [tab, setTab] = useTabFromUrl();
   const { user, isLoggedIn, isAdmin } = useAuth();
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/lessons",
+      title: "الدروس الشرعية والعلمية | المجلس العلمي",
+      description: "دروس شرعية وعلمية من أئمة وعلماء الكويت والعالم — فقه وعقيدة وقرآن وسيرة ولغة عربية.",
+      keywords: ["دروس شرعية", "دروس دينية", "دروس علمية", "علماء الكويت", "حلقات علمية"],
+    });
+  }, []);
 
   useEffect(() => {
     if (initialActive) return;
