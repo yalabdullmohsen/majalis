@@ -1,4 +1,5 @@
 import { Suspense, lazy, useEffect, useState } from "react";
+import { BookOpen, Clock, Medal } from "lucide-react";
 import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { applyPageSeo } from "@/lib/seo";
@@ -120,12 +121,12 @@ export default function LearningPathDashboardPage() {
             {/* الكتب الجارية */}
             {inProgress.length > 0 && (
               <div className="mb-8">
-                <h2 className="font-bold text-[var(--majalis-ink)] text-base mb-3">⏳ تابع من حيث توقفت</h2>
+                <h2 className="font-bold text-[var(--majalis-ink)] text-base mb-3 flex items-center gap-2"><Clock size={16} strokeWidth={1.8} aria-hidden="true" /> تابع من حيث توقفت</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {inProgress.slice(0, 4).map((p) => (
                     <Link key={p.book_id} href={`/learning-path/book/${p.book_id}`}>
                       <div className="flex items-center gap-3 p-3 bg-[var(--majalis-panel)] rounded-xl border border-yellow-200 dark:border-yellow-800 hover:shadow-md transition-all cursor-pointer">
-                        <span className="text-2xl">📖</span>
+                        <span className="text-2xl" aria-hidden="true"><BookOpen size={22} strokeWidth={1.5} /></span>
                         <div className="flex-1 min-w-0">
                           <p className="text-sm font-medium text-[var(--majalis-ink-soft)] line-clamp-1">كتاب جاري</p>
                           <div className="h-1.5 bg-[var(--majalis-parchment-deep)] rounded-full mt-1.5">
@@ -142,7 +143,7 @@ export default function LearningPathDashboardPage() {
 
             {/* الإنجازات */}
             <div className="mb-8">
-              <h2 className="font-bold text-[var(--majalis-ink)] text-base mb-3">🏅 الأوسمة والإنجازات</h2>
+              <h2 className="font-bold text-[var(--majalis-ink)] text-base mb-3 flex items-center gap-2"><Medal size={16} strokeWidth={1.8} aria-hidden="true" /> الأوسمة والإنجازات</h2>
               <div className="bg-[var(--majalis-panel)] rounded-2xl border border-[var(--majalis-line)] p-5">
                 <Suspense fallback={<div className="h-24 bg-[var(--majalis-parchment-deep)] rounded-xl animate-pulse" />}>
                   <AchievementBadges achievements={achievements} />

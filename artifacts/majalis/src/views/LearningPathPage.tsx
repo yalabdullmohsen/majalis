@@ -1,4 +1,5 @@
 import { Suspense, lazy, useEffect, useState } from "react";
+import { BookOpen, ClipboardList, Leaf, Map as MapIcon } from "lucide-react";
 import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { applyPageSeo } from "@/lib/seo";
@@ -76,7 +77,7 @@ export default function LearningPathPage() {
 
         <div className="relative max-w-4xl mx-auto px-4 py-14 text-center text-white">
           <div className="inline-flex items-center gap-2 text-emerald-200 text-sm mb-4 bg-white/10 px-4 py-1.5 rounded-full">
-            <span>🗺️</span>
+            <MapIcon size={15} strokeWidth={1.8} aria-hidden="true" />
             <span>خارطة طالب العلم الشرعي</span>
           </div>
           <h1 className="text-3xl md:text-4xl font-extrabold mb-4 leading-tight">
@@ -106,7 +107,7 @@ export default function LearningPathPage() {
             {isLoggedIn ? (
               <Link href="/learning-path/dashboard">
                 <span className="inline-block px-6 py-2.5 bg-white text-emerald-800 font-bold rounded-xl hover:bg-emerald-50 transition-colors cursor-pointer">
-                  📊 لوحتي التعليمية
+                  لوحتي التعليمية
                 </span>
               </Link>
             ) : (
@@ -125,7 +126,7 @@ export default function LearningPathPage() {
 
         {/* كيف تعمل الخارطة */}
         <div className="mb-10 bg-[var(--majalis-panel)] rounded-2xl border border-[var(--majalis-line)] p-6">
-          <h2 className="font-bold text-[var(--majalis-ink)] text-lg mb-4">📋 كيف تعمل الخارطة؟</h2>
+          <h2 className="font-bold text-[var(--majalis-ink)] text-lg mb-4 flex items-center gap-2"><ClipboardList size={18} strokeWidth={1.8} aria-hidden="true" /> كيف تعمل الخارطة؟</h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {[
               { n: "١", title: "اختر علماً", desc: "من العقيدة والحديث والفقه وغيرها" },
@@ -146,8 +147,8 @@ export default function LearningPathPage() {
         </div>
 
         {/* العلوم */}
-        <h2 className="font-extrabold text-[var(--majalis-ink)] text-xl mb-5">
-          🌿 العلوم الشرعية
+        <h2 className="font-extrabold text-[var(--majalis-ink)] text-xl mb-5 flex items-center gap-2">
+          <Leaf size={18} strokeWidth={1.8} aria-hidden="true" /> العلوم الشرعية
         </h2>
 
         {error && (
@@ -158,7 +159,7 @@ export default function LearningPathPage() {
           <LoadingSkeleton />
         ) : sciences.length === 0 ? (
           <div className="text-center py-16 text-[var(--majalis-ink-soft)] opacity-60">
-            <div className="text-4xl mb-2">📚</div>
+            <div className="text-4xl mb-2" aria-hidden="true"><BookOpen size={48} strokeWidth={1.3} /></div>
             <p>لا توجد علوم متاحة بعد</p>
           </div>
         ) : (

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Star } from "lucide-react";
 import { Spinner } from "@/components/ui/spinner";
 import { Link, useRoute } from "wouter";
 import {
@@ -209,7 +210,7 @@ export default function CitationPublicPage() {
                     : "bg-[var(--majalis-panel)] border-gray-300 dark:border-gray-600 text-[var(--majalis-ink-soft)] hover:border-amber-400"
                 }`}
               >
-                {saved ? "⭐ محفوظ" : "⭐ احفظ في مكتبتي"}
+                <Star size={14} strokeWidth={2} aria-hidden="true" /> {saved ? "محفوظ" : "احفظ في مكتبتي"}
               </button>
             )}
           </div>

@@ -1,4 +1,5 @@
 import { Suspense, lazy, useEffect, useState } from "react";
+import { BookOpen, Lightbulb, ScrollText } from "lucide-react";
 import { Link, useParams } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { applyPageSeo } from "@/lib/seo";
@@ -58,7 +59,7 @@ export default function LearningPathSciencePage() {
   if (notFound || !science) {
     return (
       <div dir="rtl" className="min-h-screen bg-[var(--majalis-parchment)] flex flex-col items-center justify-center gap-4">
-        <div className="text-5xl">📚</div>
+        <div className="text-5xl" aria-hidden="true"><ScrollText size={48} strokeWidth={1.3} /></div>
         <p className="text-[var(--majalis-ink-soft)]">العلم غير موجود</p>
         <Link href="/learning-path">
           <span className="text-[var(--majalis-emerald)] hover:underline cursor-pointer text-sm">← العودة للخارطة</span>
@@ -109,7 +110,7 @@ export default function LearningPathSciencePage() {
         <div className="max-w-4xl mx-auto px-4 mt-6">
           <div className="bg-[var(--majalis-emerald-muted)] border border-[var(--majalis-emerald)] rounded-2xl p-4 lps-why-box">
             <p className="text-[var(--majalis-emerald)] text-sm leading-relaxed">
-              <strong>💡 لماذا تدرس {science.name}؟ </strong>
+              <strong className="inline-flex items-center gap-1"><Lightbulb size={14} strokeWidth={1.8} aria-hidden="true" /> لماذا تدرس {science.name}؟ </strong>
               {science.why_study}
             </p>
           </div>
@@ -121,7 +122,7 @@ export default function LearningPathSciencePage() {
         <h2 className="font-bold text-[var(--majalis-ink)] text-lg mb-6">مسار التعلم</h2>
         {levels.length === 0 ? (
           <div className="text-center py-16 text-[var(--majalis-ink-soft)] opacity-60">
-            <div className="text-4xl mb-2">📖</div>
+            <div className="text-4xl mb-2" aria-hidden="true"><BookOpen size={44} strokeWidth={1.3} /></div>
             <p>لم تُضَف كتب لهذا العلم بعد</p>
           </div>
         ) : (

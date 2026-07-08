@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { ClipboardList, FileText, Flame, FolderOpen, Pencil, Star } from "lucide-react";
 import { Link } from "wouter";
 import { Spinner } from "@/components/ui/spinner";
 import {
@@ -201,7 +202,7 @@ export default function MyCitationsPage() {
                     onClick={() => handleExport("markdown")}
                     className="block w-full text-right px-4 py-2 text-sm text-[var(--majalis-ink-soft)] hover:bg-[var(--mn-surface-hover)]"
                   >
-                    📝 Markdown
+                    <FileText size={13} strokeWidth={1.8} aria-hidden="true" /> Markdown
                   </button>
                   <button
                     type="button"
@@ -250,10 +251,10 @@ export default function MyCitationsPage() {
                     : "text-[var(--majalis-ink-soft)] hover:bg-[var(--mn-surface-hover)]"
                 }`}
               >
-                {t === "الكل" && "📋 "}
-                {t === "المجلدات" && "📁 "}
-                {t === "المفضلة" && "⭐ "}
-                {t === "الأكثر استخداماً" && "🔥 "}
+                {t === "الكل" && <ClipboardList size={13} strokeWidth={1.8} aria-hidden="true" />}{" "}
+                {t === "المجلدات" && <FolderOpen size={13} strokeWidth={1.8} aria-hidden="true" />}{" "}
+                {t === "المفضلة" && <Star size={13} strokeWidth={1.8} aria-hidden="true" />}{" "}
+                {t === "الأكثر استخداماً" && <Flame size={13} strokeWidth={1.8} aria-hidden="true" />}{" "}
                 {t}
               </button>
             ))}
@@ -390,7 +391,7 @@ export default function MyCitationsPage() {
                           className={`text-lg flex-shrink-0 transition-transform hover:scale-110 ${item.is_favorite ? "text-amber-400" : "text-gray-300"}`}
                           title={item.is_favorite ? "إزالة من المفضلة" : "إضافة للمفضلة"}
                         >
-                          ⭐
+                          <Star size={16} strokeWidth={2} aria-hidden="true" />
                         </button>
                       </div>
 
@@ -426,14 +427,14 @@ export default function MyCitationsPage() {
                         </div>
                       ) : item.personal_note ? (
                         <div className="flex items-start gap-1.5">
-                          <span className="text-xs text-[var(--majalis-ink-soft)] opacity-60">📝</span>
+                          <span className="text-xs text-[var(--majalis-ink-soft)] opacity-60" aria-hidden="true"><FileText size={12} strokeWidth={1.8} /></span>
                           <p className="text-xs text-[var(--majalis-ink-soft)] italic">{item.personal_note}</p>
                           <button
                             type="button"
                             onClick={() => { setEditNoteId(item.id); setEditNoteText(item.personal_note || ""); }}
                             className="text-xs text-[var(--majalis-ink-soft)] opacity-60 hover:opacity-100 hover:text-[var(--majalis-emerald)] flex-shrink-0"
                           >
-                            ✏️
+                            <Pencil size={12} strokeWidth={1.8} aria-hidden="true" />
                           </button>
                         </div>
                       ) : null}
