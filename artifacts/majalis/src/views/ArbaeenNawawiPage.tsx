@@ -1,8 +1,19 @@
+import { useEffect } from "react";
 import { PageHeader } from "@/components/ui-common";
 import { ARBAEEN_NAWAWI } from "@/lib/arbaeen-nawawi-seed";
 import { HighlightedContentCard } from "@/components/reading/HighlightedContentCard";
+import { applyPageSeo } from "@/lib/seo";
 
 export default function ArbaeenNawawiPage() {
+  useEffect(() => {
+    applyPageSeo({
+      path: "/arbaeen",
+      title: "الأربعون النووية — أحاديث نووية مشروحة | المجلس العلمي",
+      description: "الأربعون حديثاً النووية مع شرح موجز وفوائد ومصدر لكل حديث — مرجع حديثي مختصر لطالب العلم.",
+      keywords: ["الأربعون النووية", "أحاديث نووية", "شرح الأحاديث", "الحديث النبوي", "نووي"],
+    });
+  }, []);
+
   return (
     <div className="page-shell">
       <PageHeader

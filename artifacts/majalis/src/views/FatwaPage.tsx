@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { PageHeader, Loading, Empty } from "@/components/ui-common";
+import { applyPageSeo } from "@/lib/seo";
 import { PlatformContentCard } from "@/components/platform/ContentDetailLayout";
 import { getFatwas } from "@/lib/platform-content-service";
 import { getLatestFatwas, getMostReadFatwas, getMostSearchedFatwas } from "@/lib/fatwa-seed";
@@ -54,6 +55,15 @@ export default function FatwaPage() {
   const debouncedSearch = useDebouncedValue(search);
 
   usePageView("fatwa", null);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/fatwa",
+      title: "الفتاوى الشرعية | المجلس العلمي",
+      description: "مكتبة الفتاوى الشرعية الموثقة — تصفح فتاوى أئمة وعلماء الشريعة الإسلامية في الفقه والعبادات والمعاملات.",
+      keywords: ["فتاوى", "فتوى شرعية", "أحكام شرعية", "علماء مسلمون", "فقه إسلامي"],
+    });
+  }, []);
 
   useEffect(() => {
     if (tab !== "all") {

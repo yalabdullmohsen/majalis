@@ -3,6 +3,7 @@ import { useLocation } from "wouter";
 import { ADHKAR_CATEGORIES, type AdhkarItem } from "@/lib/adhkar-seed";
 import { usePublishedAdhkarItems } from "@/lib/adhkar-service";
 import { PageHeader, Empty } from "@/components/ui-common";
+import { applyPageSeo } from "@/lib/seo";
 
 const FEATURED_CATEGORY_SLUGS = new Set([
   "morning", "evening", "sleep", "wakeup", "home-in", "home-out",
@@ -91,6 +92,15 @@ export default function AdhkarPage() {
   const advanceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const { data: publishedItems = [], isLoading, isError } = usePublishedAdhkarItems();
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/adhkar",
+      title: "الأذكار والأدعية الإسلامية | المجلس العلمي",
+      description: "أذكار الصباح والمساء وما بعد الصلاة وسائر الأذكار المأثورة — مع التسبيح التفاعلي وعداد الذكر.",
+      keywords: ["أذكار", "أدعية", "أذكار الصباح", "أذكار المساء", "ذكر الله", "أذكار إسلامية"],
+    });
+  }, []);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);

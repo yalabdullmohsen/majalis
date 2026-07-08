@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { getQaCategories, getQaQuestions } from "@/lib/supabase";
+import { applyPageSeo } from "@/lib/seo";
 
 const FIQH_HUB_TABS = [
   { key: "fatawa",  label: "الفتاوى",         href: "/fatwa" },
@@ -84,6 +85,15 @@ export default function QaPage({
   const debouncedSearch = useDebouncedValue(search);
 
   const items = useMemo(() => normalizeQaItems(rawItems), [rawItems]);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/qa",
+      title: "الأسئلة والأجوبة الشرعية | المجلس العلمي",
+      description: "أسئلة وأجوبة شرعية في الفقه والعقيدة والعبادات والمعاملات — موثقة من العلماء والمراجع الموثوقة.",
+      keywords: ["أسئلة شرعية", "أجوبة شرعية", "فتاوى", "فقه إسلامي", "سؤال وجواب"],
+    });
+  }, []);
 
   const loadCategories = useCallback(async () => {
     setCategoriesLoading(true);

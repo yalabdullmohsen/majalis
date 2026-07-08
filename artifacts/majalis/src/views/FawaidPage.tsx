@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { getApprovedFawaid, submitFawaid } from "@/lib/supabase";
+import { applyPageSeo } from "@/lib/seo";
 import { RequestManager } from "@/lib/request-manager";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { DEMO_FAWAID, FAWAID_CATEGORIES } from "@/lib/demo-content";
@@ -48,6 +49,15 @@ export default function FawaidPage({
   const [filtersOpen, setFiltersOpen] = useState(false);
   const { user, isLoggedIn, isAdmin } = useAuth();
   const debouncedSearch = useDebouncedValue(search);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/fawaid",
+      title: "الفوائد العلمية | المجلس العلمي",
+      description: "منصة لنشر ومشاركة الفوائد العلمية والشرعية — فوائد قرآنية وحديثية وعقدية وفقهية وتربوية.",
+      keywords: ["فوائد علمية", "فوائد شرعية", "فوائد قرآنية", "فوائد حديثية", "الفوائد الإسلامية"],
+    });
+  }, []);
 
   useEffect(() => {
     if (initialFawaid) return;

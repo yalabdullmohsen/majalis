@@ -7,6 +7,7 @@ import { PlatformContentCard } from "@/components/platform/ContentDetailLayout";
 import { getAnnualCourses } from "@/lib/platform-content-service";
 import { COURSE_TYPES } from "@/lib/platform-types";
 import { usePageView } from "@/hooks/usePageView";
+import { applyPageSeo } from "@/lib/seo";
 
 function useDebouncedValue<T>(value: T, delayMs = 350): T {
   const [debounced, setDebounced] = useState(value);
@@ -26,6 +27,15 @@ export default function AnnualCoursesPage() {
   const debouncedSearch = useDebouncedValue(search);
 
   usePageView("annual-courses", null);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/annual-courses",
+      title: "البرامج السنوية والدورات العلمية | المجلس العلمي",
+      description: "دورات علمية سنوية في الفقه والعقيدة والقرآن والسيرة — تصفح البرامج واشترك في طلب العلم المنظم.",
+      keywords: ["دورات علمية", "برامج سنوية", "طلب العلم", "دورات فقه", "دورات قرآن"],
+    });
+  }, []);
 
   useEffect(() => {
     setLoading(true);

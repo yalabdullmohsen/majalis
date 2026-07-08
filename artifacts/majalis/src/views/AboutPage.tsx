@@ -1,7 +1,18 @@
+import { useEffect } from "react";
 import { Link } from "wouter";
 import { LegalBackLink, LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
+import { applyPageSeo } from "@/lib/seo";
 
 export default function AboutPage() {
+  useEffect(() => {
+    applyPageSeo({
+      path: "/about",
+      title: "من نحن | المجلس العلمي",
+      description: "تعرف على المجلس العلمي — منصة شرعية رقمية كويتية تجمع الدروس والفتاوى والمكتبة العلمية والمصحف الرقمي في مرجع موثوق.",
+      keywords: ["المجلس العلمي", "منصة إسلامية", "منصة شرعية", "الكويت", "تعريف"],
+    });
+  }, []);
+
   return (
     <LegalPageLayout eyebrow="تعرف علينا" title="من نحن">
 

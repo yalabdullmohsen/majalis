@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import { LegalBackLink, LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
+import { applyPageSeo } from "@/lib/seo";
 
 const FAQ = [
   {
@@ -33,6 +35,15 @@ const TOPICS = [
 ];
 
 export default function ContactPage() {
+  useEffect(() => {
+    applyPageSeo({
+      path: "/contact",
+      title: "تواصل معنا | المجلس العلمي",
+      description: "تواصل مع فريق المجلس العلمي — تقرير خطأ، اقتراح محتوى، شراكات مؤسسية، أو طلبات تقنية.",
+      keywords: ["تواصل", "المجلس العلمي", "الدعم", "اقتراح محتوى", "إبلاغ عن خطأ"],
+    });
+  }, []);
+
   return (
     <LegalPageLayout eyebrow="التواصل" title="تواصل معنا">
 
