@@ -1,6 +1,8 @@
+import { useEffect } from "react";
 import { Link } from "wouter";
 import { useAssistantChat } from "@/hooks/useAssistantChat";
 import { AssistantChatView } from "@/components/assistant/AssistantChatView";
+import { applyPageSeo } from "@/lib/seo";
 
 export { ASSISTANT_FAILURE_MESSAGE as FAILURE_MESSAGE } from "@/hooks/useAssistantChat";
 
@@ -22,6 +24,15 @@ const RESEARCHER_LINKS = [
 
 export default function AssistantPage() {
   const chat = useAssistantChat();
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/assistant",
+      title: "المساعد العلمي الذكي | المجلس العلمي",
+      description: "مساعد شرعي ذكي يجيب على أسئلتك في الفقه والعقيدة والقرآن والحديث — مدعوم بالذكاء الاصطناعي.",
+      keywords: ["مساعد إسلامي", "مساعد شرعي", "أسئلة شرعية", "الذكاء الاصطناعي الإسلامي"],
+    });
+  }, []);
 
   return (
     <div className="assistant-page">

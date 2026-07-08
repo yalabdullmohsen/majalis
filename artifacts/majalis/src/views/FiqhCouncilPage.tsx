@@ -21,6 +21,7 @@ import {
   type FiqhCouncilCategory,
   type FiqhItemType,
 } from "@/lib/fiqh-council-types";
+import { applyPageSeo } from "@/lib/seo";
 
 const SUBNAV_LINKS = [
   { href: "/fiqh-council", label: "الرئيسية" },
@@ -281,6 +282,15 @@ export function FiqhCouncilHubPage() {
   const [topIssues, setTopIssues] = useState<any[]>([]);
   const [liveData, setLiveData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/fiqh-council",
+      title: "المجمع الفقهي الإسلامي | المجلس العلمي",
+      description: "مرجع المجمع الفقهي — قرارات وفتاوى وتوصيات وجلسات المجامع الفقهية الدولية وهيئات الإفتاء.",
+      keywords: ["مجمع فقهي", "قرارات فقهية", "هيئة كبار العلماء", "المجمع الفقهي", "فتاوى المجامع"],
+    });
+  }, []);
 
   useEffect(() => {
     let cancelled = false;

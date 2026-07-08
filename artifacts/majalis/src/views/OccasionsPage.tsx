@@ -7,6 +7,7 @@ import {
 } from "@/lib/islamic-occasions";
 import { HijriMonthSelect } from "@/components/HijriMonthSelect";
 import { getHijriMonthName, isSacredMonth } from "@/lib/hijri-utils";
+import { applyPageSeo } from "@/lib/seo";
 
 function CountdownBadge({ days }: { days: number | null | undefined }) {
   if (days == null) return <span className="occasion-detail__countdown">موسمية</span>;
@@ -22,6 +23,15 @@ export default function OccasionsPage() {
   const [occasions, setOccasions] = useState<IslamicOccasionView[]>([]);
   const [loading, setLoading] = useState(true);
   const [monthFilter, setMonthFilter] = useState<number | "">("");
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/occasions",
+      title: "المناسبات الإسلامية والمواسم | المجلس العلمي",
+      description: "تقويم المناسبات الإسلامية والأعياد والمواسم الدينية — رمضان وعيد الفطر وعيد الأضحى والمواسم الهجرية.",
+      keywords: ["مناسبات إسلامية", "أعياد إسلامية", "رمضان", "عيد الأضحى", "المواسم الدينية"],
+    });
+  }, []);
 
   useEffect(() => {
     let active = true;

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { KUWAIT_SHEIKHS } from "@/lib/kuwait-sheikhs";
+import { applyPageSeo } from "@/lib/seo";
 
 declare global {
   interface Window { twttr?: { widgets?: { load: (el?: HTMLElement) => void } } }
@@ -88,6 +89,15 @@ function SheikhCard({ sheikh }: { sheikh: (typeof KUWAIT_SHEIKHS)[number] }) {
 export default function KuwaitLessonsPage() {
   const feedRef = useRef<HTMLDivElement>(null);
   useTwitterEmbed(feedRef);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/kuwait-lessons",
+      title: "دروس مشايخ الكويت | المجلس العلمي",
+      description: "جميع الدروس العلمية القادمة لمشايخ الكويت — محدَّثة تلقائياً من مصادر معتمدة.",
+      keywords: ["دروس الكويت", "مشايخ الكويت", "دروس كويتية", "علماء الكويت", "حلقات علمية"],
+    });
+  }, []);
 
   return (
     <div className="page-shell narrow" dir="rtl">
