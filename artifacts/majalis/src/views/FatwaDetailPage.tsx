@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Loading, Empty } from "@/components/ui-common";
+import { SkeletonPage, Empty } from "@/components/ui-common";
 import { ContentDetailLayout, RelatedLinks } from "@/components/platform/ContentDetailLayout";
 import { getFatwaById, getRelatedFatwas } from "@/lib/platform-content-service";
 import { applyPageSeo } from "@/lib/seo";
@@ -54,7 +54,7 @@ export default function FatwaDetailPage({ params }: { params: { id: string } }) 
     });
   }, [item]);
 
-  if (loading) return <Loading />;
+  if (loading) return <SkeletonPage />;
   if (!item) return <Empty text="الفتوى غير موجودة." />;
 
   const copyText = `السؤال: ${item.question}\n\nالجواب: ${item.answer}`;

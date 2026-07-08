@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Loading, Empty } from "@/components/ui-common";
+import { SkeletonPage, Empty } from "@/components/ui-common";
 import { ContentDetailLayout, RelatedLinks } from "@/components/platform/ContentDetailLayout";
 import { RulingDetailSections } from "@/components/rulings/RulingDetailSections";
 import { getRulingById, getRelatedRulingsEncyclopedia } from "@/lib/rulings-service";
@@ -56,7 +56,7 @@ export default function RulingDetailPage({ params }: { params: { id: string } })
     });
   }, [item]);
 
-  if (loading) return <Loading />;
+  if (loading) return <SkeletonPage />;
   if (!item) return <Empty text="الحكم غير موجود." />;
 
   const copyText = [item.title, item.summary, item.body].filter(Boolean).join("\n\n");

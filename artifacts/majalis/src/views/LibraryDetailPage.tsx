@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
-import { Loading, Empty } from "@/components/ui-common";
+import { SkeletonPage, Empty } from "@/components/ui-common";
 import { ContentDetailLayout, RelatedLinks } from "@/components/platform/ContentDetailLayout";
 import { getLibraryItemById } from "@/lib/supabase";
 import { getRelatedLibraryBooks, isCatalogBookId, type LibraryItem } from "@/lib/library-service";
@@ -55,7 +55,7 @@ export default function LibraryDetailPage({ params }: { params: { id: string } }
     });
   }, [item]);
 
-  if (loading) return <Loading />;
+  if (loading) return <SkeletonPage />;
   if (!item) return <Empty text="الكتاب غير موجود." />;
 
   const readUrl = item.external_url || item.file_url;

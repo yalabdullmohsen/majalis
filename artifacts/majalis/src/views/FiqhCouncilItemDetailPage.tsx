@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
-import { Loading, Empty } from "@/components/ui-common";
+import { SkeletonPage, Empty } from "@/components/ui-common";
 import { ContentDetailLayout, RelatedLinks } from "@/components/platform/ContentDetailLayout";
 import {
   getFiqhCouncilItemBySlug,
@@ -102,7 +102,7 @@ export default function FiqhCouncilItemDetailPage({ params }: { params: { slug: 
     });
   }, [item]);
 
-  if (loading) return <Loading />;
+  if (loading) return <SkeletonPage />;
   if (!item) return <Empty text="المحتوى غير موجود." />;
 
   const bodyText = item.content || item.ruling_text || "";

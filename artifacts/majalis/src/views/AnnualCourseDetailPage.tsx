@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
-import { Loading, Empty } from "@/components/ui-common";
+import { SkeletonPage, Empty } from "@/components/ui-common";
 import { ContentDetailLayout, RelatedLinks } from "@/components/platform/ContentDetailLayout";
 import { getAnnualCourseById, getRelatedCourses } from "@/lib/platform-content-service";
 import { applyPageSeo } from "@/lib/seo";
@@ -65,7 +65,7 @@ export default function AnnualCourseDetailPage({ params }: { params: { id: strin
     });
   }, [item]);
 
-  if (loading) return <Loading />;
+  if (loading) return <SkeletonPage />;
   if (!item) return <Empty text="الدورة غير موجودة." />;
 
   const mapEmbed = buildMapsEmbed(item.map_url, item.venue_name, item.venue_city);

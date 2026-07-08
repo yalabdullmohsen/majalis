@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { AdminInlineEdit } from "@/components/AdminInlineEdit";
 import { getLessonById, getSheikhs } from "@/lib/supabase";
-import { Loading, Empty } from "@/components/ui-common";
+import { SkeletonPage, Empty } from "@/components/ui-common";
 import ContentActions from "@/components/ContentActions";
 import { isDemoId } from "@/lib/demo-content";
 import { extractLessonSchedule, hasValue } from "@/lib/lesson-display";
@@ -249,7 +249,7 @@ export default function LessonDetailPage({
   useLessonSeo(seoLesson, `/lessons/${params.id}`);
   usePageView("lesson", params.id);
 
-  if (loading) return <Loading />;
+  if (loading) return <SkeletonPage />;
   if (!unified) return <Empty text="لم يُعثر على الدرس." />;
 
   const sheikhName = unified.sheikhName;
