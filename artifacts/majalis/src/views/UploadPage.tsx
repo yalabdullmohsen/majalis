@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef, type ChangeEvent, type DragEvent, type FormEvent } from "react";
+import { CheckCircle2, GraduationCap, Loader2, Mic2, ScrollText, Upload, XCircle } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { submitAdhan, submitLesson } from "@/lib/user-submissions-service";
 
@@ -135,7 +136,7 @@ function AdhanForm() {
   return (
     <form onSubmit={handleSubmit} className="ulp-form">
       <div className="ulp-banner">
-        <span className="ulp-banner__icon">🎙️</span>
+        <span className="ulp-banner__icon" aria-hidden="true"><Mic2 size={22} strokeWidth={1.5} /></span>
         <span className="ulp-banner__text">
           ارفع تسجيلاً صوتياً للأذان · يُراجَع من قِبل الفريق قبل نشره في المكتبة.
         </span>
@@ -185,7 +186,7 @@ function AdhanForm() {
       </Field>
 
       <Feedback state={uploadState} message={message} />
-      <SubmitBtn loading={uploadState === "uploading"} label="📤 إرسال الأذان للمراجعة" />
+      <SubmitBtn loading={uploadState === "uploading"} label="إرسال الأذان للمراجعة" />
     </form>
   );
 }
@@ -236,7 +237,7 @@ function LessonForm() {
   return (
     <form onSubmit={handleSubmit} className="ulp-form">
       <div className="ulp-banner">
-        <span className="ulp-banner__icon">📚</span>
+        <span className="ulp-banner__icon" aria-hidden="true"><ScrollText size={22} strokeWidth={1.5} /></span>
         <span className="ulp-banner__text">
           أضف درساً علمياً موثّقاً · يمكن رفع ملف صوت/فيديو أو إرسال معلومات الدرس فقط.
         </span>
@@ -284,7 +285,7 @@ function LessonForm() {
       </Field>
 
       <Feedback state={uploadState} message={message} />
-      <SubmitBtn loading={uploadState === "uploading"} label="📤 إرسال الدرس للمراجعة" />
+      <SubmitBtn loading={uploadState === "uploading"} label="إرسال الدرس للمراجعة" />
     </form>
   );
 }
@@ -305,7 +306,7 @@ export default function UploadPage() {
     <div className="ulp-page">
       <div className="ulp-header">
         <p className="ulp-eyebrow">المشاركة</p>
-        <h1 className="ulp-title">📤 رفع محتوى إسلامي</h1>
+        <h1 className="ulp-title"><Upload size={22} strokeWidth={1.5} aria-hidden="true" /> رفع محتوى إسلامي</h1>
         <p className="ulp-subtitle">شارك أذاناً أو درساً علمياً · يُراجَع من فريق المجالس قبل النشر.</p>
       </div>
 
@@ -320,16 +321,16 @@ export default function UploadPage() {
 
       <div className="ulp-tabs">
         {([
-          { id: "adhan",  icon: "🎙️", label: "رفع أذان" },
-          { id: "lesson", icon: "📚", label: "رفع درس"  },
+          { id: "adhan",  Icon: Mic2,          label: "رفع أذان" },
+          { id: "lesson", Icon: GraduationCap,  label: "رفع درس"  },
         ] as const).map((t) => (
           <button
             key={t.id}
             type="button"
-            onClick={() => setTab(t.id)}
+            onClick={() => setTab(t.id as Tab)}
             className={`ulp-tab${tab === t.id ? " is-active" : ""}`}
           >
-            <span>{t.icon}</span>
+            <span aria-hidden="true"><t.Icon size={16} strokeWidth={1.8} /></span>
             <span>{t.label}</span>
           </button>
         ))}
@@ -369,7 +370,7 @@ function Feedback({ state, message }: { state: UploadState; message: string }) {
   const isSuccess = state === "success";
   return (
     <div className={`ulp-feedback${isSuccess ? " ulp-feedback--success" : " ulp-feedback--error"}`}>
-      {isSuccess ? "✅ " : "❌ "}{message}
+      {isSuccess ? <CheckCircle2 size={16} strokeWidth={2} aria-hidden="true" /> : <XCircle size={16} strokeWidth={2} aria-hidden="true" />} {message}
     </div>
   );
 }
@@ -378,8 +379,8 @@ function SubmitBtn({ loading, label }: { loading: boolean; label: string }) {
   return (
     <button type="submit" disabled={loading} className={`ulp-submit-btn${loading ? " is-loading" : ""}`}>
       {loading ? (
-        <><span className="ulp-submit-btn__spinner">⏳</span>جارٍ الرفع...</>
-      ) : label}
+        <><Loader2 size={15} strokeWidth={2} className="ulp-submit-btn__spinner" aria-hidden="true" /> جارٍ الرفع...</>
+      ) : <><Upload size={15} strokeWidth={2} aria-hidden="true" /> {label}</>}
     </button>
   );
 }

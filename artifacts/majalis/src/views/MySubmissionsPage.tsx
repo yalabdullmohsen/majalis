@@ -1,16 +1,18 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
+import { CheckCircle2, Clock, FileText, GraduationCap, Mic2, Upload, XCircle } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { formatFileSize, type UserSubmission, type SubmissionStatus } from "@/lib/user-submissions-service";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 
-const STATUS_META: Record<SubmissionStatus, { icon: string; label: string; bg: string; color: string; border: string }> = {
-  pending:  { icon: "⏳", label: "قيد المراجعة",  bg: "#F0F9FF", color: "#0369A1", border: "#A7F3D0" },
-  approved: { icon: "✅", label: "مقبول",          bg: "#f0fdf4", color: "var(--majalis-emerald)", border: "#86efac" },
-  rejected: { icon: "❌", label: "مرفوض",          bg: "#fef2f2", color: "var(--msk-red, #C1595A)", border: "#fca5a5" },
+const STATUS_META: Record<SubmissionStatus, { Icon: LucideIcon; label: string; bg: string; color: string; border: string }> = {
+  pending:  { Icon: Clock,         label: "قيد المراجعة",  bg: "#F0F9FF", color: "#0369A1", border: "#A7F3D0" },
+  approved: { Icon: CheckCircle2,  label: "مقبول",          bg: "#f0fdf4", color: "var(--majalis-emerald)", border: "#86efac" },
+  rejected: { Icon: XCircle,       label: "مرفوض",          bg: "#fef2f2", color: "var(--msk-red, #C1595A)", border: "#fca5a5" },
 };
 
-const TYPE_ICON: Record<string, string> = { adhan: "🎙️", lesson: "📚" };
+const TYPE_ICON: Record<string, LucideIcon> = { adhan: Mic2, lesson: GraduationCap };
 const TYPE_LABEL: Record<string, string> = { adhan: "أذان",   lesson: "درس" };
 
 function SubmissionRow({ sub }: { sub: UserSubmission }) {
@@ -41,7 +43,7 @@ function SubmissionRow({ sub }: { sub: UserSubmission }) {
     >
       {/* Status bar */}
       <div className="msr-card__status-bar">
-        <span>{sm.icon}</span>
+        <span aria-hidden="true"><sm.Icon size={15} strokeWidth={2} /></span>
         <span className="msr-card__status-label">{sm.label}</span>
         <span className="msr-card__date">
           {new Date(sub.created_at).toLocaleDateString("ar-KW", { dateStyle: "medium" })}
@@ -51,7 +53,7 @@ function SubmissionRow({ sub }: { sub: UserSubmission }) {
       <div className="msr-card__body">
         {/* Title row */}
         <div className="msr-card__title-row">
-          <span className="msr-card__type-icon">{TYPE_ICON[sub.type] ?? "📄"}</span>
+          <span className="msr-card__type-icon" aria-hidden="true">{(() => { const I = TYPE_ICON[sub.type] ?? FileText; return <I size={18} strokeWidth={1.6} />; })()}</span>
           <div className="msr-card__info">
             <div className="msr-card__title">{sub.title}</div>
             <div className="msr-card__meta">
@@ -198,15 +200,15 @@ export default function MySubmissionsPage() {
           </div>
           <div className="msp-stat msp-stat--pending">
             <div className="msp-stat__val">{stats.pending}</div>
-            <div className="msp-stat__label">⏳ قيد المراجعة</div>
+            <div className="msp-stat__label"><Clock size={13} strokeWidth={2} aria-hidden="true" /> قيد المراجعة</div>
           </div>
           <div className="msp-stat msp-stat--approved">
             <div className="msp-stat__val">{stats.approved}</div>
-            <div className="msp-stat__label">✅ مقبول</div>
+            <div className="msp-stat__label"><CheckCircle2 size={13} strokeWidth={2} aria-hidden="true" /> مقبول</div>
           </div>
           <div className="msp-stat msp-stat--rejected">
             <div className="msp-stat__val">{stats.rejected}</div>
-            <div className="msp-stat__label">❌ مرفوض</div>
+            <div className="msp-stat__label"><XCircle size={13} strokeWidth={2} aria-hidden="true" /> مرفوض</div>
           </div>
         </div>
       )}
@@ -214,7 +216,7 @@ export default function MySubmissionsPage() {
       {/* Results */}
       {list !== null && list.length === 0 && (
         <div className="msp-empty-state">
-          <div className="msp-empty-state__icon">📭</div>
+          <div className="msp-empty-state__icon" aria-hidden="true"><FileText size={40} strokeWidth={1.3} /></div>
           <p className="msp-empty-state__msg">لا توجد مساهمات مرتبطة بهذا البريد.</p>
           <Link href="/upload">
             <button type="button" className="msp-cta-btn">ارفع أذاناً أو درساً</button>
@@ -235,7 +237,7 @@ export default function MySubmissionsPage() {
           <div className="msp-cta__text">أو ارفع محتوىً جديداً:</div>
           <Link href="/upload">
             <button type="button" className="msp-cta-btn msp-cta-btn--gradient">
-              📤 رفع أذان أو درس
+              <Upload size={15} strokeWidth={2} aria-hidden="true" /> رفع أذان أو درس
             </button>
           </Link>
         </div>

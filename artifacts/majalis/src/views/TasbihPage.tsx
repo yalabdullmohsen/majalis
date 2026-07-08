@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { Flame } from "lucide-react";
 import { PageHeader } from "@/components/ui-common";
 import { useAuth } from "@/components/AuthProvider";
 import { TasbeehCounter } from "@/components/reading/TasbeehCounter";
@@ -141,7 +142,7 @@ export default function TasbihPage() {
         {aggregateStats.streak > 0 && (
           <div className="ui-card tasbih-stat tasbih-stat--streak">
             <span>التتابع</span>
-            <strong>{aggregateStats.streak} 🔥</strong>
+            <strong>{aggregateStats.streak} <Flame size={14} strokeWidth={2} aria-hidden="true" /></strong>
           </div>
         )}
       </div>

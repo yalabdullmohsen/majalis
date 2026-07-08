@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Building2 } from "lucide-react";
 import { QuranCircleCard } from "@/components/circles/QuranCircleCard";
 import { getQuranCircles, type QuranCircle, type CircleFilters } from "@/lib/quran-circles-service";
 import { applyPageSeo } from "@/lib/seo";
@@ -107,7 +108,7 @@ export default function QuranCirclesPage() {
         </div>
       ) : circles.length === 0 ? (
         <div className="qcp-empty">
-          <p className="qcp-empty__icon">🕌</p>
+          <p className="qcp-empty__icon" aria-hidden="true"><Building2 size={40} strokeWidth={1.3} /></p>
           <p className="qcp-empty__title">لا توجد حلقات بهذه المعايير حالياً</p>
           <p className="qcp-empty__desc">جرّب تغيير الفلاتر أو تواصل مع الإدارة لإضافة حلقتك.</p>
           <button

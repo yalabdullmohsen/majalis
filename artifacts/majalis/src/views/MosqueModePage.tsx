@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { BookMarked, BookOpen, Building2, Compass, Lightbulb, RotateCw, ScrollText, VolumeX } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { Link } from "wouter";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import { applyPageSeo } from "@/lib/seo";
@@ -15,13 +17,13 @@ function formatCountdown(seconds: number): string {
   return `${pad(m)}:${pad(s)}`;
 }
 
-const QUICK_LINKS = [
-  { href: "/quran", icon: "📖", label: "القرآن الكريم" },
-  { href: "/adhkar", icon: "📿", label: "الأذكار" },
-  { href: "/qibla", icon: "🧭", label: "القبلة" },
-  { href: "/prayer-times", icon: "🕌", label: "مواقيت الصلاة" },
-  { href: "/tasbih", icon: "🔮", label: "التسبيح" },
-  { href: "/hadith", icon: "📚", label: "حديث يومي" },
+const QUICK_LINKS: { href: string; Icon: LucideIcon; label: string }[] = [
+  { href: "/quran",        Icon: BookMarked, label: "القرآن الكريم" },
+  { href: "/adhkar",       Icon: RotateCw,   label: "الأذكار" },
+  { href: "/qibla",        Icon: Compass,    label: "القبلة" },
+  { href: "/prayer-times", Icon: Building2,  label: "مواقيت الصلاة" },
+  { href: "/tasbih",       Icon: RotateCw,   label: "التسبيح" },
+  { href: "/hadith",       Icon: ScrollText, label: "حديث يومي" },
 ];
 
 export default function MosqueModePage() {
@@ -54,7 +56,7 @@ export default function MosqueModePage() {
       {/* Silence alert */}
       {silenceAlerted && (
         <div className="mosque-mode__silence-alert">
-          <span>🔕</span>
+          <VolumeX size={18} strokeWidth={1.8} aria-hidden="true" />
           <span>تذكّر إيقاف صوت هاتفك داخل المسجد</span>
           <button
             type="button"
@@ -69,7 +71,7 @@ export default function MosqueModePage() {
       {/* Header */}
       <div className="mosque-mode__header">
         <Link href="/" className="mosque-mode__exit">✕</Link>
-        <span className="mosque-mode__label">🕌 وضع المسجد</span>
+        <span className="mosque-mode__label"><Building2 size={15} strokeWidth={1.8} aria-hidden="true" /> وضع المسجد</span>
       </div>
 
       {/* Prayer countdown */}
@@ -92,7 +94,7 @@ export default function MosqueModePage() {
       <div className="mosque-mode__grid">
         {QUICK_LINKS.map((item) => (
           <Link key={item.href} href={item.href} className="mosque-mode__link">
-            <span className="mosque-mode__link-icon">{item.icon}</span>
+            <span className="mosque-mode__link-icon" aria-hidden="true"><item.Icon size={22} strokeWidth={1.5} /></span>
             <span className="mosque-mode__link-label">{item.label}</span>
           </Link>
         ))}
@@ -100,7 +102,7 @@ export default function MosqueModePage() {
 
       {/* PWA install hint */}
       <p className="mosque-mode__pwa-hint">
-        💡 أضف المنصة لشاشتك الرئيسية لوصول أسرع
+        <Lightbulb size={14} strokeWidth={1.8} aria-hidden="true" /> أضف المنصة لشاشتك الرئيسية لوصول أسرع
       </p>
     </div>
   );
