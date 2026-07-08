@@ -7,6 +7,7 @@ import {
   getLocationLabel,
   getScientificAnnouncementById,
 } from "@/lib/scientific-announcements";
+import { applyPageSeo } from "@/lib/seo";
 
 function safeHref(url?: string): string | undefined {
   if (!url) return undefined;
@@ -33,6 +34,15 @@ export default function ScientificAnnouncementDetailPage({
 }) {
   const item = getScientificAnnouncementById(params.id);
   const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/scientific-announcements",
+      title: `${item?.announcementTitle || "إعلان علمي"} | المجلس العلمي`,
+      description: `${item?.announcementTitle || "إعلان علمي"} — تفاصيل الإعلان العلمي والمؤتمرات والدورات الإسلامية.`,
+      keywords: ["إعلانات علمية", "مؤتمرات إسلامية", "دورات علمية", "فعاليات شرعية"],
+    });
+  }, [item?.announcementTitle]);
   const [shared, setShared] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => () => { if (timerRef.current) clearTimeout(timerRef.current); }, []);

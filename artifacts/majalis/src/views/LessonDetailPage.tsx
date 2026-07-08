@@ -37,6 +37,7 @@ import { SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { KnowledgeRelatedItems } from "@/components/knowledge/KnowledgeRelatedItems";
 import { ScholarFollowButton } from "@/components/ScholarFollowButton";
 import { RecommendationWidget } from "@/components/recommendations/RecommendationWidget";
+import { applyPageSeo } from "@/lib/seo";
 
 function buildMapsEmbed(url?: string, mosque?: string, region?: string) {
   if (url?.includes("google.com/maps") || url?.includes("goo.gl/maps") || url?.includes("maps.app")) {
@@ -115,6 +116,15 @@ export default function LessonDetailPage({
   initialLesson?: KuwaitLessonRecord | null;
 }) {
   const [lesson, setLesson] = useState<any>(null);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/lessons",
+      title: "تفاصيل الدرس | المجلس العلمي",
+      description: "تفاصيل الدرس العلمي الشرعي — محتوى الدرس والشيخ والملاحظات والمصادر.",
+      keywords: ["درس شرعي", "محاضرة إسلامية", "علم شرعي", "تفاصيل درس"],
+    });
+  }, []);
   const [kuwaitLesson, setKuwaitLesson] = useState<KuwaitLessonRecord | null>(initialLesson ?? null);
   const [similar, setSimilar] = useState<KuwaitLessonRecord[]>([]);
   const [sameSheikh, setSameSheikh] = useState<KuwaitLessonRecord[]>([]);

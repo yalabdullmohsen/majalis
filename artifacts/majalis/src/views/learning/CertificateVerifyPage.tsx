@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "wouter";
 import { verifyLearningCertificate } from "@/lib/digital-learning-service";
+import { applyPageSeo } from "@/lib/seo";
 
 type CertResult = {
   valid: boolean;
@@ -17,6 +18,15 @@ type CertResult = {
 export default function CertificateVerifyPage() {
   const params = useParams();
   const [code, setCode] = useState(params.code || "");
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/learning/certificate-verify",
+      title: "التحقق من الشهادة | المجلس العلمي",
+      description: "تحقق من صحة الشهادة العلمية الصادرة من المجلس العلمي — أدخل رمز الشهادة للتحقق منها.",
+      keywords: ["تحقق شهادة", "شهادة علمية", "اعتماد علمي", "المجلس العلمي"],
+    });
+  }, []);
   const [inputCode, setInputCode] = useState(params.code || "");
   const [result, setResult] = useState<CertResult | null>(null);
   const [loading, setLoading] = useState(Boolean(params.code));

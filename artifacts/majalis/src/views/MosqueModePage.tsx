@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
+import { applyPageSeo } from "@/lib/seo";
 
 function pad(n: number) {
   return String(n).padStart(2, "0");
@@ -26,6 +27,15 @@ const QUICK_LINKS = [
 export default function MosqueModePage() {
   const { countdown } = usePrayerCountdown();
   const [silenceAlerted, setSilenceAlerted] = useState(false);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/mosque-mode",
+      title: "وضع المسجد | المجلس العلمي",
+      description: "وضع المسجد — عد تنازلي للصلاة مع تذكير بالصمت وإطفاء الصوت داخل المسجد.",
+      keywords: ["وضع المسجد", "آداب المسجد", "صمت مسجد", "عد تنازلي صلاة"],
+    });
+  }, []);
 
   // Show silence reminder once on mount
   useEffect(() => {

@@ -1,8 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Link } from "wouter";
 import { MUEZZINS, previewAdhan, stopAdhan } from "@/lib/adhan-audio";
 import { loadFavorites, toggleFavorite } from "@/lib/muezzin-favorites";
 import { patchAdhanPrefs, loadAdhanPrefs } from "@/lib/adhan-preferences";
+import { useEffect } from "react";
+import { applyPageSeo } from "@/lib/seo";
 
 const STYLE_CLASS: Record<string, string> = {
   "خاشع":    "khashi",
@@ -19,6 +21,15 @@ function formatNum(n: number): string {
 
 export default function MuezzinFavoritesPage() {
   const [favorites, setFavorites] = useState<Set<string>>(() => loadFavorites());
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/muezzins/favorites",
+      title: "المؤذنون المفضلون | المجلس العلمي",
+      description: "أذان مؤذنيك المفضلين — استمع، قيّم، واختر الصوت الافتراضي للأذان في إعداداتك.",
+      keywords: ["مؤذنون مفضلون", "أذان مفضل", "تفضيلات أذان", "أصوات إسلامية"],
+    });
+  }, []);
   const [previewing, setPreviewing] = useState<string | null>(null);
   const [savedDefault, setSavedDefault] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);

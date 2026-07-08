@@ -11,12 +11,22 @@ import {
   type SavedResearch,
 } from "@/lib/rag-service";
 import { useAuth } from "@/components/AuthProvider";
+import { applyPageSeo } from "@/lib/seo";
 
 type View = "search" | "library";
 
 export default function ScholarlyResearchPage() {
   const { isLoggedIn } = useAuth();
   const [view, setView] = useState<View>("search");
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/scholarly-research",
+      title: "البحث العلمي الشرعي | المجلس العلمي",
+      description: "محرك بحث شرعي ذكي بتقنية RAG — ابحث في المصادر الإسلامية واحصل على إجابات دقيقة موثّقة.",
+      keywords: ["بحث علمي شرعي", "ذكاء اصطناعي إسلامي", "محرك بحث فقهي", "RAG إسلامي", "إجابات شرعية"],
+    });
+  }, []);
 
   const [query, setQuery]       = useState("");
   const [loading, setLoading]   = useState(false);

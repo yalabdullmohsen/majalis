@@ -11,6 +11,7 @@ import {
   type ResumeItem,
 } from "@/lib/user-profile-service";
 import { BADGE_DEFS, BADGE_MAP } from "@/lib/user-badges";
+import { applyPageSeo } from "@/lib/seo";
 
 // ─── Stat card ───────────────────────────────────────────────────────────────
 
@@ -214,6 +215,16 @@ function NewBadgesFlash({ keys }: { keys: string[] }) {
 export default function UserStatsPage() {
   const { user, isLoggedIn, loading: authLoading } = useAuth();
   const [stats, setStats] = useState<ProfileStats | null>(null);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/my-profile",
+      title: "إحصائياتي | المجلس العلمي",
+      description: "إحصائياتي وشاراتي وسجل تعلمي في المجلس العلمي — تابع تقدمك في رحلتك العلمية.",
+      keywords: ["إحصائيات", "شارات", "نشاط المستخدم", "تقدم علمي", "المجلس العلمي"],
+      robots: "noindex, follow",
+    });
+  }, []);
   const [resumeItems, setResumeItems] = useState<ResumeItem[]>([]);
   const [newBadges, setNewBadges] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);

@@ -15,6 +15,7 @@ import {
   type LearningPlan,
   type PlanItem,
 } from "@/lib/learning-plan-service";
+import { applyPageSeo } from "@/lib/seo";
 
 // ─── Wizard Steps ─────────────────────────────────────────────────────────────
 
@@ -193,6 +194,15 @@ function PlanDisplay({
 export default function LearningPlanPage() {
   const { user, isLoggedIn, loading: authLoading } = useAuth();
   const [step, setStep] = useState<WizardStep>("level");
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/learning-plan",
+      title: "خطة التعلم الشخصية | المجلس العلمي",
+      description: "أنشئ خطة تعلم شرعية مخصصة لك — حدد مستواك واهتماماتك وعدد الدقائق اليومية.",
+      keywords: ["خطة تعلم", "تعلم شرعي", "منهج إسلامي شخصي", "تعليم إسلامي ذكي"],
+    });
+  }, []);
   const [level, setLevel] = useState<PlanLevel | "">("");
   const [interests, setInterests] = useState<InterestId[]>([]);
   const [dailyMinutes, setDailyMinutes] = useState(30);

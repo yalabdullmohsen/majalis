@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { applyPageSeo } from "@/lib/seo";
 import { Link } from "wouter";
 import { PageHeader } from "@/components/ui-common";
 import { getAllSurahStories, getSurahStory, searchSurahStories } from "@/lib/surah-stories";
@@ -8,6 +9,15 @@ import { SectionErrorBoundary } from "@/components/ErrorBoundary";
 
 export default function SurahStoriesPage() {
   const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/surah-stories",
+      title: "قصص سور القرآن | المجلس العلمي",
+      description: "قصص وأسباب نزول سور القرآن الكريم — تعرّف على مناسبات النزول والقصص المرتبطة بكل سورة.",
+      keywords: ["قصص القرآن", "أسباب النزول", "سور القرآن", "قصص إسلامية", "تفسير قرآني"],
+    });
+  }, []);
   const stories = search.trim() ? searchSurahStories(search) : getAllSurahStories();
 
   return (

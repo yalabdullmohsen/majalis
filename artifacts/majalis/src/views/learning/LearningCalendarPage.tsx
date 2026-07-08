@@ -4,6 +4,7 @@ import { format } from "date-fns";
 import { arSA } from "date-fns/locale";
 import { PageHeader, Loading } from "@/components/ui-common";
 import { fetchLearningCalendar, subscribeLearningEvent } from "@/lib/digital-learning-service";
+import { applyPageSeo } from "@/lib/seo";
 
 const TYPE_LABELS: Record<string, string> = {
   lesson: "درس",
@@ -16,6 +17,15 @@ const TYPE_LABELS: Record<string, string> = {
 export default function LearningCalendarPage() {
   const [events, setEvents] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/learning/calendar",
+      title: "تقويم الدروس والدورات | المجلس العلمي",
+      description: "تقويم الأحداث والدروس والدورات الإسلامية القادمة — اشترك وتابع المواعيد العلمية.",
+      keywords: ["تقويم دروس", "دورات إسلامية", "مواعيد علمية", "أحداث شرعية", "دورات قرآنية"],
+    });
+  }, []);
 
   useEffect(() => {
     fetchLearningCalendar()

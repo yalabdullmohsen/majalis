@@ -9,6 +9,7 @@ import {
   INTEREST_TAGS,
   type ResearcherProfile,
 } from "@/lib/researcher-profile-service";
+import { applyPageSeo } from "@/lib/seo";
 
 // ─── Interest Tag Toggle ───────────────────────────────────────────────────────
 
@@ -103,6 +104,16 @@ export default function ResearcherProfilePage() {
   const [saved, setSaved] = useState(false);
   const [pubInput, setPubInput] = useState<string[]>([""]);
   const savedTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/researcher-profile",
+      title: "الملف الشخصي للباحث | المجلس العلمي",
+      description: "أنشئ ملفك الشخصي كباحث إسلامي — تخصصاتك واهتماماتك ومنشوراتك العلمية.",
+      keywords: ["باحث إسلامي", "ملف أكاديمي", "بحث شرعي", "باحث شرعي"],
+      robots: "noindex, follow",
+    });
+  }, []);
 
   useEffect(() => () => { if (savedTimerRef.current) clearTimeout(savedTimerRef.current); }, []);
 

@@ -1,6 +1,7 @@
 import { Suspense, lazy, useCallback, useEffect, useRef, useState } from "react";
 import { Link, useParams } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
+import { applyPageSeo } from "@/lib/seo";
 import { supabase } from "@/lib/supabase";
 import type { LPBookDetail, LPExplanation, LPBenefit, LPQuiz, LPProgress } from "@/lib/learning-path-service";
 import { fetchBook, fetchProgress, updateProgress, DIFFICULTY_LABELS } from "@/lib/learning-path-service";
@@ -14,6 +15,15 @@ const EXPLANATION_ICONS = { audio: "🎙️", video: "📹", text: "📝" };
 export default function LearningPathBookPage() {
   const { bookId } = useParams<{ bookId: string }>();
   const { isLoggedIn } = useAuth();
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/learning-path/book",
+      title: "كتاب في مسار التعلم | المجلس العلمي",
+      description: "تصفّح محتوى الكتاب في مسار التعلم الشرعي — شروح وملاحظات وتتبع تقدمك في القراءة.",
+      keywords: ["كتاب شرعي", "مسار تعلم", "قراءة علمية", "شرح كتاب", "تعليم إسلامي"],
+    });
+  }, []);
   const tokenRef = useRef<string | null>(null);
   const [book, setBook]             = useState<LPBookDetail | null>(null);
   const [explanations, setExp]      = useState<LPExplanation[]>([]);

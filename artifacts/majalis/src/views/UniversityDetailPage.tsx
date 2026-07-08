@@ -12,6 +12,7 @@ import {
 import { CompareProvider } from "@/components/universities/CompareContext";
 import { useCompare } from "@/components/universities/CompareContext";
 import { CompareBar } from "@/components/universities/CompareBar";
+import { applyPageSeo } from "@/lib/seo";
 
 function ProgramCard({ program: p }: { program: UniversityProgram }) {
   const [open, setOpen] = useState(false);
@@ -291,6 +292,17 @@ export default function UniversityDetailPage() {
   const [university, setUniversity] = useState<University | null>(null);
   const [loading, setLoading]       = useState(true);
   const [notFound, setNotFound]     = useState(false);
+
+  useEffect(() => {
+    if (university) {
+      applyPageSeo({
+        path: `/universities/${slug}`,
+        title: `${university.name_ar} | المجلس العلمي`,
+        description: university.about || `تفاصيل ${university.name_ar} — البرامج الأكاديمية والتخصصات والاعتمادات.`,
+        keywords: ["جامعة إسلامية", university.name_ar, "دراسة شرعية", "تعليم ديني"],
+      });
+    }
+  }, [university, slug]);
 
   useEffect(() => {
     if (!slug) return;

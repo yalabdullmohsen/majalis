@@ -11,11 +11,21 @@ import {
   moduleLabel,
   type LearningModule,
 } from "@/lib/digital-learning-service";
+import { applyPageSeo } from "@/lib/seo";
 
 export default function LearningPathDetailPage() {
   const params = useParams();
   const slug = params.slug || "";
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/learning/path",
+      title: "مسار تعليمي | المجلس العلمي",
+      description: "تفاصيل مسار التعلم الإسلامي — الدروس والوحدات والاختبارات وشهادة الإتمام.",
+      keywords: ["مسار تعليمي", "تعلم إسلامي", "وحدات دراسية", "شهادة إتمام"],
+    });
+  }, []);
   const [path, setPath] = useState<any>(null);
   const [modules, setModules] = useState<LearningModule[]>([]);
   const [nextModule, setNextModule] = useState<LearningModule | null>(null);

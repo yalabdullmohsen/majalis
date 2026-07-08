@@ -1,4 +1,5 @@
-import { useState, useRef, type ChangeEvent, type DragEvent, type FormEvent } from "react";
+import { useEffect, useState, useRef, type ChangeEvent, type DragEvent, type FormEvent } from "react";
+import { applyPageSeo } from "@/lib/seo";
 import { submitAdhan, submitLesson } from "@/lib/user-submissions-service";
 
 type Tab = "adhan" | "lesson";
@@ -290,6 +291,15 @@ function LessonForm() {
 
 export default function UploadPage() {
   const [tab, setTab] = useState<Tab>("adhan");
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/upload",
+      title: "رفع أذان أو درس | المجلس العلمي",
+      description: "أرسل تسجيل أذان أو درس علمي للمجلس العلمي — شارك العلم وأسهم في إثراء المكتبة الإسلامية.",
+      keywords: ["رفع أذان", "تسجيل درس", "رفع ملف صوتي", "مشاركة علمية", "المجلس العلمي"],
+    });
+  }, []);
 
   return (
     <div className="ulp-page">

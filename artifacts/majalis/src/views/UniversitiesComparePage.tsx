@@ -1,5 +1,7 @@
+import { useEffect } from "react";
 import { Link } from "wouter";
 import { CompareProvider, useCompare } from "@/components/universities/CompareContext";
+import { applyPageSeo } from "@/lib/seo";
 import { ACCREDITATION_LABELS, ACCREDITATION_COLOR } from "@/lib/universities-service";
 import type { University, UniversityProgram } from "@/lib/universities-service";
 
@@ -164,6 +166,15 @@ function CompareContent() {
 }
 
 export default function UniversitiesComparePage() {
+  useEffect(() => {
+    applyPageSeo({
+      path: "/universities/compare",
+      title: "مقارنة الجامعات الإسلامية | المجلس العلمي",
+      description: "قارن بين الجامعات الإسلامية — التخصصات والاعتمادات والبرامج الأكاديمية جنباً إلى جنب.",
+      keywords: ["مقارنة جامعات", "جامعات إسلامية", "دراسة شرعية", "اعتماد أكاديمي", "مقارنة برامج"],
+    });
+  }, []);
+
   return (
     <CompareProvider>
       <CompareContent />

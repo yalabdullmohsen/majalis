@@ -1,6 +1,7 @@
 import { Suspense, lazy, useEffect, useState } from "react";
 import { Link, useParams } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
+import { applyPageSeo } from "@/lib/seo";
 import { supabase } from "@/lib/supabase";
 import type { LPScience, LPLevel, LPProgress } from "@/lib/learning-path-service";
 import { fetchScienceDetail, fetchProgress } from "@/lib/learning-path-service";
@@ -12,6 +13,15 @@ const LevelTimeline = lazy(() =>
 export default function LearningPathSciencePage() {
   const { scienceSlug } = useParams<{ scienceSlug: string }>();
   const { isLoggedIn } = useAuth();
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/learning-path/science",
+      title: "علم في مسار التعلم | المجلس العلمي",
+      description: "استكشف مستويات العلم الشرعي في مسار التعلم الإسلامي — من المبتدئ إلى المتقدم.",
+      keywords: ["علم شرعي", "مسار تعلم", "مستويات علمية", "تعليم إسلامي", "فقه ومذاهب"],
+    });
+  }, []);
   const [science, setScience]   = useState<LPScience | null>(null);
   const [levels, setLevels]     = useState<LPLevel[]>([]);
   const [progress, setProgress] = useState<LPProgress[]>([]);

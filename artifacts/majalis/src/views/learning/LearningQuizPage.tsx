@@ -2,12 +2,22 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "wouter";
 import { Loading } from "@/components/ui-common";
 import { fetchLearningQuiz, submitLearningQuiz, type QuizQuestion } from "@/lib/digital-learning-service";
+import { applyPageSeo } from "@/lib/seo";
 
 type Phase = "loading" | "playing" | "done";
 
 export default function LearningQuizPage() {
   const params = useParams();
   const slug = params.slug || "aqeedah";
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/learning/quiz",
+      title: "اختبار المسار الشرعي | المجلس العلمي",
+      description: "اختبر فهمك لمحتوى المسار الشرعي — أسئلة اختيار من متعدد مع نتيجة فورية وشهادة.",
+      keywords: ["اختبار شرعي", "اختبار المسار", "تقييم علمي", "أسئلة إسلامية"],
+    });
+  }, []);
   const [phase, setPhase] = useState<Phase>("loading");
   const [quiz, setQuiz] = useState<any>(null);
   const [index, setIndex] = useState(0);

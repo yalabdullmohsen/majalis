@@ -8,6 +8,7 @@ import {
   type IntelligentSearchResult,
   type TopicSection,
 } from "@/lib/scholarly-intelligence-service";
+import { applyPageSeo } from "@/lib/seo";
 
 function SectionGroup({
   title,
@@ -51,6 +52,15 @@ export default function TopicPage() {
   const [sections, setSections] = useState<TopicSection | null>(null);
   const [totalCount, setTotalCount] = useState(0);
   const [relatedTopics, setRelatedTopics] = useState<Array<{ slug: string; title: string }>>([]);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/topic",
+      title: `${topic?.title || "موضوع"} | المجلس العلمي`,
+      description: `استعرض محتوى موضوع "${topic?.title || "الموضوع"}" من الدروس والفتاوى والأحاديث في المجلس العلمي.`,
+      keywords: [topic?.title || "موضوع", "محتوى إسلامي", "فتاوى", "دروس", "أحاديث"],
+    });
+  }, [topic?.title]);
 
   useEffect(() => {
     if (!slug) return;

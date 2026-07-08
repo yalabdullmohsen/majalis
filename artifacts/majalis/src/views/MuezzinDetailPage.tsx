@@ -19,6 +19,7 @@ import {
   saveRating,
   getUserRating,
 } from "@/lib/muezzin-favorites";
+import { applyPageSeo } from "@/lib/seo";
 
 const STYLE_CLASS: Record<string, string> = {
   "خاشع":    "khashi",
@@ -55,6 +56,15 @@ export default function MuezzinDetailPage() {
   const [, params] = useRoute("/muezzins/:id");
   const id = params?.id ?? "";
   const muezzin = getMuezzin(id);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/muezzins",
+      title: `${muezzin?.name || "مؤذن"} | أذان | المجلس العلمي`,
+      description: `استمع لتلاوات ${muezzin?.name || "المؤذن"} — أذان مباشر وتسجيلات إسلامية متنوعة.`,
+      keywords: ["أذان", "مؤذن", "تلاوات أذان", "صوت مؤذن", "أذان إسلامي"],
+    });
+  }, [muezzin?.name]);
 
   const [playState, setPlayState] = useState<PlayState>({ key: null });
   const [saved, setSaved] = useState(false);
