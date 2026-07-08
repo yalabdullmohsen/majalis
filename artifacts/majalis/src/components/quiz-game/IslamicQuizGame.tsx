@@ -350,16 +350,7 @@ function SetupPhase({ onStart }: { onStart: (cats: string[], names: [string, str
                 type="button"
                 onClick={() => toggle(cat.id)}
                 disabled={maxed}
-                className="qzg-cat-btn"
-                style={{
-                  "--qzg-cb-border": on ? "var(--ds-emerald, var(--majalis-emerald))" : "var(--ds-line-color)",
-                  "--qzg-cb-bg": on ? "var(--ds-emerald-soft, var(--majalis-emerald-muted))" : "var(--ds-parchment-deep, var(--majalis-parchment-deep))",
-                  "--qzg-cb-color": on ? "var(--ds-emerald-deep, var(--majalis-emerald-deep))" : maxed ? "var(--ds-ink-soft)" : "var(--ds-ink)",
-                  "--qzg-cb-cursor": maxed ? "not-allowed" : "pointer",
-                  "--qzg-cb-fw": on ? 700 : 400,
-                  "--qzg-cb-opacity": maxed ? 0.5 : 1,
-                  "--qzg-cb-icon-opacity": maxed ? 0.4 : 1,
-                } as React.CSSProperties}
+                className={`qzg-cat-btn${on ? " qzg-cat-btn--on" : ""}${maxed ? " qzg-cat-btn--maxed" : ""}`}
               >
                 <div className="qzg-cat-btn__icon">
                   <CategoryIcon name={cat.icon} size={20} />
@@ -449,14 +440,7 @@ function BoardPhase({
                   type="button"
                   disabled={cell.used}
                   onClick={() => dispatch({ type: "SELECT_CELL", cell, pool: poolRef.current ?? ALL_QUESTIONS, persistedUsedIds })}
-                  className="qzg-board-cell"
-                  style={{
-                    "--qzg-cell-border": cell.used ? "var(--ds-line-color)" : "var(--ds-emerald, var(--majalis-emerald))",
-                    "--qzg-cell-bg": cell.used ? "var(--ds-parchment-deep, var(--majalis-parchment-deep))" : "#fff",
-                    "--qzg-cell-color": cell.used ? "var(--ds-ink-soft)" : "var(--ds-emerald-deep, var(--majalis-emerald-deep))",
-                    "--qzg-cell-cursor": cell.used ? "default" : "pointer",
-                    "--qzg-cell-opacity": cell.used ? 0.4 : 1,
-                  } as React.CSSProperties}
+                  className={`qzg-board-cell${cell.used ? " qzg-board-cell--used" : ""}`}
                 >
                   {cell.used ? "—" : pts}
                 </button>

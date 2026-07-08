@@ -28,11 +28,7 @@ export function AchievementToast({ badges, onDismiss }: Props) {
     <div
       role="status"
       aria-live="polite"
-      className="at-toast"
-      style={{
-        "--at-opacity":    visible ? "1" : "0",
-        "--at-transform":  visible ? "translateY(0)" : "translateY(1.5rem)",
-      } as React.CSSProperties}
+      className={`at-toast${visible ? " at-toast--visible" : ""}`}
     >
       <span className="at-icon">{badge.icon}</span>
       <div className="at-body">
