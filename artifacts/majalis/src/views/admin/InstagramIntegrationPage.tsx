@@ -6,7 +6,7 @@ import {
   refreshInstagramTokenInfo,
   type InstagramIntegrationStatus,
 } from "@/lib/instagram-integration-api";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { AdminShell } from "@/views/admin/AdminShell";
 
 function StatusBadge({ ok, label }: { ok: boolean; label: string }) {
@@ -70,7 +70,7 @@ function InstagramIntegrationContent() {
         <Link href="/admin/sources" className="igst-back-link">← المصادر</Link>
       </div>
 
-      {loading ? <Loading /> : (
+      {loading ? <SkeletonCardGrid count={6} /> : (
         <>
           <section className="igst-section">
             <h3 className="igst-section-h3">حالة الربط</h3>

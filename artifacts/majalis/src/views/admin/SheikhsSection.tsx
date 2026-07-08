@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { adminGetSheikhs, adminUpsertSheikh, adminDeleteSheikh, uploadSheikhImage, deleteSheikhImage } from "@/lib/supabase";
 import { GOVERNORATES } from "@/lib/theme";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { AdminModal, Field, FieldRow } from "./AdminModal";
 import { BulkImport } from "./BulkImport";
 import { SheikhAvatar } from "@/components/lessons/SheikhAvatar";
@@ -127,7 +127,7 @@ export function SheikhsSection() {
       </div>
       <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="بحث في المشايخ..." className="adm-input skh-search" />
 
-      {loading ? <Loading /> : (
+      {loading ? <SkeletonCardGrid count={6} /> : (
         <div className="skh-table-wrap">
           <table className="skh-table">
             <thead>

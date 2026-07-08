@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { useAdminShell } from "@/views/admin/AdminShell";
 import {
   bootstrapVerifiedKnowledge,
@@ -84,7 +84,7 @@ export function VerifiedKnowledgeSection() {
     }
   };
 
-  if (loading && !data) return <Loading />;
+  if (loading && !data) return <SkeletonCardGrid count={6} />;
 
   const totals = report?.totals ?? {};
   const gaps = report?.gaps ?? [];

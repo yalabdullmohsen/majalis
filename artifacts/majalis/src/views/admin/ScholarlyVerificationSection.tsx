@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { useAdminShell } from "@/views/admin/AdminShell";
 import {
   fetchScholarlyDashboard,
@@ -67,7 +67,7 @@ export function ScholarlyVerificationSection() {
     }
   };
 
-  if (loading && !data) return <Loading />;
+  if (loading && !data) return <SkeletonCardGrid count={6} />;
 
   const sectionStats = report?.section_stats ?? {};
 

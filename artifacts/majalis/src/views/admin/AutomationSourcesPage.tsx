@@ -10,7 +10,7 @@ import {
   SOURCE_TYPES,
   type TrustedLessonSource,
 } from "@/lib/lesson-automation-api";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { AdminShell, useAdminShell } from "@/views/admin/AdminShell";
 import { InstagramManualAssistPanel } from "@/views/admin/InstagramManualAssistPanel";
 
@@ -144,7 +144,7 @@ function AutomationSourcesContent() {
         </section>
       )}
 
-      {loading ? <Loading /> : (
+      {loading ? <SkeletonCardGrid count={6} /> : (
         <div className="asp-list">
           {sources.map((s) => (
             <article key={s.id} className="asp-card">

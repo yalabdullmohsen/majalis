@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { adminGetUsers, adminUpdateUserRole } from "@/lib/supabase";
 import { assignGovernanceRole, syncLegacyRoles, LEGACY_ROLE_MAP } from "@/lib/governance-service";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { useAdminShell } from "./AdminShell";
 
 const ROLES: Record<string, { label: string; bg: string; text: string }> = {
@@ -91,7 +91,7 @@ export function UsersSection() {
         ))}
       </div>
 
-      {loading ? <Loading /> : (
+      {loading ? <SkeletonCardGrid count={6} /> : (
         <div className="usr-table-wrap">
           <table className="usr-table">
             <thead>

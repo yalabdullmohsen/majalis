@@ -50,7 +50,7 @@ import {
   type FiqhCouncilSource,
   type FiqhSyncJob,
 } from "@/lib/fiqh-council-types";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { AdminModal, Field } from "./AdminModal";
 import { useAdminShell } from "./AdminShell";
 import { FiqhCompletionBarFromItem } from "@/components/fiqh-council/FiqhCompletionBar";
@@ -748,7 +748,7 @@ export function FiqhCouncilSection() {
             />
           </div>
 
-          {loading ? <Loading /> : (
+          {loading ? <SkeletonCardGrid count={6} /> : (
             <div className="fcs-items-grid">
               {filtered.length === 0 ? (
                 <p className="fcs-empty">

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link } from "wouter";
 import { getMkeDashboard, runMkeEngine } from "@/lib/majlis-knowledge-engine-api";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { AdminShell } from "@/views/admin/AdminShell";
 
 type AkpStats = {
@@ -149,7 +149,7 @@ function MajlisKnowledgeEngineContent() {
 
       {runResult && <p className="mke-run-result">{runResult}</p>}
 
-      {loading ? <Loading /> : (
+      {loading ? <SkeletonCardGrid count={6} /> : (
         <>
           <div className="mke-stats-row">
             <StatCard label="\u0635\u062d\u0629 \u0627\u0644\u0646\u0638\u0627\u0645" value={stats?.health?.score ?? "\u2014"} color={stats?.health?.status === "healthy" ? "var(--majalis-emerald-deep)" : "#0E6E52"} />

@@ -10,7 +10,7 @@ import {
   resetAllUsedQuizIds,
 } from "@/lib/supabase";
 import { sanitizeText } from "@/lib/sanitize";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { AdminModal, Field, FieldRow } from "./AdminModal";
 import { useAdminShell } from "./AdminShell";
 
@@ -215,7 +215,7 @@ export function QuizSection() {
       </div>
 
       {loading ? (
-        <Loading />
+        <SkeletonCardGrid count={6} />
       ) : filtered.length === 0 ? (
         <div className="qzs-empty">
           {items.length === 0

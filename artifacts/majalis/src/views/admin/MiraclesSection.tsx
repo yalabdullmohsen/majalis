@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { adminGetMiracles, adminUpsertMiracle, adminDeleteMiracle } from "@/lib/supabase";
 import { sanitizeText } from "@/lib/sanitize";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { AdminModal, Field } from "./AdminModal";
 import { BulkImport } from "./BulkImport";
 
@@ -65,7 +65,7 @@ export function MiraclesSection() {
 
       <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="بحث..." className="adm-input mir-search" />
 
-      {loading ? <Loading /> : (
+      {loading ? <SkeletonCardGrid count={6} /> : (
         <div className="mir-table-wrap">
           <table className="mir-table">
             <thead>

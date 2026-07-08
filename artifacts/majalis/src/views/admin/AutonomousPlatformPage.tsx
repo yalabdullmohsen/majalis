@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { AdminShell, useAdminShell } from "@/views/admin/AdminShell";
 
 const API_BASE = "/api/admin/autonomous-platform";
@@ -273,7 +273,7 @@ function AutonomousPlatformContent() {
         ))}
       </div>
 
-      {loading && <Loading />}
+      {loading && <SkeletonCardGrid count={6} />}
 
       {!loading && tab === "overview" && (
         <>

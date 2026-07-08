@@ -3,7 +3,7 @@ import { Link } from "wouter";
 import { adminGetDashboardStats, adminGetStats } from "@/lib/supabase";
 import { ADHKAR_ITEMS } from "@/lib/adhkar-seed";
 import { getPublishedAdhkarItems } from "@/lib/adhkar-admin";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { useAdminShell } from "./AdminShell";
 import { AdminSectionToolbar } from "./AdminSectionToolbar";
 
@@ -23,7 +23,7 @@ export function ReportsSection() {
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <Loading />;
+  if (loading) return <SkeletonCardGrid count={6} />;
 
   const cards = [
     { label: "المشايخ", value: stats?.sheikhsCount ?? 0 },

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AlertTriangle } from "lucide-react";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { useAdminShell } from "@/views/admin/AdminShell";
 import {
   fetchAkeStats,
@@ -119,7 +119,7 @@ export function KnowledgeEngineSection() {
       )}
 
       {loading ? (
-        <Loading />
+        <SkeletonCardGrid count={6} />
       ) : (
         <>
           <div className="ken-stats-grid">

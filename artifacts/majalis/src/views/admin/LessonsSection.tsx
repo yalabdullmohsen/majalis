@@ -6,7 +6,7 @@ import { parseTimeToMinutes } from "@/lib/lesson-time";
 import { invalidateLessonsCache } from "@/lib/lessons-service";
 import { sanitizeText } from "@/lib/sanitize";
 import { GOVERNORATES } from "@/lib/theme";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { adminListLoad } from "@/lib/admin-list-load";
 import { AdminModal, Field, FieldRow } from "./AdminModal";
 import { BulkImport } from "./BulkImport";
@@ -249,7 +249,7 @@ export function LessonsSection() {
         </select>
       </div>
 
-      {loading ? <Loading /> : (
+      {loading ? <SkeletonCardGrid count={6} /> : (
         <div className="les-table-wrap">
           <table className="les-table">
             <thead>

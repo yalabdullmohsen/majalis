@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { adminGetAllAnnualCourses, adminUpsertAnnualCourse, adminDeleteAnnualCourse } from "@/lib/platform-supabase";
 import { ANNUAL_COURSES_SEED } from "@/lib/annual-courses-seed";
 import { COURSE_TYPES } from "@/lib/platform-types";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { AdminModal, Field } from "./AdminModal";
 import { useAdminShell } from "./AdminShell";
 
@@ -26,7 +26,7 @@ export function AnnualCoursesSection() {
         <h2 className="adm-section-h2">الدورات العلمية ({items.length})</h2>
         <button onClick={() => { setForm({ ...EMPTY }); setOpen(true); }} className="adm-btn-add">+ إضافة</button>
       </div>
-      {loading ? <Loading /> : items.map((item, idx) => (
+      {loading ? <SkeletonCardGrid count={6} /> : items.map((item, idx) => (
         <div key={item.id ?? item.title ?? idx} className="adm-item-card">
           <strong>{item.title}</strong> — {item.course_type}
           <div className="adm-item-actions">

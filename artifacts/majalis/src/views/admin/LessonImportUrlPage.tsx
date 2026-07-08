@@ -12,7 +12,7 @@ import {
   type ParsedLessonFields,
   type LessonImportResponse,
 } from "@/lib/lesson-import-api";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { AdminShell, useAdminShell } from "@/views/admin/AdminShell";
 import { LessonImportReviewPanel, labelStyle } from "@/views/admin/LessonImportShared";
 
@@ -266,7 +266,7 @@ function LessonImportUrlContent() {
 
       {busy && (
         <div className="liu-loading-wrap">
-          <Loading />
+          <SkeletonCardGrid count={6} />
         </div>
       )}
     </div>

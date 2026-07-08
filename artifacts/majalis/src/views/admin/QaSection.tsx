@@ -12,7 +12,7 @@ import {
   QA_RULING_COLORS,
   QA_REVIEW_LABELS,
 } from "@/lib/theme";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { AdminModal, Field, FieldRow } from "./AdminModal";
 import { BulkImport } from "./BulkImport";
 
@@ -144,7 +144,7 @@ export function QaSection() {
         </select>
       </div>
 
-      {loading ? <Loading /> : (
+      {loading ? <SkeletonCardGrid count={6} /> : (
         <div className="qa-table-wrap">
           <table className="qa-table">
             <thead>

@@ -8,7 +8,7 @@ import {
   listContentDrafts,
   rejectContentDraft,
 } from "@/lib/smart-cms-api";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { useAdminShell } from "./AdminShell";
 
 const ERROR_MESSAGES: Record<string, string> = {
@@ -371,7 +371,7 @@ export function SmartCmsSection() {
       </div>
 
       {loading ? (
-        <Loading />
+        <SkeletonCardGrid count={6} />
       ) : drafts.length === 0 ? (
         <p className="scm-empty">لا توجد مسودات معلّقة.</p>
       ) : (

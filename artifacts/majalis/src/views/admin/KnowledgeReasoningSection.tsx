@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { useAdminShell } from "@/views/admin/AdminShell";
 import {
   fetchReasoningDashboard,
@@ -76,7 +76,7 @@ export function KnowledgeReasoningSection() {
     }
   };
 
-  if (loading && !dashboard) return <Loading />;
+  if (loading && !dashboard) return <SkeletonCardGrid count={6} />;
 
   return (
     <div>

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { AdminShell, useAdminShell } from "@/views/admin/AdminShell";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { FiqhAdminSubnav } from "@/components/fiqh-council/FiqhAdminSubnav";
 import {
   adminGetFiqhQualityStats,
@@ -60,7 +60,7 @@ function QualityContent() {
     }
   };
 
-  if (loading) return <Loading />;
+  if (loading) return <SkeletonCardGrid count={6} />;
 
   const s = stats || {
     published_count: 0,

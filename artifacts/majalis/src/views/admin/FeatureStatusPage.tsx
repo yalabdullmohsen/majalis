@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Ban, CheckCircle2, XCircle } from "lucide-react";
 import { Link } from "wouter";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { adminFetch } from "@/lib/admin-api";
 import registry from "../../../data/feature-registry.json";
 
@@ -186,7 +186,7 @@ export default function FeatureStatusPage() {
       )}
 
       {loading && !health ? (
-        <Loading />
+        <SkeletonCardGrid count={6} />
       ) : (
         <>
           <section className="ui-card admin-feature-status__bootstrap">

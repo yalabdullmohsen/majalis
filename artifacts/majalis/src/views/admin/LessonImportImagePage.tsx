@@ -13,7 +13,7 @@ import {
   type ParsedLessonFields,
 } from "@/lib/lesson-import-api";
 import { GOVERNORATES } from "@/lib/theme";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { AdminShell, useAdminShell } from "@/views/admin/AdminShell";
 
 const CATEGORIES = ["تفسير", "فقه", "عقيدة", "حديث", "سيرة", "تجويد", "أخرى"];
@@ -589,7 +589,7 @@ function LessonImportImageContent() {
 
       {busy && (
         <div className="lip-loading-wrap">
-          <Loading />
+          <SkeletonCardGrid count={6} />
         </div>
       )}
     </div>

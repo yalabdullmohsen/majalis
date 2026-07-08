@@ -5,7 +5,7 @@ import { RULING_CATEGORIES } from "@/lib/platform-types";
 import { RULINGS_CATEGORY_TREE, flattenCategories } from "@/lib/rulings-categories";
 import { importRulingsFromText, RULINGS_CSV_TEMPLATE } from "@/lib/rulings-import";
 import { validateRuling, findSimilarRulings } from "@/lib/rulings-validator";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { adminListLoad } from "@/lib/admin-list-load";
 import { StatusBadge } from "./AdminUI";
 import { AdminModal, Field } from "./AdminModal";
@@ -195,7 +195,7 @@ export function RulingsSection() {
       />
 
       {loading ? (
-        <Loading />
+        <SkeletonCardGrid count={6} />
       ) : (
         <>
         {filtered.length > 100 && (

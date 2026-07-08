@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { adminGetAllFatwas, adminUpsertFatwa, adminDeleteFatwa, adminSetPlatformContentStatus } from "@/lib/platform-supabase";
 import { FATWA_SEED } from "@/lib/fatwa-seed";
 import { FATWA_CATEGORIES } from "@/lib/platform-types";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { AdminModal, Field } from "./AdminModal";
 import { useAdminShell } from "./AdminShell";
 
@@ -30,7 +30,7 @@ export function FatwaAdminSection() {
         <h2 className="adm-section-h2">الفتاوى ({items.length})</h2>
         <button onClick={() => { setForm({ ...EMPTY }); setOpen(true); }} className="adm-btn-add">+ إضافة</button>
       </div>
-      {loading ? <Loading /> : items.map((item) => (
+      {loading ? <SkeletonCardGrid count={6} /> : items.map((item) => (
         <div key={item.id} className="adm-item-card">
           <strong>{item.question}</strong>
           <div className="adm-item-actions">

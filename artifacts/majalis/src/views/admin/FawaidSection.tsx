@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { adminGetAllFawaid, moderateFawaid, adminDeleteFawaid, adminUpsertFawaid } from "@/lib/supabase";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { AdminModal, Field } from "./AdminModal";
 import { BulkImport } from "./BulkImport";
 
@@ -85,7 +85,7 @@ export function FawaidSection() {
         ))}
       </div>
 
-      {loading ? <Loading /> : (
+      {loading ? <SkeletonCardGrid count={6} /> : (
         <div className="faw-grid">
           {filtered.map(item => {
             const sc = STATUS_COLORS[item.status] || { bg: "var(--majalis-parchment-deep)", text: "var(--majalis-ink-soft)" };

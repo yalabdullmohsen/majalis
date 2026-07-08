@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { AdminShell, useAdminShell } from "@/views/admin/AdminShell";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import {
   adminApproveAutoContent,
   adminGetAutoImportedContent,
@@ -225,7 +225,7 @@ function AutoContentAdmin() {
       </div>
 
       {loading ? (
-        <Loading />
+        <SkeletonCardGrid count={6} />
       ) : filtered.length === 0 ? (
         <p className="acp-empty">\u0644\u0627 \u062a\u0648\u062c\u062f \u0645\u0648\u0627\u062f \u0645\u0633\u062a\u0648\u0631\u062f\u0629. \u0634\u063a\u0651\u0644 \u0627\u0644\u0645\u0632\u0627\u0645\u0646\u0629 \u0623\u0648 \u0623\u0636\u0641 \u0645\u0635\u0627\u062f\u0631 RSS \u0641\u064a Supabase.</p>
       ) : (

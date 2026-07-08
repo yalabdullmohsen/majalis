@@ -13,7 +13,7 @@ import { adminGetDashboardStats, adminResolveReport } from "@/lib/supabase";
 import { getCmsDashboardStats } from "@/lib/cms/supabase-cms";
 import { getTopSearchQueries } from "@/lib/search-history";
 import { isSupabaseConfigured } from "@/lib/supabase-config";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { useAuth } from "@/components/AuthProvider";
 import { useAdminShell, type AdminSection } from "./AdminShell";
 
@@ -462,7 +462,7 @@ export function DashboardSection() {
     return groups;
   }, [filteredCards]);
 
-  if (loading || !data) return <Loading />;
+  if (loading || !data) return <SkeletonCardGrid count={6} />;
 
   const { stats, recentReports, recentLessons, topViewedLessons, topSearches } = data;
   const searches  = topSearches.length > 0 ? topSearches : localSearches;

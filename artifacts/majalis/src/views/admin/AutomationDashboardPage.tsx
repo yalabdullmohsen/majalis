@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link } from "wouter";
 import { getAutomationDashboard } from "@/lib/lesson-automation-api";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { AdminShell } from "@/views/admin/AdminShell";
 
 type DashboardStats = {
@@ -66,7 +66,7 @@ function AutomationDashboardContent() {
         </div>
       </div>
 
-      {loading ? <Loading /> : (
+      {loading ? <SkeletonCardGrid count={6} /> : (
         <>
           <div className="adp-stats-row">
             <StatCard label="المصادر" value={stats?.sourcesCount ?? 0} />

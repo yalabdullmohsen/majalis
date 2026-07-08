@@ -5,7 +5,7 @@ import {
   runContentProductionJob,
   type ContentProductionDashboard,
 } from "@/lib/content-production-api";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { AdminShell } from "@/views/admin/AdminShell";
 
 function StatCard({ label, value, color }: { label: string; value: number | string; color?: string }) {
@@ -73,7 +73,7 @@ function ContentProductionDashboardContent() {
       )}
 
       {loading ? (
-        <Loading />
+        <SkeletonCardGrid count={6} />
       ) : (
         <>
           <div className="cpd-stats-row">

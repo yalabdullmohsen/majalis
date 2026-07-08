@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { adminGetAllUpdates, adminUpsertUpdate, adminDeleteUpdate } from "@/lib/platform-supabase";
 import { UPDATES_SEED } from "@/lib/updates-seed";
 import { UPDATE_TYPES } from "@/lib/platform-types";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { AdminModal, Field } from "./AdminModal";
 import { useAdminShell } from "./AdminShell";
 
@@ -26,7 +26,7 @@ export function UpdatesSection() {
         <h2 className="adm-section-h2">آخر المستجدات ({items.length})</h2>
         <button onClick={() => { setForm({ ...EMPTY }); setOpen(true); }} className="adm-btn-add">+ إضافة</button>
       </div>
-      {loading ? <Loading /> : items.map((item) => (
+      {loading ? <SkeletonCardGrid count={6} /> : items.map((item) => (
         <div key={item.id} className="adm-item-card">
           <span className="adm-type-badge">{item.update_type}</span>
           <strong className="adm-block-title">{item.title}</strong>

@@ -4,7 +4,7 @@ import {
   getIntelligenceCenter,
   runIntelligenceEngine,
 } from "@/lib/lesson-automation-api";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { AdminShell } from "@/views/admin/AdminShell";
 
 type CenterStats = {
@@ -108,7 +108,7 @@ function AutomationCenterContent() {
         </div>
       </div>
 
-      {loading ? <Loading /> : (
+      {loading ? <SkeletonCardGrid count={6} /> : (
         <>
           <div className="acc-stats-row">
             <StatCard label="المصادر" value={stats?.sourcesCount ?? 0} />

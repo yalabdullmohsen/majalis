@@ -8,7 +8,7 @@ import {
   reAnalyzeAutomationDraft,
   type AutomationAuditRecord,
 } from "@/lib/lesson-automation-api";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { AdminShell, useAdminShell } from "@/views/admin/AdminShell";
 
 type DraftRow = {
@@ -179,7 +179,7 @@ function AutomationReviewContent() {
         ))}
       </div>
 
-      {loading ? <Loading /> : (
+      {loading ? <SkeletonCardGrid count={6} /> : (
         <div className="arp-list">
           {tab === "pending" && drafts.map((d) => {
             const title = String(d.parsed_payload?.title || "\u0628\u062f\u0648\u0646 \u0639\u0646\u0648\u0627\u0646");

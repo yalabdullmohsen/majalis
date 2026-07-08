@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { AdminShell, useAdminShell } from "@/views/admin/AdminShell";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { FiqhAdminSubnav } from "@/components/fiqh-council/FiqhAdminSubnav";
 import { FiqhCompletionBarFromItem } from "@/components/fiqh-council/FiqhCompletionBar";
 import {
@@ -117,7 +117,7 @@ function ReviewContent() {
     }
   };
 
-  if (loading) return <Loading />;
+  if (loading) return <SkeletonCardGrid count={6} />;
 
   return (
     <div className="fiqh-admin-page">

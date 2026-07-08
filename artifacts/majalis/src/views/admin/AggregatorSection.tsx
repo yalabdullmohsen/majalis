@@ -8,7 +8,7 @@ import {
 import { runImportJob, previewDedup } from "@/lib/cms";
 import { getCmsDashboardStats, getRecentImportJobs, getDuplicateReport } from "@/lib/cms/supabase-cms";
 import { getRecentAuditLogs } from "@/lib/cms/audit-log";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { AdminSectionToolbar } from "./AdminSectionToolbar";
 import { useAdminShell } from "./AdminShell";
 import { ContentFileImport } from "./ContentFileImport";
@@ -80,7 +80,7 @@ export function AggregatorSection() {
     }
   };
 
-  if (loading || !stats) return <Loading />;
+  if (loading || !stats) return <SkeletonCardGrid count={6} />;
 
   return (
     <div>
