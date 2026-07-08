@@ -49,7 +49,7 @@ export function NavProgressBar() {
     >
       <div
         className="nav-progress-bar"
-        style={{ width: `${width}%` }}
+        style={{ "--nav-pct": `${width}%` } as React.CSSProperties}
       />
     </div>
   );

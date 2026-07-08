@@ -14224,6 +14224,7 @@ img[loading="lazy"]:not([src=""]) {
 
 .nav-progress-bar {
   height: 100% !important;
+  width: var(--nav-pct, 0%) !important;
   background: linear-gradient(
     90deg,
     var(--majalis-emerald, #0E6E52) 0%,
