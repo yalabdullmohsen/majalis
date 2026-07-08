@@ -119,8 +119,8 @@ function UniversitiesContent() {
 
       <div className="max-w-5xl mx-auto px-4 py-6 space-y-6">
         {/* تنبيه البيانات التجريبية */}
-        <div className="bg-amber-50 dark:bg-amber-900/10 border border-amber-200 dark:border-amber-800
-          rounded-xl px-4 py-3 text-sm text-amber-700 dark:text-amber-300">
+        <div className="bg-[var(--majalis-emerald-muted)] border border-[var(--majalis-emerald)]
+          rounded-xl px-4 py-3 text-sm text-[var(--majalis-emerald)]">
           <AlertTriangle size={14} aria-hidden="true" className="inline ml-1" /> <strong>تنبيه:</strong> البيانات المعروضة تجريبية وتحتاج تحقق بشري. تأكد دائماً من الموقع
           الرسمي للجامعة قبل اتخاذ أي قرار.
         </div>

@@ -29,6 +29,7 @@
   position: fixed;
   top: 0;
   left: 0;
+  width: var(--mshf-pct, 0%);
   height: 3px;
   background: linear-gradient(to right, #4CAF85, #6ab58c);
   z-index: 350;

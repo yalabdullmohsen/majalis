@@ -33,8 +33,8 @@ function ProgramCard({ program: p }: { program: UniversityProgram }) {
             <span className="text-xs bg-[var(--majalis-parchment-deep)] text-[var(--majalis-ink-soft)]
               px-2 py-0.5 rounded-full">{p.study_mode}</span>
             {p.has_scholarship && (
-              <span className="text-xs bg-amber-50 dark:bg-amber-900/20 text-amber-700
-                dark:text-amber-400 px-2 py-0.5 rounded-full font-medium flex items-center gap-1"><GraduationCap size={11} aria-hidden="true" /> منحة</span>
+              <span className="text-xs bg-[var(--majalis-emerald-muted)] text-[var(--majalis-emerald)]
+                px-2 py-0.5 rounded-full font-medium flex items-center gap-1"><GraduationCap size={11} aria-hidden="true" /> منحة</span>
             )}
           </div>
           <p className="font-semibold text-[var(--majalis-ink)] text-sm">{p.program_name}</p>
@@ -145,8 +145,8 @@ function DetailContent({ university: u }: { university: University }) {
   return (
     <div dir="rtl" className="min-h-screen bg-[var(--majalis-parchment)] pb-24">
       {/* شريط التحديث + تنبيه */}
-      <div className="bg-amber-50 dark:bg-amber-900/10 border-b border-amber-200 dark:border-amber-800
-        px-4 py-2 text-xs text-amber-700 dark:text-amber-300 text-center">
+      <div className="bg-[var(--majalis-emerald-muted)] border-b border-[var(--majalis-emerald)]
+        px-4 py-2 text-xs text-[var(--majalis-emerald)] text-center">
         <AlertTriangle size={12} aria-hidden="true" className="inline ml-1" /> آخر تحديث: {new Date(u.last_updated_at).toLocaleDateString("ar-SA")} — تحقق من الموقع الرسمي للجامعة قبل اتخاذ أي قرار.
       </div>
 

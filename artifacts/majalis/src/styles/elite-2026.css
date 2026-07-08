@@ -5602,8 +5602,8 @@ button.primary:hover {
 .miracle-item__ref {
   font-family: var(--font-quran);
   font-size: 1rem;
-  color: var(--mk-border, #c9a84c);
-  border-inline-end: 3px solid var(--mk-border, #c9a84c);
+  color: var(--mk-border, #0E6E52);
+  border-inline-end: 3px solid var(--mk-border, #0E6E52);
   padding-inline-end: 0.5rem;
   line-height: 1.8;
 }
@@ -10711,7 +10711,7 @@ button, .btn {
 .qzg-btn-gold {
   padding: 0.875rem 1.5rem;
   border-radius: var(--ds-radius-lg, 0.625rem);
-  background: linear-gradient(135deg, var(--majalis-brass), var(--majalis-brass-deep, #7A5C1E));
+  background: linear-gradient(135deg, var(--majalis-brass, #0E6E52), var(--majalis-brass-deep, #0A5040));
   color: #fff;
   border: none;
   font-size: 1rem;

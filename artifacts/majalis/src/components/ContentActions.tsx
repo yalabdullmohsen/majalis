@@ -105,7 +105,7 @@ export default function ContentActions({ contentType, contentId }: Props) {
             key={star}
             type="button"
             onClick={() => handleRating(star)}
-            className={`text-2xl transition-transform hover:scale-110 ${rating >= star ? "text-amber-400" : "text-[var(--majalis-line)]"}`}
+            className={`text-2xl transition-transform hover:scale-110 ${rating >= star ? "text-[var(--majalis-emerald)]" : "text-[var(--majalis-line)]"}`}
           >
             
           </button>
@@ -116,7 +116,7 @@ export default function ContentActions({ contentType, contentId }: Props) {
         type="button"
         onClick={handleBookmark}
         className={`flex items-center gap-1 px-3 py-1.5 rounded-lg text-sm font-medium transition-all border
-          ${bookmarked ? "bg-amber-50 border-amber-300 text-amber-700" : "bg-[var(--majalis-panel)] border-[var(--majalis-line)] text-[var(--majalis-ink-soft)] hover:border-amber-300"}`}
+          ${bookmarked ? "bg-[var(--majalis-emerald-muted)] border-[var(--majalis-emerald)] text-[var(--majalis-emerald)]" : "bg-[var(--majalis-panel)] border-[var(--majalis-line)] text-[var(--majalis-ink-soft)] hover:border-[var(--majalis-emerald)]"}`}
       >
         {bookmarked ? "محفوظ" : "احفظ"}
       </button>

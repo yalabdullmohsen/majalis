@@ -126,7 +126,7 @@ export default function CitationPublicPage() {
         <div className="w-full max-w-xl space-y-6">
 
           {/* بطاقة الاقتباس */}
-          <div className="bg-[var(--majalis-panel)] rounded-2xl shadow-xl overflow-hidden border border-amber-100 dark:border-gray-700"
+          <div className="bg-[var(--majalis-panel)] rounded-2xl shadow-xl overflow-hidden border border-[var(--majalis-line)] dark:border-gray-700"
             style={{ "--cit-type-color": typeColor } as React.CSSProperties}>
             {/* شريط ملوَّن */}
             <div className="h-1.5 cit-type-bar" />
@@ -206,8 +206,8 @@ export default function CitationPublicPage() {
                 disabled={saved}
                 className={`flex items-center gap-1.5 px-4 py-2 text-sm rounded-xl border transition-colors shadow-sm ${
                   saved
-                    ? "bg-amber-50 dark:bg-amber-900/30 border-amber-400 text-amber-700 dark:text-amber-400"
-                    : "bg-[var(--majalis-panel)] border-gray-300 dark:border-gray-600 text-[var(--majalis-ink-soft)] hover:border-amber-400"
+                    ? "bg-[var(--majalis-emerald-muted)] border-[var(--majalis-emerald)] text-[var(--majalis-emerald)]"
+                    : "bg-[var(--majalis-panel)] border-gray-300 dark:border-gray-600 text-[var(--majalis-ink-soft)] hover:border-[var(--majalis-emerald)]"
                 }`}
               >
                 <Star size={14} strokeWidth={2} aria-hidden="true" /> {saved ? "محفوظ" : "احفظ في مكتبتي"}

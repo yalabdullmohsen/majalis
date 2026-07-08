@@ -82,7 +82,7 @@ html {
 .ds-page-header__eyebrow {
   font-size: var(--ds-text-xs);
   font-weight: 700;
-  color: var(--majalis-brass-deep, #8a6d1e);
+  color: var(--majalis-brass-deep, #0A5040);
   margin: 0 0 var(--ds-space-1);
   letter-spacing: 0.02em;
 }
@@ -891,7 +891,7 @@ p, li {
 
 .miracle-item__ref {
   font-size: var(--ds-text-xs);
-  color: var(--majalis-brass-deep, #8a6d1e);
+  color: var(--majalis-brass-deep, #0A5040);
   font-style: italic;
   margin: var(--ds-space-1) 0;
 }
@@ -1073,7 +1073,7 @@ p, li {
 .surah-story-num {
   font-size: var(--ds-text-xs);
   font-weight: 800;
-  color: var(--majalis-brass-deep, #8a6d1e);
+  color: var(--majalis-brass-deep, #0A5040);
 }
 
 .surah-story-meta {

@@ -388,7 +388,7 @@ export default function MyCitationsPage() {
                         <button
                           type="button"
                           onClick={() => handleToggleFavorite(item)}
-                          className={`text-lg flex-shrink-0 transition-transform hover:scale-110 ${item.is_favorite ? "text-amber-400" : "text-gray-300"}`}
+                          className={`text-lg flex-shrink-0 transition-transform hover:scale-110 ${item.is_favorite ? "text-[var(--majalis-emerald)]" : "text-gray-300"}`}
                           title={item.is_favorite ? "إزالة من المفضلة" : "إضافة للمفضلة"}
                         >
                           <Star size={16} strokeWidth={2} aria-hidden="true" />

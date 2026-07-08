@@ -321,7 +321,7 @@ export default function QuranPage() {
     <div className={`mshf-shell${nightMode ? " mshf-night" : ""}`} dir="rtl">
 
       {/* شريط التقدم */}
-      <div className="mshf-progress" style={{ width: `${progress}%` }} />
+      <div className="mshf-progress" style={{ "--mshf-pct": `${progress}%` } as React.CSSProperties} />
 
       {/* ══ شريط علوي ══ */}
       <header className={`mshf-top${uiOn ? " on" : ""}`}>

@@ -125,12 +125,12 @@ export default function LearningPathDashboardPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {inProgress.slice(0, 4).map((p) => (
                     <Link key={p.book_id} href={`/learning-path/book/${p.book_id}`}>
-                      <div className="flex items-center gap-3 p-3 bg-[var(--majalis-panel)] rounded-xl border border-yellow-200 dark:border-yellow-800 hover:shadow-md transition-all cursor-pointer">
+                      <div className="flex items-center gap-3 p-3 bg-[var(--majalis-panel)] rounded-xl border border-[var(--majalis-line)] hover:shadow-md transition-all cursor-pointer">
                         <span className="text-2xl" aria-hidden="true"><BookOpen size={22} strokeWidth={1.5} /></span>
                         <div className="flex-1 min-w-0">
                           <p className="text-sm font-medium text-[var(--majalis-ink-soft)] line-clamp-1">كتاب جاري</p>
                           <div className="h-1.5 bg-[var(--majalis-parchment-deep)] rounded-full mt-1.5">
-                            <div className="h-full bg-yellow-400 rounded-full ldb-prog-fill" style={{ "--ldb-prog": `${p.progress_percent}%` } as React.CSSProperties} />
+                            <div className="h-full bg-[var(--majalis-emerald)] rounded-full ldb-prog-fill" style={{ "--ldb-prog": `${p.progress_percent}%` } as React.CSSProperties} />
                           </div>
                         </div>
                         <span className="text-xs text-[var(--majalis-ink-soft)] opacity-60">{p.progress_percent}%</span>
