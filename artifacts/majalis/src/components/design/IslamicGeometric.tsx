@@ -38,7 +38,7 @@ export function IslamicLoader({ size = 48, color = "var(--v2-green, #1F6F52)" }:
           .il-star { animation: none !important; opacity: 0.5; }
         }
       `}</style>
-      <g style={{ transformOrigin: `${cx}px ${cx}px`, animation: "islamic-rotate 2s linear infinite" }} className="il-star">
+      <g style={{ "--il-cx": `${cx}px`, transformOrigin: "var(--il-cx) var(--il-cx)", animation: "islamic-rotate 2s linear infinite" } as React.CSSProperties} className="il-star">
         <polygon
           points={star8Points(cx, cx, r1, r2)}
           fill="none"
