@@ -375,6 +375,7 @@
 .mshf-zoom-btn:hover  { color: #fff; }
 .mshf-zoom-btn:active { transform: scale(0.86); }
 .mshf-zoom-btn:disabled { opacity: 0.25; cursor: not-allowed; }
+.mshf-zoom-btn--reset { font-size: 0.58rem; width: 32px; }
 
 /* أزرار التنقل */
 .mshf-nav-btn {

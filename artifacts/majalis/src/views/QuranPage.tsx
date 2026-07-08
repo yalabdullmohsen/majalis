@@ -443,8 +443,7 @@ export default function QuranPage() {
           </button>
           <button
             type="button"
-            className="mshf-zoom-btn"
-            style={{ fontSize: "0.58rem", width: "32px" }}
+            className="mshf-zoom-btn mshf-zoom-btn--reset"
             onClick={() => { setFontSize(1.9); lsSet(FONT_KEY, 1.9); }}
             title="إعادة الضبط"
           >
