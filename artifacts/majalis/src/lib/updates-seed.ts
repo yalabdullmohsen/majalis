@@ -463,6 +463,33 @@ export const UPDATES_SEED: PlatformUpdate[] = [
     published_at: "2026-07-06T09:00:00Z",
     status: "approved",
   },
+  {
+    id: "update-prophetic-medicine-expanded",
+    title: "تحديث: الطب النبوي — 5 عناصر جديدة وإصلاح تكرار",
+    summary: "إضافة عناصر جديدة للطب النبوي: صلاة الفجر والضوء الصباحي، الزبيب، الوضوء بالماء البارد، الصدقة وأثرها النفسي، الشعير والتلبينة. مع إصلاح مُعرّفات مكررة.",
+    update_type: "إعلان",
+    source_url: "/prophetic-medicine",
+    published_at: "2026-07-08T18:00:00Z",
+    status: "approved",
+  },
+  {
+    id: "update-fiqh-issues-5-new",
+    title: "تحديث: 5 مسائل فقهية معاصرة جديدة",
+    summary: "إضافة 5 مسائل فقهية: زراعة الشعر والتجميل، التمويل الجماعي، الصيام في البلاد القطبية، فسخ النكاح بسبب التدليس، وحكم CBD الطبي.",
+    update_type: "إعلان",
+    source_url: "/fiqh-council",
+    published_at: "2026-07-08T19:00:00Z",
+    status: "approved",
+  },
+  {
+    id: "update-scientific-announcements-5-new",
+    title: "تحديث: 5 إعلانات علمية جديدة",
+    summary: "إضافة إعلانات: دورة الفرائض، الفقه المقارن، مكثف مصطلح الحديث، السيرة المدنية، وندوة النوازل والفتاوى المعاصرة.",
+    update_type: "إعلان",
+    source_url: "/lessons",
+    published_at: "2026-07-08T20:00:00Z",
+    status: "approved",
+  },
 ];
 
 export function getSortedUpdates(limit?: number) {
