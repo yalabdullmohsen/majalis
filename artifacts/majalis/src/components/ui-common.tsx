@@ -56,17 +56,27 @@ export function SkeletonTable({ rows = 5, cols = 4 }: { rows?: number; cols?: nu
   );
 }
 
-/** حالة تحميل صفحة كاملة — عمود من الأسطر الهيكلية */
+/** حالة تحميل صفحة تفصيلية — مقال أو محتوى مفرد */
 export function SkeletonPage() {
   return (
     <div role="status" aria-live="polite">
       <span className="sr-only">جارٍ التحميل…</span>
-      <div className="sk-page" aria-hidden="true">
+      <div className="sk-page sk-page--article" aria-hidden="true">
+        <div className="ds-skeleton sk-page__meta" style={{ width: "30%", height: "0.75rem" }} />
         <div className="ds-skeleton sk-page__title" />
-        <div className="ds-skeleton sk-page__subtitle" />
-        <div className="sk-card-grid">
-          {Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)}
-        </div>
+        <div className="ds-skeleton sk-page__subtitle" style={{ width: "70%" }} />
+        <div className="ds-skeleton sk-page__divider" />
+        {Array.from({ length: 5 }).map((_, i) => (
+          <div key={i} className="ds-skeleton sk-page__line"
+            style={{ width: `${[95, 88, 93, 75, 82][i]}%`, height: "0.875rem", marginBottom: "0.6rem" }}
+          />
+        ))}
+        <div className="ds-skeleton sk-page__line" style={{ width: "40%", height: "0.875rem", marginTop: "1.5rem" }} />
+        {Array.from({ length: 4 }).map((_, i) => (
+          <div key={i} className="ds-skeleton sk-page__line"
+            style={{ width: `${[90, 83, 96, 60][i]}%`, height: "0.875rem", marginBottom: "0.6rem" }}
+          />
+        ))}
       </div>
     </div>
   );
