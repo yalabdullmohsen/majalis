@@ -6139,6 +6139,113 @@ button.primary:hover {
 .lpp-path-card__meta  { display: flex; gap: 0.5rem; flex-wrap: wrap; font-size: 0.75rem; }
 .lpp-path-card__badge { padding: 0.125rem 0.5rem; border-radius: 999px; background: var(--panel-soft, #f3f4f6); }
 
+/* Extended lpp-* styles */
+.lpp-page { padding-bottom: 3rem; }
+
+.lpp-stats-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  background: var(--majalis-panel, #fff);
+  border: 1px solid var(--majalis-line, #e5e7eb);
+  border-radius: 1rem;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+.lpp-stat { display: flex; flex-direction: column; gap: .2rem; }
+.lpp-stat strong { font-size: 1.4rem; font-weight: 800; color: var(--majalis-emerald-deep, #166534); line-height: 1; }
+.lpp-stat span   { font-size: .78rem; color: var(--majalis-ink-soft); }
+.lpp-stat-divider { width: 1px; height: 2.5rem; background: var(--majalis-line, #e5e7eb); }
+
+.lpp-legend {
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+  font-size: .82rem;
+}
+.lpp-legend-item { display: flex; align-items: center; gap: .35rem; color: var(--majalis-ink-soft); }
+
+.lpp-cat-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+  margin-bottom: 2rem;
+}
+.lpp-cat-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  padding: .4rem .9rem;
+  border-radius: 999px;
+  border: 1px solid var(--majalis-line, #e5e7eb);
+  background: var(--majalis-panel, #fff);
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--majalis-ink-soft);
+  cursor: pointer;
+  font-family: inherit;
+  transition: background .15s, color .15s, border-color .15s;
+}
+.lpp-cat-btn:hover { background: var(--majalis-emerald-subtle, #f0fdf4); color: var(--majalis-emerald-deep, #166534); border-color: var(--majalis-emerald, #22c55e); }
+.lpp-cat-btn--active { background: var(--majalis-emerald-deep, #166534); color: #fff; border-color: var(--majalis-emerald-deep, #166534); }
+
+.lpp-category-header {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  margin-bottom: 1rem;
+}
+.lpp-cat-icon { font-size: 1.2rem; }
+.lpp-cat-count {
+  font-size: .78rem;
+  color: var(--majalis-ink-soft);
+  background: var(--majalis-bg-subtle, #f9fafb);
+  padding: .15rem .55rem;
+  border-radius: 999px;
+}
+
+.lpp-path-card { padding: 1.25rem; border-radius: .65rem; border: 1px solid var(--majalis-line, #e5e7eb); background: var(--majalis-panel, #fff); height: 100%; display: flex; flex-direction: column; transition: border-color .15s, box-shadow .15s; }
+.lpp-path-link:hover .lpp-path-card { border-color: var(--majalis-emerald, #22c55e); box-shadow: 0 2px 12px rgba(22,101,52,.08); }
+
+.lpp-path-card__top { display: flex; justify-content: space-between; align-items: flex-start; gap: .5rem; margin-bottom: .45rem; }
+.lpp-path-level-icon { font-size: 1rem; flex-shrink: 0; }
+
+.lpp-path-card__badge--level { background: var(--majalis-emerald-subtle, #f0fdf4); color: var(--majalis-emerald-deep, #166534); }
+.lpp-path-card__badge--progress { background: #fef3c7; color: #92400e; }
+
+.lpp-progress-bar { height: 4px; border-radius: 999px; background: var(--majalis-line, #e5e7eb); overflow: hidden; margin-top: .75rem; }
+.lpp-progress-fill { height: 100%; width: var(--lpp-pct, 0%); background: var(--majalis-emerald, #22c55e); border-radius: 999px; }
+
+.lpp-how-section {
+  margin-top: 3rem;
+  padding: 2rem;
+  background: var(--majalis-panel, #fff);
+  border: 1px solid var(--majalis-line, #e5e7eb);
+  border-radius: 1rem;
+}
+.lpp-how-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; text-align: center; }
+.lpp-how-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1.25rem; }
+.lpp-how-step { text-align: center; }
+.lpp-how-num {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: var(--majalis-emerald-subtle, #f0fdf4);
+  border: 2px solid var(--majalis-emerald, #22c55e);
+  color: var(--majalis-emerald-deep, #166534);
+  font-weight: 800;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto .75rem;
+}
+.lpp-how-step h3 { font-size: .9rem; font-weight: 700; margin-bottom: .3rem; }
+.lpp-how-step p  { font-size: .8rem; color: var(--majalis-ink-soft); line-height: 1.55; margin: 0; }
+
 /* ============================================================
    §65 — SubmitContentPage  (scp-*)
    ============================================================ */
