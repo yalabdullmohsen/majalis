@@ -233,24 +233,13 @@
 /* ══ منطقة الصفحة ══ */
 .mshf-page-container {
   flex: 1;
+  min-height: 0; /* حيوي — يمنع تمدد flex children */
   position: relative;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 0;
-}
-
-/* إطار الصفحة — مستحدث */
-.mshf-page-frame {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  max-width: min(100%, calc(100vh * 0.67));
-  margin: 0 auto;
 }
 
 /* ── أنيمشن انتقال الصفحة ── */
@@ -265,7 +254,7 @@
   max-width: 100%;
   max-height: 100%;
   width: auto;
-  height: 100%;
+  height: auto; /* auto أكثر أماناً من 100% في سياق flex */
   object-fit: contain;
   display: block;
   opacity: 0;

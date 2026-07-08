@@ -13,6 +13,7 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { usePageSeo } from "@/lib/seo";
 import { LazyRouteFallback } from "@/components/LazyRouteFallback";
 
+const QuranPage = lazy(() => import("@/views/QuranPage"));
 const CalendarPage = lazy(() => import("@/views/CalendarPage"));
 const SearchPage = lazy(() => import("@/views/SearchPage"));
 const TopicPage = lazy(() => import("@/views/TopicPage"));
@@ -167,7 +168,7 @@ export default function AppRoutes() {
         <Route path="/quran/surah-stories/:number" component={QuranComingSoon} />
         <Route path="/quran/surah-stories" component={QuranComingSoon} />
         <Route path="/quran-radio" component={QuranComingSoon} />
-        <Route path="/quran" component={QuranComingSoon} />
+        <Route path="/quran"><SafeLazyRoute component={QuranPage} /></Route>
         <Route path="/prayer-times"><SafeLazyRoute component={PrayerTimesPage} /></Route>
         <Route path="/prayer-ranks"><Redirect to="/prayer-times?tab=ranks" /></Route>
         <Route path="/qibla"><SafeLazyRoute component={QiblaPage} /></Route>

@@ -24,8 +24,8 @@ const STATUS_LABEL: Record<FeatureStatus, string> = {
 const FEATURES: RoadmapFeature[] = [
   {
     title: "المصحف الرقمي الاحترافي",
-    description: "604 صفحة بصور CDN عالية الجودة، انتقال سلس، وضع ليلي، فهرس شامل للسور والأجزاء والأحزاب، bookmark.",
-    progress: 95,
+    description: "604 صفحة بصور CDN عالية الجودة، ثلاثة أوضاع قراءة (نهاري/دافئ/ليلي)، تحكم بالتكبير، شبكة سور ثلاثية الأعمدة، فهرس الأجزاء والأحزاب، bookmark مستمر.",
+    progress: 98,
     status: "beta",
   },
   {

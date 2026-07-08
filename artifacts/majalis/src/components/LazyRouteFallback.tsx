@@ -15,9 +15,9 @@ function IslamicStar({ size = 44 }: { size?: number }) {
         @keyframes lrf-rotate{to{transform:rotate(360deg)}}
         @media(prefers-reduced-motion:reduce){svg{animation:none!important;opacity:.4}}
       `}</style>
-      <polygon points={pts} fill="none" stroke="var(--v2-green,#1F6F52)"
+      <polygon points={pts} fill="none" stroke="var(--majalis-emerald,#0E6E52)"
         strokeWidth="1.6" strokeLinejoin="round" opacity="0.85" />
-      <circle cx={cx} cy={cx} r={size * 0.09} fill="var(--v2-green,#1F6F52)" opacity="0.6" />
+      <circle cx={cx} cy={cx} r={size * 0.09} fill="var(--majalis-emerald,#0E6E52)" opacity="0.6" />
     </svg>
   );
 }

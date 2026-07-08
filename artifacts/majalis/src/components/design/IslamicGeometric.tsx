@@ -16,7 +16,7 @@ function star8Points(cx: number, cy: number, r1: number, r2: number): string {
 
 // ── مُحمَّل هندسي (بديل Spinner) ─────────────────────────────────────────
 
-export function IslamicLoader({ size = 48, color = "var(--v2-green, #1F6F52)" }: { size?: number; color?: string }) {
+export function IslamicLoader({ size = 48, color = "var(--majalis-emerald, #0E6E52)" }: { size?: number; color?: string }) {
   const cx = size / 2;
   const r1 = size * 0.42;
   const r2 = size * 0.22;
@@ -57,8 +57,8 @@ export function IslamicLoader({ size = 48, color = "var(--v2-green, #1F6F52)" }:
 
 export function IslamicDividerStar({
   label,
-  color = "var(--v2-border, #D8D2C7)",
-  starColor = "var(--v2-green, #1F6F52)",
+  color = "var(--majalis-line, rgba(14,110,82,0.15))",
+  starColor = "var(--majalis-emerald, #0E6E52)",
   style,
 }: {
   label?: string;
