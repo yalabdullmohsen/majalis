@@ -312,7 +312,7 @@ export default function QuranPage() {
 
       {/* ══ شريط علوي ══ */}
       <header className={`mshf-top${uiOn ? " on" : ""}`}>
-        <button className="mshf-back" onClick={() => window.history.back()} aria-label="رجوع">
+        <button type="button" className="mshf-back" onClick={() => window.history.back()} aria-label="رجوع">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
             <path d="M15 18l-6-6 6-6"/>
           </svg>
@@ -330,6 +330,7 @@ export default function QuranPage() {
 
         <div className="mshf-top-actions">
           <button
+                    type="button"
             className={`mshf-icon-btn${isBookmarked ? " active" : ""}`}
             onClick={toggleBookmark}
             aria-label={isBookmarked ? "إزالة العلامة" : "إضافة علامة"}
@@ -340,6 +341,7 @@ export default function QuranPage() {
           </button>
 
           <button
+                    type="button"
             className={`mshf-icon-btn${nightMode ? " active" : ""}`}
             onClick={toggleNight}
             aria-label={nightMode ? "الوضع النهاري" : "الوضع الليلي"}
@@ -358,7 +360,7 @@ export default function QuranPage() {
             }
           </button>
 
-          <button className="mshf-icon-btn" onClick={() => openNav("surahs")} aria-label="الفهرس">
+          <button type="button" className="mshf-icon-btn" onClick={() => openNav("surahs")} aria-label="الفهرس">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/>
               <line x1="8" y1="18" x2="21" y2="18"/>
@@ -389,7 +391,7 @@ export default function QuranPage() {
         {imgErr && (
           <div className="mshf-err">
             <p>تعذّر تحميل الصفحة</p>
-            <button onClick={() => { setImgErr(false); setImgLoaded(false); }} className="mshf-err-btn">
+            <button type="button" onClick={() => { setImgErr(false); setImgLoaded(false); }} className="mshf-err-btn">
               إعادة المحاولة
             </button>
           </div>
@@ -410,6 +412,7 @@ export default function QuranPage() {
       {/* ══ شريط سفلي ══ */}
       <footer className={`mshf-bot${uiOn ? " on" : ""}`}>
         <button
+                  type="button"
           className="mshf-nav-btn"
           onClick={() => go(page - 1)}
           disabled={page <= 1}
@@ -439,6 +442,7 @@ export default function QuranPage() {
             />
           ) : (
             <button
+                      type="button"
               className="mshf-pgnum-btn"
               onClick={e => { e.stopPropagation(); startEdit(); }}
             >
@@ -450,6 +454,7 @@ export default function QuranPage() {
         </div>
 
         <button
+                  type="button"
           className="mshf-nav-btn"
           onClick={() => go(page + 1)}
           disabled={page >= TOTAL}
@@ -474,13 +479,14 @@ export default function QuranPage() {
               <div className="mshf-sheet-tabs">
                 {([ ["surahs","السور"], ["juz","الأجزاء"], ["ahzab","الأحزاب"], ["bookmarks","العلامات"] ] as [NavTab, string][]).map(([id, label]) => (
                   <button
+                            type="button"
                     key={id}
                     className={`mshf-sheet-tab${navTab === id ? " active" : ""}`}
                     onClick={() => { setNavTab(id); setSearch(""); }}
                   >{label}</button>
                 ))}
               </div>
-              <button className="mshf-sheet-close" onClick={() => setNavOpen(false)} aria-label="إغلاق">
+              <button type="button" className="mshf-sheet-close" onClick={() => setNavOpen(false)} aria-label="إغلاق">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
                   <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
                 </svg>
@@ -502,7 +508,7 @@ export default function QuranPage() {
                   aria-label="بحث في السور"
                 />
                 {search && (
-                  <button className="mshf-search-clear" onClick={() => setSearch("")}>✕</button>
+                  <button type="button" className="mshf-search-clear" onClick={() => setSearch("")}>✕</button>
                 )}
               </div>
             )}
@@ -520,6 +526,7 @@ export default function QuranPage() {
                         const isActive = page >= sp && (idx === SURAHS.length - 1 || page < SURAHS[idx + 1][1]);
                         return (
                           <button
+                                    type="button"
                             key={name}
                             className={`mshf-surah-row${isActive ? " active" : ""}`}
                             onClick={() => goTo(sp)}
@@ -541,6 +548,7 @@ export default function QuranPage() {
                     const isActive = page >= sp && (i === AJZAA.length - 1 || page < AJZAA[i + 1][1]);
                     return (
                       <button
+                                type="button"
                         key={i}
                         className={`mshf-grid-item${isActive ? " active" : ""}`}
                         onClick={() => goTo(sp)}
@@ -560,6 +568,7 @@ export default function QuranPage() {
                     const isActive = page >= sp && (i === AHZAB.length - 1 || page < AHZAB[i + 1][1]);
                     return (
                       <button
+                                type="button"
                         key={i}
                         className={`mshf-grid-item${isActive ? " active" : ""}`}
                         onClick={() => goTo(sp)}
@@ -587,7 +596,7 @@ export default function QuranPage() {
                     const s = (() => { for (let i = SURAHS.length - 1; i >= 0; i--) if (p >= SURAHS[i][1]) return SURAHS[i][0]; return ""; })();
                     return (
                       <div key={p} className="mshf-bm-row">
-                        <button className="mshf-bm-btn" onClick={() => goTo(p)}>
+                        <button type="button" className="mshf-bm-btn" onClick={() => goTo(p)}>
                           <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="none">
                             <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/>
                           </svg>
@@ -597,6 +606,7 @@ export default function QuranPage() {
                           </div>
                         </button>
                         <button
+                                  type="button"
                           className="mshf-bm-del"
                           onClick={() => {
                             const next = bookmarks.filter(b => b !== p);

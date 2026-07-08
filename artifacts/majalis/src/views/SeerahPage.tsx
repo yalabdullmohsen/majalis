@@ -203,6 +203,7 @@ export default function SeerahPage() {
             {PHASES.map(phase => (
               <button
                 key={phase.id}
+                type="button"
                 className={`seerah-timeline__item${activeId === phase.id ? " seerah-timeline__item--active" : ""}`}
                 onClick={() => goTo(phase.id)}
                 style={{ "--phase-color": phase.color } as React.CSSProperties}
@@ -257,6 +258,7 @@ export default function SeerahPage() {
             <div className="seerah-panel__nav">
               {activeIdx > 0 && (
                 <button
+                  type="button"
                   className="seerah-panel__nav-btn"
                   onClick={() => goTo(PHASES[activeIdx - 1].id)}
                 >
@@ -265,6 +267,7 @@ export default function SeerahPage() {
               )}
               {activeIdx < PHASES.length - 1 && (
                 <button
+                  type="button"
                   className="seerah-panel__nav-btn seerah-panel__nav-btn--next"
                   onClick={() => goTo(PHASES[activeIdx + 1].id)}
                 >

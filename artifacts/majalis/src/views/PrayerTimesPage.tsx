@@ -189,7 +189,7 @@ export default function PrayerTimesPage() {
           {pinnedKey && pinnedKey !== countdown.next.key ? (
             <span className="pt-hero__hint-inner">
               {isTomorrow && <span className="pt-tomorrow-badge">غداً</span>}
-              <button className="pt-hero__reset" onClick={() => setPinnedKey(null)}>
+              <button type="button" className="pt-hero__reset" onClick={() => setPinnedKey(null)}>
                 العودة للصلاة القادمة
               </button>
             </span>
@@ -203,6 +203,7 @@ export default function PrayerTimesPage() {
           {prayers.map((p) => (
             <button
               key={p.key}
+              type="button"
               role="listitem"
               className={[
                 "pt-prayer",
@@ -232,6 +233,7 @@ export default function PrayerTimesPage() {
           {KUWAIT_GOVERNORATES.map((gov) => (
             <button
               key={gov.id}
+              type="button"
               className={`pt-gov-chip${govId === gov.id ? " pt-gov-chip--active" : ""}`}
               onClick={() => handleGov(gov.id)}
               aria-pressed={govId === gov.id}

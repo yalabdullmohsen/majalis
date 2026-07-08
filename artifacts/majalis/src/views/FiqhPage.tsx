@@ -107,6 +107,7 @@ export default function FiqhPage() {
           {TABS.map((t) => (
             <button
               key={t.key}
+              type="button"
               onClick={() => setActiveTab(t.key)}
               className={`flex items-center gap-1.5 px-5 py-3.5 text-sm font-medium whitespace-nowrap border-b-2 transition-colors ${
                 activeTab === t.key

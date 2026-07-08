@@ -195,6 +195,7 @@ export default function LearningPathBookPage() {
               <div className="flex flex-wrap gap-2">
                 {status !== "in_progress" && status !== "completed" && (
                   <button
+                    type="button"
                     onClick={() => handleStatus("in_progress")}
                     disabled={saving}
                     className="px-5 py-2 citation-btn citation-btn--primary text-sm font-medium rounded-xl transition-colors disabled:opacity-50"
@@ -204,6 +205,7 @@ export default function LearningPathBookPage() {
                 )}
                 {status !== "completed" && (
                   <button
+                    type="button"
                     onClick={() => handleStatus("completed")}
                     disabled={saving}
                     className="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-xl transition-colors disabled:opacity-50"
