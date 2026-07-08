@@ -114,7 +114,7 @@ function ProgramCard({ program: p }: { program: UniversityProgram }) {
                 {req.application_deadline && (
                   <div>
                     <span className="text-[var(--majalis-ink-soft)] opacity-60 text-xs block">موعد التقديم</span>
-                    <span className="font-medium text-orange-600 dark:text-orange-400 flex items-center gap-1">
+                    <span className="font-medium text-[var(--majalis-emerald)] flex items-center gap-1">
                       <Calendar size={13} aria-hidden="true" /> {req.application_deadline}
                     </span>
                   </div>
@@ -197,7 +197,7 @@ function DetailContent({ university: u }: { university: University }) {
               onClick={() => inCompare ? removeFromCompare(u.slug) : addToCompare(u)}
               disabled={!inCompare && !canAdd}
               className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
-                inCompare ? "bg-orange-500 text-white" :
+                inCompare ? "bg-white text-[var(--majalis-emerald)] font-semibold" :
                 canAdd ? "bg-white/20 text-white hover:bg-white/30" :
                 "bg-white/10 text-white/50 cursor-not-allowed"
               }`}>

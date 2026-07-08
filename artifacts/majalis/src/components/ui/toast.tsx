@@ -46,7 +46,7 @@ const toastVariants = cva(
         success:
           "border border-[var(--msk-gold-border)] bg-[var(--msk-canvas)] text-[var(--msk-text)]",
         warning:
-          "border border-orange-200 bg-[var(--msk-canvas)] text-[var(--msk-text)]",
+          "border border-[var(--majalis-emerald)] bg-[var(--msk-canvas)] text-[var(--msk-text)]",
         destructive:
           "border border-red-200 bg-[var(--msk-canvas)] text-[var(--msk-text)]",
         info:
