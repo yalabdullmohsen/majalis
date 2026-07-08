@@ -78,6 +78,7 @@ export function HomeDailyCorner() {
       <div className="hdc__tabs" role="tablist" aria-label="الورد اليومي">
         {TABS.map(t => (
           <button
+                    type="button"
             key={t.id}
             role="tab"
             aria-selected={tab === t.id}

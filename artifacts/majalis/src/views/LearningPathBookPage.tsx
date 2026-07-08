@@ -215,6 +215,7 @@ export default function LearningPathBookPage() {
                 )}
                 {quizzes.length > 0 && (
                   <button
+                            type="button"
                     onClick={() => setQuizOpen(true)}
                     className="px-5 py-2 border border-purple-300 text-purple-700 dark:text-purple-400 dark:border-purple-700 text-sm font-medium rounded-xl hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors"
                   >

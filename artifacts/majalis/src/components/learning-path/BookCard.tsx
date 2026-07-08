@@ -71,6 +71,7 @@ export function BookCard({ book, scienceColor = "#059669", progress, onMarkDone 
 
         {onMarkDone && status !== "completed" && (
           <button
+                    type="button"
             onClick={(e) => { e.preventDefault(); onMarkDone(book.id); }}
             className="w-full text-xs font-medium py-1.5 rounded-xl border border-[var(--majalis-emerald)] text-[var(--majalis-emerald)] hover:bg-[var(--majalis-emerald-muted)] transition-colors"
           >

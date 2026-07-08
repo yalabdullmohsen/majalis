@@ -102,6 +102,7 @@ export function HomeUpcomingLessons({
     <div className="home-lessons-tabs" role="tablist" aria-label="تصفية الدروس">
       {HOME_TABS.map(({ id, label }) => (
         <button
+                  type="button"
           key={id}
           role="tab"
           aria-selected={tab === id}

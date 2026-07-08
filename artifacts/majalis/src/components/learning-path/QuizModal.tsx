@@ -57,7 +57,7 @@ export function QuizModal({ quizzes, token, onClose }: Props) {
         {/* رأس النافذة */}
         <div className="px-6 py-4 flex items-center justify-between qzm-modal-head">
           <h2 className="font-bold text-lg">اختبر نفسك 📝</h2>
-          <button onClick={onClose} className="text-xl leading-none opacity-80 hover:opacity-100">✕</button>
+          <button type="button" onClick={onClose} className="text-xl leading-none opacity-80 hover:opacity-100">✕</button>
         </div>
 
         <div className="p-6">
@@ -75,6 +75,7 @@ export function QuizModal({ quizzes, token, onClose }: Props) {
                   : "راجع الكتاب ثم حاول مجدداً"}
               </p>
               <button
+                        type="button"
                 onClick={onClose}
                 className="citation-btn citation-btn--primary px-6 py-2.5 rounded-xl"
               >
@@ -108,6 +109,7 @@ export function QuizModal({ quizzes, token, onClose }: Props) {
                   const isWrong    = result && opt === selected && !result.correct;
                   return (
                     <button
+                              type="button"
                       key={i}
                       onClick={() => handleAnswer(opt)}
                       disabled={!!selected || loading}
@@ -134,6 +136,7 @@ export function QuizModal({ quizzes, token, onClose }: Props) {
 
               {selected && (
                 <button
+                          type="button"
                   onClick={next}
                   className="citation-btn citation-btn--primary mt-4 w-full py-2.5 rounded-xl"
                 >
