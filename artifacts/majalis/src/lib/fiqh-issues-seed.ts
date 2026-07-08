@@ -573,6 +573,106 @@ export const FIQH_ISSUES_PUBLISHED_SEED: FiqhCouncilIssue[] = [
     updated_at: "2025-01-15T09:00:00Z",
     created_at: "2025-01-15T09:00:00Z",
   },
+  {
+    id: "seed-issue-hair-transplant",
+    slug: "hair-transplant-cosmetic",
+    title: "زراعة الشعر والعمليات التجميلية",
+    summary: "مسألة فقهية في حكم زراعة الشعر وعمليات التجميل العلاجية والتحسينية.",
+    description:
+      "تتناول هذه المسألة الفرق بين التجميل العلاجي المبيح لإزالة العيوب والضرر، والتجميل التحسيني الذي فيه تغيير لخلق الله، مع بيان أحكام زراعة الشعر بالتفصيل.",
+    category: "الطب والنوازل",
+    subcategory: "الطب",
+    ruling_summary:
+      "زراعة الشعر جائزة إذا كانت من شعر الشخص نفسه أو مما يباح بطبيعته، وإزالة العيوب الخِلقية جائزة، أما التجميل التحسيني المحض فيه خلاف.",
+    evidence_summary:
+      "أحكام التداوي وتغيير خلق الله والقواعد الفقهية في الضرورة والحاجة.",
+    documentation_level: "official_verified",
+    status: "published",
+    views_count: 730,
+    published_at: "2025-02-10T10:00:00Z",
+    updated_at: "2025-02-10T10:00:00Z",
+    created_at: "2025-02-10T10:00:00Z",
+  },
+  {
+    id: "seed-issue-crowdfunding",
+    slug: "crowdfunding-investment",
+    title: "التمويل الجماعي وضوابطه الشرعية",
+    summary: "مسألة فقهية في حكم منصات التمويل الجماعي (Crowdfunding) للمشاريع التجارية والخيرية.",
+    description:
+      "انتشر التمويل الجماعي عبر الإنترنت بصور متعددة: القرض، والمشاركة بالأرباح، والتبرع، والمكافأة. ولكل صورة حكم يختلف في الشريعة الإسلامية.",
+    category: "الاقتصاد الإسلامي",
+    subcategory: "الاقتصاد",
+    ruling_summary:
+      "التمويل الجماعي بصيغة المشاركة بالأرباح جائز، وبصيغة القرض بفائدة محرم ربا، وبصيغة التبرع جائز ومستحب.",
+    evidence_summary:
+      "أحكام الشركة والقرض والربا والهبة في الفقه الإسلامي.",
+    documentation_level: "official_verified",
+    status: "published",
+    views_count: 510,
+    published_at: "2025-03-18T09:00:00Z",
+    updated_at: "2025-03-18T09:00:00Z",
+    created_at: "2025-03-18T09:00:00Z",
+  },
+  {
+    id: "seed-issue-polar-fasting",
+    slug: "polar-regions-fasting",
+    title: "الصيام في البلاد القطبية والشمالية البعيدة",
+    summary: "مسألة فقهية في كيفية الصيام وأوقات الصلاة في البلاد التي يطول فيها النهار أو الليل إلى أكثر من 18 ساعة.",
+    description:
+      "يُعاني المسلمون في الدول الإسكندنافية وكندا وأجزاء من روسيا من تحديات في ضبط أوقات العبادة، إذ قد يبلغ النهار 20-22 ساعة صيفاً.",
+    category: "الأقليات المسلمة",
+    subcategory: "الأقليات",
+    ruling_summary:
+      "يجوز للمسلم في البلاد التي يتعذر فيها تحديد وقت الفجر أو المغرب أن يعمل بأقرب بلد متعارف الأوقات، أو بالتقدير على مكة المكرمة.",
+    evidence_summary:
+      "حديث الدجال وطوله اليوم كسنة وما قياس الأوقات فيه، وأصول الاجتهاد في المسائل الفقهية المستحدثة.",
+    documentation_level: "official_verified",
+    status: "published",
+    views_count: 420,
+    published_at: "2025-04-05T08:00:00Z",
+    updated_at: "2025-04-05T08:00:00Z",
+    created_at: "2025-04-05T08:00:00Z",
+  },
+  {
+    id: "seed-issue-deception-marriage-annulment",
+    slug: "deception-marriage-annulment",
+    title: "فسخ النكاح بسبب الغش والتدليس",
+    summary: "مسألة فقهية في أثر اكتشاف الغش أو إخفاء عيوب جوهرية قبل الزواج على صحة عقد النكاح.",
+    description:
+      "يتناول الفقهاء أثر التدليس في عقد الزواج كإخفاء مرض خطير، أو إخفاء السبق للزواج، أو ادعاء حرية من هو رقيق، وما يترتب على ذلك من فسخ أو خيار.",
+    category: "الأسرة والنكاح",
+    subcategory: "الأسرة",
+    ruling_summary:
+      "إذا وقع التدليس في صفة جوهرية يُؤثّر على الرضا فللمغرور حق فسخ النكاح، مع ثبوت المهر لحصول الدخول.",
+    evidence_summary:
+      "أحكام الخيار في العقود وشروط الرضا وعيوب النكاح في المذاهب الأربعة.",
+    documentation_level: "official_verified",
+    status: "published",
+    views_count: 860,
+    published_at: "2025-05-20T10:00:00Z",
+    updated_at: "2025-05-20T10:00:00Z",
+    created_at: "2025-05-20T10:00:00Z",
+  },
+  {
+    id: "seed-issue-medicinal-cannabis",
+    slug: "medicinal-cannabis-cbd",
+    title: "زيت CBD والقنب الطبي",
+    summary: "مسألة فقهية معاصرة في حكم استخدام زيت الكانابيديول (CBD) المستخرج من القنب لأغراض طبية.",
+    description:
+      "انتشر استخدام مستخلصات القنب الطبية في كثير من دول العالم. والمسألة ذات أبعاد طبية وشرعية: هل خلوها من THC (المادة المسكرة) يُبيحها؟ وما ضوابط التداوي بالمحرم؟",
+    category: "الطب والنوازل",
+    subcategory: "الطب",
+    ruling_summary:
+      "ما خلا من المادة المسكرة (THC) وثبتت فائدته الطبية ولم يوجد بديل مباح فقد يُجاز للضرورة بشرط وصفة طبيب متخصص. وما احتوى على نسبة مُسكِرة فهو محرم.",
+    evidence_summary:
+      "قاعدة الضرورة تُبيح المحظورات، وأحكام التداوي بالمحرم، والحديث: «إن الله لم يجعل شفاءكم فيما حرّم عليكم».",
+    documentation_level: "official_verified",
+    status: "published",
+    views_count: 940,
+    published_at: "2025-06-12T09:00:00Z",
+    updated_at: "2025-06-12T09:00:00Z",
+    created_at: "2025-06-12T09:00:00Z",
+  },
 ];
 
 /** ربط المسائل بعناصر البذور عبر slug */
@@ -607,6 +707,11 @@ export const FIQH_ISSUE_ITEM_LINKS: Record<string, string[]> = {
   "covid-vaccine-ruling": [],
   "nft-metaverse-transactions": ["fiqh-crypto-2024"],
   "social-media-dawah": ["fiqh-social-media-dawah", "fiqh-ai-fatwa-tools"],
+  "hair-transplant-cosmetic": [],
+  "crowdfunding-investment": [],
+  "polar-regions-fasting": [],
+  "deception-marriage-annulment": [],
+  "medicinal-cannabis-cbd": [],
 };
 
 export const FIQH_ISSUE_TIMELINE_SEED: Record<string, Omit<FiqhTimelineEvent, "id" | "issue_id">[]> = {
@@ -784,6 +889,51 @@ export const FIQH_ISSUE_TIMELINE_SEED: Record<string, Omit<FiqhTimelineEvent, "i
       title: "قرار المجمع في زواج المسلم من الكتابية في الغرب",
       description: "ضوابط وحكم زواج المسلم من الكتابية في بيئة الأقليات.",
       event_date: "2025-11-08",
+      sort_order: 1,
+    },
+  ],
+  "hair-transplant-cosmetic": [
+    {
+      event_type: "first_resolution",
+      title: "قرار المجمع في حكم زراعة الشعر",
+      description: "بيان جواز زراعة الشعر وضوابطها الشرعية.",
+      event_date: "2025-02-10",
+      sort_order: 1,
+    },
+  ],
+  "crowdfunding-investment": [
+    {
+      event_type: "first_resolution",
+      title: "قرار المجمع في التمويل الجماعي",
+      description: "بيان أنواع التمويل الجماعي وأحكامها الشرعية.",
+      event_date: "2025-03-18",
+      sort_order: 1,
+    },
+  ],
+  "polar-regions-fasting": [
+    {
+      event_type: "statement",
+      title: "بيان المجمع في الصيام بالبلاد القطبية",
+      description: "ضوابط تقدير أوقات الصلاة والصيام في البلاد الشمالية.",
+      event_date: "2025-04-05",
+      sort_order: 1,
+    },
+  ],
+  "deception-marriage-annulment": [
+    {
+      event_type: "first_resolution",
+      title: "قرار المجمع في الغش في عقد الزواج",
+      description: "بيان أثر التدليس على عقد النكاح وحق الفسخ.",
+      event_date: "2025-05-20",
+      sort_order: 1,
+    },
+  ],
+  "medicinal-cannabis-cbd": [
+    {
+      event_type: "statement",
+      title: "بيان المجمع في زيت CBD الطبي",
+      description: "بيان ضوابط استخدام مستخلصات القنب الطبية.",
+      event_date: "2025-06-12",
       sort_order: 1,
     },
   ],
