@@ -472,6 +472,107 @@ export const FIQH_ISSUES_PUBLISHED_SEED: FiqhCouncilIssue[] = [
     updated_at: "2023-11-08T09:00:00Z",
     created_at: "2023-11-08T09:00:00Z",
   },
+  // ─── مسائل فقهية جديدة ────────────────────────────────────────────
+  {
+    id: "seed-issue-surrogacy",
+    slug: "surrogacy-mother",
+    title: "حكم الأمومة البديلة (الرحم المستعارة)",
+    summary: "مسألة فقهية في حكم الاستعانة برحم امرأة أخرى لحمل الجنين لزوجين عاجزين عن الإنجاب.",
+    description:
+      "تُعدّ الأمومة البديلة من أبرز إشكاليات الطب الحديث؛ إذ تتشعب إلى صور متعددة: زرع بويضة الزوجة في رحم امرأة أخرى بنطفة الزوج، أو استخدام بويضة المرأة الحاملة مع نطفة الزوج، أو غير ذلك.",
+    category: "الطب والنوازل",
+    subcategory: "الطب",
+    ruling_summary:
+      "تحرم الأمومة البديلة في جميع صورها وفق قرار مجمع الفقه الإسلامي؛ لما فيها من اختلاط الأنساب والإشكال في تحديد الأم الشرعية.",
+    evidence_summary:
+      "أحكام النسب في الإسلام، وقاعدة سد الذرائع، والنهي عن كل ما يُفضي إلى اختلاط الأنساب.",
+    documentation_level: "official_verified",
+    status: "published",
+    views_count: 830,
+    published_at: "2024-02-10T09:00:00Z",
+    updated_at: "2024-02-10T09:00:00Z",
+    created_at: "2024-02-10T09:00:00Z",
+  },
+  {
+    id: "seed-issue-euthanasia",
+    slug: "euthanasia-mercy-killing",
+    title: "حكم القتل الرحيم (الموت الرحيم)",
+    summary: "مسألة فقهية في حكم إنهاء حياة المريض الميؤوس من شفائه أو إيقاف العلاج عنه.",
+    description:
+      "يُفرّق الفقهاء المعاصرون بين صورتين: القتل الرحيم الإيجابي (إعطاء جرعة مميتة للمريض)، والسلبي (إيقاف أجهزة الإنعاش أو الامتناع عن العلاج)؛ ولكل صورة حكمها.",
+    category: "الطب والنوازل",
+    subcategory: "الطب",
+    ruling_summary:
+      "يحرم القتل الرحيم الإيجابي إجماعاً. أما إيقاف الأجهزة عن الميت دماغياً فقد أجازه بعض العلماء بضوابط طبية وشرعية دقيقة.",
+    evidence_summary:
+      "حرمة الدم الإنساني، وقاعدة لا ضرر ولا ضرار، وفقه الضرورة الطبية.",
+    documentation_level: "official_verified",
+    status: "published",
+    views_count: 740,
+    published_at: "2024-04-05T09:00:00Z",
+    updated_at: "2024-04-05T09:00:00Z",
+    created_at: "2024-04-05T09:00:00Z",
+  },
+  {
+    id: "seed-issue-covid-vaccine",
+    slug: "covid-vaccine-ruling",
+    title: "حكم التطعيم الإجباري ضد الأوبئة",
+    summary: "مسألة فقهية في حكم إجبار الدولة للمواطنين على التطعيم ضد الأوبئة.",
+    description:
+      "أثار انتشار وباء كوفيد-19 تساؤلات فقهية حول شرعية التطعيم الإجباري وما يترتب على الامتناع عنه من عقوبات أو قيود.",
+    category: "الطب والنوازل",
+    subcategory: "الطب",
+    ruling_summary:
+      "يجوز للدولة تشجيع التطعيم إلزاماً لدرء الضرر العام. أما اللقاحات المأمونة فيُستحسن أخذها تطبيقاً لقاعدة درء الضرر.",
+    evidence_summary:
+      "قاعدة المصلحة العامة تُقدَّم على المصلحة الخاصة، وأحكام الحجر الصحي في السنة النبوية.",
+    documentation_level: "official_verified",
+    status: "published",
+    views_count: 1050,
+    published_at: "2021-03-15T09:00:00Z",
+    updated_at: "2021-03-15T09:00:00Z",
+    created_at: "2021-03-15T09:00:00Z",
+  },
+  {
+    id: "seed-issue-nft-metaverse",
+    slug: "nft-metaverse-transactions",
+    title: "أحكام NFT والميتافيرس الرقمي",
+    summary: "مسألة فقهية مستحدثة في حكم التعامل بالرموز غير القابلة للاستبدال (NFT) وعقود الفضاء الافتراضي.",
+    description:
+      "ظهرت في السنوات الأخيرة صور جديدة للملكية الرقمية تشمل NFT (رموز البلوكتشين المرتبطة بأصول رقمية) وعقارات الميتافيرس الافتراضية، مما استدعى بحثاً فقهياً معمّقاً.",
+    category: "الاقتصاد الإسلامي",
+    subcategory: "التقنية والفقه",
+    ruling_summary:
+      "قد تصح NFT المرتبطة بأصول حقيقية ومنافع مشروعة وفق ضوابط الشرع. أما ما كان منها مجرد مضاربة على الشهرة دون قيمة حقيقية ففيه غرر.",
+    evidence_summary:
+      "أحكام البيع والملكية في الفقه الإسلامي، ومنع الغرر والجهالة في المعاملات.",
+    documentation_level: "official_verified",
+    status: "published",
+    views_count: 890,
+    published_at: "2024-07-01T09:00:00Z",
+    updated_at: "2024-07-01T09:00:00Z",
+    created_at: "2024-07-01T09:00:00Z",
+  },
+  {
+    id: "seed-issue-social-media-dawah",
+    slug: "social-media-dawah",
+    title: "الدعوة عبر منصات التواصل الاجتماعي وضوابطها",
+    summary: "مسألة فقهية في حكم استخدام منصات التواصل الاجتماعي للدعوة وما يترتب عليها من مسؤوليات.",
+    description:
+      "انتشرت ظاهرة الفتوى والدعوة عبر الإنترنت ومنصات التواصل، مما يستدعي تأصيلاً فقهياً لضوابط الداعية ومسؤولية الناشر والمؤثر الإسلامي.",
+    category: "الدعوة والإعلام",
+    subcategory: "الدعوة",
+    ruling_summary:
+      "يجوز الدعوة عبر منصات التواصل بشرط الضبط العلمي والأمانة والابتعاد عن التشهير والفتنة. والداعية مسؤول شرعاً عما ينشره.",
+    evidence_summary:
+      "وجوب الأمر بالمعروف والنهي عن المنكر، وأحكام الاجتهاد والإفتاء والمسؤولية الشرعية.",
+    documentation_level: "official_verified",
+    status: "published",
+    views_count: 680,
+    published_at: "2025-01-15T09:00:00Z",
+    updated_at: "2025-01-15T09:00:00Z",
+    created_at: "2025-01-15T09:00:00Z",
+  },
 ];
 
 /** ربط المسائل بعناصر البذور عبر slug */
@@ -501,6 +602,11 @@ export const FIQH_ISSUE_ITEM_LINKS: Record<string, string[]> = {
   "digital-waqf": ["update-decision-waqf-digital", "fiqh-waqf-stocks"],
   "zakat-real-estate": ["fatwa-zakat-debt"],
   "gender-reassignment-surgery": [],
+  "surrogacy-mother": ["fiqh-surrogacy"],
+  "euthanasia-mercy-killing": [],
+  "covid-vaccine-ruling": [],
+  "nft-metaverse-transactions": ["fiqh-crypto-2024"],
+  "social-media-dawah": ["fiqh-social-media-dawah", "fiqh-ai-fatwa-tools"],
 };
 
 export const FIQH_ISSUE_TIMELINE_SEED: Record<string, Omit<FiqhTimelineEvent, "id" | "issue_id">[]> = {
