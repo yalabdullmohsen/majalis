@@ -78,6 +78,300 @@ export const FIQH_ISSUES_PUBLISHED_SEED: FiqhCouncilIssue[] = [
     updated_at: "2022-08-01T05:00:00Z",
     created_at: "2022-08-01T05:00:00Z",
   },
+  {
+    id: "seed-issue-general-anesthesia",
+    slug: "general-anesthesia",
+    title: "التخدير الكلي في العمليات الجراحية",
+    summary: "مسألة فقهية حول حكم استخدام التخدير الكلي الذي يُفقد الوعي أثناء العمليات الجراحية.",
+    description:
+      "تتناول هذه المسألة حكم التخدير الكلي من حيث كونه مُسكّراً أو مُخدّراً، وأثره على الصلاة والصيام، ومدى جوازه عند الضرورة الطبية.",
+    category: "الطب والنوازل",
+    subcategory: "الطب",
+    ruling_summary:
+      "يجوز التخدير الكلي عند الضرورة الطبية، ولا يُعدّ ناقضاً للإيمان لانعدام القصد والاختيار.",
+    evidence_summary: "الاستدلال بقاعدة الضرورات تبيح المحظورات، وعدم التكليف مع رفع الحرج.",
+    documentation_level: "official_verified",
+    status: "published",
+    views_count: 430,
+    published_at: "2025-01-10T08:00:00Z",
+    updated_at: "2025-01-10T08:00:00Z",
+    created_at: "2025-01-10T08:00:00Z",
+  },
+  {
+    id: "seed-issue-artificial-organ-transplant",
+    slug: "artificial-organ-transplant",
+    title: "زراعة الأعضاء الاصطناعية",
+    summary: "مسألة فقهية حول جواز استبدال الأعضاء البشرية بأعضاء اصطناعية مصنوعة من مواد غير عضوية.",
+    description:
+      "تشمل المسألة أحكام تركيب الأطراف الصناعية والأعضاء الميكانيكية كالقلب الاصطناعي والرئة الاصطناعية.",
+    category: "الطب والنوازل",
+    subcategory: "الطب",
+    ruling_summary: "يجوز زراعة الأعضاء الاصطناعية بقصد العلاج وإعادة وظائف الجسم الحيوية.",
+    evidence_summary: "قاعدة درء المفسدة وجلب المصلحة، والاستدلال بمشروعية التداوي.",
+    documentation_level: "official_verified",
+    status: "published",
+    views_count: 310,
+    published_at: "2025-02-20T09:00:00Z",
+    updated_at: "2025-02-20T09:00:00Z",
+    created_at: "2025-02-20T09:00:00Z",
+  },
+  {
+    id: "seed-issue-human-cloning",
+    slug: "human-cloning",
+    title: "الاستنساخ البشري",
+    summary: "مسألة فقهية حول حكم الاستنساخ البشري التكاثري والعلاجي في ضوء المقاصد الشرعية.",
+    description:
+      "تتناول المسألة أنواع الاستنساخ وحكم كل نوع، والآثار الفقهية على النسب والإرث والعلاقات الأسرية.",
+    category: "الطب والنوازل",
+    subcategory: "الطب",
+    ruling_summary:
+      "يحرم الاستنساخ البشري التكاثري؛ ويُجيز بعض العلماء الاستنساخ العلاجي بضوابط صارمة.",
+    evidence_summary:
+      "مقصد حفظ النسل، وتحريم الاختلاط في الأنساب، وحرمة الكيان الإنساني.",
+    documentation_level: "official_verified",
+    status: "published",
+    views_count: 560,
+    published_at: "2025-03-05T10:00:00Z",
+    updated_at: "2025-03-05T10:00:00Z",
+    created_at: "2025-03-05T10:00:00Z",
+  },
+  {
+    id: "seed-issue-abortion-rape-cases",
+    slug: "abortion-rape-cases",
+    title: "الإجهاض في حالات الاغتصاب",
+    summary: "مسألة فقهية معاصرة حول حكم إسقاط الحمل الناتج عن اغتصاب في المراحل الأولى.",
+    description:
+      "تستعرض المسألة الأقوال الفقهية المعتبرة وضوابط الإجهاض في الحالات الإكراهية الاستثنائية.",
+    category: "الطب والنوازل",
+    subcategory: "الطب",
+    ruling_summary:
+      "أجاز جمهور الفقهاء المعاصرين الإسقاط قبل نفخ الروح للضرورة القصوى في حالات الاغتصاب.",
+    evidence_summary:
+      "قاعدة الضرورات، وأحكام الجنين قبل نفخ الروح، ومقصد حفظ العقل والكرامة الإنسانية.",
+    documentation_level: "official_verified",
+    status: "published",
+    views_count: 740,
+    published_at: "2025-04-12T08:00:00Z",
+    updated_at: "2025-04-12T08:00:00Z",
+    created_at: "2025-04-12T08:00:00Z",
+  },
+  {
+    id: "seed-issue-misyar-marriage",
+    slug: "misyar-marriage",
+    title: "زواج المسيار",
+    summary: "مسألة فقهية حول زواج المسيار وشروطه وما يترتب عليه من حقوق وواجبات.",
+    description:
+      "يُقصد بزواج المسيار عقد زواج يتنازل فيه أحد الطرفين عن بعض حقوقه الشرعية كالنفقة والمبيت.",
+    category: "الأسرة والنكاح",
+    subcategory: "الأسرة",
+    ruling_summary:
+      "يجيزه جمع من العلماء المعاصرين بتوافر أركان الزواج وشروطه مع استيفاء الولي والشهود.",
+    evidence_summary: "أحكام شروط الزواج، وأن التنازل عن الحق الشخصي لصاحبه جائز.",
+    documentation_level: "official_verified",
+    status: "published",
+    views_count: 950,
+    published_at: "2024-09-18T07:00:00Z",
+    updated_at: "2024-09-18T07:00:00Z",
+    created_at: "2024-09-18T07:00:00Z",
+  },
+  {
+    id: "seed-issue-electronic-divorce",
+    slug: "electronic-divorce",
+    title: "الطلاق الإلكتروني",
+    summary: "مسألة فقهية معاصرة حول وقوع الطلاق عبر الوسائل الرقمية كالرسائل النصية والبريد الإلكتروني.",
+    description:
+      "تتناول المسألة حكم الطلاق الواقع عبر الرسائل القصيرة والبريد الإلكتروني ووسائل التواصل الاجتماعي.",
+    category: "الأسرة والنكاح",
+    subcategory: "الأسرة",
+    ruling_summary:
+      "يقع الطلاق الإلكتروني الكتابي متى ثبتت صدوره من الزوج بقصد ونية الطلاق.",
+    evidence_summary:
+      "قياس الكتابة الإلكترونية على الكتابة الخطية في باب الطلاق عند الفقهاء.",
+    documentation_level: "official_verified",
+    status: "published",
+    views_count: 870,
+    published_at: "2024-10-05T09:00:00Z",
+    updated_at: "2024-10-05T09:00:00Z",
+    created_at: "2024-10-05T09:00:00Z",
+  },
+  {
+    id: "seed-issue-artificial-breastfeeding",
+    slug: "artificial-breastfeeding",
+    title: "الرضاعة الاصطناعية وعلاقة المحرمية",
+    summary: "مسألة فقهية حول مدى ثبوت المحرمية من الرضاعة بطريق غير مباشر كالحليب المستخرج في قارورة.",
+    description:
+      "تستعرض المسألة آراء الفقهاء المعاصرين في اشتراط المص المباشر أو الاكتفاء بوصول لبن المرأة إلى الرضيع.",
+    category: "الأسرة والنكاح",
+    subcategory: "الأسرة",
+    ruling_summary:
+      "تثبت المحرمية بوصول اللبن إلى الرضيع بأي طريقة وفق الراجح عند جمهور العلماء المعاصرين.",
+    evidence_summary:
+      "الاستدلال بعلة تغذية الجسم بلبن المرأة وإنبات اللحم وإنشاز العظم.",
+    documentation_level: "official_verified",
+    status: "published",
+    views_count: 490,
+    published_at: "2024-11-20T08:00:00Z",
+    updated_at: "2024-11-20T08:00:00Z",
+    created_at: "2024-11-20T08:00:00Z",
+  },
+  {
+    id: "seed-issue-fasting-elderly-disabled",
+    slug: "fasting-elderly-disabled",
+    title: "صيام كبار السن العاجزين",
+    summary: "مسألة فقهية حول حكم صيام رمضان لمن بلغ حداً من الكبر عجز معه عن الصيام كلياً.",
+    category: "الصيام والعبادات",
+    subcategory: "العبادات",
+    ruling_summary:
+      "يسقط الصيام عن العاجز بسبب الكبر ويُفدى عنه بإطعام مسكين عن كل يوم.",
+    evidence_summary:
+      "الاستدلال بآية الفدية وإجماع الفقهاء على سقوط الصوم بالعجز الدائم.",
+    documentation_level: "official_verified",
+    status: "published",
+    views_count: 680,
+    published_at: "2024-12-01T07:00:00Z",
+    updated_at: "2024-12-01T07:00:00Z",
+    created_at: "2024-12-01T07:00:00Z",
+  },
+  {
+    id: "seed-issue-astronaut-prayer",
+    slug: "astronaut-prayer",
+    title: "صلاة رواد الفضاء",
+    summary: "مسألة فقهية متعلقة بأوقات الصلاة واتجاه القبلة لرواد الفضاء في المدار الأرضي.",
+    description:
+      "تتناول المسألة كيفية تحديد أوقات الصلاة والقبلة لمن يكون في مدار لا تُعرف فيه أوقات الشمس بصورة طبيعية.",
+    category: "الصيام والعبادات",
+    subcategory: "العبادات",
+    ruling_summary:
+      "يصلي رائد الفضاء بحسب توقيت أقرب بلد أُقلع منه أو توقيت مكة المكرمة، ويتوجه نحو الكعبة تقريباً.",
+    evidence_summary:
+      "مبدأ اليسر ورفع الحرج، وأحكام القبلة للعاجز عن التحقق منها.",
+    documentation_level: "official_verified",
+    status: "published",
+    views_count: 1200,
+    published_at: "2025-05-15T10:00:00Z",
+    updated_at: "2025-05-15T10:00:00Z",
+    created_at: "2025-05-15T10:00:00Z",
+  },
+  {
+    id: "seed-issue-zakat-crypto",
+    slug: "zakat-crypto",
+    title: "زكاة العملات الرقمية",
+    summary: "مسألة فقهية حول وجوب الزكاة على ما يمتلكه الشخص من عملات رقمية وكيفية حسابها.",
+    description:
+      "تستعرض المسألة حكم إخراج زكاة البيتكوين والعملات الرقمية الأخرى ونسبتها ووقت وجوبها.",
+    category: "الزكاة والوقف",
+    subcategory: "الاقتصاد",
+    ruling_summary:
+      "تجب الزكاة على العملات الرقمية بنسبة ربع العشر (2.5%) بعد حولان الحول وبلوغ النصاب بقيمتها السوقية.",
+    evidence_summary:
+      "القياس على زكاة النقدين وعروض التجارة، وعموم النصوص الواردة في وجوب الزكاة في المال.",
+    documentation_level: "official_verified",
+    status: "published",
+    views_count: 820,
+    published_at: "2025-06-01T08:00:00Z",
+    updated_at: "2025-06-01T08:00:00Z",
+    created_at: "2025-06-01T08:00:00Z",
+  },
+  {
+    id: "seed-issue-health-insurance-ruling",
+    slug: "health-insurance-ruling",
+    title: "حكم التأمين الصحي",
+    summary: "مسألة فقهية حول جواز الاشتراك في التأمين الصحي التجاري والتعاوني.",
+    description:
+      "تتناول المسألة الفرق بين التأمين التجاري والتعاوني والأثر الفقهي على مدى جوازهما.",
+    category: "الاقتصاد الإسلامي",
+    subcategory: "الاقتصاد",
+    ruling_summary:
+      "يجيز أكثر العلماء التأمين الصحي التعاوني، ورخّص كثيرون في التجاري للضرورة ورفع الحرج.",
+    evidence_summary:
+      "مبدأ التعاون على البر، وقاعدة الضرورة، وتفريق الفقهاء بين صور التأمين.",
+    documentation_level: "official_verified",
+    status: "published",
+    views_count: 760,
+    published_at: "2025-07-10T07:00:00Z",
+    updated_at: "2025-07-10T07:00:00Z",
+    created_at: "2025-07-10T07:00:00Z",
+  },
+  {
+    id: "seed-issue-stock-market-trading",
+    slug: "stock-market-trading",
+    title: "تداول الأسهم في البورصة",
+    summary: "مسألة فقهية شاملة حول حكم شراء الأسهم وبيعها في الأسواق المالية.",
+    description:
+      "تستعرض المسألة شروط جواز التعامل في أسهم الشركات من حيث نشاطها وطريقة التداول وأثر الديون.",
+    category: "الاقتصاد الإسلامي",
+    subcategory: "الاقتصاد",
+    ruling_summary:
+      "يجوز تداول أسهم الشركات المباحة النشاط بضوابط تصفية الحرام وتجنب المحرمات.",
+    evidence_summary:
+      "أحكام الشركات في الفقه الإسلامي، وفتاوى المجامع الفقهية في المعايير الشرعية.",
+    documentation_level: "official_verified",
+    status: "published",
+    views_count: 1050,
+    published_at: "2025-08-05T09:00:00Z",
+    updated_at: "2025-08-05T09:00:00Z",
+    created_at: "2025-08-05T09:00:00Z",
+  },
+  {
+    id: "seed-issue-organ-donation-will",
+    slug: "organ-donation-will",
+    title: "وصايا التبرع بالأعضاء بعد الوفاة",
+    summary: "مسألة فقهية حول مدى صحة الوصية بالتبرع بالأعضاء وأثرها الشرعي.",
+    description:
+      "تتناول المسألة صحة الوصية بالتبرع بالأعضاء من الناحية الشرعية ومدى إلزامها للورثة.",
+    category: "الطب والنوازل",
+    subcategory: "الطب",
+    ruling_summary:
+      "تصح الوصية بالتبرع بالأعضاء عند جمهور المعاصرين، ويُستحسن تنفيذها احتراماً لرغبة الميت.",
+    evidence_summary:
+      "أحكام الوصية في الفقه الإسلامي، وقاعدة إحياء النفس، وفتاوى المجامع الفقهية.",
+    documentation_level: "official_verified",
+    status: "published",
+    views_count: 390,
+    published_at: "2025-09-12T08:00:00Z",
+    updated_at: "2025-09-12T08:00:00Z",
+    created_at: "2025-09-12T08:00:00Z",
+  },
+  {
+    id: "seed-issue-milk-bank-breastfeeding",
+    slug: "milk-bank-breastfeeding",
+    title: "الإرضاع من بنك الحليب",
+    summary: "مسألة فقهية حول ثبوت المحرمية بالرضاعة من بنك الحليب حيث يختلط حليب نساء متعددات.",
+    description:
+      "تستعرض المسألة خطورة اختلاط الأنساب وضوابط التحريم بالرضاعة عند استخدام بنوك الحليب.",
+    category: "الأسرة والنكاح",
+    subcategory: "الأسرة",
+    ruling_summary:
+      "يحذر أكثر الفقهاء المعاصرين من استخدام بنوك الحليب المختلط لما قد يُفضي إليه من الخلط في المحرمية.",
+    evidence_summary:
+      "أحكام الرضاعة المحرِّمة، وقاعدة سد الذرائع، والاحتياط في باب الأنساب.",
+    documentation_level: "official_verified",
+    status: "published",
+    views_count: 510,
+    published_at: "2025-10-20T07:00:00Z",
+    updated_at: "2025-10-20T07:00:00Z",
+    created_at: "2025-10-20T07:00:00Z",
+  },
+  {
+    id: "seed-issue-minorities-kitabiyya-marriage",
+    slug: "minorities-kitabiyya-marriage",
+    title: "زواج المسلم من الكتابية في بلاد الغرب",
+    summary: "مسألة فقهية خاصة بالأقليات المسلمة حول جواز زواج المسلم من الكتابية في بلاد الغرب وضوابطه.",
+    description:
+      "تتناول المسألة الشروط والضوابط التي وضعها العلماء لتحقيق المصلحة الدينية والأسرية لدى المسلمين في الغرب.",
+    category: "الأسرة والنكاح",
+    subcategory: "الأسرة",
+    ruling_summary:
+      "يجيز العلماء زواج المسلم من الكتابية مع التحذير من مخاطره على دين الأبناء وثقافتهم في بيئة الأقليات.",
+    evidence_summary:
+      "نص القرآن الكريم على جواز نكاح الكتابيات، مع تقييده بأحكام المصلحة والضوابط الفقهية.",
+    documentation_level: "official_verified",
+    status: "published",
+    views_count: 670,
+    published_at: "2025-11-08T09:00:00Z",
+    updated_at: "2025-11-08T09:00:00Z",
+    created_at: "2025-11-08T09:00:00Z",
+  },
 ];
 
 /** ربط المسائل بعناصر البذور عبر slug */
@@ -87,6 +381,21 @@ export const FIQH_ISSUE_ITEM_LINKS: Record<string, string[]> = {
   "muslim-minorities-rights": ["fiqh-minorities-rights"],
   "zakat-stocks": ["fiqh-zakat-stocks"],
   "hajj-delay": ["fiqh-collective-fatwa-hajj"],
+  "general-anesthesia": ["fiqh-general-anesthesia"],
+  "artificial-organ-transplant": ["fiqh-artificial-organ-transplant"],
+  "human-cloning": ["fiqh-human-cloning"],
+  "abortion-rape-cases": ["fiqh-abortion-rape-cases"],
+  "misyar-marriage": ["fiqh-misyar-marriage"],
+  "electronic-divorce": ["fiqh-electronic-divorce"],
+  "artificial-breastfeeding": ["fiqh-artificial-breastfeeding"],
+  "fasting-elderly-disabled": ["fiqh-fasting-elderly-disabled"],
+  "astronaut-prayer": ["fiqh-astronaut-prayer"],
+  "zakat-crypto": ["fiqh-zakat-crypto"],
+  "health-insurance-ruling": ["fiqh-health-insurance-ruling"],
+  "stock-market-trading": ["fiqh-stock-market-trading"],
+  "organ-donation-will": ["fiqh-organ-donation-will"],
+  "milk-bank-breastfeeding": ["fiqh-milk-bank-breastfeeding"],
+  "minorities-kitabiyya-marriage": ["fiqh-minorities-kitabiyya-marriage"],
 };
 
 export const FIQH_ISSUE_TIMELINE_SEED: Record<string, Omit<FiqhTimelineEvent, "id" | "issue_id">[]> = {
@@ -129,6 +438,141 @@ export const FIQH_ISSUE_TIMELINE_SEED: Record<string, Omit<FiqhTimelineEvent, "i
       event_type: "first_resolution",
       title: "فتوى جماعية: وجوب الحج على الفور",
       event_date: "2022-08-01",
+      sort_order: 1,
+    },
+  ],
+  "general-anesthesia": [
+    {
+      event_type: "first_resolution",
+      title: "قرار المجمع في حكم التخدير الكلي",
+      description: "بيان جواز التخدير الكلي للضرورة الطبية.",
+      event_date: "2025-01-10",
+      sort_order: 1,
+    },
+  ],
+  "artificial-organ-transplant": [
+    {
+      event_type: "first_resolution",
+      title: "قرار المجمع في زراعة الأعضاء الاصطناعية",
+      description: "بيان حكم تركيب الأعضاء الاصطناعية.",
+      event_date: "2025-02-20",
+      sort_order: 1,
+    },
+  ],
+  "human-cloning": [
+    {
+      event_type: "first_resolution",
+      title: "قرار المجمع في تحريم الاستنساخ البشري التكاثري",
+      description: "بيان حكم أنواع الاستنساخ البشري.",
+      event_date: "2025-03-05",
+      sort_order: 1,
+    },
+  ],
+  "abortion-rape-cases": [
+    {
+      event_type: "recommendation",
+      title: "توصية فقهية في الإجهاض لحالات الاغتصاب",
+      description: "ضوابط الإجهاض الاستثنائي قبل نفخ الروح.",
+      event_date: "2025-04-12",
+      sort_order: 1,
+    },
+  ],
+  "misyar-marriage": [
+    {
+      event_type: "first_resolution",
+      title: "قرار المجمع في زواج المسيار",
+      description: "بيان أحكام وضوابط زواج المسيار.",
+      event_date: "2024-09-18",
+      sort_order: 1,
+    },
+  ],
+  "electronic-divorce": [
+    {
+      event_type: "first_resolution",
+      title: "قرار المجمع في الطلاق الإلكتروني",
+      description: "بيان وقوع الطلاق عبر الوسائل الرقمية.",
+      event_date: "2024-10-05",
+      sort_order: 1,
+    },
+  ],
+  "artificial-breastfeeding": [
+    {
+      event_type: "statement",
+      title: "بيان المجمع في الرضاعة الاصطناعية والمحرمية",
+      description: "توضيح ثبوت المحرمية بالرضاعة الاصطناعية.",
+      event_date: "2024-11-20",
+      sort_order: 1,
+    },
+  ],
+  "fasting-elderly-disabled": [
+    {
+      event_type: "first_resolution",
+      title: "قرار سقوط الصيام عن العاجز بسبب الكبر",
+      description: "بيان حكم الفدية عن العاجز عن الصيام.",
+      event_date: "2024-12-01",
+      sort_order: 1,
+    },
+  ],
+  "astronaut-prayer": [
+    {
+      event_type: "first_resolution",
+      title: "قرار المجمع في صلاة رواد الفضاء",
+      description: "بيان أوقات الصلاة والقبلة في المدار الأرضي.",
+      event_date: "2025-05-15",
+      sort_order: 1,
+    },
+  ],
+  "zakat-crypto": [
+    {
+      event_type: "first_resolution",
+      title: "قرار المجمع في زكاة العملات الرقمية",
+      description: "بيان نسبة الزكاة وكيفية حسابها على العملات الرقمية.",
+      event_date: "2025-06-01",
+      sort_order: 1,
+    },
+  ],
+  "health-insurance-ruling": [
+    {
+      event_type: "first_resolution",
+      title: "قرار المجمع في حكم التأمين الصحي",
+      description: "التفريق بين التأمين التعاوني والتجاري.",
+      event_date: "2025-07-10",
+      sort_order: 1,
+    },
+  ],
+  "stock-market-trading": [
+    {
+      event_type: "first_resolution",
+      title: "قرار المجمع في تداول الأسهم في البورصة",
+      description: "ضوابط جواز التعامل في أسهم الشركات.",
+      event_date: "2025-08-05",
+      sort_order: 1,
+    },
+  ],
+  "organ-donation-will": [
+    {
+      event_type: "recommendation",
+      title: "توصية المجمع بصحة وصية التبرع بالأعضاء",
+      description: "بيان الأثر الشرعي لوصية التبرع بالأعضاء.",
+      event_date: "2025-09-12",
+      sort_order: 1,
+    },
+  ],
+  "milk-bank-breastfeeding": [
+    {
+      event_type: "statement",
+      title: "بيان المجمع في حكم بنوك الحليب",
+      description: "تحذير من استخدام بنوك الحليب المختلط.",
+      event_date: "2025-10-20",
+      sort_order: 1,
+    },
+  ],
+  "minorities-kitabiyya-marriage": [
+    {
+      event_type: "first_resolution",
+      title: "قرار المجمع في زواج المسلم من الكتابية في الغرب",
+      description: "ضوابط وحكم زواج المسلم من الكتابية في بيئة الأقليات.",
+      event_date: "2025-11-08",
       sort_order: 1,
     },
   ],

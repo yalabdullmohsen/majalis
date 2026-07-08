@@ -272,6 +272,503 @@ export const ANNUAL_COURSES_SEED: AnnualCourse[] = [
     view_count: 460,
     created_at: "2026-05-10T07:00:00Z",
   },
+
+  // ── دورات متون ───────────────────────────────────────────────────
+  {
+    id: "matn-ajurrumiyyah-2026",
+    external_key: "matn-ajurrumiyyah-2026",
+    title: "متن الآجرومية في النحو",
+    summary: "حلقة علمية لحفظ وشرح متن الآجرومية في النحو للمبتدئين.",
+    body: `**عن الدورة:**
+متن الآجرومية من أهم المتون النحوية للمبتدئين؛ يُدرَّس مع شرح تطبيقي وتمارين.
+
+**المحاور:**
+- أقسام الكلام
+- إعراب الأسماء والأفعال
+- علامات الإعراب
+- التمارين التطبيقية`,
+    course_type: "متن",
+    season: "1447هـ",
+    year: 2026,
+    sheikh_names: ["أ. محمد الخالدي"],
+    mutoon: ["متن الآجرومية"],
+    schedule: [
+      { day: "الأحد", time: "بعد المغرب", topic: "حفظ وشرح", sheikh: "أ. محمد الخالدي" },
+    ],
+    venue_name: "مركز الدراسات الإسلامية",
+    venue_city: "الكويت",
+    registration_open: true,
+    start_date: "2026-02-01",
+    end_date: "2026-06-30",
+    keywords: ["آجرومية", "نحو", "متن", "مبتدئ"],
+    status: "approved",
+    view_count: 280,
+    created_at: "2026-01-15T06:00:00Z",
+  },
+  {
+    id: "matn-al-waraqat-2026",
+    external_key: "matn-al-waraqat-2026",
+    title: "متن الورقات في أصول الفقه",
+    summary: "حلقة علمية في حفظ وشرح متن الورقات لإمام الحرمين الجويني.",
+    body: `**عن الدورة:**
+متن الورقات من أوجز المتون وأنفعها في أصول الفقه؛ يُشرح مع التمثيل التطبيقي على المسائل الأصولية.
+
+**المحاور:**
+- الأحكام الشرعية
+- الأدلة الشرعية
+- طرق الاستنباط`,
+    course_type: "متن",
+    season: "1447هـ",
+    year: 2026,
+    sheikh_names: ["د. مطلق الجاسر"],
+    mutoon: ["الورقات في أصول الفقه"],
+    schedule: [
+      { day: "الاثنين", time: "بعد العشاء", topic: "حفظ وشرح", sheikh: "د. مطلق الجاسر" },
+    ],
+    venue_name: "مسجد الإمام أحمد",
+    venue_city: "الكويت",
+    registration_open: true,
+    start_date: "2026-02-15",
+    end_date: "2026-07-15",
+    keywords: ["ورقات", "أصول الفقه", "متن", "جويني"],
+    status: "approved",
+    view_count: 310,
+    created_at: "2026-01-20T07:00:00Z",
+  },
+  {
+    id: "matn-al-bayquniyyah-2026",
+    external_key: "matn-al-bayquniyyah-2026",
+    title: "المنظومة البيقونية في مصطلح الحديث",
+    summary: "حفظ وشرح المنظومة البيقونية لتعلّم مصطلح الحديث بأسلوب ميسّر.",
+    course_type: "متن",
+    season: "1447هـ",
+    year: 2026,
+    sheikh_names: ["د. حاتم بن عارف العوني"],
+    mutoon: ["المنظومة البيقونية"],
+    schedule: [
+      { day: "الخميس", time: "بعد الفجر", topic: "حفظ وشرح المنظومة", sheikh: "د. حاتم العوني" },
+    ],
+    venue_name: "مسجد الإمام مالك",
+    venue_city: "الكويت",
+    registration_open: true,
+    start_date: "2026-03-01",
+    end_date: "2026-06-01",
+    keywords: ["بيقونية", "مصطلح الحديث", "منظومة", "متن"],
+    status: "approved",
+    view_count: 195,
+    created_at: "2026-02-01T05:00:00Z",
+  },
+  {
+    id: "matn-nakhbat-al-fikr-2026",
+    external_key: "matn-nakhbat-al-fikr-2026",
+    title: "نخبة الفكر في مصطلح أهل الأثر",
+    summary: "دراسة متن نخبة الفكر لابن حجر مع شرح تطبيقي على الأسانيد.",
+    course_type: "متن",
+    season: "1447هـ",
+    year: 2026,
+    sheikh_names: ["د. إبراهيم الدويش"],
+    mutoon: ["نخبة الفكر", "نزهة النظر"],
+    schedule: [
+      { day: "الأربعاء", time: "بعد المغرب", topic: "شرح نخبة الفكر", sheikh: "د. إبراهيم الدويش" },
+    ],
+    venue_name: "مركز العلوم الشرعية",
+    venue_city: "الكويت",
+    registration_open: true,
+    start_date: "2026-02-20",
+    end_date: "2026-08-20",
+    keywords: ["نخبة الفكر", "ابن حجر", "مصطلح الحديث", "متن"],
+    status: "approved",
+    view_count: 370,
+    created_at: "2026-01-25T08:00:00Z",
+  },
+  {
+    id: "matn-thalatha-usul-2026",
+    external_key: "matn-thalatha-usul-2026",
+    title: "ثلاثة الأصول وأدلتها",
+    summary: "حلقة علمية لحفظ وشرح ثلاثة الأصول لشيخ الإسلام ابن عبدالوهاب.",
+    course_type: "متن",
+    season: "1447هـ",
+    year: 2026,
+    sheikh_names: ["د. عبدالله الشثري"],
+    mutoon: ["ثلاثة الأصول وأدلتها"],
+    schedule: [
+      { day: "الجمعة", time: "بعد صلاة الجمعة", topic: "شرح ثلاثة الأصول", sheikh: "د. عبدالله الشثري" },
+    ],
+    venue_name: "مسجد ابن تيمية",
+    venue_city: "الكويت",
+    registration_open: true,
+    start_date: "2026-01-30",
+    end_date: "2026-05-30",
+    keywords: ["ثلاثة الأصول", "عقيدة", "متن", "ابن عبدالوهاب"],
+    status: "approved",
+    view_count: 490,
+    created_at: "2026-01-10T09:00:00Z",
+  },
+
+  // ── دورات فقهية ──────────────────────────────────────────────────
+  {
+    id: "course-zaad-al-mustaqni-2026",
+    external_key: "course-zaad-al-mustaqni-2026",
+    title: "شرح زاد المستقنع — الفقه الحنبلي",
+    summary: "دورة علمية متكاملة في شرح زاد المستقنع للحجاوي من أول كتاب الطهارة.",
+    body: `**عن الدورة:**
+زاد المستقنع من أهم متون الفقه الحنبلي؛ تُشرح فيه أحكام العبادات والمعاملات تفصيلاً.
+
+**المحاور:**
+- كتاب الطهارة والصلاة
+- كتاب الزكاة والصيام والحج
+- كتاب البيوع والمعاملات`,
+    course_type: "سنوية",
+    season: "1447هـ",
+    year: 2026,
+    sheikh_names: ["د. يوسف الشبيلي"],
+    mutoon: ["زاد المستقنع"],
+    schedule: [
+      { day: "الثلاثاء", time: "بعد العصر", topic: "شرح زاد المستقنع", sheikh: "د. يوسف الشبيلي" },
+    ],
+    venue_name: "المجلس العلمي",
+    venue_city: "الكويت",
+    registration_open: true,
+    start_date: "2026-01-10",
+    end_date: "2026-12-31",
+    keywords: ["زاد المستقنع", "فقه حنبلي", "طهارة", "صلاة"],
+    status: "approved",
+    view_count: 620,
+    created_at: "2025-12-20T08:00:00Z",
+  },
+  {
+    id: "course-bidayat-al-mujtahid-2026",
+    external_key: "course-bidayat-al-mujtahid-2026",
+    title: "بداية المجتهد ونهاية المقتصد",
+    summary: "دراسة الفقه المقارن من خلال كتاب ابن رشد الشهير في مسائل الخلاف.",
+    course_type: "برنامج",
+    season: "1447هـ",
+    year: 2026,
+    sheikh_names: ["د. حامد المسعد", "د. دهام أبو خشبة"],
+    mutoon: ["بداية المجتهد ونهاية المقتصد"],
+    schedule: [
+      { day: "السبت", time: "بعد العشاء", topic: "الفقه المقارن", sheikh: "د. حامد المسعد" },
+      { day: "الثلاثاء", time: "بعد المغرب", topic: "مسائل الخلاف", sheikh: "د. دهام أبو خشبة" },
+    ],
+    venue_name: "مركز المجلس العلمي",
+    venue_city: "الكويت",
+    registration_open: true,
+    start_date: "2026-03-01",
+    end_date: "2026-11-30",
+    keywords: ["بداية المجتهد", "فقه مقارن", "ابن رشد", "خلاف"],
+    status: "approved",
+    view_count: 410,
+    created_at: "2026-02-10T07:00:00Z",
+  },
+  {
+    id: "course-al-rawdh-al-murbi-2026",
+    external_key: "course-al-rawdh-al-murbi-2026",
+    title: "شرح الروض المربع — في الفقه",
+    summary: "شرح متن الروض المربع شرح دقائق زاد المستقنع للشيخ البهوتي.",
+    course_type: "سنوية",
+    season: "1447هـ",
+    year: 2026,
+    sheikh_names: ["د. عبدالله المطلق"],
+    mutoon: ["الروض المربع"],
+    schedule: [
+      { day: "الأحد", time: "بعد المغرب", topic: "شرح الروض المربع", sheikh: "د. عبدالله المطلق" },
+    ],
+    venue_name: "مسجد الصحابة",
+    venue_city: "الكويت",
+    registration_open: true,
+    start_date: "2026-02-01",
+    end_date: "2026-12-31",
+    keywords: ["الروض المربع", "فقه حنبلي", "البهوتي"],
+    status: "approved",
+    view_count: 350,
+    created_at: "2026-01-15T06:00:00Z",
+  },
+  {
+    id: "course-umdat-al-talib-2026",
+    external_key: "course-umdat-al-talib-2026",
+    title: "عمدة الطالب في فقه الإمام أحمد",
+    summary: "دراسة متن عمدة الطالب وهو مختصر في الفقه الحنبلي للمبتدئين.",
+    course_type: "برنامج",
+    season: "1447هـ",
+    year: 2026,
+    sheikh_names: ["د. مطلق الجاسر"],
+    mutoon: ["عمدة الطالب"],
+    schedule: [
+      { day: "الأربعاء", time: "بعد الفجر", topic: "شرح عمدة الطالب", sheikh: "د. مطلق الجاسر" },
+    ],
+    venue_name: "مسجد ابن تيمية",
+    venue_city: "الكويت",
+    registration_open: true,
+    start_date: "2026-02-10",
+    end_date: "2026-07-10",
+    keywords: ["عمدة الطالب", "فقه حنبلي", "مبتدئ"],
+    status: "approved",
+    view_count: 240,
+    created_at: "2026-01-20T05:00:00Z",
+  },
+
+  // ── دورات تفسير ──────────────────────────────────────────────────
+  {
+    id: "course-muqadimat-tafsir-2026",
+    external_key: "course-muqadimat-tafsir-2026",
+    title: "مقدمة في أصول التفسير",
+    summary: "دورة تأسيسية في أصول علم التفسير ومناهج المفسرين.",
+    body: `**عن الدورة:**
+دراسة أصول علم التفسير من القرآن والسنة والأثر وأقوال الصحابة.
+
+**المحاور:**
+- تعريف التفسير ومناهجه
+- تفسير القرآن بالقرآن وبالسنة
+- اللغة العربية وعلاقتها بالتفسير
+- مقدمة ابن تيمية في أصول التفسير`,
+    course_type: "برنامج",
+    season: "1447هـ",
+    year: 2026,
+    sheikh_names: ["الشيخ صالح المغامسي"],
+    mutoon: ["مقدمة في أصول التفسير — ابن تيمية"],
+    schedule: [
+      { day: "الجمعة", time: "بعد الفجر", topic: "أصول التفسير", sheikh: "الشيخ صالح المغامسي" },
+    ],
+    venue_name: "مركز التعليم الإسلامي",
+    venue_city: "الكويت",
+    registration_open: true,
+    start_date: "2026-03-15",
+    end_date: "2026-07-15",
+    keywords: ["تفسير", "أصول التفسير", "مقدمة", "مناهج"],
+    status: "approved",
+    view_count: 390,
+    created_at: "2026-02-20T07:00:00Z",
+  },
+  {
+    id: "course-al-tibyan-2026",
+    external_key: "course-al-tibyan-2026",
+    title: "التبيان في آداب حملة القرآن",
+    summary: "دراسة كتاب التبيان للنووي في آداب القرآن وأحكام التلاوة.",
+    course_type: "برنامج",
+    season: "1447هـ",
+    year: 2026,
+    sheikh_names: ["د. محمد ضاوي العصيمي"],
+    mutoon: ["التبيان في آداب حملة القرآن — النووي"],
+    schedule: [
+      { day: "الخميس", time: "بعد العشاء", topic: "آداب القرآن", sheikh: "د. محمد ضاوي العصيمي" },
+    ],
+    venue_name: "مسجد الإمام مالك",
+    venue_city: "الكويت",
+    registration_open: true,
+    start_date: "2026-02-15",
+    end_date: "2026-06-30",
+    keywords: ["التبيان", "آداب القرآن", "تلاوة", "حملة القرآن"],
+    status: "approved",
+    view_count: 285,
+    created_at: "2026-02-01T06:00:00Z",
+  },
+  {
+    id: "course-manhaj-ibn-kathir-2026",
+    external_key: "course-manhaj-ibn-kathir-2026",
+    title: "منهج ابن كثير في التفسير",
+    summary: "دراسة تحليلية لمنهج الإمام ابن كثير في تفسيره وأصوله الاستدلالية.",
+    course_type: "برنامج",
+    season: "صيف 1447",
+    year: 2026,
+    sheikh_names: ["د. ناصر بن سليمان العمر"],
+    mutoon: ["تفسير القرآن العظيم — ابن كثير"],
+    schedule: [
+      { day: "السبت", time: "بعد الظهر", topic: "منهج ابن كثير", sheikh: "د. ناصر العمر" },
+    ],
+    venue_name: "مركز الدراسات الإسلامية",
+    venue_city: "الكويت",
+    registration_open: true,
+    start_date: "2026-06-15",
+    end_date: "2026-09-15",
+    keywords: ["ابن كثير", "تفسير", "منهج", "دراسة"],
+    status: "approved",
+    view_count: 340,
+    created_at: "2026-05-15T07:00:00Z",
+  },
+
+  // ── دورات حديث ───────────────────────────────────────────────────
+  {
+    id: "course-arbain-nawawiyyah-matn-2026",
+    external_key: "course-arbain-nawawiyyah-matn-2026",
+    title: "متن الأربعين النووية — حفظاً وفهماً",
+    summary: "برنامج تأسيسي لحفظ الأربعين النووية مع استخلاص الفوائد الفقهية.",
+    course_type: "متن",
+    season: "1447هـ",
+    year: 2026,
+    sheikh_names: ["الشيخ سليمان الرحيلي"],
+    mutoon: ["الأربعون النووية"],
+    schedule: [
+      { day: "الاثنين", time: "بعد الفجر", topic: "حفظ وفهم الأربعين النووية", sheikh: "الشيخ سليمان الرحيلي" },
+    ],
+    venue_name: "مسجد الكويت الكبير",
+    venue_city: "الكويت",
+    registration_open: true,
+    start_date: "2026-01-25",
+    end_date: "2026-06-25",
+    keywords: ["أربعين نووية", "حديث", "حفظ", "متن"],
+    status: "approved",
+    view_count: 520,
+    created_at: "2026-01-05T08:00:00Z",
+  },
+  {
+    id: "course-umdat-al-ahkam-2026",
+    external_key: "course-umdat-al-ahkam-2026",
+    title: "عمدة الأحكام من كلام خير الأنام",
+    summary: "دراسة أحاديث عمدة الأحكام للإمام عبدالغني المقدسي مع استنباط الأحكام.",
+    course_type: "سنوية",
+    season: "1447هـ",
+    year: 2026,
+    sheikh_names: ["د. دهام أبو خشبة"],
+    mutoon: ["عمدة الأحكام"],
+    schedule: [
+      { day: "الأحد", time: "بعد العصر", topic: "شرح عمدة الأحكام", sheikh: "د. دهام أبو خشبة" },
+    ],
+    venue_name: "المجلس العلمي",
+    venue_city: "الكويت",
+    registration_open: true,
+    start_date: "2026-01-15",
+    end_date: "2026-12-15",
+    keywords: ["عمدة الأحكام", "حديث", "فقه الحديث", "أحكام"],
+    status: "approved",
+    view_count: 430,
+    created_at: "2025-12-25T06:00:00Z",
+  },
+  {
+    id: "course-bulugh-al-maram-2026",
+    external_key: "course-bulugh-al-maram-2026",
+    title: "بلوغ المرام من أدلة الأحكام",
+    summary: "شرح أحاديث بلوغ المرام لابن حجر مع بيان أحكامها الفقهية.",
+    body: `**عن الدورة:**
+بلوغ المرام من أشهر كتب الحديث الفقهي؛ يجمع ابن حجر فيه أدلة الأحكام الشرعية مرتبةً على أبواب الفقه.
+
+**المحاور:**
+- كتاب الطهارة
+- كتاب الصلاة
+- كتاب الزكاة والصيام
+- كتاب البيوع والنكاح`,
+    course_type: "سنوية",
+    season: "1447هـ",
+    year: 2026,
+    sheikh_names: ["د. حسين المويزري"],
+    mutoon: ["بلوغ المرام من أدلة الأحكام"],
+    schedule: [
+      { day: "الثلاثاء", time: "بعد الفجر", topic: "شرح بلوغ المرام", sheikh: "د. حسين المويزري" },
+      { day: "السبت", time: "بعد المغرب", topic: "مراجعة وتطبيق", sheikh: "د. حسين المويزري" },
+    ],
+    venue_name: "مسجد الصحابة",
+    venue_city: "الكويت",
+    registration_open: true,
+    start_date: "2026-01-01",
+    end_date: "2026-12-31",
+    keywords: ["بلوغ المرام", "ابن حجر", "حديث فقهي", "أدلة الأحكام"],
+    status: "approved",
+    view_count: 680,
+    created_at: "2025-12-15T07:00:00Z",
+  },
+
+  // ── برامج صيفية ──────────────────────────────────────────────────
+  {
+    id: "mukhayam-sayfi-1447",
+    external_key: "mukhayam-sayfi-1447",
+    title: "مخيم صيفي 1447هـ — إجازة العلم والعمل",
+    summary: "مخيم علمي تربوي صيفي يجمع بين طلب العلم والأنشطة الترفيهية الهادفة.",
+    body: `**عن المخيم:**
+مخيم علمي متكامل يُقام خلال الإجازة الصيفية؛ يستهدف الشباب من 15—25 سنة.
+
+**البرنامج:**
+- دروس علمية صباحية في العقيدة والفقه
+- ورش عمل في التلاوة والتجويد
+- أنشطة رياضية وترفيهية هادفة
+- محاضرات في السيرة النبوية والتاريخ
+
+**المدة:**
+أسبوعان متواصلان`,
+    course_type: "موسمية",
+    season: "صيف 1447",
+    year: 2026,
+    sheikh_names: ["الشيخ نبيل العوضي", "الشيخ خالد الراشد"],
+    mutoon: ["ثلاثة الأصول وأدلتها", "الأربعون النووية"],
+    schedule: [
+      { day: "يومياً", time: "08:00 صباحاً", topic: "درس علمي", sheikh: "الشيخ نبيل العوضي" },
+      { day: "يومياً", time: "بعد المغرب", topic: "محاضرة", sheikh: "الشيخ خالد الراشد" },
+    ],
+    venue_name: "مركز الشباب الإسلامي",
+    venue_city: "الكويت",
+    registration_open: true,
+    start_date: "2026-07-01",
+    end_date: "2026-07-14",
+    keywords: ["مخيم", "صيفي", "شباب", "إجازة", "تربية"],
+    status: "approved",
+    view_count: 730,
+    created_at: "2026-05-01T08:00:00Z",
+  },
+  {
+    id: "course-sayf-kuwait-ilmi-1447",
+    external_key: "course-sayf-kuwait-ilmi-1447",
+    title: "دورة صيف الكويت العلمي — 1447هـ",
+    summary: "دورة علمية صيفية مكثفة تُعقد سنوياً في الكويت بمشاركة علماء ومشايخ متعددين.",
+    body: `**عن الدورة:**
+دورة صيفية سنوية تجمع شيوخاً وطلاباً من مختلف التخصصات في برنامج علمي مكثف.
+
+**التخصصات:**
+- حلقة العقيدة
+- حلقة الفقه
+- حلقة التفسير
+- حلقة الحديث
+- حلقة العربية`,
+    course_type: "موسمية",
+    season: "صيف 1447",
+    year: 2026,
+    sheikh_names: ["د. محمد ضاوي العصيمي", "د. مطلق الجاسر", "د. دهام أبو خشبة"],
+    mutoon: ["زاد المستقنع", "نخبة الفكر", "الورقات"],
+    schedule: [
+      { day: "السبت—الأربعاء", time: "08:00—14:00", topic: "برنامج مكثف متعدد المواد", sheikh: "د. محمد ضاوي العصيمي" },
+    ],
+    venue_name: "مسجد الصحابة",
+    venue_address: "الجابرية، شارع 10",
+    venue_city: "الكويت",
+    registration_url: "/lessons?tab=courses",
+    registration_open: true,
+    start_date: "2026-07-15",
+    end_date: "2026-08-10",
+    keywords: ["صيف الكويت", "دورة مكثفة", "علوم شرعية", "صيفية"],
+    status: "approved",
+    view_count: 920,
+    created_at: "2026-05-15T09:00:00Z",
+  },
+  {
+    id: "barnamaj-al-talib-al-mutamayyiz-2026",
+    external_key: "barnamaj-al-talib-al-mutamayyiz-2026",
+    title: "برنامج الطالب المتميز — المسار العلمي",
+    summary: "برنامج نخبوي لاستقطاب المتفوقين من طلاب العلم وتأهيلهم للمسار العلمي الاحترافي.",
+    body: `**عن البرنامج:**
+برنامج متخصص يستهدف طلاب العلم المتقدمين الراغبين في التعمق والتأهل للتدريس.
+
+**مميزات البرنامج:**
+- منهج دراسي شامل ومتدرج
+- إشراف مباشر من شيوخ متخصصين
+- اختبارات دورية ومحاضرات أسبوعية
+- شهادة إتمام معتمدة
+- تدريب على الإلقاء والتدريس`,
+    course_type: "برنامج",
+    season: "1447—1448هـ",
+    year: 2026,
+    sheikh_names: ["د. مطلق الجاسر", "د. محمد ضاوي العصيمي"],
+    mutoon: ["زاد المستقنع", "الورقات", "نخبة الفكر", "ألفية ابن مالك"],
+    schedule: [
+      { day: "السبت", time: "09:00 صباحاً", topic: "الفقه والأصول", sheikh: "د. مطلق الجاسر" },
+      { day: "الثلاثاء", time: "بعد المغرب", topic: "الحديث والتفسير", sheikh: "د. محمد ضاوي العصيمي" },
+    ],
+    venue_name: "مركز المجلس العلمي",
+    venue_city: "الكويت",
+    registration_open: true,
+    start_date: "2026-09-01",
+    end_date: "2027-06-30",
+    keywords: ["برنامج", "طالب متميز", "مسار علمي", "نخبة", "تأهيل"],
+    status: "approved",
+    view_count: 510,
+    created_at: "2026-06-01T10:00:00Z",
+  },
 ];
 
 export function findAnnualCourseById(id: string) {
