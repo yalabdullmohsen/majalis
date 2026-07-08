@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { AlertTriangle, Clock, Globe, RotateCw } from "lucide-react";
+import { AlertTriangle, Bell, Clock, Globe, RotateCw } from "lucide-react";
 import { Link } from "wouter";
 import { AdminShell, useAdminShell } from "@/views/admin/AdminShell";
 import {
@@ -298,7 +298,7 @@ function AdminContent() {
                 ? "border-emerald-600 text-emerald-700 dark:text-emerald-400"
                 : "border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
             }`}>
-            {s === "list" ? "قائمة الجامعات" : s === "add" ? "+ إضافة جامعة" : `🔔 التذكيرات (${reminders.length})`}
+            {s === "list" ? "قائمة الجامعات" : s === "add" ? "+ إضافة جامعة" : <><Bell size={13} className="inline ml-1" />التذكيرات ({reminders.length})</>}
           </button>
         ))}
       </div>

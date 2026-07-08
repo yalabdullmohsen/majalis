@@ -1,13 +1,23 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { AlertTriangle, BookOpen, Lightbulb, Search, Users } from "lucide-react";
+import { AlertTriangle, Bird, BookOpen, Castle, Compass, Flower2, Gem, Landmark, Leaf, Lightbulb, Map as MapIcon, Moon, Ruler, Sailboat, Scale, Search, Shield, Star, Sun, Sword, Users } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { supabase } from "@/lib/supabase";
 import { isSupabaseConfigured } from "@/lib/supabase-config";
 import { PageHeader } from "@/components/ui-common";
 import { ISLAMIC_STORIES_SEED } from "@/lib/islamic-stories-seed";
 import { applyPageSeo } from "@/lib/seo";
+
+const STORY_ICON_MAP: Record<string, LucideIcon> = {
+  Star, Scale, Sword, Landmark, Bird, Compass, Gem, BookOpen, Moon, Castle,
+  Sun, Sailboat, Flower2, MapIcon, Ruler, Leaf, Shield,
+};
+function StoryIconEl({ name }: { name: string }) {
+  const I = STORY_ICON_MAP[name] ?? BookOpen;
+  return <I size={22} strokeWidth={1.5} />;
+}
 
 // ─────────────────── Types ────────────────────────────────────────────────────
 type Category = "الكل" | "صحابة" | "فتوحات" | "تاريخ";
@@ -44,7 +54,7 @@ function StoryCard({ story, onSelect }: { story: IslamicStory; onSelect: () => v
       aria-label={`اقرأ قصة: ${story.title}`}
     >
       <div className="isp-card__head">
-        <span className="isp-card__icon">{story.icon}</span>
+        <span className="isp-card__icon"><StoryIconEl name={story.icon} /></span>
         <div className="isp-card__meta-badges">
           <span className="isp-badge isp-badge--cat">{story.category}</span>
           <span className="isp-badge isp-badge--era">{story.era}</span>
@@ -84,7 +94,7 @@ function StoryDetail({ story, onBack }: { story: IslamicStory; onBack: () => voi
           <span className="isp-badge isp-badge--cat">{story.category}</span>
           <span className="isp-badge isp-badge--era">{story.era}</span>
         </div>
-        <div className="isp-detail__icon">{story.icon}</div>
+        <div className="isp-detail__icon"><StoryIconEl name={story.icon} /></div>
         <h1 className="isp-detail__title">{story.title}</h1>
         <p className="isp-detail__summary">{story.summary}</p>
       </div>

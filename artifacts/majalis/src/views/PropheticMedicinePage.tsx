@@ -1,5 +1,6 @@
 import { useEffect, useState, useMemo } from "react";
-import { AlertTriangle, ScrollText } from "lucide-react";
+import { AlertTriangle, BookOpen, CalendarDays, Leaf, Moon, ScrollText, Sunrise, Utensils } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { Chip } from "@/components/ui-common";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
@@ -8,6 +9,14 @@ import {
   PM_CATEGORIES,
   type PropheticMedicineCategory,
 } from "@/lib/prophetic-medicine-seed";
+
+const PM_ICON_MAP: Record<string, LucideIcon> = {
+  Leaf, Moon, BookOpen, CalendarDays, Utensils, Sunrise,
+};
+function PMIcon({ name }: { name: string }) {
+  const I = PM_ICON_MAP[name] ?? Leaf;
+  return <I size={20} strokeWidth={1.5} />;
+}
 
 const DISCLAIMER =
   "تنبيه: المعلومات الواردة هنا تعليمية تُعرض ما ثبت في السنة النبوية الصحيحة، ولا تُغني عن استشارة الطبيب. الإسلام يُوجب التداوي عند الحاجة.";
@@ -88,7 +97,7 @@ export default function PropheticMedicinePage() {
             >
               {/* رأس البطاقة */}
               <div className="pmp-card__head">
-                <span className="pmp-card__icon">{item.icon}</span>
+                <span className="pmp-card__icon"><PMIcon name={item.icon} /></span>
                 <div className="pmp-card__head-info">
                   <p className="pmp-card__name">{item.name}</p>
                   <div className="pmp-card__badges">
