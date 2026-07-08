@@ -127,7 +127,7 @@ export async function getUserProfileStats(userId: string): Promise<ProfileStats>
       key: b.achievement_key,
       titleAr: def?.titleAr ?? b.title,
       descAr: def?.descAr ?? b.description ?? "",
-      icon: def?.icon ?? "🏅",
+      icon: def?.icon ?? "Medal",
       category: def?.category ?? "content",
       earned_at: b.earned_at,
     };

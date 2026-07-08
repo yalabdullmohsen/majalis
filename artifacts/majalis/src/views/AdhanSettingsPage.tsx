@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { MapPin, Sunrise, Music, Bell, ChevronLeft } from "lucide-react";
+import { CloudMoon, CloudSun, MapPin, Moon, Music, Bell, ChevronLeft, Sunrise, Sun, Sunset } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { Link } from "wouter";
 import {
   loadAdhanPrefs,
@@ -24,6 +25,10 @@ import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import { applyPageSeo } from "@/lib/seo";
 
 const ADVANCE_OPTIONS: AdvanceMinutes[] = [0, 5, 10, 15, 20, 30];
+
+const PRAYER_ICON_MAP: Record<string, LucideIcon> = {
+  Moon, Sun, CloudSun, Sunset, CloudMoon,
+};
 
 function Toggle({
   checked,
@@ -239,7 +244,7 @@ export default function AdhanSettingsPage() {
               >
                 <div className="ads-row">
                   <div className="ads-prayer-icon-row">
-                    <span className="ads-prayer-icon">{PRAYER_ICON[key]}</span>
+                    {(() => { const I = PRAYER_ICON_MAP[PRAYER_ICON[key]] ?? Moon; return <I size={16} className="ads-prayer-icon" />; })()}
                     <span className="ads-prayer-name">{PRAYER_ARABIC[key]}</span>
                   </div>
                   <Toggle checked={p.enabled} onChange={(v) => togglePrayer(key, v)} />

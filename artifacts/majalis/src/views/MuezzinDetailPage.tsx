@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { BookOpen, Building2, Cog, Heart, MapPin, Mic2, Moon, Music2, Star, Tag } from "lucide-react";
+import { BookOpen, Building2, CloudMoon, CloudSun, Cog, Heart, MapPin, Mic2, Moon, Music2, Star, Sun, Sunset, Tag } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { Link, useRoute } from "wouter";
 import {
   getMuezzin,
@@ -21,6 +22,10 @@ import {
   getUserRating,
 } from "@/lib/muezzin-favorites";
 import { applyPageSeo } from "@/lib/seo";
+
+const PRAYER_ICON_MAP: Record<string, LucideIcon> = {
+  Moon, Sun, CloudSun, Sunset, CloudMoon,
+};
 
 const STYLE_CLASS: Record<string, string> = {
   "خاشع":    "khashi",
@@ -258,7 +263,7 @@ export default function MuezzinDetailPage() {
           <div className="mzd-prayer-rows">
             {PRAYER_KEYS.map((key) => (
               <div key={key} className="mzd-prayer-row">
-                <span>{PRAYER_ICON[key]}</span>
+                {(() => { const I = PRAYER_ICON_MAP[PRAYER_ICON[key]] ?? Moon; return <I size={16} />; })()}
                 <span className="mzd-prayer-row__name">{PRAYER_ARABIC[key]}</span>
                 <span className="mzd-prayer-row__type">
                   {key === "fajr" && muezzin.fajrUrl ? "أذان الفجر الخاص" : "الأذان العام"}

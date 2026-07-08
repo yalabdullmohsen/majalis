@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Award, BookOpen, BookText, Bookmark, FileText, Flame, GraduationCap, Leaf, Lock, MapPin, Medal, RotateCw } from "lucide-react";
+import { Award, BookMarked, BookOpen, BookText, Bookmark, FileText, Flame, Gem, GraduationCap, HelpCircle, Landmark, Leaf, Library, Lock, MapPin, Medal, Moon, Repeat2, RotateCw, Scale, ScrollText, Sparkles, Star } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
@@ -14,6 +14,15 @@ import {
 } from "@/lib/user-profile-service";
 import { BADGE_DEFS, BADGE_MAP } from "@/lib/user-badges";
 import { applyPageSeo } from "@/lib/seo";
+
+const BADGE_ICON_MAP: Record<string, LucideIcon> = {
+  Flame, Moon, Star, BookOpen, Library, GraduationCap, BookMarked, Repeat2, Sparkles,
+  Leaf, Landmark, Scale, Bookmark, Gem, Medal, ScrollText, HelpCircle, FileText,
+};
+function BadgeIcon({ name }: { name: string }) {
+  const I = BADGE_ICON_MAP[name] ?? Medal;
+  return <I size={20} />;
+}
 
 // ─── Stat card ───────────────────────────────────────────────────────────────
 
@@ -100,7 +109,7 @@ function BadgeGrid({ earned }: { earned: Set<string> }) {
                   className={`profile-badge${isEarned ? " profile-badge--earned" : ""}`}
                   title={`${def.titleAr} — ${def.descAr}`}
                 >
-                  <span className="profile-badge__icon">{def.icon}</span>
+                  <span className="profile-badge__icon"><BadgeIcon name={def.icon} /></span>
                   <span className="profile-badge__title">{def.titleAr}</span>
                   {!isEarned && (
                     <span className="profile-badge__locked">{def.descAr}</span>
@@ -203,7 +212,7 @@ function NewBadgesFlash({ keys }: { keys: string[] }) {
         if (!def) return null;
         return (
           <div key={key} className="profile-new-badge">
-            <span>{def.icon}</span>
+            <BadgeIcon name={def.icon} />
             <span>أحرزت شارة جديدة: <strong>{def.titleAr}</strong></span>
           </div>
         );

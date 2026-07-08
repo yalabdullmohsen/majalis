@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { BookmarkCheck, BookOpen, FileText, Lock } from "lucide-react";
+import { BookmarkCheck, BookOpen, FileText, GraduationCap, HelpCircle, Lightbulb, Lock, Pin, Scale, ScrollText } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { applyPageSeo } from "@/lib/seo";
@@ -16,6 +17,15 @@ import {
 } from "@/lib/vault-service";
 
 type Tab = "bookmarks" | "resume" | "notes";
+
+const VAULT_ICON_MAP: Record<string, LucideIcon> = {
+  GraduationCap, BookOpen, ScrollText, Lightbulb, Scale, HelpCircle, FileText, Pin,
+};
+function VaultIcon({ type }: { type: string }) {
+  const name = getContentTypeIcon(type);
+  const I = VAULT_ICON_MAP[name] ?? FileText;
+  return <I size={18} strokeWidth={1.5} />;
+}
 
 // ─── Add Note Modal ───────────────────────────────────────────────────────────
 
@@ -301,7 +311,7 @@ export default function VaultPage() {
               )}
               {filteredBookmarks.map((b) => (
                 <div key={b.id} className="vault-item-card">
-                  <span className="vault-item-card__icon">{getContentTypeIcon(b.content_type)}</span>
+                  <span className="vault-item-card__icon"><VaultIcon type={b.content_type} /></span>
                   <div className="vault-item-card__body">
                     <p className="vault-item-card__title">{b.title ?? b.content_id}</p>
                     <span className="vault-item-card__type">{getContentTypeLabel(b.content_type)}</span>
@@ -325,7 +335,7 @@ export default function VaultPage() {
               )}
               {filteredResume.map((r) => (
                 <div key={r.id} className="vault-item-card">
-                  <span className="vault-item-card__icon">{getContentTypeIcon(r.content_type)}</span>
+                  <span className="vault-item-card__icon"><VaultIcon type={r.content_type} /></span>
                   <div className="vault-item-card__body">
                     <p className="vault-item-card__title">{r.content_title ?? r.content_id}</p>
                     <span className="vault-item-card__type">{getContentTypeLabel(r.content_type)}</span>

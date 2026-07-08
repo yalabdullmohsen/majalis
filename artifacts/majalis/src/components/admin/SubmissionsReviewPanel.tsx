@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { CheckCircle2, ClipboardList, Clock, GraduationCap, Library, Link2, MapPin, Mic2, PenLine, RefreshCw, Rocket, XCircle } from "lucide-react";
+import { CheckCircle2, ClipboardList, Clock, Download, FolderOpen, GraduationCap, Library, Link2, MapPin, Mic2, Paperclip, PenLine, RefreshCw, Rocket, User, XCircle } from "lucide-react";
 import {
   listSubmissions,
   reviewSubmission,
@@ -113,7 +113,7 @@ function SubmissionCard({ sub, onReview }: {
           </div>
 
           <div className="srp-card-meta-row">
-            👤 {sub.submitter_name}
+            <User size={13} className="inline ml-1" />{sub.submitter_name}
             {sub.submitter_email && ` · ${sub.submitter_email}`}
             {" · "}
             {sub.type === "adhan" ? "أذان" : "درس"}
@@ -123,7 +123,7 @@ function SubmissionCard({ sub, onReview }: {
 
           <div className="srp-card-chips">
             {sub.file_name && (
-              <span className="srp-meta-chip">📎 {sub.file_name} ({formatFileSize(sub.file_size_kb)})</span>
+              <span className="srp-meta-chip"><Paperclip size={11} className="inline ml-1" />{sub.file_name} ({formatFileSize(sub.file_size_kb)})</span>
             )}
             {meta.country && <span className="srp-meta-chip"><MapPin size={11} className="inline ml-1" />{String(meta.country)}</span>}
             {meta.muezzin_style && <span className="srp-meta-chip">{String(meta.muezzin_style)}</span>}
@@ -149,7 +149,7 @@ function SubmissionCard({ sub, onReview }: {
             <div className="srp-audio-row">
               <AudioPreview url={sub.file_url} />
               <a href={sub.file_url} target="_blank" rel="noopener noreferrer" className="srp-link">
-                ⬇️ تحميل الملف
+                <Download size={13} className="inline ml-1" />تحميل الملف
               </a>
             </div>
           )}
@@ -157,7 +157,7 @@ function SubmissionCard({ sub, onReview }: {
           {sub.file_url && !isAudio && (
             <div className="srp-detail-file">
               <a href={sub.file_url} target="_blank" rel="noopener noreferrer" className="srp-link">
-                📂 عرض / تحميل الملف
+                <FolderOpen size={13} className="inline ml-1" />عرض / تحميل الملف
               </a>
             </div>
           )}

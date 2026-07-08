@@ -20,11 +20,11 @@ export const PRAYER_ARABIC: Record<PrayerKey, string> = {
 };
 
 export const PRAYER_ICON: Record<PrayerKey, string> = {
-  fajr:    "🌙",
-  dhuhr:   "☀️",
-  asr:     "🌤️",
-  maghrib: "🌅",
-  isha:    "🌃",
+  fajr:    "Moon",
+  dhuhr:   "Sun",
+  asr:     "CloudSun",
+  maghrib: "Sunset",
+  isha:    "CloudMoon",
 };
 
 /** Minutes before the adhan to trigger an advance reminder. 0 = disabled. */

@@ -300,7 +300,7 @@ export function CitationModal({ source, initialText = "", startOffset, endOffset
                         onClick={downloadImage}
                         className="citation-btn citation-btn--brass"
                       >
-                        🖼️ تحميل بطاقة الاقتباس (SVG)
+                        <ImageDown size={14} className="inline ml-1" />تحميل بطاقة الاقتباس (SVG)
                       </button>
                     </div>
                   )}

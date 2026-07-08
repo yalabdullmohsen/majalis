@@ -1,5 +1,12 @@
 import { useEffect, useState } from "react";
+import { Bookmark, BookMarked, BookOpen, Flame, Gem, GraduationCap, Landmark, Leaf, Library, Medal, Moon, Repeat2, Scale, Sparkles, Star } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import type { EarnedBadge } from "@/lib/user-profile-service";
+
+const BADGE_ICON_MAP: Record<string, LucideIcon> = {
+  Flame, Moon, Star, BookOpen, Library, GraduationCap, BookMarked, Repeat2,
+  Sparkles, Leaf, Landmark, Scale, Bookmark, Gem, Medal,
+};
 
 type Props = {
   badges: EarnedBadge[];
@@ -30,7 +37,7 @@ export function AchievementToast({ badges, onDismiss }: Props) {
       aria-live="polite"
       className={`at-toast${visible ? " at-toast--visible" : ""}`}
     >
-      <span className="at-icon">{badge.icon}</span>
+      <span className="at-icon">{(() => { const I = BADGE_ICON_MAP[badge.icon] ?? Medal; return <I size={24} />; })()}</span>
       <div className="at-body">
         <p className="at-label">إنجاز جديد</p>
         <p className="at-title">{badge.titleAr}</p>

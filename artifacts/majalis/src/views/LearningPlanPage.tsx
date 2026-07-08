@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
-import { BookOpen, ClipboardList, Lock, Sprout, Timer, Trophy } from "lucide-react";
+import { BookOpen, ClipboardList, Gem, Landmark, Lock, Moon, Repeat2, ScrollText, Sprout, Timer, Trophy } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { useAuth } from "@/components/AuthProvider";
 import { PageHeader } from "@/components/ui-common";
@@ -18,6 +18,10 @@ import {
   type PlanItem,
 } from "@/lib/learning-plan-service";
 import { applyPageSeo } from "@/lib/seo";
+
+const INTEREST_ICON_MAP: Record<string, LucideIcon> = {
+  Landmark, ScrollText, Repeat2, BookOpen, Moon, Gem,
+};
 
 // ─── Wizard Steps ─────────────────────────────────────────────────────────────
 
@@ -79,7 +83,7 @@ function StepInterests({
             className={`lp-wizard__interest${value.includes(o.id) ? " lp-wizard__interest--selected" : ""}`}
             onClick={() => toggle(o.id)}
           >
-            <span>{o.icon}</span>
+            {(() => { const I = INTEREST_ICON_MAP[o.icon] ?? BookOpen; return <I size={18} />; })()}
             <span>{o.label}</span>
           </button>
         ))}

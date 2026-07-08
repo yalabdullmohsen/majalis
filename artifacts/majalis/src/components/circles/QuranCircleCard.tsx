@@ -1,4 +1,4 @@
-import { CalendarDays, MapPin } from "lucide-react";
+import { CalendarDays, MapPin, Phone } from "lucide-react";
 import type { QuranCircle } from "@/lib/quran-circles-service";
 import { GeometricPattern } from "@/components/design/GeometricPattern";
 
@@ -82,7 +82,7 @@ export function QuranCircleCard({ circle: c }: Props) {
             </a>
           ) : (
             <span className="qc-card__contact">
-              📞 {c.contact_info}
+              <Phone size={13} className="inline ml-1" />{c.contact_info}
             </span>
           )}
         </div>

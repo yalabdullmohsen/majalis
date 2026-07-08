@@ -125,16 +125,16 @@ export function getContentTypeLabel(type: string): string {
 
 export function getContentTypeIcon(type: string): string {
   const map: Record<string, string> = {
-    lesson: "🎓",
-    lesson_registration: "🎓",
-    book: "📚",
-    library_item: "📚",
-    hadith: "📜",
-    fawaid: "💡",
-    ruling: "⚖️",
-    qa: "❓",
-    general: "📝",
-    article: "📄",
+    lesson: "GraduationCap",
+    lesson_registration: "GraduationCap",
+    book: "BookOpen",
+    library_item: "BookOpen",
+    hadith: "ScrollText",
+    fawaid: "Lightbulb",
+    ruling: "Scale",
+    qa: "HelpCircle",
+    general: "FileText",
+    article: "FileText",
   };
-  return map[type] ?? "📌";
+  return map[type] ?? "Pin";
 }

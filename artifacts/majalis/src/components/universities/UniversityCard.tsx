@@ -1,4 +1,4 @@
-import { GraduationCap, MapPin } from "lucide-react";
+import { Globe, GraduationCap, MapPin } from "lucide-react";
 import { Link } from "wouter";
 import type { University } from "@/lib/universities-service";
 import { ACCREDITATION_LABELS, ACCREDITATION_COLOR } from "@/lib/universities-service";
@@ -99,7 +99,7 @@ export function UniversityCard({ university: u, compact = false }: Props) {
             className="univ-btn univ-btn--ghost"
             title="الموقع الرسمي"
           >
-            🌐 الموقع
+            <Globe size={13} className="inline ml-1" />الموقع
           </a>
         )}
 

@@ -8,7 +8,7 @@
  * - المصدر: AlQuran Cloud API فقط — لا توليد AI
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { AlertTriangle, Search } from "lucide-react";
+import { AlertTriangle, Clock, Search } from "lucide-react";
 import { searchQuran, type SearchMatch } from "@/lib/quran-api";
 import { normalizeArabic } from "@/lib/arabic-search";
 import { addSearchHistory, getSearchHistory, clearSearchHistory } from "@/lib/search-history";
@@ -215,7 +215,7 @@ export function QuranSearch({ onGoToResult }: Props) {
                       onClick={() => setQuery(h)}
                       className="qss-pill"
                     >
-                      🕐 {h}
+                      <Clock size={12} className="inline ml-1" />{h}
                     </button>
                   ))}
                 </div>

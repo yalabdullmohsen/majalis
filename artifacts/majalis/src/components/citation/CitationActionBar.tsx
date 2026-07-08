@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ClipboardCopy, Link2 } from "lucide-react";
+import { ClipboardCopy, Link2, Printer, Quote, Star } from "lucide-react";
 import { CitationModal } from "./CitationModal";
 import { type CitationSource, type CitationContentType, CONTENT_TYPE_COLOR } from "@/lib/citation-service";
 
@@ -76,7 +76,7 @@ function SelectionTooltip({
         className="flex items-center gap-1 px-2 py-1 rounded transition-colors hover:bg-[var(--majalis-emerald-deep)]"
         title="اقتبس"
       >
-        📑 اقتباس
+        <Quote size={13} className="inline ml-1" />اقتباس
       </button>
       <button
         type="button"
@@ -185,7 +185,7 @@ export function CitationActionBar({
           className={btnClass}
           title="اقتباس"
         >
-          📑 {!compact && "اقتباس"}
+          <Quote size={13} className="inline ml-1" />{!compact && "اقتباس"}
         </button>
 
         <button
@@ -194,7 +194,7 @@ export function CitationActionBar({
           className={btnClass}
           title="حفظ"
         >
-          ⭐ {!compact && "حفظ"}
+          <Star size={13} className="inline ml-1" />{!compact && "حفظ"}
         </button>
 
         <button
@@ -221,7 +221,7 @@ export function CitationActionBar({
           className={btnClass}
           title="طباعة"
         >
-          🖨️ {!compact && "طباعة"}
+          <Printer size={13} className="inline ml-1" />{!compact && "طباعة"}
         </button>
       </div>
 
