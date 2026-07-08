@@ -1,3 +1,4 @@
+import { BookOpen, Clock, FileText } from "lucide-react";
 import { Link } from "wouter";
 import type { LPBook, LPProgress } from "@/lib/learning-path-service";
 import { DIFFICULTY_LABELS } from "@/lib/learning-path-service";
@@ -33,13 +34,13 @@ export function BookCard({ book, scienceColor = "#059669", progress, onMarkDone 
             loading="lazy"
           />
         ) : (
-          <span className="text-4xl opacity-60">📗</span>
+          <span className="text-4xl opacity-60"><BookOpen size={40} strokeWidth={1.3} /></span>
         )}
         {/* شارة الحالة */}
         <span
           className={`absolute top-2 left-2 text-xs font-medium px-2 py-0.5 rounded-full bc-status-badge bc-status-badge--${status}`}
         >
-          {status === "completed" ? "✓ مكتمل" : status === "in_progress" ? "⏳ جاري" : "لم يبدأ"}
+          {status === "completed" ? "✓ مكتمل" : status === "in_progress" ? <><Clock size={11} className="inline ml-0.5" />جارٍ</> : "لم يبدأ"}
         </span>
       </div>
 
@@ -64,7 +65,7 @@ export function BookCard({ book, scienceColor = "#059669", progress, onMarkDone 
           )}
           {book.pages_count > 0 && (
             <span className="text-xs text-[var(--majalis-ink-soft)] bg-[var(--majalis-parchment)] px-2 py-0.5 rounded-full">
-              📄 {book.pages_count}ص
+              <FileText size={11} className="inline ml-0.5" />{book.pages_count}ص
             </span>
           )}
         </div>

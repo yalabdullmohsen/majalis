@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import {
-  BookOpen, CheckCircle2, Handshake, Library, Lightbulb, ScrollText, Moon, Search, Send, Star, Scale, Building2, Landmark, Gem, Trophy, XCircle,
+  Award, BookOpen, CheckCircle2, Handshake, Library, Lightbulb, RefreshCw, ScrollText, Moon, Search, Send, Star, Scale, Building2, Landmark, Gem, Trophy, XCircle,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -384,7 +384,7 @@ function SetupPhase({ onStart }: { onStart: (cats: string[], names: [string, str
         disabled={!canStart}
         className={`qzg-btn-primary qzg-btn-primary--wide${canStart ? "" : " qzg-btn-primary--disabled"}`}
       >
-        {canStart ? "ابدأ اللعبة 🎮" : selected.length < 2 ? "اختر فئتين على الأقل" : "أدخل أسماء الفريقين"}
+        {canStart ? "ابدأ اللعبة" : selected.length < 2 ? "اختر فئتين على الأقل" : "أدخل أسماء الفريقين"}
       </button>
     </div>
   );
@@ -512,7 +512,7 @@ function QuestionPhase({
         {!passedToOpponent && (
           <div className="qzg-q-transfer-row">
             <button type="button" onClick={() => dispatch({ type: "TRANSFER_QUESTION" })} className="qzg-btn-transfer">
-              📤 أرسل للفريق الآخر
+              <Send size={14} className="inline ml-1" />أرسل للفريق الآخر
             </button>
           </div>
         )}
@@ -602,7 +602,7 @@ function WinnerPhase({ teams, onReset }: { teams: [Team, Team]; onReset: () => v
           <div key={team.id}
             className="qzg-section-card qzg-winner-card"
             style={{ "--qzg-wc-border": i === 0 ? "var(--majalis-brass)" : "var(--ds-line-color)" } as React.CSSProperties}>
-            <div className="qzg-winner-rank">{i === 0 ? (isDraw ? "🤝" : "🥇") : "🥈"}</div>
+            <div className="qzg-winner-rank">{i === 0 ? (isDraw ? <Handshake size={24} /> : <Trophy size={24} />) : <Award size={24} />}</div>
             <p className="qzg-winner-name">{team.name}</p>
             <p className="qzg-winner-score" style={{ "--qzg-winner-score-color": i === 0 ? "var(--majalis-brass)" : "var(--majalis-ink-soft)" } as React.CSSProperties}>
               {team.score.toLocaleString("ar-EG")}
@@ -613,7 +613,7 @@ function WinnerPhase({ teams, onReset }: { teams: [Team, Team]; onReset: () => v
       </div>
 
       <button type="button" onClick={onReset} className="qzg-btn-gold qzg-btn-gold--px">
-        🔄 لعبة جديدة
+        <RefreshCw size={14} className="inline ml-1" />لعبة جديدة
       </button>
     </div>
   );

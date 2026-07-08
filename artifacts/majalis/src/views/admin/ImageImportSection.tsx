@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { invalidateLessonsCache } from "@/lib/lessons-service";
-import { CheckCircle2, Image, Trash2, User } from "lucide-react";
+import { CheckCircle2, Image, MousePointerClick, Trash2, User } from "lucide-react";
 import {
   EMPTY_PARSED,
   FIELD_LABELS,
@@ -897,7 +897,7 @@ export function ImageImportSection() {
               />
             ) : (
               <div className="ii-queue__empty">
-                <span aria-hidden="true" className="iis-drop-icon">👆</span>
+                <span aria-hidden="true" className="iis-drop-icon"><MousePointerClick size={36} strokeWidth={1.3} /></span>
                 <p>اختر صورة من القائمة لمراجعة بياناتها</p>
               </div>
             )}

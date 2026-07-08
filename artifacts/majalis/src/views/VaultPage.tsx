@@ -247,7 +247,7 @@ export default function VaultPage() {
     <div className="page-shell narrow vault-page" dir="rtl">
       <PageHeader
         eyebrow="المعرفة"
-        title="📦 المحفظة العلمية"
+        title="المحفظة العلمية"
         subtitle="مكان موحّد لكل ما حفظته وقرأته وسجّلته في رحلتك مع العلم."
       />
 

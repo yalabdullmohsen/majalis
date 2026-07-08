@@ -331,7 +331,7 @@ export default function FamilyModePage() {
     <div className="page-shell narrow fm-page" dir="rtl">
       <PageHeader
         eyebrow="المجتمع"
-        title="👨‍👩‍👧 الوضع العائلي"
+        title="الوضع العائلي"
         subtitle="ولي الأمر يتابع تقدم أبنائه في طلب العلم، روابط آمنة بدون مشاركة كلمة المرور."
       />
 

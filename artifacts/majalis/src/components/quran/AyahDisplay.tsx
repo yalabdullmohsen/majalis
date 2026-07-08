@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { BookmarkCheck, Link2, PenLine } from "lucide-react";
+import { BookmarkCheck, ImageDown, Link2, PenLine } from "lucide-react";
 import type { Ayah } from "@/lib/quran-api";
 import type { PlayerState } from "@/hooks/useAyahPlayer";
 import { copyAyahText, shareAyahAsImage } from "@/lib/share-ayah";
@@ -376,7 +376,7 @@ export function AyahDisplay({
                   onClick={handleContextShare}
                   disabled={sharing}
                 >
-                  <span aria-hidden="true">🖼</span> {sharing ? "جارٍ التصدير…" : "مشاركة كصورة"}
+                  <ImageDown size={14} aria-hidden="true" /> {sharing ? "جارٍ التصدير…" : "مشاركة كصورة"}
                 </button>
 
                 <button

@@ -1,5 +1,6 @@
 "use client";
 
+import { AlertTriangle } from "lucide-react";
 import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { PageHeader, Empty } from "@/components/ui-common";
@@ -51,7 +52,7 @@ export default function SheikhsPageClient({
       <section className="spc-channels-section">
         <h2 className="spc-section-h2">القنوات الرسمية الموثّقة</h2>
         <p className="spc-section-note">
-          ⚠️ نعرض هنا روابط المصادر الرسمية فقط — لا نستضيف أي محتوى للمشايخ على موقعنا.
+          <AlertTriangle size={14} className="inline ml-1" />نعرض هنا روابط المصادر الرسمية فقط — لا نستضيف أي محتوى للمشايخ على موقعنا.
         </p>
         <div className="spc-channels-grid">
           {OFFICIAL_CHANNELS.map((ch) => (

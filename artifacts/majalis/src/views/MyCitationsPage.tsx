@@ -182,7 +182,7 @@ export default function MyCitationsPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-              <h1 className="text-xl font-bold text-[var(--majalis-ink)]">📑 اقتباساتي</h1>
+              <h1 className="text-xl font-bold text-[var(--majalis-ink)]"><FileText size={20} className="inline ml-1" />اقتباساتي</h1>
               <p className="text-sm text-[var(--majalis-ink-soft)] mt-0.5">
                 {saved.length} اقتباس محفوظ
               </p>
@@ -339,7 +339,7 @@ export default function MyCitationsPage() {
             </div>
           ) : displayed.length === 0 ? (
             <div className="text-center py-16 space-y-3">
-              <p className="text-4xl">📑</p>
+              <p className="text-4xl"><FileText size={40} strokeWidth={1.3} /></p>
               <p className="text-[var(--majalis-ink-soft)] text-sm">
                 {searchQuery ? "لا توجد نتائج مطابقة" : "لا توجد اقتباسات محفوظة بعد"}
               </p>

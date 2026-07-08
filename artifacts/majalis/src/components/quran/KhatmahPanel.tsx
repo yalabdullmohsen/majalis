@@ -57,7 +57,7 @@ function PlanCard({ plan, currentPage }: { plan: KhatmahPlan; currentPage: numbe
           <div className="kht-progress-meta">
             <span>الصفحة {actualPages} / 604</span>
             <span className={isAhead ? "kht-progress-ahead" : "kht-progress-behind"}>
-              {isAhead ? "أنت متقدم 🎉" : `متأخر (${expectedPages - actualPages} ص)`}
+              {isAhead ? "أنت متقدم!" : `متأخر (${expectedPages - actualPages} ص)`}
             </span>
           </div>
           <p className="kht-plan-daily">

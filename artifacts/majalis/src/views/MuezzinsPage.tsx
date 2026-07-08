@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect, useRef } from "react";
-import { Heart, MapPin, Mic2, Palette, Search, Star, Upload, Users } from "lucide-react";
+import { Globe, Heart, MapPin, Mic2, Palette, Search, Star, Upload, Users } from "lucide-react";
 import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { MUEZZINS, previewAdhan, stopAdhan, type Muezzin, type MuezzinStyle } from "@/lib/adhan-audio";
@@ -275,7 +275,7 @@ export default function MuezzinsPage() {
       {community.length > 0 && (
         <div className="mzp-community">
           <div className="mzp-community__head">
-            <h2 className="mzp-community__title">🌍 أذانات من المجتمع</h2>
+            <h2 className="mzp-community__title"><Globe size={18} className="inline ml-1" />أذانات من المجتمع</h2>
             {isAdmin && (
               <span className="mzp-community__count">{community.length} تسجيل</span>
             )}

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { ClipboardCopy, ImageDown } from "lucide-react";
 import { toPng } from "html-to-image";
 import {
   type Citation,
@@ -227,14 +228,14 @@ export function CitationModal({ source, initialText = "", startOffset, endOffset
                   onClick={copyTextAndRef}
                   className="citation-btn citation-btn--primary"
                 >
-                  📋 نسخ النص والمصدر
+                  <ClipboardCopy size={14} className="inline ml-1" />نسخ النص والمصدر
                 </button>
                 <button
                   type="button"
                   onClick={downloadCardPng}
                   className="citation-btn citation-btn--secondary"
                 >
-                  🖼️ تحميل صورة
+                  <ImageDown size={14} className="inline ml-1" />تحميل صورة
                 </button>
               </div>
             </>

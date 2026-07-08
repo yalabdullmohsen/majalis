@@ -1,3 +1,4 @@
+import { FileText, Lock } from "lucide-react";
 import { Link } from "wouter";
 import type { LPLevel, LPProgress } from "@/lib/learning-path-service";
 
@@ -72,7 +73,7 @@ export function LevelTimeline({ levels, progress }: Props) {
                         </span>
                       )}
                       {!isUnlocked && (
-                        <span className="text-gray-400 text-sm">🔒</span>
+                        <Lock size={14} className="text-gray-400" />
                       )}
                     </div>
                   </div>
@@ -113,7 +114,7 @@ export function LevelTimeline({ levels, progress }: Props) {
                                     <span className="text-xs text-[var(--majalis-ink-soft)] opacity-60">⏱ {book.estimated_hours}س</span>
                                   )}
                                   {book.pages_count > 0 && (
-                                    <span className="text-xs text-[var(--majalis-ink-soft)] opacity-60">📄 {book.pages_count}ص</span>
+                                    <span className="text-xs text-[var(--majalis-ink-soft)] opacity-60"><FileText size={11} className="inline ml-0.5" />{book.pages_count}ص</span>
                                   )}
                                 </div>
                               </div>
