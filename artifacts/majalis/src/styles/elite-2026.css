@@ -5106,10 +5106,10 @@ button.primary:hover {
   font-weight: 700;
   margin-bottom: 1rem;
 }
-.mzd-style-badge--khashi   { background: #f0fdf4; color: #065f46; border: 1px solid #bbf7d0; }
-.mzd-style-badge--rasmi    { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
-.mzd-style-badge--taqlidi  { background: #faf5ff; color: #6d28d9; border: 1px solid #ddd6fe; }
-.mzd-style-badge--kilasiki { background: #fff7ed; color: #0E6E52; border: 1px solid rgba(14,110,82,0.25); }
+.mzd-style-badge--khashi   { background: var(--majalis-emerald-muted); color: var(--majalis-emerald); border: 1px solid var(--majalis-line); }
+.mzd-style-badge--rasmi    { background: var(--majalis-parchment-deep); color: var(--majalis-ink); border: 1px solid var(--majalis-line); }
+.mzd-style-badge--taqlidi  { background: var(--majalis-parchment-deep); color: var(--majalis-ink-soft); border: 1px solid var(--majalis-line); }
+.mzd-style-badge--kilasiki { background: var(--majalis-emerald-muted); color: var(--majalis-emerald); border: 1px solid var(--majalis-line); }
 .mzd-hero__stats  { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
 .mzd-hero__stat   { text-align: center; }
 .mzd-hero__stat-value { font-size: 1.2rem; font-weight: 700; }
@@ -5131,13 +5131,13 @@ button.primary:hover {
 }
 .mzd-fav-btn.is-fav { border-color: #fca5a5; background: rgba(239,68,68,0.2); }
 .mzd-banner {
-  background: #f0fdf4;
-  border: 1px solid #bbf7d0;
+  background: var(--majalis-emerald-muted);
+  border: 1px solid var(--majalis-line);
   border-radius: 0.6rem;
   padding: 0.6rem 0.875rem;
   margin-bottom: 1rem;
   font-size: 0.82rem;
-  color: #065f46;
+  color: var(--majalis-emerald);
   font-weight: 600;
 }
 .mzd-section { margin-bottom: 1.25rem; }
@@ -5160,7 +5160,7 @@ button.primary:hover {
 .mzd-rating-num { font-size: 1.5rem; font-weight: 800; color: var(--majalis-ink); }
 .mzd-rating-label { font-size: 0.8rem; color: var(--majalis-ink-muted, #9BA3B5); }
 .mzd-stars-row { display: inline-flex; gap: 0.1rem; }
-.mzd-star { font-size: 1.1rem; color: #e5e7eb; }
+.mzd-star { font-size: 1.1rem; color: var(--majalis-line); }
 .mzd-star.is-active { color: var(--majalis-emerald, #0E6E52); }
 .mzd-user-rating { border-top: 1px solid #f3f4f6; padding-top: 0.75rem; }
 .mzd-user-rating__label { font-size: 0.78rem; color: var(--majalis-ink-soft); font-weight: 600; margin-bottom: 0.5rem; }
@@ -5168,7 +5168,7 @@ button.primary:hover {
 .mzd-star-btn {
   background: none; border: none; cursor: pointer;
   font-size: 1.6rem; padding: 0.1rem;
-  color: #e5e7eb; transition: color 0.1s; font-family: inherit;
+  color: var(--majalis-line); transition: color 0.1s; font-family: inherit;
 }
 .mzd-star-btn.is-active { color: var(--majalis-emerald, #0E6E52); }
 .mzd-flash { font-size: 0.75rem; color: var(--majalis-emerald); font-weight: 600; margin-top: 0.35rem; }
@@ -5182,9 +5182,9 @@ button.primary:hover {
 .mzd-audio-row {
   display: flex; align-items: center; gap: 0.75rem;
   padding: 0.75rem 0.875rem; border-radius: 0.75rem;
-  border: 1.5px solid #e5e7eb; background: #fafafa; margin-bottom: 0.5rem;
+  border: 1.5px solid var(--majalis-line); background: var(--majalis-parchment); margin-bottom: 0.5rem;
 }
-.mzd-audio-row--highlight { border-color: #bbf7d0; background: #f0fdf4; }
+.mzd-audio-row--highlight { border-color: var(--majalis-emerald); background: var(--majalis-emerald-muted); }
 .mzd-audio-row__icon { font-size: 1.1rem; }
 .mzd-audio-row__info { flex: 1; }
 .mzd-audio-row__title { font-weight: 600; font-size: 0.875rem; color: var(--majalis-ink); }
@@ -5304,7 +5304,7 @@ button.primary:hover {
 }
 .mzp-set-default-btn {
   width: 100%; margin-top: 0.35rem; padding: 0.35rem;
-  border-radius: 0.5rem; border: 1px dashed #d1d5db;
+  border-radius: 0.5rem; border: 1px dashed var(--majalis-line);
   background: transparent; color: var(--txt-subdued, #6B7280);
   font-size: 0.72rem; cursor: pointer; font-family: inherit;
 }
@@ -5312,11 +5312,11 @@ button.primary:hover {
 /* MuezzinCard */
 .mzp-card {
   background: var(--majalis-panel, rgba(255,255,255,0.08));
-  border-radius: 1rem; border: 1.5px solid #e5e7eb;
+  border-radius: 1rem; border: 1.5px solid var(--majalis-line);
   padding: 1.1rem 1rem; display: flex;
   flex-direction: column; gap: 0.6rem; transition: border-color 0.15s;
 }
-.mzp-card--fav { border-color: #bbf7d0; }
+.mzp-card--fav { border-color: var(--majalis-emerald); }
 .mzp-card__head { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.5rem; }
 .mzp-card__info { flex: 1; min-width: 0; }
 .mzp-card__name { font-weight: 700; font-size: 0.95rem; color: var(--majalis-ink); margin-bottom: 0.15rem; }
@@ -5325,17 +5325,17 @@ button.primary:hover {
 .mzp-fav-btn {
   background: none; border: none; cursor: pointer;
   font-size: 1.1rem; padding: 0.1rem 0.2rem;
-  color: #d1d5db; transition: color 0.15s;
+  color: var(--majalis-line); transition: color 0.15s;
 }
-.mzp-fav-btn.is-fav { color: #ef4444; }
+.mzp-fav-btn.is-fav { color: var(--majalis-danger, #dc2626); }
 .mzp-style-badge {
   padding: 0.2rem 0.55rem; border-radius: 999px;
   font-size: 0.68rem; font-weight: 600;
 }
-.mzp-style-badge--khashi   { background: #f0fdf4; color: #065f46; }
-.mzp-style-badge--rasmi    { background: #eff6ff; color: #1d4ed8; }
-.mzp-style-badge--taqlidi  { background: #faf5ff; color: #6d28d9; }
-.mzp-style-badge--kilasiki { background: #fff7ed; color: #0E6E52; }
+.mzp-style-badge--khashi   { background: var(--majalis-emerald-muted); color: var(--majalis-emerald); }
+.mzp-style-badge--rasmi    { background: var(--majalis-parchment-deep); color: var(--majalis-ink); }
+.mzp-style-badge--taqlidi  { background: var(--majalis-parchment-deep); color: var(--majalis-ink-soft); }
+.mzp-style-badge--kilasiki { background: var(--majalis-emerald-muted); color: var(--majalis-emerald); }
 .mzp-card__category { font-size: 0.72rem; color: var(--txt-muted, #52525B); }
 .mzp-card__rating-row { display: flex; align-items: center; gap: 0.4rem; }
 .mzp-card__rating-num { font-size: 0.78rem; font-weight: 600; color: var(--majalis-ink-soft); }
@@ -5351,7 +5351,7 @@ button.primary:hover {
 .mzp-card__detail-btn { border: 1.5px solid #134a3a; background: transparent; color: var(--majalis-emerald); }
 /* Stars */
 .mzp-stars { display: inline-flex; align-items: center; gap: 0.15rem; font-size: 0.8rem; }
-.mzp-star { font-size: 0.85rem; color: #e5e7eb; }
+.mzp-star { font-size: 0.85rem; color: var(--majalis-line); }
 .mzp-star.is-active { color: var(--majalis-emerald, #0E6E52); }
 /* Community */
 .mzp-community { margin-top: 2rem; }
@@ -5383,8 +5383,8 @@ button.primary:hover {
 /* CTA */
 .mzp-cta {
   margin-top: 2rem;
-  background: linear-gradient(135deg, #f0fdf4, #eff6ff);
-  border: 1.5px solid #bbf7d0; border-radius: 1rem;
+  background: var(--majalis-parchment-deep);
+  border: 1.5px solid var(--majalis-line); border-radius: 1rem;
   padding: 1.25rem; display: flex; align-items: center;
   gap: 1rem; flex-wrap: wrap;
 }
@@ -5841,7 +5841,7 @@ button.primary:hover {
 .ulp-hidden { display: none; }
 
 /* ─ Drop zone ─ */
-.ulp-dropzone { border: 2px dashed #d1d5db; border-radius: 0.875rem; padding: 1.5rem; text-align: center; cursor: pointer; background: #fafafa; transition: all 0.15s; }
+.ulp-dropzone { border: 2px dashed var(--majalis-line); border-radius: 0.875rem; padding: 1.5rem; text-align: center; cursor: pointer; background: var(--majalis-parchment); transition: all 0.15s; }
 .ulp-dropzone.is-dragging { border-color: #134a3a; background: #f0fdf4; }
 .ulp-dropzone.has-file    { border-color: #86efac; background: #f8fffe; }
 .ulp-dropzone__success-icon { font-size: 1.75rem; margin-bottom: 0.4rem; }
@@ -6307,11 +6307,11 @@ button.primary:hover {
 .scp-input {
   margin-top: 0.375rem;
   padding: 0.6rem 0.75rem;
-  border: 1px solid #d1d5db;
+  border: 1px solid var(--majalis-line);
   border-radius: 0.4rem;
   font-size: 0.9rem;
   font-family: inherit;
-  background: #fafafa;
+  background: var(--majalis-parchment);
   color: var(--majalis-ink);
   outline: none;
   width: 100%;
@@ -8083,7 +8083,7 @@ button.primary:hover {
 .asp-form-actions   { margin-top: 0.75rem; display: flex; gap: 0.5rem; }
 .asp-save-btn       { padding: 0.4rem 0.75rem; background: var(--majalis-emerald-deep); color: #fff; border: none; border-radius: 0.375rem; cursor: pointer; font-family: inherit; }
 .asp-save-btn:disabled { opacity: 0.7; cursor: not-allowed; }
-.asp-cancel-btn     { padding: 0.4rem 0.75rem; cursor: pointer; font-family: inherit; background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 0.375rem; }
+.asp-cancel-btn     { padding: 0.4rem 0.75rem; cursor: pointer; font-family: inherit; background: var(--majalis-parchment-deep); border: 1px solid var(--majalis-line); border-radius: 0.375rem; }
 .asp-list           { display: grid; gap: 0.75rem; }
 .asp-card           { background: var(--majalis-panel); border: 1px solid var(--majalis-line); border-radius: 0.5rem; padding: 0.875rem; }
 .asp-card-body      { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; }
@@ -8093,7 +8093,7 @@ button.primary:hover {
 .asp-card-dates     { margin: 0.35rem 0 0; font-size: 0.75rem; color: var(--majalis-ink-soft); }
 .asp-card-error     { margin: 0; font-size: 0.75rem; color: #991B1B; }
 .asp-card-actions   { display: flex; gap: 0.35rem; flex-wrap: wrap; align-items: flex-start; }
-.asp-small-btn      { font-size: 0.75rem; padding: 0.25rem 0.5rem; cursor: pointer; font-family: inherit; background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 0.25rem; }
+.asp-small-btn      { font-size: 0.75rem; padding: 0.25rem 0.5rem; cursor: pointer; font-family: inherit; background: var(--majalis-parchment-deep); border: 1px solid var(--majalis-line); border-radius: 0.25rem; }
 .asp-small-btn:disabled { opacity: 0.7; cursor: not-allowed; }
 .asp-small-btn--accent { color: var(--majalis-emerald-deep); font-weight: 600; }
 
@@ -8155,7 +8155,7 @@ button.primary:hover {
 .arp-approve-btn      { font-size: 0.75rem; padding: 0.25rem 0.5rem; background: var(--majalis-emerald); color: var(--majalis-parchment); border: none; border-radius: 0.25rem; cursor: pointer; font-family: inherit; }
 .arp-approve-btn:disabled { opacity: 0.7; cursor: not-allowed; }
 .arp-edit-link        { font-size: 0.75rem; padding: 0.25rem 0.5rem; border-radius: 0.25rem; border: 1px solid var(--majalis-line); text-decoration: none; color: var(--majalis-emerald-deep); display: inline-flex; align-items: center; }
-.arp-small-btn        { font-size: 0.75rem; padding: 0.25rem 0.5rem; cursor: pointer; font-family: inherit; background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 0.25rem; }
+.arp-small-btn        { font-size: 0.75rem; padding: 0.25rem 0.5rem; cursor: pointer; font-family: inherit; background: var(--majalis-parchment-deep); border: 1px solid var(--majalis-line); border-radius: 0.25rem; }
 .arp-small-btn:disabled { opacity: 0.7; cursor: not-allowed; }
 .arp-card-text        { margin-top: 0.5rem; font-size: 0.75rem; color: var(--majalis-ink-soft); }
 .arp-card-text summary { cursor: pointer; }
@@ -10707,8 +10707,6 @@ button, .btn {
 .univ-card__meta     { color: var(--majalis-ink-soft); }
 .univ-card__updated  { color: var(--majalis-line); }
 .univ-card__acc-dot  { background: var(--univ-acc, var(--majalis-line)); }
-.toast-icon { color: var(--toast-icon-color, var(--majalis-ink)); flex-shrink: 0; margin-top: 0.05rem; }
-
 /* ── §193 — AdhanNotificationBar ───────────────────────────────────────────── */
 .anb-stack {
   position: fixed;
@@ -13729,85 +13727,184 @@ img[loading="lazy"]:not([src=""]) {
 }
 
 /* ══════════════════════════════════════════════════════════════════
-   §TOAST-REDESIGN — إشعارات احترافية عائمة
+   §TOAST-REDESIGN — إشعارات زمردية عصرية
    ══════════════════════════════════════════════════════════════════ */
 
-/* Viewport — يظهر في أسفل الشاشة على الجوال */
-[data-radix-toast-viewport] {
+@keyframes msk-toast-in {
+  from { opacity: 0; transform: translateY(12px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0)    scale(1);    }
+}
+@keyframes msk-toast-out {
+  from { opacity: 1; transform: translateY(0) scale(1);    }
+  to   { opacity: 0; transform: translateY(8px) scale(0.95); }
+}
+@keyframes msk-toast-swipe-out {
+  from { transform: translateX(var(--radix-toast-swipe-end-x)); }
+  to   { transform: translateX(calc(100% + 1rem)); }
+}
+
+/* Viewport */
+.msk-toast-viewport {
   position: fixed !important;
-  bottom: calc(72px + env(safe-area-inset-bottom, 0px)) !important;
+  bottom: calc(80px + env(safe-area-inset-bottom, 0px)) !important;
   left: 50% !important;
   right: auto !important;
   top: auto !important;
   transform: translateX(-50%) !important;
-  width: min(92vw, 400px) !important;
+  width: min(94vw, 420px) !important;
   display: flex !important;
-  flex-direction: column-reverse !important;
-  gap: 8px !important;
+  flex-direction: column !important;
+  gap: 10px !important;
   padding: 0 !important;
   z-index: 9999 !important;
   pointer-events: none !important;
+  list-style: none !important;
 }
 
-/* بطاقة الإشعار */
+/* بطاقة الإشعار الأساسية */
 .msk-toast {
   position: relative !important;
   display: flex !important;
-  align-items: flex-start !important;
+  align-items: center !important;
   gap: 12px !important;
-  padding: 14px 16px !important;
-  background: rgba(255,255,255,0.96) !important;
-  backdrop-filter: blur(20px) saturate(180%) !important;
-  border: 1px solid rgba(0,0,0,0.08) !important;
+  padding: 14px 16px 14px 14px !important;
+  background: var(--majalis-panel, #fff) !important;
+  border: 1px solid var(--majalis-line, #e5e7eb) !important;
+  border-top: 3px solid var(--toast-accent, var(--majalis-emerald)) !important;
   border-radius: 14px !important;
   box-shadow:
-    0 4px 24px rgba(0,0,0,0.12),
-    0 1px 4px rgba(0,0,0,0.06) !important;
+    0 8px 32px rgba(0,0,0,0.10),
+    0 2px 8px rgba(0,0,0,0.06),
+    0 0 0 1px rgba(0,0,0,0.03) !important;
   pointer-events: all !important;
   width: 100% !important;
   overflow: hidden !important;
   direction: rtl !important;
+  cursor: default !important;
 }
 
-/* شريط جانبي ملوّن حسب النوع */
-.msk-toast::before {
-  content: "" !important;
-  position: absolute !important;
-  right: 0 !important;
-  top: 0 !important;
-  bottom: 0 !important;
-  width: 4px !important;
-  border-radius: 0 14px 14px 0 !important;
-  background: var(--toast-strip, #059669) !important;
+/* حالات الأنيميشن */
+.msk-toast[data-state="open"] {
+  animation: msk-toast-in 0.28s cubic-bezier(0.34,1.56,0.64,1) !important;
+}
+.msk-toast[data-state="closed"] {
+  animation: msk-toast-out 0.2s ease-in forwards !important;
+}
+.msk-toast[data-swipe="move"] {
+  transform: translateX(var(--radix-toast-swipe-move-x)) !important;
+  transition: none !important;
+}
+.msk-toast[data-swipe="cancel"] {
+  transform: translateX(0) !important;
+  transition: transform 0.2s ease !important;
+}
+.msk-toast[data-swipe="end"] {
+  animation: msk-toast-swipe-out 0.15s ease-out forwards !important;
 }
 
-/* ألوان الأنواع */
-[data-variant="success"] .msk-toast,
-.msk-toast[data-variant="success"] {
-  --toast-strip: #059669 !important;
-}
-[data-variant="destructive"] .msk-toast,
-.msk-toast[data-variant="destructive"] {
-  --toast-strip: #DC2626 !important;
-  background: rgba(254,242,242,0.97) !important;
-}
-[data-variant="warning"] .msk-toast,
-.msk-toast[data-variant="warning"] {
-  --toast-strip: #0E6E52 !important;
-}
-[data-variant="info"] .msk-toast,
-.msk-toast[data-variant="info"] {
-  --toast-strip: #2563EB !important;
-}
-
-.toast-icon {
-  color: var(--toast-icon-color, #059669) !important;
-  flex-shrink: 0 !important;
-  margin-top: 1px !important;
-  width: 20px !important;
-  height: 20px !important;
+/* أيقونة النوع */
+.msk-toast__icon-wrap {
   display: flex !important;
   align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+  width: 34px !important;
+  height: 34px !important;
+  border-radius: 10px !important;
+}
+
+/* جسم النص */
+.msk-toast__body {
+  flex: 1 !important;
+  min-width: 0 !important;
+  display: grid !important;
+  gap: 2px !important;
+}
+
+.msk-toast__title {
+  font-size: 0.875rem !important;
+  font-weight: 700 !important;
+  line-height: 1.35 !important;
+  color: var(--majalis-ink, #1E1E1E) !important;
+}
+
+.msk-toast__desc {
+  font-size: 0.8rem !important;
+  line-height: 1.5 !important;
+  color: var(--majalis-ink-soft, #6B7280) !important;
+}
+
+/* زر الإجراء */
+.msk-toast__action {
+  flex-shrink: 0 !important;
+}
+.msk-toast__action-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  height: 30px !important;
+  padding: 0 12px !important;
+  border-radius: 8px !important;
+  border: 1px solid var(--majalis-line) !important;
+  background: var(--majalis-parchment-deep) !important;
+  color: var(--majalis-ink) !important;
+  font-size: 0.78rem !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: background 0.15s !important;
+}
+.msk-toast__action-btn:hover {
+  background: var(--majalis-emerald-muted) !important;
+  border-color: var(--majalis-emerald) !important;
+  color: var(--majalis-emerald) !important;
+}
+
+/* زر الإغلاق */
+.msk-toast__close {
+  flex-shrink: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 24px !important;
+  height: 24px !important;
+  border-radius: 6px !important;
+  border: none !important;
+  background: transparent !important;
+  color: var(--majalis-ink-soft, #9CA3AF) !important;
+  cursor: pointer !important;
+  opacity: 0.6 !important;
+  transition: opacity 0.15s, background 0.15s !important;
+}
+.msk-toast__close:hover {
+  opacity: 1 !important;
+  background: var(--majalis-parchment-deep) !important;
+}
+
+/* ألوان خاصة لـ destructive */
+.msk-toast--destructive {
+  --toast-accent: var(--majalis-danger, #DC2626) !important;
+  background: #FFF5F5 !important;
+}
+.msk-toast--warning {
+  --toast-accent: #D97706 !important;
+}
+.msk-toast--info {
+  --toast-accent: #2563EB !important;
+}
+.msk-toast--success,
+.msk-toast--default {
+  --toast-accent: var(--majalis-emerald) !important;
+}
+
+/* Desktop: يُحاذَى من اليمين */
+@media (min-width: 640px) {
+  .msk-toast-viewport {
+    bottom: 24px !important;
+    left: auto !important;
+    right: 24px !important;
+    transform: none !important;
+    width: min(90vw, 400px) !important;
+    align-items: flex-end !important;
+  }
 }
 
 /* ── نهاية §TOAST-REDESIGN ───────────────────────────────────────── */

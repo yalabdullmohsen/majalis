@@ -348,7 +348,7 @@ html[data-reading-mode="quiet"] .highlighted-card__highlight {
   }
 
   .highlighted-card__highlight {
-    border: 1px solid #ccc;
+    border: 1px solid var(--majalis-line, #ccc);
     box-shadow: none;
     break-inside: avoid;
   }

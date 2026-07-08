@@ -1,4 +1,4 @@
-import { CheckCircle2, AlertTriangle, XCircle, Info } from "lucide-react"
+import { CheckCircle2, AlertTriangle, XCircle, Info, Bell } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import {
   Toast,
@@ -9,18 +9,17 @@ import {
   ToastViewport,
 } from "@/components/ui/toast"
 
-// ── أيقونة وlون حسب نوع التوست ────────────────────────────────────────────
 type ToastVariant = "default" | "success" | "warning" | "destructive" | "info"
 
 const VARIANT_META: Record<
   ToastVariant,
-  { Icon: typeof CheckCircle2; color: string }
+  { Icon: typeof CheckCircle2; accent: string; iconBg: string; iconColor: string }
 > = {
-  default:     { Icon: Info,          color: "var(--msk-text-2)"  },
-  success:     { Icon: CheckCircle2,  color: "var(--msk-gold)"    },
-  warning:     { Icon: AlertTriangle, color: "#97A59F"             },
-  destructive: { Icon: XCircle,       color: "#DC2626"             },
-  info:        { Icon: Info,          color: "var(--msk-text-2)"  },
+  default:     { Icon: Bell,          accent: "var(--majalis-emerald)",      iconBg: "var(--majalis-emerald-muted)", iconColor: "var(--majalis-emerald)" },
+  success:     { Icon: CheckCircle2,  accent: "var(--majalis-emerald)",      iconBg: "var(--majalis-emerald-muted)", iconColor: "var(--majalis-emerald)" },
+  warning:     { Icon: AlertTriangle, accent: "#D97706",                     iconBg: "#FEF3C7",                      iconColor: "#B45309"                 },
+  destructive: { Icon: XCircle,       accent: "var(--majalis-danger,#DC2626)", iconBg: "#FEE2E2",                   iconColor: "#DC2626"                  },
+  info:        { Icon: Info,          accent: "#2563EB",                     iconBg: "#DBEAFE",                      iconColor: "#1D4ED8"                  },
 }
 
 export function Toaster() {
@@ -30,28 +29,28 @@ export function Toaster() {
     <ToastProvider>
       {toasts.map(function ({ id, title, description, action, variant, ...props }) {
         const v = (variant ?? "default") as ToastVariant
-        const { Icon, color } = VARIANT_META[v] ?? VARIANT_META.default
+        const meta = VARIANT_META[v] ?? VARIANT_META.default
 
         return (
-          <Toast key={id} variant={variant} {...props}>
+          <Toast key={id} variant={variant} {...props}
+            style={{ "--toast-accent": meta.accent } as React.CSSProperties}
+          >
             {/* أيقونة النوع */}
             <span
-              className="toast-icon"
-              style={{ "--toast-icon-color": color } as React.CSSProperties}
+              className="msk-toast__icon-wrap"
+              style={{ background: meta.iconBg, color: meta.iconColor } as React.CSSProperties}
               aria-hidden="true"
             >
-              <Icon size={18} strokeWidth={2} />
+              <meta.Icon size={16} strokeWidth={2.2} />
             </span>
 
             {/* المحتوى */}
-            <div className="grid gap-0.5 min-w-0 flex-1">
+            <div className="msk-toast__body">
               {title && <ToastTitle>{title}</ToastTitle>}
-              {description && (
-                <ToastDescription>{description}</ToastDescription>
-              )}
+              {description && <ToastDescription>{description}</ToastDescription>}
             </div>
 
-            {action}
+            {action && <div className="msk-toast__action">{action}</div>}
             <ToastClose />
           </Toast>
         )

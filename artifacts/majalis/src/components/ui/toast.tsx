@@ -13,44 +13,22 @@ const ToastViewport = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <ToastPrimitives.Viewport
     ref={ref}
-    className={cn(
-      "fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px]",
-      className
-    )}
+    className={cn("msk-toast-viewport", className)}
     {...props}
   />
 ))
 ToastViewport.displayName = ToastPrimitives.Viewport.displayName
 
 const toastVariants = cva(
-  [
-    "msk-toast",
-    "group pointer-events-auto relative flex w-full items-start gap-3 overflow-hidden p-4 pr-10",
-    "data-[swipe=cancel]:translate-x-0",
-    "data-[swipe=end]:translate-x-[var(--radix-toast-swipe-end-x)]",
-    "data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)]",
-    "data-[swipe=move]:transition-none",
-    "data-[state=open]:animate-in data-[state=closed]:animate-out",
-    "data-[state=closed]:fade-out-80",
-    "data-[state=closed]:slide-out-to-right-full",
-    "data-[state=open]:slide-in-from-top-2",
-    "data-[state=open]:fade-in",
-    "motion-reduce:data-[state=open]:animate-none",
-    "motion-reduce:data-[state=closed]:animate-none",
-  ].join(" "),
+  "msk-toast",
   {
     variants: {
       variant: {
-        default:
-          "border border-[var(--msk-border)] bg-[var(--msk-canvas)] text-[var(--msk-text)]",
-        success:
-          "border border-[var(--msk-gold-border)] bg-[var(--msk-canvas)] text-[var(--msk-text)]",
-        warning:
-          "border border-[var(--majalis-emerald)] bg-[var(--msk-canvas)] text-[var(--msk-text)]",
-        destructive:
-          "border border-red-200 bg-[var(--msk-canvas)] text-[var(--msk-text)]",
-        info:
-          "border border-[var(--msk-border)] bg-[var(--msk-canvas)] text-[var(--msk-text)]",
+        default:     "msk-toast--default",
+        success:     "msk-toast--success",
+        warning:     "msk-toast--warning",
+        destructive: "msk-toast--destructive",
+        info:        "msk-toast--info",
       },
     },
     defaultVariants: {
@@ -80,13 +58,7 @@ const ToastAction = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <ToastPrimitives.Action
     ref={ref}
-    className={cn(
-      "inline-flex h-8 shrink-0 items-center justify-center rounded-lg border bg-transparent px-3 text-sm font-medium transition-colors",
-      "border-[var(--msk-border)] hover:bg-[var(--msk-canvas-2)]",
-      "focus:outline-none focus:ring-2 focus:ring-[var(--msk-gold)] focus:ring-offset-2",
-      "disabled:pointer-events-none disabled:opacity-50",
-      className
-    )}
+    className={cn("msk-toast__action-btn", className)}
     {...props}
   />
 ))
@@ -98,17 +70,11 @@ const ToastClose = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <ToastPrimitives.Close
     ref={ref}
-    className={cn(
-      "absolute right-2 top-2 rounded-md p-1",
-      "text-[var(--msk-text-3)] opacity-60 transition-opacity",
-      "hover:opacity-100 hover:text-[var(--msk-text)]",
-      "focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-[var(--msk-gold)]",
-      className
-    )}
+    className={cn("msk-toast__close", className)}
     toast-close=""
     {...props}
   >
-    <X className="h-4 w-4" />
+    <X className="h-3.5 w-3.5" />
   </ToastPrimitives.Close>
 ))
 ToastClose.displayName = ToastPrimitives.Close.displayName
@@ -119,7 +85,7 @@ const ToastTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <ToastPrimitives.Title
     ref={ref}
-    className={cn("text-sm font-semibold leading-snug", className)}
+    className={cn("msk-toast__title", className)}
     {...props}
   />
 ))
@@ -131,7 +97,7 @@ const ToastDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <ToastPrimitives.Description
     ref={ref}
-    className={cn("text-sm opacity-80 leading-snug", className)}
+    className={cn("msk-toast__desc", className)}
     {...props}
   />
 ))

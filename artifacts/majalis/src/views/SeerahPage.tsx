@@ -405,10 +405,10 @@ const SEERAH_CSS = `
   max-height: calc(100vh - 2rem);
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: #d1d5db transparent;
+  scrollbar-color: var(--majalis-line) transparent;
 }
 .seerah-timeline::-webkit-scrollbar { width: 4px; }
-.seerah-timeline::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 2px; }
+.seerah-timeline::-webkit-scrollbar-thumb { background: var(--majalis-line); border-radius: 2px; }
 @media (max-width: 720px) {
   .seerah-timeline {
     position: static;
@@ -473,9 +473,9 @@ const SEERAH_CSS = `
   justify-content: center;
   font-size: 0.72rem;
   font-weight: 700;
-  background: #f9fafb;
-  border: 2px solid #d1d5db;
-  color: #6b7280;
+  background: var(--majalis-parchment);
+  border: 2px solid var(--majalis-line);
+  color: var(--majalis-ink-soft);
   transition: border-color 0.15s, background 0.15s, color 0.15s;
 }
 
