@@ -54,7 +54,7 @@
   --txt-hint:       #71717A;
   --txt-disabled:   #A1A1AA;
   --txt-success:    #15803D;
-  --txt-warning:    #92400E;
+  --txt-warning:    #0A5040;
   --txt-error:      #B91C1C;
   --txt-info:       #1E40AF;
   --txt-accent:     #166534;
@@ -701,7 +701,7 @@ label {
 .prophets-lux-empty,
 .prophets-lux-empty { color: var(--txt-muted, #52525B) !important; }
 .prophets-lux-disclaimer {
-  color: var(--txt-warning, #92400E) !important;
+  color: var(--txt-warning, #0A5040) !important;
   border-color: rgba(202,138,4,0.30) !important;
   background: var(--m26-gold-50, #f0faf5) !important;
 }
@@ -781,7 +781,7 @@ label {
 .notif-banner--warn {
   background: var(--m26-gold-50, #f0faf5) !important;
   border-color: rgba(202,138,4,0.35) !important;
-  color: var(--txt-warning, #92400E) !important;
+  color: var(--txt-warning, #0A5040) !important;
 }
 .notif-banner--err {
   background: #FEF2F2 !important;

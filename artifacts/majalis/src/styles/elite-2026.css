@@ -4982,7 +4982,7 @@ button.primary:hover {
 
 .isp-detail__section-title--green  { color: #15803D !important; }
 .isp-detail__section-title--purple { color: #6D28D9 !important; }
-.isp-detail__section-title--gold   { color: #92400E !important; }
+.isp-detail__section-title--gold   { color: var(--majalis-emerald,#0E6E52) !important; }
 
 .isp-detail__body {
   font-size: 0.9rem;
@@ -11472,7 +11472,7 @@ a:focus-visible {
   display: flex;
   align-items: center;
   gap: 0.15rem;
-  color: #c9a84c;
+  color: var(--majalis-emerald, #0E6E52);
   font-size: 0.8rem;
 }
 
@@ -11486,7 +11486,7 @@ a:focus-visible {
   transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s !important;
 }
 .fawaid-card:hover {
-  border-color: var(--majalis-gold, #c9a84c) !important;
+  border-color: var(--majalis-emerald, #0E6E52) !important;
   box-shadow: 0 6px 20px rgba(0,0,0,0.09) !important;
   transform: translateX(-2px) !important;
 }
@@ -11822,7 +11822,7 @@ a:focus-visible {
   border-top: 3px solid #0E6E52 !important;
 }
 .isp-card--conquests {
-  border-top: 3px solid #C6A059 !important;
+  border-top: 3px solid #0E6E52 !important;
 }
 .isp-card--history {
   border-top: 3px solid #0369a1 !important;
@@ -11856,8 +11856,8 @@ a:focus-visible {
   color: var(--majalis-emerald-deep) !important;
 }
 .isp-badge--era {
-  background: color-mix(in srgb, var(--v2-gold, #C6A059) 15%, transparent) !important;
-  color: #92640A !important;
+  background: color-mix(in srgb, var(--v2-gold, #0E6E52) 15%, transparent) !important;
+  color: var(--majalis-emerald,#0E6E52) !important;
 }
 
 /* فاصل */
@@ -11930,9 +11930,9 @@ a:focus-visible {
   border-color: color-mix(in srgb, #0E6E52 25%, transparent) !important;
 }
 .isp-stat-chip--conquests {
-  background: color-mix(in srgb, #C6A059 12%, transparent) !important;
-  color: #92640A !important;
-  border-color: color-mix(in srgb, #C6A059 30%, transparent) !important;
+  background: color-mix(in srgb, #0E6E52 12%, transparent) !important;
+  color: var(--majalis-emerald,#0E6E52) !important;
+  border-color: color-mix(in srgb, #0E6E52 30%, transparent) !important;
 }
 .isp-stat-chip--history {
   background: color-mix(in srgb, #0369a1 10%, transparent) !important;
@@ -12029,7 +12029,7 @@ a:focus-visible {
 .isp-detail__hero {
   text-align: center !important;
   padding: 2rem 1.5rem !important;
-  background: linear-gradient(135deg, color-mix(in srgb, var(--majalis-emerald) 5%, transparent), color-mix(in srgb, var(--v2-gold,#C6A059) 5%, transparent)) !important;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--majalis-emerald) 5%, transparent), color-mix(in srgb, var(--v2-gold,#0E6E52) 5%, transparent)) !important;
   border-radius: 16px !important;
   border: 1px solid var(--v2-border, #D8D2C7) !important;
 }
@@ -12073,7 +12073,7 @@ a:focus-visible {
 }
 .isp-detail__section-title--green { color: var(--majalis-emerald-deep) !important; }
 .isp-detail__section-title--purple { color: #7c3aed !important; }
-.isp-detail__section-title--gold { color: #92640A !important; }
+.isp-detail__section-title--gold { color: var(--majalis-emerald,#0E6E52) !important; }
 .isp-detail__body {
   font-size: 0.92rem !important;
   color: var(--v2-ink-2, #4A453F) !important;
@@ -12269,7 +12269,7 @@ a:focus-visible {
 }
 
 .quiz-answer-reveal {
-  background: linear-gradient(135deg, color-mix(in srgb, var(--majalis-emerald) 8%, transparent), color-mix(in srgb, var(--v2-gold,#C6A059) 6%, transparent)) !important;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--majalis-emerald) 8%, transparent), color-mix(in srgb, var(--v2-gold,#0E6E52) 6%, transparent)) !important;
   border: 1px solid color-mix(in srgb, var(--majalis-emerald) 20%, transparent) !important;
   border-radius: 10px !important;
   padding: 1rem !important;
@@ -13664,7 +13664,7 @@ img[loading="lazy"]:not([src=""]) {
 }
 [data-variant="warning"] .msk-toast,
 .msk-toast[data-variant="warning"] {
-  --toast-strip: #D97706 !important;
+  --toast-strip: #0E6E52 !important;
 }
 [data-variant="info"] .msk-toast,
 .msk-toast[data-variant="info"] {

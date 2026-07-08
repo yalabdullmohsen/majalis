@@ -134,7 +134,7 @@ export function IslamicPatternBg({
 
 export function AchievementFrame({
   size = 64,
-  color = "var(--v2-gold, #C6A059)",
+  color = "var(--v2-gold, #0E6E52)",
   children,
 }: {
   size?: number;
