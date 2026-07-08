@@ -2,7 +2,7 @@
   "id": "/?source=pwa",
   "name": "المجلس العلمي",
   "short_name": "المجلس العلمي",
-  "description": "منصة علمية شرعية موثقة للدروس والدورات والقرآن والأذكار والأسئلة والمساعد الشرعي.",
+  "description": "منصة علمية شرعية موثقة للدروس والدورات والقرآن والأذكار والفتاوى والأسئلة والمساعد الشرعي.",
   "lang": "ar",
   "dir": "rtl",
   "start_url": "/?source=pwa",
@@ -13,6 +13,7 @@
   "theme_color": "#166534",
   "orientation": "portrait-primary",
   "categories": ["education", "books", "lifestyle"],
+  "prefer_related_applications": false,
   "icons": [
     {
       "src": "/favicon.svg",
@@ -41,27 +42,45 @@
   ],
   "shortcuts": [
     {
-      "name": "الدروس",
+      "name": "القرآن الكريم",
+      "short_name": "القرآن",
+      "url": "/quran?source=pwa",
+      "description": "المصحف الرقمي الاحترافي",
+      "icons": [{ "src": "/logo-icon.png", "sizes": "256x256" }]
+    },
+    {
+      "name": "الدروس العلمية",
       "short_name": "الدروس",
       "url": "/lessons?source=pwa",
+      "description": "دروس ومحاضرات شرعية",
       "icons": [{ "src": "/logo-icon.png", "sizes": "256x256" }]
     },
     {
       "name": "أوقات الصلاة",
       "short_name": "الصلاة",
       "url": "/prayer-times?source=pwa",
+      "description": "مواقيت الصلاة الدقيقة",
       "icons": [{ "src": "/logo-icon.png", "sizes": "256x256" }]
     },
     {
       "name": "الأذكار",
       "short_name": "الأذكار",
       "url": "/adhkar?source=pwa",
+      "description": "أذكار الصباح والمساء",
       "icons": [{ "src": "/logo-icon.png", "sizes": "256x256" }]
     },
     {
-      "name": "الأسئلة",
-      "short_name": "الأسئلة",
-      "url": "/qa?source=pwa",
+      "name": "الفتاوى الشرعية",
+      "short_name": "الفتاوى",
+      "url": "/fatwa?source=pwa",
+      "description": "فتاوى موثّقة بالأدلة",
+      "icons": [{ "src": "/logo-icon.png", "sizes": "256x256" }]
+    },
+    {
+      "name": "المسابقات التعليمية",
+      "short_name": "المسابقات",
+      "url": "/quiz?source=pwa",
+      "description": "اختبر معلوماتك الشرعية",
       "icons": [{ "src": "/logo-icon.png", "sizes": "256x256" }]
     }
   ]
