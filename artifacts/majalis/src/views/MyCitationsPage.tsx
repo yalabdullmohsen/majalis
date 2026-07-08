@@ -192,7 +192,7 @@ export default function MyCitationsPage() {
               <div className="relative group">
                 <button
                   type="button"
-                  className="flex items-center gap-1.5 px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-[var(--majalis-panel)] text-[var(--majalis-ink-soft)] hover:border-emerald-500 transition-colors"
+                  className="flex items-center gap-1.5 px-3 py-2 text-sm border border-[var(--majalis-line)] rounded-lg bg-[var(--majalis-panel)] text-[var(--majalis-ink-soft)] hover:border-[var(--majalis-emerald)] transition-colors"
                 >
                   <Download size={13} className="inline ml-1" /> تصدير
                 </button>
@@ -226,9 +226,9 @@ export default function MyCitationsPage() {
               value={searchQuery}
               onChange={(e) => handleSearch(e.target.value)}
               placeholder="ابحث في اقتباساتك وملاحظاتك..."
-              className="w-full border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-2.5 text-sm text-right
+              className="w-full border border-[var(--majalis-line)] rounded-xl px-4 py-2.5 text-sm text-right
                 bg-[var(--majalis-parchment)] text-[var(--majalis-ink)]
-                focus:ring-2 focus:ring-emerald-500 outline-none"
+                focus:ring-2 focus:ring-[var(--majalis-emerald)] outline-none"
               dir="rtl"
             />
           </div>
@@ -283,8 +283,8 @@ export default function MyCitationsPage() {
                   value={newFolderName}
                   onChange={(e) => setNewFolderName(e.target.value)}
                   placeholder="اسم المجلد..."
-                  className="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-2 py-1.5 text-xs text-right
-                    bg-[var(--majalis-panel)] focus:ring-2 focus:ring-emerald-500 outline-none"
+                  className="w-full border border-[var(--majalis-line)] rounded-lg px-2 py-1.5 text-xs text-right
+                    bg-[var(--majalis-panel)] focus:ring-2 focus:ring-[var(--majalis-emerald)] outline-none"
                   dir="rtl"
                   onKeyDown={(e) => { if (e.key === "Enter") handleCreateFolder(); }}
                 />
@@ -317,7 +317,7 @@ export default function MyCitationsPage() {
                   key={f.id}
                   type="button"
                   onClick={() => handleFolderClick(f.id)}
-                  className={`w-full flex items-center gap-2 px-4 py-2.5 text-sm text-right transition-colors border-b border-gray-50 dark:border-gray-800 last:border-0 ${
+                  className={`w-full flex items-center gap-2 px-4 py-2.5 text-sm text-right transition-colors border-b border-[var(--majalis-line)] last:border-0 ${
                     activeFolder === f.id
                       ? "bg-[var(--majalis-emerald-muted)]"
                       : "hover:bg-[var(--mn-surface-hover)]"
@@ -388,7 +388,7 @@ export default function MyCitationsPage() {
                         <button
                           type="button"
                           onClick={() => handleToggleFavorite(item)}
-                          className={`text-lg flex-shrink-0 transition-transform hover:scale-110 ${item.is_favorite ? "text-[var(--majalis-emerald)]" : "text-gray-300"}`}
+                          className={`text-lg flex-shrink-0 transition-transform hover:scale-110 ${item.is_favorite ? "text-[var(--majalis-emerald)]" : "text-[var(--majalis-ink-soft)] opacity-40"}`}
                           title={item.is_favorite ? "إزالة من المفضلة" : "إضافة للمفضلة"}
                         >
                           <Star size={16} strokeWidth={2} aria-hidden="true" />
