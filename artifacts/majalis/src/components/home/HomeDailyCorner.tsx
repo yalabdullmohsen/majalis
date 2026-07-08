@@ -8,6 +8,7 @@ import { getDailyDhikr, getDailyFaida, getDailyHadith, getDailyQa } from "@/lib/
 import { cleanDisplayText, displayText } from "@/lib/display-text";
 import { RequestManager } from "@/lib/request-manager";
 import { getQaQuestions } from "@/lib/supabase";
+import { ShareButton } from "@/components/ShareButton";
 
 type TabId = "dhikr" | "hadith" | "faida" | "question";
 
@@ -106,6 +107,7 @@ export function HomeDailyCorner() {
             {dhikr.category && <span className="page-tag">{dhikr.category}</span>}
             <p className="hdc__text">{displayText(dhikr.text)}</p>
             {dhikr.source && <p className="hdc__meta">{dhikr.source}</p>}
+            <ShareButton title="ذكر اليوم" text={`${displayText(dhikr.text)}${dhikr.source ? `\n— ${dhikr.source}` : ""}`} size="sm" className="hdc__share" />
           </div>
         )}
 
@@ -118,6 +120,7 @@ export function HomeDailyCorner() {
               {hadith.grade  ? ` (${hadith.grade})` : ""}
             </p>
             {hadith.meaning && <p className="hdc__meaning">{hadith.meaning}</p>}
+            <ShareButton title="حديث اليوم" text={`${hadith.text}\n— ${hadith.narrator}${hadith.source ? ` | ${hadith.source}` : ""}`} size="sm" className="hdc__share" />
           </div>
         )}
 
@@ -131,6 +134,7 @@ export function HomeDailyCorner() {
                 {(faida as any).author_name && <span> · {(faida as any).author_name}</span>}
               </p>
             )}
+            <ShareButton title="فائدة اليوم" text={displayText(faida.text)} size="sm" className="hdc__share" />
           </div>
         )}
 

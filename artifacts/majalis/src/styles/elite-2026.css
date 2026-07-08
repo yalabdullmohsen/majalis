@@ -1453,6 +1453,7 @@ body > #root > div {
   padding-right: 0.65rem;
 }
 .hdc__loading { font-size: 0.85rem; color: var(--elite-muted); margin: 0; }
+.hdc__share { margin-top: 0.25rem; align-self: flex-start; }
 .hdc__qa-link {
   display: flex; flex-direction: column; gap: 0.5rem;
   text-decoration: none; color: inherit;
