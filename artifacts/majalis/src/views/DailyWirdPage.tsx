@@ -20,23 +20,24 @@ function WirdRing({ pct, pages, target }: { pct: number; pages: number; target: 
   const done = pct >= 1;
   return (
     <svg width="148" height="148" viewBox="0 0 148 148" className="wird-ring" aria-hidden="true">
-      <circle cx="74" cy="74" r={r} fill="none" stroke="rgba(22,163,74,0.12)" strokeWidth="9" />
+      <circle cx="74" cy="74" r={r} fill="none" stroke="var(--majalis-emerald-muted, rgba(14,110,82,0.12))" strokeWidth="9" />
       <circle
         cx="74" cy="74" r={r}
         fill="none"
-        stroke={done ? "#16A34A" : "#22C55E"}
+        stroke={done ? "var(--majalis-emerald, #0E6E52)" : "var(--majalis-emerald, #0E6E52)"}
         strokeWidth="9"
         strokeLinecap="round"
         strokeDasharray={circ}
         strokeDashoffset={circ * (1 - Math.min(pct, 1))}
         transform="rotate(-90 74 74)"
         className="dwd-ring-fill"
+        opacity={done ? "1" : "0.7"}
       />
-      <text x="74" y="67" textAnchor="middle" fill={done ? "#16A34A" : "#18362A"}
+      <text x="74" y="67" textAnchor="middle" fill="var(--majalis-emerald, #0E6E52)"
         fontSize="24" fontWeight="800" fontFamily="inherit">
         {toAr(pages)}
       </text>
-      <text x="74" y="84" textAnchor="middle" fill="rgba(24,54,42,0.5)"
+      <text x="74" y="84" textAnchor="middle" fill="var(--majalis-ink-soft, rgba(14,110,82,0.45))"
         fontSize="10.5" fontWeight="600" fontFamily="inherit">
         من {toAr(target)} صفحة
       </text>

@@ -1,271 +1,256 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState, memo } from "react";
-import { Bookmark, BookOpen, ChevronLeft, ChevronRight, List, Minus, Moon, Plus, Search, Sun, Sunrise, X } from "lucide-react";
+import {
+  useCallback, useEffect, useMemo, useRef, useState, memo,
+} from "react";
+import {
+  Bookmark, ChevronLeft, ChevronRight, List, Moon, Minus, Plus,
+  Search, Sunrise, Sun, X,
+} from "lucide-react";
 import "@/styles/mushaf.css";
 import { applyPageSeo } from "@/lib/seo";
 
-/* ══ ثوابت ══ */
-const CDN_PRIMARY  = "https://cdn.jsdelivr.net/gh/QuranHub/quran-pages-images@main/kfgqpc/hafs-wasat";
-const CDN_FALLBACK = "https://raw.githubusercontent.com/QuranHub/quran-pages-images/main/kfgqpc/hafs-wasat";
-const TOTAL    = 604;
-const PAGE_KEY  = "mj-mushaf-page-v2";
-const MODE_KEY  = "mj-mushaf-mode-v2"; // "day" | "night" | "sepia"
-const BM_KEY    = "mj-mushaf-bookmarks";
+/* ══════════════════════════════════════════════════════════════════════
+   ثوابت وأنواع
+   ══════════════════════════════════════════════════════════════════════ */
+const API_BASE  = "https://api.alquran.cloud/v1";
+const EDITION   = "quran-uthmani";      // النص العثماني الموثوق
+const TOTAL_SURAHS = 114;
+
+const SURAH_KEY  = "mj-quran-surah-v3";
+const MODE_KEY   = "mj-quran-mode-v3";
+const BM_KEY     = "mj-quran-bookmarks-v3";
+const FONT_KEY   = "mj-quran-font-v3";
 
 type ReadMode = "day" | "night" | "sepia";
+type Ayah = { number: number; numberInSurah: number; text: string };
+type SurahData = {
+  number: number; name: string; englishName: string;
+  revelationType: string; numberOfAyahs: number;
+  ayahs: Ayah[];
+};
+type BmEntry = { surah: number; ayah: number; name: string };
+type NavTab = "surahs" | "bookmarks";
 
-/* ══ localStorage helpers ══ */
-function lsGet(k: string, fb: number): number {
-  try { const v = localStorage.getItem(k); return v ? +JSON.parse(v) : fb; } catch { return fb; }
-}
-function lsSet(k: string, v: number) {
-  try { localStorage.setItem(k, String(v)); } catch { /* */ }
-}
-function lsGetArr(k: string): number[] {
-  try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : []; } catch { return []; }
-}
-function lsSetArr(k: string, v: number[]) {
-  try { localStorage.setItem(k, JSON.stringify(v)); } catch { /* */ }
-}
-function lsGetMode(): ReadMode {
-  try { const v = localStorage.getItem(MODE_KEY); return (v === "night" || v === "sepia") ? v : "day"; } catch { return "day"; }
-}
-
-/* ══ بناء URL الصورة ══ */
-function pageUrl(n: number, fallback = false): string {
-  const base = fallback ? CDN_FALLBACK : CDN_PRIMARY;
-  return `${base}/${n}.jpg`;
-}
-
-/* ══ بيانات السور (محفوظة بالكامل) ══ */
-const SURAHS: [string, number][] = [
-  ["الفاتحة",1],["البقرة",2],["آل عمران",50],["النساء",77],["المائدة",106],
-  ["الأنعام",128],["الأعراف",151],["الأنفال",177],["التوبة",187],["يونس",208],
-  ["هود",221],["يوسف",235],["الرعد",249],["إبراهيم",255],["الحجر",262],
-  ["النحل",267],["الإسراء",282],["الكهف",293],["مريم",305],["طه",312],
-  ["الأنبياء",322],["الحج",332],["المؤمنون",342],["النور",350],["الفرقان",359],
-  ["الشعراء",367],["النمل",377],["القصص",385],["العنكبوت",396],["الروم",404],
-  ["لقمان",411],["السجدة",415],["الأحزاب",418],["سبأ",428],["فاطر",434],
-  ["يس",440],["الصافات",446],["ص",453],["الزمر",458],["غافر",467],
-  ["فصلت",477],["الشورى",483],["الزخرف",489],["الدخان",496],["الجاثية",499],
-  ["الأحقاف",502],["محمد",507],["الفتح",511],["الحجرات",515],["ق",518],
-  ["الذاريات",520],["الطور",523],["النجم",526],["القمر",528],["الرحمن",531],
-  ["الواقعة",534],["الحديد",537],["المجادلة",542],["الحشر",545],["الممتحنة",549],
-  ["الصف",551],["الجمعة",553],["المنافقون",554],["التغابن",556],["الطلاق",558],
-  ["التحريم",560],["الملك",562],["القلم",564],["الحاقة",566],["المعارج",568],
-  ["نوح",570],["الجن",572],["المزمل",574],["المدثر",575],["القيامة",577],
-  ["الإنسان",578],["المرسلات",580],["النبأ",582],["النازعات",583],["عبس",585],
-  ["التكوير",586],["الانفطار",587],["المطففين",587],["الانشقاق",589],["البروج",590],
-  ["الطارق",591],["الأعلى",591],["الغاشية",592],["الفجر",593],["البلد",594],
-  ["الشمس",595],["الليل",595],["الضحى",596],["الشرح",596],["التين",597],
-  ["العلق",597],["القدر",598],["البينة",598],["الزلزلة",599],["العاديات",599],
-  ["القارعة",600],["التكاثر",600],["العصر",601],["الهمزة",601],["الفيل",601],
-  ["قريش",602],["الماعون",602],["الكوثر",602],["الكافرون",603],["النصر",603],
-  ["المسد",603],["الإخلاص",604],["الفلق",604],["الناس",604],
+/* ══ بيانات السور (اسم + عدد الآيات) — محفوظة من التغيير ══ */
+const SURAHS_META: [string, number][] = [
+  ["الفاتحة",7],["البقرة",286],["آل عمران",200],["النساء",176],
+  ["المائدة",120],["الأنعام",165],["الأعراف",206],["الأنفال",75],
+  ["التوبة",129],["يونس",109],["هود",123],["يوسف",111],
+  ["الرعد",43],["إبراهيم",52],["الحجر",99],["النحل",128],
+  ["الإسراء",111],["الكهف",110],["مريم",98],["طه",135],
+  ["الأنبياء",112],["الحج",78],["المؤمنون",118],["النور",64],
+  ["الفرقان",77],["الشعراء",227],["النمل",93],["القصص",88],
+  ["العنكبوت",69],["الروم",60],["لقمان",34],["السجدة",30],
+  ["الأحزاب",73],["سبأ",54],["فاطر",45],["يس",83],
+  ["الصافات",182],["ص",88],["الزمر",75],["غافر",85],
+  ["فصلت",54],["الشورى",53],["الزخرف",89],["الدخان",59],
+  ["الجاثية",37],["الأحقاف",35],["محمد",38],["الفتح",29],
+  ["الحجرات",18],["ق",45],["الذاريات",60],["الطور",49],
+  ["النجم",62],["القمر",55],["الرحمن",78],["الواقعة",96],
+  ["الحديد",29],["المجادلة",22],["الحشر",24],["الممتحنة",13],
+  ["الصف",14],["الجمعة",11],["المنافقون",11],["التغابن",18],
+  ["الطلاق",12],["التحريم",12],["الملك",30],["القلم",52],
+  ["الحاقة",52],["المعارج",44],["نوح",28],["الجن",28],
+  ["المزمل",20],["المدثر",56],["القيامة",40],["الإنسان",31],
+  ["المرسلات",50],["النبأ",40],["النازعات",46],["عبس",42],
+  ["التكوير",29],["الانفطار",19],["المطففين",36],["الانشقاق",25],
+  ["البروج",22],["الطارق",17],["الأعلى",19],["الغاشية",26],
+  ["الفجر",30],["البلد",20],["الشمس",15],["الليل",21],
+  ["الضحى",11],["الشرح",8],["التين",8],["العلق",19],
+  ["القدر",5],["البينة",8],["الزلزلة",8],["العاديات",11],
+  ["القارعة",11],["التكاثر",8],["العصر",3],["الهمزة",9],
+  ["الفيل",5],["قريش",4],["الماعون",7],["الكوثر",3],
+  ["الكافرون",6],["النصر",3],["المسد",5],["الإخلاص",4],
+  ["الفلق",5],["الناس",6],
 ];
 
-/* ══ الأجزاء والأحزاب ══ */
-const JUZ_PAGES = [1,22,42,62,82,102,121,142,162,182,201,221,241,261,281,301,321,341,361,381,401,421,441,461,481,501,521,542,561,581];
-const AJZAA: [string, number][] = JUZ_PAGES.map((p, i) => [`الجزء ${i + 1}`, p]);
-
-const HIZ_PAGES = [1,8,14,22,29,36,43,50,56,62,69,76,82,89,96,102,108,115,121,127,134,142,148,154,162,169,175,182,188,195,201,207,214,221,227,235,241,249,255,261,268,276,282,288,294,301,308,315,321,327,334,341,348,355,362,369,377,385,392,401];
-const AHZAB: [string, number][] = HIZ_PAGES.map((p, i) => [`الحزب ${i + 1}`, p]);
-
-const MODE_LABELS: Record<ReadMode, string> = { day: "النهاري", night: "الليلي", sepia: "الدافئ" };
+const MODE_LABELS: Record<ReadMode, string> = {
+  day: "النهاري", night: "الليلي", sepia: "الدافئ",
+};
 const MODE_CYCLE: ReadMode[] = ["day", "sepia", "night"];
-const ZOOM_STEP = 0.15;
-const ZOOM_MIN  = 0.6;
-const ZOOM_MAX  = 1.5;
 
-type NavTab = "surahs" | "juz" | "ahzab" | "bookmarks";
+/* البسملة (تُعرض قبل كل سورة ما عدا التوبة والفاتحة) */
+const BASMALA = "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ";
 
-/* ══ مكون صورة الصفحة (memo) ══ */
-interface PageImgProps {
-  page: number;
-  mode: ReadMode;
-  zoom: number;
-  loaded: boolean;
-  onLoad: () => void;
-  onError: () => void;
+/* ══ localStorage helpers ══ */
+function lsGet<T>(k: string, fb: T): T {
+  try {
+    const v = localStorage.getItem(k);
+    return v ? JSON.parse(v) as T : fb;
+  } catch { return fb; }
 }
-const PageImg = memo(function PageImg({ page, mode, zoom, loaded, onLoad, onError }: PageImgProps) {
-  const [useFallback, setUseFallback] = useState(false);
+function lsSet<T>(k: string, v: T) {
+  try { localStorage.setItem(k, JSON.stringify(v)); } catch { /* */ }
+}
 
-  const handleError = () => {
-    if (!useFallback) { setUseFallback(true); }
-    else { onError(); }
-  };
-
+/* ══════════════════════════════════════════════════════════════════════
+   مكون آية واحدة
+   ══════════════════════════════════════════════════════════════════════ */
+const AyahItem = memo(function AyahItem({
+  ayah, fontSize, isBookmarked, onToggleBm,
+}: {
+  ayah: Ayah;
+  fontSize: number;
+  isBookmarked: boolean;
+  onToggleBm: (n: number) => void;
+}) {
   return (
-    <img
-      key={`${page}-${useFallback ? "fb" : "pr"}`}
-      src={pageUrl(page, useFallback)}
-      alt={`صفحة ${page}`}
-      className={`mshf-page-img${loaded ? " loaded" : ""}${mode === "night" ? " night" : ""}`}
-      loading="eager"
-      draggable={false}
-      style={{ transform: `scale(${zoom})`, transformOrigin: "center center" }}
-      onLoad={onLoad}
-      onError={handleError}
-    />
+    <div
+      id={`ayah-${ayah.numberInSurah}`}
+      className={`qs-ayah${isBookmarked ? " qs-ayah--bm" : ""}`}
+    >
+      <span className="qs-ayah__text" style={{ fontSize: `${fontSize}rem` }}>
+        {ayah.text}
+        {" "}
+        <span className="qs-ayah__num" aria-label={`الآية ${ayah.numberInSurah}`}>
+          &#x202D;({ayah.numberInSurah.toLocaleString("ar-EG")})&#x202C;
+        </span>
+      </span>
+      <button
+        type="button"
+        className="qs-ayah__bm-btn"
+        onClick={() => onToggleBm(ayah.numberInSurah)}
+        aria-label={isBookmarked ? "إزالة العلامة" : "إضافة علامة"}
+        title={isBookmarked ? "إزالة العلامة" : "إضافة علامة"}
+      >
+        <Bookmark
+          size={13}
+          strokeWidth={2}
+          fill={isBookmarked ? "currentColor" : "none"}
+          aria-hidden="true"
+        />
+      </button>
+    </div>
   );
 });
 
-/* ══ المكون الرئيسي ══ */
+/* ══════════════════════════════════════════════════════════════════════
+   المكون الرئيسي
+   ══════════════════════════════════════════════════════════════════════ */
 export default function QuranPage() {
-  const [page, setPage]         = useState(() => Math.min(lsGet(PAGE_KEY, 1), TOTAL));
-  const [readMode, setReadMode] = useState<ReadMode>(lsGetMode);
-  const [zoom, setZoom]         = useState(1.0);
-  const [imgLoaded, setImgLoaded] = useState(false);
-  const [imgErr, setImgErr]       = useState(false);
-  const [uiOn, setUiOn]           = useState(true);
-  const [editingPage, setEditingPage] = useState(false);
-  const [editVal, setEditVal]     = useState("");
-  const [navOpen, setNavOpen]     = useState(false);
-  const [navTab, setNavTab]       = useState<NavTab>("surahs");
-  const [search, setSearch]       = useState("");
-  const [bookmarks, setBookmarks] = useState<number[]>(() => lsGetArr(BM_KEY));
+  /* ── حالة ── */
+  const [surahNum, setSurahNum] = useState<number>(() => lsGet(SURAH_KEY, 1));
+  const [readMode, setReadMode] = useState<ReadMode>(() => lsGet(MODE_KEY, "day"));
+  const [fontSize, setFontSize] = useState<number>(() => lsGet(FONT_KEY, 1.9));
+  const [bookmarks, setBookmarks] = useState<BmEntry[]>(() => lsGet(BM_KEY, []));
+
+  const [surahData, setSurahData] = useState<SurahData | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+
+  const [navOpen, setNavOpen] = useState(false);
+  const [navTab, setNavTab]   = useState<NavTab>("surahs");
+  const [search, setSearch]   = useState("");
+  const [uiOn, setUiOn]       = useState(true);
+
   const [modeBadge, setModeBadge] = useState(false);
 
-  const [animDir, setAnimDir]     = useState<"" | "left" | "right">("");
-  const [displayPage, setDisplayPage] = useState(page);
+  /* ── refs ── */
+  const cache       = useRef<Map<number, SurahData>>(new Map());
+  const uiTimer     = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const badgeTimer  = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const scrollRef   = useRef<HTMLDivElement>(null);
+  const searchRef   = useRef<HTMLInputElement>(null);
+  const abortRef    = useRef<AbortController | null>(null);
 
-  const cache        = useRef<Map<number, string>>(new Map());
-  const uiTimer      = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const badgeTimer   = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const touchRef     = useRef<{ x: number; y: number } | null>(null);
-  const pageInputRef = useRef<HTMLInputElement>(null);
-  const searchRef    = useRef<HTMLInputElement>(null);
-  const navBodyRef   = useRef<HTMLDivElement>(null);
-  const animating    = useRef(false);
-
+  /* ── SEO ── */
   useEffect(() => {
     applyPageSeo({
       path: "/quran",
       title: "القرآن الكريم | المجلس العلمي",
-      description: "اقرأ القرآن الكريم بصفحات المصحف الشريف — تصفّح السور والآيات بواجهة مصحفية أنيقة.",
+      description: "اقرأ القرآن الكريم سورةً سورةً بنص عثماني موثوق — ابحث وضع علامات واختر وضع القراءة المناسب.",
       keywords: ["قرآن كريم", "مصحف", "تلاوة", "سور القرآن", "قراءة القرآن"],
     });
   }, []);
 
-  /* preload */
-  const preload = useCallback((n: number) => {
-    if (n < 1 || n > TOTAL || cache.current.has(n)) return;
-    const img = new Image();
-    img.onload = () => cache.current.set(n, pageUrl(n));
-    img.src = pageUrl(n);
+  /* ── جلب بيانات السورة ── */
+  const fetchSurah = useCallback(async (n: number) => {
+    if (cache.current.has(n)) {
+      setSurahData(cache.current.get(n)!);
+      setLoading(false);
+      setError(false);
+      return;
+    }
+    abortRef.current?.abort();
+    const ctrl = new AbortController();
+    abortRef.current = ctrl;
+    setLoading(true);
+    setError(false);
+    setSurahData(null);
+    try {
+      const res = await fetch(`${API_BASE}/surah/${n}/${EDITION}`, { signal: ctrl.signal });
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      const json = await res.json();
+      const d = json.data as SurahData;
+      cache.current.set(n, d);
+      setSurahData(d);
+    } catch (e: unknown) {
+      if ((e as Error)?.name !== "AbortError") setError(true);
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
+  /* حين تتغير السورة */
   useEffect(() => {
-    preload(page - 1);
-    preload(page + 1);
-    preload(page + 2);
-  }, [page, preload]);
+    fetchSurah(surahNum);
+    lsSet(SURAH_KEY, surahNum);
+    /* إعادة التمرير للأعلى */
+    setTimeout(() => scrollRef.current?.scrollTo({ top: 0, behavior: "instant" }), 50);
+  }, [surahNum, fetchSurah]);
 
-  /* UI timer */
+  /* preload السورة التالية */
+  useEffect(() => {
+    if (surahNum < TOTAL_SURAHS && !cache.current.has(surahNum + 1)) {
+      fetch(`${API_BASE}/surah/${surahNum + 1}/${EDITION}`)
+        .then(r => r.json())
+        .then(j => { cache.current.set(surahNum + 1, j.data); })
+        .catch(() => { /* تجاهل أخطاء preload */ });
+    }
+  }, [surahNum]);
+
+  /* ── UI timer ── */
   const bump = useCallback(() => {
     if (uiTimer.current) clearTimeout(uiTimer.current);
     setUiOn(true);
-    uiTimer.current = setTimeout(() => setUiOn(false), 3500);
+    uiTimer.current = setTimeout(() => setUiOn(false), 4000);
   }, []);
 
-  useEffect(() => {
+  useEffect(() => { bump(); }, [surahNum, bump]);
+  useEffect(() => () => { if (uiTimer.current) clearTimeout(uiTimer.current); }, []);
+
+  /* ── الانتقال بين السور ── */
+  const goSurah = useCallback((n: number) => {
+    const p = Math.max(1, Math.min(TOTAL_SURAHS, n));
+    setSurahNum(p);
     bump();
-    return () => { if (uiTimer.current) clearTimeout(uiTimer.current); };
-  }, [page, bump]);
+  }, [bump]);
 
-  /* الانتقال بالأنيمشن */
-  const go = useCallback((n: number) => {
-    if (animating.current) return;
-    const p = Math.max(1, Math.min(TOTAL, n));
-    if (p === page) return;
-    const dir = p > page ? "left" : "right";
-    animating.current = true;
-    setAnimDir(dir);
-    setTimeout(() => {
-      setPage(p);
-      setDisplayPage(p);
-      lsSet(PAGE_KEY, p);
-      setImgLoaded(false);
-      setImgErr(false);
-      setAnimDir("");
-      animating.current = false;
-      bump();
-    }, 220);
-  }, [page, bump]);
-
-  /* لوحة المفاتيح */
+  /* ── لوحة المفاتيح ── */
   useEffect(() => {
     const h = (e: KeyboardEvent) => {
-      if (editingPage || navOpen) return;
-      if (e.key === "ArrowLeft")        go(page + 1);
-      else if (e.key === "ArrowRight")  go(page - 1);
-      else if (e.key === "+" || e.key === "=") setZoom(z => Math.min(ZOOM_MAX, +(z + ZOOM_STEP).toFixed(2)));
-      else if (e.key === "-")           setZoom(z => Math.max(ZOOM_MIN, +(z - ZOOM_STEP).toFixed(2)));
-      else if (e.key === "0")           setZoom(1.0);
-      else if (e.key === "Escape")      window.history.back();
+      if (navOpen) return;
+      if (e.key === "ArrowLeft")       goSurah(surahNum + 1);
+      else if (e.key === "ArrowRight") goSurah(surahNum - 1);
+      else if (e.key === "+")          setFontSize(f => Math.min(3.0, +(f + 0.1).toFixed(1)));
+      else if (e.key === "-")          setFontSize(f => Math.max(1.2, +(f - 0.1).toFixed(1)));
+      else if (e.key === "Escape")     window.history.back();
     };
     window.addEventListener("keydown", h);
     return () => window.removeEventListener("keydown", h);
-  }, [page, editingPage, navOpen, go]);
+  }, [surahNum, navOpen, goSurah]);
 
-  /* السحب (swipe) */
-  const onTS = useCallback((e: React.TouchEvent) => {
-    touchRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-  }, []);
+  /* ── حجم الخط ── */
+  const incFont = () => setFontSize(f => { const n = Math.min(3.0, +(f + 0.15).toFixed(2)); lsSet(FONT_KEY, n); return n; });
+  const decFont = () => setFontSize(f => { const n = Math.max(1.2, +(f - 0.15).toFixed(2)); lsSet(FONT_KEY, n); return n; });
 
-  const onTE = useCallback((e: React.TouchEvent) => {
-    if (!touchRef.current) return;
-    const dx = e.changedTouches[0].clientX - touchRef.current.x;
-    const dy = Math.abs(e.changedTouches[0].clientY - touchRef.current.y);
-    touchRef.current = null;
-    if (dy > 60 || Math.abs(dx) < 40) { bump(); return; }
-    go(dx < 0 ? page + 1 : page - 1);
-  }, [page, go, bump]);
-
-  /* نقر على الصفحة */
-  const onFrameClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    if (editingPage || navOpen) return;
-    const { clientX, currentTarget } = e;
-    const w = currentTarget.clientWidth;
-    const zone = clientX / w;
-    if (zone < 0.28)       go(page + 1);
-    else if (zone > 0.72)  go(page - 1);
-    else { setUiOn(v => !v); if (uiTimer.current) clearTimeout(uiTimer.current); }
-  }, [editingPage, navOpen, page, go]);
-
-  /* تحرير رقم الصفحة */
-  const startEdit = useCallback(() => {
-    setEditingPage(true);
-    setEditVal(String(page));
-    bump();
-    setTimeout(() => pageInputRef.current?.select(), 30);
-  }, [page, bump]);
-
-  const commitEdit = useCallback(() => {
-    const n = parseInt(editVal, 10);
-    if (!isNaN(n)) go(n);
-    setEditingPage(false);
-  }, [editVal, go]);
-
-  /* علامات المرجعية */
-  const isBookmarked = useMemo(() => bookmarks.includes(page), [bookmarks, page]);
-  const toggleBookmark = useCallback(() => {
-    const next = isBookmarked
-      ? bookmarks.filter(b => b !== page)
-      : [...bookmarks, page].sort((a, b) => a - b);
-    setBookmarks(next);
-    lsSetArr(BM_KEY, next);
-    bump();
-  }, [isBookmarked, bookmarks, page, bump]);
-
-  /* دورة أوضاع القراءة */
+  /* ── دورة الوضع ── */
   const cycleMode = useCallback(() => {
     setReadMode(cur => {
       const idx = MODE_CYCLE.indexOf(cur);
       const next = MODE_CYCLE[(idx + 1) % MODE_CYCLE.length];
-      try { localStorage.setItem(MODE_KEY, next); } catch { /* */ }
+      lsSet(MODE_KEY, next);
       return next;
     });
     setModeBadge(true);
@@ -274,78 +259,66 @@ export default function QuranPage() {
     bump();
   }, [bump]);
 
-  /* تحكم الزوم */
-  const zoomIn  = useCallback(() => setZoom(z => Math.min(ZOOM_MAX, +(z + ZOOM_STEP).toFixed(2))), []);
-  const zoomOut = useCallback(() => setZoom(z => Math.max(ZOOM_MIN, +(z - ZOOM_STEP).toFixed(2))), []);
-
-  /* السورة الحالية */
-  const currentSurah = useMemo(() => {
-    for (let i = SURAHS.length - 1; i >= 0; i--) {
-      if (page >= SURAHS[i][1]) return { name: SURAHS[i][0], idx: i + 1 };
-    }
-    return { name: "", idx: 0 };
-  }, [page]);
-
-  /* الجزء الحالي */
-  const currentJuz = useMemo(() => {
-    for (let i = JUZ_PAGES.length - 1; i >= 0; i--) {
-      if (page >= JUZ_PAGES[i]) return i + 1;
-    }
-    return 1;
-  }, [page]);
-
-  /* الحزب الحالي */
-  const currentHizb = useMemo(() => {
-    for (let i = HIZ_PAGES.length - 1; i >= 0; i--) {
-      if (page >= HIZ_PAGES[i]) return i + 1;
-    }
-    return 1;
-  }, [page]);
-
-  /* شريط التقدم */
-  const progress = useMemo(() => ((page - 1) / (TOTAL - 1)) * 100, [page]);
-
-  /* السور المفلترة */
-  const filteredSurahs = useMemo(
-    () => SURAHS.filter(([name]) => !search || name.includes(search)),
-    [search]
+  /* ── علامات الآيات ── */
+  const bmSet = useMemo(
+    () => new Set(bookmarks.filter(b => b.surah === surahNum).map(b => b.ayah)),
+    [bookmarks, surahNum],
   );
 
-  /* فتح لوحة التنقل */
+  const toggleBm = useCallback((ayahN: number) => {
+    setBookmarks(cur => {
+      const exists = cur.some(b => b.surah === surahNum && b.ayah === ayahN);
+      const next = exists
+        ? cur.filter(b => !(b.surah === surahNum && b.ayah === ayahN))
+        : [...cur, { surah: surahNum, ayah: ayahN, name: SURAHS_META[surahNum - 1][0] }];
+      lsSet(BM_KEY, next);
+      return next;
+    });
+  }, [surahNum]);
+
+  /* ── فتح لوحة التنقل ── */
   const openNav = useCallback((tab: NavTab = "surahs") => {
     setNavTab(tab);
     setSearch("");
     setNavOpen(true);
-    if (tab === "surahs" && window.matchMedia("(pointer: fine)").matches) {
-      setTimeout(() => searchRef.current?.focus(), 80);
-    }
+    if (tab === "surahs") setTimeout(() => searchRef.current?.focus(), 80);
   }, []);
 
-  const goTo = useCallback((p: number) => { go(p); setNavOpen(false); }, [go]);
+  const goTo = useCallback((n: number) => { goSurah(n); setNavOpen(false); }, [goSurah]);
 
-  /* تمرير السورة النشطة */
-  useEffect(() => {
-    if (!navOpen || navTab !== "surahs") return;
-    setTimeout(() => {
-      navBodyRef.current
-        ?.querySelector(".mshf-surah-row.active")
-        ?.scrollIntoView({ block: "center", behavior: "smooth" });
-    }, 120);
-  }, [navOpen, navTab]);
+  /* ── السور المفلترة ── */
+  const filteredSurahs = useMemo(
+    () => SURAHS_META.map((m, i) => ({ ...m, idx: i + 1 }))
+          .filter(({ 0: name }) => !search || name.includes(search)),
+    [search],
+  );
 
-  /* ── أيقونة الوضع ── */
+  /* بسملة — لا تُعرض للفاتحة (مضمّنة في الآيات) ولا التوبة */
+  const showBasmala = surahNum !== 1 && surahNum !== 9;
+
+  /* أيقونة الوضع */
   const ModeIcon = readMode === "night" ? Moon : readMode === "sepia" ? Sunrise : Sun;
 
-  /* ══════════════════════════════════════════════════════
+  /* معلومات السورة الحالية */
+  const surahMeta = SURAHS_META[surahNum - 1];
+
+  /* ══════════════════════════════════════════════════════════════════════
      JSX
-  ══════════════════════════════════════════════════════ */
+     ══════════════════════════════════════════════════════════════════════ */
   return (
     <div
-      className={`mshf-shell${readMode === "night" ? " mshf-night" : readMode === "sepia" ? " mshf-sepia" : ""}`}
+      className={`mshf-shell qs-shell${
+        readMode === "night" ? " mshf-night" : readMode === "sepia" ? " mshf-sepia" : ""
+      }`}
       dir="rtl"
+      onClick={bump}
     >
+
       {/* شريط التقدم */}
-      <div className="mshf-progress" style={{ "--mshf-pct": `${progress}%` } as React.CSSProperties} />
+      <div
+        className="mshf-progress"
+        style={{ "--mshf-pct": `${((surahNum - 1) / (TOTAL_SURAHS - 1)) * 100}%` } as React.CSSProperties}
+      />
 
       {/* ══ رأس ══ */}
       <header className={`mshf-top${uiOn ? " on" : ""}`}>
@@ -359,175 +332,173 @@ export default function QuranPage() {
         </button>
 
         <div className="mshf-title-wrap">
-          <span className="mshf-title-main">المصحف الشريف</span>
+          <span className="mshf-title-main">القرآن الكريم</span>
           <span className="mshf-title-sub">
-            {currentSurah.name ? `${currentSurah.idx}. ${currentSurah.name} · ` : ""}
-            ج{currentJuz} · ح{currentHizb}
+            {surahNum}. {surahMeta[0]} — {surahMeta[1].toLocaleString("ar-EG")} آية
           </span>
         </div>
 
         <div className="mshf-top-actions">
           <button
             type="button"
-            className={`mshf-icon-btn${isBookmarked ? " active" : ""}`}
-            onClick={toggleBookmark}
-            aria-label={isBookmarked ? "إزالة العلامة" : "إضافة علامة"}
-          >
-            <Bookmark size={17} strokeWidth={2} fill={isBookmarked ? "currentColor" : "none"} aria-hidden="true" />
-          </button>
-
-          <button
-            type="button"
             className={`mshf-icon-btn${readMode !== "day" ? " active" : ""}`}
             onClick={cycleMode}
-            aria-label={`الوضع الحالي: ${MODE_LABELS[readMode]} — اضغط للتغيير`}
+            aria-label={`وضع القراءة: ${MODE_LABELS[readMode]}`}
           >
             <ModeIcon size={17} strokeWidth={2} aria-hidden="true" />
           </button>
-
           <button
             type="button"
             className="mshf-icon-btn"
             onClick={() => openNav("surahs")}
-            aria-label="الفهرس"
+            aria-label="قائمة السور"
           >
             <List size={17} strokeWidth={2} aria-hidden="true" />
           </button>
         </div>
       </header>
 
-      {/* ══ منطقة الصفحة ══ */}
+      {/* ══ منطقة النص ══ */}
       <div
-        className={`mshf-page-container${animDir ? ` anim-${animDir}` : ""}`}
-        onTouchStart={onTS}
-        onTouchEnd={onTE}
-        onClick={onFrameClick}
+        className="mshf-page-container qs-reader-area"
+        ref={scrollRef}
+        onClick={bump}
       >
-        {!imgLoaded && !imgErr && (
+        {loading && (
           <div className="mshf-loading">
             <div className="mshf-spinner" />
-            <span>جاري التحميل…</span>
+            <span>جاري تحميل السورة…</span>
           </div>
         )}
 
-        {imgErr && (
+        {error && !loading && (
           <div className="mshf-err">
-            <BookOpen size={40} strokeWidth={1.2} aria-hidden="true" style={{ opacity: 0.25 }} />
-            <p>تعذّر تحميل الصفحة</p>
+            <p>تعذّر تحميل السورة. تحقق من الاتصال بالإنترنت.</p>
             <button
               type="button"
-              onClick={() => { setImgErr(false); setImgLoaded(false); }}
               className="mshf-err-btn"
+              onClick={() => fetchSurah(surahNum)}
             >
               إعادة المحاولة
             </button>
           </div>
         )}
 
-        {!imgErr && (
-          <PageImg
-            page={displayPage}
-            mode={readMode}
-            zoom={zoom}
-            loaded={imgLoaded}
-            onLoad={() => setImgLoaded(true)}
-            onError={() => setImgErr(true)}
-          />
+        {surahData && !loading && (
+          <div className="qs-surah">
+            {/* رأس السورة */}
+            <div className="qs-surah-header">
+              <div className="qs-surah-ornament" aria-hidden="true">﷽</div>
+              <h1 className="qs-surah-name">سورة {surahData.name}</h1>
+              <p className="qs-surah-meta">
+                {surahData.revelationType === "Meccan" ? "مكية" : "مدنية"}
+                {" · "}
+                {surahData.numberOfAyahs.toLocaleString("ar-EG")} آية
+              </p>
+            </div>
+
+            {/* البسملة */}
+            {showBasmala && (
+              <div className="qs-basmala" aria-label="بسم الله الرحمن الرحيم">
+                {BASMALA}
+              </div>
+            )}
+
+            {/* الآيات */}
+            <div className="qs-ayahs" lang="ar">
+              {surahData.ayahs.map(ay => (
+                <AyahItem
+                  key={ay.number}
+                  ayah={ay}
+                  fontSize={fontSize}
+                  isBookmarked={bmSet.has(ay.numberInSurah)}
+                  onToggleBm={toggleBm}
+                />
+              ))}
+            </div>
+          </div>
         )}
       </div>
 
       {/* بادج الوضع */}
-      <div className={`mshf-mode-badge${modeBadge ? " show" : ""}`} aria-live="polite">
+      <div
+        className={`mshf-mode-badge${modeBadge ? " show" : ""}`}
+        aria-live="polite"
+      >
         وضع {MODE_LABELS[readMode]}
       </div>
 
       {/* ══ شريط سفلي ══ */}
       <footer className={`mshf-bot${uiOn ? " on" : ""}`}>
-        {/* أزرار التكبير */}
+        {/* تحكم حجم الخط */}
         <div className="mshf-zoom-ctrl">
           <button
             type="button"
             className="mshf-zoom-btn"
-            onClick={zoomOut}
-            disabled={zoom <= ZOOM_MIN}
-            aria-label="تصغير"
+            onClick={decFont}
+            disabled={fontSize <= 1.2}
+            aria-label="تصغير الخط"
           >
             <Minus size={14} strokeWidth={2.5} aria-hidden="true" />
           </button>
           <button
             type="button"
             className="mshf-zoom-btn"
-            style={{ fontSize: "0.6rem", width: "30px" }}
-            onClick={() => setZoom(1.0)}
+            style={{ fontSize: "0.58rem", width: "32px" }}
+            onClick={() => { setFontSize(1.9); lsSet(FONT_KEY, 1.9); }}
             title="إعادة الضبط"
           >
-            {Math.round(zoom * 100)}%
+            {Math.round(fontSize * 10)}
           </button>
           <button
             type="button"
             className="mshf-zoom-btn"
-            onClick={zoomIn}
-            disabled={zoom >= ZOOM_MAX}
-            aria-label="تكبير"
+            onClick={incFont}
+            disabled={fontSize >= 3.0}
+            aria-label="تكبير الخط"
           >
             <Plus size={14} strokeWidth={2.5} aria-hidden="true" />
           </button>
         </div>
 
-        {/* التنقل بين الصفحات */}
+        {/* السورة السابقة */}
         <button
           type="button"
           className="mshf-nav-btn"
-          onClick={() => go(page - 1)}
-          disabled={page <= 1}
-          aria-label="الصفحة السابقة"
-        >
-          <ChevronLeft size={20} strokeWidth={2.2} aria-hidden="true" />
-        </button>
-
-        <div className="mshf-pgnum">
-          {editingPage ? (
-            <input
-              ref={pageInputRef}
-              className="mshf-pgnum-input"
-              type="number"
-              min={1}
-              max={TOTAL}
-              value={editVal}
-              onChange={e => setEditVal(e.target.value)}
-              onBlur={commitEdit}
-              onKeyDown={e => {
-                if (e.key === "Enter") commitEdit();
-                if (e.key === "Escape") setEditingPage(false);
-              }}
-              onClick={e => e.stopPropagation()}
-            />
-          ) : (
-            <button
-              type="button"
-              className="mshf-pgnum-btn"
-              onClick={e => { e.stopPropagation(); startEdit(); }}
-              aria-label="انتقل إلى صفحة"
-            >
-              <span className="mshf-pgnum-cur">{page}</span>
-              <span className="mshf-pgnum-sep">/</span>
-              <span className="mshf-pgnum-tot">{TOTAL}</span>
-            </button>
-          )}
-        </div>
-
-        <button
-          type="button"
-          className="mshf-nav-btn"
-          onClick={() => go(page + 1)}
-          disabled={page >= TOTAL}
-          aria-label="الصفحة التالية"
+          onClick={() => goSurah(surahNum - 1)}
+          disabled={surahNum <= 1}
+          aria-label="السورة السابقة"
         >
           <ChevronRight size={20} strokeWidth={2.2} aria-hidden="true" />
         </button>
+
+        {/* رقم السورة */}
+        <div className="mshf-pgnum">
+          <button
+            type="button"
+            className="mshf-pgnum-btn"
+            onClick={() => openNav("surahs")}
+            aria-label="اختيار سورة"
+          >
+            <span className="mshf-pgnum-cur">{surahNum.toLocaleString("ar-EG")}</span>
+            <span className="mshf-pgnum-sep">/</span>
+            <span className="mshf-pgnum-tot">{TOTAL_SURAHS}</span>
+          </button>
+        </div>
+
+        {/* السورة التالية */}
+        <button
+          type="button"
+          className="mshf-nav-btn"
+          onClick={() => goSurah(surahNum + 1)}
+          disabled={surahNum >= TOTAL_SURAHS}
+          aria-label="السورة التالية"
+        >
+          <ChevronLeft size={20} strokeWidth={2.2} aria-hidden="true" />
+        </button>
       </footer>
 
-      {/* ══ Bottom Sheet (الفهرس) ══ */}
+      {/* ══ Bottom Sheet — الفهرس والعلامات ══ */}
       {navOpen && (
         <div className="mshf-sheet-overlay" onClick={() => setNavOpen(false)}>
           <div className="mshf-sheet" onClick={e => e.stopPropagation()}>
@@ -538,8 +509,6 @@ export default function QuranPage() {
               <div className="mshf-sheet-tabs">
                 {([
                   ["surahs",    "السور"],
-                  ["juz",       "الأجزاء"],
-                  ["ahzab",     "الأحزاب"],
                   ["bookmarks", "العلامات"],
                 ] as [NavTab, string][]).map(([id, label]) => (
                   <button
@@ -579,78 +548,31 @@ export default function QuranPage() {
                     type="button"
                     className="mshf-search-clear"
                     onClick={() => setSearch("")}
-                    aria-label="مسح البحث"
-                  >
-                    ✕
-                  </button>
+                    aria-label="مسح"
+                  >✕</button>
                 )}
               </div>
             )}
 
-            {/* جسم الـ sheet */}
-            <div ref={navBodyRef} className="mshf-sheet-body">
+            <div className="mshf-sheet-body">
 
               {/* السور */}
               {navTab === "surahs" && (
                 <div className="mshf-surah-list">
                   {filteredSurahs.length === 0 ? (
                     <p className="mshf-empty" style={{ gridColumn: "1/-1" }}>لا نتائج</p>
-                  ) : filteredSurahs.map(([name, sp]) => {
-                    const idx = SURAHS.findIndex(s => s[0] === name);
-                    const isActive = page >= sp && (idx === SURAHS.length - 1 || page < SURAHS[idx + 1][1]);
-                    return (
-                      <button
-                        type="button"
-                        key={name}
-                        className={`mshf-surah-row${isActive ? " active" : ""}`}
-                        onClick={() => goTo(sp)}
-                      >
-                        <span className="mshf-surah-num">{idx + 1}</span>
-                        <span className="mshf-surah-name">{name}</span>
-                        <span className="mshf-surah-page">ص {sp}</span>
-                      </button>
-                    );
-                  })}
-                </div>
-              )}
-
-              {/* الأجزاء */}
-              {navTab === "juz" && (
-                <div className="mshf-grid5">
-                  {AJZAA.map(([, sp], i) => {
-                    const isActive = page >= sp && (i === AJZAA.length - 1 || page < AJZAA[i + 1][1]);
-                    return (
-                      <button
-                        type="button"
-                        key={i}
-                        className={`mshf-grid-item${isActive ? " active" : ""}`}
-                        onClick={() => goTo(sp)}
-                      >
-                        <span className="mshf-grid-num">{i + 1}</span>
-                        <span className="mshf-grid-pg">ص {sp}</span>
-                      </button>
-                    );
-                  })}
-                </div>
-              )}
-
-              {/* الأحزاب */}
-              {navTab === "ahzab" && (
-                <div className="mshf-grid6">
-                  {AHZAB.map(([, sp], i) => {
-                    const isActive = page >= sp && (i === AHZAB.length - 1 || page < AHZAB[i + 1][1]);
-                    return (
-                      <button
-                        type="button"
-                        key={i}
-                        className={`mshf-grid-item${isActive ? " active" : ""}`}
-                        onClick={() => goTo(sp)}
-                      >
-                        <span className="mshf-grid-num">{i + 1}</span>
-                        <span className="mshf-grid-pg">ص {sp}</span>
-                      </button>
-                    );
-                  })}
+                  ) : filteredSurahs.map(({ 0: name, 1: ayahCount, idx }) => (
+                    <button
+                      type="button"
+                      key={idx}
+                      className={`mshf-surah-row${surahNum === idx ? " active" : ""}`}
+                      onClick={() => goTo(idx)}
+                    >
+                      <span className="mshf-surah-num">{idx}</span>
+                      <span className="mshf-surah-name">{name}</span>
+                      <span className="mshf-surah-page">{ayahCount.toLocaleString("ar-EG")} آية</span>
+                    </button>
+                  ))}
                 </div>
               )}
 
@@ -661,38 +583,42 @@ export default function QuranPage() {
                     <div className="mshf-empty mshf-empty--center">
                       <Bookmark size={36} strokeWidth={1.5} aria-hidden="true" />
                       <p>لا توجد علامات محفوظة</p>
-                      <p className="mshf-empty-sub">اضغط أيقونة العلامة في الأعلى لحفظ صفحة</p>
+                      <p className="mshf-empty-sub">اضغط أيقونة العلامة بجانب أي آية لحفظها</p>
                     </div>
-                  ) : bookmarks.map(bm => {
-                    const s = (() => {
-                      for (let i = SURAHS.length - 1; i >= 0; i--)
-                        if (bm >= SURAHS[i][1]) return SURAHS[i][0];
-                      return "";
-                    })();
-                    return (
-                      <div key={bm} className="mshf-bm-row">
-                        <button type="button" className="mshf-bm-btn" onClick={() => goTo(bm)}>
-                          <Bookmark size={13} fill="currentColor" stroke="none" aria-hidden="true" />
-                          <div className="mshf-bm-info">
-                            <span className="mshf-bm-page">صفحة {bm}</span>
-                            <span className="mshf-bm-surah">{s}</span>
-                          </div>
-                        </button>
-                        <button
-                          type="button"
-                          className="mshf-bm-del"
-                          onClick={() => {
-                            const next = bookmarks.filter(b => b !== bm);
-                            setBookmarks(next);
-                            lsSetArr(BM_KEY, next);
-                          }}
-                          aria-label="حذف العلامة"
-                        >
-                          ✕
-                        </button>
-                      </div>
-                    );
-                  })}
+                  ) : bookmarks.map(bm => (
+                    <div key={`${bm.surah}-${bm.ayah}`} className="mshf-bm-row">
+                      <button
+                        type="button"
+                        className="mshf-bm-btn"
+                        onClick={() => {
+                          goSurah(bm.surah);
+                          setNavOpen(false);
+                          setTimeout(() => {
+                            document.getElementById(`ayah-${bm.ayah}`)
+                              ?.scrollIntoView({ behavior: "smooth", block: "center" });
+                          }, 400);
+                        }}
+                      >
+                        <Bookmark size={13} fill="currentColor" stroke="none" aria-hidden="true" />
+                        <div className="mshf-bm-info">
+                          <span className="mshf-bm-page">
+                            سورة {bm.name} — آية {bm.ayah.toLocaleString("ar-EG")}
+                          </span>
+                          <span className="mshf-bm-surah">السورة {bm.surah.toLocaleString("ar-EG")}</span>
+                        </div>
+                      </button>
+                      <button
+                        type="button"
+                        className="mshf-bm-del"
+                        onClick={() => setBookmarks(cur => {
+                          const next = cur.filter(b => !(b.surah === bm.surah && b.ayah === bm.ayah));
+                          lsSet(BM_KEY, next);
+                          return next;
+                        })}
+                        aria-label="حذف العلامة"
+                      >✕</button>
+                    </div>
+                  ))}
                 </div>
               )}
             </div>

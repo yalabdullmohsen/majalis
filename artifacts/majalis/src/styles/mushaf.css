@@ -823,3 +823,161 @@
   .mshf-sheet { height: 90vh; }
   .mshf-nav-btn { width: 40px; height: 40px; }
 }
+
+/* ══════════════════════════════════════════════════════════════════════
+   قسم النص القرآني (qs-*) — عارض النص بالآيات
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* منطقة التمرير */
+.qs-reader-area {
+  overflow-y: auto;
+  overflow-x: hidden;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  padding: calc(72px + env(safe-area-inset-top)) 0 calc(80px + env(safe-area-inset-bottom));
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+/* غلاف السورة */
+.qs-surah {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 3rem;
+}
+
+/* رأس السورة */
+.qs-surah-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: 1.75rem;
+  padding: 1.5rem 1.5rem 1.25rem;
+  border: 1px solid var(--mshf-frame-border);
+  border-radius: 1.25rem;
+  background: var(--mshf-btn-bg, rgba(255,255,255,0.05));
+  text-align: center;
+}
+.mshf-shell:not(.mshf-night):not(.mshf-sepia) .qs-surah-header {
+  background: rgba(14,110,82,0.04);
+  border-color: rgba(14,110,82,0.12);
+}
+
+.qs-surah-ornament {
+  font-size: 2.2rem;
+  line-height: 1;
+  color: var(--mshf-emerald, #0E6E52);
+  opacity: 0.85;
+}
+.qs-surah-name {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--mshf-ink);
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+.mshf-night .qs-surah-name { color: var(--mshf-ink, #E0F0E8); }
+
+.qs-surah-meta {
+  font-size: 0.8rem;
+  color: var(--mshf-ink-soft);
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+/* البسملة */
+.qs-basmala {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--mshf-emerald, #0E6E52);
+  margin-bottom: 1.5rem;
+  padding: 0.75rem 1rem;
+  line-height: 2;
+  letter-spacing: 0.06em;
+  direction: rtl;
+}
+.mshf-night .qs-basmala { color: var(--mshf-active-color, #70D4A0); }
+
+/* حاوية الآيات — نص مسترسل */
+.qs-ayahs {
+  direction: rtl;
+  text-align: justify;
+  text-justify: inter-word;
+  line-height: 2.4;
+  word-spacing: 0.1em;
+}
+
+/* آية واحدة */
+.qs-ayah {
+  display: inline;
+  position: relative;
+}
+.qs-ayah--bm .qs-ayah__text {
+  background: linear-gradient(transparent 60%, rgba(14,110,82,0.14) 60%);
+  border-radius: 3px;
+}
+.mshf-night .qs-ayah--bm .qs-ayah__text {
+  background: linear-gradient(transparent 60%, rgba(100,200,150,0.15) 60%);
+}
+
+.qs-ayah__text {
+  color: var(--mshf-ink);
+  font-family: "Scheherazade New", "KFGQPC Uthmanic Script HAFS", "Traditional Arabic", serif;
+  transition: color 0.3s;
+  cursor: default;
+  line-height: inherit;
+}
+
+/* رقم الآية */
+.qs-ayah__num {
+  display: inline-block;
+  font-size: 0.65em;
+  font-family: inherit;
+  color: var(--mshf-emerald, #0E6E52);
+  font-weight: 700;
+  opacity: 0.75;
+  vertical-align: super;
+  line-height: 1;
+  margin: 0 0.1em;
+  direction: ltr;
+  unicode-bidi: embed;
+}
+.mshf-night .qs-ayah__num { color: var(--mshf-active-color, #70D4A0); }
+
+/* زر العلامة */
+.qs-ayah__bm-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.4em;
+  height: 1.4em;
+  vertical-align: middle;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--mshf-ink-soft);
+  cursor: pointer;
+  margin: 0 0.12em;
+  transition: color 0.15s, background 0.15s;
+  -webkit-tap-highlight-color: transparent;
+  flex-shrink: 0;
+}
+.qs-ayah__bm-btn:hover { background: rgba(14,110,82,0.1); color: var(--mshf-emerald, #0E6E52); }
+.qs-ayah--bm .qs-ayah__bm-btn { color: var(--mshf-emerald, #0E6E52); }
+.mshf-night .qs-ayah--bm .qs-ayah__bm-btn { color: var(--mshf-active-color, #70D4A0); }
+
+/* ══ استجابة ══ */
+@media (max-width: 480px) {
+  .qs-surah { padding: 1rem 1rem 2.5rem; }
+  .qs-surah-name { font-size: 1.35rem; }
+  .qs-basmala { font-size: 1.3rem; }
+  .qs-ayahs { line-height: 2.2; }
+}
+@media (min-width: 700px) {
+  .qs-surah { padding: 2rem 2rem 4rem; }
+  .qs-ayahs { line-height: 2.6; }
+}
