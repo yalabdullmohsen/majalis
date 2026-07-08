@@ -544,6 +544,33 @@ export const UPDATES_SEED: PlatformUpdate[] = [
     published_at: "2026-07-09T08:00:00Z",
     status: "approved",
   },
+  {
+    id: "update-fiqh-council-17",
+    title: "تحديث: قرارات المجمع الفقهي — 17 قراراً",
+    summary: "إضافة 5 قرارات: حكم تغيير الجنس، البيع بالتقسيط، التبرع بالدم وبيعه، صيام المناطق القطبية، شهادات الحلال.",
+    update_type: "قرار",
+    source_url: "/fiqh",
+    published_at: "2026-07-08T09:00:00Z",
+    status: "approved",
+  },
+  {
+    id: "update-qa-303",
+    title: "تحديث: الأسئلة والأجوبة تبلغ 303 مسألة",
+    summary: "إضافة 10 مسائل في الأذكار والأنبياء والآداب والقرآن والحديث والطهارة.",
+    update_type: "إعلان",
+    source_url: "/qa",
+    published_at: "2026-07-08T10:00:00Z",
+    status: "approved",
+  },
+  {
+    id: "update-courses-44",
+    title: "تحديث: الدورات العلمية السنوية — 44 دورة",
+    summary: "إضافة 5 دورات: مصطلح الحديث، الفقه الحنبلي (عمدة الفقه)، التفسير الموضوعي، السيرة النبوية التحليلية، علم الفرائض والمواريث.",
+    update_type: "دورة",
+    source_url: "/lessons",
+    published_at: "2026-07-08T11:00:00Z",
+    status: "approved",
+  },
 ];
 
 export function getSortedUpdates(limit?: number) {
