@@ -8,7 +8,7 @@ import { getFatwas } from "@/lib/platform-content-service";
 import { getLatestFatwas } from "@/lib/fatwa-seed";
 import { getRulingsEncyclopedia } from "@/lib/rulings-service";
 import { RULINGS_CATEGORY_TREE } from "@/lib/rulings-categories";
-import { Loading, Empty } from "@/components/ui-common";
+import { SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { getQaQuestions } from "@/lib/supabase";
 import { SEED_QA, QA_CATEGORIES } from "@/lib/qa-seed";
 import { RequestManager } from "@/lib/request-manager";
@@ -147,7 +147,7 @@ export default function FiqhPage() {
 
             {/* فتاوى حديثة */}
             {loadingF ? (
-              <Loading />
+              <SkeletonCardGrid count={6} />
             ) : fatwas.length === 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {latestFatwas.map((f, i) => (
@@ -197,7 +197,7 @@ export default function FiqhPage() {
             </div>
 
             {loadingR ? (
-              <Loading />
+              <SkeletonCardGrid count={6} />
             ) : rulings.length === 0 ? (
               <Empty text="لا توجد أحكام بعد" />
             ) : (
@@ -249,7 +249,7 @@ export default function FiqhPage() {
             </div>
 
             {loadingQ ? (
-              <Loading />
+              <SkeletonCardGrid count={6} />
             ) : qaItems.length === 0 ? (
               <Empty text="لا توجد أسئلة بعد" />
             ) : (

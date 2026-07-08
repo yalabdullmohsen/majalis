@@ -5,7 +5,7 @@ import { RequestManager } from "@/lib/request-manager";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { DEMO_FAWAID, FAWAID_CATEGORIES } from "@/lib/demo-content";
 import { canSubmitForm } from "@/lib/form-rate-limit";
-import { PageHeader, Loading, Empty } from "@/components/ui-common";
+import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
 import { useAuth } from "@/components/AuthProvider";
 import { FaidahCard } from "@/components/fawaid/FaidahCard";
@@ -154,7 +154,7 @@ export default function FawaidPage({
       </div>
 
       {loading ? (
-        <Loading />
+        <SkeletonCardGrid count={8} />
       ) : displayItems.length === 0 ? (
         <Empty text={debouncedSearch.trim() ? `لا توجد فوائد مطابقة لـ «${debouncedSearch.trim()}».` : "لا توجد فوائد في هذا القسم."} />
       ) : (

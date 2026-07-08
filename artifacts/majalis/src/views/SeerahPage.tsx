@@ -5,6 +5,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { Link } from "wouter";
 import { usePageView } from "@/hooks/usePageView";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
+import { ShareButton } from "@/components/ShareButton";
 
 const PHASES: { id: string; num: number; title: string; year: string; Icon: LucideIcon; color: string; desc: string; topics: string[] }[] = [
   {
@@ -255,6 +256,13 @@ export default function SeerahPage() {
               <span className="seerah-panel__coming-dot" />
               التفاصيل التاريخية التفصيلية من مصادر موثقة قادمة قريباً
             </div>
+
+            <ShareButton
+              title={`السيرة النبوية — ${active.title}`}
+              text={`${active.title} (${active.year})\n${active.desc}`}
+              size="sm"
+              className="seerah-panel__share"
+            />
 
             {/* Navigation */}
             <div className="seerah-panel__nav">
@@ -722,5 +730,13 @@ const SEERAH_CSS = `
   border-color: color-mix(in srgb, var(--panel-color, #18362A) 31%, transparent);
   color: var(--panel-color, #18362A);
   background: color-mix(in srgb, var(--panel-color, #18362A) 5%, transparent);
+}
+.seerah-panel__share {
+  margin-top: 1rem;
+  border-color: color-mix(in srgb, var(--panel-color, #18362A) 28%, transparent);
+  color: var(--panel-color, #18362A);
+}
+.seerah-panel__share:hover {
+  background: color-mix(in srgb, var(--panel-color, #18362A) 6%, transparent);
 }
 `;

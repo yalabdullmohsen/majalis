@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Star } from "lucide-react";
-import { Loading, PageHeader } from "@/components/ui-common";
+import { SkeletonCardGrid, PageHeader } from "@/components/ui-common";
 import {
   loadIslamicOccasions,
   sortOccasionsByUpcoming,
@@ -81,7 +81,7 @@ export default function OccasionsPage() {
       )}
 
       {loading ? (
-        <Loading />
+        <SkeletonCardGrid count={6} />
       ) : filtered.length === 0 ? (
         <p className="occasions-filter__count occasions-filter__count--empty">
           لا توجد مناسبات في هذا الشهر.

@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Scale } from "lucide-react";
 import { Link } from "wouter";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
-import { PageHeader, Loading, Empty } from "@/components/ui-common";
+import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
 import { PlatformContentCard } from "@/components/platform/ContentDetailLayout";
 import { getFatwas } from "@/lib/platform-content-service";
@@ -154,7 +154,7 @@ export default function FatwaPage() {
       )}
 
       {loading && tab === "all" ? (
-        <Loading />
+        <SkeletonCardGrid count={9} />
       ) : displayItems.length === 0 ? (
         <Empty text="لا توجد فتاوى مطابقة." />
       ) : (
