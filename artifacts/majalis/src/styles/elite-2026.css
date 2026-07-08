@@ -13319,10 +13319,9 @@ a:focus-visible {
   color: var(--rd-ink) !important;
   line-height: 1.35 !important;
   margin: 0 0 4px !important;
-  display: -webkit-box !important;
-  -webkit-line-clamp: 2 !important;
-  -webkit-box-orient: vertical !important;
-  overflow: hidden !important;
+  display: block !important;
+  overflow: visible !important;
+  white-space: normal !important;
 }
 
 .lesson-unified-card.lesson-unified-card--compact .lesson-unified-card__sheikh {
@@ -13715,14 +13714,17 @@ img[loading="lazy"]:not([src=""]) {
   background: linear-gradient(135deg, rgba(5,150,105,0.22) 0%, rgba(5,150,105,0.14) 100%) !important;
 }
 
-/* ─── عناوين بطاقات الدروس في الصفحة الرئيسية ─────────────────── */
+/* ─── عناوين بطاقات الدروس في الصفحة الرئيسية — كاملة بلا اقتطاع ─── */
 .lesson-unified-card.lesson-unified-card--compact .lesson-unified-card__title {
   font-size: 1.05rem !important;
   font-weight: 800 !important;
   color: var(--majalis-ink) !important;
   letter-spacing: -0.01em !important;
   line-height: 1.3 !important;
-  -webkit-line-clamp: 3 !important;
+  display: block !important;
+  overflow: visible !important;
+  white-space: normal !important;
+  -webkit-line-clamp: unset !important;
 }
 
 /* ─── بادج وقت الصلاة في شريط التنقل السفلي ───────────────────── */
