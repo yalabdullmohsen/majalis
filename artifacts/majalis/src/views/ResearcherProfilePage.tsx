@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
+import { Link2, Lock } from "lucide-react";
 import { useAuth } from "@/components/AuthProvider";
 import { PageHeader } from "@/components/ui-common";
 import {
@@ -77,7 +78,7 @@ function ShareBanner({ userId }: { userId: string }) {
 
   return (
     <div className="rp-share-banner">
-      <span className="rp-share-banner__label">🔗 رابط ملفك العام:</span>
+      <span className="rp-share-banner__label flex items-center gap-1"><Link2 size={14} aria-hidden="true" /> رابط ملفك العام:</span>
       <span className="rp-share-banner__url">{url}</span>
       <button type="button" className="vault-btn vault-btn--sm vault-btn--primary" onClick={copy}>
         {copied ? "✓ تم النسخ" : "نسخ"}
@@ -167,7 +168,7 @@ export default function ResearcherProfilePage() {
   if (!isLoggedIn) {
     return (
       <div className="page-shell narrow rpr-login-prompt" dir="rtl">
-        <div className="rpr-login-icon">🔐</div>
+        <div className="rpr-login-icon"><Lock size={40} strokeWidth={1.3} aria-hidden="true" /></div>
         <p className="rpr-login-msg">
           سجّل الدخول لإنشاء ملفك البحثي.
         </p>
@@ -190,7 +191,7 @@ export default function ResearcherProfilePage() {
     <div className="page-shell narrow rp-page" dir="rtl">
       <PageHeader
         eyebrow="البحث العلمي"
-        title="🎓 ملف الباحث"
+        title="ملف الباحث"
         subtitle="أنشئ ملفاً بحثياً يُعرّف بك وباهتماماتك العلمية في الدراسات الإسلامية."
       />
 

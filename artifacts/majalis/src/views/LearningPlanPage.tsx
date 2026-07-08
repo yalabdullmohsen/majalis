@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
+import { BookOpen, ClipboardList, Lock, Sprout, Timer, Trophy } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { useAuth } from "@/components/AuthProvider";
 import { PageHeader } from "@/components/ui-common";
 import {
@@ -28,10 +30,10 @@ function StepLevel({
   value: PlanLevel | "";
   onChange: (v: PlanLevel) => void;
 }) {
-  const options: { value: PlanLevel; label: string; desc: string; icon: string }[] = [
-    { value: "beginner", label: "مبتدئ", desc: "أبدأ رحلتي في طلب العلم", icon: "🌱" },
-    { value: "intermediate", label: "متوسط", desc: "لديّ قاعدة ولكنني أريد المزيد", icon: "📚" },
-    { value: "advanced", label: "متقدم", desc: "طالب علم بخبرة واسعة", icon: "🏆" },
+  const options: { value: PlanLevel; label: string; desc: string; Icon: LucideIcon }[] = [
+    { value: "beginner", label: "مبتدئ", desc: "أبدأ رحلتي في طلب العلم", Icon: Sprout },
+    { value: "intermediate", label: "متوسط", desc: "لديّ قاعدة ولكنني أريد المزيد", Icon: BookOpen },
+    { value: "advanced", label: "متقدم", desc: "طالب علم بخبرة واسعة", Icon: Trophy },
   ];
 
   return (
@@ -45,7 +47,7 @@ function StepLevel({
             className={`lp-wizard__option${value === o.value ? " lp-wizard__option--selected" : ""}`}
             onClick={() => onChange(o.value)}
           >
-            <span className="lp-wizard__option-icon">{o.icon}</span>
+            <span className="lp-wizard__option-icon">{(() => { const I = o.Icon; return <I size={28} strokeWidth={1.5} aria-hidden="true" />; })()}</span>
             <span className="lp-wizard__option-label">{o.label}</span>
             <span className="lp-wizard__option-desc">{o.desc}</span>
           </button>
@@ -138,7 +140,7 @@ function PlanDisplay({
       <div className="lp-plan__header">
         <div className="lp-plan__meta">
           <span className="lp-plan__level">{LEVEL_LABELS[plan.level]}</span>
-          <span className="lp-plan__minutes">⏱ {plan.daily_minutes} دقيقة يومياً</span>
+          <span className="lp-plan__minutes flex items-center gap-1"><Timer size={13} aria-hidden="true" /> {plan.daily_minutes} دقيقة يومياً</span>
         </div>
         <div className="lp-plan__progress">
           <div className="lp-plan__progress-bar">
@@ -178,8 +180,8 @@ function PlanDisplay({
       )}
 
       <div className="lp-plan__actions">
-        <Link href="/flashcards" className="lp-plan__action-btn lp-plan__action-btn--primary">
-          📇 مراجعة البطاقات
+        <Link href="/flashcards" className="lp-plan__action-btn lp-plan__action-btn--primary flex items-center gap-1.5">
+          <ClipboardList size={14} aria-hidden="true" /> مراجعة البطاقات
         </Link>
         <button type="button" className="lp-plan__action-btn" onClick={onReset}>
           ↺ إعادة بناء الخطة
@@ -259,7 +261,7 @@ export default function LearningPlanPage() {
   if (!isLoggedIn) {
     return (
       <div className="page-shell narrow lpn-login-prompt" dir="rtl">
-        <div className="lpn-login-icon">🔐</div>
+        <div className="lpn-login-icon"><Lock size={40} strokeWidth={1.3} aria-hidden="true" /></div>
         <p className="lpn-login-msg">
           سجّل الدخول لإنشاء خطة تعلّم شخصية.
         </p>

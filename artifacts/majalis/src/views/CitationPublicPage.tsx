@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Star } from "lucide-react";
+import { Download, Link2, QrCode, Star } from "lucide-react";
 import { Spinner } from "@/components/ui/spinner";
 import { Link, useRoute } from "wouter";
 import {
@@ -180,7 +180,7 @@ export default function CitationPublicPage() {
               onClick={copyLink}
               className="flex items-center gap-1.5 px-4 py-2 text-sm bg-[var(--majalis-panel)] border border-gray-300 dark:border-gray-600 rounded-xl hover:border-emerald-500 text-[var(--majalis-ink-soft)] transition-colors shadow-sm"
             >
-              🔗 {copied ? "تم النسخ ✓" : "نسخ الرابط"}
+              <Link2 size={14} strokeWidth={2} aria-hidden="true" /> {copied ? "تم النسخ ✓" : "نسخ الرابط"}
             </button>
 
             <button
@@ -188,7 +188,7 @@ export default function CitationPublicPage() {
               onClick={() => setShowQr(!showQr)}
               className="flex items-center gap-1.5 px-4 py-2 text-sm bg-[var(--majalis-panel)] border border-gray-300 dark:border-gray-600 rounded-xl hover:border-emerald-500 text-[var(--majalis-ink-soft)] transition-colors shadow-sm"
             >
-              📱 QR Code
+              <QrCode size={14} strokeWidth={2} aria-hidden="true" /> QR Code
             </button>
 
             <a
@@ -196,7 +196,7 @@ export default function CitationPublicPage() {
               download={`citation-${slug}.svg`}
               className="flex items-center gap-1.5 px-4 py-2 text-sm bg-[var(--majalis-panel)] border border-gray-300 dark:border-gray-600 rounded-xl hover:border-emerald-500 text-[var(--majalis-ink-soft)] transition-colors shadow-sm"
             >
-              🖼️ تحميل بطاقة
+              <Download size={14} strokeWidth={2} aria-hidden="true" /> تحميل بطاقة
             </a>
 
             {user && (

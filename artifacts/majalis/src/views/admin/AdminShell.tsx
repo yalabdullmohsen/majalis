@@ -1,6 +1,15 @@
 import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import { Link, useLocation } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
+import {
+  BookOpen, Bot, Brain, Building2, CheckCircle2, Dna,
+  FlaskConical, Flag, GraduationCap, Globe, HelpCircle, Image, Landmark,
+  LayoutDashboard, Library, Lightbulb, MessageCircle, MessageSquare,
+  Network, PlayCircle, Radio, RefreshCw, Scale, School, ScrollText, Search,
+  Send, Settings, Settings2, ShieldCheck, Smartphone, Sparkles,
+  Target, Unlock, User, Users,
+} from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 export type AdminSection =
   | "dashboard"
@@ -42,79 +51,79 @@ export type AdminSection =
   | "image-import"
   | "haramain-lessons";
 
-type NavItem = { key: AdminSection; label: string; icon: string };
+type NavItem = { key: AdminSection; label: string; Icon: LucideIcon };
 
 const NAV_GROUPS: Array<{ title?: string; items: NavItem[] }> = [
   {
     items: [
-      { key: "dashboard", label: "لوحة التحكم", icon: "◉" },
+      { key: "dashboard", label: "لوحة التحكم", Icon: LayoutDashboard },
     ],
   },
   {
     title: "المحتوى",
     items: [
-      { key: "lessons",  label: "الدروس",          icon: "▶" },
-      { key: "sheikhs",  label: "المشايخ",          icon: "👤" },
-      { key: "library",  label: "المكتبة",          icon: "📚" },
-      { key: "fawaid",   label: "الفوائد",          icon: "💡" },
-      { key: "adhkar",   label: "الأذكار",          icon: "◎" },
-      { key: "miracles", label: "الإعجاز العلمي",  icon: "✨" },
-      { key: "qa",       label: "الأسئلة والأجوبة", icon: "❓" },
-      { key: "quiz",     label: "المسابقة",         icon: "🎯" },
+      { key: "lessons",  label: "الدروس",          Icon: PlayCircle },
+      { key: "sheikhs",  label: "المشايخ",          Icon: User },
+      { key: "library",  label: "المكتبة",          Icon: Library },
+      { key: "fawaid",   label: "الفوائد",          Icon: Lightbulb },
+      { key: "adhkar",   label: "الأذكار",          Icon: RefreshCw },
+      { key: "miracles", label: "الإعجاز العلمي",  Icon: Sparkles },
+      { key: "qa",       label: "الأسئلة والأجوبة", Icon: HelpCircle },
+      { key: "quiz",     label: "المسابقة",         Icon: Target },
     ],
   },
   {
     title: "الشريعة",
     items: [
-      { key: "fiqh-council",   label: "المجمع الفقهي",   icon: "⚖" },
-      { key: "fatwa",          label: "الفتاوى",           icon: "📜" },
-      { key: "rulings",        label: "الأحكام الشرعية",  icon: "🏛" },
-      { key: "annual-courses", label: "الدورات العلمية",  icon: "🎓" },
+      { key: "fiqh-council",   label: "المجمع الفقهي",   Icon: Scale },
+      { key: "fatwa",          label: "الفتاوى",           Icon: ScrollText },
+      { key: "rulings",        label: "الأحكام الشرعية",  Icon: Landmark },
+      { key: "annual-courses", label: "الدورات العلمية",  Icon: GraduationCap },
     ],
   },
   {
     title: "المجتمع",
     items: [
-      { key: "users",       label: "المستخدمون",    icon: "👥" },
-      { key: "submissions", label: "مقترحات",       icon: "📩" },
-      { key: "reports",     label: "التقارير",      icon: "📊" },
+      { key: "users",       label: "المستخدمون",    Icon: Users },
+      { key: "submissions", label: "مقترحات",       Icon: MessageSquare },
+      { key: "reports",     label: "التقارير",      Icon: Flag },
     ],
   },
   {
     title: "الاستيراد والأتمتة",
     items: [
-      { key: "image-import",     label: "استخلاص من صور",   icon: "🖼" },
-      { key: "smart-cms",        label: "CMS الذكي",        icon: "🤖" },
-      { key: "aggregator",       label: "محرك التجميع",     icon: "⚙" },
-      { key: "knowledge-engine", label: "Auto Knowledge",    icon: "🧠" },
-      { key: "telegram",         label: "Telegram",          icon: "📢" },
-      { key: "prophet-stories",  label: "قصص الأنبياء",     icon: "📖" },
-      { key: "islamic-stories",  label: "القصص الإسلامية",  icon: "🕌" },
-      { key: "haramain-lessons", label: "دروس الحرمين",     icon: "🕋" },
-      { key: "updates",          label: "المستجدات",        icon: "📡" },
-      { key: "universities",     label: "دليل الجامعات",    icon: "🏫" },
+      { key: "image-import",     label: "استخلاص من صور",   Icon: Image },
+      { key: "smart-cms",        label: "CMS الذكي",        Icon: Bot },
+      { key: "aggregator",       label: "محرك التجميع",     Icon: Settings2 },
+      { key: "knowledge-engine", label: "Auto Knowledge",    Icon: Brain },
+      { key: "telegram",         label: "Telegram",          Icon: Send },
+      { key: "prophet-stories",  label: "قصص الأنبياء",     Icon: BookOpen },
+      { key: "islamic-stories",  label: "القصص الإسلامية",  Icon: Building2 },
+      { key: "haramain-lessons", label: "دروس الحرمين",     Icon: Landmark },
+      { key: "updates",          label: "المستجدات",        Icon: Radio },
+      { key: "universities",     label: "دليل الجامعات",    Icon: School },
     ],
   },
   {
     title: "التحليل",
     items: [
-      { key: "search-analytics",       label: "تحليل البحث",    icon: "🔍" },
-      { key: "verified-knowledge",     label: "المعرفة الموثقة", icon: "✅" },
-      { key: "scholarly-verification", label: "التوثيق العلمي",  icon: "🔏" },
-      { key: "knowledge-reasoning",    label: "محرك الاستدلال",  icon: "💭" },
-      { key: "digital-learning",       label: "التعليم الرقمي",  icon: "📱" },
+      { key: "search-analytics",       label: "تحليل البحث",    Icon: Search },
+      { key: "verified-knowledge",     label: "المعرفة الموثقة", Icon: CheckCircle2 },
+      { key: "scholarly-verification", label: "التوثيق العلمي",  Icon: ShieldCheck },
+      { key: "knowledge-reasoning",    label: "محرك الاستدلال",  Icon: MessageCircle },
+      { key: "digital-learning",       label: "التعليم الرقمي",  Icon: Smartphone },
     ],
   },
   {
     title: "النظام المتقدم",
     items: [
-      { key: "autonomous-ai",        label: "المنظومة الذاتية",   icon: "🔬" },
-      { key: "global-reference",     label: "المرجع العالمي",     icon: "🌍" },
-      { key: "islamic-intelligence", label: "الاستخبارات العلمية", icon: "🧬" },
-      { key: "open-platform",        label: "Open Platform",       icon: "🔓" },
-      { key: "governance",           label: "الحوكمة المؤسسية",   icon: "🏛" },
-      { key: "knowledge-graph",      label: "الرسم البياني",      icon: "🕸" },
-      { key: "settings",             label: "الإعدادات",          icon: "⚙" },
+      { key: "autonomous-ai",        label: "المنظومة الذاتية",   Icon: FlaskConical },
+      { key: "global-reference",     label: "المرجع العالمي",     Icon: Globe },
+      { key: "islamic-intelligence", label: "الاستخبارات العلمية", Icon: Dna },
+      { key: "open-platform",        label: "Open Platform",       Icon: Unlock },
+      { key: "governance",           label: "الحوكمة المؤسسية",   Icon: Landmark },
+      { key: "knowledge-graph",      label: "الرسم البياني",      Icon: Network },
+      { key: "settings",             label: "الإعدادات",          Icon: Settings },
     ],
   },
 ];
@@ -237,7 +246,7 @@ export function AdminShell({ section, onSectionChange, children }: AdminShellPro
         >
           {/* شعار المنصة */}
           <div className="admin-sidebar-logo">
-            <span className="admin-sidebar-logo__icon">🕌</span>
+            <span className="admin-sidebar-logo__icon"><Building2 size={22} strokeWidth={1.5} aria-hidden="true" /></span>
             <p className="admin-sidebar-logo__title">المجلس العلمي</p>
             <p className="admin-sidebar-logo__subtitle">Admin Dashboard</p>
           </div>
@@ -287,7 +296,7 @@ export function AdminShell({ section, onSectionChange, children }: AdminShellPro
                     className={`admin-nav__item${section === item.key ? " is-active" : ""}`}
                   >
                     <span className="admin-nav__item-icon" aria-hidden="true">
-                      {item.icon}
+                      {(() => { const I = item.Icon; return <I size={14} strokeWidth={1.8} />; })()}
                     </span>
                     <span className="admin-nav__item-label">{item.label}</span>
                   </button>

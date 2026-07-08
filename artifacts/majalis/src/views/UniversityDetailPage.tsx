@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { AlertTriangle, Calendar, ExternalLink, FileText, Globe, GraduationCap, Info, Landmark, MapPin } from "lucide-react";
 import { useRoute, Link } from "wouter";
 import { Spinner } from "@/components/ui/spinner";
 import {
@@ -33,7 +34,7 @@ function ProgramCard({ program: p }: { program: UniversityProgram }) {
               px-2 py-0.5 rounded-full">{p.study_mode}</span>
             {p.has_scholarship && (
               <span className="text-xs bg-amber-50 dark:bg-amber-900/20 text-amber-700
-                dark:text-amber-400 px-2 py-0.5 rounded-full font-medium">🎓 منحة</span>
+                dark:text-amber-400 px-2 py-0.5 rounded-full font-medium flex items-center gap-1"><GraduationCap size={11} aria-hidden="true" /> منحة</span>
             )}
           </div>
           <p className="font-semibold text-[var(--majalis-ink)] text-sm">{p.program_name}</p>
@@ -87,7 +88,7 @@ function ProgramCard({ program: p }: { program: UniversityProgram }) {
                   <ul className="space-y-1">
                     {req.required_documents.map((d, i) => (
                       <li key={i} className="flex gap-2 text-sm text-[var(--majalis-ink-soft)]">
-                        <span className="text-blue-500 flex-shrink-0">📄</span>
+                        <FileText size={12} strokeWidth={1.8} className="text-blue-500 flex-shrink-0 mt-0.5" aria-hidden="true" />
                         <span>{d}</span>
                       </li>
                     ))}
@@ -113,15 +114,15 @@ function ProgramCard({ program: p }: { program: UniversityProgram }) {
                 {req.application_deadline && (
                   <div>
                     <span className="text-[var(--majalis-ink-soft)] opacity-60 text-xs block">موعد التقديم</span>
-                    <span className="font-medium text-orange-600 dark:text-orange-400">
-                      🗓️ {req.application_deadline}
+                    <span className="font-medium text-orange-600 dark:text-orange-400 flex items-center gap-1">
+                      <Calendar size={13} aria-hidden="true" /> {req.application_deadline}
                     </span>
                   </div>
                 )}
                 {req.application_url && (
                   <a href={req.application_url} target="_blank" rel="noopener noreferrer"
                     className="flex items-center gap-1.5 px-4 py-2 citation-btn citation-btn--primary rounded-xl text-sm font-medium transition-colors">
-                    📝 رابط التقديم الرسمي ↗
+                    <ExternalLink size={13} aria-hidden="true" /> رابط التقديم الرسمي ↗
                   </a>
                 )}
               </div>
@@ -146,7 +147,7 @@ function DetailContent({ university: u }: { university: University }) {
       {/* شريط التحديث + تنبيه */}
       <div className="bg-amber-50 dark:bg-amber-900/10 border-b border-amber-200 dark:border-amber-800
         px-4 py-2 text-xs text-amber-700 dark:text-amber-300 text-center">
-        ⚠️ آخر تحديث: {new Date(u.last_updated_at).toLocaleDateString("ar-SA")} — تحقق من الموقع الرسمي للجامعة قبل اتخاذ أي قرار.
+        <AlertTriangle size={12} aria-hidden="true" className="inline ml-1" /> آخر تحديث: {new Date(u.last_updated_at).toLocaleDateString("ar-SA")} — تحقق من الموقع الرسمي للجامعة قبل اتخاذ أي قرار.
       </div>
 
       {/* Header */}
@@ -169,8 +170,8 @@ function DetailContent({ university: u }: { university: University }) {
               <h1 className="text-xl font-bold mb-1 leading-snug">{u.name_ar}</h1>
               {u.name_en && <p className="text-emerald-200 text-sm mb-2">{u.name_en}</p>}
               <div className="flex flex-wrap gap-2 text-sm">
-                <span className="bg-white/20 px-2.5 py-0.5 rounded-full">
-                  📍 {u.city ? `${u.city}، ` : ""}{u.country}
+                <span className="bg-white/20 px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                  <MapPin size={12} aria-hidden="true" /> {u.city ? `${u.city}، ` : ""}{u.country}
                 </span>
                 <span className="px-2.5 py-0.5 rounded-full text-white text-xs font-medium udp-acc-badge"
                   style={{ "--acc-color": accColor } as React.CSSProperties}>
@@ -189,7 +190,7 @@ function DetailContent({ university: u }: { university: University }) {
               <a href={u.website_url} target="_blank" rel="noopener noreferrer"
                 className="px-4 py-2 bg-white text-emerald-800 rounded-xl text-sm font-semibold
                   hover:bg-emerald-50 transition-colors">
-                🌐 الموقع الرسمي ↗
+                <Globe size={14} aria-hidden="true" /> الموقع الرسمي ↗
               </a>
             )}
             <button type="button"
@@ -276,7 +277,7 @@ function DetailContent({ university: u }: { university: University }) {
 
         {/* إخلاء مسؤولية */}
         <div className="bg-[var(--majalis-parchment-deep)] rounded-xl px-4 py-3 text-xs text-[var(--majalis-ink-soft)]">
-          📌 المعلومات أعلاه مُدخَلة يدوياً لأغراض توجيهية فقط. الرسوم والشروط وتواريخ القبول
+          <Info size={12} aria-hidden="true" className="inline ml-1" /> المعلومات أعلاه مُدخَلة يدوياً لأغراض توجيهية فقط. الرسوم والشروط وتواريخ القبول
           قد تتغير. تحقق دائماً من الموقع الرسمي للجامعة أو تواصل معها مباشرة قبل اتخاذ قرار.
         </div>
       </div>
@@ -328,7 +329,7 @@ export default function UniversityDetailPage() {
     return (
       <div dir="rtl" className="flex items-center justify-center min-h-screen text-center">
         <div>
-          <p className="text-5xl mb-4">🏛️</p>
+          <Landmark size={48} strokeWidth={1.3} className="mx-auto mb-4" aria-hidden="true" />
           <p className="text-lg font-bold text-[var(--majalis-ink-soft)] mb-2">الجامعة غير موجودة</p>
           <Link href="/universities" className="text-[var(--majalis-emerald)] hover:underline text-sm">
             → العودة للدليل

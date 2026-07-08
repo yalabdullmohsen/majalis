@@ -3,45 +3,51 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
+import {
+  BookOpen, Briefcase, Building2, FlaskConical, Globe,
+  GraduationCap, Landmark, Layers, Library, Moon, PenLine, Scale, ScrollText,
+} from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 type Tab = "theses" | "institutions" | "personal";
 
-const TABS: { id: Tab; label: string; icon: string; desc: string }[] = [
-  { id: "theses",       label: "الرسائل العلمية",       icon: "🎓", desc: "رسائل الماجستير والدكتوراه" },
-  { id: "institutions", label: "أبحاث المؤسسات",        icon: "🏛", desc: "أبحاث المنظمات والمراكز والجامعات" },
-  { id: "personal",    label: "الأبحاث الشخصية",       icon: "✍️", desc: "أبحاث الأعضاء والباحثين" },
+const TABS: { id: Tab; label: string; Icon: LucideIcon; desc: string }[] = [
+  { id: "theses",       label: "الرسائل العلمية",       Icon: GraduationCap, desc: "رسائل الماجستير والدكتوراه" },
+  { id: "institutions", label: "أبحاث المؤسسات",        Icon: Landmark,      desc: "أبحاث المنظمات والمراكز والجامعات" },
+  { id: "personal",    label: "الأبحاث الشخصية",       Icon: PenLine,       desc: "أبحاث الأعضاء والباحثين" },
 ];
 
-const THESIS_CATEGORIES = [
-  { icon: "📖", label: "الفقه وأصوله" },
-  { icon: "🌙", label: "الحديث وعلومه" },
-  { icon: "📿", label: "العقيدة والكلام" },
-  { icon: "📜", label: "التفسير وعلوم القرآن" },
-  { icon: "⚖️", label: "الفقه المقارن" },
-  { icon: "🏛", label: "السيرة والتاريخ الإسلامي" },
-  { icon: "🔬", label: "الإعجاز العلمي" },
-  { icon: "🌍", label: "الدعوة والتربية الإسلامية" },
+const THESIS_CATEGORIES: { Icon: LucideIcon; label: string }[] = [
+  { Icon: BookOpen,     label: "الفقه وأصوله" },
+  { Icon: Moon,         label: "الحديث وعلومه" },
+  { Icon: Layers,       label: "العقيدة والكلام" },
+  { Icon: ScrollText,   label: "التفسير وعلوم القرآن" },
+  { Icon: Scale,        label: "الفقه المقارن" },
+  { Icon: Landmark,     label: "السيرة والتاريخ الإسلامي" },
+  { Icon: FlaskConical, label: "الإعجاز العلمي" },
+  { Icon: Globe,        label: "الدعوة والتربية الإسلامية" },
 ];
 
-const INSTITUTION_CATEGORIES = [
-  { icon: "🎓", label: "الجامعات الإسلامية" },
-  { icon: "🏢", label: "المراكز البحثية" },
-  { icon: "🌐", label: "المنظمات الدولية" },
-  { icon: "📚", label: "مجامع الفقه" },
-  { icon: "🕌", label: "دور الإفتاء" },
-  { icon: "💼", label: "الهيئات الشرعية" },
+const INSTITUTION_CATEGORIES: { Icon: LucideIcon; label: string }[] = [
+  { Icon: GraduationCap, label: "الجامعات الإسلامية" },
+  { Icon: Building2,     label: "المراكز البحثية" },
+  { Icon: Globe,         label: "المنظمات الدولية" },
+  { Icon: Library,       label: "مجامع الفقه" },
+  { Icon: Landmark,      label: "دور الإفتاء" },
+  { Icon: Briefcase,     label: "الهيئات الشرعية" },
 ];
 
 function EmptyCard({ tab }: { tab: Tab }) {
-  const msgs: Record<Tab, { icon: string; title: string; sub: string }> = {
-    theses:       { icon: "🎓", title: "لا توجد رسائل علمية بعد", sub: "سيتم إضافة الرسائل والأطروحات قريباً — يمكنك المساهمة بإرسال بحثك" },
-    institutions: { icon: "🏛", title: "لا توجد أبحاث مؤسسية بعد", sub: "نعمل على تجميع أبحاث المراكز والجامعات الإسلامية" },
-    personal:     { icon: "✍️", title: "لا توجد أبحاث شخصية بعد", sub: "شارك بحثك وأضفه لأرشيف المجلس العلمي" },
+  const msgs: Record<Tab, { Icon: LucideIcon; title: string; sub: string }> = {
+    theses:       { Icon: GraduationCap, title: "لا توجد رسائل علمية بعد", sub: "سيتم إضافة الرسائل والأطروحات قريباً — يمكنك المساهمة بإرسال بحثك" },
+    institutions: { Icon: Landmark,      title: "لا توجد أبحاث مؤسسية بعد", sub: "نعمل على تجميع أبحاث المراكز والجامعات الإسلامية" },
+    personal:     { Icon: PenLine,       title: "لا توجد أبحاث شخصية بعد", sub: "شارك بحثك وأضفه لأرشيف المجلس العلمي" },
   };
   const m = msgs[tab];
+  const I = m.Icon;
   return (
     <div className="ar-empty">
-      <div className="ar-empty__icon" aria-hidden="true">{m.icon}</div>
+      <div className="ar-empty__icon" aria-hidden="true"><I size={44} strokeWidth={1.3} /></div>
       <p className="ar-empty__title">{m.title}</p>
       <p className="ar-empty__sub">{m.sub}</p>
       <Link href="/submit-content" className="ar-empty__btn">إرسال بحث</Link>
@@ -71,7 +77,7 @@ function ThesesTab() {
         <div className="ar-cats__grid">
           {THESIS_CATEGORIES.map(c => (
             <button key={c.label} className="ar-cat-item" type="button">
-              <span className="ar-cat-item__icon" aria-hidden="true">{c.icon}</span>
+              <span className="ar-cat-item__icon" aria-hidden="true">{(() => { const I = c.Icon; return <I size={16} strokeWidth={1.6} />; })()}</span>
               <span className="ar-cat-item__label">{c.label}</span>
             </button>
           ))}
@@ -105,7 +111,7 @@ function InstitutionsTab() {
         <div className="ar-cats__grid">
           {INSTITUTION_CATEGORIES.map(c => (
             <button key={c.label} className="ar-cat-item" type="button">
-              <span className="ar-cat-item__icon" aria-hidden="true">{c.icon}</span>
+              <span className="ar-cat-item__icon" aria-hidden="true">{(() => { const I = c.Icon; return <I size={16} strokeWidth={1.6} />; })()}</span>
               <span className="ar-cat-item__label">{c.label}</span>
             </button>
           ))}
@@ -121,7 +127,7 @@ function PersonalTab() {
   return (
     <div className="ar-tab-body">
       <div className="ar-submit-prompt">
-        <div className="ar-submit-prompt__icon" aria-hidden="true">✍️</div>
+        <div className="ar-submit-prompt__icon" aria-hidden="true"><PenLine size={40} strokeWidth={1.3} /></div>
         <div className="ar-submit-prompt__body">
           <p className="ar-submit-prompt__title">شارك بحثك مع المجتمع العلمي</p>
           <p className="ar-submit-prompt__sub">يمكنك نشر أبحاثك ودراساتك وتلخيصاتك لتستفيد منها المجتمع المسلم حول العالم.</p>
@@ -182,7 +188,7 @@ export default function AcademicResearchPage() {
             onClick={() => setActiveTab(t.id)}
             aria-pressed={activeTab === t.id}
           >
-            <span className="ar-tab-btn__icon" aria-hidden="true">{t.icon}</span>
+            <span className="ar-tab-btn__icon" aria-hidden="true">{(() => { const I = t.Icon; return <I size={16} strokeWidth={1.6} />; })()}</span>
             <span className="ar-tab-btn__label">{t.label}</span>
             <span className="ar-tab-btn__sub">{t.desc}</span>
           </button>

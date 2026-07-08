@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { AlertTriangle, GraduationCap, Landmark, Search } from "lucide-react";
 import { CompareProvider } from "@/components/universities/CompareContext";
 import { CompareBar } from "@/components/universities/CompareBar";
 import { UniversityCard } from "@/components/universities/UniversityCard";
@@ -91,7 +92,7 @@ function UniversitiesContent() {
       {/* Header */}
       <div className="text-white py-10 px-4 ldb-hero">
         <div className="max-w-5xl mx-auto text-center">
-          <h1 className="text-2xl font-bold mb-2">🎓 دليل الجامعات والكليات الشرعية</h1>
+          <h1 className="text-2xl font-bold mb-2 flex items-center justify-center gap-2"><GraduationCap size={22} strokeWidth={1.5} aria-hidden="true" /> دليل الجامعات والكليات الشرعية</h1>
           <p className="text-emerald-100 text-sm max-w-xl mx-auto leading-relaxed">
             موسوعة شاملة للجامعات التي تُقدّم دراسات شرعية حول العالم.
             ابحث وقارن وصل لرابط التقديم الرسمي مباشرة.
@@ -120,7 +121,7 @@ function UniversitiesContent() {
         {/* تنبيه البيانات التجريبية */}
         <div className="bg-amber-50 dark:bg-amber-900/10 border border-amber-200 dark:border-amber-800
           rounded-xl px-4 py-3 text-sm text-amber-700 dark:text-amber-300">
-          ⚠️ <strong>تنبيه:</strong> البيانات المعروضة تجريبية وتحتاج تحقق بشري. تأكد دائماً من الموقع
+          <AlertTriangle size={14} aria-hidden="true" className="inline ml-1" /> <strong>تنبيه:</strong> البيانات المعروضة تجريبية وتحتاج تحقق بشري. تأكد دائماً من الموقع
           الرسمي للجامعة قبل اتخاذ أي قرار.
         </div>
 
@@ -168,7 +169,7 @@ function UniversitiesContent() {
         {/* Grid */}
         {seedNeeded && (
           <div className="text-center py-10 text-[var(--majalis-ink-soft)] opacity-60">
-            <p className="text-4xl mb-3">🏛️</p>
+            <Landmark size={40} strokeWidth={1.3} className="mx-auto mb-3" aria-hidden="true" />
             <p>جداول الجامعات لم تُطبَّق بعد على قاعدة البيانات.</p>
             <p className="text-xs mt-2">شغّل: <code className="bg-[var(--majalis-parchment-deep)] px-1 rounded">node scripts/apply-universities-migrations.mjs</code></p>
           </div>
@@ -184,7 +185,7 @@ function UniversitiesContent() {
 
         {!seedNeeded && !loading && universities.length === 0 && (
           <div className="text-center py-12 text-[var(--majalis-ink-soft)] opacity-60">
-            <p className="text-4xl mb-3">🔍</p>
+            <Search size={40} strokeWidth={1.3} className="mx-auto mb-3" aria-hidden="true" />
             <p>لا توجد نتائج مطابقة للبحث الحالي.</p>
           </div>
         )}

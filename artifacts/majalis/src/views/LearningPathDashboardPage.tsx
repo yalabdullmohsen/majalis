@@ -1,5 +1,5 @@
 import { Suspense, lazy, useEffect, useState } from "react";
-import { BookOpen, Clock, Medal } from "lucide-react";
+import { BookOpen, Clock, Flame, Lock, Medal } from "lucide-react";
 import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { applyPageSeo } from "@/lib/seo";
@@ -53,7 +53,7 @@ export default function LearningPathDashboardPage() {
   if (!isLoggedIn) {
     return (
       <div dir="rtl" className="min-h-screen bg-[var(--majalis-parchment)] flex flex-col items-center justify-center gap-4">
-        <div className="text-5xl">🔒</div>
+        <Lock size={40} strokeWidth={1.3} aria-hidden="true" />
         <p className="text-[var(--majalis-ink-soft)]">يجب تسجيل الدخول لعرض لوحتك التعليمية</p>
         <Link href="/login">
           <span className="px-6 py-2.5 citation-btn citation-btn--primary rounded-xl font-medium transition-colors cursor-pointer">
@@ -77,7 +77,7 @@ export default function LearningPathDashboardPage() {
               ← خارطة طالب العلم
             </span>
           </Link>
-          <h1 className="text-2xl md:text-3xl font-extrabold mb-1">📊 لوحتي التعليمية</h1>
+          <h1 className="text-2xl md:text-3xl font-extrabold mb-1">لوحتي التعليمية</h1>
           <p className="text-emerald-100 text-sm">تابع تقدمك وإنجازاتك في مسيرة طلب العلم</p>
         </div>
       </div>
@@ -112,7 +112,7 @@ export default function LearningPathDashboardPage() {
 
             {/* الأيام المتتالية */}
             <div className="mb-8">
-              <h2 className="font-bold text-[var(--majalis-ink)] text-base mb-3">🔥 الأيام المتتالية</h2>
+              <h2 className="font-bold text-[var(--majalis-ink)] text-base mb-3 flex items-center gap-2"><Flame size={16} strokeWidth={1.8} aria-hidden="true" /> الأيام المتتالية</h2>
               <Suspense fallback={<div className="h-20 bg-[var(--majalis-parchment-deep)] rounded-2xl animate-pulse" />}>
                 <StreakCounter streak={streak} />
               </Suspense>

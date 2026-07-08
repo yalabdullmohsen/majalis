@@ -1,5 +1,14 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
+import {
+  BarChart2, BookOpen, Bot, Brain, Building2, CheckCircle2, Clock, Dna,
+  Eye, Flag, FlaskConical, Globe, GraduationCap, HelpCircle, Image,
+  Landmark, Library, Lightbulb, MessageCircle, MessageSquare, Network,
+  PlayCircle, Radio, RefreshCw, Scale, School, ScrollText, Search, Send,
+  Settings, Settings2, ShieldCheck, Smartphone, Sparkles, Target, Unlock,
+  User, Users, Flame,
+} from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { adminGetDashboardStats, adminResolveReport } from "@/lib/supabase";
 import { getCmsDashboardStats } from "@/lib/cms/supabase-cms";
 import { getTopSearchQueries } from "@/lib/search-history";
@@ -13,7 +22,7 @@ type DashboardData = Awaited<ReturnType<typeof adminGetDashboardStats>>;
 
 type SectionCard = {
   key: AdminSection;
-  icon: string;
+  Icon: LucideIcon;
   label: string;
   description: string;
   whatItDoes: string;
@@ -27,7 +36,7 @@ type SectionCard = {
 const SECTION_CATALOG: SectionCard[] = [
   // ── إدارة المحتوى ──────────────────────────────────────────────────
   {
-    key: "lessons", icon: "▶", label: "الدروس", group: "المحتوى",
+    key: "lessons", Icon: PlayCircle, label: "الدروس", group: "المحتوى",
     description: "إدارة كامل جدول الدروس العلمية الأسبوعية في المساجد",
     whatItDoes: "تعرض جميع الدروس المُسجَّلة في قاعدة البيانات مع إمكانية إضافة درس يدوياً أو تعديله أو حذفه.",
     whenToUse: "استخدمه لإضافة درس جديد أو تصحيح بيانات درس موجود أو إيقاف درس انتهى.",
@@ -35,7 +44,7 @@ const SECTION_CATALOG: SectionCard[] = [
     affectsPublic: true,
   },
   {
-    key: "sheikhs", icon: "👤", label: "المشايخ", group: "المحتوى",
+    key: "sheikhs", Icon: User, label: "المشايخ", group: "المحتوى",
     description: "إدارة ملفات المشايخ والعلماء المُسجَّلين في المنصة",
     whatItDoes: "تتيح إضافة شيخ جديد أو تعديل بياناته أو ربطه بدروسه الموجودة.",
     whenToUse: "عند إضافة شيخ جديد لم يُسجَّل سابقاً أو تحديث صورته ومعلوماته.",
@@ -43,7 +52,7 @@ const SECTION_CATALOG: SectionCard[] = [
     affectsPublic: true,
   },
   {
-    key: "library", icon: "📚", label: "المكتبة", group: "المحتوى",
+    key: "library", Icon: Library, label: "المكتبة", group: "المحتوى",
     description: "إدارة الكتب والمراجع العلمية في المكتبة الرقمية",
     whatItDoes: "تتيح إضافة كتب ومراجع علمية مع بيانات المؤلف والناشر وملف PDF.",
     whenToUse: "لإضافة كتاب جديد أو تحديث بيانات كتاب موجود أو ربطه بموضوع.",
@@ -51,7 +60,7 @@ const SECTION_CATALOG: SectionCard[] = [
     affectsPublic: true,
   },
   {
-    key: "fawaid", icon: "💡", label: "الفوائد", group: "المحتوى",
+    key: "fawaid", Icon: Lightbulb, label: "الفوائد", group: "المحتوى",
     description: "إدارة الفوائد والتنبيهات الشرعية المختارة",
     whatItDoes: "تتيح إضافة فوائد علمية مختصرة ومراجعة الفوائد المقترحة من المستخدمين.",
     whenToUse: "لنشر فوائد علمية جديدة أو اعتماد فوائد مقترحة من الزوار.",
@@ -59,7 +68,7 @@ const SECTION_CATALOG: SectionCard[] = [
     affectsPublic: true,
   },
   {
-    key: "adhkar", icon: "◎", label: "الأذكار", group: "المحتوى",
+    key: "adhkar", Icon: RefreshCw, label: "الأذكار", group: "المحتوى",
     description: "إدارة مجموعات الأذكار والأدعية الشرعية الموثقة",
     whatItDoes: "يتيح إضافة أذكار جديدة ومراجعة بيانات الأذكار القائمة.",
     whenToUse: "لإضافة ذكر جديد أو تصحيح نص ذكر موجود أو تعديل مصدره.",
@@ -67,7 +76,7 @@ const SECTION_CATALOG: SectionCard[] = [
     affectsPublic: true,
   },
   {
-    key: "miracles", icon: "✨", label: "الإعجاز العلمي", group: "المحتوى",
+    key: "miracles", Icon: Sparkles, label: "الإعجاز العلمي", group: "المحتوى",
     description: "إدارة محتوى الإعجاز العلمي في القرآن والسنة",
     whatItDoes: "تتيح إضافة مقالات الإعجاز العلمي ومراجعتها قبل النشر.",
     whenToUse: "لإضافة محتوى جديد أو تعديل مقالة موجودة أو إزالة محتوى غير دقيق.",
@@ -75,7 +84,7 @@ const SECTION_CATALOG: SectionCard[] = [
     affectsPublic: true,
   },
   {
-    key: "qa", icon: "❓", label: "الأسئلة والأجوبة", group: "المحتوى",
+    key: "qa", Icon: HelpCircle, label: "الأسئلة والأجوبة", group: "المحتوى",
     description: "إدارة الأسئلة الشرعية والفتاوى المُجابة",
     whatItDoes: "تتيح إضافة أسئلة وأجوبة شرعية أو مراجعة المقترحات من الزوار.",
     whenToUse: "لنشر سؤال وجواب جديد أو اعتماد سؤال مُقترح أو تعديل إجابة.",
@@ -83,7 +92,7 @@ const SECTION_CATALOG: SectionCard[] = [
     affectsPublic: true,
   },
   {
-    key: "quiz", icon: "🎯", label: "المسابقة", group: "المحتوى",
+    key: "quiz", Icon: Target, label: "المسابقة", group: "المحتوى",
     description: "إدارة أسئلة المسابقة والاختبارات التفاعلية",
     whatItDoes: "تتيح إضافة أسئلة المسابقة مع خيارات الإجابة وتحديد الإجابة الصحيحة.",
     whenToUse: "لإثراء بنك الأسئلة أو تصحيح سؤال موجود أو تعديل درجة صعوبته.",
@@ -92,7 +101,7 @@ const SECTION_CATALOG: SectionCard[] = [
   },
   // ── الشريعة ──────────────────────────────────────────────────────────
   {
-    key: "fiqh-council", icon: "⚖", label: "المجمع الفقهي", group: "الشريعة",
+    key: "fiqh-council", Icon: Scale, label: "المجمع الفقهي", group: "الشريعة",
     description: "إدارة قرارات ووثائق المجمع الفقهي الكويتي والخليجي",
     whatItDoes: "تتيح استعراض وإضافة قرارات المجامع الفقهية وتصنيفها وربطها بموضوعاتها.",
     whenToUse: "لإدخال قرارات جديدة من دورات المجمع أو تحديث بيانات قرار قديم.",
@@ -100,7 +109,7 @@ const SECTION_CATALOG: SectionCard[] = [
     affectsPublic: true,
   },
   {
-    key: "fatwa", icon: "📜", label: "الفتاوى", group: "الشريعة",
+    key: "fatwa", Icon: ScrollText, label: "الفتاوى", group: "الشريعة",
     description: "إدارة قاعدة الفتاوى الشرعية الموثقة",
     whatItDoes: "تتيح إدارة الفتاوى الشرعية مع بيانات المُفتي والسند والمراجع.",
     whenToUse: "لإضافة فتوى جديدة أو مراجعة فتاوى مُقترحة أو تصحيح بيانات فتوى.",
@@ -108,7 +117,7 @@ const SECTION_CATALOG: SectionCard[] = [
     affectsPublic: true,
   },
   {
-    key: "rulings", icon: "🏛", label: "الأحكام الشرعية", group: "الشريعة",
+    key: "rulings", Icon: Landmark, label: "الأحكام الشرعية", group: "الشريعة",
     description: "إدارة موسوعة الأحكام الشرعية المُصنَّفة",
     whatItDoes: "تتيح إدارة الأحكام الشرعية مُصنَّفةً حسب الموضوع مع المصادر الفقهية.",
     whenToUse: "لإضافة حكم جديد أو تعديل حكم موجود أو تصنيفه ضمن أبواب الفقه.",
@@ -116,7 +125,7 @@ const SECTION_CATALOG: SectionCard[] = [
     affectsPublic: true,
   },
   {
-    key: "annual-courses", icon: "🎓", label: "الدورات العلمية", group: "الشريعة",
+    key: "annual-courses", Icon: GraduationCap, label: "الدورات العلمية", group: "الشريعة",
     description: "إدارة الدورات العلمية والبرامج التعليمية السنوية",
     whatItDoes: "تتيح إدارة الدورات العلمية الدورية مع جداولها وبرامجها ومشايخها.",
     whenToUse: "قبل موسم الدورات أو عند الإعلان عن دورة جديدة.",
@@ -125,7 +134,7 @@ const SECTION_CATALOG: SectionCard[] = [
   },
   // ── الاستيراد والذكاء الاصطناعي ──────────────────────────────────────
   {
-    key: "image-import", icon: "🖼", label: "استخلاص من صور", group: "الاستيراد والذكاء الاصطناعي",
+    key: "image-import", Icon: Image, label: "استخلاص من صور", group: "الاستيراد والذكاء الاصطناعي",
     description: "رفع صور الإعلانات واستخلاص بيانات الدروس تلقائياً بالذكاء الاصطناعي",
     whatItDoes: "يحلل الذكاء الاصطناعي صورة الإعلان ويستخرج منها جميع البيانات (الشيخ، الوقت، المسجد…) تلقائياً دون إدخال يدوي.",
     whenToUse: "عند وصول صور إعلانات الدروس من التليجرام أو الواتساب أو الإنستقرام.",
@@ -133,7 +142,7 @@ const SECTION_CATALOG: SectionCard[] = [
     affectsPublic: true,
   },
   {
-    key: "smart-cms", icon: "🤖", label: "CMS الذكي", group: "الاستيراد والذكاء الاصطناعي",
+    key: "smart-cms", Icon: Bot, label: "CMS الذكي", group: "الاستيراد والذكاء الاصطناعي",
     description: "مركز إدارة المحتوى الذكي المُدعوم بالذكاء الاصطناعي",
     whatItDoes: "يوفر أدوات ذكية لاستيراد المحتوى وتصنيفه ومراجعته وفهرسته تلقائياً.",
     whenToUse: "للعمليات الدورية من استيراد وتصنيف ومراجعة جماعية للمحتوى.",
@@ -141,7 +150,7 @@ const SECTION_CATALOG: SectionCard[] = [
     affectsPublic: false,
   },
   {
-    key: "aggregator", icon: "⚙", label: "محرك التجميع", group: "الاستيراد والذكاء الاصطناعي",
+    key: "aggregator", Icon: Settings2, label: "محرك التجميع", group: "الاستيراد والذكاء الاصطناعي",
     description: "تجميع المحتوى العلمي تلقائياً من مصادر متعددة",
     whatItDoes: "يسحب المحتوى من مصادر خارجية (قنوات، مواقع، APIs) ويُهيّئه للمراجعة والنشر.",
     whenToUse: "لأتمتة عملية جلب المحتوى من مصادر موثوقة دون إدخال يدوي.",
@@ -149,7 +158,7 @@ const SECTION_CATALOG: SectionCard[] = [
     affectsPublic: false,
   },
   {
-    key: "knowledge-engine", icon: "🧠", label: "Auto Knowledge", group: "الاستيراد والذكاء الاصطناعي",
+    key: "knowledge-engine", Icon: Brain, label: "Auto Knowledge", group: "الاستيراد والذكاء الاصطناعي",
     description: "محرك المعرفة الآلي لاكتشاف المحتوى وتصنيفه تلقائياً",
     whatItDoes: "يحلل المحتوى الموجود ويقترح تصنيفات وعلاقات وتوصيات جديدة باستخدام NLP.",
     whenToUse: "دورياً لتحسين جودة التصنيف واكتشاف المحتوى غير المُصنَّف.",
@@ -157,7 +166,7 @@ const SECTION_CATALOG: SectionCard[] = [
     affectsPublic: false,
   },
   {
-    key: "telegram", icon: "📢", label: "Telegram", group: "الاستيراد والذكاء الاصطناعي",
+    key: "telegram", Icon: Send, label: "Telegram", group: "الاستيراد والذكاء الاصطناعي",
     description: "استيراد الإعلانات العلمية من قنوات التليجرام",
     whatItDoes: "يراقب قنوات التليجرام ويستخرج إعلانات الدروس تلقائياً ويُعرضها للمراجعة.",
     whenToUse: "لاستيراد الدروس المُعلَن عنها في القنوات الرسمية للمشايخ.",
@@ -165,7 +174,7 @@ const SECTION_CATALOG: SectionCard[] = [
     affectsPublic: false,
   },
   {
-    key: "prophet-stories", icon: "📖", label: "قصص الأنبياء", group: "الاستيراد والذكاء الاصطناعي",
+    key: "prophet-stories", Icon: BookOpen, label: "قصص الأنبياء", group: "الاستيراد والذكاء الاصطناعي",
     description: "إدارة محتوى قصص الأنبياء عليهم السلام",
     whatItDoes: "تتيح إضافة ومراجعة قصص الأنبياء المُستخرجة من المصادر الشرعية.",
     whenToUse: "لإضافة قصة جديدة أو مراجعة قصة مُقترحة.",
@@ -173,7 +182,7 @@ const SECTION_CATALOG: SectionCard[] = [
     affectsPublic: true,
   },
   {
-    key: "islamic-stories", icon: "🕌", label: "القصص الإسلامية", group: "الاستيراد والذكاء الاصطناعي",
+    key: "islamic-stories", Icon: Building2, label: "القصص الإسلامية", group: "الاستيراد والذكاء الاصطناعي",
     description: "إدارة القصص الإسلامية التاريخية والتربوية",
     whatItDoes: "تتيح إدارة القصص الإسلامية المُوجَّهة للتربية والتعليم.",
     whenToUse: "لنشر قصص إسلامية جديدة أو مراجعة ما تم استيراده.",
@@ -181,7 +190,7 @@ const SECTION_CATALOG: SectionCard[] = [
     affectsPublic: true,
   },
   {
-    key: "updates", icon: "📡", label: "المستجدات", group: "الاستيراد والذكاء الاصطناعي",
+    key: "updates", Icon: Radio, label: "المستجدات", group: "الاستيراد والذكاء الاصطناعي",
     description: "متابعة آخر المستجدات والأخبار العلمية",
     whatItDoes: "يعرض المحتوى المُجمَّع حديثاً ويتيح مراجعته واعتماده للنشر.",
     whenToUse: "دورياً لمتابعة المستجدات المُجمَّعة ومراجعتها.",
@@ -189,7 +198,7 @@ const SECTION_CATALOG: SectionCard[] = [
     affectsPublic: true,
   },
   {
-    key: "universities", icon: "🏫", label: "دليل الجامعات", group: "الاستيراد والذكاء الاصطناعي",
+    key: "universities", Icon: School, label: "دليل الجامعات", group: "الاستيراد والذكاء الاصطناعي",
     description: "إدارة دليل الجامعات والمؤسسات الإسلامية",
     whatItDoes: "تتيح إدارة قائمة الجامعات والمعاهد الإسلامية مع بياناتها الكاملة.",
     whenToUse: "لإضافة جامعة جديدة أو تحديث بيانات مؤسسة موجودة.",
@@ -198,7 +207,7 @@ const SECTION_CATALOG: SectionCard[] = [
   },
   // ── التحليل ─────────────────────────────────────────────────────────
   {
-    key: "search-analytics", icon: "🔍", label: "تحليل البحث", group: "التحليل والذكاء",
+    key: "search-analytics", Icon: Search, label: "تحليل البحث", group: "التحليل والذكاء",
     description: "تحليل استعلامات البحث وسلوك الزوار في المنصة",
     whatItDoes: "يعرض أكثر الكلمات بحثاً وأكثر الصفحات زيارة واتجاهات البحث عبر الزمن.",
     whenToUse: "لفهم اهتمامات الزوار واتخاذ قرارات المحتوى بناءً على البيانات.",
@@ -206,7 +215,7 @@ const SECTION_CATALOG: SectionCard[] = [
     affectsPublic: false,
   },
   {
-    key: "verified-knowledge", icon: "✅", label: "المعرفة الموثقة", group: "التحليل والذكاء",
+    key: "verified-knowledge", Icon: CheckCircle2, label: "المعرفة الموثقة", group: "التحليل والذكاء",
     description: "عرض المحتوى الموثق والمُصادَق عليه من العلماء",
     whatItDoes: "يجمع المحتوى الذي مر بعملية التحقق الشرعي ويعرضه في قائمة موحدة.",
     whenToUse: "للتحقق من جودة المحتوى المُوثَّق ومراجعة ما يحتاج إعادة تقييم.",
@@ -214,7 +223,7 @@ const SECTION_CATALOG: SectionCard[] = [
     affectsPublic: false,
   },
   {
-    key: "scholarly-verification", icon: "🔏", label: "التوثيق العلمي", group: "التحليل والذكاء",
+    key: "scholarly-verification", Icon: ShieldCheck, label: "التوثيق العلمي", group: "التحليل والذكاء",
     description: "إدارة عملية التحقق الشرعي للمحتوى العلمي",
     whatItDoes: "يوفر قوائم عمل للمراجعين العلميين لتوثيق المحتوى وإضافة ملاحظات التحقق.",
     whenToUse: "عندما يُرسَل محتوى للتحقق أو عند مراجعة المحتوى المُعلَّق.",
@@ -222,7 +231,7 @@ const SECTION_CATALOG: SectionCard[] = [
     affectsPublic: false,
   },
   {
-    key: "knowledge-reasoning", icon: "💭", label: "محرك الاستدلال", group: "التحليل والذكاء",
+    key: "knowledge-reasoning", Icon: MessageCircle, label: "محرك الاستدلال", group: "التحليل والذكاء",
     description: "محرك الاستدلال المنطقي للمحتوى الشرعي",
     whatItDoes: "يستخدم الذكاء الاصطناعي للاستدلال على العلاقات المنطقية بين المحتوى الشرعي.",
     whenToUse: "للبحث في التناقضات أو اكتشاف الروابط غير الواضحة بين المواضيع.",
@@ -230,7 +239,7 @@ const SECTION_CATALOG: SectionCard[] = [
     affectsPublic: false,
   },
   {
-    key: "digital-learning", icon: "📱", label: "التعليم الرقمي", group: "التحليل والذكاء",
+    key: "digital-learning", Icon: Smartphone, label: "التعليم الرقمي", group: "التحليل والذكاء",
     description: "إدارة مسارات التعلم والبرامج التعليمية الرقمية",
     whatItDoes: "يتيح تصميم مسارات تعلم مُنظَّمة وتتبع تقدم المستخدمين.",
     whenToUse: "لإطلاق برنامج تعليمي جديد أو متابعة تقدم المتعلمين.",
@@ -239,7 +248,7 @@ const SECTION_CATALOG: SectionCard[] = [
   },
   // ── المجتمع ──────────────────────────────────────────────────────────
   {
-    key: "users", icon: "👥", label: "المستخدمون", group: "المجتمع والإدارة",
+    key: "users", Icon: Users, label: "المستخدمون", group: "المجتمع والإدارة",
     description: "إدارة حسابات المستخدمين وصلاحياتهم",
     whatItDoes: "يعرض قائمة المستخدمين ويتيح تعديل صلاحياتهم أو تعليق حساباتهم.",
     whenToUse: "لترقية مستخدم إلى مراجع أو مشرف أو لمعالجة شكوى متعلقة بحساب.",
@@ -247,7 +256,7 @@ const SECTION_CATALOG: SectionCard[] = [
     affectsPublic: false,
   },
   {
-    key: "submissions", icon: "📩", label: "المقترحات", group: "المجتمع والإدارة",
+    key: "submissions", Icon: MessageSquare, label: "المقترحات", group: "المجتمع والإدارة",
     description: "مراجعة المحتوى المُقترح من زوار الموقع",
     whatItDoes: "يعرض المحتوى الذي أرسله الزوار (فوائد، أسئلة، تصحيحات) لمراجعته واعتماده.",
     whenToUse: "دورياً لمراجعة ما أرسله المجتمع والرد عليه.",
@@ -255,7 +264,7 @@ const SECTION_CATALOG: SectionCard[] = [
     affectsPublic: false,
   },
   {
-    key: "reports", icon: "📊", label: "التقارير والبلاغات", group: "المجتمع والإدارة",
+    key: "reports", Icon: Flag, label: "التقارير والبلاغات", group: "المجتمع والإدارة",
     description: "مراجعة البلاغات والتقارير المُرسَلة عن المحتوى",
     whatItDoes: "يجمع البلاغات التي أرسلها الزوار عن محتوى مُشكِل ويتيح معالجتها.",
     whenToUse: "عند وجود بلاغات جديدة أو بشكل دوري للمراجعة.",
@@ -264,7 +273,7 @@ const SECTION_CATALOG: SectionCard[] = [
   },
   // ── النظام المتقدم ───────────────────────────────────────────────────
   {
-    key: "autonomous-ai", icon: "🔬", label: "المنظومة الذاتية", group: "النظام المتقدم",
+    key: "autonomous-ai", Icon: FlaskConical, label: "المنظومة الذاتية", group: "النظام المتقدم",
     description: "منظومة الذكاء الاصطناعي المستقل لأتمتة المحتوى",
     whatItDoes: "تشغّل عمليات الإنتاج والمراجعة والنشر تلقائياً وفق قواعد مُبرمَجة.",
     whenToUse: "لإعداد سير عمل تلقائية أو مراقبة العمليات الآلية الجارية.",
@@ -272,7 +281,7 @@ const SECTION_CATALOG: SectionCard[] = [
     affectsPublic: false,
   },
   {
-    key: "global-reference", icon: "🌍", label: "المرجع العالمي", group: "النظام المتقدم",
+    key: "global-reference", Icon: Globe, label: "المرجع العالمي", group: "النظام المتقدم",
     description: "قاعدة بيانات المرجعية الشرعية العالمية",
     whatItDoes: "يربط محتوى المنصة بالمصادر الشرعية العالمية الموثوقة.",
     whenToUse: "لإثراء بيانات المراجع أو التحقق من مصدر حكم شرعي.",
@@ -280,7 +289,7 @@ const SECTION_CATALOG: SectionCard[] = [
     affectsPublic: false,
   },
   {
-    key: "islamic-intelligence", icon: "🧬", label: "الاستخبارات العلمية", group: "النظام المتقدم",
+    key: "islamic-intelligence", Icon: Dna, label: "الاستخبارات العلمية", group: "النظام المتقدم",
     description: "تحليل التوجهات والأنماط في المحتوى الشرعي",
     whatItDoes: "يحلل الأنماط والاتجاهات في المحتوى باستخدام نماذج الذكاء الاصطناعي.",
     whenToUse: "للكشف عن فجوات المحتوى أو الموضوعات الأكثر استفساراً.",
@@ -288,7 +297,7 @@ const SECTION_CATALOG: SectionCard[] = [
     affectsPublic: false,
   },
   {
-    key: "open-platform", icon: "🔓", label: "Open Platform", group: "النظام المتقدم",
+    key: "open-platform", Icon: Unlock, label: "Open Platform", group: "النظام المتقدم",
     description: "واجهة برمجة التطبيقات المفتوحة للمطورين",
     whatItDoes: "تتيح إدارة مفاتيح API والتطبيقات الخارجية المُتكاملة مع المنصة.",
     whenToUse: "لإضافة تطبيق خارجي جديد أو مراجعة بيانات استخدام API.",
@@ -296,7 +305,7 @@ const SECTION_CATALOG: SectionCard[] = [
     affectsPublic: false,
   },
   {
-    key: "governance", icon: "🏛", label: "الحوكمة المؤسسية", group: "النظام المتقدم",
+    key: "governance", Icon: Landmark, label: "الحوكمة المؤسسية", group: "النظام المتقدم",
     description: "إدارة الصلاحيات والأدوار والحوكمة المؤسسية",
     whatItDoes: "يُعرِّف الأدوار والصلاحيات ويُخصِّصها للمستخدمين.",
     whenToUse: "لإضافة دور جديد أو تعديل صلاحيات دور قائم.",
@@ -304,7 +313,7 @@ const SECTION_CATALOG: SectionCard[] = [
     affectsPublic: false,
   },
   {
-    key: "knowledge-graph", icon: "🕸", label: "الرسم البياني", group: "النظام المتقدم",
+    key: "knowledge-graph", Icon: Network, label: "الرسم البياني", group: "النظام المتقدم",
     description: "خريطة العلاقات بين عناصر المحتوى في المنصة",
     whatItDoes: "يعرض شبكة العلاقات بين الدروس والمشايخ والمواضيع والمصادر.",
     whenToUse: "لاستكشاف الارتباطات الخفية بين المحتوى أو إدارة العلاقات.",
@@ -312,7 +321,7 @@ const SECTION_CATALOG: SectionCard[] = [
     affectsPublic: false,
   },
   {
-    key: "settings", icon: "⚙", label: "الإعدادات", group: "النظام المتقدم",
+    key: "settings", Icon: Settings, label: "الإعدادات", group: "النظام المتقدم",
     description: "إعدادات المنصة العامة والتكوينات التقنية",
     whatItDoes: "تتيح ضبط الإعدادات العامة للمنصة مثل الثيم والإشعارات والتكاملات.",
     whenToUse: "لتغيير إعداد عام أو ضبط تكامل خارجي.",
@@ -358,7 +367,7 @@ function SectionCard({
   return (
     <div className="dsc-card">
       <div className="dsc-card__head">
-        <span className="dsc-card__icon" aria-hidden="true">{card.icon}</span>
+        <span className="dsc-card__icon" aria-hidden="true">{(() => { const I = card.Icon; return <I size={20} strokeWidth={1.6} />; })()}</span>
         <div className="dsc-card__meta">
           <p className="dsc-card__title">{card.label}</p>
           <span className={`dsc-card__pub ${card.affectsPublic ? "dsc-card__pub--yes" : "dsc-card__pub--no"}`}>
@@ -469,7 +478,7 @@ export function DashboardSection() {
           <p className="admin-welcome__name">{fullName}</p>
           <p className="admin-welcome__date">{getArabicDate()}</p>
         </div>
-        <div className="admin-welcome__icon" aria-hidden="true">🕌</div>
+        <div className="admin-welcome__icon" aria-hidden="true"><Building2 size={28} strokeWidth={1.4} /></div>
       </div>
 
       {/* ── حالة النظام ── */}
@@ -494,16 +503,16 @@ export function DashboardSection() {
 
       {/* ── إحصائيات مختصرة ── */}
       <div className="dsc-quick-stats">
-        {[
-          { n: stats.totalLessons,  label: "درس",      icon: "▶" },
-          { n: stats.totalSheikhs,  label: "شيخ",      icon: "👤" },
-          { n: stats.totalBooks,    label: "كتاب",     icon: "📚" },
-          { n: stats.totalUsers,    label: "مستخدم",   icon: "👥" },
-          { n: stats.todayViews,    label: "مشاهدة اليوم", icon: "👁" },
-          { n: stats.pendingReports,label: "بلاغ معلّق", icon: "🚩" },
-        ].map(({ n, label, icon }) => (
+        {([
+          { n: stats.totalLessons,   label: "درس",           Icon: PlayCircle },
+          { n: stats.totalSheikhs,   label: "شيخ",           Icon: User },
+          { n: stats.totalBooks,     label: "كتاب",          Icon: Library },
+          { n: stats.totalUsers,     label: "مستخدم",        Icon: Users },
+          { n: stats.todayViews,     label: "مشاهدة اليوم",  Icon: Eye },
+          { n: stats.pendingReports, label: "بلاغ معلّق",    Icon: Flag },
+        ] as { n: number; label: string; Icon: LucideIcon }[]).map(({ n, label, Icon: StatIcon }) => (
           <div key={label} className="dsc-qstat">
-            <span className="dsc-qstat__icon">{icon}</span>
+            <span className="dsc-qstat__icon"><StatIcon size={16} strokeWidth={1.8} aria-hidden="true" /></span>
             <span className="dsc-qstat__n">{n.toLocaleString("ar")}</span>
             <span className="dsc-qstat__label">{label}</span>
           </div>
@@ -513,7 +522,7 @@ export function DashboardSection() {
       {/* ── بلاغات معلّقة ── */}
       {recentReports.length > 0 && (
         <div className="admin-reports-panel">
-          <p className="admin-reports-panel__title">🚩 بلاغات تحتاج مراجعة</p>
+          <p className="admin-reports-panel__title flex items-center gap-1.5"><Flag size={14} strokeWidth={1.8} aria-hidden="true" /> بلاغات تحتاج مراجعة</p>
           {recentReports.map((rep: any) => (
             <div key={rep.id} className="admin-report-item">
               <span className="admin-report-item__type">{rep.report_type}</span>
@@ -534,7 +543,7 @@ export function DashboardSection() {
       {/* ── شريط البحث والفلترة ── */}
       <div className="dsc-toolbar">
         <div className="dsc-search-wrap">
-          <span className="dsc-search-icon" aria-hidden="true">🔍</span>
+          <span className="dsc-search-icon" aria-hidden="true"><Search size={15} strokeWidth={1.8} /></span>
           <input
             className="dsc-search"
             type="search"
@@ -586,7 +595,7 @@ export function DashboardSection() {
       </div>
       <div className="admin-info-grid">
         <div className="admin-info-panel">
-          <p className="admin-info-panel__title">🕒 آخر تحديثات الدروس</p>
+          <p className="admin-info-panel__title flex items-center gap-1.5"><Clock size={14} strokeWidth={1.8} aria-hidden="true" /> آخر تحديثات الدروس</p>
           {recentLessons.length === 0 ? (
             <p className="admin-info-panel__empty">لا توجد تحديثات حديثة.</p>
           ) : (
@@ -603,7 +612,7 @@ export function DashboardSection() {
           )}
         </div>
         <div className="admin-info-panel">
-          <p className="admin-info-panel__title">🔥 أكثر الدروس مشاهدة</p>
+          <p className="admin-info-panel__title flex items-center gap-1.5"><Flame size={14} strokeWidth={1.8} aria-hidden="true" /> أكثر الدروس مشاهدة</p>
           {topViewedLessons.length === 0 ? (
             <p className="admin-info-panel__empty">لا توجد مشاهدات مسجّلة بعد.</p>
           ) : (
@@ -618,7 +627,7 @@ export function DashboardSection() {
           )}
         </div>
         <div className="admin-info-panel">
-          <p className="admin-info-panel__title">🔍 أكثر عمليات البحث</p>
+          <p className="admin-info-panel__title flex items-center gap-1.5"><Search size={14} strokeWidth={1.8} aria-hidden="true" /> أكثر عمليات البحث</p>
           {searches.length === 0 ? (
             <p className="admin-info-panel__empty">لا توجد عمليات بحث مسجّلة بعد.</p>
           ) : (
@@ -636,7 +645,7 @@ export function DashboardSection() {
         </div>
         {cmsStats && (
           <div className="admin-info-panel">
-            <p className="admin-info-panel__title">📊 فهرس CMS</p>
+            <p className="admin-info-panel__title flex items-center gap-1.5"><BarChart2 size={14} strokeWidth={1.8} aria-hidden="true" /> فهرس CMS</p>
             <ul className="admin-info-panel__list">
               {[
                 { label: "إجمالي المفهرس", value: cmsStats.indexTotal.toLocaleString("ar") },
