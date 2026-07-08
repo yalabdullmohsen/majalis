@@ -1,4 +1,6 @@
 import { Suspense, lazy, useCallback, useEffect, useRef, useState } from "react";
+import { CheckCircle2, Clock, HelpCircle, Lightbulb, Mic2, Music2, ScrollText, Video } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { Link, useParams } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { applyPageSeo } from "@/lib/seo";
@@ -10,7 +12,7 @@ const QuizModal = lazy(() =>
   import("@/components/learning-path/QuizModal").then((m) => ({ default: m.QuizModal }))
 );
 
-const EXPLANATION_ICONS = { audio: "🎙️", video: "📹", text: "📝" };
+const EXPLANATION_ICONS: Record<string, LucideIcon> = { audio: Mic2, video: Video, text: Music2 };
 
 export default function LearningPathBookPage() {
   const { bookId } = useParams<{ bookId: string }>();
@@ -92,7 +94,7 @@ export default function LearningPathBookPage() {
   if (notFound || !book) {
     return (
       <div dir="rtl" className="min-h-screen bg-[var(--majalis-parchment)] flex flex-col items-center justify-center gap-4">
-        <div className="text-5xl">📚</div>
+        <div className="text-5xl" aria-hidden="true"><ScrollText size={48} strokeWidth={1.3} /></div>
         <p className="text-[var(--majalis-ink-soft)]">الكتاب غير موجود</p>
         <Link href="/learning-path">
           <span className="text-[var(--majalis-emerald)] hover:underline cursor-pointer text-sm">← العودة للخارطة</span>
@@ -179,7 +181,7 @@ export default function LearningPathBookPage() {
                 <span
                   className={`flex-shrink-0 text-xs font-medium px-3 py-1 rounded-full lpb-status lpb-status--${status === "completed" ? "completed" : status === "in_progress" ? "in-progress" : "pending"}`}
                 >
-                  {status === "completed" ? "✓ مكتمل" : status === "in_progress" ? "⏳ جاري" : "لم يبدأ"}
+                  {status === "completed" ? <><CheckCircle2 size={12} strokeWidth={2} aria-hidden="true" /> مكتمل</> : status === "in_progress" ? <><Clock size={12} strokeWidth={2} aria-hidden="true" /> جاري</> : "لم يبدأ"}
                 </span>
               </div>
               {book.author && (
@@ -219,7 +221,7 @@ export default function LearningPathBookPage() {
                     onClick={() => setQuizOpen(true)}
                     className="px-5 py-2 border border-purple-300 text-purple-700 dark:text-purple-400 dark:border-purple-700 text-sm font-medium rounded-xl hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors"
                   >
-                    📝 اختبر نفسك ({quizzes.length} سؤال)
+                    <HelpCircle size={14} strokeWidth={1.8} aria-hidden="true" /> اختبر نفسك ({quizzes.length} سؤال)
                   </button>
                 )}
               </div>
@@ -237,11 +239,11 @@ export default function LearningPathBookPage() {
             {/* الشروحات */}
             {explanations.length > 0 && (
               <section>
-                <h2 className="font-bold text-[var(--majalis-ink)] text-base mb-3">🎙️ شروحات الكتاب</h2>
+                <h2 className="font-bold text-[var(--majalis-ink)] text-base mb-3"><Mic2 size={16} strokeWidth={1.8} aria-hidden="true" /> شروحات الكتاب</h2>
                 <div className="space-y-2">
                   {explanations.map((exp) => (
                     <div key={exp.id} className="flex items-center gap-3 p-3 bg-[var(--majalis-panel)] rounded-xl border border-[var(--majalis-line)]">
-                      <span className="text-lg">{EXPLANATION_ICONS[exp.type]}</span>
+                      <span className="text-lg" aria-hidden="true">{(() => { const I = EXPLANATION_ICONS[exp.type] ?? Music2; return <I size={18} strokeWidth={1.6} />; })()}</span>
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium text-[var(--majalis-ink)]">{exp.sheikh_name}</p>
                         {exp.notes && <p className="text-xs text-[var(--majalis-ink-soft)] mt-0.5">{exp.notes}</p>}
@@ -261,7 +263,7 @@ export default function LearningPathBookPage() {
             {/* الفوائد */}
             {benefits.length > 0 && (
               <section>
-                <h2 className="font-bold text-[var(--majalis-ink)] text-base mb-3">💡 فوائد من الكتاب</h2>
+                <h2 className="font-bold text-[var(--majalis-ink)] text-base mb-3"><Lightbulb size={16} strokeWidth={1.8} aria-hidden="true" /> فوائد من الكتاب</h2>
                 <ul className="space-y-2">
                   {benefits.map((b) => (
                     <li key={b.id} className="flex gap-2 items-start text-sm text-[var(--majalis-ink-soft)]">
