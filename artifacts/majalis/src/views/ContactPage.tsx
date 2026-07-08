@@ -1,4 +1,6 @@
 import { useEffect } from "react";
+import { AlertTriangle, Code2, Lock, Plus, Settings2, Users2 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { LegalBackLink, LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
 import { applyPageSeo } from "@/lib/seo";
 
@@ -25,13 +27,13 @@ const FAQ = [
   },
 ];
 
-const TOPICS = [
-  { icon: "⚠️", label: "الإبلاغ عن خطأ في المحتوى",     note: "درس / حديث / فتوى / معلومة غير دقيقة" },
-  { icon: "➕", label: "اقتراح محتوى أو شيخ جديد",       note: "علماء / كتب / دروس / فوائد" },
-  { icon: "🛠️", label: "مشكلة تقنية في المنصة",          note: "خلل في عرض الصفحات أو الأدوات" },
-  { icon: "🔒", label: "طلب حذف أو تعديل بيانات الحساب", note: "خصوصيتك مكفولة" },
-  { icon: "🤝", label: "شراكات مؤسسية وعلمية",           note: "مؤسسات / هيئات / جامعات" },
-  { icon: "💻", label: "واجهة برمجية (API) والمطورين",   note: "مفاتيح API / التكامل" },
+const TOPICS: { Icon: LucideIcon; label: string; note: string }[] = [
+  { Icon: AlertTriangle, label: "الإبلاغ عن خطأ في المحتوى",     note: "درس / حديث / فتوى / معلومة غير دقيقة" },
+  { Icon: Plus,          label: "اقتراح محتوى أو شيخ جديد",       note: "علماء / كتب / دروس / فوائد" },
+  { Icon: Settings2,     label: "مشكلة تقنية في المنصة",          note: "خلل في عرض الصفحات أو الأدوات" },
+  { Icon: Lock,          label: "طلب حذف أو تعديل بيانات الحساب", note: "خصوصيتك مكفولة" },
+  { Icon: Users2,        label: "شراكات مؤسسية وعلمية",           note: "مؤسسات / هيئات / جامعات" },
+  { Icon: Code2,         label: "واجهة برمجية (API) والمطورين",   note: "مفاتيح API / التكامل" },
 ];
 
 export default function ContactPage() {
@@ -77,7 +79,7 @@ export default function ContactPage() {
         <div className="contact-topics">
           {TOPICS.map((t) => (
             <div key={t.label} className="contact-topic">
-              <span className="contact-topic__icon" aria-hidden="true">{t.icon}</span>
+              <span className="contact-topic__icon" aria-hidden="true">{(() => { const I = t.Icon; return <I size={18} strokeWidth={1.8} />; })()}</span>
               <div>
                 <strong className="contact-topic__label">{t.label}</strong>
                 <p className="contact-topic__note">{t.note}</p>

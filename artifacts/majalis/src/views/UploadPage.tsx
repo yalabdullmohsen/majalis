@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef, type ChangeEvent, type DragEvent, type FormEvent } from "react";
-import { CheckCircle2, GraduationCap, Loader2, Mic2, ScrollText, Upload, XCircle } from "lucide-react";
+import { AlertTriangle, CheckCircle2, FolderOpen, GraduationCap, Loader2, Mic2, ScrollText, Upload, XCircle } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { submitAdhan, submitLesson } from "@/lib/user-submissions-service";
 
@@ -68,7 +68,7 @@ function FileDropZone({ accept, maxMb, onFile, file, hint }: {
         />
         {file ? (
           <div>
-            <div className="ulp-dropzone__success-icon">✅</div>
+            <div className="ulp-dropzone__success-icon"><CheckCircle2 size={36} strokeWidth={1.3} className="text-green-600" /></div>
             <div className="ulp-dropzone__filename">{file.name}</div>
             <div className="ulp-dropzone__filesize">
               {(file.size / (1024 * 1024)).toFixed(2)} MB
@@ -83,7 +83,7 @@ function FileDropZone({ accept, maxMb, onFile, file, hint }: {
           </div>
         ) : (
           <div>
-            <div className="ulp-dropzone__empty-icon">📁</div>
+            <div className="ulp-dropzone__empty-icon"><FolderOpen size={36} strokeWidth={1.3} /></div>
             <div className="ulp-dropzone__empty-text">اسحب وأفلت أو اضغط للاختيار</div>
             <div className="ulp-dropzone__hint">{hint} · الحجم الأقصى {maxMb} MB</div>
           </div>
@@ -311,7 +311,7 @@ export default function UploadPage() {
       </div>
 
       <div className="ulp-notice">
-        <span className="ulp-notice__icon">⚠️</span>
+        <span className="ulp-notice__icon"><AlertTriangle size={14} /></span>
         <div className="ulp-notice__text">
           <strong>تنبيه:</strong> يُشترط أن يكون المحتوى موثوقاً من علماء معتمدين.
           لا يُقبل المحتوى المجهول المصدر أو المخالف لأهل السنة والجماعة.

@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { MapPin, Mic2 } from "lucide-react";
+import { Heart, MapPin, Mic2, Star, Trash2 } from "lucide-react";
 import { Link } from "wouter";
 import { MUEZZINS, previewAdhan, stopAdhan } from "@/lib/adhan-audio";
 import { loadFavorites, toggleFavorite } from "@/lib/muezzin-favorites";
@@ -75,11 +75,11 @@ export default function MuezzinFavoritesPage() {
         <button type="button" className="mzf-back-btn">← مكتبة المؤذنين</button>
       </Link>
 
-      <h1 className="mzf-title">❤️ المؤذنون المفضلون</h1>
+      <h1 className="mzf-title"><Heart size={22} className="inline ml-2 text-red-500" />المؤذنون المفضلون</h1>
       <p className="mzf-subtitle">
         {favList.length > 0
           ? `${favList.length} مؤذن في قائمة مفضلتك`
-          : "لا يوجد مؤذنون مفضلون بعد — اضغط 🤍 في الصفحة الرئيسية لإضافتهم."}
+          : "لا يوجد مؤذنون مفضلون بعد — اضغط على القلب في الصفحة الرئيسية لإضافتهم."}
       </p>
 
       {savedDefault && (
@@ -88,7 +88,7 @@ export default function MuezzinFavoritesPage() {
 
       {favList.length === 0 ? (
         <div className="mzf-empty">
-          <div className="mzf-empty__icon">🤍</div>
+          <div className="mzf-empty__icon"><Heart size={40} strokeWidth={1.3} className="opacity-40" /></div>
           <p className="mzf-empty__msg">قائمة مفضلتك فارغة</p>
           <Link href="/muezzins">
             <button type="button" className="mzf-explore-btn">استكشف المؤذنين</button>
@@ -111,7 +111,7 @@ export default function MuezzinFavoritesPage() {
                   <div className="mzf-card__origin"><MapPin size={11} strokeWidth={1.8} aria-hidden="true" /> {m.origin} · {m.country}</div>
                   <div className="mzf-card__tags">
                     <span className={`mzf-style-badge mzf-style-badge--${styleCls}`}>{m.style}</span>
-                    <span className="mzf-card__rating">★ {m.rating}</span>
+                    <span className="mzf-card__rating"><Star size={11} className="inline ml-0.5" />{m.rating}</span>
                     <span className="mzf-card__followers">{formatNum(m.followers)} متابع</span>
                   </div>
                 </div>
@@ -130,7 +130,7 @@ export default function MuezzinFavoritesPage() {
                     className="mzf-remove-btn"
                     title="إزالة من المفضلة"
                   >
-                    🗑️
+                    <Trash2 size={14} />
                   </button>
                 </div>
               </div>
