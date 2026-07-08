@@ -17,10 +17,6 @@ import { AchievementToast } from "@/components/AchievementToast";
 import { useAchievementCheck } from "@/hooks/useAchievementCheck";
 import { GlobalSearchModal } from "@/components/GlobalSearchModal";
 import HomePage from "@/views/HomePage";
-import AboutPage from "@/views/AboutPage";
-import PrivacyPage from "@/views/PrivacyPage";
-import TermsPage from "@/views/TermsPage";
-import ContactPage from "@/views/ContactPage";
 import NotFound from "@/views/not-found";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { usePageSeo } from "@/lib/seo";
@@ -31,6 +27,11 @@ import { startAdhanScheduler } from "@/lib/adhan-scheduler";
 import { loadNotifPrefs, scheduleIslamicReminder } from "@/lib/local-notifications";
 
 const lazy = lazyWithRetry;
+
+const AboutPage = lazy(() => import("@/views/AboutPage"));
+const PrivacyPage = lazy(() => import("@/views/PrivacyPage"));
+const TermsPage = lazy(() => import("@/views/TermsPage"));
+const ContactPage = lazy(() => import("@/views/ContactPage"));
 
 const CalendarPage = lazy(() => import("@/views/CalendarPage"));
 const SearchPage = lazy(() => import("@/views/SearchPage"));
@@ -233,10 +234,10 @@ function Router() {
       <Route path="/">
         <HomePage />
       </Route>
-      <Route path="/about" component={AboutPage} />
-      <Route path="/privacy" component={PrivacyPage} />
-      <Route path="/terms" component={TermsPage} />
-      <Route path="/contact" component={ContactPage} />
+      <Route path="/about"><SafeLazyRoute component={AboutPage} /></Route>
+      <Route path="/privacy"><SafeLazyRoute component={PrivacyPage} /></Route>
+      <Route path="/terms"><SafeLazyRoute component={TermsPage} /></Route>
+      <Route path="/contact"><SafeLazyRoute component={ContactPage} /></Route>
       <Route path="/settings"><SafeLazyRoute component={SettingsPage} /></Route>
       <Route path="/search/:q"><SafeLazyRoute component={SearchPage} /></Route>
       <Route path="/search"><SafeLazyRoute component={SearchPage} /></Route>
