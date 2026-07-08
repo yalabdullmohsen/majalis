@@ -28,7 +28,7 @@ function ProgramCard({ program: p }: { program: UniversityProgram }) {
       >
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap mb-1">
-            <span className="text-xs bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400
+            <span className="text-xs bg-[var(--majalis-emerald-muted)] text-[var(--majalis-emerald)]
               px-2 py-0.5 rounded-full font-medium">{p.degree_level}</span>
             <span className="text-xs bg-[var(--majalis-parchment-deep)] text-[var(--majalis-ink-soft)]
               px-2 py-0.5 rounded-full">{p.study_mode}</span>
@@ -88,7 +88,7 @@ function ProgramCard({ program: p }: { program: UniversityProgram }) {
                   <ul className="space-y-1">
                     {req.required_documents.map((d, i) => (
                       <li key={i} className="flex gap-2 text-sm text-[var(--majalis-ink-soft)]">
-                        <FileText size={12} strokeWidth={1.8} className="text-blue-500 flex-shrink-0 mt-0.5" aria-hidden="true" />
+                        <FileText size={12} strokeWidth={1.8} className="text-[var(--majalis-emerald)] flex-shrink-0 mt-0.5" aria-hidden="true" />
                         <span>{d}</span>
                       </li>
                     ))}

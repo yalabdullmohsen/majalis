@@ -81,7 +81,7 @@ function SelectionTooltip({
       <button
         type="button"
         onMouseDown={(e) => { e.preventDefault(); onCopy(selText); setPos(null); }}
-        className="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-600 transition-colors"
+        className="flex items-center gap-1 px-2 py-1 rounded hover:bg-[var(--majalis-emerald-deep)] transition-colors"
         title="نسخ"
       >
         <ClipboardCopy size={13} className="inline ml-1" />نسخ
@@ -260,7 +260,7 @@ export function WithCitation({
           source={source}
           contentRef={contentRef as React.RefObject<HTMLElement>}
           compact={compact}
-          className="border-t border-gray-100 dark:border-gray-700 pt-2 mt-2"
+          className="border-t border-[var(--majalis-line)] pt-2 mt-2"
         />
       )}
     </div>

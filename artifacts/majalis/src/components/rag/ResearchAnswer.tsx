@@ -84,7 +84,7 @@ export function ResearchAnswer({ result, onSave }: Props) {
           </span>
         )}
         {result.fromCache && (
-          <span className="text-xs text-blue-500 dark:text-blue-400">من الذاكرة المؤقتة</span>
+          <span className="text-xs text-[var(--majalis-emerald)]">من الذاكرة المؤقتة</span>
         )}
         {result.durationMs && (
           <span className="text-xs text-[var(--majalis-ink-soft)] opacity-40 mr-auto">
@@ -177,8 +177,8 @@ export function ResearchAnswer({ result, onSave }: Props) {
         {/* تبويب آراء متعددة */}
         {activeTab === "opinions" && (
           <div className="space-y-3">
-            <div className="bg-blue-50 dark:bg-blue-900/10 border border-blue-200 dark:border-blue-800
-              rounded-xl p-4 text-sm text-blue-700 dark:text-blue-300">
+            <div className="bg-[var(--majalis-emerald-muted)] border border-[var(--majalis-emerald)]
+              rounded-xl p-4 text-sm text-[var(--majalis-emerald)]">
               <Scale size={13} className="inline ml-1" />تعدّدت آراء العلماء في هذه المسألة. يعرض النظام الأقوال بمصادرها ولا يُرجِّح بنفسه.
             </div>
             <div className="space-y-3">

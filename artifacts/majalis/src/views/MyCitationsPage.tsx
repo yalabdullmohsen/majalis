@@ -294,7 +294,7 @@ export default function MyCitationsPage() {
                       key={c}
                       type="button"
                       onClick={() => setNewFolderColor(c)}
-                      className={`w-5 h-5 rounded-full border-2 cit-color-swatch ${newFolderColor === c ? "border-gray-800 dark:border-white" : "border-transparent"}`}
+                      className={`w-5 h-5 rounded-full border-2 cit-color-swatch ${newFolderColor === c ? "border-[var(--majalis-ink)]" : "border-transparent"}`}
                       style={{ "--swatch-bg": c } as React.CSSProperties}
                     />
                   ))}

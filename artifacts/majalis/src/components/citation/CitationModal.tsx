@@ -279,7 +279,7 @@ export function CitationModal({ source, initialText = "", startOffset, endOffset
                         <img
                           src={getQrCodeUrl(citation.deep_link_slug)}
                           alt="QR Code"
-                          className="w-40 h-40 rounded-lg border border-gray-200 dark:border-gray-600"
+                          className="w-40 h-40 rounded-lg border border-[var(--majalis-line)]"
                         />
                         <a
                           href={getQrCodeUrl(citation.deep_link_slug)}
@@ -306,7 +306,7 @@ export function CitationModal({ source, initialText = "", startOffset, endOffset
                   )}
                 </>
               ) : (
-                <p className="text-sm text-gray-500 dark:text-gray-400 text-center py-4">
+                <p className="text-sm text-[var(--majalis-ink-soft)] text-center py-4">
                   {loading ? "جاري الإنشاء..." : "انقر على تبويب «معاينة» أولًا للتحقق من النص"}
                 </p>
               )}
@@ -316,7 +316,7 @@ export function CitationModal({ source, initialText = "", startOffset, endOffset
           {/* تبويب الحفظ */}
           {tab === "save" && (
             <div className="space-y-4">
-              <p className="text-sm text-gray-600 dark:text-gray-400">
+              <p className="text-sm text-[var(--majalis-ink-soft)]">
                 احفظ هذا الاقتباس في مكتبتك الشخصية مع ملاحظة اختيارية.
               </p>
               <div>
