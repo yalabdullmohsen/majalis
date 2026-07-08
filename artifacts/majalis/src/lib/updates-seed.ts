@@ -364,6 +364,42 @@ export const UPDATES_SEED: PlatformUpdate[] = [
     published_at: "2026-06-25T07:00:00Z",
     status: "approved",
   },
+  {
+    id: "update-miracles-new-categories",
+    title: "تحديث: إضافة فئات جديدة للإعجاز العلمي",
+    summary: "إضافة 5 فئات جديدة من الإعجاز القرآني: الضوء، الجلد، العظام، النجوم، والدم.",
+    update_type: "إعلان",
+    source_url: "/miracles",
+    published_at: "2026-07-08T10:00:00Z",
+    status: "approved",
+  },
+  {
+    id: "update-scholars-expanded",
+    title: "تحديث: توسعة قاعدة بيانات العلماء",
+    summary: "إضافة 6 علماء جدد من كبار أئمة الإسلام: ابن تيمية، النووي، ابن كثير، الشنقيطي، وآخرين.",
+    update_type: "إعلان",
+    source_url: "/lessons",
+    published_at: "2026-07-08T09:00:00Z",
+    status: "approved",
+  },
+  {
+    id: "update-adhkar-enriched",
+    title: "تحديث: إثراء قسم الأذكار",
+    summary: "إضافة 10 أذكار جديدة في فئات الخروج من المنزل، السوق، اللباس، وركوب السيارة.",
+    update_type: "إعلان",
+    source_url: "/adhkar",
+    published_at: "2026-07-08T08:00:00Z",
+    status: "approved",
+  },
+  {
+    id: "update-occasions-expanded",
+    title: "تحديث: إضافة مناسبات إسلامية جديدة",
+    summary: "إضافة عشر ذي الحجة، عيد الأضحى، عيد الفطر، وليلة نصف شعبان في تقويم المناسبات.",
+    update_type: "إعلان",
+    source_url: "/prayer-times",
+    published_at: "2026-07-08T07:00:00Z",
+    status: "approved",
+  },
 ];
 
 export function getSortedUpdates(limit?: number) {
