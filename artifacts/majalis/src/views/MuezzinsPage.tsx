@@ -5,6 +5,7 @@ import { MUEZZINS, previewAdhan, stopAdhan, type Muezzin, type MuezzinStyle } fr
 import { patchAdhanPrefs, loadAdhanPrefs } from "@/lib/adhan-preferences";
 import { toggleFavorite, loadFavorites } from "@/lib/muezzin-favorites";
 import { loadCommunityMuezzins, type CommunityMuezzin } from "@/lib/user-submissions-service";
+import { applyPageSeo } from "@/lib/seo";
 
 const STYLES: MuezzinStyle[] = ["خاشع", "رسمي", "تقليدي", "كلاسيكي"];
 const COUNTRIES = [...new Set(MUEZZINS.map((m) => m.country))];
@@ -107,6 +108,15 @@ export default function MuezzinsPage() {
   const defaultTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const defaultMuezzinId = loadAdhanPrefs().defaultMuezzinId;
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/muezzins",
+      title: "الأذان والمؤذنون | المجلس العلمي",
+      description: "استمع إلى الأذان بأصوات أشهر المؤذنين وخصّص إعدادات الأذان — مكتبة متنوعة من أصوات الأذان العالمية.",
+      keywords: ["أذان", "مؤذنون", "صوت الأذان", "أذان اسلامي", "مواقيت الصلاة"],
+    });
+  }, []);
 
   useEffect(() => {
     loadCommunityMuezzins().then(setCommunity).catch(() => {});

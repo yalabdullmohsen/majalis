@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { CompareProvider } from "@/components/universities/CompareContext";
 import { CompareBar } from "@/components/universities/CompareBar";
 import { UniversityCard } from "@/components/universities/UniversityCard";
+import { applyPageSeo } from "@/lib/seo";
 import {
   fetchUniversities,
   DEGREE_LEVELS,
@@ -64,6 +65,15 @@ function UniversitiesContent() {
       setLoading(false);
     }
   }, [filters, search]);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/universities",
+      title: "دليل الجامعات الإسلامية | المجلس العلمي",
+      description: "دليل شامل للجامعات والمعاهد الإسلامية حول العالم — ابحث وقارن بين الجامعات حسب التخصص والمستوى وطريقة الدراسة.",
+      keywords: ["جامعات إسلامية", "كليات شريعة", "دراسة شرعية", "جامعة إسلامية", "معهد ديني"],
+    });
+  }, []);
 
   useEffect(() => { load(); }, [load]);
 

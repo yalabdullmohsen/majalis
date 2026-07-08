@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { PageHeader } from "@/components/ui-common";
+import { applyPageSeo } from "@/lib/seo";
 import {
   getDueFlashCards,
   submitCardReview,
@@ -163,6 +164,16 @@ export default function FlashCardsPage() {
       setLoading(false);
     }
   }, [user?.id]);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/flashcards",
+      title: "بطاقات المراجعة التعليمية | المجلس العلمي",
+      description: "بطاقات مراجعة تعتمد نظام التكرار المتباعد لتثبيت المعلومات الشرعية في الذاكرة — مثالية لطلاب العلم.",
+      keywords: ["بطاقات مراجعة", "تعلم", "مراجعة شرعية", "حفظ", "تكرار متباعد"],
+      robots: "noindex, follow",
+    });
+  }, []);
 
   useEffect(() => {
     if (isLoggedIn && user?.id) loadCards();
