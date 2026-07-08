@@ -578,7 +578,7 @@ const SEERAH_CSS = `
 .seerah-panel__coming-dot {
   width: 8px; height: 8px;
   border-radius: 50%;
-  background: #f59e0b;
+  background: #1a9e75;
   flex-shrink: 0;
 }
 

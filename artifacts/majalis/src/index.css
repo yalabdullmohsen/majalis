@@ -8116,7 +8116,7 @@ input, textarea, select { font-family: inherit; }
 
 .story-card__topic {
   font-size: 0.8rem;
-  color: var(--majalis-gold, #C9A84C);
+  color: var(--majalis-gold, #0E6E52);
   font-weight: 600;
   margin: 0;
 }
@@ -8142,7 +8142,7 @@ input, textarea, select { font-family: inherit; }
 
 .story-card__category {
   background: var(--majalis-gold-faint, rgba(14,110,82,0.06));
-  color: var(--majalis-gold, #C9A84C);
+  color: var(--majalis-gold, #0E6E52);
   border: 1px solid var(--majalis-gold-light, rgba(24,54,42,0.25));
   border-radius: 0.3rem;
   padding: 0.15rem 0.5rem;
@@ -13310,7 +13310,7 @@ body.has-assistant-fab .app-main {
   --ds-t-fast: 0.14s var(--ds-ease);
   --ds-t-mid: 0.22s var(--ds-ease);
 
-  --ds-gold-grad: linear-gradient(135deg, #E2BC6A 0%, #D9AE5C 55%, #C49540 100%);
+  --ds-gold-grad: linear-gradient(135deg, #0E6E52 0%, #1a9e75 55%, #0A5040 100%);
   --ds-emerald-grad: linear-gradient(135deg, #0E6E52 0%, #0A5040 100%);
   --ds-hero-grad: linear-gradient(155deg, #0F1220 0%, #171C2E 42%, #1F2540 72%, #131829 100%);
 }

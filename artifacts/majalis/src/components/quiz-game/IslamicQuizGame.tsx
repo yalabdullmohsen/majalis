@@ -237,7 +237,7 @@ function markCellUsed(board: Cell[][], cell: Cell | null): Cell[][] {
 
 function TimerBar({ seconds, maxSeconds }: { seconds: number; maxSeconds: number }) {
   const pct = maxSeconds > 0 ? seconds / maxSeconds : 0;
-  const color = pct > 0.4 ? "#22c55e" : pct > 0.2 ? "#f59e0b" : "#ef4444";
+  const color = pct > 0.4 ? "#22c55e" : pct > 0.2 ? "#0E6E52" : "#ef4444";
   const label = seconds <= 0 ? "انتهى الوقت" : `${seconds}ث`;
   return (
     <div

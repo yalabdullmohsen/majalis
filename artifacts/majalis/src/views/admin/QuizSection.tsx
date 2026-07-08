@@ -232,8 +232,8 @@ export function QuizSection() {
                 key={item.id}
                 className="qzs-item"
                 style={{
-                  "--qzs-item-bg": item.is_used ? "#FFF8F0" : "var(--majalis-panel)",
-                  "--qzs-item-border": item.is_used ? "#FDE68A" : "var(--majalis-line)",
+                  "--qzs-item-bg": item.is_used ? "rgba(14,110,82,0.05)" : "var(--majalis-panel)",
+                  "--qzs-item-border": item.is_used ? "rgba(14,110,82,0.3)" : "var(--majalis-line)",
                 } as React.CSSProperties}
               >
                 <div className="qzs-item-body">

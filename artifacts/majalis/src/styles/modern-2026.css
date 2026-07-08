@@ -142,7 +142,7 @@ html {
   --majalis-ink-soft:     #374151;
   --majalis-ink-muted:    #52525B;
   --majalis-emerald:      #166534;
-  --majalis-brass:        #A16207;
+  --majalis-brass:        #0E6E52;
   --majalis-panel:        #FFFFFF;
   --majalis-panel-raised: #F8F9FA;
   --ds-emerald:      #166534;
@@ -480,7 +480,7 @@ label {
   letter-spacing: -0.02em !important;
 }
 .pt-hero__label {
-  color: var(--m26-gold-700, #A16207) !important;
+  color: var(--m26-gold-700, #0E6E52) !important;
   font-size: var(--type-label) !important;
   font-weight: var(--fw-semibold) !important;
   letter-spacing: var(--ls-wider) !important;
@@ -499,8 +499,8 @@ label {
   background: var(--m26-green-50) !important;
 }
 .pt-prayer--pinned {
-  border-color: var(--m26-gold-500, #CA8A04) !important;
-  background: var(--m26-gold-50, #FEFCE8) !important;
+  border-color: var(--m26-gold-500, #1a9e75) !important;
+  background: var(--m26-gold-50, #f0faf5) !important;
 }
 .pt-prayer__name {
   color: var(--txt-primary, #111827) !important;
@@ -626,7 +626,7 @@ label {
 
 /* ══ 14. Login Page ══════════════════════════════════════════════════════════ */
 .login-page {
-  background: linear-gradient(160deg, #F0FDF4 0%, #FAFAFA 60%, #FEFCE8 100%) !important;
+  background: linear-gradient(160deg, #F0FDF4 0%, #FAFAFA 60%, #f0faf5 100%) !important;
 }
 .login-card {
   background: #FFFFFF !important;
@@ -703,7 +703,7 @@ label {
 .prophets-lux-disclaimer {
   color: var(--txt-warning, #92400E) !important;
   border-color: rgba(202,138,4,0.30) !important;
-  background: var(--m26-gold-50, #FEFCE8) !important;
+  background: var(--m26-gold-50, #f0faf5) !important;
 }
 .prophets-lux-tab {
   color: var(--txt-muted, #52525B) !important;
@@ -779,7 +779,7 @@ label {
 .notif-time__hint,
 .notif-time__hint { color: var(--txt-muted, #52525B) !important; }
 .notif-banner--warn {
-  background: var(--m26-gold-50, #FEFCE8) !important;
+  background: var(--m26-gold-50, #f0faf5) !important;
   border-color: rgba(202,138,4,0.35) !important;
   color: var(--txt-warning, #92400E) !important;
 }
@@ -792,7 +792,7 @@ label {
 /* ══ 18. Home Page ═══════════════════════════════════════════════════════════ */
 .home-hero {
   background: linear-gradient(160deg,
-    #FFFFFF 0%, var(--m26-green-50) 60%, var(--m26-gold-50) 100%) !important;
+    #FFFFFF 0%, var(--m26-green-50) 60%, var(--m26-green-50) 100%) !important;
   border-bottom: 1px solid rgba(0,0,0,0.06) !important;
 }
 .home-hero__title {
@@ -899,7 +899,7 @@ td {
 
 /* ══ 24. Seerah Bridge ═══════════════════════════════════════════════════════ */
 .prophets-seerah-bridge {
-  background: linear-gradient(135deg, var(--m26-green-50), var(--m26-gold-50)) !important;
+  background: linear-gradient(135deg, var(--m26-green-50), var(--m26-green-100, #dcfce7)) !important;
   border: 1px solid rgba(22,163,74,0.25) !important;
   border-radius: var(--m26-r-lg) !important;
 }
@@ -910,7 +910,7 @@ td {
 .prophets-seerah-bridge__title,
 .prophets-seerah-bridge__title { color: var(--m26-green-950, #052E16) !important; }
 .prophets-seerah-bridge__eyebrow,
-.prophets-seerah-bridge__eyebrow { color: var(--m26-gold-700, #A16207) !important; }
+.prophets-seerah-bridge__eyebrow { color: var(--m26-gold-700, #0E6E52) !important; }
 .prophets-seerah-bridge__desc,
 .prophets-seerah-bridge__desc { color: var(--txt-secondary, #374151) !important; }
 .prophets-seerah-bridge__arrow,
@@ -1398,7 +1398,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   font-weight: 600;
 }
 .adhkar-grade--sahih { background: #DCFCE7; color: #166534; }
-.adhkar-grade--hasan { background: #FEF9C3; color: #A16207; }
+.adhkar-grade--hasan { background: #e8f5f0; color: #0E6E52; }
 .adhkar-grade--other { background: #F3F4F6; color: #374151; }
 .adhkar-sheet-dismiss {
   display: block;

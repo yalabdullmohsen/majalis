@@ -1268,7 +1268,7 @@ body {
 }
 
 .pt-hero__countdown {
-  color: var(--elite-gold-light, #FDE68A) !important;
+  color: var(--elite-gold-light, #ffffff) !important;
   font-family: var(--font-display) !important;
 }
 
@@ -1860,8 +1860,8 @@ html {
 }
 
 .badge-v2--gold {
-  background: var(--elite-gold-pale, #FFFBEB) !important;
-  color: var(--elite-gold-deep, #78350F) !important;
+  background: var(--elite-gold-pale, #F1F3F2) !important;
+  color: var(--elite-gold-deep, #0E2019) !important;
 }
 
 /* ══════════════════════════════════════════════
@@ -4377,7 +4377,7 @@ button.primary:hover {
 .search-kind-badge--fatwa       { background: #FFF7ED; color: #C2410C; border-color: rgba(194,65,12,0.2); }
 .search-kind-badge--ruling      { background: #FFF7ED; color: #C2410C; border-color: rgba(194,65,12,0.2); }
 .search-kind-badge--qa          { background: #F5F3FF; color: #6D28D9; border-color: rgba(109,40,217,0.2); }
-.search-kind-badge--fawaid      { background: #FEFCE8; color: #A16207; border-color: rgba(161,98,7,0.2); }
+.search-kind-badge--fawaid      { background: #e8f5f0; color: #0E6E52; border-color: rgba(14,110,82,0.2); }
 .search-kind-badge--adhkar      { background: #F0FDF4; color: #15803D; border-color: rgba(21,128,61,0.2); }
 .search-kind-badge--library     { background: #FDF4FF; color: #7E22CE; border-color: rgba(126,34,206,0.2); }
 .search-kind-badge--hadith      { background: #FFF1F2; color: #BE123C; border-color: rgba(190,18,60,0.2); }
@@ -4966,7 +4966,7 @@ button.primary:hover {
 .isp-detail__section--content  { }
 .isp-detail__section--lessons  { background: rgba(21,128,61,0.05); border-color: rgba(21,128,61,0.15); }
 .isp-detail__section--figures  { background: #F5F3FF; border-color: rgba(109,40,217,0.15); }
-.isp-detail__section--sources  { background: #FFFBEB; border-color: rgba(180,130,10,0.18); }
+.isp-detail__section--sources  { background: #f0faf5; border-color: rgba(14,110,82,0.18); }
 
 .isp-detail__section-title {
   font-size: 0.9rem !important;
@@ -5635,7 +5635,7 @@ button.primary:hover {
 .qrp-now-playing {
   margin-top: 1.25rem; padding: 1rem;
   background: var(--bg-card, #fff);
-  border: 1px solid var(--majalis-gold, #B08D2E);
+  border: 1px solid var(--majalis-gold, #0E6E52);
   border-radius: 0.75rem; direction: rtl;
 }
 .qrp-now-playing__head {
@@ -6321,7 +6321,7 @@ button.primary:hover {
 .scp-submit-btn {
   width: 100%;
   padding: 0.75rem;
-  background: #C9A84C;
+  background: #0E6E52;
   color: #fff;
   border: none;
   border-radius: 0.5rem;
@@ -7378,7 +7378,7 @@ button.primary:hover {
 .sub-title            { font-size: 1.25rem; font-weight: 700; margin: 0; }
 .sub-filter-row       { display: flex; gap: 0.5rem; }
 .sub-filter-btn       { padding: 0.375rem 0.875rem; border-radius: 0.375rem; border: 1px solid #e5e7eb; background: #fff; color: #6b7280; font-weight: 400; cursor: pointer; font-family: inherit; font-size: 0.8125rem; }
-.sub-filter-btn--active { border-color: #C9A84C; background: rgba(14,110,82,0.06); color: #0E6E52; font-weight: 700; }
+.sub-filter-btn--active { border-color: #0E6E52; background: rgba(14,110,82,0.06); color: #0E6E52; font-weight: 700; }
 .sub-loading          { color: #9ca3af; }
 .sub-empty            { color: #9ca3af; padding: 2rem; text-align: center; }
 .sub-list             { display: flex; flex-direction: column; gap: 0.875rem; }
@@ -7753,7 +7753,7 @@ button.primary:hover {
 .qzs-btn-group      { display: flex; gap: 0.5rem; flex-wrap: wrap; }
 .qzs-btn            { padding: 0.4rem 0.875rem; border-radius: 0.375rem; border: 1px solid var(--majalis-line); background: var(--majalis-panel); color: var(--majalis-emerald-deep); cursor: pointer; font-size: 0.8125rem; font-family: inherit; font-weight: 600; }
 .qzs-btn--primary   { background: var(--majalis-emerald); color: #fff; border: none; }
-.qzs-btn--warn      { background: rgba(14,110,82,0.08); color: #0E6E52; border: 1px solid #FDE68A; }
+.qzs-btn--warn      { background: rgba(14,110,82,0.08); color: #0E6E52; border: 1px solid rgba(14,110,82,0.3); }
 .qzs-btn--danger    { color: #dc2626; }
 .qzs-btn:disabled   { opacity: 0.6; cursor: not-allowed; }
 .qzs-stats-row      { display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
@@ -8123,7 +8123,7 @@ button.primary:hover {
    ============================================================ */
 .vks-recs            { margin-bottom: 1.5rem; padding: 0.75rem 1rem; border-radius: 0.5rem; background: rgba(14,110,82,0.08); border: 1px solid rgba(24,54,42,0.4); }
 .vks-recs-title      { margin: 0; font-weight: 600; color: #0E6E52; }
-.vks-recs-list       { margin: 0.5rem 0 0; padding-right: 1.25rem; color: #78350F; font-size: 0.875rem; }
+.vks-recs-list       { margin: 0.5rem 0 0; padding-right: 1.25rem; color: #0A5040; font-size: 0.875rem; }
 .vks-td--priority    { padding: 0.5rem; border-bottom: 1px solid var(--majalis-line); color: var(--vks-priority-color, var(--majalis-ink-soft)); }
 .vks-td--active      { color: var(--vks-src-color, var(--majalis-ink-soft)); }
 
@@ -8567,10 +8567,10 @@ button.primary:hover {
 .hrm-progress-bar { flex: 1; height: 8px; background: var(--majalis-line); border-radius: 4px; overflow: hidden; }
 .hrm-progress-fill { height: 100%; background: var(--majalis-emerald); border-radius: 4px; width: var(--hrm-pf-w, 0%); transition: width 0.3s; }
 .hrm-progress-label { font-size: 0.75rem; color: var(--majalis-emerald-deep); font-weight: 700; white-space: nowrap; }
-.hrm-card--makkah { border-top: 3px solid var(--majalis-gold, #C9A84C); }
+.hrm-card--makkah { border-top: 3px solid var(--majalis-gold, #0E6E52); }
 .hrm-card--madinah { border-top: 3px solid var(--majalis-emerald); }
 .hrm-card__head { display: flex; gap: 0.4rem; flex-wrap: wrap; align-items: center; }
-.hrm-card__course-tag { font-size: 0.68rem; padding: 0.1rem 0.4rem; background: #FEF9C3; color: #854D0E; border-radius: 0.25rem; font-weight: 600; }
+.hrm-card__course-tag { font-size: 0.68rem; padding: 0.1rem 0.4rem; background: #e8f5f0; color: #0E6E52; border-radius: 0.25rem; font-weight: 600; }
 .hrm-card__tags { display: flex; gap: 0.35rem; flex-wrap: wrap; }
 .hrm-card__tag { font-size: 0.68rem; padding: 0.1rem 0.4rem; background: var(--majalis-parchment-deep); color: var(--majalis-ink-soft); border-radius: 0.25rem; }
 .hrm-card__tag--recurring { background: var(--majalis-sage); color: var(--majalis-emerald-deep); }
@@ -10829,7 +10829,7 @@ button, .btn {
 
 /* ── SheikhsPageClient (spc-*) ────────────────────────────────────────────────── */
 .spc-channels-section { margin-bottom: 2.5rem; }
-.spc-section-h2  { font-size: 1.1rem; font-weight: 700; color: var(--majalis-ink, #EDE9DD); margin-bottom: 1rem; border-right: 3px solid var(--majalis-brass, #C9A84C); padding-right: 0.75rem; }
+.spc-section-h2  { font-size: 1.1rem; font-weight: 700; color: var(--majalis-ink, #EDE9DD); margin-bottom: 1rem; border-right: 3px solid var(--majalis-brass, #0E6E52); padding-right: 0.75rem; }
 .spc-section-note { font-size: 0.82rem; color: var(--majalis-ink-muted, #9BA3B5); margin-bottom: 1.25rem; }
 .spc-channels-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.25rem; }
 .spc-channel-card  { background: var(--majalis-panel, rgba(255,255,255,0.07)); border: 1px solid rgba(255,255,255,0.10); border-radius: 0.75rem; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.30); }
@@ -11537,7 +11537,7 @@ a:focus-visible {
 .miracle-card--astronomy { border-top: 3px solid #1d4ed8; }
 .miracle-card--sea { border-top: 3px solid #0ea5e9; }
 .miracle-card--plant { border-top: 3px solid #16a34a; }
-.miracle-card--animal { border-top: 3px solid #d97706; }
+.miracle-card--animal { border-top: 3px solid #0E6E52; }
 .miracle-card--embryo { border-top: 3px solid #db2777; }
 .miracle-card--medicine { border-top: 3px solid #dc2626; }
 .miracle-card--water { border-top: 3px solid #0284c7; }

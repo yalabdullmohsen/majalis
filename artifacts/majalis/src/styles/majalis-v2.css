@@ -660,7 +660,7 @@
 /* ── أطراف ذهبية: القائمة + البحث ── */
 .navbar-menu-btn,
 .navbar-search-cmd {
-  border: 1.5px solid #C49540 !important;
+  border: 1.5px solid #0E6E52 !important;
   box-shadow:
     0 0 0 1px rgba(217,174,92,0.25),
     0 1px 6px rgba(196,149,64,0.20) !important;
@@ -674,7 +674,7 @@
 .navbar-menu-btn:hover,
 .navbar-search-cmd:hover {
   background: #fffdf5 !important;
-  border-color: #D9AE5C !important;
+  border-color: #1a9e75 !important;
   box-shadow:
     0 0 0 2px rgba(217,174,92,0.30),
     0 2px 10px rgba(196,149,64,0.28) !important;
@@ -959,7 +959,7 @@
   font-family: "Katibeh", "Aref Ruqaa", "Amiri", serif !important;
   font-size: clamp(1.25rem, 4vw, 1.65rem) !important;
   font-weight: 700 !important;
-  color: #C49540 !important;
+  color: #0E6E52 !important;
   letter-spacing: 0.01em !important;
   white-space: nowrap !important;
   line-height: 1.1 !important;
@@ -979,7 +979,7 @@
   color: #B8922E !important;
 }
 .bottom-nav__tab.is-active {
-  color: #D9AE5C !important;
+  color: #1a9e75 !important;
 }
 .bottom-nav__tab.is-active .bottom-nav__tab-icon {
   background: rgba(217,174,92,0.12) !important;
@@ -987,36 +987,36 @@
 
 /* Navbar — نص القائمة والبحث ذهبي */
 .navbar-menu-btn__label {
-  color: #C49540 !important;
+  color: #0E6E52 !important;
   font-weight: 700 !important;
 }
 .navbar-search-hint {
-  color: #C49540 !important;
+  color: #0E6E52 !important;
   font-weight: 700 !important;
 }
 .navbar-search-cmd svg {
-  color: #C49540 !important;
+  color: #0E6E52 !important;
 }
 
 /* Navbar brand — اسم التطبيق بجانب الشعار */
 .navbar-brand {
-  color: #C49540 !important;
+  color: #0E6E52 !important;
 }
 .navbar-brand-name,
 .navbar-brand strong,
 .navbar-brand span {
-  color: #C49540 !important;
+  color: #0E6E52 !important;
 }
 
 /* القائمة الجانبية — تسميات المجموعات ذهبية */
 .side-nav-group__title {
-  color: #C49540 !important;
+  color: #0E6E52 !important;
 }
 
 /* dark mode */
 .bottom-nav__tab:last-child:hover,
 .bottom-nav__tab:last-child.is-active {
-  border-color: #D9AE5C !important;
+  border-color: #1a9e75 !important;
   box-shadow: 0 0 12px rgba(217,174,92,0.35) !important;
 }
 
@@ -1029,19 +1029,19 @@
   object-fit: contain;
   filter:
     /* طرز ذهبي صلب — طبقة أولى (1px) */
-    drop-shadow(1px  0px 0 #D9AE5C)
-    drop-shadow(-1px 0px 0 #D9AE5C)
-    drop-shadow(0px  1px 0 #D9AE5C)
-    drop-shadow(0px -1px 0 #D9AE5C)
+    drop-shadow(1px  0px 0 #1a9e75)
+    drop-shadow(-1px 0px 0 #1a9e75)
+    drop-shadow(0px  1px 0 #1a9e75)
+    drop-shadow(0px -1px 0 #1a9e75)
     /* طبقة ثانية (2px) لسُمك أكثر */
-    drop-shadow(2px  0px 0 #C49540)
-    drop-shadow(-2px 0px 0 #C49540)
-    drop-shadow(0px  2px 0 #C49540)
-    drop-shadow(0px -2px 0 #C49540)
-    drop-shadow(2px  2px 0 #C49540)
-    drop-shadow(-2px -2px 0 #C49540)
-    drop-shadow(2px -2px 0 #C49540)
-    drop-shadow(-2px 2px 0 #C49540)
+    drop-shadow(2px  0px 0 #0E6E52)
+    drop-shadow(-2px 0px 0 #0E6E52)
+    drop-shadow(0px  2px 0 #0E6E52)
+    drop-shadow(0px -2px 0 #0E6E52)
+    drop-shadow(2px  2px 0 #0E6E52)
+    drop-shadow(-2px -2px 0 #0E6E52)
+    drop-shadow(2px -2px 0 #0E6E52)
+    drop-shadow(-2px 2px 0 #0E6E52)
     /* توهّج ذهبي خارجي */
     drop-shadow(0 0 6px rgba(217,174,92,0.95))
     drop-shadow(0 0 16px rgba(196,149,64,0.65))
@@ -1069,7 +1069,7 @@
 }
 .home-feature-strip-icon {
   background: rgba(255,255,255,0.15) !important;
-  color: #D9AE5C !important;
+  color: #1a9e75 !important;
 }
 
 /* بطاقات الروابط السريعة */
@@ -1080,7 +1080,7 @@
 }
 .home-quick-link:hover {
   background: linear-gradient(145deg, #0E6E52, #0A4A38) !important;
-  border-color: #D9AE5C !important;
+  border-color: #1a9e75 !important;
 }
 .home-quick-link span {
   color: rgba(255,255,255,0.68) !important;
@@ -1098,7 +1098,7 @@
   color: rgba(255,255,255,0.70) !important;
 }
 .home-story-card__arrow {
-  color: #D9AE5C !important;
+  color: #1a9e75 !important;
   opacity: 1 !important;
 }
 .home-story-card__icon {
@@ -1117,7 +1117,7 @@
   color: rgba(255,255,255,0.72) !important;
 }
 .home-learning-path-card-arrow {
-  color: #D9AE5C !important;
+  color: #1a9e75 !important;
 }
 
 /* بطاقة لعبة سؤال وجواب */
@@ -1132,7 +1132,7 @@
   color: rgba(255,255,255,0.72) !important;
 }
 .home-quiz-card-btn {
-  color: #D9AE5C !important;
+  color: #1a9e75 !important;
 }
 
 /* عناوين الأقسام */
@@ -2301,7 +2301,7 @@ table th {
 .hcp-strip__countdown                         { color: var(--majalis-ink-muted, #9BA3B5) !important; }
 .home-about__title                            { color: var(--majalis-emerald, #2E8B67) !important; }
 .home-about__body                             { color: var(--majalis-ink-soft, #C9C5B8) !important; }
-.home-about__eyebrow                          { color: var(--majalis-brass, #C9A84C) !important; }
+.home-about__eyebrow                          { color: var(--majalis-brass, #0E6E52) !important; }
 /* ══ صفحة مواقيت الصلاة — تصميم جديد ══════════════════════════════════════ */
 .pt-wrap {
   display: flex;
@@ -2334,7 +2334,7 @@ table th {
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--majalis-brass, #C9A84C);
+  color: var(--majalis-brass, #0E6E52);
 }
 .pt-hero__name {
   font-size: clamp(2rem, 6vw, 3rem);
@@ -2379,7 +2379,7 @@ table th {
   background: none;
   border: 1px solid rgba(201,168,76,0.30);
   border-radius: 999px;
-  color: var(--majalis-brass, #C9A84C);
+  color: var(--majalis-brass, #0E6E52);
   font-size: 0.72rem;
   padding: 0.2rem 0.75rem;
   cursor: pointer;
@@ -2388,7 +2388,7 @@ table th {
 }
 .pt-hero__reset:hover {
   background: rgba(201,168,76,0.10);
-  border-color: var(--majalis-brass, #C9A84C);
+  border-color: var(--majalis-brass, #0E6E52);
 }
 
 /* ── شريط الصلوات ── */
@@ -2422,7 +2422,7 @@ table th {
   background: rgba(46,139,103,0.10);
 }
 .pt-prayer--pinned {
-  border-color: var(--majalis-brass, #C9A84C);
+  border-color: var(--majalis-brass, #0E6E52);
   background: rgba(201,168,76,0.10);
 }
 .pt-prayer__name {
@@ -2436,7 +2436,7 @@ table th {
 }
 .pt-prayer--pinned .pt-prayer__name,
 .pt-prayer--pinned .pt-prayer__time {
-  color: var(--majalis-brass, #C9A84C);
+  color: var(--majalis-brass, #0E6E52);
 }
 .pt-prayer__time {
   font-size: 0.8rem;
@@ -2494,7 +2494,7 @@ table th {
   font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.08em;
-  color: var(--majalis-brass, #C9A84C);
+  color: var(--majalis-brass, #0E6E52);
   text-transform: uppercase;
   margin-bottom: 0.25rem;
 }
@@ -2513,7 +2513,7 @@ table th {
 }
 .prophets-seerah-bridge__arrow {
   font-size: 1.25rem;
-  color: var(--majalis-brass, #C9A84C);
+  color: var(--majalis-brass, #0E6E52);
   flex-shrink: 0;
   transition: transform 0.2s;
 }
@@ -2527,7 +2527,7 @@ table th {
   align-items: center;
   gap: 0.4rem;
   font-size: 0.78rem;
-  color: var(--majalis-brass, #C9A84C);
+  color: var(--majalis-brass, #0E6E52);
   text-decoration: none;
   border: 1px solid rgba(201,168,76,0.25);
   border-radius: 999px;

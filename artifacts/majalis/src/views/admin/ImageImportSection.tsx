@@ -67,7 +67,7 @@ const STATUS_META: Record<JobStatus, { label: string; css: string; dot: string }
   waiting:      { label: "بانتظار المعالجة", css: "ii-chip--wait",    dot: "#94a3b8" },
   analyzing:    { label: "جارٍ التحليل",    css: "ii-chip--analyze", dot: "#3b82f6" },
   completed:    { label: "اكتمل",           css: "ii-chip--done",    dot: "#22c55e" },
-  "needs-review":{ label:"يحتاج مراجعة",   css: "ii-chip--review",  dot: "#f59e0b" },
+  "needs-review":{ label:"يحتاج مراجعة",   css: "ii-chip--review",  dot: "#0E6E52" },
   failed:       { label: "فشل",            css: "ii-chip--fail",    dot: "#ef4444" },
   approved:     { label: "تمّ النشر",      css: "ii-chip--approved",dot: "#10b981" },
   rejected:     { label: "مرفوض",          css: "ii-chip--rejected",dot: "#dc2626" },
@@ -76,7 +76,7 @@ const STATUS_META: Record<JobStatus, { label: string; css: string; dot: string }
 // ── مؤشر الثقة ─────────────────────────────────────────────────────────
 function ConfidenceBar({ score }: { score: number }) {
   const pct  = Math.round(score * 100);
-  const color = pct >= 75 ? "#22c55e" : pct >= 45 ? "#f59e0b" : "#ef4444";
+  const color = pct >= 75 ? "#22c55e" : pct >= 45 ? "#0E6E52" : "#ef4444";
   const label = pct >= 75 ? "ثقة عالية" : pct >= 45 ? "تحقق مطلوب" : "غير موثوق";
   return (
     <div className="ii-conf" style={{ "--iis-pct": `${pct}%`, "--iis-color": color } as React.CSSProperties}>
@@ -849,7 +849,7 @@ export function ImageImportSection() {
           <div className="ii-stats">
             {stats.waiting   > 0 && <StatPill n={stats.waiting}   label="انتظار"  color="#64748b" />}
             {stats.analyzing > 0 && <StatPill n={stats.analyzing} label="يُحلَّل"  color="#3b82f6" />}
-            {stats.review    > 0 && <StatPill n={stats.review}    label="مراجعة"  color="#f59e0b" />}
+            {stats.review    > 0 && <StatPill n={stats.review}    label="مراجعة"  color="#0E6E52" />}
             {stats.done      > 0 && <StatPill n={stats.done}      label="جاهز"    color="#22c55e" />}
             {stats.approved  > 0 && <StatPill n={stats.approved}  label="منشور"   color="#10b981" />}
             {stats.failed    > 0 && <StatPill n={stats.failed}    label="فشل"     color="#ef4444" />}
