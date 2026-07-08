@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
+import { HelpCircle, Lightbulb, RotateCw, Scroll } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { getDailyDhikr, getDailyFaida, getDailyHadith, getDailyQa } from "@/lib/daily-content";
 import { cleanDisplayText, displayText } from "@/lib/display-text";
 import { RequestManager } from "@/lib/request-manager";
@@ -9,11 +11,11 @@ import { getQaQuestions } from "@/lib/supabase";
 
 type TabId = "dhikr" | "hadith" | "faida" | "question";
 
-const TABS: { id: TabId; label: string; icon: string; link: string; linkLabel: string }[] = [
-  { id: "dhikr",    label: "ذكر",   icon: "📿", link: "/adhkar", linkLabel: "الأذكار" },
-  { id: "hadith",   label: "حديث",  icon: "📜", link: "/hadith", linkLabel: "الأحاديث" },
-  { id: "faida",    label: "فائدة", icon: "💡", link: "/fawaid", linkLabel: "الفوائد" },
-  { id: "question", label: "سؤال",  icon: "❓", link: "/qa",     linkLabel: "الأسئلة" },
+const TABS: { id: TabId; label: string; Icon: LucideIcon; link: string; linkLabel: string }[] = [
+  { id: "dhikr",    label: "ذكر",   Icon: RotateCw,  link: "/adhkar", linkLabel: "الأذكار" },
+  { id: "hadith",   label: "حديث",  Icon: Scroll,    link: "/hadith", linkLabel: "الأحاديث" },
+  { id: "faida",    label: "فائدة", Icon: Lightbulb, link: "/fawaid", linkLabel: "الفوائد" },
+  { id: "question", label: "سؤال",  Icon: HelpCircle, link: "/qa",   linkLabel: "الأسئلة" },
 ];
 const TAB_IDS = TABS.map(t => t.id);
 const ROTATE_MS = 9000;
@@ -85,7 +87,7 @@ export function HomeDailyCorner() {
             className={`hdc__tab${tab === t.id ? " active" : ""}`}
             onClick={() => handleTab(t.id)}
           >
-            <span className="hdc__tab-icon" aria-hidden="true">{t.icon}</span>
+            <span className="hdc__tab-icon" aria-hidden="true"><t.Icon size={16} strokeWidth={1.8} /></span>
             <span>{t.label}</span>
           </button>
         ))}

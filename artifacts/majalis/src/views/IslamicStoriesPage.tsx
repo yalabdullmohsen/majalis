@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { BookOpen, Lightbulb, Search, Users } from "lucide-react";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { supabase } from "@/lib/supabase";
 import { isSupabaseConfigured } from "@/lib/supabase-config";
@@ -89,13 +90,13 @@ function StoryDetail({ story, onBack }: { story: IslamicStory; onBack: () => voi
       </div>
 
       <section className="isp-detail__section isp-detail__section--content">
-        <h2 className="isp-detail__section-title">📖 تفاصيل القصة</h2>
+        <h2 className="isp-detail__section-title"><BookOpen size={18} strokeWidth={1.8} aria-hidden="true" /> تفاصيل القصة</h2>
         <div className="isp-detail__body">{story.full_content}</div>
       </section>
 
       {story.key_lessons.length > 0 && (
         <section className="isp-detail__section isp-detail__section--lessons">
-          <h2 className="isp-detail__section-title isp-detail__section-title--green">💡 الدروس المستفادة</h2>
+          <h2 className="isp-detail__section-title isp-detail__section-title--green"><Lightbulb size={18} strokeWidth={1.8} aria-hidden="true" /> الدروس المستفادة</h2>
           <ul className="isp-lessons-list">
             {story.key_lessons.map((lesson, i) => (
               <li key={i} className="isp-lessons-list__item">
@@ -110,7 +111,7 @@ function StoryDetail({ story, onBack }: { story: IslamicStory; onBack: () => voi
       <div className="isp-detail__grid">
         {story.related_figures.length > 0 && (
           <section className="isp-detail__section isp-detail__section--figures">
-            <h2 className="isp-detail__section-title isp-detail__section-title--purple">👥 الشخصيات</h2>
+            <h2 className="isp-detail__section-title isp-detail__section-title--purple"><Users size={18} strokeWidth={1.8} aria-hidden="true" /> الشخصيات</h2>
             <div className="isp-detail__list">
               {story.related_figures.map((fig, i) => (
                 <span key={i} className="isp-detail__list-item">• {fig}</span>
@@ -121,7 +122,7 @@ function StoryDetail({ story, onBack }: { story: IslamicStory; onBack: () => voi
 
         {story.sources.length > 0 && (
           <section className="isp-detail__section isp-detail__section--sources">
-            <h2 className="isp-detail__section-title isp-detail__section-title--gold">📚 المصادر</h2>
+            <h2 className="isp-detail__section-title isp-detail__section-title--gold"><BookOpen size={18} strokeWidth={1.8} aria-hidden="true" /> المصادر</h2>
             <div className="isp-detail__list">
               {story.sources.map((src, i) => (
                 <span key={i} className="isp-detail__list-item">• {src}</span>
@@ -250,7 +251,7 @@ export default function IslamicStoriesPage() {
         <div className="isp-controls">
           <input
             className="isp-search"
-            placeholder="🔍 ابحث في القصص…"
+            placeholder="ابحث في القصص…"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
@@ -310,7 +311,7 @@ export default function IslamicStoriesPage() {
         </div>
       ) : filtered.length === 0 ? (
         <div className="isp-empty">
-          <span className="isp-empty__icon">🔍</span>
+          <span className="isp-empty__icon"><Search size={32} strokeWidth={1.4} aria-hidden="true" /></span>
           <p>لا توجد نتائج للبحث أو الفلتر المحدد.</p>
         </div>
       ) : (

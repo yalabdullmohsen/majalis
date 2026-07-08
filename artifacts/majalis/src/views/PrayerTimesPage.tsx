@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import { Link } from "wouter";
+import { Compass, Moon, RotateCw, Star, Sun, SunDim, Sunset, Sunrise } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import {
   KUWAIT_GOVERNORATES,
@@ -20,13 +22,13 @@ const PRAYER_AR: Record<string, string> = {
   Isha:    "العشاء",
 };
 
-const PRAYER_ICON: Record<string, string> = {
-  Fajr:    "🌙",
-  Sunrise: "🌅",
-  Dhuhr:   "☀️",
-  Asr:     "🌤️",
-  Maghrib: "🌇",
-  Isha:    "🌃",
+const PRAYER_ICON: Record<string, LucideIcon> = {
+  Fajr:    Moon,
+  Sunrise: Sunrise,
+  Dhuhr:   Sun,
+  Asr:     SunDim,
+  Maghrib: Sunset,
+  Isha:    Star,
 };
 
 const HIJRI_MONTHS = [
@@ -170,7 +172,7 @@ export default function PrayerTimesPage() {
         </div>
         <h1 className="pt-hero__name" key={displayKey}>
           <span className="pt-hero__icon" aria-hidden="true">
-            {PRAYER_ICON[displayKey] ?? "🕌"}
+            {(() => { const I = PRAYER_ICON[displayKey] ?? Sunset; return <I size={36} strokeWidth={1.5} />; })()}
           </span>
           {displayName}
         </h1>
@@ -216,7 +218,7 @@ export default function PrayerTimesPage() {
               aria-label={`صلاة ${PRAYER_AR[p.key] ?? p.name} — ${p.time}`}
             >
               <span className="pt-prayer__icon" aria-hidden="true">
-                {PRAYER_ICON[p.key] ?? "🕌"}
+                {(() => { const I = PRAYER_ICON[p.key] ?? Sunset; return <I size={20} strokeWidth={1.6} />; })()}
               </span>
               <span className="pt-prayer__name">{PRAYER_AR[p.key] ?? p.name}</span>
               <span className="pt-prayer__time">{p.time}</span>
@@ -247,10 +249,10 @@ export default function PrayerTimesPage() {
       {/* ── روابط سريعة ── */}
       <div className="pt-quick-links">
         <Link href="/qibla" className="pt-quick-link">
-          <span aria-hidden="true">🧭</span> اتجاه القبلة
+          <Compass size={16} strokeWidth={1.8} aria-hidden="true" /> اتجاه القبلة
         </Link>
         <Link href="/tasbih" className="pt-quick-link">
-          <span aria-hidden="true">📿</span> التسبيح
+          <RotateCw size={16} strokeWidth={1.8} aria-hidden="true" /> التسبيح
         </Link>
       </div>
 
