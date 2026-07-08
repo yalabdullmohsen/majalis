@@ -5,7 +5,7 @@ import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { getVerifiedHadith } from "@/lib/supabase";
 import { RequestManager } from "@/lib/request-manager";
 import { arabicMatchAny } from "@/lib/arabic-search";
-import { PageHeader, Loading, Empty } from "@/components/ui-common";
+import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
 import { RecommendationWidget } from "@/components/recommendations/RecommendationWidget";
 import { CitationActionBar } from "@/components/citation/CitationActionBar";
@@ -573,7 +573,7 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
       </div>
 
       {loading ? (
-        <Loading />
+        <SkeletonCardGrid count={8} />
       ) : displayItems.length === 0 ? (
         <Empty
           text={

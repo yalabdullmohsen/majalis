@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "wouter";
-import { Loading } from "@/components/ui-common";
+import { SkeletonPage } from "@/components/ui-common";
 import { fetchLearningQuiz, submitLearningQuiz, type QuizQuestion } from "@/lib/digital-learning-service";
 import { applyPageSeo } from "@/lib/seo";
 
@@ -56,7 +56,7 @@ export default function LearningQuizPage() {
     }
   };
 
-  if (phase === "loading") return <Loading />;
+  if (phase === "loading") return <SkeletonPage />;
 
   if (!quiz || questions.length === 0) {
     return (

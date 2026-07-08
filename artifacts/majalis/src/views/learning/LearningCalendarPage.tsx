@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { format } from "date-fns";
 import { arSA } from "date-fns/locale";
-import { PageHeader, Loading } from "@/components/ui-common";
+import { PageHeader, SkeletonCardGrid } from "@/components/ui-common";
 import { fetchLearningCalendar, subscribeLearningEvent } from "@/lib/digital-learning-service";
 import { applyPageSeo } from "@/lib/seo";
 
@@ -37,7 +37,7 @@ export default function LearningCalendarPage() {
     await subscribeLearningEvent(eventId);
   };
 
-  if (loading) return <Loading />;
+  if (loading) return <SkeletonCardGrid count={6} />;
 
   return (
     <div className="page-shell narrow">

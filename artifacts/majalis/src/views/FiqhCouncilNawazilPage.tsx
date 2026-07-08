@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
-import { PageHeader, Loading, Empty } from "@/components/ui-common";
+import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { PlatformContentCard } from "@/components/platform/ContentDetailLayout";
 import { FiqhCouncilSubnav } from "./FiqhCouncilPage";
 import { getAllNawazilItems, getNawazilTopicItems } from "@/lib/fiqh-council-service";
@@ -73,7 +73,7 @@ export default function FiqhCouncilNawazilPage() {
       )}
 
       {loading ? (
-        <Loading />
+        <SkeletonCardGrid count={6} />
       ) : items.length === 0 ? (
         <Empty text="لا توجد مواد موثّقة لهذا الموضوع حالياً." />
       ) : (

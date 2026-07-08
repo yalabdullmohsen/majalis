@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { Link, useLocation } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
-import { PageHeader, Loading, Empty } from "@/components/ui-common";
+import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { PlatformContentCard } from "@/components/platform/ContentDetailLayout";
 import { FiqhCouncilSearchBox } from "@/components/fiqh-council/FiqhCouncilSearchBox";
 import { getFiqhCouncilItems, getFiqhCouncilCategoryCounts, getMostViewedFiqhCouncilItems, getAllNawazilItems, getPublicFiqhSources } from "@/lib/fiqh-council-service";
@@ -249,7 +249,7 @@ export function FiqhCouncilListPage({
       />
 
       {loading ? (
-        <Loading />
+        <SkeletonCardGrid count={6} />
       ) : items.length === 0 ? (
         <Empty text="لا توجد عناصر مطابقة." />
       ) : (
@@ -391,7 +391,7 @@ export function FiqhCouncilHubPage() {
         </section>
       )}
 
-      {loading ? <Loading /> : (
+      {loading ? <SkeletonCardGrid count={6} /> : (
         <>
           {topIssues.length > 0 && <section className="fiqh-council-section">
             <div className="fiqh-council-section-header">

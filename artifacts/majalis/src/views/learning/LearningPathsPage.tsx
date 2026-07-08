@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { BookOpen, Building2, Leaf, Library, Moon, PenLine, Scale, ScrollText, Sprout, Target, Trophy } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { Link } from "wouter";
-import { PageHeader, Loading } from "@/components/ui-common";
+import { PageHeader, SkeletonCardGrid } from "@/components/ui-common";
 import { fetchLearningPaths, levelLabel, type LearningPath } from "@/lib/digital-learning-service";
 import { applyPageSeo } from "@/lib/seo";
 
@@ -165,7 +165,7 @@ export default function LearningPathsPage() {
         })}
       </div>
 
-      {loading && <Loading />}
+      {loading && <SkeletonCardGrid count={8} />}
 
       {Object.entries(displayed).map(([category, items]) => {
         const meta = CATEGORY_META[category] ?? CATEGORY_META.other;

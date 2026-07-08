@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "wouter";
-import { Loading } from "@/components/ui-common";
+import { SkeletonPage } from "@/components/ui-common";
 import {
   fetchLearningPath,
   enrollInLearningPath,
@@ -69,7 +69,7 @@ export default function LearningPathDetailPage() {
     }
   };
 
-  if (loading) return <Loading />;
+  if (loading) return <SkeletonPage />;
   if (!path) return <div className="page-shell"><p>المسار غير موجود</p></div>;
 
   return (
