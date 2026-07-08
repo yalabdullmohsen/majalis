@@ -163,7 +163,7 @@ export default function ScholarlyResearchPage() {
               className={`px-5 py-3 text-sm font-medium border-b-2 transition-colors ${
                 view === v
                   ? "border-[var(--mn-border-active)] text-[var(--mn-text-active)]"
-                  : "border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+                  : "border-transparent text-[var(--majalis-ink-soft)] hover:text-[var(--majalis-ink)]"
               }`}
             >
               {v === "search" ? <><Search size={14} strokeWidth={1.8} aria-hidden="true" /> البحث</> : <><BookOpen size={14} strokeWidth={1.8} aria-hidden="true" /> مكتبتي</>}
@@ -189,7 +189,7 @@ export default function ScholarlyResearchPage() {
                 onKeyDown={handleKeyDown}
                 placeholder="اكتب سؤالك الشرعي هنا… (Shift+Enter للسطر الجديد)"
                 className="w-full resize-none rounded-xl border border-[var(--majalis-line)]
-                  bg-[var(--majalis-parchment)] text-[var(--majalis-ink)] placeholder-gray-400
+                  bg-[var(--majalis-parchment)] text-[var(--majalis-ink)] placeholder-[var(--majalis-ink-soft)]
                   px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--majalis-emerald)]
                   transition-all overflow-hidden"
               />

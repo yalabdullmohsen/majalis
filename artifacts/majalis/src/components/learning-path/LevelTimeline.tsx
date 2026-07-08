@@ -73,7 +73,7 @@ export function LevelTimeline({ levels, progress }: Props) {
                         </span>
                       )}
                       {!isUnlocked && (
-                        <Lock size={14} className="text-gray-400" />
+                        <Lock size={14} className="text-[var(--majalis-ink-soft)] opacity-60" />
                       )}
                     </div>
                   </div>

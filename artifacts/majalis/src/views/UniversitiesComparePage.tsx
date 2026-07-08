@@ -114,7 +114,7 @@ function CompareContent() {
                           className="text-xs text-[var(--majalis-emerald)] hover:underline">
                           التفاصيل
                         </a>
-                        <span className="text-gray-300">|</span>
+                        <span className="text-[var(--majalis-ink-soft)] opacity-50">|</span>
                         <button type="button" onClick={() => removeFromCompare(u.slug)}
                           className="text-xs text-red-400 hover:text-red-600">إزالة</button>
                       </div>

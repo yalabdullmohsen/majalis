@@ -105,7 +105,7 @@ function UniversitiesContent() {
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
               placeholder="ابحث عن جامعة أو تخصص…"
-              className="flex-1 px-4 py-2.5 rounded-xl text-gray-800 text-sm focus:outline-none
+              className="flex-1 px-4 py-2.5 rounded-xl text-[#1E1E1E] text-sm focus:outline-none
                 focus:ring-2 focus:ring-white/50"
             />
             <button type="submit"

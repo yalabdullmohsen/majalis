@@ -224,7 +224,7 @@ function ProgramForm({
         <button type="submit" disabled={loading} className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm rounded-xl disabled:opacity-50 transition-colors">
           {loading ? "جارٍ الحفظ…" : "إضافة البرنامج"}
         </button>
-        <button type="button" onClick={onCancel} className="px-3 py-2 text-sm text-gray-500 hover:text-gray-700 transition-colors">إلغاء</button>
+        <button type="button" onClick={onCancel} className="px-3 py-2 text-sm text-[var(--majalis-ink-soft)] hover:text-[var(--majalis-ink)] transition-colors">إلغاء</button>
       </div>
     </form>
   );
@@ -313,10 +313,10 @@ function AdminContent() {
             </div>
           )}
 
-          {loading && <div className="text-center py-10 text-gray-400">جارٍ التحميل…</div>}
+          {loading && <div className="text-center py-10 text-[var(--majalis-ink-soft)] opacity-60">جارٍ التحميل…</div>}
 
           {!loading && universities.length === 0 && (
-            <div className="text-center py-10 text-gray-400">
+            <div className="text-center py-10 text-[var(--majalis-ink-soft)] opacity-60">
               <p>لا توجد جامعات بعد.</p>
               <button type="button" onClick={() => setSection("add")}
                 className="mt-3 text-sm text-emerald-600 hover:underline">+ إضافة جامعة</button>
@@ -386,7 +386,7 @@ function AdminContent() {
             هذه تذكيرات للمراجعة البشرية — لا يُحدَّث أي محتوى تلقائياً.
           </p>
           {reminders.length === 0 && (
-            <div className="text-center py-10 text-gray-400">لا توجد تذكيرات معلّقة. ✅</div>
+            <div className="text-center py-10 text-[var(--majalis-ink-soft)] opacity-60">لا توجد تذكيرات معلّقة. ✅</div>
           )}
           {reminders.map((r) => (
             <div key={r.id} className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4">
