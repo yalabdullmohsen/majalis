@@ -1,7 +1,101 @@
 /* ══════════════════════════════════════════════════════════════════════
-   مصحفي — Image-based Mushaf Viewer
-   خلفية عاجية · أخضر إسلامي · لا أسود
+   مُصحفي ٢٠٢٦ — تصميم جديد كلياً
+   ثلاثة أوضاع: نهاري · ليلي · دافئ
    ══════════════════════════════════════════════════════════════════════ */
+
+/* ── متغيرات الوضع النهاري (افتراضي) ── */
+.mshf-shell {
+  --mshf-bg:           #F8F4EE;
+  --mshf-bg2:          #EDE8DF;
+  --mshf-ink:          #1A2E1A;
+  --mshf-ink-soft:     rgba(26,46,26,0.5);
+  --mshf-emerald:      #0E6E52;
+  --mshf-emerald-deep: #0A5040;
+  --mshf-line:         rgba(14,110,82,0.15);
+  --mshf-bar-from:     #0E6E52;
+  --mshf-bar-to:       #2aad7c;
+  --mshf-overlay-top:  linear-gradient(to bottom, rgba(10,80,64,0.97) 0%, rgba(10,80,64,0) 100%);
+  --mshf-overlay-bot:  linear-gradient(to top,    rgba(10,80,64,0.97) 0%, rgba(10,80,64,0) 100%);
+  --mshf-btn-bg:       rgba(255,255,255,0.12);
+  --mshf-btn-hover:    rgba(255,255,255,0.24);
+  --mshf-active-glow:  rgba(126,214,168,0.3);
+  --mshf-active-color: #7ED6A8;
+  --mshf-sheet-bg:     #FAF7F2;
+  --mshf-sheet-item:   rgba(14,110,82,0.07);
+  --mshf-sheet-active: rgba(14,110,82,0.18);
+  --mshf-sheet-border: rgba(14,110,82,0.12);
+  --mshf-item-text:    #1A2E1A;
+  --mshf-item-sub:     rgba(14,110,82,0.45);
+  --mshf-num-bg:       rgba(14,110,82,0.1);
+  --mshf-num-color:    #0A5040;
+  --mshf-img-filter:   none;
+  --mshf-frame-shadow: 0 4px 32px rgba(10,80,64,0.18), 0 1px 6px rgba(0,0,0,0.08);
+  --mshf-frame-border: rgba(14,110,82,0.12);
+  --mshf-spinner-track: rgba(14,110,82,0.1);
+  --mshf-spinner-head:  rgba(14,110,82,0.7);
+  --mshf-loading-text:  rgba(14,110,82,0.5);
+  --mshf-handle-bg:    rgba(14,110,82,0.18);
+}
+
+/* ── الوضع الليلي ── */
+.mshf-shell.mshf-night {
+  --mshf-bg:           #0D1F16;
+  --mshf-bg2:          #0A1812;
+  --mshf-ink:          #E0F0E8;
+  --mshf-ink-soft:     rgba(200,240,220,0.45);
+  --mshf-line:         rgba(120,200,160,0.12);
+  --mshf-overlay-top:  linear-gradient(to bottom, rgba(5,20,12,0.97) 0%, rgba(5,20,12,0) 100%);
+  --mshf-overlay-bot:  linear-gradient(to top,    rgba(5,20,12,0.97) 0%, rgba(5,20,12,0) 100%);
+  --mshf-btn-bg:       rgba(255,255,255,0.08);
+  --mshf-btn-hover:    rgba(255,255,255,0.16);
+  --mshf-active-glow:  rgba(100,200,140,0.2);
+  --mshf-active-color: #70D4A0;
+  --mshf-sheet-bg:     #121E17;
+  --mshf-sheet-item:   rgba(100,200,150,0.06);
+  --mshf-sheet-active: rgba(100,200,150,0.18);
+  --mshf-sheet-border: rgba(100,200,150,0.1);
+  --mshf-item-text:    rgba(220,245,232,0.9);
+  --mshf-item-sub:     rgba(140,210,175,0.35);
+  --mshf-num-bg:       rgba(100,200,150,0.12);
+  --mshf-num-color:    #70D4A0;
+  --mshf-img-filter:   invert(1) sepia(0.2) brightness(0.82) hue-rotate(10deg);
+  --mshf-frame-shadow: 0 4px 40px rgba(0,0,0,0.6);
+  --mshf-frame-border: rgba(100,200,150,0.1);
+  --mshf-spinner-track: rgba(100,200,150,0.08);
+  --mshf-spinner-head:  rgba(100,200,150,0.65);
+  --mshf-loading-text:  rgba(180,230,205,0.4);
+  --mshf-handle-bg:    rgba(180,230,205,0.14);
+}
+
+/* ── الوضع الدافئ ── */
+.mshf-shell.mshf-sepia {
+  --mshf-bg:           #F4ECE0;
+  --mshf-bg2:          #EBE0D0;
+  --mshf-ink:          #2E1E08;
+  --mshf-ink-soft:     rgba(46,30,8,0.45);
+  --mshf-line:         rgba(14,110,82,0.12);
+  --mshf-overlay-top:  linear-gradient(to bottom, rgba(30,18,5,0.94) 0%, rgba(30,18,5,0) 100%);
+  --mshf-overlay-bot:  linear-gradient(to top,    rgba(30,18,5,0.94) 0%, rgba(30,18,5,0) 100%);
+  --mshf-btn-bg:       rgba(255,255,255,0.14);
+  --mshf-btn-hover:    rgba(255,255,255,0.26);
+  --mshf-active-color: #A8D4B8;
+  --mshf-active-glow:  rgba(120,180,140,0.25);
+  --mshf-sheet-bg:     #EEE5D4;
+  --mshf-sheet-item:   rgba(14,110,82,0.08);
+  --mshf-sheet-active: rgba(14,110,82,0.16);
+  --mshf-sheet-border: rgba(14,110,82,0.1);
+  --mshf-item-text:    #2E1E08;
+  --mshf-item-sub:     rgba(80,50,10,0.4);
+  --mshf-num-bg:       rgba(14,110,82,0.1);
+  --mshf-num-color:    #0A5040;
+  --mshf-img-filter:   sepia(0.22) brightness(0.97);
+  --mshf-frame-shadow: 0 4px 32px rgba(30,18,5,0.15), 0 1px 6px rgba(0,0,0,0.07);
+  --mshf-frame-border: rgba(14,110,82,0.1);
+  --mshf-spinner-track: rgba(14,110,82,0.1);
+  --mshf-spinner-head:  rgba(14,110,82,0.6);
+  --mshf-loading-text:  rgba(46,30,8,0.45);
+  --mshf-handle-bg:    rgba(46,30,8,0.14);
+}
 
 /* ══ غلاف كامل الشاشة ══ */
 .mshf-shell {
@@ -10,35 +104,30 @@
   z-index: 300;
   display: flex;
   flex-direction: column;
-  background: #FAF7F0;
+  background: var(--mshf-bg);
   overflow: hidden;
   direction: rtl;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
   user-select: none;
   -webkit-user-select: none;
+  transition: background 0.3s ease;
 }
 
-/* الوضع الليلي — غلاف */
-.mshf-shell.mshf-night {
-  background: #1A2A22;
-}
-
-/* ══ شريط التقدم (3px) ══ */
+/* ══ شريط التقدم (2px) ══ */
 .mshf-progress {
   position: fixed;
   top: 0;
-  left: 0;
+  right: 0;
   width: var(--mshf-pct, 0%);
-  height: 3px;
-  background: linear-gradient(to right, #4CAF85, #6ab58c);
-  z-index: 350;
-  border-radius: 0 3px 3px 0;
-  transition: width 0.3s ease;
+  height: 2px;
+  background: linear-gradient(to left, var(--mshf-bar-from, #0E6E52), var(--mshf-bar-to, #2aad7c));
+  z-index: 9999;
+  transition: width 0.35s ease;
   pointer-events: none;
 }
 
-/* ══ شريط علوي ══ */
+/* ══ رأس — شريط علوي ══ */
 .mshf-top {
   position: absolute;
   top: 0;
@@ -46,19 +135,22 @@
   z-index: 210;
   display: flex;
   align-items: center;
-  padding: 0 0.5rem;
-  padding-top: max(0.5rem, env(safe-area-inset-top));
-  min-height: calc(54px + max(0rem, env(safe-area-inset-top)));
-  background: linear-gradient(to bottom, rgba(26,55,46,0.96) 0%, transparent 100%);
+  gap: 0.25rem;
+  padding: 0 0.6rem;
+  padding-top: max(0.55rem, env(safe-area-inset-top));
+  min-height: calc(60px + max(0rem, env(safe-area-inset-top)));
+  background: var(--mshf-overlay-top);
   opacity: 0;
-  transform: translateY(-10px);
-  transition: opacity 0.25s ease, transform 0.25s ease;
+  transform: translateY(-100%);
+  transition: opacity 0.28s ease, transform 0.28s cubic-bezier(0.2,0,0,1);
   pointer-events: none;
+  backdrop-filter: blur(0px);
 }
 .mshf-top.on {
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;
+  backdrop-filter: blur(2px);
 }
 
 /* زر الرجوع */
@@ -66,51 +158,55 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 42px;
-  height: 42px;
+  width: 40px;
+  height: 40px;
   border: none;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.13);
-  color: #fff;
+  background: var(--mshf-btn-bg);
+  color: #FFFFFF;
   cursor: pointer;
   flex-shrink: 0;
   transition: background 0.15s;
+  -webkit-tap-highlight-color: transparent;
 }
-.mshf-back:hover { background: rgba(255, 255, 255, 0.24); }
+.mshf-back:hover { background: var(--mshf-btn-hover); }
+.mshf-back:active { transform: scale(0.92); }
 
 /* عنوان المصحف */
 .mshf-title-wrap {
   flex: 1;
   display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.mshf-title-col {
-  display: flex;
   flex-direction: column;
   align-items: center;
-  line-height: 1.25;
+  justify-content: center;
   gap: 0.1rem;
+  min-width: 0;
+  line-height: 1.2;
 }
 .mshf-title-main {
-  font-size: 1rem;
-  font-weight: 700;
-  color: #fff;
-  letter-spacing: 0.04em;
-  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  letter-spacing: 0.06em;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.35);
+  white-space: nowrap;
 }
 .mshf-title-sub {
-  font-size: 0.68rem;
-  color: rgba(185, 235, 210, 0.85);
+  font-size: 0.66rem;
+  color: rgba(200,240,220,0.78);
   font-weight: 500;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 
 /* أزرار الأيقونات */
 .mshf-top-actions {
   display: flex;
   align-items: center;
-  gap: 0.2rem;
+  gap: 0.15rem;
   flex-shrink: 0;
 }
 .mshf-icon-btn {
@@ -121,17 +217,18 @@
   height: 40px;
   border: none;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.11);
-  color: rgba(255, 255, 255, 0.78);
+  background: var(--mshf-btn-bg);
+  color: rgba(255,255,255,0.8);
   cursor: pointer;
-  transition: background 0.15s, color 0.15s;
+  transition: background 0.15s, color 0.15s, transform 0.1s;
+  -webkit-tap-highlight-color: transparent;
 }
-.mshf-icon-btn:hover { background: rgba(255, 255, 255, 0.22); color: #fff; }
+.mshf-icon-btn:hover  { background: var(--mshf-btn-hover); color: #fff; }
+.mshf-icon-btn:active { transform: scale(0.88); }
 .mshf-icon-btn.active {
-  color: #7ED6A8;
-  background: rgba(106, 181, 142, 0.2);
+  color: var(--mshf-active-color);
+  background: var(--mshf-active-glow);
 }
-.mshf-icon-btn.active:hover { background: rgba(106, 181, 142, 0.32); }
 
 /* ══ منطقة الصفحة ══ */
 .mshf-page-container {
@@ -141,47 +238,51 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0;
 }
 
-/* أنيمشن الانتقال */
-.mshf-page-container.anim-left {
-  animation: slide-out-left 0.22s ease forwards;
-}
-.mshf-page-container.anim-right {
-  animation: slide-out-right 0.22s ease forwards;
+/* إطار الصفحة — مستحدث */
+.mshf-page-frame {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  max-width: min(100%, calc(100vh * 0.67));
+  margin: 0 auto;
 }
 
-@keyframes slide-out-left {
-  0%   { transform: translateX(0);     opacity: 1; }
-  100% { transform: translateX(-8%);   opacity: 0; }
-}
-@keyframes slide-out-right {
-  0%   { transform: translateX(0);     opacity: 1; }
-  100% { transform: translateX(8%);    opacity: 0; }
-}
+/* ── أنيمشن انتقال الصفحة ── */
+.mshf-page-container.anim-left  { animation: mshf-out-left  0.22s ease forwards; }
+.mshf-page-container.anim-right { animation: mshf-out-right 0.22s ease forwards; }
+
+@keyframes mshf-out-left  { 0% { transform: translateX(0); opacity: 1; } 100% { transform: translateX(-6%); opacity: 0; } }
+@keyframes mshf-out-right { 0% { transform: translateX(0); opacity: 1; } 100% { transform: translateX(6%);  opacity: 0; } }
 
 /* ── صورة الصفحة ── */
 .mshf-page-img {
-  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
   height: 100%;
   object-fit: contain;
   display: block;
   opacity: 0;
-  transition: opacity 0.25s ease, filter 0.3s ease;
-  /* لا تسمح بالسحب الافتراضي للمتصفح */
+  transition: opacity 0.3s ease, filter 0.35s ease;
   -webkit-user-drag: none;
   user-drag: none;
+  border-radius: 4px;
+  box-shadow: var(--mshf-frame-shadow);
+  border: 1px solid var(--mshf-frame-border);
+  background: transparent;
+  transform-origin: center center;
 }
-.mshf-page-img.loaded {
-  opacity: 1;
-}
+.mshf-page-img.loaded { opacity: 1; }
+.mshf-page-img.night  { filter: var(--mshf-img-filter); }
+.mshf-shell.mshf-sepia .mshf-page-img { filter: var(--mshf-img-filter); }
 
-/* الوضع الليلي — الصورة */
-.mshf-page-img.night {
-  filter: invert(1) sepia(0.3) brightness(0.85);
-}
-
-/* ══ تحميل ══ */
+/* ── تحميل ── */
 .mshf-loading {
   position: absolute;
   inset: 0;
@@ -189,22 +290,23 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.8rem;
-  color: rgba(26, 75, 55, 0.5);
-  font-size: 0.85rem;
+  gap: 1rem;
+  color: var(--mshf-loading-text);
+  font-size: 0.8rem;
   pointer-events: none;
+  letter-spacing: 0.04em;
 }
 .mshf-spinner {
-  width: 34px;
-  height: 34px;
-  border: 3px solid rgba(26, 75, 55, 0.1);
-  border-top-color: rgba(76, 175, 133, 0.65);
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  animation: mshf-spin 0.75s linear infinite;
+  border: 3px solid var(--mshf-spinner-track);
+  border-top-color: var(--mshf-spinner-head);
+  animation: mshf-spin 0.7s linear infinite;
 }
 @keyframes mshf-spin { to { transform: rotate(360deg); } }
 
-/* ══ خطأ ══ */
+/* ── خطأ ── */
 .mshf-err {
   display: flex;
   flex-direction: column;
@@ -213,22 +315,22 @@
   gap: 0.75rem;
   padding: 2rem;
   text-align: center;
-  color: rgba(26, 75, 55, 0.7);
+  color: var(--mshf-ink-soft);
 }
 .mshf-err p { margin: 0; font-size: 0.9rem; }
 .mshf-err-btn {
-  padding: 0.45rem 1.2rem;
-  border: 1px solid rgba(76, 175, 133, 0.35);
+  padding: 0.5rem 1.5rem;
+  border: 1.5px solid var(--mshf-emerald, #0E6E52);
   border-radius: 2rem;
-  background: rgba(76, 175, 133, 0.08);
-  color: #2a6b50;
+  background: transparent;
+  color: var(--mshf-emerald, #0E6E52);
   font-family: inherit;
   font-size: 0.85rem;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   transition: background 0.15s;
 }
-.mshf-err-btn:hover { background: rgba(76, 175, 133, 0.18); }
+.mshf-err-btn:hover { background: rgba(14,110,82,0.08); }
 
 /* ══ شريط سفلي ══ */
 .mshf-bot {
@@ -238,38 +340,72 @@
   z-index: 210;
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  padding: 0.65rem 0.85rem;
-  padding-bottom: max(0.65rem, env(safe-area-inset-bottom));
-  background: linear-gradient(to top, rgba(26,55,46,0.96) 0%, transparent 100%);
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+  background: var(--mshf-overlay-bot);
   opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.25s ease, transform 0.25s ease;
+  transform: translateY(100%);
+  transition: opacity 0.28s ease, transform 0.28s cubic-bezier(0.2,0,0,1);
   pointer-events: none;
+  backdrop-filter: blur(0px);
 }
 .mshf-bot.on {
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;
+  backdrop-filter: blur(2px);
 }
+
+/* تحكم الزوم */
+.mshf-zoom-ctrl {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+  background: var(--mshf-btn-bg);
+  border-radius: 999px;
+  padding: 0 0.2rem;
+}
+.mshf-zoom-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: rgba(255,255,255,0.75);
+  font-size: 1.15rem;
+  font-weight: 700;
+  cursor: pointer;
+  line-height: 1;
+  transition: color 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+.mshf-zoom-btn:hover  { color: #fff; }
+.mshf-zoom-btn:active { transform: scale(0.86); }
+.mshf-zoom-btn:disabled { opacity: 0.25; cursor: not-allowed; }
 
 /* أزرار التنقل */
 .mshf-nav-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
-  border: none;
+  width: 48px;
+  height: 48px;
+  border: 1.5px solid rgba(255,255,255,0.15);
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.12);
-  color: #fff;
+  background: var(--mshf-btn-bg);
+  color: #FFFFFF;
   cursor: pointer;
   flex-shrink: 0;
-  transition: background 0.15s, opacity 0.15s;
+  transition: background 0.15s, border-color 0.15s, transform 0.1s;
+  -webkit-tap-highlight-color: transparent;
 }
-.mshf-nav-btn:hover:not(:disabled) { background: rgba(255, 255, 255, 0.22); }
-.mshf-nav-btn:disabled { opacity: 0.25; cursor: not-allowed; }
+.mshf-nav-btn:hover:not(:disabled) { background: var(--mshf-btn-hover); border-color: rgba(255,255,255,0.28); }
+.mshf-nav-btn:active:not(:disabled) { transform: scale(0.9); }
+.mshf-nav-btn:disabled { opacity: 0.2; cursor: not-allowed; }
 
 /* رقم الصفحة */
 .mshf-pgnum {
@@ -280,88 +416,110 @@
 }
 .mshf-pgnum-btn {
   display: flex;
-  align-items: baseline;
-  gap: 0.25rem;
-  border: none;
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 2rem;
-  padding: 0.35rem 1.1rem;
+  align-items: center;
+  gap: 0.3rem;
+  border: 1.5px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.08);
+  border-radius: 999px;
+  padding: 0.4rem 1.25rem;
   cursor: pointer;
-  transition: background 0.15s;
+  transition: background 0.15s, border-color 0.15s;
+  -webkit-tap-highlight-color: transparent;
 }
-.mshf-pgnum-btn:hover { background: rgba(106, 181, 142, 0.15); }
+.mshf-pgnum-btn:hover { background: rgba(255,255,255,0.14); border-color: rgba(255,255,255,0.25); }
 .mshf-pgnum-cur {
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #FFFFFF;
   font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
 }
-.mshf-pgnum-sep { font-size: 0.78rem; color: rgba(255, 255, 255, 0.35); }
-.mshf-pgnum-tot {
-  font-size: 0.8rem;
-  color: rgba(185, 235, 210, 0.55);
-  font-weight: 400;
-}
+.mshf-pgnum-sep { font-size: 0.75rem; color: rgba(255,255,255,0.3); margin: 0 0.05rem; }
+.mshf-pgnum-tot { font-size: 0.8rem; color: rgba(200,240,220,0.5); font-weight: 500; }
 
 /* input تحرير رقم الصفحة */
 .mshf-pgnum-input {
   width: 5.5rem;
   text-align: center;
-  border: 1.5px solid rgba(106, 181, 142, 0.55);
-  border-radius: 2rem;
-  padding: 0.3rem 0.5rem;
-  background: rgba(106, 181, 142, 0.1);
-  color: #fff;
+  border: 1.5px solid rgba(200,240,220,0.5);
+  border-radius: 999px;
+  padding: 0.35rem 0.5rem;
+  background: rgba(200,240,220,0.1);
+  color: #FFFFFF;
   font-family: inherit;
   font-size: 1.1rem;
-  font-weight: 700;
+  font-weight: 800;
   outline: none;
   -moz-appearance: textfield;
   appearance: textfield;
 }
 .mshf-pgnum-input::-webkit-outer-spin-button,
 .mshf-pgnum-input::-webkit-inner-spin-button { -webkit-appearance: none; }
-.mshf-pgnum-input:focus { border-color: rgba(106, 181, 142, 0.9); }
+.mshf-pgnum-input:focus { border-color: var(--mshf-active-color); }
+
+/* ══ مناطق اللمس للتصفح بالنقر ══ */
+.mshf-tap-prev,
+.mshf-tap-next {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 28%;
+  z-index: 5;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+.mshf-tap-prev { right: 0;  justify-content: flex-start; padding-right: 1rem; }
+.mshf-tap-next { left: 0;   justify-content: flex-end;   padding-left: 1rem; }
+.mshf-tap-center {
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 28%; right: 28%;
+  z-index: 5;
+  cursor: pointer;
+}
 
 /* ══════════════════════════════════════════════════════════════════════
-   Bottom Sheet — الفهرس
+   Bottom Sheet — الفهرس (تصميم جديد)
    ══════════════════════════════════════════════════════════════════════ */
 
 .mshf-sheet-overlay {
   position: fixed;
   inset: 0;
-  z-index: 300;
-  background: rgba(0, 0, 0, 0.45);
+  z-index: 400;
+  background: rgba(0,0,0,0.5);
   display: flex;
   align-items: flex-end;
-  animation: mshf-fade-in 0.18s ease;
+  animation: mshf-fade-in 0.2s ease;
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
 }
 @keyframes mshf-fade-in { from { opacity: 0; } to { opacity: 1; } }
 
 .mshf-sheet {
   width: 100%;
-  height: 75vh;
-  background: #F5F1E8;
-  border-radius: 1.5rem 1.5rem 0 0;
+  max-height: 82vh;
+  background: var(--mshf-sheet-bg);
+  border-radius: 1.75rem 1.75rem 0 0;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  animation: mshf-slide-up 0.24s cubic-bezier(0.32, 0.72, 0, 1);
+  animation: mshf-slide-up 0.28s cubic-bezier(0.18,0.89,0.32,1.1);
   padding-bottom: max(1rem, env(safe-area-inset-bottom));
-  box-shadow: 0 -8px 40px rgba(26, 55, 46, 0.15);
+  box-shadow: 0 -12px 60px rgba(0,0,0,0.2);
 }
 @keyframes mshf-slide-up {
-  from { transform: translateY(100%); }
-  to   { transform: translateY(0);    }
+  from { transform: translateY(100%); opacity: 0.5; }
+  to   { transform: translateY(0);    opacity: 1;   }
 }
 
 /* drag handle */
 .mshf-sheet-handle {
-  width: 40px;
+  width: 36px;
   height: 4px;
-  background: rgba(26, 55, 46, 0.18);
+  background: var(--mshf-handle-bg);
   border-radius: 2px;
-  margin: 0.55rem auto 0;
+  margin: 0.65rem auto 0;
   flex-shrink: 0;
 }
 
@@ -369,33 +527,47 @@
 .mshf-sheet-head {
   display: flex;
   align-items: center;
-  padding: 0.6rem 0.75rem 0;
-  gap: 0.5rem;
+  padding: 0.5rem 1rem 0;
+  gap: 0.4rem;
   flex-shrink: 0;
-  border-bottom: 1px solid rgba(26, 55, 46, 0.1);
 }
+.mshf-sheet-title {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--mshf-emerald-deep, #0A5040);
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+
 .mshf-sheet-tabs {
   display: flex;
-  gap: 0.2rem;
+  gap: 0.25rem;
   flex: 1;
+  background: var(--mshf-sheet-item);
+  border-radius: 999px;
+  padding: 3px;
 }
 .mshf-sheet-tab {
   flex: 1;
-  padding: 0.5rem 0.4rem;
+  padding: 0.38rem 0.4rem;
   border: none;
-  border-radius: 0.6rem 0.6rem 0 0;
+  border-radius: 999px;
   background: transparent;
-  color: rgba(26, 55, 46, 0.45);
+  color: var(--mshf-ink-soft);
   font-family: inherit;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.15s, color 0.15s;
+  transition: background 0.18s, color 0.18s;
+  white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
 }
 .mshf-sheet-tab.active {
-  background: rgba(76, 175, 133, 0.15);
-  color: #1A4A34;
+  background: var(--mshf-emerald, #0E6E52);
+  color: #FFFFFF;
+  box-shadow: 0 1px 6px rgba(14,110,82,0.3);
 }
+
 .mshf-sheet-close {
   display: flex;
   align-items: center;
@@ -404,196 +576,214 @@
   height: 34px;
   border: none;
   border-radius: 50%;
-  background: rgba(26, 55, 46, 0.08);
-  color: rgba(26, 55, 46, 0.5);
+  background: var(--mshf-sheet-item);
+  color: var(--mshf-ink-soft);
   cursor: pointer;
   flex-shrink: 0;
-  transition: background 0.15s;
+  transition: background 0.15s, color 0.15s;
+  -webkit-tap-highlight-color: transparent;
 }
-.mshf-sheet-close:hover { background: rgba(26, 55, 46, 0.15); color: #1A4A34; }
+.mshf-sheet-close:hover { background: var(--mshf-sheet-active); color: var(--mshf-item-text); }
 
 /* ── شريط البحث ── */
 .mshf-search-bar {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  margin: 0.6rem 0.75rem 0.3rem;
-  padding: 0.45rem 0.75rem;
-  background: rgba(255, 255, 255, 0.7);
-  border: 1px solid rgba(76, 175, 133, 0.2);
-  border-radius: 0.75rem;
+  margin: 0.5rem 1rem 0;
+  padding: 0.5rem 0.8rem;
+  background: var(--mshf-sheet-item);
+  border: 1px solid var(--mshf-sheet-border);
+  border-radius: 1rem;
   flex-shrink: 0;
-  color: rgba(26, 55, 46, 0.4);
-  backdrop-filter: blur(4px);
+  color: var(--mshf-ink-soft);
 }
 .mshf-search-input {
   flex: 1;
   border: none;
   background: transparent;
-  color: #1A3A2A;
+  color: var(--mshf-item-text);
   font-family: inherit;
   font-size: 0.875rem;
   outline: none;
   direction: rtl;
 }
-.mshf-search-input::placeholder { color: rgba(26, 55, 46, 0.35); }
+.mshf-search-input::placeholder { color: var(--mshf-ink-soft); }
 .mshf-search-clear {
   border: none;
   background: transparent;
-  color: rgba(26, 55, 46, 0.35);
+  color: var(--mshf-ink-soft);
   cursor: pointer;
-  font-size: 0.75rem;
-  padding: 0 0.15rem;
+  font-size: 0.78rem;
+  padding: 0.15rem;
   line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  transition: background 0.12s;
 }
+.mshf-search-clear:hover { background: var(--mshf-sheet-active); }
 
 /* ── جسم الـ sheet ── */
 .mshf-sheet-body {
   flex: 1;
   overflow-y: auto;
-  padding: 0.5rem 0.75rem;
+  padding: 0.6rem 0.75rem;
   -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
 }
 
-/* ══ قائمة السور ══ */
+/* ══ قائمة السور (شبكة ٣ أعمدة) ══ */
 .mshf-surah-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.4rem;
 }
 .mshf-surah-row {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 0.75rem;
-  width: 100%;
-  padding: 0.6rem 0.65rem;
-  border: none;
-  border-radius: 0.65rem;
-  background: transparent;
+  gap: 0.2rem;
+  padding: 0.6rem 0.35rem 0.55rem;
+  border: 1.5px solid var(--mshf-sheet-border);
+  border-radius: 1rem;
+  background: var(--mshf-sheet-item);
   cursor: pointer;
-  transition: background 0.12s;
-  text-align: right;
+  transition: background 0.14s, border-color 0.14s, transform 0.1s;
+  text-align: center;
+  -webkit-tap-highlight-color: transparent;
 }
-.mshf-surah-row:hover { background: rgba(76, 175, 133, 0.09); }
-.mshf-surah-row.active { background: rgba(76, 175, 133, 0.16); }
-
+.mshf-surah-row:hover { background: var(--mshf-sheet-active); border-color: var(--mshf-emerald, #0E6E52); transform: translateY(-1px); }
+.mshf-surah-row.active {
+  background: var(--mshf-emerald, #0E6E52);
+  border-color: var(--mshf-emerald, #0E6E52);
+  box-shadow: 0 2px 12px rgba(14,110,82,0.28);
+}
 .mshf-surah-num {
-  min-width: 1.8rem;
-  height: 1.8rem;
+  width: 1.7rem;
+  height: 1.7rem;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: rgba(76, 175, 133, 0.12);
-  color: #2a7a52;
-  font-size: 0.68rem;
+  background: var(--mshf-num-bg);
+  color: var(--mshf-num-color);
+  font-size: 0.6rem;
   font-weight: 700;
   flex-shrink: 0;
 }
-.mshf-surah-row.active .mshf-surah-num {
-  background: #2a7a52;
-  color: #fff;
-}
+.mshf-surah-row.active .mshf-surah-num { background: rgba(255,255,255,0.2); color: #FFFFFF; }
 .mshf-surah-name {
-  flex: 1;
-  color: #1A3A2A;
-  font-size: 0.9rem;
-  font-weight: 600;
+  color: var(--mshf-item-text);
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1.2;
 }
-.mshf-surah-row.active .mshf-surah-name { color: #1A4A34; }
+.mshf-surah-row.active .mshf-surah-name { color: #FFFFFF; }
 .mshf-surah-page {
-  font-size: 0.68rem;
-  color: rgba(26, 55, 46, 0.38);
+  font-size: 0.6rem;
+  color: var(--mshf-item-sub);
   font-variant-numeric: tabular-nums;
 }
-.mshf-surah-row.active .mshf-surah-page { color: rgba(42, 122, 82, 0.7); }
+.mshf-surah-row.active .mshf-surah-page { color: rgba(255,255,255,0.65); }
 
 /* ══ شبكة الأجزاء (5 أعمدة) ══ */
 .mshf-grid5 {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 0.45rem;
+  gap: 0.4rem;
 }
-
 /* ══ شبكة الأحزاب (6 أعمدة) ══ */
 .mshf-grid6 {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  gap: 0.4rem;
+  gap: 0.35rem;
 }
 
-/* عنصر الشبكة (مشترك) */
+/* عنصر الشبكة */
 .mshf-grid-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0.55rem 0.2rem;
-  border: 1px solid rgba(76, 175, 133, 0.15);
-  border-radius: 0.7rem;
-  background: rgba(255, 255, 255, 0.55);
+  padding: 0.6rem 0.2rem;
+  border: 1.5px solid var(--mshf-sheet-border);
+  border-radius: 0.85rem;
+  background: var(--mshf-sheet-item);
   cursor: pointer;
-  transition: background 0.12s, border-color 0.12s;
+  transition: background 0.14s, border-color 0.14s, transform 0.1s;
+  -webkit-tap-highlight-color: transparent;
 }
-.mshf-grid-item:hover { background: rgba(76, 175, 133, 0.1); border-color: rgba(76, 175, 133, 0.3); }
-.mshf-grid-item.active { background: rgba(76, 175, 133, 0.2); border-color: rgba(76, 175, 133, 0.45); }
+.mshf-grid-item:hover { background: var(--mshf-sheet-active); border-color: var(--mshf-emerald, #0E6E52); transform: translateY(-1px); }
+.mshf-grid-item.active {
+  background: var(--mshf-emerald, #0E6E52);
+  border-color: var(--mshf-emerald, #0E6E52);
+  box-shadow: 0 2px 10px rgba(14,110,82,0.28);
+}
 .mshf-grid-num {
   font-size: 1rem;
-  font-weight: 700;
-  color: #1A3A2A;
+  font-weight: 800;
+  color: var(--mshf-item-text);
   line-height: 1;
 }
-.mshf-grid-item.active .mshf-grid-num { color: #1A4A34; }
+.mshf-grid-item.active .mshf-grid-num { color: #FFFFFF; }
 .mshf-grid-pg {
-  font-size: 0.55rem;
-  color: rgba(26, 55, 46, 0.38);
-  margin-top: 0.2rem;
+  font-size: 0.52rem;
+  color: var(--mshf-item-sub);
+  margin-top: 0.25rem;
   font-variant-numeric: tabular-nums;
 }
+.mshf-grid-item.active .mshf-grid-pg { color: rgba(255,255,255,0.6); }
 
 /* ══ قائمة العلامات ══ */
 .mshf-bm-list { display: flex; flex-direction: column; gap: 0.4rem; }
 .mshf-bm-row {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
-  background: rgba(255, 255, 255, 0.65);
-  border: 1px solid rgba(76, 175, 133, 0.15);
-  border-radius: 0.75rem;
+  border: 1.5px solid var(--mshf-sheet-border);
+  border-radius: 1rem;
   overflow: hidden;
+  background: var(--mshf-sheet-item);
+  transition: border-color 0.14s;
 }
+.mshf-bm-row:hover { border-color: var(--mshf-emerald, #0E6E52); }
 .mshf-bm-btn {
   flex: 1;
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  padding: 0.6rem 0.75rem;
+  gap: 0.75rem;
+  padding: 0.7rem 0.85rem;
   border: none;
   background: transparent;
-  color: #1A3A2A;
+  color: var(--mshf-item-text);
   cursor: pointer;
   text-align: right;
+  -webkit-tap-highlight-color: transparent;
 }
-.mshf-bm-btn svg { color: #4CAF85; flex-shrink: 0; }
-.mshf-bm-info { display: flex; flex-direction: column; gap: 0.1rem; }
-.mshf-bm-page { font-size: 0.875rem; font-weight: 600; }
-.mshf-bm-surah { font-size: 0.7rem; color: rgba(42, 122, 82, 0.65); }
+.mshf-bm-btn svg { color: var(--mshf-emerald, #0E6E52); flex-shrink: 0; }
+.mshf-bm-info { display: flex; flex-direction: column; gap: 0.15rem; }
+.mshf-bm-page { font-size: 0.9rem; font-weight: 700; color: var(--mshf-item-text); }
+.mshf-bm-surah { font-size: 0.72rem; color: var(--mshf-item-sub); }
 .mshf-bm-del {
-  padding: 0.6rem 0.75rem;
+  padding: 0.7rem 0.85rem;
   border: none;
-  border-right: 1px solid rgba(76, 175, 133, 0.12);
+  border-right: 1px solid var(--mshf-sheet-border);
   background: transparent;
-  color: rgba(26, 55, 46, 0.25);
+  color: var(--mshf-ink-soft);
   cursor: pointer;
-  font-size: 0.75rem;
+  font-size: 0.78rem;
   transition: color 0.12s, background 0.12s;
+  -webkit-tap-highlight-color: transparent;
 }
-.mshf-bm-del:hover { color: #c0392b; background: rgba(192, 57, 43, 0.07); }
+.mshf-bm-del:hover { color: var(--majalis-danger, #9B1C1C); background: rgba(155,28,28,0.06); }
 
 /* ══ فارغة ══ */
 .mshf-empty {
-  color: rgba(26, 55, 46, 0.4);
+  color: var(--mshf-ink-soft);
   text-align: center;
-  padding: 1rem 0.5rem;
+  padding: 1rem;
   font-size: 0.875rem;
   margin: 0;
 }
@@ -602,58 +792,45 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  padding: 2.5rem 1rem;
+  gap: 0.6rem;
+  padding: 3rem 1rem;
 }
-.mshf-empty--center svg { opacity: 0.2; }
+.mshf-empty--center svg { opacity: 0.18; }
 .mshf-empty--center p { margin: 0; }
-.mshf-empty-sub {
-  font-size: 0.75rem !important;
-  color: rgba(26, 55, 46, 0.28) !important;
-}
+.mshf-empty-sub { font-size: 0.75rem !important; opacity: 0.65; }
 
-/* ══ الوضع الليلي — Bottom Sheet ══ */
-.mshf-night .mshf-sheet {
-  background: #1E2E25;
-  box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.4);
+/* ══ مؤشر الوضع الحالي (badge في الزاوية) ══ */
+.mshf-mode-badge {
+  position: absolute;
+  bottom: calc(env(safe-area-inset-bottom) + 72px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(14,110,82,0.85);
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 0.2rem 0.7rem;
+  border-radius: 999px;
+  letter-spacing: 0.06em;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+  z-index: 220;
 }
-.mshf-night .mshf-sheet-handle { background: rgba(185, 235, 210, 0.15); }
-.mshf-night .mshf-sheet-head { border-bottom-color: rgba(185, 235, 210, 0.1); }
-.mshf-night .mshf-sheet-tab { color: rgba(185, 235, 210, 0.4); }
-.mshf-night .mshf-sheet-tab.active { background: rgba(76, 175, 133, 0.18); color: #a8e8c8; }
-.mshf-night .mshf-sheet-close { background: rgba(185, 235, 210, 0.07); color: rgba(185, 235, 210, 0.45); }
-.mshf-night .mshf-sheet-close:hover { background: rgba(185, 235, 210, 0.14); color: #a8e8c8; }
-.mshf-night .mshf-search-bar { background: rgba(255,255,255,0.06); border-color: rgba(76,175,133,0.2); color: rgba(185,235,210,0.4); }
-.mshf-night .mshf-search-input { color: #e0f5e9; }
-.mshf-night .mshf-search-input::placeholder { color: rgba(185,235,210,0.28); }
-.mshf-night .mshf-surah-row:hover { background: rgba(76,175,133,0.09); }
-.mshf-night .mshf-surah-row.active { background: rgba(76,175,133,0.18); }
-.mshf-night .mshf-surah-name { color: rgba(255,255,255,0.88); }
-.mshf-night .mshf-surah-row.active .mshf-surah-name { color: #a8e8c8; }
-.mshf-night .mshf-surah-page { color: rgba(185,235,210,0.28); }
-.mshf-night .mshf-grid-item { background: rgba(255,255,255,0.04); border-color: rgba(76,175,133,0.15); }
-.mshf-night .mshf-grid-item:hover { background: rgba(76,175,133,0.09); }
-.mshf-night .mshf-grid-item.active { background: rgba(76,175,133,0.2); }
-.mshf-night .mshf-grid-num { color: rgba(255,255,255,0.85); }
-.mshf-night .mshf-grid-pg { color: rgba(185,235,210,0.3); }
-.mshf-night .mshf-bm-row { background: rgba(255,255,255,0.04); border-color: rgba(76,175,133,0.15); }
-.mshf-night .mshf-bm-btn { color: rgba(255,255,255,0.88); }
-.mshf-night .mshf-bm-del { border-right-color: rgba(185,235,210,0.1); color: rgba(185,235,210,0.22); }
-.mshf-night .mshf-empty { color: rgba(185,235,210,0.35); }
-.mshf-night .mshf-loading { color: rgba(185,235,210,0.4); }
+.mshf-mode-badge.show { opacity: 1; }
 
 /* ══ استجابة — شاشات كبيرة ══ */
 @media (min-width: 700px) {
-  .mshf-sheet { max-width: 520px; border-radius: 1.5rem; margin: auto; }
+  .mshf-sheet { max-width: 540px; border-radius: 1.75rem; margin: auto; }
   .mshf-sheet-overlay { align-items: center; }
   .mshf-grid5 { grid-template-columns: repeat(6, 1fr); }
   .mshf-grid6 { grid-template-columns: repeat(8, 1fr); }
+  .mshf-surah-list { grid-template-columns: repeat(4, 1fr); }
 }
 
-/* ══ شاشة أفقية صغيرة ══ */
-@media (orientation: landscape) and (max-height: 500px) {
-  .mshf-top  { min-height: 40px; }
-  .mshf-back { width: 36px; height: 36px; }
-  .mshf-nav-btn { width: 36px; height: 36px; }
+/* ══ شاشة أفقية ══ */
+@media (orientation: landscape) and (max-height: 520px) {
+  .mshf-top   { min-height: 44px; }
   .mshf-sheet { height: 90vh; }
+  .mshf-nav-btn { width: 40px; height: 40px; }
 }
