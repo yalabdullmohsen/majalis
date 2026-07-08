@@ -2219,9 +2219,9 @@ button.hcp-prayer-cell:focus-visible {
   border: 1px solid rgba(255,255,255,0.22) !important;
 }
 .lesson-unified-card--today .lesson-unified-card__status {
-  background: rgba(255,220,40,0.25) !important;
-  color: #fef3c7 !important;
-  border-color: rgba(255,220,40,0.4) !important;
+  background: rgba(255,255,255,0.30) !important;
+  color: #FFFFFF !important;
+  border-color: rgba(255,255,255,0.50) !important;
 }
 
 /* زر التفاصيل — أخضر داكن يطابق رأس البطاقة */

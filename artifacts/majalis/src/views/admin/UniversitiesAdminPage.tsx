@@ -404,7 +404,7 @@ function AdminContent() {
                   </p>
                   {r.universities?.website_url && (
                     <a href={r.universities.website_url} target="_blank" rel="noopener noreferrer"
-                      className="text-xs text-emerald-600 dark:text-emerald-400 hover:underline mt-1 block">
+                      className="text-xs text-[var(--majalis-emerald)] hover:underline mt-1 block">
                       <Globe size={12} className="inline ml-1" />فتح الموقع الرسمي للمراجعة ↗
                     </a>
                   )}

@@ -133,7 +133,7 @@
   background: var(--bg-hover, #f3f0eb);
 }
 .qs-surah-item.is-active {
-  background: #f0f7f4;
+  background: var(--majalis-emerald-soft, #EBF5F0);
   color: var(--majalis-emerald, #164E3C);
   font-weight: 700;
 }
@@ -223,7 +223,7 @@
 
 /* Playing ayah: تغيير اللون فقط — لا صندوق يقطع السطر */
 .qs-ayah-inline--playing .qs-ayah-inline__text {
-  color: #0a3a25;
+  color: var(--majalis-emerald-deep, #0A5040);
   text-decoration: underline;
   text-decoration-color: rgba(22, 78, 60, 0.4);
   text-underline-offset: 3px;
@@ -232,7 +232,7 @@
 
 /* Target ayah (jump destination) */
 .qs-ayah-inline--target .qs-ayah-inline__text {
-  color: #5c3800;
+  color: var(--majalis-emerald, #0E6E52);
 }
 
 /* Ayah text span — inline, cursor pointer for tap-to-select */
@@ -414,7 +414,7 @@
   border-color: var(--majalis-emerald, #164E3C);
 }
 .qs-pb-btn--primary:hover:not(:disabled) {
-  background: #0f3329;
+  background: var(--majalis-emerald-deep, #0A5040);
 }
 .qs-pb-font-ctrl {
   display: flex;
@@ -464,7 +464,7 @@
 .qs-reciter-option.is-selected {
   color: var(--majalis-emerald, #164E3C);
   font-weight: 700;
-  background: #f0f7f4;
+  background: var(--majalis-emerald-soft, #EBF5F0);
 }
 
 /* ── Search panel ── */
@@ -534,7 +534,7 @@
   transition: background .1s;
 }
 .qs-search__result:hover {
-  background: #f0f7f4;
+  background: var(--majalis-emerald-soft, #EBF5F0);
 }
 .qs-search__result-ref {
   font-size: .76rem;
@@ -590,8 +590,8 @@
 .qs-error {
   text-align: center;
   padding: 2rem 1rem;
-  color: #c0392b;
-  background: #fdf0ef;
+  color: var(--majalis-danger, #9B1C1C);
+  background: var(--majalis-danger-muted, rgba(155,28,28,.08));
   border-radius: .5rem;
   margin: 1rem 0;
 }
@@ -671,8 +671,8 @@
   flex-wrap: wrap;
 }
 .qs-radio-card.is-active {
-  border-color: var(--majalis-gold, #0E6E52);
-  background: #fffdf5;
+  border-color: var(--majalis-emerald, #0E6E52);
+  background: var(--majalis-emerald-soft, #EBF5F0);
 }
 .qs-radio-card__info {
   display: flex;
@@ -700,12 +700,12 @@
   color: var(--text-muted, #6b7280);
 }
 .qs-radio-status--live {
-  background: #dcfce7;
-  color: #14532d;
+  background: var(--majalis-emerald-soft, #EBF5F0);
+  color: var(--majalis-emerald-deep, #0A5040);
 }
 .qs-radio-status--error {
-  background: #fee2e2;
-  color: #7f1d1d;
+  background: var(--majalis-danger-muted, rgba(155,28,28,.08));
+  color: var(--majalis-danger, #9B1C1C);
 }
 .qs-radio-play-btn {
   padding: .35rem .85rem;
@@ -718,7 +718,7 @@
   cursor: pointer;
 }
 .qs-radio-play-btn:hover {
-  background: #0f3329;
+  background: var(--majalis-emerald-deep, #0A5040);
 }
 .qs-live-section {
   margin-top: 2rem;
@@ -832,7 +832,7 @@
   color: #fff;
   border-color: var(--majalis-emerald, #164E3C);
 }
-.qs-ctrl-btn--accent:hover { background: #0f3729; }
+.qs-ctrl-btn--accent:hover { background: var(--majalis-emerald-deep, #0A5040); }
 
 /* ── Qiraat selector ── */
 .qs-qiraat-row {
@@ -862,7 +862,7 @@
   justify-content: space-between;
   gap: .75rem;
   padding: .6rem 1rem;
-  background: #f0f7f4;
+  background: var(--majalis-emerald-soft, #EBF5F0);
   border-radius: .625rem;
   margin-bottom: 1rem;
   direction: rtl;
@@ -924,7 +924,7 @@
   cursor: pointer;
   transition: background .15s;
 }
-.qs-page-nav__btn:hover:not(:disabled) { background: #f0f7f4; }
+.qs-page-nav__btn:hover:not(:disabled) { background: var(--majalis-emerald-soft, #EBF5F0); }
 .qs-page-nav__btn:disabled {
   opacity: .4;
   cursor: not-allowed;
@@ -943,7 +943,7 @@
   align-items: center;
   gap: .5rem;
   padding: .5rem .875rem;
-  background: #f0f7f4;
+  background: var(--majalis-emerald-soft, #EBF5F0);
   border-radius: 2rem;
   margin: .75rem 0;
   font-size: .82rem;
@@ -1026,13 +1026,13 @@
   transition: background .15s;
   text-align: right;
 }
-.qs-context-sheet__btn:hover { background: #f0f7f4; }
+.qs-context-sheet__btn:hover { background: var(--majalis-emerald-soft, #EBF5F0); }
 .qs-context-sheet__btn--primary {
   background: var(--majalis-emerald, #164E3C);
   color: #fff;
   border-color: var(--majalis-emerald, #164E3C);
 }
-.qs-context-sheet__btn--primary:hover { background: #0f3729; }
+.qs-context-sheet__btn--primary:hover { background: var(--majalis-emerald-deep, #0A5040); }
 .qs-context-sheet__btn--close {
   background: transparent;
   color: var(--text-muted, #6b7280);
@@ -1064,7 +1064,7 @@
   cursor: pointer;
   transition: background .15s;
 }
-.qs-page-view__nav-btn:hover:not(:disabled):not(.is-disabled) { background: #f0f7f4; }
+.qs-page-view__nav-btn:hover:not(:disabled):not(.is-disabled) { background: var(--majalis-emerald-soft, #EBF5F0); }
 .qs-page-view__nav-btn:disabled,
 .qs-page-view__nav-btn.is-disabled { opacity: .4; cursor: not-allowed; }
 .qs-page-view__counter {
@@ -1094,7 +1094,7 @@
   border-radius: .875rem;
   overflow: hidden;
   box-shadow: 0 4px 28px rgba(0, 0, 0, .13);
-  background: #f8f4e8;
+  background: var(--qs-parchment, #F8F2E4);
 }
 .qs-page-view__skeleton {
   padding: 0;
@@ -1105,26 +1105,26 @@
   align-items: center;
   justify-content: center;
   gap: .75rem;
-  background: linear-gradient(135deg, #fdf8f0 0%, #f5ede0 100%);
+  background: var(--qs-parchment, #F8F2E4);
   font-size: .85rem;
-  color: #8b7355;
+  color: var(--majalis-ink-soft, #4A4A4A);
 }
 .qs-page-view__spinner {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  border: 3px solid #d4a96a;
+  border: 3px solid var(--majalis-emerald, #0E6E52);
   border-top-color: transparent;
   animation: spin .9s linear infinite;
 }
 .qs-page-view__error {
   padding: 3rem 2rem;
-  color: #8B1A1A;
-  background: #fff9f9;
+  color: var(--majalis-danger, #9B1C1C);
+  background: var(--majalis-panel, #fff);
 }
 .qs-page-view__error-sub {
   font-size: .8rem;
-  color: #666;
+  color: var(--majalis-ink-soft, #4A4A4A);
   margin: .35rem 0 1rem;
 }
 .qs-page-view__retry-btn {
@@ -1245,8 +1245,8 @@
 .qs-juz-progress__bar { height: 6px; background: var(--border, #e5e3dd); border-radius: 999px; overflow: hidden; }
 .qs-juz-progress__fill { height: 100%; background: var(--majalis-emerald, #164E3C); border-radius: 999px; transition: width .2s; }
 .qs-juz-surah-header {
-  background: linear-gradient(135deg, #f0f7f4, #f8f4e8);
-  border: 1px solid #b8d4c8;
+  background: var(--majalis-emerald-soft, #EBF5F0);
+  border: 1px solid var(--majalis-line, rgba(0,0,0,0.07));
   border-radius: .625rem;
   padding: .625rem 1rem;
   margin: 1.25rem 0 .625rem;
@@ -1258,7 +1258,7 @@
 .qs-juz-ayah { display: flex; gap: .75rem; margin-bottom: .5rem; align-items: flex-start; direction: rtl; }
 .qs-juz-ayah__num {
   flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
-  background: #f0f7f4; color: var(--msk-gold);
+  background: var(--majalis-emerald-soft, #EBF5F0); color: var(--majalis-emerald, #0E6E52);
   font-size: .65rem; font-weight: 700;
   display: flex; align-items: center; justify-content: center;
 }
@@ -1933,7 +1933,7 @@
   background-repeat: no-repeat;
   font-size:   0.56em;
   font-weight: 700;
-  color: #2c2412; /* حبر داكن — تباين ~12:1 على العاجي */
+  color: var(--majalis-emerald-deep, #0A5040); /* حبر زمردي داكن — تباين عالٍ على العاجي */
   vertical-align: middle;
   margin: 0 0.22em;
   user-select: none;
@@ -2022,7 +2022,7 @@
 .quran-shell--night .qs-ayah-num {
   background-color: #111009;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='50,6 62,22 81,19 78,39 94,50 78,62 81,81 62,78 50,94 38,78 19,81 22,62 6,50 22,39 19,19 38,22' fill='%230E6E52' opacity='0.55'/%3E%3Ccircle cx='50' cy='50' r='19' fill='%23111009'/%3E%3C/svg%3E");
-  color: #D4A94A;
+  color: #a8e8c8;
 }
 .quran-shell--night .qs-bismillah { color: #e8d5b0; }
 
@@ -2034,18 +2034,18 @@
 .quran-shell--warm .qs-mushaf-frame::before {
   border-color: rgba(14,110,82,0.30);
 }
-.quran-shell--warm .qs-mushaf-frame .qs-mushaf-body { color: #2c1a0e; }
-.quran-shell--warm .qs-surah-header__title { color: #5a2d00; }
-.quran-shell--warm .qs-mushaf-header-row { color: #4a2800; }
+.quran-shell--warm .qs-mushaf-frame .qs-mushaf-body { color: #1a2e1c; }
+.quran-shell--warm .qs-surah-header__title { color: var(--majalis-emerald-deep, #0A5040); }
+.quran-shell--warm .qs-mushaf-header-row { color: var(--majalis-emerald, #0E6E52); }
 .quran-shell--warm .qs-surah-name-box { border-color: rgba(14,110,82,0.40); }
-.quran-shell--warm .qs-surah-name-box__title { color: #3c1e00; }
-.quran-shell--warm .qs-mushaf-footer-row__page { color: #4a2800; }
+.quran-shell--warm .qs-surah-name-box__title { color: var(--majalis-emerald-deep, #0A5040); }
+.quran-shell--warm .qs-mushaf-footer-row__page { color: var(--majalis-emerald, #0E6E52); }
 .quran-shell--warm .qs-ayah-num {
   background-color: #fdf0d8;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='50,6 62,22 81,19 78,39 94,50 78,62 81,81 62,78 50,94 38,78 19,81 22,62 6,50 22,39 19,19 38,22' fill='%230E6E52'/%3E%3Ccircle cx='50' cy='50' r='19' fill='%23fdf0d8'/%3E%3C/svg%3E");
-  color: #5c3800;
+  color: var(--majalis-emerald, #0E6E52);
 }
-.quran-shell--warm .qs-bismillah { color: #2c1a0e; }
+.quran-shell--warm .qs-bismillah { color: #1a2e1c; }
 
 /* ── الاستجابة — الإطار يتقلص بهدوء على الشاشات الصغيرة ── */
 @media (max-width: 480px) {
