@@ -1,7 +1,18 @@
+import { useEffect } from "react";
 import { Link } from "wouter";
 import { LegalBackLink, LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
+import { applyPageSeo } from "@/lib/seo";
 
 export default function PrivacyPage() {
+  useEffect(() => {
+    applyPageSeo({
+      path: "/privacy",
+      title: "سياسة الخصوصية | المجلس العلمي",
+      description: "سياسة خصوصية المجلس العلمي — كيف نجمع بياناتك ونحميها ونستخدمها.",
+      keywords: ["خصوصية", "سياسة خصوصية", "المجلس العلمي", "حماية البيانات"],
+    });
+  }, []);
+
   return (
     <LegalPageLayout eyebrow="الخصوصية" title="سياسة الخصوصية">
       <LegalSection title="البيانات التي نجمعها">

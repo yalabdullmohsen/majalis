@@ -1,6 +1,17 @@
+import { useEffect } from "react";
 import { LegalBackLink, LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
+import { applyPageSeo } from "@/lib/seo";
 
 export default function TermsPage() {
+  useEffect(() => {
+    applyPageSeo({
+      path: "/terms",
+      title: "شروط الاستخدام | المجلس العلمي",
+      description: "شروط وأحكام استخدام منصة المجلس العلمي — اقرأها قبل استخدام الخدمات.",
+      keywords: ["شروط الاستخدام", "المجلس العلمي", "الاستخدام المقبول"],
+    });
+  }, []);
+
   return (
     <LegalPageLayout eyebrow="الاستخدام" title="شروط الاستخدام">
       <LegalSection title="قبول الشروط">
