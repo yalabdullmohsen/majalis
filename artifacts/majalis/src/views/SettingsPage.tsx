@@ -1,6 +1,8 @@
 "use client";
 
+import { useEffect } from "react";
 import { Link } from "wouter";
+import { applyPageSeo } from "@/lib/seo";
 import { LegalBackLink, LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
 import { useAuth } from "@/components/AuthProvider";
 import { useFontPreference } from "@/components/FontPreferenceProvider";
@@ -36,6 +38,16 @@ function ToggleRow({
 
 export default function SettingsPage() {
   const { user, isLoggedIn, logout } = useAuth();
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/settings",
+      title: "الإعدادات | المجلس العلمي",
+      description: "إعدادات حساب المجلس العلمي — اللغة والخط والوضع الليلي وتفضيلات الأذان.",
+      keywords: ["إعدادات", "المجلس العلمي", "تفضيلات"],
+      robots: "noindex, follow",
+    });
+  }, []);
   const { lang, setLang, t } = useLanguage();
   const { preference: fontPreference, setPreference: setFontPreference } = useFontPreference();
   const { preferences, updatePreferences } = useUserPreferences();

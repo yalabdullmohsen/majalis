@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import { Link } from "wouter";
+import { applyPageSeo } from "@/lib/seo";
 
 const SUGGESTIONS = [
   { href: "/quran",        label: "المصحف الشريف" },
@@ -12,6 +14,16 @@ const SUGGESTIONS = [
 ];
 
 export default function NotFound() {
+  useEffect(() => {
+    applyPageSeo({
+      path: "/404",
+      title: "الصفحة غير موجودة | المجلس العلمي",
+      description: "الصفحة التي تبحث عنها غير موجودة — استخدم القائمة للوصول إلى أقسام المجلس العلمي.",
+      keywords: ["404", "صفحة غير موجودة"],
+      robots: "noindex, follow",
+    });
+  }, []);
+
   return (
     <div className="nf-page">
       <section className="nf-card">

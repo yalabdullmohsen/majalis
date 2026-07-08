@@ -8,6 +8,7 @@ import { bootstrapSupabaseFromServer } from "@/lib/supabase-bootstrap";
 import { signInWithGoogle } from "@/lib/supabase";
 import { preloadRoute } from "@/lib/lazy-with-retry";
 import { Loading } from "@/components/ui-common";
+import { applyPageSeo } from "@/lib/seo";
 
 function canAccessAdminUser(current: Awaited<ReturnType<typeof import("@/lib/supabase").getCurrentUser>>) {
   if (!current) return false;
@@ -40,6 +41,16 @@ function isAdminLogin(nextPath: string) {
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/login",
+      title: "تسجيل الدخول | المجلس العلمي",
+      description: "سجّل دخولك إلى المجلس العلمي للوصول إلى محتوى شخصي وأدوات متقدمة.",
+      keywords: ["تسجيل دخول", "المجلس العلمي"],
+      robots: "noindex, follow",
+    });
+  }, []);
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [denied, setDenied] = useState(false);

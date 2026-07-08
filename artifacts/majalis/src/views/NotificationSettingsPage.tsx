@@ -19,6 +19,7 @@ import {
   searchHistory,
   type NotifRecord,
 } from "@/lib/notification-history";
+import { applyPageSeo } from "@/lib/seo";
 
 type Permission = ReturnType<typeof getPermissionStatus>;
 type HistoryTab = "inbox" | "archived";
@@ -92,6 +93,16 @@ function NotifRow({ rec, onRead, onArchive, onDelete }: {
 // ── الصفحة الرئيسية ─────────────────────────────────────────────────────────
 export default function NotificationSettingsPage() {
   const [prefs, setPrefs] = useState<NotifPrefs>(loadNotifPrefs);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/notification-settings",
+      title: "إعدادات الإشعارات | المجلس العلمي",
+      description: "إدارة إشعارات المجلس العلمي — صلاة الأذان والتذكيرات الشرعية والأحداث العلمية.",
+      keywords: ["إشعارات", "إعدادات أذان", "تذكيرات إسلامية"],
+      robots: "noindex, follow",
+    });
+  }, []);
   const [permission, setPermission] = useState<Permission>(getPermissionStatus);
   const [requesting, setRequesting] = useState(false);
   const [saved, setSaved] = useState(false);

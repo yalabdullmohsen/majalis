@@ -6,9 +6,20 @@ import { isSupabaseConfigured } from "@/lib/supabase-config";
 import { bootstrapSupabaseFromServer } from "@/lib/supabase-bootstrap";
 import { supabase, signInWithGoogle } from "@/lib/supabase";
 import { Loading } from "@/components/ui-common";
+import { applyPageSeo } from "@/lib/seo";
 
 export default function RegisterPage() {
   const { register, user, loading: authLoading } = useAuth();
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/register",
+      title: "إنشاء حساب | المجلس العلمي",
+      description: "أنشئ حسابك في المجلس العلمي وابدأ رحلتك في تعلم العلوم الإسلامية.",
+      keywords: ["إنشاء حساب", "تسجيل", "المجلس العلمي"],
+      robots: "noindex, follow",
+    });
+  }, []);
   const [, navigate] = useLocation();
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
