@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FiqhCouncilSubnav } from "./FiqhCouncilPage";
+import { applyPageSeo } from "@/lib/seo";
 import { PageHeader } from "@/components/ui-common";
 import { FiqhResearchAssistantView } from "@/components/fiqh-council/FiqhResearchAssistantView";
 import {
@@ -12,6 +13,15 @@ import { FIQH_RESEARCH_DISCLAIMER } from "@/lib/fiqh-citation";
 
 export default function FiqhCouncilResearchAssistantPage() {
   const [type, setType] = useState("الكل");
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/fiqh-council/assistant",
+      title: "مساعد البحث الفقهي | المجلس العلمي",
+      description: "مساعد بحث ذكي في قرارات المجمع الفقهي — ابحث وصنّف واستشهد بالمصادر الفقهية الموثوقة.",
+      keywords: ["مساعد بحث فقهي", "ذكاء اصطناعي فقهي", "بحث إسلامي", "مجمع فقهي", "استشهاد علمي"],
+    });
+  }, []);
   const [category, setCategory] = useState("الكل");
   const [source, setSource] = useState("");
   const [year, setYear] = useState("الكل");

@@ -6,6 +6,7 @@ import { PlatformContentCard } from "@/components/platform/ContentDetailLayout";
 import { FiqhCouncilSubnav } from "./FiqhCouncilPage";
 import { advancedSearchFiqhCouncil } from "@/lib/fiqh-council-service";
 import { FIQH_CATEGORY_TREE } from "@/lib/fiqh-council-categories";
+import { applyPageSeo } from "@/lib/seo";
 import {
   FIQH_COUNCIL_CATEGORIES,
   FIQH_ITEM_TYPES,
@@ -42,6 +43,15 @@ export default function FiqhCouncilAdvancedSearchPage() {
   const subcategories = category !== "الكل"
     ? FIQH_CATEGORY_TREE.find((c) => c.name === category)?.children?.map((c) => c.name) || []
     : [];
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/fiqh-council/advanced-search",
+      title: "البحث المتقدم في المجمع الفقهي | المجلس العلمي",
+      description: "بحث متقدم في قرارات وفتاوى وبحوث المجمع الفقهي — تصفية حسب النوع والتصنيف والسنة والمصدر.",
+      keywords: ["بحث متقدم فقهي", "بحث في الفتاوى", "مجمع فقهي", "تصفية فقهية", "محرك بحث إسلامي"],
+    });
+  }, []);
 
   useEffect(() => {
     setLoading(true);

@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { Link } from "wouter";
+import { applyPageSeo } from "@/lib/seo";
 
 const CONTENT_TYPES = ["درس", "فائدة", "معلومة", "سؤال لعبة", "فكرة"] as const;
 type ContentType = (typeof CONTENT_TYPES)[number];
@@ -10,6 +11,15 @@ type Status = "idle" | "loading" | "success" | "error";
 
 export default function SubmitContentPage() {
   const [contentType, setContentType] = useState<ContentType>("درس");
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/submit",
+      title: "أضف محتوى | المجلس العلمي",
+      description: "شارك في إثراء المجلس العلمي — أرسل درساً أو فائدة أو سؤالاً وساهم في نشر العلم الشرعي.",
+      keywords: ["إضافة محتوى", "مشاركة علمية", "إرسال درس", "نشر العلم", "المجلس العلمي"],
+    });
+  }, []);
   const [title, setTitle] = useState("");
   const [details, setDetails] = useState("");
   const [author, setAuthor] = useState("");

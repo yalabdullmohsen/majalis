@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { PageHeader } from "@/components/ui-common";
+import { applyPageSeo } from "@/lib/seo";
 
 const MECCA_LAT = 21.4225;
 const MECCA_LON = 39.8262;
@@ -118,6 +119,15 @@ function QiblaCompass({
 
 export default function QiblaPage() {
   const [bearing,  setBearing]  = useState<number | null>(null);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/qibla",
+      title: "اتجاه القبلة | المجلس العلمي",
+      description: "حدد اتجاه القبلة من موقعك الحالي بدقة — بوصلة رقمية تعتمد على GPS للمسلمين في كل مكان.",
+      keywords: ["اتجاه القبلة", "قبلة", "بوصلة إسلامية", "اتجاه مكة", "صلاة"],
+    });
+  }, []);
   const [heading,  setHeading]  = useState<number | null>(null);
   const [dist,     setDist]     = useState<number | null>(null);
   const [error,    setError]    = useState("");

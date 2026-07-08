@@ -10,10 +10,20 @@ import {
 } from "@/lib/fiqh-council-types";
 import { FiqhCouncilSearchBox } from "@/components/fiqh-council/FiqhCouncilSearchBox";
 import { FiqhCouncilSubnav } from "./FiqhCouncilPage";
+import { applyPageSeo } from "@/lib/seo";
 
 export default function FiqhCouncilArchivePage() {
   const [items, setItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/fiqh-council/archive",
+      title: "أرشيف المجمع الفقهي | المجلس العلمي",
+      description: "أرشيف القرارات والفتاوى التاريخية للمجمع الفقهي الإسلامي — وثائق وقرارات مؤرشفة.",
+      keywords: ["أرشيف فقهي", "قرارات تاريخية", "مجمع فقهي", "وثائق إسلامية", "تاريخ الفقه"],
+    });
+  }, []);
 
   useEffect(() => {
     getArchivedFiqhCouncilItems()

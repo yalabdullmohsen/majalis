@@ -3,6 +3,7 @@ import { Link, useSearch } from "wouter";
 import { PageHeader, Loading, Empty } from "@/components/ui-common";
 import { FiqhCouncilSubnav } from "./FiqhCouncilPage";
 import { compareFiqhItems, getFiqhCouncilItems, getFiqhCouncilItemsBySlugs } from "@/lib/fiqh-council-service";
+import { applyPageSeo } from "@/lib/seo";
 import {
   fiqhCompareHref,
   fiqhItemHref,
@@ -61,6 +62,15 @@ export default function FiqhCouncilComparePage() {
   const [catalog, setCatalog] = useState<FiqhCouncilItem[]>([]);
   const [picker, setPicker] = useState<string[]>(selectedSlugs);
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/fiqh-council/compare",
+      title: "مقارنة قرارات المجمع الفقهي | المجلس العلمي",
+      description: "قارن بين قرارات وفتاوى مجلس الفقه الإسلامي جنباً إلى جنب — أداة تحليلية للباحثين والدارسين.",
+      keywords: ["مقارنة فقهية", "قرارات فقهية", "مجمع فقهي", "تحليل فقهي", "مقارنة الفتاوى"],
+    });
+  }, []);
 
   useEffect(() => {
     getFiqhCouncilItems({ limit: 40 }).then(({ data }) => setCatalog(data));

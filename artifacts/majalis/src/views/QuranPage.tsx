@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState, memo } from "react";
 import "@/styles/mushaf.css";
+import { applyPageSeo } from "@/lib/seo";
 
 /* ══ ثوابت ══ */
 const CDN   = "https://cdn.qurancdn.com/images/quran/pages/v4/page";
@@ -92,6 +93,14 @@ const PageImg = memo(function PageImg({ page, night, loaded, onLoad, onError }: 
 /* ══ المكون الرئيسي ══ */
 export default function QuranPage() {
   const [page, setPage]           = useState(() => Math.min(lsGet(PAGE_KEY, 1), TOTAL));
+  useEffect(() => {
+    applyPageSeo({
+      path: "/quran",
+      title: "القرآن الكريم | المجلس العلمي",
+      description: "اقرأ القرآن الكريم بصفحات المصحف الشريف — تصفّح السور والآيات بواجهة مصحفية أنيقة.",
+      keywords: ["قرآن كريم", "مصحف", "تلاوة", "سور القرآن", "قراءة القرآن"],
+    });
+  }, []);
   const [imgLoaded, setImgLoaded] = useState(false);
   const [imgErr, setImgErr]       = useState(false);
   const [uiOn, setUiOn]           = useState(true);

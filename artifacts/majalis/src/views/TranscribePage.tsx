@@ -1,4 +1,5 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { applyPageSeo } from "@/lib/seo";
 import { validateMediaUpload, safeUploadFileName, MAX_MEDIA_BYTES } from "@/lib/file-validation";
 import { sanitizeText } from "@/lib/sanitize";
 import { Link } from "wouter";
@@ -30,6 +31,15 @@ export default function TranscribePage() {
   const [activeTab, setActiveTab] = useState<TabId>("upload");
   const [manualText, setManualText] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/transcribe",
+      title: "تفريغ الدروس والمحاضرات | المجلس العلمي",
+      description: "أداة تفريغ الدروس والمحاضرات الإسلامية تلقائياً — حمّل ملفاً صوتياً أو رابط يوتيوب واحصل على ملخص وفوائد منظّمة.",
+      keywords: ["تفريغ دروس", "تفريغ محاضرات", "تلخيص درس", "ذكاء اصطناعي إسلامي", "استخراج فوائد"],
+    });
+  }, []);
 
   const onDrop = useCallback(
     (acceptedFiles: File[], rejectedFiles: FileRejection[]) => {

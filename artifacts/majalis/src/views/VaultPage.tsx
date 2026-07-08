@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
+import { applyPageSeo } from "@/lib/seo";
 import { PageHeader } from "@/components/ui-common";
 import {
   getVaultData,
@@ -158,6 +159,16 @@ function NotesTab({
 export default function VaultPage() {
   const { user, isLoggedIn, loading: authLoading } = useAuth();
   const [tab, setTab] = useState<Tab>("bookmarks");
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/vault",
+      title: "خزينتي الشخصية | المجلس العلمي",
+      description: "احفظ المحتوى الإسلامي المفضل — الإشارات المرجعية والملاحظات الشخصية وسجل القراءة في مكان واحد.",
+      keywords: ["خزينة", "إشارات مرجعية", "حفظ المحتوى", "ملاحظات إسلامية", "مكتبة شخصية"],
+      robots: "noindex, follow",
+    });
+  }, []);
   const [vaultData, setVaultData] = useState<VaultData>({ bookmarks: [], resume: [], notes: [] });
   const [loading, setLoading] = useState(true);
   const [showAddNote, setShowAddNote] = useState(false);

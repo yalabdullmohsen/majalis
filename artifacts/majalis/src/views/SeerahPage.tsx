@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { applyPageSeo } from "@/lib/seo";
 import { Link } from "wouter";
 import { usePageView } from "@/hooks/usePageView";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
@@ -137,6 +138,15 @@ const SOURCES = [
 export default function SeerahPage() {
   usePageView("seerah", null);
   const [activeId, setActiveId] = useState(PHASES[0].id);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/seerah",
+      title: "السيرة النبوية | المجلس العلمي",
+      description: "السيرة النبوية الشريفة — تاريخ حياة النبي محمد ﷺ منذ الميلاد حتى الوفاة بمراحل مرتّبة.",
+      keywords: ["السيرة النبوية", "سيرة النبي", "محمد ﷺ", "تاريخ الإسلام", "الهجرة النبوية"],
+    });
+  }, []);
 
   const activeIdx = PHASES.findIndex(p => p.id === activeId);
   const active = PHASES[activeIdx];

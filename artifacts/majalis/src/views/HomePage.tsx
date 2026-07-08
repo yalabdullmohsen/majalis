@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
+import { applyPageSeo } from "@/lib/seo";
 import { Link, useLocation } from "wouter";
 import { SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { HomeCompactPrayer } from "@/components/home/HomeCompactPrayer";
@@ -123,6 +124,15 @@ export default function HomePage() {
   const [term, setTerm] = useState("");
   const [, navigate] = useLocation();
   const quickSearch = (q: string) => { navigate(`/search/${encodeURIComponent(q)}`); };
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/",
+      title: "المجلس العلمي — منصة العلوم الإسلامية",
+      description: "منصة إسلامية شاملة للعلوم الشرعية: القرآن الكريم، الأذكار، الدروس العلمية، الفتاوى، والفقه المعاصر.",
+      keywords: ["المجلس العلمي", "علوم إسلامية", "قرآن كريم", "أذكار", "فتاوى", "دروس علمية"],
+    });
+  }, []);
 
   const submitSearch = (e: FormEvent) => {
     e.preventDefault();

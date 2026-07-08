@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { applyPageSeo } from "@/lib/seo";
 import { Link } from "wouter";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import {
@@ -90,6 +91,15 @@ function formatHms(totalSeconds: number): string {
 
 export default function PrayerTimesPage() {
   const [govId, setGovId] = useState(() => getSelectedGovernorate().id);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/prayer-times",
+      title: "مواقيت الصلاة — الكويت | المجلس العلمي",
+      description: "مواقيت صلاة دقيقة لجميع مناطق الكويت — الفجر والظهر والعصر والمغرب والعشاء مع العد التنازلي.",
+      keywords: ["مواقيت الصلاة", "صلاة الكويت", "أوقات الصلاة", "الفجر", "الأذان"],
+    });
+  }, []);
   const { data, countdown, loading } = usePrayerCountdown(govId);
   const [pinnedKey, setPinnedKey] = useState<string | null>(null);
 

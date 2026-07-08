@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { useAuth } from "@/components/AuthProvider";
 import { PageHeader, Loading, Empty } from "@/components/ui-common";
+import { applyPageSeo } from "@/lib/seo";
 
 const FIQH_HUB_TABS = [
   { key: "fatawa",  label: "الفتاوى",         href: "/fatwa" },
@@ -73,6 +74,15 @@ export default function RulingsPage() {
   const debouncedSearch = useDebouncedValue(search);
 
   usePageView("rulings", null);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/rulings",
+      title: "الأحكام الشرعية | المجلس العلمي",
+      description: "موسوعة الأحكام الشرعية في الفقه الإسلامي — استعرض الأحكام مرتّبةً حسب الأبواب الفقهية والتصنيفات.",
+      keywords: ["أحكام شرعية", "فقه إسلامي", "الأحكام الفقهية", "حكم شرعي", "موسوعة فقهية"],
+    });
+  }, []);
 
   const loadStats = useCallback(async () => {
     const [catStats, totalCount] = await Promise.all([
