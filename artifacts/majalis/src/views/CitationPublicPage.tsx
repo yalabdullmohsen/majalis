@@ -147,7 +147,7 @@ export default function CitationPublicPage() {
               )}
 
               {/* النص المقتبس */}
-              <blockquote className="border-r-4 border-emerald-600 pr-4">
+              <blockquote className="border-r-4 border-[var(--majalis-emerald)] pr-4">
                 <p
                   ref={contentRef}
                   className="text-[var(--majalis-ink)] text-lg leading-relaxed font-arabic"

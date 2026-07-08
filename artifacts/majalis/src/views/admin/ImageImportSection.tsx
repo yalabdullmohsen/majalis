@@ -494,7 +494,7 @@ function JobDetail({
           {isDone ? (
             <div className="iis-done-wrap">
               <p className="iis-done-icon">
-                {job.status === "approved" ? <CheckCircle2 size={36} strokeWidth={1.4} className="text-green-600" aria-hidden="true" /> : <Trash2 size={36} strokeWidth={1.4} className="text-red-400" aria-hidden="true" />}
+                {job.status === "approved" ? <CheckCircle2 size={36} strokeWidth={1.4} className="text-[var(--majalis-emerald)]" aria-hidden="true" /> : <Trash2 size={36} strokeWidth={1.4} className="text-[var(--majalis-danger,#dc2626)]" aria-hidden="true" />}
               </p>
               <p className="iis-done-msg">
                 {job.status === "approved"

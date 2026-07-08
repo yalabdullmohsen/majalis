@@ -130,7 +130,7 @@ function UniversityForm({
 
       <div className="flex gap-2">
         <button type="submit" disabled={loading}
-          className="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium rounded-xl disabled:opacity-50 transition-colors">
+          className="px-5 py-2 bg-[var(--majalis-emerald)] hover:bg-[var(--majalis-emerald-deep,#0b5c44)] text-white text-sm font-medium rounded-xl disabled:opacity-50 transition-colors">
           {loading ? "جارٍ الحفظ…" : "حفظ"}
         </button>
         <button type="button" onClick={onCancel}
@@ -221,7 +221,7 @@ function ProgramForm({
         </div>
       </div>
       <div className="flex gap-2">
-        <button type="submit" disabled={loading} className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm rounded-xl disabled:opacity-50 transition-colors">
+        <button type="submit" disabled={loading} className="px-4 py-2 bg-[var(--majalis-emerald)] hover:bg-[var(--majalis-emerald-deep,#0b5c44)] text-white text-sm rounded-xl disabled:opacity-50 transition-colors">
           {loading ? "جارٍ الحفظ…" : "إضافة البرنامج"}
         </button>
         <button type="button" onClick={onCancel} className="px-3 py-2 text-sm text-[var(--majalis-ink-soft)] hover:text-[var(--majalis-ink)] transition-colors">إلغاء</button>
@@ -295,7 +295,7 @@ function AdminContent() {
           <button key={s} type="button" onClick={() => { setSection(s); setEditTarget(null); }}
             className={`px-4 py-2.5 text-sm font-medium border-b-2 transition-colors ${
               section === s
-                ? "border-emerald-600 text-emerald-700 dark:text-emerald-400"
+                ? "border-[var(--majalis-emerald)] text-[var(--majalis-emerald)]"
                 : "border-transparent text-[var(--majalis-ink-soft)] hover:text-[var(--majalis-ink)]"
             }`}>
             {s === "list" ? "قائمة الجامعات" : s === "add" ? "+ إضافة جامعة" : <><Bell size={13} className="inline ml-1" />التذكيرات ({reminders.length})</>}
@@ -319,7 +319,7 @@ function AdminContent() {
             <div className="text-center py-10 text-[var(--majalis-ink-soft)] opacity-60">
               <p>لا توجد جامعات بعد.</p>
               <button type="button" onClick={() => setSection("add")}
-                className="mt-3 text-sm text-emerald-600 hover:underline">+ إضافة جامعة</button>
+                className="mt-3 text-sm text-[var(--majalis-emerald)] hover:underline">+ إضافة جامعة</button>
             </div>
           )}
 
@@ -330,7 +330,7 @@ function AdminContent() {
                   <div className="flex items-center gap-2 flex-wrap">
                     <p className="font-semibold text-[var(--majalis-ink)] text-sm">{u.name_ar}</p>
                     {u.is_verified && <span className="text-xs bg-[var(--majalis-emerald-muted)] text-[var(--majalis-emerald)] px-1.5 py-0.5 rounded">✓ موثقة</span>}
-                    {!u.is_published && <span className="text-xs bg-red-50 dark:bg-red-900/20 text-red-500 px-1.5 py-0.5 rounded">غير منشورة</span>}
+                    {!u.is_published && <span className="text-xs bg-[var(--majalis-danger-muted,#fef2f2)] text-[var(--majalis-danger,#dc2626)] px-1.5 py-0.5 rounded">غير منشورة</span>}
                   </div>
                   <p className="text-xs text-[var(--majalis-ink-soft)] mt-0.5">{u.country}{u.city ? ` — ${u.city}` : ""} | {u.university_programs?.length || 0} برنامج</p>
                   <p className="text-xs text-[var(--majalis-ink-soft)] opacity-40">آخر تحديث: {new Date(u.last_updated_at).toLocaleDateString("ar-SA")}</p>
@@ -362,7 +362,7 @@ function AdminContent() {
                 <ProgramForm universityId={u.id} onSave={(d) => handleAddProgram(u.id, d)} onCancel={() => setShowProgForm(null)} />
               ) : (
                 <button type="button" onClick={() => setShowProgForm(u.id)}
-                  className="text-xs text-emerald-600 dark:text-emerald-400 hover:underline">
+                  className="text-xs text-[var(--majalis-emerald)] hover:underline">
                   + إضافة برنامج
                 </button>
               )}
