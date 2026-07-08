@@ -132,7 +132,7 @@ export default function LearningPathPage() {
         </h2>
 
         {error && (
-          <div className="text-center py-10 text-red-500">{error}</div>
+          <div className="text-center py-10 text-[var(--majalis-danger,#dc2626)]">{error}</div>
         )}
 
         {loading ? (

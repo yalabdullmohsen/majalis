@@ -75,7 +75,7 @@ export default function MuezzinFavoritesPage() {
         <button type="button" className="mzf-back-btn">← مكتبة المؤذنين</button>
       </Link>
 
-      <h1 className="mzf-title"><Heart size={22} className="inline ml-2 text-red-500" />المؤذنون المفضلون</h1>
+      <h1 className="mzf-title"><Heart size={22} className="inline ml-2 text-[var(--majalis-danger,#dc2626)]" />المؤذنون المفضلون</h1>
       <p className="mzf-subtitle">
         {favList.length > 0
           ? `${favList.length} مؤذن في قائمة مفضلتك`

@@ -156,7 +156,7 @@ export default function ContentActions({ contentType, contentId }: Props) {
             type="button"
             onClick={submitReport}
             disabled={!reportType || submitting}
-            className="bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-red-700 disabled:opacity-50"
+            className="bg-[var(--majalis-danger,#dc2626)] text-white px-4 py-2 rounded-lg text-sm font-medium hover:opacity-90 disabled:opacity-50"
           >
             {submitting ? "جاري الإرسال..." : "إرسال البلاغ"}
           </button>

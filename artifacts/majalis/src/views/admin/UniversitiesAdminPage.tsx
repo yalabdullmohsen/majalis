@@ -352,7 +352,7 @@ function AdminContent() {
                       <span className="text-[var(--majalis-emerald)]">•</span>
                       <span>{p.program_name}</span>
                       <span className="bg-[var(--majalis-parchment-deep)] px-1.5 py-0.5 rounded">{p.degree_level}</span>
-                      {!p.is_active && <span className="text-red-400">(غير نشط)</span>}
+                      {!p.is_active && <span className="text-[var(--majalis-danger,#dc2626)] opacity-75">(غير نشط)</span>}
                     </div>
                   ))}
                 </div>
