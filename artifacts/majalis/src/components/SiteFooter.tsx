@@ -59,6 +59,7 @@ const FOOTER_GROUPS = [
       { href: "/fiqh",         label: "الفقه الإسلامي" },
       { href: "/madhahib",     label: "المذاهب الفقهية" },
       { href: "/zakat",        label: "الزكاة وأحكامها" },
+      { href: "/sawm",         label: "الصيام وأحكامه" },
       { href: "/fatwa",        label: "الفتاوى" },
       { href: "/rulings",      label: "الأحكام الشرعية" },
       { href: "/fiqh-council", label: "المجمع الفقهي" },

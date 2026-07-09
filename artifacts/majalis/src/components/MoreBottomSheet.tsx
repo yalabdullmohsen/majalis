@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import {
   Activity, BarChart3, BookOpen, Bot, Building2, Calculator, Calendar, CheckCircle2, Compass, CreditCard,
   FileText, GraduationCap, Heart, HelpCircle, Info, Landmark, Library, Layers,
-  Mic, Network, Radio, RefreshCw, Repeat2, Scale, ScrollText, Search, Settings,
+  Mic, Moon, Network, Radio, RefreshCw, Repeat2, Scale, ScrollText, Search, Settings,
   Shield, Sparkles, Star, Stethoscope, Tv, Users, X, Zap,
 } from "lucide-react";
 
@@ -47,6 +47,7 @@ const SHEET_SECTIONS = [
     { href: "/qa",                  label: "الأسئلة",         Icon: HelpCircle },
     { href: "/madhahib",            label: "المذاهب الأربعة",  Icon: Scale },
     { href: "/zakat",               label: "الزكاة وأحكامها",  Icon: Calculator },
+    { href: "/sawm",                label: "الصيام وأحكامه",   Icon: Moon },
     { href: "/fiqh",                label: "الفقه",           Icon: Scale },
     { href: "/fatwa",               label: "الفتاوى",         Icon: Scale },
     { href: "/rulings",             label: "الأحكام",         Icon: Scale },
