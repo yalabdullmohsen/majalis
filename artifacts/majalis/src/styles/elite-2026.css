@@ -19629,3 +19629,207 @@ img[loading="lazy"]:not([src=""]) {
 }
 
 /* ── نهاية §232 ─────────────────────────────────────────── */
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   §233 — SahabahPage (.sb-*)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.sb-page { max-width: 780px; margin: 0 auto; padding: 0 0 6rem; }
+
+/* hero */
+.sb-hero {
+  background: linear-gradient(135deg, var(--majalis-emerald-deep,#0A5040) 0%, var(--majalis-emerald,#0E6E52) 100%);
+  padding: 2.5rem 1.5rem 2rem;
+  text-align: center;
+  color: #fff;
+}
+.sb-hero__badge {
+  display: inline-block;
+  background: rgba(255,255,255,.15);
+  border: 1px solid rgba(255,255,255,.3);
+  border-radius: 2rem;
+  padding: .3rem .9rem;
+  font-size: .75rem;
+  font-weight: 600;
+  margin-bottom: .8rem;
+  color: #fff;
+}
+.sb-hero__title { font-size: 1.65rem; font-weight: 800; margin: 0 0 .5rem; color: #fff; }
+.sb-hero__sub { font-size: .9rem; opacity: .88; margin: 0 0 1.4rem; line-height: 1.6; color: #fff; }
+
+/* ayah box */
+.sb-ayah {
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: .8rem;
+  padding: 1rem 1.2rem;
+  max-width: 580px;
+  margin: 0 auto;
+}
+.sb-ayah__text { font-family: var(--font-quran,'Scheherazade New',serif); font-size: 1.15rem; line-height: 2; color: #fff; margin: 0 0 .3rem; }
+.sb-ayah__ref  { font-size: .72rem; opacity: .75; color: #fff; font-style: normal; }
+
+/* body */
+.sb-body { padding: 1.25rem 1rem; }
+
+/* search */
+.sb-search {
+  width: 100%;
+  padding: .65rem 1rem;
+  border: 1.5px solid #D1FAE5;
+  border-radius: .7rem;
+  font-size: .9rem;
+  outline: none;
+  margin-bottom: 1rem;
+  background: #fff;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+.sb-search:focus { border-color: var(--majalis-emerald,#0E6E52); }
+
+/* categories */
+.sb-cats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+  margin-bottom: .75rem;
+}
+.sb-cat-btn {
+  padding: .35rem .85rem;
+  border: 1.5px solid #D1FAE5;
+  border-radius: 2rem;
+  background: #fff;
+  font-size: .78rem;
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all .15s;
+}
+.sb-cat-btn--active {
+  background: var(--majalis-emerald,#0E6E52);
+  border-color: var(--majalis-emerald,#0E6E52);
+  color: #fff;
+}
+.sb-count { font-size: .8rem; color: #6B7280; margin: 0 0 1rem; }
+
+/* card list */
+.sb-list { display: flex; flex-direction: column; gap: .75rem; }
+
+.sb-card {
+  background: #fff;
+  border: 1.5px solid #E5E7EB;
+  border-radius: .9rem;
+  overflow: hidden;
+  transition: border-color .15s, box-shadow .15s;
+}
+.sb-card--open { border-color: var(--majalis-emerald,#0E6E52); box-shadow: 0 2px 12px rgba(14,110,82,.1); }
+
+.sb-card__head {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  width: 100%;
+  padding: .9rem 1rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: right;
+}
+.sb-card__icon { font-size: 1.5rem; flex-shrink: 0; }
+.sb-card__info { flex: 1; min-width: 0; }
+.sb-card__name  { display: block; font-weight: 700; font-size: .95rem; color: #111; }
+.sb-card__kunya { display: block; font-size: .75rem; color: #6B7280; margin-top: .15rem; }
+.sb-card__tags  { display: flex; flex-wrap: wrap; gap: .3rem; }
+.sb-card__tag {
+  background: #F0FDF4;
+  border: 1px solid #BBF7D0;
+  border-radius: .4rem;
+  padding: .15rem .5rem;
+  font-size: .68rem;
+  font-weight: 600;
+  color: var(--majalis-emerald,#0E6E52);
+}
+.sb-card__chevron { font-size: .8rem; color: #9CA3AF; transition: transform .2s; flex-shrink: 0; }
+.sb-card__chevron--open { transform: rotate(180deg); }
+
+/* card body */
+.sb-card__body { padding: 0 1rem 1rem; border-top: 1px solid #F3F4F6; }
+
+/* meta grid */
+.sb-card__meta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .6rem;
+  margin: .85rem 0;
+}
+.sb-meta-item { background: #F9FAFB; border-radius: .6rem; padding: .55rem .75rem; }
+.sb-meta-item__label { display: block; font-size: .68rem; font-weight: 700; color: var(--majalis-emerald,#0E6E52); margin-bottom: .2rem; }
+.sb-meta-item__value { font-size: .8rem; color: #374151; line-height: 1.4; }
+
+/* fadl box */
+.sb-fadl-box {
+  background: linear-gradient(135deg,#F0FDF4,#ECFDF5);
+  border: 1px solid #BBF7D0;
+  border-right: 3px solid var(--majalis-emerald,#0E6E52);
+  border-radius: .7rem;
+  padding: .8rem 1rem;
+  margin-bottom: .8rem;
+}
+.sb-fadl-box__label { display: block; font-size: .72rem; font-weight: 700; color: var(--majalis-emerald,#0E6E52); margin-bottom: .35rem; }
+.sb-fadl-box__text  { font-size: .85rem; line-height: 1.7; color: #052E16; margin: 0; }
+
+/* quote */
+.sb-quote {
+  background: #FFFBEB;
+  border: 1px solid #FDE68A;
+  border-radius: .6rem;
+  padding: .7rem 1rem;
+  margin: 0 0 .8rem;
+}
+.sb-quote__text { font-size: .88rem; color: #78350F; font-weight: 600; line-height: 1.7; margin: 0; }
+
+/* legacy */
+.sb-legacy__label { display: block; font-size: .78rem; font-weight: 700; color: #111; margin-bottom: .5rem; }
+.sb-legacy__list  { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: .4rem; }
+.sb-legacy__item  {
+  display: flex;
+  align-items: flex-start;
+  gap: .5rem;
+  font-size: .83rem;
+  color: #374151;
+  line-height: 1.5;
+}
+.sb-legacy__item::before { content: "✦"; color: var(--majalis-emerald,#0E6E52); font-size: .65rem; margin-top: .2rem; flex-shrink: 0; }
+
+/* empty */
+.sb-empty { text-align: center; padding: 3rem 1rem; color: #9CA3AF; }
+.sb-empty span { font-size: 2.5rem; display: block; margin-bottom: .5rem; }
+.sb-empty p { font-size: .9rem; }
+
+/* related */
+.sb-related { margin-top: 2.5rem; }
+.sb-related__title { font-size: 1rem; font-weight: 700; color: #111; margin: 0 0 .75rem; }
+.sb-related__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; }
+.sb-related__link {
+  background: #fff;
+  border: 1px solid #E5E7EB;
+  border-radius: .6rem;
+  padding: .6rem .7rem;
+  font-size: .82rem;
+  color: var(--majalis-emerald,#0E6E52);
+  text-align: center;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background .15s;
+  display: block;
+}
+.sb-related__link:hover { background: #F0FDF4; border-color: var(--majalis-emerald,#0E6E52); }
+
+@media (max-width: 640px) {
+  .sb-card__meta-grid { grid-template-columns: 1fr; }
+  .sb-related__grid { grid-template-columns: repeat(2, 1fr); }
+  .sb-hero__title { font-size: 1.35rem; }
+}
+
+/* ── نهاية §233 ─────────────────────────────────────────── */

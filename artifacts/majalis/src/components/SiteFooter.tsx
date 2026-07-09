@@ -29,6 +29,7 @@ const FOOTER_GROUPS = [
       { href: "/fadail-aamal",   label: "فضائل الأعمال" },
       { href: "/stories",        label: "القصص الإسلامية" },
       { href: "/seerah",         label: "السيرة النبوية" },
+      { href: "/sahabah",        label: "أعلام الصحابة" },
       { href: "/qa",             label: "الأسئلة" },
       { href: "/arbaeen-nawawi", label: "الأربعون النووية" },
       { href: "/updates",        label: "آخر المستجدات" },

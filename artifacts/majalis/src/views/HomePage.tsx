@@ -25,7 +25,7 @@ import {
   BookMarked, BookOpen, Bot, Building2, CalendarDays, Car, Check, Clock,
   Compass, Droplets, FlaskConical, GraduationCap, Heart, HelpCircle, Landmark, Layers,
   Lightbulb, Map, Mic2, Monitor, Moon, Network, Newspaper,
-  Radio, RotateCw, Scale, Scroll, Star, Target, Upload, Wrench,
+  Radio, RotateCw, Scale, Scroll, Star, Target, Upload, Users, Wrench,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
@@ -68,6 +68,7 @@ const FEATURE_CATS: FeatureCat[] = [
     label: "السيرة والتاريخ",
     items: [
       { href: "/seerah",          Icon: Moon,     title: "السيرة النبوية",    desc: "حياته ﷺ من الميلاد إلى الوفاة" },
+      { href: "/sahabah",         Icon: Users,    title: "أعلام الصحابة",     desc: "12 صحابياً بالتفصيل: سيرة وإرث وفضل" },
       { href: "/prophets",        Icon: Star,     title: "قصص الأنبياء",     desc: "من آدم إلى محمد ﷺ" },
       { href: "/islamic-stories", Icon: Landmark, title: "صحابة وفتوحات",    desc: "سير الصحابة والفتوحات" },
       { href: "/stories",         Icon: Map,      title: "القصص الإسلامية",  desc: "وقائع من التاريخ الإسلامي" },
