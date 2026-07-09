@@ -17500,3 +17500,199 @@ img[loading="lazy"]:not([src=""]) {
 }
 
 /* ── نهاية §223 ─────────────────────────────────────────── */
+
+/* ══════════════════════════════════════════════════════════
+   §224 — صفحة المذاهب الفقهية الأربعة (.mdb-*)
+   ══════════════════════════════════════════════════════════ */
+
+.mdb-page { max-width: 820px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+
+/* هيرو */
+.mdb-hero {
+  background: linear-gradient(135deg, #0A5040 0%, #0E6E52 60%, #155E45 100%);
+  border-radius: 1.25rem;
+  padding: 2.5rem 1.5rem 2rem;
+  color: #FFFFFF;
+  text-align: center;
+  margin-bottom: 1.75rem;
+  box-shadow: 0 4px 24px rgba(14,110,82,0.18);
+}
+.mdb-hero__badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #FFFFFF;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.25rem 0.85rem;
+  border-radius: 99px;
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.04em;
+}
+.mdb-hero__title { font-size: 2rem; font-weight: 900; color: #FFFFFF; margin: 0 0 0.65rem; }
+.mdb-hero__sub { font-size: 0.88rem; color: rgba(255,255,255,0.87); max-width: 580px; margin: 0 auto 1.5rem; line-height: 1.75; }
+
+/* أزرار التنقل */
+.mdb-hero__nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.65rem; }
+.mdb-hero__nav-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  background: rgba(255,255,255,0.12);
+  border: 1.5px solid rgba(255,255,255,0.2);
+  border-radius: 0.9rem;
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+  transition: all 0.18s;
+  min-width: 72px;
+  font-family: inherit;
+}
+.mdb-hero__nav-btn:hover { background: rgba(255,255,255,0.22); border-color: rgba(255,255,255,0.4); }
+.mdb-hero__nav-btn--active { background: rgba(255,255,255,0.3); border-color: #FFFFFF; box-shadow: 0 0 0 2px rgba(255,255,255,0.15); }
+.mdb-hero__nav-icon { font-size: 1.5rem; line-height: 1; }
+.mdb-hero__nav-name { font-size: 0.8rem; font-weight: 700; color: #FFFFFF; }
+
+/* قائمة البطاقات */
+.mdb-list { display: flex; flex-direction: column; gap: 1rem; }
+
+/* البطاقة */
+.mdb-card {
+  background: #FFFFFF;
+  border: 1.5px solid #D4E3DB;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 1px 6px rgba(14,110,82,0.05);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.mdb-card--open { border-color: #0E6E52; box-shadow: 0 4px 18px rgba(14,110,82,0.12); }
+.mdb-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 1.1rem 1.25rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: right;
+  gap: 0.75rem;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+.mdb-card__header:hover { background: rgba(14,110,82,0.04); }
+.mdb-card__header-left { display: flex; align-items: center; gap: 0.85rem; flex: 1; min-width: 0; }
+.mdb-card__icon { font-size: 2.2rem; flex-shrink: 0; line-height: 1; }
+.mdb-card__name { font-size: 1.05rem; font-weight: 900; color: #052E16; }
+.mdb-card__founder { font-size: 0.8rem; color: #1E4A38; margin-top: 0.15rem; }
+.mdb-card__origin { font-size: 0.75rem; color: #4A7563; margin-top: 0.1rem; }
+.mdb-card__spread { flex-shrink: 0; font-size: 0.75rem; color: #6B9E86; max-width: 120px; text-align: left; line-height: 1.4; }
+
+/* محتوى البطاقة */
+.mdb-card__body { padding: 0 1.25rem 1.25rem; border-top: 1.5px solid #E8F2EE; }
+.mdb-card__summary { font-size: 0.9rem; color: #1E4A38; line-height: 1.75; margin: 1rem 0 1rem; }
+
+/* أقسام داخل البطاقة */
+.mdb-section { margin-bottom: 1rem; }
+.mdb-section__title { font-size: 0.78rem; font-weight: 800; color: #0E6E52; margin-bottom: 0.45rem; letter-spacing: 0.03em; }
+.mdb-section__body { font-size: 0.87rem; color: #2D4A3C; line-height: 1.7; }
+
+/* المصادر */
+.mdb-sources { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.mdb-source-chip {
+  background: rgba(14,110,82,0.08);
+  border: 1px solid rgba(14,110,82,0.2);
+  color: #0A5040;
+  font-size: 0.76rem;
+  font-weight: 600;
+  padding: 0.25rem 0.65rem;
+  border-radius: 99px;
+}
+
+/* المميزات */
+.mdb-features { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.4rem; }
+.mdb-feature {
+  font-size: 0.86rem;
+  color: #1E4A38;
+  padding-right: 1.1rem;
+  position: relative;
+  line-height: 1.5;
+}
+.mdb-feature::before { content: "◆"; position: absolute; right: 0; font-size: 0.55rem; color: #0E6E52; top: 0.25rem; }
+
+/* الكتب */
+.mdb-books { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; }
+.mdb-book {
+  background: #F8FBF9;
+  border: 1px solid #D4E3DB;
+  border-radius: 0.6rem;
+  padding: 0.5rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+}
+.mdb-book__title { font-size: 0.83rem; font-weight: 700; color: #052E16; }
+.mdb-book__author { font-size: 0.73rem; color: #4A7563; margin-top: 0.15rem; }
+
+/* العلماء */
+.mdb-scholars { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.mdb-scholar-chip {
+  background: #FFFFFF;
+  border: 1.5px solid #D4E3DB;
+  color: #052E16;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.28rem 0.7rem;
+  border-radius: 0.5rem;
+  transition: border-color 0.15s;
+}
+.mdb-scholar-chip:hover { border-color: #0E6E52; }
+
+/* قول الإمام */
+.mdb-quote {
+  background: linear-gradient(135deg, #0E6E52, #0A5040);
+  border-radius: 0.85rem;
+  padding: 1rem 1.1rem;
+  color: #FFFFFF;
+}
+.mdb-quote blockquote { margin: 0; padding: 0; border: none; }
+.mdb-quote blockquote p { font-size: 0.9rem; color: #FFFFFF; font-style: italic; line-height: 1.65; margin: 0 0 0.3rem; }
+.mdb-quote blockquote footer { font-size: 0.78rem; color: rgba(255,255,255,0.75); font-weight: 700; }
+
+/* تنبيه */
+.mdb-notice {
+  margin-top: 2rem;
+  background: rgba(14,110,82,0.06);
+  border: 1.5px solid rgba(14,110,82,0.2);
+  border-radius: 0.85rem;
+  padding: 0.85rem 1.1rem;
+}
+.mdb-notice p { font-size: 0.85rem; color: #1E4A38; line-height: 1.7; margin: 0; }
+
+/* ذات صلة */
+.mdb-related { margin-top: 2rem; padding-top: 1.5rem; border-top: 1.5px solid #E8F2EE; }
+.mdb-related__title { font-size: 1rem; font-weight: 700; color: #052E16; margin-bottom: 0.75rem; }
+.mdb-related__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.5rem; }
+.mdb-related__link {
+  display: block;
+  padding: 0.6rem 0.85rem;
+  border: 1.5px solid #D4E3DB;
+  border-radius: 0.65rem;
+  text-decoration: none;
+  font-size: 0.83rem;
+  font-weight: 600;
+  color: #052E16;
+  background: #FFFFFF;
+  transition: all 0.15s;
+  text-align: center;
+}
+.mdb-related__link:hover { border-color: #0E6E52; background: rgba(14,110,82,0.05); color: #0E6E52; }
+
+@media (max-width: 600px) {
+  .mdb-hero__title { font-size: 1.6rem; }
+  .mdb-hero__nav-btn { min-width: 58px; padding: 0.45rem 0.65rem; }
+  .mdb-card__spread { display: none; }
+  .mdb-books { grid-template-columns: 1fr; }
+  .mdb-related__grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ── نهاية §224 ─────────────────────────────────────────── */

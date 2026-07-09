@@ -55,6 +55,7 @@ const FOOTER_GROUPS = [
     title: "الفقه والأحكام",
     links: [
       { href: "/fiqh",         label: "الفقه الإسلامي" },
+      { href: "/madhahib",     label: "المذاهب الفقهية" },
       { href: "/fatwa",        label: "الفتاوى" },
       { href: "/rulings",      label: "الأحكام الشرعية" },
       { href: "/fiqh-council", label: "المجمع الفقهي" },

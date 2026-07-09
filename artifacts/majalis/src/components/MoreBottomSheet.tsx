@@ -44,6 +44,7 @@ const SHEET_SECTIONS = [
   ]},
   { group: "الأحكام والفقه", items: [
     { href: "/qa",                  label: "الأسئلة",         Icon: HelpCircle },
+    { href: "/madhahib",            label: "المذاهب الأربعة",  Icon: Scale },
     { href: "/fiqh",                label: "الفقه",           Icon: Scale },
     { href: "/fatwa",               label: "الفتاوى",         Icon: Scale },
     { href: "/rulings",             label: "الأحكام",         Icon: Scale },

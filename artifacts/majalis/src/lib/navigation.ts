@@ -51,6 +51,7 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
   { href: "/arkan",             label: "أركان الإسلام" },
   { href: "/arkan-iman",        label: "أركان الإيمان" },
   { href: "/hadith-science",    label: "مصطلح الحديث" },
+  { href: "/madhahib",          label: "المذاهب الفقهية" },
   { href: "/universities",       label: "دليل الجامعات" },
   { href: "/learning-path",      label: "خارطة طالب العلم" },
   // القرآن
@@ -291,6 +292,7 @@ export const HOME_MORE_SECTIONS = [
   { href: "/arkan",      title: "أركان الإسلام",        description: "الأركان الخمسة مع الأدلة القرآنية والنبوية والتفاصيل الفقهية وأقوال العلماء" },
   { href: "/arkan-iman",    title: "أركان الإيمان",        description: "الأركان الستة مع أدلة القرآن والسنة وأقوال العلماء: الإيمان بالله والملائكة والكتب" },
   { href: "/hadith-science", title: "مصطلح الحديث",       description: "30+ مصطلح في علوم الحديث: أنواع الأحاديث والسند والراوي والجرح والتعديل والكتب الستة" },
+  { href: "/madhahib",       title: "المذاهب الفقهية",    description: "المذاهب الأربعة: الحنفي والمالكي والشافعي والحنبلي — مناهجها ومصادرها وانتشارها وأبرز مصنفاتها" },
   { href: "/knowledge-map", title: "الخريطة المعرفية",   description: "14 حقلاً علمياً بروابط تفاعلية ومحركات البحث" },
   { href: "/quran-hub",    title: "مركز القرآن",          description: "بوابتك الشاملة للمصحف والتجويد والإذاعات والبث المباشر" },
 ] as const;
