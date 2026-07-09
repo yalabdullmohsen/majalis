@@ -117,6 +117,7 @@ const AutoContentDetailPage = lazy(() => import("@/views/AutoContentDetailPage")
 const DeveloperPage = lazy(() => import("@/views/DeveloperPage"));
 const KnowledgeGraphPage = lazy(() => import("@/views/KnowledgeGraphPage"));
 const IslamicKnowledgeMapPage = lazy(() => import("@/views/IslamicKnowledgeMapPage"));
+const MindMapPage = lazy(() => import("@/views/MindMapPage"));
 const QuranLivePage = lazy(() => import("@/views/QuranLivePage"));
 const IslamicScholarsPage = lazy(() => import("@/views/IslamicScholarsPage"));
 const AsmaaHusnaPage = lazy(() => import("@/views/AsmaaHusnaPage"));
@@ -314,6 +315,7 @@ function Router() {
       <Route path="/quiz"><SafeLazyRoute component={QuizPage} /></Route>
       <Route path="/knowledge-graph"><SafeLazyRoute component={KnowledgeGraphPage} /></Route>
       <Route path="/knowledge-map"><SafeLazyRoute component={IslamicKnowledgeMapPage} /></Route>
+      <Route path="/mind-map"><SafeLazyRoute component={MindMapPage} /></Route>
       <Route path="/scholars"><SafeLazyRoute component={IslamicScholarsPage} /></Route>
       <Route path="/asma-husna"><SafeLazyRoute component={AsmaaHusnaPage} /></Route>
       <Route path="/akhlaq"><SafeLazyRoute component={AkhlaqPage} /></Route>

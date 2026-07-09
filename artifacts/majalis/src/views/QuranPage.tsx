@@ -429,6 +429,11 @@ export default function QuranPage() {
         {/* النص القرآني بالرسم العثماني */}
         {!loading && !fetchErr && groups.map(group => (
           <div key={group.num} className="qs-surah">
+            {/* البسملة فوق رأس السورة — لكل سورة جديدة ما عدا الفاتحة والتوبة */}
+            {group.isFirst && group.num !== 1 && group.num !== 9 && (
+              <div className="qs-basmala" lang="ar" dir="rtl">بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ</div>
+            )}
+
             {/* رأس السورة */}
             {group.isFirst && (
               <div className="qs-surah-header">
@@ -437,13 +442,6 @@ export default function QuranPage() {
                 <p className="qs-surah-meta">
                   سورة رقم {group.num.toLocaleString("ar-EG")} — {group.revelationType === "Meccan" ? "مكية" : "مدنية"}
                 </p>
-              </div>
-            )}
-
-            {/* البسملة — لكل سورة جديدة ما عدا الفاتحة والتوبة */}
-            {group.isFirst && group.num !== 1 && group.num !== 9 && (
-              <div className="qs-basmala" lang="ar" dir="rtl">
-                بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ
               </div>
             )}
 

@@ -1,0 +1,305 @@
+/* ═══════════════════════════════════════════════════════════════
+   الخرائط الذهنية — Mind Map Styles
+   ═══════════════════════════════════════════════════════════════ */
+
+.mm-page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 5rem;
+  direction: rtl;
+}
+
+/* ── رأس الصفحة ── */
+.mm-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.6rem;
+  margin-bottom: 1.75rem;
+  padding: 2rem 1rem 1.5rem;
+  background: linear-gradient(135deg, rgba(31,77,58,0.08) 0%, rgba(31,77,58,0.03) 100%);
+  border: 1px solid rgba(31,77,58,0.12);
+  border-radius: 1.5rem;
+}
+
+.mm-hero__icon {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(31,77,58,0.1);
+  border-radius: 50%;
+  color: #1F4D3A;
+}
+
+.mm-hero__title {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: #1F4D3A;
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+.mm-hero__sub {
+  font-size: 0.88rem;
+  color: rgba(31,77,58,0.65);
+  margin: 0;
+  line-height: 1.6;
+  max-width: 420px;
+}
+
+/* ── فلتر الفئات ── */
+.mm-filters {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  margin-bottom: 1.25rem;
+}
+
+.mm-filter-btn {
+  padding: 0.35rem 0.85rem;
+  border: 1.5px solid rgba(31,77,58,0.18);
+  border-radius: 999px;
+  background: transparent;
+  color: rgba(31,77,58,0.7);
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+.mm-filter-btn:hover { background: rgba(31,77,58,0.06); border-color: rgba(31,77,58,0.35); color: #1F4D3A; }
+.mm-filter-btn--active {
+  background: #1F4D3A;
+  border-color: #1F4D3A;
+  color: #FFFFFF;
+}
+
+/* ── قائمة البطاقات ── */
+.mm-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* ── بطاقة واحدة ── */
+.mm-card {
+  border: 1.5px solid rgba(31,77,58,0.14);
+  border-radius: 1.1rem;
+  background: #FFFFFF;
+  overflow: hidden;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.mm-card:hover { border-color: rgba(31,77,58,0.3); }
+.mm-card--open {
+  border-color: rgba(31,77,58,0.35);
+  box-shadow: 0 4px 24px rgba(31,77,58,0.1);
+}
+
+.mm-card__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 1rem 1.1rem;
+  width: 100%;
+  text-align: right;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.14s;
+}
+.mm-card__head:hover { background: rgba(31,77,58,0.04); }
+
+.mm-card__meta { flex: 1; display: flex; flex-direction: column; gap: 0.25rem; }
+
+.mm-card__category {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #1F4D3A;
+  background: rgba(31,77,58,0.1);
+  border-radius: 999px;
+  padding: 0.15rem 0.6rem;
+  align-self: flex-start;
+  letter-spacing: 0.04em;
+}
+
+.mm-card__title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #1A2E1A;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.mm-card__desc {
+  font-size: 0.78rem;
+  color: rgba(31,77,58,0.55);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.mm-card__toggle {
+  color: #1F4D3A;
+  opacity: 0.7;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.mm-card__body {
+  padding: 0.5rem 1.1rem 1.1rem;
+  border-top: 1px solid rgba(31,77,58,0.1);
+  background: rgba(31,77,58,0.015);
+}
+
+/* ═══════════════════════════════
+   عقدة الخريطة الذهنية
+═══════════════════════════════ */
+.mm-node { display: flex; flex-direction: column; }
+
+/* العقدة الجذر */
+.mm-node--d0 > .mm-node__label {
+  font-size: 1rem;
+  font-weight: 900;
+  color: #1F4D3A;
+  background: rgba(31,77,58,0.1);
+  border-color: rgba(31,77,58,0.25);
+}
+.mm-node--d0 > .mm-node__children { border-right: 2.5px solid rgba(31,77,58,0.3); margin-right: 0.7rem; padding-right: 0.9rem; }
+
+/* العمق الأول */
+.mm-node--d1 > .mm-node__label {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: #1A2E1A;
+  background: rgba(31,77,58,0.07);
+  border-color: rgba(31,77,58,0.18);
+}
+.mm-node--d1 > .mm-node__children { border-right: 2px solid rgba(31,77,58,0.18); margin-right: 0.65rem; padding-right: 0.85rem; }
+
+/* العمق الثاني */
+.mm-node--d2 > .mm-node__label {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #1A2E1A;
+  background: rgba(31,77,58,0.04);
+  border-color: rgba(31,77,58,0.12);
+}
+.mm-node--d2 > .mm-node__children { border-right: 1.5px solid rgba(31,77,58,0.12); margin-right: 0.6rem; padding-right: 0.8rem; }
+
+/* العمق الثالث وما بعده */
+.mm-node--d3 > .mm-node__label,
+.mm-node--d4 > .mm-node__label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: rgba(26,46,26,0.8);
+  background: transparent;
+  border-color: rgba(31,77,58,0.1);
+}
+
+/* زر تسمية العقدة */
+.mm-node__label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.65rem;
+  margin: 0.2rem 0;
+  border: 1px solid rgba(31,77,58,0.14);
+  border-radius: 0.6rem;
+  background: transparent;
+  text-align: right;
+  font-family: inherit;
+  line-height: 1.4;
+  cursor: pointer;
+  transition: background 0.13s, border-color 0.13s;
+  width: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+.mm-node__label:hover { background: rgba(31,77,58,0.08); border-color: rgba(31,77,58,0.28); }
+.mm-node__label--open { border-color: rgba(31,77,58,0.22); }
+.mm-node__label--leaf { cursor: default; }
+.mm-node__label--leaf:hover { background: rgba(31,77,58,0.04); }
+
+.mm-node__icon {
+  display: flex;
+  align-items: center;
+  color: rgba(31,77,58,0.5);
+  flex-shrink: 0;
+}
+
+.mm-node__text { flex: 1; }
+
+.mm-node__link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  color: rgba(31,77,58,0.5);
+  flex-shrink: 0;
+  transition: color 0.13s, background 0.13s;
+  text-decoration: none;
+}
+.mm-node__link:hover { color: #1F4D3A; background: rgba(31,77,58,0.12); }
+
+.mm-node__children {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── نصيحة الاستخدام ── */
+.mm-tip {
+  font-size: 0.76rem;
+  color: rgba(31,77,58,0.5);
+  text-align: center;
+  margin-top: 2rem;
+  line-height: 1.7;
+  padding: 0 1rem;
+}
+
+.mm-empty {
+  text-align: center;
+  color: rgba(31,77,58,0.45);
+  padding: 3rem 1rem;
+  font-size: 0.9rem;
+}
+
+/* ── وضع داكن ── */
+@media (prefers-color-scheme: dark) {
+  .mm-page { color: #E0F0E8; }
+  .mm-card { background: #0D1F16; border-color: rgba(120,200,160,0.12); }
+  .mm-card__head:hover { background: rgba(100,200,150,0.06); }
+  .mm-card__title { color: #E0F0E8; }
+  .mm-hero { background: linear-gradient(135deg, rgba(100,200,150,0.08) 0%, rgba(100,200,150,0.03) 100%); border-color: rgba(100,200,150,0.12); }
+  .mm-hero__title { color: #7ED6A8; }
+  .mm-hero__icon { background: rgba(100,200,150,0.1); color: #7ED6A8; }
+  .mm-filter-btn { border-color: rgba(100,200,150,0.2); color: rgba(140,210,175,0.8); }
+  .mm-filter-btn--active { background: #1F4D3A; border-color: #7ED6A8; color: #FFFFFF; }
+  .mm-node__label { color: #E0F0E8; border-color: rgba(100,200,150,0.12); }
+  .mm-node__label:hover { background: rgba(100,200,150,0.08); }
+  .mm-node--d0 > .mm-node__label { color: #7ED6A8; background: rgba(100,200,150,0.12); }
+  .mm-node--d1 > .mm-node__label { background: rgba(100,200,150,0.06); }
+  .mm-node--d0 > .mm-node__children { border-color: rgba(100,200,150,0.25); }
+  .mm-node--d1 > .mm-node__children { border-color: rgba(100,200,150,0.15); }
+  .mm-card__body { background: rgba(100,200,150,0.02); border-color: rgba(100,200,150,0.1); }
+  .mm-card__category { color: #7ED6A8; background: rgba(100,200,150,0.12); }
+}
+
+/* ── استجابة ── */
+@media (max-width: 480px) {
+  .mm-page { padding: 1rem 0.75rem 5rem; }
+  .mm-hero { padding: 1.5rem 0.75rem 1.25rem; }
+  .mm-hero__title { font-size: 1.35rem; }
+  .mm-card__head { padding: 0.85rem 0.9rem; }
+  .mm-card__body { padding: 0.5rem 0.9rem 0.9rem; }
+  .mm-filters { gap: 0.3rem; }
+  .mm-filter-btn { font-size: 0.72rem; padding: 0.3rem 0.65rem; }
+}

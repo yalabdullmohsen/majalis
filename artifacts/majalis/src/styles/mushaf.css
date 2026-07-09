@@ -917,13 +917,15 @@
 /* البسملة */
 .qs-basmala {
   text-align: center;
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-size: var(--qs-font-size, 1.9rem);
+  font-family: "Amiri Quran", "Scheherazade New", "KFGQPC Uthmanic Script HAFS", "Noto Naskh Arabic", "Traditional Arabic", serif;
+  font-weight: 400;
   color: var(--mshf-emerald, #1F4D3A);
-  margin-bottom: 1.5rem;
-  padding: 0.75rem 1rem;
-  line-height: 2;
-  letter-spacing: 0.06em;
+  margin: 0 0 1.25rem;
+  padding: 0.25rem 0;
+  line-height: 2.2;
+  letter-spacing: 0;
+  word-spacing: 0;
   direction: rtl;
 }
 .mshf-night .qs-basmala { color: var(--mshf-active-color, #70D4A0); }
@@ -1017,7 +1019,6 @@
 @media (max-width: 480px) {
   .qs-surah { padding: 1rem 1rem 2.5rem; }
   .qs-surah-name { font-size: 1.35rem; }
-  .qs-basmala { font-size: 1.3rem; }
   .qs-ayahs { line-height: 2.2; }
 }
 @media (min-width: 700px) {
