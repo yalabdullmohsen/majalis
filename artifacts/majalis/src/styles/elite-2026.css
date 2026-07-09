@@ -21815,3 +21815,92 @@ img[loading="lazy"]:not([src=""]) {
   .nb-azm-grid { grid-template-columns: 1fr; }
   .nb-miracles-grid { grid-template-columns: 1fr; }
 }
+
+/* ══════════════════════════════════════════════════════════════════
+   §245 — JannaNaarPage  (.jn-*)
+   ══════════════════════════════════════════════════════════════════ */
+.jn-page { min-height: 100vh; background: #F8FAFC; }
+
+.jn-hero { padding: 3.5rem 1.5rem 2.5rem; text-align: center; transition: background .3s ease; }
+.jn-hero__inner { max-width: 680px; margin: 0 auto; }
+.jn-hero__badge {
+  display: inline-block; background: rgba(255,255,255,.15); color: #fff;
+  border: 1px solid rgba(255,255,255,.3); border-radius: 999px;
+  padding: .3rem .9rem; font-size: .75rem; font-weight: 700; letter-spacing: .07em;
+  margin-bottom: .9rem;
+}
+.jn-hero__title { font-size: 2rem; font-weight: 800; color: #fff; margin: 0 0 .5rem; }
+.jn-hero__sub { color: rgba(255,255,255,.8); font-size: .92rem; margin: 0; line-height: 1.75; max-width: 520px; margin: 0 auto; }
+
+.jn-tabs {
+  display: flex; overflow-x: auto; gap: .4rem; padding: .8rem 1rem;
+  background: #fff; border-bottom: 1px solid #E5E7EB;
+  position: sticky; top: 0; z-index: 10; scrollbar-width: none;
+}
+.jn-tabs::-webkit-scrollbar { display: none; }
+.jn-tab {
+  white-space: nowrap; border: 1.5px solid #E5E7EB; background: #fff; color: #475569;
+  border-radius: 999px; padding: .4rem .9rem; font-size: .8rem; font-weight: 700;
+  cursor: pointer; flex-shrink: 0; transition: all .15s ease;
+}
+.jn-tab:hover { border-color: #1F4D3A; color: #1F4D3A; }
+.jn-tab--active { color: #fff; }
+
+.jn-container { max-width: 900px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+.jn-sections { display: flex; flex-direction: column; gap: 2rem; }
+
+.jn-section {}
+.jn-section__title { font-size: 1.1rem; font-weight: 800; margin: 0 0 .85rem; border-right: 3px solid currentColor; padding-right: .7rem; }
+
+.jn-cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: .75rem; }
+.jn-desc-card {
+  background: #fff; border: 1px solid #E5E7EB; border-top: 3px solid;
+  border-radius: .9rem; padding: 1rem 1.1rem;
+  display: flex; flex-direction: column; gap: .4rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,.04);
+}
+.jn-desc-card__title { font-size: .9rem; font-weight: 800; color: #0F172A; margin: 0; }
+.jn-desc-card__text { font-size: .86rem; color: #334155; line-height: 1.75; margin: 0; }
+.jn-desc-card__ref { font-size: .72rem; color: #94A3B8; margin: 0; }
+
+.jn-naar-warn {
+  background: rgba(155,28,28,.07); border: 1px solid rgba(155,28,28,.2);
+  border-right: 4px solid #9B1C1C; border-radius: .6rem;
+  padding: .8rem 1rem; font-size: .9rem; color: #9B1C1C;
+  font-weight: 700; line-height: 1.6;
+}
+
+.jn-intro { background: rgba(31,77,58,.06); border-right: 3px solid #1F4D3A; border-radius: .6rem; padding: .85rem 1rem; margin-bottom: 1.2rem; }
+.jn-intro p { font-size: .88rem; color: #1E293B; line-height: 1.75; margin: 0; }
+
+.jn-asbab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: .8rem; }
+.jn-sabab-card {
+  background: #fff; border: 1px solid #E5E7EB; border-radius: 1rem;
+  padding: 1rem 1.1rem; display: flex; flex-direction: column; gap: .45rem;
+}
+.jn-sabab-num {
+  font-size: .7rem; font-weight: 900; color: #fff;
+  background: #1F4D3A; border-radius: 999px; width: 1.5rem; height: 1.5rem;
+  display: flex; align-items: center; justify-content: center;
+}
+.jn-sabab-title { font-size: .9rem; font-weight: 800; color: #0F172A; margin: 0; }
+.jn-sabab-text { font-size: .83rem; color: #334155; line-height: 1.7; margin: 0; }
+.jn-ref { font-size: .72rem; color: #94A3B8; margin: 0; }
+
+.jn-duas-list { display: flex; flex-direction: column; gap: .8rem; }
+.jn-dua-card {
+  background: #fff; border: 1px solid #E5E7EB; border-right: 4px solid #1F4D3A;
+  border-radius: .8rem; padding: 1rem 1.2rem;
+  display: flex; flex-direction: column; gap: .45rem;
+}
+.jn-dua-text {
+  font-family: "Amiri","Traditional Arabic",serif;
+  font-size: 1.1rem; color: #0F172A; line-height: 1.9; margin: 0;
+}
+.jn-dua-source { font-size: .75rem; color: #6B7280; margin: 0; }
+
+@media (max-width: 640px) {
+  .jn-hero__title { font-size: 1.5rem; }
+  .jn-cards-grid { grid-template-columns: 1fr; }
+  .jn-asbab-grid { grid-template-columns: 1fr; }
+}

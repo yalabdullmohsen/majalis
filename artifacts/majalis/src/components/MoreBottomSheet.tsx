@@ -51,6 +51,7 @@ const SHEET_SECTIONS = [
     { href: "/islamic-glossary",   label: "المصطلحات الإسلامية", Icon: BookOpen },
     { href: "/adab-talab-ilm",    label: "آداب طالب العلم",     Icon: GraduationCap },
     { href: "/anbiya",            label: "الأنبياء والرسل",     Icon: Star },
+    { href: "/janna-naar",        label: "الجنة والنار",         Icon: Sparkles },
     { href: "/prophetic-medicine", label: "الطب النبوي",       Icon: Stethoscope },
   ]},
   { group: "الأحكام والفقه", items: [
