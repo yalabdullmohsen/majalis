@@ -65,6 +65,7 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
   { href: "/ulum-quran",        label: "علوم القرآن" },
   { href: "/mawarith",          label: "المواريث والفرائض" },
   { href: "/salah-guide",       label: "دليل الصلاة الكامل" },
+  { href: "/duas-quran",        label: "أدعية القرآن الكريم" },
   { href: "/universities",       label: "دليل الجامعات" },
   { href: "/learning-path",      label: "خارطة طالب العلم" },
   // القرآن
@@ -319,6 +320,7 @@ export const HOME_MORE_SECTIONS = [
   { href: "/ulum-quran",    title: "علوم القرآن الكريم",  description: "النزول والجمع والتفسير والإعجاز والمحكم والمتشابه والناسخ والمنسوخ" },
   { href: "/mawarith",      title: "المواريث والفرائض",   description: "حصص الورثة الشرعية وأسباب الإرث وموانعه وأحكام العَصَبة والحجب والعَوْل والردّ" },
   { href: "/salah-guide",   title: "دليل الصلاة الكامل",  description: "الشروط والأركان وكيفية الصلاة والمبطلات والخشوع وفضائل الصلاة الخمس" },
+  { href: "/duas-quran",    title: "أدعية القرآن الكريم",  description: "12 دعاءً قرآنياً مأثوراً: دعاء الأنبياء والمؤمنين مع سياقها وفوائدها" },
   { href: "/knowledge-map", title: "الخريطة المعرفية",   description: "14 حقلاً علمياً بروابط تفاعلية ومحركات البحث" },
   { href: "/quran-hub",    title: "مركز القرآن",          description: "بوابتك الشاملة للمصحف والتجويد والإذاعات والبث المباشر" },
 ] as const;

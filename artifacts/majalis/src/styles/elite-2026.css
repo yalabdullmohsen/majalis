@@ -20706,3 +20706,135 @@ img[loading="lazy"]:not([src=""]) {
 }
 
 /* ── نهاية §237 ─────────────────────────────────────────── */
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   §238 — DuasQuranPage (.dq-*)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.dq-page { max-width: 780px; margin: 0 auto; padding: 0 0 6rem; }
+
+/* hero */
+.dq-hero {
+  background: linear-gradient(160deg, #0c1a2e 0%, #1a2e4a 50%, #0e3a5f 100%);
+  padding: 2.5rem 1.5rem 2rem; text-align: center; color: #fff;
+}
+.dq-hero__badge {
+  display: inline-block; background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.25); border-radius: 2rem;
+  padding: .3rem .9rem; font-size: .75rem; font-weight: 600; margin-bottom: .8rem; color: #fff;
+}
+.dq-hero__title { font-size: 1.65rem; font-weight: 800; margin: 0 0 .5rem; color: #fff; }
+.dq-hero__sub   { font-size: .9rem; opacity: .88; margin: 0 0 1.4rem; line-height: 1.6; color: #fff; }
+.dq-hero-ayah {
+  background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2);
+  border-radius: .8rem; padding: 1rem 1.2rem; max-width: 540px; margin: 0 auto;
+}
+.dq-hero-ayah__text { font-family: var(--font-quran,'Scheherazade New',serif); font-size: 1.1rem; line-height: 2.1; color: #fff; margin: 0 0 .3rem; }
+.dq-hero-ayah__ref  { font-size: .72rem; opacity: .7; color: #fff; font-style: normal; }
+
+/* body */
+.dq-body { padding: 1.25rem 1rem; }
+
+/* search */
+.dq-search {
+  width: 100%; padding: .65rem 1rem; border: 1.5px solid #BFDBFE;
+  border-radius: .7rem; font-size: .9rem; outline: none;
+  margin-bottom: 1rem; background: #fff; box-sizing: border-box; font-family: inherit;
+}
+.dq-search:focus { border-color: #3B82F6; }
+
+/* categories */
+.dq-cats { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: .75rem; }
+.dq-cat-btn {
+  padding: .35rem .8rem; border: 1.5px solid #DBEAFE; border-radius: 2rem;
+  background: #fff; font-size: .75rem; font-weight: 600; color: #374151;
+  cursor: pointer; font-family: inherit; transition: all .15s;
+}
+.dq-cat-btn--active { background: #1E40AF; border-color: #1E40AF; color: #fff; }
+.dq-count { font-size: .8rem; color: #6B7280; margin: 0 0 1rem; }
+
+/* list */
+.dq-list { display: flex; flex-direction: column; gap: .75rem; }
+
+/* card */
+.dq-card {
+  background: #fff; border: 1.5px solid #E5E7EB;
+  border-radius: .9rem; overflow: hidden;
+}
+.dq-card--open { border-color: #1E40AF; box-shadow: 0 2px 12px rgba(30,64,175,.1); }
+.dq-card__head {
+  display: flex; align-items: flex-start; gap: .7rem;
+  width: 100%; padding: .85rem 1rem;
+  background: transparent; border: none; cursor: pointer; font-family: inherit; text-align: right;
+}
+.dq-card__title-wrap { flex: 1; min-width: 0; }
+.dq-card__name    { display: block; font-weight: 700; font-size: .88rem; color: #111; margin-bottom: .15rem; }
+.dq-card__ref     { font-size: .72rem; color: #1E40AF; font-style: normal; font-weight: 600; display: block; margin-bottom: .1rem; }
+.dq-card__prophet { font-size: .7rem; color: #D97706; font-weight: 600; background: #FEF3C7; padding: .1rem .4rem; border-radius: .3rem; display: inline-block; }
+.dq-card__tags    { display: flex; flex-wrap: wrap; gap: .3rem; align-items: flex-start; }
+
+.dq-tag {
+  background: #EFF6FF; border: 1px solid #BFDBFE; border-radius: .4rem;
+  padding: .12rem .45rem; font-size: .65rem; font-weight: 600; color: #1E40AF;
+}
+
+.dq-chevron { font-size: .8rem; color: #9CA3AF; transition: transform .2s; flex-shrink: 0; margin-top: .1rem; }
+.dq-chevron--open { transform: rotate(180deg); }
+
+/* arabic */
+.dq-arabic-wrap { padding: .5rem 1rem .75rem; border-top: 1px solid #F3F4F6; }
+.dq-arabic {
+  font-family: var(--font-quran,'Scheherazade New',serif);
+  font-size: 1.15rem; line-height: 2.1; color: #052E16;
+  text-align: right; margin: 0;
+}
+
+/* card body */
+.dq-card__body { padding: .5rem 1rem .85rem; border-top: 1px solid #F3F4F6; }
+.dq-context-box {
+  background: #EFF6FF; border: 1px solid #BFDBFE;
+  border-right: 3px solid #1E40AF; border-radius: .65rem;
+  padding: .7rem .9rem; margin-bottom: .6rem;
+}
+.dq-context-box__label { display: block; font-size: .7rem; font-weight: 700; color: #1E40AF; margin-bottom: .3rem; }
+.dq-context-box__text  { font-size: .82rem; color: #1e3a5f; line-height: 1.65; margin: 0; }
+.dq-all-tags { display: flex; flex-wrap: wrap; gap: .3rem; }
+
+/* empty */
+.dq-empty { text-align: center; padding: 3rem 1rem; color: #9CA3AF; }
+.dq-empty span { font-size: 2.5rem; display: block; margin-bottom: .5rem; }
+.dq-empty p { font-size: .9rem; }
+
+/* آداب الدعاء */
+.dq-adab-box {
+  background: linear-gradient(135deg,#F8FAFF,#EFF6FF);
+  border: 1px solid #BFDBFE; border-radius: .9rem; padding: 1.1rem 1.2rem; margin-top: 2rem;
+}
+.dq-adab-box__title { font-size: 1rem; font-weight: 700; color: #111; margin: 0 0 .75rem; }
+.dq-adab-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+.dq-adab-item {
+  display: flex; gap: .5rem; align-items: flex-start;
+  background: #fff; border: 1px solid #DBEAFE; border-radius: .6rem; padding: .55rem .7rem;
+}
+.dq-adab-item__icon { font-size: 1rem; flex-shrink: 0; }
+.dq-adab-item__text { font-size: .78rem; color: #374151; line-height: 1.5; }
+
+/* related */
+.dq-related { margin-top: 2.5rem; }
+.dq-related__title { font-size: 1rem; font-weight: 700; color: #111; margin: 0 0 .75rem; }
+.dq-related__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; }
+.dq-related__link {
+  background: #fff; border: 1px solid #E5E7EB; border-radius: .6rem;
+  padding: .6rem .7rem; font-size: .82rem; color: var(--majalis-emerald,#0E6E52);
+  text-align: center; text-decoration: none; font-weight: 600;
+  transition: background .15s; display: block;
+}
+.dq-related__link:hover { background: #F0FDF4; border-color: var(--majalis-emerald,#0E6E52); }
+
+@media (max-width: 640px) {
+  .dq-adab-grid { grid-template-columns: 1fr; }
+  .dq-related__grid { grid-template-columns: repeat(2, 1fr); }
+  .dq-hero__title { font-size: 1.35rem; }
+  .dq-arabic { font-size: 1rem; }
+}
+
+/* ── نهاية §238 ─────────────────────────────────────────── */

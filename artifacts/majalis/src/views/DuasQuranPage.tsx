@@ -1,0 +1,293 @@
+import { useState } from "react";
+import { applyPageSeo } from "../lib/seo";
+
+applyPageSeo({
+  path: "/duas-quran",
+  title: "أدعية القرآن الكريم — المجلس العلمي",
+  description: "أجمل الأدعية المأثورة من كتاب الله: دعاء الأنبياء والمؤمنين في القرآن الكريم",
+  keywords: ["أدعية القرآن", "دعاء في القرآن", "دعاء الأنبياء", "أفضل الأدعية", "دعاء قرآني"],
+});
+
+type DuaCategory = "الكل" | "الأنبياء" | "الرزق والهداية" | "المغفرة" | "الأسرة" | "الدنيا والآخرة" | "الصبر والنصر";
+
+interface QuranDua {
+  id: string;
+  arabic: string;
+  ref: string;
+  name: string;
+  category: DuaCategory[];
+  context: string;
+  benefitTags: string[];
+  prophet?: string;
+}
+
+const DUAS: QuranDua[] = [
+  {
+    id: "fatiha",
+    arabic: "اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ ۝ صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ",
+    ref: "الفاتحة: 6-7",
+    name: "دعاء الهداية",
+    category: ["الكل", "الرزق والهداية"],
+    context: "آخر دعاء في أم الكتاب — يُقرأ في كل ركعة — الله يقول لعبده: هذا لعبدي ولعبدي ما سأل",
+    benefitTags: ["الهداية", "طريق النجاة", "يومياً"],
+  },
+  {
+    id: "baqara-rabana",
+    arabic: "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ",
+    ref: "البقرة: 201",
+    name: "سيد الأدعية",
+    category: ["الكل", "الدنيا والآخرة"],
+    context: "كان النبي ﷺ يُكثر من هذا الدعاء — قال أنس: كانت أكثر دعاء النبي ﷺ هذه الآية",
+    benefitTags: ["جامع", "دنيا وآخرة", "يومياً"],
+  },
+  {
+    id: "baqara-tawba",
+    arabic: "رَبَّنَا ظَلَمْنَا أَنفُسَنَا وَإِن لَّمْ تَغْفِرْ لَنَا وَتَرْحَمْنَا لَنَكُونَنَّ مِنَ الْخَاسِرِينَ",
+    ref: "الأعراف: 23",
+    name: "دعاء آدم وحواء",
+    category: ["الكل", "المغفرة", "الأنبياء"],
+    context: "دعاء آدم وحواء بعد نزولهما من الجنة — دعاء الاعتراف بالذنب والتوسل بالمغفرة",
+    benefitTags: ["مغفرة", "توبة", "اعتراف"],
+    prophet: "آدم ﵇",
+  },
+  {
+    id: "ibrahim-dhurriyya",
+    arabic: "رَبِّ اجْعَلْنِي مُقِيمَ الصَّلَاةِ وَمِن ذُرِّيَّتِي ۚ رَبَّنَا وَتَقَبَّلْ دُعَاءِ",
+    ref: "إبراهيم: 40",
+    name: "دعاء إبراهيم للذرية",
+    category: ["الكل", "الأسرة", "الأنبياء"],
+    context: "دعاء إبراهيم ﵇ لنفسه ولذريته بإقامة الصلاة — درس في الاهتمام بأبناء وأحفاد المؤمن",
+    benefitTags: ["الأسرة", "الصلاة", "الذرية"],
+    prophet: "إبراهيم ﵇",
+  },
+  {
+    id: "musa-nur",
+    arabic: "رَبِّ اشْرَحْ لِي صَدْرِي ۝ وَيَسِّرْ لِي أَمْرِي ۝ وَاحْلُلْ عُقْدَةً مِّن لِّسَانِي ۝ يَفْقَهُوا قَوْلِي",
+    ref: "طه: 25-28",
+    name: "دعاء موسى قبل الرسالة",
+    category: ["الكل", "الرزق والهداية", "الأنبياء"],
+    context: "دعاء موسى ﵇ حين بعثه الله لفرعون — دعاء العلماء وأهل الدعوة والمتحدثين",
+    benefitTags: ["علم", "فصاحة", "تيسير"],
+    prophet: "موسى ﵇",
+  },
+  {
+    id: "ayyub-daaf",
+    arabic: "رَبِّ إِنِّي مَسَّنِيَ الضُّرُّ وَأَنتَ أَرْحَمُ الرَّاحِمِينَ",
+    ref: "الأنبياء: 83",
+    name: "دعاء أيوب في البلاء",
+    category: ["الكل", "الصبر والنصر", "الأنبياء"],
+    context: "دعاء أيوب ﵇ في شدة مرضه — دعاء يُستحب في المرض والضيق. قال الله: فاستجبنا له فكشفنا ما به من ضر",
+    benefitTags: ["مرض", "بلاء", "فرج"],
+    prophet: "أيوب ﵇",
+  },
+  {
+    id: "yunus-hoot",
+    arabic: "لَّا إِلَٰهَ إِلَّا أَنتَ سُبْحَانَكَ إِنِّي كُنتُ مِنَ الظَّالِمِينَ",
+    ref: "الأنبياء: 87",
+    name: "دعاء يونس في بطن الحوت",
+    category: ["الكل", "المغفرة", "الصبر والنصر", "الأنبياء"],
+    context: "قاله يونس ﵇ في ظلمات ثلاث — روى النبي ﷺ أنه ما دعا به مكروب إلا فرّج الله عنه",
+    benefitTags: ["كرب", "ضيق", "مستجاب"],
+    prophet: "يونس ﵇",
+  },
+  {
+    id: "zakariyya-walad",
+    arabic: "رَبِّ لَا تَذَرْنِي فَرْدًا وَأَنتَ خَيْرُ الْوَارِثِينَ",
+    ref: "الأنبياء: 89",
+    name: "دعاء زكريا للنسل",
+    category: ["الكل", "الأسرة", "الأنبياء"],
+    context: "دعاء زكريا ﵇ بعد أن شاخ — فاستجاب الله له ووهب له يحيى ﵇ وهو شيخ عقيم الامرأة",
+    benefitTags: ["ذرية", "أسرة", "نسل"],
+    prophet: "زكريا ﵇",
+  },
+  {
+    id: "suleiman-shukr",
+    arabic: "رَبِّ أَوْزِعْنِي أَنْ أَشْكُرَ نِعْمَتَكَ الَّتِي أَنْعَمْتَ عَلَيَّ وَعَلَىٰ وَالِدَيَّ وَأَنْ أَعْمَلَ صَالِحًا تَرْضَاهُ وَأَدْخِلْنِي بِرَحْمَتِكَ فِي عِبَادِكَ الصَّالِحِينَ",
+    ref: "النمل: 19",
+    name: "دعاء سليمان عند النعمة",
+    category: ["الكل", "الرزق والهداية", "الأنبياء"],
+    context: "قاله سليمان ﵇ حين سمع كلام النملة — دعاء الشكر على النعم وطلب الصلاح والدخول في الصالحين",
+    benefitTags: ["شكر", "صلاح", "والدان"],
+    prophet: "سليمان ﵇",
+  },
+  {
+    id: "muminun-ghufran",
+    arabic: "رَبَّنَا اغْفِرْ لَنَا وَلِإِخْوَانِنَا الَّذِينَ سَبَقُونَا بِالْإِيمَانِ وَلَا تَجْعَلْ فِي قُلُوبِنَا غِلًّا لِّلَّذِينَ آمَنُوا رَبَّنَا إِنَّكَ رَءُوفٌ رَّحِيمٌ",
+    ref: "الحشر: 10",
+    name: "دعاء المؤمنين للسابقين",
+    category: ["الكل", "المغفرة"],
+    context: "دعاء الإخوة في الإيمان — من قاله غُفر له ولإخوانه المؤمنين وطهُر قلبه من الغلّ والحسد",
+    benefitTags: ["مغفرة", "إخوة", "طهارة القلب"],
+  },
+  {
+    id: "baqara-amantu",
+    arabic: "رَبَّنَا لَا تُؤَاخِذْنَا إِن نَّسِينَا أَوْ أَخْطَأْنَا ۚ رَبَّنَا وَلَا تَحْمِلْ عَلَيْنَا إِصْرًا كَمَا حَمَلْتَهُ عَلَى الَّذِينَ مِن قَبْلِنَا",
+    ref: "البقرة: 286",
+    name: "خاتمة البقرة",
+    category: ["الكل", "المغفرة", "الدنيا والآخرة"],
+    context: "قال النبي ﷺ: من قرأ الآيتين من آخر سورة البقرة في ليلة كفتاه — دعاء العفو والرفع والنصر",
+    benefitTags: ["ليلاً", "حماية", "كفاية"],
+  },
+  {
+    id: "kahf-rahmatan",
+    arabic: "رَبَّنَا آتِنَا مِن لَّدُنكَ رَحْمَةً وَهَيِّئْ لَنَا مِنْ أَمْرِنَا رَشَدًا",
+    ref: "الكهف: 10",
+    name: "دعاء أصحاب الكهف",
+    category: ["الكل", "الرزق والهداية", "الصبر والنصر"],
+    context: "دعاء الفتية المؤمنين حين لجأوا إلى الكهف — دعاء طلب الهداية والتوفيق للأمر الرشيد",
+    benefitTags: ["حماية", "توفيق", "هداية"],
+  },
+];
+
+const CATEGORIES: DuaCategory[] = ["الكل", "الأنبياء", "الرزق والهداية", "المغفرة", "الأسرة", "الدنيا والآخرة", "الصبر والنصر"];
+
+export default function DuasQuranPage() {
+  const [activeCat, setActiveCat] = useState<DuaCategory>("الكل");
+  const [search, setSearch] = useState("");
+  const [openId, setOpenId] = useState<string | null>(null);
+
+  const filtered = DUAS.filter((d) => {
+    const matchCat = activeCat === "الكل" || d.category.includes(activeCat);
+    const matchSearch = !search.trim() || d.name.includes(search) || d.arabic.includes(search) || d.ref.includes(search);
+    return matchCat && matchSearch;
+  });
+
+  return (
+    <main className="dq-page" dir="rtl">
+      {/* hero */}
+      <section className="dq-hero">
+        <div className="dq-hero__badge">الأدعية القرآنية</div>
+        <h1 className="dq-hero__title">أدعية القرآن الكريم</h1>
+        <p className="dq-hero__sub">
+          أجمل الأدعية المأثورة من كلام الله — دعاء الأنبياء والمؤمنين في كتاب الله المبين
+        </p>
+
+        <div className="dq-hero-ayah">
+          <p className="dq-hero-ayah__text">
+            وَإِذَا سَأَلَكَ عِبَادِي عَنِّي فَإِنِّي قَرِيبٌ ۖ أُجِيبُ دَعْوَةَ الدَّاعِ إِذَا دَعَانِ
+          </p>
+          <cite className="dq-hero-ayah__ref">البقرة: 186</cite>
+        </div>
+      </section>
+
+      <div className="dq-body">
+        {/* search */}
+        <input
+          type="search"
+          className="dq-search"
+          placeholder="ابحث بالاسم أو الآية..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+
+        {/* categories */}
+        <div className="dq-cats">
+          {CATEGORIES.map((cat) => (
+            <button
+              key={cat}
+              type="button"
+              className={`dq-cat-btn${activeCat === cat ? " dq-cat-btn--active" : ""}`}
+              onClick={() => setActiveCat(cat)}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+
+        <p className="dq-count">{filtered.length} دعاء</p>
+
+        {/* duas list */}
+        <div className="dq-list">
+          {filtered.map((d) => {
+            const isOpen = openId === d.id;
+            return (
+              <article key={d.id} className={`dq-card${isOpen ? " dq-card--open" : ""}`}>
+                <button
+                  type="button"
+                  className="dq-card__head"
+                  onClick={() => setOpenId(isOpen ? null : d.id)}
+                  aria-expanded={isOpen}
+                >
+                  <div className="dq-card__title-wrap">
+                    <span className="dq-card__name">{d.name}</span>
+                    <cite className="dq-card__ref">{d.ref}</cite>
+                    {d.prophet && <span className="dq-card__prophet">{d.prophet}</span>}
+                  </div>
+                  <div className="dq-card__tags">
+                    {d.benefitTags.slice(0, 2).map((t) => (
+                      <span key={t} className="dq-tag">{t}</span>
+                    ))}
+                  </div>
+                  <span className={`dq-chevron${isOpen ? " dq-chevron--open" : ""}`}>▾</span>
+                </button>
+
+                {/* الدعاء دائماً ظاهر */}
+                <div className="dq-arabic-wrap">
+                  <p className="dq-arabic">{d.arabic}</p>
+                </div>
+
+                {isOpen && (
+                  <div className="dq-card__body">
+                    <div className="dq-context-box">
+                      <span className="dq-context-box__label">السياق والفائدة</span>
+                      <p className="dq-context-box__text">{d.context}</p>
+                    </div>
+                    <div className="dq-all-tags">
+                      {d.benefitTags.map((t) => (
+                        <span key={t} className="dq-tag">{t}</span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </article>
+            );
+          })}
+        </div>
+
+        {filtered.length === 0 && (
+          <div className="dq-empty">
+            <span>🔍</span>
+            <p>لا توجد نتائج مطابقة</p>
+          </div>
+        )}
+
+        {/* adab dua */}
+        <div className="dq-adab-box">
+          <h2 className="dq-adab-box__title">آداب الدعاء</h2>
+          <div className="dq-adab-grid">
+            {[
+              { icon: "🕌", text: "استقبال القبلة ورفع اليدين" },
+              { icon: "🤲", text: "البدء بالحمد والثناء والصلاة على النبي ﷺ" },
+              { icon: "💧", text: "الدعاء بقلب حاضر ويقين الإجابة" },
+              { icon: "⏰", text: "اغتنام أوقات الإجابة (السحر، بين الأذان والإقامة، يوم الجمعة)" },
+              { icon: "🚫", text: "اجتناب الحرام في المطعم والملبس والمشرب" },
+              { icon: "🔄", text: "الإلحاح والتكرار دون استعجال الإجابة" },
+            ].map((a) => (
+              <div key={a.text} className="dq-adab-item">
+                <span className="dq-adab-item__icon">{a.icon}</span>
+                <span className="dq-adab-item__text">{a.text}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* related */}
+        <nav className="dq-related" aria-label="صفحات ذات صلة">
+          <h2 className="dq-related__title">استكشف أيضاً</h2>
+          <div className="dq-related__grid">
+            {[
+              { href: "/duas", label: "الأدعية الشرعية" },
+              { href: "/adhkar", label: "الأذكار اليومية" },
+              { href: "/daily-wird", label: "الورد اليومي" },
+              { href: "/tawba", label: "التوبة والاستغفار" },
+              { href: "/arbaeen-nawawi", label: "الأربعون النووية" },
+              { href: "/fadail-aamal", label: "فضائل الأعمال" },
+            ].map((r) => (
+              <a key={r.href} href={r.href} className="dq-related__link">{r.label}</a>
+            ))}
+          </div>
+        </nav>
+      </div>
+    </main>
+  );
+}

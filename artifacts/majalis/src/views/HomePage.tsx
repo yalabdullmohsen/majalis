@@ -118,6 +118,7 @@ const FEATURE_CATS: FeatureCat[] = [
       { href: "/adhkar",          Icon: Star,        title: "الأذكار",              desc: "أذكار الصباح والمساء" },
       { href: "/sunan-yawmiyya",  Icon: Check,       title: "السنن النبوية",        desc: "25+ سنة يومية مع تتبع التطبيق" },
       { href: "/duas",        Icon: Heart,       title: "الأدعية الشرعية",    desc: "25 دعاءً موثقاً مع المعنى والمصدر" },
+      { href: "/duas-quran",  Icon: BookOpen,    title: "أدعية القرآن",        desc: "12 دعاءً قرآنياً للأنبياء والمؤمنين" },
       { href: "/fawaid",       Icon: Lightbulb,   title: "الفوائد الدينية",      desc: "فوائد علمية منتقاة" },
       { href: "/hikam-salaf",  Icon: BookOpen,    title: "حكم السلف الصالح",     desc: "أقوال الأئمة والصحابة والتابعين" },
       { href: "/fadail-aamal", Icon: Star,        title: "فضائل الأعمال",         desc: "30+ حديث في فضائل العبادات والأخلاق" },

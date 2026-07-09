@@ -37,6 +37,7 @@ const SHEET_SECTIONS = [
     { href: "/hikam-salaf",        label: "حكم السلف",         Icon: BookOpen },
     { href: "/fadail-aamal",       label: "فضائل الأعمال",     Icon: Star },
     { href: "/tawba",              label: "التوبة والاستغفار", Icon: RefreshCw },
+    { href: "/duas-quran",         label: "أدعية القرآن",      Icon: BookOpen },
     { href: "/ulum-quran",         label: "علوم القرآن",       Icon: GraduationCap },
     { href: "/updates",            label: "آخر المستجدات",     Icon: RefreshCw },
     { href: "/stories",            label: "القصص الإسلامية",   Icon: BookOpen },
