@@ -30,6 +30,15 @@ const PERIODS: Record<string, SunnahPeriod> = {
       { label: "الدعاء", href: "/adhkar?cat=distress" },
     ],
   },
+  afterDhuhr: {
+    id: "afterDhuhr",
+    title: "بعد الظهر",
+    suggestions: [
+      { label: "سنة الظهر البعدية", href: "/adhkar?cat=salah" },
+      { label: "أذكار ما بعد الصلاة", href: "/adhkar?cat=after-salah" },
+      { label: "قراءة القرآن", href: "/quran" },
+    ],
+  },
   afterAsr: {
     id: "afterAsr",
     title: "بعد العصر",
@@ -66,7 +75,7 @@ function periodFromPrayer(current: PrayerSlot | null): SunnahPeriod {
     case "Fajr":
       return PERIODS.afterFajr;
     case "Dhuhr":
-      return PERIODS.beforeDhuhr;
+      return PERIODS.afterDhuhr;
     case "Asr":
       return PERIODS.afterAsr;
     case "Maghrib":
@@ -80,9 +89,10 @@ function periodFromPrayer(current: PrayerSlot | null): SunnahPeriod {
 
 function periodFromLocalHour(hour: number): SunnahPeriod {
   if (hour >= 4 && hour < 10) return PERIODS.afterFajr;
-  if (hour >= 10 && hour < 14) return PERIODS.beforeDhuhr;
-  if (hour >= 14 && hour < 17) return PERIODS.afterAsr;
-  if (hour >= 17 && hour < 20) return PERIODS.afterMaghrib;
+  if (hour >= 10 && hour < 12) return PERIODS.beforeDhuhr;
+  if (hour >= 12 && hour < 15) return PERIODS.afterDhuhr;
+  if (hour >= 15 && hour < 18) return PERIODS.afterAsr;
+  if (hour >= 18 && hour < 21) return PERIODS.afterMaghrib;
   return PERIODS.afterIsha;
 }
 
