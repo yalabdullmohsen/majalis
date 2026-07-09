@@ -307,13 +307,9 @@ export default function HomePage() {
       {/* ══════════════════ Main Content ══════════════════ */}
       <main className="home-container home-main home-main--v3">
 
-        {/* الدروس — أول قسم */}
-        <SafeHomeSection name="الدروس">
+        {/* الدروس والدورات */}
+        <SafeHomeSection name="الدروس والدورات">
           <HomeUpcomingLessons />
-        </SafeHomeSection>
-
-        {/* الدورات القادمة */}
-        <SafeHomeSection name="الدورات القادمة">
           <HomeUpcomingCourses />
         </SafeHomeSection>
 
