@@ -306,7 +306,7 @@ export default function ShimaelPage() {
                   onClick={() => setOpenBab(openBab === bab.id ? null : bab.id)}
                   role="button"
                   tabIndex={0}
-                  onKeyDown={e => e.key === "Enter" && setOpenBab(openBab === bab.id ? null : bab.id)}
+                  onKeyDown={e => (e.key === "Enter" || e.key === " ") && setOpenBab(openBab === bab.id ? null : bab.id)}
                   aria-expanded={openBab === bab.id}
                 >
                   <span className="sh-bab__icon" aria-hidden="true">{bab.icon}</span>
@@ -348,7 +348,7 @@ export default function ShimaelPage() {
                   onClick={() => setOpenBab(openBab === bab.id + 100 ? null : bab.id + 100)}
                   role="button"
                   tabIndex={0}
-                  onKeyDown={e => e.key === "Enter" && setOpenBab(openBab === bab.id + 100 ? null : bab.id + 100)}
+                  onKeyDown={e => (e.key === "Enter" || e.key === " ") && setOpenBab(openBab === bab.id + 100 ? null : bab.id + 100)}
                   aria-expanded={openBab === bab.id + 100}
                 >
                   <span className="sh-bab__icon" aria-hidden="true">{bab.icon}</span>
@@ -390,7 +390,7 @@ export default function ShimaelPage() {
                   onClick={() => setOpenBab(openBab === bab.id + 200 ? null : bab.id + 200)}
                   role="button"
                   tabIndex={0}
-                  onKeyDown={e => e.key === "Enter" && setOpenBab(openBab === bab.id + 200 ? null : bab.id + 200)}
+                  onKeyDown={e => (e.key === "Enter" || e.key === " ") && setOpenBab(openBab === bab.id + 200 ? null : bab.id + 200)}
                   aria-expanded={openBab === bab.id + 200}
                 >
                   <span className="sh-bab__icon" aria-hidden="true">{bab.icon}</span>
@@ -437,7 +437,7 @@ export default function ShimaelPage() {
                     onClick={() => setOpenMahabbah(openMahabbah === i ? null : i)}
                     role="button"
                     tabIndex={0}
-                    onKeyDown={e => e.key === "Enter" && setOpenMahabbah(openMahabbah === i ? null : i)}
+                    onKeyDown={e => (e.key === "Enter" || e.key === " ") && setOpenMahabbah(openMahabbah === i ? null : i)}
                     aria-expanded={openMahabbah === i}
                   >
                     <span className="sh-mahabbah-card__num">{(i + 1).toLocaleString("ar-EG")}</span>

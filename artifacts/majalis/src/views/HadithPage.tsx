@@ -121,7 +121,7 @@ function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) 
     <article
       className="hadith-card ui-card"
       onClick={() => onExpand(h)}
-      onKeyDown={(e) => e.key === "Enter" && onExpand(h)}
+      onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && onExpand(h)}
       tabIndex={0}
       role="button"
       aria-label={`عرض تفاصيل الحديث: ${h.title ?? ""}`}

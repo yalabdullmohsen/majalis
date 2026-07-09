@@ -30,7 +30,7 @@ function CardFace({
       onClick={onFlip}
       role="button"
       tabIndex={0}
-      onKeyDown={(e) => e.key === "Enter" && onFlip()}
+      onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && onFlip()}
       aria-label={flipped ? "انقر لرؤية الوجه" : "انقر لرؤية الإجابة"}
     >
       <div className="fc-card__inner">

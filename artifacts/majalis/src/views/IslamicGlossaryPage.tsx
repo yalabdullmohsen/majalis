@@ -357,7 +357,7 @@ export default function IslamicGlossaryPage() {
                   onClick={() => setOpenTerm(isOpen ? null : term.id)}
                   role="button"
                   tabIndex={0}
-                  onKeyDown={e => e.key === "Enter" && setOpenTerm(isOpen ? null : term.id)}
+                  onKeyDown={e => (e.key === "Enter" || e.key === " ") && setOpenTerm(isOpen ? null : term.id)}
                   aria-expanded={isOpen}
                 >
                   <div className="gl-term__title-wrap">

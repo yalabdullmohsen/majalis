@@ -48,7 +48,7 @@ function StoryCard({ story, onSelect }: { story: IslamicStory; onSelect: () => v
     <article
       className={`isp-card isp-card--${story.category === "صحابة" ? "companions" : story.category === "فتوحات" ? "conquests" : "history"}`}
       onClick={onSelect}
-      onKeyDown={(e) => e.key === "Enter" && onSelect()}
+      onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && onSelect()}
       tabIndex={0}
       role="button"
       aria-label={`اقرأ قصة: ${story.title}`}

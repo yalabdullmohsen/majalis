@@ -99,7 +99,7 @@ function ProphetCard({
         "--prophet-color-light": color + "30",
       } as React.CSSProperties}
       onClick={onSelect}
-      onKeyDown={e => e.key === "Enter" && onSelect()}
+      onKeyDown={e => (e.key === "Enter" || e.key === " ") && onSelect()}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       tabIndex={0}

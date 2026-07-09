@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Mic2, Music2 } from "lucide-react";
+import { Mic2, Music2, Play, Pause, SkipBack, SkipForward } from "lucide-react";
 import { Link } from "wouter";
 import { supabase } from "@/lib/supabase";
 import { applyPageSeo } from "@/lib/seo";
@@ -28,6 +28,7 @@ export default function CarModePage() {
   const [playing, setPlaying] = useState(false);
   const [loading, setLoading] = useState(true);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const wasPlayingRef = useRef(false);
 
   useEffect(() => {
     applyPageSeo({
@@ -92,31 +93,37 @@ export default function CarModePage() {
   };
 
   const goNext = () => {
+    wasPlayingRef.current = playing;
     const next = Math.min(currentIdx + 1, lessons.length - 1);
     setCurrentIdx(next);
-    setPlaying(false);
     saveLastLesson(lessons[next]?.id ?? "");
   };
 
   const goPrev = () => {
+    wasPlayingRef.current = playing;
     const prev = Math.max(currentIdx - 1, 0);
     setCurrentIdx(prev);
-    setPlaying(false);
     saveLastLesson(lessons[prev]?.id ?? "");
   };
 
   const selectLesson = (idx: number) => {
+    wasPlayingRef.current = playing;
     setCurrentIdx(idx);
-    setPlaying(false);
     saveLastLesson(lessons[idx]?.id ?? "");
   };
 
-  // Sync audio element when current changes
+  // Sync audio element when current changes — resume if was playing
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio || !audioSrc) return;
     audio.load();
-    setPlaying(false);
+    if (wasPlayingRef.current) {
+      audio.play().catch(() => {});
+      setPlaying(true);
+      wasPlayingRef.current = false;
+    } else {
+      setPlaying(false);
+    }
   }, [audioSrc]);
 
   if (loading) {
@@ -181,7 +188,7 @@ export default function CarModePage() {
           disabled={currentIdx === 0}
           aria-label="السابق"
         >
-          ⏮
+          <SkipBack size={28} strokeWidth={1.6} />
         </button>
         <button
           type="button"
@@ -189,7 +196,7 @@ export default function CarModePage() {
           onClick={togglePlay}
           aria-label={playing ? "إيقاف" : "تشغيل"}
         >
-          {playing ? "⏸" : "▶"}
+          {playing ? <Pause size={36} strokeWidth={1.5} /> : <Play size={36} strokeWidth={1.5} />}
         </button>
         <button
           type="button"
@@ -198,7 +205,7 @@ export default function CarModePage() {
           disabled={currentIdx === lessons.length - 1}
           aria-label="التالي"
         >
-          ⏭
+          <SkipForward size={28} strokeWidth={1.6} />
         </button>
       </div>
 
