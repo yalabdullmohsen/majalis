@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
-import { BookMarked, GraduationCap, Home, LayoutGrid, Sunset } from "lucide-react";
+import { BookMarked, Home, LayoutGrid, Repeat2, Sunset } from "lucide-react";
 import { MoreBottomSheet } from "./MoreBottomSheet";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 
@@ -11,9 +11,9 @@ type NavTab = {
 };
 
 const NAV_TABS: NavTab[] = [
-  { href: "/",        label: "الرئيسية", Icon: Home },
-  { href: "/lessons", label: "الدروس",   Icon: GraduationCap },
-  { href: "/quran",   label: "المصحف",   Icon: BookMarked },
+  { href: "/",       label: "الرئيسية", Icon: Home },
+  { href: "/quran",  label: "المصحف",   Icon: BookMarked },
+  { href: "/adhkar", label: "الأذكار",  Icon: Repeat2 },
 ];
 
 export function BottomNavBar() {
