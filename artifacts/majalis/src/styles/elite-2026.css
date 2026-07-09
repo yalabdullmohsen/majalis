@@ -6374,6 +6374,10 @@ button.primary:hover {
 .pmp-filter-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 
 /* ─ Card ─ */
+.pmp-cat--ilaj    { --pm-bg: #18362A; --pm-accent: #BEC7C3; }
+.pmp-cat--ghidha  { --pm-bg: #153025; --pm-accent: #97A59F; }
+.pmp-cat--ibada   { --pm-bg: #12281F; --pm-accent: #BEC7C3; }
+.pmp-cat--nathafa { --pm-bg: #0E2019; --pm-accent: #97A59F; }
 .pmp-card { border: 1px solid var(--msk-border); border-radius: 1rem; overflow: hidden; background: var(--msk-canvas-1, var(--msk-canvas)); display: flex; flex-direction: column; }
 .pmp-card__head { background: var(--pm-bg, #18362A); background-image: url("/star-pattern.svg"); background-size: 100px 100px; padding: 1rem 1rem 0.875rem; display: flex; align-items: center; gap: 0.75rem; }
 .pmp-card__icon { font-size: 1.75rem; line-height: 1; flex-shrink: 0; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.35)); }
@@ -7208,6 +7212,10 @@ button.primary:hover {
 .flc-login-msg    { color: var(--majalis-ink-soft, #5c564c); margin-bottom: 1rem; }
 .flc-empty-icon   { font-size: 3rem; margin-bottom: 1rem; }
 .flc-empty-link   { margin-top: 1.5rem; display: inline-block; }
+.fc-q--0 { --fc-btn-color: #dc2626; }
+.fc-q--2 { --fc-btn-color: #1F4D3A; }
+.fc-q--4 { --fc-btn-color: #16a34a; }
+.fc-q--5 { --fc-btn-color: #0284c7; }
 .fc-quality__btn  { border-color: var(--fc-btn-color); color: var(--fc-btn-color); }
 .fc-progress__fill { width: var(--fc-pct, 0%); }
 
@@ -7304,6 +7312,10 @@ button.primary:hover {
 .ldb-skeleton-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
 @media (max-width: 640px) { .ldb-skeleton-grid { grid-template-columns: 1fr; } }
 .ldb-skeleton-card { background: var(--majalis-parchment-deep); border-radius: 1rem; height: 7rem; animation: pulse 1.5s ease-in-out infinite; }
+.ldb-stat--completed  { --stat-bg: #dcfce7; --stat-color: #15803d; }
+.ldb-stat--inprogress { --stat-bg: #E6EDE9; --stat-color: #18362A; }
+.ldb-stat--started    { --stat-bg: #eff6ff; --stat-color: #1d4ed8; }
+.ldb-stat--achieve    { --stat-bg: #faf5ff; --stat-color: #6b21a8; }
 .ldb-stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2rem; }
 @media (min-width: 640px) { .ldb-stats-grid { grid-template-columns: repeat(4, 1fr); } }
 .ldb-stat-card { background: var(--stat-bg); border-color: color-mix(in srgb, var(--stat-color) 19%, transparent); border-radius: 1rem; padding: 1rem; text-align: center; border-width: 1px; border-style: solid; }

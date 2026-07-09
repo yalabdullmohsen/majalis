@@ -91,15 +91,14 @@ export default function LearningPathDashboardPage() {
             {/* إحصائيات سريعة */}
             <div className="ldb-stats-grid">
               {[
-                { value: completed.length,    label: "كتاب مكتمل",  bg: "#dcfce7", color: "#15803d" },
-                { value: inProgress.length,   label: "جاري حالياً", bg: "#E6EDE9", color: "#18362A" },
-                { value: progress.length,     label: "كتاب بدأت",   bg: "#eff6ff", color: "#1d4ed8" },
-                { value: achievements.length, label: "وسام حصلت",   bg: "#faf5ff", color: "#6b21a8" },
+                { value: completed.length,    label: "كتاب مكتمل",  mod: "ldb-stat--completed"  },
+                { value: inProgress.length,   label: "جاري حالياً", mod: "ldb-stat--inprogress" },
+                { value: progress.length,     label: "كتاب بدأت",   mod: "ldb-stat--started"    },
+                { value: achievements.length, label: "وسام حصلت",   mod: "ldb-stat--achieve"    },
               ].map((stat) => (
                 <div
                   key={stat.label}
-                  className="ldb-stat-card"
-                  style={{ "--stat-bg": stat.bg, "--stat-color": stat.color } as React.CSSProperties}
+                  className={`ldb-stat-card ${stat.mod}`}
                 >
                   <div className="ldb-stat-val">{stat.value}</div>
                   <div className="ldb-stat-label">{stat.label}</div>

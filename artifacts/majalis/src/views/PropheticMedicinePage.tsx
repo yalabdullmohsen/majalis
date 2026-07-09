@@ -23,11 +23,11 @@ function PMIcon({ name }: { name: string }) {
 const DISCLAIMER =
   "تنبيه: المعلومات الواردة هنا تعليمية تُعرض ما ثبت في السنة النبوية الصحيحة، ولا تُغني عن استشارة الطبيب. الإسلام يُوجب التداوي عند الحاجة.";
 
-const CATEGORY_COLORS: Record<string, { bg: string; accent: string }> = {
-  "العلاج والدواء":    { bg: "#18362A", accent: "#BEC7C3" },
-  "الغذاء والتغذية":  { bg: "#153025", accent: "#97A59F" },
-  "العبادة والصحة":   { bg: "#12281F", accent: "#BEC7C3" },
-  "النظافة والوقاية": { bg: "#0E2019", accent: "#97A59F" },
+const PM_CAT_MOD: Record<string, string> = {
+  "العلاج والدواء":    "pmp-cat--ilaj",
+  "الغذاء والتغذية":  "pmp-cat--ghidha",
+  "العبادة والصحة":   "pmp-cat--ibada",
+  "النظافة والوقاية": "pmp-cat--nathafa",
 };
 
 export default function PropheticMedicinePage() {
@@ -88,14 +88,12 @@ export default function PropheticMedicinePage() {
       {/* الشبكة */}
       <div className="ds-grid">
         {items.map((item) => {
-          const palette = CATEGORY_COLORS[item.category] ?? { bg: "#18362A", accent: "#BEC7C3" };
           const isOpen = expanded === item.id;
 
           return (
             <article
               key={item.id}
-              className="pmp-card"
-              style={{ "--pm-bg": palette.bg, "--pm-accent": palette.accent } as React.CSSProperties}
+              className={`pmp-card ${PM_CAT_MOD[item.category] ?? "pmp-cat--ilaj"}`}
             >
               {/* رأس البطاقة */}
               <div className="pmp-card__head">

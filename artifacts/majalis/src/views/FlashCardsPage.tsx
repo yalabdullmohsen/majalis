@@ -57,6 +57,13 @@ function CardFace({
 
 // ─── Quality buttons ──────────────────────────────────────────────────────────
 
+const FC_Q_MOD: Record<number, string> = {
+  0: "fc-q--0",
+  2: "fc-q--2",
+  4: "fc-q--4",
+  5: "fc-q--5",
+};
+
 function QualityBar({
   onRate,
 }: {
@@ -70,8 +77,7 @@ function QualityBar({
           <button
             key={opt.value}
             type="button"
-            className="fc-quality__btn"
-            style={{ "--fc-btn-color": opt.color } as React.CSSProperties}
+            className={`fc-quality__btn ${FC_Q_MOD[opt.value] ?? ""}`}
             onClick={() => onRate(opt.value)}
           >
             {opt.label}
