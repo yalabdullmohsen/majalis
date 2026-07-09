@@ -33,12 +33,11 @@ export function Toaster() {
 
         return (
           <Toast key={id} variant={variant} {...props}
-            style={{ "--toast-accent": meta.accent } as React.CSSProperties}
+            style={{ "--toast-accent": meta.accent, "--toast-icon-bg": meta.iconBg, "--toast-icon-color": meta.iconColor } as React.CSSProperties}
           >
             {/* أيقونة النوع */}
             <span
               className="msk-toast__icon-wrap"
-              style={{ background: meta.iconBg, color: meta.iconColor } as React.CSSProperties}
               aria-hidden="true"
             >
               <meta.Icon size={16} strokeWidth={2.2} />

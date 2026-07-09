@@ -14109,6 +14109,8 @@ img[loading="lazy"]:not([src=""]) {
   width: 34px !important;
   height: 34px !important;
   border-radius: 10px !important;
+  background: var(--toast-icon-bg, var(--majalis-emerald-muted)) !important;
+  color: var(--toast-icon-color, var(--majalis-emerald)) !important;
 }
 
 /* جسم النص */
