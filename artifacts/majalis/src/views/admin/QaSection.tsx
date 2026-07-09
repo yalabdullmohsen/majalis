@@ -9,9 +9,13 @@ import {
 import {
   QA_RULING_TYPES,
   QA_RULING_CATEGORY_SLUG,
-  QA_RULING_COLORS,
   QA_REVIEW_LABELS,
 } from "@/lib/theme";
+
+const RULING_CSS: Record<string, string> = {
+  "حلال": "halal", "مباح": "mubah", "سنة": "sunnah",
+  "مندوب": "mandub", "مكروه": "makruh", "حرام": "haram",
+};
 import { SkeletonCardGrid } from "@/components/ui-common";
 import { AdminModal, Field, FieldRow } from "./AdminModal";
 import { BulkImport } from "./BulkImport";
@@ -99,16 +103,10 @@ export function QaSection() {
       <div className="qa-header">
         <h2 className="qa-title">
           الأسئلة والأجوبة ({items.length})
-          <span className="qa-badge" style={{ "--qa-badge-bg": "var(--majalis-sage)", "--qa-badge-color": "var(--majalis-emerald-deep)" } as React.CSSProperties}>
-            {publishedCount} منشور
-          </span>
-          <span className="qa-badge" style={{ "--qa-badge-bg": "var(--majalis-parchment-deep)", "--qa-badge-color": "var(--majalis-ink-soft)" } as React.CSSProperties}>
-            {draftCount} مسودة
-          </span>
+          <span className="qa-badge qa-badge--published">{publishedCount} منشور</span>
+          <span className="qa-badge qa-badge--draft">{draftCount} مسودة</span>
           {reviewCount > 0 && (
-            <span className="qa-badge" style={{ "--qa-badge-bg": "rgba(14,110,82,0.08)", "--qa-badge-color": "#1F4D3A" } as React.CSSProperties}>
-              {reviewCount} يحتاج مراجعة
-            </span>
+            <span className="qa-badge qa-badge--review">{reviewCount} يحتاج مراجعة</span>
           )}
         </h2>
         <div className="qa-actions">
@@ -156,42 +154,30 @@ export function QaSection() {
             </thead>
             <tbody>
               {filtered.map((item) => {
-                const rc = item.ruling_type ? (QA_RULING_COLORS[item.ruling_type] || null) : null;
+                const rulingCssClass = item.ruling_type ? (RULING_CSS[item.ruling_type] || null) : null;
                 const approved = item.review_status === "approved";
                 return (
                   <tr key={item.id} className="qa-tr">
                     <td className="qa-td qa-td--question">{item.question}</td>
                     <td className="qa-td qa-td--muted">{item.qa_categories?.name || "—"}</td>
                     <td className="qa-td">
-                      {rc ? (
-                        <span
-                          className="qa-ruling-badge"
-                          style={{ "--qa-rb-bg": rc.bg, "--qa-rb-color": rc.text } as React.CSSProperties}
-                        >
+                      {rulingCssClass ? (
+                        <span className={`qa-ruling-badge qa-ruling-badge--${rulingCssClass}`}>
                           {item.ruling_type}
                         </span>
                       ) : <span className="qa-ruling-none">—</span>}
                     </td>
                     <td className="qa-td">
-                      <span
-                        className="qa-review-badge"
-                        style={{
-                          "--qa-rev-bg": approved ? "#D1FAE5" : "rgba(14,110,82,0.08)",
-                          "--qa-rev-color": approved ? "#065F46" : "#1F4D3A",
-                        } as React.CSSProperties}
-                      >
+                      <span className={`qa-review-badge${approved ? " qa-review-badge--approved" : ""}`}>
                         {QA_REVIEW_LABELS[item.review_status] || item.review_status}
                       </span>
                     </td>
                     <td className="qa-td">
                       <button
+                        type="button"
                         onClick={() => toggleStatus(item)}
                         title={item.status === "published" ? "اضغط لإخفائه" : "اضغط لنشره"}
-                        className="qa-publish-btn"
-                        style={{
-                          "--qa-pub-bg": item.status === "published" ? "var(--majalis-emerald)" : "var(--majalis-parchment-deep)",
-                          "--qa-pub-color": item.status === "published" ? "var(--majalis-parchment)" : "var(--majalis-ink-soft)",
-                        } as React.CSSProperties}
+                        className={`qa-publish-btn${item.status === "published" ? " qa-publish-btn--published" : ""}`}
                       >
                         {item.status === "published" ? "منشور" : "مسودة"}
                       </button>
