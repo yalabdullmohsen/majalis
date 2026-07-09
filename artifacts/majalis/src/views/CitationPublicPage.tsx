@@ -4,8 +4,8 @@ import { Spinner } from "@/components/ui/spinner";
 import { Link, useRoute } from "wouter";
 import {
   type Citation,
-  CONTENT_TYPE_COLOR,
   CONTENT_TYPE_LABEL,
+  citTypeClass,
   getCitationImageUrl,
   getQrCodeUrl,
   getShareUrl,
@@ -92,7 +92,7 @@ export default function CitationPublicPage() {
   }
 
   const src = citation.source;
-  const typeColor = src ? CONTENT_TYPE_COLOR[src.content_type] || "#065f46" : "#065f46";
+  const typeMod = src ? citTypeClass(src.content_type) : "cit-type--fatwa";
   const typeLabel = src ? CONTENT_TYPE_LABEL[src.content_type] || "" : "";
   const sourceHref = src?.source_url || (src?.reference_id ? `/${src.content_type.replace("_", "-")}/${src.reference_id}` : "/");
 
@@ -119,10 +119,7 @@ export default function CitationPublicPage() {
         <div className="cpp-content">
 
           {/* بطاقة الاقتباس */}
-          <div
-            className="cpp-card"
-            style={{ "--cit-type-color": typeColor } as React.CSSProperties}
-          >
+          <div className={`cpp-card ${typeMod}`}>
             <div className="h-1.5 cit-type-bar" />
             <div className="cpp-card__body">
 

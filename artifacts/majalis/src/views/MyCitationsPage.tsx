@@ -5,8 +5,8 @@ import { Spinner } from "@/components/ui/spinner";
 import {
   type CitationFolder,
   type SavedCitation,
-  CONTENT_TYPE_COLOR,
   CONTENT_TYPE_LABEL,
+  citTypeClass,
   createCitationFolder,
   exportCitations,
   fetchUserCitations,
@@ -305,19 +305,13 @@ export default function MyCitationsPage() {
               {displayed.map((item) => {
                 const cit = item.citation;
                 const src = cit?.source as { title_ar?: string; content_type?: string; author_name?: string; book_name?: string } | undefined;
-                const typeColor = src?.content_type
-                  ? CONTENT_TYPE_COLOR[src.content_type as keyof typeof CONTENT_TYPE_COLOR] || "#065f46"
-                  : "#065f46";
+                const typeMod = citTypeClass(src?.content_type ?? "fatwa");
                 const typeLabel = src?.content_type
                   ? CONTENT_TYPE_LABEL[src.content_type as keyof typeof CONTENT_TYPE_LABEL] || ""
                   : "";
 
                 return (
-                  <div
-                    key={item.id}
-                    className="mcp-cit-card"
-                    style={{ "--cit-type-color": typeColor } as React.CSSProperties}
-                  >
+                  <div key={item.id} className={`mcp-cit-card ${typeMod}`}>
                     <div className="h-1 cit-type-bar" />
 
                     <div className="p-4 space-y-3">

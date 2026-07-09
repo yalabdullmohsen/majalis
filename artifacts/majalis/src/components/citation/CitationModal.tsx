@@ -5,10 +5,10 @@ import {
   type Citation,
   type CitationSource,
   type CitationStyle,
-  CONTENT_TYPE_COLOR,
   CONTENT_TYPE_LABEL,
   MAX_QUOTE_LENGTH,
   STYLE_LABEL,
+  citTypeClass,
   createCitation,
   fetchFormattedCitation,
   getCitationImageUrl,
@@ -127,8 +127,8 @@ export function CitationModal({ source, initialText = "", startOffset, endOffset
     setTimeout(() => setStatus(null), 3000);
   };
 
-  const typeColor = CONTENT_TYPE_COLOR[source.content_type] || "var(--majalis-emerald, #1F4D3A)";
   const typeLabel = CONTENT_TYPE_LABEL[source.content_type] || source.content_type;
+  const typeMod = citTypeClass(source.content_type);
 
   return (
     <div
@@ -140,10 +140,7 @@ export function CitationModal({ source, initialText = "", startOffset, endOffset
         {/* رأس النافذة */}
         <div className="flex items-center justify-between px-5 py-4 cm-header">
           <div className="flex items-center gap-2">
-            <span
-              className="px-2 py-0.5 rounded text-xs text-white font-medium cm-type-badge"
-              style={{ "--cm-type-color": typeColor } as React.CSSProperties}
-            >
+            <span className={`px-2 py-0.5 rounded text-xs text-white font-medium cm-type-badge ${typeMod}`}>
               {typeLabel}
             </span>
             <span className="text-sm font-semibold line-clamp-1">

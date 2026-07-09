@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ClipboardCopy, Link2, Printer, Quote, Star } from "lucide-react";
 import { CitationModal } from "./CitationModal";
-import { type CitationSource, type CitationContentType, CONTENT_TYPE_COLOR } from "@/lib/citation-service";
+import { type CitationSource, type CitationContentType, citTypeClass } from "@/lib/citation-service";
 
 interface Props {
   /** بيانات المصدر — يمكن تمريرها مباشرة إن كانت معلومة */
@@ -107,9 +107,7 @@ export function CitationActionBar({
   const printRef = useRef(false);
 
 
-  const typeColor = src
-    ? CONTENT_TYPE_COLOR[src.content_type] || "var(--majalis-emerald, #1F4D3A)"
-    : (contentType ? CONTENT_TYPE_COLOR[contentType] || "var(--majalis-emerald, #1F4D3A)" : "var(--majalis-emerald, #1F4D3A)");
+  const typeMod = citTypeClass(src?.content_type ?? contentType ?? "fatwa");
 
   const openCite = useCallback((text = "", start?: number, end?: number) => {
     setSelectedText(text);
@@ -173,10 +171,7 @@ export function CitationActionBar({
       >
         {/* فاصل ملوَّن حسب نوع المحتوى */}
         {!compact && (
-          <span
-            className="w-1 h-6 rounded-full ml-1 self-center cab-type-bar"
-            style={{ "--cab-type-color": typeColor } as React.CSSProperties}
-          />
+          <span className={`w-1 h-6 rounded-full ml-1 self-center cab-type-bar ${typeMod}`} />
         )}
 
         <button

@@ -2,15 +2,10 @@ import { CalendarDays, MapPin, Phone } from "lucide-react";
 import type { QuranCircle } from "@/lib/quran-circles-service";
 import { GeometricPattern } from "@/components/design/GeometricPattern";
 
-const LEVEL_COLOR: Record<string, string> = {
-  "مبتدئ": "var(--majalis-emerald-soft, #EBF5F0)",
-  "متوسط": "var(--majalis-emerald-muted, rgba(14,110,82,0.08))",
-  "متقدم": "var(--majalis-danger-muted, rgba(155,28,28,0.08))",
-};
-const LEVEL_TEXT: Record<string, string> = {
-  "مبتدئ": "var(--majalis-emerald-deep, #0A5040)",
-  "متوسط": "var(--majalis-emerald, #1F4D3A)",
-  "متقدم": "var(--majalis-danger, #9B1C1C)",
+const LEVEL_MOD: Record<string, string> = {
+  "مبتدئ": "qcl--mubtadi",
+  "متوسط": "qcl--mutawassit",
+  "متقدم": "qcl--mutaqaddim",
 };
 
 interface Props {
@@ -35,8 +30,7 @@ export function QuranCircleCard({ circle: c }: Props) {
       <div className="qc-card__body">
         <div className="qc-card__badges">
           <span
-            className="qc-badge qc-badge--level"
-            style={{ "--qcl-bg": LEVEL_COLOR[c.level] ?? "#f3f4f6", "--qcl-color": LEVEL_TEXT[c.level] ?? "#374151" } as React.CSSProperties}
+            className={`qc-badge qc-badge--level ${LEVEL_MOD[c.level] ?? ""}`}
           >
             {c.level}
           </span>

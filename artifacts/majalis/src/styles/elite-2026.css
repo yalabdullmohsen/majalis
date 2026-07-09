@@ -7455,6 +7455,18 @@ button.primary:hover {
    ============================================================ */
 .cit-color-swatch { background: var(--swatch-bg); }
 .cit-folder-dot   { background: var(--folder-dot-bg); }
+/* Citation content-type color tokens — set all 3 vars used across citation components */
+.cit-type--quran-ayah    { --cit-type-color: #065f46; --cm-type-color: #065f46; --cab-type-color: #065f46; }
+.cit-type--hadith        { --cit-type-color: #1d4ed8; --cm-type-color: #1d4ed8; --cab-type-color: #1d4ed8; }
+.cit-type--scholar-quote { --cit-type-color: #7c3aed; --cm-type-color: #7c3aed; --cab-type-color: #7c3aed; }
+.cit-type--fatwa,
+.cit-type--book          { --cit-type-color: #1F4D3A; --cm-type-color: #1F4D3A; --cab-type-color: #1F4D3A; }
+.cit-type--article       { --cit-type-color: #0369a1; --cm-type-color: #0369a1; --cab-type-color: #0369a1; }
+.cit-type--research      { --cit-type-color: #0c4a6e; --cm-type-color: #0c4a6e; --cab-type-color: #0c4a6e; }
+.cit-type--lesson        { --cit-type-color: #047857; --cm-type-color: #047857; --cab-type-color: #047857; }
+.cit-type--benefit       { --cit-type-color: #166534; --cm-type-color: #166534; --cab-type-color: #166534; }
+.cit-type--prophet-story { --cit-type-color: #dc2626; --cm-type-color: #dc2626; --cab-type-color: #dc2626; }
+.cit-type--qa            { --cit-type-color: #6b7280; --cm-type-color: #6b7280; --cab-type-color: #6b7280; }
 .cit-type-bar     { background: var(--cit-type-color, #065f46); }
 .cit-type-badge   { background: var(--cit-type-color, #065f46); }
 
@@ -10920,6 +10932,9 @@ body {
   flex: 1; font-size: 0.78rem; color: var(--majalis-ink-soft);
   display: flex; align-items: center; gap: 0.3rem;
 }
+.qcl--mubtadi    { --qcl-bg: var(--majalis-emerald-soft, #EBF5F0); --qcl-color: var(--majalis-emerald-deep, #0A5040); }
+.qcl--mutawassit { --qcl-bg: var(--majalis-emerald-muted, rgba(14,110,82,0.08)); --qcl-color: var(--majalis-emerald, #1F4D3A); }
+.qcl--mutaqaddim { --qcl-bg: var(--majalis-danger-muted, rgba(155,28,28,0.08)); --qcl-color: var(--majalis-danger, #9B1C1C); }
 .qc-badge--level {
   background: var(--qcl-bg, #f3f4f6);
   color: var(--qcl-color, #374151);
@@ -14615,20 +14630,28 @@ img[loading="lazy"]:not([src=""]) {
   background: var(--majalis-parchment-deep) !important;
 }
 
-/* ألوان خاصة لـ destructive */
+/* ألوان خاصة لكل نوع toast — تشمل accent + icon bg + icon color */
 .msk-toast--destructive {
   --toast-accent: var(--majalis-danger, #DC2626) !important;
+  --toast-icon-bg: var(--majalis-danger-muted, rgba(155,28,28,0.08)) !important;
+  --toast-icon-color: var(--majalis-danger, #9B1C1C) !important;
   background: #FFF5F5 !important;
 }
 .msk-toast--warning {
   --toast-accent: #EA580C !important;
+  --toast-icon-bg: var(--majalis-emerald-soft, #EBF5F0) !important;
+  --toast-icon-color: var(--majalis-emerald, #1F4D3A) !important;
 }
 .msk-toast--info {
   --toast-accent: #2563EB !important;
+  --toast-icon-bg: #DBEAFE !important;
+  --toast-icon-color: #1D4ED8 !important;
 }
 .msk-toast--success,
 .msk-toast--default {
   --toast-accent: var(--majalis-emerald) !important;
+  --toast-icon-bg: var(--majalis-emerald-muted) !important;
+  --toast-icon-color: var(--majalis-emerald) !important;
 }
 
 /* Desktop: يُحاذَى من اليمين */

@@ -96,6 +96,10 @@ export const CONTENT_TYPE_COLOR: Record<CitationContentType, string> = {
   qa:           "#6b7280",
 };
 
+export function citTypeClass(t: CitationContentType | string): string {
+  return `cit-type--${String(t).replace(/_/g, "-")}`;
+}
+
 export const STYLE_LABEL: Record<CitationStyle, string> = {
   default:  "الافتراضي",
   apa:      "APA",
