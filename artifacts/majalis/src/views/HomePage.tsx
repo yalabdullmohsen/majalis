@@ -269,21 +269,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ══ إحصائيات المنصة ══ */}
-      <div className="hp-stats-bar" aria-label="إحصائيات المنصة">
-        {[
-          { value: "١٠٨",  label: "كتاب شرعي" },
-          { value: "٧٦+",  label: "عالم وشيخ" },
-          { value: "٦٨٠+", label: "سؤال تعليمي" },
-          { value: "٦٠٤",  label: "صفحة مصحف" },
-        ].map(({ value, label }) => (
-          <div key={label} className="hp-stat-item">
-            <strong className="hp-stat-value">{value}</strong>
-            <span className="hp-stat-label">{label}</span>
-          </div>
-        ))}
-      </div>
-
       {/* ══ زرتَ مؤخراً ══ */}
       <RecentPagesBar />
 
