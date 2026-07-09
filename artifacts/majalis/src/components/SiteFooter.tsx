@@ -40,6 +40,7 @@ const FOOTER_GROUPS = [
       { href: "/prayer-times", label: "مواقيت الصلاة" },
       { href: "/tasbih",       label: "التسبيح" },
       { href: "/daily-wird",   label: "الورد اليومي" },
+      { href: "/prayer-ranks", label: "فضائل الصلاة" },
       { href: "/qibla",        label: "القبلة" },
       { href: "/occasions",    label: "المناسبات" },
     ],

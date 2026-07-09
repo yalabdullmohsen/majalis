@@ -50,6 +50,7 @@ const SHEET_SECTIONS = [
     { href: "/prayer-countdown", label: "عداد الصلاة",         Icon: Activity },
     { href: "/prayer-times",     label: "مواقيت الصلاة",       Icon: Calendar },
     { href: "/daily-wird",       label: "الورد اليومي",        Icon: Repeat2 },
+    { href: "/prayer-ranks",     label: "فضائل الصلاة",        Icon: Shield },
     { href: "/qibla",            label: "القبلة",              Icon: Compass },
     { href: "/occasions",        label: "المناسبات الإسلامية", Icon: Calendar },
   ]},
