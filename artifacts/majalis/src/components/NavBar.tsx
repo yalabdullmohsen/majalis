@@ -150,12 +150,12 @@ export default function NavBar() {
           {!isMobile && (
             <nav className="navbar-v3__tabs" aria-label={lang === "en" ? "Main navigation" : "التنقل الرئيسي"}>
               {PRIMARY_NAV_ITEMS.map((item) => (
-                <Link key={item.href} href={item.href} className={tabCls(isActive(item.href))}>
+                <Link key={item.href} href={item.href} className={tabCls(isActive(item.href))} aria-current={isActive(item.href) ? "page" : undefined}>
                   {item.label}
                 </Link>
               ))}
               {isAdmin && (
-                <Link href="/admin" className={tabCls(location.startsWith("/admin"), "nav-tab--admin")}>
+                <Link href="/admin" className={tabCls(location.startsWith("/admin"), "nav-tab--admin")} aria-current={location.startsWith("/admin") ? "page" : undefined}>
                   {t("nav_admin_panel")}
                 </Link>
               )}

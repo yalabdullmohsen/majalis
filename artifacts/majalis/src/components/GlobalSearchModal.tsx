@@ -324,6 +324,7 @@ export function GlobalSearchModal({ onClose }: Props) {
                 type="button"
                 onClick={() => setActiveFilter(chip.key)}
                 className={`gsm-chip${active ? " gsm-chip--active" : ""}`}
+                aria-pressed={active}
               >
                 {chip.label}
               </button>

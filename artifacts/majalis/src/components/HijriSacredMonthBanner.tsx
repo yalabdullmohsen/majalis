@@ -281,6 +281,7 @@ export function HijriSacredMonthBanner() {
                   setTimeout(() => { setIndex(i); setVisible(true); }, 280);
                 }}
                 className={`hmb-dot${active ? " hmb-dot--active" : ""}`}
+                aria-pressed={active}
               />
             );
           })}
