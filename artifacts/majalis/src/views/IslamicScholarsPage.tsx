@@ -308,7 +308,10 @@ export default function IslamicScholarsPage() {
           const isOpen = expanded === s.id;
           return (
             <article key={s.id} className={["sch-card", isOpen ? "sch-card--open" : ""].join(" ")}>
-              <div className="sch-card__header" onClick={() => setExpanded(isOpen ? null : s.id)}>
+              <div className="sch-card__header" role="button" tabIndex={0}
+                onClick={() => setExpanded(isOpen ? null : s.id)}
+                onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && setExpanded(isOpen ? null : s.id)}
+                aria-expanded={isOpen} aria-controls={`sch-body-${s.id}`}>
                 <div className="sch-card__avatar">
                   <span className="sch-card__initial">{s.name[0]}</span>
                 </div>
@@ -331,7 +334,7 @@ export default function IslamicScholarsPage() {
               <p className="sch-card__bio">{s.bio}</p>
 
               {isOpen && (
-                <div className="sch-card__details">
+                <div id={`sch-body-${s.id}`} className="sch-card__details">
                   {s.quote && (
                     <blockquote className="sch-card__quote">
                       <Star size={14} className="sch-card__quote-icon" />
