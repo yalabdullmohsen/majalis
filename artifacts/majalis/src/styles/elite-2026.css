@@ -13203,7 +13203,7 @@ a:focus-visible {
   --rd-emerald:       #10B981; /* Primary — Emerald 500 */
   --rd-emerald-deep:  #0D5E3F; /* Hover / dark active */
   --rd-emerald-dark:  #064E3B; /* Hero dark */
-  --rd-gold:          #D4AF37; /* Secondary accent */
+  --rd-gold:          var(--majalis-emerald, #0E6E52); /* Secondary accent — mapped to emerald */
   --rd-ivory:         #F5EFE7; /* Page background */
   --rd-dark-card:     #1F3A3A; /* Dark sections */
   --rd-ink:           #1F2937; /* Text on light bg */

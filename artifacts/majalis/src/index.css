@@ -7741,9 +7741,9 @@ input, textarea, select { font-family: inherit; }
   border: 1px solid #e9d5ff;
 }
 .hadith-badge--bukhari {
-  background: #fff7ed;
-  color: #c2410c;
-  border: 1px solid #fed7aa;
+  background: var(--majalis-emerald-soft, #EBF5F0);
+  color: var(--majalis-emerald-deep, #0A5040);
+  border: 1px solid color-mix(in srgb, var(--majalis-emerald) 28%, transparent);
 }
 .hadith-badge--muslim {
   background: #f0fdf4;
@@ -8733,9 +8733,9 @@ input, textarea, select { font-family: inherit; }
   font-weight: 700;
   padding: 0.2rem 0.55rem;
   border-radius: 999px;
-  background: rgba(212, 175, 95, 0.22);
-  color: #f5e6c8;
-  border: 1px solid rgba(212, 175, 95, 0.35);
+  background: var(--majalis-emerald-soft, #EBF5F0);
+  color: var(--majalis-emerald, #0E6E52);
+  border: 1px solid color-mix(in srgb, var(--majalis-emerald) 30%, transparent);
 }
 
 .sci-ann-card__body {
@@ -8802,9 +8802,9 @@ input, textarea, select { font-family: inherit; }
   font-weight: 700;
   padding: 0.25rem 0.55rem;
   border-radius: 999px;
-  background: rgba(212, 175, 95, 0.14);
-  color: #7a5a24;
-  border: 1px solid rgba(212, 175, 95, 0.28);
+  background: var(--majalis-emerald-soft, #EBF5F0);
+  color: var(--majalis-emerald-deep, #0A5040);
+  border: 1px solid color-mix(in srgb, var(--majalis-emerald) 28%, transparent);
 }
 
 .sci-ann-card__actions,
