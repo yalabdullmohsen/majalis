@@ -18,6 +18,7 @@ import { HomeLearningSeasonsWidget } from "@/components/home/HomeLearningSeasons
 import { HomeUpcomingCourses } from "@/components/home/HomeUpcomingCourses";
 import { HomePrayerRanks } from "@/components/home/HomePrayerRanks";
 import { HomeFeaturedLibrary } from "@/components/home/HomeFeaturedLibrary";
+import { HomeQuizCard } from "@/components/home/HomeQuizCard";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
 import { HijriSacredMonthBanner } from "@/components/HijriSacredMonthBanner";
 import {
@@ -363,6 +364,11 @@ export default function HomePage() {
         {/* المكتبة العلمية */}
         <SafeHomeSection name="المكتبة العلمية">
           <HomeFeaturedLibrary />
+        </SafeHomeSection>
+
+        {/* لعبة المسابقة */}
+        <SafeHomeSection name="المسابقة">
+          <HomeQuizCard />
         </SafeHomeSection>
 
         {/* الركن اليومي — مدمج */}
