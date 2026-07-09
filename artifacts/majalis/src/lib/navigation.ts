@@ -48,6 +48,7 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
   { href: "/learning-path",      label: "خارطة طالب العلم" },
   // القرآن
   { href: "/quran",                label: "القرآن" },
+  { href: "/quran-hub",           label: "مركز القرآن" },
   { href: "/quran-radio",         label: "إذاعة القرآن" },
   { href: "/quran/surah-stories", label: "قصص القرآن" },
   // الأذكار
@@ -111,11 +112,13 @@ export const NAV_GROUPS: NavGroup[] = [
     id: "quran",
     title: "القرآن",
     links: [
+      { href: "/quran-hub",            label: "مركز القرآن" },
       { href: "/quran",                label: "المصحف الشريف" },
       { href: "/quran/surah-stories",  label: "قصص القرآن" },
       { href: "/quran/tajweed",        label: "علم التجويد" },
       { href: "/quran-live",           label: "البث المباشر" },
       { href: "/quran-radio",          label: "إذاعات القرآن" },
+      { href: "/quran-circles",        label: "حلقات القرآن" },
       { href: "/daily-wird",           label: "الورد اليومي" },
     ],
   },

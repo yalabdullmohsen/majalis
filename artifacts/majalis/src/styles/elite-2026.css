@@ -14751,3 +14751,299 @@ img[loading="lazy"]:not([src=""]) {
 .tj-related-link:hover { background: rgba(255,255,255,0.18); }
 
 /* ── نهاية §PERF-UX-2026 ─────────────────────────────────────── */
+
+/* ══════════════════════════════════════════════
+   §54. Quran Hub Page — مركز القرآن الكريم
+   ══════════════════════════════════════════════ */
+.quran-hub-page {
+  min-height: 100vh;
+  background: var(--elite-white, #FAF8F2);
+  color: var(--elite-ink, #0C0C0C);
+  padding-bottom: 5rem;
+}
+
+/* Hero */
+.quran-hub-hero {
+  background: linear-gradient(160deg, #062B20 0%, #0A5040 55%, #0E6E52 100%);
+  padding: 3rem 1.5rem 2.5rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.quran-hub-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.04) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 70%, rgba(255,255,255,0.03) 0%, transparent 50%);
+  pointer-events: none;
+}
+.quran-hub-hero__ornament {
+  font-family: "Amiri", "Scheherazade New", serif;
+  font-size: 1.05rem;
+  color: rgba(168,223,192,0.7);
+  letter-spacing: 0.04em;
+  margin-bottom: 1rem;
+}
+.quran-hub-hero__title {
+  font-family: "Amiri", serif;
+  font-size: clamp(2rem, 6vw, 3rem);
+  font-weight: 700;
+  color: #FFFFFF;
+  margin: 0 0 0.5rem;
+  line-height: 1.2;
+}
+.quran-hub-hero__sub {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.75);
+  margin: 0 auto 1.75rem;
+  max-width: 28rem;
+}
+
+/* Stats strip */
+.quran-hub-stats {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+.quran-hub-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+}
+.quran-hub-stat__val {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  line-height: 1;
+}
+.quran-hub-stat__lbl {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.6);
+}
+
+/* CTA Button */
+.quran-hub-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #FFFFFF;
+  color: #0A5040;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 0.75rem 1.75rem;
+  border-radius: 2rem;
+  text-decoration: none;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.quran-hub-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.25);
+  text-decoration: none;
+}
+
+/* Sections grid */
+.quran-hub-sections {
+  max-width: 72rem;
+  margin: 2.5rem auto 0;
+  padding: 0 1rem;
+}
+.quran-hub-sections__title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--elite-forest, #052E16);
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid rgba(10,80,64,0.15);
+}
+.quran-hub-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+  gap: 1.25rem;
+}
+.quran-hub-card {
+  display: flex;
+  flex-direction: column;
+  background: #FFFFFF;
+  border: 1px solid rgba(10,80,64,0.12);
+  border-radius: 1rem;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+.quran-hub-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 28px rgba(10,80,64,0.15);
+  border-color: rgba(10,80,64,0.3);
+  text-decoration: none;
+}
+.quran-hub-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.25rem 1rem;
+  position: relative;
+}
+.quran-hub-card__icon {
+  color: #FFFFFF;
+}
+.quran-hub-card__tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.85);
+  background: rgba(255,255,255,0.18);
+  padding: 0.2rem 0.55rem;
+  border-radius: 1rem;
+  letter-spacing: 0.03em;
+}
+.quran-hub-card__body {
+  padding: 1rem 1.25rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  flex: 1;
+  background: #FFFFFF;
+}
+.quran-hub-card__title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--elite-forest, #052E16);
+  margin: 0;
+}
+.quran-hub-card__desc {
+  font-size: 0.86rem;
+  color: #374151;
+  line-height: 1.6;
+  margin: 0;
+  flex: 1;
+}
+.quran-hub-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #0A5040;
+  margin-top: 0.5rem;
+}
+
+/* Features */
+.quran-hub-features {
+  max-width: 72rem;
+  margin: 3rem auto 0;
+  padding: 0 1rem;
+}
+.quran-hub-features__title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--elite-forest, #052E16);
+  margin-bottom: 1.25rem;
+}
+.quran-hub-features__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+  gap: 1rem;
+}
+.quran-hub-feature-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: #FFFFFF;
+  border: 1px solid rgba(10,80,64,0.1);
+  border-radius: 0.75rem;
+  padding: 1rem 1.25rem;
+  color: var(--elite-ink, #0C0C0C);
+}
+.quran-hub-feature-item__icon {
+  color: #0A5040;
+  flex-shrink: 0;
+}
+.quran-hub-feature-item__text {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #1a1a1a;
+}
+
+/* Closing ayah */
+.quran-hub-closing {
+  text-align: center;
+  padding: 3rem 1.5rem 2rem;
+  background: linear-gradient(135deg, #0A5040, #0E6E52);
+  margin-top: 3rem;
+}
+.quran-hub-closing__ayah {
+  font-family: "Amiri", "Scheherazade New", serif;
+  font-size: clamp(1.1rem, 3vw, 1.4rem);
+  color: #FFFFFF;
+  margin: 0 0 0.5rem;
+  line-height: 1.9;
+}
+.quran-hub-closing__ref {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.65);
+}
+
+/* ══════════════════════════════════════════════
+   §55. إصلاح تباين النص على الخلفيات البيضاء
+   ══════════════════════════════════════════════ */
+
+/* أي بطاقة ذات خلفية بيضاء/فاتحة — النص الرئيسي أسود */
+.bg-white p, .bg-white span, .bg-white li,
+[style*="background: #fff"] p,
+[style*="background: #FFF"] p,
+[style*="background: white"] p,
+[style*="background-color: white"] p,
+[style*="background-color: #fff"] p {
+  color: var(--elite-ink, #0C0C0C) !important;
+}
+
+/* العناوين h1-h4 على أي خلفية فاتحة — داكنة */
+.bg-white h1, .bg-white h2, .bg-white h3, .bg-white h4,
+[class*="card"] h1, [class*="card"] h2,
+[class*="card"] h3, [class*="card"] h4 {
+  color: var(--elite-forest, #052E16) !important;
+}
+
+/* النصوص الثانوية على البيضاء — رمادي داكن وليس رمادياً فاتحاً */
+.bg-white .text-gray-400,
+.bg-white .text-gray-300,
+[class*="card"] .text-gray-400,
+[class*="card"] .text-gray-300 {
+  color: #4B5563 !important;
+}
+
+/* text-muted على خلفيات بيضاء */
+.bg-white .text-muted,
+.bg-gray-50 .text-muted,
+.bg-gray-100 .text-muted {
+  color: #374151 !important;
+}
+
+/* بطاقات المحتوى — أي نص على خلفية #FFFFFF أو #FAF8F2 */
+.elite-card,
+.ui-card,
+[class*="elite-card"],
+.lesson-card,
+.hadith-card,
+.story-card,
+.prophet-card {
+  color: var(--elite-ink, #0C0C0C) !important;
+}
+.elite-card p, .ui-card p, .lesson-card p, .hadith-card p {
+  color: #374151 !important;
+}
+
+/* إصلاح أي نص أبيض على خلفية فاتحة (خطأ شائع) */
+.bg-white .text-white,
+.bg-gray-50 .text-white,
+.bg-gray-100 .text-white {
+  color: var(--elite-forest, #052E16) !important;
+}
+
+/* ── نهاية §55 ───────────────────────────────────────────── */

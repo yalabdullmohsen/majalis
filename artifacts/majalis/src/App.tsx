@@ -53,6 +53,7 @@ const HadithDaifPage = lazy(() => import("@/views/HadithDaifPage"));
 const HadithMawduPage = lazy(() => import("@/views/HadithMawduPage"));
 const QuranRadioPage = lazy(() => import("@/views/QuranRadioPage"));
 const QuranCirclesPage = lazy(() => import("@/views/QuranCirclesPage"));
+const QuranHubPage = lazy(() => import("@/views/QuranHubPage"));
 const SurahStoriesPage = lazy(() => import("@/views/SurahStoriesPage"));
 const QuranTajweedPage = lazy(() => import("@/views/QuranTajweedPage"));
 const SurahStoryDetailRoute = lazy(() =>
@@ -338,6 +339,7 @@ function Router() {
           </Suspense>
         </ErrorBoundary>
       </Route>
+      <Route path="/quran-hub"><SafeLazyRoute component={QuranHubPage} /></Route>
       <Route path="/quran-radio"><SafeLazyRoute component={QuranRadioPage} /></Route>
       <Route path="/quran-live" component={QuranComingSoon} />
       <Route path="/tajweed"><SafeLazyRoute component={QuranTajweedPage} /></Route>
