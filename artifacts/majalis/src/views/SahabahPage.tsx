@@ -1,12 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { applyPageSeo } from "../lib/seo";
 
-applyPageSeo({
-  path: "/sahabah",
-  title: "أعلام الصحابة الكرام — المجلس العلمي",
-  description: "موسوعة كبار الصحابة رضي الله عنهم: سيرتهم وفضائلهم وإرثهم في الإسلام",
-  keywords: ["الصحابة", "الخلفاء الراشدون", "أصحاب النبي", "سيرة الصحابة", "فضائل الصحابة"],
-});
 
 type SahabiCategory = "الكل" | "الخلفاء" | "العشرة" | "النساء" | "العلماء" | "الفاتحون";
 
@@ -253,6 +247,15 @@ const SAHABAH: Sahabi[] = [
 const CATEGORIES: SahabiCategory[] = ["الكل", "الخلفاء", "العشرة", "النساء", "العلماء", "الفاتحون"];
 
 export default function SahabahPage() {
+  useEffect(() => {
+      applyPageSeo({
+      path: "/sahabah",
+      title: "أعلام الصحابة الكرام — المجلس العلمي",
+      description: "موسوعة كبار الصحابة رضي الله عنهم: سيرتهم وفضائلهم وإرثهم في الإسلام",
+      keywords: ["الصحابة", "الخلفاء الراشدون", "أصحاب النبي", "سيرة الصحابة", "فضائل الصحابة"],
+    });
+  }, []);
+
   const [activeCat, setActiveCat] = useState<SahabiCategory>("الكل");
   const [search, setSearch] = useState("");
   const [openId, setOpenId] = useState<string | null>(null);

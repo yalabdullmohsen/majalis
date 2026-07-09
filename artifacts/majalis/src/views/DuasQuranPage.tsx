@@ -1,12 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { applyPageSeo } from "../lib/seo";
 
-applyPageSeo({
-  path: "/duas-quran",
-  title: "أدعية القرآن الكريم — المجلس العلمي",
-  description: "أجمل الأدعية المأثورة من كتاب الله: دعاء الأنبياء والمؤمنين في القرآن الكريم",
-  keywords: ["أدعية القرآن", "دعاء في القرآن", "دعاء الأنبياء", "أفضل الأدعية", "دعاء قرآني"],
-});
 
 type DuaCategory = "الكل" | "الأنبياء" | "الرزق والهداية" | "المغفرة" | "الأسرة" | "الدنيا والآخرة" | "الصبر والنصر";
 
@@ -142,6 +136,15 @@ const DUAS: QuranDua[] = [
 const CATEGORIES: DuaCategory[] = ["الكل", "الأنبياء", "الرزق والهداية", "المغفرة", "الأسرة", "الدنيا والآخرة", "الصبر والنصر"];
 
 export default function DuasQuranPage() {
+  useEffect(() => {
+      applyPageSeo({
+      path: "/duas-quran",
+      title: "أدعية القرآن الكريم — المجلس العلمي",
+      description: "أجمل الأدعية المأثورة من كتاب الله: دعاء الأنبياء والمؤمنين في القرآن الكريم",
+      keywords: ["أدعية القرآن", "دعاء في القرآن", "دعاء الأنبياء", "أفضل الأدعية", "دعاء قرآني"],
+    });
+  }, []);
+
   const [activeCat, setActiveCat] = useState<DuaCategory>("الكل");
   const [search, setSearch] = useState("");
   const [openId, setOpenId] = useState<string | null>(null);

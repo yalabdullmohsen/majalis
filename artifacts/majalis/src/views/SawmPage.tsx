@@ -1,12 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { applyPageSeo } from "../lib/seo";
 
-applyPageSeo({
-  path: "/sawm",
-  title: "الصيام وأحكامه — المجلس العلمي",
-  description: "دليل شامل لأحكام الصيام: أنواعه وشروطه ومفطراته والمعذورين وفضائل رمضان",
-  keywords: ["الصيام", "رمضان", "أحكام الصيام", "مفطرات", "شروط الصيام", "فضل الصيام"],
-});
 
 /* ───────── types ───────── */
 type SawmTab = "types" | "conditions" | "muftirat" | "exemptions" | "virtues";
@@ -373,6 +367,15 @@ const KIND_CLASS: Record<string, string> = {
 
 /* ───────── component ───────── */
 export default function SawmPage() {
+  useEffect(() => {
+      applyPageSeo({
+      path: "/sawm",
+      title: "الصيام وأحكامه — المجلس العلمي",
+      description: "دليل شامل لأحكام الصيام: أنواعه وشروطه ومفطراته والمعذورين وفضائل رمضان",
+      keywords: ["الصيام", "رمضان", "أحكام الصيام", "مفطرات", "شروط الصيام", "فضل الصيام"],
+    });
+  }, []);
+
   const [tab, setTab] = useState<SawmTab>("types");
   const [openType, setOpenType] = useState<string | null>("ramadan");
 

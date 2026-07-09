@@ -1,12 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { applyPageSeo } from "../lib/seo";
 
-applyPageSeo({
-  path: "/ulum-quran",
-  title: "علوم القرآن الكريم — المجلس العلمي",
-  description: "مقدمة شاملة في علوم القرآن: النزول والجمع والتفسير والإعجاز والمحكم والمتشابه والناسخ والمنسوخ",
-  keywords: ["علوم القرآن", "أسباب النزول", "الناسخ والمنسوخ", "المحكم والمتشابه", "إعجاز القرآن"],
-});
 
 type UQTab = "nuzul" | "jam" | "tafsir" | "ijaz" | "ahkam";
 
@@ -117,6 +111,15 @@ const NASKH_TYPES = [
 ];
 
 export default function UlumQuranPage() {
+  useEffect(() => {
+      applyPageSeo({
+      path: "/ulum-quran",
+      title: "علوم القرآن الكريم — المجلس العلمي",
+      description: "مقدمة شاملة في علوم القرآن: النزول والجمع والتفسير والإعجاز والمحكم والمتشابه والناسخ والمنسوخ",
+      keywords: ["علوم القرآن", "أسباب النزول", "الناسخ والمنسوخ", "المحكم والمتشابه", "إعجاز القرآن"],
+    });
+  }, []);
+
   const [tab, setTab] = useState<UQTab>("nuzul");
   const [openJam, setOpenJam] = useState<number | null>(null);
 

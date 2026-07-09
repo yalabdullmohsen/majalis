@@ -1,12 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { applyPageSeo } from "../lib/seo";
 
-applyPageSeo({
-  path: "/mawarith",
-  title: "علم المواريث والفرائض — المجلس العلمي",
-  description: "دليل شامل في علم الفرائض: الورثة وحصصهم وأسباب الإرث وموانعه وأحكام العَصَبة والحجب",
-  keywords: ["المواريث", "الفرائض", "علم الإرث", "الورثة", "الحجب في الميراث"],
-});
 
 type MawTab = "varasa" | "huquq" | "asab" | "hajb" | "masail";
 
@@ -183,6 +177,15 @@ const MASAIL = [
 ];
 
 export default function MawarithPage() {
+  useEffect(() => {
+      applyPageSeo({
+      path: "/mawarith",
+      title: "علم المواريث والفرائض — المجلس العلمي",
+      description: "دليل شامل في علم الفرائض: الورثة وحصصهم وأسباب الإرث وموانعه وأحكام العَصَبة والحجب",
+      keywords: ["المواريث", "الفرائض", "علم الإرث", "الورثة", "الحجب في الميراث"],
+    });
+  }, []);
+
   const [tab, setTab] = useState<MawTab>("varasa");
   const [openWarith, setOpenWarith] = useState<string | null>(null);
 

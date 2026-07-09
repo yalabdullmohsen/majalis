@@ -1,12 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { applyPageSeo } from "../lib/seo";
 
-applyPageSeo({
-  path: "/tawba",
-  title: "التوبة والاستغفار — المجلس العلمي",
-  description: "دليل شامل للتوبة النصوح: شروطها وأنواعها وآداب الاستغفار وأفضل أدعية المغفرة",
-  keywords: ["التوبة", "الاستغفار", "التوبة النصوح", "شروط التوبة", "أدعية المغفرة"],
-});
 
 type TawbaTab = "shurut" | "anwaa" | "adhkar" | "mawani" | "athaar";
 
@@ -143,6 +137,15 @@ const ATHAAR: { icon: string; title: string; desc: string; dalil?: string }[] = 
 ];
 
 export default function TawbaPage() {
+  useEffect(() => {
+      applyPageSeo({
+      path: "/tawba",
+      title: "التوبة والاستغفار — المجلس العلمي",
+      description: "دليل شامل للتوبة النصوح: شروطها وأنواعها وآداب الاستغفار وأفضل أدعية المغفرة",
+      keywords: ["التوبة", "الاستغفار", "التوبة النصوح", "شروط التوبة", "أدعية المغفرة"],
+    });
+  }, []);
+
   const [tab, setTab] = useState<TawbaTab>("shurut");
   const [openDhikr, setOpenDhikr] = useState<number | null>(null);
 

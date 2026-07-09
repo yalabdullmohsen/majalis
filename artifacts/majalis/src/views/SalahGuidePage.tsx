@@ -1,12 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { applyPageSeo } from "../lib/seo";
 
-applyPageSeo({
-  path: "/salah-guide",
-  title: "دليل الصلاة الكامل — المجلس العلمي",
-  description: "الدليل الشامل للصلاة: شروطها وأركانها وواجباتها وسننها ومبطلاتها وكيفية الخشوع فيها",
-  keywords: ["الصلاة", "كيفية الصلاة", "أركان الصلاة", "شروط الصلاة", "خشوع الصلاة"],
-});
 
 type SalahTab = "shurut" | "kayfiyya" | "mubtilatat" | "khushuu" | "fawaid";
 
@@ -116,6 +110,15 @@ const AHADITH_FAWAID = [
 ];
 
 export default function SalahGuidePage() {
+  useEffect(() => {
+      applyPageSeo({
+      path: "/salah-guide",
+      title: "دليل الصلاة الكامل — المجلس العلمي",
+      description: "الدليل الشامل للصلاة: شروطها وأركانها وواجباتها وسننها ومبطلاتها وكيفية الخشوع فيها",
+      keywords: ["الصلاة", "كيفية الصلاة", "أركان الصلاة", "شروط الصلاة", "خشوع الصلاة"],
+    });
+  }, []);
+
   const [tab, setTab] = useState<SalahTab>("shurut");
   const [openStep, setOpenStep] = useState<number | null>(null);
 

@@ -1,12 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { applyPageSeo } from "../lib/seo";
 
-applyPageSeo({
-  path: "/janaza",
-  title: "أحكام الجنائز — المجلس العلمي",
-  description: "دليل شامل لأحكام الجنائز: الغسل والتكفين والصلاة والدفن والتعزية والزيارة",
-  keywords: ["الجنائز", "أحكام الجنازة", "صلاة الجنازة", "التكفين", "الدفن", "التعزية"],
-});
 
 type JanazaTab = "ghusl" | "takfin" | "salah" | "dafn" | "aadab";
 
@@ -92,6 +86,15 @@ const TABS: { id: JanazaTab; label: string; icon: string }[] = [
 ];
 
 export default function JanazaPage() {
+  useEffect(() => {
+      applyPageSeo({
+      path: "/janaza",
+      title: "أحكام الجنائز — المجلس العلمي",
+      description: "دليل شامل لأحكام الجنائز: الغسل والتكفين والصلاة والدفن والتعزية والزيارة",
+      keywords: ["الجنائز", "أحكام الجنازة", "صلاة الجنازة", "التكفين", "الدفن", "التعزية"],
+    });
+  }, []);
+
   const [tab, setTab] = useState<JanazaTab>("ghusl");
 
   return (

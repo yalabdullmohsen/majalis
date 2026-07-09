@@ -1,12 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { applyPageSeo } from "../lib/seo";
 
-applyPageSeo({
-  path: "/hajj",
-  title: "الحج والعمرة — المجلس العلمي",
-  description: "دليل شامل لأحكام الحج والعمرة: الأركان والواجبات والسنن والمشاعر والدعاء",
-  keywords: ["الحج", "العمرة", "أركان الحج", "مناسك الحج", "أحكام الحج", "الإحرام"],
-});
 
 /* ────── types ────── */
 type HajjTab = "overview" | "arkan" | "wajibat" | "mashaer" | "umra";
@@ -228,6 +222,15 @@ const TABS: { id: HajjTab; label: string; icon: string }[] = [
 
 /* ────── component ────── */
 export default function HajjPage() {
+  useEffect(() => {
+      applyPageSeo({
+      path: "/hajj",
+      title: "الحج والعمرة — المجلس العلمي",
+      description: "دليل شامل لأحكام الحج والعمرة: الأركان والواجبات والسنن والمشاعر والدعاء",
+      keywords: ["الحج", "العمرة", "أركان الحج", "مناسك الحج", "أحكام الحج", "الإحرام"],
+    });
+  }, []);
+
   const [tab, setTab] = useState<HajjTab>("overview");
   const [openRukn, setOpenRukn] = useState<string | null>("ihram");
 

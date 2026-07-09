@@ -1,12 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { applyPageSeo } from "../lib/seo";
 
-applyPageSeo({
-  path: "/tahara",
-  title: "الطهارة وأحكامها — المجلس العلمي",
-  description: "دليل شامل لأحكام الطهارة: الوضوء والغسل والتيمم وأنواع المياه والنجاسات",
-  keywords: ["الطهارة", "الوضوء", "الغسل", "التيمم", "أحكام الطهارة", "الفقه"],
-});
 
 type TaharaTab = "wudu" | "ghusl" | "tayammum" | "najasat";
 
@@ -120,6 +114,15 @@ const TABS: { id: TaharaTab; label: string; icon: string }[] = [
 ];
 
 export default function TaharaPage() {
+  useEffect(() => {
+      applyPageSeo({
+      path: "/tahara",
+      title: "الطهارة وأحكامها — المجلس العلمي",
+      description: "دليل شامل لأحكام الطهارة: الوضوء والغسل والتيمم وأنواع المياه والنجاسات",
+      keywords: ["الطهارة", "الوضوء", "الغسل", "التيمم", "أحكام الطهارة", "الفقه"],
+    });
+  }, []);
+
   const [tab, setTab] = useState<TaharaTab>("wudu");
 
   return (
