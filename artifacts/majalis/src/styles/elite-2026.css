@@ -15378,6 +15378,7 @@ img[loading="lazy"]:not([src=""]) {
   flex-direction: column;
   gap: 0.75rem;
   align-items: flex-start;
+  background: var(--ikm-domain-bg, var(--clr-primary));
 }
 .ikm-detail__icon { color: rgba(255,255,255,0.9); }
 .ikm-detail__title {
@@ -15458,6 +15459,7 @@ img[loading="lazy"]:not([src=""]) {
   height: 10px;
   border-radius: 50%;
   flex-shrink: 0;
+  background: var(--ikm-domain-bg, var(--clr-primary));
 }
 .ikm-rel-text {
   flex: 1;
@@ -15520,6 +15522,7 @@ img[loading="lazy"]:not([src=""]) {
   border: none;
   white-space: nowrap;
   transition: opacity 0.15s, transform 0.15s;
+  background: var(--ikm-domain-bg, var(--clr-primary));
 }
 .ikm-conn-node:hover { opacity: 0.85; transform: scale(1.03); }
 .ikm-conn-line {

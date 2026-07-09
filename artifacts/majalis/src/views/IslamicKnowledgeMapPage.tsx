@@ -346,7 +346,7 @@ export default function IslamicKnowledgeMapPage() {
       {selectedDomain && (
         <section className="ikm-detail">
           <div className="ikm-detail__inner">
-            <div className="ikm-detail__left" style={{ background: selectedDomain.bg }}>
+            <div className="ikm-detail__left" style={{ "--ikm-domain-bg": selectedDomain.bg } as { [k: string]: string }}>
               <selectedDomain.icon size={40} className="ikm-detail__icon" />
               <h2 className="ikm-detail__title">{selectedDomain.title}</h2>
               <p className="ikm-detail__sub">{selectedDomain.subtitle}</p>
@@ -372,7 +372,7 @@ export default function IslamicKnowledgeMapPage() {
                   );
                   return (
                     <div key={cid} className="ikm-rel-item">
-                      <div className="ikm-rel-dot" style={{ background: cd.bg }} />
+                      <div className="ikm-rel-dot" style={{ "--ikm-domain-bg": cd.bg } as { [k: string]: string }} />
                       <div className="ikm-rel-text">
                         <span className="ikm-rel-name">{cd.title}</span>
                         {connInfo && (
@@ -411,7 +411,7 @@ export default function IslamicKnowledgeMapPage() {
               <div key={i} className="ikm-conn-item">
                 <button
                   className="ikm-conn-node"
-                  style={{ background: da.bg }}
+                  style={{ "--ikm-domain-bg": da.bg } as { [k: string]: string }}
                   onClick={() => setSelected(c.a)}
                 >
                   {da.title}
@@ -422,7 +422,7 @@ export default function IslamicKnowledgeMapPage() {
                 </div>
                 <button
                   className="ikm-conn-node"
-                  style={{ background: db.bg }}
+                  style={{ "--ikm-domain-bg": db.bg } as { [k: string]: string }}
                   onClick={() => setSelected(c.b)}
                 >
                   {db.title}
