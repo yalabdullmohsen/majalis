@@ -108,7 +108,7 @@ export default function DailyWirdPage() {
       ...state,
       completedToday: next,
       lastDate: today,
-      monthlyTotal: (state.lastDate === today ? state.monthlyTotal : state.monthlyTotal) + n,
+      monthlyTotal: state.monthlyTotal + n,
       totalPagesEver: state.totalPagesEver + n,
       streak: newStreak,
       weeklyLogs: updatedLogs,

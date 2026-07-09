@@ -1,6 +1,8 @@
 import { Link } from "wouter";
-import { fetchPrayerTimes, computePrayerStatus } from "@/lib/prayer-times";
+import { fetchPrayerTimes, computePrayerCountdown } from "@/lib/prayer-times";
 import { useEffect, useState } from "react";
+
+const OBLIGATORY_KEYS = ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"];
 
 export function HomeHeroBanner() {
   const [nextPrayer, setNextPrayer] = useState<string>("");
@@ -8,9 +10,16 @@ export function HomeHeroBanner() {
   useEffect(() => {
     fetchPrayerTimes()
       .then((t) => {
-        const status = computePrayerStatus(t.prayers);
-        if (status.next) {
-          setNextPrayer(`${status.next.name} بعد ${status.remainingLabel}`);
+        const cd = computePrayerCountdown(t.prayers);
+        if (!cd.next) return;
+        if (cd.sinceSeconds != null && cd.graceNextHms) {
+          // أثناء فترة السماح: أظهر الصلاة التالية الفعلية
+          const obligatory = t.prayers.filter((p) => OBLIGATORY_KEYS.includes(p.key));
+          const ranIdx = obligatory.findIndex((p) => p.key === cd.next?.key);
+          const actualNext = ranIdx >= 0 ? obligatory[(ranIdx + 1) % obligatory.length] : null;
+          if (actualNext) setNextPrayer(`${actualNext.name} بعد ${cd.graceNextHms}`);
+        } else {
+          setNextPrayer(`${cd.next.name} بعد ${cd.remainingLabel}`);
         }
       })
       .catch(() => setNextPrayer(""));
