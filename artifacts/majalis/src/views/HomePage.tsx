@@ -15,6 +15,8 @@ import { HomeIslamicOccasions } from "@/components/home/HomeIslamicOccasions";
 import { HomeLatestUpdates } from "@/components/home/HomeLatestUpdates";
 import { HomeDailyProgress } from "@/components/home/HomeDailyProgress";
 import { HomeLearningSeasonsWidget } from "@/components/home/HomeLearningSeasonsWidget";
+import { HomeUpcomingCourses } from "@/components/home/HomeUpcomingCourses";
+import { HomePrayerRanks } from "@/components/home/HomePrayerRanks";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
 import { HijriSacredMonthBanner } from "@/components/HijriSacredMonthBanner";
 import {
@@ -273,6 +275,11 @@ export default function HomePage() {
           <HomeUpcomingLessons />
         </SafeHomeSection>
 
+        {/* الدورات القادمة */}
+        <SafeHomeSection name="الدورات القادمة">
+          <HomeUpcomingCourses />
+        </SafeHomeSection>
+
         {/* مواقيت الصلاة */}
         <SafeHomeSection name="مواقيت الصلاة">
           <HomeCompactPrayer />
@@ -355,6 +362,11 @@ export default function HomePage() {
         {/* الركن اليومي — مدمج */}
         <SafeHomeSection name="الركن اليومي">
           <HomeDailyCorner />
+        </SafeHomeSection>
+
+        {/* مراتب الناس في الصلاة */}
+        <SafeHomeSection name="مراتب الصلاة">
+          <HomePrayerRanks />
         </SafeHomeSection>
 
         <SafeHomeSection name="عن المجلس العلمي">
