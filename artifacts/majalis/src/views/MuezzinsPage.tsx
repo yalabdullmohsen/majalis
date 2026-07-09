@@ -311,11 +311,11 @@ export default function MuezzinsPage() {
           <div className="mzp-cta__desc">شارك صوتك مع مجتمع المجالس — يُراجع الفريق ويُنشر في المكتبة.</div>
         </div>
         <div className="mzp-cta__btns">
-          <Link href="/upload">
-            <button type="button" className="mzp-cta__upload-btn"><Upload size={14} strokeWidth={2} aria-hidden="true" /> ارفع أذانك</button>
+          <Link href="/upload" className="mzp-cta__upload-btn">
+            <Upload size={14} strokeWidth={2} aria-hidden="true" /> ارفع أذانك
           </Link>
-          <Link href="/my-submissions">
-            <button type="button" className="mzp-cta__submissions-btn">مساهماتي</button>
+          <Link href="/my-submissions" className="mzp-cta__submissions-btn">
+            مساهماتي
           </Link>
         </div>
       </div>
