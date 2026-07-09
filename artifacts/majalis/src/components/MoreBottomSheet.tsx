@@ -47,6 +47,7 @@ const SHEET_SECTIONS = [
     { href: "/sahabah",            label: "أعلام الصحابة",     Icon: Users },
     { href: "/shamael",            label: "الشمائل المحمدية",  Icon: Star },
     { href: "/miracles",           label: "الإعجاز العلمي",    Icon: Sparkles },
+    { href: "/islam-stats",        label: "الإسلام في أرقام",  Icon: BarChart3 },
     { href: "/prophetic-medicine", label: "الطب النبوي",       Icon: Stethoscope },
   ]},
   { group: "الأحكام والفقه", items: [

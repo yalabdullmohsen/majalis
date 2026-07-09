@@ -82,6 +82,7 @@ const FOOTER_GROUPS = [
       { href: "/akhlaq",       label: "الأخلاق الإسلامية" },
       { href: "/scholars",     label: "أعلام الإسلام" },
       { href: "/miracles",     label: "الإعجاز العلمي" },
+      { href: "/islam-stats",  label: "الإسلام في أرقام" },
     ],
   },
   {

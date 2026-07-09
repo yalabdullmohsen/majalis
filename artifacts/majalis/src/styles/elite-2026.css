@@ -21219,3 +21219,165 @@ img[loading="lazy"]:not([src=""]) {
   .sh-tab { font-size: .72rem; padding: .45rem .5rem; }
   .sh-hadith__text { font-size: .95rem; }
 }
+
+/* ══════════════════════════════════════════════════════════════════════
+   §241 — الإسلام في أرقام  (.is-*)
+   ══════════════════════════════════════════════════════════════════════ */
+
+.is-page { background: #F0F4F8; min-height: 100vh; }
+
+/* hero */
+.is-hero {
+  background: linear-gradient(135deg, #0F172A 0%, #1E3A5F 55%, #0E6E52 100%);
+  padding: 3.5rem 1.25rem 2.75rem; text-align: center; color: #fff;
+}
+.is-hero__inner { max-width: 700px; margin: 0 auto; }
+.is-hero__badge {
+  display: inline-flex; align-items: center; gap: .4rem;
+  background: rgba(14,110,82,.3); color: #7ED6A8;
+  border: 1px solid rgba(126,214,168,.3); border-radius: 999px;
+  padding: .25rem .9rem; font-size: .75rem; font-weight: 700;
+  margin-bottom: .9rem;
+}
+.is-hero__title { font-size: 2rem; font-weight: 900; margin: 0 0 .6rem; }
+.is-hero__sub { font-size: .9rem; color: rgba(200,220,255,.7); margin: 0 0 1.75rem; line-height: 1.7; }
+.is-hero__kpis { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+.is-kpi {
+  display: flex; align-items: center; gap: .4rem;
+  background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15);
+  border-radius: 999px; padding: .4rem 1rem;
+  font-size: .82rem; font-weight: 700; color: #fff;
+}
+.is-kpi svg { color: #7ED6A8; }
+
+/* container */
+.is-container { max-width: 900px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+
+/* tabs */
+.is-tabs {
+  display: flex; gap: .4rem; flex-wrap: wrap; margin-bottom: 1.75rem;
+  background: #fff; border: 1px solid #E2E8F0; border-radius: 1rem; padding: .35rem;
+}
+.is-tab {
+  flex: 1; min-width: max-content; display: flex; align-items: center; gap: .4rem;
+  justify-content: center; padding: .55rem .7rem;
+  border: none; border-radius: .7rem; background: transparent;
+  color: #64748B; font-family: inherit; font-size: .8rem; font-weight: 600;
+  cursor: pointer; transition: background .15s, color .15s; white-space: nowrap;
+}
+.is-tab--active { background: var(--majalis-emerald,#0E6E52); color: #fff; }
+
+/* section */
+.is-section { display: flex; flex-direction: column; gap: 1.5rem; }
+
+/* stats grid */
+.is-stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; }
+.is-stat-card {
+  background: #fff; border-top: 3px solid #0E6E52; border-radius: .9rem;
+  padding: 1rem 1.1rem; display: flex; flex-direction: column; gap: .3rem;
+  box-shadow: 0 1px 6px rgba(0,0,0,.06);
+}
+.is-stat-card__val { font-size: 1.5rem; font-weight: 900; line-height: 1; }
+.is-stat-card__lbl { font-size: .82rem; font-weight: 700; color: #1E293B; }
+.is-stat-card__sub { font-size: .72rem; color: #94A3B8; line-height: 1.4; }
+
+/* section title */
+.is-section-title {
+  display: flex; align-items: center; gap: .5rem;
+  color: var(--majalis-emerald,#0E6E52);
+}
+.is-section-title h2 { font-size: .95rem; font-weight: 800; margin: 0; color: #0F172A; }
+
+/* bars */
+.is-bars { display: flex; flex-direction: column; gap: .65rem; }
+.is-bar { display: flex; align-items: center; gap: .65rem; }
+.is-bar__label { width: 5rem; font-size: .82rem; font-weight: 600; color: #334155; text-align: right; flex-shrink: 0; }
+.is-bar__track {
+  flex: 1; height: 10px; background: #E2E8F0; border-radius: 999px; overflow: hidden;
+}
+.is-bar__fill { height: 100%; border-radius: 999px; }
+.is-bar__val { width: 3rem; font-size: .78rem; font-weight: 700; color: #475569; flex-shrink: 0; }
+
+/* note */
+.is-note {
+  font-size: .78rem; color: #94A3B8; line-height: 1.5;
+  background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: .6rem;
+  padding: .65rem .85rem;
+}
+
+/* Quran highlight */
+.is-quran-highlight {
+  background: linear-gradient(135deg, #0A5040, #0E6E52);
+  border-radius: 1.25rem; padding: 1.75rem 1.5rem; text-align: center; color: #fff;
+}
+.is-quran-highlight__text {
+  font-family: "Amiri","Traditional Arabic",serif;
+  font-size: 1.45rem; line-height: 2; margin: 0 0 .5rem; color: #fff;
+}
+.is-quran-highlight__ref { font-size: .8rem; color: rgba(200,240,220,.65); margin: 0; }
+
+/* timeline */
+.is-timeline { position: relative; padding-right: 1.5rem; }
+.is-timeline::before {
+  content: ""; position: absolute; right: .6rem; top: 0; bottom: 0;
+  width: 2px; background: linear-gradient(to bottom, #0E6E52, transparent);
+}
+.is-timeline-item {
+  display: flex; align-items: flex-start; gap: .75rem; margin-bottom: 1.1rem;
+}
+.is-timeline-item__year {
+  min-width: 4.5rem; font-size: .72rem; font-weight: 800; color: #0E6E52;
+  text-align: left; padding-top: .15rem; flex-shrink: 0;
+}
+.is-timeline-item__dot {
+  width: 10px; height: 10px; border-radius: 50%; background: #0E6E52;
+  flex-shrink: 0; margin-top: .3rem; border: 2px solid #fff;
+  box-shadow: 0 0 0 2px #0E6E52;
+}
+.is-timeline-item__content { flex: 1; }
+.is-timeline-item__event { font-size: .88rem; color: #1E293B; font-weight: 600; margin: 0; line-height: 1.5; }
+.is-timeline-item__note { font-size: .72rem; color: #94A3B8; margin: .2rem 0 0; }
+
+/* science */
+.is-science-intro {
+  display: flex; align-items: flex-start; gap: .6rem;
+  background: rgba(14,110,82,.06); border-right: 3px solid #0E6E52;
+  border-radius: .5rem; padding: .85rem 1rem;
+  font-size: .875rem; color: #1E293B; line-height: 1.7;
+}
+.is-science-intro p { margin: 0; }
+.is-science-intro svg { color: #0E6E52; flex-shrink: 0; margin-top: .1rem; }
+
+.is-science-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+.is-science-card {
+  background: #fff; border: 1px solid #E2E8F0; border-radius: 1rem;
+  padding: 1.1rem 1.2rem; display: flex; flex-direction: column; gap: .65rem;
+  box-shadow: 0 1px 6px rgba(0,0,0,.05);
+}
+.is-science-card__topic {
+  font-size: .75rem; font-weight: 800; color: #0E6E52;
+  background: rgba(14,110,82,.1); padding: .25rem .7rem; border-radius: 999px;
+  align-self: flex-start; letter-spacing: .04em;
+}
+.is-science-card__ayah {
+  font-family: "Amiri","Traditional Arabic",serif;
+  font-size: 1rem; color: #0F172A; line-height: 1.8; margin: 0;
+}
+.is-science-card__ref { font-size: .72rem; color: #94A3B8; margin: 0; }
+.is-science-card__discovery {
+  display: flex; flex-direction: column; gap: .2rem;
+  background: #F0FDF4; border: 1px solid #D1FAE5; border-radius: .6rem;
+  padding: .6rem .75rem;
+}
+.is-science-card__disc-label { font-size: .65rem; font-weight: 800; color: #065F46; letter-spacing: .05em; }
+.is-science-card__disc-text { font-size: .82rem; color: #1E293B; font-weight: 600; }
+.is-science-card__disc-year { font-size: .72rem; color: #6B7280; }
+
+@media (max-width: 640px) {
+  .is-hero__title { font-size: 1.5rem; }
+  .is-tabs { gap: .2rem; }
+  .is-tab { font-size: .72rem; padding: .45rem .5rem; }
+  .is-stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .is-science-grid { grid-template-columns: 1fr; }
+  .is-bar__label { width: 4rem; font-size: .75rem; }
+}
